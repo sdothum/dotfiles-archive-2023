@@ -1,0 +1,207 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Syncing
+
+# laptop=monad
+laptop=lumen
+
+# sync but..
+exclude_cache="--exclude='cache' --exclude='.cache' --exclude='*.cache'"
+exclude_http_local="--exclude='thedarnedestthing.db' --exclude='log'"
+exclude_virtualbox="--exclude='VirtualBox VMs' --filter='protect VirtualBox*'"
+
+rsync_home() {
+  rsync --delete --delete-excluded --delete-before \
+        --exclude '.adobe' \
+        --exclude '.atom' \
+        --exclude '.bundler' \
+        --exclude '.cabal' \
+        --exclude '.cache' \
+        --exclude '.ccnet' \
+        --exclude 'chromium' \
+        --exclude 'depot' \
+        --exclude '.dropbox' \
+        --exclude '.dropbox-dist' \
+        --exclude '.gem' \
+        --exclude '.Genymobile' \
+        --exclude '.ghc' \
+        --exclude 'google-chrome' \
+        --exclude '.googleearth' \
+        --exclude '.local/share/weechat' \
+        --exclude '.moovida' \
+        --exclude '.mozilla' \
+        --exclude '.node-gyp' \
+        --exclude '.PlayOnLinux' \
+        --exclude 'Steam' \
+        --exclude '.sync' \
+        --exclude '.SyncArchive' \
+        --exclude '.sync-save' \
+        --exclude '.thumbnails' \
+        --exclude 'tmp' \
+        --exclude 'Trash' \
+        --exclude '.unison' \
+        --exclude 'VirtualBox VMs' \
+        /home/$USER $@
+  # syncthing index most often corrupted
+  rm -rfv $@/$USER/.config/syncthing/index*
+  sync
+}
+
+case $@ in
+  '')
+    echo ".. rsync  backup | depot | home | server | stow | ttrss | usb | vps | [--delete] command" ;;
+
+  backup)
+    if is_server ;then
+      if if-yes "backup /data to /backup" ;then
+        rsync -av --delete /data/* /backup/
+      fi
+    fi
+    ;;
+
+  home)
+    if if-yes "backup $HOME to /data/archive" ;then
+      [[ -d /data/archive$HOME ]] || mkdir -pv /data/archive/home
+      rsync --delete $exclude_virtualbox $exclude_cache \
+            --exclude='Trash' --exclude='Logs' --exclude='*.corrupted' \
+            $HOME /data/archive/home/
+    fi
+    ;;
+
+  depot)
+    if is_server ;then
+      if-yes "backup depot to $laptop" && rsync --delete /data/depot $laptop:/data/
+    else
+      if-no "update depot to luna" || rsync /data/depot luna:/data/
+    fi
+    ;;
+
+  music)
+    if is_laptop ;then
+      if if-yes "replicate mpd music database from luna" ;then
+        killall mpd
+        if [[ ! -d /data/media ]] ;then
+          sudo mkdir /data/media
+          sudo chown $USER:users /data/media
+        fi
+        rsync --delete $USER@luna:.mpd ~/
+        rsync --delete luna:/data/media/music /data/media/
+        mpd 2>/dev/null &
+      fi
+    else
+      echo ".. initiate update request from $laptop"
+    fi
+    ;;
+
+  server)
+    if is_server ;then
+      if if-yes "backup media server databases to /data/archive" ;then
+        [[ -d /data/archive/var/lib ]] || mkdir -pv /data/archive/var/lib
+        sudo rsync -av --delete /var/lib/sonarr /data/archive/var/lib/
+        [[ -d /data/archive/opt/plexmediaserver/Library/Application\ Support ]] \
+          || mkdir -pv /data/archive/opt/plexmediaserver/Library/Application\ Support
+        sudo rsync -av --delete \
+                   /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                   /data/archive/opt/plexmediaserver/Library/Application\ Support/
+        [[ -d /data/archive/srv/lib ]] || sudo mkdir -p /data/archive/srv/lib
+        sudo rsync -av --delete /srv/lib/postgres /data/archive/srv/lib/
+        [[ -d /data/archive/etc/webapps/tt-rss ]] || sudo mkdir -p /data/archive/etc/webapps/tt-rss
+        sudo rsync -av /etc/webapps/tt-rss/config.php /data/archive/etc/webapps/tt-rss/
+      fi
+    fi
+    ;;
+
+  SERVER)
+    if is_server ;then
+      if ! if-no "restore media server databases from /data/archive" ;then
+        sudo systemctl stop sonarr
+        sudo rsync -av --delete /data/archive/var/lib/sonarr /var/lib/
+        sudo systemctl start sonarr
+        sudo systemctl stop plexmediaserver
+        sudo rsync -av --delete \
+                   /data/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                   /opt/plexmediaserver/Library/Application\ Support/
+        sudo systemctl start plexmediaserver
+        sudo systemctl stop postgres
+        sudo rsync -av --delete /data/archive/srv/lib/postgres /srv/lib/
+        sudo systemctl start postgres
+        sudo systemctl stop tt-rss
+        sudo rsync -av /data/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
+        sudo systemctl start tt-rss
+      fi
+    fi
+    ;;
+
+  stow)
+    if is_server ;then
+      if-yes "backup stow to $laptop" && rsync --delete --exclude='.SyncArchive' ~/stow $USER@$laptop:~/
+    else
+      if-no "update stow to luna" || rsync --exclude='.SyncArchive' ~/stow $USER@luna:~/
+    fi
+    ;;
+
+  ttrss)
+    if is_server ;then
+      rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
+    else
+      rsync /srv/http/tt-rss/themes/my*.css luna:/srv/http/tt-rss/themes/
+    fi
+    ;;
+
+  usb)
+    if [[ -d /run/media/$USER/$(hostname)/home ]] ;then
+      rsync_home /run/media/$USER/$(hostname)/home/
+    elif [[ -d /media/home ]] ;then
+      rsync_home /media/home/
+      rsync ~/.password-store /media/home/$USER/
+    elif [[ -d /run/media/$USER/My\ Passport ]] ;then
+      [[ -d /run/media/$USER/My\ Passport/media ]] || mkdir -v /run/media/$USER/My\ Passport/media
+      rsync --delete /data/media/videos/series /run/media/$USER/My\ Passport/media/videos/
+      rsync --delete /data/photos /run/media/$USER/My\ Passport/
+      sync
+    else
+      echo ".. insert ($(hostname)/passport) usb drive"
+    fi
+    ;;
+
+  vps)
+    sudo touch /srv/http/thedarnedestthing.com/application/log/restart.txt
+    # trace "saving => stow:/application"
+    # rsync -rltuv /srv/http/thedarnedestthing.com/application ~/thedarnedestthing.com/
+    trace "updating => thedarnedestthing.com:/application"
+    rsync -L --delete --exclude='vimwiki' $exclude_http_local \
+          /srv/http/thedarnedestthing.com/application \
+          thedarnedestthing.com:/srv/http/thedarnedestthing.com/
+    rsync --delete \
+          /home/$USER/stow/thedarnedestthing/thedarnedestthing.com/application/public/images \
+          thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
+    rsync /srv/http/thedarnedestthing.com/application/thedarnedestthing.db \
+          thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/
+    rsync /srv/http/thedarnedestthing.com/application/log/restart.txt \
+          thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/log/
+    trace "updating => thedarnedestthing.com:/vimwiki"
+    rsync -L --delete \
+          ~/vimwiki \
+          thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
+    if is_server ;then
+      if ping -c 1 -W 1 $laptop >/dev/null ;then
+        trace "updating => $laptop:/srv/http/thedarnedestthing.com"
+        rsync -l --delete $exclude_http_local /srv/http/thedarnedestthing.com $laptop:/srv/http/
+        # trace "syncing timestamps => $laptop:~/vimwiki"
+        # rsync -rt ~/vimwiki $laptop:~/
+      fi
+    else
+      if ping -c 1 -W 1 luna 2>&1 >/dev/null ;then
+        trace "updating => luna:/srv/http/thedarnedestthing.com"
+        rsync $exclude_http_local /srv/http/thedarnedestthing.com luna:/srv/http/
+      fi
+    fi
+    ;;
+
+  *)
+    command rsync -av --exclude='lost+found' $@ ;;
+esac
+
+# vim: set ft=zsh: #

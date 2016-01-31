@@ -1,0 +1,27 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# open file
+while name=$(echo | history files | dmenu 'Find File') || exit
+do
+  [ "$name" ] || exit
+  list=$(sudo locate -A -e -i $name)
+  [ "$list" ] || continue
+
+  file=$(echo "$list" \
+       | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \
+       | sort \
+       | column -s\^ -t \
+       | dmenu 'Open File' -no-custom) || exit
+
+  file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
+  history files "$file"
+  echo "$file" | xsel -b -i
+  pgrep herbstluftwm >/dev/null && focus frame
+  xdg-open "$file"
+done
+
+# vim: set ft=sh: #

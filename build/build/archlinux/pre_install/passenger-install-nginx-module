@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# Pre_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ nginx
+
+[ -d /opt/nginx ] && sudo rm -rf /opt/nginx
+sudo mkdir -v /opt/nginx
+sudo chown root:users /opt/nginx
+sudo chmod 775 /opt/nginx
+
+# vim: set ft=sh: #

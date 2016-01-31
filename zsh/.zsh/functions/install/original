@@ -1,0 +1,23 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................... Configuration files
+
+# replace previous original?
+if [[ $1 = -f ]] ;then
+  file=$2
+  sudo rm -f $file.original 2>/dev/null
+else
+  file=$1
+fi
+[[ -e $file.original ]] && return 1
+
+# save distribution original
+if [[ -e $file ]] ;then
+  echo ".. copying $(sudo cp -pRv "$file" "$file.original")"
+  return 0
+fi
+return -1
+
+# vim: set ft=zsh: #

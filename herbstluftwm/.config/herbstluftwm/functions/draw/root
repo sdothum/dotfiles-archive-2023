@@ -1,0 +1,113 @@
+
+[ $TRACE ] && CHILD="draw/root $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Draw background
+
+# Usage: draw root [shuffle|select|toggle]
+#        draw root, refresh background if necessary, shuffling if set
+#        draw root shuffle, enable random background shuffling
+#        draw root select, select default background and disable shuffling
+#        draw root toggle, toggle background blur mode
+
+setroot=$ROOT/herbstluftwm:setroot
+shuffle=$ROOT/herbstluftwm:shuffle
+noblur=$ROOT/herbstluftwm:noblur
+theme=$ROOT/herbstluftwm:theme
+
+# blur radius, brightness (to slightly darken and enhance transparency)
+blur=50
+brighten=-0.025
+# modulo of random number for random desktop wallpaper
+modulo=3
+[ -e $setroot ] || echo '0: :0: ' >$setroot
+
+if [ "$1" = 'toggle' ] ;then
+  [ -e $noblur ] && rm -f $noblur || touch $noblur
+fi
+
+# occupied or empty desktop, setroot record structure:
+# 1: occupied (blurred image)
+# 0: empty (raw image)
+root() {
+  if ! [ -e $noblur ] && herbstclient compare tags.by-name.$(herbstclient attr monitors.$1.tag).client_count gt 0 ;then
+    echo "1: --on $1 --blur $blur --brighten $brighten --zoom $BACKGROUND"
+  else
+    echo "0: --on $1 --zoom $BACKGROUND"
+  fi
+}
+
+primary=$(root 0)
+query multihead && secondary=$(root 1)
+current="${primary}:${secondary}"
+
+shuffle() {
+  ln -sf $(find ${background%/default} -name '*.png' | shuf -n1) $BACKGROUND
+  rm -f $theme 2>/dev/null
+}
+
+select() {
+  time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
+  # initialize default link
+  ls -L $BACKGROUND 2>/dev/null || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
+  # must escape quote --action, see office/feh
+  feh -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
+      -A "\"ln -sf %f $BACKGROUND && xdotool type 'q'\"" \
+      $HOME/images/backgrounds/
+  rm -f $theme 2>/dev/null
+}
+
+# (0) ignore, (1) change of state to unblurred
+unblur() {
+  expr $1 '<' $(cut -d: -f$2 $setroot)
+}
+
+draw border &
+case "$*" in
+  select) rm -f $shuffle 2>/dev/null
+          select ;;
+
+  shuffle) touch $shuffle
+           shuffle ;;
+
+  *) [ "$current" = "$(cat $setroot)" ] && exit
+     # random background selection on un-blur change of state
+     if [ -e $shuffle ] ;then
+       if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
+         # increase modulo to reduce frequency of shuffle
+         [ $(expr $(hexdump -n 2 -e '/2 "%u"' /dev/random) % $modulo = 0) -eq 1 ] && shuffle
+       fi
+     fi ;;
+esac
+
+eval setroot ${primary#?:} ${secondary#?:} &
+echo "$current" >$setroot
+
+# create pulsar border color gradient
+set_border() {
+  query colorcodehex $1 | grep 'Complementary' | head -1 | cut -d/ -f6 >$BORDER
+  query colorcodehex $(cat $BORDER) \
+       | grep 'color_light_1' \
+       | sed 's/<\/font>/\n/g' \
+       | sed  's/.*<font>//g' \
+       | grep '^#' | cut -d'#' -f2 \
+       | tac >$PULSAR
+  # use tee to append file into itself
+  tac $PULSAR | tee >>$PULSAR
+}
+
+# apply conky theme to .conkyrc
+[ -e $theme ] && exit
+touch $theme
+wallpaper=$(query theme)
+# load theme or generate a theme from the border colour
+[ -e "$wallpaper" ] && conky theme colours $(cat "$wallpaper") \
+                    || conky theme base '00ffff' >$wallpaper
+set_border $(head -1 "$wallpaper")
+# restart panels with new theme
+pkill -TERM -f 'draw panel'
+restore panel
+
+# vim: set ft=sh: #

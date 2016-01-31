@@ -1,0 +1,72 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Radio
+
+# Note: mpv --no-cache --quiet, are unique options used on this system for radio
+
+radio=/tmp/radio
+# access list csv format: station name, url
+stations=$HOME/bin/functions/dmenu/.config/radio
+
+delay=0.5
+
+playlist() {
+  if [ -e $radio ] ;then
+    cat $stations | sed '1i[ toggle ]\n[ clear ]\n[ edit ]'
+  else
+    cat $stations | sed '1i[ edit stations ]'
+  fi
+}
+
+stop() {
+  # url in pkill removed because "?" and "&" in some urls fail match
+  pkill -TERM -f 'mpv --no-cache --quiet' >/dev/null 2>&1
+}
+
+station() {
+  [ -e $radio ] && echo "Radio $(cat $radio)" || echo 'Radio Station'
+}
+
+url() {
+  grep "$@" $stations | sed 's/.*, *//'
+}
+
+while station=$(playlist | sed 's/,.*//' | dmenu "$(station)" -no-custom) || exit
+do
+  case $station in
+    '[ toggle ]') if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
+                    stop
+                  else
+                    mpv --no-cache --quiet $(url $(cat $radio)) &
+                  fi
+                  echo '.. toggling playlist'
+                  exit ;;
+
+    '[ clear ]') stop
+                 rm -f $radio
+                 echo '.. clearing playlist'
+                 exit ;;
+
+    '[ edit stations ]') gvim -f $stations ;;
+
+    *) [ -e $radio ] && stop
+       # quotes required "$station"
+       url=$(url "$station")
+       if [ "$url" ] ;then
+         # mpv --no-cache $station &
+         mpv --no-cache --quiet $url &
+         sleep $delay
+         if pgrep -f 'mpv --no-cache --quiet' ;then
+           echo "$station" >$radio
+           echo ".. playing $station"
+           exit
+         else
+           rm -f $radio
+         fi
+       fi ;;
+  esac
+done
+
+# vim: set ft=sh: #

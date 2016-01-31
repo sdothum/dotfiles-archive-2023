@@ -1,0 +1,133 @@
+# utilities packages
+# see bundle_install
+
+= admin
+# ▔▔▔▔▔
+  ack
+# etc-update
+  expect
+  mlocate
+# pacnews-git
+  screenfetch
+  stow
+  tree
+
+
+= file compression tools
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# par2unrar
+  file-roller
+  p7zip
+  unrar
+  unzip
+  zip
+
+
+= disk utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  convmv
+  dos2unix
+# gnome-disk-utility
+  gparted
+  gptfdisk
+  samsung_magician [is_server || is_laptop]
+# unetbootin
+
+
+= file managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ffmpegthumbnailer
+# filelight
+  ncdu
+  ranger
+  rox
+# thunar
+# thunar-archive-plugin
+# thunar-volman
+  tumbler
+  vifm
+
+
+= file systems
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  dosfstools
+# exfat-utils
+  fuse
+# fuse-exfat
+  gvfs
+# hfsprogs
+# nfs-utils
+  ntfs-3g
+
+
+= ripping
+# ▔▔▔▔▔▔▔
+# abcde           [is_server]
+# asunder         [is_server]
+  audacity        [is_server]
+# byzanz          [is_server]
+# byzanz-git      [is_server]
+  cdrdao          [is_server]
+# dvd+rw-tools    [is_server]
+# dvdbackup       [is_server]
+# ffcast          [is_server]
+  ffmpeg          [is_server]
+# gnome-subtitles [is_server]
+  handbrake       [is_server]
+# handbrake-cli   [is_server]
+# jokosher        [is_server]
+# k3b             [is_server]
+  ruby-gtk2       [is_server]
+  rubyripper      [is_server]
+# soundconverter  [is_server]
+  transcode       [is_server]
+  xfburn          [is_server]
+
+
+= shell
+# ▔▔▔▔▔
+# ansi-color
+# bash-completion
+# bc
+# checkbashisms
+  fasd
+# fish
+  fortune-mod
+# fortune-mod-chucknorris
+  prezto-git
+  zsh-doc
+
+
+= system monitor and test
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# bonnie++
+# gamin
+  gsmartcontrol
+# mprime-bin [is_server]
+  smartmontools
+  htop
+  iotop
+# memtester
+# multitail
+# sysstat
+  xrestop
+
+
+= terminals
+# ▔▔▔▔▔▔▔▔▔
+# putty
+# roxterm
+# rxvt-unicode
+# sakura
+# terminator
+# termite-git
+# xterm
+
+
+= terminal multiplexors
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  byobu
+# screen
+  tmux
+
+# vim: set ft=conf: #

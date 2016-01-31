@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................... xfce4-power-manager
+
+# configure power manager
+xfce4-power-manager &
+xfce4-power-manager -c
+
+# vim: set ft=sh: #

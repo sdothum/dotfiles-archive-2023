@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... tt-rss
+
+[ -d /srv/http ] || sudo mkdir /srv/http
+[ -L /srv/http/tt-rss ] || sudo ln -sfv /usr/share/webapps/tt-rss /srv/http/
+
+[ -d /var/lib/tt-rss ] && sudo chown -Rv http:http /var/lib/tt-rss
+annotate 'initialize database and config.php
+login http://localhost/tt-rss/install with ttrss/ttrss
+login http://localhost/tt-rss/ with admin/password
+set config.php to SINGLE_USER_MODE true'
+
+original /etc/php/php.ini
+sudo sed -i -e '/^include_path = ".:\/usr\/share\/pear"/s|"$|:/etc/webapps/tt-rss"|' \
+            -e '/^open_basedir =$/s|$| "/usr/share/webapps/:/etc/webapps/:/var/lib/tt-rss/:/tmp/"|' \
+         /etc/php/php.ini
+
+is_server && sudo systemctl restart postgresql
+if ! [ -d /srv/lib/postgresql/data/base ] ;then
+  su -c "echo \"create user ttrss with password 'ttrss';\" | psql" - postgres
+  su -c "echo \"alter user ttrss set work_mem='64MB';\" | psql" - postgres
+  su -c "echo \"create database ttrss;\" | psql" - postgres
+  su -c "echo \"grant all privileges on database ttrss to ttrss;\" | psql" - postgres
+fi
+
+is_server && systemd enable tt-rss || annotate "sudo systemctl start tt-rss"
+
+
+# vim: set ft=sh: #

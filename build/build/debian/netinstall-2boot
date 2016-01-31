@@ -1,0 +1,43 @@
+#!/bin/bash
+# systemd install from root shell mandatory
+
+if [ $USER != root ]; then
+  echo ".. systemd can only be installed as root user: su"
+  exit
+fi
+home=/home/shum
+bin=$home/sync/dist/sid
+
+# living on the edge with systemd!
+# must use apt-get to install (instead of aptitude)
+apt-get -y install systemd
+echo '========================================================================='
+echo '.. systemd-sysv install requires entering "Yes, do as I say!" to complete'
+echo '========================================================================='
+apt-get install systemd-sysv
+
+# hold systemd-sysv package or debian will try to remove it and replace with the old initscripts
+echo systemd-sysv hold | dpkg --set-selections
+sed '/^ExecStart=/s/%I/-a shum %I/' /lib/systemd/system/getty@.service >/etc/systemd/system/autologin@.service
+# force enable for systemd upgrades
+systemctl -f enable autologin@.service
+systemctl disable getty@.service
+
+# setup raid
+if [ $(ls -l /dev/sd*1 | wc -l) -gt 2 ]; then
+  # $bin/install-debian-zfs
+  export aptmode=Y
+  $bin/install-zfs
+  [ -d /data ] || sudo mkdir -v /data
+  [ -d /bkup ] || sudo mkdir -v /bkup
+  # sudo zpool export tank
+  # sudo zpool export pond
+  sudo zpool import tank
+  sudo zpool import pond
+  sudo zpool status
+fi
+[ -d /data/depot ] || (echo ".. warning!! /data not mounted. Check zpools")
+
+echo ".. reboot to test systemd and autologin"
+[ $(hostname) = luna ] && echo ".. reboot to test zfs"
+echo ".. proceed to netinstall-3xorg"

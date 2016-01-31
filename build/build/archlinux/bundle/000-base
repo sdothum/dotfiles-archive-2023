@@ -1,0 +1,70 @@
+# core packages
+# see bundle_install
+
+= entropy
+# ▔▔▔▔▔▔▔
+  haveged
+
+
+= cpu power management
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cpupower [is_laptop]
+
+
+= sound
+# ▔▔▔▔▔
+  alsa-utils
+
+
+= shell
+# ▔▔▔▔▔
+  dash
+  fasd
+  prezto-git
+  zsh
+
+
+= x11 drivers
+# ▔▔▔▔▔▔▔▔▔▔▔
+  xf86-video-ati       [lspci | grep VGA | grep -q ATI]
+  xf86-video-intel     [lspci | grep VGA | grep -q Intel]
+  nvidia-340xx         [nvidia]
+  xf86-input-synaptics [is_laptop]
+
+
+= x11 server
+# ▔▔▔▔▔▔▔▔▔▔
+  mesa
+# mesa-git
+# mesa-vdpau-git
+  xorg-xinit
+  xorg-server
+  xorg-server-utils
+
+
+= infinality font rendering
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+? infinality-bundle
+
+
+= ncurses editor
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gvim
+
+
+= terminal
+# ▔▔▔▔▔▔▔▔
+  rxvt-unicode-patched
+
+
+= window manager
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# herbstluftwm
+  herbstluftwm-git
+
+
+= virtualbox guest mode
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# virtualbox-guest-utils [[[ -n $(dmidecode --type 1 | grep VirtualBox) ]]]
+
+# vim: set ft=conf: #

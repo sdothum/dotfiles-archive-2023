@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Terminal
+
+SHELL=/bin/sh
+urxvt -shading 100 -title 'pseudoframe' -name 'pseudoframe' -e sh -c 'tput civis; sleep 365d'

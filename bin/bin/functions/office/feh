@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... Viewer
+
+pgrep herbstluftwm >/dev/null && focus frame
+# eval quoted --action, see draw root
+eval /usr/bin/feh -B black --scale-down $@
+pgrep herbstluftwm >/dev/null && focus window
+
+# # vim: set ft=sh: #

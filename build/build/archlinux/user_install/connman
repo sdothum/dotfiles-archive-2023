@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... connman
+
+# get network hosts table
+original /etc/hosts
+sudo ln -sfv $HOME/etc/hosts /etc/
+
+# add host ip address
+ip=$(hostname --ip-address)
+hostname=$(hostname)
+if grep -q " $hostname *" /etc/hosts ;then
+  sudo sed -i "/ $hostname */s/^[^ ]*/$ip/" /etc/hosts
+else
+  sudo sed -i "/localhost.*ttrss/a$ip $hostname" /etc/hosts
+fi
+
+# vim: set ft=sh: #

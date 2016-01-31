@@ -1,0 +1,44 @@
+#!/usr/bin/dash
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Demo
+
+# Playback format:
+#   # comment
+#   ! command (some xdotool key triplets are problematic)
+#   xdotool key command (everything else)
+
+TRACE=true
+DELAY=1.5
+
+# demo key sequence playback
+PLAYBACK='
+  alt+bracketright
+  alt+1
+  ! term 'Terminal'
+  s c r e e n f e t c h Return
+  alt+grave
+  alt+backslash
+  alt+backslash
+  alt+f
+  ! sleep 1.5
+  alt+grave
+  ! sleep 1.5
+  alt+f
+  ! sleep 1.5
+  alt+grave
+  ! draw refresh select &
+  ! sleep 1.5
+  # alt+Shift+space
+  alt+space
+  alt+grave
+  ! sleep 1.5
+  alt+w
+  alt+w
+  alt+w
+  alt+bracketleft
+'
+
+# vim: set ft=sh: #

@@ -1,0 +1,73 @@
+# development packages
+# see bundle_install
+
+= database management software
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# adminer
+  pgadmin3
+  postgresql
+# python2-pysqlite
+  sqlite
+  sqlitebrowser
+
+
+= c
+# ▔
+# tcc
+
+
+= document formatting
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# csstidy
+  enscript
+
+
+= editors
+# ▔▔▔▔▔▔▔
+# atom-editor     [is_server]
+# atom-editor-bin [is_server]
+  ctags
+# emacs
+# neovim
+# neovim-git
+# nvpy-git
+# powerline-fonts-git
+# sublime-text
+
+
+= haskell
+# ▔▔▔▔▔▔▔
+# cabal-install
+# "ghc must be installed before other haskell packages"
+  ghc
+# alex
+# haddock
+# happy
+
+
+= java
+# ▔▔▔▔
+  icedtea-web
+  jre7-openjdk
+
+
+= software tools
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# arduino [is_server]
+  cmake
+  gdb
+  python-setuptools
+  strace
+
+
+= version control
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# vcsh-git
+# hgview
+  git
+  mercurial
+# myrepos
+# subversion
+  tortoisehg
+
+# vim: set ft=conf: #

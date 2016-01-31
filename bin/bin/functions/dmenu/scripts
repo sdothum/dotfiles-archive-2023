@@ -1,0 +1,34 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Edit
+
+# shell scripts excluding .man (see dmenu man)
+file=$(echo $(find -L $HOME/bin -type f) \
+            $(find -L $HOME/build/archlinux -type f) \
+            $(find -L $HOME/.config/herbstluftwm -type f) \
+     | tr ' ' '\n' \
+     | egrep -v '\.cache|\.deprecated|\.hg|makepkg' \
+     | sed -e 's|.*/bin/|bin/|' \
+           -e 's|.*/archlinux/|archlinux/|' \
+           -e 's|.*/herbstluftwm/|herbstluftwm/|' \
+     | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \
+     | sort \
+     | history scripts \
+     | column -s\^ -t \
+     | dmenu 'Edit Script' -no-custom) || exit
+
+history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
+# echo $file
+
+if [ -e $HOME/$file ] ;then
+  eval v $HOME/$file
+elif [ -e $HOME/build/$file ] ;then
+  eval v $HOME/build/$file
+elif [ -e $HOME/.config/$file ] ;then
+  eval v $HOME/.config/$file
+fi
+
+# vim: set ft=sh: #

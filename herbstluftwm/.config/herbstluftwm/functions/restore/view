@@ -1,0 +1,34 @@
+
+# [ $TRACE ] && CHILD="restore/view $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................... Restore normal (non-fullscreen) view
+
+# return to non-fullscreen monitor layout if no fullscreen app visible
+[ -e $FULLSCREEN ] || exit 0
+
+case $(herbstclient attr monitors.focus.index) in
+  0) [ -e $FULLSCREEN:primary ] || exit 0 ;;
+  1) [ -e $FULLSCREEN:secondary ] || exit 0 ;;
+esac
+
+refresh=true
+tag=$(herbstclient attr monitors.focus.tag)
+for i in $(query winids)
+do
+  if herbstclient compare clients.$i.tag = "$tag" ;then
+    if herbstclient compare clients.$i.fullscreen = true ;then
+      unset refresh
+      break
+    fi
+  fi
+done
+
+[ $refresh ] || exit 0 
+draw refresh
+focus window
+exit 1
+  
+# vim: set ft=sh: #

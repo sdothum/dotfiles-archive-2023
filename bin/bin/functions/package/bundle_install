@@ -1,0 +1,57 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Distribution install
+
+# Usage: bundle_install bundle
+#
+# format: # comment
+#         = title
+#         * gem [condition]
+#         + package (to manually install afterwards)
+#         - package [condition] (to remove)
+#         ? package [condition] (confirm, see pm_install)
+#           package [condition] (noconfirm)
+#
+#         where, condition = [command] or [[[expression]]] as short form for test
+#         e.g. package [[[ $(hostname) = server ]]]
+
+subject $(basename $@ | cut -d- -f2-9)
+
+# preserve stdin fd for package manager prompts
+# note: (action package) map to (package condition) for default noconfirm install
+while read action package condition <&3
+do
+  # echo "action=$action package=$package condition=$condition"
+  case $action in
+    '#' | '') continue ;;
+
+    '=') title "$package $condition"
+         continue ;;
+
+    '+') heading "[ Manual install required.. ]   $package"
+         continue ;;
+
+    '-' | '?' | '*') [ "$condition" ] && condition="$(echo $condition | sed -e 's/^\[//' -e 's/\]$//')" \
+                                      || condition=true ;;
+
+    *) [ $package ] && condition="$(echo $package | sed -e 's/^\[//' -e 's/\]$//')" \
+                    || condition=true ;;
+  esac
+
+  eval $condition || continue
+
+  # package management
+  case $action in
+    '-') heading "[ Uninstalling.. ]   $package"
+         pm R $package ;;
+
+    '?') pm_install S $package ;;
+    '*') gem_install $package ;;
+    *) pm_install $action ;;
+  esac
+done 3< $1
+
+# vim: set ft=sh: #

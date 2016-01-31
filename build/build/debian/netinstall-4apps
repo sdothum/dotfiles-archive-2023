@@ -1,0 +1,921 @@
+#!/usr/bin/env fish
+# assumes that fish is already installed along with user functions
+# so a virgin install will require some user installation preparation.
+# notably the above and software depot of non-deb packages.
+# see install-zfs to include /data/depot installs from this script
+
+script-check
+[ (hostname) = luna ]; and set desktop true
+[ (hostname) = monad ]; and set laptop true
+[ -f $HOME/.netinstall ]; and set newinstall true
+[ -d $HOME/tmp ]; or mkdir $HOME/tmp
+set bin $HOME/sync/dist/sid
+
+function add-package
+  [ -d /data/depot -a $newinstall ]; and eval $bin/$argv
+end
+
+
+#-----------------------------------------------------------------------------
+title "initialize fresh install"
+#-----------------------------------------------------------------------------
+# !p dropbox; and begin; if-no "enable dropbox daemon during install"; or $HOME/.dropbox-dist/dropboxd &; end
+[ (cat $HOME/.windowmanager) = xmonad ]; and sudo cp -v $HOME/.config/terminator/config.xmonad $HOME/.config/terminator/config
+set --export aptmode Y
+[ $newinstall ]; or begin
+  if-yes "verify installed packages only"; and set --export aptmode s; or begin
+    if-no "install missing packages"; and exit; or set --export aptmode y
+  end
+end
+
+# for future install decisions based on available ram and disks instead of hostname
+set gbram (cat /proc/meminfo | head -1 | awk '{printf ("%i", $2/1024/1024)}')
+set numdisks (ll /dev/sd*1 | wc -l)
+set --export distro (head -1 /etc/apt/apt.conf | sed 's/^.*"\(.*\)".*/\1/')
+
+[ $aptmode = s ]; or begin
+  attn ""
+  attn ""
+  attn "Starting netinstall-4apps ... "(date '+%Y.%m.%d %H:%S:%M')
+  annotate "using debian $distro"
+  annotate+ '"tail log" to track install list'
+  attn ""
+  # default log of log.fish
+  touch $HOME/tmp/session.log
+  sleep 3s
+end
+
+if [ -f /etc/apt/sources.list.d/multimedia.list -a $newinstall ]
+#-----------------------------------------------------------------------------
+title "deb multimedia keyring"
+#-----------------------------------------------------------------------------
+  install deb-multimedia-keyring
+end
+
+
+#-----------------------------------------------------------------------------
+title "astronomy"
+#-----------------------------------------------------------------------------
+# [ $desktop ]; and install+ celestia
+# [ $desktop ]; and install+ kstars
+install stellarium
+
+
+#-----------------------------------------------------------------------------
+title "browsers"
+#-----------------------------------------------------------------------------
+# install+ elinks
+# install+ iceweasel
+# install+ midori
+# install+ uzbl
+install+ chromium
+install+ hbro
+install+ luakit
+install+ surf
+install+ w3m
+install w3m-img
+
+# add-package install-hindsight
+# add-package install-jumanji
+# add-package install-luakit
+# add-package install-pychrome
+add-package install-tabbed
+
+sudo update-alternatives --set gnome-www-browser /usr/bin/luakit
+sudo update-alternatives --set x-www-browser /usr/bin/luakit
+annotate "compare customizations in $HOME/.luakit/* with /data/depot/www/luakit/luakit-master/config/* sources"
+
+sudo update-alternatives --set www-browser /usr/bin/w3m
+
+
+#-----------------------------------------------------------------------------
+title "chat"
+#-----------------------------------------------------------------------------
+# install+ bitlbee
+# install+ irssi
+# install+ irssi-scripts
+# install+ libtime-duration-perl
+# install+ finch
+install+ pidgin
+install xchat
+
+
+#-----------------------------------------------------------------------------
+title "codecs"
+#-----------------------------------------------------------------------------
+# install+ gnash
+# install+ gstreamer0.10-plugins-bad
+# install+ gstreamer0.10-plugins-good
+# install+ gstreamer0.10-plugins-ugly
+# install+ gstreamer1.0-plugins-bad
+# install+ gstreamer1.0-plugins-good
+# install+ gstreamer1.0-plugins-ugly
+# install lightspark
+install flashplugin-nonfree
+
+
+#-----------------------------------------------------------------------------
+title "cups printing"
+#-----------------------------------------------------------------------------
+# lpr doesn't work with cups, use lp instead which uses cups default printer
+install+ cups
+install+ cups-pdf
+install+ system-config-printer
+install printer-driver-hpijs
+
+# sudo lppasswd -a $USER
+sudo grep -q "^lpadmin.*$USER" /etc/group; or sudo sed -i 's/\(^lpadmin:.*$\)/\1,'$USER'/' /etc/group
+[ $laptop ]; and annotate "https://localhost:631 to configure printer and network sharing"
+
+
+#-----------------------------------------------------------------------------
+title "database management software"
+#-----------------------------------------------------------------------------
+install+ pgadmin3
+install+ sqlite3
+install sqlitebrowser
+
+# add-package install-sqliteman
+
+
+#-----------------------------------------------------------------------------
+title "desktop"
+#-----------------------------------------------------------------------------
+# install+ screenruler
+# install+ scrot
+# install+ shutter
+# install+ xcompmgr
+install+ clipit
+install+ gpick
+install+ hsetroot
+install+ lxappearance
+install+ nitrogen
+install+ rss-glx
+install+ xfce4-notifyd
+install+ xfce4-screenshooter
+install+ xscreensaver
+install+ xscreensaver-data-extra
+install xscreensaver-gl-extra
+
+add-package install-compton
+add-package install-xwinwrap
+
+!p compton; and eval $HOME/bin/compton &
+
+
+#-----------------------------------------------------------------------------
+title "document formatting"
+#-----------------------------------------------------------------------------
+install+ csstidy
+install enscript
+
+
+#-----------------------------------------------------------------------------
+title "editors"
+#-----------------------------------------------------------------------------
+# install+ bluefish
+# install+ focuswriter
+# install+ leksah
+# install+ markdown
+# install+ pyroom
+install+ exuberant-ctags
+install retext
+
+add-package install-nvpy
+
+
+#-----------------------------------------------------------------------------
+title "file transfer"
+#-----------------------------------------------------------------------------
+# install+ nzbget
+# install+ pypar2
+# install+ rtorrent
+# [ $desktop ]; and install+ sabnzbdplus
+# install+ transmission
+# annotate "update transmission-gtk blocklist url http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+install+ par2
+install unrar
+
+sudo dpkg -i /data/depot/torrent/tixati/tixati_*_amd64.deb
+annotate "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+annotate+ "add bogon blocklist http://list.iblocklist.com/?list=bt_bogon&fileformat=p2p&archiveformat=gz"
+
+[ $desktop ]; and add-package install-couchpotato
+add-package install-nzbget
+[ $desktop ]; and add-package install-sickbeard
+
+# rtorrent session data
+# mkdir -v $HOME/.session 2>/dev/null
+# [ $desktop ]; and dist-config /etc/default/sabnzbdplus
+
+
+
+# #-----------------------------------------------------------------------------
+# title "filesystems"
+# #-----------------------------------------------------------------------------
+# install+ hfsplus
+# install+ hfsprogs
+# install+ hfsutils
+# install hfsutils-tcltk
+
+
+#-----------------------------------------------------------------------------
+title "file managers"
+#-----------------------------------------------------------------------------
+install+ filelight
+install+ file-roller
+install+ ncdu
+install+ ranger
+install+ rox-filer
+install+ thunar
+install+ thunar-archive-plugin
+install+ thunar-media-tags-plugin
+install+ tumbler
+install vifm
+
+# allow user to mount removable devices
+# original /usr/share/polkit-1/actions/org.freedesktop.udisks.policy
+# sudo sed -i '1,/<allow_active>auth_admin_keep<\/allow_active>/s/<allow_active>auth_admin_keep<\/allow_active>/<allow_active>yes<\/allow_active>/' /usr/share/polkit-1/actions/org.freedesktop.udisks.policy
+original /usr/share/polkit-1/actions/org.freedesktop.udisks2.policy
+sudo sed -i -e '1,/<allow_active>auth_admin_keep<\/allow_active>/s/>auth_admin</>yes</' \
+            -e '1,/<allow_active>auth_admin_keep<\/allow_active>/s/>auth_admin_keep</>yes</' /usr/share/polkit-1/actions/org.freedesktop.udisks2.policy
+
+
+#-----------------------------------------------------------------------------
+title "fonts and font managers"
+#-----------------------------------------------------------------------------
+# install+ ttf-freefont
+# install typecatcher
+install+ font-manager
+install+ fontmatrix
+install+ fonts-freefont-ttf
+install+ fonts-inconsolata
+install+ ttf-anonymous-pro
+install+ ttf-bitstream-vera
+install+ ttf-mscorefonts-installer
+install ttf-xfree86-nonfree
+
+# [ -d $HOME/.config/fontconfig ]; or mkdir -p $HOME/.config/fontconfig
+# sudo mv -v $HOME/.fonts.conf $HOME/.config/fontconfig/fonts.conf
+# rebuild font caches
+sudo fc-cache -frv
+
+# # complete infinality install with "warning" corrected conf files
+# original /etc/fonts/infinality/conf.d/60-group-non-tt-fonts.conf
+# original /etc/fonts/infinality/conf.d/60-group-tt-fonts.conf
+# original /etc/fonts/infinality/conf.d/65-override.conf
+# original /etc/fonts/infinality/conf.d/80-selective-rendering-inf-win-lin.conf
+# dist-config /etc/fonts/infinality/conf.d/60-group-non-tt-fonts.conf
+# dist-config /etc/fonts/infinality/conf.d/60-group-tt-fonts.conf
+# dist-config /etc/fonts/infinality/conf.d/65-override.conf
+# dist-config /etc/fonts/infinality/conf.d/80-selective-rendering-inf-win-lin.conf
+
+
+#-----------------------------------------------------------------------------
+title "java"
+#-----------------------------------------------------------------------------
+install+ icedtea-7-plugin
+install openjdk-7-jre
+
+
+# #-----------------------------------------------------------------------------
+# title "liquorix/siduction kernel keyrings"
+# #-----------------------------------------------------------------------------
+# if [ $distro = sid ]
+#   sudo apt-get install --yes --force-yes '^liquorix-([^-]+-)?keyring.?'
+#   # sudo apt-get install --yes --force-yes linux-image-liquorix-amd64
+#   sudo apt-get install --yes --force-yes '^siduction-([^-]+-)?keyring.?'
+#   # sudo apt-get install --yes --force-yes linux-image-siduction-amd64
+# end
+
+
+#-----------------------------------------------------------------------------
+title "mail client"
+#-----------------------------------------------------------------------------
+# install+ abook
+# install+ geary
+# install+ libmail-box-perl
+# install+ mutt
+# install+ mutt-patched
+# install+ muttprint
+# install+ muttprint-manual
+# install+ notmuch
+# install sup-mail
+# 
+# mkdir -v $HOME/attachments 2>/dev/null
+# chown -v $USER $HOME/attachments
+# mkdir -pv $HOME/.mail/.notmuch
+# mkdir -pv $HOME/.cache/mutt_results
+# ln -svf $HOME/.cache/mutt_results $HOME/.mail/.notmuch/=Search
+# annotate "initialize notmuch by running: notmuch setup; and notmuch new"
+
+# add-package install-mutt-notmuch
+add-package install-sup
+
+
+#-----------------------------------------------------------------------------
+title "mail services"
+#-----------------------------------------------------------------------------
+install+ archivemail
+install+ imapfilter
+install+ msmtp-mta
+install offlineimap
+
+# setup sendmail services
+sudo cp -v /usr/share/doc/msmtp/examples/msmtpqueue/msmtp*.sh /usr/local/bin/
+sudo chmod -v 755 /usr/local/bin/msmtp*.sh
+sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/local/bin/sendmail
+original /usr/sbin/sendmail
+  # sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/sbin/sendmail
+  and sudo ln -svf /usr/local/bin/sendmail /usr/sbin/sendmail
+ln -sfv $HOME/sync/user/.msmtprc $HOME/.msmtprc
+[ -L $HOME/.msmtprc ]; and chmod -v 600 $HOME/sync/user/.msmtprc; or chmod -v 600 $HOME/.msmtprc
+
+mkdir -pv $HOME/.mail/gmail
+# initialize crontab for sendmail (and all other user cron processes)
+# dist-config /var/spool/cron/crontabs/$USER
+# sudo chmod -v 600 /var/spool/cron/crontabs/$USER
+# sudo chown -v $USER:crontab /var/spool/cron/crontabs/$USER
+cat $HOME/sync/dist/var/spool/cron/crontabs/$USER | sudo crontab -u $USER -
+
+
+#-----------------------------------------------------------------------------
+title "mime"
+#-----------------------------------------------------------------------------
+# install+ urlview
+install+ antiword
+install+ docx2txt
+install+ lynx
+install urlscan
+
+original /etc/lynx-cur/lynx.cfg
+  and sudo sed -i -e 's/^#\(ENABLE_LYNXRC:ACCEPT_ALL_COOKIES:ON\)/\1/' \
+                  -e '$ahttp_proxy:http://localhost:8118/' /etc/lynx-cur/lynx.cfg
+
+
+#-----------------------------------------------------------------------------
+title "music"
+#-----------------------------------------------------------------------------
+install+ mpc
+install+ mpd
+install+ ncmpcpp
+install radiotray
+
+[ -d $HOME/.mpd/playlists ]; or mkdir -pv $HOME/.mpd/playlists
+touch $HOME/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
+touch $HOME/tmp/mpd.log
+if [ -L $HOME/.mpdconf ]
+  sudo cp -v $HOME/.mpdconf $HOME/.mpdconf.save
+  sudo cp -v /etc/mpd.conf $HOME/.mpdconf
+else
+  sudo cp -v /etc/mpd.conf $HOME/.mpdconf
+  ln -sfv $HOME/.mpdconf $HOME/.mpdconf
+  # annotate "configure $HOME/.mpdconf for non-root access to local mpd files"
+end
+sed -i -e 's,/var/lib/mpd/music,/data/media/music,' \
+       -e 's,/var/log/mpd/mpd.log,'$HOME'/tmp/mpd.log,' \
+       -e 's,/run/mpd/pid,'$HOME'/.mpd/pid,' \
+       -e 's,/var/lib/mpd,'$HOME'/.mpd,' \
+       -e 's/^user/#user/' \
+       -e 's/^#\(follow_outside_symlinks\)/\1/' \
+       -e 's/^#\(follow_inside_symlinks\)/\1/' $HOME/.mpdconf
+[ $desktop ]; and sed -i \
+       -e '/^audio_output/,/^}/s/^\([^#]\)/#\1/' \
+       -e '$aaudio_output { \
+        type            "pulse" \
+        name            "My MPD PulseAudio Output" \
+}' $HOME/.mpdconf
+# local user instance required for pavucontrol visibility
+# sudo /etc/init.d/mpd stop
+# sudo update-rc.d -f mpd remove
+sudo systemctl stop mpd.service
+sudo systemctl disable mpd.service
+mpd &
+mpc update
+
+
+
+#-----------------------------------------------------------------------------
+title "network and security"
+#-----------------------------------------------------------------------------
+# [ $desktop ]; and install+ airport-utils
+# install+ gnome-bluetooth
+# install+ tor
+# install+ vidalia
+install+ network-manager
+install+ network-manager-gnome
+install+ openssh-client
+install+ openssh-server
+install+ ntp
+install vsftpd
+
+# sudo systemctl enable NetworkManager
+# sudo systemctl start NetworkManager
+
+original /etc/ssh/sshd_config
+  and sudo sed -i -e 's/^\(AcceptEnv LANG LC_\*\)/#\1/' \
+                  -e '$aAcceptEnv TERM LANG LC_*' /etc/ssh/sshd_config
+# sudo systemctl enable ssh.service
+# sudo systemctl start ssh.service
+sudo systemctl restart ssh.service
+
+original /etc/vsftpd.conf
+  and sudo sed -i -e 's/^\(anonymous_enable\)=YES/\1=NO/' \
+                  -e 's/^#\(local_enable=YES\)/\1/' \
+                  -e 's/^#\(write_enable=YES\)/\1/' \
+                  -e 's/^#\(local_umask=022\)/\1/' \
+                  -e 's/^\(connect_from_port_20\)=YES/\1=NO/' \
+                  -e 's/^#\(ls_recurse_enable=YES\)/\1/' /etc/vsftpd.conf
+# restart vsftpd
+sudo systemctl enable vsftpd.service
+sudo systemctl start vsftpd.service
+# sudo systemctl restart vsftpd.service
+
+# disable youtube caching
+eval $bin/set-youtube-iptables on
+
+
+#-----------------------------------------------------------------------------
+title "photography"
+#-----------------------------------------------------------------------------
+# [ $desktop ]; and install+ dcraw
+# [ $desktop ]; and install+ digikam
+# [ $desktop ]; and install+ dispcalgu
+# install+ gimp
+# install+ gimp-gmic
+# install+ gimp-plugin-registry
+# [ $desktop ]; and install+ gimp-ufraw
+# [ $desktop ]; and install+ qtpfsgui
+# [ $desktop ]; and install+ rawstudio
+# [ $desktop ]; and install+ rawtherapee
+# [ $desktop ]; and install+ showfoto
+# [ $desktop ]; and install+ ufraw
+[ $laptop ]; and install darktable
+
+# [ $desktop ]; and add-package install-macrofusion
+add-package install-viewnior
+
+
+#-----------------------------------------------------------------------------
+title "productivity"
+#-----------------------------------------------------------------------------
+# install+ artha
+# install+ fortunes-min
+# install+ fortune-mod
+install+ apcalc
+install+ autokey-gtk
+install+ dict
+install+ dictd
+install+ dict-gcide
+install+ dict-jargon
+install+ dict-moby-thesaurus
+install+ dict-vera
+install+ dict-wn
+install+ fortunes
+install+ fortunes-off
+install+ galculator
+install+ gnumeric
+install+ gsimplecal
+install+ ktouch
+install xpad
+
+
+#-----------------------------------------------------------------------------
+title "proxies"
+#-----------------------------------------------------------------------------
+# install+ dante-server
+install+ polipo
+install+ privoxy
+install squid3
+
+# dist-config /etc/danted.conf (hostname)
+# sudo /etc/init.d/danted stop
+# sudo /etc/init.d/danted start
+
+original /etc/polipo/config
+  and sed -e 's/^# *\(cacheIsShared = false\)/\1/' \
+          -e 's/^# *\(censoredHeaders = from.*\)/\1/' \
+          -e 's/^# *\(censorReferer = maybe\)/\1/' \
+          -e 's/^# *\(diskCacheRoot = ""\)/\1/' \
+          -e '$a \
+logSyslog = true \
+dnsNameServer = 127.0.0.1' /usr/share/doc/polipo/examples/config.sample | sudo tee /etc/polipo/config
+  and [ -f /etc/init.d/tor ]
+  and sudo sed -i -e 's/^# *\(diskCacheRoot = ""\)/\1/' \
+                  -e 's/^# *\(socksParentProxy = "localhost:9050"\)/\1/' \
+                  -e 's/^# *\(socksProxyType = socks5\)/\1/' \
+                  -e '$adisableLocalInterface = true' /etc/polipo/config
+# restart polipo
+# sudo systemctl enable polipo.service
+# sudo systemctl start polipo.service
+sudo systemctl restart polipo.service
+
+original /etc/privoxy/config
+  and sudo sed -i 's/^\(enable-edit-actions\) 0/\1 1/' /etc/privoxy/config
+  and [ -f /usr/bin/polipo ]
+  and sudo sed -i '$aforward / localhost:8123' /etc/privoxy/config
+  # polipo unstable at the moment
+  and sudo sed -i 's,^\(forward / localhost:8123\),# \1,' /etc/privoxy/config
+# allow dpreview images
+original /etc/privoxy/user.action
+  and sudo sed -i '$a \
+{ fragile } \
+a.img-dpreview.com \
+.disqus.com \
+.nhl.com \
+{ +block{Nasty ads.} } \
+storage.canoe.ca/v1/dynamic_resize/sws_path/suns-prod-images/' /etc/privoxy/user.action
+annotate "configure browser proxies to localhost:8118"
+# restart privoxy
+# sudo systemctl enable privoxy.service
+# sudo systemctl start privoxy.service
+sudo systemctl restart privoxy.service
+
+# dist-config /etc/squid3/squid.conf
+original /etc/squid3/squid.conf
+  and sudo sed -i '$a \
+acl localnet src 10.0.0.0/8 \
+acl Safe_ports port 631     # cups \
+acl Safe_ports port 6789    # nzbget \
+acl Safe_ports port 32400   # plexmediaserver \
+http_access allow localnet \
+cache_peer 127.0.0.1 parent 8118 7 no-digest no-query no-netdb-exchange \
+never_direct allow all \
+hierarchy_stoplist cgi-bin ? \
+cache_dir ufs /var/spool/squid3 100 16 256 \
+via off \
+request_header_access From deny all \
+request_header_access Referer deny all \
+request_header_access Server deny all \
+request_header_access WWW-Authenticate deny all \
+request_header_access Link deny all \
+request_header_access Cache-Control deny all \
+reply_header_access From deny all \
+reply_header_access Referer deny all \
+reply_header_access Server deny all \
+reply_header_access User-Agent deny all \
+reply_header_access WWW-Authenticate deny all \
+reply_header_access Link deny all \
+shutdown_lifetime 0 seconds \
+forwarded_for delete' /etc/squid3/squid.conf
+# restart squid3
+# sudo systemctl enable squid3.service
+# sudo systemctl start squid3.service
+sudo systemctl restart squid3.service
+
+
+if [ $desktop ]
+#-----------------------------------------------------------------------------
+title "ripping"
+#-----------------------------------------------------------------------------
+  # install+ abcde
+  # install+ asunder
+  # install+ vloopback-source
+  # install+ ffmpeg
+  # install+ gnome-subtitles
+  # install+ genisoimage
+  # install+ growisofs
+  # install+ handbrake-cli
+  # install+ sonata
+  # install+ soundconverter
+  # install+ xfburn
+  install+ handbrake-gtk
+  install+ k3b
+  install rubyripper
+end
+
+
+#-----------------------------------------------------------------------------
+title "sound"
+#-----------------------------------------------------------------------------
+install+ alsa-base
+[ $desktop ]; and install+ paprefs
+[ $desktop ]; and install+ pavucontrol
+[ $desktop ]; and install+ pulseaudio
+install+ xfce4-mixer
+install xfce4-volumed
+annotate "enable sound (unmute) xfce4-mixer"
+annotate+ "set full volume alsamixer"
+
+# [ $desktop ]; and add-package install-pavolume
+
+if [ $laptop ]
+  [ -f $HOME/.asoundrc ]; and sudo mv -v $HOME/.asoundrc.save
+  annotate+ "restore $HOME/.asoundrc(.pulse) for pulseaudio playback"
+end
+
+
+#-----------------------------------------------------------------------------
+title "system"
+#-----------------------------------------------------------------------------
+# install+ anacron
+# install+ launchy
+# install+ lxinput
+# install+ screen
+# install+ startupmanager
+# install+ synapse
+# install+ tmux
+install+ autocutsel
+install+ cpufrequtils
+install+ keepassx
+install+ lm-sensors
+install+ preload
+install+ rlwrap
+install+ suckless-tools
+install+ sysv-rc-conf
+install+ xfce4-power-manager
+install+ xinput
+install xsel
+
+add-package install-ansi-color
+
+# sudo systemctl enable preload.service
+# sudo systemctl start preload.service
+
+
+#-----------------------------------------------------------------------------
+title "system monitor and test"
+#-----------------------------------------------------------------------------
+install+ bmon
+install+ bonnie++
+install+ gsmartcontrol
+install+ htop
+install+ iftop
+install+ iotop
+install+ memtester
+# see /etc/apt/sources.list.d/monitorix.list
+wget http://apt.izzysoft.de/izzysoft.asc -O - | sudo apt-key add -
+install+ monitorix
+install+ tcpflow
+install tcptrack
+
+original /etc/default/smartmontools
+  and sudo sed -i 's/^#\(start_smartd=yes\)/\1/' /etc/default/smartmontools
+original /etc/smartd.conf
+  and sudo sed -i 's,^DEVICESCAN.*,DEVICESCAN -d removable -n standby -m sdothum@gmail.com -M exec /usr/share/smartmontools/smartd-runner,' /etc/smartd.conf
+original /etc/smartmontools/run.d/10mail; and begin
+  dist-config /etc/smartmontools/run.d/10mail
+  sudo chmod -v 600 /etc/smartmontools/run.d/10mail
+end
+# sudo systemctl enable smartmontools.service
+# sudo systemctl start smartmontools.service
+sudo systemctl restart smartmontools.service
+
+
+#-----------------------------------------------------------------------------
+title "themes and gtk engines"
+#-----------------------------------------------------------------------------
+# gtk engine for ffuu theme
+install+ gnome-icon-theme-extras
+install+ gtk-chtheme
+install+ gtk2-engines-murrine
+install+ gtk2-engines-pixbuf
+install murrine-themes
+
+add-package install-equinox
+
+
+#-----------------------------------------------------------------------------
+title "utilities"
+#-----------------------------------------------------------------------------
+# install+ cronolog
+# install+ gprename
+# install+ guake
+install+ ack-grep
+install+ convmv
+install+ dos2unix
+install+ gftp
+install+ gparted
+install+ mlocate
+install+ putty
+install tree
+
+sudo ln -sfv /usr/bin/ack-grep /usr/bin/ack
+
+# update mlocate db
+original /etc/updatedb.conf
+  and sudo sed -i -e 's/# \(PRUNENAMES=".*\)"/\1 .cache Trash backups"/' \
+                  -e 's,\(PRUNEPATHS=".*\)",\1 /data /bkup",' /etc/updatedb.conf
+sudo updatedb &
+
+
+#-----------------------------------------------------------------------------
+title "version control"
+#-----------------------------------------------------------------------------
+# install+ subversion
+install mercurial
+
+
+#-----------------------------------------------------------------------------
+title "video"
+#-----------------------------------------------------------------------------
+# install+ gecko-mediaplayer
+# install+ gnome-mplayer
+# install+ mplayerthumbs
+# install+ smplayer
+install+ minitube
+install+ mplayer
+install+ xbmc
+install xbmc-skin-confluence
+
+# sudo dpkg -i /data/depot/media/umplayer/umplayer_0.97-1+r181~webupd8~oneiric2_amd64.deb
+# dist-config /etc/mplayer/mplayer.conf
+
+
+#-----------------------------------------------------------------------------
+title "viewers"
+#-----------------------------------------------------------------------------
+# install+ evince
+# install+ xchm
+# install zathura
+[ $desktop ]; and install+ calibre
+install+ comix
+install+ fbreader
+install mupdf
+
+
+# if [ $desktop ]
+if [ $gbram -gt 4 ]
+#-----------------------------------------------------------------------------
+title "virtualbox"
+#-----------------------------------------------------------------------------
+  # wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+  install+ linux-headers-(uname -r)
+  install+ dkms
+  install+ virtualbox
+  install virtualbox-guest-additions-iso
+  [ -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]
+    or sudo VBoxManage extpack install /data/depot/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-*.vbox-extpack
+  # install virtualbox-4.2
+  # annotate "adding \"vboxdrv\" to /etc/modules"
+  # # sudo echo >>/etc/modules; sudo echo vboxdrv >>/etc/modules
+  # sudo sed -i '$avboxdrv' /etc/modules
+  # cat /etc/modules
+  # annotate "switching udev reference from /usr/share/virtualbox to /lib/udev (/usr not mounted)"
+  # sudo cp -v /usr/share/virtualbox/VBoxCreateUSBNode.sh /lib/udev/
+  # original /etc/udev/rules.d/10-vboxdrv.rules
+  # sudo sed -i 's,/usr/share/virtualbox,/lib/udev,' /etc/udev/rules.d/10-vboxdrv.rules
+end
+
+
+#-----------------------------------------------------------------------------
+title "window managers"
+#-----------------------------------------------------------------------------
+# install+ awesome awesome-extra
+# install+ dwm
+# install+ herbstluftwm
+# install+ i3
+# install+ ratpoison
+# install+ spectrwm
+# install+ stumpwm
+# install+ subtle
+# install+ wmii
+# install+ xfce4
+install+ libghc-xmonad-doc
+install+ lua-socket
+install notion
+
+# add-package install-trayion
+add-package install-dmenu
+
+[ -d $HOME/.x11/notion/default-session--0 ]; or mkdir -pv $HOME/.x11/notion/default-session--0
+chown -Rv $USER $HOME/.x11
+
+
+#-----------------------------------------------------------------------------
+title "x11"
+#-----------------------------------------------------------------------------
+[ $desktop ]; and install+ arandr
+[ $desktop ]; and install+ lxrandr
+install+ xorg-docs-core
+install xrestop
+
+
+#-----------------------------------------------------------------------------
+title "web"
+#-----------------------------------------------------------------------------
+# install+ blogilo
+# install+ canto
+# install+ ttytter
+install+ newsbeuter
+install surfraw
+
+add-package install-ttrss
+add-package install-turses
+
+
+#-----------------------------------------------------------------------------
+title "usenet"
+#-----------------------------------------------------------------------------
+install+ slrn
+install slrnpull
+original /etc/default/slrnpull
+  and sudo sed -i "s/^RUNFROM=.*/RUNFROM='cron job'/" /etc/default/slrnpull
+original /etc/news/slrnpull.conf; and begin
+  # can't append directly after delete to eof
+  sudo sed -i '/^default/,$d' /etc/news/slrnpull.conf
+  sudo sed -i '$adefault 100 14 0' /etc/news/slrnpull.conf
+end
+[ -f /etc/cron.daily/slrnpull ]; and sudo mv -v /etc/cron.daily/slrnpull /etc/cron.hourly/
+[ -L /var/spool/news ]; or begin
+  sudo ln -sfv /var/spool/slrnpull/news /var/spool/news
+  dist-config /var/spool/slrnpull/authinfo
+  sudo chmod -v 600 /var/spool/slrnpull/authinfo
+  sudo chown -Rv news:news /var/spool/slrnpull
+end
+sudo touch /var/log/news/slrnpull.log
+touch $HOME/.config/slrn/jnewsrc
+
+
+#-----------------------------------------------------------------------------
+title "nginx / passenger / sinatra"
+#-----------------------------------------------------------------------------
+add-package install-sinatra
+
+
+#-----------------------------------------------------------------------------
+title "cloud storage/syncing"
+#-----------------------------------------------------------------------------
+# install owncloud-client
+
+# add-package install-owncloud
+# add-package install-seafile
+add-package install-btsync
+
+
+if [ $desktop ]
+#-----------------------------------------------------------------------------
+title "plexmediaserver"
+#-----------------------------------------------------------------------------
+  [ -f /etc/apt/sources.list.d/plexmediaserver.list ]; or begin
+    echo "deb http://shell.ninthgate.se/packages/debian squeeze main" | sudo tee -a /etc/apt/sources.list.d/plexmediaserver.list
+    sudo curl http://shell.ninthgate.se/packages/shell-ninthgate-se-keyring.key | sudo apt-key add -
+    sudo apt-get update
+  end
+  install plexmediaserver
+  original /etc/default/plexmediaserver
+    and sudo sed -i 's,^# \(PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR\).*,\1="/srv/plexmediaserver/Library/Application Support",' /etc/default/plexmediaserver
+  [ -d /srv/plexmediaserver/Library/Application\ Support ]; or sudo mkdir -pv /srv/plexmediaserver/Library/Application\ Support
+  sudo chown -R plex /srv/plexmediaserver/
+  restart plexmediaserver
+end
+
+
+#-----------------------------------------------------------------------------
+title "package management"
+#-----------------------------------------------------------------------------
+# install+ aptitude-gtk
+install+ apt-file
+install+ apt-listbugs
+install+ apt-rdepends
+install+ apt-show-versions
+install+ debfoster
+install+ deborphan
+install+ dselect
+install+ gdebi
+install synaptic
+
+install-gem bundler
+
+
+#-----------------------------------------------------------------------------
+title "smxi"
+#-----------------------------------------------------------------------------
+add-package install-smxi
+
+# finished with package installs !!
+[ $newinstall ]; or exit
+sudo rm -f $HOME/.netinstall
+
+
+#-----------------------------------------------------------------------------
+title "install exceptions"
+#-----------------------------------------------------------------------------
+annotate "logged install exceptions"
+cat $bin/netinstall-4exceptions
+attn ""
+attn "Ending netinstall-4apps ... "(date '+%Y.%m.%d %H:%S:%M')
+attn ""
+
+
+# #-----------------------------------------------------------------------------
+# title "init level services removal"
+# #-----------------------------------------------------------------------------
+# #sudo update-rc.d bluetooth remove
+# sudo update-rc.d exim4 remove
+# sudo update-rc.d gdomap remove
+# sudo update-rc.d motd remove
+# sudo update-rc.d nfs-common remove
+# #sudo update-rc.d openvpn remove
+# sudo update-rc.d saned remove
+# annotate "services can be re-enabled with sysv-rc-conf or update-rc.d"
+
+
+#-----------------------------------------------------------------------------
+title "complete installation"
+#-----------------------------------------------------------------------------
+sudo sensors-detect
+if-yes "set default applications"; and sudo update-alternatives --all
+eval $bin/netinstall-5post
+
+# vim: set ft=fish: #

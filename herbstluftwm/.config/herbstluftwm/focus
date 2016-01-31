@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+# [ $TRACE ] && CHILD="focus $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................. Focus operations
+
+# Usage: focus [msg], see functions/focus
+
+# dmenu functions
+. $HOME/bin/dmenu
+
+TAG=$(herbstclient attr monitors.focus.tag)
+
+msg=$1
+shift
+if [ -e ${0%/focus}/functions/focus/$msg ] ;then
+  touch $LOCK
+  . ${0%/focus}/functions/focus/$msg $@
+  rm -f $LOCK
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

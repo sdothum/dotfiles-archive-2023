@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# bspwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... External rules
+
+# role=$(sprop $1 WM_WINDOW_ROLE)
+# echo "$role=\$(sprop $1 WM_WINDOW_ROLE)" >> /tmp/bspwm_rules.log 2>&1
+# case "$role" in
+#   notmuch)            echo "desktop=4" ;;
+#   thedarnedestthing)  echo "desktop=5" ;;
+# esac
+
+title=$(xwinfo -n $1)
+echo "$title=\$(xwinfo -n $1)" >> /tmp/bspwm_rules.log 2>&1
+case "$title" in
+  Twitter)    echo "desktop=3" ;;
+  Mail)       echo "desktop=4" ;;
+  TODO)       echo "desktop=4" ;;
+  Usenet)     echo "desktop=4" ;;
+  Text)       echo "desktop=5" ;;
+  Mixer)      echo "desktop=6" ;;
+  Music)      echo "desktop=6" ;;
+  NZB)        echo "desktop=8" ;;
+  Radio)      echo "desktop=6" ;;
+  scratchpad) echo "sticky=true" ;;
+esac

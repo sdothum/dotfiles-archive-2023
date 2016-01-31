@@ -1,0 +1,100 @@
+{
+    "astroid": {
+        "config": {
+            "version": "0"
+        },
+        "notmuch": {
+            "db": "~\/Maildir",
+            "excluded_tags": "muted,spam,deleted"
+        },
+        "debug": {
+            "dryrun_sending": "true"
+        }
+    },
+    "thread_index": {
+        "open_default_paned": "false",
+        "page_jump_rows": "6",
+        "cell": {
+            "font_description": "PragmataPro 12",
+            "line_spacing": "2",
+            "date_length": "10",
+            "message_count_length": "4",
+            "authors_length": "20",
+            "tags_length": "80",
+            "subject_color": "#606060",
+            "subject_color_selected": "brown",
+            "tags_color": "#0070F0"
+        }
+    },
+    "general": {
+        "time": {
+            "clock_format": "local",
+            "same_year": "%b %-e",
+            "diff_year": "%x"
+        }
+    },
+    "editor": {
+        "gvim": {
+            "cmd": "gvim",
+            "args": "-f -c 'set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8'"
+        },
+        "charset": "utf-8"
+    },
+    "mail": {
+        "reply": {
+            "quote_line": "Excerpts from %1's message of %2:"
+        },
+        "forward": {
+            "quote_line": "Forwarding %1's message of %2:"
+        }
+    },
+    "poll": {
+        "interval": "60"
+    },
+    "attachment": {
+        "external_open_cmd": "xdg-open"
+    },
+    "thread_view": {
+        "open_html_part_external": "true",
+        "open_external_link": "vimb-detached",
+        "indent_messages": "true",
+        "mathjax": {
+            "enable": "true",
+            "uri_prefix": "https:\/\/cdn.mathjax.org\/mathjax\/latest\/",
+            "for_tags": ""
+        },
+        "code_prettify": {
+            "enable": "true",
+            "uri_prefix": "https:\/\/google-code-prettify.googlecode.com\/svn\/loader\/",
+            "for_tags": "",
+            "code_tag": "```",
+            "enable_for_patches": "true"
+        }
+    },
+    "contacts": {
+        "lbdb": {
+            "cmd": "lbdb",
+            "enable": "false"
+        },
+        "recent": {
+            "load": "100",
+            "query": "not tag:spam"
+        }
+    },
+    "accounts": {
+        "me": {
+            "name": "Steven Hum",
+            "email": "sdothum@gmail.com",
+            "gpgkey": "",
+            "sendmail": "msmtp -t",
+            "default": "true",
+            "save_sent": "false",
+            "save_sent_to": "\/home\/shum\/Maildir\/SENT\/cur\/"
+        }
+    },
+    "startup": {
+        "queries": {
+            "inbox": "tag:attn"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ${_colors_} defined in .zshenv
+
+# .......................................................... Install preparation
+
+# complete package configuration
+if [[ -s ~/build/archlinux/post_install/$@ ]] ;then
+  is_arch && echo "${_GREEN_}@ post_install/$@${_nocolor_}"
+  ~/build/archlinux/post_install/$@
+fi
+
+# apply user specific configuration
+if [[ -s ~/build/archlinux/user_install/$@ ]] ;then
+  is_arch && echo "${_GREEN_}@ user_install/$@${_nocolor_}"
+  ~/build/archlinux/user_install/$@
+fi
+
+# vim: set ft=zsh: #

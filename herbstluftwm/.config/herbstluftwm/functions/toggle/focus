@@ -1,0 +1,18 @@
+
+[ $TRACE ] && CHILD="toggle/focus $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Toggle dynamic focus
+
+if [ -e $DYNAMIC ] ;then
+  rm -f $DYNAMIC
+  notify 'Dynamic Focus' Off
+else
+  touch $DYNAMIC
+  notify 'Dynamic Focus' On
+  focus window
+fi
+
+# vim: set ft=sh: #

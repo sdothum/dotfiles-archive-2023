@@ -1,0 +1,85 @@
+#!/usr/bin/dash
+# post install/upgrade configuration
+
+if ! [ -d $HOME/stow ] ;then
+  echo '..stow directory not present'
+  exit
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                   title "setup"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if is_laptop ;then
+heading "/data/* directories"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  if ! [ -d /data/archive ] ;then
+    sudo mkdir -pv /data/archive
+    permissions /data/archive
+  fi
+
+  if ! [ -d /data/downloads/depot ] ;then
+    sudo mkdir -pv /data/downloads/depot
+    permissions /data/downloads
+  fi
+fi
+
+
+if sudo test ! -f /root/.forward ;then
+heading "root setup"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  # sudo ln -sfv $HOME/.config/xfce4 /root/.config/
+  sudo mkdir -v /root/tmp
+  sudo mkdir -v /root/log
+  passphrase uid/gmail | sudo tee /root/.forward
+  sudo lxappearance
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                title "hardware"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+# if is_laptop && ! [ -f /etc/modules-load.d/pciehp.conf ] ;then
+# heading "acer sdhc card reader"
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#     config_install /etc/modules-load.d/pciehp.conf
+#   fi
+# fi
+
+
+if is_server && ! grep -q '/data' /etc/fstab ;then
+heading "/data raid"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /etc/fstab
+  cat /etc/fstab.original $HOME/build/root/etc/fstab.$(hostname).raid >$HOME/build/root/etc/fstab.$(hostname)
+  config_install /etc/fstab $(hostname)
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                    title "boot"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if ! grep -q 'backgrounds/clock' /etc/default/grub ;then
+heading "grub splash"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /etc/default/grub
+  sudo sed -i -e '/^GRUB_TIMEOUT/s/[0-9]/3/' \
+              -e 's,#*GRUB_BACKGROUND=.*,GRUB_BACKGROUND='$HOME'/images/backgrounds/clock.png,' \
+           /etc/default/grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+#                                                                 title "finish"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+$HOME/build/archlinux/archlinux-update
+
+# vim: set ft=sh: #

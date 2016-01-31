@@ -1,0 +1,33 @@
+#!/usr/bin/env fish
+# install x11 infinality fonts
+
+headline+ "building infinality"
+
+[ -d /data/depot/fonts/infinality ]; or mkdir -pv /data/depot/fonts/infinality
+cd /data/depot/fonts/infinality
+[ -d Debian-Packages ]; and sudo rm -rf Debian-Packages
+git clone https://github.com/chenxiaolong/Debian-Packages.git
+install+ libx11-dev
+install+ libz-dev
+install x11proto-core-dev
+
+cd Debian-Packages
+cd freetype-infinality
+dpkg-checkbuilddeps
+
+cd ../fontconfig-infinality
+dpkg-checkbuilddeps
+
+cd ../freetype-infinality
+./build.sh
+cd ../fontconfig-infinality
+./build.sh
+
+cd ..
+[ -f /var/lib/dpkg/statoverride ]; and sudo rm -v /var/lib/dpkg/statoverride
+sudo dpkg -i freetype-infinality/*.deb fontconfig-infinality/*.deb
+
+original /etc/profile.d/infinality-settings.sh
+sudo sed -i 's/^\(USE_STYLE\)=".*"/\1="LINUX"/' /etc/profile.d/infinality-settings.sh
+
+# vim: set ft=fish: #

@@ -1,0 +1,26 @@
+# emulation packages
+# see bundle_install
+
+= virtual machines
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# dkms                    [is_server && is_icore]
+# virtualbox              [is_server && is_icore]
+# virtualbox-ext-oracle   [is_server && is_icore]
+# virtualbox-guest-iso    [is_server && is_icore]
+# virtualbox-guest-utils  [is_server && is_icore]
+# virtualbox-host-modules [is_server && is_icore]
+# genymotion              [is_server && is_icore]
+
+
+= wine for topaz
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# lib32-ncurses [is_server && is_icore]
+# lib32-mpg123  [is_server && is_icore]
+# winetricks    [is_server && is_icore]
+# playonlinux   [is_server && is_icore]
+# wine          [is_server && is_icore]
+# xdg-user-dirs [is_server && is_icore]
+# wine_gecko    [is_server && is_icore]
+# wine-mono     [is_server && is_icore]
+
+# vim: set ft=conf: #

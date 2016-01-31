@@ -1,0 +1,30 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# history
+filter='ERROR:|localhost|luakit:|Page not found|[Ss]earch'
+
+case $BROWSER in
+  luakit) sqldb=$HOME/.local/share/luakit/history.db
+          query="select datetime(last_visit,'unixepoch'), title, uri from history order by last_visit DESC;"
+          uri=$(echo "$query" | sqlite3 $sqldb \
+              | egrep -v "$filter" | sed 's/[|]/  ::  /g' \
+              | sed '1i[ bookmarks ]' \
+              | dmenu 'Browser History' -no-custom \
+              | sed -r 's/.*(http.*)/\1/') ;;
+
+  vimb | *) histfile=$HOME/.config/vimb/history
+            uri=$(tac $histfile $histfile.vimb \
+                | egrep -v "$filter" | sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" \
+                | sed '1i[ bookmarks ]' \
+                | dmenu 'Browser History' -no-custom \
+                | sed -r 's/.*(http.*)/\1/') ;;
+esac
+
+[ "$uri" = '[ bookmarks ]' ] && exec dmenu bookmarks
+[ "$uri" ] && exec dmenu browser "$uri"
+
+# vim: set ft=sh: #

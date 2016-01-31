@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Package management
+
+# Usage: pi [core|extra|..]
+
+# packages installed
+[ "$*" ] && repo="$@" || repo=core
+for i in $(expac -S '%r/%n' | grep "^$repo")
+do
+  # installed if description listed
+  echo "$i^$(expac '%d' ${i#*/})"
+done | column -s^ -t
+
+# vim: set ft=sh: #

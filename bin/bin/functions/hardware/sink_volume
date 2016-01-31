@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Hardware
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Audio
+
+# audio sink (destination) volume, see .conkyrc (lua rings)
+pactl list \
+| sed -n "/^Sink #$(sink)/,\$p" \
+| sed '/^$/,$d' \
+| grep -P '^\t*Volume:' \
+| sed -r 's/.* ([0-9]*)% .*/\1/'
+
+
+# vim: set ft=sh: #

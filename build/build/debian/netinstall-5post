@@ -1,0 +1,35 @@
+#!/usr/bin/env fish
+# post-install update checks
+
+# correct permissions
+sudo chmod o+x /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+# allow user to mount removable devices
+original /usr/share/polkit-1/actions/org.freedesktop.udisks2.policy
+sudo sed -i -e '1,/<allow_active>auth_admin_keep<\/allow_active>/s/>auth_admin</>yes</' \
+            -e '1,/<allow_active>auth_admin_keep<\/allow_active>/s/>auth_admin_keep</>yes</' /usr/share/polkit-1/actions/org.freedesktop.udisks2.policy
+
+# udev alsa boot up fix
+grep -q '/usr/sbin' /lib/udev/rules.d/90-alsa-restore.rules; and begin
+  sudo cp -v /usr/sbin/alsactl /lib/udev/
+  original /lib/udev/rules.d/90-alsa-restore.rules
+  sudo sed -i 's,/usr/sbin,/lib/udev,g' /lib/udev/rules.d/90-alsa-restore.rules
+end
+
+# restore trackball button configuration
+cmp -s $HOME/sync/dist/usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/10-evdev.conf
+  or dist-config /usr/share/X11/xorg.conf.d/10-evdev.conf
+
+# disable mpd update attempts to run as root
+[ -f /etc/init.d/mpd ]; and sudo systemctl disable mpd.service
+
+# complete wireless configuration
+[ -f /etc/NetworkManager/system-connections/Ravens ]; or begin;
+  [ (hostname) = monad ]; and sudo sed -i '/^auto wlan0/,$d' /etc/network/interfaces
+  annotate "setup local wifi connection"
+  sudo nm-connection-editor
+end
+
+# reset apt-file database update flag
+touch $HOME/.apt-file.update
+
+# vim: set ft=fish: #

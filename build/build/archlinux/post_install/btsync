@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... btsync
+
+annotate "rmdir .sync and reinitialize (emptied) sync directories"
+systemd enable btsync@$USER
+
+# vim: set ft=sh: #

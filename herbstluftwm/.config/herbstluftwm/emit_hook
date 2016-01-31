@@ -1,0 +1,40 @@
+#!/usr/bin/dash
+[ $TRACE ] && CHILD="emit_hook $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Emit hook trap
+
+[ $(pgrep -cx emit_hook) -gt 1 ] && exit
+touch $DYNAMIC
+
+herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
+do
+  [ -e $LOCK ] && continue
+  [ $TRACE ] && echo "> emit_hook $hook $rule $winid" >>$TRACE
+  case $hook in
+    focus_changed) ( restore view && draw root ) & ;;
+    focus_window) [ -e $DYNAMIC ] && focus window & ;;
+    focus_frame) [ -e $DYNAMIC ] && focus frame & ;;
+    focus_monitor) restore panel & ;;
+
+    rule) case $rule in
+            max) herbstclient set_layout max & ;;
+
+            fullscreen) if query primary ;then
+                          ( [ -e $CONKY ] && draw monitor conky fullscreen || draw monitor fullscreen ) &
+                        else
+                          draw monitor secondary fullscreen &
+                        fi ;;
+
+            # experimental only.. 
+            # focus_frame) [ -e $DYNAMIC ] && ( focus frame && bring $winid ) & ;;
+            *) [ $TRACE ] && echo "> undefined rule: $hook [$rule] $winid" >>$TRACE ;;
+          esac ;;
+
+    *) [ $TRACE ] && echo "> undefined hook: [$hook] $rule $winid" >>$TRACE ;;
+  esac
+done &
+
+# vim: set ft=sh: #

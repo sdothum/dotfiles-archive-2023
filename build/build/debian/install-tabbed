@@ -1,0 +1,14 @@
+#!/usr/bin/env fish
+# add tabbing to surf
+
+headline+ "building surf tabbed"
+
+install surf
+
+cd /data/depot/www/surf
+[ -d tabbed-0.5 ]; or tar xvzf tabbed-0.5.tar.gz
+
+cd tabbed-0.5
+sudo make clean install
+
+# vim: set ft=fish: #

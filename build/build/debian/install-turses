@@ -1,0 +1,14 @@
+#!/usr/bin/env fish
+# install cli twitter client
+
+headline+ "building turses"
+
+cd /data/depot/twitter/turses
+[ -d turses ]; and sudo rm -rf turses
+git clone https://github.com/alejandrogomez/turses.git
+sudo chown -R shum:users turses
+
+cd turses
+sudo python setup.py install
+
+# vim: set ft=fish: #

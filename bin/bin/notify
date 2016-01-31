@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+
+# X11 Desktop
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Notifier
+
+usage() {
+  echo "usage: $(basename $0) [ time=seconds ] notify \"summary\" [ \"body\" ]"
+  exit 1
+}
+
+echo "$(timestamp) $USER: \"$1\" \"$2\"" >>/tmp/notify.log
+
+if [ -z $DISPLAY ] && tty | grep -q '/dev/tty[1-9]' ;then
+  [ $2 ] && echo "\n${_YELLOW_}=> $1\n${_GREEN_} -> $2${_nocolor_}\n" \
+         || echo "\n${_YELLOW_}=> $1${_nocolor_}\n"
+else
+  [ $time ] && expire="--expire-time=$(( $time * 1000 ))"
+  case $# in
+    0) echo '.. notify  "heading"  ["line1\nline2.."]' ;;
+    1) sudo -u $USER DISPLAY=:0 notify-send $expire --icon=help-info "$1" & ;;
+    2) sudo -u $USER DISPLAY=:0 notify-send $expire --icon=help-info "$1" "$2" & ;;
+    h | *) usage ;;
+  esac
+fi
+
+# vim: set ft=sh: #

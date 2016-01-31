@@ -1,0 +1,30 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Screensaver
+
+# Usage: dmenu screensaver [on | off | 0 | 1]
+#        dmenu screensaver, interactive mode
+#        dmenu Screensaver [on | 1], turn screensaver on
+#        dmenu Screensaver [off | 0], turn screensaver off
+
+# toggle monitor display settings
+if [ "$*" ] ;then
+  toggle="$1"
+else
+  xset q | grep -q 'DPMS is Enabled' && toggle='off' || toggle='on'
+  toggle=$(echo "$toggle" | dmenu 'Toggle Screensaver' -no-custom) || exit
+fi
+
+case $toggle in
+  off | 0) pidof xscreensaver >/dev/null && killall xscreensaver
+           xset s off -dpms
+           notify 'Screensaver' Off ;;
+
+  on | 1) xset s on +dpms
+          pidof xscreensaver >/dev/null || ( xscreensaver -no-splash & )
+          notify 'Screensaver' On ;;
+esac
+
+# vim: set ft=sh: #

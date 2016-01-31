@@ -1,0 +1,25 @@
+
+[ $TRACE ] && CHILD="toggle/conky $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................. Toggle conky desktop padding
+
+[ -e $CONKY ] && rm -f $CONKY || touch $CONKY
+
+# must be fg process to regulate panel fifo names
+restore conky
+
+# panel persistence, enabled if multihead
+if query multihead ;then
+  [ -e $PANEL ] && restore panel || toggle panel
+elif [ -e $CONKY ] ;then
+  # disable panel on conky
+  [ -e $PANEL ] && toggle panel || restore panel
+else
+  # show panel otherwise
+  [ -e $PANEL ] && restore panel || toggle panel
+fi
+
+# vim: set ft=sh: #

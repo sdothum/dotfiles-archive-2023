@@ -1,0 +1,23 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# view log files
+[ "$*" ] && mode='Watch' || mode='View'
+
+cd /tmp
+ln_logs
+file=$(ls *.log \
+     | sort | sed 's/.log//' \
+     | sed '1i[ journals ]' \
+     | dmenu "$mode Log" -no-custom) || exit
+
+[ "$service" = '[ journals ]' ] && exec dmenu journals
+case $mode in
+  View) [ $file ] && term "$file" MAX less $file.log ;;
+  Watch) [ $file ] && term "$file" tail -f $file.log ;;
+esac
+
+# vim: set ft=sh: #

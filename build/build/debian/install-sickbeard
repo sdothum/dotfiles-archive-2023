@@ -1,0 +1,19 @@
+#!/usr/bin/env fish
+# install sickbeard
+
+headline+ "building sickbeard"
+
+install python-cheetah
+
+[ -d /opt/sickbeard ]; or begin
+  cd /data/depot/nzb/sickbeard
+  git clone git://github.com/midgetspy/Sick-Beard.git my-sickbeard-install
+  [ -d /opt/sickbeard ]; and sudo rm -rf /opt/sickbeard
+  sudo mv -v my-sickbeard-install /opt/sickbeard
+  # original /opt/sickbeard/lib/tvdb_api/tvdb_api.py
+  # sed -i 's,\(self.config\[\'base_url\'\]\) = .*,\1 = "http://thexem.de/proxy/tvdb/scene",' /opt/sickbeard/lib/tvdb_api/tvdb_api.py
+end
+
+annotate "configure sickbeard http://localhost:8081/"
+
+# vim: set ft=fish: #

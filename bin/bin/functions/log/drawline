@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+
+# Log
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ${_colors_} defined in .zshenv
+
+# .................................................................... Highlight
+
+# line break
+[ "$*" ] && linechar=$1 || linechar='─'
+[ $2 ] && color=$2 || color=${_red_}
+line=$(head -c $(tput cols) </dev/zero | tr '\0' 'X')
+line=$(echo $line | sed "s/X/$linechar/g")
+
+echo "$color$line${_nocolor_}"
+
+# vim: set ft=sh: #

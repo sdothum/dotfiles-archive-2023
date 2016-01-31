@@ -1,0 +1,21 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Shell
+
+# vacuum multiline functions from zsh history
+egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
+mv -f $HOME/.zhistory.vacuum $HOME/.zhistory
+
+cmd=$(h \
+    | sed -re "s/^([^ ]*)  */\1 $SEP $INVISIBLE/" \
+    | column -s$INVISIBLE -t \
+    | dmenu 'Zsh History' -no-custom) || exit
+
+cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
+notify 'Ctrl-Alt-V' "$(echo $cmd | sed -e 's/[&][&]/and/g' -e 's/[&]/ampersand/')"
+echo "$cmd" | xsel -i
+xdotool type "$cmd"
+
+# vim: set ft=sh: #

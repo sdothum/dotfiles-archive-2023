@@ -1,0 +1,46 @@
+#!/usr/bin/dash
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Xdotool
+
+# Usage: demo [msg], see functions/demo
+#        msg scripts set PLAYBACK
+
+TRACE=true
+DELAY=1
+
+# Playback format:
+#   # comment
+#   ! command (some xdotool key triplets are problematic)
+#   xdotool key command (everything else)
+
+demo() {
+  echo "$PLAYBACK" | while read line
+  do
+    [ $TRACE ] && echo $line
+    set -- $(echo $line)
+    case "$1" in
+      '#') continue ;;
+
+      '!') shift
+           eval $@
+           sleep $DELAY ;;
+
+      *) [ "$line" ] && eval xdotool key --delay 5 $line
+         sleep $DELAY ;;
+    esac
+  done
+}
+
+msg=$1
+shift
+if [ -e ${0%/demo}/functions/demo/$msg ] ;then
+  . ${0%/demo}/functions/demo/$msg $@
+  demo
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

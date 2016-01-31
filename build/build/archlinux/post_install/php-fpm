@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... php-fpm
+
+original /etc/php/php-fpm.conf
+sudo sed -i -e '/request_terminate_timeout/s/=.*/= 300/' \
+            -e '/request_terminate_timeout/s/;//' \
+         /etc/php/php-fpm.conf
+
+systemd enable php-fpm
+sudo systemctl restart nginx
+
+# vim: set ft=sh: #

@@ -1,0 +1,11 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Networking
+
+# monitor network traffic
+echo "tcptrack -i $@ \ (eth0, wlan0, ..)"
+command sudo tcptrack -i $@
+
+# vim: set ft=zsh: #

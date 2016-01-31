@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... privoxy
+
+original /etc/privoxy/config
+if ! grep -q '^enable-edit-actions.*1' /etc/privoxy/config ;then
+  sudo sed -i '/^enable-edit-actions/s/0/1/' /etc/privoxy/config
+fi
+if [ -f /usr/bin/polipo ] ;then
+  if ! grep 'forward / localhost:8123' /etc/privoxy/config ;then
+    sudo sed -i '$a\
+forward / localhost:8123\
+' /etc/privoxy/config
+  fi
+fi
+
+systemd enable privoxy
+# annotate "configure browser proxies to localhost:8118"
+
+# vim: set ft=sh: #

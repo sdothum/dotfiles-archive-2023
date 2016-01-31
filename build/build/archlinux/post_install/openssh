@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... openssh
+
+original /etc/ssh/sshd_config
+sudo sed -i 's/^#X11Forwarding no/X11Forwarding yes/' /etc/ssh/sshd_config
+systemd enable sshd
+
+# vim: set ft=sh: #

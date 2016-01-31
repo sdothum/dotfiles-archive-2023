@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Fortunes
+
+# preselect default fortune database
+# /usr/bin/fortune chucknorris
+/usr/bin/fortune all
+
+# vim: set ft=sh: #

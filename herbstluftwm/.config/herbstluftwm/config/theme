@@ -1,0 +1,55 @@
+
+[ $TRACE ] && CHILD="config/theme $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Theme
+
+hc set tree_style                    '╾│ ├└╼─┐'
+hc attr theme.tiling.reset           1
+hc attr theme.floating.reset         1
+
+# set for compton transparency rules, see .compton.conf
+# see draw for monitor margins
+hc set always_show_frame             0
+hc set frame_bg_active_color         red
+hc set frame_bg_normal_color         red
+hc set frame_bg_transparent          1
+hc set frame_border_active_color     white
+hc set frame_border_normal_color     black
+hc set frame_border_width            0
+hc set frame_gap                     55
+hc set frame_padding                 0
+hc set frame_transparent_width       0
+hc set gapless_grid                  0
+hc set mouse_recenter_gap            0
+hc set smart_frame_surroundings      0
+hc set smart_window_surroundings     0
+hc set window_gap                    5
+
+hc attr theme.active.color           red
+hc attr theme.active.inner_color     red
+hc attr theme.active.outer_color     white
+hc attr theme.background_color       red
+hc attr theme.border_width           5
+hc attr theme.floating.border_width  5
+hc attr theme.floating.outer_color   '#707070'
+hc attr theme.floating.outer_width   1
+hc attr theme.inner_color            black
+hc attr theme.inner_width            0
+hc attr theme.normal.color           '#808080'
+hc attr theme.outer_color            '#707070'
+hc attr theme.outer_width            1
+hc attr theme.urgent.color           orange
+
+if query rez -1440 ;then
+  hc set frame_gap                   0
+  hc set window_gap                  0
+  hc attr theme.border_width         3
+elif query rez -2560 ;then
+  hc set frame_gap                   0
+  hc set window_gap                  0
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. plexmediaserver
+
+if ! grep -q '/opt/plexmediaserver/Library/Application Support/Plex Media Server' /etc/conf.d/plexmediaserver ;then
+  original /etc/conf.d/plexmediaserver
+  sudo sed -i '/PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/s|=.*|=/opt/plexmediaserver/Library/Application\\ Support/Plex\\ Media\\ Server|' \
+           /etc/conf.d/plexmediaserver
+fi
+
+systemd enable plexmediaserver
+
+# vim: set ft=sh: #

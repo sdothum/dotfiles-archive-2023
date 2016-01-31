@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Distribution install
+
+# be careful of partial gem list regex matches!
+if gem list $1 | grep -q "^$1 " ;then
+  heading : "$1   [ INSTALLED ]"
+else
+  heading : $1
+  gem install --no-rdoc --no-ri $1
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,88 @@
+#!/usr/bin/dash
+[ $TRACE ] && CHILD="autostart $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# chain herbstclient commands (note: keybind chains use ".")
+hc() {
+  cmds="$cmds , $@"
+}
+
+dohc() {
+  herbstclient chain $cmds &
+  unset cmds
+}
+
+# ................................................................... Initialize
+
+# re-entrant (startx) cleanup
+pkill -TERM -f 'panel' &
+pkill -TERM -f 'pulsar' &
+
+# unlock, just to be sure
+hc emit_hook reload
+hc unlock
+
+# remove all existing keybindings and rules
+hc keyunbind --all
+hc unrule -F
+# split/remove frame created by herbstluftwm on startup to allow custom default_frame_layout
+hc split vertical 0.5 && hc remove
+dohc
+
+# ...................................................... Configuration framework
+
+for i in $HOME/.config/herbstluftwm/config/*
+do
+  echo ".. loading herbstluftwm config ${i##*/}"
+  . $i
+  # add dummy hc cmd for any sources that don't e.g. ENV
+  hc echo done ${i##*/}
+  dohc
+done 
+# monitor dependent env must be set after detect monitors
+. ${0%/autostart}/config/ENV
+
+# .............................................................. Desktop layouts
+
+# load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
+if query rez +1440 ;then
+  herbstclient load '1' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
+  herbstclient load '2' '(clients max:0)' &
+  herbstclient load '3' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
+  herbstclient load '4' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
+  herbstclient load '5' '(clients horizontal:0)' &
+  herbstclient load '6' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
+fi
+
+# ................................................................ Startup suite
+
+# session startup stuff, see .xinitrc
+query multihead && draw monitor secondary
+[ -e $ROOT/herbstluftwm:autostart ] || $HOME/bin/autostart
+touch $ROOT/herbstluftwm:autostart
+
+# wait for slowest emit_hook process
+sleep 1
+if [ $(herbstclient list_monitors | wc -l) -gt 1 ] ;then
+  herbstclient chain . focus_monitor 1 . use 2
+  # xdotool search --sync --onlyvisible --limit 1 --classname IRC >/dev/null
+  herbstclient chain . focus_monitor 0 . use 1
+  # xdotool search --sync --onlyvisible --limit 1 --classname $BROWSER >/dev/null
+else
+  herbstclient use 1
+fi
+
+# .................................................................... Emit hook
+
+# add window management extensions
+emit_hook &
+
+# ................................................................ Final touches
+
+# initialize desktop blur and panel / conky rules
+draw root
+[ $PANEL_MARGIN ] && toggle panel || toggle conky
+
+# vim: set ft=sh: #

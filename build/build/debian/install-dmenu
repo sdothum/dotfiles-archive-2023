@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+# install dmenu with xft support
+
+headline+ "building xft dmenu"
+
+cd /data/depot/desktop/dmenu
+[ -d dmenu-4.5 ]; or begin; tar xvzf dmenu-4.5.tar.gz
+  cd dmenu-4.5
+  patch -p1 < ../dmenu-xft-height/dmenu-4.5-xft.diff
+  patch -p1 < ../dmenu-xft-height/dmenu-4.5-xft-height.diff
+  sed -i 's,^PREFIX = .*,PREFIX = /usr,' config.mk
+  cd ..
+end
+
+cd dmenu-4.5
+sudo make clean install
+
+# vim: set ft=fish: #

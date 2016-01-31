@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... dash
+
+sudo ln -sfv $HOME/.dash /root/
+sudo ln -sfv $HOME/.dashenv /root/
+sudo ln -sfv $HOME/.dashrc /root/
+
+sudo chsh -s /usr/bin/dash root
+
+# vim: set ft=sh: #

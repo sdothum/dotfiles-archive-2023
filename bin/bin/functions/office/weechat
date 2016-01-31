@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... IRC chat
+
+timeout=180
+log=/tmp/weechat.log
+
+# wait for znc to establish connections
+# connections = irc servers X (times) 2, e.g. freenode + rizon = 4
+if pgrep 'znc' >/dev/null ;then
+  echo '.. launching weechat' >>$log
+  echo '.. waiting on znc connections' >>$log
+
+  count=0
+  while :
+  do
+    [ $(sudo ss -apt | grep 'znc' | grep 'ESTAB' | wc -l) -ge 4 ] && break
+    sleep 1
+    count=$(( $count + 1 ))
+    if [ $count -ge $timeout ] ;then
+      echo ".. $timeout second connection timeout exception" >>$log
+      exit
+    fi
+  done
+
+  echo ".. $count seconds to connect" >>$log
+  /usr/bin/weechat
+else
+  echo '.. znc server not running' >>$log
+fi
+
+# vim: set ft=sh: #

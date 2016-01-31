@@ -1,0 +1,16 @@
+
+[ $TRACE ] && CHILD="restore/frames $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Split frame
+
+# restore layout if in fullscreen, as split is just one keystroke away
+if query fullscreen ;then
+  toggle fullscreen
+else
+  herbstclient split explode
+fi
+
+# vim: set ft=sh: #

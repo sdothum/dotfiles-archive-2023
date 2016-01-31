@@ -1,0 +1,12 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# suckless browser
+unset HTTP_PROXY
+[[ $* ]] && ( command surf $@ & ) \
+         || ( command surf http://thedarnedestthing/ & )
+
+# vim: set ft=zsh: #

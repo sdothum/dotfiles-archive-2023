@@ -1,0 +1,40 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... Editor
+
+# va va voom
+SHELL=/usr/bin/dash
+( [ -z $DISPLAY ] && tty | grep '/dev/tty* [0-9]' ) || gui='-f -g'
+
+pgrep herbstluftwm >/dev/null && focus frame
+
+edit() {
+  if [ -z "$*" ] ;then
+    vim $gui /tmp/scratch
+  else
+    # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
+    file=$(echo $@)
+    if ! [ -e $1 ] ;then
+      eval vim $gui $file
+    elif is_owned $1 ;then
+      eval vim $gui $file
+    else
+      eval sudo -s vim $gui $file
+      # chown root history to prevent syncing errors
+      # find $HOME/.vim/backups -user root -exec sudo chown -v $USER\:users {} \;
+    fi
+  fi
+
+  # syncthing housekeeping
+  find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
+  find $HOME/.vim/backups -user root -exec sudo chown $USER:users {} \;
+  # avoid nfs mounts
+  find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -fv {} \;
+}
+
+edit $@ &
+
+# # vim: set ft=sh: #

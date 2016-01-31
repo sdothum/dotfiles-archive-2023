@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+
+# File
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. File manager
+
+# wrapper to default opening to /data/downloads if no location given
+if [ "$*" ] ;then
+  start=$1
+elif [ $(ls -1 /data/downloads/nzbs/completed | wc -l) -gt 0 ] ;then
+  start=/data/downloads/nzbs/completed
+else
+  start=/data/downloads/http
+fi
+# rox is too fast for emit_hook so.. see toggle
+# pgrep herbstluftwm >/dev/null && focus frame
+/usr/bin/rox $start 2>>/tmp/rox.log
+
+# vim: set ft=sh: #

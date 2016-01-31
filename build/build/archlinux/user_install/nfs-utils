@@ -1,0 +1,37 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... nfs
+
+# network share email database
+if is_server ;then
+  sudo mkdir -pv /srv/nfs4/Maildir
+  sudo mkdir -pv /srv/nfs4/data
+  if ! grep -q 'Maildir.*bind' /etc/fstab ;then
+    sudo sed -i '$a\
+/home/$uid/Maildir    /srv/nfs4/Maildir   none    bind    0 0\
+/data                 /srv/nfs4/data      none    bind    0 0\
+' /etc/fstab
+
+    sudo sed -i '$a\
+/srv/nfs4/Maildir *(rw,sync,no_subtree_check,nohide)\
+/srv/nfs4/data    *(rw,sync,no_subtree_check,nohide)\
+' /etc/exports
+    sudo exportfs -rav
+  fi
+else
+  if ! grep -q 'Maildir.*nfs4' /etc/fstab ;then
+    sudo sed -i -e '/^LABEL=.*\/data.*btrfs/s/^/# /' \
+                -e '$a\
+luna:/Maildir   /home/$uid/Maildir    nfs4    rw,noatime,_netdev    0 0\
+luna:/data      /data                 nfs4    rw,noatime,_netdev    0 0\
+' /etc/fstab
+  fi
+fi
+
+sudo sed -i "s/\$uid/$USER/" /etc/fstab
+
+
+# vim: set ft=sh: #

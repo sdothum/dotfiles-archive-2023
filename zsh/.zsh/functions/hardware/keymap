@@ -1,0 +1,16 @@
+
+# Hardware
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Keyboard
+
+[[ -e /etc/vconsole.conf ]] || echo qwerty | sudo tee /etc/vconsole.conf
+
+# toggle qwerty and colemak variants
+case $@ in
+  colemak)  colemak ;;
+  querty)   qwerty ;;
+  toggle)   grep -q 'qwerty' /etc/vconsole.conf && colemak || qwerty ;;
+esac
+
+# vim: set ft=zsh: #

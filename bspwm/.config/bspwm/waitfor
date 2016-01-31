@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# bspwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Wait for application
+
+# wait for application to start up
+# usage: waitfor application [seconds]
+start=$SECONDS
+[[ $2 ]] && cutoff=$2 || cutoff=10
+while ! bspc query -T | grep $1; do
+  sleep 0.1s
+  [[ $(( $SECONDS - $start )) -gt $cutoff ]] && exit 1
+done
+exit 0

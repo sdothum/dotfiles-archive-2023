@@ -1,0 +1,77 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................ Random word generator
+
+# Usage: wordgen ( sentence word lengths ), default
+#        wordgen 8 11 14 17
+#        filter='<regex>' wordgen [ ... ]
+
+[[ $corpus ]] || corpus=30000
+sentences=( 8 11 14 17 )
+
+typedir=~/.config/Amphetype
+rm -f $typedir/[0-9]*-word-corpus.txt
+# rebuild corpus if corpus source updated
+# natural language corpus data by Peter Norvig at http://norvig.com/ngrams/
+wordfile=$typedir/count_1w100k.txt
+paragraphs=$(mktemp)
+
+[[ $* ]] && sentences=( $@ )
+[[ $filter ]] || filter='*'
+
+# rebuild corpus from new wordfile
+if [[ -e $wordfile.words ]] ;then
+  if-no "rebuild corpus" || rm -f $wordfile.*
+fi
+# build common word dictionary (ignore majority of 1-2 character word acronyms)
+if [[ ! -e $wordfile.words ]] ;then
+  notify "Building $wordfile.words" "Please be patient.."
+  sort -nr --key=2 $wordfile \
+  | sed -e 's/\t.*//' -e 's/\(.*\)/\L\1/' \
+  | egrep -v '^(.|..)$' \
+  | egrep "$filter" \
+  > $wordfile.words
+  # arbitrarily remove all questionable spellings
+  cat $wordfile.words \
+  | aspell --ignore-case -a \
+  | grep -v '^\*$' \
+  | grep -v '^$' \
+  | awk '{ print $2; }' \
+  > $wordfile.trim
+fi
+diff $wordfile.words $wordfile.trim \
+| grep '^-[a-z]' \
+| sed 's/^-//' \
+| head -$corpus \
+> $wordfile.corpus
+typefile=$typedir/$(cat $wordfile.corpus | wc -l)-word-corpus.txt
+
+# build sentences
+__wordgen() {
+  shuf $wordfile.corpus \
+  | tr '\n' ' ' \
+  | fold -s --width=$(( $@ * 5 )) \
+  | sed -e 's/^\(.\)/\U\1/' -e 's/ $/./' \
+  >> $paragraphs
+  echo >> $paragraphs
+}
+
+for i in $sentences
+do
+  echo ".. sentence length $i words"
+  __wordgen $i
+done
+# add paragraph markers (reduced by subsequent shuf)
+sed -i 's/\(.*\)/\1\n/' $paragraphs
+
+shuf $paragraphs > $typefile
+rm -f $paragraphs
+
+head $typefile
+echo -n "$typefile" | xsel -i
+time=10000 notify "Amphetype import" "$typefile"
+unset filter
+
+# vim: set ft=zsh: #

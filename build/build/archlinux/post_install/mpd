@@ -1,0 +1,39 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... mpd
+
+[ -d $HOME/.mpd ] || mkdir -v $HOME/.mpd
+[ -e $HOME/.mpd/playlists ] || mkdir -v $HOME/.mpd/playlists
+touch $HOME/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
+
+# annotate "configure $HOME/.mpdconf for non-root access to local mpd files"
+sed -e '/^#music_directory/s|".*"|"/data/media/music"|' \
+    -e '/^#music_directory/s/^#//' \
+    -e '/^#db_file/s|".*"|"'$HOME'/.mpd/mpd.db"|' \
+    -e '/^#db_file/s/^#//' \
+    -e '/^#log_file/s|".*"|"/tmp/mpd.log"|' \
+    -e '/^#log_file/s/^#//' \
+    -e '/^#follow_outside_symlinks/s/#//' \
+    -e '/^#follow_inside_symlinks/s/#//' \
+    -e '/^#metadata_to_use/s/#//' \
+    -e '$a\
+audio_output {\
+        type            "pulse"\
+        name            "My MPD PulseAudio Output"\
+}\
+' \
+    -e '$a\
+audio_output {\
+        type                    "fifo"\
+        name                    "my_fifo"\
+        path                    "/tmp/mpd.fifo"\
+        format                  "44100:16:2"\
+}\
+' /usr/share/doc/mpd/mpdconf.example >$HOME/.mpdconf
+
+sudo gpasswd -a $USER mpd
+
+# vim: set ft=sh: #

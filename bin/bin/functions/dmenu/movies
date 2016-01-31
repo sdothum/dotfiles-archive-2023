@@ -1,0 +1,82 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... Movies
+
+# Library structure:
+# ../videos
+#        ../movies
+#               ../title.YEAR.*  (movie)
+
+library=${LIBRARY:-/data/media/videos/${1:-movies}}
+
+# list latest movie additions first
+T=t
+movies=/tmp/dmenu:movies
+pgrep herbstluftwm >/dev/null && monitor=$(query monitor)
+
+# clean up titles
+mytitles $library >>/tmp/mytitles:movies
+playlist=$library/.playlist
+[ -e "$playlist" ] || echo >"$playlist"
+
+shows() {
+  ls -1$T $library | sed -re 's/\./ /g' -e 's/ ([12][0-9][0-9][0-9])( .*)*/  (\1)/' >"$movies"
+  playlist "$movies" "$playlist"
+}
+
+library() {
+  [ "$1" ] && echo '[ theatrical   ]' || echo '[ animation    ]'
+}
+
+options() {
+  grep -q '[^ ]' "$playlist" && echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" \
+                             || echo "[ $(sortlist $T) ]"
+}
+
+while :
+do
+  # focus monitor menu originally presented on
+  [ $monitor ] && herbstclient focus_monitor $monitor
+  movie=$(shows \
+        | sed "1i$(library $1)" \
+        | sed "1i$(options)" \
+        | dmenu 'Movie' "$movie" -no-custom) || exit
+
+  [ "$movie" = '[ last viewed  ]' ] && movie=$(grep '[^ ]' "$playlist" | head -1)
+
+  case "$movie" in
+    '[ sort by name ]') unset T
+                        continue ;;
+
+    '[ sort by date ]') T=t
+                        continue ;;
+
+    '[ animation    ]') exec dmenu movies animation ;;
+    '[ theatrical   ]') exec dmenu movies ;;
+
+    *) movie=$(echo "$movie" | sed "s/ $SEP$//")
+       while :
+       do
+         action=$(echo 'play\nreviews\nmark\nedit' | dmenu "$movie" -no-custom) || break
+         video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed -e 's/  (\([12][0-9][0-9][0-9]\))$/ \1/' -e 's/ /./g').*")
+         case $action in
+           play) inject "$movie" "$playlist"
+                 play "$video"
+                 break ;;
+
+           reviews) vimb-detached "mr $movie" ;;
+
+           mark) inject "$movie" "$playlist"
+                 break ;;
+
+           edit) term 'movies' ranger "$video"
+                 pwait "ranger $video"
+                 break ;;
+         esac
+       done ;;
+  esac
+done
+
+# vim: set ft=sh: #

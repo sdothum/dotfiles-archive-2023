@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+#
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Distribution install
+
+# my package installer
+heading : $1
+pre_install $1
+cd $HOME/build/archlinux/makepkg/$1
+sudo makepkg -f --asroot
+cd -
+
+# do post install for previously installed package dependencies
+post_install $1
+
+# cleanup package directory for subsequent arch rebuilds
+sudo find $HOME/build/archlinux/makepkg -user root -exec sudo chown -v $USER:users {} \;
+sudo rm -rv $HOME/build/archlinux/makepkg/$1/pkg 2>/dev/null
+sudo rm -rv $HOME/build/archlinux/makepkg/$1/src 2>/dev/null
+
+# vim: set ft=sh: #

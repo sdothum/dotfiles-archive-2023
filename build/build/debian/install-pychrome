@@ -1,0 +1,12 @@
+#!/usr/bin/env fish
+# convert google chrome bookmarks and history to html
+
+headline+ "install py-chrome-bookmarks"
+
+cd /data/depot/www
+unzip py-chrome-bookmarks-master.zip
+chmod 755 py-chrome-bookmarks-master/*.py
+sudo mv -fv py-chrome-bookmarks-master/*.py /usr/local/bin/
+sudo rm -rf py-chrome-bookmarks-master
+
+# vim: set ft=fish: #

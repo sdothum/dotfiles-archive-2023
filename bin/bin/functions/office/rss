@@ -1,0 +1,43 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Syndication
+
+usage() {
+  echo "usage: $(basename $0)  'start | I'nitialize | i'mport <opml>"
+  exit 1
+}
+
+# reader
+BROWSER=vimb-detached
+
+__rss() {
+  if ping -c 1 -W 1 luna >/dev/null 2>&1 ;then
+    sed -i 's,http://localhost/tt-rss,http://luna/tt-rss,' $HOME/.newsbeuter/config
+  else
+    sed -i 's,http://luna/tt-rss,http://localhost/tt-rss,' $HOME/.newsbeuter/config
+  fi
+}
+
+case $1 in
+  '') if ! pidof newsbeuter ;then
+        __rss
+        newsbeuter -C $HOME/.newsbeuter/config
+      else
+        p newsbeuter
+      fi ;;
+
+  I) sudo rm -f $HOME/.newsbeuter/cache.db 2>/dev/null
+     rss ;;
+
+  i) if ! pidof newsbeuter ;then
+       __rss
+       newsbeuter -C $HOME/.newsbeuter/config -i $2
+     fi ;;
+
+  h | *) usage ;;
+esac
+
+# vim: set ft=sh: #

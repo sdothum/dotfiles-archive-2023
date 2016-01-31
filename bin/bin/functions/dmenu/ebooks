@@ -1,0 +1,69 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... E-books
+
+# ebook library
+library=${LIBRARY:-/data/media/ebooks/${1:-Library}}
+
+# build catalogue
+ebooks() {
+  find $library -maxdepth 3 -name '*mobi' \
+    | sed -re "s|$library/([^/]*)/(.*/)*([^/]*).mobi|\1$SEP\3|" \
+          -e 's/ - .*//' \
+          -e 's/ \([0-9]*\)//' \
+          -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
+  | sort
+}
+
+while :
+do
+  book=$(ebooks \
+       | history ebooks \
+       | column -s\^ -t \
+       | sed '1i[ documents ]' \
+       | dmenu 'E-book' -no-custom) || exit
+
+  [ "$book" = '[ documents ]' ] && exec dmenu references
+  title=${book%$SEP*}
+  mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")
+  mobi=$(find $library -regex "$mobi")
+
+  while action=$(echo 'read\nedit\nkindle' | dmenu "$title" -no-custom) || break
+  do
+    case $action in
+      read) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+            FBReader "$mobi" ;;
+
+      edit) if grep -q "$book" $(history)/ebooks ;then
+              grep -v "$book" $(history)/ebooks >/tmp/ebooks
+              mv -f /tmp/ebooks $(history)/ebooks
+            fi
+            book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
+            term "$title" vifm "${book%/*}" "$book"
+            pwait "vifm ${book%/*} $book" ;;
+
+      kindle) kindle=$(echo | history kindle | dmenu '[ Address ]@kindle.com') || break
+              kindle=${kindle%%@*}
+              history kindle $kindle
+              kindle=$kindle@kindle.com
+              account=sdothum@gmail.com
+              (
+                cat - <<END
+Subject: $title
+From: $account
+To: $kindle
+Content-Type: text/plain
+
+$title attached.
+
+END
+                uuencode "$mobi" "$mobi"
+              ) | /usr/local/bin/msmtp-enqueue.sh --account=${account} -t -- $kindle & ;;
+    esac
+    break
+  done
+done
+
+# vim: set ft=sh: #

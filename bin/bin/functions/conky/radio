@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# X11 Desktop
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Conky
+
+radio=/tmp/radio
+stations=$HOME/.pyradio/stations.csv
+
+if [ -e $radio ] ;then
+  pgrep -f 'mpv --no-cache --quiet' >/dev/null && cat $radio
+fi
+
+# vim: set ft=sh: #

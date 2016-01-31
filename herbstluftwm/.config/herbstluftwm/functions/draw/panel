@@ -1,0 +1,174 @@
+
+[ $TRACE ] && CHILD="draw/panel $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Draw panel
+
+# Usage: draw panel fifo, see restore panel
+
+. ${0%/draw}/config/ENV
+
+fifo=${1#:}
+
+# calculate panel width (don't span monitors)
+monitor=$(query monitor)
+
+# geometry has the format: X Y W H
+geometry='X:Y:W:H'
+for i in $(herbstclient monitor_rect $monitor)
+do
+  eval monitor${geometry%%:*}=$i
+  geometry=${geometry#*:}
+done
+gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
+panel_width=$(( $monitorW - $gap * 2 ))
+panel_offset=$(( $monitorX + $gap ))
+
+# check for fullscreen mode and adjust accordingly
+case $monitorW in
+  "$(cat $FULLSCREEN:width)") gap=$(( $(margins $monitorW) + $gap ))
+                              panel_width=$(( $panel_width + $gap * 2 ))
+                              panel_offset=$(( $panel_offset - gap )) ;;
+
+  "$PRIMARY" | "$SECONDARY") [ $monitor -ne 0 ] && gap=$(pixel_match $gap $UM1680)
+                             gap=$(( $(margins $monitorW) - $gap ))
+                             panel_width=$(( $panel_width - $gap * 2 ))
+                             panel_offset=$(( $panel_offset + gap )) ;;
+
+  *) [ $TRACE ] && echo "> monitorW=$monitorW PRIMARY=$PRIMARY SECONDARY=$SECONDARY" >>$TRACE ;;
+esac
+
+# tag desktop description
+title() {
+  tag=$(herbstclient attr monitors.focus.tag)
+  title="${PANEL_INDENT}$(query desktop $tag)"
+}
+
+# clean up active window title (filter special characters, common prefixes)
+trim() {
+  echo "$@" | sed -e 's/ *[(\|:].*//' \
+                  -e 's/ *[-] .*//' \
+                  -e 's/[[].*[]]//' \
+                  -e 's/https*//'
+}
+
+# eye candy tag icons
+tag_symbol() {
+  [ $visible ] && tag=$OCCUPIED || tag=$FREE
+}
+
+desktops() {
+  active=$(query tag)
+  inactive=$(query tag inactive)
+  unset tags
+  for i in $(query winids)
+  do
+    tags="$tags $(herbstclient attr clients.$i.tag)"
+  done
+  unset desktops
+  for i in $TAGS
+  do
+    if echo "$tags" | grep -q "$i" ;then
+      echo "$tags" | grep -q " $i" && visible=true || unset visible
+      echo "$tags" | grep -q "'$i" && hidden=true || unset hidden
+      [ $CANDY ] && tag_symbol || tag=$i
+      if [ $i. = $active. ] ;then
+        if [ $CANDY ] ;then
+          format="%{B$DEFAULT_BG}"
+          [ $visible ] && format="${format}%{F$ACTIVE_FG}"
+          [ $hidden ] && format="${format}%{F$ACTIVE_HIDDEN_FG}"
+        else
+          format="%{B$ACTIVE_BG}"
+          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
+                       || format="${format}%{F$FREE_FG}"
+          [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
+        fi
+      elif [ $i. = $inactive. ] ;then
+        if [ $CANDY ] ;then
+          format="%{B$DEFAULT_BG}"
+          [ $visible ] && format="${format}%{F$INACTIVE_FG}"
+          [ $hidden ] && format="${format}%{F$INACTIVE_HIDDEN_FG}"
+        else
+          format="%{B$INACTIVE_BG}"
+          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
+                       || format="${format}%{F$FREE_FG}"
+          [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
+        fi
+      elif [ $CANDY ] ;then
+        format="%{B$DEFAULT_BG}"
+        [ $visible ] && format="${format}%{F$OCCUPIED_FG}"
+        [ $hidden ] && format="${format}%{F$OCCUPIED_HIDDEN_FG}"
+      else
+        format="%{B$DEFAULT_BG}"
+        [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
+                      || format="${format}%{F$FREE_FG}"
+        [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
+      fi
+    else
+      unset visible
+      unset hidden
+      [ $CANDY ] && tag=$FREE || tag=$i
+      if [ $i. = $active. ] ;then
+        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" \
+                   || format="%{F$FREE_FG}%{B$ACTIVE_BG}"
+      elif [ $i. = $inactive. ] ;then
+        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" \
+                   || format="%{F$FREE_FG}%{B$INACTIVE_BG}"
+      else
+        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$FREE_FG}" \
+                   || format="%{F$FREE_FG}%{B$DEFAULT_BG}"
+      fi
+    fi
+    [ $hidden ] && [ -z $CANDY ] && unset leader || leader="${TAG_PAD}"
+    desktops="${desktops} ${format}${leader}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
+  done
+}
+
+# fifo read loop
+panel() {
+  while read -r line
+  do
+    case $line in
+      S*) system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}${PANEL_INDENT}%{B-}%{F-}" ;;
+
+      T*) title
+          count=$(herbstclient attr tags.focus.client_count)
+          [ $count -gt 1 ] && title="$title   ⮁   $count"
+          if [ $count -gt 0 ] ;then
+            if [ "$(query window)" = "${line#?}" ] ;then
+              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{B-}%{F-}%{F$DEFAULT_FG}"
+            else
+              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query window)%{F$DEFAULT_FG}"
+              desc=$(trim ${line#?})
+              [ "$desc" ] && title="$title   ⮁   ${desc}%{B-}%{F-}"
+            fi
+          fi ;;
+
+      *_changed*) desktops ;;
+    esac
+
+    # empty desktop does not generate T message
+    [ "$title" ] || title
+    [ "$desktops" ] || desktops
+    printf "%s\n" "%{l}${title}%{c}${desktops} %{r}${system}"
+    unset line
+  done
+}
+
+# initialize fifo
+[ -e $PANEL_FIFO:$fifo ] && rm $PANEL_FIFO:$fifo
+mkfifo $PANEL_FIFO:$fifo
+clock -sf "S%A   ⮃   %{F$ACTIVE_FG}%-I:%M %P%{F-}   ⮃   %-d %b '%y" >$PANEL_FIFO:$fifo &
+herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
+xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
+
+cat $PANEL_FIFO:$fifo \
+| panel \
+| lemonbar -d -n "lemonbar:$fifo" \
+           -g ${panel_width}x$PANEL_HEIGHT+$panel_offset -u 2 ${PANEL_BOTTOM} \
+           -f "$PANEL_FONT" -f "$UTF8_FONT" -f "$ICON_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+wait
+
+# vim: set ft=sh: #

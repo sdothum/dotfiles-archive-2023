@@ -1,0 +1,9 @@
+#!/bin/bash
+# add gpg key as per apt-get gpg error
+set -x
+
+key=$@
+gpg --keyserver wwwkeys.eu.gpg.net --recv-keys "$key"
+gpg --export "$key" > $HOME/SERVER.key
+sudo apt-key add $HOME/SERVER.key
+sudo rm $HOME/SERVER.key

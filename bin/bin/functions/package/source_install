@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ${_colors_} defined in .zshenv
+
+# ......................................................... Distribution install
+
+# return git uri
+[ -s $HOME/build/archlinux/pre_install/$1 ] && echo $($HOME/build/archlinux/pre_install/$1)
+
+# vim: set ft=sh: #

@@ -1,0 +1,11 @@
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Help
+
+# zsearch :-)
+[[ $1 = test ]] && man --pager="/usr/bin/less -p'^CONDITIONAL EXPRESSIONS$'" zshall \
+                || man --pager="/usr/bin/less -p'^ *$@ '" zshall
+
+# vim: set ft=zsh: #

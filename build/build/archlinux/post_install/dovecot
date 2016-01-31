@@ -1,0 +1,45 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... dovecot
+
+sed -e '/#C=/cC=CA' \
+    -e '/#ST=/cST=Ontario' \
+    -e '/#L=/cL=Ottawa' \
+    -e '/#O=/cO=thedarnedestthing' \
+    -e '/emailAddress=/cemailAddress=sdothum@gmail.com' \
+    /etc/ssl/dovecot-openssl.cnf.sample | sudo tee /etc/ssl/dovecot-openssl.cnf
+
+sudo /usr/lib/dovecot/mkcert.sh
+sudo cp -v /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot/
+sudo cp -rv /usr/share/doc/dovecot/example-config/conf.d /etc/dovecot/
+
+# echo "$USER:{PLAIN}password:$UID:$GID::$HOME" >users
+# password=$(passphrase host/$(hostname)/$USER)
+# echo "$USER:{PLAIN}$password:$UID:$GID::$HOME" >users
+password=dovecot
+echo "$USER:{PLAIN}$password:$UID:$GID::$HOME" >users
+sudo mv users /etc/dovecot/
+
+# should not be missing..
+if ! [ -f /etc/ssl/certs/dovecot.pem ] ;then
+  config_install /etc/ssl/certs/dovecot.pem
+  sudo chmod 444 /etc/ssl/certs/dovecot.pem
+fi
+
+original /etc/dovecot/conf.d/10-auth.conf
+sudo sed -i -e '/^!include auth-system.conf.ext/s/^/#/' \
+            -e '/#!include auth-passwdfile.conf.ext/s/#//' \
+         /etc/dovecot/conf.d/10-auth.conf
+
+original /etc/dovecot/conf.d/10-mail.conf
+sudo sed -i '/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs' \
+         /etc/dovecot/conf.d/10-mail.conf
+
+is_server && systemd enable dovecot || annotate "sudo systemctl start dovecot"
+# test dovecot installation
+mailcot localhost "$USER" "$password"
+
+# vim: set ft=sh: #

@@ -1,0 +1,124 @@
+nnoremap ; :
+nnoremap : ;
+nnoremap b :open !
+nnoremap B :tabopen !
+nnoremap d :quit<CR>
+nnoremap D :quit!<CR>
+nnoremap O :tabopen 
+nnoremap <C-S> :set statusbar!<CR><Esc>
+nnoremap t :open !/
+nnoremap T :tabopen !/
+nnoremap gt :sh! xdotool key --window $VIMB_XID ctrl+shift+l<CR><Esc>
+nnoremap gT :sh! xdotool key --window $VIMB_XID ctrl+shift+h<CR><Esc>
+nnoremap 1gt :sh! xdotool key --window $VIMB_XID ctrl+1<CR><Esc>
+nnoremap 2gt :sh! xdotool key --window $VIMB_XID ctrl+2<CR><Esc>
+nnoremap 3gt :sh! xdotool key --window $VIMB_XID ctrl+3<CR><Esc>
+nnoremap 4gt :sh! xdotool key --window $VIMB_XID ctrl+4<CR><Esc>
+nnoremap 5gt :sh! xdotool key --window $VIMB_XID ctrl+5<CR><Esc>
+nnoremap 6gt :sh! xdotool key --window $VIMB_XID ctrl+6<CR><Esc>
+nnoremap 7gt :sh! xdotool key --window $VIMB_XID ctrl+7<CR><Esc>
+nnoremap 8gt :sh! xdotool key --window $VIMB_XID ctrl+8<CR><Esc>
+nnoremap 9gt :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>
+nnoremap 0gt :sh! xdotool key --window $VIMB_XID ctrl+0<CR><Esc>
+nnoremap Q :eval! readable()<CR>
+nnoremap q :eval! simplyread()<CR>
+nnoremap X :eval! translate()<CR>
+nnoremap <BS> <C-O>
+
+augroup mygroup
+  autocmd LoadCommited https://www.youtube.com/watch* :shell mpv %<CR>
+augroup end
+
+# set accelerated-compositing=true
+# set ca-bundle=~/.config/vimb/ca-bundle.crt
+set download-path=/data/downloads/http
+set editor-command="gvim -f"
+set fontsize=12px
+set hint-timeout=1000
+set hintkeys=arstdoienh
+set history-max-items=99999
+# set hsts=false
+set input-autohide=true
+set input-bg-normal=#464f52
+set input-fg-normal=#fdf6e3
+# set home-page=http://this-page-intentionally-left-blank.org/
+# set home-page=https://wiki.archlinux.org/index.php/Special:Random
+# set home-page=https://www.archlinux.org/
+set home-page=https://bbs.archlinux.org/viewforum.php?id=49
+set smooth-scrolling=true
+set spacial-navigation=true
+set spell-checking=true
+set statusbar=false
+set status-font='monospace bold 10'
+set strict-ssl=false
+set webinspector=true
+shortcut-default du
+
+shortcut-add 13=http://1337x.org/search/$0/0/
+shortcut-add ab=https://bbs.archlinux.org/search.php?action=search&author=&forums=&search_in=0&sort_by=0&sort_dir=DESC&show_as=topics&keywords=$0
+shortcut-add ac=http://www.allacronyms.com/$0
+shortcut-add al=http://alternativeto.net/software/$0/?platform=linux
+shortcut-add am=http://www.amazon.ca/s/ref=nb_sb_noss?url=search-alias&field-keywords=$0
+shortcut-add AM=http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias&field-keywords=$0
+shortcut-add an=http://www.anime-planet.com/anime/all?name=$0
+shortcut-add ar=https://duckduckgo.com/?q=arch%20linux%20$0
+shortcut-add as=http://www.asiatorrents.me/index.php?page=torrents&options=0&active=0&search=$0
+shortcut-add au=https://aur.archlinux.org/packages/?O=0&C=0&SeB=nd&outdated=&SB=n&SO=a&PP=50&do_Search=Go&K=$0
+shortcut-add aw=https://wiki.archlinux.org/index.php?title=Special:Search&search=$0
+shortcut-add bi=http://www.bing.com/search?q=$0
+shortcut-add bs=http://www.binsearch.net?q=$0
+shortcut-add ca=http://www.canadacomputers.com/advanced_search_result.php?keywords=$0
+shortcut-add cc=http://www.codecodex.com/wiki/Special:Search?search=$0&go=Go
+shortcut-add ch=https://www.colorcodehex.com/$0/
+shortcut-add co=http://www.costco.ca/CatalogSearch?storeId=10302&catalogId=11201&langId=-24&refine=&keyword=$0
+shortcut-add cr=http://crunchbanglinux.org/forums/search/?action=search&keywords=$0&show_as=topics
+shortcut-add de=http://www.demonoid.ph/files/?query=$0
+shortcut-add di=http://dictionary.reference.com/browse/$0
+shortcut-add dt=http://deskthority.net/search.php?keywords=$0
+shortcut-add du=https://duckduckgo.com/?q=$0&ia=images
+shortcut-add eb=http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_sop=15&_nkw=$0&_pgn=2&_skc=50&rt=nc
+shortcut-add fg=http://www.reddit.com/r/FixedGearBicycle/search?q=$0&restrict_sr=on
+# shortcut-add ge=https://01100111011001010110010101101011.info/search/$0
+shortcut-add ge=https://01100111011001010110010101101011.info/search/$0?t=2000
+shortcut-add gh=https://geekhack.org/index.php?action=search2&search=$0
+shortcut-add gi=https://github.com/search?q=$0
+shortcut-add go=https://encrypted.google.com/search?q=$0
+shortcut-add ha=http://www.haskell.org/hoogle/?hoogle=$0
+shortcut-add im=http://www.imdb.com/find?s=all&q=$0
+shortcut-add ja=http://www.jango.com/music/$0
+shortcut-add ki=http://kat.ph/usearch/$0%20category:movies/
+shortcut-add li=https://duckduckgo.com/?q=linux%20$0
+shortcut-add lu=http://luakit.org/search/index/luakit?q=$0
+shortcut-add me=http://www.mec.ca/shop/?q=$0
+shortcut-add mr=http://www.mrqe.com/search?q=$0
+shortcut-add mu=http://www.allmusic.com/search/all/$0
+# shortcut-add ne=https://newztown.co.za/search/$0
+shortcut-add ne=https://newztown.co.za/search/$0?t=2000
+shortcut-add ni=https://duckduckgo.com/?q=nixos%20linux%20$0
+shortcut-add nm=https://nmatrix.co.za/search/$0
+shortcut-add nw=https://nixos.org/w/index.php?search=$0
+shortcut-add nz=https://nzbx.co/s?q=$0
+shortcut-add pa=https://www.archlinux.org/packages/?sort=&maintainer=&flagged=&arch=any&q=$0
+shortcut-add pi=http://pipedia.org/index.php?search=$0
+shortcut-add pr=http://predb.me/?search=$0
+shortcut-add pt=http://www.reddit.com/r/PipeTobacco/search?q=$0&restrict_sr=on
+shortcut-add re=https://duckduckgo.com/?q=review%20$0
+shortcut-add ro=http://www.rottentomatoes.com/search/?search=$0
+shortcut-add ru=https://duckduckgo.com/?q=rumor%20$0
+shortcut-add sc=http://scrapetorrent.com/Search/index.php?search=$0&sort=seed&cat=x
+shortcut-add sf=http://sf.net/search/?words=$0
+shortcut-add su=http://www.subtitleseeker.com/search/TITLES/$0
+shortcut-add td=http://thedarnedestthing:8000/admin/:$0
+shortcut-add TD=http://thedarnedestthing.com/admin/:$0
+shortcut-add th=http://thesaurus.com/browse/$0
+shortcut-add to=http://www.tobaccoreviews.com/search?Blend=$0
+shortcut-add tu=http://tuebl.ca/search?utf8=%E2%9C%93&search=$0&button=
+shortcut-add tz=http://torrentz.eu/search?q=$0
+# shortcut-add us=http://usenet-crawler.com/search/$0
+shortcut-add us=http://usenet-crawler.com/search/$0?t=2000
+shortcut-add wa=http://thepaperwall.com/search.php?search=$0&submit=search
+shortcut-add wi=http://en.wikipedia.org/w/index.php?title=Special:Search&search=$0
+shortcut-add wo=http://www.wolframalpha.com/input/?i=$0
+shortcut-add VP=http://thedarnedestthing.com/admin/:$0
+shortcut-add yo=http://www.youtube.com/results?search_query=$0
+shortcut-add za=http://songza.com/search/?q=$0

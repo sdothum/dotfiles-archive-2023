@@ -1,0 +1,38 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# open directory
+while name=$(echo | history folders | dmenu 'Find Folder') || exit
+do
+  [ "$name" ] || exit
+  list=$(sudo locate -A -e -i $name)
+  [ "$list" ] || continue
+
+  file=$(echo "$list" | dmenu 'Select Folder' -no-custom) || exit
+
+  [ -d $file ] && dir=$file || dir="$(dirname $file)"
+  history folders "$dir"
+  while action=$(echo 'term\nfilelight\nncdu\nranger\nrox\nthunar' | dmenu "$dir" -no-custom) || exit
+  do
+    case $action in
+      term) cd $dir && term "$dir" SHELL ;;
+      ranger) term "$dir" ranger "$dir" ;;
+      ncdu) term "$dir" ncdu "$dir" ;;
+
+      filelight) pgrep herbstluftwm >/dev/null && focus frame
+                 filelight "$dir" & ;;
+
+      rox) pgrep herbstluftwm >/dev/null && focus frame
+           rox "$dir" ;;
+
+      thunar) pgrep herbstluftwm >/dev/null && focus frame
+              thunar "$dir" ;;
+    esac
+    exit
+  done
+done
+
+# vim: set ft=sh: #

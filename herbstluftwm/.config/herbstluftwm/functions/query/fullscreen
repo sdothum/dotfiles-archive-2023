@@ -1,0 +1,11 @@
+
+# [ $TRACE ] && CHILD="query/fullscreen $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Fullscreen mode
+
+herbstclient compare clients.focus.fullscreen = true
+
+# vim: set ft=sh: #

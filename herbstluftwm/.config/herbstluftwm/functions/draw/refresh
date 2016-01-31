@@ -1,0 +1,33 @@
+
+[ $TRACE ] && CHILD="draw/refresh $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................... Redraw desktop padding
+
+# Usage: draw refresh [monocle] [shuffle|select|toggle], see draw root
+#        draw refresh monocle, refresh (regardless of monitor focus)
+#        draw refresh [shuffle|select|toggle], see draw root
+
+if query rez +1024 ;then
+  if query primary || [ "$1" = 'monocle' ] ;then
+    if [ -e $CONKY ] ;then
+      # dynamic desktop width with conky panel
+      query fullscreen && draw monitor conky fullscreen \
+                       || draw monitor conky
+    else
+      query fullscreen && draw monitor fullscreen \
+                       || draw monitor fullframe
+    fi
+  else
+    query fullscreen && draw monitor secondary fullscreen \
+                     || draw monitor secondary
+  fi
+fi
+
+# optionally shuffle background
+[ "$1" = 'monocle' ] && shift
+draw root $1
+  
+# vim: set ft=sh: #

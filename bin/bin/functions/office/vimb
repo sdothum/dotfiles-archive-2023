@@ -1,0 +1,54 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# nvidia && fn='monospace bold 8' || fn='monospace bold 10'
+if nvidia ;then
+  fn='monospace bold 8'
+  bin=local
+else
+  fn='monospace bold 10'
+fi
+
+# prune in-browser history for performance
+histfile=$HOME/.config/vimb/history
+histsize=1000
+
+# see dhistory for external browser history access
+prune_history() {
+  work=$(mktemp)
+  [ -e $histfile.vimb ] || touch $histfile.vimb
+  cat $histfile.vimb $histfile >$work
+  head -$(( $(cat $work | wc -l) - $histsize )) $work >$histfile.vimb
+  tail -$histsize $work >$histfile
+  rm -f $work
+}
+
+vimbt() {
+  # wget -O $HOME/.config/vimb/ca-bundle.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  [ $(hostname) = luna ] && prune_history
+  rm -f /run/user/1000/vimb/socket/*
+  # unclutter causes tabbed vimb to load homepages endlessly
+  pkill -TERM -x unclutter
+  until_instance 'VimbT' && toggle unclutter &
+
+  # respawning creates endless tabs with unclutter
+  # tabbed -f -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' \
+  #        /usr/bin/vimb --socket --dump --embed >/tmp/vimb.socket
+  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' \
+         /usr/$bin/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed \
+         >/tmp/vimb.socket 2>>/tmp/vimb.log
+}
+
+# use or setup socket (with tabs)
+if ! xdotool search -classname 'VimbT' >/dev/null ;then
+  # focus next window on close
+  ( vimbt && focus window ) &
+  xdotool search --sync --onlyvisible --limit 1 --classname 'VimbT' >/dev/null
+fi
+[ "$*" ] && echo ";tabopen $@<CR>" | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket)
+
+# vim: set ft=sh: #

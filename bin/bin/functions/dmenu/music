@@ -1,0 +1,140 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Music
+
+playlist() {
+  if [ $(mpc playlist | wc -l) -gt 0 ] ;then
+    mpc list artist \
+    | sort -n \
+    | sed '1i[ player ]\n[ albums ]'
+  else
+    mpc list artist \
+    | sort -n \
+    | sed '1i[ albums ]'
+  fi
+}
+
+albums() {
+  [ "$artist" = '[ albums ]' ] && mpc list album \
+                               || mpc list album artist "$artist"
+}
+
+# playlist
+current() {
+  mpc current
+}
+
+next() {
+  track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)")
+  [ "$track" ] && echo "$SEP $track"
+}
+
+previous() {
+  track=$(mpc playlist | grep -B 1 "$(current)" | grep -v "$(current)")
+  [ "$track" ] && echo "$SEP $track"
+}
+
+tracks() {
+  echo "$@" | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'
+}
+
+info() {
+  stats=$(mpc status | sed -n '2p')
+  echo "$stats" | grep -q 'playing' && echo "Playing $(tracks $stats)" \
+                                     || echo "Paused $(tracks $stats)"
+}
+
+# toggle state
+status() {
+  mpc status | grep -q "$@" && echo off || echo on
+}
+
+mpc list artist >/dev/null 2>&1 || exit
+while artist=$(playlist | dmenu 'Artist' "$artist" -no-custom) || exit
+do
+  if [ "$artist" = '[ player ]' ] ;then
+    while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" \
+              | column -s\^ -t \
+              | dmenu "$(info)" "${cmd%% *}" -no-custom) || break
+    do
+      case "$cmd" in
+        toggle\ on | toggle\ off) mpc toggle
+                                  [ $(status '\[playing\]') = off ] || exit ;;
+
+        next*) mpc play
+               mpc next ;;
+
+        rewind*) mpc play
+                 mpc prev
+                 mpc next ;;
+
+        previous*) mpc play
+                   mpc prev ;;
+
+        random\ on | random\ off) mpc play
+                                  mpc random ;;
+
+        repeat\ on| repeat\ off) mpc play
+                                 mpc repeat ;;
+
+        clear) mpc clear
+               break ;;
+      esac
+      continue
+    done
+    continue
+  fi
+
+  more=true
+  while [ $more ]
+  do
+    if [ $(albums | wc -l) -gt 1 ] ;then
+      if [ "$artist" = '[ albums ]' ] ;then
+        album=$(albums \
+              | sort -n \
+              | dmenu 'Album' "$album" -no-custom) || break
+      else
+        album=$(albums \
+              | sort -n \
+              | sed '1i[ all ]' \
+              | dmenu 'Album' "$album" -no-custom) || break
+      fi
+    else
+      album=$(albums \
+            | sort -n \
+            | dmenu 'Album' "$album" -no-custom) || break
+      more=
+    fi
+
+    if [ "$album" = '[ all ]' ] ;then
+      playlist=$(mpc find artist "$artist")
+      music="All songs by $artist"
+      more=
+    elif [ "$artist" = '[ albums ]' ] ;then
+      playlist=$(mpc find album "$album")
+      music=$album
+    else
+      playlist=$(mpc find artist "$artist" album "$album")
+      music="$album by $artist"
+    fi
+
+    while action=$(echo 'play\nadd\ninsert' | dmenu "$music" -no-custom) || break
+    do
+      case $action in
+        play) mpc clear >/dev/null
+              echo -n "$playlist" | mpc add >/dev/null
+              mpc play
+              exit ;;
+
+        add) echo -n "$playlist" | mpc add >/dev/null ;;
+        insert) echo -n "$playlist" | mpc insert >/dev/null ;;
+      esac
+      break
+    done
+    mpc play >/dev/null
+  done
+done
+
+# vim: set ft=sh: #

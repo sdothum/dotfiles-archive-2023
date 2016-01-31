@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Prompts
+
+# if yes && ..
+underline $1
+
+while :
+do
+  printf 'continue? [yes]/no/abort : '
+  read CONTINUE
+  echo
+  case "$CONTINUE" in
+    y | Y | '') exit 0 ;;
+    n | N) exit 1 ;;
+
+    a | A) kill -TERM $PPID
+           pkill -f "$0 $1"
+           exit 1 ;;
+  esac
+done
+
+# vim: set ft=sh: #

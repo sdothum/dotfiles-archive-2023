@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... mlocate
+
+original /etc/updatedb.conf
+if ! grep -q ' /data /bkup"' /etc/updatedb.conf ;then
+  sudo sed -i -e '/^PRUNENAMES/s/"$/ .cache Trash backups"/' \
+              -e '/^PRUNEPATHS/s|"$| /data /bkup"|' \
+           /etc/updatedb.conf
+fi
+
+sudo updatedb &
+
+# vim: set ft=sh: #

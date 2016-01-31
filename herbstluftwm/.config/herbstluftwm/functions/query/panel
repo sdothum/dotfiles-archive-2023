@@ -1,0 +1,12 @@
+
+# [ $TRACE ] && CHILD="query/panel $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Panel
+
+# query panel status (silently)
+pgrep -f 'draw panel' >/dev/null
+
+# vim: set ft=sh: 

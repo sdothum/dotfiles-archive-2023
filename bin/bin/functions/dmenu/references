@@ -1,0 +1,22 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... E-books
+
+# ebook library
+library=${LIBRARY:-/data/media/ebooks/${1:-references}}
+
+# open file
+while book=$(ls -1 $library \
+           | grep '.pdf$' | sed 's/.pdf$//' \
+           | history references | sed '1i[ ebooks ]' \
+           | dmenu 'Read Document') || exit
+do
+  [ "$book" = '[ ebooks ]' ] && exec dmenu ebooks
+  history references "$book"
+  pgrep herbstluftwm >/dev/null && focus frame
+  xdg-open "$library/$book.pdf" 2>/dev/null
+done
+
+# vim: set ft=sh: #

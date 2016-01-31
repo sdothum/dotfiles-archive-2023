@@ -1,0 +1,53 @@
+#!/usr/bin/dash
+[ $TRACE ] && CHILD="term $@" . $PARENT
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Terminal
+
+# Usage: term [title] [FLOAT|MAX|STACK] [[SHELL] command..]
+#        title (and default name string)
+#        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
+#        SHELL command, for simpler unquoted command passing
+# Note:  title may not contain spaces, use hyphen or underscore in place
+
+# first parameter may be title
+if [ "$1" ] ;then
+  if echo "$1" | egrep -qv 'FLOAT|MAX|STACK|SHELL' ;then
+    title="-title \"$1\""
+    shift
+  fi
+fi
+
+while [ "$1" ]
+do
+  case $1 in
+    FLOAT) name='-name float'
+           geometry='-geometry 1024x600+0+0'
+           shift ;;
+
+    MAX) name='-name max'
+         shift ;;
+
+    STACK) touch $STACK
+           shift ;;
+
+    SHELL) shift
+           # open shell commands in interactive mode
+           [ "$*" ] && cmd="-e zsh -ic '$@'" || cmd='-e zsh'
+           break ;;
+
+    *) cmd="-e $@"
+       break ;;
+  esac
+done
+
+if [ -z "$name" ] ;then
+  [ "$title" ] && name="-name ${title#* }"
+fi
+
+# urxvt client issues focus frame
+urxvt $title $name $geometry $cmd
+
+# vim: set ft=sh: #

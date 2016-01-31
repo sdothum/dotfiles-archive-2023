@@ -1,0 +1,22 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... Editor
+
+# list current fkey assignments
+fkeys() {
+  cd $HOME/.vim/config
+  for i in $(seq 1 12)
+  do
+    title "F$i"
+    ack "<.*F$i>" *.vim
+  done
+  cd - >/dev/null
+  echo
+}
+
+fkeys | less -RX
+
+# vim: set ft=sh: #

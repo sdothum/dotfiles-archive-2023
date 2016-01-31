@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Log
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ${_colors_} defined in .zshenv
+
+# ...................................................................... Heading
+
+# mark content division
+echo
+drawline '▁' ${_green_}
+heading ' ' $@
+drawline '▔' ${_green_}
+
+# vim: set ft=sh: #

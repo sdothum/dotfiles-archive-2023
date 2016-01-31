@@ -1,0 +1,12 @@
+#!/usr/bin/env fish
+# install ansi shell color
+
+headline+ "building (ansi) color"
+
+cd /data/depot/system/ansi-color
+[ -d ansi-color-0.6 ]; or tar xvzf ansi-color-0.6.tar.gz
+
+cd ansi-color-0.6
+sudo make install
+
+# vim: set ft=fish: #

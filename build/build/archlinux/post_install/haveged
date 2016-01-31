@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... haveged
+
+# entropy
+systemd enable
+# echo "\n.. initializing pacman keys, please be patient ..\n"
+# sudo pacman-key --init
+
+# vim: set ft=sh: #

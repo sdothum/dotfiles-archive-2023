@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+nvidia && fn='monospace bold 8' || fn='monospace bold 10'
+if nvidia ;then
+  fn='monospace bold 8'
+  bin=local
+else
+  fn='monospace bold 10'
+fi
+
+# standalone vimb instance
+/usr/$bin/bin/vimb --cmd="set status-font=$fn" "$@" 2>>/tmp/vimb.log
+
+# vim: set ft=sh: #

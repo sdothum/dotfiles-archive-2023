@@ -1,0 +1,129 @@
+# application packages
+# see bundle_install
+
+= astronomy
+# ▔▔▔▔▔▔▔▔▔
+# celestia      [is_server]
+# google-earth  [is_server]
+# kdeedu-kstars [is_server]
+# gpredict-git  [is_server]
+# nightshade    [is_server]
+# xephem        [is_server]
+  stellarium
+  wego-git
+
+
+= editors
+# ▔▔▔▔▔▔▔
+# abiword
+# focuswriter
+# markdown
+# pyroom
+# retext
+# rubyroom
+# ted [is_server]
+# wordgrinder
+
+
+= games
+# ▔▔▔▔▔
+# steam [is_server]
+
+
+= music
+# ▔▔▔▔▔
+  beets
+  mpc
+  mpd
+  ncmpcpp
+
+
+= photography
+# ▔▔▔▔▔▔▔▔▔▔▔
+  darktable
+# dcraw      [is_server]
+# digikam    [is_server]
+  dispcalgui [is_server]
+  feh
+# gimp       [is_server]
+# kdebase-workspace [is_server]
+# kipi-plugins      [is_server]
+# photivo-hg        [is_server]
+# rawtherapee       [is_server]
+# lightzone
+# sxiv
+# viewnior
+
+
+= media server/player
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# kodi                       [is_server]
+# plex-media-server-plexpass [is_server]
+# plex-media-server          [is_server]
+# xbmc
+
+
+= productivity
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  aiksaurus
+  amphetpe-svn
+# artha
+  aspell
+  aspell-en
+  calc
+# calcurse
+  dictd
+# dictd-foldoc
+# dictd-gcide
+# dictd-moby-thesaurus
+# galculator
+# gnumeric
+# gsimplecal
+  hunspell
+  hunspell-en
+# hunspell-en-ca
+# kdeedu-ktouch [is_server]
+# klavaro
+  sc-im
+  speedcrunch
+# todotxt
+  wyrd
+# xpad
+
+
+= radio
+# ▔▔▔▔▔
+# "pyradio requires module pkg_resources"
+# pyradio-git
+# radiotray
+
+
+= video players
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# coriander [is_server]
+# livestreamer-curses
+# minitube
+  mpv
+# smplayer
+# smplayer-themes
+# umplayer
+# vlc
+# xvba-video [is_server]
+  youtube-dl
+
+
+= viewers
+# ▔▔▔▔▔▔▔
+# calibre [is_server]
+# coolreader
+# evince
+  fbreader
+# foxitreader
+# mcomix
+# mupdf
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
+
+
+# vim: set ft=conf: #

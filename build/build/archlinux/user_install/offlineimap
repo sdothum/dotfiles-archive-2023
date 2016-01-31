@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. offlineimap
+
+# initialize keyring table for .offlineimaprc
+imap_setring
+
+# vim: set ft=sh: #

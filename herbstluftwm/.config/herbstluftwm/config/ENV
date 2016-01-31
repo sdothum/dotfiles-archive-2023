@@ -1,0 +1,106 @@
+# to enable tracing, export TRACE=/tmp/herbstluftwm.log in .xinitrc
+export PARENT=$HOME/bin/functions/log/parent
+[ $TRACE ] && CHILD="config/ENV $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# export Mod=Mod4  # Use super key as the main modifier
+export Mod=Mod1    # Use alt as the main modifier
+
+export SHELL=/usr/bin/dash
+export XDG_CONFIG_HOME=$HOME/.config
+export ROOT=${ROOT:-/tmp}
+
+# ............................................................ Persistent states
+
+export BACKGROUND="$HOME/images/backgrounds/default"
+export BORDER=$ROOT/herbstluftwm:border
+export COMPTON=$ROOT/herbstluftwm:compton
+export CONKY=$ROOT/herbstluftwm:conky
+export DYNAMIC=$ROOT/herbstluftwm:dynamic
+export FULLSCREEN=$ROOT/herbstluftwm:fullscreen
+export LOCK=$ROOT/herbstluftwm:lock
+export MONOCLE=$ROOT/herbstluftwm:monocle
+export PANEL=$ROOT/herbstluftwm:panel
+export PULSAR=$ROOT/herbstluftwm:pulsar
+export STACK=$ROOT/herbstluftwm:stack
+
+# ..................................................................... Desktops
+
+# desktops
+export TAG_NAMES='WEB CHAT PERSONAL WIKI MEDIA ADMIN'
+export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
+
+# dmenu window state icons
+export VISIBLE='■'
+export INVISIBLE='□'
+
+# ..................................................................... Displays
+
+# display geometry (fullscreen)
+if [ $(xrandr -d :0 -q | grep ' connected' | wc -l) -gt 1 ]; then
+  export PRIMARY=$(xrandr | grep ' connected ' | grep primary | cut -d' ' -f4 | cut -dx -f1)
+  export SECONDARY=$(xrandr | grep ' connected ' | grep -v primary | cut -d' ' -f3 | cut -dx -f1)
+else
+  export PRIMARY=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
+fi
+
+[ $COMPOSITING ] && touch $COMPTON
+# compton shadow left shift pixel adjustment (0) none
+export SHADOW=2
+# dynamic monocle frame height adjustment, (0) none
+# add urxvt lines (top and bottom) using .Xresources fontsize, see draw monitor
+[ $PRIMARY -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
+
+# ............................................................. Lemonbar options
+
+# to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
+[ $PRIMARY -lt 1440 ] && export PANEL_MARGIN=true
+
+# panel config defaults (best set in .xinitrc to minimize source reloads)
+export PANEL_FIFO=${PANEL_FIFO:-$ROOT/herbstluftwm:panel-fifo}
+# to set panel location to bottom of screen, export in .xinitrc
+if [ $PANEL_BOTTOM ] ;then
+  export PANEL_BOTTOM=-b
+fi
+
+# panel fonts
+export PANEL_HEIGHT=18
+export PANEL_FONT='Arial:size=8'
+export UTF8_FONT='DejaVu Sans Mono for Powerline:size=8'
+export ICON_FONT='FontAwesome:size=7'
+
+# .................................................................. Panel theme
+
+# panel symbols, unset candy for numeric desktop tags
+export CANDY=true
+export OCCUPIED=$(/usr/bin/printf '\uf111')
+export FREE=$(/usr/bin/printf '\uf10c')
+# tag bar separator (visual spacing)
+export TAG_PAD='  '
+export PANEL_INDENT='   '
+
+# panel theme
+# export DEFAULT_BG='#242C2E'
+# alpha channel for panel transparency with compton
+export DEFAULT_BG='#00000000'
+export ACTIVE_BG='#762508'
+export INACTIVE_BG='#074B5F'
+export DEFAULT_FG='#888B90'
+export ACTIVE_FG='#639E73'
+export ACTIVE_HIDDEN_FG='#324f3a'
+export INACTIVE_FG='#9d628d'
+export INACTIVE_HIDDEN_FG='#4e3146'
+if [ $CANDY ] ;then
+  export FREE_FG='#4A4B4E'
+  export FREE_HIDDEN_FG='#7B7E83'
+  export OCCUPIED_FG=$FREE_FG
+  export OCCUPIED_HIDDEN_FG=$FREE_HIDDEN_FG
+else
+  export FREE_FG='#7B7E83'
+  export HIDDEN_FG='#25C0EF'
+  export OCCUPIED_FG='#E4E5E6'
+fi
+
+# vim: set ft=sh: #

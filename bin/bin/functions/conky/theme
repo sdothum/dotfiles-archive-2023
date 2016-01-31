@@ -1,0 +1,180 @@
+#!/usr/bin/dash
+
+# X11 Desktop
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Conky
+
+# Conky desktop themer for clock and ring meters
+#
+# .conkyrc format:
+#   default_color [hex colour] (ring)
+#   color0 [hex colour]        (ring)
+#   color1 [hex colour]        (text)
+#   color2 [hex colour]        (text)
+#   color3 [hex colour]        (text)
+#   color4 [hex colour]        (text)
+#   color5 [hex colour]        (text)
+#   color6 [hex colour]        (ring)
+#   color7 [hex colour]        (graph)
+#   color8 [hex colour]        (graph)
+#   color9 [hex colour]        (hidden)
+#   #colorA [hex colour]       (hidden)
+#   #colorI [hex colour]       (hidden)
+#
+# conky-rings.lua format:
+#   default_color=0x[hex colour]
+#   color0=0x[hex colour]
+#   color6=0x[hex colour]
+#
+# theming formula uses ColorCodeHex tables..
+# base = https://www.colorcodehex.com/[hex colour]/
+# default_color [base]
+# color0 [base mono-1]
+# color1 to color5 uses solarized paper mono-1 gradients
+# color6 [color0 mono-3]
+# color7 [color0 mono-1]
+# color8 [color0]
+# color9 [base complementary]
+# colorA [base mono-2]
+# colorI [color9 mono-2]
+
+usage() {
+  echo "usage: $(basename $0) theme  cyan | orange | paper"
+  echo "usage: $(basename $0) theme  base (hex colour)"
+  echo "usage: $(basename $0) theme  rings (3..) | graphs (2..) | text (5..) | hidden (3..) | colours (8..) | scheme (13..),  (hex colours..)"
+  exit 1
+}
+
+conkyrc=$HOME/.conkyrc
+conkylua=$HOME/.conky/conky-rings.lua
+env=$HOME/.config/herbstluftwm/config/ENV
+
+# colour schemes
+rings() {
+  sed -i --follow-symlinks "/^default_color /s/ .*/ $1/" $conkyrc
+  sed -i --follow-symlinks "/^default_color=/s/=0x.*/=0x$1/" $conkylua
+  sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#$1'/" $env
+  shift
+  sed -i --follow-symlinks "/^color0 /s/ .*/ $1/" $conkyrc
+  sed -i --follow-symlinks "/^color0=/s/=0x.*/=0x$1/" $conkylua
+  shift
+  sed -i --follow-symlinks "/^color6 /s/ .*/ $1/" $conkyrc
+  sed -i --follow-symlinks "/^color6=/s/=0x.*/=0x$1/" $conkylua
+}
+
+text() {
+  sed -i --follow-symlinks "/^color1 /s/ .*/ $1/" $conkyrc
+  shift
+  sed -i --follow-symlinks "/^color2 /s/ .*/ $1/" $conkyrc
+  shift
+  sed -i --follow-symlinks "/^color3 /s/ .*/ $1/" $conkyrc
+  shift
+  sed -i --follow-symlinks "/^color4 /s/ .*/ $1/" $conkyrc
+  shift
+  sed -i --follow-symlinks "/^color5 /s/ .*/ $1/" $conkyrc
+}
+
+graphs() {
+  gradient=$(grep '^color7 ' $conkyrc | cut -d' ' -f2)
+  sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
+  shift
+  gradient=$(grep '^color8 ' $conkyrc | cut -d' ' -f2)
+  sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
+}
+
+hidden() {
+  sed -i --follow-symlinks "/^color9 /s/ .*/ $1/" $conkyrc
+  sed -i --follow-symlinks "/^export INACTIVE_FG=/s/='#.*'/='#$1'/" $env
+  shift
+  sed -i --follow-symlinks "/^#colorA /s/ .*/ $1/" $conkyrc
+  sed -i --follow-symlinks "/^export ACTIVE_HIDDEN_FG=/s/='#.*'/='#$1'/" $env
+  shift
+  sed -i --follow-symlinks "/^#colorI /s/ .*/ $1/" $conkyrc
+  sed -i --follow-symlinks "/^export INACTIVE_HIDDEN_FG=/s/='#.*'/='#$1'/" $env
+}
+
+colours() {
+  rings $@
+  shift
+  shift
+  shift
+  graphs $@
+  shift
+  shift
+  hidden $@
+}
+
+scheme() {
+  rings $@
+  shift
+  shift
+  shift
+  text $@
+  shift
+  shift
+  shift
+  shift
+  shift
+  graphs $@
+  shift
+  shift
+  hidden $@
+}
+
+hexgen() {
+  default_color=$1
+  hex=$(query colorcodehex $default_color)
+  color0=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f10)
+  color9=$(echo -n "$hex" | grep 'Complementary' | head -1 | cut -d/ -f6)
+  colorA=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
+  echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  hex=$(query colorcodehex $color0)
+  color6=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f2)
+  color7=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f10)
+  color8=$color0
+  echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  hex=$(query colorcodehex $color9)
+  colorI=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
+  echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+}
+
+tmpbackup() {
+  tmp=$(mktemp).conkyrc
+  cp -v $conkyrc $tmp
+  tmp=$(mktemp).conky-rings.lua
+  cp -v $conkylua $tmp
+  unset error
+}
+
+action=$1
+shift
+tmpbackup
+case "$action" in
+  base) if [ $# -eq 1 ] ;then
+          hexgen $1
+          colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+          echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+          # are we in interactive mode
+          if ! pgrep -f 'draw root' >/dev/null ;then
+            if ! if-no "update $(query theme)" ;then
+              echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$(query theme)
+            fi
+          fi
+        fi ;;
+
+  cyan) colours 25EFB5 1BB387 0A4232 148665 1BB387 EF2561 13775A 771331 ;;
+  orange) colours EF5A29 B3431E 42190B 863216 B3431E 25C0EF 772D15 136077 ;;
+  paper) text FDF6E3 BDB8AA 8D8A7F 69675F 4E4D47 ;;
+
+  rings) [ $# -eq 3 ] && rings $@ ;;
+  graphs) [ $# -eq 2 ] && graphs $@ ;;
+  text) [ $# -eq 5 ] && text $@ ;;
+  hidden) [ $# -eq 3 ] && hidden $@ ;;
+  colo*rs) [ $# -eq 8 ] && colours $@ ;;
+  scheme) [ $# -eq 13 ] && scheme $@ ;;
+
+  h | *) usage ;;
+esac
+
+# vim: set ft=sh: #

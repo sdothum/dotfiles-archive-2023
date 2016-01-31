@@ -1,0 +1,21 @@
+# see .conkyrc
+# [ $TRACE ] && CHILD="query/window $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Window class name
+
+# redirect errors, on startup no window may have focus during conky initialization
+name=$(herbstclient attr clients.focus.instance 2>/dev/null)
+# use of conky refresh to reset monitors when necessary after quitting fullscreen app
+# not using herbstluftwm's mod-w close bypasses the focus window hook and emit_hook traps
+# see keybinds and .conkyrc
+[ $name ] || restore view
+if [ $(echo $name | wc -w) -eq 1 ] ;then
+  echo $name
+else
+  herbstclient attr clients.focus.class 2>/dev/null
+fi
+
+# vim: set ft=sh: #

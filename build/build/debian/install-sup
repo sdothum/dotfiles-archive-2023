@@ -1,0 +1,14 @@
+#!/usr/bin/env fish
+# install cli threading mail client
+
+headline+ "building sup"
+
+install libncursesw5-dev
+
+install-gem sup
+
+cd (find /var -path '*gems*/sup-*/lib')
+cd ..
+sudo patch -p1 < /data/depot/mail/sup/buffer.contacts.patch
+
+# vim: set ft=fish: #

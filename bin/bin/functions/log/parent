@@ -1,0 +1,22 @@
+
+# Log
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Trace
+
+# Usage: CHILD="message" . parent
+#        must be sourced in order to obtain correct parent id
+
+TRACE=${TRACE:-/tmp/trace.log}
+# set ljust=true for left justified parent name
+unset ljust
+
+parent() {
+  proc=$(ps -ef | grep $PPID | sort | head -1 | awk '{ ps=$NF; sub( /.*\//, "", ps); print ps }')
+  [ $ljust ] && echo "$proc              " | sed -r 's/^(..............).*/\1/' \
+             || echo "              $proc" | sed -r 's/.*(..............)$/\1/'
+}
+
+echo "  $(parent) -> $CHILD" >>$TRACE
+
+# vim: set ft=sh: #

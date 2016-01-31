@@ -1,0 +1,11 @@
+
+# [ $TRACE ] && CHILD="query/colorcodehex $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................... Scrape colorcodehex.com
+
+curl --silent -L "https://www.colorcodehex.com/$1/"
+
+# vim: set ft=sh: #

@@ -1,0 +1,29 @@
+# web framework packages
+# see bundle_install
+
+= sinatra web framework
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# * exifr
+* kramdown
+* mail
+* passenger
+* rack
+* sanitize
+* sinatra
+* slim
+* term-ansicolor
+* thin
+* xapian-fu
+# xapian-ruby-bindings
+  ruby-xapian-ruby
+
+
+= web server (modules)
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# nginx
+# nginx-passenger
+  php
+  php-fpm
+  php-pgsql
+
+# vim: set ft=conf: #

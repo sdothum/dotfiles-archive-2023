@@ -1,0 +1,22 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Package management
+
+# remove orphans
+orphans=$(pacman -Qdtq)
+if [ "$orphans" ] ;then
+  echo $orphans
+  if ! if-no 'remove orphan packages' ;then
+    for i in $orphans
+    do
+      pm R $i
+    done
+  fi
+fi
+
+screenfetch
+
+# vim: set ft=sh: #

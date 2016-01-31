@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# locate wrapper
+# see /etc/updatedb.conf prunenames exclusions
+/usr/bin/locate -A -e -i "$@" | egrep -v '/vim/backups/|/Trash/|/.Trash-|/.cache/|.cache$'
+
+# vim: set ft=sh: #

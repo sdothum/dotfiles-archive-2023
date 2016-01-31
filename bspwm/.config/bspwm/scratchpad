@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# bspwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Scratchpad
+
+# toggle scratchpad
+if ! xdotool search --onlyvisible --classname 'scratchpad' windowunmap; then
+  if ! xdotool search --classname 'scratchpad' windowmap; then
+    which byobu 2>/dev/null && screen='-e byobu' || screen='-pe tabbed &'
+    urxvt -title 'scratchpad' -name 'scratchpad' $screen
+  fi
+  # bspc window --swap biggest
+fi
+
+

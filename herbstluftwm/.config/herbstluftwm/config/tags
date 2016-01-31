@@ -1,0 +1,29 @@
+
+[ $TRACE ] && CHILD="config/tags $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Tags
+
+# custom default_frame_layout must be set before tags are added
+query rez -1440 && hc set default_frame_layout 2 \
+                || hc set default_frame_layout 0
+hc rename default '1' || true
+
+# configured by tag number, references by-name (not index value)
+for key in $TAGS
+do
+  hc add "$key"
+  hc keybind "$Mod-$key"       chain . lock . use "$key" . emit_hook focus_window . spawn switch monocle "$key" . unlock
+  # hc keybind "$Mod-Shift-$key" move_index "$key"
+  hc keybind "$Mod-Shift-$key" spawn switch tag "$key"
+done
+
+# hc set_monitors X1xY1+0+0 X2xY2+X1+0..
+# hc set auto_detect_monitors     1
+# hc set swap_monitors_to_get_tag 0
+hc detect_monitors
+hc set focus_follows_mouse 0
+
+# vim: set ft=sh: #

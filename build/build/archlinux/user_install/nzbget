@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... nzbget
+
+sudo mkdir -pv /data/downloads/http
+sudo mkdir -pv /data/downloads/nzbs
+permissions /data/downloads
+
+# vim: set ft=sh: #

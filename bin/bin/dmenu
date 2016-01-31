@@ -1,0 +1,163 @@
+#!/usr/bin/dash
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Dmenu rofi wrapper
+
+# Usage: dmenu function
+# Note:  non-dmenu messages within $0/functions/dmenu
+#        source $HOME/bin/dmenu
+#        POSIX standard for use with dash shell
+
+cachedir=${XDG_CACHE_HOME:-$HOME/.cache}
+
+# content formatting items
+SEP='•'
+LSPACE="    $SEP"
+RSPACE="$SEP    "
+INDENT='   '
+
+# allow subword match input (by inserting single quote symbol into input)
+unquote() {
+  echo "$@" | sed "s/'//g"
+}
+
+# Rofi fullscreen fill specs
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# -fullscreen only fills the herbstluftwm virtual monitor coordinates, so to fill the screen
+# tweak rofi padding, fontsize and lines for 2560, 1680 (secondary), 1440, 1024 displays
+if pgrep herbstluftwm >/dev/null; then
+  if query primary ;then
+    if query rez =2560 ;then
+      padding=410
+      fontsize=18
+      lines=12
+    elif query rez =1440 ;then
+      padding=200
+      fontsize=14
+      lines=10
+    elif query rez -1440 ;then
+      padding=110
+      fontsize=14
+      lines=7
+    fi
+  else
+    # 1680 secondary monitor
+    padding=230
+    fontsize=16
+    lines=10
+  fi
+else 
+  padding=200
+  fontsize=14
+  lines=10
+fi
+
+# dmenu playback history
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# usage: history file "$selection" (record history)
+#        .. | history file | ..    (insert history into head of dmenu prompt)
+# note:  echo | history file | ..  (if no preceding prompt content)
+#        "$selection" is assumes no dmenu function has a valid null select value
+history() {
+  history=$HOME/bin/functions/dmenu/.history/$1
+  if [ -z "$*" ] ;then
+    echo ${history%/}
+    return
+  fi
+  shift
+  if [ "$*" ] ;then
+    inject "$@" $history
+  else
+    [ -e $history ] || touch $history
+    cat $history -
+  fi
+}
+
+# usage: inject item file
+inject() {
+  # remove duplicate history entries
+  echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" "$2")" | sed '/^$/d' >/tmp/dmenu
+  mv -f /tmp/dmenu "$2"
+}
+
+# Available apps
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# return list of existing applications
+apps() {
+  unset apps
+  for i in $@
+  do
+    apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")"
+  done
+  echo $apps | sed 's/ /\n/g'
+}
+
+# Media player playlist
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# usage:  playlist library played, see dmenu series/movies
+playlist() {
+  cat "$2" | while read line
+  do
+    [ "$line" ] && grep -q "$line" "$1" && sed -i "/^$line/s/^$line/$line $SEP/" "$1"
+  done
+  cat "$1"
+}
+
+# playlist order
+sortlist() {
+  [ "$*" ] && echo 'sort by name' || echo 'sort by date'
+}
+
+# Source wrapper
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# dmenu wrapper for sourced apps
+# usage: dmenu 'prompt' ['select'] [parameters.. ]
+dmenu() {
+  # prompt string
+  if [ "$1" ] ;then
+    prompt="$1  "
+    shift
+  fi
+  # select string
+  if [ "$1" ] ;then
+    # if not parameter
+    if [ "${1%%-*}" != '' ] ;then
+      select="$1"
+      shift
+    fi
+  fi
+  # use blank -mesg as added separator and indent pick list!
+  input=$(sed "s/^/$INDENT/" \
+        | rofi -bg black -bc black -bw 0 -fg '#FDF6E3' -hlbg black -hlfg '#25C0EF' \
+               -font "PragmataPro $fontsize" -eh 2 \
+               -opacity 85 -separator-style none -hide-scrollbar \
+               -lines $lines -width 100 -fixed-num-lines -padding $padding \
+               -dmenu -p "$prompt──────   " -i -mesg ' ' -select "$select" $@ \
+        )
+  # strip indent from input!
+  [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1
+}
+
+# if not sourced, execute dmenu message
+if [ $(basename $0) = dmenu ] ;then
+  # if pgrep herbstluftwm >/dev/null; then
+  #   fullscreen mode windows hide dmenu
+  #   if query fullscreen ;then
+  #     toggle fullscreen
+  #     fullscreen=true
+  #   fi
+  # fi
+  msg=$1
+  shift
+  if [ -e ${0%/dmenu}/functions/dmenu/$msg ] ;then
+    . ${0%/dmenu}/functions/dmenu/$msg $@
+  else
+    usage $0
+  fi
+  # restore
+  pgrep herbstluftwm >/dev/null && [ $fullscreen ] && toggle fullscreen
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+# install xmonad status bar
+
+headline+ "building dzen2"
+
+# remove debian package if installed
+[ -f /usr/bin/dzen2 ]; and apt r dzen2
+install libxpm-dev
+
+cd /data/depot/x11/dzen2/dzen
+sudo make clean install
+
+# vim: set ft=fish: #

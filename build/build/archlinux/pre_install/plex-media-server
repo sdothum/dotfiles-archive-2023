@@ -1,0 +1,10 @@
+#!/usr/bin/dash
+
+# Pre_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. plexmediaserver
+
+[ -d /opt/plexmediaserver ] && sudo rm -rf /opt/plexmediaserver
+
+# vim: set ft=sh: #

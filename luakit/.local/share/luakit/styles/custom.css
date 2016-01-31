@@ -1,0 +1,4 @@
+/* privoxy adblock message suppress */
+.small { display: none !important; }
+/* adsuck adblock message suppress */
+#errorContainer { display: none !important; }

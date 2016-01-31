@@ -1,0 +1,12 @@
+#!/bin/bash
+# scratchpad+ monitor (see sxhkdrc)
+# restore scratchpad to original monitor
+
+if [ -n "$@" ]; then
+  D=$(bspc query --monitors --monitor focused)
+  # "monitor --focus" bug? appears to force "monitor --focus last", hence, test
+  # which, on a dual-head setup, works with "--focus last"
+  [ $@ = $D ] || bspc monitor $@ --focus
+  xdotool search --classname scratchpad windowmap
+  [ $@ = $D ] || bspc monitor $D --focus
+fi

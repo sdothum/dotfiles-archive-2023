@@ -1,0 +1,15 @@
+
+# [ $TRACE ] && CHILD="query/display $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Display resolution
+
+# Usage: query display [secondary], returns X Y _ area
+#        typically, set -- $(query display) to reference X Y as $1 $2
+
+[ "$*" ] && secondary='-r'
+xrandr | grep '*' | sort $secondary | tail -1 | tr 'x' ' '
+
+# vim: set ft=sh: #

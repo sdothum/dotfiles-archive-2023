@@ -1,0 +1,687 @@
+           conky -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+           conky -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+        minimize -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+        minimize -> restore/windows 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+          hidden -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+         windows -> restore/windows 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+          hidden -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+         windows -> restore/windows 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+        minimize -> restore/hidden 
+          hidden -> query/winids 
+          hidden -> query/winids 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+        minimize -> restore/hidden 
+          hidden -> query/winids 
+          hidden -> query/winids 
+        minimize -> term Terimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+       "Terimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+        minimize -> restore/hidden 
+          hidden -> query/winids 
+          hidden -> query/winids 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+        Terminal -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+          border -> query/fullscreen 
+           frame -> query/primary 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+          window -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+          border -> query/fullscreen 
+           frame -> query/primary 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 2267x1494+1752+53 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1219x1582+2276+9 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+          border -> query/fullscreen 
+           frame -> query/primary 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+          window -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1219x1582+2276+9 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1219x1582+2276+9 1560x964+60+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+          border -> query/fullscreen 
+           frame -> query/primary 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+           bring -> query/primary 
+           bring -> query/rez =2560
+            rofi -> focus/hlwm bring
+           bring -> query/winids 
+           frame -> query/primary 
+           frame -> query/rez =2560
+           bring -> focus/frame 
+            edit -> query/primary 
+            edit -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+               v -> focus/frame 
+           bring -> query/primary 
+           bring -> query/rez =2560
+           dmenu -> focus/hlwm bring
+           bring -> query/winids 
+           frame -> query/primary 
+           frame -> query/rez =2560
+           bring -> focus/frame 
+            edit -> query/primary 
+            edit -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+      .zpreztorc -> focus/frame 
+         scripts -> query/primary 
+         scripts -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+           music -> focus/frame 
+           dmenu -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+           bring -> query/primary 
+           bring -> query/rez =2560
+           dmenu -> focus/hlwm bring
+           bring -> query/winids 
+           frame -> query/primary 
+           frame -> query/rez =2560
+           bring -> focus/frame 
+            edit -> query/primary 
+             984 -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+      .zpreztorc -> focus/frame 
+         scripts -> query/primary 
+         scripts -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+           music -> focus/frame 
+           dmenu -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+           bring -> query/primary 
+           bring -> query/rez =2560
+           dmenu -> focus/hlwm bring
+           bring -> query/winids 
+           frame -> query/primary 
+           frame -> query/rez =2560
+           frame -> focus/frame 
+            edit -> query/primary 
+            edit -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+   .Xmodmap.orig -> focus/frame 
+         scripts -> query/primary 
+         scripts -> query/rez =2560
+           frame -> query/primary 
+           frame -> query/rez =2560
+           music -> focus/frame 
+        Terminal -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+        minimize -> term Termimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Termimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+        minimize -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+        minimize -> restore/windows 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+        minimize -> term Termimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Termimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+          hidden -> restore/hidden 
+          hidden -> query/winids 
+          hidden -> query/winids 
+        Termimal -> term Termimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Termimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+              %P -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+              %P -> restore/windows 
+          u16:1] -> query/primary 
+          u16:1] -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+        Terminal -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+                 -> focus/frame 
+          select -> draw/border pulsar
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+        minimize -> term Termimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Termimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+        minimize -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+        minimize -> restore/windows 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+        Termimal -> term Termimal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Termimal" -> focus/frame 
+          hidden -> query/primary 
+          hidden -> query/rez =2560
+          hidden -> restore/hidden 
+          hidden -> query/winids 
+         windows -> query/primary 
+         windows -> query/rez =2560
+         windows -> restore/windows 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+          window -> query/primary 
+          window -> query/rez =2560
+         windows -> restore/window 
+        Terminal -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+          select -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 
+         monocle -> term Terminal
+           frame -> query/primary 
+           frame -> query/rez =2560
+      "Terminal" -> focus/frame 
+         monocle -> draw/refresh select
+          select -> query/rez +1024
+          select -> query/primary 
+          select -> query/conky 
+          select -> query/fullscreen 
+          select -> draw/monitor conky
+           conky -> query/display 
+           conky -> query/multihead 
+           conky -> query/display secondary
+> herbstclient set_monitors 1225x1582+2270+9 1568x964+56+43
+          select -> draw/root select
+          select -> query/multihead 
+          select -> draw/border 
+           frame -> query/primary 
+          border -> query/fullscreen 
+           frame -> query/rez =2560
+          select -> draw/border pulsar
+                 -> focus/frame 
+          window -> query/primary 
+          window -> query/rez =2560
+                 -> focus/window 

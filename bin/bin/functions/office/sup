@@ -1,0 +1,91 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+usage() {
+  echo "usage: $(basename $0)  'start | d'ump | F'orce | I'nitialize | l'og | syncM'aildirs | r'estore | reS'ync | s'ync <folder>"
+  exit 1
+}
+
+# that doesn't suck!
+SHELL=/usr/bin/dash
+SUP_LOG_LEVEL=debug
+# reduce ruby garbage collection activity (to speed up sup!)
+RUBY_GC_MALLOC_LIMIT=256000000
+RUBY_HEAP_MIN_SLOTS=600000
+RUBY_HEAP_SLOTS_INCREMENT=200000
+RUBY_HEAP_FREE_MIN=100000
+
+__killsup() {
+  kill -TERM $(pgrep -cx /usr/bin/sup) 2>/dev/null
+  sudo rm -f $HOME/.sup/lock 2>/dev/null
+  sudo rm -f $HOME/.sup/xapian/flintlock 2>/dev/null
+}
+
+case $1 in
+  '') if !p /usr/bin/sup ;then
+        sudo rm -f $HOME/.sup/lock
+        [ -e $HOME/.netrc ] && chmod 600 $HOME/.netrc
+        if [ -d $HOME/.sup/xapian ] ;then
+          sudo cp -fv $HOME/.sup/sources.yaml.conf $HOME/.sup/sources.yaml
+        else
+          sudo cp -fv $HOME/.sup/sources.yaml.init $HOME/.sup/sources.yaml
+          touch $HOME/.sup-archive
+        fi
+        # mb2md.pl -s $HOME/.sup/sent.mbox -d $HOME/Maildir/sdothum/INBOX >>/tmp/sup.log 2>&1
+        # archivemail -d0 -s.%y%m%d.%H%M%S $HOME/.sup/sent.mbox >>/tmp/sup.log 2>&1
+        # match terminal background to sup tomorrow theme background
+        term 'Mail' /usr/bin/sup 2>>/tmp/sup.log
+        sudo rm -f $HOME/.sup-archive
+      else
+        echo '.. instance locked: force restart with "sup F"'
+      fi ;;
+
+  d) !p /usr/bin/sup && sup-dump >$HOME/.sup/dump ;;
+
+  F) if if-yes 'force sup' ;then
+         __killsup
+       sudo rm -f $HOME/.sup/lock
+       sup
+     fi ;;
+
+  I) if if-yes 'initialize xapian database' ;then
+       __killsup
+       sudo rm -Rf $HOME/.sup/xapian 2>/dev/null
+     fi
+     sup ;;
+
+  l) echo '.. tail -f /tmp/sup.log'
+     tail -f /tmp/sup.log ;;
+
+  M) if if-yes 'sync maildirs' ;then
+       __killsup
+       sup-sync-back-maildir
+     fi
+     sup ;;
+
+  r) if if-yes 'sup restore' ;then
+       __killsup
+       sup-sync --restored --restore $HOME/.sup/dum
+     fi
+     sup ;;
+
+  S) if if-yes 'sup restore' ;then
+       __killsup
+       sup-sync 2>>/tmp/sup.log
+     fi
+     sup ;;
+
+  s) if if-yes 'sup restore' ;then
+       __killsup
+       sup-sync -v maildir:$HOME/Maildir/sdothum/$2
+     fi
+     sup ;;
+
+  h | *) usage ;;
+esac
+
+# vim: set ft=sh: #

@@ -1,0 +1,31 @@
+
+[ $TRACE ] && CHILD="toggle/max $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Toggle max layout
+
+# restore layout if in fullscreen, as max is just one keystroke away
+if query fullscreen ;then
+  # don't flip out of monocle mode, see toggle fullscreen (also monocle aware)
+  if query monocle ;then
+    herbstclient chain . lock . fullscreen toggle . set_layout max . unlock
+  else
+    toggle fullscreen
+  fi
+else
+  layout=$(herbstclient dump '' '@' | sed -r 's/[^ ]* ([^:]*).*/\1/')
+  tag=$ROOT/herbstluftwm:tag:$(herbstclient attr monitors.focus.tag)
+  if [ $layout != max ] ;then
+    echo $layout >$tag
+    herbstclient set_layout max
+  elif [ -e $tag ] ;then
+    herbstclient set_layout $(cat $tag)
+    rm -f $tag
+  else
+    herbstclient cycle_layout 1 vertical
+  fi
+fi
+
+# vim: set ft=sh: #

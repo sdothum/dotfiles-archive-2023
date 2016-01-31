@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... nzbget
+
+[ -e $HOME/.session ] || mkdir -v $HOME/.session
+
+provider=$(passphrase usenet/provider)
+email=$(passphrase uid/$provider)
+password=$(passphrase usenet/$provider)
+sed -e '/^MainDir=/s|=.*|=/data/downloads/nzbs|' \
+    -e '/^DestDir=/s/dst/completed/' \
+    -e '/^NzbDir=/s|=.*|=/data/downloads/http|' \
+    -e '/^LogFile=/s|=.*|=/tmp/nzbget.log|' \
+    -e "/^Server1.Host=/s/=.*/=$provider/" \
+    -e '/^Server1.Port=/s/=.*/=563/' \
+    -e "/^Server1.Username=/s/=.*/=$email/" \
+    -e "/^Server1.Password=/s/=.*/=$password/" \
+    -e '/^Server1.Encryption=/s/no/yes/' \
+    -e '/^Server1.Cipher=$/s/=/=RC4-MD5/' \
+    -e '/Server1.Connections=/s/=.*/=10/' \
+    -e '/Category1.DestDir=/s|=.*|=/data/media/videos/movies|' \
+    -e '/Category2.Name=Series/aCategory2.DestDir=/data/media/videos/series' \
+    -e '/^ControlIP=/s/=.*/=127.0.0.1/' \
+    -e '/^ControlPassword=/s/=.*/=nzbget/' \
+    -e '/^WriteBufferSize=/s/0/-1/' \
+    -e '/^DeleteCleanupDisk=/s/yes/no/' \
+    -e '/^KeepHistory=/s/=.*/=7/' \
+    -e '/^CursesGroup=/s/no/yes/' \
+    -e '/^CursesTime=/s/no/yes/' \
+    /usr/share/nzbget/nzbget.conf >$HOME/.nzbget
+
+# vim: set ft=sh: #

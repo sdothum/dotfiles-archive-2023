@@ -1,0 +1,83 @@
+#!/usr/bin/dash
+
+# X11 Server
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Window manager
+
+usage() {
+  echo "usage: $(basename $0)  'start | 2bwm | awesome | bspwm | budgie | dwm | goomwwm | herbstluftwm | i3 | notion | openbox | ratpoison | spectrwm | stumpwm | subtle | xfce4 | shell | wmii | xmonad"
+  exit 1
+}
+
+[ -z $DISPLAY ] && tty | grep '/dev/tty[0-9]' && console=true
+
+# see .xinitrc
+case $1 in
+  '') [ $console ] && echo "${_GREEN_}$(figlet -tf lean $(cat $HOME/.windowmanager))${_nocolor_}" ;;
+  2bwm | 2b*) echo 2bwm >$HOME/.windowmanager ;;
+  awesome | aw*) echo awesome >$HOME/.windowmanager ;;
+  bspwm | bs*) echo bspwm >$HOME/.windowmanager ;;
+  budgie | bu*) echo budgie >$HOME/.windowmanager ;;
+  dwm | dw) echo dwm >$HOME/.windowmanager ;;
+  gnome | gn*) echo gnome >$HOME/.windowmanager ;;
+  goomwwm | go*) echo goomwwm >$HOME/.windowmanager ;;
+  herbstluftwm | he*) echo herbstluftwm >$HOME/.windowmanager ;;
+  i3) echo i3 >$HOME/.windowmanager ;;
+  notion | no* | ion3 | io*) echo notion >$HOME/.windowmanager ;;
+  openbox | op*) echo openbox >$HOME/.windowmanager ;;
+  ratpoison | ra*) echo ratpoison >$HOME/.windowmanager ;;
+  spectrwm | sp*) echo spectrwm >$HOME/.windowmanager ;;
+  stumpwm | st*) echo stumpwm >$HOME/.windowmanager ;;
+  subtle | su*) echo subtle >$HOME/.windowmanager ;;
+  xfce4 | xf*) echo xfce4 >$HOME/.windowmanager ;;
+  shell | sh*) echo shell >$HOME/.windowmanager ;;
+  wmii) echo wmii >$HOME/.windowmanager ;;
+  wmutils | wm*) echo wmutils >$HOME/.windowmanager ;;
+  xmonad | xm*) echo xmonad >$HOME/.windowmanager ;;
+  h | *) usage ;;
+esac
+
+# start X11 from init console
+if [ $console ] ;then
+  # escape to shell prompt
+  [ $(cat $HOME/.windowmanager) = shell ] && exit
+  startx=$(pgrep startx)
+  [ $startx ] || startx --
+else
+  # already in X11 session
+  echo '.. window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'
+fi
+
+# session specific clean up
+case $windowmanager in
+  2bwm) ;;
+  awesome) ;;
+  bspwm) ;;
+  budgie) ;;
+  cinnamon) ;;
+  goomwwm) ;;
+  dwm) ;;
+
+  herbstluftwm) pkill -TERM -f 'herbst'
+                rm -rf /tmp/herbst* ;;
+
+  gnome) ;;
+  i3) ;;
+  kde) ;;
+  lxde) ;;
+  mate) ;;
+  notion) ;;
+  openbox) ;;
+  ratpoison) ;;
+  razor-qt) ;;
+  spectrwm) ;;
+  stumpwm) ;;
+  subtle) ;;
+  wmii) ;;
+  wmutils) ;;
+  xfce) ;;
+  xmonad) ;;
+esac
+
+# vim: set ft=sh: #

@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Package management
+
+# Usage: [D=N] pd package
+#        pd package, list depends on
+#        D=N pd package, list required by
+
+D=${D:-D}
+[ $D = D ] && dep='depends on' || dep='required by'
+
+# package dependency
+if [ "$*" ] ;then
+  for i in $@
+  do
+    if [ "$(expac '%n' $i)" ] ;then
+      # list source repository
+      echo "$(expac -S '%r/%n' $i) ($dep)$(expac "%$D" $i | sed 's/  */\n/g' | sort | sed 's/^/^/')" | column -s^ -t
+    else
+      echo ".. \"$i\" not found"
+    fi
+  done
+fi
+
+# vim: set ft=sh: #

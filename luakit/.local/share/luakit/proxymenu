@@ -1,0 +1,3 @@
+  squid3 http://localhost:3128
+  privoxy http://localhost:8118
+  polipo http://localhost:8123

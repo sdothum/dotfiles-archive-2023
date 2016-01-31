@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... adminer
+
+if ! grep -q "Adminer" /etc/httpd/conf/httpd.conf ;then
+  sudo sed -i '$a\
+# Adminer Configuration\
+Include conf/extra/httpd-adminer.conf\
+' /etc/httpd/conf/httpd.conf
+fi
+
+# vim: set ft=sh: #

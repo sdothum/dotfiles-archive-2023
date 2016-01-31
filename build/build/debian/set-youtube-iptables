@@ -1,0 +1,12 @@
+#!/usr/bin/env fish
+# bypass youtube cache servers for full bandwidth
+
+switch "$argv"
+  case off;   sudo iptables -v -D INPUT -s 173.194.55.0/24 -j REJECT
+              sudo iptables -v -D INPUT -s 206.111.0.0/16 -j REJECT
+  case on;    sudo iptables -v -A INPUT -s 173.194.55.0/24 -j REJECT
+              sudo iptables -v -A INPUT -s 206.111.0.0/16 -j REJECT
+  case '*';   echo ".. set-youtube-iptables on | off"
+end
+
+# vim: set ft=fish: #

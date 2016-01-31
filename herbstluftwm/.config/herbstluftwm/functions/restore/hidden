@@ -1,0 +1,47 @@
+
+[ $TRACE ] && CHILD="restore/hidden $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................ Unhide hidden windows
+
+title=" to $(query desktop $TAG)"
+
+count=$(query ttag $TAG)
+if [ $count -gt 0 ] ;then
+  # list of hidden windows
+  for i in $(query winids)
+  do
+    if herbstclient compare clients.$i.tag = "'$TAG" ;then
+      window="$(query title $i):$i"
+      [ "$hidden" ] && hidden="$hidden\n$window" \
+                    || hidden="$window"
+    fi
+  done
+
+  if [ $count -gt 1 ] ;then
+    window=$(echo $hidden \
+          | sort \
+          | cut -d: -f1 \
+          | sed '1i[ all  ]\n[ last ]' \
+          | dmenu "Raise Window$title" -no-custom) || exit
+  else
+    window=$(echo $hidden | cut -d: -f1 | dmenu "Raise Window$title" -no-custom)
+  fi
+  if [ "$window" ] ;then
+    case $window in
+      '[ all  ]') exec restore windows ;;
+      '[ last ]') exec restore window ;;
+
+      *) winid=$(echo $hidden | grep "$window" | cut -d: -f2)
+         touch $LOCK
+         herbstclient chain . lock . use $TAG
+         focus frame
+         herbstclient chain . bring $winid . unlock
+         rm -f $LOCK ;;
+    esac
+  fi
+fi
+
+# vim: set ft=sh: #

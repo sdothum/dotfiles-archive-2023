@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. offlineimap
+
+# initialize keyring
+annotate "run pass.sh if new public key generated and rerun imap_pass"
+[ -d $HOME/.password-store/mail ] && imap_pass
+
+# vim: set ft=sh: #

@@ -1,0 +1,34 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Help
+
+# man page list with recent queries
+page=$(apropos . \
+     | cut -d' ' -f1 | sort -d | uniq \
+     | history man \
+     | dmenu 'Manual Page' \
+     | cut -d':' -f3-)
+page=$(unquote $page)
+
+(
+  if [ $page ] ;then
+    if apropos . | cut -d' ' -f1 | grep -q "$page" ;then
+      history man "$page"
+      # do not fork urxvt
+      term "$page" MAX man "$page"
+      pwait "man $page"
+
+      hardcopy=$(echo 'no\nyes' | dmenu "Print $page" -no-custom) || exit
+      if [ $hardcopy = yes ] ;then
+        # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
+        manpage=$(find /usr/share/man -name "$page.1.gz")
+        [ $manpage ] && zcat $manpage | groff -man -Tps | lpr -P $PRINTER \
+                     || notify "$page" 'man1 page not found'
+      fi
+    fi
+  fi
+) &
+
+# vim: set ft=sh: #

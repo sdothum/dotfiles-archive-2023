@@ -1,0 +1,16 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Menu
+
+# test all dmenu scripts
+while :
+do
+  script=$(ls -1 ${0%/dmenu}/functions/dmenu \
+      | egrep -v 'browser|help|test' \
+      | dmenu 'Menu' "$script" -no-custom) || exit
+  command dmenu $script
+done
+
+# vim: set ft=sh: #

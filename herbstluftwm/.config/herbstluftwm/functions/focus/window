@@ -1,0 +1,29 @@
+
+[ $TRACE ] && CHILD="focus/window $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................. Focus non-empty subframe window
+
+[ -e $DYNAMIC ] || exit
+
+frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
+herbstclient chain . lock . cycle_frame -1
+
+for i in $(seq 1 $frames)
+do
+  herbstclient cycle_frame 1
+  herbstclient compare tags.by-name.$TAG.curframe_wcount gt 0 && break
+  # empty desktop, return to original frame
+  if [ $i -ge $frames ] ;then
+    herbstclient cycle_frame 1
+    # clear any prior title info
+    [ $PANEL_FIFO ] || . ${0%/focus}/config/ENV
+    echo 'T ' >$PANEL_FIFO &
+    break
+  fi
+done
+herbstclient unlock
+
+# vim: set ft=sh: #

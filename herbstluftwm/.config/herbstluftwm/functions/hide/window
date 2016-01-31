@@ -1,0 +1,13 @@
+
+[ $TRACE ] && CHILD="hide/window $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Hide window
+
+herbstclient dump "'$TAG" 2>/dev/null || herbstclient add "'$TAG"
+herbstclient move "'$TAG"
+focus window
+
+# vim: set ft=sh: #

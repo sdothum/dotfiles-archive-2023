@@ -1,0 +1,11 @@
+
+# [ $TRACE ] && CHILD="query/winids $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. List of winid's
+
+herbstclient attr clients | grep '0x' | sed 's/\.$//'
+
+# vim: set ft=sh: #

@@ -1,0 +1,29 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# bookmarks
+case $BROWSER in
+  luakit) sqldb=$HOME/.local/share/luakit/bookmarks.db
+          query='select title, tags, uri from bookmarks order by tags,title ASC;'
+          uri=$(echo "$query" | sqlite3 $sqldb \
+              | sed 's/[|]/  ::  /g' \
+              | sed '1i[ history ]' \
+              | dmenu 'Browser Bookmark' -no-custom \
+              | sed -r 's/.*(http.*)/\1/') ;;
+
+  vimb | *) bookmarks=$HOME/.config/vimb/bookmark
+            uri=$(cat $bookmarks \
+                | sed -re "s/(.*)\t(.*)\t(.*)/\2 ${LSPACE} \3 ${RSPACE} \1/g" \
+                      -e "s/^ ${LSPACE}/... ${LSPACE}/" \
+                | sed '1i[ history ]' \
+                | dmenu 'Browser Bookmark' -no-custom \
+                | sed -r 's/.*(http.*)/\1/') ;;
+esac
+
+[ "$uri" = '[ history ]' ] && exec dmenu history
+[ "$uri" ] && exec dmenu browser "$uri" $bookmarks
+
+# vim: set ft=sh: #

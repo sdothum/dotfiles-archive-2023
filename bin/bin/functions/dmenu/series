@@ -1,0 +1,72 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Television series
+
+# Library structure:
+# ../videos
+#        ../series
+#               ../show
+#                    ../*S01E01*  (episode)
+
+library=${LIBRARY:-/data/media/videos/${1:-series}}
+
+# list latest television series additions first
+T=t
+episodes=/tmp/dmenu:episodes
+pgrep herbstluftwm >/dev/null && monitor=$(query monitor)
+
+shows() {
+  ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-E[0-9][0-9])*).*/\1/' >"$episodes"
+  playlist "$episodes" "$playlist"
+}
+
+library() {
+  [ "$1" ] && echo '[ theatrical   ]' || echo '[ anime        ]'
+}
+
+while :
+do
+  show=$(ls -1$T $library \
+       | sed "1i$(library $1)\n[ edit         ]" \
+       | sed "1i[ $(sortlist $T) ]" \
+       | dmenu 'Play Show' "$show" -no-custom) || exit
+
+  case "$show" in
+    '[ sort by name ]') unset T
+                        continue ;;
+
+    '[ sort by date ]') T=t
+                        continue ;;
+
+    '[ anime        ]') exec dmenu series anime ;;
+    '[ theatrical   ]') exec dmenu series ;;
+
+    '[ edit         ]') pkill -TERM 'ROX-Filer'
+                        rox "$library"
+                        pwait "ROX-Filer $library"
+                        continue ;;
+
+    *) series="$library/$show"
+       # clean up titles
+       mytitles "$series" >>/tmp/mytitles:series
+       playlist="$series/.playlist"
+       [ -e "$playlist" ] || echo >"$playlist" ;;
+  esac
+
+  while :
+  do
+    # focus monitor menu originally presented on
+    [ $monitor ] && herbstclient focus_monitor $monitor
+    # highlight most current episode viewed
+    [ $episode ] || episode=$(shows | grep " $SEP$" | tail -1)
+    episode=$(shows | dmenu "$show" "$episode" -no-custom) || break
+    episode=$(echo "$episode" | sed "s/ $SEP$//")
+    video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
+    inject "$episode" "$playlist"
+    play "$video"
+  done
+done
+
+# vim: set ft=sh: #

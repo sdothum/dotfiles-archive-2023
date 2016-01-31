@@ -1,0 +1,37 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... smbnetfs
+
+[ -f /etc/samba/smb.conf ] || sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf
+if [ -z $(cat /etc/samba/smb.conf | grep usershare) ] ;then
+  set --export USERSHARES_DIR /var/lib/samba/usershares
+  set --export USERSHARES_GROUP sambashare
+  sudo mkdir -p $USERSHARES_DIR
+  sudo groupadd $USERSHARES_GROUP
+  sudo chown root:$USERSHARES_GROUP $USERSHARES_DIR
+  sudo chmod 01770 $USERSHARES_DIR
+
+  original /etc/samba/smb.conf
+  if ! grep -q 'usershare path = /var/lib/samba/usershares' /etc/samba/smb.conf ;then
+    sudo sed -i '/\[global\]/a\
+usershare path = /var/lib/samba/usershares\
+usershare max shares = 100\
+usershare allow guests = yes\
+usershare owner only = False\
+' /etc/samba/smb.conf
+  fi
+  sudo usermod -a -G $USERSHARES_GROUP $USER
+
+  original /etc/fuse.conf
+  sudo sed -i '/^#user_allow_other/s/#//' /etc/fuse.conf
+  sudo modprobe fuse
+fi
+
+systemd enable smbd
+systemd enable nmbd
+systemd enable smbnetfs
+
+# vim: set ft=sh: #

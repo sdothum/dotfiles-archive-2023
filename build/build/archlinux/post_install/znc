@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... znc
+
+annotate 'listen on port 7000, username/password znc/znc
+freenode channels "##astronomy,##javascript,##linux,##math,##reddit-hockey,#archlinux,#arduino,#atom,#bash,#bspwm,#btrfs,#compton,#css,#darktable,#dcraw,#deskthority,#digikam,#emacs,#geekhack,#git,#github,#haskell,#herbstluftwm,#lesswrong,#lisp,#neovim,#nginx,#nixos,#notmuch,#papyros,#passenger,#python,#qutebrowser,#raspberrypi,#rawtherapee,#ruby,#sinatra,#sup,#vim,#weechat,#znc,#dash"
+oftc channels "#fish,#luakit,#suckless"
+rizon channels "#rice"
+'
+sudo -u znc znc --makeconf
+is_server && systemd enable znc || annotate "sudo systemctl start znc"
+
+# vim: set ft=sh: #

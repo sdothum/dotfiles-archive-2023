@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+
+# Hardware
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+#  ...................................................................... Tablet
+
+usage() {
+  echo "usage: $(basename $0)  l'eft | r'ight | a'll"
+  exit 1
+}
+
+case $@ in
+  h | '') usage ;;
+  DVI-0 | left | l) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '1680x1050+0+0' ;;
+  DVI-1 | right | r) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '2560x1600+1680+0' ;;
+  all | a) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '4240x1600+0+0' ;;
+esac
+
+# vim: set ft=sh: #

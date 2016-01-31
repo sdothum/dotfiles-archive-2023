@@ -1,0 +1,25 @@
+#!/bin/sh
+# xmonad volume control +/- 3db
+
+case "$1" in
+  -)  if [ -f /usr/bin/pulseaudio-ctl ]; then \
+        pulseaudio-ctl down; \
+      else \
+        V=$(echo "$(amixer sget Master | grep '  Mono' | cut -d' ' -f5) - 3" | bc); \
+        [ $V -ge 0 ] && amixer sset Master $V; \
+      fi
+      ;;
+  +)  if [ -f /usr/bin/pulseaudio-ctl ]; then \
+        pulseaudio-ctl up; \
+      else \
+        V=$(echo "$(amixer sget Master | grep '  Mono' | cut -d' ' -f5) + 3" | bc); \
+        [ $V -le 100 ] && amixer sset Master $V; \
+      fi
+      ;;
+  0)  if [ -f /usr/bin/pulseaudio-ctl ]; then \
+        pulseaudio-ctl mute; \
+      else \
+        mixer sset Master toggle; \
+      fi
+      ;;
+esac

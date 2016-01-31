@@ -1,0 +1,64 @@
+
+[ $TRACE ] && CHILD="toggle/monocle $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................... Toggle monocle view
+
+# Note:  monocle view mode and fullscreen switching have been tightly integrated
+#        to provide an IMO more seamless use of this distraction free mode
+#        see draw monitor, switch frames, toggle fullscreen
+#        windows opened over a fullscreen view exhibit the same characteristics
+#        regardless of the monitor setting, monocle or normal display
+
+merge() {
+  for i in $(seq 1 $(( $(herbstclient attr tags.focus.frame_count) - 1 )))
+  do
+    # collapse all frames into single subframe
+    herbstclient remove
+  done
+}
+
+# calculate pseudo golden ratio margins
+if query primary ;then
+  set -- $(query display)
+  # really only useful for large displays..
+  [ $1 -gt 1440 ] && D=2 || D=16
+  [ $(cat $MONOCLE) -eq 0 ] && echo "$(( ($1 - $2) / $D ))" >$MONOCLE \
+                            || echo 0 >$MONOCLE
+  tag=$(herbstclient attr monitors.focus.tag)
+  cp -f $MONOCLE $MONOCLE:$tag
+  winid=$(herbstclient attr clients.focus.winid)
+  touch $LOCK
+  herbstclient lock
+  # toggle out of fullscreen before entering monocle
+  query fullscreen && herbstclient fullscreen toggle
+  draw refresh
+  if [ $(cat $MONOCLE) -gt 0 ] ;then
+    # allow toggling fullscreen (width) and monocle frame, else just max current window
+    merge
+    herbstclient set_layout max
+  else
+    # allow transitioning to full fullscreen, see draw monitor
+    if ! query fullscreen ;then
+      merge
+      # side by side frames is my normal layout..
+      if query multihead ;then
+        # rotate window focus to left frame
+        if [ $(query count) -gt 2 ] ;then
+          herbstclient chain . set_layout horizontal . split explode 0.5 . focus right . set_layout vertical . focus left . set_layout vertical
+        elif [ $(query count) -gt 1 ] ;then
+          herbstclient chain . set_layout horizontal . split explode 0.5 . rotate . rotate
+        else
+          herbstclient chain . set_layout horizontal . split explode 0.5 . rotate
+        fi
+      fi
+    fi
+  fi
+  herbstclient chain . bring $winid . unlock
+  rm -f $LOCK
+  restore panel
+fi
+
+# vim: set ft=sh: #

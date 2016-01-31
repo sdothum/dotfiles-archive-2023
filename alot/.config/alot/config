@@ -1,0 +1,91 @@
+
+editor_cmd = dmenu compose
+
+initial_command = search tag:attn
+
+theme = my.theme
+
+thread_authors_me = '┄━┄'
+
+print_cmd = pr mail
+
+[accounts]
+
+  [[gmail]]
+    realname = Steven Hum
+    address = sdothum@gmail.com
+    sentmail_command = msmtp -t
+    signature = /home/shum/.signature
+    sent_box = maildir:////home/shum/Maildir/sdothum/SENT
+    draft_box = maildir:////home/shum/Maildir/sdothum/DRAFTS
+
+[bindings]
+
+  A = search tag:attachment
+
+  e = search tag:INBOX tag:inbox
+  E = search tag:SENT
+
+  i = search tag:bbs
+  I = search tag:attn
+
+  n = search tag:family
+  N = search tag:clients
+
+  q =
+  Q = exit
+
+  u = search tag:unread
+  U = search tag:new
+
+  backspace = bclose
+
+[tags]
+
+  [[flagged]]
+    translated = ⚑
+    normal = '','','light red','','light red',''
+    focus = '','','light red','','light red,bold',''
+
+  [[unread]]
+    translated = ✉
+    normal = '','','light red','','light red',''
+    focus = '','','light red','','light red,bold',''
+
+  [[replied]]
+    translated = ⏎
+    normal = '','','light red','','yellow,bold',''
+    focus = '','','light red','','yellow,bold',''
+
+  [[encrypted]]
+    translated = ⚷
+    normal = '','','light red','','yellow,bold',''
+    focus = '','','light red','','yellow,bold',''
+
+  [[attachment]]
+    translated = ●
+    normal = '','','light red','','yellow',''
+    focus = '','','light red','','yellow',''
+
+  [[INBOX]]
+    translated =
+
+  [[inbox]]
+    translated =
+
+  [[new]]
+    translated =
+
+  [[attn]]
+    translated =
+
+  [[bbs]]
+    translated =
+
+  [[SENT]]
+    translated =
+
+  [[sent]]
+    translated = ⏎
+    normal = '','','light red','','yellow,bold',''
+    focus = '','','light red','','yellow,bold',''

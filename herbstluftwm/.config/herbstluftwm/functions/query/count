@@ -1,0 +1,11 @@
+
+# [ $TRACE ] && CHILD="query/count $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Window count (frame)
+
+herbstclient layout | grep '\[FOCUS\]' | cut -d: -f2 | cut -d[ -f1 | wc -w
+
+# vim: set ft=sh: #

@@ -1,0 +1,42 @@
+#!/usr/bin/env fish
+# install cloud server
+
+headline+ "install seafile"
+
+install+ libjansson4
+install+ python-imaging
+install+ python-setuptools
+install+ python-simplejson
+install sqlite3
+
+cd /data/depot/cloud/seafile
+sudo dpkg -i seafile_2.0.6_amd64.deb
+tar xvfz seafile-server_2.0.2_x86-64.tar.gz
+
+[ -d /srv/http/seafile ]; or sudo mkdir /srv/http/seafile
+sudo chown $USER:$USER /srv/http/seafile
+mv seafile-server-2.0.2 /srv/http/seafile/
+
+cd /srv/http/seafile/seafile-server-2.0.2
+./setup-seafile.sh
+
+sed -i '$a \
+\
+[quota] \
+# default user quota in GB, integer only \
+default = 3 \
+\
+[history] \
+keep_days = 0' /srv/http/seafile/ccnet/ccnet.conf
+
+#eval $HOME/bin/seafile start
+dist-config /etc/init.d/seafile
+sudo update-rc.d seafile defaults
+sudo /etc/init.d/seafile start
+
+# random error not found on desktop install, likely due to past package dependencies
+# causes seafile-applet to fail on localhost uri
+[ -f /usr/local/lib/python2.7/dist-packages/httplib2-0.8-py2.7.egg/EGG-INFO/top_level.txt ]
+  and sudo chmod 644 /usr/local/lib/python2.7/dist-packages/httplib2-0.8-py2.7.egg/EGG-INFO/top_level.txt
+
+# vim: set ft=fish: #

@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... View
+
+# Usage: q filename, find and list filename from current directory
+
+# simple source listing tool
+file=$(find . -name "$1" -type f | egrep -v '.deprecated|.hg')
+if [ "$file" ] ;then
+  if [ $(echo $file | wc -c) -gt 1 ] ;then
+    for i in $file
+    do
+      if ! echo $file | grep -q "^$i" ;then
+        if-yes "$i" || break
+      fi
+      cat $i
+    done
+  else
+    cat $file
+  fi
+else
+  echo ".. \"$1\" not found"
+fi
+
+# vim: set ft=sh: #

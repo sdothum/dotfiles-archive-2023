@@ -1,0 +1,14 @@
+
+[ $TRACE ] && CHILD="switch/monitor $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Switch previous
+
+# use previous desktop, check for monocle layout
+herbstclient use_previous
+switch monocle $(query tag) force
+focus window
+
+# vim: set ft=sh: #

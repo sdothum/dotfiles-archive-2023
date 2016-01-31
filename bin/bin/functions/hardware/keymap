@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+
+# Hardware
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Keyboard
+
+usage() {
+  echo "usage: $(basename $0)  c'olemak | q'werty | t'oggle"
+  exit 1
+}
+
+[ -e /etc/vconsole.conf ] || echo qwerty | sudo tee /etc/vconsole.conf
+
+# toggle qwerty and colemak variants
+case $@ in
+  h | '') usage ;;
+  colemak | c) colemak ;;
+  querty | q) qwerty ;;
+  toggle | t) grep -q 'qwerty' /etc/vconsole.conf && colemak || qwerty ;;
+esac
+
+# vim: set ft=sh: #

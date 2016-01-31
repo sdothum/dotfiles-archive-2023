@@ -1,0 +1,56 @@
+#!/usr/bin/dash
+
+# Network
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... DNS
+
+# create adblock list for dnsmasq
+# lifted from http://www.sheenaustin.com/2014/07/23/block-ads-using-dnsmasq/
+
+[ -d $HOME/adblock ] || mkdir -v $HOME/adblock
+cd $HOME/adblock
+
+echo "# Generated on: $(timestamp)" >adblock
+cat adblock >>/tmp/adblock.log
+
+echo 'Downloading file from YoYo.org'
+wget -O yoyo http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts 2>>/tmp/adblock.log
+wait
+echo 'Processing YoYo.org file'
+cat yoyo | grep '127.0.0.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+wait
+
+echo 'Downloading file from SomeoneWhoCares.org'
+wget -O swc http://someonewhocares.org/hosts/zero/ 2>>/tmp/adblock.log
+wait
+echo 'Processing SomeoneWhoCares.org file'
+cat swc | grep '0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' >>adblock
+wait
+
+echo 'Downloading file from MVPS.org'
+wget -O mvps http://winhelp2002.mvps.org/hosts.txt 2>>/tmp/adblock.log
+wait
+echo 'Processing MVPS.org file'
+cat mvps | grep 0.0.0.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+wait
+
+# echo 'Downloading file from HPHosts'
+# wget -O hphosts http://hosts-file.net/download/hosts.txt
+# wait
+# echo 'Processing HPHosts file'
+# cat hphosts | grep '127.0.0.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+# wait
+
+[ -e myblacklist ] && cat myblacklist | awk '{ print "0.0.0.0\t"$1 }' >>adblock
+
+echo 'Writing changes to zone file'
+tr '[A-Z]' '[a-z]' <adblock | tr '\r' '\n' | sort -f | uniq >adblock.uniq
+wait
+
+if ! pidof script ;then
+  echo 'Reloading DNS Server'
+  sudo systemctl restart dnsmasq
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# Log
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... Log
+
+# abort condition
+if ! pgrep -x script ;then
+  echo '... run "script" to log stdout messages'
+  # kill script called from
+  exit
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+# install notion trayion applet manager
+
+headline+ "building trayion"
+
+cd /data/depot/x11/notion
+[ -d trayion-master ]; or begin; unzip trayion-master.zip
+  cd trayion-master
+  sed -i -e 's,/usr/X11R6,/usr/bin/X11,g' -e 's,\${X11_PREFIX}/include,/usr/include/X11,g' -e 's,\${X11_PREFIX}/lib,/usr/lib/X11,g' Rules.make
+  cd ..
+end
+
+cd trayion-master
+make clean
+make
+sudo make install
+
+# vim: set ft=fish: #

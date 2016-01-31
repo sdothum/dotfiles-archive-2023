@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... tixati
+
+sudo mkdir -pv /data/downloads/http
+sudo mkdir -pv /data/downloads/torrents
+permissions /data/downloads
+
+# vim: set ft=sh: #

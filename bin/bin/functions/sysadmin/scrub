@@ -1,0 +1,51 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Filesystem
+
+usage() {
+  echo "usage: $(basename $0)  all | 'start | c'ancel | I'nitialize | s'tatus  [ boot | data | backup ]"
+  exit 1
+}
+
+# butterfs maintenance
+volume() {
+  case $@ in
+    boot | root) echo /boot ;;
+    data) echo /data ;;
+    backup) echo /backup ;;
+    *) echo $@ ;;
+  esac
+}
+
+show() {
+  V=$(volume $@)
+  p scrub | grep -q "btrfs scrub start -Bd $V" || in_progress=$@
+  while :
+  do
+    echo "$(timestamp) ❯❯❯ ${_YELLOW_}$@${_nocolor_}"
+    sudo btrfs scrub status $V
+    p scrub | grep -q "btrfs scrub start -Bd $V" || break
+    sleep 60s
+  done
+  [ $in_progress ] || press-enter
+}
+
+case $1 in
+  h | '') usage ;;
+
+  all) scrub boot
+       scrub data
+       scrub backup ;;
+
+  c) sudo btrfs scrub cancel $(volume $2) ;;
+  I) sudo rm /var/lib/btrfs/*.* ;;
+  s) show $(volume $2) ;;
+
+  *) sudo btrfs scrub start -Bd $(volume $@) &
+     term "$@" SHELL "scrub s $@" & ;;
+esac
+
+# vim: set ft=sh: #

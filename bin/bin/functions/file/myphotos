@@ -1,0 +1,58 @@
+#!/usr/bin/ruby
+# encoding: UTF-8
+
+# File
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Copy
+
+require 'term/ansicolor'
+# require 'socket'
+
+class String
+  include Term::ANSIColor
+end
+
+# transfer copy of new sdhc images 
+def copy_images(file, camera)
+  filename = File.basename(file)
+  date = File.stat(file).mtime.strftime('%Y-%m-%d')
+  year = date.sub(/-\d\d-\d\d/, '')
+  unless Dir.exist?("/data/photos/#{year}")
+    print "\n=> #{year}\n\n".red.bold
+    Dir.mkdir("/data/photos/#{year}")
+  end
+  unless Dir.exist?("/data/photos/#{year}/#{date}")
+    print "\n=> #{year} / #{date}\n\n".green.bold
+    Dir.mkdir("/data/photos/#{year}/#{date}")
+  end
+  print "#{filename}"
+  unless File.exist?("/data/photos/#{year}/#{date}/#{filename}")
+    print " -> #{year} / #{date} / #{filename}".yellow.bold
+    File.copy_stream(file, "/data/photos/#{year}/#{date}/#{filename}")
+    File.chmod(0644, "/data/photos/#{year}/#{date}/#{filename}")
+  end
+  print "\n"
+end
+
+# Dir.glob('/run/media/disk/DCIM/102_FUJI/*').each { |file| copy_images(file, 'fuji x100') } if Dir.exist?('/run/media/disk/DCIM/102_FUJI')
+# Dir.glob('/run/media/SIGMA DP1/DCIM/100SIGMA/*').each { |file| copy_images(file, 'sigma dp1') } if Dir.exist?('/run/media/SIGMA DP1/DCIM/100SIGMA')
+Dir.glob('/run/media/shum/disk/DCIM/100_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/disk/DCIM/100_FUJI')
+Dir.glob('/run/media/shum/disk/DCIM/102_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/disk/DCIM/102_FUJI')
+Dir.glob('/run/media/shum/disk/DCIM/103_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/disk/DCIM/103_FUJI')
+Dir.glob('/run/media/shum/disk/DCIM/104_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/disk/DCIM/104_FUJI')
+Dir.glob('/run/media/shum/disk/DCIM/100SIGMA/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/disk/DCIM/100SIGMA')
+
+# if Socket.gethostname == 'monad'
+# system(%[sudo mount /dev/$(sudo ls -l /dev/disk/by-id/*usb-ENE_Flash* 2>/dev/null | grep '1$' | sed 's,.*/,,') /run/media 2>/dev/null]) unless Dir.exists?('/run/media/shum/disk/DCIM')
+unless Dir.exists?('/run/media/shum/disk/DCIM')
+  system(%[sudo mount /dev/$(sudo ls -l /dev/disk/by-id/*usb-ENE_Flash*part1 2>/dev/null | sed 's,.*/,,') /media 2>/dev/null])
+  system(%[sudo mount /dev/$(sudo ls -l /dev/disk/by-id/*usb-SanDisk*part1 2>/dev/null | sed 's,.*/,,') /media 2>/dev/null])
+end
+Dir.glob('/run/media/shum/DCIM/100_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/DCIM/100_FUJI')
+Dir.glob('/run/media/shum/DCIM/102_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/DCIM/102_FUJI')
+Dir.glob('/run/media/shum/DCIM/103_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/DCIM/103_FUJI')
+Dir.glob('/run/media/shum/DCIM/104_FUJI/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/DCIM/104_FUJI')
+Dir.glob('/run/media/shum/SIGMA DP1/DCIM/100SIGMA/*').each { |file| copy_images(file, 'photos') } if Dir.exist?('/run/media/shum/SIGMA DP1/DCIM/100SIGMA')
+system('sudo umount /media 2>/dev/null') unless Dir.exists?('/run/media/shum/disk/DCIM')
+# end

@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+
+# Network
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................... Configure
+
+# update utorrent ipfilter list
+update() {
+  sudo wget http://list.iblocklist.com/\?list\=ydxerpxkpcfqjaybcssw\&fileformat\=dat\&archiveformat\=\&username\=sdothum\&pin\=283116 -O /srv/utserver/settings/ipfilter.dat
+  sudo chown utserver:utserver /srv/utserver/settings/ipfilter.dat
+}
+
+[ -e /srv/utserver/settings/ipfilter.dat ] || update
+find /srv/utserver/settings -mtime -1 -name 'ipfilter.dat' 2>/dev/null || update
+
+# vim: set ft=sh: #

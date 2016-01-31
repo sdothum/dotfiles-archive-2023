@@ -1,0 +1,15 @@
+#!/usr/bin/env fish
+# install couchpotato
+
+headline+ "building couchpotato"
+
+[ -d /opt/couchpotato ]; or begin
+  cd /data/depot/nzb/couchpotato
+  git clone https://github.com/RuudBurger/CouchPotatoServer.git
+  [ -d /opt/couchpotato ]; and sudo rm -rf /opt/couchpotato
+  sudo mv -v CouchPotatoServer /opt/couchpotato
+end
+
+annotate "configure couchpotato http://localhost:5050/"
+
+# vim: set ft=fish: #

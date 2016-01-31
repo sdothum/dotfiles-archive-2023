@@ -1,0 +1,91 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... Git
+
+usage() {
+  echo "usage: $(basename $0)  <comment> | ignore | list | undo | rm <dir>"
+  exit 1
+}
+
+# update github dotfiles
+# see .gitignore, to remove items from remote repository
+# git rm --cached <filespec>
+# git rm --cached -r <dir>
+dotfiles="alot \
+          amphetype \
+          astroid \
+          bash \
+          bin \
+          bspwm \
+          build \
+          byobu \
+          compton \
+          conky \
+          dunst \
+          fish \
+          herbstluftwm \
+          infinality \
+          luakit \
+          mpv \
+          music \
+          notion \
+          qutebrowser \
+          README.md \
+          sxhkd \
+          tt-rss \
+          vim \
+          vimb \
+          X11 \
+          xmonad \
+          wyrd \
+          zsh \
+"
+
+cd $HOME/stow
+# syncthing housekeeping
+find . -name '*.sync-conflict-*' -exec rm -f {} \;
+find . -name '*.syncthing.hsts.tmp' -exec rm -f {} \;
+
+for i in $dotfiles
+do
+  git add -v $i
+done
+
+commit() {
+  echo
+  git commit -m "$DESC"
+  git push --force --set-upstream origin master
+}
+
+if [ "$*" ] ;then
+  case "$1" in
+    h) usage ;;
+    ignore) gvim .gitignore ;;
+    list) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+
+    undo | redo | reset) git reset --soft HEAD~
+                         dotfiles ;;
+
+    rm) if [ -e "$2" ] ;then
+          git rm -r --cached $2
+          git commit -m "Remove directory \"$2\""
+          git push origin master
+        else
+          echo " -> $(basename $PWD) directory \"$2\" not found"
+          usage
+        fi ;;
+
+    *) if-yes "commit \"$@\"" && commit ;;
+  esac
+else
+  printf "commit? [abort]/comment.. : ${_YELLOW_}"
+  read DESC
+  printf "${_nocolor_}"
+  [ "$DESC" ] && commit
+fi
+cd - >/dev/null
+
+# vim: set ft=sh: #

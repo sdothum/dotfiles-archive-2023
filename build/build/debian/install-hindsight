@@ -1,0 +1,20 @@
+#!/usr/bin/env fish
+# install google-chrome bookmarks and history database converter
+
+headline+ "building hindsight"
+
+install+ libdbd-sqlite3-perl
+install+ libdbi-perl
+install+ libexcel-writer-xlsx-perl
+install+ libgetopt-long-descriptive-perl
+install+ liblwp-useragent-determined-perl
+install+ libterm-progressbar-perl
+install liburi-escape-xs-perl
+
+cd /data/depot/database
+unzip hindsight.v0.83.zip -d hindsight
+dos2unix hindsight/*.pl hindsight/plugins/*.pl
+chmod 755 hindsight/*.pl hindsight/plugins/*.pl
+sudo mv -fv hindsight /opt/hindsight
+
+# vim: set ft=fish: #

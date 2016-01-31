@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# File
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... View
+
+# semi-smart view (see rox)
+if echo "$1" | egrep -E '.(JPG|jpg|png)$' ;then
+  feh -B black -d --scale-down --start-at "$(escape $1)" $(dirname "$1")
+else
+  term "$1" less "$1"
+fi
+
+# vim: set ft=sh: #

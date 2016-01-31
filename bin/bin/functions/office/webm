@@ -1,0 +1,40 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Screencast
+
+usage() {
+  echo "usage: $(basename $0)  [ l'eft | r'ight | a'll ]"
+  exit 1
+}
+
+target=/data/media/videos/recordings
+delay=${delay:-1}
+
+if is_server ;then
+  case $@ in
+    DVI-0 | left | l) opts='-s 1680x1050 -i :0.0' ;;
+    DVI-1 | right | r) opts='-s 2560x1600 -i :0.0+1680,0' ;;
+    all | a) opts='-s 4240x1600 -i :0.0' ;;
+    h | *) usage ;;
+  esac
+else
+  set -- $(query display)
+  opts="-s $1x$2 -i :0.0"
+fi
+
+mkv=$(mktemp).mkv
+sleep $delay
+echo
+echo "${_YELLOW_}━━━━━━━━━  Press [q] to stop recording  ━━━━━━━━━${_nocolor_}"
+echo
+ffmpeg -f x11grab -r 25 $opts -vcodec libx264 -preset ultrafast -crf 0 $mkv
+echo
+echo "${_YELLOW_}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${_nocolor_}"
+echo
+ffmpeg -i $mkv -deadline good -lag-in-frames 0 -g 120 -slices 8 -c:v libvpx -qmin 0 -qmax 50 -crf 0 -b:v 1M -c:a libvorbis ${mkv%.mkv}.webm
+mv -v ${mkv%.mkv}.webm $target
+
+# vim: set ft=sh: #

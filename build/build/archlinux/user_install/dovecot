@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... dovecot
+
+# re-initialize dovecot database
+sudo systemctl stop dovecot
+find $HOME/Maildir -name 'dovecot*' -exec rm -fv {} \;
+sudo systemctl restart dovecot
+
+# vim: set ft=sh: #

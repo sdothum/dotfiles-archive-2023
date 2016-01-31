@@ -1,0 +1,30 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... System monitor
+
+monitors="htop \
+          iftop \
+          iotop \
+          mtr \
+          nethogs \
+          xrestop \
+"
+
+interface() {
+  ip link show | grep '^[0-9]' | cut -d: -f2 | dmenu 'Interface' -no-custom || exit
+}
+
+while monitor=$(apps "$monitors" | dmenu 'System Monitor' -no-custom) || exit
+do
+  case $monitor in
+    iftop) term "$monitor" $monitor $(interface) ;;
+    iotop) term "$monitor" SHELL $monitor ;;
+    nethogs) term "$monitor" sudo $monitor $(interface) ;;
+    *) term "$monitor" $monitor ;;
+  esac
+  exit
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,147 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... weechat
+
+if [ -d $HOME/.weechat ] ;then
+  annotate 'see post_install/weechat to re-initialize weechat.conf'
+else
+  annotate 'within weechat session, copy and paste each of the command blocks below
+colorize_lines.pl may need to be reinstalled
+configure authentication else some channels will force #<channel>-unregistered
+"/go #python"
+"/msg nickserv identify <username> <password>"
+"/msg *sasl RequireAuth yes"
+"/msg *sasl Set <username> <password>"'
+  cat <<EOF
+
+# server
+/server add znc luna/7000
+/set irc.server.znc.username "znc"
+/set irc.server.znc.password "znc"
+/set irc.server.znc.autoconnect on
+/server add rizon luna/7000 -username=znc/rizon -password=znc
+/set irc.server.rizon.autoconnect on
+/connect rizon
+# /server add nixers luna/7000 -username=znc/nixers -password=znc
+# /set irc.server.nixers.autoconnect on
+# /connect nixers
+
+# scripts
+/script install autosort.py
+/script install beep.pl
+/script install buffers.pl
+/script install colorize_lines.pl
+/script install go.py
+/script install ichatts.py
+/script install iset.pl
+/script install jabber.py
+/script install urlserver.py
+/script install vimode.py
+# /script install weetweet.py
+/script install ws_replace.py
+
+# buffers
+/set buffers.look.indenting on
+/set buffers.look.show_number off
+/set irc.look.server_buffer independent
+/set irc.look.smart_filter on
+/filter add irc_join_names * irc_366,irc_332,irc_333,irc_329,irc_324 *
+/filter add irc_smart * irc_smart_filter *
+
+# ichatts
+/set plugins.var.python.ichatts.minutes_until_timestamp 5
+/set plugins.var.python.ichatts.remind_every 60
+
+# jabber
+/jabber add jabber $(cat $HOME/.forward) $(pass mail/$(cat $HOME/.forward | sed 's/\(.*\)[@]\(.*\)/\2\/\1/'))
+/set jabber.server.jabber.autoconnect on
+/set jabber.server.jabber.autoreconnect on
+/set jabber.server.jabber.server talk.google.com
+
+# urlserver
+/set plugins.var.python.urlserver.http_hostname "$(hostname)"
+/set plugins.var.python.urlserver.http_port "34545"
+/set plugins.var.python.urlserver.http_allowed_ips "^(127.0.0.1|10.1.*)$"
+/set plugins.var.python.urlserver.http_url_prefix "lambda"
+
+# theme
+/set buffers.color.current_bg default
+/set buffers.color.current_fg 123
+/set buffers.color.default_fg 236
+/set buffers.color.hotlist_message_fg 024
+/set buffers.color.none_channel_fg 004
+/set buffers.look.show_number off
+
+/set weechat.bar.buffers.hidden off
+/set weechat.bar.buffers.items "buffers"
+/set weechat.bar.buffers.position "bottom"
+/set weechat.bar.input.color_delim 023
+/set weechat.bar.input.color_fg 036
+# /set weechat.bar.input.items "[input_prompt]+(away),[input_search],[input_paste],input_text"
+# "[..indicators..]" using "+" (instead of comma "," which wraps with spaces)
+/set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+minimal"
+
+/set weechat.color.chat 032
+/set weechat.color.chat_delimiters 238
+/set weechat.color.chat_inactive_window 240
+/set weechat.color.chat_prefix_more 238
+/set weechat.color.chat_prefix_suffix 196
+# /set weechat.color.chat_read_marker yellow
+/set weechat.color.chat_time 238
+/set weechat.color.chat_time_delimiters 238
+/set weechat.color.separator 030
+/set weechat.color.status_name 023
+
+/set weechat.look.buffer_notify_default message
+/set weechat.look.buffer_time_format ""
+/set weechat.look.color_real_white on
+/set weechat.look.day_change_message_1date %a, %d %b %Y
+/set weechat.look.day_change_message_2dates %a, %d %b %Y
+/set weechat.look.mouse on
+/set weechat.look.prefix_action "▷"
+/set weechat.look.prefix_align_max 15
+/set weechat.look.prefix_align_more "…"
+/set weechat.look.prefix_align_min 15
+/set weechat.look.prefix_error "⚠ "
+/set weechat.look.prefix_join "◥"
+/set weechat.look.prefix_network "⚡"
+/set weechat.look.prefix_quit "◣"
+/set weechat.look.prefix_same_nick "⇢"
+# /set weechat.look.prefix_suffix "│"
+/set weechat.look.prefix_suffix " "
+/set weechat.look.read_marker none
+# /set weechat.look.read_marker_string "  ⇣ "
+/set weechat.look.save_config_on_exit off
+/set weechat.look.save_layout_on_exit all
+# /set weechat.look.separator_horizontal "─"
+# /set weechat.look.separator_horizontal "⋅"
+/set weechat.look.separator_horizontal " "
+# /set weechat.look.separator_vertical ""
+/set weechat.look.separator_vertical " "
+/window splith 20
+
+# keybinds
+/key bind ctrl-B /bar toggle buffers
+/key bind ctrl-H /window down
+/key bind ctrl-J /window left
+/key bind ctrl-K /window up
+/key bind ctrl-L /window right
+/key bind ctrl-W /window refresh
+/key bind ctrl-Z /window zoom
+
+EOF
+fi
+
+mkdir -pv $HOME/.local/share/weechat/logs
+original $HOME/.weechat/logger.conf
+sed -i '/path = /cpath = "$HOME/.local/share/weechat/logs"' $HOME/.weechat/logger.conf
+# abbreviate vimode inputbar indicator
+original $HOME/.weechat/python/vimode.py
+if ! grep -q 'return mode\[0\]' $HOME/.weechat/python/vimode.py ;then
+  sed -i 's/return mode/return mode[0]/' $HOME/.weechat/python/vimode.py
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... networkmanager
+
+if ! grep -q 'dhcp=dhcpcd' /etc/NetworkManager/NetworkManager.conf ;then
+  sudo sed -i '$a\
+dhcp=dhcpcd\
+' /etc/NetworkManager/NetworkManager.conf
+fi
+
+is_server || systemd enable NetworkManager
+
+# vim: set ft=sh: #

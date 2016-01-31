@@ -1,0 +1,18 @@
+# unnecessary core packages (with this install)
+# see bundle_install, to list packages see pi
+
+= filesystems
+# ▔▔▔▔▔▔▔▔▔▔▔
+# - dmraid
+- jfsutils
+- lvm2
+- mdadm
+- reiserfsprogs
+- xfsprogs
+
+
+= network
+# ▔▔▔▔▔▔▔
+# - gssproxy
+
+# vim: set ft=conf: #

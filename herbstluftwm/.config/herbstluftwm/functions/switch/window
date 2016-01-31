@@ -1,0 +1,34 @@
+
+[ $TRACE ] && CHILD="switch/window $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................ Smart switch (monitor) window
+
+# move window to non-empty tag subframe (and focus next window)
+switch_frame() {
+  touch $LOCK
+  herbstclient lock
+  query fullscreen && toggle fullscreen
+  herbstclient focus_monitor $1
+  focus frame
+  herbstclient chain . bring $winid . focus_monitor $2
+  focus window
+  herbstclient unlock
+  rm -f $LOCK
+}
+
+# switch window and focus to monitor (0,1)
+direction=${1:-0}
+focus=$(herbstclient attr monitors.focus.index)
+winid=$(herbstclient attr clients.focus.winid)
+
+if [ $focus -eq $direction ] ;then
+  [ $focus -eq 0 ] && switch_frame 1 0 || switch_frame 0 1
+else
+  [ $focus -eq 0 ] && switch_frame 1 1 || switch_frame 0 0
+  herbstclient emit_hook focus_monitor
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... prezto
+
+# tailor dash session login / logout
+original /etc/dash/zlogin
+grep -q 'echo $[{]_yellow_[}]' /etc/dash/zlogin || sudo sed -i '1iecho ${_yellow_}---' /etc/zsh/zlogin
+original /etc/dash/zlogout
+sudo sed -i '/^source .*zlogout/s/^/#/' /etc/dash/zlogout
+
+# vim: set ft=sh: #

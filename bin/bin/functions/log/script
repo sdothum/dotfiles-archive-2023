@@ -1,0 +1,30 @@
+#!/usr/bin/dash
+
+# Log
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................................... Log
+
+typescript=$HOME/typescript
+
+# new session log
+__script() {
+  echo ".. saving previous to $HOME/log/typescript.log"
+  [ -d $HOME/log ] || mkdir -v $HOME/log
+  cat $typescript >>$HOME/log/typescript.log
+  cat /dev/null >$typescript
+}
+
+# capture automated install script output
+if [ -e $typescript ] ;then
+  if-no 'create fresh typescript log' || __script
+fi
+
+/usr/bin/script -a $typescript
+
+# strip carriage returns at eol
+dos2unix -f $typescript
+# strip embedded carriage returns from pacman progressbar (could turn it off instead but..)
+sed -i '/\x0d/d' $typescript
+
+# vim: set ft=sh: #

@@ -1,0 +1,174 @@
+
+[ $TRACE ] && CHILD="draw/monitor $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................... Draw monitor (regions)
+
+# Usage: draw monitor conky, conky view
+#        draw monitor conky fullscreen [width], conky fullscreen view
+#        draw monitor fullframe, hidden conky view
+#        draw monitor fullscreen, fullscreen view
+#        draw monitor secondary [fullscreen], secondary monitor view
+# Note:  draw monitor conky fullscreen width, returns the width only, see draw panel
+
+SHADOW=${SHADOW:-1}
+[ -e $MONOCLE ] || echo 0 >$MONOCLE
+
+# secondary display area 
+X1=0
+Y1=0
+
+# split out display geometry
+xy() {
+  eval X$1=$2
+  eval Y$1=$3
+}
+
+# X Y display dimensions
+xy 0 $(query display)
+query multihead && xy 1 $(query display secondary)
+
+# XxY+X'+Y' monitor configuration
+monitor() {
+  herbstclient list_monitors | grep "^$1:" | cut -d' ' -f2
+}
+
+# currently defined monitors
+primary=$(monitor 0)
+secondary=$(monitor 1)
+
+# margin tweaks for known display resolutions
+desktop_margin=$(margins $X0)
+# see toggle monocle
+monocle=$(cat $MONOCLE)
+
+# with transparent compton window borders, calculations assume..
+# - frame_border_width=0
+# - smart_frame_surroundings=0
+# - smart_window_surroundings=0
+# border=$(herbstclient attr theme.border_width)
+frame=$(herbstclient attr settings.frame_gap)
+window=$(herbstclient attr settings.window_gap)
+window_frame=$(( $window + $frame ))
+margin=$(( $desktop_margin - $window_frame ))
+# ricing tweak.. pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, ..
+# note: frame and window gap changes will skew the left margin along the X axis
+marginX=$(( $margin * 17 / 13 ))
+conky_margin=$(grep 'border_outer_margin' $HOME/.conkyrc | awk '{ print $2 }')
+conky_width=$(grep 'maximum_width' $HOME/.conkyrc | awk '{ print $2 }')
+conkyX=$(( $conky_width + $conky_margin*2 - $window_frame ))
+
+# adjust monitor by panel height?
+if [ $PANEL_MARGIN ] ;then
+  [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
+else
+  panelY=0
+fi
+# reshape monocle frame by urxvt lines
+if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
+  monocleY=$(( $(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2) * $MONOCLE_LINES ))
+  # frame effect, arbitrary compression of frame width in relation to frame height
+  monocle=$(( $monocle + $monocleY ))
+else
+  monocleY=0
+fi
+
+# adjust virtual monitor dimensions to set fixed visual window margins
+normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
+fullscreen_width=$(( $normal_width - $window_frame*2 ))
+# panel width global attribute, see draw panel
+echo $fullscreen_width >$FULLSCREEN:width
+
+# monitor regions are adjusted per conky layout.. in this particular instance,
+# margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
+case $@ in
+  conky*fullscreen*width) echo $fullscreen_width
+                          exit ;;
+
+  conky) rm -f $FULLSCREEN:primary 2>/dev/null
+         primary=$(printf '%dx%d%+d%+d' \
+                 $normal_width \
+                 $(( $Y0 - $margin*2 + $monocleY*2 )) \
+                 $(( $X1 + $marginX + $monocle - 1 - $SHADOW )) \
+                 $(( $margin - $monocleY )) ) ;;
+
+  conky*fullscreen) touch $FULLSCREEN:primary
+                    if [ $X0 -gt 1024 ] ;then
+                      # desktop screens retain margins
+                      primary=$(printf '%dx%d%+d%+d' \
+                              $fullscreen_width \
+                              $(( $Y0 - $margin*2 + $monocleY*2 - $window_frame*2 - $panelY )) \
+                              $(( $X1 + $marginX + $window_frame + $monocle - 1 - $SHADOW )) \
+                              $(( $margin - $monocleY + $window_frame )) )
+                    else
+                      # laptop screens fill to edge
+                      primary=$(printf '%dx%d%+d%+d' \
+                              $(( $fullscreen_width + $marginX + $window_frame )) \
+                              $Y0 \
+                              $X1 \
+                              0 )
+                    fi ;;
+
+  fullframe) rm -f $FULLSCREEN:primary 2>/dev/null
+             if [ $monocle -eq 0 ] ;then
+               primary=$(printf '%dx%d%+d%+d' \
+                       $(( $X0 - $marginX*2 )) \
+                       $(( $Y0 - $margin*2 )) \
+                       $(( $X1 + $marginX - 1 - $SHADOW )) \
+                       $margin )
+             else
+               primary=$(printf '%dx%d%+d%+d' \
+                       $normal_width \
+                       $(( $Y0 - $margin*2 + $monocleY*2 )) \
+                       $(( $X1 + ($X0 - $normal_width)/2 - 1 - $SHADOW )) \
+                       $(( $margin - $monocleY )) )
+             fi ;;
+
+  fullscreen) touch $FULLSCREEN:primary
+              if [ $monocle -eq 0 ] ;then
+                primary=$(printf '%dx%d%+d%+d' \
+                        $X0 \
+                        $Y0 \
+                        $X1 \
+                        0 )
+              else
+                # golden ratio screen retain margins
+                primary=$(printf '%dx%d%+d%+d' \
+                        $fullscreen_width \
+                        $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
+                        $(( $X1 + ($X0 - $fullscreen_width)/2 - 1 - $SHADOW )) \
+                        $(( $marginX + $window_frame)) )
+              fi ;;
+
+  secondary) rm -f $FULLSCREEN:secondary 2>/dev/null
+             # create identical secondary monitor margins using dot pitch adjustment
+             margin=$(pixel_match $margin $UM1680)
+             marginX=$(pixel_match $marginX $UM1680)
+             # adjust secondary monitor visual margin to primary using dot pitch ratio!
+             secondary=$(printf '%dx%d%+d%+d' \
+                       $(( $X1 - $marginX*2 )) \
+                       $(( $Y1 - $margin*2 )) \
+                       $marginX \
+                       $margin ) ;;
+
+  secondary*fullscreen) touch $FULLSCREEN:secondary
+                        secondary=$(printf '%dx%d%+d%+d' \
+                                  $X1 \
+                                  $Y1 \
+                                  0 \
+                                  0 ) ;;
+esac
+
+# configure multihead..
+# virtual monitors defined in lieu of hc pad monitor, to define fullscreen boundaries
+[ $TRACE ] && echo "> herbstclient set_monitors $primary $secondary" >>$TRACE
+herbstclient set_monitors $primary $secondary
+if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then
+  touch $FULLSCREEN
+else
+  rm -f $FULLSCREEN 2>/dev/null
+fi
+  
+# vim: set ft=sh: #

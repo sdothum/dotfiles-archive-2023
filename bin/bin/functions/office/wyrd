@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................... Getting things done
+
+# appointments and todo
+# if wyrd crashes (common tiling wm problem), restart
+cp -f $HOME/.reminders /tmp/
+while :
+do
+  pidof wyrd || ( sleep 1s && /usr/bin/wyrd 2>>/tmp/wyrd.log )
+done
+
+# vim: set ft=sh: #

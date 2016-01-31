@@ -1,0 +1,32 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Edit
+
+# project list format:
+# tag... :: [ filename | $(eval) ]...
+# where,
+#   tag      - dmenu search tag
+#   filename - posix filename expression
+#   eval     - posix shell expression that evaluates to a list of filenames
+
+# tag file containing project specs
+projects=$HOME/bin/functions/dmenu/.config/edit
+
+while files=$(sed "s/  *::  */^$SEP /" $projects \
+            | history edit \
+            | column -s\^ -t \
+            | sed -e '1i[ edit tags ]' \
+            | dmenu 'Edit Source' -no-custom) || exit
+do
+  if [ "$files" = '[ edit tags ]' ] ;then
+    gvim -f $projects
+  else
+    history edit "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+    eval v ${files#*$SEP}
+    exit
+  fi
+done
+
+# vim: set ft=sh: #

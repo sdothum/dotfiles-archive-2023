@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... genymotion
+
+sudo sed -i '$a\
+vboxnetflt\
+vboxnetadp\
+vboxpci\
+' /etc/modules-load.d/virtualbox.conf
+
+sudo modprobe vboxnetflt
+sudo modprobe vboxnetadp
+sudo modprobe vboxpci
+
+# vim: set ft=sh: #

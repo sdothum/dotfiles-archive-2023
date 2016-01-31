@@ -1,0 +1,52 @@
+
+[ $TRACE ] && CHILD="draw/border $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................... Draw active border color
+
+# below 0.045 can cause (hw dependent) resource hogging
+frequency=0.066
+
+[ -e $PULSAR ] && colors="$(cat $PULSAR)" || colors='FFFFFF AAAAAA 555555  000000 555555 AAAAAA'
+[ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER='000000'
+
+pulsar() {
+  while :
+  do
+    for i in $colors
+    do
+      # don't let processes queue up on slower system..
+      pkill -TERM -f 'herbstclient attr theme.active.color'
+      # disable spawning as bg process if desktop resource issues occur
+      herbstclient attr theme.active.color "#$i" &
+      sleep $frequency
+    done
+  done
+}
+
+# a bit of trickery here.. draw border pulsar is executed by draw border
+# so subsequent emit_hook can kill the pulsar instance!
+if [ "$1" = pulsar ] ;then
+  # trap concurrent requests to create pulsating borders
+  [ $(pgrep -cf 'draw border pulsar') -gt 1 ] && exit
+  pulsar
+  exit
+fi
+
+# kill any previous instance of border highlighting
+pkill -TERM -f 'draw border pulsar'
+# fullscreen does not alter layout so :max test below is ineffective
+query fullscreen && exit
+
+# highlight stacked windows 
+tag=$(herbstclient attr monitors.focus.tag)
+# visually highlight border for stacked windows
+if herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
+  herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && exec draw border pulsar
+else
+  herbstclient attr theme.active.color "#$BORDER"
+fi
+
+# vim: set ft=sh: #

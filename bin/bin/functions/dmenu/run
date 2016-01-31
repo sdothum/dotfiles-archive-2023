@@ -1,0 +1,20 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... dmenu launcher
+
+cache=$cachedir/dmenu_run
+
+# see /usr/bin/dmenu_run
+IFS=:
+stest -dqr -n "$cache" $PATH && stest -flx $PATH | sort -u | tee "$cache" >/dev/null
+unset IFS
+
+# no text prompt to dmenu
+cmd=$(cat "$cache" | history run | dmenu '' -no-custom) || exit
+history run "$cmd"
+pgrep herbstluftwm >/dev/null && focus frame
+$cmd &
+
+# vim: set ft=sh: #

@@ -1,0 +1,62 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# in order of personal preference..
+editors="vim \
+         focuswriter \
+         nano \
+         pyroom \
+         rubyroom \
+         wordgrinder \
+"
+
+format_message() {
+  # insert 2 line feed characters into reply for vim cursor positioning and spacing
+  # note required search order
+  if grep -q '^--- Begin forwarded message from ' $1 ;then
+    sed -i '/^--- Begin forwarded message from /i\
+\
+' $1
+  elif grep -q '^Excerpts from .* message of ' $1 ;then
+    sed -i '/^Excerpts from .* message of /i\
+\
+' $1
+  fi
+  # composing new email message needs no blank lines added
+}
+
+compose_with() {
+  pgrep herbstluftwm >/dev/null && focus frame
+  format_message $2
+  folded=$(mktemp)
+  $1 $2
+  fold -s -w 72 $2 >$folded
+  cp -f $folded $2
+  mv $folded $folded.draft
+}
+
+while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' -no-custom) || exit
+do
+  case $editor in
+    '[ send ]') ;;
+
+    vim) SHELL=/bin/sh
+         format_message $1
+         gvim -f -c 'set filetype=mail' $1
+         cp $1 $1.draft
+         # cleanup sup mail draft histories
+         find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm -f {} \; ;;
+
+    focuswriter) compose_with focuswriter $1 ;;
+    nano) compose_with pyroom $1 ;;
+    pyroom) compose_with pyroom $1 ;;
+    rubyroom) compose_with rubyroom $1 ;;
+    wordgrinder) compose_with wordgrinder $1 ;;
+  esac
+  exit
+done
+
+# vim: set ft=sh: #

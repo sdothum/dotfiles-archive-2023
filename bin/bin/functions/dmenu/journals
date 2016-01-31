@@ -1,0 +1,22 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Sysadmin
+
+# view systemd journal logs
+[ "$*" ] && mode='Watch' || mode='View'
+
+cd /usr/lib/systemd/system/
+service=$(stest -fl . \
+        | sort  | sed 's/.service$//' \
+        | sed '1i[ logs ]' \
+        | dmenu "$mode Journal" -no-custom) || exit
+
+[ "$service" = '[ logs ]' ] && exec dmenu logs
+case $mode in
+  View) [ $service ] && term "$service" journalctl -u $service.service ;;
+  Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;
+esac
+
+# vim: set ft=sh: #

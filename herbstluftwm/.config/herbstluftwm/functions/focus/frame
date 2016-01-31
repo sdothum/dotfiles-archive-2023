@@ -1,0 +1,43 @@
+
+[ $TRACE ] && CHILD="focus/frame $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................ Find empty subframe to open (spawn) window in
+
+[ -e $DYNAMIC ] || exit
+
+# fill empty grid locations once
+# fill=true
+unset fill
+
+herbstclient chain . lock . cycle_frame -1
+frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
+
+for i in $(seq 1 $frames)
+do
+  herbstclient cycle_frame 1
+  herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 && break
+  if [ $i -ge $frames ] ;then
+    if [ $fill ] ;then
+      # all frames occupied, look for an empty grid region then
+      herbstclient cycle_frame -1
+      for i in $(seq 1 $frames)
+      do
+        herbstclient cycle_frame 1
+        if herbstclient layout | grep '\[FOCUS\]' | grep 'grid:' ;then
+          [ $(expr $(query count) % 2) -gt 0 ] && break
+        fi
+        if [ $i -ge $frames ] ;then 
+          herbstclient cycle_frame 1
+          unset fill
+          break
+        fi
+      done
+    fi
+  fi
+done
+herbstclient chain . set_layout vertical . unlock
+
+# vim: set ft=sh: #

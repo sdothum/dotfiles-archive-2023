@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Conky
+
+# Usage: conky [msg], see functions/conky
+#        conky, start daemon
+
+if [ "$*" ] ;then
+  msg=$1
+  shift
+  if [ -e ${0%/conky}/functions/conky/$msg ] ;then
+    . ${0%/conky}/functions/conky/$msg $@
+  else
+    usage $0
+  fi
+else
+  /usr/bin/conky -q &
+fi
+
+# vim: set ft=sh: #

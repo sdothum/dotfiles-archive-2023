@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# [ $TRACE ] && CHILD="switch $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Switch operations
+
+# Usage: switch [msg], see functions/switch
+
+msg=$1
+shift
+if [ -e ${0%/switch}/functions/switch/$msg ] ;then
+  . ${0%/switch}/functions/switch/$msg $@
+else
+  usage $0
+fi
+herbstclient emit_hook focus_changed
+
+# vim: set ft=sh: #

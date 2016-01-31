@@ -1,0 +1,67 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Sysadmin
+
+# restart systemd process
+status() {
+  if sudo systemctl status $service ;then
+    notify "Systemd $action" "$(sudo systemctl status $service)"
+  else
+    time=0 notify "Systemd $action" "$(sudo systemctl status $service)"
+  fi
+}
+
+cd /usr/lib/systemd/system/
+while :
+do
+  service=$(stest -fl . \
+          | sort  | sed 's/.service$//' \
+          | sed '1i[ daemon-reload   ]\n[ list services   ]\n[ list-unit-files ]' \
+          | dmenu 'Systemd' -no-custom) || exit
+
+  case $service in
+    '[ daemon-reload   ]') sudo systemctl daemon-reload
+                           notify 'Systemd daemon-reload'
+                           break ;;
+
+    '[ list services   ]') term 'services' systemctl --type service --all ;;
+    '[ list-unit-files ]') term 'unit-files' systemctl list-unit-files ;;
+
+    *) service=$service.service
+       sudo systemctl status $service && actions='stop\nrestart' || actions='start'
+       while action=$(echo "$actions\nstatus\nenable\ndisable" \
+                    | dmenu "${service%.service}" -no-custom) || break
+       do
+         case $action in
+           'start') sudo systemctl start $service
+                    status
+                    break ;;
+
+           'stop') sudo systemctl stop $service
+                   status
+                   break ;;
+
+           'restart') sudo systemctl restart $service
+                      status
+                      break ;;
+
+           'status') status
+                     break ;;
+
+           'enable') sudo systemctl enable $service
+                     status
+                     break ;;
+
+           'disable') sudo systemctl disable $service
+                      status
+                      break ;;
+         esac
+         break
+       done
+       break ;;
+  esac
+done
+
+# vim: set ft=sh: #

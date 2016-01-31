@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Screenshot
+
+usage() {
+  echo "usage: $(basename $0)  [ l'eft | r'ght | a'll | <XxY+'X+'Y> ]"
+  exit 1
+}
+
+target=/data/photos/batchqueue
+delay=${delay:-5}
+
+if is_server ;then
+  case $@ in
+    h | '') usage ;;
+    DVI-0 | left | 0 | l) opts='--geometry=1680x1050+0+0' ;;
+    DVI-1 | right | 1 | r) opts='--geometry=2560x1600+1680+0' ;;
+    all | a) opts='--geometry=4240x1600+0+0' ;;
+    *) opts="--geometry=$@" ;;
+  esac
+else
+  set -- $(query display)
+  opts="--geometry=$1x$2+0+0"
+fi
+
+png=$(mktemp).png
+sleep $delay && /usr/bin/maim $opts $png
+mv -v $png $target
+
+# vim: set ft=sh: #

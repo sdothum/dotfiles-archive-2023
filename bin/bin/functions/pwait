@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................... Processes
+
+# Usage: pwait 'title'
+
+delay=0.01
+
+# wait for a uniquely named window to close before proceeding
+while [ "$(pgrep -af "$@" | grep -v pwait)" ]
+do
+  sleep $delay
+done
+
+# vim: set ft=sh: #

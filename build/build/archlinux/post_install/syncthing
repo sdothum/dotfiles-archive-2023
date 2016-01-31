@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................... syncthing
+
+sudo chown $USER:users $HOME/.config/syncthing/config.xml
+original $HOME/.config/syncthing/config.xml
+sed -i 's/127.0.0.1/0.0.0.0/' $HOME/.config/syncthing/config.xml
+# see syncthing-inotify
+# systemd enable syncthing@$USER
+
+# vim: set ft=sh: #

@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ xorg-xlsfonts
+
+# rebuild font caches
+sudo rm -rf $HOME/.fontconfig/*
+sudo fc-cache -fv
+
+# vim: set ft=sh: #

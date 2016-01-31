@@ -1,0 +1,120 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# select email contact addresses for insert into sup query
+maildir=${MAILDIR:-$HOME/Maildir}
+addressbook=$maildir/addressbook
+# additional contacts
+# - name <address>
+# - tag :: name <address>,..
+contacts=$maildir/contacts
+
+# build address list
+# - exclude major lists correspondence
+# - exclude news and announcement items
+# - exclude malformed addresses, unexpected characters
+# - addresses must include "user name" prefix
+# - proper case "user name"
+__abook() {
+  time=15 notify 'Updating dmenu addressbook cache' 'Please be patient..'
+  /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc):' $maildir \
+  | grep '@' \
+  | sed -re 's/(\xad|\x01)/ /g' \
+        -e 's/[,;] */\n/g' \
+        -e 's/["]//g' \
+        -e "s/[']//g" \
+        -e 's/<br>//' \
+        -e 's/<mailto:[^>]*>//' \
+        -e 's/\t/ /g' \
+        -e 's/  *$//' \
+        -e 's/^  *//' \
+        -e 's/  */ /g' \
+        -e 's/^To: //I' \
+        -e 's/^From: //I' \
+        -e 's/^Cc: //I' \
+        -e 's/^Bcc: //I' \
+        -e 's/< */</' \
+        -e 's/ *>/>/' \
+  | grep '^[^<].*<.*>$' \
+  | grep -v '@.*<' \
+  | grep -Eiv '(^[^a-z[]|[#])' \
+  | grep -Piv '<comments(?!@thedarnedestthing)' \
+  | grep -Eiv '((hello|info)@)' \
+  | grep -Eiv '(announce|automated|confirm|contact|help|invitations|market|news|notification|promo|reply|review|subscribe|welcome)' \
+  | grep -Eiv '(feedspot|github|via linkedin|yahoogroups)' \
+  | sed -re 's/[^< ]*[?][^< ]* //' \
+        -e 's/\b(\w*)\b/\L\u\1/g' \
+        -e 's/(<.*)/\L\1/g' \
+  | sort -f | uniq -i \
+  >$addressbook
+  notify 'Update of dmenu addressbook cache' '..Complete'
+}
+
+# command line initialization with: dmenu abook [init]
+if ! [ -s $addressbook ] || [ "$*" ] ;then
+  __abook
+  [ "$*" ] && exit
+fi
+
+ribbon() {
+  if [ -z "$addresses" ] ;then
+    echo 'Email Address'
+  elif echo $addresses | grep -qv ',' ;then
+    echo "$addresses"
+  else
+    echo "... $(echo ${addresses##*,})"
+  fi
+}
+
+contacts() {
+  sed "s/  *::  */^$SEP /" $contacts | column -s\^ -t
+  cat $addressbook
+}
+
+addresslist() {
+  if [ "$addresses" ] ;then
+    contacts \
+    | sed '/^ *$/d' \
+    | sed '1i[ paste        ]\n[ clipboard    ]\n[ add contacts ]'
+  else
+    contacts \
+    | sed '/^ *$/d' \
+    | sed '1i[ rebuild database ]\n[ edit contacts    ]'
+  fi
+}
+
+while :
+do
+  address=$(addresslist | dmenu "$(ribbon)" -no-custom) || exit
+  address=${address#*$SEP }
+
+  case "$address" in
+    '[ rebuild database ]') __abook
+                            unset addresses ;;
+
+    '[ edit contacts    ]') gvim -f $contacts ;;
+
+    '[ paste        ]') echo "$addresses" | xsel -i
+                        xdotool type "$addresses"
+                        break ;;
+
+    '[ clipboard    ]') echo "$addresses" | xsel -i
+                        time=10 notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
+                        break ;;
+
+    '[ add contacts ]') if [ "$addresses" ] ;then
+                          desc=$(echo | dmenu 'Description') || continue
+                          [ $desc ] || desc='Contacts'
+                          echo "\n$desc :: $addresses" >>$contacts
+                          unset addresses
+                          gvim -f $contacts
+                        fi ;;
+
+    *) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
+  esac
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,67 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Edit
+
+# system conf files
+configs=$cachedir/dmenu_configs
+
+__configs() {
+  notify 'Updating dmenu config cache' 'Please be patient..'
+  exclude='\.azureus|backups|\.bundler|\.cache|cairo|chromium|depot|\.deprecated|\.dropbox|geany|\.gem|\.ghc|\.gimp|google|\.hg|\.kde|libreoffice|\.mozilla|\.opera|\.original|\.PlayOnLinux|sandbox|\.save|\.stversions|(s|u)mplayer|tint2|Trash|\.vim|vundle|\.xbmc|\.xmonad|xfce4'
+
+  # convert spaces in filenames to tilde and convert back after joining!
+  # avoid nfs mounts
+  echo $HOME/build/root/var/spool/cron/$USER \
+       $(sudo find -L /etc -maxdepth 1 -type f | egrep -v '\.original') \
+       $(sudo find /etc -type f -regex '.*cfg' | sed 's/ /:/g') \
+       $(sudo find /etc -type f -regextype posix-extended -regex '.*conf(ig)*' | egrep -v 'asciidoc|bluetooth|dbus-1|fonts|ghostscript|sane\.d' | sed 's/ /:/g') \
+       $(sudo find /etc -type f -regextype posix-extended -regex '.*/conf(ig)*.*' | egrep -v 'exim4|fonts' | sed 's/ /:/g') \
+       $(sudo find /etc -type f -regex '.*ini' | sed 's/ /:/g') \
+       $(sudo find /etc -type f -regex '.*rc' | egrep -v 'Muttrc' | sed 's/ /:/g') \
+       $(sudo find /opt -type f -regextype posix-extended -regex '.*conf(ig)*' | egrep -v '\.git' | sed 's/ /:/g') \
+       $(sudo find /opt -type f -regex '.*ini' | sed 's/ /:/g') \
+       $(sudo find /usr/lib/systemd/system/ -type f) \
+       $([ -d /var/adsuck ] && sudo find /var/adsuck -type f | sed 's/ /:/g') \
+       $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*cfg' | egrep -v "$exclude" | sed 's/ /:/g') \
+       $(find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex '.*conf(ig)*' | egrep -v "$exclude" | sed 's/ /:/g') \
+       $(find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex '.*/conf(ig)*.*' | egrep -v "$exclude" | sed 's/ /:/g') \
+       $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*ini' | egrep -v "$exclude" | sed 's/ /:/g') \
+       $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*rc' | egrep -v "$exclude" | sed 's/ /:/g') \
+  | tr ' ' '\n' \
+  | sed -re 's/:/ /g' \
+        -e "s|(.*)/([^/]*)$|\2^$SEP \1|" \
+  | sort -u \
+  | sed -e '1i
+' \
+  >$configs
+  notify 'Updating dmenu config cache' '..Finished'
+}
+
+# command line initialization with: dmenu configs [init]
+if ! [ -s $configs ] || [ "$*" ] ;then
+  __configs
+  [ "$*" ] && exit
+fi
+
+while :
+do
+  file=$(cat $configs \
+       | history configs \
+       | sed -e '1i[ rebuild database ]' \
+       | column -s\^ -t \
+       | dmenu 'Edit Config' -no-custom) || exit
+  if [ "$file" = '[ rebuild database ]' ] ;then
+    __configs
+    continue
+  fi
+
+  history configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+  # why do people put spaces in filenames, especially config files!
+  file=$(echo $file | sed -re "s|^(.*)  *${SEP}  *(.*)|\2/\1|" -e 's/ /\\\\\\\\ /')
+  eval v "$file"
+  exit
+done
+
+# vim: set ft=sh: #

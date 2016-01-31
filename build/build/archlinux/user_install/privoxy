@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... privoxy
+
+# allow dpreview images
+original /etc/privoxy/user.action
+if ! grep -q 'a.img-dpreview.com' /etc/privoxy/user.action ;then
+  sudo sed -i '$a\
+{ fragile }\
+a.img-dpreview.com\
+.disqus.com\
+.photographyblog.com\
+.nhl.com\
+{ +block{Nasty ads.} }\
+storage.canoe.ca/v1/dynamic_resize/sws_path/suns-prod-images/\
+' /etc/privoxy/user.action
+fi
+
+systemd enable privoxy
+
+# vim: set ft=sh: #

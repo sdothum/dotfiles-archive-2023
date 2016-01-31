@@ -1,0 +1,20 @@
+
+[ $TRACE ] && CHILD="restore/window $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Restore window
+
+# smart restore window
+if herbstclient dump "'$TAG" ;then
+  touch $LOCK
+  focus frame
+  herbstclient chain . lock . use "'$TAG"
+  # moving window sometimes isn't visible, so bring window instead !!
+  winid=$(herbstclient attr clients.focus.winid)
+  herbstclient chain . use $TAG . bring $winid . unlock
+  rm -f $LOCK
+fi
+
+# vim: set ft=sh: #

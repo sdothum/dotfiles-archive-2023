@@ -1,0 +1,19 @@
+
+[ $TRACE ] && CHILD="draw/compton $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Compton
+
+if [ -e $COMPTON ] ;then
+  if ! pidof compton >/dev/null ;then
+    compton >/tmp/compton.log 2>&1 &
+    xscreensaver -no-splash &
+  fi
+elif pidof compton >/dev/null ;then
+  killall compton
+  killall xscreensaver
+fi
+
+# vim: set ft=sh: #

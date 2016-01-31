@@ -1,0 +1,159 @@
+# system packages
+# see bundle_install
+
+= codecs
+# ▔▔▔▔▔▔
+# gnash-common
+  gst-libav
+  gst-plugins-base
+  gst-plugins-good
+  gstreamer0.10-plugins
+# lightspark-git
+
+
+= cups printing
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cups
+# cups-filters
+  cups-pdf
+# foomatic-db
+# foomatic-db-engine
+# foomatic-db-nonfree
+  ghostscript
+  gsfonts
+  gutenprint
+# hplip
+# python2-pyq5
+# splix
+# system-config-printer
+
+
+= fonts and font managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# cairo
+  font-manager
+# fontconfig
+# fontmatrix
+  ibfonts-meta-base
+# infinality-bundle-fonts
+  libxft
+# otf-gnutypewriter
+  powerline-fonts-git
+  terminus-font-ll2-td1
+# ttf-fantasque-sans
+  ttf-font-awesome
+# ttf-google-fonts-git
+# ttf-inconsolata
+  ttf-ionicons
+# ttf-mac-fonts
+  ttf-ms-fonts
+# ttf-noto-sans-ib
+# ttf-ubuntu-font-family
+# xorg-fonts-type1
+# xorg-xlsfonts
+
+
+= linux-ck kernel
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# linux-ck-atom    [is_atom]
+# linux-ck-headers [is_atom]
+# linux-ck-haswell [is_icore]
+# linux-ck-headers [is_icore]
+# "intel microcode must be installed after ck kernel"
+
+
+= hardware
+# ▔▔▔▔▔▔▔▔
+  dmidecode
+# gpointing-device-settings [nvidia]
+  hwinfo
+  intel-ucode
+  lm_sensors
+  xf86-input-wacom [is_server]
+
+
+= package managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  aurvote
+  cower
+# cower-git
+  downgrade
+# nix
+  pacaur
+# package-query-git
+# packer
+  pkgstats
+  pkgtools
+# powerpill
+# trizen
+# yaourt-gui
+# pacgraph
+  reflector
+
+
+= package rollback (btrfs)
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  grub-btrfs-git
+  pacupg
+  snapper
+
+
+= permissions and passwords
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gksu
+  gnome-keyring
+# keepassx
+  pass
+  polkit-gnome
+  python-keyring
+
+
+= power
+# ▔▔▔▔▔
+  acpi     [is_laptop]
+  powertop [is_laptop]
+  xfce4-power-manager
+
+
+= sound
+# ▔▔▔▔▔
+# alsa-firmware
+  alsa-plugins
+  lib32-alsa-plugins
+  lib32-libpulse
+  libflashsupport-oss
+  libflashsupport-pulse
+  mpg123
+# paprefs
+# pavolume-git
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+# pulseaudio-ctl
+# pulsemixer-git
+# xfce4-mixer
+# xfce4-volumed
+
+
+= system utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# anacron
+  cronie
+# dcron
+  figlet
+# incron
+# lxinput-qt-git
+  ntp
+# pmount
+  preload
++ qwertickle
+  rlwrap
+# synapse
+# sysstat
+# toilet
+  tlp [is_laptop]
+  udiskie
+# watcher
+  zramswap
+
+# vim: set ft=conf: #

@@ -1,0 +1,373 @@
+
+! X11 Settings
+! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+! to reload settings without needing to restart xserver:
+!   xrdb -merge ~/.Xresources
+
+! ............................................................... URxvt terminal
+
+! settings
+URxvt*buffered:               true            ! double buffer for xtf
+URxvt*hold:                   false           ! kill window on shell exit
+URxvt*loginShell:             true            ! to load shell profiles
+URxvt*print-pipe:             cat >$HOME/tmp/$(echo urxvt.dump.$(date +'%s'))
+URxvt*saveLines:              15000           ! non-tmux window scroll back
+
+! text
+URxvt*colorUL:                yellow
+! URxvt*font:                   xft:Inconsolata-dz:size=12
+! URxvt*font:                   xft:Fantasque Sans Mono:size=12
+URxvt*font:                   xft:PragmataPro:size=11
+URxvt*imLocale:               en_US.utf8
+URxvt*internalBorder:         9               ! pixels from frame edge
+
+URxvt*cursorUnderline:        true
+! pixels from frame edge
+! pixels from frame edge
+! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
+URxvt*lineSpace:              5               ! pixels between lines for added readability
+URxvt*underlineColor:         yellow
+
+! UI
+URxvt*fading:                 30              ! % brightness reduction on focus loss
+URxvt*mapAlert:               true            ! de-iconify on bell alert
+URxvt*scrollBar:              false           ! maximize usable line width
+URxvt*shading:                20              ! % transparency level
+URxvt*transparent:            true
+! URxvt*transparent:            false
+URxvt*visualBell:             true            ! blink window on bell
+
+! scrolling
+URxvt*scrollTtyKeypress:      true            ! scroll to bottom on keypress
+URxvt*scrollTtyOutput:        false           ! do not scroll to bottom on output
+URxvt*scrollWithBuffer:       false           ! do not use scrollback buffer
+URxvt*skipScroll:             true            ! favour scroll speed over listing all lines
+
+! enable left mouse click url launcher
+URxvt*matcher.button:         1
+URxvt*perl-ext:
+URxvt*perl-ext-common:        default,matcher
+URxvt*url-launcher:           vimb-detached
+
+! ........................................................... URxvt XTerm keymap
+! lifted from http://www.netswarm.net/misc/urxvt-xtermcompat.txt
+
+! act more like XTerm :-)
+URxvt*termName:               xterm-256color
+
+! normal
+URxvt*keysym.Home:            \033OH
+URxvt*keysym.End:             \033OF
+URxvt*keysym.F1:              \033OP
+URxvt*keysym.F2:              \033OQ
+URxvt*keysym.F3:              \033OR
+URxvt*keysym.F4:              \033OS
+
+! shift
+! paste conflict
+! URxvt*keysym.S-Insert:      \033[2;2~
+URxvt*keysym.S-Delete:        \033[3;2~
+URxvt*keysym.S-Home:          \033[1;2H
+URxvt*keysym.S-End:           \033[1;2F
+! scrolling conflict
+! URxvt*keysym.S-Page_Up:       \033[5;2~
+! URxvt*keysym.S-Page_Down:     \033[6;2~
+
+URxvt*keysym.S-F1:            \033[1;2P
+URxvt*keysym.S-F2:            \033[1;2Q
+URxvt*keysym.S-F3:            \033[1;2R
+URxvt*keysym.S-F4:            \033[1;2S
+URxvt*keysym.S-F5:            \033[15;2~
+URxvt*keysym.S-F6:            \033[17;2~
+URxvt*keysym.S-F7:            \033[18;2~
+URxvt*keysym.S-F8:            \033[19;2~
+URxvt*keysym.S-F9:            \033[20;2~
+URxvt*keysym.S-F10:           \033[21;2~
+URxvt*keysym.S-F11:           \033[23;2~
+URxvt*keysym.S-F12:           \033[24;2~
+
+! tab navigation conflict (only when using tabs)
+URxvt*keysym.S-Up:            \033[1;2A
+URxvt*keysym.S-Down:          \033[1;2B
+URxvt*keysym.S-Right:         \033[1;2C
+URxvt*keysym.S-Left:          \033[1;2D
+
+! alt
+URxvt*keysym.M-Insert:        \033[2;3~
+URxvt*keysym.M-Delete:        \033[3;3~
+URxvt*keysym.M-Home:          \033[1;3H
+URxvt*keysym.M-End:           \033[1;3F
+URxvt*keysym.M-Page_Up:       \033[5;3~
+URxvt*keysym.M-Page_Down:     \033[6;3~
+
+URxvt*keysym.M-F1:            \033[1;3P
+URxvt*keysym.M-F2:            \033[1;3Q
+URxvt*keysym.M-F3:            \033[1;3R
+URxvt*keysym.M-F4:            \033[1;3S
+URxvt*keysym.M-F5:            \033[15;3~
+URxvt*keysym.M-F6:            \033[17;3~
+URxvt*keysym.M-F7:            \033[18;3~
+URxvt*keysym.M-F8:            \033[19;3~
+URxvt*keysym.M-F9:            \033[20;3~
+URxvt*keysym.M-F10:           \033[21;3~
+URxvt*keysym.M-F11:           \033[23;3~
+URxvt*keysym.M-F12:           \033[24;3~
+
+URxvt*keysym.M-Up:            \033[1;3A
+URxvt*keysym.M-Down:          \033[1;3B
+URxvt*keysym.M-Right:         \033[1;3C
+URxvt*keysym.M-Left:          \033[1;3D
+
+! shift+alt
+URxvt*keysym.S-M-F1:          \033[1;4P
+URxvt*keysym.S-M-F2:          \033[1;4Q
+URxvt*keysym.S-M-F3:          \033[1;4R
+URxvt*keysym.S-M-F4:          \033[1;4S
+URxvt*keysym.S-M-F5:          \033[15;4~
+URxvt*keysym.S-M-F6:          \033[17;4~
+URxvt*keysym.S-M-F7:          \033[18;4~
+URxvt*keysym.S-M-F8:          \033[19;4~
+URxvt*keysym.S-M-F9:          \033[20;4~
+URxvt*keysym.S-M-F10:         \033[21;4~
+URxvt*keysym.S-M-F11:         \033[23;4~
+URxvt*keysym.S-M-F12:         \033[24;4~
+
+URxvt*keysym.S-M-Insert:      \033[2;4~
+URxvt*keysym.S-M-Delete:      \033[3;4~
+URxvt*keysym.S-M-Home:        \033[1;4H
+URxvt*keysym.S-M-End:         \033[1;4F
+URxvt*keysym.S-M-Page_Up:     \033[5;4~
+URxvt*keysym.S-M-Page_Down:   \033[6;4~
+
+URxvt*keysym.S-M-Up:          \033[1;4A
+URxvt*keysym.S-M-Down:        \033[1;4B
+URxvt*keysym.S-M-Right:       \033[1;4C
+URxvt*keysym.S-M-Left:        \033[1;4D
+
+! control
+URxvt*keysym.C-F1:            \033[1;5P
+URxvt*keysym.C-F2:            \033[1;5Q
+URxvt*keysym.C-F3:            \033[1;5R
+URxvt*keysym.C-F4:            \033[1;5S
+URxvt*keysym.C-F5:            \033[15;5~
+URxvt*keysym.C-F6:            \033[17;5~
+URxvt*keysym.C-F7:            \033[18;5~
+URxvt*keysym.C-F8:            \033[19;5~
+URxvt*keysym.C-F9:            \033[20;5~
+URxvt*keysym.C-F10:           \033[21;5~
+URxvt*keysym.C-F11:           \033[23;5~
+URxvt*keysym.C-F12:           \033[24;5~
+
+URxvt*keysym.C-Insert:        \033[2;5~
+URxvt*keysym.C-Delete:        \033[3;5~
+URxvt*keysym.C-Home:          \033[1;5H
+URxvt*keysym.C-End:           \033[1;5F
+URxvt*keysym.C-Page_Up:       \033[5;5~
+URxvt*keysym.C-Page_Down:     \033[6;5~
+
+URxvt*keysym.C-Up:            \033[1;5A
+URxvt*keysym.C-Down:          \033[1;5B
+URxvt*keysym.C-Right:         \033[1;5C
+URxvt*keysym.C-Left:          \033[1;5D
+
+! shift+control
+URxvt*keysym.S-C-F1:          \033[1;6P
+URxvt*keysym.S-C-F2:          \033[1;6Q
+URxvt*keysym.S-C-F3:          \033[1;6R
+URxvt*keysym.S-C-F4:          \033[1;6S
+URxvt*keysym.S-C-F5:          \033[15;6~
+URxvt*keysym.S-C-F6:          \033[17;6~
+URxvt*keysym.S-C-F7:          \033[18;6~
+URxvt*keysym.S-C-F8:          \033[19;6~
+URxvt*keysym.S-C-F9:          \033[20;6~
+URxvt*keysym.S-C-F10:         \033[21;6~
+URxvt*keysym.S-C-F11:         \033[23;6~
+URxvt*keysym.S-C-F12:         \033[24;6~
+
+URxvt*keysym.S-C-Insert:      \033[2;6~
+URxvt*keysym.S-C-Delete:      \033[3;6~
+URxvt*keysym.S-C-Home:        \033[1;6H
+URxvt*keysym.S-C-End:         \033[1;6F
+URxvt*keysym.S-C-Page_Up:     \033[5;6~
+URxvt*keysym.S-C-Page_Down:   \033[6;6~
+
+URxvt*keysym.S-C-Up:          \033[1;6A
+URxvt*keysym.S-C-Down:        \033[1;6B
+URxvt*keysym.S-C-Right:       \033[1;6C
+URxvt*keysym.S-C-Left:        \033[1;6D
+
+! alt+control
+URxvt*keysym.M-C-F1:          \033[1;7P
+URxvt*keysym.M-C-F2:          \033[1;7Q
+URxvt*keysym.M-C-F3:          \033[1;7R
+URxvt*keysym.M-C-F4:          \033[1;7S
+URxvt*keysym.M-C-F5:          \033[15;7~
+URxvt*keysym.M-C-F6:          \033[17;7~
+URxvt*keysym.M-C-F7:          \033[18;7~
+URxvt*keysym.M-C-F8:          \033[19;7~
+URxvt*keysym.M-C-F9:          \033[20;7~
+URxvt*keysym.M-C-F10:         \033[21;7~
+URxvt*keysym.M-C-F11:         \033[23;7~
+URxvt*keysym.M-C-F12:         \033[24;7~
+
+URxvt*keysym.M-C-Insert:      \033[2;7~
+URxvt*keysym.M-C-Delete:      \033[3;7~
+URxvt*keysym.M-C-Home:        \033[1;7H
+URxvt*keysym.M-C-End:         \033[1;7F
+URxvt*keysym.M-C-Page_Up:     \033[5;7~
+URxvt*keysym.M-C-Page_Down:   \033[6;7~
+
+URxvt*keysym.M-C-Up:          \033[1;7A
+URxvt*keysym.M-C-Down:        \033[1;7B
+URxvt*keysym.M-C-Right:       \033[1;7C
+URxvt*keysym.M-C-Left:        \033[1;7D
+
+! shift+alt+control
+URxvt*keysym.S-M-C-F1:        \033[1;8P
+URxvt*keysym.S-M-C-F2:        \033[1;8Q
+URxvt*keysym.S-M-C-F3:        \033[1;8R
+URxvt*keysym.S-M-C-F4:        \033[1;8S
+URxvt*keysym.S-M-C-F5:        \033[15;8~
+URxvt*keysym.S-M-C-F6:        \033[17;8~
+URxvt*keysym.S-M-C-F7:        \033[18;8~
+URxvt*keysym.S-M-C-F8:        \033[19;8~
+URxvt*keysym.S-M-C-F9:        \033[20;8~
+URxvt*keysym.S-M-C-F10:       \033[21;8~
+URxvt*keysym.S-M-C-F11:       \033[23;8~
+URxvt*keysym.S-M-C-F12:       \033[24;8~
+
+URxvt*keysym.S-M-C-Insert:    \033[2;8~
+URxvt*keysym.S-M-C-Delete:    \033[3;8~
+URxvt*keysym.S-M-C-Home:      \033[1;8H
+URxvt*keysym.S-M-C-End:       \033[1;8F
+URxvt*keysym.S-M-C-Page_Up:   \033[5;8~
+URxvt*keysym.S-M-C-Page_Down: \033[6;8~
+
+URxvt*keysym.S-M-C-Up:        \033[1;8A
+URxvt*keysym.S-M-C-Down:      \033[1;8B
+URxvt*keysym.S-M-C-Right:     \033[1;8C
+URxvt*keysym.S-M-C-Left:      \033[1;8D
+
+! ...................................................................... Colours
+
+! ! color scheme
+URxvt*background:             #131d24
+URxvt*foreground:             #fdf6e3
+URxvt*cursorColor:            #fdf6e3
+! black
+URxvt.color0:                 #101010
+URxvt.color8:                 #565656
+! red
+URxvt.color1:                 #bd4a4a
+URxvt.color9:                 #cc6666
+! green
+URxvt.color2:                 #A1B52F
+URxvt.color10:                #bde077
+! yellow
+URxvt.color3:                 #e8ae5b
+URxvt.color11:                #ffd965
+! blue
+URxvt.color4:                 #597FA5
+URxvt.color12:                #66aabb
+! magenta
+URxvt.color5:                 #FF4B69
+URxvt.color13:                #f26b9e
+! cyan
+URxvt.color6:                 #72ad8c
+URxvt.color14:                #9fe3bc
+! white
+URxvt.color7:                 #BDB8AA
+URxvt.color15:                #fdf6e3
+
+! tabbed colors
+URxvt.tabbed.tabbar-fg:       243
+URxvt.tabbed.tabbar-bg:       238
+URxvt.tabbed.tab-fg:          231
+URxvt.tabbed.tab-bg:          124
+  
+! ..................................................................... Defaults
+
+! URxvt*answerbackString:     string
+! URxvt*background:           color
+! URxvt*backspacekey:         string
+! URxvt*boldFont:             fontname
+! URxvt*boldItalicFont:       fontname
+! URxvt*borderColor:          color
+! URxvt*borderLess:           boolean
+! URxvt*chdir:                string
+! URxvt.color0:               #000000
+! URxvt.color10:              #55FF55
+! URxvt.color11:              #FFFF55
+! URxvt.color12:              #5555FF
+! URxvt.color13:              #FF55FF
+! URxvt.color14:              #55FFFF
+! URxvt.color15:              #FFFFFF
+! URxvt.color1:               #AA0000
+! URxvt.color2:               #00AA00
+! URxvt.color3:               #AA5500
+! URxvt.color4:               #0000AA
+! URxvt.color5:               #AA00AA
+! URxvt.color6:               #00AAAA
+! URxvt.color7:               #AAAAAA
+! URxvt.color8:               #555555
+! URxvt.color9:               #FF5555
+! URxvt*colorBD:              color
+! URxvt*colorIT:              color
+! URxvt*colorRV:              color
+! URxvt*cursorBlink:          boolean
+! URxvt*cursorColor2:         color
+! URxvt*cursorColor:          color
+! URxvt*cutchars:             string
+! URxvt*deletekey:            string
+! URxvt*depth:                number
+! URxvt*externalBorder:       number
+! URxvt*fadeColor:            color
+! URxvt*foreground:           color
+! URxvt*geometry:             geom
+! URxvt*highlightColor:       color
+! URxvt*highlightTextColor:   color
+! URxvt*iconFile:             file
+! URxvt*iconName:             string
+! URxvt*imFont:               fontname
+! URxvt*imLocale:             string
+! URxvt*inputMethod:          name
+! URxvt*insecure:             boolean
+! URxvt*intensityStyles:      boolean
+! URxvt*iso14755_52:          boolean
+! URxvt*iso14755:             boolean
+! URxvt*italicFont:           fontname
+! URxvt*jumpScroll:           boolean
+! URxvt*keysym.sym:           keysym
+! URxvt*meta8:                boolean
+! URxvt*modifier:             modifier
+! URxvt*mouseWheelScrollPage: boolean
+! URxvt*override-redirect:    boolean
+! URxvt*pastableTabs:         boolean
+! URxvt*perl-eval:            perl-eval
+! URxvt*perl-lib:             string
+! URxvt*pointerBlank:         boolean
+! URxvt*pointerBlankDelay:    number
+! URxvt*pointerColor2:        color
+! URxvt*pointerColor:         color
+! URxvt*preeditType:          style
+! URxvt*reverseVideo:         boolean
+! URxvt*scrollBar_align:      mode
+! URxvt*scrollBar_floating:   boolean
+! URxvt*scrollBar_right:      boolean
+! URxvt*scrollColor:          color
+! URxvt*scrollstyle:          mode
+! URxvt*searchable-scrollback: keysym
+! URxvt*secondaryScreen:      boolean
+! URxvt*secondaryScroll:      boolean
+! URxvt*selection-autotransform.idx: perl-transform
+! URxvt*selection.pattern-idx: perl-regex
+! URxvt*skipBuiltinGlyphs:    boolean
+! URxvt*termName:             string
+! URxvt*thickness:            number
+! URxvt*title:                string
+! URxvt*transient-for:        windowid
+! URxvt*tripleclickwords:     boolean
+! URxvt*troughColor:          color
+! URxvt*urgentOnBell:         boolean
+! URxvt*utmpInhibit:          boolean

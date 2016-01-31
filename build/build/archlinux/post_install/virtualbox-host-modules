@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... virtualbox
+
+sudo dkms install vboxhost/$(pm virtualbox-host | grep virtualbox-host-modules | cut -d' ' -f2 | sed 's/-.*//')
+echo "vboxdrv
+vboxnetflt" | sudo tee /etc/modules-load.d/virtualbox.conf
+sudo modprobe vboxdrv
+sudo modprobe vboxnetflt
+
+sudo gpasswd -a $USER vboxusers
+if ! [ -d /data/depot/vms ] ;then
+  sudo mkdir -pv /data/depot/vms
+  sudo chown -R $USER:users /data/depot
+  # disable CoW for virtual machine images
+  chattr +C /data/depot/vms/
+  sudo ln -sv /data/depot/vms /data/
+  sudo chown $USER:users /data/vms
+fi
+
+# vim: set ft=sh: #

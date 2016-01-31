@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................... Processes
+
+# quick kill!
+if [ "$*" ] ;then
+  if p $@ | grep -v "$0" ;then
+    pids=$(p $@ | grep -v "$0" | awk '{ print $2 }')
+    if-yes "kill /$@/ $pids" && sudo kill -KILL $pids 2>/dev/null
+  fi
+fi
+
+# vim: set ft=sh: #

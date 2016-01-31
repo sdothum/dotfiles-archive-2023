@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Package management
+
+# default (no options) to package query
+
+if [ $# -eq 1 ] ;then
+  pacman -Qs $@ || yaourt -Ss $@
+else
+  action=$1
+  shift
+  if [ $action. = R. ] ;then
+    # see pacman -R --help, eg. -Rccssnd
+    sudo pacman -Rns --noconfirm $@
+  else
+    # no dash option shorthand for noconfirm :-)
+    echo $action | grep -q '^-' || action="-$action --noconfirm"
+    eval yaourt $action $@
+  fi
+fi
+
+# vim: set ft=sh: #

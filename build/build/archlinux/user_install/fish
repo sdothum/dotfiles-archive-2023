@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... fish
+
+sudo mkdir -pv /root/.config/fish
+sudo ln -sfv $HOME/.config/fish/config.fish /root/.config/fish/
+sudo ln -sfv $HOME/.config/fish/functions /root/.config/fish/
+sudo ln -sfv $HOME/.config/fish/user.fish /root/.config/fish/
+
+# vim: set ft=sh: #

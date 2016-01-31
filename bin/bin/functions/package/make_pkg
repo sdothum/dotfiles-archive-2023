@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Distribution install
+
+echo cd $HOME/build/archlinux/makepkg
+echo sudo pacman -Rdd ${_yellow_}\{package\}${_nocolor_}
+echo wget https://aur.archlinux.org/packages/pa/${_yellow_}\{package\}${_nocolor_}/${_yellow_}\{package\}${_nocolor_}.tar.gz
+echo tar -xzf ${_yellow_}\{package\}${_nocolor_}.tar.gz
+echo cd ${_yellow_}\{package\}${_nocolor_}
+echo makepkg -s
+echo sudo pacman -U ${_yellow_}\{package\}${_nocolor_}-\*.pkg.tar.xz
+echo sudo find $HOME/build/archlinux/makepkg -user root -exec sudo chown -v \$USER:users {} \;
+echo sudo rm -rv $HOME/build/archlinux/makepkg/${_yellow_}\{package\}${_nocolor_}/\{pkg,src\} 2\>\/dev\/null
+
+# vim: set ft=sh: #

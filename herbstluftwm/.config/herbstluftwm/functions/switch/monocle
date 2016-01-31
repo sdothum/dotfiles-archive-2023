@@ -1,0 +1,33 @@
+
+[ $TRACE ] && CHILD="switch/monocle $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................... Switch monocle margins
+
+# Usage: switch monocle primary_tag [force]
+#        switch monocle primary_tag, with monitor focus dependency
+#        switch monocle primary_tag force, force check
+
+monocle() {
+  [ -e $MONOCLE:$1 ] || echo 0 >$MONOCLE:$1
+  # has associated tag view (monocle layout) changed?
+  if [ $(cat $MONOCLE) -ne $(cat $MONOCLE:$1) ] ;then
+    cp -f $MONOCLE:$1 $MONOCLE
+    draw refresh monocle
+    query primary && restore panel
+  fi
+}
+
+# force monocle check?
+if [ "$2" ] ;then
+  monocle $1
+elif query primary ;then
+  monocle $1
+else
+  # keybind monocle check issued from secondary monitor so check primary tag!
+  monocle $(query tag inactive)
+fi
+
+# vim: set ft=sh: #

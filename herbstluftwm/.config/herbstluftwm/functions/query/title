@@ -1,0 +1,23 @@
+
+# [ $TRACE ] && CHILD="query/title $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Window title
+
+SEP='•'
+
+attr() {
+  herbstclient attr clients.$2.$1
+}
+
+instance=$(attr 'instance' "$1")
+title=$(attr 'title' "$1" \
+  | sed -e '/(.*).*VIM/s|\(.*\) (.*/\(.*\)).*|\2/\1|' \
+        -e 's/ [-+] .*//' \
+        -e 's/ at .*//'\
+        -e 's/:/ /')
+echo "$instance $SEP $title"
+
+# vim: set ft=sh: #

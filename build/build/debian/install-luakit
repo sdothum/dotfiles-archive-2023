@@ -1,0 +1,42 @@
+#!/usr/bin/env fish
+# install luajit/luakit browser
+
+headline+ "building luajit"
+
+cd /data/depot/www/luakit
+[ -d LuaLIT-2.0.1 ]; or tar xvzf LuaJIT-2.0.1.tar.gz
+
+cd LuaJIT-2.0.1
+make clean
+make
+sudo make install
+sudo ln -svf /usr/local/bin/luajit-2.0.1 /usr/local/bin/luajit
+
+headline+ "building luakit"
+
+install+ libsqlite3-dev
+install+ libunique-dev
+install+ libwebkit-dev
+install lua-filesystem
+
+cd /data/depot/www/luakit
+[ -d luakit ]; and sudo rm -rf luakit
+git clone https://github.com/mason-larobina/luakit.git
+
+cd luakit
+make clean
+make USE_LUAJIT=1
+sudo make install
+# add system wide link library path
+sudo ldconfig /usr/local/lib
+# luakit doesn't find this libary for some reason! :-?
+sudo ln -sfv /usr/lib/x86_64-linux-gnu/lua/5.1/lfs.so /usr/local/lib/lua/5.1/
+
+sudo update-alternatives --verbose --install /usr/bin/gnome-www-browser gnome-www-browser /usr/local/bin/luakit 80
+sudo update-alternatives --verbose --install /usr/bin/x-www-browser x-www-browser /usr/local/bin/luakit 80
+#sudo update-alternatives --set gnome-www-browser /usr/local/bin/luakit
+#sudo update-alternatives --set x-www-browser /usr/local/bin/luakit
+
+annotate "compare customizations in $HOME/.luakit/* with /data/depot/www/luakit/luakit-master/config/* sources"
+
+# vim: set ft=fish: #

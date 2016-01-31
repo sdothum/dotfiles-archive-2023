@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................. xf86-video-intel
+
+# intel video tearing fix
+if ! [ -e /etc/X11/xorg.conf.d/20-intel.conf ] ;then
+  config_install /etc/X11/xorg.conf.d/20-intel.conf
+fi
+
+# vim: set ft=sh: #

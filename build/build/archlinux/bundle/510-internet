@@ -1,0 +1,87 @@
+# internet packages
+# see bundle_install
+
+= browsers
+# ▔▔▔▔▔▔▔▔
+  chromium
+  chromium-pepper-flash
+# dwb-git
+# dwb-gtk3
+# elinks
+# firefox
+  flashplugin
+# haskell-hbro
+# jumanji-git
+# libunique
+# links
+# lispkit-browser
+# lua51-filesystem
+# luajit
+# luakit
+# lynx
+# midorio
+# qutebrowser
+# qutebrowser-git
+# surf
+  tabbed
+# uzbl-browser
+# vimb
+  vimb-git
+  w3m
+  webkitgtk2
+
+
+= chat/twitter
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+# centerim5-git
+# finch
+# pidgin
+# skype
+  python-twitter
+# turses
+  weechat
+# xchat
+  xmpppy
+  znc
+
+
+= file transfer
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# btsyncindicator
+# btsync
+# couchpotato-git [is_server]
+# flexget
+  gftp
+  nzbget [is_server]
+# par2cmdline-tbb
+# python2-pyopenssl
+  rsync
+# rtorrent
+# sabnzbd       [is_server]
+# sickbeard-git [is_server]
+  sonarr [is_server]
+  syncthing
+# syncthing-git
+  syncthing-inotify
+  tixati
+# transmission-gtk
+# unison
+# utserver
+# wget
+
+
+= usenet mail
+# ▔▔▔▔▔▔▔▔▔▔▔
+# slrn
+
+
+= web aggregators
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# newsbeuter
+  php-gd
+  php-mcrypt
+  tt-rss
+# ttaurter
+  surfraw
+
+# vim: set ft=conf: #

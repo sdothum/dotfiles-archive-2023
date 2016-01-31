@@ -1,0 +1,12 @@
+
+# [ $TRACE ] && CHILD="query/primary $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ Primary focus
+
+# is primary monitor 0 in focus?
+herbstclient compare monitors.focus.index = 0
+
+# vim: set ft=sh: #

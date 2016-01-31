@@ -1,0 +1,136 @@
+#!/bin/bash
+# run from recovery mode for initial setup
+
+#-----------------------------------------------------------------------------
+# warning: export your zfs pools as a precautionary measure
+#          BEFORE starting your netinstall !!
+# otherwise, mdadm may be included by netinstall incorrectly identifying the
+# raid causing zfs to think the pools are damaged. Not to worry,
+# this script will remove mdadm so you can proceed after a reboot
+#-----------------------------------------------------------------------------
+
+if [ $USER != root ]; then
+  echo ".. please run this script as root user"
+  exit
+fi
+home=/home/shum
+
+function original() {
+  [ ! -f $@.dist ] && cp -v $@ $@.dist
+}
+
+function dist-config() {
+  cp -v $home/sync/dist/$@ $@
+}
+
+echo ":: set user privileges"
+original /etc/group
+dist-config /etc/group
+original /etc/sudoers.d/README
+dist-config /etc/sudoers.d/README
+
+echo ":: update hosts table"
+original /etc/hosts
+dist-config /etc/hosts
+cat hosts
+
+echo ":: set colemak keyboard layout"
+original /etc/default/keyboard
+dist-config /etc/default/keyboard
+ls -Rl /etc/default/k*
+
+echo ":: set local startup processes"
+original /etc/rc.local
+dist-config /etc/rc.local
+
+echo ":: free up block device caches"
+original sysctl.conf
+sed -i '$avm.vfs_cache_pressure=50' /etc/sysctl.conf
+
+if [ "$(hostname)" = "monad" ]; then
+  echo ":: remap acer international key to left shift"
+  dist-config /etc/X11/Xmodmap
+  original /etc/X11/xinit/xinitrc
+  dist-config /etc/X11/xinit/xinitrc
+  ls -R /etc/X11/Xm* /etc/X11/xi*
+  # echo ":: install acer fan control"
+  # modprobe -a -d /lib/modules/*/kernel/drivers/platform/x86 acerhdf fanon=55000 fanoff=50000
+
+  echo ":: reduce kernel swapping to lower disk IO"
+  sed -i '$avm.swappiness=20' /etc/sysctl.conf
+
+  echo ":: adist cpu freq control, sdhc hot plugin and webcam support"
+  sed -i '$acpi_cpufreq\
+pciehp\
+uvcvideo' /etc/rc.conf
+  echo 'options pciehp pciehp_force=1' | sudo tee /etc/modprobe.d/pciehp.conf
+fi
+
+if [ "$(hostname)" = "luna" ]; then
+  # echo ":: enable the USB dac which is inhibited by the hdmi of the video card (see ArchWiki sound config)"
+  # original /etc/modprobe.d/alsa-base.conf
+  # dist-config /etc/modprobe.d/alsa-base.conf
+  # ls -l /etc/modprobe.d
+
+  if [ -f /etc/gdm/Init/Default ]; then
+      echo ":: configure dual monitor displays"
+      original /etc/gdm/Init/Default
+      dist-config /etc/gdm/Init/Default
+  fi
+
+  echo ":: reduce SSD disk activity"
+  sed -i '$a \
+vm.dirty_ratio = 40 \
+vm.dirty_background_ratio = 1 \
+vm.dirty_writeback_centisecs = 24000' /etc/sysctl.conf
+fi
+
+echo ":: insert noatime into /etc/fstab"
+original /etc/fstab
+grep -q noatime /etc/fstab || sed -i -e 's/ defaults/ defaults,noatime/' \
+                                     -e 's/ errors=remount-ro/ defaults,noatime,errors=remount-ro/' /etc/fstab
+cat /etc/fstab
+
+echo ":: allow shell concurrency"
+original /etc/default/rcS
+sed -i '$aCONCURRENCY=shell' /etc/default/rcS
+cat /etc/default/rcS
+
+echo ":: reset x11 window manager startup"
+echo xmonad > $home/.windowmanager
+rm $home/.startx 2>/dev/null
+
+echo ":: enable auto login to user"
+original /etc/inittab
+dist-config /etc/inittab
+
+echo ":: set root mail forwarding"
+echo sdothum@gmail.com >/root/.forward
+
+echo ":: set grub splash"
+original /etc/default/grub
+sudo sed -i 's/\(GRUB_TIMEOUT\)=.*/\1=3/' /etc/default/grub
+sudo sed -i '$aGRUB_BACKGROUND='$home'/images/wallpapers/milkyway.jpg' /etc/default/grub
+sudo update-grub
+
+echo ":: setup wifi"
+original /etc/network/interfaces
+if [ $(hostname) = monad ]; then
+  /etc/init.d/networking stop
+  sed -i '$a \
+auto wlan0 \
+iface wlan0 inet dhcp \
+  wpa-ssid "Ravens" \
+  wpa-psk "the keys of enoch"' /etc/network/interfaces
+  chmod 0600 /etc/network/interfaces
+  /etc/init.d/networking start
+fi
+echo ".. sudo /etc/init.d/networking restart"
+echo ".. sudo ping 10.1.0.1"
+echo ".. sudo ping www.google.ca"
+
+if [ -f /sbin/mdadm ]; then
+  echo ":: prevent mdadm from interfering with any zfs pools"
+  apt-get -y remove mdadm
+  echo ".. reboot system before enabling zfs"
+fi

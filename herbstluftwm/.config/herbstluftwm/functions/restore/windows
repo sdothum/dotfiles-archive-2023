@@ -1,0 +1,17 @@
+
+[ $TRACE ] && CHILD="restore/windows $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................... Dump (recover all) windows
+
+# herbstclient dump "'$TAG" && herbstclient merge_tag "'$TAG"
+herbstclient lock
+for i in $(seq 1 $(query ttag $TAG))
+do
+  restore window
+done
+herbstclient unlock
+
+# vim: set ft=sh: #

@@ -1,0 +1,29 @@
+
+[ $TRACE ] && CHILD="switch/frames $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................... Smart frame window cycle
+
+# Usage: switch frames {hc cycle command}
+#        this structure is required because keybind chaining is not sequential!
+
+herbstclient lock
+if query fullscreen; then
+  # fullscreen=true
+  # retain monocle view
+  if query monocle ;then
+    toggle fullscreen
+    toggle monocle
+  else
+    toggle fullscreen
+  fi
+fi
+
+herbstclient $@
+
+# [ $fullscreen ] && toggle fullscreen
+herbstclient unlock
+ 
+# vim: set ft=sh: #

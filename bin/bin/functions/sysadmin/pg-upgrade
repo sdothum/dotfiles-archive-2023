@@ -1,0 +1,29 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Postgresql
+
+usage() {
+  echo "usage: $(basename $0) 9.x"
+  exit 1
+}
+
+[ "$*" ] || usage
+
+# upgrade postgresql database
+stop postgresql
+sudo pacman -S --needed postgresql-old-upgrade
+
+sudo chown postgres:postgres /var/lib/postgres/
+sudo su - postgres -c "mv /var/lib/postgres/data /var/lib/postgres/data-$1"
+sudo su - postgres -c 'mkdir /var/lib/postgres/data'
+sudo su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'
+sudo su - postgres -c "pg_upgrade -b /opt/pgsql-$1/bin/ -B /usr/bin/ -d /var/lib/postgres/data-$1 -D /var/lib/postgres/data"
+
+sudo pacman -R postgresql-old-upgrade
+start postgresql
+if-no "remove /var/lib/postgres/data-$1" || sudo rm -rf /var/lib/postgres/data-$1
+
+# vim: set ft=sh: #

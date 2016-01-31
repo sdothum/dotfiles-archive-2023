@@ -1,0 +1,64 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# Usage: dmenu browser uri [bookmarks]
+
+# in order of personal preference..
+browsers="vimb \
+          vimb-detached \
+          chromium \
+          dwb \
+          elinks \
+          firefox \
+          hbro \
+          iceweasel \
+          jumanji \
+          lispkit \
+          luakit \
+          midori \
+          opera \
+          qutebrowser \
+          surf \
+          uzbl \
+          w3m \
+          xombrero \
+"
+
+[ $2 ] && edit='1i[ edit ]'
+
+while browser=$(apps "$browsers" | sed "$edit" | dmenu 'Browser' -no-custom) || exit
+do
+  case ${browser} in
+    '[ edit ]') gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
+                command dmenu bookmarks ;;
+
+    elinks | w3m) term "$browser" $browser "$1" ;;
+
+    chromium) pgrep herbstluftwm >/dev/null && focus frame
+              chromium -app=$1 ;;
+
+    dwb \
+    | firefox \
+    | google-chrome \
+    | iceweasel \
+    | hbro \
+    | jumanji \
+    | luakit \
+    | lispkit \
+    | midori \
+    | opera \
+    | qutebrowser \
+    | surf \
+    | uzbl \
+    | vimb \
+    | vimb-detached \
+    | xombrero) pgrep herbstluftwm >/dev/null && focus frame
+                eval $browser "$1" ;;
+  esac
+  exit
+done
+
+# vim: set ft=sh: #

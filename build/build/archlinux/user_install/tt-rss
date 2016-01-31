@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# User_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... tt-rss
+
+# override tt-rss theme, in lieu of selectable themes
+[ -e /srv/http/tt-rss/themes/default.css.original ] && exit
+original /srv/http/tt-rss/themes/default.css
+sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/particle_images /srv/http/tt-rss/themes/
+sudo cp -v $HOME/tt-rss/themes/particle_tall.css /srv/http/tt-rss/themes/default.css
+sudo systemctl restart tt-rss
+
+# vim: set ft=sh: #

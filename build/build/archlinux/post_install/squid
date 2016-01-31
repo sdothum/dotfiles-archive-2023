@@ -1,0 +1,39 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ squid
+
+original /etc/squid/squid.conf
+if ! grep -q 'acl localnet src 10.0.0.0/8' /etc/squid/squid.conf ;then
+  sudo sed -i '$a\
+acl localnet src 10.0.0.0/8\
+acl Safe_ports port 631     # cups\
+acl Safe_ports port 6789    # nzbget\
+acl Safe_ports port 32400   # plexmediaserver\
+http_access allow localnet\
+cache_peer 127.0.0.1 parent 8118 7 no-digest no-query no-netdb-exchange\
+never_direct allow all\
+hierarchy_stoplist cgi-bin ?\
+via off\
+request_header_access From deny all\
+request_header_access Referer deny all\
+request_header_access Server deny all\
+request_header_access WWW-Authenticate deny all\
+request_header_access Link deny all\
+request_header_access Cache-Control deny all\
+reply_header_access From deny all\
+reply_header_access Referer deny all\
+reply_header_access Server deny all\
+reply_header_access User-Agent deny all\
+reply_header_access WWW-Authenticate deny all\
+reply_header_access Link deny all\
+shutdown_lifetime 0 seconds\
+forwarded_for delete\
+' /etc/squid/squid.conf
+fi
+
+systemd enable squid
+
+# vim: set ft=sh: #

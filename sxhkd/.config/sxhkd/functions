@@ -1,0 +1,29 @@
+#!/bin/bash
+# sxhkdrc functions
+
+# temporarily turn off scratchpad and return (echo) monitor it resides on
+# scratchpad-
+function scratchpad- {
+  if bspc query --tree | grep -q scratchpad; then
+    for i in $(bspc query --monitors); do
+      if [ -n "$(bspc query --tree --monitor $i | grep scratchpad)" ]; then
+        xdotool search --onlyvisible --classname scratchpad windowunmap
+        echo $i
+        break
+      fi
+    done
+  fi
+}
+
+# restore scratchpad to original monitor
+# scratchpad+ monitor
+function scratchpad+ {
+  if [ -n "$@" ]; then
+    D=$(bspc query --monitors --monitor focused)
+    # "monitor --focus" bug? appears to force "monitor --focus last", hence, test
+    # which, on a dual-head setup, works with "--focus last"
+    [ $@ = $D ] || bspc monitor $@ --focus
+    xdotool search --classname scratchpad windowmap
+    [ $@ = $D ] || bspc monitor $D --focus
+  fi
+}

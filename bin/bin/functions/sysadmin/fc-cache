@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Fonts
+
+# fc-cache wrapper to eliminate deprecated warning
+/usr/bin/fc-cache
+/bin/rm -f $HOME/.fonts.conf
+
+# vim: set ft=sh: #

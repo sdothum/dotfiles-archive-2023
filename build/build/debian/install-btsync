@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+# install btsync
+
+headline+ "install btsync"
+
+cd /data/depot/cloud/btsync
+[ -f btsync ]; or tar xvzf btsync_x64.tar.gz
+sudo cp btsync /usr/local/bin/
+
+dist-config /etc/init.d/btsync
+sudo update-rc.d btsync defaults
+sudo /etc/init.d/btsync start
+
+annotate "rmdir .sync and reinitialize (emptied) sync directories"
+
+# vim: set ft=fish: #

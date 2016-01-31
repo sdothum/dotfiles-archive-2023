@@ -1,0 +1,19 @@
+
+[ $TRACE ] && CHILD="switch/tag $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Smart move tag
+
+# move window to non-empty tag subframe and focus next window
+touch $LOCK
+winid=$(herbstclient attr clients.focus.winid)
+herbstclient chain . lock . use $1
+focus frame
+herbstclient chain . bring $winid . use_previous
+focus window
+herbstclient unlock
+rm -f $LOCK
+
+# vim: set ft=sh: #

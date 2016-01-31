@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... cups-pdf
+
+original /etc/cups/cups-pdf.conf
+if ! grep -q '^Out \${HOME}/documents' /etc/cups/cups-pdf.conf ;then
+  sudo sed -i '/#Out/aOut ${HOME}/documents' /etc/cups/cups-pdf.conf
+fi
+
+sudo systemctl restart cups
+
+# vim: set ft=sh: #

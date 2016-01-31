@@ -1,0 +1,12 @@
+#!/usr/bin/xdotool
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Window manager
+
+# raise window class
+search --onlyvisible --classname $1
+windowraise %@
+
+# vim: set ft=sh: #

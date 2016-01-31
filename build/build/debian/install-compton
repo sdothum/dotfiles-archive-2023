@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+# install a lighter weight compositing manager
+
+headline+ "building compton"
+
+cd /data/depot/x11/compton
+[ -d compton ]; and sudo rm -rf compton
+git clone https://github.com/chjj/compton.git
+install+ asciidoc
+install+ libconfig-dev
+install+ libdbus-1-dev
+install libxcomposite-dev
+
+cd compton
+make
+sudo make install
+
+# vim: set ft=fish: #

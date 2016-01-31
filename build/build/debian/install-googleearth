@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+# install google earth
+
+headline+ "building google earth"
+
+install googleearth-package
+
+cd /data/depot/astronomy/google-earth
+make-googleearth-package
+
+# still requires 32bit libraries.. boo!
+sudo dpkg -i googleearth*amd64.deb
+# vim: set ft=fish: #

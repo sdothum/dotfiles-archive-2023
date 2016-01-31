@@ -1,0 +1,89 @@
+#!/usr/bin/env fish
+# install rss news aggregator
+
+# postgresql version
+set vsn 9.3
+
+headline+ "install tiny tiny rss aggregator"
+
+install+ php5-cgi
+install+ php5-cli
+install+ php5-curl
+install+ php5-dev
+install+ php5-fpm
+install+ php5-gd
+install+ php5-mcrypt
+install+ php5-pgsql
+install+ php-apc
+install+ postgresql
+install tidy
+
+original /etc/php5/fpm/php.ini
+original /etc/php5/fpm/pool.d/www.conf
+sudo sed -i -e 's/\(max_execution_time\) =.*/\1 = 300/' \
+            -e 's,^;\(date.timezone\) =.*,\1 = "Canada/Eastern",' /etc/php5/fpm/php.ini
+sudo sed -i 's/^;\(request_terminate_timeout\) =.*/\1 = 300/' /etc/php5/fpm/pool.d/www.conf
+sudo systemctl enable php5-fpm.service
+sudo systemctl restart php5-fpm.service
+
+original /etc/postgresql/$vsn/main/postgresql.conf
+sudo sed -i "s,^\(data_directory =\) '/var,\1 '/srv," /etc/postgresql/$vsn/main/postgresql.conf
+original /etc/postgresql/$vsn/main/pg_hba.conf
+sudo sed -i 's/^\(local *all *all *\) peer/\1 md5/' /etc/postgresql/$vsn/main/pg_hba.conf
+#sudo systemctl enable postgresql.service
+#sudo systemctl start postgresql.service
+sudo service postgresql restart
+[ -d /srv/lib/postgresql/$vsn/main/base ]; or begin
+  su -c "echo \"create user ttrss with password 'tinytinyrss';\" | psql" - postgres
+  su -c "echo \"alter user ttrss set work_mem='64MB';\" | psql" - postgres
+  su -c "echo \"create database ttrss;\" | psql" - postgres
+  su -c "echo \"grant all privileges on database ttrss to ttrss;\" | psql" - postgres
+end
+#sudo service postgresql restart
+
+[ -d /data/depot/rss/ttrss ]; or mkdir -pv /data/depot/rss/ttrss
+cd /data/depot/rss/ttrss
+sudo rm -rf php*
+apt-get source php5
+
+cd php*/ext/pcntl
+sudo phpize
+sudo ./configure --prefix=/usr
+sudo make
+sudo make install
+original /etc/php5/cgi/php.ini
+sudo sed -i '1aextension=pcntl.so' /etc/php5/cgi/php.ini
+
+[ -d /srv/http/ttrss ]; or begin
+  cd /data/depot/rss/ttrss
+  git clone https://github.com/gothfox/Tiny-Tiny-RSS.git
+  mv Tiny-Tiny-RSS ttrss
+  mkdir -v ttrss/logs
+  echo '<?php phpinfo(); ?>' >ttrss/info.php
+  cp -rv /data/depot/themes/ttrss/themes/my* ttrss/themes/
+
+  git clone https://github.com/Churten/tt-rss-ff-xmllint.git
+  mv tt-rss-ff-xmllint/ff_xmllint ttrss/plugins/
+  sudo mv -f ttrss /srv/http/ttrss
+  sudo rm -rf tt-rss-ff-xmllint
+
+  cd /srv/http/ttrss
+  sudo chmod -v 777 cache/export
+  sudo chmod -v 777 cache/images
+  sudo chmod -v 777 cache/js
+  sudo chmod -v 777 cache/upload
+  sudo chmod -v 777 feed-icons
+  sudo chmod -v 777 lock
+  # sudo chown -R www-data:www-data /srv/http/ttrss/
+  sudo grep -q "^www-data.*$USER" /etc/group; or sudo sed -i 's/\(^www-data:.*$\)/\1'$USER'/' /etc/group
+  sudo chown -Rv $USER:$USER /srv/http/ttrss/themes/my*
+end
+
+annotate "initialize and create config.php at http://localhost/ttrss/install username ttrss password tinytinyrss"
+annotate+ 'login to ttrss with "admin" "password"'
+annotate+ "sudo sed -i \"s=\(define('SELF_URL_PATH'\), 'http://ttrss/');=\1, 'http://luna/ttrss/');=\" /srv/http/ttrss/config.php"
+annotate+ "sudo sed -i 's/\(define(\'SINGLE_USER_MODE\'\), false);/\1, true);/' /srv/http/ttrss/config.php"
+
+sudo systemctl restart nginx.service
+
+# vim: set ft=fish: #

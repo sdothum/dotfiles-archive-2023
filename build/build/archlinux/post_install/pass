@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... pass
+
+# create public key
+if [ is_server ] ;then
+  [ -d $HOME/.gnupg ] || gpg --full-gen-key
+fi
+echo RELOADAGENT | gpg-connect-agent
+gpg-agent --homedir /home/$USER/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log 
+
+# vim: set ft=sh: #

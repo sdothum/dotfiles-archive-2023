@@ -1,0 +1,45 @@
+#!/usr/bin/dash
+# [ $TRACE ] && CHILD="draw $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Draw operations
+
+# Usage: draw [msg], see functions/draw
+
+# um pixel pitch for primary and other monitors used
+# 30" 2560x1600
+# 22" 1680x1050
+# 15.4" 1440x900
+UM2560=250
+UM1680=282
+UM1440=230
+
+# match (visual) margins of secondary monitors to dell 30" 2560x1600 cinema display
+# laptops are arbitrary ratios of
+margins() {
+  case $1 in
+    2560) echo 93 ;;
+    1680) echo $(pixel_match $(margins 2560) $UM1680) ;;
+    1440) echo 40 ;;
+    *) echo 0 ;;
+  esac
+}
+
+# dot pitch match (width, um pixel pitch) to dell 30" 2560x1600 cinema display
+pixel_match() {
+  # echo $(( ($1 * $UM2560) / $2 )
+  # visual correction of um calculation by 1.1 using dell 2209wa monitor reference
+  echo $1 $2 | awk "{ print int(\$1 * $UM2560 / \$2 / 1.1 + 0.5) }"
+}
+
+msg=$1
+shift
+if [ -e ${0%/draw}/functions/draw/$msg ] ;then
+  . ${0%/draw}/functions/draw/$msg $@
+else
+  usage $0
+fi
+
+# vim: set ft=sh: #

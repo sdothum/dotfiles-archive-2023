@@ -1,0 +1,46 @@
+#!/usr/bin/ruby
+# encoding: UTF-8
+
+# File
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... Rename
+
+require 'term/ansicolor'
+
+class String
+  include Term::ANSIColor
+end
+
+# cleanup media title names
+begin
+  pwd = ENV['PWD']
+  unless ARGV[0].nil?
+    exit if File.file?(ARGV[0])
+    Dir.chdir(ARGV[0])
+  end
+  list = Dir.glob("*")
+  list.sort.each do |filename|
+    # newname = File.basename(filename, File.extname(filename))
+    newname = filename
+      .gsub(/\((\d\d\d\d)\)/, '\1')
+      .gsub(/[,._'()\[\]{}]/, ' ')
+      .gsub(/ s /, "'s ")
+      .gsub(/ t /, "'t ")
+      .gsub(/ +/,'.')
+      .gsub(/s(\d\d)e(\d\d)/, 'S\1E\2')
+      .gsub(/(\d)x(\d\d)/, 'S0\1E\2')
+      .gsub(/\.$/, '')
+      .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize }
+      # .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize } + File.extname(filename)
+    print "#{filename}".gsub(/ s /, "'s ")
+    unless filename == newname
+      print " => #{newname}".yellow.bold
+      File.rename(filename, newname) unless filename == newname
+    end
+    print "\n"
+  end
+  Dir.chdir(pwd)
+rescue
+  print ".. invalid directory #{ARGV[0].bold}\n".red unless ARGV[0] =~ /\//
+end

@@ -1,0 +1,20 @@
+
+[ $TRACE ] && CHILD="toggle/unclutter $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................. Toggle unclutter
+
+if pidof unclutter >/dev/null ;then
+  killall unclutter
+  pkill -TERM autokey-gtk
+  herbstclient set focus_follows_mouse 1
+else
+  # vimb script kills unclutter directly
+  pgrep -f autokey-gtk >/dev/null || autokey-gtk 2>/dev/null &
+  unclutter -idle 1 -jitter 2 -root &
+  herbstclient set focus_follows_mouse 0
+fi
+
+# vim: set ft=sh: #

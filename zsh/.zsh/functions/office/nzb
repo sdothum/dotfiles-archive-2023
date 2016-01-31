@@ -1,0 +1,77 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Syncing
+
+# curses nzb control
+list_delay=60s
+action=$1
+(( $# )) && shift
+queue=$@
+
+case $action in
+  '')   if ! pidof nzbget ;then
+          nzbget -o OutputMode=curses -s
+        else
+          underline $(timestamp)
+          nzbget -L G
+        fi
+        ;;
+  b)    nzbget -E G B $queue && nzb ;;
+  B)    nzb b $(nzb S $queue) ;;
+  c)    nzbget -o OutputMode=curses -C ;;
+  C)    nzb
+        if-yes "clear entire download queue" && nzbget -E G D 1-999999
+        ;;
+  d)    nzbget -E G D $queue && nzb ;;
+  D)    nzb d $(nzb S $queue) ;;
+  I)    if if-yes "clear history and queue" ;then
+          killall nzbget 2>/dev/null
+          # delay required for server shutdown (cannot use "nzb q")
+          sleep 1s
+          rm -rf /data/downloads/nzbs/{inter,queue,tmp}
+          # restart to create subdirectories
+          nzb
+        fi
+        ;;
+  l)    echo ".. tail -f /tmp/nzbget.log | g 'error|warning'"
+        tail -f /tmp/nzbget.log | g 'error|warning'
+        ;;
+  L)    while true
+        do
+          nzb
+          sleep $list_delay
+        done
+        ;;
+  p)    nzbget -E G P $queue && nzb ;;
+  # P)  if [[ -e ~/.nzbget.paused ]] ;then
+  #       nzb U
+  #     else
+  #       nzbget -P
+  #       touch ~/.nzbget.paused
+  #       nzb
+  #     fi
+  #     ;;
+  P)    nzb p $(nzb S $queue) ;;
+  q)    nzbget -Q ;;
+  r)    nzbget --rate $queue ;;
+  s)    nzb | egrep -i $queue ;;
+  S)    nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
+  t)    nzbget -E G T $queue && nzb ;;
+  T)    nzb t $(nzb S $queue) ;;
+  u)    nzbget -E G U $queue && nzb ;;
+  U)    nzb u $(nzb S $queue) ;;
+  # U)  nzbget -U
+  #     sudo rm -f ~/.nzbget.paused 2>/dev/null
+  #     !p "sleep $list_delay" && nzb L || nzb
+  #     ;;
+  # h|*)  echo ".. nzb (server)  'start/show  b'ottom|B  c'lient  C'lear  d'elete|D  h'elp  I'nitialize  l'og  L'ist  p'ause|P  q'uit  r'ate  s'earch  t'op|T  u'npause|U" 
+  h|*)  echo ".. nzb (server)  'start/show  c'lient  h'elp  I'nitialize  l'og  L'ist  q'uit  r'ate  s'earch" 
+        echo "   nzb (queue)  b'ottom|B  C'lear  d'elete|D  p'ause|P  t'op|T  u'npause|U" 
+        echo '   eg. nzb d <GID,GID-GID,..>'
+        echo '       nzb D <title>'
+        ;;
+esac
+
+# vim: set ft=zsh: #

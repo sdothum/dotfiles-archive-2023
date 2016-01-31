@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Git diff
+
+# Usage: cd /data/depot/dotfiles/.. ; dotfiled
+
+
+# diff all source files with local image
+src=${PWD#*dotfiles/}
+src=$HOME/${src#*/}
+
+for i in $(find . -type f | egrep -v '.deprecated|.hg')
+do
+  echo "${_YELLOW_}$i${_nocolor_}"
+  # git diff from prezto $(which diff), run in git repository directory
+  git --no-pager diff --color=auto --no-ext-diff --no-index $i $src/$i \
+  || if-no 'vdiff' \
+  || vimdiff -g -f --role='gvimdiff' $i $src/$i
+done
+
+# vim: set ft=sh: #

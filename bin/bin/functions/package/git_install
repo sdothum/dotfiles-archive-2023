@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................... Distribution install
+
+# git on with it!
+heading : $1
+
+__git_install=$(source_install $1)
+if [ -z $__git_install ] ;then
+  annotate "missing pre_install/$1 \"echo git://uri\""
+  exit
+fi
+
+[ -d $HOME/build/archlinux/git ] || mkdir -pv $HOME/build/archlinux/git
+git clone $__git_install $HOME/build/archlinux/git/$1
+
+# do post install for previously installed package dependencies
+post_install $1
+
+# cleanup package directory for subsequent arch rebuilds
+sudo find $HOME/build/archlinux/git -user root -exec sudo chown -v shum:users {} \;
+sudo rm -r $HOME/build/archlinux/git/$1 2>/dev/null
+unset __git_install
+
+# vim: set ft=sh: #

@@ -1,0 +1,73 @@
+#!/usr/bin/dash
+
+# X11 Desktop
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Conky
+
+# Usage: conky_weather city [debug]
+
+[ $# -gt 1 ] && debug=true
+
+# connection test
+count=0
+while ! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1
+do
+  sleep 1s
+  count=$(( $count + 1 ))
+  [ $count -gt 5 ] && exit
+done
+
+# http://www.weatheroffice.gc.ca/business/index_e.html for city codes
+case $1 in
+  calgary) city=ab-52 ;;
+  halifax) city=ns-19 ;;
+  kingston) city=on-69 ;;
+  nanaimo) city=bc-20 ;;
+  nelson) city=bc-37 ;;
+  vancouver) city=bc-74 ;;
+  victoria) city=bc-85 ;;
+  *) city=on-52 ;;
+esac
+
+# WEATHER=$(curl --silent "http://www.weatheroffice.gc.ca/rss/city/${city}_e.xml?source=ignitionfork#stream/feed%2Fhttp%3A%2F%2Fwww.weatheroffice.gc.ca%2Frss%2Fcity%2F${city}_e.xml")
+WEATHER=$(curl --silent "http://weather.gc.ca/rss/city/${city}_e.xml?source=ignitionfork")
+if [ $debug ] ;then
+  echo Weather .. $WEATHER
+  echo
+  read input
+fi
+
+CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/&.*$/, "", $0); print; }')
+if [ $debug ] ;then
+  echo Current .. $CURRENT
+  echo
+  read input
+fi
+
+# round temperature
+TEMPERATURE=$(echo $CURRENT | awk '{ gsub(/[^0-9.]*/, "", $0); $0 = $0 + .5; gsub(/\.[0-9]/, "", $0); print; }')
+CURRENT=$(echo $CURRENT | sed 's/[0-9.]//g')
+if [ $debug ] ;then
+  echo Temperature .. $TEMPERATURE
+  echo Current .. $CURRENT
+  echo
+  read input
+fi
+
+FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/ .*$/, "", $0); print; }')
+if [ $debug ] ;then
+  echo Feels like .. \"$FEELSLIKE\"
+  echo
+  read input
+fi
+
+if [ -z $FEELSLIKE ] ;then
+  echo ${CURRENT}${TEMPERATURE}C
+else
+  #echo ${CURRENT}${TEMPERATURE}C, Feels Like ${FEELSLIKE}C
+  echo ${CURRENT}${TEMPERATURE}C, Feels ${FEELSLIKE}C
+  #echo ${CURRENT}${TEMPERATURE}C/${FEELSLIKE}C
+fi
+
+# vim: set ft=sh: #

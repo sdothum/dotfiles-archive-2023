@@ -1,0 +1,30 @@
+
+[ $TRACE ] && CHILD="toggle/fullscreen $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................... Toggle conky fullscreen
+
+# fullscreen with conky panel
+herbstclient lock
+if query rez +1024 ;then
+  if query primary ;then
+    # allow transitioning monocle directly to fullscreen
+    query monocle && toggle monocle
+    if xdotool search --onlyvisible --limit 1 --maxdepth 1 --screen 0 --classname 'Conky' >/dev/null ;then
+      query fullscreen && draw monitor conky \
+                       || draw monitor conky fullscreen
+    else
+      # handle frame no conky
+      query fullscreen && draw monitor fullframe \
+                       || draw monitor fullscreen
+    fi
+  else
+    query fullscreen && draw monitor secondary \
+                     || draw monitor secondary fullscreen
+  fi
+fi
+herbstclient chain . fullscreen toggle . unlock
+
+# vim: set ft=sh: #

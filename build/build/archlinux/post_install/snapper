@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... snapper
+
+# .snapshots subvolume created during install, see archlinux-0disk
+# but snapper creates /.snapshots btrfs subvolume when generating config
+sudo umount /.snapshots
+sudo rmdir /.snapshots
+sudo snapper -c root create-config /
+sudo btrfs subvolume delete /.snapshots
+sudo mkdir /.snapshots
+sudo chmod 750 /.snapshots
+sudo mount /.snapshots
+
+# manual cleanup triggered in pa function
+original /etc/snapper/configs/root
+sudo sed -i -e "/^ALLOW_USERS=/cALLOW_USERS=\"$USER\"" \
+            -e '/^NUMBER_LIMIT=/cNUMBER_LIMIT="30"' \
+            -e '/^TIMELINE_CREATE=/cTIMELINE_CREATE="no"' \
+         /etc/snapper/configs/root
+
+# vim: set ft=sh: #

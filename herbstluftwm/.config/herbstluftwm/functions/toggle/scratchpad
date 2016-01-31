@@ -1,0 +1,43 @@
+
+[ $TRACE ] && CHILD="toggle/scratchpad $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Toggle scratchpad
+
+name='Scratchpad'
+scratchpad=$ROOT/herbstluftwm:scratchpad
+delay=${delay:=0.1}
+
+if xdotool search --onlyvisible --limit 1 --classname $name >/dev/null ;then
+  # if herbstclient compare monitors.focus.tag = $(herbstclient attr clients.$(cat $scratchpad).tag) ;then
+  if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
+                  compare monitors.focus.tag = TAG 2>/dev/null ;then
+    xdotool search --onlyvisible --limit 1 --classname $name windowunmap >/dev/null
+    draw refresh
+    focus window
+    exit
+  fi
+fi
+
+focus frame
+
+if [ -f $scratchpad ] ;then
+  if ! herbstclient bring $(cat $scratchpad) 2>/dev/null ;then
+    xdotool search --limit 1 --classname $name windowmap >/dev/null && exit
+    # otherwise, old instance probably killed or closed..
+  fi
+fi
+
+# allow for urxvt timing issues before creating new scratchpad instance
+sleep $delay
+if ! xdotool search --limit 1 --classname $name windowmap >/dev/null ;then
+  # cancel out above focus frame
+  focus frame
+  term $name byobu 'new-session -n ""'
+  xdotool search --sync --onlyvisible --limit 1 --classname $name >/dev/null
+  herbstclient attr clients.focus.winid >$scratchpad
+fi
+
+# vim: set ft=sh: #
