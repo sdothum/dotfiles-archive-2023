@@ -6,7 +6,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0)  <comment> | ignore | list | undo | rm <dir>"
+  echo "usage: $(basename $0)  <comment> | edit | ignore | init | list | undo | rm <dir>"
   exit 1
 }
 
@@ -63,7 +63,15 @@ commit() {
 if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
-    ignore) gvim .gitignore ;;
+    edit | ignore) gvim .gitignore ;;
+
+    init) git init
+          git add README.md
+          git commit -m "first commit"
+          git remote add origin https://github.com/sdothum/dotfiles.git
+          git push -u origin master
+          git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
+
     list) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
 
     undo | redo | reset) git reset --soft HEAD~
