@@ -52,9 +52,13 @@ status() {
 }
 
 mpc list artist >/dev/null 2>&1 || exit
-while artist=$(playlist | dmenu 'Artist' "$artist" -no-custom) || exit
+# note: cannot compare to null string
+[ "$(current)" > ' ' ] && artist='[ player ]'
+while :
 do
+  [ "$artist" = '[ player ]' ] || artist=$(playlist | dmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = '[ player ]' ] ;then
+    unset artist
     while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" \
               | column -s\^ -t \
               | dmenu "$(info)" "${cmd%% *}" -no-custom) || break
