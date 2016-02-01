@@ -17,22 +17,10 @@ redraw() {
   fi
 }
 
-search_conky() {
-  while :
-  do
-    case "$1" in
-      --onlyvisible | --sync) options="$options $1" ;;
-      *) break ;;
-    esac
-    shift
-  done
-  xdotool search --limit 1 --maxdepth 1 --screen 0 --classname $options 'Conky' $1 >/dev/null
-}
-
 spawn_conky() {
-  if ! search_conky windowmap ;then
+  if ! query conky windowmap ;then
     conky &
-    search_conky --onlyvisible --sync
+    query conky --onlyvisible --sync
   fi
 }
 
@@ -42,12 +30,12 @@ if query rez +1024 ;then
     redraw 'conky fullscreen' 'conky'
     query multihead && restore panel
   else
-    search_conky --onlyvisible windowunmap && redraw 'fullscreen' 'fullframe'
+    query conky --onlyvisible windowunmap && redraw 'fullscreen' 'fullframe'
   fi
 elif [ -e $CONKY ] ;then
   spawn_conky
 else
-  search_conky --onlyvisible windowunmap
+  query conky --onlyvisible windowunmap
 fi
 
 # vim: set ft=sh: #

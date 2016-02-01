@@ -1,0 +1,23 @@
+
+# [ $TRACE ] && CHILD="query/conky $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Conky focus
+
+# Usage: query conky [--options..] [command]
+#        any number of --options but only one optional command e.g. windowmap or windowunmap
+
+while :
+do
+  case "$1" in
+    --onlyvisible | --sync) options="$options $1" ;;
+    *) break ;;
+  esac
+  shift
+done
+
+xdotool search --limit 1 --maxdepth 1 --screen 0 --classname $options 'Conky' $1 >/dev/null
+
+# vim: set ft=sh: #

@@ -12,7 +12,7 @@ if query rez +1024 ;then
   if query primary ;then
     # allow transitioning monocle directly to fullscreen
     [ -e $MONOCLE ] && toggle monocle
-    if xdotool search --onlyvisible --limit 1 --maxdepth 1 --screen 0 --classname 'Conky' >/dev/null ;then
+    if query conky --onlyvisible ;then
       query fullscreen && draw monitor conky \
                        || draw monitor conky fullscreen
     else
