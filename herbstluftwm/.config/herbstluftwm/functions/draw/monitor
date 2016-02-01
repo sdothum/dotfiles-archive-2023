@@ -14,7 +14,6 @@
 # Note:  draw monitor conky fullscreen width, returns the width only, see draw panel
 
 SHADOW=${SHADOW:-1}
-[ -e $MONOCLE ] || echo 0 >$MONOCLE
 
 # secondary display area 
 X1=0
@@ -42,7 +41,7 @@ secondary=$(monitor 1)
 # margin tweaks for known display resolutions
 desktop_margin=$(margins $X0)
 # see toggle monocle
-monocle=$(cat $MONOCLE)
+[ -e $MONOCLE ] && monocle=$(cat $MONOCLE) || monocle=0
 
 # with transparent compton window borders, calculations assume..
 # - frame_border_width=0

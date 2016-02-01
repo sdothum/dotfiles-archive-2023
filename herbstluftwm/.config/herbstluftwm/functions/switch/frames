@@ -13,7 +13,7 @@ herbstclient lock
 if query fullscreen; then
   # fullscreen=true
   # retain monocle view
-  if query monocle ;then
+  if [ -e $MONOCLE ] ;then
     toggle fullscreen
     toggle monocle
   else

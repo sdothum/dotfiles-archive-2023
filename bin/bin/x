@@ -40,44 +40,44 @@ esac
 
 # start X11 from init console
 if [ $console ] ;then
+  wm=$(cat $HOME/.windowmanager)
   # escape to shell prompt
-  [ $(cat $HOME/.windowmanager) = shell ] && exit
-  startx=$(pgrep startx)
-  [ $startx ] || startx --
+  [ $wm = shell ] && exit
+  pgrep startx >/dev/null || startx --
+
+  # session specific clean up
+  case $wm in
+    2bwm) ;;
+    awesome) ;;
+    bspwm) ;;
+    budgie) ;;
+    cinnamon) ;;
+    goomwwm) ;;
+    dwm) ;;
+
+    herbstluftwm) pkill -TERM -f 'herbst'
+                  rm -rf /tmp/herbst* ;;
+
+    gnome) ;;
+    i3) ;;
+    kde) ;;
+    lxde) ;;
+    mate) ;;
+    notion) ;;
+    openbox) ;;
+    ratpoison) ;;
+    razor-qt) ;;
+    spectrwm) ;;
+    stumpwm) ;;
+    subtle) ;;
+    wmii) ;;
+    wmutils) ;;
+    xfce) ;;
+    xmonad) ;;
+  esac
 else
   # already in X11 session
   echo '.. window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'
 fi
-
-# session specific clean up
-case $windowmanager in
-  2bwm) ;;
-  awesome) ;;
-  bspwm) ;;
-  budgie) ;;
-  cinnamon) ;;
-  goomwwm) ;;
-  dwm) ;;
-
-  herbstluftwm) pkill -TERM -f 'herbst'
-                rm -rf /tmp/herbst* ;;
-
-  gnome) ;;
-  i3) ;;
-  kde) ;;
-  lxde) ;;
-  mate) ;;
-  notion) ;;
-  openbox) ;;
-  ratpoison) ;;
-  razor-qt) ;;
-  spectrwm) ;;
-  stumpwm) ;;
-  subtle) ;;
-  wmii) ;;
-  wmutils) ;;
-  xfce) ;;
-  xmonad) ;;
-esac
 
 # vim: set ft=sh: #

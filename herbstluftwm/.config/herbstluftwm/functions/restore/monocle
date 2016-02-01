@@ -11,10 +11,13 @@
 #        restore monocle primary_tag force, force check
 
 monocle() {
-  [ -e $MONOCLE:$1 ] || echo 0 >$MONOCLE:$1
   # has associated tag view (monocle layout) changed?
-  if [ $(cat $MONOCLE) -ne $(cat $MONOCLE:$1) ] ;then
-    cp -f $MONOCLE:$1 $MONOCLE
+  if [ -e $MONOCLE ] || [ -e $MONOCLE:$1 ] ;then
+    if [ -e $MONOCLE ] && ! [ -e $MONOCLE:$1 ] ;then
+      rm -f $MONOCLE
+    else ! [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ]
+      cp -f $MONOCLE:$1 $MONOCLE
+    fi
     draw refresh force
     query primary && restore panel
   fi

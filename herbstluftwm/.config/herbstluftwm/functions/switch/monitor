@@ -13,12 +13,12 @@ switch_to() {
   swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
   herbstclient chain . lock . set swap_monitors_to_get_tag 1
   case $1 in
-    0) herbstclient chain . focus_monitor 1 . use $tag0
-       restore monocle $tag1 force
-       herbstclient chain . focus_monitor 0 . use $tag1 ;;
+    0) herbstclient chain . focus_monitor 1 . use $tag0 . focus_monitor 0 . use $tag1
+       restore monocle $tag1 force ;;
 
-    1) restore monocle $tag1 force
-       herbstclient chain . focus_monitor 0 . use $tag1 . focus_monitor 1 . use $tag0 ;;
+    1) herbstclient chain . focus_monitor 0 . use $tag1
+       restore monocle $tag1 force
+       herbstclient chain . focus_monitor 1 . use $tag0 ;;
   esac
   herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock
   rm -f $LOCK
@@ -33,7 +33,7 @@ if [ $focus -eq $direction ] ;then
   [ $focus = 0 ] && switch_to 0 || switch_to 1
 else
   [ $focus = 0 ] && switch_to 1 || switch_to 0
-  herbstclient emit_hook focus_monitor
 fi
+herbstclient emit_hook focus_monitor
 
 # vim: set ft=sh: #

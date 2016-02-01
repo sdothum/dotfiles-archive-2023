@@ -9,7 +9,7 @@
 # restore layout if in fullscreen, as max is just one keystroke away
 if query fullscreen ;then
   # don't flip out of monocle mode, see toggle fullscreen (also monocle aware)
-  if query monocle ;then
+  if [ -e $MONOCLE ] ;then
     herbstclient chain . lock . fullscreen toggle . set_layout max . unlock
   else
     toggle fullscreen

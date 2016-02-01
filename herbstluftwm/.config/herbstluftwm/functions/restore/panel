@@ -9,9 +9,7 @@
 # create a panel on the current monitor, noting monocle mode
 if query primary ;then
   [ -e $CONKY ] && conky=':conky'
-  if [ -e $MONOCLE ] ;then
-    [ $(cat $MONOCLE) -gt 0 ] && monocle=':monocle'
-  fi
+  [ -e $MONOCLE ] && monocle=':monocle'
 fi
 
 fifo="$(query monitor)$conky$monocle"
