@@ -20,7 +20,8 @@ do
     herbstclient cycle_frame 1
     # clear any prior title info
     [ $PANEL_FIFO ] || . ${0%/focus}/config/ENV
-    echo 'T ' >$PANEL_FIFO &
+    # see restore panel
+    echo 'T ' >$(PANEL_FIFO) &
     break
   fi
 done

@@ -1,21 +1,21 @@
 
-[ $TRACE ] && CHILD="switch/monocle $@" . $PARENT
+[ $TRACE ] && CHILD="restore/monocle $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ....................................................... Switch monocle margins
+# ...................................................... Restore monocle margins
 
-# Usage: switch monocle primary_tag [force]
-#        switch monocle primary_tag, with monitor focus dependency
-#        switch monocle primary_tag force, force check
+# Usage: restore monocle primary_tag [force]
+#        restore monocle primary_tag, with monitor focus dependency
+#        restore monocle primary_tag force, force check
 
 monocle() {
   [ -e $MONOCLE:$1 ] || echo 0 >$MONOCLE:$1
   # has associated tag view (monocle layout) changed?
   if [ $(cat $MONOCLE) -ne $(cat $MONOCLE:$1) ] ;then
     cp -f $MONOCLE:$1 $MONOCLE
-    draw refresh monocle
+    draw refresh force
     query primary && restore panel
   fi
 }

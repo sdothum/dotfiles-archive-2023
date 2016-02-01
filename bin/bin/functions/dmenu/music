@@ -8,7 +8,7 @@ playlist() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
     mpc list artist \
     | sort -n \
-    | sed '1i[ player ]\n[ albums ]'
+    | sed '1i[ albums ]'
   else
     mpc list artist \
     | sort -n \

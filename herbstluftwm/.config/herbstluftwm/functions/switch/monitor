@@ -14,10 +14,10 @@ switch_to() {
   herbstclient chain . lock . set swap_monitors_to_get_tag 1
   case $1 in
     0) herbstclient chain . focus_monitor 1 . use $tag0
-       switch monocle $tag1 force
+       restore monocle $tag1 force
        herbstclient chain . focus_monitor 0 . use $tag1 ;;
 
-    1) switch monocle $tag1 force
+    1) restore monocle $tag1 force
        herbstclient chain . focus_monitor 0 . use $tag1 . focus_monitor 1 . use $tag0 ;;
   esac
   herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock

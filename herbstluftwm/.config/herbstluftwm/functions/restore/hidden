@@ -22,10 +22,10 @@ if [ $count -gt 0 ] ;then
 
   if [ $count -gt 1 ] ;then
     window=$(echo $hidden \
-          | sort \
-          | cut -d: -f1 \
-          | sed '1i[ all  ]\n[ last ]' \
-          | dmenu "Raise Window$title" -no-custom) || exit
+           | sort \
+           | cut -d: -f1 \
+           | sed '1i[ all  ]\n[ last ]' \
+           | dmenu "Raise Window$title" -no-custom) || exit
   else
     window=$(echo $hidden | cut -d: -f1 | dmenu "Raise Window$title" -no-custom)
   fi

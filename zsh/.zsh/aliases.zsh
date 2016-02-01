@@ -92,6 +92,7 @@ alias gvimdiff="vimdiff -g --role='gvimdiff'"
 alias handbrake='ghb'
 alias hc='herbstclient'
 alias herbstluftwm=". $HOME/.config/herbstluftwm/config/ENV"
+alias hh='h HH'
 alias iotop='sudo iotop'
 # alias j='fasd_cd -d'
 alias l1='ls -1'

@@ -14,10 +14,10 @@ attr() {
 
 instance=$(attr 'instance' "$1")
 title=$(attr 'title' "$1" \
-  | sed -e '/(.*).*VIM/s|\(.*\) (.*/\(.*\)).*|\2/\1|' \
-        -e 's/ [-+] .*//' \
-        -e 's/ at .*//'\
-        -e 's/:/ /')
+      | sed -e '/(.*).*VIM/s|\(.*\) (.*/\(.*\)).*|\2/\1|' \
+            -e 's/ [-+] .*//' \
+            -e 's/ at .*//'\
+            -e 's/:/ /')
 echo "$instance $SEP $title"
 
 # vim: set ft=sh: #
