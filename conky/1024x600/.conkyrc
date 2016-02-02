@@ -67,7 +67,7 @@ ${goto 80}${color}${font Ubuntu:size=22}${time %e}
 ${goto 50}${color1}${voffset -22}${font Ubuntu:size=10}${time %A}
 ${goto 65}${color2}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -2} ${color3}${font Ubuntu:size=12}'${time %y}
 ${voffset 9}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -142}${font Ubuntu:size=30:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color3}${endif}${alignr} ${exec query tag}
+${voffset -142}${font Ubuntu:size=30:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -37}
 ${goto 55}${font}${color1}${texeci 900 conky weather}
@@ -77,7 +77,7 @@ ${goto 65}${font}${color2}${kernel} ${alignr}${uptime}
 # ${goto 75}${font}${color3}${nodename} ${alignr}${fs_type /var}
 # ${goto 75}${font}${color}focus ${exec bspc query -M -m focused} ${alignr}desktop ${exec bspc query -D -d focused}
 ${voffset -148}
-${font}${color3}${alignr}${exec query window}
+${font}${color2}${alignr}${exec query window}
 ${voffset 105}
 
 # ${goto 75}${font Ubuntu:size=7:style=Bold}${color}MPD ${alignr}${mpd_status}

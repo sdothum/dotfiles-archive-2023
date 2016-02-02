@@ -8,6 +8,8 @@
 
 # Usage: pin [msg], see functions/pin
 
+TAG=$(herbstclient attr monitors.focus.tag)
+
 msg=$1
 shift
 if [ -e ${0%/pin}/functions/pin/$msg ] ;then
