@@ -1,11 +1,11 @@
 #!/usr/bin/dash
 
-# Hardware
+# X11 Desktop
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ........................................................................ Audio
+# ........................................................................ Conky
 
-# audio sink (destination) volume, see .conkyrc (lua rings)
+# audio sink (destination) volume
 pactl list \
 | sed -n "/^Sink #$(sink)/,\$p" \
 | sed '/^$/,$d' \

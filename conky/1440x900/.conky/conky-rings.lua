@@ -18,7 +18,7 @@ color6=0x1b2c20
 -- HOURS
 clock_h = {
     {
-    name='time',                   arg='%l',                    max_value=12,
+    name='time',                   arg='%l',                        max_value=12,
     x=100,                          y=130,
     graph_radius=65,
     graph_thickness=3,
@@ -37,7 +37,7 @@ clock_h = {
 -- MINUTES
 clock_m = {
     {
-    name='time',                   arg='%M',                    max_value=60,
+    name='time',                   arg='%M',                        max_value=60,
     x=100,                          y=130,
     graph_radius=69,
     graph_thickness=2,
@@ -56,7 +56,7 @@ clock_m = {
 -- SECONDS
 clock_s = {
     {
-    name='time',                   arg='%S',                    max_value=60,
+    name='time',                   arg='%S',                        max_value=60,
     x=100,                          y=130,
     graph_radius=62,
     graph_thickness=2,
@@ -101,7 +101,7 @@ temp = {
 
 gauge = {
 {
-    name='cpu',                    arg='cpu0',                  max_value=100,
+    name='cpu',                    arg='cpu0',                      max_value=100,
     x=79,                          y=359,
     graph_radius=29,
     graph_thickness=1,
@@ -122,7 +122,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='memperc',                arg='',                      max_value=100,
+    name='memperc',                arg='',                          max_value=100,
     x=79,                          y=542,
     graph_radius=29,
     graph_thickness=1,
@@ -143,7 +143,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='fs_used_perc',           arg='/tmp',                  max_value=100,
+    name='fs_used_perc',           arg='/tmp',                      max_value=100,
     x=79,                          y=542,
     graph_radius=25,
     graph_thickness=3,
@@ -164,7 +164,8 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='fs_used_perc',           arg='/',                     max_value=100,
+    -- name='fs_used_perc',           arg='/',                         max_value=100,
+    name='exec',                   arg='conky btrfs / percent',     max_value=100,
     x=79,                          y=684,
     graph_radius=29,
     graph_thickness=1,
@@ -185,7 +186,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='swapperc',               arg='',                      max_value=100,
+    name='swapperc',               arg='',                          max_value=100,
     x=79,                          y=684,
     graph_radius=25,
     graph_thickness=3,
@@ -206,7 +207,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='wireless_link_qual_perc', arg='wls4',                 max_value=100,
+    name='wireless_link_qual_perc', arg='wls4',                     max_value=100,
     x=79,                          y=802,
     graph_radius=29,
     graph_thickness=1,

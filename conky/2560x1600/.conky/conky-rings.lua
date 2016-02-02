@@ -18,7 +18,7 @@ color6=0x1b2c20
 -- HOURS
 clock_h = {
     {
-    name='time',                   arg='%l',                    max_value=12,
+    name='time',                   arg='%l',                        max_value=12,
     x=115,                         y=150,
     graph_radius=65,
     graph_thickness=3,
@@ -37,7 +37,7 @@ clock_h = {
 -- MINUTES
 clock_m = {
     {
-    name='time',                   arg='%M',                    max_value=60,
+    name='time',                   arg='%M',                        max_value=60,
     x=115,                         y=150,
     graph_radius=69,
     graph_thickness=2,
@@ -56,7 +56,7 @@ clock_m = {
 -- SECONDS
 clock_s = {
     {
-    name='time',                   arg='%S',                    max_value=60,
+    name='time',                   arg='%S',                        max_value=60,
     x=115,                         y=150,
     graph_radius=62,
     graph_thickness=2,
@@ -122,7 +122,7 @@ temp = {
 
 gauge = {
 {
-    name='exec',                   arg='sink_volume',           max_value=100,
+    name='exec',                   arg='conky volume',              max_value=100,
     x=94,                          y=372,
     graph_radius=29,
     graph_thickness=1,
@@ -143,7 +143,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='mpd_percent',            arg='',                      max_value=100,
+    name='mpd_percent',            arg='',                          max_value=100,
     x=94,                          y=372,
     graph_radius=25,
     graph_thickness=3,
@@ -164,7 +164,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='cpu',                    arg='cpu0',                  max_value=100,
+    name='cpu',                    arg='cpu0',                      max_value=100,
     x=94,                          y=578,
     graph_radius=29,
     graph_thickness=1,
@@ -185,7 +185,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='memperc',                arg='',                      max_value=100,
+    name='memperc',                arg='',                          max_value=100,
     x=94,                          y=784,
     graph_radius=29,
     graph_thickness=1,
@@ -206,7 +206,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='fs_used_perc',           arg='/tmp',                  max_value=100,
+    name='fs_used_perc',           arg='/tmp',                      max_value=100,
     x=94,                          y=784,
     graph_radius=25,
     graph_thickness=3,
@@ -227,7 +227,8 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='fs_used_perc',           arg='/',                     max_value=100,
+    -- name='fs_used_perc',           arg='/',                         max_value=100,
+    name='exec',                   arg='conky btrfs / percent',     max_value=100,
     x=94,                          y=944,
     graph_radius=29,
     graph_thickness=1,
@@ -248,7 +249,8 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='fs_used_perc',           arg='/data',                 max_value=100,
+    -- name='fs_used_perc',           arg='/data',                     max_value=100,
+    name='exec',                   arg='conky btrfs /data percent', max_value=100,
     x=94,                          y=944,
     graph_radius=25,
     graph_thickness=3,
@@ -269,7 +271,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='swapperc',               arg='',                      max_value=100,
+    name='swapperc',               arg='',                          max_value=100,
     x=94,                          y=944,
     graph_radius=25,
     graph_thickness=3,
@@ -290,7 +292,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='wireless_link_qual_perc', arg='wlp4s0',               max_value=100,
+    name='wireless_link_qual_perc', arg='wlp4s0',                   max_value=100,
     x=94,                          y=1183,
     graph_radius=29,
     graph_thickness=1,

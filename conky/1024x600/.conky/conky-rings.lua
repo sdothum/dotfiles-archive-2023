@@ -9,16 +9,16 @@
 
 require 'cairo'
 
-default_color=0xD2DEDB
-color0=0x9da6a4
-color6=0x3a3e3d
+default_color=0x639E73
+color0=0x4a7656
+color6=0x1b2c20
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
 -- HOURS
 clock_h = {
     {
-    name='time',                   arg='%l',                    max_value=12,
+    name='time',                   arg='%l',                        max_value=12,
     x=85,                          y=85,
     graph_radius=55,
     graph_thickness=3,
@@ -37,7 +37,7 @@ clock_h = {
 -- MINUTES
 clock_m = {
     {
-    name='time',                   arg='%M',                    max_value=60,
+    name='time',                   arg='%M',                        max_value=60,
     x=85,                          y=85,
     graph_radius=59,
     graph_thickness=2,
@@ -56,7 +56,7 @@ clock_m = {
 -- SECONDS
 clock_s = {
     {
-    name='time',                   arg='%S',                    max_value=60,
+    name='time',                   arg='%S',                        max_value=60,
     x=85,                          y=85,
     graph_radius=52,
     graph_thickness=2,
@@ -101,7 +101,7 @@ temp = {
 
 gauge = {
 {
-    name='cpu',                    arg='cpu0',                  max_value=100,
+    name='cpu',                    arg='cpu0',                      max_value=100,
     x=69,                          y=278,
     graph_radius=29,
     graph_thickness=1,
@@ -122,7 +122,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='memperc',                arg='/',                     max_value=100,
+    name='memperc',                arg='',                          max_value=100,
     x=69,                          y=425,
     graph_radius=29,
     graph_thickness=1,
@@ -143,7 +143,8 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='fs_used_perc',           arg='/',                     max_value=100,
+    -- name='fs_used_perc',           arg='/',                         max_value=100,
+    name='exec',                   arg='conky btrfs / percent',     max_value=100,
     x=69,                          y=425,
     graph_radius=25,
     graph_thickness=3,
@@ -164,7 +165,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='swapperc',               arg='',                      max_value=100,
+    name='swapperc',               arg='',                          max_value=100,
     x=69,                          y=425,
     graph_radius=25,
     graph_thickness=3,
@@ -185,7 +186,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='wireless_link_qual_perc', arg='wlp2s0',               max_value=100,
+    name='wireless_link_qual_perc', arg='wlp2s0',                   max_value=100,
     x=69,                          y=536,
     graph_radius=29,
     graph_thickness=1,
@@ -206,7 +207,7 @@ gauge = {
     caption_fg_colour=0xFFFFFF,    caption_fg_alpha=0.3,
 },
 {
-    name='battery_percent',        arg='',                      max_value=100,
+    name='battery_percent',        arg='',                          max_value=100,
     x=69,                          y=536,
     graph_radius=25,
     graph_thickness=3,
