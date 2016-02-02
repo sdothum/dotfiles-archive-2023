@@ -78,13 +78,13 @@ fi
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
 fullscreen_width=$(( $normal_width - $window_frame*2 ))
 # panel width global attribute, see draw panel
-echo $fullscreen_width >$FULLSCREEN:width
+# echo $fullscreen_width >$FULLSCREEN:width
 
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
 case $@ in
-  conky*fullscreen*width) echo $fullscreen_width
-                          exit ;;
+  # conky*fullscreen*width) echo $fullscreen_width
+  #                         exit ;;
 
   conky) rm -f $FULLSCREEN:primary 2>/dev/null
          primary=$(printf '%dx%d%+d%+d' \

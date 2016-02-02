@@ -28,9 +28,9 @@ panel_offset=$(( $monitorX + $gap ))
 
 # check for fullscreen mode and adjust accordingly
 case $monitorW in
-  "$(cat $FULLSCREEN:width)") gap=$(( $(margins $monitorW) + $gap ))
-                              panel_width=$(( $panel_width + $gap * 2 ))
-                              panel_offset=$(( $panel_offset - gap )) ;;
+  # "$(cat $FULLSCREEN:width)") gap=$(( $(margins $monitorW) + $gap ))
+  #                             panel_width=$(( $panel_width + $gap * 2 ))
+  #                             panel_offset=$(( $panel_offset - gap )) ;;
 
   "$PRIMARY" | "$SECONDARY") [ $monitor -ne 0 ] && gap=$(pixel_match $gap $UM1680)
                              gap=$(( $(margins $monitorW) - $gap ))

@@ -11,6 +11,7 @@
 # has associated tag view (monocle layout) changed?
 if query primary; then
   if [ -e $MONOCLE ] || [ -e $MONOCLE:$1 ] ;then
+    [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ] && exit
     if [ -e $MONOCLE ] && ! [ -e $MONOCLE:$1 ] ;then
       rm -f $MONOCLE
     else ! [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ]

@@ -60,6 +60,11 @@ commit() {
   git push --force --set-upstream origin master
 }
 
+pending() {
+  echo '..'
+  git diff --name-only HEAD | tee
+}
+
 if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
@@ -86,9 +91,12 @@ if [ "$*" ] ;then
           usage
         fi ;;
 
-    *) if-yes "commit \"$@\"" && commit ;;
+    *) pending
+       if-yes "commit \"$@\"" && commit ;;
   esac
 else
+  pending
+  underline
   printf "commit? [abort]/comment.. : ${_YELLOW_}"
   read DESC
   printf "${_nocolor_}"
