@@ -27,4 +27,8 @@ if query rez +1024 ;then
 fi
 herbstclient chain . fullscreen toggle . unlock
 
+tag=$(herbstclient attr monitors.focus.tag)
+query fullscreen && touch $FULLSCREEN:$tag \
+                 || rm -f $FULLSCREEN:$tag
+
 # vim: set ft=sh: #

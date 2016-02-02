@@ -6,12 +6,10 @@
 
 # ...................................................... Restore monocle margins
 
-# Usage: restore monocle primary_tag [force]
-#        restore monocle primary_tag, with monitor focus dependency
-#        restore monocle primary_tag force, force check
+# Usage: restore monocle tag
 
-monocle() {
-  # has associated tag view (monocle layout) changed?
+# has associated tag view (monocle layout) changed?
+if query primary; then
   if [ -e $MONOCLE ] || [ -e $MONOCLE:$1 ] ;then
     if [ -e $MONOCLE ] && ! [ -e $MONOCLE:$1 ] ;then
       rm -f $MONOCLE
@@ -19,18 +17,8 @@ monocle() {
       cp -f $MONOCLE:$1 $MONOCLE
     fi
     draw refresh force
-    query primary && restore panel
+    restore panel
   fi
-}
-
-# force monocle check?
-if [ "$2" ] ;then
-  monocle $1
-elif query primary ;then
-  monocle $1
-else
-  # keybind monocle check issued from secondary monitor so check primary tag!
-  monocle $(query tag inactive)
 fi
 
 # vim: set ft=sh: #

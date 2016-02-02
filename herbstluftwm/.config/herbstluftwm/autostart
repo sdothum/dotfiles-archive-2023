@@ -84,5 +84,8 @@ emit_hook &
 # initialize desktop blur and panel / conky rules
 draw root
 [ $PANEL_MARGIN ] && toggle panel || toggle conky
+# emit hook stalled otherwise until a new window action..
+focus frame
+focus window
 
 # vim: set ft=sh: #

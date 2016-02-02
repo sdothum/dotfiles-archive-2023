@@ -1,0 +1,19 @@
+
+[ $TRACE ] && CHILD="switch/previous $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Switch desktop
+
+# Usage: switch desktop [previous]
+
+# check layout (fullscreen or monocle)
+[ "$1" ] && herbstclient use_previous
+tag=$(herbstclient attr monitors.focus.tag)
+[ $(query primary) ] && restore fullscreen $tag primary \
+                     || restore fullscreen $tag secondary
+restore monocle $(query tag)
+focus window
+
+# vim: set ft=sh: #

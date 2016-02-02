@@ -1,0 +1,45 @@
+
+[ $TRACE ] && CHILD="restore/fullscreen $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................... Restore fullscreen margins
+
+# Usage: restore fullscreen tag monitor
+#        where monitor is primary or secondary
+
+fullscreen() {
+  herbstclient lock
+  if query rez +1024 ;then
+    if query primary ;then
+      if query conky --onlyvisible ;then
+        [ $1 = on ] && draw monitor conky fullscreen \
+                    || draw monitor conky
+      else
+        # handle frame no conky
+        [ $1 = on ] && draw monitor fullscreen \
+                    || draw monitor fullframe
+      fi
+    else
+      [ $1 = on ] && draw monitor secondary fullscreen \
+                  || draw monitor secondary
+    fi
+  fi
+  herbstclient unlock
+}
+
+# if fullscreen tag..
+if [ -e $FULLSCREEN:$1 ] ;then
+  # and fullscreen monitor
+  [ -e $FULLSCREEN:$2 ] && exit
+  # else initialize fullscreen
+  fullscreen on
+else
+  # and not fullscreen monitor
+  ! [ -e $FULLSCREEN:$2 ] && exit
+  # else restore default view
+  fullscreen off
+fi
+
+# vim: set ft=sh: #

@@ -6,19 +6,24 @@
 
 # .............................................................. Switch monitors
 
-# switch tag and focus to monitor
+# switch tag and focus to monitor retaining layout (fullscreen or monocle)
 switch_to() {
   touch $LOCK
   # view tag on selected monitor
   swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
   herbstclient chain . lock . set swap_monitors_to_get_tag 1
   case $1 in
-    0) herbstclient chain . focus_monitor 1 . use $tag0 . focus_monitor 0 . use $tag1
-       restore monocle $tag1 force ;;
+    0) herbstclient chain . focus_monitor 1 . use $tag0
+       restore fullscreen $tag0 secondary
+       herbstclient chain . focus_monitor 0 . use $tag1
+       restore fullscreen $tag1 primary
+       restore monocle $tag1 ;;
 
     1) herbstclient chain . focus_monitor 0 . use $tag1
-       restore monocle $tag1 force
-       herbstclient chain . focus_monitor 1 . use $tag0 ;;
+       restore fullscreen $tag1 primary
+       restore monocle $tag1
+       herbstclient chain . focus_monitor 1 . use $tag0
+       restore fullscreen $tag0 secondary ;;
   esac
   herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock
   rm -f $LOCK
@@ -30,9 +35,9 @@ tag0=$(herbstclient attr monitors.0.tag)
 tag1=$(herbstclient attr monitors.1.tag)
 
 if [ $focus -eq $direction ] ;then
-  [ $focus = 0 ] && switch_to 0 || switch_to 1
+  [ $focus -eq 0 ] && switch_to 0 || switch_to 1
 else
-  [ $focus = 0 ] && switch_to 1 || switch_to 0
+  [ $focus -eq 0 ] && switch_to 1 || switch_to 0
 fi
 herbstclient emit_hook focus_monitor
 
