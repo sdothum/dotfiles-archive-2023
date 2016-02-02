@@ -58,8 +58,8 @@ else
   hc keybind $Mod-Shift-k            chain . shift up    . emit_hook focus_changed
   hc keybind $Mod-Shift-l            chain . shift right . emit_hook focus_changed
 fi
-hc keybind $Mod-Shift-bracketleft    spawn switch window 1
-hc keybind $Mod-Shift-bracketright   spawn switch window 0
+hc keybind $Mod-Shift-bracketleft    spawn pin monitor 1
+hc keybind $Mod-Shift-bracketright   spawn pin monitor 0
 hc keybind $Mod-Control-bracketleft  spawn switch monitor 1
 hc keybind $Mod-Control-bracketright spawn switch monitor 0
 
@@ -105,7 +105,7 @@ hc keybind $Mod-Control-Right        resize right +$resizestep
 # cycle through tags
 hc keybind $Mod-Control-period       use_index +1 --skip-visible
 hc keybind $Mod-Control-comma        use_index -1 --skip-visible
-hc keybind $Mod-BackSpace            spawn switch desktop previous
+hc keybind $Mod-BackSpace            spawn switch tag previous
 
 # set layout
 hc keybind $Mod-r                    remove
@@ -115,12 +115,12 @@ hc keybind $Mod-s                    chain . floating toggle . emit_hook focus_c
 hc keybind $Mod-f                    spawn toggle fullscreen
 hc keybind $Mod-p                    chain . pseudotile toggle . emit_hook focus_changed
 if [ $COLEMAK_DH ] ;then
-  hc keybind $Mod-h                  spawn hide window
+  hc keybind $Mod-h                  spawn pin ttag
   hc keybind $Mod-Control-h          spawn restore window
   hc keybind $Mod-Control-Shift-h    spawn restore windows 
   hc keybind $Mod-Shift-h            spawn restore hidden
 else
-  hc keybind $Mod-m                  spawn hide window
+  hc keybind $Mod-m                  spawn pin ttag
   hc keybind $Mod-Control-m          spawn restore window
   hc keybind $Mod-Control-Shift-m    spawn restore windows 
   hc keybind $Mod-Shift-m            spawn restore hidden

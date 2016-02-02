@@ -28,7 +28,11 @@ fi
 herbstclient chain . fullscreen toggle . unlock
 
 tag=$(herbstclient attr monitors.focus.tag)
-query fullscreen && touch $FULLSCREEN:$tag \
-                 || rm -f $FULLSCREEN:$tag
+if query fullscreen ;then
+  touch $FULLSCREEN:$tag
+  rm -f $MONOCLE:$tag >/dev/null
+else
+  rm -f $FULLSCREEN:$tag
+fi
 
 # vim: set ft=sh: #

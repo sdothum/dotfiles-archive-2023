@@ -4,16 +4,16 @@
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ............................................................... Smart move tag
+# ................................................................ Switch to tag
 
-# move window to non-empty tag subframe and focus next window
-touch $LOCK
-winid=$(herbstclient attr clients.focus.winid)
-herbstclient chain . lock . use $1
-focus frame
-herbstclient chain . bring $winid . use_previous
+# Usage: switch tag [tag]
+
+# check layout (fullscreen or monocle)
+[ "$1" ] && herbstclient use $1 || herbstclient use_previous
+tag=$(herbstclient attr monitors.focus.tag)
+query primary && restore fullscreen $tag primary \
+              || restore fullscreen $tag secondary
+restore monocle $(query tag)
 focus window
-herbstclient unlock
-rm -f $LOCK
 
 # vim: set ft=sh: #

@@ -128,8 +128,8 @@ ${goto 100}${font}${color3}${top_mem name 6}${alignr}${top_mem mem_res 6}
 
 ${voffset 30}
 # ${goto 100}${font Ubuntu:size=7:style=Bold}${color}DISKS ${alignr}${fs_type /var}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}/boot ${alignr}${fs_used /}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/data   ${color}(swap) ${color0}${alignr}${fs_used /data}
+${goto 100}${font Ubuntu:size=7:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
+${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/data   ${color}(swap) ${color0}${alignr}${exec conky btrfs /data}GiB
 # ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/Tmp ${alignr}${fs_used /tmp}
 ${goto 100}${diskiograph 25,0 4a7656 4a7656}
 ${voffset -5}${goto 100}${font}${color1}Disk I/O ${alignr}${lua_parse bandwidth ${diskio}}

@@ -104,7 +104,7 @@ ${voffset -5}${goto 75}${font}${color1}${threads} processes ${alignr}${cpu cpu0}
 ${voffset 20}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color}MEM ${alignr}${mem}
 # ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
-${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Disk (s) ${alignr}${fs_used /}
+${goto 75}${font Ubuntu:size=7:style=Bold}${color0}/boot   ${color}(swap) ${alignr}${exec conky btrfs /}GiB
 ${goto 75}${font}${color1}${top_mem name 1}${alignr}${top_mem mem_res 1}
 ${goto 75}${font}${color2}${top_mem name 2}${alignr}${top_mem mem_res 2}
 ${goto 75}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}

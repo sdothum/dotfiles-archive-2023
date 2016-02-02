@@ -110,7 +110,7 @@ ${goto 85}${font}${color5}${top_mem name 5}${alignr}${top_mem mem_res 5}
 
 ${voffset 25}
 # ${goto 85}${font Ubuntu:size=6:style=Bold}${color}DISKS ${alignr}${fs_type /var}
-${goto 85}${font Ubuntu:size=6:style=Bold}${color}/boot ${alignr}${fs_used /}
+${goto 85}${font Ubuntu:size=6:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
 # ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}/tmp ${alignr}${fs_used /tmp}
 ${goto 85}${diskiograph 20,0 375840 375840}

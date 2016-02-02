@@ -1,10 +1,10 @@
 
-[ $TRACE ] && CHILD="switch/window $@" . $PARENT
+[ $TRACE ] && CHILD="pin/monitor $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ................................................ Smart switch (monitor) window
+# ....................................................... Smart shift to monitor
 
 # move window to non-empty tag subframe (and focus next window)
 switch_frame() {
@@ -19,7 +19,7 @@ switch_frame() {
   rm -f $LOCK
 }
 
-# switch window and focus to monitor (0,1)
+# move window and focus to monitor (0,1)
 direction=${1:-0}
 focus=$(herbstclient attr monitors.focus.index)
 winid=$(herbstclient attr clients.focus.winid)
