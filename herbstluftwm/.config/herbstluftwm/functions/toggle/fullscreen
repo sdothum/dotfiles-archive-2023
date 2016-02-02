@@ -30,6 +30,7 @@ herbstclient chain . fullscreen toggle . unlock
 tag=$(herbstclient attr monitors.focus.tag)
 if query fullscreen ;then
   touch $FULLSCREEN:$tag
+  # clear any previously set monocle state (on other monitor)
   rm -f $MONOCLE:$tag >/dev/null
 else
   rm -f $FULLSCREEN:$tag
