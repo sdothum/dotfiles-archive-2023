@@ -10,6 +10,7 @@
 switch_frame() {
   touch $LOCK
   herbstclient lock
+  # don't pin fullscreen windows
   query fullscreen && toggle fullscreen
   herbstclient focus_monitor $1
   focus frame

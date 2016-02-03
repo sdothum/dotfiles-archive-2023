@@ -16,9 +16,7 @@ TAG=$(herbstclient attr monitors.focus.tag)
 msg=$1
 shift
 if [ -e ${0%/focus}/functions/focus/$msg ] ;then
-  touch $LOCK
   . ${0%/focus}/functions/focus/$msg $@
-  rm -f $LOCK
 else
   usage $0
 fi

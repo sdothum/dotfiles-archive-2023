@@ -44,19 +44,19 @@ xftfont Ubuntu:size=6
 xftalpha 0.5
 uppercase no
 
-default_color 639E73
-color0 4a7656
+default_color F1CD8D
+color0 b49969
 color1 FDF6E3
 color2 BDB8AA
 color3 8D8A7F
 color4 69675F
 color5 4E4D47
-color6 1b2c20
-color7 375840
-color8 4a7656
-color9 9d628d
-#colorA 324f3a
-#colorI 4e3146
+color6 433927
+color7 87724e
+color8 b49969
+color9 89aff0
+#colorA 786646
+#colorI 445778
 
 lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
@@ -81,7 +81,7 @@ ${goto 75}${font}${color2}${kernel} ${alignr}${uptime}
 # ${goto 85}${font}${color0}${lua_parse null ${mpd_title}}
 # ${goto 85}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
 ${voffset 12}
-${goto 85}${loadgraph 20,0 375840 375840}
+${goto 85}${loadgraph 20,0 87724e 87724e}
 ${voffset -5}${goto 85}${font}${color1}Load ${alignr}${loadavg 1}   ${loadavg 2}   ${loadavg 3}
 
 ${voffset 25}
@@ -96,7 +96,7 @@ ${goto 85}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 ${goto 85}${font}${color4}${top name 4}${alignr}${top cpu 4}%
 ${goto 85}${font}${color5}${top name 5}${alignr}${top cpu 5}%
 # ${goto 85}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
-${goto 85}${cpugraph 20,0 375840 375840}
+${goto 85}${cpugraph 20,0 87724e 87724e}
 ${voffset -5}${goto 85}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 
 ${voffset 25}
@@ -113,12 +113,12 @@ ${voffset 25}
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
 # ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}/tmp ${alignr}${fs_used /tmp}
-${goto 85}${diskiograph 20,0 375840 375840}
+${goto 85}${diskiograph 20,0 87724e 87724e}
 ${voffset -5}${goto 85}${font}${color1}Disk I/O ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 25}
 ${goto 85}${color2}${font Ubuntu:size=6:style=Bold}${color}${wireless_essid wls4}${font Ubuntu:size=6}
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}wls4 ${alignr}${addr wls4}${font Ubuntu:size=6}
-${goto 85}${downspeedgraph wls4 20,0 375840 375840}
-${voffset -33}${goto 85}${upspeedgraph wls4 20,0 4a7656 4a7656}
+${goto 85}${downspeedgraph wls4 20,0 87724e 87724e}
+${voffset -33}${goto 85}${upspeedgraph wls4 20,0 b49969 b49969}
 ${voffset -5}${goto 85}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wls4}}↑   ${lua_parse bandwidth ${downspeed wls4}}↓

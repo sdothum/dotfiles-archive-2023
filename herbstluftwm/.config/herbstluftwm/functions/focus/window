@@ -3,11 +3,13 @@
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
+set -x
 # .............................................. Focus non-empty subframe window
 
 [ -e $DYNAMIC ] || exit
+[ "$(herbstclient attr clients.focus.instance 2>/dev/null)" > ' ' ] && exit
 
+touch $LOCK
 frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
 herbstclient chain . lock . cycle_frame -1
 
@@ -26,5 +28,6 @@ do
   fi
 done
 herbstclient unlock
+rm -f $LOCK
 
 # vim: set ft=sh: #

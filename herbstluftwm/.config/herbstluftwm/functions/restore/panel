@@ -12,7 +12,7 @@ if query primary ;then
   [ -e $MONOCLE ] && monocle=':monocle'
 fi
 
-fifo="$(query monitor)$conky$monocle"
+fifo="$(herbstclient attr monitors.focus.index)$conky$monocle"
 
 # disable panel
 xdotool search --onlyvisible --limit 1 --maxdepth 1 --name 'lemonbar' windowunmap >/dev/null

@@ -45,7 +45,9 @@ if window=$(echo $windows \
   if [ "$*" ] ;then
     herbstclient bring "$(echo $window | cut -d: -f3)"
   else
-    herbstclient lock
+    touch $LOCK
+    swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
+    herbstclient chain . lock . set swap_monitors_to_get_tag 0
     if echo $window | grep " $VISIBLE [0-9]" ;then
       # focus normal tag
       herbstclient chain . use "$TAG" . jumpto "$(echo $window | cut -d: -f3)"
@@ -53,7 +55,8 @@ if window=$(echo $windows \
       # focus (restore) tick'tag
       herbstclient chain . use "$TAG" . bring "$(echo $window | cut -d: -f3)"
     fi
-    herbstclient unlock
+    herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . emit_hook focus_monitor . unlock
+    rm -f $LOCK
   fi
   echo $window | grep " $INVISIBLE [0-9]:0x" && query ttag $TAG
 fi

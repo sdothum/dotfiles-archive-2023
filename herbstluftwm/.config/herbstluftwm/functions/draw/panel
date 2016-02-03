@@ -13,7 +13,7 @@
 fifo=${1#:}
 
 # calculate panel width (don't span monitors)
-monitor=$(query monitor)
+monitor=$(herbstclient attr monitors.focus.index)
 
 # geometry has the format: X Y W H
 geometry='X:Y:W:H'

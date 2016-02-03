@@ -24,6 +24,6 @@ done
 # hc set auto_detect_monitors     1
 # hc set swap_monitors_to_get_tag 0
 hc detect_monitors
-hc set focus_follows_mouse 0
+# hc set focus_follows_mouse      1
 
 # vim: set ft=sh: #

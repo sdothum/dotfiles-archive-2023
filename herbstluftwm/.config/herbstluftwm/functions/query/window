@@ -6,12 +6,15 @@
 
 # ............................................................ Window class name
 
+# Note: Use of conky refresh to trap quitting apps w/o herbstluftwm's mod-w
+
 # redirect errors, on startup no window may have focus during conky initialization
 name=$(herbstclient attr clients.focus.instance 2>/dev/null)
-# use of conky refresh to reset monitors when necessary after quitting fullscreen app
-# not using herbstluftwm's mod-w close bypasses the focus window hook and emit_hook traps
-# see keybinds and .conkyrc
-[ $name ] || restore view
+if ! [ "$name" ] ; then
+  restore view
+  # take advantage of conky query to dynamically focus!
+  focus window
+fi
 if [ $(echo $name | wc -w) -eq 1 ] ;then
   echo $name
 else

@@ -13,7 +13,7 @@
 restore panel
 
 if [ $PANEL_MARGIN ] ;then
-  monitor=$(query monitor)
+  monitor=$(herbstclient attr monitors.focus.index)
   if [ -e $PANEL ] ;then
     [ ${PANEL_BOTTOM} ] && herbstclient pad $monitor 0 0 $PANEL_HEIGHT 0 \
                         || herbstclient pad $monitor $PANEL_HEIGHT 0 0 0
