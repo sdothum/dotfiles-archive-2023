@@ -164,6 +164,7 @@ esac
 # virtual monitors defined in lieu of hc pad monitor, to define fullscreen boundaries
 [ $TRACE ] && echo "> herbstclient set_monitors $primary $secondary" >>$TRACE
 herbstclient set_monitors $primary $secondary
+
 if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then
   touch $FULLSCREEN
 else

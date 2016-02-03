@@ -9,8 +9,15 @@
 # template from http://stackoverflow.com/questions/18551558/how-to-use-terminal-color-palette-with-curses
 
 import curses
+import sys
 
 def main(stdscr):
+    try:
+        columns=int(sys.argv[1])
+    except:
+        columns=16
+    if columns == 0:
+        columns=256
     curses.start_color()
     curses.use_default_colors()
     for i in range(0, curses.COLORS):
@@ -20,7 +27,7 @@ def main(stdscr):
         for i in range(0, 255):
             stdscr.addstr(' %03i ' % i, curses.color_pair(i+1))
             j+=1
-            if j == 8:
+            if j == columns:
                 stdscr.addstr('\n')
                 j=0
         # 255 (#eeeeee) most closely matches 015 (#ffffff) if .Xresourses set as such, otherwise..
