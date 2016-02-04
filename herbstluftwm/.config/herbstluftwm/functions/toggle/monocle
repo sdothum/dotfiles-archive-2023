@@ -6,14 +6,18 @@
 
 # .......................................................... Toggle monocle view
 
+# Usage: toggle monocle [fullscreen]
+#        toggle monocle fullscreen, to suppress laptop conky view
 # Note:  monocle view mode and fullscreen switching have been tightly integrated
 #        to provide an IMO more seamless use of this distraction free mode
 #        see draw monitor, switch frames, toggle fullscreen
 #        windows opened over a fullscreen view exhibit the same characteristics
 #        regardless of the monitor setting, monocle or normal display
 
+fullscreen=$1
+
 merge() {
-  for i in $(seq 1 $(( $(herbstclient attr tags.focus.frame_count) - 1 )))
+  for i in $(seq 1 $(( $(herbstclient attr tags.focus.frame_count) - 1 )) )
   do
     # collapse all frames into single subframe
     herbstclient remove
@@ -34,16 +38,32 @@ if query primary ;then
     echo "$(( ($1 - $2) / $D ))" >$MONOCLE
     cp -f $MONOCLE $MONOCLE:$tag
   fi
+
   winid=$(herbstclient attr clients.focus.winid)
   touch $LOCK
   herbstclient lock
   # toggle out of fullscreen before entering monocle
-  query fullscreen && herbstclient fullscreen toggle
-  draw refresh
+  if query fullscreen ;then
+    herbstclient fullscreen toggle
+    fullscreen=true
+  fi
+
+  # toggle out of conky for distraction free mode on laptop screens
+  if [ -e $MONOCLE ] && [ -e $CONKY ] && query rez -2560 ;then
+    toggle conky
+    touch $MONOCLE:conky
+  elif [ -e $MONOCLE:conky ] && ! [ $fullscreen ] ;then
+    toggle conky
+    rm -f $MONOCLE:conky
+  else
+    draw refresh
+  fi
+
   if [ -e $MONOCLE ] ;then
     # allow toggling fullscreen (width) and monocle frame, else just max current window
     merge
     herbstclient set_layout max
+    rm -f $FULLSCREEN:$tag 2>/dev/null
   else
     # allow transitioning to full fullscreen, see draw monitor
     if ! query fullscreen ;then
@@ -52,7 +72,9 @@ if query primary ;then
       if query multihead ;then
         # rotate window focus to left frame
         if [ $(query count) -gt 2 ] ;then
-          herbstclient chain . set_layout horizontal . split explode 0.5 . focus right . set_layout vertical . focus left . set_layout vertical
+          herbstclient chain . set_layout horizontal . split explode 0.5 \
+                             . focus right . set_layout vertical \
+                             . focus left . set_layout vertical
         elif [ $(query count) -gt 1 ] ;then
           herbstclient chain . set_layout horizontal . split explode 0.5 . rotate . rotate
         else

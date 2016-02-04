@@ -11,8 +11,8 @@ log=/tmp/weechat.log
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if pgrep 'znc' >/dev/null ;then
-  echo '.. launching weechat' >>$log
-  echo '.. waiting on znc connections' >>$log
+  echo '.. launching weechat'
+  echo '.. waiting on znc connections'
 
   count=0
   while :
@@ -26,10 +26,10 @@ if pgrep 'znc' >/dev/null ;then
     fi
   done
 
-  echo ".. $count seconds to connect" >>$log
+  echo ".. $count seconds to connect"
   /usr/bin/weechat
 else
-  echo '.. znc server not running' >>$log
+  echo '.. znc server not running'
 fi
 
 # vim: set ft=sh: #

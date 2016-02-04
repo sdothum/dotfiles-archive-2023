@@ -55,8 +55,9 @@ if window=$(echo $windows \
       # focus (restore) tick'tag
       herbstclient chain . use "$TAG" . bring "$(echo $window | cut -d: -f3)"
     fi
-    herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . emit_hook focus_monitor . unlock
+    herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock
     rm -f $LOCK
+    restore panel 
   fi
   echo $window | grep " $INVISIBLE [0-9]:0x" && query ttag $TAG
 fi

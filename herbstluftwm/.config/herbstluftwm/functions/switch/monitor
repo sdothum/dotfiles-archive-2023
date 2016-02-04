@@ -39,6 +39,6 @@ if [ $focus -eq $direction ] ;then
 else
   [ $focus -eq 0 ] && switch_to 1 || switch_to 0
 fi
-herbstclient emit_hook focus_monitor
+restore panel
 
 # vim: set ft=sh: #

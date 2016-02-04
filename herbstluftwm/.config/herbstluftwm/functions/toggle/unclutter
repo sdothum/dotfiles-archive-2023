@@ -6,6 +6,7 @@
 
 # ............................................................. Toggle unclutter
 
+# current workflow is to hide cursor with mouse off (that's why we prefer keyboards!)
 if pidof unclutter >/dev/null ;then
   killall unclutter
   pkill -TERM autokey-gtk

@@ -48,6 +48,7 @@ toggle_app() {
   if pgrep -lf "${app:-$msg}" | grep -qv 'toggle' ;then
     app=${app:-$msg}
     touch $LOCK
+    herbstclient lock
     focus=true
     for i in $(query winids)
     do
@@ -62,6 +63,7 @@ toggle_app() {
         [ "$msg" = 'rox' ] || break
       fi
     done
+    herbstclient unlock
     rm -f $LOCK
   else
     # new instance

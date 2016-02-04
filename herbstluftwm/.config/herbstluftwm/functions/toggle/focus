@@ -6,6 +6,7 @@
 
 # ......................................................... Toggle dynamic focus
 
+# see emit_hook and focus functions
 if [ -e $DYNAMIC ] ;then
   rm -f $DYNAMIC
   notify 'Dynamic Focus' Off

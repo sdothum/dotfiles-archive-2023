@@ -17,7 +17,7 @@ pulsar() {
   do
     for i in $colors
     do
-      # don't let processes queue up on slower system..
+      # don't let processes queue up on a slower system..
       pkill -TERM -f 'herbstclient attr theme.active.color'
       # disable spawning as bg process if desktop resource issues occur
       herbstclient attr theme.active.color "#$i" &
@@ -27,7 +27,7 @@ pulsar() {
 }
 
 # a bit of trickery here.. draw border pulsar is executed by draw border
-# so subsequent emit_hook can kill the pulsar instance!
+# so a subsequent emit_hook can kill the pulsar instance!
 if [ "$1" = pulsar ] ;then
   # trap concurrent requests to create pulsating borders
   [ $(pgrep -cf 'draw border pulsar') -gt 1 ] && exit

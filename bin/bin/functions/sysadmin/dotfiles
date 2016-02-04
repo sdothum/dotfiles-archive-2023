@@ -29,6 +29,7 @@ dotfiles="alot \
           herbstluftwm \
           infinality \
           luakit \
+          mpd \
           mpv \
           music \
           notion \
@@ -38,6 +39,7 @@ dotfiles="alot \
           tt-rss \
           vim \
           vimb \
+          weechat \
           X11 \
           xmonad \
           wyrd \

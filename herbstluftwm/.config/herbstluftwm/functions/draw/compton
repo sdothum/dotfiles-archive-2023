@@ -6,6 +6,7 @@
 
 # ...................................................................... Compton
 
+# compton compositor state flag dependent
 if [ -e $COMPTON ] ;then
   if ! pidof compton >/dev/null ;then
     compton >/tmp/compton.log 2>&1 &

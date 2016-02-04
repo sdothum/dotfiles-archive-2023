@@ -11,7 +11,7 @@ herbstclient lock
 if query rez +1024 ;then
   if query primary ;then
     # allow transitioning monocle directly to fullscreen
-    [ -e $MONOCLE ] && toggle monocle
+    [ -e $MONOCLE ] && toggle monocle fullscreen
     if query conky --onlyvisible ;then
       query fullscreen && draw monitor conky \
                        || draw monitor conky fullscreen
@@ -34,6 +34,8 @@ if query fullscreen ;then
   rm -f $MONOCLE:$tag >/dev/null
 else
   rm -f $FULLSCREEN:$tag
+  # clear any prior monocle conky state
+  rm -f $MONOCLE:conky >/dev/null
 fi
 
 # vim: set ft=sh: #

@@ -32,7 +32,8 @@ fi
 # 1: occupied (blurred image)
 # 0: empty (raw image)
 root() {
-  if ! [ -e $noblur ] && herbstclient compare tags.by-name.$(herbstclient attr monitors.$1.tag).client_count gt 0 ;then
+  if ! [ -e $noblur ] \
+  && herbstclient compare tags.by-name.$(herbstclient attr monitors.$1.tag).client_count gt 0 ;then
     echo "1: --on $1 --blur $blur --brighten $brighten --zoom $BACKGROUND"
   else
     echo "0: --on $1 --zoom $BACKGROUND"
@@ -51,7 +52,8 @@ shuffle() {
 select() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   # initialize default link
-  ls -L $BACKGROUND 2>/dev/null || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
+  ls -L $BACKGROUND 2>/dev/null \
+  || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
   # must escape quote --action, see office/feh
   feh -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
       -A "\"ln -sf %f $BACKGROUND && xdotool type 'q'\"" \
@@ -89,11 +91,11 @@ echo "$current" >$setroot
 set_border() {
   query colorcodehex $1 | grep 'Complementary' | head -1 | cut -d/ -f6 >$BORDER
   query colorcodehex $(cat $BORDER) \
-       | grep 'color_light_1' \
-       | sed 's/<\/font>/\n/g' \
-       | sed  's/.*<font>//g' \
-       | grep '^#' | cut -d'#' -f2 \
-       | tac >$PULSAR
+                     | grep 'color_light_1' \
+                     | sed 's/<\/font>/\n/g' \
+                     | sed  's/.*<font>//g' \
+                     | grep '^#' | cut -d'#' -f2 \
+                     | tac >$PULSAR
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
 }
