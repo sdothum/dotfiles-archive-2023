@@ -105,7 +105,7 @@ hc keybind $Mod-Control-Right        resize right +$resizestep
 # cycle through tags
 hc keybind $Mod-Control-period       use_index +1 --skip-visible
 hc keybind $Mod-Control-comma        use_index -1 --skip-visible
-hc keybind $Mod-BackSpace            spawn switch tag previous
+hc keybind $Mod-BackSpace            spawn switch tag
 
 # set layout
 hc keybind $Mod-r                    remove

@@ -28,7 +28,7 @@ hc keybind $Mod-backslash            spawn toggle conky
 hc keybind $Mod-Shift-backslash      spawn toggle panel
 hc keybind Super-backslash           spawn toggle unclutter
 hc keybind Control-backslash         spawn draw compton
-hc keybind Super-F1                  spawn dmenu test
+hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
 hc keybind Super-a                   spawn dmenu abook
 hc keybind Super-Shift-a             spawn toggle term 'Mail' alot

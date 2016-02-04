@@ -4,7 +4,7 @@
 
 # ......................................................................... Menu
 
-# test all dmenu scripts
+# meta dmenu menu!
 while :
 do
   script=$(ls -1 ${0%/dmenu}/functions/dmenu \
