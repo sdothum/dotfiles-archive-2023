@@ -15,10 +15,10 @@ library=${LIBRARY:-/data/media/videos/${1:-series}}
 # list latest television series additions first
 T=t
 episodes=/tmp/dmenu:episodes
-pgrep herbstluftwm >/dev/null && monitor=$(query monitor)
+pgrep herbstluftwm >/dev/null && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
-  ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-E[0-9][0-9])*).*/\1/' >"$episodes"
+  ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-E[0-9][0-9])*).*/\1/' | sort >"$episodes"
   playlist "$episodes" "$playlist"
 }
 
