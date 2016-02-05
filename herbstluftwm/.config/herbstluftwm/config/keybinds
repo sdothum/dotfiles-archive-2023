@@ -39,8 +39,8 @@ else
   hc keybind $Mod-k                  focus up
   hc keybind $Mod-l                  focus right
 fi
-hc keybind $Mod-bracketleft          chain . focus_monitor 1 . emit_hook focus_window . emit_hook focus_monitor
-hc keybind $Mod-bracketright         chain . focus_monitor 0 . emit_hook focus_window . emit_hook focus_monitor
+hc keybind $Mod-bracketleft          chain . focus_monitor 1 . emit_hook focus_window
+hc keybind $Mod-bracketright         chain . focus_monitor 0 . emit_hook focus_window
 
 # move client
 hc keybind $Mod-Shift-Left           shift_edge left
