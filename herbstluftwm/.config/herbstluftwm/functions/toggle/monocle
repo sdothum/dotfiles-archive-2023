@@ -83,9 +83,9 @@ if query primary ;then
       fi
     fi
   fi
+  restore panel
   herbstclient chain . bring $winid . unlock
   rm -f $LOCK
-  restore panel
 fi
 
 # vim: set ft=sh: #
