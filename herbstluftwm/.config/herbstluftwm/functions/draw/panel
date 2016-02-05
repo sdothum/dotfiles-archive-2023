@@ -24,7 +24,9 @@ do
 done
 gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
 panel_width=$(( $monitorW - $gap * 2 ))
-panel_offset=$(( $monitorX + $gap ))
+panel_offsetX=$(( $monitorX + $gap ))
+panel_offsetY=$(( ($monitorY + $gap) / 2 - $PANEL_HEIGHT * 2 / 3 ))
+[ $panel_offsetY -lt 0 ] && panel_offsetY=0
 
 # check for fullscreen mode and adjust accordingly
 case $monitorW in
@@ -167,7 +169,7 @@ xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 cat $PANEL_FIFO:$fifo \
 | panel \
 | lemonbar -d -n "lemonbar:$fifo" \
-           -g ${panel_width}x$PANEL_HEIGHT+$panel_offset -u 2 ${PANEL_BOTTOM} \
+           -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY -u 2 ${PANEL_BOTTOM} \
            -f "$PANEL_FONT" -f "$UTF8_FONT" -f "$ICON_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait
 
