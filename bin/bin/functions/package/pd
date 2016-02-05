@@ -5,12 +5,22 @@
 
 # ........................................................... Package management
 
-# Usage: [D=N] pd package
-#        pd package, list depends on
-#        D=N pd package, list required by
+usage() {
+  echo "usage: $(basename $0)  'depends on | r'equired by  <package>"
+  exit 1
+}
 
-D=${D:-D}
-[ $D = D ] && dep='depends on' || dep='required by'
+[ "$*" ] || usage
+[ $1 = h ] && usage
+
+if [ $1 = r ] ;then
+  D=N
+  shift
+  dep='required by'
+else
+  D=D
+  dep='depends on'
+fi
 
 # package dependency
 if [ "$*" ] ;then

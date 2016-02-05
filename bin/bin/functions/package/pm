@@ -5,6 +5,14 @@
 
 # ........................................................... Package management
 
+usage() {
+  echo "usage: $(basename $0) <package>"
+  exit 1
+}
+
+[ "$*" ] || usage
+[ $1 = h ] && usage
+
 # default (no options) to package query
 
 if [ $# -eq 1 ] ;then

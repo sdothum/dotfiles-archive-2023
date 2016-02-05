@@ -20,7 +20,7 @@ do
     focus_changed) ( restore view && draw root ) & 
                    if herbstclient compare monitors.focus.index != $monitor ;then
                      monitor=$(herbstclient attr monitors.focus.index)
-                     restore panel
+                     restore panel &
                    fi ;;
 
     focus_window) [ -e $DYNAMIC ] && focus window & ;;
