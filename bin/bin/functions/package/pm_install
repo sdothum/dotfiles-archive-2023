@@ -5,7 +5,7 @@
 
 # ......................................................... Distribution install
 
-# Usage: pm_install [--confirm] package
+# Usage: pm_install [--confirm] <package>
 
 if [ $1. = S. ] ;then
   confirm=true

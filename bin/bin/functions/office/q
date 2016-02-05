@@ -5,7 +5,7 @@
 
 # ......................................................................... View
 
-# Usage: q filename, find and list filename from current directory
+# Usage: q <filename>, find and list filename from current directory
 
 # simple source listing tool
 file=$(find . -name "$1" -type f | egrep -v '.deprecated|.hg')

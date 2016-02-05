@@ -5,7 +5,7 @@
 
 # ........................................................................ Regex
 
-# Usage: escape "string.."
+# Usage: escape "<string>"
 
 # escape special characters with backslash ('\')
 echo "$@" | sed -r 's/([ &;(){}])/\\\1/g'

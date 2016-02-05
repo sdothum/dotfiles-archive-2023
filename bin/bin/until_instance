@@ -5,7 +5,7 @@
 
 # ......................................................... Wait for application
 
-# Usage: until_instance application [cutoff (seconds)]
+# Usage: until_instance <application> [<cutoff>], in seconds
 
 start=$(date '+%s')
 [ $2 ] && cutoff=$2 || cutoff=10

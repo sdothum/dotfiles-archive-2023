@@ -6,10 +6,10 @@
 # ........................................................... Package management
 
 # track package for version changes
-# Usage: trackpkg [package]
+# Usage: trackpkg [<package>]
 #        add if new
 #        del if tracking
-#        list current versions if no [package] given
+#        list current versions if no <package> given
 
 conf=$HOME/.trackpkg
 [ -e $conf ] || touch $conf

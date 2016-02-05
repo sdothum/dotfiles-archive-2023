@@ -5,7 +5,7 @@
 
 # ...................................................................... Xdotool
 
-# Usage: demo [msg], see functions/demo
+# Usage: demo [<message>], see functions/demo
 #        msg scripts set PLAYBACK
 
 TRACE=true

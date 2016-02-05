@@ -5,7 +5,7 @@
 
 # ........................................................... Dmenu rofi wrapper
 
-# Usage: dmenu function
+# Usage: dmenu <function>
 # Note:  non-dmenu messages within $0/functions/dmenu
 #        source $HOME/bin/dmenu
 #        POSIX standard for use with dash shell

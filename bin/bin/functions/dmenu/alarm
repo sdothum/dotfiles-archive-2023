@@ -5,8 +5,8 @@
 # .................................................................. Alarm clock
 
 # Usage: dmenu alarm (interactive mode)
-#        dmenu alarm duration description
-#        dmenu alarm duration description repetitions
+#        dmenu alarm <duration> <description>
+#        dmenu alarm <duration> <description> <repetitions>
 #
 # Note:  duration defaults to minutes (not seconds)
 

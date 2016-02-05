@@ -4,7 +4,7 @@
 
 # ...................................................................... Browser
 
-# Usage: dmenu browser uri [bookmarks]
+# Usage: dmenu browser uri [<bookmarks>]
 
 # in order of personal preference..
 browsers="vimb \

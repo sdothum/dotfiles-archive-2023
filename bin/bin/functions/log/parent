@@ -4,7 +4,7 @@
 
 # ........................................................................ Trace
 
-# Usage: CHILD="message" . parent
+# Usage: CHILD="<message>" . parent
 #        must be sourced in order to obtain correct parent id
 
 TRACE=${TRACE:-/tmp/trace.log}

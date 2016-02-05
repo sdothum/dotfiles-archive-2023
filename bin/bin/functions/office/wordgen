@@ -5,9 +5,9 @@
 
 # ........................................................ Random word generator
 
-# Usage: wordgen ( sentence word lengths ), default
+# Usage: wordgen [<sentence word lengths>]*, default
 #        wordgen 8 11 14 17
-#        filter='<regex>' wordgen [ ... ]
+#        filter='<regex>' wordgen ...
 
 [ $corpus ] || corpus=30000
 sentences='8 11 14 17'

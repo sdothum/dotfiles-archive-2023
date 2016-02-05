@@ -5,7 +5,7 @@
 
 # .................................................................... Processes
 
-# Usage: p name[,name]*
+# Usage: p <name>[,<name>]*
 
 # 'or' a list of process names
 list=$(echo $@ | tr ',' '|')
