@@ -29,7 +29,6 @@ if [ $focus -eq $direction ] ;then
   [ $focus -eq 0 ] && switch_frame 1 0 || switch_frame 0 1
 else
   [ $focus -eq 0 ] && switch_frame 1 1 || switch_frame 0 0
-  restore panel
 fi
 
 # vim: set ft=sh: #

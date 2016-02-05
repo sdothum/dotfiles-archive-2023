@@ -39,6 +39,5 @@ if [ $focus -eq $direction ] ;then
 else
   [ $focus -eq 0 ] && switch_to 1 || switch_to 0
 fi
-restore panel
 
 # vim: set ft=sh: #
