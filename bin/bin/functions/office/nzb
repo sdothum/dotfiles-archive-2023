@@ -14,7 +14,7 @@ usage() {
 }
 
 # curses nzb control
-list_delay=60s
+list_delay=60
 action=$1
 (( $# )) && shift
 queue=$@
@@ -39,7 +39,7 @@ case $action in
   I) if if-yes 'clear history and queue' ;then
        killall nzbget 2>/dev/null
        # delay required for server shutdown (cannot use "nzb q")
-       sleep 1s
+       sleep 1
        rm -rf /data/downloads/nzbs/inter
        rm -rf /data/downloads/nzbsqueue
        rm -rf /data/downloads/nzbs/tmp

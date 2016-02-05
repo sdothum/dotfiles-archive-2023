@@ -10,10 +10,12 @@
 start=$(date '+%s')
 [ $2 ] && cutoff=$2 || cutoff=10
 
+delay=0.01
+
 case $(cat $HOME/.windowmanager) in
   bspwm) while ! bspc query -T | grep $1
          do
-           sleep 0.01
+           sleep $delay
            [ $(( $(date '+%s') - $start )) -gt $cutoff ] && exit 1
          done
          exit 0 ;;
@@ -24,7 +26,7 @@ case $(cat $HOME/.windowmanager) in
                   do
                     herbstclient compare clients.${i%.}.instance = $1 && exit 0
                   done
-                  sleep 0.01
+                  sleep $delay
                   [ $(( $(date '+%s') - $start )) -gt $cutoff ] && exit 1
                 done ;;
 esac

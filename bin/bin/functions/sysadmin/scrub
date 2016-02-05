@@ -28,7 +28,7 @@ show() {
     echo "$(timestamp) ❯❯❯ ${_YELLOW_}$@${_nocolor_}"
     sudo btrfs scrub status $V
     p scrub | grep -q "btrfs scrub start -Bd $V" || break
-    sleep 60s
+    sleep 60
   done
   [ $in_progress ] || press-enter
 }
