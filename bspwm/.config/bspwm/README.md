@@ -21,7 +21,7 @@ reference url above and use vim mappings (customized) where possible. Redefine t
 ## notice
 
 bspwm version 0.9.1+ obsoletes the scripts defined here. Syntax 
-conversion will be required in order to utilize them. The new bspwm 
+conversion will be required with version 0.9.1 and above. The new bspwm 
 syntax can be found <a 
 href="https://github.com/baskerville/bspwm/wiki/Command-Syntax-Rewrite">here</a>.
 
