@@ -171,6 +171,6 @@ cat $PANEL_FIFO:$fifo \
 | lemonbar -d -n "lemonbar:$fifo" \
            -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY -u 2 ${PANEL_BOTTOM} \
            -f "$PANEL_FONT" -f "$UTF8_FONT" -f "$ICON_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
-wait
+wait &
 
 # vim: set ft=sh: #

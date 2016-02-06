@@ -28,7 +28,6 @@ if query rez +1024 ;then
   if [ -e $CONKY ] ;then
     spawn_conky
     redraw 'conky fullscreen' 'conky'
-    query multihead && restore panel
   else
     query conky --onlyvisible windowunmap && redraw 'fullscreen' 'fullframe'
   fi

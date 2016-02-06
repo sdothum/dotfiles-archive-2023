@@ -18,6 +18,12 @@ applications and window managers. Note that these are tailored for the
 Colemake Shift-DH layout -- a custom Colemak variant -- described in the
 reference url above and use vim mappings (customized) where possible. Redefine these keybinds as required.
 
+## notice
+
+bspwm version 0.9.1+ obsoletes the scripts defined here. The new bspwm 
+syntax can be found <a 
+href="https://github.com/baskerville/bspwm/wiki/Command-Syntax-Rewrite">here</a>.
+
 ## license
 
 This code is distributed under the terms and conditions of the MIT

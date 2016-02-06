@@ -21,6 +21,6 @@ xdotool search --onlyvisible --limit 1 --maxdepth 1 --name 'lemonbar' windowunma
 # restore panel
 echo "$PANEL_FIFO:$fifo" >$PANEL_FIFO
 xdotool search --limit 1 --maxdepth 1 --name "lemonbar:$fifo\$" windowmap >/dev/null && exit
-draw panel $fifo &
+exec draw panel $fifo
 
 # vim: set ft=sh: #
