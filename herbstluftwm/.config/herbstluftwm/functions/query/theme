@@ -6,7 +6,7 @@
 
 # .................................................................... Wallpaper
 
-. ${0%/query}/config/ENV
+[ "$BACKGROUND" ] || . ${0%/query}/config/ENV
 
 ls -l $BACKGROUND | awk '{ gsub(".png", ".theme", $NF); print $NF }'
 

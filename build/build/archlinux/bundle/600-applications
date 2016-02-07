@@ -33,6 +33,7 @@
 = music
 # ▔▔▔▔▔
   beets
+  cli-visualizer
   mpc
   mpd
   ncmpcpp

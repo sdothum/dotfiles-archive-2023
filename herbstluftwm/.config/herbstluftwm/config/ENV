@@ -46,24 +46,26 @@ else
   export PRIMARY=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
 fi
 
+# ........................................................... Margin adjustments
+
 [ $COMPOSITING ] && touch $COMPTON
-# compton shadow left shift pixel adjustment (0) none
+# compton shadow left shift pixel adjustment for conky panel edge (0) none
 export SHADOW=2
 # dynamic monocle frame height adjustment, (0) none
 # add urxvt lines (top and bottom) using .Xresources fontsize, see draw monitor
 [ $PRIMARY -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
 
-# ............................................................. Lemonbar options
-
-# to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-[ $PRIMARY -lt 1440 ] && export PANEL_MARGIN=true
+# ........................................................................ Panel
 
 # panel config defaults (best set in .xinitrc to minimize source reloads)
-export PANEL_FIFO=${PANEL_FIFO:-$ROOT/herbstluftwm:panel-fifo}
+export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 # to set panel location to bottom of screen, export in .xinitrc
 if [ $PANEL_BOTTOM ] ;then
   export PANEL_BOTTOM=-b
 fi
+
+# to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
+[ $PRIMARY -lt 1440 ] && export PANEL_MARGIN=true
 
 # panel fonts
 export PANEL_HEIGHT=18

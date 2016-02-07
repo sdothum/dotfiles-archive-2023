@@ -401,7 +401,7 @@ progressbar_look = ─╼━
 ## Note: You can define startup screen for ncmpcpp
 ## by choosing screen from the list above.
 ##
-startup_screen = media_library
+startup_screen = visualizer
 #
 ##
 ## Default width of locked screen (in %).
@@ -511,7 +511,7 @@ active_window_border = red
 #
 visualizer_fifo_path = /tmp/mpd.fifo
 visualizer_output_name = my_fifo
-visualizer_sync_interval = 30
+visualizer_sync_interval = 24
 # visualizer_look = ⋅⋅
 # visualizer_in_stereo = no
 # visualizer_type = wave

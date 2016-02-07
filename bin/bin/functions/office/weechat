@@ -12,7 +12,7 @@ log=/tmp/weechat.log
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if pgrep 'znc' >/dev/null ;then
   echo '.. launching weechat'
-  echo '.. waiting on znc connections'
+  echo '.. waiting for ZNC server connections to complete'
 
   count=0
   while :
@@ -21,12 +21,12 @@ if pgrep 'znc' >/dev/null ;then
     sleep 1
     count=$(( $count + 1 ))
     if [ $count -ge $timeout ] ;then
-      echo ".. $timeout second connection timeout exception" >>$log
+      notify "Weechat" "$timeout second ZNC server IRC timeout"
       exit
     fi
   done
 
-  echo ".. $count seconds to connect"
+  notify "Weechat" "$count seconds to ZNC server IRC connection"
   /usr/bin/weechat
 else
   echo '.. znc server not running'

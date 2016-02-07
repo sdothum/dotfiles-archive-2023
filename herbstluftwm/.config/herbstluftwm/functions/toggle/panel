@@ -6,7 +6,7 @@
 
 # ................................................................. Toggle panel
 
-. ${0%/toggle}/config/ENV
+[ $PANEL ] || . ${0%/toggle}/config/ENV
 
 [ -e $PANEL ] && rm -f $PANEL || touch $PANEL
 

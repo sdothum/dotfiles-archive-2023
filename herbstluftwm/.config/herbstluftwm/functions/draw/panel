@@ -7,8 +7,7 @@
 # ................................................................... Draw panel
 
 # Usage: draw panel fifo, see restore panel
-
-. ${0%/draw}/config/ENV
+[ $PANEL_FIFO ] || . ${0%/draw}/config/ENV
 
 fifo=${1#:}
 

@@ -50,6 +50,7 @@ desktop_margin=$(margins $X0)
 # border=$(herbstclient attr theme.border_width)
 frame=$(herbstclient attr settings.frame_gap)
 window=$(herbstclient attr settings.window_gap)
+border=$(herbstclient attr theme.border_width)
 window_frame=$(( $window + $frame ))
 margin=$(( $desktop_margin - $window_frame ))
 # ricing tweak.. pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, ..
@@ -76,7 +77,7 @@ fi
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
-fullscreen_width=$(( $normal_width - $window_frame*2 ))
+fullscreen_width=$(( $normal_width - $window_frame*2 - $border * 2))
 # panel width global attribute, see draw panel
 # echo $fullscreen_width >$FULLSCREEN:width
 
@@ -98,9 +99,9 @@ case $@ in
                       # desktop screens retain margins
                       primary=$(printf '%dx%d%+d%+d' \
                               $fullscreen_width \
-                              $(( $Y0 - $margin*2 + $monocleY*2 - $window_frame*2 - $panelY )) \
-                              $(( $X1 + $marginX + $window_frame + $monocle - 1 - $SHADOW )) \
-                              $(( $margin - $monocleY + $window_frame )) )
+                              $(( $Y0 - $margin*2 + $monocleY*2 - $window_frame*2 - $panelY - $border * 2)) \
+                              $(( $X1 + $marginX + $window_frame + $monocle - 1 - $SHADOW + $border)) \
+                              $(( $margin - $monocleY + $window_frame + $border )) )
                     else
                       # laptop screens fill to edge
                       primary=$(printf '%dx%d%+d%+d' \
