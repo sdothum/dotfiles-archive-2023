@@ -23,6 +23,7 @@ do
 done
 gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
 border=$(herbstclient attr theme.border_width)
+# dynamically indent the panel by margin minus panel height
 indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent ))
