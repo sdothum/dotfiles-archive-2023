@@ -1,11 +1,15 @@
-
-# [ $TRACE ] && CHILD="query/count $@" . $PARENT
+#!/usr/bin/dash
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ......................................................... Window count (frame)
+# ...................................................... Scrape colorcodehex.com
 
-herbstclient layout | grep '\[FOCUS\]' | cut -d: -f2 | cut -d[ -f1 | wc -w
+usage() {
+  echo "usage: $(basename $0) <hexcolor>"
+  exit 1
+}
+
+[ "$*" ] && curl --silent -L "https://www.colorcodehex.com/$1/" || usage
 
 # vim: set ft=sh: #

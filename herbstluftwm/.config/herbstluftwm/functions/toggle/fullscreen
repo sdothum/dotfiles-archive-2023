@@ -8,27 +8,27 @@
 
 # fullscreen with conky panel
 herbstclient lock
-if query rez +1024 ;then
-  if query primary ;then
+if is display +1024 ;then
+  if is primary ;then
     # allow transitioning monocle directly to fullscreen
     [ -e $MONOCLE ] && toggle monocle fullscreen
-    if query conky --onlyvisible ;then
-      query fullscreen && draw monitor conky \
-                       || draw monitor conky fullscreen
+    if conky search --onlyvisible ;then
+      is fullscreen && draw monitor conky \
+                    || draw monitor conky fullscreen
     else
       # handle frame no conky
-      query fullscreen && draw monitor fullframe \
-                       || draw monitor fullscreen
+      is fullscreen && draw monitor fullframe \
+                    || draw monitor fullscreen
     fi
   else
-    query fullscreen && draw monitor secondary \
-                     || draw monitor secondary fullscreen
+    is fullscreen && draw monitor secondary \
+                  || draw monitor secondary fullscreen
   fi
 fi
 herbstclient chain . fullscreen toggle . unlock
 
 tag=$(herbstclient attr monitors.focus.tag)
-if query fullscreen ;then
+if is fullscreen ;then
   touch $FULLSCREEN:$tag
   # clear any previously set monocle state (on other monitor)
   rm -f $MONOCLE:$tag >/dev/null

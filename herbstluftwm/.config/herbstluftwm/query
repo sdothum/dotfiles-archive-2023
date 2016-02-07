@@ -6,7 +6,7 @@
 
 # ............................................................. Query operations
 
-# Usage: query [msg], see functions/query
+# Usage: query <msg>, see functions/query
 
 msg=$1
 shift

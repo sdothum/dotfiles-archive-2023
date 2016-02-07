@@ -1,5 +1,5 @@
 # see .conkyrc
-# [ $TRACE ] && CHILD="query/window $@" . $PARENT
+# [ $TRACE ] && CHILD="query/wname $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬

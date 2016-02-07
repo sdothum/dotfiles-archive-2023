@@ -79,7 +79,9 @@ windowmanager=$1
 # ............................................................... Window manager
 
 setpath() {
-  export PATH=$(echo $@:$(echo $PATH | sed "s|$@:||g"))
+  path=$1
+  [ -d $1/bin ] && path=$path:$1/bin
+  export PATH=$(echo $path:$(echo $PATH | sed "s|$path:||g"))
 }
 
 # unset to use qwerty keyboard wasd mappings

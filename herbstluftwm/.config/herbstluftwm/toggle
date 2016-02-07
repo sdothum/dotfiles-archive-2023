@@ -6,9 +6,8 @@
 
 # ............................................................ Toggle operations
 
-# Usage: toggle [msg | term msg], see functions/toggle
-#        toggle msg, start/stop visible app or raise app to current desktop
-#        toggle term msg, start/stop visible terminal app or goto terminal desktop (tag)
+# Usage: toggle <msg>, start/stop visible app or raise app to current desktop
+#        toggle term <msg>, start/stop visible terminal app or goto terminal desktop (tag)
 
 # close by winid
 close() {

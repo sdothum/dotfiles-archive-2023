@@ -27,7 +27,7 @@ xy() {
 
 # X Y display dimensions
 xy 0 $(query display)
-query multihead && xy 1 $(query display secondary)
+is multihead && xy 1 $(query display secondary)
 
 # XxY+X'+Y' monitor configuration
 monitor() {

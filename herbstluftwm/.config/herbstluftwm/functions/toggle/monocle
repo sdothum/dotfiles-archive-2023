@@ -25,7 +25,7 @@ merge() {
 }
 
 # calculate pseudo golden ratio margins
-if query primary ;then
+if is primary ;then
   tag=$(herbstclient attr monitors.focus.tag)
   if [ -e $MONOCLE ] ;then
     rm -f $MONOCLE
@@ -43,13 +43,13 @@ if query primary ;then
   touch $LOCK
   herbstclient lock
   # toggle out of fullscreen before entering monocle
-  if query fullscreen ;then
+  if is fullscreen ;then
     herbstclient fullscreen toggle
     fullscreen=true
   fi
 
   # toggle out of conky for distraction free mode on laptop screens
-  if [ -e $MONOCLE ] && [ -e $CONKY ] && query rez -2560 ;then
+  if [ -e $MONOCLE ] && [ -e $CONKY ] && is display -2560 ;then
     toggle conky
     touch $MONOCLE:conky
   elif [ -e $MONOCLE:conky ] && ! [ $fullscreen ] ;then
@@ -66,16 +66,16 @@ if query primary ;then
     rm -f $FULLSCREEN:$tag 2>/dev/null
   else
     # allow transitioning to full fullscreen, see draw monitor
-    if ! query fullscreen ;then
+    if ! is fullscreen ;then
       merge
       # side by side frames is my normal layout..
-      if query multihead ;then
+      if is multihead ;then
         # rotate window focus to left frame
-        if [ $(query count) -gt 2 ] ;then
+        if [ $(query fcount) -gt 2 ] ;then
           herbstclient chain . set_layout horizontal . split explode 0.5 \
                              . focus right . set_layout vertical \
                              . focus left . set_layout vertical
-        elif [ $(query count) -gt 1 ] ;then
+        elif [ $(query fcount) -gt 1 ] ;then
           herbstclient chain . set_layout horizontal . split explode 0.5 . rotate . rotate
         else
           herbstclient chain . set_layout horizontal . split explode 0.5 . rotate

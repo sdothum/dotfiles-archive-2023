@@ -3,9 +3,9 @@
 # X11 Window Manager
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ......................................................... Wait for application
+# ......................................... Wait for application window creation
 
-# Usage: until_instance <application> [<cutoff>], in seconds
+# Usage: pstat <application> [<cutoff>], in seconds
 
 start=$(date '+%s')
 [ $2 ] && cutoff=$2 || cutoff=10

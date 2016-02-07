@@ -6,7 +6,7 @@
 
 # ................................................................... Draw panel
 
-# Usage: draw panel fifo, see restore panel
+# Usage: draw panel <fifo>, see restore panel
 [ $PANEL_FIFO ] || . ${0%/draw}/config/ENV
 
 fifo=${1#:}
@@ -25,6 +25,8 @@ gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.w
 border=$(herbstclient attr theme.border_width)
 # dynamically indent the panel by margin minus panel height
 indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
+# for netbook displays with no gaps..
+[ $indent -lt 0 ] && indent=$border
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent ))
 panel_offsetY=$(( ($monitorY + $gap) / 2 - $PANEL_HEIGHT * 2 / 3 ))
@@ -47,7 +49,7 @@ esac
 # tag desktop description
 title() {
   tag=$(herbstclient attr monitors.focus.tag)
-  title="$(query desktop $tag)"
+  title="$(query tname $tag)"
 }
 
 # clean up active window title (filter special characters, common prefixes)
@@ -141,10 +143,10 @@ panel() {
           count=$(herbstclient attr tags.focus.client_count)
           [ $count -gt 1 ] && title="$title   ⮁   $count"
           if [ $count -gt 0 ] ;then
-            if [ "$(query window)" = "${line#?}" ] ;then
+            if [ "$(query wname)" = "${line#?}" ] ;then
               title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{B-}%{F-}%{F$DEFAULT_FG}"
             else
-              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query window)%{F$DEFAULT_FG}"
+              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
               desc=$(trim ${line#?})
               [ "$desc" ] && title="$title   ⮁   ${desc}%{B-}%{F-}"
             fi

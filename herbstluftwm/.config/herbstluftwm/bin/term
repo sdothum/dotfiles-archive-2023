@@ -6,7 +6,7 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [title] [FLOAT|MAX|STACK] [[SHELL] command..]
+# Usage: term [<title>] [FLOAT|MAX|STACK] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
 #        SHELL command, for simpler unquoted command passing

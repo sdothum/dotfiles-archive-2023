@@ -44,19 +44,19 @@ xftfont Ubuntu:size=7
 xftalpha 0.5
 uppercase no
 
-default_color F1CD8D
-color0 b49969
+default_color FBB248
+color0 bc8536
 color1 FDF6E3
 color2 BDB8AA
 color3 8D8A7F
 color4 69675F
 color5 4E4D47
-color6 433927
-color7 87724e
-color8 b49969
-color9 89aff0
-#colorA 786646
-#colorI 445778
+color6 463114
+color7 8d6328
+color8 bc8536
+color9 4792fa
+#colorA 7d5924
+#colorI 24497d
 
 lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
@@ -67,7 +67,7 @@ ${goto 80}${color}${font Ubuntu:size=22}${time %e}
 ${goto 50}${color1}${voffset -22}${font Ubuntu:size=10}${time %A}
 ${goto 65}${color2}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -2} ${color3}${font Ubuntu:size=12}'${time %y}
 ${voffset 9}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -142}${font Ubuntu:size=30:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
+${voffset -142}${font Ubuntu:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -37}
 ${goto 55}${font}${color1}${texeci 900 conky weather}
@@ -75,17 +75,16 @@ ${goto 55}${font}${color1}${texeci 900 conky weather}
 # ${goto 65}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
 ${goto 65}${font}${color2}${kernel} ${alignr}${uptime}
 # ${goto 75}${font}${color3}${nodename} ${alignr}${fs_type /var}
-# ${goto 75}${font}${color}focus ${exec bspc query -M -m focused} ${alignr}desktop ${exec bspc query -D -d focused}
 ${voffset -148}
-${font}${color2}${alignr}${exec query window}
+${font}${color2}${alignr}${exec query wname}
 ${voffset 105}
 
 # ${goto 75}${font Ubuntu:size=7:style=Bold}${color}MPD ${alignr}${mpd_status}
 # # ${goto 75}${font}${color1}volume
 # ${goto 75}${font}${color0}${lua_parse null ${mpd_title}}
 # ${goto 75}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
-${goto 75}${loadgraph 15,0 87724e 87724e}
-${voffset -28}${goto 75}${diskiograph 15,0 b49969 b49969}
+${goto 75}${loadgraph 15,0 8d6328 8d6328}
+${voffset -28}${goto 75}${diskiograph 15,0 bc8536 bc8536}
 ${voffset -5}${goto 75}${font}${color1}Load   ${loadavg 1}   ${loadavg 2}   ${loadavg 3} ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 20}
@@ -98,7 +97,7 @@ ${goto 75}${font}${color1}${top name 1}${alignr}${top cpu 1}%
 ${goto 75}${font}${color2}${top name 2}${alignr}${top cpu 2}%
 ${goto 75}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 # ${goto 75}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
-${goto 75}${cpugraph 15,0 87724e 87724e}
+${goto 75}${cpugraph 15,0 8d6328 8d6328}
 ${voffset -5}${goto 75}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 
 ${voffset 20}
@@ -112,6 +111,6 @@ ${goto 75}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
 ${voffset 20}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp2s0} ${alignr}${addr wlp2s0}${font Ubuntu:size=7}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Battery ${alignr}${lua_parse battery ${battery_time}}
-${goto 75}${downspeedgraph wlp2s0 15,0 87724e 87724e}
-${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 b49969 b49969}
+${goto 75}${downspeedgraph wlp2s0 15,0 8d6328 8d6328}
+${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 bc8536 bc8536}
 ${voffset -5}${goto 75}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp2s0}}↑   ${lua_parse bandwidth ${downspeed wlp2s0}}↓

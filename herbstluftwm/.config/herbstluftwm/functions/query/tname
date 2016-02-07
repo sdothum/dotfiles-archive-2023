@@ -1,12 +1,13 @@
 
-# [ $TRACE ] && CHILD="query/panel $@" . $PARENT
+# [ $TRACE ] && CHILD="query/tname $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ........................................................................ Panel
+# ..................................................................... Tag name
 
-# query panel status (silently)
-pgrep -f 'draw panel' >/dev/null
+# Usage: query tname [0-9]
 
-# vim: set ft=sh: 
+echo $TAG_NAMES | sed 's/ /\n/g' | sed ${1}q\;d
+
+# vim: set ft=sh: #

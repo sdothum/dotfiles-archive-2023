@@ -1,11 +1,11 @@
 
-# [ $TRACE ] && CHILD="query/fullscreen $@" . $PARENT
+# [ $TRACE ] && CHILD="query/fcount $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# .............................................................. Fullscreen mode
+# ........................................................... Frame window count
 
-herbstclient compare clients.focus.fullscreen = true
+herbstclient layout | grep '\[FOCUS\]' | cut -d: -f2 | cut -d[ -f1 | wc -w
 
 # vim: set ft=sh: #

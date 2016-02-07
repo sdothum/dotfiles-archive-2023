@@ -51,7 +51,7 @@ done
 # .............................................................. Desktop layouts
 
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
-if query rez +1440 ;then
+if is display +1440 ;then
   herbstclient load '1' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
   herbstclient load '2' '(clients max:0)' &
   herbstclient load '3' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
@@ -63,7 +63,7 @@ fi
 # ................................................................ Startup suite
 
 # session startup stuff, see .xinitrc
-query multihead && draw monitor secondary
+is multihead && draw monitor secondary
 [ -e $ROOT/herbstluftwm:autostart ] || $HOME/bin/autostart
 touch $ROOT/herbstluftwm:autostart
 

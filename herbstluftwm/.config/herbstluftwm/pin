@@ -6,7 +6,7 @@
 
 # ............................................................... Pin operations
 
-# Usage: pin [msg], see functions/pin
+# Usage: pin <msg>, see functions/pin
 
 TAG=$(herbstclient attr monitors.focus.tag)
 

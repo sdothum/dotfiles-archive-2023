@@ -10,7 +10,7 @@
 
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
 if [ "$(query tag)" = "$1" ] || [ "$(query tag unfocused)" = "$1" ] ;then
-  if query primary ;then 
+  if is primary ;then 
     # redundant move
     [ $(query tag) = $1 ] && exit
     switch monitor 0
@@ -25,8 +25,8 @@ touch $LOCK
 herbstclient lock
 [ "$1" ] && herbstclient use $1 || herbstclient use_previous
 tag=$(herbstclient attr monitors.focus.tag)
-query primary && restore fullscreen $tag primary \
-              || restore fullscreen $tag secondary
+is primary && restore fullscreen $tag primary \
+           || restore fullscreen $tag secondary
 restore monocle $(query tag)
 focus window
 herbstclient unlock

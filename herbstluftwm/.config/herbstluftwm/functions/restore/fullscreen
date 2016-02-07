@@ -6,14 +6,14 @@
 
 # ................................................... Restore fullscreen margins
 
-# Usage: restore fullscreen tag monitor
+# Usage: restore fullscreen <tag> <monitor>
 #        where monitor is primary or secondary
 
 fullscreen() {
   herbstclient lock
-  if query rez +1024 ;then
-    if query primary ;then
-      if query conky --onlyvisible ;then
+  if is display +1024 ;then
+    if is primary ;then
+      if conky search --onlyvisible ;then
         [ $1 = on ] && draw monitor conky fullscreen \
                     || draw monitor conky
       else

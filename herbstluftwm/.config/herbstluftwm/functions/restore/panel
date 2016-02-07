@@ -7,7 +7,7 @@
 # ................................................................ Restore panel
 
 # create a panel on the current monitor, noting monocle mode
-if query primary ;then
+if is primary ;then
   [ -e $CONKY ] && conky=':conky'
   [ -e $MONOCLE ] && monocle=':monocle'
 fi

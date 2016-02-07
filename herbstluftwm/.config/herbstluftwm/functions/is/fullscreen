@@ -1,13 +1,11 @@
 
-# [ $TRACE ] && CHILD="query/desktop $@" . $PARENT
+# [ $TRACE ] && CHILD="is/fullscreen $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ............................................................... Desktop (name)
+# .............................................................. Fullscreen mode
 
-# Usage: query desktop [0-9]
-
-echo $TAG_NAMES | sed 's/ /\n/g' | sed ${1}q\;d
+herbstclient compare clients.focus.fullscreen = true
 
 # vim: set ft=sh: #

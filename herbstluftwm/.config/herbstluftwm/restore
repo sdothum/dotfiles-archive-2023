@@ -6,7 +6,7 @@
 
 # ........................................................... Restore operations
 
-# Usage: focus [msg], see functions/focus
+# Usage: restore <msg>, see functions/focus
 
 # dmenu functions
 . $HOME/bin/dmenu

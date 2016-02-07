@@ -13,7 +13,7 @@
 if [ "$*" ] ;then
   mode='Raise'
   tag=$(herbstclient attr monitors.focus.tag)
-  title=" to $(query desktop $tag)"
+  title=" to $(query tname $tag)"
 else
   mode='Focus'
 fi
@@ -27,7 +27,7 @@ tag() {
 for i in $(query winids)
 do
   TAG=$(herbstclient attr clients.$i.tag)
-  window="$TAG:$(query title $i)^$(tag):$i"
+  window="$TAG:$(query wtitle $i)^$(tag):$i"
   [ "$windows" ] && windows="$windows\n$window" \
                  || windows="$window"
 done

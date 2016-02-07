@@ -6,7 +6,7 @@
 
 # ........................................................ Unhide hidden windows
 
-title=" to $(query desktop $TAG)"
+title=" to $(query tname $TAG)"
 
 count=$(query ttag $TAG)
 if [ $count -gt 0 ] ;then
@@ -14,7 +14,7 @@ if [ $count -gt 0 ] ;then
   for i in $(query winids)
   do
     if herbstclient compare clients.$i.tag = "'$TAG" ;then
-      window="$(query title $i):$i"
+      window="$(query wtitle $i):$i"
       [ "$hidden" ] && hidden="$hidden\n$window" \
                     || hidden="$window"
     fi

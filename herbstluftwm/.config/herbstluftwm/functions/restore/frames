@@ -7,7 +7,7 @@
 # .................................................................. Split frame
 
 # restore layout if in fullscreen, as split is just one keystroke away
-if query fullscreen ;then
+if is fullscreen ;then
   toggle fullscreen
 else
   herbstclient split explode

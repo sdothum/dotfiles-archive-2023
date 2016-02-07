@@ -38,7 +38,7 @@ fi
 # kill any previous instance of border highlighting
 pkill -TERM -f 'draw border pulsar'
 # fullscreen does not alter layout so :max test below is ineffective
-query fullscreen && exit
+is fullscreen && exit
 
 # highlight stacked windows 
 tag=$(herbstclient attr monitors.focus.tag)

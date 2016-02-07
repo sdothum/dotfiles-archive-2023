@@ -1,12 +1,10 @@
 
-# [ $TRACE ] && CHILD="query/conky $@" . $PARENT
-
-# herbstluftwm
+# X11 Desktop
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# .................................................................. Conky focus
+# ........................................................................ Conky
 
-# Usage: query conky [--options..] [command]
+# Usage: conky search [<--option>*] [<command>], see herbstluftwm conky functions
 #        any number of --options but only one optional command e.g. windowmap or windowunmap
 
 while :

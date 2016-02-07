@@ -1,13 +1,13 @@
 
-# [ $TRACE ] && CHILD="query/rez $@" . $PARENT
+# [ $TRACE ] && CHILD="is/display $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ............................................................. Query resolution
+# ................................................................ Is resolution
 
-# Usage: query rez +width | =width | -width
-#        returns boolean based on whether less or greate than check
+# Usage: is display [+|=|-]<width>
+#        returns boolean based on whether less, equal or greater than check
 
 case $(echo $1 | sed -r 's/^(.).*/\1/') in
   '+') [ $(xrandr | grep '*' | cut -dx -f1 | sort | tail -1) -gt ${1#?} ] ;;

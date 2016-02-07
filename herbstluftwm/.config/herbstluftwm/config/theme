@@ -43,11 +43,11 @@ hc attr theme.outer_color            '#707070'
 hc attr theme.outer_width            1
 hc attr theme.urgent.color           orange
 
-if query rez -1440 ;then
+if is display -1440 ;then
   hc set frame_gap                   0
   hc set window_gap                  0
   hc attr theme.border_width         3
-elif query rez -2560 ;then
+elif is display -2560 ;then
   hc set frame_gap                   0
   hc set window_gap                  0
 fi

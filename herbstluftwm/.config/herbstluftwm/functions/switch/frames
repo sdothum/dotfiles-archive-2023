@@ -6,11 +6,11 @@
 
 # ..................................................... Smart frame window cycle
 
-# Usage: switch frames {hc cycle command}
+# Usage: switch frames, herbstclient cycle command
 #        this structure is required because keybind chaining is not sequential!
 
 herbstclient lock
-if query fullscreen; then
+if is fullscreen; then
   # fullscreen=true
   # retain monocle view
   if [ -e $MONOCLE ] ;then

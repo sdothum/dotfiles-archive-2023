@@ -28,16 +28,16 @@ unquote() {
 # -fullscreen only fills the herbstluftwm virtual monitor coordinates, so to fill the screen
 # tweak rofi padding, fontsize and lines for 2560, 1680 (secondary), 1440, 1024 displays
 if pgrep herbstluftwm >/dev/null; then
-  if query primary ;then
-    if query rez =2560 ;then
+  if is primary ;then
+    if is display =2560 ;then
       padding=410
       fontsize=18
       lines=12
-    elif query rez =1440 ;then
+    elif is display =1440 ;then
       padding=200
       fontsize=14
       lines=10
-    elif query rez -1440 ;then
+    elif is display -1440 ;then
       padding=110
       fontsize=14
       lines=7

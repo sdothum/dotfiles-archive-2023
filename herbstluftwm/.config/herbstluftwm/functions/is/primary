@@ -1,11 +1,12 @@
 
-# [ $TRACE ] && CHILD="query/colorcodehex $@" . $PARENT
+# [ $TRACE ] && CHILD="is/primary $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ...................................................... Scrape colorcodehex.com
+# ................................................................ Primary focus
 
-curl --silent -L "https://www.colorcodehex.com/$1/"
+# is primary monitor 0 in focus?
+herbstclient compare monitors.focus.index = 0
 
 # vim: set ft=sh: #

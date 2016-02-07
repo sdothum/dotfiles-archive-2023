@@ -41,7 +41,7 @@ root() {
 }
 
 primary=$(root 0)
-query multihead && secondary=$(root 1)
+is multihead && secondary=$(root 1)
 current="${primary}:${secondary}"
 
 shuffle() {
@@ -89,13 +89,13 @@ echo "$current" >$setroot
 
 # create pulsar border color gradient
 set_border() {
-  query colorcodehex $1 | grep 'Complementary' | head -1 | cut -d/ -f6 >$BORDER
-  query colorcodehex $(cat $BORDER) \
-                     | grep 'color_light_1' \
-                     | sed 's/<\/font>/\n/g' \
-                     | sed  's/.*<font>//g' \
-                     | grep '^#' | cut -d'#' -f2 \
-                     | tac >$PULSAR
+  hexcolors $1 | grep 'Complementary' | head -1 | cut -d/ -f6 >$BORDER
+  hexcolors $(cat $BORDER) \
+            | grep 'color_light_1' \
+            | sed 's/<\/font>/\n/g' \
+            | sed  's/.*<font>//g' \
+            | grep '^#' | cut -d'#' -f2 \
+            | tac >$PULSAR
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
 }

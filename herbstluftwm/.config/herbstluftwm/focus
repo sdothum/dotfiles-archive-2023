@@ -6,7 +6,7 @@
 
 # ............................................................. Focus operations
 
-# Usage: focus [msg], see functions/focus
+# Usage: focus <msg>, see functions/focus
 
 # dmenu functions
 . $HOME/bin/dmenu

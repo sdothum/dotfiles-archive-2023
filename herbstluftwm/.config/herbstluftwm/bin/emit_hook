@@ -29,7 +29,7 @@ do
     rule) case $rule in
             max) herbstclient set_layout max & ;;
 
-            fullscreen) if query primary ;then
+            fullscreen) if is primary ;then
                           ( [ -e $CONKY ] && draw monitor conky fullscreen || draw monitor fullscreen ) &
                         else
                           draw monitor secondary fullscreen &

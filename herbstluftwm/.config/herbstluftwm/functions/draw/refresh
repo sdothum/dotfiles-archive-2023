@@ -10,19 +10,19 @@
 #        draw refresh force, refresh (regardless of monitor focus)
 #        draw refresh [shuffle|select|toggle], see draw root
 
-if query rez +1024 ;then
-  if query primary || [ "$1" = 'force' ] ;then
+if is display +1024 ;then
+  if is primary || [ "$1" = 'force' ] ;then
     if [ -e $CONKY ] ;then
       # dynamic desktop width with conky panel
-      query fullscreen && draw monitor conky fullscreen \
-                       || draw monitor conky
+      is fullscreen && draw monitor conky fullscreen \
+                    || draw monitor conky
     else
-      query fullscreen && draw monitor fullscreen \
-                       || draw monitor fullframe
+      is fullscreen && draw monitor fullscreen \
+                    || draw monitor fullframe
     fi
   else
-    query fullscreen && draw monitor secondary fullscreen \
-                     || draw monitor secondary
+    is fullscreen && draw monitor secondary fullscreen \
+                  || draw monitor secondary
   fi
 fi
 
