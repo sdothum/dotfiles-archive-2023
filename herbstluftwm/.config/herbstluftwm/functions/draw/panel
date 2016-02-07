@@ -22,8 +22,10 @@ do
   geometry=${geometry#*:}
 done
 gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
-panel_width=$(( $monitorW - $gap * 2 ))
-panel_offsetX=$(( $monitorX + $gap ))
+border=$(herbstclient attr theme.border_width)
+indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
+panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
+panel_offsetX=$(( $monitorX + $gap + $indent ))
 panel_offsetY=$(( ($monitorY + $gap) / 2 - $PANEL_HEIGHT * 2 / 3 ))
 [ $panel_offsetY -lt 0 ] && panel_offsetY=0
 
@@ -44,7 +46,7 @@ esac
 # tag desktop description
 title() {
   tag=$(herbstclient attr monitors.focus.tag)
-  title="${PANEL_INDENT}$(query desktop $tag)"
+  title="$(query desktop $tag)"
 }
 
 # clean up active window title (filter special characters, common prefixes)
@@ -132,7 +134,7 @@ panel() {
   while read -r line
   do
     case $line in
-      S*) system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}${PANEL_INDENT}%{B-}%{F-}" ;;
+      S*) system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
 
       T*) title
           count=$(herbstclient attr tags.focus.client_count)

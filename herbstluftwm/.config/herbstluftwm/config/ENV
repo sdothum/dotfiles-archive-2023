@@ -81,7 +81,6 @@ export OCCUPIED=$(/usr/bin/printf '\uf111')
 export FREE=$(/usr/bin/printf '\uf10c')
 # tag bar separator (visual spacing)
 export TAG_PAD='  '
-export PANEL_INDENT='   '
 
 # panel theme
 # export DEFAULT_BG='#242C2E'
