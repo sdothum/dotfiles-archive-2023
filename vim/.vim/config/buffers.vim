@@ -27,8 +27,8 @@
       " sudo save
       cmap w!!          w !sudo tee % >/dev/null
       " write and close all buffers, note herbstluftwm hook
-      nmap <silent>ZZ   :!(sleep 0.075 && herbstclient chain . spawn draw refresh . emit_hook focus_window)&<CR>:wqall<CR>
-      vmap <silent>ZZ   <ESC>:!(sleep 0.075 && herbstclient chain . spawn draw refresh . emit_hook focus_window)&<CR>:wqall<CR>
+      nmap <silent>ZZ   :wqall<CR>
+      vmap <silent>ZZ   <ESC>:wqall<CR>
 
       " save on losing focus
       autocmd FocusLost * silent! :wall
