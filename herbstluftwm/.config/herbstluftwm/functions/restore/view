@@ -6,12 +6,17 @@
 
 # ......................................... Restore normal (non-fullscreen) view
 
+focus() {
+  focus window
+  exit 0
+}
+
 # return to non-fullscreen monitor layout if no fullscreen app visible
-[ -e $FULLSCREEN ] || exit 0
+[ -e $FULLSCREEN ] || focus
 
 case $(herbstclient attr monitors.focus.index) in
-  0) [ -e $FULLSCREEN:primary ] || exit 0 ;;
-  1) [ -e $FULLSCREEN:secondary ] || exit 0 ;;
+  0) [ -e $FULLSCREEN:primary ] || focus ;;
+  1) [ -e $FULLSCREEN:secondary ] || focus ;;
 esac
 
 refresh=true

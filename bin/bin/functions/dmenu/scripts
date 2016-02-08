@@ -10,7 +10,7 @@ file=$(echo $(find -L $HOME/bin -type f) \
             $(find -L $HOME/.config/herbstluftwm -type f) \
      | tr ' ' '\n' \
      | egrep -v '\.cache|\.deprecated|\.hg|makepkg' \
-     | sed -e 's|.*/bin/|bin/|' \
+     | sed -e "s|$HOME/bin/|bin/|" \
            -e 's|.*/archlinux/|archlinux/|' \
            -e 's|.*/herbstluftwm/|herbstluftwm/|' \
      | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \

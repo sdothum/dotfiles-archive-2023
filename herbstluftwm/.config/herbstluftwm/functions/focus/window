@@ -23,7 +23,7 @@ do
     # clear any prior title info
     [ $PANEL_FIFO ] || . ${0%/focus}/config/ENV
     # see restore panel
-    echo 'T ' >$(PANEL_FIFO) &
+    echo 'T ' >$(cat $PANEL_FIFO)
     break
   fi
 done
