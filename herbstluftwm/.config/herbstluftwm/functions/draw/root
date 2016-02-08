@@ -99,14 +99,14 @@ set_border() {
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
 }
-
+set -x
 # apply conky theme to .conkyrc
 [ -e $theme ] && exit
-touch $theme
 wallpaper=$(query theme)
 # load theme or generate a theme from the border colour
 [ -e "$wallpaper" ] && conky theme colours $(cat "$wallpaper") \
                     || conky theme base '00ffff' >$wallpaper
+echo $wallpaper >$theme
 set_border $(head -1 "$wallpaper")
 # restart panels with new theme
 pkill -TERM -f 'draw panel'
