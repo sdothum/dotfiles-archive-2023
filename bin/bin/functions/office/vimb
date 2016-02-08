@@ -33,7 +33,7 @@ vimbt() {
   rm -f /run/user/1000/vimb/socket/*
   # unclutter causes tabbed vimb to load homepages endlessly
   pkill -TERM -x unclutter
-  pstat 'VimbT' && toggle unclutter &
+  winstance 'VimbT' && toggle unclutter &
   
   
 'VimbT' && toggle unclutter &
