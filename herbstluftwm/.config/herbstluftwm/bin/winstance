@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+[ $TRACE ] && CHILD="winstance $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................... Wait for application window instantiation
+
+# Usage: winstance <application> [<cutoff>], in seconds
+
+start=$(date '+%s')
+[ $2 ] && cutoff=$2 || cutoff=10
+
+delay=0.01
+
+while :
+do
+  for i in $(herbstclient attr clients | egrep '0x|focus')
+  do
+    herbstclient compare clients.${i%.}.instance = $1 && exit 0
+  done
+  sleep $delay
+  [ $(( $(date '+%s') - $start )) -gt $cutoff ] && exit 1
+done
+
+# vim: set ft=sh: #

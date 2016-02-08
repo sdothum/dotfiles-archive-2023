@@ -81,7 +81,7 @@ fi
 # .................................................................... Emit hook
 
 # add window management extensions
-emit_hook &
+emithook &
 
 # ................................................................ Final touches
 

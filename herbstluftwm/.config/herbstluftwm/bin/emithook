@@ -1,12 +1,12 @@
 #!/usr/bin/dash
-[ $TRACE ] && CHILD="emit_hook $@" . $PARENT
+[ $TRACE ] && CHILD="emithook $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # ............................................................... Emit hook trap
 
-[ $(pgrep -cx emit_hook) -gt 1 ] && exit
+[ $(pgrep -cx emithook) -gt 1 ] && exit
 touch $DYNAMIC
 monitor=$(herbstclient attr monitors.focus.index)
 
@@ -14,7 +14,7 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
 do
   # script lock to suppress unnecessary emit hook message processing
   [ -e $LOCK ] && continue
-  [ $TRACE ] && echo "> emit_hook $hook $rule $winid" >>$TRACE
+  [ $TRACE ] && echo "> emithook $hook $rule $winid" >>$TRACE
 
   case $hook in
     focus_changed) ( restore view && draw root ) & 
