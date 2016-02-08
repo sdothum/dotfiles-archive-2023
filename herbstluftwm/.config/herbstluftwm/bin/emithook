@@ -14,7 +14,7 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
 do
   # script lock to suppress unnecessary emit hook message processing
   [ -e $LOCK ] && continue
-  [ $TRACE ] && echo "> emithook $hook $rule $winid" >>$TRACE
+  [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
   case $hook in
     focus_changed) ( restore view && draw root ) & 

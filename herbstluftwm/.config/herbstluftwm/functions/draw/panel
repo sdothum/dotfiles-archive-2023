@@ -45,7 +45,7 @@ case $monitorW in
                              panel_width=$(( $panel_width - $gap * 2 ))
                              panel_offset=$(( $panel_offset + gap )) ;;
 
-  *) [ $TRACE ] && echo "> monitorW=$monitorW PRIMARY=$PRIMARY SECONDARY=$SECONDARY" >>$TRACE ;;
+  # *) [ $TRACE ] && echo "= monitorW=$monitorW PRIMARY=$PRIMARY SECONDARY=$SECONDARY" >>$TRACE ;;
 esac
 
 # tag desktop description
