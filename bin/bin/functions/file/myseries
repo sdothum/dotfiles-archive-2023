@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+
+# File
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Episode folders
+
+title=$(ls -1 | head -1 | sed -r 's/(.*\.[sS][0-9]*[eE])[0-9]*\..*/\1/')
+if-no "$title" && exit
+
+for i in $(seq 1 99)
+do
+  [ $i -lt 10 ] && j=0$i || j=$i
+  episode=$(find . -name "${title}$j.*mkv")
+  [ -e "$episode" ] || break
+  mkdir -v "${title%e}E$j"
+  find . -type f -name "${title}$j.*" -exec mv -v {} "${title%e}E$j/" \;
+done
+
+
+# vim: set ft=sh: #

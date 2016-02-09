@@ -11,7 +11,7 @@
 # redirect errors, on startup no window may have focus during conky initialization
 name=$(herbstclient attr clients.focus.instance 2>/dev/null)
 if ! [ "$name" ] ; then
-  restore view
+  draw refresh
   # take advantage of conky query to dynamically focus!
   focus window
 fi
