@@ -13,16 +13,21 @@ monitor=$(herbstclient attr monitors.focus.index)
 herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
 do
   # script lock to suppress unnecessary emit hook message processing
-  [ -e $LOCK ] && continue
+  [ $lock ] && echo "> (locked) $hook $rule $winid" >>$TRACE && continue
+  [ -e $LOCK ] && echo "> (LOCKED) $hook $rule $winid" >>$TRACE && continue
   [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
   case $hook in
-    focus_changed) ( draw refresh && draw root ) & 
+    focus_changed) ( lock=true
+                     draw refresh && draw root
+                     unset lock
+                   ) & 
                    if herbstclient compare monitors.focus.index != $monitor ;then
                      monitor=$(herbstclient attr monitors.focus.index)
                      restore panel &
                    fi ;;
 
+    draw_refresh) [ -e $DYNAMIC ] && focus window & ;;
     focus_window) [ -e $DYNAMIC ] && focus window & ;;
     focus_frame) [ -e $DYNAMIC ] && focus frame & ;;
 

@@ -5,7 +5,7 @@
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # ........................................................ Unhide hidden windows
-set -x
+
 title=" to $(query tname $TAG)"
 
 count=$(query ttag $TAG)
@@ -34,10 +34,7 @@ if [ $count -gt 0 ] ;then
       '[ all  ]') exec restore windows ;;
       '[ last ]') exec restore window ;;
 
-      *) echo 
-        echo "===$hidden==="
-        echo
-        winid=$(echo $hidden | grep "$(echo $window | sed -re 's/([[])/\\\1/g' -e 's/([]])/\\\1/g')" | cut -d: -f2)
+      *) winid=$(echo $hidden | grep "$(echo $window | sed -re 's/([[])/\\\1/g' -e 's/([]])/\\\1/g')" | cut -d: -f2)
          touch $LOCK
          herbstclient chain . lock . use $TAG
          focus frame
