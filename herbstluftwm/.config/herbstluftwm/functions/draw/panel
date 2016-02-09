@@ -168,7 +168,7 @@ panel() {
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
-clock -sf "S%A   ⮃   %{F$ACTIVE_FG}%-I:%M %P%{F-}   ⮃   %-d %b '%y" >$PANEL_FIFO:$fifo &
+clock -i 1 -sf "S%A   ⮃   %{F$ACTIVE_FG}%-I:%M %P%{F-}   ⮃   %-d %b '%y" >$PANEL_FIFO:$fifo &
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 

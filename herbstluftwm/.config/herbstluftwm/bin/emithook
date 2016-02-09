@@ -1,5 +1,5 @@
 #!/usr/bin/dash
-[ $TRACE ] && CHILD="emithook $@" . $PARENT
+[ $TRACE ] && CHILD="bin/emithook $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -13,15 +13,15 @@ monitor=$(herbstclient attr monitors.focus.index)
 herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
 do
   # script lock to suppress unnecessary emit hook message processing
-  [ $lock ] && echo "> (locked) $hook $rule $winid" >>$TRACE && continue
   [ -e $LOCK ] && echo "> (LOCKED) $hook $rule $winid" >>$TRACE && continue
   [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
   case $hook in
-    focus_changed) ( lock=true
-                     draw refresh && draw root
-                     unset lock
-                   ) & 
+    focus_changed) if [ -e $FULLSCREEN ] ;then
+                     ( draw refresh && draw root ) &
+                   else
+                     draw root &
+                   fi
                    if herbstclient compare monitors.focus.index != $monitor ;then
                      monitor=$(herbstclient attr monitors.focus.index)
                      restore panel &

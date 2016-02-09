@@ -1,5 +1,5 @@
 #!/usr/bin/dash
-[ $TRACE ] && CHILD="winstance $@" . $PARENT
+[ $TRACE ] && CHILD="bin/winstance $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬

@@ -8,7 +8,7 @@
 
 # Usage: restore fullscreen <tag> <monitor>
 #        where monitor is primary or secondary
-
+set -x
 fullscreen() {
   herbstclient lock
   if is display +1024 ;then
