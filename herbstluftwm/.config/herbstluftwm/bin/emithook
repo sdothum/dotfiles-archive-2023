@@ -16,6 +16,10 @@ do
   [ -e $LOCK ] && echo "> (LOCKED) $hook $rule $winid" >>$TRACE && continue
   [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
+  # lots of manual tuning here to avoid unnecessary draw refreshes in particular,
+  # hence, the fullscreen test. also, see query wname whose conky usage is capitalized 
+  # on to reinitialze monitor layouts after windows are terminated and focus windows
+
   case $hook in
     focus_changed) if [ -e $FULLSCREEN ] ;then
                      ( draw refresh && draw root ) &
@@ -27,7 +31,6 @@ do
                      restore panel &
                    fi ;;
 
-    draw_refresh) [ -e $DYNAMIC ] && focus window & ;;
     focus_window) [ -e $DYNAMIC ] && focus window & ;;
     focus_frame) [ -e $DYNAMIC ] && focus frame & ;;
 
