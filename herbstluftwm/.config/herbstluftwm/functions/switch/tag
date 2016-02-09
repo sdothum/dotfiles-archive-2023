@@ -27,7 +27,7 @@ herbstclient lock
 tag=$(herbstclient attr monitors.focus.tag)
 is primary && restore fullscreen $tag primary \
            || restore fullscreen $tag secondary
-restore monocle $(query tag)
+restore monocle $tag
 focus window
 herbstclient unlock
 rm -f $LOCK
