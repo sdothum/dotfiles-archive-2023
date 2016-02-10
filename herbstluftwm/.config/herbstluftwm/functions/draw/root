@@ -99,7 +99,7 @@ set_border() {
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
 }
-set -x
+
 # apply conky theme to .conkyrc
 [ -e $theme ] && exit
 wallpaper=$(query theme)

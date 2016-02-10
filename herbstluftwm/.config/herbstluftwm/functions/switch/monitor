@@ -5,7 +5,7 @@
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # .............................................................. Switch monitors
-set -x
+
 # switch tag and focus to monitor retaining layout (fullscreen or monocle)
 switch_to() {
   touch $LOCK
