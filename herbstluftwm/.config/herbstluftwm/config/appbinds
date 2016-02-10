@@ -27,7 +27,7 @@ hc keybind Super-Shift-slash         spawn dmenu folders
 hc keybind $Mod-backslash            spawn toggle conky
 hc keybind $Mod-Shift-backslash      spawn toggle panel
 hc keybind Super-backslash           spawn toggle unclutter
-hc keybind Control-backslash         spawn draw compton
+hc keybind Control-backslash         spawn toggle compton
 hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
 hc keybind Super-a                   spawn dmenu abook

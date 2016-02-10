@@ -1,12 +1,13 @@
 
-[ $TRACE ] && CHILD="draw/compton $@" . $PARENT
+[ $TRACE ] && CHILD="toggle/compton $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ...................................................................... Compton
+# ............................................................... Toggle compton
 
-# compton compositor state flag dependent
+[ -e $COMPTON ] && rm -f $COMPTON || touch $COMPTON
+
 if [ -e $COMPTON ] ;then
   if ! pidof compton >/dev/null ;then
     compton >/tmp/compton.log 2>&1 &

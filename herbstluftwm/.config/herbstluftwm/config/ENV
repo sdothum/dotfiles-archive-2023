@@ -48,7 +48,6 @@ fi
 
 # ........................................................... Margin adjustments
 
-[ $COMPOSITING ] && touch $COMPTON
 # compton shadow left shift pixel adjustment for conky panel edge (0) none
 export SHADOW=2
 # dynamic monocle frame height adjustment, (0) none
