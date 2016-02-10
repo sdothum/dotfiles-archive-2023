@@ -1,4 +1,5 @@
 #!/bin/sh
+# sdothum - 2016 (c) wtfpl
 # fresh arch pre-installer
 
 source ./archlinux-functions

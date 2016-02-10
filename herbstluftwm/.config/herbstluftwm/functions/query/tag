@@ -1,4 +1,4 @@
-# see .conkyrc
+# sdothum - 2016 (c) wtfpl
 # [ $TRACE ] && CHILD="query/tag $@" . $PARENT
 
 # herbstluftwm

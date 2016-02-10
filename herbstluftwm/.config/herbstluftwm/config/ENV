@@ -1,3 +1,4 @@
+# sdothum - 2016 (c) wtfpl
 # to enable tracing, export TRACE=/tmp/herbstluftwm.log in .xinitrc
 export PARENT=$HOME/bin/functions/log/parent
 [ $TRACE ] && CHILD="config/ENV $@" . $PARENT

@@ -1,4 +1,4 @@
-
+# sdothum - 2016 (c) wtfpl
 [ $TRACE ] && CHILD="toggle/conky $@" . $PARENT
 
 # herbstluftwm
@@ -8,6 +8,7 @@
 
 [ -e $CONKY ] && rm -f $CONKY || touch $CONKY
 
+# set conky monitor layout
 redraw() {
   if is primary ;then
     is fullscreen && draw monitor $1 || draw monitor $2
