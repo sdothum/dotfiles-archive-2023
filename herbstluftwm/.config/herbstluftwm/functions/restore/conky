@@ -24,6 +24,7 @@ spawn_conky() {
   fi
 }
 
+# conky modes
 if is display +1024 ;then
   if [ -e $CONKY ] ;then
     spawn_conky

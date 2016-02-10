@@ -30,6 +30,7 @@ switch_to() {
   rm -f $LOCK
 }
 
+# opposing direction switches monitor focus
 direction=$1
 focus=$(herbstclient attr monitors.focus.index)
 tag0=$(herbstclient attr monitors.0.tag)

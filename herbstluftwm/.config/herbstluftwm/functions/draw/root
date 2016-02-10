@@ -24,6 +24,9 @@ brighten=-0.025
 modulo=3
 
 [ -e $setroot ] || echo '0: :0: ' >$setroot
+
+# ......................................................................... Blur
+
 if [ "$1" = 'toggle' ] ;then
   [ -e $noblur ] && rm -f $noblur || touch $noblur
 fi
@@ -76,7 +79,10 @@ case "$*" in
   shuffle) touch $shuffle
            shuffle ;;
 
-  *) [ "$current" = "$(cat $setroot)" ] && exit
+  *) if [ "$current" = "$(cat $setroot)" ] ;then
+       draw border &
+       exit
+     fi
      # random background selection on un-blur change of state
      if [ -e $shuffle ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
@@ -89,11 +95,11 @@ esac
 eval setroot ${primary#?:} ${secondary#?:} &
 echo "$current" >$setroot
 
-# ................................................................ Window border
+# ....................................................................... Border
 
 # create pulsar border color gradient
 set_border() {
-  hexcolors $1 | grep 'Complementary' | head -1 | cut -d/ -f6 >$BORDER
+  hexcolors $1 | grep 'Triadic Color' | head -1 | cut -d/ -f10 >$BORDER
   hexcolors $(cat $BORDER) \
             | grep 'color_light_1' \
             | sed 's/<\/font>/\n/g' \
@@ -105,6 +111,8 @@ set_border() {
 }
 
 draw border &
+
+# ........................................................................ Theme
 
 # apply conky theme to .conkyrc, $theme unset above if new background
 [ -e $theme ] && exit

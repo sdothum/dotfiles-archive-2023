@@ -15,6 +15,8 @@
 
 SHADOW=${SHADOW:-1}
 
+# ..................................................................... Displays
+
 # secondary display area 
 X1=0
 Y1=0
@@ -37,6 +39,8 @@ monitor() {
 # currently defined monitors
 primary=$(monitor 0)
 secondary=$(monitor 1)
+
+# ....................................................................... Layout
 
 # margin tweaks for known display resolutions
 desktop_margin=$(margins $X0)
@@ -80,6 +84,8 @@ normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
 fullscreen_width=$(( $normal_width - $window_frame*2 - $border * 2))
 # panel width global attribute, see draw panel
 # echo $fullscreen_width >$FULLSCREEN:width
+
+# ..................................................................... Geometry
 
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
@@ -165,6 +171,8 @@ esac
 # virtual monitors defined in lieu of hc pad monitor, to define fullscreen boundaries
 # [ $TRACE ] && echo "= herbstclient set_monitors $primary $secondary" >>$TRACE
 herbstclient set_monitors $primary $secondary &
+
+# ................................................................... Fullscreen
 
 if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then
   touch $FULLSCREEN

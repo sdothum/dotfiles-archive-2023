@@ -59,6 +59,10 @@ if is primary ;then
     draw refresh
   fi
 
+  # monocle rules presented here represent a personal workflow preference
+  # toggling in, collapse frames to single frame max view of window in focus
+  # toggling out, exlode to side by side frames, window in focus to left frame
+
   if [ -e $MONOCLE ] ;then
     # allow toggling fullscreen (width) and monocle frame, else just max current window
     merge

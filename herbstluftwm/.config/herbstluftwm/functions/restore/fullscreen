@@ -29,16 +29,13 @@ fullscreen() {
   herbstclient unlock
 }
 
-# if fullscreen tag..
+# if fullscreen tag but not in fullscreen, then fullscreen layout
 if [ -e $FULLSCREEN:$1 ] ;then
-  # and fullscreen monitor
   [ -e $FULLSCREEN:$2 ] && exit
-  # else initialize fullscreen
   fullscreen on
 else
-  # and not fullscreen monitor
+  # not fullscreen tag but in fullscreen, then normal layout
   ! [ -e $FULLSCREEN:$2 ] && exit
-  # else restore default view
   fullscreen off
 fi
 

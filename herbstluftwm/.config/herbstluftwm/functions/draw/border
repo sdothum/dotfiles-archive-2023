@@ -9,7 +9,7 @@
 # below 0.045 can cause (hw dependent) resource hogging
 frequency=0.066
 
-[ -e $PULSAR ] && colors="$(cat $PULSAR)" || colors='FFFFFF AAAAAA 555555  000000 555555 AAAAAA'
+[ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='FFFFFF AAAAAA 555555  000000 555555 AAAAAA'
 [ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER='000000'
 
 pulsar() {

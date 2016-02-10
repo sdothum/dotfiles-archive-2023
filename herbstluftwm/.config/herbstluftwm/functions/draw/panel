@@ -55,7 +55,7 @@ esac
 # tag desktop description
 title() {
   tag=$(herbstclient attr monitors.focus.tag)
-  title="$(query tname $tag)"
+  title=$(query tname $tag)
 }
 
 # clean up active window title (filter special characters, common prefixes)

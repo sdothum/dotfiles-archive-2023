@@ -34,7 +34,8 @@ if [ $count -gt 0 ] ;then
       '[ all  ]') exec restore windows ;;
       '[ last ]') exec restore window ;;
 
-      *) winid=$(echo $hidden | grep "$(echo $window | sed -re 's/([[])/\\\1/g' -e 's/([]])/\\\1/g')" | cut -d: -f2)
+      *) # look out for square brackets in window title e.g. url page titles
+         winid=$(echo $hidden | grep "$(echo $window | sed -re 's/([[])/\\\1/g' -e 's/([]])/\\\1/g')" | cut -d: -f2)
          touch $LOCK
          herbstclient chain . lock . use $TAG
          focus frame
