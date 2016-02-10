@@ -13,6 +13,8 @@
 
 fifo=${1#:}
 
+# ..................................................................... Geometry
+
 # calculate panel width (don't span monitors)
 monitor=$(herbstclient attr monitors.focus.index)
 
@@ -47,6 +49,8 @@ case $monitorW in
 
   # *) [ $TRACE ] && echo "= monitorW=$monitorW PRIMARY=$PRIMARY SECONDARY=$SECONDARY" >>$TRACE ;;
 esac
+
+# ...................................................................... Content
 
 # tag desktop description
 title() {
@@ -133,6 +137,8 @@ desktops() {
     desktops="${desktops} ${format}${leader}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
   done
 }
+
+# .............................................................. FIFO processing
 
 # fifo read loop
 panel() {

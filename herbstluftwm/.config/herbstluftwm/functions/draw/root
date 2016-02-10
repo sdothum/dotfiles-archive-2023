@@ -22,8 +22,8 @@ blur=50
 brighten=-0.025
 # modulo of random number for random desktop wallpaper
 modulo=3
-[ -e $setroot ] || echo '0: :0: ' >$setroot
 
+[ -e $setroot ] || echo '0: :0: ' >$setroot
 if [ "$1" = 'toggle' ] ;then
   [ -e $noblur ] && rm -f $noblur || touch $noblur
 fi
@@ -44,6 +44,9 @@ primary=$(root 0)
 is multihead && secondary=$(root 1)
 current="${primary}:${secondary}"
 
+# ................................................................... Background
+
+# set background wallpaper
 select() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   # initialize default link
@@ -61,12 +64,11 @@ shuffle() {
   rm -f $theme 2>/dev/null
 }
 
-# (0) ignore, (1) change of state to unblurred
 unblur() {
+  # (0) ignore, (1) change of state to unblurred
   expr $1 '<' $(cut -d: -f$2 $setroot)
 }
 
-draw border &
 case "$*" in
   select) rm -f $shuffle 2>/dev/null
           select ;;
@@ -87,6 +89,8 @@ esac
 eval setroot ${primary#?:} ${secondary#?:} &
 echo "$current" >$setroot
 
+# ................................................................ Window border
+
 # create pulsar border color gradient
 set_border() {
   hexcolors $1 | grep 'Complementary' | head -1 | cut -d/ -f6 >$BORDER
@@ -100,7 +104,9 @@ set_border() {
   tac $PULSAR | tee >>$PULSAR
 }
 
-# apply conky theme to .conkyrc
+draw border &
+
+# apply conky theme to .conkyrc, $theme unset above if new background
 [ -e $theme ] && exit
 wallpaper=$(query theme)
 # load theme or generate a theme from the border colour
