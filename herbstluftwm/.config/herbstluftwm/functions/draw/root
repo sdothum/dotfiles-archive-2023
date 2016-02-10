@@ -44,11 +44,6 @@ primary=$(root 0)
 is multihead && secondary=$(root 1)
 current="${primary}:${secondary}"
 
-shuffle() {
-  ln -sf $(find ${background%/default} -name '*.png' | shuf -n1) $BACKGROUND
-  rm -f $theme 2>/dev/null
-}
-
 select() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   # initialize default link
@@ -58,6 +53,11 @@ select() {
   feh -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
       -A "\"ln -sf %f $BACKGROUND && xdotool type 'q'\"" \
       $HOME/images/backgrounds/
+  rm -f $theme 2>/dev/null
+}
+
+shuffle() {
+  ln -sf $(find ${background%/default} -name '*.png' | shuf -n1) $BACKGROUND
   rm -f $theme 2>/dev/null
 }
 
