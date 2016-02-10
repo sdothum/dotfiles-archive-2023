@@ -12,7 +12,7 @@ switch_to() {
   # view tag on selected monitor
   swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
   herbstclient chain . lock . set swap_monitors_to_get_tag 1
-  echo ">>switchto $@ $tag0 $tag1" >>$TRACE
+
   case $1 in
     0) herbstclient chain . focus_monitor 1 . use $tag0
        restore fullscreen $tag0 secondary
