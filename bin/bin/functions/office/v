@@ -1,5 +1,6 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
+
 # Office
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
@@ -8,8 +9,6 @@
 # va va voom
 SHELL=/usr/bin/dash
 ( [ -z $DISPLAY ] && tty | grep '/dev/tty* [0-9]' ) || gui='-f -g'
-
-pgrep herbstluftwm >/dev/null && focus frame
 
 edit() {
   if [ -z "$*" ] ;then
@@ -35,6 +34,11 @@ edit() {
   find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -fv {} \;
 }
 
+# suppress conky wname tendency to refocus out of empty frames (only appears to affect vim launch)
+touch $LOCK
+pgrep herbstluftwm >/dev/null && focus frame
 edit $@ &
+herbstclient set_layout max
+rm LOCK
 
 # # vim: set ft=sh: #

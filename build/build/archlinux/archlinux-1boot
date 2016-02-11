@@ -1,5 +1,6 @@
 #!/bin/sh
 # sdothum - 2016 (c) wtfpl
+
 # archlinux boot configuration
 
 source ./archlinux-functions

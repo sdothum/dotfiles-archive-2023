@@ -12,7 +12,7 @@
 name=$(herbstclient attr clients.focus.instance 2>/dev/null)
 if ! [ "$name" ] ; then
   [ -e $FULLSCREEN ] && draw refresh
-  # take advantage of conky query to dynamically focus!
+  # take advantage of conky query to dynamically focus apps that bypass herbstluftwm close
   [ -e $LOCK ] || focus window
 fi
 if [ $(echo $name | wc -w) -eq 1 ] ;then
