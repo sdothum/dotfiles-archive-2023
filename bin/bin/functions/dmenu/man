@@ -13,20 +13,35 @@ page=$(apropos . \
      | cut -d':' -f3-)
 page=$(unquote $page)
 
-(
-  if [ $page ] ;then
-    if apropos . | cut -d' ' -f1 | grep -q "$page" ;then
-      history man "$page"
-      # do not fork urxvt
-      term "$page" MAX man "$page"
-      pwait "man $page"
+whatis "$page" >/dev/null || exit
 
-      hardcopy=$(echo 'no\nyes' | dmenu "Print $page" -no-custom) || exit
-      if [ $hardcopy = yes ] ;then
-        # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
-        manpage=$(find /usr/share/man -name "$page.1.gz")
-        [ $manpage ] && zcat $manpage | groff -man -Tps | lpr -P $PRINTER \
-                     || notify "$page" 'man1 page not found'
+# list possible man sections!
+if [ $(whatis "$page" | wc -l) -gt 1 ] ;then
+  page=$(whatis "$page" \
+       | sed "s/) *-/)^-/" \
+       | column -s^ -t \
+       | dmenu 'Manual Section' -no-custom)
+else
+  page=$(whatis "$page")
+fi
+
+page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
+
+( if [ "$page" ] ;then
+    history man "${page#* }"
+    term "$page" MAX man "$page"
+    pwait "man $page"
+
+    hardcopy=$(echo 'no\nyes' | dmenu "Print $page" -no-custom) || exit
+    if [ $hardcopy = yes ] ;then
+      # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
+      set -- $page
+      manpage=$(find /usr/share/man -name "$2.$1.gz")
+      if [ $manpage ] ;then
+        zcat $manpage | groff -man -Tps | lpr -P $PRINTER
+        pr eject
+      else
+        notify "$page" 'man1 page not found'
       fi
     fi
   fi

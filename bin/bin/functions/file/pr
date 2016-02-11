@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: $(basename $0)  stdin | mail | prev'iew  <filelist>"
+  echo "usage: $(basename $0)  eject | stdin | mail | prev'iew  [<filelist>]"
   exit 1
 }
 
@@ -15,16 +15,14 @@ usage() {
 format='--pretty-print --color --fancy-header --font=Courier8 --header-font=Helvetica12 --media=Letter --portrait --tabsize=4'
 [ $noln ] || format="$format --line-numbers"
 
-# force immediate print with hp (escape) reset code
-reset() {
-  printf '\033E' | lpr -P $PRINTER
-}
-
 case $1 in
   h | '') usage ;;
 
+  eject) # force immediate print with hp (escape) reset code
+         printf '\033E' | lpr -P $PRINTER ;;
+
   stdin) iconv -c -f utf-8 -t ascii | enscript $format
-         reset ;;
+         pr eject ;;
 
   mail) sed -n '/^Date: /,$p' | noln=true pr stdin ;;
 

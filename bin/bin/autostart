@@ -7,10 +7,7 @@
 # ....................................................... Window manager restart
 
 killall -TERM imapfilter 2>/dev/null
-killall -TERM ncmpcpp 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
-killall -TERM unclutter 2>/dev/null
-killall -TERM weechat 2>/dev/null
 
 # ....................................................... Session initialization
 

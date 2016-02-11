@@ -22,7 +22,6 @@ file=$(echo $(find -L $HOME/bin -type f) \
 
 history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
 file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
-# echo $file
 
 if [ -e $HOME/$file ] ;then
   eval v $HOME/$file

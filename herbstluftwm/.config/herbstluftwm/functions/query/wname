@@ -13,9 +13,9 @@ name=$(herbstclient attr clients.focus.instance 2>/dev/null)
 if ! [ "$name" ] ; then
   [ -e $FULLSCREEN ] && draw refresh
   # take advantage of conky query to dynamically focus apps that bypass herbstluftwm close
+  # bg focus frame actions where you do not want wname to refocus frame inadvertantly
   [ -e $LOCK ] || focus window
-fi
-if [ $(echo $name | wc -w) -eq 1 ] ;then
+elif [ $(echo $name | wc -w) -eq 1 ] ;then
   echo $name
 else
   herbstclient attr clients.focus.class 2>/dev/null

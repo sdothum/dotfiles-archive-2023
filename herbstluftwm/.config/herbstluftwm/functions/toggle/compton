@@ -14,8 +14,8 @@ if [ -e $COMPTON ] ;then
     xscreensaver -no-splash &
   fi
 elif pidof compton >/dev/null ;then
-  killall compton
-  killall xscreensaver
+  killall -TERM compton
+  killall -TERM xscreensaver
 fi
 
 # vim: set ft=sh: #

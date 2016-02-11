@@ -56,8 +56,8 @@ if [ $console ] ;then
     goomwwm) ;;
     dwm) ;;
 
-    herbstluftwm) pkill -TERM -f 'herbst'
-                  pkill -TERM weechat
+    herbstluftwm) pkill -KILL -f 'herbst'
+                  killall -KILL weechat 2>/dev/null
                   rm -rf /tmp/herbst* ;;
 
     gnome) ;;

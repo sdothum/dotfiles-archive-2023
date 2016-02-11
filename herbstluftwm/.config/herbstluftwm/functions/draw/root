@@ -123,8 +123,7 @@ wallpaper=$(query theme)
 echo $wallpaper >$theme
 set_border $(head -1 "$wallpaper")
 # restart panels with new theme
-pkill -TERM -f 'draw panel'
-restore panel
+pkill -TERM -f 'draw panel' && restore panel
 exit 1
 
 # vim: set ft=sh: #
