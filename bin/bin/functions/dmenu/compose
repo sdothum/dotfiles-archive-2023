@@ -30,7 +30,6 @@ format_message() {
 }
 
 compose_with() {
-  pgrep herbstluftwm >/dev/null && focus frame
   format_message $2
   folded=$(mktemp)
   $1 $2

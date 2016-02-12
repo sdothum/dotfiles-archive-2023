@@ -27,17 +27,8 @@ do
   do
     case $action in
       term) cd $dir && term "$dir" SHELL ;;
-      ranger) term "$dir" ranger "$dir" ;;
-      ncdu) term "$dir" ncdu "$dir" ;;
-
-      filelight) pgrep herbstluftwm >/dev/null && focus frame
-                 filelight "$dir" & ;;
-
-      rox) pgrep herbstluftwm >/dev/null && focus frame
-           rox "$dir" ;;
-
-      thunar) pgrep herbstluftwm >/dev/null && focus frame
-              thunar "$dir" ;;
+      ncdu | ranger) term "$dir" $action "$dir" ;;
+      filelight | rox | thunar) focus $action "$dir" ;;
     esac
     exit
   done

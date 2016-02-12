@@ -25,7 +25,6 @@ export LOCK=$ROOT/herbstluftwm:lock
 export MONOCLE=$ROOT/herbstluftwm:monocle
 export PANEL=$ROOT/herbstluftwm:panel
 export PULSAR=$ROOT/herbstluftwm:pulsar
-export STACK=$ROOT/herbstluftwm:stack
 
 # ..................................................................... Desktops
 

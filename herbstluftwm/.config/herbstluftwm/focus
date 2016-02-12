@@ -7,17 +7,28 @@
 
 # ............................................................. Focus operations
 
-# Usage: focus <msg>, see functions/focus
+# Usage: focus <msg> [<options>*], see functions/focus
 
 # dmenu functions
 . $HOME/bin/dmenu
 
 TAG=$(herbstclient attr monitors.focus.tag)
 
+# disable query wname conky polling rules
+focus_app() {
+  touch $LOCK
+  focus frame
+  $msg $@ &
+  rm -f $LOCK
+}
+
 msg=$1
-shift
+[ $msg ] && shift || usage $0
 if [ -e ${0%/focus}/functions/focus/$msg ] ;then
   . ${0%/focus}/functions/focus/$msg $@
+elif which $msg >/dev/null ;then
+  # dynamic app window creation
+  focus_app $@
 else
   usage $0
 fi

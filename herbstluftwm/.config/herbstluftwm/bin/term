@@ -31,7 +31,7 @@ do
     MAX) name='-name max'
          shift ;;
 
-    STACK) touch $STACK
+    STACK) stack=true
            shift ;;
 
     SHELL) shift
@@ -48,7 +48,10 @@ if [ -z "$name" ] ;then
   [ "$title" ] && name="-name ${title#* }"
 fi
 
-# urxvt client issues focus frame
-urxvt $title $name $geometry $cmd
+if [ $stack ] ;then
+  eval urxvt $title $name $geometry $cmd
+else
+  focus urxvt $title $name $geometry $cmd
+fi
 
 # vim: set ft=sh: #

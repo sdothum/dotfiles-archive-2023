@@ -36,7 +36,7 @@ pixel_match() {
 }
 
 msg=$1
-shift
+[ $msg ] && shift || usage $0
 if [ -e ${0%/draw}/functions/draw/$msg ] ;then
   . ${0%/draw}/functions/draw/$msg $@
 else

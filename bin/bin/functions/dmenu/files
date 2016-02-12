@@ -21,8 +21,8 @@ do
   file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
   history files "$file"
   echo "$file" | xsel -b -i
-  pgrep herbstluftwm >/dev/null && focus frame
-  xdg-open "$file"
+  focus xdg-open "$file"
+  break
 done
 
 # vim: set ft=sh: #

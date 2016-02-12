@@ -35,9 +35,6 @@ vimbt() {
   # unclutter causes tabbed vimb to load homepages endlessly
   pkill -TERM -x unclutter
   winstance 'VimbT' && toggle unclutter &
-  
-  
-'VimbT' && toggle unclutter &
 
   # respawning creates endless tabs with unclutter
   # tabbed -f -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' \
@@ -49,8 +46,7 @@ vimbt() {
 
 # use or setup socket (with tabs)
 if ! xdotool search -classname 'VimbT' >/dev/null ;then
-  # focus next window on close
-  ( vimbt && focus window ) &
+  vimbt &
   xdotool search --sync --onlyvisible --limit 1 --classname 'VimbT' >/dev/null
 fi
 [ "$*" ] && echo ";tabopen $@<CR>" | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket)

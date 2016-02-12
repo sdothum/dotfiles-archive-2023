@@ -10,7 +10,7 @@
 # Usage: is <msg>, see functions/is
 
 msg=$1
-shift
+[ $msg ] && shift || usage $0
 if [ -e ${0%/is}/functions/is/$msg ] ;then
   . ${0%/is}/functions/is/$msg $@
 else

@@ -66,20 +66,17 @@ toggle_app() {
     herbstclient unlock
     rm -f $LOCK
   else
-    # bg launch <msg> *before* focus frame to circumvent query wname focus window
-    # which occasionally can refocus a window out of an empty frame (if one exists)
-    $msg $@ &
-    focus frame
+    focus $msg $@
   fi
 }
 
 msg=$1
-shift
+[ $msg ] && shift || usage $0
 if [ -e ${0%/toggle}/functions/toggle/$msg ] ;then
   . ${0%/toggle}/functions/toggle/$msg $@
 elif [ $msg = term ] ;then
   toggle_term $@
-elif which $msg ;then
+elif which $msg >/dev/null ;then
   toggle_app
 else
   usage $0

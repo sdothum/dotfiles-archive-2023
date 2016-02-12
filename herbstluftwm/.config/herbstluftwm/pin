@@ -12,7 +12,7 @@
 TAG=$(herbstclient attr monitors.focus.tag)
 
 msg=$1
-shift
+[ $msg ] && shift || usage $0
 if [ -e ${0%/pin}/functions/pin/$msg ] ;then
   . ${0%/pin}/functions/pin/$msg $@
 else

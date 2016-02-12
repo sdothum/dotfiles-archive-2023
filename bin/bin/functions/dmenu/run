@@ -12,12 +12,10 @@ IFS=:
 stest -dqr -n "$cache" $PATH && stest -flx $PATH | sort -u | tee "$cache" >/dev/null
 unset IFS
 
-# no text prompt to dmenu
+# no text prompt message (unique to run vs other menu functions)
 cmd=$(cat "$cache" | history run | dmenu '' -no-custom) || exit
 history run "$cmd"
-# bg launch <cmd> *before* focus frame to circumvent query wname focus window
-# which occasionally can refocus a window out of an empty frame (if one exists)
-$cmd &
-pgrep herbstluftwm >/dev/null && focus frame
+focus $cmd
+
 
 # vim: set ft=sh: #

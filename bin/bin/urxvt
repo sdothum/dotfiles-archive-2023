@@ -10,12 +10,6 @@
 export SHELL=/usr/bin/zsh
 # adjust font for macbook nvidia display
 nvidia && fn='-fn xft:PragmataPro:size=10'
-# urxvt daemon can be too fast for emit_hook..
-if [ -e $STACK ] ;then
-  rm -f $STACK
-else
-  pgrep herbstluftwm >/dev/null && focus frame
-fi
 
 eval urxvtc $fn $@
 if [ $? -eq 2 ] ;then

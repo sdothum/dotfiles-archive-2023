@@ -38,8 +38,7 @@ do
 
     elinks | w3m) term "$browser" $browser "$1" ;;
 
-    chromium) chromium -app=$1 &
-              pgrep herbstluftwm >/dev/null && focus frame ;;
+    chromium) focus chromium -app=$1 ;;
 
     dwb \
     | firefox \
@@ -56,8 +55,7 @@ do
     | uzbl \
     | vimb \
     | vimb-detached \
-    | xombrero) eval $browser "$1" &
-                pgrep herbstluftwm >/dev/null && focus frame ;;
+    | xombrero) focus $browser \\"$1\\" ;;
   esac
   exit
 done

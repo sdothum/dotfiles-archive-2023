@@ -34,7 +34,7 @@ emit_hook() {
 }
 
 msg=$1
-shift
+[ $msg ] && shift || usage $0
 if [ -e ${0%/restore}/functions/restore/$msg ] ;then
   . ${0%/restore}/functions/restore/$msg $@
 else
