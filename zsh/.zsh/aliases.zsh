@@ -89,6 +89,7 @@ alias gl='egrep -l --ignore-case -E'
 alias gprename='gprename $PWD'
 alias gvim='vim -g'
 alias gvimdiff="vimdiff -g --role='gvimdiff'"
+alias h:='ls -l /tmp/herbstluftwm:*'
 alias handbrake='ghb'
 alias hc='herbstclient'
 alias herbstluftwm=". $HOME/.config/herbstluftwm/config/ENV"

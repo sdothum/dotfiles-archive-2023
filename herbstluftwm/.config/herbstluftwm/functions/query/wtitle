@@ -6,15 +6,13 @@
 
 # ................................................................. Window title
 
-SEP='•'
+# Usage: query wtitle <winid>
 
-attr() {
-  herbstclient attr clients.$2.$1
-}
+SEP='∙'
 
-instance=$(attr 'instance' "$1")
-title=$(attr 'title' "$1" \
-      | sed -e '/(.*).*VIM/s|\(.*\) (.*/\(.*\)).*|\2/\1|' \
+instance=$(herbstclient attr clients.$1.instance)
+title=$(herbstclient attr clients.$1.title \
+      | sed -e '/(.*).*VIM/s|\(.*\) (.*/\([^/]*/[^()]*\)).*|\2/\1|' \
             -e 's/ [-+] .*//' \
             -e 's/ at .*//'\
             -e 's/:/ /')

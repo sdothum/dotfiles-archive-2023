@@ -35,7 +35,7 @@ edit() {
 }
 
 # bg focus frame, otherwise query wname may refocus frame
-pgrep herbstluftwm >/dev/null && focus frame &
+pgrep herbstluftwm >/dev/null && focus frame
 edit $@ &
 
 # # vim: set ft=sh: #

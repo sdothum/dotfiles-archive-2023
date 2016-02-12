@@ -32,6 +32,8 @@ do
                  || windows="$window"
 done
 
+# ........................................................................ Dmenu
+
 if window=$(echo $windows \
           | sort \
           | cut -d: -f2 \

@@ -18,7 +18,7 @@ whatis "$page" >/dev/null || exit
 # list possible man sections!
 if [ $(whatis "$page" | wc -l) -gt 1 ] ;then
   page=$(whatis "$page" \
-       | sed "s/) *-/)^-/" \
+       | sed "s/) *-/)^$SEP/" \
        | column -s^ -t \
        | dmenu 'Manual Section' -no-custom)
 else
