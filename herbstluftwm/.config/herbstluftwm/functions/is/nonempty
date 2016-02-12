@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/nonempty $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ Non-empty tag
+
+# Usage: is nonempty <tag>
+
+herbstclient compare tags.by-name.$1.client_count gt 0
+
+# vim: set ft=sh: #

@@ -35,8 +35,7 @@ fi
 # 1: occupied (blurred image)
 # 0: empty (raw image)
 root() {
-  if ! [ -e $noblur ] \
-  && herbstclient compare tags.by-name.$(herbstclient attr monitors.$1.tag).client_count gt 0 ;then
+  if ! [ -e $noblur ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
     echo "1: --on $1 --blur $blur --brighten $brighten --zoom $BACKGROUND"
   else
     echo "0: --on $1 --zoom $BACKGROUND"
