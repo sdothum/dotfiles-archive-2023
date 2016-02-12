@@ -21,6 +21,8 @@ dohc() {
 
 # ................................................................... Initialize
 
+setroot --blank-color "#$(od -An -N3 -x /dev/random | sed -e 's/ 00//' -e 's/ //')"
+
 # re-entrant (startx) cleanup
 pkill -TERM -f 'panel' &
 pkill -TERM -f 'pulsar' &

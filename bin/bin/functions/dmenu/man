@@ -32,7 +32,7 @@ page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
     term "$page" MAX man "$page"
     pwait "man $page"
 
-    hardcopy=$(echo 'no\nyes' | dmenu "Print $page" -no-custom) || exit
+    hardcopy=$(echo 'no\nyes' | dmenu "Print ${page#* }" -no-custom) || exit
     if [ $hardcopy = yes ] ;then
       # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
       set -- $page
