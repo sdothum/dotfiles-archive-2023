@@ -15,7 +15,9 @@ unset IFS
 # no text prompt to dmenu
 cmd=$(cat "$cache" | history run | dmenu '' -no-custom) || exit
 history run "$cmd"
-pgrep herbstluftwm >/dev/null && focus frame
+# bg launch <cmd> *before* focus frame to circumvent query wname focus window
+# which occasionally can refocus a window out of an empty frame (if one exists)
 $cmd &
+pgrep herbstluftwm >/dev/null && focus frame
 
 # vim: set ft=sh: #

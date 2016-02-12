@@ -34,8 +34,9 @@ edit() {
   find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -fv {} \;
 }
 
-# bg focus frame, otherwise query wname may refocus frame
-pgrep herbstluftwm >/dev/null && focus frame
+# bg launch editor *before* focus frame to circumvent query wname focus window
+# which occasionally can refocus a window out of an empty frame (if one exists)
 edit $@ &
+pgrep herbstluftwm >/dev/null && focus frame
 
 # # vim: set ft=sh: #

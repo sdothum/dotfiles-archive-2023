@@ -66,9 +66,10 @@ toggle_app() {
     herbstclient unlock
     rm -f $LOCK
   else
-    # new instance
-    focus frame
+    # bg launch <msg> *before* focus frame to circumvent query wname focus window
+    # which occasionally can refocus a window out of an empty frame (if one exists)
     $msg $@ &
+    focus frame
   fi
 }
 
