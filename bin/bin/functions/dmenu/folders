@@ -5,6 +5,13 @@
 
 # ........................................................................ Files
 
+filemanagers="filelight \
+              ncdu \
+              ranger \
+              rox \
+              thunar \
+"
+
 # open directory
 while name=$(echo | history folders | dmenu 'Find Folder') || exit
 do
@@ -16,7 +23,7 @@ do
 
   [ -d $file ] && dir=$file || dir="$(dirname $file)"
   history folders "$dir"
-  while action=$(echo 'term\nfilelight\nncdu\nranger\nrox\nthunar' | dmenu "$dir" -no-custom) || exit
+  while action=$(echo "term\n$(apps \"$filemanagers\")" | dmenu "$dir" -no-custom) || exit
   do
     case $action in
       term) cd $dir && term "$dir" SHELL ;;
