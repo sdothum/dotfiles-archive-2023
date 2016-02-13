@@ -49,7 +49,7 @@ if [ -z "$name" ] ;then
 fi
 
 if [ $stack ] ;then
-  eval urxvt $title $name $geometry $cmd
+  urxvt $title $name $geometry $cmd
 else
   focus urxvt $title $name $geometry $cmd
 fi

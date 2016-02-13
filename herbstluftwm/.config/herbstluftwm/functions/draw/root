@@ -98,13 +98,13 @@ echo "$current" >$setroot
 
 # create pulsar border color gradient
 set_border() {
-  conky hexcolors $1 | grep 'Triadic Color' | head -1 | cut -d/ -f10 >$BORDER
-  conky hexcolors $(cat $BORDER) \
-                  | grep 'color_light_1' \
-                  | sed 's/<\/font>/\n/g' \
-                  | sed  's/.*<font>//g' \
-                  | grep '^#' | cut -d'#' -f2 \
-                  | tac >$PULSAR
+  conky palette $1 | grep 'Triadic Color' | head -1 | cut -d/ -f10 >$BORDER
+  conky palette $(cat $BORDER) \
+                | grep 'color_light_1' \
+                | sed 's/<\/font>/\n/g' \
+                | sed  's/.*<font>//g' \
+                | grep '^#' | cut -d'#' -f2 \
+                | tac >$PULSAR
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
 }
