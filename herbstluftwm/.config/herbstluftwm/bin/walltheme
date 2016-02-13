@@ -4,14 +4,15 @@
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ................................................................. Random theme
+# .................................................... Set wallpaper color theme
 
+# see draw root
 while :
 do
-  color=$(randcolor)
-  conky theme base "$color"
-  if-no "keep wallpaper conky theme" && continue
-  break
+  conky theme base "$(randcolor)"
+  [ $? -eq 0 ] && break
+  # see if-no if-yes prompts
+  [ -e /tmp/abort ] && break
 done
 
 # vim: set ft=sh: #

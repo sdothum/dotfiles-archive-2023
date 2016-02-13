@@ -118,7 +118,7 @@ draw border &
 wallpaper=$(query theme)
 # load theme or generate a theme from the border colour
 [ -e "$wallpaper" ] && conky theme colours $(cat "$wallpaper") \
-                    || term 'Theme' randtheme
+                    || term 'Theme' walltheme
 echo $wallpaper >$theme
 set_border $(head -1 "$wallpaper")
 # restart panels with new theme

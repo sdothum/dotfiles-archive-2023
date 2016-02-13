@@ -33,7 +33,8 @@ indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
 [ $indent -lt 0 ] && indent=$border
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent ))
-panel_offsetY=$(( ($monitorY + $gap - $PANEL_HEIGHT) / 2 ))
+# compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
+panel_offsetY=$(( ($monitorY + $gap - $PANEL_HEIGHT) / 2 - $SHADOW ))
 [ $panel_offsetY -lt 0 ] && panel_offsetY=0
 
 # check for fullscreen mode and adjust accordingly

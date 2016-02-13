@@ -11,6 +11,7 @@ underline $1
 
 while :
 do
+  rm -f /tmp/abort 2>/dev/null
   printf 'continue? [no]/yes/abort : '
   read CONTINUE
   echo
@@ -18,8 +19,8 @@ do
     n | N | '') exit 0 ;;
     y | Y) exit 1 ;;
 
-    a | A) kill -TERM $PPID
-           pkill -f "$0 $1" ;;
+    a | A) echo $PPID >/tmp/abort
+           kill -KILL $PPID ;;
   esac
 done
 
