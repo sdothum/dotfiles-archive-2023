@@ -21,6 +21,7 @@ dohc() {
 
 # ................................................................... Initialize
 
+# herbstluftwm random background color
 setroot --blank-color "#$(od -An -N3 -x /dev/random | sed -e 's/ 00//' -e 's/ //')"
 
 # re-entrant (startx) cleanup
