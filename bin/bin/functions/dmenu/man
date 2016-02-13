@@ -47,7 +47,7 @@ do
         zcat $manpage | groff -man -Tps | lpr -P $PRINTER
         pr eject
       else
-        notify "$page" 'man1 page not found'
+        notify "$page" "man $1 section not found"
       fi
     fi
   fi
