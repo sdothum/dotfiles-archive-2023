@@ -35,6 +35,7 @@ do
   do
     case $action in
       read) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+            [ $focus ] || focus frame && focus=true
             FBReader "$mobi" ;;
 
       edit) if grep -q "$book" $(history)/ebooks ;then
@@ -50,8 +51,7 @@ do
               history kindle $kindle
               kindle=$kindle@kindle.com
               account=sdothum@gmail.com
-              (
-                cat - <<END
+              ( cat - <<END
 Subject: $title
 From: $account
 To: $kindle

@@ -33,7 +33,7 @@ indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
 [ $indent -lt 0 ] && indent=$border
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent ))
-panel_offsetY=$(( ($monitorY + $gap) / 2 - $PANEL_HEIGHT * 2 / 3 ))
+panel_offsetY=$(( ($monitorY + $gap) / 2 - $PANEL_HEIGHT * 3 / 5 ))
 [ $panel_offsetY -lt 0 ] && panel_offsetY=0
 
 # check for fullscreen mode and adjust accordingly
