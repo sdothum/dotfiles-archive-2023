@@ -33,7 +33,9 @@ do
 
   if [ "$page" ] ;then
     history man "${page#* }"
-    term "$page" MAX man "$page"
+    term "$page" MAX $stack man "$page"
+    # subsequent manpages open on same frame
+    stack=STACK
     pwait "man $page"
 
     hardcopy=$(echo 'no\nyes' | dmenu "Print ${page#* }" -no-custom) || exit
