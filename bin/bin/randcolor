@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Random color
+
+usage() {
+  echo "usage: $(basename $0) ['#'], '#' to prepend"
+  exit 1
+}
+
+[ "$*" ] && [ "$1" != '#' ] && usage
+echo "$1$(od -An -N3 -x /dev/random | sed -e 's/ 00//' -e 's/ //')"
+
+# vim: set ft=sh: #
