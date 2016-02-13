@@ -98,13 +98,13 @@ echo "$current" >$setroot
 
 # create pulsar border color gradient
 set_border() {
-  hexcolors $1 | grep 'Triadic Color' | head -1 | cut -d/ -f10 >$BORDER
-  hexcolors $(cat $BORDER) \
-            | grep 'color_light_1' \
-            | sed 's/<\/font>/\n/g' \
-            | sed  's/.*<font>//g' \
-            | grep '^#' | cut -d'#' -f2 \
-            | tac >$PULSAR
+  conky hexcolors $1 | grep 'Triadic Color' | head -1 | cut -d/ -f10 >$BORDER
+  conky hexcolors $(cat $BORDER) \
+                  | grep 'color_light_1' \
+                  | sed 's/<\/font>/\n/g' \
+                  | sed  's/.*<font>//g' \
+                  | grep '^#' | cut -d'#' -f2 \
+                  | tac >$PULSAR
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
 }
@@ -118,7 +118,7 @@ draw border &
 wallpaper=$(query theme)
 # load theme or generate a theme from the border colour
 [ -e "$wallpaper" ] && conky theme colours $(cat "$wallpaper") \
-                    || conky theme base "$(randcolor)" >$wallpaper
+                    || term 'Theme' randtheme
 echo $wallpaper >$theme
 set_border $(head -1 "$wallpaper")
 # restart panels with new theme

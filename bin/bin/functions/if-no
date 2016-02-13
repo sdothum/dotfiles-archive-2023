@@ -19,8 +19,7 @@ do
     y | Y) exit 1 ;;
 
     a | A) kill -TERM $PPID
-           pkill -f "$0 $1"
-           exit 0 ;;
+           pkill -f "$0 $1" ;;
   esac
 done
 
