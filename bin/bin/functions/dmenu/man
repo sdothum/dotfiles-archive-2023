@@ -6,28 +6,32 @@
 # ......................................................................... Help
 
 # man page list with recent queries
-page=$(apropos . \
+man=$(apropos . \
      | cut -d' ' -f1 | sort -d | uniq \
      | history man \
      | dmenu 'Manual Page' \
      | cut -d':' -f3-)
-page=$(unquote $page)
+man=$(unquote $man)
 
-whatis "$page" >/dev/null || exit
+whatis "$man" >/dev/null || exit
 
-# list possible man sections!
-if [ $(whatis "$page" | wc -l) -gt 1 ] ;then
-  page=$(whatis "$page" \
-       | sed "s/) *-/)^$SEP/" \
-       | column -s^ -t \
-       | dmenu 'Manual Section' -no-custom)
-else
-  page=$(whatis "$page")
-fi
+# loop for multiple entries
+while :
+do
+  # list possible man sections!
+  if [ $(whatis "$man" | wc -l) -gt 1 ] ;then
+    page=$(whatis "$man" \
+        | sed "s/) *-/)^$SEP/" \
+        | column -s^ -t \
+        | dmenu 'Manual Section' -no-custom) || exit
+  else
+    page=$(whatis "$man")
+    singleton=true
+  fi
 
-page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
+  page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
 
-( if [ "$page" ] ;then
+  if [ "$page" ] ;then
     history man "${page#* }"
     term "$page" MAX man "$page"
     pwait "man $page"
@@ -45,6 +49,7 @@ page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
       fi
     fi
   fi
-) &
+  [ $singleton ] && break
+done
 
 # vim: set ft=sh: #
