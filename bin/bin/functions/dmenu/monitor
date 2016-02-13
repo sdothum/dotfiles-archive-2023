@@ -17,7 +17,7 @@ interface() {
   ip link show | grep '^[0-9]' | cut -d: -f2 | dmenu 'Interface' -no-custom || exit
 }
 
-while monitor=$(apps "$monitors" | dmenu 'System Monitor' -no-custom) || exit
+while monitor=$(apps "$monitors" | dmenu 'Monitor' -no-custom) || exit
 do
   case $monitor in
     iftop) term "$monitor" $monitor $(interface) ;;

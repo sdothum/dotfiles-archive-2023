@@ -12,7 +12,7 @@ library=${LIBRARY:-/data/media/ebooks/${1:-references}}
 while book=$(ls -1 $library \
            | grep '.pdf$' | sed 's/.pdf$//' \
            | history references | sed '1i[ ebooks ]' \
-           | dmenu 'Read Document') || exit
+           | dmenu 'Document') || exit
 do
   [ "$book" = '[ ebooks ]' ] && exec dmenu ebooks
   history references "$book"

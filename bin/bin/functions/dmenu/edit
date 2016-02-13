@@ -19,7 +19,7 @@ while files=$(sed "s/  *::  */^$SEP /" $projects \
             | history edit \
             | column -s\^ -t \
             | sed -e '1i[ edit tags ]' \
-            | dmenu 'Edit Source' -no-custom) || exit
+            | dmenu 'Edit Group' -no-custom) || exit
 do
   if [ "$files" = '[ edit tags ]' ] ;then
     gvim -f $projects

@@ -62,7 +62,7 @@ fi
 
 ribbon() {
   if [ -z "$addresses" ] ;then
-    echo 'Email Address'
+    echo 'E-mail'
   elif echo $addresses | grep -qv ',' ;then
     echo "$addresses"
   else

@@ -27,7 +27,7 @@ stop() {
 }
 
 station() {
-  [ -e $radio ] && echo "Radio $(cat $radio)" || echo 'Radio Station'
+  [ -e $radio ] && cat $radio || echo 'Radio'
 }
 
 url() {

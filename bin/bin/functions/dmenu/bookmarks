@@ -12,7 +12,7 @@ case $BROWSER in
           uri=$(echo "$query" | sqlite3 $sqldb \
               | sed 's/[|]/  ::  /g' \
               | sed '1i[ history ]' \
-              | dmenu 'Browser Bookmark' -no-custom \
+              | dmenu 'Bookmark' -no-custom \
               | sed -r 's/.*(http.*)/\1/') ;;
 
   vimb | *) bookmarks=$HOME/.config/vimb/bookmark
@@ -20,7 +20,7 @@ case $BROWSER in
                 | sed -re "s/(.*)\t(.*)\t(.*)/\2 ${LSPACE} \3 ${RSPACE} \1/g" \
                       -e "s/^ ${LSPACE}/... ${LSPACE}/" \
                 | sed '1i[ history ]' \
-                | dmenu 'Browser Bookmark' -no-custom \
+                | dmenu 'Bookmark' -no-custom \
                 | sed -r 's/.*(http.*)/\1/') ;;
 esac
 

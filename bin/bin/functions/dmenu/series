@@ -32,7 +32,7 @@ do
   show=$(ls -1$T $library \
        | sed "1i$(library $1)\n[ edit         ]" \
        | sed "1i[ $(sortlist $T) ]" \
-       | dmenu 'Play Show' "$show" -no-custom) || exit
+       | dmenu 'Show' "$show" -no-custom) || exit
 
   case "$show" in
     '[ sort by name ]') unset T

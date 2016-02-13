@@ -12,7 +12,7 @@ mv -f $HOME/.zhistory.vacuum $HOME/.zhistory
 cmd=$(h \
     | sed -re "s/^([^ ]*)  */\1 $SEP $INVISIBLE/" \
     | column -s$INVISIBLE -t \
-    | dmenu 'Zsh History' -no-custom) || exit
+    | dmenu 'History' -no-custom) || exit
 
 cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
 notify 'Ctrl-Alt-V' "$(echo $cmd | sed -e 's/[&][&]/and/g' -e 's/[&]/ampersand/')"
