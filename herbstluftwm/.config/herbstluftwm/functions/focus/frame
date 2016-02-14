@@ -13,8 +13,9 @@
 unset fill
 
 touch $LOCK
-# do not overlay a window over a fullscreen window
 herbstclient lock
+# do not overlay a window over a fullscreen window, revert to normal view first!
+# this prevents a fullscreen window from resizing to a differing monitor geometry
 is fullscreen && toggle fullscreen
 herbstclient cycle_frame -1
 frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
