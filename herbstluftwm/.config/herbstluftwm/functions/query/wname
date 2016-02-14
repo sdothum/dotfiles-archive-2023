@@ -13,12 +13,12 @@ name=$(herbstclient attr clients.focus.instance 2>/dev/null)
 if ! [ "$name" ] ; then
   [ -e $FULLSCREEN ] && draw refresh
   # take advantage of conky polling to dynamically focus apps that bypass herbstluftwm close
-  if ! [ -e $LOCK ] ;then
-    if [ -e $DYNAMIC ] && is nonempty $(query tag) ;then
-      focus window
-    else
-      herbstclient emit_hook focus_changed
-    fi
+  [ -e $LOCK ] && exit
+  if [ -e $DYNAMIC ] && is nonempty $(query tag) ;then
+    # focus window only if focus <app> not in progress! see focus
+    [ -e $FOCUS ] || focus window
+  else
+    herbstclient emit_hook focus_changed
   fi
 elif [ $(echo $name | wc -w) -eq 1 ] ;then
   echo $name

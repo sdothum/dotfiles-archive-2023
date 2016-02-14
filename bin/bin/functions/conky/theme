@@ -41,7 +41,7 @@
 
 usage() {
   echo "usage: $(basename $0) theme  cyan | orange | paper"
-  echo "usage: $(basename $0) theme  base <hex colour>"
+  echo "usage: $(basename $0) theme  test <hex colour>"
   echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <13..>,  <hex colours..>"
   exit 1
 }
@@ -151,17 +151,15 @@ action=$1
 shift
 tmpbackup
 case "$action" in
-  base) if [ $# -eq 1 ] ;then
+  test) if [ $# -eq 1 ] ;then
           hexgen $1
           colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           # are we in interactive mode
-          if ! pgrep -f 'draw root' >/dev/null ;then
-            if if-no "update $(query theme)" ;then
-              exit 1
-            else
-              echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$(query theme)
-            fi
+          if if-no "update $(query theme)" ;then
+            exit 1
+          else
+            echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$(query theme)
           fi
         fi ;;
 

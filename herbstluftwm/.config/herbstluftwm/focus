@@ -19,6 +19,8 @@ focus_app() {
   touch $LOCK
   focus frame
   $msg $@ &
+  # prevent premature focus window request from conky polling, see query wname
+  ( touch $FOCUS && sleep 1 && rm -f $FOCUS ) &
   rm -f $LOCK
 }
 

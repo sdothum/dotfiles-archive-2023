@@ -1,5 +1,6 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="bin/walltheme $@" . $PARENT
 
 # herbstluftwm
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
@@ -9,7 +10,7 @@
 # see draw root
 while :
 do
-  conky theme base "$(randcolor)"
+  conky theme test "$(randcolor)"
   [ $? -eq 0 ] && break
   # see if-no if-yes prompts
   [ -e /tmp/abort ] && break

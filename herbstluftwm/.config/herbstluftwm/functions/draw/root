@@ -54,10 +54,10 @@ select() {
   # initialize default link
   ls -L $BACKGROUND 2>/dev/null \
   || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
-  # must escape quote --action, see office/feh
-  feh -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
-      -A "\"ln -sf %f $BACKGROUND && xdotool type 'q'\"" \
-      $HOME/images/backgrounds/
+  # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
+  /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
+               -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
+               $HOME/images/backgrounds/
   rm -f $theme 2>/dev/null
 }
 
@@ -117,8 +117,12 @@ draw border &
 [ -e $theme ] && exit
 wallpaper=$(query theme)
 # load theme or generate a theme from the border colour
-[ -e "$wallpaper" ] && conky theme colours $(cat "$wallpaper") \
-                    || term 'Theme' walltheme
+if [ -e "$wallpaper" ] ;then
+  conky theme colours $(cat "$wallpaper")
+else
+  term 'Theme' STACK SHELL walltheme
+  pwait walltheme
+fi
 echo $wallpaper >$theme
 set_border $(head -1 "$wallpaper")
 # restart panels with new theme

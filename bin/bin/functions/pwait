@@ -10,7 +10,12 @@
 
 delay=0.01
 
-# wait for a uniquely named window to close before proceeding
+# wait for uniquely named window to process to startup
+until [ "$(pgrep -af "$@" | grep -v pwait)" ]
+do
+  sleep $delay
+done
+# wait for uniquely named window to close before proceeding
 while [ "$(pgrep -af "$@" | grep -v pwait)" ]
 do
   sleep $delay
