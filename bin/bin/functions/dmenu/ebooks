@@ -51,17 +51,34 @@ do
               history kindle $kindle
               kindle=$kindle@kindle.com
               account=sdothum@gmail.com
+              boundary="===============$(od -An -N9 -i /dev/random | sed -re 's/[ -]//g' -e 's/(...................).*/\1/')=="
               ( cat - <<END
+Content-Type: multipart/mixed; boundary="$boundary"
+MIME-Version: 1.0
 Subject: $title
 From: $account
 To: $kindle
-Content-Type: text/plain
 
-$title attached.
+--$boundary
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+${mobi##*/} attached.
+
+--$boundary
+Content-Type: application/octet-stream
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="${mobi##*/}"
 
 END
-                uuencode "$mobi" "$mobi"
-              ) | /usr/local/bin/msmtp-enqueue.sh -t -- $kindle & ;;
+                base64 "$mobi"
+                cat - <<END
+
+--$boundary--
+END
+              ) | /usr/local/bin/msmtp-enqueue.sh -t & ;;
     esac
     break
   done
