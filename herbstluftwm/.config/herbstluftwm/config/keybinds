@@ -18,7 +18,7 @@ hc keybind $Mod-grave                spawn toggle monocle
 hc keybind $Mod-d                    spawn draw refresh select
 hc keybind $Mod-Shift-d              spawn draw refresh shuffle
 hc keybind $Mod-Control-d            spawn draw refresh toggle
-hc keybind $Mod-w                    chain . close_or_remove . spawn draw refresh . emit_hook focus_window
+hc keybind $Mod-w                    chain . close_or_remove . emit_hook focus_window
 hc keybind $Mod-Super-Control-space  spawn toggle focus
 hc keybind Super-Tab                 spawn focus hlwm
 hc keybind Super-Control-Tab         spawn focus hlwm bring

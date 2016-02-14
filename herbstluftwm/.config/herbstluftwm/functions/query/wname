@@ -8,11 +8,17 @@
 
 # Note: Use of conky refresh to trap quitting apps w/o herbstluftwm's mod-w
 
-# redirect errors, on startup no window may have focus during conky initialization
+# windows not closed with mod-w may leave focus in an empty frame and no focused instance
 name=$(herbstclient attr clients.focus.instance 2>/dev/null)
-if ! [ "$name" ] ; then
+if [ "$name" ] ; then
+  if [ $(echo $name | wc -w) -eq 1 ] ;then
+    echo $name
+  else
+    herbstclient attr clients.focus.class 2>/dev/null
+  fi
+else
   [ -e $FULLSCREEN ] && draw refresh
-  # take advantage of conky polling to dynamically focus apps that bypass herbstluftwm close
+  # take advantage of conky polling to dynamically focus apps that bypass mod-w (see keybinds)
   [ -e $LOCK ] && exit
   if [ -e $DYNAMIC ] && is nonempty $(query tag) ;then
     # focus window only if focus <app> not in progress! see focus
@@ -20,10 +26,6 @@ if ! [ "$name" ] ; then
   else
     herbstclient emit_hook focus_changed
   fi
-elif [ $(echo $name | wc -w) -eq 1 ] ;then
-  echo $name
-else
-  herbstclient attr clients.focus.class 2>/dev/null
 fi
 
 # vim: set ft=sh: #

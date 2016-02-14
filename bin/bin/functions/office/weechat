@@ -6,7 +6,7 @@
 
 # ..................................................................... IRC chat
 
-timeout=180
+timeout=240
 log=/tmp/weechat.log
 
 # wait for znc to establish connections

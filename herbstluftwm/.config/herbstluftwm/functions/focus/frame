@@ -12,8 +12,7 @@
 # fill=true
 unset fill
 
-# see focus and query wname for lock condition
-[ -e $LOCK ] && lock=true || touch $LOCK
+touch $LOCK
 herbstclient chain . lock . cycle_frame -1
 frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
 
@@ -41,6 +40,6 @@ do
   fi
 done
 herbstclient chain . set_layout vertical . unlock
-[ $lock ] || rm -f $LOCK
+rm -f $LOCK
 
 # vim: set ft=sh: #
