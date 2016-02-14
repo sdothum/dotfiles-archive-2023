@@ -61,7 +61,7 @@ $title attached.
 
 END
                 uuencode "$mobi" "$mobi"
-              ) | /usr/local/bin/msmtp-enqueue.sh --account=${account} -t -- $kindle & ;;
+              ) | /usr/local/bin/msmtp-enqueue.sh -t -- $kindle & ;;
     esac
     break
   done

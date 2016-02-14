@@ -13,7 +13,10 @@
 unset fill
 
 touch $LOCK
-herbstclient chain . lock . cycle_frame -1
+# do not overlay a window over a fullscreen window
+herbstclient lock
+is fullscreen && toggle fullscreen
+herbstclient cycle_frame -1
 frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
 
 for i in $(seq 1 $frames)
