@@ -6,7 +6,6 @@
 # ........................................................................ Conky
 
 radio=/tmp/radio
-stations=$HOME/.pyradio/stations.csv
 
 if [ -e $radio ] ;then
   pgrep -f 'mpv --no-cache --quiet' >/dev/null && cat $radio

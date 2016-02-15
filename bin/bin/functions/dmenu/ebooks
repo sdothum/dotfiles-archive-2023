@@ -28,6 +28,7 @@ do
 
   [ "$book" = '[ documents ]' ] && exec dmenu references
   title=${book%$SEP*}
+  title=$(echo $title | sed 's/ *$//g')
   mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")
   mobi=$(find $library -regex "$mobi")
 
@@ -50,8 +51,8 @@ do
               kindle=${kindle%%@*}
               history kindle $kindle
               kindle=$kindle@kindle.com
-              account=sdothum@gmail.com
-              boundary="===============$(od -An -N9 -i /dev/random | sed -re 's/[ -]//g' -e 's/(...................).*/\1/')=="
+              account=$(grep $USER /etc/aliases | cut -d' ' -f2)
+              boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
               ( cat - <<END
 Content-Type: multipart/mixed; boundary="$boundary"
 MIME-Version: 1.0
@@ -64,7 +65,7 @@ Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-${mobi##*/} attached.
+$title attached.
 
 --$boundary
 Content-Type: application/octet-stream
@@ -78,7 +79,8 @@ END
 
 --$boundary--
 END
-              ) | /usr/local/bin/msmtp-enqueue.sh -t & ;;
+              ) | /usr/local/bin/msmtp-enqueue.sh -t &
+              notify "$title" "$kindle" ;;
     esac
     break
   done
