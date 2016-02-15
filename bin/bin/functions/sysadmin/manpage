@@ -1,13 +1,14 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# X11 System
+# Sysadmin
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # ..................................................................... Man page
 
 xsel=/tmp/manpage:xsel
 
+# man page wrapper
 # xsel -o stack is unavailable to dmenu man, use tmp storage instead
 rm -f $xsel
 man $@
