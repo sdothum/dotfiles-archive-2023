@@ -32,7 +32,7 @@ do
 
     *) service=$service.service
        sudo systemctl status $service && actions='stop\nrestart' || actions='start'
-       while action=$(echo "$actions\nstatus\nenable\ndisable" \
+       while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" \
                     | dmenu "${service%.service}" -no-custom) || break
        do
          case $action in
@@ -58,6 +58,8 @@ do
            'disable') sudo systemctl disable $service
                       status
                       break ;;
+
+           'edit') gvim -f $service ;;
          esac
          break
        done
