@@ -8,7 +8,7 @@
 
 # get network hosts table
 original /etc/hosts
-sudo ln -sfv $HOME/etc/hosts /etc/
+config_install L /etc/hosts
 
 # add host ip address
 ip=$(hostname --ip-address)

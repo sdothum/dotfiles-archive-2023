@@ -16,6 +16,8 @@ sleep 5s
 grep '^nameserver' /etc/resolv.conf || sudo sed -i '$anameserver 10.1.0.1' /etc/resolv.conf
 # disable CoW on systemd journal
 sudo chattr +C /var/log/journal/
+# default mail addresses
+config_install L /etc/aliases
 
 
 title "archlinux testing"

@@ -6,6 +6,19 @@
 
 # ......................................................... Distribution install
 
+usage() {
+  echo "usage: $(basename $0) [L] <path/file>"
+  exit 1
+}
+
+[ "$1" = h ] || [ -z "$1" ] && usage
+
+# link vs copy
+if [ "$1" = L ] ;then
+  link=true
+  shift
+fi
+
 # restore customizations (not typically config files)
 root=$HOME/build/root
 
@@ -14,7 +27,11 @@ if [ "$*" ] ;then
   [ $# -eq 2 ] && host=.$2
   [ -e ${1%/*} ] || sudo mkdir -pv ${1%/*}
   [ -e $1 ] && original $1
-  echo '.. copying '$(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)
+  if [ $link ] ;then
+    echo '.. linking '$(sudo ln -sfv $root/.${1}$host $1)
+  else
+    echo '.. copying '$(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)
+  fi
   annotate "check customization $1"
 fi
 
