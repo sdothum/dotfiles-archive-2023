@@ -13,8 +13,8 @@
 
 # lookup selection (unless it is a non-word), else present history tape
 selection=$(xsel -o) && xsel -c
-[ "$selection" ] && echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
-
+[ $(echo "$selection" | wc -w) -ne 1 ] && unset selection
+set -x
 if [ "$selection" ] ;then
   word=$selection
 else
@@ -28,7 +28,7 @@ while hints=$(dict "$word" 2>&1 >/dev/null | cut -d: -f2 | xargs -n1 | sort -u -
 do
   [ "$hints" ] || break
   # "No definitions found for $word" sorted above, hence, ordered match..
-  echo "$hints" | tr -d'\n' | egrep -q 'definitionsforfoundNo'
+  echo "$hints" | tr '\n' ' ' | egrep -q 'definitions.*for.*found.*No'
   if [ $? -eq 0 ] ;then
     word=$(echo | dmenu "No definitions found for \"$word\"") || exit
   else
