@@ -80,12 +80,17 @@ pass I || exit" >$HOME/sandbox/pass.sh
 
   *) if [ $# -eq 1 ] ;then
        if password=$(/usr/bin/pass $1) ;then
-         [ -e $HOME/.password-store/username/${1#*/}.gpg ] \
-         && username=$(/usr/bin/pass username/${1#*/}) \
-         || username=$(/usr/bin/pass username/default)
-         echo "$username\n$password"
-         notify $1 "$username\n$password"
-         /usr/bin/pass --clip $1
+         # interactive mode?
+         if ps -ef | grep $PPID | grep $SHELL ;then
+           [ -e $HOME/.password-store/username/${1#*/}.gpg ] \
+           && username=$(/usr/bin/pass username/${1#*/}) \
+           || username=$(/usr/bin/pass username/default)
+           echo "$username\n$password"
+           notify $1 "$username\n$password"
+           /usr/bin/pass --clip $1
+         else
+           echo "$password"
+         fi
        else
          pass 
        fi

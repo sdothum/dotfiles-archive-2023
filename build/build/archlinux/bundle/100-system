@@ -108,6 +108,7 @@
   pass
   polkit-gnome
   python-keyring
+  python-keyrings-alt
 
 
 = power
