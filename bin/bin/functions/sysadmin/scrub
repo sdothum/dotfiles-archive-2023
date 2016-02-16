@@ -26,7 +26,7 @@ show() {
   p scrub | grep -q "btrfs scrub start -Bd $V" || in_progress=$@
   while :
   do
-    echo "$(timestamp) ❯❯❯ ${_YELLOW_}$@${_nocolor_}"
+    echo "$(timestamp) ${_RED_}❯❯❯ ${_YELLOW_}$@${_nocolor_}"
     sudo btrfs scrub status $V
     p scrub | grep -q "btrfs scrub start -Bd $V" || break
     sleep 60

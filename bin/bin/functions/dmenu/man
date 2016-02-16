@@ -69,7 +69,6 @@ do
       pwait "manpage $page"
       # highlighted man page entry?
       [ -e $xsel ] && break
-      xsel -c
 
       # print hard copy?
       set -- $page
