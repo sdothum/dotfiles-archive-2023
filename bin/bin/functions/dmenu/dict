@@ -14,7 +14,7 @@
 # lookup selection (unless it is a non-word), else present history tape
 selection=$(xsel -o) && xsel -c
 [ $(echo "$selection" | wc -w) -ne 1 ] && unset selection
-set -x
+
 if [ "$selection" ] ;then
   word=$selection
 else
