@@ -28,7 +28,7 @@
       if $HOST == 'monad'
         set scrolloff=3
       else
-        set scrolloff=8
+        set scrolloff=5
       endif
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1

@@ -54,7 +54,7 @@ status() {
 
 mpc list artist >/dev/null 2>&1 || exit
 # note: cannot compare to null string
-[ "$(current)" > ' ' ] && artist='[ player ]'
+[ "$(current)" != '' ] && artist='[ player ]'
 while :
 do
   [ "$artist" = '[ player ]' ] || artist=$(playlist | dmenu 'Artist' "$artist" -no-custom) || exit

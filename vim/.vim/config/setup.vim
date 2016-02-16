@@ -92,10 +92,10 @@
 
       " insert mode local region cursor movements
       " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      imap <C-h>           <Left>
-      imap <C-j>           <Down>
-      imap <C-k>           <Up>
-      imap <C-l>           <Right>
+      " imap <C-h>           <Left>
+      " imap <C-j>           <Down>
+      " imap <C-k>           <Up>
+      " imap <C-l>           <Right>
 
     " ............................................................. Disable keys
 

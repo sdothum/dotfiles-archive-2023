@@ -7,7 +7,7 @@
 # .............................................. Focus non-empty subframe window
 
 [ -e $DYNAMIC ] || exit
-[ "$(herbstclient attr clients.focus.instance 2>/dev/null)" > ' ' ] && exit
+[ "$(herbstclient attr clients.focus.instance 2>/dev/null)" != '' ] && exit
 
 touch $LOCK
 frames=$(herbstclient attr tags.by-name.$TAG.frame_count)

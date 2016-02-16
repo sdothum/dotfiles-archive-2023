@@ -13,6 +13,7 @@ xsel=/tmp/manpage:xsel
 rm -f $xsel
 man $@
 xsel -o >$xsel
-[ -s $xsel ] || rm -f $xsel
+hilight=$(cat $xsel | grep -v $2 | sed 's/ //g')
+[ $hilight ] || rm -f $xsel
 
 # vim: set ft=sh: #
