@@ -127,6 +127,8 @@ dmenu() {
     if [ "${1%%-*}" != '' ] ;then
       select="$1"
       shift
+    else
+      unset select
     fi
   fi
   # use blank -mesg as added separator and indent pick list!
