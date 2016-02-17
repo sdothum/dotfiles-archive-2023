@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Fetch
+
+# fetch wrapper
+if [ "$*" ] ;then
+  /usr/bin/fetch --help
+else
+  xterm -e '/usr/bin/fetch --size 340 --xoffset 36 --yoffset 28 \
+                           --image ~/images/backgrounds/default \
+                           --block_range 0 15 --gap -16 \
+            && echo \
+            && read \
+           '
+fi
+
+# vim: set ft=sh: #

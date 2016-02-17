@@ -5,6 +5,65 @@
 ! to reload settings without needing to restart xserver:
 !   xrdb -merge ~/.Xresources
 
+! ........................................................................ XTerm
+
+XTerm*bellIsUrgent:           true
+XTerm*charClass:              33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+XTerm*cursorBlink:            true
+XTerm*cursorColor:            yellow
+XTerm*faceName:               PragmataPro:pixelsize=16
+XTerm*fullscreen:             never
+XTerm*internalBorder:         9
+XTerm*locale:                 en_US.utf8
+XTerm*pointerColorBackground: black
+XTerm*pointerColor:           white
+XTerm*SaveLines:              9000
+XTerm*scaleHeight:            1.15
+XTerm*ScrollBar:              false
+XTerm*ScrollKey:              true
+XTerm*selectToClipboard:      true
+XTerm*utf8:                   1
+XTerm*visualbell:             true
+
+! ...................................................................... Colours
+
+*termName:                    xterm-256color
+
+! ! color scheme
+*background:                  #000000
+*foreground:                  #fdf6e3
+*cursorColor:                 #fdf6e3
+! black
+*color0:                      #101010
+*color8:                      #565656
+! red
+*color1:                      #bd4a4a
+*color9:                      #cc6666
+! green
+*color2:                      #A1B52F
+*color10:                     #bde077
+! yellow
+*color3:                      #e8ae5b
+*color11:                     #ffd965
+! blue
+*color4:                      #597FA5
+*color12:                     #66aabb
+! magenta
+*color5:                      #FF4B69
+*color13:                     #f26b9e
+! cyan
+*color6:                      #72ad8c
+*color14:                     #9fe3bc
+! white
+*color7:                      #BDB8AA
+*color15:                     #fdf6e3
+
+! tabbed colors
+URxvt*tabbed.tabbar-fg:       243
+URxvt*tabbed.tabbar-bg:       238
+URxvt*tabbed.tab-fg:          231
+URxvt*tabbed.tab-bg:          124
+
 ! ............................................................... URxvt terminal
 
 ! settings
@@ -26,7 +85,7 @@ URxvt*cursorUnderline:        true
 ! pixels from frame edge
 ! pixels from frame edge
 ! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
-URxvt*lineSpace:              5               ! pixels between lines for added readability
+URxvt*linespace:              5               ! pixels between lines for added readability
 URxvt*underlineColor:         yellow
 
 ! UI
@@ -52,9 +111,6 @@ URxvt*url-launcher:           vimb-detached
 
 ! ........................................................... URxvt XTerm keymap
 ! lifted from http://www.netswarm.net/misc/urxvt-xtermcompat.txt
-
-! act more like XTerm :-)
-URxvt*termName:               xterm-256color
 
 ! normal
 URxvt*keysym.Home:            \033OH
@@ -248,126 +304,3 @@ URxvt*keysym.S-M-C-Up:        \033[1;8A
 URxvt*keysym.S-M-C-Down:      \033[1;8B
 URxvt*keysym.S-M-C-Right:     \033[1;8C
 URxvt*keysym.S-M-C-Left:      \033[1;8D
-
-! ...................................................................... Colours
-
-! ! color scheme
-URxvt*background:             #131d24
-URxvt*foreground:             #fdf6e3
-URxvt*cursorColor:            #fdf6e3
-! black
-URxvt*color0:                 #101010
-URxvt*color8:                 #565656
-! red
-URxvt*color1:                 #bd4a4a
-URxvt*color9:                 #cc6666
-! green
-URxvt*color2:                 #A1B52F
-URxvt*color10:                #bde077
-! yellow
-URxvt*color3:                 #e8ae5b
-URxvt*color11:                #ffd965
-! blue
-URxvt*color4:                 #597FA5
-URxvt*color12:                #66aabb
-! magenta
-URxvt*color5:                 #FF4B69
-URxvt*color13:                #f26b9e
-! cyan
-URxvt*color6:                 #72ad8c
-URxvt*color14:                #9fe3bc
-! white
-URxvt*color7:                 #BDB8AA
-URxvt*color15:                #fdf6e3
-
-! tabbed colors
-URxvt*tabbed.tabbar-fg:       243
-URxvt*tabbed.tabbar-bg:       238
-URxvt*tabbed.tab-fg:          231
-URxvt*tabbed.tab-bg:          124
-  
-! ..................................................................... Defaults
-
-! URxvt*answerbackString:     string
-! URxvt*background:           color
-! URxvt*backspacekey:         string
-! URxvt*boldFont:             fontname
-! URxvt*boldItalicFont:       fontname
-! URxvt*borderColor:          color
-! URxvt*borderLess:           boolean
-! URxvt*chdir:                string
-! URxvt*color0:               #000000
-! URxvt*color10:              #55FF55
-! URxvt*color11:              #FFFF55
-! URxvt*color12:              #5555FF
-! URxvt*color13:              #FF55FF
-! URxvt*color14:              #55FFFF
-! URxvt*color15:              #FFFFFF
-! URxvt*color1:               #AA0000
-! URxvt*color2:               #00AA00
-! URxvt*color3:               #AA5500
-! URxvt*color4:               #0000AA
-! URxvt*color5:               #AA00AA
-! URxvt*color6:               #00AAAA
-! URxvt*color7:               #AAAAAA
-! URxvt*color8:               #555555
-! URxvt*color9:               #FF5555
-! URxvt*colorBD:              color
-! URxvt*colorIT:              color
-! URxvt*colorRV:              color
-! URxvt*cursorBlink:          boolean
-! URxvt*cursorColor2:         color
-! URxvt*cursorColor:          color
-! URxvt*cutchars:             string
-! URxvt*deletekey:            string
-! URxvt*depth:                number
-! URxvt*externalBorder:       number
-! URxvt*fadeColor:            color
-! URxvt*foreground:           color
-! URxvt*geometry:             geom
-! URxvt*highlightColor:       color
-! URxvt*highlightTextColor:   color
-! URxvt*iconFile:             file
-! URxvt*iconName:             string
-! URxvt*imFont:               fontname
-! URxvt*imLocale:             string
-! URxvt*inputMethod:          name
-! URxvt*insecure:             boolean
-! URxvt*intensityStyles:      boolean
-! URxvt*iso14755_52:          boolean
-! URxvt*iso14755:             boolean
-! URxvt*italicFont:           fontname
-! URxvt*jumpScroll:           boolean
-! URxvt*keysym.sym:           keysym
-! URxvt*meta8:                boolean
-! URxvt*modifier:             modifier
-! URxvt*mouseWheelScrollPage: boolean
-! URxvt*override-redirect:    boolean
-! URxvt*pastableTabs:         boolean
-! URxvt*perl-eval:            perl-eval
-! URxvt*perl-lib:             string
-! URxvt*pointerBlank:         boolean
-! URxvt*pointerBlankDelay:    number
-! URxvt*pointerColor2:        color
-! URxvt*pointerColor:         color
-! URxvt*preeditType:          style
-! URxvt*reverseVideo:         boolean
-! URxvt*scrollBar_align:      mode
-! URxvt*scrollBar_floating:   boolean
-! URxvt*scrollBar_right:      boolean
-! URxvt*scrollColor:          color
-! URxvt*scrollstyle:          mode
-! URxvt*searchable-scrollback: keysym
-! URxvt*secondaryScreen:      boolean
-! URxvt*secondaryScroll:      boolean
-! URxvt*selection-autotransform.idx: perl-transform
-! URxvt*selection.pattern-idx: perl-regex
-! URxvt*skipBuiltinGlyphs:    boolean
-! URxvt*termName:             string
-! URxvt*thickness:            number
-! URxvt*title:                string
-! URxvt*transient-for:        windowid
-! URxvt*tripleclickwords:     boolean
-! URxvt*troughColor:          color
-! URxvt*urgentOnBell:         boolean
-! URxvt*utmpInhibit:          boolean

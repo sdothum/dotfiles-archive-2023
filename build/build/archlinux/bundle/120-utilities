@@ -8,9 +8,10 @@
   ack
 # etc-update
   expect
+  fetch-git
   mlocate
 # pacnews-git
-  screenfetch
+# screenfetch
   stow
   tree
 
@@ -123,7 +124,7 @@
 # sakura
 # terminator
 # termite-git
-# xterm
+  xterm
 
 
 = terminal multiplexors

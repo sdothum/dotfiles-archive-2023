@@ -21,6 +21,7 @@ alias help='run-help'
 
 # default shell
 export SHELL=/usr/bin/zsh
+export XTERM_SHELL=/usr/bin/zsh
 
 # for xmonad onhost
 export HOST=$(hostname)

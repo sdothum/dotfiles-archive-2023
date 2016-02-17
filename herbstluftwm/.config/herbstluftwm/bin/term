@@ -13,6 +13,8 @@
 #        SHELL command, for simpler unquoted command passing
 # Note:  title may not contain spaces, use hyphen or underscore in place
 
+TERM=urxvt
+
 # first parameter may be title
 if [ "$1" ] ;then
   if echo "$1" | egrep -qv 'FLOAT|MAX|STACK|SHELL' ;then
@@ -49,9 +51,9 @@ if [ -z "$name" ] ;then
 fi
 
 if [ $stack ] ;then
-  urxvt $title $name $geometry $cmd
+  $TERM $title $name $geometry $cmd
 else
-  focus urxvt $title $name $geometry $cmd
+  focus $TERM $title $name $geometry $cmd
 fi
 
 # vim: set ft=sh: #
