@@ -256,35 +256,35 @@ URxvt*background:             #131d24
 URxvt*foreground:             #fdf6e3
 URxvt*cursorColor:            #fdf6e3
 ! black
-URxvt.color0:                 #101010
-URxvt.color8:                 #565656
+URxvt*color0:                 #101010
+URxvt*color8:                 #565656
 ! red
-URxvt.color1:                 #bd4a4a
-URxvt.color9:                 #cc6666
+URxvt*color1:                 #bd4a4a
+URxvt*color9:                 #cc6666
 ! green
-URxvt.color2:                 #A1B52F
-URxvt.color10:                #bde077
+URxvt*color2:                 #A1B52F
+URxvt*color10:                #bde077
 ! yellow
-URxvt.color3:                 #e8ae5b
-URxvt.color11:                #ffd965
+URxvt*color3:                 #e8ae5b
+URxvt*color11:                #ffd965
 ! blue
-URxvt.color4:                 #597FA5
-URxvt.color12:                #66aabb
+URxvt*color4:                 #597FA5
+URxvt*color12:                #66aabb
 ! magenta
-URxvt.color5:                 #FF4B69
-URxvt.color13:                #f26b9e
+URxvt*color5:                 #FF4B69
+URxvt*color13:                #f26b9e
 ! cyan
-URxvt.color6:                 #72ad8c
-URxvt.color14:                #9fe3bc
+URxvt*color6:                 #72ad8c
+URxvt*color14:                #9fe3bc
 ! white
-URxvt.color7:                 #BDB8AA
-URxvt.color15:                #fdf6e3
+URxvt*color7:                 #BDB8AA
+URxvt*color15:                #fdf6e3
 
 ! tabbed colors
-URxvt.tabbed.tabbar-fg:       243
-URxvt.tabbed.tabbar-bg:       238
-URxvt.tabbed.tab-fg:          231
-URxvt.tabbed.tab-bg:          124
+URxvt*tabbed.tabbar-fg:       243
+URxvt*tabbed.tabbar-bg:       238
+URxvt*tabbed.tab-fg:          231
+URxvt*tabbed.tab-bg:          124
   
 ! ..................................................................... Defaults
 
@@ -296,22 +296,22 @@ URxvt.tabbed.tab-bg:          124
 ! URxvt*borderColor:          color
 ! URxvt*borderLess:           boolean
 ! URxvt*chdir:                string
-! URxvt.color0:               #000000
-! URxvt.color10:              #55FF55
-! URxvt.color11:              #FFFF55
-! URxvt.color12:              #5555FF
-! URxvt.color13:              #FF55FF
-! URxvt.color14:              #55FFFF
-! URxvt.color15:              #FFFFFF
-! URxvt.color1:               #AA0000
-! URxvt.color2:               #00AA00
-! URxvt.color3:               #AA5500
-! URxvt.color4:               #0000AA
-! URxvt.color5:               #AA00AA
-! URxvt.color6:               #00AAAA
-! URxvt.color7:               #AAAAAA
-! URxvt.color8:               #555555
-! URxvt.color9:               #FF5555
+! URxvt*color0:               #000000
+! URxvt*color10:              #55FF55
+! URxvt*color11:              #FFFF55
+! URxvt*color12:              #5555FF
+! URxvt*color13:              #FF55FF
+! URxvt*color14:              #55FFFF
+! URxvt*color15:              #FFFFFF
+! URxvt*color1:               #AA0000
+! URxvt*color2:               #00AA00
+! URxvt*color3:               #AA5500
+! URxvt*color4:               #0000AA
+! URxvt*color5:               #AA00AA
+! URxvt*color6:               #00AAAA
+! URxvt*color7:               #AAAAAA
+! URxvt*color8:               #555555
+! URxvt*color9:               #FF5555
 ! URxvt*colorBD:              color
 ! URxvt*colorIT:              color
 ! URxvt*colorRV:              color
