@@ -1,4 +1,5 @@
 # keybindings
+unbind-key -n F1
 bind-key -n F2 new-window -c "#{pane_current_path}" \; rename-window ""
 bind-key -n F10 copy-mode
 

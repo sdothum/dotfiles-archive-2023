@@ -10,12 +10,14 @@
 if [ "$*" ] ;then
   /usr/bin/fetch --help
 else
-  xterm -e '/usr/bin/fetch --size 340 --xoffset 36 --yoffset 28 \
-                           --image ~/images/backgrounds/default \
+  # hide cursor (make it dark!)
+  xterm -cr '#101010' \
+        -e "/usr/bin/fetch --size 340 --xoffset 36 --yoffset 28 \
+                           --image $HOME/images/backgrounds/default \
                            --block_range 0 15 --gap -16 \
             && echo \
-            && read \
-           '
+            && read close \
+           "
 fi
 
 # vim: set ft=sh: #

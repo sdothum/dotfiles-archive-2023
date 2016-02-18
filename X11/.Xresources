@@ -9,7 +9,7 @@
 
 XTerm*bellIsUrgent:           true
 XTerm*charClass:              33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
-XTerm*cursorBlink:            true
+XTerm*cursorBlink:            false
 XTerm*cursorColor:            yellow
 XTerm*faceName:               PragmataPro:pixelsize=16
 XTerm*fullscreen:             never
@@ -17,10 +17,10 @@ XTerm*internalBorder:         9
 XTerm*locale:                 en_US.utf8
 XTerm*pointerColorBackground: black
 XTerm*pointerColor:           white
-XTerm*SaveLines:              9000
+XTerm*saveLines:              9000
 XTerm*scaleHeight:            1.15
-XTerm*ScrollBar:              false
-XTerm*ScrollKey:              true
+XTerm*scrollBar:              false
+XTerm*scrollKey:              true
 XTerm*selectToClipboard:      true
 XTerm*utf8:                   1
 XTerm*visualbell:             true
@@ -49,8 +49,8 @@ XTerm*visualbell:             true
 *color4:                      #597FA5
 *color12:                     #66aabb
 ! magenta
-*color5:                      #FF4B69
-*color13:                     #f26b9e
+*color5:                      #f26b9e
+*color13:                     #F7A1BF
 ! cyan
 *color6:                      #72ad8c
 *color14:                     #9fe3bc
