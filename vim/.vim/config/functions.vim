@@ -395,19 +395,19 @@
           " for macbook nvidia gpu
           if &guifont == 'PragmataPro 11'
             set guifont=Fantasque\ Sans\ Mono\ 11
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 18 : 8)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 18 : 7)
           else
             set guifont=PragmataPro\ 11
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 6)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 5)
           endif
         else
           " for ati/intel gpu's
           if &guifont == 'PragmataPro 12'
             set guifont=Fantasque\ Sans\ Mono\ 12
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 18 : 8)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 18 : 7)
           else
             set guifont=PragmataPro\ 12
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 6)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 5)
           endif
         endif
       endfunction
