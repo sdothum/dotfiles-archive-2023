@@ -75,7 +75,7 @@ blank() {
 
 wallpaper() {
   # initialize default link
-  ls -L $BACKGROUND 2>/dev/null \
+  ls -L $BACKGROUND >/dev/null 2>&1 \
   || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
   rm -f $theme 2>/dev/null
 }
@@ -95,12 +95,12 @@ shuffle() {
   rm -f $theme 2>/dev/null
 }
 
+# ..................................................................... Set root
+
 unblur() {
   # (0) ignore, (1) change of state to unblurred
   expr $1 '<' $(cut -d: -f$2 $setroot)
 }
-
-# .................................................................... Draw root
 
 case "$*" in
   blank) touch $blank
@@ -130,12 +130,12 @@ case "$*" in
      fi ;;
 esac
 
+# .................................................................. Apply theme
+
 setblur >$setroot
 [ -e $blank ] || eval setroot ${primary#?:} ${secondary#?:} &
 
 draw border &
-
-# ............................................................ Apply conky theme
 
 # apply conky theme to .conkyrc, $theme unset above if new background
 if ! [ -e $blank ] ;then
@@ -156,7 +156,6 @@ if ! [ -e $blank ] ;then
 fi
 
 # restart panels with new theme
-
 pkill -TERM -f 'draw panel' && restore panel
 exit 1
 
