@@ -22,7 +22,7 @@ dohc() {
 # ................................................................... Initialize
 
 # appropriately wild herbstluftwm background color!
-setroot --blank-color "$(randcolor \#)"
+draw root blank
 
 # re-entrant (startx) cleanup
 pkill -TERM -f 'panel' &
@@ -91,7 +91,7 @@ emithook &
 
 # initialize desktop blur and panel / conky rules
 toggle compton
-draw root
+draw root wallpaper
 [ $PANEL_MARGIN ] && toggle panel || toggle conky
 # emit hook stalled otherwise until a new window action..
 focus frame

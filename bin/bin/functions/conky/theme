@@ -41,7 +41,7 @@
 
 usage() {
   echo "usage: $(basename $0) theme  cyan | orange | paper"
-  echo "usage: $(basename $0) theme  test <hex colour>"
+  echo "usage: $(basename $0) theme  test | complement  <hex colour>"
   echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <13..>,  <hex colours..>"
   exit 1
 }
@@ -128,15 +128,15 @@ hexgen() {
   color0=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f10)
   color9=$(echo -n "$hex" | grep 'Complementary' | head -1 | cut -d/ -f6)
   colorA=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
-  echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   hex=$(conky palette $color0)
   color6=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f2)
   color7=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f10)
   color8=$color0
-  echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   hex=$(conky palette $color9)
   colorI=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
-  echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
 
 tmpbackup() {
@@ -144,14 +144,19 @@ tmpbackup() {
   cp -v $conkyrc $tmp
   tmp=$(mktemp).conky-rings.lua
   cp -v $conkylua $tmp
-  unset error
 }
 
 action=$1
 shift
-tmpbackup
 case "$action" in
+  complement) if [ $# -eq 1 ] ;then
+                hexgen $(conky palette $1 | grep 'Triadic Color'  | head -1 | cut -d/ -f2)
+                colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+                echo $default_color
+              fi ;;
+
   test) if [ $# -eq 1 ] ;then
+          tmpbackup
           hexgen $1
           colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI

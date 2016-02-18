@@ -19,8 +19,8 @@ if [ "$name" ] ; then
 else
   [ -e $FULLSCREEN ] && draw refresh
   # take advantage of conky polling to dynamically focus apps that bypass mod-w (see keybinds)
-  # respect manual herbstluftwm script locks and rofi focus
-  [ -e $LOCK ] || pidof rofi && exit
+  # respect manual herbstluftwm script locks and dmenu (rofi) focus
+  [ -e $LOCK ] || pidof rofi >/dev/null && exit
   if [ -e $DYNAMIC ] && is nonempty $(query tag) ;then
     # focus window only if focus <app> not in progress! see focus
     [ -e $FOCUS ] || focus window

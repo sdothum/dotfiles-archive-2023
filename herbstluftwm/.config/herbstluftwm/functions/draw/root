@@ -6,15 +6,18 @@
 
 # .............................................................. Draw background
 
-# Usage: draw root [shuffle|select|toggle]
+# Usage: draw root [ blank | shuffle | select | toggle | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set
+#        draw root blank, draw random background color
 #        draw root shuffle, enable random background shuffling
 #        draw root select, select default background and disable shuffling
 #        draw root toggle, toggle background blur mode
+#        draw root wallpaper, draw background
 
 setroot=$ROOT/herbstluftwm:setroot
 shuffle=$ROOT/herbstluftwm:shuffle
 noblur=$ROOT/herbstluftwm:noblur
+blank=$ROOT/herbstluftwm:blank
 theme=$ROOT/herbstluftwm:theme
 
 # blur radius, brightness (to slightly darken and enhance transparency)
@@ -25,7 +28,7 @@ modulo=3
 
 [ -e $setroot ] || echo '0: :0: ' >$setroot
 
-# ......................................................................... Blur
+# ..................................................................... Map blur
 
 if [ "$1" = 'toggle' ] ;then
   [ -e $noblur ] && rm -f $noblur || touch $noblur
@@ -42,27 +45,53 @@ root() {
   fi
 }
 
-primary=$(root 0)
-is multihead && secondary=$(root 1)
-current="${primary}:${secondary}"
+setblur() {
+  primary=$(root 0)
+  is multihead && secondary=$(root 1)
+  echo "${primary}:${secondary}"
+}
 
-# ................................................................... Background
+# ....................................................... Generate border colors
+
+# create pulsar border color gradient
+set_border() {
+  echo $1 >$BORDER
+  conky palette $1 | grep 'color_light_1' \
+                   | sed 's/<\/font>/\n/g' \
+                   | sed  's/.*<font>//g' \
+                   | grep '^#' | cut -d'#' -f2 \
+                   | tac >$PULSAR
+  # use tee to append file into itself
+  tac $PULSAR | tee >>$PULSAR
+}
+
+# ............................................................ Assign background
+
+blank() {
+  color=$(randcolor)
+  setroot --blank-color "#$color" 2>/dev/null
+  set_border "$(conky theme complement $color)"
+}
+
+wallpaper() {
+  # initialize default link
+  ls -L $BACKGROUND 2>/dev/null \
+  || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
+  rm -f $theme 2>/dev/null
+}
 
 # set background wallpaper
 select() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
-  # initialize default link
-  ls -L $BACKGROUND 2>/dev/null \
-  || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
+  wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
                $HOME/images/backgrounds/
-  rm -f $theme 2>/dev/null
 }
 
 shuffle() {
-  ln -sf $(find ${background%/default} -name '*.png' | shuf -n1) $BACKGROUND
+  ln -sf $(find ${BACKGROUND%/default} -name '*.png' | shuf -n1) $BACKGROUND
   rm -f $theme 2>/dev/null
 }
 
@@ -71,14 +100,24 @@ unblur() {
   expr $1 '<' $(cut -d: -f$2 $setroot)
 }
 
+# .................................................................... Draw root
+
 case "$*" in
+  blank) touch $blank
+         blank ;;
+
   select) rm -f $shuffle 2>/dev/null
+          rm -f $blank
           select ;;
 
   shuffle) touch $shuffle
+           rm -f $blank
            shuffle ;;
+           
+  wallpaper) rm -f $blank
+             wallpaper ;;
 
-  *) if [ "$current" = "$(cat $setroot)" ] ;then
+  *) if [ "$(setblur)" = "$(cat $setroot)" ] ;then
        draw border &
        exit
      fi
@@ -91,41 +130,33 @@ case "$*" in
      fi ;;
 esac
 
-eval setroot ${primary#?:} ${secondary#?:} &
-echo "$current" >$setroot
-
-# ....................................................................... Border
-
-# create pulsar border color gradient
-set_border() {
-  conky palette $1 | grep 'Triadic Color' | head -1 | cut -d/ -f10 >$BORDER
-  conky palette $(cat $BORDER) \
-                | grep 'color_light_1' \
-                | sed 's/<\/font>/\n/g' \
-                | sed  's/.*<font>//g' \
-                | grep '^#' | cut -d'#' -f2 \
-                | tac >$PULSAR
-  # use tee to append file into itself
-  tac $PULSAR | tee >>$PULSAR
-}
+setblur >$setroot
+[ -e $blank ] || eval setroot ${primary#?:} ${secondary#?:} &
 
 draw border &
 
-# ........................................................................ Theme
+# ............................................................ Apply conky theme
 
 # apply conky theme to .conkyrc, $theme unset above if new background
-[ -e $theme ] && exit
-wallpaper=$(query theme)
-# load theme or generate a theme from the border colour
-if [ -e "$wallpaper" ] ;then
-  conky theme colours $(cat "$wallpaper")
-else
-  term 'Theme' STACK SHELL walltheme
-  pwait walltheme
+if ! [ -e $blank ] ;then
+  [ -e $theme ] && exit
+  wallpaper=$(query theme)
+  # load theme or generate a theme from the border colour
+  if [ -e "$wallpaper" ] ;then
+    conky theme colours $(cat "$wallpaper")
+  else
+    term 'Theme' STACK SHELL walltheme
+    pwait walltheme
+  fi
+  echo $wallpaper >$theme
+  set_border $(conky palette $(awk '{ print $1 }' $wallpaper) \
+             | grep 'Triadic Color' \
+             | head -1 \
+             | cut -d/ -f10)
 fi
-echo $wallpaper >$theme
-set_border $(head -1 "$wallpaper")
+
 # restart panels with new theme
+
 pkill -TERM -f 'draw panel' && restore panel
 exit 1
 
