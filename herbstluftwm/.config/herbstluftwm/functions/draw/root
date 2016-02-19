@@ -9,6 +9,7 @@
 # Usage: draw root [ blank | shuffle | select | toggle | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
+#        draw root conky, draw random conky color
 #        draw root shuffle, enable random background shuffling
 #        draw root select, select default background and disable shuffling
 #        draw root toggle, toggle background blur mode
@@ -70,7 +71,7 @@ set_border() {
 blank() {
   color=$(randcolor)
   setroot --blank-color "#$color" 2>/dev/null
-  set_border "$(conky theme complement $color)"
+  set_border "$(conky theme tint $color)"
 }
 
 wallpaper() {
@@ -105,6 +106,8 @@ unblur() {
 case "$*" in
   blank) touch $blank
          blank ;;
+
+  conky) set_border "$(conky theme contrast $(randcolor))" ;;
 
   select) rm -f $shuffle 2>/dev/null
           rm -f $blank

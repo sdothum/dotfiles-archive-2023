@@ -24,9 +24,20 @@ do
        | history ebooks \
        | column -s\^ -t \
        | sed '1i[ documents ]' \
-       | dmenu 'E-book' -no-custom) || exit
+       | dmenu 'E-book' -filter "$author" -no-custom)
+
+  # return loop filtered by author, allow escape to clear filter!
+  if [ -z "$book" ] ;then
+    if [ "$author" ] ;then
+      unset author
+      continue
+    else
+      exit
+    fi
+  fi
 
   [ "$book" = '[ documents ]' ] && exec dmenu references
+  author=${book#*$SEP}
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
   mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")

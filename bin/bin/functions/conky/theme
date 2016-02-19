@@ -40,8 +40,8 @@
 # colorI [color9 mono-2]
 
 usage() {
-  echo "usage: $(basename $0) theme  cyan | orange | paper"
-  echo "usage: $(basename $0) theme  test | complement  <hex colour>"
+  echo "usage: $(basename $0) theme  cyan | orange | paper | ink"
+  echo "usage: $(basename $0) theme  test | light | dark  <hex colour>"
   echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <13..>,  <hex colours..>"
   exit 1
 }
@@ -137,6 +137,7 @@ hexgen() {
   hex=$(conky palette $color9)
   colorI=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
 
 tmpbackup() {
@@ -149,16 +150,19 @@ tmpbackup() {
 action=$1
 shift
 case "$action" in
-  complement) if [ $# -eq 1 ] ;then
-                hexgen $(conky palette $1 | grep 'Triadic Color'  | head -1 | cut -d/ -f2)
-                colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-                echo $default_color
-              fi ;;
+  tint) if [ $# -eq 1 ] ;then
+          hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f18)
+          echo $default_color
+        fi ;;
+
+  contrast) if [ $# -eq 1 ] ;then
+              hexgen $1
+              echo $default_color
+            fi ;;
 
   test) if [ $# -eq 1 ] ;then
           tmpbackup
           hexgen $1
-          colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           # are we in interactive mode
           if if-no "update $(query theme)" ;then
@@ -171,6 +175,7 @@ case "$action" in
   cyan) colours 25EFB5 1BB387 0A4232 148665 1BB387 EF2561 13775A 771331 ;;
   orange) colours EF5A29 B3431E 42190B 863216 B3431E 25C0EF 772D15 136077 ;;
   paper) text FDF6E3 BDB8AA 8D8A7F 69675F 4E4D47 ;;
+  ink) text 000000 202020 303030 404040 505050 ;;
 
   rings) [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;

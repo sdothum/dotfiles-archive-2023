@@ -114,30 +114,38 @@ sortlist() {
 # Source wrapper
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # dmenu wrapper for sourced apps
-# usage: dmenu 'prompt' ['select'] [parameters.. ]
+# usage: dmenu '<prompt>' ['<select>' | -filter '<filter>'] [<option>*]
 dmenu() {
   # prompt string
   if [ "$1" ] ;then
     prompt="$1  "
     shift
   fi
+
   # select string
+  unset select
   if [ "$1" ] ;then
     # if not parameter
     if [ "${1%%-*}" != '' ] ;then
       select="$1"
       shift
-    else
-      unset select
     fi
   fi
+
+  # filter option (must precede remaining option list)
+  unset filter
+  if [ "$1" = '-filter' ] ;then
+    filter="$2"
+    shift 2
+  fi
+
   # use blank -mesg as added separator and indent pick list!
   input=$(sed "s/^/$INDENT/" \
         | rofi -bg black -bc black -bw 0 -fg '#FDF6E3' -hlbg black -hlfg '#25C0EF' \
                -font "PragmataPro $fontsize" -eh 2 \
                -opacity 85 -separator-style none -hide-scrollbar \
                -lines $lines -width 100 -fixed-num-lines -padding $padding \
-               -dmenu -p "$prompt──────   " -i -mesg ' ' -select "$select" $@ \
+               -dmenu -p "$prompt──────   " -i -mesg ' ' -select "$select" -filter "$filter" $@ \
         )
   # strip indent from input!
   [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1
