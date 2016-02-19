@@ -8,22 +8,36 @@
 # ebook library
 library=${LIBRARY:-/data/media/ebooks/${1:-Library}}
 
+type=mobi
+
+format() {
+  [ $type = mobi ] && echo 'epub' || echo 'mobi'
+}
+
+handling() {
+  [ $type = mobi ] && echo 'kindle' || echo 'convert'
+}
+
 # build catalogue
 ebooks() {
-  find $library -maxdepth 3 -name '*mobi' \
-    | sed -re "s|$library/([^/]*)/(.*/)*([^/]*).mobi|\1$SEP\3|" \
+  find $library -maxdepth 3 -name "*$type" \
+    | sed -re "s|$library/([^/]*)/(.*/)*([^/]*).$type|\1$SEP\3|" \
           -e 's/ - .*//' \
           -e 's/ \([0-9]*\)//' \
           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
   | sort
 }
 
+current() {
+  [ $type = mobi ] && history ebooks || tee
+}
+
 while :
 do
   book=$(ebooks \
-       | history ebooks \
+       | current \
        | column -s\^ -t \
-       | sed '1i[ documents ]' \
+       | sed "1i[ documents ]\n[ $(format)      ]" \
        | dmenu 'E-book' -filter "$author" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
@@ -36,19 +50,33 @@ do
     fi
   fi
 
+  if [ "$book" = '[ epub      ]' ]; then
+    type=epub
+    continue
+  fi
+  if [ "$book" = '[ mobi      ]' ]; then
+    type=mobi
+    continue
+  fi
   [ "$book" = '[ documents ]' ] && exec dmenu references
+
   author="${book#*$SEP } "
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
-  mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")
-  mobi=$(find $library -regex "$mobi")
+  if [ $type = mobi ] ;then
+    mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")
+    mobi=$(find $library -regex "$mobi")
+  else
+    epub=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.epub|")
+    epub=$(find $library -regex "$epub")
+  fi
 
-  while action=$(echo 'read\nedit\nkindle' | dmenu "$title" -no-custom) || break
+  while action=$(echo "read\nedit\n$(handling)" | dmenu "$title" -no-custom) || break
   do
     case $action in
       read) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
             [ $focus ] || focus frame && focus=true
-            FBReader "$mobi" ;;
+            [ $type = mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
 
       edit) if grep -q "$book" $(history)/ebooks ;then
               grep -v "$book" $(history)/ebooks >/tmp/ebooks
@@ -92,6 +120,8 @@ END
 END
               ) | /usr/local/bin/msmtp-enqueue.sh -t &
               notify "$title" "$kindle" ;;
+
+      convert) kindlegen "$epub" ;;
     esac
     break
   done
