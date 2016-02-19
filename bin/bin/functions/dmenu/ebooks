@@ -4,40 +4,36 @@
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # ...................................................................... E-books
-
+set -x
 # ebook library
 library=${LIBRARY:-/data/media/ebooks/${1:-Library}}
 
-type=mobi
-
-format() {
-  [ $type = mobi ] && echo 'epub' || echo 'mobi'
-}
-
-handling() {
-  [ $type = mobi ] && echo 'kindle' || echo 'convert'
-}
-
 # build catalogue
 ebooks() {
-  find $library -maxdepth 3 -name "*$type" \
-    | sed -re "s|$library/([^/]*)/(.*/)*([^/]*).$type|\1$SEP\3|" \
-          -e 's/ - .*//' \
-          -e 's/ \([0-9]*\)//' \
-          -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
-  | sort
+  find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" \
+  | sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
+        -e 's/ - .*//' \
+        -e 's/ \([0-9]*\)//' \
+        -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
+  | sort -u
 }
 
-current() {
-  [ $type = mobi ] && history ebooks || tee
+mobi() {
+  mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.mobi|")
+  mobi=$(find $library -regex "$mobi")
+}
+
+epub() {
+  epub=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.epub|")
+  epub=$(find $library -regex "$epub")
 }
 
 while :
 do
   book=$(ebooks \
-       | current \
+       | history ebooks \
        | column -s\^ -t \
-       | sed "1i[ documents ]\n[ $(format)      ]" \
+       | sed "1i[ documents ]" \
        | dmenu 'E-book' -filter "$author" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
@@ -50,33 +46,21 @@ do
     fi
   fi
 
-  if [ "$book" = '[ epub      ]' ]; then
-    type=epub
-    continue
-  fi
-  if [ "$book" = '[ mobi      ]' ]; then
-    type=mobi
-    continue
-  fi
   [ "$book" = '[ documents ]' ] && exec dmenu references
 
   author="${book#*$SEP } "
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
-  if [ $type = mobi ] ;then
-    mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")
-    mobi=$(find $library -regex "$mobi")
-  else
-    epub=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.epub|")
-    epub=$(find $library -regex "$epub")
-  fi
+  unset mobi epub
+  mobi
+  [ $mobi ] || epub
 
-  while action=$(echo "read\nedit\n$(handling)" | dmenu "$title" -no-custom) || break
+  while action=$(echo "read\nedit\nkindle" | dmenu "$title" -no-custom) || break
   do
     case $action in
       read) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
             [ $focus ] || focus frame && focus=true
-            [ $type = mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
+            [ $mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
 
       edit) if grep -q "$book" $(history)/ebooks ;then
               grep -v "$book" $(history)/ebooks >/tmp/ebooks
@@ -86,7 +70,11 @@ do
             term "$title" vifm "${book%/*}" "$book"
             pwait "vifm ${book%/*} $book" ;;
 
-      kindle) kindle=$(echo | history kindle | dmenu '[ Address ]@kindle.com') || break
+      kindle) if [ -z $mobi ] ;then
+                kindlegen "$epub"
+                mobi
+              fi
+              kindle=$(echo | history kindle | dmenu '[ Address ]@kindle.com') || break
               kindle=${kindle%%@*}
               history kindle $kindle
               kindle=$kindle@kindle.com
@@ -120,8 +108,6 @@ END
 END
               ) | /usr/local/bin/msmtp-enqueue.sh -t &
               notify "$title" "$kindle" ;;
-
-      convert) kindlegen "$epub" ;;
     esac
     break
   done
