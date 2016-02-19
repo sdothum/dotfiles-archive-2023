@@ -37,7 +37,7 @@ do
   fi
 
   [ "$book" = '[ documents ]' ] && exec dmenu references
-  author=${book#*$SEP}
+  author="${book#*$SEP } "
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
   mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*.mobi|")
