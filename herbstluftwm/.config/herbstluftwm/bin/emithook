@@ -19,7 +19,7 @@ do
   [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
   # lots of manual tuning here to avoid unnecessary draw refreshes in particular,
-  # hence, the fullscreen test. also, see query wname whose conky usage is capitalized 
+  # hence, the fullscreen test. also, see query wname whose conky usage is capitalized
   # on to reinitialze monitor layouts after windows are terminated and focus windows
 
   case $hook in

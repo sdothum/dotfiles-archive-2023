@@ -68,10 +68,24 @@ set_border() {
 
 # ............................................................ Assign background
 
+# perceived brightness formula (vs actual luminence) 
+# see http://hobbithouseinc.com/vb/color%20contrast.htm 
+brightness() {
+  rgb=$(echo "$1" | tr '[a-z]' '[A-Z]')
+  R=$(echo "3 k $(echo $rgb | sed -r 's/(..)..../\1/') FF / 255 0.299 * * p" | dc)
+  G=$(echo "3 k $(echo $rgb | sed -r 's/..(..)../\1/') FF / 255 0.587 * * p" | dc)
+  B=$(echo "3 k $(echo $rgb | sed -r 's/....(..)/\1/') FF / 255 0.114 * * p" | dc)
+  echo "$R $G $B + + 0 k p" | dc | sed 's/\..*//'
+}
+
 blank() {
   color=$(randcolor)
   setroot --blank-color "#$color" 2>/dev/null
-  set_border "$(conky theme tint $color)"
+  if [ $(brightness $color) -lt 128 ] ;then
+    set_border "$(conky theme light $color)"
+  else
+    set_border "$(conky theme dark $color)"
+  fi
 }
 
 wallpaper() {
@@ -106,8 +120,6 @@ unblur() {
 case "$*" in
   blank) touch $blank
          blank ;;
-
-  conky) set_border "$(conky theme contrast $(randcolor))" ;;
 
   select) rm -f $shuffle 2>/dev/null
           rm -f $blank

@@ -38,13 +38,13 @@ hc keybind Super-Shift-c             spawn toggle term 'IRC' weechat
 hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
 hc keybind Super-e                   spawn dmenu edit
-hc keybind Super-Shift-e             spawn dmenu ebooks
 # hc keybind Super-f                 spawn dmenu zsh
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu history
 hc keybind Super-j                   spawn dmenu journals watch
 hc keybind Super-Shift-j             spawn dmenu journals
-hc keybind Super-k                   spawn toggle kodi
+hc keybind Super-k                   spawn dmenu ebooks
+hc keybind Super-Shift-k             spawn toggle kodi
 hc keybind Super-l                   spawn dmenu logs watch
 hc keybind Super-Shift-l             spawn dmenu logs
 hc keybind Super-m                   spawn dmenu music

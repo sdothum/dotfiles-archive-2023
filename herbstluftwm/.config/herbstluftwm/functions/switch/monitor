@@ -21,7 +21,7 @@ switch_to() {
        restore monocle $tag1 ;;
 
     1) herbstclient chain . focus_monitor 0 . use $tag1
-       restore fullscreen $tag1 primary      
+       restore fullscreen $tag1 primary
        restore monocle $tag1
        herbstclient chain . focus_monitor 1 . use $tag0
        restore fullscreen $tag0 secondary ;;

@@ -150,15 +150,17 @@ tmpbackup() {
 action=$1
 shift
 case "$action" in
-  tint) if [ $# -eq 1 ] ;then
-          hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f18)
+  light) if [ $# -eq 1 ] ;then
+           hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f18)
+           conky theme paper
+           echo $default_color
+         fi ;;
+
+  dark) if [ $# -eq 1 ] ;then
+          hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f2)
+          conky theme ink
           echo $default_color
         fi ;;
-
-  contrast) if [ $# -eq 1 ] ;then
-              hexgen $1
-              echo $default_color
-            fi ;;
 
   test) if [ $# -eq 1 ] ;then
           tmpbackup

@@ -91,7 +91,7 @@ emithook &
 
 # initialize desktop blur and panel / conky rules
 toggle compton
-draw root wallpaper
+# draw root wallpaper
 [ $PANEL_MARGIN ] && toggle panel || toggle conky
 # emit hook stalled otherwise until a new window action..
 focus frame
