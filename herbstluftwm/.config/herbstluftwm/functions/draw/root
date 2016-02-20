@@ -6,7 +6,7 @@
 
 # .............................................................. Draw background
 
-# Usage: draw root [ blank | shuffle | select | toggle | wallpaper ]
+# Usage: draw root [ blank [<color>] | shuffle | select | toggle | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
 #        draw root conky, draw random conky color
@@ -47,8 +47,10 @@ root() {
 }
 
 setblur() {
-  primary=$(root 0)
-  is multihead && secondary=$(root 1)
+  if ! [ -e $blank ] ;then
+    primary=$(root 0)
+    is multihead && secondary=$(root 1)
+  fi
   echo "${primary}:${secondary}"
 }
 
@@ -79,7 +81,12 @@ brightness() {
 }
 
 blank() {
-  color=$(randcolor)
+  if [ "$*" ] ;then
+    color="$1"
+  else
+    color=$(randcolor)
+    echo $color >$ROOTRGB
+  fi
   setroot --blank-color "#$color" 2>/dev/null
   if [ $(brightness $color) -lt 128 ] ;then
     set_border "$(conky theme light $color)"
@@ -117,9 +124,9 @@ unblur() {
   expr $1 '<' $(cut -d: -f$2 $setroot)
 }
 
-case "$*" in
+case "$1" in
   blank) touch $blank
-         blank ;;
+         blank $2 ;;
 
   select) rm -f $shuffle 2>/dev/null
           rm -f $blank

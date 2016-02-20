@@ -21,9 +21,6 @@ dohc() {
 
 # ................................................................... Initialize
 
-# appropriately wild herbstluftwm background color!
-draw root blank
-
 # re-entrant (startx) cleanup
 pkill -TERM -f 'panel' &
 pkill -TERM -f 'pulsar' &
@@ -53,6 +50,9 @@ done
 . ${0%/autostart}/config/ENV
 
 # .............................................................. Desktop layouts
+
+# appropriately wild herbstluftwm background color!
+draw root blank $(cat $ROOTRGB 2>/dev/null)
 
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 if is display +1440 ;then
