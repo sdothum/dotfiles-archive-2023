@@ -63,10 +63,9 @@ do
     # display man page
     if [ "$page" ] ;then
       history man "$man"
-      term "$page" MAX $stack manpage "$page"
+      term "$page" MAX $stack WAIT manpage "$page"
       # subsequent manpages open on same frame
       stack=STACK
-      pwait "manpage $page"
       # highlighted man page entry?
       [ -e $xsel ] && break
 

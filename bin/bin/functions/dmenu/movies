@@ -72,8 +72,7 @@ do
            mark) inject "$movie" "$playlist"
                  break ;;
 
-           edit) term 'movies' ranger "$video"
-                 pwait "ranger $video"
+           edit) term 'movies' WAIT ranger "$video"
                  break ;;
          esac
        done ;;

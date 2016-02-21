@@ -7,16 +7,17 @@
 # .................................................................... Processes
 
 # Usage: pwait "<title>"
+# Note:  includes special handling for "term WAIT <command>", see term
 
 delay=0.01
 
 # wait for uniquely named window to process to startup
-until [ "$(pgrep -af "$@" | grep -v pwait)" ]
+until pgrep -af "$@" | egrep -v 'pwait|/term '
 do
   sleep $delay
 done
 # wait for uniquely named window to close before proceeding
-while [ "$(pgrep -af "$@" | grep -v pwait)" ]
+while pgrep -af "$@" | egrep -v 'pwait|/term '
 do
   sleep $delay
 done

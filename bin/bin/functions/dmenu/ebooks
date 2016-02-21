@@ -67,8 +67,7 @@ do
               mv -f /tmp/ebooks $(history)/ebooks
             fi
             book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
-            term "$title" vifm "${book%/*}" "$book"
-            pwait "vifm ${book%/*} $book" ;;
+            term "$title" WAIT vifm "${book%/*}" "$book" ;;
 
       kindle) if [ -z $mobi ] ;then
                 kindlegen "$epub"

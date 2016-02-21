@@ -15,10 +15,11 @@
 hc keybind $Mod-Shift-q              quit
 hc keybind $Mod-Shift-r              reload
 hc keybind $Mod-grave                spawn toggle monocle
-hc keybind $Mod-d                    spawn draw refresh blank
-hc keybind $Mod-Shift-d              spawn draw refresh select
-hc keybind $Mod-Control-d            spawn draw refresh toggle
-hc keybind $Mod-Super-d              spawn draw refresh shuffle
+hc keybind $Mod-d                    spawn draw root select
+hc keybind $Mod-Control-d            spawn draw root toggle
+hc keybind $Mod-Super-d              spawn draw root shuffle
+hc keybind $Mod-Shift-d              spawn draw root blank
+hc keybind $Mod-Shift-Control-d      spawn term 'Setroot' draw root restore
 hc keybind $Mod-w                    chain . close_or_remove . emit_hook focus_window
 hc keybind $Mod-Super-Control-space  spawn toggle focus
 hc keybind Super-Tab                 spawn focus hlwm
@@ -120,12 +121,12 @@ hc keybind $Mod-p                    chain . pseudotile toggle . emit_hook focus
 if [ $COLEMAK_DH ] ;then
   hc keybind $Mod-h                  spawn pin ttag
   hc keybind $Mod-Control-h          spawn restore window
-  hc keybind $Mod-Control-Shift-h    spawn restore windows 
+  hc keybind $Mod-Control-Shift-h    spawn restore windows
   hc keybind $Mod-Shift-h            spawn restore hidden
 else
   hc keybind $Mod-m                  spawn pin ttag
   hc keybind $Mod-Control-m          spawn restore window
-  hc keybind $Mod-Control-Shift-m    spawn restore windows 
+  hc keybind $Mod-Control-Shift-m    spawn restore windows
   hc keybind $Mod-Shift-m            spawn restore hidden
 fi
 

@@ -7,10 +7,12 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [FLOAT|MAX|STACK] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | MAX | STACK | TR | WAIT ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
-#        SHELL command, for simpler unquoted command passing
+#        TR, disable urxvt pseudo transparency
+#        WAIT, for process to complete before returning
+#        SHELL <command>, for simpler unquoted command passing
 # Note:  title may not contain spaces, use hyphen or underscore in place
 
 TERM=urxvt
@@ -36,12 +38,20 @@ do
     STACK) stack=true
            shift ;;
 
+    TR) tr='+tr'
+        shift ;;
+
+    WAIT) foreground=true
+          shift ;;
+
     SHELL) shift
+           process="$@"
            # open shell commands in interactive mode
            [ "$*" ] && cmd="-e zsh -ic '$@'" || cmd='-e zsh'
            break ;;
 
-    *) cmd="-e $@"
+    *) process="$@"
+       cmd="-e $@"
        break ;;
   esac
 done
@@ -51,9 +61,14 @@ if [ -z "$name" ] ;then
 fi
 
 if [ $stack ] ;then
-  $TERM $title $name $geometry $cmd
+  $TERM $title $name $geometry $tr $cmd
 else
-  focus $TERM $title $name $geometry $cmd
+  focus $TERM $title $name $geometry $tr $cmd
+fi
+
+# wait for process to complete
+if [ $foreground ] ;then
+  pwait "$process"
 fi
 
 # vim: set ft=sh: #

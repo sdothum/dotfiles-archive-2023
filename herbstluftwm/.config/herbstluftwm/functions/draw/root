@@ -97,6 +97,20 @@ blank() {
   fi
 }
 
+restroot() {
+  echo "#$(cat $BACKGROUND)" | hex2col
+  if-no "save background color" || save=$(cat $BACKGROUND)
+  for i in $(cat $backgrounds)
+  do
+    echo "#$i" | hex2col
+    if-no "set background color" && continue
+    echo $i >$BACKGROUND
+    blank $i
+    break
+  done
+  [ $save ] && history $backgrounds $save
+}
+
 wallpaper() {
   # initialize default link
   ls -L $WALLPAPER >/dev/null 2>&1 \
@@ -143,14 +157,8 @@ case "$1" in
 
   save) history $backgrounds $(cat $BACKGROUND) ;;
 
-  restore) for i in $(cat $backgrounds)
-           do
-             echo "#$i" | hex2col
-             if-no "set background color" && continue
-             echo $i >$BACKGROUND
-             exec draw root blank $i
-             break
-           done ;;
+  restore) touch $blank
+           restroot ;;
 
   *) [ "$(setblur)" = "$(cat $setroot)" ] && exit
      # random background selection on un-blur change of state
@@ -165,6 +173,7 @@ esac
 # .................................................................. Apply theme
 
 setblur >$setroot
+# must bracket eval &
 [ -e $blank ] || eval setroot ${primary#?:} ${secondary#?:} &
 
 # apply conky theme to .conkyrc, $theme unset above if new background
@@ -186,7 +195,7 @@ if ! [ -e $blank ] ;then
 fi
 
 # restart panels with new theme
-pkill -TERM -f 'draw panel' && restore panel
-exit 1
+pkill -TERM -f 'draw panel'
+herbstclient emit_hook restore_panel
 
 # vim: set ft=sh: #
