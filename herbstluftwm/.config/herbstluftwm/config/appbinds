@@ -44,7 +44,7 @@ hc keybind Super-h                   spawn dmenu history
 hc keybind Super-j                   spawn dmenu journals watch
 hc keybind Super-Shift-j             spawn dmenu journals
 hc keybind Super-k                   spawn dmenu ebooks
-hc keybind Super-Shift-k             spawn toggle kodi
+hc keybind Super-Shift-k             spawn dmenu references
 hc keybind Super-l                   spawn dmenu logs watch
 hc keybind Super-Shift-l             spawn dmenu logs
 hc keybind Super-m                   spawn dmenu music

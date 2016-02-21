@@ -6,12 +6,13 @@
 
 # .............................................................. Draw background
 
-# Usage: draw root [ blank [<color>] | shuffle | select | toggle | wallpaper ]
+# Usage: draw root [ blank [<color>] | restore | save | select | shuffle | toggle | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
-#        draw root conky, draw random conky color
-#        draw root shuffle, enable random background shuffling
+#        draw root restore, restore background color
+#        draw root save, save background color
 #        draw root select, select default background and disable shuffling
+#        draw root shuffle, enable random background shuffling
 #        draw root toggle, toggle background blur mode
 #        draw root wallpaper, draw background
 
@@ -20,6 +21,7 @@ shuffle=$ROOT/herbstluftwm:shuffle
 noblur=$ROOT/herbstluftwm:noblur
 blank=$ROOT/herbstluftwm:blank
 theme=$ROOT/herbstluftwm:theme
+backgrounds=$HOME/images/backgrounds/.history
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50
@@ -40,9 +42,9 @@ fi
 # 0: empty (raw image)
 root() {
   if ! [ -e $noblur ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
-    echo "1: --on $1 --blur $blur --brighten $brighten --zoom $BACKGROUND"
+    echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
   else
-    echo "0: --on $1 --zoom $BACKGROUND"
+    echo "0: --on $1 --zoom $WALLPAPER"
   fi
 }
 
@@ -70,8 +72,8 @@ set_border() {
 
 # ............................................................ Assign background
 
-# perceived brightness formula (vs actual luminence) 
-# see http://hobbithouseinc.com/vb/color%20contrast.htm 
+# perceived brightness formula (vs actual luminence)
+# see http://hobbithouseinc.com/vb/color%20contrast.htm
 brightness() {
   rgb=$(echo "$1" | tr '[a-z]' '[A-Z]')
   R=$(echo "3 k $(echo $rgb | sed -r 's/(..)..../\1/') FF / 255 0.299 * * p" | dc)
@@ -85,7 +87,7 @@ blank() {
     color="$1"
   else
     color=$(randcolor)
-    echo $color >$ROOTRGB
+    echo $color >$BACKGROUND
   fi
   setroot --blank-color "#$color" 2>/dev/null
   if [ $(brightness $color) -lt 128 ] ;then
@@ -97,8 +99,8 @@ blank() {
 
 wallpaper() {
   # initialize default link
-  ls -L $BACKGROUND >/dev/null 2>&1 \
-  || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $BACKGROUND
+  ls -L $WALLPAPER >/dev/null 2>&1 \
+  || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $WALLPAPER
   rm -f $theme 2>/dev/null
 }
 
@@ -107,13 +109,13 @@ select() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
-               -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
+  /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $WALLPAPER | cut -d'>' -f2) \
+               -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
                $HOME/images/backgrounds/
 }
 
 shuffle() {
-  ln -sf $(find ${BACKGROUND%/default} -name '*.png' | shuf -n1) $BACKGROUND
+  ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
   rm -f $theme 2>/dev/null
 }
 
@@ -135,14 +137,22 @@ case "$1" in
   shuffle) touch $shuffle
            rm -f $blank
            shuffle ;;
-           
+
   wallpaper) rm -f $blank
              wallpaper ;;
 
-  *) if [ "$(setblur)" = "$(cat $setroot)" ] ;then
-       draw border &
-       exit
-     fi
+  save) history $backgrounds $(cat $BACKGROUND) ;;
+
+  restore) for i in $(cat $backgrounds)
+           do
+             echo "#$i" | hex2col
+             if-no "set background color" && continue
+             echo $i >$BACKGROUND
+             exec draw root blank $i
+             break
+           done ;;
+
+  *) [ "$(setblur)" = "$(cat $setroot)" ] && exit
      # random background selection on un-blur change of state
      if [ -e $shuffle ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
@@ -156,8 +166,6 @@ esac
 
 setblur >$setroot
 [ -e $blank ] || eval setroot ${primary#?:} ${secondary#?:} &
-
-draw border &
 
 # apply conky theme to .conkyrc, $theme unset above if new background
 if ! [ -e $blank ] ;then

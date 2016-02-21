@@ -32,6 +32,8 @@
 
     " ...................................................... Filetype attributes
 
+      let s:goyotypes='vimwiki\|mail'
+
       " [regex name, filetype, modifiable, wordcount] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " wordcount (0) no word count (1) statusline with wordcount
@@ -111,13 +113,15 @@
           call Wiki(index)
         endfor
         " reset cursorline (for last open for some reason..)
-        call HiLite()
+        if &filetype =~ s:goyotypes
+          call HiLite()
+        endif
         redir END
       endfunction
 
       " open vimwiki ()
       autocmd VimEnter * if argv (0) == 'thedarnedestthing' | bdelete | call OpenWikis() | endif
-      autocmd VimEnter * if &filetype == 'vimwiki' | call ToggleGoyo(0) | endif
+      autocmd VimEnter * if &filetype =~ s:goyotypes | call ToggleGoyo(0) | endif
 
     " ................................................................... E-mail
 
@@ -137,7 +141,6 @@
       " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
       autocmd Filetype mail setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
       autocmd Filetype mail call ComposeMail()
-      autocmd VimEnter * if &filetype == 'mail' | call ToggleGoyo(0) | endif
 
   " UI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -222,7 +225,7 @@
       endfunction
 
       function! LiteType()
-        if &filetype =~ 'vimwiki\|mail'
+        if &filetype =~ s:goyotypes
           call ProseView()
         else
           call CodeView()
@@ -259,7 +262,7 @@
       " toggle goyo / litedfm
       " offset (0) new or resized window (1) current window
       function! ToggleGoyo(offset)
-        if &filetype =~ 'vimwiki\|mail'
+        if &filetype =~ s:goyotypes
           if !exists('#goyo')
             execute 'LiteDFMClose'
             " width must be greater than textwidth
@@ -298,7 +301,7 @@
       nmap <F7> :call ResetGoyo(1)<CR>
 
       " with window resizing, goyo margins are newly calculated
-      autocmd VimResized * if &filetype =~ 'vimwiki\|mail' | call ResetGoyo(0) | endif
+      autocmd VimResized * if &filetype =~ s:goyotypes | call ResetGoyo(0) | endif
 
     " ............................................................. Colour theme
 
@@ -361,7 +364,7 @@
       endfunction
 
       function! ToggleHiLite()
-        if &filetype =~ 'vimwiki\|mail'
+        if &filetype =~ s:goyotypes
           if !exists('s:cursorline')
             let s:cursorline='#000000'
           endif
@@ -393,21 +396,21 @@
         " adjust font displays for various gpu's
         if system("lspci") =~ 'VGA .* NVIDIA'
           " for macbook nvidia gpu
-          if &guifont == 'PragmataPro 11'
-            set guifont=Fantasque\ Sans\ Mono\ 11
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 18 : 7)
-          else
+          if &guifont == 'Input Mono Compressed 11'
             set guifont=PragmataPro\ 11
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 5)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 15 : 5)
+          else
+            set guifont=Input\ Mono\ Compressed\ 11
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 11 : 0)
           endif
         else
           " for ati/intel gpu's
-          if &guifont == 'PragmataPro 12'
-            set guifont=Fantasque\ Sans\ Mono\ 12
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 18 : 7)
-          else
+          if &guifont == 'Input Mono Compressed 12'
             set guifont=PragmataPro\ 12
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 5)
+          else
+            set guifont=Input\ Mono\ Compressed\ 12
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 12 : 0)
           endif
         endif
       endfunction
@@ -988,7 +991,7 @@
       " toggle coding line statistics
       function! ToggleStatus(persistence)
         " show/hide word count info
-        if &filetype =~ 'vimwiki\|mail'
+        if &filetype =~ s:goyotypes
           if a:persistence == 0
             let &laststatus=(&laststatus == 0 ? 2 : 0)
           else

@@ -1,0 +1,45 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................. Playback history
+
+# Usage: history <file> [<selection>] (record history)
+#        .. | history <file> | ..    (insert history into head of dmenu prompt)
+# Note:  echo | history <file> | ..  (if no preceding prompt content)
+#        <selection> is assumes no dmenu function has a valid null select value
+
+usage() {
+  echo "usage: $(basename $0) <file> [<selection>]"
+  exit 1
+}
+
+echo "$1" | grep -qv '/' && history=$HOME/bin/functions/dmenu/.history/$1 \
+                         || history="$1"
+
+# usage: inject item file
+inject() {
+  update=$(mktemp).history
+  if ! [ -e "$2" ] ;then
+    mkdir -p "${2%/*}"
+    touch "$2"
+  fi
+  # remove duplicate history entries
+  echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" "$2")" | sed '/^$/d' >$update
+  mv -f $update "$2"
+}
+
+[ "$*" ] || usage
+# history file
+shift
+# update history or show it
+if [ "$*" ] ;then
+  inject "$@" $history
+else
+  [ -e $history ] || touch $history
+  cat $history -
+fi
+
+# vim: set ft=sh: #

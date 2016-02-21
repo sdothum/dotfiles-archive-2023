@@ -23,11 +23,8 @@ do
   # on to reinitialze monitor layouts after windows are terminated and focus windows
 
   case $hook in
-    focus_changed) if [ -e $FULLSCREEN ] ;then
-                     ( draw refresh && draw root ) &
-                   else
-                     draw root &
-                   fi
+    focus_changed) ( [ -e $FULLSCREEN ] && draw refresh || draw root ) &
+                   draw border &
                    if herbstclient compare monitors.focus.index != $monitor ;then
                      monitor=$(herbstclient attr monitors.focus.index)
                      restore panel &
@@ -40,7 +37,9 @@ do
             max) herbstclient set_layout max & ;;
 
             fullscreen) if is primary ;then
-                          ( [ -e $CONKY ] && draw monitor conky fullscreen || draw monitor fullscreen ) &
+                          ( [ -e $CONKY ] && draw monitor conky fullscreen \
+                                          || draw monitor fullscreen \
+                          ) &
                         else
                           draw monitor secondary fullscreen &
                         fi ;;

@@ -85,17 +85,14 @@
 
     " ................................................................ Lightline
 
-      " set guifont=Anonymous\ Pro\ for\ Powerline\ 9
       " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
-      " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
       " set guifont=Inconsolata-dz\ for\ Powerline\ 9
       " set guifont=Liberation\ Mono\ for\ Powerline\ 9
-      " set guifont=Source\ Code\ Pro\ for\ Powerline\ 9
 
       if has("gui_running")
         let g:lightline = {
           \  'colorscheme'  : 'solarized'
-          \, 'separator'    : { 'left' : '', 'right' : '' }
+          \, 'separator'    : { 'left' : '⮀', 'right' : '' }
           \, 'subseparator' : { 'left' : '⮁', 'right' : '⮃' }
           \}
       else
@@ -192,7 +189,7 @@
 
     " .................................................................. LiteDFM
 
-      let g:lite_dfm_left_offset=22
+      let g:lite_dfm_left_offset=18
       " see LiteToggle functions.vim
       " nmap <silent><leader>z :LiteDFMToggle<CR>i<Esc>`^
 

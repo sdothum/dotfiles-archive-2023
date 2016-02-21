@@ -55,34 +55,6 @@ else
   lines=10
 fi
 
-# dmenu playback history
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# usage: history file "$selection" (record history)
-#        .. | history file | ..    (insert history into head of dmenu prompt)
-# note:  echo | history file | ..  (if no preceding prompt content)
-#        "$selection" is assumes no dmenu function has a valid null select value
-history() {
-  history=$HOME/bin/functions/dmenu/.history/$1
-  if [ -z "$*" ] ;then
-    echo ${history%/}
-    return
-  fi
-  shift
-  if [ "$*" ] ;then
-    inject "$@" $history
-  else
-    [ -e $history ] || touch $history
-    cat $history -
-  fi
-}
-
-# usage: inject item file
-inject() {
-  # remove duplicate history entries
-  echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" "$2")" | sed '/^$/d' >/tmp/dmenu
-  mv -f /tmp/dmenu "$2"
-}
-
 # Available apps
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # return list of existing applications
@@ -150,6 +122,9 @@ dmenu() {
   # strip indent from input!
   [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1
 }
+
+# Main
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then

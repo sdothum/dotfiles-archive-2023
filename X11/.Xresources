@@ -76,7 +76,7 @@ URxvt*saveLines:              15000           ! non-tmux window scroll back
 ! text
 URxvt*colorUL:                yellow
 ! URxvt*font:                   xft:Inconsolata-dz:size=12
-! URxvt*font:                   xft:Fantasque Sans Mono:size=12
+! URxvt*font:                   xft:Input Mono Compressed:size=11
 URxvt*font:                   xft:PragmataPro:size=11
 URxvt*imLocale:               en_US.utf8
 URxvt*internalBorder:         9               ! pixels from frame edge

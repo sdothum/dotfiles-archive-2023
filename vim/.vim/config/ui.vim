@@ -51,9 +51,7 @@
       scriptencoding utf-8
       set encoding=utf-8                      " necessary to show unicode glyphs
       " set guifont=Liberation\ Mono\ 10
-      " set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
       " set guifont=Inconsolata\ 12
-      " set guifont=Fantasque\ Sans\ Mono\ 12
       " set guifont=PragmataPro\ 12
 
       " line spacing for visual readability can only be set globally on startup
