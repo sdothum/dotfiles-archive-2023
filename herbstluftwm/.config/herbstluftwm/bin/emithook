@@ -11,10 +11,10 @@
 touch $DYNAMIC
 monitor=$(herbstclient attr monitors.focus.index)
 
-herbstclient --idle '(focus_.*|restore_.*|rule)' | while read hook rule winid
+herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
 do
   # script lock to suppress unnecessary emit hook message processing
-  [ -e $LOCK ] && echo "> (LOCK) $hook $rule $winid" >>$TRACE && continue
+  # [ -e $LOCK ] && echo "> (LOCK) $hook $rule $winid" >>$TRACE && continue
   [ -e $LOCK ] && continue
   [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
@@ -32,7 +32,6 @@ do
 
     focus_window) [ -e $DYNAMIC ] && focus window & ;;
     focus_frame) [ -e $DYNAMIC ] && focus frame & ;;
-    restore_panel) restore panel & ;;
 
     rule) case $rule in
             max) herbstclient set_layout max & ;;

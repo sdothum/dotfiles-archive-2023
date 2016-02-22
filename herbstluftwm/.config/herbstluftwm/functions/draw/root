@@ -6,7 +6,8 @@
 
 # .............................................................. Draw background
 
-# Usage: draw root [ blank [<color>] | restore | save | select | shuffle | toggle | wallpaper ]
+# Usage: draw root [ blank [<color>] | restore | save ]
+# Usage: draw root [ select | shuffle | toggle | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
 #        draw root restore, restore background color
@@ -21,13 +22,14 @@ shuffle=$ROOT/herbstluftwm:shuffle
 noblur=$ROOT/herbstluftwm:noblur
 blank=$ROOT/herbstluftwm:blank
 theme=$ROOT/herbstluftwm:theme
-backgrounds=$HOME/images/backgrounds/.history
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50
 brighten=-0.025
 # modulo of random number for random desktop wallpaper
 modulo=3
+# color swatch size to create
+size=180x180
 
 [ -e $setroot ] || echo '0: :0: ' >$setroot
 
@@ -87,8 +89,8 @@ blank() {
     color="$1"
   else
     color=$(randcolor)
-    echo $color >$BACKGROUND
   fi
+  echo $color >$BACKGROUND.color
   setroot --blank-color "#$color" 2>/dev/null
   if [ $(brightness $color) -lt 128 ] ;then
     set_border "$(conky theme light $color)"
@@ -97,35 +99,35 @@ blank() {
   fi
 }
 
-restroot() {
-  echo "#$(cat $BACKGROUND)" | hex2col
-  if-no "save background color" || save=$(cat $BACKGROUND)
-  for i in $(cat $backgrounds)
-  do
-    echo "#$i" | hex2col
-    if-no "set background color" && continue
-    echo $i >$BACKGROUND
-    blank $i
-    break
-  done
-  [ $save ] && history $backgrounds $save
+color() {
+  # initialize default link
+  [ -L $BACKGROUND ] || ln -sf $(ls -1 ${BACKGROUND%/default}/*.png | head -1) $BACKGROUND
+}
+
+select_blank() {
+  time=5 notify 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
+  color
+  # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
+  /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
+               -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
+               ${BACKGROUND%/default}/
+  blank $(ls -l $BACKGROUND | cut -d'>' -f2 | sed -r 's|.*/(.*).png|\1|')
 }
 
 wallpaper() {
   # initialize default link
-  ls -L $WALLPAPER >/dev/null 2>&1 \
-  || ln -sf $(ls -1 $HOME/images/backgrounds/*.png | head -1) $WALLPAPER
+  [ -L $WALLPAPER ] || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
   rm -f $theme 2>/dev/null
 }
 
 # set background wallpaper
-select() {
+select_wallpaper() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $WALLPAPER | cut -d'>' -f2) \
                -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
-               $HOME/images/backgrounds/
+               ${WALLPAPER%/default}/
 }
 
 shuffle() {
@@ -144,9 +146,16 @@ case "$1" in
   blank) touch $blank
          blank $2 ;;
 
+  restore) touch $blank
+           select_blank ;;
+
+  save) color=$(cat $BACKGROUND.color)
+        convert -size $size xc:"#$color" $HOME/images/colors/$color.png
+        notify 'Background Color' "$color saved" ;;
+
   select) rm -f $shuffle 2>/dev/null
           rm -f $blank
-          select ;;
+          select_wallpaper ;;
 
   shuffle) touch $shuffle
            rm -f $blank
@@ -154,11 +163,6 @@ case "$1" in
 
   wallpaper) rm -f $blank
              wallpaper ;;
-
-  save) history $backgrounds $(cat $BACKGROUND) ;;
-
-  restore) touch $blank
-           restroot ;;
 
   *) [ "$(setblur)" = "$(cat $setroot)" ] && exit
      # random background selection on un-blur change of state
@@ -196,6 +200,6 @@ fi
 
 # restart panels with new theme
 pkill -TERM -f 'draw panel'
-herbstclient emit_hook restore_panel
+restore panel
 
 # vim: set ft=sh: #
