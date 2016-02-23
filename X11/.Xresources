@@ -74,18 +74,15 @@ URxvt*print-pipe:             cat >$HOME/tmp/$(echo urxvt.dump.$(date +'%s'))
 URxvt*saveLines:              15000           ! non-tmux window scroll back
 
 ! text
-URxvt*colorUL:                yellow
 ! URxvt*font:                   xft:Inconsolata-dz:size=12
-! URxvt*font:                   xft:Input Mono Compressed:size=11
 URxvt*font:                   xft:PragmataPro:size=11
-URxvt*imLocale:               en_US.utf8
+! URxvt*letterSpace:            -1              ! xft adjustment (for vanilla urxvt)
+URxvt*linespace:              5               ! pixels between lines for added readability
 URxvt*internalBorder:         9               ! pixels from frame edge
 
+URxvt*imLocale:               en_US.utf8
+URxvt*colorUL:                yellow
 URxvt*cursorUnderline:        true
-! pixels from frame edge
-! pixels from frame edge
-! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
-URxvt*linespace:              5               ! pixels between lines for added readability
 URxvt*underlineColor:         yellow
 
 ! UI

@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................... spacemacs
+
+rm -rf $HOME/.emacs.d
+rm -rf $HOME/.emacs
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+annotate 'launch emacs to complete spacemacs installation and prompts'
+
+# vim: set ft=sh: #

@@ -25,5 +25,5 @@ herbstclient $@
 
 # [ $fullscreen ] && toggle fullscreen
 herbstclient unlock
- 
+
 # vim: set ft=sh: #

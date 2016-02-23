@@ -79,7 +79,7 @@ shortcut-add du=https://duckduckgo.com/?q=$0&ia=images
 shortcut-add eb=http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_sop=15&_nkw=$0&_pgn=2&_skc=50&rt=nc
 shortcut-add fg=http://www.reddit.com/r/FixedGearBicycle/search?q=$0&restrict_sr=on
 # shortcut-add ge=https://01100111011001010110010101101011.info/search/$0
-shortcut-add ge=https://01100111011001010110010101101011.info/search/$0?t=2000
+shortcut-add ge=https://nzbgeek.info/geekseek.php?moviesgeekseek=1&browsecategory=2000&browseincludewords=$0
 shortcut-add gh=https://geekhack.org/index.php?action=search2&search=$0
 shortcut-add gi=https://github.com/search?q=$0
 shortcut-add go=https://encrypted.google.com/search?q=$0

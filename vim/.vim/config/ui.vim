@@ -59,7 +59,7 @@
       " further enhance distraction free editing of wiki and mail, see functions.vim
       " execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || argv(0) =~ '\(wiki\|eml\)$' ? 18 : 8)
       " execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || argv(0) =~ '\(wiki\|eml\)$' ? 16 : 6)
-      
+
       " set font and line spacing
       call FontSwitch()
 
@@ -83,8 +83,8 @@
       " set colorcolumn=45,80               " highlight column
       set colorcolumn=0                     " highlight column
       " see ToggleColumn functions.vim
-      imap <C-F11> <C-o>:set colorcolumn=
-      nmap <C-F11> :set colorcolumn=
+      imap <S-F7> <C-o>:set colorcolumn=
+      nmap <S-F7> :set colorcolumn=
 
     " ............................................................. Line numbers
 

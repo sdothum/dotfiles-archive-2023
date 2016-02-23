@@ -68,6 +68,7 @@ rox actions :: $( find $HOME/.config/rox.sourceforge.net/SendTo/ -type f)
 rss feeds :: $HOME/.config/newsbeuter/config
 signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
+spacemacs :: $HOME/.spacemacs
 subtle :: $HOME/.config/subtle/subtle.rb
 sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb

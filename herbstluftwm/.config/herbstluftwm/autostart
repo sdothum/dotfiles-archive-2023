@@ -45,7 +45,7 @@ do
   # add dummy hc cmd for any sources that don't e.g. ENV
   hc echo done ${i##*/}
   dohc
-done 
+done
 # monitor dependent env must be set after detect monitors
 . ${0%/autostart}/config/ENV
 

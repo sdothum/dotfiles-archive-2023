@@ -34,7 +34,7 @@ do
         if herbstclient layout | grep '\[FOCUS\]' | grep 'grid:' ;then
           [ $(expr $(query fcount) % 2) -gt 0 ] && break
         fi
-        if [ $i -ge $frames ] ;then 
+        if [ $i -ge $frames ] ;then
           herbstclient cycle_frame 1
           unset fill
           break

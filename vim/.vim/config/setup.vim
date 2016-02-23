@@ -38,7 +38,7 @@
       augroup reload_vimrc
         autocmd!
         " autocmd BufWritePost $MYVIMRC        source $MVIMRC
-        autocmd bufwritepost $MYVIMRC nested source $MYVIMRC 
+        autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
         autocmd BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
         " PluginUpdate and config reload loses filetype, restore
       augroup END

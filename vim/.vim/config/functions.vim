@@ -276,14 +276,15 @@
           else
             execute 'Goyo!'
             call ProseView()
+            call ToggleStatus(0)
           endif
           " force spellcheck as autocmd sequences don't seem to set this consistently
           set spell
         endif
       endfunction
 
-      imap <S-F7> <C-o>:call ToggleGoyo(1)<CR>
-      nmap <S-F7> :call ToggleGoyo(1)<CR>
+      imap <S-F11> <C-o>:call ToggleGoyo(1)<CR>
+      nmap <S-F11> :call ToggleGoyo(1)<CR>
 
       " reset window margins by toggling goyo on and off (<C-w>= leaves number artifacts)
       function! ResetGoyo(offset)
@@ -297,8 +298,8 @@
       endfunction
 
       " reset margins in current window
-      imap <F7> <C-o>:call ResetGoyo(1)<CR>
-      nmap <F7> :call ResetGoyo(1)<CR>
+      imap <C-F11> <C-o>:call ResetGoyo(1)<CR>
+      nmap <C-F11> :call ResetGoyo(1)<CR>
 
       " with window resizing, goyo margins are newly calculated
       autocmd VimResized * if &filetype =~ s:goyotypes | call ResetGoyo(0) | endif
@@ -451,6 +452,9 @@
             return
           endif
         endif
+        if &colorcolumn == ''
+          let &colorcolumn=col('.')
+        endif
         execute 'let l:index=index(s:margins,' . &colorcolumn . ') + 1'
         " weird problem with if test so simply loop list! :-o
         " if l:index > len(s:margins)
@@ -460,8 +464,8 @@
         let &colorcolumn=(s:margins+s:margins)[l:index]
       endfunction
 
-      imap <S-F11> <C-o>:call ToggleColumn()<CR>
-      nmap <S-F11> :call ToggleColumn()<CR>
+      imap <F7> <C-o>:call ToggleColumn()<CR>
+      nmap <F7> :call ToggleColumn()<CR>
 
       " toggle line wrap
       function! ToggleWrap()
@@ -970,7 +974,7 @@
             if exists('b:prose')
               if b:prose == 0
                 if search('[ \t]\+$', 'nw') != 0
-                  let b:statusline_pad_warning='spaces $'
+                  let b:statusline_pad_warning='■ $'
                 endif
               endif
             endif

@@ -10,7 +10,7 @@
 
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
 if [ "$(query tag)" = "$1" ] || [ "$(query tag unfocused)" = "$1" ] ;then
-  if is primary ;then 
+  if is primary ;then
     # redundant move
     [ $(query tag) = $1 ] && exit
     switch monitor 0

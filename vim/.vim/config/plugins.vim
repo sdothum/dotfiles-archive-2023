@@ -104,8 +104,9 @@
       endif
 
       let g:lightline.active = {
-        \  'left'  : [ [ 'mode', 'paste' ]
-        \,             [ 'readonly', 'rootpath', 'basepath', 'filename', 'wordcount', 'lineinfo', 'modified' ]
+        \  'left'  : [ [ 'mode', 'paste', ]
+        \,             [ 'rootpath', 'basepath', 'filename' ]
+        \,             [ 'readonly', 'wordcount', 'lineinfo', 'modified' ]
         \            ]
         \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
         \,             [ 'line', 'linecount' ]
@@ -130,7 +131,7 @@
         \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
         \, 'basepath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") : ""}'
         \, 'filename'     : '%t'
-        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "-"}'
+        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "*" : &modifiable ? "" : "⎯"}'
         \, 'bufnum'       : '%n'
         \, 'paste'        : '%{&paste ? "PASTE" : ""}'
         \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'

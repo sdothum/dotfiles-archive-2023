@@ -29,5 +29,5 @@ fi
 # optionally shuffle background
 [ "$1" = 'force' ] && shift
 draw root $1
-  
+
 # vim: set ft=sh: #

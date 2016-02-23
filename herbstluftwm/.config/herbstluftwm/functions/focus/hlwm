@@ -59,7 +59,7 @@ if window=$(echo $windows \
     fi
     herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock
     rm -f $LOCK
-    restore panel 
+    restore panel
   fi
   echo $window | grep " $INVISIBLE [0-9]:0x" && query ttag $TAG
 fi

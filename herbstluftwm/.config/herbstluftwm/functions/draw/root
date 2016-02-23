@@ -33,6 +33,15 @@ size=180x180
 
 [ -e $setroot ] || echo '0: :0: ' >$setroot
 
+# linked file reference
+lnfile() {
+  ls -l "$1" | cut -d'>' -f2
+}
+
+exists() {
+  [ -e $(lnfile "$1") ]
+}
+
 # ..................................................................... Map blur
 
 if [ "$1" = 'toggle' ] ;then
@@ -101,14 +110,14 @@ blank() {
 
 color() {
   # initialize default link
-  [ -L $BACKGROUND ] || ln -sf $(ls -1 ${BACKGROUND%/default}/*.png | head -1) $BACKGROUND
+  [ -L $BACKGROUND ] && exists $BACKGROUND || ln -sf $(ls -1 ${BACKGROUND%/default}/*.png | head -1) $BACKGROUND
 }
 
 select_blank() {
   time=5 notify 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $BACKGROUND | cut -d'>' -f2) \
+  /usr/bin/feh -B black --scale-down -r --start-at $(lnfile $BACKGROUND) \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
                ${BACKGROUND%/default}/
   blank $(ls -l $BACKGROUND | cut -d'>' -f2 | sed -r 's|.*/(.*).png|\1|')
@@ -116,7 +125,7 @@ select_blank() {
 
 wallpaper() {
   # initialize default link
-  [ -L $WALLPAPER ] || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
+  [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
   rm -f $theme 2>/dev/null
 }
 
@@ -125,7 +134,7 @@ select_wallpaper() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r --start-at $(ls -l $WALLPAPER | cut -d'>' -f2) \
+  /usr/bin/feh -B black --scale-down -r --start-at $(lnfile $WALLPAPER) \
                -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
                ${WALLPAPER%/default}/
 }
@@ -150,7 +159,7 @@ case "$1" in
            select_blank ;;
 
   save) color=$(cat $BACKGROUND.color)
-        convert -size $size xc:"#$color" $HOME/images/colors/$color.png
+        convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
         notify 'Background Color' "$color saved" ;;
 
   select) rm -f $shuffle 2>/dev/null
