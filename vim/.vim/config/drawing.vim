@@ -188,4 +188,4 @@
       imap <leader><leader><Space> <C-o>:call RightJustify()<CR>
       nmap <leader><leader><Space> :call RightJustify()<CR>
 
-" draw.vim
+" drawing.vim
