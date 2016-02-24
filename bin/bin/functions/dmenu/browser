@@ -55,7 +55,7 @@ do
     | uzbl \
     | vimb \
     | vimb-detached \
-    | xombrero) focus $browser \\"$1\\" ;;
+    | xombrero) focus $browser "$1" ;;
   esac
   exit
 done

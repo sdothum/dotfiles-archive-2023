@@ -16,7 +16,7 @@ usage() {
   exit 1
 }
 
-echo "$1" | grep -qv '/' && history=$HOME/bin/functions/dmenu/.history/$1 \
+echo "$1" | grep -qv '/' && history="$HOME/bin/functions/dmenu/.history/$1" \
                          || history="$1"
 
 # usage: inject item file
@@ -36,10 +36,10 @@ inject() {
 shift
 # update history or show it
 if [ "$*" ] ;then
-  inject "$@" $history
+  inject "$@" "$history"
 else
-  [ -e $history ] || touch $history
-  cat $history -
+  [ -e "$history" ] || touch "$history"
+  cat "$history" -
 fi
 
 # vim: set ft=sh: #

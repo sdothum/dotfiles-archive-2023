@@ -65,7 +65,7 @@ do
     episode=$(shows | dmenu "$show" "$episode" -no-custom) || break
     episode=$(echo "$episode" | sed "s/ $SEP$//")
     video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
-    inject "$episode" "$playlist"
+    history "$playlist" "$episode"
     play "$video"
   done
 done

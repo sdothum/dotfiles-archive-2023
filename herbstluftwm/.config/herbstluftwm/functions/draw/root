@@ -34,12 +34,8 @@ size=180x180
 [ -e $setroot ] || echo '0: :0: ' >$setroot
 
 # linked file reference
-lnfile() {
-  ls -l "$1" | cut -d'>' -f2
-}
-
 exists() {
-  [ -e $(lnfile "$1") ]
+  [ -e "$(lname $1)" ]
 }
 
 # ..................................................................... Map blur
@@ -117,7 +113,7 @@ select_blank() {
   time=5 notify 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r --start-at $(lnfile $BACKGROUND) \
+  /usr/bin/feh -B black --scale-down -r --start-at $(lname $BACKGROUND) \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
                ${BACKGROUND%/default}/
   blank $(ls -l $BACKGROUND | cut -d'>' -f2 | sed -r 's|.*/(.*).png|\1|')
@@ -134,7 +130,7 @@ select_wallpaper() {
   time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r --start-at $(lnfile $WALLPAPER) \
+  /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \
                -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
                ${WALLPAPER%/default}/
 }
