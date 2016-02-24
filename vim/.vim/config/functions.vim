@@ -274,9 +274,15 @@
             " subsequent goyo toggling alters left margin position
             let s:goyo=1
           else
+            " goyo! always returns to first buffer, so remember last
+            let l:buffer=bufnr('%')
             execute 'Goyo!'
+            " turn on status when not in goyo view
             call ProseView()
             call ToggleStatus(0)
+            let g:wikistatus=2
+            let &laststatus=g:wikistatus
+            execute 'buffer ' . l:buffer
           endif
           " force spellcheck as autocmd sequences don't seem to set this consistently
           set spell
@@ -397,7 +403,7 @@
         " adjust font displays for various gpu's
         if system("lspci") =~ 'VGA .* NVIDIA'
           " for macbook nvidia gpu
-          if &guifont == 'Input Mono Compressed 11'
+          if &guifont =~ 'Input Mono'
             set guifont=PragmataPro\ 11
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 15 : 5)
           else
@@ -406,7 +412,7 @@
           endif
         else
           " for ati/intel gpu's
-          if &guifont == 'Input Mono Compressed 12'
+          if &guifont =~ 'Input Mono'
             set guifont=PragmataPro\ 12
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 5)
           else
