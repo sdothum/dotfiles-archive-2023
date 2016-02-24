@@ -50,18 +50,6 @@
     " ..................................................................... Font
       scriptencoding utf-8
       set encoding=utf-8                      " necessary to show unicode glyphs
-      " set guifont=Liberation\ Mono\ 10
-      " set guifont=Inconsolata\ 12
-      " set guifont=PragmataPro\ 12
-
-      " line spacing for visual readability can only be set globally on startup
-      " attempts to set afterwards affects the statusline position
-      " further enhance distraction free editing of wiki and mail, see functions.vim
-      " execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || argv(0) =~ '\(wiki\|eml\)$' ? 18 : 8)
-      " execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || argv(0) =~ '\(wiki\|eml\)$' ? 16 : 6)
-
-      " set font and line spacing
-      call FontSwitch()
 
     " ................................................................... Cursor
 

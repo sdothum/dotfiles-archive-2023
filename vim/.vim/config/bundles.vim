@@ -3,13 +3,13 @@
 " Bundles
 " ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-  filetype off                              " safe startup (vundle requirement)
-  " see https://github.com/junegunn/vim-plug
-  " :PlugInstall/PlugUpdate/PlugClean
-  " :PlugUpgrade (vim-plug)
-  call plug#begin('~/.vim/plugged')
-
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    filetype off                            " safe startup (vundle requirement)
+    " see https://github.com/junegunn/vim-plug
+    " :PlugInstall/PlugUpdate/PlugClean
+    " :PlugUpgrade (vim-plug)
+    call plug#begin('~/.vim/plugged')
 
     " ...................................................................... GUI
 
