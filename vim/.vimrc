@@ -18,6 +18,6 @@
   source ~/.vim/config/themes.vim
   source ~/.vim/config/types.vim
   source ~/.vim/config/views.vim
-  source ~/.vim/config/colemak.vim
+  source ~/.vim/config/keyboard.vim
 
 " .vimrc
