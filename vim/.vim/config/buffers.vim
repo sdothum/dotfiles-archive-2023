@@ -8,7 +8,7 @@
     " ........................................................... Buffer opening
 
       set autoread                          " reload files changed outside vim
-      " set autowrite                       " automatically write a file when leaving a modified buffer
+      " set autowrite                       " automatically write a modified buffer on leaving
       set hidden                            " allow hidden background buffers
 
       " query current buffer

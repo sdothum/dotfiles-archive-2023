@@ -49,24 +49,24 @@
       " imap \         <C-o><Plug>(easymotion-s)
       " nmap \         <Plug>(easymotion-s)
       " 2 keystroke binding (backslash inhibits use in insert mode)
-      imap <leader>/ <C-o><Plug>(easymotion-s2)
-      nmap <leader>/ <Plug>(easymotion-s2)
+      imap <leader><leader>/ <C-o><Plug>(easymotion-s2)
+      nmap <leader><leader>/ <Plug>(easymotion-s2)
 
       " line motions
-      imap <leader>j <C-o><Plug>(easymotion-j)
-      nmap <leader>j <Plug>(easymotion-j)
-      imap <leader>k <C-o><Plug>(easymotion-k)
-      nmap <leader>k <Plug>(easymotion-k)
+      imap <leader><leader>j <C-o><Plug>(easymotion-j)
+      nmap <leader><leader>j <Plug>(easymotion-j)
+      imap <leader><leader>k <C-o><Plug>(easymotion-k)
+      nmap <leader><leader>k <Plug>(easymotion-k)
 
       " word motions
-      imap <leader>E <C-o><Plug>(easymotion-gE)
-      nmap <leader>E <Plug>(easymotion-gE)
-      imap <leader>e <C-o><Plug>(easymotion-E)
-      nmap <leader>e <Plug>(easymotion-E)
-      imap <leader>W <C-o><Plug>(easymotion-B)
-      nmap <leader>W <Plug>(easymotion-B)
-      imap <leader>w <C-o><Plug>(easymotion-W)
-      nmap <leader>w <Plug>(easymotion-W)
+      imap <leader><leader>E <C-o><Plug>(easymotion-gE)
+      nmap <leader><leader>E <Plug>(easymotion-gE)
+      imap <leader><leader>e <C-o><Plug>(easymotion-E)
+      nmap <leader><leader>e <Plug>(easymotion-E)
+      imap <leader><leader>W <C-o><Plug>(easymotion-B)
+      nmap <leader><leader>W <Plug>(easymotion-B)
+      imap <leader><leader>w <C-o><Plug>(easymotion-W)
+      nmap <leader><leader>w <Plug>(easymotion-W)
 
     " .................................................................. Endwise
 
@@ -255,7 +255,7 @@
       nmap <silent><leader>t :TagbarToggle<CR>
 
       " " see ctags.cnf
-      " " extracted from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin
+      " " from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin
         " let g:tagbar_type_vimwiki={
         "   \ 'ctagstype' : 'vimwiki',
         "   \ 'kinds'     : [
@@ -291,7 +291,7 @@
     "   autocmd Filetype mail         call pencil#init()
     "   autocmd FileType markdown,mkd call pencil#init()
     "   autocmd Filetype text         call pencil#init()
-    "   autocmd Filetype vimwiki      call pencil#init() 
+    "   autocmd Filetype vimwiki      call pencil#init()
     " augroup END
 
     " .................................................... Vim-shell / Vim-filer
@@ -354,37 +354,11 @@
       " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
       " see arch install patch to initialize s:vimwiki_autowriteall
 
-      " ``` vim
-      " " *:VimwikiTagsearch*
-      " " *:VWT* /pattern/
-      " "   Search for /^Tags: *\(pattern\)$/ in all files of current wiki.
-      " "   This is useful for maintaining "Tags" metadata on across
-      " "   all wiki pages. Navigate matches using same commands
-      " "   as for VimwikiSearch. Example: "VWT xxx\|yyy"
-
-      " exe 'au FileType vimwiki command! -buffer -nargs=* VimwikiTagsearch lvimgrep "^Tags: .*\(<args>\)" '.
-      "   \ escape(VimwikiGet('path').'**/*'.VimwikiGet('ext'), ' ')
-      " exe 'au FileType vimwiki command! -buffer -nargs=* VWT lvimgrep "^Tags: .*\(<args>\)" '.
-      "   \ escape(VimwikiGet('path').'**/*'.VimwikiGet('ext'), ' ')
-
-      " " *:VimwikiUntagged*
-      " " *:VWU*
-      " "   Search for /^Tags: *$/ in all files of current wiki.
-      " "   This is useful for maintaining "Tags" metadata on across
-      " "   all wiki pages. Navigate matches using same commands
-      " "   as for VimwikiSearch.
-
-      " exe 'au FileType vimwiki command! -buffer VimwikiUntagged lvimgrep "^Tags: *$" '.
-      "   \ escape(VimwikiGet('path').'**/*'.VimwikiGet('ext'), ' ')
-      " exe 'au FileType vimwiki command! -buffer VWU lvimgrep "^Tags: *$" '.
-      "   \ escape(VimwikiGet('path').'**/*'.VimwikiGet('ext'), ' ')
-      " ```
-
     " ................................................................. Yankring
 
       let g:yankring_default_menu_mode=1      " menu on with no shortcut
       let g:yankring_dot_repeat_yank=1        " allow repeating yankring action
-      let g:yankring_enabled=1                " disables the yankring initially because of macro conflict
+      let g:yankring_enabled=1                " disable yankring because of macro conflict
       let g:yankring_window_height=30         " horizontal window height
 
       nmap Y            :<C-U>YRYankCount 'y$'<CR>

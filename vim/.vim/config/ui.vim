@@ -14,7 +14,7 @@
 
     " .................................................................. Display
 
-      set t_Co=256                          " explicitly tell vim that the terminal supports 256 colors
+      set t_Co=256                          " 256 color support
       set viewoptions=folds,options,cursor,unix,slash
       set virtualedit=block                 " allow virtual editing in Visual block mode
       " set virtualedit=onemore               " allow for cursor beyond last character
@@ -24,7 +24,6 @@
     " ................................................................ Scrolling
 
       " set scrolljump=8                      " lines to scroll when cursor leaves screen
-      " scrolling distance from margins dependent on screen size
       if $HOST == 'monad'
         set scrolloff=3
       else
@@ -36,14 +35,15 @@
       noremap zl           zL
       noremap zh           zH
 
-      " manual jump scrolling
-      if $HOST == 'monad'
-        nnoremap <Space>   10jzz
-        nnoremap <S-Space> 10kzz
-      else
-        nnoremap <Space>   30jzz
-        nnoremap <S-Space> 30kzz
-      endif
+      " space now commandeered as leader by spacemacs wannabe :-)
+      " " manual jump scrolling
+      " if $HOST == 'monad'
+      "   nnoremap <Space>   10jzz
+      "   nnoremap <S-Space> 10kzz
+      " else
+      "   nnoremap <Space>   30jzz
+      "   nnoremap <S-Space> 30kzz
+      " endif
 
   " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

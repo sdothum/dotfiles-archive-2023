@@ -5,10 +5,12 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " setup.vim should be first source in .vimrc
+
     " ...................................................................... Vim
 
-      let mapleader=','                     " remap <leader>
-      let g:mapleader= ','
+      let mapleader="\<Space>"              " remap <leader>
+      let g:mapleader="\<Space>"
 
       " open help in maximum horizontal split
       if $HOST == 'monad'
@@ -17,10 +19,10 @@
 
     " .......................................................... OS and hardware
 
-      set lazyredraw                        " don't redraw while executing macros (good performance config)
+      set lazyredraw                        " don't redraw while executing macros
       " set modelines=0                       " prevent modeline secrurity hole
       set modelines=1
-      set mouse=a                           " use mouse for scrolling, jumping cursor, selecting by character/line!
+      set mouse=a                           " enable mouse actions
       set shell=/bin/sh                     " required for plugin system call dependencies
       set title                             " change the terminal's title
       set ttyfast
@@ -59,7 +61,7 @@
       set undodir=~/.vim/backups
       set undofile
       set undolevels=1000                   " maximum number of changes that can be undone
-      set undoreload=10000                  " maximum number lines to save for undo on a buffer reload
+      set undoreload=10000                  " maximum number lines to save for undo
       " easier redo
       map U <C-r>
 
@@ -124,7 +126,7 @@
       set ignorecase                        " ignore case when searching
       set incsearch                         " find the next match as we type the search
       set showmatch                         " set show matching parenthesis
-      set smartcase                         " ignore case if search pattern is all lowercase, case-sensitive otherwise
+      set smartcase                         " ignore case if search pattern is all lowercase
 
       " use extended regex statements for searches (unfortunately, must set
       " manually for search and replace)
@@ -146,7 +148,7 @@
       set wildignore+=*.o,*.obj,*~
       set wildignore+=tmp/**
       set wildmenu                          " enable ctrl-n and ctrl-p to scroll thru matches
-      set wildmode=list:longest,full        " command <Tab> completion, list matches, then longest common part, then all
+      set wildmode=list:longest,full        " command <Tab> completion order
       set wildignore+=*vim/backups*
 
 " setup.vim

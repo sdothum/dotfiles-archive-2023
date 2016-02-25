@@ -8,6 +8,7 @@
     " ................................................................ Underline
 
       " insert underline
+      " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
       function! Underline(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           normal ^
@@ -42,18 +43,19 @@
         endif
       endfunction
 
-      imap <leader>- <C-o>:call Underline('▔')<CR><C-Return>
-      nmap <leader>- :call Underline('▔')<CR><Down>
-      imap <leader>= <C-o>:call Underline('▬')<CR><C-Return>
-      nmap <leader>= :call Underline('▬')<CR><Down>
+      imap <leader>-- <C-o>:call Underline('▔')<CR><C-Return>
+      nmap <leader>-- :call Underline('▔')<CR><Down>
+      imap <leader>== <C-o>:call Underline('▬')<CR><C-Return>
+      nmap <leader>== :call Underline('▬')<CR><Down>
       " imap <leader><leader>+ <C-o>:call Underline('▬')<CR><C-Return>
       " nmap <leader><leader>+ :call Underline('▬')<CR><Down>
 
     " .................................................................... Ruler
 
       " insert ruler
-      " note: to insert a ruler on an empty line (virtual column position), add a <space> character,
-      " else in insert mode, the ruler will positioned using column 1
+      " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+      " note: to insert a ruler on an empty line (virtual column position), add a <space>
+      " character, else in insert mode, the ruler will positioned using column 1
       function! Drawline(delimiter)
         " insert dummy mark line if on blank line
         if matchstr(getline(line('.')), '\S') == ''
@@ -90,7 +92,7 @@
 
     " .................................................................. Trailer
 
-      " append trailer
+      " append trailer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
       function! AppendTrailer(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing trailer
@@ -129,7 +131,7 @@
 
     " ................................................................... Leader
 
-      " insert leader
+      " .......................................................... insert leader
       function! InsertLeader(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader

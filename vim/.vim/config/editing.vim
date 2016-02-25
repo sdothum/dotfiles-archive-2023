@@ -38,9 +38,12 @@
       inoremap <F5>                 <C-o>V:call CodeBlock()<CR>
       nnoremap <F5>                 V:call CodeBlock()<CR>
       vmap <F5>                     :call CodeBlock()<CR>
+      " some html codes require escaping with <C-o>
       " insert strikeout
-      imap <leader><Delete>         <<c-o>idel>
+      imap <leader><leader><Delete> <<C-o>adel>
       imap <leader><Delete><Delete> </del>
+      " insert br
+      imap <leader><leader><CR>     <<C-o>abr><CR>
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -49,9 +52,9 @@
       set autoindent
       set copyindent                        " copy the previous indentation on autoindenting
       set expandtab                         " expand tabs into spaces, never use hard tabs!
-      set shiftround                        " use multiple of shiftwidth when indenting with "<" and ">"
+      set shiftround                        " use multiple of shiftwidth when indenting with "<>"
       set shiftwidth=2                      " number of spaces for unindenting
-      set nosmartindent                     " smartindent on outdents hash comments to beginning of line
+      set nosmartindent                     " smartindent hash comments to beginning of line
       set smarttab
       set softtabstop=2
       set tabstop=2                         " global tab width

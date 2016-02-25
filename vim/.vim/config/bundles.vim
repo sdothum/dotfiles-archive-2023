@@ -5,6 +5,8 @@
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " bundles.vim must be sourced before plugins.vim
+
     filetype off                            " safe startup (vundle requirement)
     " see https://github.com/junegunn/vim-plug
     " :PlugInstall/PlugUpdate/PlugClean
@@ -15,6 +17,7 @@
 
       " Plug 'kana/vim-arpeggio'
       Plug 'junegunn/goyo.vim'
+      " Plug 'morhetz/gruvbox'
       Plug 'itchyny/lightline.vim'
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
@@ -28,7 +31,17 @@
       Plug 'chrisbra/NrrwRgn'
       Plug 'duff/vim-scratch'
 
-    " .................................................. Navigation / completion
+    " ................................................................... Coding
+
+      Plug 'tpope/vim-endwise'
+      Plug 'msanders/snipmate.vim'
+      Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+      Plug 'scrooloose/syntastic'
+      Plug 'majutsushi/tagbar'
+      Plug 'tomtom/tcomment_vim'
+      " Plug 'mattn/zencoding-vim'
+
+    " .................................................. Completion / navigation
 
       " Plug 'SearchComplete'
       Plug 'ervandew/supertab'
@@ -55,16 +68,6 @@
       Plug 'vim-scripts/calendar.vim--Matsumoto'
       Plug 'ludovicchabant/vim-lawrencium'
       Plug 'vim-scripts/openurl.vim'
-
-    " .............................................................. Programming
-
-      Plug 'tpope/vim-endwise'
-      Plug 'msanders/snipmate.vim'
-      Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-      Plug 'scrooloose/syntastic'
-      Plug 'majutsushi/tagbar'
-      Plug 'tomtom/tcomment_vim'
-      " Plug 'mattn/zencoding-vim'
 
     " ...................................................... Syntax highlighting
 

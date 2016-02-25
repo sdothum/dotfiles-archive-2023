@@ -60,7 +60,8 @@
         if exists('#goyo')
           call ToggleHiLite()
         else
-          " match lightline to current colorscheme, see https://github.com/itchyny/lightline.vim/issues/104
+          " match lightline to current colorscheme
+          " see https://github.com/itchyny/lightline.vim/issues/104
           if &background == 'light'
             let g:lightline.colorscheme = 'solarized_light'
           else

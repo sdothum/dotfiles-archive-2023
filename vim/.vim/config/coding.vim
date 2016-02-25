@@ -139,7 +139,7 @@
         endif
       endfunction
 
-      imap <leader>c <C-o>:call ToggleComment()<CR>
+      imap <leader><leader>c <C-o>:call ToggleComment()<CR>
 
     " .......................................................... Code block text
 
