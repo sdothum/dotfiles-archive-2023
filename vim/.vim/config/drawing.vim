@@ -23,7 +23,7 @@
             normal ^iMark
           endif
           " comment line
-          normal ,c
+          normal "\<leader>"c
           if &filetype == 'lua' || &filetype == 'haskell'
             normal /Mark
             " remove prefix+1 to treat as common 2 byte comment leader
@@ -187,7 +187,7 @@
         endif
       endfunction
 
-      imap <leader><leader><Space> <C-o>:call RightJustify()<CR>
-      nmap <leader><leader><Space> :call RightJustify()<CR>
+      imap <leader><leader>> <C-o>:call RightJustify()<CR>
+      nmap <leader><leader>> :call RightJustify()<CR>
 
 " drawing.vim

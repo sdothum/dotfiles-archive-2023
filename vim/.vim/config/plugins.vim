@@ -234,9 +234,9 @@
 
     set complete-=t
 
-    " vimwiki uses <tab> for tables
-    " let g:SuperTabMappingForward = '<C-Space>'
-    " let g:SuperTabMappingBackward = '<C-S-Space>'
+    " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab
+    let g:SuperTabMappingForward = '<C-Space>'
+    let g:SuperTabMappingBackward = '<C-S-Space>'
 
     " ................................................................ Syntastic
 

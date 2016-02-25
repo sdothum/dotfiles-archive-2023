@@ -74,7 +74,7 @@
 
       function! Wiki(index)
         " open vimwiki index file
-        execute 'normal ' . a:index . ',ww'
+        execute 'normal ' . a:index . "<\leader>ww"
         " vimenter bypasses other autocmds and filetype assignments
         " producing an unitialized non-lightline (raw) statusline !!??
         call CheckFiletype()

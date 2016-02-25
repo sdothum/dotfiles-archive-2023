@@ -125,7 +125,7 @@
           let l:mark=0
         endif
         " comment line
-        normal ,c
+        normal "\<leader>"c
         " reposition cursor when uncommenting autocomment line (creates "" line)
         if matchstr(getline(line('.')), '\S') == ''
           execute 'normal ' . l:col . 'a '

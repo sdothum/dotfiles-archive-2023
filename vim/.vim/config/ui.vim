@@ -121,7 +121,7 @@
 
       set nolist                           " display tabs and trailing spaces visually
       " Display tabs and trailing spaces visually
-      set listchars=tab:▸\ 
+      set listchars="tab:▸\<Space>"
       " set listchars+=trail:_
       set listchars+=trail:·
       set listchars+=nbsp:.

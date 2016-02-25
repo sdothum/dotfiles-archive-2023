@@ -9,9 +9,6 @@
 
     " ...................................................................... Vim
 
-      let mapleader="\<Space>"              " remap <leader>
-      let g:mapleader="\<Space>"
-
       " open help in maximum horizontal split
       if $HOST == 'monad'
         autocmd BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
