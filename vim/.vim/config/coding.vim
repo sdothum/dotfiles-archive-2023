@@ -57,10 +57,10 @@
       function! ToggleWrap()
         if &formatoptions == 'tqwan1'
           " NoPencil
-          set formatoptions=qwn1
+          set formatoptions=g:codingoptions
           " echo PencilMode() . ' - Automatic line wrap OFF'
           echo 'Automatic line wrap OFF'
-        elseif &formatoptions == 'qwn1'
+        elseif &formatoptions == g:codingoptions
           " Pencil
           set formatoptions=tqwan1
           " echo PencilMode() . ' - Automatic line wrap ON'
@@ -125,7 +125,7 @@
           let l:mark=0
         endif
         " comment line
-        normal "\<leader>"c
+        execute "normal :TComment\<CR>"
         " reposition cursor when uncommenting autocomment line (creates "" line)
         if matchstr(getline(line('.')), '\S') == ''
           execute 'normal ' . l:col . 'a '

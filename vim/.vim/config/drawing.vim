@@ -23,7 +23,7 @@
             normal ^iMark
           endif
           " comment line
-          normal "\<leader>"c
+          execute "normal :TComment\<CR>"
           if &filetype == 'lua' || &filetype == 'haskell'
             normal /Mark
             " remove prefix+1 to treat as common 2 byte comment leader

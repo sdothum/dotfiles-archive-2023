@@ -7,7 +7,8 @@
 
     " ........................................................... Input settings
 
-      set formatoptions=qn1j                " coding options
+      set formatoptions=qrn1j               " coding options
+      let g:codingoptions=&formatoptions
       " double spaces at the end of a wrapped line, becomes <br> by markdown
       set nojoinspaces                      " force single spacing after sentence punctuation!
       set textwidth=80                      " normally 78-80, see autocmd for mail
