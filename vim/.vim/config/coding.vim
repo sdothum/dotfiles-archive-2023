@@ -24,30 +24,30 @@
 
     " ................................................. Colorcolumns / line wrap
 
-      let g:linewidth=&textwidth            " default to &textwidth, see Ruler
+      let g:linewidth = &textwidth          " default to &textwidth, see Ruler
       " column list must end in [0]
-      let s:margins=[45, 72, &textwidth, g:linewidth, 0]
+      let s:margins = [45, 72, &textwidth, g:linewidth, 0]
 
       " toggle colorcolumns
       function! ToggleColumn()
         " add 1st non-blank character in current line to margins list :-)
         if getline(line('.')) != ''
           if index(s:margins, col('.')) == -1
-            let s:margins=uniq(SortNumbers([col('.')]+s:margins[:-2])) + [0]
-            let &colorcolumn=col('.')
+            let s:margins = uniq(SortNumbers([col('.')]+s:margins[:-2])) + [0]
+            let &colorcolumn = col('.')
             return
           endif
         endif
         if &colorcolumn == ''
-          let &colorcolumn=col('.')
+          let &colorcolumn = col('.')
         endif
-        execute 'let l:index=index(s:margins,' . &colorcolumn . ') + 1'
+        execute 'let l:index = index(s:margins,' . &colorcolumn . ') + 1'
         " weird problem with if test so simply loop list! :-o
         " if l:index > len(s:margins)
-        "   let l:index=0
+        "   let l:index = 0
         " endif
-        " let &colorcolumn=s:margins[l:index]
-        let &colorcolumn=(s:margins+s:margins)[l:index]
+        " let &colorcolumn = s:margins[l:index]
+        let &colorcolumn = (s:margins+s:margins)[l:index]
       endfunction
 
       imap <F7> <C-o>:call ToggleColumn()<CR>
@@ -57,7 +57,7 @@
       function! ToggleWrap()
         if &formatoptions == 'tqwan1'
           " NoPencil
-          set formatoptions=g:codingoptions
+          let &formatoptions = g:codingoptions
           " echo PencilMode() . ' - Automatic line wrap OFF'
           echo 'Automatic line wrap OFF'
         elseif &formatoptions == g:codingoptions
@@ -115,14 +115,14 @@
 
       " toggle comment, see T-comment plugins.vim
       function! ToggleComment()
-        let l:col=virtcol('.')
+        let l:col = virtcol('.')
         " suffix empty line from successive ToggleComment's
         " (for cycles: empty commented -> uncommented -> empty commented..)
         if matchstr(getline(line('.')), '\s') > ''
-          let l:mark=l:col
+          let l:mark = l:col
           normal aMark
         else
-          let l:mark=0
+          let l:mark = 0
         endif
         " comment line
         execute "normal :TComment\<CR>"
@@ -177,27 +177,27 @@
       endfunction
 
       function! s:MoveLineOrVisualUp(line_getter, range)
-        let l_num=line(a:line_getter)
+        let l_num = line(a:line_getter)
         if l_num - v:count1 - 1 < 0
-          let move_arg='0'
+          let move_arg = '0'
         else
-          let move_arg=a:line_getter . ' -' . (v:count1 + 1)
+          let move_arg = a:line_getter . ' -' . (v:count1 + 1)
         endif
         call s:MoveLineOrVisualUpOrDown(a:range . 'move ' . move_arg)
       endfunction
 
       function! s:MoveLineOrVisualDown(line_getter, range)
-        let l_num=line(a:line_getter)
+        let l_num = line(a:line_getter)
         if l_num + v:count1 > line('$')
-          let move_arg='$'
+          let move_arg = '$'
         else
-          let move_arg=a:line_getter . ' +' . v:count1
+          let move_arg = a:line_getter . ' +' . v:count1
         endif
         call s:MoveLineOrVisualUpOrDown(a:range . 'move ' . move_arg)
       endfunction
 
       function! s:MoveLineOrVisualUpOrDown(move_arg)
-        let col_num=virtcol('.')
+        let col_num = virtcol('.')
         execute 'silent! ' . a:move_arg
         execute 'normal! ' . col_num . '|'
       endfunction

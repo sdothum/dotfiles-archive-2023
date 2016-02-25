@@ -8,20 +8,20 @@
     " ................................................................ Solarized
 
       " further distraction free mode settings
-      " let g:dfm_fg='#586e75'                " solarized foreground
-      " let g:dfm_fg_dark='#93a1a1'           " solarized light foreground
-      let g:dfm_fg='#333333'                " dark foreground
-      let g:dfm_fg_dark='#cccccc'           " light foreground
-      let g:dfm_bg='#fdf6e3'                " solarized light (paper) background
-      let g:dfm_bg_dark='#002b36'           " solarized dark background
-      let g:dfm_cursor='#15ABDD'            " ia writer blue cursor
-      let g:dfm_cursor_dark='#DA4716'       " reddish cursor
-      let g:dfm_unfocused='#93A1A1'         " light grey surrounding text content
-      let g:dfm_unfocused_dark='#576565'    " dark grey surrounding text content
-      let g:dfm_fg_line='#cccccc'           " light grey line numbers
-      let g:dfm_fg_line_dark='#444444'      " dark grey line numbers
-      let g:dfm_bg_line='#eee8d5'           " solarized light cursorline
-      let g:dfm_bg_line_dark='#073642'      " solarized dark cursorline
+      " let g:dfm_fg = '#586e75'            " solarized foreground
+      " let g:dfm_fg_dark = '#93a1a1'       " solarized light foreground
+      let g:dfm_fg = '#333333'              " dark foreground
+      let g:dfm_fg_dark = '#cccccc'         " light foreground
+      let g:dfm_bg = '#fdf6e3'              " solarized light (paper) background
+      let g:dfm_bg_dark = '#002b36'         " solarized dark background
+      let g:dfm_cursor = '#15ABDD'          " ia writer blue cursor
+      let g:dfm_cursor_dark = '#DA4716'     " reddish cursor
+      let g:dfm_unfocused = '#93A1A1'       " light grey surrounding text content
+      let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
+      let g:dfm_fg_line = '#cccccc'         " light grey line numbers
+      let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
+      let g:dfm_bg_line = '#eee8d5'         " solarized light cursorline
+      let g:dfm_bg_line_dark = '#073642'    " solarized dark cursorline
 
       " match marks margin and whitespace colours to background
       function! LiteBackground()
@@ -55,7 +55,7 @@
       function! LiteSwitch()
         " 1st usage causes one time initialization error, trap error instead
         call Quietly('LiteDFMClose')
-        let &background=(&background == 'dark' ? 'light' : 'dark')
+        let &background = (&background == 'dark' ? 'light' : 'dark')
         call LiteType()
         if exists('#goyo')
           call ToggleHiLite()
@@ -83,32 +83,32 @@
         if !exists('s:cursorline')
           call ToggleHiLite()
         endif
-        execute 'highlight CursorLine gui=bold guibg='   . s:cursorline       . ' guifg=' . s:foreground
+        execute 'highlight CursorLine gui=bold guibg=' . s:cursorline      . ' guifg=' . s:foreground
         if &background == 'light'
-          execute 'highlight CursorLineNr guibg='        . g:dfm_bg
-          execute 'highlight Cursor guibg='              . g:dfm_cursor       . ' guifg=' . g:dfm_bg
+          execute 'highlight CursorLineNr guibg='      . g:dfm_bg
+          execute 'highlight Cursor guibg='            . g:dfm_cursor      . ' guifg=' . g:dfm_bg
         else
-          execute 'highlight CursorLineNr guibg='        . g:dfm_bg_dark
-          execute 'highlight Cursor guibg='              . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
+          execute 'highlight CursorLineNr guibg='      . g:dfm_bg_dark
+          execute 'highlight Cursor guibg='            . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
         end
       endfunction
 
       " cursorline contrast (0) low (1) high
-      let s:contrast=1
+      let s:contrast = 1
 
       function! CursorLine(fg, bg, BG)
-        let s:foreground=a:fg
+        let s:foreground = a:fg
         if s:cursorline != a:bg
-          let s:cursorline=a:bg
+          let s:cursorline = a:bg
         else
-          let s:cursorline=a:BG
+          let s:cursorline = a:BG
         endif
       endfunction
 
       function! ToggleHiLite()
         if &filetype =~ g:goyotypes
           if !exists('s:cursorline')
-            let s:cursorline='#000000'
+            let s:cursorline = '#000000'
           endif
           if s:contrast == 0
             " low contrast cursorline

@@ -12,7 +12,7 @@
       function! Underline(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           normal ^
-          let l:col=virtcol('.')
+          let l:col = virtcol('.')
           execute 'normal yypVr' . a:delimiter
           " blank to margin
           if l:col > 1
@@ -59,10 +59,10 @@
       function! Drawline(delimiter)
         " insert dummy mark line if on blank line
         if matchstr(getline(line('.')), '\S') == ''
-          let l:mark=1
+          let l:mark = 1
           normal $RMark
         else
-          let l:mark=0
+          let l:mark = 0
         endif
         call Underline(a:delimiter)
         " remove temporary mark
@@ -72,8 +72,8 @@
         normal $
         if virtcol('.') < g:linewidth
           " for mirrored left/right margin spacing
-          " let l:col=g:linewidth - virtcol('.') - l:col + 1
-          let l:col=g:linewidth - virtcol('.')
+          " let l:col = g:linewidth - virtcol('.') - l:col + 1
+          let l:col = g:linewidth - virtcol('.')
           execute 'normal ' . l:col . 'a' . a:delimiter
         endif
         normal ^
@@ -101,7 +101,7 @@
             normal $bmD
           endif
           normal $
-          let l:col=g:linewidth - virtcol('.') - 1
+          let l:col = g:linewidth - virtcol('.') - 1
           if l:col > 0
             " suppress potential comment line wrapping
             set formatoptions-=c
@@ -120,7 +120,7 @@
 
       " prompted trailer
       function! InputTrailer()
-        let l:delimiter=input('Line character: ')
+        let l:delimiter = input('Line character: ')
         if l:delimiter > ''
           call AppendTrailer(l:delimiter[0])
         endif
@@ -154,7 +154,7 @@
 
       " prompted leader
       function! InputLeader()
-        let l:delimiter=input('Line character: ')
+        let l:delimiter = input('Line character: ')
         if l:delimiter > ''
           if l:delimiter == ' '
             call RightJustify()
@@ -175,7 +175,7 @@
             execute 'normal 0vwmd'
           endif
           normal $
-          let l:col=g:linewidth - virtcol('.') - 1
+          let l:col = g:linewidth - virtcol('.') - 1
           if l:col > 0
             " suppress potential comment line wrapping
             set formatoptions-=c

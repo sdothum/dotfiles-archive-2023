@@ -43,7 +43,7 @@
           execute 'highlight CursorLineNr guifg=' . g:dfm_bg_dark . ' guibg=' . g:dfm_bg_dark
         end
         " persistent word count display, see ToggleStatus
-        let &laststatus=g:wikistatus
+        let &laststatus = g:wikistatus
       endfunction
 
       function! LiteType()
@@ -94,16 +94,16 @@
               execute 'Goyo ' . (&textwidth + 1) . '+1'
             endif
             " subsequent goyo toggling alters left margin position
-            let s:goyo=1
+            let s:goyo = 1
           else
             " goyo! always returns to first buffer, so remember last
-            let l:buffer=bufnr('%')
+            let l:buffer = bufnr('%')
             execute 'Goyo!'
             " turn on status when not in goyo view
             call ProseView()
             call ToggleStatus(0)
-            let g:wikistatus=2
-            let &laststatus=g:wikistatus
+            let g:wikistatus = 2
+            let &laststatus = g:wikistatus
             execute 'buffer ' . l:buffer
           endif
           " force spellcheck as autocmd sequences don't seem to set this consistently
@@ -118,7 +118,7 @@
       function! ResetGoyo(offset)
         if exists('#goyo')
           " goyo! always returns to first buffer, so remember last
-          let l:buffer=bufnr('%')
+          let l:buffer = bufnr('%')
           call ToggleGoyo(a:offset)
           execute 'buffer ' . l:buffer
           call ToggleGoyo(a:offset)

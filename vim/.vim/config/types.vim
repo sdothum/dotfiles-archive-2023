@@ -7,13 +7,13 @@
 
     " ...................................................... Filetype attributes
 
-      let g:goyotypes='vimwiki\|mail'
+      let g:goyotypes = 'vimwiki\|mail'
 
       " [regex name, filetype, modifiable, wordcount] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " wordcount (0) no word count (1) statusline with wordcount
       " note "/name" to represent "^name"
-      let s:nametypes=[
+      let s:nametypes = [
         \  ['conf$', 'conf', 1, 0]
         \, ['config$', 'conf', 1, 0]
         \, ['eml$', 'mail', 1, 1]
@@ -28,7 +28,7 @@
       " [regex fileinfo, filetype, modifiable, readonly] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " readonly (0) not set (1) set
-      let s:contenttypes=[
+      let s:contenttypes = [
         \  ['binary', 'binary', 0, 1]
         \, ['no read permission', 'binary', 0, 1]
         \, ['text', 'text', 1, 0]
@@ -36,15 +36,15 @@
 
       " set buffer attributes
       function! CheckFiletype()
-        let b:prose=0
+        let b:prose = 0
         " by name structure
         for [name, filetype, modifiable, wordcount] in s:nametypes
           " known filetypes can be processed by filename e.g. "mkd" readme files
           if expand('%') =~ name
             " assign unknown filetype
-            let &filetype=(&filetype == '' ? filetype : &filetype)
-            let &modifiable=modifiable
-            let b:prose=wordcount
+            let &filetype = (&filetype == '' ? filetype : &filetype)
+            let &modifiable = modifiable
+            let b:prose = wordcount
             break
           endif
         endfor
@@ -52,23 +52,23 @@
         if &filetype == ''
           for [content, filetype, modifiable, readonly] in s:contenttypes
             if system('file -i ' . expand('%') . '|cut -d: -f2') =~ content
-              let &filetype=filetype
-              let &modifiable=modifiable
-              let &readonly=readonly
+              let &filetype = filetype
+              let &modifiable = modifiable
+              let &readonly = readonly
             endif
           endfor
         endif
         " make nomodifiable persistent, see toggle below
-        let b:modifiable=&modifiable
+        let b:modifiable = &modifiable
       endfunction
 
       " toggle modifiable attribute
-      nmap <silent><F1>   :let &modifiable=(b:modifiable == 1 ? (&modifiable == 0 ? 1 : 0) : b:modifiable)<CR>
-      nmap <silent><C-F1> :let &modifiable=(&modifiable == 0 ? 1 : 0)<CR>
+      nmap <silent><F1>   :let &modifiable = (b:modifiable == 1 ? (&modifiable == 0 ? 1 : 0) : b:modifiable)<CR>
+      nmap <silent><C-F1> :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " check filetype on open
       autocmd BufNewFile,BufRead * call CheckFiletype()
-      autocmd BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | let b:prose=1 | endif
+      autocmd BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | let b:prose = 1 | endif
 
     " .................................................................... Wikis
 

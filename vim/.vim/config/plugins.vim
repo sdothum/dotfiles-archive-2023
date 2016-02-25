@@ -11,20 +11,20 @@
 
     " ............................................................... Auto-pairs
 
-      let g:AutoPairsMapBS=1                  " auto delete symbol pairs
-      let g:AutoPairsMapSpace=0               " disabled to make iabbrev work!
+      let g:AutoPairsMapBS = 1              " auto delete symbol pairs
+      let g:AutoPairsMapSpace = 0           " disabled to make iabbrev work!
 
     " ................................................................... Ctrl-p
 
-      let g:ctrlp_cache_dir=$HOME . '/.cache/ctrlp'
-      let g:ctrlp_clear_cache_on_exit=0       " enable cross-session caching
-      let g:ctrlp_follow_symlinks=1           " follow symbolic links
-      let g:ctrlp_max_height=30               " results window height
-      let g:ctrlp_mruf_case_sensitive=0       " avoid duplicate entries
-      let g:ctrlp_mruf_max=1000               " maximum mru entries to remember
-      let g:ctrlp_open_multiple_files='i'     " open multiple files in hidden buffers
-      let g:ctrlp_open_new_file='v'           " <C-y> opens new file in vertical split
-      let g:ctrlp_working_path_mode=0         " default to current directory
+      let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+      let g:ctrlp_clear_cache_on_exit = 0   " enable cross-session caching
+      let g:ctrlp_follow_symlinks = 1       " follow symbolic links
+      let g:ctrlp_max_height = 30           " results window height
+      let g:ctrlp_mruf_case_sensitive = 0   " avoid duplicate entries
+      let g:ctrlp_mruf_max = 1000           " maximum mru entries to remember
+      let g:ctrlp_open_multiple_files = 'i' " open multiple files in hidden buffers
+      let g:ctrlp_open_new_file = 'v'       " <C-y> opens new file in vertical split
+      let g:ctrlp_working_path_mode = 0     " default to current directory
 
       nmap <leader>b :CtrlPBuffer<CR>
       nmap <leader>M :CtrlPMixed<CR>
@@ -39,8 +39,8 @@
 
     " ............................................................... Easymotion
 
-      let g:EasyMotion_do_mapping=0           " disable default mappings
-      let g:EasyMotion_smartcase=1            " turn on case sensitive feature
+      let g:EasyMotion_do_mapping = 0       " disable default mappings
+      let g:EasyMotion_smartcase = 1        " turn on case sensitive feature
 
       " bi-directional find motion
       " avoid conflict with regular vim search!
@@ -79,7 +79,7 @@
 
     " ........................................................... Graphical undo
 
-      let g:gundo_preview_bottom=1
+      let g:gundo_preview_bottom = 1
       " nmap <C-F7> :GundoToggle<CR>
       nmap <F3> :GundoToggle<CR>
 
@@ -190,13 +190,13 @@
 
     " .................................................................. LiteDFM
 
-      let g:lite_dfm_left_offset=18
+      let g:lite_dfm_left_offset = 18
       " see LiteToggle functions.vim
       " nmap <silent><leader>z :LiteDFMToggle<CR>i<Esc>`^
 
     " ............................................................ Narrow region
 
-      let g:nrrw_rgn_vert=1                   " open in vertical split buffer
+      let g:nrrw_rgn_vert = 1               " open in vertical split buffer
 
     " ................................................................. Open URL
 
@@ -212,15 +212,15 @@
 
     " ................................................................ Showmarks
 
-      " let g:showmarks_enable=0
-      let g:showmarks_include='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY'
+      " let g:showmarks_enable = 0
+      let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY'
 
     " .......................................................... Solarized theme
 
-      let g:solarized_contrast='high'         " preferred contrast level for light background
-      let g:solarized_hitrail=1
-      let g:solarized_termcolors=256
-      let g:solarized_termtrans=1             " terminal transparency (0) off (1) on
+      let g:solarized_contrast = 'high'     " preferred contrast level for light background
+      let g:solarized_hitrail = 1
+      let g:solarized_termcolors = 256
+      let g:solarized_termtrans = 1         " terminal transparency (0) off (1) on
 
       colorscheme solarized
       if has("gui_running")
@@ -240,10 +240,10 @@
 
     " ................................................................ Syntastic
 
-      let g:syntastic_auto_jump=0
-      let g:syntastic_auto_loc_list=1
-      let g:syntastic_enable_signs=1
-      let g:syntastic_quiet_messages={'level':'warnings'}
+      let g:syntastic_auto_jump = 0
+      let g:syntastic_auto_loc_list = 1
+      let g:syntastic_enable_signs = 1
+      let g:syntastic_quiet_messages = {'level':'warnings'}
 
       " set statusline+=%#warningmsg#
       " set statusline+=%{SyntasticStatuslineFlag()}
@@ -251,12 +251,12 @@
 
     " ................................................................... Tagbar
 
-      " let g:tagbar_ctags_bin='ctags-exuberant'
+      " let g:tagbar_ctags_bin = 'ctags-exuberant'
       nmap <silent><leader>t :TagbarToggle<CR>
 
       " " see ctags.cnf
       " " from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin
-        " let g:tagbar_type_vimwiki={
+        " let g:tagbar_type_vimwiki = {
         "   \ 'ctagstype' : 'vimwiki',
         "   \ 'kinds'     : [
         "   \ 'h:header',
@@ -280,11 +280,11 @@
       autocmd Filetype vimwiki      call litecorrect#init()
     augroup END
 
-    " let g:pencil#wrapModeDefault = 'hard'     " default 'hard'
-    " let g:pencil#textwidth = 72               " default 74
-    " let g:pencil#joinspaces = 0               " 0=one_space (def), 1=two_spaces
-    " let g:pencil#cursorwrap = 1               " 0=disable, 1=enable (def)
-    " let g:pencil#autoformat = 1               " 0=manual, 1=auto (def)
+    " let g:pencil#wrapModeDefault = 'hard' " default 'hard'
+    " let g:pencil#textwidth = 72           " default 74
+    " let g:pencil#joinspaces = 0           " 0=one_space (def), 1=two_spaces
+    " let g:pencil#cursorwrap = 1           " 0=disable, 1=enable (def)
+    " let g:pencil#autoformat = 1           " 0=manual, 1=auto (def)
     "
     " augroup pencil
     "   autocmd!
@@ -297,13 +297,13 @@
     " .................................................... Vim-shell / Vim-filer
 
       " requires make http://github.com/Shougo/vimproc
-      let g:vimfiler_as_default_explorer=1    " explorer mode
+      let g:vimfiler_as_default_explorer = 1" explorer mode
       nmap <leader>!         :VimShell<CR>
       nmap <leader><leader>! :VimFiler<CR>
 
     " .................................................................. Vimwiki
 
-      let g:vimwiki_list=[
+      let g:vimwiki_list = [
         \  {
         \  'path'             : '~/vimwiki/thedarnedestthing/'
         \, 'path_html'        : '~/vimwiki/thedarnedestthing/html/'
@@ -356,10 +356,10 @@
 
     " ................................................................. Yankring
 
-      let g:yankring_default_menu_mode=1      " menu on with no shortcut
-      let g:yankring_dot_repeat_yank=1        " allow repeating yankring action
-      let g:yankring_enabled=1                " disable yankring because of macro conflict
-      let g:yankring_window_height=30         " horizontal window height
+      let g:yankring_default_menu_mode = 1  " menu on with no shortcut
+      let g:yankring_dot_repeat_yank = 1    " allow repeating yankring action
+      let g:yankring_enabled = 1            " disable yankring because of macro conflict
+      let g:yankring_window_height = 30     " horizontal window height
 
       nmap Y            :<C-U>YRYankCount 'y$'<CR>
       " nmap <silent><F7> :YRShow<cr>
