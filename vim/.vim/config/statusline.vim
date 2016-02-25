@@ -22,7 +22,7 @@
           if &modifiable
             let long_line_lens = s:LongLines()
             if len(long_line_lens) > 0
-              let b:statusline_long_line_warning = 
+              let b:statusline_long_line_warning =
                 \           len(long_line_lens) . ':'
                 \ . ' +/' . s:Median(long_line_lens)
                 \ . ' '   . max(long_line_lens)

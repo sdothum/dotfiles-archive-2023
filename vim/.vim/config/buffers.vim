@@ -58,32 +58,28 @@
 
     " ............................................................ Split windows
 
-      " horizontal split
+      " horizontal / vertical split
       nmap <leader>s    <C-w>v<C-w>l
-      " vertical split
       nmap <leader>S    <C-w>s<C-w>l
-      " maximize left/right
+      " maximize left:right / top:bottom
       nmap <leader>\    <C-w><Bar>
-      " maximixe top/bottom
       nmap <leader>-    <C-w>_
-      " Adjust viewports to the same size
+      " adjust viewports to the same size
       nmap <leader>=    <C-w>=
 
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
-      " switch to left split
-      " nmap <C-m>        <C-w>h
+      " switch to left / right split
+      " nmap <C-m>      <C-w>h
+      " nmap <C-e>      <C-w>l
       nmap <C-S-Left>   <C-w>h
-      " switch to bottom split
-      " nmap <C-n>        <C-w>j
-      nmap <C-S-Down>   <C-w>j
-      " switch to right split
-      " nmap <C-e>        <C-w>l
       nmap <C-S-Right>  <C-w>l
-      " switch to top split
-      " nmap <C-l>        <C-w>k
+      " switch to top / bottom split
+      " nmap <C-l>      <C-w>k
+      " nmap <C-n>      <C-w>j
       nmap <C-S-Up>     <C-w>k
+      nmap <C-S-Down>   <C-w>j
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -95,9 +91,8 @@
       set foldnestmax=3                     " deepest fold is 3 levels
 
       " toggle fold
-      " noremap <leader><space> za          " just use z commands for folding
-      " fold html tags
-      noremap <leader>ft      Vatzf
+      noremap <leader>f za                  " just use z commands for folding
+      noremap <leader>ft Vatzf              " fold tags
 
     " ........................................................... Folding levels
 
@@ -113,4 +108,4 @@
       nmap <leader>f8 :set foldlevel=8<CR>
       nmap <leader>f9 :set foldlevel=9<CR>
 
-" buffers.vim
+" buffers.vimtzf

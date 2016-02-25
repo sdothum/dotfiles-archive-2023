@@ -7,7 +7,7 @@
 
     " setup.vim should be first source in .vimrc
 
-    " ...................................................................... Vim
+    " ..................................................................... Help
 
       " open help in maximum horizontal split
       if $HOST == 'monad'
@@ -91,28 +91,28 @@
 
       " insert mode local region cursor movements
       " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap <C-h>           <Left>
-      " imap <C-j>           <Down>
-      " imap <C-k>           <Up>
-      " imap <C-l>           <Right>
+      " imap <C-h>         <Left>
+      " imap <C-j>         <Down>
+      " imap <C-k>         <Up>
+      " imap <C-l>         <Right>
 
     " ............................................................. Disable keys
 
       " affirm vim modal usage but these keys are remapped below anyway :-)
       " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
-      " imap <down>  <nop>
-      " imap <left>  <nop>
-      " imap <right> <nop>
-      " imap <up>    <nop>
-      " nmap <down>  <nop>
-      " nmap <left>  <nop>
-      " nmap <right> <nop>
-      " nmap <up>    <nop>
+      " imap <down>        <nop>
+      " imap <left>        <nop>
+      " imap <right>       <nop>
+      " imap <up>          <nop>
+      " nmap <down>        <nop>
+      " nmap <left>        <nop>
+      " nmap <right>       <nop>
+      " nmap <up>          <nop>
 
       " avoid accidental F1
-      " imap <F1> <ESC>
-      " nmap <F1> <ESC>
-      " vmap <F1> <ESC>
+      " imap <F1>          <ESC>
+      " nmap <F1>          <ESC>
+      " vmap <F1>          <ESC>
 
   " Search and completion ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

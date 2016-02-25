@@ -44,10 +44,10 @@
 
       " bi-directional find motion
       " avoid conflict with regular vim search!
-      nmap //        <Plug>(easymotion-sn)
+      nmap //                <Plug>(easymotion-sn)
       " one key binding
-      " imap \         <C-o><Plug>(easymotion-s)
-      " nmap \         <Plug>(easymotion-s)
+      " imap \               <C-o><Plug>(easymotion-s)
+      " nmap \               <Plug>(easymotion-s)
       " 2 keystroke binding (backslash inhibits use in insert mode)
       imap <leader><leader>/ <C-o><Plug>(easymotion-s2)
       nmap <leader><leader>/ <Plug>(easymotion-s2)
@@ -274,10 +274,10 @@
 
     augroup litecorrect
       autocmd!
-      autocmd Filetype mail         call litecorrect#init()
-      autocmd FileType markdown,mkd call litecorrect#init()
-      autocmd Filetype text         call litecorrect#init()
-      autocmd Filetype vimwiki      call litecorrect#init()
+      autocmd Filetype mail           call litecorrect#init()
+      autocmd FileType markdown,mkd   call litecorrect#init()
+      autocmd Filetype text           call litecorrect#init()
+      autocmd Filetype vimwiki        call litecorrect#init()
     augroup END
 
     " let g:pencil#wrapModeDefault = 'hard' " default 'hard'
@@ -305,32 +305,32 @@
 
       let g:vimwiki_list = [
         \  {
-        \  'path'             : '~/vimwiki/thedarnedestthing/'
-        \, 'path_html'        : '~/vimwiki/thedarnedestthing/html/'
+        \  'path'      : '~/vimwiki/thedarnedestthing/'
+        \, 'path_html' : '~/vimwiki/thedarnedestthing/html/'
         \  }
         \, {
-        \  'path'             : '~/vimwiki/thestory/'
-        \, 'path_html'        : '~/vimwiki/thestory/html/'
+        \  'path'      : '~/vimwiki/thestory/'
+        \, 'path_html' : '~/vimwiki/thestory/html/'
         \  }
         \, {
-        \  'path'             : '~/vimwiki/truthordie/'
-        \, 'path_html'        : '~/vimwiki/truthordie/html/'
+        \  'path'      : '~/vimwiki/truthordie/'
+        \, 'path_html' : '~/vimwiki/truthordie/html/'
         \  }
         \, {
-        \  'path'             : '~/vimwiki/shadowsandlight/'
-        \, 'path_html'        : '~/vimwiki/shadowsandlight/html/'
+        \  'path'      : '~/vimwiki/shadowsandlight/'
+        \, 'path_html' : '~/vimwiki/shadowsandlight/html/'
         \  }
         \, {
-        \  'path'             : '~/vimwiki/healing/'
-        \, 'path_html'        : '~/vimwiki/healing/html/'
+        \  'path'      : '~/vimwiki/healing/'
+        \, 'path_html' : '~/vimwiki/healing/html/'
         \  }
         \, {
-        \  'path'             : '~/vimwiki/colophon/'
-        \, 'path_html'        : '~/vimwiki/colophon/html/'
+        \  'path'      : '~/vimwiki/colophon/'
+        \, 'path_html' : '~/vimwiki/colophon/html/'
         \  }
         \, {
-        \  'path'             : '~/vimwiki/notes/'
-        \, 'path_html'        : '~/vimwiki/notes/html/'
+        \  'path'      : '~/vimwiki/notes/'
+        \, 'path_html' : '~/vimwiki/notes/html/'
         \  }
         \]
 
@@ -361,10 +361,10 @@
       let g:yankring_enabled = 1            " disable yankring because of macro conflict
       let g:yankring_window_height = 30     " horizontal window height
 
-      nmap Y            :<C-U>YRYankCount 'y$'<CR>
+      nmap Y              :<C-U>YRYankCount 'y$'<CR>
       " nmap <silent><F7> :YRShow<cr>
       " imap <silent><F7> <ESC>:YRShow<cr>
-      nmap <silent><F2> :YRShow<cr>
-      imap <silent><F2> <ESC>:YRShow<cr>
+      nmap <silent><F2>   :YRShow<cr>
+      imap <silent><F2>   <ESC>:YRShow<cr>
 
 " plugins.vim

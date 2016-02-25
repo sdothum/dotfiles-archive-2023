@@ -8,6 +8,7 @@
     " bundles.vim must be sourced before plugins.vim
 
     filetype off                            " safe startup (vundle requirement)
+
     " see https://github.com/junegunn/vim-plug
     " :PlugInstall/PlugUpdate/PlugClean
     " :PlugUpgrade (vim-plug)
@@ -91,6 +92,7 @@
       Plug 'vimwiki/vimwiki'
 
     call plug#end()
+
     filetype plugin on
     filetype indent on                        " required
     filetype on

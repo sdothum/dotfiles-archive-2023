@@ -44,7 +44,7 @@
       imap <leader><leader><Delete> <<C-o>adel>
       imap <leader><Delete><Delete> </del>
       " insert br
-      imap <leader><leader><CR>     <<C-o>abr><CR>
+      imap <leader><leader>b<CR>    <<C-o>abr><CR>
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -95,7 +95,6 @@
       autocmd Filetype shell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd Filetype sh      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd Filetype slim    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype vim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd Filetype vim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
   " Line manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

@@ -136,7 +136,6 @@
 
       set omnifunc=syntaxcomplete#Complete
       syntax on                             " turn on syntax highlighting
-      nmap <leader>f :setfiletype fish<CR>
       nmap <leader>C :setfiletype conf<CR>
 
     " .............................................................. Spell check
