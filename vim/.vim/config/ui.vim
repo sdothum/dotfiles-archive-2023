@@ -50,7 +50,7 @@
 
     " ..................................................................... Font
       scriptencoding utf-8
-      set encoding=utf-8                      " necessary to show unicode glyphs
+      set encoding=utf-8                    " necessary to show unicode glyphs
 
     " ................................................................... Cursor
 

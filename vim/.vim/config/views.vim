@@ -72,7 +72,7 @@
       " reset vimwiki link color
       function! s:GoyoLeave()
         " silent !tmux set status on
-        set scrolloff=8
+        set scrolloff=5
         set number
         " restore vimwiki link
         call VimWikiLink()
