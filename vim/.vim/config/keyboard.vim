@@ -5,7 +5,7 @@
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ....................................................... Colemak-shift-dh
+    " ......................................................... Colemak-shift-dh
 
       " Note: scripts are affected by the mappings below!
       " e.g. "h" becomes "m", "f" becomes "t" etc.
