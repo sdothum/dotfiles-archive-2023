@@ -9,6 +9,7 @@
 
       set noerrorbells                      " don't beep
       set gcr=a:blinkon0                    " disable cursor blink
+      set mousehide                         " hide mouse when typing
       set shortmess+=filmnrxoOtT            " abbrev. of messages (avoids "hit enter")
       set visualbell                        " no sounds
 
@@ -17,7 +18,7 @@
       set t_Co=256                          " 256 color support
       set viewoptions=folds,options,cursor,unix,slash
       set virtualedit=block                 " allow virtual editing in Visual block mode
-      " set virtualedit=onemore               " allow for cursor beyond last character
+      " set virtualedit=onemore             " allow for cursor beyond last character
       set winminheight=0                    " windows can be 0 line high
       set wrap                              " wrap lines for viewing
 
@@ -32,8 +33,8 @@
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1
       " easier horizontal scrolling
-      noremap zl           zL
-      noremap zh           zH
+      noremap zl             zL
+      noremap zh             zH
 
       " space now commandeered as leader by spacemacs wannabe :-)
       " " manual jump scrolling
@@ -56,7 +57,7 @@
       " see functions.vim
       set cursorline                        " highlight current line
 
-      " mode aware cursors, see Solarized functions.vim
+      " mode aware cursors, see solarized functions.vim
       set guicursor=a:block
       set guicursor+=o:hor50-Cursor
       set guicursor+=n:Cursor

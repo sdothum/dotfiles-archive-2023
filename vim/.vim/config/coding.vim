@@ -57,10 +57,10 @@
       function! ToggleWrap()
         if &formatoptions == 'tqwan1'
           " NoPencil
-          let &formatoptions = g:codingoptions
+          let &formatoptions = g:codeoptions
           " echo PencilMode() . ' - Automatic line wrap OFF'
           echo 'Automatic line wrap OFF'
-        elseif &formatoptions == g:codingoptions
+        elseif &formatoptions == g:codeoptions
           " Pencil
           set formatoptions=tqwan1
           " echo PencilMode() . ' - Automatic line wrap ON'

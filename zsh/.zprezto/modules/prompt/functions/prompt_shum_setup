@@ -61,7 +61,7 @@ function prompt_shum_setup {
     red='196'
     P='╼'
   fi
-  E='/'
+  E='_'
   if [[ $multiline ]] ;then
     # formatting tweaks to match single line behaviour..
     L='└'
