@@ -191,8 +191,6 @@
     " .................................................................. LiteDFM
 
       let g:lite_dfm_left_offset = 18
-      " see LiteToggle functions.vim
-      " nmap <silent><leader>z :LiteDFMToggle<CR>i<Esc>`^
 
     " ............................................................ Narrow region
 
@@ -362,9 +360,9 @@
       let g:yankring_window_height = 30     " horizontal window height
 
       nmap Y              :<C-U>YRYankCount 'y$'<CR>
-      " nmap <silent><F7> :YRShow<cr>
-      " imap <silent><F7> <ESC>:YRShow<cr>
-      nmap <silent><F2>   :YRShow<cr>
-      imap <silent><F2>   <ESC>:YRShow<cr>
+      " nmap <silent><F7> :YRShow<CR>
+      " imap <silent><F7> <ESC>:YRShow<CR>
+      nmap <silent><F2>   :YRShow<CR>
+      imap <silent><F2>   <ESC>:YRShow<CR>
 
 " plugins.vim

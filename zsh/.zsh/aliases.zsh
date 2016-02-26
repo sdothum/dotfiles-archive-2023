@@ -61,7 +61,7 @@ alias -g TT='|& tail -50'
 alias -g VM=/var/log/messages
 alias -g WL='|& wc -l'
 alias -g XD='export DISPLAY=:0.0'
-alias -g ZZ="|& egrep -v '\.deprecated|\.hg'"
+alias -g ZZ="|& egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'"
 
 # .................................................................... Shortcuts
 

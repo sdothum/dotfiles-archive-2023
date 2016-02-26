@@ -16,8 +16,8 @@
     " ...................................................... Trailing whitespace
 
       " strip all trailing whitespace in the current file
-      " nmap <C-F8>                 :%s/\s\+$//<cr>:let @/=""<CR>
-      nmap <leader><F8>             :%s/\s\+$//<cr>:let @/=""<CR>
+      " nmap <C-F8>                 :%s/\s\+$//<CR>:let @/=""<CR>
+      nmap <leader><F8>             :%s/\s\+$//<CR>:let @/=""<CR>
 
     " ...................................................... Reformat paragraghs
 

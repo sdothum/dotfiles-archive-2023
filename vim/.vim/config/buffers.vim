@@ -22,14 +22,14 @@
     " .................................................. Buffer closing / saving
 
       " close buffer
-      nmap <leader>d    :bdelete<CR>
+      nmap <leader>d    :bdelete!<CR>
       " Fast saving
-      " nmap <leader>w  :write!<cr>
+      nmap <leader>w    :write!<CR>
       " sudo save
-      cmap w!!          w !sudo tee % >/dev/null
-      " write and close all buffers, note herbstluftwm hook
-      nmap <silent>ZZ   :wqall<CR>
-      vmap <silent>ZZ   <ESC>:wqall<CR>
+      nmap <leader>W    :w !sudo tee % >/dev/null
+      " (write and) close all buffers
+      nmap <leader>zz   :wqall!<CR>
+      nmap <leader>qq   :qall!<CR>
 
       " save on losing focus
       autocmd FocusLost * silent! :wall
