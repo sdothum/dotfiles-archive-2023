@@ -14,11 +14,15 @@
         set laststatus=2                    " turn on statusline
         call LiteBackground()
         if &background == 'light'
-          execute 'highlight LineNr guifg=' . g:dfm_fg_line
-          execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line
+          execute 'highlight LineNr guifg='         . g:dfm_fg_line
+          " execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line
+          execute 'highlight CursorLineNr guibg='   . g:dfm_bg
+          execute 'highlight Cursor guibg='         . g:dfm_cursor      . ' guifg=' . g:dfm_bg
         else
-          execute 'highlight LineNr guifg=' . g:dfm_fg_line_dark
-          execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line_dark
+          execute 'highlight LineNr guifg='         . g:dfm_fg_line_dark
+          " execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line_dark
+          execute 'highlight CursorLineNr guibg='   . g:dfm_bg_dark
+          execute 'highlight Cursor guibg='         . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
         end
       endfunction
 
@@ -38,9 +42,11 @@
         if &background == 'light'
           execute 'highlight Normal guifg=' . g:dfm_unfocused
           execute 'highlight CursorLineNr guifg=' . g:dfm_bg . ' guibg=' . g:dfm_bg
+          let s:unfocused = g:dfm_unfocused
         else
           execute 'highlight Normal guifg=' . g:dfm_unfocused_dark
           execute 'highlight CursorLineNr guifg=' . g:dfm_bg_dark . ' guibg=' . g:dfm_bg_dark
+          let s:unfocused = g:dfm_unfocused_dark
         end
         " persistent word count display, see ToggleStatus
         let &laststatus = g:wikistatus
@@ -72,7 +78,7 @@
       " reset vimwiki link color
       function! s:GoyoLeave()
         " silent !tmux set status on
-        set scrolloff=5
+        let &scrolloff = g:scrolloff
         set number
         " restore vimwiki link
         call VimWikiLink()
@@ -131,5 +137,33 @@
 
       " with window resizing, goyo margins are newly calculated
       autocmd VimResized * if &filetype =~ g:goyotypes | call ResetGoyo(0) | endif
+
+    " ..................................................................... Mode
+
+      function! ToggleMode()
+        " toggle between writing and proofing modes
+        if &filetype =~ g:goyotypes
+          if &background == 'light'
+            if s:unfocused == g:dfm_unfocused
+              execute 'highlight Normal guifg=' . g:dfm_proof
+              let s:unfocused = g:dfm_fg
+            else
+              execute 'highlight Normal guifg=' . g:dfm_unfocused
+              let s:unfocused = g:dfm_unfocused
+            end
+          else
+            if s:unfocused == g:dfm_unfocused_dark
+              execute 'highlight Normal guifg=' . g:dfm_proof_dark
+              let s:unfocused = g:dfm_fg_dark
+            else
+              execute 'highlight Normal guifg=' . g:dfm_unfocused_dark
+              let s:unfocused = g:dfm_unfocused_dark
+            end
+          endif
+        endif
+      endfunction
+
+      imap <F11> <C-o>:call ToggleMode()<CR>
+      nmap <F11> :call ToggleMode()<CR>
 
 " views.vim

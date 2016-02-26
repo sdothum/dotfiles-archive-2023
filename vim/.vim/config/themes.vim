@@ -8,20 +8,25 @@
     " ................................................................ Solarized
 
       " further distraction free mode settings
-      " let g:dfm_fg = '#586e75'            " solarized foreground
-      " let g:dfm_fg_dark = '#93a1a1'       " solarized light foreground
-      let g:dfm_fg = '#333333'              " dark foreground
-      let g:dfm_fg_dark = '#cccccc'         " light foreground
+      " foreground
+      let g:dfm_fg = '#000000'              " dark foreground
+      let g:dfm_fg_dark = '#fdf6e3'         " light foreground
+      let g:dfm_proof = '#073642'           " dark foreground
+      let g:dfm_proof_dark = '#eee8d5'      " light foreground
+      let g:dfm_unfocused = '#aaaaaa'       " light grey surrounding text content
+      let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
+
+      " background
       let g:dfm_bg = '#fdf6e3'              " solarized light (paper) background
       let g:dfm_bg_dark = '#002b36'         " solarized dark background
-      let g:dfm_cursor = '#15ABDD'          " ia writer blue cursor
+
+      " cursor line
+      let g:dfm_cursor = '#54D4FF'          " ia writer blue cursor
       let g:dfm_cursor_dark = '#DA4716'     " reddish cursor
-      let g:dfm_unfocused = '#93A1A1'       " light grey surrounding text content
-      let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
-      let g:dfm_fg_line = '#cccccc'         " light grey line numbers
-      let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
       let g:dfm_bg_line = '#eee8d5'         " solarized light cursorline
       let g:dfm_bg_line_dark = '#073642'    " solarized dark cursorline
+      let g:dfm_fg_line = '#cccccc'         " light grey line numbers
+      let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
 
       " match marks margin and whitespace colours to background
       function! LiteBackground()
@@ -83,14 +88,7 @@
         if !exists('s:cursorline')
           call ToggleHiLite()
         endif
-        execute 'highlight CursorLine gui=bold guibg=' . s:cursorline      . ' guifg=' . s:foreground
-        if &background == 'light'
-          execute 'highlight CursorLineNr guibg='      . g:dfm_bg
-          execute 'highlight Cursor guibg='            . g:dfm_cursor      . ' guifg=' . g:dfm_bg
-        else
-          execute 'highlight CursorLineNr guibg='      . g:dfm_bg_dark
-          execute 'highlight Cursor guibg='            . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
-        end
+        execute 'highlight CursorLine gui=none guibg=' . s:cursorline      . ' guifg=' . s:foreground
       endfunction
 
       " cursorline contrast (0) low (1) high
@@ -113,16 +111,18 @@
           if s:contrast == 0
             " low contrast cursorline
             if &background == 'light'
-              call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
+              " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
+              call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
             else
-              call CursorLine(g:dfm_fg_dark, g:dfm_bg_dark, g:dfm_bg_line_dark)
+              call CursorLine(g:dfm_fg_dark, g:dfm_bg_dark, g:dfm_bg_dark)
             end
           else
             " high contrast cursorline
             if &background == 'light'
-              call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
+              " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
+              call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
             else
-              call CursorLine(g:dfm_fg_dark, g:dfm_bg_line_dark, g:dfm_bg_dark)
+              call CursorLine(g:dfm_fg_dark, g:dfm_bg_dark, g:dfm_bg_dark)
             end
           endif
           call HiLite()

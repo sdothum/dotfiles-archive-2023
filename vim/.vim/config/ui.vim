@@ -30,6 +30,7 @@
       else
         set scrolloff=5
       endif
+      let g:scrolloff = &scrolloff
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1
       " easier horizontal scrolling
@@ -106,7 +107,7 @@
       set guioptions-=T                     " no toolbar
 
       " Toggle full screen (for notion fkey compatibility)
-      map <silent><F11> :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
+      " map <silent><F11>    :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
       " Toggle Menu and Toolbar
       map <silent><C-S-F11> :if &guioptions =~# 'T' <Bar>
         \ set guioptions-=T <Bar>
