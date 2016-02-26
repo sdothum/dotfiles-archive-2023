@@ -26,16 +26,15 @@
       let g:ctrlp_open_new_file = 'v'       " <C-y> opens new file in vertical split
       let g:ctrlp_working_path_mode = 0     " default to current directory
 
-      nmap <leader>b :CtrlPBuffer<CR>
-      nmap <leader>M :CtrlPMixed<CR>
-      nmap <leader>m :CtrlPMRU<CR>
-      " nmap <leader>p     :CtrlP
-      nmap <leader>p :CtrlP<CR>
+      nmap <leader>b   :CtrlPBuffer<CR>
+      nmap <leader>M   :CtrlPMixed<CR>
+      nmap <leader>m   :CtrlPMRU<CR>
+      nmap <leader>p   :CtrlP<CR>
 
     " ............................................................... Easy-align
 
-      vmap <Enter>   <Plug>(EasyAlign)
-      nmap <leader>a <Plug>(EasyAlign)
+      vmap <Enter>     <Plug>(EasyAlign)
+      nmap <leader>a   <Plug>(EasyAlign)
 
     " ............................................................... Easymotion
 
