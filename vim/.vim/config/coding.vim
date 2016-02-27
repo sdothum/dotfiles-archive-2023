@@ -19,8 +19,9 @@
         end
       endfunction
 
-      imap <silent><F8> <C-o>:call ToggleSpaces()<CR>
-      nmap <silent><F8> :call ToggleSpaces()<CR>
+      " imap <silent><F8>          <C-o>:call ToggleSpaces()<CR>
+      " nmap <silent><F8>          :call ToggleSpaces()<CR>
+      nmap <silent><leader><Space> :call ToggleSpaces()<CR>
 
     " ................................................. Colorcolumns / line wrap
 
@@ -50,8 +51,9 @@
         let &colorcolumn = (s:margins+s:margins)[l:index]
       endfunction
 
-      imap <F7> <C-o>:call ToggleColumn()<CR>
-      nmap <F7> :call ToggleColumn()<CR>
+      " imap <F7> <C-o>:call ToggleColumn()<CR>
+      " nmap <F7> :call ToggleColumn()<CR>
+      nmap <Bar>  :call ToggleColumn()<CR>
 
       " toggle line wrap
       function! ToggleWrap()
@@ -65,11 +67,14 @@
           set formatoptions=tqwan1
           " echo PencilMode() . ' - Automatic line wrap ON'
           echo 'Automatic line wrap ON'
+        else
+          set formatoptions
         endif
       endfunction
 
-      imap <silent><F4> <C-o>:call ToggleWrap()<CR>
-      nmap <silent><F4> :call ToggleWrap()<CR>
+      " imap <silent><F4>    <C-o>:call ToggleWrap()<CR>
+      " nmap <silent><F4>    :call ToggleWrap()<CR>
+      nmap <silent><leader><CR> :call ToggleWrap()<CR>
 
       " " toggle pencil
       " function! TogglePencil()

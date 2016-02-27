@@ -129,8 +129,8 @@
         endif
       endfunction
 
-      imap <silent><S-F9> <C-o>:call ToggleHiLite()<CR>
-      nmap <silent><S-F9> :call ToggleHiLite()<CR>
+      " imap <silent><S-F9> <C-o>:call ToggleHiLite()<CR>
+      " nmap <silent><S-F9> :call ToggleHiLite()<CR>
 
     " ..................................................................... Font
 
@@ -155,6 +155,9 @@
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 12 : 0)
           endif
         endif
+        " toggle fullscreen to reposition statusline
+        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
+        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
       endfunction
 
       " set initial font and line spacing

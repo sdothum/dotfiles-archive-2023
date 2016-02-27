@@ -70,47 +70,47 @@
     " .......................................................... Modal switching
 
       " no more reaching for shift or esc keys
-      nmap ;               :
-      vmap ;               :
-      " imap kk            <ESC>
+      nmap ;           :
+      vmap ;           :
+      " imap kk        <ESC>
       " command mode insertion (paste) of current yank buffer
-      cmap <C-v>           <C-r>"
+      cmap <C-v>       <C-r>"
       " clear search highlight and command line messages
-      nmap <leader><Space> :nohlsearch<Bar>echo<CR>
+      nmap <leader>//  :nohlsearch<Bar>echo<CR>
 
     " ......................................................... Cursor movements
 
       " up/down by screen lines, not file lines
-      nnoremap j           gj
-      nnoremap k           gk
+      nnoremap j       gj
+      nnoremap k       gk
       " up/down by paragraph sentence
-      nmap <C-S-Left>      {{)
-      nmap <C-S-Right>     })
+      nmap <C-S-Left>  {{)
+      nmap <C-S-Right> })
 
       " insert mode local region cursor movements
       " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap <C-h>         <Left>
-      " imap <C-j>         <Down>
-      " imap <C-k>         <Up>
-      " imap <C-l>         <Right>
+      " imap <C-h>     <Left>
+      " imap <C-j>     <Down>
+      " imap <C-k>     <Up>
+      " imap <C-l>     <Right>
 
     " ............................................................. Disable keys
 
       " affirm vim modal usage but these keys are remapped below anyway :-)
       " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
-      " imap <down>        <nop>
-      " imap <left>        <nop>
-      " imap <right>       <nop>
-      " imap <up>          <nop>
-      " nmap <down>        <nop>
-      " nmap <left>        <nop>
-      " nmap <right>       <nop>
-      " nmap <up>          <nop>
+      " imap <down>    <nop>
+      " imap <left>    <nop>
+      " imap <right>   <nop>
+      " imap <up>      <nop>
+      " nmap <down>    <nop>
+      " nmap <left>    <nop>
+      " nmap <right>   <nop>
+      " nmap <up>      <nop>
 
       " avoid accidental F1
-      " imap <F1>          <ESC>
-      " nmap <F1>          <ESC>
-      " vmap <F1>          <ESC>
+      " imap <F1>      <ESC>
+      " nmap <F1>      <ESC>
+      " vmap <F1>      <ESC>
 
   " Search and completion ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

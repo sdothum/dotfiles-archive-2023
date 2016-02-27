@@ -14,6 +14,9 @@ fkeys() {
     title "F$i"
     ack "<.*F$i>" *.vim
   done
+
+  title "LEADER"
+  ack "<leader>" *.vim
   cd - >/dev/null
   echo
 }

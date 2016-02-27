@@ -79,8 +79,9 @@
     " ........................................................... Graphical undo
 
       let g:gundo_preview_bottom = 1
-      " nmap <C-F7> :GundoToggle<CR>
-      nmap <F3> :GundoToggle<CR>
+      " nmap <C-F7>  :GundoToggle<CR>
+      " nmap <F3>    :GundoToggle<CR>
+      nmap <leader>u :GundoToggle<CR>
 
     " ................................................................ Lightline
 
@@ -358,10 +359,11 @@
       let g:yankring_enabled = 1            " disable yankring because of macro conflict
       let g:yankring_window_height = 30     " horizontal window height
 
-      nmap Y              :<C-U>YRYankCount 'y$'<CR>
-      " nmap <silent><F7> :YRShow<CR>
-      " imap <silent><F7> <ESC>:YRShow<CR>
-      nmap <silent><F2>   :YRShow<CR>
-      imap <silent><F2>   <ESC>:YRShow<CR>
+      nmap Y                 :<C-U>YRYankCount 'y$'<CR>
+      " nmap <silent><F7>    :YRShow<CR>
+      " imap <silent><F7>    <ESC>:YRShow<CR>
+      " nmap <silent><F2>    :YRShow<CR>
+      " imap <silent><F2>    <ESC>:YRShow<CR>
+      nmap <silent><leader>y :YRShow<CR>
 
 " plugins.vim

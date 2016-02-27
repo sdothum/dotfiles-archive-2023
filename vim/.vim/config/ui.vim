@@ -73,8 +73,9 @@
       " set colorcolumn=45,80               " highlight column
       set colorcolumn=0                     " highlight column
       " see ToggleColumn functions.vim
-      imap <S-F7> <C-o>:set colorcolumn=
-      nmap <S-F7> :set colorcolumn=
+      " imap <S-F7>      <C-o>:set colorcolumn=
+      " nmap <S-F7>      :set colorcolumn=
+      nmap <leader><Bar> :set colorcolumn=
 
     " ............................................................. Line numbers
 
@@ -109,7 +110,7 @@
       " Toggle full screen (for notion fkey compatibility)
       " map <silent><F11>    :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
       " Toggle Menu and Toolbar
-      map <silent><C-S-F11> :if &guioptions =~# 'T' <Bar>
+      map <silent><F12> :if &guioptions =~# 'T' <Bar>
         \ set guioptions-=T <Bar>
         \ set guioptions-=m <bar>
         \ else <Bar>
@@ -132,7 +133,7 @@
       " set listchars+=eol:¬
 
       " toggle trailing white space highlight, see ToggleSpaces functions.vim
-      " nmap <silent><F8> :set list!<CR>
+      " nmap <silent><F2> :set list!<CR>
 
     " ...................................................... Syntax highlighting
 
@@ -155,6 +156,6 @@
       highlight SpellLocal guisp=red gui=undercurl,bold guifg=green
 
       " spell check
-      imap <F3> <C-p>
+      " imap <F3> <C-p>
 
 " ui.vim

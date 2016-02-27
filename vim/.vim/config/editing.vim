@@ -16,8 +16,8 @@
     " ...................................................... Trailing whitespace
 
       " strip all trailing whitespace in the current file
-      " nmap <C-F8>                 :%s/\s\+$//<CR>:let @/=""<CR>
-      nmap <leader><F8>             :%s/\s\+$//<CR>:let @/=""<CR>
+      " nmap <C-F2>                 :%s/\s\+$//<CR>:let @/=""<CR>
+      nmap <leader><Space><Delete>  :%s/\s\+$//<CR>:let @/=""<CR>
 
     " ...................................................... Reformat paragraghs
 
@@ -28,17 +28,21 @@
       nnoremap Q                    gqap
       vnoremap Q                    gq
       " reformat paragraph, reformat and go to next
-      inoremap <S-F4>               <ESC>mZ{gq}`Z:silent delmark Z<CR>a
-      nnoremap <S-F4>               {gq}j
+      " inoremap <S-F4>             <ESC>mZ{gq}`Z:silent delmark Z<CR>a
+      " nnoremap <S-F4>             {gq}j
+      nnoremap <leader>[            {gq}j
       " add trailing space to paragragh lines
-      vnoremap <S-F4>               V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      " vnoremap <S-F4>             V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      vnoremap <leader>]            V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
 
       " ........................................................ Wiki code block
 
       " markdown wiki code blocks
-      inoremap <F5>                 <C-o>V:call CodeBlock()<CR>
-      nnoremap <F5>                 V:call CodeBlock()<CR>
-      vmap <F5>                     :call CodeBlock()<CR>
+      " inoremap <F5>               <C-o>V:call CodeBlock()<CR>
+      " nnoremap <F5>               V:call CodeBlock()<CR>
+      " vmap <F5>                   :call CodeBlock()<CR>
+      nnoremap <leader>`            V:call CodeBlock()<CR>
+      vmap <leader>`                :call CodeBlock()<CR>
       " some html codes require escaping with <C-o>
       " insert strikeout
       imap <leader><leader><Delete> <<C-o>adel>
@@ -78,11 +82,16 @@
 
       :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
       :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
-      nmap <F3>           :retab<CR>
-      nmap <silent><C-F3> :Space2Tab<CR>
-      vmap <silent><C-F3> :Space2Tab<CR>
-      nmap <silent><S-F3> :Tab2Space<CR>
-      vmap <silent><S-F3> :Tab2Space<CR>
+      " nmap <F3>                        :retab<CR>
+      " nmap <silent><C-F3>              :Space2Tab<CR>
+      " vmap <silent><C-F3>              :Space2Tab<CR>
+      " nmap <silent><S-F3>              :Tab2Space<CR>
+      " vmap <silent><S-F3>              :Tab2Space<CR>
+      nmap <leader><tab>                 :retab<CR>
+      nmap <silent><leader><leader><tab> :Space2Tab<CR>
+      vmap <silent><leader><leader><tab> :Space2Tab<CR>
+      nmap <silent><leader><tab><tab>    :Tab2Space<CR>
+      vmap <silent><leader><tab><tab>    :Tab2Space<CR>
 
     " .................................................... Filetype tab settings
 
@@ -124,16 +133,16 @@
 
     " ................................................................ Shortcuts
 
-      set pastetoggle=<F8>                  " prevent cascading paste insert
+      set pastetoggle=<F2>                  " prevent cascading paste insert
       autocmd InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
       " see yankring for plugin equivalent
-      nnoremap Y          y$
+      nnoremap Y                 y$
       " reselect/reyank text just pasted
-      nnoremap <leader>v  gv
-      nnoremap <leader>y  gvy
-      vnoremap <leader>p  pgvy
+      nnoremap <leader><leader>v gv
+      nnoremap <leader><leader>y gvy
+      vnoremap <leader><leader>p pgvy
 
     " ...................................................... Sentence operations
 
@@ -273,6 +282,6 @@
         \# vim: set ft=conf: #
         \<ESC>:set ft=conf<CR>gg<down><down><left>
 
-      nmap <S-F1> :set ft=conf<CR>
+      nmap <F3> :set ft=conf<CR>
 
 " editing.vim

@@ -131,7 +131,7 @@
 
     " ................................................................... Leader
 
-      " .......................................................... insert leader
+      " .......................................................... Insert leader
       function! InsertLeader(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader

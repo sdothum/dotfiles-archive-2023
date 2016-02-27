@@ -29,7 +29,7 @@
       source ~/.vim/config/types.vim
       source ~/.vim/config/views.vim
 
-    " ................................................................. Hardware
+   " ................................................................. Hardware
 
       source ~/.vim/config/keyboard.vim
 
