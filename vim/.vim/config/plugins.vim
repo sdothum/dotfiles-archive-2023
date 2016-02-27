@@ -43,19 +43,19 @@
 
       " bi-directional find motion
       " avoid conflict with regular vim search!
-      nmap //                <Plug>(easymotion-sn)
+      nmap <leader>/         <Plug>(easymotion-sn)
       " one key binding
       " imap \               <C-o><Plug>(easymotion-s)
-      " nmap \               <Plug>(easymotion-s)
+      nmap <leader>\         <Plug>(easymotion-s)
       " 2 keystroke binding (backslash inhibits use in insert mode)
       imap <leader><leader>/ <C-o><Plug>(easymotion-s2)
       nmap <leader><leader>/ <Plug>(easymotion-s2)
 
       " line motions
-      imap <leader><leader>j <C-o><Plug>(easymotion-j)
-      nmap <leader><leader>j <Plug>(easymotion-j)
-      imap <leader><leader>k <C-o><Plug>(easymotion-k)
-      nmap <leader><leader>k <Plug>(easymotion-k)
+      imap <leader><leader>n <C-o><Plug>(easymotion-j)
+      nmap <leader><leader>n <Plug>(easymotion-j)
+      imap <leader><leader>l <C-o><Plug>(easymotion-k)
+      nmap <leader><leader>l <Plug>(easymotion-k)
 
       " word motions
       imap <leader><leader>E <C-o><Plug>(easymotion-gE)

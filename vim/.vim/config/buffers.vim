@@ -62,8 +62,8 @@
       nmap <leader>s    <C-w>v<C-w>l
       nmap <leader>S    <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      nmap <leader>\    <C-w><Bar>
-      nmap <leader>-    <C-w>_
+      nmap <leader>z    <C-w><Bar>
+      nmap <leader>Z    <C-w>_
       " adjust viewports to the same size
       nmap <leader>=    <C-w>=
 
@@ -92,7 +92,7 @@
 
       " toggle fold
       noremap <leader>f za                  " just use z commands for folding
-      noremap <leader>ff Vatzf              " fold tags
+      noremap <leader>F Vatzf               " fold tags
 
     " ........................................................... Folding levels
 

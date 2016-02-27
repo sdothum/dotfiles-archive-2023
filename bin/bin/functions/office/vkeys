@@ -7,7 +7,7 @@
 # ....................................................................... Editor
 
 usage() {
-  echo "usage: $(basename $0) [ vim ]"
+  echo "usage: $(basename $0) [  vim ]"
   exit 1
 }
 
@@ -26,8 +26,12 @@ keys() {
   echo
 }
 
+list() {
+  keys | sed 's/: /^/' | column -s^ -t 
+}
+
 [ "$1" = h ] && usage
 [ "$*" ] || title=true
-[ $title ] && keys | less -RX || keys | sed 's/: /^/' | column -s^ -t | more
+[ $title ] && list | less -RX || list | more
 
 # vim: set ft=sh: #

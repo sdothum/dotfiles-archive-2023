@@ -5,6 +5,35 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " .......................................................... OS and hardware
+
+      set lazyredraw                        " don't redraw while executing macros
+      " set modelines=0                       " prevent modeline secrurity hole
+      set modelines=1
+      set mouse=a                           " enable mouse actions
+      set shell=/bin/sh                     " required for plugin system call dependencies
+      set title                             " change the terminal's title
+      set ttyfast
+      set timeout timeoutlen=1000 ttimeoutlen=100
+      " set cryptmethod=blowfish            " encryption method
+
+    " .............................................................. Config file
+
+      " quickly edit/reload the vimrc file
+      nmap <silent><leader>vim         :edit $MYVIMRC<CR>
+      " must switch to .vimrc first for unknown reason.. (bug?)
+      nmap <silent><leader><leader>vim :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
+
+      " load .vimrc after save
+      augroup reload_vimrc
+        autocmd!
+        " autocmd BufWritePost $MYVIMRC        source $MVIMRC
+        autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+        autocmd BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
+        " PluginUpdate and config reload loses filetype, restore
+      augroup END
+      autocmd BufWinEnter *.vim              set filetype=vim
+
     " ..................................................................... Help
 
       " open help in maximum horizontal split
@@ -16,35 +45,6 @@
       imap <F1> <C-o>:!vkeys vim<CR>
       nmap <F1> <C-o>:!vkeys vim<CR>
       vmap <F1> <C-o>:!vkeys vim<CR>
-
-    " .......................................................... OS and hardware
-
-      set lazyredraw                        " don't redraw while executing macros
-      " set modelines=0                       " prevent modeline secrurity hole
-      set modelines=1
-      set mouse=a                           " enable mouse actions
-      set shell=/bin/sh                     " required for plugin system call dependencies
-      set title                             " change the terminal's title
-      set ttyfast
-      set timeout timeoutlen=1000 ttimeoutlen=100
-      " set cryptmethod=blowfish              " encryption method
-
-    " .............................................................. Config file
-
-      " quickly edit/reload the vimrc file
-      nmap <silent><leader>ev :edit $MYVIMRC<CR>
-      " must switch to .vimrc first for unknown reason.. (bug?)
-      nmap <silent><leader>sv :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
-
-      " load .vimrc after save
-      augroup reload_vimrc
-        autocmd!
-        " autocmd BufWritePost $MYVIMRC        source $MVIMRC
-        autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
-        autocmd BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
-        " PluginUpdate and config reload loses filetype, restore
-      augroup END
-      autocmd BufWinEnter *.vim              set filetype=vim
 
     " ............................................................... Swap files
 
@@ -81,7 +81,7 @@
       " command mode insertion (paste) of current yank buffer
       cmap <C-v>       <C-r>"
       " clear search highlight and command line messages
-      nmap <leader>//  :nohlsearch<Bar>echo<CR>
+      nmap //          :nohlsearch<Bar>echo<CR>
 
     " ......................................................... Cursor movements
 
