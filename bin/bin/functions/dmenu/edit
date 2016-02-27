@@ -17,7 +17,7 @@ projects=$HOME/bin/functions/dmenu/.config/edit
 
 while files=$(sed "s/  *::  */^$SEP /" $projects \
             | history edit \
-            | column -s\^ -t \
+            | column -s^ -t \
             | sed -e '1i[ edit tags ]' \
             | dmenu 'Edit Group' -no-custom) || exit
 do

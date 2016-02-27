@@ -61,7 +61,7 @@ do
   if [ "$artist" = '[ player ]' ] ;then
     unset artist
     while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" \
-              | column -s\^ -t \
+              | column -s^ -t \
               | dmenu "$(info)" "${cmd%% *}" -no-custom) || break
     do
       case "$cmd" in

@@ -17,7 +17,7 @@ file=$(echo $(find -L $HOME/bin -type f) \
      | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \
      | sort \
      | history scripts \
-     | column -s\^ -t \
+     | column -s^ -t \
      | dmenu 'Edit Script' -no-custom) || exit
 
 history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"

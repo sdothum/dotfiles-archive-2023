@@ -51,7 +51,7 @@ do
   file=$(cat $configs \
        | history configs \
        | sed -e '1i[ rebuild database ]' \
-       | column -s\^ -t \
+       | column -s^ -t \
        | dmenu 'Edit Config' -no-custom) || exit
   if [ "$file" = '[ rebuild database ]' ] ;then
     __configs

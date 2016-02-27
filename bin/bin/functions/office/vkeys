@@ -6,21 +6,28 @@
 
 # ....................................................................... Editor
 
-# list current fkey assignments
-fkeys() {
+usage() {
+  echo "usage: $(basename $0) [ vim ]"
+  exit 1
+}
+
+# list current key assignments
+keys() {
   cd $HOME/.vim/config
   for i in $(seq 1 12)
   do
-    title "F$i"
-    ack "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"'
+    [ $title ] && title "F$i"
+    ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"'
   done
 
-  title "LEADER"
-  ack "<leader>" *.vim
+  [ $title ] && title "LEADER"
+  ack --nocolor "<leader>" *.vim
   cd - >/dev/null
   echo
 }
 
-fkeys | less -RX
+[ "$1" = h ] && usage
+[ "$*" ] || title=true
+[ $title ] && keys | less -RX || keys | sed 's/: /^/' | column -s^ -t | more
 
 # vim: set ft=sh: #

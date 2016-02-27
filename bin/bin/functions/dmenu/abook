@@ -71,7 +71,7 @@ ribbon() {
 }
 
 contacts() {
-  sed "s/  *::  */^$SEP /" $contacts | column -s\^ -t
+  sed "s/  *::  */^$SEP /" $contacts | column -s^ -t
   cat $addressbook
 }
 

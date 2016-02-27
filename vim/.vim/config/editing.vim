@@ -35,9 +35,9 @@
       " vnoremap <S-F4>             V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
       vnoremap <leader>]            V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
 
-      " ........................................................ Wiki code block
+      " ...................................................... Markup code block
 
-      " markdown wiki code blocks
+      " markup wiki code blocks
       " inoremap <F5>               <C-o>V:call CodeBlock()<CR>
       " nnoremap <F5>               V:call CodeBlock()<CR>
       " vmap <F5>                   :call CodeBlock()<CR>

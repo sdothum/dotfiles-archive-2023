@@ -12,6 +12,11 @@
         autocmd BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
       endif
 
+      " list my function and leader key assignments
+      imap <F1> <C-o>:!vkeys vim<CR>
+      nmap <F1> <C-o>:!vkeys vim<CR>
+      vmap <F1> <C-o>:!vkeys vim<CR>
+
     " .......................................................... OS and hardware
 
       set lazyredraw                        " don't redraw while executing macros

@@ -15,7 +15,7 @@ do
   file=$(echo "$list" \
        | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \
        | sort \
-       | column -s\^ -t \
+       | column -s^ -t \
        | dmenu 'Open File' -no-custom) || exit
 
   file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
