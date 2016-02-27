@@ -3,9 +3,9 @@
 " Views
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " Distraction free modes ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  "  Distraction free views ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................................................ LiteDFM views
+    " ................................................................ Code view
 
       " source code style
       function! CodeView()
@@ -25,6 +25,8 @@
           execute 'highlight Cursor guibg='         . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
         end
       endfunction
+
+    " ............................................................... Prose view
 
       " vimwiki prose style
       function! ProseView()
@@ -62,6 +64,8 @@
 
       " intial view mode: source code or prose
       autocmd BufEnter * call LiteType()
+
+  " Goyo ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ................................................................ Goyo view
 
@@ -138,7 +142,9 @@
       " with window resizing, goyo margins are newly calculated
       autocmd VimResized * if &filetype =~ g:goyotypes | call ResetGoyo(0) | endif
 
-    " ..................................................................... Mode
+  " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ...................................................... Screen display mode
 
       function! ToggleMode()
         " toggle between writing and proofing modes

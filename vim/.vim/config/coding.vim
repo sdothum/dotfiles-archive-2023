@@ -5,25 +5,7 @@
 
   " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ....................................................... Trailing highlight
-
-      " toggle trailing whitespace highlight
-      function! ToggleSpaces()
-        set list!
-        if &list == 0
-          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
-          echo ''
-        else
-          match ExtraWhitespace /\s\+$/
-          echo 'List invisibles ON'
-        end
-      endfunction
-
-      " imap <silent><F8>          <C-o>:call ToggleSpaces()<CR>
-      " nmap <silent><F8>          :call ToggleSpaces()<CR>
-      nmap <silent><leader><Space> :call ToggleSpaces()<CR>
-
-    " ................................................. Colorcolumns / line wrap
+    " ............................................................. Colorcolumns
 
       let g:linewidth = &textwidth          " default to &textwidth, see Ruler
       " column list must end in [0]
@@ -55,7 +37,28 @@
       " nmap <F7> :call ToggleColumn()<CR>
       nmap <Bar>  :call ToggleColumn()<CR>
 
-      " toggle line wrap
+    " ....................................................... Trailing highlight
+
+      " toggle trailing whitespace highlight
+      function! ToggleSpaces()
+        set list!
+        if &list == 0
+          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
+          echo ''
+        else
+          match ExtraWhitespace /\s\+$/
+          echo 'List invisibles ON'
+        end
+      endfunction
+
+      " imap <silent><F8>          <C-o>:call ToggleSpaces()<CR>
+      " nmap <silent><F8>          :call ToggleSpaces()<CR>
+      nmap <silent><leader><Space> :call ToggleSpaces()<CR>
+
+  " Line wrap ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ......................................................... Toggle line wrap
+
       function! ToggleWrap()
         if &formatoptions == 'tqwan1'
           " NoPencil
@@ -85,6 +88,8 @@
       " imap <C-F4> <C-o>:call TogglePencil()<CR>
       " nmap <C-F4> :call TogglePencil()<CR>
 
+  " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
     " .............................................................. Select text
 
       function! ParagraphAbove()
@@ -113,51 +118,6 @@
       " extend paragraph selection
       vmap <A-PageUp>   {
       vmap <A-PageDown> }
-
-  " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ............................................................. Comment text
-
-      " toggle comment, see T-comment plugins.vim
-      function! ToggleComment()
-        let l:col = virtcol('.')
-        " suffix empty line from successive ToggleComment's
-        " (for cycles: empty commented -> uncommented -> empty commented..)
-        if matchstr(getline(line('.')), '\s') > ''
-          let l:mark = l:col
-          normal aMark
-        else
-          let l:mark = 0
-        endif
-        " comment line
-        execute "normal :TComment\<CR>"
-        " reposition cursor when uncommenting autocomment line (creates "" line)
-        if matchstr(getline(line('.')), '\S') == ''
-          execute 'normal ' . l:col . 'a '
-          execute "normal a\<BS>"
-        else
-          normal $
-          " remove empty comment suffix
-          if l:mark > 0
-            normal xxxx
-          endif
-        endif
-      endfunction
-
-      imap <leader><leader>c <C-o>:call ToggleComment()<CR>
-
-    " .......................................................... Code block text
-
-      " convert wiki text lines into code block lines
-      function! CodeBlock()
-        execute "silent! normal :s/\\(.*\\)/`\\1`/\<CR>"
-        " preserve leading spaces with wiki markdown
-        execute "silent! normal gv:s/^` /`^ /\<CR>"
-        execute "silent! normal gv:s/^``/`^ `/e\<CR>"
-        " convert [[ test ]], see thedarnedestthing markdown
-        execute "silent! normal gv:s/ \\[\\[ / [[] /e\<CR>"
-        execute "silent! normal gv:s/ \\]\\] / []] /e\<CR>"
-      endfunction
 
     " ...................................................... Vertical text shift
 
@@ -214,5 +174,63 @@
       nmap <silent><S-Down> <ESC>:call <SID>MoveLineDown()<CR>
       vmap <silent><S-Up>   <ESC>:call <SID>MoveVisualUp()<CR>
       vmap <silent><S-Down> <ESC>:call <SID>MoveVisualDown()<CR>
+
+  " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................. Comment text
+
+      " toggle comment, see T-comment plugins.vim
+      function! ToggleComment()
+        let l:col = virtcol('.')
+        " suffix empty line from successive ToggleComment's
+        " (for cycles: empty commented -> uncommented -> empty commented..)
+        if matchstr(getline(line('.')), '\s') > ''
+          let l:mark = l:col
+          normal aMark
+        else
+          let l:mark = 0
+        endif
+        " comment line
+        execute "normal :TComment\<CR>"
+        " reposition cursor when uncommenting autocomment line (creates "" line)
+        if matchstr(getline(line('.')), '\S') == ''
+          execute 'normal ' . l:col . 'a '
+          execute "normal a\<BS>"
+        else
+          normal $
+          " remove empty comment suffix
+          if l:mark > 0
+            normal xxxx
+          endif
+        endif
+      endfunction
+
+      imap <leader><leader>c <C-o>:call ToggleComment()<CR>
+
+    " .......................................................... Code block text
+
+      " convert wiki text lines into code block lines
+      function! CodeBlock()
+        execute "silent! normal :s/\\(.*\\)/`\\1`/\<CR>"
+        " preserve leading spaces with wiki markdown
+        execute "silent! normal gv:s/^` /`^ /\<CR>"
+        execute "silent! normal gv:s/^``/`^ `/e\<CR>"
+        " convert [[ test ]], see thedarnedestthing markdown
+        execute "silent! normal gv:s/ \\[\\[ / [[] /e\<CR>"
+        execute "silent! normal gv:s/ \\]\\] / []] /e\<CR>"
+      endfunction
+
+      " markup wiki code blocks
+      " inoremap <F5>               <C-o>V:call CodeBlock()<CR>
+      " nnoremap <F5>               V:call CodeBlock()<CR>
+      " vmap <F5>                   :call CodeBlock()<CR>
+      nnoremap <leader>`            V:call CodeBlock()<CR>
+      vmap <leader>`                :call CodeBlock()<CR>
+      " some html codes require escaping with <C-o>
+      " insert strikeout
+      imap <leader><leader><Delete> <<C-o>adel>
+      imap <leader><Delete><Delete> </del>
+      " insert br
+      imap <leader><leader><CR><CR> <<C-o>abr><CR>
 
 " coding.vim

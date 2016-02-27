@@ -64,7 +64,7 @@ prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto/ -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*
 qutebrowser :: $HOME/.config/qutebrowser/*.conf $HOME/.config/qutebrowser/quickmarks
-rox actions :: $( find $HOME/.config/rox.sourceforge.net/SendTo/ -type f)
+rox actions :: $(find $HOME/.config/rox.sourceforge.net/SendTo/ -type f)
 rss feeds :: $HOME/.config/newsbeuter/config
 signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
@@ -79,6 +79,8 @@ tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*
 uzbl :: $HOME/.config/uzbl/config
 vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb/history $HOME/.config/vimb/scripts.js $HOME/.config/vimb/style.css
 vim :: $HOME/.vimrc $HOME/.vim/config/*.vim
+vim settings :: $HOME/.vimrc $(grep -L 'function!' $HOME/.vim/config/*.vim)
+vim functions :: $(grep -l 'function!' $HOME/.vim/config/*.vim)
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/minimal.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
 www website :: $(find -L /srv/http/thedarnedestthing.com/application -regextype posix-extended -regex '.*(rb|slim)')

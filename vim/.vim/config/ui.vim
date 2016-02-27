@@ -47,9 +47,10 @@
       "   nnoremap <S-Space> 30kzz
       " endif
 
-  " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Terminal ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ..................................................................... Font
+
       scriptencoding utf-8
       set encoding=utf-8                    " necessary to show unicode glyphs
 
@@ -67,37 +68,6 @@
       set guicursor+=c:CommandCursor
       set guicursor+=v-ve:VisualCursor
       set guicursor+=a:blinkon0
-
-    " ........................................................... Column margins
-
-      " set colorcolumn=45,80               " highlight column
-      set colorcolumn=0                     " highlight column
-      " see ToggleColumn functions.vim
-      " imap <S-F7>      <C-o>:set colorcolumn=
-      " nmap <S-F7>      :set colorcolumn=
-      nmap <leader><Bar> :set colorcolumn=
-
-    " ............................................................. Line numbers
-
-      set number                            " line numbers are good
-      set relativenumber
-      " autocmd InsertEnter * :set number   " toggle relative line numbers
-      " autocmd InsertLeave * :set relativenumber " auto line numbers
-
-    " .................................................................... Marks
-
-      set viminfo='100,f1                   " save up to 100 marks, enable capital marks
-      set viminfo^=%                        " remember info about open buffers on close
-      " delete all marks in current buffer
-      nmap <leader>'' :delmarks!<CR>
-
-    " ................................................... Status / command lines
-
-      " see Lightline plugins.vim
-      set laststatus=2                      " always show status line
-      set ruler                             " show cursor position in status line
-      set noshowcmd                         " show incomplete cmds in command line
-      set noshowmode                        " show current mode in command line
 
     " ............................... Gvim Options (make it look like terminal!)
 
@@ -117,6 +87,32 @@
         \ set guioptions+=T <Bar>
         \ set guioptions+=m <Bar>
         \ endif<CR>
+
+  " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ........................................................... Column margins
+
+      " set colorcolumn=45,80               " highlight column
+      set colorcolumn=0                     " highlight column
+      " see ToggleColumn functions.vim
+      " imap <S-F7>      <C-o>:set colorcolumn=
+      " nmap <S-F7>      :set colorcolumn=
+      nmap <leader><Bar> :set colorcolumn=
+
+    " ............................................................. Line numbers
+
+      set number                            " line numbers are good
+      set relativenumber
+      " autocmd InsertEnter * :set number   " toggle relative line numbers
+      " autocmd InsertLeave * :set relativenumber " auto line numbers
+
+    " ................................................... Status / command lines
+
+      " see Lightline plugins.vim
+      set laststatus=2                      " always show status line
+      set ruler                             " show cursor position in status line
+      set noshowcmd                         " show incomplete cmds in command line
+      set noshowmode                        " show current mode in command line
 
   " Highlighting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -139,19 +135,5 @@
 
       set omnifunc=syntaxcomplete#Complete
       syntax on                             " turn on syntax highlighting
-
-    " .............................................................. Spell check
-
-      set dictionary=/usr/share/dict/words
-      set complete+=k                       " <C-p> to complete list word
-      set keywordprg=dict
-      set nospell                           " spell checking off by default for code
-      " set thesaurus=/usr/share/dict/thesaurus
-      " set complete+=s                       " disabled, selection list too long
-
-      highlight SpellBad guisp=red gui=undercurl,bold guifg=brown
-      highlight SpellCap guisp=red gui=undercurl,bold guifg=black
-      highlight SpellRare guisp=red gui=undercurl,bold guifg=blue
-      highlight SpellLocal guisp=red gui=undercurl,bold guifg=green
 
 " ui.vim

@@ -1,11 +1,26 @@
 " sdothum - 2016 (c) wtfpl
 
-" Types
+" Files
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " File handling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ...................................................... Filetype attributes
+    " ........................................................ Filetype settings
+
+      autocmd Filetype conf    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype fish    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype haskell setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype lua     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype python  setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
+      autocmd Filetype ruby    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype shell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype sh      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype slim    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd Filetype vim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+
+      nmap <leader><leader>t :setfiletype<Space>
+
+    " ............................................................... Modifiable
 
       let g:goyotypes = 'vimwiki\|mail'
 
@@ -72,6 +87,8 @@
       autocmd BufNewFile,BufRead * call CheckFiletype()
       autocmd BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | let b:prose = 1 | endif
 
+  " Documents ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
     " .................................................................... Wikis
 
       function! Wiki(index)
@@ -119,4 +136,4 @@
       autocmd Filetype mail setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
       autocmd Filetype mail call ComposeMail()
 
-" types.vim
+" files.vim

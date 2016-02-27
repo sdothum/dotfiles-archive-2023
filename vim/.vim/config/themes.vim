@@ -49,7 +49,7 @@
         end
       endfunction
 
-    " ................................................................... Colour
+    " ............................................................ Switch colour
 
       " restore vimwiki link
       function! VimWikiLink()
@@ -83,12 +83,16 @@
       imap <silent><F9> <C-o>:call LiteSwitch()<CR>
       nmap <silent><F9> :call LiteSwitch()<CR>
 
+  " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................... Cursorline
+
       " set prose cursorline theme
       function! HiLite()
         if !exists('s:cursorline')
           call ToggleHiLite()
         endif
-        execute 'highlight CursorLine gui=none guibg=' . s:cursorline      . ' guifg=' . s:foreground
+        execute 'highlight CursorLine gui=none guibg=' . s:cursorline . ' guifg=' . s:foreground
       endfunction
 
       " cursorline contrast (0) low (1) high
@@ -132,7 +136,9 @@
       " imap <silent><S-F9> <C-o>:call ToggleHiLite()<CR>
       " nmap <silent><S-F9> :call ToggleHiLite()<CR>
 
-    " ..................................................................... Font
+  " Font ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .............................................................. Switch font
 
       function! FontSwitch()
         " adjust font displays for various gpu's

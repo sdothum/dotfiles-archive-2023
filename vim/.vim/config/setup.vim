@@ -17,6 +17,27 @@
       set timeout timeoutlen=1000 ttimeoutlen=100
       " set cryptmethod=blowfish            " encryption method
 
+    " .................................................................... Marks
+
+      set viminfo='100,f1                   " save up to 100 marks, enable capital marks
+      set viminfo^=%                        " remember info about open buffers on close
+      " delete all marks in current buffer
+      nmap <leader>'' :delmarks!<CR>
+
+    "  ............................................................ Undo history
+
+      " keep persistent undo history across sessions, by storing in file
+      silent !mkdir ~/.vim/backups 2>/dev/null
+      set history=1000                      " store lots of :cmdline history
+      set undodir=~/.vim/backups
+      set undofile
+      set undolevels=1000                   " maximum number of changes that can be undone
+      set undoreload=10000                  " maximum number lines to save for undo
+      " easier redo
+      map U <C-r>
+
+  " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
     " .............................................................. Config file
 
       " quickly edit/reload the vimrc file
@@ -46,24 +67,12 @@
       nmap <F1> <C-o>:!vkeys vim<CR>
       vmap <F1> <C-o>:!vkeys vim<CR>
 
-    " ............................................................... Swap files
+    " ..................................................................... Swap
 
       set nobackup
       set directory=~/tmp,/tmp              " keep swap files in one location
       set noswapfile                        " turn off swap files
       set nowritebackup
-
-    "  .......................................................... Undo / history
-
-      " keep persistent undo history across sessions, by storing in file
-      silent !mkdir ~/.vim/backups 2>/dev/null
-      set history=1000                      " store lots of :cmdline history
-      set undodir=~/.vim/backups
-      set undofile
-      set undolevels=1000                   " maximum number of changes that can be undone
-      set undoreload=10000                  " maximum number lines to save for undo
-      " easier redo
-      map U <C-r>
 
   " Keyboard (re)mappings ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
