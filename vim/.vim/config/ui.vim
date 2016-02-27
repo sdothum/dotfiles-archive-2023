@@ -1,7 +1,7 @@
 " sdothum - 2016 (c) wtfpl
 
 " User Interface
-" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Behaviour ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -108,9 +108,9 @@
       set guioptions-=T                     " no toolbar
 
       " Toggle full screen (for notion fkey compatibility)
-      " map <silent><F11>    :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
+      " map <silent><S-F12> :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
       " Toggle Menu and Toolbar
-      map <silent><F12> :if &guioptions =~# 'T' <Bar>
+      map <silent><F12>     :if &guioptions =~# 'T' <Bar>
         \ set guioptions-=T <Bar>
         \ set guioptions-=m <bar>
         \ else <Bar>
@@ -139,12 +139,11 @@
 
       set omnifunc=syntaxcomplete#Complete
       syntax on                             " turn on syntax highlighting
-      nmap <leader>C :setfiletype conf<CR>
 
     " .............................................................. Spell check
 
       set dictionary=/usr/share/dict/words
-      set complete+=k                       " <C-p> (F3) to complete list word
+      set complete+=k                       " <C-p> to complete list word
       set keywordprg=dict
       set nospell                           " spell checking off by default for code
       " set thesaurus=/usr/share/dict/thesaurus
@@ -154,8 +153,5 @@
       highlight SpellCap guisp=red gui=undercurl,bold guifg=black
       highlight SpellRare guisp=red gui=undercurl,bold guifg=blue
       highlight SpellLocal guisp=red gui=undercurl,bold guifg=green
-
-      " spell check
-      " imap <F3> <C-p>
 
 " ui.vim

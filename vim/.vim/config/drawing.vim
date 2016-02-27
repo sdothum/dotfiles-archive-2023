@@ -1,7 +1,7 @@
 " sdothum - 2016 (c) wtfpl
 
 " Drawing
-" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -43,12 +43,10 @@
         endif
       endfunction
 
-      imap <leader>-- <C-o>:call Underline('▔')<CR><C-Return>
-      nmap <leader>-- :call Underline('▔')<CR><Down>
-      imap <leader>== <C-o>:call Underline('▬')<CR><C-Return>
-      nmap <leader>== :call Underline('▬')<CR><Down>
-      " imap <leader><leader>+ <C-o>:call Underline('▬')<CR><C-Return>
-      " nmap <leader><leader>+ :call Underline('▬')<CR><Down>
+      imap <leader><leader>- <C-o>:call Underline('▔')<CR><C-Return>
+      nmap <leader><leader>- :call Underline('▔')<CR><Down>
+      imap <leader><leader>= <C-o>:call Underline('▂')<CR><C-Return>
+      nmap <leader><leader>= :call Underline('▂')<CR><Down>
 
     " .................................................................... Ruler
 
@@ -81,14 +79,10 @@
 
       " imap <leader><leader>- <C-o>:call Drawline('─')<CR>
       " nmap <leader><leader>- :call Drawline('─')<CR>
-      imap <leader><leader>- <C-o>:call Drawline('▔')<CR>
-      nmap <leader><leader>- :call Drawline('▔')<CR>
-      " imap <leader><leader>= <C-o>:call Drawline('═')<CR>
-      " nmap <leader><leader>= :call Drawline('═')<CR>
-      imap <leader><leader>= <C-o>:call Drawline('▬')<CR>
-      nmap <leader><leader>= :call Drawline('▬')<CR>
-      imap <leader><leader>: <C-o>:call Drawline(':')<CR>
-      nmap <leader><leader>: :call Drawline(':')<CR>
+      imap <leader><leader>-- <C-o>:call Drawline('▔')<CR>
+      nmap <leader><leader>-- :call Drawline('▔')<CR>
+      imap <leader><leader>== <C-o>:call Drawline('▂')<CR>
+      nmap <leader><leader>== :call Drawline('▂')<CR>
 
     " .................................................................. Trailer
 

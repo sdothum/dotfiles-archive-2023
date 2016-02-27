@@ -1,7 +1,7 @@
 " sdothum - 2016 (c) wtfpl
 
 " Editing
-" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Formatting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -106,6 +106,8 @@
       autocmd Filetype slim    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd Filetype vim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
+      nmap <leader><leader>t :setfiletype<Space>
+
   " Line manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................. Insert line / paragraph
@@ -140,9 +142,9 @@
       " see yankring for plugin equivalent
       nnoremap Y                 y$
       " reselect/reyank text just pasted
-      nnoremap <leader><leader>v gv
-      nnoremap <leader><leader>y gvy
-      vnoremap <leader><leader>p pgvy
+      nnoremap <leader>V  gv
+      nnoremap <leader>Y  gvy
+      vnoremap <leader>P  pgvy
 
     " ...................................................... Sentence operations
 
@@ -228,6 +230,7 @@
     " ........................................................... Script headers
 
       iabbrev dash.. 
+        \<ESC>ggO
         \#!/usr/bin/dash<CR>
         \<ESC>Go
         \<CR>
@@ -235,6 +238,7 @@
         \<ESC>:set ft=sh<CR>gg<down><left>
 
       iabbrev sh.. 
+        \<ESC>ggO
         \#!/bin/sh<CR>
         \<ESC>Go
         \<CR>
@@ -242,6 +246,7 @@
         \<ESC>:set ft=sh<CR>gg<down><left>
 
       iabbrev fish.. 
+        \<ESC>ggO
         \#!/usr/bin/fish<CR>
         \<ESC>Go
         \<CR>
@@ -249,6 +254,7 @@
         \<ESC>:set ft=fish<CR>gg<down><left>
 
       iabbrev zsh.. 
+        \<ESC>ggO
         \#!/usr/bin/zsh<CR>
         \<ESC>Go
         \<CR>
@@ -256,6 +262,7 @@
         \<ESC>:set ft=zsh<CR>gg<down><left>
 
       iabbrev hs.. 
+        \<ESC>ggO
         \#!/usr/bin/ghci<CR>
         \<ESC>Go
         \<CR>
@@ -263,6 +270,7 @@
         \<ESC>:set ft=hs<CR>gg<down><left>
 
       iabbrev rb.. 
+        \<ESC>ggO
         \#!/usr/bin/ruby<CR><BS>
         \# encoding: UTF-8<CR><BS><BS><CR>
         \require 'term/ansicolor'<CR>
@@ -276,12 +284,10 @@
 
      " ........................................................... Vim modifiers
 
-      iabbrev conf## 
+      iabbrev conf.. 
         \<ESC>Go
         \<CR>
         \# vim: set ft=conf: #
         \<ESC>:set ft=conf<CR>gg<down><down><left>
-
-      nmap <F3> :set ft=conf<CR>
 
 " editing.vim
