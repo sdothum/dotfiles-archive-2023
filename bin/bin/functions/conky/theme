@@ -140,6 +140,10 @@ hexgen() {
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
 
+panel() {
+  sed -i --follow-symlinks "/^export DEFAULT_FG=/s/='#.*'/='#$1'/" $env
+}
+
 tmpbackup() {
   tmp=$(mktemp).conkyrc
   cp -v $conkyrc $tmp
@@ -174,8 +178,11 @@ case "$action" in
           fi
         fi ;;
 
-  paper) text FDF6E3 BDB8AA 8D8A7F 69675F 4E4D47 ;;
-  ink) text 000000 202020 303030 404040 505050 ;;
+  paper) text f0f0f0 c0c0c0 909090 707070 505050
+         panel e0e0e0 ;;
+
+  ink) text 000000 202020 303030 404040 505050
+       panel 606060 ;;
 
   rings) [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;

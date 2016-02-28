@@ -146,7 +146,7 @@
           " for macbook nvidia gpu
           if &guifont =~ 'Input Mono'
             set guifont=PragmataPro\ 11
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 15 : 5)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 15 : 2)
           else
             set guifont=Input\ Mono\ Compressed\ 11
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 11 : 0)
@@ -155,7 +155,7 @@
           " for ati/intel gpu's
           if &guifont =~ 'Input Mono'
             set guifont=PragmataPro\ 12
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 5)
+            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 16 : 3)
           else
             set guifont=Input\ Mono\ Compressed\ 12
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 12 : 0)
