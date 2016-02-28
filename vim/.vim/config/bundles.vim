@@ -20,6 +20,7 @@
       Plug 'junegunn/goyo.vim'
       " Plug 'morhetz/gruvbox'
       Plug 'itchyny/lightline.vim'
+      Plug 'junegunn/limelight.vim'
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
       " Plug 'whatyouhide/vim-gotham'

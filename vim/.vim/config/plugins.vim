@@ -197,6 +197,12 @@
       imap <C-F10> <C-o>:call lightline#toggle()<CR>
       nmap <C-F10> :call lightline#toggle()<CR>
 
+    " ................................................................ Limelight
+
+      " see views
+      " autocmd! User GoyoEnter Limelight
+      " autocmd! User GoyoLeave Limelight!
+
     " .................................................................. LiteDFM
 
       let g:lite_dfm_left_offset = 18

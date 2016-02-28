@@ -12,7 +12,7 @@
       set hidden                            " allow hidden background buffers
 
       " query current buffer
-      nmap <leader>B      echo @%<CR>
+      nmap <leader>B      :echo @%<CR>
 
       " always switch to the current file directory, unless uri
       autocmd BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | endif

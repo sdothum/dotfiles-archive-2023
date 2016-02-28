@@ -75,15 +75,11 @@
             endif
           endfor
         endif
-        " make nomodifiable persistent, see toggle below
-        let b:modifiable = &modifiable
       endfunction
 
       " toggle modifiable attribute
-      " nmap <silent><F1>            :let &modifiable = (b:modifiable == 1 ? (&modifiable == 0 ? 1 : 0) : b:modifiable)<CR>
-      " nmap <silent><C-F1>          :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
-      nmap <silent><leader>-         :let &modifiable = (b:modifiable == 1 ? (&modifiable == 0 ? 1 : 0) : b:modifiable)<CR>
-      nmap <silent><leader><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+      " nmap <silent><C-F1>  :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+      nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " check filetype on open
       autocmd BufNewFile,BufRead * call CheckFiletype()

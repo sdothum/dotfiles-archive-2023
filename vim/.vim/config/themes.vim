@@ -9,11 +9,11 @@
 
       " further distraction free mode settings
       " foreground
-      let g:dfm_fg = '#000000'              " dark foreground
+      let g:dfm_fg = '#002b36'              " dark foreground
       let g:dfm_fg_dark = '#fdf6e3'         " light foreground
       let g:dfm_proof = '#073642'           " dark foreground
       let g:dfm_proof_dark = '#eee8d5'      " light foreground
-      let g:dfm_unfocused = '#aaaaaa'       " light grey surrounding text content
+      let g:dfm_unfocused = '#93a1a1'       " light grey surrounding text content
       let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
 
       " background
@@ -33,19 +33,19 @@
         if &background == 'light'
           execute 'highlight ShowMarksHLl    guibg=' . g:dfm_bg
           execute 'highlight SignColumn      guibg=' . g:dfm_bg
-          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_fg_dark
-          execute 'highlight InsertCursor    guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_fg
-          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_fg
-          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_fg
-          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_fg
+          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
+          execute 'highlight InsertCursor    guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
+          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
         else
           execute 'highlight ShowMarksHLl    guibg=' . g:dfm_bg_dark
           execute 'highlight SignColumn      guibg=' . g:dfm_bg_dark
-          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_fg
-          execute 'highlight InsertCursor    guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_fg
-          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_fg
-          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_fg
-          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_fg
+          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
+          execute 'highlight InsertCursor    guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
+          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
         end
       endfunction
 

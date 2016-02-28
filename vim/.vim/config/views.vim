@@ -17,13 +17,12 @@
           execute 'highlight LineNr guifg='         . g:dfm_fg_line
           " execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line
           execute 'highlight CursorLineNr guibg='   . g:dfm_bg
-          execute 'highlight Cursor guibg='         . g:dfm_cursor      . ' guifg=' . g:dfm_bg
         else
           execute 'highlight LineNr guifg='         . g:dfm_fg_line_dark
           " execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line_dark
           execute 'highlight CursorLineNr guibg='   . g:dfm_bg_dark
-          execute 'highlight Cursor guibg='         . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
         end
+        call Cursor()
       endfunction
 
     " ............................................................... Prose view
@@ -50,8 +49,10 @@
           execute 'highlight CursorLineNr guifg=' . g:dfm_bg_dark . ' guibg=' . g:dfm_bg_dark
           let s:unfocused = g:dfm_unfocused_dark
         end
+        call Cursor()
         " persistent word count display, see ToggleStatus
         let &laststatus = g:wikistatus
+        execute 'Limelight'
       endfunction
 
       function! LiteType()
@@ -81,6 +82,7 @@
 
       " reset vimwiki link color
       function! s:GoyoLeave()
+        execute 'Limelight!'
         " silent !tmux set status on
         let &scrolloff = g:scrolloff
         set number
@@ -146,27 +148,42 @@
 
     " ...................................................... Screen display mode
 
+      function! Cursor()
+        if &background == 'light'
+          execute 'highlight Cursor guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
+        else
+          execute 'highlight Cursor guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
+        end
+
+      endfunction
+
       function! ToggleMode()
         " toggle between writing and proofing modes
         if &filetype =~ g:goyotypes
           if &background == 'light'
             if s:unfocused == g:dfm_unfocused
+              execute 'Limelight!'
               execute 'highlight Normal guifg=' . g:dfm_proof
               let s:unfocused = g:dfm_fg
             else
               execute 'highlight Normal guifg=' . g:dfm_unfocused
               let s:unfocused = g:dfm_unfocused
+              execute 'Limelight'
             end
           else
             if s:unfocused == g:dfm_unfocused_dark
+              execute 'Limelight!'
               execute 'highlight Normal guifg=' . g:dfm_proof_dark
               let s:unfocused = g:dfm_fg_dark
             else
               execute 'highlight Normal guifg=' . g:dfm_unfocused_dark
               let s:unfocused = g:dfm_unfocused_dark
+              execute 'Limelight'
             end
           endif
         endif
+        " restore cursor (fullscreen toggling reverts defaults)
+        call Cursor()
       endfunction
 
       imap <F11> <C-o>:call ToggleMode()<CR>
