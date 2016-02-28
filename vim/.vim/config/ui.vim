@@ -24,7 +24,7 @@
 
     " ................................................................ Scrolling
 
-      " set scrolljump=8                      " lines to scroll when cursor leaves screen
+      " set scrolljump=8                    " lines to scroll when cursor leaves screen
       if $HOST == 'monad'
         set scrolloff=3
       else

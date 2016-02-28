@@ -8,7 +8,7 @@
     " .......................................................... OS and hardware
 
       set lazyredraw                        " don't redraw while executing macros
-      " set modelines=0                       " prevent modeline secrurity hole
+      " set modelines=0                     " prevent modeline secrurity hole
       set modelines=1
       set mouse=a                           " enable mouse actions
       set shell=/bin/sh                     " required for plugin system call dependencies
@@ -48,7 +48,7 @@
       " load .vimrc after save
       augroup reload_vimrc
         autocmd!
-        " autocmd BufWritePost $MYVIMRC        source $MVIMRC
+        " autocmd BufWritePost $MYVIMRC      source $MVIMRC
         autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
         autocmd BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
         " PluginUpdate and config reload loses filetype, restore

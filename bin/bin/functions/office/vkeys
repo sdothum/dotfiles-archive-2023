@@ -21,6 +21,11 @@ keys() {
     ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"'
   done
 
+  # map key assignments
+  [ $title ] && title "MAP"
+  ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>'
+  echo
+
   # leader key assignments
   [ $title ] && title "LEADER"
   ack --nocolor "<leader>" *.vim
@@ -29,8 +34,8 @@ keys() {
 }
 
 list() {
-  # use ';' as separator (caret i usually use is a common vim expr)
-  keys | grep -v '" .*map ' | sed -re 's/: /;/' -e 's/(map  *[^ ]*)  */\1;/' | column -s\; -t 
+  # utf-8 char as separator (as caret i usually use is common regex)
+  keys | grep -v '" .*map ' | sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' | column -s► -t 
 }
 
 [ "$1" = h ] && usage

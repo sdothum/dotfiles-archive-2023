@@ -26,15 +26,15 @@
       let g:ctrlp_open_new_file = 'v'       " <C-y> opens new file in vertical split
       let g:ctrlp_working_path_mode = 0     " default to current directory
 
-      nmap <leader>b   :CtrlPBuffer<CR>
-      nmap <leader>M   :CtrlPMixed<CR>
-      nmap <leader>m   :CtrlPMRU<CR>
-      nmap <leader>p   :CtrlP<CR>
+      nmap <leader>b :CtrlPBuffer<CR>
+      nmap <leader>M :CtrlPMixed<CR>
+      nmap <leader>m :CtrlPMRU<CR>
+      nmap <leader>p :CtrlP<CR>
 
     " ............................................................... Easy-align
 
-      vmap <Enter>     <Plug>(EasyAlign)
-      nmap <leader>a   <Plug>(EasyAlign)
+      vmap <Enter>   <Plug>(EasyAlign)
+      nmap <leader>a <Plug>(EasyAlign)
 
     " ............................................................... Easymotion
 
@@ -90,20 +90,23 @@
       " set guifont=Liberation\ Mono\ for\ Powerline\ 9
 
       if has("gui_running")
-        let g:lightline = {
+        let g:lightline =
+          \{
           \  'colorscheme'  : 'solarized'
           \, 'separator'    : { 'left' : '⮀', 'right' : '' }
           \, 'subseparator' : { 'left' : '⮁', 'right' : '⮃' }
           \}
       else
-        let g:lightline = {
+        let g:lightline =
+          \{
           \  'colorscheme'  : 'solarized'
           \, 'separator'    : { 'left' : '', 'right' : '' }
           \, 'subseparator' : { 'left' : '/', 'right' : '\' }
           \}
       endif
 
-      let g:lightline.active = {
+      let g:lightline.active =
+        \{
         \  'left'  : [ [ 'mode', 'paste', ]
         \,             [ 'rootpath', 'basepath', 'filename' ]
         \,             [ 'readonly', 'wordcount', 'lineinfo', 'modified' ]
@@ -114,17 +117,20 @@
         \            ]
         \}
 
-      let g:lightline.inactive = {
+      let g:lightline.inactive =
+        \{
         \  'left'  : [ [ 'filename' ] ]
         \, 'right' : [ [ 'line', 'linecount' ] ]
         \}
 
-      let g:lightline.tabline = {
+      let g:lightline.tabline =
+        \{
         \  'left'  : [ [ 'tabs' ] ]
         \, 'right' : [ [ 'close' ] ]
         \}
 
-      let g:lightline.component = {
+      let g:lightline.component =
+        \{
         \  'mode'         : '%{lightline#mode()}'
         \, 'absolutepath' : '%F'
         \, 'relativepath' : '%f'
@@ -151,7 +157,8 @@
         \, 'atom'         : '%{synIDattr(synID(line("."),col("."),1),"name")}'
         \}
 
-      let g:lightline.component_visible_condition = {
+      let g:lightline.component_visible_condition =
+        \{
         \  'rootpath'  : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
         \, 'basepath'  : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
         \, 'modified'  : '(&filetype != "help" && (&modified || !&modifiable))'
@@ -162,7 +169,8 @@
         \, 'atom'      : '(synIDattr(synID(line("."),col("."),1),"name") != "")'
         \}
 
-      let g:lightline.component_function = {
+      let g:lightline.component_function =
+        \{
         \  'indent'      : 'Indent'
         \, 'spaces'      : 'Spaces'
         \, 'wordcount'   : 'WordCount'
@@ -170,7 +178,8 @@
         \, 'specialchar' : 'SpecialChar'
         \}
 
-      let g:lightline.mode_map = {
+      let g:lightline.mode_map =
+        \{
         \  'n'      : 'N'
         \, 'i'      : 'I'
         \, 'R'      : 'R'
@@ -254,13 +263,14 @@
 
       " " see ctags.cnf
       " " from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin
-        " let g:tagbar_type_vimwiki = {
-        "   \ 'ctagstype' : 'vimwiki',
-        "   \ 'kinds'     : [
-        "   \ 'h:header',
-        "   \ ],
-        "   \ 'sort'      : 0
-        "   \ }
+        " let g:tagbar_type_vimwiki =
+        "   \{
+        "   \  'ctagstype' : 'vimwiki'
+        "   \, 'kinds'     : [
+        "   \  'h:header'
+        "   \, ]
+        "   \, 'sort'      : 0
+        "   \}
 
     " ................................................................ T-comment
 
@@ -301,34 +311,35 @@
 
     " .................................................................. Vimwiki
 
-      let g:vimwiki_list = [
+      let g:vimwiki_list =
+        \[
         \  {
-        \  'path'      : '~/vimwiki/thedarnedestthing/'
-        \, 'path_html' : '~/vimwiki/thedarnedestthing/html/'
+        \    'path'      : '~/vimwiki/thedarnedestthing/'
+        \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
         \  }
         \, {
-        \  'path'      : '~/vimwiki/thestory/'
-        \, 'path_html' : '~/vimwiki/thestory/html/'
+        \    'path'      : '~/vimwiki/thestory/'
+        \,   'path_html' : '~/vimwiki/thestory/html/'
         \  }
         \, {
-        \  'path'      : '~/vimwiki/truthordie/'
-        \, 'path_html' : '~/vimwiki/truthordie/html/'
+        \    'path'      : '~/vimwiki/truthordie/'
+        \,   'path_html' : '~/vimwiki/truthordie/html/'
         \  }
         \, {
-        \  'path'      : '~/vimwiki/shadowsandlight/'
-        \, 'path_html' : '~/vimwiki/shadowsandlight/html/'
+        \    'path'      : '~/vimwiki/shadowsandlight/'
+        \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
         \  }
         \, {
-        \  'path'      : '~/vimwiki/healing/'
-        \, 'path_html' : '~/vimwiki/healing/html/'
+        \    'path'      : '~/vimwiki/healing/'
+        \,   'path_html' : '~/vimwiki/healing/html/'
         \  }
         \, {
-        \  'path'      : '~/vimwiki/colophon/'
-        \, 'path_html' : '~/vimwiki/colophon/html/'
+        \    'path'      : '~/vimwiki/colophon/'
+        \,   'path_html' : '~/vimwiki/colophon/html/'
         \  }
         \, {
-        \  'path'      : '~/vimwiki/notes/'
-        \, 'path_html' : '~/vimwiki/notes/html/'
+        \    'path'      : '~/vimwiki/notes/'
+        \,   'path_html' : '~/vimwiki/notes/html/'
         \  }
         \]
 

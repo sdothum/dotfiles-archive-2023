@@ -28,7 +28,8 @@
       " modifiable (0) nomodifiable (1) modifiable
       " wordcount (0) no word count (1) statusline with wordcount
       " note "/name" to represent "^name"
-      let s:nametypes = [
+      let s:nametypes =
+        \[
         \  ['conf$', 'conf', 1, 0]
         \, ['config$', 'conf', 1, 0]
         \, ['eml$', 'mail', 1, 1]
@@ -43,7 +44,8 @@
       " [regex fileinfo, filetype, modifiable, readonly] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " readonly (0) not set (1) set
-      let s:contenttypes = [
+      let s:contenttypes =
+        \[
         \  ['binary', 'binary', 0, 1]
         \, ['no read permission', 'binary', 0, 1]
         \, ['text', 'text', 1, 0]

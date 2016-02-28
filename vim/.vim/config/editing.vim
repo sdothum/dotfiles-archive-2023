@@ -22,18 +22,18 @@
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <A-End>             ggVG
+      nnoremap <A-End>   ggVG
 
       " use Q for formatting the current paragraph (or selection)
-      nnoremap Q                   gqap
-      vnoremap Q                   gq
+      nnoremap Q         gqap
+      vnoremap Q         gq
       " reformat paragraph, reformat and go to next
-      " inoremap <S-F4>            <ESC>mZ{gq}`Z:silent delmark Z<CR>a
-      " nnoremap <S-F4>            {gq}j
-      nnoremap <leader>[           {gq}j
+      " inoremap <S-F4>  <ESC>mZ{gq}`Z:silent delmark Z<CR>a
+      " nnoremap <S-F4>  {gq}j
+      nnoremap <leader>[ {gq}j
       " add trailing space to paragragh lines
       " vnoremap <S-F4>            V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
-      vnoremap <leader>]           V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      vnoremap <leader>] V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -55,13 +55,13 @@
     " .................................................. Shift text left / right
 
       " see Vertical Text Shifting functions.vim
-      nnoremap <S-Left>   <<
-      nnoremap <S-Right>  >>
-      inoremap <S-Left>   <C-d>
-      inoremap <S-Right>  <C-t>
+      nnoremap <S-Left>  <<
+      nnoremap <S-Right> >>
+      inoremap <S-Left>  <C-d>
+      inoremap <S-Right> <C-t>
       " preserve selection when indenting
-      vnoremap <S-Right>  >gv
-      vnoremap <S-Left>   <gv
+      vnoremap <S-Right> >gv
+      vnoremap <S-Left>  <gv
 
     " ............................................................. Convert tabs
 

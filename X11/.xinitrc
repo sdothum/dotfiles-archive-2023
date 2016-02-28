@@ -119,6 +119,7 @@ case $windowmanager in
                 # enable debug trace by referencing log file
                 export TRACE=/tmp/herbstluftwm.log
                 export PANEL_BOTTOM=true
+                export SET_ROOT=true
                 # export PANEL_MARGIN=true
                 setpath $HOME/.config/herbstluftwm
                 . $HOME/.config/herbstluftwm/config/ENV
