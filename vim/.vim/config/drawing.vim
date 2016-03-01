@@ -7,6 +7,8 @@
 
     " ................................................................ Underline
 
+      let g:linedrawing = '▁▔▂'             " see statusline
+
       " insert underline
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
       function! Underline(delimiter)
@@ -77,8 +79,6 @@
         normal ^
       endfunction
 
-      " imap <leader><leader>- <C-o>:call Drawline('─')<CR>
-      " nmap <leader><leader>- :call Drawline('─')<CR>
       imap <leader><leader>-- <C-o>:call Drawline('▔')<CR>
       nmap <leader><leader>-- :call Drawline('▔')<CR>
       imap <leader><leader>== <C-o>:call Drawline('▂')<CR>

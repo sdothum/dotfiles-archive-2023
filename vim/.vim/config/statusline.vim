@@ -9,7 +9,9 @@
 
       " regex list of multibyte characters used for line drawing
       " note: files using other multibyte characters will produce incorrect statistics
-      let s:multibytes = '[─═‾↑▁▔▂]'
+      let s:indicators = '▶■‾↑'             " statusline indicators
+      let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
+      let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
       " see https://github.com/scrooloose/vimfiles/blob/master/vimrc#L78
       " return a warning for long lines > g:linewidth
@@ -24,9 +26,9 @@
             let long_line_lens = s:LongLines()
             if len(long_line_lens) > 0
               let b:statusline_long_line_warning =
-                \          len(long_line_lens) . '='
-                \ . ' ‾' . s:Median(long_line_lens)
-                \ . ' '  . max(long_line_lens) . '↑'
+                \         len(long_line_lens) . '='
+                \. ' ‾' . s:Median(long_line_lens)
+                \. ' '  . max(long_line_lens) . '↑'
             else
               let b:statusline_long_line_warning = ''
             endif
@@ -43,7 +45,10 @@
         " let l:line_lens = map(getline(1,'$'), 'v:val =~ s:multibytes
         "   \ ? len(substitute(substitute(v:val, s:multibytes, " ", "g"), "\\t", l:spaces, "g"))
         "   \ : len(substitute(v:val, "\\t", l:spaces, "g"))')
-        let l:line_lens = map(getline(1,'$'), 'len(substitute(v:val =~ s:multibytes ? substitute(v:val, s:multibytes, " ", "g") : v:val, "\\t", l:spaces, "g"))')
+        let l:line_lens = map(getline(1,'$'),
+          \ 'len(substitute(v:val =~ s:multibytes
+          \? substitute(v:val, s:multibytes, " ", "g")
+          \: v:val, "\\t", l:spaces, "g"))')
         return filter(l:line_lens, 'v:val > g:linewidth')
       endfunction
 
@@ -122,7 +127,7 @@
           if getline(line('.')) != ''
             let l:char = getline('.')[col('.')-1]
             " not interested in ascii keyboard characters
-            if l:char !~ '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)' && l:char != "'"
+            if l:char !~ s:ascii && l:char != "'"
               let l:statusmsg = v:statusmsg
               normal ga
               " show hex value :-)
@@ -143,7 +148,7 @@
       " inconsistent tab warning
       function! Indent()
         " return '&expandtab' if &expandtab is set wrong
-        " return '^ indent' if spaces and tabs are used to indent
+        " return '|▶' if spaces and tabs are used to indent
         if !exists('b:statusline_tab_warning')
           let b:statusline_tab_warning = ''
           if &modifiable
@@ -151,7 +156,7 @@
             "find spaces that arent used as alignment in the first indent column
             let l:spaces = search('^ \{' . &tabstop . ',}[^\t]', 'nw') != 0
             if l:tabs && l:spaces
-              let b:statusline_tab_warning = '^ indent'
+              let b:statusline_tab_warning = '|▶'
             elseif (l:spaces && !&expandtab) || (l:tabs && &expandtab)
               let b:statusline_tab_warning = '&expandtab'
             endif
@@ -162,14 +167,14 @@
 
       " trailing spaces warning
       function! Spaces()
-        " return 'spaces $' if trailing spaces/tabs are present
+        " return '■|' if trailing spaces/tabs are present
         if !exists('b:statusline_pad_warning')
           let b:statusline_pad_warning = ''
           if &modifiable
             if exists('b:prose')
               if b:prose == 0
                 if search('[ \t]\+$', 'nw') != 0
-                  let b:statusline_pad_warning = '■ $'
+                  let b:statusline_pad_warning = '■|'
                 endif
               endif
             endif

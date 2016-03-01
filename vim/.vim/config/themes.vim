@@ -143,29 +143,35 @@
       " let s:font = 'Input\ Mono\ Compressed\'
       let s:font = 'PragmataPro\'
 
+      function! Fontspace(prose, source)
+        execute 'set guifont=' . s:font . ' ' . a:prose
+        execute 'set linespace=' .
+          \(
+          \  argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$'
+          \  ? a:prose
+          \  : a:source
+          \)
+      endfunction
+
       function! FontSize(size)
         " adjust font displays for various gpu's
         " liteDFM offsets arbitrarily chosen to fit my screens
         if system("lspci") =~ 'VGA .* NVIDIA'
           " for macbook nvidia gpu
           if &guifont =~ '11' || a:size < 0
-            execute 'set guifont=' . s:font . ' 10'
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 10 : 0)
+            call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            execute 'set guifont=' . s:font . ' 11'
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 11 : 0)
+            call Fontspace(11, 0)
             " let g:lite_dfm_left_offset = 18
           endif
         else
           " for ati/intel gpu's
           if &guifont =~ '12' || a:size < 0
-            execute 'set guifont=' . s:font . ' 11'
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 11 : 0)
+            call Fontspace(11, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            execute 'set guifont=' . s:font . ' 12'
-            execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 12 : 0)
+            call Fontspace(12, 0)
             " let g:lite_dfm_left_offset = 18
           endif
         endif
