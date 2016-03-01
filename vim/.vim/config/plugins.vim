@@ -85,17 +85,24 @@
 
     " ................................................................ Lightline
 
-      "   \, 'separator'    : { 'left' : '⮀', 'right' : '' }
-      "   \, 'subseparator' : { 'left' : '⮁', 'right' : '⮃' }
-      "   \, 'separator'    : { 'left' : '', 'right' : '' }
-      "   \, 'subseparator' : { 'left' : '', 'right' : '' }
+      let s:powerline=0                     " my current visual preference
+
       if has("gui_running")
-        let g:lightline =
-          \{
-          \  'colorscheme'  : 'solarized'
-          \, 'separator'    : { 'left' : '', 'right' : '' }
-          \, 'subseparator' : { 'left' : '', 'right' : '' }
-          \}
+        if s:powerline == 0
+          let g:lightline =
+            \{
+            \  'colorscheme'  : 'solarized'
+            \, 'separator'    : { 'left' : '', 'right' : '' }
+            \, 'subseparator' : { 'left' : '', 'right' : '' }
+            \}
+        else
+          let g:lightline =
+            \{
+            \  'colorscheme'  : 'solarized'
+            \, 'separator'    : { 'left' : '', 'right' : '' }
+            \, 'subseparator' : { 'left' : '', 'right' : '' }
+            \}
+        endif
       else
         let g:lightline =
           \{

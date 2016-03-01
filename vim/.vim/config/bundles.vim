@@ -53,6 +53,7 @@
     " .................................................................. Editing
 
       Plug 'sjl/gundo.vim'
+      " Plug 'mbbill/undotree'
       Plug 'tpope/vim-abolish'
       Plug 'tpope/vim-repeat'
       Plug 'vim-scripts/YankRing.vim'
