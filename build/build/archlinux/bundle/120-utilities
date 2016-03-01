@@ -65,23 +65,14 @@
 
 = ripping
 # ▔▔▔▔▔▔▔
-# abcde           [is_server]
 # asunder         [is_server]
-  audacity        [is_server]
-# byzanz          [is_server]
-# byzanz-git      [is_server]
   cdrdao          [is_server]
 # dvd+rw-tools    [is_server]
 # dvdbackup       [is_server]
-# ffcast          [is_server]
   ffmpeg          [is_server]
-# gnome-subtitles [is_server]
   handbrake       [is_server]
 # handbrake-cli   [is_server]
-# jokosher        [is_server]
 # k3b             [is_server]
-  ruby-gtk2       [is_server]
-  rubyripper      [is_server]
 # soundconverter  [is_server]
   transcode       [is_server]
   xfburn          [is_server]

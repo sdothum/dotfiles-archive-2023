@@ -94,6 +94,7 @@ case $@ in
   #                         exit ;;
 
   conky) rm -f $FULLSCREEN:primary 2>/dev/null
+         rm -f $FULLSCREEN:$TAG 2>/dev/null
          primary=$(printf '%dx%d%+d%+d' \
                  $normal_width \
                  $(( $Y0 - $margin*2 + $monocleY*2 )) \
@@ -101,6 +102,7 @@ case $@ in
                  $(( $margin - $monocleY )) ) ;;
 
   conky*fullscreen) touch $FULLSCREEN:primary
+                    touch $FULLSCREEN:$TAG
                     if [ $X0 -gt 1024 ] ;then
                       # desktop screens retain margins
                       primary=$(printf '%dx%d%+d%+d' \
@@ -118,6 +120,7 @@ case $@ in
                     fi ;;
 
   fullframe) rm -f $FULLSCREEN:primary 2>/dev/null
+             rm -f $FULLSCREEN:$TAG 2>/dev/null
              if [ $monocle -eq 0 ] ;then
                primary=$(printf '%dx%d%+d%+d' \
                        $(( $X0 - $marginX*2 )) \
@@ -133,6 +136,7 @@ case $@ in
              fi ;;
 
   fullscreen) touch $FULLSCREEN:primary
+              touch $FULLSCREEN:$TAG 2>/dev/null
               if [ $monocle -eq 0 ] ;then
                 primary=$(printf '%dx%d%+d%+d' \
                         $X0 \
@@ -149,6 +153,7 @@ case $@ in
               fi ;;
 
   secondary) rm -f $FULLSCREEN:secondary 2>/dev/null
+             rm -f $FULLSCREEN:$TAG 2>/dev/null
              # create identical secondary monitor margins using dot pitch adjustment
              margin=$(pixel_match $margin $UM1680)
              marginX=$(pixel_match $marginX $UM1680)
@@ -160,6 +165,7 @@ case $@ in
                        $margin ) ;;
 
   secondary*fullscreen) touch $FULLSCREEN:secondary
+                        touch $FULLSCREEN:$TAG 2>/dev/null
                         secondary=$(printf '%dx%d%+d%+d' \
                                   $X1 \
                                   $Y1 \
@@ -169,7 +175,7 @@ esac
 
 # configure multihead..
 # virtual monitors defined in lieu of hc pad monitor, to define fullscreen boundaries
-# [ $TRACE ] && echo "= herbstclient set_monitors $primary $secondary" >>$TRACE
+[ $TRACE ] && echo "= herbstclient set_monitors $primary $secondary" >>$TRACE
 herbstclient set_monitors $primary $secondary &
 
 # ................................................................... Fullscreen

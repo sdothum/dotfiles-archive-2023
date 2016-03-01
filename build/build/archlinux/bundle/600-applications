@@ -27,6 +27,11 @@
 # wordgrinder
 
 
+= fonts
+# ▔▔▔▔▔
+  fontforge [is_server]
+
+
 = games
 # ▔▔▔▔▔
 # steam [is_server]
@@ -44,11 +49,11 @@
 = photography
 # ▔▔▔▔▔▔▔▔▔▔▔
   darktable
-# dcraw      [is_server]
-# digikam    [is_server]
-  dispcalgui [is_server]
+# dcraw             [is_server]
+# digikam           [is_server]
+  dispcalgui        [is_server]
   feh
-# gimp       [is_server]
+# gimp              [is_server]
 # kdebase-workspace [is_server]
 # kipi-plugins      [is_server]
 # photivo-hg        [is_server]
@@ -56,6 +61,19 @@
 # lightzone
 # sxiv
 # viewnior
+
+
+= ripping
+# ▔▔▔▔▔▔▔
+# abcde           [is_server]
+  audacity        [is_server]
+# byzanz          [is_server]
+# byzanz-git      [is_server]
+# ffcast          [is_server]
+# gnome-subtitles [is_server]
+# jokosher        [is_server]
+  ruby-gtk2       [is_server]
+  rubyripper      [is_server]
 
 
 = media server/player

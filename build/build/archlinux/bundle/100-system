@@ -33,6 +33,7 @@
 = fonts and font managers
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # cairo
+  fontforge
   font-manager
 # fontconfig
 # fontmatrix

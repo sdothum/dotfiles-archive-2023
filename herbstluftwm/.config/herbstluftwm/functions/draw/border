@@ -40,10 +40,8 @@ pkill -TERM -f 'draw border pulsar'
 # fullscreen does not alter layout so :max test below is ineffective
 is fullscreen && exit
 
-# highlight stacked windows
-tag=$(herbstclient attr monitors.focus.tag)
 # visually highlight border for stacked windows
-if herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
+if herbstclient compare tags.by-name.$TAG.curframe_wcount gt 1 ;then
   herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && exec draw border pulsar
 else
   herbstclient attr theme.active.color "#$BORDER"

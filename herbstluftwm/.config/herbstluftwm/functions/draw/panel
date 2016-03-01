@@ -153,9 +153,9 @@ panel() {
           [ $count -gt 1 ] && title="$title   ⮁   $count"
           if [ $count -gt 0 ] ;then
             if [ "$(query wname)" = "${line#?}" ] ;then
-              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{B-}%{F-}%{F$DEFAULT_FG}"
+              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
             else
-              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
+              title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
               desc=$(trim ${line#?})
               [ "$desc" ] && title="$title   ⮁   ${desc}%{B-}%{F-}"
             fi
@@ -182,7 +182,7 @@ xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 cat $PANEL_FIFO:$fifo \
 | panel \
 | lemonbar -d -n "lemonbar:$fifo" \
-           -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY -u 2 ${PANEL_BOTTOM} \
+           -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY -u 1 ${PANEL_BOTTOM} \
            -f "$PANEL_FONT" -f "$UTF8_FONT" -f "$ICON_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 

@@ -35,6 +35,8 @@ pixel_match() {
   echo $1 $2 | awk "{ print int(\$1 * $UM2560 / \$2 / 1.1 + 0.5) }"
 }
 
+TAG=$(herbstclient attr monitors.focus.tag)
+
 msg=$1
 [ $msg ] && shift || usage $0
 if [ -e ${0%/draw}/functions/draw/$msg ] ;then
