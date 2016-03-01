@@ -8,7 +8,8 @@
     " ................................................................ Line info
 
       " regex list of multibyte characters used for line drawing
-      let s:multibytes = '[─═▂]'
+      " note: files using other multibyte characters will produce incorrect statistics
+      let s:multibytes = '[─═▁▔▂]'
 
       " see https://github.com/scrooloose/vimfiles/blob/master/vimrc#L78
       " return a warning for long lines > g:linewidth
@@ -23,9 +24,9 @@
             let long_line_lens = s:LongLines()
             if len(long_line_lens) > 0
               let b:statusline_long_line_warning =
-                \           len(long_line_lens) . ':'
-                \ . ' +/' . s:Median(long_line_lens)
-                \ . ' '   . max(long_line_lens)
+                \         s:Median(long_line_lens)
+                \ . ':' . len(long_line_lens)
+                \ . ' ' . max(long_line_lens) . '↑'
             else
               let b:statusline_long_line_warning = ''
             endif
@@ -125,7 +126,7 @@
               let l:statusmsg = v:statusmsg
               normal ga
               " show hex value :-)
-              let l:hex = '\x' . matchstr(split(v:statusmsg)[3], '[^,]*')
+              let l:hex = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
               let v:statusmsg = l:statusmsg
               " clear ga information!
               echo ''

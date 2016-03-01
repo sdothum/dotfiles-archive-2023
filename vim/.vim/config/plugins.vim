@@ -85,17 +85,15 @@
 
     " ................................................................ Lightline
 
-      " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
-      " set guifont=Inconsolata-dz\ for\ Powerline\ 9
-      " set guifont=Liberation\ Mono\ for\ Powerline\ 9
-
       "   \, 'separator'    : { 'left' : '⮀', 'right' : '' }
       "   \, 'subseparator' : { 'left' : '⮁', 'right' : '⮃' }
+      "   \, 'separator'    : { 'left' : '', 'right' : '' }
+      "   \, 'subseparator' : { 'left' : '', 'right' : '' }
       if has("gui_running")
         let g:lightline =
           \{
           \  'colorscheme'  : 'solarized'
-          \, 'separator'    : { 'left' : '', 'right' : '' }
+          \, 'separator'    : { 'left' : '', 'right' : '' }
           \, 'subseparator' : { 'left' : '', 'right' : '' }
           \}
       else
