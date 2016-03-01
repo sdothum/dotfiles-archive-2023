@@ -34,7 +34,7 @@ hc keybind Super-a                   spawn dmenu abook
 hc keybind Super-Shift-a             spawn toggle term 'Mail' alot
 hc keybind Super-b                   spawn dmenu bookmarks
 hc keybind Super-c                   spawn dmenu configs
-hc keybind Super-Shift-c             spawn toggle term 'IRC' weechat
+hc keybind Super-Shift-c             spawn toggle term 'IRC' FONTSIZE '10' weechat
 hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
 hc keybind Super-e                   spawn dmenu edit

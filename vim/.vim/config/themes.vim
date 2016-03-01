@@ -140,42 +140,52 @@
 
     " .............................................................. Switch font
 
-      let s:font = 'Input\ Mono\ Compressed\'
+      " let s:font = 'Input\ Mono\ Compressed\'
+      let s:font = 'PragmataPro\'
 
-      function! FontSwitch(size)
+      function! FontSize(size)
         " adjust font displays for various gpu's
+        " liteDFM offsets arbitrarily chosen to fit my screens
         if system("lspci") =~ 'VGA .* NVIDIA'
           " for macbook nvidia gpu
           if &guifont =~ '11' || a:size < 0
             execute 'set guifont=' . s:font . ' 10'
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 10 : 0)
-            let g:lite_dfm_left_offset = 22
+            " let g:lite_dfm_left_offset = 22
           else
             execute 'set guifont=' . s:font . ' 11'
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 11 : 0)
-            let g:lite_dfm_left_offset = 18
+            " let g:lite_dfm_left_offset = 18
           endif
         else
           " for ati/intel gpu's
           if &guifont =~ '12' || a:size < 0
             execute 'set guifont=' . s:font . ' 11'
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 11 : 0)
-            let g:lite_dfm_left_offset = 22
+            " let g:lite_dfm_left_offset = 22
           else
             execute 'set guifont=' . s:font . ' 12'
             execute 'set linespace=' . (argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$' ? 12 : 0)
-            let g:lite_dfm_left_offset = 18
+            " let g:lite_dfm_left_offset = 18
           endif
         endif
-        " toggle fullscreen to reposition statusline
+        " toggle fullscreen to reposition statusline (2x required to restore)
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
       endfunction
 
       " set initial font and line spacing
-      call FontSwitch(argv(0) =~ 'thedarnedestthing\|.eml' ? +1 : -1)
+      call FontSize(argv(0) =~ 'thedarnedestthing\|.eml' ? +1 : -1)
 
-      imap <silent><C-F9> <C-o>:call FontSwitch(0)<CR>:LiteDFMClose<CR>:call LiteType()<CR>
-      nmap <silent><C-F9> :call FontSwitch(0)<CR>:LiteDFMClose<CR>:call LiteType()<CR>
+      function! FontSwitch()
+        call FontSize(0)
+        if &filetype !~ g:goyotypes
+          call Quietly('LiteDFMClose')
+          call LiteType()
+        endif
+      endfunction
+
+      imap <silent><C-F9> <C-o>:call FontSwitch()<CR>
+      nmap <silent><C-F9> :call FontSwitch()<CR>
 
 " themes.vim

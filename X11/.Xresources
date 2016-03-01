@@ -74,10 +74,10 @@ URxvt*print-pipe:             cat >$HOME/tmp/$(echo urxvt.dump.$(date +'%s'))
 URxvt*saveLines:              15000           ! non-tmux window scroll back
 
 ! text
-! URxvt*font:                   xft:Input Mono Compressed:size=11
+! URxvt*font:                 xft:Input Mono Compressed:size=11
 URxvt*font:                   xft:PragmataPro:size=11
-! URxvt*letterSpace:            -1              ! xft adjustment (for vanilla urxvt)
-URxvt*linespace:              5               ! pixels between lines for added readability
+! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
+! URxvt*linespace:            0               ! pixels between lines for added readability
 URxvt*internalBorder:         9               ! pixels from frame edge
 
 URxvt*imLocale:               en_US.utf8
@@ -91,7 +91,7 @@ URxvt*mapAlert:               true            ! de-iconify on bell alert
 URxvt*scrollBar:              false           ! maximize usable line width
 URxvt*shading:                20              ! % transparency level
 URxvt*transparent:            true
-! URxvt*transparent:            false
+! URxvt*transparent:          false
 URxvt*visualBell:             true            ! blink window on bell
 
 ! scrolling
@@ -124,8 +124,8 @@ URxvt*keysym.S-Delete:        \033[3;2~
 URxvt*keysym.S-Home:          \033[1;2H
 URxvt*keysym.S-End:           \033[1;2F
 ! scrolling conflict
-! URxvt*keysym.S-Page_Up:       \033[5;2~
-! URxvt*keysym.S-Page_Down:     \033[6;2~
+! URxvt*keysym.S-Page_Up:     \033[5;2~
+! URxvt*keysym.S-Page_Down:   \033[6;2~
 
 URxvt*keysym.S-F1:            \033[1;2P
 URxvt*keysym.S-F2:            \033[1;2Q

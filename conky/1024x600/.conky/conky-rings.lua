@@ -9,9 +9,9 @@
 
 require 'cairo'
 
-default_color=0x55520e
-color0=0x3f3d0a
-color6=0x181703
+default_color=0xc39589
+color0=0x926f66
+color6=0x362a26
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA

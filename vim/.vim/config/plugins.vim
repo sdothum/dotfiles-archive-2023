@@ -89,12 +89,14 @@
       " set guifont=Inconsolata-dz\ for\ Powerline\ 9
       " set guifont=Liberation\ Mono\ for\ Powerline\ 9
 
+      "   \, 'separator'    : { 'left' : '⮀', 'right' : '' }
+      "   \, 'subseparator' : { 'left' : '⮁', 'right' : '⮃' }
       if has("gui_running")
         let g:lightline =
           \{
           \  'colorscheme'  : 'solarized'
-          \, 'separator'    : { 'left' : '⮀', 'right' : '' }
-          \, 'subseparator' : { 'left' : '⮁', 'right' : '⮃' }
+          \, 'separator'    : { 'left' : '', 'right' : '' }
+          \, 'subseparator' : { 'left' : '', 'right' : '' }
           \}
       else
         let g:lightline =
@@ -137,7 +139,7 @@
         \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
         \, 'basepath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") : ""}'
         \, 'filename'     : '%t'
-        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "*" : &modifiable ? "" : "⎯"}'
+        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
         \, 'bufnum'       : '%n'
         \, 'paste'        : '%{&paste ? "PASTE" : ""}'
         \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
