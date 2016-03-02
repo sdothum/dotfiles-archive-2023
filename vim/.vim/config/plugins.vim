@@ -78,10 +78,15 @@
 
     " ........................................................... Graphical undo
 
+      let g:gundo_width = 30
       let g:gundo_preview_bottom = 1
+      let g:gundo_preview_height = 20
+
       " nmap <C-F7>  :GundoToggle<CR>
       " nmap <F3>    :GundoToggle<CR>
       nmap <leader>u :GundoToggle<CR>
+
+      autocmd BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
 
     " ................................................................ Lightline
 

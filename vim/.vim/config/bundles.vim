@@ -96,7 +96,7 @@
     call plug#end()
 
     filetype plugin on
-    filetype indent on                        " required
+    filetype indent on                      " required
     filetype on
 
 " bundles.vim
