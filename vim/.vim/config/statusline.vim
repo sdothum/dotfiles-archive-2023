@@ -7,7 +7,7 @@
 
     " regex list of multibyte characters used for line drawing
     " note: files using other multibyte characters will produce incorrect statistics
-    let s:indicators = '▶■‾↑'               " statusline indicators
+    let s:indicators = '▶■‾↑'               " multibyte statusline indicators
     let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
     let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
@@ -16,7 +16,7 @@
 
       " see https://github.com/scrooloose/vimfiles/blob/master/vimrc#L78
       " return a warning for long lines > g:linewidth
-      function! s:LineInfo()
+      function! s:LineSizes()
         " return 'x +/y z' if long lines are found, where
         "   x is the number of long lines
         "   y is the median length of the long lines
@@ -27,11 +27,11 @@
             let long_line_lens = s:LongLines()
             if len(long_line_lens) > 0
               let b:statusline_long_line_warning =
-                \         len(long_line_lens) . '='
+                \  ' ' . len(long_line_lens) . '='
                 \. ' ‾' . s:Median(long_line_lens)
                 \. ' '  . max(long_line_lens) . '↑'
             else
-              let b:statusline_long_line_warning = ''
+              let b:statusline_long_line_warning = ''
             endif
           endif
         endif
@@ -63,11 +63,11 @@
         endif
       endfunction
 
-      function! LineInfo()
+      function! LineSizes()
         " plugin command windows bypass autocmds
         if exists('b:code')
           if b:code == 1
-            return s:LineInfo()
+            return s:LineSizes()
           endif
         endif
         return ''

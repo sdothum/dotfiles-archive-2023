@@ -21,8 +21,8 @@
 
       set viminfo='100,f1                   " save up to 100 marks, enable capital marks
       set viminfo^=%                        " remember info about open buffers on close
-      " delete all marks in current buffer
-      nmap <leader>'' :delmarks!<CR>
+      " delete all marks in current buffer, see signature plugin
+      " nmap <leader>'' :delmarks!<CR>
 
     "  ............................................................ Undo history
 

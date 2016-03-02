@@ -5,7 +5,7 @@
 
   " Line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    let g:linedrawing = '▁▔▂'             " see statusline
+    let g:linedrawing = '▁▔▂'             " declare multibytes, see statusline.vim
 
     " ................................................................ Underline
 

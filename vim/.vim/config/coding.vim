@@ -5,8 +5,6 @@
 
   " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    let g:linewidth = &textwidth          " default to &textwidth, see Ruler
-
     " ............................................................. Colorcolumns
 
       " column list must end in [0]
@@ -45,10 +43,12 @@
         set list!
         if &list == 0
           match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
-          echo ''
+          " echo ''
+          let g:matchspace = ''
         else
           match ExtraWhitespace /\s\+$/
-          echo 'List invisibles ON'
+          " echo 'List invisibles ON'
+          let g:matchspace = '■'
         end
       endfunction
 
@@ -57,6 +57,18 @@
       nmap <silent><leader><Space> :call ToggleSpaces()<CR>
 
   " Line wrap ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ......................................................... Insert line wrap
+
+      " insert line while disabling auto-commenting
+      function! InsertWrap()
+        let l:formatoptions = &formatoptions
+        set formatoptions-=croq
+        normal o
+        let &formatoptions = l:formatoptions
+      endfunction
+
+      inoremap <C-CR> <C-o>:call InsertWrap()<CR>
 
     " ......................................................... Toggle line wrap
 

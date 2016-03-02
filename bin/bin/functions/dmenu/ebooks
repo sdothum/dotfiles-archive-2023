@@ -69,7 +69,8 @@ do
             book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
             term "$title" WAIT vifm "${book%/*}" "$book" ;;
 
-      kindle) if [ -z $mobi ] ;then
+      kindle) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+              if [ -z $mobi ] ;then
                 kindlegen "$epub"
                 mobi
               fi

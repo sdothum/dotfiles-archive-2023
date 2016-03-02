@@ -90,7 +90,9 @@
 
     " ................................................................ Lightline
 
-      let s:powerline=0                     " my current visual preference
+
+      let g:matchspace = ''                 " see ToggleSpaces coding.vim
+      let s:powerline=0                     " powerline symbol set preference
 
       if has("gui_running")
         if s:powerline == 0
@@ -119,9 +121,9 @@
 
       let g:lightline.active =
         \{
-        \  'left'  : [ [ 'mode', 'paste', ]
+        \  'left'  : [ [ 'mode', 'paste', 'matchspace' ]
         \,             [ 'rootpath', 'basepath', 'filename' ]
-        \,             [ 'readonly', 'wordcount', 'lineinfo', 'modified' ]
+        \,             [ 'readonly', 'wordcount', 'linesizes', 'modified' ]
         \            ]
         \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
         \,             [ 'line', 'linecount' ]
@@ -143,66 +145,68 @@
 
       let g:lightline.component =
         \{
-        \  'mode'         : '%{lightline#mode()}'
-        \, 'absolutepath' : '%F'
-        \, 'relativepath' : '%f'
-        \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
+        \  'absolutepath' : '%F'
+        \, 'atom'         : '%{synIDattr(synID(line("."),col("."),1),"name")}'
         \, 'basepath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") : ""}'
-        \, 'filename'     : '%t'
-        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
         \, 'bufnum'       : '%n'
-        \, 'paste'        : '%{&paste ? "PASTE" : ""}'
-        \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
         \, 'charvalue'    : '%b'
         \, 'charvaluehex' : '%B'
+        \, 'close'        : '%999X X '
+        \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
         \, 'fileencoding' : '%{strlen(&fenc) ? &fenc : &enc}'
         \, 'fileformat'   : '%{&fileformat}'
+        \, 'filename'     : '%t'
         \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
-        \, 'percent'      : '%3p%%'
-        \, 'percentwin'   : '%P'
-        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "ALL" : "Top") : line("w$") == line("$") ? "Bottom" : ""}'
+        \, 'linecount'    : '%L'
         \, 'lineinfo'     : '%3l:%-2v'
         \, 'line'         : '%l'
-        \, 'linecount'    : '%L'
-        \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
-        \, 'close'        : '%999X X '
-        \, 'atom'         : '%{synIDattr(synID(line("."),col("."),1),"name")}'
+        \, 'matchspace'   : '%{g:matchspace}'
+        \, 'mode'         : '%{lightline#mode()}'
+        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
+        \, 'paste'        : '%{&paste ? "PASTE" : ""}'
+        \, 'percent'      : '%3p%%'
+        \, 'percentwin'   : '%P'
+        \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
+        \, 'relativepath' : '%f'
+        \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
+        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "ALL" : "Top") : line("w$") == line("$") ? "Bottom" : ""}'
         \}
 
       let g:lightline.component_visible_condition =
         \{
-        \  'rootpath'  : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
-        \, 'basepath'  : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-        \, 'modified'  : '(&filetype != "help" && (&modified || !&modifiable))'
-        \, 'readonly'  : '(&filetype != "help" && &readonly)'
-        \, 'paste'     : '&paste'
-        \, 'topbottom' : '(line("w0") == 1 || line("w$") == line("$"))'
-        \, 'column'    : '(getline(line(".")) != "")'
-        \, 'atom'      : '(synIDattr(synID(line("."),col("."),1),"name") != "")'
+        \  'atom'       : '(synIDattr(synID(line("."),col("."),1),"name") != "")'
+        \, 'basepath'   : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+        \, 'column'     : '(getline(line(".")) != "")'
+        \, 'matchspace' : '(g:matchspace != "")'
+        \, 'modified'   : '(&filetype != "help" && (&modified || !&modifiable))'
+        \, 'paste'      : '&paste'
+        \, 'readonly'   : '(&filetype != "help" && &readonly)'
+        \, 'rootpath'   : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
+        \, 'topbottom'  : '(line("w0") == 1 || line("w$") == line("$"))'
         \}
 
       let g:lightline.component_function =
         \{
         \  'indent'      : 'Indent'
+        \, 'linesizes'   : 'LineSizes'
         \, 'spaces'      : 'Spaces'
-        \, 'wordcount'   : 'WordCount'
-        \, 'lineinfo'    : 'LineInfo'
         \, 'specialchar' : 'SpecialChar'
+        \, 'wordcount'   : 'WordCount'
         \}
 
       let g:lightline.mode_map =
         \{
-        \  'n'      : 'N'
-        \, 'i'      : 'I'
-        \, 'R'      : 'R'
-        \, 'v'      : 'V'
-        \, 'V'      : 'V-LINE'
+        \  '?'      : ' '
         \, 'c'      : 'C'
+        \, "\<C-s>" : 'S-BLOCK'
         \, "\<C-v>" : 'V-BLOCK'
+        \, 'i'      : 'I'
+        \, 'n'      : 'N'
+        \, 'R'      : 'R'
         \, 's'      : 'S'
         \, 'S'      : 'S-LINE'
-        \, "\<C-s>" : 'S-BLOCK'
-        \, '?'      : ' '
+        \, 'v'      : 'V'
+        \, 'V'      : 'V-LINE'
         \}
 
       " toggle lightline/default vim statusline
@@ -211,13 +215,13 @@
 
     " ................................................................ Limelight
 
-      " see views
+      " see views.vim
       " autocmd! User GoyoEnter Limelight
       " autocmd! User GoyoLeave Limelight!
 
     " .................................................................. LiteDFM
 
-      " see themes
+      " see themes.vim
       let g:lite_dfm_left_offset = 22
 
     " ............................................................ Narrow region
@@ -255,6 +259,37 @@
         set background=dark
       endif
       syntax enable
+
+    " ................................................................ Signature
+
+      " vim convention m'ark key conflics with my colemak-shift-dh layout
+      " using apostrophe instead, preferable imo :-)
+      let g:SignatureMap =
+        \{
+        \  'Leader'            : "'"
+        \, 'PlaceNextMark'     : "',"
+        \, 'ToggleMarkAtLine'  : "'."
+        \, 'PurgeMarksAtLine'  : "'-"
+        \, 'DeleteMark'        : "d'"
+        \, 'PurgeMarks'        : "'<Space>"
+        \, 'PurgeMarkers'      : "'<BS>"
+        \, 'GotoNextLineAlpha' : "']"
+        \, 'GotoPrevLineAlpha' : "'["
+        \, 'GotoNextSpotAlpha' : "`]"
+        \, 'GotoPrevSpotAlpha' : "`["
+        \, 'GotoNextLineByPos' : "]'"
+        \, 'GotoPrevLineByPos' : "['"
+        \, 'GotoNextSpotByPos' : "]`"
+        \, 'GotoPrevSpotByPos' : "[`"
+        \, 'GotoNextMarker'    : "[+"
+        \, 'GotoPrevMarker'    : "[-"
+        \, 'GotoNextMarkerAny' : "]="
+        \, 'GotoPrevMarkerAny' : "[="
+        \, 'ListBufferMarks'   : "'/"
+        \, 'ListBufferMarkers' : "'?"
+        \}
+
+      nmap <leader>' '.
 
     " ................................................................. Supertab
 

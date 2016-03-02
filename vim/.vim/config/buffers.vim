@@ -90,9 +90,9 @@
       " set foldmethod=syntax               " folding based on syntax
       set foldnestmax=3                     " deepest fold is 3 levels
 
-      " toggle fold
-      noremap <leader>f za                  " just use z commands for folding
-      noremap <leader>F Vatzf               " fold tags
+      " toggle fold / fold tags
+      noremap <leader>f za
+      noremap <leader>F Vatzf
 
     " ........................................................... Folding levels
 
@@ -108,4 +108,4 @@
       nmap <leader>f8 :set foldlevel=8<CR>
       nmap <leader>f9 :set foldlevel=9<CR>
 
-" buffers.vimtzf
+" buffers.vim

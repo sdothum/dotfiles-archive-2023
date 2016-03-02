@@ -65,7 +65,7 @@ alias -g ZZ="|& egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'"
 
 # .................................................................... Shortcuts
 
-alias a='ack'
+# alias a='ack'
 alias al='ack -l'
 alias am='yaourt -Ss'
 # alias ata='sudo /usr/bin/ls -l /dev/disk/by-id/*ata*'

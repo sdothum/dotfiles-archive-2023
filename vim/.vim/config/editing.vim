@@ -12,6 +12,7 @@
       " double spaces at the end of a wrapped line, becomes <br> by markdown
       set nojoinspaces                      " force single spacing after sentence punctuation!
       set textwidth=80                      " normally 78-80, see autocmd for mail
+      let g:linewidth = &textwidth          " see coding.vim, drawing.vim, statusline.vim
 
     " ...................................................... Trailing whitespace
 
@@ -84,7 +85,8 @@
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
-      inoremap <C-CR>                  <C-o>o
+      " see InsertWrap coding.vim
+      " inoremap <C-CR>                <C-o>o
       " similarly, open curly braces and continue inserting in indented body
       inoremap <S-CR>                  <CR><C-o>O<Tab>
 

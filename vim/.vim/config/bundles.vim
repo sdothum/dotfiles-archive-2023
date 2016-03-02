@@ -16,15 +16,12 @@
 
     " ...................................................................... GUI
 
-      " Plug 'kana/vim-arpeggio'
       Plug 'junegunn/goyo.vim'
-      " Plug 'morhetz/gruvbox'
       Plug 'itchyny/lightline.vim'
       Plug 'junegunn/limelight.vim'
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
-      " Plug 'whatyouhide/vim-gotham'
-      " Plug 'kshenoy/vim-signature'        " conflicts with lmne navigation
+      Plug 'kshenoy/vim-signature'
 
     " ........................................................ Buffer management
 
@@ -41,7 +38,7 @@
       Plug 'scrooloose/syntastic'
       Plug 'majutsushi/tagbar'
       Plug 'tomtom/tcomment_vim'
-      " Plug 'mattn/zencoding-vim'
+      " Plug 'mattn/emmet-vim'
 
     " .................................................. Completion / navigation
 
@@ -53,7 +50,6 @@
     " .................................................................. Editing
 
       Plug 'sjl/gundo.vim'
-      " Plug 'mbbill/undotree'
       Plug 'tpope/vim-abolish'
       Plug 'tpope/vim-repeat'
       Plug 'vim-scripts/YankRing.vim'
@@ -83,6 +79,7 @@
 
     " ................................................................... System
 
+      " Plug 'kana/vim-arpeggio'
       Plug 'Shougo/unite.vim'
       Plug 'Shougo/vimfiler.vim'
       Plug 'Shougo/vimshell.vim'

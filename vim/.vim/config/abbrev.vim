@@ -119,3 +119,5 @@
         \<CR>
         \# vim: set ft=conf: #
         \<ESC>:set ft=conf<CR>gg<down><down><left>
+
+" abbrev.vim

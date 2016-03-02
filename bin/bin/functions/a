@@ -1,0 +1,13 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... Search
+
+# filter search, see aliases.zsh for commands
+ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $@ \
+| egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'
+
+# vim: set ft=sh: #
