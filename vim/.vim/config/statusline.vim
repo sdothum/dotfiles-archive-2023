@@ -5,13 +5,14 @@
 
   " Content extensions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " regex list of multibyte characters used for line drawing
+    " note: files using other multibyte characters will produce incorrect statistics
+    let s:indicators = '▶■‾↑'               " statusline indicators
+    let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
+    let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
+
     " ................................................................ Line info
 
-      " regex list of multibyte characters used for line drawing
-      " note: files using other multibyte characters will produce incorrect statistics
-      let s:indicators = '▶■‾↑'             " statusline indicators
-      let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
-      let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
       " see https://github.com/scrooloose/vimfiles/blob/master/vimrc#L78
       " return a warning for long lines > g:linewidth
@@ -40,11 +41,7 @@
       " return a list containing the lengths of the long lines in this buffer
       function! s:LongLines()
         let l:spaces = repeat(' ', &tabstop)
-        " let l:line_lens = map(getline(1,'$'), 'len(substitute(v:val, "\\t", l:spaces, "g"))')
         " trap multibyte line drawing characters used by "ruler" and "underline"
-        " let l:line_lens = map(getline(1,'$'), 'v:val =~ s:multibytes
-        "   \ ? len(substitute(substitute(v:val, s:multibytes, " ", "g"), "\\t", l:spaces, "g"))
-        "   \ : len(substitute(v:val, "\\t", l:spaces, "g"))')
         let l:line_lens = map(getline(1,'$'),
           \ 'len(substitute(v:val =~ s:multibytes
           \? substitute(v:val, s:multibytes, " ", "g")

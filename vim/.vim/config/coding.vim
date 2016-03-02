@@ -5,9 +5,10 @@
 
   " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    let g:linewidth = &textwidth          " default to &textwidth, see Ruler
+
     " ............................................................. Colorcolumns
 
-      let g:linewidth = &textwidth          " default to &textwidth, see Ruler
       " column list must end in [0]
       let s:margins = [45, 72, &textwidth, g:linewidth, 0]
 

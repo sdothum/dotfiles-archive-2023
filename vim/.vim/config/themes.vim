@@ -5,28 +5,28 @@
 
   " The look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " further distraction free mode settings
+    " foreground
+    let g:dfm_fg = '#002b36'              " dark foreground
+    let g:dfm_fg_dark = '#fdf6e3'         " light foreground
+    let g:dfm_proof = '#073642'           " dark foreground
+    let g:dfm_proof_dark = '#eee8d5'      " light foreground
+    let g:dfm_unfocused = '#93a1a1'       " light grey surrounding text content
+    let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
+
+    " background
+    let g:dfm_bg = '#fdf6e3'              " solarized light (paper) background
+    let g:dfm_bg_dark = '#002b36'         " solarized dark background
+
+    " cursor line
+    let g:dfm_cursor = '#54D4FF'          " ia writer blue cursor
+    let g:dfm_cursor_dark = '#DA4716'     " reddish cursor
+    let g:dfm_bg_line = '#eee8d5'         " solarized light cursorline
+    let g:dfm_bg_line_dark = '#073642'    " solarized dark cursorline
+    let g:dfm_fg_line = '#cccccc'         " light grey line numbers
+    let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
+
     " ................................................................ Solarized
-
-      " further distraction free mode settings
-      " foreground
-      let g:dfm_fg = '#002b36'              " dark foreground
-      let g:dfm_fg_dark = '#fdf6e3'         " light foreground
-      let g:dfm_proof = '#073642'           " dark foreground
-      let g:dfm_proof_dark = '#eee8d5'      " light foreground
-      let g:dfm_unfocused = '#93a1a1'       " light grey surrounding text content
-      let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
-
-      " background
-      let g:dfm_bg = '#fdf6e3'              " solarized light (paper) background
-      let g:dfm_bg_dark = '#002b36'         " solarized dark background
-
-      " cursor line
-      let g:dfm_cursor = '#54D4FF'          " ia writer blue cursor
-      let g:dfm_cursor_dark = '#DA4716'     " reddish cursor
-      let g:dfm_bg_line = '#eee8d5'         " solarized light cursorline
-      let g:dfm_bg_line_dark = '#073642'    " solarized dark cursorline
-      let g:dfm_fg_line = '#cccccc'         " light grey line numbers
-      let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
 
       " match marks margin and whitespace colours to background
       function! LiteBackground()
@@ -180,9 +180,6 @@
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
       endfunction
 
-      " set initial font and line spacing
-      call FontSize(argv(0) =~ 'thedarnedestthing\|.eml' ? +1 : -1)
-
       function! FontSwitch()
         call FontSize(0)
         if &filetype !~ g:goyotypes
@@ -193,5 +190,9 @@
 
       imap <silent><C-F9> <C-o>:call FontSwitch()<CR>
       nmap <silent><C-F9> :call FontSwitch()<CR>
+
+    " ............................................ Initial font and line spacing
+
+      call FontSize(argv(0) =~ 'thedarnedestthing\|.eml' ? +1 : -1)
 
 " themes.vim
