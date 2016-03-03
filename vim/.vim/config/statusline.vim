@@ -11,6 +11,10 @@
     let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
     let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
+    " statusline buffer statistics toggle (0) off (1) on
+    let s:code = 0
+    let s:prose = 0
+
     " ................................................................ Line info
 
 
@@ -65,16 +69,16 @@
 
       function! LineSizes()
         " plugin command windows bypass autocmds
-        if exists('b:code')
-          if b:code == 1
+        if exists('s:code')
+          if s:code == 1
             return s:LineSizes()
           endif
         endif
         return ''
       endfunction
 
-      " line statistics off by default per buffer
-      autocmd bufread                 * let b:code = 0
+      " line statistics off by default per buffer (declare flags to b:uffer)
+      " autocmd bufread               * let b:code = 0
       " recalculate the long line warning when idle and after saving
       autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 
@@ -102,9 +106,9 @@
 
       function! WordCount()
         " plugin command windows bypass autocmds
-        if exists('b:prose')
+        if exists('s:prose')
           " ignore source code word counts
-          if b:prose == 1
+          if s:prose == 1
             return s:WordCount()
           endif
         endif
@@ -112,8 +116,8 @@
       endfunction
 
       " toggle word count manually
-      imap <silent><A-F10> <C-o>:let b:prose = (b:prose == 0 ? 1 : 0)<CR>
-      nmap <silent><A-F10> :let b:prose = (b:prose == 0 ? 1 : 0)<CR>
+      imap <silent><A-F10> <C-o>:let s:prose = (s:prose == 0 ? 1 : 0)<CR>
+      nmap <silent><A-F10> :let s:prose = (s:prose == 0 ? 1 : 0)<CR>
 
     " ........................................................ Special Character
 
@@ -168,8 +172,8 @@
         if !exists('b:statusline_pad_warning')
           let b:statusline_pad_warning = ''
           if &modifiable
-            if exists('b:prose')
-              if b:prose == 0
+            if exists('s:prose')
+              if s:prose == 0
                 if search('[ \t]\+$', 'nw') != 0
                   let b:statusline_pad_warning = '■|'
                 endif
@@ -206,8 +210,8 @@
         " show/hide line statistics
         else
           " toggle line info statistics where word counts are inapplicable
-          if b:prose == 0
-            let b:code = (b:code == 0 ? 1 : 0)
+          if s:prose == 0
+            let s:code = (s:code == 0 ? 1 : 0)
           endif
         endif
         " clear show message

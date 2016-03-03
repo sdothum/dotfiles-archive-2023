@@ -53,7 +53,6 @@
 
       " set buffer attributes
       function! CheckFiletype()
-        let b:prose = 0
         " by name structure
         for [name, filetype, modifiable, wordcount] in s:nametypes
           " known filetypes can be processed by filename e.g. "mkd" readme files
@@ -61,7 +60,6 @@
             " assign unknown filetype
             let &filetype = (&filetype == '' ? filetype : &filetype)
             let &modifiable = modifiable
-            let b:prose = wordcount
             break
           endif
         endfor
@@ -83,7 +81,7 @@
 
       " check filetype on open
       autocmd BufNewFile,BufRead * call CheckFiletype()
-      autocmd BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | let b:prose = 1 | endif
+      autocmd BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
 
   " Documents ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
