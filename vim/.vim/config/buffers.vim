@@ -15,7 +15,7 @@
       nmap <leader>B      :echo @%<CR>
 
       " always switch to the current file directory, unless uri
-      autocmd BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | endif
+      autocmd BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
       " return to last edit position when opening files (You want this!)
       autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
 

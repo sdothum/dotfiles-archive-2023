@@ -7,9 +7,6 @@
 
     set nocompatible                        " disable vi-compatibility
 
-    let mapleader = "\<Space>"              " remap <leader> a la spacemacs
-    let g:mapleader = "\<Space>"
-
     " ................................................................. Settings
 
       source ~/.vim/config/setup.vim

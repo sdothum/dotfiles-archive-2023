@@ -179,10 +179,10 @@ case "$action" in
         fi ;;
 
   paper) text f0f0f0 c0c0c0 909090 707070 505050
-         panel e0e0e0 ;;
+         panel d0d0d0 ;;
 
   ink) text 000000 202020 303030 404040 505050
-       panel 606060 ;;
+       panel 707070 ;;
 
   rings) [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;

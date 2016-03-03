@@ -17,7 +17,15 @@
       set timeout timeoutlen=1000 ttimeoutlen=100
       " set cryptmethod=blowfish            " encryption method
 
-    " .................................................................... Marks
+    " ................................................................... Leader
+
+      let mapleader = "\<Space>"            " remap <leader> a la spacemacs
+      let g:mapleader = "\<Space>"
+
+      " non-latent space insertion (for lining up text, conflicting leader sequences, etc.)
+      inoremap <C-Space> <Space>
+
+    " .................................................................... Mark
 
       set viminfo='100,f1                   " save up to 100 marks, enable capital marks
       set viminfo^=%                        " remember info about open buffers on close
@@ -35,6 +43,15 @@
       set undoreload=10000                  " maximum number lines to save for undo
       " easier redo
       map U <C-r>
+
+    " ................................................................. Messages
+
+      " recover last error message
+      nmap <leader>e :echo errmsg<CR>
+
+      " clear messages after awhile
+      autocmd cursorhold * echo
+
 
   " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -62,10 +79,13 @@
         autocmd BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
       endif
 
+      imap <F1> <C-o>:help<Space>
+      nmap <F1> :help<Space>
+      vmap <F1> <C-o>:help<Space>
       " list my function and leader key assignments
-      imap <F1> <C-o>:!vkeys vim<CR>
-      nmap <F1> <C-o>:!vkeys vim<CR>
-      vmap <F1> <C-o>:!vkeys vim<CR>
+      imap <S-F1> <C-o>:!vkeys vim<CR>
+      nmap <S-F1> :!vkeys vim<CR>
+      vmap <S-F1> <C-o>:!vkeys vim<CR>
 
     " ..................................................................... Swap
 

@@ -123,7 +123,7 @@
         \{
         \  'left'  : [ [ 'mode', 'paste', 'matchspace' ]
         \,             [ 'rootpath', 'basepath', 'filename' ]
-        \,             [ 'readonly', 'wordcount', 'linesizes', 'modified' ]
+        \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
         \            ]
         \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
         \,             [ 'line', 'linecount' ]
@@ -296,8 +296,8 @@
     set complete-=t
 
     " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab
-    let g:SuperTabMappingForward = '<C-Space>'
-    let g:SuperTabMappingBackward = '<C-S-Space>'
+    " let g:SuperTabMappingForward = '<C-Tab>'
+    " let g:SuperTabMappingBackward = '<C-S-Tab>'
 
     " ................................................................ Syntastic
 
