@@ -82,18 +82,19 @@ export OCCUPIED=$(/usr/bin/printf '\uf111')
 export FREE=$(/usr/bin/printf '\uf10c')
 # tag bar separator (visual spacing)
 export TAG_PAD='  '
+# underline title, unset for normal contrast distinction
+# export UNDERLINE=true
 
 # panel theme
-# export DEFAULT_BG='#242C2E'
 # alpha channel for panel transparency with compton
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#d0d0d0'
-export ACTIVE_FG='#8fc5d5'
-export ACTIVE_HIDDEN_FG='#47626a'
-export INACTIVE_FG='#d49c8c'
-export INACTIVE_HIDDEN_FG='#6a4e46'
+export DEFAULT_FG='#215e54'
+export ACTIVE_FG='#000000'
+export ACTIVE_HIDDEN_FG='#112f2a'
+export INACTIVE_FG='#5b202a'
+export INACTIVE_HIDDEN_FG='#2e1015'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

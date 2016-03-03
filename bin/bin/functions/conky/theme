@@ -54,7 +54,6 @@ env=$HOME/.config/herbstluftwm/config/ENV
 rings() {
   sed -i --follow-symlinks "/^default_color /s/ .*/ $1/" $conkyrc
   sed -i --follow-symlinks "/^default_color=/s/=0x.*/=0x$1/" $conkylua
-  sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#$1'/" $env
   shift
   sed -i --follow-symlinks "/^color0 /s/ .*/ $1/" $conkyrc
   sed -i --follow-symlinks "/^color0=/s/=0x.*/=0x$1/" $conkylua
@@ -122,6 +121,10 @@ scheme() {
   hidden $@
 }
 
+panel() {
+  sed -i --follow-symlinks "/^export DEFAULT_FG=/s/='#.*'/='#$1'/" $env
+}
+
 hexgen() {
   default_color=$1
   hex=$(conky palette $default_color)
@@ -138,10 +141,7 @@ hexgen() {
   colorI=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-}
-
-panel() {
-  sed -i --follow-symlinks "/^export DEFAULT_FG=/s/='#.*'/='#$1'/" $env
+  panel $default_color
 }
 
 tmpbackup() {
@@ -179,10 +179,10 @@ case "$action" in
         fi ;;
 
   paper) text f0f0f0 c0c0c0 909090 707070 505050
-         panel d0d0d0 ;;
+         sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#f0f0f0'/" $env ;;
 
   ink) text 000000 202020 303030 404040 505050
-       panel 707070 ;;
+       sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#000000'/" $env ;;
 
   rings) [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;
