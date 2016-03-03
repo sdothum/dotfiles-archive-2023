@@ -68,7 +68,8 @@
       endfunction
 
       function! LineSizes()
-        " plugin command windows bypass autocmds
+        " clear file description from commandline
+        echo ''
         if exists('s:code')
           if s:code == 1
             return s:LineSizes()
