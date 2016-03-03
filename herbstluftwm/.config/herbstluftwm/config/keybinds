@@ -15,12 +15,12 @@
 hc keybind $Mod-Shift-q              quit
 hc keybind $Mod-Shift-r              reload
 hc keybind $Mod-grave                spawn toggle monocle
-hc keybind $Mod-b                    spawn draw root restore
-hc keybind $Mod-Shift-b              spawn draw root save
-hc keybind $Mod-Control-b            spawn draw root blank
-hc keybind $Mod-d                    spawn draw root select
-hc keybind $Mod-Shift-d              spawn draw root shuffle
-hc keybind $Mod-Control-d            spawn draw root toggle
+hc keybind $Mod-b                    spawn draw root select
+hc keybind $Mod-Shift-b              spawn draw root shuffle
+hc keybind $Mod-Control-b            spawn draw root toggle
+hc keybind $Mod-d                    spawn draw root restore
+hc keybind $Mod-Shift-d              spawn draw root save
+hc keybind $Mod-Control-d            spawn draw root blank
 hc keybind $Mod-w                    chain . close_or_remove . emit_hook focus_window
 hc keybind $Mod-Super-Control-space  spawn toggle focus
 hc keybind Super-Tab                 spawn focus hlwm
