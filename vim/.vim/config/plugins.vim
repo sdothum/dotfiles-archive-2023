@@ -26,10 +26,12 @@
       let g:ctrlp_open_new_file = 'v'       " <C-y> opens new file in vertical split
       let g:ctrlp_working_path_mode = 0     " default to current directory
 
-      nmap <leader>b :CtrlPBuffer<CR>
-      nmap <leader>M :CtrlPMixed<CR>
-      nmap <leader>m :CtrlPMRU<CR>
-      nmap <leader>p :CtrlP<CR>
+      " cannot silence vim's default file info message as with buffer keymaps
+      " see autocmd cursorhold in setup.vim for delayed clear
+      nmap <silent><leader>b :silent CtrlPBuffer<CR>
+      nmap <silent><leader>M :silent CtrlPMixed<CR>
+      nmap <silent><leader>m :silent CtrlPMRU<CR>
+      nmap <silent><leader>p :silent CtrlP<CR>
 
     " ............................................................... Easy-align
 
@@ -166,7 +168,7 @@
         \, 'paste'        : '%{&paste ? "PASTE" : ""}'
         \, 'percent'      : '%3p%%'
         \, 'percentwin'   : '%P'
-        \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
+        \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
         \, 'relativepath' : '%f'
         \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
         \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "ALL" : "Top") : line("w$") == line("$") ? "Bottom" : ""}'
@@ -214,6 +216,10 @@
       nmap <C-F10> :call lightline#toggle()<CR>
 
     " ................................................................ Limelight
+
+      let g:limelight_default_coefficient = 0.66
+      let g:limelight_paragraph_span = 0    " include preceding/following paragraphs
+      let g:limelight_priority = 1          " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
       " see views.vim
       " autocmd! User GoyoEnter Limelight

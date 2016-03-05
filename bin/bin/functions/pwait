@@ -12,12 +12,12 @@
 delay=0.01
 
 # wait for uniquely named window to process to startup
-until pgrep -af "$@" | egrep -v 'pwait|/term '
+until pgrep -af "$@" | egrep -q 'pwait|/term '
 do
   sleep $delay
 done
 # wait for uniquely named window to close before proceeding
-while pgrep -af "$@" | egrep -v 'pwait|/term '
+while pgrep -af "$@" | egrep -q 'pwait|/term '
 do
   sleep $delay
 done

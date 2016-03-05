@@ -5,8 +5,6 @@
 
   " Sources ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    set nocompatible                        " disable vi-compatibility
-
     " ................................................................. Settings
 
       source ~/.vim/config/setup.vim

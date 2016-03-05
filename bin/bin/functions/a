@@ -6,8 +6,9 @@
 
 # ....................................................................... Search
 
-# filter search, see aliases.zsh for commands
-ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $@ \
+# lazy $@ does not substitute as expected in ack line, so assign to var, see aliases.zsh for commands
+regex="$@"
+ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$regex" \
 | egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'
 
 # vim: set ft=sh: #

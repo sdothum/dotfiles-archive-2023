@@ -183,8 +183,8 @@
       " shift text up / down
       imap <silent><S-Up>   <ESC>:call <SID>MoveLineUp()<CR>a
       imap <silent><S-Down> <ESC>:call <SID>MoveLineDown()<CR>a
-      nmap <silent><S-Up>   <ESC>:call <SID>MoveLineUp()<CR>
-      nmap <silent><S-Down> <ESC>:call <SID>MoveLineDown()<CR>
+      nmap <silent><S-Up>   :call <SID>MoveLineUp()<CR>
+      nmap <silent><S-Down> :call <SID>MoveLineDown()<CR>
       vmap <silent><S-Up>   <ESC>:call <SID>MoveVisualUp()<CR>
       vmap <silent><S-Down> <ESC>:call <SID>MoveVisualDown()<CR>
 

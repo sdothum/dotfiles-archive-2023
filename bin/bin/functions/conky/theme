@@ -2,7 +2,7 @@
 
 # X11 Desktop
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-
+set -x
 # ........................................................................ Conky
 
 # Conky desktop themer for clock and ring meters
@@ -41,7 +41,7 @@
 
 usage() {
   echo "usage: $(basename $0) theme  paper | ink"
-  echo "usage: $(basename $0) theme  test | light | dark  <hex colour>"
+  echo "usage: $(basename $0) theme  test | contrast | light | dark  <hex colour>"
   echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <13..>,  <hex colours..>"
   exit 1
 }
@@ -49,6 +49,18 @@ usage() {
 conkyrc=$HOME/.conkyrc
 conkylua=$HOME/.conky/conky-rings.lua
 env=$HOME/.config/herbstluftwm/config/ENV
+
+# perceived brightness formula (vs actual luminence)
+# see http://hobbithouseinc.com/vb/color%20contrast.htm
+brightness() {
+  rgb=$(echo "$1" | tr '[a-z]' '[A-Z]')
+  R=$(echo "3 k $(echo $rgb | sed -r 's/(..)..../\1/') FF / 255 0.299 * * p" | dc)
+  G=$(echo "3 k $(echo $rgb | sed -r 's/..(..)../\1/') FF / 255 0.587 * * p" | dc)
+  B=$(echo "3 k $(echo $rgb | sed -r 's/....(..)/\1/') FF / 255 0.114 * * p" | dc)
+  # darker < 128 < lighter
+  [ $(echo "$R $G $B + + 0 k p" | dc | sed 's/\..*//') -lt 128 ]
+}
+
 
 # colour schemes
 rings() {
@@ -94,31 +106,19 @@ hidden() {
 }
 
 colours() {
+  panel $1
   rings $@
-  shift
-  shift
-  shift
+  shift 3
   graphs $@
-  shift
-  shift
+  shift 2
   hidden $@
 }
 
 scheme() {
-  rings $@
-  shift
-  shift
-  shift
+  panel $1
+  colours $@
+  shift 8
   text $@
-  shift
-  shift
-  shift
-  shift
-  shift
-  graphs $@
-  shift
-  shift
-  hidden $@
 }
 
 panel() {
@@ -141,7 +141,6 @@ hexgen() {
   colorI=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-  panel $default_color
 }
 
 tmpbackup() {
@@ -154,6 +153,11 @@ tmpbackup() {
 action=$1
 shift
 case "$action" in
+  contrast) if [ $# -eq 1 ] ;then
+              # contrast theme colors
+              brightness $1 && conky theme light $1 || conky theme dark $1
+            fi ;;
+
   light) if [ $# -eq 1 ] ;then
            hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f18)
            conky theme paper
@@ -170,6 +174,7 @@ case "$action" in
           tmpbackup
           hexgen $1
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+          brightness $default_color && conky theme ink || conky theme paper
           # are we in interactive mode
           if if-no "update $(query theme)" ;then
             exit 1
@@ -188,7 +193,13 @@ case "$action" in
   graphs) [ $# -eq 2 ] && graphs $@ ;;
   text) [ $# -eq 5 ] && text $@ ;;
   hidden) [ $# -eq 3 ] && hidden $@ ;;
-  colo*rs) [ $# -eq 8 ] && colours $@ ;;
+
+  colo*rs) if [ $# -eq 8 ] ;then
+             colours $@
+             # match theme colors
+             brightness $1 && conky theme ink || conky theme paper
+           fi ;;
+
   scheme) [ $# -eq 13 ] && scheme $@ ;;
 
   h | *) usage ;;

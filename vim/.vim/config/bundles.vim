@@ -21,7 +21,6 @@
       Plug 'junegunn/limelight.vim'
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
-      Plug 'kshenoy/vim-signature'
 
     " ........................................................ Buffer management
 
@@ -46,6 +45,7 @@
       Plug 'ervandew/supertab'
       Plug 'Lokaltog/vim-easymotion'
       Plug 'vim-scripts/matchit.zip'
+      Plug 'kshenoy/vim-signature'
 
     " .................................................................. Editing
 

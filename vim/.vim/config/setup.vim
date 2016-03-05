@@ -5,6 +5,8 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    set nocompatible                        " disable vi-compatibility
+
     " .......................................................... OS and hardware
 
       set lazyredraw                        " don't redraw while executing macros
@@ -49,7 +51,7 @@
       " recover last error message
       nmap <leader>e :echo errmsg<CR>
 
-      " clear messages after awhile
+      " clear messages after awhile to keep screen clean and distraction free!
       autocmd cursorhold * echo
 
 

@@ -79,16 +79,6 @@ set_border() {
 
 # ............................................................ Assign background
 
-# perceived brightness formula (vs actual luminence)
-# see http://hobbithouseinc.com/vb/color%20contrast.htm
-brightness() {
-  rgb=$(echo "$1" | tr '[a-z]' '[A-Z]')
-  R=$(echo "3 k $(echo $rgb | sed -r 's/(..)..../\1/') FF / 255 0.299 * * p" | dc)
-  G=$(echo "3 k $(echo $rgb | sed -r 's/..(..)../\1/') FF / 255 0.587 * * p" | dc)
-  B=$(echo "3 k $(echo $rgb | sed -r 's/....(..)/\1/') FF / 255 0.114 * * p" | dc)
-  echo "$R $G $B + + 0 k p" | dc | sed 's/\..*//'
-}
-
 blank() {
   if [ "$*" ] ;then
     color="$1"
@@ -97,11 +87,7 @@ blank() {
   fi
   echo $color >$BACKGROUND.color
   setroot --blank-color "#$color" 2>/dev/null
-  if [ $(brightness $color) -lt 128 ] ;then
-    set_border "$(conky theme light $color)"
-  else
-    set_border "$(conky theme dark $color)"
-  fi
+  set_border "$(conky theme contrast $color)"
 }
 
 color() {
@@ -191,7 +177,9 @@ if ! [ -e $blank ] ;then
   wallpaper=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e "$wallpaper" ] ;then
-    conky theme colours $(cat "$wallpaper")
+    theme=$(cat "$wallpaper")
+    [ $(echo "$theme" | wc -w) -eq 8 ] && conky theme colours $theme \
+                                       || conky theme scheme $theme
   else
     term 'Theme' STACK SHELL walltheme
     pwait walltheme
