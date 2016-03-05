@@ -42,7 +42,7 @@ set -x
 usage() {
   echo "usage: $(basename $0) theme  paper | ink"
   echo "usage: $(basename $0) theme  test | contrast | light | dark  <hex colour>"
-  echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <13..>,  <hex colours..>"
+  echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <8..> <paper|ink>,  <hex colours..>"
   exit 1
 }
 
@@ -118,7 +118,7 @@ scheme() {
   panel $1
   colours $@
   shift 8
-  text $@
+  conky theme $1
 }
 
 panel() {
@@ -176,10 +176,17 @@ case "$action" in
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           brightness $default_color && conky theme ink || conky theme paper
           # are we in interactive mode
-          if if-no "update $(query theme)" ;then
+          theme=$(query theme)
+          if if-no "update $theme" ;then
             exit 1
           else
-            echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$(query theme)
+            echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$theme
+            if if-no "change contrast" ;then
+              exit 1
+            else
+              brightness $default_color && contrast=paper || contrast=ink
+              sed -i "s/$/ $contrast/" $theme
+            fi
           fi
         fi ;;
 
@@ -200,7 +207,7 @@ case "$action" in
              brightness $1 && conky theme ink || conky theme paper
            fi ;;
 
-  scheme) [ $# -eq 13 ] && scheme $@ ;;
+  scheme) [ $# -eq 9 ] && scheme $@ ;;
 
   h | *) usage ;;
 esac
