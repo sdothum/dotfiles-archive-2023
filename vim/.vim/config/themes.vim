@@ -7,12 +7,18 @@
 
     " further distraction free mode settings
     " foreground
-    let g:dfm_fg = '#002b36'              " dark foreground
-    let g:dfm_fg_dark = '#fdf6e3'         " light foreground
-    let g:dfm_proof = '#073642'           " dark foreground
-    let g:dfm_proof_dark = '#eee8d5'      " light foreground
-    let g:dfm_unfocused = '#93a1a1'       " light grey surrounding text content
-    let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
+    " let g:dfm_fg = '#002b36'              " dark foreground
+    " let g:dfm_fg_dark = '#fdf6e3'         " light foreground
+    " let g:dfm_proof = '#073642'           " dark foreground
+    " let g:dfm_proof_dark = '#eee8d5'      " light foreground
+    " let g:dfm_unfocused = '#93a1a1'       " light grey surrounding text content
+    " let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
+    let g:dfm_fg = '#cb4b16'              " dark foreground
+    let g:dfm_fg_dark = '#cb4b16'         " light foreground
+    let g:dfm_proof = '#002b36'           " dark foreground
+    let g:dfm_proof_dark = '#fdf6e3'      " light foreground
+    let g:dfm_unfocused = '#002b36'       " light grey surrounding text content
+    let g:dfm_unfocused_dark = '#fdf6e3'  " dark grey surrounding text content
 
     " background
     let g:dfm_bg = '#fdf6e3'              " solarized light (paper) background
