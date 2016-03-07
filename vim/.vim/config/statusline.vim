@@ -13,7 +13,7 @@
 
     " statusline buffer statistics toggle (0) off (1) on
     let s:code = 0
-    let s:prose = 0
+    let g:prose = 0
 
     " ................................................................ Line info
 
@@ -105,9 +105,9 @@
 
       function! WordCount()
         " plugin command windows bypass autocmds
-        if exists('s:prose')
+        if exists('g:prose')
           " ignore source code word counts
-          if s:prose == 1
+          if g:prose == 1
             return s:WordCount()
           endif
         endif
@@ -115,8 +115,8 @@
       endfunction
 
       " toggle word count manually
-      imap <silent><A-F10> <C-o>:let s:prose = (s:prose == 0 ? 1 : 0)<CR>
-      nmap <silent><A-F10> :let s:prose = (s:prose == 0 ? 1 : 0)<CR>
+      imap <silent><A-F10> <C-o>:let g:prose = (g:prose == 0 ? 1 : 0)<CR>
+      nmap <silent><A-F10> :let g:prose = (g:prose == 0 ? 1 : 0)<CR>
 
     " ........................................................ Special Character
 
@@ -171,8 +171,8 @@
         if !exists('b:statusline_pad_warning')
           let b:statusline_pad_warning = ''
           if &modifiable
-            if exists('s:prose')
-              if s:prose == 0
+            if exists('g:prose')
+              if g:prose == 0
                 if search('[ \t]\+$', 'nw') != 0
                   let b:statusline_pad_warning = '■|'
                 endif
@@ -209,7 +209,7 @@
         " show/hide line statistics
         else
           " toggle line info statistics where word counts are inapplicable
-          if s:prose == 0
+          if g:prose == 0
             let s:code = (s:code == 0 ? 1 : 0)
           endif
         endif
@@ -221,5 +221,31 @@
       nmap <F10>   :call ToggleStatus(0)<CR>
       imap <S-F10> <C-o>:call ToggleStatus(1)<CR>
       nmap <S-F10> :call ToggleStatus(1)<CR>
+
+  " Visibility ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ........................................................ Toggle statusline
+
+      function! ToggleLine()
+        if &filetype =~ g:goyotypes
+          " goyo defines highlight term/gui reverse
+          call ToggleStatus(0)
+          if &laststatus == 2
+            execute 'highlight statusline guibg=' . g:dfm_proof
+            execute 'highlight Normal guibg=' . g:dfm_bg
+            " goyo doesn't play nice with statuslines (understandably) and creates trailing ...
+            set statusline=%{expand('%:t:r')}\ %M\ 
+          else
+            " simply hide statusline content
+            execute 'highlight statusline guibg=' . g:dfm_bg
+          endif
+        else
+          call lightline#toggle()
+        endif
+      endfunction
+
+      " toggle lightline/default vim statusline
+      imap <C-F10> <C-o>:call ToggleLine()<CR>
+      nmap <C-F10> :call ToggleLine()<CR>
 
 " statusline.vim

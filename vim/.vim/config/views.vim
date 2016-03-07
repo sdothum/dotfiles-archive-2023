@@ -58,6 +58,7 @@
       function! LiteType()
         if &filetype =~ g:goyotypes
           call ProseView()
+          call ToggleMode(1)
         else
           call CodeView()
         endif
@@ -157,36 +158,42 @@
 
       endfunction
 
-      function! ToggleMode()
+      function! ToggleMode(focus)
         " toggle between writing and proofing modes
+        " focus (0) toggle (1) to force default dfm writing mode
         if &filetype =~ g:goyotypes
           if &background == 'light'
-            if s:unfocused == g:dfm_unfocused
+            if s:unfocused == g:dfm_unfocused && a:focus == 0
               execute 'Limelight!'
               execute 'highlight Normal guifg=' . g:dfm_proof
+              call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
               let s:unfocused = g:dfm_fg
             else
               execute 'highlight Normal guifg=' . g:dfm_unfocused
+              call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
               let s:unfocused = g:dfm_unfocused
               execute 'Limelight'
             end
           else
-            if s:unfocused == g:dfm_unfocused_dark
+            if s:unfocused == g:dfm_unfocused_dark && a:focus == 0
               execute 'Limelight!'
               execute 'highlight Normal guifg=' . g:dfm_proof_dark
+              call CursorLine(g:dfm_proof_dark, g:dfm_bg_dark, g:dfm_bg_dark)
               let s:unfocused = g:dfm_fg_dark
             else
               execute 'highlight Normal guifg=' . g:dfm_unfocused_dark
+              call CursorLine(g:dfm_fg_dark, g:dfm_bg_dark, g:dfm_bg_dark)
               let s:unfocused = g:dfm_unfocused_dark
               execute 'Limelight'
             end
           endif
+          call HiLite()
         endif
         " restore cursor (fullscreen toggling reverts defaults)
         call Cursor()
       endfunction
 
-      imap <F11> <C-o>:call ToggleMode()<CR>
-      nmap <F11> :call ToggleMode()<CR>
+      imap <F11> <C-o>:call ToggleMode(0)<CR>
+      nmap <F11> :call ToggleMode(0)<CR>
 
 " views.vim

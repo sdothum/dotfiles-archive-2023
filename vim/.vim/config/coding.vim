@@ -63,12 +63,18 @@
       " insert line while disabling auto-commenting
       function! InsertWrap()
         let l:formatoptions = &formatoptions
-        set formatoptions-=croq
+        set formatoptions-=c
+        set formatoptions-=r
+        set formatoptions-=o
+        normal ^
+        let l:pos = col('.')
         normal o
+        " align line indentation
+        execute 'normal a' . repeat(' ', l:pos)
         let &formatoptions = l:formatoptions
       endfunction
 
-      inoremap <C-CR> <C-o>:call InsertWrap()<CR>
+      inoremap <C-Return> <C-o>:call InsertWrap()<CR>
 
     " ......................................................... Toggle line wrap
 

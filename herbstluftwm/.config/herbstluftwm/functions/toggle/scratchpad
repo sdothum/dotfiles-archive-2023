@@ -22,7 +22,9 @@ fi
 
 focus frame
 
-[ -f $scratchpad ] && herbstclient bring $(cat $scratchpad) 2>/dev/null && exit
+# winids appear reusable with scratchpad's being lost sometimes (don't know how)
+# drop through to make certain scratchpad indeed has been recovered 
+[ -f $scratchpad ] && herbstclient bring $(cat $scratchpad) 2>/dev/null
 xdotool search --limit 1 --classname $name windowmap >/dev/null && exit
 
 # cancel out above focus frame

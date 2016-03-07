@@ -217,7 +217,7 @@
 
     " ................................................................ Limelight
 
-      let g:limelight_default_coefficient = 0.66
+      let g:limelight_default_coefficient = 0.8
       let g:limelight_paragraph_span = 0    " include preceding/following paragraphs
       let g:limelight_priority = 1          " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
@@ -415,7 +415,7 @@
       autocmd Filetype vimwiki call VimWikiLink()
 
       " force <BS> mapping.. default assignment overwritten somewhere (auto-pairs ??)
-      " nmap <BS> :call vimwiki#base#go_back_link()<CR>
+      " nmap <BS> :call ToggleMode(0)<CR>
 
       autocmd BufEnter *.wiki   set filetype=vimwiki
       autocmd Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72

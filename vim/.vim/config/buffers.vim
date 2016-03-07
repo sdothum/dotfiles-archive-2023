@@ -63,8 +63,8 @@
       nmap <leader>s    <C-w>v<C-w>l
       nmap <leader>S    <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      nmap <leader>z    <C-w><Bar>
-      nmap <leader>Z    <C-w>_
+      nmap <leader>Z    <C-w><Bar>
+      nmap <leader>z    <C-w>_
       " adjust viewports to the same size
       nmap <leader>=    <C-w>=
 
