@@ -214,11 +214,11 @@
           " goyo defines highlight term/gui reverse
           if &laststatus == 2
             let s:prose = 1
-            execute 'highlight statusline guibg=' . g:dfm_proof
+            execute 'highlight statusline guibg=' . g:dfm_status
             execute 'highlight Normal guibg=' . g:dfm_bg
-            " reset statusline fillchars to spaces !!
-            set fillchars+=stl:\ ,stlnc:\ 
-            set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ 
+            " reset statusline fillchars to spaces (" comment highlights trailing space)
+            set fillchars+=stl:\ ,stlnc:\ "
+            set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ "
           else
             let s:prose = 0
             " simply hide statusline content

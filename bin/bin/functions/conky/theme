@@ -191,9 +191,11 @@ case "$action" in
         fi ;;
 
   paper) text f0f0f0 c0c0c0 909090 707070 505050
+         sed -i --follow-symlinks "/^COLORING=/s/=0x.*/=0xFFFFFF/" $conkylua
          sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#f0f0f0'/" $env ;;
 
   ink) text 000000 202020 303030 404040 505050
+       sed -i --follow-symlinks "/^COLORING=/s/=0x.*/=0x000000/" $conkylua
        sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#000000'/" $env ;;
 
   rings) [ $# -eq 3 ] && rings $@ ;;

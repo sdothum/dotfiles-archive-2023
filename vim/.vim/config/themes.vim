@@ -28,6 +28,10 @@
       let g:dfm_fg_line_light = '#cccccc'   " light grey line numbers
       let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
 
+      " statusline
+      let g:dfm_status_light = '#073642'    " light statusline
+      let g:dfm_status_dark = '#eee8d5'     " dark statusline
+
       function! SetTheme()
         if &background == 'light'
           let g:dfm_fg = g:dfm_fg_light
@@ -37,6 +41,7 @@
           let g:dfm_cursor = g:dfm_cursor_light
           let g:dfm_bg_line = g:dfm_bg_line_light
           let g:dfm_fg_line = g:dfm_fg_line_light
+          let g:dfm_status = g:dfm_status_light
         else
           let g:dfm_fg = g:dfm_fg_dark
           let g:dfm_proof = g:dfm_proof_dark
@@ -45,6 +50,7 @@
           let g:dfm_cursor = g:dfm_cursor_dark
           let g:dfm_bg_line = g:dfm_bg_line_dark
           let g:dfm_fg_line = g:dfm_fg_line_dark
+          let g:dfm_status = g:dfm_status_dark
         endif
       endfunction
 

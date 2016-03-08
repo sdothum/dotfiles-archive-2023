@@ -3,6 +3,11 @@
 " Abbreviations
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
+  " Note: iabbrev <chord> "$
+  "       the trailing comment (doublequote) highlights the required trailing
+  "       space following the iabbrev trigger chord (and prevents the statusline
+  "       trailing space warning :-)
+
   " Composition ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................. Current Date
@@ -14,7 +19,7 @@
 
       " pencil disables abbreviations..
 
-      iabbrev lorem.. 
+      iabbrev lorem.. "
         \Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
         \ do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         \ Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -27,31 +32,31 @@
 
     " ............................................................... Signatures
 
-      iabbrev bye.. 
+      iabbrev bye.. "
         \Bye!<CR>
         \Steven<ESC>
 
-      iabbrev dad.. 
+      iabbrev dad.. "
         \(L)<CR>
         \:D(A):D<ESC>
 
-      iabbrev hope.. 
+      iabbrev hope.. "
         \Hope this helps,<CR>
         \Steven<ESC>
 
-      iabbrev kindest.. 
+      iabbrev kindest.. "
         \Kindest regards,<CR>
         \Steven<ESC>
 
-      iabbrev regards.. 
+      iabbrev regards.. "
         \Regards,<CR>
         \Steven<ESC>
 
-      iabbrev take.. 
+      iabbrev take.. "
         \Take good care,<CR>
         \Steven<ESC>
 
-      iabbrev thanks.. 
+      iabbrev thanks.. "
         \Thanks,<CR>
         \Steven<ESC>
 
@@ -59,7 +64,7 @@
 
     " ........................................................... Script headers
 
-      iabbrev dash.. 
+      iabbrev dash.. "
         \<ESC>ggO
         \#!/usr/bin/dash<CR>
         \<ESC>Go
@@ -67,7 +72,7 @@
         \# vim: set ft=sh: #
         \<ESC>:set ft=sh<CR>gg<down><left>
 
-      iabbrev sh.. 
+      iabbrev sh.. "
         \<ESC>ggO
         \#!/bin/sh<CR>
         \<ESC>Go
@@ -75,7 +80,7 @@
         \# vim: set ft=sh: #
         \<ESC>:set ft=sh<CR>gg<down><left>
 
-      iabbrev fish.. 
+      iabbrev fish.. "
         \<ESC>ggO
         \#!/usr/bin/fish<CR>
         \<ESC>Go
@@ -83,7 +88,7 @@
         \# vim: set ft=fish: #
         \<ESC>:set ft=fish<CR>gg<down><left>
 
-      iabbrev zsh.. 
+      iabbrev zsh.. "
         \<ESC>ggO
         \#!/usr/bin/zsh<CR>
         \<ESC>Go
@@ -91,7 +96,7 @@
         \# vim: set ft=zsh: #
         \<ESC>:set ft=zsh<CR>gg<down><left>
 
-      iabbrev hs.. 
+      iabbrev hs.. "
         \<ESC>ggO
         \#!/usr/bin/ghci<CR>
         \<ESC>Go
@@ -99,7 +104,7 @@
         \# vim: set ft=hs: #
         \<ESC>:set ft=hs<CR>gg<down><left>
 
-      iabbrev rb.. 
+      iabbrev rb.. "
         \<ESC>ggO
         \#!/usr/bin/ruby<CR><BS>
         \# encoding: UTF-8<CR><BS><BS><CR>
@@ -114,7 +119,7 @@
 
      " ........................................................... Vim modifiers
 
-      iabbrev conf.. 
+      iabbrev conf.. "
         \<ESC>Go
         \<CR>
         \# vim: set ft=conf: #
