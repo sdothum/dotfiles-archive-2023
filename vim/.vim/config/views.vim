@@ -84,17 +84,12 @@
       autocmd User GoyoLeave nested call <SID>GoyoLeave()
 
       " toggle goyo / litedfm
-      " offset (0) new or resized window (1) current window
-      function! ToggleGoyo(offset)
+      function! ToggleGoyo()
         if &filetype =~ g:goyotypes
           if !exists('#goyo')
             execute 'LiteDFMClose'
             " width must be greater than textwidth
-            if exists('s:goyo') && a:offset > 0
-              execute 'Goyo ' . (&textwidth + 1) . '+6'
-            else
-              execute 'Goyo ' . (&textwidth + 1) . '+1'
-            endif
+            execute 'Goyo ' . (&textwidth + 1) . '+1'
             " subsequent goyo toggling alters left margin position
             let s:goyo = 1
           else
@@ -113,26 +108,19 @@
         endif
       endfunction
 
-      " imap <S-F11> <C-o>:call ToggleGoyo(1)<CR>
-      " nmap <S-F11> :call ToggleGoyo(1)<CR>
-
       " reset window margins by toggling goyo on and off (<C-w>= leaves number artifacts)
-      function! ResetGoyo(offset)
+      function! ResetGoyo()
         if exists('#goyo')
           " goyo! always returns to first buffer, so remember last
           let l:buffer = bufnr('%')
-          call ToggleGoyo(a:offset)
+          call ToggleGoyo()
           execute 'buffer ' . l:buffer
-          call ToggleGoyo(a:offset)
+          call ToggleGoyo()
         endif
       endfunction
 
-      " reset margins in current window
-      " imap <C-F11> <C-o>:call ResetGoyo(1)<CR>
-      " nmap <C-F11> :call ResetGoyo(1)<CR>
-
       " with window resizing, goyo margins are newly calculated
-      autocmd VimResized * if &filetype =~ g:goyotypes | call ResetGoyo(0) | endif
+      autocmd VimResized * if &filetype =~ g:goyotypes | call ResetGoyo() | endif
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

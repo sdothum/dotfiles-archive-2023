@@ -89,8 +89,15 @@
       " see http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
       " null return suppresses wordcount for non-prose or empty new buffer
       function! WordCount()
-        " trap buffer window
-        if expand('%:t') == 'ControlP'
+        " trap buffer window, visual mode (gives incorrect word count)
+        if expand('%:t') == 'ControlP' || mode() =~ '[vV]'
+          return ''
+        endif
+        if exists('s:code')
+          if s:code == 0 && s:prose != 1
+            return ''
+          endif
+        else
           return ''
         endif
         let b:wordcount = ''
@@ -192,7 +199,6 @@
           endif
         " show/hide line statistics
         else
-          " toggle line info statistics where word counts are inapplicable
           if s:prose == 0
             let s:code = (s:code == 0 ? 1 : 0)
           endif
@@ -207,12 +213,14 @@
         if &filetype =~ g:goyotypes
           " goyo defines highlight term/gui reverse
           if &laststatus == 2
+            let s:prose = 1
             execute 'highlight statusline guibg=' . g:dfm_proof
             execute 'highlight Normal guibg=' . g:dfm_bg
             " reset statusline fillchars to spaces !!
             set fillchars+=stl:\ ,stlnc:\ 
             set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ 
           else
+            let s:prose = 0
             " simply hide statusline content
             execute 'highlight statusline guibg=' . g:dfm_bg
           endif

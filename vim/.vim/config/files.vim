@@ -111,7 +111,7 @@
 
       " open vimwiki ()
       autocmd VimEnter * if argv (0) == 'thedarnedestthing' | bdelete | call OpenWikis() | endif
-      autocmd VimEnter * if &filetype =~ g:goyotypes | call ToggleGoyo(0) | endif
+      autocmd VimEnter * if &filetype =~ g:goyotypes | call ToggleGoyo() | endif
 
     " ................................................................... E-mail
 
