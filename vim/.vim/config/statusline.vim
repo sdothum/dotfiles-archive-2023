@@ -197,8 +197,6 @@
             let s:code = (s:code == 0 ? 1 : 0)
           endif
         endif
-        " clear show message
-        echo ''
       endfunction
 
     " ........................................................ Toggle statusline
@@ -222,7 +220,7 @@
       endfunction
 
       " toggle lightline/default vim statusline
-      imap <F10> <C-o>:call ToggleInfo()<CR>
-      nmap <F10> :call ToggleInfo()<CR>
+      imap <silent><F10> <C-o>:call ToggleInfo()<CR>
+      nmap <silent><F10> :call ToggleInfo()<CR>
 
 " statusline.vim

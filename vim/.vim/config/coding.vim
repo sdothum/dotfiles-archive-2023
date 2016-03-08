@@ -34,7 +34,7 @@
 
       " imap <F7> <C-o>:call ToggleColumn()<CR>
       " nmap <F7> :call ToggleColumn()<CR>
-      nmap <Bar>  :call ToggleColumn()<CR>
+      nmap <silent><Bar>  :call ToggleColumn()<CR>
 
     " ....................................................... Trailing highlight
 
@@ -74,7 +74,7 @@
         let &formatoptions = l:formatoptions
       endfunction
 
-      inoremap <C-Return> <C-o>:call InsertWrap()<CR>
+      inoremap <silent><C-Return> <C-o>:call InsertWrap()<CR>
 
     " ......................................................... Toggle line wrap
 
@@ -118,7 +118,7 @@
             normal j
           endif
         endif
-        normal }kV{
+        normal }lV{
       endfunction
 
       function! ParagraphBelow()
@@ -128,7 +128,7 @@
             normal k
           endif
         endif
-        normal {jV}
+        normal {nV}
       endfunction
 
       " select paragragh
@@ -224,7 +224,7 @@
         endif
       endfunction
 
-      imap <leader><leader>c <C-o>:call ToggleComment()<CR>
+      imap <silent><leader><leader>c <C-o>:call ToggleComment()<CR>
 
     " .......................................................... Code block text
 
@@ -243,8 +243,8 @@
       " inoremap <F5>               <C-o>V:call CodeBlock()<CR>
       " nnoremap <F5>               V:call CodeBlock()<CR>
       " vmap <F5>                   :call CodeBlock()<CR>
-      nnoremap <leader>`            V:call CodeBlock()<CR>
-      vmap <leader>`                :call CodeBlock()<CR>
+      nnoremap <silent><leader>`    V:call CodeBlock()<CR>
+      vmap <silent><leader>`        :call CodeBlock()<CR>
       " some html codes require escaping with <C-o>
       " insert strikeout
       imap <leader><leader><Delete> <<C-o>adel>
