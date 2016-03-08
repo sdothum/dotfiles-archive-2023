@@ -5,53 +5,66 @@
 
   " The look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " further distraction free mode settings
-    " foreground
-    " let g:dfm_fg = '#002b36'              " dark foreground
-    " let g:dfm_fg_dark = '#fdf6e3'         " light foreground
-    " let g:dfm_proof = '#073642'           " dark foreground
-    " let g:dfm_proof_dark = '#eee8d5'      " light foreground
-    " let g:dfm_unfocused = '#93a1a1'       " light grey surrounding text content
-    " let g:dfm_unfocused_dark = '#576565'  " dark grey surrounding text content
-    let g:dfm_fg = '#cb4b16'              " dark foreground
-    let g:dfm_fg_dark = '#cb4b16'         " light foreground
-    let g:dfm_proof = '#002b36'           " dark foreground
-    let g:dfm_proof_dark = '#fdf6e3'      " light foreground
-    let g:dfm_unfocused = '#002b36'       " light grey surrounding text content
-    let g:dfm_unfocused_dark = '#fdf6e3'  " dark grey surrounding text content
+    " .......................................................... Text and cursor
 
-    " background
-    let g:dfm_bg = '#fdf6e3'              " solarized light (paper) background
-    let g:dfm_bg_dark = '#002b36'         " solarized dark background
+      " further distraction free mode settings
+      " foreground
+      let g:dfm_fg_light = '#cb4b16'        " dark foreground
+      let g:dfm_fg_dark = '#cb4b16'         " light foreground
+      let g:dfm_proof_light = '#002b36'     " dark foreground
+      let g:dfm_proof_dark = '#fdf6e3'      " light foreground
+      let g:dfm_unfocused_light = '#002b36' " light grey surrounding text content
+      let g:dfm_unfocused_dark = '#fdf6e3'  " dark grey surrounding text content
 
-    " cursor line
-    let g:dfm_cursor = '#54D4FF'          " ia writer blue cursor
-    let g:dfm_cursor_dark = '#DA4716'     " reddish cursor
-    let g:dfm_bg_line = '#eee8d5'         " solarized light cursorline
-    let g:dfm_bg_line_dark = '#073642'    " solarized dark cursorline
-    let g:dfm_fg_line = '#cccccc'         " light grey line numbers
-    let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
+      " background
+      let g:dfm_bg_light = '#fdf6e3'        " solarized light (paper) background
+      let g:dfm_bg_dark = '#002b36'         " solarized dark background
 
-    " ................................................................ Solarized
+      " cursor line
+      let g:dfm_cursor_light = '#54D4FF'    " ia writer blue cursor
+      let g:dfm_cursor_dark = '#DA4716'     " reddish cursor
+      let g:dfm_bg_line_light = '#eee8d5'   " solarized light cursorline
+      let g:dfm_bg_line_dark = '#073642'    " solarized dark cursorline
+      let g:dfm_fg_line_light = '#cccccc'   " light grey line numbers
+      let g:dfm_fg_line_dark = '#444444'    " dark grey line numbers
+
+      function! SetTheme()
+        if &background == 'light'
+          let g:dfm_fg = g:dfm_fg_light
+          let g:dfm_proof = g:dfm_proof_light
+          let g:dfm_unfocused = g:dfm_unfocused_light
+          let g:dfm_bg = g:dfm_bg_light
+          let g:dfm_cursor = g:dfm_cursor_light
+          let g:dfm_bg_line = g:dfm_bg_line_light
+          let g:dfm_fg_line = g:dfm_fg_line_light
+        else
+          let g:dfm_fg = g:dfm_fg_dark
+          let g:dfm_proof = g:dfm_proof_dark
+          let g:dfm_unfocused = g:dfm_unfocused_dark
+          let g:dfm_bg = g:dfm_bg_dark
+          let g:dfm_cursor = g:dfm_cursor_dark
+          let g:dfm_bg_line = g:dfm_bg_line_dark
+          let g:dfm_fg_line = g:dfm_fg_line_dark
+        endif
+      endfunction
+
+    " .................................................................. Margins
 
       " match marks margin and whitespace colours to background
       function! LiteBackground()
+        execute 'highlight ShowMarksHLl    guibg=' . g:dfm_bg
+        execute 'highlight SignColumn      guibg=' . g:dfm_bg
+        execute 'highlight InsertCursor    guibg=' . g:dfm_cursor         . ' guifg=' . g:dfm_bg
         if &background == 'light'
-          execute 'highlight ShowMarksHLl    guibg=' . g:dfm_bg
-          execute 'highlight SignColumn      guibg=' . g:dfm_bg
-          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg_dark
-          execute 'highlight InsertCursor    guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
-          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
+          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
+          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
         else
-          execute 'highlight ShowMarksHLl    guibg=' . g:dfm_bg_dark
-          execute 'highlight SignColumn      guibg=' . g:dfm_bg_dark
-          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
-          execute 'highlight InsertCursor    guibg=' . g:dfm_cursor_dark . ' guifg=' . g:dfm_bg
-          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor      . ' guifg=' . g:dfm_bg
+          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg_light
+          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
         end
       endfunction
 
@@ -67,6 +80,7 @@
         " 1st usage causes one time initialization error, trap error instead
         call Quietly('LiteDFMClose')
         let &background = (&background == 'dark' ? 'light' : 'dark')
+        call SetTheme()
         call LiteType()
         if exists('#goyo')
           call ToggleHiLite()
@@ -119,21 +133,11 @@
             let s:cursorline = '#000000'
           endif
           if s:contrast == 0
-            " low contrast cursorline
-            if &background == 'light'
-              " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
-              call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-            else
-              call CursorLine(g:dfm_fg_dark, g:dfm_bg_dark, g:dfm_bg_dark)
-            end
+            " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
+            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
           else
-            " high contrast cursorline
-            if &background == 'light'
-              " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
-              call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-            else
-              call CursorLine(g:dfm_fg_dark, g:dfm_bg_dark, g:dfm_bg_dark)
-            end
+            " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
+            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
           endif
           call HiLite()
         endif

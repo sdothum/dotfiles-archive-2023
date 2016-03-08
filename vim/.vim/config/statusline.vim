@@ -3,7 +3,7 @@
 " Statusline
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " Content extensions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Buffer statistics ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " regex list of multibyte characters used for line drawing
     " note: files using other multibyte characters will produce incorrect statistics
@@ -177,7 +177,9 @@
       " recalculate the trailing whitespace warning when idle, and after saving
       autocmd cursorhold,bufwritepost * unlet! b:statusline_pad_warning
 
-    " ......................................................... Statusbar format
+  " Enhanced statusline ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ........................................................ Statusline format
 
       " toggle vimwiki word count or coding line statistics
       function! ToggleStatus()
@@ -199,38 +201,27 @@
         echo ''
       endfunction
 
-  " Visibility ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
     " ........................................................ Toggle statusline
 
       " context sensitive statusline content (prose words, code line statistics)
-      function! ToggleLine()
+      function! ToggleInfo()
         call ToggleStatus()
         if &filetype =~ g:goyotypes
           " goyo defines highlight term/gui reverse
           if &laststatus == 2
-            if &background == 'light'
-              execute 'highlight statusline guibg=' . g:dfm_proof
-              execute 'highlight Normal guibg=' . g:dfm_bg
-            else
-              execute 'highlight statusline guibg=' . g:dfm_proof_dark
-              execute 'highlight Normal guibg=' . g:dfm_bg
-            endif
+            execute 'highlight statusline guibg=' . g:dfm_proof
+            execute 'highlight Normal guibg=' . g:dfm_bg
             " goyo doesn't play nice with statuslines (understandably) and creates trailing ...
             set statusline=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ 
           else
             " simply hide statusline content
-            if &background == 'light'
-              execute 'highlight statusline guibg=' . g:dfm_bg
-            else
-              execute 'highlight statusline guibg=' . g:dfm_bg_dark
-            endif
+            execute 'highlight statusline guibg=' . g:dfm_bg
           endif
         endif
       endfunction
 
       " toggle lightline/default vim statusline
-      imap <F10> <C-o>:call ToggleLine()<CR>
-      nmap <F10> :call ToggleLine()<CR>
+      imap <F10> <C-o>:call ToggleInfo()<CR>
+      nmap <F10> :call ToggleInfo()<CR>
 
 " statusline.vim
