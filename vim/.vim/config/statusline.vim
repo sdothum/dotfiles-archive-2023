@@ -13,7 +13,7 @@
 
     " statusline buffer statistics toggle (0) off (1) on
     let s:code = 0
-    let g:prose = 0
+    let s:prose = 0
 
     " ................................................................ Line info
 
@@ -88,7 +88,7 @@
 
       " see http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
       " null return suppresses wordcount for non-prose or empty new buffer
-      function! s:WordCount()
+      function! WordCount()
         let b:wordcount = ''
         let l:statusmsg = v:statusmsg
         " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
@@ -102,21 +102,6 @@
         call setpos('.', l:position)
         return b:wordcount
       endfunction
-
-      function! WordCount()
-        " plugin command windows bypass autocmds
-        if exists('g:prose')
-          " ignore source code word counts
-          if g:prose == 1
-            return s:WordCount()
-          endif
-        endif
-        return ''
-      endfunction
-
-      " toggle word count manually
-      imap <silent><A-F10> <C-o>:let g:prose = (g:prose == 0 ? 1 : 0)<CR>
-      nmap <silent><A-F10> :let g:prose = (g:prose == 0 ? 1 : 0)<CR>
 
     " ........................................................ Special Character
 
@@ -171,8 +156,8 @@
         if !exists('b:statusline_pad_warning')
           let b:statusline_pad_warning = ''
           if &modifiable
-            if exists('g:prose')
-              if g:prose == 0
+            if exists('s:prose')
+              if s:prose == 0
                 if search('[ \t]\+$', 'nw') != 0
                   let b:statusline_pad_warning = '■|'
                 endif
@@ -190,9 +175,7 @@
 
     " ......................................................... Statusbar format
 
-      " toggle vimwiki word count in statusline (0) current buffer (1) all buffers
-      " or
-      " toggle coding line statistics
+      " toggle vimwiki word count or coding line statistics
       function! ToggleStatus(persistence)
         " show/hide word count info
         if &filetype =~ g:goyotypes
@@ -209,7 +192,7 @@
         " show/hide line statistics
         else
           " toggle line info statistics where word counts are inapplicable
-          if g:prose == 0
+          if s:prose == 0
             let s:code = (s:code == 0 ? 1 : 0)
           endif
         endif
@@ -217,35 +200,38 @@
         echo ''
       endfunction
 
-      imap <F10>   <C-o>:call ToggleStatus(0)<CR>
-      nmap <F10>   :call ToggleStatus(0)<CR>
-      imap <S-F10> <C-o>:call ToggleStatus(1)<CR>
-      nmap <S-F10> :call ToggleStatus(1)<CR>
-
   " Visibility ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................ Toggle statusline
 
+      " context sensitive statusline content (prose words, code line statistics)
       function! ToggleLine()
+        call ToggleStatus(0)
         if &filetype =~ g:goyotypes
           " goyo defines highlight term/gui reverse
-          call ToggleStatus(0)
           if &laststatus == 2
-            execute 'highlight statusline guibg=' . g:dfm_proof
-            execute 'highlight Normal guibg=' . g:dfm_bg
+            if &background == 'light'
+              execute 'highlight statusline guibg=' . g:dfm_proof
+              execute 'highlight Normal guibg=' . g:dfm_bg
+            else
+              execute 'highlight statusline guibg=' . g:dfm_proof_dark
+              execute 'highlight Normal guibg=' . g:dfm_bg
+            endif
             " goyo doesn't play nice with statuslines (understandably) and creates trailing ...
-            set statusline=%{expand('%:t:r')}\ %M\ 
+            set statusline=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ 
           else
             " simply hide statusline content
-            execute 'highlight statusline guibg=' . g:dfm_bg
+            if &background == 'light'
+              execute 'highlight statusline guibg=' . g:dfm_bg
+            else
+              execute 'highlight statusline guibg=' . g:dfm_bg_dark
+            endif
           endif
-        else
-          call lightline#toggle()
         endif
       endfunction
 
       " toggle lightline/default vim statusline
-      imap <C-F10> <C-o>:call ToggleLine()<CR>
-      nmap <C-F10> :call ToggleLine()<CR>
+      imap <F10> <C-o>:call ToggleLine()<CR>
+      nmap <F10> :call ToggleLine()<CR>
 
 " statusline.vim

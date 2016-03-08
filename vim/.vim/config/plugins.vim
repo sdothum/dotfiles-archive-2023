@@ -212,8 +212,8 @@
         \}
 
       " toggle lightline/default vim statusline
-      imap <C-F10> <C-o>:call lightline#toggle()<CR>
-      nmap <C-F10> :call lightline#toggle()<CR>
+      " imap <C-F10> <C-o>:call lightline#toggle()<CR>
+      " nmap <C-F10> :call lightline#toggle()<CR>
 
     " ................................................................ Limelight
 

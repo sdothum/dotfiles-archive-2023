@@ -124,8 +124,8 @@
         endif
       endfunction
 
-      imap <S-F11> <C-o>:call ToggleGoyo(1)<CR>
-      nmap <S-F11> :call ToggleGoyo(1)<CR>
+      " imap <S-F11> <C-o>:call ToggleGoyo(1)<CR>
+      " nmap <S-F11> :call ToggleGoyo(1)<CR>
 
       " reset window margins by toggling goyo on and off (<C-w>= leaves number artifacts)
       function! ResetGoyo(offset)
@@ -139,8 +139,8 @@
       endfunction
 
       " reset margins in current window
-      imap <C-F11> <C-o>:call ResetGoyo(1)<CR>
-      nmap <C-F11> :call ResetGoyo(1)<CR>
+      " imap <C-F11> <C-o>:call ResetGoyo(1)<CR>
+      " nmap <C-F11> :call ResetGoyo(1)<CR>
 
       " with window resizing, goyo margins are newly calculated
       autocmd VimResized * if &filetype =~ g:goyotypes | call ResetGoyo(0) | endif
@@ -162,6 +162,9 @@
         " toggle between writing and proofing modes
         " focus (0) toggle (1) to force default dfm writing mode
         if &filetype =~ g:goyotypes
+          if !exists('s:unfocused')
+            let s:unfocused = g:dfm_unfocused
+          endif
           if &background == 'light'
             if s:unfocused == g:dfm_unfocused && a:focus == 0
               execute 'Limelight!'
@@ -193,7 +196,7 @@
         call Cursor()
       endfunction
 
-      imap <F11> <C-o>:call ToggleMode(0)<CR>
-      nmap <F11> :call ToggleMode(0)<CR>
+      imap <silent><F11> <C-o>:call ToggleMode(0)<CR>
+      nmap <silent><F11> :call ToggleMode(0)<CR>
 
 " views.vim
