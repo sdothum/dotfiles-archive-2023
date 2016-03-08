@@ -211,8 +211,9 @@
           if &laststatus == 2
             execute 'highlight statusline guibg=' . g:dfm_proof
             execute 'highlight Normal guibg=' . g:dfm_bg
-            " goyo doesn't play nice with statuslines (understandably) and creates trailing ...
-            set statusline=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ 
+            " reset statusline fillchars to spaces !!
+            set fillchars+=stl:\ ,stlnc:\ 
+            set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ 
           else
             " simply hide statusline content
             execute 'highlight statusline guibg=' . g:dfm_bg

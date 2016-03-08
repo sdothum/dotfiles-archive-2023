@@ -9,8 +9,8 @@
 
       " further distraction free mode settings
       " foreground
-      let g:dfm_fg_light = '#cb4b16'        " dark foreground
-      let g:dfm_fg_dark = '#cb4b16'         " light foreground
+      let g:dfm_fg_light = '#cb4b16'        " light foreground
+      let g:dfm_fg_dark = '#cb4b16'         " dark foreground
       let g:dfm_proof_light = '#002b36'     " dark foreground
       let g:dfm_proof_dark = '#fdf6e3'      " light foreground
       let g:dfm_unfocused_light = '#002b36' " light grey surrounding text content
