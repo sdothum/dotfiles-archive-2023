@@ -412,11 +412,7 @@
       highlight VimwikiHeader6 guifg=#5f8700
 
       " override highlight link
-      autocmd Filetype vimwiki call VimWikiLink()
-
-      " force <BS> mapping.. default assignment overwritten somewhere (auto-pairs ??)
-      " nmap <BS> :call ToggleMode(0)<CR>
-
+      autocmd Filetype vimwiki  call VimWikiLink()
       autocmd BufEnter *.wiki   set filetype=vimwiki
       autocmd Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       autocmd Filetype vimwiki  setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72

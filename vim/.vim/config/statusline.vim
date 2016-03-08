@@ -89,6 +89,10 @@
       " see http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
       " null return suppresses wordcount for non-prose or empty new buffer
       function! WordCount()
+        " trap buffer window
+        if expand('%:t') == 'ControlP'
+          return ''
+        endif
         let b:wordcount = ''
         let l:statusmsg = v:statusmsg
         " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
@@ -176,15 +180,10 @@
     " ......................................................... Statusbar format
 
       " toggle vimwiki word count or coding line statistics
-      function! ToggleStatus(persistence)
+      function! ToggleStatus()
         " show/hide word count info
         if &filetype =~ g:goyotypes
-          if a:persistence == 0
-            let &laststatus = (&laststatus == 0 ? 2 : 0)
-          else
-            let g:wikistatus = (g:wikistatus == 0 ? 2 : 0)
-            let &laststatus = g:wikistatus
-          endif
+          let &laststatus = (&laststatus == 0 ? 2 : 0)
           " turn off persistence whenever statusline turned off :-)
           if &laststatus == 0
             let g:wikistatus = 0
@@ -206,7 +205,7 @@
 
       " context sensitive statusline content (prose words, code line statistics)
       function! ToggleLine()
-        call ToggleStatus(0)
+        call ToggleStatus()
         if &filetype =~ g:goyotypes
           " goyo defines highlight term/gui reverse
           if &laststatus == 2

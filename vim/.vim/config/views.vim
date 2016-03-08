@@ -58,7 +58,7 @@
       function! LiteType()
         if &filetype =~ g:goyotypes
           call ProseView()
-          call ToggleMode(1)
+          call ToggleView(1)
         else
           call CodeView()
         endif
@@ -114,7 +114,7 @@
             execute 'Goyo!'
             " turn on status when not in goyo view
             call ProseView()
-            call ToggleStatus(0)
+            call ToggleStatus()
             let g:wikistatus = 2
             let &laststatus = g:wikistatus
             execute 'buffer ' . l:buffer
@@ -158,7 +158,7 @@
 
       endfunction
 
-      function! ToggleMode(focus)
+      function! ToggleView(focus)
         " toggle between writing and proofing modes
         " focus (0) toggle (1) to force default dfm writing mode
         if &filetype =~ g:goyotypes
@@ -196,7 +196,7 @@
         call Cursor()
       endfunction
 
-      imap <silent><F11> <C-o>:call ToggleMode(0)<CR>
-      nmap <silent><F11> :call ToggleMode(0)<CR>
+      imap <silent><F11> <C-o>:call ToggleView(0)<CR>
+      nmap <silent><F11> :call ToggleView(0)<CR>
 
 " views.vim
