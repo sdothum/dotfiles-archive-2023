@@ -23,12 +23,7 @@
 
       " vimwiki prose style
       function! ProseView()
-        if exists('#goyo')
-          call s:GoyoEnter()
-        else
-          call s:GoyoLeave()
-          execute 'LiteDFM'
-        endif
+        call s:GoyoEnter()
         set colorcolumn=0
         set noshowmode
         call LiteBackground()
