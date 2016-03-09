@@ -83,9 +83,6 @@
 
     " ............................................................... Word count
 
-      " persistent vimwiki wordcount statusline
-      let g:wikistatus = 0                  " default vimwiki statusline off
-
       " see http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
       " null return suppresses wordcount for non-prose or empty new buffer
       function! WordCount()
@@ -94,11 +91,9 @@
           return ''
         endif
         if exists('s:code')
-          if s:code == 0 && s:prose != 1
+          if s:code == 0 && s:prose == 0
             return ''
           endif
-        else
-          return ''
         endif
         let b:wordcount = ''
         let l:statusmsg = v:statusmsg
@@ -188,20 +183,29 @@
 
     " ........................................................ Statusline format
 
-      " toggle vimwiki word count or coding line statistics
-      function! ToggleStatus()
-        " show/hide word count info
-        if &filetype =~ g:goyotypes
-          let &laststatus = (&laststatus == 0 ? 2 : 0)
-          " turn off persistence whenever statusline turned off :-)
-          if &laststatus == 0
-            let g:wikistatus = 0
-          endif
-        " show/hide line statistics
+      " center prose statusline :-)
+      function! WikiInfo()
+        let s:prose = 1
+        let l:name = (&modified ? '+ ' : '') . expand('%:t:r') . '  ' . WordCount()
+        let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
+        return l:leader . l:name
+      endfunction
+
+      function! HideInfo()
+        " simply hide statusline content
+        execute 'highlight statusline guibg=' . g:dfm_bg
+      endfunction
+
+      function! ShowInfo()
+        if g:wikistatus == 1
+          " reset statusline fillchars to spaces (" comment highlights trailing space)
+          set fillchars+=stl:\ ,stlnc:\ "
+          " set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}%{(&modified\ ?\ '\ +'\ :\ '')}
+          set statusline=%{WikiInfo()}
+          " goyo defines highlight term/gui reverse
+          execute 'highlight statusline guibg=' . g:dfm_status
         else
-          if s:prose == 0
-            let s:code = (s:code == 0 ? 1 : 0)
-          endif
+          call HideInfo()
         endif
       endfunction
 
@@ -209,21 +213,11 @@
 
       " context sensitive statusline content (prose words, code line statistics)
       function! ToggleInfo()
-        call ToggleStatus()
         if &filetype =~ g:goyotypes
-          " goyo defines highlight term/gui reverse
-          if &laststatus == 2
-            let s:prose = 1
-            execute 'highlight statusline guibg=' . g:dfm_status
-            execute 'highlight Normal guibg=' . g:dfm_bg
-            " reset statusline fillchars to spaces (" comment highlights trailing space)
-            set fillchars+=stl:\ ,stlnc:\ "
-            set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}\ %M\ "
-          else
-            let s:prose = 0
-            " simply hide statusline content
-            execute 'highlight statusline guibg=' . g:dfm_bg
-          endif
+          let g:wikistatus = (g:wikistatus == 0 ? 1 : 0)
+          call ShowInfo()
+        else
+          let s:code = (s:code == 0 ? 1 : 0)
         endif
       endfunction
 

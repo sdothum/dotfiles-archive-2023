@@ -9,8 +9,15 @@
 name='Scratchpad'
 scratchpad=$ROOT/herbstluftwm:scratchpad
 
+[ $(pgrep -cf 'toggle scratchpad') -gt 1 ] && exit
+# kill any extra tmux sessions spawned (default 2 processes)..
+kill -KILL $(pgrep -f 'tmux -u -2 -f' | sed '1,2d') 2>/dev/null
+
+winid() {
+  printf '0x%x' $(xdotool search --onlyvisible --limit 1 --classname $name)
+}
+
 if xdotool search --onlyvisible --limit 1 --classname $name >/dev/null ;then
-  # if herbstclient compare monitors.focus.tag = $(herbstclient attr clients.$(cat $scratchpad).tag) ;then
   if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
                   compare monitors.focus.tag = TAG 2>/dev/null ;then
     xdotool search --onlyvisible --limit 1 --classname $name windowunmap >/dev/null
@@ -22,10 +29,17 @@ fi
 
 focus frame
 
-# winids appear reusable with scratchpad's being lost sometimes (don't know how)
-# drop through to make certain scratchpad indeed has been recovered 
-[ -f $scratchpad ] && herbstclient bring $(cat $scratchpad) 2>/dev/null
-xdotool search --limit 1 --classname $name windowmap >/dev/null && exit
+# bring window into focus and verify winid
+if [ -f $scratchpad ] && herbstclient bring $(cat $scratchpad) 2>/dev/null ;then
+  [ "$(cat $scratchpad)" = $(winid) ] && exit
+fi
+
+# recover winid if somehow it differs
+xdotool search --limit 1 --classname $name windowmap >/dev/null
+if [ $(winid) != '0x0' ] ;then
+  echo $(winid) >$scratchpad
+  exit
+fi
 
 # cancel out above focus frame
 focus frame

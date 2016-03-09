@@ -23,9 +23,8 @@
 
       " vimwiki prose style
       function! ProseView()
+        " initialize goyo margins etc.
         call s:GoyoEnter()
-        set colorcolumn=0
-        set noshowmode
         call LiteBackground()
         call HiLite()
         " hide line numbers
@@ -33,8 +32,6 @@
         execute 'highlight CursorLineNr guifg=' . g:dfm_bg . ' guibg=' . g:dfm_bg
         let s:unfocused = g:dfm_unfocused
         call Cursor()
-        " persistent word count display, see ToggleStatus
-        let &laststatus = g:wikistatus
         execute 'Limelight'
       endfunction
 
@@ -42,7 +39,7 @@
         call SetTheme()
         if &filetype =~ g:goyotypes
           call ProseView()
-          call ToggleProof(1)
+          call DfmWriting()
         else
           call CodeView()
         endif
@@ -63,6 +60,13 @@
         set numberwidth=1
         set foldcolumn=0
         set nonumber
+        set colorcolumn=0
+        set noshowmode
+        if !exists('g:wikistatus')
+          let g:wikistatus=1
+        endif
+        call DfmWriting()
+        call ShowInfo()
       endfunction
 
       " reset vimwiki link color
@@ -81,12 +85,11 @@
       " toggle goyo / litedfm
       function! ToggleGoyo()
         if &filetype =~ g:goyotypes
+          " goyo launched yet?
           if !exists('#goyo')
             execute 'LiteDFMClose'
-            " width must be greater than textwidth
-            execute 'Goyo ' . (&textwidth + 1) . '+1'
-            " subsequent goyo toggling alters left margin position
-            let s:goyo = 1
+            " width must be greater than textwidth, center vertical (to accomodate statusline)
+            execute 'Goyo ' . (&textwidth + 1) . '+1x+1'
           else
             " goyo! always returns to first buffer, so remember last
             let l:buffer = bufnr('%')
@@ -94,8 +97,6 @@
             " turn on status when not in goyo view
             call ProseView()
             call ToggleStatus()
-            let g:wikistatus = 2
-            let &laststatus = g:wikistatus
             execute 'buffer ' . l:buffer
           endif
           " force spellcheck as autocmd sequences don't seem to set this consistently
@@ -125,23 +126,28 @@
         execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
       endfunction
 
-      function! ToggleProof(focus)
+      function! DfmWriting()
+        execute 'highlight Normal guifg=' . g:dfm_unfocused
+        call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
+        let s:unfocused = g:dfm_unfocused
+        execute 'Limelight'
+        call ShowInfo()
+      endfunction
+
+      function! ToggleProof()
         " toggle between writing and proofing modes
-        " focus (0) toggle (1) to force default dfm writing mode
         if &filetype =~ g:goyotypes
           if !exists('s:unfocused')
             let s:unfocused = g:dfm_unfocused
           endif
-          if s:unfocused == g:dfm_unfocused && a:focus == 0
+          if s:unfocused == g:dfm_unfocused
             execute 'Limelight!'
             execute 'highlight Normal guifg=' . g:dfm_proof
             call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
             let s:unfocused = g:dfm_fg
+            call HideInfo()
           else
-            execute 'highlight Normal guifg=' . g:dfm_unfocused
-            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-            let s:unfocused = g:dfm_unfocused
-            execute 'Limelight'
+            call DfmWriting()
           end
           call HiLite()
         endif
@@ -149,7 +155,7 @@
         call Cursor()
       endfunction
 
-      imap <silent><F11> <C-o>:call ToggleProof(0)<CR>
-      nmap <silent><F11> :call ToggleProof(0)<CR>
+      imap <silent><F11> <C-o>:call ToggleProof()<CR>
+      nmap <silent><F11> :call ToggleProof()<CR>
 
 " views.vim
