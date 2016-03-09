@@ -51,20 +51,16 @@
         \, ['text', 'text', 1, 0]
         \]
 
-      " set buffer attributes
+      " set buffer attributes by known filetypes
       function! CheckFiletype()
-        " by name structure
         for [name, filetype, modifiable, wordcount] in s:nametypes
-          " known filetypes can be processed by filename e.g. "mkd" readme files
           if expand('%') =~ name
-            " assign unknown filetype
             let &filetype = (&filetype == '' ? filetype : &filetype)
             let &modifiable = modifiable
             break
           endif
         endfor
-        " by file content if not autodetected
-        if &filetype == ''
+        if &filetype == ''                  " by file content if not autodetected
           for [content, filetype, modifiable, readonly] in s:contenttypes
             if system('file -i ' . expand('%') . '|cut -d: -f2') =~ content
               let &filetype = filetype
@@ -98,12 +94,10 @@
       function! OpenWikis()
         " new 'maxhi' option is still a bit buggy
         redir! >/tmp/vim.log
-        " skip index 1 "journal" wiki
-        for index in reverse(range(2, len(g:vimwiki_list)))
+        for index in reverse(range(2, len(g:vimwiki_list))) " skip journal" wiki(1)
           call Wiki(index)
         endfor
-        " reset cursorline (for last open for some reason..)
-        if &filetype =~ g:goyotypes
+        if &filetype =~ g:goyotypes         " reset cursorline (for last open for some reason..)
           call HiLite()
         endif
         redir END
@@ -116,8 +110,7 @@
     " ................................................................... E-mail
 
       function! ComposeMail()
-        " set default cursorline highlight
-        call SetTheme()
+        call SetTheme()                     " set default cursorline highlight
         call ProseView()
         " email has blank lines inserted externally (via sed) for replys to
         " avoid the previously messy and unpredictable editing mode vim commands

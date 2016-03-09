@@ -56,11 +56,9 @@
 
     " ................................................................... Cursor
 
-      " see functions.vim
       set cursorline                        " highlight current line
 
-      " mode aware cursors, see solarized functions.vim
-      set guicursor=a:block
+      set guicursor=a:block                 " mode aware cursors, see solarized functions.vim
       set guicursor+=o:hor50-Cursor
       set guicursor+=n:Cursor
       set guicursor+=i-ci-sm:ver25-InsertCursor
@@ -119,8 +117,8 @@
     " ...................................................... White space markers
 
       set nolist                           " display tabs and trailing spaces visually
-      " Display tabs and trailing spaces visually
       set listchars="tab:▸\<Space>"
+
       " set listchars+=trail:_
       set listchars+=trail:·
       set listchars+=nbsp:.

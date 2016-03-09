@@ -10,12 +10,11 @@
       " column list must end in [0]
       let s:margins = [45, 72, &textwidth, g:linewidth, 0]
 
-      " toggle colorcolumns
+      " toggle colorcolumns, add 1st non-blank character in current line to margins list :-)
       function! ToggleColumn()
-        " add 1st non-blank character in current line to margins list :-)
         if getline(line('.')) != ''
           if index(s:margins, col('.')) == -1
-            let s:margins = uniq(SortNumbers([col('.')]+s:margins[:-2])) + [0]
+            let s:margins    = uniq(SortNumbers([col('.')]+s:margins[:-2])) + [0]
             let &colorcolumn = col('.')
             return
           endif
@@ -24,12 +23,11 @@
           let &colorcolumn = col('.')
         endif
         execute 'let l:index = index(s:margins,' . &colorcolumn . ') + 1'
-        " weird problem with if test so simply loop list! :-o
-        " if l:index > len(s:margins)
+        " if l:index > len(s:margins)       " weird problem with if test so simply loop list!
         "   let l:index = 0
         " endif
         " let &colorcolumn = s:margins[l:index]
-        let &colorcolumn = (s:margins+s:margins)[l:index]
+        let &colorcolumn   = (s:margins+s:margins)[l:index]
       endfunction
 
       " imap <F7> <C-o>:call ToggleColumn()<CR>
@@ -161,29 +159,29 @@
       endfunction
 
       function! s:MoveLineOrVisualUp(line_getter, range)
-        let l_num = line(a:line_getter)
-        if l_num - v:count1 - 1 < 0
-          let move_arg = '0'
+        let l:line = line(a:line_getter)
+        if l:line - v:count1 - 1 < 0
+          let l:move = '0'
         else
-          let move_arg = a:line_getter . ' -' . (v:count1 + 1)
+          let l:move = a:line_getter . ' -' . (v:count1 + 1)
         endif
-        call s:MoveLineOrVisualUpOrDown(a:range . 'move ' . move_arg)
+        call s:MoveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
       endfunction
 
       function! s:MoveLineOrVisualDown(line_getter, range)
-        let l_num = line(a:line_getter)
-        if l_num + v:count1 > line('$')
-          let move_arg = '$'
+        let l:line = line(a:line_getter)
+        if l:line + v:count1 > line('$')
+          let l:move = '$'
         else
-          let move_arg = a:line_getter . ' +' . v:count1
+          let l:move = a:line_getter . ' +' . v:count1
         endif
-        call s:MoveLineOrVisualUpOrDown(a:range . 'move ' . move_arg)
+        call s:MoveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
       endfunction
 
-      function! s:MoveLineOrVisualUpOrDown(move_arg)
-        let col_num = virtcol('.')
-        execute 'silent! ' . a:move_arg
-        execute 'normal! ' . col_num . '|'
+      function! s:MoveLineOrVisualUpOrDown(move)
+        let l:col = virtcol('.')
+        execute 'silent! ' . a:move
+        execute 'normal! ' . l:col . '|'
       endfunction
 
       " shift text up / down

@@ -21,7 +21,7 @@
 
     " ................................................................... Leader
 
-      let mapleader = "\<Space>"            " remap <leader> a la spacemacs
+      let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
       let g:mapleader = "\<Space>"
 
       " non-latent space insertion (for lining up text, conflicting leader sequences, etc.)
@@ -76,8 +76,7 @@
 
     " ..................................................................... Help
 
-      " open help in maximum horizontal split
-      if $HOST == 'monad'
+      if $HOST == 'monad'                   " open help in maximum horizontal split
         autocmd BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
       endif
 

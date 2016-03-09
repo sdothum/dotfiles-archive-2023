@@ -23,7 +23,6 @@
 
       " vimwiki prose style
       function! ProseView()
-        " initialize goyo margins etc.
         call s:GoyoEnter()
         call LiteBackground()
         call HiLite()
@@ -53,7 +52,6 @@
     " .......................................................... Goyo prose view
 
       " goyo initialization hooks
-      " undo lite-dfm settings
       function! s:GoyoEnter()
         " silent !tmux set status off
         set scrolloff=999
@@ -62,21 +60,20 @@
         set nonumber
         set colorcolumn=0
         set noshowmode
+        set fillchars-=stl:.                " remove statusline fillchars '.' set by goyo.vim
+        " set fillchars+=stl:\ "
         if !exists('g:wikistatus')
-          let g:wikistatus=1
+          let g:wikistatus = 1
         endif
         call DfmWriting()
-        call ShowInfo()
       endfunction
 
       " reset vimwiki link color
       function! s:GoyoLeave()
         execute 'Limelight!'
-        " silent !tmux set status on
-        let &scrolloff = g:scrolloff
+        let &scrolloff = g:scrolloff        " silent !tmux set status on
         set number
-        " restore vimwiki link
-        call VimWikiLink()
+        call VimWikiLink()                  " restore vimwiki link
       endfunction
 
       autocmd User GoyoEnter nested call <SID>GoyoEnter()
@@ -85,30 +82,24 @@
       " toggle goyo / litedfm
       function! ToggleGoyo()
         if &filetype =~ g:goyotypes
-          " goyo launched yet?
-          if !exists('#goyo')
+          if !exists('#goyo')               " goyo launched yet?
             execute 'LiteDFMClose'
             " width must be greater than textwidth, center vertical (to accomodate statusline)
             execute 'Goyo ' . (&textwidth + 1) . '+1x+1'
           else
-            " goyo! always returns to first buffer, so remember last
-            let l:buffer = bufnr('%')
+            let l:buffer = bufnr('%')       " goyo! always returns to first buffer, so remember last
             execute 'Goyo!'
-            " turn on status when not in goyo view
-            call ProseView()
-            call ToggleStatus()
+            call ProseView()                " turn on status when not in goyo view
             execute 'buffer ' . l:buffer
           endif
-          " force spellcheck as autocmd sequences don't seem to set this consistently
-          set spell
+          set spell                         " force spellcheck
         endif
       endfunction
 
       " reset window margins by toggling goyo on and off (<C-w>= leaves number artifacts)
       function! ResetGoyo()
         if exists('#goyo')
-          " goyo! always returns to first buffer, so remember last
-          let l:buffer = bufnr('%')
+          let l:buffer = bufnr('%')         " goyo! always returns to first buffer, so remember last
           call ToggleGoyo()
           execute 'buffer ' . l:buffer
           call ToggleGoyo()
@@ -131,12 +122,11 @@
         call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
         let s:unfocused = g:dfm_unfocused
         execute 'Limelight'
-        call ShowInfo()
+        call ShowInfo(0)
       endfunction
 
       function! ToggleProof()
-        " toggle between writing and proofing modes
-        if &filetype =~ g:goyotypes
+        if &filetype =~ g:goyotypes         " toggle between writing and proofing modes
           if !exists('s:unfocused')
             let s:unfocused = g:dfm_unfocused
           endif
@@ -145,14 +135,13 @@
             execute 'highlight Normal guifg=' . g:dfm_proof
             call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
             let s:unfocused = g:dfm_fg
-            call HideInfo()
+            call ShowInfo(1)
           else
             call DfmWriting()
           end
           call HiLite()
         endif
-        " restore cursor (fullscreen toggling reverts defaults)
-        call Cursor()
+        call Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
       endfunction
 
       imap <silent><F11> <C-o>:call ToggleProof()<CR>

@@ -9,15 +9,15 @@
 
     " ................................................................ Underline
 
-      " insert underline
-      " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+      " example: draw underline
+      " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+       
       function! Underline(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           normal ^
           let l:col = virtcol('.')
           execute 'normal yypVr' . a:delimiter
-          " blank to margin
-          if l:col > 1
+          if l:col > 1                      " blank to margin
             execute 'normal ' . l:col . 'r '
           endif
           " prefix lua/haskell comment to avoid potential delimiter conflict
@@ -52,28 +52,26 @@
 
     " .................................................................... Ruler
 
-      " insert ruler
+      " example: draw ruler
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
       " note: to insert a ruler on an empty line (virtual column position), add a <space>
       " character, else in insert mode, the ruler will positioned using column 1
+       
       function! Drawline(delimiter)
-        " insert dummy mark line if on blank line
-        if matchstr(getline(line('.')), '\S') == ''
+        if matchstr(getline(line('.')), '\S') == '' " insert dummy mark line if on blank line
           let l:mark = 1
           normal $RMark
         else
           let l:mark = 0
         endif
         call Underline(a:delimiter)
-        " remove temporary mark
-        if l:mark > 0
+        if l:mark > 0                       " remove temporary mark
           normal kdd
         endif
         normal $
-        if virtcol('.') < g:linewidth
-          " for mirrored left/right margin spacing
+        if virtcol('.') < g:linewidth       " for mirrored left/right margin spacing
           " let l:col = g:linewidth - virtcol('.') - l:col + 1
-          let l:col = g:linewidth - virtcol('.')
+          let l:col   = g:linewidth - virtcol('.')
           execute 'normal ' . l:col . 'a' . a:delimiter
         endif
         normal ^
@@ -86,7 +84,8 @@
 
     " .................................................................. Trailer
 
-      " append trailer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      " example: append trailer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+       
       function! AppendTrailer(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing trailer
@@ -97,8 +96,7 @@
           normal $
           let l:col = g:linewidth - virtcol('.') - 1
           if l:col > 0
-            " suppress potential comment line wrapping
-            set formatoptions-=c
+            set formatoptions-=c            " suppress potential comment line wrapping
             execute 'normal a '
             execute 'normal ' . l:col . 'a' . a:delimiter
             set formatoptions+=c
@@ -125,7 +123,8 @@
 
     " ................................................................... Leader
 
-      " .......................................................... Insert leader
+      " ................................................. example: insert leader
+       
       function! InsertLeader(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader
@@ -163,16 +162,14 @@
 
       function! RightJustify()
         if matchstr(getline(line('.')), '\S') > ''
-          " remove existing leader
-          if matchstr(getline(line('.')), '^ *') > ''
+          if matchstr(getline(line('.')), '^ *') > '' " remove existing leader
             " execute 'normal 0vwhd'
             execute 'normal 0vwmd'
           endif
           normal $
           let l:col = g:linewidth - virtcol('.') - 1
           if l:col > 0
-            " suppress potential comment line wrapping
-            set formatoptions-=c
+            set formatoptions-=c            " suppress potential comment line wrapping
             normal ^
             execute 'normal ' . l:col . 'i '
             execute 'normal a '

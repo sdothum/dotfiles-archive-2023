@@ -9,10 +9,9 @@
     " note: files using other multibyte characters will produce incorrect statistics
     let s:indicators = '▶■‾↑'               " multibyte statusline indicators
     let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
-    let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
+    let s:ascii      = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
-    " statusline buffer statistics toggle (0) off (1) on
-    let s:code = 0
+    let s:code  = 0                         " statusline buffer statistics toggle (0) off (1) on
     let s:prose = 0
 
     " ................................................................ Line info
@@ -55,9 +54,7 @@
 
       " find the median of the given array of numbers
       function! s:Median(nums)
-        " original code incorrectly sorted by text
-        let l:nums = SortNumbers(a:nums)
-        " echo l:nums
+        let l:nums = SortNumbers(a:nums)    " original code incorrectly sorted by text
         let l:size = len(l:nums)
         if l:size % 2 == 1
           let l:middle = (l:size-1)/2
@@ -97,8 +94,7 @@
         endif
         let b:wordcount = ''
         let l:statusmsg = v:statusmsg
-        " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
-        let l:position = getpos('.')
+        let l:position  = getpos('.')       " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
         execute "silent normal g\<C-g>"
         if v:statusmsg != '--No lines in buffer--'
           let b:wordcount = str2nr(split(v:statusmsg)[11])
@@ -112,17 +108,14 @@
     " ........................................................ Special Character
 
       function! SpecialChar()
-        " getline() test fails on switch into insert mode
-        if mode() == 'n'
-          " ignore newline (is NUL)
-          if getline(line('.')) != ''
+        if mode() == 'n'                    " getline() test fails on switch into insert mode
+          if getline(line('.')) != ''       " ignore newline (is NUL)
             let l:char = getline('.')[col('.')-1]
-            " not interested in ascii keyboard characters
+            " show hex value, not interested in ascii keyboard characters
             if l:char !~ s:ascii && l:char != "'"
               let l:statusmsg = v:statusmsg
               normal ga
-              " show hex value :-)
-              let l:hex = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
+              let l:hex       = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
               let v:statusmsg = l:statusmsg
               " clear ga information!
               echo ''
@@ -136,10 +129,9 @@
     " ................................................................. Warnings
 
       " see https://github.com/scrooloose/vimfiles/blob/master/vimrc#L78
-      " inconsistent tab warning
+      " inconsistent tab warning, return '&expandtab' if &expandtab is set wrong
+      " return '|▶' if spaces and tabs are used to indent
       function! Indent()
-        " return '&expandtab' if &expandtab is set wrong
-        " return '|▶' if spaces and tabs are used to indent
         if !exists('b:statusline_tab_warning')
           let b:statusline_tab_warning = ''
           if &modifiable
@@ -156,9 +148,8 @@
         return b:statusline_tab_warning
       endfunction
 
-      " trailing spaces warning
+      " trailing spaces warning, return '■|' if trailing spaces/tabs are present
       function! Spaces()
-        " return '■|' if trailing spaces/tabs are present
         if !exists('b:statusline_pad_warning')
           let b:statusline_pad_warning = ''
           if &modifiable
@@ -183,29 +174,28 @@
 
     " ........................................................ Statusline format
 
-      " center prose statusline :-)
-      function! WikiInfo()
+      " center dfm indicator / proofing statusline
+      function! WikiInfo(proof)
         let s:prose = 1
-        let l:name = (&modified ? '+ ' : '') . expand('%:t:r') . '  ' . WordCount()
+        if a:proof == 0
+          let l:name = (&modified ? '' : '')
+        else
+          let l:name = (&modified ? '+ ' : '') . expand('%:t:r') . '  ' . WordCount()
+        endif
         let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
         return l:leader . l:name
       endfunction
 
-      function! HideInfo()
-        " simply hide statusline content
-        execute 'highlight statusline guibg=' . g:dfm_bg
-      endfunction
-
-      function! ShowInfo()
+      " see views.vim
+      function! ShowInfo(proof)
         if g:wikistatus == 1
-          " reset statusline fillchars to spaces (" comment highlights trailing space)
-          set fillchars+=stl:\ ,stlnc:\ "
           " set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}%{(&modified\ ?\ '\ +'\ :\ '')}
-          set statusline=%{WikiInfo()}
+          execute 'set statusline=%{WikiInfo(' . a:proof . ')}'
           " goyo defines highlight term/gui reverse
           execute 'highlight statusline guibg=' . g:dfm_status
         else
-          call HideInfo()
+          " simply hide statusline content
+          execute 'highlight statusline guibg=' . g:dfm_bg
         endif
       endfunction
 
@@ -215,7 +205,7 @@
       function! ToggleInfo()
         if &filetype =~ g:goyotypes
           let g:wikistatus = (g:wikistatus == 0 ? 1 : 0)
-          call ShowInfo()
+          call ShowInfo(0)
         else
           let s:code = (s:code == 0 ? 1 : 0)
         endif

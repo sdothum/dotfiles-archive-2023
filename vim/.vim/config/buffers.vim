@@ -53,34 +53,34 @@
     " .......................................................... Window handling
 
       " kill (close) current window
-      nmap <leader>q    <C-w>q
+      nmap <leader>q   <C-w>q
       " close all other windows
-      nmap <leader>Q    <C-w>o
+      nmap <leader>Q   <C-w>o
 
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      nmap <leader>s    <C-w>v<C-w>l
-      nmap <leader>S    <C-w>s<C-w>l
+      nmap <leader>s   <C-w>v<C-w>l
+      nmap <leader>S   <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      nmap <leader>Z    <C-w><Bar>
-      nmap <leader>z    <C-w>_
+      nmap <leader>Z   <C-w><Bar>
+      nmap <leader>z   <C-w>_
       " adjust viewports to the same size
-      nmap <leader>=    <C-w>=
+      nmap <leader>=   <C-w>=
 
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
       " switch to left / right split
-      " nmap <C-m>      <C-w>h
-      " nmap <C-e>      <C-w>l
-      nmap <C-S-Left>   <C-w>h
-      nmap <C-S-Right>  <C-w>l
+      " nmap <C-m>     <C-w>h
+      " nmap <C-e>     <C-w>l
+      nmap <C-S-Left>  <C-w>h
+      nmap <C-S-Right> <C-w>l
       " switch to top / bottom split
-      " nmap <C-l>      <C-w>k
-      " nmap <C-n>      <C-w>j
-      nmap <C-S-Up>     <C-w>k
-      nmap <C-S-Down>   <C-w>j
+      " nmap <C-l>     <C-w>k
+      " nmap <C-n>     <C-w>j
+      nmap <C-S-Up>    <C-w>k
+      nmap <C-S-Down>  <C-w>j
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
