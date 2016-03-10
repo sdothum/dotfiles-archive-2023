@@ -81,6 +81,7 @@ vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb
 vim :: $HOME/.vimrc $HOME/.vim/config/*.vim
 vim settings :: $HOME/.vimrc $(grep -L 'function!' $HOME/.vim/config/*.vim)
 vim functions :: $(grep -l 'function!' $HOME/.vim/config/*.vim)
+vim snippets :: $HOME/.vim/snippets/*
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/minimal.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
 www website :: $(find -L /srv/http/thedarnedestthing.com/application -regextype posix-extended -regex '.*(rb|slim)')

@@ -11,8 +11,8 @@
     let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
     let s:ascii      = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
-    let s:code  = 0                         " statusline buffer statistics toggle (0) off (1) on
-    let s:prose = 0
+    let s:code       = 0                    " statusline buffer statistics toggle (0) off (1) on
+    let s:prose      = 0
 
     " ................................................................ Line info
 

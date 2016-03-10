@@ -22,14 +22,14 @@
     " .................................................. Buffer closing / saving
 
       " close buffer
-      nmap <leader>d    :bdelete!<CR>
+      nmap <silent><leader>d    :silent bdelete!<CR>
       " Fast saving
-      nmap <leader>w    :write!<CR>
+      nmap <silent><leader>w    :silent write!<CR>
       " sudo save
-      nmap <leader>W    :w !sudo tee % >/dev/null
+      nmap <silent><leader>W    :w !sudo tee % >/dev/null
       " (write and) close all buffers
-      nmap <leader>zz   :wqall!<CR>
-      nmap <leader>qq   :qall!<CR>
+      nmap <silent><leader>zz   :silent wqall!<CR>
+      nmap <silent><leader>qq   :silent qall!<CR>
 
       " save on losing focus
       autocmd FocusLost * silent! :wall
@@ -98,15 +98,15 @@
     " ........................................................... Folding levels
 
       " 'f' key, not Function key!
-      nmap <leader>f0 :set foldlevel=0<CR>
-      nmap <leader>f1 :set foldlevel=1<CR>
-      nmap <leader>f2 :set foldlevel=2<CR>
-      nmap <leader>f3 :set foldlevel=3<CR>
-      nmap <leader>f4 :set foldlevel=4<CR>
-      nmap <leader>f5 :set foldlevel=5<CR>
-      nmap <leader>f6 :set foldlevel=6<CR>
-      nmap <leader>f7 :set foldlevel=7<CR>
-      nmap <leader>f8 :set foldlevel=8<CR>
-      nmap <leader>f9 :set foldlevel=9<CR>
+      nmap <silent><leader>f0 :set foldlevel=0<CR>
+      nmap <silent><leader>f1 :set foldlevel=1<CR>
+      nmap <silent><leader>f2 :set foldlevel=2<CR>
+      nmap <silent><leader>f3 :set foldlevel=3<CR>
+      nmap <silent><leader>f4 :set foldlevel=4<CR>
+      nmap <silent><leader>f5 :set foldlevel=5<CR>
+      nmap <silent><leader>f6 :set foldlevel=6<CR>
+      nmap <silent><leader>f7 :set foldlevel=7<CR>
+      nmap <silent><leader>f8 :set foldlevel=8<CR>
+      nmap <silent><leader>f9 :set foldlevel=9<CR>
 
 " buffers.vim

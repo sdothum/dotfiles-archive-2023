@@ -17,8 +17,8 @@
     " ...................................................... Trailing whitespace
 
       " strip all trailing whitespace in the current file
-      " nmap <C-F2>                :%s/\s\+$//<CR>:let @/=""<CR>
-      nmap <leader><Space><Delete> :%s/\s\+$//<CR>:let @/=""<CR>
+      " nmap <C-F2>                :silent %s/\s\+$//<CR>:silent let @/=""<CR>
+      nmap <leader><Space><Delete> :silent %s/\s\+$//<CR>:silent let @/=""<CR>
 
     " ...................................................... Reformat paragraghs
 
@@ -33,8 +33,8 @@
       " nnoremap <S-F4>  {gq}j
       nnoremap <leader>[ {gq}j
       " add trailing space to paragragh lines
-      " vnoremap <S-F4>            V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
-      vnoremap <leader>] V:s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      " vnoremap <S-F4>  V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      vnoremap <leader>] V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -68,16 +68,16 @@
 
       :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
       :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
-      " nmap <F3>                        :retab<CR>
-      " nmap <silent><C-F3>              :Space2Tab<CR>
-      " vmap <silent><C-F3>              :Space2Tab<CR>
-      " nmap <silent><S-F3>              :Tab2Space<CR>
-      " vmap <silent><S-F3>              :Tab2Space<CR>
-      nmap <leader><tab>                 :retab<CR>
-      nmap <silent><leader><leader><tab> :Space2Tab<CR>
-      vmap <silent><leader><leader><tab> :Space2Tab<CR>
-      nmap <silent><leader><tab><tab>    :Tab2Space<CR>
-      vmap <silent><leader><tab><tab>    :Tab2Space<CR>
+      " nmap <F3>                        :silent retab<CR>
+      " nmap <silent><C-F3>              :silent Space2Tab<CR>
+      " vmap <silent><C-F3>              :silent Space2Tab<CR>
+      " nmap <silent><S-F3>              :silent Tab2Space<CR>
+      " vmap <silent><S-F3>              :silent Tab2Space<CR>
+      nmap <silent><leader><tab>         :silent retab<CR>
+      nmap <silent><leader><leader><tab> :silent Space2Tab<CR>
+      vmap <silent><leader><leader><tab> :silent Space2Tab<CR>
+      nmap <silent><leader><tab><tab>    :silent Tab2Space<CR>
+      vmap <silent><leader><tab><tab>    :silent Tab2Space<CR>
 
   " Line manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -91,17 +91,17 @@
       inoremap <S-CR>                  <CR><C-o>O<Tab>
 
       " break line (in .wiki)
-      nnoremap <silent><leader><Enter> :set paste<CR>i<CR><ESC>:set nopaste<CR>i
+      nnoremap <silent><leader><Enter> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
 
       " insert blank line above/below
-      nnoremap <silent><leader><Up>    :set paste<CR>m`O<Esc>``:set nopaste<CR>
-      nnoremap <silent><leader><Down>  :set paste<CR>m`o<Esc>``:set nopaste<CR>
+      nnoremap <silent><leader><Up>    :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
+      nnoremap <silent><leader><Down>  :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
 
     " .............................................................. Delete line
 
       " delete blank line above/below
-      nnoremap <silent><C-Up>          m`:silent -g/\m^\s*$/d<CR>``:nohlsearch<CR>
-      nnoremap <silent><C-Down>        m`:silent +g/\m^\s*$/d<CR>``:nohlsearch<CR>
+      nnoremap <silent><C-Up>          m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Down>        m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
   " Copying and pasting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
