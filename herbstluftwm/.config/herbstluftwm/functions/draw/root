@@ -99,9 +99,9 @@ select_blank() {
   time=5 notify 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
-  /usr/bin/feh -B black --scale-down -r --start-at $(lname $BACKGROUND) \
+  /usr/bin/feh -B black --scale-down -r \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
-               ${BACKGROUND%/default}/
+               --start-at $(lname $BACKGROUND) $(find ${BACKGROUND%/default}/ -name '*.png')
   blank $(ls -l $BACKGROUND | cut -d'>' -f2 | sed -r 's|.*/(.*).png|\1|')
 }
 
