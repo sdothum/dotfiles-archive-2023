@@ -42,7 +42,7 @@ if [ $(winid) != '0x0' ] ;then
 fi
 
 # check winid's just in case.. it happens!
-for i in $(query windids)
+for i in $(query winids)
 do
   if [ $(herbstclient attr clients.$i.instance) = $name ] ;then
     echo $i >$scratchpad
