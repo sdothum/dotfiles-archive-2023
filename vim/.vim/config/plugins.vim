@@ -84,9 +84,9 @@
       let g:gundo_preview_bottom = 1
       let g:gundo_preview_height = 20
 
-      " nmap <C-F7>  :GundoToggle<CR>
-      " nmap <F3>    :GundoToggle<CR>
-      nmap <leader>u :GundoToggle<CR>
+      " nmap <silent><C-F7>  :GundoToggle<CR>
+      " nmap <silent><F3>    :GundoToggle<CR>
+      nmap <silent><leader>u :GundoToggle<CR>
 
       autocmd BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
 
@@ -212,8 +212,8 @@
         \}
 
       " toggle lightline/default vim statusline
-      " imap <C-F10> <C-o>:call lightline#toggle()<CR>
-      " nmap <C-F10> :call lightline#toggle()<CR>
+      " imap <silent><C-F10> <C-o>:call lightline#toggle()<CR>
+      " nmap <silent><C-F10> :call lightline#toggle()<CR>
 
     " ................................................................ Limelight
 
@@ -235,7 +235,7 @@
 
     " ................................................................. Open URL
 
-      nmap <leader>o :OpenUrl<CR>
+      nmap <silent><leader>o :OpenUrl<CR>
 
     " ...................................................... Rainbow parentheses
 
@@ -365,8 +365,8 @@
 
       " requires make http://github.com/Shougo/vimproc
       let g:vimfiler_as_default_explorer = 1" explorer mode
-      nmap <leader>!         :VimShell<CR>
-      nmap <leader><leader>! :VimFiler<CR>
+      nmap <silent><leader>!         :VimShell<CR>
+      nmap <silent><leader><leader>! :VimFiler<CR>
 
     " .................................................................. Vimwiki
 
@@ -425,7 +425,7 @@
       let g:yankring_enabled           = 1  " disable yankring because of macro conflict
       let g:yankring_window_height     = 30 " horizontal window height
 
-      nmap Y                 :<C-U>YRYankCount 'y$'<CR>
+      nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
       " nmap <silent><F7>    :YRShow<CR>
       " imap <silent><F7>    <ESC>:YRShow<CR>
       " nmap <silent><F2>    :YRShow<CR>

@@ -30,8 +30,8 @@
         let &colorcolumn   = (s:margins+s:margins)[l:index]
       endfunction
 
-      " imap <F7> <C-o>:call ToggleColumn()<CR>
-      " nmap <F7> :call ToggleColumn()<CR>
+      " imap <silent><F7> <C-o>:call ToggleColumn()<CR>
+      " nmap <silent><F7> :call ToggleColumn()<CR>
       nmap <silent><Bar>  :call ToggleColumn()<CR>
 
     " ....................................................... Trailing highlight
@@ -92,8 +92,8 @@
         endif
       endfunction
 
-      " imap <silent><F4>    <C-o>:call ToggleWrap()<CR>
-      " nmap <silent><F4>    :call ToggleWrap()<CR>
+      " imap <silent><F4>       <C-o>:call ToggleWrap()<CR>
+      " nmap <silent><F4>       :call ToggleWrap()<CR>
       nmap <silent><leader><CR> :call ToggleWrap()<CR>
 
       " " toggle pencil
@@ -102,8 +102,8 @@
       "   echo PencilMode()
       " endfunction
       "
-      " imap <C-F4> <C-o>:call TogglePencil()<CR>
-      " nmap <C-F4> :call TogglePencil()<CR>
+      " imap <silent><C-F4> <C-o>:call TogglePencil()<CR>
+      " nmap <silent><C-F4> :call TogglePencil()<CR>
 
   " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -130,8 +130,8 @@
       endfunction
 
       " select paragragh
-      nmap <A-PageUp>   :call ParagraphAbove()<CR>
-      nmap <A-PageDown> :call ParagraphBelow()<CR>
+      nmap <silent><A-PageUp>   :call ParagraphAbove()<CR>
+      nmap <silent><A-PageDown> :call ParagraphBelow()<CR>
       " extend paragraph selection
       vmap <A-PageUp>   {
       vmap <A-PageDown> }
@@ -238,16 +238,10 @@
       endfunction
 
       " markup wiki code blocks
-      " inoremap <F5>               <C-o>V:call CodeBlock()<CR>
-      " nnoremap <F5>               V:call CodeBlock()<CR>
-      " vmap <F5>                   :call CodeBlock()<CR>
-      nnoremap <silent><leader>`    V:call CodeBlock()<CR>
-      vmap <silent><leader>`        :call CodeBlock()<CR>
-      " some html codes require escaping with <C-o>
-      " insert strikeout
-      imap <leader><leader><Delete> <<C-o>adel>
-      imap <leader><Delete><Delete> </del>
-      " insert br
-      imap <leader><leader><CR><CR> <<C-o>abr><CR>
+      " inoremap <silent><F5>    <C-o>V:call CodeBlock()<CR>
+      " nnoremap <silent><F5>    V:call CodeBlock()<CR>
+      " vmap <silent><F5>        :call CodeBlock()<CR>
+      nnoremap <silent><leader>` V:call CodeBlock()<CR>
+      vmap <silent><leader>`     :call CodeBlock()<CR>
 
 " coding.vim

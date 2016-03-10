@@ -5,6 +5,7 @@
 
   " Note: iabbrev <chord> $
   "       a trailing space is required following the iabbrev trigger chord
+  "       see .vim/snippets/*
 
   " Composition ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -12,6 +13,13 @@
 
       inoremap <silent><leader><leader>d <C-r>=tolower(strftime("%A, %-d %B %Y"))<CR>
       nnoremap <silent><leader><leader>d "=tolower(strftime("%A, %-d %B %Y"))<CR>P<CR>
+
+    " ............................................................... HTML codes
+
+      " some html codes require escaping with <C-o>
+      imap <leader><leader><Delete> <<C-o>adel>
+      imap <leader><Delete><Delete> </del>
+      imap <leader><leader><CR><CR> <<C-o>abr><CR>
 
     " .................................................. Lorem ipsum placeholder
 
