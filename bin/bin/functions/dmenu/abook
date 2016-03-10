@@ -19,7 +19,7 @@ contacts=$maildir/contacts
 # - exclude malformed addresses, unexpected characters
 # - addresses must include "user name" prefix
 # - proper case "user name"
-__abook() {
+abook() {
   time=15 notify 'Updating dmenu addressbook cache' 'Please be patient..'
   /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc):' $maildir \
   | grep '@' \
@@ -56,7 +56,7 @@ __abook() {
 
 # command line initialization with: dmenu abook [init]
 if ! [ -s $addressbook ] || [ "$*" ] ;then
-  __abook
+  abook
   [ "$*" ] && exit
 fi
 
@@ -93,7 +93,7 @@ do
   address=${address#*$SEP }
 
   case "$address" in
-    '[ rebuild database ]') __abook
+    '[ rebuild database ]') abook
                             unset addresses ;;
 
     '[ edit contacts    ]') gvim -f $contacts ;;

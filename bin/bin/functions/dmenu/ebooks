@@ -7,16 +7,26 @@
 
 # ebook library
 library=${LIBRARY:-/data/media/ebooks/${1:-Library}}
+ebooks=$library/.ebooks
 
 # build catalogue
 ebooks() {
+  time=5 notify 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" \
   | sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
         -e 's/ - .*//' \
         -e 's/ \([0-9]*\)//' \
         -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
-  | sort -u
+  | sort -u \
+  >$ebooks
+  notify 'Update of library cache' '..Complete'
 }
+
+# command line initialization with: dmenu ebooks [init]
+if ! [ -s $ebooks ] || [ "$*" ] ;then
+  ebooks
+  [ "$*" ] && exit
+fi
 
 mobi() {
   mobi=$(echo $book | sed -re "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.mobi|")
@@ -30,10 +40,10 @@ epub() {
 
 while :
 do
-  book=$(ebooks \
+  book=$(cat $ebooks \
        | history ebooks \
        | column -s^ -t \
-       | sed "1i[ documents ]" \
+       | sed "1i[ rebuild database ]\n[ documents        ]" \
        | dmenu 'E-book' -filter "$author" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
@@ -44,6 +54,9 @@ do
     else
       exit
     fi
+  elif [ "$book" = '[ rebuild database ]' ] ;then
+    ebooks
+    continue
   fi
 
   [ "$book" = '[ documents ]' ] && exec dmenu references

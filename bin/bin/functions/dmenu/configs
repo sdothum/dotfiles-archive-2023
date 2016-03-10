@@ -8,7 +8,7 @@
 # system conf files
 configs=$cachedir/dmenu_configs
 
-__configs() {
+configs() {
   notify 'Updating dmenu config cache' 'Please be patient..'
   exclude='\.azureus|backups|\.bundler|\.cache|cairo|chromium|depot|\.deprecated|\.dropbox|geany|\.gem|\.ghc|\.gimp|google|\.hg|\.kde|libreoffice|\.mozilla|\.opera|\.original|\.PlayOnLinux|sandbox|\.save|\.stversions|(s|u)mplayer|tint2|Trash|\.vim|vundle|\.xbmc|\.xmonad|xfce4'
 
@@ -42,7 +42,7 @@ __configs() {
 
 # command line initialization with: dmenu configs [init]
 if ! [ -s $configs ] || [ "$*" ] ;then
-  __configs
+  configs
   [ "$*" ] && exit
 fi
 
@@ -54,7 +54,7 @@ do
        | column -s^ -t \
        | dmenu 'Edit Config' -no-custom) || exit
   if [ "$file" = '[ rebuild database ]' ] ;then
-    __configs
+    configs
     continue
   fi
 
