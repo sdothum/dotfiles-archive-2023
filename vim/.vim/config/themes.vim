@@ -9,12 +9,14 @@
 
       " further distraction free mode settings
       " foreground
-      let g:dfm_fg_light        = '#cb4b16' " light foreground
+      let g:dfm_fg_light        = 'brown'   " light foreground
       let g:dfm_fg_dark         = '#cb4b16' " dark foreground
       let g:dfm_proof_light     = '#002b36' " dark foreground
       let g:dfm_proof_dark      = '#fdf6e3' " light foreground
       let g:dfm_unfocused_light = '#002b36' " light grey surrounding text content
       let g:dfm_unfocused_dark  = '#fdf6e3' " dark grey surrounding text content
+      let g:dfm_code_light      = '#859900' " light code foreground
+      let g:dfm_code_dark       = '#859900' " dark code foreground
 
       " background
       let g:dfm_bg_light        = '#fdf6e3' " solarized light (paper) background
@@ -37,6 +39,7 @@
           let g:dfm_fg        = g:dfm_fg_light
           let g:dfm_proof     = g:dfm_proof_light
           let g:dfm_unfocused = g:dfm_unfocused_light
+          let g:dfm_code      = g:dfm_code_light
           let g:dfm_bg        = g:dfm_bg_light
           let g:dfm_cursor    = g:dfm_cursor_light
           let g:dfm_bg_line   = g:dfm_bg_line_light
@@ -46,6 +49,7 @@
           let g:dfm_fg        = g:dfm_fg_dark
           let g:dfm_proof     = g:dfm_proof_dark
           let g:dfm_unfocused = g:dfm_unfocused_dark
+          let g:dfm_code      = g:dfm_code_dark
           let g:dfm_bg        = g:dfm_bg_dark
           let g:dfm_cursor    = g:dfm_cursor_dark
           let g:dfm_bg_line   = g:dfm_bg_line_dark
@@ -111,15 +115,13 @@
 
     " ............................................................... Cursorline
 
+      let s:contrast   = 1                  " cursorline contrast (0) low (1) high
+      let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
+
       " set prose cursorline theme
       function! HiLite()
-        if !exists('s:cursorline')
-          call ToggleHiLite()
-        endif
         execute 'highlight CursorLine gui=none guibg=' . s:cursorline . ' guifg=' . s:foreground
       endfunction
-
-      let s:contrast = 1                    " cursorline contrast (0) low (1) high
 
       function! CursorLine(fg, bg, BG)
         let s:foreground = a:fg
@@ -132,9 +134,6 @@
 
       function! ToggleHiLite()
         if &filetype =~ g:goyotypes
-          if !exists('s:cursorline')
-            let s:cursorline = '#000000'
-          endif
           if s:contrast == 0
             " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
             call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)

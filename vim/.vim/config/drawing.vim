@@ -11,7 +11,7 @@
 
       " example: draw underline
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-       
+
       function! Underline(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           normal ^
@@ -56,7 +56,7 @@
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
       " note: to insert a ruler on an empty line (virtual column position), add a <space>
       " character, else in insert mode, the ruler will positioned using column 1
-       
+
       function! Drawline(delimiter)
         if matchstr(getline(line('.')), '\S') == '' " insert dummy mark line if on blank line
           let l:mark = 1
@@ -85,7 +85,7 @@
     " .................................................................. Trailer
 
       " example: append trailer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-       
+
       function! AppendTrailer(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing trailer
@@ -124,7 +124,7 @@
     " ................................................................... Leader
 
       " ................................................. example: insert leader
-       
+
       function! InsertLeader(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader

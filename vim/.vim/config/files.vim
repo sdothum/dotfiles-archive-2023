@@ -98,7 +98,7 @@
           call Wiki(index)
         endfor
         if &filetype =~ g:goyotypes         " reset cursorline (for last open for some reason..)
-          call HiLite()
+          call ToggleHiLite()
         endif
         redir END
       endfunction

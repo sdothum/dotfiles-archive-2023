@@ -7,7 +7,7 @@
 
     " regex list of multibyte characters used for line drawing
     " note: files using other multibyte characters will produce incorrect statistics
-    let s:indicators = '▶■‾↑'               " multibyte statusline indicators
+    let s:indicators = '▶■‾↑'              " multibyte statusline indicators
     let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
     let s:ascii      = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
@@ -65,10 +65,8 @@
       endfunction
 
       function! LineSizes()
-        if exists('s:code')
-          if s:code == 1
-            return s:LineSizes()
-          endif
+        if s:code == 1
+          return s:LineSizes()
         endif
         return ''
       endfunction
@@ -87,10 +85,8 @@
         if expand('%:t') == 'ControlP' || mode() =~ '[vV]'
           return ''
         endif
-        if exists('s:code')
-          if s:code == 0 && s:prose == 0
-            return ''
-          endif
+        if s:code == 0 && s:prose == 0
+          return ''
         endif
         let b:wordcount = ''
         let l:statusmsg = v:statusmsg
@@ -153,11 +149,9 @@
         if !exists('b:statusline_pad_warning')
           let b:statusline_pad_warning = ''
           if &modifiable
-            if exists('s:prose')
-              if s:prose == 0
-                if search('[ \t]\+$', 'nw') != 0
-                  let b:statusline_pad_warning = '■|'
-                endif
+            if s:prose == 0
+              if search('[ \t]\+$', 'nw') != 0
+                let b:statusline_pad_warning = '■|'
               endif
             endif
           endif

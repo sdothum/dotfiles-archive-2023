@@ -26,9 +26,9 @@
         call s:GoyoEnter()
         call LiteBackground()
         call HiLite()
-        " hide line numbers
         execute 'highlight Normal guifg=' . g:dfm_unfocused
         execute 'highlight CursorLineNr guifg=' . g:dfm_bg . ' guibg=' . g:dfm_bg
+        execute 'highlight PreProc guifg=' . g:dfm_code
         let s:unfocused = g:dfm_unfocused
         call Cursor()
         execute 'Limelight'
@@ -51,6 +51,8 @@
 
     " .......................................................... Goyo prose view
 
+      let g:wikistatus = 1                  " initial wikistatus, see statusline.vim
+
       " goyo initialization hooks
       function! s:GoyoEnter()
         " silent !tmux set status off
@@ -62,9 +64,6 @@
         set noshowmode
         set fillchars-=stl:.                " remove statusline fillchars '.' set by goyo.vim
         " set fillchars+=stl:\ "
-        if !exists('g:wikistatus')
-          let g:wikistatus = 1
-        endif
         call DfmWriting()
       endfunction
 
@@ -127,9 +126,6 @@
 
       function! ToggleProof()
         if &filetype =~ g:goyotypes         " toggle between writing and proofing modes
-          if !exists('s:unfocused')
-            let s:unfocused = g:dfm_unfocused
-          endif
           if s:unfocused == g:dfm_unfocused
             execute 'Limelight!'
             execute 'highlight Normal guifg=' . g:dfm_proof

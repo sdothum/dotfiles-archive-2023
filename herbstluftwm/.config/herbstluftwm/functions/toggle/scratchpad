@@ -41,6 +41,16 @@ if [ $(winid) != '0x0' ] ;then
   exit
 fi
 
+# check winid's just in case.. it happens!
+for i in $(query windids)
+do
+  if [ $(herbstclient attr clients.$i.instance) = $name ] ;then
+    echo $i >$scratchpad
+    herbstclient bring $i 2>/dev/null
+    exit
+  fi
+done
+
 # cancel out above focus frame
 focus frame
 term $name byobu 'new-session -n ""'
