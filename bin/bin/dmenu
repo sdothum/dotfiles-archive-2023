@@ -11,7 +11,7 @@
 #        source $HOME/bin/dmenu
 #        POSIX standard for use with dash shell
 
-cachedir=${XDG_CACHE_HOME:-$HOME/.cache}
+CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
 
 # content formatting items
 SEP='∙'

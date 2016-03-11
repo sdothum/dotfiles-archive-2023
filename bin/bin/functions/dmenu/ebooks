@@ -7,7 +7,7 @@
 
 # ebook library
 library=${LIBRARY:-/data/media/ebooks/${1:-Library}}
-ebooks=$library/.ebooks
+cache=$library/.ebooks
 
 # build catalogue
 ebooks() {
@@ -18,12 +18,12 @@ ebooks() {
         -e 's/ \([0-9]*\)//' \
         -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
   | sort -u \
-  >$ebooks
+  >$cache
   notify 'Update of library cache' '..Complete'
 }
 
 # command line initialization with: dmenu ebooks [init]
-if ! [ -s $ebooks ] || [ "$*" ] ;then
+if ! [ -s $cache ] || [ "$*" ] ;then
   ebooks
   [ "$*" ] && exit
 fi
@@ -40,7 +40,7 @@ epub() {
 
 while :
 do
-  book=$(cat $ebooks \
+  book=$(cat $cache \
        | history ebooks \
        | column -s^ -t \
        | sed "1i[ rebuild database ]\n[ documents        ]" \

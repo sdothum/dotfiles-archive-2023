@@ -6,7 +6,7 @@
 # ......................................................................... Edit
 
 # system conf files
-configs=$cachedir/dmenu_configs
+cache=$CACHEDIR/dmenu_configs
 
 configs() {
   notify 'Updating dmenu config cache' 'Please be patient..'
@@ -36,19 +36,19 @@ configs() {
   | sort -u \
   | sed -e '1i
 ' \
-  >$configs
+  >$cache
   notify 'Updating dmenu config cache' '..Finished'
 }
 
 # command line initialization with: dmenu configs [init]
-if ! [ -s $configs ] || [ "$*" ] ;then
+if ! [ -s $cache ] || [ "$*" ] ;then
   configs
   [ "$*" ] && exit
 fi
 
 while :
 do
-  file=$(cat $configs \
+  file=$(cat $cache \
        | history configs \
        | sed -e '1i[ rebuild database ]' \
        | column -s^ -t \

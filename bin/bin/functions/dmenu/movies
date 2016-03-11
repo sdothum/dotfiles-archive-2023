@@ -14,7 +14,7 @@ library=${LIBRARY:-/data/media/videos/${1:-movies}}
 
 # list latest movie additions first
 T=t
-movies=/tmp/dmenu:movies
+cache=/tmp/dmenu:movies
 pgrep herbstluftwm >/dev/null && monitor=$(herbstclient attr monitors.focus.index)
 
 # clean up titles
@@ -23,8 +23,8 @@ playlist=$library/.playlist
 [ -e "$playlist" ] || echo >"$playlist"
 
 shows() {
-  ls -1$T $library | sed -re 's/\./ /g' -e 's/ ([12][0-9][0-9][0-9])( .*)*/  (\1)/' >"$movies"
-  playlist "$movies" "$playlist"
+  ls -1$T $library | sed -re 's/\./ /g' -e 's/ ([12][0-9][0-9][0-9])( .*)*/  (\1)/' >"$cache"
+  playlist "$cache" "$playlist"
 }
 
 library() {

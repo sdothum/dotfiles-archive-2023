@@ -7,7 +7,7 @@
 
 # select email contact addresses for insert into sup query
 maildir=${MAILDIR:-$HOME/Maildir}
-addressbook=$maildir/addressbook
+cache=$maildir/addressbook
 # additional contacts
 # - name <address>
 # - tag :: name <address>,..
@@ -50,12 +50,12 @@ abook() {
         -e 's/\b(\w*)\b/\L\u\1/g' \
         -e 's/(<.*)/\L\1/g' \
   | sort -f | uniq -i \
-  >$addressbook
+  >$cache
   notify 'Update of dmenu addressbook cache' '..Complete'
 }
 
 # command line initialization with: dmenu abook [init]
-if ! [ -s $addressbook ] || [ "$*" ] ;then
+if ! [ -s $cache ] || [ "$*" ] ;then
   abook
   [ "$*" ] && exit
 fi
@@ -72,7 +72,7 @@ ribbon() {
 
 contacts() {
   sed "s/  *::  */^$SEP /" $contacts | column -s^ -t
-  cat $addressbook
+  cat $cache
 }
 
 addresslist() {
