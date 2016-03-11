@@ -100,10 +100,11 @@ URxvt*scrollTtyOutput:        false           ! do not scroll to bottom on outpu
 URxvt*scrollWithBuffer:       false           ! do not use scrollback buffer
 URxvt*skipScroll:             true            ! favour scroll speed over listing all lines
 
-! enable left mouse click url launcher
-URxvt*matcher.button:         1
+! extensions, enable left mouse click url launcher, vi mode
 URxvt*perl-ext:
-URxvt*perl-ext-common:        default,matcher
+URxvt*perl-ext-common:        default,matcher,keyboard-select
+URxvt.keysym.M-Escape:        perl:keyboard-select:activate
+URxvt*matcher.button:         1
 URxvt*url-launcher:           vimb-detached
 
 ! ........................................................... URxvt XTerm keymap

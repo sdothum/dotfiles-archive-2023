@@ -115,6 +115,7 @@
 # sakura
 # terminator
 # termite-git
+  urxvt-perls 
   xterm
 
 
