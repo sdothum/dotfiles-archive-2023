@@ -75,6 +75,8 @@ set_border() {
                    | tac >$PULSAR
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
+  # refresh border of active window
+  herbstclient attr theme.active.color "#$1"
 }
 
 # ............................................................ Assign background
