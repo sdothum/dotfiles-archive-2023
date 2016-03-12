@@ -143,6 +143,10 @@ hexgen() {
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
 
+complimentary () {
+  conky palette $1 | grep 'Complementary' | head -1 | cut -d/ -f6
+}
+
 tmpbackup() {
   tmp=$(mktemp).conkyrc
   cp -v $conkyrc $tmp
@@ -156,18 +160,17 @@ case "$action" in
   contrast) if [ $# -eq 1 ] ;then
               # contrast theme colors
               brightness $1 && conky theme light $1 || conky theme dark $1
+              complimentary $1
             fi ;;
 
   light) if [ $# -eq 1 ] ;then
            hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f18)
            conky theme paper
-           echo $default_color
          fi ;;
 
   dark) if [ $# -eq 1 ] ;then
           hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f2)
           conky theme ink
-          echo $default_color
         fi ;;
 
   test) if [ $# -eq 1 ] ;then

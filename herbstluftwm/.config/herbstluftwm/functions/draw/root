@@ -92,7 +92,7 @@ blank() {
 
 color() {
   # initialize default link
-  [ -L $BACKGROUND ] && exists $BACKGROUND || ln -sf $(ls -1 ${BACKGROUND%/default}/*.png | head -1) $BACKGROUND
+  [ -L $BACKGROUND ] && exists $BACKGROUND || ln -sf $(find ${BACKGROUND%/default} -name '*.png' | head -1) $BACKGROUND
 }
 
 select_blank() {

@@ -102,7 +102,7 @@ desktops() {
       else
         format="%{B$DEFAULT_BG}"
         [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
-                      || format="${format}%{F$FREE_FG}"
+                     || format="${format}%{F$FREE_FG}"
         [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
       fi
     else
