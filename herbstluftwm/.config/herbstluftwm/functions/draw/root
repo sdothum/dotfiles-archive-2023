@@ -3,7 +3,7 @@
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-set -x
+
 # .............................................................. Draw background
 
 # Usage: draw root [ blank [<color>] | restore | save ]
@@ -156,7 +156,7 @@ case "$1" in
   wallpaper) wallpaper ;;
 
   *) [ "$(setblur)" = "$(cat $setroot)" ] && exit
-     echo "= setblur -> $(setblur)\n= setroot -> $(cat $setroot)" >>$TRACE
+     # echo "= setblur -> $(setblur)\n= setroot -> $(cat $setroot)" >>$TRACE
      # random background selection on un-blur change of state
      if [ -e $shuffle ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then

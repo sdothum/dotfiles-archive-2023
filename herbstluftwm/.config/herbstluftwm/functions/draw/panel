@@ -29,7 +29,7 @@ gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.w
 border=$(herbstclient attr theme.border_width)
 # dynamically indent the panel by margin minus panel height
 indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
-[ $indent -lt 0 ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
+[ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent - 1 ))
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
