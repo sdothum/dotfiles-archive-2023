@@ -49,15 +49,16 @@
 = photography
 # ▔▔▔▔▔▔▔▔▔▔▔
   darktable
-# dcraw             [is_server]
-# digikam           [is_server]
-  dispcalgui        [is_server]
+# dcraw                         [is_server]
+# digikam                       [is_server]
+  dispcalgui                    [is_server]
   feh
-# gimp              [is_server]
-# kdebase-workspace [is_server]
-# kipi-plugins      [is_server]
-# photivo-hg        [is_server]
-# rawtherapee       [is_server]
+  gimp                          [is_server]
+  gimp-plugin-resynthesizer-git [is_server]
+# kdebase-workspace             [is_server]
+# kipi-plugins                  [is_server]
+# photivo-hg                    [is_server]
+# rawtherapee                   [is_server]
 # lightzone
 # sxiv
 # viewnior

@@ -3,7 +3,7 @@
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-
+set -x
 # .............................................................. Draw background
 
 # Usage: draw root [ blank [<color>] | restore | save ]
@@ -35,7 +35,7 @@ size=180x180
 
 # linked file reference
 exists() {
-  [ -e "$(lname $1)" ]
+  [ -e $(lname $1) ]
 }
 
 # ..................................................................... Map blur
@@ -90,6 +90,8 @@ blank() {
   echo $color >$BACKGROUND.color
   setroot --blank-color "#$color" 2>/dev/null
   set_border "$(conky theme contrast $color)"
+  echo $color >$blank
+  rm -f $theme 2>/dev/null
 }
 
 color() {
@@ -110,6 +112,7 @@ select_blank() {
 wallpaper() {
   # initialize default link
   [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
+  rm -f $blank
   rm -f $theme 2>/dev/null
 }
 
@@ -125,6 +128,7 @@ select_wallpaper() {
 
 shuffle() {
   ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
+  rm -f $blank
   rm -f $theme 2>/dev/null
 }
 
@@ -136,28 +140,23 @@ unblur() {
 }
 
 case "$1" in
-  blank) touch $blank
-         blank $2 ;;
-
-  restore) touch $blank
-           select_blank ;;
+  blank) blank $2 ;;
+  restore) select_blank ;;
 
   save) color=$(cat $BACKGROUND.color)
         convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
         notify 'Background Color' "$color saved" ;;
 
   select) rm -f $shuffle 2>/dev/null
-          rm -f $blank
           select_wallpaper ;;
 
   shuffle) touch $shuffle
-           rm -f $blank
            shuffle ;;
 
-  wallpaper) rm -f $blank
-             wallpaper ;;
+  wallpaper) wallpaper ;;
 
   *) [ "$(setblur)" = "$(cat $setroot)" ] && exit
+     echo "= setblur -> $(setblur)\n= setroot -> $(cat $setroot)" >>$TRACE
      # random background selection on un-blur change of state
      if [ -e $shuffle ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
@@ -176,21 +175,21 @@ setblur >$setroot
 # apply conky theme to .conkyrc, $theme unset above if new background
 if ! [ -e $blank ] ;then
   [ -e $theme ] && exit
-  wallpaper=$(query theme)
+  background=$(query theme)
   # load theme or generate a theme from the border colour
-  if [ -e "$wallpaper" ] ;then
-    theme=$(cat "$wallpaper")
-    [ $(echo "$theme" | wc -w) -eq 8 ] && conky theme colours $theme \
-                                       || conky theme scheme $theme
+  if [ -e "$background" ] ;then
+    colours=$(cat "$background")
+    [ $(echo "$colours" | wc -w) -eq 8 ] && conky theme colours $colours \
+                                         || conky theme scheme $colours
   else
     term 'Theme' STACK SHELL walltheme
     pwait walltheme
   fi
-  echo $wallpaper >$theme
-  set_border $(conky palette $(awk '{ print $1 }' $wallpaper) \
+  set_border $(conky palette $(awk '{ print $1 }' $background) \
              | grep 'Triadic Color' \
              | head -1 \
              | cut -d/ -f10)
+  echo $colours >$theme
 fi
 
 # restart panels with new theme

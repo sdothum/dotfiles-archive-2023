@@ -24,6 +24,7 @@ do
 
   case $hook in
     focus_changed) ( [ -e $FULLSCREEN ] && draw refresh || draw root ) &
+                     ( [ -e $FULLSCREEN ] && draw refresh || draw root ) &
                    draw border &
                    if herbstclient compare monitors.focus.index != $monitor ;then
                      monitor=$(herbstclient attr monitors.focus.index)
@@ -44,7 +45,7 @@ do
                           draw monitor secondary fullscreen &
                         fi ;;
 
-            # experimental only.. 
+            # experimental only..
             # focus_frame) [ -e $DYNAMIC ] && ( focus frame && bring $winid ) & ;;
             *) [ $TRACE ] && echo "> undefined rule: $hook [$rule] $winid" >>$TRACE ;;
           esac ;;

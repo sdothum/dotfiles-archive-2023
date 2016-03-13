@@ -52,8 +52,8 @@ done
 # .............................................................. Desktop layouts
 
 # appropriately wild herbstluftwm background color!
-# draw root blank 
-draw root blank $(cat $BACKGROUND.color 2>/dev/null)
+draw root blank
+# draw root blank $(cat $BACKGROUND.color 2>/dev/null)
 
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 if is display +1440 ;then

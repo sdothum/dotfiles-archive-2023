@@ -120,7 +120,7 @@ case $windowmanager in
                 export TRACE=/tmp/herbstluftwm.log
                 export PANEL_BOTTOM=true
                 # export PANEL_MARGIN=true
-                # export SET_ROOT=true
+                export SET_ROOT=true
                 setpath $HOME/.config/herbstluftwm
                 . $HOME/.config/herbstluftwm/config/ENV
                 # initial build install?

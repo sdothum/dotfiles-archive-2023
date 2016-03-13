@@ -185,10 +185,11 @@ case "$action" in
           else
             echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$theme
             if if-no "change contrast" ;then
-              exit 1
+              exit
             else
               brightness $default_color && contrast=paper || contrast=ink
               sed -i "s/$/ $contrast/" $theme
+              exit
             fi
           fi
         fi ;;
