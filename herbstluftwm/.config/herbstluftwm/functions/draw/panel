@@ -29,13 +29,17 @@ gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.w
 border=$(herbstclient attr theme.border_width)
 # dynamically indent the panel by margin minus panel height
 indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
-# for netbook displays with no gaps..
 [ $indent -lt 0 ] && indent=$border
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent ))
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 panel_offsetY=$(( ($monitorY + $gap - $PANEL_HEIGHT - $SHADOW) / 2 ))
 [ $panel_offsetY -lt 0 ] && panel_offsetY=0
+# for small displays with no margins..
+if [ $(margins $monitorW) -eq 0 ] ;then
+  $panel_offsetX=0
+  $panel_offsetY=0
+fi
 
 # check for fullscreen mode and adjust accordingly
 case $monitorW in

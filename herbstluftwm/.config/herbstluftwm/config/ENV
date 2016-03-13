@@ -51,7 +51,7 @@ fi
 # ........................................................... Margin adjustments
 
 # compton shadow left shift pixel adjustment for conky panel edge (0) none
-export SHADOW=2
+export SHADOW=0
 # dynamic monocle frame height adjustment, (0) none
 # add urxvt lines (top and bottom) using .Xresources fontsize, see draw monitor
 [ $PRIMARY -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4

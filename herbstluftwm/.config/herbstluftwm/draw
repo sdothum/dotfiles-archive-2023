@@ -23,7 +23,7 @@ margins() {
   case $1 in
     2560) echo 84 ;;
     1680) echo $(pixel_match $(margins 2560) $UM1680) ;;
-    1440) echo 21 ;;
+    1440) echo 28 ;;
     *) echo 0 ;;
   esac
 }
