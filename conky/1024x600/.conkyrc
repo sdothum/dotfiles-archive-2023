@@ -44,19 +44,19 @@ xftfont Ubuntu:size=7
 xftalpha 0.5
 uppercase no
 
-default_color 912f18
-color0 6c2312
-color1 000000
-color2 080808
-color3 101010
-color4 202020
-color5 303030
-color6 280d06
-color7 511a0d
-color8 6c2312
-color9 187a90
-#colorA 48180c
-#colorI 0c3d48
+default_color 8CB7FF
+color0 6989bf
+color1 f0f0f0
+color2 c0c0c0
+color3 909090
+color4 707070
+color5 505050
+color6 273347
+color7 4e668f
+color8 6989bf
+color9 ffd28a
+#colorA 465b7f
+#colorI 7f6945
 
 lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
@@ -83,8 +83,8 @@ ${voffset 105}
 # # ${goto 75}${font}${color1}volume
 # ${goto 75}${font}${color0}${lua_parse null ${mpd_title}}
 # ${goto 75}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
-${goto 75}${loadgraph 15,0 511a0d 511a0d}
-${voffset -28}${goto 75}${diskiograph 15,0 6c2312 6c2312}
+${goto 75}${loadgraph 15,0 4e668f 4e668f}
+${voffset -28}${goto 75}${diskiograph 15,0 6989bf 6989bf}
 ${voffset -5}${goto 75}${font}${color1}Load   ${loadavg 1}   ${loadavg 2}   ${loadavg 3} ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 20}
@@ -97,7 +97,7 @@ ${goto 75}${font}${color1}${top name 1}${alignr}${top cpu 1}%
 ${goto 75}${font}${color2}${top name 2}${alignr}${top cpu 2}%
 ${goto 75}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 # ${goto 75}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
-${goto 75}${cpugraph 15,0 511a0d 511a0d}
+${goto 75}${cpugraph 15,0 4e668f 4e668f}
 ${voffset -5}${goto 75}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 
 ${voffset 20}
@@ -111,6 +111,6 @@ ${goto 75}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
 ${voffset 20}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp2s0} ${alignr}${addr wlp2s0}${font Ubuntu:size=7}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Battery ${alignr}${lua_parse battery ${battery_time}}
-${goto 75}${downspeedgraph wlp2s0 15,0 511a0d 511a0d}
-${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 6c2312 6c2312}
+${goto 75}${downspeedgraph wlp2s0 15,0 4e668f 4e668f}
+${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 6989bf 6989bf}
 ${voffset -5}${goto 75}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp2s0}}↑   ${lua_parse bandwidth ${downspeed wlp2s0}}↓
