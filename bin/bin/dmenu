@@ -19,6 +19,8 @@ LSPACE="    $SEP"
 RSPACE="$SEP    "
 INDENT='   '
 
+leader='──────'
+
 # allow subword match input (by inserting single quote symbol into input)
 unquote() {
   echo "$@" | sed "s/'//g"
@@ -117,7 +119,7 @@ dmenu() {
                -font "PragmataPro $fontsize" -eh 2 \
                -opacity 85 -separator-style none -hide-scrollbar \
                -lines $lines -width 100 -fixed-num-lines -padding $padding \
-               -dmenu -p "$prompt──────   " -i -mesg ' ' -select "$select" -filter "$filter" $@ \
+               -dmenu -p "${prompt}$leader   " -i -mesg ' ' -select "$select" -filter "$filter" $@ \
         )
   # strip indent from input!
   [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1

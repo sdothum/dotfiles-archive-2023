@@ -42,8 +42,9 @@ chk_pkg() {
   do
     j=$(grep "^$i" $conf | cut -d: -f1)
     k=$(grep "^$i" $conf | cut -d: -f2)
-    l=$(am $j | head -1 | sed 's/ (.*)//')
-    [ $k. = $l. ] && echo $k || echo "$k  =>  $l"
+    # echo $j :: $k
+    l=$(yaourt -Ss $j | head -1 | sed 's/ (.*)//')
+    [ "$k" = "$l" ] && echo $k || echo "$k  =>  $l"
   done
 }
 
