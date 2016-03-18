@@ -133,7 +133,7 @@ do
               mpc play
               exit ;;
 
-        add) echo -n "$playlist" | mpc add >/dev/null ;;
+        add)    echo -n "$playlist" | mpc add >/dev/null ;;
         insert) echo -n "$playlist" | mpc insert >/dev/null ;;
       esac
       break

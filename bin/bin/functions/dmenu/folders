@@ -26,9 +26,15 @@ do
   while action=$(echo "term\n$(apps \"$filemanagers\")" | dmenu "$dir" -no-custom) || exit
   do
     case $action in
-      term) cd $dir && term "$dir" SHELL ;;
-      ncdu | ranger) term "$dir" $action "$dir" ;;
-      filelight | rox | thunar) focus $action "$dir" ;;
+      term) cd $dir
+            term "$dir" SHELL ;;
+
+      ncdu |\
+      ranger) term "$dir" $action "$dir" ;;
+
+      filelight |\
+      rox |\
+      thunar) focus $action "$dir" ;;
     esac
     exit
   done

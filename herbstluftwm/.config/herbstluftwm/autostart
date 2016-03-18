@@ -52,8 +52,8 @@ done
 # .............................................................. Desktop layouts
 
 # appropriately wild herbstluftwm background color!
-draw root blank
-# draw root blank $(cat $BACKGROUND.color 2>/dev/null)
+[ "$SETROOT" = blank ] && draw root blank $(cat $BACKGROUND.color 2>/dev/null) \
+                       || draw root blank
 
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 if is display +1440 ;then
@@ -92,7 +92,8 @@ emithook &
 
 # initialize desktop blur and panel / conky rules
 toggle compton
-[ $SET_ROOT ] && draw root wallpaper
+# setroot (wallpaper) last wallpaper (blank) last blank wall, otherwise random blank wall
+[ "$SETROOT" = wallpaper ] && draw root wallpaper
 [ $PANEL_MARGIN ] && toggle panel || toggle conky
 # emit hook stalled otherwise until a new window action..
 focus frame

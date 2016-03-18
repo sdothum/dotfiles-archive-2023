@@ -31,7 +31,7 @@ do
                    fi ;;
 
     focus_window) [ -e $DYNAMIC ] && focus window & ;;
-    focus_frame) [ -e $DYNAMIC ] && focus frame & ;;
+    focus_frame)  [ -e $DYNAMIC ] && focus frame & ;;
 
     rule) case $rule in
             max) herbstclient set_layout max & ;;

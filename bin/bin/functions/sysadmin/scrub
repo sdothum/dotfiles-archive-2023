@@ -15,9 +15,9 @@ usage() {
 volume() {
   case $@ in
     boot | root) echo /boot ;;
-    data) echo /data ;;
-    backup) echo /backup ;;
-    *) echo $@ ;;
+    data)        echo /data ;;
+    backup)      echo /backup ;;
+    *)           echo $@ ;;
   esac
 }
 

@@ -111,8 +111,8 @@ case $windowmanager in
           exec budgie-session ;;
 
   cinnamon) exec gnome-session-cinnamon ;;
-  goomwwm) exec goomwwm ;;
-  dwm) exec dwm ;;
+  goomwwm)  exec goomwwm ;;
+  dwm)      exec dwm ;;
 
   herbstluftwm) pkill -KILL -f 'herbst'
                 rm -f /tmp/herbstluftwm:*
@@ -120,18 +120,19 @@ case $windowmanager in
                 export TRACE=/tmp/herbstluftwm.log
                 export PANEL_BOTTOM=true
                 # export PANEL_MARGIN=true
-                export SET_ROOT=true
+                # setroot (wallpaper) last wallpaper (blank) last blank wall, otherwise random blank wall
+                export SETROOT=wallpaper
                 setpath $HOME/.config/herbstluftwm
                 . $HOME/.config/herbstluftwm/config/ENV
                 # initial build install?
                 which xdotool >/dev/null || urxvt &
                 exec herbstluftwm >/tmp/herbstluftwm.log 2>&1 ;;
 
-  gnome) exec gnome-session ;;
-  i3) exec i3 ;;
-  kde) exec startkde ;;
-  lxde) exec lxsession ;;
-  mate) exec mate-session ;;
+  gnome)  exec gnome-session ;;
+  i3)     exec i3 ;;
+  kde)    exec startkde ;;
+  lxde)   exec lxsession ;;
+  mate)   exec mate-session ;;
   notion) exec notion ;;
 
   openbox) sed 's/_user_/'$(whoami)'/' $HOME/.config/obmenu-generator/schema.pl -i
@@ -140,11 +141,11 @@ case $windowmanager in
            sed 's/_user_/'$(whoami)'/' $HOME/.config/obmenu-generator/config.pl -i exec openbox-session ;;
 
   ratpoison) exec ratpoison ;;
-  razor-qt) exec razor-session ;;
-  spectrwm) exec spectrwm ;;
-  stumpwm) exec stumpwm ;;
-  subtle) exec subtle ;;
-  wmii) exec wmii ;;
+  razor-qt)  exec razor-session ;;
+  spectrwm)  exec spectrwm ;;
+  stumpwm)   exec stumpwm ;;
+  subtle)    exec subtle ;;
+  wmii)      exec wmii ;;
 
   wmutils) export SXHKD_SHELL=/usr/bin/dash
            sxhkd -c $HOME/.config/wmutils/sxhkdrc &
@@ -153,7 +154,7 @@ case $windowmanager in
            urxvt &
            exec xwait ;;
 
-  xfce) exec xfce4-session ;;
+  xfce)   exec xfce4-session ;;
   xmonad) exec xmonad 2>/tmp/xmonad.log ;;
 
   *) exec $DEFAULTSESSION ;;

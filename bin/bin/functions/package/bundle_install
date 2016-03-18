@@ -51,7 +51,7 @@ do
 
     '?') pm_install S $package ;;
     '*') gem_install $package ;;
-    *) pm_install $action ;;
+    *)   pm_install $action ;;
   esac
 done 3< $1
 

@@ -202,9 +202,9 @@ case "$action" in
        sed -i --follow-symlinks "/^COLORING=/s/=0x.*/=0x000000/" $conkylua
        sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#000000'/" $env ;;
 
-  rings) [ $# -eq 3 ] && rings $@ ;;
+  rings)  [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;
-  text) [ $# -eq 5 ] && text $@ ;;
+  text)   [ $# -eq 5 ] && text $@ ;;
   hidden) [ $# -eq 3 ] && hidden $@ ;;
 
   colo*rs) if [ $# -eq 8 ] ;then
@@ -214,7 +214,6 @@ case "$action" in
            fi ;;
 
   scheme) [ $# -eq 9 ] && scheme $@ ;;
-
   h | *) usage ;;
 esac
 

@@ -30,10 +30,15 @@ augroup mygroup
 augroup end
 
 # set accelerated-compositing=true
+# set auto-load-images=true
+set auto-resize-window=true
+set auto-shrink-images=true
 # set ca-bundle=~/.config/vimb/ca-bundle.crt
+# set closed-max-items=20
 set download-path=/data/downloads/http
 set editor-command="gvim -f"
 set fontsize=12px
+set frame-flattening=true
 set hint-timeout=1000
 set hintkeys=arstdoienh
 set history-max-items=99999

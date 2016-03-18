@@ -21,8 +21,8 @@ case $1 in
   enable | e) sudo systemctl enable $2
               sudo systemctl start $2 ;;
 
-  start | S) sudo systemctl start $2 ;;
-  stop | s) sudo systemctl stop $2 ;;
+  start | S)   sudo systemctl start $2 ;;
+  stop | s)    sudo systemctl stop $2 ;;
   restart | r) sudo systemctl restart $2 ;;
 
   toggle | t) if sudo systemctl status $2 | grep -q 'Active: active' ;then

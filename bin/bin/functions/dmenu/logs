@@ -17,7 +17,7 @@ file=$(ls *.log \
 
 [ "$service" = '[ journals ]' ] && exec dmenu journals
 case $mode in
-  View) [ $file ] && term "$file" MAX less $file.log ;;
+  View)  [ $file ] && term "$file" MAX less $file.log ;;
   Watch) [ $file ] && term "$file" tail -f $file.log ;;
 esac
 

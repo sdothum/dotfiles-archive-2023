@@ -24,7 +24,7 @@ margins() {
     2560) echo 82 ;;
     1680) echo $(pixel_match $(margins 2560) $UM1680) ;;
     1440) echo 26;;
-    *) echo 0 ;;
+    *)    echo 0 ;;
   esac
 }
 

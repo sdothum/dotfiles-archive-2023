@@ -58,6 +58,7 @@ export XIVIEWER='feh'
 export PLAYER='mpv'
 # less prompt
 export LESS='-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
+export PAGER='less'
 
 # lua
 export LUA_INIT="@$HOME/.luarc"

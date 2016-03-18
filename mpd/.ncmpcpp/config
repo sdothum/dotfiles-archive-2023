@@ -503,7 +503,9 @@ alternative_ui_separator_color = blue
 #
 active_column_color = green
 #
-visualizer_color = 089,090,091,092,093,094,095,096,097,098,099,100,029,030,031,032,033,034,035,036,037,038,039,040
+# visualizer_color = 089,090,091,092,093,094,095,096,097,098,099,100,029,030,031,032,033,034,035,036,037,038,039,040
+# visualizer_color = 022,028,005,034,040,046,052,088,124,160
+visualizer_color = 053,089,125,002,161,197,203,209,010,215
 #
 window_border_color = green
 #

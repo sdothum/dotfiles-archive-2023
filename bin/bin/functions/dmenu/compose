@@ -51,9 +51,9 @@ do
          find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm -f {} \; ;;
 
     focuswriter) compose_with focuswriter $1 ;;
-    nano) compose_with pyroom $1 ;;
-    pyroom) compose_with pyroom $1 ;;
-    rubyroom) compose_with rubyroom $1 ;;
+    nano)        compose_with pyroom $1 ;;
+    pyroom)      compose_with pyroom $1 ;;
+    rubyroom)    compose_with rubyroom $1 ;;
     wordgrinder) compose_with wordgrinder $1 ;;
   esac
   exit
