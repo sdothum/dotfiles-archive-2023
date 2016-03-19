@@ -11,7 +11,7 @@ scratchpad=$ROOT/herbstluftwm:scratchpad
 
 [ $(pgrep -cf 'toggle scratchpad') -gt 1 ] && exit
 # kill any extra tmux sessions spawned (default 2 processes)..
-kill -KILL $(pgrep -f 'tmux -u -2 -f' | sed '1,2d') 2>/dev/null
+kill -TERM $(pgrep -f 'tmux -u -2 -f' | sed '1,2d') 2>/dev/null
 
 winid() {
   printf '0x%x' $(xdotool search --onlyvisible --limit 1 --classname $name)

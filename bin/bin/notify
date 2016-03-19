@@ -5,7 +5,7 @@
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ..................................................................... Notifier
-
+set -x
 usage() {
   echo "usage: $(basename $0) [ time=seconds ] notify \"<summary>\" [ \"<body>\" ]"
   exit 1
@@ -14,8 +14,8 @@ usage() {
 echo "$(timestamp) $USER: \"$1\" \"$2\"" >>/tmp/notify.log
 
 if [ -z $DISPLAY ] && tty | grep -q '/dev/tty[1-9]' ;then
-  [ $2 ] && echo "\n${_YELLOW_}=> $1\n${_GREEN_} -> $2${_nocolor_}\n" \
-         || echo "\n${_YELLOW_}=> $1${_nocolor_}\n"
+  [ "$2" ] && echo "\n${_YELLOW_}==> $1\n${_GREEN_}  --> $2${_nocolor_}\n" \
+           || echo "\n${_YELLOW_}==> $1${_nocolor_}\n"
 else
   [ $time ] && expire="--expire-time=$(( $time * 1000 ))"
   case $# in

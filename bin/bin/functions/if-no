@@ -6,6 +6,8 @@
 
 # ...................................................................... Prompts
 
+sig=${sig:--TERM}
+
 # if no || ..
 underline $1
 
@@ -20,7 +22,7 @@ do
     y | Y)      exit 1 ;;
 
     a | A) echo $PPID >/tmp/abort
-           kill -KILL $PPID ;;
+           kill $sig $PPID ;;
   esac
 done
 

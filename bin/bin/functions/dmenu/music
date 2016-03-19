@@ -5,7 +5,8 @@
 
 # ........................................................................ Music
 
-playlist() {
+# library listings
+artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
     mpc list artist \
     | sort -n \
@@ -63,12 +64,13 @@ status() {
   mpc status | grep -q "$@" && echo off || echo on
 }
 
+# outer loop by library listing
 mpc list artist >/dev/null 2>&1 || exit
-# note: cannot compare to null string
+# player controls on entry, note: cannot compare to null string
 [ "$(current)" != '' ] && artist='[ player ]'
 while :
 do
-  [ "$artist" = '[ player ]' ] || artist=$(playlist | dmenu 'Artist' "$artist" -no-custom) || exit
+  [ "$artist" = '[ player ]' ] || artist=$(artists | dmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = '[ player ]' ] ;then
     unset artist
     while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" \
@@ -103,6 +105,7 @@ do
     continue
   fi
 
+  # inner loop by artist
   more=true
   while [ $more ]
   do
@@ -120,9 +123,10 @@ do
       album=$(albums \
             | sort -n \
             | dmenu 'Album' "$album" -no-custom) || break
-      more=
+      unset more
     fi
 
+    # player, library or playlist selection
     case "$album" in
       '[ player ]') artist='[ player ]'
                     break ;;
@@ -131,7 +135,7 @@ do
 
       '[ all ]') playlist=$(mpc find artist "$artist")
                  music="All songs by $artist"
-                 more= ;;
+                 unset more ;;
 
       *) if [ "$artist" = '[ albums ]' ] ;then
            playlist=$(mpc find album "$album")
@@ -142,6 +146,7 @@ do
          fi ;;
     esac
 
+    # playlist action
     while action=$(echo 'play\nadd\ninsert' | dmenu "$music" -no-custom) || break
     do
       case $action in

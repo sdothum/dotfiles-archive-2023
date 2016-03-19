@@ -48,8 +48,8 @@ set input-bg-normal=#464f52
 set input-fg-normal=#fdf6e3
 # set home-page=http://this-page-intentionally-left-blank.org/
 # set home-page=https://wiki.archlinux.org/index.php/Special:Random
-# set home-page=https://www.archlinux.org/
-set home-page=https://bbs.archlinux.org/viewforum.php?id=49
+set home-page=https://www.archlinux.org/
+# set home-page=https://bbs.archlinux.org/viewforum.php?id=49
 set smooth-scrolling=true
 set spacial-navigation=true
 set spell-checking=true

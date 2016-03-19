@@ -96,6 +96,8 @@ alias herbstluftwm=". $HOME/.config/herbstluftwm/config/ENV"
 alias hh='h HH'
 alias iotop='sudo iotop'
 # alias j='fasd_cd -d'
+alias K='sig=-KILL k'
+alias KK='sig=-KILL kk'
 alias l1='ls -1'
 # alias label='sudo /usr/bin/ls -l /dev/disk/by-label/*'
 alias ldot='ls -lAd .*'
