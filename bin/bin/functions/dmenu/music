@@ -5,6 +5,9 @@
 
 # ........................................................................ Music
 
+# unset redundant for short album menus
+# redundant=true
+
 # library listings
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
@@ -20,14 +23,27 @@ artists() {
 
 albums() {
   if [ "$artist" = '[ albums ]' ] ;then
-    if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-      mpc list album \
-      | sort -n \
-      | sed '1i[ player ]\n[ artist ]'
+    # redundant menu return to artist listings
+    if [ $redundant ] ;then
+      if [ $(mpc playlist | wc -l) -gt 0 ] ;then
+        mpc list album \
+        | sort -n \
+        | sed '1i[ player ]\n[ artist ]'
+      else
+        mpc list album \
+        | sort -n \
+        | sed '1i[ artist ]'
+      fi
     else
-      mpc list album \
-      | sort -n \
-      | sed '1i[ artist ]'
+      # escape return to artist listings
+      if [ $(mpc playlist | wc -l) -gt 0 ] ;then
+        mpc list album \
+        | sort -n \
+        | sed '1i[ player ]'
+      else
+        mpc list album \
+        | sort -n
+      fi
     fi
   else
     mpc list album artist "$artist"
