@@ -9,7 +9,8 @@
 
       " source code style
       function! CodeView()
-        execute 'LiteDFM'
+        " suppress tty ctermfg error messages
+        call Quietly('LiteDFM')
         set showmode
         set laststatus=2                    " turn on statusline
         call LiteBackground()

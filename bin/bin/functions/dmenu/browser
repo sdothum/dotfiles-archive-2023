@@ -36,9 +36,6 @@ do
     '[ edit ]') gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
                 command dmenu bookmarks ;;
 
-    elinks |\
-    w3m) term "$browser" $browser "$1" ;;
-
     chromium) focus chromium -app=$1 ;;
 
     dwb |\
@@ -57,6 +54,9 @@ do
     vimb |\
     vimb-detached |\
     xombrero) focus $browser "$1" ;;
+
+    elinks |\
+    w3m) term "$browser" $browser "$1" ;;
   esac
   exit
 done

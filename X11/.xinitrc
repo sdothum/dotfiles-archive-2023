@@ -121,7 +121,7 @@ case $windowmanager in
                 export PANEL_BOTTOM=true
                 # export PANEL_MARGIN=true
                 # setroot (wallpaper) last wallpaper (blank) last blank wall, otherwise random blank wall
-                export SETROOT=wallpaper
+                export SETROOT=$(cat $HOME/.setroot 2>/dev/null)
                 setpath $HOME/.config/herbstluftwm
                 . $HOME/.config/herbstluftwm/config/ENV
                 # initial build install?
