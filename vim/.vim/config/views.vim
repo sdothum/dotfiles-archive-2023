@@ -85,7 +85,7 @@
           if !exists('#goyo')               " goyo launched yet?
             execute 'LiteDFMClose'
             " width must be greater than textwidth, center vertical (to accomodate statusline)
-            execute 'Goyo ' . (&textwidth + 1) . '+1x+1'
+            execute 'Goyo ' . (&textwidth + 1) . '+1x+0'
           else
             let l:buffer = bufnr('%')       " goyo! always returns to first buffer, so remember last
             execute 'Goyo!'

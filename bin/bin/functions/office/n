@@ -9,7 +9,7 @@
 # nanu nanu!
 if ! [ -e $1 ] ;then
   nano $@
-elif is_owned $1 ;then
+elif [ -w $1 ] ;then
   nano $@
 else
   sudo nano $@

@@ -48,7 +48,7 @@ print_cmd = pr mail
     focus = '','','light red','','light red,bold',''
 
   [[unread]]
-    translated = ✉
+    translated = ◦
     normal = '','','light red','','light red',''
     focus = '','','light red','','light red,bold',''
 
@@ -63,7 +63,7 @@ print_cmd = pr mail
     focus = '','','light red','','yellow,bold',''
 
   [[attachment]]
-    translated = ●
+    translated = ✉
     normal = '','','light red','','yellow',''
     focus = '','','light red','','yellow',''
 

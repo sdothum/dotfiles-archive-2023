@@ -17,13 +17,19 @@ winid() {
   printf '0x%x' $(xdotool search --onlyvisible --limit 1 --classname $name)
 }
 
+focus_check() {
+  [ "$(query wname)" = $name ] && exit
+}
+
 if xdotool search --onlyvisible --limit 1 --classname $name >/dev/null ;then
-  if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
-                  compare monitors.focus.tag = TAG 2>/dev/null ;then
-    xdotool search --onlyvisible --limit 1 --classname $name windowunmap >/dev/null
-    draw refresh
-    focus window
-    exit
+  if [ "$(query wname)" = $name ] ;then
+    if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
+                    compare monitors.focus.tag = TAG 2>/dev/null ;then
+      xdotool search --onlyvisible --limit 1 --classname $name windowunmap >/dev/null
+      draw refresh
+      focus window
+      exit
+    fi
   fi
 fi
 
@@ -31,15 +37,15 @@ focus frame
 
 # bring window into focus and verify winid
 if [ -f $scratchpad ] && herbstclient bring $(cat $scratchpad) 2>/dev/null ;then
-  [ "$(cat $scratchpad)" = $(winid) ] && exit
+  focus_check
 fi
 
 # recover winid if somehow it differs
 xdotool search --limit 1 --classname $name windowmap >/dev/null
 if [ $(winid) != '0x0' ] ;then
   echo $(winid) >$scratchpad
-  exit
 fi
+focus_check
 
 # check winid's just in case.. it happens!
 for i in $(query winids)
@@ -47,9 +53,10 @@ do
   if [ $(herbstclient attr clients.$i.instance) = $name ] ;then
     echo $i >$scratchpad
     herbstclient bring $i 2>/dev/null
-    exit
+    break
   fi
 done
+focus_check
 
 # cancel out above focus frame
 focus frame

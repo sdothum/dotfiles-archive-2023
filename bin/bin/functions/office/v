@@ -17,7 +17,7 @@ else
   file=$(echo $@)
   if ! [ -e $1 ] ;then
     focus vim $gui $file
-  elif is_owned $1 ;then
+  elif [ -w $1 ] ;then
     focus vim $gui $file
   else
     focus sudo -s vim $gui $file
