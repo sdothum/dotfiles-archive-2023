@@ -22,6 +22,7 @@ shuffle=$ROOT/herbstluftwm:shuffle
 noblur=$ROOT/herbstluftwm:noblur
 blank=$ROOT/herbstluftwm:blank
 theme=$ROOT/herbstluftwm:theme
+root=$HOME/.setroot
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50
@@ -139,19 +140,25 @@ unblur() {
   expr $1 '<' $(cut -d: -f$2 $setroot)
 }
 
+# remember current background state for autostart
 case "$1" in
-  blank)   blank $2 ;;
-  restore) select_blank ;;
+  blank)   blank $2
+           rm -f $root ;;
+            
+  restore) select_blank
+           echo blank >$root ;;
 
   save) color=$(cat $BACKGROUND.color)
         convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
         notify 'Background Color' "$color saved" ;;
 
   select) rm -f $shuffle 2>/dev/null
-          select_wallpaper ;;
+          select_wallpaper
+          echo wallpaper >$root ;;
 
   shuffle) touch $shuffle
-           shuffle ;;
+           shuffle
+           echo wallpaper >$root ;;
 
   wallpaper) wallpaper ;;
 
