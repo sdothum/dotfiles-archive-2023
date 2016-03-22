@@ -42,8 +42,8 @@ else
   hc keybind $Mod-k                  focus up
   hc keybind $Mod-l                  focus right
 fi
-# hc keybind $Mod-bracketleft          chain . focus_monitor 1 . emit_hook focus_window
-# hc keybind $Mod-bracketright         chain . focus_monitor 0 . emit_hook focus_window
+# hc keybind $Mod-bracketleft        chain . focus_monitor 1 . emit_hook focus_window
+# hc keybind $Mod-bracketright       chain . focus_monitor 0 . emit_hook focus_window
 hc keybind $Mod-bracketleft          focus_monitor 1
 hc keybind $Mod-bracketright         focus_monitor 0
 
@@ -79,14 +79,14 @@ hc keybind $Mod-Control-o            split right  0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space        spawn restore frames
 if [ $COLEMAK_DH ] ;then
-  hc keybind $Mod-slash                rotate
-  hc keybind $Mod-Shift-slash          rotate
-  hc keybind $Mod-Shift-period         chain . lock . rotate . rotate . focus_edge right . unlock
-  hc keybind $Mod-Shift-comma          chain . lock . rotate . rotate . focus_edge left . unlock
+  hc keybind $Mod-slash              rotate
+  hc keybind $Mod-Shift-slash        chain . lock . rotate . rotate . rotate . unlock
+  hc keybind $Mod-Shift-period       chain . lock . rotate . rotate . focus_edge right . unlock
+  hc keybind $Mod-Shift-comma        chain . lock . rotate . rotate . focus_edge left . unlock
 else
-  hc keybind $Mod-Shift-comma          rotate
-  hc keybind $Mod-Shift-period         chain . lock . rotate . rotate . focus_edge left . unlock
-  hc keybind $Mod-Shift-slash          chain . lock . rotate . rotate . focus_edge right . unlock
+  hc keybind $Mod-Shift-comma        rotate
+  hc keybind $Mod-Shift-period       chain . lock . rotate . rotate . focus_edge left . unlock
+  hc keybind $Mod-Shift-slash        chain . lock . rotate . rotate . focus_edge right . unlock
 fi
 
 # resizing frames

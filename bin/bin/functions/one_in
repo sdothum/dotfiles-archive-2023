@@ -6,7 +6,12 @@
 
 # ................................................................ Random chance
 
-# Usage: one_in <number>
+usage() {
+  echo "usage: $(basename $0) <number>"
+  exit 1
+}
+
+[ "$*" ] || usage
 
 [ $(expr $(hexdump -n 2 -e '/2 "%u"' /dev/random) % $1 = 0) -eq 1 ]
 

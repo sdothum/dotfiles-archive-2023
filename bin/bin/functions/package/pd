@@ -12,7 +12,7 @@ usage() {
 }
 
 [ "$*" ] || usage
-[ $1 = h ] && usage
+[ "$1" = h ] && usage
 
 if [ $1 = r ] ;then
   D=N

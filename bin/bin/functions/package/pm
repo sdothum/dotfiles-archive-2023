@@ -12,7 +12,7 @@ usage() {
 }
 
 [ "$*" ] || usage
-[ $1 = h ] && usage
+[ "$1" = h ] && usage
 
 # default (no options) to package query
 
