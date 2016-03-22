@@ -168,7 +168,7 @@ case "$1" in
      if [ -e $shuffle ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
          # increase modulo to reduce frequency of shuffle
-         [ $(expr $(hexdump -n 2 -e '/2 "%u"' /dev/random) % $modulo = 0) -eq 1 ] && shuffle
+         one_in $modulo && shuffle
        fi
      fi ;;
 esac

@@ -71,6 +71,7 @@ fi
 # panel fonts
 export PANEL_HEIGHT=18
 export PANEL_FONT='Arial:size=8'
+export PANEL_UNDERLINE=2
 export UTF8_FONT='DejaVu Sans Mono for Powerline:size=8'
 export ICON_FONT='FontAwesome:size=7'
 

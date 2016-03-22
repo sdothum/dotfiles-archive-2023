@@ -150,7 +150,17 @@ panel() {
 
       T*) title
           count=$(herbstclient attr tags.focus.client_count)
-          [ $count -gt 1 ] && title="$title   ⮁   $count"
+          tickcount=$(herbstclient attr tags.by-name.\'$tag.client_count 2>/dev/null)
+          [ $tickcount ] || tickcount=0
+          if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
+            if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
+              title="$title   ⮁   $count   %{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+            elif [ $count -gt 1 ] ;then
+              title="$title   ⮁   $count"
+            else
+              title="$title   ⮁   %{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+            fi
+          fi
           if [ $count -gt 0 ] ;then
             if [ "$(query wname)" = "${line#?}" ] ;then
               if [ $UNDERLINE ] ;then
@@ -190,7 +200,7 @@ xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 cat $PANEL_FIFO:$fifo \
 | panel \
 | lemonbar -d -n "lemonbar:$fifo" \
-           -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY -u 1 ${PANEL_BOTTOM} \
+           -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY -u $PANEL_UNDERLINE $PANEL_BOTTOM \
            -f "$PANEL_FONT" -f "$UTF8_FONT" -f "$ICON_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
