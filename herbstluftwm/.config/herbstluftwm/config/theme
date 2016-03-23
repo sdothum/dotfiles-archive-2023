@@ -45,7 +45,7 @@ hc attr theme.urgent.color            orange
 
 if is display -1440 ;then
   hc set frame_gap                    0
-  hc set window_gap                   2
+  hc set window_gap                   1
   hc attr theme.border_width          3
   hc attr theme.floating.border_width 3
 elif is display -2560 ;then

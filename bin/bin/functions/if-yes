@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
 # Shell
@@ -15,14 +15,17 @@ while :
 do
   rm -f /tmp/abort 2>/dev/null
   printf 'continue? [yes]/no/abort : '
-  read CONTINUE
+  # using bash's extended read functionality (over dash) for single character input
+  IFS= read -rn1 CONTINUE
   echo
   case "$CONTINUE" in
     y | Y | '') exit 0 ;;
     n | N)      exit 1 ;;
 
     a | A) echo $PPID >/tmp/abort
-           kill $sig $PPID ;;
+           # try to cleanly close any child processes
+           kill $sig $PPID
+           pid $PPID && kill -KILL $PPID ;;
   esac
 done
 
