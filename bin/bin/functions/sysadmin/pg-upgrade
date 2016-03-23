@@ -25,6 +25,6 @@ sudo su - postgres -c "pg_upgrade -b /opt/pgsql-$1/bin/ -B /usr/bin/ -d /var/lib
 
 sudo pacman -R postgresql-old-upgrade
 start postgresql
-if-no "remove /var/lib/postgres/data-$1" || sudo rm -rf /var/lib/postgres/data-$1
+if-no "remove /var/lib/postgres/data-$1" || sudo rm -r /var/lib/postgres/data-$1
 
 # vim: set ft=sh: #

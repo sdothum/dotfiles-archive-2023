@@ -5,7 +5,7 @@
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # .............................................................. Draw background
-
+set -x
 # Usage: draw root [ blank [<color>] | restore | save ]
 # Usage: draw root [ select | shuffle | toggle | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set

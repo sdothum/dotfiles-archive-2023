@@ -22,25 +22,25 @@ RUBY_HEAP_FREE_MIN=100000
 
 __killsup() {
   kill -TERM $(pgrep -cx /usr/bin/sup) 2>/dev/null
-  sudo rm -f $HOME/.sup/lock 2>/dev/null
-  sudo rm -f $HOME/.sup/xapian/flintlock 2>/dev/null
+  sudo rm $HOME/.sup/lock 2>/dev/null
+  sudo rm $HOME/.sup/xapian/flintlock 2>/dev/null
 }
 
 case $1 in
   '') if !p /usr/bin/sup ;then
-        sudo rm -f $HOME/.sup/lock
+        sudo rm $HOME/.sup/lock
         [ -e $HOME/.netrc ] && chmod 600 $HOME/.netrc
         if [ -d $HOME/.sup/xapian ] ;then
-          sudo cp -fv $HOME/.sup/sources.yaml.conf $HOME/.sup/sources.yaml
+          sudo cp -v $HOME/.sup/sources.yaml.conf $HOME/.sup/sources.yaml
         else
-          sudo cp -fv $HOME/.sup/sources.yaml.init $HOME/.sup/sources.yaml
+          sudo cp -v $HOME/.sup/sources.yaml.init $HOME/.sup/sources.yaml
           touch $HOME/.sup-archive
         fi
         # mb2md.pl -s $HOME/.sup/sent.mbox -d $HOME/Maildir/sdothum/INBOX >>/tmp/sup.log 2>&1
         # archivemail -d0 -s.%y%m%d.%H%M%S $HOME/.sup/sent.mbox >>/tmp/sup.log 2>&1
         # match terminal background to sup tomorrow theme background
         term 'Mail' /usr/bin/sup 2>>/tmp/sup.log
-        sudo rm -f $HOME/.sup-archive
+        sudo rm $HOME/.sup-archive
       else
         echo '.. instance locked: force restart with "sup F"'
       fi ;;
@@ -49,13 +49,13 @@ case $1 in
 
   F) if if-yes 'force sup' ;then
          __killsup
-       sudo rm -f $HOME/.sup/lock
+       sudo rm $HOME/.sup/lock
        sup
      fi ;;
 
   I) if if-yes 'initialize xapian database' ;then
        __killsup
-       sudo rm -Rf $HOME/.sup/xapian 2>/dev/null
+       sudo rm -R $HOME/.sup/xapian 2>/dev/null
      fi
      sup ;;
 

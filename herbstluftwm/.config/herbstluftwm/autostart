@@ -52,8 +52,12 @@ done
 # .............................................................. Desktop layouts
 
 # appropriately wild herbstluftwm background color!
-[ "$SETROOT" = blank ] && draw root blank $(cat $BACKGROUND.color 2>/dev/null) \
-                       || draw root blank
+if [ "$SETROOT" = blank ] ;then
+  draw root blank $(cat $BACKGROUND.color 2>/dev/null)
+else
+  # random background colour surprise a la herbstluftwm!
+  draw root blank
+fi 
 
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 if is display +1440 ;then

@@ -96,13 +96,14 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # bonnie++
 # gamin
+  glances
   gsmartcontrol
-# mprime-bin [is_server]
-  smartmontools
   htop
   iotop
 # memtester
+# mprime-bin [is_server]
 # multitail
+  smartmontools
 # sysstat
   xrestop
 

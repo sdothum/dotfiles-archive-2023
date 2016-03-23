@@ -48,7 +48,7 @@ do
          gvim -f -c 'set filetype=mail' $1
          cp $1 $1.draft
          # cleanup sup mail draft histories
-         find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm -f {} \; ;;
+         find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \; ;;
 
     focuswriter) compose_with focuswriter $1 ;;
     nano)        compose_with pyroom $1 ;;

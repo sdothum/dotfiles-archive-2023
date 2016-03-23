@@ -9,7 +9,7 @@
 # replace previous original?
 if [ $1. = -f. ] ;then
   file=$2
-  sudo rm -f $file.original 2>/dev/null
+  sudo rm $file.original 2>/dev/null
 else
   file=$1
 fi

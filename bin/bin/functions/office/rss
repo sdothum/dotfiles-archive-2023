@@ -30,7 +30,7 @@ case $1 in
         p newsbeuter
       fi ;;
 
-  I) sudo rm -f $HOME/.newsbeuter/cache.db 2>/dev/null
+  I) sudo rm $HOME/.newsbeuter/cache.db 2>/dev/null
      rss ;;
 
   i) if ! pidof newsbeuter ;then
