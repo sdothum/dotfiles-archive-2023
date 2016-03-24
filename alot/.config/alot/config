@@ -5,7 +5,7 @@ initial_command = search tag:attn
 
 theme = my.theme
 
-thread_authors_me = '┄━┄'
+thread_authors_me = '◕‿◕'
 
 print_cmd = pr mail
 
@@ -48,7 +48,7 @@ print_cmd = pr mail
     focus = '','','light red','','light red,bold',''
 
   [[unread]]
-    translated = ◦
+    translated = ⇢
     normal = '','','light red','','light red',''
     focus = '','','light red','','light red,bold',''
 
