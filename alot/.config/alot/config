@@ -45,27 +45,27 @@ print_cmd = pr mail
   [[flagged]]
     translated = ⚑
     normal = '','','light red','','light red',''
-    focus = '','','light red','','light red,bold',''
+    focus = '','','white','','white',''
 
   [[unread]]
     translated = ⇢
     normal = '','','light red','','light red',''
-    focus = '','','light red','','light red,bold',''
+    focus = '','','white','','white',''
 
   [[replied]]
     translated = ⏎
-    normal = '','','light red','','yellow,bold',''
-    focus = '','','light red','','yellow,bold',''
+    normal = '','','light red','','yellow',''
+    focus = '','','white','','white',''
 
   [[encrypted]]
     translated = ⚷
-    normal = '','','light red','','yellow,bold',''
-    focus = '','','light red','','yellow,bold',''
+    normal = '','','light red','','yellow',''
+    focus = '','','white','','white',''
 
   [[attachment]]
     translated = ✉
     normal = '','','light red','','yellow',''
-    focus = '','','light red','','yellow',''
+    focus = '','','white','','white',''
 
   [[INBOX]]
     translated =
@@ -88,4 +88,4 @@ print_cmd = pr mail
   [[sent]]
     translated = ⏎
     normal = '','','light red','','yellow,bold',''
-    focus = '','','light red','','yellow,bold',''
+    focus = '','','white','','white',''

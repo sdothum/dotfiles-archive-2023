@@ -154,7 +154,7 @@ panel() {
           [ $tickcount ] || tickcount=0
           if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
             if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
-              title="$title   ⮁   $count   %{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+              title="$title   ⮁   $count   ⮁   %{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
             elif [ $count -gt 1 ] ;then
               title="$title   ⮁   $count"
             else
