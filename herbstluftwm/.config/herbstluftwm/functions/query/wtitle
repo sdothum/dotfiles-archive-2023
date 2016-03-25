@@ -17,6 +17,6 @@ title=$(herbstclient attr clients.$1.title \
             -e 's/ at .*//'\
             -e 's/:/ /')
 # note: ^$SEP for use with dmenu column alignment, see focus hlwm, restore hidden
-echo "$instance ^$SEP $title"
+echo "$instance^$SEP $title"
 
 # vim: set ft=sh: #

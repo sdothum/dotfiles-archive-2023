@@ -27,7 +27,7 @@ tag() {
 for i in $(query winids)
 do
   TAG=$(herbstclient attr clients.$i.tag)
-  window="$TAG:$(query wtitle $i)^$(tag):$i"
+  window="$TAG:$(query wtitle $i) ^$(tag):$i"
   [ "$windows" ] && windows="$windows\n$window" \
                  || windows="$window"
 done
@@ -40,7 +40,7 @@ if window=$(echo $windows \
           | column -s\^ -t \
           | dmenu "$mode Window$title" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
-  window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/^\1/" -e "s/($SEP)/^\1/")
+  window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/ ^\1/" -e "s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
   TAG=$(echo $window | cut -d: -f1)
   focus frame
