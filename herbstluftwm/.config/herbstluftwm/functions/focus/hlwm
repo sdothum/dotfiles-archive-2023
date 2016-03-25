@@ -39,7 +39,8 @@ if window=$(echo $windows \
           | cut -d: -f2 \
           | column -s\^ -t \
           | dmenu "$mode Window$title" -no-custom) || exit ;then
-  window=$(echo $window | sed -r "s/ *([$VISIBLE$INVISIBLE])/^\1/")
+  # restore ^$SEP, see query wtitle
+  window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/^\1/" -e "s/($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
   TAG=$(echo $window | cut -d: -f1)
   focus frame
