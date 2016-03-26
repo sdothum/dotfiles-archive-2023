@@ -94,7 +94,7 @@
 
 
       let g:matchspace = ''                 " see ToggleSpaces coding.vim
-      let s:powerline  = 0                  " powerline symbol set preference
+      let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
 
       if has("gui_running")
         if s:powerline == 0
