@@ -6,7 +6,9 @@
 
 # .................................................................... Processes
 
+# Usage: !p <name>
+
 # no process && ..
-[ $(pgrep -cf "$@") -eq 0 ]
+p "$@" && exit 1 || exit 0
 
 # vim: set ft=sh: #
