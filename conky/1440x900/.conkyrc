@@ -18,9 +18,9 @@ double_buffer yes
 no_buffers yes
 text_buffer_size 2048
 
-# gap_x 15
-gap_x 1240
-gap_y 15
+alignment top_right
+gap_x 14
+gap_y 14
 minimum_size 185 900
 maximum_width 185
 own_window yes
@@ -30,8 +30,7 @@ own_window_transparent yes
 # own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
 own_window_hints sticky,above
 border_inner_margin 0
-border_outer_margin 15
-alignment tr
+border_outer_margin 14
 
 draw_shades no
 draw_outline no

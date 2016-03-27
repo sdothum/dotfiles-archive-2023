@@ -21,23 +21,49 @@ begin
   message = Mail.read(ARGV[0])
   to = message.to[0]
   from = message.from[0]
-  subject = message.subject.sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
+  subject = message.subject.gsub(/%20/, ' ').sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
   date = message.date.strftime("%Y-%m-%d %H:%M:%S")
   print "Date: #{date}\n".green
   print "To: #{to}\n".green
   print "From: #{from}\n".green
   print "Subject: #{subject}\n".green
   begin
-    text = (case message.mime_type
-      when 'text/plain' then "#{message.body}"
-      when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
-      when 'text/html' then "#{message.body}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-      else raise
-      end).gsub(/^ +/m, '')
+    if message.multipart?
+      text = ''
+      message.parts.each do |part|
+        print "> #{part.mime_type}\n"
+        text = text + (
+          case part.mime_type
+            when 'text/plain' then "#{part.body.decoded}".gsub(/\r\n/m, "\n")
+            when 'text/html' then "#{part.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+            when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+            else ''
+          end
+        ).gsub(/^ +/m, '')
+        if text.length > 1
+          break
+        end
+      end
+    else
+      text = (
+        print "> #{message.mime_type}\n"
+        case message.mime_type
+          when 'text/plain' then "#{message.body}"
+          when 'text/html' then "#{message.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+          when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+          else ''
+        end
+      ).gsub(/^ +/m, '')
+    end
+    if text.length < 2
+      raise
+    end
     print "\nBody: ".green
-    text.split("\n\n").each do |line|
-      break if text =~ /^-- *$/
-      print "#{line}\n"
+    if text > ''
+      text.split("\n\n").each do |line|
+        break if line =~ /^-- *$/
+        print "#{line}\n"
+      end
     end
   rescue
     print ".. invalid mime type #{message.mime_type.red.bold}\n"

@@ -60,9 +60,11 @@ margin=$(( $desktop_margin - $window_frame ))
 # ricing tweak.. pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, ..
 # note: frame and window gap changes will skew the left margin along the X axis
 marginX=$(( $margin * 17 / 13 ))
-conky_margin=$(grep 'border_outer_margin' $HOME/.conkyrc | awk '{ print $2 }')
-conky_width=$(grep 'maximum_width' $HOME/.conkyrc | awk '{ print $2 }')
-conkyX=$(( $conky_width + $conky_margin*2 - $window_frame ))
+conky_gap=$(grep '^gap_x' $HOME/.conkyrc | awk '{ print $2 }')
+conky_inner=$(grep '^border_inner_margin' $HOME/.conkyrc | awk '{ print $2 }')
+conky_outer=$(grep '^border_outer_margin' $HOME/.conkyrc | awk '{ print $2 }')
+conky_width=$(grep '^maximum_width' $HOME/.conkyrc | awk '{ print $2 }')
+conkyX=$(( $conky_width + $conky_gap + $conky_inner + $conky_outer - $window_frame ))
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then

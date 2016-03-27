@@ -9,10 +9,10 @@
 
 require 'cairo'
 
-COLORING=0x000000
-default_color=0x4e3648
-color0=0x3a2836
-color6=0x150f14
+COLORING=0xFFFFFF
+default_color=0xd09fb3
+color0=0x9c7786
+color6=0x3a2d32
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
@@ -20,7 +20,7 @@ color6=0x150f14
 clock_h = {
     {
     name='time',                   arg='%l',                        max_value=12,
-    x=85,                          y=85,
+    x=85,                          y=84,
     graph_radius=55,
     graph_thickness=3,
     graph_unit_angle=30,           graph_unit_thickness=30,
@@ -39,7 +39,7 @@ clock_h = {
 clock_m = {
     {
     name='time',                   arg='%M',                        max_value=60,
-    x=85,                          y=85,
+    x=85,                          y=84,
     graph_radius=59,
     graph_thickness=2,
     graph_unit_angle=6,            graph_unit_thickness=6,
@@ -58,7 +58,7 @@ clock_m = {
 clock_s = {
     {
     name='time',                   arg='%S',                        max_value=60,
-    x=85,                          y=85,
+    x=85,                          y=84,
     graph_radius=52,
     graph_thickness=2,
     graph_unit_angle=6,            graph_unit_thickness=2,
@@ -79,7 +79,7 @@ clock_s = {
 temp = {
 {
     name='exec',                   arg="sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e '...C  *[(].*$//' | sort | tail -1", max_value=100,
-    x=69,                          y=278,
+    x=69,                          y=277,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -103,7 +103,7 @@ temp = {
 gauge = {
 {
     name='cpu',                    arg='cpu0',                      max_value=100,
-    x=69,                          y=278,
+    x=69,                          y=277,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -124,7 +124,7 @@ gauge = {
 },
 {
     name='memperc',                arg='',                          max_value=100,
-    x=69,                          y=425,
+    x=69,                          y=424,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -146,7 +146,7 @@ gauge = {
 {
     -- name='fs_used_perc',           arg='/',                         max_value=100,
     name='exec',                   arg='conky btrfs / percent',     max_value=100,
-    x=69,                          y=425,
+    x=69,                          y=424,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -167,7 +167,7 @@ gauge = {
 },
 {
     name='swapperc',               arg='',                          max_value=100,
-    x=69,                          y=425,
+    x=69,                          y=424,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -188,7 +188,7 @@ gauge = {
 },
 {
     name='wireless_link_qual_perc', arg='wlp2s0',                   max_value=100,
-    x=69,                          y=536,
+    x=69,                          y=535,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -209,7 +209,7 @@ gauge = {
 },
 {
     name='battery_percent',        arg='',                          max_value=100,
-    x=69,                          y=536,
+    x=69,                          y=535,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,

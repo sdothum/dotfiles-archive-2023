@@ -1,0 +1,90 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... Man help
+
+# Note: hilighting a word in the manpage display (terminal) will automatically
+#       lookup that manpage when the terminal window is closed
+#       adding an apostrophe (') to the input word allows lookup of word tokens already
+#       in the manpage history with the apostrophe being removed (useful when
+#       the name is part of several descriptions)
+
+xsel=/tmp/manpage:xsel
+
+highlight() {
+  cat $xsel | sed 's/(.*//'
+}
+
+# see manpage
+rm -f $xsel
+while :
+do
+  # highlighted lookup
+  if [ -e $xsel ] ;then
+    man=$(highlight)
+    if [ $(echo "$man" | wc -w) -ne 1 ] ;then
+      unset man
+    else
+      [ $(whatis "$man" | wc -l) -eq 0 ] && unset man
+    fi
+    if [ -z $man ] ;then
+      notify "$(highlight)" "No manual entry found"
+      exit
+    fi
+  else
+    # initial lookup
+    man=$(apropos . \
+        | cut -d' ' -f1 | sort -d | uniq \
+        | history man \
+        | dmenu 'Manpage' \
+        | cut -d':' -f3-)
+    man=$(unquote $man)
+    whatis "$man" >/dev/null || exit
+  fi
+
+  # loop where multiple entries
+  while :
+  do
+    # list possible man sections!
+    if [ $(whatis "$man" | wc -l) -gt 1 ] ;then
+      page=$(whatis "$man" \
+          | sed "s/) *-/)^$SEP/" \
+          | column -s^ -t \
+          | dmenu 'Section' -no-custom) || exit
+    else
+      page=$(whatis "$man")
+      singleton=true
+    fi
+
+    page=$(echo $page | cut -d')' -f1 | sed -r 's/(.*) \((.*)/\2 \1/')
+
+    # display man page
+    if [ "$page" ] ;then
+      history man "$man"
+      term "$page" MAX $stack WAIT manpage "$page"
+      # subsequent manpages open on same frame
+      stack=STACK
+      # highlighted man page entry?
+      [ -e $xsel ] && break
+
+      # print hard copy?
+      set -- $page
+      hardcopy=$(echo 'no\nyes' | dmenu "Print $2 ($1)" -no-custom) || exit
+      if [ $hardcopy = yes ] ;then
+        # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
+        manpage=$(find /usr/share/man -name "$2.$1.gz")
+        if [ $manpage ] ;then
+          zcat $manpage | groff -man -Tps | lpr -P $PRINTER
+          pr eject
+        else
+          notify "$page" "man $1 section not found"
+        fi
+      fi
+    fi
+    [ $singleton ] && exit
+  done
+done
+
+# vim: set ft=sh: #
