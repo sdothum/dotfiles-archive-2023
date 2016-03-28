@@ -87,5 +87,10 @@ print_cmd = pr mail
 
   [[sent]]
     translated = ⏎
-    normal = '','','light red','','yellow,bold',''
+    normal = '','','light red','','yellow',''
+    focus = '','','white','','white',''
+
+  [[signed]]
+    translated = ✘
+    normal = '','','light red','','light red',''
     focus = '','','white','','white',''

@@ -128,7 +128,7 @@
         \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
         \            ]
         \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
-        \,             [ 'line', 'linecount' ]
+        \,             [ 'line', 'linecount', 'topbottom' ]
         \,             [ 'atom', 'specialchar', 'column' ]
         \            ]
         \}
@@ -171,7 +171,7 @@
         \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
         \, 'relativepath' : '%f'
         \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
-        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "ALL" : "Top") : line("w$") == line("$") ? "Bottom" : ""}'
+        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "◯" : "◒") : line("w$") == line("$") ? "◓" : ""}'
         \}
 
       let g:lightline.component_visible_condition =

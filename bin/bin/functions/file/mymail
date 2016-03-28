@@ -16,6 +16,35 @@ class String
   include Term::ANSIColor
 end
 
+def parse_mail(message)
+  if message.multipart?
+    text = ''
+    message.parts.each do |part|
+      print "> #{part.mime_type}\n"
+      text = text + (
+        case part.mime_type
+          when 'text/plain' then "#{part.body.decoded}".gsub(/\r\n/m, "\n")
+          when 'text/html' then "#{part.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+          when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+          else ''
+        end
+      ).gsub(/^ +/m, '')
+      break if text.length > 1
+    end
+  else
+    text = (
+      print "> #{message.mime_type}\n"
+      case message.mime_type
+        when 'text/plain' then "#{message.body}"
+        when 'text/html' then "#{message.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+        when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+        else ''
+      end
+    ).gsub(/^ +/m, '')
+  end
+  text.gsub(/\n\n/, "\n")
+end
+
 # view email (see rox)
 begin
   message = Mail.read(ARGV[0])
@@ -28,45 +57,18 @@ begin
   print "From: #{from}\n".green
   print "Subject: #{subject}\n".green
   begin
-    if message.multipart?
-      text = ''
-      message.parts.each do |part|
-        print "> #{part.mime_type}\n"
-        text = text + (
-          case part.mime_type
-            when 'text/plain' then "#{part.body.decoded}".gsub(/\r\n/m, "\n")
-            when 'text/html' then "#{part.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-            when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
-            else ''
-          end
-        ).gsub(/^ +/m, '')
-        if text.length > 1
-          break
-        end
-      end
-    else
-      text = (
-        print "> #{message.mime_type}\n"
-        case message.mime_type
-          when 'text/plain' then "#{message.body}"
-          when 'text/html' then "#{message.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-          when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
-          else ''
-        end
-      ).gsub(/^ +/m, '')
-    end
-    if text.length < 2
-      raise
-    end
+    text = parse_mail(message)
+    raise if text.length == 0
+    raise if text.split("\n")[0] =~ /^-- *$/
     print "\nBody: ".green
     if text > ''
-      text.split("\n\n").each do |line|
+      text.split("\n").each do |line|
         break if line =~ /^-- *$/
         print "#{line}\n"
       end
     end
   rescue
-    print ".. invalid mime type #{message.mime_type.red.bold}\n"
+    print ".. empty mime type #{message.mime_type.red.bold}\n"
   end
 rescue
   print ".. invalid mail #{ARGV[0].red.bold}\n" unless not ARGV[0]
