@@ -128,7 +128,7 @@
         \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
         \            ]
         \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
-        \,             [ 'line', 'linecount', 'topbottom' ]
+        \,             [ 'linecount', 'topbottom' ]
         \,             [ 'atom', 'specialchar', 'column' ]
         \            ]
         \}
@@ -136,7 +136,7 @@
       let g:lightline.inactive =
         \{
         \  'left'  : [ [ 'filename' ] ]
-        \, 'right' : [ [ 'line', 'linecount' ] ]
+        \, 'right' : [ [ 'linecount' ] ]
         \}
 
       let g:lightline.tabline =
