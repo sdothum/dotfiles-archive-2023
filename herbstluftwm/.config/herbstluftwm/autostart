@@ -57,7 +57,7 @@ if [ "$SETROOT" = blank ] ;then
 else
   # random background colour surprise a la herbstluftwm!
   draw root blank
-fi 
+fi
 
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 if is display +1440 ;then

@@ -16,6 +16,7 @@ library=${LIBRARY:-/data/media/videos/${1:-movies}}
 T=t
 cache=/tmp/dmenu:movies
 pgrep herbstluftwm >/dev/null && monitor=$(herbstclient attr monitors.focus.index)
+[ -e "$cache" ] || notify 'Movies' 'Caching library..'
 
 # clean up titles
 mytitles $library >>/tmp/mytitles:movies
@@ -60,7 +61,7 @@ do
     *) movie=$(echo "$movie" | sed "s/ $SEP$//")
        while :
        do
-         action=$(echo 'play\nmrqe\nimdb\nmark\nedit' | dmenu "$movie" -no-custom) || break
+         action=$(echo 'play\nmrqe\nimdb\nedit\ndelete\nmark' | dmenu "$movie" -no-custom) || break
          video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed -e 's/  (\([12][0-9][0-9][0-9]\))$/ \1/' -e 's/ /./g').*")
          case $action in
            play) history "$playlist" "$movie"
@@ -70,10 +71,13 @@ do
            mrqe) vimb-detached "mr $movie" ;;
            imdb) vimb-detached "im $movie" ;;
 
-           mark) history "$playlist" "$movie"
+           edit) term 'movies' WAIT ranger "$video"
                  break ;;
 
-           edit) term 'movies' WAIT ranger "$video"
+           delete) rm -r "$video"
+                   break ;;
+
+           mark) history "$playlist" "$movie"
                  break ;;
          esac
        done ;;

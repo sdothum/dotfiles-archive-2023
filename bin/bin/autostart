@@ -51,13 +51,13 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-term 'IRC' FONTSIZE '10' weechat
-term 'Mail' alot
+is_server && term 'IRC' FONTSIZE '10' weechat
+is_server && term 'Mail' alot
 
 # .................................................................. Window apps
 
 $BROWSER
-gvim --role='thedarnedestthing' thedarnedestthing
-thedarnedestthing
+is_server && gvim --role='thedarnedestthing' thedarnedestthing
+is_server && thedarnedestthing
 
 # vim: set ft=sh: #

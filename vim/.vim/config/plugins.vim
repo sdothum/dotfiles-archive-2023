@@ -117,7 +117,7 @@
           \{
           \  'colorscheme'  : 'solarized'
           \, 'separator'    : { 'left' : '', 'right' : '' }
-          \, 'subseparator' : { 'left' : '/', 'right' : '\' }
+          \, 'subseparator' : { 'left' : '', 'right' : '' }
           \}
       endif
 
@@ -275,7 +275,7 @@
         \, 'PlaceNextMark'     : "',"
         \, 'ToggleMarkAtLine'  : "'."
         \, 'PurgeMarksAtLine'  : "'-"
-        \, 'DeleteMark'        : "d'"
+        \, 'DeleteMark'        : "''"
         \, 'PurgeMarks'        : "'<Space>"
         \, 'PurgeMarkers'      : "'<BS>"
         \, 'GotoNextLineAlpha' : "']"

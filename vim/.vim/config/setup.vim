@@ -160,11 +160,15 @@
 
       " use extended regex statements for searches (unfortunately, must set
       " manually for search and replace)
-      nmap /     /\v
-      vmap /     /\v
+      nmap /      /\v
+      vmap /      /\v
       " tab to bracket pairs
-      nmap <Tab> %
-      vmap <Tab> %
+      nmap <Tab>  %
+      vmap <Tab>  %
+
+      " repeat latest f,t,F,T see modal searching remaps above
+      nnoremap ,, ;
+      vnoremap ,, ;
 
     " ........................................................... Tab completion
 
