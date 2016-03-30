@@ -29,12 +29,19 @@ del_pkg() {
   done
 }
 
+# $@ expansion in grep and if-yes truncated, so..
+pkgs="$@"
 if [ -z "$*" ] ;then
-  grep '^ *IgnorePkg.*' $conf
-elif grep -q "^ *IgnorePkg.*$@" $conf ;then
-  if-yes "reinstate $@" && del_pkg $@
+  pkgs=$(grep '^ *IgnorePkg.*' $conf)
+  echo $pkgs
+  pkgs=$(echo $pkgs | sed 's/^.*= *//')
+  if [ "$pkgs" ] ;then
+    if-no "reinstate $pkgs" || del_pkg $pkgs
+  fi 
+elif grep -q "^ *IgnorePkg.*$1" $conf ;then
+  if-yes "reinstate $pkgs" && del_pkg $pkgs
 else
-  if-yes "ignore $@" && add_pkg $@
+  if-yes "ignore $pkgs" && add_pkg $pkgs
 fi
 
 # vim: set ft=sh: #
