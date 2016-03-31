@@ -36,6 +36,7 @@ case $1 in
   shell | sh*)        echo shell >$HOME/.windowmanager ;;
   wmii)               echo wmii >$HOME/.windowmanager ;;
   wmutils | wm*)      echo wmutils >$HOME/.windowmanager ;;
+  wtftw | wt*)        echo wtftw >$HOME/.windowmanager ;;
   xmonad | xm*)       echo xmonad >$HOME/.windowmanager ;;
 
   h | *) usage ;;
@@ -76,6 +77,7 @@ if [ $console ] ;then
     subtle)    ;;
     wmii)      ;;
     wmutils)   ;;
+    wtftw)     ;;
     xfce)      ;;
     xmonad)    ;;
   esac

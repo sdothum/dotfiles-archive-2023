@@ -6,6 +6,15 @@
 
 # ............................................................ Toggle max layout
 
+# flat ui panel refresh (border width 0 suppresses pulsing borders)
+set_layout() {
+  herbstclient set_layout $1
+  # toggle title refresh in panel to update frame status
+  if herbstclient compare theme.border_width = 0 ;then
+    herbstclient chain . lock . use_index +1 --skip-visible . use_index -1 --skip-visible . unlock
+  fi
+}
+
 # restore layout if in fullscreen, as max is just one keystroke away
 if is fullscreen ;then
   # don't flip out of monocle mode, see toggle fullscreen (also monocle aware)
@@ -19,9 +28,9 @@ else
   tag=$ROOT/herbstluftwm:tag:$(herbstclient attr monitors.focus.tag)
   if [ $layout != max ] ;then
     echo $layout >$tag
-    herbstclient set_layout max
+    set_layout max
   elif [ -e $tag ] ;then
-    herbstclient set_layout $(cat $tag)
+    set_layout $(cat $tag)
     rm -f $tag
   else
     herbstclient cycle_layout 1 vertical

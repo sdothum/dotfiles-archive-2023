@@ -31,12 +31,12 @@ del_pkg() {
 
 # $@ expansion in grep and if-yes truncated, so..
 pkgs="$@"
+ignored=$(grep '^ *IgnorePkg.*' $conf)
+echo $ignored
 if [ -z "$*" ] ;then
-  pkgs=$(grep '^ *IgnorePkg.*' $conf)
-  echo $pkgs
-  pkgs=$(echo $pkgs | sed 's/^.*= *//')
-  if [ "$pkgs" ] ;then
-    if-no "reinstate $pkgs" || del_pkg $pkgs
+  ignored=$(echo $ignored | sed 's/^.*= *//')
+  if [ "$ignored" ] ;then
+    if-no "reinstate $ignored" || del_pkg $ignored
   fi 
 elif grep -q "^ *IgnorePkg.*$1" $conf ;then
   if-yes "reinstate $pkgs" && del_pkg $pkgs

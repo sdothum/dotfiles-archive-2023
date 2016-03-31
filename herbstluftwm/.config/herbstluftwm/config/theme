@@ -32,8 +32,8 @@ hc attr theme.active.color            red
 hc attr theme.active.inner_color      '#808080'
 hc attr theme.active.outer_color      black
 hc attr theme.background_color        red
-hc attr theme.border_width            3
-hc attr theme.floating.border_width   3
+hc attr theme.border_width            0
+hc attr theme.floating.border_width   0
 hc attr theme.floating.outer_color    black
 hc attr theme.floating.outer_width    0
 hc attr theme.inner_color             '#808080'
@@ -45,14 +45,10 @@ hc attr theme.urgent.color            orange
 
 if is display -1440 ;then
   hc set frame_gap                    0
-  hc set window_gap                   1
-  hc attr theme.border_width          3
-  hc attr theme.floating.border_width 3
+  hc set window_gap                   0
 elif is display -2560 ;then
-  hc set frame_gap                    0
-  hc set window_gap                   2
-  hc attr theme.border_width          3
-  hc attr theme.floating.border_width 3
+  hc set frame_gap                    1
+  hc set window_gap                   1
 fi
 
 # vim: set ft=sh: #

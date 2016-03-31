@@ -21,9 +21,9 @@ UM1440=230
 # laptops are arbitrary ratios of
 margins() {
   case $1 in
-    2560) echo 82 ;;
+    2560) echo 85 ;;
     1680) echo $(pixel_match $(margins 2560) $UM1680) ;;
-    1440) echo 26;;
+    1440) echo 29;;
     *)    echo 0 ;;
   esac
 }

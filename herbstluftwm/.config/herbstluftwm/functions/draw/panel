@@ -161,15 +161,19 @@ panel() {
               title="$title   ⮁   %{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
             fi
           fi
+          unset hiding
+          if herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
+            herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && hiding=true
+          fi
           if [ $count -gt 0 ] ;then
             if [ "$(query wname)" = "${line#?}" ] ;then
-              if [ $UNDERLINE ] ;then
+              if [ $hiding ] ;then
                 title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
               else
                 title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
               fi
             else
-              if [ $UNDERLINE ] ;then
+              if [ $hiding ] ;then
                 title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
               else
                 title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"

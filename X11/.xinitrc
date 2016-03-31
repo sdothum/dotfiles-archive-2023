@@ -154,6 +154,9 @@ case $windowmanager in
            urxvt &
            exec xwait ;;
 
+  wtftw) urxvt & 
+         exec wtftw ;;
+
   xfce)   exec xfce4-session ;;
   xmonad) exec xmonad 2>/tmp/xmonad.log ;;
 
