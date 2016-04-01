@@ -24,7 +24,7 @@
   clipit
   colorgrab
   colors-git
-# conky-lua wireless_essid broken
+# conky-lua add BUILD_WLAN=ON to pkgbuild
   conky-lua-nv
 # stest contained in dmenu package  
   dmenu

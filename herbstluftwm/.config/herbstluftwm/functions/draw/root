@@ -67,16 +67,18 @@ setblur() {
 
 # create pulsar border color gradient
 set_border() {
-  echo $1 >$BORDER
+  # echo $1 >$BORDER
   conky palette $1 | grep 'color_light_1' \
                    | sed 's/<\/font>/\n/g' \
                    | sed  's/.*<font>//g' \
                    | grep '^#' | cut -d'#' -f2 \
                    | tac >$PULSAR
+  # set border to midtone
+  sed '10q;d' $PULSAR >$BORDER
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
   # refresh border of active window
-  herbstclient attr theme.active.color "#$1"
+  herbstclient attr theme.active.color "#$(cat $BORDER)"
 }
 
 # ............................................................ Assign background
@@ -92,6 +94,8 @@ blank() {
   set_border "$(conky theme contrast $color)"
   echo $color >$BLANK
   rm -f $theme 2>/dev/null
+  # make inactive border invisible!
+  herbstclient attr theme.normal.color "#$color"
 }
 
 color() {

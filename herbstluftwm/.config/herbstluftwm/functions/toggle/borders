@@ -1,0 +1,28 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="toggle/borders $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................ Toggle window borders
+
+normal=$ROOT/herbstluftwm:normal
+
+# no borders focusing aid
+[ $(pgrep -cf 'focus borders') -gt 1 ] && exit
+[ -e $normal ] || herbstclient attr theme.normal.color >$normal
+
+# no borders
+if herbstclient compare theme.border_width gt 0 ;then
+  herbstclient chain . lock . attr theme.normal.color "$(cat $normal)" \
+                     . attr theme.border_width 0 \
+                     . attr theme.floating.border_width 0 . unlock
+else
+  # with solid background colour, make inactive border invisible!
+  [ -e $BLANK ] && bg="#$(cat $BLANK)" || bg=$(cat $normal)
+  herbstclient chain . lock . attr theme.normal.color "$bg" \
+                     . attr theme.border_width $BORDER_WIDTH \
+                     . attr theme.floating.border_width $BORDER_WIDTH . unlock
+fi
+
+# vim: set ft=sh: #

@@ -11,8 +11,6 @@
 [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" = '' ] && exit
 
 width=$(herbstclient attr theme.border_width)
-float_width=$(herbstclient attr theme.floating.border_width)
-
 active=$(herbstclient attr theme.active.color)
 normal=$(herbstclient attr theme.normal.color)
 # with solid background colour, make inactive border invisible!
@@ -22,11 +20,13 @@ if [ -e $BLANK ] ;then
 else
   hilight=$(cat $BORDER)
 fi
+
 # border attention!
+border=$(( $width + $FOCUS_WIDTH ))
 herbstclient chain . lock . attr theme.active.color "$hilight" \
                    . attr theme.normal.color "$bg" \
-                   . attr theme.border_width $(( $width + $FOCUS_WIDTH )) \
-                   . attr theme.floating.border_width $(( $float_width + $FOCUS_WIDTH )) . unlock
+                   . attr theme.border_width $border \
+                   . attr theme.floating.border_width $border . unlock
 
 sleep 2
 
@@ -34,7 +34,7 @@ sleep 2
 herbstclient chain . lock . attr theme.active.color "$active" \
                    . attr theme.normal.color "$normal" \
                    . attr theme.border_width $width \
-                   . attr theme.floating.border_width $float_width . unlock
+                   . attr theme.floating.border_width $width . unlock
 
 
 # vim: set ft=sh: #
