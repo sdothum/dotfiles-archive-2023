@@ -1,0 +1,32 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Terminal
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................... Relative luminance
+
+usage() {
+  echo "usage: $(basename $0) +|-<rrggbb>"
+  exit 1
+}
+
+# perceived luminance, see http://hobbithouseinc.com/vb/color%20contrast.htm
+luminance() {
+  rgb=$(echo "$1" | tr '[a-z]' '[A-Z]')
+  R=$(echo "3 k $(echo $rgb | sed -r 's/(..)..../\1/') FF / 255 0.299 * * p" | dc)
+  G=$(echo "3 k $(echo $rgb | sed -r 's/..(..)../\1/') FF / 255 0.587 * * p" | dc)
+  B=$(echo "3 k $(echo $rgb | sed -r 's/....(..)/\1/') FF / 255 0.114 * * p" | dc)
+  # darker < 128 < lighter
+  echo "$R $G $B + + 0 k p" | dc | sed 's/\..*//'
+}
+
+# returns boolean based on whether colour is (+) brighter or (-) darker
+case "$(echo ${1%??????})" in
+  '+') [ $(luminance ${1#+}) -ge 128 ] ;;
+  '-') [ $(luminance ${1#-}) -lt 128 ] ;;
+  *)   usage ;;
+esac
+
+
+# vim: set ft=sh: #

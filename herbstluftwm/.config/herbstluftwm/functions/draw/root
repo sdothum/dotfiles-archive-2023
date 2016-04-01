@@ -20,7 +20,6 @@
 setroot=$ROOT/herbstluftwm:setroot
 shuffle=$ROOT/herbstluftwm:shuffle
 noblur=$ROOT/herbstluftwm:noblur
-blank=$ROOT/herbstluftwm:blank
 theme=$ROOT/herbstluftwm:theme
 root=$HOME/.setroot
 
@@ -57,7 +56,7 @@ root() {
 }
 
 setblur() {
-  if ! [ -e $blank ] ;then
+  if ! [ -e $BLANK ] ;then
     primary=$(root 0)
     is multihead && secondary=$(root 1)
   fi
@@ -91,7 +90,7 @@ blank() {
   echo $color >$BACKGROUND.color
   setroot --blank-color "#$color" 2>/dev/null
   set_border "$(conky theme contrast $color)"
-  echo $color >$blank
+  echo $color >$BLANK
   rm -f $theme 2>/dev/null
 }
 
@@ -113,7 +112,7 @@ select_blank() {
 wallpaper() {
   # initialize default link
   [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
-  rm -f $blank
+  rm -f $BLANK
   rm -f $theme 2>/dev/null
 }
 
@@ -129,7 +128,7 @@ select_wallpaper() {
 
 shuffle() {
   ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
-  rm -f $blank
+  rm -f $BLANK
   rm -f $theme 2>/dev/null
 }
 
@@ -177,10 +176,10 @@ esac
 
 setblur >$setroot
 # must bracket eval &
-[ -e $blank ] || eval setroot ${primary#?:} ${secondary#?:} &
+[ -e $BLANK ] || eval setroot ${primary#?:} ${secondary#?:} &
 
 # apply conky theme to .conkyrc, $theme unset above if new background
-if ! [ -e $blank ] ;then
+if ! [ -e $BLANK ] ;then
   [ -e $theme ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour

@@ -9,10 +9,8 @@
 # flat ui panel refresh (border width 0 suppresses pulsing borders)
 set_layout() {
   herbstclient set_layout $1
-  # toggle title refresh in panel to update frame status
-  if herbstclient compare theme.border_width = 0 ;then
-    herbstclient chain . lock . use_index +1 --skip-visible . use_index -1 --skip-visible . unlock
-  fi
+  # refresh in panel title to update frame status, see draw panel
+  xtitle -f 'T%s' >$(cat $PANEL_FIFO)
 }
 
 # restore layout if in fullscreen, as max is just one keystroke away

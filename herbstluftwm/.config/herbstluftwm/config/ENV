@@ -15,7 +15,8 @@ export ROOT=${ROOT:-/tmp}
 
 # ............................................................ Persistent states
 
-export WALLPAPER=$HOME/images/backgrounds/default
+export BACKGROUND=$HOME/images/colors/default
+export BLANK=$ROOT/herbstluftwm:blank
 export BORDER=$ROOT/herbstluftwm:border
 export COMPTON=$ROOT/herbstluftwm:compton
 export CONKY=$ROOT/herbstluftwm:conky
@@ -26,7 +27,7 @@ export LOCK=$ROOT/herbstluftwm:lock
 export MONOCLE=$ROOT/herbstluftwm:monocle
 export PANEL=$ROOT/herbstluftwm:panel
 export PULSAR=$ROOT/herbstluftwm:pulsar
-export BACKGROUND=$HOME/images/colors/default
+export WALLPAPER=$HOME/images/backgrounds/default
 
 # ..................................................................... Desktops
 
@@ -37,6 +38,9 @@ export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
 # dmenu window state icons
 export VISIBLE='■'
 export INVISIBLE='□'
+
+# focus aid, see focus border
+export FOCUS_WIDTH=6
 
 # ..................................................................... Displays
 
@@ -89,11 +93,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#cd9a89'
-export ACTIVE_FG='#f0f0f0'
-export ACTIVE_HIDDEN_FG='#664d44'
-export INACTIVE_FG='#89bccd'
-export INACTIVE_HIDDEN_FG='#445e66'
+export DEFAULT_FG='#343a3a'
+export ACTIVE_FG='#000000'
+export ACTIVE_HIDDEN_FG='#1a1d1d'
+export INACTIVE_FG='#383333'
+export INACTIVE_HIDDEN_FG='#1c1a1a'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

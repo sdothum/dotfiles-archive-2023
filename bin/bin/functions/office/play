@@ -7,6 +7,7 @@
 # ................................................................. Media player
 
 # play media (see rox, dmenu movies, dmenu series)
-mpv "$@" >/dev/null 2>&1
+notify 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
+mpv --vf=eq "$@" >/dev/null 2>&1
 
 # vim: set ft=sh: #

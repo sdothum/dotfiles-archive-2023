@@ -50,18 +50,6 @@ conkyrc=$HOME/.conkyrc
 conkylua=$HOME/.conky/conky-rings.lua
 env=$HOME/.config/herbstluftwm/config/ENV
 
-# perceived brightness formula (vs actual luminence)
-# see http://hobbithouseinc.com/vb/color%20contrast.htm
-brightness() {
-  rgb=$(echo "$1" | tr '[a-z]' '[A-Z]')
-  R=$(echo "3 k $(echo $rgb | sed -r 's/(..)..../\1/') FF / 255 0.299 * * p" | dc)
-  G=$(echo "3 k $(echo $rgb | sed -r 's/..(..)../\1/') FF / 255 0.587 * * p" | dc)
-  B=$(echo "3 k $(echo $rgb | sed -r 's/....(..)/\1/') FF / 255 0.114 * * p" | dc)
-  # darker < 128 < lighter
-  [ $(echo "$R $G $B + + 0 k p" | dc | sed 's/\..*//') -lt 128 ]
-}
-
-
 # colour schemes
 rings() {
   sed -i --follow-symlinks "/^default_color /s/ .*/ $1/" $conkyrc
@@ -159,7 +147,7 @@ shift
 case "$action" in
   contrast) if [ $# -eq 1 ] ;then
               # contrast theme colors
-              brightness $1 && conky theme light $1 || conky theme dark $1
+              luminance +$1 && conky theme dark $1 || conky theme light $1
               complimentary $1
             fi ;;
 
@@ -177,7 +165,7 @@ case "$action" in
           tmpbackup
           hexgen $1
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-          brightness $default_color && conky theme ink || conky theme paper
+          luminance +$default_color && conky theme paper || conky theme ink
           # are we in interactive mode
           theme=$(query theme)
           if if-no "update $theme" ;then
@@ -187,7 +175,7 @@ case "$action" in
             if if-no "change contrast" ;then
               exit
             else
-              brightness $default_color && contrast=paper || contrast=ink
+              luminance -$default_color && contrast=paper || contrast=ink
               sed -i "s/$/ $contrast/" $theme
               exit
             fi
@@ -210,7 +198,7 @@ case "$action" in
   colo*rs) if [ $# -eq 8 ] ;then
              colours $@
              # match theme colors
-             brightness $1 && conky theme ink || conky theme paper
+             luminance +$1 && conky theme paper || conky theme ink
            fi ;;
 
   scheme) [ $# -eq 9 ] && scheme $@ ;;
