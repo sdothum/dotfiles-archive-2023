@@ -118,6 +118,7 @@ wallpaper() {
   [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
   rm -f $BLANK
   rm -f $theme 2>/dev/null
+  herbstclient attr theme.normal.color "$NORMAL"
 }
 
 # set background wallpaper
