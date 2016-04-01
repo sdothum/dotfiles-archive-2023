@@ -4,9 +4,10 @@
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ......................................................... Flash window borders
+# .................................................. Flash active window borders
 
 # no borders focusing aid
+[ $(pgrep -cf 'focus borders') -gt 1 ] && exit
 [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" = '' ] && exit
 
 width=$(herbstclient attr theme.border_width)
@@ -27,7 +28,7 @@ herbstclient chain . lock . attr theme.active.color "$hilight" \
                    . attr theme.border_width $(( $width + $FOCUS_WIDTH )) \
                    . attr theme.floating.border_width $(( $float_width + $FOCUS_WIDTH )) . unlock
 
-sleep 1
+sleep 2
 
 # restore borders
 herbstclient chain . lock . attr theme.active.color "$active" \

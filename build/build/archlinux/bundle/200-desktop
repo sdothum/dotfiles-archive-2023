@@ -24,8 +24,8 @@
   clipit
   colorgrab
   colors-git
-  conky-lua
-# conky-lua-nv
+# conky-lua wireless_essid broken
+  conky-lua-nv
 # stest contained in dmenu package  
   dmenu
 # dmenu-xft-height

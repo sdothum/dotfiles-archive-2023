@@ -40,7 +40,7 @@ export VISIBLE='■'
 export INVISIBLE='□'
 
 # focus aid, see focus border
-export FOCUS_WIDTH=6
+export FOCUS_WIDTH=5
 
 # ..................................................................... Displays
 
@@ -93,11 +93,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#343a3a'
-export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#1a1d1d'
-export INACTIVE_FG='#383333'
-export INACTIVE_HIDDEN_FG='#1c1a1a'
+export DEFAULT_FG='#a290b6'
+export ACTIVE_FG='#f0f0f0'
+export ACTIVE_HIDDEN_FG='#51485b'
+export INACTIVE_FG='#a2b48e'
+export INACTIVE_HIDDEN_FG='#515a47'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

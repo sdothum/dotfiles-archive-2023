@@ -14,7 +14,6 @@ sudo sed -i -e '/open_basedir/s/=.*/=/' \
             -e '/=gd.so/s/^;//' \
             -e '/=iconv.so/s/^;//' \
             -e '/=mcrypt.so/s/^;//' \
-            -e '/=posix.so/s/^;//' \
             -e '/=soap.so/s/^;//' \
             -e '/date.timezone/s|=.*|= "Canada/Eastern"|' \
             -e '/date.timezone/s/;//' \
