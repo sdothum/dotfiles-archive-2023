@@ -45,10 +45,10 @@ hc attr theme.urgent.color            orange
 
 if is display -1440 ;then
   hc set frame_gap                    0
-  hc set window_gap                   0
+  hc set window_gap                   1
 elif is display -2560 ;then
   hc set frame_gap                    1
-  hc set window_gap                   1
+  hc set window_gap                   2
 fi
 
 # vim: set ft=sh: #

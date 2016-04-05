@@ -61,12 +61,12 @@ lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
 
 TEXT
-${voffset 17}
+${voffset 15}
 ${goto 80}${color}${font Ubuntu:size=22}${time %e}
-${goto 50}${color1}${voffset -22}${font Ubuntu:size=10}${time %A}
+${goto 50}${color1}${voffset -25}${font Ubuntu:size=10}${time %A}
 ${goto 65}${color2}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -2} ${color3}${font Ubuntu:size=12}'${time %y}
 ${voffset 9}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -142}${font Ubuntu:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
+${voffset -137}${font Ubuntu:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -37}
 ${goto 55}${font}${color1}${texeci 900 conky weather}

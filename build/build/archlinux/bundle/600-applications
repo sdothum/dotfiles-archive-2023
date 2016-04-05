@@ -67,14 +67,15 @@
 = ripping
 # ▔▔▔▔▔▔▔
 # abcde           [is_server]
+  asunder         [is_server]
   audacity        [is_server]
 # byzanz          [is_server]
 # byzanz-git      [is_server]
 # ffcast          [is_server]
 # gnome-subtitles [is_server]
 # jokosher        [is_server]
-  ruby-gtk2       [is_server]
-  rubyripper      [is_server]
+# ruby-gtk2       [is_server]
+# rubyripper      [is_server]
 
 
 = media server/player

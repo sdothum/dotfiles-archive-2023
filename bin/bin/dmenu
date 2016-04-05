@@ -28,8 +28,9 @@ unquote() {
 
 # Rofi fullscreen fill specs
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# -fullscreen only fills the herbstluftwm virtual monitor coordinates, so to fill the screen
-# tweak rofi padding, fontsize and lines for 2560, 1680 (secondary), 1440, 1024 displays
+# -fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
+# fill the actual physical display area, tweak rofi padding, fontsize and lines
+# for 2560, 1680 (secondary), 1440, 1024 displays
 if pgrep herbstluftwm >/dev/null; then
   if is primary ;then
     if is display =2560 ;then

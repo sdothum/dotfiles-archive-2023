@@ -55,7 +55,10 @@
 
 = software tools
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# arduino [is_server]
+# arduino        [is_server]
+  avr-gcc-atmel  [is_server]
+  avr-libc-atmel [is_server]
+  dfu-programmer [is_server]
   cmake
   gdb
   python-setuptools

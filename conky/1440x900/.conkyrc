@@ -61,12 +61,12 @@ lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
 
 TEXT
-${voffset 63}
+${voffset 62}
 ${goto 105}${color}${font Ubuntu:size=18}${time %e}
-${goto 67}${color1}${voffset -22}${font Ubuntu:size=9}${time %A}
+${goto 67}${color1}${voffset -24}${font Ubuntu:size=9}${time %A}
 ${goto 75}${color3}${voffset -2}${font Ubuntu:size=8}${time %b}${voffset -2}  ${color5}${font Ubuntu:size=14}'${time %y}
 ${voffset 20}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -210}${font Ubuntu:size=40:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
+${voffset -207}${font Ubuntu:size=40:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -233}
 ${font}${color2}${alignr}${exec query wname}

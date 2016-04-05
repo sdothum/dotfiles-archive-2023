@@ -38,7 +38,7 @@ hc rule windowrole=thedarnedestthing tag=4 index=0 focus=on
 hc rule class=mplayer2               tag=5
 hc rule title=Music                  tag=5 index=0 focus=on pseudotile=on
 hc rule title=Radio                  tag=5 index=1 focus=off
-hc rule class=Rrip_gui               tag=5 focus=on switchtag=on
+# hc rule class=Rrip_gui             tag=5 focus=on switchtag=on
 hc rule class=Smplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Umplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Kodi                   tag=5 monitor=5 focus=on switchtag=on hook=fullscreen
