@@ -29,20 +29,23 @@ case $# in
      alert=$2
      repeat=$3 ;;
 
-  *) while delay=$(echo | dmenu 'Duration [m]/s') || exit
+  *) while delay=$(echo | history alarm | column -s^ -t | dmenu 'Duration [m]/s') || exit
      do
+       delay=$(unquote $delay)
+       if echo $delay | grep -q "$SEP" ;then
+         alert=$(echo $delay | sed "s/.*$SEP //")
+         delay=$(echo $delay | sed "s/.$SEP.*//")
+         break
+       fi
        if [ $delay ] ;then
          if echo $delay | grep -q '^[0-9]*[ms]*$' ;then
            delay=$(duration $delay)
+           while alert=$(echo | dmenu 'Notification') || exit
+           do
+             [ "$alert" ] && break
+           done
            break
          fi
-       fi
-     done
-     while alert=$(echo | history alarm | dmenu 'Notification') || exit
-     do
-       if [ "$alert" ] ;then
-         history alarm "$alert"
-         break
        fi
      done
      repeat=$(echo '1' | dmenu 'Repetitions') || exit ;;
@@ -52,6 +55,7 @@ esac
                   || notify "$alert" "$delay"
 
 alarm() {
+  history alarm "$delay^$SEP $alert"
   for i in $(seq 1 $repeat)
   do
     sleep $delay
