@@ -19,6 +19,7 @@ episodes=/tmp/dmenu:episodes
 pgrep herbstluftwm >/dev/null && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
+  mytitles "$series" >>/tmp/mytitles:series
   ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-E[0-9][0-9])*).*/\1/' | sort >"$episodes"
   playlist "$episodes" "$playlist"
 }

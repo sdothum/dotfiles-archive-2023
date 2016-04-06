@@ -29,8 +29,8 @@ begin
       .gsub(/ s /, "'s ")
       .gsub(/ t /, "'t ")
       .gsub(/ +/,'.')
-      .gsub(/s(\d\d)e(\d\d)/, 'S\1E\2')
-      .gsub(/(\d)x(\d\d)/, 'S0\1E\2')
+      .gsub(/s(\d\d)e(\d\d)/i, 'S\1E\2')
+      .gsub(/(\d)x(\d\d)/i, 'S0\1E\2')
       .gsub(/\.$/, '')
       .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize }
       # .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize } + File.extname(filename)
