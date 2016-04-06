@@ -24,7 +24,7 @@ eqn() {
 }
 
 count=0
-while eqn=$(echo $ribbon | column -s^ -t | dmenu "Solve$error") || break
+while eqn=$(echo $ribbon | column -s$SEP -t | dmenu "Solve$error") || break
 do
   eqn=$(unquote $eqn)
   if ans=$(calc -pd "$(eval echo $(eqn))") ;then
@@ -37,7 +37,7 @@ do
         eval export \$VAR$count=$ans
         # ribbon defines alpha=value for subsequent calculations
         if echo "$eqn" | grep -q '[^0-9.]' ;then
-          ribbon="$(eval echo "\$VAR$count = $eqn '^->' $ans")\n$ribbon"
+          ribbon="$(eval echo "\$VAR$count = $eqn '$SEP->' $ans")\n$ribbon"
         else
           ribbon="$(eval echo "\$VAR$count = $eqn")\n$ribbon"
         fi
