@@ -18,6 +18,7 @@ SEP='∙'
 LSPACE="    $SEP"
 RSPACE="$SEP    "
 INDENT='   '
+UTF='□'
 
 leader='──────'
 
