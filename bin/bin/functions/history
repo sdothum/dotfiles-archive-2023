@@ -39,7 +39,9 @@ if [ "$*" ] ;then
   inject "$@" "$history"
 else
   [ -e "$history" ] || touch "$history"
-  cat "$history" -
+  # match on fixed strings (not regex)
+  grep -Fvf "$history" - >/tmp/history.nonmatch
+  cat "$history" /tmp/history.nonmatch
 fi
 
 # vim: set ft=sh: #

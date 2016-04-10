@@ -60,6 +60,8 @@ notion :: $HOME/.notion/*.lua $HOME/bin/autostart
 nzb :: $HOME/.nzbget
 openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
+planck :: $HOME/build/qmk_firmware/keyboard/planck/keymaps/sdothum.c $HOME/build/qmk_firmware/keyboard/planck/extended_keymap_common.h
+planck examples :: $(find $HOME/build/qmk_firmware/keyboard/planck/ -name '*.c')
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto/ -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*

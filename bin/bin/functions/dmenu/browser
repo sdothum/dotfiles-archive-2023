@@ -10,6 +10,7 @@
 # in order of personal preference..
 browsers="vimb \
           vimb-detached \
+          brave \
           chromium \
           dwb \
           elinks \
@@ -36,8 +37,10 @@ do
     '[ edit ]') gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
                 command dmenu bookmarks ;;
 
-    chromium) focus chromium -app=$1 ;;
+    # chromium) focus chromium -app=$1 ;;
 
+    brave |\
+    chromium |\
     dwb |\
     firefox |\
     google-chrome |\

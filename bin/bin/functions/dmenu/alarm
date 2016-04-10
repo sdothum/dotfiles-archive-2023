@@ -40,10 +40,8 @@ case $# in
        if [ $delay ] ;then
          if echo $delay | grep -q '^[0-9]*[ms]*$' ;then
            delay=$(duration $delay)
-           while alert=$(echo | dmenu 'Notification') || exit
-           do
-             [ "$alert" ] && break
-           done
+           alert=$(echo | dmenu 'Notification') || exit
+           [ "$alert" ] || alert='Test'
            break
          fi
        fi
@@ -55,7 +53,7 @@ esac
                   || notify "$alert" "$delay"
 
 alarm() {
-  history alarm "$delay^$SEP $alert"
+  echo "$alert" | grep -iq 'test' || history alarm "$delay^$SEP $alert"
   for i in $(seq 1 $repeat)
   do
     sleep $delay
