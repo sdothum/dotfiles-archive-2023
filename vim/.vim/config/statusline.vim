@@ -14,6 +14,15 @@
     let s:code       = 0                    " statusline buffer statistics toggle (0) off (1) on
     let s:prose      = 0
 
+  " ................................................... Byte position percentage
+
+      function! BytePercent()
+        " let byte = line2byte(line('.') + 1) - 1
+        let byte = line2byte(line('.')) + col('.') - 1
+        let size = line2byte(line('$') + 1) - 1
+        return (line("w0") != 1 && line("w$") != line("$")) ? (byte * 100) / size : ''
+      endfunction
+
     " ................................................................ Line info
 
 

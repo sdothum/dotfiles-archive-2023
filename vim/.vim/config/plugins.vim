@@ -128,7 +128,7 @@
         \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
         \            ]
         \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
-        \,             [ 'linecount', 'topbottom' ]
+        \,             [ 'topbottom', 'bytepercent', 'linecount' ]
         \,             [ 'atom', 'specialchar', 'column' ]
         \            ]
         \}
@@ -150,6 +150,7 @@
         \  'absolutepath' : '%F'
         \, 'atom'         : '%{synIDattr(synID(line("."),col("."),1),"name")}'
         \, 'basepath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") : ""}'
+        \, 'bytepercent'  : '%{BytePercent()}%%'
         \, 'bufnum'       : '%n'
         \, 'charvalue'    : '%b'
         \, 'charvaluehex' : '%B'
@@ -166,7 +167,7 @@
         \, 'mode'         : '%{lightline#mode()}'
         \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
         \, 'paste'        : '%{&paste ? "PASTE" : ""}'
-        \, 'percent'      : '%3p%%'
+        \, 'percent'      : '%-0p%%'
         \, 'percentwin'   : '%P'
         \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
         \, 'relativepath' : '%f'
@@ -176,15 +177,16 @@
 
       let g:lightline.component_visible_condition =
         \{
-        \  'atom'       : '(synIDattr(synID(line("."),col("."),1),"name") != "")'
-        \, 'basepath'   : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-        \, 'column'     : '(getline(line(".")) != "")'
-        \, 'matchspace' : '(g:matchspace != "")'
-        \, 'modified'   : '(&filetype != "help" && (&modified || !&modifiable))'
-        \, 'paste'      : '&paste'
-        \, 'readonly'   : '(&filetype != "help" && &readonly)'
-        \, 'rootpath'   : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
-        \, 'topbottom'  : '(line("w0") == 1 || line("w$") == line("$"))'
+        \  'atom'        : '(synIDattr(synID(line("."),col("."),1),"name") != "")'
+        \, 'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+        \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
+        \, 'column'      : '(getline(line(".")) != "")'
+        \, 'matchspace'  : '(g:matchspace != "")'
+        \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
+        \, 'paste'       : '&paste'
+        \, 'readonly'    : '(&filetype != "help" && &readonly)'
+        \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
+        \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
         \}
 
       let g:lightline.component_function =

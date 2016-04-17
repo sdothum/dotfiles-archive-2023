@@ -32,10 +32,11 @@ case $1 in
      zathura $printfile
      rm -f $printfile ;;
 
-  *) for file in $@
+  *) for i in $@
      do
-       cat $file | pr stdin
-     done ;;
+       enscript $format $i
+     done
+     pr eject ;;
 esac
 
 # vim: set ft=sh: #
