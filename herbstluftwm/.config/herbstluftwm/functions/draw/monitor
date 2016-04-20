@@ -127,13 +127,13 @@ case $@ in
                primary=$(printf '%dx%d%+d%+d' \
                        $(( $X0 - $marginX*2 )) \
                        $(( $Y0 - $margin*2 )) \
-                       $(( $X1 + $marginX - 1 - $SHADOW )) \
+                       $(( $X1 + $marginX - 1 )) \
                        $margin )
              else
                primary=$(printf '%dx%d%+d%+d' \
                        $normal_width \
                        $(( $Y0 - $margin*2 + $monocleY*2 )) \
-                       $(( $X1 + ($X0 - $normal_width)/2 - 1 - $SHADOW )) \
+                       $(( $X1 + ($X0 - $normal_width)/2 - 1 )) \
                        $(( $margin - $monocleY )) )
              fi ;;
 
@@ -150,7 +150,7 @@ case $@ in
                 primary=$(printf '%dx%d%+d%+d' \
                         $fullscreen_width \
                         $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
-                        $(( $X1 + ($X0 - $fullscreen_width)/2 - 1 - $SHADOW )) \
+                        $(( $X1 + ($X0 - $fullscreen_width)/2 - 1 )) \
                         $(( $marginX + $window_frame)) )
               fi ;;
 

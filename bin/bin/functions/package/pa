@@ -16,9 +16,10 @@ if [ -z "$*" ] ;then
   [ -x /etc/grub.d/41_snapshots-btrfs ] || sudo chmod 755 /etc/grub.d/41_snapshots-btrfs
   snapper --verbose cleanup number
 
-  # pacupg doesnot upgrade pacaur properly
+  # pacaur doesn't appear to update its pacman db entry when it upgrades itself via pacupg
   sudo pacman -Sy
-  pacman -Qu pacaur >/dev/null && pm S pacaur 
+  pacaur -Qu pacaur | grep -q pacaur && pm S pacaur 
+  pacaur -Qu | grep -q '[^ ]*' || exit
 
   # note: ignorepkg any packages that abort upgrade
   # if-no && (a) || (b) shortform cannot be used because return of (a) may be false

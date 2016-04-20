@@ -23,10 +23,6 @@ do
   if grep -q "^ *IgnorePkg.*$i" $conf ;then
     sudo sed -i "/^ *IgnorePkg.*$i/s/ $i//" $conf
   fi
-done
-
-for i in $@
-do
   pm S $i
 done
 

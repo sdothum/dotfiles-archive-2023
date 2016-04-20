@@ -43,29 +43,29 @@ xftfont Ubuntu:size=7
 xftalpha 0.5
 uppercase no
 
-default_color 8bc7e5
-color0 6895ab
-color1 f0f0f0
-color2 c0c0c0
-color3 909090
-color4 707070
-color5 505050
-color6 27373f
-color7 4e6f80
-color8 6895ab
-color9 e5a98b
-#colorA 456372
-#colorI 725445
+default_color 38392d
+color0 2a2a21
+color1 000000
+color2 080808
+color3 101010
+color4 202020
+color5 303030
+color6 0f0f0c
+color7 1f1f18
+color8 2a2a21
+color9 2e2d39
+#colorA 1c1d17
+#colorI 17171d
 
 lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
 
 TEXT
-${voffset 15}
+${voffset 14}
 ${goto 80}${color}${font Ubuntu:size=22}${time %e}
 ${goto 50}${color1}${voffset -25}${font Ubuntu:size=10}${time %A}
 ${goto 65}${color2}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -2} ${color3}${font Ubuntu:size=12}'${time %y}
-${voffset 9}${font}${color3}${alignr}${time %-Vw  /  %-jd}
+${voffset 10}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -137}${font Ubuntu:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -37}
@@ -82,8 +82,8 @@ ${voffset 105}
 # # ${goto 75}${font}${color1}volume
 # ${goto 75}${font}${color0}${lua_parse null ${mpd_title}}
 # ${goto 75}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
-${goto 75}${loadgraph 15,0 4e6f80 4e6f80}
-${voffset -28}${goto 75}${diskiograph 15,0 6895ab 6895ab}
+${goto 75}${loadgraph 15,0 1f1f18 1f1f18}
+${voffset -28}${goto 75}${diskiograph 15,0 2a2a21 2a2a21}
 ${voffset -5}${goto 75}${font}${color1}Load   ${loadavg 1}   ${loadavg 2}   ${loadavg 3} ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 20}
@@ -96,7 +96,7 @@ ${goto 75}${font}${color1}${top name 1}${alignr}${top cpu 1}%
 ${goto 75}${font}${color2}${top name 2}${alignr}${top cpu 2}%
 ${goto 75}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 # ${goto 75}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
-${goto 75}${cpugraph 15,0 4e6f80 4e6f80}
+${goto 75}${cpugraph 15,0 1f1f18 1f1f18}
 ${voffset -5}${goto 75}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 
 ${voffset 20}
@@ -110,6 +110,6 @@ ${goto 75}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
 ${voffset 20}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp2s0} ${alignr}${addr wlp2s0}${font Ubuntu:size=7}
 ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Battery ${alignr}${lua_parse battery ${battery_time}}
-${goto 75}${downspeedgraph wlp2s0 15,0 4e6f80 4e6f80}
-${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 6895ab 6895ab}
+${goto 75}${downspeedgraph wlp2s0 15,0 1f1f18 1f1f18}
+${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 2a2a21 2a2a21}
 ${voffset -5}${goto 75}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp2s0}}↑   ${lua_parse bandwidth ${downspeed wlp2s0}}↓
