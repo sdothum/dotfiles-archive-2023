@@ -17,9 +17,9 @@ if [ -z "$*" ] ;then
   snapper --verbose cleanup number
 
   # pacaur doesn't appear to update its pacman db entry when it upgrades itself via pacupg
-  sudo pacman -Sy
-  pacaur -Qu pacaur | grep -q pacaur && pm S pacaur 
-  pacaur -Qu | grep -q '[^ ]*' || exit
+  # sudo pacman -Sy
+  # pacaur -Qu pacaur | grep -q pacaur && pm S pacaur 
+  # pacaur -Qu | grep -q '[^ ]*' || exit
 
   # note: ignorepkg any packages that abort upgrade
   # if-no && (a) || (b) shortform cannot be used because return of (a) may be false

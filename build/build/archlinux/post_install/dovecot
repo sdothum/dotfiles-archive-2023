@@ -17,11 +17,8 @@ sudo /usr/lib/dovecot/mkcert.sh
 sudo cp -v /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot/
 sudo cp -rv /usr/share/doc/dovecot/example-config/conf.d /etc/dovecot/
 
-# echo "$USER:{PLAIN}password:$UID:$GID::$HOME" >users
-# password=$(passphrase host/$(hostname)/$USER)
-# echo "$USER:{PLAIN}$password:$UID:$GID::$HOME" >users
 password=dovecot
-echo "$USER:{PLAIN}$password:$UID:$GID::$HOME" >users
+echo "$USER:{PLAIN}$password:$(id -u $USER):$(id -g $USER)::$HOME" >users
 sudo mv users /etc/dovecot/
 
 # should not be missing..
@@ -36,7 +33,7 @@ sudo sed -i -e '/^!include auth-system.conf.ext/s/^/#/' \
          /etc/dovecot/conf.d/10-auth.conf
 
 original /etc/dovecot/conf.d/10-mail.conf
-sudo sed -i '/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs' \
+sudo sed -i "/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs" \
          /etc/dovecot/conf.d/10-mail.conf
 
 is_server && systemd enable dovecot || annotate "sudo systemctl start dovecot"

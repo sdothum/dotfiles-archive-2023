@@ -43,6 +43,7 @@ rsync_home() {
         --exclude '.node-gyp' \
         --exclude '.PlayOnLinux' \
         --exclude 'Steam' \
+        --exclude 'subscriptions' \
         --exclude '.sync' \
         --exclude '.SyncArchive' \
         --exclude '.sync-save' \
