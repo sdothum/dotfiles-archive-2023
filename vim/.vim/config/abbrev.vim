@@ -73,6 +73,7 @@
       iabbrev dash.. 
         \<ESC>ggO
         \#!/usr/bin/dash<CR>
+        \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
         \<CR>
         \# vim: set ft=sh: #
@@ -81,6 +82,7 @@
       iabbrev sh.. 
         \<ESC>ggO
         \#!/bin/sh<CR>
+        \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
         \<CR>
         \# vim: set ft=sh: #
@@ -89,6 +91,7 @@
       iabbrev fish.. 
         \<ESC>ggO
         \#!/usr/bin/fish<CR>
+        \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
         \<CR>
         \# vim: set ft=fish: #
@@ -97,6 +100,7 @@
       iabbrev zsh.. 
         \<ESC>ggO
         \#!/usr/bin/zsh<CR>
+        \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
         \<CR>
         \# vim: set ft=zsh: #
@@ -105,6 +109,7 @@
       iabbrev hs.. 
         \<ESC>ggO
         \#!/usr/bin/ghci<CR>
+        \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
         \<CR>
         \# vim: set ft=hs: #
@@ -112,8 +117,9 @@
 
       iabbrev rb.. 
         \<ESC>ggO
-        \#!/usr/bin/ruby<CR><BS>
-        \# encoding: UTF-8<CR><BS><BS><CR>
+        \#!/usr/bin/ruby<CR>
+        \ encoding: UTF-8<CR>
+        \sdothum - 2016 (c) wtfpl<CR><BS><BS><CR>
         \require 'term/ansicolor'<CR>
         \class String<CR>
         \  include Term::ANSIColor<CR>
