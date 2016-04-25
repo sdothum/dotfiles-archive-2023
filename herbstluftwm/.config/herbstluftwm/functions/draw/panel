@@ -12,6 +12,7 @@
 . ${0%/draw}/config/ENV
 
 fifo=${1#:}
+pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
 
 # ..................................................................... Geometry
 

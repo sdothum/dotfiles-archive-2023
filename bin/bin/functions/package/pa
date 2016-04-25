@@ -18,7 +18,7 @@ if [ -z "$*" ] ;then
 
   # pacaur doesn't appear to update its pacman db entry when it upgrades itself via pacupg
   # sudo pacman -Sy
-  # pacaur -Qu pacaur | grep -q pacaur && pm S pacaur 
+  # pacaur -Qu pacaur | grep -q pacaur && pm S pacaur
   # pacaur -Qu | grep -q '[^ ]*' || exit
 
   # note: ignorepkg any packages that abort upgrade
@@ -26,7 +26,7 @@ if [ -z "$*" ] ;then
   if if-no 'upgrade --devel packages' ;then
     pacupg --aur
   else
-    pacupg --devel 
+    pacupg --devel
   fi
 
   # update any .pacnew configs

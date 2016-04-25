@@ -5,7 +5,7 @@
 
 # Executed by startx (run your window manager from here):
 #   startx -- -layout Multihead
-# Note: .xinitrc takes precedence over .xsession, use either but ensure dbus is enabled for thunar
+# Note: .xinitrc takes precedence over .xsession, use either but ensure dbus is enabled
 
 # ................................................................... User setup
 
