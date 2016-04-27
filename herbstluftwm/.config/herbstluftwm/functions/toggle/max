@@ -9,8 +9,7 @@
 # flat ui panel refresh (border width 0 suppresses pulsing borders)
 set_layout() {
   herbstclient set_layout $1
-  # refresh in panel title to update frame status, see draw panel
-  xtitle -f 'T%s' >$(cat $PANEL_FIFO)
+  touch_panel
 }
 
 # restore layout if in fullscreen, as max is just one keystroke away
