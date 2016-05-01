@@ -17,6 +17,8 @@
 #        draw root toggle, toggle background blur mode
 #        draw root wallpaper, draw background
 
+is_arm && exit
+
 setroot=$ROOT/herbstluftwm:setroot
 shuffle=$ROOT/herbstluftwm:shuffle
 noblur=$ROOT/herbstluftwm:noblur

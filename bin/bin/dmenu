@@ -44,7 +44,11 @@ if pgrep herbstluftwm >/dev/null; then
       padding=200
       fontsize=14
       lines=10
-    elif is display -1440 ;then
+    elif is display =1360 ;then
+      padding=220
+      fontsize=16
+      lines=10
+    else
       padding=110
       fontsize=14
       lines=7

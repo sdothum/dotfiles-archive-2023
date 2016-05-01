@@ -73,7 +73,9 @@ fi
 
 # session startup stuff, see .xinitrc
 is multihead && draw monitor secondary
-[ -e $ROOT/herbstluftwm:autostart ] || $HOME/bin/autostart
+if ! [ -e $ROOT/herbstluftwm:autostart ] ;then
+  is_arm && toggle unclutter || $HOME/bin/autostart
+fi 
 touch $ROOT/herbstluftwm:autostart
 
 # wait for slowest emit_hook process

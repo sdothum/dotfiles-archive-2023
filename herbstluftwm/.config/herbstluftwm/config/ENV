@@ -57,7 +57,9 @@ fi
 # ........................................................... Margin adjustments
 
 # compton shadow left shift pixel adjustment for conky panel edge (0) none
-if grep -q '^shadow-opacity = 0.0' $HOME/.compton.conf ;then
+if ! [ -e $HOME/.compton.conf ] ;then
+  export SHADOW=0
+elif grep -q '^shadow-opacity = 0.0' $HOME/.compton.conf ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)
@@ -105,11 +107,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#393b1b'
+export DEFAULT_FG='#21542d'
 export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#1d1e0e'
-export INACTIVE_FG='#1b1a38'
-export INACTIVE_HIDDEN_FG='#0e0d1c'
+export ACTIVE_HIDDEN_FG='#112a17'
+export INACTIVE_FG='#502045'
+export INACTIVE_HIDDEN_FG='#281023'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'
