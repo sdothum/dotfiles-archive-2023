@@ -6,8 +6,8 @@
 
 # ................................................................. Toggle panel
 
+which lemonbar >/dev/null || exit
 [ $PANEL ] || . ${0%/toggle}/config/ENV
-
 [ -e $PANEL ] && rm -f $PANEL || touch $PANEL
 
 restore panel
