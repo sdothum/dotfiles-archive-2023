@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 System
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... Terminal
+
+# invisible terminal!
+/usr/bin/urxvt -sh 10 -fg black -bg black -cr black $@
+
+# vim: set ft=sh: #

@@ -18,7 +18,7 @@ if herbstclient compare monitors.count gt 1 ;then
     # cleanup any black screens on other desktops
     pgrep -f blackscreen >/dev/null && kill -TERM $(pgrep -f blackscreen)
     # for toggling, spawn own urxvt instance (not client)
-    SHELL=/usr/bin/dash /usr/bin/urxvt -sh 10 -fg black -bg black -cr black -title 'blackscreen' -name 'blackscreen' 2>>/tmp/urxvt.log &
+    nilterm -title 'blackscreen' -name 'blackscreen' 2>>/tmp/urxvt.log &
     draw monitor secondary fullscreen
     dmenu screensaver off
   fi

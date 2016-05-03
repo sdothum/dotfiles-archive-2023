@@ -6,12 +6,9 @@
 
 # ................................................................. Media player
 
-# kludge to retain keyboard control of raspberrypi media player
-TERM='/usr/bin/urxvt -sh 10 -fg black -bg black -cr black -e'
-
 # play media (see rox, dmenu movies, dmenu series)
 if is_arm; then 
-  $TERM omxplayer -p -o hdmi "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')" >/dev/null 2>&1
+  nilterm -e omxplayer -p -o hdmi "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')" >/dev/null 2>&1
 else
   notify 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
   mpv --vf=eq "$@" >/dev/null 2>&1
