@@ -126,7 +126,8 @@
 # coriander [is_server]
 # livestreamer-curses
 # minitube
-  mpv
+  mpv       [is_server || is_laptop]
+  omxplayer [is_arm]
 # smplayer
 # smplayer-themes
 # umplayer
