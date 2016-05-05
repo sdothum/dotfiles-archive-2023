@@ -7,8 +7,8 @@
 # ................................................................. Media player
 
 # play media (see rox, dmenu movies, dmenu series)
-if is_arm; then 
-  nilterm -e omxplayer -p -o hdmi "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')" >/dev/null 2>&1
+if is_arm; then
+  noir -e omxplayer -p -o hdmi "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')" >/dev/null 2>&1
 else
   notify 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
   mpv --vf=eq "$@" >/dev/null 2>&1

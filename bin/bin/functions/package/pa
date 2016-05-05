@@ -8,6 +8,10 @@
 
 # AUR package manager
 if [ -z "$*" ] ;then
+  if is_arm ;then
+    sudo pacman -Syu
+    exit
+  fi
   mirrorlist Canada
   # pacaur -Syu --repo
   # pacaur -Su --aur --noconfirm
