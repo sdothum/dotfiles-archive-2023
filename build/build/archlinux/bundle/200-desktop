@@ -15,6 +15,7 @@
   setroot
 # xcompmgr
 # shantz-xwinwrap-bzr [is_server]
+# xflux
 
 
 = desktop utilities
@@ -24,8 +25,8 @@
   clipit
   colorgrab
   colors-git
-# conky-lua add BUILD_WLAN=ON to pkgbuild
-  conky-lua-nv
+  conky-lua
+# conky-lua-nv
 # stest contained in dmenu package  
   dmenu
 # dmenu-xft-height

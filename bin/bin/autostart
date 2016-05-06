@@ -30,6 +30,7 @@ xrdb -merge $HOME/.Xresources &
 pidof mpd || sleep 2 && mpd &
 pidof nzbget || nzbget --daemon &
 pidof urxvtd || urxvtd -q -o -f &
+# pidof xflux || xflux -l 45.4 -g -75.7
 
 # ....................................................... Desktop initialization
 
