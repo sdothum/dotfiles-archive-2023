@@ -6,7 +6,14 @@
 
 # ..................................................................... Terminal
 
+noir='/usr/bin/urxvt -sh 10 -fg black -bg black -cr black'
+
 # invisible terminal!
-/usr/bin/urxvt -sh 10 -fg black -bg black -cr black $@
+if [ "$1" = omxplayer ] ;then
+  # in order to control omxplayer from keyboard..
+  $noir -e omxplayer -b -p -o hdmi "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')"
+else
+  $noir $@
+fi
 
 # vim: set ft=sh: #

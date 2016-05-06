@@ -46,8 +46,8 @@ xftalpha 0.5
 uppercase no
 
 # default_color FFFFFF
-default_color 393f32
-color0 2a2f25
+default_color Binary
+color0 
 color1 000000
 color2 080808
 color3 101010
