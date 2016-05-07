@@ -132,7 +132,7 @@ hexgen() {
 }
 
 complimentary () {
-  conky palette $1 | grep 'Complementary' | head -1 | cut -d/ -f6
+  conky palette $1 | grep -a 'Complementary' | head -1 | cut -d/ -f6
 }
 
 tmpbackup() {
@@ -152,12 +152,12 @@ case "$action" in
             fi ;;
 
   light) if [ $# -eq 1 ] ;then
-           hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f18)
+           hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f18)
            conky theme paper
          fi ;;
 
   dark) if [ $# -eq 1 ] ;then
-          hexgen $(conky palette $1 | grep 'Monochromatic'  | cut -d/ -f2)
+          hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f2)
           conky theme ink
         fi ;;
 

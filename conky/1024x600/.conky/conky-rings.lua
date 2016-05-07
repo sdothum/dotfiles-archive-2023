@@ -10,8 +10,8 @@
 require 'cairo'
 
 COLORING=0xFFFFFF
-default_color=0x92a89c
-color0=0x6d7e75
+default_color=0xBinary
+color0=0x
 color6=0x292f2c
 
 --------------------------------------------------------------------------------

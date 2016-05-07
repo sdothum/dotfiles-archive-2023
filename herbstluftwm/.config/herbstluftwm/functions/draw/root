@@ -84,7 +84,7 @@ set_border() {
 }
 
 # ............................................................ Assign background
-
+set -x
 blank() {
   if [ "$*" ] ;then
     color="$1"
