@@ -7,7 +7,7 @@
 # ................................................................. Media player
 
 # play media (see rox, dmenu movies, dmenu series)
-if is_arm; then
+if arm; then
   noir omxplayer "$@"
 else
   notify 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'

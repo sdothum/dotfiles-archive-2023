@@ -12,6 +12,6 @@ dhcp=dhcpcd\
 ' /etc/NetworkManager/NetworkManager.conf
 fi
 
-is_server || systemd enable NetworkManager
+server || systemd enable NetworkManager
 
 # vim: set ft=sh: #

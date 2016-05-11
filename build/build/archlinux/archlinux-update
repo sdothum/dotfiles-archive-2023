@@ -13,7 +13,7 @@ heading "verify group and passwd files"
 sudo grpck
 
 
-if is_server && [ -d /etc/X11/xorg.conf.d ] ;then
+if server && [ -d /etc/X11/xorg.conf.d ] ;then
 heading "x11 trackman mouse"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   # restore in event xorg is updated
@@ -38,7 +38,7 @@ sudo mandb 2>/dev/null
 
 heading "dmenu cache"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-is_server && dmenu abook init
+server && dmenu abook init
 dmenu configs init
 
 

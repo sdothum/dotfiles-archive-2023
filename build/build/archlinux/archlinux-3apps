@@ -7,9 +7,9 @@
 script-check
 
 # this install setup
-is_bfq() {
-  is_atom && return 0
-  # is_icore && return 0
+bfq() {
+  atom && return 0
+  # icore && return 0
   return 1
 }
 

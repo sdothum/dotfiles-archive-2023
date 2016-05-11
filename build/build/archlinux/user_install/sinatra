@@ -10,7 +10,7 @@
 if ! [ -d /srv/http/thedarnedestthing.com ] ;then
   sudo mkdir -v /srv/http/thedarnedestthing.com
   sudo chown $USER:users /srv/http/thedarnedestthing.com
-  if is_server ;then
+  if server ;then
     # rsync -av $USER@monad:/srv/http/thedarnedestthing.com /srv/http/
     rsync -av $USER@lumen:/srv/http/thedarnedestthing.com /srv/http/
   else

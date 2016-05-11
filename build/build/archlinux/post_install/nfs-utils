@@ -6,7 +6,7 @@
 
 # .......................................................................... nfs
 
-if is_server ;then
+if server ;then
   original /etc/conf.d/nfs-server.conf
   sudo sed -i '/NFSD_OPTS=""/s/""/"-N 2 -N 3"/' /etc/conf.d/nfs-server.conf
   systemd enable rpcbind

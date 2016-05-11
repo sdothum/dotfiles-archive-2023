@@ -36,7 +36,7 @@ original /etc/dovecot/conf.d/10-mail.conf
 sudo sed -i "/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs" \
          /etc/dovecot/conf.d/10-mail.conf
 
-is_server && systemd enable dovecot || annotate "sudo systemctl start dovecot"
+server && systemd enable dovecot || annotate "sudo systemctl start dovecot"
 # test dovecot installation
 mailcot localhost "$USER" "$password"
 

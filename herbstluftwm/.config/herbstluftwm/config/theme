@@ -26,7 +26,8 @@ hc set gapless_grid                   0
 hc set mouse_recenter_gap             0
 hc set smart_frame_surroundings       0
 hc set smart_window_surroundings      0
-hc set window_gap                     2
+hc set window_gap                     $SHADOW
+# hc set window_gap                   2
 
 hc attr theme.active.color            red
 hc attr theme.active.inner_color      '#808080'

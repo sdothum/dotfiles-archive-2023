@@ -7,7 +7,7 @@
 # .......................................................................... nfs
 
 # network share email database
-if is_server ;then
+if server ;then
   sudo mkdir -pv /srv/nfs4/Maildir
   sudo mkdir -pv /srv/nfs4/data
   if ! grep -q 'Maildir.*bind' /etc/fstab ;then

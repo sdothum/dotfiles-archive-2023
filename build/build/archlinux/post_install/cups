@@ -7,8 +7,8 @@
 # ......................................................................... cups
 
 original /etc/cups/client.conf
-is_laptop && sudo sed -i '/^ServerName/cServerName luna' /etc/cups/client.conf
-is_server && sudo sed -i '/^ServerName/cServerName localhost:631' /etc/cups/client.conf
+laptop && sudo sed -i '/^ServerName/cServerName luna' /etc/cups/client.conf
+server && sudo sed -i '/^ServerName/cServerName localhost:631' /etc/cups/client.conf
 
 sudo groupadd printadmin
 sudo gpasswd -a $USER printadmin

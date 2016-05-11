@@ -8,7 +8,7 @@
 
 # AUR package manager
 if [ -z "$*" ] ;then
-  if is_arm ;then
+  if arm ;then
     sudo pacman -Syu
     exit
   fi

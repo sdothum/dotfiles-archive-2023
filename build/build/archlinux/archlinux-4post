@@ -14,7 +14,7 @@ fi
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-if is_laptop ;then
+if laptop ;then
 heading "/data/* directories"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   if ! [ -d /data/archive ] ;then
@@ -45,7 +45,7 @@ fi
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-# if is_laptop && ! [ -f /etc/modules-load.d/pciehp.conf ] ;then
+# if laptop && ! [ -f /etc/modules-load.d/pciehp.conf ] ;then
 # heading "acer sdhc card reader"
 # # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 #     config_install /etc/modules-load.d/pciehp.conf
@@ -53,7 +53,7 @@ fi
 # fi
 
 
-if is_server && ! grep -q '/data' /etc/fstab ;then
+if server && ! grep -q '/data' /etc/fstab ;then
 heading "/data raid"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   original /etc/fstab

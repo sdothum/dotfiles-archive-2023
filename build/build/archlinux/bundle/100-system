@@ -58,10 +58,10 @@
 
 = linux-ck kernel
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# linux-ck-atom    [is_atom]
-# linux-ck-headers [is_atom]
-# linux-ck-haswell [is_icore]
-# linux-ck-headers [is_icore]
+# linux-ck-atom    [atom]
+# linux-ck-headers [atom]
+# linux-ck-haswell [icore]
+# linux-ck-headers [icore]
 # "intel microcode must be installed after ck kernel"
 
 
@@ -73,7 +73,8 @@
   intel-ucode
   lm_sensors
   mbpfan-git       [nvidia]
-  xf86-input-wacom [is_server]
+  plover
+  xf86-input-wacom [server]
 
 
 = package managers
@@ -115,8 +116,8 @@
 
 = power
 # ▔▔▔▔▔
-  acpi     [is_laptop]
-  powertop [is_laptop]
+  acpi     [laptop]
+  powertop [laptop]
   xfce4-power-manager
 
 
@@ -156,7 +157,7 @@
 # synapse
 # sysstat
 # toilet
-  tlp [is_laptop]
+  tlp [laptop]
   udiskie
 # watcher
   zramswap

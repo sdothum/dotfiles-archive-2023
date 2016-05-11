@@ -8,9 +8,9 @@
 # restart systemd process
 status() {
   if sudo systemctl status $service ;then
-    notify "Systemd $action" "$(sudo systemctl status $service)"
+    notify "Systemd $action" "$(sudo systemctl --no-pager status $service)"
   else
-    time=0 notify "Systemd $action" "$(sudo systemctl status $service)"
+    time=0 notify "Systemd $action" "$(sudo systemctl --no-pager status $service)"
   fi
 }
 

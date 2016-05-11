@@ -14,7 +14,7 @@
 # nitrogen
   setroot
 # xcompmgr
-# shantz-xwinwrap-bzr [is_server]
+# shantz-xwinwrap-bzr [server]
 # xflux
 
 
@@ -116,17 +116,17 @@
 
 = x11
 # ▔▔▔
-  arandr           [is_server]
+  arandr           [server]
   autocutsel
-  lib32-mesa-libgl [is_laptop]
-  lxrandr          [is_server]
+  lib32-mesa-libgl [laptop]
+  lxrandr          [server]
 # slock
 # trayer-srg-git
   unclutter
 # xclip
   xf86-input-mouse
   xf86-input-keyboard
-  xf86-input-synaptics [is_laptop]
+  xf86-input-synaptics [laptop]
   xorg-server-xephyr
   xorg-xev
   xorg-xinput

@@ -5,12 +5,12 @@
 
 = astronomy
 # ▔▔▔▔▔▔▔▔▔
-# celestia      [is_server]
-# google-earth  [is_server]
-# kdeedu-kstars [is_server]
-# gpredict-git  [is_server]
-# nightshade    [is_server]
-# xephem        [is_server]
+# celestia      [server]
+# google-earth  [server]
+# kdeedu-kstars [server]
+# gpredict-git  [server]
+# nightshade    [server]
+# xephem        [server]
   stellarium
   wego-git
 
@@ -23,18 +23,19 @@
 # pyroom
 # retext
 # rubyroom
-# ted [is_server]
+# ted [server]
 # wordgrinder
 
 
 = fonts
 # ▔▔▔▔▔
-  fontforge [is_server]
+  fontforge [server]
 
 
 = games
 # ▔▔▔▔▔
-# steam [is_server]
+  lsb-release [server]
+  steam       [server]
 
 
 = music
@@ -49,16 +50,16 @@
 = photography
 # ▔▔▔▔▔▔▔▔▔▔▔
   darktable
-# dcraw                         [is_server]
-# digikam                       [is_server]
-  dispcalgui                    [is_server]
+# dcraw                         [server]
+# digikam                       [server]
+  dispcalgui                    [server]
   feh
-  gimp                          [is_server]
-  gimp-plugin-resynthesizer-git [is_server]
-# kdebase-workspace             [is_server]
-# kipi-plugins                  [is_server]
-# photivo-hg                    [is_server]
-# rawtherapee                   [is_server]
+  gimp                          [server]
+  gimp-plugin-resynthesizer-git [server]
+# kdebase-workspace             [server]
+# kipi-plugins                  [server]
+# photivo-hg                    [server]
+# rawtherapee                   [server]
 # lightzone
 # sxiv
 # viewnior
@@ -66,23 +67,23 @@
 
 = ripping
 # ▔▔▔▔▔▔▔
-# abcde           [is_server]
-  asunder         [is_server]
-  audacity        [is_server]
-# byzanz          [is_server]
-# byzanz-git      [is_server]
-# ffcast          [is_server]
-# gnome-subtitles [is_server]
-# jokosher        [is_server]
-# ruby-gtk2       [is_server]
-# rubyripper      [is_server]
+# abcde           [server]
+  asunder         [server]
+  audacity        [server]
+# byzanz          [server]
+# byzanz-git      [server]
+# ffcast          [server]
+# gnome-subtitles [server]
+# jokosher        [server]
+# ruby-gtk2       [server]
+# rubyripper      [server]
 
 
 = media server/player
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# kodi                       [is_server]
-# plex-media-server-plexpass [is_server]
-# plex-media-server          [is_server]
+# kodi                       [server]
+# plex-media-server-plexpass [server]
+# plex-media-server          [server]
 # xbmc
 
 
@@ -105,7 +106,7 @@
   hunspell
   hunspell-en
 # hunspell-en-ca
-# kdeedu-ktouch [is_server]
+# kdeedu-ktouch [server]
 # klavaro
   sc-im
   speedcrunch
@@ -123,22 +124,22 @@
 
 = video players
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
-# coriander [is_server]
+# coriander [server]
 # livestreamer-curses
 # minitube
-  mpv       [is_server || is_laptop]
-  omxplayer [is_arm]
+  mpv       [server || laptop]
+  omxplayer [arm]
 # smplayer
 # smplayer-themes
 # umplayer
 # vlc
-# xvba-video [is_server]
+# xvba-video [server]
   youtube-dl
 
 
 = viewers
 # ▔▔▔▔▔▔▔
-# calibre [is_server]
+# calibre [server]
 # coolreader
 # evince
   fbreader

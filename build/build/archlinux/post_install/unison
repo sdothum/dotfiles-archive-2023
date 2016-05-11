@@ -6,7 +6,7 @@
 
 # ....................................................................... unison
 
-is_server && target=monad || target = luna
+server && target=monad || target = luna
 echo "
 root = /home/$USER
 root = ssh://$target//home/$USER

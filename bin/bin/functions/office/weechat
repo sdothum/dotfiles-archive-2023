@@ -11,7 +11,7 @@ log=/tmp/weechat.log
 
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
-if is_server ;then
+if server ;then
   if pgrep 'znc' >/dev/null ;then
     echo '.. launching weechat'
     echo '.. waiting for ZNC server connections to complete'

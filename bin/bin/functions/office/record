@@ -21,7 +21,7 @@ target=/data/media/videos/recordings
 pidname=recording
 framerate=25
 
-if is_server ;then
+if server ;then
   case $1 in
     DVI-0 | left | l) xy='1680x1050' ;;
 

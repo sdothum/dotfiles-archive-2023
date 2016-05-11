@@ -74,7 +74,7 @@ fi
 # session startup stuff, see .xinitrc
 is multihead && draw monitor secondary
 if ! [ -e $ROOT/herbstluftwm:autostart ] ;then
-  is_arm && toggle unclutter || $HOME/bin/autostart
+  arm && toggle unclutter || $HOME/bin/autostart
 fi 
 touch $ROOT/herbstluftwm:autostart
 

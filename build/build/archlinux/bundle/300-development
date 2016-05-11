@@ -26,8 +26,8 @@
 
 = editors
 # ▔▔▔▔▔▔▔
-# atom-editor     [is_server]
-# atom-editor-bin [is_server]
+# atom-editor     [server]
+# atom-editor-bin [server]
   ctags
 # emacs
 # neovim
@@ -55,10 +55,10 @@
 
 = software tools
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# arduino        [is_server]
-  avr-gcc-atmel  [is_server]
-  avr-libc-atmel [is_server]
-  dfu-programmer [is_server]
+# arduino        [server]
+  avr-gcc-atmel  [server]
+  avr-libc-atmel [server]
+  dfu-programmer [server]
   cmake
   gdb
   python-setuptools

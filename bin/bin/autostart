@@ -17,8 +17,8 @@ rm -f /tmp/setroot 2>/dev/null
 rm -f /srv/http/tt-rss/lock/* 2>/dev/null
 
 gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
-# is_laptop && synclient VertEdgeScroll=1 &
-# is_laptop && synclient TapButton1=1 &
+# laptop && synclient VertEdgeScroll=1 &
+# laptop && synclient TapButton1=1 &
 pidof gpg-agent >/dev/null \
 || gpg-agent --homedir /home/shum/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 ipfilter &
@@ -35,7 +35,7 @@ pidof urxvtd || urxvtd -q -o -f &
 # ....................................................... Desktop initialization
 
 draw compton
-if is_server ;then
+if server ;then
   dispread -v -d2 -c1 -yl "-P0.012987012987,1,4.11345646438" \
           -k "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
           -s "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
@@ -54,13 +54,13 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-is_server && term 'IRC' FONTSIZE '10' weechat
-is_server && term 'Mail' alot
+server && term 'IRC' FONTSIZE '10' weechat
+server && term 'Mail' alot
 
 # .................................................................. Window apps
 
 $BROWSER
-is_server && gvim --role='thedarnedestthing' thedarnedestthing
-is_server && thedarnedestthing
+server && gvim --role='thedarnedestthing' thedarnedestthing
+server && thedarnedestthing
 
 # vim: set ft=sh: #

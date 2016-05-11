@@ -7,6 +7,7 @@
 # ▔▔▔▔▔▔▔▔
   chromium
   chromium-pepper-flash
+  chromium-widevine
 # dwb-git
 # dwb-gtk3
 # elinks
@@ -51,17 +52,17 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # btsyncindicator
 # btsync
-# couchpotato-git [is_server]
+# couchpotato-git [server]
 # flexget
   gftp
-  nzbget [is_server]
+  nzbget [server]
 # par2cmdline-tbb
 # python2-pyopenssl
   rsync
 # rtorrent
-# sabnzbd       [is_server]
-# sickbeard-git [is_server]
-  sonarr [is_server]
+# sabnzbd       [server]
+# sickbeard-git [server]
+  sonarr [server]
   syncthing
 # syncthing-git
   syncthing-inotify

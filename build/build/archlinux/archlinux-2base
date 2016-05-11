@@ -11,7 +11,7 @@ script-check
 title "setup"
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 # sudo loadkeys colemak
-is_server && sudo dhcpcd || sudo wifi-menu
+server && sudo dhcpcd || sudo wifi-menu
 sleep 5s
 grep '^nameserver' /etc/resolv.conf || sudo sed -i '$anameserver 10.1.0.1' /etc/resolv.conf
 # disable CoW on systemd journal

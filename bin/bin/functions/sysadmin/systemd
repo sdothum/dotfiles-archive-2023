@@ -35,6 +35,6 @@ case $1 in
   *) [ $# -eq 1 ] || usage ;;
 esac
 
-sudo systemctl status ${2:-$1}
+sudo systemctl --no-pager status ${2:-$1}
 
 # vim: set ft=sh: #

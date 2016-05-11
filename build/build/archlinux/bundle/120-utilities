@@ -33,7 +33,7 @@
 # gnome-disk-utility
   gparted
   gptfdisk
-  samsung_magician [is_server || is_laptop]
+  samsung_magician [server || laptop]
 # unetbootin
 
 
@@ -65,17 +65,17 @@
 
 = ripping
 # ▔▔▔▔▔▔▔
-# asunder         [is_server]
-  cdrdao          [is_server]
-# dvd+rw-tools    [is_server]
-# dvdbackup       [is_server]
-  ffmpeg          [is_server]
-  handbrake       [is_server]
-# handbrake-cli   [is_server]
-# k3b             [is_server]
-# soundconverter  [is_server]
-  transcode       [is_server]
-  xfburn          [is_server]
+# asunder         [server]
+  cdrdao          [server]
+# dvd+rw-tools    [server]
+# dvdbackup       [server]
+  ffmpeg          [server]
+  handbrake       [server]
+# handbrake-cli   [server]
+# k3b             [server]
+# soundconverter  [server]
+  transcode       [server]
+  xfburn          [server]
 
 
 = shell
@@ -101,7 +101,7 @@
   htop
   iotop
 # memtester
-# mprime-bin [is_server]
+# mprime-bin [server]
 # multitail
   smartmontools
 # sysstat

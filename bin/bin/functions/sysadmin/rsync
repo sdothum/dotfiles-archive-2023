@@ -60,7 +60,7 @@ rsync_home() {
 case $@ in
   h | '') usage ;;
 
-  backup) if is_server ;then
+  backup) if server ;then
             if if-yes 'backup /data to /backup' ;then
               rsync -av --delete /data/* /backup/
             fi
@@ -73,13 +73,13 @@ case $@ in
                 $HOME /data/archive/home/
         fi ;;
 
-  depot) if is_server ;then
+  depot) if server ;then
            if-yes "backup depot to $laptop" && rsync --delete /data/depot $laptop:/data/
          else
            if-no 'update depot to luna' || rsync /data/depot luna:/data/
          fi ;;
 
-  music) if is_laptop ;then
+  music) if laptop ;then
            if if-yes 'replicate mpd music database from luna' ;then
              killall mpd
              if ! [ -d /data/media ] ;then
@@ -94,7 +94,7 @@ case $@ in
            echo ".. initiate update request from $laptop"
          fi ;;
 
-  server) if is_server ;then
+  server) if server ;then
             if if-yes 'backup media server databases to /data/archive' ;then
               [ -d /data/archive/var/lib ] || mkdir -pv /data/archive/var/lib
               sudo rsync -av --delete /var/lib/sonarr /data/archive/var/lib/
@@ -110,7 +110,7 @@ case $@ in
             fi
           fi ;;
 
-  SERVER) if is_server ;then
+  SERVER) if server ;then
             if ! if-no 'restore media server databases from /data/archive' ;then
               sudo systemctl stop sonarr
               sudo rsync -av --delete /data/archive/var/lib/sonarr /var/lib/
@@ -129,13 +129,13 @@ case $@ in
             fi
           fi ;;
 
-  stow) if is_server ;then
+  stow) if server ;then
           if-yes "backup stow to $laptop" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$laptop:$HOME/
         else
           if-no 'update stow to luna' || rsync --exclude='.SyncArchive' $HOME/stow $USER@luna:$HOME/
         fi ;;
 
-  ttrss) if is_server ;then
+  ttrss) if server ;then
            rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
          else
            rsync /srv/http/tt-rss/themes/my*.css luna:/srv/http/tt-rss/themes/
@@ -173,7 +173,7 @@ case $@ in
        rsync -L --delete \
              $HOME/vimwiki \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
-       if is_server ;then
+       if server ;then
          if ping -c 1 -W 1 $laptop >/dev/null ;then
            trace "updating => $laptop:/srv/http/thedarnedestthing.com"
            rsync -l --delete $exclude_http_local /srv/http/thedarnedestthing.com $laptop:/srv/http/

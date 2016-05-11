@@ -7,7 +7,7 @@
 
 # disconnect nfs to prevent shutdown wait..
 disconnect() {
-  if ! is_server ;then
+  if ! server ;then
     sudo umount /data
     sudo umount /home/shum/Maildir
     sudo systemctl stop nfs-config

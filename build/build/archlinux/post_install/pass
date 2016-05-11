@@ -7,7 +7,7 @@
 # ......................................................................... pass
 
 # create public key
-if [ is_server ] ;then
+if [ server ] ;then
   [ -d $HOME/.gnupg ] || gpg --full-gen-key
 fi
 echo RELOADAGENT | gpg-connect-agent

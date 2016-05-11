@@ -12,6 +12,6 @@ oftc channels "#fish,#luakit,#suckless"
 rizon channels "#rice"
 '
 sudo -u znc znc --makeconf
-is_server && systemd enable znc || annotate "sudo systemctl start znc"
+server && systemd enable znc || annotate "sudo systemctl start znc"
 
 # vim: set ft=sh: #
