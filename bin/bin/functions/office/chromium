@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Browser
+
+chrome=/usr/bin/chromium
+
+# release remote instance
+unset instance
+unlock() {
+  for i in $@
+  do
+    /usr/bin/ssh $i -- killall ${chrome##*/} 2>/dev/null && instance=true
+  done
+  # let instance die..
+  [ $instance ] && sleep 3
+}
+
+# close (unlock) any remote instances
+case $(hostname) in
+  luna)  unlock lumen monad pi ;;
+  lumen) unlock luna monad pi ;;
+  monad) unlock luna lumen pi ;;
+  pi)    unlock luna lumen monad ;;
+esac
+
+# focus frame, see dmenu/browser
+[ "$*" ] && eval $chrome $(echo $@ | cut -d' ' -f-$(( $# - 1 )) ) -app=\${$#} || focus $chrome
+
+# vim: set ft=sh: #
