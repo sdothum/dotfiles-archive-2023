@@ -7,7 +7,7 @@
 # ...................................................................... Twitter
 
 # stupid git!
-BROWSER=vimb-detached
+# BROWSER=vimb-detached
 pidof turses || turses
 
 # vim: set ft=sh: #

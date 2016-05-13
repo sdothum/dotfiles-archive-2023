@@ -49,7 +49,7 @@
 # flattr-icon-theme-git
 # gtk-chtheme
 # gtk-engine-equinox
-# gtk-engine-murrine
+  gtk-engine-murrine
 # gtk-theme-numix
 # gtk-theme-numix-blue
 # gtk-theme-numix-holo

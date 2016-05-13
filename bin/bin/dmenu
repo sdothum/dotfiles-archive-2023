@@ -76,7 +76,11 @@ apps() {
   unset apps
   for i in $@
   do
-    apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")"
+    # allow user named browser scripts
+    # apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")"
+    if [ -n "$(find /usr/bin -name $i)" ] ;then 
+      apps="$apps$i "
+    fi
   done
   echo $apps | sed 's/ /\n/g'
 }
