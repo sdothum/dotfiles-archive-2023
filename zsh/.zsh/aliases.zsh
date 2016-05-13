@@ -171,4 +171,5 @@ if alias d >/dev/null ;then
   # unalias mv
   unalias p
   # unalias rm
+  unalias top
 fi

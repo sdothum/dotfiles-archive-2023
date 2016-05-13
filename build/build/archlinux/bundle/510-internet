@@ -25,13 +25,13 @@
 # midorio
 # qutebrowser
 # qutebrowser-git
-  surf
-  tabbed
+# surf
+# tabbed
 # uzbl-browser
 # vimb
-  vimb-git
+# vimb-git
   w3m
-  webkitgtk2
+# webkitgtk2
 
 
 = chat/twitter

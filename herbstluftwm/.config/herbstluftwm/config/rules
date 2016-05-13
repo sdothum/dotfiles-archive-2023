@@ -17,6 +17,7 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 # desktop application groups
 hc rule class=tabbed                 tag=1 index=0 focus=on
+# hc rule class=chromium             tag=1
 hc rule class=dwb                    tag=1
 hc rule class=luakit                 tag=1
 hc rule class=qutebrowser            tag=1
@@ -35,6 +36,8 @@ hc rule title=Usenet                 tag=3
 # hc rule class=Surf                 tag=4
 hc rule class=Vimb                   tag=4 index=1 focus=off once
 hc rule windowrole=thedarnedestthing tag=4 index=0 focus=on
+# chromium title (class) doesn't appear to be trapped
+hc rule title=thedarnedestthing      tag=4 index=0 focus=on
 hc rule class=mplayer2               tag=5
 hc rule title=Music                  tag=5 index=0 focus=on pseudotile=on
 hc rule title=Radio                  tag=5 index=1 focus=off

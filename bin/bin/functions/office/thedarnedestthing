@@ -6,6 +6,15 @@
 
 # .......................................................... the darnedest thing
 
-/usr/bin/vimb http://thedarnedestthing:8000/ 2>>/tmp/vimb.log &
+# tag
+wiki=4
+
+# manual rule to handle lack of chromium class handling, see bin/autostart..
+herbstclient lock
+switch tag "$wiki"
+focus chromium --incognito http://thedarnedestthing:8000/
+sleep 1
+switch tag
+herbstclient unlock
 
 # vim: set ft=sh: #

@@ -41,7 +41,8 @@ export PASSWORD_STORE_CLIP_TIME=60
 # default browser
 # export BROWSER=luakit
 # export BROWSER=qutebrowser
-export BROWSER=vimb
+# export BROWSER=vimb
+export BROWSER=chromium
 
 # proxies
 [[ -z $(pidof privoxy) ]] || export HTTP_PROXY=localhost:8118

@@ -63,6 +63,7 @@
 # lightzone
 # sxiv
 # viewnior
+  webkitgtk2                    [server]
 
 
 = ripping

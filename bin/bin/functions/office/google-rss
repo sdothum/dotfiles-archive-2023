@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................. Google group rss
+
+usage() {
+  echo "usage: $(basename $0) <group>"
+  exit 1
+}
+
+[ "$*" ] || usage
+
+echo https://groups.google.com/group/$@/feed/rss_v2_0_msgs.xml?num=50
+
+
+# vim: set ft=sh: #

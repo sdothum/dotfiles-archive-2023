@@ -24,7 +24,7 @@ playlist=$library/.playlist
 [ -e "$playlist" ] || echo >"$playlist"
 
 shows() {
-  ls -1$T $library | sed -re 's/\./ /g' -e 's/ ([12][0-9][0-9][0-9])( .*)*/  (\1)/' >"$cache"
+  ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >"$cache"
   playlist "$cache" "$playlist"
 }
 

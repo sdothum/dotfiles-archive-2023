@@ -59,8 +59,9 @@ server && term 'Mail' alot
 
 # .................................................................. Window apps
 
-$BROWSER
-server && gvim --role='thedarnedestthing' thedarnedestthing
+# browser order is important, see office/thedarnedestting
 server && thedarnedestthing
+server && gvim --role='thedarnedestthing' thedarnedestthing
+$BROWSER &
 
 # vim: set ft=sh: #
