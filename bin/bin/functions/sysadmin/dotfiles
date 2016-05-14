@@ -95,7 +95,10 @@ if [ "$*" ] ;then
         fi ;;
 
     *) pending
-       if-yes "commit \"$@\"" && commit ;;
+       if if-yes "commit \"$@\"" ;then
+         DESC="$@"
+         commit
+       fi ;;
   esac
 else
   pending
