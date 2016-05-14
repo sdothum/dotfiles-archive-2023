@@ -13,8 +13,8 @@ wiki=4
 herbstclient lock
 switch tag "$wiki"
 focus chromium --incognito http://thedarnedestthing:8000/
-sleep 1
-switch tag
+# wait for window to attach to tag
+xdotool search --screen 0 --classname --sync 'thedarnedestthing' >/dev/null
 herbstclient unlock
 
 # vim: set ft=sh: #

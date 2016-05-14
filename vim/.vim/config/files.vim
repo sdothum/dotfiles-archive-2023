@@ -104,7 +104,7 @@
       endfunction
 
       " open vimwiki ()
-      autocmd VimEnter * if expand("%:p") == $HOME . '/thedarnedestthing' | bdelete | call OpenWikis() | endif
+      autocmd VimEnter * if argv (0) == 'vimwiki' | bdelete | call OpenWikis() | endif
       autocmd VimEnter * if &filetype =~ g:goyotypes | call ToggleGoyo() | endif
 
     " ................................................................... E-mail

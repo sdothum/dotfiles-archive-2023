@@ -6,6 +6,9 @@
 
 # ....................................................... Window manager restart
 
+# tag
+web=1
+
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
 
@@ -59,9 +62,10 @@ server && term 'Mail' alot
 
 # .................................................................. Window apps
 
-# browser order is important, see office/thedarnedestting
+server && gvim --role='thedarnedestthing' vimwiki
 server && thedarnedestthing
-server && gvim --role='thedarnedestthing' thedarnedestthing
+switch tag "$web"
 $BROWSER &
+# xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 
 # vim: set ft=sh: #
