@@ -7,21 +7,21 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0)  'depends on | r'equired by  <package>"
+  echo "usage: $(basename $0)  'depends on <package> | n'o dependencies | r'equired by <package>"
   exit 1
 }
 
-[ "$*" ] || usage
-[ "$1" = h ] && usage
+case $1 in
+  '' | h) usage ;;
 
-if [ $1 = r ] ;then
-  D=N
-  shift
-  dep='required by'
-else
-  D=D
-  dep='depends on'
-fi
+  r) D=N
+     shift
+     dep='required by' ;;
+  n) pacman -Qet
+     exit ;;
+  *) D=D
+     dep='depends on' ;;
+esac
 
 # package dependency
 if [ "$*" ] ;then
