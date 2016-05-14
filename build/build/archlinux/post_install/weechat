@@ -71,7 +71,7 @@ configure authentication else some channels will force #<channel>-unregistered
 # theme
 /set buffers.color.current_bg default
 /set buffers.color.current_fg 123
-/set buffers.color.default_fg 236
+/set buffers.color.default_fg 237
 /set buffers.color.hotlist_message_fg 024
 /set buffers.color.none_channel_fg 004
 /set buffers.look.show_number off
