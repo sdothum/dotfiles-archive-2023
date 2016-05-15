@@ -15,13 +15,23 @@ case $BROWSER in
               | dmenu 'Bookmark' -no-custom \
               | sed -r 's/.*(http.*)/\1/') ;;
 
-  vimb | *) bookmarks=$HOME/.config/vimb/bookmark
-            uri=$(cat $bookmarks \
-                | sed -re "s/(.*)\t(.*)\t(.*)/\2 ${LSPACE} \3 ${RSPACE} \1/g" \
-                      -e "s/^ ${LSPACE}/... ${LSPACE}/" \
-                | sed '1i[ history ]' \
-                | dmenu 'Bookmark' -no-custom \
-                | sed -r 's/.*(http.*)/\1/') ;;
+  vimb) bookmarks=$HOME/.config/vimb/bookmark
+        uri=$(cat $bookmarks \
+            | sed -re "s/(.*)\t(.*)\t(.*)/\2 ${LSPACE} \3 ${RSPACE} \1/g" \
+                  -e "s/^ ${LSPACE}/... ${LSPACE}/" \
+            | sed '1i[ history ]' \
+            | dmenu 'Bookmark' -no-custom \
+            | sed -r 's/.*(http.*)/\1/') ;;
+
+  *) bookmarks=~/.config/chromium/Default/Bookmarks
+     py-chrome-bookmarks.py $bookmarks $bookmarks.html
+     uri=$(cat $bookmarks.html \
+         | grep 'http://' \
+         | sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" \
+         | cat - $HOME/bin/functions/dmenu/.config/bookmarks \
+         | sed '1i[ history ]' \
+         | dmenu 'Bookmark' -no-custom \
+         | sed -r 's/.*(http.*)/\1/') ;;
 esac
 
 [ "$uri" = '[ history ]' ] && exec dmenu history
