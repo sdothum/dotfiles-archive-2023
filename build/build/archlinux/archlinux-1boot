@@ -181,14 +181,14 @@ heading 'sync home directory'
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 if ! [ -d /home/$user/stow ] ;then
   pm_install rsync
-  mkdir /data
-  mount -L Data -t btrfs /data
-  [ -d /data/archive/home/$user ] && rsync -av /data/archive/home/$user /home/ || rsync -av /media/home/$user /home/
+  mkdir /net
+  mount -L Share -t btrfs /net
+  [ -d /net/archive/home/$user ] && rsync -av /net/archive/home/$user /home/ || rsync -av /media/home/$user /home/
 fi
 
 
 heading 'cd / and umount /media (usb), exit chroot'
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-# sudo mkdir -pv /data/downloads
+# sudo mkdir -pv /net/downloads
 
 # vim: set ft=sh: #

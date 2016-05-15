@@ -9,10 +9,10 @@
 
 require 'cairo'
 
-COLORING=0xFFFFFF
-default_color=0x98d9a0
-color0=0x72a278
-color6=0x2a3c2d
+COLORING=0x000000
+default_color=0x48584b
+color0=0x364238
+color6=0x141815
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
@@ -250,8 +250,8 @@ gauge = {
     caption_fg_colour=COLORING,    caption_fg_alpha=0.3,
 },
 {
-    -- name='fs_used_perc',           arg='/data',                     max_value=100,
-    name='exec',                   arg='conky btrfs /data percent', max_value=100,
+    -- name='fs_used_perc',           arg='/net',                      max_value=100,
+    name='exec',                   arg='conky btrfs /net percent',  max_value=100,
     x=94,                          y=944,
     graph_radius=25,
     graph_thickness=3,

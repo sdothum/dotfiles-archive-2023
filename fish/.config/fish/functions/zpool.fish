@@ -13,7 +13,7 @@ function zpool
   switch "$argv[1]"
     [1];            sudo zpool status
     case destroy;   if-no "$argv"; or sudo zpool $argv
-    case mount;     mount tank /data 0
+    case mount;     mount tank /net 0
                     mount pond /bkup 0
     case '*';       sudo zpool $argv
   end

@@ -79,7 +79,7 @@ CDPATH=.:..:../..:~:/home:/
 # browser
 export BROWSER=lynx
 export HTTP_PROXY=localhost:8118
-export XDG_DOWNLOAD_DIR=/data/downloads
+export XDG_DOWNLOAD_DIR=/net/downloads/http
 
 # disable 'xterm-color' for host
 export DOMAIN=

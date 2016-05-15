@@ -6,13 +6,13 @@
 
 # ................................................................. File manager
 
-# wrapper to default opening to /data/downloads if no location given
+# wrapper to default opening to /net/downloads if no location given
 if [ "$*" ] ;then
   start=$1
-elif [ $(ls -1 /data/downloads/nzbs/completed | wc -l) -gt 0 ] ;then
-  start=/data/downloads/nzbs/completed
+elif [ $(ls -1 /net/downloads/nzbs/completed | wc -l) -gt 0 ] ;then
+  start=/net/downloads/nzbs/completed
 else
-  start=/data/downloads/http
+  start=/net/downloads/http
 fi
 # see appbinds, toggle rox focuses frame
 /usr/bin/rox $start 2>>/tmp/rox.log

@@ -6,7 +6,7 @@
 
 # create .webm screencast
 
-target=/data/photos/batchqueue
+target=/net/photos/batchqueue
 [[ $delay ]] || delay=1
 
 if is_server ;then

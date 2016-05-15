@@ -6,7 +6,7 @@
 
 # poor resolution, see byzanz in functions/office
 
-target=/data/photos/batchqueue
+target=/net/photos/batchqueue
 [[ $delay ]] || delay=1s
 
 if is_server ;then

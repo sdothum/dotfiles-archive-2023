@@ -15,16 +15,16 @@ fi
 
 
 if laptop ;then
-heading "/data/* directories"
+heading "/net/* directories"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  if ! [ -d /data/archive ] ;then
-    sudo mkdir -pv /data/archive
-    permissions /data/archive
+  if ! [ -d /net/archive ] ;then
+    sudo mkdir -pv /net/archive
+    permissions /net/archive
   fi
 
-  if ! [ -d /data/downloads/depot ] ;then
-    sudo mkdir -pv /data/downloads/depot
-    permissions /data/downloads
+  if ! [ -d /net/downloads/depot ] ;then
+    sudo mkdir -pv /net/downloads/depot
+    permissions /net/downloads
   fi
 fi
 
@@ -53,8 +53,8 @@ fi
 # fi
 
 
-if server && ! grep -q '/data' /etc/fstab ;then
-heading "/data raid"
+if server && ! grep -q '/net' /etc/fstab ;then
+heading "/net raid"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   original /etc/fstab
   cat /etc/fstab.original $HOME/build/root/etc/fstab.$(hostname).raid >$HOME/build/root/etc/fstab.$(hostname)

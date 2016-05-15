@@ -4,7 +4,7 @@
 
 # ................................................................... Screenshot
 
-target=/data/photos/batchqueue
+target=/net/photos/batchqueue
 [[ $delay ]] || delay=5s
 
 if is_server ;then

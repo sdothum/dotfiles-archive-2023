@@ -10,7 +10,7 @@
 #        ../movies
 #               ../title.YEAR.*  (movie)
 
-library=${LIBRARY:-/data/media/videos/${1:-movies}}
+library=${LIBRARY:-/net/media/videos/${1:-movies}}
 
 # list latest movie additions first
 T=t

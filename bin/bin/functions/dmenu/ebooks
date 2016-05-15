@@ -6,7 +6,7 @@
 # ...................................................................... E-books
 
 # ebook library
-library=${LIBRARY:-/data/media/ebooks/${1:-Library}}
+library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$library/.ebooks
 
 # build catalogue

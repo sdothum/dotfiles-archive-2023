@@ -7,7 +7,7 @@
 # .......................................................................... mpd
 
 if ! [ -f $HOME/.config/beets/config.yaml ] ;then
-  sed -e '/^directory:/cdirectory: /data/media/music' \
+  sed -e '/^directory:/cdirectory: /net/media/music' \
       -e '/^plugins:/cplugins: [mpdupdate]' \
       -e '/^ui:/i\
 mpd:\

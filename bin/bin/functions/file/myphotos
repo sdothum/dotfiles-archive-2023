@@ -19,19 +19,19 @@ def copy_images(file, camera)
   filename = File.basename(file)
   date = File.stat(file).mtime.strftime('%Y-%m-%d')
   year = date.sub(/-\d\d-\d\d/, '')
-  unless Dir.exist?("/data/photos/#{year}")
+  unless Dir.exist?("/net/photos/#{year}")
     print "\n=> #{year}\n\n".red.bold
-    Dir.mkdir("/data/photos/#{year}")
+    Dir.mkdir("/net/photos/#{year}")
   end
-  unless Dir.exist?("/data/photos/#{year}/#{date}")
+  unless Dir.exist?("/net/photos/#{year}/#{date}")
     print "\n=> #{year} / #{date}\n\n".green.bold
-    Dir.mkdir("/data/photos/#{year}/#{date}")
+    Dir.mkdir("/net/photos/#{year}/#{date}")
   end
   print "#{filename}"
-  unless File.exist?("/data/photos/#{year}/#{date}/#{filename}")
+  unless File.exist?("/net/photos/#{year}/#{date}/#{filename}")
     print " -> #{year} / #{date} / #{filename}".yellow.bold
-    File.copy_stream(file, "/data/photos/#{year}/#{date}/#{filename}")
-    File.chmod(0644, "/data/photos/#{year}/#{date}/#{filename}")
+    File.copy_stream(file, "/net/photos/#{year}/#{date}/#{filename}")
+    File.chmod(0644, "/net/photos/#{year}/#{date}/#{filename}")
   end
   print "\n"
 end

@@ -6,17 +6,17 @@
 # when k3b fails try manually..
 case $@ in
   '')   echo ".. burn  dvd | iso | {data}" ;;
-  dvd)  if [[ $(ls -l /data/downloads/dvd/ | wc -l) -gt 1 ]] ;then
-          ls -l /data/downloads/dvd/
+  dvd)  if [[ $(ls -l /net/downloads/dvd/ | wc -l) -gt 1 ]] ;then
+          ls -l /net/downloads/dvd/
           if-no "erase directory" && return
-          dvdbackup -i /dev/dvd -o /data/downloads/dvd/ -M
-          title=$(basename /data/downloads/dvd/*)
-          genisoimage -dvd-video -udf -V "$title" -o /data/downloads/dvd/dvd.iso "$title"
+          dvdbackup -i /dev/dvd -o /net/downloads/dvd/ -M
+          title=$(basename /net/downloads/dvd/*)
+          genisoimage -dvd-video -udf -V "$title" -o /net/downloads/dvd/dvd.iso "$title"
           if-yes "burn iso to dvd" && burn iso
         fi
         ;;
-  iso)  if [[ -e /data/downloads/dvd/dvd.iso ]] ;then
-          growisofs -dvd-compat -Z /dev/dvd=/data/downloads/dvd/dvd.iso
+  iso)  if [[ -e /net/downloads/dvd/dvd.iso ]] ;then
+          growisofs -dvd-compat -Z /dev/dvd=/net/downloads/dvd/dvd.iso
         fi
         ;;
   *)    if [[ $(ls -l /media/cdrom0/ | wc -l) -eq 1 ]] ;then

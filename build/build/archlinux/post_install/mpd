@@ -11,7 +11,7 @@
 touch $HOME/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
 
 # annotate "configure $HOME/.mpdconf for non-root access to local mpd files"
-sed -e '/^#music_directory/s|".*"|"/data/media/music"|' \
+sed -e '/^#music_directory/s|".*"|"/net/media/music"|' \
     -e '/^#music_directory/s/^#//' \
     -e '/^#db_file/s|".*"|"'$HOME'/.mpd/mpd.db"|' \
     -e '/^#db_file/s/^#//' \

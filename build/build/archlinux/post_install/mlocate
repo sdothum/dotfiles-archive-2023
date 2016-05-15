@@ -7,9 +7,9 @@
 # ...................................................................... mlocate
 
 original /etc/updatedb.conf
-if ! grep -q ' /data /bkup"' /etc/updatedb.conf ;then
+if ! grep -q ' /net /bkup"' /etc/updatedb.conf ;then
   sudo sed -i -e '/^PRUNENAMES/s/"$/ .cache Trash backups"/' \
-              -e '/^PRUNEPATHS/s|"$| /data /bkup"|' \
+              -e '/^PRUNEPATHS/s|"$| /net /bkup"|' \
            /etc/updatedb.conf
 fi
 

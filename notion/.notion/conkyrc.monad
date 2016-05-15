@@ -119,7 +119,7 @@ ${goto 44}${diskiograph 22,0}
   srv ${goto 44}${fs_bar /srv}
   tmp ${goto 44}${fs_bar /tmp}
   var ${goto 44}${fs_bar /var}
-  data ${goto 44}${fs_bar /data}
+  data ${goto 44}${fs_bar /net}
 #
 #Memory ${alignr}$mem/$memmax
 #${goto 44}${mem}${alignr}${memmax}

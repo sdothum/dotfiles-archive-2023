@@ -6,12 +6,12 @@
 
 # ............................................................ plex-media-server
 
-sudo mkdir -pv /data/media/videos
-sudo mkdir -pv /data/media/videos/animation
-sudo mkdir -pv /data/media/videos/anime
-sudo mkdir -pv /data/media/videos/movies
-sudo mkdir -pv /data/media/videos/series
-sudo mkdir -pv /data/media/videos/tutorials
-permissions /data/media
+sudo mkdir -pv /net/media/videos
+sudo mkdir -pv /net/media/videos/animation
+sudo mkdir -pv /net/media/videos/anime
+sudo mkdir -pv /net/media/videos/movies
+sudo mkdir -pv /net/media/videos/series
+sudo mkdir -pv /net/media/videos/tutorials
+permissions /net/media
 
 # vim: set ft=sh: #

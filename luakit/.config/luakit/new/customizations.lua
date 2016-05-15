@@ -229,7 +229,7 @@ webview.init_funcs.mailto_hook = function (view, w)
 end
 
 -- downloads.default_dir = os.getenv("HOME") .. "/down"
-downloads.default_dir = "/data/downloads"
+downloads.default_dir = "/net/downloads/http"
 
 -- save last session
 local close_win = window.methods.close_win

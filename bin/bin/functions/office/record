@@ -17,7 +17,7 @@ usage() {
 
 # create .webm screencast
 
-target=/data/media/videos/recordings
+target=/net/media/videos/recordings
 pidname=recording
 framerate=25
 

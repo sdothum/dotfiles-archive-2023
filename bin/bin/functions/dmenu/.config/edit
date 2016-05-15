@@ -27,7 +27,7 @@ dmenu browser :: $HOME/bin/functions/dmenu/bookmarks $HOME/bin/functions/dmenu/h
 dmenu config :: $HOME/bin/functions/dmenu/.config/*
 dmenu dictionary :: $HOME/bin/functions/dmenu/dict $HOME/bin/functions/dmenu/thesaurus
 dmenu history :: $HOME/bin/functions/dmenu/.history/*
-dmenu playlist :: $(find /data/media/videos/ -maxdepth 3 -name '.playlist' | sed 's/ /\\\\ /g')
+dmenu playlist :: $(find /net/media/videos/ -maxdepth 3 -name '.playlist' | sed 's/ /\\\\ /g')
 dmenu tags :: $HOME/bin/functions/dmenu/.config/edit $HOME/bin/dmenu
 dwb :: $(find $HOME/.config/dwb/ -type f -maxdepth 1)
 fasd jump :: $HOME/.fasd
@@ -62,6 +62,7 @@ openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
 planck :: $HOME/build/qmk_firmware/keyboard/planck/keymaps/sdothum.c
 planck examples :: $(find $HOME/build/qmk_firmware/keyboard/planck/ -name '*.c')
+plover :: $HOME/stow/Xmodmap/plover/.Xmodmap
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto/ -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*

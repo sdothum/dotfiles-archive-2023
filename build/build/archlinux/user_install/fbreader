@@ -6,7 +6,7 @@
 
 # ..................................................................... fbreader
 
-sudo mkdir -pv /data/media/ebooks
-permissions /data/media
+sudo mkdir -pv /net/media/ebooks
+permissions /net/media
 
 # vim: set ft=sh: #

@@ -6,7 +6,7 @@
 
 # ...................................................................... digikam
 
-sudo mkdir -pv /data/photos
-permissions /data/photos
+sudo mkdir -pv /net/photos
+permissions /net/photos
 
 # vim: set ft=sh: #

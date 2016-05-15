@@ -34,7 +34,7 @@ set --export PATH ~/sync/bin /usr/bin /bin /sbin /usr/sbin /usr/local/bin /usr/b
 set --export BROWSER w3m
 # [ -z (pidof privoxy) ]; or set --export HTTP_PROXY localhost:8118
 # [ -z (pidof squid3) ]; or set --export HTTP_PROXY localhost:3128
-set --export XDG_DOWNLOAD_DIR /data/downloads
+set --export XDG_DOWNLOAD_DIR /net/downloads/http
 set --export NNTPSERVER news.eternal-september.org
 
 # editors

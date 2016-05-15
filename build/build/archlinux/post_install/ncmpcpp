@@ -6,7 +6,7 @@
 
 # ...................................................................... ncmpcpp
 
-sed -e '/#mpd_music_dir =/cmpd_music_dir = /data/media/music' \
+sed -e '/#mpd_music_dir =/cmpd_music_dir = /net/media/music' \
     -e '/#playlist_shorten_total_times =/cplaylist_shorten_total_times = yes' \
     -e '/#autocenter_mode =/cautocenter_mode = yes' \
     -e '/#centered_cursor =/ccentered_cursor = yes' \

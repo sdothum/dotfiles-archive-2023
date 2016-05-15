@@ -13,8 +13,8 @@ if [ $USER != root ]
     # cat ~/zpool.status
     # if [ $HOST = luna ]
     #   # delay required because systemd is too fast to login! :-)
-    #   #[ -d /data/depot ]; or begin; sleep 5s; zpool mount; end
-    #   [ -d /data/depot ]; or zpool mount
+    #   #[ -d /net/depot ]; or begin; sleep 5s; zpool mount; end
+    #   [ -d /net/depot ]; or zpool mount
     # end
     # adsuck dns filter in place
     grep -q nameserver /etc/resolv.conf; or begin

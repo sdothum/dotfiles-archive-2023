@@ -6,7 +6,7 @@
 # ...................................................................... E-books
 
 # ebook library
-library=${LIBRARY:-/data/media/ebooks/${1:-references}}
+library=${LIBRARY:-/net/media/ebooks/${1:-references}}
 
 # open file
 while book=$(ls -1 $library \

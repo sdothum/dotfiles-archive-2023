@@ -6,7 +6,7 @@
 
 # .......................................................................... mpd
 
-sudo mkdir -pv /data/media/music
-permissions /data/media
+sudo mkdir -pv /net/media/music
+permissions /net/media
 
 # vim: set ft=sh: #

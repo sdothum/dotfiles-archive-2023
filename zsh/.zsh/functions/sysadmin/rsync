@@ -55,26 +55,26 @@ case $@ in
 
   backup)
     if is_server ;then
-      if if-yes "backup /data to /backup" ;then
-        rsync -av --delete /data/* /backup/
+      if if-yes "backup /net to /backup" ;then
+        rsync -av --delete /net/* /backup/
       fi
     fi
     ;;
 
   home)
-    if if-yes "backup $HOME to /data/archive" ;then
-      [[ -d /data/archive$HOME ]] || mkdir -pv /data/archive/home
+    if if-yes "backup $HOME to /net/archive" ;then
+      [[ -d /net/archive$HOME ]] || mkdir -pv /net/archive/home
       rsync --delete $exclude_virtualbox $exclude_cache \
             --exclude='Trash' --exclude='Logs' --exclude='*.corrupted' \
-            $HOME /data/archive/home/
+            $HOME /net/archive/home/
     fi
     ;;
 
   depot)
     if is_server ;then
-      if-yes "backup depot to $laptop" && rsync --delete /data/depot $laptop:/data/
+      if-yes "backup depot to $laptop" && rsync --delete /net/depot $laptop:/net/
     else
-      if-no "update depot to luna" || rsync /data/depot luna:/data/
+      if-no "update depot to luna" || rsync /net/depot luna:/net/
     fi
     ;;
 
@@ -82,12 +82,12 @@ case $@ in
     if is_laptop ;then
       if if-yes "replicate mpd music database from luna" ;then
         killall mpd
-        if [[ ! -d /data/media ]] ;then
-          sudo mkdir /data/media
-          sudo chown $USER:users /data/media
+        if [[ ! -d /net/media ]] ;then
+          sudo mkdir /net/media
+          sudo chown $USER:users /net/media
         fi
         rsync --delete $USER@luna:.mpd ~/
-        rsync --delete luna:/data/media/music /data/media/
+        rsync --delete luna:/net/media/music /net/media/
         mpd 2>/dev/null &
       fi
     else
@@ -97,38 +97,38 @@ case $@ in
 
   server)
     if is_server ;then
-      if if-yes "backup media server databases to /data/archive" ;then
-        [[ -d /data/archive/var/lib ]] || mkdir -pv /data/archive/var/lib
-        sudo rsync -av --delete /var/lib/sonarr /data/archive/var/lib/
-        [[ -d /data/archive/opt/plexmediaserver/Library/Application\ Support ]] \
-          || mkdir -pv /data/archive/opt/plexmediaserver/Library/Application\ Support
+      if if-yes "backup media server databases to /net/archive" ;then
+        [[ -d /net/archive/var/lib ]] || mkdir -pv /net/archive/var/lib
+        sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
+        [[ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ]] \
+          || mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
         sudo rsync -av --delete \
                    /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
-                   /data/archive/opt/plexmediaserver/Library/Application\ Support/
-        [[ -d /data/archive/srv/lib ]] || sudo mkdir -p /data/archive/srv/lib
-        sudo rsync -av --delete /srv/lib/postgres /data/archive/srv/lib/
-        [[ -d /data/archive/etc/webapps/tt-rss ]] || sudo mkdir -p /data/archive/etc/webapps/tt-rss
-        sudo rsync -av /etc/webapps/tt-rss/config.php /data/archive/etc/webapps/tt-rss/
+                   /net/archive/opt/plexmediaserver/Library/Application\ Support/
+        [[ -d /net/archive/srv/lib ]] || sudo mkdir -p /net/archive/srv/lib
+        sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
+        [[ -d /net/archive/etc/webapps/tt-rss ]] || sudo mkdir -p /net/archive/etc/webapps/tt-rss
+        sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
       fi
     fi
     ;;
 
   SERVER)
     if is_server ;then
-      if ! if-no "restore media server databases from /data/archive" ;then
+      if ! if-no "restore media server databases from /net/archive" ;then
         sudo systemctl stop sonarr
-        sudo rsync -av --delete /data/archive/var/lib/sonarr /var/lib/
+        sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
         sudo systemctl start sonarr
         sudo systemctl stop plexmediaserver
         sudo rsync -av --delete \
-                   /data/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                   /net/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
                    /opt/plexmediaserver/Library/Application\ Support/
         sudo systemctl start plexmediaserver
         sudo systemctl stop postgres
-        sudo rsync -av --delete /data/archive/srv/lib/postgres /srv/lib/
+        sudo rsync -av --delete /net/archive/srv/lib/postgres /srv/lib/
         sudo systemctl start postgres
         sudo systemctl stop tt-rss
-        sudo rsync -av /data/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
+        sudo rsync -av /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
         sudo systemctl start tt-rss
       fi
     fi
@@ -158,8 +158,8 @@ case $@ in
       rsync ~/.password-store /media/home/$USER/
     elif [[ -d /run/media/$USER/My\ Passport ]] ;then
       [[ -d /run/media/$USER/My\ Passport/media ]] || mkdir -v /run/media/$USER/My\ Passport/media
-      rsync --delete /data/media/videos/series /run/media/$USER/My\ Passport/media/videos/
-      rsync --delete /data/photos /run/media/$USER/My\ Passport/
+      rsync --delete /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
+      rsync --delete /net/photos /run/media/$USER/My\ Passport/
       sync
     else
       echo ".. insert ($(hostname)/passport) usb drive"

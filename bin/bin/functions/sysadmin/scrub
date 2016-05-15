@@ -7,7 +7,7 @@
 # ................................................................... Filesystem
 
 usage() {
-  echo "usage: $(basename $0)  all | 'start | c'ancel | I'nitialize | s'tatus  [ boot | data | backup ]"
+  echo "usage: $(basename $0)  all | 'start | c'ancel | I'nitialize | s'tatus  [ boot | net | share | backup ]"
   exit 1
 }
 
@@ -15,7 +15,7 @@ usage() {
 volume() {
   case $@ in
     boot | root) echo /boot ;;
-    data)        echo /data ;;
+    net | share) echo /net ;;
     backup)      echo /backup ;;
     *)           echo $@ ;;
   esac
@@ -38,7 +38,7 @@ case $1 in
   h | '') usage ;;
 
   all) scrub boot
-       scrub data
+       scrub share
        scrub backup ;;
 
   c) sudo btrfs scrub cancel $(volume $2) ;;

@@ -48,7 +48,7 @@ export BROWSER=chromium
 [[ -z $(pidof privoxy) ]] || export HTTP_PROXY=localhost:8118
 [[ -z $(pidof squid3) ]] || export HTTP_PROXY=localhost:3128
 
-export XDG_DOWNLOAD_DIR=/data/downloads
+export XDG_DOWNLOAD_DIR=/net/downloads/http
 export NNTPSERVER=news.sunnyusenet.com
 
 # ..................................................................... Defaults

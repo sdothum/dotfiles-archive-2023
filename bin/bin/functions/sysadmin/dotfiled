@@ -6,7 +6,7 @@
 
 # ..................................................................... Git diff
 
-# Usage: cd /data/depot/dotfiles/<source directory> ; dotfiled
+# Usage: cd /net/depot/dotfiles/<source directory> ; dotfiled
 
 
 # diff all source files with local image

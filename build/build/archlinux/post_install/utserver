@@ -9,9 +9,9 @@
 # utorrent daemon
 original /etc/utserver.conf
 sed -e '/#ut_webui_port:/cut_webui_port: 8081' \
-    -e '/#dir_autoload:/cdir_autoload: /data/downloads/http' \
+    -e '/#dir_autoload:/cdir_autoload: /net/downloads/http' \
     -e '/#dir_autoload_delete:/cdir_autoload_delete: true' \
-    -e '/dir_root:/c/dir_root: /data/downloads/torrents' \
+    -e '/dir_root:/c/dir_root: /net/downloads/torrents' \
     -e '$a\
 localhost_authentication: false\
 ' /etc/utserver.conf.original | sudo tee /etc/utserver.conf

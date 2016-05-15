@@ -94,7 +94,7 @@ ${font PT Sans:size=7}       ${texeci 900 conky-weather}${texeci 3600 conky-weat
 #Testing ${image /home/shum/.debian-release-weather.png -p 33,64 -s 18x18 -f 900} ${alignr}$kernel
 Unstable Sid ${image /home/shum/.debian-release-weather.png -p 54,64 -s 18x18 -f 900} ${alignr}$kernel
 #Kernel ${alignr}$kernel
-  File System ${alignr}${fs_type /boot} / ${fs_type /data}
+  File System ${alignr}${fs_type /boot} / ${fs_type /net}
   Host ${alignr}$nodename
   Uptime ${alignr}$uptime
 #Battery ${goto 50}${battery_bar BAT0}
@@ -123,7 +123,7 @@ ${goto 50}${diskiograph 22,0}
   srv ${goto 50}${fs_bar /srv}
   tmp ${goto 50}${fs_bar /tmp}
   var ${goto 50}${fs_bar /var}
-  data ${goto 50}${fs_bar /data}
+  data ${goto 50}${fs_bar /net}
   bkup ${goto 50}${fs_bar /bkup}
 #Memory ${alignr}$mem/$memmax
 #${goto 50}${mem}${alignr}${memmax}
