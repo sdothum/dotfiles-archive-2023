@@ -39,8 +39,9 @@ if [ "$*" ] ;then
   inject "$@" "$history"
 else
   [ -e "$history" ] || touch "$history"
-  # match on fixed strings (not regex)
-  grep -Fvf "$history" - >/tmp/history.nonmatch
+  # create uniq list by subtracting history from stdin
+  cat $history | sed -r 's/(.*)/^\1$/' >/tmp/history.regex
+  grep -vf /tmp/history.regex - >/tmp/history.nonmatch
   cat "$history" /tmp/history.nonmatch
 fi
 

@@ -7,25 +7,32 @@
 # ...................................................................... Browser
 
 chrome=/usr/bin/chromium
+hosts='luna lumen monad pi'
 
 # release remote instance
 unset instance
 unlock() {
+  browser=${chrome##*/}
   for i in $@
   do
-    /usr/bin/ssh $i -- killall ${chrome##*/} 2>/dev/null && instance=true
+    if /usr/bin/ssh $i -- killall $browser 2>/dev/null ;then
+      host=$i
+      break
+    fi
   done
   # let instance die..
-  [ $instance ] && sleep 3
+  if [ $host ] ;then
+    while /usr/bin/ssh $host -- pgrep -f $browser >/dev/null
+    do
+      sleep 0.1
+    done
+    # purge user profile lock
+    rm -f $HOME/.config/$browser/SingletonLock 2>/dev/null
+  fi
 }
 
 # close (unlock) any remote instances
-case $(hostname) in
-  luna)  unlock lumen monad pi ;;
-  lumen) unlock luna monad pi ;;
-  monad) unlock luna lumen pi ;;
-  pi)    unlock luna lumen monad ;;
-esac
+unlock $(echo " $hosts " | sed "s/ $(hostname) //")
 
 # focus frame, see dmenu/browser
 [ "$*" ] && eval $chrome $(echo $@ | cut -d' ' -f-$(( $# - 1 )) ) -app=\${$#} || focus $chrome
