@@ -46,19 +46,19 @@ xftalpha 0.5
 uppercase no
 
 # default_color FFFFFF
-default_color 48584b
-color0 364238
+default_color 414326
+color0 30321c
 color1 000000
 color2 080808
 color3 101010
 color4 202020
 color5 303030
-color6 141815
-color7 364238
-color8 364238
-color9 574754
-#colorA 242c26
-#colorI 2c242a
+color6 12120a
+color7 30321c
+color8 30321c
+color9 272541
+#colorA 212213
+#colorI 141321
 
 lua_load ~/.conky/conky-rings.lua
 lua_draw_hook_post main
@@ -98,7 +98,7 @@ ${goto 100}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
 ${voffset 10}
 # display BOTH hwmon temps, one or other will reflect gpu temp
 ${goto 80}${font Ubuntu:size=18:style=Bold}${color3}SYS ${color2}${font Ubuntu:size=7:style=Bold}${color0}GPU ${alignr}${hwmon 0 temp 1}°C
-${goto 100}${loadgraph 25,0 364238 364238}
+${goto 100}${loadgraph 25,0 30321c 30321c}
 ${voffset -5}${goto 100}${font}${color1}Loadavg ${alignr}${loadavg 1}   ${loadavg 2}   ${loadavg 3}
 
 ${voffset 30}
@@ -111,7 +111,7 @@ ${goto 100}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 ${goto 100}${font}${color3}${top name 4}${alignr}${top cpu 4}%
 ${goto 100}${font}${color3}${top name 5}${alignr}${top cpu 5}%
 ${goto 100}${font}${color3}${top name 6}${alignr}${top cpu 6}%
-${goto 100}${cpugraph 25,0 364238 364238}
+${goto 100}${cpugraph 25,0 30321c 30321c}
 ${voffset -5}${goto 100}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 # ${goto 100}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
 
@@ -131,25 +131,25 @@ ${voffset 30}
 ${goto 100}${font Ubuntu:size=7:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
 ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/net   ${color}(swap) ${color0}${alignr}${exec conky btrfs /net}GiB
 # ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/Tmp ${alignr}${fs_used /tmp}
-${goto 100}${diskiograph 25,0 364238 364238}
+${goto 100}${diskiograph 25,0 30321c 30321c}
 ${voffset -5}${goto 100}${font}${color1}Disk I/O ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 10}
 ${goto 80}${font Ubuntu:size=18:style=Bold}${color3}NET${color2}${font Ubuntu:size=7:style=Bold}${color0} eno1 ${alignr}${addr eno1}
-${goto 100}${downspeedgraph eno1 25,0 364238 364238}
-${voffset -38}${goto 100}${upspeedgraph eno1 25,0 364238 364238}
+${goto 100}${downspeedgraph eno1 25,0 30321c 30321c}
+${voffset -38}${goto 100}${upspeedgraph eno1 25,0 30321c 30321c}
 ${voffset -5}${goto 100}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed eno1}}↑   ${lua_parse bandwidth ${downspeed eno1}}↓
 #
 # ${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color1}enp10s0 ${alignr}${addr enp10s0}
-# ${goto 100}${downspeedgraph enp10s0 25,0 364238 364238}
-# ${voffset -38}${goto 100}${upspeedgraph enp10s0 25,0 364238 364238}
+# ${goto 100}${downspeedgraph enp10s0 25,0 30321c 30321c}
+# ${voffset -38}${goto 100}${upspeedgraph enp10s0 25,0 30321c 30321c}
 # ${voffset -5}${goto 100}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed enp10s0}}↑   ${lua_parse bandwidth ${downspeed enp10s0}}↓
 
 ${voffset 30}
 ${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp4s0}
 ${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color0}wlp4s0 ${alignr}${addr wlp4s0}
-${goto 100}${downspeedgraph wlp4s0 25,0 364238 364238}
-${voffset -38}${goto 100}${upspeedgraph wlp4s0 25,0 364238 364238}
+${goto 100}${downspeedgraph wlp4s0 25,0 30321c 30321c}
+${voffset -38}${goto 100}${upspeedgraph wlp4s0 25,0 30321c 30321c}
 ${voffset -5}${goto 100}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp4s0}}↑   ${lua_parse bandwidth ${downspeed wlp4s0}}↓
 
 ${goto 100}${font Ubuntu:size=7:style=Bold}${color1}${alignr}${tcp_portmon 1 65535 count}  open ports
@@ -172,8 +172,8 @@ ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 14}${alignr 1}${tcp_portmon
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 15}${alignr 1}${tcp_portmon 1 65535 rport 15}
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 16}${alignr 1}${tcp_portmon 1 65535 rport 16}
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 17}${alignr 1}${tcp_portmon 1 65535 rport 17}
-${if_match ${tcp_portmon 1 65535 count} 364238 18}${alignr}${color3}• • • ${endif}
+${if_match ${tcp_portmon 1 65535 count} 30321c 18}${alignr}${color3}• • • ${endif}
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 18}${alignr 1}${tcp_portmon 1 65535 rport 18}
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 19}${alignr 1}${tcp_portmon 1 65535 rport 19}
-# ${if_match ${tcp_portmon 1 65535 count} 364238 20}${alignr}${color3}• • • ${endif}
+# ${if_match ${tcp_portmon 1 65535 count} 30321c 20}${alignr}${color3}• • • ${endif}
 

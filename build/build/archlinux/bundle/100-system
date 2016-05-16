@@ -9,6 +9,7 @@
   gst-libav
   gst-plugins-base
   gst-plugins-good
+  gst-plugins-ugly
   gstreamer0.10-plugins
 # lightspark-git
 

@@ -8,8 +8,7 @@
 # Usage: dmenu browser uri [<bookmarks>]
 
 # in order of personal preference..
-browsers="vimb \
-          vimb-detached \
+browsers="qutebrowser \
           brave \
           chromium \
           dwb \
@@ -22,7 +21,8 @@ browsers="vimb \
           luakit \
           midori \
           opera \
-          qutebrowser \
+          vimb \
+          vimb-detached \
           surf \
           uzbl \
           w3m \
@@ -51,12 +51,13 @@ do
     lispkit |\
     midori |\
     opera |\
-    qutebrowser |\
     surf |\
     uzbl |\
     vimb |\
     vimb-detached |\
     xombrero) focus $browser "$1" ;;
+
+    qutebrowser) focus qutebrowser --target tab "$1" ;;
 
     elinks |\
     w3m) term "$browser" $browser "$1" ;;

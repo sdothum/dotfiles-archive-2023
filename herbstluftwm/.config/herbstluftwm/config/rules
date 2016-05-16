@@ -20,7 +20,6 @@ hc rule class=tabbed                 tag=1 index=0 focus=on
 # hc rule class=chromium             tag=1
 hc rule class=dwb                    tag=1
 hc rule class=luakit                 tag=1
-hc rule class=qutebrowser            tag=1
 hc rule title=RSS                    tag=1 index=1 focus=off
 hc rule class=Minitube               tag=1
 hc rule title=IRC                    tag=2 index=1 focus=on
