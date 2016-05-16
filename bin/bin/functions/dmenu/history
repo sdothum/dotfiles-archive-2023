@@ -6,7 +6,7 @@
 # ...................................................................... Browser
 
 # history
-filter='ERROR:|localhost|luakit:|Page not found|[Ss]earch|thedarnedestthing|tt-rss'
+filter='/accounts|acronym|color(codehex|combos|hexa)|dictionary|duckduckgo|ERROR:|fontbureau|google.com/mail|localhost|luakit:|Page not found|[Ss]earch|thedarnedestthing|thesaurus|tt-rss'
 
 case $BROWSER in
   luakit) sqldb=$HOME/.local/share/luakit/history.db
@@ -37,6 +37,7 @@ case $BROWSER in
                -e 's/\&\#3[0-9];//g' \
                -e 's/\&\#x[ab]b;//g' \
                -e 's/\&\#xe[0-9];/e/g' \
+               -e 's/\&amp;/\&/g' \
                -e 's/^[Rr][Ee]: //' \
          | sed '1i[ bookmarks ]' \
          | dmenu 'History' -no-custom \

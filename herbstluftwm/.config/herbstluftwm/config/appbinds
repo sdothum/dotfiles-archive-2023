@@ -22,6 +22,7 @@ hc keybind Super-Control-0           spawn toggle pavucontrol
 hc keybind Super-1                   spawn dmenu monitor
 hc keybind Super-2                   spawn dmenu alarm
 hc keybind Super-equal               spawn dmenu calc
+hc keybind Super-minus               spawn toggle plover
 hc keybind Super-slash               spawn dmenu files
 hc keybind Super-Shift-slash         spawn dmenu folders
 hc keybind $Mod-backslash            spawn toggle conky
