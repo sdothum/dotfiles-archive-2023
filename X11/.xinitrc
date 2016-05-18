@@ -25,7 +25,7 @@ autocutsel -selection PRIMARY -fork &
 # X11 display managers usually start pulseaudio.. but we're using tiling window managers :-)
 pulseaudio --start
 # Enable automounting removable devices
-udiskie --use-udisks2 &
+udiskie --use-udisks2 --automount --notify --no-tray &
 
 # ........................................................................ D-Bus
 
@@ -35,6 +35,7 @@ udiskie --use-udisks2 &
 #     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 #     echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
 # fi
+. /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 
 # ................................................................ Gnome keyring
 

@@ -116,9 +116,8 @@
       nnoremap Y          y$
       " reselect/reyank text just pasted
       nnoremap <leader>v  gv
-      nnoremap <leader>V  gv
-      nnoremap <leader>Y  gvy
-      vnoremap <leader>P  pgvy
+      nnoremap <leader>V  gvy
+      map <leader>p       pgvy
 
     " ...................................................... Sentence operations
 

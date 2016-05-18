@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="bin/quit $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................... Housekeeping before quit
+
+# session oriented apps that may complain on herbstluftwm restart
+apps='chromium \
+      firefox \
+      qutebrowser'
+ 
+killall -TERM $apps 2>/dev/null
+herbstclient quit
+
+# vim: set ft=sh: #

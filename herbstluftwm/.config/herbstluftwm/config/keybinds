@@ -12,7 +12,7 @@
 # .................................................................. Keybindings
 
 # window manager
-hc keybind $Mod-Shift-q              quit
+hc keybind $Mod-Shift-q              spawn quit
 hc keybind $Mod-Shift-r              reload
 hc keybind $Mod-grave                spawn toggle monocle
 hc keybind $Mod-b                    spawn draw root select

@@ -31,7 +31,7 @@
       nmap <silent><leader>b :silent CtrlPBuffer<CR>
       nmap <silent><leader>M :silent CtrlPMixed<CR>
       nmap <silent><leader>m :silent CtrlPMRU<CR>
-      nmap <silent><leader>p :silent CtrlP<CR>
+      nmap <silent><leader>B :silent CtrlP<CR>
 
     " ............................................................... Easy-align
 
