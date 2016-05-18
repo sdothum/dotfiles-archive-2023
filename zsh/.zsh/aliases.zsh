@@ -67,8 +67,10 @@ alias -g ZZ="|& egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'"
 
 # alias a='ack'
 alias al='ack -l'
-alias am='yaourt -Ss'
-alias AM='yaourt -Ss --pager'
+# alias am='yaourt -Ss'
+# alias AM='yaourt -Ss --pager'
+alias am='pacaur -Ss'
+alias AM='pacaur -Ss | less'
 # alias ata='sudo /usr/bin/ls -l /dev/disk/by-id/*ata*'
 alias c='clear && setterm -cursor on'
 alias calc='speedcrunch'

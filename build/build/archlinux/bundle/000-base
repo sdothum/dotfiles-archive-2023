@@ -3,6 +3,13 @@
 
 # see bundle_install
 
+= aur package manager
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+@ cower
+@ pacaur
+! pacaur -Sy
+
+
 = entropy
 # ▔▔▔▔▔▔▔
   haveged
@@ -30,7 +37,6 @@
 # ▔▔▔▔▔▔▔▔▔▔▔
   xf86-video-ati       [lspci | grep VGA | grep -q ATI]
   xf86-video-intel     [lspci | grep VGA | grep -q Intel]
-  xf86-video-fbdev     [arm]
   nvidia-340xx         [nvidia]
 # nvidia-340xx-libgl   [nvidia]
   xf86-input-synaptics [laptop]

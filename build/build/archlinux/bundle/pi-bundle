@@ -3,28 +3,23 @@
 
 # see bundle_install
 
-= pi core
-# ▔▔▔▔▔▔▔
-  alsa-utils
+= aur package manager
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+a package-query
+a yaourt
+! yaourt -Sy
+
+
+= core
+# ▔▔▔▔
   autoconf
-  autocutsel
   automake
   bc
   bison
-  connman
-  dash
-  downgrade
-  dunst
   expac
-  fasd
-  figlet
   flex
   grep
-  gtk-engine-murrine
-  haveged
-  herbstluftwm
   iputils
-  libnotify
   licenses
   linux-raspberrypi
   logrotate
@@ -34,35 +29,118 @@
   nano
   net-tools
   netctl
-  nfs-utils
-  omxplayer-git
-  openssh
   patch
-  pavucontrol
   pkg-config
-  prezto-git
   procps-ng
   raspberrypi-firmware
-  rofi
-  rsync
-  rxvt-unicode
-  screenfetch
-  sudo
-  unclutter
   usbutils
   vi
   which
-  wget
   wireless_tools
-  xdotool
-  xf86-input-keyboard
-  xf86-input-mouse
+
+
+= entropy
+# ▔▔▔▔▔▔▔
+  haveged
+
+
+= shell
+# ▔▔▔▔▔
+  dash
+  fasd
+  prezto-git
+  zsh
+
+
+= x11 drivers
+# ▔▔▔▔▔▔▔▔▔▔▔
   xf86-video-fbdev
+
+
+= x11 server
+# ▔▔▔▔▔▔▔▔▔▔
+  xorg-xinit
   xorg-server
   xorg-server-utils
   xorg-server-xephyr
-  xorg-xinit
-  yaourt
-  zsh
+
+
+= terminal
+# ▔▔▔▔▔▔▔▔
+  rxvt-unicode
+
+
+= window manager
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  herbstluftwm
+
+
+= sound
+# ▔▔▔▔▔
+  alsa-utils
+  alsa-plugins
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+
+
+= system utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  figlet
+  screenfetch
+  sudo
+
+
+= package managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  downgrade
+
+
+= network
+# ▔▔▔▔▔▔▔
+  connman
+
+
+= network security
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  openssh
+
+
+= network share
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  avahi
+  nfs-utils
+
+
+= desktop utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  dunst
+  libnotify
+  rofi
+
+
+= gtk themes and engines
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gtk-engine-murrine
+
+
+= x11
+# ▔▔▔
+  autocutsel
+  unclutter
+  xdotool
+  xf86-input-keyboard
+  xf86-input-mouse
+
+
+= file transfer
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  rsync
+  wget
+
+
+= video players
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  omxplayer-git
 
 # vim: set ft=conf: #

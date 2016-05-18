@@ -128,8 +128,7 @@
 # coriander [server]
 # livestreamer-curses
 # minitube
-  mpv       [server || laptop]
-  omxplayer [arm]
+  mpv
 # smplayer
 # smplayer-themes
 # umplayer

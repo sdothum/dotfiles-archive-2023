@@ -13,11 +13,12 @@ usage() {
 
 [ "$*" ] || usage
 [ "$1" = h ] && usage
+which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
 
 # default (no options) to package query
 
 if [ $# -eq 1 ] ;then
-  pacman -Qs $@ || yaourt -Ss $@
+  pacman -Qs $@ || $pacaur -Ss $@
 else
   action=$1
   shift
@@ -27,7 +28,7 @@ else
   else
     # no dash option shorthand for noconfirm :-)
     echo $action | grep -q '^-' || action="-$action --noconfirm"
-    eval yaourt $action $@
+    eval $pacaur $action $@
   fi
 fi
 

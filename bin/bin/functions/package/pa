@@ -6,6 +6,8 @@
 
 # ........................................................... Package management
 
+# Note: ignorepkg any packages that abort upgrade
+
 # AUR package manager
 if [ -z "$*" ] ;then
   if arm ;then
@@ -27,14 +29,17 @@ if [ -z "$*" ] ;then
     aur='--devel'
   fi
 
-  # update git's first because pacupg --aur does not record git package updates
+  #  update aur kludge to prevent pacupg --aur from re-installing aur package updates
   sudo pacman -Sy
-  if git=$(pacaur -Qu $aur | grep -q 'git$') ;then
-    pm S $(echo $git | awk '{ print $3 }')
+  package=$(pacaur -Qu $aur)
+  if [ -n "$package" ] ;then
+    echo -n "\n$package"
+    # strip color codes, see pacman.conf
+    pm S "$(echo $package | awk '{ print $3 }' | sed -r 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g')"
   fi
 
-  # note: ignorepkg any packages that abort upgrade
-  pacupg $aur
+  # pacupg $aur doesn't always create new boot snapshot
+  pacupg
 
   # update any .pacnew configs
   pacnew=$(sudo find /etc -name '*.pacnew')

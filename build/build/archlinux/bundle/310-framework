@@ -5,17 +5,17 @@
 
 = sinatra web framework
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# * exifr
-* kramdown
-* mail
-* passenger
-* rack
-* sanitize
-* sinatra
-* slim
-* term-ansicolor
-* thin
-* xapian-fu
+# g exifr
+g kramdown
+g mail
+g passenger
+g rack
+g sanitize
+g sinatra
+g slim
+g term-ansicolor
+g thin
+g xapian-fu
 # xapian-ruby-bindings
   ruby-xapian-ruby
 

@@ -48,24 +48,12 @@ keyserver-options auto-key-retrieve' >$HOME/.gnupg/gpg.conf
 fi
 
 
-title "install aur package manager"
+# title "install aur package manager"
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-cd /tmp
-sudo rm -Rf package-query*
-curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
-tar xzf package-query.tar.gz
-cd package-query
-makepkg -s
-sudo pacman -U --noconfirm package-query*tar.xz
-
-cd /tmp
-sudo rm -Rf yaourt*
-curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
-tar xzf yaourt.tar.gz
-cd yaourt
-makepkg -s
-sudo pacman -U --noconfirm yaourt*tar.xz
-yaourt -Syu
+# aur_install package-query
+# aur_install yaourt
+# aur_install cower
+# aur_install pacaur
 
 
 title "update base"

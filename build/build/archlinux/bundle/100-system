@@ -92,6 +92,7 @@
   pkgtools
 # powerpill
 # trizen
+# yaourt
 # yaourt-gui
 # pacgraph
   reflector
