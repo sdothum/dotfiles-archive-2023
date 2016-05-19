@@ -70,11 +70,12 @@ setblur() {
 # create pulsar border color gradient
 set_border() {
   # echo $1 >$BORDER
-  conky palette $1 | grep 'color_light_1' \
-                   | sed 's/<\/font>/\n/g' \
-                   | sed  's/.*<font>//g' \
-                   | grep '^#' | cut -d'#' -f2 \
-                   | tac >$PULSAR
+  conky palette $1 \
+        | grep 'color_light_1' \
+        | sed 's/<\/font>/\n/g' \
+        | sed  's/.*<font>//g' \
+        | grep '^#' | cut -d'#' -f2 \
+        | tac >$PULSAR
   # set border to midtone
   sed '10q;d' $PULSAR >$BORDER
   # use tee to append file into itself
