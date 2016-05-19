@@ -8,7 +8,7 @@
 
 # atom cpu
 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' \
-| uniq | cut -d' ' -f2-4 | sed -e 's/(.*)/ /' -e 's/ CPU//' \
-| grep -q 'Atom'
+    | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)/ /' -e 's/ CPU//' \
+    | grep -q 'Atom'
 
 # vim: set ft=sh: #

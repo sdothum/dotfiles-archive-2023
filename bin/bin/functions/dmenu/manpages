@@ -50,9 +50,9 @@ do
     # list possible man sections!
     if [ $(whatis "$man" | wc -l) -gt 1 ] ;then
       page=$(whatis "$man" \
-          | sed "s/) *-/)^$SEP/" \
-          | column -s^ -t \
-          | dmenu 'Section' -no-custom) || exit
+           | sed "s/) *-/)^$SEP/" \
+           | column -s^ -t \
+           | dmenu 'Section' -no-custom) || exit
     else
       page=$(whatis "$man")
       singleton=true

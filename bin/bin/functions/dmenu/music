@@ -12,12 +12,12 @@
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
     mpc list artist \
-    | sort -n \
-    | sed '1i[ player ]\n[ albums ]'
+        | sort -n \
+        | sed '1i[ player ]\n[ albums ]'
   else
     mpc list artist \
-    | sort -n \
-    | sed '1i[ albums ]'
+        | sort -n \
+        | sed '1i[ albums ]'
   fi
 }
 
@@ -27,22 +27,22 @@ albums() {
     if [ $redundant ] ;then
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
         mpc list album \
-        | sort -n \
-        | sed '1i[ player ]\n[ artist ]'
+            | sort -n \
+            | sed '1i[ player ]\n[ artist ]'
       else
         mpc list album \
-        | sort -n \
-        | sed '1i[ artist ]'
+            | sort -n \
+            | sed '1i[ artist ]'
       fi
     else
       # escape return to artist listings
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
         mpc list album \
-        | sort -n \
-        | sed '1i[ player ]'
+            | sort -n \
+            | sed '1i[ player ]'
       else
         mpc list album \
-        | sort -n
+            | sort -n
       fi
     fi
   else

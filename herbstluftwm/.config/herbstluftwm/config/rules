@@ -66,6 +66,7 @@ hc rule class=Klavaro                pseudotile=on
 # trap urxvt -name=max
 hc rule instance=max                 focus=on switchtag=on hook=max
 hc rule class=mpv                    focus=on switchtag=on fullscreen=on hook=fullscreen
+hc rule class=Plover                 pseudotile=on
 hc rule class=ROX-Filer              pseudotile=off
 hc rule class=Savebox                pseudotile=off
 # hc rule title=scratchpad           pseudotile=on

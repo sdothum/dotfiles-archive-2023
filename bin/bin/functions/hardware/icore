@@ -8,7 +8,7 @@
 
 # core iN cpu
 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' \
-| uniq | cut -d' ' -f2-4 | sed -e 's/(.*)/ /' -e 's/ CPU//' \
-| grep -q 'Core *i'
+    | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)/ /' -e 's/ CPU//' \
+    | grep -q 'Core *i'
 
 # vim: set ft=sh: #

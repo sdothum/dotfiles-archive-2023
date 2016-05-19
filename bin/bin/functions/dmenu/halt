@@ -24,9 +24,11 @@ do
     suspend) [ -e /sbin/systemctl ] && sudo systemctl suspend || sudo pm-suspend ;;
 
     reboot) disconnect
+            quit
             [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo shutdown -r now ;;
 
     shutdown) disconnect
+              quit
               [ -e /sbin/systemctl ] && sudo systemctl poweroff || sudo shutdown -h now ;;
   esac
   break

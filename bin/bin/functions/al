@@ -1,16 +1,12 @@
+#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# X11 Desktop
+# Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ........................................................................ Conky
+# ....................................................................... Search
 
-# audio sink (destination) volume
-pactl list \
-      | sed -n "/^Sink #$(sink)/,\$p" \
-      | sed '/^$/,$d' \
-      | grep -P '^\t*Volume:' \
-      | sed -r 's/.* ([0-9]*)% .*/\1/'
-
+# fix for ack -l limitation with escaped regex
+a --nocolor "$@" | cut -d: -f1 | uniq
 
 # vim: set ft=sh: #

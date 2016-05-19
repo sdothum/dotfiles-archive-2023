@@ -205,11 +205,11 @@ herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 
 cat $PANEL_FIFO:$fifo \
-| panel \
-| lemonbar -d -n "lemonbar:$fifo" \
-           -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY $PANEL_BOTTOM \
-           -u $PANEL_UNDERLINE \
-           -f "$PANEL_FONT" -f "$UTF8_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+    | panel \
+    | lemonbar -d -n "lemonbar:$fifo" \
+               -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY $PANEL_BOTTOM \
+               -u $PANEL_UNDERLINE \
+               -f "$PANEL_FONT" -f "$UTF8_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #

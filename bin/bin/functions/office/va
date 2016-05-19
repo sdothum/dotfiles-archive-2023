@@ -7,6 +7,6 @@
 # ....................................................................... Editor
 
 # v by content
-v $(ack -l "$@" | egrep -v '\.deprecated|\.hg')
+v $(al "$@")
 
 # vim: set ft=sh: #

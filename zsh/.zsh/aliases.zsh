@@ -66,7 +66,7 @@ alias -g ZZ="|& egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'"
 # .................................................................... Shortcuts
 
 # alias a='ack'
-alias al='ack -l'
+# alias al='ack -l'
 # alias am='yaourt -Ss'
 # alias AM='yaourt -Ss --pager'
 alias am='pacaur -Ss'

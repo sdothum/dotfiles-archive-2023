@@ -6,9 +6,14 @@
 
 # ....................................................................... Search
 
-# lazy $@ does not substitute as expected in ack line, so assign to var, see aliases.zsh for commands
+if [ "$1" = '--nocolor' ] ;then
+  nocolor=$1
+  shift
+fi
+
+# $@ does not substitute as expected in ack line, so assign to var, see aliases.zsh for commands
 regex="$@"
-ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$regex" \
+ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $nocolor "$regex" \
 | egrep -v '\.deprecated|\.hg|\.vimv|vimmappings'
 
 # vim: set ft=sh: #

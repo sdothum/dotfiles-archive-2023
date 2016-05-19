@@ -54,8 +54,9 @@ hc keybind Super-Shift-m             spawn toggle term 'Music' ncmpcpp
 hc keybind Super-Control-m           spawn toggle term 'Visualizer' vis
 hc keybind Super-n                   spawn toggle tixati
 hc keybind Super-Shift-n             spawn toggle term 'NZB' nzbget --connect
-hc keybind Super-p                   spawn toggle xpad
-hc keybind Super-Shift-p             spawn dmenu pass
+# hc keybind Super-p                 spawn toggle xpad
+hc keybind Super-p                   spawn dmenu pass
+hc keybind Super-Shift-p             spawn pr eject
 hc keybind Super-q                   spawn toggle amphetype
 hc keybind Super-Shift-q             spawn clack swap
 hc keybind Super-Control-q           spawn clack

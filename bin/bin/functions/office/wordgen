@@ -31,32 +31,32 @@ fi
 if ! [ -e $wordfile.words ] ;then
   notify "Building $wordfile.words" 'Please be patient..'
   sort -nr --key=2 $wordfile \
-  | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' \
-  | egrep -v '^(.|..)$' \
-  | egrep "$filter" \
-  >$wordfile.words
+       | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' \
+       | egrep -v '^(.|..)$' \
+       | egrep "$filter" \
+       >$wordfile.words
   # arbitrarily remove all questionable spellingssed -r 's/([ &;(){}])/\\\\\1/g'
   cat $wordfile.words \
-  | aspell --ignore-case -a \
-  | grep -v '^\*$' \
-  | grep -v '^$' \
-  | awk '{ print $2; }' \
-  >$wordfile.trim
+      | aspell --ignore-case -a \
+      | grep -v '^\*$' \
+      | grep -v '^$' \
+      | awk '{ print $2; }' \
+      >$wordfile.trim
 fi
 diff $wordfile.words $wordfile.trim \
-| grep '^-[a-z]' \
-| sed 's/^-//' \
-| head -$corpus \
->$wordfile.corpus
+     | grep '^-[a-z]' \
+     | sed 's/^-//' \
+     | head -$corpus \
+     >$wordfile.corpus
 typefile=$typedir/$(cat $wordfile.corpus | wc -l)-word-corpus.txt
 
 # build sentences
 __wordgen() {
   shuf $wordfile.corpus \
-  | tr '\n' ' ' \
-  | fold -s --width=$(( $@ * 5 )) \
-  | sed -re 's/^(.)/\U\1/' -e 's/ $/./' \
-  >>$paragraphs
+       | tr '\n' ' ' \
+       | fold -s --width=$(( $@ * 5 )) \
+       | sed -re 's/^(.)/\U\1/' -e 's/ $/./' \
+       >>$paragraphs
   echo >>$paragraphs
 }
 

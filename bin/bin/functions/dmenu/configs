@@ -30,13 +30,13 @@ configs() {
        $(find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex '.*/conf(ig)*.*' | egrep -v "$exclude" | sed 's/ /:/g') \
        $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*ini' | egrep -v "$exclude" | sed 's/ /:/g') \
        $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*rc' | egrep -v "$exclude" | sed 's/ /:/g') \
-  | tr ' ' '\n' \
-  | sed -re 's/:/ /g' \
-        -e "s|(.*)/([^/]*)$|\2^$SEP \1|" \
-  | sort -u \
-  | sed -e '1i
+       | tr ' ' '\n' \
+       | sed -re 's/:/ /g' \
+             -e "s|(.*)/([^/]*)$|\2^$SEP \1|" \
+       | sort -u \
+       | sed -e '1i
 ' \
-  >$cache
+       >$cache
   notify 'Updating dmenu config cache' '..Finished'
 }
 

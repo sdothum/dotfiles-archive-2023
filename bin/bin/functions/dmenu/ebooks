@@ -13,12 +13,12 @@ cache=$library/.ebooks
 ebooks() {
   time=5 notify 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" \
-  | sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
-        -e 's/ - .*//' \
-        -e 's/ \([0-9]*\)//' \
-        -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
-  | sort -u \
-  >$cache
+       | sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
+             -e 's/ - .*//' \
+             -e 's/ \([0-9]*\)//' \
+             -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
+       | sort -u \
+       >$cache
   notify 'Update of library cache' '..Complete'
 }
 
