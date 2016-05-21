@@ -12,7 +12,9 @@ apps='chromium \
       firefox \
       qutebrowser'
  
+kill -TERM $(xdotool search --maxdepth 1 --name 'the darnedest thing' getwindowpid) 2>/dev/null
 killall -TERM $apps 2>/dev/null
+
 herbstclient quit
 
 # vim: set ft=sh: #

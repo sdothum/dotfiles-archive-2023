@@ -12,9 +12,9 @@ wiki=4
 # manual rule to handle lack of chromium class handling, see bin/autostart..
 herbstclient lock
 switch tag "$wiki"
-focus chromium --incognito http://thedarnedestthing:8000/
+focus qutebrowser http://thedarnedestthing:8000/
 # wait for window to attach to tag
-xdotool search --screen 0 --classname --sync 'thedarnedestthing' >/dev/null
+xdotool search --screen 0 --name --sync 'the darnedest thing' >/dev/null
 herbstclient unlock
 
 # vim: set ft=sh: #
