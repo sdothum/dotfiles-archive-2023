@@ -16,7 +16,7 @@ library=${LIBRARY:-/net/media/videos/${1:-series}}
 # list latest television series additions first
 T=t
 episodes=/tmp/dmenu:episodes
-pgrep herbstluftwm >/dev/null && monitor=$(herbstclient attr monitors.focus.index)
+hlwm && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   mytitles "$series" >>/tmp/mytitles:series

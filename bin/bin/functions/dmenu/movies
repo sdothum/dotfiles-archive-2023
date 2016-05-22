@@ -15,7 +15,7 @@ library=${LIBRARY:-/net/media/videos/${1:-movies}}
 # list latest movie additions first
 T=t
 cache=/tmp/dmenu:movies
-pgrep herbstluftwm >/dev/null && monitor=$(herbstclient attr monitors.focus.index)
+hlwm && monitor=$(herbstclient attr monitors.focus.index)
 [ -e "$cache" ] || time=5 notify 'Movies' 'Caching library..'
 
 # clean up titles

@@ -1,7 +1,7 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# X11 startup
+# X11 Startup
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ....................................................... Window manager restart
@@ -57,15 +57,18 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-# server && term 'IRC' FONTSIZE '10' weechat
+server && term 'IRC' FONTSIZE '10' weechat
 server && term 'Mail' alot
 
 # .................................................................. Window apps
 
+# lock out desktop switching flickering
+hlwm && herbstclient lock
 server && gvim --role='thedarnedestthing' vimwiki
 server && thedarnedestthing
 switch tag "$web"
-$BROWSER &
+hlwm && herbstclient unlock
+qutebrowser http://luna:8000/tt-rss/ &
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 
 # vim: set ft=sh: #

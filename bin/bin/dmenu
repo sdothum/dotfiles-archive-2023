@@ -36,7 +36,7 @@ unquote() {
 # -fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
 # fill the actual physical display area, tweak rofi padding, fontsize and lines
 # for 2560, 1680 (secondary), 1440, 1024 displays
-if pgrep herbstluftwm >/dev/null; then
+if hlwm; then
   if is primary ;then
     if is display =2560 ;then
       padding=410
@@ -67,7 +67,8 @@ else
   lines=10
 fi
 
-monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
+hlwm && monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) \
+                              || monitor=0
 
 # Available apps
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -150,7 +151,7 @@ dmenu() {
 
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then
-  # if pgrep herbstluftwm >/dev/null; then
+  # if hlwm; then
   #   fullscreen mode windows hide dmenu
   #   if query fullscreen ;then
   #     toggle fullscreen
@@ -165,7 +166,7 @@ if [ $(basename $0) = dmenu ] ;then
     usage $0
   fi
   # restore
-  pgrep herbstluftwm >/dev/null && [ $fullscreen ] && toggle fullscreen
+  hlwm && [ $fullscreen ] && toggle fullscreen
 fi
 
 # vim: set ft=sh: #

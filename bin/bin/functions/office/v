@@ -25,7 +25,7 @@ else
     # find $HOME/.vim/backups -user root -exec sudo chown -v $USER\:users {} \;
   fi
 fi
-herbstclient set_layout max
+hlwm && herbstclient set_layout max
 
 # syncthing housekeeping
 find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
