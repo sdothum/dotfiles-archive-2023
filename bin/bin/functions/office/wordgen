@@ -30,6 +30,8 @@ corpus=$typedir/$corpus
 # natural language corpus data by Peter Norvig at http://norvig.com/ngrams/
 paragraphs=$(mktemp)
 
+# ................................................................... Initialize
+
 # rebuild corpus from new wordfile
 if [ -e $corpus.words ] ;then
   if-no 'rebuild corpus' || rm -f $corpus.*
@@ -57,6 +59,8 @@ if ! [ -e $corpus.words ] ;then
 fi
 typefile="$typedir/$(cat $corpus.corpus | wc -l)-${corpus##*/}.txt"
 
+# .................................................................... Sentences
+
 wordcase() {
   if [ "$case" = proper ] ;then
     sed -re 's/^(.)/\U\1/' -e 's/ $/./' -
@@ -74,6 +78,8 @@ wordgen() {
        >>$paragraphs
   echo >>$paragraphs
 }
+
+# ................................................................... Paragraphs
 
 for i in $sentences
 do

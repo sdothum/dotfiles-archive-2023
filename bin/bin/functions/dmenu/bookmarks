@@ -23,7 +23,7 @@ case $BROWSER in
             | dmenu 'Bookmark' -no-custom \
             | sed -r 's/.*(http.*)/\1/') ;;
 
-  *) bookmarks=~/.config/chromium/Default/Bookmarks
+  *) bookmarks=$HOME/.config/chromium/Default/Bookmarks
      py-chrome-bookmarks.py $bookmarks $bookmarks.html
      uri=$(cat $bookmarks.html \
          | grep 'http://' \

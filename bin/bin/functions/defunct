@@ -13,9 +13,10 @@ defunct() {
 
 pids=$(defunct | /usr/bin/awk '{ print $3; }' | sort -u)
 pids=$(echo $pids | sed 's/ /|/g')
+
 if [ "$pids" ] ;then
   defunct | egrep --color "$pids"
-  drawline '─ '
+  drawline '∘ '
   defunct -v | egrep --color "$pids"
 fi
 

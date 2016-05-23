@@ -30,6 +30,7 @@ if [ $count -gt 0 ] ;then
   else
     window=$(echo $hidden | cut -d: -f1 | column -s\^ -t | dmenu "Raise Window$title" -no-custom)
   fi
+
   if [ "$window" ] ;then
     case $window in
       '[ all  ]') exec restore windows ;;

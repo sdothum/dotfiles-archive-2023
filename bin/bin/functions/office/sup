@@ -20,7 +20,7 @@ RUBY_HEAP_MIN_SLOTS=600000
 RUBY_HEAP_SLOTS_INCREMENT=200000
 RUBY_HEAP_FREE_MIN=100000
 
-__killsup() {
+killsup() {
   kill -TERM $(pgrep -cx /usr/bin/sup) 2>/dev/null
   sudo rm $HOME/.sup/lock 2>/dev/null
   sudo rm $HOME/.sup/xapian/flintlock 2>/dev/null
@@ -48,13 +48,13 @@ case $1 in
   d) !p /usr/bin/sup && sup-dump >$HOME/.sup/dump ;;
 
   F) if if-yes 'force sup' ;then
-         __killsup
+         killsup
        sudo rm $HOME/.sup/lock
        sup
      fi ;;
 
   I) if if-yes 'initialize xapian database' ;then
-       __killsup
+       killsup
        sudo rm -R $HOME/.sup/xapian 2>/dev/null
      fi
      sup ;;
@@ -63,25 +63,25 @@ case $1 in
      tail -f /tmp/sup.log ;;
 
   M) if if-yes 'sync maildirs' ;then
-       __killsup
+       killsup
        sup-sync-back-maildir
      fi
      sup ;;
 
   r) if if-yes 'sup restore' ;then
-       __killsup
+       killsup
        sup-sync --restored --restore $HOME/.sup/dum
      fi
      sup ;;
 
   S) if if-yes 'sup restore' ;then
-       __killsup
+       killsup
        sup-sync 2>>/tmp/sup.log
      fi
      sup ;;
 
   s) if if-yes 'sup restore' ;then
-       __killsup
+       killsup
        sup-sync -v maildir:$HOME/Maildir/sdothum/$2
      fi
      sup ;;

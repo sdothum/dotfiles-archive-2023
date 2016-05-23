@@ -14,7 +14,7 @@ usage() {
 # reader
 BROWSER=vimb-detached
 
-__rss() {
+rss() {
   if ping -c 1 -W 1 luna >/dev/null 2>&1 ;then
     sed -i 's,http://localhost/tt-rss,http://luna/tt-rss,' $HOME/.newsbeuter/config
   else
@@ -24,7 +24,7 @@ __rss() {
 
 case $1 in
   '') if ! pidof newsbeuter ;then
-        __rss
+        rss
         newsbeuter -C $HOME/.newsbeuter/config
       else
         p newsbeuter
@@ -34,7 +34,7 @@ case $1 in
      rss ;;
 
   i) if ! pidof newsbeuter ;then
-       __rss
+       rss
        newsbeuter -C $HOME/.newsbeuter/config -i $2
      fi ;;
 

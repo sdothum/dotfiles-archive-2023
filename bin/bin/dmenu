@@ -31,8 +31,8 @@ unquote() {
   echo "$@" | sed "s/'//g"
 }
 
-# Rofi fullscreen fill specs
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ................................................... Rofi fullscreen fill specs
+
 # -fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
 # fill the actual physical display area, tweak rofi padding, fontsize and lines
 # for 2560, 1680 (secondary), 1440, 1024 displays
@@ -70,8 +70,8 @@ fi
 hlwm && monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) \
                               || monitor=0
 
-# Available apps
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ............................................................... Available apps
+
 # return list of existing applications
 apps() {
   unset apps
@@ -86,8 +86,8 @@ apps() {
   echo $apps | sed 's/ /\n/g'
 }
 
-# Media player playlist
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ........................................................ Media player playlist
+
 # usage:  playlist library played, see dmenu series/movies
 playlist() {
   cat "$2" | while read line
@@ -102,8 +102,8 @@ sortlist() {
   [ "$*" ] && echo 'sort by name' || echo 'sort by date'
 }
 
-# Source wrapper
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ............................................................... Source wrapper
+
 # dmenu wrapper for sourced apps
 # usage: dmenu '<prompt>' ['<select>' | -filter '<filter>'] [<option>*]
 dmenu() {
@@ -146,8 +146,7 @@ dmenu() {
   [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1
 }
 
-# Main
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ......................................................................... Main
 
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then

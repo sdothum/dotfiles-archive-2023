@@ -14,11 +14,11 @@ usage() {
 # list device identifiers
 case $1 in
   h | '') usage ;;
-  ata)   ls --color -l /dev/disk/by-id/*ata* ;;
-  label) ls --color -l /dev/disk/by-label/* ;;
-  usb)   ls --color -l /dev/disk/by-id/*usb* ;;
-  uuid)  ls --color -l /dev/disk/by-uuid/* ;;
-  *)     ls --color -l /dev/disk/by-id/ | grep --color=never -i "$1" ;;
+  ata)    ls --color -l /dev/disk/by-id/*ata* ;;
+  label)  ls --color -l /dev/disk/by-label/* ;;
+  usb)    ls --color -l /dev/disk/by-id/*usb* ;;
+  uuid)   ls --color -l /dev/disk/by-uuid/* ;;
+  *)      ls --color -l /dev/disk/by-id/ | grep --color=never -i "$1" ;;
 esac
 
 # vim: set ft=sh: #

@@ -8,6 +8,8 @@
 # unset redundant for short album menus
 # redundant=true
 
+# ...................................................................... Library
+
 # library listings
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
@@ -50,6 +52,8 @@ albums() {
   fi
 }
 
+# ............................................................. Playback control
+
 # playlist
 current() {
   mpc current
@@ -80,6 +84,8 @@ status() {
   mpc status | grep -q "$@" && echo off || echo on
 }
 
+# ....................................................................... Player
+ 
 # outer loop by library listing
 mpc list artist >/dev/null 2>&1 || exit
 # player controls on entry, note: cannot compare to null string

@@ -8,6 +8,7 @@
 
 # remove orphans
 orphans=$(pacman -Qdtq)
+
 if [ "$orphans" ] ;then
   echo $orphans
   if ! if-no 'remove orphan packages' ;then

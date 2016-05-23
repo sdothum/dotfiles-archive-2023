@@ -8,6 +8,8 @@
 # system conf files
 cache=$CACHEDIR/dmenu_configs
 
+# ................................................................... Initialize
+ 
 configs() {
   notify 'Updating dmenu config cache' 'Please be patient..'
   exclude='\.azureus|backups|\.bundler|\.cache|cairo|chromium|depot|\.deprecated|\.dropbox|geany|\.gem|\.ghc|\.gimp|google|\.hg|\.kde|libreoffice|\.mozilla|\.opera|\.original|\.PlayOnLinux|sandbox|\.save|\.stversions|(s|u)mplayer|tint2|Trash|\.vim|vundle|\.xbmc|\.xmonad|xfce4'
@@ -45,6 +47,8 @@ if ! [ -s $cache ] || [ "$*" ] ;then
   configs
   [ "$*" ] && exit
 fi
+
+# .................................................................. Edit config
 
 while :
 do

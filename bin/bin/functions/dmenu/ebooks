@@ -9,6 +9,38 @@
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$library/.ebooks
 
+# kindle update via email
+email() {
+  cat - <<END
+Content-Type: multipart/mixed; boundary="$boundary"
+MIME-Version: 1.0
+Subject: $title
+From: $account
+To: $kindle
+
+--$boundary
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+$title attached.
+
+--$boundary
+Content-Type: application/octet-stream
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="${mobi##*/}"
+
+END
+                base64 "$mobi"
+                cat - <<END
+
+--$boundary--
+END
+}
+
+# ....................................................................... Libary
+
 # build catalogue
 ebooks() {
   time=5 notify 'Updating library cache' 'Please be patient..'
@@ -38,6 +70,8 @@ epub() {
   epub=$(find $library -regex "$epub")
 }
 
+# ..................................................................... E-reader
+ 
 while :
 do
   book=$(cat $cache \
@@ -93,33 +127,7 @@ do
               kindle=$kindle@kindle.com
               account=$(grep $USER /etc/aliases | cut -d' ' -f2)
               boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
-              ( cat - <<END
-Content-Type: multipart/mixed; boundary="$boundary"
-MIME-Version: 1.0
-Subject: $title
-From: $account
-To: $kindle
-
---$boundary
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-
-$title attached.
-
---$boundary
-Content-Type: application/octet-stream
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="${mobi##*/}"
-
-END
-                base64 "$mobi"
-                cat - <<END
-
---$boundary--
-END
-              ) | /usr/local/bin/msmtp-enqueue.sh -t &
+              email | /usr/local/bin/msmtp-enqueue.sh -t &
               notify "$title" "$kindle" ;;
     esac
     break
