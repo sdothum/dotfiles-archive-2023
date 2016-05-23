@@ -62,12 +62,9 @@ server && term 'Mail' alot
 
 # .................................................................. Window apps
 
-# lock out desktop switching flickering
-hlwm && herbstclient lock
 server && gvim --role='thedarnedestthing' vimwiki
 server && thedarnedestthing
 switch tag "$web"
-hlwm && herbstclient unlock
 qutebrowser http://luna:8000/tt-rss/ &
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 

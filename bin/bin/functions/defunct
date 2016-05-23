@@ -7,12 +7,16 @@
 # .................................................................... Processes
 
 # list defunct processes and their parents
-pids=$(p '<defunct>' | grep -v $0 | /usr/bin/awk '{ print $3; }' | sort -u)
+defunct() {
+  ps -ef --sort '-%cpu' | grep $1 '<defunct>' | grep -v grep
+}
+
+pids=$(defunct | /usr/bin/awk '{ print $3; }' | sort -u)
 pids=$(echo $pids | sed 's/ /|/g')
 if [ "$pids" ] ;then
-  p $pids | grep '<defunct>' | egrep --color "$pids"
-  drawline '─'
-  p $pids | grep -v '<defunct>' | egrep --color "$pids"
+  defunct | egrep --color "$pids"
+  drawline '─ '
+  defunct -v | egrep --color "$pids"
 fi
 
 # vim: set ft=sh: #

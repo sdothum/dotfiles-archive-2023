@@ -74,7 +74,16 @@ fi
 # session startup stuff, see .xinitrc
 is multihead && draw monitor secondary
 if ! [ -e $ROOT/herbstluftwm:autostart ] ;then
-  arm && toggle unclutter || $HOME/bin/autostart
+  if arm ;then
+    toggle unclutter
+  else
+    # lock out desktop switching flickering
+    herbstclient lock
+    $HOME/bin/autostart
+    herbstclient unlock
+    # close dunst notifications
+    xdotool key ctrl+shift+space
+  fi 
 fi 
 touch $ROOT/herbstluftwm:autostart
 

@@ -126,7 +126,7 @@ desktops() {
   done
 }
 
-# .............................................................. FIFO processing
+# ............................................................... Title and time
 
 # tag desktop description
 title() {
@@ -196,6 +196,8 @@ panel() {
     unset line
   done
 }
+
+# .............................................................. FIFO processing
 
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
