@@ -6,7 +6,7 @@
 
 # ...................................................................... Xdotool
 
-# Usage: demo [<message>], see functions/demo
+# Usage: demo [<message> [record]], see functions/demo
 #        msg scripts set PLAYBACK
 
 TRACE=true
@@ -38,7 +38,11 @@ demo() {
 msg=$1
 shift
 if [ -e ${0%/demo}/functions/demo/$msg ] ;then
-  . ${0%/demo}/functions/demo/$msg $@
+  if [ "$1" = record ] ;then
+    record DVI-1 &
+    sleep 1
+  fi
+  . ${0%/demo}/functions/demo/$msg
   demo
 else
   usage $0
