@@ -7,7 +7,7 @@
 # ................................................................... Screencast
 
 usage() {
-  echo "usage: $(basename $0)  [ l'eft | r'ight | a'll ]"
+  echo "usage: $(basename $0)  l'eft | r'ight | a'll"
   exit 1
 }
 

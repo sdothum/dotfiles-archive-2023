@@ -85,7 +85,7 @@ set_border() {
 }
 
 # ................................................................... Background
-set -x
+
 blank() {
   if [ "$*" ] ;then
     color="$1"
@@ -131,7 +131,7 @@ select_wallpaper() {
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \
                -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
-               ${WALLPAPER%/default}/
+               ${WALLPAPER%/default}/$WALL
 }
 
 shuffle() {

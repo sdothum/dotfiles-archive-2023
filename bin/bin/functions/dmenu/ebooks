@@ -93,7 +93,7 @@ do
     continue
   fi
 
-  [ "$book" = '[ documents ]' ] && exec dmenu references
+  [ "$book" = '[ documents        ]' ] && exec dmenu references
 
   author="${book#*$SEP } "
   title=${book%$SEP*}

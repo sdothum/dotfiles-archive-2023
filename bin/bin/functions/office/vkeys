@@ -7,7 +7,7 @@
 # ....................................................................... Editor
 
 usage() {
-  echo "usage: $(basename $0) [ vim ]"
+  echo "usage: $(basename $0) [vim]"
   exit 1
 }
 

@@ -128,7 +128,7 @@ pm_install bc
 pm_install dash
 pm_install zsh
 chsh -s /usr/bin/zsh $user
-config_install /etc/profile.d/bin.sh
+config_install /etc/profile.d/path.sh
 checkpoint
 
 

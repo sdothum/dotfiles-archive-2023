@@ -68,8 +68,8 @@ do
                  play "$video"
                  break ;;
 
-           mrqe) vimb-detached "mr $movie" ;;
-           imdb) vimb-detached "im $movie" ;;
+           mrqe) $BROWSER "mr $movie" ;;
+           imdb) $BROWSER "im $movie" ;;
 
            edit) term 'movies' WAIT ranger "$video"
                  break ;;

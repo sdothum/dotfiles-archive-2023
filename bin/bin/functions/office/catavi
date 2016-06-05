@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... Screenshot
+
+# see http://www.doctort.org/adam/nerd-notes/concatenating-avi-files.html
+usage() {
+  echo "usage: $(basename $0) <file>*"
+  exit 1
+}
+
+
+TEMPFILE=/tmp/avitmp
+cat "$@" > $TEMPFILE
+mencoder -forceidx -oac copy -ovc copy $TEMPFILE -o joined.avi
+rm $TEMPFILE
+
+# vim: set ft=sh: #

@@ -51,7 +51,7 @@
 # ▔▔▔▔▔▔▔▔▔▔▔
   darktable
 # dcraw                         [server]
-# digikam                       [server]
+  digikam                       [server]
   dispcalgui                    [server]
   feh
   gimp                          [server]
@@ -126,6 +126,7 @@
 = video players
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # coriander [server]
+  gnome-mpv
 # livestreamer-curses
 # minitube
   mpv

@@ -51,5 +51,4 @@ if server ;then
   fi
 fi
 
-
 # vim: set ft=sh: #

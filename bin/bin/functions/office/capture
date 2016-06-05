@@ -7,7 +7,7 @@
 # ................................................................... Screenshot
 
 usage() {
-  echo "usage: $(basename $0)  [ l'eft | r'ght | a'll | <XxY+'X+'Y> ]"
+  echo "usage: $(basename $0)  l'eft | r'ght | a'll | <XxY+'X+'Y>"
   exit 1
 }
 

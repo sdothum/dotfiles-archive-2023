@@ -50,7 +50,8 @@ configure authentication else some channels will force #<channel>-unregistered
 /set irc.look.server_buffer independent
 /set irc.look.smart_filter on
 /filter add irc_join_names * irc_366,irc_332,irc_333,irc_329,irc_324 *
-/filter add irc_smart * irc_smart_filter *
+/filter add irc_smart_filter *
+/filter add joinquit * irc_join,irc_part,irc_quit *
 
 # ichatts
 /set plugins.var.python.ichatts.minutes_until_timestamp 5

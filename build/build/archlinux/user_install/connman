@@ -6,6 +6,8 @@
 
 # ...................................................................... connman
 
+gateway=10.1.0.1
+
 # get network hosts table
 original /etc/hosts
 config_install L /etc/hosts
@@ -18,5 +20,11 @@ if grep -q " $hostname *" /etc/hosts ;then
 else
   sudo sed -i "/localhost.*ttrss/a$ip $hostname" /etc/hosts
 fi
+
+# set static ip
+server && service=$(connmanctl services | grep Wired) \
+       || service=$(connmanctl services | grep Ravens)
+service=$(echo $service | awk '{ print $3 }')
+connmanctl config $service --ipv4 manual $ip 255.255.255.0 $gateway
 
 # vim: set ft=sh: #

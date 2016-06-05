@@ -11,12 +11,11 @@ usage() {
   exit 1
 }
 
-[ -z $DISPLAY ] && tty | grep '/dev/tty[0-9]' && console=true
+[ -z $DISPLAY ] && tty | grep -q '/dev/tty[0-9]' && console=true
 
 # see .xinitrc
 case $1 in
-  '') [ $console ] && echo "${_GREEN_}$(figlet -tf lean $(cat $HOME/.windowmanager))${_nocolor_}" ;;
-
+  '')                 ;;
   2bwm | 2b*)         echo 2bwm >$HOME/.windowmanager ;;
   awesome | aw*)      echo awesome >$HOME/.windowmanager ;;
   bspwm | bs*)        echo bspwm >$HOME/.windowmanager ;;
@@ -38,13 +37,13 @@ case $1 in
   wmutils | wm*)      echo wmutils >$HOME/.windowmanager ;;
   wtftw | wt*)        echo wtftw >$HOME/.windowmanager ;;
   xmonad | xm*)       echo xmonad >$HOME/.windowmanager ;;
-
-  h | *) usage ;;
+  h | *)              usage ;;
 esac
 
 # start X11 from init console
 if [ $console ] ;then
   wm=$(cat $HOME/.windowmanager)
+  echo "${_GREEN_}$(figlet -t -f lean $wm)${_nocolor_}"
   # escape to shell prompt
   [ $wm = shell ] && exit
   pgrep startx >/dev/null || startx --
