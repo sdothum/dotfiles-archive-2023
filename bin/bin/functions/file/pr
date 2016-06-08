@@ -13,7 +13,7 @@ usage() {
 
 # page printing
 format='--pretty-print --color --fancy-header --font=Courier8 --header-font=Helvetica12 --media=Letter --portrait --tabsize=4'
-[ $noln ] || format="$format --line-numbers"
+[ $noln ] && format="$format --font=Times-Roman14" || format="$format --line-numbers"
 
 case $1 in
   h | '') usage ;;
@@ -28,13 +28,15 @@ case $1 in
 
   v) printfile=$(mktemp)
      # note: header font spec doesn't appear to do anything
-     enscript $format --output=$printfile $2
+     enscript $format --output=$printfile "$2"
      zathura $printfile
      rm -f $printfile ;;
 
-  *) for i in $@
+  *) while [ $# -gt 0 ]
      do
-       enscript $format $i
+       # filenames may have blanks, hence, usage of while vs for i in $@
+       enscript $format "$1"
+       shift
      done
      pr eject ;;
 esac

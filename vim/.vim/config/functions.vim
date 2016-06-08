@@ -27,4 +27,11 @@
         return sort(a:nums, '<SID>CompareNumber')
       endfunction
 
+    " .......................................................... Escape filename
+    
+      " change space to \<Space>, see Print (buffers.vim)
+      function! EscapeFilename()
+        return substitute(expand('%:t'), " ", "\\\\ ", "g")
+      endfunction
+
 " functions.vim

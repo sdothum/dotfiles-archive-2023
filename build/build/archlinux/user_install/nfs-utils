@@ -26,8 +26,8 @@ else
   if ! grep -q 'Maildir.*nfs4' /etc/fstab ;then
     sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
                 -e '$a\
-luna:/Maildir   /home/$uid/Maildir    nfs4    rw,noatime,_netdev    0 0\
-luna:/net       /net                  nfs4    rw,noatime,_netdev    0 0\
+luna:/Maildir   /home/$uid/Maildir    nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev    0 0\
+luna:/net       /net                  nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev    0 0\
 ' /etc/fstab
   fi
 fi

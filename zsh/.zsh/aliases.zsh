@@ -77,6 +77,7 @@ fi
 # alias ata='sudo /usr/bin/ls -l /dev/disk/by-id/*ata*'
 alias c='clear && setterm -cursor on'
 alias calc='speedcrunch'
+alias cd='cd -q'
 alias close='eject -t'
 alias cpl='cp -LRfv'
 alias cpv='cp -v'

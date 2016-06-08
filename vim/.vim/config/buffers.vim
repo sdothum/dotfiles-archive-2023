@@ -109,4 +109,10 @@
       nmap <silent><leader>f8 :set foldlevel=8<CR>
       nmap <silent><leader>f9 :set foldlevel=9<CR>
 
+  " Printing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................... Print file
+
+    command! Print execute "if &filetype == 'vimwiki' | execute '!noln=true pr ' EscapeFilename() | else | execute '!pr ' EscapeFilename() | endif"
+
 " buffers.vim
