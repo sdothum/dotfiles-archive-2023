@@ -1,0 +1,75 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ Print
+
+usage() {
+  echo "usage: $(basename $0)  eject | prev'iew  [<filelist>]"
+  exit 1
+}
+
+# (xe)latex formatting (see rox, vim and pr)
+if [ "$text" ] ;then
+  fontsize=11
+  spacing='\doublespacing'
+  unset linenumbers
+else
+  fontsize=8
+  spacing='\onehalfspacing'
+  linenumbers='\linenumbers'
+fi
+
+format() {
+  cat <<EOF
+\documentclass[6pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{lineno}
+\usepackage{setspace}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\today}
+\chead{$1}
+\rhead{\thepage}
+\setmainfont[]{PragmataPro}
+$linenumbers
+$spacing
+\geometry{letterpaper,left=100pt,top=75pt,right=50pt,bottom=50pt}
+\makeatletter
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}%
+\makeatother
+\begin{document}
+\noindent
+\verbatimfont{\PragmataPro}
+\fontsize{${fontsize}pt}{${fontsize}pt}\selectfont
+\begin{verbatim}
+$(cat "$1")
+\end{verbatim}
+\end{document}
+EOF
+}
+
+case $1 in
+  h | '') usage ;;
+
+  eject) pr eject ;;
+
+  v) format "$2" | xelatex >/dev/null
+     zathura texput.pdf 2>&1 ;;
+
+  *) while [ $# -gt 0 ]
+     do
+       # filenames may have blanks, hence, usage of while vs for i in $@
+       format "$1" | xelatex >/dev/null
+       lpr -P $PRINTER texput.pdf
+       shift
+     done
+     pr eject ;;
+esac
+[ -e texput.pdf ] && rm -f texput.pdf
+
+# vim: set ft=sh: #

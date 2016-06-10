@@ -58,7 +58,7 @@ do
        playlist="$series/.playlist"
        [ -e "$playlist" ] || echo >"$playlist" ;;
   esac
-set -x
+
   while :
   do
     # focus monitor menu originally presented on

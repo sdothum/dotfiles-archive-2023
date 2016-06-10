@@ -43,7 +43,7 @@ xftfont Ubuntu:size=7
 xftalpha 0.5
 uppercase no
 
-default_color 8ab1c2
+default_color 
 color0 678491
 color1 f0f0f0
 color2 c0c0c0

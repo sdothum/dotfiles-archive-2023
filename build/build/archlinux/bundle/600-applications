@@ -15,15 +15,30 @@
   wego-git
 
 
+= dictionaries
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  aiksaurus
+# artha
+  aspell
+  aspell-en
+  dictd
+# dictd-foldoc
+# dictd-gcide
+# dictd-moby-thesaurus
+  hunspell
+  hunspell-en
+# hunspell-en-ca
+
+
 = editors
 # ▔▔▔▔▔▔▔
-# abiword
 # focuswriter
 # markdown
 # pyroom
 # retext
 # rubyroom
 # ted [server]
+  texlive-core [server]
 # wordgrinder
 
 
@@ -90,29 +105,19 @@
 
 = productivity
 # ▔▔▔▔▔▔▔▔▔▔▔▔
-  aiksaurus
+  abiword  [server]
   amphetpe-svn
-# artha
-  aspell
-  aspell-en
   calc
 # calcurse
-  dictd
-# dictd-foldoc
-# dictd-gcide
-# dictd-moby-thesaurus
 # galculator
-# gnumeric
+  gnumeric [server]
 # gsimplecal
-  hunspell
-  hunspell-en
-# hunspell-en-ca
 # kdeedu-ktouch [server]
 # klavaro
 # sc-im
   speedcrunch
 # todotxt
-  wps-office
+# wps-office [server]
   wyrd
 # xpad
 

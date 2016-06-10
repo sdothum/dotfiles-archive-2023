@@ -20,8 +20,8 @@ fi
 # ...................................................................... Daemons
 
 # Enable cut and paste (can leave small visible square icon on desktop)
-# autocutsel -fork &
-# autocutsel -selection PRIMARY -fork &
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
 # X11 display managers usually start pulseaudio.. but we're using tiling window managers :-)
 pulseaudio --start
 # Enable automounting removable devices

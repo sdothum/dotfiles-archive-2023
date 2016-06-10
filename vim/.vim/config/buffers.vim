@@ -113,6 +113,6 @@
 
     " ............................................................... Print file
 
-    command! Print execute "if &filetype == 'vimwiki' | execute '!noln=true pr ' EscapeFilename() | else | execute '!pr ' EscapeFilename() | endif"
+    command! Print execute "if &filetype == 'vimwiki' | execute '!text=true prtex' EscapeFilename() | else | execute '!prtex' EscapeFilename() | endif"
 
 " buffers.vim
