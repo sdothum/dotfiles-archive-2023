@@ -26,13 +26,13 @@ prune_history() {
   cat $histfile.vimb $histfile | perl -ne 'print unless $seen{$_}++' >$work
   head -$(( $(cat $work | wc -l) - $histsize )) $work >$histfile.vimb
   tail -$histsize $work >$histfile
-  rm $work
+  rm -f $work
 }
 
 vimbt() {
   # wget -O $HOME/.config/vimb/ca-bundle.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
   [ $(hostname) = luna ] && prune_history &
-  rm /run/user/1000/vimb/socket/*
+  rm -f /run/user/1000/vimb/socket/*
   # unclutter causes tabbed vimb to load homepages endlessly
   pkill -TERM -x unclutter
   winstance 'VimbT' && toggle unclutter &

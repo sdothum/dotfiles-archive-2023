@@ -60,7 +60,7 @@ if [ $console ] ;then
 
     herbstluftwm) pkill -KILL -f 'herbst'
                   killall -KILL weechat 2>/dev/null
-                  rm -r /tmp/herbst* ;;
+                  rm -rf /tmp/herbst* ;;
 
     gnome)     ;;
     i3)        ;;

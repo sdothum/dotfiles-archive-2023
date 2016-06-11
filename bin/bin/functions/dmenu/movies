@@ -79,7 +79,7 @@ do
            edit) term 'movies' WAIT ranger "$video"
                  break ;;
 
-           delete) rm -r "$video"
+           delete) rm -rf "$video"
                    break ;;
 
            mark) history "$playlist" "$movie"

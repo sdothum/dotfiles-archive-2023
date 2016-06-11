@@ -47,7 +47,7 @@ if server ;then
     kill -TERM $(pidof -s $pidname)
     mv -v $webm $target
   else
-    rm $webm
+    rm -f $webm
   fi
 fi
 

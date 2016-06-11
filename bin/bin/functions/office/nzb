@@ -41,9 +41,9 @@ case $action in
        killall nzbget 2>/dev/null
        # delay required for server shutdown (cannot use "nzb q")
        sleep 1
-       rm -r /net/downloads/nzbs/inter
-       rm -r /net/downloads/nzbsqueue
-       rm -r /net/downloads/nzbs/tmp
+       rm -rf /net/downloads/nzbs/inter
+       rm -rf /net/downloads/nzbsqueue
+       rm -rf /net/downloads/nzbs/tmp
        # restart to create subdirectories
        nzb
      fi ;;

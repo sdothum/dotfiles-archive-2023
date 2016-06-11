@@ -23,6 +23,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set irc.server.znc.username "znc"
 /set irc.server.znc.password "znc"
 /set irc.server.znc.autoconnect on
+/connect znc
 /server add rizon luna/7000 -username=znc/rizon -password=znc
 /set irc.server.rizon.autoconnect on
 /connect rizon
@@ -36,13 +37,13 @@ configure authentication else some channels will force #<channel>-unregistered
 /script install buffers.pl
 /script install colorize_lines.pl
 /script install go.py
-/script install ichatts.py
 /script install iset.pl
 /script install jabber.py
 /script install urlserver.py
 /script install vimode.py
-# /script install weetweet.py
 /script install ws_replace.py
+# /script install ichatts.py
+# /script install weetweet.py
 
 # buffers
 /set buffers.look.indenting on
@@ -50,12 +51,12 @@ configure authentication else some channels will force #<channel>-unregistered
 /set irc.look.server_buffer independent
 /set irc.look.smart_filter on
 /filter add irc_join_names * irc_366,irc_332,irc_333,irc_329,irc_324 *
-/filter add irc_smart_filter *
+/filter add irc_smart * irc_smart_filter *
 /filter add joinquit * irc_join,irc_part,irc_quit *
 
 # ichatts
-/set plugins.var.python.ichatts.minutes_until_timestamp 5
-/set plugins.var.python.ichatts.remind_every 60
+# /set plugins.var.python.ichatts.minutes_until_timestamp 5
+# /set plugins.var.python.ichatts.remind_every 60
 
 # jabber
 /jabber add jabber $(cat $HOME/.forward) $(pass mail/$(cat $HOME/.forward | sed 's/\(.*\)[@]\(.*\)/\2\/\1/'))
@@ -71,31 +72,36 @@ configure authentication else some channels will force #<channel>-unregistered
 
 # theme
 /set buffers.color.current_bg default
-/set buffers.color.current_fg 123
+/set buffers.color.current_fg 226
 /set buffers.color.default_fg 237
 /set buffers.color.hotlist_message_fg 024
 /set buffers.color.none_channel_fg 004
+/set buffers.look.indenting off
 /set buffers.look.show_number off
 
-/set weechat.bar.buffers.hidden off
 /set weechat.bar.buffers.items "buffers"
-/set weechat.bar.buffers.position "bottom"
-/set weechat.bar.input.color_delim 023
-/set weechat.bar.input.color_fg 036
+/set weechat.bar.buffers.position "right"
+/set weechat.bar.buffers.separator off
+/set weechat.bar.buffers.size_max 12
+
+/set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+minimal"
+/set weechat.bar.nicklist.hidden on
+/set weechat.bar.status.hidden on
+/set weechat.bar.title.hidden on
+/set weechat.bar.vi_cmd.hidden on
 # /set weechat.bar.input.items "[input_prompt]+(away),[input_search],[input_paste],input_text"
 # "[..indicators..]" using "+" (instead of comma "," which wraps with spaces)
-/set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+minimal"
 
 /set weechat.color.chat 032
-/set weechat.color.chat_delimiters 238
 /set weechat.color.chat_inactive_window 240
-/set weechat.color.chat_prefix_more 238
-/set weechat.color.chat_prefix_suffix 196
-# /set weechat.color.chat_read_marker yellow
-/set weechat.color.chat_time 238
-/set weechat.color.chat_time_delimiters 238
-/set weechat.color.separator 030
 /set weechat.color.status_name 023
+# /set weechat.color.chat_delimiters 238
+# /set weechat.color.chat_prefix_more 238
+# /set weechat.color.chat_prefix_suffix 196
+# /set weechat.color.chat_read_marker yellow
+# /set weechat.color.chat_time 238
+# /set weechat.color.chat_time_delimiters 238
+# /set weechat.color.separator 030
 
 /set weechat.look.buffer_notify_default message
 /set weechat.look.buffer_time_format ""
@@ -105,6 +111,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.look.mouse on
 /set weechat.look.prefix_action "▷"
 /set weechat.look.prefix_align_max 15
+/set weechat.look.prefix_align_min 15
 /set weechat.look.prefix_align_more "…"
 /set weechat.look.prefix_align_min 15
 /set weechat.look.prefix_error "⚠ "
@@ -112,18 +119,16 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.look.prefix_network "⚡"
 /set weechat.look.prefix_quit "◣"
 /set weechat.look.prefix_same_nick "⇢"
-# /set weechat.look.prefix_suffix "│"
 /set weechat.look.prefix_suffix " "
 /set weechat.look.read_marker none
-# /set weechat.look.read_marker_string "  ⇣ "
-/set weechat.look.save_config_on_exit off
 /set weechat.look.save_layout_on_exit all
+/set weechat.look.separator_horizontal " "
+/set weechat.look.separator_vertical " "
+# /set weechat.look.prefix_suffix "│"
+# /set weechat.look.read_marker_string "  ⇣ "
 # /set weechat.look.separator_horizontal "─"
 # /set weechat.look.separator_horizontal "⋅"
-/set weechat.look.separator_horizontal " "
 # /set weechat.look.separator_vertical ""
-/set weechat.look.separator_vertical " "
-/window splith 20
 
 # keybinds
 /key bind ctrl-B /bar toggle buffers

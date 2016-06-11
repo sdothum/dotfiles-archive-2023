@@ -16,6 +16,6 @@ usage() {
 TEMPFILE=/tmp/avitmp
 cat "$@" > $TEMPFILE
 mencoder -forceidx -oac copy -ovc copy $TEMPFILE -o joined.avi
-rm $TEMPFILE
+rm -f $TEMPFILE
 
 # vim: set ft=sh: #

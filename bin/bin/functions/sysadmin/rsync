@@ -53,7 +53,7 @@ rsync_home() {
         --exclude 'VirtualBox VMs' \
         /home/$USER $@
   # syncthing index most often corrupted
-  rm -rv $@/$USER/.config/syncthing/index*
+  rm -rfv $@/$USER/.config/syncthing/index*
   sync
 }
 

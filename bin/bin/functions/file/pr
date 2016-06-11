@@ -67,7 +67,7 @@ case $1 in
          format $stdin
          lpr -P $PRINTER /tmp/texput.pdf
          pr eject
-         rm $stdin ;;
+         rm -f $stdin ;;
 
   mail) # clean up mail header to essential contact information
         sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | \

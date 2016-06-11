@@ -55,6 +55,6 @@ do
     break
   fi
 done
-rm $copy
+rm -f $copy
 
 # vim: set ft=sh: #

@@ -18,7 +18,7 @@ highlight() {
 }
 
 # see manpage
-rm $xsel
+rm -f $xsel
 while :
 do
   # highlighted lookup

@@ -28,7 +28,7 @@ unlock() {
     done
   fi
   # purge user profile lock
-  rm $HOME/.config/$browser/SingletonLock 2>/dev/null
+  rm -f $HOME/.config/$browser/SingletonLock 2>/dev/null
 }
 
 # close (unlock) any remote instances
