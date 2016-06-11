@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: $(basename $0)  eject | prev'iew  [<filelist>]"
+  echo "usage: $(basename $0)  eject | mail | prev'iew  [<filelist>]"
   exit 1
 }
 
@@ -24,7 +24,7 @@ fi
 
 format() {
   cat <<EOF
-\documentclass[6pt]{article}
+\documentclass[${fontsize}pt]{article}
 \usepackage{fancyhdr}
 \usepackage{fontspec}
 \usepackage{geometry}
@@ -43,7 +43,6 @@ $spacing
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}%
 \makeatother
 \begin{document}
-\noindent
 \verbatimfont{\PragmataPro}
 \fontsize{${fontsize}pt}{${fontsize}pt}\selectfont
 \begin{verbatim}
@@ -58,18 +57,17 @@ case $1 in
 
   eject) pr eject ;;
 
-  v) format "$2" | xelatex >/dev/null
-     zathura texput.pdf 2>&1 ;;
+  v) format "$2" | xelatex -output-directory=/tmp >/tmp/prtex.log
+     zathura /tmp/texput.pdf 2>&1 ;;
 
   *) while [ $# -gt 0 ]
      do
        # filenames may have blanks, hence, usage of while vs for i in $@
-       format "$1" | xelatex >/dev/null
-       lpr -P $PRINTER texput.pdf
+       format "$1" | xelatex -output-directory=/tmp >/tmp/prtex.log
+       lpr -P $PRINTER /tmp/texput.pdf
        shift
      done
      pr eject ;;
 esac
-[ -e texput.pdf ] && rm -f texput.pdf
 
 # vim: set ft=sh: #

@@ -37,6 +37,9 @@ pidof urxvtd || urxvtd -q -o -f &
 
 # ....................................................... Desktop initialization
 
+# enable cut and paste
+autocutsel -selection PRIMARY -fork &
+
 draw compton
 if server ;then
   dispread -v -d2 -c1 -yl "-P0.012987012987,1,4.11345646438" \
@@ -57,7 +60,7 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-server && term 'IRC' FONTSIZE '10' weechat
+# server && term 'IRC' FONTSIZE '10' weechat
 server && term 'Mail' alot
 
 # .................................................................. Window apps

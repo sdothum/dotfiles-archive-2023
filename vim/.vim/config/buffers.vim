@@ -113,6 +113,7 @@
 
     " ............................................................... Print file
 
-    command! Print execute "if &filetype == 'vimwiki' | execute '!text=true prtex' EscapeFilename() | else | execute '!prtex' EscapeFilename() | endif"
+      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!text=true prtex' EscapeFilename() | else | execute '!prtex' EscapeFilename() | endif"
+      nmap <C-h> :silent Hardcopy<CR>
 
 " buffers.vim
