@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: $(basename $0)  eject | mail | prev'iew  [<filelist>]"
+  echo "usage: $(basename $0)  prev'iew  [<filelist>]"
   exit 1
 }
 
@@ -54,8 +54,6 @@ EOF
 
 case $1 in
   h | '') usage ;;
-
-  eject) pr eject ;;
 
   v) format "$2" | xelatex -output-directory=/tmp >/tmp/prtex.log
      zathura /tmp/texput.pdf 2>&1 ;;
