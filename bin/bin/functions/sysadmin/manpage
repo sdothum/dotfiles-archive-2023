@@ -10,10 +10,10 @@ xsel=/tmp/manpage:xsel
 
 # man page wrapper
 # xsel -o stack is unavailable to dmenu man, use tmp storage instead
-rm -f $xsel
+rm $xsel
 xsel -c
 man $@
 xsel -o >$xsel
-[ -s $xsel ] || rm -f $xsel
+[ -s $xsel ] || rm $xsel
 
 # vim: set ft=sh: #

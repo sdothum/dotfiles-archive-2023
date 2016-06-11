@@ -15,7 +15,7 @@ sed -i -re "/stest.*@\"/s/ tee /sed '1iscratchpad\\\\nterm\\\\npseudoframe' | te
        -e '/).*SHELL.*&/c)' \
     /usr/bin/dmenu_run
 
-rm -f $HOME/.cache/dmenu_run
+rm $HOME/.cache/dmenu_run
 annotate "check bspwm changes to /usr/bin/dmenu_run (see sxhkdrc)"
 
 # vim: set ft=sh: #

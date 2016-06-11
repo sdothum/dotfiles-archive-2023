@@ -6,8 +6,8 @@
 
 # .................................................................... spacemacs
 
-rm -rf $HOME/.emacs.d
-rm -rf $HOME/.emacs
+rm -r $HOME/.emacs.d
+rm -r $HOME/.emacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 annotate 'launch emacs to complete spacemacs installation and prompts'
 

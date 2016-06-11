@@ -6,8 +6,8 @@
 
 # ................................................................ cabal-install
 
-rm -rf $HOME/.ghc
-rm -rf $HOME/.cabal
+rm -r $HOME/.ghc
+rm -r $HOME/.cabal
 cabal update
 cabal install cabal-install
 

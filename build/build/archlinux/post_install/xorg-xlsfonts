@@ -7,7 +7,7 @@
 # ................................................................ xorg-xlsfonts
 
 # rebuild font caches
-sudo rm -rf $HOME/.fontconfig/*
+sudo rm -r $HOME/.fontconfig/*
 sudo fc-cache -fv
 
 # vim: set ft=sh: #

@@ -14,10 +14,10 @@ killall -TERM offlineimap 2>/dev/null
 
 # ....................................................... Session initialization
 
-rm -f $HOME/.msmtpqueue/.lock 2>/dev/null
-rm -f $HOME/.nzbget.paused 2>/dev/null
-rm -f /tmp/setroot 2>/dev/null
-rm -f /srv/http/tt-rss/lock/* 2>/dev/null
+rm $HOME/.msmtpqueue/.lock 2>/dev/null
+rm $HOME/.nzbget.paused 2>/dev/null
+rm /tmp/setroot 2>/dev/null
+rm /srv/http/tt-rss/lock/* 2>/dev/null
 
 gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient VertEdgeScroll=1 &

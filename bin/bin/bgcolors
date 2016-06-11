@@ -13,7 +13,7 @@ do
   setroot --blank-color "#$color" 2>/dev/null
   echo ${i#*colors/}
   if-no 'delete this background' && continue
-  rm -f $i
+  rm $i
 done
 
 # vim: set ft=sh: #

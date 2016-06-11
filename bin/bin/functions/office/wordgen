@@ -34,7 +34,7 @@ paragraphs=$(mktemp)
 
 # rebuild corpus from new wordfile
 if [ -e $corpus.words ] ;then
-  if-no 'rebuild corpus' || rm -f $corpus.*
+  if-no 'rebuild corpus' || rm $corpus.*
 fi
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if ! [ -e $corpus.words ] ;then
@@ -90,7 +90,7 @@ done
 sed -i -r 's/(.*)/\1\n/' $paragraphs
 
 shuf $paragraphs >$typefile
-rm -f $paragraphs
+rm $paragraphs
 
 head $typefile
 echo "$typefile" | xsel -i

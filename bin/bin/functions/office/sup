@@ -55,7 +55,7 @@ case $1 in
 
   I) if if-yes 'initialize xapian database' ;then
        killsup
-       sudo rm -R $HOME/.sup/xapian 2>/dev/null
+       sudo rm -r $HOME/.sup/xapian 2>/dev/null
      fi
      sup ;;
 

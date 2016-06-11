@@ -11,9 +11,50 @@ usage() {
   exit 1
 }
 
-# page printing
-format='--pretty-print --color --fancy-header --header-font=Helvetica12 --media=Letter --portrait --tabsize=4'
-[ $text ] && format="$format --font=Times-Roman11" || format="$format --line-numbers --font=Courier9"
+# fontsize automatically suppresses line numbering, source code printing assumed otherwise
+if [ "$fontsize" ] ;then
+  fontsize=$fontsize
+  unset linenumbers
+else
+  fontsize=8
+  linenumbers='\linenumbers'
+fi
+# default 1.5 line spacing (see vim)
+[ "$spacing" = "2" ] && spacing='\doublespacing' || spacing='\onehalfspacing'
+
+format() {
+  echo "$1" | grep -q '^/tmp/tmp\.[^ ]*$' || title="$1"
+  (cat <<EOF
+\documentclass[${fontsize}pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{lineno}
+\usepackage{setspace}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\today}
+\chead{$title}
+\rhead{\thepage}
+\setmainfont[]{PragmataPro}
+$linenumbers
+$spacing
+\geometry{letterpaper,left=100pt,top=75pt,right=50pt,bottom=50pt}
+\makeatletter
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}%
+\makeatother
+\begin{document}
+\verbatimfont{\PragmataPro}
+\fontsize{${fontsize}pt}{${fontsize}pt}\selectfont
+\begin{verbatim}
+% need to inject a blank line to preserve top of file!
+
+$(cat "$1")
+\end{verbatim}
+\end{document}
+EOF
+  ) | xelatex -output-directory=/tmp >/tmp/pr.log
+}
 
 case $1 in
   h | '') usage ;;
@@ -21,21 +62,28 @@ case $1 in
   eject) # force immediate print with hp (escape) reset code
          printf '\033E' | lpr -P $PRINTER ;;
 
-  stdin) iconv -c -f utf-8 -t ascii | enscript $format
-         pr eject ;;
+  stdin) stdin=$(mktemp)
+         iconv -c -f utf-8 -t ascii >$stdin
+         format $stdin
+         lpr -P $PRINTER /tmp/texput.pdf
+         pr eject
+         rm $stdin ;;
 
-  mail) sed -n '/^Date: /,$p' | fontsize=12 pr stdin ;;
+  mail) # clean up mail header to essential contact information
+        sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | \
+        pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' | \
+        egrep -vEi '^(Accept-Language|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' | \
+        egrep -vE '^ *(boundary=".*"|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$' | \
+        fontsize=9 pr stdin ;;
 
-  v) printfile=$(mktemp)
-     # note: header font spec doesn't appear to do anything
-     enscript $format --output=$printfile "$2"
-     zathura $printfile
-     rm -f $printfile ;;
+  v) format "$2"
+     zathura /tmp/texput.pdf 2>&1 ;;
 
   *) while [ $# -gt 0 ]
      do
        # filenames may have blanks, hence, usage of while vs for i in $@
-       enscript $format "$1"
+       format "$1"
+       lpr -P $PRINTER /tmp/texput.pdf
        shift
      done
      pr eject ;;

@@ -28,9 +28,9 @@ fi
 hlwm && herbstclient set_layout max
 
 # syncthing housekeeping
-find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
+find $HOME/.vim/backups -size 0 -exec rm -v {} \;
 find $HOME/.vim/backups -user root -exec sudo chown $USER:users {} \;
 # avoid nfs mounts
-find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -fv {} \;
+find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -v {} \;
 
 # vim: set ft=sh: #

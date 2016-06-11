@@ -6,7 +6,7 @@
 
 # ........................................................................ nginx
 
-[ -d /opt/nginx ] && sudo rm -rf /opt/nginx
+[ -d /opt/nginx ] && sudo rm -r /opt/nginx
 sudo mkdir -v /opt/nginx
 sudo chown root:users /opt/nginx
 sudo chmod 775 /opt/nginx

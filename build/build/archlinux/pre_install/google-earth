@@ -6,6 +6,6 @@
 
 # ................................................................. google-earth
 
-[ -d /opt/google/earth ] && sudo rm -rf /opt/google/earth
+[ -d /opt/google/earth ] && sudo rm -r /opt/google/earth
 
 # vim: set ft=sh: #

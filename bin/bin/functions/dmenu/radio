@@ -46,7 +46,7 @@ do
                   exit ;;
 
     '[ clear ]') stop
-                 rm -f $radio
+                 rm $radio
                  echo '.. clearing playlist'
                  exit ;;
 
@@ -64,7 +64,7 @@ do
            echo ".. playing $station"
            exit
          else
-           rm -f $radio
+           rm $radio
          fi
        fi ;;
   esac

@@ -38,7 +38,7 @@
 # retext
 # rubyroom
 # ted [server]
-  texlive-core [server]
+  texlive-core
 # wordgrinder
 
 

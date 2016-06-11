@@ -6,6 +6,6 @@
 
 # .................................................................... lightzone
 
-[ -d /opt/lightzone ] && sudo rm -rf /opt/lightzone
+[ -d /opt/lightzone ] && sudo rm -r /opt/lightzone
 
 # vim: set ft=sh: #

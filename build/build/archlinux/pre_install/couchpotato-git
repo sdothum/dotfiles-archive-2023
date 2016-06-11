@@ -6,6 +6,6 @@
 
 # .................................................................. couchpotato
 
-[ -d /opt/couchpotato ] && sudo rm -rf /opt/couchpotato
+[ -d /opt/couchpotato ] && sudo rm -r /opt/couchpotato
 
 # vim: set ft=sh: #

@@ -43,7 +43,7 @@ AcceptEnv LANG LC_*\
 ' /etc/ssh/sshd_config
 
 systemd enable sshd
-sudo rm -f $HOME/.ssh/known_hosts
+sudo rm $HOME/.ssh/known_hosts
 annotate "ssh to computers and thedarnedestthing.com to refresh known_hosts"
 
 # vim: set ft=sh: #

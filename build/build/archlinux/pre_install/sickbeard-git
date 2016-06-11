@@ -6,6 +6,6 @@
 
 # .................................................................... sickbeard
 
-[ -d /opt/sickbeard ] && sudo rm -rf /opt/sickbeard
+[ -d /opt/sickbeard ] && sudo rm -r /opt/sickbeard
 
 # vim: set ft=sh: #

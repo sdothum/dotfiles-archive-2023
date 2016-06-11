@@ -6,6 +6,6 @@
 
 # .............................................................. plexmediaserver
 
-[ -d /opt/plexmediaserver ] && sudo rm -rf /opt/plexmediaserver
+[ -d /opt/plexmediaserver ] && sudo rm -r /opt/plexmediaserver
 
 # vim: set ft=sh: #
