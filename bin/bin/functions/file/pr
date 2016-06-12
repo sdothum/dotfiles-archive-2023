@@ -18,6 +18,7 @@ usage() {
 fontsize=9
 linenumbers='\linenumbers'
 spacing='\singlespacing'
+fold=80
 
 # ............................................................... Latex preamble
 
@@ -82,7 +83,7 @@ print() {
 
 stdin() {
   stdin=$(mktemp)
-  iconv -c -f utf-8 -t ascii >$stdin
+  iconv -c -f utf-8 -t ascii | fold -sw $fold >$stdin
   print $stdin
   rm -f $stdin
   pr eject
