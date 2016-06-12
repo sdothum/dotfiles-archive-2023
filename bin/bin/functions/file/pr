@@ -7,9 +7,13 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: $(basename $0)  eject | stdin | mail | prev'iew  [<filelist>]"
+  echo "usage: [var=..] $(basename $0)  eject | stdin | mail | prev'iew  [<filelist>]"
+  echo "       [fontsize=<pointsize>]  [spacing=2]  [preview=true]  $(basename $0) .."
   exit 1
 }
+
+# unset for direct printing, set for proofing and latex debugging
+# preview=true
 
 # fontsize automatically suppresses line numbering, source code printing assumed otherwise
 if [ "$fontsize" ] ;then
@@ -22,8 +26,12 @@ fi
 # default 1.5 line spacing (see vim)
 [ "$spacing" = "2" ] && spacing='\doublespacing' || spacing='\onehalfspacing'
 
+# ............................................................... Latex preamble
+
 format() {
+  # set title, ignore stdin printing
   echo "$1" | grep -q '^/tmp/tmp\.[^ ]*$' || title="$1"
+  # latex!
   (cat <<EOF
 \documentclass[${fontsize}pt]{article}
 \usepackage{fancyhdr}
@@ -37,6 +45,8 @@ format() {
 \chead{$title}
 \rhead{\thepage}
 \setmainfont[]{PragmataPro}
+\renewcommand\linenumberfont{\selectfont\small}
+\setlength\linenumbersep{1em}
 $linenumbers
 $spacing
 \geometry{letterpaper,left=100pt,top=75pt,right=50pt,bottom=50pt}
@@ -53,7 +63,18 @@ $(cat "$1")
 \end{verbatim}
 \end{document}
 EOF
-  ) | xelatex -output-directory=/tmp >/tmp/pr.log
+  ) | xelatex -jobname="$1" -output-directory=/tmp >/tmp/pr.log
+}
+
+# ................................................................ Print options
+ 
+print() {
+  format "$1"
+  if [ $preview ] ;then
+    zathura "/tmp/$1.pdf" 2>&1
+  else
+    lpr -P $PRINTER "/tmp/$1.pdf"
+  fi
 }
 
 case $1 in
@@ -64,8 +85,7 @@ case $1 in
 
   stdin) stdin=$(mktemp)
          iconv -c -f utf-8 -t ascii >$stdin
-         format $stdin
-         lpr -P $PRINTER /tmp/texput.pdf
+         print $stdin
          pr eject
          rm -f $stdin ;;
 
@@ -76,14 +96,13 @@ case $1 in
         egrep -vE '^ *(boundary=".*"|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$' | \
         fontsize=9 pr stdin ;;
 
-  v) format "$2"
-     zathura /tmp/texput.pdf 2>&1 ;;
+  v) preview=true
+     print "$2" ;;
 
   *) while [ $# -gt 0 ]
      do
        # filenames may have blanks, hence, usage of while vs for i in $@
-       format "$1"
-       lpr -P $PRINTER /tmp/texput.pdf
+       print "$1"
        shift
      done
      pr eject ;;
