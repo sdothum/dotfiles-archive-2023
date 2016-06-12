@@ -113,7 +113,7 @@
 
     " ............................................................... Print file
 
-      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!fontsize=11 spacing=2 pr' EscapeFilename() | else | execute '!pr' EscapeFilename() | endif"
+      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki' EscapeFilename() | else | execute '!pr code' EscapeFilename() | endif"
       nmap <silent><C-h> :silent Hardcopy<CR>
 
 " buffers.vim
