@@ -116,10 +116,10 @@
 
 = x11
 # ▔▔▔
-  arandr           [server]
+  arandr               [server]
   autocutsel
-  lib32-mesa-libgl [laptop]
-  lxrandr          [server]
+  lib32-mesa-libgl     [laptop]
+  lxrandr              [server]
 # slock
 # trayer-srg-git
   unclutter

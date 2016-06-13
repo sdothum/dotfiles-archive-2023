@@ -105,19 +105,20 @@
 
 = productivity
 # ▔▔▔▔▔▔▔▔▔▔▔▔
-  abiword  [server]
+  abiword       [server]
   amphetpe-svn
   calc
 # calcurse
 # galculator
-  gnumeric [server]
+  gnumeric      [server]
 # gsimplecal
 # kdeedu-ktouch [server]
 # klavaro
 # sc-im
+  simpletimer-git
   speedcrunch
 # todotxt
-# wps-office [server]
+# wps-office    [server]
   wyrd
 # xpad
 
@@ -131,7 +132,7 @@
 
 = video players
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
-# coriander [server]
+# coriander  [server]
   gnome-mpv
 # livestreamer-curses
 # minitube

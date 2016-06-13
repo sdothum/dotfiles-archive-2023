@@ -94,7 +94,7 @@ configure authentication else some channels will force #<channel>-unregistered
 
 /set weechat.color.chat 032
 /set weechat.color.chat_inactive_window 240
-/set weechat.color.status_name 023
+/set weechat.color.status_name cyan
 # /set weechat.color.chat_delimiters 238
 # /set weechat.color.chat_prefix_more 238
 # /set weechat.color.chat_prefix_suffix 196

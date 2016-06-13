@@ -65,7 +65,7 @@ server && term 'Mail' alot
 
 # .................................................................. Window apps
 
-server && gvim --role='thedarnedestthing' vimwiki
+server && vimwiki
 server && thedarnedestthing
 switch tag "$web"
 qutebrowser http://luna:8000/tt-rss/ &

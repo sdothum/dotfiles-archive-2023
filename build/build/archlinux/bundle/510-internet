@@ -11,7 +11,7 @@
 # dwb-git
 # dwb-gtk3
 # elinks
-# firefox [server]
+# firefox  [server]
   flashplugin
 # haskell-hbro
 # jumanji-git
@@ -26,7 +26,7 @@
 # qutebrowser
   qutebrowser-git
 # surf
-  tabbed [server]
+  tabbed   [server]
 # uzbl-browser
 # vimb
   vimb-git [server]
@@ -55,14 +55,14 @@
 # couchpotato-git [server]
 # flexget
   gftp
-  nzbget [server]
+  nzbget          [server]
 # par2cmdline-tbb
 # python2-pyopenssl
   rsync
 # rtorrent
-# sabnzbd       [server]
-# sickbeard-git [server]
-  sonarr [server]
+# sabnzbd         [server]
+# sickbeard-git   [server]
+  sonarr          [server]
   syncthing
 # syncthing-git
   syncthing-inotify

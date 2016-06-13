@@ -34,8 +34,8 @@
 = fonts and font managers
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # cairo
-  fontforge
   font-manager
+  fontforge
 # fontconfig
 # fontmatrix
   ibfonts-meta-base
@@ -73,9 +73,9 @@
   hwinfo
   intel-ucode
   lm_sensors
-  mbpfan-git       [nvidia]
+  mbpfan-git                [nvidia]
   plover
-  xf86-input-wacom [server]
+  xf86-input-wacom          [server]
 
 
 = package managers

@@ -70,6 +70,7 @@ hc rule class=Plover                 pseudotile=on
 hc rule class=ROX-Filer              pseudotile=off
 hc rule class=Savebox                pseudotile=off
 # hc rule title=scratchpad           pseudotile=on
+hc rule class=Simpletimer            pseudotile=on
 hc rule class=Vlc                    focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Zathura                focus=on hook=max
 

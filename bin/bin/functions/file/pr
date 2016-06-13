@@ -81,6 +81,7 @@ print() {
   fi
 }
 
+# lines from stdin are folded
 stdin() {
   stdin=$(mktemp)
   iconv -c -f utf-8 -t ascii | fold -sw $fold >$stdin

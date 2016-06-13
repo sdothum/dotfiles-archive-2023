@@ -7,7 +7,7 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)  backup | depot | home | server | stow | ttrss | usb | vps | [--delete] <command>"
+  echo "usage: $(basename $0)  backup | depot | home | pi | server | stow | ttrss | usb | vps | [--delete] <command>"
   exit 1
 }
 
@@ -93,6 +93,12 @@ case $@ in
          else
            echo ".. initiate update request from $laptop"
          fi ;;
+
+  pi) if server; then
+        rsync --delete --exclude='.deprecated' --exclude='.hg' $HOME/stow/bin/bin pi:$HOME/
+        rsync --delete --exclude='.deprecated' --exclude='.hg' $HOME/stow/herbstluftwm/.config/herbstluftwm pi:$HOME/.config/
+        rsync --delete --exclude='.deprecated' --exclude='.hg' --exclude='makepkg' $HOME/stow/build/build/archlinux pi:$HOME/build/
+      fi ;;
 
   server) if server ;then
             if if-yes 'backup media server databases to /net/archive' ;then
