@@ -78,6 +78,7 @@ print() {
     zathura "/tmp/${1#/tmp/}.pdf" 2>&1
   else
     lpr -P $PRINTER "/tmp/${1#/tmp/}.pdf"
+    notify "Printing" "$title"
   fi
 }
 
@@ -85,6 +86,8 @@ print() {
 stdin() {
   stdin=$(mktemp)
   iconv -c -f utf-8 -t ascii | fold -sw $fold >$stdin
+  # set title to mail subject heading
+  title=$(grep '^Subject:' $stdin | cut -d' ' -f2-)
   print $stdin
   rm -f $stdin
   pr eject
