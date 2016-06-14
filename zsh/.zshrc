@@ -59,6 +59,9 @@ source ~/.zsh/setopts.zsh
 source ~/.zsh/bindkeys.zsh
 source ~/.zsh/aliases.zsh
 # source ~/.zsh/colors.zsh
+if [[ -s /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] ;then
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi 
 
 # ........................................................... Autoload functions
 

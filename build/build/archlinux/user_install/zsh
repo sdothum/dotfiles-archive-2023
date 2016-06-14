@@ -4,12 +4,12 @@
 # User_install
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# .......................................................................... dash
+# .......................................................................... zsh
 
-sudo ln -sfv $HOME/.dash /root/
-sudo ln -sfv $HOME/.dashenv /root/
-sudo ln -sfv $HOME/.dashrc /root/
+sudo ln -sfv $HOME/.zsh /root/
+sudo ln -sfv $HOME/.zshenv /root/
+sudo ln -sfv $HOME/.zshrc /root/
 
-sudo chsh -s /usr/bin/dash root
+sudo chsh -s /usr/bin/zsh root
 
 # vim: set ft=sh: #
