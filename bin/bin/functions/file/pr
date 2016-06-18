@@ -77,8 +77,8 @@ print() {
   if [ $proof ] ;then
     zathura "/tmp/${1#/tmp/}.pdf" 2>&1
   else
-    lpr -P $PRINTER "/tmp/${1#/tmp/}.pdf"
     notify "Printing" "$title"
+    lpr -P $PRINTER "/tmp/${1#/tmp/}.pdf"
   fi
 }
 
@@ -87,7 +87,7 @@ stdin() {
   stdin=$(mktemp)
   iconv -c -f utf-8 -t ascii | fold -sw $fold >$stdin
   # set title to mail subject heading
-  title=$(grep '^Subject:' $stdin | cut -d' ' -f2-)
+  title=$(grep '^Subject:' $stdin | cut -d' ' -f2- | sed -re 's/^ *[Rr][Ee]: *//' -e 's/^ *[Ff][Ww][Dd]*: *//')
   print $stdin
   rm -f $stdin
   pr eject

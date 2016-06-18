@@ -33,7 +33,7 @@ hc rule title=Mail                   tag=3 index=0 focus=on
 hc rule title=Calendar               tag=3 index=1 focus=on
 hc rule title=Usenet                 tag=3
 # hc rule class=Surf                 tag=4
-hc rule class=Vimb                   tag=4 index=1 focus=off once
+# hc rule class=Vimb                 tag=4 index=1 focus=off once
 hc rule windowrole=thedarnedestthing tag=4 index=0 focus=on
 # chromium title (class) doesn't appear to be trapped
 hc rule title=thedarnedestthing      tag=4 index=0 focus=on

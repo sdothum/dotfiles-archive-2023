@@ -27,6 +27,7 @@
   iftop
   mtr
   nethogs
+# netstat-nat
 # tcpflow
 # traceroute
 # wireshark-gtk

@@ -34,3 +34,7 @@ bindkey -M vicmd 'm' backward-char
 bindkey -M vicmd 'n' down-line
 bindkey -M vicmd 'l' up-line
 bindkey -M vicmd 'e' forward-char
+
+# .................................................................. Autosuggest
+
+bindkey '^ ' autosuggest-clear

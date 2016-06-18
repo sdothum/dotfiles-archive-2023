@@ -5,13 +5,14 @@
 
 = virtual machines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# dkms                    [server && icore]
-# virtualbox              [server && icore]
-# virtualbox-ext-oracle   [server && icore]
-# virtualbox-guest-iso    [server && icore]
-# virtualbox-guest-utils  [server && icore]
-# virtualbox-host-modules [server && icore]
-# genymotion              [server && icore]
+# dkms                       [server && icore]
+virtualbox-host-modules-arch [server && icore]
+virtualbox                   [server && icore]
+# virtualbox-ext-oracle      [server && icore]
+# virtualbox-guest-iso       [server && icore]
+# virtualbox-guest-utils     [server && icore]
+# virtualbox-host-modules    [server && icore]
+# genymotion                 [server && icore]
 
 
 = wine for topaz

@@ -80,7 +80,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set buffers.look.show_number off
 
 /set weechat.bar.buffers.items "buffers"
-/set weechat.bar.buffers.position "right"
+/set weechat.bar.buffers.position "left"
 /set weechat.bar.buffers.separator off
 /set weechat.bar.buffers.size_max 12
 
