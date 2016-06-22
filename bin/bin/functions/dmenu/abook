@@ -12,6 +12,7 @@ cache=$maildir/addressbook
 # - name <address>
 # - tag :: name <address>,..
 contacts=$maildir/contacts
+patricia=$maildir/addressbook.patricia
 
 # ................................................................... Initialize
 
@@ -75,7 +76,7 @@ ribbon() {
 
 contacts() {
   sed "s/  *::  */^$SEP /" $contacts | column -s^ -t
-  cat $cache
+  cat $patricia $cache
 }
 
 addresslist() {

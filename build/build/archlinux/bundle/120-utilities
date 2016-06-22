@@ -9,6 +9,7 @@
 # etc-update
   expect
   fetch-git
+  mediainfo [server]
   mlocate
 # pacnews-git
 # screenfetch

@@ -12,7 +12,7 @@ usage() {
 }
 
 # unset for direct printing, set for proofing and latex debugging
-# proof=true
+proof=true
 
 # text defaults
 fontsize=9
@@ -31,11 +31,12 @@ format() {
 \usepackage{fancyhdr}
 \usepackage{fontspec}
 \usepackage{geometry}
+\usepackage{ifthen}
 \usepackage{lineno}
 \usepackage{setspace}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{\today}
+\lhead{\ifthenelse{\equal{$time}{}}{\today}{$time}}
 \chead{$title}
 \rhead{\thepage}
 \setmainfont[]{PragmataPro}
@@ -60,7 +61,7 @@ EOF
   ) | xelatex -jobname="${1#/tmp/}" -output-directory=/tmp >/tmp/pr.log
 }
 
-# .................................................................. Mail filter
+# ............................................................... Mail functions
 
 filter() {
   # reduce mail header to essential contact information
@@ -70,6 +71,18 @@ filter() {
   egrep -vE '^ *(boundary=".*"|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$'
 }
 
+header() {
+  title=$(grep -m 1 '^Subject:' $stdin \
+        | cut -d' ' -f2- \
+        | sed -re 's/^ *([Rr][Ee]: )+//' \
+              -e 's/^ *([Ff][Ww][Dd]*: )+//' \
+              -e 's/(\[SPAM\])//')
+
+  time=$(grep -m 1 '^Date:' $stdin \
+       | cut -d' ' -f2-5)
+  time=$(date -d "$time" +'%B %-d, %Y')
+}
+
 # ................................................................ Print options
 
 print() {
@@ -77,7 +90,7 @@ print() {
   if [ $proof ] ;then
     zathura "/tmp/${1#/tmp/}.pdf" 2>&1
   else
-    notify "Printing" "$title"
+    notify "Printing" "$t'itle"
     lpr -P $PRINTER "/tmp/${1#/tmp/}.pdf"
   fi
 }
@@ -86,8 +99,8 @@ print() {
 stdin() {
   stdin=$(mktemp)
   iconv -c -f utf-8 -t ascii | fold -sw $fold >$stdin
-  # set title to mail subject heading
-  title=$(grep '^Subject:' $stdin | cut -d' ' -f2- | sed -re 's/^ *[Rr][Ee]: *//' -e 's/^ *[Ff][Ww][Dd]*: *//')
+  # set (title, time) format values, see case mail below
+  [ "$*" ] && $@
   print $stdin
   rm -f $stdin
   pr eject
@@ -106,7 +119,7 @@ case "$1" in
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
-        filter | stdin ;;
+        filter | stdin header ;;
 
   text) fontsize=9
         spacing='\singlespacing'
@@ -116,7 +129,7 @@ case "$1" in
         spacing='\doublespacing'
         unset linenumbers ;;
 
-  code | *) fontsize=8
+  code | *) fontsize=9
             spacing='\onehalfspacing'
             linenumbers='\linenumbers'
             [ "$1" = code ] || noshift=true ;;

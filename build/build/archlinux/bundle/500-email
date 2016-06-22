@@ -19,12 +19,14 @@
 # ruby-gme
 # sup
 # sup-git
+# thunderbird
 
 
 = mail services
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # archivemail
   dovecot
+# imapdedup
   imapfilter
 # mb2md
   msmtp-mta

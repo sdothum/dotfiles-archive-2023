@@ -51,7 +51,7 @@
         focus = 'standout','','light gray','light gray','g85','dark blue'
         parts = date,mailcount,tags,authors,subject
         [[[date]]]
-            normal = 'default','','light gray','default','g15','default'
+            normal = 'default','','light gray','default','g35','default'
             focus = 'standout','','yellow','light gray','yellow,bold','dark blue'
             width = 'fit',10,10
             alignment = right
@@ -81,7 +81,7 @@
         normal = 'default','','default,bold','default','#6d6,bold','default'
         parts = date,mailcount,tags,authors,subject
         [[[date]]]
-            normal = 'default','','light gray,bold','default','g25','default'
+            normal = 'default','','light gray,bold','default','light gray','default'
         [[[mailcount]]]
             normal = 'default','','light gray,bold','default','brown','default'
         [[[tags]]]
