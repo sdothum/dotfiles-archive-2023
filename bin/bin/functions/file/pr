@@ -12,7 +12,7 @@ usage() {
 }
 
 # unset for direct printing, set for proofing and latex debugging
-proof=true
+# proof=true
 
 # text defaults
 fontsize=9
@@ -35,12 +35,13 @@ format() {
 \usepackage{lineno}
 \usepackage{setspace}
 \pagestyle{fancy}
+\newcommand{\hdrfont}{\fontsize{${fontsize}}{${fontsize}}\selectfont}%
 \fancyhf{}
-\lhead{\ifthenelse{\equal{$time}{}}{\today}{$time}}
-\chead{$title}
-\rhead{\thepage}
+\fancyhead[L]{\hdrfont{\ifthenelse{\equal{$time}{}}{\today}{$time}}}
+\fancyhead[C]{\hdrfont{$title}}
+\fancyhead[R]{\hdrfont{\thepage}}
 \setmainfont[]{PragmataPro}
-\renewcommand\linenumberfont{\selectfont\small}
+\renewcommand\linenumberfont{\selectfont}%
 \setlength\linenumbersep{1em}
 $linenumbers
 $spacing
@@ -50,7 +51,7 @@ $spacing
 \makeatother
 \begin{document}
 \verbatimfont{\PragmataPro}
-\fontsize{${fontsize}pt}{${fontsize}pt}\selectfont
+\fontsize{${fontsize}}{${fontsize}}\selectfont
 \begin{verbatim}
 % need to inject a blank line to preserve top of file!
 
@@ -129,7 +130,7 @@ case "$1" in
         spacing='\doublespacing'
         unset linenumbers ;;
 
-  code | *) fontsize=9
+  code | *) fontsize=8
             spacing='\onehalfspacing'
             linenumbers='\linenumbers'
             [ "$1" = code ] || noshift=true ;;
