@@ -39,6 +39,7 @@
 # rubyroom
 # ted [server]
   texlive-core
+  texlive-latexextra
 # wordgrinder
 
 

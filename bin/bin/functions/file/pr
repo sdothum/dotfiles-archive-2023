@@ -28,16 +28,20 @@ format() {
   # latex!
   (cat <<EOF
 \documentclass[${fontsize}pt]{article}
+\usepackage{etoolbox}
+\usepackage{fp}
 \usepackage{fancyhdr}
 \usepackage{fontspec}
 \usepackage{geometry}
-\usepackage{ifthen}
 \usepackage{lineno}
 \usepackage{setspace}
 \pagestyle{fancy}
-\newcommand{\hdrfont}{\fontsize{${fontsize}}{${fontsize}}\selectfont}%
+\newfontfamily\hdrbold{PragmataPro Bold}
+\FPadd\hdrsize{$fontsize}{\ifnumgreater{$fontsize}{8}{-1}{0}}
+\newcommand{\hdrfont}{\hdrbold\fontsize{\hdrsize}{\hdrsize}\selectfont}%
 \fancyhf{}
-\fancyhead[L]{\hdrfont{\ifthenelse{\equal{$time}{}}{\today}{$time}}}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\hdrfont{\ifstrempty{$time}{\today}{$time}}}
 \fancyhead[C]{\hdrfont{$title}}
 \fancyhead[R]{\hdrfont{\thepage}}
 \setmainfont[]{PragmataPro}
@@ -51,7 +55,7 @@ $spacing
 \makeatother
 \begin{document}
 \verbatimfont{\PragmataPro}
-\fontsize{${fontsize}}{${fontsize}}\selectfont
+\fontsize{$fontsize}{$fontsize}\selectfont
 \begin{verbatim}
 % need to inject a blank line to preserve top of file!
 
@@ -126,7 +130,7 @@ case "$1" in
         spacing='\singlespacing'
         linenumbers='\linenumbers' ;;
 
-  wiki) fontsize=11
+  wiki) fontsize=10
         spacing='\doublespacing'
         unset linenumbers ;;
 
