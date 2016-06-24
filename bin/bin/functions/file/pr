@@ -12,7 +12,8 @@ usage() {
 }
 
 # unset for direct printing, set for proofing and latex debugging
-proof=true
+# proof=true
+[ -e $HOME/.proof ] && proof=true
 
 # text defaults
 fontsize=9
@@ -36,6 +37,8 @@ format() {
     esac
     [ $pwd ] && title="$pwd/$1" || title="$1"
   fi 
+  # must escape underscores, a fancyhdr limitation(?)
+  [ $title ] && title=$(echo $title | sed 's/_/\\_/g')
 
   (cat <<EOF
 \documentclass[]{article}
