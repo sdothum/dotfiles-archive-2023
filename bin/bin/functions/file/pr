@@ -74,6 +74,7 @@ $spacing
 \normalfont\fontsize{$fontsize}{$fontsize}\selectfont
 \begin{verbatim}
 % need to inject a blank line before cat to preserve top of file!
+% source file injection doesn't work so well with actual latex files!
 
 $(cat "$1")
 \end{verbatim}

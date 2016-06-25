@@ -34,7 +34,7 @@ indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent - 1 ))
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
-panel_offsetY=$(( ($monitorY + $gap - $PANEL_HEIGHT - $SHADOW) / 2 - 1 ))
+panel_offsetY=$(( ($monitorY + $gap - $PANEL_HEIGHT - ($SHADOW / 2)) / 2 - 1 ))
 [ $panel_offsetX -lt 0 ] && panel_offsetX=0
 [ $panel_offsetY -lt 0 ] && panel_offsetY=0
 
