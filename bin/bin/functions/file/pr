@@ -37,8 +37,8 @@ format() {
     esac
     [ $pwd ] && title="$pwd/$1" || title="$1"
   fi 
-  # must escape underscores, a fancyhdr limitation(?)
-  [ $title ] && title=$(echo $title | sed 's/_/\\_/g')
+  # must escape certain character, a fancyhdr limitation(?)
+  [ "$title" ] && title=$(echo $title | sed -r 's/([_#])/\\\1/g')
 
   (cat <<EOF
 \documentclass[]{article}
@@ -74,7 +74,7 @@ $spacing
 \normalfont\fontsize{$fontsize}{$fontsize}\selectfont
 \begin{verbatim}
 % need to inject a blank line before cat to preserve top of file!
-% source file injection doesn't work so well with actual latex files!
+% warning: source file injection with latex file will terminate on \end{verbatim} statement
 
 $(cat "$1")
 \end{verbatim}
@@ -160,10 +160,11 @@ case "$1" in
 esac
 [ $noshift ] || shift
 
-# process filelist
+# filenames may have blanks, hence, usage of while vs for i in $@
 while [ $# -gt 0 ]
 do
-  # filenames may have blanks, hence, usage of while vs for i in $@
+  # set date to file modification date
+  time=$(date -r "$1" +'%B %-d, %Y')
   print "$1"
   shift
 done

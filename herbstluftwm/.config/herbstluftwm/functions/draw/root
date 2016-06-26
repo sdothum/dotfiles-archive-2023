@@ -37,7 +37,11 @@ size=180x180
 
 # linked file reference
 exists() {
-  [ -e $(lname $1) ]
+  if lname $1 >/dev/null ;then
+    [ -e $(lname $1) ]
+  else
+   return 1 
+  fi
 }
 
 # ..................................................................... Map blur
@@ -118,7 +122,7 @@ select_blank() {
 
 wallpaper() {
   # initialize default link
-  [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/*.png | head -1) $WALLPAPER
+  [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   rm -f $BLANK
   rm -f $theme 2>/dev/null
   herbstclient attr theme.normal.color "$NORMAL"
