@@ -33,9 +33,9 @@ if [ -z "$*" ] ;then
   sudo pacman -Sy
   package=$(pacaur -Qu $aur)
   if [ -n "$package" ] ;then
-    echo -n "\n$package"
+    echo "\n$package\n"
     # strip color codes, could have queried with "--color never" instead, see pacman.conf
-    package="$(echo $package | sed -r 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' | awk '{ print $3 }')"
+    package="$(echo "$package" | sed -r 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' | awk '{ print $3 }')"
     pm S $(echo $package)
   fi
 

@@ -23,7 +23,7 @@
 # autokey-gtk
 # autokey-py3
   clipit
-  colorgrab
+# colorgrab
   colors-git
   conky-lua
 # conky-lua-nv
@@ -39,6 +39,7 @@
   rofi
 # scrot
 # shutter
+  slickpicker
 # xfce4-notifyd
 # xfce4-screenshooter
 # xgrabcolor

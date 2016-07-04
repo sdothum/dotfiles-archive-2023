@@ -42,7 +42,7 @@ def parse_mail(message)
       end
     ).gsub(/^ +/m, '')
   end
-  text.gsub(/\n\n/, "\n")
+  # text.gsub(/\n\n/, "\n")
 end
 
 # view email (see rox)

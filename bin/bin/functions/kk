@@ -6,6 +6,12 @@
 
 # .................................................................... Processes
 
+usage() {
+  echo "usage: [sig=<signal>] $(basename $0) <regex>"
+  exit 1
+}
+
+
 sig=${sig:--TERM}
 
 # quick kill!

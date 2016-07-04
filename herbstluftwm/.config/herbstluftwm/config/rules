@@ -57,9 +57,11 @@ hc rule title=Trace                  tag=6 focus=off
 # special apps and dialogues
 hc rule class=Amphetype              pseudotile=on
 hc rule title=blackscreen            monitor=1 fullscreen=on hook=fullscreen
+hc rule class=Colorgrab              pseudotile=on
 hc rule class=feh                    focus=on switchtag=on
 hc rule class=File-roller            pseudotile=off
 hc rule class=float                  focus=on pseudotile=on
+# hc rule class=Gnome-mpv            pseudotile=on
 hc rule class=Gvim                   focus=on hook=max
 hc rule windowrole=gvimdiff          focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                pseudotile=on
@@ -71,6 +73,7 @@ hc rule class=ROX-Filer              pseudotile=off
 hc rule class=Savebox                pseudotile=off
 # hc rule title=scratchpad           pseudotile=on
 hc rule class=Simpletimer            pseudotile=on
+hc rule class=Slickpicker            pseudotile=on
 hc rule class=Vlc                    focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Zathura                focus=on hook=max
 

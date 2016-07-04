@@ -5,9 +5,9 @@
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ........................................................................ Print
-
+set -x
 usage() {
-  echo "usage: [proof=true]  $(basename $0)  eject | stdin | code | mail | text | wiki  [<filelist>]"
+  echo "usage: [proof=true]  $(basename $0)  eject | stdin | code | mail | text | wiki | wps  [<filelist>]"
   exit 1
 }
 
@@ -25,18 +25,21 @@ fold=80
 
 format() {
   # set title dependent on source, ignore stdin
-  if echo "$1" | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
-    case "$PWD" in
-      */.config*) pwd=".config/${PWD#*/.config}" ;;
-      */.vim*)    pwd=".vim/${PWD#*/.vim}" ;;
-      */bin/bin*) pwd="${PWD#*/bin/bin/}" ;;
-      */bin*)     pwd="${PWD#*/bin/}" ;;
-      */build*)   pwd="${PWD#*/build/}" ;;
-      */vimwiki*) ;;
-      *)          pwd="$PWD" ;;
-    esac
-    [ $pwd ] && title="$pwd/$1" || title="$1"
-  fi 
+  if ! [ "$title" ] ;then
+    if echo "$1" | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
+      unset pwd
+      case "$PWD" in
+        */.config*) pwd=".config/${PWD#*/.config}" ;;
+        */.vim*)    pwd=".vim/${PWD#*/.vim}" ;;
+        */bin/bin*) pwd="${PWD#*/bin/bin/}" ;;
+        */bin*)     pwd="${PWD#*/bin/}" ;;
+        */build*)   pwd="${PWD#*/build/}" ;;
+        */vimwiki*) ;;
+        *)          pwd="$PWD" ;;
+      esac
+      [ $pwd ] && title="$pwd/$1" || title="${1%.wiki}"
+    fi
+  fi
   # must escape certain character, a fancyhdr limitation(?)
   [ "$title" ] && title=$(echo $title | sed -r 's/([_#])/\\\1/g')
 
@@ -83,26 +86,40 @@ EOF
   ) | xelatex -jobname="${1#/tmp/}" -output-directory=/tmp >/tmp/pr.log
 }
 
-# ............................................................... Mail functions
+# .............................................................. Mail formatting
 
 filter() {
   # reduce mail header to essential contact information
+  # escape any special characters that trip latex up
   sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | \
   pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' | \
   egrep -vEi '^(Accept-Language|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' | \
-  egrep -vE '^ *(boundary=".*"|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$'
+  egrep -vE '^ *(boundary=".*"|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$' | \
+  sed 's/[&]/\\&/g'
 }
 
 header() {
   title=$(grep -m 1 '^Subject:' $stdin \
         | cut -d' ' -f2- \
-        | sed -re 's/^ *([Rr][Ee]: )+//' \
+        | sed -re 's/^ *([Rr][Ee]:* )+//' \
               -e 's/^ *([Ff][Ww][Dd]*: )+//' \
               -e 's/(\[SPAM\])//')
 
   time=$(grep -m 1 '^Date:' $stdin \
        | cut -d' ' -f2-5)
   time=$(date -d "$time" +'%B %-d, %Y')
+}
+
+# ............................................................. UTF-8 conversion
+
+# convert common utf-8 punctuation to ascii
+ascii() {
+  sed -e 's/\xe2\x80\x93/--/g' \
+      -e "s/\xe2\x80\x99/'/g" \
+      -e 's/\xe2\x80\x9c/"/g' \
+      -e 's/\xe2\x80\x9d/"/g' \
+      -e 's/\xe2\x80\xa6/.../g' \
+      -e 's/\xe2\x80?/\n===== UTF-8 =====\n/g'
 }
 
 # ................................................................ Print options
@@ -122,6 +139,7 @@ print() {
 # lines from stdin are folded
 stdin() {
   stdin=$(mktemp)
+  # tr -cd '\11\12\15\40-\176' | fold -sw $fold >$stdin
   iconv -c -f utf-8 -t ascii | fold -sw $fold >$stdin
   # set (title, time) format values, see case mail below
   [ "$*" ] && $@
@@ -143,7 +161,7 @@ case "$1" in
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
-        filter | stdin header ;;
+        filter | ascii | stdin header ;;
 
   text) fontsize=9
         spacing='\singlespacing'
@@ -152,6 +170,22 @@ case "$1" in
   wiki) fontsize=10
         spacing='\doublespacing'
         unset linenumbers ;;
+
+  wps) # word document saved as text file
+       fontsize=9
+       spacing='\doublespacing'
+       unset linenumbers
+       shift
+       title="${1%.txt}"
+       # remove document [annotation] and reformat paragraphs
+       # contract spaces and leading annotation punctuation (paragraph)
+       perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" | \
+       sed -r 's/^(\xe3\x80\x80)*/\n/' | \
+       ascii | \
+       sed -e 's/^\.*  *//' \
+           -e 's/  */ /g' | \
+       stdin ;;
+      
 
   code | *) fontsize=8
             spacing='\onehalfspacing'
@@ -167,6 +201,7 @@ do
   time=$(date -r "$1" +'%B %-d, %Y')
   print "$1"
   shift
+  unset title
 done
 pr eject
 

@@ -74,7 +74,6 @@
   intel-ucode
   lm_sensors
   mbpfan-git                [nvidia]
-  plover
   xf86-input-wacom          [server]
 
 

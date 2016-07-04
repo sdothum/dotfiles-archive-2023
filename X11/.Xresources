@@ -71,7 +71,7 @@ URxvt*buffered:               true            ! double buffer for xtf
 URxvt*hold:                   false           ! kill window on shell exit
 URxvt*loginShell:             true            ! to load shell profiles
 URxvt*print-pipe:             cat >$HOME/tmp/$(echo urxvt.dump.$(date +'%s'))
-URxvt*saveLines:              15000           ! non-tmux window scroll back
+URxvt*saveLines:              9000            ! non-tmux window scroll back
 
 ! text
 ! URxvt*font:                 xft:Input Mono Compressed:size=11

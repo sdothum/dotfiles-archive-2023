@@ -45,7 +45,8 @@
 
 = fonts
 # ▔▔▔▔▔
-  fontforge [server]
+  fontforge     [server]
+  ttf-wps-fonts [server]
 
 
 = games
@@ -53,6 +54,11 @@
   lsb-release [server]
   steam       [server]
 
+
+= keyboard
+# ▔▔▔▔▔▔▔▔
+  plover
+▔
 
 = music
 # ▔▔▔▔▔
@@ -106,12 +112,12 @@
 
 = productivity
 # ▔▔▔▔▔▔▔▔▔▔▔▔
-  abiword       [server]
+  abiword
   amphetpe-svn
   calc
 # calcurse
 # galculator
-  gnumeric      [server]
+  gnumeric
 # gsimplecal
 # kdeedu-ktouch [server]
 # klavaro
@@ -119,7 +125,7 @@
   simpletimer-git
   speedcrunch
 # todotxt
-# wps-office    [server]
+  wps-office    [server]
   wyrd
 # xpad
 

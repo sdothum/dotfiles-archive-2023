@@ -42,12 +42,10 @@ configure authentication else some channels will force #<channel>-unregistered
 /script install urlserver.py
 /script install vimode.py
 /script install ws_replace.py
-# /script install ichatts.py
+/script install ichatts.py
 # /script install weetweet.py
 
 # buffers
-/set buffers.look.indenting on
-/set buffers.look.show_number off
 /set irc.look.server_buffer independent
 /set irc.look.smart_filter on
 /filter add irc_join_names * irc_366,irc_332,irc_333,irc_329,irc_324 *
@@ -55,8 +53,8 @@ configure authentication else some channels will force #<channel>-unregistered
 /filter add joinquit * irc_join,irc_part,irc_quit *
 
 # ichatts
-# /set plugins.var.python.ichatts.minutes_until_timestamp 5
-# /set plugins.var.python.ichatts.remind_every 60
+/set plugins.var.python.ichatts.minutes_until_timestamp 5
+/set plugins.var.python.ichatts.remind_every 1440
 
 # jabber
 /jabber add jabber $(cat $HOME/.forward) $(pass mail/$(cat $HOME/.forward | sed 's/\(.*\)[@]\(.*\)/\2\/\1/'))
@@ -71,6 +69,8 @@ configure authentication else some channels will force #<channel>-unregistered
 /set plugins.var.python.urlserver.http_url_prefix "lambda"
 
 # theme
+/set buffers.look.name_crop_suffix "…"
+/set buffers.look.name_size_max 12
 /set buffers.color.current_bg default
 /set buffers.color.current_fg 226
 /set buffers.color.default_fg 237
@@ -82,7 +82,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.bar.buffers.items "buffers"
 /set weechat.bar.buffers.position "left"
 /set weechat.bar.buffers.separator on
-/set weechat.bar.buffers.size_max 12
+/set weechat.bar.buffers.size_max 13
 
 /set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+minimal"
 /set weechat.bar.nicklist.hidden on
@@ -91,6 +91,8 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.bar.vi_cmd.hidden on
 # /set weechat.bar.input.items "[input_prompt]+(away),[input_search],[input_paste],input_text"
 # "[..indicators..]" using "+" (instead of comma "," which wraps with spaces)
+/set buffers.look.indenting on
+/set buffers.look.show_number off
 
 /set weechat.color.chat 032
 /set weechat.color.chat_inactive_window 240
