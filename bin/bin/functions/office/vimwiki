@@ -10,6 +10,8 @@
 wiki=4
 
 switch tag "$wiki"
+# vim config rule for vimwiki requires being in home directory
+cd $HOME
 focus gvim --role='thedarnedestthing' vimwiki
 
 # vim: set ft=sh: #

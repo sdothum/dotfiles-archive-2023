@@ -21,11 +21,11 @@ fi
 case $toggle in
   off | 0) pidof xscreensaver >/dev/null && killall xscreensaver
            xset s off -dpms
-           notify 'Screensaver' Off ;;
+           urgency=low notify 'Screensaver' Off ;;
 
   on | 1) xset s on +dpms
           pidof xscreensaver >/dev/null || ( xscreensaver -no-splash & )
-          notify 'Screensaver' On ;;
+          urgency=low notify 'Screensaver' On ;;
 esac
 
 # vim: set ft=sh: #

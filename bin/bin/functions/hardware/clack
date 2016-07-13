@@ -7,7 +7,7 @@
 # ..................................................................... Keyboard
 
 hint() {
-    notify 'Typewriter Sounds' '↑ Super-Shift Minus\n↓ Super-Minus'
+    urgency=low notify 'Typewriter Sounds' '↑ Super-Shift Minus\n↓ Super-Minus'
     # confirm enter key sound :-)
     mpg123 -o pulse /usr/share/qwertickle/typewriter-return.mp3 &
 }
@@ -15,7 +15,7 @@ hint() {
 if [ -z "$*" ] ;then
   if pidof qwertickle ;then
     killall qwertickle
-    notify 'Typewriter Sounds' 'Off'
+    urgency=low notify 'Typewriter Sounds' 'Off'
   else
     qwertickle &
     hint

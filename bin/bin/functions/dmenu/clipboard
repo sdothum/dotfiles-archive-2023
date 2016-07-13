@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................... Clipboard
+
+clip=$(gpaste-client \
+     | cut -d' ' -f2- \
+     | grep -v '^$' \
+     | sed 's/^ *//' \
+     | dmenu 'Clipboard' -no-custom) || exit
+
+if [ "$clip" ] ;then
+  # gpaste add removes duplicate entries and pushes stack :-)
+  gpaste-client add "$clip"
+  xdotool type "$clip"
+fi
+
+# vim: set ft=sh: #

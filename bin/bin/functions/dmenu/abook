@@ -23,7 +23,7 @@ patricia=$maildir/addressbook.patricia
 # - addresses must include "user name" prefix
 # - proper case "user name"
 abook() {
-  time=15 notify 'Updating dmenu addressbook cache' 'Please be patient..'
+  time=15 urgency=low notify 'Updating dmenu addressbook cache' 'Please be patient..'
   /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc): .*@' $maildir | \
   sed -re 's/(\xad|\x01)/ /g' \
       -e 's/[,;] */\n/g' \
@@ -53,7 +53,7 @@ abook() {
       -e 's/(<.*)/\L\1/g' | \
   sort -f | \
   uniq -i >$cache
-  notify 'Update of dmenu addressbook cache' '..Complete'
+  urgency=low notify 'Update of dmenu addressbook cache' '..Complete'
 }
 
 # command line initialization with: dmenu abook [init]
@@ -102,11 +102,11 @@ do
 
     '[ edit contacts    ]') gvim -f $contacts ;;
 
-    '[ paste        ]') echo "$addresses" | xsel -i
+    '[ paste        ]') gpaste-client add "$addresses"
                         xdotool type "$addresses"
                         break ;;
 
-    '[ clipboard    ]') echo "$addresses" | xsel -i
+    '[ clipboard    ]') gpaste-client add "$addresses"
                         time=10 notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
                         break ;;
 

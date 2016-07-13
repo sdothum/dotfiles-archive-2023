@@ -43,7 +43,7 @@ END
 
 # build catalogue
 ebooks() {
-  time=5 notify 'Updating library cache' 'Please be patient..'
+  time=5 urgency=low notify 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" \
        | sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
              -e 's/ - .*//' \
@@ -51,7 +51,7 @@ ebooks() {
              -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
        | sort -u \
        >$cache
-  notify 'Update of library cache' '..Complete'
+  urgency=low notify 'Update of library cache' '..Complete'
 }
 
 # command line initialization with: dmenu ebooks [init]

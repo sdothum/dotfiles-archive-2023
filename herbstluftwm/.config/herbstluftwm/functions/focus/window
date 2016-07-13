@@ -10,7 +10,7 @@
 [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" != '' ] && exit
 
 touch $LOCK
-frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
+frames=$(query fcount $TAG)
 herbstclient chain . lock . cycle_frame -1
 
 for i in $(seq 1 $frames)

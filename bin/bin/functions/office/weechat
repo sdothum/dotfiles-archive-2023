@@ -6,6 +6,7 @@
 
 # ..................................................................... IRC chat
 
+ircservers=3
 timeout=300
 log=/tmp/weechat.log
 
@@ -19,11 +20,11 @@ if server ;then
     count=0
     while :
     do
-      [ $(sudo ss -apt | grep 'znc' | grep 'ESTAB' | wc -l) -ge 4 ] && break
+      [ $(sudo ss -apt | grep 'znc' | grep 'ESTAB' | wc -l) -ge $ircservers ] && break
       sleep 1
       count=$(( $count + 1 ))
       if [ $count -ge $timeout ] ;then
-        notify "Weechat" "$timeout second ZNC server IRC timeout"
+        urgency=critical notify "Weechat" "$timeout second ZNC server IRC timeout"
         exit
       fi
     done

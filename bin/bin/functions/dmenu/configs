@@ -11,7 +11,7 @@ cache=$CACHEDIR/dmenu_configs
 # ................................................................... Initialize
  
 configs() {
-  notify 'Updating dmenu config cache' 'Please be patient..'
+  urgency=low notify 'Updating dmenu config cache' 'Please be patient..'
   exclude='\.azureus|backups|\.bundler|\.cache|cairo|chromium|depot|\.deprecated|\.dropbox|geany|\.gem|\.ghc|\.gimp|google|\.hg|\.kde|libreoffice|\.mozilla|\.opera|\.original|\.PlayOnLinux|sandbox|\.save|\.stversions|(s|u)mplayer|tint2|Trash|\.vim|vundle|\.xbmc|\.xmonad|xfce4'
 
   # convert spaces in filenames to tilde and convert back after joining!
@@ -39,7 +39,7 @@ configs() {
        | sed -e '1i
 ' \
        >$cache
-  notify 'Updating dmenu config cache' '..Finished'
+  urgency=low notify 'Updating dmenu config cache' '..Finished'
 }
 
 # command line initialization with: dmenu configs [init]

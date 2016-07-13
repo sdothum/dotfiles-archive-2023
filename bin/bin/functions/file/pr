@@ -5,7 +5,7 @@
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ........................................................................ Print
-set -x
+
 usage() {
   echo "usage: [proof=true]  $(basename $0)  eject | stdin | code | mail | text | wiki | wps  [<filelist>]"
   exit 1
@@ -41,7 +41,10 @@ format() {
     fi
   fi
   # must escape certain character, a fancyhdr limitation(?)
-  [ "$title" ] && title=$(echo $title | sed -r 's/([_#])/\\\1/g')
+  if [ "$title" ] ;then
+    title=$(echo $title | sed -r 's/([_#])/\\\1/g' | fold -sw $(( $fold - 20 )) )
+    [ $(echo "$title" | wc -l) -gt 1 ] && title="$(echo "$title" | head -1 | sed 's/ *$//').."
+  fi 
 
   (cat <<EOF
 \documentclass[]{article}
@@ -161,7 +164,11 @@ case "$1" in
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
-        filter | ascii | stdin header ;;
+        # contract excessive blank lines
+        filter | \
+        ascii | \
+        perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' | \
+        stdin header ;;
 
   text) fontsize=9
         spacing='\singlespacing'

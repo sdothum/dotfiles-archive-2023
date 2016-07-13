@@ -20,9 +20,9 @@
 
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# autokey-gtk
+  autokey-gtk
 # autokey-py3
-  clipit
+# clipit
 # colorgrab
   colors-git
   conky-lua
@@ -32,6 +32,7 @@
 # dmenu-xft-height
 # dmenu2
   dunst
+  gpaste
 # gpick
   libnotify
 # lxsession

@@ -10,7 +10,7 @@
 if arm; then
   noir omxplayer "$@"
 else
-  notify 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
+  urgency=low notify 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
   mpv --vf=eq "$@" >/dev/null 2>&1
 fi
 

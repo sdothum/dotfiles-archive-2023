@@ -22,12 +22,13 @@ nnoremap 9gt :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>
 nnoremap 0gt :sh! xdotool key --window $VIMB_XID ctrl+0<CR><Esc>
 nnoremap Q :eval! readable()<CR>
 nnoremap q :eval! simplyread()<CR>
+nnoremap x :sh! mpv %<CR>
 nnoremap X :eval! translate()<CR>
 nnoremap <BS> <C-O>
 
-augroup mygroup
-  autocmd LoadCommited https://www.youtube.com/watch* :shell mpv %<CR>
-augroup end
+# augroup mygroup
+#   autocmd LoadCommited https://www.youtube.com/watch* :shell mpv %<CR>
+# augroup end
 
 # set accelerated-compositing=true
 # set auto-load-images=true

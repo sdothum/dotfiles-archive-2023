@@ -6,6 +6,9 @@
 
 # ........................................................... Frame window count
 
-herbstclient layout | grep '\[FOCUS\]' | cut -d: -f2 | cut -d[ -f1 | wc -w
+# Usage: query fcount [<tag>]
 
-# vim: set ft=sh: #
+[ "$1" ] && herbstclient attr "tags.by-name.$1.frame_count" \
+         || herbstclient attr tags.focus.frame_count
+
+# vim: set ft=sh: #sdothum

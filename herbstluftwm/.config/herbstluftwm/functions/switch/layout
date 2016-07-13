@@ -9,7 +9,7 @@
 # restore layout if in fullscreen, as cycle layout is just one keystroke away
 if is fullscreen ;then
   toggle fullscreen
-elif [ $(query fcount) -eq 2 ] ;then
+elif [ $(query wcount) -eq 2 ] ;then
   # skip grid if only 2 windows in subframe (layout is effectively same as horizontal)
   herbstclient cycle_layout 1 vertical horizontal
 else

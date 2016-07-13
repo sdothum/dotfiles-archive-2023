@@ -10,7 +10,7 @@
 wiki=4
 
 switch tag "$wiki"
-focus qutebrowser -R http://thedarnedestthing:8000/
+focus vimb http://thedarnedestthing:8000/
 # wait for window to attach to tag
 xdotool search --screen 0 --name --sync 'the darnedest thing' >/dev/null
 

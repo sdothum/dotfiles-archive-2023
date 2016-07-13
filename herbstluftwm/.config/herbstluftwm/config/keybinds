@@ -40,7 +40,7 @@ if [ $COLEMAK_DH ] ;then
   hc keybind $Mod-e                  focus right
 else
   hc keybind $Mod-h                  focus left
-  hc keybind $Mod-j                  focus down
+  
   hc keybind $Mod-k                  focus up
   hc keybind $Mod-l                  focus right
 fi
@@ -81,14 +81,14 @@ hc keybind $Mod-Control-o            split right  0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space        spawn restore frames
 if [ $COLEMAK_DH ] ;then
-  hc keybind $Mod-slash              rotate
-  hc keybind $Mod-Shift-slash        chain . lock . rotate . rotate . rotate . unlock
-  hc keybind $Mod-Shift-period       chain . lock . rotate . rotate . focus_edge right . unlock
-  hc keybind $Mod-Shift-comma        chain . lock . rotate . rotate . focus_edge left . unlock
+  hc keybind $Mod-slash              spawn switch orientation +1
+  hc keybind $Mod-Shift-slash        spawn switch orientation -1
+  hc keybind $Mod-Shift-period       spawn switch orientation +2
+  hc keybind $Mod-Shift-comma        spawn switch orientation -2
 else
-  hc keybind $Mod-Shift-comma        rotate
-  hc keybind $Mod-Shift-period       chain . lock . rotate . rotate . focus_edge left . unlock
-  hc keybind $Mod-Shift-slash        chain . lock . rotate . rotate . focus_edge right . unlock
+  hc keybind $Mod-Shift-comma        spawn switch orientation +1
+  hc keybind $Mod-Shift-period       spawn switch orientation +2
+  hc keybind $Mod-Shift-slash        spawn switch orientation -2
 fi
 
 # resizing frames

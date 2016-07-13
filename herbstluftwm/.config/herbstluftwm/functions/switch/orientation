@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="switch/frames $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................... Smart frame orientation
+
+# Usage: switch orientation +1 (90 degrees counter clockwise)
+#        switch orientation -1 (90 degrees clockwise)
+#        switch orientation +2 (180 degrees counter clockwise, focus right)
+#        switch orientation -2 (180 degrees clockwise, focus left)
+
+# if single frame, split frame first (in order to rotate)!
+[ $(query fcount) -eq 1 ] && restore frames
+
+case "$1" in
+  +1) herbstclient rotate ;;
+  -1) herbstclient chain . lock . rotate . rotate . rotate . unlock ;;
+  +2) herbstclient chain . lock . rotate . rotate . focus_edge right . unlock ;;
+  -2) herbstclient chain . lock . rotate . rotate . focus_edge left . unlock ;;
+esac
+
+# vim: set ft=sh: #

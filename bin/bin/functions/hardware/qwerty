@@ -11,6 +11,6 @@ setxkbmap us -variant basic
 left_shift_key
 sudo sed -i '/^KEYMAP/cKEYMAP=us' /etc/vconsole.conf
 
-notify 'Keyboard Layout' 'Qwerty'
+urgency=low notify 'Keyboard Layout' 'Qwerty'
 
 # vim: set ft=sh: #

@@ -11,8 +11,6 @@ usage() {
   exit 1
 }
 
-[ -z $DISPLAY ] && tty | grep -q '/dev/tty[0-9]' && console=true
-
 # see .xinitrc
 case $1 in
   '')                 ;;
@@ -41,7 +39,7 @@ case $1 in
 esac
 
 # start X11 from init console
-if [ $console ] ;then
+if console ;then
   wm=$(cat $HOME/.windowmanager)
   echo "${_GREEN_}$(figlet -t -f lean $wm)${_nocolor_}"
   # escape to shell prompt

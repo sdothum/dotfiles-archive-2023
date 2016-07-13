@@ -66,6 +66,7 @@
 
 = ripping
 # ▔▔▔▔▔▔▔
+  audex           [server]
 # asunder         [server]
   cdrdao          [server]
 # dvd+rw-tools    [server]

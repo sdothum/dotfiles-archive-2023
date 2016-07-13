@@ -16,6 +16,6 @@ else
 fi
 sudo sed -i '/^KEYMAP/cKEYMAP=colemak' /etc/vconsole.conf
 
-notify 'Keyboard Layout' "Colemak $layout"
+urgency=low notify 'Keyboard Layout' "Colemak $layout"
 
 # vim: set ft=sh: #

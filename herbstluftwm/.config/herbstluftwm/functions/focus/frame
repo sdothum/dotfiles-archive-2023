@@ -18,7 +18,7 @@ herbstclient lock
 # this prevents a fullscreen window from resizing to a differing monitor geometry
 is fullscreen && toggle fullscreen
 herbstclient cycle_frame -1
-frames=$(herbstclient attr tags.by-name.$TAG.frame_count)
+frames=$(query fcount $TAG)
 
 for i in $(seq 1 $frames)
 do
@@ -32,7 +32,7 @@ do
       do
         herbstclient cycle_frame 1
         if herbstclient layout | grep '\[FOCUS\]' | grep 'grid:' ;then
-          [ $(expr $(query fcount) % 2) -gt 0 ] && break
+          [ $(expr $(query wcount) % 2) -gt 0 ] && break
         fi
         if [ $i -ge $frames ] ;then
           herbstclient cycle_frame 1

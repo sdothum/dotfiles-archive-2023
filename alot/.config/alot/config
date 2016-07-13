@@ -27,11 +27,11 @@ print_cmd = pr mail
   e = search tag:INBOX or tag:inbox
   E = search tag:SENT
 
-  i = search tag:bbs
-  I = search tag:attn
+  i = search tag:attn
+  I = search tag:bbs
 
-  n = search tag:family
-  N = search tag:clients
+  n = search tag:clients
+  N = search tag:family
 
   p = search tag:patricia and not tag:sent
   P = search tag:patricia and tag:sent and steven

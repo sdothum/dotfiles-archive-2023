@@ -134,6 +134,7 @@ configure authentication else some channels will force #<channel>-unregistered
 
 # keybinds
 /key bind ctrl-B /bar toggle buffers
+/key bind ctrl-F /filter toggle
 /key bind ctrl-H /window down
 /key bind ctrl-J /window left
 /key bind ctrl-K /window up

@@ -8,7 +8,12 @@
 
 # va va voom
 SHELL=/usr/bin/dash
-( [ -z $DISPLAY ] && tty | grep '/dev/tty[0-9]' ) || gui='-f -g'
+if console ;then
+  vim $@
+  exit
+fi
+  
+gui='-f -g'
 
 if [ -z "$*" ] ;then
   focus vim $gui /tmp/scratch
