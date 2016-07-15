@@ -6,8 +6,8 @@
 
 # ....................................................................... Search
 
-# ignore archive folders
-filter='\.deprecated|\.hg|\.vimv|vimmappings'
+# ignore archive folders and dmenui history
+filter='\.deprecated|\.hg|dmenu.*history|\.vimv|vimmappings'
 
 if [ "$1" = '--nocolor' ] ;then
   nocolor=$1

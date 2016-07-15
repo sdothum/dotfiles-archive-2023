@@ -26,10 +26,10 @@
 # qutebrowser
   qutebrowser-git
 # surf
-  tabbed   [server]
+  tabbed
 # uzbl-browser
-# vimb
-  vimb-git [server]
+  vimb
+# vimb-git
   w3m
 # webkitgtk2
 

@@ -7,7 +7,10 @@
 # ..................................................................... Fortunes
 
 # preselect default fortune database
-# /usr/bin/fortune chucknorris
-/usr/bin/fortune all
+# fortune=chucknorris 
+fortune=all 
+
+# strip off utf-8 characters
+/usr/bin/fortune $fortune | ascii
 
 # vim: set ft=sh: #

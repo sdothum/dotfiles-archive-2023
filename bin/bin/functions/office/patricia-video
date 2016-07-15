@@ -11,7 +11,7 @@ media=5
 
 switch tag "$media"
 focus frame
-# mpv https://gallivanmedia-1.wistia.com/medias/b1ygqqmhvh
-mpv /net/media/patricia/Patricia.mp4
+# play https://gallivanmedia-1.wistia.com/medias/b1ygqqmhvh
+play /net/media/patricia/Patricia.mp4
 
 # vim: set ft=sh: #

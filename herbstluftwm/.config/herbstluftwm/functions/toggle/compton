@@ -12,11 +12,11 @@ which compton >/dev/null || exit
 if [ -e $COMPTON ] ;then
   if ! pidof compton >/dev/null ;then
     compton >/tmp/compton.log 2>&1 &
-    xscreensaver -no-splash &
+    # xscreensaver -no-splash &
   fi
 elif pidof compton >/dev/null ;then
   killall -TERM compton
-  killall -TERM xscreensaver
+  # killall -TERM xscreensaver
 fi
 
 # vim: set ft=sh: #

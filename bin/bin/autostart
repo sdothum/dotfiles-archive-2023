@@ -70,7 +70,7 @@ server && term 'Mail' alot
 server && thedarnedestthing
 server && vimwiki
 switch tag "$web"
-vimbt http://luna:8000/tt-rss/ &
+qutebrowser -R http://luna:8000/tt-rss/ &
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 
 # vim: set ft=sh: #
