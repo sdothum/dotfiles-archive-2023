@@ -52,7 +52,7 @@ a yaourt
   zsh
 
 
-= x11 drivers
+zsh= x11 drivers
 # ▔▔▔▔▔▔▔▔▔▔▔
   xf86-video-fbdev
 

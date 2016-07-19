@@ -53,6 +53,11 @@
   jre7-openjdk
 
 
+= python
+# ▔▔▔▔▔▔
+  python-setuptools
+
+
 = software tools
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # arduino        [server]
@@ -61,7 +66,6 @@
   dfu-programmer [server]
   cmake
   gdb
-  python-setuptools
   strace
 
 

@@ -5,7 +5,7 @@ arch install :: $HOME/build/archlinux/archlinux-*
 arch post-install :: $HOME/build/archlinux/post_install/*
 arch pre-install :: $HOME/build/archlinux/pre_install/*
 arch user-install :: $HOME/build/archlinux/user_install/*
-astroid mail :: $HOME/.config/astroid/config /usr/share/astroid/ui/thread-view.css
+astroid mail :: $HOME/.config/astroid/config $HOME/.config/astroid/ui/*
 autostart bin :: $HOME/bin/autostart
 bash shell :: $HOME/.bash_aliases $HOME/.profile
 bin scripts :: $(find $HOME/bin/ -maxdepth 1 -type f)

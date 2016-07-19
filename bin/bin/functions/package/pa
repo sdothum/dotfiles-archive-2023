@@ -9,7 +9,7 @@
 # Note: ignorepkg any packages that abort upgrade
 
 # update aur kludge to prevent pacupg --aur from re-installing aur package updates
-pacaur=true
+# pacaur=true
 
 # AUR package manager
 if [ -z "$*" ] ;then
