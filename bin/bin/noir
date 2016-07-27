@@ -6,7 +6,7 @@
 
 # ..................................................................... Terminal
 
-noir='/usr/bin/urxvt -sh 10 -fg black -bg black -cr black'
+noir='/usr/bin/urxvt +tr -sh 10 -fg black -bg black -cr black'
 
 # invisible terminal!
 if [ "$1" = omxplayer ] ;then

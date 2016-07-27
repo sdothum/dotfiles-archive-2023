@@ -16,7 +16,7 @@ library=${LIBRARY:-/net/media/videos/${1:-movies}}
 T=t
 cache=/tmp/dmenu:movies
 hlwm && monitor=$(herbstclient attr monitors.focus.index)
-[ -e "$cache" ] || time=5 urgency=low notify 'Movies' 'Caching library..'
+[ -e "$cache" ] || time=5 notify low 'Movies' 'Caching library..'
 
 # clean up titles
 mytitles $library >>/tmp/mytitles:movies
@@ -65,7 +65,7 @@ do
          video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed -e 's/  (\([12][0-9][0-9][0-9]\))$/ \1/' -e 's/ /./g').*")
          case $action in
            play) if [ $(echo -n "$video\n" | wc -l) -gt 1 ] ;then
-                   urgency=critical notify "$movie" "Duplicate movie files found"
+                   notify critical "$movie" "Duplicate movie files found"
                    sleep 3s
                    break
                  fi

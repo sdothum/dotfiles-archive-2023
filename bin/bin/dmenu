@@ -166,6 +166,7 @@ if [ $(basename $0) = dmenu ] ;then
   fi
   # restore
   hlwm && [ $fullscreen ] && toggle fullscreen
+  # pidof gpaste-clieunt >/dev/null || gpaste-client &
 fi
 
 # vim: set ft=sh: #

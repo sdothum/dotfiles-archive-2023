@@ -9,10 +9,10 @@
 # see emit_hook and focus functions
 if [ -e $DYNAMIC ] ;then
   rm -f $DYNAMIC
-  notify 'Dynamic Focus' Off
+  notify low 'Dynamic Focus' Off
 else
   touch $DYNAMIC
-  notify 'Dynamic Focus' On
+  notify low 'Dynamic Focus' On
   focus window
 fi
 

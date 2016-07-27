@@ -11,8 +11,8 @@ destination=/net/media
 video="$@"
 video="${video##*/}"
 
-urgency=low notify 'Starting Recording' "$video"
+notify low 'Starting Recording' "$video"
 mpv --no-resume-playback --stream-dump="$destination/$video"  "$@" >/dev/null 2>&1
-urgency=low notify 'Finished Recording' "$video""
+notify low 'Finished Recording' "$video""
 
 # vim: set ft=sh: #

@@ -7,8 +7,8 @@
 # ........................................................ Applications keybinds
 
 hc keybind $Mod-Return               spawn toggle scratchpad
-hc keybind $Mod-Shift-Return         spawn term 'Terminal'
-hc keybind $Mod-Control-Return       spawn term 'Terminal' STACK
+hc keybind $Mod-Shift-Return         spawn term 'Terminal' FORTUNE
+hc keybind $Mod-Control-Return       spawn term 'Terminal' FORTUNE STACK
 hc keybind Super-Return              spawn dmenu manpages
 hc keybind Super-Shift-Return        spawn dmenu zshelp
 hc keybind Super-space               spawn dmenu run
@@ -57,6 +57,7 @@ hc keybind Super-Shift-n             spawn toggle term 'NZB' nzbget --connect
 # hc keybind Super-p                 spawn toggle xpad
 hc keybind Super-p                   spawn dmenu pass
 hc keybind Super-Shift-p             spawn pr eject
+hc keybind Super-Control-p           spawn proof
 hc keybind Super-q                   spawn toggle amphetype
 hc keybind Super-Shift-q             spawn clack swap
 hc keybind Super-Control-q           spawn clack

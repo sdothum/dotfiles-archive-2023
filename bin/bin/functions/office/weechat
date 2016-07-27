@@ -24,12 +24,12 @@ if server ;then
       sleep 1
       count=$(( $count + 1 ))
       if [ $count -ge $timeout ] ;then
-        urgency=critical notify "Weechat" "$timeout second ZNC server IRC timeout"
+        notify critical "Weechat" "$timeout second ZNC server IRC timeout"
         exit
       fi
     done
 
-    notify "Weechat" "$count seconds to ZNC server IRC connection"
+    notify low "Weechat" "$count seconds to ZNC server IRC connection"
     /usr/bin/weechat
   else
     echo '.. znc server not running'

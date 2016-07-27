@@ -38,7 +38,7 @@ if [ -e $corpus.words ] ;then
 fi
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if ! [ -e $corpus.words ] ;then
-  urgency=low notify "Building $corpus.words" 'Please be patient..'
+  notify low "Building $corpus.words" 'Please be patient..'
   sort -nr --key=2 $typedir/100K-word.database \
        | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' \
        | egrep -v '^(.|..)$' \
@@ -94,7 +94,7 @@ rm -f $paragraphs
 
 head $typefile
 echo "$typefile" | xsel -i
-time=10 notify 'Amphetype import' "$typefile"
+time=10 notify low 'Amphetype import' "$typefile"
 unset word
 
 # vim: set ft=sh: #

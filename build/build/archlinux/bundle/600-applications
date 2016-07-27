@@ -37,7 +37,7 @@
 # pyroom
 # retext
 # rubyroom
-# ted [server]
+# ted          [server]
   texlive-core
   texlive-latexextra
 # wordgrinder
@@ -154,7 +154,7 @@
 
 = viewers
 # ▔▔▔▔▔▔▔
-# calibre [server]
+# calibre    [server]
 # coolreader
 # evince
   fbreader

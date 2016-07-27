@@ -45,11 +45,14 @@ promptinit 2>/dev/null && prompt shum
 if [[ $(tty) =~ /dev/tty[1-9] ]] ;then
   echo
 else
-  if ! [ -e /tmp/herbstluftwm:fortune ] ;then
-    # su notify to apply user notification (spec)
-    [[ $USER = root ]] && su -c "time=15 notify --urgency=critical \"$(fortune)\"" - shum 2>/dev/null \
-                       || time=15 notify "$(fortune)" 2>/dev/null
-    # touch /tmp/herbstluftwm:fortune
+  if [[ -e /tmp/term:fortune ]] ;then
+    if ! [[ -e /tmp/herbstluftwm:fortune ]] ;then
+      # su notify to apply user notification (spec)
+      [[ $USER = root ]] && su -c "time=15 notify --urgency=critical \"$(fortune)\"" - shum 2>/dev/null \
+                         || time=15 notify "$(fortune)" 2>/dev/null
+      # touch /tmp/herbstluftwm:fortune
+    fi
+    rm -f /tmp/term:fortune 2>/dev/null
   fi
 fi
 

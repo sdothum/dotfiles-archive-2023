@@ -111,7 +111,7 @@ color() {
 }
 
 select_blank() {
-  time=5 notify 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
+  time=5 notify low 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r \
@@ -130,7 +130,7 @@ wallpaper() {
 
 # set background wallpaper
 select_wallpaper() {
-  time=5 notify 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
+  time=5 notify low 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \
@@ -161,7 +161,7 @@ case "$1" in
 
   save) color=$(cat $BACKGROUND.color)
         convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
-        notify 'Background Color' "$color saved" ;;
+        notify low 'Background Color' "$color saved" ;;
 
   select) rm -f $shuffle 2>/dev/null
           select_wallpaper

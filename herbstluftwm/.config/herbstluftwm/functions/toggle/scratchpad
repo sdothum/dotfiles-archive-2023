@@ -65,7 +65,7 @@ focus_check
 
 # cancel out above focus frame
 focus frame
-term $name byobu 'new-session -n ""'
+term $name FORTUNE byobu 'new-session -n ""'
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$scratchpad
 

@@ -7,7 +7,7 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | MAX | FONTSIZE <size> | STACK | TR | WAIT ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | MAX | FONTSIZE <size> | FORTUNE | STACK | TR | WAIT ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
 #        TR, disable urxvt pseudo transparency
@@ -19,7 +19,7 @@ TERM=urxvt
 
 # first parameter may be title
 if [ "$1" ] ;then
-  if echo "$1" | egrep -qv 'FLOAT|MAX|STACK|SHELL' ;then
+  if echo "$1" | egrep -qv 'FLOAT|FORTUNE|MAX|STACK|SHELL' ;then
     title="-title \"$1\""
     shift
   fi
@@ -37,6 +37,9 @@ do
 
     FONTSIZE) fn="-fn 'xft:PragmataPro:size=$2'"
               shift 2 ;;
+
+    FORTUNE) touch /tmp/term:fortune
+             shift ;;
 
     STACK) stack=true
            shift ;;

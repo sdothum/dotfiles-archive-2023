@@ -13,6 +13,11 @@ heading "verify group and passwd files"
 sudo grpck
 
 
+heading "restore connman dns"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
+
+
 if server && [ -d /etc/X11/xorg.conf.d ] ;then
 heading "x11 trackman mouse"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔

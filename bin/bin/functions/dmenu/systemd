@@ -24,7 +24,7 @@ do
 
   case $service in
     '[ daemon-reload   ]') sudo systemctl daemon-reload
-                           urgency=low notify 'Systemd daemon-reload'
+                           notify low 'Systemd daemon-reload'
                            break ;;
 
     '[ list services   ]') term 'services' systemctl --type service --all ;;

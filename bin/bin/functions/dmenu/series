@@ -70,7 +70,7 @@ do
     episode=$(echo "$episode" | sed "s/ $SEP$//")
     video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
     if [ $(echo -n "$video\n" | wc -l) -gt 1 ] ;then
-      urgency=critical notify "$show" "Duplicate episodes found"
+      notify critical "$show" "Duplicate episodes found"
       sleep 3s
       break
     fi

@@ -14,6 +14,8 @@ usage() {
 # unset for direct printing, set for proofing and latex debugging
 # proof=true
 [ -e $HOME/.proof ] && proof=true
+[ $proof ] && proof=/tmp/pr.proof
+dotdot=/tmp/dotdot
 
 # text defaults
 fontsize=9
@@ -23,10 +25,33 @@ fold=80
 
 # ............................................................... Latex preamble
 
+# must escape certain character, a fancyhdr limitation(?)
+escape() {
+  echo $@ | sed -r 's/([_#])/\\\1/g'
+}
+
+# reverse word order
+reverse() {
+  awk '{ for (i=NF; i>1; i--) printf("%s ",$i); print $1; }'
+}
+
+# title truncation footwork
+truncate() {
+  lines=$(fold -sw $(( $fold - 20 )) )
+  [ $(echo "$lines" | wc -l) -gt 0 ] && echo '..' >$dotdot || rm -f $dotdot
+  echo "$lines" | head -1
+}
+
+dotdot() {
+  cat $dotdot
+}
+
 format() {
+  if [ "$title" ] ;then
+    title="$(escape $title | truncate | sed 's/ *$//')"
+    title="$title$(dotdot)"
   # set title dependent on source, ignore stdin
-  if ! [ "$title" ] ;then
-    if echo "$1" | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
+  elif echo "$1" | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
       unset pwd
       case "$PWD" in
         */.config*) pwd=".config/${PWD#*/.config}" ;;
@@ -38,12 +63,9 @@ format() {
         *)          pwd="$PWD" ;;
       esac
       [ $pwd ] && title="$pwd/$1" || title="${1%.wiki}"
-    fi
-  fi
-  # must escape certain character, a fancyhdr limitation(?)
-  if [ "$title" ] ;then
-    title=$(echo $title | sed -r 's/([_#])/\\\1/g' | fold -sw $(( $fold - 20 )) )
-    [ $(echo "$title" | wc -l) -gt 1 ] && title="$(echo "$title" | head -1 | sed 's/ *$//').."
+      # truncate long pathnames
+      title=$(echo $title | sed 's|/| ^|g' | reverse | truncate)
+      title="$(dotdot)$(escape $title | reverse | sed 's| *\^|/|g')"
   fi 
 
   (cat <<EOF
@@ -119,6 +141,7 @@ header() {
 # convert common utf-8 punctuation to ascii equivalents
 punctuation() {
   sed -e 's/\xe2\x80\x93/--/g' \
+      -e 's/\xe2\x80\x94/---/g' \
       -e "s/\xe2\x80\x99/'/g" \
       -e 's/\xe2\x80\x9c/"/g' \
       -e 's/\xe2\x80\x9d/"/g' \
@@ -135,7 +158,7 @@ print() {
   if [ $proof ] ;then
     zathura "$output" 2>&1
   else
-    notify "Printing" "$title"
+    notify low "Printing" "$title"
     lpr -P $PRINTER "$output"
   fi
 }
@@ -165,7 +188,13 @@ case "$1" in
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
+        # hexdump log for inspecting unprintable punctuation characters
+        if [ $proof ] ;then
+          cat >$proof
+          cat $proof | hexdump -C >$proof:hexdump
+        fi
         # contract excessive blank lines
+        cat $proof | \
         filter | \
         punctuation | \
         perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' | \

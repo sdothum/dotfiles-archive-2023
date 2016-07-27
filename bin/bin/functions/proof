@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ Print
+
+# toggle proof, see pr
+proof=$HOME/.proof
+
+if [ -e $proof ] ;then
+  rm -f $proof
+  notify low 'PR Latex' 'Print hardcopy'
+else
+  touch $proof
+  notify low 'PR Latex' 'Display proof'
+fi 
+
+
+# vim: set ft=sh: #
