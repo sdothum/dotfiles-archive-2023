@@ -75,7 +75,7 @@ if [ "$*" ] ;then
 
     init) git init
           git add README.md
-          git commit -m "first commit"
+          git commit -m "refresh commit"
           git remote add origin https://github.com/sdothum/dotfiles.git
           git push -u origin master
           git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
