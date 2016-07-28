@@ -7,7 +7,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: [time=seconds] $(basename $0) [low | normal | critical] \"<summary>\" [\"<body>\"]"
+  echo "usage: [time=seconds]  $(basename $0)  [low | normal | critical] \"<summary>\" [\"<body>\"]"
   exit 1
 }
 

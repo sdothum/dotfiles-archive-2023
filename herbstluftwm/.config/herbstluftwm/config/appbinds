@@ -59,7 +59,8 @@ hc keybind Super-p                   spawn dmenu pass
 hc keybind Super-Shift-p             spawn pr eject
 hc keybind Super-Control-p           spawn proof
 hc keybind Super-q                   spawn toggle amphetype
-hc keybind Super-Shift-q             spawn clack swap
+# hc keybind Super-Shift-q           spawn toggle plover
+# hc keybind Super-Shift-q           spawn clack swap
 hc keybind Super-Control-q           spawn clack
 hc keybind Super-r                   spawn dmenu radio
 # hc keybind Super-Shift-r           spawn dmenu references

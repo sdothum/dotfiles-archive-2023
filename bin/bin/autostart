@@ -50,7 +50,7 @@ if server ;then
           -k "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
           -s "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
 fi
-server && dmenu screensaver on
+# server && dmenu screensaver on
 unclutter -idle 1 -jitter 2 -root &
 
 # ................................................................. Systray apps
