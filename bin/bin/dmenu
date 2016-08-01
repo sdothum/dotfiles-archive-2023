@@ -33,7 +33,7 @@ unquote() {
 
 # ................................................... Rofi fullscreen fill specs
 
-# -fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
+# fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
 # fill the actual physical display area, tweak rofi padding, fontsize and lines
 # for 2560, 1680 (secondary), 1440, 1024 displays
 if hlwm; then
@@ -42,6 +42,10 @@ if hlwm; then
       padding=410
       fontsize=18
       lines=12
+    elif is display =1680 ;then
+      padding=230
+      fontsize=16
+      lines=10
     elif is display =1440 ;then
       padding=200
       fontsize=14
@@ -56,7 +60,7 @@ if hlwm; then
       lines=7
     fi
   else
-    # 1680 secondary monitor
+    # 1680 as secondary monitor
     padding=230
     fontsize=16
     lines=10

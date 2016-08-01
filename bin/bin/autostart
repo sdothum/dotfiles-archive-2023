@@ -42,15 +42,15 @@ pidof urxvtd || urxvtd -q -o -f &
 autocutsel -selection PRIMARY -fork &
 
 draw compton
-if server ;then
-  dispread -v -d2 -c1 -yl "-P0.012987012987,1,4.11345646438" \
-          -k "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
-          -s "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
-  dispread -v -d1 -c1 -yl "-P0.0195488721805,1,4.07630522088" \
-          -k "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
-          -s "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
-fi
-# server && dmenu screensaver on
+# if server ;then
+#   dispread -v -d2 -c1 -yl "-P0.012987012987,1,4.11345646438" \
+#           -k "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
+#           -s "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
+#   dispread -v -d1 -c1 -yl "-P0.0195488721805,1,4.07630522088" \
+#           -k "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
+#           -s "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
+# fi
+server && dmenu screensaver on
 unclutter -idle 1 -jitter 2 -root &
 
 # ................................................................. Systray apps

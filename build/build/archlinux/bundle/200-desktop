@@ -48,6 +48,7 @@
 
 = gtk themes and engines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  adapta-gtk-theme-deb
 # flattr-icon-theme-git
 # gtk-chtheme
 # gtk-engine-equinox
@@ -60,7 +61,7 @@
 # gtk-theme-numix-white
 # numix-icon-theme-git
 # numix-themes
-  paper-gtk-theme-git
+# paper-gtk-theme-git
   paper-icon-theme-git
 # qtcurve-kde4
 # qtcurve-style-numix
