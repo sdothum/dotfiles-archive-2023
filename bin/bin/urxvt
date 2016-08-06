@@ -9,7 +9,11 @@
 # URxvt client/server
 export SHELL=/usr/bin/zsh
 # adjust font for macbook nvidia display
-nvidia && fn='-fn xft:PragmataPro:size=11'
+if macbook ;then
+  fn='-fn xft:PragmataPro:size=9'
+elif nvidia ;then
+  fn='-fn xft:PragmataPro:size=11'
+fi 
 
 eval urxvtc $fn $@
 if [ $? -eq 2 ] ;then

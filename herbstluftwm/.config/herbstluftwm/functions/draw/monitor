@@ -1,6 +1,6 @@
 # sdothum - 2016 (c) wtfpl
 [ $TRACE ] && CHILD="draw/monitor $@" . $PARENT
-set -x
+
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
@@ -16,7 +16,10 @@ set -x
 SHADOW=${SHADOW:-1}
 # load theme
 # . ${0%/draw}/config/ENV
-panel_height=$(query pheight)
+case $@ in
+  secondary*) panel_height=$(query pheight secondary) ;;
+  *)          panel_height=$(query pheight primary) ;;
+esac
 
 # ricing pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, etc
 # RICE=21/13
@@ -82,7 +85,7 @@ if [ $PANEL_MARGIN ] ;then
 else
   panelY=0
 fi
-[ $margin -lt $panel_height ] && marginY=$panel_height || marginY=0
+[ $margin -lt $panel_height ] && marginY=$(( $panel_height - $margin )) || marginY=0
 # reshape monocle frame by urxvt lines
 if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
   monocleY=$(( $(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2) * $MONOCLE_LINES ))
@@ -95,7 +98,7 @@ fi
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
-fullscreen_width=$(( $normal_width - $window_frame*2 - $border * 2))
+fullscreen_width=$(( $normal_width - $window_frame*2 - $border*2))
 # panel width global attribute, see draw panel
 # echo $fullscreen_width >$FULLSCREEN:width
 
@@ -121,9 +124,9 @@ case $@ in
                       # desktop screens retain margins
                       primary=$(printf '%dx%d%+d%+d' \
                               $(( $fullscreen_width - $SHADOW )) \
-                              $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY - $border*2)) \
-                              $(( $X1 + $marginX + $window_frame + $monocle - 1 + $border)) \
-                              $(( $margin - $monocleY + $window_frame + $border )) )
+                              $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY )) \
+                              $(( $X1 + $marginX + $window_frame + $monocle - 1 )) \
+                              $(( $margin - $monocleY + $window_frame )) )
                     else
                       # laptop screens fill to edge
                       primary=$(printf '%dx%d%+d%+d' \
@@ -138,13 +141,13 @@ case $@ in
              if [ $monocle -eq 0 ] ;then
                primary=$(printf '%dx%d%+d%+d' \
                        $(( $X0 - $marginX*2 )) \
-                       $(( $Y0 - $margin*2 - $marginY )) \
+                       $(( $Y0 - $margin*2 + $window_frame - $marginY - 2 )) \
                        $(( $X1 + $marginX - 1 )) \
                        $margin )
              else
                primary=$(printf '%dx%d%+d%+d' \
                        $normal_width \
-                       $(( $Y0 + $monocleY*2 - $marginY )) \
+                       $(( $Y0 + $monocleY*2 + $window_frame - $marginY - 2 )) \
                        $(( $X1 + ($X0 - $normal_width)/2 - 1 )) \
                        $(( $margin - $monocleY )) )
              fi ;;
@@ -174,7 +177,7 @@ case $@ in
              # bottom margin calculation adjusted for lower resolution than primary
              secondary=$(printf '%dx%d%+d%+d' \
                        $(( $X1 - $marginX*2 )) \
-                       $(( $Y1 - $margin*2 - $window_frame - $panelY - $border )) \
+                       $(( $Y1 - $margin*2 + $window_frame - $marginY - 2 )) \
                        $marginX \
                        $margin ) ;;
 

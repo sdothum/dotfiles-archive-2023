@@ -25,7 +25,8 @@ margins() {
   case $1 in
     3440) echo 0 ;;
     2560) echo 86 ;;
-    1680) is multihead && echo $(pixel_match $(margins 3440) $UM1680) || echo 42 ;;
+    # 1680) is multihead && echo $(pixel_match $(margins 2560) $UM1680) || echo 42 ;;
+    1680) echo 0 ;;
     1440) echo 10;;
     *)    echo 0 ;;
   esac
