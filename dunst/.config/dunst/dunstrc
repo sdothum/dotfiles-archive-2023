@@ -180,13 +180,13 @@
     timeout = 10
 
 [urgency_normal]
-    background = "#FDF6E3"
-    foreground = "#242C2E"
+    background = "#285577"
+    foreground = "#FDF6E3"
     timeout = 20
 
 [urgency_critical]
-    background = "#EF5A29"
-    foreground = "#242C2E"
+    background = "#900000"
+    foreground = "#FDF6E3"
     timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules to

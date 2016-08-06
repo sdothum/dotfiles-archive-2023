@@ -84,11 +84,10 @@ fi
 [ $PRIMARY -lt 1440 ] && export PANEL_MARGIN=true
 
 # panel fonts
-export PANEL_HEIGHT=18
-export PANEL_FONT='Arial:size=8'
+# export ICON_FONT='FontAwesome'
+export PANEL_FONT='Arial'
+export UTF8_FONT='DejaVu Sans Mono for Powerline'
 export PANEL_UNDERLINE=2
-export UTF8_FONT='DejaVu Sans Mono for Powerline:size=8'
-# export ICON_FONT='FontAwesome:size=8'
 
 # .................................................................. Panel theme
 
@@ -109,11 +108,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#5a544e'
-export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#2d2a27'
-export INACTIVE_FG='#4c5257'
-export INACTIVE_HIDDEN_FG='#26292c'
+export DEFAULT_FG='#c5ee9a'
+export ACTIVE_FG='#f0f0f0'
+export ACTIVE_HIDDEN_FG='#62774d'
+export INACTIVE_FG='#c096ed'
+export INACTIVE_HIDDEN_FG='#604b76'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

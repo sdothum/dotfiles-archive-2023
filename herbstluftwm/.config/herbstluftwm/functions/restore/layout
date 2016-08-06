@@ -1,0 +1,44 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="restore/frames $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................... Restore layout
+
+# Usage: restore layout [tags]
+
+layout() {
+  if is display =2560 ;then
+    case $1 in
+      1) herbstclient load '1' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
+      2) herbstclient load '2' '(clients max:0)' ;;
+      3) herbstclient load '3' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
+      4) herbstclient load '4' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
+      5) herbstclient load '5' '(clients horizontal:0)' ;;
+      6) herbstclient load '6' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
+    esac
+  elif is display =3440 ;then
+    case $1 in
+      1) herbstclient load '1' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
+      2) herbstclient load '2' '(clients max:0)' ;;
+      3) herbstclient load '3' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
+      4) herbstclient load '4' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
+      5) herbstclient load '5' '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))' ;;
+      6) herbstclient load '6' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
+    esac
+  else
+    herbstclient load "$1" '(clients vertical:0)'
+  fi
+}
+
+if [ "$1" = tags ] ;then
+  for i in $TAGS
+  do
+    layout $i
+  done
+else
+  layout $TAG
+fi
+
+# vim: set ft=sh: #

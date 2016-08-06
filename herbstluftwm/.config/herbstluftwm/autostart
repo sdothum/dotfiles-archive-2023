@@ -59,15 +59,9 @@ else
   draw root blank
 fi
 
+# initialize tag layouts
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
-if is display +1440 ;then
-  herbstclient load '1' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
-  herbstclient load '2' '(clients max:0)' &
-  herbstclient load '3' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
-  herbstclient load '4' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
-  herbstclient load '5' '(clients horizontal:0)' &
-  herbstclient load '6' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' &
-fi
+restore layout tags
 
 # ................................................................ Startup suite
 

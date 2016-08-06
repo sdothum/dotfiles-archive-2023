@@ -49,7 +49,7 @@ if ! [ -e $corpus.words ] ;then
       | aspell --ignore-case -a \
       | grep -v '^\*$' \
       | grep -v '^$' \
-      | awk '{ print $2; }' \
+      | awk '{ print $2 }' \
       >$corpus.undefined
   diff $corpus.words $corpus.undefined \
       | grep '^< [a-z]' \

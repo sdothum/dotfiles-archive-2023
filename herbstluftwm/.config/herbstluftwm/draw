@@ -10,9 +10,11 @@
 # Usage: draw <msg>, see functions/draw
 
 # um pixel pitch for primary and other monitors used
-# 30" 2560x1600
-# 22" 1680x1050
+# 34"   3440x1440
+# 30"   2560x1600
+# 22"   1680x1050
 # 15.4" 1440x900
+UM3440=231
 UM2560=250
 UM1680=282
 UM1440=230
@@ -21,9 +23,10 @@ UM1440=230
 # laptops are arbitrary ratios of
 margins() {
   case $1 in
+    3440) echo 0 ;;
     2560) echo 86 ;;
-    1680) is multihead && echo $(pixel_match $(margins 2560) $UM1680) || echo 42 ;;
-    1440) echo 30;;
+    1680) is multihead && echo $(pixel_match $(margins 3440) $UM1680) || echo 42 ;;
+    1440) echo 10;;
     *)    echo 0 ;;
   esac
 }

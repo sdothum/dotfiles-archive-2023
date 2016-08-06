@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/pheight $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Panel height
+
+is display =3440 && echo 20 || echo 18
+
+# vim: set ft=sh: #sdothum

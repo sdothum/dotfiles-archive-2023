@@ -18,7 +18,7 @@ heading "restore connman dns"
 sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
 
 
-if server && [ -d /etc/X11/xorg.conf.d ] ;then
+if [ -d /etc/X11/xorg.conf.d ] ;then
 heading "x11 trackman mouse"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   # restore in event xorg is updated

@@ -19,15 +19,15 @@ hc set frame_bg_transparent           1
 hc set frame_border_active_color      white
 hc set frame_border_normal_color      black
 hc set frame_border_width             0
-hc set frame_gap                      57
+hc set frame_gap                      $SHADOW
 hc set frame_padding                  0
 hc set frame_transparent_width        0
 hc set gapless_grid                   0
 hc set mouse_recenter_gap             0
 hc set smart_frame_surroundings       0
 hc set smart_window_surroundings      0
-hc set window_gap                     $SHADOW
-# hc set window_gap                   2
+# hc set window_gap                   $SHADOW
+hc set window_gap                     3
 
 hc attr theme.active.color            red
 hc attr theme.active.inner_color      '#808080'
@@ -50,6 +50,10 @@ if is display -1440 ;then
 elif is display -2560 ;then
   hc set frame_gap                    1
   hc set window_gap                   2
+elif is display =2560 ;then
+  hc set frame_gap                    57
+elif is display =3440 ;then
+  hc set frame_gap                    $SHADOW
 fi
 
 # vim: set ft=sh: #

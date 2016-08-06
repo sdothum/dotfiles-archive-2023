@@ -9,10 +9,12 @@
 # Usage: draw panel <fifo>, see restore panel
 
 # load theme
-. ${0%/draw}/config/ENV
+# . ${0%/draw}/config/ENV
 
 fifo=${1#:}
 pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
+
+panel_height=$(query pheight)
 
 # ..................................................................... Geometry
 
@@ -29,28 +31,29 @@ done
 gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
 border=$(herbstclient attr theme.border_width)
 # dynamically indent the panel by margin minus panel height
-indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
-[ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
+indent=$(( $monitorY + $gap + $border - $panel_height ))
+[ $indent -lt $panel_height ] && indent=$(( $panel_height * 3 / 2 ))
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $gap + $indent - 1 ))
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
-panel_offsetY=$(( ($monitorY + $gap - $PANEL_HEIGHT - ($SHADOW / 2)) / 2 - 1 ))
+panel_offsetY=$(( ($monitorY + $gap - $panel_height - ($SHADOW / 2)) / 2 - 1 ))
 [ $panel_offsetX -lt 0 ] && panel_offsetX=0
 [ $panel_offsetY -lt 0 ] && panel_offsetY=0
+[ $panel_offsetY -eq 0 ] && panel_offsetY=$(( $SHADOW / 3 ))
 
-# check for fullscreen mode and adjust accordingly
-case $monitorW in
-  # "$(cat $FULLSCREEN:width)") gap=$(( $(margins $monitorW) + $gap ))
-  #                             panel_width=$(( $panel_width + $gap * 2 ))
-  #                             panel_offset=$(( $panel_offset - gap )) ;;
-
-  "$PRIMARY" | "$SECONDARY") [ $monitor -ne 0 ] && gap=$(pixel_match $gap $UM1680)
-                             gap=$(( $(margins $monitorW) - $gap ))
-                             panel_width=$(( $panel_width - $gap * 2 ))
-                             panel_offset=$(( $panel_offset + gap )) ;;
-
-  # *) [ $TRACE ] && echo "= monitorW=$monitorW PRIMARY=$PRIMARY SECONDARY=$SECONDARY" >>$TRACE ;;
-esac
+# # check for fullscreen mode and adjust accordingly
+# case $monitorW in
+#   # "$(cat $FULLSCREEN:width)") gap=$(( $(margins $monitorW) + $gap ))
+#   #                             panel_width=$(( $panel_width + $gap * 2 ))
+#   #                             panel_offset=$(( $panel_offset - gap )) ;;
+#
+#   "$PRIMARY" | "$SECONDARY") # [ $monitor -ne 0 ] && gap=$(pixel_match $gap $UM1680)
+#                              gap=$(( $(margins $monitorW) - $gap ))
+#                              panel_width=$(( $panel_width - $gap * 2 ))
+#                              panel_offset=$(( $panel_offset + gap )) ;;
+#
+#   # *) [ $TRACE ] && echo "= monitorW=$monitorW PRIMARY=$PRIMARY SECONDARY=$SECONDARY" >>$TRACE ;;
+# esac
 
 # ................................................................... Tag status
 
@@ -206,12 +209,14 @@ clock -i 1 -sf "S%A   ⮃   %{F$ACTIVE_FG}%-I:%M %P%{F-}   ⮃   %-d %b '%y" >$P
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 
+is display =3440 && size=9 || size=8
+
 cat $PANEL_FIFO:$fifo \
     | panel \
     | lemonbar -d -n "lemonbar:$fifo" \
-               -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY $PANEL_BOTTOM \
+               -g ${panel_width}x$panel_height+$panel_offsetX+$panel_offsetY $PANEL_BOTTOM \
                -u $PANEL_UNDERLINE \
-               -f "$PANEL_FONT" -f "$UTF8_FONT" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+               -f "$PANEL_FONT:size=$size" -f "$UTF8_FONT:size=$size" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #

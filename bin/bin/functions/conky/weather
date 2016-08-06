@@ -38,7 +38,7 @@ if [ $debug ] ;then
   read input
 fi
 
-CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/&.*$/, "", $0); print; }')
+CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/&.*$/, "", $0); print }')
 if [ $debug ] ;then
   echo Current .. $CURRENT
   echo
@@ -46,7 +46,7 @@ if [ $debug ] ;then
 fi
 
 # round temperature
-TEMPERATURE=$(echo $CURRENT | awk '{ gsub(/[^0-9.]*/, "", $0); $0 = $0 + .5; gsub(/\.[0-9]/, "", $0); print; }')
+TEMPERATURE=$(echo $CURRENT | awk '{ gsub(/[^0-9.]*/, "", $0); $0 = $0 + .5; gsub(/\.[0-9]/, "", $0); print }')
 CURRENT=$(echo $CURRENT | sed 's/[0-9.]//g')
 if [ $debug ] ;then
   echo Temperature .. $TEMPERATURE
@@ -55,7 +55,7 @@ if [ $debug ] ;then
   read input
 fi
 
-FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/ .*$/, "", $0); print; }')
+FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/ .*$/, "", $0); print }')
 if [ $debug ] ;then
   echo Feels like .. \"$FEELSLIKE\"
   echo

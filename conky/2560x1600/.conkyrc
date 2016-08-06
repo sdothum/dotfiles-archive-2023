@@ -172,8 +172,7 @@ ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 14}${alignr 1}${tcp_portmon
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 15}${alignr 1}${tcp_portmon 1 65535 rport 15}
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 16}${alignr 1}${tcp_portmon 1 65535 rport 16}
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 17}${alignr 1}${tcp_portmon 1 65535 rport 17}
-${if_match ${tcp_portmon 1 65535 count} 8f817b 18}${alignr}${color3}• • • ${endif}
+${if_match ${tcp_portmon 1 65535 count} > 18}${alignr}${color3}• • • ${endif}
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 18}${alignr 1}${tcp_portmon 1 65535 rport 18}
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 19}${alignr 1}${tcp_portmon 1 65535 rport 19}
-# ${if_match ${tcp_portmon 1 65535 count} 8f817b 20}${alignr}${color3}• • • ${endif}
-
+# ${if_match ${tcp_portmon 1 65535 count} > 20}${alignr}${color3}• • • ${endif}

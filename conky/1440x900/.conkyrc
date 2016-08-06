@@ -1,66 +1,69 @@
-#==============================================================================
-#                                 conkyrc_grey
-#
-#  author  : SLK
-#  version : v2011011601
-#  license : Distributed under the terms of GNU GPL version 2 or later
-#
-#==============================================================================
+conky.config = {
+--==============================================================================
+--                                 conkyrc_grey
 
-background yes
-update_interval 1
+--  author  : SLK
+--  version : v2011011601
+--  license : Distributed under the terms of GNU GPL version 2 or later
 
-cpu_avg_samples 2
-net_avg_samples 2
-temperature_unit celsius
+--==============================================================================
 
-double_buffer yes
-no_buffers yes
-# text_buffer_size 2048
+  background = true,
+  update_interval = 1,
 
-alignment top_right
-gap_x 14
-gap_y 14
-minimum_size 185 900
-maximum_width 185
-own_window yes
-# own_window_type panel
-own_window_type dock
-own_window_transparent yes
-# own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
-own_window_hints sticky,above
-border_inner_margin 0
-border_outer_margin 14
+  cpu_avg_samples = 2,
+  net_avg_samples = 2,
+  temperature_unit = 'celsius',
 
-draw_shades no
-draw_outline no
-draw_borders no
-draw_graph_borders no
+  double_buffer = true,
+  no_buffers = true,
+-- text_buffer_size 2048
 
-override_utf8_locale yes
-use_xft yes
-xftfont Ubuntu:size=6
-xftalpha 0.5
-uppercase no
+  alignment = 'top_right',
+  gap_x = 14,
+  gap_y = 14,
+  minimum_width = 185, minimum_height = 900,
+  maximum_width = 185,
+  own_window = true,
+-- own_window_type panel
+  own_window_type = 'dock',
+  own_window_transparent = true,
+-- own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+  own_window_hints = 'sticky,above',
+  border_inner_margin = 0,
+  border_outer_margin = 14,
 
-default_color 0b525a
-color0 083d43
-color1 000000
-color2 080808
-color3 101010
-color4 202020
-color5 303030
-color6 031719
-color7 062d32
-color8 083d43
-color9 56120b
-#colorA 06292d
-#colorI 2b0906
+  draw_shades = false,
+  draw_outline = false,
+  draw_borders = false,
+  draw_graph_borders = false,
 
-lua_load ~/.conky/conky-rings.lua
-lua_draw_hook_post main
+  override_utf8_locale = true,
+  use_xft = true,
+  font = 'Ubuntu:size=6',
+  xftalpha = 0.5,
+  uppercase = false,
 
-TEXT
+  default_color = '#c58788',
+  color0 = '#936566',
+  color1 = '#f0f0f0',
+  color2 = '#c0c0c0',
+  color3 = '#909090',
+  color4 = '#707070',
+  color5 = '#505050',
+  color6 = '#362626',
+  color7 = '#6e4b4c',
+  color8 = '#936566',
+  color9 = '#87c4c3',
+--colorA 624344
+--colorI 436261
+
+  lua_load = '~/.conky/conky-rings.lua',
+  lua_draw_hook_post = 'main',
+
+};
+
+conky.text = [[
 ${voffset 62}
 ${goto 105}${color}${font Ubuntu:size=18}${time %e}
 ${goto 67}${color1}${voffset -24}${font Ubuntu:size=9}${time %A}
@@ -80,7 +83,7 @@ ${goto 75}${font}${color2}${kernel} ${alignr}${uptime}
 # ${goto 85}${font}${color0}${lua_parse null ${mpd_title}}
 # ${goto 85}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
 ${voffset 12}
-${goto 85}${loadgraph 20,0 062d32 062d32}
+${goto 85}${loadgraph 20,0 6e4b4c 6e4b4c}
 ${voffset -5}${goto 85}${font}${color1}Load ${alignr}${loadavg 1}   ${loadavg 2}   ${loadavg 3}
 
 ${voffset 25}
@@ -95,7 +98,7 @@ ${goto 85}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 ${goto 85}${font}${color4}${top name 4}${alignr}${top cpu 4}%
 ${goto 85}${font}${color5}${top name 5}${alignr}${top cpu 5}%
 # ${goto 85}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
-${goto 85}${cpugraph 20,0 062d32 062d32}
+${goto 85}${cpugraph 20,0 6e4b4c 6e4b4c}
 ${voffset -5}${goto 85}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 
 ${voffset 25}
@@ -112,12 +115,13 @@ ${voffset 25}
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
 # ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}/tmp ${alignr}${fs_used /tmp}
-${goto 85}${diskiograph 20,0 062d32 062d32}
+${goto 85}${diskiograph 20,0 6e4b4c 6e4b4c}
 ${voffset -5}${goto 85}${font}${color1}Disk I/O ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 25}
 ${goto 85}${color2}${font Ubuntu:size=6:style=Bold}${color}${wireless_essid wls4}${font Ubuntu:size=6}
 ${goto 85}${font Ubuntu:size=6:style=Bold}${color0}wls4 ${alignr}${addr wls4}${font Ubuntu:size=6}
-${goto 85}${downspeedgraph wls4 20,0 062d32 062d32}
-${voffset -33}${goto 85}${upspeedgraph wls4 20,0 083d43 083d43}
+${goto 85}${downspeedgraph wls4 20,0 6e4b4c 6e4b4c}
+${voffset -33}${goto 85}${upspeedgraph wls4 20,0 936566 936566}
 ${voffset -5}${goto 85}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wls4}}↑   ${lua_parse bandwidth ${downspeed wls4}}↓
+]];

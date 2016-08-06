@@ -77,10 +77,10 @@ text() {
 }
 
 graphs() {
-  gradient=$(grep '^color7 ' $conkyrc | cut -d' ' -f2)
+  gradient=$(grep '^color7 ' $conkyrc | cut -d\' -f2)
   sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
   shift
-  gradient=$(grep '^color8 ' $conkyrc | cut -d' ' -f2)
+  gradient=$(grep '^color8 ' $conkyrc | cut -d\' -f2)
   sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
 }
 

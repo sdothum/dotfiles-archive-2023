@@ -12,7 +12,7 @@ usage() {
 }
 
 # reader
-host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2; }' | sed 's/"//g')
+host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')
 
 case $i in
   '') pidof slrn || slrn -h $host ;;

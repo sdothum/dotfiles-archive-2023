@@ -46,10 +46,8 @@ fi
 
 # ........................................................................ Panel
 
-# panel persistence, enabled if multihead
-if is multihead ;then
-  [ -e $PANEL ] && restore panel || toggle panel
-elif [ -e $CONKY ] ;then
+# panel persistence
+if [ -e $CONKY ] ;then
   # disable panel on conky
   [ -e $PANEL ] && toggle panel || restore panel
 else

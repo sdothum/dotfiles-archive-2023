@@ -62,7 +62,7 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-server && term 'IRC' FONTSIZE '10' weechat
+# server && term 'IRC' FONTSIZE '10' weechat
 server && term 'Mail' alot
 
 # .................................................................. Window apps
@@ -72,5 +72,10 @@ server && vimwiki
 switch tag "$web"
 qutebrowser -R http://luna:8000/tt-rss/ &
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
+
+# .............................................................. Cleanup desktop
+
+# autocutsel leaves a small square of black pixels in the bottom right corner
+(xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 
 # vim: set ft=sh: #

@@ -7,6 +7,6 @@
 # .................................................................... Processes
 
 # process list
-p "$@" | /usr/bin/awk '{ print $2; }'
+p "$@" | /usr/bin/awk '{ print $2 }'
 
 # vim: set ft=sh: #

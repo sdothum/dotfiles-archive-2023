@@ -1,6 +1,6 @@
 # sdothum - 2016 (c) wtfpl
 [ $TRACE ] && CHILD="draw/monitor $@" . $PARENT
-
+set -x
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
@@ -14,6 +14,12 @@
 # Note:  draw monitor conky fullscreen width, returns the width only, see draw panel
 
 SHADOW=${SHADOW:-1}
+# load theme
+# . ${0%/draw}/config/ENV
+panel_height=$(query pheight)
+
+# ricing pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, etc
+# RICE=21/13
 
 # ..................................................................... Displays
 
@@ -42,6 +48,10 @@ secondary=$(monitor 1)
 
 # ....................................................................... Layout
 
+conky() {
+  sed -r 's/.*= *([0-9]*),.*/\1/'
+}
+
 # margin tweaks for known display resolutions
 desktop_margin=$(margins $X0)
 # see toggle monocle
@@ -57,21 +67,22 @@ window=$(herbstclient attr settings.window_gap)
 border=$(herbstclient attr theme.border_width)
 window_frame=$(( $window + $frame ))
 margin=$(( $desktop_margin - $window_frame ))
-# ricing tweak.. pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, ..
-# note: frame and window gap changes will skew the left margin along the X axis
-marginX=$(( $margin * 17 / 13 ))
-conky_gap=$(grep '^gap_x' $HOME/.conkyrc | awk '{ print $2 }')
-conky_inner=$(grep '^border_inner_margin' $HOME/.conkyrc | awk '{ print $2 }')
-conky_outer=$(grep '^border_outer_margin' $HOME/.conkyrc | awk '{ print $2 }')
-conky_width=$(grep '^maximum_width' $HOME/.conkyrc | awk '{ print $2 }')
+[ $margin -lt 0 ] && margin=0
+# frame and window gap changes will skew the left margin along the X axis
+[ $RICE ] && marginX=$(( $margin * $RICE )) || marginX=$margin
+conky_gap=$(grep '^ *gap_x' $HOME/.conkyrc | conky)
+conky_inner=$(grep '^ *border_inner_margin' $HOME/.conkyrc | conky)
+conky_outer=$(grep '^ *border_outer_margin' $HOME/.conkyrc | conky)
+conky_width=$(grep '^ *maximum_width' $HOME/.conkyrc | conky)
 conkyX=$(( $conky_width + $conky_gap + $conky_inner + $conky_outer - $window_frame ))
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then
-  [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
+  [ -e $PANEL ] && panelY=$panel_height || panelY=0
 else
   panelY=0
 fi
+[ $margin -lt $panel_height ] && marginY=$panel_height || marginY=0
 # reshape monocle frame by urxvt lines
 if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
   monocleY=$(( $(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2) * $MONOCLE_LINES ))
@@ -80,6 +91,7 @@ if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
 else
   monocleY=0
 fi
+[ $margin -lt $monocleY ] && monocleY=$margin
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
@@ -98,9 +110,9 @@ case $@ in
   conky) rm -f $FULLSCREEN:primary 2>/dev/null
          rm -f $FULLSCREEN:$TAG 2>/dev/null
          primary=$(printf '%dx%d%+d%+d' \
-                 $normal_width \
-                 $(( $Y0 - $margin*2 + $monocleY*2 )) \
-                 $(( $X1 + $marginX + $monocle - 1 - $SHADOW )) \
+                 $(( $normal_width - $SHADOW )) \
+                 $(( $Y0 + $monocleY*2 - $margin*2 )) \
+                 $(( $X1 + $marginX + $monocle - 1 )) \
                  $(( $margin - $monocleY )) ) ;;
 
   conky*fullscreen) touch $FULLSCREEN:primary
@@ -108,9 +120,9 @@ case $@ in
                     if [ $X0 -gt 1024 ] ;then
                       # desktop screens retain margins
                       primary=$(printf '%dx%d%+d%+d' \
-                              $fullscreen_width \
-                              $(( $Y0 - $margin*2 + $monocleY*2 - $window_frame*2 - $panelY - $border * 2)) \
-                              $(( $X1 + $marginX + $window_frame + $monocle - 1 - $SHADOW + $border)) \
+                              $(( $fullscreen_width - $SHADOW )) \
+                              $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY - $border*2)) \
+                              $(( $X1 + $marginX + $window_frame + $monocle - 1 + $border)) \
                               $(( $margin - $monocleY + $window_frame + $border )) )
                     else
                       # laptop screens fill to edge
@@ -126,13 +138,13 @@ case $@ in
              if [ $monocle -eq 0 ] ;then
                primary=$(printf '%dx%d%+d%+d' \
                        $(( $X0 - $marginX*2 )) \
-                       $(( $Y0 - $margin*2 )) \
+                       $(( $Y0 - $margin*2 - $marginY )) \
                        $(( $X1 + $marginX - 1 )) \
                        $margin )
              else
                primary=$(printf '%dx%d%+d%+d' \
                        $normal_width \
-                       $(( $Y0 - $margin*2 + $monocleY*2 )) \
+                       $(( $Y0 + $monocleY*2 - $marginY )) \
                        $(( $X1 + ($X0 - $normal_width)/2 - 1 )) \
                        $(( $margin - $monocleY )) )
              fi ;;
@@ -159,10 +171,10 @@ case $@ in
              # create identical secondary monitor margins using dot pitch adjustment
              margin=$(pixel_match $margin $UM1680)
              marginX=$(pixel_match $marginX $UM1680)
-             # adjust secondary monitor visual margin to primary using dot pitch ratio!
+             # bottom margin calculation adjusted for lower resolution than primary
              secondary=$(printf '%dx%d%+d%+d' \
                        $(( $X1 - $marginX*2 )) \
-                       $(( $Y1 - $margin*2 )) \
+                       $(( $Y1 - $margin*2 - $window_frame - $panelY - $border )) \
                        $marginX \
                        $margin ) ;;
 
@@ -177,6 +189,8 @@ esac
 
 # configure multihead..
 # virtual monitors defined in lieu of hc pad monitor, to define fullscreen boundaries
+# trap negative X pos when no monitor gap»
+primary=$(echo $primary | sed -r 's/-([0-9]*)/+0/g')
 [ $TRACE ] && echo "= herbstclient set_monitors $primary $secondary" >>$TRACE
 herbstclient set_monitors $primary $secondary &
 
