@@ -1,6 +1,6 @@
 # sdothum - 2016 (c) wtfpl
 [ $TRACE ] && CHILD="toggle/monocle $@" . $PARENT
-
+set -x
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
@@ -15,14 +15,6 @@
 #        regardless of the monitor setting, monocle or normal display
 
 fullscreen=$1
-
-merge() {
-  for i in $(seq 1 $(( $(query fcount) - 1 )) )
-  do
-    # collapse all frames into single subframe
-    herbstclient remove
-  done
-}
 
 # calculate pseudo golden ratio margins
 if is primary ;then
@@ -65,31 +57,30 @@ if is primary ;then
 
   if [ -e $MONOCLE ] ;then
     # allow toggling fullscreen (width) and monocle frame, else just max current window
-    merge
+    restore mono
     herbstclient set_layout max
     rm -f $FULLSCREEN:$tag 2>/dev/null
   else
     # allow transitioning to full fullscreen, see draw monitor
     if ! is fullscreen ;then
-      merge
+      restore mono
       # side by side frames is my normal layout..
       if is multihead ;then
-        # rotate window focus to left frame
-        if [ $(query wcount) -gt 2 ] ;then
-          herbstclient chain . set_layout horizontal . split explode 0.5 \
-                             . focus right . set_layout vertical \
-                             . focus left . set_layout vertical
-        elif [ $(query wcount) -gt 1 ] ;then
-          herbstclient chain . set_layout horizontal . split explode 0.5 . rotate . rotate
+        if is display =3440 ;then
+          restore layout thirds
+        elif is display =2560 ;then
+          restore layout even
         else
-          herbstclient chain . set_layout horizontal . split explode 0.5 . rotate
+          restore layout grid
         fi
+        flash=true
       fi
     fi
   fi
   restore panel
   herbstclient chain . bring $winid . unlock
   rm -f $LOCK
+  [ $flash ] && focus borders
 fi
 
 # vim: set ft=sh: #
