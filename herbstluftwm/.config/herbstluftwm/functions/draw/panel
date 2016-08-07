@@ -35,17 +35,24 @@ indent=$(( $monitorY + $gap + $border - $panel_height ))
 [ $indent -lt $panel_height ] && indent=$(( $panel_height * 3 / 2 ))
 panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
 
-# multihead geometry for secondary primary (left right) orientation
-panel_offsetX=$(( $gap + $indent - 1 ))
-[ $monitorX -gt 0 ] && panel_offsetX=$(( $panel_offsetX + $monitorX - 1680 ))
-
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
-displayH=$(xrandr 2>/dev/null | grep '*' | sed -r 's/.*x([0-9]*).*/\1/' | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
+displayH=$(xrandr 2>/dev/null \
+         | grep '*' \
+         | sed -r 's/.*x([0-9]*).*/\1/' \
+         | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
 if [ $(( $displayH - $monitorH )) -gt $panel_height ] ;then
   panel_offsetY=$(( ($displayH - $monitorH - $panel_height) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
 else
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $panel_height )) || panel_offsetY=$panel_height
+fi
+
+# multihead geometry for secondary primary (left right) orientation
+panel_offsetX=$(( $gap + $indent - 1 ))
+if is multihead ;then
+  is primary && panel_offsetX=$(( $panel_offsetX + $monitorX - 1680 ))
+else
+  panel_offsetY=$(( $panel_offsetY + 2 ))
 fi
 
 # ................................................................... Tag status

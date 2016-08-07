@@ -115,8 +115,8 @@ hc keybind $Mod-Control-comma        use_index -1 --skip-visible
 hc keybind $Mod-BackSpace            spawn switch tag
 
 # set layout
-hc keybind $Mod-r                    remove
-hc keybind $Mod-Shift-r              spawn restore layout
+# hc keybind $Mod-r                  remove
+hc keybind $Mod-r                    spawn restore layout
 hc keybind $Mod-space                spawn toggle max
 hc keybind $Mod-Shift-space          spawn switch layout
 hc keybind $Mod-s                    chain . floating toggle . emit_hook focus_changed

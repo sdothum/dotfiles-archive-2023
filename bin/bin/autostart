@@ -62,7 +62,7 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-# server && term 'IRC' FONTSIZE '10' weechat
+server && term 'IRC' FONTSIZE '10' weechat
 server && term 'Mail' alot
 
 # .................................................................. Window apps

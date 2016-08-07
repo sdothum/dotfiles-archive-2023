@@ -6,26 +6,55 @@
 
 # ............................................................... Restore layout
 
-# Usage: restore layout [tags]
+# Usage: restore layout [ tags |  ]
 
+even() {
+  herbstclient load "$1" '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
+}
+
+grid() {
+  herbstclient load "$1" '(clients grid:0)'
+}
+
+horizontal() {
+  herbstclient load "$1" '(clients horizontal:0)'
+}
+
+max() {
+  herbstclient load "$1" '(clients max:0)'
+}
+
+third() {
+  herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
+}
+
+thirds() {
+  herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
+}
+
+vertical() {
+  herbstclient load "$1" '(clients vertical:0)'
+}
+
+# initial desktop layouts
 layout() {
   if is display =2560 ;then
     case $1 in
-      1) herbstclient load '1' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
-      2) herbstclient load '2' '(clients max:0)' ;;
-      3) herbstclient load '3' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
-      4) herbstclient load '4' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
-      5) herbstclient load '5' '(clients horizontal:0)' ;;
-      6) herbstclient load '6' '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))' ;;
+      1) even       '1' ;;
+      2) max        '2' ;;
+      3) even       '3' ;;
+      4) even       '4' ;;
+      5) horizontal '5' ;;
+      6) even       '6' ;;
     esac
   elif is display =3440 ;then
     case $1 in
-      1) herbstclient load '1' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
-      2) herbstclient load '2' '(clients max:0)' ;;
-      3) herbstclient load '3' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
-      4) herbstclient load '4' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
-      5) herbstclient load '5' '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))' ;;
-      6) herbstclient load '6' '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))' ;;
+      1) thirds     '1' ;;
+      2) max        '2' ;;
+      3) thirds     '3' ;;
+      4) thirds     '4' ;;
+      5) third      '5' ;;
+      6) thirds     '6' ;;
     esac
   else
     herbstclient load "$1" '(clients vertical:0)'
@@ -38,7 +67,8 @@ if [ "$1" = tags ] ;then
     layout $i
   done
 else
-  layout $TAG
+  layout=$(echo "grid\nhorizontal\nmax\nvertical\neven\nthird\nthirds" | dmenu 'Set Layout' -no-custom) || exit
+  $layout $TAG
 fi
 
 # vim: set ft=sh: #
