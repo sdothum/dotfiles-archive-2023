@@ -69,11 +69,11 @@
 = hardware
 # ▔▔▔▔▔▔▔▔
   dmidecode
-# gpointing-device-settings [nvidia]
+# gpointing-device-settings [macbook]
   hwinfo
   intel-ucode
   lm_sensors
-  mbpfan-git                [nvidia]
+  mbpfan-git                [macbook]
   xf86-input-wacom          [server]
 
 

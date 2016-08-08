@@ -121,7 +121,10 @@
 # ▔▔▔
   arandr               [server]
   autocutsel
+  lib32-libglvnd       [nvidia]
   lib32-mesa-libgl     [laptop]
+  lib32-nvidia-libgl   [nvidia]
+  lib32-nvidia-utils   [nvidia]
   lxrandr              [server]
 # slock
 # trayer-srg-git

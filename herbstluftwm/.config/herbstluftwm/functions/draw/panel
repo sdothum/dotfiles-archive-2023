@@ -209,7 +209,7 @@ clock -i 1 -sf "S%A   ⮃   %{F$ACTIVE_FG}%-I:%M %P%{F-}   ⮃   %-d %b '%y" >$P
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 
-is display =3440 && size=9 || size=8
+is display =3440 && size=10 || size=8
 
 cat $PANEL_FIFO:$fifo \
     | panel \

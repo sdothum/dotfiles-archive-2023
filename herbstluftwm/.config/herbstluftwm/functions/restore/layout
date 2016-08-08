@@ -54,57 +54,51 @@ vertical() {
   herbstclient load "$1" '(clients vertical:0)'
 }
 
+split() {
+  herbstclient chain . set_layout horizontal . split explode $1 \
+                      . focus_edge left . cycle_layout 1 vertical \
+                      . shift right . cycle_layout 1 vertical
+}
+
 # otherwise, manually explode frame windows
 even() {
   if [ "$load" ] ;then
     herbstclient load "$1" '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
-    herbstclient chain . set_layout horizontal . split explode 0.5 \
-                       . focus_edge left . cycle_layout 1 vertical \
-                       . shift right . cycle_layout 1 vertical
+    split 0.5
   fi
 }
 
 thirds() {
-  if [ "$load" ] ;then
+  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 2 ] ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
   else
     restore mono
-    if [ $master = right ] ;then
-      # master window on right
-      herbstclient chain . set_layout horizontal . split explode 0.3333 \
-                         . focus_edge left . cycle_layout 1 vertical \
-                         . focus_edge right . split explode 0.5 \
-                         . focus_edge right . cycle_layout 1 vertical \
-                         . shift left . cycle_layout 1 vertical
-    else
+    if [ $master = left ] ;then
       # master window on left
       herbstclient chain . set_layout horizontal . split explode 0.6666 \
                          . focus_edge right . cycle_layout 1 vertical \
                          . focus_edge left . split explode 0.5 \
                          . focus_edge left . cycle_layout 1 vertical \
                          . shift right . cycle_layout 1 vertical
+    else
+      # master window on right
+      herbstclient chain . set_layout horizontal . split explode 0.3333 \
+                         . focus_edge left . cycle_layout 1 vertical \
+                         . focus_edge right . split explode 0.5 \
+                         . focus_edge right . cycle_layout 1 vertical \
+                         . shift left . cycle_layout 1 vertical
     fi
   fi
 }
 
 onethird() {
-  if [ "$load" ] ;then
+  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 2 ] ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
-    if [ $master = right ] ;then
-      # master window on right
-      herbstclient chain . set_layout horizontal . split explode 0.6666 \
-                         . focus_edge left . cycle_layout 1 vertical \
-                         . shift right . cycle_layout 1 vertical
-    else
-      # master window on left
-      herbstclient chain . set_layout horizontal . split explode 0.3333 \
-                         . focus_edge right . cycle_layout 1 vertical \
-                         . shift left . cycle_layout 1 vertical
-    fi
+    [ $master = left ] && split 0.3333 || split 0.6666
   fi
 }
 
@@ -122,12 +116,12 @@ case "$1" in
   thirds |\
   onethird) herbstclient lock
             $1 $TAG
-            herbstclient unlock
-            focus borders ;;
+            herbstclient unlock ;;
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\neven\nthirds\none third" | dmenu 'Explode to Layout' -no-custom) || exit
      [ "$layout" = 'one third' ] && layout='onethird'
-     restore layout $layout  ;;
+     restore layout $layout
+     focus borders ;;
 esac
 
 # vim: set ft=sh: #

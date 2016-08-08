@@ -51,10 +51,6 @@ secondary=$(monitor 1)
 
 # ....................................................................... Layout
 
-conky() {
-  sed -r 's/.*= *([0-9]*),.*/\1/'
-}
-
 # margin tweaks for known display resolutions
 desktop_margin=$(margins $X0)
 # see toggle monocle
@@ -73,11 +69,7 @@ margin=$(( $desktop_margin - $window_frame ))
 [ $margin -lt 0 ] && margin=0
 # frame and window gap changes will skew the left margin along the X axis
 [ $RICE ] && marginX=$(( $margin * $RICE )) || marginX=$margin
-conky_gap=$(grep '^ *gap_x' $HOME/.conkyrc | conky)
-conky_inner=$(grep '^ *border_inner_margin' $HOME/.conkyrc | conky)
-conky_outer=$(grep '^ *border_outer_margin' $HOME/.conkyrc | conky)
-conky_width=$(grep '^ *maximum_width' $HOME/.conkyrc | conky)
-conkyX=$(( $conky_width + $conky_gap + $conky_inner + $conky_outer - $window_frame ))
+conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then
@@ -88,7 +80,7 @@ fi
 [ $margin -lt $panel_height ] && marginY=$(( $panel_height - $margin )) || marginY=0
 # reshape monocle frame by urxvt lines
 if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
-  monocleY=$(( $(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2) * $MONOCLE_LINES ))
+  monocleY=$(( $MONOCLE_SIZE * $MONOCLE_LINES ))
   # frame effect, arbitrary compression of frame width in relation to frame height
   monocle=$(( $monocle + $monocleY ))
 else

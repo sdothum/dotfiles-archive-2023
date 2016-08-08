@@ -1,6 +1,6 @@
 # sdothum - 2016 (c) wtfpl
 [ $TRACE ] && CHILD="toggle/monocle $@" . $PARENT
-set -x
+
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
@@ -73,14 +73,14 @@ if is primary ;then
         else
           restore layout grid
         fi
-        flash=true
+        blink=true
       fi
     fi
   fi
   restore panel
   herbstclient chain . bring $winid . unlock
   rm -f $LOCK
-  [ $flash ] && focus borders
+  [ $blink ] && focus borders
 fi
 
 # vim: set ft=sh: #

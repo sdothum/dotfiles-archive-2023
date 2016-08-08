@@ -58,6 +58,16 @@ fi
 
 # ........................................................... Margin adjustments
 
+# conky lua syntax filter
+conky() {
+  grep "^ *$1" $HOME/.conkyrc | sed -r 's/.*= *([0-9]*),.*/\1/'
+}
+
+export CONKY_GAP=$(conky 'gap_x')
+export CONKY_INNER=$(conky 'border_inner_margin')
+export CONKY_OUTER=$(conky 'border_outer_margin')
+export CONKY_WIDTH=$(conky 'maximum_width')
+
 # compton shadow left shift pixel adjustment for conky panel edge (0) none
 if ! [ -e $HOME/.compton.conf ] ;then
   export SHADOW=0
@@ -67,8 +77,10 @@ else
   # assumes shadow-offset = -(shadow-radius)
   export SHADOW=$(( $(grep '^shadow-radius =' $HOME/.compton.conf | sed -r 's/.*= *([0-9]*).*/\1/') * 2 )) 
 fi
+
 # dynamic monocle frame height adjustment, (0) none
 # add urxvt lines (top and bottom) using .Xresources fontsize, see draw monitor
+export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
 [ $PRIMARY -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
 
 # ........................................................................ Panel
@@ -108,11 +120,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#295b0d'
+export DEFAULT_FG='#5d4427'
 export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#152e07'
-export INACTIVE_FG='#3d0d59'
-export INACTIVE_HIDDEN_FG='#1f072d'
+export ACTIVE_HIDDEN_FG='#2f2214'
+export INACTIVE_FG='#263e59'
+export INACTIVE_HIDDEN_FG='#131f2d'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

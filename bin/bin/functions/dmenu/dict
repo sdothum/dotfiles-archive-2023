@@ -13,12 +13,15 @@
 
 # lookup selection (unless it is a non-word), else present history tape
 selection=$(xsel -o) && xsel -c
-[ $(echo "$selection" | wc -w) -ne 1 ] && unset selection
+if [ "$selection" ] ;then
+  echo "$selection" | grep -q ' ' && unset selection
+  echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
+fi
 
 if [ "$selection" ] ;then
   word=$selection
 else
-  word=$(echo | history dictionary | sed '1i[ thesaurus ]' | dmenu 'Meaning Of') || exit
+  word=$(echo | history dictionary | sed '1i[ thesaurus ]' | dmenu 'Dictionary') || exit
 fi
 [ "$word" = '[ thesaurus ]' ] && exec dmenu thesaurus
 word=$(unquote $word)

@@ -32,7 +32,7 @@ do
       do
         herbstclient cycle_frame 1
         if herbstclient layout | grep '\[FOCUS\]' | grep 'grid:' ;then
-          [ $(expr $(query wcount) % 2) -gt 0 ] && break
+          [ $(expr $(herbstclient attr tags.focus.curframe_wcount) % 2) -gt 0 ] && break
         fi
         if [ $i -ge $frames ] ;then
           herbstclient cycle_frame 1

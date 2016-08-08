@@ -36,12 +36,16 @@
 
 = x11 drivers
 # ▔▔▔▔▔▔▔▔▔▔▔
+  libglvnd             [nvidia]
   xf86-video-ati       [lspci | grep VGA | grep -q ATI]
   xf86-video-intel     [lspci | grep VGA | grep -q Intel]
-  nvidia-340xx         [nvidia]
-# nvidia-340xx-libgl   [nvidia]
+  nvidia               [nvidia]
+  nvidia-340xx         [macbook]
+# nvidia-340xx-libgl   [macbook]
+  nvidia-libgl         [nvidia]
+  nvidia-utils         [nvidia]
   xf86-input-synaptics [laptop]
-
+  xf86-video-nouveau   [nvidia]
 
 = x11 server
 # ▔▔▔▔▔▔▔▔▔▔
@@ -51,6 +55,7 @@
   xorg-xinit
   xorg-server
   xorg-server-utils
+
 
 
 = infinality font rendering
