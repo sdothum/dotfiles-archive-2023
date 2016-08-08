@@ -26,7 +26,7 @@ if is primary ;then
     touch $MONOCLE
     set -- $(query display)
     # really only useful for large displays..
-    [ $1 -gt 1440 ] && D=2 || D=16
+    [ $1 -gt 2560 ] && D=3 || ( [ $1 -gt 1440 ] && D=2 || D=16 )
     echo "$(( ($1 - $2) / $D * 10 / 11 ))" >$MONOCLE
     cp -f $MONOCLE $MONOCLE:$tag
   fi
@@ -67,13 +67,13 @@ if is primary ;then
       # side by side frames is my normal layout..
       if is multihead ;then
         if is display =3440 ;then
-          restore layout thirds
+          restore layout 3:3:3
         elif is display =2560 ;then
-          restore layout even
+          restore layout 1:1
         else
           restore layout grid
         fi
-        blink=true
+        [ $(herbstclient attr tags.focus.client_count) -gt 1 ] && blink=true
       fi
     fi
   fi
