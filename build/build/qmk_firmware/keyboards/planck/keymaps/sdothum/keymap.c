@@ -24,6 +24,8 @@
 //   Plover layer toggling has added binding to the herbstluftwm window manager
 //   to enable/disable the necessary plover software
 //
+//   Adjust layer is available on keypad(=)+esc, see colemak layout
+//
 // Code:
 //   This source is shamelessly based on the "default" planck layout
 //   Non-indented #ifdef block structures are syntax highlighted in vim
@@ -66,21 +68,15 @@ enum planck_keycodes {
 };
 
 enum function_id {
-  _ESC= 0,
-  _MIN,
+  _MIN = 0,
   _EQL,
-  _CAP,
   _TAB,
   _SPC,
   _BSP,
   _DEL,
   _LFT,
-  _RHT,
-  _DN,
-  _UP,
   _QOT,
   _SLS,
-  _ENT,
 };
 
 enum tap_dance {
@@ -107,10 +103,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_QWERTY] = {
-  {KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,     KC_O,   KC_P,    KC_BSPC},
-  {F(_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,     KC_L,   KC_SCLN, F(_ENT)},
-  {F(_MIN), KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM,  KC_DOT, KC_SLSH, F(_QOT)},
-  {F(_EQL), KC_LCTL, F(_CAP), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT),  F(_DN), F(_UP),  F(_RHT)},
+  {KC_GRV,        KC_Q,    KC_W,           KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,           KC_P,         KC_BSPC       },
+  {GUI_T(KC_ESC), KC_A,    KC_S,           KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,           KC_SCLN,      CTL_T(KC_ENT) },
+  {F(_MIN),       KC_Z,    KC_X,           KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,         KC_SLSH,      F(_QOT)       },
+  {F(_EQL),       KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
 },
 
 // ..................................................................... Colemak
@@ -126,10 +122,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_COLEMAK] = {
-  {KC_GRV,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,     KC_Y,   KC_SCLN, KC_BSLS},
-  {F(_ESC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,     KC_I,   KC_O,    F(_ENT)},
-  {F(_MIN), KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM,  KC_DOT, KC_SLSH, F(_QOT)},
-  {F(_EQL), KC_LCTL, F(_CAP), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT),  F(_DN), F(_UP),  F(_RHT)},
+  {KC_GRV,        KC_Q,    KC_W,           KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,           KC_SCLN,      KC_BSLS       },
+  {GUI_T(KC_ESC), KC_A,    KC_R,           KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,           KC_O,         CTL_T(KC_ENT) },
+  {F(_MIN),       KC_Z,    KC_X,           KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,         KC_SLSH,      F(_QOT)       },
+  {F(_EQL),       KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
 },
 
 // ...................................................................... Dvorak
@@ -145,10 +141,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_DVORAK] = {
-  {KC_GRV,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,     KC_R,   KC_L,    KC_BSPC},
-  {F(_ESC), KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,     KC_N,   KC_S,    F(_ENT)},
-  {F(_MIN), KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,     KC_V,   KC_Z,    F(_SLS)},
-  {F(_EQL), KC_LCTL, F(_CAP), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT),  F(_DN), F(_UP),  F(_RHT)},
+  {KC_GRV,        KC_QUOT, KC_COMM,        KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,           KC_L,         KC_BSPC       },
+  {GUI_T(KC_ESC), KC_A,    KC_O,           KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,           KC_S,         CTL_T(KC_ENT) },
+  {F(_MIN),       KC_SCLN, KC_Q,           KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,           KC_Z,         F(_SLS)       },
+  {F(_EQL),       KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
 },
 
 // ...................................................................... Plover
@@ -164,10 +160,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_PLOVER] = {
-  {KC_1,     KC_1,    KC_1,       KC_1,    KC_1, KC_1,    KC_1,       KC_1,    KC_1, KC_1,    KC_1,    KC_1   },
-  {ZZZZZZZ,  KC_Q,    KC_W,       KC_E,    KC_R, KC_T,    KC_Y,       KC_U,    KC_I, KC_O,    KC_P,    KC_LBRC},
-  {ZZZZZZZ,  KC_A,    KC_S,       KC_D,    KC_F, KC_G,    KC_H,       KC_J,    KC_K, KC_L,    KC_SCLN, KC_QUOT},
-  {PLOVEXIT, ZZZZZZZ, ZZZZZZZ,    KC_C,    KC_V, ZZZZZZZ, ZZZZZZZ,    KC_N,    KC_M, ZZZZZZZ, ZZZZZZZ, ZZZZZZZ},
+  {KC_1,     KC_1,    KC_1,    KC_1,   KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
+  {ZZZZZZZ,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+  {ZZZZZZZ,  KC_A,    KC_S,    KC_D,   KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+  {PLOVEXIT, ZZZZZZZ, ZZZZZZZ, KC_C,   KC_V,    ZZZZZZZ, ZZZZZZZ, KC_N,    KC_M,    ZZZZZZZ, ZZZZZZZ, ZZZZZZZ},
  },
 
 // ...................................................................... Adjust
@@ -213,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |   E  |   F  |   7  |   8  |   9  |   -  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |   C  |   D  |   4  |   5  |   6  |   +  |
+  // |Adjust|      |      |      |      |      |   C  |   D  |   4  |   5  |   6  |   +  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |   A  |   B  |   1  |   2  |   3  |   =  |
   // |-----------------------------------------------------------------------------------|
@@ -221,10 +217,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
 [_KEYPAD] = {
-  {_______, _______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7, KC_8,   KC_9,    KC_MINS},
-  {_______, _______, _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4, KC_5,   KC_6,    KC_PLUS},
-  {_______, _______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1, KC_2,   KC_3,    KC_EQL },
-  {_______, _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0, KC_DOT, KC_SLSH, KC_ASTR},
+  {_______,     _______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7, KC_8,   KC_9,    KC_MINS},
+  {MO(_ADJUST), _______, _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4, KC_5,   KC_6,    KC_PLUS},
+  {_______,     _______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1, KC_2,   KC_3,    KC_EQL },
+  {_______,     _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0, KC_DOT, KC_SLSH, KC_ASTR},
 },
 
 // ............ ..................................................Navigation Pad
@@ -249,47 +245,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef AUDIO_ENABLE
-float tone_startup[][2]   = SONG(STARTUP_SOUND       );
-float tone_qwerty[][2]    = SONG(QWERTY_SOUND        );
-float tone_dvorak[][2]    = SONG(DVORAK_SOUND        );
-float tone_colemak[][2]   = SONG(COLEMAK_SOUND       );
-float tone_plover[][2]    = SONG(PLOVER_SOUND        );
-float tone_plover_gb[][2] = SONG(PLOVER_GOODBYE_SOUND);
-float tone_caps_on[][2]   = SONG(CAPS_LOCK_ON_SOUND  );
-float tone_caps_off[][2]  = SONG(CAPS_LOCK_OFF_SOUND );
-float music_scale[][2]    = SONG(MUSIC_SCALE_SOUND   );
-float tone_goodbye[][2]   = SONG(GOODBYE_SOUND       );
+float tone_startup[][2]   = SONG (STARTUP_SOUND       );
+float tone_qwerty[][2]    = SONG (QWERTY_SOUND        );
+float tone_dvorak[][2]    = SONG (DVORAK_SOUND        );
+float tone_colemak[][2]   = SONG (COLEMAK_SOUND       );
+float tone_plover[][2]    = SONG (PLOVER_SOUND        );
+float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
+float tone_caps_on[][2]   = SONG (CAPS_LOCK_ON_SOUND  );
+float tone_caps_off[][2]  = SONG (CAPS_LOCK_OFF_SOUND );
+float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND   );
+float tone_goodbye[][2]   = SONG (GOODBYE_SOUND       );
 #endif
 
 const uint16_t PROGMEM fn_actions[] = {
-  [_ESC] = ACTION_LAYER_TAP_KEY (_ADJUST,   KC_ESC),
   [_MIN] = ACTION_MODS_TAP_KEY  (MOD_LSFT, KC_MINS),
-  [_EQL] = ACTION_LAYER_TAP_KEY (_KEYPAD,   KC_EQL),
-  [_CAP] = ACTION_MODS_TAP_KEY  (MOD_LGUI, KC_CAPS),
-  [_TAB] = ACTION_LAYER_TAP_KEY (_NUMBER,   KC_TAB),
-  [_SPC] = ACTION_MODS_TAP_KEY  (MOD_LSFT,  KC_SPC),
+  [_EQL] = ACTION_LAYER_TAP_KEY (_KEYPAD,  KC_EQL ),
+  [_TAB] = ACTION_LAYER_TAP_KEY (_NUMBER,  KC_TAB ),
+  [_SPC] = ACTION_MODS_TAP_KEY  (MOD_LSFT, KC_SPC ),
   [_BSP] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_BSPC),
-  [_DEL] = ACTION_LAYER_TAP_KEY (_NUMBER,   KC_DEL),
+  [_DEL] = ACTION_LAYER_TAP_KEY (_NUMBER,  KC_DEL ),
   [_LFT] = ACTION_LAYER_TAP_KEY (_NAVPAD,  KC_LEFT),
-  [_DN]  = ACTION_MODS_TAP_KEY  (MOD_RALT, KC_DOWN),
-  [_UP]  = ACTION_MODS_TAP_KEY  (MOD_RGUI,   KC_UP),
-  [_RHT] = ACTION_MODS_TAP_KEY  (MOD_RCTL, KC_RGHT),
   [_QOT] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_QUOT),
   [_SLS] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_SLSH),
-  [_ENT] = ACTION_MODS_TAP_KEY  (MOD_RCTL,  KC_ENT),
 };
 
 void paren(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
-    register_code (KC_LSFT);
-    register_code (KC_9);
+    register_code   (KC_LSFT);
+    register_code   (KC_9);
     unregister_code (KC_9);
-    register_code (KC_0);
+    register_code   (KC_0);
     unregister_code (KC_0);
     unregister_code (KC_LSFT);
   } else {
-    register_code (KC_LSFT);
-    register_code (KC_9);
+    register_code   (KC_LSFT);
+    register_code   (KC_9);
     unregister_code (KC_9);
     unregister_code (KC_LSFT);
   }
@@ -298,12 +288,12 @@ void paren(qk_tap_dance_state_t *state, void *user_data) {
 
 void brace(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
-    register_code (KC_LBRC);
+    register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
-    register_code (KC_RBRC);
+    register_code   (KC_RBRC);
     unregister_code (KC_RBRC);
   } else {
-    register_code (KC_LBRC);
+    register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
   }
   reset_tap_dance(state);
@@ -311,15 +301,15 @@ void brace(qk_tap_dance_state_t *state, void *user_data) {
 
 void curly(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
-    register_code (KC_LSFT);
-    register_code (KC_LBRC);
+    register_code   (KC_LSFT);
+    register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
-    register_code (KC_RBRC);
+    register_code   (KC_RBRC);
     unregister_code (KC_RBRC);
     unregister_code (KC_LSFT);
   } else {
-    register_code (KC_LSFT);
-    register_code (KC_LBRC);
+    register_code   (KC_LSFT);
+    register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
     unregister_code (KC_LSFT);
   }
@@ -342,7 +332,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QWERTY:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
+        PLAY_NOTE_ARRAY (tone_qwerty, false, 0);
         #endif
         persistant_default_layer_set(1UL<<_QWERTY);
       }
@@ -351,7 +341,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_colemak, false, 0);
+        PLAY_NOTE_ARRAY (tone_colemak, false, 0);
         #endif
         persistant_default_layer_set(1UL<<_COLEMAK);
       }
@@ -360,7 +350,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DVORAK:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_dvorak, false, 0);
+        PLAY_NOTE_ARRAY (tone_dvorak, false, 0);
         #endif
         persistant_default_layer_set(1UL<<_DVORAK);
       }
@@ -370,13 +360,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
         stop_all_notes();
-        PLAY_NOTE_ARRAY(tone_plover, false, 0);
+        PLAY_NOTE_ARRAY (tone_plover, false, 0);
         #endif
-        layer_off(_NUMBER);
-        layer_off(_KEYPAD);
-        layer_off(_NAVPAD);
-        layer_off(_ADJUST);
-        layer_on(_PLOVER);
+        layer_off       (_NUMBER);
+        layer_off       (_KEYPAD);
+        layer_off       (_NAVPAD);
+        layer_off       (_ADJUST);
+        layer_on        (_PLOVER);
         if (!eeconfig_is_enabled()) {
             eeconfig_init();
         }
@@ -384,26 +374,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keymap_config.nkro = 1;
         eeconfig_update_keymap(keymap_config.raw);
         // toggle plover application on, see herbstluftwm/config/appbinds
-        register_code(KC_LGUI);
-        register_code(KC_MINS);
-        unregister_code(KC_MINS);
+        register_code   (KC_LGUI);
+        register_code   (KC_MINS);
+        unregister_code (KC_MINS);
         // unregister modifiers as late as possible (convention)
-        unregister_code(KC_LGUI);
+        unregister_code (KC_LGUI);
       }
       return false;
       break;
     case PLOVEXIT:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
+        PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);
         #endif
-        layer_off(_PLOVER);
+        layer_off       (_PLOVER);
         // toggle plover application off, see herbstluftwm/config/appbinds
-        register_code(KC_LGUI);
-        register_code(KC_MINS);
-        unregister_code(KC_MINS);
+        register_code   (KC_LGUI);
+        register_code   (KC_MINS);
+        unregister_code (KC_MINS);
         // unregister modifiers as late as possible (convention)
-        unregister_code(KC_LGUI);
+        unregister_code (KC_LGUI);
       }
       return false;
       break;
@@ -421,12 +411,12 @@ void matrix_init_user(void) {
 void startup_user()
 {
   _delay_ms(20); // gets rid of tick
-  PLAY_NOTE_ARRAY(tone_startup, false, 0);
+  PLAY_NOTE_ARRAY (tone_startup, false, 0);
 }
 
 void shutdown_user()
 {
-  PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
+  PLAY_NOTE_ARRAY (tone_goodbye, false, 0);
   _delay_ms(150);
   stop_all_notes();
 }
@@ -438,7 +428,7 @@ void music_on_user(void)
 
 void music_scale_user(void)
 {
-  PLAY_NOTE_ARRAY(music_scale, false, 0);
+  PLAY_NOTE_ARRAY (music_scale, false, 0);
 }
 #endif
 
