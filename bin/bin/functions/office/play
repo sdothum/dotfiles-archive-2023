@@ -13,7 +13,7 @@ else
   notify low 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
   mpv --vf=eq "$@" >/dev/null 2>&1
 fi
-# upon single fullscreen window closure
-herbstclient emit_hook focus_changed
+# refresh panel title on close
+focus window
 
 # vim: set ft=sh: #

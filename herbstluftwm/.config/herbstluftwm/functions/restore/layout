@@ -72,7 +72,7 @@ halves() {
 }
 
 onethird() {
-  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 2 ] ;then
+  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 3 ] ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
@@ -81,7 +81,7 @@ onethird() {
 }
 
 thirds() {
-  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 2 ] ;then
+  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 3 ] ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
   else
     restore mono
