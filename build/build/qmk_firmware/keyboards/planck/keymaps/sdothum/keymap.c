@@ -281,27 +281,47 @@ const uint16_t PROGMEM fn_actions[] = {
 
 void paren(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
-    SEND_STRING("()");
+    register_code (KC_LSFT);
+    register_code (KC_9);
+    unregister_code (KC_9);
+    register_code (KC_0);
+    unregister_code (KC_0);
+    unregister_code (KC_LSFT);
   } else {
-    SEND_STRING("(");
+    register_code (KC_LSFT);
+    register_code (KC_9);
+    unregister_code (KC_9);
+    unregister_code (KC_LSFT);
   }
   reset_tap_dance(state);
 }
 
 void brace(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
-    SEND_STRING("[]");
+    register_code (KC_LBRC);
+    unregister_code (KC_LBRC);
+    register_code (KC_RBRC);
+    unregister_code (KC_RBRC);
   } else {
-    SEND_STRING("[");
+    register_code (KC_LBRC);
+    unregister_code (KC_LBRC);
   }
   reset_tap_dance(state);
 }
 
 void curly(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
-    SEND_STRING("{}");
+    register_code (KC_LSFT);
+    register_code (KC_LBRC);
+    unregister_code (KC_LBRC);
+    register_code (KC_RBRC);
+    unregister_code (KC_RBRC);
+    unregister_code (KC_LSFT);
   } else {
-    SEND_STRING("{");
+    register_code (KC_LSFT);
+    register_code (KC_LBRC);
+    unregister_code (KC_LBRC);
+    unregister_code (KC_LSFT);
   }
   reset_tap_dance(state);
 }

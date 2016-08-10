@@ -11,6 +11,7 @@ media=5
 
 switch tag "$media"
 focus frame
-gnome-mpv "/net/media/patricia/Michael Reading for Patricia.MP3" &
+gnome-mpv "/net/media/patricia/Michael Reading for Patricia.MP3"
+focus window
 
 # vim: set ft=sh: #
