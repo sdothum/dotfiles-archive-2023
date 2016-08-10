@@ -127,7 +127,7 @@ case "$1" in
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
      restore layout $layout
-     [ $(herbstclient attr tags.focus.client_count) -gt 1 ] && focus borders ;;
+     [ $(herbstclient attr tags.focus.client_count) -gt 1 ] && ! [ $layout = max ] && focus borders ;;
 esac
 
 # vim: set ft=sh: #

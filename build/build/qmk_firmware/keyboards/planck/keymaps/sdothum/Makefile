@@ -19,6 +19,8 @@ RGBLIGHT_ENABLE  = no   # enable WS2812 RGB underlight.  Do not enable this with
 # do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = no   # breathing sleep LED during USB suspend
 
+TAP_DANCE_ENABLE = yes  # enable double tap completion of (),[],{}
+
 ifndef QUANTUM_DIR
 include ../../../../Makefile
 endif

@@ -36,6 +36,7 @@
 //   Future git updates may undo this and require swapping of gui and alt keys
 //   in the colemak-dh layer
 
+#include "config.h"
 #include "planck.h"
 #include "action_layer.h"
 #ifdef AUDIO_ENABLE
@@ -65,7 +66,7 @@ enum planck_keycodes {
 };
 
 enum function_id {
-  _ESC,
+  _ESC= 0,
   _MIN,
   _EQL,
   _CAP,
@@ -78,7 +79,14 @@ enum function_id {
   _DN,
   _UP,
   _QOT,
-  _SLS
+  _SLS,
+  _ENT,
+};
+
+enum tap_dance {
+  _PRN = 0,
+  _BRC,
+  _CBR,
 };
 
 #define _______ KC_TRNS
@@ -99,9 +107,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_QWERTY] = {
-  {KC_GRV,  KC_Q,    KC_W,    KC_E,      KC_R,   KC_T,    KC_Y,     KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC},
-  {F(_ESC), KC_A,    KC_S,    KC_D,      KC_F,   KC_G,    KC_H,     KC_J,  KC_K,    KC_L,    KC_SCLN, KC_ENT },
-  {F(_MIN), KC_Z,    KC_X,    KC_C,      KC_V,   KC_B,    KC_N,     KC_M,  KC_COMM, KC_DOT,  KC_SLSH, F(_QOT)},
+  {KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,     KC_O,   KC_P,    KC_BSPC},
+  {F(_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,     KC_L,   KC_SCLN, F(_ENT)},
+  {F(_MIN), KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM,  KC_DOT, KC_SLSH, F(_QOT)},
   {F(_EQL), KC_LCTL, F(_CAP), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT),  F(_DN), F(_UP),  F(_RHT)},
 },
 
@@ -119,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMAK] = {
   {KC_GRV,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,     KC_Y,   KC_SCLN, KC_BSLS},
-  {F(_ESC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,     KC_I,   KC_O,    KC_ENT },
+  {F(_ESC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,     KC_I,   KC_O,    F(_ENT)},
   {F(_MIN), KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM,  KC_DOT, KC_SLSH, F(_QOT)},
   {F(_EQL), KC_LCTL, F(_CAP), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT),  F(_DN), F(_UP),  F(_RHT)},
 },
@@ -137,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_DVORAK] = {
-  {KC_GRV,  KC_QUOT, KC_COMM, KC_DOT,    KC_P,   KC_Y,    KC_F,     KC_G,  KC_C,    KC_R,      KC_L,  KC_BSPC},
-  {F(_ESC), KC_A,    KC_O,    KC_E,      KC_U,   KC_I,    KC_D,     KC_H,  KC_T,    KC_N,      KC_S,  KC_ENT },
-  {F(_MIN), KC_SCLN, KC_Q,    KC_J,      KC_K,   KC_X,    KC_B,     KC_M,  KC_W,    KC_V,      KC_Z,  F(_SLS)},
+  {KC_GRV,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,     KC_R,   KC_L,    KC_BSPC},
+  {F(_ESC), KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,     KC_N,   KC_S,    F(_ENT)},
+  {F(_MIN), KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,     KC_V,   KC_Z,    F(_SLS)},
   {F(_EQL), KC_LCTL, F(_CAP), KC_LGUI, F(_TAB), F(_SPC), F(_BSP), F(_DEL), F(_LFT),  F(_DN), F(_UP),  F(_RHT)},
 },
 
@@ -194,10 +202,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
 [_NUMBER] = {
-  {KC_RCBR, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_RBRC},
-  {KC_LCBR, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_LBRC},
-  {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11 },
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+  {KC_RCBR,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_RBRC },
+  {TD(_CBR), KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(_PRN), KC_RPRN, TD(_BRC)},
+  {KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11  },
+  {_______,  _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN,  KC_PGUP, KC_END  },
 },
 
 // .......................................................... Hexadecimal Keypad
@@ -254,20 +262,54 @@ float tone_goodbye[][2]   = SONG(GOODBYE_SOUND       );
 #endif
 
 const uint16_t PROGMEM fn_actions[] = {
-  [_ESC]      = ACTION_LAYER_TAP_KEY ( _ADJUST,  KC_ESC),
-  [_MIN]      = ACTION_MODS_TAP_KEY  (MOD_LSFT, KC_MINS),
-  [_EQL]      = ACTION_LAYER_TAP_KEY ( _KEYPAD,  KC_EQL),
-  [_CAP]      = ACTION_MODS_TAP_KEY  (MOD_LGUI, KC_CAPS),
-  [_TAB]      = ACTION_LAYER_TAP_KEY ( _NUMBER,  KC_TAB),
-  [_SPC]      = ACTION_MODS_TAP_KEY  (MOD_LSFT,  KC_SPC),
-  [_BSP]      = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_BSPC),
-  [_DEL]      = ACTION_LAYER_TAP_KEY ( _NUMBER,  KC_DEL),
-  [_LFT]      = ACTION_LAYER_TAP_KEY ( _NAVPAD, KC_LEFT),
-  [_DN]       = ACTION_MODS_TAP_KEY  (MOD_RALT, KC_DOWN),
-  [_UP]       = ACTION_MODS_TAP_KEY  (MOD_RGUI,   KC_UP),
-  [_RHT]      = ACTION_MODS_TAP_KEY  (MOD_RCTL, KC_RGHT),
-  [_QOT]      = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_QUOT),
-  [_SLS]      = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_SLSH),
+  [_ESC] = ACTION_LAYER_TAP_KEY (_ADJUST,   KC_ESC),
+  [_MIN] = ACTION_MODS_TAP_KEY  (MOD_LSFT, KC_MINS),
+  [_EQL] = ACTION_LAYER_TAP_KEY (_KEYPAD,   KC_EQL),
+  [_CAP] = ACTION_MODS_TAP_KEY  (MOD_LGUI, KC_CAPS),
+  [_TAB] = ACTION_LAYER_TAP_KEY (_NUMBER,   KC_TAB),
+  [_SPC] = ACTION_MODS_TAP_KEY  (MOD_LSFT,  KC_SPC),
+  [_BSP] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_BSPC),
+  [_DEL] = ACTION_LAYER_TAP_KEY (_NUMBER,   KC_DEL),
+  [_LFT] = ACTION_LAYER_TAP_KEY (_NAVPAD,  KC_LEFT),
+  [_DN]  = ACTION_MODS_TAP_KEY  (MOD_RALT, KC_DOWN),
+  [_UP]  = ACTION_MODS_TAP_KEY  (MOD_RGUI,   KC_UP),
+  [_RHT] = ACTION_MODS_TAP_KEY  (MOD_RCTL, KC_RGHT),
+  [_QOT] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_QUOT),
+  [_SLS] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_SLSH),
+  [_ENT] = ACTION_MODS_TAP_KEY  (MOD_RCTL,  KC_ENT),
+};
+
+void paren(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count > 1) {
+    SEND_STRING("()");
+  } else {
+    SEND_STRING("(");
+  }
+  reset_tap_dance(state);
+}
+
+void brace(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count > 1) {
+    SEND_STRING("[]");
+  } else {
+    SEND_STRING("[");
+  }
+  reset_tap_dance(state);
+}
+
+void curly(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count > 1) {
+    SEND_STRING("{}");
+  } else {
+    SEND_STRING("{");
+  }
+  reset_tap_dance(state);
+}
+
+const qk_tap_dance_action_t tap_dance_actions[] = {
+  [_PRN] = ACTION_TAP_DANCE_FN (paren),
+  [_BRC] = ACTION_TAP_DANCE_FN (brace),
+  [_CBR] = ACTION_TAP_DANCE_FN (curly),
 };
 
 void persistant_default_layer_set(uint16_t default_layer) {
