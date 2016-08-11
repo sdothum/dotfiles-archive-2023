@@ -52,48 +52,64 @@ conkyrc=$HOME/.conkyrc
 conkylua=$HOME/.conky/conky-rings.lua
 env=$HOME/.config/herbstluftwm/config/ENV
 
+# apply colors to conky and herbstluftwm config files
+conkyrc() {
+  sed -i --follow-symlinks "/^ *$1 =/s/= .*/= '$2',/" $conkyrc
+}
+
+conkylua() {
+  sed -i --follow-symlinks "/^$1=/s/=0x.*/=0x$2/" $conkylua
+}
+
+env() {
+  sed -i --follow-symlinks "/^export $1=/s/='#.*'/='$2'/" $env
+}
+
+gradient() {
+  gradient=$(grep "^ *$1 =" $conkyrc | cut -d\' -f2)
+  sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
+}
+
 # colour schemes
 rings() {
-  sed -i --follow-symlinks "/^default_color /s/ .*/ $1/" $conkyrc
-  sed -i --follow-symlinks "/^default_color=/s/=0x.*/=0x$1/" $conkylua
+  conkyrc default_color $1
+  conkylua default_color $1
   shift
-  sed -i --follow-symlinks "/^color0 /s/ .*/ $1/" $conkyrc
-  sed -i --follow-symlinks "/^color0=/s/=0x.*/=0x$1/" $conkylua
+  conkyrc color0 $1
+  conkylua color0 $1
   shift
-  sed -i --follow-symlinks "/^color6 /s/ .*/ $1/" $conkyrc
-  sed -i --follow-symlinks "/^color6=/s/=0x.*/=0x$1/" $conkylua
+  conkyrc color6 $1
+  conkylua color6 $1
 }
 
 text() {
-  sed -i --follow-symlinks "/^color1 /s/ .*/ $1/" $conkyrc
+  conkyrc color1 $1
   shift
-  sed -i --follow-symlinks "/^color2 /s/ .*/ $1/" $conkyrc
+  conkyrc color2 $1
   shift
-  sed -i --follow-symlinks "/^color3 /s/ .*/ $1/" $conkyrc
+  conkyrc color3 $1
   shift
-  sed -i --follow-symlinks "/^color4 /s/ .*/ $1/" $conkyrc
+  conkyrc color4 $1
   shift
-  sed -i --follow-symlinks "/^color5 /s/ .*/ $1/" $conkyrc
+  conkyrc color5 $1
 }
 
 graphs() {
-  gradient=$(grep '^color7 ' $conkyrc | cut -d\' -f2)
-  sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
+  gradient color7
   shift
-  gradient=$(grep '^color8 ' $conkyrc | cut -d\' -f2)
-  sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
+  gradient color8
 }
 
 hidden() {
-  sed -i --follow-symlinks "/^color9 /s/ .*/ $1/" $conkyrc
-  sed -i --follow-symlinks "/^export INACTIVE_FG=/s/='#.*'/='#$1'/" $env
+  conkyrc color9 $1
+  env INACTIVE_FG $1
   shift
-  sed -i --follow-symlinks "/^#colorA /s/ .*/ $1/" $conkyrc
-  sed -i --follow-symlinks "/^export ACTIVE_HIDDEN_FG=/s/='#.*'/='#$1'/" $env
+  conkyrc '--colorA' $1
+  env ACTIVE_HIDDEN_FG $1
   shift
-  sed -i --follow-symlinks "/^#colorI /s/ .*/ $1/" $conkyrc
-  sed -i --follow-symlinks "/^export INACTIVE_HIDDEN_FG=/s/='#.*'/='#$1'/" $env
-}
+  conkyrc '--colorI' $1
+  env INACTIVE_HIDDEN_FG $1
+} 
 
 # ............................................. Auto-scrape colour relationships
 
@@ -114,7 +130,7 @@ scheme() {
 }
 
 panel() {
-  sed -i --follow-symlinks "/^export DEFAULT_FG=/s/='#.*'/='#$1'/" $env
+  env DEFAULT_FG $1
 }
 
 # see conky/palette
@@ -190,12 +206,12 @@ case "$action" in
         fi ;;
 
   paper) text f0f0f0 c0c0c0 909090 707070 505050
-         sed -i --follow-symlinks "/^COLORING=/s/=0x.*/=0xFFFFFF/" $conkylua
-         sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#f0f0f0'/" $env ;;
+         conkylua COLORING FFFFFF
+         env ACTIVE_FG f0f0f0 ;;
 
   ink) text 000000 080808 101010 202020 303030
-       sed -i --follow-symlinks "/^COLORING=/s/=0x.*/=0x000000/" $conkylua
-       sed -i --follow-symlinks "/^export ACTIVE_FG=/s/='#.*'/='#000000'/" $env ;;
+       conkylua COLORING 000000
+       env ACTIVE_FG 000000 ;;
 
   rings)  [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;

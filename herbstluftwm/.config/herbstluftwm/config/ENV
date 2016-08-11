@@ -59,14 +59,14 @@ fi
 # ........................................................... Margin adjustments
 
 # conky lua syntax filter
-conky() {
+conkyrc() {
   grep "^ *$1" $HOME/.conkyrc | sed -r 's/.*= *([0-9]*),.*/\1/'
 }
 
-export CONKY_GAP=$(conky 'gap_x')
-export CONKY_INNER=$(conky 'border_inner_margin')
-export CONKY_OUTER=$(conky 'border_outer_margin')
-export CONKY_WIDTH=$(conky 'maximum_width')
+export CONKY_GAP=$(conkyrc 'gap_x')
+export CONKY_INNER=$(conkyrc 'border_inner_margin')
+export CONKY_OUTER=$(conkyrc 'border_outer_margin')
+export CONKY_WIDTH=$(conkyrc 'maximum_width')
 
 # compton shadow left shift pixel adjustment for conky panel edge (0) none
 if ! [ -e $HOME/.compton.conf ] ;then
@@ -120,11 +120,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#55313b'
-export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#2b191e'
-export INACTIVE_FG='#31544a'
-export INACTIVE_HIDDEN_FG='#192a25'
+export DEFAULT_FG='ba95ae'
+export ACTIVE_FG='f0f0f0'
+export ACTIVE_HIDDEN_FG='5d4a57'
+export INACTIVE_FG='93b89f'
+export INACTIVE_HIDDEN_FG='495c4f'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

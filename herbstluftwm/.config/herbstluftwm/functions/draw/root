@@ -90,6 +90,10 @@ set_border() {
 
 # ................................................................... Background
 
+background() {
+  ls -l $BACKGROUND | cut -d'>' -f2
+}
+
 blank() {
   if [ "$*" ] ;then
     color="$1"
@@ -98,7 +102,14 @@ blank() {
   fi
   echo $color >$BACKGROUND.color
   setroot --blank-color "#$color" 2>/dev/null
-  set_border "$(conky theme contrast $color)"
+  background=$(background)
+  if echo $background | grep -q '/dark/' ;then
+    set_border "$(conky theme light $color)"
+  elif echo $background | grep -q '/light/' ;then
+    set_border "$(conky theme dark $color)"
+  else
+    set_border "$(conky theme contrast $color)"
+  fi
   echo $color >$BLANK
   rm -f $theme 2>/dev/null
   # make inactive border invisible!
@@ -117,7 +128,7 @@ select_blank() {
   /usr/bin/feh -B black --scale-down -r \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
                --start-at $(lname $BACKGROUND) $(find ${BACKGROUND%/default}/ -name '*.png')
-  blank $(ls -l $BACKGROUND | cut -d'>' -f2 | sed -r 's|.*/(.*).png|\1|')
+  blank $(background | sed -r 's|.*/(.*).png|\1|')
 }
 
 wallpaper() {

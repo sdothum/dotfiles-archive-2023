@@ -68,15 +68,10 @@ enum planck_keycodes {
 };
 
 enum function_id {
-  _MINS = 0,
-  _EQL,
+  _EQL = 0,
   _TAB,
-  _SPC,
-  _BSPC,
   _DEL,
   _LEFT,
-  _QUOT,
-  _SLSH,
 };
 
 enum tap_dance {
@@ -103,10 +98,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_QWERTY] = {
-  {KC_GRV,        KC_Q,    KC_W,           KC_E,    KC_R,    KC_T,    KC_Y,     KC_U,    KC_I,     KC_O,           KC_P,         KC_BSPC       },
-  {GUI_T(KC_ESC), KC_A,    KC_S,           KC_D,    KC_F,    KC_G,    KC_H,     KC_J,    KC_K,     KC_L,           KC_SCLN,      CTL_T(KC_ENT) },
-  {F(_MINS),      KC_Z,    KC_X,           KC_C,    KC_V,    KC_B,    KC_N,     KC_M,    KC_COMM,  KC_DOT,         KC_SLSH,      F(_QUOT)      },
-  {F(_EQL),       KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), F(_SPC), F(_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
+  {KC_GRV,         KC_Q,    KC_W,           KC_E,    KC_R,    KC_T,          KC_Y,           KC_U,    KC_I,     KC_O,           KC_P,         KC_BSPC       },
+  {GUI_T(KC_ESC),  KC_A,    KC_S,           KC_D,    KC_F,    KC_G,          KC_H,           KC_J,    KC_K,     KC_L,           KC_SCLN,      CTL_T(KC_ENT) },
+  {SFT_T(KC_MINS), KC_Z,    KC_X,           KC_C,    KC_V,    KC_B,          KC_N,           KC_M,    KC_COMM,  KC_DOT,         KC_SLSH,      SFT_T(KC_QUOT)},
+  {F(_EQL),        KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), SFT_T(KC_SPC), SFT_T(KC_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
 },
 
 // ..................................................................... Colemak
@@ -122,10 +117,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_COLEMAK] = {
-  {KC_GRV,        KC_Q,    KC_W,           KC_F,    KC_P,    KC_B,    KC_J,     KC_L,    KC_U,     KC_Y,           KC_SCLN,      KC_BSLS       },
-  {GUI_T(KC_ESC), KC_A,    KC_R,           KC_S,    KC_T,    KC_G,    KC_M,     KC_N,    KC_E,     KC_I,           KC_O,         CTL_T(KC_ENT) },
-  {F(_MINS),      KC_Z,    KC_X,           KC_C,    KC_D,    KC_V,    KC_K,     KC_H,    KC_COMM,  KC_DOT,         KC_SLSH,      F(_QUOT)      },
-  {F(_EQL),       KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), F(_SPC), F(_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
+  {KC_GRV,         KC_Q,    KC_W,           KC_F,    KC_P,    KC_B,          KC_J,           KC_L,    KC_U,     KC_Y,           KC_SCLN,      KC_BSLS       },
+  {GUI_T(KC_ESC),  KC_A,    KC_R,           KC_S,    KC_T,    KC_G,          KC_M,           KC_N,    KC_E,     KC_I,           KC_O,         CTL_T(KC_ENT) },
+  {SFT_T(KC_MINS), KC_Z,    KC_X,           KC_C,    KC_D,    KC_V,          KC_K,           KC_H,    KC_COMM,  KC_DOT,         KC_SLSH,      SFT_T(KC_QUOT)},
+  {F(_EQL),        KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), SFT_T(KC_SPC), SFT_T(KC_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
 },
 
 // ...................................................................... Dvorak
@@ -141,10 +136,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_DVORAK] = {
-  {KC_GRV,        KC_QUOT, KC_COMM,        KC_DOT,  KC_P,    KC_Y,    KC_F,     KC_G,    KC_C,     KC_R,           KC_L,         KC_BSPC       },
-  {GUI_T(KC_ESC), KC_A,    KC_O,           KC_E,    KC_U,    KC_I,    KC_D,     KC_H,    KC_T,     KC_N,           KC_S,         CTL_T(KC_ENT) },
-  {F(_MINS),      KC_SCLN, KC_Q,           KC_J,    KC_K,    KC_X,    KC_B,     KC_M,    KC_W,     KC_V,           KC_Z,         F(_SLSH)      },
-  {F(_EQL),       KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), F(_SPC), F(_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
+  {KC_GRV,         KC_QUOT, KC_COMM,        KC_DOT,  KC_P,    KC_Y,          KC_F,           KC_G,    KC_C,     KC_R,           KC_L,         KC_BSPC       },
+  {GUI_T(KC_ESC),  KC_A,    KC_O,           KC_E,    KC_U,    KC_I,          KC_D,           KC_H,    KC_T,     KC_N,           KC_S,         CTL_T(KC_ENT) },
+  {SFT_T(KC_MINS), KC_SCLN, KC_Q,           KC_J,    KC_K,    KC_X,          KC_B,           KC_M,    KC_W,     KC_V,           KC_Z,         SFT_T(KC_SLSH)},
+  {F(_EQL),        KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), SFT_T(KC_SPC), SFT_T(KC_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
 },
 
 // ...................................................................... Plover
@@ -258,15 +253,10 @@ float tone_goodbye[][2]   = SONG (GOODBYE_SOUND       );
 #endif
 
 const uint16_t PROGMEM fn_actions[] = {
-  [_MINS] = ACTION_MODS_TAP_KEY  (MOD_LSFT, KC_MINS),
   [_EQL]  = ACTION_LAYER_TAP_KEY (_KEYPAD,  KC_EQL ),
   [_TAB]  = ACTION_LAYER_TAP_KEY (_NUMBER,  KC_TAB ),
-  [_SPC]  = ACTION_MODS_TAP_KEY  (MOD_LSFT, KC_SPC ),
-  [_BSPC] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_BSPC),
   [_DEL]  = ACTION_LAYER_TAP_KEY (_NUMBER,  KC_DEL ),
   [_LEFT] = ACTION_LAYER_TAP_KEY (_NAVPAD,  KC_LEFT),
-  [_QUOT] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_QUOT),
-  [_SLSH] = ACTION_MODS_TAP_KEY  (MOD_RSFT, KC_SLSH),
 };
 
 void paren(qk_tap_dance_state_t *state, void *user_data) {
