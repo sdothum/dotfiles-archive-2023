@@ -51,7 +51,7 @@ done
 
 # .............................................................. Desktop layouts
 
-# appropriately wild herbstluftwm background color!
+# appropriately wild herbstluftwm background color! see .xinitrc
 if [ "$SETROOT" = blank ] ;then
   draw root blank $(cat $BACKGROUND.color 2>/dev/null)
 else

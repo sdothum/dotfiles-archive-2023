@@ -75,13 +75,38 @@ enum function_id {
 };
 
 enum tap_dance {
-  _PRN = 0,
-  _BRC,
-  _CBR,
+  _LPRN = 0,
+  _LBRC,
+  _LCBR,
 };
 
+// modifier keys
+#define Esc    GUI_T (KC_ESC)
+#define Mins   SFT_T (KC_MINS)
+#define Eql    LT    (_KEYPAD, KC_EQL)
+#define Caps   GUI_T (KC_CAPS)
+#define Tab    LT    (_NUMBER, KC_TAB)
+#define Spc    SFT_T (KC_SPC)
+#define Bspc   SFT_T (KC_BSPC)
+#define Del    LT    (_NUMBER, KC_DEL)
+#define Left   LT    (_NAVPAD, KC_LEFT)
+#define Down   ALT_T (KC_DOWN)
+#define Up     GUI_T (KC_UP)
+#define Rght   CTL_T (KC_RGHT)
+#define Quot   SFT_T (KC_QUOT)
+#define Slsh   SFT_T (KC_SLSH)
+#define Ent    CTL_T (KC_ENT)
+
+// tap dance keys
+#define Lcbr   TD    (_LCBR)
+#define Lprn   TD    (_LPRN)
+#define Lbrc   TD    (_LBRC)
+
+// adjust layer key
+#define ADJUST MO    (_ADJUST)
+
 #define _______ KC_TRNS
-#define ZZZZZZZ KC_NO
+#define Zzzzzzz KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -98,10 +123,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_QWERTY] = {
-  {KC_GRV,         KC_Q,    KC_W,           KC_E,    KC_R,    KC_T,          KC_Y,           KC_U,    KC_I,     KC_O,           KC_P,         KC_BSPC       },
-  {GUI_T(KC_ESC),  KC_A,    KC_S,           KC_D,    KC_F,    KC_G,          KC_H,           KC_J,    KC_K,     KC_L,           KC_SCLN,      CTL_T(KC_ENT) },
-  {SFT_T(KC_MINS), KC_Z,    KC_X,           KC_C,    KC_V,    KC_B,          KC_N,           KC_M,    KC_COMM,  KC_DOT,         KC_SLSH,      SFT_T(KC_QUOT)},
-  {F(_EQL),        KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), SFT_T(KC_SPC), SFT_T(KC_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
+  {KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
+  {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
+  {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
+  {Eql,     KC_LCTL, Caps,    KC_LGUI, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
 },
 
 // ..................................................................... Colemak
@@ -117,10 +142,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_COLEMAK] = {
-  {KC_GRV,         KC_Q,    KC_W,           KC_F,    KC_P,    KC_B,          KC_J,           KC_L,    KC_U,     KC_Y,           KC_SCLN,      KC_BSLS       },
-  {GUI_T(KC_ESC),  KC_A,    KC_R,           KC_S,    KC_T,    KC_G,          KC_M,           KC_N,    KC_E,     KC_I,           KC_O,         CTL_T(KC_ENT) },
-  {SFT_T(KC_MINS), KC_Z,    KC_X,           KC_C,    KC_D,    KC_V,          KC_K,           KC_H,    KC_COMM,  KC_DOT,         KC_SLSH,      SFT_T(KC_QUOT)},
-  {F(_EQL),        KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), SFT_T(KC_SPC), SFT_T(KC_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
+  {KC_GRV,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS},
+  {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
+  {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
+  {Eql,     KC_LCTL, Caps,    KC_LGUI, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
 },
 
 // ...................................................................... Dvorak
@@ -136,10 +161,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_DVORAK] = {
-  {KC_GRV,         KC_QUOT, KC_COMM,        KC_DOT,  KC_P,    KC_Y,          KC_F,           KC_G,    KC_C,     KC_R,           KC_L,         KC_BSPC       },
-  {GUI_T(KC_ESC),  KC_A,    KC_O,           KC_E,    KC_U,    KC_I,          KC_D,           KC_H,    KC_T,     KC_N,           KC_S,         CTL_T(KC_ENT) },
-  {SFT_T(KC_MINS), KC_SCLN, KC_Q,           KC_J,    KC_K,    KC_X,          KC_B,           KC_M,    KC_W,     KC_V,           KC_Z,         SFT_T(KC_SLSH)},
-  {F(_EQL),        KC_LCTL, GUI_T(KC_CAPS), KC_LGUI, F(_TAB), SFT_T(KC_SPC), SFT_T(KC_BSPC), F(_DEL), F(_LEFT), ALT_T(KC_DOWN), GUI_T(KC_UP), CTL_T(KC_RGHT)},
+  {KC_GRV,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC},
+  {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
+  {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
+  {Eql,     KC_LCTL, Caps,    KC_LGUI, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
 },
 
 // ...................................................................... Plover
@@ -155,10 +180,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_PLOVER] = {
-  {KC_1,     KC_1,    KC_1,    KC_1,   KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-  {ZZZZZZZ,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-  {ZZZZZZZ,  KC_A,    KC_S,    KC_D,   KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-  {PLOVEXIT, ZZZZZZZ, ZZZZZZZ, KC_C,   KC_V,    ZZZZZZZ, ZZZZZZZ, KC_N,    KC_M,    ZZZZZZZ, ZZZZZZZ, ZZZZZZZ},
+  {KC_1,     KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
+  {Zzzzzzz,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+  {Zzzzzzz,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+  {PLOVEXIT, Zzzzzzz, Zzzzzzz, KC_C,    KC_V,    Zzzzzzz, Zzzzzzz, KC_N,    KC_M,    Zzzzzzz, Zzzzzzz, Zzzzzzz},
  },
 
 // ...................................................................... Adjust
@@ -193,10 +218,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
 [_NUMBER] = {
-  {KC_RCBR,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    KC_RBRC },
-  {TD(_CBR), KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(_PRN), KC_RPRN, TD(_BRC)},
-  {KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11  },
-  {_______,  _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN,  KC_PGUP, KC_END  },
+  {KC_RCBR, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_RBRC},
+  {Lcbr,    KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, Lbrc   },
+  {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11 },
+  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
 
 // .......................................................... Hexadecimal Keypad
@@ -212,10 +237,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
 [_KEYPAD] = {
-  {_______,     _______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7, KC_8,   KC_9,    KC_MINS},
-  {MO(_ADJUST), _______, _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4, KC_5,   KC_6,    KC_PLUS},
-  {_______,     _______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1, KC_2,   KC_3,    KC_EQL },
-  {_______,     _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0, KC_DOT, KC_SLSH, KC_ASTR},
+  {_______, _______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7, KC_8,   KC_9,    KC_MINS},
+  {ADJUST,  _______, _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4, KC_5,   KC_6,    KC_PLUS},
+  {_______, _______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1, KC_2,   KC_3,    KC_EQL },
+  {_______, _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0, KC_DOT, KC_SLSH, KC_ASTR},
 },
 
 // ............ ..................................................Navigation Pad
@@ -251,13 +276,6 @@ float tone_caps_off[][2]  = SONG (CAPS_LOCK_OFF_SOUND );
 float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND   );
 float tone_goodbye[][2]   = SONG (GOODBYE_SOUND       );
 #endif
-
-const uint16_t PROGMEM fn_actions[] = {
-  [_EQL]  = ACTION_LAYER_TAP_KEY (_KEYPAD,  KC_EQL ),
-  [_TAB]  = ACTION_LAYER_TAP_KEY (_NUMBER,  KC_TAB ),
-  [_DEL]  = ACTION_LAYER_TAP_KEY (_NUMBER,  KC_DEL ),
-  [_LEFT] = ACTION_LAYER_TAP_KEY (_NAVPAD,  KC_LEFT),
-};
 
 void paren(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count > 1) {
@@ -307,9 +325,9 @@ void curly(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 const qk_tap_dance_action_t tap_dance_actions[] = {
-  [_PRN] = ACTION_TAP_DANCE_FN (paren),
-  [_BRC] = ACTION_TAP_DANCE_FN (brace),
-  [_CBR] = ACTION_TAP_DANCE_FN (curly),
+  [_LPRN] = ACTION_TAP_DANCE_FN (paren),
+  [_LBRC] = ACTION_TAP_DANCE_FN (brace),
+  [_LCBR] = ACTION_TAP_DANCE_FN (curly),
 };
 
 void persistant_default_layer_set(uint16_t default_layer) {
