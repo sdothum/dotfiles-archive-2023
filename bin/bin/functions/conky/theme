@@ -62,12 +62,12 @@ conkylua() {
 }
 
 env() {
-  sed -i --follow-symlinks "/^export $1=/s/='#.*'/='$2'/" $env
+  sed -i --follow-symlinks "/^export $1=/s/='#.*'/='#$2'/" $env
 }
 
 gradient() {
   gradient=$(grep "^ *$1 =" $conkyrc | cut -d\' -f2)
-  sed -i --follow-symlinks "s/$gradient/$1/g" $conkyrc
+  sed -i --follow-symlinks "s/$gradient/$2/g" $conkyrc
 }
 
 # colour schemes
@@ -95,9 +95,9 @@ text() {
 }
 
 graphs() {
-  gradient color7
+  gradient color7 $1
   shift
-  gradient color8
+  gradient color8 $1
 }
 
 hidden() {
@@ -133,21 +133,25 @@ panel() {
   env DEFAULT_FG $1
 }
 
+monochromatic() {
+  echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f$1
+}
+
 # see conky/palette
 hexgen() {
   default_color=$1
   hex=$(conky palette $default_color)
-  color0=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f10)
+  color0=$(monochromatic 10)
   color9=$(echo -n "$hex" | grep 'Complementary' | head -1 | cut -d/ -f6)
-  colorA=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
+  colorA=$(monochromatic 6)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   hex=$(conky palette $color0)
-  color6=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f2)
-  color7=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f10)
+  color6=$(monochromatic 2)
+  color7=$(monochromatic 10)
   color8=$color0
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   hex=$(conky palette $color9)
-  colorI=$(echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f6)
+  colorI=$(monochromatic 6)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }

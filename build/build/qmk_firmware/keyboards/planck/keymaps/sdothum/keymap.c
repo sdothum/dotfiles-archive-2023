@@ -67,19 +67,13 @@ enum planck_keycodes {
   PLOVEXIT,
 };
 
-enum function_id {
-  _EQL = 0,
-  _TAB,
-  _DEL,
-  _LEFT,
-};
-
 enum tap_dance {
   _LPRN = 0,
   _LBRC,
   _LCBR,
 };
 
+// avoid define conflicts with proper case naming
 // modifier keys
 #define Esc    GUI_T (KC_ESC)
 #define Mins   SFT_T (KC_MINS)

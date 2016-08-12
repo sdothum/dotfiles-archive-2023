@@ -22,7 +22,7 @@ hc set frame_border_width             0
 hc set frame_gap                      $SHADOW
 hc set frame_padding                  0
 hc set frame_transparent_width        0
-hc set gapless_grid                   0
+hc set gapless_grid                   1
 hc set mouse_recenter_gap             0
 hc set smart_frame_surroundings       0
 hc set smart_window_surroundings      0

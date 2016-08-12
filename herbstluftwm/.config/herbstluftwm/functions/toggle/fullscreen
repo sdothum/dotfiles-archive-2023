@@ -8,6 +8,7 @@
 
 # fullscreen with conky panel
 herbstclient lock
+restore unfloat
 if is display +1024 ;then
   if is primary ;then
     # allow transitioning monocle directly to fullscreen

@@ -12,6 +12,7 @@ set_layout() {
   touch_panel
 }
 
+restore unfloat
 # restore layout if in fullscreen, as max is just one keystroke away
 if is fullscreen ;then
   # don't flip out of monocle mode, see toggle fullscreen (also monocle aware)

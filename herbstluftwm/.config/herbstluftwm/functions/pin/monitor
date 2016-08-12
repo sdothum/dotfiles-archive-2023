@@ -11,7 +11,7 @@ switch_frame() {
   touch $LOCK
   herbstclient lock
   # don't pin fullscreen windows
-  is fullscreen && toggle fullscreen
+  restore windowed
   herbstclient focus_monitor $1
   focus frame
   herbstclient chain . bring $winid . focus_monitor $2

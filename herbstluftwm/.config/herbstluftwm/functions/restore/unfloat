@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="restore/unfloat $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Unfloat mode
+
+herbstclient compare tags.focus.floating = true && herbstclient floating toggle
+
+# vim: set ft=sh: #

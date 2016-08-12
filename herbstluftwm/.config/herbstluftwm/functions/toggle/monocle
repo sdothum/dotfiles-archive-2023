@@ -18,6 +18,7 @@ fullscreen=$1
 
 # calculate pseudo golden ratio margins
 if is primary ;then
+  restore unfloat
   tag=$(herbstclient attr monitors.focus.tag)
   if [ -e $MONOCLE ] ;then
     rm -f $MONOCLE

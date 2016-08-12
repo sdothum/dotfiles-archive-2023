@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="restore/windowed $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ Windowed mode
+
+is fullscreen && toggle fullscreen
+
+# vim: set ft=sh: #

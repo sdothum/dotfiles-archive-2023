@@ -8,8 +8,8 @@
 
 # Usage: draw panel <fifo>, see restore panel
 
-# load theme
-# . ${0%/draw}/config/ENV
+# load theme which may be updated by conky theme
+. ${0%/draw}/config/ENV
 
 fifo=${1#:}
 pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
