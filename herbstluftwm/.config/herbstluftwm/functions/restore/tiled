@@ -1,10 +1,10 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="restore/unfloat $@" . $PARENT
+[ $TRACE ] && CHILD="restore/tiled $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................. Unfloat mode
+# ................................................................... Tiled mode
 
 herbstclient compare tags.focus.floating = true && herbstclient floating toggle
 

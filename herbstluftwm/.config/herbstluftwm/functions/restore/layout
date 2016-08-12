@@ -126,7 +126,6 @@ case "$1" in
          herbstclient unlock ;;
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
-     restore unfloat
      restore windowed
      restore layout $layout
      [ $(herbstclient attr tags.focus.client_count) -gt 1 ] && ! [ $layout = max ] && focus borders ;;

@@ -7,7 +7,7 @@
 # ........................................................... Smart cycle layout
 
 # restore layout if in fullscreen, as cycle layout is just one keystroke away
-restore unfloat
+restore tiled
 if is fullscreen ;then
   toggle fullscreen
 elif [ $(herbstclient attr tags.focus.curframe_wcount) -eq 2 ] ;then
