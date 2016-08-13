@@ -16,20 +16,44 @@
 //   dfu-programmer
 //
 // Notes:
-//   New colemak-dh, f(number), keypad and navigation pad layers
+//   New colemak-dh, f(number/symbol), keypad and navigation pad layers
 //
 //   Original qwerty and dvorak layers have normalized enter key, tap key esc
 //   tap key right-shift and modifier row (consistent with colemak-dh)
 //
+//   The number/symbol layer is optimized for symbol keys over function key
+//   placement order
+//
+//   Autocompletion tap dance key pairs (),[],{} are available from the
+//   number/symbol layer
+//
+//   The navigation pad provides a single hand right thumb activated cluster
+//   with a left hand option
+//
 //   Plover layer toggling has added binding to the herbstluftwm window manager
 //   to enable/disable the necessary plover software
 //
-//   Adjust layer is available on keypad(=)+esc, see colemak layout
+//   Adjust layer is toggled from the keypad layer i.e. keypad+esc (key
+//   position, see colemak layer) to prevent accidental keyboard reset
+//
+// Modifier clusters:
+//   Not quite a perfectly symmetrical layout due to the thumb placement for
+//   the right hand navigation cluster
+//
+//   The number and symbol layers are effectively identical with the symbol
+//   layer omitting the cursor keys (for KC_TRNS requirement)
+//
+//   ,-----------------------------------------------------------------------------------.
+//   |  Kpd | Ctrl | GUI  | Alt  | Num  |Shift |Shift | Nav  | Sym  | Alt  | GUI  | Ctrl |
+//   `-----------------------------------------------------------------------------------'
+//
 //
 // Code:
 //   This source is shamelessly based on the "default" planck layout
 //   Non-indented #ifdef block structures are syntax highlighted in vim
 //   c++ commenting style is used throughout
+//   Proper case naming for modifier key names to avoid define conflicts (DOWN
+//   and UP in particular) adds readability bonus
 //
 // Issues:
 //   AG_SWAP appears to be on by default which swaps the left gui and alt keys
@@ -54,6 +78,7 @@ enum planck_layers {
   _DVORAK,
   _PLOVER,
   _NUMBER,
+  _SYMBOL,
   _KEYPAD,
   _NAVPAD,
   _ADJUST,
@@ -73,7 +98,6 @@ enum tap_dance {
   _LCBR,
 };
 
-// avoid define conflicts with proper case naming
 // modifier keys
 #define Esc    GUI_T (KC_ESC)
 #define Mins   SFT_T (KC_MINS)
@@ -82,8 +106,8 @@ enum tap_dance {
 #define Tab    LT    (_NUMBER, KC_TAB)
 #define Spc    SFT_T (KC_SPC)
 #define Bspc   SFT_T (KC_BSPC)
-#define Del    LT    (_NUMBER, KC_DEL)
-#define Left   LT    (_NAVPAD, KC_LEFT)
+#define Del    LT    (_NAVPAD, KC_DEL)
+#define Left   LT    (_SYMBOL, KC_LEFT)
 #define Down   ALT_T (KC_DOWN)
 #define Up     GUI_T (KC_UP)
 #define Rght   CTL_T (KC_RGHT)
@@ -113,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   -  |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |  "   |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl | GUI  | Alt  | Tab  | Space| Bksp | Del  | Left | Down |  Up  |Right |
+  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
 [_QWERTY] = {
@@ -132,7 +156,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   -  |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |  "   |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl | GUI  | Alt  | Tab  | Space| Bksp | Del  | Left | Down |  Up  |Right |
+  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
 [_COLEMAK] = {
@@ -151,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   -  |   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |  /   |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl | GUI  | Alt  | Tab  | Space| Bksp | Del  | Left | Down |  Up  |Right |
+  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
 [_DVORAK] = {
@@ -199,76 +223,86 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
 
-// .................................................. Number / symbol / function
+// ....................................................... Number / Symbol Layer
 
   // .-----------------------------------------------------------------------------------.
-  // |   }  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   ]  |
+  // |  F10 |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  F9  |
   // |-----------------------------------------------------------------------------------|
-  // |   {  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |   [  |
+  // |  F11 |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  F8  |
   // |-----------------------------------------------------------------------------------|
-  // |  F12 |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
+  // |  F12 |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   [  |   ]  |   {  |   }  |  F7  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |  f() |      |      |  f() | Home | PgDn | PgUp |  End |
+  // |      |      |      |      |  f() |      |      |      | Home | PgDn | PgUp |  End | Number
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |      |      |  f() |      |      |      | Symbol KC_TRNS
   // '-----------------------------------------------------------------------------------'
 
+
 [_NUMBER] = {
-  {KC_RCBR, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_RBRC},
-  {Lcbr,    KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, Lbrc   },
-  {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11 },
+  {KC_F10,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F9  },
+  {KC_F11,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, KC_F8  },
+  {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   Lbrc,    KC_RBRC, Lcbr,    KC_RCBR, KC_F7  },
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+},
+
+[_SYMBOL] = {
+  {KC_F10,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F9  },
+  {KC_F11,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, KC_F8  },
+  {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   Lbrc,    KC_RBRC, Lcbr,    KC_RCBR, KC_F7  },
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
 },
 
 // .......................................................... Hexadecimal Keypad
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |   E  |   F  |   7  |   8  |   9  |   -  |
+  // |      |      |      |      |      |   E  |   F  |   7  |   8  |   9  |   -  |      |
   // |-----------------------------------------------------------------------------------|
-  // |Adjust|      |      |      |      |      |   C  |   D  |   4  |   5  |   6  |   +  |
+  // |Adjust|      |      |      |      |   C  |   D  |   4  |   5  |   6  |   +  |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |   A  |   B  |   1  |   2  |   3  |   =  |
+  // |      |      |      |      |      |   A  |   B  |   1  |   2  |   3  |   =  |      |
   // |-----------------------------------------------------------------------------------|
-  // |  f() |      |      |      |      |      |   (  |   )  |   0  |   .  |   /  |   *  |
+  // |  f() |      |      |      |      |   (  |   )  |   0  |   .  |   /  |   *  |      |
   // '-----------------------------------------------------------------------------------'
 
 [_KEYPAD] = {
-  {_______, _______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7, KC_8,   KC_9,    KC_MINS},
-  {ADJUST,  _______, _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4, KC_5,   KC_6,    KC_PLUS},
-  {_______, _______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1, KC_2,   KC_3,    KC_EQL },
-  {_______, _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0, KC_DOT, KC_SLSH, KC_ASTR},
+  {_______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7,    KC_8,    KC_9,    KC_MINS, _______},
+  {ADJUST,  _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4,    KC_5,    KC_6,    KC_PLUS, _______},
+  {_______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1,    KC_2,    KC_3,    KC_EQL,  _______},
+  {_______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0,    KC_DOT,  KC_SLSH, KC_ASTR, _______},
 },
 
 // ............ ..................................................Navigation Pad
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      | Home |  Up  |  End | PgUp |
+  // |      |      | Home |  Up  |  End |  Del | Bksp | Home |  Up  |  End |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      | Left | Down | Right| PgDn |
+  // | Ctrl |      | Left | Down | Right| Bksp |  Del | Left | Down | Right|      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |      |      |      | PgUp | PgDn |      |      | PgDn | PgUp |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |  f() |      |      |      |
+  // |      |      |      |      |      |      |      |  f() |      |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
 [_NAVPAD] = {
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {_______, _______, KC_HOME, KC_UP,   KC_END,  KC_DEL,  KC_BSPC, KC_HOME, KC_UP,   KC_END,  _______, _______},
+  {KC_LCTL, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_BSPC, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+  {_______, _______, _______, KC_PGUP, KC_PGDN, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
 },
 
 };
 
 #ifdef AUDIO_ENABLE
-float tone_startup[][2]   = SONG (STARTUP_SOUND       );
-float tone_qwerty[][2]    = SONG (QWERTY_SOUND        );
-float tone_dvorak[][2]    = SONG (DVORAK_SOUND        );
-float tone_colemak[][2]   = SONG (COLEMAK_SOUND       );
-float tone_plover[][2]    = SONG (PLOVER_SOUND        );
+float tone_startup[][2]   = SONG (STARTUP_SOUND);
+float tone_qwerty[][2]    = SONG (QWERTY_SOUND);
+float tone_dvorak[][2]    = SONG (DVORAK_SOUND);
+float tone_colemak[][2]   = SONG (COLEMAK_SOUND);
+float tone_plover[][2]    = SONG (PLOVER_SOUND);
 float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
-float tone_caps_on[][2]   = SONG (CAPS_LOCK_ON_SOUND  );
-float tone_caps_off[][2]  = SONG (CAPS_LOCK_OFF_SOUND );
-float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND   );
-float tone_goodbye[][2]   = SONG (GOODBYE_SOUND       );
+float tone_caps_on[][2]   = SONG (CAPS_LOCK_ON_SOUND);
+float tone_caps_off[][2]  = SONG (CAPS_LOCK_OFF_SOUND);
+float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND);
+float tone_goodbye[][2]   = SONG (GOODBYE_SOUND);
 #endif
 
 void paren(qk_tap_dance_state_t *state, void *user_data) {

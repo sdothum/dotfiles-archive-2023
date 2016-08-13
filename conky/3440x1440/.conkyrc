@@ -47,19 +47,19 @@ conky.config = {
   uppercase = false,
 
 -- default_color FFFFFF
-  default_color = '#5f2220',
-  color0 = '#471918',
-  color1 = '#000000',
-  color2 = '#080808',
-  color3 = '#101010',
-  color4 = '#202020',
-  color5 = '#303030',
-  color6 = '#1b0909',
-  color7 = '#471918',
-  color8 = '#471918',
-  color9 = '#1f5a5b',
---colorA 301110
---colorI 102d2e
+  default_color = 'afbfae',
+  color0 = '838f82',
+  color1 = 'f0f0f0',
+  color2 = 'c0c0c0',
+  color3 = '909090',
+  color4 = '707070',
+  color5 = '505050',
+  color6 = '303530',
+  color7 = '626b61',
+  color8 = '838f82',
+  color9 = 'bcadbd',
+--colorA = '575f57',
+--colorI = '5e565e',
 
   lua_load = '~/.conky/conky-rings.lua',
   lua_draw_hook_post = 'main',

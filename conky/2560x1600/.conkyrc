@@ -1,69 +1,72 @@
-#==============================================================================
-#                                 conkyrc_grey
-#
-#  author  : SLK
-#  version : v2011011601
-#  license : Distributed under the terms of GNU GPL version 2 or later
-#
-#==============================================================================
+conky.config = {
+--==============================================================================
+--                                 conkyrc_grey
 
-background yes
-update_interval 1
+--  author  : SLK
+--  version : v2011011601
+--  license : Distributed under the terms of GNU GPL version 2 or later
 
-cpu_avg_samples 2
-net_avg_samples 2
-temperature_unit celsius
+--==============================================================================
 
-double_buffer yes
-no_buffers yes
-# text_buffer_size 2048
+	background = true,
+	update_interval = 1,
 
-# span 2 monitors! 1680+2560 (0:4239) minus panel width
-# span 2 monitors!
-alignment top_right
-gap_x 29
-gap_y 29
-minimum_size 200 1600
-maximum_width 200
-own_window yes
-# own_window_type panel
-own_window_type dock
-own_window_transparent yes
-# own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below,above
-own_window_hints undecorated,below
-border_inner_margin 0
-border_outer_margin 29
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	temperature_unit = 'celsius',
 
-draw_shades no
-draw_outline no
-draw_borders no
-draw_graph_borders no
+	double_buffer = true,
+	no_buffers = true,
+-- text_buffer_size 2048
 
-override_utf8_locale yes
-use_xft yes
-xftfont Ubuntu:size=7
-xftalpha 0.5
-uppercase no
+-- span 2 monitors! 1680+2560 (0:4239) minus panel width
+-- span 2 monitors!
+	alignment = 'top_right',
+	gap_x = 29,
+	gap_y = 29,
+	minimum_width = 200, minimum_height = 1600,
+	maximum_width = 200,
+	own_window = true,
+-- own_window_type panel
+	own_window_type = 'dock',
+	own_window_transparent = true,
+-- own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below,above
+	own_window_hints = 'undecorated,below',
+	border_inner_margin = 0,
+	border_outer_margin = 29,
 
-# default_color FFFFFF
-default_color bfaca4
-color0 8f817b
-color1 f0f0f0
-color2 c0c0c0
-color3 909090
-color4 707070
-color5 505050
-color6 35302e
-color7 8f817b
-color8 8f817b
-color9 a3b6bd
-#colorA 5f5652
-#colorI 515b5e
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
 
-lua_load ~/.conky/conky-rings.lua
-lua_draw_hook_post main
+	override_utf8_locale = true,
+	use_xft = true,
+	font = 'Ubuntu:size=7',
+	xftalpha = 0.5,
+	uppercase = false,
 
-TEXT
+-- default_color FFFFFF
+	default_color = '#bfaca4',
+	color0 = '#8f817b',
+	color1 = '#f0f0f0',
+	color2 = '#c0c0c0',
+	color3 = '#909090',
+	color4 = '#707070',
+	color5 = '#505050',
+	color6 = '#35302e',
+	color7 = '#8f817b',
+	color8 = '#8f817b',
+	color9 = '#a3b6bd',
+--colorA = 5f5652
+--colorI = 515b5e
+
+	lua_load = '~/.conky/conky-rings.lua',
+	lua_draw_hook_post = 'main',
+
+};
+
+conky.text = [[
 ${voffset 65}
 ${goto 117}${color}${font Ubuntu:size=21}${time %e}
 ${goto 81}${color1}${voffset -23}${font Ubuntu:size=10}${time %A}
@@ -176,3 +179,4 @@ ${if_match ${tcp_portmon 1 65535 count} > 18}${alignr}${color3}• • • ${end
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 18}${alignr 1}${tcp_portmon 1 65535 rport 18}
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 19}${alignr 1}${tcp_portmon 1 65535 rport 19}
 # ${if_match ${tcp_portmon 1 65535 count} > 20}${alignr}${color3}• • • ${endif}
+]];
