@@ -37,6 +37,9 @@ export PATH=$PATH:~/.cabal/bin:~/.gem/ruby/2.3.0/bin:/bin:/sbin:/usr/sbin:/usr/b
 [[ -S ~/.gnupg/S.gpg-agent ]] && export GPG_AGENT_INFO=~/.gnupg/S.gpg-agent
 export PASSWORD_STORE_CLIP_TIME=60
 
+# suppress no newline % symbol marker
+export PROMPT_EOL_MARK=''
+
 # ..................................................................... Internet
 
 # default browser

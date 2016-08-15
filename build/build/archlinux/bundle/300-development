@@ -45,6 +45,7 @@
 # alex
 # haddock
 # happy
+  stack
 
 
 = java

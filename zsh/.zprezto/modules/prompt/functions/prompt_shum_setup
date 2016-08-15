@@ -111,7 +111,7 @@ ${editor_info[keymap]}  '
   else
     # PROMPT='${I}%(?::%b%F{$red})%f%b%(1?;%{%F{$red}%} ✘%f;)%(!;%{%B%F{yellow}%}${_blink_} ⚡${_noblink_}%f%b;)%(1j;%{%F{cyan}%} %j ⚙%f;)${editor_info[keymap]}  '
     PROMPT='%(1j;%{%F{cyan}%}⚙%f; )%(!;%{%B%F{yellow}%}${_blink_}⚡${_noblink_}%f%b; )%(?::%b%F{$red})%f%b%(1?;%{%F{$red}%}✘%f; )${editor_info[keymap]}  '
-    RPROMPT='${editor_info[overwrite]}${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}  $bold%F{$yellow}${_prompt_shum_hostname}%F{$yellow}${_prompt_shum_pwd}%f%b${git_info:+${(e)git_info[prompt]}}  %F{green}%(?::%F{$red})%D{%-I:%M %S}'
+    RPROMPT='${editor_info[overwrite]}${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]} ${git_info:+${(e)git_info[prompt]}}$bold%F{$yellow}${_prompt_shum_hostname}%F{$yellow}${_prompt_shum_pwd}%f%b  %F{green}%(?::%F{$red})%D{%-I:%M %S}'
   fi
   SPROMPT='zsh: correct %F{$red}%R%f to %F{green}%r%f [nyae]? '
 }

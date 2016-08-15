@@ -1,7 +1,8 @@
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 // this is the style you want to emulate.
 //
-// To flash planck firmware:
+// To flash planck firmware
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   Reset keyboard or press hw reset button on base (hole)
 //
 //   cd qmk_firmware/keyboards/planck
@@ -10,12 +11,14 @@
 //   sudo make clean     (good practice before flashing)
 //   make KEYMAP=sdothum (to compile check)
 //
-// Package requirements (for arch linux):
+// Package requirements (for arch linux)
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   avr-gcc-atmel
 //   avr-libc-atmel
 //   dfu-programmer
 //
-// Notes:
+// Notes
+// ▔▔▔▔▔
 //   New colemak-dh, f(number/symbol), keypad and navigation pad layers
 //
 //   Original qwerty and dvorak layers have normalized enter key, tap key esc
@@ -36,7 +39,8 @@
 //   Adjust layer is toggled from the keypad layer i.e. keypad+esc (key
 //   position, see colemak layer) to prevent accidental keyboard reset
 //
-// Modifier clusters:
+// Modifier clusters
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   Not quite a perfectly symmetrical layout due to the thumb placement for
 //   the right hand navigation cluster
 //
@@ -47,20 +51,23 @@
 //   |  Kpd | Ctrl | GUI  | Alt  | Num  |Shift |Shift | Nav  | Sym  | Alt  | GUI  | Ctrl |
 //   `-----------------------------------------------------------------------------------'
 //
+// Hint
+// ▔▔▔▔
+//   For sculpted keycaps such as Cherry or OEM profile, reverse the Alt, Num,
+//   Shift, Shift, Nav, Sym keycaps for more ergonomic thumb orientation and
+//   actuation
 //
-// Code:
+// Code
+// ▔▔▔▔
 //   This source is shamelessly based on the "default" planck layout
-//   Non-indented #ifdef block structures are syntax highlighted in vim
+//
+//   #ifdef/#endif block structures are not indented, as syntax highlighting
+//   in vim is sufficient for identification
+//
 //   c++ commenting style is used throughout
+//
 //   Proper case naming for modifier key names to avoid define conflicts (DOWN
 //   and UP in particular) adds readability bonus
-//
-// Issues:
-//   AG_SWAP appears to be on by default which swaps the left gui and alt keys
-//   mapping "ctrl gui alt" as desired
-//
-//   Future git updates may undo this and require swapping of gui and alt keys
-//   in the colemak-dh layer
 
 #include "config.h"
 #include "planck.h"
@@ -73,8 +80,8 @@
 extern keymap_config_t keymap_config;
 
 enum planck_layers {
-  _QWERTY = 0,
-  _COLEMAK,
+  _COLEMAK = 0,
+  _QWERTY,
   _DVORAK,
   _PLOVER,
   _NUMBER,
@@ -85,11 +92,11 @@ enum planck_layers {
 };
 
 enum planck_keycodes {
-  QWERTY = SAFE_RANGE,
-  COLEMAK,
+  COLEMAK = SAFE_RANGE,
+  QWERTY,
   DVORAK,
   PLOVER,
-  PLOVEXIT,
+  PLOVEX,
 };
 
 enum tap_dance {
@@ -128,25 +135,6 @@ enum tap_dance {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// ...................................................................... Qwerty
-
-  // ,-----------------------------------------------------------------------------------.
-  // |   `  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
-  // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |  Esc |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   -  |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |  "   |
-  // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
-  // `-----------------------------------------------------------------------------------'
-
-[_QWERTY] = {
-  {KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
-  {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
-  {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-  {Eql,     KC_LCTL, Caps,    KC_LGUI, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
-},
-
 // ..................................................................... Colemak
 
   // ,-----------------------------------------------------------------------------------.
@@ -163,13 +151,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_GRV,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS},
   {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
   {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-  {Eql,     KC_LCTL, Caps,    KC_LGUI, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+},
+
+// ...................................................................... Qwerty
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   `  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  \   |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |  Esc |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   -  |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |  "   |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
+  // `-----------------------------------------------------------------------------------'
+
+[_QWERTY] = {
+  {KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS},
+  {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
+  {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
+  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
 },
 
 // ...................................................................... Dvorak
 
   // ,-----------------------------------------------------------------------------------.
-  // |   `  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
+  // |   `  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  |  \   |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |  Esc |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |Enter |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -179,10 +186,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_DVORAK] = {
-  {KC_GRV,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC},
+  {KC_GRV,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSLS},
   {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
   {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-  {Eql,     KC_LCTL, Caps,    KC_LGUI, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
 },
 
 // ...................................................................... Plover
@@ -201,7 +208,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_1,     KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
   {Zzzzzzz,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
   {Zzzzzzz,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-  {PLOVEXIT, Zzzzzzz, Zzzzzzz, KC_C,    KC_V,    Zzzzzzz, Zzzzzzz, KC_N,    KC_M,    Zzzzzzz, Zzzzzzz, Zzzzzzz},
+  {PLOVEX,   Zzzzzzz, Zzzzzzz, KC_C,    KC_V,    Zzzzzzz, Zzzzzzz, KC_N,    KC_M,    Zzzzzzz, Zzzzzzz, Zzzzzzz},
  },
 
 // ...................................................................... Adjust
@@ -209,7 +216,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |  f() |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|Plover|      |
+  // |  f() |      |      |Aud on|Audoff|AGnorm|AGswap|Colemk|Qwerty|Dvorak|Plover|      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -218,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = {
   {_______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL },
-  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  PLOVER,  _______},
+  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, COLEMAK,  QWERTY, DVORAK,  PLOVER,  _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
@@ -276,7 +283,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      | Home |  Up  |  End |  Del | Bksp | Home |  Up  |  End |      |      |
   // |-----------------------------------------------------------------------------------|
-  // | Ctrl |      | Left | Down | Right| Bksp |  Del | Left | Down | Right|      |      |
+  // |      |      | Left | Down | Right| Bksp |  Del | Left | Down | Right|      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      | PgUp | PgDn |      |      | PgDn | PgUp |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -285,7 +292,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NAVPAD] = {
   {_______, _______, KC_HOME, KC_UP,   KC_END,  KC_DEL,  KC_BSPC, KC_HOME, KC_UP,   KC_END,  _______, _______},
-  {KC_LCTL, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_BSPC, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+  {_______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_BSPC, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
   {_______, _______, _______, KC_PGUP, KC_PGDN, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
 },
@@ -399,6 +406,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         PLAY_NOTE_ARRAY (tone_plover, false, 0);
         #endif
         layer_off       (_NUMBER);
+        layer_off       (_SYMBOL);
         layer_off       (_KEYPAD);
         layer_off       (_NAVPAD);
         layer_off       (_ADJUST);
@@ -418,7 +426,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case PLOVEXIT:
+    case PLOVEX:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);

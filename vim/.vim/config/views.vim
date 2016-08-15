@@ -130,7 +130,7 @@
           if s:unfocused == g:dfm_unfocused
             execute 'Limelight!'
             execute 'highlight Normal guifg=' . g:dfm_proof
-            call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
+            " call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
             let s:unfocused = g:dfm_fg
             call ShowInfo(1)
           else

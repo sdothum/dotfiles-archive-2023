@@ -1,13 +1,16 @@
+
 # Zsh Interactive Session Config
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # zmodload zsh/zprof
 
-# ................................................................ Source prezto
+# ........................................................ Source plugin manager
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]] ;then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+# source <(antibody init)
+# antibody bundle <$HOME/.zsh/antibody.plugins 2>/dev/null
 
 # ................................................................ Session entry
 
