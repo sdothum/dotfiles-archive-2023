@@ -6,15 +6,18 @@
 
 # ..................................................................... Terminal
 
-# URxvt client/server
-export SHELL=/usr/bin/zsh
-# adjust font for macbook nvidia display
+export SHELL=/usr/bin/fish
+
+# adjust font for various displays and video cards
 if macbook ;then
   fn='-fn xft:PragmataPro:size=9'
 elif nvidia ;then
   fn='-fn xft:PragmataPro:size=11'
+elif laptop ;then
+  fn='-fn xft:PragmataPro:size=9'
 fi 
 
+# URxvt client/server
 eval urxvtc $fn $@
 if [ $? -eq 2 ] ;then
   urxvtd -q -o -f 2>/tmp/urxvt.log

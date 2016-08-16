@@ -23,7 +23,7 @@ SET fish_color_selection:\x2d\x2dbackground\x3dpurple
 SET fish_color_user:green
 SET fish_color_valid_path:\x2d\x2dunderline
 SET_EXPORT fish_greeting:\x1d
-SET fish_key_bindings:fish_default_key_bindings
+SET fish_key_bindings:fish_vi_key_bindings
 SET fish_pager_color_completion:normal
 SET fish_pager_color_description:555\x1eyellow
 SET fish_pager_color_prefix:cyan

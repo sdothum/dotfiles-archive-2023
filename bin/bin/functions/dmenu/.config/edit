@@ -32,7 +32,7 @@ dmenu tags :: $HOME/bin/functions/dmenu/.config/edit $HOME/bin/dmenu
 dwb :: $(find $HOME/.config/dwb/ -type f -maxdepth 1)
 fasd jump :: $HOME/.fasd
 fish functions :: $HOME/.config/fish/functions/*.fish
-fish shell :: $HOME/.config/fish/*.fish
+fish shell :: $HOME/.config/fish/*.fish $HOME/.config/fish/conf.d/*.fish
 git dotfiles :: $HOME/bin/functions/sysadmin/dotfiles $HOME/stow/.gitignore
 group etc :: /etc/group
 grub :: /etc/default/grub

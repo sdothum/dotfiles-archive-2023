@@ -7,7 +7,7 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | MAX | FONTSIZE <size> | FORTUNE | STACK | TR | WAIT ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | MAX | FONTSIZE <size> | FORTUNE | STACK | TABBED | TR | WAIT ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
 #        TR, disable urxvt pseudo transparency
@@ -15,6 +15,7 @@
 #        SHELL <command>, for simpler unquoted command passing
 # Note:  title may not contain spaces, use hyphen or underscore in place
 
+SHELL=/usr/bin/fish
 TERM=urxvt
 
 # first parameter may be title
@@ -44,6 +45,9 @@ do
     STACK) stack=true
            shift ;;
 
+    TABBED) tabbed='-pe tabbed'
+            shift ;;
+
     TR) tr='+tr'
         shift ;;
 
@@ -53,7 +57,7 @@ do
     SHELL) shift
            process="$@"
            # open shell commands in interactive mode
-           [ "$*" ] && cmd="-e zsh -ic '$@'" || cmd='-e zsh'
+           [ "$*" ] && cmd="-e $SHELL -ic '$@'" || cmd="-e $SHELL"
            break ;;
 
     *) process="$@"
@@ -69,7 +73,7 @@ fi
 if [ $stack ] ;then
   $TERM $title $name $geometry $tr $cmd
 else
-  focus $TERM $title $name $geometry $tr $fn $cmd
+  focus $TERM $title $name $geometry $tabbed $tr $fn $cmd
 fi
 
 # wait for process to complete

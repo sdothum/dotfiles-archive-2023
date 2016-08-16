@@ -8,6 +8,9 @@
 
 name='Scratchpad'
 scratchpad=$ROOT/herbstluftwm:scratchpad
+# simple tabbed or tmux
+term=tmux
+
 
 [ $(pgrep -cf 'toggle scratchpad') -gt 1 ] && exit
 # kill any extra tmux sessions spawned (default 2 processes)..
@@ -65,7 +68,8 @@ focus_check
 
 # cancel out above focus frame
 focus frame
-term $name FORTUNE byobu 'new-session -n ""'
+[ $term = tmux ] && term $name FORTUNE byobu 'new-session -n ""' \
+                 || term $name FORTUNE TABBED
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$scratchpad
 
