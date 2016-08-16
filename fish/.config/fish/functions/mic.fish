@@ -1,4 +1,0 @@
-function mic
-  pacat -r --latency-msec=1 -d  alsa_input.pci-0000_00_1b.0.analog-stereo | pacat -p --latency-msec=1 -d  alsa_output.pci-0000_00_1b.0.analog-stereo
-  echo ".. mute microphone via pulseaudio"
-end

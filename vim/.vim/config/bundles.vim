@@ -71,7 +71,7 @@
     " ...................................................... Syntax highlighting
 
       Plug 'kien/rainbow_parentheses.vim'
-      " Plug 'aliva/vim-fish'
+      Plug 'dag/vim-fish'
       " Plug 'tpope/vim-markdown'
       Plug 'plasticboy/vim-markdown'
       Plug 'greyblake/vim-preview'

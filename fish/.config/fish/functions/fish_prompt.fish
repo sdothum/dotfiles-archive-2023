@@ -1,1 +1,0 @@
-/home/shum/.config/fish/functions/fish_prompt_double.fish

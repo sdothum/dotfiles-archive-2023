@@ -10,7 +10,7 @@
 export SHELL=/usr/bin/zsh
 # adjust font for macbook nvidia display
 if macbook ;then
-  fn='-fn xft:PragmataPro:size=8'
+  fn='-fn xft:PragmataPro:size=9'
 elif nvidia ;then
   fn='-fn xft:PragmataPro:size=11'
 fi 
