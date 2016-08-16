@@ -50,8 +50,14 @@ function fish_prompt
       switch $fish_bind_mode
         case default
           printf '%s' ' ──_──  '
-        case '*'
+        case insert
           printf '%s' ' ─────  '
+        case replace-one
+          printf '%s' ' ──═──  '
+        case visual
+          printf '%s' ' ── ──  '
+        case '*'
+          printf '%s' ' ─ ─ ─  '
       end
     else
       printf '%s' ' ─────  '
