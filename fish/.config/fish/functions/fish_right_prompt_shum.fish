@@ -8,11 +8,19 @@ function fish_right_prompt
   end
 
   function dir
-    printf '%s%s  ' (set_color yellow) (printf '%s' "$PWD" | sed -r 's|([^/.])[^/]*/|\1/|g')
+    printf '%s%s' (set_color yellow) (printf '%s' "$PWD" | sed -re "s|^$HOME|~|" -e  's|([^/.])[^/]*/|\1/|g')
   end
 
   function time
-    printf '%s%s' (set_color 666) (date '+%-I:%M %S')
+    date '+  %-I:%M %S'
+  end
+
+  function duration
+    if test $CMD_DURATION
+      if test $CMD_DURATION -gt 1000
+        printf '  %sS' (math "$CMD_DURATION / 1000")
+      end
+    end
   end
 
   # oddly, attempting a single formatted printf line doesn't display as expected
@@ -21,5 +29,7 @@ function fish_right_prompt
   echo '  '
   host
   dir
-  time
+  set_color 666
+  # time
+  duration
 end

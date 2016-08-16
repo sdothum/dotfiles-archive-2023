@@ -24,8 +24,10 @@ else
   [ $time ] && expire="--expire-time=$(( $time * 1000 ))"
   case $# in
     0) usage ;;
-    1) sudo -u $USER DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" & ;;
-    2) sudo -u $USER DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" "$2" & ;;
+    # 1) sudo -u $USER DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" & ;;
+    # 2) sudo -u $USER DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" "$2" & ;;
+    1) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" & ;;
+    2) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" "$2" & ;;
     *) usage ;;
   esac
 fi

@@ -76,7 +76,7 @@ function fish_prompt
   if test $CMD_DURATION
     if test $CMD_DURATION -gt (math "1000 * 10")
       set secs (math "$CMD_DURATION / 1000")
-      notify critical "$history[1]" "Returned $status, took $secs seconds"
+      notify low "$history[1]" "Returned $status, took $secs seconds"
     end
   end
 end
