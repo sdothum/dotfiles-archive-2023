@@ -19,16 +19,16 @@ function gitstatus
 
   function precmd_update_git_vars
     set -e GIT_STATUS
-    ls .git >/dev/null 2>&1
-    and update_current_git_vars
+    ls .git >/dev/null ^&1
+      and update_current_git_vars
   end
 
   function update_current_git_vars
     switch $GIT_EXECUTABLE
       case python
-        set -g GIT_STATUS (python $GIT_BIN/gitstatus.py 2>/dev/null  | tr ' ' \n)
+        set -g GIT_STATUS (python $GIT_BIN/gitstatus.py ^/dev/null  | tr ' ' \n)
       case haskell
-        set -g GIT_STATUS (git status --porcelain --branch 2>/dev/null | $GIT_BIN/gitstatus  | tr ' ' \n)
+        set -g GIT_STATUS (git status --porcelain --branch ^/dev/null | $GIT_BIN/gitstatus  | tr ' ' \n)
     end
     # echo $GIT_STATUS
 
@@ -68,7 +68,10 @@ function gitstatus
     if [ "$GIT_UNTRACKED" -ne 0 ]
       set STATUS "$STATUS$THEME_UNTRACKED"(set_color normal)
     end
-    if [ "$GIT_CHANGED" -eq 0 ]; and [ "$GIT_CONFLICTS" -eq 0 ]; and [ "$GIT_STAGED" -eq 0 ]; and [ "$GIT_UNTRACKED" -eq 0 ]
+    if [ "$GIT_CHANGED" -eq 0 ]
+    and [ "$GIT_CONFLICTS" -eq 0 ]
+    and [ "$GIT_STAGED" -eq 0 ]
+    and [ "$GIT_UNTRACKED" -eq 0 ]
       set STATUS "$STATUS$THEME_CLEAN"
     end
     set STATUS "$STATUS"(set_color normal)"$THEME_SUFFIX"

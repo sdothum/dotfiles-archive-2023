@@ -1,5 +1,5 @@
 function fish_right_prompt
-  function host
+  function remote
     if [ -n "$SSH_CLIENT" ]
       printf '%s%s ' (set_color -o yellow) (hostname)
     else
@@ -7,7 +7,7 @@ function fish_right_prompt
     end
   end
 
-  function dir
+  function folder
     printf '%s%s' (set_color yellow) (printf '%s' "$PWD" | sed -re "s|^$HOME|~|" -e  's|([^/.])[^/]*/|\1/|g')
   end
 
@@ -27,8 +27,8 @@ function fish_right_prompt
   # printf '%s %s%s %s%s' (gitstatus) (host) (dir) (time) (set_color normal)
   gitstatus
   echo '  '
-  host
-  dir
+  remote
+  folder
   set_color 666
   # time
   duration

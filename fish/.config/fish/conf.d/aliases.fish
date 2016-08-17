@@ -6,7 +6,7 @@
 
 # alias a 'ack'
 # alias al 'ack -l'
-if which pacaur >/dev/null 2>&1
+if which pacaur >/dev/null ^&1
   alias am 'pacaur -Ss'
   alias AM 'pacaur -Ss | less'
 else
@@ -80,7 +80,7 @@ alias rm 'rm -i'
 alias rmv 'rm -iv'
 # alias roxterm 'SHELL=/usr/bin/zsh roxterm'
 alias restart 'systemd restart'
-# alias rip 'rrip_gui >/dev/null 2>&1 &'
+# alias rip 'rrip_gui >/dev/null ^&1 &'
 # alias sakura 'SHELL=/usr/bin/zsh sakura'
 alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
 alias sdiff 'sdiff -b -E -W -w(tput cols)'

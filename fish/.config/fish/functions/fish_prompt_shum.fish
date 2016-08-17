@@ -17,23 +17,25 @@ function fish_prompt
   set -g BLINK (printf "\e[5m")
   set -g NOBLINK (printf "\e[25m")
   
-  tty | grep -q tty; and set -g TTY tty; or set -g TTY pts
+  tty | grep -q tty
+    and set -g TTY tty
+    or set -g TTY pts
   function glyph
     [ "$TTY" = tty ]
-    and printf '%s' "$argv[2]"
-    or printf '%s' "$argv[1]"
+      and printf '%s' "$argv[2]"
+      or printf '%s' "$argv[1]"
   end
 
-  function jobg
+  function bgjobs
     jobs -c | egrep -qv '^(Command|fasd)'
-    and printf '%s%s' (set_color $BLUE) (glyph '⚙' 'o')
-    or printf '%s%s' (set_color normal) ' '
+      and printf '%s%s' (set_color $BLUE) (glyph '⚙' 'o')
+      or printf '%s%s' (set_color normal) ' '
   end
 
   function root
     [ "$USER" = root ]
-    and printf '%s%s' (set_color $YELLOW) $BLINK(glyph '⚡' 'z')$NOBLINK
-    or printf '%s%s' (set_color normal) ' '
+      and printf '%s%s' (set_color $YELLOW) $BLINK(glyph '⚡' 'z')$NOBLINK
+      or printf '%s%s' (set_color normal) ' '
   end
 
   function rcode
@@ -57,7 +59,7 @@ function fish_prompt
         case visual
           printf '%s' ' ── ──  '
         case '*'
-          printf '%s' ' ─ ─ ─  '
+          printf '%s' ' ─ ? ─  '
       end
     else
       printf '%s' ' ─────  '
@@ -66,7 +68,7 @@ function fish_prompt
   
   # taking a page out of the right hand prompt
   # printf '%s%s%s %s─────%s  ' (jobg) (root) (rcode) (set_color $ORANGE) (set_color normal)
-  jobg
+  bgjobs
   root
   rcode
   leader

@@ -27,7 +27,8 @@ if [ $USER != root ]
 
   # reset keyboard layout
   if [ -e /etc/vconsole.conf ]
-    grep -q 'colemak' /etc/vconsole.conf ;and keymap qwerty
+    grep -q 'colemak' /etc/vconsole.conf
+      and keymap qwerty
   end
 end
 
@@ -38,10 +39,11 @@ else
   if [ -e /tmp/term:fortune ]
     if not [ -e /tmp/herbstluftwm:fortune 
       # su notify to apply user notification (spec)
-      [ $USER = root ] ;and su -c "time=15 notify --urgency=critical \"$(fortune)\"" - shum 2>/dev/null \
-                       ;or  time=15 notify "$(fortune)" 2>/dev/null
+      [ $USER = root ]
+        and su -c "time=15 notify --urgency=critical \"$(fortune)\"" - shum ^/dev/null
+        or time=15 notify "$(fortune)" ^/dev/null
       # touch /tmp/herbstluftwm:fortune
     end
-    rm -f /tmp/term:fortune 2>/dev/null
+    rm -f /tmp/term:fortune ^/dev/null
   end
 end
