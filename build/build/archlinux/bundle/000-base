@@ -29,6 +29,7 @@
 # ▔▔▔▔▔
   dash
   fasd
+  fish
   prezto-git
   zsh
   zsh-autosuggestions

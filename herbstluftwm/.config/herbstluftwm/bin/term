@@ -15,7 +15,7 @@
 #        SHELL <command>, for simpler unquoted command passing
 # Note:  title may not contain spaces, use hyphen or underscore in place
 
-SHELL=/usr/bin/fish
+SHELL=/usr/bin/dash
 TERM=urxvt
 
 # first parameter may be title
@@ -56,8 +56,7 @@ do
 
     SHELL) shift
            process="$@"
-           # open shell commands in interactive mode
-           [ "$*" ] && cmd="-e $SHELL -ic '$@'" || cmd="-e $SHELL"
+           [ "$*" ] && cmd="-e $SHELL -c '$@'"
            break ;;
 
     *) process="$@"
@@ -71,7 +70,7 @@ if [ -z "$name" ] ;then
 fi
 
 if [ $stack ] ;then
-  $TERM $title $name $geometry $tr $cmd
+  $TERM $title $name $geometry $tabbed $tr $fn $cmd
 else
   focus $TERM $title $name $geometry $tabbed $tr $fn $cmd
 fi

@@ -88,7 +88,6 @@
 # bc
 # checkbashisms
   fasd
-  fish
   fortune-mod
   fortune-mod-chucknorris
   prezto-git

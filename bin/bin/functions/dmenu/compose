@@ -43,7 +43,7 @@ do
   case $editor in
     '[ send ]') ;;
 
-    vim) SHELL=/bin/sh
+    vim) SHELL=/usr/bin/dash
          format_message $1
          gvim -f -c 'set filetype=mail' $1
          cp $1 $1.draft

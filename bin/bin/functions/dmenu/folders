@@ -27,7 +27,7 @@ do
   do
     case $action in
       term) cd $dir
-            term "$dir" SHELL ;;
+            term "$dir" ;;
 
       ncdu |\
       ranger) term "$dir" $action "$dir" ;;
