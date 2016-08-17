@@ -18,7 +18,7 @@ function fish_right_prompt
   function duration
     if test $CMD_DURATION
       if test $CMD_DURATION -gt 1000
-        printf '  %sS' (math "$CMD_DURATION / 1000")
+        printf '  %ss' (math "$CMD_DURATION / 1000")
       end
     end
   end
