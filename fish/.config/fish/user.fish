@@ -25,6 +25,15 @@ if [ $USER != root ]
     end
   end
 
+  # set PATH so it includes user's private bin if it exists
+  if [ -d "$HOME/bin" ]
+    set -x PATH (echo $PATH | sed -e "s|$HOME/bin ||" -e "s|/opt/bin ||")
+    set -x PATH "/opt/bin $PATH"
+    for i in (find -L $HOME/bin -type d | grep -v '/\.' | sort -r)
+      set -x PATH "$i $PATH" ^/dev/null
+    end
+  end
+
   # reset keyboard layout
   if [ -e /etc/vconsole.conf ]
     grep -q 'colemak' /etc/vconsole.conf

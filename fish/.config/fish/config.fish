@@ -21,9 +21,7 @@ set -x PRINTER HP_LaserJet_1320_series
 
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow ~/stow/user /usr /
-set -x PATH $PATH ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games
-
-
+set -x PATH $PATH ~/.cabal/bin ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
 
 # gpg key
 [ -S ~/.gnupg/S.gpg-agent ] ;and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent

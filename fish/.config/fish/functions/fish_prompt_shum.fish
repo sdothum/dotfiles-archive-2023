@@ -1,25 +1,26 @@
-function fish_prompt
-  and set -g RCODE ok
-  or set -g RCODE fail
+function fish_prompt --description 'Write out the prompt'
+
+	set -g RCODE $status
 
   # console prompt hacks for the anal..
-  if tty | grep -q tty
-    set -g YELLOW '-o yellow'
-    set -g ORANGE 'yellow'
-    set -g RED    'red'
-    set -g BLUE   'blue'
-  else
-    set -g YELLOW 'FC6'
-    set -g ORANGE 'F60'
-    set -g RED    'F00'
-    set -g BLUE   '03F'
+  if not set -q TTY
+    if tty | grep -q tty
+      set -g TTY tty
+      set -g YELLOW '-o yellow'
+      set -g ORANGE 'yellow'
+      set -g RED    'red'
+      set -g BLUE   'blue'
+    else
+      set -g TTY pts
+      set -g YELLOW 'FC6'
+      set -g ORANGE 'F60'
+      set -g RED    'F00'
+      set -g BLUE   '03F'
+    end
+    set -g BLINK (printf "\e[5m")
+    set -g NOBLINK (printf "\e[25m")
   end
-  set -g BLINK (printf "\e[5m")
-  set -g NOBLINK (printf "\e[25m")
-  
-  tty | grep -q tty
-    and set -g TTY tty
-    or set -g TTY pts
+
   function glyph
     [ "$TTY" = tty ]
       and printf '%s' "$argv[2]"
@@ -39,7 +40,7 @@ function fish_prompt
   end
 
   function rcode
-    if [ "$RCODE" = ok ]
+    if [ $RCODE -eq 0 ]
      printf '%s%s' (set_color normal) ' '
     else
       printf '%s%s' (set_color $RED) (glyph '✘' 'x')
