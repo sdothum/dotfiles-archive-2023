@@ -24,12 +24,13 @@ configure authentication else some channels will force #<channel>-unregistered
 /set irc.server.znc.password "znc"
 /set irc.server.znc.autoconnect on
 /connect znc
+# add server networks on znc webpage before connecting to servers
 /server add rizon luna/7000 -username=znc/rizon -password=znc
 /set irc.server.rizon.autoconnect on
 /connect rizon
-# /server add nixers luna/7000 -username=znc/nixers -password=znc
-# /set irc.server.nixers.autoconnect on
-# /connect nixers
+/server add nixers luna/7000 -username=znc/nixers -password=znc
+/set irc.server.nixers.autoconnect on
+/connect nixers
 
 # scripts
 /script install autosort.py

@@ -7,6 +7,9 @@
 # correct commands.
 setopt CORRECT
 
+# auto-completion of command line switches for aliases
+setopt COMPLETE_ALIASES
+
 # disable bang history (exclamation! repeat)
 unsetopt BANG_HIST
 

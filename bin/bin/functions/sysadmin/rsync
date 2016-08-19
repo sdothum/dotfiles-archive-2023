@@ -95,9 +95,14 @@ case $@ in
          fi ;;
 
   pi) if server; then
-        rsync --delete --exclude='.deprecated' --exclude='.hg' $HOME/stow/bin/bin pi:$HOME/
-        rsync --delete --exclude='.deprecated' --exclude='.hg' $HOME/stow/herbstluftwm/.config/herbstluftwm pi:$HOME/.config/
-        rsync --delete --exclude='.deprecated' --exclude='.hg' --exclude='makepkg' $HOME/stow/build/build/archlinux pi:$HOME/build/
+        rsync --delete --exclude='.deprecated' --exclude='.hg' \
+              $HOME/stow/bash/.bash_logout $HOME/stow/bash/.bash_profile $HOME/stow/bash/.bashrc $HOME/stow/bin/bin \
+              pi:$HOME/
+        rsync --delete --exclude='.deprecated' --exclude='.hg' \
+              $HOME/stow/fish/.config/fish $HOME/stow/herbstluftwm/.config/herbstluftwm \
+              pi:$HOME/.config/
+        rsync --delete --exclude='.deprecated' --exclude='.hg' --exclude='makepkg' \
+              $HOME/stow/build/build/archlinux pi:$HOME/build/
       fi ;;
 
   server) if server ;then
@@ -107,8 +112,8 @@ case $@ in
               [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] \
                 || mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
               sudo rsync -av --delete \
-                        /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
-                        /net/archive/opt/plexmediaserver/Library/Application\ Support/
+                         /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                         /net/archive/opt/plexmediaserver/Library/Application\ Support/
               [ -d /net/archive/srv/lib ] || sudo mkdir -p /net/archive/srv/lib
               sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
               [ -d /net/archive/etc/webapps/tt-rss ] || sudo mkdir -p /net/archive/etc/webapps/tt-rss

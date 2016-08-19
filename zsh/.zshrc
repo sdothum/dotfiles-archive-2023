@@ -4,6 +4,8 @@
 
 # zmodload zsh/zprof
 
+user_login
+
 # ........................................................ Source plugin manager
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]] ;then
@@ -12,69 +14,50 @@ fi
 # source <(antibody init)
 # antibody bundle <$HOME/.zsh/antibody.plugins 2>/dev/null
 
-# ................................................................ Session entry
-
-# login check
-if [[ $USER != root ]] ;then
-  if [[ -z "$DISPLAY" && $(tty) = /dev/tty1 ]] ;then
-    # assign deadline scheduler to SSD boot drive
-    if [[ $(hostname) = luna && ! -e /tmp/ssd:scheduler ]] ;then
-      ssd=$(ls -l /dev/disk/by-id/*ata* | grep 'Samsung_SSD' | head -1 | cut -d/ -f7)
-      if [[ $ssd ]] ;then
-        # virtual block devices must be referenced explicitly
-        case $ssd in
-          sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
-          sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
-          sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
-          sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
-          sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
-        esac
-        notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
-        echo "/dev/$ssd [deadline]" > /tmp/ssd:scheduler
-      fi
-    fi
-  fi
-
-  # reset keyboard layout
-  if [[ -e /etc/vconsole.conf ]] ;then
-    grep -q 'colemak' /etc/vconsole.conf && keymap qwerty
-  fi
-fi
-
-# "prompt -s" doesn't work yet
-autoload -Uz promptinit
-promptinit 2>/dev/null && prompt shum
-# login triggers prezto fortune, insert blank line
-if [[ $(tty) =~ /dev/tty[1-9] ]] ;then
-  echo
-else
-  if [[ -e /tmp/term:fortune ]] ;then
-    if ! [[ -e /tmp/herbstluftwm:fortune ]] ;then
-      # su notify to apply user notification (spec)
-      [[ $USER = root ]] && su -c "time=15 notify --urgency=critical \"$(fortune)\"" - shum 2>/dev/null \
-                         || time=15 notify "$(fortune)" 2>/dev/null
-      # touch /tmp/herbstluftwm:fortune
-    fi
-    rm -f /tmp/term:fortune 2>/dev/null
-  fi
-fi
-
 # ................................................................... zsh config
+
+# auto-completion
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
 
 source ~/.zsh/setopts.zsh
 source ~/.zsh/bindkeys.zsh
 source ~/.zsh/aliases.zsh
-# source ~/.zsh/colors.zsh
+source ~/.zsh/colors.zsh
+
+# "prompt -s" doesn't work yet
+autoload -Uz promptinit
+promptinit 2>/dev/null && prompt shum >/dev/null
+# if no prompt theme loaded
+if [[ "$PROMPT" = '%m%# ' ]] ;then
+  PROMPT='%F{red}    ─────  %f%b%F{blue}'
+  RPROMPT='%F{yellow}%~%f  %F{green}%(?::%F{red})%D{%-I:%M %S}'
+fi
+
 if [[ -s /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] ;then
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi 
+fi
+if [[ -s /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] ;then
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# history search
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
 
 # ........................................................... Autoload functions
 
 # .zshenv is used to make functions available to dmenu system
-autoload run-help-git
-autoload run-help-svn
-autoload run-help-svk
+autoload -Uz run-help
+autoload -Uz run-help-git
+autoload -Uz run-help-svn
+autoload -Uz run-help-svk
+alias help=run-help
 
 # ................................................................... Deprecated
 

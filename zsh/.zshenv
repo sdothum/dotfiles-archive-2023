@@ -30,7 +30,7 @@ export HOST=$(hostname)
 export PRINTER=HP_LaserJet_1320_series
 
 # paths
-export CDPATH=.:..:../..:~:~/.config:~/stow:~/stow/user:/usr:/
+export CDPATH=.:..:../..:~:~/.config:~/stow:/usr:/
 export PATH=$PATH:~/.cabal/bin:~/.gem/ruby/2.3.0/bin:/bin:/sbin:/usr/sbin:/usr/bin/core_perl:/usr/local/games
 
 # gpg key

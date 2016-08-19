@@ -1,8 +1,12 @@
+# sdothum - 2016 (c) wtfpl
 
 # Fish Shell
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # ....................................................................... Config
+
+# turn off
+set fish_greeting
 
 # only shells wish vi mode allowed here!
 fish_vi_key_bindings
@@ -20,7 +24,7 @@ set -x HOST (hostname)
 set -x PRINTER HP_LaserJet_1320_series
 
 # paths
-set -x CDPATH . .. ../.. ~ ~/.config ~/stow ~/stow/user /usr /
+set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
 set -x PATH $PATH ~/.cabal/bin ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
 
 # gpg key
@@ -59,3 +63,7 @@ set -x PAGER 'less'
 set -x LUA_INIT "@$HOME/.luarc"
 # ruby
 set -x RI '--format ansi --no-pager'
+
+# ........................................................................ Login
+
+user_login

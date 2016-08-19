@@ -1,11 +1,12 @@
+# sdothum - 2016 (c) wtfpl
 
 # Fish Shell
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 # ...................................................................... Aliases
 
-# alias a 'ack'
-# alias al 'ack -l'
+alias a 'ack'
+alias al 'ack -l'
 if which pacaur >/dev/null ^&1
   alias am 'pacaur -Ss'
   alias AM 'pacaur -Ss | less'

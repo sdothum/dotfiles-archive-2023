@@ -41,8 +41,8 @@ hc rule class=mplayer2               tag=5
 hc rule title=Music                  tag=5 index=0 focus=on pseudotile=on
 hc rule title=Radio                  tag=5 index=1 focus=off
 # hc rule class=Rrip_gui             tag=5 focus=on switchtag=on
-hc rule class=Smplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
-hc rule class=Umplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
+haaaaaaaac rule class=Smplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=off
+hc rule class=Umplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=off
 hc rule class=Kodi                   tag=5 monitor=5 focus=on switchtag=on hook=fullscreen
 hc rule class=Gimp                   tag=5 monitor=5 focus=on switchtag=on
 hc rule class=Darktable              tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
@@ -67,7 +67,7 @@ hc rule windowrole=gvimdiff          focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                pseudotile=on
 # trap urxvt -name=max
 hc rule instance=max                 focus=on switchtag=on hook=max
-hc rule class=mpv                    focus=on switchtag=on fullscreen=on hook=fullscreen
+hc rule class=mpv                    focus=on switchtag=on fullscreen=off
 hc rule class=Plover                 pseudotile=on
 hc rule class=ROX-Filer              pseudotile=off
 hc rule class=Savebox                pseudotile=off

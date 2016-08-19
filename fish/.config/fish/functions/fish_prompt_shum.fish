@@ -3,47 +3,60 @@ function fish_prompt --description 'Write out the prompt'
 	set -g RCODE $status
 
   # console prompt hacks for the anal..
-  if not set -q TTY
-    if tty | grep -q tty
-      set -g TTY tty
-      set -g YELLOW '-o yellow'
-      set -g ORANGE 'yellow'
-      set -g RED    'red'
-      set -g BLUE   'blue'
-    else
-      set -g TTY pts
-      set -g YELLOW 'FC6'
-      set -g ORANGE 'F60'
-      set -g RED    'F00'
-      set -g BLUE   '03F'
-    end
-    set -g BLINK (printf "\e[5m")
-    set -g NOBLINK (printf "\e[25m")
+  if tty | grep -q tty
+    set -g TTY tty
+    set -g YELLOW '-o yellow'
+    set -g ORANGE 'yellow'
+    set -g RED    'red'
+    set -g BLUE   'blue'
+  else
+    set -g TTY pts
+    set -g YELLOW 'FC6'
+    set -g ORANGE 'F60'
+    set -g RED    'F00'
+    set -g BLUE   '03F'
   end
+  set -g BLINK (printf "\e[5m")
+  set -g NOBLINK (printf "\e[25m")
 
   function glyph
     [ "$TTY" = tty ]
-      and printf '%s' "$argv[2]"
-      or printf '%s' "$argv[1]"
+      and echo -n "$argv[2]"
+      or echo -n "$argv[1]"
+  end
+
+  function space
+    set_color normal
+    echo -n ' '
   end
 
   function bgjobs
-    jobs -c | egrep -qv '^(Command|fasd)'
-      and printf '%s%s' (set_color $BLUE) (glyph '⚙' 'o')
-      or printf '%s%s' (set_color normal) ' '
+    if jobs -c | egrep -qv '^(Command|fasd)'
+      set_color $BLUE
+      glyph '⚙' 'o'
+      set_color normal
+    else
+      space
+    end
   end
 
   function root
-    [ "$USER" = root ]
-      and printf '%s%s' (set_color $YELLOW) $BLINK(glyph '⚡' 'z')$NOBLINK
-      or printf '%s%s' (set_color normal) ' '
+    if [ "$USER" = root ]
+      set_color $YELLOW
+      echo -n $BLINK(glyph '⚡' 'z')$NOBLINK
+      set_color normal
+    else
+      space
+    end
   end
 
   function rcode
     if [ $RCODE -eq 0 ]
-     printf '%s%s' (set_color normal) ' '
+     space
     else
-      printf '%s%s' (set_color $RED) (glyph '✘' 'x')
+      set_color $RED
+      glyph '✘' 'x'
+      set_color normal
     end
   end
 
@@ -52,19 +65,20 @@ function fish_prompt --description 'Write out the prompt'
     if test "$fish_key_bindings" = "fish_vi_key_bindings"
       switch $fish_bind_mode
         case default
-          printf '%s' ' ──_──  '
+          echo -n ' ──_──  '
         case insert
-          printf '%s' ' ─────  '
+          echo -n ' ─────  '
         case replace-one
-          printf '%s' ' ──═──  '
+          echo -n ' ──═──  '
         case visual
-          printf '%s' ' ── ──  '
+          echo -n ' ── ──  '
         case '*'
-          printf '%s' ' ─ ? ─  '
+          echo -n ' ─ ? ─  '
       end
     else
-      printf '%s' ' ─────  '
+      echo -n ' ─────  '
     end
+    set_color normal
   end
   
   # taking a page out of the right hand prompt
@@ -73,7 +87,6 @@ function fish_prompt --description 'Write out the prompt'
   root
   rcode
   leader
-  set_color normal
 
   # If commands runs >= 10 seconds, notify user on completion
   if test $CMD_DURATION

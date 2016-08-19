@@ -11,6 +11,7 @@ if arm; then
   noir omxplayer "$@"
 else
   notify low 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
+  focus frame
   mpv --vf=eq "$@" >/dev/null 2>&1
 fi
 # refresh panel title on close

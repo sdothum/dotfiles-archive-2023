@@ -90,8 +90,11 @@
   fasd
   fortune-mod
   fortune-mod-chucknorris
-  prezto-git
-  zsh-doc
+# prezto-git
+# zsh-doc
+# zsh-autosuggestions
+# zsh-completions
+# zsh-syntax-highlighting
 
 
 = system monitor and test
@@ -124,7 +127,7 @@
 
 = terminal multiplexors
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  byobu
+# byobu
 # screen
   tmux
 

@@ -30,9 +30,8 @@
   dash
   fasd
   fish
-  prezto-git
-  zsh
-  zsh-autosuggestions
+# prezto-git
+# zsh
 
 
 = x11 drivers
