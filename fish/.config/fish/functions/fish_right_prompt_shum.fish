@@ -1,8 +1,12 @@
 function fish_right_prompt
+  set -g HILIGHT 1
+
   if tty | grep -q tty
-    set -g GREY 'red'
+    set -g GREY   'red'
+    set -g YELLOW '-o yellow'
   else
-    set -g GREY '666'
+    set -g GREY   '666'
+    set -g YELLOW 'FC3'
   end
 
   function gitstatus
@@ -74,12 +78,24 @@ function fish_right_prompt
   end
 
   function folder
-    set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
-    set -l base (echo $folders | cut -f1,2 | rev)
-    set -l parent (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
-    set_color yellow
-    # pwd | sed -re "s|^$HOME|~|" -e  's|([^/.])[^/]*/|\1/|g'
-    echo -n "/$parent$base" | sed -e 's|\t|/|g' -e 's|^//|/|' -e 's|^/~/~|~|' -e 's|^/~/|~/|'
+    if [ $HILIGHT -eq 1 ]
+      set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
+      set -l base (echo $folders | cut -f1 | rev)
+      set -l parent (echo $folders | cut -f2 | rev)
+      set -l tree (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
+      set_color yellow
+      set -l path (echo "/$tree/$parent/"(set_color $YELLOW)"$base" | sed -e 's|\t|/|g' -e 's|//|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
+      [ "$path" = '~' ]
+        and set -l path (set_color $YELLOW)~
+      echo -n $path
+    else
+      set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
+      set -l base (echo $folders | cut -f1,2 | rev)
+      set -l parent (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
+      set_color yellow
+      # pwd | sed -re "s|^$HOME|~|" -e  's|([^/.])[^/]*/|\1/|g'
+      echo -n "/$parent$base" | sed -e 's|\t|/|g' -e 's|^//|/|' -e 's|^/~/~|~|' -e 's|^/~/|~/|'
+    end
     set_color normal
   end
 
@@ -93,7 +109,7 @@ function fish_right_prompt
     if test $CMD_DURATION
       if test $CMD_DURATION -gt 1000
         set_color $GREY
-        echo -n '  …'(math "$CMD_DURATION / 1000")'s'
+        echo -n '  ⇣'(math "$CMD_DURATION / 1000")'s'
         set_color normal
       end
     end

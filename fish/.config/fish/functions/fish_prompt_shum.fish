@@ -71,7 +71,7 @@ function fish_prompt --description 'Write out the prompt'
         case replace-one
           echo -n ' ──═──  '
         case visual
-          echo -n ' ── ──  '
+          echo -n ' ──━──  '
         case '*'
           echo -n ' ─ ? ─  '
       end
@@ -92,7 +92,9 @@ function fish_prompt --description 'Write out the prompt'
   if test $CMD_DURATION
     if test $CMD_DURATION -gt (math "1000 * 10")
       set secs (math "$CMD_DURATION / 1000")
-      notify low "$history[1]" "Returned $status, took $secs seconds"
+      set mins (math "$secs / 60")
+      set secs (math "$secs - $mins * 60")
+      notify low "$history[1]" "Returned $status, took $mins\m $secs\s"
     end
   end
 end

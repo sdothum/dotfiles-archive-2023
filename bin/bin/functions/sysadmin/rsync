@@ -97,7 +97,7 @@ case $@ in
   pi) if server; then
         rsync --delete --exclude='.deprecated' --exclude='.hg' \
               $HOME/stow/bash/.bash_logout $HOME/stow/bash/.bash_profile $HOME/stow/bash/.bashrc $HOME/stow/bin/bin \
-              pi:$HOME/
+              $HOME/stow/fasd/.fasd pi:$HOME/
         rsync --delete --exclude='.deprecated' --exclude='.hg' \
               $HOME/stow/fish/.config/fish $HOME/stow/herbstluftwm/.config/herbstluftwm \
               pi:$HOME/.config/

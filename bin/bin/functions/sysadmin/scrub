@@ -23,6 +23,7 @@ volume() {
 
 show() {
   V=$(volume $@)
+  [ "$V" ] || usage
   p scrub | grep -q "btrfs scrub start -Bd $V" || in_progress=$@
   while :
   do
@@ -46,7 +47,8 @@ case $1 in
   s) show $(volume $2) ;;
 
   *) sudo btrfs scrub start -Bd $(volume $@) &
-     term "$@" SHELL "scrub s $@" & ;;
+     which term >/dev/null && (term "$@" SHELL "scrub s $@" &) \
+                           || scrub s $@ ;;
 esac
 
 # vim: set ft=sh: #

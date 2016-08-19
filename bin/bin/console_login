@@ -1,0 +1,36 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ Console login
+
+# bootstrap SSD scheduler
+if [ $USER != root ] ;then
+  if [ -z "$DISPLAY" ] && [ $(tty) = /dev/tty1 ] ;then
+    # assign deadline scheduler to SSD boot drive
+    if [ $(hostname) = luna ] && ! [ -e /tmp/ssd:scheduler ] ;then
+      ssd=$(ls -l /dev/disk/by-id/*ata* | grep 'Samsung_SSD' | head -1 | cut -d/ -f7)
+      if [ $ssd ] ;then
+        # virtual block devices must be referenced explicitly
+        case $ssd in
+          sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
+          sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
+          sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
+          sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
+          sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
+        esac
+        notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
+        echo "/dev/$ssd [deadline]" > /tmp/ssd:scheduler
+      fi
+    fi
+  fi
+
+  # reset keyboard layout
+  if [ -e /etc/vconsole.conf ] ;then
+    grep -q 'colemak' /etc/vconsole.conf && keymap qwerty
+  fi
+fi
+
+# vim: set ft=sh: #

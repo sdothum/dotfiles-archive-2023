@@ -5,9 +5,11 @@
 
 # ........................................................ ANSI terminal colours
 
+# for posix shell scripts
 set -x _blink_   (printf "\e[5m")
 set -x _noblink_ (printf "\e[25m")
 set -x _nocolor_ (printf "\e[0;0m")
+set -x _normal_  (printf "\e[0;0m")
 
 # _normal_
 # _BRIGHT_

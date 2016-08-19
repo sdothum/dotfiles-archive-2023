@@ -11,28 +11,25 @@ set fish_greeting
 # only shells wish vi mode allowed here!
 fish_vi_key_bindings
 
-# ................................................................. User session
+# ............................................................ Shell environment
 
 # default shell
 set -x SHELL /usr/bin/fish
 set -x XTERM_SHELL /usr/bin/fish
 set -x KEYTIMEOUT 1 
 
-# for xmonad onhost
-set -x HOST (hostname)
-# default printer
-set -x PRINTER HP_LaserJet_1320_series
-
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
 set -x PATH $PATH ~/.cabal/bin ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
 
+# ........................................................... System environment
+
+# default printer
+set -x PRINTER HP_LaserJet_1320_series
+
 # gpg key
 [ -S ~/.gnupg/S.gpg-agent ] ;and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
 set -x PASSWORD_STORE_CLIP_TIME 60
-
-# suppress no newline % symbol marker
-set -x PROMPT_EOL_MARK ''
 
 # ..................................................................... Internet
 
@@ -59,11 +56,11 @@ set -x PLAYER 'mpv'
 set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
 set -x PAGER 'less'
 
+# ..................................................... Development environments
+
 # lua
 set -x LUA_INIT "@$HOME/.luarc"
 # ruby
 set -x RI '--format ansi --no-pager'
-
-# ........................................................................ Login
-
-user_login
+# for xmonad onhost
+set -x HOST (hostname)
