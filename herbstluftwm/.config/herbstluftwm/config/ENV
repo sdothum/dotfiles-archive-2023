@@ -9,7 +9,8 @@ export PARENT=$HOME/bin/functions/log/parent
 # export Mod=Mod4  # Use super key as the main modifier
 export Mod=Mod1    # Use alt as the main modifier
 
-# export SHELL=/usr/bin/dash
+# don't set shell else dmenu history functions may be non-functional
+export SHELL=/usr/bin/dash
 export XDG_CONFIG_HOME=$HOME/.config
 export ROOT=${ROOT:-/tmp}
 
@@ -33,7 +34,7 @@ export WALL=patricia
 
 # ..................................................................... Desktops
 
-# desktops
+# desktops, see config/tags
 export TAG_NAMES='WEB CHAT PERSONAL WIKI MEDIA ADMIN'
 export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
 
@@ -58,6 +59,9 @@ fi
 
 # ........................................................... Margin adjustments
 
+# left shift right monitor margin by shadow-radius*shadow_factor so conky doesn't cover shadow area
+export SHADOW_FACTOR=2
+
 # conky lua syntax filter
 conkyrc() {
   grep "^ *$1" $HOME/.conkyrc | sed -r 's/.*= *([0-9]*),.*/\1/'
@@ -75,7 +79,7 @@ elif grep -q '^shadow-opacity = 0.0' $HOME/.compton.conf ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)
-  export SHADOW=$(( $(grep '^shadow-radius =' $HOME/.compton.conf | sed -r 's/.*= *([0-9]*).*/\1/') * 2 )) 
+  export SHADOW=$(( $(grep '^shadow-radius =' $HOME/.compton.conf | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR )) 
 fi
 
 # dynamic monocle frame height adjustment, (0) none
@@ -120,11 +124,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#0b525a'
+export DEFAULT_FG='#17505c'
 export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#06292d'
-export INACTIVE_FG='#56120b'
-export INACTIVE_HIDDEN_FG='#2b0906'
+export ACTIVE_HIDDEN_FG='#0c282e'
+export INACTIVE_FG='#5a2216'
+export INACTIVE_HIDDEN_FG='#2d110b'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

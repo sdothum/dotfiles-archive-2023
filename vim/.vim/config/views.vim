@@ -53,6 +53,7 @@
     " .......................................................... Goyo prose view
 
       let g:wikistatus = 1                  " initial wikistatus, see statusline.vim
+      let g:goyorefresh = 0                 " goyo refresh (0) pending (1) done
 
       " goyo initialization hooks
       function! s:GoyoEnter()
@@ -98,6 +99,7 @@
 
       " reset window margins by toggling goyo on and off (<C-w>= leaves number artifacts)
       function! ResetGoyo()
+        let g:goyorefresh=1                 " prevent window manager resize loop
         if exists('#goyo')
           let l:buffer = bufnr('%')         " goyo! always returns to first buffer, so remember last
           call ToggleGoyo()
@@ -107,7 +109,9 @@
       endfunction
 
       " with window resizing, goyo margins are newly calculated
-      autocmd VimResized * if &filetype =~ g:goyotypes | call ResetGoyo() | endif
+      autocmd VimResized * if &filetype =~ g:goyotypes && g:goyorefresh == 0 | call ResetGoyo() | endif
+      " reset refresh indicator after awhile
+      autocmd cursorhold * let g:goyorefresh = 0
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

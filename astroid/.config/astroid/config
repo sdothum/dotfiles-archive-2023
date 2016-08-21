@@ -1,15 +1,11 @@
 {
     "astroid": {
         "config": {
-            "version": "5"
+            "version": "6"
         },
         "notmuch_config": "\/home\/shum\/.notmuch-config",
         "debug": {
             "dryrun_sending": "false"
-        },
-        "notmuch": {
-            "db": "~\/Maildir",
-            "excluded_tags": "muted,spam,deleted"
         }
     },
     "thread_index": {
@@ -52,7 +48,10 @@
             "quote_line": "Forwarding %1's message of %2:",
             "disposition": "inline"
         },
-        "sent_tags": "sent"
+        "sent_tags": "sent",
+        "message_id_fqdn": "",
+        "message_id_user": "",
+        "user_agent": "default"
     },
     "poll": {
         "interval": "60"
@@ -77,11 +76,13 @@
         },
         "gravatar": {
             "enable": "true"
-        }
+        },
+        "mark_unread_delay": "0.5"
     },
     "crypto": {
         "gpg": {
-            "path": "gpg2"
+            "path": "gpg2",
+            "always_trust": "true"
         }
     },
     "saved_searches": {
@@ -95,12 +96,13 @@
             "name": "Steven Hum",
             "email": "sdothum@gmail.com",
             "gpgkey": "",
+            "always_gpg_sign": "false",
             "sendmail": "msmtp -t",
             "default": "true",
             "save_sent": "false",
-            "save_sent_to": "\/home\/shum\/Maildir\/SENT\/cur\/",
+            "save_sent_to": "\/home\/root\/Mail\/sent\/cur\/",
             "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/shum\/Maildir\/drafts\/",
+            "save_drafts_to": "\/home\/root\/Mail\/drafts\/",
             "signature_file": "",
             "signature_default_on": "true",
             "signature_attach": "false"
@@ -108,7 +110,7 @@
     },
     "startup": {
         "queries": {
-            "inbox": "tag:attn"
+            "inbox": "tag:inbox"
         }
     }
 }

@@ -40,10 +40,12 @@ herbstluftwm conf :: $HOME/.config/herbstluftwm/config/* $(find $HOME/.config/he
 herbstluftwm draw :: $HOME/.config/herbstluftwm/draw $HOME/.config/herbstluftwm/functions/draw/*
 herbstluftwm focus :: $HOME/.config/herbstluftwm/focus $HOME/.config/herbstluftwm/functions/focus/*
 herbstluftwm functions :: $(find $HOME/.config/herbstluftwm/functions -maxdepth 2 -type f | sort)
-herbstluftwm hide :: $HOME/.config/herbstluftwm/hide $HOME/.config/herbstluftwm/functions/hide/*
+herbstluftwm pin :: $HOME/.config/herbstluftwm/pin $HOME/.config/herbstluftwm/functions/pin/*
+herbstluftwm is :: $HOME/.config/herbstluftwm/is $HOME/.config/herbstluftwm/functions/is/*
 herbstluftwm query :: $HOME/.config/herbstluftwm/query $HOME/.config/herbstluftwm/functions/query/*
 herbstluftwm restore :: $HOME/.config/herbstluftwm/restore $HOME/.config/herbstluftwm/functions/restore/*
 herbstluftwm switch :: $HOME/.config/herbstluftwm/switch $HOME/.config/herbstluftwm/functions/switch/*
+herbstluftwm toggle :: $HOME/.config/herbstluftwm/toggle $HOME/.config/herbstluftwm/functions/toggle/*
 herbstluftwm theme :: $HOME/.config/herbstluftwm/config/ENV $HOME/.config/herbstluftwm/config/theme $HOME/.config/herbstluftwm/draw
 herbstluftwm toggle :: $HOME/.config/herbstluftwm/toggle $HOME/.config/herbstluftwm/functions/toggle/*
 imap mail :: $HOME/.imapfilter/dovecot.lua $HOME/.offlineimaprc

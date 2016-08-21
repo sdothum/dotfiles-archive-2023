@@ -11,6 +11,12 @@ is display -1440 && hc set default_frame_layout 2 \
                  || hc set default_frame_layout 0
 hc rename default '1' || true
 
+tag=1
+for i in $TAG_NAMES
+do
+  export $i 
+done
+
 # configured by tag number, references by-name (not index value)
 for key in $TAGS
 do
@@ -18,6 +24,9 @@ do
   hc keybind "$Mod-$key" spawn switch tag "$key"
   # hc keybind "$Mod-Shift-$key" move_index "$key"
   hc keybind "$Mod-Shift-$key" spawn pin tag "$key"
+
+  # export TAG_NAME = TAG
+  export $(echo $TAG_NAMES | awk "{ print \$$key }")=$key
 done
 
 # hc set_monitors X1xY1+0+0 X2xY2+X1+0..

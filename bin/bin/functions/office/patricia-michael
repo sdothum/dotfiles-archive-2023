@@ -6,10 +6,7 @@
 
 # ................................................................... my beloved
 
-# tag
-media=5
-
-switch tag "$media"
+switch tag "$MEDIA"
 focus frame
 gnome-mpv "/net/media/patricia/Michael Reading for Patricia.MP3"
 focus window

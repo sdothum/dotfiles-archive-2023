@@ -106,8 +106,8 @@ enum tap_dance {
 };
 
 // modifier keys
-#define Grv    CTL_T (KC_GRV)
-#define Esc    GUI_T (KC_ESC)
+#define Grv    GUI_T (KC_GRV)
+#define Esc    CTL_T (KC_ESC)
 #define Mins   SFT_T (KC_MINS)
 #define Eql    LT    (_KEYPAD, KC_EQL)
 #define Caps   GUI_T (KC_CAPS)
