@@ -74,7 +74,7 @@ if is primary ;then
         else
           restore layout grid
         fi
-        [ $(herbstclient attr tags.focus.client_count) -gt 1 ] && blink=true
+        herbstclient compare tags.focus.client_count gt 1 && blink=true
       fi
     fi
   fi

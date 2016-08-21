@@ -57,8 +57,8 @@ vertical() {
 
 split() {
   herbstclient chain . set_layout horizontal . split explode $1 \
-                      . focus_edge left . cycle_layout 1 vertical \
-                      . shift right . cycle_layout 1 vertical
+                     . focus_edge left . cycle_layout 1 vertical \
+                     . shift right . cycle_layout 1 vertical
 }
 
 # otherwise, manually explode frame windows
@@ -72,7 +72,7 @@ halves() {
 }
 
 onethird() {
-  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 3 ] ;then
+  if [ "$load" ] || herbstclient compare tags.focus.client_count lt 3 ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
@@ -81,7 +81,7 @@ onethird() {
 }
 
 thirds() {
-  if [ "$load" ] || [ $(herbstclient attr tags.focus.client_count) -lt 3 ] ;then
+  if [ "$load" ] || herbstclient compare tags.focus.client_count lt 3 ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
   else
     restore mono
@@ -92,6 +92,8 @@ thirds() {
                          . focus_edge left . split explode 0.5 \
                          . focus_edge left . cycle_layout 1 vertical \
                          . shift right . cycle_layout 1 vertical
+      # fudge to populate empty frame
+      herbstclient compare tags.focus.client_count = 4 && herbstclient shift left
     else
       # master window on right
       herbstclient chain . set_layout horizontal . split explode 0.3333 \
@@ -99,6 +101,8 @@ thirds() {
                          . focus_edge right . split explode 0.5 \
                          . focus_edge right . cycle_layout 1 vertical \
                          . shift left . cycle_layout 1 vertical
+      # fudge to populate empty frame
+      herbstclient compare tags.focus.client_count = 4 && herbstclient shift right
     fi
   fi
 }
@@ -128,7 +132,7 @@ case "$1" in
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
      restore windowed
      restore layout $layout
-     [ $(herbstclient attr tags.focus.client_count) -gt 1 ] && ! [ $layout = max ] && focus borders ;;
+     herbstclient compare tags.focus.client_count gt 1 && ! [ $layout = max ] && focus borders ;;
 esac
 
 # vim: set ft=sh: #

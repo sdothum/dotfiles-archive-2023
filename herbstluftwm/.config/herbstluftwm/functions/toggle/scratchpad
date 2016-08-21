@@ -58,7 +58,7 @@ focus_check
 # check winid's just in case.. it happens!
 for i in $(query winids)
 do
-  if [ $(herbstclient attr clients.$i.instance) = $name ] ;then
+  if herbstclient compare clients.$i.instance = $name ;then
     echo $i >$scratchpad
     herbstclient bring $i 2>/dev/null
     break

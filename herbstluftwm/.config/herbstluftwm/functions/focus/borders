@@ -8,7 +8,8 @@
 
 # no borders focusing aid
 [ $(pgrep -cf 'focus borders') -gt 1 ] && exit
-[ "$(herbstclient attr clients.focus.instance 2>/dev/null)" = '' ] && exit
+# [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" = '' ] && exit
+herbstclient compare clients.focus.instance = '' 2>/dev/null && exit
 
 width=$(herbstclient attr theme.border_width)
 active=$(herbstclient attr theme.active.color)
