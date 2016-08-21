@@ -1,0 +1,39 @@
+#!/usr/bin/zsh
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... History
+
+# filter session history
+export HISTFILE=$HOME/.zhistory
+export HISTSIZE=10000
+# filter out single word commands
+#            history commands (h)
+#            process commands (k, kk, p)
+#            list commands (l, la, ll, lr, ls, lt)
+#            shell repeat command (r)
+#            startx command (x)
+filter='^[^ ]*  *(([^ ]*)|((h|kk*|l[alrst]*|pa*|r|x)( *| .*)))$'
+
+# discard command duplicates
+week=$(date '+%V')
+weekof() {
+  # calculation assumes history size does not span more than one calendar year
+  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" \
+      | sort -k 3 \
+      | uniq -f 2 \
+      | sort -n $1 \
+      | sed -r 's/^[0-9]* ([^ ]*)/\1w   /g' \
+      | egrep -v $filter 
+}
+
+fc -R
+if [ "$*" ] ;then
+  fc -l -t '%V' 1 | ack "$@" | weekof
+else
+  fc -l -t '%V' 1 | weekof -r
+fi
+
+# vim: set ft=sh: #

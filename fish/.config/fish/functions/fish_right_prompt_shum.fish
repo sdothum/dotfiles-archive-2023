@@ -3,7 +3,7 @@ function fish_right_prompt
 
   if tty | grep -q tty
     set -g GREY   'red'
-    set -g YELLOW '-o yellow'
+    set -g YELLOW 'green'
   else
     set -g GREY   '666'
     set -g YELLOW 'FC3'

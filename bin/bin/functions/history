@@ -10,6 +10,9 @@
 #        .. | history <file> | ..    (insert history into head of dmenu prompt)
 # Note:  echo | history <file> | ..  (if no preceding prompt content)
 #        <selection> is assumes no dmenu function has a valid null select value
+#
+#        Under dash, scripts can execute this command, but shells with in-built
+#        command history tracking cannot without full pathname reference
 
 usage() {
   echo "usage: $(basename $0) <file> [<selection>]"

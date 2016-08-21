@@ -75,6 +75,6 @@ hc keybind Super-w                   spawn focus qutebrowser
 hc keybind Super-Shift-w             spawn toggle term 'IRC' FONTSIZE '10' weechat
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
-hc keybind Super-z                   spawn dmenu zshist
+hc keybind Super-z                   spawn dmenu shistory
 
 # vim: set ft=sh: #

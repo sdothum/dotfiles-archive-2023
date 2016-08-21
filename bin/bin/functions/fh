@@ -1,0 +1,24 @@
+#!/usr/bin/fish
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... History
+
+# filter session history
+# filter out single word commands
+#            history commands (h)
+#            process commands (k, kk, p)
+#            list commands (l, la, ll, lr, ls, lt)
+#            shell repeat command (r)
+#            startx command (x)
+set filter '^([^ ]* *|((  *)|(cd|h|kk*|l[alrst]*|pa*|r|x|z))( *| .*))$'
+
+if [ "$argv" ]
+  history | ack "$argv" | egrep -v $filter
+else
+  history | egrep -v $filter
+end
+
+# vim: set ft=sh: #

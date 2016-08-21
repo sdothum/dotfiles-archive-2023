@@ -7,14 +7,16 @@
 # ..................................................................... Terminal
 
 export SHELL=/usr/bin/fish
+# font='Iosevka\ Term'
+font='PragmataPro'
 
 # adjust font for various displays and video cards
 if macbook ;then
-  fn='-fn xft:PragmataPro:size=9'
+  fn="-fn xft:$font:size=9"
 elif nvidia ;then
-  fn='-fn xft:PragmataPro:size=11'
+  fn="-fn xft:$font:size=11"
 elif laptop ;then
-  fn='-fn xft:PragmataPro:size=9'
+  fn="-fn xft:$font:size=9"
 fi 
 
 # URxvt client/server

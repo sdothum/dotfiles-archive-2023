@@ -75,6 +75,7 @@ URxvt*saveLines:              9000            ! non-tmux window scroll back
 
 ! text
 ! URxvt*font:                 xft:Input Mono Compressed:size=11
+! URxvt*font:                 xft:Iosevka Term:size=11
 URxvt*font:                   xft:PragmataPro:size=11
 ! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
 ! URxvt*linespace:            0               ! pixels between lines for added readability
@@ -86,7 +87,7 @@ URxvt*cursorUnderline:        true
 URxvt*underlineColor:         yellow
 
 ! UI
-URxvt*fading:                 30              ! % brightness reduction on focus loss
+URxvt*fading:                 0               ! % brightness reduction on focus loss
 URxvt*mapAlert:               true            ! de-iconify on bell alert
 URxvt*scrollBar:              false           ! maximize usable line width
 URxvt*shading:                20              ! % transparency level
