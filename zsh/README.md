@@ -6,7 +6,7 @@ some.
 
 ## warning
 
-At the time of this README, zsh has become my interactive shell of 
+At the time of this README, fish has become my interactive shell of 
 choice -- and dash, my scripting shell, for performance and POSIX 
 conformity. As such, I have not continued to maintain this shell 
 configuration and function library to ensure its integration with the 
