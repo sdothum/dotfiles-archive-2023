@@ -25,12 +25,20 @@ configure authentication else some channels will force #<channel>-unregistered
 /set irc.server.znc.autoconnect on
 /connect znc
 # add server networks on znc webpage before connecting to servers
+# freenode chat.freenode.net +6697
+# oftc irc.oftc.net +6697
+# rizon irc.rizon.net +6697
+# gitter irc.gitter.im +6667 <password>
+# znc install adds freenode by default for #znc
 /server add rizon luna/7000 -username=znc/rizon -password=znc
 /set irc.server.rizon.autoconnect on
 /connect rizon
 /server add nixers luna/7000 -username=znc/nixers -password=znc
 /set irc.server.nixers.autoconnect on
 /connect nixers
+/server add gitter luna/7000 -username=znc/gitter -password=znc
+/set irc.server.gitter.autoconnect on
+/connect gitter
 
 # scripts
 /script install autosort.py

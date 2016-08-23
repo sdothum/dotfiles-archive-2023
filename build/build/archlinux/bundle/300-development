@@ -29,7 +29,7 @@
 # atom-editor     [server]
 # atom-editor-bin [server]
   ctags
-# emacs
+  emacs           [server]
 # neovim
 # neovim-git
 # nvpy-git

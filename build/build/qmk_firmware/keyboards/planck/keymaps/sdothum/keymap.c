@@ -31,7 +31,6 @@
 //   number/symbol layer
 //
 //   The navigation pad provides a single hand right thumb activated cluster
-//   with a left hand option
 //
 //   Plover layer toggling has added binding to the herbstluftwm window manager
 //   to enable/disable the necessary plover software
@@ -41,14 +40,11 @@
 //
 // Modifier clusters
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-//   Not quite a perfectly symmetrical layout due to the thumb placement for
-//   the right hand navigation cluster
-//
-//   The number and symbol layers are effectively identical with the symbol
-//   layer omitting the cursor keys (for KC_TRNS requirement)
+//   The number and symbol layers are identical but defined to allow
+//   update_tri_layer access (number+symbol) to the navigation pad layer
 //
 //   ,-----------------------------------------------------------------------------------.
-//   |  Kpd | Ctrl | GUI  | Alt  | Num  |Shift |Shift | Nav  | Sym  | Alt  | GUI  | Ctrl |
+//   |  Kpd | Ctrl | GUI  | Alt  | Num  |Shift |Shift | Sym  | Alt  | GUI  | Ctrl | Rght |
 //   `-----------------------------------------------------------------------------------'
 //
 // Hint
@@ -91,12 +87,15 @@ enum planck_layers {
   _ADJUST,
 };
 
+// update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts 
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE,
   QWERTY,
   DVORAK,
   PLOVER,
   PLOVEX,
+  Tab = LT (_NUMBER, KC_TAB),
+  Del = LT (_SYMBOL, KC_DEL),
 };
 
 enum tap_dance {
@@ -111,14 +110,11 @@ enum tap_dance {
 #define Mins   SFT_T (KC_MINS)
 #define Eql    LT    (_KEYPAD, KC_EQL)
 #define Caps   GUI_T (KC_CAPS)
-#define Tab    LT    (_NUMBER, KC_TAB)
 #define Spc    SFT_T (KC_SPC)
 #define Bspc   SFT_T (KC_BSPC)
-#define Del    LT    (_NAVPAD, KC_DEL)
-#define Left   LT    (_SYMBOL, KC_LEFT)
-#define Down   ALT_T (KC_DOWN)
-#define Up     GUI_T (KC_UP)
-#define Rght   CTL_T (KC_RGHT)
+#define Left   ALT_T (KC_LEFT)
+#define Down   GUI_T (KC_DOWN)
+#define Up     CTL_T (KC_UP)
 #define Quot   SFT_T (KC_QUOT)
 #define Slsh   SFT_T (KC_SLSH)
 #define Ent    CTL_T (KC_ENT)
@@ -153,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
   {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
   {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
 },
 
 // ...................................................................... Qwerty
@@ -172,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
   {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
   {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
 },
 
 // ...................................................................... Dvorak
@@ -191,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
   {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
   {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+  {Eql,     KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
 },
 
 // ...................................................................... Plover
@@ -241,9 +237,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // |  F12 |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   [  |   ]  |   {  |   }  |  F7  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |  f() |      |      |      | Home | PgDn | PgUp |  End | Number
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |  f() |      |      |      | Symbol KC_TRNS
+  // |      |      |      |      |  f() |      |      |  f() | Home | PgDn | PgUp |  End |
   // '-----------------------------------------------------------------------------------'
 
 
@@ -258,7 +252,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_F10,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F9  },
   {KC_F11,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, KC_F8  },
   {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   Lbrc,    KC_RBRC, Lcbr,    KC_RCBR, KC_F7  },
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
 
 // .......................................................... Hexadecimal Keypad
@@ -283,33 +277,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ............ ..................................................Navigation Pad
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      | Home |  Up  |  End |  Del | Bksp | Home |  Up  |  End |      |      |
+  // |      |      |      |      |      |      | Bksp | Home |  Up  |  End |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      | Left | Down | Right| Bksp |  Del | Left | Down | Right|      |      |
+  // | Ctrl |      |      |      |      |      |  Del | Left | Down | Right|      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      | PgUp | PgDn |      |      | PgDn | PgUp |      |      |      |
+  // |      |      |      |      |      |      |      | PgDn | PgUp |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |  f() |      |      |      |      |
+  // |      |      |      |      |  f() |      |      |  f() |      |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
 [_NAVPAD] = {
-  {_______, _______, KC_HOME, KC_UP,   KC_END,  KC_DEL,  KC_BSPC, KC_HOME, KC_UP,   KC_END,  _______, _______},
-  {_______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_BSPC, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
-  {_______, _______, _______, KC_PGUP, KC_PGDN, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
+  {_______, _______, _______, _______, _______, _______, KC_BSPC, KC_HOME, KC_UP,   KC_END,  _______, _______},
+  {KC_LCTL, _______, _______, _______, _______, _______, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
 },
 
 };
 
 #ifdef AUDIO_ENABLE
+#define CAPSLOCK_ON_SOUND   S__NOTE(_C7 ),ED_NOTE(_E7 )
+#define CAPSLOCK_OFF_SOUND  S__NOTE(_E7 ),ED_NOTE(_C7 )
 float tone_startup[][2]   = SONG (STARTUP_SOUND);
 float tone_qwerty[][2]    = SONG (QWERTY_SOUND);
 float tone_dvorak[][2]    = SONG (DVORAK_SOUND);
 float tone_colemak[][2]   = SONG (COLEMAK_SOUND);
 float tone_plover[][2]    = SONG (PLOVER_SOUND);
 float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
-float tone_caps_on[][2]   = SONG (CAPS_LOCK_ON_SOUND);
-float tone_caps_off[][2]  = SONG (CAPS_LOCK_OFF_SOUND);
+float tone_caps_on[][2]   = SONG (CAPSLOCK_ON_SOUND);
+float tone_caps_off[][2]  = SONG (CAPSLOCK_OFF_SOUND);
 float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND);
 float tone_goodbye[][2]   = SONG (GOODBYE_SOUND);
 #endif
@@ -374,6 +370,32 @@ void persistant_default_layer_set(uint16_t default_layer) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case Tab:
+      if (record->event.pressed) {
+        layer_on(_NUMBER);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+      } else {
+        layer_off(_NUMBER);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        // sticky ctrl occurs when it precedes the navpad selection 
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
+    case Del:
+      if (record->event.pressed) {
+        layer_on(_SYMBOL);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+      } else {
+        layer_off(_SYMBOL);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        // sticky ctrl occurs when it precedes the navpad selection 
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
     case QWERTY:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
@@ -454,6 +476,23 @@ void matrix_init_user(void) {
 }
 
 #ifdef AUDIO_ENABLE
+void led_set_user(uint8_t usb_led)
+{
+  static uint8_t old_usb_led = 0;
+  // gets rid of tick
+  _delay_ms(10);
+  if (!is_playing_notes()) {
+    if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
+      // if capslock LED is turning on
+      PLAY_NOTE_ARRAY(tone_caps_on,  false, 0);
+    } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
+      // if capslock LED is turning off
+      PLAY_NOTE_ARRAY(tone_caps_off, false, LEGATO);
+    }
+  }
+  old_usb_led = usb_led;
+}
+
 void startup_user()
 {
   _delay_ms(20); // gets rid of tick

@@ -21,10 +21,13 @@ INDENT='   '
 UTF='□'
 
 leader='──────'
+# fg='#ADA693'
 fg='#FDF6E3'
+# hlbg='#070707'
+hlbg='black'
+# hlfg='#FDF6E3'
+# hlfg='#F87217'
 hlfg='#25C0EF'
-# hlbg='black'
-hlbg='#070707'
 
 # allow subword match input (by inserting single quote symbol into input)
 unquote() {
