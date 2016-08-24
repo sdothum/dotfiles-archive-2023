@@ -128,8 +128,8 @@ enum tap_dance {
 // adjust layer key
 #define ADJUST MO    (_ADJUST)
 
-#define _______ KC_TRNS
-#define Zzzzzzz KC_NO
+#define Xparent KC_TRNS
+#define _______ KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -204,15 +204,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_PLOVER] = {
   {KC_1,     KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-  {Zzzzzzz,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-  {Zzzzzzz,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-  {PLOVEX,   Zzzzzzz, Zzzzzzz, KC_C,    KC_V,    Zzzzzzz, Zzzzzzz, KC_N,    KC_M,    Zzzzzzz, Zzzzzzz, Zzzzzzz},
+  {_______,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+  {_______,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+  {PLOVEX,   _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, _______},
  },
 
 // ...................................................................... Adjust
 
   // ,-----------------------------------------------------------------------------------.
-  // |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+  // |      | Reset|      |      |      |      |      |      |      |      |      |      |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |  f() |      |      |Aud on|Audoff|AGnorm|AGswap|Colemk|Qwerty|Dvorak|Plover|      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -222,8 +222,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
 [_ADJUST] = {
-  {_______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL },
-  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, COLEMAK,  QWERTY, DVORAK,  PLOVER,  _______},
+  {_______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {Xparent, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, COLEMAK,  QWERTY, DVORAK,  PLOVER,  _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
@@ -245,14 +245,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_F10,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F9  },
   {KC_F11,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, KC_F8  },
   {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   Lbrc,    KC_RBRC, Lcbr,    KC_RCBR, KC_F7  },
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+  {Xparent, Xparent, Xparent, Xparent, Xparent, Xparent, Xparent, Xparent, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
 
 [_SYMBOL] = {
   {KC_F10,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F9  },
   {KC_F11,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, Lprn,    KC_RPRN, KC_F8  },
   {KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   Lbrc,    KC_RBRC, Lcbr,    KC_RCBR, KC_F7  },
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+  {Xparent, Xparent, Xparent, Xparent, Xparent, Xparent, Xparent, Xparent, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
 
 // .......................................................... Hexadecimal Keypad
@@ -269,9 +269,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_KEYPAD] = {
   {_______, _______, _______, _______, _______, S(KC_E), S(KC_F), KC_7,    KC_8,    KC_9,    KC_MINS, _______},
-  {ADJUST,  _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4,    KC_5,    KC_6,    KC_PLUS, _______},
+  {ADJUST,  _______, _______, _______, _______, S(KC_C), S(KC_D), KC_4,    KC_5,    KC_6,    KC_PLUS, Xparent},
   {_______, _______, _______, _______, _______, S(KC_A), S(KC_B), KC_1,    KC_2,    KC_3,    KC_EQL,  _______},
-  {_______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0,    KC_DOT,  KC_SLSH, KC_ASTR, _______},
+  {Xparent, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_0,    KC_DOT,  KC_SLSH, KC_ASTR, _______},
 },
 
 // ............ ..................................................Navigation Pad
@@ -279,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      | Bksp | Home |  Up  |  End |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      | Ctrl | Shift|      |  Del | Left | Down | Right|      |      |
+  // |      |      |  GUI | Ctrl | Shift|      |  Del | Left | Down | Right|      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      | PgDn | PgUp |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -288,9 +288,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NAVPAD] = {
   {_______, _______, _______, _______, _______, _______, KC_BSPC, KC_HOME, KC_UP,   KC_END,  _______, _______},
-  {_______, _______, _______, KC_LCTL, KC_LSFT, _______, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+  {_______, _______, KC_LGUI, KC_LCTL, KC_LSFT, _______, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+  {_______, _______, _______, _______, Xparent, _______, _______, Xparent, _______, _______, _______, _______},
 },
 
 };
@@ -378,8 +378,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
         // undo sticky modifiers 
-        unregister_code (KC_LCTL);
+        unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
       }
       // LT hack
       // return false;
@@ -392,8 +393,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
         // undo sticky modifiers 
-        unregister_code (KC_LCTL);
+        unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
       }
       // LT hack
       // return false;
