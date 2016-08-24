@@ -16,17 +16,17 @@ hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG'                      focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 # desktop application groups
-hc rule class=tabbed                 tag=1 index=0 focus=on
+hc rule class=tabbed                 tag=1 focus=on
 # hc rule class=chromium             tag=1
 hc rule class=dwb                    tag=1
 hc rule class=luakit                 tag=1
 hc rule title=RSS                    tag=1 index=1 focus=off
 hc rule class=Minitube               tag=1
-hc rule title=IRC                    tag=2 index=1 focus=on
-hc rule title=Messenger              tag=2 index=0 focus=on
+hc rule title=IRC                    tag=2 focus=on
+hc rule title=Messenger              tag=2 focus=on
 hc rule class=Pidgin                 tag=2
 hc rule title=Twitter                tag=2
-hc rule class=Astroid                tag=3 index=0 focus=on
+hc rule class=Astroid                tag=3 focus=on
 hc rule class=Geary                  tag=3
 hc rule title=IMAP                   tag=3
 hc rule title=Mail                   tag=3 index=0 focus=on
@@ -34,16 +34,16 @@ hc rule title=Calendar               tag=3 index=1 focus=on
 hc rule title=Usenet                 tag=3
 # hc rule class=Surf                 tag=4
 # hc rule class=Vimb                 tag=4 index=1 focus=off once
-hc rule windowrole=thedarnedestthing tag=4 index=0 focus=on
+hc rule windowrole=thedarnedestthing tag=4 index=1 focus=on
 # chromium title (class) doesn't appear to be trapped
-hc rule title=thedarnedestthing      tag=4 index=0 focus=on
+hc rule title=thedarnedestthing      tag=4 index=1 focus=on
 hc rule class=mplayer2               tag=5
-hc rule title=Music                  tag=5 index=0 focus=on pseudotile=on
-hc rule title=Radio                  tag=5 index=1 focus=off
+hc rule title=Music                  tag=5 focus=on pseudotile=on
+hc rule title=Radio                  tag=5 focus=off
 # hc rule class=Rrip_gui             tag=5 focus=on switchtag=on
-haaaaaaaac rule class=Smplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=off
-hc rule class=Umplayer               tag=5 monitor=5 focus=on switchtag=on fullscreen=off
-hc rule class=Kodi                   tag=5 monitor=5 focus=on switchtag=on hook=fullscreen
+hc rule class=Smplayer               tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
+hc rule class=Umplayer               tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
+hc rule class=Kodi                   tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
 hc rule class=Gimp                   tag=5 monitor=5 focus=on switchtag=on
 hc rule class=Darktable              tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Digikam                tag=5 monitor=5 focus=on switchtag=on
@@ -67,7 +67,7 @@ hc rule windowrole=gvimdiff          focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                pseudotile=on
 # trap urxvt -name=max
 hc rule instance=max                 focus=on switchtag=on hook=max
-hc rule class=mpv                    focus=on switchtag=on fullscreen=off
+hc rule class=mpv                    index=1 focus=on switchtag=on fullscreen=off
 hc rule class=Plover                 pseudotile=on
 hc rule class=ROX-Filer              pseudotile=off
 hc rule class=Savebox                pseudotile=off

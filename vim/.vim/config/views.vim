@@ -58,7 +58,7 @@
       " goyo initialization hooks
       function! s:GoyoEnter()
         " silent !tmux set status off
-        set scrolloff=999
+        set scrolloff=8
         set numberwidth=1
         set foldcolumn=0
         set nonumber

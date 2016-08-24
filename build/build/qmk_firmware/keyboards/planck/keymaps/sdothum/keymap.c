@@ -279,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      | Bksp | Home |  Up  |  End |      |      |
   // |-----------------------------------------------------------------------------------|
-  // | Ctrl |      |      |      |      |      |  Del | Left | Down | Right|      |      |
+  // |      |      |      | Ctrl | Shift|      |  Del | Left | Down | Right|      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      | PgDn | PgUp |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -288,7 +288,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NAVPAD] = {
   {_______, _______, _______, _______, _______, _______, KC_BSPC, KC_HOME, KC_UP,   KC_END,  _______, _______},
-  {KC_LCTL, _______, _______, _______, _______, _______, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+  {_______, _______, _______, KC_LCTL, KC_LSFT, _______, KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
 },
@@ -377,8 +377,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         layer_off(_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
-        // sticky ctrl occurs when it precedes the navpad selection 
+        // undo sticky modifiers 
         unregister_code (KC_LCTL);
+        unregister_code (KC_LSFT);
       }
       // LT hack
       // return false;
@@ -390,8 +391,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         layer_off(_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
-        // sticky ctrl occurs when it precedes the navpad selection 
+        // undo sticky modifiers 
         unregister_code (KC_LCTL);
+        unregister_code (KC_LSFT);
       }
       // LT hack
       // return false;

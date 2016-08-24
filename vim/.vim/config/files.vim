@@ -123,7 +123,7 @@
       endfunction
 
       " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
-      autocmd Filetype mail setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
+      autocmd Filetype mail setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
       autocmd Filetype mail call ComposeMail()
 
 " files.vim
