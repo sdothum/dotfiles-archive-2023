@@ -86,7 +86,7 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -l parent (echo $folders | cut -f2 | rev)
       set -l tree (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
       set_color yellow
-      set -l path (echo "/$tree/$parent/"(set_color $YELLOW)"$base" | sed -e 's|\t|/|g' -e 's|//|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
+      set -l path (echo "/$tree/$parent/"(set_color $YELLOW)"$base" | sed -e 's|///*|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
       test "$path" = '~' 
         and set -l path (set_color $YELLOW)~
       echo -n $path
@@ -95,8 +95,7 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -l base (echo $folders | cut -f1,2 | rev)
       set -l parent (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
       set_color yellow
-      # pwd | sed -re "s|^$HOME|~|" -e  's|([^/.])[^/]*/|\1/|g'
-      echo -n "/$parent$base" | sed -e 's|\t|/|g' -e 's|^//|/|' -e 's|^/~/~|~|' -e 's|^/~/|~/|'
+      echo -n "/$parent$base" | sed -e 's|\t|/|g' -e 's|//|/|' -e 's|^/~/~|~|' -e 's|^/~/|~/|'
     end
     set_color normal
   end
@@ -124,8 +123,7 @@ function fish_right_prompt --description 'Write out the right prompt'
         test "$TTY" = pts 
           and test $CMD_DURATION -gt (math "1000 * 10")
             and notify low "$history[1]" "Returned $status, took "(cmd_duration)
-        true
-        return
+        return (true)
       end
     end
     false
