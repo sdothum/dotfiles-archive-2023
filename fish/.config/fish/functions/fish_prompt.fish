@@ -3,18 +3,18 @@ function fish_prompt --description 'Write out the prompt'
 	set -g RCODE $status
 
   # console prompt hacks for the anal..
-  if tty | grep -q tty
-    set -g TTY tty
-    set -g YELLOW '-o yellow'
-    set -g ORANGE 'yellow'
-    set -g RED    'red'
-    set -g BLUE   'blue'
-  else
+  if set_color F00 >/dev/null
     set -g TTY pts
     set -g YELLOW 'FC6'
     set -g ORANGE 'F60'
     set -g RED    'F00'
     set -g BLUE   '03F'
+  else
+    set -g TTY tty
+    set -g YELLOW 'normal'
+    set -g ORANGE 'yellow'
+    set -g RED    'red'
+    set -g BLUE   'blue'
   end
   set -g BLINK (printf "\e[5m")
   set -g NOBLINK (printf "\e[25m")

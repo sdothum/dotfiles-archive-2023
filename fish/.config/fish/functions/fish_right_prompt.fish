@@ -1,14 +1,20 @@
 function fish_right_prompt --description 'Write out the right prompt'
   set -g HILIGHT 1
 
-  if tty | grep -q tty
-    set -g TTY tty
-    set -g GREY   'red'
-    set -g YELLOW 'green'
-  else
+  if set_color F00 >/dev/null
     set -g TTY pts
     set -g GREY   '666'
     set -g YELLOW 'FC3'
+  else
+    set -g TTY tty
+    set -g GREY   'red'
+    set -g YELLOW 'green'
+  end
+
+  function glyph
+    test "$TTY" = tty 
+      and echo -n "$argv[2]" 
+      or echo -n "$argv[1]"
   end
 
   function gitstatus
@@ -73,8 +79,10 @@ function fish_right_prompt --description 'Write out the right prompt'
 
   function remote
     if test -n "$SSH_CLIENT"
-      set_color -o yellow
-      echo -n (hostname)' '
+      set_color $YELLOW
+      echo -n (hostname)
+      set_color $GREY
+      echo ':'
       set_color normal
     end
   end
@@ -118,7 +126,8 @@ function fish_right_prompt --description 'Write out the right prompt'
     if test $CMD_DURATION
       if test $CMD_DURATION -gt 1000
         set_color $GREY
-        echo -n '  ⇣'(cmd_duration $CMD_DURATION)
+        glyph '  ⇡' '  ^'
+        echo -n (cmd_duration $CMD_DURATION)
         set_color normal
         test "$TTY" = pts 
           and test $CMD_DURATION -gt (math "1000 * 10")
