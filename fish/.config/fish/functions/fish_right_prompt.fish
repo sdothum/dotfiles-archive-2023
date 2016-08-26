@@ -101,12 +101,6 @@ function fish_right_prompt --description 'Write out the right prompt'
     set_color normal
   end
 
-  function time
-    set_color $GREY
-    date '+  %-I:%M %S'
-    set_color normal
-  end
-
   function cmd_duration
     set -l secs (math "$CMD_DURATION / 1000")
     set -l mins (math "$secs / 60")
@@ -130,13 +124,24 @@ function fish_right_prompt --description 'Write out the right prompt'
         test "$TTY" = pts 
           and test $CMD_DURATION -gt (math "1000 * 10")
             and notify low "$history[1]" "Returned $status, took "(cmd_duration)
+        true
+        return
       end
     end
+    false
+  end
+
+  function time
+    set_color $GREY
+    date '+  %-I:%M %S'
+    set_color normal
   end
 
   gitstatus
   remote
   folder
-  # time
   duration
+    or if test "$TTY" = tty 
+      time
+    end
 end
