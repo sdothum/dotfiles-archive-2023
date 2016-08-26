@@ -8,7 +8,7 @@
 # turn off
 set fish_greeting
 
-# only shells wish vi mode allowed here!
+# only shells with vi mode accepted here!
 fish_vi_key_bindings
 
 # ............................................................ Shell environment
