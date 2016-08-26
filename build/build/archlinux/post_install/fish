@@ -7,6 +7,6 @@
 # ......................................................................... fish
 
 curl -L http://get.oh-my.fish | fish
-# fish -c 'omf install fasd'
+fish -c 'omf install fasd'
 
 # vim: set ft=sh: #

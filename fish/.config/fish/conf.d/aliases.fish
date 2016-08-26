@@ -3,10 +3,8 @@
 # Fish Shell
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ...................................................................... Aliases
+# ........................................................... Package management
 
-alias a 'ack'
-alias al 'ack -l'
 if which pacaur >/dev/null ^&1
   alias am 'pacaur -Ss'
   alias AM 'pacaur -Ss | less'
@@ -14,97 +12,107 @@ else
   alias am 'yaourt -Ss'
   alias AM 'yaourt -Ss --pager'
 end 
+
+alias pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
+alias pn 'env D=N pd'
+alias pq 'pacman -Qii'
+alias ts "test -f typescript ;and egrep -v '%|--:--|<=>' typescript | less ;or egrep -v '%|--:--|<=>' ~/typescript | less"
+alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
+
+# ....................................................................... System
+ 
+alias K 'env sig=-KILL k'
+alias KK 'env sig=-KILL kk'
+alias mount 'sudo mount'
+alias restartd 'systemd restart'
+alias startd 'systemd start'
+alias statusd 'systemd status'
+alias stopd 'systemd stop'
+# alias su 'sudo su'
+# alias syslog 'sudo journalctl -b'
+alias umount 'sudo umount'
+
+# ....................................................................... Device
+ 
 # alias ata 'sudo /usr/bin/ls -l /dev/disk/by-id/*ata*'
-alias c 'clear ;and setterm -cursor on'
-alias calc 'speedcrunch'
-# alias cd 'cd -q'
+# alias label 'sudo /usr/bin/ls -l /dev/disk/by-label/*'
+# alias usb 'sudo /usr/bin/ls -l /dev/disk/by-id/*usb*'
+# alias uuid 'sudo /usr/bin/ls -l /dev/disk/by-uuid/*'
+
 alias close 'eject -t'
+alias left_shift_key 'test -f /etc/X11/Xmodmap ;and xmodmap /etc/X11/Xmodmap'
+alias iotop 'sudo iotop'
+alias traceroute 'mtr --report -c 1'
+
+# ...................................................................... Desktop
+ 
+# alias c 'clear ;and setterm -cursor on'
+alias cursor 'setterm -cursor on'
+alias h: 'ls -l /tmp/herbstluftwm:*'
+alias hc 'herbstclient'
+alias herbstluftwm ". $HOME/.config/herbstluftwm/config/ENV"
+
+# .................................................................... Directory
+ 
+# alias j 'fasd_cd -d'
+alias l1 'ls -1'
+alias ldot 'ls -lAd .*'
+alias ll 'ls -lA'
+alias llr 'ls -lAR'
+alias locate 'sudo locate'
+alias lpr 'lpr -P hp-LaserJet-1320-series'
+alias lr 'ls -LAR'
+alias lt 'll -t'
+alias path 'echo $PATH'
+alias pp 'pwd'
+alias stow 'stow -t ~ -v'
+alias tree 'sudo tree -aCF'
+alias treed 'sudo tree -aCdF'
+
+# ................................................................... Filesystem
+ 
 alias cp 'cp -i'
 alias cpl 'cp -iLRfv'
 alias cpv 'cp -iv'
-alias cursor 'setterm -cursor on'
-# alias daemond 'systemd'
-# alias df 'sudo btrfs filesystem df'
+alias df 'command df ;and sudo btrfs filesystem df /'
 alias ducks "du -cks * | sort -rn | egrep -v '^0|total'"
 alias dud 'du -d 1 -h'
 alias fd 'find . -type d'
 alias ff 'find . -type f'
 alias f 'find . -iname'
-alias font-manager 'font-manager ;and sudo rm -f ~/.fonts.conf'
-alias fontmatrix 'fontmatrix ;and sudo rm -f ~/.fonts.conf'
-alias g 'egrep --ignore-case -E'
-alias gl 'egrep -l --ignore-case -E'
+alias g 'ack --ignore-case'
+alias gl 'ack -l --ignore-case'
 alias gprename 'gprename $PWD'
-alias gvim 'vim -g'
-alias gvimdiff "vimdiff -g --role='gvimdiff'"
-alias h: 'ls -l /tmp/herbstluftwm:*'
-alias handbrake 'ghb'
-alias hc 'herbstclient'
-alias herbstluftwm ". $HOME/.config/herbstluftwm/config/ENV"
-alias hh 'h HH'
-alias iotop 'sudo iotop'
-# alias j 'fasd_cd -d'
-alias K 'env sig=-KILL k'
-alias KK 'env sig=-KILL kk'
-alias l1 'ls -1'
-# alias label 'sudo /usr/bin/ls -l /dev/disk/by-label/*'
-alias ldot 'ls -lAd .*'
-alias left_shift_key '[ -f /etc/X11/Xmodmap ] ;and xmodmap /etc/X11/Xmodmap'
-alias ll 'ls -lA'
-alias llr 'ls -lAR'
-# alias l 'ls -A'
-alias locate 'sudo locate'
-alias lpr 'lpr -P hp-LaserJet-1320-series'
-alias lr 'ls -LAR'
-alias lt 'll -t'
 alias m 'less'
 alias mgrep 'pcregrep -M'
-alias mount 'sudo mount'
-alias music '!p ncmpcpp ;and ncmpcpp'
 alias mv 'mv -i'
 alias mvv 'mv -iv'
-alias mysql 'mysql -h localhost -u root -p'
-# alias nop "true '"
-alias nul 'cat /dev/null >'
-alias nv 'nvpy'
-alias p1 'rm -f $HOME/.zprezto/.prompt'
-alias p2 'touch $HOME/.zprezto/.prompt'
-alias path 'echo $PATH'
-# alias peanuts 'dmenu alarm 20m "Peanuts at 275F" 6'
-alias peanuts 'dmenu alarm 20m "Peanuts at 400F with cooldown in oven" 1'
-alias pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
-alias pn 'env D=N pd'
-alias pp 'pwd'
-alias pq 'pacman -Qii'
-# alias radio '!p pyradio ;and pyradio'
 alias rm 'rm -i'
 alias rmv 'rm -iv'
-# alias roxterm 'SHELL=/usr/bin/zsh roxterm'
-alias restartd 'systemd restart'
-# alias rip 'rrip_gui >/dev/null ^&1 &'
-# alias sakura 'SHELL=/usr/bin/zsh sakura'
-alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
+alias t 'tail -f'
+
+# ......................................................................... Edit
+ 
+alias gvim 'vim -g'
+alias gvimdiff "vimdiff -g --role='gvimdiff'"
+alias nv 'nvpy'
 alias sdiff 'sdiff -b -E -W -w(tput cols)'
 # alias sed 'sed -r'
-alias ss 'sc-im'
-alias startd 'systemd start'
-alias statusd 'systemd status'
-alias stopd 'systemd stop'
-alias stow 'stow -t ~ -v'
-# alias su 'sudo su'
-# alias syslog 'sudo journalctl -b'
-alias t 'tail -f'
-alias todo 'rlwrap todo-screen'
-alias traceroute 'mtr --report -c 1'
-alias tree 'sudo tree -aCF'
-alias treed 'sudo tree -aCdF'
-alias ts "[ -f typescript ] ;and egrep -v '%|--:--|<=>' typescript | less ;or egrep -v '%|--:--|<=>' ~/typescript | less"
-alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
-alias umount 'sudo umount'
-# alias usb 'sudo /usr/bin/ls -l /dev/disk/by-id/*usb*'
-# alias uuid 'sudo /usr/bin/ls -l /dev/disk/by-uuid/*'
-alias uterm 'urxvt -sh 1'
 alias vd 'gvimdiff --role=gvimdiff'
 # alias vi 'v'
 # alias vf 'vifm'
+
+# .................................................................. Application
+
+alias calc 'speedcrunch'
+alias font-manager 'font-manager ;and sudo rm -f ~/.fonts.conf'
+alias fontmatrix 'fontmatrix ;and sudo rm -f ~/.fonts.conf'
+alias handbrake 'ghb'
+alias music '!p ncmpcpp ;and ncmpcpp'
+alias mysql 'mysql -h localhost -u root -p'
+# alias rip 'rrip_gui >/dev/null ^&1 &'
+alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
+alias ss 'sc-im'
+alias todo 'rlwrap todo-screen'
+alias uterm 'urxvt -sh 1'
 alias we 'wego'

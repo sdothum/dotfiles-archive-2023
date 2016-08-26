@@ -32,13 +32,13 @@ escape() {
 
 # reverse word order
 reverse() {
-  awk '{ for (i=$NF; i>1; i--) printf("%s ", $i); print $1 }'
+  awk '{ for (i=$NF; i>1; i--) printf("%s ", $i) }'
 }
 
 # title truncation footwork
 truncate() {
   lines=$(fold -sw $(( $fold - 20 )) )
-  [ $(echo "$lines" | wc -l) -gt 0 ] && echo '..' >$dotdot || rm -f $dotdot
+  [ $(echo "$lines" | wc -l) -gt 1 ] && echo '..' >$dotdot || >$dotdot
   echo "$lines" | head -1
 }
 
@@ -53,16 +53,20 @@ format() {
   # set title dependent on source, ignore stdin
   elif echo "$1" | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
       unset pwd
-      case "$PWD" in
-        */.config*) pwd=".config/${PWD#*/.config}" ;;
-        */.vim*)    pwd=".vim/${PWD#*/.vim}" ;;
-        */bin/bin*) pwd="${PWD#*/bin/bin/}" ;;
-        */bin*)     pwd="${PWD#*/bin/}" ;;
-        */build*)   pwd="${PWD#*/build/}" ;;
-        */vimwiki*) ;;
-        *)          pwd="$PWD" ;;
-      esac
-      [ $pwd ] && title="$pwd/$1" || title="${1%.wiki}"
+      if echo "$1" | grep -q "$HOME" ;then
+        case "$PWD" in
+          */.config*) pwd=".config/${PWD#*/.config}" ;;
+          */.vim*)    pwd=".vim/${PWD#*/.vim}" ;;
+          */bin/bin*) pwd="${PWD#*/bin/bin/}" ;;
+          */bin*)     pwd="${PWD#*/bin/}" ;;
+          */build*)   pwd="${PWD#*/build/}" ;;
+          */vimwiki*) ;;
+          *)          pwd="$PWD" ;;
+        esac
+        [ $pwd ] && title="$pwd/$1" || title="${1%.wiki}"
+      else
+        title="$1"
+      fi
       # truncate long pathnames
       title=$(echo $title | sed 's|/| ^|g' | reverse | truncate)
       title="$(dotdot)$(escape $title | reverse | sed 's| *\^|/|g')"
@@ -108,7 +112,7 @@ $(cat "$1")
 \end{verbatim}
 \end{document}
 EOF
-  ) | xelatex -jobname="${1#/tmp/}" -output-directory=/tmp >/tmp/pr.log
+  ) | xelatex -jobname="$(basename $1)" -output-directory=/tmp >/tmp/pr.log
 }
 
 # .............................................................. Mail formatting
@@ -152,7 +156,7 @@ punctuation() {
 # ................................................................ Print options
 
 print() {
-  output="/tmp/${1#/tmp/}.pdf"
+  output="/tmp/$(basename $1).pdf"
   rm -f "$output" 2>&1
   format "$1"
   if [ $proof ] ;then
