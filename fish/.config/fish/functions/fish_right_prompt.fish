@@ -1,18 +1,16 @@
 function fish_right_prompt --description 'Write out the right prompt'
   set -g HILIGHT 1
 
-  if set_color F00 >/dev/null
-    set -g TTY pts
-    set -g GREY   '666'
-    set -g YELLOW 'FC3'
-  else
-    set -g TTY tty
+  if test $TERM = "linux"
     set -g GREY   'red'
     set -g YELLOW 'green'
+  else
+    set -g GREY   '666'
+    set -g YELLOW 'FC3'
   end
 
   function glyph
-    test "$TTY" = tty 
+    test $TERM = "linux" 
       and echo -n "$argv[2]" 
       or echo -n "$argv[1]"
   end
@@ -29,32 +27,32 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -g __fish_git_prompt_color_branch magenta --bold
     end
     if not set -q __fish_git_prompt_showupstream
-      set -g __fish_git_prompt_showupstream "informative"
+      set -g __fish_git_prompt_showupstream 'informative'
     end
     if not set -q __fish_git_prompt_char_upstream_ahead
-      set -g __fish_git_prompt_char_upstream_ahead "↑"
+      set -g __fish_git_prompt_char_upstream_ahead '↑'
     end
     if not set -q __fish_git_prompt_char_upstream_behind
-      set -g __fish_git_prompt_char_upstream_behind "↓"
+      set -g __fish_git_prompt_char_upstream_behind '↓'
     end
     if not set -q __fish_git_prompt_char_upstream_prefix
-      set -g __fish_git_prompt_char_upstream_prefix ""
+      set -g __fish_git_prompt_char_upstream_prefix ''
     end
 
     if not set -q __fish_git_prompt_char_stagedstate
-      set -g __fish_git_prompt_char_stagedstate "●"
+      set -g __fish_git_prompt_char_stagedstate (glyph '●' '■')
     end
     if not set -q __fish_git_prompt_char_dirtystate
-      set -g __fish_git_prompt_char_dirtystate "✱"
+      set -g __fish_git_prompt_char_dirtystate (glyph '✱' '*')
     end
     if not set -q __fish_git_prompt_char_untrackedfiles
-      set -g __fish_git_prompt_char_untrackedfiles "…"
+      set -g __fish_git_prompt_char_untrackedfiles '…'
     end
     if not set -q __fish_git_prompt_char_conflictedstate
-      set -g __fish_git_prompt_char_conflictedstate "✖"
+      set -g __fish_git_prompt_char_conflictedstate (glyph '✖' 'x')
     end
     if not set -q __fish_git_prompt_char_cleanstate
-      set -g __fish_git_prompt_char_cleanstate "✔"
+      set -g __fish_git_prompt_char_cleanstate (glyph '✔' '=')
     end
 
     if not set -q __fish_git_prompt_color_dirtystate
@@ -129,7 +127,7 @@ function fish_right_prompt --description 'Write out the right prompt'
         glyph '  ⇡' '  ^'
         echo -n (cmd_duration $CMD_DURATION)
         set_color normal
-        test "$TTY" = pts 
+        test $TERM != "linux" 
           and test $CMD_DURATION -gt (math "1000 * 10")
             and notify low "$history[1]" "Returned $status, took "(cmd_duration)
         return (true)
@@ -148,7 +146,7 @@ function fish_right_prompt --description 'Write out the right prompt'
   remote
   folder
   duration
-    or if test "$TTY" = tty 
+    or if test $TERM = "linux" 
       time
     end
 end

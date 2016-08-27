@@ -20,7 +20,8 @@ set -x KEYTIMEOUT 1
 
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
-set -x PATH $PATH ~/.cabal/bin ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
+echo $PATH | grep -q "$HOME/.local/bin"
+  or set -x PATH $PATH ~/.local/bin ~/.cabal/bin ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
 
 # ........................................................... System environment
 
@@ -64,3 +65,5 @@ set -x LUA_INIT "@$HOME/.luarc"
 set -x RI '--format ansi --no-pager'
 # for xmonad onhost
 set -x HOST (hostname)
+
+if [ -e ~/.config/chips/build.fish ] ; source ~/.config/chips/build.fish ; end

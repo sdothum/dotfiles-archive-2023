@@ -3,24 +3,22 @@ function fish_prompt --description 'Write out the prompt'
 	set -g RCODE $status
 
   # console prompt hacks for the anal..
-  if set_color F00 >/dev/null
-    set -g TTY pts
+  if test $TERM = "linux"
+    set -g YELLOW 'normal'
+    set -g ORANGE 'red'
+    set -g RED    'red'
+    set -g BLUE   'blue'
+  else
     set -g YELLOW 'FC6'
     set -g ORANGE 'F60'
     set -g RED    'F00'
     set -g BLUE   '03F'
-  else
-    set -g TTY tty
-    set -g YELLOW 'normal'
-    set -g ORANGE 'yellow'
-    set -g RED    'red'
-    set -g BLUE   'blue'
   end
   set -g BLINK (printf "\e[5m")
   set -g NOBLINK (printf "\e[25m")
 
   function glyph
-    test "$TTY" = tty 
+    test $TERM = "linux" 
       and echo -n "$argv[2]" 
       or echo -n "$argv[1]"
   end
