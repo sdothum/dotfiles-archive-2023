@@ -40,7 +40,7 @@ if [ $COLEMAK_DH ] ;then
   hc keybind $Mod-e                  focus right
 else
   hc keybind $Mod-h                  focus left
-  
+  hc keybind $Mod-j                  focus down
   hc keybind $Mod-k                  focus up
   hc keybind $Mod-l                  focus right
 fi

@@ -28,7 +28,7 @@
 = shell
 # ▔▔▔▔▔
   dash
-  fasd
+# fasd
   fish
 # prezto-git
 # zsh

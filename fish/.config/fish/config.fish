@@ -3,7 +3,7 @@
 # Fish Shell
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# ....................................................................... Config
+# .................................................................. Interactive
 
 # turn off
 set fish_greeting
@@ -29,7 +29,8 @@ echo $PATH | grep -q "$HOME/.local/bin"
 set -x PRINTER HP_LaserJet_1320_series
 
 # gpg key
-[ -S ~/.gnupg/S.gpg-agent ] ;and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
+test -S ~/.gnupg/S.gpg-agent
+  and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
 set -x PASSWORD_STORE_CLIP_TIME 60
 
 # ..................................................................... Internet
@@ -65,5 +66,3 @@ set -x LUA_INIT "@$HOME/.luarc"
 set -x RI '--format ansi --no-pager'
 # for xmonad onhost
 set -x HOST (hostname)
-
-if [ -e ~/.config/chips/build.fish ] ; source ~/.config/chips/build.fish ; end
