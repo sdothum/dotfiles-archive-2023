@@ -90,7 +90,7 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
       set -l base (echo $folders | cut -f1 | rev)
       set -l parent (echo $folders | cut -f2 | rev)
-      set -l tree (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
+      set -l tree (echo $folders | cut -f3- | rev | sed -re 's|([^\t.])[^\t]*\t*|\1/|g' -e 's|\t||g')
       set_color yellow
       set -l path (echo "/$tree/$parent/"(set_color $YELLOW)"$base" | sed -e 's|///*|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
       test "$path" = '~' 

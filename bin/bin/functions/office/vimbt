@@ -9,7 +9,6 @@
 # nvidia && fn='monospace bold 8' || fn='monospace bold 10'
 if nvidia ;then
   fn='monospace bold 8'
-  bin=local
 else
   fn='monospace bold 10'
 fi
@@ -41,7 +40,7 @@ vimbt() {
   # tabbed -f -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' \
   #        /usr/bin/vimb --socket --dump --embed >/tmp/vimb.socket
   tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' \
-         /usr/$bin/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed \
+         /usr/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed \
          >/tmp/vimb.socket 2>>/tmp/vimb.log
 }
 

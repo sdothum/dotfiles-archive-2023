@@ -17,7 +17,9 @@ herbstclient lock
 # do not overlay a window over a fullscreen window, revert to normal view first!
 # this prevents a fullscreen window from resizing to a differing monitor geometry
 restore windowed
-herbstclient cycle_frame -1
+# always start from left edge to right fill the desktop so as not to produce any
+# emppy frames between populated frames
+herbstclient chain . focus_edge left . cycle_frame -1 >/dev/null
 frames=$(query fcount $TAG)
 
 for i in $(seq 1 $frames)
