@@ -13,6 +13,8 @@ else
   notify low 'MPV' '1-2  Contrast\n3-4  Brightness\n5-6  Gamma\n7-8  Saturation'
   focus frame
   mpv --vf=eq "$@" >/dev/null 2>&1
+  # delete accidental screenshots
+  rm -f $HOME/mpv-shot*.jpg
 fi
 # refresh panel title on close
 focus window

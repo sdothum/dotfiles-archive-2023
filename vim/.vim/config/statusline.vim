@@ -179,14 +179,17 @@
 
       " center dfm indicator / proofing statusline
       function! WikiInfo(proof)
-        let s:prose = 1
-        if a:proof == 0
-          let l:name = (&modified ? '' : '')
-        else
-          let l:name = expand('%:t:r') .(&modified ? '    ' : ' ⎵ ')  . WordCount()
-        endif
-        let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
-        return l:leader . l:name
+        try                                 " trap snippet insertion interruption
+          let s:prose = 1
+          if a:proof == 0
+            let l:name = (&modified ? '' : '')
+          else
+            let l:name = expand('%:t:r') .(&modified ? '    ' : ' ⎵ ')  . WordCount()
+          endif
+          let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
+          return l:leader . l:name
+        catch
+        endtry
       endfunction
 
       " see views.vim

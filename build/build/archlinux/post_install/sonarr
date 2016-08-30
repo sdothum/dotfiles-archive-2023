@@ -8,5 +8,11 @@
 
 systemd enable sonarr
 annotate "configure sonarr http://localhost:8989/"
+if ! grep -q '^users:.*sonarr' ;then
+  grep -q '^users:.*:$' && sudo sed -r 's/^(users:.*)/\1sonarr/' \
+                        || sudo sed -r 's/^(users:.*)/\1,sonarr/'
+fi
+
+annotate allow sonarr users group access with sudo chmod 775 /net/media/videos/{series,anime}
 
 # vim: set ft=sh: #

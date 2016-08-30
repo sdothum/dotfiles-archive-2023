@@ -2,7 +2,7 @@
 editor_cmd = dmenu compose
 
 # initial_command = search tag:patricia and tag:sent and steven
-initial_command = search tag:attn
+initial_command = search tag:attn or tag:store
 
 theme = my.theme
 
