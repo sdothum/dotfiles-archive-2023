@@ -9,7 +9,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0)  <comment> | edit | ignore | init | list | undo | rm <dir>"
+  echo "usage: $(basename $0)  <comment> | add <path/filespec> | edit | ignore | init | list | undo | rm <dir>"
   exit 1
 }
 
@@ -73,6 +73,9 @@ pending() {
 if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
+
+    add) git add -f $@ ;;
+
     edit | ignore) gvim .gitignore ;;
 
     init) git init
