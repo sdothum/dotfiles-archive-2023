@@ -3,13 +3,17 @@
 # Fish Shell
 # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-# .................................................................. Interactive
+# ................................................................. Command line
 
 # turn off
 set fish_greeting
 
 # only shells with vi mode accepted here!
 fish_vi_key_bindings
+
+# fuzzy searches
+test -e /usr/share/fish/completions/autojump.fish
+  and source /usr/share/fish/completions/autojump.fish
 
 # ............................................................ Shell environment
 

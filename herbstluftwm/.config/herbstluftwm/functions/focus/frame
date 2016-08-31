@@ -26,7 +26,7 @@ do
   herbstclient cycle_frame 1
   # right fill the desktop to to avoid visual frame gaps
   if herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 ;then
-    herbstclient chain . focus_edge left . cycle_frame -1 >/dev/null
+    herbstclient chain . focus_edge right >/dev/null
     break
   fi
 done

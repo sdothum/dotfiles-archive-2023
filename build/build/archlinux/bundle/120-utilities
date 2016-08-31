@@ -84,10 +84,11 @@
 = shell
 # ▔▔▔▔▔
 # ansi-color
+  autojump
 # bash-completion
 # bc
 # checkbashisms
-  fasd
+# fasd
   fortune-mod
   fortune-mod-chucknorris
 # prezto-git
