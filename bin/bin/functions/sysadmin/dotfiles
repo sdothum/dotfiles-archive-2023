@@ -74,7 +74,8 @@ if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
 
-    add) git add -f $@ ;;
+    add) shift
+         [ "$*" ] && git add -f $@ ;;
 
     edit | ignore) gvim .gitignore ;;
 
@@ -90,13 +91,11 @@ if [ "$*" ] ;then
     undo | redo | reset) git reset --soft HEAD~
                          dotfiles ;;
 
-    rm) if [ -e "$2" ] ;then
-          git rm -r --cached $2
-          git commit -m "Remove directory \"$2\""
+    rm) shift
+        if [ "$*" ] ;then
+          git rm -r --cached $@
+          git commit -m "Remove directory \"$@\""
           git push origin master
-        else
-          echo " -> $(basename $PWD) directory \"$2\" not found"
-          usage
         fi ;;
 
     *) pending
