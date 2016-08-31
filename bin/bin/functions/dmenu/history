@@ -17,9 +17,19 @@ case $BROWSER in
               | dmenu 'History' -no-custom \
               | sed -r 's/.*(http.*)/\1/') ;;
 
+  qutebrowser) history=$HOME/.local/share/qutebrowser/history
+               uri=$(tac $history \
+                   | egrep -v "$filter" \
+                   | sed -r "s/[^ ]* ([^ ]*) (.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" \
+                   | sed '1i[ bookmarks ]' \
+                   | dmenu 'History' -no-custom \
+                   | sed -r 's/.*(http.*)/\1/') ;;
+
   vimb) history=$HOME/.config/vimb/history
         uri=$(tac $history $history.vimb \
-            | egrep -v "$filter" | sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" \
+            | egrep -v "$filter" \
+            | sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" \
+            | grep "$SEP" \
             | sed '1i[ bookmarks ]' \
             | dmenu 'History' -no-custom \
             | sed -r 's/.*(http.*)/\1/') ;;

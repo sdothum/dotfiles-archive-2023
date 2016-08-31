@@ -42,8 +42,8 @@ set -x PASSWORD_STORE_CLIP_TIME 60
 # default browser
 # set -x BROWSER chromium
 # set -x BROWSER luakit
-# set -x BROWSER qutebrowser
-set -x BROWSER vimb
+set -x BROWSER qutebrowser
+# set -x BROWSER vimb
 
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
