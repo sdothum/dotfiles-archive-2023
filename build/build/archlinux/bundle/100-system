@@ -10,7 +10,7 @@
   gst-plugins-base
   gst-plugins-good
   gst-plugins-ugly
-  gstreamer0.10-plugins
+  gstreamer0.10-base-plugins
 # lightspark-git
 
 
@@ -35,20 +35,19 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # cairo
   font-manager
-  fontforge
 # fontconfig
 # fontmatrix
   ibfonts-meta-base
 # infinality-bundle-fonts
   libxft
 # otf-gnutypewriter
-  powerline-fonts-git
+# powerline-fonts-git
   terminus-font-ll2-td1
 # ttf-fantasque-sans
   ttf-font-awesome
 # ttf-google-fonts-git
 # ttf-inconsolata
-  ttf-ionicons
+# ttf-ionicons
 # ttf-mac-fonts
   ttf-ms-fonts
 # ttf-noto-sans-ib
@@ -111,8 +110,8 @@
 # keepassx
   pass
   polkit-gnome
-  python-keyring
-  python-keyrings-alt
+# python-keyring
+# python-keyrings-alt
 
 
 = power
@@ -149,7 +148,6 @@
 # anacron
   cronie
 # dcron
-  figlet
 # incron
 # lxinput-qt-git
   ntp
@@ -159,7 +157,6 @@
   rlwrap
 # synapse
 # sysstat
-# toilet
   udiskie
 # watcher
   zramswap

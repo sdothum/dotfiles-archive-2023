@@ -6,7 +6,7 @@
 = appearance
 # ▔▔▔▔▔▔▔▔▔▔
 # breeze-obsidian-cursor-theme
-  breeze-snow-cursor-theme
+# breeze-snow-cursor-theme
   compton
 # compton-git
 # hsetroot
@@ -15,6 +15,7 @@
   setroot
 # xcompmgr
 # shantz-xwinwrap-bzr [server]
+  unclutter
 # xflux
 
 
@@ -40,7 +41,7 @@
   rofi
 # scrot
 # shutter
-  slickpicker
+# slickpicker
 # xfce4-notifyd
 # xfce4-screenshooter
 # xgrabcolor
@@ -128,7 +129,6 @@
   lxrandr              [server]
 # slock
 # trayer-srg-git
-  unclutter
 # xclip
   xdotool
   xf86-input-mouse

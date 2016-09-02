@@ -5,15 +5,21 @@
 ! to reload settings without needing to restart xserver:
 !   xrdb -merge ~/.Xresources
 
+
+! ....................................................................... Cursor
+ 
+Xcursor.theme: default
+Xcursor.size: 16
+ 
 ! ........................................................................ XTerm
 
 XTerm*bellIsUrgent:           true
 XTerm*charClass:              33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 XTerm*cursorBlink:            false
 XTerm*cursorColor:            yellow
-XTerm*faceName:               PragmataPro:pixelsize=16
+XTerm*faceName:               PragmataPro:pixelsize=13
 XTerm*fullscreen:             never
-XTerm*internalBorder:         9
+XTerm*internalBorder:         10
 XTerm*locale:                 en_US.utf8
 XTerm*pointerColorBackground: black
 XTerm*pointerColor:           white

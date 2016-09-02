@@ -37,7 +37,9 @@ alias umount 'sudo umount'
 
 # ....................................................................... System
  
+alias htop 'glances'
 alias iotop 'sudo iotop'
+alias screenfetch 'fetch'
 alias traceroute 'mtr --report -c 1'
 
 # ...................................................................... Desktop

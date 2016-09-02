@@ -11,7 +11,7 @@
 # dwb-git
 # dwb-gtk3
 # elinks
-# firefox     [server]
+# firefox      [server]
   flashplugin
 # haskell-hbro
 # jumanji-git
@@ -23,12 +23,12 @@
 # luakit
 # lynx
 # midorio
-# qutebrowser
-  qutebrowser-git
+  qutebrowser
+# qutebrowser-git
 # surf
-  tabbed
+# tabbed
 # uzbl-browser
-  vimb
+  vimb         [server]
 # vimb-git
   w3m
 # webkitgtk2
@@ -40,7 +40,7 @@
 # finch
 # pidgin
 # skype
-  python-twitter
+# python-twitter
 # turses
   weechat
 # xchat

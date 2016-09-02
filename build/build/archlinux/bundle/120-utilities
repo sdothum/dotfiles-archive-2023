@@ -89,9 +89,11 @@
 # bc
 # checkbashisms
 # fasd
+  figlet
   fortune-mod
-  fortune-mod-chucknorris
+# fortune-mod-chucknorris
 # prezto-git
+# toilet
 # zsh-doc
 # zsh-autosuggestions
 # zsh-completions
@@ -104,7 +106,7 @@
 # gamin
   glances
   gsmartcontrol
-  htop
+# htop
   iotop
 # memtester
 # mprime-bin [server]
