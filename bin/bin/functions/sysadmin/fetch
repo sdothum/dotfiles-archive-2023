@@ -10,13 +10,14 @@
 if [ "$*" ] ;then
   /usr/bin/fetch --help
 else
+  focus frame
   # hide cursor (make it dark!)
   xterm -cr '#101010' \
         -e "/usr/bin/fetch --size 340 --xoffset 40 --yoffset 26 \
                            --image $(lname $HOME/images/backgrounds/default) \
                            --block_range 0 15 --gap -10 \
             && echo \
-            && read close \
+            && read CLOSE \
            "
 fi
 

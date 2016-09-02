@@ -46,7 +46,7 @@
 = fonts
 # ▔▔▔▔▔
   fontforge     [server]
-  ttf-wps-fonts [server]
+# ttf-wps-fonts [server]
 
 
 = games
@@ -125,7 +125,7 @@
   simpletimer-git
   speedcrunch
 # todotxt
-  wps-office    [server]
+# wps-office    [server]
   wyrd
 # xpad
 

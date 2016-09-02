@@ -10,9 +10,9 @@
 require 'cairo'
 
 COLORING=0x000000
-default_color=0x365c42
-color0=0x284531
-color6=0x0f1a12
+default_color=0x4f3b2e
+color0=0x3b2c22
+color6=0x16100c
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
@@ -79,7 +79,7 @@ clock_s = {
 temp = {
 {
     name='exec',                   arg="sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  *[(].*$//' | sort | tail -1", max_value=100,
-    x=94,                          y=539,
+    x=94,                          y=541,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -166,7 +166,7 @@ gauge = {
 },
 {
     name='cpu',                    arg='cpu0',                      max_value=100,
-    x=94,                          y=539,
+    x=94,                          y=541,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -187,7 +187,7 @@ gauge = {
 },
 {
     name='memperc',                arg='',                          max_value=100,
-    x=94,                          y=745,
+    x=94,                          y=747,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -208,7 +208,7 @@ gauge = {
 },
 {
     name='fs_used_perc',           arg='/tmp',                      max_value=100,
-    x=94,                          y=745,
+    x=94,                          y=747,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -230,7 +230,7 @@ gauge = {
 {
     -- name='fs_used_perc',           arg='/',                         max_value=100,
     name='exec',                   arg='conky btrfs / percent',     max_value=100,
-    x=94,                          y=905,
+    x=94,                          y=907,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -252,7 +252,7 @@ gauge = {
 {
     -- name='fs_used_perc',           arg='/net',                      max_value=100,
     name='exec',                   arg='conky btrfs /net percent',  max_value=100,
-    x=94,                          y=905,
+    x=94,                          y=907,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -273,7 +273,7 @@ gauge = {
 },
 {
     name='swapperc',               arg='',                          max_value=100,
-    x=94,                          y=905,
+    x=94,                          y=907,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -294,7 +294,7 @@ gauge = {
 },
 {
     name='wireless_link_qual_perc', arg='wlp4s0',                   max_value=100,
-    x=94,                          y=1144,
+    x=94,                          y=1146,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,

@@ -6,10 +6,12 @@
 !   xrdb -merge ~/.Xresources
 
 
-! ....................................................................... Cursor
- 
-Xcursor.theme: default
-Xcursor.size: 16
+! .......................................................................... Xft
+
+Xft.dpi:                      96
+Xft.antialias:                true
+Xft.hinting:                  true
+Xft.hintstyle:                hintfull
  
 ! ........................................................................ XTerm
 
@@ -80,9 +82,9 @@ URxvt*print-pipe:             cat >$HOME/tmp/$(echo urxvt.dump.$(date +'%s'))
 URxvt*saveLines:              9000            ! non-tmux window scroll back
 
 ! text
-! URxvt*font:                 xft:Input Mono Compressed:size=11
-! URxvt*font:                 xft:Iosevka Term:size=11
-URxvt*font:                   xft:PragmataPro:size=11
+! URxvt*font:                 xft:Input Mono Compressed:size=10
+! URxvt*font:                 xft:Iosevka Term:size=10
+URxvt*font:                   xft:PragmataPro:size=10
 ! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
 ! URxvt*linespace:            0               ! pixels between lines for added readability
 URxvt*internalBorder:         10              ! pixels from frame edge

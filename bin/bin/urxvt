@@ -12,12 +12,14 @@ font='PragmataPro'
 
 # adjust font for various displays and video cards
 if macbook ;then
-  fn="-fn xft:$font:size=9"
+  size=9
 elif nvidia ;then
-  fn="-fn xft:$font:size=11"
+  size=10
 elif laptop ;then
-  fn="-fn xft:$font:size=9"
+  size=9
 fi 
+
+fn="-fn xft:$font:size=$size"
 
 # URxvt client/server
 eval urxvtc $fn $@

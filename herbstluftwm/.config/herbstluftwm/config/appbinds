@@ -38,7 +38,9 @@ hc keybind Super-b                   spawn dmenu bookmarks
 hc keybind Super-c                   spawn dmenu clipboard
 hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
-hc keybind Super-e                   spawn dmenu edit
+hc keybind Super-e                   spawn dmenu scripts
+hc keybind Super-Shift-e             spawn dmenu edit
+hc keybind Super-Control-e           spawn dmenu configs
 # hc keybind Super-f                 spawn dmenu zsh
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu history
@@ -64,8 +66,6 @@ hc keybind Super-q                   spawn toggle amphetype
 hc keybind Super-Control-q           spawn clack
 hc keybind Super-r                   spawn dmenu radio
 # hc keybind Super-Shift-r           spawn dmenu references
-hc keybind Super-s                   spawn dmenu scripts
-hc keybind Super-Shift-s             spawn dmenu configs
 hc keybind Super-t                   spawn dmenu series
 hc keybind Super-Shift-t             spawn dmenu series anime
 hc keybind Super-v                   spawn dmenu movies

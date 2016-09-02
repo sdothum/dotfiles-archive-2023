@@ -47,19 +47,19 @@ conky.config = {
   uppercase = false,
 
 -- default_color FFFFFF
-  default_color = '365c42',
-  color0 = '284531',
+  default_color = '4f3b2e',
+  color0 = '3b2c22',
   color1 = '000000',
   color2 = '080808',
   color3 = '101010',
   color4 = '202020',
   color5 = '303030',
-  color6 = '0f1a12',
-  color7 = '1e3324',
-  color8 = '284531',
-  color9 = '5a354f',
---colorA = '1b2e21',
---colorI = '2d1b28',
+  color6 = '16100c',
+  color7 = '2c2119',
+  color8 = '3b2c22',
+  color9 = '2d414d',
+--colorA = '281e17',
+--colorI = '172127',
 
   lua_load = '~/.conky/conky-rings.lua',
   lua_draw_hook_post = 'main',
@@ -67,23 +67,23 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 45}
-${goto 117}${color}${font Ubuntu:size=21}${time %e}
-${goto 81}${color1}${voffset -23}${font Ubuntu:size=10}${time %A}
-${goto 92}${color3}${voffset -1}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
-${voffset 15}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -6}
+${voffset 40}
+${goto 114}${color}${font Ubuntu:size=24}${time %e}
+${goto 81}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
+${goto 92}${color3}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+${voffset 12}${font}${color3}${alignr}${time %-Vw  /  %-jd}
+${voffset -5}
 ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
-${voffset -210}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 155}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
-${voffset -71}
+${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 151}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+${voffset -72}
 ${else}
-${voffset -210}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 155}${font Ubuntu:size=16:style=Normal}${exec query tag inactive}${voffset -42}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
-${voffset -230}
+${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 151}${font Ubuntu:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
+${voffset -249}
 ${endif}
 ${font}${color2}${alignr}${exec query wname}
 ${voffset 93}
 
-${voffset -10}
+${voffset -12}
 ${goto 80}${font}${color1}${texeci 900 conky weather}
 ${goto 90}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
 ${goto 90}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
