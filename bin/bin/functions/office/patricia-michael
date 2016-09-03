@@ -4,9 +4,9 @@
 # Office
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................... my beloved
+# ................................................................... my Beloved
 
-switch tag "$MEDIA"
+# switch tag "$MEDIA"
 focus frame
 gnome-mpv "/net/media/patricia/Michael Reading for Patricia.MP3"
 focus window

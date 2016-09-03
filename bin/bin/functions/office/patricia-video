@@ -4,9 +4,9 @@
 # Office
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................... my beloved
+# ................................................................... my Beloved
 
-switch tag "$MEDIA"
+# switch tag "$MEDIA"
 focus frame
 # play https://gallivanmedia-1.wistia.com/medias/b1ygqqmhvh
 play /net/media/patricia/Patricia.mp4

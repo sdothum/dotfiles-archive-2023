@@ -1,12 +1,13 @@
+-- sdothum - 2016 (c) wtfpl
+
+-- X11 Desktop
+-- ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+-- ....................................................................... Conky
+
+-- see bin/functions/conky/theme
+
 conky.config = {
---==============================================================================
---                                 conkyrc_grey
-
---  author  : SLK
---  version : v2011011601
---  license : Distributed under the terms of GNU GPL version 2 or later
-
---==============================================================================
 
 	background = true,
 	update_interval = 1,
@@ -180,3 +181,5 @@ ${if_match ${tcp_portmon 1 65535 count} > 18}${alignr}${color3}• • • ${end
 # ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 19}${alignr 1}${tcp_portmon 1 65535 rport 19}
 # ${if_match ${tcp_portmon 1 65535 count} > 20}${alignr}${color3}• • • ${endif}
 ]];
+
+-- vim: set ft=lua : --

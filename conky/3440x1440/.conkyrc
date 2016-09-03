@@ -173,3 +173,5 @@ ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 11}${alignr 1}${tcp_portmon
 ${if_match ${tcp_portmon 1 65535 count} > 12}${alignr}${color3}• • • ${endif}
 
 ]];
+
+-- vim: set ft=lua : --

@@ -1,12 +1,13 @@
+-- sdothum - 2016 (c) wtfpl
+
+-- X11 Desktop
+-- ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+-- ....................................................................... Conky
+
+-- see bin/functions/conky/theme
+
 conky.config = {
---==============================================================================
---                                 conkyrc_grey
-
---  author  : SLK
---  version : v2011011601
---  license : Distributed under the terms of GNU GPL version 2 or later
-
---==============================================================================
 
   background = true,
   update_interval = 1,
@@ -117,3 +118,5 @@ ${goto 75}${downspeedgraph wlp2s0 15,0 ${color7} ${color7}}
 ${voffset -28}${goto 75}${upspeedgraph wlp2s0 15,0 ${color8} ${color8}}
 ${voffset -5}${goto 75}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp2s0}}↑   ${lua_parse bandwidth ${downspeed wlp2s0}}↓
 ]];
+
+-- vim: set ft=lua : --
