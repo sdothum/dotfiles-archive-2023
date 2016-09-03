@@ -169,11 +169,11 @@
       function! FontSize(size)
         if system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
           " for desktop nvidia gpu
-          if &guifont =~ '11' || a:size < 0
-            call Fontspace(10, 0)
+          if &guifont =~ '10' || a:size < 0
+            call Fontspace(9, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(11, 0)
+            call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* NVIDIA'

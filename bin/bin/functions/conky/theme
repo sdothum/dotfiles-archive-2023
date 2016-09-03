@@ -29,15 +29,15 @@
 #
 # theming formula uses ColorCodeHex tables..
 # base = https://www.colorcodehex.com/[hex colour]/
-# default_color [base]
-# color0 [base mono-1]
-# color1 to color5 uses solarized paper mono-1 gradients
-# color6 [color0 mono-3]
-# color7 [color0 mono-1]
-# color8 [color0]
-# color9 [base complementary]
-# colorA [base mono-2]
-# colorI [color9 mono-2]
+#   default_color [base]
+#   color0 [base mono-1]
+#   color1 to color5 uses solarized paper mono-1 gradients
+#   color6 [color0 mono-3]
+#   color7 [color0 mono-1]
+#   color8 [color0]
+#   color9 [base complementary]
+#   colorA [base mono-2]
+#   colorI [color9 mono-2]
 
 usage() {
   echo "usage: $(basename $0) theme  paper | ink"
@@ -65,11 +65,6 @@ env() {
   sed -i --follow-symlinks "/^export $1=/s/='#.*'/='#$2'/" $env
 }
 
-gradient() {
-  gradient=$(grep "^ *$1 =" $conkyrc | cut -d\' -f2)
-  sed -i --follow-symlinks "s/$gradient/$2/g" $conkyrc
-}
-
 # colour schemes
 rings() {
   conkyrc default_color $1
@@ -95,9 +90,9 @@ text() {
 }
 
 graphs() {
-  gradient color7 $1
+  conkyrc color7 $1
   shift
-  gradient color8 $1
+  conkyrc color8 $1
 }
 
 hidden() {
@@ -181,11 +176,13 @@ case "$action" in
   light) if [ $# -eq 1 ] ;then
            hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f18)
            conky theme paper
+           complimentary $1
          fi ;;
 
   dark) if [ $# -eq 1 ] ;then
           hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f2)
           conky theme ink
+          complimentary $1
         fi ;;
 
   test) if [ $# -eq 1 ] ;then

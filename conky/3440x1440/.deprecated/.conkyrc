@@ -1,110 +1,126 @@
-#==============================================================================
-#                                 conkyrc_grey
-#
-#  author  : SLK
-#  version : v2011011601
-#  license : Distributed under the terms of GNU GPL version 2 or later
-#
-#==============================================================================
+-- sdothum - 2016 (c) wtfpl
 
-background yes
-update_interval 1
+-- X11 Desktop
+-- ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-cpu_avg_samples 2
-net_avg_samples 2
-temperature_unit celsius
+-- ....................................................................... Conky
 
-double_buffer yes
-no_buffers yes
-text_buffer_size 2048
+-- see bin/functions/conky/theme
 
-# span 2 monitors! 1680+2560 (0:4239) minus panel width
-# span 2 monitors!
-gap_x 4011
-gap_y 30
-minimum_size 200 1600
-maximum_width 200
-own_window yes
-# own_window_type panel
-own_window_type dock
-own_window_transparent yes
-# own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below,above
-own_window_hints undecorated,below
-border_inner_margin 0
-border_outer_margin 29
-alignment tr
+conky.config = {
 
-draw_shades no
-draw_outline no
-draw_borders no
-draw_graph_borders no
+  background = true,
+  update_interval = 1,
 
-override_utf8_locale yes
-use_xft yes
-xftfont Ubuntu:size=7
-xftalpha 0.5
-uppercase no
+  cpu_avg_samples = 2,
+  net_avg_samples = 2,
+  temperature_unit = 'celsius',
 
-# default_color FFFFFF
-default_color F49270
-color0 EF5A29
-# color1 DDDDDD
-color1 FDF6E3
-color2 AAAAAA
-color3 888888
-color4 666666
-color5 444444
-color9 25C0EF
+  double_buffer = true,
+  no_buffers = true,
+-- text_buffer_size 2048
 
-lua_load ~/.conky/conky-rings.lua
-lua_draw_hook_post main
+-- span 2 monitors! 1680+2560 (0:4239) minus panel width
+-- span 2 monitors!
+  alignment = 'top_right',
+  gap_x = 29,
+  gap_y = 29,
+  minimum_width = 200, minimum_height = 1440,
+  maximum_width = 200,
+  own_window = true,
+-- own_window_type panel
+  own_window_type = 'dock',
+  own_window_transparent = true,
+-- own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below,above
+  own_window_hints = 'undecorated,below',
+  border_inner_margin = 0,
+  border_outer_margin = 29,
 
-TEXT
-${voffset 66}
-${goto 117}${color0}${font Ubuntu:size=21}${time %e}
-${goto 81}${color1}${voffset -22}${font Ubuntu:size=10}${time %A}
-${goto 92}${color3}${voffset -1}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+  draw_shades = false,
+  draw_outline = false,
+  draw_borders = false,
+  draw_graph_borders = false,
+
+  override_utf8_locale = true,
+  use_xft = true,
+  font = 'Ubuntu:size=7',
+  xftalpha = 0.5,
+  uppercase = false,
+
+-- default_color = 'FFFFFF',
+  default_color = '48584b',
+  color0 = '364238',
+  color1 = '000000',
+  color2 = '080808',
+  color3 = '101010',
+  color4 = '202020',
+  color5 = '303030',
+  color6 = '141815',
+  color7 = '28312a',
+  color8 = '364238',
+  color9 = '574754',
+--colorA = '242c26',
+--colorI = '2c242a',
+
+  lua_load = '~/.conky/conky-rings.lua',
+  lua_draw_hook_post = 'main',
+
+};
+
+-- for explicit .xresources xft.dpi: 96
+-- ${voffset 40}
+-- ${goto 114}${color}${font Ubuntu:size=24}${time %e}
+-- ${goto 81}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
+-- ${goto 92}${color3}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+-- ${voffset 12}${font}${color3}${alignr}${time %-Vw  /  %-jd}
+-- ${voffset -5}
+-- ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
+-- ${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 151}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+-- ${voffset -72}
+-- ${else}
+-- ${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 151}${font Ubuntu:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
+-- ${voffset -249}
+-- ${endif}
+-- ${font}${color2}${alignr}${exec query wname}
+-- ${voffset 93}
+
+conky.text = [[
+${voffset 40}
+${goto 113}${color}${font Ubuntu:size=26}${time %e}
+${goto 81}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
+${goto 92}${color3}${voffset -3}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
 ${voffset 15}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -6}${if_match "${exec cat ~/.windowmanager}" == "bspwm"}${if_match "${exec bspc query -M -m focused}" == "DVI-0"}
-${voffset -221}${font Ubuntu:size=48:style=Normal}${if_match "${exec query hidden focus}" == "hidden"}${color9}${else}${color3}${endif}${offset 136}${exec query desktop focus}${font Ubuntu:size=16:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color4}${endif}${exec query desktop}
-${voffset -72}
+${voffset -6}
+${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
+${voffset -210}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 155}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+${voffset -71}
 ${else}
-${voffset -221}${font Ubuntu:size=48:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color4}${endif}${offset 136}${font Ubuntu:size=16:style=Normal}${exec query desktop}${voffset -46}${font Ubuntu:size=48:style=Normal}${if_match "${exec query hidden focus}" == "hidden"}${color9}${else}${color3}${endif}${exec query desktop focus}
-${voffset -249}
+${voffset -210}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 155}${font Ubuntu:size=16:style=Normal}${exec query tag inactive}${voffset -42}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
+${voffset -230}
 ${endif}
-${font}${color3}${alignr}${exec [[ $(bspc query -T | grep "$(bspc query -W -w)" | wc -l) -eq 1 ]] && (bspc query -T | grep "$(bspc query -W -w)" | awk '{ print $3; }') || echo}
-${voffset 106}
-${else}${if_match "${exec cat ~/.windowmanager}" == "herbstluftwm"}${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
-${voffset -221}${font Ubuntu:size=48:style=Normal}${if_match "${exec query hidden focus}" == "hidden"}${color9}${else}${color3}${endif}${offset 136}${exec query desktop focus}${font Ubuntu:size=16:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color4}${endif}${exec query desktop}
-${voffset -72}
-${else}
-${voffset -221}${font Ubuntu:size=48:style=Normal}${if_match "${exec query hidden}" == "hidden"}${color9}${else}${color4}${endif}${offset 136}${font Ubuntu:size=16:style=Normal}${exec query desktop}${voffset -46}${font Ubuntu:size=48:style=Normal}${if_match "${exec query hidden focus}" == "hidden"}${color9}${else}${color3}${endif}${exec query desktop focus}
-${voffset -249}
-${endif}
-${font}${color3}${alignr}${exec query window}
-${voffset 106}
-${endif}${endif}
+${font}${color2}${alignr}${exec query wname}
+${voffset 93}
 
-${voffset -10}
+${voffset -12}
 ${goto 80}${font}${color1}${texeci 900 conky weather}
 ${goto 90}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
-${goto 90}${font}${color2}${texeci 900 conky weather calgary} ${alignr}Calgary
+${goto 90}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
 # ${goto 90}${font}${color3}${texeci 900 conky weather vancouver} ${alignr}Vancouver
 
 ${voffset -5}${goto 100}${font}${color2}${nodename} ${alignr}${fs_type /var}
 ${goto 100}${font}${color1}${kernel} ${alignr}${uptime}
-# ${goto 100}${font}${color}focus ${exec bspc query -M -m focused} ${alignr}desktop ${exec bspc query -D -d focused}
 
 ${voffset 34}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}MPD ${alignr}${mpd_status}
+${goto 100}${font Ubuntu:size=7:style=Bold}${color}Volume ${alignr}${mpd_status}
 # ${goto 100}${font}${color1}volume
 ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}${if_match "${exec conky radio}" > ""}${alignr}${exec conky radio}${else}${lua_parse null ${mpd_title}}${endif}
 ${goto 100}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
 
 ${voffset 10}
 # display BOTH hwmon temps, one or other will reflect gpu temp
-${goto 80}${font Ubuntu:size=18:style=Bold}${color3}SYS ${color2}${font Ubuntu:size=7:style=Bold}${color0}GPU ${alignr}${hwmon 0 temp 1}°C${font Ubuntu:size=7}
-${voffset -5}${goto 100}${loadgraph 25,0 EF5A29 8E2C0A -t}
+# ${goto 80}${font Ubuntu:size=18:style=Bold}${color3}SYS ${color2}${font Ubuntu:size=7:style=Bold}${color0}GPU ${alignr}${nvidia temp}°C
+${goto 80}${font Ubuntu:size=18:style=Bold}${color3}SYS ${color2}${font Ubuntu:size=7:style=Bold}${color0}
+${goto 100}${loadgraph 25,0 ${color7} ${color7}}
 ${voffset -5}${goto 100}${font}${color1}Loadavg ${alignr}${loadavg 1}   ${loadavg 2}   ${loadavg 3}
 
 ${voffset 30}
@@ -117,14 +133,14 @@ ${goto 100}${font}${color3}${top name 3}${alignr}${top cpu 3}%
 ${goto 100}${font}${color3}${top name 4}${alignr}${top cpu 4}%
 ${goto 100}${font}${color3}${top name 5}${alignr}${top cpu 5}%
 ${goto 100}${font}${color3}${top name 6}${alignr}${top cpu 6}%
-${goto 100}${cpugraph 25,0 EF5A29 8E2C0A -t}
+${goto 100}${cpugraph 25,0 ${color7} ${color7}}
 ${voffset -5}${goto 100}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 # ${goto 100}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
 
 ${voffset 30}
 ${goto 100}${font Ubuntu:size=7:style=Bold}${color}MEM ${alignr}${mem}
-# ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}Swap ${alignr}${lua_parse swap ${swap}}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}Tmp ${alignr}${fs_used /tmp}
+# ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
+${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/tmp ${alignr}${fs_used /tmp}
 ${goto 100}${font}${color1}${top_mem name 1}${alignr}${top_mem mem_res 1}
 ${goto 100}${font}${color2}${top_mem name 2}${alignr}${top_mem mem_res 2}
 ${goto 100}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
@@ -134,52 +150,44 @@ ${goto 100}${font}${color3}${top_mem name 6}${alignr}${top_mem mem_res 6}
 
 ${voffset 30}
 # ${goto 100}${font Ubuntu:size=7:style=Bold}${color}DISKS ${alignr}${fs_type /var}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}Boot ${alignr}${fs_used /}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}Data   ${color2}(s) ${color0}${alignr}${fs_used /data}
+${goto 100}${font Ubuntu:size=7:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
+${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/net   ${color}(swap) ${color0}${alignr}${exec conky btrfs /net}GiB
 # ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/Tmp ${alignr}${fs_used /tmp}
-${goto 100}${diskiograph 25,0 EF5A29 8E2C0A -t}
+${goto 100}${diskiograph 25,0 ${color7} ${color7}}
 ${voffset -5}${goto 100}${font}${color1}Disk I/O ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 10}
-${goto 80}${font Ubuntu:size=18:style=Bold}${color3}NET${color2}${font Ubuntu:size=7:style=Bold}${color0} eno1 ${alignr}${addr eno1}${font Ubuntu:size=7}
-${goto 100}${downspeedgraph eno1 25,0 EF5A29 8E2C0A -t}
-${voffset -38}${goto 100}${upspeedgraph eno1 25,0 F49270 EF5A29 -t}
+${goto 80}${font Ubuntu:size=18:style=Bold}${color3}NET${color2}${font Ubuntu:size=7:style=Bold}${color0} eno1 ${alignr}${addr eno1}
+${goto 100}${downspeedgraph eno1 25,0 ${color7} ${color7}}
+${voffset -38}${goto 100}${upspeedgraph eno1 25,0 ${color8} ${color8}}
 ${voffset -5}${goto 100}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed eno1}}↑   ${lua_parse bandwidth ${downspeed eno1}}↓
 #
-# ${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color1}enp10s0 ${alignr}${addr enp10s0}${font Ubuntu:size=7}
-# ${goto 100}${downspeedgraph enp10s0 25,0 EF5A29 8E2C0A -t}
-# ${voffset -38}${goto 100}${upspeedgraph enp10s0 25,0 F49270 EF5A29 -t}
-# ${voffset -5}${goto 100}bandwidth ${alignr}${upspeed enp10s0}↑   ${downspeed enp10s0}↓
+# ${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color1}enp10s0 ${alignr}${addr enp10s0}
+# ${goto 100}${downspeedgraph enp10s0 25,0 ${color7} ${color7}}
+# ${voffset -38}${goto 100}${upspeedgraph enp10s0 25,0 ${color7} ${color7}}
+# ${voffset -5}${goto 100}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed enp10s0}}↑   ${lua_parse bandwidth ${downspeed enp10s0}}↓
 
 ${voffset 30}
-${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color}wlp4s0 ${alignr}${addr wlp4s0}${font Ubuntu:size=7}
-${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color0}${wireless_essid wlp4s0}${font Ubuntu:size=7}
-${goto 100}${downspeedgraph wlp4s0 25,0 EF5A29 8E2C0A -t}
-${voffset -38}${goto 100}${upspeedgraph wlp4s0 25,0 F49270 EF5A29 -t}
+${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp4s0}
+${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color0}wlp4s0 ${alignr}${addr wlp4s0}
+${goto 100}${downspeedgraph wlp4s0 25,0 ${color7} ${color7}}
+${voffset -38}${goto 100}${upspeedgraph wlp4s0 25,0 ${color8} ${color8}}
 ${voffset -5}${goto 100}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp4s0}}↑   ${lua_parse bandwidth ${downspeed wlp4s0}}↓
 
 ${goto 100}${font Ubuntu:size=7:style=Bold}${color1}${alignr}${tcp_portmon 1 65535 count}  open ports
-${goto 100}${font Ubuntu:size=7:style=Bold}${color1}IP${alignr}DPORT
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  0}${alignr 1}${tcp_portmon 1 65535 rport  0}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  1}${alignr 1}${tcp_portmon 1 65535 rport  1}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  2}${alignr 1}${tcp_portmon 1 65535 rport  2}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  3}${alignr 1}${tcp_portmon 1 65535 rport  3}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  4}${alignr 1}${tcp_portmon 1 65535 rport  4}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  5}${alignr 1}${tcp_portmon 1 65535 rport  5}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  6}${alignr 1}${tcp_portmon 1 65535 rport  6}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  7}${alignr 1}${tcp_portmon 1 65535 rport  7}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  8}${alignr 1}${tcp_portmon 1 65535 rport  8}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip  9}${alignr 1}${tcp_portmon 1 65535 rport  9}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 10}${alignr 1}${tcp_portmon 1 65535 rport 10}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 11}${alignr 1}${tcp_portmon 1 65535 rport 11}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 12}${alignr 1}${tcp_portmon 1 65535 rport 12}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 13}${alignr 1}${tcp_portmon 1 65535 rport 13}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 14}${alignr 1}${tcp_portmon 1 65535 rport 14}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 15}${alignr 1}${tcp_portmon 1 65535 rport 15}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 16}${alignr 1}${tcp_portmon 1 65535 rport 16}
-${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 17}${alignr 1}${tcp_portmon 1 65535 rport 17}
-${if_match ${tcp_portmon 1 65535 count} > 18}${alignr}${color2}• • • ${endif}
-# ${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 18}${alignr 1}${tcp_portmon 1 65535 rport 18}
-# ${goto 100}${font}${color2}${tcp_portmon 1 65535 rip 19}${alignr 1}${tcp_portmon 1 65535 rport 19}
-# ${if_match ${tcp_portmon 1 65535 count} > 20}${alignr}${color2}• • • ${endif}
+${goto 100}${font Ubuntu:size=7:style=Bold}${color2}IP${alignr}DPORT
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  0}${alignr 1}${tcp_portmon 1 65535 rport  0}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  1}${alignr 1}${tcp_portmon 1 65535 rport  1}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  2}${alignr 1}${tcp_portmon 1 65535 rport  2}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  3}${alignr 1}${tcp_portmon 1 65535 rport  3}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  4}${alignr 1}${tcp_portmon 1 65535 rport  4}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  5}${alignr 1}${tcp_portmon 1 65535 rport  5}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  6}${alignr 1}${tcp_portmon 1 65535 rport  6}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  7}${alignr 1}${tcp_portmon 1 65535 rport  7}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  8}${alignr 1}${tcp_portmon 1 65535 rport  8}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  9}${alignr 1}${tcp_portmon 1 65535 rport  9}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 10}${alignr 1}${tcp_portmon 1 65535 rport 10}
+${goto 100}${font}${color3}${tcp_portmon 1 65535 rip 11}${alignr 1}${tcp_portmon 1 65535 rport 11}
+${if_match ${tcp_portmon 1 65535 count} > 12}${alignr}${color3}• • • ${endif}
 
+]];

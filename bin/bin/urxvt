@@ -14,7 +14,7 @@ font='PragmataPro'
 if macbook ;then
   size=9
 elif nvidia ;then
-  size=10
+  is display +1680 && size=9 || size=8
 elif laptop ;then
   size=9
 fi 

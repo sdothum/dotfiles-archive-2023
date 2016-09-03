@@ -8,7 +8,7 @@
 
 ! .......................................................................... Xft
 
-Xft.dpi:                      96
+! Xft.dpi:                    96
 Xft.antialias:                true
 Xft.hinting:                  true
 Xft.hintstyle:                hintfull

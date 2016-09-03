@@ -10,9 +10,9 @@
 require 'cairo'
 
 COLORING=0x000000
-default_color=0x4f3b2e
-color0=0x3b2c22
-color6=0x16100c
+default_color=0x48584b
+color0=0x364238
+color6=0x141815
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
@@ -27,7 +27,7 @@ clock_h = {
     graph_bg_colour=COLORING,      graph_bg_alpha=0,
     graph_fg_colour=color0,        graph_fg_alpha=0.66,
     txt_radius=50,
-    txt_weight=1,                  txt_size=13.0,
+    txt_weight=0,                  txt_size=14.0,
     txt_fg_colour=COLORING,        txt_fg_alpha=0.6,
     graduation_radius=55,
     graduation_thickness=0,        graduation_mark_thickness=1,
@@ -65,7 +65,7 @@ clock_s = {
     graph_bg_colour=COLORING,      graph_bg_alpha=0,
     graph_fg_colour=COLORING,      graph_fg_alpha=0.22,
     txt_radius=52,
-    txt_weight=0,                  txt_size=12.0,
+    txt_weight=0,                  txt_size=10.0,
     txt_fg_colour=COLORING,        txt_fg_alpha=0.3,
     graduation_radius=0,
     graduation_thickness=0,        graduation_mark_thickness=1,
@@ -79,7 +79,7 @@ clock_s = {
 temp = {
 {
     name='exec',                   arg="sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  *[(].*$//' | sort | tail -1", max_value=100,
-    x=94,                          y=541,
+    x=94,                          y=551,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -100,7 +100,7 @@ temp = {
 },
 -- {
 --     name='exec',                   arg="sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  *[(].*$//' | sort | head -1", max_value=100,
---     x=94,                          y=539,
+--     x=94,                          y=551,
 --     graph_radius=25,
 --     graph_thickness=3,
 --     graph_start_angle=180,
@@ -124,7 +124,7 @@ temp = {
 gauge = {
 {
     name='exec',                   arg='conky volume',              max_value=100,
-    x=94,                          y=335,
+    x=94,                          y=345,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -145,7 +145,7 @@ gauge = {
 },
 {
     name='mpd_percent',            arg='',                          max_value=100,
-    x=94,                          y=335,
+    x=94,                          y=345,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -166,7 +166,7 @@ gauge = {
 },
 {
     name='cpu',                    arg='cpu0',                      max_value=100,
-    x=94,                          y=541,
+    x=94,                          y=551,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -187,7 +187,7 @@ gauge = {
 },
 {
     name='memperc',                arg='',                          max_value=100,
-    x=94,                          y=747,
+    x=94,                          y=757,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -208,7 +208,7 @@ gauge = {
 },
 {
     name='fs_used_perc',           arg='/tmp',                      max_value=100,
-    x=94,                          y=747,
+    x=94,                          y=757,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -230,7 +230,7 @@ gauge = {
 {
     -- name='fs_used_perc',           arg='/',                         max_value=100,
     name='exec',                   arg='conky btrfs / percent',     max_value=100,
-    x=94,                          y=907,
+    x=94,                          y=917,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
@@ -252,7 +252,7 @@ gauge = {
 {
     -- name='fs_used_perc',           arg='/net',                      max_value=100,
     name='exec',                   arg='conky btrfs /net percent',  max_value=100,
-    x=94,                          y=907,
+    x=94,                          y=917,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -273,7 +273,7 @@ gauge = {
 },
 {
     name='swapperc',               arg='',                          max_value=100,
-    x=94,                          y=907,
+    x=94,                          y=917,
     graph_radius=25,
     graph_thickness=3,
     graph_start_angle=180,
@@ -294,7 +294,7 @@ gauge = {
 },
 {
     name='wireless_link_qual_perc', arg='wlp4s0',                   max_value=100,
-    x=94,                          y=1146,
+    x=94,                          y=1156,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
