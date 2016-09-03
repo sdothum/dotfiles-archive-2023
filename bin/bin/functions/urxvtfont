@@ -1,0 +1,27 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 System
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... Urxvt font
+
+# see bin/urxvt
+
+# font='Iosevka\ Term'
+font='PragmataPro'
+
+# adjust font for various displays and video cards
+if macbook ;then
+  size=8
+elif nvidia ;then
+  is display +1680 && size=9 || size=8
+elif laptop ;then
+  size=9
+else
+  size=10
+fi 
+
+echo -n "-fn xft:$font:size=$size"
+
+# vim: set ft=sh: #

@@ -143,6 +143,7 @@ case $@ in
 
   stow) if server ;then
           if-yes "backup stow to $laptop" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$laptop:$HOME/
+          if-yes "backup stow to $netbook" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$netbook:$HOME/
         else
           if-no 'update stow to luna' || rsync --exclude='.SyncArchive' $HOME/stow $USER@luna:$HOME/
         fi ;;

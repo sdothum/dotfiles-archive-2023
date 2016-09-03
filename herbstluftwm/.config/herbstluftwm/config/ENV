@@ -47,16 +47,6 @@ export FOCUS_WIDTH=5
 export BORDER_WIDTH=3
 export NORMAL='#808080'
 
-# ..................................................................... Displays
-
-# display geometry (fullscreen)
-if [ $(xrandr -d :0 -q | grep ' connected' | wc -l) -gt 1 ]; then
-  export PRIMARY=$(xrandr | grep ' connected ' | grep primary | cut -d' ' -f4 | cut -dx -f1)
-  export SECONDARY=$(xrandr | grep ' connected ' | grep -v primary | cut -d' ' -f3 | cut -dx -f1)
-else
-  export PRIMARY=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
-fi
-
 # ........................................................... Margin adjustments
 
 # left shift right monitor margin by shadow-radius*shadow_factor so conky doesn't cover shadow area
@@ -124,11 +114,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#48584b'
-export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#242c26'
-export INACTIVE_FG='#574754'
-export INACTIVE_HIDDEN_FG='#2c242a'
+export DEFAULT_FG='#3dd8a8'
+export ACTIVE_FG='#f0f0f0'
+export ACTIVE_HIDDEN_FG='#1f6c54'
+export INACTIVE_FG='#d73c6d'
+export INACTIVE_HIDDEN_FG='#6b1e37'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

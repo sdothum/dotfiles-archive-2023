@@ -4,19 +4,15 @@
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................ Is resolution
+# ................................................................ Is query screenwidth
 
 # Usage: is display [+|=|-]<width>
 #        returns boolean based on whether less, equal or greater than check
 
-resolution() {
-  xrandr 2>/dev/null | grep '*' | cut -dx -f1 | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d"
-}
-
 case $(echo $1 | sed -r 's/^(.).*/\1/') in
-  '+') [ $(resolution) -gt ${1#?} ] ;;
-  '=') [ $(resolution) -eq ${1#?} ] ;;
-  '-') [ $(resolution) -lt ${1#?} ] ;;
+  '+') [ $(query screenwidth) -gt ${1#?} ] ;;
+  '=') [ $(query screenwidth) -eq ${1#?} ] ;;
+  '-') [ $(query screenwidth) -lt ${1#?} ] ;;
   *)   false ;;
 esac
 

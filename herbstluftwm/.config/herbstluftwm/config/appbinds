@@ -72,7 +72,7 @@ hc keybind Super-v                   spawn dmenu movies
 hc keybind Super-Shift-v             spawn dmenu movies animation
 hc keybind Super-Control-v           spawn toggle cinema
 hc keybind Super-w                   spawn focus qutebrowser
-hc keybind Super-Shift-w             spawn toggle term 'IRC' FONTSIZE '8' weechat
+hc keybind Super-Shift-w             spawn toggle term 'IRC' weechat
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
 hc keybind Super-z                   spawn dmenu shistory

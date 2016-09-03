@@ -93,9 +93,9 @@
       " set foldmethod=syntax               " folding based on syntax
       set foldnestmax=3                     " deepest fold is 3 levels
 
-      " toggle fold / fold tags
-      noremap <leader>f za
-      noremap <leader>F Vatzf
+      " toggle fold tag / open all
+      noremap <leader>z         za
+      noremap <leader><leader>z zR
 
     " ........................................................... Folding levels
 

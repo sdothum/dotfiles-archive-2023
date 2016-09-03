@@ -7,7 +7,7 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | MAX | FONTSIZE <size> | FORTUNE | STACK | TABBED | TR | WAIT ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | MAX | FORTUNE | STACK | TABBED | TR | WAIT ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
 #        TR, disable urxvt pseudo transparency
@@ -35,9 +35,6 @@ do
 
     MAX) name='-name max'
          shift ;;
-
-    FONTSIZE) fn="-fn 'xft:PragmataPro:size=$2'"
-              shift 2 ;;
 
     FORTUNE) touch /tmp/term:fortune
              shift ;;
@@ -70,9 +67,9 @@ if [ -z "$name" ] ;then
 fi
 
 if [ $stack ] ;then
-  $TERM $title $name $geometry $tabbed $tr $fn $cmd
+  $TERM $title $name $geometry $tabbed $tr $cmd
 else
-  focus $TERM $title $name $geometry $tabbed $tr $fn $cmd
+  focus $TERM $title $name $geometry $tabbed $tr $cmd
 fi
 
 # wait for process to complete

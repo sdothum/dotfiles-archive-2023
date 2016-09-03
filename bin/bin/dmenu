@@ -37,49 +37,34 @@ unquote() {
 # ................................................... Rofi fullscreen fill specs
 
 # fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
-# fill the actual physical display area, tweak rofi padding, fontsize and lines
+# fill the actual physical display area, tweak rofi padding and fontsize
 # for 2560, 1680 (secondary), 1440, 1024 displays
+
+# set padding and fontsize
+padsize() {
+  # padding calculation = screenwidth / fontsize * factor
+  padding=$(( $1 / $2 * $3 ))
+  fontsize=$2
+}
+
 if hlwm; then
-  if is primary ;then
-    if is display =3440 ;then
-      padding=620
-      fontsize=18
-      lines=12
-    elif is display =2560 ;then
-      padding=410
-      fontsize=18
-      lines=12
-    elif is display =1680 ;then
-      padding=230
-      fontsize=16
-      lines=10
-    elif is display =1440 ;then
-      padding=200
-      fontsize=14
-      lines=10
-    elif is display =1360 ;then
-      padding=220
-      fontsize=16
-      lines=10
-    else
-      padding=110
-      fontsize=14
-      lines=7
-    fi
-  else
-    # 1680 as secondary monitor
-    padding=230
-    fontsize=16
-    lines=10
-  fi
+  width=$(query screenwidth)
 else 
-  padding=200
-  fontsize=14
-  lines=10
+  # assumes single display
+  width=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
+fi
+
+# tune padding factor to screenwidth
+if [ $width -gt 1680 ] ;then
+  padsize $width 14 '3 / 2'
+elif [ $width -gt 1024 ] ;then
+  padsize $width 12 2
+else
+  padsize $width 10 1
 fi
 
 hlwm && monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) \
-                              || monitor=0
+     || monitor=0
 
 # ............................................................... Available apps
 
@@ -143,15 +128,15 @@ dmenu() {
 
   # use blank -mesg as added separator and indent pick list!
   input=$(sed "s/^/$INDENT/" \
-        | rofi -monitor $monitor -hide-scrollbar -padding $padding \
-               -bw 0 -eh 2 -opacity 85 \
+        | rofi -monitor $monitor -hide-scrollbar -padding $padding -fullscreen \
+               -bw 0 -eh 1 -line-margin $fontsize -opacity 85 \
                -color-enabled -color-window black \
                -color-normal "black,$fg,black,$hlbg,$hlfg" \
                -color-active "black,$fg,black,$hlbg,$hlfg" \
                -color-urgent "black,$fg,black,$hlbg,$hlfg" \
                -font "PragmataPro $fontsize" \
-               -lines $lines -width 100 -fixed-num-lines -separator-style none \
-               -dmenu -p "${prompt}$leader   " -i -mesg ' ' -select "$select" -filter "$filter" $@ \
+               -width 100 -fixed-num-lines -separator-style none \
+               -dmenu -p "${prompt}$leader   " -i -select "$select" -filter "$filter" $@ \
         )
   # strip indent from input!
   [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1

@@ -1,13 +1,12 @@
--- sdothum - 2016 (c) wtfpl
-
--- X11 Desktop
--- ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-
--- ....................................................................... Conky
-
--- see bin/functions/conky/theme
-
 conky.config = {
+--==============================================================================
+--                                 conkyrc_grey
+
+--  author  : SLK
+--  version : v2011011601
+--  license : Distributed under the terms of GNU GPL version 2 or later
+
+--==============================================================================
 
   background = true,
   update_interval = 1,
@@ -45,19 +44,19 @@ conky.config = {
   xftalpha = 0.5,
   uppercase = false,
 
-  default_color = '3c0557',
-  color0 = '2d0341',
+  default_color = '48584b',
+  color0 = '364238',
   color1 = '000000',
   color2 = '080808',
   color3 = '101010',
   color4 = '202020',
   color5 = '303030',
-  color6 = '110118',
-  color7 = '210230',
-  color8 = '2d0341',
-  color9 = '205705',
---colorA = '1e032c',
---colorI = '102c03',
+  color6 = '141815',
+  color7 = '28312a',
+  color8 = '41353f',
+  color9 = '574754',
+--colorA = '242c26',
+--colorI = '2c242a',
 
   lua_load = '~/.conky/conky-rings.lua',
   lua_draw_hook_post = 'main',
@@ -65,16 +64,16 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 62}
-${goto 105}${color}${font Ubuntu:size=18}${time %e}
+${voffset 54}
+${goto 96}${color}${font Ubuntu:size=21}${time %e}
 ${goto 67}${color1}${voffset -24}${font Ubuntu:size=9}${time %A}
-${goto 75}${color3}${voffset -2}${font Ubuntu:size=8}${time %b}${voffset -2}  ${color5}${font Ubuntu:size=14}'${time %y}
-${voffset 20}${font}${color3}${alignr}${time %-Vw  /  %-jd}
+${goto 75}${color3}${voffset -2}${font Ubuntu:size=8}${time %b}${voffset -2}  ${color5}${font Ubuntu:size=12}'${time %y}
+${voffset 22}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -207}${font Ubuntu:size=40:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -233}
 ${font}${color2}${alignr}${exec query wname}
-${voffset 127}
+${voffset 131}
 ${goto 65}${font}${color1}${texeci 900 conky weather}
 ${goto 75}${font}${color2}${kernel} ${alignr}${uptime}
 #
@@ -126,5 +125,3 @@ ${goto 85}${downspeedgraph wls4 20,0 ${color7} ${color7}}
 ${voffset -33}${goto 85}${upspeedgraph wls4 20,0 ${color8} ${color8}}
 ${voffset -5}${goto 85}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wls4}}↑   ${lua_parse bandwidth ${downspeed wls4}}↓
 ]];
-
--- vim: set ft=lua : --

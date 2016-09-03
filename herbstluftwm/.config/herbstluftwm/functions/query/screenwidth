@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/display $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Screen width
+
+# in pixels
+xrandr 2>/dev/null | grep '*' | cut -dx -f1 | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d"
+
+# vim: set ft=sh: #

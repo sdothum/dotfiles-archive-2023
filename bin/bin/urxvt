@@ -7,25 +7,12 @@
 # ..................................................................... Terminal
 
 export SHELL=/usr/bin/fish
-# font='Iosevka\ Term'
-font='PragmataPro'
-
-# adjust font for various displays and video cards
-if macbook ;then
-  size=9
-elif nvidia ;then
-  is display +1680 && size=9 || size=8
-elif laptop ;then
-  size=9
-fi 
-
-fn="-fn xft:$font:size=$size"
 
 # URxvt client/server
-eval urxvtc $fn $@
+eval urxvtc $(urxvtfont) $@
 if [ $? -eq 2 ] ;then
   urxvtd -q -o -f 2>/tmp/urxvt.log
-  eval urxvtc $fn $@
+  eval urxvtc $(urxvtfont) $@
 fi
 
 # vim: set ft=sh: #
