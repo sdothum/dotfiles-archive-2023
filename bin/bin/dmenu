@@ -42,7 +42,7 @@ unquote() {
 
 # set padding and fontsize
 padsize() {
-  # padding calculation = screenwidth / fontsize * factor
+  # padding calculation = displaywidth / fontsize * factor
   padding=$(( $1 / $2 * $3 ))
   fontsize=$2
 }
@@ -54,7 +54,7 @@ else
   width=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
 fi
 
-# tune padding factor to screenwidth
+# tune padding factor to displaywidth / font calculation
 if [ $width -gt 1680 ] ;then
   padsize $width 14 '3 / 2'
 elif [ $width -gt 1024 ] ;then

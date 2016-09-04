@@ -67,6 +67,7 @@ env() {
 
 # colour schemes
 rings() {
+  color=$1
   conkyrc default_color $1
   conkylua default_color $1
   shift
@@ -93,7 +94,8 @@ graphs() {
   conkyrc color7 $1
   shift
   # conkyrc color8 $1
-  conkyrc color8 $(complimentary $1)
+  # conkyrc color8 $(complimentary $1)
+  conkyrc color8 $color
 }
 
 hidden() {

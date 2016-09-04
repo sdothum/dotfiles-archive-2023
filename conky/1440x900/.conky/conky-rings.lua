@@ -1,18 +1,18 @@
---==============================================================================
---                                 conky_grey.lua
---
---  author  : SLK
---  version : v2011062101
---  license : Distributed under the terms of GNU GPL version 2 or later
---
---==============================================================================
+-- sdothum - 2016 (c) wtfpl
+
+-- X11 Desktop
+-- ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+-- ....................................................................... Conky
+
+-- see bin/functions/conky/theme
 
 require 'cairo'
 
-COLORING=0x000000
-default_color=0x48584b
-color0=0x364238
-color6=0x141815
+COLORING=0xFFFFFF
+default_color=0xc5ee9a
+color0=0x93b273
+color6=0x36422b
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA

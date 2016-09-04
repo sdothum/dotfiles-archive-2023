@@ -13,9 +13,12 @@ heading "verify group and passwd files"
 sudo grpck
 
 
+if grep -qv '\--nodnsproxy' /lib/systemd/system/connman.service; then
 heading "restore connman dns"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
+  sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
+  sudo systemctl restart connman
+fi
 
 
 if [ -d /etc/X11/xorg.conf.d ] ;then

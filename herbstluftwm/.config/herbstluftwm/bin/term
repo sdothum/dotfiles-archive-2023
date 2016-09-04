@@ -7,10 +7,11 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | MAX | FORTUNE | STACK | TABBED | TR | WAIT ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | MAX | FORTUNE | STACK | TABBED | TR | VISIBLE | WAIT ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
 #        TR, disable urxvt pseudo transparency
+#        VISIBLE, wait for window visibility
 #        WAIT, for process to complete before returning
 #        SHELL <command>, for simpler unquoted command passing
 # Note:  title may not contain spaces, use hyphen or underscore in place
@@ -21,7 +22,7 @@ TERM=urxvt
 # first parameter may be title
 if [ "$1" ] ;then
   if echo "$1" | egrep -qv 'FLOAT|FORTUNE|MAX|STACK|SHELL' ;then
-    title="-title \"$1\""
+    title="-title $(echo $1 | sed 's/ /_/g')"
     shift
   fi
 fi
@@ -48,7 +49,10 @@ do
     TR) tr='+tr'
         shift ;;
 
-    WAIT) foreground=true
+    VISIBLE) visible=true
+             shift ;;
+
+    WAIT) wait=true
           shift ;;
 
     SHELL) shift
@@ -72,8 +76,11 @@ else
   focus $TERM $title $name $geometry $tabbed $tr $cmd
 fi
 
-# wait for process to complete
-if [ $foreground ] ;then
+if [ $visible ] && [ "$title" ] ;then
+  xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
+fi
+
+if [ $wait ] ;then
   pwait "$process"
 fi
 

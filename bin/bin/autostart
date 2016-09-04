@@ -62,7 +62,12 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-[ -e $HOME/.irc ] && server && term 'IRC' weechat
+if [ -e $HOME/.irc ] && server ;then
+  herbstclient focus_monitor 1
+  # wait for window visibility before switching monitors, for urxvt font handling 
+  term 'IRC' VISIBLE weechat
+  herbstclient focus_monitor 0
+fi
 server && term 'Mail' alot
 
 # .................................................................. Window apps

@@ -11,26 +11,23 @@
 #       in the manpage history with the apostrophe being removed (useful when
 #       the name is part of several descriptions)
 
-xsel=/tmp/manpage:xsel
-
-highlight() {
-  cat $xsel | sed 's/(.*//'
-}
-
-# see manpage
-rm -f $xsel
 while :
 do
+  if [ "$selection" ] ;then
+    echo "$selection" | grep -q ' ' && unset selection
+    echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
+  fi
+
   # highlighted lookup
-  if [ -e $xsel ] ;then
-    man=$(highlight)
+  if [ "$selection" ] ;then
+    man=$selection
     if [ $(echo "$man" | wc -w) -ne 1 ] ;then
       unset man
     else
       [ $(whatis "$man" | wc -l) -eq 0 ] && unset man
     fi
     if [ -z $man ] ;then
-      notify critical "$(highlight)" "No manual entry found"
+      notify critical "$selection" "No manual entry found"
       exit
     fi
   else
@@ -63,11 +60,15 @@ do
     # display man page
     if [ "$page" ] ;then
       history man "$man"
-      term "$page" MAX $stack WAIT manpage "$page"
+      xsel -c
+      term "$page" MAX $stack WAIT man "$page"
+       
       # subsequent manpages open on same frame
       stack=STACK
       # highlighted man page entry?
-      [ -e $xsel ] && break
+      # selection highlighting does not appear to work
+      selection=$(xsel -o)
+      [ "$selection" ] && break
 
       # print hard copy?
       set -- $page
