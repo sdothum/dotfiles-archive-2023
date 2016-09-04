@@ -18,15 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # 0.1:  initial release
+# 0.2:  name change
 #
 # usage:
-# add +minimal to the end of weechat.bar.input.items
+# add +unfocused to the end of weechat.bar.input.items
 
-SCRIPT_NAME    = "minimal"
+SCRIPT_NAME    = "unfocused"
 SCRIPT_AUTHOR  = "sdothum <sdothum@gmail.com>"
-SCRIPT_VERSION = "0.1"
+SCRIPT_VERSION = "0.2"
 SCRIPT_LICENSE = "GPL3"
-SCRIPT_DESC    = "Unfocused buffer bar line indicator. Add +minimal to the end of input bar."
+SCRIPT_DESC    = "Unfocused buffer bar line indicator. Add +unfocused to the end of input bar."
 
 unfocused_sep = '⋅'
 
@@ -42,12 +43,12 @@ except ImportError as message:
     print('Missing package(s) for %s: %s' % (SCRIPT_NAME, message))
     import_ok = False
 
-def minimal_bar_item_update (data=None, signal=None, signal_data=None):
+def unfocused_bar_item_update (data=None, signal=None, signal_data=None):
     '''Updates bar item'''
-    w.bar_item_update('minimal')
+    w.bar_item_update('unfocused')
     return w.WEECHAT_RC_OK
 
-def minimal_bar_item (data, item, window):
+def unfocused_bar_item (data, item, window):
     '''Item constructor'''
     # window empty? root bar!
     if not window:
@@ -64,6 +65,6 @@ def minimal_bar_item (data, item, window):
 if __name__ == "__main__":
     if w.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC, "", ""):
         # update status bar display
-        minimal_bar_item_update()
-        w.hook_signal('buffer_switch', 'minimal_bar_item_update', '')
-        w.bar_item_new('minimal', 'minimal_bar_item', '')
+        unfocused_bar_item_update()
+        w.hook_signal('buffer_switch', 'unfocused_bar_item_update', '')
+        w.bar_item_new('unfocused', 'unfocused_bar_item', '')

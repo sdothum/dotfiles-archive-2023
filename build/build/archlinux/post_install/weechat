@@ -93,7 +93,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.bar.buffers.separator on
 /set weechat.bar.buffers.size_max 13
 
-/set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+minimal"
+/set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+unfocused"
 /set weechat.bar.nicklist.hidden on
 /set weechat.bar.status.hidden on
 /set weechat.bar.title.hidden on
