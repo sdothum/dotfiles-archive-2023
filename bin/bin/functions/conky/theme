@@ -92,6 +92,7 @@ text() {
 graphs() {
   conkyrc color7 $1
   shift
+  # conkyrc color8 $1
   conkyrc color8 $(complimentary $1)
 }
 
