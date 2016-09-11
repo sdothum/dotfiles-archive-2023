@@ -8,7 +8,7 @@
 # ............................................................... Emit hook trap
 
 [ $(pgrep -cx emithook) -gt 1 ] && exit
-touch $DYNAMIC
+# touch $DYNAMIC (see toggle focus)
 monitor=$(herbstclient attr monitors.focus.index)
 
 herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
@@ -30,9 +30,10 @@ do
                      restore panel &
                    fi ;;
 
+      focus_window) [ -e $DYNAMIC ] && focus window & ;;
+      focus_frame)  [ -e $DYNAMIC ] && focus frame & ;;
+
     rule) case $rule in
-            focus_window) [ -e $DYNAMIC ] && focus window & ;;
-            focus_frame)  [ -e $DYNAMIC ] && focus frame & ;;
             max)          herbstclient set_layout max & ;;
 
             fullscreen) if is primary ;then

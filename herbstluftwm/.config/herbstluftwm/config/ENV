@@ -75,19 +75,17 @@ fi
 # dynamic monocle frame height adjustment, (0) none
 # add urxvt lines (top and bottom) using .Xresources fontsize, see draw monitor
 export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
-[ $PRIMARY -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
+[ $(query displaywidth 0) -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
 
 # ........................................................................ Panel
 
 # panel config defaults (best set in .xinitrc to minimize source reloads)
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 # to set panel location to bottom of screen, export in .xinitrc
-if [ $PANEL_BOTTOM ] ;then
-  export PANEL_BOTTOM=-b
-fi
+[ $PANEL_BOTTOM ] && export PANEL_BOTTOM=-b
 
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-[ $PRIMARY -lt 1440 ] && export PANEL_MARGIN=true
+[ $(query displaywidth 0) -lt 1440 ] && export PANEL_MARGIN=true
 
 # panel fonts
 # export ICON_FONT='FontAwesome'
@@ -114,11 +112,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#FBB248'
-export ACTIVE_FG='#f0f0f0'
-export ACTIVE_HIDDEN_FG='#7d5924'
-export INACTIVE_FG='#4792fa'
-export INACTIVE_HIDDEN_FG='#24497d'
+export DEFAULT_FG='#5d4427'
+export ACTIVE_FG='#000000'
+export ACTIVE_HIDDEN_FG='#2f2214'
+export INACTIVE_FG='#263e59'
+export INACTIVE_HIDDEN_FG='#131f2d'
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'

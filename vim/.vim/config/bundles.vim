@@ -24,18 +24,18 @@
 
     " ........................................................ Buffer management
 
-      Plug 'mileszs/ack.vim'
+      " Plug 'mileszs/ack.vim'
       Plug 'kien/ctrlp.vim'
-      Plug 'chrisbra/NrrwRgn'
-      Plug 'duff/vim-scratch'
+      " Plug 'chrisbra/NrrwRgn'
+      " Plug 'duff/vim-scratch'
 
     " ................................................................... Coding
 
       Plug 'tpope/vim-endwise'
       Plug 'msanders/snipmate.vim'
-      Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-      Plug 'scrooloose/syntastic'
-      Plug 'majutsushi/tagbar'
+      " Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+      " Plug 'scrooloose/syntastic'
+      " Plug 'majutsushi/tagbar'
       Plug 'tomtom/tcomment_vim'
       " Plug 'mattn/emmet-vim'
 
@@ -44,14 +44,14 @@
       " Plug 'SearchComplete'
       Plug 'ervandew/supertab'
       Plug 'Lokaltog/vim-easymotion'
-      Plug 'vim-scripts/matchit.zip'
+      " Plug 'vim-scripts/matchit.zip'
       Plug 'kshenoy/vim-signature'
 
     " .................................................................. Editing
 
       Plug 'sjl/gundo.vim'
-      Plug 'tpope/vim-abolish'
-      Plug 'tpope/vim-repeat'
+      " Plug 'tpope/vim-abolish'
+      " Plug 'tpope/vim-repeat'
       Plug 'vim-scripts/YankRing.vim'
 
     " ............................................................... Formatting
@@ -63,9 +63,9 @@
 
     " ............................................................. Productivity
 
-      Plug 'tpope/vim-fugitive'
-      Plug 'vim-scripts/calendar.vim--Matsumoto'
-      Plug 'ludovicchabant/vim-lawrencium'
+      " Plug 'tpope/vim-fugitive'
+      " Plug 'vim-scripts/calendar.vim--Matsumoto'
+      " Plug 'ludovicchabant/vim-lawrencium'
       Plug 'vim-scripts/openurl.vim'
 
     " ...................................................... Syntax highlighting
@@ -74,15 +74,15 @@
       Plug 'dag/vim-fish'
       " Plug 'tpope/vim-markdown'
       Plug 'plasticboy/vim-markdown'
-      Plug 'greyblake/vim-preview'
+      " Plug 'greyblake/vim-preview'
       Plug 'slim-template/vim-slim'
 
     " ................................................................... System
 
       " Plug 'kana/vim-arpeggio'
-      Plug 'Shougo/unite.vim'
-      Plug 'Shougo/vimfiler.vim'
-      Plug 'Shougo/vimshell.vim'
+      " Plug 'Shougo/unite.vim'
+      " Plug 'Shougo/vimfiler.vim'
+      " Plug 'Shougo/vimshell.vim'
 
     " .................................................................. Writing
       Plug 'reedes/vim-litecorrect'

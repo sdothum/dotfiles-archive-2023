@@ -7,7 +7,7 @@
 # ................................................................ Session login
  
 # console login check
-if tty | grep -q '/dev/tty[1-9]' ;then
+if console ;then
   echo
 elif [ -e /tmp/term:fortune ] ;then
   if ! [ -e /tmp/herbstluftwm:fortune ] ;then

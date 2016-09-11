@@ -1,12 +1,17 @@
 # sdothum - 2016 (c) wtfpl
-# [ $TRACE ] && CHILD="is/display $@" . $PARENT
+# [ $TRACE ] && CHILD="query/displaywidth $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................. Screen width
+# ................................................................ Display width
+
+# Usage: query displaywidth [<monitor>]
+#        default, display current monitor display width
+#        monitor (0) primary (1) secondary, etc.
 
 # in pixels
-xrandr 2>/dev/null | grep '*' | cut -dx -f1 | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d"
+[ "$*" ] && monitor=$1 || monitor=$(herbstclient attr monitors.focus.index)
+xrandr 2>/dev/null | grep '*' | cut -dx -f1 | sed "$(( $monitor + 1 ))q;d"
 
 # vim: set ft=sh: #

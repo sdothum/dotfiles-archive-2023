@@ -45,19 +45,19 @@ conky.config = {
   xftalpha = 0.5,
   uppercase = false,
 
-  default_color = 'c5ee9a',
-  color0 = '93b273',
-  color1 = 'f0f0f0',
-  color2 = 'c0c0c0',
-  color3 = '909090',
-  color4 = '707070',
-  color5 = '505050',
-  color6 = '36422b',
-  color7 = '6e8556',
-  color8 = 'c5ee9a',
-  color9 = 'c096ed',
---colorA = '62774d',
---colorI = '604b76',
+  default_color = '5d4427',
+  color0 = '45331d',
+  color1 = '000000',
+  color2 = '080808',
+  color3 = '101010',
+  color4 = '202020',
+  color5 = '303030',
+  color6 = '1a130b',
+  color7 = '332615',
+  color8 = '5d4427',
+  color9 = '263e59',
+--colorA = '2f2214',
+--colorI = '131f2d',
 
   lua_load = '~/.conky/conky-rings.lua',
   lua_draw_hook_post = 'main',
@@ -74,7 +74,7 @@ ${voffset -207}${font Ubuntu:size=40:style=Normal}${if_match "${exec is hidden}"
 
 ${voffset -233}
 ${font}${color2}${alignr}${exec query wname}
-${voffset 130}
+${voffset 129}
 ${goto 65}${font}${color1}${texeci 900 conky weather}
 ${goto 75}${font}${color2}${kernel} ${alignr}${uptime}
 #

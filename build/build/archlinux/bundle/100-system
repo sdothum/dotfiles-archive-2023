@@ -112,6 +112,7 @@
   polkit-gnome
 # python-keyring
 # python-keyrings-alt
+  xclip
 
 
 = power

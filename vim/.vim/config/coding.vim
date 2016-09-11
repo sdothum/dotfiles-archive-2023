@@ -192,6 +192,10 @@
       vmap <silent><S-Up>   <ESC>:call <SID>MoveVisualUp()<CR>
       vmap <silent><S-Down> <ESC>:call <SID>MoveVisualDown()<CR>
 
+      " move visual block with automatic alignment!
+      vnoremap L :m '<-2<CR>gv=gv
+      vnoremap N :m '>+1<CR>gv=gv
+
   " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................. Comment text

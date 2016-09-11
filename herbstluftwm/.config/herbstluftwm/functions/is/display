@@ -4,7 +4,7 @@
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................ Is query displaywidth
+# ........................................................... Test display width
 
 # Usage: is display [+|=|-]<width>
 #        returns boolean based on whether less, equal or greater than check

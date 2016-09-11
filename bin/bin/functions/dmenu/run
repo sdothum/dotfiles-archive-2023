@@ -5,7 +5,7 @@
 
 # ............................................................... dmenu launcher
 
-cache=$CACHEDIR/dmenu_run
+cache=$CACHEDIR/dmenu:run
 
 # see /usr/bin/dmenu_run
 IFS=:

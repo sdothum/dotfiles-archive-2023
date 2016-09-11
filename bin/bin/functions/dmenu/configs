@@ -6,7 +6,7 @@
 # ......................................................................... Edit
 
 # system conf files
-cache=$CACHEDIR/dmenu_configs
+cache=$CACHEDIR/dmenu:configs
 
 # ................................................................... Initialize
  

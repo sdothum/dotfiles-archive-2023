@@ -124,6 +124,7 @@
 # sakura
 # terminator
 # termite-git
+  urxvt-font-size-git [server]
   urxvt-perls 
   xterm
 

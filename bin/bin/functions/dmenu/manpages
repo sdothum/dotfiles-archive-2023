@@ -66,8 +66,9 @@ do
       # subsequent manpages open on same frame
       stack=STACK
       # highlighted man page entry?
-      # selection highlighting does not appear to work
       selection=$(xsel -o)
+      # selection highlighting does not appear to work, not a clue why xdotool is in clipboard
+      echo $selection | grep -q xdotool && unset selection
       [ "$selection" ] && break
 
       # print hard copy?

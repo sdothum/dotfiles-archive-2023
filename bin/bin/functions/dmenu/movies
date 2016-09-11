@@ -11,22 +11,27 @@
 #               ../title.YEAR.*  (movie)
 
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
+playlist=$library/.playlist
+cache=$CACHEDIR/dmenu:${1:-movies}
+# unset debug to remove exit from menu items
+debug='\nexit'
 
 # list latest movie additions first
 T=t
-cache=/tmp/dmenu:movies
-hlwm && monitor=$(herbstclient attr monitors.focus.index)
-[ -e "$cache" ] || time=5 notify low 'Movies' 'Caching library..'
-
-# clean up titles
-mytitles $library >>/tmp/mytitles:movies
-playlist=$library/.playlist
-[ -e "$playlist" ] || echo >"$playlist"
-
-shows() {
-  ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >"$cache"
-  playlist "$cache" "$playlist"
+catlg() {
+  ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' > /tmp/dmenu:movies
+  playlist /tmp/dmenu:movies "$playlist" > $cache
 }
+
+# any new media added?
+if stest -dqr -n "$cache" $library ;then
+  time=5 notify low 'Movies' 'Caching library..'
+  # clean up titles
+  mytitles $library >>/tmp/mytitles:${1:-movies}
+  [ -e "$playlist" ] || echo >"$playlist"
+  catlg
+fi
+
 
 library() {
   [ "$1" ] && echo '[ theatrical   ]' || echo '[ animation    ]'
@@ -41,7 +46,7 @@ while :
 do
   # focus monitor menu originally presented on
   [ $monitor ] && herbstclient focus_monitor $monitor
-  movie=$(shows \
+  movie=$(cat $cache \
         | sed "1i$(library $1)" \
         | sed "1i$(options)" \
         | dmenu 'Movie' "$movie" -no-custom) || exit
@@ -61,7 +66,7 @@ do
     *) movie=$(echo "$movie" | sed "s/ $SEP$//")
        while :
        do
-         action=$(echo 'play\nmrqe\nimdb\nedit\ndelete\nmark' | dmenu "$movie" -no-custom) || break
+         action=$(echo "play\nmrqe\nimdb\nedit\ndelete\nmark$debug" | dmenu "$movie" -no-custom) || break
          video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed -e 's/  (\([12][0-9][0-9][0-9]\))$/ \1/' -e 's/ /./g').*")
          case $action in
            play) if [ $(echo -n "$video\n" | wc -l) -gt 1 ] ;then
@@ -70,6 +75,7 @@ do
                    break
                  fi
                  history "$playlist" "$movie"
+                 catlg &
                  play "$video"
                  break ;;
 
@@ -77,13 +83,18 @@ do
            imdb) vimb "im $movie" ;;
 
            edit) term 'movies' WAIT ranger "$video"
+                 catlg &
                  break ;;
 
            delete) rm -rf "$video"
+                   catlg &
                    break ;;
 
            mark) history "$playlist" "$movie"
+                 catlg &
                  break ;;
+
+           exit) exit ;;
          esac
        done ;;
   esac

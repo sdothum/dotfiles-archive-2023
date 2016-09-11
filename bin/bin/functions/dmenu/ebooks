@@ -7,7 +7,7 @@
 
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
-cache=$library/.ebooks
+cache=$CACHEDIR/dmenu:ebooks
 
 # kindle update via email
 email() {

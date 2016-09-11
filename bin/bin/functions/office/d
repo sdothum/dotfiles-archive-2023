@@ -6,7 +6,7 @@
 
 # ................................................................... Dictionary
 
-# see bin/ddictionary
+# see dmenu dict
 dict $1 >/dev/null && dict $1 | less
 
 # vim: set ft=sh: #

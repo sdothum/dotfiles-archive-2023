@@ -96,6 +96,7 @@ fi
 
 # add window management extensions
 emithook &
+toggle focus
 
 # ................................................................ Final touches
 

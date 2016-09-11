@@ -129,7 +129,6 @@
   lxrandr              [server]
 # slock
 # trayer-srg-git
-# xclip
   xdotool
   xf86-input-mouse
   xf86-input-keyboard

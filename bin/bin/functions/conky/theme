@@ -135,7 +135,7 @@ monochromatic() {
   echo -n "$hex" | grep 'Monochromatic' | cut -d/ -f$1
 }
 
-# see conky/palette
+# see conky palette
 hexgen() {
   default_color=$1
   hex=$(conky palette $default_color)
