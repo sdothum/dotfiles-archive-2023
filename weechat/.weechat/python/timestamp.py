@@ -18,13 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # 0.1:  initial release
+# 0.2:  center timestamp in message window, assumes balanced window widths
 
 import weechat
 import time
 
 SCRIPT_NAME    = "timestamp"
 SCRIPT_AUTHOR  = "sdothum <sdothum@gmail.com>"
-SCRIPT_VERSION = "0.1"
+SCRIPT_VERSION = "0.2"
 SCRIPT_LICENSE = "GPL3"
 SCRIPT_DESC    = "Buffer timestamp"
 
@@ -32,11 +33,10 @@ settings = {
     "modulo_interval"         : '15',   # print a new timestamp every X minutes of the hour
 }
 
-buffer_dates = {}
-
-def prnt_timestamp(buffer, timestamp):
-    weechat.prnt(buffer, '%s[%s%s%s:%s%s%s]' %
-	(weechat.color("chat_delimiters"),
+def prnt_timestamp(buffer, timestamp, indent):
+    weechat.prnt(buffer, '%s%s⋅⋅ %s%s%s:%s%s%s ⋅⋅' %
+	(' ' * indent,
+	 weechat.color("chat_delimiters"),
 	 weechat.color("chat_time"),
 	 time.strftime('%H', time.localtime(timestamp)),
 	 weechat.color("chat_time_delimiters"),
@@ -50,9 +50,11 @@ def timer_cb(data, remaining_calls):
     if (current_time % interval) == 0:
         infolist = weechat.infolist_get("buffer", "", "")
         if infolist:
+            # center of message area = (window width - prefix width - (vertical separator + date)) / 2 - rounding adjustment
+            indent = (weechat.window_get_integer(weechat.current_window (), "win_width") - int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {})) - 14) / 2 - 1
             while weechat.infolist_next(infolist):
                 buffer = weechat.infolist_pointer(infolist, 'pointer')
-                prnt_timestamp(buffer, current_time)
+                prnt_timestamp(buffer, current_time, indent)
             weechat.infolist_free(infolist)
     return weechat.WEECHAT_RC_OK
 

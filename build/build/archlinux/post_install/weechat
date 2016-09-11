@@ -51,7 +51,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /script install urlserver.py
 /script install vimode.py
 /script install ws_replace.py
-/script install ichatts.py
+# /script install ichatts.py
 # /script install weetweet.py
 
 # buffers
@@ -62,8 +62,8 @@ configure authentication else some channels will force #<channel>-unregistered
 /filter add joinquit * irc_join,irc_part,irc_quit *
 
 # ichatts
-/set plugins.var.python.ichatts.minutes_until_timestamp 5
-/set plugins.var.python.ichatts.remind_every 1440
+# /set plugins.var.python.ichatts.minutes_until_timestamp 5
+# /set plugins.var.python.ichatts.remind_every 1440
 
 # jabber
 /jabber add jabber $(cat $HOME/.forward) $(pass mail/$(cat $HOME/.forward | sed 's/\(.*\)[@]\(.*\)/\2\/\1/'))
@@ -124,7 +124,6 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.look.prefix_align_max 15
 /set weechat.look.prefix_align_min 15
 /set weechat.look.prefix_align_more "…"
-/set weechat.look.prefix_align_min 15
 /set weechat.look.prefix_error "⚠ "
 /set weechat.look.prefix_join "◥"
 /set weechat.look.prefix_network "⚡"
