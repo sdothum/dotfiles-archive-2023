@@ -136,7 +136,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set weechat.look.separator_vertical " "
 # /set weechat.look.prefix_suffix "│"
 # /set weechat.look.read_marker_string "  ⇣ "
-# /set weechat.look.separator_horizontal "─"
+# /set weechat.look.separator_horizontal
 # /set weechat.look.separator_horizontal "⋅"
 # /set weechat.look.separator_vertical ""
 

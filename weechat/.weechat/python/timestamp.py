@@ -31,6 +31,7 @@ SCRIPT_DESC    = "Buffer timestamp"
 
 settings = {
     "modulo_interval"         : '15',   # print a new timestamp every X minutes of the hour
+    "center"                  : '1',    # (0) left justify (1) center
 }
 
 def prnt_timestamp(buffer, timestamp, indent):
@@ -50,8 +51,11 @@ def timer_cb(data, remaining_calls):
     if (current_time % interval) == 0:
         infolist = weechat.infolist_get("buffer", "", "")
         if infolist:
-            # center of message area = (window width - prefix width - (vertical separator + date)) / 2 - rounding adjustment
-            indent = (weechat.window_get_integer(weechat.current_window (), "win_width") - int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {})) - 14) / 2 - 1
+            if weechat.config_get_plugin('center') == '0':
+                indent = 0
+            else:
+                # centering = (window width - prefix width - (vertical separator + date)) / 2 - rounding adjustment
+                indent = (weechat.window_get_integer(weechat.current_window (), "win_width") - int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {})) - 14) / 2 - 1
             while weechat.infolist_next(infolist):
                 buffer = weechat.infolist_pointer(infolist, 'pointer')
                 prnt_timestamp(buffer, current_time, indent)
