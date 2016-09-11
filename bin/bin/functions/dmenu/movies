@@ -19,8 +19,9 @@ debug='\nexit'
 # list latest movie additions first
 T=t
 catlg() {
+  cat /dev/null > $cache
   ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' > /tmp/dmenu:movies
-  playlist /tmp/dmenu:movies "$playlist" > $cache
+  playlist /tmp/dmenu:movies "$playlist" > $cache &
 }
 
 # any new media added?
@@ -44,8 +45,15 @@ options() {
 
 while :
 do
+  # rebuilding catalogue?
+  if ! [ -s $cache ] ;then
+    sleep 1
+    continue
+  fi
+
   # focus monitor menu originally presented on
   [ $monitor ] && herbstclient focus_monitor $monitor
+
   movie=$(cat $cache \
         | sed "1i$(library $1)" \
         | sed "1i$(options)" \
@@ -75,23 +83,23 @@ do
                    break
                  fi
                  history "$playlist" "$movie"
-                 catlg &
+                 catlg
                  play "$video"
                  break ;;
 
            mrqe) vimb "mr $movie" ;;
            imdb) vimb "im $movie" ;;
 
-           edit) term 'movies' WAIT ranger "$video"
-                 catlg &
+           edit) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
+                 catlg
                  break ;;
 
            delete) rm -rf "$video"
-                   catlg &
+                   catlg
                    break ;;
 
            mark) history "$playlist" "$movie"
-                 catlg &
+                 catlg
                  break ;;
 
            exit) exit ;;
