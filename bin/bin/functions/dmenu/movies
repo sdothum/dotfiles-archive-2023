@@ -47,7 +47,7 @@ while :
 do
   # rebuilding catalogue?
   if ! [ -s $cache ] ;then
-    sleep 1
+    sleep 0.1
     continue
   fi
 
@@ -79,7 +79,7 @@ do
          case $action in
            play) if [ $(echo -n "$video\n" | wc -l) -gt 1 ] ;then
                    notify critical "$movie" "Duplicate movie files found"
-                   sleep 3s
+                   sleep 3
                    break
                  fi
                  history "$playlist" "$movie"
