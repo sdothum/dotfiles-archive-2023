@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. My passport
+
+# udiskie/fuse does not handle ntfs-3g, so manually remount
+if [ -e /run/media/shum/My\ Passport ] ;then
+  device=$(mount -l | grep '/run/media/shum/My Passport' | cut -d' ' -f1)
+  sudo fusermount -u /run/media/shum/My\ Passport
+  [ -d '/media/My Passport' ] || sudo mkdir -v '/media/My Passport'
+  sudo mount -t ntfs -o nls=utf8,rw $device /media/My\ Passport
+elif mount -l | grep '/media/My Passport' ;then
+  sudo umount /media/My\ Passport
+else
+  notify 'My Passport' 'Reconnect drive to establish /dev/.. assignment\nthen rerun "passport" to mount drive'
+fi
+
+# vim: set ft=sh: #
