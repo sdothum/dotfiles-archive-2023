@@ -59,9 +59,9 @@ alarm() {
     sleep $delay
     if [ $repeat -gt 1 ] ;then
       [ $(( $repeat - $i )) -gt 0 ] && time=0 notify "($i/$repeat)  $alert" \
-                                    || time=0 notify "($i/$repeat)  $alert" 'Finished!'
+                                    || notify critical "($i/$repeat)  $alert" 'Finished!'
     else
-      time=0 notify "$alert"
+      notify critical "$alert"
     fi
     paplay $HOME/music/sonar-ping.wav &
   done

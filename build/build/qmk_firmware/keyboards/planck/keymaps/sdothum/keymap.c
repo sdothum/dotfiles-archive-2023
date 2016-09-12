@@ -79,6 +79,7 @@ enum planck_layers {
   _QWERTY,
   _DVORAK,
   _PLOVER,
+  _MASHUP,
   _NUMBER,
   _SYMBOL,
   _NAVPAD,
@@ -93,6 +94,7 @@ enum planck_keycodes {
   DVORAK,
   PLOVER,
   PLOVEX,
+  MASHUP,
   KEYTEST,
   Tab = LT (_NUMBER, KC_TAB),
   Del = LT (_SYMBOL, KC_DEL),
@@ -208,6 +210,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {PLOVEX,   _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, _______},
  },
 
+// ...................................................................... Mashup
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   ~  |   Q  |   W  |   F  |   P  |   V  |   J  |   L  |   U  |   Y  |   ;  |  \   |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |  Esc |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |Enter |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   -  |   Z  |   X  |   C  |   D  |   B  |   K  |   H  |   ,  |   .  |   "  |  /   |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
+  // `-----------------------------------------------------------------------------------'
+
+[_MASHUP] = {
+  {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
+  {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
+  {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
+  {KC_EQL,  KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+},
+
 // ...................................................................... Adjust
 
   // ,-----------------------------------------------------------------------------------.
@@ -215,7 +236,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |      |      |      |Aud on|Audoff|AGnorm|AGswap|Colemk|Qwerty|Dvorak|Plover|      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
+  // |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|Mashup|      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |      |      |      |      |      |      |      |      |      |      |      |      |
   // `-----------------------------------------------------------------------------------'
@@ -223,7 +244,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = {
   {___x___, RESET,   KEYTEST, _______, _______, _______, _______, _______, _______, _______, _______, _______},
   {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, COLEMAK, QWERTY,  DVORAK,  PLOVER,  _______},
-  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
+  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  MASHUP,  _______, _______, _______, _______},
   {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LALT, KC_LGUI, KC_LCTL, _______},
 },
 
@@ -477,6 +498,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         unregister_code (KC_MINS);
         // unregister modifiers as late as possible (convention)
         unregister_code (KC_LGUI);
+      }
+      return false;
+      break;
+    case MASHUP:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+        PLAY_NOTE_ARRAY (tone_colemak, false, 0);
+        #endif
+        persistant_default_layer_set(1UL<<_MASHUP);
       }
       return false;
       break;

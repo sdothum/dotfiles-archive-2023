@@ -19,6 +19,7 @@
 #
 # 0.1:  initial release
 # 0.2:  center timestamp in message window, assumes balanced window widths
+#       adjust buffers.look.name_size_max to correct window balancing
 
 import weechat
 import time
