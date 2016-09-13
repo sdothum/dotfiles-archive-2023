@@ -111,7 +111,7 @@
       " command mode insertion (paste) of current yank buffer
       cmap <C-v>       <C-r>"
       " clear search highlight and command line messages
-      nmap //          :nohlsearch<Bar>echo<CR>
+      nmap <silent>\   :noh<CR>
 
     " ......................................................... Cursor movements
 

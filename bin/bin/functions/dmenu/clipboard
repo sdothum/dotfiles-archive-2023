@@ -5,6 +5,20 @@
 
 # .................................................................... Clipboard
 
+# quick security pass
+clipboard=/tmp/dmenu:clipboard
+gpaste-client | grep '^[0-9]*: ' | sort -nr >$clipboard
+
+while read index word <&3
+do
+  len=$(echo "$word" | wc -c)
+  if [ $len -ge 6 ] && [ $len -le 12 ] ;then
+    notify "$index" "$word"
+    gpaste-client delete $index 
+  fi
+done 3< $clipboard
+rm -f $clipboard
+
 clip=$(gpaste-client \
      | cut -d' ' -f2- \
      | grep -v '^$' \

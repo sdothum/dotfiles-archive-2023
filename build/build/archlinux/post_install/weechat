@@ -103,6 +103,7 @@ configure authentication else some channels will force #<channel>-unregistered
 /set buffers.look.indenting on
 /set buffers.look.show_number off
 
+/set weechat.color.chat_time 142
 /set weechat.color.chat 032
 /set weechat.color.chat_inactive_window 240
 /set weechat.color.status_name cyan
@@ -110,7 +111,6 @@ configure authentication else some channels will force #<channel>-unregistered
 # /set weechat.color.chat_prefix_more 238
 # /set weechat.color.chat_prefix_suffix 196
 # /set weechat.color.chat_read_marker yellow
-# /set weechat.color.chat_time 238
 # /set weechat.color.chat_time_delimiters 238
 # /set weechat.color.separator 030
 

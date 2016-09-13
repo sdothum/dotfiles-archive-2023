@@ -83,8 +83,8 @@ pass I || exit" >$HOME/sandbox/pass.sh
          # interactive mode?
          if ps -ef | grep $PPID | grep $SHELL ;then
            [ -e $HOME/.password-store/username/${1#*/}.gpg ] \
-           && username=$(/usr/bin/pass username/${1#*/}) \
-           || username=$(/usr/bin/pass username/default)
+             && username=$(/usr/bin/pass username/${1#*/}) \
+             || username=$(/usr/bin/pass username/default)
            echo "$username\n$password"
            notify $1 "$username\n$password"
            /usr/bin/pass --clip $1
