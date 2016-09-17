@@ -76,7 +76,7 @@ function fish_right_prompt --description 'Write out the right prompt'
     set -l git (__fish_git_prompt)
     test -z "$git"
       and return
-    echo -n "  $git"
+    echo -n " $git"
     set_color normal
   end
 
