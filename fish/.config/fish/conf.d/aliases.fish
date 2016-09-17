@@ -100,6 +100,7 @@ alias vd 'gvimdiff --role=gvimdiff'
 # .................................................................. Application
 
 alias calc 'speedcrunch'
+alias friendlybear 'smbclient //friendlybear/patricia motu om'
 alias font-manager 'font-manager ;and sudo rm -f ~/.fonts.conf'
 alias fontmatrix 'fontmatrix ;and sudo rm -f ~/.fonts.conf'
 alias handbrake 'ghb'

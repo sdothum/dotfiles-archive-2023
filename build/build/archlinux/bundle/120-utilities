@@ -55,7 +55,7 @@
 = file systems
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
-# exfat-utils
+  exfat-utils
   fuse
 # fuse-exfat
   gvfs

@@ -25,9 +25,9 @@ fold=80
 
 # ............................................................... Latex preamble
 
-# must escape certain character, a fancyhdr limitation(?)
+# must escape certain latex characters for fancyhdr and cat body
 escape() {
-  echo $@ | sed -r 's/([_#])/\\\1/g'
+  echo $@ | sed -r 's/([#$%&_])/\\\1/g'
 }
 
 # reverse word order
@@ -119,11 +119,11 @@ EOF
 
 filter() {
   # reduce mail header to essential contact information
-  # escape any special characters that trip latex up
+  
   sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | \
   pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' | \
-  egrep -vEi '^(Accept-Language|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' | \
-  egrep -vE '^ *(boundary=".*"|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$'
+  egrep -vEi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' | \
+  egrep -vE '^ *(boundary=.*|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$'
 }
 
 header() {
@@ -175,7 +175,7 @@ stdin() {
   # set (title, time) format values, see case mail below
   [ "$*" ] && $@
   print $stdin
-  rm -f $stdin
+  [ $proof ] || rm -f $stdin
   pr eject
 }
 

@@ -110,8 +110,6 @@
       " imap kk        <ESC>
       " command mode insertion (paste) of current yank buffer
       cmap <C-v>       <C-r>"
-      " clear search highlight and command line messages
-      nmap <silent>\   :noh<CR>
 
     " ......................................................... Cursor movements
 
@@ -160,15 +158,18 @@
 
       " use extended regex statements for searches (unfortunately, must set
       " manually for search and replace)
-      nmap /      /\v
-      vmap /      /\v
+      nmap /         /\v
+      vmap /         /\v
+      " clear search highlight and command line messages
+      nmap <silent>\ :noh<CR>
+
       " tab to bracket pairs
-      nmap <Tab>  %
-      vmap <Tab>  %
+      nmap <Tab>     %
+      vmap <Tab>     %
 
       " repeat latest f,t,F,T see modal searching remaps above
-      nnoremap ,, ;
-      vnoremap ,, ;
+      nnoremap ,,    ;
+      vnoremap ,,    ;
 
     " ........................................................... Tab completion
 

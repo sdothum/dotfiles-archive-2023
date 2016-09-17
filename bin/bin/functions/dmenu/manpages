@@ -60,16 +60,15 @@ do
     # display man page
     if [ "$page" ] ;then
       history man "$man"
-      xsel -c
+      # xsel -c
       term "$page" MAX $stack WAIT man "$page"
        
       # subsequent manpages open on same frame
       stack=STACK
+      # # selection highlighting does not appear to work
       # highlighted man page entry?
-      selection=$(xsel -o)
-      # selection highlighting does not appear to work, not a clue why xdotool is in clipboard
-      echo $selection | grep -q xdotool && unset selection
-      [ "$selection" ] && break
+      # selection=$(xsel -o)
+      # [ "$selection" ] && break
 
       # print hard copy?
       set -- $page

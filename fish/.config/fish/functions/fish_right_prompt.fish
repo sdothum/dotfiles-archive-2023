@@ -1,5 +1,6 @@
 function fish_right_prompt --description 'Write out the right prompt'
   set -g HILIGHT 1
+  set -g POSTFIX 1
 
   if test $TERM = "linux"
     set -g GREY   'red'
@@ -71,11 +72,16 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -g __fish_git_prompt_color_cleanstate green --bold
     end
 
-    echo -n (__fish_git_prompt)'  '
+
+    set -l git (__fish_git_prompt)
+    test -z "$git"
+      and return
+    echo -n "  $git"
     set_color normal
   end
 
   function remote
+    echo -n '  '
     if test -n "$SSH_CLIENT"
       set_color $YELLOW
       echo -n (hostname)
@@ -142,11 +148,18 @@ function fish_right_prompt --description 'Write out the right prompt'
     set_color normal
   end
 
+  function timer
+    duration
+      or if test $TERM = "linux" 
+        time
+      end
+  end
+
+  test $POSTFIX -eq 1
+    or timer
   gitstatus
   remote
   folder
-  duration
-    or if test $TERM = "linux" 
-      time
-    end
+  test $POSTFIX -eq 1
+    and timer
 end
