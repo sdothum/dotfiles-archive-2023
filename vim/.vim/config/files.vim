@@ -7,18 +7,21 @@
 
     " ........................................................ Filetype settings
 
-      autocmd Filetype conf    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype fish    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype haskell setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype lua     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype python  setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
-      autocmd Filetype ruby    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype shell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype sh      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype slim    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd Filetype vim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-
       nmap <leader><leader>t :setfiletype<Space>
+
+      augroup filetype
+        autocmd!
+        autocmd Filetype conf    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype fish    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype haskell setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype lua     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype python  setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
+        autocmd Filetype ruby    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype shell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype sh      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype slim    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype vim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      augroup END
 
     " ............................................................... Modifiable
 
@@ -76,8 +79,8 @@
       nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " check filetype on open
-      autocmd BufNewFile,BufRead * call CheckFiletype()
-      autocmd BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
+      autocmd filetype BufNewFile,BufRead * call CheckFiletype()
+      autocmd filetype BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
 
   " Documents ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -104,8 +107,8 @@
       endfunction
 
       " open vimwiki ()
-      autocmd VimEnter * if argv (0) =~ '/vimwiki$' | bdelete | call OpenWikis() | endif
-      autocmd VimEnter * if &filetype =~ g:goyotypes | call ToggleGoyo() | endif
+      autocmd filetype VimEnter * if argv (0) =~ '/vimwiki$' | bdelete | call OpenWikis() | endif
+      autocmd filetype VimEnter * if &filetype =~ g:goyotypes | call ToggleGoyo() | endif
 
     " ................................................................... E-mail
 
@@ -123,7 +126,7 @@
       endfunction
 
       " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
-      autocmd Filetype mail setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
-      autocmd Filetype mail call ComposeMail()
+      autocmd filetype Filetype mail setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
+      autocmd filetype Filetype mail call ComposeMail()
 
 " files.vim

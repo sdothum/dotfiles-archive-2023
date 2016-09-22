@@ -5,6 +5,12 @@
 
   "  Distraction free modes ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " .................................................................... Setup
+    
+      augroup view
+        autocmd!
+      augroup END
+
     " ................................................................ Code view
 
       " source code style
@@ -46,7 +52,7 @@
       endfunction
 
       " intial view mode: source code or prose
-      autocmd BufEnter * call LiteType()
+      autocmd view BufEnter * call LiteType()
 
   " Goyo ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -77,8 +83,8 @@
         call VimWikiLink()                  " restore vimwiki link
       endfunction
 
-      autocmd User GoyoEnter nested call <SID>GoyoEnter()
-      autocmd User GoyoLeave nested call <SID>GoyoLeave()
+      autocmd view User GoyoEnter nested call <SID>GoyoEnter()
+      autocmd view User GoyoLeave nested call <SID>GoyoLeave()
 
       " toggle goyo / litedfm
       function! ToggleGoyo()
@@ -109,9 +115,9 @@
       endfunction
 
       " with window resizing, goyo margins are newly calculated
-      autocmd VimResized * if &filetype =~ g:goyotypes && g:goyorefresh == 0 | call ResetGoyo() | endif
+      autocmd view VimResized * if &filetype =~ g:goyotypes && g:goyorefresh == 0 | call ResetGoyo() | endif
       " reset refresh indicator after awhile
-      autocmd cursorhold * let g:goyorefresh = 0
+      autocmd view cursorhold * let g:goyorefresh = 0
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

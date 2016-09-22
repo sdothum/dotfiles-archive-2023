@@ -101,8 +101,8 @@
 
       set number                            " line numbers are good
       set relativenumber
-      " autocmd InsertEnter * :set number   " toggle relative line numbers
-      " autocmd InsertLeave * :set relativenumber " auto line numbers
+      " autocmd! InsertEnter * :set number   " toggle relative line numbers
+      " autocmd! InsertLeave * :set relativenumber " auto line numbers
 
     " ................................................... Status / command lines
 

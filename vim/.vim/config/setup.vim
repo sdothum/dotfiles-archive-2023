@@ -5,7 +5,13 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    set nocompatible                        " disable vi-compatibility
+    " .................................................................... Setup
+
+      set nocompatible                      " disable vi-compatibility
+     
+      augroup setup
+        autocmd!
+      augroup END
 
     " .......................................................... OS and hardware
 
@@ -52,7 +58,7 @@
       nmap <leader>e :echo errmsg<CR>
 
       " clear messages after awhile to keep screen clean and distraction free!
-      autocmd cursorhold * echo
+      autocmd setup cursorhold * echo
 
 
   " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -65,19 +71,16 @@
       nmap <silent><leader><leader>vim :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
 
       " load .vimrc after save
-      augroup reload_vimrc
-        autocmd!
-        " autocmd BufWritePost $MYVIMRC      source $MVIMRC
-        autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
-        autocmd BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
-        " PluginUpdate and config reload loses filetype, restore
-      augroup END
-      autocmd BufWinEnter *.vim              set filetype=vim
+      " autocmd setup BufWritePost $MYVIMRC      source $MVIMRC
+      autocmd setup bufwritepost $MYVIMRC nested source $MYVIMRC
+      autocmd setup BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
+      " PluginUpdate and config reload loses filetype, restore
+      autocmd setup BufWinEnter *.vim            set filetype=vim
 
     " ..................................................................... Help
 
       " if $HOST == 'monad'                 " open help in maximum horizontal split
-        autocmd BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
+        autocmd setup BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
       " endif
 
       imap <F1> <C-o>:help<Space>

@@ -5,6 +5,12 @@
 
   " Plugin settings ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " .................................................................... Setup
+     
+      augroup plugin
+        autocmd!
+      augroup END
+
     " ...................................................................... Ack
 
       nmap <leader>A :Ack
@@ -73,7 +79,7 @@
 
       " add fish shell syntax rule
       " see ~/.vim/plugged/vim-fish/syntax/fish.vim
-      autocmd FileType fish
+      autocmd plugin FileType fish
         \  let b:endwise_addition  = 'end'
         \| let b:endwise_words     = 'function,begin,if,while,for,switch'
         \| let b:endwise_syngroups = 'shFunctionKey'
@@ -88,7 +94,7 @@
       " nmap <silent><F3>    :GundoToggle<CR>
       nmap <silent><leader>u :GundoToggle<CR>
 
-      autocmd BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
+      autocmd plugin BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
 
     " ................................................................ Lightline
 
@@ -241,11 +247,11 @@
 
     " ...................................................... Rainbow parentheses
 
-      autocmd Syntax   * RainbowParenthesesLoadBraces
-      autocmd Syntax   * RainbowParenthesesLoadChevrons
-      autocmd Syntax   * RainbowParenthesesLoadRound
-      autocmd Syntax   * RainbowParenthesesLoadSquare
-      autocmd VimEnter * RainbowParenthesesToggle
+      autocmd plugin Syntax   * RainbowParenthesesLoadBraces
+      autocmd plugin Syntax   * RainbowParenthesesLoadChevrons
+      autocmd plugin Syntax   * RainbowParenthesesLoadRound
+      autocmd plugin Syntax   * RainbowParenthesesLoadSquare
+      autocmd plugin VimEnter * RainbowParenthesesToggle
 
     " ................................................................ Showmarks
 
@@ -341,13 +347,10 @@
 
     " ............................................ Vim-litecorrect /  Vim-pencil
 
-    augroup litecorrect
-      autocmd!
-      autocmd Filetype mail           call litecorrect#init()
-      autocmd FileType markdown,mkd   call litecorrect#init()
-      autocmd Filetype text           call litecorrect#init()
-      autocmd Filetype vimwiki        call litecorrect#init()
-    augroup END
+      autocmd plugin Filetype mail           call litecorrect#init()
+      autocmd plugin FileType markdown,mkd   call litecorrect#init()
+      autocmd plugin Filetype text           call litecorrect#init()
+      autocmd plugin Filetype vimwiki        call litecorrect#init()
 
     " let g:pencil#wrapModeDefault = 'hard' " default 'hard'
     " let g:pencil#textwidth       = 72     " default 74
@@ -355,13 +358,10 @@
     " let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
     " let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
     "
-    " augroup pencil
-    "   autocmd!
-    "   autocmd Filetype mail         call pencil#init()
-    "   autocmd FileType markdown,mkd call pencil#init()
-    "   autocmd Filetype text         call pencil#init()
-    "   autocmd Filetype vimwiki      call pencil#init()
-    " augroup END
+    " autocmd plugin Filetype mail         call pencil#init()
+    " autocmd plugin FileType markdown,mkd call pencil#init()
+    " autocmd plugin Filetype text         call pencil#init()
+    " autocmd plugin Filetype vimwiki      call pencil#init()
 
     " .................................................... Vim-shell / Vim-filer
 
@@ -413,10 +413,10 @@
       highlight VimwikiHeader6 guifg=#5f8700
 
       " override highlight link
-      autocmd Filetype vimwiki  call VimWikiLink()
-      autocmd BufEnter *.wiki   set filetype=vimwiki
-      autocmd Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd Filetype vimwiki  setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      autocmd plugin Filetype vimwiki  call VimWikiLink()
+      autocmd plugin BufEnter *.wiki   set filetype=vimwiki
+      autocmd plugin Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      autocmd plugin Filetype vimwiki  setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
       " see arch install patch to initialize s:vimwiki_autowriteall
 

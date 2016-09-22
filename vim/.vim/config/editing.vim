@@ -109,47 +109,47 @@
 
       " prevent cascading paste insert
       set pastetoggle=<F2>
-      autocmd InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
+      autocmd! InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
       " see yankring for plugin equivalent
-      nnoremap Y          y$
+      nnoremap Y           y$
       " reselect/reyank text just pasted
-      nnoremap <leader>v  gv
-      nnoremap <leader>V  gvy
-      map <leader>p       pgvy
+      nnoremap <leader>v   gv
+      nnoremap <leader>V   gvy
+      map <leader>p        pgvy
 
       " highlight last inserted text
-      nnoremap <leader>i  `[v`]
+      nnoremap <leader>i   `[v`]
 
     " ...................................................... Sentence operations
 
       " use "as" suffix for outer sentence
       " change sentence
-      nnoremap <leader>cc cis
+      nnoremap <leader>cc  cis
       " cut sentence
-      nnoremap <leader>dd dis
+      nnoremap <leader>dd  dis
       " yank sentence
-      nnoremap <leader>yy yis
+      nnoremap <leader>yy  yis
 
     " .................................................... Clipboard cut / paste
 
       " visual mode yank/cut clipboard actions
       " "+Y yank line to clipboard
-      vnoremap <C-c>      "+y
-      vnoremap ys         "+y
-      vnoremap yS         "+Y
+      vnoremap <C-c>       "+y
+      vnoremap ys          "+y
+      vnoremap yS          "+Y
       " "+D cut line to clipboard
-      vnoremap <C-d>      "+d
-      vnoremap yd         "+d
-      vnoremap yD         "+D
+      vnoremap <C-d>       "+d
+      vnoremap yd          "+d
+      vnoremap yD          "+D
 
       " normal/insert mode paste actions
       " "+P paste before from clipboard
-      inoremap <C-v>      <C-o>"+p
-      nnoremap <C-v>      "+p
-      inoremap <C-S-v>    <ESC>"+pi
-      nnoremap <C-S-v>    "+P
+      inoremap <C-v>       <C-o>"+p
+      nnoremap <C-v>       "+p
+      inoremap <C-S-v>     <ESC>"+pi
+      nnoremap <C-S-v>     "+P
 
   " Spelling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

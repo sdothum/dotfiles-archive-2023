@@ -5,14 +5,20 @@
 
   " Buffer statistics ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " regex list of multibyte characters used for line drawing
-    " note: files using other multibyte characters will produce incorrect statistics
-    let s:indicators = '▶■‾↑'              " multibyte statusline indicators
-    let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
-    let s:ascii      = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
+    " .................................................................... Setup
+     
+      " regex list of multibyte characters used for line drawing
+      " note: files using other multibyte characters will produce incorrect statistics
+      let s:indicators = '▶■‾↑'            " multibyte statusline indicators
+      let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
+      let s:ascii      = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
-    let s:code       = 0                    " statusline buffer statistics toggle (0) off (1) on
-    let s:prose      = 0
+      let s:code       = 0                  " statusline buffer statistics toggle (0) off (1) on
+      let s:prose      = 0
+
+      augroup status
+        autocmd!
+      augroup END
 
   " ................................................... Byte position percentage
 
@@ -81,9 +87,9 @@
       endfunction
 
       " line statistics off by default per buffer (declare flags to b:uffer)
-      " autocmd bufread               * let b:code = 0
+      " autocmd status bufread               * let b:code = 0
       " recalculate the long line warning when idle and after saving
-      autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+      autocmd status cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 
     " ............................................................... Word count
 
@@ -169,9 +175,9 @@
       endfunction
 
       " recalculate the tab warning flag when idle and after writing
-      autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+      autocmd status cursorhold,bufwritepost * unlet! b:statusline_tab_warning
       " recalculate the trailing whitespace warning when idle, and after saving
-      autocmd cursorhold,bufwritepost * unlet! b:statusline_pad_warning
+      autocmd status cursorhold,bufwritepost * unlet! b:statusline_pad_warning
 
   " Enhanced statusline ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

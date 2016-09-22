@@ -5,7 +5,7 @@
 
   " Buffer actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ........................................................... Buffer opening
+    " .................................................................... Setup
 
       set autoread                          " reload files changed outside vim
       " set autowrite                       " automatically write a modified buffer on leaving
@@ -14,14 +14,20 @@
       " query current buffer
       nmap <leader>bb     :echo @%<CR>
 
-      " check file sensitivity, even though may be sudoed
-      autocmd BufRead     * if expand('%:p') !~ $HOME | set nomodifiable | endif
-      " always switch to the current file directory, unless uri
-      autocmd BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
-      " return to last edit position when opening files (You want this!)
-      autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
+      augroup buffer
+        autocmd!
+      augroup END
 
-    " .................................................. Buffer closing / saving
+    " .............................................................. Buffer open
+
+      " check file sensitivity, even though may be sudoed
+      autocmd buffer BufRead     * if expand('%:p') !~ $HOME | set nomodifiable | endif
+      " always switch to the current file directory, unless uri
+      autocmd buffer BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
+      " return to last edit position when opening files (You want this!)
+      autocmd buffer BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
+
+    " ...................................................... Buffer close / save
 
       " close buffer
       nmap <silent><leader>d    :silent bdelete!<CR>
@@ -33,8 +39,11 @@
       nmap <silent><leader>zz   :silent wqall!<CR>
       nmap <silent><leader>qq   :silent qall!<CR>
 
+      " pre-write formatting
+      autocmd buffer BufWritePre * if &filetype !~ 'markdown\|vimwiki\|wiki' | call StripTrailingWhitespaces() | endif
+      autocmd buffer FocusLost   * if &filetype !~ 'markdown\|vimwiki\|wiki' | call StripTrailingWhitespaces() | endif
       " save on losing focus
-      autocmd FocusLost   * silent! :wall
+      autocmd buffer FocusLost   * silent! :wall
 
     " ......................................................... Buffer switching
 
