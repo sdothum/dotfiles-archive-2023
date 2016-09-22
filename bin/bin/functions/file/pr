@@ -13,7 +13,11 @@ usage() {
 
 # unset for direct printing, set for proofing and latex debugging
 # proof=true
-[ -e $HOME/.proof ] && proof=true
+if [ -e $HOME/.proof ] ;then
+  proof=true
+else 
+  lpstat -p $PRINTER >/dev/null 2>&1 || proof=true
+fi 
 [ $proof ] && proof=/tmp/pr.proof
 dotdot=/tmp/dotdot
 

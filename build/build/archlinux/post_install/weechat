@@ -19,6 +19,7 @@ configure authentication else some channels will force #<channel>-unregistered
   cat <<EOF
 
 # server
+/server add znc localhost/7000
 /server add znc luna/7000
 /set irc.server.znc.username "znc"
 /set irc.server.znc.password "znc"

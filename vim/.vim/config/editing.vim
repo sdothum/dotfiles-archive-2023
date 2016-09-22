@@ -119,6 +119,9 @@
       nnoremap <leader>V  gvy
       map <leader>p       pgvy
 
+      " highlight last inserted text
+      nnoremap <leader>i  `[v`]
+
     " ...................................................... Sentence operations
 
       " use "as" suffix for outer sentence

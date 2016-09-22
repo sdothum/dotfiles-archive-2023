@@ -19,6 +19,8 @@ print_cmd = pr mail
     signature = /home/shum/.signature
     sent_box = maildir:////home/shum/Maildir/sdothum/SENT
     draft_box = maildir:////home/shum/Maildir/sdothum/DRAFTS
+    # sent_box = /home/shum/Maildir/sdothum/SENT
+    # draft_box = /home/shum/Maildir/sdothum/DRAFTS
 
 [bindings]
 

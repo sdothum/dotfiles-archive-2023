@@ -22,10 +22,10 @@ sudo sed -i -e '/^include_path = ".:\/usr\/share\/pear"/s|"$|:/etc/webapps/tt-rs
 
 server && sudo systemctl restart postgresql
 if ! [ -d /srv/lib/postgresql/data/base ] ;then
-  su -c "echo \"create user ttrss with password 'ttrss';\" | psql" - postgres
-  su -c "echo \"alter user ttrss set work_mem='64MB';\" | psql" - postgres
+  su -c "echo \"create user ttrss_users with password 'ttrss';\" | psql" - postgres
+  su -c "echo \"alter user ttrss_users set work_mem='64MB';\" | psql" - postgres
   su -c "echo \"create database ttrss;\" | psql" - postgres
-  su -c "echo \"grant all privileges on database ttrss to ttrss;\" | psql" - postgres
+  su -c "echo \"grant all privileges on database ttrss to ttrss_users;\" | psql" - postgres
 fi
 
 server && systemd enable tt-rss || annotate "sudo systemctl start tt-rss"

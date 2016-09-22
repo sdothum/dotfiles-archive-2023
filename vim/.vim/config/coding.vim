@@ -5,6 +5,21 @@
 
   " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ........................................................... Line numbering
+   
+      " see https://dougblack.io/words/a-good-vimrc.html
+      " toggle between number and relativenumber
+      function! ToggleNumber()
+        if(&relativenumber == 1)
+          set norelativenumber
+          set number
+        else
+          set relativenumber
+        endif
+      endfunc
+
+      nmap <silent># :call ToggleNumber()<CR>
+
     " ............................................................. Column ruler
 
       " column list must end in [0]

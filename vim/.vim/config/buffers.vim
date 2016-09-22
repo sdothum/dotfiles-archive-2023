@@ -34,7 +34,7 @@
       nmap <silent><leader>qq   :silent qall!<CR>
 
       " save on losing focus
-      autocmd FocusLost * silent! :wall
+      autocmd FocusLost   * silent! :wall
 
     " ......................................................... Buffer switching
 
@@ -88,7 +88,9 @@
 
     " ............................................................. Fold methods
 
-      set nofoldenable                      " don't fold by default
+      set foldenable                        " fold by default
+      set foldlevelstart=10                 " open most folds by default
+      set foldnestmax=10                    " 10 nested fold max 
       set foldmethod=indent                 " fold based on indent
       " set foldmethod=syntax               " folding based on syntax
       set foldnestmax=3                     " deepest fold is 3 levels

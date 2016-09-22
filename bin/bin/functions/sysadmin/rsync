@@ -38,10 +38,12 @@ rsync_home() {
         --exclude 'google-chrome' \
         --exclude '.googleearth' \
         --exclude '.local/share/weechat' \
+        --exclude 'logs' \
         --exclude '.moovida' \
         --exclude '.mozilla' \
         --exclude '.node-gyp' \
         --exclude '.PlayOnLinux' \
+        --exclude '.stack' \
         --exclude 'Steam' \
         --exclude '.sync' \
         --exclude '.SyncArchive' \
@@ -50,6 +52,7 @@ rsync_home() {
         --exclude 'tmp' \
         --exclude 'Trash' \
         --exclude '.unison' \
+        --exclude '.vim/backups' \
         --exclude 'VirtualBox VMs' \
         /home/$USER $@
   # syncthing index most often corrupted

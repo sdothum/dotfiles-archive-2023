@@ -178,11 +178,11 @@
           endif
         elseif system("lspci") =~ 'VGA .* NVIDIA'
           " for macbook nvidia gpu
-          if &guifont =~ '10' || a:size < 0
-            call Fontspace(9, 0)
+          if &guifont =~ '9' || a:size < 0
+            call Fontspace(8, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(10, 0)
+            call Fontspace(9, 0)
             " let g:lite_dfm_left_offset = 18
           endif
         else

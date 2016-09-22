@@ -23,6 +23,8 @@ alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
  
 alias K 'env sig=-KILL k'
 alias KK 'env sig=-KILL kk'
+alias disabled 'systemd disable'
+alias enabled 'systemd enable'
 alias restartd 'systemd restart'
 alias startd 'systemd start'
 alias statusd 'systemd status'

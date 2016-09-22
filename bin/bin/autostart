@@ -8,6 +8,7 @@
 
 # tag
 web=1
+chat=2
 
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
@@ -62,20 +63,25 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-if [ -e $HOME/.irc ] && server ;then
-  herbstclient focus_monitor 1
-  # wait for window visibility before switching monitors, for urxvt font handling 
-  term 'IRC' VISIBLE weechat
-  herbstclient focus_monitor 0
+if [ -e $HOME/.irc ] ;then
+  if server ;then
+    herbstclient focus_monitor 1
+    # wait for window visibility before switching monitors, for urxvt font handling 
+    term 'IRC' VISIBLE weechat
+    herbstclient focus_monitor 0
+  else
+    switch tag "$chat"
+    term 'IRC' VISIBLE weechat
+  fi
 fi
-server && term 'Mail' alot
+[ -e $HOME/.mail ] && term 'Mail' alot
 
 # .................................................................. Window apps
 
 server && thedarnedestthing
 server && vimwiki
 switch tag "$web"
-qutebrowser -R http://luna:8000/tt-rss/ &
+qutebrowser &
 # vimbt http://luna:8000/tt-rss/
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 
