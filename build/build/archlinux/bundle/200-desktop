@@ -28,7 +28,7 @@
   colors-git
   conky-lua
 # conky-lua-nv
-# stest contained in dmenu package  
+# stest contained in dmenu package
   dmenu
 # dmenu-xft-height
 # dmenu2

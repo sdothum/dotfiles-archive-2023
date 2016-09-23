@@ -5,30 +5,32 @@
 
 # .................................................................... Clipboard
 
+# truncation length for max dmenu display
+truncate=160
+
 # quick security pass
 clipboard=/tmp/dmenu:clipboard
-gpaste-client | grep '^[0-9]*: ' | sort -nr >$clipboard
+gpaste-client --oneline | sed "s/://" | cut -c -$truncate >$clipboard
 
 while read index word <&3
 do
   len=$(echo "$word" | wc -c)
   if [ $len -ge 6 ] && [ $len -le 12 ] ;then
     notify "$index" "$word"
-    gpaste-client delete $index 
+    gpaste-client delete $index
   fi
 done 3< $clipboard
-rm -f $clipboard
 
-clip=$(gpaste-client \
-     | cut -d' ' -f2- \
-     | grep -v '^$' \
-     | sed 's/^ *//' \
-     | dmenu 'Clipboard' -no-custom) || exit
+clip=$(sed "s/ /^$SEP /" $clipboard \
+     | column -s^ -t \
+     | dmenu 'Clipboard' -no-custom)
 
 if [ "$clip" ] ;then
+  clip=$(echo $clip | cut -d' ' -f1)
   # gpaste add removes duplicate entries and pushes stack :-)
-  gpaste-client add "$clip"
-  xdotool type "$clip"
+  gpaste-client add "$(gpaste-client get $clip)"
+  xdotool type --delay 0 "$(gpaste-client get $clip)"
 fi
+rm -f $clipboard
 
 # vim: set ft=sh: #

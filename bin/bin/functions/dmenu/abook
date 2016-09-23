@@ -90,7 +90,7 @@ addresslist() {
 }
 
 # ................................................................. Address book
- 
+
 while :
 do
   address=$(addresslist | dmenu "$(ribbon)" -no-custom) || exit
@@ -103,7 +103,7 @@ do
     '[ edit contacts    ]') gvim -f $contacts ;;
 
     '[ paste        ]') gpaste-client add "$addresses"
-                        xdotool type "$addresses"
+                        xdotool type --delay 0 "$addresses"
                         break ;;
 
     '[ clipboard    ]') gpaste-client add "$addresses"
