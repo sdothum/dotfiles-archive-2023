@@ -31,7 +31,7 @@ SCRIPT_LICENSE = "GPL3"
 SCRIPT_DESC    = "Buffer timestamp"
 
 settings = {
-    "modulo_interval"         : '15',   # print a new timestamp every X minutes of the hour
+    "modulo_interval"         : '20',   # print a new timestamp every X minutes of the hour
     "center"                  : '1',    # (0) left justify (1) center
 }
 

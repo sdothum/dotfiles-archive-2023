@@ -55,7 +55,7 @@ hc rule title=NZB                    tag=6 focus=on switchtag=on
 hc rule title=Trace                  tag=6 focus=off
 
 # special apps and dialogues
-hc rule class=Amphetype              pseudotile=on
+# hc rule class=Amphetype            pseudotile=on
 hc rule title=blackscreen            monitor=1 fullscreen=on hook=fullscreen
 hc rule class=Colorgrab              pseudotile=on
 hc rule class=feh                    focus=on switchtag=on

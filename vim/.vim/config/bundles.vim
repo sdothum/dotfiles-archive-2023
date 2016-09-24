@@ -31,6 +31,7 @@
 
     " ................................................................... Coding
 
+      Plug 'metakirby5/codi.vim'
       Plug 'tpope/vim-endwise'
       Plug 'msanders/snipmate.vim'
       " Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -79,6 +80,7 @@
 
     " ................................................................... System
 
+      Plug 'ramele/agrep'
       " Plug 'kana/vim-arpeggio'
       " Plug 'Shougo/unite.vim'
       " Plug 'Shougo/vimfiler.vim'

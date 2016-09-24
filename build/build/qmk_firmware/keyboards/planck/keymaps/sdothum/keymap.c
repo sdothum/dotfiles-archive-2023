@@ -87,7 +87,7 @@ enum planck_layers {
   _ADJUST,
 };
 
-// update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts 
+// update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE,
   QWERTY,
@@ -409,7 +409,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         layer_off(_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
-        // undo sticky modifiers 
+        // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
         unregister_code (KC_LCTL);
@@ -424,7 +424,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         layer_off(_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
-        // undo sticky modifiers 
+        // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
         unregister_code (KC_LCTL);
