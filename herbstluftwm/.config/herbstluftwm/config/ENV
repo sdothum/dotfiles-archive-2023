@@ -29,8 +29,11 @@ export MONOCLE=$ROOT/herbstluftwm:monocle
 export PANEL=$ROOT/herbstluftwm:panel
 export PULSAR=$ROOT/herbstluftwm:pulsar
 export WALLPAPER=$HOME/images/backgrounds/default
-# unset WALL folder to select all wallpaper folders
-# export WALL=patricia
+
+# select wallpaper subdirectory
+export WALL=${WALL:-.}
+
+export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 
 # ..................................................................... Desktops
 
@@ -77,55 +80,7 @@ fi
 export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
 [ $(query displaywidth 0) -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
 
-# ........................................................................ Panel
-
-# panel config defaults (best set in .xinitrc to minimize source reloads)
-export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
-# to set panel location to bottom of screen, export in .xinitrc
-[ $PANEL_BOTTOM ] && export PANEL_BOTTOM=-b
-
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-[ $(query displaywidth 0) -lt 1440 ] && export PANEL_MARGIN=true
-
-# panel fonts
-# export ICON_FONT='FontAwesome'
-export PANEL_FONT='Ubuntu'
-export UTF8_FONT='DejaVu Sans Mono for Powerline'
-export PANEL_UNDERLINE=2
-
-# .................................................................. Panel theme
-
-# panel symbols, unset candy for numeric desktop tags
-export CANDY=true
-# fontawesome utf icons
-# export OCCUPIED=$(/usr/bin/printf '\uf111')
-# export FREE=$(/usr/bin/printf '\uf10c')
-# export OCCUPIED='■'
-# export FREE='□'
-export OCCUPIED='●'
-export FREE='○'
-# tag bar separator (visual spacing)
-export TAG_PAD='  '
-
-# panel theme
-# alpha channel for panel transparency with compton
-export DEFAULT_BG='#00000000'
-export ACTIVE_BG='#762508'
-export INACTIVE_BG='#074B5F'
-export DEFAULT_FG="#$(conky color default_color)"
-export ACTIVE_FG="#$(conky color PANEL)"
-export ACTIVE_HIDDEN_FG="#$(conky color colorA)"
-export INACTIVE_FG="#$(conky color color9)"
-export INACTIVE_HIDDEN_FG="#$(conky color colorI)"
-if [ $CANDY ] ;then
-  export FREE_FG='#4A4B4E'
-  export FREE_HIDDEN_FG='#7B7E83'
-  export OCCUPIED_FG=$FREE_FG
-  export OCCUPIED_HIDDEN_FG=$FREE_HIDDEN_FG
-else
-  export FREE_FG='#7B7E83'
-  export HIDDEN_FG='#25C0EF'
-  export OCCUPIED_FG='#E4E5E6'
-fi
+[ $(query displaywidth 0) -lt 1440 ] && PANEL_MARGIN=true
 
 # vim: set ft=sh: #

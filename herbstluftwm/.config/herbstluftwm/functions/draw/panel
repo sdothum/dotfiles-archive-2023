@@ -8,13 +8,54 @@
 
 # Usage: draw panel <fifo>, see restore panel
 
-# load theme which may be updated by conky theme
-. ${0%/draw}/config/ENV
-
 fifo=${1#:}
 pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
 
-panel_height=$(query pheight)
+# .................................................................. Panel theme
+
+# to set panel location to bottom of screen, export in .xinitrc
+[ $PANEL_BOTTOM ] && PANEL_BOTTOM=-b
+
+# panel fonts
+# ICON_FONT='FontAwesome'
+PANEL_FONT='Ubuntu'
+UTF8_FONT='DejaVu Sans Mono for Powerline'
+PANEL_UNDERLINE=2
+
+# panel symbols, unset candy for numeric desktop tags
+CANDY=true
+# fontawesome utf icons
+# OCCUPIED=$(/usr/bin/printf '\uf111')
+# FREE=$(/usr/bin/printf '\uf10c')
+# OCCUPIED='■'
+# FREE='□'
+OCCUPIED='●'
+FREE='○'
+# tag bar separator (visual spacing)
+TAG_PAD='  '
+
+# panel theme
+# alpha channel for panel transparency with compton
+DEFAULT_BG='#00000000'
+ACTIVE_BG='#762508'
+INACTIVE_BG='#074B5F'
+DEFAULT_FG="#$(conky color default_color)"
+ACTIVE_FG="#$(conky color PANEL)"
+ACTIVE_HIDDEN_FG="#$(conky color colorA)"
+INACTIVE_FG="#$(conky color color9)"
+INACTIVE_HIDDEN_FG="#$(conky color colorI)"
+if [ $CANDY ] ;then
+  FREE_FG='#4A4B4E'
+  FREE_HIDDEN_FG='#7B7E83'
+  OCCUPIED_FG=$FREE_FG
+  OCCUPIED_HIDDEN_FG=$FREE_HIDDEN_FG
+else
+  FREE_FG='#7B7E83'
+  HIDDEN_FG='#25C0EF'
+  OCCUPIED_FG='#E4E5E6'
+fi
+
+PANEL_HEIGHT=$(query pheight)
 
 # ..................................................................... Geometry
 
@@ -28,27 +69,27 @@ do
   eval monitor${geometry%%:*}=$i
   geometry=${geometry#*:}
 done
-gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
-border=$(herbstclient attr theme.border_width)
+
+margin=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) + $(herbstclient attr theme.border_width) ))
 # dynamically indent the panel by margin minus panel height
-indent=$(( $monitorY + $gap + $border - $panel_height ))
-[ $indent -lt $panel_height ] && indent=$(( $panel_height * 3 / 2 ))
-panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
+indent=$(( $margin - $PANEL_HEIGHT ))
+[ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
+panel_width=$(( $monitorW + $monitorX / 2 - $indent * 2 - $SHADOW / 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 displayH=$(xrandr 2>/dev/null \
          | grep '*' \
          | sed -r 's/.*x([0-9]*).*/\1/' \
          | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
-if [ $(( $displayH - $monitorH )) -gt $panel_height ] ;then
-  panel_offsetY=$(( ($displayH - $monitorH - $panel_height) / 2 ))
+if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
+  panel_offsetY=$(( ($displayH - $monitorH - $PANEL_HEIGHT) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
 else
-  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $panel_height )) || panel_offsetY=$panel_height
+  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 fi
 
 # multihead geometry for secondary primary (left right) orientation
-panel_offsetX=$(( $gap + $indent - 1 ))
+panel_offsetX=$(( $margin + $indent + $SHADOW / 2 - 1 ))
 if is multihead ;then
   is primary && panel_offsetX=$(( $panel_offsetX + $monitorX - 1680 ))
 else
@@ -167,7 +208,7 @@ panel() {
           fi
           unset hiding
           if is fullscreen ;then
-            [ $count -gt 1 ] && hiding=true 
+            [ $count -gt 1 ] && hiding=true
           elif herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
             herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && hiding=true
           fi
@@ -214,7 +255,7 @@ is display =3440 && size=8 || size=7
 cat $PANEL_FIFO:$fifo \
     | panel \
     | lemonbar -d -n "lemonbar:$fifo" \
-               -g ${panel_width}x$panel_height+$panel_offsetX+$panel_offsetY \
+               -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
                -u $PANEL_UNDERLINE \
                -f "$PANEL_FONT:size=$size" -f "$UTF8_FONT:size=$size" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &

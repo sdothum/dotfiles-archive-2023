@@ -44,7 +44,7 @@ export SSH_AUTH_SOCK
 # ........................................................................... UI
 
 # Ensure that GTK themes are applied uniformly in the Desktop Environment
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0" 
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Initialize keyboard
@@ -155,7 +155,7 @@ case $windowmanager in
            urxvt &
            exec xwait ;;
 
-  wtftw) urxvt & 
+  wtftw) urxvt &
          exec wtftw ;;
 
   xfce)   exec xfce4-session ;;

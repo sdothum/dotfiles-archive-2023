@@ -41,7 +41,7 @@
 
 usage() {
   echo "usage: conky $(basename $0) theme  test | contrast | light | dark  <hex colour>"
-  echo "usage: conky $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <8..> <paper|ink>,  <hex colours..>"
+  echo "usage: conky $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <8..> <paper|ink>"
   exit 1
 }
 
