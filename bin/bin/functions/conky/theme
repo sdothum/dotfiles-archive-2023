@@ -40,79 +40,53 @@
 #   colorI [color9 mono-2]
 
 usage() {
-  echo "usage: $(basename $0) theme  paper | ink"
-  echo "usage: $(basename $0) theme  test | contrast | light | dark  <hex colour>"
-  echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <8..> <paper|ink>,  <hex colours..>"
+  echo "usage: conky $(basename $0) theme  test | contrast | light | dark  <hex colour>"
+  echo "usage: conky $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <8..> <paper|ink>,  <hex colours..>"
   exit 1
 }
 
-# .......................................................... Config file updates
+# ................................................................. Conky colorN
 
-conkyrc=$HOME/.conkyrc
-conkylua=$HOME/.conky/conky-rings.lua
-env=$HOME/.config/herbstluftwm/config/ENV
-
-# apply colors to conky and herbstluftwm config files
-conkyrc() {
-  sed -i --follow-symlinks "/^ *$1 =/s/= .*/= '$2',/" $conkyrc
-}
-
-conkylua() {
-  sed -i --follow-symlinks "/^$1=/s/=0x.*/=0x$2/" $conkylua
-}
-
-env() {
-  sed -i --follow-symlinks "/^export $1=/s/='#.*'/='#$2'/" $env
-}
-
-# colour schemes
 rings() {
   color=$1
-  conkyrc default_color $1
-  conkylua default_color $1
+  default_color=$1
   shift
-  conkyrc color0 $1
-  conkylua color0 $1
+  color0=$1
   shift
-  conkyrc color6 $1
-  conkylua color6 $1
+  color6=$1
 }
 
 text() {
-  conkyrc color1 $1
+  color1=$1
   shift
-  conkyrc color2 $1
+  color2=$1
   shift
-  conkyrc color3 $1
+  color3=$1
   shift
-  conkyrc color4 $1
+  color4=$1
   shift
-  conkyrc color5 $1
+  color5=$1
 }
 
 graphs() {
-  conkyrc color7 $1
+  color7=$1
   shift
-  # conkyrc color8 $1
-  # conkyrc color8 $(complimentary $1)
-  conkyrc color8 $color
+  # color8=$1
+  # color8=$(complimentary $1)
+  color8=$color
 }
 
 hidden() {
-  conkyrc color9 $1
-  env INACTIVE_FG $1
+  color9=$1
   shift
-  conkyrc '--colorA' $1
-  env ACTIVE_HIDDEN_FG $1
+  colorA=$1
   shift
-  conkyrc '--colorI' $1
-  env INACTIVE_HIDDEN_FG $1
-} 
+  colorI=$1
+}
 
 # ............................................. Auto-scrape colour relationships
 
 colours() {
-  panel $1
   rings $@
   shift 3
   graphs $@
@@ -121,14 +95,9 @@ colours() {
 }
 
 scheme() {
-  panel $1
   colours $@
   shift 8
-  conky theme $1
-}
-
-panel() {
-  env DEFAULT_FG $1
+  [ "$1" = paper ] && paper || ink
 }
 
 monochromatic() {
@@ -158,6 +127,20 @@ complimentary () {
   conky palette $1 | grep -a 'Complementary' | head -1 | cut -d/ -f6
 }
 
+# ................................................................... Conky text
+
+paper() {
+  text f0f0f0 c0c0c0 909090 707070 505050
+  COLORING=FFFFFF
+  ACTIVE_FG=f0f0f0
+}
+
+ink() {
+  text 000000 080808 101010 202020 303030
+  COLORING=000000
+  ACTIVE_FG=000000
+}
+
 # ....................................................................... Themes
 
 tmpbackup() {
@@ -172,19 +155,18 @@ shift
 case "$action" in
   contrast) if [ $# -eq 1 ] ;then
               # contrast theme colors
-              luminance +$1 && conky theme dark $1 || conky theme light $1
-              complimentary $1
+              luminance +$1 && exec conky theme dark $1 || exec conky theme light $1
             fi ;;
 
   light) if [ $# -eq 1 ] ;then
            hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f18)
-           conky theme paper
+           paper
            complimentary $1
          fi ;;
 
   dark) if [ $# -eq 1 ] ;then
           hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f2)
-          conky theme ink
+          ink
           complimentary $1
         fi ;;
 
@@ -192,7 +174,7 @@ case "$action" in
           tmpbackup
           hexgen $1
           echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-          luminance +$default_color && conky theme paper || conky theme ink
+          luminance +$default_color && paper || ink
           # are we in interactive mode
           theme=$(query theme)
           if if-no "update $theme" ;then
@@ -209,13 +191,6 @@ case "$action" in
           fi
         fi ;;
 
-  paper) text f0f0f0 c0c0c0 909090 707070 505050
-         conkylua COLORING FFFFFF
-         env ACTIVE_FG f0f0f0 ;;
-
-  ink) text 000000 080808 101010 202020 303030
-       conkylua COLORING 000000
-       env ACTIVE_FG 000000 ;;
 
   rings)  [ $# -eq 3 ] && rings $@ ;;
   graphs) [ $# -eq 2 ] && graphs $@ ;;
@@ -225,12 +200,18 @@ case "$action" in
   colo*rs) if [ $# -eq 8 ] ;then
              colours $@
              # match theme colors
-             luminance +$1 && conky theme paper || conky theme ink
+             luminance +$1 && paper || ink
            fi ;;
 
   scheme) [ $# -eq 9 ] && scheme $@ ;;
 
   h | *) usage ;;
 esac
+
+echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nCOLORING=$COLORING\nACTIVE_FG=$ACTIVE_FG\n" > $CONKY:colors
+
+# reload .conkyrc with new theme
+killall -TERM /usr/bin/conky
+[ -e $CONKY ] && conky &
 
 # vim: set ft=sh: #

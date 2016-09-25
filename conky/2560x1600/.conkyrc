@@ -47,20 +47,17 @@ conky.config = {
 	xftalpha = 0.5,
 	uppercase = false,
 
--- default_color FFFFFF
-	default_color = '#bfaca4',
-	color0 = '#8f817b',
-	color1 = '#f0f0f0',
-	color2 = '#c0c0c0',
-	color3 = '#909090',
-	color4 = '#707070',
-	color5 = '#505050',
-	color6 = '#35302e',
-	color7 = '#8f817b',
-	color8 = '#8f817b',
-	color9 = '#a3b6bd',
---colorA = 5f5652
---colorI = 515b5e
+  default_color = io.popen('conky color default_color'):read(),
+  color0 = io.popen('conky color color0'):read(),
+  color1 = io.popen('conky color color1'):read(),
+  color2 = io.popen('conky color color2'):read(),
+  color3 = io.popen('conky color color3'):read(),
+  color4 = io.popen('conky color color4'):read(),
+  color5 = io.popen('conky color color5'):read(),
+  color6 = io.popen('conky color color6'):read(),
+  color7 = io.popen('conky color color7'):read(),
+  color8 = io.popen('conky color color8'):read(),
+  color9 = io.popen('conky color color9'):read(),
 
 	lua_load = '~/.conky/conky-rings.lua',
 	lua_draw_hook_post = 'main',

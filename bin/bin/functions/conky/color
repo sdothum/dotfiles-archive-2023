@@ -4,13 +4,13 @@
 # X11 Desktop
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................... Scrape colorcodehex.com
+# ................................................................. Conky colorN
 
 usage() {
-  echo "usage: conky $(basename $0) <hexcolor>"
+  echo "usage: conky $(basename $0) <colorN>"
   exit 1
 }
 
-[ "$*" ] && curl --silent -L "https://www.colorcodehex.com/$1/" || usage
+[ "$*" ] && grep "$1" $CONKY:colors | cut -d= -f2 || usage
 
 # vim: set ft=sh: #

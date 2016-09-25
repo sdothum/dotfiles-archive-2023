@@ -9,10 +9,10 @@
 
 require 'cairo'
 
-COLORING=0x000000
-default_color=0x495f43
-color0=0x364732
-color6=0x141b12
+COLORING=tonumber(io.popen('conky color COLORING'):read(), 16)
+default_color=tonumber(io.popen('conky color default_color'):read(), 16)
+color0=tonumber(io.popen('conky color color0'):read(), 16)
+color6=tonumber(io.popen('conky color color6'):read(), 16)
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
@@ -416,7 +416,7 @@ function go_clock_rings(display)
         value = tonumber(str)
         draw_clock_ring(display, data, value)
     end
-    
+
     for i in pairs(clock_h) do
         load_clock_rings(display, clock_h[i])
     end
@@ -442,7 +442,7 @@ function go_temp_rings(display)
         -- value = math.floor(tonumber(str) / 0.90 + 0.5)
         draw_gauge_ring(display, data, value)
     end
-    
+
     for i in pairs(temp) do
         load_temp_rings(display, temp[i])
     end
@@ -456,7 +456,7 @@ function go_gauge_rings(display)
         value = tonumber(str)
         draw_gauge_ring(display, data, value)
     end
-    
+
     for i in pairs(gauge) do
         load_gauge_rings(display, gauge[i])
     end
@@ -465,22 +465,22 @@ end
 -------------------------------------------------------------------------------
 --                                                                         MAIN
 function conky_main()
-    if conky_window == nil then 
+    if conky_window == nil then
         return
     end
 
     local cs = cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
     local display = cairo_create(cs)
-    
+
     local updates = conky_parse('${updates}')
     update_num = tonumber(updates)
-    
+
     if update_num > 5 then
         go_clock_rings(display)
         go_gauge_rings(display)
         go_temp_rings(display)
     end
-    
+
     cairo_surface_destroy(cs)
     cairo_destroy(display)
 end

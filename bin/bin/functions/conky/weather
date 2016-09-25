@@ -5,7 +5,7 @@
 
 # ........................................................................ Conky
 
-# Usage: conky_weather city [debug]
+# Usage: conky weather <city> [debug]
 
 [ $# -gt 1 ] && debug=true
 

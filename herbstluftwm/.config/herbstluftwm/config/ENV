@@ -69,7 +69,7 @@ elif grep -q '^shadow-opacity = 0.0' $HOME/.compton.conf ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)
-  export SHADOW=$(( $(grep '^shadow-radius =' $HOME/.compton.conf | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR )) 
+  export SHADOW=$(( $(grep '^shadow-radius =' $HOME/.compton.conf | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR ))
 fi
 
 # dynamic monocle frame height adjustment, (0) none
@@ -112,11 +112,11 @@ export TAG_PAD='  '
 export DEFAULT_BG='#00000000'
 export ACTIVE_BG='#762508'
 export INACTIVE_BG='#074B5F'
-export DEFAULT_FG='#495f43'
-export ACTIVE_FG='#000000'
-export ACTIVE_HIDDEN_FG='#253022'
-export INACTIVE_FG='#57425c'
-export INACTIVE_HIDDEN_FG='#2c212e'
+export DEFAULT_FG="#$(conky color default_color)"
+export ACTIVE_FG="#$(conky color ACTIVE_FG)"
+export ACTIVE_HIDDEN_FG="#$(conky color colorA)"
+export INACTIVE_FG="#$(conky color color9)"
+export INACTIVE_HIDDEN_FG="#$(conky color colorI)"
 if [ $CANDY ] ;then
   export FREE_FG='#4A4B4E'
   export FREE_HIDDEN_FG='#7B7E83'
