@@ -29,4 +29,4 @@
 
       source ~/.vim/config/keyboard.vim
 
-.vimrc
+" .vimrc
