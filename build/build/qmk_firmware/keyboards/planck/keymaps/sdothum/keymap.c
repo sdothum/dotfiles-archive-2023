@@ -379,6 +379,7 @@ void persistant_default_layer_set(uint16_t default_layer) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // turn off _ADJUST layer before setting default layer else usb reset necessary
   switch (keycode) {
     case Tab:
       if (record->event.pressed) {
