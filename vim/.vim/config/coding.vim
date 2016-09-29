@@ -6,15 +6,18 @@
   " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................... Line numbering
-   
-      " see https://dougblack.io/words/a-good-vimrc.html
-      " toggle between number and relativenumber
+
+      " toggle relative number, line number and no numbering
       function! ToggleNumber()
-        if(&relativenumber == 1)
+        if (&relativenumber == 1 && &number == 1)
           set norelativenumber
-          set number
         else
-          set relativenumber
+          if (&relativenumber == 0 && &number == 1)
+            set nonumber
+          else
+            set relativenumber
+            set number
+          endif
         endif
       endfunc
 
