@@ -70,11 +70,18 @@ do
   geometry=${geometry#*:}
 done
 
-margin=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) + $(herbstclient attr theme.border_width) ))
+gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
+border=$(herbstclient attr theme.border_width)
 # dynamically indent the panel by margin minus panel height
-indent=$(( $margin - $PANEL_HEIGHT ))
+indent=$(( $monitorY + $gap + $border - $PANEL_HEIGHT ))
 [ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
-panel_width=$(( $monitorW + $monitorX / 2 - $indent * 2 - $SHADOW / 2 ))
+panel_width=$(( $monitorW - $gap * 2 - $indent * 2 ))
+
+# margin=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) + $(herbstclient attr theme.border_width) ))
+# # dynamically indent the panel by margin minus panel height
+# indent=$(( $margin - $PANEL_HEIGHT ))
+# [ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
+# panel_width=$(( $monitorW - $indent * 2 - $SHADOW / 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 displayH=$(xrandr 2>/dev/null \
@@ -89,7 +96,8 @@ else
 fi
 
 # multihead geometry for secondary primary (left right) orientation
-panel_offsetX=$(( $margin + $indent + $SHADOW / 2 - 1 ))
+panel_offsetX=$(( $gap + $indent - 1 ))
+# panel_offsetX=$(( $margin + $indent + $SHADOW / 2 - 1 ))
 if is multihead ;then
   is primary && panel_offsetX=$(( $panel_offsetX + $monitorX - 1680 ))
 else
