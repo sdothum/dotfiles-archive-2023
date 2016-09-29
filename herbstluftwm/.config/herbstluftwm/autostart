@@ -77,8 +77,8 @@ if ! [ -e $ROOT/herbstluftwm:autostart ] ;then
     herbstclient unlock
     # close dunst notifications
     xdotool key ctrl+shift+space
-  fi 
-fi 
+  fi
+fi
 touch $ROOT/herbstluftwm:autostart
 
 # wait for slowest emit_hook process

@@ -24,6 +24,7 @@ zsh() {
 }
 
 case $SHELL in
+  *dash) ${DASHELL:-fish} ;;
   *fish) fish ;;
   *zsh)  zsh ;;
 esac

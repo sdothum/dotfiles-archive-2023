@@ -20,7 +20,7 @@ test -e /usr/share/fish/completions/autojump.fish
 # default shell
 set -x SHELL /usr/bin/fish
 set -x XTERM_SHELL /usr/bin/fish
-set -x KEYTIMEOUT 1 
+set -x KEYTIMEOUT 1
 
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null

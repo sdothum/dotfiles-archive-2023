@@ -61,10 +61,10 @@
 
 = software tools
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# arduino        [server]
-  avr-gcc-atmel  [server]
-  avr-libc-atmel [server]
-  dfu-programmer [server]
+# arduino        [!laptop]
+  avr-gcc-atmel  [!laptop]
+  avr-libc-atmel [!laptop]
+  dfu-programmer [!laptop]
   cmake
   gdb
   strace

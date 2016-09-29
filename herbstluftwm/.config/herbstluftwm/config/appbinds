@@ -10,7 +10,6 @@ hc keybind $Mod-Return               spawn toggle scratchpad
 hc keybind $Mod-Shift-Return         spawn term 'Terminal' FORTUNE
 hc keybind $Mod-Control-Return       spawn term 'Terminal' FORTUNE STACK
 hc keybind Super-Return              spawn dmenu manpages
-hc keybind Super-Shift-Return        spawn dmenu zshelp
 hc keybind Super-space               spawn dmenu run
 hc keybind Super-Shift-space         spawn dmenu systemd
 hc keybind Super-grave               spawn toggle rox
@@ -66,6 +65,7 @@ hc keybind Super-q                   spawn toggle amphetype
 hc keybind Super-Control-q           spawn clack
 hc keybind Super-r                   spawn dmenu radio
 # hc keybind Super-Shift-r           spawn dmenu references
+hc keybind Super-s                   spawn dmenu shistory
 hc keybind Super-t                   spawn dmenu series
 hc keybind Super-Shift-t             spawn dmenu series anime
 hc keybind Super-v                   spawn dmenu movies
@@ -75,6 +75,6 @@ hc keybind Super-w                   spawn focus qutebrowser
 hc keybind Super-Shift-w             spawn toggle term 'IRC' weechat
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
-hc keybind Super-z                   spawn dmenu shistory
+hc keybind Super-z                   spawn dmenu zshelp
 
 # vim: set ft=sh: #

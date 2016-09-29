@@ -134,6 +134,8 @@
 
     " .................................................... Clipboard cut / paste
 
+      nnoremap <C-a>       "ggVG+y
+
       " visual mode yank/cut clipboard actions
       " "+Y yank line to clipboard
       vnoremap <C-c>       "+y

@@ -10,8 +10,12 @@ truncate=160
 
 # quick security pass
 clipboard=/tmp/dmenu:clipboard
-gpaste-client --oneline | sed "s/://" | cut -c -$truncate >$clipboard
 
+clipboard() {
+  gpaste-client --oneline | sed "s/://" | cut -c -$truncate >$clipboard
+}
+
+clipboard
 while read index word <&3
 do
   len=$(echo "$word" | wc -c)
@@ -21,15 +25,17 @@ do
   fi
 done 3< $clipboard
 
+# any deletes above will resequence the clipboard history
+clipboard
 clip=$(sed "s/ /^$SEP /" $clipboard \
      | column -s^ -t \
      | dmenu 'Clipboard' -no-custom)
 
 if [ "$clip" ] ;then
   clip=$(echo $clip | cut -d' ' -f1)
+  xdotool type --delay 0 "$(gpaste-client get $clip)"
   # gpaste add removes duplicate entries and pushes stack :-)
   gpaste-client add "$(gpaste-client get $clip)"
-  xdotool type --delay 0 "$(gpaste-client get $clip)"
 fi
 rm -f $clipboard
 

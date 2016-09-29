@@ -79,7 +79,6 @@ enum planck_layers {
   _QWERTY,
   _DVORAK,
   _PLOVER,
-  _MASHUP,
   _NUMBER,
   _SYMBOL,
   _NAVPAD,
@@ -94,7 +93,6 @@ enum planck_keycodes {
   DVORAK,
   PLOVER,
   PLOVEX,
-  MASHUP,
   KEYTEST,
   Tab = LT (_NUMBER, KC_TAB),
   Del = LT (_SYMBOL, KC_DEL),
@@ -137,19 +135,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ..................................................................... Colemak
 
   // ,-----------------------------------------------------------------------------------.
-  // |   ~  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |  \   |
+  // |   ~  |   Q  |   W  |   F  |   P  |   V  |   J  |   L  |   U  |   Y  |   ;  |  \   |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |  Esc |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |Enter |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   -  |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   "  |  /   |
+  // |   -  |   Z  |   X  |   C  |   D  |   B  |   K  |   H  |   ,  |   .  |   "  |  /   |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
 [_COLEMAK] = {
-  {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
+  {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
   {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
-  {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
+  {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
   {KC_EQL,  KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
 },
 
@@ -210,25 +208,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {PLOVEX,   _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, _______},
  },
 
-// ...................................................................... Mashup
-
-  // ,-----------------------------------------------------------------------------------.
-  // |   ~  |   Q  |   W  |   F  |   P  |   V  |   J  |   L  |   U  |   Y  |   ;  |  \   |
-  // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |  Esc |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |Enter |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   -  |   Z  |   X  |   C  |   D  |   B  |   K  |   H  |   ,  |   .  |   "  |  /   |
-  // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
-  // `-----------------------------------------------------------------------------------'
-
-[_MASHUP] = {
-  {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
-  {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
-  {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
-  {KC_EQL,  KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
-},
-
 // ...................................................................... Adjust
 
   // ,-----------------------------------------------------------------------------------.
@@ -236,7 +215,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |      |      |      |Aud on|Audoff|AGnorm|AGswap|Colemk|Qwerty|Dvorak|Plover|      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|Mashup|      |      |      |      |
+  // |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |      |      |      |      |      |      |      |      |      |      |      |      |
   // `-----------------------------------------------------------------------------------'
@@ -244,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = {
   {___x___, RESET,   KEYTEST, _______, _______, _______, _______, _______, _______, _______, _______, _______},
   {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, COLEMAK, QWERTY,  DVORAK,  PLOVER,  _______},
-  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  MASHUP,  _______, _______, _______, _______},
+  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LALT, KC_LGUI, KC_LCTL, _______},
 },
 
@@ -270,20 +249,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ................................................................ Number Layer
 
   // .-----------------------------------------------------------------------------------.
-  // |Adjust|      |      |      |   ,  |      |   #  |   7  |   8  |   9  |   E  |   F  |
+  // |Adjust|   \  |   %  |   (  |   )  |      |      |   7  |   8  |   9  |   E  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // |      |   /  |   *  |   -  |   +  |      |   .  |   4  |   5  |   6  |   C  |   D  |
+  // |      |   /  |   *  |   -  |   +  |   ,  |   .  |   4  |   5  |   6  |   C  |   D  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |   (  |   )  |      |   0  |   1  |   2  |   3  |   A  |   B  |
+  // |      |   o  |   x  |   #  |   u  |   b  |   0  |   1  |   2  |   3  |   A  |   B  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |  f() |      |      |      | Home | PgDn | PgUp |  End |
+  // |      |      |      |      |  f() |      |      |      | Left | Down |  Up  |Right |
   // '-----------------------------------------------------------------------------------'
 
 [_NUMBER] = {
-  {ADJUST,  _______, _______, _______, KC_COMM, _______, KC_HASH, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
-  {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, _______, KC_DOT,  KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
-  {_______, _______, _______, KC_LPRN, KC_RPRN, _______, KC_0,    KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
-  {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+  {ADJUST,  KC_BSLS, KC_PERC, KC_LPRN, KC_RPRN, _______, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
+  {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_COMM, KC_DOT,  KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
+  {_______, KC_O,    KC_X,    KC_HASH, KC_U,    KC_B,    KC_0,    KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
+  {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT},
 },
 
 // ................................................................ Symbol Layer
@@ -295,15 +274,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // | Shift|   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |  f() |      |      |      |      |
+  // |      |      |      |      |      |      |      |  f() | Home | PgDn | PgUp |  End |
   // '-----------------------------------------------------------------------------------'
-
 
 [_SYMBOL] = {
   {KC_LGUI, KC_AMPR, KC_ASTR, KC_DOT,  Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
   {KC_LCTL, KC_DLR,  KC_PERC, KC_CIRC, Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
   {KC_LSFT, KC_EXLM, KC_AT,   KC_HASH, Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-  {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LALT, KC_PGDN, KC_PGUP, _______},
+  {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
 },
 
 // ............ ..................................................Navigation Pad
@@ -498,15 +476,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         unregister_code (KC_MINS);
         // unregister modifiers as late as possible (convention)
         unregister_code (KC_LGUI);
-      }
-      return false;
-      break;
-    case MASHUP:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY (tone_colemak, false, 0);
-        #endif
-        persistant_default_layer_set(1UL<<_MASHUP);
       }
       return false;
       break;

@@ -11,11 +11,11 @@ if [ $# -eq 2 ] ;then
   target=${1%/}
   destination=${2%/}
   hold=$RANDOM.$target
-  if ( [ -e $target ] && [ -e $destination ] ) \
-  || ( [ -d $target ] && [ -d $destination ] ) ;then
-    mv $target $hold
-    mv $destination $target
-    mv $hold $destination
+  if ( [ -e "$target" ] && [ -e "$destination" ] ) \
+  || ( [ -d "$target" ] && [ -d "$destination" ] ) ;then
+    mv "$target" "$hold"
+    mv "$destination" "$target"
+    mv "$hold" "$destination"
     echo ".. $target  --> <--  $destination"
   fi
 else
