@@ -26,7 +26,7 @@ esac
 
 # ..................................................................... Displays
 
-# secondary display area
+# if no secondary monitor..
 X1=0
 Y1=0
 
@@ -107,7 +107,7 @@ case $@ in
          primary=$(printf '%dx%d%+d%+d' \
                  $(( $normal_width - $SHADOW )) \
                  $(( $Y0 + $monocleY*2 - $margin*2 )) \
-                 $(( $X1 + $marginX + $monocle - 1 )) \
+                 $(( $X1 + $marginX + $monocle )) \
                  $(( $margin - $monocleY )) ) ;;
 
   conky*fullscreen) touch $FULLSCREEN:primary
@@ -117,7 +117,7 @@ case $@ in
                       primary=$(printf '%dx%d%+d%+d' \
                               $(( $fullscreen_width - $SHADOW )) \
                               $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY )) \
-                              $(( $X1 + $marginX + $window_frame + $monocle - 1 )) \
+                              $(( $X1 + $marginX + $window_frame + $monocle )) \
                               $(( $margin - $monocleY + $window_frame )) )
                     else
                       # laptop screens fill to edge
@@ -134,13 +134,13 @@ case $@ in
                primary=$(printf '%dx%d%+d%+d' \
                        $(( $X0 - $marginX*2 )) \
                        $(( $Y0 - $margin*2 + $window_frame - $marginY - 2 )) \
-                       $(( $X1 + $marginX - 1 )) \
+                       $(( $X1 + $marginX )) \
                        $margin )
              else
                primary=$(printf '%dx%d%+d%+d' \
                        $normal_width \
                        $(( $Y0 + $monocleY*2 + $window_frame - $marginY - 2 )) \
-                       $(( $X1 + ($X0 - $normal_width)/2 - 1 )) \
+                       $(( $X1 + ($X0 - $normal_width)/2 )) \
                        $(( $margin - $monocleY )) )
              fi ;;
 
@@ -157,7 +157,7 @@ case $@ in
                 primary=$(printf '%dx%d%+d%+d' \
                         $fullscreen_width \
                         $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
-                        $(( $X1 + ($X0 - $fullscreen_width)/2 - 1 )) \
+                        $(( $X1 + ($X0 - $fullscreen_width)/2 )) \
                         $(( $marginX + $window_frame)) )
               fi ;;
 
