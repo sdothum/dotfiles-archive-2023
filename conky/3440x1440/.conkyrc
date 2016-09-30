@@ -66,9 +66,9 @@ conky.config = {
 
 conky.text = [[
 ${voffset 40}
-${goto 94}${color}${font Ubuntu:size=24}${time %e}
-${goto 61}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
-${goto 72}${color3}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+${goto 84}${color}${font Ubuntu:size=24}${time %e}
+${goto 51}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
+${goto 62}${color3}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
 ${voffset 12}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -5}
 ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
@@ -82,9 +82,9 @@ ${font}${color2}${alignr}${exec query wname}
 ${voffset 93}
 
 ${voffset -2}
-${goto 70}${font}${color1}${texeci 900 conky weather}
-${goto 80}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
-${goto 80}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
+${goto 45}${font}${color1}${texeci 900 conky weather}
+${goto 60}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
+${goto 75}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
 # ${goto 80}${font}${color3}${texeci 900 conky weather vancouver} ${alignr}Vancouver
 
 ${voffset -5}${goto 90}${font}${color2}${nodename} ${alignr}${fs_type /var}

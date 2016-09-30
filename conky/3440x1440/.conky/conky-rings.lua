@@ -20,7 +20,7 @@ color6=tonumber(io.popen('conky color color6'):read(), 16)
 clock_h = {
     {
     name='time',                   arg='%l',                        max_value=12,
-    x=95,                         y=125,
+    x=85,                          y=125,
     graph_radius=65,
     graph_thickness=3,
     graph_unit_angle=30,           graph_unit_thickness=30,
@@ -39,7 +39,7 @@ clock_h = {
 clock_m = {
     {
     name='time',                   arg='%M',                        max_value=60,
-    x=95,                         y=125,
+    x=85,                          y=125,
     graph_radius=69,
     graph_thickness=2,
     graph_unit_angle=6,            graph_unit_thickness=6,
@@ -58,7 +58,7 @@ clock_m = {
 clock_s = {
     {
     name='time',                   arg='%S',                        max_value=60,
-    x=95,                         y=125,
+    x=85,                          y=125,
     graph_radius=62,
     graph_thickness=2,
     graph_unit_angle=6,            graph_unit_thickness=2,
