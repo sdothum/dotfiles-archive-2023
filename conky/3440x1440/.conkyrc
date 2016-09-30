@@ -82,9 +82,9 @@ ${font}${color2}${alignr}${exec query wname}
 ${voffset 93}
 
 ${voffset -2}
-${goto 45}${font}${color1}${texeci 900 conky weather}
+${goto 50}${font}${color1}${texeci 900 conky weather}
 ${goto 60}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
-${goto 75}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
+${goto 70}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
 # ${goto 80}${font}${color3}${texeci 900 conky weather vancouver} ${alignr}Vancouver
 
 ${voffset -5}${goto 90}${font}${color2}${nodename} ${alignr}${fs_type /var}

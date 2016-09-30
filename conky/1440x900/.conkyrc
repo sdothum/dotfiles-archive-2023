@@ -64,16 +64,16 @@ conky.config = {
 
 conky.text = [[
 ${voffset 65}
-${goto 106}${color}${font Ubuntu:size=18}${time %e}
-${goto 67}${color1}${voffset -24}${font Ubuntu:size=9}${time %A}
-${goto 76}${color3}${voffset -2}${font Ubuntu:size=8}${time %b}${voffset -2}  ${color5}${font Ubuntu:size=12}'${time %y}
+${goto 96}${color}${font Ubuntu:size=18}${time %e}
+${goto 57}${color1}${voffset -24}${font Ubuntu:size=9}${time %A}
+${goto 66}${color3}${voffset -2}${font Ubuntu:size=8}${time %b}${voffset -2}  ${color5}${font Ubuntu:size=12}'${time %y}
 ${voffset 22}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -207}${font Ubuntu:size=40:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -233}
 ${font}${color2}${alignr}${exec query wname}
 ${voffset 129}
-${goto 65}${font}${color1}${texeci 900 conky weather}
+${goto 60}${font}${color1}${texeci 900 conky weather}
 ${goto 75}${font}${color2}${kernel} ${alignr}${uptime}
 #
 # ${voffset 18}
