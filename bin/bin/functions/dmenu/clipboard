@@ -5,14 +5,12 @@
 
 # .................................................................... Clipboard
 
-# truncation length for max dmenu display
-truncate=160
-
 # quick security pass
 clipboard=/tmp/dmenu:clipboard
 
 clipboard() {
-  gpaste-client --oneline | sed "s/://" | cut -c -$truncate >$clipboard
+  # trim multiline content (corrupts list format otherwise)
+  gpaste-client --oneline | cut -c -$TRUNCATE | sed "s/://" >$clipboard
 }
 
 clipboard

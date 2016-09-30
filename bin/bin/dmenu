@@ -12,6 +12,8 @@
 #        POSIX standard for use with dash shell
 
 CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
+# arbitrary max dmenu list width
+TRUNCATE=200
 
 # content formatting items
 SEP='∙'
@@ -49,7 +51,7 @@ padsize() {
 
 if hlwm; then
   width=$(query displaywidth)
-else 
+else
   # assumes single display
   width=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
 fi
@@ -75,7 +77,7 @@ apps() {
   do
     # allow user named browser scripts
     # apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")"
-    if [ -n "$(find /usr/bin -name $i)" ] ;then 
+    if [ -n "$(find /usr/bin -name $i)" ] ;then
       apps="$apps$i "
     fi
   done
@@ -128,6 +130,7 @@ dmenu() {
 
   # use blank -mesg as added separator and indent pick list!
   input=$(sed "s/^/$INDENT/" \
+        | cut -c -$TRUNCATE \
         | rofi -monitor $monitor \
                -bw 0 \
                -font "PragmataPro $fontsize" \
