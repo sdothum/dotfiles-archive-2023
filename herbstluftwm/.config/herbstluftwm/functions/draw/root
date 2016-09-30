@@ -143,10 +143,10 @@ wallpaper() {
 select_wallpaper() {
   time=5 notify low 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
-  # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
+  # to use office/feh and focus, the quoted --action must be escaped and pwait invoked.. see ENV
   /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \
                -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
-               ${WALLPAPER%/default}/$WALL
+               ${WALLPAPER%/default}/${WALL#.}
 }
 
 shuffle() {
