@@ -8,7 +8,7 @@
     " .................................................................... Setup
 
       set nocompatible                      " disable vi-compatibility
-     
+
       augroup setup
         autocmd!
       augroup END

@@ -32,20 +32,20 @@
     " ................................................................... Coding
 
       Plug 'metakirby5/codi.vim'
-      Plug 'tpope/vim-endwise'
+      " Plug 'mattn/emmet-vim'
       Plug 'msanders/snipmate.vim'
       " Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
       " Plug 'scrooloose/syntastic'
       " Plug 'majutsushi/tagbar'
       Plug 'tomtom/tcomment_vim'
-      " Plug 'mattn/emmet-vim'
+      Plug 'tpope/vim-endwise'
 
     " .................................................. Completion / navigation
 
+      " Plug 'vim-scripts/matchit.zip'
       " Plug 'SearchComplete'
       Plug 'ervandew/supertab'
       Plug 'Lokaltog/vim-easymotion'
-      " Plug 'vim-scripts/matchit.zip'
       Plug 'kshenoy/vim-signature'
 
     " .................................................................. Editing
@@ -57,32 +57,33 @@
 
     " ............................................................... Formatting
 
-      " Plug 'Townk/vim-autoclose'
       Plug 'auto-pairs'
+      " Plug 'Townk/vim-autoclose'
       Plug 'junegunn/vim-easy-align'
+      Plug 'bimbalaszlo/vim-eightheader'
       Plug 'tpope/vim-surround'
 
     " ............................................................. Productivity
 
-      " Plug 'tpope/vim-fugitive'
       " Plug 'vim-scripts/calendar.vim--Matsumoto'
-      " Plug 'ludovicchabant/vim-lawrencium'
       Plug 'vim-scripts/openurl.vim'
+      " Plug 'tpope/vim-fugitive'
+      " Plug 'ludovicchabant/vim-lawrencium'
 
     " ...................................................... Syntax highlighting
 
       Plug 'kien/rainbow_parentheses.vim'
       Plug 'dag/vim-fish'
-      " Plug 'tpope/vim-markdown'
       Plug 'plasticboy/vim-markdown'
+      " Plug 'tpope/vim-markdown'
       " Plug 'greyblake/vim-preview'
       Plug 'slim-template/vim-slim'
 
     " ................................................................... System
 
       Plug 'ramele/agrep'
-      " Plug 'kana/vim-arpeggio'
       " Plug 'Shougo/unite.vim'
+      " Plug 'kana/vim-arpeggio'
       " Plug 'Shougo/vimfiler.vim'
       " Plug 'Shougo/vimshell.vim'
 

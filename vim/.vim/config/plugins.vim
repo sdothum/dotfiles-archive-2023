@@ -6,7 +6,7 @@
   " Plugin settings ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................................... Setup
-     
+
       augroup plugin
         autocmd!
       augroup END
@@ -74,6 +74,16 @@
       nmap <leader><leader>W <Plug>(easymotion-B)
       imap <leader><leader>w <C-o><Plug>(easymotion-W)
       nmap <leader><leader>w <Plug>(easymotion-W)
+
+    " .............................................................. Eightheader
+
+      " justified fold headers
+      let &foldtext = "EightHeaderFolds(
+        \ '\\=s:fullwidth',
+        \ 'left',
+        \ [ repeat( '  ', v:foldlevel - 1 ), ' ', '' ],
+        \ '\\= s:foldlines . \" lines\"',
+        \ '' )"
 
     " .................................................................. Endwise
 

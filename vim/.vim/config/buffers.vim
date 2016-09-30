@@ -99,7 +99,7 @@
 
       set foldenable                        " fold by default
       set foldlevelstart=10                 " open most folds by default
-      set foldnestmax=10                    " 10 nested fold max 
+      set foldnestmax=10                    " 10 nested fold max
       set foldmethod=indent                 " fold based on indent
       " set foldmethod=syntax               " folding based on syntax
       set foldnestmax=3                     " deepest fold is 3 levels
@@ -110,17 +110,16 @@
 
     " ........................................................... Folding levels
 
-      " 'f' key, not Function key!
-      nmap <silent><leader>f0 :set foldlevel=0<CR>
-      nmap <silent><leader>f1 :set foldlevel=1<CR>
-      nmap <silent><leader>f2 :set foldlevel=2<CR>
-      nmap <silent><leader>f3 :set foldlevel=3<CR>
-      nmap <silent><leader>f4 :set foldlevel=4<CR>
-      nmap <silent><leader>f5 :set foldlevel=5<CR>
-      nmap <silent><leader>f6 :set foldlevel=6<CR>
-      nmap <silent><leader>f7 :set foldlevel=7<CR>
-      nmap <silent><leader>f8 :set foldlevel=8<CR>
-      nmap <silent><leader>f9 :set foldlevel=9<CR>
+      nmap <silent><leader>0 :set foldlevel=0<CR>
+      nmap <silent><leader>1 :set foldlevel=1<CR>
+      nmap <silent><leader>2 :set foldlevel=2<CR>
+      nmap <silent><leader>3 :set foldlevel=3<CR>
+      nmap <silent><leader>4 :set foldlevel=4<CR>
+      nmap <silent><leader>5 :set foldlevel=5<CR>
+      nmap <silent><leader>6 :set foldlevel=6<CR>
+      nmap <silent><leader>7 :set foldlevel=7<CR>
+      nmap <silent><leader>8 :set foldlevel=8<CR>
+      nmap <silent><leader>9 :set foldlevel=9<CR>
 
   " Printing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
