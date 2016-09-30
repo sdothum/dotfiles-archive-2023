@@ -58,7 +58,7 @@ export NORMAL='#808080'
 # ........................................................... Margin adjustments
 
 # left shift right monitor margin by shadow-radius*shadow_factor so conky doesn't cover shadow area
-export SHADOW_FACTOR=2
+export SHADOW_FACTOR=3
 
 # conky lua syntax filter
 conkyrc() {
