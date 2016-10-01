@@ -65,11 +65,11 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 40}
-${goto 84}${color}${font Ubuntu:size=24}${time %e}
-${goto 51}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
-${goto 62}${color3}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
-${voffset 12}${font}${color3}${alignr}${time %-Vw  /  %-jd}
+${voffset 31}
+${goto 89}${color}${font Ubuntu:size=25}${time %e}
+${goto 56}${color1}${voffset -28}${font Ubuntu:size=11}${time %A}
+${goto 67}${color3}${voffset -3}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+${voffset 17}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -5}
 ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
 ${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 141}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
