@@ -3,7 +3,7 @@
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-set -x
+
 # .............................................................. Draw background
 
 # Usage: draw root [ blank [<color>] | restore | save ]
@@ -16,7 +16,7 @@ set -x
 #        draw root shuffle, enable random background shuffling
 #        draw root toggle, toggle background blur mode
 #        draw root wallpaper, draw background
-set -x
+
 arm && exit
 
 setroot=$ROOT/herbstluftwm:setroot

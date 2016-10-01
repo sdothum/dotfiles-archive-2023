@@ -12,8 +12,6 @@
 #        POSIX standard for use with dash shell
 
 CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
-# arbitrary max dmenu list width
-TRUNCATE=200
 
 # content formatting items
 SEP='∙'
@@ -130,7 +128,6 @@ dmenu() {
 
   # use blank -mesg as added separator and indent pick list!
   input=$(sed "s/^/$INDENT/" \
-        | cut -c -$TRUNCATE \
         | rofi -monitor $monitor \
                -bw 0 \
                -font "PragmataPro $fontsize" \

@@ -5,12 +5,15 @@
 
 # .................................................................... Clipboard
 
+# arbitrary content trim length (for display only)
+truncate=320
+
 # quick security pass
 clipboard=/tmp/dmenu:clipboard
 
 clipboard() {
   # trim multiline content (corrupts list format otherwise)
-  gpaste-client --oneline | cut -c -$TRUNCATE | sed "s/://" >$clipboard
+  gpaste-client --oneline | cut -c -$truncate | sed "s/://" >$clipboard
 }
 
 clipboard

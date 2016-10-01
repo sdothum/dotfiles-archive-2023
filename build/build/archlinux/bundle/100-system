@@ -73,6 +73,7 @@
   intel-ucode
   lm_sensors
   mbpfan-git                [macbook]
+  nvidiabl                  [macbook]
   xf86-input-wacom          [server]
 
 
