@@ -65,10 +65,10 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 31}
-${goto 89}${color}${font Ubuntu:size=25}${time %e}
-${goto 56}${color1}${voffset -28}${font Ubuntu:size=11}${time %A}
-${goto 67}${color3}${voffset -3}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+${voffset 26}
+${goto 89}${color}${font Ubuntu:size=26}${time %e}
+${goto 47}${color1}${voffset -29}${font Ubuntu:size=12}${time %A}
+${goto 67}${color3}${voffset -4}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
 ${voffset 17}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -5}
 ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
