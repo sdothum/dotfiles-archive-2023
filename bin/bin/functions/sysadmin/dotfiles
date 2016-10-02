@@ -61,7 +61,7 @@ done
 
 commit() {
   echo
-  git commit -m "$DESC"
+  git commit --message="$DESC"
   git push --force --set-upstream origin master
 }
 
@@ -69,7 +69,7 @@ pending() {
   echo '..'
   git diff --name-only HEAD | tee
 }
-set -x
+
 if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
@@ -86,7 +86,7 @@ if [ "$*" ] ;then
 
     init) git init
           git add README.md
-          git commit -m "refresh commit"
+          git commit --message="refresh commit"
           git remote add origin https://github.com/sdothum/dotfiles.git
           git push -u origin master
           git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
@@ -99,13 +99,13 @@ if [ "$*" ] ;then
     rm) shift
         if [ "$*" ] ;then
           git rm -r --cached $@
-          git commit -m "Remove directory \"$@\""
+          git commit --message="Remove directory \"$@\""
           git push origin master
         fi ;;
 
     *) pending
-       if if-yes "commit \"$@\"" ;then
-         DESC="$@"
+       DESC="$@"
+       if if-yes "commit \"$DESC\"" ;then
          commit
        fi ;;
   esac
