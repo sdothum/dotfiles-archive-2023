@@ -81,7 +81,7 @@ if [ "$*" ] ;then
     comment | amend) shift
                      DESC="$@"
                      [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" \
-                              || git commit --amend ;;
+                                 || git commit --amend ;;
 
     edit | ignore) gvim .gitignore ;;
 
