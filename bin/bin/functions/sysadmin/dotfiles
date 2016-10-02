@@ -69,7 +69,7 @@ pending() {
   echo '..'
   git diff --name-only HEAD | tee
 }
-
+set -x
 if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
@@ -78,7 +78,8 @@ if [ "$*" ] ;then
          [ "$*" ] && git add -f $@ ;;
 
     comment | amend) shift
-                     [ "$*" ] && git commit --amend -m "$@" \
+                     DESC="$@"
+                     [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" \
                               || git commit --amend ;;
 
     edit | ignore) gvim .gitignore ;;
