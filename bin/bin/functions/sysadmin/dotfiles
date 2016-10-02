@@ -9,7 +9,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0)  <comment> | add <path/filespec> | edit | ignore | init | list | undo | rm <dir>"
+  echo "usage: $(basename $0)  <comment> | add <path/filespec> | comment [<comment>] | edit | ignore | init | list | undo | rm <dir>"
   exit 1
 }
 
@@ -77,6 +77,10 @@ if [ "$*" ] ;then
     add) shift
          [ "$*" ] && git add -f $@ ;;
 
+    comment | amend) shift
+                     [ "$*" ] && git commit --amend -m "$@" \
+                              || git commit --amend ;;
+
     edit | ignore) gvim .gitignore ;;
 
     init) git init
@@ -86,7 +90,7 @@ if [ "$*" ] ;then
           git push -u origin master
           git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
 
-    list) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+    list | log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
 
     undo | redo | reset) git reset --soft HEAD~
                          dotfiles ;;
