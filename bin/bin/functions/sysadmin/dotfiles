@@ -70,6 +70,7 @@ pending() {
   git diff --name-only HEAD | tee
 }
 
+# $@ substitution within complex expressions is more predictably handled by var substitution
 if [ "$*" ] ;then
   case "$1" in
     h) usage ;;
@@ -98,8 +99,9 @@ if [ "$*" ] ;then
 
     rm) shift
         if [ "$*" ] ;then
-          git rm -r --cached $@
-          git commit --message="Remove directory \"$@\""
+          DESC="$@"
+          git rm -r --cached $DESC
+          git commit --message="Remove directory \"$DESC\""
           git push origin master
         fi ;;
 
