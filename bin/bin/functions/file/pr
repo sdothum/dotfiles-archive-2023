@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: [proof=true]  $(basename $0)  'eject | stdin | code | mail | text | wiki | wps  [<filelist>]"
+  echo "usage: [proof=true]  $(basename $0)  'eject | stdin | <file>.ps | code | mail | text | wiki | wps  [<filelist>]"
   exit 1
 }
 
@@ -15,9 +15,9 @@ usage() {
 # proof=true
 if [ -e $HOME/.proof ] ;then
   proof=true
-else 
+else
   lpstat -p $PRINTER >/dev/null 2>&1 || proof=true
-fi 
+fi
 [ $proof ] && proof=/tmp/pr.proof
 dotdot=/tmp/dotdot
 
@@ -74,7 +74,7 @@ format() {
       # truncate long pathnames
       title=$(echo $title | sed 's|/| ^|g' | reverse | truncate)
       title="$(dotdot)$(escape $title | reverse | sed 's| *\^|/|g')"
-  fi 
+  fi
 
   (cat <<EOF
 \documentclass[]{article}
@@ -123,7 +123,7 @@ EOF
 
 filter() {
   # reduce mail header to essential contact information
-  
+
   sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | \
   pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' | \
   egrep -vEi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' | \
@@ -160,9 +160,14 @@ punctuation() {
 # ................................................................ Print options
 
 print() {
-  output="/tmp/$(basename $1).pdf"
-  rm -f "$output" 2>&1
-  format "$1"
+  case "$1" in
+    *.ps) title="$1"
+          output="$1" ;;
+
+    *) output="/tmp/$(basename $1).pdf"
+       rm -f "$output" 2>&1
+       format "$1" ;;
+  esac
   if [ $proof ] ;then
     zathura "$output" 2>&1
   else
@@ -230,7 +235,6 @@ case "$1" in
        sed -e 's/^\.*  *//' \
            -e 's/  */ /g' | \
        stdin ;;
-      
 
   code | *) fontsize=8
             spacing='\onehalfspacing'
