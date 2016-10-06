@@ -25,8 +25,8 @@
     " ........................................................ Buffer management
 
       " Plug 'mileszs/ack.vim'
-      Plug 'kien/ctrlp.vim'
-      " Plug 'chrisbra/NrrwRgn'
+      " Plug 'kien/ctrlp.vim'
+      Plug 'chrisbra/NrrwRgn'
       " Plug 'duff/vim-scratch'
 
     " ................................................................... Coding
@@ -44,7 +44,7 @@
 
       " Plug 'vim-scripts/matchit.zip'
       " Plug 'SearchComplete'
-      Plug 'ervandew/supertab'
+      " Plug 'ervandew/supertab'
       Plug 'Lokaltog/vim-easymotion'
       Plug 'kshenoy/vim-signature'
 
@@ -89,7 +89,7 @@
 
     " .................................................................. Writing
       Plug 'reedes/vim-litecorrect'
-      " Plug 'reedes/vim-pencil'
+      Plug 'reedes/vim-pencil'
       " Plug 'reedes/vim-wordy'
       Plug 'vimwiki/vimwiki'
 

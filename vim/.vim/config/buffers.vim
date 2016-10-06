@@ -11,9 +11,6 @@
       " set autowrite                       " automatically write a modified buffer on leaving
       set hidden                            " allow hidden background buffers
 
-      " query current buffer
-      nmap <leader>bb     :echo @%<CR>
-
       augroup buffer
         autocmd!
       augroup END
@@ -46,6 +43,11 @@
       autocmd buffer FocusLost   * silent! :wall
 
     " ......................................................... Buffer switching
+
+      " goto buffer (just fingering convenience)
+      nmap <leader>b            :b<Space>
+      " query current buffer
+      nmap <leader>B            :echo @%<CR>
 
       " silence vim's default (command line) file info message, note silent..silent
       vmap <silent><C-PageUp>   <ESC>:silent bprevious<CR>

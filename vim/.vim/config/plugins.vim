@@ -22,22 +22,22 @@
 
     " ................................................................... Ctrl-p
 
-      let g:ctrlp_cache_dir           = $HOME . '/.cache/ctrlp'
-      let g:ctrlp_clear_cache_on_exit = 0    " enable cross-session caching
-      let g:ctrlp_follow_symlinks     = 1    " follow symbolic links
-      let g:ctrlp_max_height          = 30   " results window height
-      let g:ctrlp_mruf_case_sensitive = 0    " avoid duplicate entries
-      let g:ctrlp_mruf_max            = 1000 " maximum mru entries to remember
-      let g:ctrlp_open_multiple_files = 'i'  " open multiple files in hidden buffers
-      let g:ctrlp_open_new_file       = 'v'  " <C-y> opens new file in vertical split
-      let g:ctrlp_working_path_mode   = 0    " default to current directory
-
-      " cannot silence vim's default file info message as with buffer keymaps
-      " see autocmd cursorhold in setup.vim for delayed clear
-      nmap <silent><leader>b :silent CtrlPBuffer<CR>
-      nmap <silent><leader>M :silent CtrlPMixed<CR>
-      nmap <silent><leader>m :silent CtrlPMRU<CR>
-      nmap <silent><leader>B :silent CtrlP<CR>
+      " let g:ctrlp_cache_dir           = $HOME . '/.cache/ctrlp'
+      " let g:ctrlp_clear_cache_on_exit = 0    " enable cross-session caching
+      " let g:ctrlp_follow_symlinks     = 1    " follow symbolic links
+      " let g:ctrlp_max_height          = 30   " results window height
+      " let g:ctrlp_mruf_case_sensitive = 0    " avoid duplicate entries
+      " let g:ctrlp_mruf_max            = 1000 " maximum mru entries to remember
+      " let g:ctrlp_open_multiple_files = 'i'  " open multiple files in hidden buffers
+      " let g:ctrlp_open_new_file       = 'v'  " <C-y> opens new file in vertical split
+      " let g:ctrlp_working_path_mode   = 0    " default to current directory
+      "
+      " " cannot silence vim's default file info message as with buffer keymaps
+      " " see autocmd cursorhold in setup.vim for delayed clear
+      " nmap <silent><leader>b :silent CtrlPBuffer<CR>
+      " nmap <silent><leader>M :silent CtrlPMixed<CR>
+      " nmap <silent><leader>m :silent CtrlPMRU<CR>
+      " nmap <silent><leader>B :silent CtrlP<CR>
 
     " ............................................................... Easy-align
 
@@ -47,7 +47,7 @@
     " ............................................................... Easymotion
 
       let g:EasyMotio_do_mapping = 0       " disable default mappings
-      let g:EasyMotion_smartcase  = 1       " turn on case sensitive feature
+      let g:EasyMotion_smartcase = 1       " turn on case sensitive feature
 
       " bi-directional find motion
       " avoid conflict with regular vim search!
@@ -316,8 +316,6 @@
 
     " ................................................................. Supertab
 
-    set complete-=t
-
     " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab
     " let g:SuperTabMappingForward = '<C-Tab>'
     " let g:SuperTabMappingBackward = '<C-S-Tab>'
@@ -362,16 +360,16 @@
       autocmd plugin Filetype text           call litecorrect#init()
       autocmd plugin Filetype vimwiki        call litecorrect#init()
 
-    " let g:pencil#wrapModeDefault = 'hard' " default 'hard'
-    " let g:pencil#textwidth       = 72     " default 74
-    " let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
-    " let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
-    " let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
-    "
-    " autocmd plugin Filetype mail         call pencil#init()
-    " autocmd plugin FileType markdown,mkd call pencil#init()
-    " autocmd plugin Filetype text         call pencil#init()
-    " autocmd plugin Filetype vimwiki      call pencil#init()
+      let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
+      let g:pencil#textwidth       = 72     " 74 (def)
+      let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
+      let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
+      let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
+
+      autocmd plugin Filetype mail         call pencil#init()
+      autocmd plugin FileType markdown,mkd call pencil#init()
+      autocmd plugin Filetype text         call pencil#init()
+      autocmd plugin Filetype vimwiki      call pencil#init()
 
     " .................................................... Vim-shell / Vim-filer
 

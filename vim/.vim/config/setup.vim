@@ -163,7 +163,7 @@
       " manually for search and replace)
       nmap /         /\v
       vmap /         /\v
-      " clear search highlight and command line messages
+      " clear search highlight
       nmap <silent>\ :noh<CR>
 
       " tab to bracket pairs

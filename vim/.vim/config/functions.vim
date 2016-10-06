@@ -28,24 +28,26 @@
       endfunction
 
     " .......................................................... Escape filename
-    
+
       " change space to \<Space>, see Print (buffers.vim)
       function! EscapeFilename()
         return substitute(expand('%:t'), " ", "\\\\ ", "g")
       endfunction
 
     " ......................................................... Strip whitespace
-     
-      " see https://dougblack.io/words/a-good-vimrc.html 
+
+      " see https://dougblack.io/words/a-good-vimrc.html
       " strips trailing whitespace from all lines
       function! StripTrailingWhitespaces()
-        " save last search & cursor position
-        let _s=@/
-        let l = line(".")
-        let c = col(".")
-        %s/\s\+$//e
-        let @/=_s
-        call cursor(l, c)
+        if &modifiable == 1
+          " save last search & cursor position
+          let _s=@/
+          let l = line(".")
+          let c = col(".")
+          %s/\s\+$//e
+          let @/=_s
+          call cursor(l, c)
+        endif
       endfunction
 
 " functions.vim

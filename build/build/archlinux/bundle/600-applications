@@ -64,6 +64,7 @@
 # ▔▔▔▔▔
   beets
   cli-visualizer
+  deadbeef       [server]
   mpc
   mpd
   ncmpcpp

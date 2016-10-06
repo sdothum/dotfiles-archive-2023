@@ -6,7 +6,7 @@
   " Buffer statistics ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................................... Setup
-     
+
       " regex list of multibyte characters used for line drawing
       " note: files using other multibyte characters will produce incorrect statistics
       let s:indicators = '▶■‾↑'            " multibyte statusline indicators
@@ -120,19 +120,24 @@
 
       function! SpecialChar()
         if mode() == 'n'                    " getline() test fails on switch into insert mode
-          if getline(line('.')) != ''       " ignore newline (is NUL)
-            let l:char = getline('.')[col('.')-1]
-            " show hex value, not interested in ascii keyboard characters
-            if l:char !~ s:ascii && l:char != "'"
-              let l:statusmsg = v:statusmsg
-              normal ga
-              let l:hex       = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
-              let v:statusmsg = l:statusmsg
-              " clear ga information!
-              echo ''
-              return l:hex
+          try
+            if getline(line('.')) != ''     " ignore newline (is NUL)
+              let l:char = getline('.')[col('.')-1]
+              " show hex value, not interested in ascii keyboard characters
+              if l:char !~ s:ascii && l:char != "'"
+                let l:statusmsg = v:statusmsg
+                normal ga
+                let l:hex       = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
+                let v:statusmsg = l:statusmsg
+                " clear ga information!
+                echo ''
+                return l:hex
+              endif
             endif
-          endif
+          catch /.*/
+            " discard messages and clear message line
+            echo ''
+          endtry
         endif
         return ''
       endfunction
