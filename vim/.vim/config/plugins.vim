@@ -243,6 +243,13 @@
       " autocmd! User GoyoEnter Limelight
       " autocmd! User GoyoLeave Limelight!
 
+    " .............................................................. Litecorrect
+
+      autocmd plugin Filetype mail           call litecorrect#init()
+      autocmd plugin FileType markdown,mkd   call litecorrect#init()
+      autocmd plugin Filetype text           call litecorrect#init()
+      autocmd plugin Filetype vimwiki        call litecorrect#init()
+
     " .................................................................. LiteDFM
 
       let g:lite_dfm_left_offset = 22       " see themes.vim
@@ -254,6 +261,19 @@
     " ................................................................. Open URL
 
       nmap <silent><leader>o :OpenUrl<CR>
+
+    " ................................................................... Pencil
+
+      " let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
+      " let g:pencil#textwidth       = 72     " 74 (def)
+      " let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
+      " let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
+      " let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
+      "
+      " autocmd plugin Filetype mail         call pencil#init()
+      " autocmd plugin FileType markdown,mkd call pencil#init()
+      " autocmd plugin Filetype text         call pencil#init()
+      " autocmd plugin Filetype vimwiki      call pencil#init()
 
     " ...................................................... Rainbow parentheses
 
@@ -353,30 +373,15 @@
       nmap <leader>c <C-_><C-_>
       vmap <leader>c <C-_><C-_>
 
-    " ............................................ Vim-litecorrect /  Vim-pencil
+    " ................................................................. Vimfiler
 
-      autocmd plugin Filetype mail           call litecorrect#init()
-      autocmd plugin FileType markdown,mkd   call litecorrect#init()
-      autocmd plugin Filetype text           call litecorrect#init()
-      autocmd plugin Filetype vimwiki        call litecorrect#init()
+      " requires http://github.com/Shougo/unite.vim
+      " let g:vimfiler_as_default_explorer = 1" explorer mode
+      " nmap <silent><leader><leader>! :VimFiler<CR>
 
-      let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
-      let g:pencil#textwidth       = 72     " 74 (def)
-      let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
-      let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
-      let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
+    " ................................................................. Vimshell
 
-      autocmd plugin Filetype mail         call pencil#init()
-      autocmd plugin FileType markdown,mkd call pencil#init()
-      autocmd plugin Filetype text         call pencil#init()
-      autocmd plugin Filetype vimwiki      call pencil#init()
-
-    " .................................................... Vim-shell / Vim-filer
-
-      " requires make http://github.com/Shougo/vimproc
-      let g:vimfiler_as_default_explorer = 1" explorer mode
-      nmap <silent><leader>!         :VimShell<CR>
-      nmap <silent><leader><leader>! :VimFiler<CR>
+      " nmap <silent><leader>!         :VimShell<CR>
 
     " .................................................................. Vimwiki
 

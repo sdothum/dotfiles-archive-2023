@@ -25,8 +25,7 @@
 
       " pencil disables abbreviations..
 
-      iabbrev lorem.. 
-        \Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+      iabbrev lorem.. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
         \ do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         \ Ut enim ad minim veniam, quis nostrud exercitation ullamco
         \ laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
@@ -38,40 +37,32 @@
 
     " ............................................................... Signatures
 
-      iabbrev bye.. 
-        \Bye!<CR>
+      iabbrev bye.. Bye!<CR>
         \Steven<ESC>
 
-      iabbrev dad.. 
-        \(L)<CR>
+      iabbrev dad.. (L)<CR>
         \:D(A):D<ESC>
 
-      iabbrev hope.. 
-        \Hope this helps,<CR>
+      iabbrev hope.. Hope this helps,<CR>
         \Steven<ESC>
 
-      iabbrev kindest.. 
-        \Kindest regards,<CR>
+      iabbrev kindest.. Kindest regards,<CR>
         \Steven<ESC>
 
-      iabbrev regards.. 
-        \Regards,<CR>
+      iabbrev regards.. Regards,<CR>
         \Steven<ESC>
 
-      iabbrev take.. 
-        \Take good care,<CR>
+      iabbrev take.. Take good care,<CR>
         \Steven<ESC>
 
-      iabbrev thanks.. 
-        \Thanks,<CR>
+      iabbrev thanks.. Thanks,<CR>
         \Steven<ESC>
 
   " Coding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................... Script headers
 
-      iabbrev dash.. 
-        \<ESC>ggO
+      iabbrev dash.. <ESC>ggO
         \#!/usr/bin/dash<CR>
         \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
@@ -79,8 +70,7 @@
         \# vim: set ft=sh: #
         \<ESC>:set ft=sh<CR>gg<down><left>
 
-      iabbrev sh.. 
-        \<ESC>ggO
+      iabbrev sh.. <ESC>ggO
         \#!/bin/sh<CR>
         \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
@@ -88,8 +78,7 @@
         \# vim: set ft=sh: #
         \<ESC>:set ft=sh<CR>gg<down><left>
 
-      iabbrev fish.. 
-        \<ESC>ggO
+      iabbrev fish.. <ESC>ggO
         \#!/usr/bin/fish<CR>
         \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
@@ -97,8 +86,7 @@
         \# vim: set ft=fish: #
         \<ESC>:set ft=fish<CR>gg<down><left>
 
-      iabbrev zsh.. 
-        \<ESC>ggO
+      iabbrev zsh.. <ESC>ggO
         \#!/usr/bin/zsh<CR>
         \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
@@ -106,8 +94,7 @@
         \# vim: set ft=zsh: #
         \<ESC>:set ft=zsh<CR>gg<down><left>
 
-      iabbrev hs.. 
-        \<ESC>ggO
+      iabbrev hs.. <ESC>ggO
         \#!/usr/bin/ghci<CR>
         \# sdothum - 2016 (c) wtfpl<CR><BS><BS>
         \<ESC>Go
@@ -115,8 +102,7 @@
         \# vim: set ft=hs: #
         \<ESC>:set ft=hs<CR>gg<down><left>
 
-      iabbrev rb.. 
-        \<ESC>ggO
+      iabbrev rb.. <ESC>ggO
         \#!/usr/bin/ruby<CR>
         \ encoding: UTF-8<CR>
         \sdothum - 2016 (c) wtfpl<CR><BS><BS><CR>
@@ -131,8 +117,7 @@
 
      " ........................................................... Vim modifiers
 
-      iabbrev conf.. 
-        \<ESC>Go
+      iabbrev conf.. <ESC>Go
         \<CR>
         \# vim: set ft=conf: #
         \<ESC>:set ft=conf<CR>gg<down><down><left>
