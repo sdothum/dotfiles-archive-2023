@@ -104,13 +104,20 @@ enum tap_dance {
   _LCBR,
 };
 
+enum shift_macros {
+  SPC = 0,
+  BSPC,
+};
+
 // modifier keys
 #define Grv     GUI_T (KC_GRV)
 #define Esc     CTL_T (KC_ESC)
 #define Mins    SFT_T (KC_MINS)
 #define Caps    GUI_T (KC_CAPS)
-#define Spc     SFT_T (KC_SPC)
-#define Bspc    SFT_T (KC_BSPC)
+// #define Spc  SFT_T (KC_SPC)
+// #define Bspc SFT_T (KC_BSPC)
+#define Spc     M     (SPC)
+#define Bspc    M     (BSPC)
 #define Left    ALT_T (KC_LEFT)
 #define Down    GUI_T (KC_DOWN)
 #define Up      CTL_T (KC_UP)
@@ -320,7 +327,8 @@ float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND);
 float tone_goodbye[][2]   = SONG (GOODBYE_SOUND);
 #endif
 
-void paren(qk_tap_dance_state_t *state, void *user_data) {
+void paren(qk_tap_dance_state_t *state, void *user_data)
+{
   if (state->count > 1) {
     register_code   (KC_LSFT);
     register_code   (KC_9);
@@ -337,7 +345,8 @@ void paren(qk_tap_dance_state_t *state, void *user_data) {
   reset_tap_dance(state);
 }
 
-void brace(qk_tap_dance_state_t *state, void *user_data) {
+void brace(qk_tap_dance_state_t *state, void *user_data)
+{
   if (state->count > 1) {
     register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
@@ -350,7 +359,8 @@ void brace(qk_tap_dance_state_t *state, void *user_data) {
   reset_tap_dance(state);
 }
 
-void curly(qk_tap_dance_state_t *state, void *user_data) {
+void curly(qk_tap_dance_state_t *state, void *user_data)
+{
   if (state->count > 1) {
     register_code   (KC_LSFT);
     register_code   (KC_LBRC);
@@ -373,12 +383,52 @@ const qk_tap_dance_action_t tap_dance_actions[] = {
   [_LCBR] = ACTION_TAP_DANCE_FN (curly),
 };
 
-void persistant_default_layer_set(uint16_t default_layer) {
+// macro replacement for SFT_T to avoid tap timing anomalies (sacrificing auto-repeat)
+static uint16_t key_timer;
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+      switch(id) {
+        case SPC:
+          if (record->event.pressed) {
+            key_timer = timer_read();
+            register_code   (KC_LSFT);
+          }
+          else {
+            // unregister modifier early (vim requirement)
+            unregister_code (KC_LSFT);
+            if (timer_elapsed(key_timer) < TAPPING_TERM) {
+              register_code   (KC_SPC);
+              unregister_code (KC_SPC);
+            }
+          }
+          break;
+        case BSPC:
+          if (record->event.pressed) {
+            key_timer = timer_read();
+            register_code   (KC_LSFT);
+          }
+          else {
+            // unregister modifier early (vim requirement)
+            unregister_code (KC_LSFT);
+            if (timer_elapsed(key_timer) < TAPPING_TERM) {
+              register_code   (KC_BSPC);
+              unregister_code (KC_BSPC);
+            }
+          }
+          break;
+      }
+    return MACRO_NONE;
+};
+
+void persistant_default_layer_set(uint16_t default_layer)
+{
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
   // turn off _ADJUST layer before setting default layer else usb reset necessary
   switch (keycode) {
     case Tab:
@@ -497,7 +547,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-void matrix_init_user(void) {
+void matrix_init_user(void)
+{
   #ifdef AUDIO_ENABLE
   startup_user();
   #endif

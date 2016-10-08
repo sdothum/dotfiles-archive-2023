@@ -46,8 +46,8 @@
 
     " ............................................................... Easymotion
 
-      let g:EasyMotio_do_mapping = 0       " disable default mappings
-      let g:EasyMotion_smartcase = 1       " turn on case sensitive feature
+      let g:EasyMotion_do_mapping = 0       " disable default mappings
+      let g:EasyMotion_smartcase = 1        " turn on case sensitive feature
 
       " bi-directional find motion
       " avoid conflict with regular vim search!
