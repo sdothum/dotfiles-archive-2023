@@ -30,14 +30,12 @@ focus_check() {
 }
 
 if search --onlyvisible >/dev/null ;then
-  if [ "$(query wname)" = $name ] ;then
-    if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
-                    compare monitors.focus.tag = TAG 2>/dev/null ;then
-      search --onlyvisible windowunmap >/dev/null
-      draw refresh
-      focus window
-      exit
-    fi
+  if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
+                  compare monitors.focus.tag = TAG 2>/dev/null ;then
+    search --onlyvisible windowunmap >/dev/null
+    draw refresh
+    focus window
+    exit
   fi
 fi
 
