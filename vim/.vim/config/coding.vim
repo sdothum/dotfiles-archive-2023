@@ -83,11 +83,11 @@
 
       function! ToggleWrap()
         if &formatoptions =~ 't'
-          " NoPencil
+          NoPencil
           let &formatoptions = g:codeoptions
           echo 'Automatic line wrap OFF'
         elseif &formatoptions == g:codeoptions
-          " Pencil
+          Pencil
           set formatoptions=tqwan1
           echo 'Automatic line wrap ON'
         else
