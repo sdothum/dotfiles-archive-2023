@@ -7,6 +7,8 @@
 #define PREVENT_STUCK_MODIFIERS
 
 // tap dance key press termination interval
-#define TAPPING_TERM  300
+#define TAPPING_TERM  225
+// my version of SFT_T
+#define TAPPING_SHIFT 150
 
 #endif

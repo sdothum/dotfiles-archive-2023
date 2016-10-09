@@ -401,12 +401,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case SPC:
           if (record->event.pressed) {
             key_timer = timer_read();
-            register_code   (KC_LSFT);
+            register_code     (KC_LSFT);
           }
           else {
             // unregister modifier early (vim requirement)
-            unregister_code (KC_LSFT);
-            if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            unregister_code   (KC_LSFT);
+            if (timer_elapsed(key_timer) < TAPPING_SHIFT) {
               register_code   (KC_SPC);
               unregister_code (KC_SPC);
             }
@@ -415,12 +415,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case BSPC:
           if (record->event.pressed) {
             key_timer = timer_read();
-            register_code   (KC_LSFT);
+            register_code     (KC_LSFT);
           }
           else {
             // unregister modifier early (vim requirement)
-            unregister_code (KC_LSFT);
-            if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            unregister_code   (KC_LSFT);
+            if (timer_elapsed(key_timer) < TAPPING_SHIFT) {
               register_code   (KC_BSPC);
               unregister_code (KC_BSPC);
             }
@@ -442,10 +442,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   switch (keycode) {
     case Tab:
       if (record->event.pressed) {
-        layer_on(_NUMBER);
+        layer_on        (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
       } else {
-        layer_off(_NUMBER);
+        layer_off       (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
@@ -457,10 +457,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case Del:
       if (record->event.pressed) {
-        layer_on(_SYMBOL);
+        layer_on        (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
       } else {
-        layer_off(_SYMBOL);
+        layer_off       (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
         // undo sticky modifiers
         unregister_code (KC_LGUI);

@@ -104,7 +104,7 @@
 
       iabbrev rb.. <ESC>ggO
         \#!/usr/bin/ruby<CR>
-        \ encoding: UTF-8<CR>
+        \# encoding: UTF-8<CR>
         \sdothum - 2016 (c) wtfpl<CR><BS><BS><CR>
         \require 'term/ansicolor'<CR>
         \class String<CR>
