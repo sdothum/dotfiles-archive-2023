@@ -25,32 +25,19 @@
 
     " ............................................................. Column ruler
 
-      " column list must end in [0]
-      let s:margins = [45, 72, &textwidth, g:linewidth, 0]
-
       " toggle colorcolumns, add 1st non-blank character in current line to margins list :-)
       function! ToggleColumn()
-        if getline(line('.')) != ''
-          if index(s:margins, col('.')) == -1
-            let s:margins    = uniq(SortNumbers([col('.')]+s:margins[:-2])) + [0]
-            let &colorcolumn = col('.')
-            return
-          endif
-        endif
-        if &colorcolumn == ''
+        if &colorcolumn == col('.')
+          let &colorcolumn = 0
+        else
           let &colorcolumn = col('.')
         endif
-        execute 'let l:index = index(s:margins,' . &colorcolumn . ') + 1'
-        " if l:index > len(s:margins)       " weird problem with if test so simply loop list!
-        "   let l:index = 0
-        " endif
-        " let &colorcolumn = s:margins[l:index]
-        let &colorcolumn   = (s:margins+s:margins)[l:index]
       endfunction
 
       " imap <silent><F7> <C-o>:call ToggleColumn()<CR>
       " nmap <silent><F7> :call ToggleColumn()<CR>
       nmap <silent><Bar>  :call ToggleColumn()<CR>
+      nmap <leader><Bar>  :set colorcolumn=
 
     " ....................................................... Trailing highlight
 
