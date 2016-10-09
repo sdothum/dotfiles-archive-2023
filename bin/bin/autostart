@@ -66,7 +66,7 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 if [ -e $HOME/.irc ] ;then
   if server ;then
     herbstclient focus_monitor 1
-    # wait for window visibility before switching monitors, for urxvt font handling 
+    # wait for window visibility before switching monitors, for urxvt font handling
     term 'IRC' VISIBLE weechat
     herbstclient focus_monitor 0
   else
@@ -81,8 +81,8 @@ fi
 server && thedarnedestthing
 server && vimwiki
 switch tag "$web"
-qutebrowser &
-# vimbt http://luna:8000/tt-rss/
+# qutebrowser &
+vimbt
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 
 # .............................................................. Cleanup desktop
