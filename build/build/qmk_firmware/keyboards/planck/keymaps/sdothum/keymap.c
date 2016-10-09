@@ -397,37 +397,38 @@ static uint16_t key_timer;
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
-      switch(id) {
-        case SPC:
-          if (record->event.pressed) {
-            key_timer = timer_read();
-            register_code     (KC_LSFT);
-          }
-          else {
-            // unregister modifier early (vim requirement)
-            unregister_code   (KC_LSFT);
-            if (timer_elapsed(key_timer) < TAPPING_SHIFT) {
-              register_code   (KC_SPC);
-              unregister_code (KC_SPC);
-            }
-          }
-          break;
-        case BSPC:
-          if (record->event.pressed) {
-            key_timer = timer_read();
-            register_code     (KC_LSFT);
-          }
-          else {
-            // unregister modifier early (vim requirement)
-            unregister_code   (KC_LSFT);
-            if (timer_elapsed(key_timer) < TAPPING_SHIFT) {
-              register_code   (KC_BSPC);
-              unregister_code (KC_BSPC);
-            }
-          }
-          break;
+  // see process_record_user(default)
+  switch(id) {
+    case SPC:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        register_code     (KC_LSFT);
       }
-    return MACRO_NONE;
+      else {
+        // unregister modifier early (vim requirement)
+        unregister_code   (KC_LSFT);
+        if (timer_elapsed(key_timer) < TAPPING_TERM) {
+          register_code   (KC_SPC);
+          unregister_code (KC_SPC);
+        }
+      }
+      break;
+    case BSPC:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        register_code     (KC_LSFT);
+      }
+      else {
+        // unregister modifier early (vim requirement)
+        unregister_code   (KC_LSFT);
+        if (timer_elapsed(key_timer) < TAPPING_TERM) {
+          register_code   (KC_BSPC);
+          unregister_code (KC_BSPC);
+        }
+      }
+      break;
+  }
+  return MACRO_NONE;
 };
 
 void persistant_default_layer_set(uint16_t default_layer)
@@ -552,6 +553,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       return false;
       break;
+    default:
+      if (record->event.pressed) {
+        // clear action_get_macro tap key value so shift key is not undone!
+        key_timer = 0;
+      }
   }
   return true;
 }
