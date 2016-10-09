@@ -555,7 +555,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     default:
       if (record->event.pressed) {
-        // clear action_get_macro tap key value so shift key is not undone!
+        // clear action_get_macro tap key value so shifted key value is not undone!
         key_timer = 0;
       }
   }
