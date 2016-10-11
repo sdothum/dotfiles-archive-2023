@@ -30,9 +30,8 @@ vimbt() {
   # unclutter causes tabbed vimb to load homepages endlessly
   pkill -TERM -x unclutter
 
-  # respawning creates endless tabs with unclutter
-  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' \
-         $(vimb dump) >/tmp/vimb.socket 2>>/tmp/vimb.log
+  # tabbed appends winid to expanded command arguments, see vimb
+  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' vimb embed
   winstance 'VimbT' && toggle unclutter &
 }
 

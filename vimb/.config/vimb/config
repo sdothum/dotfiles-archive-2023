@@ -61,7 +61,8 @@ set smooth-scrolling=true
 set spacial-navigation=true
 set spell-checking=true
 set statusbar=true
-set status-font='monospace bold 10'
+# set status-font='monospace bold 10'
+set status-font='monospace 10'
 set strict-ssl=false
 set webinspector=true
 shortcut-default du

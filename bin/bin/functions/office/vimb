@@ -6,13 +6,12 @@
 
 # ...................................................................... Browser
 
-# Usage: vimb  [ dump | socket ] <url>, see vimbt
+# Usage: vimb  [ embed | socket ] <url>, see vimbt
 
-fn="monospace bold $(urxvtfont | cut -d= -f2)"
+fn="monospace $(urxvtfont | cut -d= -f2)"
 
 case "$1" in
-  dump) shift
-        echo "/usr/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed" ;;
+  embed) /usr/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed $2 >/tmp/vimb.socket 2>>/tmp/vimb.log ;;
 
   socket) shift
           echo ";tabopen $@<CR>" | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
