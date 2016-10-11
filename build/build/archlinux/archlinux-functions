@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+
 # sdothum - 2016 (c) wtfpl
 
 # fresh arch pre-installer
@@ -47,7 +47,9 @@ connect() {
 }
 
 config_install() {
-  echo ".. copying "$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+  if [ -e /media/home/$user/build/root/$1 ] ;then
+    echo ".. copying "$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+  fi
 }
 
 pm_install() {

@@ -19,10 +19,7 @@ bfq() {
 
 title "bundle installs"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-for i in $HOME/build/archlinux/bundle/[1-8]*
-do
-  bundle_install $i
-done
+bundle_install $HOME/build/archlinux/bundle/[1-8]*
 
 
 title "custom installs"

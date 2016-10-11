@@ -9,7 +9,7 @@
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
   if console && ! [ -e /tmp/login:console ];then
-    tty > /tmp/login:console
+    tty >/tmp/login:console
 
     # assign deadline scheduler to SSD boot drive
     if [ $(hostname) = luna ] && ! [ -e /tmp/ssd:scheduler ] ;then
@@ -24,7 +24,7 @@ if [ $USER != root ] ;then
           sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
         esac
         notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
-        echo "/dev/$ssd [deadline]" > /tmp/ssd:scheduler
+        echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler
       fi
     fi
 

@@ -4,7 +4,6 @@
 # install base packages
 
 # log output to typescript
-. $HOME/build/root/etc/profile.d/bin.sh
 script-check
 
 
@@ -48,20 +47,9 @@ keyserver-options auto-key-retrieve' >$HOME/.gnupg/gpg.conf
 fi
 
 
-# title "install aur package manager"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-# aur_install package-query
-# aur_install yaourt
-# aur_install cower
-# aur_install pacaur
-
-
 title "update base"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-for i in $HOME/build/archlinux/bundle/[0]*
-do
-  bundle_install $i
-done
+bundle_install $HOME/build/archlinux/bundle/[0]*
 
 
 title "installation errors:"

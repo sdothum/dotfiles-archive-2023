@@ -4,7 +4,7 @@ nnoremap b :open !
 nnoremap B :tabopen !
 nnoremap d :quit<CR>
 nnoremap D :quit!<CR>
-nnoremap O :tabopen 
+nnoremap O :tabopen<Space>
 nnoremap <C-S> :set statusbar!<CR><Esc>
 nnoremap t :open !/
 nnoremap T :tabopen !/
@@ -25,6 +25,7 @@ nnoremap q :eval! simplyread()<CR>
 nnoremap x :sh! mpv %<CR>
 nnoremap X :eval! translate()<CR>
 nnoremap <BS> <C-O>
+nnoremap <C-h> :open http://luna:8000/tt-rss/index.php#f=39&c=1<CR>
 
 # augroup mygroup
 #   autocmd LoadCommited https://www.youtube.com/watch* :shell mpv %<CR>
@@ -48,6 +49,10 @@ set history-max-items=99999
 set input-autohide=true
 set input-bg-normal=#464f52
 set input-fg-normal=#fdf6e3
+# set completion-bg-active=#464f52
+# set completion-fg-active=#fdf6e3
+# set completion-bg-normal=#464f52
+# set completion-fg-normal=#fdf6e3
 # set home-page=http://this-page-intentionally-left-blank.org/
 # set home-page=https://wiki.archlinux.org/index.php/Special:Random
 set home-page=https://www.archlinux.org/

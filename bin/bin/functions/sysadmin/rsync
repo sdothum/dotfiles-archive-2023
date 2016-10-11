@@ -27,7 +27,10 @@ rsync_home() {
         --exclude '.bundler' \
         --exclude '.cabal' \
         --exclude '.cache' \
+        --exclude '.cargo' \
         --exclude '.ccnet' \
+        --exclude '.cddb' \
+        --exclude '.cddbslave' \
         --exclude 'chromium' \
         --exclude 'depot' \
         --exclude '.dropbox' \
@@ -35,6 +38,7 @@ rsync_home() {
         --exclude '.gem' \
         --exclude '.Genymobile' \
         --exclude '.ghc' \
+        --exclude '.git' \
         --exclude 'google-chrome' \
         --exclude '.googleearth' \
         --exclude '.local/share/weechat' \
@@ -43,6 +47,7 @@ rsync_home() {
         --exclude '.moovida' \
         --exclude '.mozilla' \
         --exclude '.node-gyp' \
+        --exclude '.npm' \
         --exclude '.PlayOnLinux' \
         --exclude 'sandbox/patricia' \
         --exclude '.stack' \

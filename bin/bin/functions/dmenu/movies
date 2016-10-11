@@ -19,9 +19,9 @@ debug='\nexit'
 # list latest movie additions first
 T=t
 catlg() {
-  cat /dev/null > $cache
-  ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' > /tmp/dmenu:movies
-  playlist /tmp/dmenu:movies "$playlist" > $cache &
+  cat /dev/null >$cache
+  ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
+  playlist /tmp/dmenu:movies "$playlist" >$cache &
 }
 
 # any new media added?

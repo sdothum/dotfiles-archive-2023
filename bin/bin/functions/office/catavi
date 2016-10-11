@@ -14,7 +14,7 @@ usage() {
 
 
 TEMPFILE=/tmp/avitmp
-cat "$@" > $TEMPFILE
+cat "$@" >$TEMPFILE
 mencoder -forceidx -oac copy -ovc copy $TEMPFILE -o joined.avi
 rm -f $TEMPFILE
 

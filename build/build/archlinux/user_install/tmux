@@ -7,7 +7,7 @@
 # ......................................................................... tmux
 
 # byobu
-if grep -q '\$HOME' /usr/share/byobu/profiles/tmuxrc ;then
+if grep -q '\$HOME' /usr/share/byobu/profiles/tmuxrc 2>/dev/null ;then
   original /usr/share/byobu/profiles/tmuxrc
   sudo sed -i 's,\$HOME/.byobu,\$BYOBU_CONFIG_DIR,' /usr/share/byobu/profiles/tmuxrc
 fi

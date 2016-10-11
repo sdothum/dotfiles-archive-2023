@@ -3,11 +3,14 @@
 
 # see bundle_install
 
+# install aur package managers FIRST !!
 = aur package manager
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 @ cower
 @ pacaur
 ! pacaur -Sy
+  package-query
+  yaourt
 
 
 = entropy

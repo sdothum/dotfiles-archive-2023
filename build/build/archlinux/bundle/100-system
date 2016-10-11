@@ -101,6 +101,7 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   grub-btrfs-git
   pacupg
+# snap-pac
   snapper
 
 

@@ -12,7 +12,7 @@
 + dnsmasq
   dnsutils
 # dropbox-experimental
- gnome-bluetooth
+  gnome-bluetooth
 # ifenslave
 # networkmanager
 # network-manager-applet

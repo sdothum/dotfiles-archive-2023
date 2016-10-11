@@ -6,14 +6,18 @@
 
 # ...................................................................... Browser
 
-nvidia && fn='monospace bold 8' || fn='monospace bold 10'
-if nvidia ;then
-  fn='monospace bold 8'
-else
-  fn='monospace bold 10'
-fi
+# Usage: vimb  [ dump | socket ] <url>, see vimbt
 
-# standalone vimb instance
-/usr/bin/vimb --cmd="set status-font=$fn" "$@" 2>>/tmp/vimb.log
+fn="monospace bold $(urxvtfont | cut -d= -f2)"
+
+case "$1" in
+  dump) shift
+        echo "/usr/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed" ;;
+
+  socket) shift
+          echo ";tabopen $@<CR>" | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
+
+  *) /usr/bin/vimb --cmd="set status-font=$fn" "$@" 2>>/tmp/vimb.log ;;
+esac
 
 # vim: set ft=sh: #

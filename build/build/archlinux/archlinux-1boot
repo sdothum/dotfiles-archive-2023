@@ -126,8 +126,7 @@ heading 'default shell'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 pm_install bc
 pm_install dash
-pm_install zsh
-chsh -s /usr/bin/zsh $user
+pm_install fish
 config_install /etc/profile.d/path.sh
 checkpoint
 
