@@ -23,6 +23,7 @@ browsers="qutebrowser \
           opera \
           vimb \
           vimb-detached \
+          vimbt \
           surf \
           uzbl \
           w3m \
@@ -39,23 +40,24 @@ do
 
     # chromium) focus chromium -app=$1 ;;
 
-    brave |\
-    chromium |\
-    dwb |\
-    firefox |\
-    google-chrome |\
-    iceweasel |\
-    hbro |\
-    jumanji |\
-    luakit |\
-    lispkit |\
-    midori |\
-    opera |\
-    surf |\
-    uzbl |\
-    vimb |\
-    vimb-detached |\
-    xombrero) focus $browser "$1" ;;
+      brave \
+    | chromium \
+    | dwb \
+    | firefox \
+    | google-chrome \
+    | iceweasel \
+    | hbro \
+    | jumanji \
+    | luakit \
+    | lispkit \
+    | midori \
+    | opera \
+    | surf \
+    | uzbl \
+    | vimb \
+    | vimb-detached \
+    | vimbt \
+    | xombrero) focus $browser "$1" ;;
 
     qutebrowser) focus qutebrowser --target tab "$1" ;;
 

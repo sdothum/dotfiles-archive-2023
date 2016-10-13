@@ -29,12 +29,12 @@ do
       term) cd $dir
             term "$dir" ;;
 
-      ncdu |\
-      ranger) term "$dir" $action "$dir" ;;
+        ncdu \
+      | ranger) term "$dir" $action "$dir" ;;
 
-      filelight |\
-      rox |\
-      thunar) focus $action "$dir" ;;
+        filelight \
+      | rox \
+      | thunar) focus $action "$dir" ;;
     esac
     exit
   done

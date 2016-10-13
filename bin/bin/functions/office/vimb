@@ -8,15 +8,40 @@
 
 # Usage: vimb  [ embed | socket ] <url>, see vimbt
 
-fn="monospace $(urxvtfont | cut -d= -f2)"
+size=$(urxvtfont | cut -d= -f2)
+statusfont="set status-font=monospace $size"
+sslfont="set status-ssl-font=monospace $size"
+sslinvalidfont="set status-sslinvalid-font=monospace bold $size"
+inputfont="set status-sslinvalid-font=monospace $size"
+inputerrorfont="set status-sslinvalid-font=monospace bold $size"
+completionfont="set completion-font=monospace $size"
 
 case "$1" in
-  embed) /usr/bin/vimb --cmd="set status-font=$fn" --socket --dump --embed $2 >/tmp/vimb.socket 2>>/tmp/vimb.log ;;
+  embed) /usr/bin/vimb --cmd="$statusfont" \
+                       --cmd="$sslfont" \
+                       --cmd="$sslinvalidfont" \
+                       --cmd="$inputfont" \
+                       --cmd="$inputerrorfont" \
+                       --cmd="$completionfont" \
+                       --socket --dump --embed $2 >/tmp/vimb.socket 2>>/tmp/vimb.log ;;
 
   socket) shift
-          echo ";tabopen $@<CR>" | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
+          echo -e ";$statusfont<CR>\
+                   ;$sslfont<CR>\
+                   ;$sslinvalidfont<CR>\
+                   ;$inputfont<CR>\
+                   ;$inputerrorfont<CR>\
+                   ;$completionfont<CR>\
+                   ;tabopen $@<CR>"\
+          | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
 
-  *) /usr/bin/vimb --cmd="set status-font=$fn" "$@" 2>>/tmp/vimb.log ;;
+  *) /usr/bin/vimb --cmd="$statusfont" \
+                   --cmd="$sslfont" \
+                   --cmd="$sslinvalidfont" \
+                   --cmd="$inputfont" \
+                   --cmd="$inputerrorfont" \
+                   --cmd="$completionfont" \
+                   "$@" 2>>/tmp/vimb.log ;;
 esac
 
 # vim: set ft=sh: #

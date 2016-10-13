@@ -37,21 +37,21 @@ do
       '#' | '') continue ;;
 
       '=') title "$package $condition"
-          continue ;;
+           continue ;;
 
       '+') heading "[ Manual install required.. ]   $package"
-          continue ;;
+           continue ;;
 
       '!') eval $package $condition
-          continue ;;
+           continue ;;
 
-      '-' |\
-      '?' |\
-      '@' |\
-      'a' |\
-      'g' |\
-      '!' ) [ "$condition" ] && condition="$(echo $condition | sed -e 's/^\[//' -e 's/\]$//')" \
-                            || condition=true ;;
+        '-' \
+      | '?' \
+      | '@' \
+      | 'a' \
+      | 'g' \
+      | '!' ) [ "$condition" ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" \
+                               || condition=true ;;
 
       *) [ $package ] && condition="$(echo $package | sed -e 's/^\[//' -e 's/\]$//')" \
                       || condition=true ;;
@@ -62,7 +62,7 @@ do
     # package management
     case $action in
       '-') heading "[ Uninstalling.. ]   $package"
-          pm R $package ;;
+           pm R $package ;;
 
       '?') pm_install S $package ;;
       '@') aur_install $package ;;

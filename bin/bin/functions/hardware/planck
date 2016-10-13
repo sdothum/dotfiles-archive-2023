@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... Planck
+
+usage() {
+  echo "usage: $(basename $0) <keymap>"
+  exit 1
+}
+
+[ "$*" ] || usage
+cd $HOME/build/qmk_firmware/keyboards/planck
+sudo make clean
+sudo make KEYMAP=$1 dfu
+sudo chown -R $USER:users $HOME/build/qmk_firmware
+cd -
+
+# vim: set ft=sh: #

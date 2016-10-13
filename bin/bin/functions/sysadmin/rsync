@@ -153,6 +153,7 @@ case $@ in
           fi ;;
 
   stow) if server ;then
+          sudo chown -R shum:users /home/shum/stow/build/build/qmk_firmware
           if-yes "backup stow to $laptop" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$laptop:$HOME/
           if-yes "backup stow to $netbook" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$netbook:$HOME/
         else

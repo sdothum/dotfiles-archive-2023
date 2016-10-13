@@ -1,11 +1,13 @@
+nnoremap <BS> <C-o>
 nnoremap ; :
 nnoremap : ;
 nnoremap b :open !
 nnoremap B :tabopen !
 nnoremap d :quit<CR>
 nnoremap D :quit!<CR>
+nnoremap H :open http://luna:8000/tt-rss/<CR>
 nnoremap O :tabopen<Space>
-nnoremap <C-S> :set statusbar!<CR><Esc>
+nnoremap S :set statusbar!<CR><Esc>
 nnoremap t :open !/
 nnoremap T :tabopen !/
 nnoremap gt :sh! xdotool key --window $VIMB_XID ctrl+shift+l<CR><Esc>
@@ -24,8 +26,6 @@ nnoremap Q :eval! readable()<CR>
 nnoremap q :eval! simplyread()<CR>
 nnoremap x :sh! mpv %<CR>
 nnoremap X :eval! translate()<CR>
-nnoremap <BS> <C-O>
-nnoremap <C-h> :open http://luna:8000/tt-rss/index.php#f=39&c=1<CR>
 
 # augroup mygroup
 #   autocmd LoadCommited https://www.youtube.com/watch* :shell mpv %<CR>
@@ -37,8 +37,8 @@ set auto-resize-window=true
 set auto-shrink-images=true
 # set ca-bundle=~/.config/vimb/ca-bundle.crt
 # set closed-max-items=20
-# set download-path=/net/downloads/http
-set download-path=/home/shum/sandbox/
+set download-path=/net/downloads/http
+# set download-path=/home/shum/sandbox/
 set editor-command="gvim -f"
 set fontsize=12px
 set frame-flattening=true
