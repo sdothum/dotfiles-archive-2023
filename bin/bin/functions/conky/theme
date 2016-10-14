@@ -174,7 +174,7 @@ case "$action" in
   h | *) usage ;;
 esac
 
-echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nLUARINGS=$LUARINGS\nPANEL=$PANEL\n" >$CONKY:colors
+echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nLUARINGS=$LUARINGS\nPANEL=$PANEL\n" >$THEME
 
 draw conky
 

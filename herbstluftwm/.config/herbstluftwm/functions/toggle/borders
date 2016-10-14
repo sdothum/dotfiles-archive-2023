@@ -6,7 +6,7 @@
 
 # ........................................................ Toggle window borders
 
-normal=$ROOT/herbstluftwm:normal
+normal=$HLWM:normal
 
 # no borders focusing aid
 [ $(pgrep -cf 'focus borders') -gt 1 ] && exit

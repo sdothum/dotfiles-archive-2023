@@ -67,7 +67,7 @@ restore layout tags
 
 # session startup stuff, see .xinitrc
 is multihead && draw monitor secondary
-if ! [ -e $ROOT/herbstluftwm:autostart ] ;then
+if ! [ -e $HLWM:autostart ] ;then
   if arm ;then
     toggle unclutter
   else
@@ -79,7 +79,7 @@ if ! [ -e $ROOT/herbstluftwm:autostart ] ;then
     xdotool key ctrl+shift+space
   fi
 fi
-touch $ROOT/herbstluftwm:autostart
+touch $HLWM:autostart
 
 # wait for slowest emit_hook process
 sleep 1

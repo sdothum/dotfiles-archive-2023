@@ -16,8 +16,8 @@ volume() {
   case $@ in
     boot | root) echo /boot ;;
     net | share) echo /net ;;
-    backup)      echo /backup ;;
-    *)           echo $@ ;;
+    backup     ) echo /backup ;;
+    *          ) echo $@ ;;
   esac
 }
 

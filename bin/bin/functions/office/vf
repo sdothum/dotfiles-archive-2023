@@ -13,9 +13,9 @@ usage() {
 
 # v by directory depth or name
 case "$1" in
-  h)              usage ;;
+  h             ) usage ;;
   '' | 1 | 2 | 3) v $(find -L . -maxdepth ${1:-1} -type f | egrep -v '\.deprecated|\.hg') ;;
-  *)              v $(find -L . -type f -name "$1" | egrep -v '\.deprecated|\.hg') ;;
+  *             ) v $(find -L . -type f -name "$1" | egrep -v '\.deprecated|\.hg') ;;
 esac
 
 # vim: set ft=sh: #

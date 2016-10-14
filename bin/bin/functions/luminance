@@ -25,7 +25,7 @@ luminance() {
 case "$(echo ${1%??????})" in
   '+') [ $(luminance ${1#+}) -ge 128 ] ;;
   '-') [ $(luminance ${1#-}) -lt 128 ] ;;
-  *)   usage ;;
+  *  ) usage ;;
 esac
 
 

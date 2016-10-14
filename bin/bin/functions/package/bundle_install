@@ -68,7 +68,7 @@ do
       '@') aur_install $package ;;
       'a') arm_install $package ;;
       'g') gem_install $package ;;
-      *)   pm_install $action ;;
+      *  ) pm_install $action ;;
     esac
   done 3< $i
 done

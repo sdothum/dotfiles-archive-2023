@@ -7,7 +7,7 @@
 # ............................................................ Toggle scratchpad
 
 name='Scratchpad'
-scratchpad=$ROOT/herbstluftwm:scratchpad
+scratchpad=$HLWM:scratchpad
 # simple tabbed, tmux or byobu
 term=tmux
 
@@ -68,8 +68,8 @@ focus_check
 focus frame
 case "$term" in
   byobu) term $name FORTUNE byobu 'new-session -n ""' ;;
-  tmux)  term $name FORTUNE tmux 'new-session -n ""' ;;
-  *)     term $name FORTUNE TABBED ;;
+  tmux ) term $name FORTUNE tmux 'new-session -n ""' ;;
+  *    ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$scratchpad

@@ -11,8 +11,8 @@
 case $SHELL in
   *dash) ${DASHELL:-fh} $@ ;;
   *fish) fh $@ ;;
-  *zsh)  zh $@ ;;
-  *)     $SHELL -c history | grep "$@" ;;
+  *zsh ) zh $@ ;;
+  *    ) $SHELL -c history | grep "$@" ;;
 esac
 
 # vim: set ft=sh: #

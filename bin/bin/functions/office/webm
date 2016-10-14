@@ -18,10 +18,10 @@ delay=${delay:-1}
 
 if server ;then
   case $@ in
-    DVI-0 | left | l)  opts='-s 1680x1050 -i :0.0' ;;
+    DVI-0 | left | l ) opts='-s 1680x1050 -i :0.0' ;;
     DVI-1 | right | r) opts='-s 2560x1600 -i :0.0+1680,0' ;;
-    all | a)           opts='-s 4240x1600 -i :0.0' ;;
-    h | *) usage ;;
+    all | a          ) opts='-s 4240x1600 -i :0.0' ;;
+    h | *            ) usage ;;
   esac
 else
   set -- $(query display)

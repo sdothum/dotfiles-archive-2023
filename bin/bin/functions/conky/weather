@@ -20,14 +20,14 @@ done
 
 # http://www.weatheroffice.gc.ca/business/index_e.html for city codes
 case $1 in
-  calgary)   city=ab-52 ;;
-  halifax)   city=ns-19 ;;
-  kingston)  city=on-69 ;;
-  nanaimo)   city=bc-20 ;;
-  nelson)    city=bc-37 ;;
+  calgary  ) city=ab-52 ;;
+  halifax  ) city=ns-19 ;;
+  kingston ) city=on-69 ;;
+  nanaimo  ) city=bc-20 ;;
+  nelson   ) city=bc-37 ;;
   vancouver) city=bc-74 ;;
-  victoria)  city=bc-85 ;;
-  *)         city=on-52 ;;
+  victoria ) city=bc-85 ;;
+  *        ) city=on-52 ;;
 esac
 
 # WEATHER=$(curl --silent "http://www.weatheroffice.gc.ca/rss/city/${city}_e.xml?source=ignitionfork#stream/feed%2Fhttp%3A%2F%2Fwww.weatheroffice.gc.ca%2Frss%2Fcity%2F${city}_e.xml")

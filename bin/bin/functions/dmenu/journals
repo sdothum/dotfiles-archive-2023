@@ -16,7 +16,7 @@ service=$(stest -fl . \
 
 [ "$service" = '[ logs ]' ] && exec dmenu logs
 case $mode in
-  View)  [ $service ] && term "$service" journalctl -u $service.service ;;
+  View ) [ $service ] && term "$service" journalctl -u $service.service ;;
   Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;
 esac
 

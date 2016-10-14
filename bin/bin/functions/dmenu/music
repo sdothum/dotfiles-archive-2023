@@ -85,7 +85,7 @@ status() {
 }
 
 # ....................................................................... Player
- 
+
 # outer loop by library listing
 mpc list artist >/dev/null 2>&1 || exit
 # player controls on entry, note: cannot compare to null string
@@ -177,7 +177,7 @@ do
               mpc play
               exit ;;
 
-        add)    echo -n "$playlist" | mpc add >/dev/null ;;
+        add   ) echo -n "$playlist" | mpc add >/dev/null ;;
         insert) echo -n "$playlist" | mpc insert >/dev/null ;;
       esac
       break

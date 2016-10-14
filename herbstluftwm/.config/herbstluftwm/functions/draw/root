@@ -19,10 +19,9 @@
 
 arm && exit
 
-setroot=$ROOT/herbstluftwm:setroot
-shuffle=$ROOT/herbstluftwm:shuffle
-noblur=$ROOT/herbstluftwm:noblur
-theme=$ROOT/herbstluftwm:theme
+setroot=$HLWM:setroot
+shuffle=$HLWM:shuffle
+noblur=$HLWM:noblur
 root=$HOME/.setroot
 
 # blur radius, brightness (to slightly darken and enhance transparency)
@@ -207,13 +206,13 @@ if ! [ -e $BLANK ] ;then
   background=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e "$background" ] ;then
-    cp -f $background $CONKY:colors
+    cp -f $background $THEME
   else
     term 'Theme' STACK SHELL walltheme
     pwait walltheme
-    cp -f $CONKY:colors $background
+    cp -f $THEME $background
   fi
-  set_border $(conky palette $(grep 'default_color=' $CONKY:colors | cut -d= -f2) \
+  set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) \
              | grep 'Triadic Color' \
              | head -1 \
              | cut -d/ -f10)

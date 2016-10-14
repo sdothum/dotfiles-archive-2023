@@ -11,6 +11,6 @@ usage() {
   exit 1
 }
 
-[ "$*" ] && grep "$1" $CONKY:colors | cut -d= -f2 || usage
+[ "$*" ] && grep "$1" $THEME | cut -d= -f2 || usage
 
 # vim: set ft=sh: #

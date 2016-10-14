@@ -41,6 +41,13 @@
 
     " ............................................................... Easy-align
 
+      let g:easy_align_delimiters =
+        \{
+        \  '>': { 'pattern': '>>\|=>\|>' }
+        \, '(': { 'pattern': '(' }
+        \, ')': { 'pattern': ')', 'left_margin': 0 }
+        \}
+
       vmap <Enter>   <Plug>(EasyAlign)
       nmap <leader>a <Plug>(EasyAlign)
 

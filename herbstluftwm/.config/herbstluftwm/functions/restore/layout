@@ -113,21 +113,21 @@ case "$1" in
           layout $i
         done ;;
 
-  grid |\
-  horizontal |\
-  max |\
-  vertical |\
-  1:1 |\
-  1:2 |\
-  3:3:3) layout=$1
-         case $layout in
-           1:1)   layout=halves ;;
-           1:2)   layout=onethird ;;
-           3:3:3) layout=thirds ;;
-         esac
-         herbstclient lock
-         $layout $TAG
-         herbstclient unlock ;;
+    grid \
+  | horizontal \
+  | max \
+  | vertical \
+  | 1:1 \
+  | 1:2 \
+  | 3:3:3) layout=$1
+           case $layout in
+             1:1  ) layout=halves ;;
+             1:2  ) layout=onethird ;;
+             3:3:3) layout=thirds ;;
+           esac
+           herbstclient lock
+           $layout $TAG
+           herbstclient unlock ;;
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
      restore windowed

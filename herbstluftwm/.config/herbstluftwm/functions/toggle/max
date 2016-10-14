@@ -23,7 +23,7 @@ if is fullscreen ;then
   fi
 else
   layout=$(herbstclient dump '' '@' | sed -r 's/[^ ]* ([^:]*).*/\1/')
-  tag=$ROOT/herbstluftwm:tag:$(herbstclient attr monitors.focus.tag)
+  tag=$HLWM:tag:$(herbstclient attr monitors.focus.tag)
   if [ $layout != max ] ;then
     echo $layout >$tag
     set_layout max

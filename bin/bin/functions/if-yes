@@ -20,7 +20,7 @@ do
   echo
   case "$CONTINUE" in
     y | Y | '') exit 0 ;;
-    n | N)      exit 1 ;;
+    n | N     ) exit 1 ;;
 
     a | A) echo $PPID >/tmp/abort
            # try to cleanly close any child processes

@@ -13,7 +13,7 @@ case $(echo $1 | sed -r 's/^(.).*/\1/') in
   '+') [ $(query displaywidth) -gt ${1#?} ] ;;
   '=') [ $(query displaywidth) -eq ${1#?} ] ;;
   '-') [ $(query displaywidth) -lt ${1#?} ] ;;
-  *)   false ;;
+  *  ) false ;;
 esac
 
 # vim: set ft=sh: #

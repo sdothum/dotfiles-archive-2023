@@ -60,12 +60,12 @@ format() {
       if echo "$1" | grep -q "$HOME" ;then
         case "$PWD" in
           */.config*) pwd=".config/${PWD#*/.config}" ;;
-          */.vim*)    pwd=".vim/${PWD#*/.vim}" ;;
+          */.vim*   ) pwd=".vim/${PWD#*/.vim}" ;;
           */bin/bin*) pwd="${PWD#*/bin/bin/}" ;;
-          */bin*)     pwd="${PWD#*/bin/}" ;;
-          */build*)   pwd="${PWD#*/build/}" ;;
+          */bin*    ) pwd="${PWD#*/bin/}" ;;
+          */build*  ) pwd="${PWD#*/build/}" ;;
           */vimwiki*) ;;
-          *)          pwd="$PWD" ;;
+          *         ) pwd="$PWD" ;;
         esac
         [ $pwd ] && title="$pwd/$1" || title="${1%.wiki}"
       else

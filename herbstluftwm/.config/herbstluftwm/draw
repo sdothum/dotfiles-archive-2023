@@ -28,7 +28,7 @@ margins() {
     # 1680) is multihead && echo $(pixel_match $(margins 2560) $UM1680) || echo 42 ;;
     1680) echo 0 ;;
     1440) echo 10 ;;
-    *)    echo 0 ;;
+    *   ) echo 0 ;;
   esac
 }
 

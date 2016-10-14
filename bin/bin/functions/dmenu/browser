@@ -59,8 +59,7 @@ do
 
     qutebrowser) focus qutebrowser --target tab "$1" ;;
 
-    elinks |\
-    w3m) term "$browser" $browser "$1" ;;
+    elinks | w3m) term "$browser" $browser "$1" ;;
   esac
   exit
 done

@@ -18,7 +18,7 @@ SHADOW=${SHADOW:-1}
 # . ${0%/draw}/config/ENV
 case $@ in
   secondary*) panel_height=$(query pheight secondary) ;;
-  *)          panel_height=$(query pheight primary) ;;
+  *         ) panel_height=$(query pheight primary) ;;
 esac
 
 # ricing pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, etc

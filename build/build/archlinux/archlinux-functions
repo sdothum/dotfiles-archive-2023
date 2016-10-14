@@ -21,10 +21,8 @@ checkpoint() {
     reply=$(echo $REPLY | sed -r 's/^(.).*/\1/')
     case $reply in
       '' | y) return ;;
-
-      n) exit ;;
-
-      s) bash -i ;;
+      n     ) exit ;;
+      s     ) bash -i ;;
     esac
   done
   echo

@@ -78,7 +78,6 @@ if [ "$format" = y ] ;then
   partition() {
     case $diskutil in
       fdisk) $diskutil -l /dev/sd${disk} | grep "$@" | cut -d' ' -f1 | cut -c9 ;;
-
       gdisk) $diskutil -l /dev/sd${disk} | grep "$@" | awk '{ print $1; }' ;;
     esac
   }

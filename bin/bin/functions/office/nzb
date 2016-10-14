@@ -68,15 +68,15 @@ case $action in
   u) nzbget -E G U $queue
      nzb ;;
 
-  B) nzb b $(nzb S $queue) ;;
-  c) nzbget -o OutputMode=curses -C ;;
-  D) nzb d $(nzb S $queue) ;;
-  P) nzb p $(nzb S $queue) ;;
-  q) nzbget -Q ;;
-  r) nzbget --rate $queue ;;
-  s) nzb | egrep -i $queue ;;
-  S) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
-  U) nzb u $(nzb S $queue) ;;
+  B    ) nzb b $(nzb S $queue) ;;
+  c    ) nzbget -o OutputMode=curses -C ;;
+  D    ) nzb d $(nzb S $queue) ;;
+  P    ) nzb p $(nzb S $queue) ;;
+  q    ) nzbget -Q ;;
+  r    ) nzbget --rate $queue ;;
+  s    ) nzb | egrep -i $queue ;;
+  S    ) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
+  U    ) nzb u $(nzb S $queue) ;;
   h | *) usage ;;
 esac
 

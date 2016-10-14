@@ -17,8 +17,10 @@ case $1 in
   r) D=N
      shift
      dep='required by' ;;
+
   n) pacman -Qet
      exit ;;
+
   *) D=D
      dep='depends on' ;;
 esac
