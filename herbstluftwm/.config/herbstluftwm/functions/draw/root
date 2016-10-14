@@ -19,10 +19,9 @@
 
 arm && exit
 
-setroot=$HLWM:setroot
-shuffle=$HLWM:shuffle
-noblur=$HLWM:noblur
-root=$HOME/.setroot
+SETROOT=$HLWM:setroot
+SHUFFLE=$HLWM:shuffle
+NOBLUR=$HLWM:noblur
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50
@@ -32,7 +31,7 @@ modulo=3
 # color swatch size to create
 size=180x180
 
-[ -e $setroot ] || echo '0: :0: ' >$setroot
+[ -e $SETROOT ] || echo '0: :0: ' >$SETROOT
 
 # linked file reference
 exists() {
@@ -46,14 +45,14 @@ exists() {
 # ..................................................................... Map blur
 
 if [ "$1" = 'toggle' ] ;then
-  [ -e $noblur ] && rm -f $noblur || touch $noblur
+  [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR
 fi
 
 # occupied or empty desktop, setroot record structure:
 # 1: occupied (blurred image)
 # 0: empty (raw image)
 root() {
-  if ! [ -e $noblur ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
+  if ! [ -e $NOBLUR ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
     echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
   else
     echo "0: --on $1 --zoom $WALLPAPER"
@@ -110,7 +109,7 @@ blank() {
     set_border "$(conky theme contrast $color)"
   fi
   echo $color >$BLANK
-  rm -f $theme 2>/dev/null
+  rm -f $THEME 2>/dev/null
   # make inactive border invisible!
   herbstclient attr theme.normal.color "#$color"
 }
@@ -134,7 +133,7 @@ wallpaper() {
   # initialize default link
   [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   rm -f $BLANK
-  rm -f $theme 2>/dev/null
+  rm -f $THEME 2>/dev/null
   herbstclient attr theme.normal.color "$NORMAL"
 }
 
@@ -151,42 +150,37 @@ select_wallpaper() {
 shuffle() {
   ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
   rm -f $BLANK
-  rm -f $theme 2>/dev/null
+  rm -f $THEME 2>/dev/null
 }
 
 # ...................................................................... Setroot
 
 unblur() {
   # (0) ignore, (1) change of state to unblurred
-  expr $1 '<' $(cut -d: -f$2 $setroot)
+  expr $1 '<' $(cut -d: -f$2 $SETROOT)
 }
-
+set -x
 # remember current background state for autostart
 case "$1" in
-  blank)   blank $2
-           rm -f $root ;;
-
-  restore) select_blank
-           echo blank >$root ;;
+  blank  ) blank $2 ;;
+  restore) select_blank ;;
 
   save) color=$(cat $BACKGROUND.color)
         convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
         notify low 'Background Color' "$color saved" ;;
 
-  select) rm -f $shuffle 2>/dev/null
-          select_wallpaper
-          echo wallpaper >$root ;;
+  select) rm -f $SHUFFLE 2>/dev/null
+          select_wallpaper ;;
 
-  shuffle) touch $shuffle
-           shuffle
-           echo wallpaper >$root ;;
+  shuffle) touch $SHUFFLE
+           shuffle ;;
 
   wallpaper) wallpaper ;;
 
-  *) [ "$(setblur)" = "$(cat $setroot)" ] && exit
-     # echo "= setblur -> $(setblur)\n= setroot -> $(cat $setroot)" >>$TRACE
+  *) [ "$(setblur)" = "$(cat $SETROOT)" ] && exit
+     # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETROOT)" >>$TRACE
      # random background selection on un-blur change of state
-     if [ -e $shuffle ] ;then
+     if [ -e $SHUFFLE ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
          # increase modulo to reduce frequency of shuffle
          one_in $modulo && shuffle
@@ -196,13 +190,13 @@ esac
 
 # ........................................................................ Theme
 
-setblur >$setroot
+setblur >$SETROOT
 # must bracket eval &
 [ -e $BLANK ] || eval setroot ${primary#?:} ${secondary#?:} &
 
-# apply conky theme to .conkyrc, $theme unset above if new background
+# apply conky theme to .conkyrc, $THEME unset above if new background
 if ! [ -e $BLANK ] ;then
-  [ -e $theme ] && exit
+  [ -e "$THEME" ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e "$background" ] ;then
