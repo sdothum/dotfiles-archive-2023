@@ -31,7 +31,7 @@ vimbt() {
   pkill -TERM -x unclutter
 
   # tabbed appends winid to expanded command arguments, see vimb
-  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' vimb embed
+  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#fdf6e3' -u '#464F52' -U '#B2BBBD' vimb embed
   winstance 'VimbT' && toggle unclutter &
 }
 

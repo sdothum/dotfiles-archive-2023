@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="draw/conky $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ Refresh conky
+
+# reload .conkyrc (herbstluftwm spawn to avoid interactive shell hanging, see draw root)
+pkill -TERM -f '/usr/bin/conky' >/dev/null 2>&1
+[ -e $CONKY ] && herbstclient spawn conky
+
+# vim: set ft=sh: #

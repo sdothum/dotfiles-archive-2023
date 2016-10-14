@@ -22,9 +22,7 @@ do
   else
     conky theme test "$(randcolor)"
   fi
-  [ $? -eq 0 ] && break
-  # see if-no if-yes prompts
-  [ -e /tmp/abort ] && break
+  if-no 'keep conky theme' || break
 done
 
 # vim: set ft=sh: #

@@ -207,18 +207,17 @@ if ! [ -e $BLANK ] ;then
   background=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e "$background" ] ;then
-    colours=$(cat "$background")
-    [ $(echo "$colours" | wc -w) -eq 8 ] && conky theme colours $colours \
-                                         || conky theme scheme $colours
+    cp -f $background $CONKY:colors
   else
     term 'Theme' STACK SHELL walltheme
     pwait walltheme
+    cp -f $CONKY:colors $background
   fi
-  set_border $(conky palette $(awk '{ print $1 }' $background) \
+  set_border $(conky palette $(grep 'default_color=' $CONKY:colors | cut -d= -f2) \
              | grep 'Triadic Color' \
              | head -1 \
              | cut -d/ -f10)
-  echo $colours >$theme
+  draw conky
 fi
 
 # restart panels with new theme

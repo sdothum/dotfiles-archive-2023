@@ -41,7 +41,6 @@
 
 usage() {
   echo "usage: $(basename $0) theme  test | contrast | light | dark  <hex colour>"
-  echo "usage: $(basename $0) theme  rings <3..> | graphs <2..> | text <5..> | hidden <3..> | colours <8..> | scheme <8..> <paper|ink>"
   exit 1
 }
 
@@ -143,13 +142,6 @@ ink() {
 
 # ....................................................................... Themes
 
-tmpbackup() {
-  tmp=$(mktemp).conkyrc
-  cp -v $conkyrc $tmp
-  tmp=$(mktemp).conky-rings.lua
-  cp -v $conkylua $tmp
-}
-
 action=$1
 shift
 case "$action" in
@@ -171,47 +163,19 @@ case "$action" in
         fi ;;
 
   test) if [ $# -eq 1 ] ;then
-          tmpbackup
           hexgen $1
-          echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
           luminance +$default_color && paper || ink
-          # are we in interactive mode
-          theme=$(query theme)
-          if if-no "update $theme" ;then
-            exit 1
-          else
-            echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI >$theme
-            if if-no "change contrast" ;then
-              exit
-            else
-              luminance -$default_color && contrast=paper || contrast=ink
-              sed -i "s/$/ $contrast/" $theme
-              exit
-            fi
+          if ! if-no "change contrast" ;then
+            luminance -$default_color && paper || ink
           fi
+          complimentary $1
         fi ;;
-
-
-  rings)  [ $# -eq 3 ] && rings $@ ;;
-  graphs) [ $# -eq 2 ] && graphs $@ ;;
-  text)   [ $# -eq 5 ] && text $@ ;;
-  hidden) [ $# -eq 3 ] && hidden $@ ;;
-
-  colo*rs) if [ $# -eq 8 ] ;then
-             colours $@
-             # match theme colors
-             luminance +$1 && paper || ink
-           fi ;;
-
-  scheme) [ $# -eq 9 ] && scheme $@ ;;
 
   h | *) usage ;;
 esac
 
 echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nLUARINGS=$LUARINGS\nPANEL=$PANEL\n" >$CONKY:colors
 
-# reload .conkyrc (herbstluftwm spawn to avoid interactive shell hanging, see draw root)
-pkill -TERM -f '/usr/bin/conky' >/dev/null 2>&1
-[ -e $CONKY ] && herbstclient spawn conky
+draw conky
 
 # vim: set ft=sh: #

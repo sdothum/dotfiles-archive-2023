@@ -22,7 +22,6 @@ browsers="qutebrowser \
           midori \
           opera \
           vimb \
-          vimb-detached \
           vimbt \
           surf \
           uzbl \
@@ -55,7 +54,6 @@ do
     | surf \
     | uzbl \
     | vimb \
-    | vimb-detached \
     | vimbt \
     | xombrero) focus $browser "$1" ;;
 

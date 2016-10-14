@@ -36,7 +36,7 @@ udiskie --use-udisks2 --automount --notify --no-tray &
 # fi
 . /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 # export dbus for cron notifications, see notify
-echo "export $(env | grep DBUS_SESSION_BUS_ADDRESS) >$HOME/.dbus/Xdbus
+echo "export $(env | grep DBUS_SESSION_BUS_ADDRESS)" >$HOME/.dbus/Xdbus
 chmod 600 $HOME/.dbus/Xdbus
 
 # ................................................................ Gnome keyring

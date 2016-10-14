@@ -24,6 +24,7 @@ title "archlinux testing"
 sudo sed -i -e '/^#\[.*testing\]/s/^#//' \
             -e '/^#Include/s/^#//' \
          /etc/pacman.conf
+sudo pacman -Syu
 
 
 title "pacman key server"
@@ -56,6 +57,6 @@ title "installation errors:"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
 echo
-echo "source /etc/profile.d/bin.sh, then startx.."
+echo "reboot, then x (startx).."
 
 # vim: set ft=sh: #
