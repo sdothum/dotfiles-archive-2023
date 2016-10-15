@@ -48,16 +48,21 @@ do
 done
 # monitor dependent env must be set after detect monitors
 . ${0%/autostart}/config/ENV
+env
 
-# .............................................................. Desktop layouts
+# ...................................................................... Desktop
 
+# initialize desktop blur and panel / conky rules
+# enable conky early to avoid visual screen refresh
+toggle compton
 # appropriately wild herbstluftwm background color! see .xinitrc
-if [ "$SETROOT" = blank ] ;then
-  draw root blank $(cat $BACKGROUND.color 2>/dev/null)
-else
-  # random background colour surprise a la herbstluftwm!
-  draw root blank
-fi
+background=$(cat $SETROOT 2>/dev/null)
+case "$background" in
+  blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
+  wallpaper) draw root wallpaper ;;
+  *        ) draw root blank ;;
+esac
+[ $PANEL_MARGIN ] && toggle panel || toggle conky
 
 # initialize tag layouts
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
@@ -100,11 +105,6 @@ toggle focus
 
 # ................................................................ Final touches
 
-# initialize desktop blur and panel / conky rules
-toggle compton
-# setroot (wallpaper) last wallpaper (blank) last blank wall, otherwise random blank wall
-[ "$SETROOT" = wallpaper ] && draw root wallpaper
-[ $PANEL_MARGIN ] && toggle panel || toggle conky
 # emit hook stalled otherwise until a new window action..
 focus frame
 focus window

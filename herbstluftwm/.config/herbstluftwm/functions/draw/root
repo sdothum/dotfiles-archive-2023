@@ -19,7 +19,7 @@
 
 arm && exit
 
-SETROOT=$HLWM:setroot
+SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
 NOBLUR=$HLWM:noblur
 
@@ -31,7 +31,7 @@ modulo=3
 # color swatch size to create
 size=180x180
 
-[ -e $SETROOT ] || echo '0: :0: ' >$SETROOT
+[ -e $SETBLUR ] || echo '0: :0: ' >$SETBLUR
 
 # linked file reference
 exists() {
@@ -98,18 +98,16 @@ blank() {
   else
     color=$(randcolor)
   fi
-  echo $color >$BACKGROUND.color
+  echo $color >$COLOR
   setroot --blank-color "#$color" 2>/dev/null
-  background=$(background)
-  if echo $background | grep -q '/dark/' ;then
+  if echo "$background" | grep -q '/dark/' ;then
     set_border "$(conky theme light $color)"
-  elif echo $background | grep -q '/light/' ;then
+  elif echo "$background" | grep -q '/light/' ;then
     set_border "$(conky theme dark $color)"
   else
     set_border "$(conky theme contrast $color)"
   fi
   echo $color >$BLANK
-  rm -f $THEME 2>/dev/null
   # make inactive border invisible!
   herbstclient attr theme.normal.color "#$color"
 }
@@ -126,7 +124,8 @@ select_blank() {
   /usr/bin/feh -B black --scale-down -r \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
                --start-at $(lname $BACKGROUND) $(find ${BACKGROUND%/default}/ -name '*.png')
-  blank $(background | sed -r 's|.*/(.*).png|\1|')
+  background=$(background)
+  blank $(basename $background .png)
 }
 
 wallpaper() {
@@ -157,28 +156,33 @@ shuffle() {
 
 unblur() {
   # (0) ignore, (1) change of state to unblurred
-  expr $1 '<' $(cut -d: -f$2 $SETROOT)
+  expr $1 '<' $(cut -d: -f$2 $SETBLUR)
 }
-set -x
+
 # remember current background state for autostart
 case "$1" in
-  blank  ) blank $2 ;;
-  restore) select_blank ;;
+  blank)   blank $2
+           rm -f $SETROOT ;;
 
-  save) color=$(cat $BACKGROUND.color)
+  restore) select_blank
+           echo blank >$SETROOT ;;
+
+  save) color=$(cat $COLOR)
         convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
         notify low 'Background Color' "$color saved" ;;
 
   select) rm -f $SHUFFLE 2>/dev/null
-          select_wallpaper ;;
+          select_wallpaper
+          echo wallpaper >$SETROOT ;;
 
   shuffle) touch $SHUFFLE
-           shuffle ;;
+           shuffle
+           echo wallpaper >$SETROOT ;;
 
   wallpaper) wallpaper ;;
 
-  *) [ "$(setblur)" = "$(cat $SETROOT)" ] && exit
-     # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETROOT)" >>$TRACE
+  *) [ "$(setblur)" = "$(cat $SETBLUR)" ] && exit
+     # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
      # random background selection on un-blur change of state
      if [ -e $SHUFFLE ] ;then
        if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
@@ -190,7 +194,7 @@ esac
 
 # ........................................................................ Theme
 
-setblur >$SETROOT
+setblur >$SETBLUR
 # must bracket eval &
 [ -e $BLANK ] || eval setroot ${primary#?:} ${secondary#?:} &
 

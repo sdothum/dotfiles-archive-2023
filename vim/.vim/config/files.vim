@@ -114,6 +114,7 @@
 
       function! ComposeMail()
         call SetTheme()                     " set default cursorline highlight
+        call FontSize(0)                    " set font
         call ProseView()
         " email has blank lines inserted externally (via sed) for replys to
         " avoid the previously messy and unpredictable editing mode vim commands

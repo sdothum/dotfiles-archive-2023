@@ -18,6 +18,10 @@ export HLWM=$ROOT/herbstluftwm
 # ............................................................ Persistent states
 
 export BACKGROUND=$HOME/images/colors/default
+export COLOR=$BACKGROUND:color
+export SETROOT=$HOME/.setroot
+export WALLPAPER=$HOME/images/backgrounds/default
+
 export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
 export COMPTON=$HLWM:compton
@@ -30,7 +34,6 @@ export MONOCLE=$HLWM:monocle
 export PANEL=$HLWM:panel
 export PULSAR=$HLWM:pulsar
 export THEME=$HLWM:theme
-export WALLPAPER=$HOME/images/backgrounds/default
 
 # select wallpaper subdirectory
 export WALL=${WALL:-.}

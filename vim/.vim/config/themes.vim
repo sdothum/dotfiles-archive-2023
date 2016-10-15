@@ -195,13 +195,13 @@
             " let g:lite_dfm_left_offset = 18
           endif
         endif
-        " toggle fullscreen to reposition statusline (2x required to restore)
-        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
-        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
       endfunction
 
       function! FontSwitch()
         call FontSize(0)
+        " toggle fullscreen to reposition statusline (2x required to restore)
+        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
+        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
         if &filetype !~ g:goyotypes
           call Quietly('LiteDFMClose')
           call LiteType()
