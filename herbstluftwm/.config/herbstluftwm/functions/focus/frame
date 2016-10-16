@@ -54,6 +54,7 @@ do
     fi
   fi
 done
+
 # herbstclient chain . set_layout vertical . unlock
 herbstclient unlock
 rm -f $LOCK

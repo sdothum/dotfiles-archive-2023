@@ -28,6 +28,7 @@ do
     break
   fi
 done
+
 herbstclient unlock
 rm -f $LOCK
 

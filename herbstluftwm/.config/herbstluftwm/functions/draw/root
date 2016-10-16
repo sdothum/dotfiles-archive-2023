@@ -42,7 +42,7 @@ exists() {
   fi
 }
 
-# ..................................................................... Map blur
+# ............................................................. Per monitor blur
 
 if [ "$1" = 'toggle' ] ;then
   [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR
@@ -86,7 +86,7 @@ set_border() {
   herbstclient attr theme.active.color "#$(cat $BORDER)"
 }
 
-# ................................................................... Background
+# ............................................................... Set background
 
 background() {
   ls -l $BACKGROUND | cut -d'>' -f2
@@ -114,7 +114,8 @@ blank() {
 
 color() {
   # initialize default link
-  [ -L $BACKGROUND ] && exists $BACKGROUND || ln -sf $(find ${BACKGROUND%/default} -name '*.png' | head -1) $BACKGROUND
+  [ -L $BACKGROUND ] && exists $BACKGROUND \
+                     || ln -sf $(find ${BACKGROUND%/default} -name '*.png' | head -1) $BACKGROUND
 }
 
 select_blank() {
@@ -128,9 +129,12 @@ select_blank() {
   blank $(basename $background .png)
 }
 
+# ................................................................ Set wallpaper
+
 wallpaper() {
   # initialize default link
-  [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
+  [ -L $WALLPAPER ] && exists $WALLPAPER \
+                    || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   rm -f $BLANK
   rm -f $THEME 2>/dev/null
   herbstclient attr theme.normal.color "$NORMAL"
@@ -192,7 +196,7 @@ case "$1" in
      fi ;;
 esac
 
-# ........................................................................ Theme
+# .................................................................. Apply theme
 
 setblur >$SETBLUR
 # must bracket eval &

@@ -10,7 +10,7 @@
 
 
 # default master pane left or right
-master=left
+MASTER=${MASTER:-left}
 
 # initial desktop layouts
 layout() {
@@ -37,6 +37,8 @@ layout() {
     herbstclient load "$1" '(clients vertical:0)'
   fi
 }
+
+# ...................................................................... Layouts
 
 # grid, horizontal, max and vertical explode frame windows..
 grid() {
@@ -76,7 +78,7 @@ onethird() {
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
-    [ $master = left ] && split 0.3333 || split 0.6666
+    [ $MASTER = left ] && split 0.3333 || split 0.6666
   fi
 }
 
@@ -85,7 +87,7 @@ thirds() {
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
   else
     restore mono
-    if [ $master = left ] ;then
+    if [ $MASTER = left ] ;then
       # master window on left
       herbstclient chain . set_layout horizontal . split explode 0.6666 \
                          . focus_edge right . cycle_layout 1 vertical \
@@ -106,6 +108,8 @@ thirds() {
     fi
   fi
 }
+
+# ....................................................................... Select
 
 case "$1" in
   tags) for i in $TAGS

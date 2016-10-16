@@ -29,6 +29,8 @@ focus_check() {
   [ "$(query wname)" = $name ] && exit
 }
 
+# .......................................................... Hide visible window
+
 if search --onlyvisible >/dev/null ;then
   if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
                   compare monitors.focus.tag = TAG 2>/dev/null ;then
@@ -38,6 +40,8 @@ if search --onlyvisible >/dev/null ;then
     exit
   fi
 fi
+
+# ............................................................... Restore window
 
 focus frame
 
@@ -63,6 +67,8 @@ do
   fi
 done
 focus_check
+
+# .......................................................... Create new instance
 
 # cancel out above focus frame
 focus frame
