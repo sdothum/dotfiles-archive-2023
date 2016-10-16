@@ -5,6 +5,8 @@
 
 # ....................................................................... Movies
 
+# Usage: dmenu movies [cache]
+
 # Library structure:
 # ../videos
 #        ../movies
@@ -33,6 +35,8 @@ if stest -dqr -n "$cache" $library ;then
   catlg
 fi
 
+# initialize cache, see autostart
+[ "$1" = cache ] && exit
 
 library() {
   [ "$1" ] && echo '[ theatrical   ]' || echo '[ animation    ]'

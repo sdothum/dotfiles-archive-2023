@@ -86,15 +86,17 @@ format() {
 \usepackage{lineno}
 \usepackage{setspace}
 \pagestyle{fancy}
-\FPadd\hdrsize{$fontsize}{\ifnumgreater{$fontsize}{7}{-1}{0}}
+\FPadd\hdrsize{$fontsize}{\ifnumgreater{$fontsize}{9}{-2}{\ifnumgreater{$fontsize}{8}{-1}{0}}}
+\FPadd\ttlsize{$fontsize}{\ifnumgreater{$fontsize}{8}{-1}{0}}
 % bold header
 % \newcommand{\hdrfont}{\bfseries\fontsize{\hdrsize}{\hdrsize}\selectfont}%
 \newcommand{\hdrfont}{\fontsize{\hdrsize}{\hdrsize}\selectfont}%
+\newcommand{\ttlfont}{\fontsize{\ttlsize}{\ttlsize}\selectfont}%
 \fancyhf{}
 % lighten header underline (0 to turn off)
 \renewcommand{\headrulewidth}{0.1pt}
 \fancyhead[L]{\hdrfont{\ifstrempty{$time}{\today}{$time}}}
-\fancyhead[C]{\hdrfont{$title}}
+\fancyhead[C]{\ttlfont{$title}}
 \fancyhead[R]{\hdrfont{\thepage}}
 \setmainfont[]{PragmataPro}
 \renewcommand\linenumberfont{\selectfont}%
