@@ -48,7 +48,7 @@ do
 done
 # monitor dependent env must be set after detect monitors
 . ${0%/autostart}/config/ENV
-env
+# env
 
 # ...................................................................... Desktop
 

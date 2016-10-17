@@ -17,12 +17,12 @@ layout() {
   load=true
   if is display =2560 ;then
     case $1 in
-      1) even       '1' ;;
+      1) halves     '1' ;;
       2) max        '2' ;;
-      3) even       '3' ;;
-      4) even       '4' ;;
+      3) halves     '3' ;;
+      4) halves     '4' ;;
       5) horizontal '5' ;;
-      6) even       '6' ;;
+      6) halves     '6' ;;
     esac
   elif is display =3440 ;then
     case $1 in
@@ -30,7 +30,7 @@ layout() {
       2) max        '2' ;;
       3) thirds     '3' ;;
       4) thirds     '4' ;;
-      5) uneven     '5' ;;
+      5) onethird   '5' ;;
       6) thirds     '6' ;;
     esac
   else

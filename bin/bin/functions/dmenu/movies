@@ -5,38 +5,44 @@
 
 # ....................................................................... Movies
 
-# Usage: dmenu movies [cache]
+# Usage: dmenu movies [animation | cache]
 
 # Library structure:
 # ../videos
 #        ../movies
 #               ../title.YEAR.*  (movie)
 
+if [ "$1" = cache ] ;then
+  cache=true
+  shift
+fi
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
 playlist=$library/.playlist
-cache=$CACHEDIR/dmenu:${1:-movies}
+catlg=$CACHEDIR/dmenu:${1:-movies}
 # unset debug to remove exit from menu items
 debug='\nexit'
 
 # list latest movie additions first
 T=t
 catlg() {
-  cat /dev/null >$cache
+  cat /dev/null >$catlg
   ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
-  playlist /tmp/dmenu:movies "$playlist" >$cache &
+  playlist /tmp/dmenu:movies "$playlist" >$catlg &
 }
 
-# any new media added?
-if stest -dqr -n "$cache" $library ;then
+cache() {
   time=5 notify low 'Movies' 'Caching library..'
   # clean up titles
   mytitles $library >>/tmp/mytitles:${1:-movies}
   [ -e "$playlist" ] || echo >"$playlist"
   catlg
-fi
+}
 
-# initialize cache, see autostart
-[ "$1" = cache ] && exit
+# any new media added?
+if stest -dqr -n "$catlg" $library ;then
+  cache
+fi
+[ $cache ] && exit
 
 library() {
   [ "$1" ] && echo '[ theatrical   ]' || echo '[ animation    ]'
@@ -50,7 +56,7 @@ options() {
 while :
 do
   # rebuilding catalogue?
-  if ! [ -s $cache ] ;then
+  if ! [ -s $catlg ] ;then
     sleep 0.1
     continue
   fi
@@ -58,7 +64,7 @@ do
   # focus monitor menu originally presented on
   [ $monitor ] && herbstclient focus_monitor $monitor
 
-  movie=$(cat $cache \
+  movie=$(cat $catlg \
         | sed "1i$(library $1)" \
         | sed "1i$(options)" \
         | dmenu 'Movie' "$movie" -no-custom) || exit

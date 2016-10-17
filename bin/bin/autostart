@@ -43,7 +43,6 @@ dmenu movies cache
 # autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
-draw compton
 # if server ;then
 #   dispread -v -d2 -c1 -yl "-P0.012987012987,1,4.11345646438" \
 #           -k "L3007WFPHC 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
@@ -58,7 +57,7 @@ unclutter -idle 1 -jitter 2 -root &
 # ................................................................. Systray apps
 
 ps -ef | grep autokey-gtk | grep -qv grep || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
-pidof gpaste-client >/dev/null || gpaste-client &
+pidof gpaste-client >/dev/null || gpaste-client start &
 pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 
 # ................................................................ Terminal apps
