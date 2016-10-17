@@ -17,6 +17,11 @@
 //   avr-libc-atmel
 //   dfu-programmer
 //
+// Attention
+// ▔▔▔▔▔▔▔▔▔
+//   Turn layer_off _ADJUST before setting default layer, else a usb reset
+//   will be necessary (disconnect, connect) after changing layouts
+//
 // Notes
 // ▔▔▔▔▔
 //   New colemak-dh, number, symbol/function and navigation pad layers
@@ -94,6 +99,7 @@ enum planck_keycodes {
   PLOVER,
   PLOVEX,
   KEYTEST,
+  Alt = KC_LEAD,
   Tab = LT (_NUMBER, KC_TAB),
   Del = LT (_SYMBOL, KC_DEL),
 };
@@ -157,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
     {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
-    {KC_EQL,  KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  KC_LCTL, Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Qwerty
@@ -176,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
     {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-    {KC_EQL,  KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  KC_LCTL, Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Dvorak
@@ -195,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
     {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
     {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-    {KC_EQL,  KC_LCTL, Caps,    KC_LALT, Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  KC_LCTL, Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Plover
@@ -431,6 +437,61 @@ const qk_tap_dance_action_t tap_dance_actions[] = {
 //   return MACRO_NONE;
 // };
 
+// see herbstluftwm keybinds
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+    SEQ_ONE_KEY(KC_C) {
+      register_code   (KC_LALT);
+      register_code   (KC_LCBR);
+      unregister_code (KC_LCBR);
+      unregister_code (KC_LALT);
+    }
+    SEQ_ONE_KEY(KC_D) {
+      register_code   (KC_LALT);
+      register_code   (KC_RCBR);
+      unregister_code (KC_RCBR);
+      unregister_code (KC_LALT);
+    }
+    SEQ_ONE_KEY(KC_S) {
+      register_code   (KC_LALT);
+      register_code   (KC_LSFT);
+      register_code   (KC_LCBR);
+      unregister_code (KC_LCBR);
+      unregister_code (KC_LSFT);
+      unregister_code (KC_LALT);
+    }
+    SEQ_ONE_KEY(KC_T) {
+      register_code   (KC_LALT);
+      register_code   (KC_LSFT);
+      register_code   (KC_RCBR);
+      unregister_code (KC_RCBR);
+      unregister_code (KC_LSFT);
+      unregister_code (KC_LALT);
+    }
+    SEQ_ONE_KEY(KC_F) {
+      register_code   (KC_LALT);
+      register_code   (KC_LCTL);
+      register_code   (KC_LCBR);
+      unregister_code (KC_LCBR);
+      unregister_code (KC_LCTL);
+      unregister_code (KC_LALT);
+    }
+    SEQ_ONE_KEY(KC_P) {
+      register_code   (KC_LALT);
+      register_code   (KC_LCTL);
+      register_code   (KC_RCBR);
+      unregister_code (KC_RCBR);
+      unregister_code (KC_LCTL);
+      unregister_code (KC_LALT);
+    }
+  }
+}
+
 void persistant_default_layer_set(uint16_t default_layer)
 {
   eeconfig_update_default_layer(default_layer);
@@ -439,8 +500,16 @@ void persistant_default_layer_set(uint16_t default_layer)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-  // turn off _ADJUST layer before setting default layer else usb reset necessary
   switch (keycode) {
+    case Alt:
+      if (record->event.pressed) {
+        register_code   (KC_LALT);
+      } else {
+        unregister_code (KC_LALT);
+      }
+      // LT hack
+      // return false;
+      break;
     case Tab:
       if (record->event.pressed) {
         layer_on        (_NUMBER);

@@ -35,6 +35,6 @@ unlock() {
 pidof chromium >/dev/null || unlock $(echo " $hosts " | sed "s/ $(hostname) / /")
 
 # focus frame (see dmenu browser)
-[ "$*" ] && eval $chrome $(echo $@ | cut -d' ' -f-$(( $# - 1 )) ) -app=\${$#} || focus $chrome
+[ "$*" ] && eval focus $chrome $(echo $@ | cut -d' ' -f-$(( $# - 1 )) ) -app=\${$#} || focus $chrome
 
 # vim: set ft=sh: #

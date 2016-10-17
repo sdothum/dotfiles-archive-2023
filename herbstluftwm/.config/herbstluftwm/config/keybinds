@@ -75,7 +75,7 @@ hc keybind $Mod-Control-bracketright spawn switch monitor 0
 hc keybind $Mod-u                    split bottom 0.5
 hc keybind $Mod-o                    split right  0.5
 hc keybind $Mod-Shift-u              split bottom 0.666666
-hc keybind $Mod-Shift-o              split right  0.666666
+cfcc
 hc keybind $Mod-Control-u            split bottom 0.333333
 hc keybind $Mod-Control-o            split right  0.333333
 # let the current frame explode into subframes

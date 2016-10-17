@@ -8,8 +8,7 @@
 # Usage: dmenu browser uri [<bookmarks>]
 
 # in order of personal preference..
-browsers="qutebrowser \
-          brave \
+browsers="brave \
           chromium \
           dwb \
           elinks \
@@ -21,6 +20,7 @@ browsers="qutebrowser \
           luakit \
           midori \
           opera \
+          qutebrowser \
           vimb \
           vimbt \
           surf \

@@ -18,6 +18,7 @@ if [ -z "$*" ] ;then
     exit
   fi
   mirrorlist Canada
+  sudo pacman-key -u
   # pacaur -Syu --repo
   # pacaur -Su --aur --noconfirm
 
@@ -38,7 +39,7 @@ if [ -z "$*" ] ;then
     pacupg
   else
     pacupg $aur
-  fi 
+  fi
 
   # update any .pacnew configs
   pacnew=$(sudo find /etc -name '*.pacnew')
