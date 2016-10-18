@@ -99,9 +99,16 @@ enum planck_keycodes {
   PLOVER,
   PLOVEX,
   KEYTEST,
+#ifdef LEADER
+  Ctl = KC_LCTL,
   Alt = KC_LEAD,
-  Tab = LT (_NUMBER, KC_TAB),
-  Del = LT (_SYMBOL, KC_DEL),
+#endif
+#ifdef ONE_SHOT
+  Ctl = OSM (MOD_LCTL),
+  Alt = OSM (MOD_LALT),
+#endif
+  Tab = LT  (_NUMBER, KC_TAB),
+  Del = LT  (_SYMBOL, KC_DEL),
 };
 
 enum tap_dance {
@@ -110,20 +117,26 @@ enum tap_dance {
   _LCBR,
 };
 
-// enum shift_macros {
-//   SPC = 0,
-//   BSPC,
-// };
+#ifdef SHIFT_TOGGLE
+enum shift_macros {
+  SPC = 0,
+  BSPC,
+};
+#endif
 
 // modifier keys
 #define Grv     GUI_T (KC_GRV)
 #define Esc     CTL_T (KC_ESC)
 #define Mins    SFT_T (KC_MINS)
 #define Caps    GUI_T (KC_CAPS)
-// #define Spc  M     (SPC)
-// #define Bspc M     (BSPC)
+#ifndef SHIFT_TOGGLE
 #define Spc     SFT_T (KC_SPC)
 #define Bspc    SFT_T (KC_BSPC)
+#endif
+#ifdef SHIFT_TOGGLE
+#define Spc     M     (SPC)
+#define Bspc    M     (BSPC)
+#endif
 #define Left    ALT_T (KC_LEFT)
 #define Down    GUI_T (KC_DOWN)
 #define Up      CTL_T (KC_UP)
@@ -163,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
     {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
-    {KC_EQL,  KC_LCTL, Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  Ctl,     Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Qwerty
@@ -182,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
     {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-    {KC_EQL,  KC_LCTL, Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  Ctl,     Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Dvorak
@@ -201,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
     {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
     {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-    {KC_EQL,  KC_LCTL, Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  Ctl,     Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Plover
@@ -398,45 +411,48 @@ const qk_tap_dance_action_t tap_dance_actions[] = {
   [_LCBR] = ACTION_TAP_DANCE_FN (curly),
 };
 
-// // macro replacement for SFT_T to avoid tap timing anomalies (sacrifices auto-repeat)
-// static uint16_t key_timer;
-//
-// const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-// {
-//   // see process_record_user(default)
-//   switch(id) {
-//     case SPC:
-//       if (record->event.pressed) {
-//         key_timer = timer_read();
-//         register_code     (KC_LSFT);
-//       }
-//       else {
-//         // unregister modifier early (vim requirement)
-//         unregister_code   (KC_LSFT);
-//         if (timer_elapsed(key_timer) < TAPPING_TERM) {
-//           register_code   (KC_SPC);
-//           unregister_code (KC_SPC);
-//         }
-//       }
-//       break;
-//     case BSPC:
-//       if (record->event.pressed) {
-//         key_timer = timer_read();
-//         register_code     (KC_LSFT);
-//       }
-//       else {
-//         // unregister modifier early (vim requirement)
-//         unregister_code   (KC_LSFT);
-//         if (timer_elapsed(key_timer) < TAPPING_TERM) {
-//           register_code   (KC_BSPC);
-//           unregister_code (KC_BSPC);
-//         }
-//       }
-//       break;
-//   }
-//   return MACRO_NONE;
-// };
+#ifdef SHIFT_TOGGLE
+// macro replacement for SFT_T to avoid tap timing anomalies (sacrifices auto-repeat)
+static uint16_t key_timer;
 
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+  // see process_record_user(default)
+  switch(id) {
+    case SPC:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        register_code     (KC_LSFT);
+      }
+      else {
+        // unregister modifier early (vim requirement)
+        unregister_code   (KC_LSFT);
+        if (timer_elapsed(key_timer) < TAPPING_TERM) {
+          register_code   (KC_SPC);
+          unregister_code (KC_SPC);
+        }
+      }
+      break;
+    case BSPC:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        register_code     (KC_LSFT);
+      }
+      else {
+        // unregister modifier early (vim requirement)
+        unregister_code   (KC_LSFT);
+        if (timer_elapsed(key_timer) < TAPPING_TERM) {
+          register_code   (KC_BSPC);
+          unregister_code (KC_BSPC);
+        }
+      }
+      break;
+  }
+  return MACRO_NONE;
+};
+#endif
+
+#ifdef LEADER
 // see herbstluftwm keybinds
 LEADER_EXTERNS();
 
@@ -491,6 +507,7 @@ void matrix_scan_user(void) {
     }
   }
 }
+#endif
 
 void persistant_default_layer_set(uint16_t default_layer)
 {
@@ -501,6 +518,16 @@ void persistant_default_layer_set(uint16_t default_layer)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
+#ifdef ONE_SHOT
+    case Ctl:
+      if (record->event.pressed) {
+        register_code   (KC_LCTL);
+      } else {
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
     case Alt:
       if (record->event.pressed) {
         register_code   (KC_LALT);
@@ -510,6 +537,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
+#endif
     case Tab:
       if (record->event.pressed) {
         layer_on        (_NUMBER);
@@ -542,9 +570,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case QWERTY:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_qwerty, false, 0);
-        #endif
+#endif
         layer_off       (_ADJUST);
         persistant_default_layer_set(1UL<<_QWERTY);
       }
@@ -552,9 +580,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case COLEMAK:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_colemak, false, 0);
-        #endif
+#endif
         layer_off       (_ADJUST);
         persistant_default_layer_set(1UL<<_COLEMAK);
       }
@@ -562,9 +590,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case DVORAK:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_dvorak, false, 0);
-        #endif
+#endif
         layer_off       (_ADJUST);
         persistant_default_layer_set(1UL<<_DVORAK);
       }
@@ -572,10 +600,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case PLOVER:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
         stop_all_notes();
         PLAY_NOTE_ARRAY (tone_plover, false, 0);
-        #endif
+#endif
         layer_off       (_NUMBER);
         layer_off       (_SYMBOL);
         layer_off       (_NAVPAD);
@@ -599,9 +627,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case PLOVEX:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);
-        #endif
+#endif
         layer_off       (_PLOVER);
         // toggle plover application off, see herbstluftwm/config/appbinds
         register_code   (KC_LGUI);
@@ -614,9 +642,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case KEYTEST:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (music_scale, false, 0);
-        #endif
+#endif
         layer_off       (_ADJUST);
         persistant_default_layer_set(1UL<<_KEYTEST);
       }
@@ -633,9 +661,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 void matrix_init_user(void)
 {
-  #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
   startup_user();
-  #endif
+#endif
 }
 
 #ifdef AUDIO_ENABLE

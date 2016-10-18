@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: [proof=true]  $(basename $0)  'eject | stdin | <file>.ps | code | mail | text | wiki | wps  [<filelist>]"
+  echo "usage: [proof=true]  $(basename $0)  'eject | stdin | <file>.ps | code | mail | note | text | wiki | wps  [<filelist>]"
   exit 1
 }
 
@@ -133,16 +133,18 @@ filter() {
 }
 
 header() {
+  title=$(grep -m 1 '^Subject:' $stdin | cut -d' ' -f2-)
+  [ "$title" ] || title=$(sed '2,$d' $stdin)
+
   # [&%] latex special characters in title will interfere with verbatim formatting
-  title=$(grep -m 1 '^Subject:' $stdin \
-        | cut -d' ' -f2- \
+  title=$(echo $title \
         | sed -re 's/([\&\%])/\\\1/g' \
               -e 's/^ *([Rr][Ee]:* )+//' \
               -e 's/^ *([Ff][Ww][Dd]*: )+//' \
-              -e 's/(\[SPAM\])//')
+              -e 's/(\[SPAM\])//' \
+              -e 's/([^.])[.]$/\1/')
 
-  time=$(grep -m 1 '^Date:' $stdin \
-       | cut -d' ' -f2-5)
+  time=$(grep -m 1 '^Date:' $stdin | cut -d' ' -f2-5)
   time=$(date -d "$time" +'%B %-d, %Y')
 }
 
@@ -211,6 +213,15 @@ case "$1" in
         # contract excessive blank lines
         cat $proof | \
         filter | \
+        punctuation | \
+        perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' | \
+        stdin header ;;
+
+  note) # stdin formatting
+        fontsize=9
+        spacing='\onehalfspacing'
+        unset linenumbers
+        cat $proof | \
         punctuation | \
         perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' | \
         stdin header ;;

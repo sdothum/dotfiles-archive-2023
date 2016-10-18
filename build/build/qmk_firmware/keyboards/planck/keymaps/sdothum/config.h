@@ -8,6 +8,18 @@
 
 // tap dance key press termination interval
 #define TAPPING_TERM   225
+
+// tap modifier actions
+
+// #define SHIFT_TOGGLE
+
+// #define LEADER
+#ifdef LEADER
 #define LEADER_TIMEOUT 250
+#endif
+
+#ifndef LEADER
+#define ONE_SHOT
+#endif
 
 #endif
