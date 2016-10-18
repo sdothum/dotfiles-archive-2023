@@ -115,7 +115,8 @@ case "$1" in
   tags) for i in $TAGS
         do
           layout $i
-        done ;;
+        done
+        exit ;;
 
     grid \
   | horizontal \
@@ -135,8 +136,9 @@ case "$1" in
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
      restore windowed
-     restore layout $layout
-     herbstclient compare tags.focus.client_count gt 1 && ! [ $layout = max ] && focus borders ;;
+     restore layout $layout ;;
 esac
+
+herbstclient compare tags.focus.client_count gt 1 && ! [ $layout = max ] && focus borders
 
 # vim: set ft=sh: #
