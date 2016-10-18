@@ -76,7 +76,7 @@ if [ "$*" ] ;then
     h) usage ;;
 
     add) shift
-         [ "$*" ] && git add -f $@ ;;
+         [ "$*" ] && git add -fv $@ ;;
 
     comment | amend) shift
                      DESC="$@"
