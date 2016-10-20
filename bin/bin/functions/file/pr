@@ -211,20 +211,18 @@ case "$1" in
           cat $proof | hexdump -C >$proof:hexdump
         fi
         # contract excessive blank lines
-        cat $proof | \
-        filter | \
-        punctuation | \
-        perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' | \
-        stdin header ;;
+        cat $proof | filter \
+                   | punctuation \
+                   | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' \
+                   | stdin header ;;
 
   note) # stdin formatting
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
-        cat $proof | \
-        punctuation | \
-        perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' | \
-        stdin header ;;
+        cat $proof | punctuation \
+                   | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' \
+                   | stdin header ;;
 
   text) fontsize=9
         spacing='\singlespacing'
@@ -242,12 +240,11 @@ case "$1" in
        title="${1%.txt}"
        # remove document [annotation] and reformat paragraphs
        # contract spaces and leading annotation punctuation (paragraph)
-       perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" | \
-       sed -r 's/^(\xe3\x80\x80)*/\n/' | \
-       punctuation | \
-       sed -e 's/^\.*  *//' \
-           -e 's/  */ /g' | \
-       stdin ;;
+       perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" | sed -r 's/^(\xe3\x80\x80)*/\n/' \
+                                                        | punctuation \
+                                                        | sed -e 's/^\.*  *//' \
+                                                              -e 's/  */ /g' \
+                                                        | stdin ;;
 
   code | *) fontsize=8
             spacing='\onehalfspacing'

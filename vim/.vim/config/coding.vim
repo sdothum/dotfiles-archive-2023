@@ -206,25 +206,30 @@
       " toggle comment, see T-comment plugins.vim
       function! ToggleComment()
         let l:col = virtcol('.')
+        let l:len = virtcol('$')
         " suffix empty line from successive ToggleComment's
         " (for cycles: empty commented -> uncommented -> empty commented..)
         if matchstr(getline(line('.')), '\s') > ''
           let l:mark = l:col
-          normal aMark
         else
           let l:mark = 0
         endif
-        " comment line
+        " toggle comment line
         execute "normal :TComment\<CR>"
         " reposition cursor when uncommenting autocomment line (creates "" line)
         if matchstr(getline(line('.')), '\S') == ''
           execute 'normal ' . l:col . 'a '
           execute "normal a\<BS>"
-        else
-          normal $
-          " remove empty comment suffix
-          if l:mark > 0
-            normal xxxx
+        endif
+        " loose column repositioning calculation for beginning and end of line
+        " but not all near edge corner cases are accounted for
+        if virtcol('.') > 1 && virtcol('.') < virtcol('$') - 1
+          if virtcol('$') > l:len
+            execute 'normal ' . (virtcol('$') - l:len) . 'e'
+          else
+            if virtcol('$') < l:len
+              execute 'normal ' . (l:len - virtcol('$')) . 'm'
+            endif
           endif
         endif
       endfunction

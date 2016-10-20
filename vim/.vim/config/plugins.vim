@@ -293,7 +293,7 @@
     " ................................................................ Showmarks
 
       " let g:showmarks_enable = 0
-      let g:showmarks_include  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY'
+      " let g:showmarks_include  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY'
 
     " .......................................................... Solarized theme
 

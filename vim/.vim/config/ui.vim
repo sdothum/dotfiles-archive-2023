@@ -34,8 +34,8 @@
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1
       " easier horizontal scrolling
-      noremap zl             zL
-      noremap zh             zH
+      noremap <C-Left>       zL
+      noremap <C-Right>      zH
 
       " space now commandeered as leader by spacemacs wannabe :-)
       " " manual jump scrolling
@@ -69,7 +69,7 @@
 
     " ............................... Gvim Options (make it look like terminal!)
 
-      set tabpagemax=10                     " want zero file tabs but defaults to 1 :-(
+
       set guioptions+=LlRrb                 " hide scrollbars
       set guioptions-=LlRrb
       set guioptions-=m                     " no menubar
