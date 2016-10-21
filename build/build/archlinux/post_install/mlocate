@@ -9,7 +9,7 @@
 original /etc/updatedb.conf
 if ! grep -q ' /net /bkup"' /etc/updatedb.conf ;then
   sudo sed -i -e '/^PRUNENAMES/s/"$/ .cache Trash backups"/' \
-              -e '/^PRUNEPATHS/s|"$| /net /bkup"|' \
+           -e '/^PRUNEPATHS/s|"$| /net /bkup"|' \
            /etc/updatedb.conf
 fi
 

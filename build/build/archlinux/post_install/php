@@ -8,16 +8,16 @@
 
 original /etc/php/php.ini
 sudo sed -i -e '/open_basedir/s/=.*/=/' \
-            -e '/max_execution_time/s/=.*/= 300/' \
-            -e '/max_execution_time/s/;//' \
-            -e '/=curl.so/s/^;//' \
-            -e '/=gd.so/s/^;//' \
-            -e '/=iconv.so/s/^;//' \
-            -e '/=mcrypt.so/s/^;//' \
-            -e '/=soap.so/s/^;//' \
-            -e '/date.timezone/s|=.*|= "Canada/Eastern"|' \
-            -e '/date.timezone/s/;//' \
-            -e '/display_errors=/s/off/on/' \
+         -e '/max_execution_time/s/=.*/= 300/' \
+         -e '/max_execution_time/s/;//' \
+         -e '/=curl.so/s/^;//' \
+         -e '/=gd.so/s/^;//' \
+         -e '/=iconv.so/s/^;//' \
+         -e '/=mcrypt.so/s/^;//' \
+         -e '/=soap.so/s/^;//' \
+         -e '/date.timezone/s|=.*|= "Canada/Eastern"|' \
+         -e '/date.timezone/s/;//' \
+         -e '/display_errors=/s/off/on/' \
          /etc/php/php.ini
 
 sudo systemctl restart nginx

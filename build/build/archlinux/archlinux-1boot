@@ -67,8 +67,8 @@ checkpoint
 heading 'configure package manager'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 sed -i -e '/^\[options\]/aILoveCandy' \
-       -e '/^#\[multilib\]/,+1s/^#//' \
-       -e '/^#Color/s/^#//' \
+    -e '/^#\[multilib\]/,+1s/^#//' \
+    -e '/^#Color/s/^#//' \
     /etc/pacman.conf
 pacman -Sy
 checkpoint
@@ -103,7 +103,7 @@ useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 pm_install sudo
 sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
-       -e '/## Defaults specification/aDefaults insults' \
+    -e '/## Defaults specification/aDefaults insults' \
     /etc/sudoers
 EDITOR=nano visudo
 # cat /etc/sudoers

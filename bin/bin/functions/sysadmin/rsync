@@ -121,8 +121,8 @@ case $@ in
             if if-yes 'backup media server databases to /net/archive' ;then
               [ -d /net/archive/var/lib ] || mkdir -pv /net/archive/var/lib
               sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
-              [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] \
-              || mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
+              [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] || \
+                mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
               sudo rsync -av --delete \
                          /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
                          /net/archive/opt/plexmediaserver/Library/Application\ Support/

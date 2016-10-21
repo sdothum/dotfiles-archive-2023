@@ -11,7 +11,8 @@ filter='/accounts|acronym|color(codehex|combos|hexa)|dictionary|duckduckgo|ERROR
 case $BROWSER in
   luakit) sqldb=$HOME/.local/share/luakit/history.db
           query="select datetime(last_visit,'unixepoch'), title, uri from history order by last_visit DESC;"
-          uri=$(echo "$query" | sqlite3 $sqldb \
+          uri=$(echo "$query" \
+              | sqlite3 $sqldb \
               | egrep -v "$filter" | sed 's/[|]/  ::  /g' \
               | sed '1i[ bookmarks ]' \
               | dmenu 'History' -no-custom \

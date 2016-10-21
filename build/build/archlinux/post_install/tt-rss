@@ -17,7 +17,7 @@ set config.php to SINGLE_USER_MODE true'
 
 original /etc/php/php.ini
 sudo sed -i -e '/^include_path = ".:\/usr\/share\/pear"/s|"$|:/etc/webapps/tt-rss"|' \
-            -e '/^open_basedir =$/s|$| "/usr/share/webapps/:/etc/webapps/:/var/lib/tt-rss/:/tmp/"|' \
+         -e '/^open_basedir =$/s|$| "/usr/share/webapps/:/etc/webapps/:/var/lib/tt-rss/:/tmp/"|' \
          /etc/php/php.ini
 
 server && sudo systemctl restart postgresql

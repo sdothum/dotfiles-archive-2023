@@ -234,8 +234,8 @@ genfstab -L -p /mnt/btrfs-boot >>/mnt/btrfs-boot/etc/fstab
 # correct genfstab output from apple macbooks
 if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
   sed -i -e '/vfat/s/0 [12]/0 0/' \
-         -e '/\/var\/lib/d' \
-         -e '$a\
+      -e '/\/var\/lib/d' \
+      -e '$a\
 \
 LABEL=Archlinux   /run/btrfs-root   btrfs   rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag   0 0\
 \

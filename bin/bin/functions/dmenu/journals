@@ -10,7 +10,8 @@
 
 cd /usr/lib/systemd/system/
 service=$(stest -fl . \
-        | sort  | sed 's/.service$//' \
+        | sort  \
+        | sed 's/.service$//' \
         | sed '1i[ logs ]' \
         | dmenu "$mode Journal" -no-custom) || exit
 

@@ -8,7 +8,7 @@
 
 original /etc/php/php-fpm.conf
 sudo sed -i -e '/request_terminate_timeout/s/=.*/= 300/' \
-            -e '/request_terminate_timeout/s/;//' \
+         -e '/request_terminate_timeout/s/;//' \
          /etc/php/php-fpm.conf
 
 systemd enable php-fpm
