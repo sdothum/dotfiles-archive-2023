@@ -13,13 +13,11 @@
 # library listings
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-    mpc list artist \
-        | sort -n \
-        | sed '1i[ player ]\n[ albums ]'
+    mpc list artist | sort -n \
+                    | sed '1i[ player ]\n[ albums ]'
   else
-    mpc list artist \
-        | sort -n \
-        | sed '1i[ albums ]'
+    mpc list artist | sort -n \
+                    | sed '1i[ albums ]'
   fi
 }
 
@@ -28,23 +26,19 @@ albums() {
     # redundant menu return to artist listings
     if [ $redundant ] ;then
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        mpc list album \
-            | sort -n \
-            | sed '1i[ player ]\n[ artist ]'
+        mpc list album | sort -n \
+                       | sed '1i[ player ]\n[ artist ]'
       else
-        mpc list album \
-            | sort -n \
-            | sed '1i[ artist ]'
+        mpc list album | sort -n \
+                       | sed '1i[ artist ]'
       fi
     else
       # escape return to artist listings
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        mpc list album \
-            | sort -n \
-            | sed '1i[ player ]'
+        mpc list album | sort -n \
+                       | sed '1i[ player ]'
       else
-        mpc list album \
-            | sort -n
+        mpc list album | sort -n
       fi
     fi
   else
@@ -76,7 +70,7 @@ tracks() {
 info() {
   stats=$(mpc status | sed -n '2p')
   echo "$stats" | grep -q 'playing' && echo "Playing $(tracks $stats)" \
-                                     || echo "Paused $(tracks $stats)"
+                                    || echo "Paused $(tracks $stats)"
 }
 
 # toggle state

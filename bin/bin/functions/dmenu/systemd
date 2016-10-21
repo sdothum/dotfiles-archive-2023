@@ -18,7 +18,8 @@ cd /usr/lib/systemd/system/
 while :
 do
   service=$(stest -fl . \
-          | sort  | sed 's/.service$//' \
+          | sort  \
+          | sed 's/.service$//' \
           | sed '1i[ daemon-reload   ]\n[ list services   ]\n[ list-unit-files ]' \
           | dmenu 'Systemd' -no-custom) || exit
 

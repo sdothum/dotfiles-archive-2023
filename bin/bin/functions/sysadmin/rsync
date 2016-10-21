@@ -122,7 +122,7 @@ case $@ in
               [ -d /net/archive/var/lib ] || mkdir -pv /net/archive/var/lib
               sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
               [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] \
-                || mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
+              || mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
               sudo rsync -av --delete \
                          /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
                          /net/archive/opt/plexmediaserver/Library/Application\ Support/
@@ -140,8 +140,8 @@ case $@ in
               sudo systemctl start sonarr
               sudo systemctl stop plexmediaserver
               sudo rsync -av --delete \
-                        /net/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
-                        /opt/plexmediaserver/Library/Application\ Support/
+                         /net/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                         /opt/plexmediaserver/Library/Application\ Support/
               sudo systemctl start plexmediaserver
               sudo systemctl stop postgres
               sudo rsync -av --delete /net/archive/srv/lib/postgres /srv/lib/

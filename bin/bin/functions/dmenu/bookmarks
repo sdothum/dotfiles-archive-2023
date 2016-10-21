@@ -9,7 +9,8 @@
 case $BROWSER in
   luakit) sqldb=$HOME/.local/share/luakit/bookmarks.db
           query='select title, tags, uri from bookmarks order by tags,title ASC;'
-          uri=$(echo "$query" | sqlite3 $sqldb \
+          uri=$(echo "$query" \
+              | sqlite3 $sqldb \
               | sed 's/[|]/  ::  /g' \
               | sed '1i[ history ]' \
               | dmenu 'Bookmark' -no-custom \

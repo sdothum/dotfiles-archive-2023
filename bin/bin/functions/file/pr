@@ -126,10 +126,10 @@ EOF
 filter() {
   # reduce mail header to essential contact information
 
-  sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | \
-  pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' | \
-  egrep -vEi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' | \
-  egrep -vE '^ *(boundary=.*|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$'
+  sed -nr '/^(Date|From|To|Cc|Subject): /,$p' \
+  | pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' \
+  | egrep -vEi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' \
+  | egrep -vE '^ *(boundary=.*|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$'
 }
 
 header() {
@@ -240,11 +240,12 @@ case "$1" in
        title="${1%.txt}"
        # remove document [annotation] and reformat paragraphs
        # contract spaces and leading annotation punctuation (paragraph)
-       perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" | sed -r 's/^(\xe3\x80\x80)*/\n/' \
-                                                        | punctuation \
-                                                        | sed -e 's/^\.*  *//' \
-                                                              -e 's/  */ /g' \
-                                                        | stdin ;;
+       perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" \
+       | sed -r 's/^(\xe3\x80\x80)*/\n/' \
+       | punctuation \
+       | sed -e 's/^\.*  *//' \
+             -e 's/  */ /g' \
+       | stdin ;;
 
   code | *) fontsize=8
             spacing='\onehalfspacing'

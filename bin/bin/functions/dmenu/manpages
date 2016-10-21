@@ -33,7 +33,9 @@ do
   else
     # initial lookup
     man=$(apropos . \
-        | cut -d' ' -f1 | sort -d | uniq \
+        | cut -d' ' -f1 \
+        | sort -d \
+        | uniq \
         | history man \
         | dmenu 'Manpage' \
         | cut -d':' -f3-)
@@ -62,7 +64,7 @@ do
       history man "$man"
       # xsel -c
       term "$page" MAX $stack WAIT man "$page"
-       
+
       # subsequent manpages open on same frame
       stack=STACK
       # # selection highlighting does not appear to work
