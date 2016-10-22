@@ -19,7 +19,7 @@ ${comment}* * * * * /home/$USER/bin/mailsync >>/tmp/mailsync.log 2>&1"  | sudo c
 
   if [ ! -L $HOME/.msmtprc ] ;then
     ln -sfv $HOME/.msmtprc $HOME/.msmtprc
-    chmod -v 600 $HOME/.msmtprc
+    chmod -c 600 $HOME/.msmtprc
   fi
 fi
 

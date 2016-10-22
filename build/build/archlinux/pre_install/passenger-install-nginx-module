@@ -8,7 +8,7 @@
 
 [ -d /opt/nginx ] && sudo rm -r /opt/nginx
 sudo mkdir -v /opt/nginx
-sudo chown root:users /opt/nginx
-sudo chmod 775 /opt/nginx
+sudo chown -c root:users /opt/nginx
+sudo chmod -c 775 /opt/nginx
 
 # vim: set ft=sh: #

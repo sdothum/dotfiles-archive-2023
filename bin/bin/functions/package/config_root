@@ -13,7 +13,7 @@ if [ "$*" ] ;then
   [ $# -eq 2 ] && host=.$2
   [ -e $root/.${1%/*} ] || mkdir -pv $root/.${1%/*}
   echo '.. copying '$(sudo cp -v $1 $root/.${1}$host)
-  sudo chown shum:users $root/.${1}$host
+  sudo chown -c shum:users $root/.${1}$host
 fi
 
 # vim: set ft=sh: #

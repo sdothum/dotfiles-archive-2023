@@ -7,6 +7,6 @@
 # ............................................................... grub-btrfs-git
 
 # disable snapshot-btrfs hook until pacupg is run, see pa
-sudo chmod 644 /etc/grub.d/41_snapshots-btrfs
+sudo chmod -c 644 /etc/grub.d/41_snapshots-btrfs
 
 # vim: set ft=sh: #

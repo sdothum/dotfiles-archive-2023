@@ -22,7 +22,7 @@ git clone $__git_install $HOME/build/archlinux/git/$1
 post_install $1
 
 # cleanup package directory for subsequent arch rebuilds
-sudo find $HOME/build/archlinux/git -user root -exec sudo chown -v shum:users {} \;
+sudo find $HOME/build/archlinux/git -user root -exec sudo chown -c shum:users {} \;
 sudo rm -r $HOME/build/archlinux/git/$1 2>/dev/null
 unset __git_install
 

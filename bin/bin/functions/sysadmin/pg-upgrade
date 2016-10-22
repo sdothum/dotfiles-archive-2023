@@ -17,7 +17,7 @@ usage() {
 stop postgresql
 sudo pacman -S --needed postgresql-old-upgrade
 
-sudo chown postgres:postgres /var/lib/postgres/
+sudo chown -c postgres:postgres /var/lib/postgres/
 sudo su - postgres -c "mv /var/lib/postgres/data /var/lib/postgres/data-$1"
 sudo su - postgres -c 'mkdir /var/lib/postgres/data'
 sudo su - postgres -c 'initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data'

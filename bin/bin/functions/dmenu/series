@@ -12,8 +12,8 @@
 #                    ../*S01E01*  (episode)
 
 library=${LIBRARY:-/net/media/videos/${1:-series}}
-sudo find $library -maxdepth 1 -user sonarr -exec chmod 755 {} \;
-sudo find $library -maxdepth 1 -user sonarr -exec chown shum:users \;
+sudo find $library -maxdepth 1 -user sonarr -exec chmod -c 755 {} \;
+sudo find $library -maxdepth 1 -user sonarr -exec chown -c shum:users \;
 
 # list latest television series additions first
 T=t

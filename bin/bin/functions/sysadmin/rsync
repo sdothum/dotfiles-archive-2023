@@ -95,7 +95,7 @@ case $@ in
              killall mpd
              if [ ! -d /net/media ] ;then
                sudo mkdir /net/media
-               sudo chown $USER:users /net/media
+               sudo chown -c $USER:users /net/media
              fi
              rsync --delete $USER@luna:.mpd $HOME/
              rsync --delete luna:/net/media/music /net/media/

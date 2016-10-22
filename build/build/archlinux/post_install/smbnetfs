@@ -12,8 +12,8 @@ if [ -z $(cat /etc/samba/smb.conf | grep usershare) ] ;then
   set --export USERSHARES_GROUP sambashare
   sudo mkdir -p $USERSHARES_DIR
   sudo groupadd $USERSHARES_GROUP
-  sudo chown root:$USERSHARES_GROUP $USERSHARES_DIR
-  sudo chmod 01770 $USERSHARES_DIR
+  sudo chown -c root:$USERSHARES_GROUP $USERSHARES_DIR
+  sudo chmod -c 01770 $USERSHARES_DIR
 
   original /etc/samba/smb.conf
   if ! grep -q 'usershare path = /var/lib/samba/usershares' /etc/samba/smb.conf ;then

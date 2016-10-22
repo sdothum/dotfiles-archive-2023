@@ -69,7 +69,7 @@ pass I || exit" >$HOME/sandbox/pass.sh
        echo "pass ! $i '$key'" >>$HOME/sandbox/pass.sh
      done
      echo "if-yes 'purge this pass import script' && rm -f pass.sh" >>$HOME/sandbox/pass.sh
-     chmod 700 $HOME/sandbox/pass.sh
+     chmod -c 700 $HOME/sandbox/pass.sh
      annotate "purge $HOME/sandbox/pass.sh after importing" ;;
 
   !) if [ $# -eq 3 ] ;then

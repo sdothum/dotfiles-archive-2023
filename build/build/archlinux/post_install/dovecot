@@ -24,7 +24,7 @@ sudo mv users /etc/dovecot/
 # should not be missing..
 if [ ! -f /etc/ssl/certs/dovecot.pem ] ;then
   config_install /etc/ssl/certs/dovecot.pem
-  sudo chmod 444 /etc/ssl/certs/dovecot.pem
+  sudo chmod -c 444 /etc/ssl/certs/dovecot.pem
 fi
 
 original /etc/dovecot/conf.d/10-auth.conf

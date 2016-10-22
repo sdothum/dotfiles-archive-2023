@@ -27,14 +27,14 @@ else
   else
     focus sudo -s vim $gui $file
     # chown root history to prevent syncing errors
-    # find $HOME/.vim/backups -user root -exec sudo chown -v $USER\:users {} \;
+    # find $HOME/.vim/backups -user root -exec sudo chown -c $USER\:users {} \;
   fi
 fi
 hlwm && herbstclient set_layout max
 
 # syncthing housekeeping
 find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
-find $HOME/.vim/backups -user root -exec sudo chown $USER:users {} \;
+find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
 # avoid nfs mounts
 find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -fv {} \;
 

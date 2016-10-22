@@ -13,7 +13,7 @@ sudo rmdir /.snapshots
 sudo snapper -c root create-config /
 sudo btrfs subvolume delete /.snapshots
 sudo mkdir /.snapshots
-sudo chmod 750 /.snapshots
+sudo chmod -c 750 /.snapshots
 sudo mount /.snapshots
 
 # manual cleanup triggered in pa function

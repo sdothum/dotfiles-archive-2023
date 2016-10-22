@@ -29,7 +29,7 @@ killsup() {
 case $1 in
   '') if !p /usr/bin/sup ;then
         sudo rm $HOME/.sup/lock
-        [ -e $HOME/.netrc ] && chmod 600 $HOME/.netrc
+        [ -e $HOME/.netrc ] && chmod -c 600 $HOME/.netrc
         if [ -d $HOME/.sup/xapian ] ;then
           sudo cp -v $HOME/.sup/sources.yaml.conf $HOME/.sup/sources.yaml
         else

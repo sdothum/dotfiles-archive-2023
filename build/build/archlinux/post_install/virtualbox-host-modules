@@ -19,7 +19,7 @@ if [ ! -d /net/depot/vms ] ;then
   # disable CoW for virtual machine images
   chattr +C /net/depot/vms/
   sudo ln -sv /net/depot/vms /net/
-  sudo chown $USER:users /net/vms
+  sudo chown -c $USER:users /net/vms
 fi
 
 # vim: set ft=sh: #

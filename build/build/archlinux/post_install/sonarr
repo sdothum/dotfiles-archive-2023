@@ -13,6 +13,6 @@ if ! grep -q '^users:.*sonarr' ;then
                         || sudo sed -r 's/^(users:.*)/\1,sonarr/'
 fi
 
-annotate allow sonarr users group access with sudo chmod 775 /net/media/videos/{series,anime}
+annotate allow sonarr users group access with sudo chmod -c 775 /net/media/videos/{series,anime}
 
 # vim: set ft=sh: #
