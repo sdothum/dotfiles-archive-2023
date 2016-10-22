@@ -3,7 +3,7 @@
 
 # post install/upgrade configuration
 
-if ! [ -d $HOME/stow ] ;then
+if [ ! -d $HOME/stow ] ;then
   echo '..stow directory not present'
   exit
 fi
@@ -20,12 +20,12 @@ config_install L /opt/bin
 if laptop ;then
 heading "/net/* directories"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  if ! [ -d /net/archive ] ;then
+  if [ ! -d /net/archive ] ;then
     sudo mkdir -pv /net/archive
     permissions /net/archive
   fi
 
-  if ! [ -d /net/downloads/depot ] ;then
+  if [ ! -d /net/downloads/depot ] ;then
     sudo mkdir -pv /net/downloads/depot
     permissions /net/downloads
   fi
@@ -48,7 +48,7 @@ fi
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-# if laptop && ! [ -f /etc/modules-load.d/pciehp.conf ] ;then
+# if laptop && [ ! -f /etc/modules-load.d/pciehp.conf ] ;then
 # heading "acer sdhc card reader"
 # # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 #     config_install /etc/modules-load.d/pciehp.conf

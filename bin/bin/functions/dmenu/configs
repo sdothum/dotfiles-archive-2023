@@ -9,7 +9,7 @@
 cache=$CACHEDIR/dmenu:configs
 
 # ................................................................... Initialize
- 
+
 configs() {
   notify low 'Updating dmenu config cache' 'Please be patient..'
   exclude='\.azureus|backups|\.bundler|\.cache|cairo|chromium|depot|\.deprecated|\.dropbox|geany|\.gem|\.ghc|\.gimp|google|\.hg|\.kde|libreoffice|\.mozilla|\.opera|\.original|\.PlayOnLinux|sandbox|\.save|\.stversions|(s|u)mplayer|tint2|Trash|\.vim|vundle|\.xbmc|\.xmonad|xfce4'
@@ -43,7 +43,7 @@ configs() {
 }
 
 # command line initialization with: dmenu configs [init]
-if ! [ -s $cache ] || [ "$*" ] ;then
+if [ ! -s $cache -o "$*" ] ;then
   configs
   [ "$*" ] && exit
 fi

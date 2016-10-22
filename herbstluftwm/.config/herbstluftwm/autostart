@@ -72,7 +72,7 @@ restore layout tags
 
 # session startup stuff, see .xinitrc
 is multihead && draw monitor secondary
-if ! [ -e $HLWM:autostart ] ;then
+if [ ! -e $HLWM:autostart ] ;then
   if arm ;then
     toggle unclutter
   else

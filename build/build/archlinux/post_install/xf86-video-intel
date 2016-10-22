@@ -7,7 +7,7 @@
 # ............................................................. xf86-video-intel
 
 # intel video tearing fix
-if ! [ -e /etc/X11/xorg.conf.d/20-intel.conf ] ;then
+if [ ! -e /etc/X11/xorg.conf.d/20-intel.conf ] ;then
   config_install /etc/X11/xorg.conf.d/20-intel.conf
 fi
 

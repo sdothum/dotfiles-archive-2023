@@ -52,7 +52,7 @@ fi
 # 1: occupied (blurred image)
 # 0: empty (raw image)
 root() {
-  if ! [ -e $NOBLUR ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
+  if [ ! -e $NOBLUR ] && is nonempty $(herbstclient attr monitors.$1.tag) ;then
     echo "1: --on $1 --blur $blur --brighten $brighten --zoom $WALLPAPER"
   else
     echo "0: --on $1 --zoom $WALLPAPER"
@@ -60,7 +60,7 @@ root() {
 }
 
 setblur() {
-  if ! [ -e $BLANK ] ;then
+  if [ ! -e $BLANK ] ;then
     primary=$(root 0)
     is multihead && secondary=$(root 1)
   fi
@@ -189,7 +189,7 @@ case "$1" in
      # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
      # random background selection on un-blur change of state
      if [ -e $SHUFFLE ] ;then
-       if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
+       if [ $(unblur ${primary%%:*} 1) -o $(unblur ${secondary%%:*} 3) ] ;then
          # increase modulo to reduce frequency of shuffle
          one_in $modulo && shuffle
        fi
@@ -203,7 +203,7 @@ setblur >$SETBLUR
 [ -e $BLANK ] || eval setroot ${primary#?:} ${secondary#?:} &
 
 # apply conky theme to .conkyrc, $THEME unset above if new background
-if ! [ -e $BLANK ] ;then
+if [ ! -e $BLANK ] ;then
   [ -e "$THEME" ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour

@@ -13,7 +13,7 @@ sudo modprobe vboxdrv
 sudo modprobe vboxnetflt
 
 sudo gpasswd -a $USER vboxusers
-if ! [ -d /net/depot/vms ] ;then
+if [ ! -d /net/depot/vms ] ;then
   sudo mkdir -pv /net/depot/vms
   sudo chown -cR $USER:users /net/depot
   # disable CoW for virtual machine images

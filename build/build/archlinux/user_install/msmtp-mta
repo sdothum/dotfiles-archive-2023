@@ -7,7 +7,7 @@
 # .................................................................... msmtp-mta
 
 # configure mail spooler
-if ! [ -f /var/spool/cron/$USER ] ;then
+if [ ! -f /var/spool/cron/$USER ] ;then
   original /usr/lib/systemd/system/cronie.service
   sudo sed -i '/ExecStart=\/usr\/bin\/crond -n$/s|$| -m "/usr/bin/msmtp -t"|' /usr/lib/systemd/system/cronie.service
 
@@ -17,7 +17,7 @@ if ! [ -f /var/spool/cron/$USER ] ;then
 * * * * * /home/$USER/bin/mailqueue >>/tmp/mailqueue.log 2>&1
 ${comment}* * * * * /home/$USER/bin/mailsync >>/tmp/mailsync.log 2>&1"  | sudo crontab -u $USER -
 
-  if ! [ -L $HOME/.msmtprc ] ;then
+  if [ ! -L $HOME/.msmtprc ] ;then
     ln -sfv $HOME/.msmtprc $HOME/.msmtprc
     chmod -v 600 $HOME/.msmtprc
   fi

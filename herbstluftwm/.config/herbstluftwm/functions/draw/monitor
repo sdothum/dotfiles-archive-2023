@@ -79,7 +79,7 @@ else
 fi
 [ $margin -lt $panel_height ] && marginY=$(( $panel_height - $margin )) || marginY=0
 # reshape monocle frame by urxvt lines
-if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
+if [ $monocle -gt 0 -a $MONOCLE_LINES -gt 0 ] ;then
   monocleY=$(( $MONOCLE_SIZE * $MONOCLE_LINES ))
   # frame effect, arbitrary compression of frame width in relation to frame height
   monocle=$(( $monocle + $monocleY ))
@@ -191,7 +191,7 @@ herbstclient set_monitors $primary $secondary &
 
 # ................................................................... Fullscreen
 
-if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then
+if [ -e $FULLSCREEN:primary -o -e $FULLSCREEN:secondary ] ;then
   touch $FULLSCREEN
 else
   rm -f $FULLSCREEN 2>/dev/null

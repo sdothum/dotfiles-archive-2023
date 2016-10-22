@@ -87,6 +87,7 @@ thirds() {
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
   else
     restore mono
+    windows=$(herbstclient attr tags.focus.client_count)
     if [ $MASTER = left ] ;then
       # master window on left
       herbstclient chain . set_layout horizontal . split explode 0.6666 \
@@ -95,7 +96,7 @@ thirds() {
                          . focus_edge left . cycle_layout 1 vertical \
                          . shift right . cycle_layout 1 vertical
       # fudge to populate empty frame
-      herbstclient compare tags.focus.client_count = 4 && herbstclient shift left
+      [ $windows -ge 3 -a $windows -le 4 ] && herbstclient shift left
     else
       # master window on right
       herbstclient chain . set_layout horizontal . split explode 0.3333 \
@@ -104,7 +105,7 @@ thirds() {
                          . focus_edge right . cycle_layout 1 vertical \
                          . shift left . cycle_layout 1 vertical
       # fudge to populate empty frame
-      herbstclient compare tags.focus.client_count = 4 && herbstclient shift right
+      [ $windows -ge 3 -a $windows -le 4 ] && herbstclient shift right
     fi
   fi
 }
@@ -136,9 +137,9 @@ case "$1" in
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
      restore windowed
-     restore layout $layout ;;
+     exec restore layout $layout ;;
 esac
 
-herbstclient compare tags.focus.client_count gt 1 && ! [ $layout = max ] && focus borders
+herbstclient compare tags.focus.client_count gt 1 && [ ! $layout = max ] && focus borders
 
 # vim: set ft=sh: #

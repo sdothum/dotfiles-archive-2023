@@ -11,9 +11,6 @@ usage() {
   exit 1
 }
 
-# reader
-BROWSER=vimb-detached
-
 rss() {
   if ping -c 1 -W 1 luna >/dev/null 2>&1 ;then
     sed -i 's,http://localhost/tt-rss,http://luna/tt-rss,' $HOME/.newsbeuter/config

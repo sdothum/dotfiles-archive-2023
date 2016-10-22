@@ -8,11 +8,11 @@
 
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
-  if console && ! [ -e /tmp/login:console ];then
+  if console && [ ! -e /tmp/login:console ];then
     tty >/tmp/login:console
 
     # assign deadline scheduler to SSD boot drive
-    if [ $(hostname) = luna ] && ! [ -e /tmp/ssd:scheduler ] ;then
+    if [ $(hostname) = luna -a ! -e /tmp/ssd:scheduler ] ;then
       ssd=$(ls -l /dev/disk/by-id/*ata* | grep 'Samsung_SSD' | head -1 | cut -d/ -f7)
       if [ $ssd ] ;then
         # virtual block devices must be referenced explicitly

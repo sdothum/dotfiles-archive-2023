@@ -9,12 +9,12 @@
 # replace previously saved?
 file=$1
 
-if [ -e $file.save ] || [ -d $file.save ] ;then
+if [ -e $file.save -o -d $file.save ] ;then
   if-yes "overwrite \"$file.save\"" || exit 1
 fi
 
 # save distribution copy
-if [ -e $file ] || [ -d $file ] ;then
+if [ -e $file -o -d $file ] ;then
   echo '.. copying '$(sudo cp -Rv "$file" "$file.save")
   exit 0
 fi

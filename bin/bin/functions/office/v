@@ -12,7 +12,7 @@ if console ;then
   vim $@
   exit
 fi
-  
+
 gui='-f -g'
 
 if [ -z "$*" ] ;then
@@ -20,7 +20,7 @@ if [ -z "$*" ] ;then
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
   file=$(echo $@)
-  if ! [ -e $1 ] ;then
+  if [ ! -e $1 ] ;then
     focus vim $gui $file
   elif [ -w $1 ] ;then
     focus vim $gui $file

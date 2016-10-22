@@ -42,7 +42,7 @@ if grep -q 'keyserver hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf ;the
 fi
 
 # signature checking
-if ! [ -e $HOME/.gnupg/gpg.conf ] ;then
+if [ ! -e $HOME/.gnupg/gpg.conf ] ;then
   echo 'keyserver hkp://keys.gnupg.net
 keyserver-options auto-key-retrieve' >$HOME/.gnupg/gpg.conf
 fi

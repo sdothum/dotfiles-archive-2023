@@ -29,7 +29,7 @@ heading "x11 trackman mouse"
 fi
 
 
-if ! [ -L $HOME/.config/font-manager/local.conf ] ;then
+if [ ! -L $HOME/.config/font-manager/local.conf ] ;then
 heading "restore default fonts"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   original $HOME/.config/font-manager/local.conf
@@ -62,7 +62,7 @@ dmenu configs init &
                                                             title "applications"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-if ! [ -L /srv/http/tt-rss/themes/default.css ] ;then
+if [ ! -L /srv/http/tt-rss/themes/default.css ] ;then
 heading "restore tt-rss theme"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cd /srv/http/tt-rss/themes

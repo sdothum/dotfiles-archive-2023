@@ -20,7 +20,7 @@ clipboard
 while read index word <&3
 do
   len=$(echo "$word" | wc -c)
-  if [ $len -ge 6 ] && [ $len -le 12 ] ;then
+  if [ $len -ge 6 -a $len -le 12 ] ;then
     notify "$index" "$word"
     gpaste-client delete $index
   fi

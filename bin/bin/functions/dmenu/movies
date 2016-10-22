@@ -56,7 +56,7 @@ options() {
 while :
 do
   # rebuilding catalogue?
-  if ! [ -s $catlg ] ;then
+  if [ ! -s $catlg ] ;then
     sleep 0.1
     continue
   fi

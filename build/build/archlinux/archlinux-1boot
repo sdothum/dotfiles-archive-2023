@@ -37,8 +37,8 @@ checkpoint
 
 heading 'select scheduler for SSD'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-if ! [ $(hostname) = luna ] ;then
-  if ! [ -f /etc/udev/rules.d/60-schedulers.rules ] ;then
+if [ ! $(hostname) = luna ] ;then
+  if [ ! -f /etc/udev/rules.d/60-schedulers.rules ] ;then
     echo '# set deadline scheduler for non-rotating disks\
   ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"' \
          >/etc/udev/rules.d/60-schedulers.rules
@@ -56,7 +56,7 @@ checkpoint
 
 # heading 'set keyboard'
 # # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-# if ! [ $(hostname) = luna ] ;then
+# if [ ! $(hostname) = luna ] ;then
 #   [ -f /etc/vconsole.conf ] && sed -i 's/^\(KEYMAP\)=.*/\1=colemak/' /etc/vconsole.conf || echo KEYMAP=colemak >/etc/vconsole.conf
 #   cat /etc/vconsole.conf
 # else
@@ -178,7 +178,7 @@ checkpoint
 
 heading 'sync home directory'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-if ! [ -d /home/$user/stow ] ;then
+if [ ! -d /home/$user/stow ] ;then
   pm_install rsync
   mkdir /net
   mount -L Share -t btrfs /net

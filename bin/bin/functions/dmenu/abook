@@ -57,7 +57,7 @@ abook() {
 }
 
 # command line initialization with: dmenu abook [init]
-if ! [ -s $cache ] || [ "$*" ] ;then
+if [ ! -s $cache -o "$*" ] ;then
   abook
   [ "$*" ] && exit
 fi

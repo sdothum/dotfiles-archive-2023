@@ -93,7 +93,7 @@ case $@ in
   music) if laptop ;then
            if if-yes 'replicate mpd music database from luna' ;then
              killall mpd
-             if ! [ -d /net/media ] ;then
+             if [ ! -d /net/media ] ;then
                sudo mkdir /net/media
                sudo chown $USER:users /net/media
              fi

@@ -35,7 +35,7 @@ if [ -e $FULLSCREEN:$1 ] ;then
   fullscreen on
 else
   # not fullscreen tag but in fullscreen, then normal layout
-  ! [ -e $FULLSCREEN:$2 ] && exit
+  [ ! -e $FULLSCREEN:$2 ] && exit
   fullscreen off
 fi
 

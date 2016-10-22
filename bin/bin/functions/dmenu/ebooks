@@ -55,7 +55,7 @@ ebooks() {
 }
 
 # command line initialization with: dmenu ebooks [init]
-if ! [ -s $cache ] || [ "$*" ] ;then
+if [ ! -s $cache -o "$*" ] ;then
   ebooks
   [ "$*" ] && exit
 fi

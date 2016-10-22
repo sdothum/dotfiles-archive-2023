@@ -76,7 +76,7 @@ else
   focus $TERM $title $name $geometry $tabbed $tr $cmd
 fi
 
-if [ $visible ] && [ "$title" ] ;then
+if [ $visible -a "$title" ] ;then
   xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
 fi
 

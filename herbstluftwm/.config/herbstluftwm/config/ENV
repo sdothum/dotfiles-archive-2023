@@ -76,7 +76,7 @@ export CONKY_OUTER=$(conkyrc 'border_outer_margin')
 export CONKY_WIDTH=$(conkyrc 'maximum_width')
 
 # compton shadow left shift pixel adjustment for conky panel edge (0) none
-if ! [ -e $HOME/.compton.conf ] ;then
+if [ ! -e $HOME/.compton.conf ] ;then
   export SHADOW=0
 elif grep -q '^shadow-opacity = 0.0' $HOME/.compton.conf ;then
   export SHADOW=0

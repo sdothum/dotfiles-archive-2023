@@ -10,11 +10,11 @@
 
 # has associated tag view (monocle layout) changed?
 if is primary; then
-  if [ -e $MONOCLE ] || [ -e $MONOCLE:$1 ] ;then
-    [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ] && exit
-    if [ -e $MONOCLE ] && ! [ -e $MONOCLE:$1 ] ;then
+  if [ -e $MONOCLE -o -e $MONOCLE:$1 ] ;then
+    [ -e $MONOCLE -a -e $MONOCLE:$1 ] && exit
+    if [ -e $MONOCLE -a ! -e $MONOCLE:$1 ] ;then
       rm -f $MONOCLE
-    else ! [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ]
+    else [ ! -e $MONOCLE -a -e $MONOCLE:$1 ]
       cp -f $MONOCLE:$1 $MONOCLE
     fi
     draw refresh force

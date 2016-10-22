@@ -22,7 +22,7 @@ echo "$USER:{PLAIN}$password:$(id -u $USER):$(id -g $USER)::$HOME" >users
 sudo mv users /etc/dovecot/
 
 # should not be missing..
-if ! [ -f /etc/ssl/certs/dovecot.pem ] ;then
+if [ ! -f /etc/ssl/certs/dovecot.pem ] ;then
   config_install /etc/ssl/certs/dovecot.pem
   sudo chmod 444 /etc/ssl/certs/dovecot.pem
 fi

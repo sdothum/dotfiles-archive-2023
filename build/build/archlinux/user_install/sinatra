@@ -7,7 +7,7 @@
 # ...................................................................... sinatra
 
 # install nginx web site dependency
-if ! [ -d /srv/http/thedarnedestthing.com ] ;then
+if [ ! -d /srv/http/thedarnedestthing.com ] ;then
   sudo mkdir -v /srv/http/thedarnedestthing.com
   sudo chown $USER:users /srv/http/thedarnedestthing.com
   if server ;then

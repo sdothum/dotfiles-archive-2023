@@ -37,7 +37,7 @@ if [ -e $corpus.words ] ;then
   if-no 'rebuild corpus' || rm -f $corpus.*
 fi
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
-if ! [ -e $corpus.words ] ;then
+if [ ! -e $corpus.words ] ;then
   notify low "Building $corpus.words" 'Please be patient..'
   sort -nr --key=2 $typedir/100K-word.database | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' \
                                                | egrep -v '^(.|..)$' \

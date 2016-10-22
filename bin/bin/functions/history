@@ -25,7 +25,7 @@ echo "$1" | grep -qv '/' && history="$HOME/bin/functions/dmenu/.history/$1" \
 # usage: inject item file
 inject() {
   update=$(mktemp).history
-  if ! [ -e "$2" ] ;then
+  if [ ! -e "$2" ] ;then
     mkdir -p "${2%/*}"
     touch "$2"
   fi
