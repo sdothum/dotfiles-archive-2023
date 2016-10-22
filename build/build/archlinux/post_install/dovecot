@@ -28,7 +28,7 @@ if ! [ -f /etc/ssl/certs/dovecot.pem ] ;then
 fi
 
 original /etc/dovecot/conf.d/10-auth.conf
-sudo sed -i -e '/^!include auth-system.conf.ext/s/^/#/' \
+sudo sed -ie '/^!include auth-system.conf.ext/s/^/#/' \
          -e '/#!include auth-passwdfile.conf.ext/s/#//' \
          /etc/dovecot/conf.d/10-auth.conf
 

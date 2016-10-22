@@ -212,7 +212,7 @@ if [ "$rescue" = n ] ;then
 heading 'choose repo mirrors'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 original /etc/pacman.d/mirrorlist
-sudo sed -i -e '/^Server =/s/^/#/' -e '/Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
+sudo sed -ie '/^Server =/s/^/#/' -e '/Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
 grep '^Server' /etc/pacman.d/mirrorlist
 checkpoint
 
@@ -233,7 +233,7 @@ heading 'edit fstab'
 genfstab -L -p /mnt/btrfs-boot >>/mnt/btrfs-boot/etc/fstab
 # correct genfstab output from apple macbooks
 if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
-  sed -i -e '/vfat/s/0 [12]/0 0/' \
+  sed -ie '/vfat/s/0 [12]/0 0/' \
       -e '/\/var\/lib/d' \
       -e '$a\
 \

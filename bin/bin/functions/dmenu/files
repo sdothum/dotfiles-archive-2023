@@ -9,7 +9,7 @@
 while name=$(echo | history files | dmenu 'Find File') || exit
 do
   [ "$name" ] || exit
-  list=$(sudo locate -A -e -i $name)
+  list=$(sudo locate -Aei $name)
   [ "$list" ] || continue
 
   file=$(echo "$list" \

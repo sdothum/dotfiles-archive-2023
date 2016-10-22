@@ -7,7 +7,7 @@
 # .................................................................... Attribute
 
 # give USER access
-sudo chown -Rv root:users $1
-sudo chmod -Rv 775 $1
+sudo chown -cR root:users $1
+sudo chmod -cR 775 $1
 
 # vim: set ft=sh: #

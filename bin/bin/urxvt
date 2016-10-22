@@ -11,7 +11,7 @@ export SHELL=/usr/bin/fish
 # URxvt client/server
 eval urxvtc $(urxvtfont) $@
 if [ $? -eq 2 ] ;then
-  urxvtd -q -o -f 2>/tmp/urxvt.log
+  urxvtd -qof 2>/tmp/urxvt.log
   eval urxvtc $(urxvtfont) $@
 fi
 

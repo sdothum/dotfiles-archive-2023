@@ -13,7 +13,7 @@ if ! grep -q '/opt/plexmediaserver/Library/Application Support/Plex Media Server
 fi
 
 sudo mkdir -p /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server 2>/dev/null
-sudo chown -R plex:plex /opt/plexmediaserver/Library/Application\ Support
+sudo chown -cR plex:plex /opt/plexmediaserver/Library/Application\ Support
 systemd enable plexmediaserver
 
 # vim: set ft=sh: #

@@ -21,7 +21,7 @@ do
   # git diff from prezto $(which diff), run in git repository directory
   git --no-pager diff --color=auto --no-ext-diff --no-index $i $src/$i || \
     if [ -e $i ] && [ -e $src/$i ] ;then
-      if-no "vdiff $i" || vimdiff -g -f --role='gvimdiff' $i $src/$i
+      if-no "vdiff $i" || vimdiff -gf --role='gvimdiff' $i $src/$i
     else
       if-yes 'unmatched source file' || break
     fi

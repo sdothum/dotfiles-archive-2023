@@ -192,6 +192,11 @@ stdin() {
   pr eject
 }
 
+paragraphs() {
+  punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' \
+              | stdin header
+}
+
 case "$1" in
   h) usage ;;
 
@@ -212,17 +217,13 @@ case "$1" in
         fi
         # contract excessive blank lines
         cat $proof | filter \
-                   | punctuation \
-                   | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' \
-                   | stdin header ;;
+                   | paragraphs ;;
 
   note) # stdin formatting
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
-        cat $proof | punctuation \
-                   | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' \
-                   | stdin header ;;
+        cat $proof | paragraphs ;;
 
   text) fontsize=9
         spacing='\singlespacing'

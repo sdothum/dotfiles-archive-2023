@@ -21,7 +21,7 @@ config_install L /etc/aliases
 
 title "archlinux testing"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-sudo sed -i -e '/^#\[.*testing\]/s/^#//' \
+sudo sed -ie '/^#\[.*testing\]/s/^#//' \
          -e '/^#Include/s/^#//' \
          /etc/pacman.conf
 sudo pacman -Syu

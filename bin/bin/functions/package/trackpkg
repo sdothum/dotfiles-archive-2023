@@ -22,7 +22,7 @@ add_pkg() {
     pkg=$(am $i)
     if [ $(echo $pkg | wc -l) -eq 2 ] ;then
       echo "$i:$(echo $pkg | head -1 | sed 's/ (.*)//')" >>$conf
-      sort -u -o $conf $conf
+      sort -uo $conf $conf
     else
       echo ".. package $i not found"
     fi
