@@ -35,7 +35,9 @@ keys() {
 
 list() {
   # utf-8 char as separator (as caret i usually use is common regex)
-  keys | grep -v '" .*map ' | sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' | column -s► -t
+  keys | grep -v '" .*map ' \
+       | sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' \
+       | column -s► -t
 }
 
 [ "$1" = h ] && usage
