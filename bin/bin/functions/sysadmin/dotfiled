@@ -20,7 +20,7 @@ do
   echo "${_YELLOW_}$i${_nocolor_}"
   # git diff from prezto $(which diff), run in git repository directory
   git --no-pager diff --color=auto --no-ext-diff --no-index $i $src/$i || \
-    if [ -e $i -a -e $src/$i ] ;then
+    if [ -e $i ] && [ -e $src/$i ] ;then
       if-no "vdiff $i" || vimdiff -gf --role='gvimdiff' $i $src/$i
     else
       if-yes 'unmatched source file' || break

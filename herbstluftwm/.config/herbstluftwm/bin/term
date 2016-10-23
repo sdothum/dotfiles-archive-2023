@@ -10,6 +10,7 @@
 # Usage: term [<title>] [ FLOAT | MAX | FORTUNE | STACK | TABBED | TR | VISIBLE | WAIT ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
+#        FORTUNE, login notifier message
 #        TR, disable urxvt pseudo transparency
 #        VISIBLE, wait for window visibility
 #        WAIT, for process to complete before returning
@@ -37,7 +38,7 @@ do
     MAX) name='-name max'
          shift ;;
 
-    FORTUNE) touch /tmp/term:fortune
+    FORTUNE) touch $FORTUNE:term
              shift ;;
 
     STACK) stack=true
@@ -76,7 +77,7 @@ else
   focus $TERM $title $name $geometry $tabbed $tr $cmd
 fi
 
-if [ $visible -a "$title" ] ;then
+if [ "$visible" ] && [ "$title" ] ;then
   xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
 fi
 

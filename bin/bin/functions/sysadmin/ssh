@@ -13,7 +13,7 @@ ps -ef | grep $PPID | grep rsync | grep -qv grep || notrsync=true
 
 if hlwm ;then
   # X11 test made network specific (to avoid git ssh conflict)
-  if [ $notrsync -a $# -gt 1 ] && $(grep -q $1 /etc/hosts); then
+  if [ $notrsync ] && [ $# -gt 1 ] && $(grep -q $1 /etc/hosts); then
     # open remote X11 session
     host=$1
     shift

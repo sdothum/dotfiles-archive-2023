@@ -189,7 +189,7 @@ case "$1" in
      # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
      # random background selection on un-blur change of state
      if [ -e $SHUFFLE ] ;then
-       if [ $(unblur ${primary%%:*} 1) -o $(unblur ${secondary%%:*} 3) ] ;then
+       if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
          # increase modulo to reduce frequency of shuffle
          one_in $modulo && shuffle
        fi

@@ -44,7 +44,7 @@ if [ "$format" = y ] ;then
   if [ "$stripe" = y ] ;then
     echo
     read -p "Add stripe volume /dev/sd? [a-z]: " stripe
-    if [ -z $stripe -o "$stripe" = "$disk" ] ;then
+    if [ -z $stripe ] || [ "$stripe" = "$disk" ] ;then
       echo "invalid stripe reference.. aborting"
       exit
     fi
@@ -109,7 +109,7 @@ heading 'mount partitions'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 mkdir -pv /mnt/btrfs-root
 read -p "SSD boot drive? [y|N]: " ssd
-[ -z $ssd -o "$ssd" = N ] && ssd= || ssd=",ssd,discard"
+[ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=",ssd,discard"
 mount=defaults,noatime,autodefrag,space_cache${ssd}
 echo "mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root"
 mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root

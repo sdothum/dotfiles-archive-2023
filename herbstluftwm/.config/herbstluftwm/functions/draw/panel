@@ -170,7 +170,7 @@ desktops() {
                    || format="%{F$FREE_FG}%{B$DEFAULT_BG}"
       fi
     fi
-    [ $hidden -a -z $CANDY ] && unset leader || leader="${TAG_PAD}"
+    [ "$hidden" ] && [ -z "$CANDY" ] && unset leader || leader="${TAG_PAD}"
     desktops="${desktops} ${format}${leader}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
   done
 }
@@ -202,8 +202,8 @@ panel() {
           count=$(herbstclient attr tags.focus.client_count)
           tickcount=$(herbstclient attr tags.by-name.\'$tag.client_count 2>/dev/null)
           [ $tickcount ] || tickcount=0
-          if [ $count -gt 1 -o $tickcount -gt 0 ] ;then
-            if [ $count -gt 1 -a $tickcount -gt 0 ] ;then
+          if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
+            if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
               title="$title   ⮁   $count   ⮁   %{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
             elif [ $count -gt 1 ] ;then
               title="$title   ⮁   $count"

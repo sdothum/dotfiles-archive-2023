@@ -96,7 +96,7 @@ thirds() {
                          . focus_edge left . cycle_layout 1 vertical \
                          . shift right . cycle_layout 1 vertical
       # fudge to populate empty frame
-      [ $windows -ge 3 -a $windows -le 4 ] && herbstclient shift left
+      [ $windows -ge 3 ] && [ $windows -le 4 ] && herbstclient shift left
     else
       # master window on right
       herbstclient chain . set_layout horizontal . split explode 0.3333 \
@@ -105,7 +105,7 @@ thirds() {
                          . focus_edge right . cycle_layout 1 vertical \
                          . shift left . cycle_layout 1 vertical
       # fudge to populate empty frame
-      [ $windows -ge 3 -a $windows -le 4 ] && herbstclient shift right
+      [ $windows -ge 3 ] && [ $windows -le 4 ] && herbstclient shift right
     fi
   fi
 }

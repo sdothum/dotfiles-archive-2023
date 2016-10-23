@@ -27,6 +27,7 @@ export BORDER=$HLWM:border
 export COMPTON=$HLWM:compton
 export CONKY=$HLWM:conky
 export DYNAMIC=$HLWM:dynamic
+export FORTUNE=$HLWM:fortune
 export FOCUS=$HLWM:focus
 export FULLSCREEN=$HLWM:fullscreen
 export LOCK=$HLWM:lock

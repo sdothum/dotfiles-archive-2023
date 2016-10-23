@@ -43,7 +43,7 @@ configs() {
 }
 
 # command line initialization with: dmenu configs [init]
-if [ ! -s $cache -o "$*" ] ;then
+if [ ! -s $cache ] || [ "$*" ] ;then
   configs
   [ "$*" ] && exit
 fi

@@ -7,7 +7,7 @@
 # ............................................................ Toggle scratchpad
 
 name='Scratchpad'
-scratchpad=$HLWM:scratchpad
+SCRATCHPAD=$HLWM:scratchpad
 # simple tabbed, tmux or byobu
 term=tmux
 
@@ -32,7 +32,7 @@ focus_check() {
 # .......................................................... Hide visible window
 
 if search --onlyvisible >/dev/null ;then
-  if herbstclient substitute TAG clients.$(cat $scratchpad).tag \
+  if herbstclient substitute TAG clients.$(cat $SCRATCHPAD).tag \
                   compare monitors.focus.tag = TAG 2>/dev/null ;then
     search --onlyvisible windowunmap >/dev/null
     draw refresh
@@ -46,14 +46,14 @@ fi
 focus frame
 
 # bring window into focus and verify winid
-if [ -f $scratchpad ] && herbstclient bring $(cat $scratchpad) 2>/dev/null ;then
+if [ -f $SCRATCHPAD ] && herbstclient bring $(cat $SCRATCHPAD) 2>/dev/null ;then
   focus_check
 fi
 
 # recover winid if somehow it differs
 search '' windowmap >/dev/null
 if [ $(winid) != '0x0' ] ;then
-  echo $(winid) >$scratchpad
+  echo $(winid) >$SCRATCHPAD
 fi
 focus_check
 
@@ -61,7 +61,7 @@ focus_check
 for i in $(query winids)
 do
   if herbstclient compare clients.$i.instance = $name ;then
-    echo $i >$scratchpad
+    echo $i >$SCRATCHPAD
     herbstclient bring $i 2>/dev/null
     break
   fi
@@ -78,6 +78,6 @@ case "$term" in
   *    ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
-herbstclient attr clients.focus.winid >$scratchpad
+herbstclient attr clients.focus.winid >$SCRATCHPAD
 
 # vim: set ft=sh: #

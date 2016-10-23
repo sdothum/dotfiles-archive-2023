@@ -17,8 +17,8 @@ SHADOW=${SHADOW:-1}
 # load theme
 # . ${0%/draw}/config/ENV
 case $@ in
-  secondary*) panel_height=$(query pheight secondary) ;;
-  *         ) panel_height=$(query pheight primary) ;;
+  secondary*) PANEL_HEIGHT=$(query pheight secondary) ;;
+  *         ) PANEL_HEIGHT=$(query pheight primary) ;;
 esac
 
 # ricing pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, etc
@@ -46,8 +46,8 @@ monitor() {
 }
 
 # currently defined monitors
-primary=$(monitor 0)
-secondary=$(monitor 1)
+PRIMARY=$(monitor 0)
+SECONDARY=$(monitor 1)
 
 # ....................................................................... Layout
 
@@ -73,13 +73,13 @@ conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_fra
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then
-  [ -e $PANEL ] && panelY=$panel_height || panelY=0
+  [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
 else
   panelY=0
 fi
-[ $margin -lt $panel_height ] && marginY=$(( $panel_height - $margin )) || marginY=0
+[ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) || marginY=0
 # reshape monocle frame by urxvt lines
-if [ $monocle -gt 0 -a $MONOCLE_LINES -gt 0 ] ;then
+if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
   monocleY=$(( $MONOCLE_SIZE * $MONOCLE_LINES ))
   # frame effect, arbitrary compression of frame width in relation to frame height
   monocle=$(( $monocle + $monocleY ))
@@ -104,7 +104,7 @@ case $@ in
 
   conky) rm -f $FULLSCREEN:primary 2>/dev/null
          rm -f $FULLSCREEN:$TAG 2>/dev/null
-         primary=$(printf '%dx%d%+d%+d' \
+         PRIMARY=$(printf '%dx%d%+d%+d' \
                  $(( $normal_width - $SHADOW )) \
                  $(( $Y0 + $monocleY*2 - $margin*2 )) \
                  $(( $X1 + $marginX + $monocle )) \
@@ -114,14 +114,14 @@ case $@ in
                     touch $FULLSCREEN:$TAG
                     if [ $X0 -gt 1024 ] ;then
                       # desktop screens retain margins
-                      primary=$(printf '%dx%d%+d%+d' \
+                      PRIMARY=$(printf '%dx%d%+d%+d' \
                               $(( $fullscreen_width - $SHADOW )) \
                               $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY )) \
                               $(( $X1 + $marginX + $window_frame + $monocle )) \
                               $(( $margin - $monocleY + $window_frame )) )
                     else
                       # laptop screens fill to edge
-                      primary=$(printf '%dx%d%+d%+d' \
+                      PRIMARY=$(printf '%dx%d%+d%+d' \
                               $(( $fullscreen_width + $marginX + $window_frame )) \
                               $Y0 \
                               $X1 \
@@ -131,13 +131,13 @@ case $@ in
   fullframe) rm -f $FULLSCREEN:primary 2>/dev/null
              rm -f $FULLSCREEN:$TAG 2>/dev/null
              if [ $monocle -eq 0 ] ;then
-               primary=$(printf '%dx%d%+d%+d' \
+               PRIMARY=$(printf '%dx%d%+d%+d' \
                        $(( $X0 - $marginX*2 )) \
                        $(( $Y0 - $margin*2 + $window_frame - $marginY - 2 )) \
                        $(( $X1 + $marginX )) \
                        $margin )
              else
-               primary=$(printf '%dx%d%+d%+d' \
+               PRIMARY=$(printf '%dx%d%+d%+d' \
                        $normal_width \
                        $(( $Y0 + $monocleY*2 + $window_frame - $marginY - 2 )) \
                        $(( $X1 + ($X0 - $normal_width)/2 )) \
@@ -147,14 +147,14 @@ case $@ in
   fullscreen) touch $FULLSCREEN:primary
               touch $FULLSCREEN:$TAG 2>/dev/null
               if [ $monocle -eq 0 ] ;then
-                primary=$(printf '%dx%d%+d%+d' \
+                PRIMARY=$(printf '%dx%d%+d%+d' \
                         $X0 \
                         $Y0 \
                         $X1 \
                         0 )
               else
                 # golden ratio screen retain margins
-                primary=$(printf '%dx%d%+d%+d' \
+                PRIMARY=$(printf '%dx%d%+d%+d' \
                         $fullscreen_width \
                         $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
                         $(( $X1 + ($X0 - $fullscreen_width)/2 )) \
@@ -167,7 +167,7 @@ case $@ in
              margin=$(pixel_match $margin $UM1680)
              marginX=$(pixel_match $marginX $UM1680)
              # bottom margin calculation adjusted for lower resolution than primary
-             secondary=$(printf '%dx%d%+d%+d' \
+             SECONDARY=$(printf '%dx%d%+d%+d' \
                        $(( $X1 - $marginX*2 )) \
                        $(( $Y1 - $margin*2 + $window_frame - $marginY - 2 )) \
                        $marginX \
@@ -175,7 +175,7 @@ case $@ in
 
   secondary*fullscreen) touch $FULLSCREEN:secondary
                         touch $FULLSCREEN:$TAG 2>/dev/null
-                        secondary=$(printf '%dx%d%+d%+d' \
+                        SECONDARY=$(printf '%dx%d%+d%+d' \
                                   $X1 \
                                   $Y1 \
                                   0 \
@@ -185,13 +185,13 @@ esac
 # configure multihead..
 # virtual monitors defined in lieu of hc pad monitor, to define fullscreen boundaries
 # trap negative X pos when no monitor gap»
-primary=$(echo $primary | sed -r 's/-([0-9]*)/+0/g')
-[ $TRACE ] && echo "= herbstclient set_monitors $primary $secondary" >>$TRACE
-herbstclient set_monitors $primary $secondary &
+PRIMARY=$(echo $PRIMARY | sed -r 's/-([0-9]*)/+0/g')
+[ $TRACE ] && echo "= herbstclient set_monitors $PRIMARY $SECONDARY" >>$TRACE
+herbstclient set_monitors $PRIMARY $SECONDARY &
 
 # ................................................................... Fullscreen
 
-if [ -e $FULLSCREEN:primary -o -e $FULLSCREEN:secondary ] ;then
+if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then
   touch $FULLSCREEN
 else
   rm -f $FULLSCREEN 2>/dev/null

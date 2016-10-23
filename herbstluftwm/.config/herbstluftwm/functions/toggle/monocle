@@ -42,10 +42,10 @@ if is primary ;then
   fi
 
   # toggle out of conky for distraction free mode on laptop screens
-  if [ -e $MONOCLE -a -e $CONKY ] && is display -2560 ;then
+  if [ -e $MONOCLE ] && [ -e $CONKY ] && is display -2560 ;then
     toggle conky
     touch $MONOCLE:conky
-  elif [ -e $MONOCLE:conky -a ! $fullscreen ] ;then
+  elif [ -e $MONOCLE:conky ] && [ -z "$fullscreen" ] ;then
     toggle conky
     rm -f $MONOCLE:conky
   else

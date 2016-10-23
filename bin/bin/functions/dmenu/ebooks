@@ -55,7 +55,7 @@ ebooks() {
 }
 
 # command line initialization with: dmenu ebooks [init]
-if [ ! -s $cache -o "$*" ] ;then
+if [ ! -s $cache ] || [ "$*" ] ;then
   ebooks
   [ "$*" ] && exit
 fi
@@ -71,7 +71,7 @@ epub() {
 }
 
 # ..................................................................... E-reader
- 
+
 while :
 do
   book=$(cat $cache \
