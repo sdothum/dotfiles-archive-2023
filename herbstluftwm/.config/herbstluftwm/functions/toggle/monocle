@@ -64,7 +64,7 @@ if is primary ;then
   else
     # allow transitioning to full fullscreen, see draw monitor
     if ! is fullscreen ;then
-      restore mono
+      # restore mono
       # side by side frames is my normal layout..
       if is multihead ;then
         if is display =3440 ;then
@@ -79,7 +79,7 @@ if is primary ;then
     fi
   fi
   restore panel
-  herbstclient chain . bring $winid . unlock
+  herbstclient chain . jumpto $winid . unlock
   rm -f $LOCK
   [ $blink ] && focus borders
 fi

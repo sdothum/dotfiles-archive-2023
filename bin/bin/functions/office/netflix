@@ -6,6 +6,6 @@
 
 # ...................................................................... Browser
 
-chromium http://www.netfix.com/ca/
+chromium netflix
 
 # vim: set ft=sh: #

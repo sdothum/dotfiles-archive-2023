@@ -7,6 +7,7 @@
 # ...................................................................... Browser
 
 chrome=/usr/bin/chromium
+netflix=http://www.netfix.com/ca
 hosts='luna lumen monad pi'
 
 # release remote instance
@@ -35,6 +36,6 @@ unlock() {
 pidof chromium >/dev/null || unlock $(echo " $hosts " | sed "s/ $(hostname) / /")
 
 # focus frame (see dmenu browser)
-[ "$*" ] && eval focus $chrome -app=$@ || focus $chrome
+[ "$1" = netflix ] && focus $chrome -app=$netflix || focus $chrome $@
 
 # vim: set ft=sh: #

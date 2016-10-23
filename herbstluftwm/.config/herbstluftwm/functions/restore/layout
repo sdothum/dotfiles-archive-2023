@@ -140,6 +140,6 @@ case "$1" in
      exec restore layout $layout ;;
 esac
 
-herbstclient compare tags.focus.client_count gt 1 && [ ! $layout = max ] && focus borders
+herbstclient compare tags.focus.client_count gt 1 && [ $layout != max ] && focus borders
 
 # vim: set ft=sh: #
