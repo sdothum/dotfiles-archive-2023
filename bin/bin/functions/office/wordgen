@@ -83,7 +83,7 @@ do
   wordgen $i
 done
 # add paragraph markers (reduced by subsequent shuf)
-sed -ir 's/(.*)/\1\n/' $paragraphs
+sed -i -r 's/(.*)/\1\n/' $paragraphs
 
 shuf $paragraphs >$typefile
 rm -f $paragraphs

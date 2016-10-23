@@ -27,41 +27,66 @@ rsync_home() {
         --exclude '.bundler' \
         --exclude '.cabal' \
         --exclude '.cache' \
+        --exclude 'cache' \
+        --exclude 'Cache' \
+        --exclude 'cairo-dock' \
         --exclude '.cargo' \
         --exclude '.ccnet' \
         --exclude '.cddb' \
         --exclude '.cddbslave' \
         --exclude 'chromium' \
+        --exclude '.dbus/session-bus' \
         --exclude 'depot' \
         --exclude '.dropbox' \
         --exclude '.dropbox-dist' \
+        --exclude '.fonts.dist' \
         --exclude '.gem' \
         --exclude '.Genymobile' \
         --exclude '.ghc' \
         --exclude '.git' \
+        --exclude 'gnome-do' \
         --exclude 'google-chrome' \
+        --exclude 'google-chrome-unstable' \
         --exclude '.googleearth' \
+        --exclude 'Gpredict' \
+        --exclude '.kingsoft' \
+        --exclude 'local-storage' \
         --exclude '.local/share/weechat' \
         --exclude 'logs' \
+        --exclude '.macromedia' \
         --exclude 'Maildir' \
+        --exclude 'maxthon' \
+        --exclude '.molecule' \
         --exclude '.moovida' \
         --exclude '.mozilla' \
+        --exclude 'mpv/watch_later' \
         --exclude '.node-gyp' \
         --exclude '.npm' \
+        --exclude 'offline-storage' \
+        --exclude '.offlineimap' \
         --exclude '.PlayOnLinux' \
+        --exclude '.python-eggs' \
         --exclude 'sandbox/patricia' \
+        --exclude 'scratch' \
+        --exclude 'scribes' \
         --exclude '.stack' \
         --exclude 'Steam' \
+        --exclude 'sublime-text-2' \
+        --exclude 'sublime-text-3' \
         --exclude '.sync' \
         --exclude '.SyncArchive' \
         --exclude '.sync-save' \
         --exclude '.thumbnails' \
         --exclude 'tmp' \
+        --exclude 'tomboy' \
         --exclude 'Trash' \
         --exclude '.unison' \
         --exclude '.vim/backups' \
         --exclude '.vim/plugged' \
         --exclude 'VirtualBox VMs' \
+        --exclude 'vivaldi' \
+        --exclude 'webkit' \
+        --exclude '.wtftw' \
         /home/$USER $@
   # syncthing index most often corrupted
   rm -rfv $@/$USER/.config/syncthing/index*

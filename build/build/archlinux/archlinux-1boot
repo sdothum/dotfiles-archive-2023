@@ -66,7 +66,7 @@ checkpoint
 
 heading 'configure package manager'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-sed -ie '/^\[options\]/aILoveCandy' \
+sed -i -e '/^\[options\]/aILoveCandy' \
     -e '/^#\[multilib\]/,+1s/^#//' \
     -e '/^#Color/s/^#//' \
     /etc/pacman.conf
@@ -89,7 +89,7 @@ pm_install wpa_supplicant
 # cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
 # essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
 # key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
-# sed -ie $essid -e $key /etc/netctl/my-wireless-network
+# sed -i -e $essid -e $key /etc/netctl/my-wireless-network
 # netctl enable my-wireless-network
 echo noarp >/etc/dhcpcd.conf
 checkpoint
@@ -102,7 +102,7 @@ heading "create \"$user\" user account"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 pm_install sudo
-sed -ie '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
+sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
     -e '/## Defaults specification/aDefaults insults' \
     /etc/sudoers
 EDITOR=nano visudo

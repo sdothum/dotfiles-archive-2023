@@ -73,11 +73,11 @@ setblur() {
 set_border() {
   # echo $1 >$BORDER
   conky palette $1 \
-        | grep 'color_light_1' \
-        | sed 's/<\/font>/\n/g' \
-        | sed  's/.*<font>//g' \
-        | grep '^#' | cut -d'#' -f2 \
-        | tac >$PULSAR
+      | grep 'color_light_1' \
+      | sed 's/<\/font>/\n/g' \
+      | sed  's/.*<font>//g' \
+      | grep '^#' | cut -d'#' -f2 \
+      | tac >$PULSAR
   # set border to midtone
   sed '10q;d' $PULSAR >$BORDER
   # use tee to append file into itself
@@ -119,7 +119,7 @@ color() {
 }
 
 select_blank() {
-  time=5 notify low 'Root Backgrount' '<Space>  Show next\n<Enter>  Select color'
+  time=5 notify low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r \

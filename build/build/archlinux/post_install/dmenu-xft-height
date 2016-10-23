@@ -8,7 +8,7 @@
 
 # add scratchpad/term default and exit code for bspwm preselect operations
 original /usr/bin/dmenu_run
-sed -ire "/stest.*@\"/s/ tee /sed '1iscratchpad\\\\nterm\\\\npseudoframe' | tee /" \
+sed -i -re "/stest.*@\"/s/ tee /sed '1iscratchpad\\\\nterm\\\\npseudoframe' | tee /" \
     -e '/stest.*@"/s/(stest.*)/run=\$(\1) || exit/' \
     -e '/dmenu.*cache"/s/(dmenu.*)/run=\$(\1) || exit/' \
     -e '/).*SHELL.*&/i\\t[[ $run ]] && $run' \

@@ -20,8 +20,8 @@ elif laptop ;then
   size=9
 else
   size=10
-fi 
+fi
 
-echo -n "-fn xft:$font:size=$size"
+echo "-fn xft:$font:size=$size"
 
 # vim: set ft=sh: #

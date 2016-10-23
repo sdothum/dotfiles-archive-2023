@@ -19,7 +19,7 @@ nameserver 208.67.222.222
 nameserver 208.67.220.220" | sudo tee /etc/resolv.dnsmasq.conf
 
 original /etc/dnsmasq.conf
-sudo sed -ie '/#listen-address=/clisten-address=127.0.0.1' \
+sudo sed -i -e '/#listen-address=/clisten-address=127.0.0.1' \
          -e '/#resolv-file=/cresolv-file=/etc/resolv.dnsmasq.conf' \
          -e "/#addn-hosts=/caddn-hosts=$HOME/adblock/adblock.uniq" \
          /etc/dnsmasq.conf

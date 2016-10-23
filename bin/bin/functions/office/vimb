@@ -33,7 +33,7 @@ case "$1" in
                    ;$inputerrorfont<CR>\
                    ;$completionfont<CR>\
                    ;tabopen $@<CR>"\
-          | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
+             | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
 
   *) /usr/bin/vimb --cmd="$statusfont" \
                    --cmd="$sslfont" \

@@ -71,7 +71,7 @@ do
     [ "$episode" ] || break
     episode=$(echo "$episode" | sed "s/ $SEP$//")
     video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
-    if [ $(echo -n "$video\n" | wc -l) -gt 1 ] ;then
+    if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify critical "$show" "Duplicate episodes found"
       sleep 3
       break

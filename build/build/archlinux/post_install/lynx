@@ -7,7 +7,7 @@
 # ......................................................................... lynx
 
 original /etc/lynx.cfg
-# sudo sed -ie '/^#ENABLE_LYNXRC:accept_all_cookies:ON/s/#//' \
+# sudo sed -i -e '/^#ENABLE_LYNXRC:accept_all_cookies:ON/s/#//' \
 #          -e '$ahttp_proxy:http://localhost:8118/' /etc/lynx.cfg
 sudo sed -i '/^#ENABLE_LYNXRC:accept_all_cookies:ON/s/#//' /etc/lynx.cfg
 

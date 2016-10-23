@@ -30,7 +30,7 @@ word=$(unquote $word)
 while hints=$(aiksaurus "$word" 2>/dev/null)
 do
   echo $hints
-  echo -n "$hints" | grep -q '*** No synonyms known. ***' || break
+  echo "$hints" | grep -q '*** No synonyms known. ***' || break
   word=$(echo "$hints" | sed -e '1,2d' -e 's/\t//' | dmenu 'Similar words') || exit
   word=$(unquote $word)
 done

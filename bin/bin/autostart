@@ -24,7 +24,7 @@ gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient VertEdgeScroll=1 &
 # laptop && synclient TapButton1=1 &
 pidof gpg-agent >/dev/null \
-|| gpg-agent --homedir /home/shum/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
+   || gpg-agent --homedir /home/shum/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 ipfilter &
 xrdb -merge $HOME/.Xresources &
 

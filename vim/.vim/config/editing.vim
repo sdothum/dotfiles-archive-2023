@@ -23,18 +23,20 @@
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <A-End>           ggVG
+      nnoremap <A-End>             ggVG
 
-      " use Q for formatting the current paragraph (or selection)
-      nnoremap Q                 gqap
-      vnoremap Q                 gq
-      " reformat paragraph, reformat and go to next
-      " inoremap <silent><S-F4>  <ESC>mZ{gq}`Z:silent delmark Z<CR>a
-      " nnoremap <S-F4>          {gq}j
-      nnoremap <leader>[         {gq}j
-      " add trailing space to paragragh lines
-      " vnoremap <silent><S-F4>  V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
-      vnoremap <silent><leader>] V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      " " use Q for formatting the current paragraph (or selection)
+      " nnoremap Q                 gqap
+      " vnoremap Q                 gq
+      " " reformat paragraph, reformat and go to next
+      " " inoremap <silent><S-F4>  <ESC>mZ{gq}`Z:silent delmark Z<CR>a
+      " " nnoremap <S-F4>          {gq}j
+      " nnoremap <leader>[         {gq}j
+      " " add trailing space to paragragh lines
+      " " vnoremap <silent><S-F4>  V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      " vnoremap <silent><leader>] V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
+      nnoremap Q                   {jv}kJvgq}}{j
+      vnoremap Q                   Jvgqj
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

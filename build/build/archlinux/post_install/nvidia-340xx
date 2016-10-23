@@ -8,7 +8,7 @@
 
 # set grub boot screen resolution
 original /etc/default/grub
-sudo sed -ie '/^GRUB_CMDLINE_LINUX_DEFAULT="quiet"/s/"quiet"/"quiet vga=0x0364"/' \
+sudo sed -i -e '/^GRUB_CMDLINE_LINUX_DEFAULT="quiet"/s/"quiet"/"quiet vga=0x0364"/' \
          -e '/^GRUB_GFXMODE=auto/s/auto/1440x900,auto/' \
          /etc/default/grub
 

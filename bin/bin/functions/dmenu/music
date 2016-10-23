@@ -167,12 +167,12 @@ do
     do
       case $action in
         play) mpc clear >/dev/null
-              echo -n "$playlist" | mpc add >/dev/null
+              echo "$playlist" | mpc add >/dev/null
               mpc play
               exit ;;
 
-        add   ) echo -n "$playlist" | mpc add >/dev/null ;;
-        insert) echo -n "$playlist" | mpc insert >/dev/null ;;
+        add   ) echo "$playlist" | mpc add >/dev/null ;;
+        insert) echo "$playlist" | mpc insert >/dev/null ;;
       esac
       break
     done

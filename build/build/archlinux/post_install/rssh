@@ -7,7 +7,7 @@
 # ......................................................................... rssh
 
 original /etc/ssh/sshd_config
-sudo sed -ie '/Port 22/s/^#//' \
+sudo sed -i -e '/Port 22/s/^#//' \
          -e '/Protocol 2/s/^#//' \
          -e '/HostKey \/etc\/ssh\/ssh_host_rsa_key/s/^#//' \
          -e '/HostKey \/etc\/ssh\/ssh_host_dsa_key/s/^#//' \

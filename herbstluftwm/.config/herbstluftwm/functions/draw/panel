@@ -258,11 +258,11 @@ xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
 is display =3440 && size=8 || size=7
 
 cat $PANEL_FIFO:$fifo \
-    | panel \
-    | lemonbar -d -n "lemonbar:$fifo" \
-               -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
-               -u $PANEL_UNDERLINE \
-               -f "$PANEL_FONT:size=$size" -f "$UTF8_FONT:size=$size" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+  | panel \
+  | lemonbar -d -n "lemonbar:$fifo" \
+             -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
+             -u $PANEL_UNDERLINE \
+             -f "$PANEL_FONT:size=$size" -f "$UTF8_FONT:size=$size" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #

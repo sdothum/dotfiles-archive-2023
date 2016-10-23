@@ -7,7 +7,7 @@
 # .......................................................................... php
 
 original /etc/php/php.ini
-sudo sed -ie '/open_basedir/s/=.*/=/' \
+sudo sed -i -e '/open_basedir/s/=.*/=/' \
          -e '/max_execution_time/s/=.*/= 300/' \
          -e '/max_execution_time/s/;//' \
          -e '/=curl.so/s/^;//' \

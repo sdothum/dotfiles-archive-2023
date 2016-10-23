@@ -18,7 +18,7 @@ sudo mount /.snapshots
 
 # manual cleanup triggered in pa function
 original /etc/snapper/configs/root
-sudo sed -ie "/^ALLOW_USERS=/cALLOW_USERS=\"$USER\"" \
+sudo sed -i -e "/^ALLOW_USERS=/cALLOW_USERS=\"$USER\"" \
          -e '/^NUMBER_LIMIT=/cNUMBER_LIMIT="50"' \
          -e '/^TIMELINE_CREATE=/cTIMELINE_CREATE="no"' \
          -e '/^TIMELINE_LIMIT_HOURLY=/cTIMELINE_LIMIT_HOURLY="10"' \
