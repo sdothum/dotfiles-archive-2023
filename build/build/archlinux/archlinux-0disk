@@ -58,7 +58,7 @@ if [ "$format" = y ] ;then
            echo "  .." ;;
   esac
   sleep 3s
-  c$diskutil /dev/sd${disk}
+  $diskutil /dev/sd${disk}
   $diskutil -l /dev/sd${disk}
   checkpoint
   if [ ! -z $stripe ] ;then
