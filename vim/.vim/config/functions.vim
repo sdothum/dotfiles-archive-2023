@@ -50,4 +50,17 @@
         endif
       endfunction
 
+    " ...................................................................... GUI
+
+      " toggle gui menu
+      function ToggleGui()
+        if &guioptions =~# 'T'
+          set guioptions-=T
+          set guioptions-=m
+        else
+          set guioptions+=T
+          set guioptions+=m
+        endif
+      endfunction
+
 " functions.vim

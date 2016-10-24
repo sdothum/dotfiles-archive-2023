@@ -78,13 +78,8 @@
       " Toggle full screen (for notion fkey compatibility)
       " map <silent><S-F12> :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
       " Toggle Menu and Toolbar
-      map <silent><F12>     :if &guioptions =~# 'T' <Bar>
-        \ set guioptions-=T <Bar>
-        \ set guioptions-=m <bar>
-        \ else <Bar>
-        \ set guioptions+=T <Bar>
-        \ set guioptions+=m <Bar>
-        \ endif<CR>
+      nnoremap <silent><F12> :call ToggleGui()<CR>
+      inoremap <silent><F12> <C-o>:call ToggleGui()<CR>
 
   " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

@@ -6,13 +6,16 @@
 
 # ....................................................................... Editor
 
+# filename:lineno trim adjustment
+adjust=3
+
 usage() {
   echo "usage: $(basename $0) [vim]"
   exit 1
 }
 
 # list current key assignments
-keys() {
+keymaps() {
   cd $HOME/.vim/config
   for i in $(seq 1 12)
   do
@@ -34,10 +37,13 @@ keys() {
 }
 
 list() {
+  # column formatting is skewed by title/drawline (field 1)
+  leader=$(head -c $(( $(tput cols) - $adjust )) </dev/zero | tr '\0' ' ')
   # utf-8 char as separator (as caret i usually use is common regex)
-  keys | grep -v '" .*map ' \
-       | sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' \
-       | column -s► -t
+  keymaps | grep -v '" .*map ' \
+          | sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' \
+          | column -s► -t \
+          | sed "s/$leader//"
 }
 
 [ "$1" = h ] && usage

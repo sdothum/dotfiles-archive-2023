@@ -193,7 +193,7 @@ stdin() {
 }
 
 paragraphs() {
-  punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n\n/smg' \
+  punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n/smg' \
               | stdin header
 }
 
