@@ -40,10 +40,10 @@ list() {
   # column formatting is skewed by title/drawline (field 1)
   leader=$(head -c $(( $(tput cols) - $adjust )) </dev/zero | tr '\0' ' ')
   # utf-8 char as separator (as caret i usually use is common regex)
-  keymaps | grep -v '" .*map ' \
-          | sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' \
-          | column -s► -t \
-          | sed "s/$leader//"
+  keymaps | grep -v '" .*map ' |
+            sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' |
+            column -s► -t |
+            sed "s/$leader//"
 }
 
 [ "$1" = h ] && usage

@@ -7,8 +7,9 @@
 # ......................................................................... Tags
 
 # custom default_frame_layout must be set before tags are added
-is display -1440 && hc set default_frame_layout 2 \
-                 || hc set default_frame_layout 0
+is display -1440 &&
+  hc set default_frame_layout 2 ||
+  hc set default_frame_layout 0
 hc rename default '1' || true
 
 # configured by tag number, references by-name (not index value)

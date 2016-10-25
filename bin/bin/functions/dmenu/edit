@@ -15,11 +15,11 @@
 # tag file containing project specs
 projects=$HOME/bin/functions/dmenu/.config/edit
 
-while files=$(sed "s/  *::  */^$SEP /" $projects \
-            | history edit \
-            | column -s^ -t \
-            | sed -e '1i[ edit tags ]' \
-            | dmenu 'Edit Project' -no-custom) || exit
+while files=$(sed "s/  *::  */^$SEP /" $projects |
+              history edit |
+              column -s^ -t |
+              sed -e '1i[ edit tags ]' |
+              dmenu 'Edit Project' -no-custom) || exit
 do
   if [ "$files" = '[ edit tags ]' ] ;then
     gvim -f $projects

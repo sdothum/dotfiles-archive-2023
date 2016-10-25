@@ -63,7 +63,7 @@
 = music
 # ▔▔▔▔▔
   beets
-  cli-visualizer
+# cli-visualizer
   deadbeef       [server]
   mpc
   mpd

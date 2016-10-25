@@ -11,6 +11,7 @@
 
 # default master pane left or right
 MASTER=${MASTER:-left}
+windows=$(herbstclient attr tags.focus.client_count)
 
 # initial desktop layouts
 layout() {
@@ -70,6 +71,12 @@ halves() {
   else
     restore mono
     split 0.5
+    # fill empty frames
+    if [ $MASTER = left ] ;then
+      [ $windows -eq 2 ] && herbstclient shift left
+    else
+      [ $windows -eq 2 ] && herbstclient shift right
+    fi
   fi
 }
 
@@ -83,7 +90,6 @@ onethird() {
 }
 
 thirds() {
-  windows=$(herbstclient attr tags.focus.client_count)
   if [ "$load" ] || herbstclient compare tags.focus.client_count lt 3 ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
     # fill empty frames

@@ -8,9 +8,9 @@
 # meta dmenu menu!
 while :
 do
-  script=$(ls -1 ${0%/dmenu}/functions/dmenu \
-         | egrep -v 'browser|compose|help|menu' \
-         | dmenu 'Menu' "$script" -no-custom) || exit
+  script=$(ls -1 ${0%/dmenu}/functions/dmenu |
+           egrep -v 'browser|compose|help|menu' |
+           dmenu 'Menu' "$script" -no-custom) || exit
   command dmenu $script
 done
 

@@ -32,13 +32,13 @@ do
     fi
   else
     # initial lookup
-    man=$(apropos . \
-        | cut -d' ' -f1 \
-        | sort -d \
-        | uniq \
-        | history man \
-        | dmenu 'Manpage' \
-        | cut -d':' -f3-)
+    man=$(apropos . |
+          cut -d' ' -f1 |
+          sort -d |
+          uniq |
+          history man |
+          dmenu 'Manpage' |
+          cut -d':' -f3-)
     man=$(unquote $man)
     whatis "$man" >/dev/null || exit
   fi
@@ -48,10 +48,10 @@ do
   do
     # list possible man sections!
     if [ $(whatis "$man" | wc -l) -gt 1 ] ;then
-      page=$(whatis "$man" \
-           | sed "s/) *-/)^$SEP/" \
-           | column -s^ -t \
-           | dmenu 'Section' -no-custom) || exit
+      page=$(whatis "$man" |
+             sed "s/) *-/)^$SEP/" |
+             column -s^ -t |
+             dmenu 'Section' -no-custom) || exit
     else
       page=$(whatis "$man")
       singleton=true

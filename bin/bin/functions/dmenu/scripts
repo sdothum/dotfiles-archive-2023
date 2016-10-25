@@ -8,17 +8,17 @@
 # shell scripts excluding .man (see dmenu man)
 file=$(echo $(find -L $HOME/bin -type f) \
             $(find -L $HOME/build/archlinux -type f) \
-            $(find -L $HOME/.config/herbstluftwm -type f) \
-     | tr ' ' '\n' \
-     | egrep -v '\.cache|\.deprecated|\.hg|makepkg' \
-     | sed -e "s|$HOME/bin/|bin/|" \
+            $(find -L $HOME/.config/herbstluftwm -type f) |
+       tr ' ' '\n' |
+       egrep -v '\.cache|\.deprecated|\.hg|makepkg' |
+       sed -e "s|$HOME/bin/|bin/|" \
            -e 's|.*/archlinux/|archlinux/|' \
-           -e 's|.*/herbstluftwm/|herbstluftwm/|' \
-     | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \
-     | sort \
-     | history scripts \
-     | column -s^ -t \
-     | dmenu 'Edit Script' -no-custom) || exit
+           -e 's|.*/herbstluftwm/|herbstluftwm/|' |
+       sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
+       sort |
+       history scripts |
+       column -s^ -t |
+       dmenu 'Edit Script' -no-custom) || exit
 
 history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
 file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")

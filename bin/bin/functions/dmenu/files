@@ -12,11 +12,11 @@ do
   list=$(sudo locate -Aei $name)
   [ "$list" ] || continue
 
-  file=$(echo "$list" \
-       | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" \
-       | sort \
-       | column -s^ -t \
-       | dmenu 'Open File' -no-custom) || exit
+  file=$(echo "$list" |
+         sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
+         sort |
+         column -s^ -t |
+         dmenu 'Open File' -no-custom) || exit
 
   file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
   history files "$file"

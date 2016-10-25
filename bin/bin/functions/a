@@ -14,7 +14,7 @@ if [ "$1" = '--nocolor' ] ;then
   shift
 fi
 
-ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $nocolor "$@" \
-  | egrep -v $filter
+ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $nocolor "$@" |
+    egrep -v $filter
 
 # vim: set ft=sh: #

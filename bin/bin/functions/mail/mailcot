@@ -1,0 +1,22 @@
+#!/usr/bin/expect
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... Server
+
+# test dovecot installation
+# Usage: mailcot <host> <user> <password>
+
+# set timeout 5
+set host [lindex $argv 0]
+set user [lindex $argv 1]
+set password [lindex $argv 2]
+spawn telnet $host 143
+expect '\*\ OK'
+send "a login \"$user\" \"$password\"\n"
+expect 'a\ OK'
+send "b list \"\" *\n"
+expect 'b\ OK'
+send "c logout\n"

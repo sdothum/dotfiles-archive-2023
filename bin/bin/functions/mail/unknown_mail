@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ Query
+
+usage() {
+  echo "usage: $(basename $0)  c'c | f'rom | s'ubject | t'o"
+  exit 1
+}
+
+# scan unknown mail
+unknown=$HOME/Maildir/sdothum/unknown
+
+case $1 in
+  c    ) ack '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;
+  f    ) ack '^From:' $unknown/* | sed -r 's/.*From: *(.*)/\1/' | sort | less ;;
+  s    ) ack '^Subject:.*\[.*\]' $unknown/* | sed -r 's/.*Subject: *(.*)/\1/' | sort | less ;;
+  t    ) ack '^To:' $unknown/* | sed -r 's/.*To: *(.*)/\1/' | sort | less ;;
+  h | *) usage ;;
+esac
+
+# vim: set ft=sh: #

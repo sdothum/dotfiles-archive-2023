@@ -1,0 +1,42 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... Send
+
+# disable fish autojump call
+export SHELL=dash
+. /etc/profile
+
+# send mail poller with error notifier
+queue=$HOME/.msmtpqueue
+
+# mailqueue status (mailqueue gt 2.. ?)
+if [ $(pgrep -cx mailqueue) -gt 2 ] ;then
+  ls -l $queue
+  exit
+fi
+# trace 'Starting mailqueue..'
+
+# mailqueue daemon (cron task)
+if [ $(ls -l $queue | wc -l) -gt 1 ] ;then
+  trace 'Sending mail..'
+  count=$(echo $(ls -l $queue | wc -l) / 2 | bc)
+  # reset any mangled mail permissions
+  [ $(stat --format '%a' $HOME/stow/msmtp/.msmtprc) -ne 600 ] && chmod -c 600 $HOME/.msmtprc
+  errmsg=$(/usr/local/bin/msmtp-runqueue.sh)
+  echo $errmsg
+  if echo $errmsg | grep -q FAILURE ;then
+    notify critical 'Check Mail Queue..' "$(echo $errmsg | sed -n 2p)"
+  else
+    [ $count -eq 1 ] &&
+      notify low 'Mail Queue' '1 message sent' ||
+      notify low 'Mail Queue' "$count messages sent"
+  fi
+else
+  trace 'No mail'
+fi
+
+# vim: set ft=sh: #

@@ -7,7 +7,7 @@
 # ▔▔▔▔▔▔▔▔▔▔
 # breeze-obsidian-cursor-theme
 # breeze-snow-cursor-theme
-  compton
+  compton             [!laptop]
 # compton-git
 # hsetroot
   lxappearance

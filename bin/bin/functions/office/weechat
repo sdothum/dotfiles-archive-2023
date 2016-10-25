@@ -8,7 +8,7 @@
 
 ircservers=3
 timeout=300
-log=/tmp/weechat.log
+rm -f $HOME/.weechat/*.log
 
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4

@@ -28,9 +28,9 @@ done 3< $clipboard
 
 # any deletes above will resequence the clipboard history
 clipboard
-clip=$(sed "s/ /^$SEP /" $clipboard \
-     | column -s^ -t \
-     | dmenu 'Clipboard' -no-custom)
+clip=$(sed "s/ /^$SEP /" $clipboard |
+       column -s^ -t |
+       dmenu 'Clipboard' -no-custom)
 
 if [ "$clip" ] ;then
   clip=$(echo $clip | cut -d' ' -f1)

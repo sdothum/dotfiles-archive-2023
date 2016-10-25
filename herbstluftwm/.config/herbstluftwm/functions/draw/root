@@ -72,12 +72,13 @@ setblur() {
 # create pulsar border color gradient
 set_border() {
   # echo $1 >$BORDER
-  conky palette $1 \
-      | grep 'color_light_1' \
-      | sed 's/<\/font>/\n/g' \
-      | sed  's/.*<font>//g' \
-      | grep '^#' | cut -d'#' -f2 \
-      | tac >$PULSAR
+  conky palette $1 |
+        grep 'color_light_1' |
+        sed 's/<\/font>/\n/g' |
+        sed  's/.*<font>//g' |
+        grep '^#' |
+        cut -d'#' -f2 |
+        tac >$PULSAR
   # set border to midtone
   sed '10q;d' $PULSAR >$BORDER
   # use tee to append file into itself
@@ -114,8 +115,9 @@ blank() {
 
 color() {
   # initialize default link
-  [ -L $BACKGROUND ] && exists $BACKGROUND \
-                     || ln -sf $(find ${BACKGROUND%/default} -name '*.png' | head -1) $BACKGROUND
+  [ -L $BACKGROUND ] &&
+    exists $BACKGROUND ||
+    ln -sf $(find ${BACKGROUND%/default} -name '*.png' | head -1) $BACKGROUND
 }
 
 select_blank() {
@@ -133,8 +135,9 @@ select_blank() {
 
 wallpaper() {
   # initialize default link
-  [ -L $WALLPAPER ] && exists $WALLPAPER \
-                    || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
+  [ -L $WALLPAPER ] &&
+    exists $WALLPAPER ||
+    ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   rm -f $BLANK
   rm -f $THEME 2>/dev/null
   herbstclient attr theme.normal.color "$NORMAL"
@@ -214,10 +217,10 @@ if [ ! -e $BLANK ] ;then
     pwait walltheme
     cp -f $THEME $background
   fi
-  set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) \
-             | grep 'Triadic Color' \
-             | head -1 \
-             | cut -d/ -f10)
+  set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) |
+               grep 'Triadic Color' |
+               head -1 |
+               cut -d/ -f10)
   draw conky
 fi
 

@@ -10,11 +10,11 @@
 
 cd /tmp
 ln_logs
-file=$(ls *.log \
-     | sort \
-     | sed 's/.log//' \
-     | sed '1i[ journals ]' \
-     | dmenu "$mode Log" -no-custom) || exit
+file=$(ls *.log |
+       sort |
+       sed 's/.log//' |
+       sed '1i[ journals ]' |
+       dmenu "$mode Log" -no-custom) || exit
 
 [ "$service" = '[ journals ]' ] && exec dmenu journals
 case $mode in

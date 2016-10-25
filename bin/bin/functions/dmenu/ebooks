@@ -44,14 +44,14 @@ END
 # build catalogue
 ebooks() {
   time=5 notify low 'Updating library cache' 'Please be patient..'
-  find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" \
-     | sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
+  find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" |
+       sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
            -e 's/ - .*//' \
            -e 's/ \([0-9]*\)//' \
-           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" \
-     | sort -u \
-     >$cache
+           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
+       sort -u >$cache
   notify low 'Update of library cache' '..Complete'
+  sleep 1
 }
 
 # command line initialization with: dmenu ebooks [init]
@@ -74,11 +74,11 @@ epub() {
 
 while :
 do
-  book=$(cat $cache \
-       | history ebooks \
-       | column -s^ -t \
-       | sed "1i[ rebuild database ]\n[ documents        ]" \
-       | dmenu 'E-book' -filter "$author" -no-custom)
+  book=$(cat $cache |
+         history ebooks |
+         column -s^ -t |
+         sed "1i[ rebuild database ]\n[ documents        ]" |
+         dmenu 'E-book' -filter "$author" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then

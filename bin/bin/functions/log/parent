@@ -13,9 +13,14 @@ TRACE=${TRACE:-/tmp/trace.log}
 unset ljust
 
 parent() {
-  proc=$(ps -ef | grep $PPID | sort | head -1 | awk '{ ps=$NF; sub( /.*\//, "", ps); print ps }')
-  [ $ljust ] && echo "$proc                  " | sed -r 's/^(..................).*/\1/' \
-             || echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
+  proc=$(ps -ef |
+         grep $PPID |
+         sort |
+         head -1 |
+         awk '{ ps=$NF; sub( /.*\//, "", ps); print ps }')
+  [ $ljust ] &&
+    echo "$proc                  " | sed -r 's/^(..................).*/\1/' ||
+    echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
 }
 
 echo "  $(parent) -> $CHILD" >>$TRACE

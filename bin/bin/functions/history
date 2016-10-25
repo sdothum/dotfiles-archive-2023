@@ -19,8 +19,9 @@ usage() {
   exit 1
 }
 
-echo "$1" | grep -qv '/' && history="$HOME/bin/functions/dmenu/.history/$1" \
-                         || history="$1"
+echo "$1" | grep -qv '/' &&
+  history="$HOME/bin/functions/dmenu/.history/$1" ||
+  history="$1"
 
 # usage: inject item file
 inject() {

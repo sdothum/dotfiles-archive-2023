@@ -11,13 +11,15 @@
 # ...................................................................... Library
 
 # library listings
+catlg() {
+  mpc list $1 | sort -n
+}
+
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-    mpc list artist | sort -n \
-                    | sed '1i[ player ]\n[ albums ]'
+    catlg artist | sed '1i[ player ]\n[ albums ]'
   else
-    mpc list artist | sort -n \
-                    | sed '1i[ albums ]'
+    catlg artist | sed '1i[ albums ]'
   fi
 }
 
@@ -26,19 +28,16 @@ albums() {
     # redundant menu return to artist listings
     if [ $redundant ] ;then
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        mpc list album | sort -n \
-                       | sed '1i[ player ]\n[ artist ]'
+        catlg album | sed '1i[ player ]\n[ artist ]'
       else
-        mpc list album | sort -n \
-                       | sed '1i[ artist ]'
+        catlg album | sed '1i[ artist ]'
       fi
     else
       # escape return to artist listings
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        mpc list album | sort -n \
-                       | sed '1i[ player ]'
+        catlg album | sed '1i[ player ]'
       else
-        mpc list album | sort -n
+        catlg album
       fi
     fi
   else
@@ -69,8 +68,9 @@ tracks() {
 
 info() {
   stats=$(mpc status | sed -n '2p')
-  echo "$stats" | grep -q 'playing' && echo "Playing $(tracks $stats)" \
-                                    || echo "Paused $(tracks $stats)"
+  echo "$stats" | grep -q 'playing' &&
+    echo "Playing $(tracks $stats)" ||
+    echo "Paused $(tracks $stats)"
 }
 
 # toggle state
@@ -86,16 +86,18 @@ mpc list artist >/dev/null 2>&1 || exit
 [ "$(current)" != '' ] && artist='[ player ]'
 while :
 do
-  [ "$artist" = '[ player ]' ] || artist=$(artists | dmenu 'Artist' "$artist" -no-custom) || exit
+  [ "$artist" = '[ player ]' ] ||
+    artist=$(artists | dmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = '[ player ]' ] ;then
     unset artist
-    while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" \
-              | column -s^ -t \
-              | dmenu "$(info)" "${cmd%% *}" -no-custom) || break
+    while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" |
+                column -s^ -t |
+                dmenu "$(info)" "${cmd%% *}" -no-custom) || break
     do
       case "$cmd" in
-        toggle\ on | toggle\ off) mpc toggle
-                                  [ $(status '\[playing\]') = off ] || exit ;;
+        toggle\ on |
+        toggle\ off) mpc toggle
+                     [ $(status '\[playing\]') = off ] || exit ;;
 
         next*) mpc play
                mpc next ;;
@@ -107,11 +109,13 @@ do
         previous*) mpc play
                    mpc prev ;;
 
-        random\ on | random\ off) mpc play
-                                  mpc random ;;
+        random\ on |
+        random\ off) mpc play
+                     mpc random ;;
 
-        repeat\ on| repeat\ off) mpc play
-                                 mpc repeat ;;
+        repeat\ on |
+        repeat\ off) mpc play
+                     mpc repeat ;;
 
         clear) mpc clear
                break ;;
@@ -127,18 +131,14 @@ do
   do
     if [ $(albums | wc -l) -gt 1 ] ;then
       if [ "$artist" = '[ albums ]' ] ;then
-        album=$(albums \
-              | dmenu 'Album' "$album" -no-custom) || break
+        album=$(albums | dmenu 'Album' "$album" -no-custom) || break
       else
-        album=$(albums \
-              | sort -n \
-              | sed '1i[ all ]' \
-              | dmenu 'Album' "$album" -no-custom) || break
+        album=$(albums | sort -n | sed '1i[ all ]' |
+                dmenu 'Album' "$album" -no-custom) || break
       fi
     else
-      album=$(albums \
-            | sort -n \
-            | dmenu 'Album' "$album" -no-custom) || break
+      album=$(albums | sort -n |
+              dmenu 'Album' "$album" -no-custom) || break
       unset more
     fi
 

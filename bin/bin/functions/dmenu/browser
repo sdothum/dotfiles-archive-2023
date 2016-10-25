@@ -39,27 +39,28 @@ do
 
     # chromium) focus chromium -app=$1 ;;
 
-      brave \
-    | chromium \
-    | dwb \
-    | firefox \
-    | google-chrome \
-    | iceweasel \
-    | hbro \
-    | jumanji \
-    | luakit \
-    | lispkit \
-    | midori \
-    | opera \
-    | surf \
-    | uzbl \
-    | vimb \
-    | vimbt \
-    | xombrero) focus $browser "$1" ;;
+    brave |\
+    chromium |\
+    dwb |\
+    firefox |\
+    google-chrome |\
+    iceweasel |\
+    hbro |\
+    jumanji |\
+    lispkit |\
+    luakit |\
+    midori |\
+    opera |\
+    surf |\
+    uzbl |\
+    vimb |\
+    vimbt |\
+    xombrero) focus $browser "$1" ;;
 
     qutebrowser) focus qutebrowser --target tab "$1" ;;
 
-    elinks | w3m) term "$browser" $browser "$1" ;;
+    elinks |\
+    w3m) term "$browser" $browser "$1" ;;
   esac
   exit
 done

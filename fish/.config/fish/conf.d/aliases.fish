@@ -11,7 +11,7 @@ if which pacaur >/dev/null ^&1
 else
   alias am 'yaourt -Ss'
   alias AM 'yaourt -Ss --pager'
-end 
+end
 
 alias pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
 alias pn 'env D=N pd'
@@ -20,7 +20,7 @@ alias ts "egrep -v '%|--:--|<=>' ~/typescript | less"
 alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
 
 # ...................................................................... Process
- 
+
 alias K 'env sig=-KILL k'
 alias KK 'env sig=-KILL kk'
 alias disabled 'systemd disable'
@@ -31,21 +31,21 @@ alias statusd 'systemd status'
 alias stopd 'systemd stop'
 
 # ....................................................................... Device
- 
+
 alias close 'eject -t'
 alias left_shift_key 'test -f /etc/X11/Xmodmap ;and xmodmap /etc/X11/Xmodmap'
 alias mount 'sudo mount'
 alias umount 'sudo umount'
 
 # ....................................................................... System
- 
+
 alias htop 'glances'
 alias iotop 'sudo iotop'
 alias screenfetch 'fetch'
 alias traceroute 'mtr --report -c 1'
 
 # ...................................................................... Desktop
- 
+
 alias c 'clear ;and setterm -cursor on'
 alias cursor 'setterm -cursor on'
 alias h: 'ls -l /tmp/herbstluftwm:*'
@@ -53,7 +53,7 @@ alias hc 'herbstclient'
 alias herbstluftwm ". $HOME/.config/herbstluftwm/config/ENV"
 
 # .................................................................... Directory
- 
+
 alias l1 'ls -1'
 alias ldot 'ls -lAd .*'
 alias ll 'ls -lA'
@@ -69,7 +69,7 @@ alias tree 'sudo tree -aCF'
 alias treed 'sudo tree -aCdF'
 
 # ................................................................... Filesystem
- 
+
 alias cp 'cp -i'
 alias cpl 'cp -iLRfv'
 alias cpv 'cp -iv'
@@ -86,7 +86,7 @@ alias rmv 'rm -iv'
 alias t 'tail -f'
 
 # ....................................................................... Search
- 
+
 alias fd 'find . -type d'
 alias ff 'find . -type f'
 alias f 'find . -iname'
@@ -94,7 +94,7 @@ alias g 'ack --ignore-case'
 alias gl 'ack -l --ignore-case'
 
 # ......................................................................... Edit
- 
+
 alias nv 'nvpy'
 alias sd 'sdiff -b -E -W -w(tput cols)'
 alias vd 'gvimdiff --role=gvimdiff'

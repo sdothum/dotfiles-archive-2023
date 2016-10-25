@@ -21,8 +21,9 @@ herbstclient lock
 [ "$1" ] && herbstclient use $1 || herbstclient use_previous
 
 tag=$(herbstclient attr monitors.focus.tag)
-is primary && restore fullscreen $tag primary \
-           || restore fullscreen $tag secondary
+is primary &&
+  restore fullscreen $tag primary ||
+  restore fullscreen $tag secondary
 restore monocle $tag
 
 focus window

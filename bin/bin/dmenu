@@ -63,8 +63,9 @@ else
   padsize $width 10 1
 fi
 
-hlwm && monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) \
-     || monitor=0
+hlwm &&
+  monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) ||
+  monitor=0
 
 # ............................................................... Available apps
 
@@ -88,7 +89,9 @@ apps() {
 playlist() {
   cat "$2" | while read line
   do
-    [ "$line" ] && grep -q "$line" "$1" && sed -i "/^$line/s/^$line/$line $SEP/" "$1"
+    [ "$line" ] &&
+      grep -q "$line" "$1" &&
+      sed -i "/^$line/s/^$line/$line $SEP/" "$1"
   done
   cat "$1"
 }
@@ -127,8 +130,8 @@ dmenu() {
   fi
 
   # use blank -mesg as added separator and indent pick list!
-  input=$(sed "s/^/$INDENT/" \
-        | rofi -monitor $monitor \
+  input=$(sed "s/^/$INDENT/" |
+          rofi -monitor $monitor \
                -bw 0 \
                -font "PragmataPro $fontsize" \
                -opacity 85 \
@@ -147,7 +150,9 @@ dmenu() {
                -dmenu -p "${prompt}$leader   " -i -select "$select" $@ \
         )
   # strip indent from input!
-  [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" || return 1
+  [ $? -eq 0 ] &&
+    echo "$input" | sed "s/^$INDENT//" ||
+    return 1
 }
 
 # ......................................................................... Main

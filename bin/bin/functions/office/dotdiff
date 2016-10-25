@@ -1,0 +1,46 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................... Revision differences
+
+# diff current sources with dotfiles git repo
+dotfiles=/net/depot/dotfiles
+current=$HOME/stow
+ignore='.deprecated|.hg|.history|debian|makepkg|nixos|qmk_firmware|root|vps'
+
+usage() {
+  echo "usage: $(basename $0) <package>"
+  exit 1
+}
+
+[ "$*" ] || usage
+[ -d "$HOME/stow/$*" ] || usage
+
+if ! if-no "sync $dotfiles repo" ;then
+  rm -rf $dotfiles
+  git clone git@github.com:sdothum/dotfiles.git $dotfiles
+fi
+
+for i in $(find $current/$1 -type f | egrep -v "$ignore")
+do
+  file=${i#*/stow/*/}
+  unset blink
+  while :
+  do
+    echo "${_green_}${blink}==> $file${_nocolor_}"
+    if ! diff $i $dotfiles/$1/$file ;then
+      # see herbstluftwm gvimdiff rule
+      if-no "edit $file" &&
+        break ||
+        gvimdiff -f --role=gvimdiff $i $dotfiles/$1/$file
+      blink=${_blink_}
+    else
+      break
+    fi
+  done
+done
+
+# vim: set ft=sh: #

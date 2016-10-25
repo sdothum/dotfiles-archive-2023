@@ -9,11 +9,11 @@
 [ "$*" ] && mode='Watch' || mode='View'
 
 cd /usr/lib/systemd/system/
-service=$(stest -fl . \
-        | sort  \
-        | sed 's/.service$//' \
-        | sed '1i[ logs ]' \
-        | dmenu "$mode Journal" -no-custom) || exit
+service=$(stest -fl . |
+          sort |
+          sed 's/.service$//' |
+          sed '1i[ logs ]' |
+          dmenu "$mode Journal" -no-custom) || exit
 
 [ "$service" = '[ logs ]' ] && exec dmenu logs
 case $mode in

@@ -24,8 +24,8 @@ patricia=$maildir/addressbook.patricia
 # - proper case "user name"
 abook() {
   time=15 notify low 'Updating dmenu addressbook cache' 'Please be patient..'
-  /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc): .*@' $maildir \
-                         | sed -re 's/(\xad|\x01)/ /g' \
+  /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc): .*@' $maildir |
+                           sed -re 's/(\xad|\x01)/ /g' \
                                -e 's/[,;] */\n/g' \
                                -e 's/["]//g' \
                                -e "s/[']//g" \
@@ -40,21 +40,21 @@ abook() {
                                -e 's/^Cc: //I' \
                                -e 's/^Bcc: //I' \
                                -e 's/< */</' \
-                               -e 's/ *>/>/' \
-                         | grep '^[^<].*<.*>$' \
-                         | grep -v '@.*<' \
-                         | grep -Eiv '(^[^a-z[]|[#])' \
-                         | grep -Piv '<comments(?!@thedarnedestthing)' \
-                         | grep -Eiv '((hello|info)@)' \
-                         | grep -Eiv '(announce|automated|confirm|contact|help|invitations|market|news|notification|promo|reply|review|subscribe|welcome)' \
-                         | grep -Eiv '(feedspot|github|via linkedin|yahoogroups)' \
-                         | sed -re 's/[^< ]*[?][^< ]* //' \
+                               -e 's/ *>/>/' |
+                           grep '^[^<].*<.*>$' |
+                           grep -v '@.*<' |
+                           grep -Eiv '(^[^a-z[]|[#])' |
+                           grep -Piv '<comments(?!@thedarnedestthing)' |
+                           grep -Eiv '((hello|info)@)' |
+                           grep -Eiv '(announce|automated|confirm|contact|help|invitations|market|news|notification|promo|reply|review|subscribe|welcome)' |
+                           grep -Eiv '(feedspot|github|via linkedin|yahoogroups)' |
+                           sed -re 's/[^< ]*[?][^< ]* //' \
                                -e 's/\b(\w*)\b/\L\u\1/g' \
-                               -e 's/(<.*)/\L\1/g' \
-                         | sort -f \
-                         | uniq -i \
-                         >$cache
+                               -e 's/(<.*)/\L\1/g' |
+                           sort -f |
+                           uniq -i >$cache
   notify low 'Update of dmenu addressbook cache' '..Complete'
+  sleep 1
 }
 
 # command line initialization with: dmenu abook [init]
@@ -82,11 +82,11 @@ contacts() {
 
 addresslist() {
   if [ "$addresses" ] ;then
-    contacts | sed '/^ *$/d' \
-             | sed '1i[ paste        ]\n[ clipboard    ]\n[ add contacts ]'
+    contacts | sed '/^ *$/d' |
+               sed '1i[ paste        ]\n[ clipboard    ]\n[ add contacts ]'
   else
-    contacts | sed '/^ *$/d' \
-             | sed '1i[ rebuild database ]\n[ edit contacts    ]'
+    contacts | sed '/^ *$/d' |
+               sed '1i[ rebuild database ]\n[ edit contacts    ]'
   fi
 }
 

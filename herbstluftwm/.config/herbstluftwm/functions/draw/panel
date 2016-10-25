@@ -87,7 +87,9 @@ if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
   panel_offsetY=$(( ($displayH - $monitorH - $PANEL_HEIGHT) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
 else
-  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
+  [ $PANEL_BOTTOM ] &&
+    panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) ||
+    panel_offsetY=$PANEL_HEIGHT
 fi
 
 # multihead geometry for secondary primary (left right) orientation

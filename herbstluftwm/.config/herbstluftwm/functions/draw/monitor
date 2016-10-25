@@ -54,7 +54,9 @@ SECONDARY=$(monitor 1)
 # margin tweaks for known display resolutions
 desktop_margin=$(margins $X0)
 # see toggle monocle
-[ -e $MONOCLE ] && monocle=$(cat $MONOCLE) || monocle=0
+[ -e $MONOCLE ] &&
+  monocle=$(cat $MONOCLE) ||
+  monocle=0
 
 # with transparent compton window borders, calculations assume..
 # - frame_border_width=0
@@ -68,16 +70,22 @@ window_frame=$(( $window + $frame ))
 margin=$(( $desktop_margin - $window_frame ))
 [ $margin -lt 0 ] && margin=0
 # frame and window gap changes will skew the left margin along the X axis
-[ $RICE ] && marginX=$(( $margin * $RICE )) || marginX=$margin
+[ $RICE ] &&
+  marginX=$(( $margin * $RICE )) ||
+  marginX=$margin
 conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then
-  [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
+  [ -e $PANEL ] &&
+    panelY=$PANEL_HEIGHT ||
+    panelY=0
 else
   panelY=0
 fi
-[ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) || marginY=0
+[ $margin -lt $PANEL_HEIGHT ] &&
+  marginY=$(( $PANEL_HEIGHT - $margin )) ||
+  marginY=0
 # reshape monocle frame by urxvt lines
 if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
   monocleY=$(( $MONOCLE_SIZE * $MONOCLE_LINES ))

@@ -78,10 +78,12 @@ if [ "$*" ] ;then
     add) shift
          [ "$*" ] && git add -fv $@ ;;
 
-    comment | amend) shift
-                     DESC="$@"
-                     [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" \
-                                 || git commit --amend ;;
+    comment |\
+    amend) shift
+           DESC="$@"
+           [ "$DESC" ] &&
+             git commit --amend --no-edit --message="$DESC" ||
+             git commit --amend ;;
 
     edit | ignore) gvim .gitignore ;;
 
@@ -92,10 +94,13 @@ if [ "$*" ] ;then
           git push -u origin master
           git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
 
-    list | log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+    list |\
+    log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
 
-    undo | redo | reset) git reset --soft HEAD~
-                         dotfiles ;;
+    undo |\
+    redo |\
+    reset) git reset --soft HEAD~
+           dotfiles ;;
 
     rm) shift
         if [ "$*" ] ;then

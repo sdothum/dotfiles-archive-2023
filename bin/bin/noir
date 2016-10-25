@@ -11,7 +11,8 @@ noir='/usr/bin/urxvt +tr -sh 10 -fg black -bg black -cr black -e dash'
 # invisible terminal!
 if [ "$1" = omxplayer ] ;then
   # in order to control omxplayer from keyboard..
-  $noir -e omxplayer "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')"
+  $noir -e omxplayer "$(find "$@" -regextype posix-extended \
+                                  -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)')"
 else
   $noir $@
 fi

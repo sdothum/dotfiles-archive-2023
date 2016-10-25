@@ -8,9 +8,10 @@
   ack
 # etc-update
   expect
-  fetch-git
+# fetch-git
   mediainfo [server]
   mlocate
+  neofetch
 # pacnews-git
 # screenfetch
   stow
@@ -125,7 +126,7 @@
 # terminator
 # termite-git
   urxvt-font-size-git [server]
-  urxvt-perls 
+  urxvt-perls
   xterm
 
 

@@ -6,7 +6,7 @@
 = browsers
 # ▔▔▔▔▔▔▔▔
   chromium
-  chromium-pepper-flash
+# chromium-pepper-flash
   chromium-widevine
 # dwb-git
 # dwb-gtk3
@@ -23,6 +23,7 @@
 # luakit
 # lynx
 # midorio
+  pepper-flash
   qutebrowser
 # qutebrowser-git
 # surf

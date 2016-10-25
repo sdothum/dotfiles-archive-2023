@@ -21,12 +21,12 @@ filter='^[^ ]*  *(([^ ]*)|((h|kk*|l[alrst]*|pa*|r|x)( *| .*)))$'
 week=$(date '+%V')
 weekof() {
   # calculation assumes history size does not span more than one calendar year
-  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" \
-    | sort -k 3 \
-    | uniq -f 2 \
-    | sort -n $1 \
-    | sed -r 's/^[0-9]* ([^ ]*)/\1w   /g' \
-    | egrep -v $filter
+  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" |
+      sort -k 3 |
+      uniq -f 2 |
+      sort -n $1 |
+      sed -r 's/^[0-9]* ([^ ]*)/\1w   /g' |
+      egrep -v $filter
 }
 
 fc -R

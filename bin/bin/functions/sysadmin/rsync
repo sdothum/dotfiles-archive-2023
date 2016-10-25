@@ -110,9 +110,11 @@ case $@ in
         fi ;;
 
   depot) if server ;then
-           if-yes "backup depot to $laptop" && rsync --delete /net/depot $laptop:/net/
+           if-yes "backup depot to $laptop" &&
+             rsync --delete /net/depot $laptop:/net/
          else
-           if-no 'update depot to luna' || rsync /net/depot luna:/net/
+           if-no 'update depot to luna' ||
+             rsync /net/depot luna:/net/
          fi ;;
 
   music) if laptop ;then
@@ -146,7 +148,7 @@ case $@ in
             if if-yes 'backup media server databases to /net/archive' ;then
               [ -d /net/archive/var/lib ] || mkdir -pv /net/archive/var/lib
               sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
-              [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] || \
+              [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
                 mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
               sudo rsync -av --delete \
                          /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
@@ -179,10 +181,13 @@ case $@ in
 
   stow) if server ;then
           sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
-          if-yes "backup stow to $laptop" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$laptop:$HOME/
-          if-yes "backup stow to $netbook" && rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$netbook:$HOME/
+          if-yes "backup stow to $laptop" &&
+            rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$laptop:$HOME/
+          if-yes "backup stow to $netbook" &&
+            rsync --delete --exclude='.SyncArchive' $HOME/stow $USER@$netbook:$HOME/
         else
-          if-no 'update stow to luna' || rsync --exclude='.SyncArchive' $HOME/stow $USER@luna:$HOME/
+          if-no 'update stow to luna' ||
+            rsync --exclude='.SyncArchive' $HOME/stow $USER@luna:$HOME/
         fi ;;
 
   ttrss) if server ;then

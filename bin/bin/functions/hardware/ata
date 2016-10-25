@@ -15,8 +15,8 @@ for i in /sys/block/s*
 do
   readlink $i | sed -e 's^\.\./devices^/sys/devices^' \
                     -e 's^/host[0-9]\{1,2\}/target^ ^' \
-                    -e 's^/[0-9]\{1,2\}\(:[0-9]\)\{3\}/block/^ ^' \
-              | while IFS=' ' read Path HostFull ID
+                    -e 's^/[0-9]\{1,2\}\(:[0-9]\)\{3\}/block/^ ^' |
+                while IFS=' ' read Path HostFull ID
                 do
                   count=0
                   IFS=:

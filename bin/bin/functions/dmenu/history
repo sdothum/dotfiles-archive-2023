@@ -11,48 +11,48 @@ filter='/accounts|acronym|color(codehex|combos|hexa)|dictionary|duckduckgo|ERROR
 case $BROWSER in
   luakit) sqldb=$HOME/.local/share/luakit/history.db
           query="select datetime(last_visit,'unixepoch'), title, uri from history order by last_visit DESC;"
-          uri=$(echo "$query" \
-              | sqlite3 $sqldb \
-              | egrep -v "$filter" | sed 's/[|]/  ::  /g' \
-              | sed '1i[ bookmarks ]' \
-              | dmenu 'History' -no-custom \
-              | sed -r 's/.*(http.*)/\1/') ;;
+          uri=$(echo "$query" |
+                sqlite3 $sqldb |
+                egrep -v "$filter" | sed 's/[|]/  ::  /g' |
+                sed '1i[ bookmarks ]' |
+                dmenu 'History' -no-custom |
+                sed -r 's/.*(http.*)/\1/') ;;
 
   qutebrowser) history=$HOME/.local/share/qutebrowser/history
-               uri=$(tac $history \
-                   | egrep -v "$filter" \
-                   | sed -r "s/[^ ]* ([^ ]*) (.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" \
-                   | sed '1i[ bookmarks ]' \
-                   | dmenu 'History' -no-custom \
-                   | sed -r 's/.*(http.*)/\1/') ;;
+               uri=$(tac $history |
+                     egrep -v "$filter" |
+                     sed -r "s/[^ ]* ([^ ]*) (.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" |
+                     sed '1i[ bookmarks ]' |
+                     dmenu 'History' -no-custom |
+                     sed -r 's/.*(http.*)/\1/') ;;
 
   vimb) history=$HOME/.config/vimb/history
-        uri=$(tac $history $history.vimb \
-            | egrep -v "$filter" \
-            | sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" \
-            | grep "$SEP" \
-            | sed '1i[ bookmarks ]' \
-            | dmenu 'History' -no-custom \
-            | sed -r 's/.*(http.*)/\1/') ;;
+        uri=$(tac $history $history.vimb |
+              egrep -v "$filter" |
+              sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" |
+              grep "$SEP" |
+              sed '1i[ bookmarks ]' |
+              dmenu 'History' -no-custom |
+              sed -r 's/.*(http.*)/\1/') ;;
 
   *) history=$HOME/.config/chromium/Default/History
      cp $history $history.copy
      py-chrome-history.py $history.copy $history.html
-     uri=$(tac $history.html \
-         | grep 'http://' \
-         | sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" \
-         | cat - $HOME/bin/functions/dmenu/.config/history \
-         | egrep -v "$filter" \
-         | sed -e 's/\&\#x20[0-9][0-9a-f];//g' \
+     uri=$(tac $history.html |
+           grep 'http://' |
+           sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" |
+           cat - $HOME/bin/functions/dmenu/.config/history |
+           egrep -v "$filter" |
+           sed -e 's/\&\#x20[0-9][0-9a-f];//g' \
                -e 's/\&\#100[0-9][0-9];//g' \
                -e 's/\&\#3[0-9];//g' \
                -e 's/\&\#x[ab]b;//g' \
                -e 's/\&\#xe[0-9];/e/g' \
                -e 's/\&amp;/\&/g' \
-               -e 's/^[Rr][Ee]: //' \
-         | sed '1i[ bookmarks ]' \
-         | dmenu 'History' -no-custom \
-         | sed -r 's/.*(http.*)/\1/') ;;
+               -e 's/^[Rr][Ee]: //' |
+           sed '1i[ bookmarks ]' |
+           dmenu 'History' -no-custom |
+           sed -r 's/.*(http.*)/\1/') ;;
 esac
 
 [ "$uri" = '[ bookmarks ]' ] && exec dmenu bookmarks

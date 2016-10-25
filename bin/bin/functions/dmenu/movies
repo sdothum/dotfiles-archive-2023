@@ -49,8 +49,9 @@ library() {
 }
 
 options() {
-  grep -q '[^ ]' "$playlist" && echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" \
-                             || echo "[ $(sortlist $T) ]"
+  grep -q '[^ ]' "$playlist" &&
+    echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" ||
+    echo "[ $(sortlist $T) ]"
 }
 
 while :
@@ -64,10 +65,10 @@ do
   # focus monitor menu originally presented on
   [ $monitor ] && herbstclient focus_monitor $monitor
 
-  movie=$(cat $catlg \
-        | sed "1i$(library $1)" \
-        | sed "1i$(options)" \
-        | dmenu 'Movie' "$movie" -no-custom) || exit
+  movie=$(cat $catlg |
+          sed "1i$(library $1)" |
+          sed "1i$(options)" |
+          dmenu 'Movie' "$movie" -no-custom) || exit
 
   [ "$movie" = '[ last viewed  ]' ] && movie=$(grep '[^ ]' "$playlist" | head -1)
 

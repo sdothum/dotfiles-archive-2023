@@ -15,21 +15,28 @@ disconnect() {
 }
 
 # quit!
-while cmd=$(echo 'lock\nlogout\nsuspend\nreboot\nshutdown' \
-          | dmenu 'Session' -no-custom) || exit
+while cmd=$(echo 'lock\nlogout\nsuspend\nreboot\nshutdown' |
+            dmenu 'Session' -no-custom) || exit
 do
   case $cmd in
     lock   ) xscreensaver-command -lock ;;
     logout ) sudo kill -TERM X ;;
-    suspend) [ -e /sbin/systemctl ] && sudo systemctl suspend || sudo pm-suspend ;;
+
+    suspend) [ -e /sbin/systemctl ] &&
+               sudo systemctl suspend ||
+               sudo pm-suspend ;;
 
     reboot) disconnect
             quit
-            [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo shutdown -r now ;;
+            [ -e /sbin/systemctl ] && 
+              sudo systemctl reboot || 
+              sudo shutdown -r now ;;
 
     shutdown) disconnect
               quit
-              [ -e /sbin/systemctl ] && sudo systemctl poweroff || sudo shutdown -h now ;;
+              [ -e /sbin/systemctl ] && 
+                sudo systemctl poweroff || 
+                sudo shutdown -h now ;;
   esac
   break
 done

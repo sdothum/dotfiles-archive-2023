@@ -20,16 +20,18 @@ fi
 
 tag() {
   # tags represented as box tag, empty box as hidden tick'tag
-  echo $TAG | grep -q "'" && echo "$INVISIBLE ${TAG#\'}" \
-                          || echo "$VISIBLE $TAG"
+  echo $TAG | grep -q "'" &&
+    echo "$INVISIBLE ${TAG#\'}" ||
+    echo "$VISIBLE $TAG"
 }
 
 for i in $(query winids)
 do
   TAG=$(herbstclient attr clients.$i.tag)
   window="$TAG:$(query wtitle $i) ^$(tag):$i"
-  [ "$windows" ] && windows="$windows\n$window" \
-                 || windows="$window"
+  [ "$windows" ] &&
+    windows="$windows\n$window" ||
+    windows="$window"
 done
 
 # ........................................................................ Dmenu

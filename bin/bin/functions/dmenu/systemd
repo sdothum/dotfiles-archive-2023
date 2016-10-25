@@ -17,11 +17,11 @@ status() {
 cd /usr/lib/systemd/system/
 while :
 do
-  service=$(stest -fl . \
-          | sort  \
-          | sed 's/.service$//' \
-          | sed '1i[ daemon-reload   ]\n[ list services   ]\n[ list-unit-files ]' \
-          | dmenu 'Systemd' -no-custom) || exit
+  service=$(stest -fl . |
+            sort  |
+            sed 's/.service$//' |
+            sed '1i[ daemon-reload   ]\n[ list services   ]\n[ list-unit-files ]' |
+            dmenu 'Systemd' -no-custom) || exit
 
   case $service in
     '[ daemon-reload   ]') sudo systemctl daemon-reload
@@ -32,9 +32,11 @@ do
     '[ list-unit-files ]') term 'unit-files' systemctl list-unit-files ;;
 
     *) service=$service.service
-       sudo systemctl status $service && actions='stop\nrestart' || actions='start'
-       while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" \
-                    | dmenu "${service%.service}" -no-custom) || break
+       sudo systemctl status $service && 
+         actions='stop\nrestart' || 
+         actions='start'
+       while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" |
+                      dmenu "${service%.service}" -no-custom) || break
        do
          case $action in
            'start') sudo systemctl start $service

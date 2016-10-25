@@ -39,20 +39,17 @@ fi
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if [ ! -e $corpus.words ] ;then
   notify low "Building $corpus.words" 'Please be patient..'
-  sort -nr --key=2 $typedir/100K-word.database | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' \
-                                               | egrep -v '^(.|..)$' \
-                                               | egrep -x ".{1,$wordlen}" \
-                                               >$corpus.words
+  sort -nr --key=2 $typedir/100K-word.database | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' |
+                                                 egrep -v '^(.|..)$' |
+                                                 egrep -x ".{1,$wordlen}" >$corpus.words
   # arbitrarily remove all questionable spellingssed -r 's/([ &;(){}])/\\\\\1/g'
-  cat $corpus.words | aspell --ignore-case -a \
-                    | grep -v '^\*$' \
-                    | grep -v '^$' \
-                    | awk '{ print $2 }' \
-                    >$corpus.undefined
-  diff $corpus.words $corpus.undefined | grep '^< [a-z]' \
-                                       | sed 's/< //' \
-                                       | head -$size \
-                                       >$corpus.corpus
+  cat $corpus.words | aspell --ignore-case -a |
+                      grep -v '^\*$' |
+                      grep -v '^$' |
+                      awk '{ print $2 }' >$corpus.undefined
+  diff $corpus.words $corpus.undefined | grep '^< [a-z]' |
+                                         sed 's/< //' |
+                                         head -$size >$corpus.corpus
 fi
 typefile="$typedir/$(cat $corpus.corpus | wc -l)-${corpus##*/}.txt"
 
@@ -68,10 +65,9 @@ wordcase() {
 
 # build sentences
 wordgen() {
-  shuf $corpus.corpus | tr '\n' ' ' \
-                      | fold -s --width=$(( $@ * 5 )) \
-                      | wordcase \
-                      >>$paragraphs
+  shuf $corpus.corpus | tr '\n' ' ' |
+                        fold -s --width=$(( $@ * 5 )) |
+                        wordcase >>$paragraphs
   echo >>$paragraphs
 }
 
