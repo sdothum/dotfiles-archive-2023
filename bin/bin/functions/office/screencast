@@ -22,11 +22,12 @@ pidname=recording
 framerate=25
 
 if server ;then
+  # allow DVI-# reference
   case $1 in
-    DVI-0 | left | l) xy='1680x1050' ;;
+    *0 | l*) xy='1680x1050' ;;
 
-    DVI-1 | right | r) xy='2560x1600' 
-                       offset='+1680,0';;
+    *1 | r*) xy='2560x1600'
+             offset='+1680,0';;
 
     all | a) xy='4240x1600' ;;
 

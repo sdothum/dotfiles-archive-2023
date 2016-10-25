@@ -36,7 +36,7 @@ begin
       # .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize } + File.extname(filename)
     print "#{filename}".gsub(/ s /, "'s ")
     unless filename == newname
-      print " ==> #{newname}".yellow.bold
+      print " -> #{newname}".yellow.bold
       File.rename(filename, newname) unless filename == newname
     end
     print "\n"

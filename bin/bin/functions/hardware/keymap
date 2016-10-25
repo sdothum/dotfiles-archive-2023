@@ -15,10 +15,10 @@ usage() {
 
 # toggle qwerty and colemak variants
 case $@ in
-  h | ''     ) usage ;;
-  colemak | c) colemak ;;
-  querty | q ) qwerty ;;
-  toggle | t ) grep -q 'qwerty' /etc/vconsole.conf && colemak || qwerty ;;
+  h | '') usage ;;
+  c*    ) colemak ;;
+  q*    ) qwerty ;;
+  t*    ) grep -q 'qwerty' /etc/vconsole.conf && colemak || qwerty ;;
 esac
 
 # vim: set ft=sh: #

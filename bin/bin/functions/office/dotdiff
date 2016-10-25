@@ -30,7 +30,7 @@ do
   unset blink
   while :
   do
-    echo "${_green_}${blink}==> $file${_nocolor_}"
+    echo "${_green_}${blink}--> $file${_nocolor_}"
     if ! diff $i $dotfiles/$1/$file ;then
       # see herbstluftwm gvimdiff rule
       if-no "edit $file" &&

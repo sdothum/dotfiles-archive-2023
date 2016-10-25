@@ -20,11 +20,11 @@ def copy_images(file, camera)
   date = File.stat(file).mtime.strftime('%Y-%m-%d')
   year = date.sub(/-\d\d-\d\d/, '')
   unless Dir.exist?("/net/photos/#{year}")
-    print "\n==> #{year}\n\n".red.bold
+    print "\n--> #{year}\n\n".red.bold
     Dir.mkdir("/net/photos/#{year}")
   end
   unless Dir.exist?("/net/photos/#{year}/#{date}")
-    print "\n==> #{year} / #{date}\n\n".green.bold
+    print "\n--> #{year} / #{date}\n\n".green.bold
     Dir.mkdir("/net/photos/#{year}/#{date}")
   end
   print "#{filename}"

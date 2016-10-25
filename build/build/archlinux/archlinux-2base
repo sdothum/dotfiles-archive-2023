@@ -19,12 +19,12 @@ sudo chattr +C /var/log/journal/
 config_install L /etc/aliases
 
 
-title "archlinux testing"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-sudo sed -i -e '/^#\[.*testing\]/s/^#//' \
-         -e '/^#Include/s/^#//' \
-         /etc/pacman.conf
-sudo pacman -Syu
+# title "archlinux testing"
+# # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# sudo sed -i -e '/^#\[.*testing\]/s/^#//' \
+#          -e '/^#Include/s/^#//' \
+#          /etc/pacman.conf
+# sudo pacman -Syu
 
 
 title "pacman key server"

@@ -15,12 +15,13 @@ target=/net/photos/batchqueue
 delay=${delay:-5}
 
 if server ;then
+  # allow DVI-# reference
   case $@ in
-    h | ''               ) usage ;;
-    DVI-0 | left | 0 | l ) opts='--geometry=1680x1050+0+0' ;;
-    DVI-1 | right | 1 | r) opts='--geometry=2560x1600+1680+0' ;;
-    all | a              ) opts='--geometry=4240x1600+0+0' ;;
-    *                    ) opts="--geometry=$@" ;;
+    h | '' ) usage ;;
+    *0 | l*) opts='--geometry=1680x1050+0+0' ;;
+    *1 | r*) opts='--geometry=2560x1600+1680+0' ;;
+    all | a) opts='--geometry=4240x1600+0+0' ;;
+    *      ) opts="--geometry=$@" ;;
   esac
 else
   set -- $(query display)
