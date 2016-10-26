@@ -6,12 +6,15 @@
 
 # ............................................................... Restore layout
 
-# Usage: restore layout [ tags | grid | horizontal | max | vertical | 1:1 | 1:2 | 3:3:3 ]
+# Usage: restore layout [ tags | grid | horizontal | max | vertical | 1:1 | 1:2 | 3:3:3 ] [focus]
 
 
 # default master pane left or right
 MASTER=${MASTER:-left}
 windows=$(herbstclient attr tags.focus.client_count)
+# focus borders
+borders=$2
+
 
 # initial desktop layouts
 layout() {
@@ -149,9 +152,9 @@ case "$1" in
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
      restore windowed
-     exec restore layout $layout ;;
+     exec restore layout $layout focus ;;
 esac
 
-herbstclient compare tags.focus.client_count gt 1 && [ $layout != max ] && focus borders
+[ "$borders" ] && [ $windows -gt 1 ] &&  [ $layout != max ] && focus borders
 
 # vim: set ft=sh: #
