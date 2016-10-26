@@ -22,7 +22,7 @@ hc keybind $Mod-d                    spawn draw root restore
 hc keybind $Mod-Shift-d              spawn draw root save
 hc keybind $Mod-Control-d            spawn draw root blank
 hc keybind $Mod-w                    chain . close_or_remove . emit_hook focus_window
-hc keybind $Mod-Super-space          spawn focus borders
+hc keybind $Mod-Super-space          spawn focus borders 3
 hc keybind Super-Control-space       spawn toggle borders
 hc keybind $Mod-Super-Control-space  spawn toggle focus
 hc keybind Super-Tab                 spawn focus hlwm
