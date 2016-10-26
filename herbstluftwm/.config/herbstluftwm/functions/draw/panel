@@ -79,10 +79,10 @@ indent=$(( $frame + $window + $border - $PANEL_HEIGHT ))
 panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
-displayH=$(xrandr 2>/dev/null \
-         | grep '*' \
-         | sed -r 's/.*x([0-9]*).*/\1/' \
-         | sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
+displayH=$(xrandr 2>/dev/null |
+           grep '*' |
+           sed -r 's/.*x([0-9]*).*/\1/' |
+           sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
 if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
   panel_offsetY=$(( ($displayH - $monitorH - $PANEL_HEIGHT) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
@@ -132,8 +132,9 @@ desktops() {
           [ $hidden ] && format="${format}%{F$ACTIVE_HIDDEN_FG}"
         else
           format="%{B$ACTIVE_BG}"
-          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
-                       || format="${format}%{F$FREE_FG}"
+          [ $visible ] &&
+            format="${format}%{F$OCCUPIED_FG}" ||
+            format="${format}%{F$FREE_FG}"
           [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
         fi
       elif [ "$i" = "$inactive" ] ;then
@@ -143,8 +144,9 @@ desktops() {
           [ $hidden ] && format="${format}%{F$INACTIVE_HIDDEN_FG}"
         else
           format="%{B$INACTIVE_BG}"
-          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
-                       || format="${format}%{F$FREE_FG}"
+          [ $visible ] &&
+            format="${format}%{F$OCCUPIED_FG}" ||
+            format="${format}%{F$FREE_FG}"
           [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
         fi
       elif [ $CANDY ] ;then
@@ -153,8 +155,9 @@ desktops() {
         [ $hidden ] && format="${format}%{F$OCCUPIED_HIDDEN_FG}"
       else
         format="%{B$DEFAULT_BG}"
-        [ $visible ] && format="${format}%{F$OCCUPIED_FG}" \
-                     || format="${format}%{F$FREE_FG}"
+        [ $visible ] &&
+          format="${format}%{F$OCCUPIED_FG}" ||
+          format="${format}%{F$FREE_FG}"
         [ $hidden ] && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
       fi
     else
@@ -162,14 +165,17 @@ desktops() {
       unset hidden
       [ $CANDY ] && tag=$FREE || tag=$i
       if [ "$i" = "$active" ] ;then
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" \
-                   || format="%{F$FREE_FG}%{B$ACTIVE_BG}"
+        [ $CANDY ] &&
+          format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" ||
+          format="%{F$FREE_FG}%{B$ACTIVE_BG}"
       elif [ "$i" = "$inactive" ] ;then
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" \
-                   || format="%{F$FREE_FG}%{B$INACTIVE_BG}"
+        [ $CANDY ] &&
+          format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" ||
+          format="%{F$FREE_FG}%{B$INACTIVE_BG}"
       else
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$FREE_FG}" \
-                   || format="%{F$FREE_FG}%{B$DEFAULT_BG}"
+        [ $CANDY ] &&
+          format="%{B$DEFAULT_BG}%{F$FREE_FG}" ||
+          format="%{F$FREE_FG}%{B$DEFAULT_BG}"
       fi
     fi
     [ "$hidden" ] && [ -z "$CANDY" ] && unset leader || leader="${TAG_PAD}"

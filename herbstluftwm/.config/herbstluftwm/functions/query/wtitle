@@ -11,8 +11,8 @@
 SEP='∙'
 
 instance=$(herbstclient attr clients.$1.instance)
-title=$(herbstclient attr clients.$1.title \
-      | sed -e '/(.*).*VIM/s|\(.*\) (.*/\([^/]*/[^()]*\)).*|\2/\1|' \
+title=$(herbstclient attr clients.$1.title |
+        sed -e '/(.*).*VIM/s|\(.*\) (.*/\([^/]*/[^()]*\)).*|\2/\1|' \
             -e 's/ [-+] .*//' \
             -e 's/ at .*//'\
             -e 's/:/ /')
