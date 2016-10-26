@@ -33,7 +33,6 @@ if is primary ;then
   fi
 
   winid=$(herbstclient attr clients.focus.winid)
-  touch $LOCK
   herbstclient lock
   # toggle out of fullscreen before entering monocle
   if is fullscreen ;then
@@ -59,9 +58,11 @@ if is primary ;then
   if [ -e $MONOCLE ] ;then
     # allow toggling fullscreen (width) and monocle frame, else just max current window
     restore mono
-    herbstclient set_layout max
+    herbstclient chain . set_layout max . jumpto $winid
     rm -f $FULLSCREEN:$tag 2>/dev/null
+    herbstclient unlock
   else
+    herbstclient unlock
     # allow transitioning to full fullscreen, see draw monitor
     if ! is fullscreen ;then
       # restore mono
@@ -74,14 +75,10 @@ if is primary ;then
         else
           restore layout grid
         fi
-        herbstclient compare tags.focus.client_count gt 1 && blink=true
       fi
     fi
   fi
   restore panel
-  herbstclient chain . jumpto $winid . unlock
-  rm -f $LOCK
-  [ $blink ] && focus borders
 fi
 
 # vim: set ft=sh: #
