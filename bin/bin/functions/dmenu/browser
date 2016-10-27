@@ -37,8 +37,6 @@ do
     '[ edit ]') gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
                 command dmenu bookmarks ;;
 
-    # chromium) focus chromium -app=$1 ;;
-
     brave |\
     chromium |\
     dwb |\

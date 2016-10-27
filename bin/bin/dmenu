@@ -13,8 +13,7 @@
 
 CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
 
-# content formatting items
-SEP='∙'
+# content formatting items, see herbstluftwm env
 LSPACE="    $SEP"
 RSPACE="$SEP    "
 INDENT='   '

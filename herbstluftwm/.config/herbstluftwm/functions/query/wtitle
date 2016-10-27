@@ -8,14 +8,11 @@
 
 # Usage: query wtitle <winid>
 
-SEP='∙'
-
 instance=$(herbstclient attr clients.$1.instance)
 title=$(herbstclient attr clients.$1.title |
-        sed -e '/(.*).*VIM/s|\(.*\) (.*/\([^/]*/[^()]*\)).*|\2/\1|' \
+        sed -re '/\(.*\).*VIM/s|(.*) \(.*/([^/]*/[^()]*)\).*|\2/\1|' \
             -e 's/ [-+] .*//' \
-            -e 's/ at .*//'\
-            -e 's/:/ /')
+            -e 's/ at .*//')
 # note: ^$SEP for use with dmenu column alignment, see focus hlwm, restore hidden
 echo "$instance^$SEP $title"
 

@@ -10,7 +10,7 @@
 if arm; then
   noir omxplayer "$@"
 else
-  notify low 'MPV' '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\nv/j  Subtitles'
+  notify low 'MPV' '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;C-&gt; Audio Delay\nv/j  Subtitles'
   focus frame
   mpv --vf=eq "$@" >/dev/null 2>&1
   # delete accidental

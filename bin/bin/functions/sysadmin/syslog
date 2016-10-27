@@ -7,6 +7,8 @@
 # ...................................................................... Systemd
 
 # systemd journal
-[ "$*" ] && sudo journalctl -b | ack "$@" | less -MRX || sudo journalctl -b
+[ "$*" ] &&
+  sudo journalctl -b | ack "$@" | less -MRX ||
+  sudo journalctl -b
 
 # vim: set ft=sh: #

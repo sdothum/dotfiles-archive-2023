@@ -39,8 +39,7 @@ do
             fullscreen) if is primary ;then
                           ( [ -e $CONKY ] &&
                               draw monitor conky fullscreen ||
-                              draw monitor fullscreen \
-                          ) &
+                              draw monitor fullscreen ) &
                         else
                           draw monitor secondary fullscreen &
                         fi ;;

@@ -37,14 +37,14 @@ if [ $count -gt 0 ] ;then
       '[ all  ]') exec restore windows ;;
       '[ last ]') exec restore window ;;
 
-      *) # look out for square brackets in window title e.g. url page titles
+      *) # escape special characters in window title e.g. url page titles
          # restore ^$SEP, see query wtitle
          winid=$(echo $hidden |
                  grep "$(echo $window |
                  sed -re 's/([[])/\\\1/g' \
                     -e 's/([]])/\\\1/g' \
-                    -e "s/ *($SEP)/^\1/" \
-                    -e 's/([*])/\\\1/g')" |
+                    -e 's/([*])/\\\1/g')" \
+                    -e "s/ *($SEP)/^\1/" |
                  cut -d: -f2)
          touch $LOCK
          herbstclient chain . lock . use $TAG

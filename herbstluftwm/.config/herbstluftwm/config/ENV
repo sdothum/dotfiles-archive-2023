@@ -94,4 +94,9 @@ export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
 [ $(query displaywidth 0) -lt 1440 ] && PANEL_MARGIN=true
 
+# ................................................................ Miscellaneous
+
+# dmenu line item marker
+export SEP='∙'
+
 # vim: set ft=sh: #
