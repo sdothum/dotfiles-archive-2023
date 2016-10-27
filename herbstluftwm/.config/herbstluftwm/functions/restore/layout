@@ -12,6 +12,7 @@
 # default master pane left or right
 MASTER=${MASTER:-left}
 windows=$(herbstclient attr tags.focus.client_count)
+wcount=$(herbstclient attr tags.focus.curframe_wcount)
 winid=$(herbstclient attr clients.focus.winid)
 
 # initial desktop layouts
@@ -82,7 +83,7 @@ halves() {
 }
 
 onethird() {
-  if [ "$load" ] || herbstclient compare tags.focus.client_count lt 3 ;then
+  if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
@@ -91,13 +92,13 @@ onethird() {
 }
 
 thirds() {
-  if [ "$load" ] || herbstclient compare tags.focus.client_count lt 3 ;then
+  if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
     # fill empty frames
     if [ $MASTER = left ] ;then
-      [ $windows -eq 2 ] && herbstclient shift right
+      [ $wcount -eq 2 ] && herbstclient shift right
     else
-      [ $windows -eq 2 ] && herbstclient shift left
+      [ $wcount -eq 2 ] && herbstclient shift left
     fi
   else
     restore mono

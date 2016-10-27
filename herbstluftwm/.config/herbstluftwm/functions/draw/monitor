@@ -113,60 +113,60 @@ case $@ in
   conky) rm -f $FULLSCREEN:primary 2>/dev/null
          rm -f $FULLSCREEN:$TAG 2>/dev/null
          PRIMARY=$(printf '%dx%d%+d%+d' \
-                 $(( $normal_width - $SHADOW )) \
-                 $(( $Y0 + $monocleY*2 - $margin*2 )) \
-                 $(( $X1 + $marginX + $monocle )) \
-                 $(( $margin - $monocleY )) ) ;;
+                          $(( $normal_width - $SHADOW )) \
+                          $(( $Y0 + $monocleY*2 - $margin*2 )) \
+                          $(( $X1 + $marginX + $monocle )) \
+                          $(( $margin - $monocleY )) ) ;;
 
   conky*fullscreen) touch $FULLSCREEN:primary
                     touch $FULLSCREEN:$TAG
                     if [ $X0 -gt 1024 ] ;then
                       # desktop screens retain margins
                       PRIMARY=$(printf '%dx%d%+d%+d' \
-                              $(( $fullscreen_width - $SHADOW )) \
-                              $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY )) \
-                              $(( $X1 + $marginX + $window_frame + $monocle )) \
-                              $(( $margin - $monocleY + $window_frame )) )
+                                       $(( $fullscreen_width - $SHADOW )) \
+                                       $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY )) \
+                                       $(( $X1 + $marginX + $window_frame + $monocle )) \
+                                       $(( $margin - $monocleY + $window_frame )) )
                     else
                       # laptop screens fill to edge
                       PRIMARY=$(printf '%dx%d%+d%+d' \
-                              $(( $fullscreen_width + $marginX + $window_frame )) \
-                              $Y0 \
-                              $X1 \
-                              0 )
+                                       $(( $fullscreen_width + $marginX + $window_frame )) \
+                                       $Y0 \
+                                       $X1 \
+                                       0 )
                     fi ;;
 
   fullframe) rm -f $FULLSCREEN:primary 2>/dev/null
              rm -f $FULLSCREEN:$TAG 2>/dev/null
              if [ $monocle -eq 0 ] ;then
                PRIMARY=$(printf '%dx%d%+d%+d' \
-                       $(( $X0 - $marginX*2 )) \
-                       $(( $Y0 - $margin*2 + $window_frame - $marginY - 2 )) \
-                       $(( $X1 + $marginX )) \
-                       $margin )
+                                $(( $X0 - $marginX*2 )) \
+                                $(( $Y0 - $margin*2 + $window_frame - $marginY - 2 )) \
+                                $(( $X1 + $marginX )) \
+                                $margin )
              else
                PRIMARY=$(printf '%dx%d%+d%+d' \
-                       $normal_width \
-                       $(( $Y0 + $monocleY*2 + $window_frame - $marginY - 2 )) \
-                       $(( $X1 + ($X0 - $normal_width)/2 )) \
-                       $(( $margin - $monocleY )) )
+                                $normal_width \
+                                $(( $Y0 + $monocleY*2 + $window_frame - $marginY - 2 )) \
+                                $(( $X1 + ($X0 - $normal_width)/2 )) \
+                                $(( $margin - $monocleY )) )
              fi ;;
 
   fullscreen) touch $FULLSCREEN:primary
               touch $FULLSCREEN:$TAG 2>/dev/null
               if [ $monocle -eq 0 ] ;then
                 PRIMARY=$(printf '%dx%d%+d%+d' \
-                        $X0 \
-                        $Y0 \
-                        $X1 \
-                        0 )
+                                 $X0 \
+                                 $Y0 \
+                                 $X1 \
+                                 0 )
               else
                 # golden ratio screen retain margins
                 PRIMARY=$(printf '%dx%d%+d%+d' \
-                        $fullscreen_width \
-                        $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
-                        $(( $X1 + ($X0 - $fullscreen_width)/2 )) \
-                        $(( $marginX + $window_frame)) )
+                                 $fullscreen_width \
+                                 $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
+                                 $(( $X1 + ($X0 - $fullscreen_width)/2 )) \
+                                 $(( $marginX + $window_frame)) )
               fi ;;
 
   secondary) rm -f $FULLSCREEN:secondary 2>/dev/null
@@ -176,18 +176,18 @@ case $@ in
              marginX=$(pixel_match $marginX $UM1680)
              # bottom margin calculation adjusted for lower resolution than primary
              SECONDARY=$(printf '%dx%d%+d%+d' \
-                       $(( $X1 - $marginX*2 )) \
-                       $(( $Y1 - $margin*2 + $window_frame - $marginY - 2 )) \
-                       $marginX \
-                       $margin ) ;;
+                                $(( $X1 - $marginX*2 )) \
+                                $(( $Y1 - $margin*2 + $window_frame - $marginY - 2 )) \
+                                $marginX \
+                                $margin ) ;;
 
   secondary*fullscreen) touch $FULLSCREEN:secondary
                         touch $FULLSCREEN:$TAG 2>/dev/null
                         SECONDARY=$(printf '%dx%d%+d%+d' \
-                                  $X1 \
-                                  $Y1 \
-                                  0 \
-                                  0 ) ;;
+                                           $X1 \
+                                           $Y1 \
+                                           0 \
+                                           0 ) ;;
 esac
 
 # configure multihead..
