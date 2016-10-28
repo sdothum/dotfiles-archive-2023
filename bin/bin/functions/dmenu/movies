@@ -91,7 +91,6 @@ do
            play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
                    notify critical "$movie" "Duplicate movie files found"
                    term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
-                   pwait "movies"
                  fi
                  history "$playlist" "$movie"
                  catlg
