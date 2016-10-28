@@ -145,8 +145,10 @@ case "$1" in
            1:2  ) layout=onethird ;;
            3:3:3) layout=thirds ;;
          esac
-         herbstclient lock
+         # may already be in lock state, see toggle monocle
+         [ -e $LOCK ] || herbstclient lock
          $layout $TAG
+         # unlock to enable focus borders
          herbstclient unlock ;;
 
   *) layout=$(echo "grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n3:3:3" | dmenu 'Explode to Layout' -no-custom) || exit
