@@ -16,8 +16,7 @@ if [ "$(query tag unfocused)" = "$1" ] ;then
 fi
 
 # check layout (fullscreen or monocle)
-touch $LOCK
-herbstclient lock
+lock
 [ "$1" ] && herbstclient use $1 || herbstclient use_previous
 
 tag=$(herbstclient attr monitors.focus.tag)
@@ -27,7 +26,6 @@ is primary &&
 restore monocle $tag
 
 focus window
-herbstclient unlock
-rm -f $LOCK
+unlock
 
 # vim: set ft=sh: #

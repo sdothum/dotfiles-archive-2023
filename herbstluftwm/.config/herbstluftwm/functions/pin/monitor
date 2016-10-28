@@ -8,16 +8,14 @@
 
 # move window to non-empty tag subframe (and focus next window)
 switch_frame() {
-  touch $LOCK
-  herbstclient lock
+  lock
   # don't pin fullscreen windows
   restore windowed
   herbstclient focus_monitor $1
   focus frame
   herbstclient chain . bring $winid . focus_monitor $2
   focus window
-  herbstclient unlock
-  rm -f $LOCK
+  unlock
 }
 
 # move window and focus to monitor (0,1)

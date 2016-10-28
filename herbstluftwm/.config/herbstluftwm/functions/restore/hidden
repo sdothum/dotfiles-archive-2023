@@ -46,11 +46,9 @@ if [ $count -gt 0 ] ;then
                              -e "s/ *($SEP)/^\1/" \
                              -e 's/([*])/\\\1/g')" |
                  cut -d: -f2)
-         touch $LOCK
-         herbstclient chain . lock . use $TAG
+         lock use $TAG
          focus frame
-         herbstclient chain . bring $winid . unlock
-         rm -f $LOCK ;;
+         unlock bring $winid 
     esac
   fi
 fi

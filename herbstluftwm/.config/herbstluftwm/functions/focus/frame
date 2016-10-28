@@ -12,8 +12,7 @@
 # fill=true
 unset fill
 
-touch $LOCK
-herbstclient lock
+lock
 # do not overlay a window over a fullscreen window, revert to normal view first!
 # this prevents a fullscreen window from resizing to a differing monitor geometry
 restore windowed
@@ -56,7 +55,6 @@ do
 done
 
 # herbstclient chain . set_layout vertical . unlock
-herbstclient unlock
-rm -f $LOCK
+unlock
 
 # vim: set ft=sh: #

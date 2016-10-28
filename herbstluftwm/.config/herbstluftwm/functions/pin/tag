@@ -7,15 +7,13 @@
 # ............................................................... Smart move tag
 
 # move window to non-empty tag subframe and focus next window
-touch $LOCK
 tag=$(query tag)
 winid=$(herbstclient attr clients.focus.winid)
-herbstclient chain . lock . use $1
+lock use $1
 focus frame
 # use_previous restores unexpected tag if movement is to already visible tag
 herbstclient chain . bring $winid . use $tag
 focus window
-herbstclient unlock
-rm -f $LOCK
+unlock
 
 # vim: set ft=sh: #

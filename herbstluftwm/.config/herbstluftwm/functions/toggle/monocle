@@ -35,8 +35,7 @@ if is primary ;then
   fi
 
   winid=$(herbstclient attr clients.focus.winid)
-  touch $LOCK
-  herbstclient lock
+  lock
   # toggle out of fullscreen before entering monocle
   if is fullscreen ;then
     herbstclient fullscreen toggle
@@ -79,8 +78,7 @@ if is primary ;then
       fi
     fi
   fi
-  herbstclient unlock
-  rm -f $LOCK
+  unlock
   restore panel
 fi
 

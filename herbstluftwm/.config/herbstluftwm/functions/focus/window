@@ -10,9 +10,8 @@
 # [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" != '' ] && exit
 herbstclient compare clients.focus.instance != '' 2>/dev/null && exit
 
-touch $LOCK
 frames=$(query fcount $TAG)
-herbstclient chain . lock . cycle_frame -1
+lock cycle_frame -1
 
 for i in $(seq 1 $frames)
 do
@@ -29,7 +28,6 @@ do
   fi
 done
 
-herbstclient unlock
-rm -f $LOCK
+unlock
 
 # vim: set ft=sh: #

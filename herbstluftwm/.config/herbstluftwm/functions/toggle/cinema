@@ -8,8 +8,7 @@
 
 # toggle / black out (secondary) screen
 if herbstclient compare monitors.count gt 1 ;then
-  touch $LOCK
-  herbstclient lock
+  lock
   if xdotool search --onlyvisible --limit 1 --classname 'blackscreen' >/dev/null ;then
     kill -TERM $(pgrep -f blackscreen)
     draw monitor secondary
@@ -22,8 +21,7 @@ if herbstclient compare monitors.count gt 1 ;then
     draw monitor secondary fullscreen
     dmenu screensaver off
   fi
-  herbstclient unlock
-  rm -f $LOCK
+  unlock
 else
   dmenu screensaver
 fi

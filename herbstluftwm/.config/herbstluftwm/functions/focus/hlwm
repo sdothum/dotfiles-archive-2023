@@ -64,9 +64,8 @@ if window=$(echo $windows |
     focus frame
     herbstclient bring "$(echo $window | cut -d$DLM -f3)"
   else
-    touch $LOCK
     swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
-    herbstclient chain . lock . set swap_monitors_to_get_tag 0
+    lock set swap_monitors_to_get_tag 0
     if echo $window | grep " \^$VISIBLE [0-9]" ;then
       # focus normal tag
       herbstclient chain . use "$TAG" . jumpto "$(echo $window | cut -d$DLM -f3)"
@@ -76,8 +75,7 @@ if window=$(echo $windows |
       focus frame
       herbstclient bring "$(echo $window | cut -d$DLM -f3)"
     fi
-    herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock
-    rm -f $LOCK
+    unlock set swap_monitors_to_get_tag $swap_monitors
     restore panel
   fi
   echo $window | grep " $INVISIBLE [0-9]${DLM}0x" && query ttag $TAG
