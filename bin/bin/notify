@@ -26,8 +26,8 @@ echo "$(timestamp) $USER:${urgency#-u} \"$1\" \"$2\"" >>/tmp/notify.log
 
 if console ;then
   [ "$2" ] &&
-    echo "\n${_YELLOW_}--> $1\n${_GREEN_}  -> $2${_nocolor_}\n" ||
-    echo "\n${_YELLOW_}--> $1${_nocolor_}\n"
+    echo "\n${_YELLOW_}-> $1\n${_GREEN_}  -- $2${_nocolor_}\n" ||
+    echo "\n${_YELLOW_}-> $1${_nocolor_}\n"
 else
   [ $time ] && expire="--expire-time=$(( $time * 1000 ))"
   case $# in

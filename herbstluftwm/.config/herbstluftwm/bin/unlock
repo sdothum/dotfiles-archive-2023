@@ -9,6 +9,7 @@
 
 # Usage: unlock [command], multiple commands chained with dot
 
+# restore dynamic emithook focusing
 [ "$*" ] && herbstclient chain . $@ . unlock || herbstclient unlock
 [ -e $LOCK ] && rm -f $LOCK
 

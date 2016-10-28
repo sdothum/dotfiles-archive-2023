@@ -15,7 +15,7 @@ if [ $# -eq 2 ] ;then
     mv "$target" "$hold"
     mv "$destination" "$target"
     mv "$hold" "$destination"
-    echo ".. $target  --> <--  $destination"
+    echo "$target -> <- $destination"
   fi
 else
   echo '.. swap file1 file2'

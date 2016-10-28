@@ -54,7 +54,6 @@ do
   fi
 done
 
-# herbstclient chain . set_layout vertical . unlock
 unlock
 
 # vim: set ft=sh: #

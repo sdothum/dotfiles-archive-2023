@@ -9,6 +9,7 @@
 
 # Usage: lock [command], multiple commands chained with dot
 
+# disable dynamic emithook focusing
 touch $LOCK
 [ "$*" ] && herbstclient chain . lock . $@ || herbstclient lock
 
