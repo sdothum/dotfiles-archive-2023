@@ -30,6 +30,7 @@ export DYNAMIC=$HLWM:dynamic
 export FORTUNE=$HLWM:fortune
 export FOCUS=$HLWM:focus
 export FULLSCREEN=$HLWM:fullscreen
+export LAYOUT=$HLWM:layout
 export LOCK=$HLWM:lock
 export MONOCLE=$HLWM:monocle
 export PANEL=$HLWM:panel

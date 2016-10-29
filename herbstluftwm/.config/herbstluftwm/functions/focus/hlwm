@@ -42,6 +42,7 @@ do
     windows="$windows\n$window" ||
     windows="$window"
 done
+echo $windows | grep $INVISIBLE && hidden="  ⇣$INVISIBLE"
 
 # ........................................................................ Dmenu
 
@@ -49,7 +50,7 @@ if window=$(echo $windows |
             sort |
             cut -d$DLM -f2 |
             column -s\^ -t |
-            dmenu "${mode}Window$title" -no-custom) || exit ;then
+            dmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
   window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/ ^\1/" -e "s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
