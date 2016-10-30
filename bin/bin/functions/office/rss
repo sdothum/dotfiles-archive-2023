@@ -27,15 +27,15 @@ case $1 in
         p newsbeuter
       fi ;;
 
-  I) sudo rm $HOME/.newsbeuter/cache.db 2>/dev/null
-     rss ;;
+  I*) sudo rm $HOME/.newsbeuter/cache.db 2>/dev/null
+      rss ;;
 
-  i) if ! pidof newsbeuter ;then
-       rss
-       newsbeuter -C $HOME/.newsbeuter/config -i $2
-     fi ;;
+  i*) if ! pidof newsbeuter ;then
+        rss
+        newsbeuter -C $HOME/.newsbeuter/config -i $2
+      fi ;;
 
-  h | *) usage ;;
+  *) usage ;;
 esac
 
 # vim: set ft=sh: #

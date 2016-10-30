@@ -21,8 +21,8 @@ if server ;then
   case $@ in
     *0 | l*) opts='-s 1680x1050 -i :0.0' ;;
     *1 | r*) opts='-s 2560x1600 -i :0.0+1680,0' ;;
-    all | a) opts='-s 4240x1600 -i :0.0' ;;
-    h | *  ) usage ;;
+    a*     ) opts='-s 4240x1600 -i :0.0' ;;
+    *      ) usage ;;
   esac
 else
   set -- $(query display)

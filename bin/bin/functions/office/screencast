@@ -29,18 +29,27 @@ if server ;then
     *1 | r*) xy='2560x1600'
              offset='+1680,0';;
 
-    all | a) xy='4240x1600' ;;
+    a*) xy='4240x1600' ;;
 
-    kill | k) kill -TERM $(pidof -s $pidname)
-              ls -l /tmp/*.webm
-              exit ;;
+    k*) kill -TERM $(pidof -s $pidname)
+        ls -l /tmp/*.webm
+        exit ;;
 
-    h | *) usage ;;
+    *) usage ;;
   esac
 
   webm=$(mktemp).webm
-  exec -a $pidname ffmpeg -f x11grab -s $xy -an -r $framerate -i :0.0$offset -c:v libvpx -b:v 5M -crf 10 -quality realtime -y -loglevel quiet $webm &
-
+  exec -a $pidname ffmpeg -f x11grab \
+                          -s $xy -an \
+                          -r $framerate \
+                          -i :0.0$offset \
+                          -c:v libvpx \
+                          -b:v 5M \
+                          -crf 10 \
+                          -quality realtime \
+                          -y \
+                          -loglevel quiet \
+                          $webm &
   shift
   [ "$*" ] && eval "$@"
 

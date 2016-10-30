@@ -7,7 +7,7 @@
 # ..................................................................... Password
 
 usage() {
-  echo "usage: $(basename $0)  <name> | eX'port | G|g'enerate <name> | I'nitialize | i'nsert <name> <password> } | l'ist | m'v <name> <'name> | R'm <name>"
+  echo "usage: $(basename $0)  <name> | a'dd <name> <password> | e'xport | G|g'enerate <name> | I'nitialize | i'mport | l'ist | m'v <name> <'name> | R'm <name>"
   exit 1
 }
 
@@ -15,68 +15,68 @@ store=${PASSWORD_STORE_DIR-$HOME/.password-store}
 
 # password manager
 case $1 in
-  h | '') usage ;;
+  '') usage ;;
 
-  G) if [ $# -eq 2 ] ;then
-       /usr/bin/pass generate --no-symbols --force --clip $2 12
-       pass $2
-     else
-       pass
-     fi ;;
+  a*) if [ $# -eq 3 ] ;then
+        echo "$3\n$3" >/tmp/pass
+        /usr/bin/pass insert --force $2 </tmp/pass
+        pass $2
+      else
+        pass
+      fi ;;
 
-  g) if [ $# -eq 2 ] ;then
-       /usr/bin/pass generate --force --clip $2 12
-       pass $2
-     else
-       pass
-     fi ;;
-
-  I) if-no 'initialize password store' && exit 1
-     [ -d $store ] && mv -fv $store $store.save
-     /usr/bin/pass init sdothum@gmail.com
-     annotate 'import (rebuild) your password store' ;;
-
-  i) if [ $# -eq 3 ] ;then
-       echo "$3\n$3" >/tmp/pass
-       /usr/bin/pass insert --force $2 </tmp/pass
-       pass $2
-     else
-       pass
-     fi ;;
-
-  l) shift && /usr/bin/pass $@ ;;
-
-  m) if [ $# -eq 3 ] ;then
-       /usr/bin/pass mv --force $2 $3
-       pass $3
-     else
-       pass
-     fi ;;
-
-  R) if [ $# -eq 2 ] ;then
-       /usr/bin/pass rm --recursive --force $2
-     else
-       pass
-     fi ;;
-
-  X) echo "#!/usr/bin/dash
+  e*) echo "#!/usr/bin/dash
 pass I || exit" >$HOME/sandbox/pass.sh
-     names=$(find $store -name '*.gpg' | sed -e "s|$store/||g" -e 's/.gpg$//')
-     for i in $names
-     do
-       echo "..exporting $i"
-       key=$(/usr/bin/pass $i | sed "s/'/'\"'\"'/")
-       echo "pass ! $i '$key'" >>$HOME/sandbox/pass.sh
-     done
-     echo "if-yes 'purge this pass import script' && rm -f pass.sh" >>$HOME/sandbox/pass.sh
-     chmod -c 700 $HOME/sandbox/pass.sh
-     annotate "purge $HOME/sandbox/pass.sh after importing" ;;
+      names=$(find $store -name '*.gpg' | sed -e "s|$store/||g" -e 's/.gpg$//')
+      for i in $names
+      do
+        echo "..exporting $i"
+        key=$(/usr/bin/pass $i | sed "s/'/'\"'\"'/")
+        echo "pass ! $i '$key'" >>$HOME/sandbox/pass.sh
+      done
+      echo "if-yes 'purge this pass import script' && rm -f pass.sh" >>$HOME/sandbox/pass.sh
+      chmod -c 700 $HOME/sandbox/pass.sh
+      annotate "purge $HOME/sandbox/pass.sh after importing" ;;
 
-  !) if [ $# -eq 3 ] ;then
-       echo "..importing $2"
-       echo "$3\n$3" >/tmp/pass
-       /usr/bin/pass insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1
-     fi ;;
+  G*) if [ $# -eq 2 ] ;then
+        /usr/bin/pass generate --no-symbols --force --clip $2 12
+        pass $2
+      else
+        pass
+      fi ;;
+
+  g*) if [ $# -eq 2 ] ;then
+        /usr/bin/pass generate --force --clip $2 12
+        pass $2
+      else
+        pass
+      fi ;;
+
+  I*) if-no 'initialize password store' && exit 1
+      [ -d $store ] && mv -fv $store $store.save
+      /usr/bin/pass init sdothum@gmail.com
+      annotate 'import (rebuild) your password store' ;;
+
+  i*) if [ $# -eq 3 ] ;then
+        echo "..importing $2"
+        echo "$3\n$3" >/tmp/pass
+        /usr/bin/pass insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1
+      fi ;;
+
+  l*) shift && /usr/bin/pass $@ ;;
+
+  m*) if [ $# -eq 3 ] ;then
+        /usr/bin/pass mv --force $2 $3
+        pass $3
+      else
+        pass
+      fi ;;
+
+  R*) if [ $# -eq 2 ] ;then
+        /usr/bin/pass rm --recursive --force $2
+      else
+        pass
+      fi ;;
 
   *) if [ $# -eq 1 ] ;then
        if password=$(/usr/bin/pass $1) ;then

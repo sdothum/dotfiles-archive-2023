@@ -14,12 +14,12 @@ usage() {
 case $1 in
   '' | h) usage ;;
 
-  r) D=N
-     shift
-     dep='required by' ;;
+  r*) D=N
+      shift
+      dep='required by' ;;
 
-  n) pacman -Qet
-     exit ;;
+  n*) pacman -Qet
+      exit ;;
 
   *) D=D
      dep='depends on' ;;

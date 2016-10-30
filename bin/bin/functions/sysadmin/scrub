@@ -7,7 +7,7 @@
 # ................................................................... Filesystem
 
 usage() {
-  echo "usage: $(basename $0)  all | 'start | c'ancel | I'nitialize | s'tatus  [boot | net | share | backup]"
+  echo "usage: $(basename $0)  a'll | c'ancel | I'nitialize | s'tatus  [boot | net | share | backup]"
   exit 1
 }
 
@@ -36,19 +36,19 @@ show() {
 }
 
 case $1 in
-  h | '') usage ;;
+  '') usage ;;
 
-  all) scrub boot
-       scrub share
-       scrub backup ;;
+  a*) scrub boot
+      scrub share
+      scrub backup ;;
 
-  c) sudo btrfs scrub cancel $(volume $2) ;;
-  I) sudo rm /var/lib/btrfs/*.* ;;
-  s) show $(volume $2) ;;
+  c*) sudo btrfs scrub cancel $(volume $2) ;;
+  I*) sudo rm /var/lib/btrfs/*.* ;;
+  s*) show $(volume $2) ;;
 
   *) sudo btrfs scrub start -Bd $(volume $@) &
      which term >/dev/null &&
-       (term "$@" SHELL "scrub s $@" &) ||
+       ( term "$@" SHELL "scrub s $@" & ) ||
        scrub s $@ ;;
 esac
 

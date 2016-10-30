@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: [proof=true]  $(basename $0)  'eject | stdin | <file>.ps | code | mail | note | text | wiki | wps  [<filelist>]"
+  echo "usage: [proof=true]  $(basename $0)  eject | stdin | <file>.ps | code | mail | note | text | wiki | wps  [<filelist>]"
   exit 1
 }
 
@@ -199,11 +199,11 @@ paragraphs() {
 }
 
 case "$1" in
-  h) usage ;;
+  '') usage ;;
 
-  eject | '') # force last page ejection with hp (escape) reset code
-              [ $proof ] || printf '\033E' | lpr -P $PRINTER
-              exit ;;
+  eject) # force last page ejection with hp (escape) reset code
+         [ $proof ] || printf '\033E' | lpr -P $PRINTER
+         exit ;;
 
   stdin) stdin ;;
 

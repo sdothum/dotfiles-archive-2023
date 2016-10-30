@@ -46,11 +46,12 @@ alias traceroute 'mtr --report -c 1'
 
 # ...................................................................... Desktop
 
-alias c 'clear ;and setterm -cursor on'
+alias c 'clear ; setterm -cursor on'
 alias cursor 'setterm -cursor on'
 alias h: 'ls -l /tmp/herbstluftwm:*'
 alias hc 'herbstclient'
 alias herbstluftwm ". $HOME/.config/herbstluftwm/config/ENV"
+alias X x
 
 # .................................................................... Directory
 
@@ -73,7 +74,7 @@ alias treed 'sudo tree -aCdF'
 alias cp 'cp -i'
 alias cpl 'cp -iLRfv'
 alias cpv 'cp -iv'
-alias df 'command df ;and sudo btrfs filesystem df /'
+alias df "command df -h ; echo ; sudo btrfs filesystem df / ; echo ; sudo btrfs filesystem du -s '/home /opt /usr /var'"
 alias ducks "du -cks * | sort -rn | egrep -v '^0|total'"
 alias dud 'du -d 1 -h'
 alias gprename 'gprename $PWD'
@@ -103,8 +104,8 @@ alias vd 'gvimdiff --role=gvimdiff'
 
 alias calc 'speedcrunch'
 alias friendlybear 'smbclient //friendlybear/patricia motu om'
-alias font-manager 'font-manager ;and sudo rm -f ~/.fonts.conf'
-alias fontmatrix 'fontmatrix ;and sudo rm -f ~/.fonts.conf'
+alias font-manager 'font-manager ; sudo rm -f ~/.fonts.conf'
+alias fontmatrix 'fontmatrix ; sudo rm -f ~/.fonts.conf'
 alias handbrake 'ghb'
 alias music '!p ncmpcpp ;and ncmpcpp'
 alias mysql 'mysql -h localhost -u root -p'

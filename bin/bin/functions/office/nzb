@@ -7,7 +7,7 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)(server)  'start/show | c'lient | h'elp | I'nitialize | l'og | L'ist | q'uit | r'ate | s'earch"
+  echo "usage: $(basename $0)(server)  'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r'ate | s'earch"
   echo "usage: $(basename $0)(queue)  B|b'ottom | C'lear | D|d'elete | P|p'ause | T|t'op | U|u'npause"
   echo ' -> nzb d <GID,GID-GID,..>'
   echo ' -> nzb D <title>'
@@ -28,56 +28,56 @@ case $action in
         nzbget -L G
       fi ;;
 
-  b) nzbget -E G B $queue
-     nzb ;;
+  b*) nzbget -E G B $queue
+      nzb ;;
 
-  C) nzb
-     if-yes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
+  C*) nzb
+      if-yes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
 
-  d) nzbget -E G D $queue
-     nzb ;;
+  d*) nzbget -E G D $queue
+      nzb ;;
 
-  I) if if-yes 'clear history and queue' ;then
-       killall nzbget 2>/dev/null
-       # delay required for server shutdown (cannot use "nzb q")
-       sleep 1
-       rm -rf /net/downloads/nzbs/inter
-       rm -rf /net/downloads/nzbsqueue
-       rm -rf /net/downloads/nzbs/tmp
-       # restart to create subdirectories
-       nzb
-     fi ;;
+  I*) if if-yes 'clear history and queue' ;then
+        killall nzbget 2>/dev/null
+        # delay required for server shutdown (cannot use "nzb q")
+        sleep 1
+        rm -rf /net/downloads/nzbs/inter
+        rm -rf /net/downloads/nzbsqueue
+        rm -rf /net/downloads/nzbs/tmp
+        # restart to create subdirectories
+        nzb
+      fi ;;
 
-  l) echo ".. tail -f /tmp/nzbget.log | g 'error|warning'"
-     tail -f /tmp/nzbget.log | g 'error|warning' ;;
+  l*) echo ".. tail -f /tmp/nzbget.log | g 'error|warning'"
+      tail -f /tmp/nzbget.log | g 'error|warning' ;;
 
-  L) while :
-     do
-       nzb
-       sleep $list_delay
-     done ;;
+  L*) while :
+      do
+        nzb
+        sleep $list_delay
+      done ;;
 
-  p) nzbget -E G P $queue
-     nzb ;;
+  p*) nzbget -E G P $queue
+      nzb ;;
 
-  t) nzbget -E G T $queue
-     nzb ;;
+  t*) nzbget -E G T $queue
+      nzb ;;
 
-  T) nzb t $(nzb S $queue) ;;
+  T*) nzb t $(nzb S $queue) ;;
 
-  u) nzbget -E G U $queue
-     nzb ;;
+  u*) nzbget -E G U $queue
+      nzb ;;
 
-  B    ) nzb b $(nzb S $queue) ;;
-  c    ) nzbget -o OutputMode=curses -C ;;
-  D    ) nzb d $(nzb S $queue) ;;
-  P    ) nzb p $(nzb S $queue) ;;
-  q    ) nzbget -Q ;;
-  r    ) nzbget --rate $queue ;;
-  s    ) nzb | egrep -i $queue ;;
-  S    ) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
-  U    ) nzb u $(nzb S $queue) ;;
-  h | *) usage ;;
+  B*) nzb b $(nzb S $queue) ;;
+  c*) nzbget -o OutputMode=curses -C ;;
+  D*) nzb d $(nzb S $queue) ;;
+  P*) nzb p $(nzb S $queue) ;;
+  q*) nzbget -Q ;;
+  r*) nzbget --rate $queue ;;
+  s*) nzb | egrep -i $queue ;;
+  S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
+  U*) nzb u $(nzb S $queue) ;;
+  *) usage ;;
 esac
 
 # vim: set ft=sh: #

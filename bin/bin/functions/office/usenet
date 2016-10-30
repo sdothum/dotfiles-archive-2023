@@ -7,7 +7,7 @@
 # ................................................................... Newsgroups
 
 usage() {
-  echo "usage: $(basename $0)  'start | F'orce | reI'nitialize"
+  echo "usage: $(basename $0)  'start | f'orce | (re)I'nitialize"
   exit 1
 }
 
@@ -17,14 +17,14 @@ host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')
 case $i in
   '') pidof slrn || slrn -h $host ;;
 
-  f) killall slrn 2>/dev/null
-     usenet ;;
+  f*) killall slrn 2>/dev/null
+      usenet ;;
 
-  I) slrn -h $host --create
-     slrn -h $host -d
-     usenet ;;
+  I*) slrn -h $host --create
+      slrn -h $host -d
+      usenet ;;
 
-  h | *) usage ;;
+  *) usage ;;
 esac
 
 # vim: set ft=sh: #

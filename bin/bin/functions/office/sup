@@ -7,7 +7,7 @@
 # ....................................................................... E-mail
 
 usage() {
-  echo "usage: $(basename $0)  'start | d'ump | F'orce | I'nitialize | l'og | syncM'aildirs | r'estore | reS'ync | s'ync <folder>"
+  echo "usage: $(basename $0)  'start | d'ump | f'orce | I'nitialize | l'og | syncM'aildirs | r'estore | reS'ync | s'ync <folder>"
   exit 1
 }
 
@@ -45,48 +45,48 @@ case $1 in
         echo '.. instance locked: force restart with "sup F"'
       fi ;;
 
-  d) !p /usr/bin/sup && sup-dump >$HOME/.sup/dump ;;
+  d*) !p /usr/bin/sup && sup-dump >$HOME/.sup/dump ;;
 
-  F) if if-yes 'force sup' ;then
+  f*) if if-yes 'force sup' ;then
+          killsup
+        sudo rm $HOME/.sup/lock
+        sup
+      fi ;;
+
+  I*) if if-yes 'initialize xapian database' ;then
+        killsup
+        sudo rm -r $HOME/.sup/xapian 2>/dev/null
+      fi
+      sup ;;
+
+  l*) echo '.. tail -f /tmp/sup.log'
+      tail -f /tmp/sup.log ;;
+
+  *M*) if if-yes 'sync maildirs' ;then
          killsup
-       sudo rm $HOME/.sup/lock
-       sup
-     fi ;;
+         sup-sync-back-maildir
+       fi
+       sup ;;
 
-  I) if if-yes 'initialize xapian database' ;then
-       killsup
-       sudo rm -r $HOME/.sup/xapian 2>/dev/null
-     fi
-     sup ;;
+  r*) if if-yes 'sup restore' ;then
+        killsup
+        sup-sync --restored --restore $HOME/.sup/dum
+      fi
+      sup ;;
 
-  l) echo '.. tail -f /tmp/sup.log'
-     tail -f /tmp/sup.log ;;
+  *S*) if if-yes 'sup restore' ;then
+         killsup
+         sup-sync 2>>/tmp/sup.log
+       fi
+       sup ;;
 
-  M) if if-yes 'sync maildirs' ;then
-       killsup
-       sup-sync-back-maildir
-     fi
-     sup ;;
+  s*) if if-yes 'sup restore' ;then
+        killsup
+        sup-sync -v maildir:$HOME/Maildir/sdothum/$2
+      fi
+      sup ;;
 
-  r) if if-yes 'sup restore' ;then
-       killsup
-       sup-sync --restored --restore $HOME/.sup/dum
-     fi
-     sup ;;
-
-  S) if if-yes 'sup restore' ;then
-       killsup
-       sup-sync 2>>/tmp/sup.log
-     fi
-     sup ;;
-
-  s) if if-yes 'sup restore' ;then
-       killsup
-       sup-sync -v maildir:$HOME/Maildir/sdothum/$2
-     fi
-     sup ;;
-
-  h | *) usage ;;
+  *) usage ;;
 esac
 
 # vim: set ft=sh: #

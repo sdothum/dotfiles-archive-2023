@@ -1,0 +1,17 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... Filesystem
+
+[ "$*" ] && dir=$1 || dir=$PWD
+[ "$dir" = . ] && dir=$PWD
+
+# display du and corrected btrfs du
+/usr/bin/du -hd1 $dir 2>/dev/null
+echo
+sudo btrfs filesystem du -s $dir
+
+# vim: set ft=sh: #
