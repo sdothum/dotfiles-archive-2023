@@ -28,9 +28,9 @@ if [ "$*" ] ;then
   [ -e ${1%/*} ] || sudo mkdir -pv ${1%/*}
   [ -e $1 ] && original $1
   if [ $link ] ;then
-    echo '.. linking '$(sudo ln -sv $root/.${1}$host $1)
+    ditto 'linking '$(sudo ln -sv $root/.${1}$host $1)
   else
-    echo '.. copying '$(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)
+    ditto 'copying '$(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)
   fi
   annotate "check customization $1"
 fi

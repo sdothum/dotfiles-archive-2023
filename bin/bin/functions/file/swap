@@ -15,10 +15,10 @@ if [ $# -eq 2 ] ;then
     mv "$target" "$hold"
     mv "$destination" "$target"
     mv "$hold" "$destination"
-    echo "$target -> <- $destination"
+    ditto "$destination -> <- $target"
   fi
 else
-  echo '.. swap file1 file2'
+  ditto 'swap file1 file2'
 fi
 
 # vim: set ft=sh: #

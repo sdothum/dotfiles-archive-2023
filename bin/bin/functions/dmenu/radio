@@ -42,12 +42,10 @@ do
                   else
                     mpv --no-cache --quiet $(url $(cat $radio)) &
                   fi
-                  echo '.. toggling playlist'
                   exit ;;
 
     '[ clear  ]') stop
                   rm -f $radio
-                  echo '.. clearing playlist'
                   exit ;;
 
     '[ edit   ]' | '[ edit ]') gvim -f $stations ;;
@@ -61,7 +59,6 @@ do
          sleep $delay
          if pgrep -f 'mpv --no-cache --quiet' ;then
            echo "$station" >$radio
-           echo ".. playing $station"
            exit
          else
            rm -f $radio

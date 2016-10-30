@@ -7,7 +7,7 @@
 # ................................................................... Screenshot
 
 usage() {
-  echo "usage: $(basename $0)  l'eft | r'ght | a'll | <XxY+'X+'Y>"
+  echo "usage: $(basename $0)  DVI-'0 | DVI-'1 | l'eft | r'ght | a'll | <XxY+'X+'Y>"
   exit 1
 }
 
@@ -15,11 +15,10 @@ target=/net/photos/batchqueue
 delay=${delay:-5}
 
 if server ;then
-  # allow DVI-# reference
   case $@ in
     ''     ) usage ;;
-    *0 | l*) opts='--geometry=1680x1050+0+0' ;;
-    *1 | r*) opts='--geometry=2560x1600+1680+0' ;;
+    l* | *0) opts='--geometry=1680x1050+0+0' ;;
+    r* | *1) opts='--geometry=2560x1600+1680+0' ;;
     a*     ) opts='--geometry=4240x1600+0+0' ;;
     *      ) opts="--geometry=$@" ;;
   esac

@@ -12,7 +12,7 @@ usage() {
 }
 
 case $1 in
-  '' | h) usage ;;
+  '') usage ;;
 
   r*) D=N
       shift
@@ -33,7 +33,7 @@ if [ "$*" ] ;then
       # list source repository
       echo "$(expac -S '%r/%n' $i) ($dep)$(expac "%$D" $i | sed 's/  */\n/g' | sort | sed 's/^/^/')" | column -s^ -t
     else
-      echo ".. \"$i\" not found"
+      ditto "\"$i\" not found"
     fi
   done
 fi

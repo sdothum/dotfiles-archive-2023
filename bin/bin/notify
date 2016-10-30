@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: [time=seconds]  $(basename $0)  [low | normal | critical] \"<summary>\" [\"<body>\"]"
+  echo "usage: [time=seconds]  $(basename $0)  [console] [low | normal | critical] \"<summary>\" [\"<body>\"]"
   exit 1
 }
 
@@ -18,13 +18,18 @@ if [ -r "$HOME/.dbus/Xdbus" ]; then
   . "$HOME/.dbus/Xdbus"
 fi
 
+if [ "$1" = console ] ;then
+  console=true
+  shift
+fi
+
 if echo "$1" | egrep -qE '^(low|normal|critical)$' ;then
   urgency="-u $1"
   shift
 fi
 echo "$(timestamp) $USER:${urgency#-u} \"$1\" \"$2\"" >>/tmp/notify.log
 
-if console ;then
+if console || [ $console ] ;then
   [ "$2" ] &&
     echo "\n${_YELLOW_}-> $1\n${_GREEN_} -> $2${_nocolor_}\n" ||
     echo "\n${_YELLOW_}-> $1${_nocolor_}\n"

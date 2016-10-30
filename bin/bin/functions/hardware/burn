@@ -33,7 +33,7 @@ case $@ in
      else
        if-yes 'merge session (append)' && growisofs -M /dev/dvd -R -J $@
      fi
-     echo '.. eject and select cdrom in thunar before next merge' ;;
+     ditto 'eject and select cdrom in thunar before next merge' ;;
 esac
 
 # vim: set ft=sh: #

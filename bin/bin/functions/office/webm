@@ -9,7 +9,7 @@
 # ................................................................... Screencast
 
 usage() {
-  echo "usage: $(basename $0)  l'eft | r'ight | a'll"
+  echo "usage: $(basename $0)  DVI-'0 | DVI-'1 | l'eft | r'ight | a'll"
   exit 1
 }
 
@@ -17,10 +17,9 @@ target=/net/media/videos/recordings
 delay=${delay:-1}
 
 if server ;then
-  # allow DVI-# reference
   case $@ in
-    *0 | l*) opts='-s 1680x1050 -i :0.0' ;;
-    *1 | r*) opts='-s 2560x1600 -i :0.0+1680,0' ;;
+    l* | *0) opts='-s 1680x1050 -i :0.0' ;;
+    r* | *1) opts='-s 2560x1600 -i :0.0+1680,0' ;;
     a*     ) opts='-s 4240x1600 -i :0.0' ;;
     *      ) usage ;;
   esac
@@ -38,7 +37,20 @@ ffmpeg -f x11grab -r 25 $opts -vcodec libx264 -preset ultrafast -crf 0 $mkv
 echo
 echo "${_YELLOW_}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${_nocolor_}"
 echo
-ffmpeg -i $mkv -deadline good -lag-in-frames 0 -g 120 -slices 8 -c:v libvpx -qmin 0 -qmax 50 -crf 0 -b:v 1M -c:a libvorbis ${mkv%.mkv}.webm
+
+ffmpeg -i $mkv \
+       -deadline good \
+       -lag-in-frames 0 \
+       -g 120 \
+       -slices 8 \
+       -c:v libvpx \
+       -qmin 0 \
+       -qmax 50 \
+       -crf 0 \
+       -b:v 1M \
+       -c:a libvorbis \
+       ${mkv%.mkv}.webm
+
 mv -v ${mkv%.mkv}.webm $target
 
 # vim: set ft=sh: #

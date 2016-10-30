@@ -12,7 +12,7 @@ usage() {
 }
 
 # scan unknown mail
-unknown=$HOME/Maildir/sdothum/unknown
+unknown=$HOME/Maildir/$(cat $HOME/.forward | cut -d@ -f1)/unknown
 
 case $1 in
   c*) ack '^Cc:' $unknown/* | sed -r 's/.*C[Cc]: *(.*)/\1/' | sort | less ;;

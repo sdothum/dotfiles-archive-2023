@@ -14,8 +14,8 @@ rm -f $HOME/.weechat/*.log
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if server ;then
   if pgrep 'znc' >/dev/null ;then
-    echo '.. launching weechat'
-    echo '.. waiting for ZNC server connections to complete'
+    ditto 'launching weechat'
+    ditto 'waiting for ZNC server connections to complete'
 
     count=0
     while :
@@ -32,7 +32,7 @@ if server ;then
     notify low "Weechat" "$count seconds to ZNC server IRC connection"
     /usr/bin/weechat
   else
-    echo '.. znc server not running'
+    ditto 'znc server not running'
   fi
 else
   /usr/bin/weechat

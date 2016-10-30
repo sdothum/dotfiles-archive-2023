@@ -11,7 +11,7 @@ while :
 do
   file=$(sudo find /etc -name '*.pacnew' | sed -e 's|^/etc/||' -e 's/.pacnew$//')
   if [ -z "$file" ] ;then
-    [ -e $copy ] && echo '.. zero (0) outstanding .pacnew files'
+    [ -e $copy ] && ditto 'zero (0) outstanding .pacnew files'
     break
   fi
 

@@ -75,7 +75,7 @@ wordgen() {
 
 for i in $sentences
 do
-  echo ".. sentence length $i words"
+  ditto "sentence length $i words"
   wordgen $i
 done
 # add paragraph markers (reduced by subsequent shuf)

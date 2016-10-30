@@ -129,7 +129,7 @@ case $@ in
              mpd 2>/dev/null &
            fi
          else
-           echo ".. initiate update request from $laptop"
+           ditto "initiate update request from $laptop"
          fi ;;
 
   pi) if server; then
@@ -207,7 +207,7 @@ case $@ in
          rsync --delete /net/photos /run/media/$USER/My\ Passport/
          sync
        else
-         echo ".. insert ($(hostname)/passport) usb drive"
+         ditto "insert ($(hostname)/passport) usb drive"
        fi ;;
 
   vps) sudo touch /srv/http/thedarnedestthing.com/application/log/restart.txt

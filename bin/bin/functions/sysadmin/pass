@@ -22,7 +22,7 @@ case $1 in
         /usr/bin/pass insert --force $2 </tmp/pass
         pass $2
       else
-        pass
+        usage
       fi ;;
 
   e*) echo "#!/usr/bin/dash
@@ -30,7 +30,7 @@ pass I || exit" >$HOME/sandbox/pass.sh
       names=$(find $store -name '*.gpg' | sed -e "s|$store/||g" -e 's/.gpg$//')
       for i in $names
       do
-        echo "..exporting $i"
+        ditto "exporting $i"
         key=$(/usr/bin/pass $i | sed "s/'/'\"'\"'/")
         echo "pass ! $i '$key'" >>$HOME/sandbox/pass.sh
       done
@@ -42,14 +42,14 @@ pass I || exit" >$HOME/sandbox/pass.sh
         /usr/bin/pass generate --no-symbols --force --clip $2 12
         pass $2
       else
-        pass
+        usage
       fi ;;
 
   g*) if [ $# -eq 2 ] ;then
         /usr/bin/pass generate --force --clip $2 12
         pass $2
       else
-        pass
+        usage
       fi ;;
 
   I*) if-no 'initialize password store' && exit 1
@@ -58,9 +58,11 @@ pass I || exit" >$HOME/sandbox/pass.sh
       annotate 'import (rebuild) your password store' ;;
 
   i*) if [ $# -eq 3 ] ;then
-        echo "..importing $2"
+        ditto "importing $2"
         echo "$3\n$3" >/tmp/pass
         /usr/bin/pass insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1
+      else
+        usage
       fi ;;
 
   l*) shift && /usr/bin/pass $@ ;;
@@ -69,13 +71,13 @@ pass I || exit" >$HOME/sandbox/pass.sh
         /usr/bin/pass mv --force $2 $3
         pass $3
       else
-        pass
+        usage
       fi ;;
 
   R*) if [ $# -eq 2 ] ;then
         /usr/bin/pass rm --recursive --force $2
       else
-        pass
+        usage
       fi ;;
 
   *) if [ $# -eq 1 ] ;then
@@ -92,10 +94,10 @@ pass I || exit" >$HOME/sandbox/pass.sh
            echo "$password"
          fi
        else
-         pass
+         usage
        fi
      else
-       pass
+       usage
      fi ;;
 esac
 

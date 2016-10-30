@@ -71,7 +71,7 @@ ribbon() {
   elif echo $addresses | grep -qv ',' ;then
     echo "$addresses"
   else
-    echo "... $(echo ${addresses##*,})"
+    echo ".., $(echo ${addresses##*,})"
   fi
 }
 

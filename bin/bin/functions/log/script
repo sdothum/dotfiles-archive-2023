@@ -10,7 +10,7 @@ typescript=$HOME/typescript
 
 # new session log
 __script() {
-  echo ".. saving previous to $HOME/log/typescript.log"
+  ditto "saving previous to $HOME/log/typescript.log"
   [ -d $HOME/log ] || mkdir -v $HOME/log
   cat $typescript >>$HOME/log/typescript.log
   cat /dev/null >$typescript

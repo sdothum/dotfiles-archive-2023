@@ -1,13 +1,11 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Network
+# X11 Desktop
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Monitor
+# ..................................................................... Notifier
 
-# monitor network traffic
-ditto "tcptrack -i $1 \ (eth0, wlan0, ..)"
-sudo /usr/bin/tcptrack -i $1
+notify console "$@"
 
 # vim: set ft=sh: #

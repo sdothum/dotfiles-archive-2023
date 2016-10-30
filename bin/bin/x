@@ -82,7 +82,7 @@ if console ;then
   esac
 else
   # already in X11 session
-  echo '.. window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'
+  ditto 'window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'
 fi
 
 # vim: set ft=sh: #

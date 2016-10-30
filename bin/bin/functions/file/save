@@ -15,7 +15,7 @@ fi
 
 # save distribution copy
 if [ -e $file ] || [ -d $file ] ;then
-  echo '.. copying '$(sudo cp -Rv "$file" "$file.save")
+  ditto 'copying '$(sudo cp -Rv "$file" "$file.save")
   exit 0
 fi
 exit 1

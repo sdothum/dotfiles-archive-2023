@@ -7,7 +7,7 @@
 # ....................................................................... E-mail
 
 usage() {
-  echo "usage: $(basename $0)  'start | d'ump | f'orce | I'nitialize | l'og | syncM'aildirs | r'estore | reS'ync | s'ync <folder>"
+  echo "usage: $(basename $0)  'start | d'ump | f'orce | I'nitialize | l'og | R'estore | r'esync | S'ync maildirs | s'ync <folder>"
   exit 1
 }
 
@@ -42,7 +42,7 @@ case $1 in
         term 'Mail' /usr/bin/sup 2>>/tmp/sup.log
         sudo rm $HOME/.sup-archive
       else
-        echo '.. instance locked: force restart with "sup F"'
+        ditto 'instance locked: restart with "sup force"'
       fi ;;
 
   d*) !p /usr/bin/sup && sup-dump >$HOME/.sup/dump ;;
@@ -59,28 +59,28 @@ case $1 in
       fi
       sup ;;
 
-  l*) echo '.. tail -f /tmp/sup.log'
+  l*) ditto 'tail -f /tmp/sup.log'
       tail -f /tmp/sup.log ;;
 
-  *M*) if if-yes 'sync maildirs' ;then
-         killsup
-         sup-sync-back-maildir
-       fi
-       sup ;;
-
-  r*) if if-yes 'sup restore' ;then
+  R*) if if-yes 'sup restore' ;then
         killsup
-        sup-sync --restored --restore $HOME/.sup/dum
+        sup-sync --restored --restore $HOME/.sup/dump
       fi
       sup ;;
 
-  *S*) if if-yes 'sup restore' ;then
-         killsup
-         sup-sync 2>>/tmp/sup.log
-       fi
-       sup ;;
+  r*) if if-yes 'sup resync' ;then
+        killsup
+        sup-sync 2>>/tmp/sup.log
+      fi
+      sup ;;
 
-  s*) if if-yes 'sup restore' ;then
+  S*) if if-yes 'sync maildirs' ;then
+        killsup
+        sup-sync-back-maildir
+      fi
+      sup ;;
+
+  s*) if if-yes "sup sync $2" ;then
         killsup
         sup-sync -v maildir:$HOME/Maildir/sdothum/$2
       fi

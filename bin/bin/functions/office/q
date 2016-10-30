@@ -23,7 +23,7 @@ if [ "$file" ] ;then
     cat $file
   fi
 else
-  echo ".. \"$1\" not found"
+  ditto "\"$1\" not found"
 fi
 
 # vim: set ft=sh: #

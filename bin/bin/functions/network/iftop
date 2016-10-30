@@ -7,7 +7,7 @@
 # ...................................................................... Monitor
 
 # monitor interface
-echo "iftop -B -i $1 \ (eth0, wlan0, ..)"
+ditto "iftop -B -i $1 \ (eth0, wlan0, ..)"
 sudo /usr/bin/iftop -B -i $1
 
 # vim: set ft=sh: #

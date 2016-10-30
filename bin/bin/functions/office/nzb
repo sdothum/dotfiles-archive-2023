@@ -7,8 +7,8 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)(server)  'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r'ate | s'earch"
-  echo "usage: $(basename $0)(queue)  B|b'ottom | C'lear | D|d'elete | P|p'ause | T|t'op | U|u'npause"
+  echo "usage: $(basename $0)(server)  'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r'ate <queue>"
+  echo "usage: $(basename $0)(queue)  B|b'ottom | C'lear | D|d'elete | P|p'ause | s'earch | T|t'op | U|u'npause  <queue>"
   echo ' -> nzb d <GID,GID-GID,..>'
   echo ' -> nzb D <title>'
   exit 1
@@ -28,11 +28,17 @@ case $action in
         nzbget -L G
       fi ;;
 
+  B*) nzb b $(nzb S $queue) ;;
+
   b*) nzbget -E G B $queue
       nzb ;;
 
   C*) nzb
       if-yes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
+
+  c*) nzbget -o OutputMode=curses -C ;;
+
+  D*) nzb d $(nzb S $queue) ;;
 
   d*) nzbget -E G D $queue
       nzb ;;
@@ -48,7 +54,7 @@ case $action in
         nzb
       fi ;;
 
-  l*) echo ".. tail -f /tmp/nzbget.log | g 'error|warning'"
+  l*) ditto "tail -f /tmp/nzbget.log | g 'error|warning'"
       tail -f /tmp/nzbget.log | g 'error|warning' ;;
 
   L*) while :
@@ -57,26 +63,25 @@ case $action in
         sleep $list_delay
       done ;;
 
+  P*) nzb p $(nzb S $queue) ;;
+
   p*) nzbget -E G P $queue
       nzb ;;
+
+  q*) nzbget -Q ;;
+  r*) nzbget --rate $queue ;;
+  S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
+  s*) nzb | egrep -i $queue ;;
+  T*) nzb t $(nzb S $queue) ;;
 
   t*) nzbget -E G T $queue
       nzb ;;
 
-  T*) nzb t $(nzb S $queue) ;;
+  U*) nzb u $(nzb S $queue) ;;
 
   u*) nzbget -E G U $queue
       nzb ;;
 
-  B*) nzb b $(nzb S $queue) ;;
-  c*) nzbget -o OutputMode=curses -C ;;
-  D*) nzb d $(nzb S $queue) ;;
-  P*) nzb p $(nzb S $queue) ;;
-  q*) nzbget -Q ;;
-  r*) nzbget --rate $queue ;;
-  s*) nzb | egrep -i $queue ;;
-  S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
-  U*) nzb u $(nzb S $queue) ;;
   *) usage ;;
 esac
 
