@@ -4,7 +4,7 @@
 # post install/upgrade configuration
 
 if [ ! -d $HOME/stow ] ;then
-  echo '..stow directory not present'
+  ditto 'stow directory not present'
   exit
 fi
 

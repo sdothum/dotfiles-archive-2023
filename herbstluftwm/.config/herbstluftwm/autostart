@@ -40,7 +40,7 @@ dohc
 
 for i in $HOME/.config/herbstluftwm/config/*
 do
-  echo ".. loading herbstluftwm config ${i##*/}"
+  ditto "loading herbstluftwm config ${i##*/}"
   . $i
   # add dummy hc cmd for any sources that don't e.g. ENV
   hc echo done ${i##*/}

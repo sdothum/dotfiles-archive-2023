@@ -46,7 +46,7 @@ connect() {
 
 config_install() {
   if [ -e /media/home/$user/build/root/$1 ] ;then
-    echo ".. copying "$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
   fi
 }
 

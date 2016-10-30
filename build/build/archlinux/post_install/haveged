@@ -8,7 +8,8 @@
 
 # entropy
 systemd enable
-# echo "\n.. initializing pacman keys, please be patient ..\n"
+
+# ditto "adding pacman keys, please be patient"
 # sudo pacman-key --init
 
 # vim: set ft=sh: #

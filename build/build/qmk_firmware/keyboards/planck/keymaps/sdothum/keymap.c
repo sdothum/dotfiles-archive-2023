@@ -105,6 +105,7 @@ enum planck_keycodes {
 #endif
 #ifdef ONE_SHOT
   Ctl = OSM (MOD_LCTL),
+  Gui = OSM (MOD_LGUI),
   Alt = OSM (MOD_LALT),
 #endif
   Tab = LT  (_NUMBER, KC_TAB),
@@ -176,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
     {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
-    {KC_EQL,  Ctl,     Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Qwerty
@@ -195,7 +196,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
     {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-    {KC_EQL,  Ctl,     Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Dvorak
@@ -214,7 +215,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
     {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
     {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-    {KC_EQL,  Ctl,     Caps,    Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
 // ...................................................................... Plover
@@ -256,7 +257,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, KC_BSLS, KC_PERC, KC_LPRN, KC_RPRN, _______, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
     {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_COMM, KC_DOT,  KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
     {_______, KC_O,    KC_X,    KC_HASH, KC_U,    KC_B,    KC_0,    KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
-    {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT},
+    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT},
   },
 
 // ................................................................ Symbol Layer
@@ -270,14 +271,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // | Shift|   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |  f() | Home | PgDn | PgUp |  End |
+  // |      |      |      |      |      | Caps |      |  f() | Home | PgDn | PgUp |  End |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
     {KC_LGUI, KC_AMPR, KC_ASTR, KC_DOT,  Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
     {KC_LCTL, KC_DLR,  KC_PERC, KC_CIRC, Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
     {KC_LSFT, KC_EXLM, KC_AT,   KC_HASH, Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-    {_______, ___x___, KC_LGUI, ___x___, ___x___, ___x___, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+    {_______, ___x___, ___x___, ___x___, ___x___, KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
   },
 
 // ............ ..................................................Navigation Pad

@@ -56,7 +56,6 @@ bundle_install $HOME/build/archlinux/bundle/[0]*
 title "installation errors:"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
-echo
-echo "reboot, then x (startx).."
+ditto "reboot, then x (startx)"
 
 # vim: set ft=sh: #

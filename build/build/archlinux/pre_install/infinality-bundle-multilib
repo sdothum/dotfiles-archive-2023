@@ -7,7 +7,7 @@
 # ............................................................. infinality fonts
 
 original /etc/pacman.conf
-echo "\n.. adding pacman keys, please be patient ..\n"
+ditto "adding pacman keys, please be patient"
 if ! grep -q '\[infinality-bundle\]' /etc/pacman.conf ;then
   sudo sed -i '$a\
 \
