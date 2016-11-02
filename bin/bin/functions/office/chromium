@@ -33,7 +33,7 @@ unlock() {
 }
 
 # close (unlock) any remote instances
-# pidof chromium >/dev/null || unlock $(echo " $hosts " | sed "s/ $(hostname) / /")
+pidof chromium >/dev/null || unlock $(echo " $hosts " | sed "s/ $(hostname) / /")
 
 [ "$1" = netflix ] && $chrome -app=$netflix || $chrome $@
 

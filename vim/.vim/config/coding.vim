@@ -83,11 +83,11 @@
 
       function! ToggleWrap()
         if &formatoptions =~ 't'
-          NoPencil
+          " NoPencil
           let &formatoptions = g:codeoptions
           echo 'Automatic line wrap OFF'
         elseif &formatoptions == g:codeoptions
-          Pencil
+          " Pencil
           set formatoptions=tqwan1
           echo 'Automatic line wrap ON'
         else
@@ -105,8 +105,8 @@
       "   echo PencilMode()
       " endfunction
       "
-      " imap <silent><C-F4> <C-o>:call TogglePencil()<CR>
-      " nmap <silent><C-F4> :call TogglePencil()<CR>
+      " imap <silent><F4> <C-o>:call TogglePencil()<CR>
+      " nmap <silent><F4> :call TogglePencil()<CR>
 
   " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

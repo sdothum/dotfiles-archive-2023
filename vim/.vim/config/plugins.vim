@@ -271,16 +271,16 @@
 
     " ................................................................... Pencil
 
-      let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
-      let g:pencil#textwidth       = 72     " 74 (def)
-      let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
-      let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
-      let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
-
-      autocmd plugin Filetype mail         call pencil#init()
-      autocmd plugin FileType markdown,mkd call pencil#init()
-      autocmd plugin Filetype text         call pencil#init()
-      autocmd plugin Filetype vimwiki      call pencil#init()
+      " let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
+      " let g:pencil#textwidth       = 72     " 74 (def)
+      " let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
+      " let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
+      " let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
+      "
+      " autocmd plugin Filetype mail         call pencil#init()
+      " autocmd plugin FileType markdown,mkd call pencil#init()
+      " autocmd plugin Filetype text         call pencil#init()
+      " autocmd plugin Filetype vimwiki      call pencil#init()
 
     " ...................................................... Rainbow parentheses
 
@@ -360,8 +360,8 @@
 
     " ................................................................... Tagbar
 
-      " let g:tagbar_ctags_bin = 'ctags-exuberant'
-      nmap <silent><leader>t :TagbarToggle<CR>
+      " " let g:tagbar_ctags_bin = 'ctags-exuberant'
+      " nmap <silent><leader>t :TagbarToggle<CR>
 
       " " see ctags.cnf
       " " from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin

@@ -107,6 +107,7 @@ enum planck_keycodes {
   Ctl = OSM (MOD_LCTL),
   Gui = OSM (MOD_LGUI),
   Alt = OSM (MOD_LALT),
+  Sft = OSM (MOD_LSFT),
 #endif
   Tab = LT  (_NUMBER, KC_TAB),
   Del = LT  (_SYMBOL, KC_DEL),
@@ -116,6 +117,7 @@ enum tap_dance {
   _LPRN = 0,
   _LBRC,
   _LCBR,
+  _BSLS,
 };
 
 #ifdef SHIFT_TOGGLE
@@ -147,9 +149,10 @@ enum shift_macros {
 #define Bsls    GUI_T (KC_BSLS)
 
 // tap dance keys
-#define Lcbr    TD    (_LCBR)
-#define Lprn    TD    (_LPRN)
-#define Lbrc    TD    (_LBRC)
+#define LCBR    TD    (_LCBR)
+#define LPRN    TD    (_LPRN)
+#define LBRC    TD    (_LBRC)
+#define BSLS    TD    (_BSLS)
 
 // adjust layer key
 #define ADJUST  MO    (_ADJUST)
@@ -271,14 +274,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // | Shift|   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      | Caps |      |  f() | Home | PgDn | PgUp |  End |
+  // |      |      |      |      |   \  | Caps |      |  f() | Home | PgDn | PgUp |  End |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {KC_LGUI, KC_AMPR, KC_ASTR, KC_DOT,  Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
-    {KC_LCTL, KC_DLR,  KC_PERC, KC_CIRC, Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-    {KC_LSFT, KC_EXLM, KC_AT,   KC_HASH, Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-    {_______, ___x___, ___x___, ___x___, ___x___, KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+    {Gui,     KC_AMPR, KC_ASTR, KC_DOT,  LCBR,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
+    {Ctl,     KC_DLR,  KC_PERC, KC_CIRC, LPRN,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
+    {Sft,     KC_EXLM, KC_AT,   KC_HASH, LBRC,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
+    {_______, ___x___, ___x___, ___x___, BSLS,    KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
   },
 
 // ............ ..................................................Navigation Pad
@@ -297,7 +300,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAVPAD] = {
     {ADJUST,  _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______, _______},
-    {_______, _______, KC_LGUI, KC_LCTL, KC_LSFT, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+    {_______, _______, Gui,     Ctl,     Sft,     _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
     {_______, _______, _______, KC_BSPC, KC_DEL,  _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
     {_______, _______, _______, _______, ___x___, _______, _______, ___x___, _______, _______, _______, _______},
   },
@@ -406,10 +409,25 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void bslsh(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_BSLS);
+    unregister_code (KC_BSLS);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_BSLS);
+    unregister_code (KC_BSLS);
+  }
+  reset_tap_dance(state);
+}
+
 const qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren),
   [_LBRC] = ACTION_TAP_DANCE_FN (brace),
   [_LCBR] = ACTION_TAP_DANCE_FN (curly),
+  [_BSLS] = ACTION_TAP_DANCE_FN (bslsh),
 };
 
 #ifdef SHIFT_TOGGLE
