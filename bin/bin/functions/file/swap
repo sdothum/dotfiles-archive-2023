@@ -6,19 +6,23 @@
 
 # ......................................................................... Copy
 
+usage() {
+  echo "usage: $(basename $0) <file> <file>"
+  exit 1
+}
+
+
+[ $# -eq 2 ] || usage
+
 # file and directory swapping
-if [ $# -eq 2 ] ;then
-  target=${1%/}
-  destination=${2%/}
-  hold=$RANDOM.$target
-  if ([ -e "$target" ] && [ -e "$destination" ]) || ([ -d "$target" ] && [ -d "$destination" ]) ;then
-    mv "$target" "$hold"
-    mv "$destination" "$target"
-    mv "$hold" "$destination"
-    ditto "$destination -> <- $target"
-  fi
-else
-  ditto 'swap file1 file2'
+target=${1%/}
+destination=${2%/}
+hold=$RANDOM.$target
+if ([ -e "$target" ] && [ -e "$destination" ]) || ([ -d "$target" ] && [ -d "$destination" ]) ;then
+  mv "$target" "$hold"
+  mv "$destination" "$target"
+  mv "$hold" "$destination"
+  ditto "$destination -> <- $target"
 fi
 
 # vim: set ft=sh: #

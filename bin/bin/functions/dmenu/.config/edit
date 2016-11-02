@@ -48,7 +48,7 @@ herbstluftwm switch :: $HOME/.config/herbstluftwm/switch $HOME/.config/herbstluf
 herbstluftwm toggle :: $HOME/.config/herbstluftwm/toggle $HOME/.config/herbstluftwm/functions/toggle/*
 herbstluftwm theme :: $HOME/.config/herbstluftwm/config/ENV $HOME/.config/herbstluftwm/config/theme $HOME/.config/herbstluftwm/draw
 herbstluftwm toggle :: $HOME/.config/herbstluftwm/toggle $HOME/.config/herbstluftwm/functions/toggle/*
-imap mail :: $HOME/.imapfilter/dovecot.lua $HOME/.offlineimaprc
+imap mail :: $HOME/.imapfilter/*.lua $HOME/.offlineimaprc*
 install bin :: $HOME/bin/functions/package/*
 luakit :: $HOME/.config/luakit/*.lua $HOME/.local/share/luakit/styles/custom.css
 mime :: $HOME/.mailcap $HOME/.local/share/applications/mimeapps.list

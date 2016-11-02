@@ -1,0 +1,82 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................... Housekeeping cleaner
+
+# Usage: vacuum [clean|CLEAN] [file, default=.vacuum]
+#
+# format: # comment
+#         = title
+#         ! file         (noconfirm) USE AT YOUR OWN RISK!
+#           file         (confirm)
+#           file package (noconfirm)
+#
+#         where, if package exists, do not purge file
+#         e.g. ~/.local/share/zathura zathura
+#         where, file is relative to current directory by default
+#
+#         clean == move files to /tmp/
+#         CLEAN == remove files
+
+usage() {
+  echo "usage: $(basename $0)  [clean|CLEAN] [file, default=.$(basename $0)]"
+  exit 1
+}
+
+case "$1" in
+  clean | CLEAN) clean=$1
+                 shift ;;
+esac
+
+[ "$*" ] && rules=$@ || rules=.$(basename $0)
+[ -e "$rules" ] || usage
+
+clean() {
+  ditto "vacuum $file"
+  [ $clean ] || return
+  case $clean in
+    clean) sudo mv -vf "$file" /tmp/ ;;
+    CLEAN) sudo rm -rvf "$file" ;;
+  esac
+}
+
+# preserve stdin fd for package manager prompts
+while read action file package <&3
+do
+  # echo "action=$action file=$file package=$package"
+  case $action in
+    '#' | '') continue ;;
+
+    '=') title "$file $package"
+         continue ;;
+
+    '!') ;;
+
+    *) package=$file
+       file=$action ;;
+  esac
+
+  [ -e "$file" ] || continue
+  echo "$file" | grep -q "^\($HOME\)*[./]*$" && continue
+
+  case $action in
+    '!') clean
+         continue ;;
+
+    *) if [ $package ] ;then
+         pm $package >/dev/null || unset package
+       elif [ $clean ] ;then
+         if-no "remove $file" || package=true
+       else
+         ditto "remove ? $file"
+         unset package
+      fi ;;
+  esac
+
+  [ $package ] && clean
+done 3< $rules
+
+# vim: set ft=sh: #

@@ -6,35 +6,34 @@
 
 # .......................................................................... znc
 
-annotate 'listen on port 7000, username/password znc/znc
-service identity with:
-/msg nickserv register <password> <email>
-or if already registered..
-/msg nickserv identity <password>
-enable sasl with:
-/msg *sasl Mechanism PLAIN
- /msg *sasl Set <nick> <password>
-freenode channels (znc):
-/join ##astronomy,#archlinux,#archlinux-arm,#archlinux-offtopic,#arduino,#atom
-/join #bash,#bspwm,#btrfs
-/join #compton,#conky,#css
-/join #darktable,#dcraw,#deskthority,#digikam
-/join #emacs,#geekhack,#git,#github
-/join #haskell,#herbstluftwm
-/join ##javascript,##linux,#latex,#lesswrong,#lisp
-/join ##math,#Mechboards
-/join #neovim,#nginx,#nixos,#notmuch
-/join #ocaml,#papyros,#passenger,#python
-/join #qutebrowser,##reddit-hockey,#raspberrypi,#rawtherapee,#ruby
-/join #sinatra,#sup
-/join #vim,#weechat,#znc
-gitter channels:
-/join #syl20bnr/spacemacs
-oftc channels:
-/join #fish,#suckless
-rizon channels:
-/join #anime-planet.com,#haruhichan,#rice
-'
+annotate "listen on port 7000, username/password znc/znc\n
+service identity with:\n
+/msg nickserv register <password> <email>\n
+or if already registered..\n
+/msg nickserv identity <password>\n
+enable sasl with:\n
+/msg *sasl Mechanism PLAIN\n
+ /msg *sasl Set <nick> <password>\n
+freenode channels (znc):\n
+/join ##astronomy,#archlinux,#archlinux-arm,#archlinux-offtopic,#arduino,#atom\n
+/join #bash,#bspwm,#btrfs\n
+/join #compton,#conky,#css\n
+/join #darktable,#dcraw,#deskthority,#digikam\n
+/join #emacs,#geekhack,#git,#github\n
+/join #haskell,#herbstluftwm\n
+/join ##javascript,##linux,#latex,#lesswrong,#lisp\n
+/join ##math,#Mechboards\n
+/join #neovim,#nginx,#nixos,#notmuch\n
+/join #ocaml,#papyros,#passenger,#python\n
+/join #qutebrowser,##reddit-hockey,#raspberrypi,#rawtherapee,#ruby\n
+/join #sinatra,#sup\n
+/join #vim,#weechat,#znc\n
+gitter channels:\n
+/join #syl20bnr/spacemacs\n
+oftc channels:\n
+/join #fish,#suckless\n
+rizon channels:\n
+/join #anime-planet.com,#haruhichan,#rice"
 sudo -u znc znc --makeconf
 server && systemd enable znc || annotate "sudo systemctl start znc"
 

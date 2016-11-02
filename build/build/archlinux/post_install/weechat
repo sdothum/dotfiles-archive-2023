@@ -9,13 +9,13 @@
 if [ -d $HOME/.weechat ] ;then
   annotate 'see post_install/weechat to re-initialize weechat.conf'
 else
-  annotate 'within weechat session, copy and paste each of the command blocks below
-colorize_lines.pl may need to be reinstalled
-configure authentication else some channels will force #<channel>-unregistered
-"/go #python"
-"/msg nickserv identify <username> <password>"
-"/msg *sasl RequireAuth yes"
-"/msg *sasl Set <username> <password>"'
+  annotate "within weechat session, copy and paste each of the command blocks below\n
+colorize_lines.pl may need to be reinstalled\n
+configure authentication else some channels will force #<channel>-unregistered\n
+"/go #python"\n
+"/msg nickserv identify <username> <password>"\n
+"/msg *sasl RequireAuth yes"\n
+"/msg *sasl Set <username> <password>""
   cat <<EOF
 
 # server

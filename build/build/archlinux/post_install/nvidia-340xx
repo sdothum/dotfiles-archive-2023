@@ -15,9 +15,9 @@ sudo sed -i -e '/^GRUB_CMDLINE_LINUX_DEFAULT="quiet"/s/"quiet"/"quiet vga=0x0364
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 if [ ! -e /etc/X11/xorg.conf ] ;then
-  annotate 'if "no screens" on x11 server startup..
-sudo Xorg -configure
-sudo cp /root/xorg.conf.new /etc/X11/xorg.conf'
+  annotate "if "no screens" on x11 server startup..\n
+sudo Xorg -configure\n
+sudo cp /root/xorg.conf.new /etc/X11/xorg.conf"
 fi
 
 # vim: set ft=sh: #

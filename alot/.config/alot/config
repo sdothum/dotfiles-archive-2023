@@ -2,7 +2,7 @@
 editor_cmd = dmenu compose
 
 # initial_command = search tag:patricia and tag:sent and steven
-initial_command = search tag:attn or tag:store
+initial_command = search tag:attn
 
 theme = my.theme
 
@@ -26,11 +26,11 @@ print_cmd = pr mail
 
   A = search tag:attachment
 
-  e = search tag:INBOX or tag:inbox
-  E = search tag:SENT
+  e = search tag:INBOX or tag:inbox or tag:new
+  E = search tag:SENT or tag:sent
 
   i = search tag:attn
-  I = search tag:bbs
+  I = search tag:thedarnedestthing
 
   n = search tag:clients
   N = search tag:family
@@ -41,8 +41,8 @@ print_cmd = pr mail
   q =
   Q = exit
 
-  u = search tag:unread
-  U = search tag:new
+  u = search tag:unread and not tag:trash and not tag:unknown
+  U = search tag:unknown
 
   backspace = bclose
 

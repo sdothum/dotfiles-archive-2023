@@ -1,12 +1,11 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# File
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Viewer
+# ......................................................................... View
 
-# --action's most likely need to be quote escaped in calling script
-focus /usr/bin/feh -B black --scale-down $@
+/usr/bin/feh -B black -d --scale-down --start-at $@ $(dirname $@)
 
 # vim: set ft=sh: #

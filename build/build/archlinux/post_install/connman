@@ -14,9 +14,9 @@ sudo systemctl restart connman
 connmanctl enable wifi
 connmanctl scan wifi
 connmanctl services
-annotate 'connmanctl> agent on
-connmanctl> connect [network]
-connmanctl> config [network] --autoconnect True'
+annotate "connmanctl> agent on\n
+connmanctl> connect [network]\n
+connmanctl> config [network] --autoconnect True"
 connmanctl
 
 original /lib/systemd/system/connman.service

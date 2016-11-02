@@ -6,7 +6,7 @@
 
 # .................................................................. xfce4-mixer
 
-annotate 'enable sound (unmute) xfce4-mixer
-set full volume alsamixer'
+annotate "enable sound (unmute) xfce4-mixer\n
+set full volume alsamixer"
 
 # vim: set ft=sh: #
