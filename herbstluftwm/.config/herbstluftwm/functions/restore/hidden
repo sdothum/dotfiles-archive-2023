@@ -14,7 +14,7 @@ if [ $count -gt 0 ] ;then
   for i in $(query winids)
   do
     if herbstclient compare clients.$i.tag = "'$TAG" ;then
-      window="$(query wtitle $i):$i"
+      window="$(query wtitle $i)$DLM$i"
       [ "$hidden" ] &&
         hidden="$hidden\n$window" ||
         hidden="$window"
@@ -24,12 +24,12 @@ if [ $count -gt 0 ] ;then
   if [ $count -gt 1 ] ;then
     window=$(echo $hidden |
              sort |
-             cut -d: -f1 |
+             cut -d$DLM -f1 |
              column -s\^ -t |
              sed '1i[ all  ]\n[ last ]' |
              dmenu "Raise Window$title" -no-custom) || exit
   else
-    window=$(echo $hidden | cut -d: -f1 | column -s\^ -t | dmenu "Raise Window$title" -no-custom)
+    window=$(echo $hidden | cut -d$DLM -f1 | column -s\^ -t | dmenu "Raise Window$title" -no-custom)
   fi
 
   if [ "$window" ] ;then
@@ -45,10 +45,10 @@ if [ $count -gt 0 ] ;then
                              -e 's/([]])/\\\1/g' \
                              -e "s/ *($SEP)/^\1/" \
                              -e 's/([*])/\\\1/g')" |
-                 cut -d: -f2)
+                 cut -d$DLM -f2)
          lock use $TAG
          focus frame
-         unlock bring $winid 
+         unlock bring $winid
     esac
   fi
 fi

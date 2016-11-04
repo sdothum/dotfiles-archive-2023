@@ -99,5 +99,7 @@ export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
 
 # dmenu line item marker
 export SEP='∙'
+# dmenu line column delimeter (must not match dmenu content), see restore hidden, focus hlwm
+export DLM='$'
 
 # vim: set ft=sh: #

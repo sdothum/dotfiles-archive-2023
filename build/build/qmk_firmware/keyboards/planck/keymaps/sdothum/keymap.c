@@ -118,6 +118,7 @@ enum tap_dance {
   _LBRC,
   _LCBR,
   _BSLS,
+  _DOT,
 };
 
 #ifdef SHIFT_TOGGLE
@@ -153,6 +154,7 @@ enum shift_macros {
 #define LPRN    TD    (_LPRN)
 #define LBRC    TD    (_LBRC)
 #define BSLS    TD    (_BSLS)
+#define DOT     TD    (_DOT)
 
 // adjust layer key
 #define ADJUST  MO    (_ADJUST)
@@ -247,20 +249,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/3b918c370c516dd0a2a91538fde5edf1
 
   // .-----------------------------------------------------------------------------------.
-  // |      |   \  |   %  |   (  |   )  |      |      |   7  |   8  |   9  |   E  |   F  |
+  // |      |      |      |      |      |      |      |   7  |   8  |   9  |   E  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // |      |   /  |   *  |   -  |   +  |   ,  |   .  |   4  |   5  |   6  |   C  |   D  |
+  // |      |      |   /  |   -  |   (  |   )  |      |   4  |   5  |   6  |   C  |   D  |
   // |-----------------------------------------------------------------------------------|
-  // |      |   o  |   x  |   #  |   u  |   b  |   0  |   1  |   2  |   3  |   A  |   B  |
+  // |      |      |   *  |   +  |   [  |   ]  |      |   1  |   2  |   3  |   A  |   B  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |  f() |      |      |      | Left | Down |  Up  |Right |
+  // |      |      |      |      |  f() |      |      |   0  |   .  |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_______, KC_BSLS, KC_PERC, KC_LPRN, KC_RPRN, _______, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
-    {_______, KC_SLSH, KC_ASTR, KC_MINS, KC_PLUS, KC_COMM, KC_DOT,  KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
-    {_______, KC_O,    KC_X,    KC_HASH, KC_U,    KC_B,    KC_0,    KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
-    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT},
+    {_______, _______, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
+    {_______, _______, KC_SLSH, KC_MINS, KC_LPRN, KC_RPRN, _______, KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
+    {_______, _______, KC_ASTR, KC_PLUS, KC_LBRC, KC_RBRC, _______, KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
+    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_0,    KC_DOT,  _______, _______, _______},
   },
 
 // ................................................................ Symbol Layer
@@ -278,7 +280,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {Gui,     KC_AMPR, KC_ASTR, KC_DOT,  LCBR,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
+    {Gui,     KC_AMPR, KC_ASTR, DOT,     LCBR,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
     {Ctl,     KC_DLR,  KC_PERC, KC_CIRC, LPRN,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
     {Sft,     KC_EXLM, KC_AT,   KC_HASH, LBRC,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
     {_______, ___x___, ___x___, ___x___, BSLS,    KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
@@ -409,7 +411,7 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void bslsh(qk_tap_dance_state_t *state, void *user_data)
+void bar(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_LSFT);
@@ -423,11 +425,26 @@ void bslsh(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void dot(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_SLSH);
+    unregister_code (KC_SLSH);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_DOT);
+    unregister_code (KC_DOT);
+  }
+  reset_tap_dance(state);
+}
+
 const qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren),
   [_LBRC] = ACTION_TAP_DANCE_FN (brace),
   [_LCBR] = ACTION_TAP_DANCE_FN (curly),
-  [_BSLS] = ACTION_TAP_DANCE_FN (bslsh),
+  [_BSLS] = ACTION_TAP_DANCE_FN (bar),
+  [_DOT]  = ACTION_TAP_DANCE_FN (dot),
 };
 
 #ifdef SHIFT_TOGGLE

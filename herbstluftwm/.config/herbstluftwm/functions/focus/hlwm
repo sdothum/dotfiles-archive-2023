@@ -11,8 +11,6 @@
 #        hlwm bring (bring window to current tag)
 #        hlwm focus/bring window
 
-DLM='$'
-
 action() {
   case "$1" in
     focus) mode='Focus ' ;;

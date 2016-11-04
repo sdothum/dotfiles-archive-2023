@@ -29,6 +29,8 @@
 
       let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
       let g:mapleader = "\<Space>"
+      " let mapleader   = "\<BS>"           " use right thumb on planck keyboard
+      " let g:mapleader = "\<BS>"           " for better <space> responsiveness
 
       " non-latent space insertion (for lining up text, conflicting leader sequences, etc.)
       inoremap <C-Space> <Space>
