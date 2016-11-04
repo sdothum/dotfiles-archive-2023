@@ -9,22 +9,29 @@
 # diff current sources with dotfiles git repo
 dotfiles=/net/depot/dotfiles
 current=$HOME/stow
-ignore='.deprecated|.hg|.history|debian|makepkg|nixos|qmk_firmware|root|vps'
+ignore='debian|makepkg|nixos|qmk_firmware|root|vps'
 
 usage() {
-  echo "usage: $(basename $0) <package>"
+  echo "usage: $(basename $0) <package> [filter]"
   exit 1
 }
 
 [ "$*" ] || usage
-[ -d "$HOME/stow/$*" ] || usage
+[ -d "$HOME/stow/$1" ] || usage
 
 if ! if-no "sync $dotfiles repo" ;then
   rm -rf $dotfiles
   git clone git@github.com:sdothum/dotfiles.git $dotfiles
 fi
 
-for i in $(find $current/$1 -type f | egrep -v "$ignore")
+if [ $2 ] ;then
+  filter="$2"
+else
+  filter="$ignore"
+  exclude=-v
+fi
+
+for i in $(find $current/$1 -type f | egrep -v '/[.](build|deprecated|git|hg|history)' | egrep $exclude $filter)
 do
   file=${i#*/stow/*/}
   unset blink

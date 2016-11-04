@@ -15,7 +15,7 @@ usage() {
 cd $HOME/build/qmk_firmware/keyboards/planck
 sudo make clean
 sudo make KEYMAP=$1 dfu
-sudo chown -cR $USER:users $HOME/build/qmk_firmware
+sudo chown -R $USER:users $HOME/build/qmk_firmware
 cd -
 
 # vim: set ft=sh: #

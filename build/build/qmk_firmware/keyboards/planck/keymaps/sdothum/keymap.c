@@ -29,19 +29,21 @@
 //   Original qwerty and dvorak layers have normalized enter key, tap key esc
 //   tap key right-shift and modifier row (consistent with colemak-dh)
 //
-//   The number/symbol layer is optimized for symbol keys over function key
-//   placement order
-//
 //   Autocompletion tap dance key pairs (),[],{} are available from the
-//   number/symbol layer
+//   number/symbol layer, as well as, other regex characters
 //
 //   The navigation pad provides a single hand right thumb activated cluster
+//   with left hand modifiers
 //
 //   Plover layer toggling has added binding to the herbstluftwm window manager
 //   to enable/disable the necessary plover software
 //
-//   Adjust layer is enabled from the number layer i.e. num+grave
+//   Adjust layer is enabled from the navigation layer i.e. num+sym+grave
 //   to prevent accidental keyboard reset
+//
+//   Tri-layer toggling requires defining toggle layer hack for the zero key
+//   and dot keys of the number and symbol layers, else num+sym navigation
+//   layer is inaccessible -- pretty cool!
 //
 // Modifier clusters
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -100,17 +102,19 @@ enum planck_keycodes {
   PLOVEX,
   KEYTEST,
 #ifdef LEADER
-  Ctl = KC_LCTL,
-  Alt = KC_LEAD,
+  Ctl  = KC_LCTL,
+  Alt  = KC_LEAD,
 #endif
 #ifdef ONE_SHOT
-  Ctl = OSM (MOD_LCTL),
-  Gui = OSM (MOD_LGUI),
-  Alt = OSM (MOD_LALT),
-  Sft = OSM (MOD_LSFT),
+  Ctl  = OSM (MOD_LCTL),
+  Gui  = OSM (MOD_LGUI),
+  Alt  = OSM (MOD_LALT),
+  Sft  = OSM (MOD_LSFT),
 #endif
-  Tab = LT  (_NUMBER, KC_TAB),
-  Del = LT  (_SYMBOL, KC_DEL),
+  Dot  = LT  (_NUMBER, KC_DOT),
+  Tab  = LT  (_NUMBER, KC_TAB),
+  Del  = LT  (_SYMBOL, KC_DEL),
+  Zero = LT  (_SYMBOL, KC_0),
 };
 
 enum tap_dance {
@@ -118,7 +122,7 @@ enum tap_dance {
   _LBRC,
   _LCBR,
   _BSLS,
-  _DOT,
+  _ASTR,
 };
 
 #ifdef SHIFT_TOGGLE
@@ -150,11 +154,11 @@ enum shift_macros {
 #define Bsls    GUI_T (KC_BSLS)
 
 // tap dance keys
-#define LCBR    TD    (_LCBR)
-#define LPRN    TD    (_LPRN)
-#define LBRC    TD    (_LBRC)
-#define BSLS    TD    (_BSLS)
-#define DOT     TD    (_DOT)
+#define Lcbr    TD    (_LCBR)
+#define Lprn    TD    (_LPRN)
+#define Lbrc    TD    (_LBRC)
+#define Bksl    TD    (_BSLS)
+#define Astr    TD    (_ASTR)
 
 // adjust layer key
 #define ADJUST  MO    (_ADJUST)
@@ -262,7 +266,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, _______, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
     {_______, _______, KC_SLSH, KC_MINS, KC_LPRN, KC_RPRN, _______, KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
     {_______, _______, KC_ASTR, KC_PLUS, KC_LBRC, KC_RBRC, _______, KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
-    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_0,    KC_DOT,  _______, _______, _______},
+    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, Zero,    KC_DOT,  _______, _______, _______},
   },
 
 // ................................................................ Symbol Layer
@@ -270,20 +274,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/538d3cab4510a8acb0c637228b46cde4
 
   // .-----------------------------------------------------------------------------------.
-  // |  GUI |   &  |   *  |   .  |   {  |   }  |      |  F9  |  F10 |  F11 |  F12 |      |
+  // |  GUI |   &  |   *  |   \  |   {  |   }  |      |  F9  |  F10 |  F11 |  F12 |      |
   // |-----------------------------------------------------------------------------------|
   // | Ctrl |   $  |   %  |   ^  |   (  |   )  |      |  F5  |  F6  |  F7  |  F8  |      |
   // |-----------------------------------------------------------------------------------|
   // | Shift|   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |   \  | Caps |      |  f() | Home | PgDn | PgUp |  End |
+  // |   +  |      |      |      |   .  | Caps |      |  f() | Home | PgDn | PgUp |  End |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {Gui,     KC_AMPR, KC_ASTR, DOT,     LCBR,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
-    {Ctl,     KC_DLR,  KC_PERC, KC_CIRC, LPRN,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-    {Sft,     KC_EXLM, KC_AT,   KC_HASH, LBRC,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-    {_______, ___x___, ___x___, ___x___, BSLS,    KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+    {Gui,     KC_AMPR, Astr,    Bksl,    Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
+    {Ctl,     KC_DLR,  KC_PERC, KC_CIRC, Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
+    {Sft,     KC_EXLM, KC_AT,   KC_HASH, Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
+    {KC_PLUS, ___x___, ___x___, ___x___, Dot,     KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
   },
 
 // ............ ..................................................Navigation Pad
@@ -411,7 +415,7 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void bar(qk_tap_dance_state_t *state, void *user_data)
+void bksls(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_LSFT);
@@ -425,7 +429,7 @@ void bar(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void dot(qk_tap_dance_state_t *state, void *user_data)
+void astrx(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_LSFT);
@@ -433,8 +437,10 @@ void dot(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_SLSH);
     unregister_code (KC_LSFT);
   } else {
-    register_code   (KC_DOT);
-    unregister_code (KC_DOT);
+    register_code   (KC_LSFT);
+    register_code   (KC_8);
+    unregister_code (KC_8);
+    unregister_code (KC_LSFT);
   }
   reset_tap_dance(state);
 }
@@ -443,8 +449,8 @@ const qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren),
   [_LBRC] = ACTION_TAP_DANCE_FN (brace),
   [_LCBR] = ACTION_TAP_DANCE_FN (curly),
-  [_BSLS] = ACTION_TAP_DANCE_FN (bar),
-  [_DOT]  = ACTION_TAP_DANCE_FN (dot),
+  [_BSLS] = ACTION_TAP_DANCE_FN (bksls),
+  [_ASTR] = ACTION_TAP_DANCE_FN (astrx),
 };
 
 #ifdef SHIFT_TOGGLE
@@ -564,6 +570,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
+    case Gui:
+      if (record->event.pressed) {
+        register_code   (KC_LGUI);
+      } else {
+        unregister_code (KC_LGUI);
+      }
+      // LT hack
+      // return false;
+      break;
     case Alt:
       if (record->event.pressed) {
         register_code   (KC_LALT);
@@ -573,7 +588,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
+    case Sft:
+      if (record->event.pressed) {
+        register_code   (KC_LSFT);
+      } else {
+        unregister_code (KC_LSFT);
+      }
+      // LT hack
+      // return false;
+      break;
 #endif
+    case Dot:
+      if (record->event.pressed) {
+        layer_on        (_NUMBER);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+      } else {
+        layer_off       (_NUMBER);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
     case Tab:
       if (record->event.pressed) {
         layer_on        (_NUMBER);
@@ -590,6 +629,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // return false;
       break;
     case Del:
+      if (record->event.pressed) {
+        layer_on        (_SYMBOL);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+      } else {
+        layer_off       (_SYMBOL);
+        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
+    case Zero:
       if (record->event.pressed) {
         layer_on        (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
