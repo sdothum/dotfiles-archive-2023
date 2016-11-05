@@ -123,6 +123,16 @@ enum tap_dance {
   _LCBR,
   _BSLS,
   _ASTR,
+  _1,
+  _2,
+  _3,
+  _4,
+  _5,
+  _6,
+  _7,
+  _8,
+  _E,
+  _F,
 };
 
 #ifdef SHIFT_TOGGLE
@@ -159,6 +169,16 @@ enum shift_macros {
 #define Lbrc    TD    (_LBRC)
 #define Bksl    TD    (_BSLS)
 #define Astr    TD    (_ASTR)
+#define One     TD    (_1)
+#define Two     TD    (_2)
+#define Three   TD    (_3)
+#define Four    TD    (_4)
+#define Five    TD    (_5)
+#define Six     TD    (_6)
+#define Seven   TD    (_7)
+#define Eight   TD    (_8)
+#define Hexe    TD    (_E)
+#define Hexf    TD    (_F)
 
 // adjust layer key
 #define ADJUST  MO    (_ADJUST)
@@ -263,9 +283,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_______, _______, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
-    {_______, _______, KC_SLSH, KC_MINS, KC_LPRN, KC_RPRN, _______, KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
-    {_______, _______, KC_ASTR, KC_PLUS, KC_LBRC, KC_RBRC, _______, KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
+    {_______, _______, _______, _______, _______, _______, _______, Seven,   Eight,   KC_9,    Hexe,    Hexf   },
+    {_______, _______, KC_SLSH, KC_MINS, Lprn,    KC_RPRN, _______, Four,    Five,    Six,     S(KC_C), S(KC_D)},
+    {_______, _______, KC_ASTR, KC_PLUS, Lbrc,    KC_RBRC, _______, One,     Two,     Three,   S(KC_A), S(KC_B)},
     {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, Zero,    KC_DOT,  _______, _______, _______},
   },
 
@@ -374,6 +394,8 @@ void paren(qk_tap_dance_state_t *state, void *user_data)
     register_code   (KC_0);
     unregister_code (KC_0);
     unregister_code (KC_LSFT);
+    register_code   (KC_LEFT);
+    unregister_code (KC_LEFT);
   } else {
     register_code   (KC_LSFT);
     register_code   (KC_9);
@@ -390,6 +412,8 @@ void brace(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_LBRC);
     register_code   (KC_RBRC);
     unregister_code (KC_RBRC);
+    register_code   (KC_LEFT);
+    unregister_code (KC_LEFT);
   } else {
     register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
@@ -406,6 +430,8 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
     register_code   (KC_RBRC);
     unregister_code (KC_RBRC);
     unregister_code (KC_LSFT);
+    register_code   (KC_LEFT);
+    unregister_code (KC_LEFT);
   } else {
     register_code   (KC_LSFT);
     register_code   (KC_LBRC);
@@ -415,7 +441,7 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void bksls(qk_tap_dance_state_t *state, void *user_data)
+void bslash(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_LSFT);
@@ -429,7 +455,7 @@ void bksls(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void astrx(qk_tap_dance_state_t *state, void *user_data)
+void astrix(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_LSFT);
@@ -445,12 +471,166 @@ void astrx(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void one(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_1);
+    unregister_code (KC_1);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_1);
+    unregister_code (KC_1);
+  }
+  reset_tap_dance(state);
+}
+
+void two(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_2);
+    unregister_code (KC_2);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_2);
+    unregister_code (KC_2);
+  }
+  reset_tap_dance(state);
+}
+
+void three(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_3);
+    unregister_code (KC_3);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_3);
+    unregister_code (KC_3);
+  }
+  reset_tap_dance(state);
+}
+
+void four(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_4);
+    unregister_code (KC_4);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_4);
+    unregister_code (KC_4);
+  }
+  reset_tap_dance(state);
+}
+
+void five(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_5);
+    unregister_code (KC_5);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_5);
+    unregister_code (KC_5);
+  }
+  reset_tap_dance(state);
+}
+
+void six(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_6);
+    unregister_code (KC_6);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_6);
+    unregister_code (KC_6);
+  }
+  reset_tap_dance(state);
+}
+
+void seven(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_7);
+    unregister_code (KC_7);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_7);
+    unregister_code (KC_7);
+  }
+  reset_tap_dance(state);
+}
+
+void eight(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_8);
+    unregister_code (KC_8);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_8);
+    unregister_code (KC_8);
+  }
+  reset_tap_dance(state);
+}
+
+void hexe(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_SCLN);
+    unregister_code (KC_SCLN);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_E);
+    unregister_code (KC_E);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void hexf(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_BSLS);
+    unregister_code (KC_BSLS);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_F);
+    unregister_code (KC_F);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
 const qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren),
   [_LBRC] = ACTION_TAP_DANCE_FN (brace),
   [_LCBR] = ACTION_TAP_DANCE_FN (curly),
-  [_BSLS] = ACTION_TAP_DANCE_FN (bksls),
-  [_ASTR] = ACTION_TAP_DANCE_FN (astrx),
+  [_BSLS] = ACTION_TAP_DANCE_FN (bslash),
+  [_ASTR] = ACTION_TAP_DANCE_FN (astrix),
+  [_1]    = ACTION_TAP_DANCE_FN (one),
+  [_2]    = ACTION_TAP_DANCE_FN (two),
+  [_3]    = ACTION_TAP_DANCE_FN (three),
+  [_4]    = ACTION_TAP_DANCE_FN (four),
+  [_5]    = ACTION_TAP_DANCE_FN (five),
+  [_6]    = ACTION_TAP_DANCE_FN (six),
+  [_7]    = ACTION_TAP_DANCE_FN (seven),
+  [_8]    = ACTION_TAP_DANCE_FN (eight),
+  [_E]    = ACTION_TAP_DANCE_FN (hexe),
+  [_F]    = ACTION_TAP_DANCE_FN (hexf),
 };
 
 #ifdef SHIFT_TOGGLE

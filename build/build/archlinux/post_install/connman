@@ -9,7 +9,7 @@
 [ -d /etc/connman ] || sudo mkdir /etc/connman
 [ -f /etc/connman/main.conf ] || echo '[General]
 PreferredTechnologies=ethernet,wifi' | sudo tee /etc/connman/main.conf
-sudo systemctl restart connman
+systemd restart connman
 
 connmanctl enable wifi
 connmanctl scan wifi
@@ -23,8 +23,8 @@ original /lib/systemd/system/connman.service
 # disable connman dnsproxy port 53 usage (conflicts with dnsmasq)
 sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
 
-sudo systemctl disable dhcpcd
-sudo systemctl disable netctl
-sudo systemctl enable connman
+systemd disable dhcpcd
+systemd disable netctl
+systemd enable connman
 
 # vim: set ft=sh: #

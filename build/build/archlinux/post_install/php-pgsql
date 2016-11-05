@@ -8,6 +8,6 @@
 
 original /etc/php/php.ini
 sudo sed -i '/=pgsql.so/s/^;//' /etc/php/php.ini
-sudo systemctl restart nginx
+systemd restart nginx
 
 # vim: set ft=sh: #

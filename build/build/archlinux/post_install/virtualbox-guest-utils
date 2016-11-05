@@ -13,8 +13,8 @@ vboxvideo' | sudo tee /etc/modules-load.d/virtualbox.conf
 
 # sudo groupadd vboxsf
 sudo gpasswd -a $USER vboxsf
-sudo systemctl enable vboxservice
-sudo systemctl start vboxservice
+systemd enable vboxservice
+systemd start vboxservice
 
 ls -l /media/sf_*
 VBoxClient-all

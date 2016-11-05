@@ -20,6 +20,6 @@ sudo sed -i -e '/open_basedir/s/=.*/=/' \
          -e '/display_errors=/s/off/on/' \
          /etc/php/php.ini
 
-sudo systemctl restart nginx
+systemd restart nginx
 
 # vim: set ft=sh: #

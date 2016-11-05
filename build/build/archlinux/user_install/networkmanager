@@ -1,19 +1,23 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Post_install
+# User_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ............................................................... networkmanager
 
-if ! grep -q 'dhcp=dhcpcd' /etc/NetworkManager/NetworkManager.conf ;then
-  sudo sed -i '$a\
-dhcp=dhcpcd\
-' /etc/NetworkManager/NetworkManager.conf
-fi
+# get network hosts table
+original /etc/hosts
+config_install L /etc/hosts
 
-systemd enable dhcpcd
-systemd enable NetworkManager
-nmtui
+# add host ip address
+
+address() {
+  ip address show | grep 'inet 10\.1\.0\.' | head -1 | sed -r 's| *inet (.*)/.*|\1|'
+}
+
+grep $(hostname) /etc/hosts &&
+  sudo sed -i "/$(hostname)/s/[0-9.]*/$(address)/" /etc/hosts ||
+  echo $(address) $(hostname) | sudo tee >>/etc/hosts
 
 # vim: set ft=sh: #

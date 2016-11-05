@@ -6,7 +6,7 @@
 
 # ...................................................................... sabnzbd
 
-sudo systemctl enable sabnzbd
+systemd enable sabnzbd
 annotate "run sabnzbd manually to configure. Note: sabnzbd is systemd enabled"
 
 # vim: set ft=sh: #

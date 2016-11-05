@@ -21,7 +21,7 @@ heading "restore connman dns"
 fi
 
 
-if [ -d /etc/X11/xorg.conf.d ] ;then
+if server ;then
 heading "x11 trackman mouse"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   # restore in event xorg is updated
