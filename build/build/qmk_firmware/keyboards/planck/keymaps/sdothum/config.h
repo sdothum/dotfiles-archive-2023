@@ -22,4 +22,7 @@
 #define ONE_SHOT
 #endif
 
+// #define QWERTY
+// #define DVORAK
+
 #endif

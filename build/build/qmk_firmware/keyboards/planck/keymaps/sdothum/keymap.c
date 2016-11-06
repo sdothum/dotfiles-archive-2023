@@ -82,63 +82,63 @@
 extern keymap_config_t keymap_config;
 
 enum planck_layers {
-  _COLEMAK = 0,
-  _QWERTY,
-  _DVORAK,
-  _PLOVER,
-  _NUMBER,
-  _SYMBOL,
-  _NAVPAD,
-  _KEYTEST,
-  _ADJUST,
+  _COLEMAK = 0
+ ,_QWERTY
+ ,_DVORAK
+ ,_PLOVER
+ ,_NUMBER
+ ,_SYMBOL
+ ,_NAVPAD
+ ,_KEYTEST
+ ,_ADJUST
 };
 
 // update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts
 enum planck_keycodes {
-  COLEMAK = SAFE_RANGE,
-  QWERTY,
-  DVORAK,
-  PLOVER,
-  PLOVEX,
-  KEYTEST,
+  COLEMAK = SAFE_RANGE
+ ,QWERTY
+ ,DVORAK
+ ,PLOVER
+ ,PLOVEX
+ ,KEYTEST
 #ifdef LEADER
-  Ctl  = KC_LCTL,
-  Alt  = KC_LEAD,
+ ,Ctl  = KC_LCTL
+ ,Alt  = KC_LEAD
 #endif
 #ifdef ONE_SHOT
-  Ctl  = OSM (MOD_LCTL),
-  Gui  = OSM (MOD_LGUI),
-  Alt  = OSM (MOD_LALT),
-  Sft  = OSM (MOD_LSFT),
+ ,Ctl  = OSM (MOD_LCTL)
+ ,Gui  = OSM (MOD_LGUI)
+ ,Alt  = OSM (MOD_LALT)
+ ,Sft  = OSM (MOD_LSFT)
 #endif
-  Dot  = LT  (_NUMBER, KC_DOT),
-  Tab  = LT  (_NUMBER, KC_TAB),
-  Del  = LT  (_SYMBOL, KC_DEL),
-  Zero = LT  (_SYMBOL, KC_0),
+ ,Dot  = LT  (_NUMBER, KC_DOT)
+ ,Tab  = LT  (_NUMBER, KC_TAB)
+ ,Del  = LT  (_SYMBOL, KC_DEL)
+ ,Zero = LT  (_SYMBOL, KC_0)
 };
 
 enum tap_dance {
-  _LPRN = 0,
-  _LBRC,
-  _LCBR,
-  _BSLS,
-  _ASTR,
-  _1,
-  _2,
-  _3,
-  _4,
-  _5,
-  _6,
-  _7,
-  _8,
-  _E,
-  _F,
+  _LPRN = 0
+ ,_LBRC
+ ,_LCBR
+ ,_BSLS
+ ,_ASTR
+ ,_1
+ ,_2
+ ,_3
+ ,_4
+ ,_5
+ ,_6
+ ,_7
+ ,_8
+ ,_E
+ ,_F
 };
 
 #ifdef SHIFT_TOGGLE
 enum shift_macros {
-  SPC = 0,
-  BSPC,
+  SPC = 0
+ ,BSPC
 };
 #endif
 
@@ -209,6 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
 
+#ifdef QWERTY
 // ...................................................................... Qwerty
 
   // ,-----------------------------------------------------------------------------------.
@@ -227,7 +228,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
     {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
+#endif
 
+#ifdef DVORAK
 // ...................................................................... Dvorak
 
   // ,-----------------------------------------------------------------------------------.
@@ -246,6 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
     {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
   },
+#endif
 
 // ...................................................................... Plover
 //
@@ -615,22 +619,22 @@ void hexf(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-const qk_tap_dance_action_t tap_dance_actions[] = {
-  [_LPRN] = ACTION_TAP_DANCE_FN (paren),
-  [_LBRC] = ACTION_TAP_DANCE_FN (brace),
-  [_LCBR] = ACTION_TAP_DANCE_FN (curly),
-  [_BSLS] = ACTION_TAP_DANCE_FN (bslash),
-  [_ASTR] = ACTION_TAP_DANCE_FN (astrix),
-  [_1]    = ACTION_TAP_DANCE_FN (one),
-  [_2]    = ACTION_TAP_DANCE_FN (two),
-  [_3]    = ACTION_TAP_DANCE_FN (three),
-  [_4]    = ACTION_TAP_DANCE_FN (four),
-  [_5]    = ACTION_TAP_DANCE_FN (five),
-  [_6]    = ACTION_TAP_DANCE_FN (six),
-  [_7]    = ACTION_TAP_DANCE_FN (seven),
-  [_8]    = ACTION_TAP_DANCE_FN (eight),
-  [_E]    = ACTION_TAP_DANCE_FN (hexe),
-  [_F]    = ACTION_TAP_DANCE_FN (hexf),
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [_LPRN] = ACTION_TAP_DANCE_FN (paren)
+ ,[_LBRC] = ACTION_TAP_DANCE_FN (brace)
+ ,[_LCBR] = ACTION_TAP_DANCE_FN (curly)
+ ,[_BSLS] = ACTION_TAP_DANCE_FN (bslash)
+ ,[_ASTR] = ACTION_TAP_DANCE_FN (astrix)
+ ,[_1]    = ACTION_TAP_DANCE_FN (one)
+ ,[_2]    = ACTION_TAP_DANCE_FN (two)
+ ,[_3]    = ACTION_TAP_DANCE_FN (three)
+ ,[_4]    = ACTION_TAP_DANCE_FN (four)
+ ,[_5]    = ACTION_TAP_DANCE_FN (five)
+ ,[_6]    = ACTION_TAP_DANCE_FN (six)
+ ,[_7]    = ACTION_TAP_DANCE_FN (seven)
+ ,[_8]    = ACTION_TAP_DANCE_FN (eight)
+ ,[_E]    = ACTION_TAP_DANCE_FN (hexe)
+ ,[_F]    = ACTION_TAP_DANCE_FN (hexf)
 };
 
 #ifdef SHIFT_TOGGLE
@@ -838,16 +842,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    case QWERTY:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY (tone_qwerty, false, 0);
-#endif
-        layer_off       (_ADJUST);
-        persistant_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
     case COLEMAK:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
@@ -858,6 +852,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       return false;
       break;
+#ifdef QWERTY
+    case QWERTY:
+      if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+        PLAY_NOTE_ARRAY (tone_qwerty, false, 0);
+#endif
+        layer_off       (_ADJUST);
+        persistant_default_layer_set(1UL<<_QWERTY);
+      }
+      return false;
+      break;
+#endif
+#ifdef DVORAK
     case DVORAK:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
@@ -868,6 +875,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       return false;
       break;
+#endif
     case PLOVER:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
