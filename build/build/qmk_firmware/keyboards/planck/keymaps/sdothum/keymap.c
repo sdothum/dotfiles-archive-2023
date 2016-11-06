@@ -101,16 +101,10 @@ enum planck_keycodes {
  ,PLOVER
  ,PLOVEX
  ,KEYTEST
-#ifdef LEADER
- ,Ctl  = KC_LCTL
- ,Alt  = KC_LEAD
-#endif
-#ifdef ONE_SHOT
  ,Ctl  = OSM (MOD_LCTL)
  ,Gui  = OSM (MOD_LGUI)
  ,Alt  = OSM (MOD_LALT)
  ,Sft  = OSM (MOD_LSFT)
-#endif
  ,Dot  = LT  (_NUMBER, KC_DOT)
  ,Tab  = LT  (_NUMBER, KC_TAB)
  ,Del  = LT  (_SYMBOL, KC_DEL)
@@ -135,26 +129,13 @@ enum tap_dance {
  ,_F
 };
 
-#ifdef SHIFT_TOGGLE
-enum shift_macros {
-  SPC = 0
- ,BSPC
-};
-#endif
-
 // modifier keys
 #define Grv     GUI_T (KC_GRV)
 #define Esc     CTL_T (KC_ESC)
 #define Mins    SFT_T (KC_MINS)
 #define Caps    GUI_T (KC_CAPS)
-#ifndef SHIFT_TOGGLE
 #define Spc     SFT_T (KC_SPC)
 #define Bspc    SFT_T (KC_BSPC)
-#endif
-#ifdef SHIFT_TOGGLE
-#define Spc     M     (SPC)
-#define Bspc    M     (BSPC)
-#endif
 #define Left    ALT_T (KC_LEFT)
 #define Down    GUI_T (KC_DOWN)
 #define Up      CTL_T (KC_UP)
@@ -316,7 +297,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ............ ..................................................Navigation Pad
 //
-// http://www.keyboard-layout-editor.com/#/gists/811df212cbbf0d197eb69b0a11749f37
+// http://www.keyboard-layout-editor.com/#/gists/9fdf46ac40cca5e78edd693d859ddefc
 
   // .-----------------------------------------------------------------------------------.
   // |Adjust|      |      |      |      |      |      | Home |  Up  |  End |      |      |
@@ -378,9 +359,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define CAPSLOCK_ON_SOUND   S__NOTE(_C7 ),ED_NOTE(_E7 )
 #define CAPSLOCK_OFF_SOUND  S__NOTE(_E7 ),ED_NOTE(_C7 )
 float tone_startup[][2]   = SONG (STARTUP_SOUND);
-float tone_qwerty[][2]    = SONG (QWERTY_SOUND);
-float tone_dvorak[][2]    = SONG (DVORAK_SOUND);
 float tone_colemak[][2]   = SONG (COLEMAK_SOUND);
+#ifdef QWERTY
+float tone_qwerty[][2]    = SONG (QWERTY_SOUND);
+#endif
+#ifdef DVORAK
+float tone_dvorak[][2]    = SONG (DVORAK_SOUND);
+#endif
 float tone_plover[][2]    = SONG (PLOVER_SOUND);
 float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
 float tone_caps_on[][2]   = SONG (CAPSLOCK_ON_SOUND);
@@ -637,104 +622,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_F]    = ACTION_TAP_DANCE_FN (hexf)
 };
 
-#ifdef SHIFT_TOGGLE
-// macro replacement for SFT_T to avoid tap timing anomalies (sacrifices auto-repeat)
-static uint16_t key_timer;
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  // see process_record_user(default)
-  switch(id) {
-    case SPC:
-      if (record->event.pressed) {
-        key_timer = timer_read();
-        register_code     (KC_LSFT);
-      }
-      else {
-        // unregister modifier early (vim requirement)
-        unregister_code   (KC_LSFT);
-        if (timer_elapsed(key_timer) < TAPPING_TERM) {
-          register_code   (KC_SPC);
-          unregister_code (KC_SPC);
-        }
-      }
-      break;
-    case BSPC:
-      if (record->event.pressed) {
-        key_timer = timer_read();
-        register_code     (KC_LSFT);
-      }
-      else {
-        // unregister modifier early (vim requirement)
-        unregister_code   (KC_LSFT);
-        if (timer_elapsed(key_timer) < TAPPING_TERM) {
-          register_code   (KC_BSPC);
-          unregister_code (KC_BSPC);
-        }
-      }
-      break;
-  }
-  return MACRO_NONE;
-};
-#endif
-
-#ifdef LEADER
-// see herbstluftwm keybinds
-LEADER_EXTERNS();
-
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-
-    SEQ_ONE_KEY(KC_C) {
-      register_code   (KC_LALT);
-      register_code   (KC_LCBR);
-      unregister_code (KC_LCBR);
-      unregister_code (KC_LALT);
-    }
-    SEQ_ONE_KEY(KC_D) {
-      register_code   (KC_LALT);
-      register_code   (KC_RCBR);
-      unregister_code (KC_RCBR);
-      unregister_code (KC_LALT);
-    }
-    SEQ_ONE_KEY(KC_S) {
-      register_code   (KC_LALT);
-      register_code   (KC_LSFT);
-      register_code   (KC_LCBR);
-      unregister_code (KC_LCBR);
-      unregister_code (KC_LSFT);
-      unregister_code (KC_LALT);
-    }
-    SEQ_ONE_KEY(KC_T) {
-      register_code   (KC_LALT);
-      register_code   (KC_LSFT);
-      register_code   (KC_RCBR);
-      unregister_code (KC_RCBR);
-      unregister_code (KC_LSFT);
-      unregister_code (KC_LALT);
-    }
-    SEQ_ONE_KEY(KC_F) {
-      register_code   (KC_LALT);
-      register_code   (KC_LCTL);
-      register_code   (KC_LCBR);
-      unregister_code (KC_LCBR);
-      unregister_code (KC_LCTL);
-      unregister_code (KC_LALT);
-    }
-    SEQ_ONE_KEY(KC_P) {
-      register_code   (KC_LALT);
-      register_code   (KC_LCTL);
-      register_code   (KC_RCBR);
-      unregister_code (KC_RCBR);
-      unregister_code (KC_LCTL);
-      unregister_code (KC_LALT);
-    }
-  }
-}
-#endif
-
 void persistant_default_layer_set(uint16_t default_layer)
 {
   eeconfig_update_default_layer(default_layer);
@@ -744,7 +631,6 @@ void persistant_default_layer_set(uint16_t default_layer)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
-#ifdef ONE_SHOT
     case Ctl:
       if (record->event.pressed) {
         register_code   (KC_LCTL);
@@ -781,7 +667,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-#endif
     case Dot:
       if (record->event.pressed) {
         layer_on        (_NUMBER);

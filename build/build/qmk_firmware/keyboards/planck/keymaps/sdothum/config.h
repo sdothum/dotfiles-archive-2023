@@ -9,19 +9,7 @@
 // tap dance key press termination interval
 #define TAPPING_TERM   200
 
-// tap modifier actions
-
-// #define SHIFT_TOGGLE
-
-// #define LEADER
-#ifdef LEADER
-#define LEADER_TIMEOUT 250
-#endif
-
-#ifndef LEADER
-#define ONE_SHOT
-#endif
-
+// additional keyboard layouts
 // #define QWERTY
 // #define DVORAK
 
