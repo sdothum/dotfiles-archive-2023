@@ -63,9 +63,9 @@
 
 = infinality font rendering
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-? infinality-bundle          [!laptop]
-? infinality-bundle-multilib [!laptop]
-? infinality-bundle-fonts    [!laptop]
+? infinality-bundle
+? infinality-bundle-multilib [server]
+# infinality-bundle-fonts
 
 
 = ncurses editor
