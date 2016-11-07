@@ -31,7 +31,7 @@ function fish_prompt --description 'Write out the prompt'
   function bgjobs
     if jobs -c | egrep -qv '^(Command|fasd|autojump)'
       set_color $BLUE
-      glyph '●' 'o'
+      glyph '⊛' 'o'
       set_color normal
     else
       space

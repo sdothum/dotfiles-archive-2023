@@ -27,14 +27,14 @@ print_cmd = pr mail
 
   A = search tag:attachment
 
-  e = search tag:INBOX or tag:inbox or tag:new
-  E = search tag:SENT or tag:sent
+  e = search tag:clients
+  E = search tag:family
 
   i = search tag:attn
   I = search tag:thedarnedestthing
 
-  n = search tag:clients
-  N = search tag:family
+  n = search tag:INBOX or tag:inbox or tag:new
+  N = search tag:SENT or tag:sent
 
   p = search tag:patricia and not tag:sent
   P = search tag:patricia and tag:sent and steven
@@ -67,7 +67,8 @@ print_cmd = pr mail
     focus = '','','white','','white',''
 
   [[encrypted]]
-    translated = ⚷
+    # translated = ⚷
+    translated = ‽
     normal = '','','light red','','yellow',''
     focus = '','','white','','white',''
 
