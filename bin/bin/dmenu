@@ -132,7 +132,7 @@ dmenu() {
   input=$(sed "s/^/$INDENT/" |
           rofi -monitor $monitor \
                -bw 0 \
-               -font "PragmataPro $fontsize" \
+               -font "$MONOFONT $fontsize" \
                -opacity 85 \
                -eh 1 \
                -color-active "black,$fg,black,$hlbg,$hlfg" \

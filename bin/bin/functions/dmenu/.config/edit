@@ -33,6 +33,7 @@ dwb :: $(find $HOME/.config/dwb/ -type f -maxdepth 1)
 fasd jump :: $HOME/.fasd
 fish functions :: $HOME/.config/fish/functions/*.fish
 fish shell :: $HOME/.config/fish/*.fish $HOME/.config/fish/conf.d/*.fish
+fonts mono :: $HOME/.config/fontconfig/*.conf $HOME/.config/fontconfig/conf.d/*.conf $HOME/.config/alot.config $HOME/.config/dunst/dunstrc $HOME/.config/qutebrowser/qutebrowser.conf $HOME/.vim/config/themes.vim $HOME/bin/functions/file/pr
 git dotfiles :: $HOME/bin/functions/sysadmin/dotfiles $HOME/stow/.gitignore
 group etc :: /etc/group
 grub :: /etc/default/grub
@@ -87,7 +88,7 @@ vim :: $HOME/.vimrc $HOME/.vim/config/*.vim
 vim settings :: $HOME/.vimrc $(grep -L 'function!' $HOME/.vim/config/*.vim)
 vim functions :: $(grep -l 'function!' $HOME/.vim/config/*.vim)
 vim snippets :: $HOME/.vim/snippets/*
-weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/timestamp.py $HOME/.weechat/python/unfocused.py
+weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/*tape.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
 www website :: $(find -L /srv/http/thedarnedestthing.com/application -regextype posix-extended -regex '.*(rb|slim)')
 x11 xresources :: $HOME/.Xresources $HOME/.xinitrc $HOME/.Xmodmap* $HOME/bin/x

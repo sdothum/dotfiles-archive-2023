@@ -8,9 +8,6 @@
 
 # see bin/urxvt
 
-# font='Iosevka\ Term'
-font='PragmataPro'
-
 # adjust font for various displays and video cards
 if macbook ;then
   size=8
@@ -22,6 +19,6 @@ else
   size=10
 fi
 
-echo "-fn xft:$font:size=$size"
+echo "-fn xft:$MONOFONT:size=$size"
 
 # vim: set ft=sh: #

@@ -18,8 +18,8 @@ function fish_prompt --description 'Write out the prompt'
   set -g NOBLINK (printf "\e[25m")
 
   function glyph
-    test $TERM = "linux" 
-      and echo -n "$argv[2]" 
+    test $TERM = "linux"
+      and echo -n "$argv[2]"
       or echo -n "$argv[1]"
   end
 
@@ -31,7 +31,7 @@ function fish_prompt --description 'Write out the prompt'
   function bgjobs
     if jobs -c | egrep -qv '^(Command|fasd|autojump)'
       set_color $BLUE
-      glyph '⚙' 'o'
+      glyph '●' 'o'
       set_color normal
     else
       space
@@ -78,7 +78,7 @@ function fish_prompt --description 'Write out the prompt'
     end
     set_color normal
   end
-  
+
   bgjobs
   root
   rcode

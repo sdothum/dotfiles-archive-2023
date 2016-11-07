@@ -154,6 +154,7 @@
 
       " let s:font = 'Input\ Mono\ Compressed\'
       let s:font   = 'PragmataPro\'
+      let s:font   = 'Iosevka\'
 
       function! Fontspace(prose, source)
         execute 'set guifont=' . s:font . ' ' . a:prose

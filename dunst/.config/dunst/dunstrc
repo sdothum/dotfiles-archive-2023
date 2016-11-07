@@ -1,5 +1,6 @@
 [global]
-    font = PragmataPro 10
+    # font = PragmataPro 10
+    font = Iosevka 10
 
     # Allow a small subset of html markup:
     #   <b>bold</b>

@@ -11,17 +11,17 @@ function fish_right_prompt --description 'Write out the right prompt'
   end
 
   function glyph
-    test $TERM = "linux" 
-      and echo -n "$argv[2]" 
+    test $TERM = "linux"
+      and echo -n "$argv[2]"
       or echo -n "$argv[1]"
   end
 
   function gitstatus
     if not set -q __fish_git_prompt_show_informative_status
-      set -g __fish_git_prompt_show_informative_status 1
+      set -g __fish_git_prompt_show_informative_status '↑'
     end
     if not set -q __fish_git_prompt_hide_untrackedfiles
-      set -g __fish_git_prompt_hide_untrackedfiles 1
+      set -g __fish_git_prompt_hide_untrackedfiles '↑'
     end
 
     if not set -q __fish_git_prompt_color_branch
@@ -44,7 +44,7 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -g __fish_git_prompt_char_stagedstate (glyph '●' '■')
     end
     if not set -q __fish_git_prompt_char_dirtystate
-      set -g __fish_git_prompt_char_dirtystate (glyph '✱' '*')
+      set -g __fish_git_prompt_char_dirtystate (glyph '*' '*')
     end
     if not set -q __fish_git_prompt_char_untrackedfiles
       set -g __fish_git_prompt_char_untrackedfiles '…'
@@ -99,7 +99,7 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -l tree (echo $folders | cut -f3- | rev | sed -re 's|([^\t.])[^\t]*\t*|\1/|g' -e 's|\t||g')
       set_color yellow
       set -l path (echo "/$tree/$parent/"(set_color $YELLOW)"$base" | sed -e 's|///*|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
-      test "$path" = '~' 
+      test "$path" = '~'
         and set -l path (set_color $YELLOW)~
       echo -n $path
     else
@@ -116,12 +116,12 @@ function fish_right_prompt --description 'Write out the right prompt'
     set -l secs (math "$CMD_DURATION / 1000")
     set -l mins (math "$secs / 60")
     set -l hrs (math "$mins / 60")
-    if test $hrs -gt 0 
+    if test $hrs -gt 0
       printf '%sh ' $hrs
       set mins (math "$mins - $hrs * 60")
       set secs (math "$secs - $hrs * 3600")
     end
-    test $hrs -gt 0 -o $mins -gt 0 
+    test $hrs -gt 0 -o $mins -gt 0
       and printf '%sm ' $mins
     printf '%ss' (math "$secs - $mins * 60")
   end
@@ -130,10 +130,10 @@ function fish_right_prompt --description 'Write out the right prompt'
     if test $CMD_DURATION
       if test $CMD_DURATION -gt 1000
         set_color $GREY
-        glyph '  ⇡' '  ^'
+        glyph '  ^' '  ^'
         echo -n (cmd_duration $CMD_DURATION)
         set_color normal
-        test $TERM != "linux" 
+        test $TERM != "linux"
           and test $CMD_DURATION -gt (math "1000 * 10")
             and notify low "$history[1]" "Returned $status, took "(cmd_duration)
         return (true)
@@ -150,7 +150,7 @@ function fish_right_prompt --description 'Write out the right prompt'
 
   function timer
     duration
-      or if test $TERM = "linux" 
+      or if test $TERM = "linux"
         time
       end
   end

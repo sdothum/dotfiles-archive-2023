@@ -97,6 +97,8 @@ export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
 
 # ................................................................ Miscellaneous
 
+# terminal font
+export MONOFONT=Iosevka
 # dmenu line item marker
 export SEP='∙'
 # dmenu line column delimeter (must not match dmenu content), see restore hidden, focus hlwm

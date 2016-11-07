@@ -11,6 +11,13 @@ usage() {
   exit 1
 }
 
+# text defaults
+font=Iosevka
+fontsize=9
+linenumbers='\linenumbers'
+spacing='\singlespacing'
+fold=80
+
 # unset for direct printing, set for proofing and latex debugging
 # proof=true
 if [ -e $HOME/.proof ] ;then
@@ -20,12 +27,6 @@ else
 fi
 [ $proof ] && proof=/tmp/pr.proof
 dotdot=/tmp/dotdot
-
-# text defaults
-fontsize=9
-linenumbers='\linenumbers'
-spacing='\singlespacing'
-fold=80
 
 # ............................................................... Latex preamble
 
@@ -98,7 +99,7 @@ format() {
 \fancyhead[L]{\hdrfont{\ifstrempty{$time}{\today}{$time}}}
 \fancyhead[C]{\ttlfont{$title}}
 \fancyhead[R]{\hdrfont{\thepage}}
-\setmainfont[]{PragmataPro}
+\setmainfont[]{$font}
 \renewcommand\linenumberfont{\selectfont}%
 \setlength\linenumbersep{1em}
 $linenumbers
@@ -108,7 +109,7 @@ $spacing
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}%
 \makeatother
 \begin{document}
-\verbatimfont{\PragmataPro}
+\verbatimfont{\\$font}
 \normalfont\fontsize{$fontsize}{$fontsize}\selectfont
 \begin{verbatim}
 % need to inject a blank line before cat to preserve top of file!
@@ -208,6 +209,7 @@ case "$1" in
   stdin) stdin ;;
 
   mail) # content is piped in from mail application, see alot
+        # font=PragmataPro
         fontsize=9
         spacing='\onehalfspacing'
         unset linenumbers
