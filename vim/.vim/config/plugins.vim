@@ -195,7 +195,7 @@
         \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
         \, 'relativepath' : '%f'
         \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
-        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "◯" : "◒") : line("w$") == line("$") ? "◓" : ""}'
+        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "▯" : "▼") : line("w$") == line("$") ? "▲" : ""}'
         \}
 
       let g:lightline.component_visible_condition =
