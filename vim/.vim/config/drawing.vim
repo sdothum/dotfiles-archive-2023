@@ -45,9 +45,11 @@
         endif
       endfunction
 
-      imap <silent><leader><leader>- <C-o>:silent call Underline('▔')<CR><C-Return>
+      " imap <silent><leader><leader>- <C-o>:silent call Underline('▔')<CR><C-Return>
+      imap <silent>,,- <C-o>:silent call Underline('▔')<CR><C-Return>
       nmap <silent><leader><leader>- :silent call Underline('▔')<CR><Down>
-      imap <silent><leader><leader>= <C-o>:silent call Underline('▂')<CR><C-Return>
+      " imap <silent><leader><leader>= <C-o>:silent call Underline('▂')<CR><C-Return>
+      imap <silent>,,= <C-o>:silent call Underline('▂')<CR><C-Return>
       nmap <silent><leader><leader>= :silent call Underline('▂')<CR><Down>
 
     " .................................................................... Ruler
@@ -77,9 +79,11 @@
         normal ^
       endfunction
 
-      imap <silent><leader><leader>-- <C-o>:silent call Drawline('▔')<CR>
+      " imap <silent><leader><leader>-- <C-o>:silent call Drawline('▔')<CR>
+      imap <silent>,,-- <C-o>:silent call Drawline('▔')<CR>
       nmap <silent><leader><leader>-- :silent call Drawline('▔')<CR>
-      imap <silent><leader><leader>== <C-o>:silent call Drawline('▂')<CR>
+      " imap <silent><leader><leader>== <C-o>:silent call Drawline('▂')<CR>
+      imap <silent>,,== <C-o>:silent call Drawline('▂')<CR>
       nmap <silent><leader><leader>== :silent call Drawline('▂')<CR>
 
     " .................................................................. Trailer
@@ -105,9 +109,11 @@
         endif
       endfunction
 
-      imap <silent><leader><leader>_ <C-o>:silent call AppendTrailer('▁')<CR>
+      " imap <silent><leader><leader>_ <C-o>:silent call AppendTrailer('▁')<CR>
+      imap <silent>,,_ <C-o>:silent call AppendTrailer('▁')<CR>
       nmap <silent><leader><leader>_ :silent call AppendTrailer('▁')<CR>
-      imap <silent><leader><leader>. <C-o>:silent call AppendTrailer('.')<CR>
+      " imap <silent><leader><leader>. <C-o>:silent call AppendTrailer('.')<CR>
+      imap <silent>,,. <C-o>:silent call AppendTrailer('.')<CR>
       nmap <silent><leader><leader>. :silent call AppendTrailer('.')<CR>
 
       " prompted trailer
@@ -118,7 +124,8 @@
         endif
       endfunction
 
-      imap <silent><leader><leader>? <C-o>:call InputTrailer()<CR>
+      " imap <silent><leader><leader>? <C-o>:call InputTrailer()<CR>
+      imap <silent>,,? <C-o>:call InputTrailer()<CR>
       nmap <silent><leader><leader>? :call InputTrailer()<CR>
 
     " ................................................................... Leader
@@ -140,9 +147,11 @@
         endif
       endfunction
 
-      imap <silent><leader>_ <C-o>:silent call InsertLeader('▁')<CR>
+      " imap <silent><leader>_ <C-o>:silent call InsertLeader('▁')<CR>
+      imap <silent>,_ <C-o>:silent call InsertLeader('▁')<CR>
       nmap <silent><leader>_ :silent call InsertLeader('▁')<CR>
-      imap <silent><leader>. <C-o>:silent call InsertLeader('.')<CR>
+      " imap <silent><leader>. <C-o>:silent call InsertLeader('.')<CR>
+      imap <silent>,. <C-o>:silent call InsertLeader('.')<CR>
       nmap <silent><leader>. :silent call InsertLeader('.')<CR>
 
       " prompted leader
@@ -157,7 +166,8 @@
         endif
       endfunction
 
-      imap <silent><leader>? <C-o>:call InputLeader()<CR>
+      " imap <silent><leader>? <C-o>:call InputLeader()<CR>
+      imap <silent>,? <C-o>:call InputLeader()<CR>
       nmap <silent><leader>? :call InputLeader()<CR>
 
       function! RightJustify()
@@ -178,7 +188,8 @@
         endif
       endfunction
 
-      imap <silent><leader><leader>> <C-o>:silent call RightJustify()<CR>
+      " imap <silent><leader><leader>> <C-o>:silent call RightJustify()<CR>
+      imap <silent>,,> <C-o>:silent call RightJustify()<CR>
       nmap <silent><leader><leader>> :silent call RightJustify()<CR>
 
 " drawing.vim

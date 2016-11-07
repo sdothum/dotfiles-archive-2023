@@ -11,15 +11,19 @@
 
     " ............................................................. Current Date
 
-      inoremap <silent><leader><leader>d <C-r>=tolower(strftime("%A, %-d %B %Y"))<CR>
+      " inoremap <silent><leader><leader>d <C-r>=tolower(strftime("%A, %-d %B %Y"))<CR>
+      inoremap <silent>,,d <C-r>=tolower(strftime("%A, %-d %B %Y"))<CR>
       nnoremap <silent><leader><leader>d "=tolower(strftime("%A, %-d %B %Y"))<CR>P<CR>
 
     " ............................................................... HTML codes
 
       " some html codes require escaping with <C-o>
-      imap <leader><leader><Delete> <<C-o>adel>
-      imap <leader><Delete><Delete> </del>
-      imap <leader><leader><CR><CR> <<C-o>abr><CR>
+      " imap <leader><leader><Delete> <<C-o>adel>
+      " imap <leader><Delete><Delete> </del>
+      " imap <leader><leader><CR><CR> <<C-o>abr><CR>
+      imap ,,<Delete> <<C-o>adel>
+      imap ,<Delete><Delete> </del>
+      imap ,,<CR><CR> <<C-o>abr><CR>
 
     " .................................................. Lorem ipsum placeholder
 

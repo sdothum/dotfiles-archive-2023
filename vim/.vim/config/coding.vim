@@ -34,8 +34,6 @@
         endif
       endfunction
 
-      " imap <silent><F7> <C-o>:call ToggleColumn()<CR>
-      " nmap <silent><F7> :call ToggleColumn()<CR>
       nmap <silent><Bar>  :call ToggleColumn()<CR>
       nmap <leader><Bar>  :set colorcolumn=
 
@@ -55,8 +53,6 @@
         end
       endfunction
 
-      " imap <silent><F8>          <C-o>:call ToggleSpaces()<CR>
-      " nmap <silent><F8>          :call ToggleSpaces()<CR>
       nmap <silent><leader><Space> :call ToggleSpaces()<CR>
 
   " Line wrap ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -95,8 +91,6 @@
         endif
       endfunction
 
-      " imap <silent><F4>       <C-o>:call ToggleWrap()<CR>
-      " nmap <silent><F4>       :call ToggleWrap()<CR>
       nmap <silent><leader><CR> :call ToggleWrap()<CR>
 
       " " toggle pencil
@@ -234,7 +228,8 @@
         endif
       endfunction
 
-      imap <silent><leader><leader>c <C-o>:call ToggleComment()<CR>
+      " imap <silent><leader><leader>c <C-o>:call ToggleComment()<CR>
+      imap <silent>,,c <C-o>:call ToggleComment()<CR>
 
     " .......................................................... Code block text
 
@@ -250,9 +245,6 @@
       endfunction
 
       " markup wiki code blocks
-      " inoremap <silent><F5>    <C-o>V:call CodeBlock()<CR>
-      " nnoremap <silent><F5>    V:call CodeBlock()<CR>
-      " vmap <silent><F5>        :call CodeBlock()<CR>
       nnoremap <silent><leader>` V:call CodeBlock()<CR>
       vmap <silent><leader>`     :call CodeBlock()<CR>
 

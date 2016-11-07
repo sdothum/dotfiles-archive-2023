@@ -53,34 +53,34 @@
 
     " ............................................................... Easymotion
 
-      let g:EasyMotion_do_mapping = 0       " disable default mappings
-      let g:EasyMotion_smartcase = 1        " turn on case sensitive feature
-
-      " bi-directional find motion
-      " avoid conflict with regular vim search!
-      nmap <leader>/         <Plug>(easymotion-sn)
-      " one key binding
-      " imap \               <C-o><Plug>(easymotion-s)
-      nmap <leader>\         <Plug>(easymotion-s)
-      " 2 keystroke binding (backslash inhibits use in insert mode)
-      imap <leader><leader>/ <C-o><Plug>(easymotion-s2)
-      nmap <leader><leader>/ <Plug>(easymotion-s2)
-
-      " line motions
-      imap <leader><leader>n <C-o><Plug>(easymotion-j)
-      nmap <leader><leader>n <Plug>(easymotion-j)
-      imap <leader><leader>l <C-o><Plug>(easymotion-k)
-      nmap <leader><leader>l <Plug>(easymotion-k)
-
-      " word motions
-      imap <leader><leader>E <C-o><Plug>(easymotion-gE)
-      nmap <leader><leader>E <Plug>(easymotion-gE)
-      imap <leader><leader>e <C-o><Plug>(easymotion-E)
-      nmap <leader><leader>e <Plug>(easymotion-E)
-      imap <leader><leader>W <C-o><Plug>(easymotion-B)
-      nmap <leader><leader>W <Plug>(easymotion-B)
-      imap <leader><leader>w <C-o><Plug>(easymotion-W)
-      nmap <leader><leader>w <Plug>(easymotion-W)
+      " let g:EasyMotion_do_mapping = 0       " disable default mappings
+      " let g:EasyMotion_smartcase = 1        " turn on case sensitive feature
+      "
+      " " bi-directional find motion
+      " " avoid conflict with regular vim search!
+      " nmap <leader>/         <Plug>(easymotion-sn)
+      " " one key binding
+      " " imap \               <C-o><Plug>(easymotion-s)
+      " nmap <leader>\         <Plug>(easymotion-s)
+      " " 2 keystroke binding (backslash inhibits use in insert mode)
+      " imap <leader><leader>/ <C-o><Plug>(easymotion-s2)
+      " nmap <leader><leader>/ <Plug>(easymotion-s2)
+      "
+      " " line motions
+      " imap <leader><leader>n <C-o><Plug>(easymotion-j)
+      " nmap <leader><leader>n <Plug>(easymotion-j)
+      " imap <leader><leader>l <C-o><Plug>(easymotion-k)
+      " nmap <leader><leader>l <Plug>(easymotion-k)
+      "
+      " " word motions
+      " imap <leader><leader>E <C-o><Plug>(easymotion-gE)
+      " nmap <leader><leader>E <Plug>(easymotion-gE)
+      " imap <leader><leader>e <C-o><Plug>(easymotion-E)
+      " nmap <leader><leader>e <Plug>(easymotion-E)
+      " imap <leader><leader>W <C-o><Plug>(easymotion-B)
+      " nmap <leader><leader>W <Plug>(easymotion-B)
+      " imap <leader><leader>w <C-o><Plug>(easymotion-W)
+      " nmap <leader><leader>w <Plug>(easymotion-W)
 
     " .............................................................. Eightheader
 
@@ -341,11 +341,15 @@
 
       nmap <leader>' '.
 
+    " .................................................................... Sneak
+
+      let g:sneak#streak = 1
+
     " ................................................................. Supertab
 
-    " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab
-    " let g:SuperTabMappingForward = '<C-Tab>'
-    " let g:SuperTabMappingBackward = '<C-S-Tab>'
+      " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab
+      " let g:SuperTabMappingForward = '<C-Tab>'
+      " let g:SuperTabMappingBackward = '<C-S-Tab>'
 
     " ................................................................ Syntastic
 
