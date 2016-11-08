@@ -43,7 +43,7 @@ conky.config = {
 
   override_utf8_locale = true,
   use_xft = true,
-  font = 'Ubuntu:size=7',
+  font = 'Noto Sans:size=7',
   xftalpha = 0.5,
   uppercase = false,
 
@@ -69,16 +69,16 @@ conky.config = {
 
 -- for explicit .xresources xft.dpi: 96
 -- ${voffset 40}
--- ${goto 114}${color}${font Ubuntu:size=24}${time %e}
--- ${goto 81}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
--- ${goto 92}${color3}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+-- ${goto 114}${color}${font Noto Sans:size=24}${time %e}
+-- ${goto 81}${color1}${voffset -28}${font Noto Sans:size=10}${time %A}
+-- ${goto 92}${color3}${voffset -2}${font Noto Sans:size=9}${time %b}${voffset -1}  ${color5}${font Noto Sans:size=16}'${time %y}
 -- ${voffset 12}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 -- ${voffset -5}
 -- ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
--- ${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 151}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+-- ${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 151}${exec query tag}${font Noto Sans:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
 -- ${voffset -72}
 -- ${else}
--- ${voffset -217}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 151}${font Ubuntu:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
+-- ${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 151}${font Noto Sans:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
 -- ${voffset -249}
 -- ${endif}
 -- ${font}${color2}${alignr}${exec query wname}
@@ -86,16 +86,16 @@ conky.config = {
 
 conky.text = [[
 ${voffset 40}
-${goto 113}${color}${font Ubuntu:size=26}${time %e}
-${goto 81}${color1}${voffset -28}${font Ubuntu:size=10}${time %A}
-${goto 92}${color3}${voffset -3}${font Ubuntu:size=9}${time %b}${voffset -1}  ${color5}${font Ubuntu:size=16}'${time %y}
+${goto 113}${color}${font Noto Sans:size=26}${time %e}
+${goto 81}${color1}${voffset -28}${font Noto Sans:size=10}${time %A}
+${goto 92}${color3}${voffset -3}${font Noto Sans:size=9}${time %b}${voffset -1}  ${color5}${font Noto Sans:size=16}'${time %y}
 ${voffset 15}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -6}
 ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
-${voffset -210}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 155}${exec query tag}${font Ubuntu:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+${voffset -210}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 155}${exec query tag}${font Noto Sans:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
 ${voffset -71}
 ${else}
-${voffset -210}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 155}${font Ubuntu:size=16:style=Normal}${exec query tag inactive}${voffset -42}${font Ubuntu:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
+${voffset -210}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 155}${font Noto Sans:size=16:style=Normal}${exec query tag inactive}${voffset -42}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
 ${voffset -230}
 ${endif}
 ${font}${color2}${alignr}${exec query wname}
@@ -111,22 +111,22 @@ ${voffset -5}${goto 100}${font}${color2}${nodename} ${alignr}${fs_type /var}
 ${goto 100}${font}${color1}${kernel} ${alignr}${uptime}
 
 ${voffset 34}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}Volume ${alignr}${mpd_status}
+${goto 100}${font Noto Sans:size=7:style=Bold}${color}Volume ${alignr}${mpd_status}
 # ${goto 100}${font}${color1}volume
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}${if_match "${exec conky radio}" > ""}${alignr}${exec conky radio}${else}${lua_parse null ${mpd_title}}${endif}
+${goto 100}${font Noto Sans:size=7:style=Bold}${color0}${if_match "${exec conky radio}" > ""}${alignr}${exec conky radio}${else}${lua_parse null ${mpd_title}}${endif}
 ${goto 100}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
 
 ${voffset 10}
 # display BOTH hwmon temps, one or other will reflect gpu temp
-# ${goto 80}${font Ubuntu:size=18:style=Bold}${color3}SYS ${color2}${font Ubuntu:size=7:style=Bold}${color0}GPU ${alignr}${nvidia temp}°C
-${goto 80}${font Ubuntu:size=18:style=Bold}${color3}SYS ${color2}${font Ubuntu:size=7:style=Bold}${color0}
+# ${goto 80}${font Noto Sans:size=18:style=Bold}${color3}SYS ${color2}${font Noto Sans:size=7:style=Bold}${color0}GPU ${alignr}${nvidia temp}°C
+${goto 80}${font Noto Sans:size=18:style=Bold}${color3}SYS ${color2}${font Noto Sans:size=7:style=Bold}${color0}
 ${goto 100}${loadgraph 25,0 ${color7} ${color7}}
 ${voffset -5}${goto 100}${font}${color1}Loadavg ${alignr}${loadavg 1}   ${loadavg 2}   ${loadavg 3}
 
 ${voffset 30}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//' -e 's/Core //'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq) + + + + + + + 8 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
-# ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}Temp ${alignr}${exec sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//' | sort | tail -1}°C
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}Temp ${alignr}${exec echo "1 k $(sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//') + + + 4 / .5 + 0 k 1 / p" | dc}°C
+${goto 100}${font Noto Sans:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//' -e 's/Core //'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq) + + + + + + + 8 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
+# ${goto 100}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//' | sort | tail -1}°C
+${goto 100}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec echo "1 k $(sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//') + + + 4 / .5 + 0 k 1 / p" | dc}°C
 ${goto 100}${font}${color1}${top name 1}${alignr}${top cpu 1}%
 ${goto 100}${font}${color2}${top name 2}${alignr}${top cpu 2}%
 ${goto 100}${font}${color3}${top name 3}${alignr}${top cpu 3}%
@@ -138,9 +138,9 @@ ${voffset -5}${goto 100}${font}${color1}${threads} processes ${alignr}${cpu cpu0
 # ${goto 100}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
 
 ${voffset 30}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}MEM ${alignr}${mem}
-# ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/tmp ${alignr}${fs_used /tmp}
+${goto 100}${font Noto Sans:size=7:style=Bold}${color}MEM ${alignr}${mem}
+# ${goto 100}${font Noto Sans:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
+${goto 100}${font Noto Sans:size=7:style=Bold}${color0}/tmp ${alignr}${fs_used /tmp}
 ${goto 100}${font}${color1}${top_mem name 1}${alignr}${top_mem mem_res 1}
 ${goto 100}${font}${color2}${top_mem name 2}${alignr}${top_mem mem_res 2}
 ${goto 100}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
@@ -149,33 +149,33 @@ ${goto 100}${font}${color3}${top_mem name 5}${alignr}${top_mem mem_res 5}
 ${goto 100}${font}${color3}${top_mem name 6}${alignr}${top_mem mem_res 6}
 
 ${voffset 30}
-# ${goto 100}${font Ubuntu:size=7:style=Bold}${color}DISKS ${alignr}${fs_type /var}
-${goto 100}${font Ubuntu:size=7:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
-${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/net   ${color}(swap) ${color0}${alignr}${exec conky btrfs /net}GiB
-# ${goto 100}${font Ubuntu:size=7:style=Bold}${color0}/Tmp ${alignr}${fs_used /tmp}
+# ${goto 100}${font Noto Sans:size=7:style=Bold}${color}DISKS ${alignr}${fs_type /var}
+${goto 100}${font Noto Sans:size=7:style=Bold}${color}/boot ${alignr}${exec conky btrfs /}GiB
+${goto 100}${font Noto Sans:size=7:style=Bold}${color0}/net   ${color}(swap) ${color0}${alignr}${exec conky btrfs /net}GiB
+# ${goto 100}${font Noto Sans:size=7:style=Bold}${color0}/Tmp ${alignr}${fs_used /tmp}
 ${goto 100}${diskiograph 25,0 ${color7} ${color7}}
 ${voffset -5}${goto 100}${font}${color1}Disk I/O ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 10}
-${goto 80}${font Ubuntu:size=18:style=Bold}${color3}NET${color2}${font Ubuntu:size=7:style=Bold}${color0} eno1 ${alignr}${addr eno1}
+${goto 80}${font Noto Sans:size=18:style=Bold}${color3}NET${color2}${font Noto Sans:size=7:style=Bold}${color0} eno1 ${alignr}${addr eno1}
 ${goto 100}${downspeedgraph eno1 25,0 ${color7} ${color7}}
 ${voffset -38}${goto 100}${upspeedgraph eno1 25,0 ${color8} ${color8}}
 ${voffset -5}${goto 100}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed eno1}}↑   ${lua_parse bandwidth ${downspeed eno1}}↓
 #
-# ${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color1}enp10s0 ${alignr}${addr enp10s0}
+# ${goto 100}${color2}${font Noto Sans:size=7:style=Bold}${color1}enp10s0 ${alignr}${addr enp10s0}
 # ${goto 100}${downspeedgraph enp10s0 25,0 ${color7} ${color7}}
 # ${voffset -38}${goto 100}${upspeedgraph enp10s0 25,0 ${color7} ${color7}}
 # ${voffset -5}${goto 100}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed enp10s0}}↑   ${lua_parse bandwidth ${downspeed enp10s0}}↓
 
 ${voffset 30}
-${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp4s0}
-${goto 100}${color2}${font Ubuntu:size=7:style=Bold}${color0}wlp4s0 ${alignr}${addr wlp4s0}
+${goto 100}${color2}${font Noto Sans:size=7:style=Bold}${color}${wireless_essid wlp4s0}
+${goto 100}${color2}${font Noto Sans:size=7:style=Bold}${color0}wlp4s0 ${alignr}${addr wlp4s0}
 ${goto 100}${downspeedgraph wlp4s0 25,0 ${color7} ${color7}}
 ${voffset -38}${goto 100}${upspeedgraph wlp4s0 25,0 ${color8} ${color8}}
 ${voffset -5}${goto 100}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp4s0}}↑   ${lua_parse bandwidth ${downspeed wlp4s0}}↓
 
-${goto 100}${font Ubuntu:size=7:style=Bold}${color1}${alignr}${tcp_portmon 1 65535 count}  open ports
-${goto 100}${font Ubuntu:size=7:style=Bold}${color2}IP${alignr}DPORT
+${goto 100}${font Noto Sans:size=7:style=Bold}${color1}${alignr}${tcp_portmon 1 65535 count}  open ports
+${goto 100}${font Noto Sans:size=7:style=Bold}${color2}IP${alignr}DPORT
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  0}${alignr 1}${tcp_portmon 1 65535 rport  0}
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  1}${alignr 1}${tcp_portmon 1 65535 rport  1}
 ${goto 100}${font}${color3}${tcp_portmon 1 65535 rip  2}${alignr 1}${tcp_portmon 1 65535 rport  2}

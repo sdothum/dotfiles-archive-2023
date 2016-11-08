@@ -65,7 +65,7 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 ? infinality-bundle
 ? infinality-bundle-multilib [server]
-# infinality-bundle-fonts
+  infinality-bundle-fonts
 
 
 = ncurses editor

@@ -41,7 +41,7 @@ conky.config = {
 
   override_utf8_locale = true,
   use_xft = true,
-  font = 'Ubuntu:size=7',
+  font = 'Noto Sans:size=7',
   xftalpha = 0.5,
   uppercase = false,
 
@@ -64,11 +64,11 @@ conky.config = {
 
 conky.text = [[
 ${voffset 14}
-${goto 80}${color}${font Ubuntu:size=22}${time %e}
-${goto 50}${color1}${voffset -25}${font Ubuntu:size=10}${time %A}
-${goto 65}${color2}${voffset -2}${font Ubuntu:size=9}${time %b}${voffset -2} ${color3}${font Ubuntu:size=12}'${time %y}
+${goto 80}${color}${font Noto Sans:size=22}${time %e}
+${goto 50}${color1}${voffset -25}${font Noto Sans:size=10}${time %A}
+${goto 65}${color2}${voffset -2}${font Noto Sans:size=9}${time %b}${voffset -2} ${color3}${font Noto Sans:size=12}'${time %y}
 ${voffset 10}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -137}${font Ubuntu:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
+${voffset -137}${font Noto Sans:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
 
 ${voffset -37}
 ${goto 55}${font}${color1}${texeci 900 conky weather}
@@ -80,7 +80,7 @@ ${voffset -148}
 ${font}${color2}${alignr}${exec query wname}
 ${voffset 105}
 
-# ${goto 75}${font Ubuntu:size=7:style=Bold}${color}MPD ${alignr}${mpd_status}
+# ${goto 75}${font Noto Sans:size=7:style=Bold}${color}MPD ${alignr}${mpd_status}
 # # ${goto 75}${font}${color1}volume
 # ${goto 75}${font}${color0}${lua_parse null ${mpd_title}}
 # ${goto 75}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
@@ -89,11 +89,11 @@ ${voffset -28}${goto 75}${color8}${diskiograph 15,0}
 ${voffset -5}${goto 75}${font}${color1}Load   ${loadavg 1}   ${loadavg 2}   ${loadavg 3} ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 20}
-${goto 75}${font Ubuntu:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq) + 2 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
-# ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Temp ${alignr}${exec sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//' | sort | tail -1}°C
-# ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Temp ${alignr}${exec echo "1 k $(sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//') + 2 / .5 + 0 k 1 / p" | dc}°C
-${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Temp ${alignr}${acpitemp}°C
-# ${goto 75}${font Ubuntu:size=7:style=Bold}${color1}${threads} processes ${alignr}${cpu cpu0}%
+${goto 75}${font Noto Sans:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq) + 2 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
+# ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//' | sort | tail -1}°C
+# ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec echo "1 k $(sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//') + 2 / .5 + 0 k 1 / p" | dc}°C
+${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${acpitemp}°C
+# ${goto 75}${font Noto Sans:size=7:style=Bold}${color1}${threads} processes ${alignr}${cpu cpu0}%
 ${goto 75}${font}${color1}${top name 1}${alignr}${top cpu 1}%
 ${goto 75}${font}${color2}${top name 2}${alignr}${top cpu 2}%
 ${goto 75}${font}${color3}${top name 3}${alignr}${top cpu 3}%
@@ -102,16 +102,16 @@ ${goto 75}${color7}${cpugraph 15,0}
 ${voffset -5}${goto 75}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
 
 ${voffset 20}
-${goto 75}${font Ubuntu:size=7:style=Bold}${color}MEM ${alignr}${mem}
-# ${goto 75}${font Ubuntu:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
-${goto 75}${font Ubuntu:size=7:style=Bold}${color0}/boot   ${color}(swap) ${alignr}${exec conky btrfs /}GiB
+${goto 75}${font Noto Sans:size=7:style=Bold}${color}MEM ${alignr}${mem}
+# ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
+${goto 75}${font Noto Sans:size=7:style=Bold}${color0}/boot   ${color}(swap) ${alignr}${exec conky btrfs /}GiB
 ${goto 75}${font}${color1}${top_mem name 1}${alignr}${top_mem mem_res 1}
 ${goto 75}${font}${color2}${top_mem name 2}${alignr}${top_mem mem_res 2}
 ${goto 75}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
 
 ${voffset 20}
-${goto 75}${font Ubuntu:size=7:style=Bold}${color}${wireless_essid wlp2s0} ${alignr}${addr wlp2s0}${font Ubuntu:size=7}
-${goto 75}${font Ubuntu:size=7:style=Bold}${color0}Battery ${alignr}${lua_parse battery ${battery_time}}
+${goto 75}${font Noto Sans:size=7:style=Bold}${color}${wireless_essid wlp2s0} ${alignr}${addr wlp2s0}${font Noto Sans:size=7}
+${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Battery ${alignr}${lua_parse battery ${battery_time}}
 ${goto 75}${color7}${downspeedgraph wlp2s0 15,0}
 ${voffset -28}${goto 75}${color8}${upspeedgraph wlp2s0 15,0}
 ${voffset -5}${goto 75}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp2s0}}↑   ${lua_parse bandwidth ${downspeed wlp2s0}}↓
