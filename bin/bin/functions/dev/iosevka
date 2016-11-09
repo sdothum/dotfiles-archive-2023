@@ -6,6 +6,8 @@
 
 # ...................................................................... Iosevka
 
+# Usage: iosevka [amphetype]
+
 # build hooky [i l] single-storey [a g] character set
 cd /net/depot
 if [ -d Iosevka ] ;then
@@ -17,7 +19,20 @@ else
   cd Iosevka
 fi
 
+if [ "$*" ] ;then
+  amphetype=-amphetype
+  sed -i -re "/^family =/s/'Iosevka'/'Iosevka-amphetype'/" \
+    -e "/^leading =/s/= ([0-9]*)/= 1850/" \
+    /net/depot/Iosevka/parameters.toml
+else
+  sed -i -re "/^family =/s/'Iosevka-.*'/'Iosevka'/" \
+    -e "/^leading =/s/= ([0-9]*)/= 1250/" \
+    /net/depot/Iosevka/parameters.toml
+fi
+
 make STYLE_COMMON='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
-cp -rf dist/iosevka dist/iosevka-slab $HOME/.fonts
+cp -rf dist/iosevka $HOME/.fonts/iosevka$amphetype
+cp -rf dist/iosevka-slab $HOME/.fonts/iosevka$amphetype-slab
+sudo fc-cache -fv
 
 # vim: set ft=sh: #

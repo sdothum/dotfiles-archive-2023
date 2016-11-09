@@ -268,9 +268,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_______, _______, _______, _______, Lcbr,    KC_RCBR, _______, Seven,   Eight,   KC_9,    Hexe,    Hexf   },
-    {_______, _______, KC_SLSH, KC_MINS, Lprn,    KC_RPRN, _______, Four,    Five,    Six,     S(KC_C), S(KC_D)},
-    {_______, _______, KC_ASTR, KC_PLUS, Lbrc,    KC_RBRC, _______, One,     Two,     Three,   S(KC_A), S(KC_B)},
+    {_______, _______, KC_ASTR, KC_MINS, Lcbr,    KC_RCBR, _______, Seven,   Eight,   KC_9,    Hexe,    Hexf   },
+    {_______, _______, KC_SLSH, KC_PLUS, Lprn,    KC_RPRN, _______, Four,    Five,    Six,     S(KC_C), S(KC_D)},
+    {_______, _______, _______, _______, Lbrc,    KC_RBRC, _______, One,     Two,     Three,   S(KC_A), S(KC_B)},
     {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, Zero,    KC_DOT,  _______, _______, _______},
   },
 
