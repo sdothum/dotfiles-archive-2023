@@ -63,4 +63,18 @@
         endif
       endfunction
 
+      
+    " .................................................................. Sneak f
+    
+      " remap sneak_s to preserve s
+      function! Sneak_f()
+        if !exists("g:sneak_f")
+          let g:sneak_f = 1
+          unmap s
+          unmap S
+          nmap f <Plug>Sneak_s
+          nmap F <Plug>Sneak_S
+        endif
+      endfunction
+
 " functions.vim

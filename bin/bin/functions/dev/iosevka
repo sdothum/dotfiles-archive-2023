@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Iosevka
+
+# build hooky [i l] single-storey [a g] character set
+cd /net/depot
+if [ -d Iosevka ] ;then
+  cd Iosevka
+  rm -rf build dist 2>/dev/null
+  git pull origin master
+else
+  git clone https://github.com/be5invis/Iosevka.git
+  cd Iosevka
+fi
+
+make STYLE_COMMON='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
+cp -rf dist/iosevka dist/iosevka-slab $HOME/.fonts
+
+# vim: set ft=sh: #

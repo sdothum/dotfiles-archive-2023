@@ -10,9 +10,9 @@
 
 # adjust font for various displays and video cards
 if macbook ;then
-  size=8
+  size=9
 elif nvidia ;then
-  is display +1680 && size=11 || size=9
+  is display +1680 && size=10 || size=9
 elif laptop ;then
   size=9
 else

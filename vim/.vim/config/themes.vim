@@ -153,14 +153,14 @@
     " .............................................................. Switch font
 
       " let s:font = 'Input\ Mono\ Compressed\'
-      let s:font   = 'PragmataPro\'
+      " let s:font = 'PragmataPro\'
       let s:font   = 'Iosevka\'
 
       function! Fontspace(prose, source)
         execute 'set guifont=' . s:font . ' ' . a:prose
         execute 'set linespace=' .
           \(
-          \  argv(0) == 'thedarnedestthing' || expand('%:t') =~ '\(wiki\|eml\)$'
+          \  argv(0) == 'vimwiki' || expand('%:t') =~ '\(wiki\|eml\)$'
           \  ? a:prose
           \  : a:source
           \)
@@ -170,11 +170,11 @@
       function! FontSize(size)
         if system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
           " for desktop nvidia gpu
-          if &guifont =~ '13' || a:size < 0
-            call Fontspace(11, 0)
+          if &guifont =~ '11' || a:size < 0
+            call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(13, 0)
+            call Fontspace(11, 0)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* NVIDIA'
@@ -214,6 +214,6 @@
 
     " ............................................ Initial font and line spacing
 
-      call FontSize(argv(0) =~ 'thedarnedestthing\|.eml' ? +1 : -1)
+      call FontSize(argv(0) =~ 'vimwiki\|.eml' ? +1 : -1)
 
 " themes.vim

@@ -343,7 +343,15 @@
 
     " .................................................................... Sneak
 
-      let g:sneak#streak = 1
+      " by default, use cc, cl for s, S
+      let g:sneak#streak       = 1          " streak mode
+      let g:sneak#s_next       = 1          " clever next, use s S for ; .
+      let g:sneak#absolute_dir = 0          " next follows direction of invocation
+      let g:sneak#use_ic_scs   = 1          " use vim case setting
+      let g:sneak#prompt       = '>'        " prompt
+
+      " preserve s and remap to f
+      autocmd BufNewFile,BufRead * call Sneak_f()
 
     " ................................................................. Supertab
 

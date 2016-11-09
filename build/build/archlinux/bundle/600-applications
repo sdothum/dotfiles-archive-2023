@@ -46,7 +46,11 @@
 = fonts
 # ▔▔▔▔▔
   fontforge     [server]
+  nodejs        [server]
+  npm           [server]
+  otfcc         [server]
 # ttf-wps-fonts [server]
+  ttfautohint   [server]
 
 
 = games
