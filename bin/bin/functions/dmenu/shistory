@@ -5,29 +5,19 @@
 
 # ........................................................................ Shell
 
-fish() {
-  # suppress empty history entry from meta-key spawn
-  cmd=$(h | grep -v '^$' | dmenu 'History' -no-custom) || exit
-}
-
-zsh() {
-  # vacuum multiline functions from zsh history
-  egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
-  mv -f $HOME/.zhistory.vacuum $HOME/.zhistory
-
-  cmd=$(h |
-        sed -re "s/^([^ ]*)  */\1 $SEP $UTF/" |
-        column -s$UTF -t |
-        dmenu 'History' -no-custom) || exit
-
-  cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
-}
-
 case $SHELL in
-  *dash) ${DASHELL:-fish} ;;
-  *fish) fish ;;
-  *zsh)  zsh ;;
+  *dash) $DASHELL ;;
+  *fish) ;;
+
+  *zsh) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
+        mv -f $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
+
+cmd=$(h |
+      sed -re "s/^([^ ]*)  */\1 $SEP $UTF/" |
+      column -s$UTF -t |
+      dmenu 'History' -no-custom) || exit
+cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
 
 notify 'Ctrl-Alt-V' "$(echo $cmd | sed -e 's/[&][&]/and/g' -e 's/[&]/ampersand/')"
 gpaste-client add "$cmd"

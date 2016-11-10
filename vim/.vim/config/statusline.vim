@@ -195,7 +195,7 @@
           if a:proof == 0
             let l:name = (&modified ? '' : '')
           else
-            let l:name = expand('%:t:r') .(&modified ? '    ' : ' ⎵ ')  . WordCount()
+            let l:name = expand('%:t:r') . (&modified ? '    ' : ' ⎵ ')  . WordCount()
           endif
           let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
           return l:leader . l:name

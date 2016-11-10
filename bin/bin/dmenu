@@ -53,15 +53,15 @@ else
   width=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
 fi
 
-# tune padding factor to displaywidth / font calculation
+# tune padding to displaywidth / (font * factor) for current monitor resolutions in system
 if [ $width -gt 1680 ] ;then
-  padsize $width 16 '3 / 2'
+  padsize $width 14 '3 / 2'
 elif [ $width -gt 1440 ] ;then
-  padsize $width 12 2
+  padsize $width 11 2
 elif [ $width -gt 1024 ] ;then
-  padsize $width 12 2
+  padsize $width 11 2
 else
-  padsize $width 10 1
+  padsize $width 11 1
 fi
 
 hlwm &&

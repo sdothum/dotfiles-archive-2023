@@ -160,7 +160,7 @@
         execute 'set guifont=' . s:font . ' ' . a:prose
         execute 'set linespace=' .
           \(
-          \  argv(0) == 'vimwiki' || expand('%:t') =~ '\(wiki\|eml\)$'
+          \  argv(0) == 'vimwiki' || expand('%:e') =~ 'wiki\|eml'
           \  ? a:prose
           \  : a:source
           \)
@@ -214,6 +214,6 @@
 
     " ............................................ Initial font and line spacing
 
-      call FontSize(argv(0) =~ 'vimwiki|.eml' ? +1 : -1)
+      call FontSize(argv(0) =~ 'vimwiki\|.eml' ? +1 : -1)
 
 " themes.vim
