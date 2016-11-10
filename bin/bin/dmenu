@@ -55,7 +55,9 @@ fi
 
 # tune padding factor to displaywidth / font calculation
 if [ $width -gt 1680 ] ;then
-  padsize $width 14 '3 / 2'
+  padsize $width 16 '3 / 2'
+elif [ $width -gt 1440 ] ;then
+  padsize $width 12 2
 elif [ $width -gt 1024 ] ;then
   padsize $width 12 2
 else
