@@ -8,10 +8,53 @@
 
 # Usage: h [<regex>]
 
+# default interactive shell
+default=fish
+
+# filter session history
+# filter out single word commands
+#            history commands (h)
+#            process commands (k, kk, p)
+#            list commands (l, la, ll, lr, ls, lt)
+#            shell repeat command (r)
+#            startx command (x)
+filter='^[^ ]*  *(([^ ]*)|((cd|h|kk*|l[alrst]*|pa*|r|x|z)( *| .*)))$'
+
+# discard command duplicates
+week=$(date '+%W')
+weekof() {
+  # calculation assumes history size does not span more than one calendar year
+  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" |
+      grep '^[0-9]* ' |
+      sort -k 3 |
+      uniq -f 2 |
+      sort -n $1 |
+      sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' |
+      egrep -v "$filter"
+}
+
+fish_history() {
+  fish -c "history --show-time='%s %W '"
+}
+
+zsh_history() {
+  zsh -c "export HISTFILE=$HOME/.zhistory ; export HISTSIZE=10000 ; fc -R ; fc -l -t '%W' 1"
+}
+
+history() {
+  shell_history=$1_history
+  shift
+  if [ "$*" ] ;then
+    $shell_history | ack "$@" | weekof
+  else
+    $shell_history | weekof -r
+  fi
+}
+
 case $SHELL in
-  *dash) ${DASHELL:-fh} $@ ;;
-  *fish) fh $@ ;;
-  *zsh ) zh $@ ;;
+  *dash) history $default $@ ;;
+  *fish) history fish $@ ;;
+  *zsh ) history zsh $@ ;;
   *    ) $SHELL -c history | grep "$@" ;;
 esac
 
