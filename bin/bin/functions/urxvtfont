@@ -19,6 +19,6 @@ else
   size=10
 fi
 
-echo "-fn xft:PragmataPro:size=$size"
+echo "-fn xft:$MONOFONT:size=$size"
 
 # vim: set ft=sh: #

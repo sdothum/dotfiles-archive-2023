@@ -9,7 +9,7 @@
 # Usage: . parent
 #        must be sourced in order to obtain correct parent id or called within
 #        a script that is itself sourced, see log trace as called from herbstluftwm
-#        example, see office vimbk
+#        example, see pabort
 
 ps -ef | grep $PPID |
          sort |

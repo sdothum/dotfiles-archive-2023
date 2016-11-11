@@ -1,0 +1,42 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Process
+
+usage() {
+  echo "usage: $(basename $0) <regex>"
+  exit 1
+}
+
+# persistent storage for regex to subvert nested shell expansion
+PABORT=/tmp/pabort
+
+# kill process
+abort() {
+  for i in $(pgrep -f "$@")
+  do
+    p $i | grep -v pabort || continue
+    if-no "close process" || kk $i
+  done
+}
+
+case "$1" in
+  ''    ) usage ;;
+  PABORT) process=$(cat $PABORT) ;;
+  vimb  ) process='vimb .* http' ;;
+  *     ) process="$@" ;;
+esac
+
+# launched from dmenu run or within terminal session?
+if [ "$(. parent)" = "[$(hostname).local]" ] ;then
+  echo "$process" >$PABORT
+  term "$0" SHELL pabort PABORT
+else
+  abort "$process"
+  rm -f $PABORT
+fi
+
+# vim: set ft=sh: #
