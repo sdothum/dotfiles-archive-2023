@@ -20,7 +20,7 @@ default=fish
 #            startx command (x)
 filter='^[^ ]*  *(([^ ]*)|((cd|h|kk*|l[alrst]*|pa*|r|x|z)( *| .*)))$'
 
-# discard command duplicates
+# discard command duplicates, see dmenu shistory
 week=$(date '+%W')
 weekof() {
   # calculation assumes history size does not span more than one calendar year

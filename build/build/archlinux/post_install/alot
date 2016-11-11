@@ -10,7 +10,7 @@
 sudo sed -i "/string = d.strftime('%b %Y')/s|%Y|%d/%y|" \
          $(find /usr/lib -name alot)/helper.py
 # arrow head
-sudo sed -i -re "s/^( *)(arrow_att=bars_att,)/\1\2\n\1arrow_tip_char=u'\\u25b7',/" \
+sudo sed -i -re "s/^( *)(arrow_att=bars_att,)/\1\2\n\1arrow_tip_char=u'\\\\u25b7',/" \
          $(find /usr/lib -name alot)/buffers.py
 
 # vim: set ft=sh: #

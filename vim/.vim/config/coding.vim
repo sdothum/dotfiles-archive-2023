@@ -229,7 +229,7 @@
       endfunction
 
       " imap <silent><leader><leader>c <C-o>:call ToggleComment()<CR>
-      imap <silent>,,c <C-o>:call ToggleComment()<CR>
+      imap <silent>,' <C-o>:call ToggleComment()<CR>
 
     " .......................................................... Code block text
 

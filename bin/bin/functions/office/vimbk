@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Browser
+
+# kill hung vimb tab instances, see vimbt
+vimbkill() {
+  for i in $(pgrep -f 'vimb .* http')
+  do
+    p $i
+    if-no 'close tab' || kk $i
+  done
+}
+
+# launched from dmenu run or within terminal session?
+[ "$(. parent)" = "[$(hostname).local]" ] && term "$0" SHELL vimbk || vimbkill
+
+# vim: set ft=sh: #
