@@ -4,7 +4,7 @@
 # Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .................................................................... Processes
+# ...................................................................... Process
 
 usage() {
   echo "usage: [sig=<signal>] $(basename $0) <regex>"
@@ -13,12 +13,33 @@ usage() {
 
 sig=${sig:--TERM}
 
-# tentative kill..
-if [ "$*" ] ;then
-  if p $@ | grep -v "$0" ;then
-    pids=$(p $@ | grep -v "$0" | awk '{ print $2 }')
-    if-no "kill /$@/ $pids" || sudo kill $sig $pids 2>/dev/null
-  fi
+# persistent storage for regex to subvert nested shell expansion
+REGEX=/tmp/k:regex
+
+# kill by process set
+abort() {
+  for i in $(pgrep -f "$@")
+  do
+    p $i | grep -v $0 || continue
+    if-no "kill $i" && continue || sudo kill $sig $i
+    # break
+  done
+}
+
+case "$1" in
+  ''    ) usage ;;
+  REGEX) process=$(cat $REGEX) ;;
+  vimb  ) process='vimb .* http' ;;
+  *     ) process="$@" ;;
+esac
+
+# launched from dmenu run or within terminal session?
+if [ "$(. parent)" = "[$(hostname).local]" ] ;then
+  echo "$process" >$REGEX
+  term "k" SHELL k REGEX
+else
+  abort "$process"
+  rm -f $REGEX
 fi
 
 # vim: set ft=sh: #

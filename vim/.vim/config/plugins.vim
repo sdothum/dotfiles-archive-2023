@@ -377,7 +377,7 @@
 
       " " see ctags.cnf
       " " from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin
-        " let g:tagbar_type_vimwiki =
+        " let g:tagbar_type_vimwiki =․
         "   \{
         "   \  'ctagstype' : 'vimwiki'
         "   \, 'kinds'     : [
@@ -391,6 +391,7 @@
       " see ToggleComment functions.vim
       nmap <leader>c <C-_><C-_>
       vmap <leader>c <C-_><C-_>
+      " imap ,c <C-_><C-_>
 
     " ................................................................. Vimfiler
 

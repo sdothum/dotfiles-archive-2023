@@ -45,6 +45,7 @@ print_cmd = pr mail
   u = search tag:unread and not tag:trash and not tag:unknown
   U = search tag:unknown
 
+  tab = fold; untag unread; move next
   backspace = bclose
 
 [tags]

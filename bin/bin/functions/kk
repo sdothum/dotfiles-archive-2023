@@ -7,14 +7,13 @@
 # .................................................................... Processes
 
 usage() {
-  echo "usage: [sig=<signal>] $(basename $0) <regex>"
+  echo "usage: [sig=<signal>] $(basename $0) <name>.."
   exit 1
 }
 
-
 sig=${sig:--TERM}
 
-# quick kill!
+# quick kill processes by name
 if [ "$*" ] ;then
   if p $@ | grep -v "$0" ;then
     pids=$(p $@ | grep -v "$0" | awk '{ print $2 }')

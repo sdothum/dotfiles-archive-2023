@@ -21,6 +21,7 @@
 # 0.2:  center timestamp in message window, assumes balanced window widths
 #       adjust buffers.look.name_size_max to correct window balancing
 # 0.3:  name change
+# 0.4:  leader character change with iosevka font
 
 import weechat
 import time
@@ -31,21 +32,26 @@ SCRIPT_VERSION = "0.2"
 SCRIPT_LICENSE = "GPL3"
 SCRIPT_DESC    = "Buffer timestamp"
 
+# buffertape_char = '⋅⋅'
+buffertape_char = '••'
+
 settings = {
     "modulo_interval"         : '20',   # print a new timestamp every X minutes of the hour
     "center"                  : '1',    # (0) left justify (1) center
 }
 
 def prnt_timestamp(buffer, timestamp, indent):
-    weechat.prnt(buffer, '%s%s⋅⋅ %s%s%s:%s%s%s ⋅⋅' %
+    weechat.prnt(buffer, '%s%s%s %s%s%s:%s%s%s %s' %
 	(' ' * indent,
 	 weechat.color("chat_delimiters"),
+     buffertape_char,
 	 weechat.color("chat_time"),
 	 time.strftime('%H', time.localtime(timestamp)),
 	 weechat.color("chat_time_delimiters"),
 	 weechat.color("chat_time"),
 	 time.strftime('%M', time.localtime(timestamp)),
-	 weechat.color("chat_delimiters")))
+	 weechat.color("chat_delimiters"),
+     buffertape_char))
 
 def timer_cb(data, remaining_calls):
     current_time = int(time.time())

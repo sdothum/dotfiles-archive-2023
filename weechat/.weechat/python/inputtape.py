@@ -20,6 +20,7 @@
 # 0.1:  initial release
 # 0.2:  name change
 # 0.3:  name change
+# 0.4:  leader character change with iosevka font
 #
 # usage:
 # add +inputtape to the end of weechat.bar.input.items
@@ -30,7 +31,8 @@ SCRIPT_VERSION = "0.2"
 SCRIPT_LICENSE = "GPL3"
 SCRIPT_DESC    = "Unfocused input bar indicator. Add +inputtape to the end of input bar."
 
-inputtape_char = '⋅'
+# inputtape_char = '⋅'
+inputtape_char = '․'
 
 try:
     import weechat as w
