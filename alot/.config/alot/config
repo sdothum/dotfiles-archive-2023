@@ -1,27 +1,39 @@
 
-editor_cmd = dmenu compose
+# [general]
 
-# initial_command = search tag:patricia and tag:sent and steven
-initial_command = search tag:attn
-
-theme = my.theme
-
-# thread_authors_me = '◕‿◕'
-thread_authors_me = '●_●'
-
-print_cmd = pr mail
+ansi_background           = False
+body_mimetype             = text/plain
+bounce_force_address      = true
+displayed_headers         = To,Cc,Bcc,Subject,Date,Message-Id,Tags
+edit_headers_blacklist    = ' '
+edit_headers_whitelist    = Attach,From,To,Subject
+editor_cmd                = dmenu compose
+forward_force_address     = true
+initial_command           = search tag:attn
+# initial_command         = search tag:patricia and tag:sent and steven
+notify_timeout            = 4
+print_cmd                 = pr mail
+prompt_suffix             = " ─────  "
+# quit_on_last_bclose     = True
+reply_force_address       = true
+search_threads_sort_order = newest_first
+show_count_in_tag_list    = messages
+theme                     = my.theme
+# thread_authors_me       = '◕‿◕'
+thread_authors_me         = '●_●'
+thread_subject            = oldest
 
 [accounts]
 
   [[gmail]]
-    realname = Steven Hum
-    address = sdothum@gmail.com
+    realname         = Steven Hum
+    address          = sdothum@gmail.com
     sentmail_command = msmtp -t
-    signature = /home/shum/.signature
-    sent_box = maildir:////home/shum/Maildir/sdothum/SENT
-    draft_box = maildir:////home/shum/Maildir/sdothum/DRAFTS
-    # sent_box = /home/shum/Maildir/sdothum/SENT
-    # draft_box = /home/shum/Maildir/sdothum/DRAFTS
+    signature        = /home/shum/.signature
+    sent_box         = maildir:////home/shum/Maildir/sdothum/SENT
+    draft_box        = maildir:////home/shum/Maildir/sdothum/DRAFTS
+    # sent_box       = /home/shum/Maildir/sdothum/SENT
+    # draft_box      = /home/shum/Maildir/sdothum/DRAFTS
 
 [bindings]
 
@@ -39,45 +51,48 @@ print_cmd = pr mail
   p = search tag:patricia and not tag:sent
   P = search tag:patricia and tag:sent and steven
 
-  q =
+  q = bclose;refresh
   Q = exit
 
   u = search tag:unread and not tag:trash and not tag:unknown
   U = search tag:unknown
 
-  tab = fold; untag unread; move next
   backspace = bclose
+
+  [[thread]]
+    ' ' = fold; untag new; untag unread; move next
 
 [tags]
 
   [[flagged]]
     translated = ⚑
-    normal = '','','light red','','light red',''
-    focus = '','','white','','white',''
+    normal     = '','','light red','','light red',''
+    focus      = '','','white','','white',''
 
   [[unread]]
     # translated = ⇢
     translated = ◌
-    normal = '','','light red','','light red',''
-    focus = '','','white','','white',''
+    normal     = '','','light red','','light red',''
+    focus      = '','','white','','white',''
 
   [[replied]]
     # translated = ⏎
     translated = ✔
-    normal = '','','light red','','yellow',''
-    focus = '','','white','','white',''
+    normal     = '','','light red','','yellow',''
+    focus      = '','','white','','white',''
 
   [[encrypted]]
     # translated = ⚷
     translated = ‽
-    normal = '','','light red','','yellow',''
-    focus = '','','white','','white',''
+    normal     = '','','light red','','yellow',''
+    focus      = '','','white','','white',''
 
   [[attachment]]
-    # translated = ✉
-    translated = ▬
-    normal = '','','light red','','yellow',''
-    focus = '','','white','','white',''
+    # ttabranslated = ✉
+    # translated = ▬
+    translated = @
+    normal     = '','','light red','','yellow',''
+    focus      = '','','white','','white',''
 
   [[INBOX]]
     translated =
@@ -100,10 +115,10 @@ print_cmd = pr mail
   [[sent]]
     # translated = ⏎
     translated = ✔
-    normal = '','','light red','','yellow',''
-    focus = '','','white','','white',''
+    normal     = '','','light red','','yellow',''
+    focus      = '','','white','','white',''
 
   [[signed]]
     translated = ✘
-    normal = '','','light red','','light red',''
-    focus = '','','white','','white',''
+    normal     = '','','light red','','light red',''
+    focus      = '','','white','','white',''

@@ -14,7 +14,7 @@ underline $1
 while :
 do
   rm -f /tmp/abort 2>/dev/null
-  printf 'continue? [no]/yes/abort : '
+  printf 'continue? [No]/yes/abort : '
   # using bash's extended read functionality (over dash) for single character input
   IFS= read -rn1 CONTINUE
   echo
