@@ -22,6 +22,7 @@
 #       adjust buffers.look.name_size_max to correct window balancing
 # 0.3:  name change
 # 0.4:  leader character change with iosevka font
+# 0.5:  persistent tape position, requires reload for window width changes
 
 import weechat
 import time
@@ -34,6 +35,8 @@ SCRIPT_DESC    = "Buffer timestamp"
 
 # buffertape_char = '⋅⋅'
 buffertape_char = '••'
+# reload script if layout apply alters window width
+indent = -1
 
 settings = {
     "modulo_interval"         : '20',   # print a new timestamp every X minutes of the hour
@@ -54,16 +57,19 @@ def prnt_timestamp(buffer, timestamp, indent):
      buffertape_char))
 
 def timer_cb(data, remaining_calls):
+    global indent
     current_time = int(time.time())
     interval = int(weechat.config_get_plugin('modulo_interval')) * 60
     if (current_time % interval) == 0:
         infolist = weechat.infolist_get("buffer", "", "")
         if infolist:
-            if weechat.config_get_plugin('center') == '0':
-                indent = 0
-            else:
-                # centering = (window width - prefix width - (vertical separator + date)) / 2 - rounding adjustment
-                indent = (weechat.window_get_integer(weechat.current_window (), "win_width") - int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {})) - 14) / 2 - 1
+            # set static width, assumes balanced window widths
+            if indent < 0:
+                if weechat.config_get_plugin('center') == '0':
+                    indent = 0
+                else:
+                    # centering = (window width - prefix width - (vertical separator + date)) / 2 - rounding adjustment
+                    indent = (weechat.window_get_integer(weechat.current_window (), "win_width") - int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {})) - 14) / 2 - 1
             while weechat.infolist_next(infolist):
                 buffer = weechat.infolist_pointer(infolist, 'pointer')
                 prnt_timestamp(buffer, current_time, indent)

@@ -39,10 +39,60 @@ alias umount 'sudo umount'
 
 # ....................................................................... System
 
+alias font-manager 'font-manager ; sudo rm -f ~/.fonts.conf'
+alias fontmatrix 'fontmatrix ; sudo rm -f ~/.fonts.conf'
 alias htop 'glances'
 alias iotop 'sudo iotop'
+alias lpr 'lpr -P hp-LaserJet-1320-series'
+alias path 'echo $PATH'
 alias screenfetch 'fetch'
 alias traceroute 'mtr --report -c 1'
+
+# ...................................................................... Network
+
+alias friendlybear 'smbclient //friendlybear/patricia motu om'
+
+# ................................................................... Filesystem
+
+alias df "command df -h ; echo ; sudo btrfs filesystem df / ; echo ; sudo btrfs filesystem du -s '/home /opt /usr /var'"
+alias ducks "du -cks * | sort -rn | egrep -v '^0|total'"
+alias dud 'du -d 1 -h'
+
+# ......................................................................... File
+
+alias cp 'cp -i'
+alias cpl 'cp -iLRfv'
+alias cpv 'cp -iv'
+alias gprename 'gprename $PWD'
+alias m 'less'
+alias mv 'mv -i'
+alias mvv 'mv -iv'
+alias rm 'rm -i'
+alias rmv 'rm -iv'
+alias stow 'stow -t ~ -v'
+alias t 'tail -f'
+
+# .................................................................... Directory
+
+alias l1 'ls -1'
+alias ldot 'ls -lAd .*'
+alias ll 'ls -lA'
+alias llr 'ls -lAR'
+alias lr 'ls -LAR'
+alias lt 'll -t'
+alias pp 'pwd'
+alias tree 'sudo tree -aCF'
+alias treed 'sudo tree -aCdF'
+
+# ....................................................................... Search
+
+alias fd 'find . -type d'
+alias ff 'find . -type f'
+alias f 'find . -iname'
+alias g 'ack --ignore-case'
+alias gl 'ack -l --ignore-case'
+alias locate 'sudo locate'
+alias mgrep 'pcregrep -M'
 
 # ...................................................................... Desktop
 
@@ -53,47 +103,6 @@ alias hc 'herbstclient'
 alias herbstluftwm ". $HOME/.config/herbstluftwm/config/ENV"
 alias X x
 
-# .................................................................... Directory
-
-alias l1 'ls -1'
-alias ldot 'ls -lAd .*'
-alias ll 'ls -lA'
-alias llr 'ls -lAR'
-alias locate 'sudo locate'
-alias lpr 'lpr -P hp-LaserJet-1320-series'
-alias lr 'ls -LAR'
-alias lt 'll -t'
-alias path 'echo $PATH'
-alias pp 'pwd'
-alias stow 'stow -t ~ -v'
-alias tree 'sudo tree -aCF'
-alias treed 'sudo tree -aCdF'
-
-# ................................................................... Filesystem
-
-alias cp 'cp -i'
-alias cpl 'cp -iLRfv'
-alias cpv 'cp -iv'
-alias df "command df -h ; echo ; sudo btrfs filesystem df / ; echo ; sudo btrfs filesystem du -s '/home /opt /usr /var'"
-alias ducks "du -cks * | sort -rn | egrep -v '^0|total'"
-alias dud 'du -d 1 -h'
-alias gprename 'gprename $PWD'
-alias m 'less'
-alias mgrep 'pcregrep -M'
-alias mv 'mv -i'
-alias mvv 'mv -iv'
-alias rm 'rm -i'
-alias rmv 'rm -iv'
-alias t 'tail -f'
-
-# ....................................................................... Search
-
-alias fd 'find . -type d'
-alias ff 'find . -type f'
-alias f 'find . -iname'
-alias g 'ack --ignore-case'
-alias gl 'ack -l --ignore-case'
-
 # ......................................................................... Edit
 
 alias nv 'nvpy'
@@ -103,9 +112,6 @@ alias vd 'gvimdiff --role=gvimdiff'
 # .................................................................. Application
 
 alias calc 'speedcrunch'
-alias friendlybear 'smbclient //friendlybear/patricia motu om'
-alias font-manager 'font-manager ; sudo rm -f ~/.fonts.conf'
-alias fontmatrix 'fontmatrix ; sudo rm -f ~/.fonts.conf'
 alias handbrake 'ghb'
 alias music '!p ncmpcpp ;and ncmpcpp'
 alias mysql 'mysql -h localhost -u root -p'

@@ -9,6 +9,6 @@
 
 # Usage: blackboard [<hexcolor>]
 
-draw root blank ${1:-000000}
+draw root blank ${1:-070707}
 
 # vim: set ft=sh: #
