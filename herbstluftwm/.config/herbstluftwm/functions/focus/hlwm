@@ -19,7 +19,8 @@ action() {
            tag=$(herbstclient attr monitors.focus.tag)
            title=" to $(query tname $tag)" ;;
 
-    *) return 1 ;;
+    close) mode='Close' ;;
+    *    ) return 1 ;;
   esac
 }
 
@@ -56,10 +57,15 @@ if window=$(echo $windows |
   if [ -z "$mode" ] ;then
     app=$(echo $window | cut -d^ -f1 | sed 's/.*\$//')
     title=$(echo $window | cut -d^ -f2)
-    action $(echo "focus\nraise" | dmenu "$app ${title% }" -no-custom) || exit
+    action $(echo "focus\nraise\nclose" | dmenu "$app ${title% }" -no-custom) || exit
   fi
+
+  # desktop cleanup loop
+  if [ $mode = 'Close' ] ;then
+    herbstclient close "$(echo $window | cut -d$DLM -f3)"
+    exec focus hlwm
   # bring window
-  if [ ${mode% *} = 'Raise' ] ;then
+  elif [ ${mode% *} = 'Raise' ] ;then
     focus frame
     herbstclient bring "$(echo $window | cut -d$DLM -f3)"
   else

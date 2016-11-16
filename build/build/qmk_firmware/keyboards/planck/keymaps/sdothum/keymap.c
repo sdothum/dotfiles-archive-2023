@@ -104,6 +104,8 @@ enum planck_keycodes {
  ,Ctl  = OSM (MOD_LCTL)
  ,Gui  = OSM (MOD_LGUI)
  ,Alt  = OSM (MOD_LALT)
+ ,Sgui = OSM (MOD_LGUI | MOD_LSFT)
+ ,Salt = OSM (MOD_LALT | MOD_LSFT)
  ,Sft  = OSM (MOD_LSFT)
  ,Dot  = LT  (_NUMBER, KC_DOT)
  ,Tab  = LT  (_NUMBER, KC_TAB)
@@ -115,8 +117,17 @@ enum tap_dance {
   _LPRN = 0
  ,_LBRC
  ,_LCBR
- ,_BSLS
+ ,_AMPR
  ,_ASTR
+ ,_AT
+ ,_BSLS
+ ,_CIRC
+ ,_DLR
+ ,_EXLM
+ ,_HASH
+ ,_PERC
+ ,_PLUS
+ ,_SLSH
  ,_1
  ,_2
  ,_3
@@ -130,26 +141,36 @@ enum tap_dance {
 };
 
 // modifier keys
-#define Grv     GUI_T (KC_GRV)
-#define Esc     CTL_T (KC_ESC)
-#define Mins    SFT_T (KC_MINS)
-#define Caps    GUI_T (KC_CAPS)
+#define Grv     GUI_T (SFT_T (KC_GRV))
+#define Esc     ALT_T (SFT_T (KC_ESC))
+#define Mins    ALT_T (CTL_T (KC_MINS))
+#define Eql     SFT_T (CTL_T (KC_EQL))
 #define Spc     SFT_T (KC_SPC)
 #define Bspc    SFT_T (KC_BSPC)
 #define Left    ALT_T (KC_LEFT)
 #define Down    GUI_T (KC_DOWN)
 #define Up      CTL_T (KC_UP)
 #define Quot    SFT_T (KC_QUOT)
-#define Slsh    SFT_T (KC_SLSH)
-#define Ent     CTL_T (KC_ENT)
-#define Bsls    GUI_T (KC_BSLS)
+#define Rght    SFT_T (CTL_T (KC_RGHT))
+#define Slsh    ALT_T (CTL_T (KC_SLSH))
+#define Ent     ALT_T (SFT_T (KC_ENT))
+#define Bsls    GUI_T (SFT_T (KC_BSLS))
 
 // tap dance keys
 #define Lcbr    TD    (_LCBR)
 #define Lprn    TD    (_LPRN)
 #define Lbrc    TD    (_LBRC)
-#define Bksl    TD    (_BSLS)
+#define Ampr    TD    (_AMPR)
 #define Astr    TD    (_ASTR)
+#define At      TD    (_AT)
+#define Sbsls   TD    (_BSLS)
+#define Circ    TD    (_CIRC)
+#define Dlr     TD    (_DLR)
+#define Exlm    TD    (_EXLM)
+#define Hash    TD    (_HASH)
+#define Perc    TD    (_PERC)
+#define Plus    TD    (_PLUS)
+#define Nslsh   TD    (_SLSH)
 #define One     TD    (_1)
 #define Two     TD    (_2)
 #define Three   TD    (_3)
@@ -187,7 +208,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
     {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
-    {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {Eql,     Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
   },
 
 #ifdef QWERTY
@@ -207,7 +228,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
     {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-    {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {Eql,     Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
   },
 #endif
 
@@ -228,7 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
     {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
     {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-    {KC_EQL,  Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      KC_RGHT},
+    {Eql,     Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
   },
 #endif
 
@@ -269,7 +290,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUMBER] = {
     {_______, _______, KC_ASTR, KC_MINS, Lcbr,    KC_RCBR, _______, Seven,   Eight,   KC_9,    Hexe,    Hexf   },
-    {_______, _______, KC_SLSH, KC_PLUS, Lprn,    KC_RPRN, _______, Four,    Five,    Six,     S(KC_C), S(KC_D)},
+    {_______, _______, Nslsh,   KC_PLUS, Lprn,    KC_RPRN, _______, Four,    Five,    Six,     S(KC_C), S(KC_D)},
     {_______, _______, _______, _______, Lbrc,    KC_RBRC, _______, One,     Two,     Three,   S(KC_A), S(KC_B)},
     {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, Zero,    KC_DOT,  _______, _______, _______},
   },
@@ -289,10 +310,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {Gui,     KC_AMPR, Astr,    Bksl,    Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
-    {Ctl,     KC_DLR,  KC_PERC, KC_CIRC, Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-    {Sft,     KC_EXLM, KC_AT,   KC_HASH, Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-    {KC_PLUS, ___x___, ___x___, ___x___, Dot,     KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+    {Sgui,    Ampr,    Astr,    Sbsls,   Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
+    {Salt,    Dlr,     Perc,    Circ,    Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
+    {Sft,     Exlm,    At,      Hash,    Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
+    {Plus,    ___x___, ___x___, ___x___, Dot,     KC_CAPS, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
   },
 
 // ............ ..................................................Navigation Pad
@@ -356,8 +377,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef AUDIO_ENABLE
-#define CAPSLOCK_ON_SOUND   S__NOTE(_C7 ),ED_NOTE(_E7 )
-#define CAPSLOCK_OFF_SOUND  S__NOTE(_E7 ),ED_NOTE(_C7 )
+#define CAPSLOCK_ON_SOUND   E__NOTE(_E7  ) \
+                           ,Q__NOTE(_GS7 )
+#define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7 ) \
+                           ,Q__NOTE(_E7  )
 float tone_startup[][2]   = SONG (STARTUP_SOUND);
 float tone_colemak[][2]   = SONG (COLEMAK_SOUND);
 #ifdef QWERTY
@@ -430,16 +453,18 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void bslash(qk_tap_dance_state_t *state, void *user_data)
+void ampher(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_LSFT);
-    register_code   (KC_BSLS);
-    unregister_code (KC_BSLS);
+    register_code   (KC_COMM);
+    unregister_code (KC_COMM);
     unregister_code (KC_LSFT);
   } else {
-    register_code   (KC_BSLS);
-    unregister_code (KC_BSLS);
+    register_code   (KC_LSFT);
+    register_code   (KC_7);
+    unregister_code (KC_7);
+    unregister_code (KC_LSFT);
   }
   reset_tap_dance(state);
 }
@@ -456,6 +481,130 @@ void astrix(qk_tap_dance_state_t *state, void *user_data)
     register_code   (KC_8);
     unregister_code (KC_8);
     unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void at(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_2);
+    unregister_code (KC_2);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_2);
+    unregister_code (KC_2);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void bslash(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_BSLS);
+    unregister_code (KC_BSLS);
+    unregister_code (KC_LSFT);
+  } else {
+    register_code   (KC_BSLS);
+    unregister_code (KC_BSLS);
+  }
+  reset_tap_dance(state);
+}
+
+void circum(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_6);
+    unregister_code (KC_6);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_6);
+    unregister_code (KC_6);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void dollar(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_4);
+    unregister_code (KC_4);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_4);
+    unregister_code (KC_4);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void exclaim(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_1);
+    unregister_code (KC_1);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_1);
+    unregister_code (KC_1);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void hash(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_3);
+    unregister_code (KC_3);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_3);
+    unregister_code (KC_3);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void percent(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_5);
+    unregister_code (KC_5);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_5);
+    unregister_code (KC_5);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void plus(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_EQL);
+    unregister_code (KC_EQL);
+  } else {
+    register_code   (KC_LSFT);
+    register_code   (KC_EQL);
+    unregister_code (KC_EQL);
+    unregister_code (KC_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void nslash(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_BSLS);
+    unregister_code (KC_BSLS);
+  } else {
+    register_code   (KC_SLSH);
+    unregister_code (KC_SLSH);
   }
   reset_tap_dance(state);
 }
@@ -608,8 +757,17 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren)
  ,[_LBRC] = ACTION_TAP_DANCE_FN (brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN (curly)
- ,[_BSLS] = ACTION_TAP_DANCE_FN (bslash)
+ ,[_AMPR] = ACTION_TAP_DANCE_FN (ampher)
  ,[_ASTR] = ACTION_TAP_DANCE_FN (astrix)
+ ,[_AT]   = ACTION_TAP_DANCE_FN (at)
+ ,[_BSLS] = ACTION_TAP_DANCE_FN (bslash)
+ ,[_CIRC] = ACTION_TAP_DANCE_FN (circum)
+ ,[_DLR]  = ACTION_TAP_DANCE_FN (dollar)
+ ,[_EXLM] = ACTION_TAP_DANCE_FN (exclaim)
+ ,[_HASH] = ACTION_TAP_DANCE_FN (hash)
+ ,[_PERC] = ACTION_TAP_DANCE_FN (percent)
+ ,[_PLUS] = ACTION_TAP_DANCE_FN (plus)
+ ,[_SLSH] = ACTION_TAP_DANCE_FN (nslash)
  ,[_1]    = ACTION_TAP_DANCE_FN (one)
  ,[_2]    = ACTION_TAP_DANCE_FN (two)
  ,[_3]    = ACTION_TAP_DANCE_FN (three)

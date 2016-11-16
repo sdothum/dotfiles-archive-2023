@@ -8,6 +8,9 @@
 
 # Usage: iosevka [amphetype]
 
+upright='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
+italic='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
+
 # build hooky [i l] single-storey [a g] character set
 cd /net/depot
 if [ -d Iosevka ] ;then
@@ -30,9 +33,11 @@ else
     /net/depot/Iosevka/parameters.toml
 fi
 
-make STYLE_COMMON='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
-cp -rf dist/iosevka $HOME/.fonts/iosevka$amphetype
-cp -rf dist/iosevka-slab $HOME/.fonts/iosevka$amphetype-slab
+make STYLE_UPRIGHT="$upright" STYLE_ITALIC="$italic"
+rm -rf $HOME/.fonts/iosevka$amphetype
+rm -rf $HOME/.fonts/iosevka$amphetype-slab
+cp -rv dist/iosevka $HOME/.fonts/iosevka$amphetype
+cp -rv dist/iosevka-slab $HOME/.fonts/iosevka$amphetype-slab
 sudo fc-cache -fv
 
 # vim: set ft=sh: #

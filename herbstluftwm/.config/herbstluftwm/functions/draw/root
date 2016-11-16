@@ -21,7 +21,6 @@ arm && exit
 
 SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
-NOBLUR=$HLWM:noblur
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50
