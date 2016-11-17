@@ -6,11 +6,14 @@
 # ......................................................................... Edit
 
 # shell scripts excluding .man (see dmenu man)
+
+filter='\.cache|\.deprecated|\.hg|makepkg'
+
 file=$(echo $(find -L $HOME/bin -type f) \
             $(find -L $HOME/build/archlinux -type f) \
             $(find -L $HOME/.config/herbstluftwm -type f) |
        tr ' ' '\n' |
-       egrep -v '\.cache|\.deprecated|\.hg|makepkg' |
+       egrep -v "$filter" |
        sed -e "s|$HOME/bin/|bin/|" \
            -e 's|.*/archlinux/|archlinux/|' \
            -e 's|.*/herbstluftwm/|herbstluftwm/|' |
@@ -26,7 +29,8 @@ if echo $file | grep -q "$SEP" ;then
   file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
 else
   # (tic) 'script for quick menu action
-  file=$(find $HOME -type f -name $(echo $file | sed "s/[' ]//g") |
+  file=$(find $HOME -type f -name $(unquote $file) |
+         egrep -v "$filter" |
          head -1 |
          sed "s|^$HOME/||")
   [ $file ] || exec dmenu scripts
