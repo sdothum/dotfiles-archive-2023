@@ -18,10 +18,20 @@ file=$(echo $(find -L $HOME/bin -type f) \
        sort |
        history scripts |
        column -s^ -t |
-       dmenu 'Edit Script' -no-custom) || exit
+       dmenu 'Edit Script') || exit
 
-history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
-file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
+if echo $file | grep -q "$SEP" ;then
+  history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+  echo $file | sed "s/ *$SEP/^$SEP/" >/tmp/debug
+  file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
+else
+  # (tic) 'script for quick menu action
+  file=$(find $HOME -type f -name $(echo $file | sed "s/[' ]//g") |
+         head -1 |
+         sed "s|^$HOME/||")
+  [ $file ] || exec dmenu scripts
+  history scripts "${file##*/}^$SEP $(echo $file | sed "s|^stow/[^/]*/||")"
+fi
 
 if [ -e $HOME/$file ] ;then
   eval v $HOME/$file
@@ -29,6 +39,8 @@ elif [ -e $HOME/build/$file ] ;then
   eval v $HOME/build/$file
 elif [ -e $HOME/.config/$file ] ;then
   eval v $HOME/.config/$file
+else
+  exec dmenu scripts
 fi
 
 # vim: set ft=sh: #

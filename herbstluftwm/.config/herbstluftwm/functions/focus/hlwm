@@ -60,29 +60,28 @@ if window=$(echo $windows |
     action $(echo "focus\nraise\nclose" | dmenu "$app ${title% }" -no-custom) || exit
   fi
 
-  # desktop cleanup loop
-  if [ $mode = 'Close' ] ;then
-    herbstclient close "$(echo $window | cut -d$DLM -f3)"
-    exec focus hlwm
-  # bring window
-  elif [ ${mode% *} = 'Raise' ] ;then
-    focus frame
-    herbstclient bring "$(echo $window | cut -d$DLM -f3)"
-  else
-    swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
-    lock set swap_monitors_to_get_tag 0
-    if echo $window | grep " \^$VISIBLE [0-9]" ;then
-      # focus normal tag
-      herbstclient chain . use "$TAG" . jumpto "$(echo $window | cut -d$DLM -f3)"
-    else
-      # focus (restore) tick'tag
-      herbstclient use "${TAG#\'}"
-      focus frame
-      herbstclient bring "$(echo $window | cut -d$DLM -f3)"
-    fi
-    unlock set swap_monitors_to_get_tag $swap_monitors
-    restore panel
-  fi
+  case "$mode" in
+    Close*) herbstclient close "$(echo $window | cut -d$DLM -f3)"
+            # desktop cleanup loop
+            exec focus hlwm ;;
+
+    Raise*) focus frame
+            herbstclient bring "$(echo $window | cut -d$DLM -f3)" ;;
+
+    *) swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
+       lock set swap_monitors_to_get_tag 0
+       if echo $window | grep " \^$VISIBLE [0-9]" ;then
+         # focus normal tag
+         herbstclient chain . use "$TAG" . jumpto "$(echo $window | cut -d$DLM -f3)"
+       else
+         # focus (restore) tick'tag
+         herbstclient use "${TAG#\'}"
+         focus frame
+         herbstclient bring "$(echo $window | cut -d$DLM -f3)"
+       fi
+       unlock set swap_monitors_to_get_tag $swap_monitors
+       restore panel ;;
+  esac
   echo $window | grep " $INVISIBLE [0-9]${DLM}0x" && query ttag $TAG
 fi
 

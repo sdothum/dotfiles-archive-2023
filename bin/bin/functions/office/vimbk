@@ -7,6 +7,6 @@
 # ...................................................................... Browser
 
 # kill vimb instance
-k vimb
+exec k vimb
 
 # vim: set ft=sh: #
