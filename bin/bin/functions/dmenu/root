@@ -1,0 +1,61 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... Background
+
+root() {
+  find $PALETTE -name '*png' | egrep '(dark|light)/' |
+                               sed -r "s|.*/(.*)/(.*)/(.*).png|\3^$SEP \1 \2|" |
+                               sort -r -k2 \
+                               >$HISTORY/root
+}
+
+# rebuild swatches
+[ "$*" ] && root
+
+themes() {
+  find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'
+}
+
+hex() {
+  echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'
+}
+set -x
+while color=$( ( [ "$menu" ] &&
+                 ( echo | history root | sed "1i$menu" ) ||
+                 ( echo | history root | sed "1i[ palette ]" ) ) |
+              column -s^ -t |
+              dmenu 'Setroot') || exit
+do
+  case "$color" in
+    ''           ) break ;;
+    '[ palette ]') root ;;
+    '[ dark  ]'  ) conky theme dark $bg ;;
+    '[ light ]'  ) conky theme light $bg ;;
+
+    '[ save  ]') hue=$(echo "$(themes)" | dmenu 'Colour') || exit
+                 contrast=$(cat $CONTRAST)
+                 history root "$bg^$SEP $contrast $hue"
+                 swatch $bg $hue
+                 ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND
+                 break ;;
+
+    *dark* |\
+    *light*) bg=$(echo $color | cut -d' ' -f1)
+             draw root blank $bg
+             ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
+             history root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+             break ;;
+
+    *) hex $color || continue
+       draw root blank $color
+       bg=$color
+       # overlay conky panel over rofi screen!
+       draw conky
+       menu='[ dark  ]\n[ light ]\n[ save  ]' ;;
+  esac
+done
+
+# vim: set ft=sh: #

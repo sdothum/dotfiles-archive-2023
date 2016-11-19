@@ -99,7 +99,6 @@ shortcut-add go=https://encrypted.google.com/search?q=$0
 shortcut-add ha=http://www.haskell.org/hoogle/?hoogle=$0
 shortcut-add im=http://www.imdb.com/find?s=all&q=$0
 shortcut-add ja=http://www.jango.com/music/$0
-shortcut-add ki=http://kat.ph/usearch/$0%20category:movies/
 shortcut-add li=https://duckduckgo.com/?q=linux%20$0
 shortcut-add me=http://www.mec.ca/shop/?q=$0
 shortcut-add mr=http://www.mrqe.com/search?q=$0

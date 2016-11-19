@@ -17,8 +17,10 @@ export HLWM=$ROOT/herbstluftwm
 
 # ............................................................ Persistent states
 
-export BACKGROUND=$HOME/images/colors/default
+export PALETTE=$HOME/images/colors
+export BACKGROUND=$PALETTE/default
 export COLOR=$BACKGROUND:color
+export HISTORY=$HOME/bin/functions/dmenu/.history
 export NOBLUR=$HOME/.noblur
 export SETROOT=$HOME/.setroot
 export WALLPAPER=$HOME/images/backgrounds/default
@@ -27,6 +29,7 @@ export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
 export COMPTON=$HLWM:compton
 export CONKY=$HLWM:conky
+export CONTRAST=$CONKY:contrast
 export DYNAMIC=$HLWM:dynamic
 export FORTUNE=$HLWM:fortune
 export FOCUS=$HLWM:focus

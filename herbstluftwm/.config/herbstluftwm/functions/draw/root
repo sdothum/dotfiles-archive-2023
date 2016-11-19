@@ -27,8 +27,6 @@ blur=50
 brighten=-0.025
 # modulo of random number for random desktop wallpaper
 modulo=3
-# color swatch size to create
-size=180x180
 
 [ -e $SETBLUR ] || echo '0: :0: ' >$SETBLUR
 
@@ -88,10 +86,6 @@ set_border() {
 
 # ............................................................... Set background
 
-background() {
-  ls -l $BACKGROUND | cut -d'>' -f2
-}
-
 blank() {
   if [ "$*" ] ;then
     color="$1"
@@ -100,9 +94,10 @@ blank() {
   fi
   echo $color >$COLOR
   setroot --blank-color "#$color" 2>/dev/null
-  if echo "$background" | grep -q '/dark/' ;then
+  contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
+  if [ "$contrast" = dark ] ;then
     set_border "$(conky theme light $color)"
-  elif echo "$background" | grep -q '/light/' ;then
+  elif [ "$contrast" = light ] ;then
     set_border "$(conky theme dark $color)"
   else
     set_border "$(conky theme contrast $color)"
@@ -116,7 +111,7 @@ color() {
   # initialize default link
   [ -L $BACKGROUND ] &&
     exists $BACKGROUND ||
-    ln -sf $(find ${BACKGROUND%/default} -name '*.png' | head -1) $BACKGROUND
+    ln -sf $(find $PALETTE -name '*.png' | head -1) $BACKGROUND
 }
 
 select_blank() {
@@ -125,9 +120,8 @@ select_blank() {
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r \
                -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
-               --start-at $(lname $BACKGROUND) $(find ${BACKGROUND%/default}/ -name '*.png')
-  background=$(background)
-  blank $(basename $background .png)
+               --start-at $(lname $BACKGROUND) $(find $PALETTE -name '*.png')
+  blank $(basename $(ls -l $BACKGROUND | cut -d'>' -f2) .png)
 }
 
 # ................................................................ Set wallpaper
@@ -174,7 +168,7 @@ case "$1" in
            echo blank >$SETROOT ;;
 
   save) color=$(cat $COLOR)
-        convert -size $size xc:"#$color" ${BACKGROUND%/default}/$color.png
+        swatch $color
         notify low 'Background Color' "$color saved" ;;
 
   select) rm -f $SHUFFLE 2>/dev/null

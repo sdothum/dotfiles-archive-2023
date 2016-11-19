@@ -60,7 +60,7 @@
             focus = 'standout','','yellow','light gray','yellow,bold','dark blue'
             width = 'fit', 5,5
         [[[tags]]]
-            normal = 'bold','','dark cyan','','#722',''
+            normal = 'bold','','dark cyan','','#b11',''
             focus = 'standout','','yellow','light gray','light red,bold','dark blue'
         [[[authors]]]
             normal = 'default,underline','','light blue','default','#088','default'

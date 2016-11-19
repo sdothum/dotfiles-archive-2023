@@ -154,12 +154,14 @@ case "$action" in
            hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f18)
            paper
            complimentary $1
+           echo dark >$CONTRAST
          fi ;;
 
   dark) if [ $# -eq 1 ] ;then
           hexgen $(conky palette $1 | grep -a 'Monochromatic'  | cut -d/ -f2)
           ink
           complimentary $1
+          echo light >$CONTRAST
         fi ;;
 
   test) if [ $# -eq 1 ] ;then

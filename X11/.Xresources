@@ -19,7 +19,8 @@ XTerm*bellIsUrgent:           true
 XTerm*charClass:              33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 XTerm*cursorBlink:            false
 XTerm*cursorColor:            yellow
-XTerm*faceName:               PragmataPro:pixelsize=13
+! XTerm*faceName:             PragmataPro:pixelsize=13
+XTerm*faceName:               Iosevka:pixelsize=13
 XTerm*fullscreen:             never
 XTerm*internalBorder:         10
 XTerm*locale:                 en_US.utf8
@@ -83,8 +84,8 @@ URxvt*saveLines:              9000            ! non-tmux window scroll back
 
 ! text
 ! URxvt*font:                 xft:Input Mono Compressed:size=10
-! URxvt*font:                 xft:Iosevka Term:size=10
-URxvt*font:                   xft:PragmataPro:size=10
+! URxvt*font:                 xft:PragmataPro:size=10
+URxvt*font:                   xft:Iosevka Term:size=10
 ! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
 ! URxvt*linespace:            0               ! pixels between lines for added readability
 URxvt*internalBorder:         10              ! pixels from frame edge

@@ -37,27 +37,23 @@ thread_subject            = oldest
 
 [bindings]
 
-  A = search tag:attachment
-
-  e = search tag:clients
-  E = search tag:family
-
-  i = search tag:attn
-  I = search tag:thedarnedestthing
-
-  n = search tag:INBOX or tag:inbox or tag:new
-  N = search tag:SENT or tag:sent
-
-  p = search tag:patricia and not tag:sent
-  P = search tag:patricia and tag:sent and steven
-
-  q = bclose;refresh
-  Q = exit
-
-  u = search tag:unread and not tag:trash and not tag:unknown
-  U = search tag:unknown
-
+  A         = search tag:attachment
+  e         = search tag:clients
+  E         = search tag:family
+  i         = search tag:attn
+  I         = search tag:thedarnedestthing
+  n         = search tag:INBOX or tag:inbox or tag:new
+  N         = search tag:SENT or tag:sent
+  p         = search tag:patricia and not tag:sent
+  P         = search tag:patricia and tag:sent and steven
+  q         = bclose; refresh
+  Q         = flush; exit
+  u         = search tag:unread and not tag:trash and not tag:unknown
+  U         = search tag:unknown
   backspace = bclose
+
+  [[search]]
+    s = toggletags unread; move down
 
   [[thread]]
     ' ' = fold; untag new; untag unread; move next
