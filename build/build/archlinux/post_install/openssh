@@ -13,7 +13,7 @@ systemd enable sshd
 annotate "Generate public/private rsa key pair:\n
 ssh-keygen -t rsa -b 2048\n
 \n
-Copy keys to target servers:\n
-ssh-copy-id $USER@server"
+From destination, ssh into server:\n
+ssh-copy-id $USER@destination"
 
 # vim: set ft=sh: #

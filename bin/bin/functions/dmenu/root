@@ -22,25 +22,25 @@ themes() {
 hex() {
   echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'
 }
-set -x
+
 while color=$( ( [ "$menu" ] &&
                  ( echo | history root | sed "1i$menu" ) ||
-                 ( echo | history root | sed "1i[ palette ]" ) ) |
+                 ( echo | history root | sed "1i[ viewer ]\n[ update ]" ) ) |
               column -s^ -t |
               dmenu 'Setroot') || exit
 do
   case "$color" in
-    ''           ) break ;;
-    '[ palette ]') root ;;
-    '[ dark  ]'  ) conky theme dark $bg ;;
-    '[ light ]'  ) conky theme light $bg ;;
+    ''          ) break ;;
+    '[ viewer ]') exec draw root restore ;;
+    '[ update ]') root ;;
+    '[ dark  ]' ) conky theme dark $bg ;;
+    '[ light ]' ) conky theme light $bg ;;
 
     '[ save  ]') hue=$(echo "$(themes)" | dmenu 'Colour') || exit
                  contrast=$(cat $CONTRAST)
                  history root "$bg^$SEP $contrast $hue"
                  swatch $bg $hue
-                 ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND
-                 break ;;
+                 ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
 
     *dark* |\
     *light*) bg=$(echo $color | cut -d' ' -f1)

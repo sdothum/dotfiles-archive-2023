@@ -20,4 +20,8 @@ grep $(hostname) /etc/hosts &&
   sudo sed -i "/$(hostname)/s/[0-9.]*/$(address)/" /etc/hosts ||
   echo $(address) $(hostname) | sudo tee >>/etc/hosts
 
+sudo wifi-menu
+
+! server && annotate 'check /etc/hosts (luna) if wlan0 errors on boot'
+
 # vim: set ft=sh: #

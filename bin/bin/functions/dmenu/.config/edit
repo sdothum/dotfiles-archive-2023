@@ -2,6 +2,7 @@ addressbook contacts :: $HOME/Maildir/addressbook $HOME/Maildir/contacts
 alot mail :: $HOME/.config/alot/config $HOME/.config/alot/themes/*
 arch bundle :: $HOME/build/archlinux/bundle/*
 arch install :: $HOME/build/archlinux/archlinux-*
+arch pi :: $HOME/build/archlinux/archlinux-pi $HOME/build/archlinux/bundle/pi-bundle
 arch post-install :: $HOME/build/archlinux/post_install/*
 arch pre-install :: $HOME/build/archlinux/pre_install/*
 arch user-install :: $HOME/build/archlinux/user_install/*

@@ -353,6 +353,11 @@
       " preserve s and remap to f
       autocmd BufNewFile,BufRead * call Sneak_f()
 
+    " ................................................................. Snipmate
+
+      let g:snipMate = get(g:, 'snipMate', {})
+      let g:snipMate.scope_aliases = {}
+
     " ................................................................. Supertab
 
       " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab

@@ -7,7 +7,7 @@
 # ..................................................................... smbnetfs
 
 [ -f /etc/samba/smb.conf ] || sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf
-if [ -z $(cat /etc/samba/smb.conf | grep usershare) ] ;then
+if [ -z $(cat /etc/samba/smb.conf | grep 'usershare') ] ;then
   set --export USERSHARES_DIR /var/lib/samba/usershares
   set --export USERSHARES_GROUP sambashare
   sudo mkdir -p $USERSHARES_DIR

@@ -2,6 +2,10 @@
 # sdothum - 2016 (c) wtfpl
 
 # see bundle_install
+# manual install after initial boot:
+# pacman -S rsync
+# then run rsync pi from main server to install scripts and proceed with
+# archlinux-pi
 
 = aur package manager
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -12,47 +16,32 @@ a yaourt
 
 = core
 # ▔▔▔▔
-  autoconf
-  automake
   bc
-  bison
   expac
-  flex
-  grep
-  iputils
-  licenses
-  linux-raspberrypi
-  logrotate
-  make
-  man-db
-  man-pages
-  nano
   net-tools
-  netctl
-  patch
-  pkg-config
-  procps-ng
-  raspberrypi-firmware
-  usbutils
-  vi
-  which
-  wireless_tools
+# wireless_tools
 
 
 = entropy
 # ▔▔▔▔▔▔▔
-  haveged
+# haveged
+
+
+= languages
+# ▔▔▔▔▔▔▔▔▔
+  python
+  ruby
+g term-ansicolor
 
 
 = shell
 # ▔▔▔▔▔
+  autojump
   dash
-  fasd
-  prezto-git
-  zsh
+  fish
 
 
-zsh= x11 drivers
+= x11 drivers
 # ▔▔▔▔▔▔▔▔▔▔▔
   xf86-video-fbdev
 
@@ -68,6 +57,7 @@ zsh= x11 drivers
 = terminal
 # ▔▔▔▔▔▔▔▔
   rxvt-unicode
+  tmux
 
 
 = window manager
@@ -86,6 +76,7 @@ zsh= x11 drivers
 
 = system utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  ack
   figlet
   screenfetch
   sudo
@@ -99,6 +90,7 @@ zsh= x11 drivers
 = network
 # ▔▔▔▔▔▔▔
   connman
+# networkmanager
 
 
 = network security
@@ -114,6 +106,8 @@ zsh= x11 drivers
 
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# dmenu package contains stest
+  dmenu
   dunst
   libnotify
   rofi
@@ -121,7 +115,7 @@ zsh= x11 drivers
 
 = gtk themes and engines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  gtk-engine-murrine
+# gtk-engine-murrine
 
 
 = x11

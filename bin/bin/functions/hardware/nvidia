@@ -7,6 +7,6 @@
 # .......................................................................... GPU
 
 # if macbook nvidia gpu
-lspci | grep VGA | grep -q NVIDIA
+lspci | grep 'VGA' | grep -q 'NVIDIA'
 
 # vim: set ft=sh: #

@@ -16,6 +16,8 @@ switch_frame() {
   herbstclient chain . bring $winid . focus_monitor $2
   focus window
   unlock
+  # required for && .. || construct below
+  return 0
 }
 
 # move window and focus to monitor (0,1)

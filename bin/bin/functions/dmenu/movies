@@ -39,7 +39,7 @@ cache() {
 }
 
 # any new media added?
-if stest -dqr -n "$catlg" $library ;then
+if [ ! -s "$catlg" ] || stest -dqr -n "$catlg" $library ;then
   cache
 fi
 [ $cache ] && exit

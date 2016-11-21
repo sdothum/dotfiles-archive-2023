@@ -30,7 +30,7 @@
 //   tap key right-shift and modifier row (consistent with colemak-dh)
 //
 //   Autocompletion tap dance key pairs (),[],{} are available from the
-//   number/symbol layer, as well as, other regex characters
+//   number/symbol layer, as well as, numerous (un)shift key values
 //
 //   The navigation pad provides a single hand right thumb activated cluster
 //   with left hand modifiers
@@ -70,6 +70,9 @@
 //
 //   Proper case naming for modifier key names to avoid define conflicts (DOWN
 //   and UP in particular) adds readability bonus
+//
+//   _One shot modifier keymap table defines
+//   __Double tap modifier keymap table defines
 
 #include "config.h"
 #include "planck.h"
@@ -101,16 +104,17 @@ enum planck_keycodes {
  ,PLOVER
  ,PLOVEX
  ,KEYTEST
- ,Ctl  = OSM (MOD_LCTL)
- ,Gui  = OSM (MOD_LGUI)
- ,Alt  = OSM (MOD_LALT)
- ,Sgui = OSM (MOD_LGUI | MOD_LSFT)
- ,Salt = OSM (MOD_LALT | MOD_LSFT)
- ,Sft  = OSM (MOD_LSFT)
- ,Dot  = LT  (_NUMBER, KC_DOT)
- ,Tab  = LT  (_NUMBER, KC_TAB)
- ,Del  = LT  (_SYMBOL, KC_DEL)
- ,Zero = LT  (_SYMBOL, KC_0)
+ ,_Ctl  = OSM (MOD_LCTL)
+ ,_Gui  = OSM (MOD_LGUI)
+ ,_Alt  = OSM (MOD_LALT)
+ ,_SGui = OSM (MOD_LGUI | MOD_LSFT)
+ ,_SAlt = OSM (MOD_LALT | MOD_LSFT)
+ ,_CAlt = OSM (MOD_LALT | MOD_LCTL)
+ ,_Sft  = OSM (MOD_LSFT)
+ ,Dot   = LT  (_NUMBER, KC_DOT)
+ ,Tab   = LT  (_NUMBER, KC_TAB)
+ ,Del   = LT  (_SYMBOL, KC_DEL)
+ ,Zero  = LT  (_SYMBOL, KC_0)
 };
 
 enum tap_dance {
@@ -127,6 +131,7 @@ enum tap_dance {
  ,_HASH
  ,_PERC
  ,_PLUS
+ ,_QUOT
  ,_SLSH
  ,_1
  ,_2
@@ -157,30 +162,31 @@ enum tap_dance {
 #define Bsls    GUI_T (SFT_T (KC_BSLS))
 
 // tap dance keys
-#define Lcbr    TD    (_LCBR)
-#define Lprn    TD    (_LPRN)
-#define Lbrc    TD    (_LBRC)
-#define Ampr    TD    (_AMPR)
-#define Astr    TD    (_ASTR)
-#define At      TD    (_AT)
-#define Sbsls   TD    (_BSLS)
-#define Circ    TD    (_CIRC)
-#define Dlr     TD    (_DLR)
-#define Exlm    TD    (_EXLM)
-#define Hash    TD    (_HASH)
-#define Perc    TD    (_PERC)
-#define Plus    TD    (_PLUS)
-#define Nslsh   TD    (_SLSH)
-#define One     TD    (_1)
-#define Two     TD    (_2)
-#define Three   TD    (_3)
-#define Four    TD    (_4)
-#define Five    TD    (_5)
-#define Six     TD    (_6)
-#define Seven   TD    (_7)
-#define Eight   TD    (_8)
-#define Hexe    TD    (_E)
-#define Hexf    TD    (_F)
+#define __Lcbr  TD    (_LCBR)
+#define __Lprn  TD    (_LPRN)
+#define __Lbrc  TD    (_LBRC)
+#define __Ampr  TD    (_AMPR)
+#define __Astr  TD    (_ASTR)
+#define __At    TD    (_AT)
+#define __Bsls  TD    (_BSLS)
+#define __Circ  TD    (_CIRC)
+#define __Dlr   TD    (_DLR)
+#define __Exlm  TD    (_EXLM)
+#define __Hash  TD    (_HASH)
+#define __Perc  TD    (_PERC)
+#define __Plus  TD    (_PLUS)
+#define __Quot  TD    (_QUOT)
+#define __Slsh  TD    (_SLSH)
+#define __1     TD    (_1)
+#define __2     TD    (_2)
+#define __3     TD    (_3)
+#define __4     TD    (_4)
+#define __5     TD    (_5)
+#define __6     TD    (_6)
+#define __7     TD    (_7)
+#define __8     TD    (_8)
+#define __E     TD    (_E)
+#define __F     TD    (_F)
 
 // adjust layer key
 #define ADJUST  MO    (_ADJUST)
@@ -192,7 +198,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ..................................................................... Colemak
 //
-// http://www.keyboard-layout-editor.com/#/gists/663687de31e2fa25f3f457a093352389
+// http://www.keyboard-layout-editor.com/#/gists/55379d7d458395c51aec5be51829d9dc
 
   // ,-----------------------------------------------------------------------------------.
   // |   ~  |   Q  |   W  |   F  |   P  |   V  |   J  |   L  |   U  |   Y  |   ;  |  \   |
@@ -207,8 +213,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAK] = {
     {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
     {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
-    {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, Slsh   },
-    {Eql,     Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+    {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot,  Slsh   },
+    {Eql,     _Ctl,    _Gui,    _Alt,    Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
   },
 
 #ifdef QWERTY
@@ -228,7 +234,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
     {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
     {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-    {Eql,     Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+    {Eql,     _Ctl,    _Gui,    _Alt,    Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
   },
 #endif
 
@@ -246,10 +252,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_DVORAK] = {
-    {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
+    {Grv,     __Quot,  KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
     {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
     {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-    {Eql,     Ctl,     Gui,     Alt,     Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+    {Eql,     _Ctl,    _Gui,    _Alt,    Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
   },
 #endif
 
@@ -268,57 +274,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_PLOVER] = {
-    {_______,  KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-    {_______,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-    {_______,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-    {PLOVEX,   _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, _______},
+    {_______, KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
+    {_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+    {_______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+    {PLOVEX,  _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, _______},
   },
 
 // ................................................................ Number Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/3b918c370c516dd0a2a91538fde5edf1
+// http://www.keyboard-layout-editor.com/#/gists/9fad9e71abd3d48acf22e39716a0f232
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |   {  |   }  |      |   7  |   8  |   9  |   E  |   F  |
+  // | ↑GUI |      |      |      |   {  |   }  |      |   7  |   8  |   9  |   E  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |   /  |   -  |   (  |   )  |      |   4  |   5  |   6  |   C  |   D  |
+  // | ↑Alt |      |   /  |   -  |   (  |   )  |      |   4  |   5  |   6  |   C  |   D  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |   *  |   +  |   [  |   ]  |      |   1  |   2  |   3  |   A  |   B  |
+  // | ^Alt |      |   *  |   +  |   [  |   ]  |      |   1  |   2  |   3  |   A  |   B  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |  f() |      |      |   0  |   .  |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_______, _______, KC_ASTR, KC_MINS, Lcbr,    KC_RCBR, _______, Seven,   Eight,   KC_9,    Hexe,    Hexf   },
-    {_______, _______, Nslsh,   KC_PLUS, Lprn,    KC_RPRN, _______, Four,    Five,    Six,     S(KC_C), S(KC_D)},
-    {_______, _______, _______, _______, Lbrc,    KC_RBRC, _______, One,     Two,     Three,   S(KC_A), S(KC_B)},
+    {_SGui,   _______, KC_ASTR, KC_MINS, __Lcbr,  KC_RCBR, _______, __7,     __8,     KC_9,    __E,     __F    },
+    {_SAlt,   _______, __Slsh,  KC_PLUS, __Lprn,  KC_RPRN, _______, __4,     __5,     __6,     S(KC_C), S(KC_D)},
+    {_CAlt,   _______, _______, _______, __Lbrc,  KC_RBRC, _______, __1,     __2,     __3,     S(KC_A), S(KC_B)},
     {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, Zero,    KC_DOT,  _______, _______, _______},
   },
 
 // ................................................................ Symbol Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/538d3cab4510a8acb0c637228b46cde4
+// http://www.keyboard-layout-editor.com/#/gists/6384e56299b2e6b0bba4762c073426ef
 
   // .-----------------------------------------------------------------------------------.
-  // |  GUI |   &  |   *  |   \  |   {  |   }  |      |  F9  |  F10 |  F11 |  F12 |      |
+  // | ↑GUI |   &  |   *  |   \  |   {  |   }  |      |  F9  |  F10 |  F11 |  F12 |      |
   // |-----------------------------------------------------------------------------------|
-  // | Ctrl |   $  |   %  |   ^  |   (  |   )  |      |  F5  |  F6  |  F7  |  F8  |      |
+  // | ↑Alt |   $  |   %  |   ^  |   (  |   )  |      |  F5  |  F6  |  F7  |  F8  |      |
   // |-----------------------------------------------------------------------------------|
-  // | Shift|   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
+  // | ^Alt |   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
   // |-----------------------------------------------------------------------------------|
   // |   +  |      |      |      |   .  |      |      |  f() | Home | PgDn | PgUp |  End |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {Sgui,    Ampr,    Astr,    Sbsls,   Lcbr,    KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
-    {Salt,    Dlr,     Perc,    Circ,    Lprn,    KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-    {Sft,     Exlm,    At,      Hash,    Lbrc,    KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-    {Plus,    ___x___, ___x___, ___x___, Dot,     ___x___, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+    {_SGui,   __Ampr,  __Astr,  __Bsls,  __Lcbr,  KC_RCBR, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
+    {_SAlt,   __Dlr,   __Perc,  __Circ,  __Lprn,  KC_RPRN, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
+    {_CAlt,   __Exlm,  __At,    __Hash,  __Lbrc,  KC_RBRC, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
+    {__Plus,  ___x___, ___x___, ___x___, Dot,     ___x___, ___x___, ___x___, KC_HOME, KC_PGDN, KC_PGUP, KC_END },
   },
 
 // ............ ..................................................Navigation Pad
 //
-// http://www.keyboard-layout-editor.com/#/gists/9fdf46ac40cca5e78edd693d859ddefc
+// http://www.keyboard-layout-editor.com/#/gists/9659f1ecf89ed7159a7132f290cd7b10
 
   // .-----------------------------------------------------------------------------------.
   // |Adjust|      |      |      |      |      |      | Home |  Up  |  End |      |      |
@@ -332,7 +338,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAVPAD] = {
     {ADJUST,  _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______, _______},
-    {_______, KC_CAPS, Gui,     Ctl,     Sft,     _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
+    {_______, KC_CAPS, _Gui,    _Ctl,    _Sft,    _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______},
     {_______, _______, _______, KC_BSPC, KC_DEL,  _______, _______, KC_PGDN, KC_PGUP, _______, _______, _______},
     {_______, _______, _______, _______, ___x___, _______, _______, ___x___, _______, _______, _______, _______},
   },
@@ -340,20 +346,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ...................................................... Test Non-printing Keys
 
   // ,-----------------------------------------------------------------------------------.
-  // |Adjust|      |      |      |      |      |      |      |      |      |      |      |
+  // |Adjust|   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   0  |      |      |      |      |      |      |      |      |      |      |   1  |
+  // |   E  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   R  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |      |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   A  |   B  |   C  |
+  // |   .  |   C  |   G  |   A  |   T  |   S  |   B  |   D  |   L  |   D  |   U  |   R  |
   // `-----------------------------------------------------------------------------------'
 
   [_KEYTEST] = {
-    {ADJUST,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {KC_0,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1   },
-    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {_______, KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_A,    KC_B,    KC_C   },
+    {ADJUST,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT },
+    {KC_E,    KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_R   },
+    {KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT },
+    {KC_DOT,  KC_C,    KC_G,    KC_A,    KC_T,    KC_S,    KC_B,    KC_D,    KC_L,    KC_D,    KC_U,    KC_R   },
   },
 
 // ................................................................ Adjust Layer
@@ -453,6 +459,24 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void quote(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_LSFT);
+    register_code   (KC_QUOT);
+    unregister_code (KC_QUOT);
+    register_code   (KC_QUOT);
+    unregister_code (KC_QUOT);
+    unregister_code (KC_LSFT);
+    register_code   (KC_LEFT);
+    unregister_code (KC_LEFT);
+  } else {
+    register_code   (KC_QUOT);
+    unregister_code (KC_QUOT);
+  }
+  reset_tap_dance(state);
+}
+
 void ampher(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
@@ -541,7 +565,7 @@ void dollar(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void exclaim(qk_tap_dance_state_t *state, void *user_data)
+void exclam(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_1);
@@ -597,7 +621,7 @@ void plus(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void nslash(qk_tap_dance_state_t *state, void *user_data)
+void slash(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     register_code   (KC_BSLS);
@@ -763,11 +787,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_BSLS] = ACTION_TAP_DANCE_FN (bslash)
  ,[_CIRC] = ACTION_TAP_DANCE_FN (circum)
  ,[_DLR]  = ACTION_TAP_DANCE_FN (dollar)
- ,[_EXLM] = ACTION_TAP_DANCE_FN (exclaim)
+ ,[_EXLM] = ACTION_TAP_DANCE_FN (exclam)
  ,[_HASH] = ACTION_TAP_DANCE_FN (hash)
  ,[_PERC] = ACTION_TAP_DANCE_FN (percent)
  ,[_PLUS] = ACTION_TAP_DANCE_FN (plus)
- ,[_SLSH] = ACTION_TAP_DANCE_FN (nslash)
+ ,[_QUOT] = ACTION_TAP_DANCE_FN (quote)
+ ,[_SLSH] = ACTION_TAP_DANCE_FN (slash)
  ,[_1]    = ACTION_TAP_DANCE_FN (one)
  ,[_2]    = ACTION_TAP_DANCE_FN (two)
  ,[_3]    = ACTION_TAP_DANCE_FN (three)
@@ -789,42 +814,42 @@ void persistant_default_layer_set(uint16_t default_layer)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
-    case Ctl:
-      if (record->event.pressed) {
-        register_code   (KC_LCTL);
-      } else {
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
-      break;
-    case Gui:
-      if (record->event.pressed) {
-        register_code   (KC_LGUI);
-      } else {
-        unregister_code (KC_LGUI);
-      }
-      // LT hack
-      // return false;
-      break;
-    case Alt:
-      if (record->event.pressed) {
-        register_code   (KC_LALT);
-      } else {
-        unregister_code (KC_LALT);
-      }
-      // LT hack
-      // return false;
-      break;
-    case Sft:
-      if (record->event.pressed) {
-        register_code   (KC_LSFT);
-      } else {
-        unregister_code (KC_LSFT);
-      }
-      // LT hack
-      // return false;
-      break;
+    // case _Ctl:
+    //   if (record->event.pressed) {
+    //     register_code   (KC_LCTL);
+    //   } else {
+    //     unregister_code (KC_LCTL);
+    //   }
+    //   // LT hack
+    //   // return false;
+    //   break;
+    // case _Gui:
+    //   if (record->event.pressed) {
+    //     register_code   (KC_LGUI);
+    //   } else {
+    //     unregister_code (KC_LGUI);
+    //   }
+    //   // LT hack
+    //   // return false;
+    //   break;
+    // case _Alt:
+    //   if (record->event.pressed) {
+    //     register_code   (KC_LALT);
+    //   } else {
+    //     unregister_code (KC_LALT);
+    //   }
+    //   // LT hack
+    //   // return false;
+    //   break;
+    // case _Sft:
+    //   if (record->event.pressed) {
+    //     register_code   (KC_LSFT);
+    //   } else {
+    //     unregister_code (KC_LSFT);
+    //   }
+    //   // LT hack
+    //   // return false;
+    //   break;
     case Dot:
       if (record->event.pressed) {
         layer_on        (_NUMBER);

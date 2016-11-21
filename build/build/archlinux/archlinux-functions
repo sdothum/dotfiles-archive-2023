@@ -47,6 +47,10 @@ connect() {
 config_install() {
   if [ -e /media/home/$user/build/root/$1 ] ;then
     echo '-> copying '$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+  elif [ -e /home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /home/$user/build/root/$1 $1)
+  else
+    echo "-> $user/build/root/$1 not found"
   fi
 }
 

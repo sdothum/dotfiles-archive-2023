@@ -1,0 +1,98 @@
+#!/bin/sh
+# sdothum - 2016 (c) wtfpl
+
+# archlinux boot configuration
+# login as user alarm
+# execute archlinux-pi as root
+
+source ./archlinux-functions
+user=shum
+
+
+heading 'set and generate locale'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
+echo LANG=en_US.UTF-8 >/etc/locale.conf
+export LANG=en_US.UTF-8
+locale-gen
+
+
+heading 'set timezone and clock'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ls /usr/share/zoneinfo
+# ls /usr/share/zoneinfo/America
+ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
+hwclock --systohc --utc
+
+
+heading 'configure network'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+[ "$hostname" = luna ] && systemctl enable dhcpcd.service
+# heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
+# [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+
+
+heading 'installing wireless tools'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install dialog
+pm_install iw
+pm_install wpa_supplicant
+# cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
+# essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
+# key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
+# sed -i -e $essid -e $key /etc/netctl/my-wireless-network
+# netctl enable my-wireless-network
+echo noarp >/etc/dhcpcd.conf
+checkpoint
+
+
+heading 'set sudo groups'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+useradd -m -g users -G wheel,storage,power -s /bin/bash $user
+passwd $user
+pm_install sudo
+sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
+    -e '/## Defaults specification/aDefaults insults' \
+    /etc/sudoers
+EDITOR=nano visudo
+# cat /etc/sudoers
+checkpoint
+
+
+heading 'install base-devel'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install base-devel
+# pm_install expac
+pm_install git
+pm_install gnome-keyring
+# pm_install jshon
+# pm_install namcap
+pm_install yajl
+checkpoint
+
+
+heading 'default shell'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install bc
+pm_install dash
+pm_install fish
+pm_install python
+config_install /etc/profile.d/path.sh
+checkpoint
+
+
+heading 'enable tty autologin'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mkdir -v /etc/systemd/system/getty@tty1.service.d
+echo "[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/systemd/system/getty@tty1.service.d/autologin.conf
+
+
+heading 'install bundle'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+echo login as user $user and execute: bundle_install bundle/pi_bundle
+
+
+# vim: set ft=sh: #

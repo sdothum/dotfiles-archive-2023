@@ -22,7 +22,7 @@ fi
 
 heading 'boot disk'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-ls -l /dev/disk/by-id | grep -v part | grep ata
+ls -l /dev/disk/by-id | grep -v 'part' | grep 'ata'
 read -p "Boot disk /dev/sd? [a-z]: " disk
 if [ -z $disk ] ;then
   echo "invalid disk reference.. aborting"
@@ -232,7 +232,7 @@ heading 'edit fstab'
 # sed -i "\$a/run/btrfs-root/__current/ROOT/var/lib\t\t/var/lib\t\tnone\t\tbind\t\t0 0" /mnt/btrfs-boot/etc/fstab
 genfstab -L -p /mnt/btrfs-boot >>/mnt/btrfs-boot/etc/fstab
 # correct genfstab output from apple macbooks
-if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
+if ! grep -q 'bind' /mnt/btrfs-boot/etc/fstab ;then
   sed -i -e '/vfat/s/0 [12]/0 0/' \
       -e '/\/var\/lib/d' \
       -e '$a\

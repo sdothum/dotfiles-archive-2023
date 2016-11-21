@@ -33,19 +33,21 @@
 
       Plug 'metakirby5/codi.vim'
       " Plug 'mattn/emmet-vim'
-      Plug 'msanders/snipmate.vim'
       " Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
       " Plug 'scrooloose/syntastic'
       " Plug 'majutsushi/tagbar'
       Plug 'tomtom/tcomment_vim'
+      Plug 'tomtom/tlib_vim'
+      Plug 'MarcWeber/vim-addon-mw-utils'
       Plug 'tpope/vim-endwise'
+      Plug 'garbas/vim-snipmate'
 
     " .................................................. Completion / navigation
 
       " Plug 'vim-scripts/matchit.zip'
       " Plug 'SearchComplete'
       Plug 'justinmk/vim-sneak'
-      " Plug 'ervandew/supertab'
+      Plug 'ervandew/supertab'
       " Plug 'Lokaltog/vim-easymotion'
       Plug 'kshenoy/vim-signature'
 

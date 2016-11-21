@@ -37,7 +37,7 @@ if [ -z "$*" ] ;then
   ignored=$(echo $ignored | sed 's/^.*= *//')
   if [ "$ignored" ] ;then
     if-no "reinstate $ignored" || del_pkg $ignored
-  fi 
+  fi
 elif grep -q "^ *IgnorePkg.*$1" $conf ;then
   if-yes "reinstate $pkgs" && del_pkg $pkgs
 else

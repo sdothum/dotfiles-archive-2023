@@ -12,8 +12,8 @@ if server ;then
   sudo mkdir -pv /srv/nfs4/net
   if ! grep -q 'Maildir.*bind' /etc/fstab ;then
     sudo sed -i '$a\
-/home/$uid/Maildir    /srv/nfs4/Maildir   none    bind    0 0\
-/net                  /srv/nfs4/net       none    bind    0 0\
+/home/$uid/Maildir /srv/nfs4/Maildir none bind 0 0\
+/net               /srv/nfs4/net     none bind 0 0\
 ' /etc/fstab
 
     sudo sed -i '$a\
@@ -22,17 +22,19 @@ if server ;then
 ' /etc/exports
     sudo exportfs -rav
   fi
-else
-  if ! grep -q 'Maildir.*nfs4' /etc/fstab ;then
-    sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
-             -e '$a\
-luna:/Maildir   /home/$uid/Maildir    nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev    0 0\
-luna:/net       /net                  nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev    0 0\
+elif ! grep -q 'net.*nfs4' /etc/fstab ;then
+  sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
+           -e '$a\
+luna:/net     /net               nfs4 rw,noatime,rsize=32768,wsize=32768,nolock,_netdev 0 0\
 ' /etc/fstab
+  if [ $(hostname) != alarmpi ] ;then
+    sudo sed -i '$a\
+luna:/Maildir /home/$uid/Maildir nfs4 rw,noatime,rsize=32768,wsize=32768,nolock,_netdev 0 0\
+' /etc/fstab
+    sudo sed -i "s/\$uid/$USER/" /etc/fstab
   fi
 fi
 
-sudo sed -i "s/\$uid/$USER/" /etc/fstab
-
+annotate 'update cliend hosts tables with nfs server address for luna'
 
 # vim: set ft=sh: #

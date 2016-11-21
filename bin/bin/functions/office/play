@@ -8,7 +8,7 @@
 
 # play media (see rox, dmenu movies, dmenu series)
 if arm; then
-  noir omxplayer "$@"
+  omxplayer "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v 'sample')"
 else
   notify low 'MPV' '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\nv/j  Subtitles'
   focus frame
