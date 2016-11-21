@@ -7,7 +7,7 @@
 # ..................................................................... Keyboard
 
 hint() {
-    notify low 'Typewriter Sounds' '↑ Super-Shift Minus\n↓ Super-Minus'
+    notify 'Typewriter Sounds' '↑ Super-Shift Minus\n↓ Super-Minus'
     # confirm enter key sound :-)
     mpg123 -o pulse /usr/share/qwertickle/typewriter-return.mp3 &
 }
