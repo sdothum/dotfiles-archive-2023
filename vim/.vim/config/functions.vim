@@ -18,13 +18,16 @@
 
     " .......................................................... Modified status
 
+      " notification + lightline: 'modified' : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
       function! Modified()
         if &filetype == "help"
           return ''
         endif
         if &modified
           if b:modified == 0
-            call system('time=10 notify critical "' . expand('%:r') . '" "Modified"')
+            let l:rootpath = expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") . '/' : '/'
+            let l:basepath = expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") . '/' : ''
+            call system('time=10 notify critical "' . l:rootpath . l:basepath . expand("%:t") . '" "Modified"')
             let b:modified = 1
           endif
           return '+'
