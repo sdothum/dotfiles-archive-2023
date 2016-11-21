@@ -214,6 +214,6 @@
 
     " ............................................ Initial font and line spacing
 
-      call FontSize(argv(0) =~ 'vimwiki\|.eml' ? +1 : -1)
+      call FontSize(argv(0) =~ 'vimwiki\|*.eml' ? +1 : -1)
 
 " themes.vim
