@@ -16,6 +16,26 @@
         endtry
       endfunction
 
+    " .......................................................... Modified status
+
+      function! Modified()
+        if &filetype == "help"
+          return ''
+        endif
+        if &modified
+          if b:modified == 0
+            call system('time=10 notify critical "' . expand('%:r') . '" "Modified"')
+            let b:modified = 1
+          endif
+          return '+'
+        endif
+        let b:modified = 0
+        if &modifiable
+          return ''
+        endif
+        return '-'
+      endfunction
+
     " ............................................................. Numeric sort
 
       " sort compare by numeric (not string) value

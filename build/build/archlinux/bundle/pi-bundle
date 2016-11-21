@@ -106,7 +106,7 @@ g term-ansicolor
 
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# dmenu package contains stest
+# "stest contained in dmenu package"
   dmenu
   dunst
   libnotify

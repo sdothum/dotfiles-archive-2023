@@ -153,7 +153,7 @@ case $@ in
         rsync --delete-during --exclude='.deprecated' --exclude='.hg' --exclude='makepkg' \
               $HOME/stow/build/build/archlinux \
               pi:$HOME/build/
-        ssh $USER@pi 'mkdir -p build/root/etc'
+        ssh pi 'mkdir -p build/root/etc'
         rsync --delete-during --exclude='.deprecated' --exclude='.hg' \
               $HOME/stow/build/build/root/etc/profile.d \
               $HOME/stow/build/build/root/etc/hosts \

@@ -188,7 +188,6 @@
         \, 'line'         : '%l'
         \, 'matchspace'   : '%{g:matchspace}'
         \, 'mode'         : '%{lightline#mode()}'
-        \, 'modified'     : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
         \, 'paste'        : '%{&paste ? "PASTE" : ""}'
         \, 'percent'      : '%-0p%%'
         \, 'percentwin'   : '%P'
@@ -216,6 +215,7 @@
         \{
         \  'indent'      : 'Indent'
         \, 'linesizes'   : 'LineSizes'
+        \, 'modified'    : 'Modified'
         \, 'spaces'      : 'Spaces'
         \, 'specialchar' : 'SpecialChar'
         \, 'wordcount'   : 'WordCount'

@@ -7,14 +7,14 @@
 # ▔▔▔▔▔▔▔
 # bluez
 # bluez-utils
-# "connman interrupts connection so complete manually afterwards"
-# connman
+# "+ connman may interrupt connection requiring post install"
+  connman
   dnsmasq
   dnsutils
 # dropbox-experimental
   gnome-bluetooth
 # ifenslave
-  networkmanager
+# networkmanager
 # network-manager-applet
 # wicd
 # wicd-gtk
@@ -26,6 +26,7 @@
 # dstat
   iftop
   mtr
+  net-tools
   nethogs
 # netstat-nat
 # tcpflow

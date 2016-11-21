@@ -38,6 +38,12 @@
       nnoremap Q                   {jv}kJvgq}}{j
       vnoremap Q                   Jvgqj
 
+    " .................................................. Quote enclose selection
+
+      " append . to enclosing %V to include last character of block
+      vnoremap '                   :s/\%V\(.*\)\%V./'\1'/<CR>
+      vnoremap "                   :s/\%V\(.*\)\%V./"\1"/<CR>
+
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ................................................................. Defaults

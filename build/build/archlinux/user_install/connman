@@ -6,6 +6,7 @@
 
 # ...................................................................... connman
 
+hosts=$HOME/build/root/etc/hosts
 gateway=10.1.0.1
 
 # get network hosts table
@@ -15,11 +16,9 @@ config_install L /etc/hosts
 # add host ip address
 ip=$(hostname --ip-address)
 hostname=$(hostname)
-if grep -q " $hostname *" /etc/hosts ;then
-  sudo sed -i "/ $hostname */s/^[^ ]*/$ip/" /etc/hosts
-else
-  sudo sed -i "/localhost.*ttrss/a$ip $hostname" /etc/hosts
-fi
+grep -q " $hostname *" $hosts &&
+     sed -i "/ $hostname */s/^[^ ]*/$ip/" $hosts ||
+     sed -i "/localhost.*ttrss/a$ip $hostname" $hosts
 
 # set static ip
 server &&

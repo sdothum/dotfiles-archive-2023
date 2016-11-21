@@ -6,19 +6,18 @@
 
 # ............................................................... networkmanager
 
+hosts=$HOME/build/root/etc/hosts
+
 # get network hosts table
 original /etc/hosts
 config_install L /etc/hosts
 
 # add host ip address
-
-address() {
-  ip address show | grep 'inet 10\.1\.0\.' | head -1 | sed -r 's| *inet (.*)/.*|\1|'
-}
-
-grep $(hostname) /etc/hosts &&
-  sudo sed -i "/$(hostname)/s/[0-9.]*/$(address)/" /etc/hosts ||
-  echo $(address) $(hostname) | sudo tee >>/etc/hosts
+ip=$(hostname --ip-address)
+hostname=$(hostname)
+grep -q " $hostname *" $hosts &&
+     sed -i "/ $hostname */s/^[^ ]*/$ip/" $hosts ||
+     sed -i "/localhost.*ttrss/a$ip $hostname" $hosts
 
 sudo wifi-menu
 

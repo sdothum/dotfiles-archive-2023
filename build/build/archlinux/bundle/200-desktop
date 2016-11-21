@@ -29,7 +29,7 @@
 # conky-lua
   conky-lua-archers [laptop]
   conky-lua-nv      [! laptop]
-# stest contained in dmenu package
+# "stest contained in dmenu package"
   dmenu
 # dmenu-xft-height
 # dmenu2
