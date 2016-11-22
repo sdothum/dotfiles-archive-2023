@@ -46,8 +46,8 @@ else
   hc keybind $Mod-l                    focus right
 fi
 if [ $PLANCK ] ;then
-  hc keybind $Mod-minus                focus_monitor 1
-  hc keybind $Mod-equal                focus_monitor 0
+  hc keybind $Mod-semicolon            focus_monitor 1
+  hc keybind $Mod-backslash            focus_monitor 0
 else
   # hc keybind $Mod-bracketleft        chain . focus_monitor 1 . emit_hook focus_window
   # hc keybind $Mod-bracketright       chain . focus_monitor 0 . emit_hook focus_window
@@ -72,10 +72,10 @@ else
   hc keybind $Mod-Shift-l              chain . shift right . emit_hook focus_changed
 fi
 if [ $PLANCK ] ;then
-  hc keybind $Mod-Shift-minus          spawn pin monitor 1
-  hc keybind $Mod-Shift-equal          spawn pin monitor 0
-  hc keybind $Mod-Control-minus        spawn switch monitor 1
-  hc keybind $Mod-Control-equal        spawn switch monitor 0
+  hc keybind $Mod-Shift-semicolon      spawn pin monitor 1
+  hc keybind $Mod-Shift-backslash      spawn pin monitor 0
+  hc keybind $Mod-Control-semicolon    spawn switch monitor 1
+  hc keybind $Mod-Control-backslash    spawn switch monitor 0
 else
   hc keybind $Mod-Shift-bracketleft    spawn pin monitor 1
   hc keybind $Mod-Shift-bracketright   spawn pin monitor 0
@@ -93,7 +93,12 @@ hc keybind $Mod-Control-u              split bottom 0.333333
 hc keybind $Mod-Control-o              split right  0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space          spawn restore frames
-if [ $COLEMAK_DH ] ;then
+if [ $PLANCK ] ;then
+  hc keybind $Mod-apostrophe           spawn switch orientation +1
+  hc keybind $Mod-Shift-apostrophe     spawn switch orientation -1
+  hc keybind $Mod-Shift-period         spawn switch orientation +2
+  hc keybind $Mod-Shift-comma          spawn switch orientation -2
+elif [ $COLEMAK_DH ] ;then
   hc keybind $Mod-slash                spawn switch orientation +1
   hc keybind $Mod-Shift-slash          spawn switch orientation -1
   hc keybind $Mod-Shift-period         spawn switch orientation +2

@@ -31,12 +31,17 @@ if [ $PLANCK ] ;then
 else
   hc keybind Super-minus             spawn toggle plover
 fi
-hc keybind Super-slash               spawn dmenu files
-hc keybind Super-Shift-slash         spawn dmenu folders
-hc keybind $Mod-backslash            spawn toggle conky
-hc keybind $Mod-Shift-backslash      spawn toggle panel
-hc keybind Super-backslash           spawn toggle unclutter
-hc keybind Control-backslash         spawn toggle compton
+if [ $PLANCK ] ;then
+  hc keybind $Mod-slash              spawn toggle conky
+  hc keybind $Mod-Shift-slash        spawn toggle panel
+  hc keybind Super-slash             spawn toggle unclutter
+  hc keybind Control-slash           spawn toggle compton
+else
+  hc keybind $Mod-backslash          spawn toggle conky
+  hc keybind $Mod-Shift-backslash    spawn toggle panel
+  hc keybind Super-backslash         spawn toggle unclutter
+  hc keybind Control-backslash       spawn toggle compton
+fi
 hc keybind Super-semicolon           spawn toggle simpletimer
 hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
@@ -50,6 +55,8 @@ hc keybind Super-e                   spawn dmenu scripts
 hc keybind Super-Shift-e             spawn dmenu edit
 hc keybind Super-Control-e           spawn dmenu configs
 # hc keybind Super-f                 spawn dmenu zsh
+hc keybind Super-f                   spawn dmenu files
+hc keybind Super-Shift-f             spawn dmenu folders
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu history
 hc keybind Super-Shift-h             spawn toggle term 'Top' htop
