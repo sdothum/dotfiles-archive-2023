@@ -55,7 +55,6 @@ hc keybind Super-Shift-d             spawn dmenu dict
 hc keybind Super-e                   spawn dmenu scripts
 hc keybind Super-Shift-e             spawn dmenu edit
 hc keybind Super-Control-e           spawn dmenu configs
-# hc keybind Super-f                 spawn dmenu zsh
 hc keybind Super-f                   spawn dmenu files
 hc keybind Super-Shift-f             spawn dmenu folders
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
@@ -63,37 +62,25 @@ hc keybind Super-h                   spawn dmenu history
 hc keybind Super-Shift-h             spawn toggle term 'Top' htop
 hc keybind Super-j                   spawn dmenu journals watch
 hc keybind Super-Shift-j             spawn dmenu journals
-hc keybind Super-k                   spawn dmenu eboks
-hc keybind Super-Shift-k             spawn dmenu references
 hc keybind Super-l                   spawn dmenu logs watch
 hc keybind Super-Shift-l             spawn dmenu logs
 hc keybind Super-m                   spawn dmenu music
-hc keybind Super-Shift-m             spawn toggle term 'Music' ncmpcpp
-hc keybind Super-Control-m           spawn toggle term 'Visualizer' vis
-# hc keybind Super-n                 spawn toggle tixati
-hc keybind Super-Shift-n             spawn toggle term 'NZB' nzbget --connect
-# hc keybind Super-p                 spawn toggle xpad
+hc keybind Super-Shift-m             spawn dmenu media
+hc keybind Super-n                   spawn toggle xpad
 hc keybind Super-p                   spawn dmenu pass
 hc keybind Super-Shift-p             spawn pr eject
 hc keybind Super-Control-p           spawn proof
 hc keybind Super-q                   spawn toggle amphetype
-# hc keybind Super-Shift-q           spawn toggle plover
-# hc keybind Super-Shift-q           spawn clack swap
-hc keybind Super-Control-q           spawn clack
+hc keybind Super-Shift-q             spawn clack
+hc keybind Super-Control-q           spawn clack swap
 hc keybind Super-r                   spawn dmenu radio
-# hc keybind Super-Shift-r           spawn dmenu references
 hc keybind Super-s                   spawn dmenu shistory
-hc keybind Super-t                   spawn dmenu series
-hc keybind Super-Shift-t             spawn dmenu series anime
-hc keybind Super-v                   spawn dmenu movies
-hc keybind Super-Shift-v             spawn dmenu movies animation
-# hc keybind Super-Control-v         spawn toggle cinema
+hc keybind Super-v                   spawn dmenu videos
 # hc keybind Super-w                 spawn focus qutebrowser
 hc keybind Super-w                   spawn focus vimbt
 hc keybind Super-Control-w           spawn focus vimbk
 hc keybind Super-Shift-w             spawn toggle term 'IRC' weechat
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
-# hc keybind Super-z                 spawn dmenu zshelp
 
 # vim: set ft=sh: #

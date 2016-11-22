@@ -17,27 +17,27 @@ catlg() {
 
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-    catlg artist | sed '1i[ player ]\n[ albums ]'
+    catlg artist | sed '1i[ player  ]\n[ albums  ]\n[ library ]'
   else
-    catlg artist | sed '1i[ albums ]'
+    catlg artist | sed '1i[ albums  ]\n[ library ]'
   fi
 }
 
 albums() {
-  if [ "$artist" = '[ albums ]' ] ;then
+  if [ "$artist" = '[ albums  ]' ] ;then
     # redundant menu return to artist listings
     if [ $redundant ] ;then
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        catlg album | sed '1i[ player ]\n[ artist ]'
+        catlg album | sed '1i[ player  ]\n[ artist  ]\n[ library ]'
       else
-        catlg album | sed '1i[ artist ]'
+        catlg album | sed '1i[ artist  ]\n[ library ]'
       fi
     else
       # escape return to artist listings
       if [ $(mpc playlist | wc -l) -gt 0 ] ;then
-        catlg album | sed '1i[ player ]'
+        catlg album | sed '1i[ player  ]\n[ library ]'
       else
-        catlg album
+        catlg album | sed '1i[ library ]'
       fi
     fi
   else
@@ -78,24 +78,30 @@ status() {
   mpc status | grep -q "$@" && echo off || echo on
 }
 
+ncmpcpp() {
+  pidof ncmpcpp >/dev/null &&
+        exec focus instance 'Music' ||
+        exec term 'Music' ncmpcpp
+}
+
 # ....................................................................... Player
 
 # outer loop by library listing
 mpc list artist >/dev/null 2>&1 || exit
 # player controls on entry, note: cannot compare to null string
-[ "$(current)" != '' ] && artist='[ player ]'
+[ "$(current)" != '' ] && artist='[ player  ]'
 while :
 do
-  [ "$artist" = '[ player ]' ] ||
+  [ "$artist" = '[ player  ]' ] ||
     artist=$(artists | dmenu 'Artist' "$artist" -no-custom) || exit
-  if [ "$artist" = '[ player ]' ] ;then
+  if [ "$artist" = '[ player  ]' ] ;then
     unset artist
-    while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nclear" |
+    while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nlibrary\nclear" |
                 column -s^ -t |
                 dmenu "$(info)" "${cmd%% *}" -no-custom) || break
     do
       case "$cmd" in
-        toggle\ on |
+        toggle\ on |\
         toggle\ off) mpc toggle
                      [ $(status '\[playing\]') = off ] || exit ;;
 
@@ -109,13 +115,15 @@ do
         previous*) mpc play
                    mpc prev ;;
 
-        random\ on |
+        random\ on |\
         random\ off) mpc play
                      mpc random ;;
 
-        repeat\ on |
+        repeat\ on |\
         repeat\ off) mpc play
                      mpc repeat ;;
+
+        library) ncmpcpp ;;
 
         clear) mpc clear
                break ;;
@@ -130,12 +138,14 @@ do
   while [ $more ]
   do
     if [ $(albums | wc -l) -gt 1 ] ;then
-      if [ "$artist" = '[ albums ]' ] ;then
+      if [ "$artist" = '[ albums  ]' ] ;then
         album=$(albums | dmenu 'Album' "$album" -no-custom) || break
       else
-        album=$(albums | sort -n | sed '1i[ all ]' |
+        album=$(albums | sort -n | sed '1i[ all      ]\n[ library ]' |
                 dmenu 'Album' "$album" -no-custom) || break
       fi
+    elif [ "$artist" = '[ library ]' ] ;then
+      album=$artist
     else
       album=$(albums | sort -n |
               dmenu 'Album' "$album" -no-custom) || break
@@ -144,14 +154,16 @@ do
 
     # player, library or playlist selection
     case "$album" in
-      '[ player ]') artist='[ player ]'
-                    break ;;
+      '[ player  ]') artist='[ player  ]'
+                     break ;;
 
-      '[ artist ]') break ;;
+      '[ artist  ]') break ;;
 
-      '[ all ]') playlist=$(mpc find artist "$artist")
-                 music="All songs by $artist"
-                 unset more ;;
+      '[ library ]') ncmpcpp ;;
+
+      '[ all     ]') playlist=$(mpc find artist "$artist")
+                     music="All songs by $artist"
+                     unset more ;;
 
       *) if [ "$artist" = '[ albums ]' ] ;then
            playlist=$(mpc find album "$album")
