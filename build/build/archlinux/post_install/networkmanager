@@ -6,14 +6,14 @@
 
 # ............................................................... networkmanager
 
-if ! grep -q 'dhcp=dhcpcd' /etc/NetworkManager/NetworkManager.conf ;then
-  sudo sed -i '$a\
+grep -q 'dhcp=dhcpcd' /etc/NetworkManager/NetworkManager.conf ||
+     sudo sed -i '$a\
 dhcp=dhcpcd\
 ' /etc/NetworkManager/NetworkManager.conf
-fi
 
 systemd enable dhcpcd
 systemd enable NetworkManager
+
 nmtui
 
 # vim: set ft=sh: #

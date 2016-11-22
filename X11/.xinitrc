@@ -90,6 +90,7 @@ setpath() {
 
 # unset to use qwerty keyboard wasd mappings
 export COLEMAK_DH=true
+export PLANCK=true
 
 case $windowmanager in
   2bwm) # Set a nice background.
