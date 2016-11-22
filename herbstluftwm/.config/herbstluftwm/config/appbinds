@@ -14,15 +14,18 @@ hc keybind Super-space               spawn dmenu run
 hc keybind Super-Shift-space         spawn dmenu systemd
 hc keybind Super-grave               spawn toggle rox
 if [ $PLANCK ] ;then
-  hc keybind Super-minus             spawn pactl set-sink-volume $(sink) -3db
-  hc keybind Super-Shift-minus       spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-semicolon         spawn pactl set-sink-volume $(sink) -3db
+  hc keybind Super-backslash         spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-y                 spawn pactl set-sink-volume $(sink) 0db
+  hc keybind Super-Shift-y           spawn pactl set-sink-mute $(sink) toggle
+  hc keybind Super-Control-y         spawn toggle pavucontrol
 else
   hc keybind Super-bracketleft       spawn pactl set-sink-volume $(sink) -3db
   hc keybind Super-bracketright      spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-0                 spawn pactl set-sink-volume $(sink) 0db
+  hc keybind Super-Shift-0           spawn pactl set-sink-mute $(sink) toggle
+  hc keybind Super-Control-0         spawn toggle pavucontrol
 fi
-hc keybind Super-0                   spawn pactl set-sink-volume $(sink) 0db
-hc keybind Super-Shift-0             spawn pactl set-sink-mute $(sink) toggle
-hc keybind Super-Control-0           spawn toggle pavucontrol
 hc keybind Super-1                   spawn dmenu monitor
 hc keybind Super-2                   spawn dmenu alarm
 hc keybind Super-equal               spawn dmenu calc
@@ -36,13 +39,14 @@ if [ $PLANCK ] ;then
   hc keybind $Mod-Shift-slash        spawn toggle panel
   hc keybind Super-slash             spawn toggle unclutter
   hc keybind Control-slash           spawn toggle compton
+  hc keybind Super-Shift-semicolon   spawn toggle simpletimer
 else
   hc keybind $Mod-backslash          spawn toggle conky
   hc keybind $Mod-Shift-backslash    spawn toggle panel
   hc keybind Super-backslash         spawn toggle unclutter
   hc keybind Control-backslash       spawn toggle compton
+  hc keybind Super-semicolon         spawn toggle simpletimer
 fi
-hc keybind Super-semicolon           spawn toggle simpletimer
 hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
 hc keybind Super-a                   spawn dmenu abook
