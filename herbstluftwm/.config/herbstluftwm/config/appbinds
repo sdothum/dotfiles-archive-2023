@@ -31,16 +31,13 @@ hc keybind Super-2                   spawn dmenu alarm
 hc keybind Super-equal               spawn dmenu calc
 if [ $PLANCK ] ;then
   hc keybind Super-Shift-equal       spawn toggle plover
-else
-  hc keybind Super-minus             spawn toggle plover
-fi
-if [ $PLANCK ] ;then
   hc keybind $Mod-slash              spawn toggle conky
   hc keybind $Mod-Shift-slash        spawn toggle panel
   hc keybind Super-slash             spawn toggle unclutter
-  hc keybind Control-slash           spawn toggle compton
+  hc keybind Super-Shift-slash       spawn toggle compton
   hc keybind Super-Shift-semicolon   spawn toggle simpletimer
 else
+  hc keybind Super-minus             spawn toggle plover
   hc keybind $Mod-backslash          spawn toggle conky
   hc keybind $Mod-Shift-backslash    spawn toggle panel
   hc keybind Super-backslash         spawn toggle unclutter
@@ -66,7 +63,7 @@ hc keybind Super-h                   spawn dmenu history
 hc keybind Super-Shift-h             spawn toggle term 'Top' htop
 hc keybind Super-j                   spawn dmenu journals watch
 hc keybind Super-Shift-j             spawn dmenu journals
-hc keybind Super-k                   spawn dmenu ebooks
+hc keybind Super-k                   spawn dmenu eboks
 hc keybind Super-Shift-k             spawn dmenu references
 hc keybind Super-l                   spawn dmenu logs watch
 hc keybind Super-Shift-l             spawn dmenu logs
@@ -93,10 +90,10 @@ hc keybind Super-Shift-v             spawn dmenu movies animation
 # hc keybind Super-Control-v         spawn toggle cinema
 # hc keybind Super-w                 spawn focus qutebrowser
 hc keybind Super-w                   spawn focus vimbt
-hc keybind Super-Control-w           spawn focus k vimb
+hc keybind Super-Control-w           spawn focus vimbk
 hc keybind Super-Shift-w             spawn toggle term 'IRC' weechat
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
-hc keybind Super-z                   spawn dmenu zshelp
+# hc keybind Super-z                 spawn dmenu zshelp
 
 # vim: set ft=sh: #

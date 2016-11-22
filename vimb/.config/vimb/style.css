@@ -1,6 +1,6 @@
 
 body {
-    background-color: #fdf6e3 !important;
+    background-color: #fdf6e3 important;
 }
 
 ._hintLabel {

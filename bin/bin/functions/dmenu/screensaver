@@ -15,17 +15,24 @@ if [ "$*" ] ;then
   toggle="$1"
 else
   xset q | grep -q 'DPMS is Enabled' && toggle='off' || toggle='on'
-  toggle=$(echo "$toggle" | dmenu 'Toggle Screensaver' -no-custom) || exit
+  toggle=$(echo "$toggle\nlock" | dmenu 'Toggle Screensaver' -no-custom) || exit
 fi
+
+screensaver() {
+  xset s on +dpms
+  pidof xscreensaver >/dev/null || ( xscreensaver -no-splash & )
+}
 
 case $toggle in
   off | 0) pidof xscreensaver >/dev/null && killall xscreensaver
            xset s off -dpms
            notify low 'Screensaver' Off ;;
 
-  on | 1) xset s on +dpms
-          pidof xscreensaver >/dev/null || ( xscreensaver -no-splash & )
+  on | 1) screensaver
           notify low 'Screensaver' On ;;
+
+  lock) screensaver
+        xscreensaver-command -lock ;;
 esac
 
 # vim: set ft=sh: #

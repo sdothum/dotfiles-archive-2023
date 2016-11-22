@@ -5,8 +5,25 @@
 
 # ...................................................................... Browser
 
+browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' |
+          dmenu 'Browser' 'vimb' -no-custom) || exit
+
 # bookmarks
-case $BROWSER in
+case $browser in
+  chromium) bookmarks=$HOME/.config/chromium/Default/Bookmarks
+            py-chrome-bookmarks.py $bookmarks $bookmarks.html
+            uri=$(grep 'http://' $bookmarks.html |
+                  sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" |
+                  cat - $HOME/bin/functions/dmenu/.config/bookmarks |
+                  sed -e 's/\&\#x2[01][0-9][0-9a-f];//g' \
+                      -e 's/\&\#3[0-9];//g' \
+                      -e 's/\&\#x[ab][0-f];/e/g' \
+                      -e 's/\&\#xe[0-9];/e/g' \
+                      -e 's/\&amp;/&/g' |
+                  sed '1i[ history ]' |
+                  dmenu 'Bookmark' -no-custom |
+                  sed -r 's/.*(http.*)/\1/') ;;
+
   luakit) sqldb=$HOME/.local/share/luakit/bookmarks.db
           query='select title, tags, uri from bookmarks order by tags,title ASC;'
           uri=$(echo "$query" |
@@ -31,20 +48,6 @@ case $BROWSER in
               sed '1i[ history ]' |
               dmenu 'Bookmark' -no-custom |
               sed -r 's/.*(http.*)/\1/') ;;
-
-  *) bookmarks=$HOME/.config/chromium/Default/Bookmarks
-     py-chrome-bookmarks.py $bookmarks $bookmarks.html
-     uri=$(grep 'http://' $bookmarks.html |
-           sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" |
-           cat - $HOME/bin/functions/dmenu/.config/bookmarks |
-           sed -e 's/\&\#x2[01][0-9][0-9a-f];//g' \
-               -e 's/\&\#3[0-9];//g' \
-               -e 's/\&\#x[ab][0-f];/e/g' \
-               -e 's/\&\#xe[0-9];/e/g' \
-               -e 's/\&amp;/&/g' |
-           sed '1i[ history ]' |
-           dmenu 'Bookmark' -no-custom |
-           sed -r 's/.*(http.*)/\1/') ;;
 esac
 
 [ "$uri" = '[ history ]' ] && exec dmenu history

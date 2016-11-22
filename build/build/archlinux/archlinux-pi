@@ -92,7 +92,7 @@ ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/sys
 heading 'install bundle'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-echo login as user $user and execute: bundle_install bundle/pi_bundle
+annotate 'reboot and run "bundle_install bundle/pi_bundle"'
 
 
 # vim: set ft=sh: #

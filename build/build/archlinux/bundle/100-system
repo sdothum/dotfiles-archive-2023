@@ -124,7 +124,7 @@
 # ▔▔▔▔▔
   acpi     [laptop]
 # powertop [laptop]
-# dead battery in macbook!
+# "dead battery in macbook"
   tlp      [laptop && ! macbook]
   xfce4-power-manager
 
