@@ -48,11 +48,16 @@ toggle_term() {
   fi
 }
 
-# toggle application, note exceptions where startup binary and instance names differ
+# toggle application, note application specific exception handling
 toggle_app() {
   # handle rox filer binary name
   [ "$msg" = 'rox' ] && app='ROX-Filer'
   if pgrep -lf "${app:-$msg}" | grep -qv 'toggle' ;then
+    # xpad multiple windows shortcut
+    if [ "$msg" = 'xpad' ] ;then
+      xpad --quit
+      exit
+    fi
     app=${app:-$msg}
     lock
     focus=true
@@ -65,8 +70,6 @@ toggle_app() {
           unset focus
           herbstclient bring $i
         fi
-        # manage multiple instances of rox
-        [ "$msg" = 'rox' ] || break
       fi
     done
     unlock

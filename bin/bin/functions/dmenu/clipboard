@@ -13,22 +13,24 @@ clipboard=/tmp/dmenu:clipboard
 
 clipboard() {
   # trim multiline content (corrupts list format otherwise)
-  gpaste-client --oneline | cut -c -$truncate | sed "s/://" >$clipboard
+  gpaste-client --oneline | cut -c -$truncate | sed "s/://" | tac >$clipboard
 }
 
+# delete from the bottom of the queue to preserve indexes
 clipboard
 while read index word <&3
 do
   len=$(echo "$word" | wc -c)
   if [ $len -ge 6 ] && [ $len -le 12 ] ;then
-    notify "$index" "$word"
+    time=5 notify critical "$word" "Delete clipboard $index"
     gpaste-client delete $index
   fi
 done 3< $clipboard
 
 # any deletes above will resequence the clipboard history
 clipboard
-clip=$(sed "s/ /^$SEP /" $clipboard |
+clip=$(tac $clipboard |
+       sed "s/ /^$SEP /" |
        column -s^ -t |
        dmenu 'Clipboard' -no-custom)
 

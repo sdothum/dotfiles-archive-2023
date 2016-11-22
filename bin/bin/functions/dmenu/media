@@ -10,7 +10,7 @@ script=series
 while :
 do
   script=$(echo 'animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati' |
-           dmenu 'Menu' "$script" -no-custom) || exit
+           dmenu 'Media' "$script" -no-custom) || exit
   case $script in
     animation ) command dmenu movies animation ;;
     anime     ) command dmenu series anime ;;
