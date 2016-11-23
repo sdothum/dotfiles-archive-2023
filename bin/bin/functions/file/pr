@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: [proof=true]  $(basename $0)  eject | stdin | <file>.ps | code | mail | note | text | wiki | wps  [<filelist>]"
+  echo "usage: [proof=true]  $(basename $0)  eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps  [<filelist>]"
   exit 1
 }
 
@@ -169,6 +169,9 @@ print() {
   case "$1" in
     *.ps) title="$1"
           output="$1" ;;
+
+    *.pdf) pdf2ps "$1"
+           exec pr ${1%.pdf}.ps ;;
 
     *) output="/tmp/$(basename $1).pdf"
        rm -f "$output" 2>&1

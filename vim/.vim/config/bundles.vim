@@ -69,6 +69,7 @@
     " ............................................................. Productivity
 
       " Plug 'vim-scripts/calendar.vim--Matsumoto'
+      " Plug 'cwoac/nvim'
       Plug 'vim-scripts/openurl.vim'
       " Plug 'tpope/vim-fugitive'
       " Plug 'ludovicchabant/vim-lawrencium'
