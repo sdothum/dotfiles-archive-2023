@@ -3,29 +3,20 @@
 # X11 Dynamic Menu
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... System monitor
+# ...................................................................... Monitor
 
-monitors="htop \
-          iftop \
-          iotop \
-          mtr \
-          nethogs \
-          xrestop \
-"
+# meta dmenu menu!
+monitor=system
+monitor=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlog ^$SEP watch\nsystem ^$SEP monitor" |
+          column -s^ -t |
+          dmenu 'Monitor' "$monitor" -no-custom) || exit
 
-interface() {
-  ip link show | grep '^[0-9]' | cut -d: -f2 | dmenu 'Interface' -no-custom || exit
-}
-
-while monitor=$(apps "$monitors" | dmenu 'Monitor' -no-custom) || exit
-do
-  case $monitor in
-    iftop  ) term "$monitor" $monitor $(interface) ;;
-    iotop  ) term "$monitor" SHELL $monitor ;;
-    nethogs) term "$monitor" sudo $monitor $(interface) ;;
-    *      ) term "$monitor" $monitor ;;
-  esac
-  exit
-done
+case "$monitor" in
+  journal*inspect) command dmenu journals ;;
+  journal*watch  ) command dmenu journals watch ;;
+  log*inspect    ) command dmenu logs ;;
+  log*watch      ) command dmenu logs watch ;;
+  system*monitor ) command dmenu system ;;
+esac
 
 # vim: set ft=sh: #

@@ -6,12 +6,12 @@
 # ....................................................................... E-mail
 
 # in order of personal preference..
-editors="vim \
-         emacs \
+editors="emacs \
          focuswriter \
          nano \
          pyroom \
          rubyroom \
+         vim \
          wordgrinder \
 "
 
@@ -39,7 +39,8 @@ compose_with() {
   mv $folded $folded.draft
 }
 
-while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' -no-custom) || exit
+editor=vim
+while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in
     '[ send ]') ;;

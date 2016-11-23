@@ -6,10 +6,9 @@
 
 # ...................................................................... History
 
-# Usage: h [<regex>]
+# Usage: shell=<shell> h [<regex>]
 
-# default interactive shell
-default=fish
+shell=${shell:-fish}
 
 # filter session history
 # filter out single word commands
@@ -51,11 +50,12 @@ history() {
   fi
 }
 
-case $SHELL in
-  *dash) history $default $@ ;;
-  *fish) history fish $@ ;;
-  *zsh ) history zsh $@ ;;
-  *    ) $SHELL -c history | grep "$@" ;;
+case $shell in
+  dash) history $shell $@ ;;
+  fish) history fish $@ ;;
+  sh  ) echo history | sh -i | sed -e 's/^ *//' -e 's/  */ /g' | egrep -v "$filter" | tac ;;
+  zsh ) history zsh $@ ;;
+  *   ) $shell -c history | grep "$@" ;;
 esac
 
 # vim: set ft=sh: #

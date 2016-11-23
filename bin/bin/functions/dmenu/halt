@@ -15,8 +15,9 @@ disconnect() {
 }
 
 # quit!
-while cmd=$(echo 'lock\nlogout\nsuspend\nreboot\nshutdown' |
-            dmenu 'Session' -no-custom) || exit
+cmd=reboot
+while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
+            dmenu 'Session' $cmd -no-custom) || exit
 do
   case $cmd in
     lock   ) xscreensaver-command -lock ;;

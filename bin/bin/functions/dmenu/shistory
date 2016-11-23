@@ -5,15 +5,20 @@
 
 # ........................................................................ Shell
 
-case $SHELL in
-  *dash) $DASHELL ;;
-  *fish) ;;
+shell=$SHELL
+shell=$(echo "fish\nsh\nzsh" |
+        dmenu 'Shell' $shell -no-custom) || exit
 
-  *zsh) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
-        mv -f $HOME/.zhistory.vacuum $HOME/.zhistory ;;
+case $shell in
+  dash) $DASHELL ;;
+  fish) ;;
+  sh  ) ;;
+
+  zsh) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
+       mv -f $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
 
-cmd=$(h |
+cmd=$(shell=$shell h |
       sed -re "s/^([^ ]*)  */\1 $SEP $UTF/" |
       column -s$UTF -t |
       dmenu 'History' -no-custom) || exit

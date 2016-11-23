@@ -6,12 +6,12 @@
 # ........................................................................ Media
 
 # meta dmenu menu!
-script=series
+media=series
 while :
 do
-  script=$(echo 'animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati' |
-           dmenu 'Media' "$script" -no-custom) || exit
-  case $script in
+  media=$(echo "animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati" |
+          dmenu 'Media' $media -no-custom) || exit
+  case $media in
     animation ) command dmenu movies animation ;;
     anime     ) command dmenu series anime ;;
     ebooks    ) command dmenu ebooks ;;

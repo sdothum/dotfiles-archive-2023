@@ -180,12 +180,12 @@
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
 [urgency_low]
-    background = "#222222"
+    background = "#204040"
     foreground = "#FDF6E3"
     timeout = 10
 
 [urgency_normal]
-    background = "#285577"
+    background = "#008080"
     foreground = "#FDF6E3"
     timeout = 20
 

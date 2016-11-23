@@ -26,7 +26,6 @@ else
   hc keybind Super-Shift-0           spawn pactl set-sink-mute $(sink) toggle
   hc keybind Super-Control-0         spawn toggle pavucontrol
 fi
-hc keybind Super-1                   spawn dmenu monitor
 hc keybind Super-2                   spawn dmenu alarm
 hc keybind Super-equal               spawn dmenu calc
 if [ $PLANCK ] ;then
@@ -48,7 +47,8 @@ hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
 hc keybind Super-a                   spawn dmenu abook
 hc keybind Super-Shift-a             spawn toggle term 'Mail' alot
-hc keybind Super-b                   spawn dmenu bookmarks
+hc keybind Super-b                   spawn dmenu history
+hc keybind Super-Shift-b             spawn dmenu bookmarks
 hc keybind Super-c                   spawn dmenu clipboard
 hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
@@ -58,12 +58,7 @@ hc keybind Super-Control-e           spawn dmenu configs
 hc keybind Super-f                   spawn dmenu files
 hc keybind Super-Shift-f             spawn dmenu folders
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
-hc keybind Super-h                   spawn dmenu history
-hc keybind Super-Shift-h             spawn toggle term 'Top' htop
-hc keybind Super-j                   spawn dmenu journals watch
-hc keybind Super-Shift-j             spawn dmenu journals
-hc keybind Super-l                   spawn dmenu logs watch
-hc keybind Super-Shift-l             spawn dmenu logs
+hc keybind Super-h                   spawn dmenu shistory
 hc keybind Super-m                   spawn dmenu music
 hc keybind Super-Shift-m             spawn dmenu media
 hc keybind Super-n                   spawn toggle xpad
@@ -74,9 +69,7 @@ hc keybind Super-q                   spawn toggle amphetype
 hc keybind Super-Shift-q             spawn clack
 hc keybind Super-Control-q           spawn clack swap
 hc keybind Super-r                   spawn dmenu radio
-hc keybind Super-s                   spawn dmenu shistory
-hc keybind Super-v                   spawn dmenu videos
-# hc keybind Super-w                 spawn focus qutebrowser
+hc keybind Super-s                   spawn dmenu monitor
 hc keybind Super-w                   spawn focus vimbt
 hc keybind Super-Control-w           spawn focus vimbk
 hc keybind Super-Shift-w             spawn toggle term 'IRC' weechat
