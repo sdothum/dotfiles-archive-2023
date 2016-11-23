@@ -3,15 +3,11 @@
 # X11 Dynamic Menu
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ......................................................................... Menu
+# ...................................................................... Browser
 
-# meta dmenu menu!
-while :
-do
-  script=$(ls -1 ${0%/dmenu}/functions/dmenu |
-           egrep -v 'browser|compose|help|menu|urlib' |
-           dmenu 'Menu' "$script" -no-custom) || exit
-  command dmenu $script
-done
+browser=vimb
+browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' |
+          dmenu 'Use URLs From' $browser -no-custom) || exit
+echo $browser
 
 # vim: set ft=sh: #

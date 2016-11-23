@@ -5,8 +5,8 @@
 
 # ...................................................................... Browser
 
-browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' |
-          dmenu 'Browser' 'vimb' -no-custom) || exit
+# select source
+browser=$(command dmenu urlsrc) || exit
 
 # bookmarks
 case $browser in
@@ -48,6 +48,8 @@ case $browser in
               sed '1i[ history ]' |
               dmenu 'Bookmark' -no-custom |
               sed -r 's/.*(http.*)/\1/') ;;
+
+  *) exit ;;
 esac
 
 [ "$uri" = '[ history ]' ] && exec dmenu history
