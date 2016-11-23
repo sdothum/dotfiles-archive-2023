@@ -26,7 +26,6 @@ else
   hc keybind Super-Shift-0           spawn pactl set-sink-mute $(sink) toggle
   hc keybind Super-Control-0         spawn toggle pavucontrol
 fi
-hc keybind Super-2                   spawn dmenu alarm
 hc keybind Super-equal               spawn dmenu calc
 if [ $PLANCK ] ;then
   hc keybind Super-Shift-equal       spawn toggle plover
@@ -34,14 +33,12 @@ if [ $PLANCK ] ;then
   hc keybind $Mod-Shift-slash        spawn toggle panel
   hc keybind Super-slash             spawn toggle unclutter
   hc keybind Super-Shift-slash       spawn toggle compton
-  hc keybind Super-Shift-semicolon   spawn toggle simpletimer
 else
   hc keybind Super-minus             spawn toggle plover
   hc keybind $Mod-backslash          spawn toggle conky
   hc keybind $Mod-Shift-backslash    spawn toggle panel
   hc keybind Super-backslash         spawn toggle unclutter
   hc keybind Control-backslash       spawn toggle compton
-  hc keybind Super-semicolon         spawn toggle simpletimer
 fi
 hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
@@ -53,14 +50,13 @@ hc keybind Super-c                   spawn dmenu clipboard
 hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
 hc keybind Super-e                   spawn dmenu scripts
-hc keybind Super-Shift-e             spawn dmenu edit
+hc keybind Super-Shift-e             spawn dmenu projects
 hc keybind Super-Control-e           spawn dmenu configs
 hc keybind Super-f                   spawn dmenu files
 hc keybind Super-Shift-f             spawn dmenu folders
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu shistory
 hc keybind Super-m                   spawn dmenu music
-hc keybind Super-Shift-m             spawn dmenu media
 hc keybind Super-n                   spawn toggle xpad
 hc keybind Super-p                   spawn dmenu pass
 hc keybind Super-Shift-p             spawn pr eject
@@ -70,10 +66,13 @@ hc keybind Super-Shift-q             spawn clack
 hc keybind Super-Control-q           spawn clack swap
 hc keybind Super-r                   spawn dmenu radio
 hc keybind Super-s                   spawn dmenu monitor
+hc keybind Super-t                   spawn dmenu media
 hc keybind Super-w                   spawn focus vimbt
 hc keybind Super-Control-w           spawn focus vimbk
 hc keybind Super-Shift-w             spawn toggle term 'IRC' weechat
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
+hc keybind Super-z                   spawn dmenu alarm
+hc keybind Super-Shift-z             spawn toggle simpletimer
 
 # vim: set ft=sh: #
