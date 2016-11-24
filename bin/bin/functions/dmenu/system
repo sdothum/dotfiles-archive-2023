@@ -18,7 +18,7 @@ interface() {
   ip link show | grep '^[0-9]' | cut -d: -f2 | dmenu 'Interface' -no-custom || exit
 }
 
-monitor=$(echo | history system | head -1)
+monitor=$(previous system)
 while monitor=$(apps "$monitors" | dmenu 'Monitor' $monitor -no-custom) || exit
 do
   history system $monitor

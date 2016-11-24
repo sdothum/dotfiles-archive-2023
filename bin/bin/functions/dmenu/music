@@ -68,9 +68,8 @@ tracks() {
 
 info() {
   stats=$(mpc status | sed -n '2p')
-  echo "$stats" | grep -q 'playing' &&
-    echo "Playing $(tracks $stats)" ||
-    echo "Paused $(tracks $stats)"
+  echo "$stats" | grep -q 'playing' && echo "Playing $(tracks $stats)" ||
+                                       echo "Paused $(tracks $stats)"
 }
 
 # toggle state
@@ -79,9 +78,8 @@ status() {
 }
 
 ncmpcpp() {
-  pidof ncmpcpp >/dev/null &&
-        exec focus instance 'Music' ||
-        exec term 'Music' ncmpcpp
+  pidof ncmpcpp >/dev/null && exec focus instance 'Music' ||
+                              exec term 'Music' ncmpcpp
 }
 
 # ....................................................................... Player

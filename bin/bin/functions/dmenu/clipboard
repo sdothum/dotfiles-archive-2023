@@ -7,7 +7,6 @@
 
 # arbitrary content trim length (for display only)
 truncate=320
-
 # quick security pass
 clipboard=/tmp/dmenu:clipboard
 

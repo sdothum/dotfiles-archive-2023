@@ -10,7 +10,7 @@
 cd /tmp
 ln_logs
 
-file=$(echo | history logs | head -1)
+file=$(previous logs)
 file=$(ls *.log |
        sort |
        sed 's/.log//' |

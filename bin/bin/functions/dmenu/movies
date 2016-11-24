@@ -45,9 +45,8 @@ fi
 [ $cache ] && exit
 
 options() {
-  grep -q '[^ ]' "$playlist" &&
-    echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" ||
-    echo "[ $(sortlist $T) ]"
+  grep -q '[^ ]' "$playlist" && echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" ||
+                                echo "[ $(sortlist $T) ]"
 }
 
 while :
@@ -73,9 +72,6 @@ do
 
     '[ sort by date ]') T=t
                         continue ;;
-
-    '[ animation    ]') exec dmenu movies animation ;;
-    '[ theatrical   ]') exec dmenu movies ;;
 
     *) movie=$(echo "$movie" | sed "s/ $SEP$//")
        while :

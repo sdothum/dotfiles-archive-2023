@@ -77,8 +77,8 @@ do
   book=$(cat $cache |
          history ebooks |
          column -s^ -t |
-         sed "1i[ rebuild database ]\n[ documents        ]" |
-         dmenu 'E-book' -filter "$author" -no-custom)
+         sed "1i[ rebuild database ]" |
+         dmenu 'E-book' 1 -filter "$author" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then
@@ -92,8 +92,6 @@ do
     ebooks
     continue
   fi
-
-  [ "$book" = '[ documents        ]' ] && exec dmenu references
 
   author="${book#*$SEP } "
   title=${book%$SEP*}

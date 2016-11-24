@@ -56,7 +56,7 @@ do
          history configs |
          sed -e '1i[ rebuild database ]' |
          column -s^ -t |
-         dmenu 'Edit Config' -no-custom) || exit
+         dmenu 'Edit Config' 1 -no-custom) || exit
   if [ "$file" = '[ rebuild database ]' ] ;then
     configs
     continue

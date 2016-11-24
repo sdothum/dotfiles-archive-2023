@@ -6,7 +6,7 @@
 # ...................................................................... Monitor
 
 # meta dmenu menu!
-monitor=$(echo | history monitor | head -1)
+monitor=$(previous monitor)
 monitor=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlog ^$SEP watch\nsystem ^$SEP monitor" |
           column -s^ -t |
           dmenu 'Monitor' "$monitor" -no-custom) || exit

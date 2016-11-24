@@ -5,7 +5,7 @@
 
 # ........................................................................ Shell
 
-shell=$(echo | history shistory | head -1)
+shell=$(previous shistory)
 shell=$(echo "fish\nsh\nzsh" |
         dmenu 'Shell' $shell -no-custom) || exit
 

@@ -49,9 +49,8 @@ case $# in
      repeat=$(echo '1' | dmenu 'Repetitions') || exit ;;
 esac
 
-[ $repeat -gt 1 ] &&
-  notify "$alert" "$delay x $repeat" ||
-  notify "$alert" "$delay"
+[ $repeat -gt 1 ] && notify "$alert" "$delay x $repeat" ||
+                     notify "$alert" "$delay"
 
 alarm() {
   echo "$alert" | grep -iq 'test' || history alarm "$delay^$SEP $alert"
@@ -59,9 +58,8 @@ alarm() {
   do
     sleep $delay
     if [ $repeat -gt 1 ] ;then
-      [ $(( $repeat - $i )) -gt 0 ] &&
-        time=0 notify "($i/$repeat)  $alert" ||
-        notify critical "($i/$repeat)  $alert" 'Finished!'
+      [ $(( $repeat - $i )) -gt 0 ] && time=0 notify "($i/$repeat)  $alert" ||
+                                       notify critical "($i/$repeat)  $alert" 'Finished!'
     else
       notify critical "$alert"
     fi

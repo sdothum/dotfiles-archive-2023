@@ -42,9 +42,6 @@ do
     '[ sort by date ]') T=t
                         continue ;;
 
-    '[ anime        ]') exec dmenu series anime ;;
-    '[ theatrical   ]') exec dmenu series ;;
-
     '[ edit         ]') pkill -TERM 'ROX-Filer'
                         rox "$library"
                         pwait "ROX-Filer $library"

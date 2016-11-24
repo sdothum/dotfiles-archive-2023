@@ -25,7 +25,6 @@ file=$(echo $(find -L $HOME/bin -type f) \
 
 if echo $file | grep -q "$SEP" ;then
   history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
-  echo $file | sed "s/ *$SEP/^$SEP/" >/tmp/debug
   file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
 else
   # (tic) 'script for quick menu action
@@ -44,6 +43,7 @@ elif [ -e $HOME/build/$file ] ;then
 elif [ -e $HOME/.config/$file ] ;then
   eval v $HOME/.config/$file
 else
+  notify critical "$file" 'No longer in path.. correct dmenu history'
   exec dmenu scripts
 fi
 

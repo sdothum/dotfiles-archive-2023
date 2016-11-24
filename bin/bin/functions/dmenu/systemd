@@ -32,9 +32,8 @@ do
     '[ list-unit-files ]') term 'unit-files' systemctl list-unit-files ;;
 
     *) service=$service.service
-       sudo systemctl status $service &&
-         actions='stop\nrestart' ||
-         actions='start'
+       sudo systemctl status $service && actions='stop\nrestart' ||
+                                         actions='start'
        while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" |
                       dmenu "${service%.service}" -no-custom) || break
        do

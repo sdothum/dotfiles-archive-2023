@@ -7,7 +7,9 @@
 
 # Usage: dmenu browser uri [<bookmarks>]
 
-# in order of personal preference..
+# default=$BROWSER
+default=chromium
+
 browsers="brave \
           chromium \
           dwb \
@@ -31,8 +33,7 @@ browsers="brave \
 
 [ $2 ] && edit='1i[ edit ]'
 
-# browser=$BROWSER
-browser=chromium
+browser=$default
 while browser=$(apps "$browsers" | sed "$edit" | dmenu 'Browser' $browser -no-custom) || exit
 do
   case ${browser} in

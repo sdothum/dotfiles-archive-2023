@@ -5,7 +5,6 @@
 
 # ....................................................................... E-mail
 
-# in order of personal preference..
 editors="emacs \
          focuswriter \
          nano \
@@ -14,7 +13,6 @@ editors="emacs \
          vim \
          wordgrinder \
 "
-editor=$(echo | history media | head -1)
 
 format_message() {
   # insert 2 line feed characters into reply for vim cursor positioning and spacing
@@ -41,6 +39,7 @@ compose_with() {
   history compose $editor
 }
 
+editor=$(previous compose)
 while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in

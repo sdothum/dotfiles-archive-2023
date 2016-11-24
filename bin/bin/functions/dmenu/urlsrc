@@ -5,9 +5,11 @@
 
 # ...................................................................... Browser
 
-browser=vimb
+browser=$(previous urlsrc)
 browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' |
           dmenu 'Use URLs From' $browser -no-custom) || exit
+
+history urlsrc $browser
 echo $browser
 
 # vim: set ft=sh: #

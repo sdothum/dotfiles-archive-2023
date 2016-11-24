@@ -9,8 +9,7 @@
 filter='/accounts|acronym|color(codehex|combos|hexa)|dictionary|duckduckgo|ERROR:|fontbureau|google.com/mail|localhost|luakit:|Page not found|[Ss]earch|thedarnedestthing|thesaurus|tt-rss'
 
 # select source
-browser=$(command dmenu urlsrc) || exit
-
+browser=$(command dmenu urlsrc)
 case $browser in
   chromium) history=$HOME/.config/chromium/Default/History
             cp $history $history.copy
@@ -27,7 +26,6 @@ case $browser in
                       -e 's/\&\#xe[0-9];/e/g' \
                       -e 's/\&amp;/\&/g' \
                       -e 's/^[Rr][Ee]: //' |
-                  sed '1i[ bookmarks ]' |
                   dmenu 'History' -no-custom |
                   sed -r 's/.*(http.*)/\1/') ;;
 
@@ -36,7 +34,6 @@ case $browser in
           uri=$(echo "$query" |
                 sqlite3 $sqldb |
                 egrep -v "$filter" | sed 's/[|]/  ::  /g' |
-                sed '1i[ bookmarks ]' |
                 dmenu 'History' -no-custom |
                 sed -r 's/.*(http.*)/\1/') ;;
 
@@ -44,7 +41,6 @@ case $browser in
                uri=$(tac $history |
                      egrep -v "$filter" |
                      sed -r "s/[^ ]* ([^ ]*) (.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" |
-                     sed '1i[ bookmarks ]' |
                      dmenu 'History' -no-custom |
                      sed -r 's/.*(http.*)/\1/') ;;
 
@@ -53,14 +49,12 @@ case $browser in
               egrep -v "$filter" |
               sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" |
               grep "$SEP" |
-              sed '1i[ bookmarks ]' |
               dmenu 'History' -no-custom |
               sed -r 's/.*(http.*)/\1/') ;;
 
   *) exit ;;
 esac
 
-[ "$uri" = '[ bookmarks ]' ] && exec dmenu bookmarks
 [ "$uri" ] && exec dmenu browser "$uri"
 
 # vim: set ft=sh: #

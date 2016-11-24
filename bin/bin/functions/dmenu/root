@@ -23,9 +23,8 @@ hex() {
   echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'
 }
 
-while color=$( ( [ "$menu" ] &&
-                 ( echo | history root | sed "1i$menu" ) ||
-                 ( echo | history root | sed "1i[ viewer ]\n[ update ]" ) ) |
+while color=$( ( [ "$menu" ] && ( echo | history root | sed "1i$menu" ) ||
+                                ( echo | history root | sed "1i[ viewer ]\n[ update ]" ) ) |
               column -s^ -t |
               dmenu 'Setroot') || exit
 do

@@ -5,9 +5,8 @@
 
 # ........................................................................ Media
 
-# last meta menu selection!
-media=$(echo | history media | head -1)
-
+# meta dmenu menu!
+media=$(previous media)
 while :
 do
   media=$(echo "animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati" |

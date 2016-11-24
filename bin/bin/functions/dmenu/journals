@@ -9,7 +9,7 @@
 [ "$*" ] && mode='Watch' || mode='View'
 cd /usr/lib/systemd/system/
 
-service=$(echo | history journals | head -1)
+service=$(previous journals)
 service=$(stest -fl . |
           sort |
           sed 's/.service$//' |

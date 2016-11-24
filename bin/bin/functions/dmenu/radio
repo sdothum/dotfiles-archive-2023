@@ -8,9 +8,9 @@
 # Note: mpv --no-cache --quiet, are unique options used on this system for radio
 
 radio=/tmp/radio
-# access list csv format: station name, url
-stations=$HOME/bin/functions/dmenu/.config/radio
-
+# access list csv format: <station>, <url>
+stations=$CONFIG/radio
+# connection lag time
 delay=0.5
 
 playlist() {
@@ -34,8 +34,7 @@ url() {
   grep "$@" $stations | sed 's/.*, *//'
 }
 
-station=$(echo | history radio | head -1)
-while station=$(playlist | sed 's/,.*//' | dmenu "$(station)" $station -no-custom) || exit
+while station=$(playlist | sed 's/,.*//' | dmenu "$(station)" -no-custom) || exit
 do
   case $station in
     '[ toggle ]') if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
@@ -51,8 +50,7 @@ do
 
     '[ edit   ]' | '[ edit ]') gvim -f $stations ;;
 
-    *) history radio $station
-       pgrep -f 'mpv --no-cache --quiet' >/dev/null && stop
+    *) pgrep -f 'mpv --no-cache --quiet' >/dev/null && stop
        # quotes required "$station"
        url=$(url "$station")
        if [ "$url" ] ;then
