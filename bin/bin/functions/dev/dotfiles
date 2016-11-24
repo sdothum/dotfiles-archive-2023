@@ -68,6 +68,7 @@ pending() {
   [ "$DESC" ] && commit
 }
 
+# any updates to push?
 [ "$(git diff --name-only HEAD | tee)" = '' ] && exit
 git diff --name-only HEAD | tee
 [ "$*" ] && underline
