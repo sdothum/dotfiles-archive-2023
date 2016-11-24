@@ -9,7 +9,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0)  <comment> | add <path/filespec> | comment [<comment>] | edit | ignore | init | list | undo | rm <dir>"
+  echo "usage: $(basename $0)  [<stowdir>..] | add <path/filespec>.. | comment [<comment>] | edit | ignore | init | list | undo | rm <dir>"
   exit 1
 }
 
@@ -54,11 +54,6 @@ cd $HOME/stow
 find . -name '*.sync-conflict-*' -exec rm -f {} \;
 find . -name '*.syncthing.hsts.tmp' -exec rm -f {} \;
 
-for i in $dotfiles
-do
-  git add -v $i
-done
-
 commit() {
   echo
   git commit --message="$DESC"
@@ -66,64 +61,79 @@ commit() {
 }
 
 pending() {
-  echo '..'
-  git diff --name-only HEAD | tee
-}
-
-# $@ substitution within complex expressions is more predictably handled by var substitution
-if [ "$*" ] ;then
-  case "$1" in
-    h) usage ;;
-
-    add) shift
-         [ "$*" ] && git add -fv $@ ;;
-
-    comment |\
-    amend) shift
-           DESC="$@"
-           [ "$DESC" ] &&
-             git commit --amend --no-edit --message="$DESC" ||
-             git commit --amend ;;
-
-    edit | ignore) gvim .gitignore ;;
-
-    init) git init
-          git add README.md
-          git commit --message="refresh commit"
-          git remote add origin https://github.com/sdothum/dotfiles.git
-          git push -u origin master
-          git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
-
-    list |\
-    log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
-
-    undo |\
-    redo |\
-    reset) git reset --soft HEAD~
-           dotfiles ;;
-
-    rm) shift
-        if [ "$*" ] ;then
-          DESC="$@"
-          git rm -r --cached $DESC
-          git commit --message="Remove directory \"$DESC\""
-          git push origin master
-        fi ;;
-
-    *) pending
-       DESC="$@"
-       if if-yes "commit \"$DESC\"" ;then
-         commit
-       fi ;;
-  esac
-else
-  pending
   underline
   printf "commit? [abort]/comment.. : ${_YELLOW_}"
   read DESC
   printf "${_nocolor_}"
   [ "$DESC" ] && commit
-fi
+}
+
+git diff --name-only HEAD | tee
+[ "$*" ] && underline
+
+# $@ substitution within complex expressions is more predictably handled by var substitution
+unset pending
+case "$1" in
+  '') if-no 'update repository' && exit
+      for i in $dotfiles
+      do
+        git add -v $i
+      done
+      pending ;;
+
+  add) shift
+       for i in "$@"
+       do
+         if [ -e $i ] ;then
+           git add -fv $i
+         else
+           usage
+         fi
+       done ;;
+
+  comment |\
+  amend) shift
+         DESC="$@"
+         [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
+                        git commit --amend ;;
+
+  edit | ignore) gvim .gitignore ;;
+
+  init) git init
+        git add README.md
+        git commit --message="refresh commit"
+        git remote add origin https://github.com/sdothum/dotfiles.git
+        git push -u origin master
+        git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
+
+  list |\
+  log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+
+  undo |\
+  redo |\
+  reset) git reset --soft HEAD~
+         dotfiles ;;
+
+  rm) shift
+      if [ "$*" ] ;then
+        DESC="$@"
+        git rm -r --cached $DESC
+        git commit --message="Remove directory \"$DESC\""
+        git push origin master
+      fi ;;
+
+  *) for i in $@
+     do
+       if [ -e $i ] ;then
+         git add -v $i
+         pending=true
+       else
+         usage
+       fi
+     done
+     [ $pending ] && pending ;;
+esac
+
 cd - >/dev/null
 
 # vim: set ft=sh: #
