@@ -20,9 +20,8 @@ usage() {
   exit 1
 }
 
-echo "$1" | grep -qv '/' &&
-  history="$HISTORY/$1" ||
-  history="$1"
+echo "$1" | grep -qv '/' && history="$HISTORY/$1" ||
+                            history="$1"
 
 # usage: inject item file
 inject() {

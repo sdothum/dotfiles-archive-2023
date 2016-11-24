@@ -50,13 +50,11 @@ do
       '@' |\
       'a' |\
       'g' |\
-      '!') [ "$condition" ] &&
-             condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
-             condition=true ;;
+      '!') [ "$condition" ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
+                               condition=true ;;
 
-      *) [ $package ] &&
-           condition="$(echo $package | sed -e 's/^\[//' -e 's/\]$//')" ||
-           condition=true ;;
+      *) [ $package ] && condition="$(echo $package | sed -e 's/^\[//' -e 's/\]$//')" ||
+                         condition=true ;;
     esac
 
     eval $condition || continue

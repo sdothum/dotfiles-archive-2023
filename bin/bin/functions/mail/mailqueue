@@ -31,9 +31,8 @@ if [ $(ls -l $queue | wc -l) -gt 1 ] ;then
   if echo $errmsg | grep -q 'FAILURE' ;then
     notify critical 'Check Mail Queue..' "$(echo $errmsg | sed -n 2p)"
   else
-    [ $count -eq 1 ] &&
-      notify low 'Mail Queue' '1 message sent' ||
-      notify low 'Mail Queue' "$count messages sent"
+    [ $count -eq 1 ] && notify low 'Mail Queue' '1 message sent' ||
+                        notify low 'Mail Queue' "$count messages sent"
   fi
 else
   trace 'No mail'

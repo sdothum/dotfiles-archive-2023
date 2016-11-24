@@ -14,9 +14,8 @@ unset ljust
 
 ancestor() {
   proc=$(parent)
-  [ $ljust ] &&
-    echo "$proc                  " | sed -r 's/^(..................).*/\1/' ||
-    echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
+  [ $ljust ] && echo "$proc                  " | sed -r 's/^(..................).*/\1/' ||
+                echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
 }
 
 echo "  $(ancestor) -> $CHILD" >>$TRACE

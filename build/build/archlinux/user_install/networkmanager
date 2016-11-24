@@ -15,9 +15,8 @@ config_install L /etc/hosts
 # add host ip address
 ip=$(hostname --ip-address)
 hostname=$(hostname)
-grep -q " $hostname *" $hosts &&
-     sed -i "/ $hostname */s/^[^ ]*/$ip/" $hosts ||
-     sed -i "/localhost.*ttrss/a$ip $hostname" $hosts
+grep -q " $hostname *" $hosts && sed -i "/ $hostname */s/^[^ ]*/$ip/" $hosts ||
+                                 sed -i "/localhost.*ttrss/a$ip $hostname" $hosts
 
 sudo wifi-menu
 
