@@ -5,8 +5,10 @@
 
 # ...................................................................... Monitor
 
+default='system monitor'
+
 # meta dmenu menu!
-monitor=system
+monitor=$default
 monitor=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlog ^$SEP watch\nsystem ^$SEP monitor" |
           column -s^ -t |
           dmenu 'Monitor' "$monitor" -no-custom) || exit

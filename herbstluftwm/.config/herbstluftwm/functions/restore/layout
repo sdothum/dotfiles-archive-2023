@@ -11,11 +11,13 @@
 # default master pane left or right
 MASTER=${MASTER:-left}
 # menu order (0) standard layouts (1) split ratios
-ORDER=1
+ORDER=0
 
 [ $ORDER -eq 0 ] &&
   layouts="grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n1:1:1" ||
   layouts="1:1:1\n1:2\n1:1\ngrid\nhorizontal\nmax\nvertical"
+
+default='1:1:1'
 
 windows=$(herbstclient attr tags.focus.client_count)
 wcount=$(herbstclient attr tags.focus.curframe_wcount)
@@ -164,7 +166,8 @@ case "$1" in
          # unlock to enable focus borders
          herbstclient unlock ;;
 
-  *) layout=$(echo "$layouts" | dmenu 'Explode to Layout' -no-custom) || exit
+  *) layout=$default
+     layout=$(echo "$layouts" | dmenu 'Explode to Layout' $layout -no-custom) || exit
      restore windowed
      exec restore layout $layout ;;
 esac

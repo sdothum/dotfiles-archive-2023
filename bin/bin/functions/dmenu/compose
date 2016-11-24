@@ -14,6 +14,7 @@ editors="emacs \
          vim \
          wordgrinder \
 "
+default=vim
 
 format_message() {
   # insert 2 line feed characters into reply for vim cursor positioning and spacing
@@ -39,7 +40,7 @@ compose_with() {
   mv $folded $folded.draft
 }
 
-editor=vim
+editor=$default
 while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in

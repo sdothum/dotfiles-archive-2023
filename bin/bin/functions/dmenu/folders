@@ -21,7 +21,7 @@ do
 
   file=$(echo "$list" | dmenu 'Select Folder' -no-custom) || exit
 
-  [ -d $file ] && dir=$file || dir="$(dirname $file)"
+  [ -d $file ] && dir=$file || dir=$(dirname $file)
   history folders "$dir"
   while action=$(echo "term\n$(apps \"$filemanagers\")" | dmenu "$dir" -no-custom) || exit
   do

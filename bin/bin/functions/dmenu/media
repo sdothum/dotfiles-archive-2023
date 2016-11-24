@@ -5,8 +5,10 @@
 
 # ........................................................................ Media
 
+default=series
+
 # meta dmenu menu!
-media=series
+media=$default
 while :
 do
   media=$(echo "animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati" |

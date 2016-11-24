@@ -5,6 +5,8 @@
 
 # ...................................................................... Session
 
+default=shutdown
+
 # disconnect nfs to prevent shutdown wait..
 disconnect() {
   if ! server ;then
@@ -15,7 +17,7 @@ disconnect() {
 }
 
 # quit!
-cmd=shutdown
+cmd=$default
 while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
             dmenu 'Session' $cmd -no-custom) || exit
 do
