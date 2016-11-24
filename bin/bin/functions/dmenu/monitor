@@ -5,14 +5,13 @@
 
 # ...................................................................... Monitor
 
-default='system monitor'
-
 # meta dmenu menu!
-monitor=$default
+monitor=$(echo | history monitor | head -1)
 monitor=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlog ^$SEP watch\nsystem ^$SEP monitor" |
           column -s^ -t |
           dmenu 'Monitor' "$monitor" -no-custom) || exit
 
+history monitor "$monitor"
 case "$monitor" in
   journal*inspect) command dmenu journals ;;
   journal*watch  ) command dmenu journals watch ;;

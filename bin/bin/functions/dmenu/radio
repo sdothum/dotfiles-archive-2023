@@ -34,7 +34,8 @@ url() {
   grep "$@" $stations | sed 's/.*, *//'
 }
 
-while station=$(playlist | sed 's/,.*//' | dmenu "$(station)" -no-custom) || exit
+station=$(echo | history radio | head -1)
+while station=$(playlist | sed 's/,.*//' | dmenu "$(station)" $station -no-custom) || exit
 do
   case $station in
     '[ toggle ]') if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
@@ -50,7 +51,8 @@ do
 
     '[ edit   ]' | '[ edit ]') gvim -f $stations ;;
 
-    *) pgrep -f 'mpv --no-cache --quiet' >/dev/null && stop
+    *) history radio $station
+       pgrep -f 'mpv --no-cache --quiet' >/dev/null && stop
        # quotes required "$station"
        url=$(url "$station")
        if [ "$url" ] ;then

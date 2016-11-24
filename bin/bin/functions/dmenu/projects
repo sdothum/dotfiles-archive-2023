@@ -13,10 +13,10 @@
 #   eval     - posix shell expression that evaluates to a list of filenames
 
 # tag file containing project specs
-projects=$HOME/bin/functions/dmenu/.config/edit
+projects=$HOME/bin/functions/dmenu/.config/projects
 
 while files=$(sed "s/  *::  */^$SEP /" $projects |
-              history edit |
+              history projects |
               column -s^ -t |
               sed -e '1i[ edit tags ]' |
               dmenu 'Edit Project' -no-custom) || exit
@@ -24,7 +24,7 @@ do
   if [ "$files" = '[ edit tags ]' ] ;then
     gvim -f $projects
   else
-    history edit "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+    history projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
     eval v ${files#*$SEP}
     exit
   fi

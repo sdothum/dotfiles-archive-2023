@@ -14,7 +14,7 @@ editors="emacs \
          vim \
          wordgrinder \
 "
-default=vim
+editor=$(echo | history media | head -1)
 
 format_message() {
   # insert 2 line feed characters into reply for vim cursor positioning and spacing
@@ -38,9 +38,9 @@ compose_with() {
   fold -s -w 72 $2 >$folded
   cp -f $folded $2
   mv $folded $folded.draft
+  history compose $editor
 }
 
-editor=$default
 while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in
@@ -51,7 +51,8 @@ do
          gvim -f -c 'set filetype=mail' $1
          cp $1 $1.draft
          # cleanup sup mail draft histories
-         find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \; ;;
+         find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
+         history compose $editor ;;
 
     focuswriter) compose_with focuswriter $1 ;;
     nano       ) compose_with pyroom $1 ;;

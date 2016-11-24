@@ -44,10 +44,6 @@ if [ ! -s "$catlg" ] || stest -dqr -n "$catlg" $library ;then
 fi
 [ $cache ] && exit
 
-library() {
-  [ "$1" ] && echo '[ theatrical   ]' || echo '[ animation    ]'
-}
-
 options() {
   grep -q '[^ ]' "$playlist" &&
     echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" ||
@@ -66,7 +62,6 @@ do
   [ $monitor ] && herbstclient focus_monitor $monitor
 
   movie=$(cat $catlg |
-          sed "1i$(library $1)" |
           sed "1i$(options)" |
           dmenu 'Movie' "$movie" -no-custom) || exit
 

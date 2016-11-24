@@ -13,15 +13,15 @@ monitors="glances \
           nethogs \
           xrestop \
 "
-default=glances
 
 interface() {
   ip link show | grep '^[0-9]' | cut -d: -f2 | dmenu 'Interface' -no-custom || exit
 }
 
-monitor=$default
+monitor=$(echo | history system | head -1)
 while monitor=$(apps "$monitors" | dmenu 'Monitor' $monitor -no-custom) || exit
 do
+  history system $monitor
   case $monitor in
     iftop  ) term "$monitor" $monitor $(interface) ;;
     iotop  ) term "$monitor" SHELL $monitor ;;

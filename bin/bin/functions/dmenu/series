@@ -26,16 +26,12 @@ shows() {
   playlist "$episodes" "$playlist"
 }
 
-library() {
-  [ "$1" ] && echo '[ theatrical   ]' || echo '[ anime        ]'
-}
-
 while :
 do
   # cleanup show names
   find $library -maxdepth 1 -name '[^ ]*.*' -exec myshow {} \;
   show=$(ls -1$T $library |
-         sed "1i$(library $1)\n[ edit         ]" |
+         sed "1i[ edit         ]" |
          sed "1i[ $(sortlist $T) ]" |
          dmenu 'Show' "$show" -no-custom) || exit
 

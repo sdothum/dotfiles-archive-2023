@@ -7,18 +7,16 @@
 
 # view log files
 [ "$*" ] && mode='Watch' || mode='View'
-
 cd /tmp
 ln_logs
 
-file=$(cat $HOME/.windowmanager)
+file=$(echo | history logs | head -1)
 file=$(ls *.log |
        sort |
        sed 's/.log//' |
-       sed '1i[ journals ]' |
        dmenu "$mode Log" $file -no-custom) || exit
 
-[ "$service" = '[ journals ]' ] && exec dmenu journals
+history logs $file
 case $mode in
   View ) [ $file ] && term "$file" MAX less $file.log ;;
   Watch) [ $file ] && term "$file" tail -f $file.log ;;

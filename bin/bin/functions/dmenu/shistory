@@ -5,10 +5,11 @@
 
 # ........................................................................ Shell
 
-shell=$SHELL
+shell=$(echo | history shistory | head -1)
 shell=$(echo "fish\nsh\nzsh" |
         dmenu 'Shell' $shell -no-custom) || exit
 
+history shistory $shell
 case $shell in
   dash) $DASHELL ;;
   fish) ;;

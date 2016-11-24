@@ -5,14 +5,15 @@
 
 # ........................................................................ Media
 
-default=series
+# last meta menu selection!
+media=$(echo | history media | head -1)
 
-# meta dmenu menu!
-media=$default
 while :
 do
   media=$(echo "animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati" |
           dmenu 'Media' $media -no-custom) || exit
+
+  history media $media
   case $media in
     animation ) command dmenu movies animation ;;
     anime     ) command dmenu series anime ;;
