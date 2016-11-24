@@ -14,19 +14,16 @@ fullscreen() {
   if is display +1024 ;then
     if is primary ;then
       if conky search --onlyvisible ;then
-        [ $1 = on ] &&
-          draw monitor conky fullscreen ||
-          draw monitor conky
+        [ $1 = on ] && draw monitor conky fullscreen ||
+                       draw monitor conky
       else
         # handle frame no conky
-        [ $1 = on ] &&
-          draw monitor fullscreen ||
-          draw monitor fullframe
+        [ $1 = on ] && draw monitor fullscreen ||
+                       draw monitor fullframe
       fi
     else
-      [ $1 = on ] &&
-        draw monitor secondary fullscreen ||
-        draw monitor secondary
+      [ $1 = on ] && draw monitor secondary fullscreen ||
+                     draw monitor secondary
     fi
   fi
   herbstclient unlock

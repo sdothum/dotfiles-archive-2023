@@ -109,9 +109,8 @@ blank() {
 
 color() {
   # initialize default link
-  [ -L $BACKGROUND ] &&
-    exists $BACKGROUND ||
-    ln -sf $(find $PALETTE -name '*.png' | head -1) $BACKGROUND
+  [ -L $BACKGROUND ] && exists $BACKGROUND ||
+                        ln -sf $(find $PALETTE -name '*.png' | head -1) $BACKGROUND
 }
 
 select_blank() {
@@ -128,9 +127,8 @@ select_blank() {
 
 wallpaper() {
   # initialize default link
-  [ -L $WALLPAPER ] &&
-    exists $WALLPAPER ||
-    ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
+  [ -L $WALLPAPER ] && exists $WALLPAPER ||
+                       ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   rm -f $BLANK
   rm -f $THEME 2>/dev/null
   herbstclient attr theme.normal.color "$NORMAL"

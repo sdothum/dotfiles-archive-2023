@@ -15,9 +15,8 @@ if [ $count -gt 0 ] ;then
   do
     if herbstclient compare clients.$i.tag = "'$TAG" ;then
       window="$(query wtitle $i)$DLM$i"
-      [ "$hidden" ] &&
-        hidden="$hidden\n$window" ||
-        hidden="$window"
+      [ "$hidden" ] && hidden="$hidden\n$window" ||
+                       hidden="$window"
     fi
   done
 

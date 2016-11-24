@@ -29,16 +29,12 @@ fi
 hc keybind Super-equal               spawn dmenu calc
 if [ $PLANCK ] ;then
   hc keybind Super-Shift-equal       spawn toggle plover
-  hc keybind $Mod-slash              spawn toggle conky
-  hc keybind $Mod-Shift-slash        spawn toggle panel
-  hc keybind Super-slash             spawn toggle unclutter
-  hc keybind Super-Shift-slash       spawn toggle compton
+  hc keybind Super-slash             spawn toggle conky
+  hc keybind Super-Shift-slash       spawn toggle panel
 else
   hc keybind Super-minus             spawn toggle plover
-  hc keybind $Mod-backslash          spawn toggle conky
-  hc keybind $Mod-Shift-backslash    spawn toggle panel
-  hc keybind Super-backslash         spawn toggle unclutter
-  hc keybind Control-backslash       spawn toggle compton
+  hc keybind Super-backslash         spawn toggle conky
+  hc keybind Super-Shift-backslash   spawn toggle panel
 fi
 hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle

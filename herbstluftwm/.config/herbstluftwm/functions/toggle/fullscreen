@@ -14,28 +14,24 @@ if is display +1024 ;then
     # allow transitioning monocle directly to fullscreen
     [ -e $MONOCLE ] && toggle monocle fullscreen
     if conky search --onlyvisible ;then
-      is fullscreen &&
-        draw monitor conky ||
-        draw monitor conky fullscreen
+      is fullscreen && draw monitor conky ||
+                       draw monitor conky fullscreen
     else
       # handle frame no conky
-      is fullscreen &&
-        draw monitor fullframe ||
-        draw monitor fullscreen
+      is fullscreen && draw monitor fullframe ||
+                       draw monitor fullscreen
     fi
   else
-    is fullscreen &&
-      draw monitor secondary ||
-      draw monitor secondary fullscreen
+    is fullscreen && draw monitor secondary ||
+                     draw monitor secondary fullscreen
   fi
 fi
 herbstclient chain . fullscreen toggle . unlock
 
 tag=$(herbstclient attr monitors.focus.tag)
 # clear any previously set monocle state (on other monitor or conky)
-is fullscreen &&
-  rm -f $MONOCLE:$tag >/dev/null ||
-  rm -f $MONOCLE:conky >/dev/null
+is fullscreen && rm -f $MONOCLE:$tag >/dev/null ||
+                 rm -f $MONOCLE:conky >/dev/null
 touch_panel
 
 # vim: set ft=sh: #
