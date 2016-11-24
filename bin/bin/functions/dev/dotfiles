@@ -68,7 +68,7 @@ pending() {
   [ "$DESC" ] && commit
 }
 
-git diff --name-only HEAD | tee >/dev/null || exit
+[ "$(git diff --name-only HEAD | tee)" = '' ] && exit
 git diff --name-only HEAD | tee
 [ "$*" ] && underline
 
