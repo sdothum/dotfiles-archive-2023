@@ -12,6 +12,7 @@
 #        POSIX standard for use with dash shell
 
 CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
+CONFIG=${0%/dmenu}/functions/dmenu/.config
 
 # content formatting items, see herbstluftwm env
 LSPACE="    $SEP"
@@ -64,9 +65,8 @@ else
   padsize $width 11 1
 fi
 
-hlwm &&
-  monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) ||
-  monitor=0
+hlwm && monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) ||
+        monitor=0
 
 # ............................................................... Available apps
 
@@ -90,9 +90,8 @@ apps() {
 playlist() {
   cat "$2" | while read line
   do
-    [ "$line" ] &&
-      grep -q "$line" "$1" &&
-      sed -i "/^$line/s/^$line/$line $SEP/" "$1"
+    [ "$line" ] && grep -q "$line" "$1" &&
+                   sed -i "/^$line/s/^$line/$line $SEP/" "$1"
   done
   cat "$1"
 }
@@ -102,10 +101,17 @@ sortlist() {
   [ "$*" ] && echo 'sort by name' || echo 'sort by date'
 }
 
+# .......................................................... Most recent history
+
+# usage: previous <function>, refer to history usage in dmenu functions
+previous() {
+  echo | history $1 | head -1
+}
+
 # ............................................................... Source wrapper
 
 # dmenu wrapper for sourced apps
-# usage: dmenu '<prompt>' ['<select>' | -filter '<filter>'] [<option>*]
+# usage: dmenu '<prompt>' [['<select>' | <row>] | -filter '<filter>'] [<option>*]
 dmenu() {
   # prompt string
   if [ "$1" ] ;then
@@ -115,10 +121,11 @@ dmenu() {
 
   # select string
   unset select
+  unset row
   if [ "$1" ] ;then
     # if not parameter
     if [ "${1%%-*}" != '' ] ;then
-      select="$1"
+      echo "$1" | grep -q '^[0-9]*$' && row=$1 || select="$1"
       shift
     fi
   fi
@@ -131,29 +138,56 @@ dmenu() {
   fi
 
   # use blank -mesg as added separator and indent pick list!
-  input=$(sed "s/^/$INDENT/" |
-          rofi -monitor $monitor \
-               -bw 0 \
-               -font "$MONOFONT $fontsize" \
-               -opacity 85 \
-               -eh 1 \
-               -color-active "black,$fg,black,$hlbg,$hlfg" \
-               -color-enabled -color-window black \
-               -color-normal "black,$fg,black,$hlbg,$hlfg" \
-               -color-urgent "black,$fg,black,$hlbg,$hlfg" \
-               -line-margin $(( $fontsize + 2 )) \
-               -separator-style none \
-               -hide-scrollbar \
-               -width 100 \
-               -padding $padding \
-               -fullscreen \
-               -filter "$filter" \
-               -dmenu -p "${prompt}$leader   " -i -select "$select" $@ \
-        )
+  if [ $row ] ;then
+    input=$(sed "s/^/$INDENT/" |
+            rofi -monitor $monitor \
+                 -bw 0 \
+                 -font "$MONOFONT $fontsize" \
+                 -opacity 85 \
+                 -eh 1 \
+                 -color-active "black,$fg,black,$hlbg,$hlfg" \
+                 -color-enabled -color-window black \
+                 -color-normal "black,$fg,black,$hlbg,$hlfg" \
+                 -color-urgent "black,$fg,black,$hlbg,$hlfg" \
+                 -line-margin $(( $fontsize + 2 )) \
+                 -separator-style none \
+                 -hide-scrollbar \
+                 -width 100 \
+                 -padding $padding \
+                 -fullscreen \
+                 -filter "$filter" \
+                 -dmenu -p "${prompt}$leader   " \
+                        -i \
+                        -selected-row "$row" \
+                        $@ \
+           )
+  else
+    input=$(sed "s/^/$INDENT/" |
+            rofi -monitor $monitor \
+                 -bw 0 \
+                 -font "$MONOFONT $fontsize" \
+                 -opacity 85 \
+                 -eh 1 \
+                 -color-active "black,$fg,black,$hlbg,$hlfg" \
+                 -color-enabled -color-window black \
+                 -color-normal "black,$fg,black,$hlbg,$hlfg" \
+                 -color-urgent "black,$fg,black,$hlbg,$hlfg" \
+                 -line-margin $(( $fontsize + 2 )) \
+                 -separator-style none \
+                 -hide-scrollbar \
+                 -width 100 \
+                 -padding $padding \
+                 -fullscreen \
+                 -filter "$filter" \
+                 -dmenu -p "${prompt}$leader   " \
+                        -i \
+                        -select "$select" \
+                        $@ \
+           )
+  fi
   # strip indent from input!
-  [ $? -eq 0 ] &&
-    echo "$input" | sed "s/^$INDENT//" ||
-    return 1
+  [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" ||
+                  return 1
 }
 
 # ......................................................................... Main
