@@ -9,10 +9,10 @@
 export SHELL=/usr/bin/fish
 
 # URxvt client/server
-eval urxvtc $(urxvtfont) $@
+eval urxvtc -fn $(termfont) $@
 if [ $? -eq 2 ] ;then
   urxvtd -q -o -f 2>/tmp/urxvt.log
-  eval urxvtc $(urxvtfont) $@
+  eval urxvtc -fn $(termfont) $@
 fi
 
 # vim: set ft=sh: #

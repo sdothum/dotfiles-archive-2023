@@ -8,7 +8,7 @@
 
 # Usage: vimb  [ embed | socket ] <url>, see vimbt
 
-size=$(urxvtfont | cut -d= -f2)
+size=$(termfont | cut -d= -f2)
 statusfont="set status-font=monospace $size"
 sslfont="set status-ssl-font=monospace $size"
 sslinvalidfont="set status-sslinvalid-font=monospace bold $size"

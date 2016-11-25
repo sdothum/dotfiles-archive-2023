@@ -4,11 +4,11 @@
 # X11 System
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................... Urxvt font
+# .................................................................... Term font
 
-# see bin/urxvt
+# see urxvt wrapper
 
-# adjust font for various displays and video cards
+# adjust font for various displays and video cards on this system
 if macbook ;then
   size=9
 elif nvidia ;then
@@ -19,6 +19,6 @@ else
   size=10
 fi
 
-echo "-fn xft:$MONOFONT:size=$size"
+echo "xft:$MONOFONT:size=$size"
 
 # vim: set ft=sh: #
