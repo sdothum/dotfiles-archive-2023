@@ -6,10 +6,6 @@
 
 # ....................................................... Window manager restart
 
-# tag
-web=1
-chat=2
-
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
 
@@ -70,7 +66,7 @@ if [ -e $HOME/.irc ] ;then
     term 'IRC' VISIBLE weechat
     herbstclient focus_monitor 0
   else
-    switch tag "$chat"
+    switch tag "$CHAT"
     term 'IRC' VISIBLE weechat
   fi
 fi
@@ -80,7 +76,7 @@ fi
 
 server && thedarnedestthing
 server && vimwiki
-switch tag "$web"
+switch tag "$WEB"
 # qutebrowser &
 vimbt
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
