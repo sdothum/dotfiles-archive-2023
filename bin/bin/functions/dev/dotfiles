@@ -17,36 +17,36 @@ usage() {
 # see .gitignore, to remove items from remote repository
 # git rm --cached <filespec>
 # git rm --cached -r <dir>
-dotfiles="alot \
-          amphetype \
-          astroid \
-          bash \
-          bin \
-          bspwm \
-          build \
-          byobu \
-          compton \
-          conky \
-          dunst \
-          fish \
+dotfiles="alot         \
+          amphetype    \
+          astroid      \
+          bash         \
+          bin          \
+          bspwm        \
+          build        \
+          byobu        \
+          compton      \
+          conky        \
+          dunst        \
+          fish         \
           herbstluftwm \
-          infinality \
-          luakit \
-          mpd \
-          mpv \
-          music \
-          notion \
-          qutebrowser \
-          README.md \
-          sxhkd \
-          tt-rss \
-          vim \
-          vimb \
-          weechat \
-          X11 \
-          xmonad \
-          wyrd \
-          zsh \
+          infinality   \
+          luakit       \
+          mpd          \
+          mpv          \
+          music        \
+          notion       \
+          qutebrowser  \
+          README.md    \
+          sxhkd        \
+          tt-rss       \
+          vim          \
+          vimb         \
+          weechat      \
+          X11          \
+          xmonad       \
+          wyrd         \
+          zsh          \
 "
 
 cd $HOME/stow
@@ -93,11 +93,11 @@ case "$1" in
          fi
        done ;;
 
-  comment |\
-  amend) shift
-         DESC="$@"
-         [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
-                        git commit --amend ;;
+  comment | amend)
+            shift
+            DESC="$@"
+            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
+                           git commit --amend ;;
 
   edit | ignore) gvim .gitignore ;;
 
@@ -108,12 +108,10 @@ case "$1" in
         git push -u origin master
         git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
 
-  list |\
-  log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+  list | log) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
 
-  undo |\
-  redo |\
-  reset) git reset --soft HEAD~
+  undo | redo | reset)
+         git reset --soft HEAD~
          dotfiles ;;
 
   rm) shift

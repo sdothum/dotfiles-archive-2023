@@ -45,13 +45,9 @@ do
       '!') eval $package $condition
            continue ;;
 
-      '-' |\
-      '?' |\
-      '@' |\
-      'a' |\
-      'g' |\
-      '!') [ "$condition" ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
-                               condition=true ;;
+      '-' | '?' | '@' | 'a' | 'g' | '!')
+            [ "$condition" ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
+                                condition=true ;;
 
       *) [ $package ] && condition="$(echo $package | sed -e 's/^\[//' -e 's/\]$//')" ||
                          condition=true ;;

@@ -147,13 +147,8 @@ case "$1" in
         done
         exit ;;
 
-  grid |\
-  horizontal |\
-  max |\
-  vertical |\
-  1:1 |\
-  1:2 |\
-  1:1:1) layout=$1
+  grid | horizontal | max | vertical | 1:1 | 1:2 | 1:1:1)
+         layout=$1
          case $layout in
            1:1  ) layout=halves ;;
            1:2  ) layout=onethird ;;
