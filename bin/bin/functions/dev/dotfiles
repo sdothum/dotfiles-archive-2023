@@ -62,7 +62,7 @@ commit() {
 
 pending() {
   underline
-  printf "commit? [abort]/comment.. : ${_YELLOW_}"
+  printf "commit? [Abort]/comment.. : ${_YELLOW_}"
   read DESC
   printf "${_nocolor_}"
   [ "$DESC" ] && commit
