@@ -8,7 +8,7 @@
 # system conf files
 cache=$CACHEDIR/dmenu:configs
 
-# ................................................................... Initialize
+# .................................................................. Build cache
 
 configs() {
   notify low 'Updating dmenu config cache' 'Please be patient..'
@@ -57,6 +57,7 @@ do
          sed -e '1i[ rebuild database ]' |
          column -s^ -t |
          dmenu 'Edit Config' 1 -no-custom) || exit
+
   if [ "$file" = '[ rebuild database ]' ] ;then
     configs
     continue

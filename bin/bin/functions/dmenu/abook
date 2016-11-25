@@ -14,7 +14,7 @@ cache=$maildir/addressbook
 contacts=$maildir/contacts
 patricia=$maildir/addressbook.patricia
 
-# ................................................................... Initialize
+# .................................................................. Build cache
 
 # build address list
 # - exclude major lists correspondence

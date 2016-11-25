@@ -62,6 +62,7 @@ do
     [ $episode ] || episode=$(shows | grep " $SEP$" | tail -1)
     episode=$(shows | dmenu "$show" "$episode" -no-custom) || break
     [ "$episode" ] || break
+
     episode=$(echo "$episode" | sed "s/ $SEP$//")
     video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
@@ -69,6 +70,7 @@ do
       sleep 3
       break
     fi
+
     history "$playlist" "$episode"
     play "$video"
   done

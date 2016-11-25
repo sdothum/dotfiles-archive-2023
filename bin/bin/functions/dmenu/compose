@@ -5,12 +5,12 @@
 
 # ....................................................................... E-mail
 
-editors="emacs \
+editors="emacs       \
          focuswriter \
-         nano \
-         pyroom \
-         rubyroom \
-         vim \
+         nano        \
+         pyroom      \
+         rubyroom    \
+         vim         \
          wordgrinder \
 "
 

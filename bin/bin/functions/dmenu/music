@@ -99,9 +99,9 @@ do
                 dmenu "$(info)" "${cmd%% *}" -no-custom) || break
     do
       case "$cmd" in
-        toggle\ on |\
-        toggle\ off) mpc toggle
-                     [ $(status '\[playing\]') = off ] || exit ;;
+        'toggle on' | 'toggle off')
+                      mpc toggle
+                      [ $(status '\[playing\]') = off ] || exit ;;
 
         next*) mpc play
                mpc next ;;
@@ -113,13 +113,13 @@ do
         previous*) mpc play
                    mpc prev ;;
 
-        random\ on |\
-        random\ off) mpc play
-                     mpc random ;;
+        'random on' | 'random off')
+                      mpc play
+                      mpc random ;;
 
-        repeat\ on |\
-        repeat\ off) mpc play
-                     mpc repeat ;;
+        'repeat on' | 'repeat off')
+                      mpc play
+                      mpc repeat ;;
 
         library) ncmpcpp ;;
 

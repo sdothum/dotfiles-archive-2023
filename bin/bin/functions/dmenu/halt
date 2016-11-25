@@ -22,8 +22,8 @@ while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
             dmenu 'Session' $cmd -no-custom) || exit
 do
   case $cmd in
-    lock   ) xscreensaver-command -lock ;;
-    logout ) sudo kill -TERM X ;;
+    lock  ) xscreensaver-command -lock ;;
+    logout) sudo kill -TERM X ;;
 
     suspend) [ -e /sbin/systemctl ] && sudo systemctl suspend ||
                                        sudo pm-suspend ;;

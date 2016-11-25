@@ -9,6 +9,8 @@
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$CACHEDIR/dmenu:ebooks
 
+# .............................................................. Kindle transfer
+
 # kindle update via email
 email() {
   cat - <<END
@@ -119,6 +121,7 @@ do
                 kindlegen "$epub"
                 mobi
               fi
+
               kindle=$(echo | history kindle | dmenu '[ Address ]@kindle.com') || break
               kindle=${kindle%%@*}
               history kindle $kindle

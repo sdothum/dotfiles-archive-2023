@@ -6,10 +6,10 @@
 # ............................................................... System monitor
 
 monitors="glances \
-          htop \
-          iftop \
-          iotop \
-          mtr \
+          htop    \
+          iftop   \
+          iotop   \
+          mtr     \
           nethogs \
           xrestop \
 "

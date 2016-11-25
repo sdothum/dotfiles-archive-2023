@@ -41,8 +41,8 @@ do
                  swatch $bg $hue
                  ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
 
-    *dark* |\
-    *light*) bg=$(echo $color | cut -d' ' -f1)
+    *dark* | *light*)
+             bg=$(echo $color | cut -d' ' -f1)
              draw root blank $bg
              ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
              history root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
