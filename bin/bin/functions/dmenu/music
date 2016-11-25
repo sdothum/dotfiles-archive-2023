@@ -9,7 +9,7 @@
 # redundant=true
 
 # ...................................................................... Library
-
+set -x
 # library listings
 catlg() {
   mpc list $1 | sort -n
@@ -78,8 +78,8 @@ status() {
 }
 
 ncmpcpp() {
-  pidof ncmpcpp >/dev/null && exec focus instance 'Music' ||
-                              exec term 'Music' ncmpcpp
+  pidof ncmpcpp >/dev/null || exec term 'Music' ncmpcpp
+  exec focus instance 'Music'
 }
 
 # ....................................................................... Player
@@ -90,8 +90,7 @@ mpc list artist >/dev/null 2>&1 || exit
 [ "$(current)" != '' ] && artist='[ player  ]'
 while :
 do
-  [ "$artist" = '[ player  ]' ] ||
-    artist=$(artists | dmenu 'Artist' "$artist" -no-custom) || exit
+  [ "$artist" = '[ player  ]' ] || artist=$(artists | dmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = '[ player  ]' ] ;then
     unset artist
     while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nlibrary\nclear" |
@@ -99,9 +98,9 @@ do
                 dmenu "$(info)" "${cmd%% *}" -no-custom) || break
     do
       case "$cmd" in
-        'toggle on' | 'toggle off')
-                      mpc toggle
-                      [ $(status '\[playing\]') = off ] || exit ;;
+        toggle*on | toggle*off)
+                    mpc toggle
+                    [ $(status '\[playing\]') = off ] || exit ;;
 
         next*) mpc play
                mpc next ;;
@@ -113,13 +112,13 @@ do
         previous*) mpc play
                    mpc prev ;;
 
-        'random on' | 'random off')
-                      mpc play
-                      mpc random ;;
+        random*on | random*off)
+                    mpc play
+                    mpc random ;;
 
-        'repeat on' | 'repeat off')
-                      mpc play
-                      mpc repeat ;;
+        repeat*on | repeat*off)
+                    mpc play
+                    mpc repeat ;;
 
         library) ncmpcpp ;;
 
@@ -163,7 +162,7 @@ do
                      music="All songs by $artist"
                      unset more ;;
 
-      *) if [ "$artist" = '[ albums ]' ] ;then
+      *) if [ "$artist" = '[ albums  ]' ] ;then
            playlist=$(mpc find album "$album")
            music=$album
          else
