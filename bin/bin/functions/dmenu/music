@@ -60,12 +60,12 @@ current() {
 
 next() {
   track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)")
-  [ "$track" ] && echo "$SEP $track"
+  [ "$track" ] && echo "  $track"
 }
 
 previous() {
   track=$(mpc playlist | grep -B 1 "$(current)" | grep -v "$(current)")
-  [ "$track" ] && echo "$SEP $track"
+  [ "$track" ] && echo "  $track"
 }
 
 tracks() {
@@ -84,7 +84,7 @@ status() {
 }
 
 ncmpcpp() {
-  pidof ncmpcpp >/dev/null || exec term 'Music' ncmpcpp
+  pidof ncmpcpp >/dev/null || term 'Music' ncmpcpp
   exec focus instance 'Music'
 }
 

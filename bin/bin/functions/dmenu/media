@@ -9,7 +9,7 @@
 media=$(previous media)
 while :
 do
-  media=$(echo "animation\nanime\nebooks\nmovies\nnzbget\nreferences\nseries\ntixati" |
+  media=$(echo "animation\nanime\nmovies\nseries\nebooks\nreferences\nnzb\ntorrent" |
           dmenu 'Media' $media -no-custom) || exit
 
   history media $media
@@ -18,10 +18,10 @@ do
     anime     ) command dmenu series anime ;;
     ebooks    ) command dmenu ebooks ;;
     movies    ) command dmenu movies ;;
-    nzbget    ) exec toggle term 'NZB' nzbget --connect ;;
+    nzb       ) exec toggle term 'NZB' nzbget --connect ;;
     references) command dmenu references ;;
     series    ) command dmenu series ;;
-    tixati    ) exec toggle tixati ;;
+    torrent   ) exec toggle tixati ;;
   esac
 done
 
