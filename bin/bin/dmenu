@@ -138,6 +138,7 @@ dmenu() {
   fi
 
   # use blank -mesg as added separator and indent pick list!
+  # piped input precludes single eval usage to contruct select clause
   if [ $row ] ;then
     input=$(sed "s/^/$INDENT/" |
             rofi -monitor $monitor \

@@ -11,11 +11,29 @@ usage() {
   exit 1
 }
 
+filter='\.deprecated|\.hg'
+
 # v by directory depth or name
 case "$1" in
-  h             ) usage ;;
-  '' | 1 | 2 | 3) v $(find -L . -maxdepth ${1:-1} -type f | egrep -v '\.deprecated|\.hg') ;;
-  *             ) v $(find -L . -type f -name "$1" | egrep -v '\.deprecated|\.hg') ;;
+  help) usage ;;
+
+  '') if [ -e $DYNAMIC ] ;then
+        toggle focus
+        dynamic=true
+      fi
+      for i in $(find -L . -type d  | egrep -v "$filter")
+      do
+        files=$(find -L $i -maxdepth 1 -type f | egrep -v "$filter")
+        [ "$files" ] || continue
+        echo
+        echo "$files" | sed 's|.*/||'
+        if-yes "edit $i" || continue
+        gvim -f $files
+      done
+      [ $dynamic ] && toggle focus ;;
+
+  1 | 2 | 3 | 4) v $(find -L . -maxdepth ${1:-1} -type f | egrep -v "$filter") ;;
+  *            ) v $(find -L . -type f -name "$1" | egrep -v "$filter") ;;
 esac
 
 # vim: set ft=sh: #

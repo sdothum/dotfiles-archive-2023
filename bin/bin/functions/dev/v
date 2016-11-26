@@ -13,19 +13,17 @@ if console ;then
   exit
 fi
 
-gui='-f -g'
-
 if [ -z "$*" ] ;then
-  focus vim $gui /tmp/scratch
+  focus vim -g /tmp/scratch
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
   file=$(echo $@)
   if [ ! -e $1 ] ;then
-    focus vim $gui $file
+    focus vim -g $file
   elif [ -w $1 ] ;then
-    focus vim $gui $file
+    focus vim -g $file
   else
-    focus sudo -s vim $gui $file
+    focus sudo -s vim -g $file
     # chown root history to prevent syncing errors
     # find $HOME/.vim/backups -user root -exec sudo chown -c $USER\:users {} \;
   fi

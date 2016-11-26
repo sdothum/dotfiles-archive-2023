@@ -32,8 +32,8 @@ case "$1" in
                    ;$inputfont<CR>\
                    ;$inputerrorfont<CR>\
                    ;$completionfont<CR>\
-                   ;tabopen $@<CR>"\
-             | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
+                   ;tabopen $@<CR>" |
+               socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
 
   *) /usr/bin/vimb --cmd="$statusfont" \
                    --cmd="$sslfont" \

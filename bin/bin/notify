@@ -40,6 +40,7 @@ else
     1) if [ $(echo "$1" | wc -l) -eq 1 ] ;then
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" &
        else
+         # set first line as heading for a single multiline message
          heading=$(echo "$1" | sed '2,$d')
          body=$(echo "$1" | sed '1d')
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$heading" "$body" &
