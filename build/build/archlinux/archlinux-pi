@@ -25,6 +25,15 @@ ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
 hwclock --systohc --utc
 
 
+heading 'configure package manager'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+sed -i -e '/^\[options\]/aILoveCandy' \
+    -e '/^#Color/s/^#//' \
+    /etc/pacman.conf
+pacman -Sy
+checkpoint
+
+
 heading 'configure network'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 [ "$hostname" = luna ] && systemctl enable dhcpcd.service
