@@ -5,6 +5,8 @@
 
 # ....................................................................... E-mail
 
+SEND='[ send ]'
+
 editors="emacs       \
          focuswriter \
          nano        \
@@ -40,10 +42,10 @@ compose_with() {
 }
 
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed '1i[ send ]' | dmenu 'Editor' $editor -no-custom) || exit
+while editor=$(apps "$editors" | sed "1i$SEND" | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in
-    '[ send ]') ;;
+    "$SEND") ;;
 
     vim) SHELL=/usr/bin/dash
          format_message $1

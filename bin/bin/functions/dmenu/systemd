@@ -5,6 +5,10 @@
 
 # ..................................................................... Sysadmin
 
+DAEMON='[ daemon-reload   ]'
+SERVICES='[ list services   ]'
+FILES='[ list-unit-files ]'
+
 # restart systemd process
 status() {
   if sudo systemctl status $service ;then
@@ -20,16 +24,16 @@ do
   service=$(stest -fl . |
             sort  |
             sed 's/.service$//' |
-            sed '1i[ daemon-reload   ]\n[ list services   ]\n[ list-unit-files ]' |
+            sed "1i$DAEMON\n$SERVICES\n$FILES" |
             dmenu 'Systemd' -no-custom) || exit
 
   case $service in
-    '[ daemon-reload   ]') sudo systemctl daemon-reload
-                           notify low 'Systemd daemon-reload'
-                           break ;;
+    "$DAEMON") sudo systemctl daemon-reload
+               notify low 'Systemd daemon-reload'
+               break ;;
 
-    '[ list services   ]') term 'services' systemctl --type service --all ;;
-    '[ list-unit-files ]') term 'unit-files' systemctl list-unit-files ;;
+    "$SERVICES") term 'services' systemctl --type service --all ;;
+    "$FILES"   ) term 'unit-files' systemctl list-unit-files ;;
 
     *) service=$service.service
        sudo systemctl status $service && actions='stop\nrestart' ||

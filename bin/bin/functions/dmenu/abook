@@ -14,6 +14,12 @@ cache=$maildir/addressbook
 contacts=$maildir/contacts
 patricia=$maildir/addressbook.patricia
 
+PASTE='[ paste        ]'
+CLIPBOARD='[ clipboard    ]'
+ADD='[ add contacts ]'
+REBUILD='[ rebuild database ]'
+EDIT='[ edit contacts    ]'
+
 # .................................................................. Build cache
 
 # build address list
@@ -83,10 +89,10 @@ contacts() {
 addresslist() {
   if [ "$addresses" ] ;then
     contacts | sed '/^ *$/d' |
-               sed '1i[ paste        ]\n[ clipboard    ]\n[ add contacts ]'
+               sed "1i$PASTE\n$CLIPBOARD\n$ADD"
   else
     contacts | sed '/^ *$/d' |
-               sed '1i[ rebuild database ]\n[ edit contacts    ]'
+               sed "1i$REBUILD\n$EDIT"
   fi
 }
 
@@ -98,26 +104,26 @@ do
   address=${address#*$SEP }
 
   case "$address" in
-    '[ rebuild database ]') abook
-                            unset addresses ;;
+    "$REBUILD") abook
+                unset addresses ;;
 
-    '[ edit contacts    ]') gvim -f $contacts ;;
+    "$EDIT") gvim -f $contacts ;;
 
-    '[ paste        ]') gpaste-client add "$addresses"
-                        xdotool type --delay 0 "$addresses"
-                        break ;;
+    "$PASTE") gpaste-client add "$addresses"
+              xdotool type --delay 0 "$addresses"
+              break ;;
 
-    '[ clipboard    ]') gpaste-client add "$addresses"
-                        time=10 notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
-                        break ;;
+    "$CLIPBOARD") gpaste-client add "$addresses"
+                  time=10 notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
+                  break ;;
 
-    '[ add contacts ]') if [ "$addresses" ] ;then
-                          desc=$(echo | dmenu 'Description') || continue
-                          [ $desc ] || desc='Contacts'
-                          echo "\n$desc :: $addresses" >>$contacts
-                          unset addresses
-                          gvim -f $contacts
-                        fi ;;
+    "$ADD") if [ "$addresses" ] ;then
+              desc=$(echo | dmenu 'Description') || continue
+              [ $desc ] || desc='Contacts'
+              echo "\n$desc :: $addresses" >>$contacts
+              unset addresses
+              gvim -f $contacts
+            fi ;;
 
     *) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
   esac

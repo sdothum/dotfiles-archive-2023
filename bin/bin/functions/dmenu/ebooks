@@ -9,6 +9,8 @@
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$CACHEDIR/dmenu:ebooks
 
+REBUILD='[ rebuild database ]'
+
 # .............................................................. Kindle transfer
 
 # kindle update via email
@@ -79,7 +81,7 @@ do
   book=$(cat $cache |
          history ebooks |
          column -s^ -t |
-         sed "1i[ rebuild database ]" |
+         sed "1i$REBUILD" |
          dmenu 'E-book' 1 -filter "$author" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
@@ -90,7 +92,7 @@ do
     else
       exit
     fi
-  elif [ "$book" = '[ rebuild database ]' ] ;then
+  elif [ "$book" = "$REBUILD" ] ;then
     ebooks
     continue
   fi

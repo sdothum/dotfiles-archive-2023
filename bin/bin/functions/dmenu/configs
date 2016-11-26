@@ -8,6 +8,8 @@
 # system conf files
 cache=$CACHEDIR/dmenu:configs
 
+REBUILD='[ rebuild database ]'
+
 # .................................................................. Build cache
 
 configs() {
@@ -54,11 +56,11 @@ while :
 do
   file=$(cat $cache |
          history configs |
-         sed -e '1i[ rebuild database ]' |
+         sed -e "1i$REBUILD" |
          column -s^ -t |
          dmenu 'Edit Config' 1 -no-custom) || exit
 
-  if [ "$file" = '[ rebuild database ]' ] ;then
+  if [ "$file" = "$REBUILD" ] ;then
     configs
     continue
   fi

@@ -5,6 +5,12 @@
 
 # ................................................................... Background
 
+VIEWER='[ viewer ]'
+UPDATE='[ update ]'
+DARK='[ dark  ]'
+LIGHT='[ light ]'
+SAVE='[ save  ]'
+
 root() {
   find $PALETTE -name '*png' | egrep '(dark|light)/' |
                                sed -r "s|.*/(.*)/(.*)/(.*).png|\3^$SEP \1 \2|" |
@@ -24,18 +30,18 @@ hex() {
 }
 
 while color=$( ( [ "$menu" ] && ( echo | history root | sed "1i$menu" ) ||
-                                ( echo | history root | sed "1i[ viewer ]\n[ update ]" ) ) |
+                                ( echo | history root | sed "1i$VIEWER\n$UPDATE" ) ) |
               column -s^ -t |
               dmenu 'Setroot') || exit
 do
   case "$color" in
-    ''          ) break ;;
-    '[ viewer ]') exec draw root restore ;;
-    '[ update ]') root ;;
-    '[ dark  ]' ) conky theme dark $bg ;;
-    '[ light ]' ) conky theme light $bg ;;
+    ''       ) break ;;
+    "$VIEWER") exec draw root restore ;;
+    "$UPDATE") root ;;
+    "$DARK"  ) conky theme dark $bg ;;
+    "$LIGHT" ) conky theme light $bg ;;
 
-    '[ save  ]') hue=$(echo "$(themes)" | dmenu 'Colour') || exit
+    "$SAVE") hue=$(echo "$(themes)" | dmenu 'Colour') || exit
                  contrast=$(cat $CONTRAST)
                  history root "$bg^$SEP $contrast $hue"
                  swatch $bg $hue
@@ -53,7 +59,7 @@ do
        bg=$color
        # overlay conky panel over rofi screen!
        draw conky
-       menu='[ dark  ]\n[ light ]\n[ save  ]' ;;
+       menu="$DARK\n$LIGHT\n$SAVE" ;;
   esac
 done
 

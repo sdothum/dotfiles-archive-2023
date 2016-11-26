@@ -11,6 +11,10 @@
 #               ../show
 #                    ../*S01E01*  (episode)
 
+NAME='[ sort by name ]'
+DATE='[ sort by date ]'
+EDIT='[ edit         ]'
+
 library=${LIBRARY:-/net/media/videos/${1:-series}}
 sudo find $library -maxdepth 1 -user sonarr -exec chmod -c 755 {} \;
 sudo find $library -maxdepth 1 -user sonarr -exec chown -c shum:users \;
@@ -31,21 +35,21 @@ do
   # cleanup show names
   find $library -maxdepth 1 -name '[^ ]*.*' -exec myshow {} \;
   show=$(ls -1$T $library |
-         sed "1i[ edit         ]" |
+         sed "1i$EDIT" |
          sed "1i[ $(sortlist $T) ]" |
          dmenu 'Show' "$show" -no-custom) || exit
 
   case "$show" in
-    '[ sort by name ]') unset T
-                        continue ;;
+    "$NAME") unset T
+             continue ;;
 
-    '[ sort by date ]') T=t
-                        continue ;;
+    "$DATE") T=t
+             continue ;;
 
-    '[ edit         ]') pkill -TERM 'ROX-Filer'
-                        rox "$library"
-                        pwait "ROX-Filer $library"
-                        continue ;;
+    "$EDIT") pkill -TERM 'ROX-Filer'
+             rox "$library"
+             pwait "ROX-Filer $library"
+             continue ;;
 
     *) series="$library/$show"
        # clean up titles

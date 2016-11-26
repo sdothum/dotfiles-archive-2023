@@ -22,6 +22,11 @@ catlg=$CACHEDIR/dmenu:${1:-movies}
 # unset debug to remove exit from menu items
 debug='\nexit'
 
+LAST='[ last viewed  ]'
+NAME='[ sort by name ]'
+DATE='[ sort by date ]'
+
+
 # list latest movie additions first
 T=t
 catlg() {
@@ -45,7 +50,7 @@ fi
 [ $cache ] && exit
 
 options() {
-  grep -q '[^ ]' "$playlist" && echo "[ last viewed  ]\\\n[ $(sortlist $T) ]" ||
+  grep -q '[^ ]' "$playlist" && echo "$LAST\\\n[ $(sortlist $T) ]" ||
                                 echo "[ $(sortlist $T) ]"
 }
 
@@ -64,14 +69,14 @@ do
           sed "1i$(options)" |
           dmenu 'Movie' "$movie" -no-custom) || exit
 
-  [ "$movie" = '[ last viewed  ]' ] && movie=$(grep '[^ ]' "$playlist" | head -1)
+  [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' "$playlist" | head -1)
 
   case "$movie" in
-    '[ sort by name ]') unset T
-                        continue ;;
+    "$NAME") unset T
+             continue ;;
 
-    '[ sort by date ]') T=t
-                        continue ;;
+    "$DATE") T=t
+             continue ;;
 
     *) movie=$(echo "$movie" | sed "s/ $SEP$//")
        while :

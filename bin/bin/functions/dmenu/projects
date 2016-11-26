@@ -15,19 +15,21 @@
 # tag file containing project specs
 projects=$CONFIG/projects
 
+EDIT='[ edit tags ]'
+
 while files=$(sed "s/  *::  */^$SEP /" $projects |
               history projects |
               column -s^ -t |
-              sed -e '1i[ edit tags ]' |
+              sed -e "1i$EDIT" |
               dmenu 'Edit Project' 1 -no-custom) || exit
 do
-  if [ "$files" = '[ edit tags ]' ] ;then
-    gvim -f $projects
-  else
-    history projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
-    eval v ${files#*$SEP}
-    exit
-  fi
+  case "$files" in
+    "$EDIT") gvim -f $projects ;;
+
+    *) history projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+       eval v ${files#*$SEP}
+       exit ;;
+   esac
 done
 
 # vim: set ft=sh: #

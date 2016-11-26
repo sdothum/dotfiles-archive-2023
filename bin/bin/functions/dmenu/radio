@@ -13,9 +13,13 @@ stations=$CONFIG/radio
 # connection lag time
 delay=0.5
 
+TOGGLE='[ toggle ]'
+CLEAR='[ clear  ]'
+EDIT='[ edit   ]'
+
 playlist() {
   if [ -e $radio ] ;then
-    cat $stations | sed '1i[ toggle ]\n[ clear  ]\n[ edit   ]'
+    cat $stations | sed "1i$TOGGLE\n$CLEAR\n$EDIT"
   else
     cat $stations | sed '1i[ edit ]'
   fi
@@ -37,18 +41,18 @@ url() {
 while station=$(playlist | sed 's/,.*//' | dmenu "$(station)" -no-custom) || exit
 do
   case $station in
-    '[ toggle ]') if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
-                    stop
-                  else
-                    mpv --no-cache --quiet $(url $(cat $radio)) &
-                  fi
-                  exit ;;
+    "$TOGGLE") if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
+                 stop
+               else
+                 mpv --no-cache --quiet $(url $(cat $radio)) &
+               fi
+               exit ;;
 
-    '[ clear  ]') stop
-                  rm -f $radio
-                  exit ;;
+    "$CLEAR") stop
+              rm -f $radio
+              exit ;;
 
-    '[ edit   ]' | '[ edit ]') gvim -f $stations ;;
+    "$EDIT") gvim -f $stations ;;
 
     *) pgrep -f 'mpv --no-cache --quiet' >/dev/null && stop
        # quotes required "$station"
