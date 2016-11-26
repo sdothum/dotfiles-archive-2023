@@ -28,7 +28,7 @@
             " path must have one parent directory i.e. does not resolve /root filenames
             let l:rootpath = expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") . '/' : '/'
             let l:basepath = expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") . '/' : ''
-            call system('time=10 notify critical "' . l:rootpath . l:basepath . expand("%:t") . '" "Modified"')
+            call system('time=5 notify critical "' . l:rootpath . l:basepath . expand("%:t") . '" "Modified"')
             let b:modified = 1
           endif
           return '+'
