@@ -8,7 +8,7 @@
 
 # allow dpreview images
 original /etc/privoxy/user.action
-if ! grep -q 'a.img-dpreview.com' /etc/privoxy/user.action ;then
+if ! grep -q 'a\.img-dpreview.com' /etc/privoxy/user.action ;then
   sudo sed -i '$a\
 { fragile }\
 a.img-dpreview.com\

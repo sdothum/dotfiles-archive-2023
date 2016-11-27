@@ -11,10 +11,10 @@ usage() {
   exit 1
 }
 
-[ "$1" = h ] && usage
+[ "$1" = help ] && usage
 
 # packages installed
-[ "$*" ] && repo="$@" || repo=core
+[ $1 ] && repo=$1 || repo=core
 for i in $(expac -S '%r/%n' | grep "^$repo")
 do
   # installed if description listed

@@ -6,7 +6,7 @@
 
 # ............................................................ Toggle scratchpad
 
-name='Scratchpad'
+name=Scratchpad
 SCRATCHPAD=$HLWM:scratchpad
 # simple tabbed, tmux or byobu
 term=tmux
@@ -52,7 +52,7 @@ fi
 
 # recover winid if somehow it differs
 search '' windowmap >/dev/null
-if [ $(winid) != '0x0' ] ;then
+if [ $(winid) != 0x0 ] ;then
   echo $(winid) >$SCRATCHPAD
 fi
 focus_check
@@ -72,7 +72,7 @@ focus_check
 
 # cancel out above focus frame
 focus frame
-case "$term" in
+case $term in
   byobu) term $name FORTUNE byobu 'new-session -n ""' ;;
   tmux ) term $name FORTUNE tmux 'new-session -n ""' ;;
   *    ) term $name FORTUNE TABBED ;;

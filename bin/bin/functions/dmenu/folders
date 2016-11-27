@@ -15,7 +15,7 @@ filemanagers="filelight \
 # open directory
 while name=$(echo | history folders | dmenu 'Find Folder') || exit
 do
-  [ "$name" ] || exit
+  [ $name ] || exit
   list=$(sudo locate -Aei $name)
   [ "$list" ] || continue
 

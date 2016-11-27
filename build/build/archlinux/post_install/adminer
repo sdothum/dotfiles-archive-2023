@@ -6,7 +6,7 @@
 
 # ...................................................................... adminer
 
-if ! grep -q "Adminer" /etc/httpd/conf/httpd.conf ;then
+if ! grep -q Adminer /etc/httpd/conf/httpd.conf ;then
   sudo sed -i '$a\
 # Adminer Configuration\
 Include conf/extra/httpd-adminer.conf\

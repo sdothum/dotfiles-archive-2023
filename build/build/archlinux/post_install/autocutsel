@@ -6,7 +6,7 @@
 
 # ................................................................... autocutsel
 
-if ! grep -q 'autocutsel' $HOME/.xinitrc ;then
+if ! grep -q autocutsel $HOME/.xinitrc ;then
   sed -i '1a\
 autocutsel -fork &\
 autocutsel -selection PRIMARY -fork &\

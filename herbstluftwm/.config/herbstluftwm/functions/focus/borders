@@ -24,16 +24,16 @@ fi
 
 # border attention!
 border=$(( $width + $FOCUS_WIDTH ))
-herbstclient chain . lock . attr theme.active.color "$hilight" \
-                   . attr theme.normal.color "$bg" \
+herbstclient chain . lock . attr theme.active.color $hilight \
+                   . attr theme.normal.color $bg \
                    . attr theme.border_width $border \
                    . attr theme.floating.border_width $border . unlock
 
 sleep ${1:-2}
 
 # restore borders
-herbstclient chain . lock . attr theme.active.color "$active" \
-                   . attr theme.normal.color "$normal" \
+herbstclient chain . lock . attr theme.active.color $active \
+                   . attr theme.normal.color $normal \
                    . attr theme.border_width $width \
                    . attr theme.floating.border_width $width . unlock
 

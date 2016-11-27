@@ -18,7 +18,7 @@ if [ -z $tracelevel ] ;then
   [ -s $HOME/.tracelevel ] && export tracelevel=$(cat $HOME/.tracelevel) || export tracelevel=0
 fi
 
-if [ -z "$*" ] ;then
+if [ -z $1 ] ;then
   echo "tracelevel := $tracelevel"
   exit
 elif echo $1 | grep -q '^[0-9]$' ;then

@@ -12,7 +12,7 @@ browser=$(command dmenu urlsrc)
 case $browser in
   chromium) bookmarks=$HOME/.config/chromium/Default/Bookmarks
             py-chrome-bookmarks.py $bookmarks $bookmarks.html
-            uri=$(grep 'http://' $bookmarks.html |
+            uri=$(grep http:// $bookmarks.html |
                   sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" |
                   cat - $CONFIG/bookmarks |
                   sed -e 's/\&\#x2[01][0-9][0-9a-f];//g' \
@@ -25,7 +25,7 @@ case $browser in
 
   luakit) sqldb=$HOME/.local/share/luakit/bookmarks.db
           query='select title, tags, uri from bookmarks order by tags,title ASC;'
-          uri=$(echo "$query" |
+          uri=$(echo $query |
                 sqlite3 $sqldb |
                 sed 's/[|]/  ::  /g' |
                 dmenu 'Bookmark' -no-custom |

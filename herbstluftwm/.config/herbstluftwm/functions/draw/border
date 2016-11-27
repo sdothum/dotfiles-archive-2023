@@ -10,7 +10,7 @@
 frequency=0.066
 
 [ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='FFFFFF AAAAAA 555555  000000 555555 AAAAAA'
-[ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER='000000'
+[ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER=000000
 
 pulsar() {
   while :

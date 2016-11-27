@@ -19,28 +19,28 @@ echo 'Downloading file from YoYo.org'
 wget -O yoyo http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts 2>>/tmp/adblock.log
 wait
 echo 'Processing YoYo.org file'
-cat yoyo | grep '127.0.0.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+cat yoyo | grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
 wait
 
 echo 'Downloading file from SomeoneWhoCares.org'
 wget -O swc http://someonewhocares.org/hosts/zero/ 2>>/tmp/adblock.log
 wait
 echo 'Processing SomeoneWhoCares.org file'
-cat swc | grep '0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' >>adblock
+cat swc | grep '0\.0\.0\.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' >>adblock
 wait
 
 echo 'Downloading file from MVPS.org'
 wget -O mvps http://winhelp2002.mvps.org/hosts.txt 2>>/tmp/adblock.log
 wait
 echo 'Processing MVPS.org file'
-cat mvps | grep 0.0.0.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+cat mvps | grep 0\.0\.0\.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
 wait
 
 # echo 'Downloading file from HPHosts'
 # wget -O hphosts http://hosts-file.net/download/hosts.txt
 # wait
 # echo 'Processing HPHosts file'
-# cat hphosts | grep '127.0.0.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+# cat hphosts | grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
 # wait
 
 [ -e myblacklist ] && cat myblacklist | awk '{ print "0.0.0.0\t"$1 }' >>adblock

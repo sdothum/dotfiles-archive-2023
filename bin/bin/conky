@@ -9,7 +9,7 @@
 # Usage: conky [<message>], see functions/conky
 #        conky, start daemon
 
-if [ "$*" ] ;then
+if [ $1 ] ;then
   msg=$1
   shift
   if [ -e ${0%/conky}/functions/conky/$msg ] ;then

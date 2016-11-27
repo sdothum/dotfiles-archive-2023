@@ -32,26 +32,26 @@ T=t
 catlg() {
   cat /dev/null >$catlg
   ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
-  playlist /tmp/dmenu:movies "$playlist" >$catlg &
+  playlist /tmp/dmenu:movies $playlist >$catlg &
 }
 
 cache() {
   time=5 notify low 'Movies' 'Caching library..'
   # clean up titles
   mytitles $library >>/tmp/mytitles:${1:-movies}
-  [ -e "$playlist" ] || echo >"$playlist"
+  [ -e $playlist ] || echo >$playlist
   catlg
 }
 
 # any new media added?
-if [ ! -s "$catlg" ] || stest -dqr -n "$catlg" $library ;then
+if [ ! -s $catlg ] || stest -dqr -n $catlg $library ;then
   cache
 fi
 [ $cache ] && exit
 
 options() {
-  grep -q '[^ ]' "$playlist" && echo "$LAST\\\n[ $(sortlist $T) ]" ||
-                                echo "[ $(sortlist $T) ]"
+  grep -q '[^ ]' $playlist && echo "$LAST\\\n[ $(sortlist $T) ]" ||
+                              echo "[ $(sortlist $T) ]"
 }
 
 while :
@@ -69,9 +69,9 @@ do
           sed "1i$(options)" |
           dmenu 'Movie' "$movie" -no-custom) || exit
 
-  [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' "$playlist" | head -1)
+  [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
 
-  case "$movie" in
+  case $movie in
     "$NAME") unset T
              continue ;;
 
@@ -86,9 +86,9 @@ do
          case $action in
            play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
                    notify critical "$movie" "Duplicate movie files found"
-                   term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
+                   term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
                  fi
-                 history "$playlist" "$movie"
+                 history $playlist "$movie"
                  catlg
                  play "$video"
                  break ;;
@@ -96,7 +96,7 @@ do
            mrqe) vimb "mr $movie" ;;
            imdb) vimb "im $movie" ;;
 
-           edit) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
+           edit) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
                  catlg
                  break ;;
 
@@ -104,7 +104,7 @@ do
                    catlg
                    break ;;
 
-           mark) history "$playlist" "$movie"
+           mark) history $playlist "$movie"
                  catlg
                  break ;;
 

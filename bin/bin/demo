@@ -22,7 +22,7 @@ demo() {
   do
     [ $TRACE ] && echo $line
     set -- $(echo $line)
-    case "$1" in
+    case $1 in
       '#') continue ;;
 
       '!') shift

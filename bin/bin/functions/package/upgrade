@@ -13,7 +13,7 @@ usage() {
 
 conf=/etc/pacman.conf
 
-if [ -z "$*" ] ;then
+if [ -z $1 ] ;then
   grep '^ *IgnorePkg.*' $conf
   usage
 fi

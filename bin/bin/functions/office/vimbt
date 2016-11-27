@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-[ "$*" ] && startpage="$@" || startpage=http://luna:8000/tt-rss/
+[ $1 ] && startpage="$@" || startpage=http://luna:8000/tt-rss/
 
 # prune in-browser history for performance
 histfile=$HOME/.config/vimb/history

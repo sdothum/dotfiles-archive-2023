@@ -17,8 +17,8 @@ pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
 [ $PANEL_BOTTOM ] && PANEL_BOTTOM=-b
 
 # panel fonts
-# ICON_FONT='FontAwesome'
-PANEL_FONT='Ubuntu'
+# ICON_FONT=FontAwesome
+PANEL_FONT=Ubuntu
 UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
@@ -80,7 +80,7 @@ panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 displayH=$(xrandr 2>/dev/null |
-           grep '*' |
+           grep '\*' |
            sed -r 's/.*x([0-9]*).*/\1/' |
            sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
 if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
@@ -120,11 +120,11 @@ desktops() {
   unset desktops
   for i in $TAGS
   do
-    if echo "$tags" | grep -q "$i" ;then
-      echo "$tags" | grep -q " $i" && visible=true || unset visible
-      echo "$tags" | grep -q "'$i" && hidden=true || unset hidden
+    if echo $tags | grep -q $i ;then
+      echo $tags | grep -q " $i" && visible=true || unset visible
+      echo $tags | grep -q "'$i" && hidden=true || unset hidden
       [ $CANDY ] && tag_symbol || tag=$i
-      if [ "$i" = "$active" ] ;then
+      if [ $i = $active ] ;then
         if [ $CANDY ] ;then
           format="%{B$DEFAULT_BG}"
           [ $visible ] && format="${format}%{F$ACTIVE_FG}"
@@ -135,7 +135,7 @@ desktops() {
                           format="${format}%{F$FREE_FG}"
           [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
         fi
-      elif [ "$i" = "$inactive" ] ;then
+      elif [ $i = $inactive ] ;then
         if [ $CANDY ] ;then
           format="%{B$DEFAULT_BG}"
           [ $visible ] && format="${format}%{F$INACTIVE_FG}"
@@ -160,10 +160,10 @@ desktops() {
       unset visible
       unset hidden
       [ $CANDY ] && tag=$FREE || tag=$i
-      if [ "$i" = "$active" ] ;then
+      if [ $i = $active ] ;then
         [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" ||
                       format="%{F$FREE_FG}%{B$ACTIVE_BG}"
-      elif [ "$i" = "$inactive" ] ;then
+      elif [ $i = $inactive ] ;then
         [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" ||
                       format="%{F$FREE_FG}%{B$INACTIVE_BG}"
       else
@@ -171,7 +171,7 @@ desktops() {
                       format="%{F$FREE_FG}%{B$DEFAULT_BG}"
       fi
     fi
-    [ "$hidden" ] && [ -z "$CANDY" ] && unset leader || leader="${TAG_PAD}"
+    [ $hidden ] && [ -z $CANDY ] && unset leader || leader="${TAG_PAD}"
     desktops="${desktops} ${format}${leader}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
   done
 }
@@ -186,7 +186,7 @@ title() {
 
 # clean up active window title (filter special characters, common prefixes)
 trim() {
-  echo "$@" | sed -e 's/ *[(\|:].*//' \
+  echo $@ | sed -e 's/ *[(\|:].*//' \
                   -e 's/ *[-] .*//' \
                   -e 's/[[].*[]]//' \
                   -e 's/https*//'
@@ -219,7 +219,7 @@ panel() {
             herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && hiding=true
           fi
           if [ $count -gt 0 ] ;then
-            if [ "$(query wname)" = "${line#?}" ] ;then
+            if [ "$(query wname)" = ${line#?} ] ;then
               if [ $hiding ] ;then
                 title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
               else

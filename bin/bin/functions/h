@@ -43,7 +43,7 @@ zsh_history() {
 history() {
   shell_history=$1_history
   shift
-  if [ "$*" ] ;then
+  if [ $1 ] ;then
     $shell_history | ack "$@" | weekof
   else
     $shell_history | weekof -r

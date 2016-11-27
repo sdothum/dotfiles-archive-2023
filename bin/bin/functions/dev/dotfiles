@@ -71,11 +71,11 @@ pending() {
 # any updates to push?
 [ "$(git diff --name-only HEAD | tee)" = '' ] && exit
 git diff --name-only HEAD | tee
-[ "$*" ] && underline
+[ $1 ] && underline
 
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
-case "$1" in
+case $1 in
   '') if-yes 'update repository' || exit
       for i in $dotfiles
       do
@@ -84,7 +84,7 @@ case "$1" in
       pending ;;
 
   add) shift
-       for i in "$@"
+       for i in $@
        do
          if [ -e $i ] ;then
            git add -fv $i
@@ -95,7 +95,7 @@ case "$1" in
 
   comment | amend)
             shift
-            DESC="$@"
+            DESC=$@
             [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
                            git commit --amend ;;
 
@@ -116,8 +116,8 @@ case "$1" in
          dotfiles ;;
 
   rm) shift
-      if [ "$*" ] ;then
-        DESC="$@"
+      if [ $1 ] ;then
+        DESC=$@
         git rm -r --cached $DESC
         git commit --message="Remove directory \"$DESC\""
         git push origin master

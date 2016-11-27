@@ -21,7 +21,7 @@ else
   herbstclient attr theme.normal.color >$NORMAL
   # with solid background colour, make inactive border invisible!
   [ -e $BLANK ] && bg="#$(cat $BLANK)" || bg=$(cat $NORMAL)
-  herbstclient chain . lock . attr theme.normal.color "$bg" \
+  herbstclient chain . lock . attr theme.normal.color $bg \
                      . attr theme.border_width $BORDER_WIDTH \
                      . attr theme.floating.border_width $BORDER_WIDTH . unlock
 fi

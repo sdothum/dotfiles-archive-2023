@@ -11,10 +11,10 @@
 #        dmenu Screensaver [off | 0], turn screensaver off
 
 # toggle monitor display settings
-if [ "$*" ] ;then
-  toggle="$1"
+if [ $1 ] ;then
+  toggle=$1
 else
-  xset q | grep -q 'DPMS is Enabled' && toggle='off' || toggle='on'
+  xset q | grep -q 'DPMS is Enabled' && toggle=off || toggle=on
   toggle=$(echo "$toggle\nlock" | dmenu 'Toggle Screensaver' -no-custom) || exit
 fi
 

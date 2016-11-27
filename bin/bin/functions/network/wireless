@@ -12,22 +12,22 @@ usage() {
 }
 
 # wireless interface
-if [ "$*" ] ;then
-  wifi="$1"
+if [ $1 ] ;then
+  wifi=$1
   shift
 else
-  wifi='Ravens'
+  wifi=Ravens
 fi
 
-network=$(connmanctl services | grep "$wifi" | awk '{ print $3 }')
+network=$(connmanctl services | grep $wifi | awk '{ print $3 }')
 
 case $1 in
   off) wireless | grep 'address=' && connmanctl disconnect $network ;;
   on ) wireless | grep 'address=' || connmanctl connect $network ;;
 
-  h | *) connmanctl services --properties $network
-         echo
-         usage ;;
+  *) connmanctl services --properties $network
+     echo
+     usage ;;
 esac
 
 # vim: set ft=sh: #

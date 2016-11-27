@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 # rank mirrorlist for country
-[ "$*" ] && country=$@ || country='United States'
+[ $1 ] && country=$@ || country='United States'
 
 sudo reflector --verbose --country "$country" -l 200 -p http --sort rate --save /etc/pacman.d/mirrorlist
 cat /etc/pacman.d/mirrorlist

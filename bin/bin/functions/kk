@@ -14,9 +14,9 @@ usage() {
 sig=${sig:--TERM}
 
 # quick kill processes by name
-if [ "$*" ] ;then
-  if p $@ | grep -v "$0" ;then
-    pids=$(p $@ | grep -v "$0" | awk '{ print $2 }')
+if [ $1 ] ;then
+  if p $@ | grep -v $0 ;then
+    pids=$(p $@ | grep -v $0 | awk '{ print $2 }')
     if-yes "kill /$@/ $pids" && sudo kill $sig $pids
   fi
 fi

@@ -7,6 +7,6 @@
 # .......................................................................... Log
 
 # tail file in terminal window (see rox)
-term "$@" sudo tail -f "$@"
+term "$@" sudo tail -f $@
 
 # vim: set ft=sh: #

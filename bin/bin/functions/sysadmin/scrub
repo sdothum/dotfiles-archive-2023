@@ -23,7 +23,7 @@ volume() {
 
 show() {
   V=$(volume $@)
-  [ "$V" ] || usage
+  [ $V ] || usage
   p scrub | grep -q "btrfs scrub start -Bd $V" || in_progress=$@
   while :
   do

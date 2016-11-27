@@ -13,14 +13,14 @@ rm -f $HOME/.weechat/*.log
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if server ;then
-  if pgrep 'znc' >/dev/null ;then
+  if pgrep znc >/dev/null ;then
     ditto 'launching weechat'
     ditto 'waiting for ZNC server connections to complete'
 
     count=0
     while :
     do
-      [ $(sudo ss -apt | grep 'znc' | grep 'ESTAB' | wc -l) -ge $ircservers ] && break
+      [ $(sudo ss -apt | grep znc | grep ESTAB | wc -l) -ge $ircservers ] && break
       sleep 1
       count=$(( $count + 1 ))
       if [ $count -ge $timeout ] ;then

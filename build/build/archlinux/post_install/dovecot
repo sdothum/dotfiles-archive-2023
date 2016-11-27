@@ -38,6 +38,6 @@ sudo sed -i "/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs"
 
 server && systemd enable dovecot || annotate "sudo systemctl start dovecot"
 # test dovecot installation
-mailcot localhost "$USER" "$password"
+mailcot localhost $USER $password
 
 # vim: set ft=sh: #

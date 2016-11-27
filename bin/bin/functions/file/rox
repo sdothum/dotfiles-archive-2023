@@ -7,7 +7,7 @@
 # ................................................................. File manager
 
 # wrapper to default opening to /net/downloads if no location given
-if [ "$*" ] ;then
+if [ $1 ] ;then
   start=$1
 elif [ $(ls -1 /net/downloads/nzbs/completed | wc -l) -gt 0 ] ;then
   start=/net/downloads/nzbs/completed

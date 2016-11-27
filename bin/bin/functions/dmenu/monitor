@@ -12,7 +12,7 @@ monitor=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nl
           dmenu 'Monitor' "$monitor" -no-custom) || exit
 
 history monitor "$monitor"
-case "$monitor" in
+case $monitor in
   journal*inspect) command dmenu journals ;;
   journal*watch  ) command dmenu journals watch ;;
   log*inspect    ) command dmenu logs ;;

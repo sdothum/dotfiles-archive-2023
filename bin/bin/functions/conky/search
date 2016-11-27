@@ -5,12 +5,12 @@
 
 # ........................................................................ Conky
 
-# Usage: conky search [<--option>*] [<command>], see herbstluftwm conky functions
+# Usage: conky search [<option>*] [<command>], see herbstluftwm conky functions
 #        any number of --options but only one optional command e.g. windowmap or windowunmap
 
 while :
 do
-  case "$1" in
+  case $1 in
     --onlyvisible | --sync) options="$options $1" ;;
     *                     ) break ;;
   esac

@@ -30,10 +30,10 @@ del_pkg() {
 }
 
 # $@ expansion in grep and if-yes truncated, so..
-pkgs="$@"
+pkgs=$@
 ignored=$(grep '^ *IgnorePkg.*' $conf)
 echo $ignored
-if [ -z "$*" ] ;then
+if [ -z $1 ] ;then
   ignored=$(echo $ignored | sed 's/^.*= *//')
   if [ "$ignored" ] ;then
     if-no "reinstate $ignored" || del_pkg $ignored

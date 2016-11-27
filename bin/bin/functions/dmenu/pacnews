@@ -22,7 +22,7 @@ do
     current=${pacnew%.pacnew}
     echo $current
     # gvimdiff for colorscheme, role for herbstluftwm rule
-    sudo gvimdiff --role='gvimdiff' --nofork $pacnew $current
+    sudo gvimdiff --role=gvimdiff --nofork $pacnew $current
 
     # use updated .pacnew
     action='keep\ndelete\nuse'

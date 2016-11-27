@@ -7,7 +7,7 @@
 # ................................................................. File manager
 
 # curses!
-[ "$*" ] && start=$1 || start=$HOME/.config
+[ $1 ] && start=$1 || start=$HOME/.config
 /usr/bin/ranger $start
 
 # vim: set ft=sh: #

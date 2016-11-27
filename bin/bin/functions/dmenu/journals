@@ -5,8 +5,10 @@
 
 # ..................................................................... Sysadmin
 
+# Usage: dmenu journals [watch]
+
 # view systemd journal logs
-[ "$*" ] && mode='Watch' || mode='View'
+[ $1 ] && mode=Watch || mode=View
 cd /usr/lib/systemd/system/
 
 service=$(previous journals)

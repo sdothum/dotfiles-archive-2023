@@ -13,7 +13,7 @@ usage() {
 }
 
 
-TEMPFILE=/tmp/avitmp
+TEMPFILE=$(mktemp)
 cat "$@" >$TEMPFILE
 mencoder -forceidx -oac copy -ovc copy $TEMPFILE -o joined.avi
 rm -f $TEMPFILE

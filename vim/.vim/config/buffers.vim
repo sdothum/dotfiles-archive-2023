@@ -128,7 +128,7 @@
     " ............................................................... Print file
 
       " a la vimb
-      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki' EscapeFilename() | elseif expand('%:p') =~ 'Patricia' | execute '!pr wps' EscapeFilename() | else | execute '!pr code' EscapeFilename() | endif"
+      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki' QuoteFile() | elseif expand('%:p') =~ 'Patricia' | execute '!pr wps' QuoteFile() | else | execute '!pr code' QuoteFile() | endif"
       nmap <silent><leader>ha :silent Hardcopy<CR>
 
 " buffers.vim

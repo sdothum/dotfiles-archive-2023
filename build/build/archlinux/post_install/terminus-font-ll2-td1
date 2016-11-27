@@ -7,6 +7,6 @@
 # ................................................................ terminus-font
 
 original /etc/vconsole.conf
-grep -q 'ter-116n' /etc/vconsole.conf || sudo sed -i '$aFONT=ter-116n' /etc/vconsole.conf
+grep -q ter-116n /etc/vconsole.conf || sudo sed -i '$aFONT=ter-116n' /etc/vconsole.conf
 
 # vim: set ft=sh: #

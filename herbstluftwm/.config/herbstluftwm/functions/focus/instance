@@ -6,11 +6,17 @@
 
 # ............................................................... Focus instance
 
-# Usage: client <instance>
+usage() {
+  echo "usage: focus $(basename $0) <instance>"
+  exit 1
+}
 
+[ $1 ] || usage
+
+# for non-herbstluftwm scripts to focus windows, see dmenu music
 for i in $(query winids)
 do
-  if herbstclient compare clients.$i.instance = "$1" ;then
+  if herbstclient compare clients.$i.instance = $1 ;then
     herbstclient jumpto $i
     return 0
   fi

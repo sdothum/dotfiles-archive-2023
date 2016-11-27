@@ -10,7 +10,7 @@
 # Note:  includes special handling for "term WAIT <command>", see term
 
 delay=0.01
-title="$@"
+title=$@
 title=${title%%(*)}
 
 # wait for uniquely named window to process to startup

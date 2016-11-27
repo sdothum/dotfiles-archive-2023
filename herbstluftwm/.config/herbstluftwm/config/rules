@@ -30,7 +30,7 @@ hc rule class=Astroid                tag=3 focus=on
 hc rule class=Geary                  tag=3
 hc rule title=IMAP                   tag=3
 hc rule title=Mail                   tag=3 index=0 focus=on
-hc rule title=Calendar               tag=3 index=1 focus=on
+hc rule title=Calendar               tag=3 index=1 focus=on switchtag=on
 hc rule title=Usenet                 tag=3
 # hc rule class=Surf                 tag=4
 # hc rule class=Vimb                 tag=4 index=1 focus=off once

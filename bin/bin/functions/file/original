@@ -17,7 +17,7 @@ fi
 
 # save distribution original
 if [ -e $file ] ;then
-  ditto "copying $(sudo cp -pRv "$file" "$file.original")"
+  ditto "copying $(sudo cp -pRv $file $file.original)"
   exit 0
 fi
 exit 1

@@ -7,6 +7,6 @@
 # ......................................................................... 2bwm
 
 # return git uri
-echo "git://z3bra.org/2bwm"
+echo git://z3bra.org/2bwm
 
 # vim: set ft=sh: #

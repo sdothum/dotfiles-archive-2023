@@ -17,7 +17,7 @@ usage() {
 case $@ in
   c*) colemak ;;
   q*) qwerty ;;
-  t*) grep -q 'qwerty' /etc/vconsole.conf && colemak || qwerty ;;
+  t*) grep -q qwerty /etc/vconsole.conf && colemak || qwerty ;;
   * ) usage ;;
 esac
 

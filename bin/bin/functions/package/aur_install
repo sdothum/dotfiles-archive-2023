@@ -6,7 +6,7 @@
 
 # .................................................................. AUR install
 
-package="$@"
+package=$@
 
 cd /tmp
 sudo rm -r $package*

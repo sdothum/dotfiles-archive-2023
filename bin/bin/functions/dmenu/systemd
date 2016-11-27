@@ -37,7 +37,7 @@ do
 
     *) service=$service.service
        sudo systemctl status $service && actions='stop\nrestart' ||
-                                         actions='start'
+                                         actions=start
        while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" |
                       dmenu "${service%.service}" -no-custom) || break
        do

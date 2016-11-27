@@ -9,7 +9,7 @@
 # ....................................................................... Prompt
 
 # standardized terminal prompt
-[ "$*" ] && cue="$@" || cue="to continue"
+[ $1 ] && cue="$@" || cue="to continue"
 echo
 echo "${_YELLOW_}━━━━━━━━━  Press [Enter] $cue  ━━━━━━━━━${_nocolor_}\n"
 read CONTINUE

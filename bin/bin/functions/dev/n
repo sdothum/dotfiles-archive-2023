@@ -1,12 +1,18 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Hardware
+# Dev
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .......................................................................... GPU
+# ....................................................................... Editor
 
-# if macbook nvidia gpu
-lspci | grep VGA | grep -q NVIDIA
+# nanu nanu!
+if [ ! -e $1 ] ;then
+  nano $@
+elif [ -w $1 ] ;then
+  nano $@
+else
+  sudo nano $@
+fi
 
 # vim: set ft=sh: #

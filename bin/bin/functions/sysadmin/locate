@@ -8,6 +8,6 @@
 
 # locate wrapper
 # see /etc/updatedb.conf prunenames exclusions
-/usr/bin/locate -Aei "$@" | egrep -v '/vim/backups/|/Trash/|/.Trash-|/.cache/|.cache$'
+/usr/bin/locate -Aei $@ | egrep -v '/vim/backups/|/Trash/|/.Trash-|/.cache/|.cache$'
 
 # vim: set ft=sh: #

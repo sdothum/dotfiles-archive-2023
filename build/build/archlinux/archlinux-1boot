@@ -60,7 +60,7 @@ checkpoint
 #   [ -f /etc/vconsole.conf ] && sed -i 's/^\(KEYMAP\)=.*/\1=colemak/' /etc/vconsole.conf || echo KEYMAP=colemak >/etc/vconsole.conf
 #   cat /etc/vconsole.conf
 # else
-#   echo "us -> qwerty"
+#   echo 'us -> qwerty'
 # fi
 
 
@@ -87,7 +87,7 @@ pm_install dialog
 pm_install iw
 pm_install wpa_supplicant
 # cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
-# essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep 'ssid' | sed 's/.*\(".*"\)/\1/')/
+# essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
 # key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
 # sed -i -e $essid -e $key /etc/netctl/my-wireless-network
 # netctl enable my-wireless-network
@@ -157,10 +157,10 @@ heading 'installing bootloader'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 [ $disk ] || read -p "Boot disk /dev/sd? [a-z]: " disk
 if [ -z $disk ] ;then
-  echo "invalid disk reference.. aborting"
+  echo 'invalid disk reference.. aborting'
   exit
 fi
-if mount | grep -q 'vfat' ;then
+if mount | grep -q vfat ;then
   pm_install refind-efi
   refind-install
   mount -t efivarfs efivarfs /sys/firmware/efi/efivars

@@ -8,7 +8,7 @@
 
 # notmuch mail client
 ln -sf $HOME/.gtkrc-2.0.mine.dark $HOME/.gtkrc-2.0.mine
-gvim --role='notmuch' -c NotMuch
+gvim --role=notmuch -c NotMuch
 ln -sf $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
 
 # vim: set ft=sh: #

@@ -10,14 +10,14 @@
 
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
 [ $(query tag) = $1 ] && exit
-if [ "$(query tag unfocused)" = "$1" ] ;then
+if [ "$(query tag unfocused)" = $1 ] ;then
   is primary && switch monitor 0 || switch monitor 1
   exit
 fi
 
 # check layout (fullscreen or monocle)
 lock
-[ "$1" ] && herbstclient use $1 || herbstclient use_previous
+[ $1 ] && herbstclient use $1 || herbstclient use_previous
 
 tag=$(herbstclient attr monitors.focus.tag)
 is primary && restore fullscreen $tag primary ||

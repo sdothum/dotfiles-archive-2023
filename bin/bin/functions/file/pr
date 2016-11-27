@@ -56,21 +56,21 @@ format() {
     title="$(escape $title | truncate | sed 's/ *$//')"
     title="$title$(dotdot)"
   # set title dependent on source, ignore stdin
-  elif echo "$1" | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
+  elif echo $1 | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
       unset pwd
-      if echo "$1" | grep -q "$HOME" ;then
-        case "$PWD" in
-          */.config*) pwd=".config/${PWD#*/.config}" ;;
-          */.vim*   ) pwd=".vim/${PWD#*/.vim}" ;;
-          */bin/bin*) pwd="${PWD#*/bin/bin/}" ;;
-          */bin*    ) pwd="${PWD#*/bin/}" ;;
-          */build*  ) pwd="${PWD#*/build/}" ;;
+      if echo $1 | grep -q $HOME ;then
+        case $PWD in
+          */.config*) pwd=.config/${PWD#*/.config} ;;
+          */.vim*   ) pwd=.vim/${PWD#*/.vim} ;;
+          */bin/bin*) pwd=${PWD#*/bin/bin/} ;;
+          */bin*    ) pwd=${PWD#*/bin/} ;;
+          */build*  ) pwd=${PWD#*/build/} ;;
           */vimwiki*) ;;
-          *         ) pwd="$PWD" ;;
+          *         ) pwd=$PWD ;;
         esac
-        [ $pwd ] && title="$pwd/$1" || title="${1%.wiki}"
+        [ $pwd ] && title=$pwd/$1 || title=${1%.wiki}
       else
-        title="$1"
+        title=$1
       fi
       # truncate long pathnames
       title="$(echo $title | sed 's|/| ^|g' | reverse | truncate)"
@@ -166,12 +166,12 @@ punctuation() {
 # ................................................................ Print options
 
 print() {
-  case "$1" in
-    *.ps) title="$1"
-          output="$1" ;;
+  case $1 in
+    *.ps) title=$1
+          output=$1 ;;
 
     *.pdf) pdf2ps "$1"
-           exec pr ${1%.pdf}.ps ;;
+           exec pr "${1%.pdf}.ps" ;;
 
     *) output="/tmp/$(basename $1).pdf"
        rm -f "$output" 2>&1
@@ -186,12 +186,13 @@ print() {
 }
 
 # lines from stdin are folded
+# usage: stdin [header]
 stdin() {
   stdin=$(mktemp)
   # tr -cd '\11\12\15\40-\176' | fold -sw $fold >$stdin
   ascii | fold -sw $fold >$stdin
   # set (title, time) format values, see case mail below
-  [ "$*" ] && $@
+  [ $1 ] && $@
   print $stdin
   [ $proof ] || rm -f $stdin
   pr eject
@@ -202,7 +203,7 @@ paragraphs() {
                 stdin header
 }
 
-case "$1" in
+case $1 in
   '') usage ;;
 
   eject) # force last page ejection with hp (escape) reset code
@@ -244,7 +245,7 @@ case "$1" in
        spacing='\doublespacing'
        unset linenumbers
        shift
-       title="${1%.txt}"
+       title=${1%.txt}
        # remove document [annotation] and reformat paragraphs
        # contract spaces and leading annotation punctuation (paragraph)
        perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" |
@@ -254,10 +255,10 @@ case "$1" in
                 -e 's/  */ /g' |
             stdin ;;
 
-  code | *) fontsize=8
-            spacing='\onehalfspacing'
-            linenumbers='\linenumbers'
-            [ "$1" = code ] || noshift=true ;;
+  *) fontsize=8
+     spacing='\onehalfspacing'
+     linenumbers='\linenumbers'
+     [ "$1" = code ] || noshift=true ;;
 esac
 [ $noshift ] || shift
 

@@ -22,8 +22,8 @@
 #         where, condition = [command] or [[[expression]]] as short form for test
 #         e.g. package [[[ $(hostname) = server ]]]
 
-[ "$*" ] || exit
-for i in "$@"
+[ $1 ] || exit
+for i in $@
 do
   subject $(basename $i | cut -d- -f2-9)
 
@@ -46,8 +46,8 @@ do
            continue ;;
 
       '-' | '?' | '@' | 'a' | 'g' | '!')
-            [ "$condition" ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
-                                condition=true ;;
+            [ $condition ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
+                              condition=true ;;
 
       *) [ $package ] && condition="$(echo $package | sed -e 's/^\[//' -e 's/\]$//')" ||
                          condition=true ;;

@@ -11,6 +11,6 @@ usage() {
   exit 1
 }
 
-[ "$*" ] && grep "$1" $THEME | cut -d= -f2 || usage
+[ $1 ] && grep $1 $THEME | cut -d= -f2 || usage
 
 # vim: set ft=sh: #

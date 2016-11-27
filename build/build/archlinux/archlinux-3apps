@@ -25,7 +25,7 @@ bundle_install $HOME/build/archlinux/bundle/[1-8]*
 title "custom installs"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 title "web server (with passenger module)"
-app_install passenger-install-nginx-module $(dirname $(find $HOME -name passenger-install-nginx-module | grep 'gems'))
+app_install passenger-install-nginx-module $(dirname $(find $HOME -name passenger-install-nginx-module | grep gems))
 
 
 title "installation errors:"

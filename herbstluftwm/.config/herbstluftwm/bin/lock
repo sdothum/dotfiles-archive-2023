@@ -11,6 +11,6 @@
 
 # disable dynamic emithook focusing
 touch $LOCK
-[ "$*" ] && herbstclient chain . lock . $@ || herbstclient lock
+[ $1 ] && herbstclient chain . lock . $@ || herbstclient lock
 
 # vim: set ft=sh: #

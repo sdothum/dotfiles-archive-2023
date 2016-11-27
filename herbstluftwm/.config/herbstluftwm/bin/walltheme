@@ -13,12 +13,12 @@ which slickpicker 2>/dev/null && color=true
 # see draw root
 while :
 do
-  if [ "$color" ] ;then
+  if [ $color ] ;then
     color=$(slickpicker)
     color=${color#\#}
   fi
-  if [ "$color" ] ;then
-    conky theme test "$color"
+  if [ $color ] ;then
+    conky theme test $color
   else
     conky theme test "$(randcolor)"
   fi

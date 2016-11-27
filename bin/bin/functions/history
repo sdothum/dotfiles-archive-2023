@@ -20,33 +20,33 @@ usage() {
   exit 1
 }
 
-echo "$1" | grep -qv '/' && history="$HISTORY/$1" ||
-                            history="$1"
+echo $1 | grep -qv '/' && history=$HISTORY/$1 ||
+                          history=$1
 
 # usage: inject item file
 inject() {
   update=$(mktemp).history
-  if [ ! -e "$2" ] ;then
-    mkdir -p "${2%/*}"
-    touch "$2"
+  if [ ! -e $2 ] ;then
+    mkdir -p ${2%/*}
+    touch $2
   fi
   # remove duplicate history entries
-  echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" "$2")" | sed '/^$/d' >$update
-  mv -f $update "$2"
+  echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" $2)" | sed '/^$/d' >$update
+  mv -f $update $2
 }
 
-[ "$*" ] || usage
+[ $1 ] || usage
 # history file
 shift
 # update history or show it
-if [ "$*" ] ;then
-  inject "$@" "$history"
+if [ "$1" ] ;then
+  inject "$@" $history
 else
-  [ -e "$history" ] || touch "$history"
+  [ -e $history ] || touch $history
   # create uniq list by subtracting history from stdin
   cat $history | sed -r 's/(.*)/^\1$/' >/tmp/history.regex
   grep -vf /tmp/history.regex - >/tmp/history.nonmatch
-  cat "$history" /tmp/history.nonmatch
+  cat $history /tmp/history.nonmatch
 fi
 
 # vim: set ft=sh: #

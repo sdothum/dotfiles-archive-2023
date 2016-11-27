@@ -14,8 +14,8 @@ usage() {
 }
 
 # enable cron notifications, see .xinitrc
-if [ -r "$HOME/.dbus/Xdbus" ]; then
-  . "$HOME/.dbus/Xdbus"
+if [ -r $HOME/.dbus/Xdbus ]; then
+  . $HOME/.dbus/Xdbus
 fi
 
 if [ "$1" = console ] ;then
@@ -23,15 +23,15 @@ if [ "$1" = console ] ;then
   shift
 fi
 
-if echo "$1" | egrep -qE '^(low|normal|critical)$' ;then
+if echo $1 | egrep -qE '^(low|normal|critical)$' ;then
   urgency="-u $1"
   shift
 fi
 echo "$(timestamp) $USER:${urgency#-u} \"$1\" \"$2\"" >>/tmp/notify.log
 
 if console || [ $console ] ;then
-  [ "$2" ] && echo "${_YELLOW_}-> $1\n${_CYAN_} -> $2${_nocolor_}" ||
-              echo "${_YELLOW_}-> $1${_nocolor_}"
+  [ $2 ] && echo "${_YELLOW_}-> $1\n${_CYAN_} -> $2${_nocolor_}" ||
+            echo "${_YELLOW_}-> $1${_nocolor_}"
 else
   [ $time ] && expire="--expire-time=$(( $time * 1000 ))"
   case $# in

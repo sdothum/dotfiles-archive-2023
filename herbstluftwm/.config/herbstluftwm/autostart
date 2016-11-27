@@ -13,7 +13,7 @@ hc() {
 dohc() {
   if [ $TRACE ]; then
     echo -n '> herbstclient chain' >>$TRACE
-    echo "$cmds" | sed 's/ , /\n -> /g' >>$TRACE
+    echo $cmds | sed 's/ , /\n -> /g' >>$TRACE
   fi
   herbstclient chain $cmds &
   unset cmds
@@ -57,7 +57,7 @@ done
 toggle compton
 # appropriately wild herbstluftwm background color! see .xinitrc
 background=$(cat $SETROOT 2>/dev/null)
-case "$background" in
+case $background in
   blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
   wallpaper) draw root wallpaper ;;
   *        ) draw root blank ;;

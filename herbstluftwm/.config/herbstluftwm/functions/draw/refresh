@@ -11,7 +11,7 @@
 #        draw refresh [shuffle|select|toggle], see draw root
 
 if is display +1024 ;then
-  if is primary || [ "$1" = 'force' ] ;then
+  if is primary || [ "$1" = force ] ;then
     if [ -e $CONKY ] ;then
       # dynamic desktop width with conky panel
       is fullscreen && draw monitor conky fullscreen ||
@@ -27,7 +27,7 @@ if is display +1024 ;then
 fi
 
 # optionally shuffle background
-[ "$1" = 'force' ] && shift
+[ "$1" = force ] && shift
 draw root $1
 
 # vim: set ft=sh: #

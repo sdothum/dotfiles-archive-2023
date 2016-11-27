@@ -46,8 +46,8 @@ list() {
             sed "s/$leader//"
 }
 
-[ "$1" = h ] && usage
-[ "$*" ] || title=true
+[ "$1" = help ] && usage
+[ $1 ] || title=true
 # f1 vim call uses more
 [ $title ] && list | less -RX || list | more
 

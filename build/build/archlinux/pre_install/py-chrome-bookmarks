@@ -7,6 +7,6 @@
 # .......................................................... py-chrome-bookmarks
 
 # return git uri
-echo "https://github.com/bdesham/py-chrome-bookmarks.git"
+echo https://github.com/bdesham/py-chrome-bookmarks.git
 
 # vim: set ft=sh: #

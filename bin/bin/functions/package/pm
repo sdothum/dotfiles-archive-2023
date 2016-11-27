@@ -11,8 +11,7 @@ usage() {
   exit 1
 }
 
-[ "$*" ] || usage
-[ "$1" = h ] && usage
+[ $1 ] || usage
 which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
 
 # default (no options) to package query

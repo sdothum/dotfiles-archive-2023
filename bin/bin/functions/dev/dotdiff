@@ -6,18 +6,18 @@
 
 # ......................................................... Revision differences
 
-# diff current sources with dotfiles git repo
-dotfiles=/net/depot/dotfiles
-current=$HOME/stow
-ignore='debian|makepkg|nixos|qmk_firmware|root|vps'
-
 usage() {
   echo "usage: $(basename $0) <package> [filter]"
   exit 1
 }
 
-[ "$*" ] || usage
-[ -d "$HOME/stow/$1" ] || usage
+# diff current sources with dotfiles git repo
+dotfiles=/net/depot/dotfiles
+current=$HOME/stow
+ignore='debian|makepkg|nixos|qmk_firmware|root|vps'
+
+[ $1 ] || usage
+[ -d $HOME/stow/$1 ] || usage
 
 if ! if-no "sync $dotfiles repo" ;then
   rm -rf $dotfiles
@@ -25,7 +25,7 @@ if ! if-no "sync $dotfiles repo" ;then
 fi
 
 if [ $2 ] ;then
-  filter="$2"
+  filter=$2
 else
   filter="$ignore"
   exclude=-v

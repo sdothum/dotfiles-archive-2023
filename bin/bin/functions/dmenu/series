@@ -26,8 +26,8 @@ hlwm && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   mytitles "$series" >>/tmp/mytitles:series
-  ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-*E[0-9][0-9])*).*/\1/' | sort >"$episodes"
-  playlist "$episodes" "$playlist"
+  ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-*E[0-9][0-9])*).*/\1/' | sort >$episodes
+  playlist $episodes "$playlist"
 }
 
 while :
@@ -39,7 +39,7 @@ do
          sed "1i[ $(sortlist $T) ]" |
          dmenu 'Show' "$show" -no-custom) || exit
 
-  case "$show" in
+  case $show in
     "$NAME") unset T
              continue ;;
 
@@ -47,7 +47,7 @@ do
              continue ;;
 
     "$EDIT") pkill -TERM 'ROX-Filer'
-             rox "$library"
+             rox $library
              pwait "ROX-Filer $library"
              continue ;;
 
@@ -64,7 +64,7 @@ do
     [ $monitor ] && herbstclient focus_monitor $monitor
     # highlight most current episode viewed
     [ $episode ] || episode=$(shows | grep " $SEP$" | tail -1)
-    episode=$(shows | dmenu "$show" "$episode" -no-custom) || break
+    episode=$(shows | dmenu "$show" $episode -no-custom) || break
     [ "$episode" ] || break
 
     episode=$(echo "$episode" | sed "s/ $SEP$//")
@@ -75,7 +75,7 @@ do
       break
     fi
 
-    history "$playlist" "$episode"
+    history $playlist "$episode"
     play "$video"
   done
 done

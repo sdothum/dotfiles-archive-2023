@@ -11,16 +11,16 @@ usage() {
   exit 1
 }
 
-[ "$*" ] || usage
+[ $1 ] || usage
 
 # rename current file/folder with parent (directory) name
-parent=$(dirname "$@")
-file=$(basename "$parent")
+parent=$(dirname $@)
+file=$(basename $parent)
 
 # if renaming file, preserve extension
-[ -e "$@" ] && ext=$(echo "$@" | awk -F . '{ print $NF }')
+[ -e $@ ] && ext=$(echo $@ | awk -F . '{ print $NF }')
 
 echo "$@ :: $parent/$file.$ext"
-mv "$@" "$parent/$file.$ext"
+mv $@ $parent/$file.$ext
 
 # vim: set ft=sh: #

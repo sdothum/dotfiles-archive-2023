@@ -5,6 +5,8 @@
 
 # ....................................................................... E-mail
 
+# Usage: dmenu abook [cache]
+
 # select email contact addresses for insert into sup query
 maildir=${MAILDIR:-$HOME/Maildir}
 cache=$maildir/addressbook
@@ -64,18 +66,18 @@ abook() {
 }
 
 # command line initialization with: dmenu abook [init]
-if [ ! -s $cache ] || [ "$*" ] ;then
+if [ ! -s $cache ] || [ $1 ] ;then
   abook
-  [ "$*" ] && exit
+  [ $1 ] && exit
 fi
 
 # ................................................................. Send-to list
 
 ribbon() {
   if [ -z "$addresses" ] ;then
-    echo 'E-mail'
+    echo E-mail
   elif echo $addresses | grep -qv ',' ;then
-    echo "$addresses"
+    echo $addresses
   else
     echo ".., $(echo ${addresses##*,})"
   fi
@@ -103,7 +105,7 @@ do
   address=$(addresslist | dmenu "$(ribbon)" -no-custom) || exit
   address=${address#*$SEP }
 
-  case "$address" in
+  case $address in
     "$REBUILD") abook
                 unset addresses ;;
 
@@ -119,7 +121,7 @@ do
 
     "$ADD") if [ "$addresses" ] ;then
               desc=$(echo | dmenu 'Description') || continue
-              [ $desc ] || desc='Contacts'
+              [ $desc ] || desc=Contacts
               echo "\n$desc :: $addresses" >>$contacts
               unset addresses
               gvim -f $contacts

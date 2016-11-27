@@ -6,6 +6,7 @@
 
 # ..................................................................... Password
 
-pass "$@" | sed -n '2{p;q}'
+# shell pass bypases notification and returns password only
+pass "$@"
 
 # vim: set ft=sh: #

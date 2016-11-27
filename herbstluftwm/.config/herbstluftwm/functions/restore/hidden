@@ -6,6 +6,9 @@
 
 # ........................................................ Unhide hidden windows
 
+ALL='[ all  ]'
+LAST='[ last ]'
+
 title=" to $(query tname $TAG)"
 
 count=$(query ttag $TAG)
@@ -25,7 +28,7 @@ if [ $count -gt 0 ] ;then
              sort |
              cut -d$DLM -f1 |
              column -s\^ -t |
-             sed '1i[ all  ]\n[ last ]' |
+             sed "1i$ALL\n$LAST" |
              dmenu "Raise Window$title" -no-custom) || exit
   else
     window=$(echo $hidden | cut -d$DLM -f1 | column -s\^ -t | dmenu "Raise Window$title" -no-custom)
@@ -33,8 +36,8 @@ if [ $count -gt 0 ] ;then
 
   if [ "$window" ] ;then
     case $window in
-      '[ all  ]') exec restore windows ;;
-      '[ last ]') exec restore window ;;
+      "$ALL" ) exec restore windows ;;
+      "$LAST") exec restore window ;;
 
       *) # escape special characters in window title e.g. url page titles
          # restore ^$SEP, see query wtitle

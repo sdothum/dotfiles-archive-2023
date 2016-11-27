@@ -13,7 +13,7 @@ if console ;then
   exit
 fi
 
-if [ -z "$*" ] ;then
+if [ -z $1 ] ;then
   focus vim -g /tmp/scratch
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??

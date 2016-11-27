@@ -5,6 +5,8 @@
 
 # ...................................................................... E-books
 
+# Usage: dmenu ebooks [cache]
+
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$CACHEDIR/dmenu:ebooks
@@ -59,9 +61,9 @@ ebooks() {
 }
 
 # command line initialization with: dmenu ebooks [init]
-if [ ! -s $cache ] || [ "$*" ] ;then
+if [ ! -s $cache ] || [ $1 ] ;then
   ebooks
-  [ "$*" ] && exit
+  [ $1 ] && exit
 fi
 
 mobi() {

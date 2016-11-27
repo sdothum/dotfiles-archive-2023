@@ -44,12 +44,12 @@ chk_pkg() {
     j=$(grep "^$i" $conf | cut -d: -f1)
     k=$(grep "^$i" $conf | cut -d: -f2)
     # echo $j :: $k
-    l=$($pacaur -Ss $j | head -1 | sed 's/ (.*)//')
+    l=$($pacaur -Ss $j)
     [ "$k" = "$l" ] && echo $k || echo "$k  =>  $l"
   done
 }
 
-if [ -z "$*" ] ;then
+if [ -z $1 ] ;then
   chk_pkg
 elif [ ! -s $conf ] ;then
   add_pkg $@

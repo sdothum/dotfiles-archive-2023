@@ -5,8 +5,10 @@
 
 # ........................................................................ Files
 
+# Usage: dmenu logs [watch]
+
 # view log files
-[ "$*" ] && mode='Watch' || mode='View'
+[ $1 ] && mode=Watch || mode=View
 cd /tmp
 ln_logs
 

@@ -1,18 +1,12 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Dev
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Editor
+# ....................................................................... Search
 
-# nanu nanu!
-if [ ! -e $1 ] ;then
-  nano $@
-elif [ -w $1 ] ;then
-  nano $@
-else
-  sudo nano $@
-fi
+# fix for ack -l limitation with escaped regex
+a --nocolor "$@" | cut -d: -f1 | uniq
 
 # vim: set ft=sh: #

@@ -22,7 +22,7 @@ else
   cd Iosevka
 fi
 
-if [ "$*" ] ;then
+if [ $1 ] ;then
   amphetype=-amphetype
   sed -i -re "/^family =/s/'Iosevka'/'Iosevka-amphetype'/" \
     -e "/^leading =/s/= ([0-9]*)/= 1850/" \

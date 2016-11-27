@@ -44,7 +44,7 @@ layout() {
       6) thirds     '6' ;;
     esac
   else
-    herbstclient load "$1" '(clients vertical:0)'
+    herbstclient load $1 '(clients vertical:0)'
   fi
 }
 
@@ -53,22 +53,22 @@ layout() {
 # grid, horizontal, max and vertical explode frame windows..
 grid() {
   echo grid >$LAYOUT:$1
-  herbstclient load "$1" '(clients grid:0)'
+  herbstclient load $1 '(clients grid:0)'
 }
 
 horizontal() {
   echo horizontal >$LAYOUT:$1
-  herbstclient load "$1" '(clients horizontal:0)'
+  herbstclient load $1 '(clients horizontal:0)'
 }
 
 max() {
   echo max >$LAYOUT:$1
-  herbstclient load "$1" '(clients max:0)'
+  herbstclient load $1 '(clients max:0)'
 }
 
 vertical() {
   echo vertical >$LAYOUT:$1
-  herbstclient load "$1" '(clients vertical:0)'
+  herbstclient load $1 '(clients vertical:0)'
 }
 
 split() {
@@ -81,7 +81,7 @@ split() {
 halves() {
   echo 1:1 >$LAYOUT:$1
   if [ "$load" ] ;then
-    herbstclient load "$1" '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
+    herbstclient load $1 '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
     split 0.5
@@ -97,7 +97,7 @@ halves() {
 onethird() {
   echo 1:2 >$LAYOUT:$1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
-    herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
+    herbstclient load $1 '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
   else
     restore mono
     [ $MASTER = left ] && split 0.3333 || split 0.6666
@@ -107,7 +107,7 @@ onethird() {
 thirds() {
   echo 1:1:1 >$LAYOUT:$1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
-    herbstclient load "$1" '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
+    herbstclient load $1 '(split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0)))'
     # fill empty frames
     if [ $MASTER = left ] ;then
       [ $wcount -eq 2 ] && herbstclient shift right
@@ -140,7 +140,7 @@ thirds() {
 
 # ....................................................................... Select
 
-case "$1" in
+case $1 in
   tags) for i in $TAGS
         do
           layout $i

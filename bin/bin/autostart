@@ -66,7 +66,7 @@ if [ -e $HOME/.irc ] ;then
     term 'IRC' VISIBLE weechat
     herbstclient focus_monitor 0
   else
-    switch tag "$CHAT"
+    switch tag $CHAT
     term 'IRC' VISIBLE weechat
   fi
 fi
@@ -76,7 +76,7 @@ fi
 
 server && thedarnedestthing
 server && vimwiki
-switch tag "$WEB"
+switch tag $WEB
 # qutebrowser &
 vimbt
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null

@@ -6,9 +6,9 @@
 
 # .......................................................... the darnedest thing
 
-switch tag "$WIKI"
+switch tag $WIKI
 # vim config rule for vimwiki requires being in home directory
 cd $HOME
-focus gvim --role='thedarnedestthing' vimwiki
+focus gvim --role=thedarnedestthing vimwiki
 
 # vim: set ft=sh: #

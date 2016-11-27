@@ -9,7 +9,7 @@
 # the finger friendly layout
 if [ -e $HOME/.Xmodmap ] ;then
   xmodmap $HOME/.Xmodmap
-  layout='Shift-DH'
+  layout=Shift-DH
 else
   setxkbmap us -variant colemak
   left_shift_key

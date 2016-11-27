@@ -8,8 +8,8 @@
 
 # create a panel on the current monitor, noting monocle mode
 if is primary ;then
-  [ -e $CONKY ] && conky=':conky'
-  [ -e $MONOCLE ] && monocle=':monocle'
+  [ -e $CONKY ] && conky=:conky
+  [ -e $MONOCLE ] && monocle=:monocle
 fi
 
 fifo="$(herbstclient attr monitors.focus.index)$conky$monocle"

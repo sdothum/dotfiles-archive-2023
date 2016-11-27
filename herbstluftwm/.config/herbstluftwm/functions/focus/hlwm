@@ -12,14 +12,14 @@
 #        hlwm focus/bring window
 
 action() {
-  case "$1" in
+  case $1 in
     focus) mode='Focus ' ;;
 
     raise) mode='Raise '
            tag=$(herbstclient attr monitors.focus.tag)
            title=" to $(query tname $tag)" ;;
 
-    close) mode='Close' ;;
+    close) mode=Close ;;
     *    ) return 1 ;;
   esac
 }
@@ -52,13 +52,13 @@ if window=$(echo $windows |
   window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/ ^\1/" -e "s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
   TAG=$(echo $window | cut -d$DLM -f1)
-  if [ -z "$mode" ] ;then
+  if [ -z $mode ] ;then
     app=$(echo $window | cut -d^ -f1 | sed 's/.*\$//')
     title=$(echo $window | cut -d^ -f2)
     action $(echo "focus\nraise\nclose" | dmenu "$app ${title% }" -no-custom) || exit
   fi
 
-  case "$mode" in
+  case $mode in
     Close*) herbstclient close "$(echo $window | cut -d$DLM -f3)"
             # desktop cleanup loop
             exec focus hlwm ;;
@@ -70,10 +70,10 @@ if window=$(echo $windows |
        lock set swap_monitors_to_get_tag 0
        if echo $window | grep " \^$VISIBLE [0-9]" ;then
          # focus normal tag
-         herbstclient chain . use "$TAG" . jumpto "$(echo $window | cut -d$DLM -f3)"
+         herbstclient chain . use $TAG . jumpto "$(echo $window | cut -d$DLM -f3)"
        else
          # focus (restore) tick'tag
-         herbstclient use "${TAG#\'}"
+         herbstclient use ${TAG#\'}
          focus frame
          herbstclient bring "$(echo $window | cut -d$DLM -f3)"
        fi

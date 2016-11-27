@@ -90,7 +90,7 @@ pass I || exit" >$HOME/sandbox/pass.sh
            notify $1 "$username\n$password"
            /usr/bin/pass --clip $1
          else
-           echo "$password"
+           echo $password
          fi
        else
          usage

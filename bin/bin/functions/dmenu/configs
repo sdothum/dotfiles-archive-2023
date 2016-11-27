@@ -5,6 +5,8 @@
 
 # ......................................................................... Edit
 
+# Usage: dmenu configs [cache]
+
 # system conf files
 cache=$CACHEDIR/dmenu:configs
 
@@ -45,9 +47,9 @@ configs() {
 }
 
 # command line initialization with: dmenu configs [init]
-if [ ! -s $cache ] || [ "$*" ] ;then
+if [ ! -s $cache ] || [ $1 ] ;then
   configs
-  [ "$*" ] && exit
+  [ $1 ] && exit
 fi
 
 # .................................................................. Edit config
@@ -68,7 +70,7 @@ do
   history configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
   file=$(echo $file | sed -re "s|^(.*)  *${SEP}  *(.*)|\2/\1|" -e 's/ /\\\\\\\\ /')
-  eval v "$file"
+  eval v $file
   exit
 done
 

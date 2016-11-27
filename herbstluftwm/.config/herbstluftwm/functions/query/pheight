@@ -12,7 +12,7 @@
 primary=20
 secondary=18
 
-case "$1" in
+case $1 in
   primary  ) echo $primary ;;
   secondary) echo $secondary ;;
   *        ) is display =3440 && echo 20 || echo 18 ;;

@@ -69,13 +69,13 @@ previous() {
 }
 
 tracks() {
-  echo "$@" | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'
+  echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'
 }
 
 info() {
   stats=$(mpc status | sed -n '2p')
-  echo "$stats" | grep -q 'playing' && echo "Playing $(tracks $stats)" ||
-                                       echo "Paused $(tracks $stats)"
+  echo $stats | grep -q playing && echo "Playing $(tracks $stats)" ||
+                                   echo "Paused $(tracks $stats)"
 }
 
 # toggle state
@@ -103,7 +103,7 @@ do
                 column -s^ -t |
                 dmenu "$(info)" "${cmd%% *}" -no-custom) || break
     do
-      case "$cmd" in
+      case $cmd in
         toggle*on | toggle*off)
                     mpc toggle
                     [ $(status '\[playing\]') = off ] || exit ;;
@@ -141,14 +141,14 @@ do
   while [ $more ]
   do
     if [ $(albums | wc -l) -gt 1 ] ;then
-      case "$artist" in
+      case $artist in
         "$ALBUMS") album=$(albums | dmenu 'Album' "$album" -no-custom) || break ;;
 
         *) album=$(albums | sort -n | sed "1i$ALL\n$LIBRARY" |
                    dmenu 'Album' "$album" -no-custom) || break ;;
       esac
     else
-      case "$artist" in
+      case $artist in
         "$LIBRARY") album=$artist ;;
 
         *) album=$(albums | sort -n | dmenu 'Album' "$album" -no-custom) || break
@@ -157,7 +157,7 @@ do
     fi
 
     # player, library or playlist selection
-    case "$album" in
+    case $album in
       "$PLAYER") artist="$PLAYER"
                  break ;;
 
@@ -168,7 +168,7 @@ do
               music="All songs by $artist"
               unset more ;;
 
-      *) case "$artist" in
+      *) case $artist in
            "$ALBUMS") playlist=$(mpc find album "$album")
                       music=$album;;
 

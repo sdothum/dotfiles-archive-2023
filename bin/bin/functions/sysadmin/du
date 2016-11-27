@@ -6,8 +6,10 @@
 
 # ................................................................... Filesystem
 
-[ "$*" ] && dir=$1 || dir=$PWD
-[ "$dir" = . ] && dir=$PWD
+case $1 in
+  '' | .) dir=$PWD ;;
+  *     ) dir=$1 ;;
+esac
 
 # display du and corrected btrfs du
 /usr/bin/du -hd1 $dir 2>/dev/null

@@ -18,7 +18,7 @@ do
   # using bash's extended read functionality (over dash) for single character input
   IFS= read -rn1 CONTINUE
   echo
-  case "$CONTINUE" in
+  case $CONTINUE in
     n | N | '') exit 0 ;;
     y | Y     ) exit 1 ;;
 

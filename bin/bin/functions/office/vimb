@@ -16,7 +16,7 @@ inputfont="set input-font-normal=monospace $size"
 inputerrorfont="set input-font-error=monospace bold $size"
 completionfont="set completion-font=monospace $size"
 
-case "$1" in
+case $1 in
   embed) /usr/bin/vimb --cmd="$statusfont" \
                        --cmd="$sslfont" \
                        --cmd="$sslinvalidfont" \
@@ -33,7 +33,7 @@ case "$1" in
                    ;$inputerrorfont<CR>\
                    ;$completionfont<CR>\
                    ;tabopen $@<CR>" |
-               socat - unix-connect:$(grep 'socket' /tmp/vimb.socket) ;;
+               socat - unix-connect:$(grep socket /tmp/vimb.socket) ;;
 
   *) /usr/bin/vimb --cmd="$statusfont" \
                    --cmd="$sslfont" \

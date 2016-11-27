@@ -51,10 +51,10 @@ toggle_term() {
 # toggle application, note application specific exception handling
 toggle_app() {
   # handle rox filer binary name
-  [ "$msg" = 'rox' ] && app='ROX-Filer'
-  if pgrep -lf "${app:-$msg}" | grep -qv 'toggle' ;then
+  [ $msg = rox ] && app=ROX-Filer
+  if pgrep -lf ${app:-$msg} | grep -qv toggle ;then
     # xpad multiple windows shortcut
-    if [ "$msg" = 'xpad' ] ;then
+    if [ $msg = xpad ] ;then
       xpad --quit
       exit
     fi
@@ -63,7 +63,7 @@ toggle_app() {
     focus=true
     for i in $(query winids)
     do
-      if herbstclient compare clients.$i.instance = "$app" ;then
+      if herbstclient compare clients.$i.instance = $app ;then
         if ! close $i ;then
           # stack windows
           [ $focus ] && focus frame

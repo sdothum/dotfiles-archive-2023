@@ -26,16 +26,16 @@ abort() {
   done
 }
 
-case "$1" in
+case $1 in
   ''   ) usage ;;
   REGEX) process=$(cat $REGEX) ;;
   vimb ) process='vimb .* http' ;;
-  *    ) process="$@" ;;
+  *    ) process=$@ ;;
 esac
 
 # launched from dmenu run or within terminal session?
 if [ "$(. parent)" = "[$(hostname).local]" ] ;then
-  echo "$process" >$REGEX
+  echo $process >$REGEX
   term "k" SHELL k REGEX
 else
   abort "$process"

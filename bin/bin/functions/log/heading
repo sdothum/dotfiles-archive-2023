@@ -9,15 +9,15 @@
 # heading eye candy specifically for install logs
 delimeter=':'
 
-# dash registers utf-8 characters as 3 bytes so can't test ${#1} = 1
-if echo "$1" | grep -q '^.$' ;then
-  if ! echo "$1" | grep -q '[[:alnum:]]' ;then
+# dash shell registers utf-8 characters as 3 bytes so can't test ${#1} = 1
+if echo $1 | grep -q '^.$' ;then
+  if echo $1 | grep -qv '[[:alnum:]]' ;then
     # specifying default leader character adds timestamp!
-    if [ "$1" = ':' ] ;then
+    if [ $1 = : ] ;then
       trace=true
       echo
     else
-      delimeter="$1"
+      delimeter=$1
     fi
     shift
   fi

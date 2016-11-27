@@ -22,10 +22,10 @@ fi
 
 heading 'boot disk'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-ls -l /dev/disk/by-id | grep -v 'part' | grep 'ata'
+ls -l /dev/disk/by-id | grep -v part | grep ata
 read -p "Boot disk /dev/sd? [a-z]: " disk
 if [ -z $disk ] ;then
-  echo "invalid disk reference.. aborting"
+  echo 'invalid disk reference.. aborting'
   exit
 fi
 echo
@@ -44,18 +44,18 @@ if [ "$format" = y ] ;then
   if [ "$stripe" = y ] ;then
     echo
     read -p "Add stripe volume /dev/sd? [a-z]: " stripe
-    if [ -z $stripe ] || [ "$stripe" = "$disk" ] ;then
-      echo "invalid stripe reference.. aborting"
+    if [ -z $stripe ] || [ "$stripe" = $disk ] ;then
+      echo 'invalid stripe reference.. aborting'
       exit
     fi
   fi
   echo
   case $diskutil in
-    fdisk) echo "Create active boot mbr partition.." ;;
+    fdisk) echo 'Create active boot mbr partition..' ;;
 
-    gdisk) echo "Create gpt partitions labeled.."
-           echo "  [ EFI boot  swap ]  root"
-           echo "  .." ;;
+    gdisk) echo 'Create gpt partitions labeled..'
+           echo '  [ EFI boot  swap ]  root'
+           echo '  ..' ;;
   esac
   sleep 3s
   $diskutil /dev/sd${disk}
@@ -63,7 +63,7 @@ if [ "$format" = y ] ;then
   checkpoint
   if [ ! -z $stripe ] ;then
     echo
-    echo "Partition stripe disk.."
+    echo 'Partition stripe disk..'
     c$diskutil /dev/sd${stripe}
     $diskutil -l /dev/sd${stripe}
     checkpoint
@@ -109,7 +109,7 @@ heading 'mount partitions'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 mkdir -pv /mnt/btrfs-root
 read -p "SSD boot drive? [y|N]: " ssd
-[ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=",ssd,discard"
+[ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=,ssd,discard
 mount=defaults,noatime,autodefrag,space_cache${ssd}
 echo "mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root"
 mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root
@@ -232,7 +232,7 @@ heading 'edit fstab'
 # sed -i "\$a/run/btrfs-root/__current/ROOT/var/lib\t\t/var/lib\t\tnone\t\tbind\t\t0 0" /mnt/btrfs-boot/etc/fstab
 genfstab -L -p /mnt/btrfs-boot >>/mnt/btrfs-boot/etc/fstab
 # correct genfstab output from apple macbooks
-if ! grep -q 'bind' /mnt/btrfs-boot/etc/fstab ;then
+if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
   sed -i -e '/vfat/s/0 [12]/0 0/' \
       -e '/\/var\/lib/d' \
       -e '$a\

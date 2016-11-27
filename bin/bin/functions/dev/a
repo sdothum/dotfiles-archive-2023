@@ -1,12 +1,20 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
+# Dev
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ....................................................................... Search
 
-# fix for ack -l limitation with escaped regex
-a --nocolor "$@" | cut -d: -f1 | uniq
+# ignore archive folders and dmenui history
+filter='(\.deprecated|\.hg|makepkg|src)/|dmenu.*history|\.vimv|vimmappings'
+
+if [ "$1" = --nocolor ] ;then
+  nocolor=$1
+  shift
+fi
+
+ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $nocolor "$@" |
+    egrep -v "$filter"
 
 # vim: set ft=sh: #

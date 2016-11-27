@@ -12,7 +12,7 @@ usage() {
   exit 1
 }
 
-[ "$*" ] && [ "$1" != '#' ] && usage
+[ $1 ] && [ $1 != '#' ] && usage
 echo "$1$(od -An -N3 -x /dev/random | sed -e 's/ 00//' -e 's/ //')"
 
 # vim: set ft=sh: #

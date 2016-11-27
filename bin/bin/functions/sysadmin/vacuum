@@ -26,20 +26,20 @@ usage() {
   exit 1
 }
 
-case "$1" in
+case $1 in
   clean | CLEAN) clean=$1
                  shift ;;
 esac
 
-[ "$*" ] && rules=$@ || rules=.$(basename $0)
-[ -e "$rules" ] || usage
+[ $1 ] && rules=$@ || rules=.$(basename $0)
+[ -e $rules ] || usage
 
 clean() {
   ditto "vacuum $file"
   [ $clean ] || return
   case $clean in
-    clean) sudo mv -vf "$file" /tmp/ ;;
-    CLEAN) sudo rm -rvf "$file" ;;
+    clean) sudo mv -vf $file /tmp/ ;;
+    CLEAN) sudo rm -rvf $file ;;
   esac
 }
 
@@ -59,8 +59,8 @@ do
        file=$action ;;
   esac
 
-  [ -e "$file" ] || continue
-  echo "$file" | grep -q "^\($HOME\)*[./]*$" && continue
+  [ -e $file ] || continue
+  echo $file | grep -q "^\($HOME\)*[./]*$" && continue
 
   case $action in
     '!') clean

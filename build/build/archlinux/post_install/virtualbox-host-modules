@@ -7,8 +7,8 @@
 # ................................................................... virtualbox
 
 sudo dkms install vboxhost/$(pm virtualbox-host | grep virtualbox-host-modules | cut -d' ' -f2 | sed 's/-.*//')
-echo "vboxdrv
-vboxnetflt" | sudo tee /etc/modules-load.d/virtualbox.conf
+echo 'vboxdrv
+vboxnetflt' | sudo tee /etc/modules-load.d/virtualbox.conf
 sudo modprobe vboxdrv
 sudo modprobe vboxnetflt
 

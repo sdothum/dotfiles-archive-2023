@@ -5,6 +5,8 @@
 
 # ................................................................... Background
 
+# Usage: dmenu root [cache]
+
 VIEWER='[ viewer ]'
 UPDATE='[ update ]'
 DARK='[ dark  ]'
@@ -14,12 +16,11 @@ SAVE='[ save  ]'
 root() {
   find $PALETTE -name '*png' | egrep '(dark|light)/' |
                                sed -r "s|.*/(.*)/(.*)/(.*).png|\3^$SEP \1 \2|" |
-                               sort -r -k2 \
-                               >$HISTORY/root
+                               sort -r -k2 >$HISTORY/root
 }
 
 # rebuild swatches
-[ "$*" ] && root
+[ $1 ] && root
 
 themes() {
   find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'
@@ -34,7 +35,7 @@ while color=$( ( [ "$menu" ] && ( echo | history root | sed "1i$menu" ) ||
               column -s^ -t |
               dmenu 'Setroot') || exit
 do
-  case "$color" in
+  case $color in
     ''       ) break ;;
     "$VIEWER") exec draw root restore ;;
     "$UPDATE") root ;;

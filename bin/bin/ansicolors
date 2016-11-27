@@ -9,7 +9,7 @@
 # show terminal colors
 # lifted from https://bbs.archlinux.org/viewtopic.php?pid=1094070#p1094070
 
-t='gYw'
+t=gYw
 
 printf '            '
 printf '%8s' {40..47}m

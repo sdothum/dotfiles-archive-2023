@@ -11,18 +11,18 @@ usage() {
   exit 1
 }
 
-[ "$*" ] || usage
+[ $1 ] || usage
 
 # rename files with parent (directory) name
 # thunar custom action can pass file and directory names
 [ $# -eq 1 ] && parent=$(basename $PWD) || parent=$(basename $2)
-[ -e $1 ] && prefix=$(echo "$1" | sed -r 's/(.*)\..*/\1/')
+[ -e $1 ] && prefix=$(echo $1 | sed -r 's/(.*)\..*/\1/')
 
 echo "$prefix => $parent"
 cd $parent
 for i in $prefix*
 do
-  suffix=$(echo "$i" | sed "s/^$prefix//")
+  suffix=$(echo $i | sed "s/^$prefix//")
   mv -i $i $parent$suffix
 done
 

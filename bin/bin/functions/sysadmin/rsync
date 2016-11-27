@@ -15,8 +15,8 @@ laptop=lumen
 netbook=monad
 
 # sync but..
-exclude_cache="--exclude='cache' --exclude='.cache' --exclude='*.cache'"
-exclude_http_local="--exclude='thedarnedestthing.db' --exclude='log'"
+exclude_cache="--exclude=cache --exclude=.cache --exclude='*.cache'"
+exclude_http_local="--exclude=thedarnedestthing.db --exclude=log"
 # exclude_virtualbox="--exclude='VirtualBox VMs' --filter='protect VirtualBox*'"
 exclude_virtualbox="--exclude='VirtualBox VMs'"
 
@@ -104,7 +104,7 @@ case $@ in
 
   home) if if-yes "backup $HOME to /net/archive" ;then
           [ -d /net/archive$HOME ] || mkdir -pv /net/archive/home
-          rsync --delete-during $exclude_virtualbox $exclude_cache --exclude='Trash' --exclude='Logs' --exclude='*.corrupted' \
+          rsync --delete-during $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
                 $HOME /net/archive/home/
         fi ;;
 
@@ -132,7 +132,7 @@ case $@ in
          fi ;;
 
   pi) if server; then
-        rsync --delete-during --exclude='.deprecated' --exclude='.hg' \
+        rsync --delete-during --exclude=.deprecated --exclude=.hg \
               $HOME/stow/bash/.bash_logout \
               $HOME/stow/bash/.bash_profile \
               $HOME/stow/bash/.bashrc $HOME/stow/bin/bin \
@@ -141,20 +141,20 @@ case $@ in
               $HOME/stow/X11/.xinitrc \
               $HOME/stow/X11/.Xresources \
               pi:$HOME/
-        rsync --delete-during --exclude='.deprecated' --exclude='.hg' \
+        rsync --delete-during --exclude=.deprecated --exclude=.hg \
               $HOME/stow/dunst/.config/dunst \
               $HOME/stow/fish/.config/fish \
               $HOME/stow/fish/.config/chips \
               $HOME/stow/herbstluftwm/.config/herbstluftwm \
               pi:$HOME/.config/
-        rsync --delete-during --exclude='.deprecated' \
+        rsync --delete-during --exclude=.deprecated \
               $HOME/stow/bin/.local/bin \
               pi:$HOME/.local/
-        rsync --delete-during --exclude='.deprecated' --exclude='.hg' --exclude='makepkg' \
+        rsync --delete-during --exclude=.deprecated --exclude=.hg --exclude=makepkg \
               $HOME/stow/build/build/archlinux \
               pi:$HOME/build/
         ssh pi 'mkdir -p build/root/etc'
-        rsync --delete-during --exclude='.deprecated' --exclude='.hg' \
+        rsync --delete-during --exclude=.deprecated --exclude=.hg \
               $HOME/stow/build/build/root/etc/profile.d \
               $HOME/stow/build/build/root/etc/hosts \
               pi:$HOME/build/root/etc/
@@ -198,12 +198,12 @@ case $@ in
   stow) if server ;then
           sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
           if-yes "backup stow to $laptop" &&
-            rsync --delete-during --exclude='.SyncArchive' $HOME/stow $USER@$laptop:$HOME/
+            rsync --delete-during --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
           if-yes "backup stow to $netbook" &&
-            rsync --delete-during --exclude='.SyncArchive' $HOME/stow $USER@$netbook:$HOME/
+            rsync --delete-during --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
         else
           if-no 'update stow to luna' ||
-            rsync --exclude='.SyncArchive' $HOME/stow $USER@luna:$HOME/
+            rsync --exclude=.SyncArchive $HOME/stow $USER@luna:$HOME/
         fi ;;
 
   ttrss) if server ;then
@@ -230,7 +230,7 @@ case $@ in
        # trace 'saving => stow:/application'
        # rsync -rltuv /srv/http/thedarnedestthing.com/application $HOME/thedarnedestthing.com/
        trace 'updating => thedarnedestthing.com:/application'
-       rsync -L --delete-during --exclude='vimwiki' $exclude_http_local \
+       rsync -L --delete-during --exclude=vimwiki $exclude_http_local \
              /srv/http/thedarnedestthing.com/application \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/
        rsync --delete-during \

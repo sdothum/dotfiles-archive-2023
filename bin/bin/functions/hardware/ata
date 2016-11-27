@@ -10,7 +10,7 @@
 # lifted from http://serverfault.com/questions/244944/linux-ata-errors-translating-to-a-device-name
 
 # save original IFS
-OLDIFS="$IFS"
+OLDIFS=$IFS
 for i in /sys/block/s*
 do
   readlink $i | sed -e 's^\.\./devices^/sys/devices^' \
@@ -34,6 +34,6 @@ do
                 done
 done
 # restore original IFS
-IFS="$OLDIFS"
+IFS=$OLDIFS
 
 # vim: set ft=sh: #

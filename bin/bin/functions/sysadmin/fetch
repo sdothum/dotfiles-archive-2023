@@ -9,7 +9,7 @@
 fetch=/usr/bin/neofetch
 
 # fetch wrapper
-if [ "$*" ] ;then
+if [ $1 ] ;then
   $fetch --help
 else
   focus frame

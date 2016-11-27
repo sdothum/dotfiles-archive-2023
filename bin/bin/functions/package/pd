@@ -26,7 +26,7 @@ case $1 in
 esac
 
 # package dependency
-if [ "$*" ] ;then
+if [ $1 ] ;then
   for i in $@
   do
     if [ "$(expac '%n' $i)" ] ;then

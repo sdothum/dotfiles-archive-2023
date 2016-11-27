@@ -12,7 +12,7 @@
 # pacaur=true
 
 # AUR package manager
-if [ -z "$*" ] ;then
+if [ -z $1 ] ;then
   if arm ;then
     sudo pacman -Syu
     exit
@@ -28,9 +28,9 @@ if [ -z "$*" ] ;then
 
   # if-no && (a) || (b) shortform cannot be used because return of (a) may be false
   if if-no 'upgrade --devel packages' ;then
-    aur='--aur'
+    aur=--aur
   else
-    aur='--devel'
+    aur=--devel
   fi
 
   # pacupg $aur doen'reate new boot snapshot, see $pacaur

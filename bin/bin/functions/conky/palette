@@ -11,6 +11,6 @@ usage() {
   exit 1
 }
 
-[ "$*" ] && curl --silent -L "https://www.colorcodehex.com/$1/" || usage
+[ $1 ] && curl --silent -L "https://www.colorcodehex.com/$1/" || usage
 
 # vim: set ft=sh: #

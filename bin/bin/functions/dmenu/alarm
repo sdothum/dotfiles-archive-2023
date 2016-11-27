@@ -41,19 +41,19 @@ case $# in
          if echo $delay | grep -q '^[0-9]*[ms]*$' ;then
            delay=$(duration $delay)
            alert=$(echo | dmenu 'Notification') || exit
-           [ "$alert" ] || alert='Test'
+           [ "$alert" ] || alert=Test
            break
          fi
        fi
      done
-     repeat=$(echo '1' | dmenu 'Repetitions') || exit ;;
+     repeat=$(echo 1 | dmenu 'Repetitions') || exit ;;
 esac
 
 [ $repeat -gt 1 ] && notify "$alert" "$delay x $repeat" ||
                      notify "$alert" "$delay"
 
 alarm() {
-  echo "$alert" | grep -iq 'test' || history alarm "$delay^$SEP $alert"
+  echo $alert | grep -iq test || history alarm "$delay^$SEP $alert"
   for i in $(seq 1 $repeat)
   do
     sleep $delay

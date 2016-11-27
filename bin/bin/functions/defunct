@@ -16,7 +16,7 @@ pids=$(echo $pids | sed 's/ /|/g')
 
 if [ "$pids" ] ;then
   defunct | egrep --color "$pids"
-  drawline '∘ '
+  underline
   defunct -v | egrep --color "$pids"
 fi
 
