@@ -18,27 +18,26 @@ hc keybind $Mod-w                      chain . close_or_remove . emit_hook focus
 hc keybind Super-Tab                   spawn focus hlwm
 hc keybind Super-Shift-Tab             spawn focus hlwm focus
 hc keybind Super-Control-Tab           spawn focus hlwm raise
+hc keybind $Mod-minus                  spawn toggle focus
 
 # UI appearance
+hc keybind $Mod-Escape                 spawn focus borders 3
+hc keybind $Mod-Shift-Escape           spawn toggle borders
+if [ $PLANCK ] ;then
+  hc keybind $Mod-slash                spawn toggle unclutter
+  hc keybind $Mod-Shift-slash          spawn toggle compton
+else
+  hc keybind $Mod-backslash            spawn toggle unclutter
+  hc keybind $Mod-Shift-backslash      spawn toggle compton
+fi
+
+# wallpaper background
 hc keybind $Mod-b                      spawn draw root select
 hc keybind $Mod-Shift-b                spawn draw root shuffle
 hc keybind $Mod-Control-b              spawn draw root toggle
 hc keybind $Mod-d                      spawn dmenu root
 hc keybind $Mod-Shift-d                spawn draw root save
 hc keybind $Mod-Control-d              spawn draw root blank
-if [ $PLANCK ] ;then
-  hc keybind $Mod-slash                spawn toggle unclutter
-  hc keybind $Mod-Shift-slash          spawn toggle compton
-  hc keybind $Mod-Escape               spawn focus borders 3
-  hc keybind $Mod-Shift-Escape         spawn toggle borders
-  hc keybind $Mod-minus                spawn toggle focus
-else
-  hc keybind $Mod-backslash            spawn toggle unclutter
-  hc keybind $Mod-Shift-backslash      spawn toggle compton
-  hc keybind $Mod-Super-space          spawn focus borders 3
-  hc keybind Super-Control-space       spawn toggle borders
-  hc keybind $Mod-Super-Control-space  spawn toggle focus
-fi
 
 # focus monitor
 # hc keybind $Mod-apostrophe           cycle_monitor
