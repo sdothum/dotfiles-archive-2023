@@ -29,9 +29,9 @@ hc keybind $Mod-Control-d              spawn draw root blank
 if [ $PLANCK ] ;then
   hc keybind $Mod-slash                spawn toggle unclutter
   hc keybind $Mod-Shift-slash          spawn toggle compton
-  hc keybind $Mod-minus                spawn focus borders 3
-  hc keybind $Mod-Shift-minus          spawn toggle borders
-  hc keybind $Mod-equal                spawn toggle focus
+  hc keybind $Mod-Escape               spawn focus borders 3
+  hc keybind $Mod-Shift-Escape         spawn toggle borders
+  hc keybind $Mod-minus                spawn toggle focus
 else
   hc keybind $Mod-backslash            spawn toggle unclutter
   hc keybind $Mod-Shift-backslash      spawn toggle compton
