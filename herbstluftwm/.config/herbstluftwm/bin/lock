@@ -7,7 +7,7 @@
 
 # ........................................................ Persistent lock state
 
-# Usage: lock [command], multiple commands chained with dot
+# Usage: lock [<command> [ . <command> ]*], multiple commands chained with dot
 
 # disable dynamic emithook focusing
 touch $LOCK

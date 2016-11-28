@@ -6,10 +6,9 @@
 
 # ................................................................. Focus window
 
-# focus active or (raise) hidden window
-# Usage: hlwm focus (switch to window)
-#        hlwm bring (bring window to current tag)
-#        hlwm focus/bring window
+# Usage: focus hlwm focus (switch to window)
+#        focus hlwm bring (bring window to current tag)
+#        focus hlwm       (focus or bring window)
 
 action() {
   case $1 in

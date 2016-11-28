@@ -6,7 +6,7 @@
 
 # ........................................................... Any hidden windows
 
-# Usage: query hidden [inactive]
+# Usage: is hidden [inactive]
 #        see query tag
 
 # query hidden status (windows) associated with current desktop tab, see .conkyrc

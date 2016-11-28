@@ -20,8 +20,10 @@ usage() {
   exit 1
 }
 
+[ $1 ] || usage
 echo $1 | grep -qv '/' && history=$HISTORY/$1 ||
                           history=$1
+shift
 
 # usage: inject item file
 inject() {
@@ -35,9 +37,6 @@ inject() {
   mv -f $update $2
 }
 
-[ $1 ] || usage
-# history file
-shift
 # update history or show it
 if [ "$1" ] ;then
   inject "$@" $history

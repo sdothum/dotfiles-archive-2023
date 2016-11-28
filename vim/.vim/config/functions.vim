@@ -51,13 +51,6 @@
         return sort(a:nums, '<SID>CompareNumber')
       endfunction
 
-    " ........................................................... Quote filename
-
-      " see Print (buffers.vim)
-      function! QuoteFile()
-        return '"' . expand('%:t') . '"'
-      endfunction
-
     " ......................................................... Strip whitespace
 
       " see https://dougblack.io/words/a-good-vimrc.html

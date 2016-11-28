@@ -7,6 +7,9 @@
 # ....................................................................... Editor
 
 # v by content
-v $(al "$@")
+files=$(al "$@")
+v $files
+count=$(echo "$files" | wc -l)
+[ $count -gt 1 ] && notify low "$count files to edit"
 
 # vim: set ft=sh: #

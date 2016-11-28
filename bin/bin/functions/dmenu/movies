@@ -17,6 +17,7 @@ if [ "$1" = cache ] ;then
   shift
 fi
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
+mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
 # unset debug to remove exit from menu items
@@ -38,7 +39,7 @@ catlg() {
 cache() {
   time=5 notify low 'Movies' 'Caching library..'
   # clean up titles
-  mytitles $library >>/tmp/mytitles:${1:-movies}
+  mytitles $library >>$mytitles
   [ -e $playlist ] || echo >$playlist
   catlg
 }

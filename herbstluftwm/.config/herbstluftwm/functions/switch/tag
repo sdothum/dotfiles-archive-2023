@@ -6,7 +6,7 @@
 
 # ................................................................ Switch to tag
 
-# Usage: switch tag [tag]
+# Usage: switch tag [<tag>]
 
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
 [ $(query tag) = $1 ] && exit

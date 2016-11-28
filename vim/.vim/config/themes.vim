@@ -214,6 +214,7 @@
 
     " ............................................ Initial font and line spacing
 
-      call FontSize(argv(0) =~ 'vimwiki\|*.eml' ? +1 : -1)
+      " a bit of regex weirdness requiring *eml and not .*eml(?)
+      call FontSize(argv(0) =~ 'vimwiki\|*eml\|.*md' ? +1 : -1)
 
 " themes.vim

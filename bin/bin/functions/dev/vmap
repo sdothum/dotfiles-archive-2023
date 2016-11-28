@@ -6,9 +6,6 @@
 
 # ....................................................................... Editor
 
-# filename:lineno trim adjustment
-adjust=3
-
 usage() {
   echo "usage: $(basename $0) [vim]"
   exit 1
@@ -16,39 +13,36 @@ usage() {
 
 # list current key assignments
 keymaps() {
-  cd $HOME/.vim/config
-  for i in $(seq 1 12)
-  do
-    # fkey assignments
-    [ $title ] && title "F$i"
-    ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"'
-  done
-
-  # map key assignments
-  [ $title ] && title "MAP"
-  ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>'
-  echo
-
-  # leader key assignments
-  [ $title ] && title "LEADER"
-  ack --nocolor "<leader>" *.vim
-  cd - >/dev/null
-  echo
+  [ $title ] && title "$@"
+  # utf-8 char as separator (as caret i commonly use may be defined in a map)
+  grep -v '" .*map ' | sed -re 's/\.vim:/:/' \
+                           -e "s/:  */$SEP/" \
+                           -e "s/(map  *[^ ]*)  */\1$SEP/" |
+                       column -s$SEP -t
 }
 
 list() {
-  # column formatting is skewed by title/drawline (field 1)
-  leader=$(head -c $(( $(tput cols) - $adjust )) </dev/zero | tr '\0' ' ')
-  # utf-8 char as separator (as caret i usually use is common regex)
-  keymaps | grep -v '" .*map ' |
-            sed -re 's/\.vim:/:/' -e 's/:  */►/' -e 's/(map  *[^ ]*)  */\1►/' |
-            column -s► -t |
-            sed "s/$leader//"
+  for i in $(seq 1 12)
+  do
+    # fkey assignments
+    ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"' | keymaps "F$i"
+  done
+
+  # map key assignments
+  ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps "MAP"
+  echo
+
+  # leader key assignments
+  ack --nocolor "<leader>" *.vim | keymaps "LEADER"
+  echo
 }
 
 [ "$1" = help ] && usage
 [ $1 ] || title=true
+
+cd $HOME/.vim/config
 # f1 vim call uses more
 [ $title ] && list | less -RX || list | more
+cd - >/dev/null
 
 # vim: set ft=sh: #

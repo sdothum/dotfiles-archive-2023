@@ -7,7 +7,7 @@
 
 # ........................................................ Persistent lock state
 
-# Usage: unlock [command], multiple commands chained with dot
+# Usage: unlock [<command> [ . <command> ]*], multiple commands chained with dot
 
 # restore dynamic emithook focusing
 [ $1 ] && herbstclient chain . $@ . unlock || herbstclient unlock

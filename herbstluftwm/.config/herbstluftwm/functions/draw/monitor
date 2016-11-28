@@ -7,11 +7,10 @@
 # ....................................................... Draw monitor (regions)
 
 # Usage: draw monitor conky, conky view
-#        draw monitor conky fullscreen [width], conky fullscreen view
+#        draw monitor conky fullscreen, conky fullscreen view
 #        draw monitor fullframe, hidden conky view
 #        draw monitor fullscreen, fullscreen view
 #        draw monitor secondary [fullscreen], secondary monitor view
-# Note:  draw monitor conky fullscreen width, returns the width only, see draw panel
 
 SHADOW=${SHADOW:-1}
 # load theme
@@ -103,9 +102,6 @@ fullscreen_width=$(( $normal_width - $window_frame*2 - $border*2))
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
 case $@ in
-  # conky*fullscreen*width) echo $fullscreen_width
-  #                         exit ;;
-
   conky) rm -f $FULLSCREEN:primary 2>/dev/null
          rm -f $FULLSCREEN:$TAG 2>/dev/null
          PRIMARY=$(printf '%dx%d%+d%+d' \

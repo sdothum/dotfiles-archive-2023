@@ -47,7 +47,7 @@
       " goto buffer (just fingering convenience)
       nmap <leader>b            :b<Space>
       " query current buffer
-      nmap <leader>B            :echo @%<CR>
+      nmap <leader><leader>b    :echo expand('%:p')<CR>
 
       " silence vim's default (command line) file info message, note silent..silent
       vmap <silent><C-PageUp>   <ESC>:silent bprevious<CR>
@@ -128,7 +128,8 @@
     " ............................................................... Print file
 
       " a la vimb
-      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki' QuoteFile() | elseif expand('%:p') =~ 'Patricia' | execute '!pr wps' QuoteFile() | else | execute '!pr code' QuoteFile() | endif"
+      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki \"' . expand('%:t') . '\"'  | elseif expand('%:p') =~ 'Patricia' | execute '!pr wps' expand('%:t') | else | execute '!pr code' expand('%:t') | endif"
+
       nmap <silent><leader>ha :silent Hardcopy<CR>
 
 " buffers.vim

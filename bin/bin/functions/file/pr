@@ -238,7 +238,11 @@ case $1 in
 
   wiki) fontsize=10
         spacing='\doublespacing'
-        unset linenumbers ;;
+        unset linenumbers
+        shift
+        title=${@##/}
+        title=${title%.wiki}
+        cat "$@" | stdin ;;
 
   wps) # word document saved as text file
        fontsize=9
