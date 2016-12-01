@@ -11,6 +11,8 @@
 #       in the manpage history with the apostrophe being removed (useful when
 #       the name is part of several descriptions)
 
+REBUILD='[ rebuild cache ]'
+set -x
 while :
 do
   if [ "$selection" ] ;then
@@ -37,23 +39,31 @@ do
           sort -d |
           uniq |
           history man |
-          dmenu 'Manpage' |
+          sed "1i$REBUILD" |
+          dmenu 'Manpage' 1 |
           cut -d':' -f3-)
+
+    if [ "$man" = "$REBUILD" ] ;then
+      time=5 notify low 'Updating manpage index cache' 'Please be patient..'
+      sudo mandb 2>/dev/null
+      continue
+    fi
     [ $man ] && man=$(unquote $man) || exit
-    whatis "$man" >/dev/null || exec dmenu manpages
+    whatis $man >/dev/null || exec dmenu manpages
   fi
+
 
   # loop where multiple entries
   while :
   do
     # list possible man sections!
-    if [ $(whatis "$man" | wc -l) -gt 1 ] ;then
-      page=$(whatis "$man" |
+    if [ $(whatis $man | wc -l) -gt 1 ] ;then
+      page=$(whatis $man |
              sed "s/) *-/)^$SEP/" |
              column -s^ -t |
              dmenu 'Section' -no-custom) || exit
     else
-      page=$(whatis "$man")
+      page=$(whatis $man)
       singleton=true
     fi
 
@@ -61,7 +71,7 @@ do
 
     # display man page
     if [ "$page" ] ;then
-      history man "$man"
+      history man $man
       # xsel -c
       term "$page" MAX $stack WAIT man "$page"
 

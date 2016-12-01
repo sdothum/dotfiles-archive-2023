@@ -16,11 +16,15 @@ cd /net/depot
 if [ -d Iosevka ] ;then
   cd Iosevka
   rm -rf build dist 2>/dev/null
+  cp -f parameters.toml.original parameters.toml
   git pull origin master
 else
   git clone https://github.com/be5invis/Iosevka.git
   cd Iosevka
+  original parameters.toml
 fi
+# ensure node.js is uptodate
+npm install
 
 if [ $1 ] ;then
   amphetype=-amphetype

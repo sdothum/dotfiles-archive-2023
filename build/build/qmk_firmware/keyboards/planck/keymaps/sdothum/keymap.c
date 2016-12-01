@@ -112,8 +112,8 @@ enum planck_keycodes {
  ,_CAlt = OSM (MOD_LALT | MOD_LCTL)
  ,_Sft  = OSM (MOD_LSFT)
  ,Dot   = LT  (_NUMBER, KC_DOT)
- ,Tab   = LT  (_NUMBER, KC_TAB)
- ,Del   = LT  (_SYMBOL, KC_DEL)
+ ,Esc   = LT  (_NUMBER, KC_ESC)
+ ,Ent   = LT  (_SYMBOL, KC_ENT)
  ,Zero  = LT  (_SYMBOL, KC_0)
 };
 
@@ -147,8 +147,8 @@ enum tap_dance {
 
 // modifier keys
 #define Grv     GUI_T (SFT_T (KC_GRV))
-#define Esc     ALT_T (SFT_T (KC_ESC))
-#define Mins    ALT_T (CTL_T (KC_MINS))
+#define Mins    ALT_T (SFT_T (KC_MINS))
+#define Tab     ALT_T (CTL_T (KC_TAB))
 #define Eql     SFT_T (CTL_T (KC_EQL))
 #define Spc     SFT_T (KC_SPC)
 #define Bspc    SFT_T (KC_BSPC)
@@ -157,8 +157,8 @@ enum tap_dance {
 #define Up      CTL_T (KC_UP)
 #define Quot    SFT_T (KC_QUOT)
 #define Rght    SFT_T (CTL_T (KC_RGHT))
-#define Slsh    ALT_T (CTL_T (KC_SLSH))
-#define Ent     ALT_T (SFT_T (KC_ENT))
+#define Del     ALT_T (CTL_T (KC_DEL))
+#define Slsh    ALT_T (SFT_T (KC_SLSH))
 #define Bsls    GUI_T (SFT_T (KC_BSLS))
 
 // tap dance keys
@@ -198,23 +198,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ..................................................................... Colemak
 //
-// http://www.keyboard-layout-editor.com/#/gists/55379d7d458395c51aec5be51829d9dc
+// http://www.keyboard-layout-editor.com/#/gists/ad230b0dcf76122c3c4234200c26b87f
 
   // ,-----------------------------------------------------------------------------------.
   // |   ~  |   Q  |   W  |   F  |   P  |   V  |   J  |   L  |   U  |   Y  |   ;  |  \   |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |  Esc |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |Enter |
+  // |   -  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  /   |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   -  |   Z  |   X  |   C  |   D  |   B  |   K  |   H  |   ,  |   .  |   "  |  /   |
+  // |  Tab |   Z  |   X  |   C  |   D  |   B  |   K  |   H  |   ,  |   .  |  "   | Del  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
+  // |   =  | Ctrl |  GUI |  Alt |  Esc | Space| Bksp |  Ent | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_COLEMAK] = {
     {Grv,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, Bsls   },
-    {Esc,     KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Ent    },
-    {Mins,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot,  Slsh   },
-    {Eql,     _Ctl,    _Gui,    _Alt,    Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+    {Mins,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    Slsh   },
+    {Tab,     KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot,  Del    },
+    {Eql,     _Ctl,    _Gui,    _Alt,    Esc,     Spc,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
   },
 
 #ifdef QWERTY
@@ -223,18 +223,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |   ~  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  \   |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |  Esc |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
+  // |   -  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   -  |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |  "   |
+  // |  Tab |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Del  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
+  // |   =  | Ctrl |  GUI |  Alt |  Esc | Space| Bksp |  Ent | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_QWERTY] = {
     {Grv,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    Bsls   },
-    {Esc,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Ent    },
-    {Mins,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Quot   },
-    {Eql,     _Ctl,    _Gui,    _Alt,    Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+    {Mins,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, Quot   },
+    {Tab,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, Del    },
+    {Eql,     _Ctl,    _Gui,    _Alt,    Esc,     Spc,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
   },
 #endif
 
@@ -244,18 +244,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |   ~  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  |  \   |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |  Esc |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |Enter |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   -  |   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |  /   |
+  // |   -  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   =  | Ctrl |  GUI |  Alt |  Tab | Space| Bksp |  Del | Left | Down |  Up  |Right |
+  // |  Tab |   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  | Del  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // |   =  | Ctrl |  GUI |  Alt |  Esc | Space| Bksp |  Ent | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_DVORAK] = {
-    {Grv,     __Quot,  KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
-    {Esc,     KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Ent    },
-    {Mins,    KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Slsh   },
-    {Eql,     _Ctl,    _Gui,    _Alt,    Tab,     Spc,     Bspc,    Del,     Left,    Down,    Up,      Rght   },
+    {Grv,     KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    Bsls   },
+    {Mins,    KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    Slsh   },
+    {Tab,     KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    Del    },
+    {Eql,     _Ctl,    _Gui,    _Alt,    Esc,     Spc,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
   },
 #endif
 
@@ -312,7 +312,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // | ^Alt |   !  |   @  |   #  |   [  |   ]  |      |  F1  |  F2  |  F3  |  F4  |      |
   // |-----------------------------------------------------------------------------------|
-  // |   +  |      |      |      |   .  |      |      |  f() | Home | PgDn | PgUp |  End |
+  // |   +  |      |      |      |   .  |      |      |  f() | Home | PgDn | PgUp | End  |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
@@ -865,7 +865,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    case Tab:
+    case Esc:
       if (record->event.pressed) {
         layer_on        (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
@@ -880,7 +880,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    case Del:
+    case Ent:
       if (record->event.pressed) {
         layer_on        (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);

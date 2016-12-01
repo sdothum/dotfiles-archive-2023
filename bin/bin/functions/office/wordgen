@@ -22,14 +22,17 @@ typedir=$HOME/.config/Amphetype
 [ $corpus ] || corpus=practice
 corpus=$typedir/$corpus
 
-sentences='8 11 14 17'
+# sentences='8 11 14 17'
+sentences='5 6 7 8'
 
 [ "$1" = help ] && usage
 [ $1 ] && sentences=$@
 
 # rebuild corpus if corpus source updated
 # natural language corpus data by Peter Norvig at http://norvig.com/ngrams/
-paragraphs=$(mktemp)
+words=$(mktemp):wd
+lines=$(mktemp):ln
+paragraphs=$(mktemp):pg
 
 # ................................................................... Initialize
 
@@ -56,19 +59,46 @@ typefile="$typedir/$(cat $corpus.corpus | wc -l)-${corpus##*/}.txt"
 
 # .................................................................... Sentences
 
+# usage: random <modulo> <match> <unmatch>
+random() {
+  od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3"
+}
+
+# inject random punctuation
 wordcase() {
   if [ $case = proper ] ;then
-    sed -re 's/^(.)/\U\1/' -e 's/ $/./' -
+    sed -re 's/^(.)/\U\1/' \
+        -e "s/\"(.)([^\"]*)\"/\"\U\1\E\2$(random 3 '?' '')\", /g" \
+        -e 's/  */ /g' \
+        -e "s/ *$/$(random 6 '?' '.')/" \
+        -e 's/^\. //' \
+        -e 's/ \././g' \
+        -e 's/[,\-]\.$/./' -
   else
     cat -
   fi
 }
 
+# inject random hyphens
+wordgroup() {
+  for i in $(shuf $corpus.corpus)
+  do
+    echo $i | tr '\n' "$(random 2 '-' ' ')"
+  done | fold -s --width=$(( $1 * 5 ))
+}
+
 # build sentences
 wordgen() {
-  shuf $corpus.corpus | tr '\n' ' ' |
-                        fold -s --width=$(( $@ * 5 )) |
-                        wordcase >>$paragraphs
+  wordgroup $1 >$words
+  while read line <&3
+  do
+    quote=$(random 1 '\"' '')
+    echo "$line" | sed -r "s/(.*) /$quote\1$quote /"
+  done 3< $words >$lines
+  while read line <&3
+  do
+    echo "$line" | wordcase
+  done 3< $lines >>$paragraphs
   echo >>$paragraphs
 }
 
@@ -83,11 +113,12 @@ done
 sed -i -r 's/(.*)/\1\n/' $paragraphs
 
 shuf $paragraphs >$typefile
+rm -f $lines
+rm -f $sentences
 rm -f $paragraphs
 
 head $typefile
-echo $typefile | xsel -i
+gpaste-client add $typefile
 time=10 notify low 'Amphetype import' "$typefile"
-unset word
 
 # vim: set ft=sh: #

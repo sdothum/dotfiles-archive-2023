@@ -6,6 +6,9 @@
 
 # .............................................................. Episode folders
 
+# clean up episodes
+ls
+if-no 'clean up episode filenames' || mytitles
 title=$(ls -1 | head -1 | sed -r 's/(.*\.[sS][0-9]*[eE])[0-9]*\..*/\1/')
 if-no "$title" && exit
 

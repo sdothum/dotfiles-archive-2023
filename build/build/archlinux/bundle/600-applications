@@ -109,6 +109,7 @@
 
 = media server/player
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gcstar
 # kodi                       [server]
 # plex-media-server-plexpass [server]
 # plex-media-server          [server]

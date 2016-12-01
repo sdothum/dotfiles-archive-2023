@@ -21,7 +21,7 @@ SHELL=/usr/bin/dash
 TERM=urxvt
 
 # first parameter may be title
-if [ $1 ] ;then
+if [ "$1" ] ;then
   if echo $1 | egrep -qv 'FLOAT|FORTUNE|MAX|STACK|SHELL' ;then
     title="-title $(echo $1 | sed 's/ /_/g')"
     shift

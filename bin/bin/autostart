@@ -48,11 +48,10 @@ autocutsel -selection PRIMARY -fork &
 #           -s "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
 # fi
 server && dmenu screensaver on
-unclutter -idle 1 -jitter 2 -root &
 
 # ................................................................. Systray apps
 
-ps -ef | grep autokey-gtk | grep -qv grep || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
+pgrep -f autokey-gtk >/dev/null || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
 pidof gpaste-client >/dev/null || gpaste-client start &
 pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 
@@ -83,6 +82,7 @@ vimbt
 
 # .............................................................. Cleanup desktop
 
+pidof unclutter >/dev/null || toggle unclutter
 # autocutsel leaves a small square of black pixels in the bottom right corner
 (xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 

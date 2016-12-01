@@ -27,18 +27,24 @@ vimbt() {
   # wget -O $HOME/.config/vimb/ca-bundle.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
   [ $(hostname) = luna ] && prune_history &
   rm -f /run/user/1000/vimb/socket/*
+
   # unclutter causes tabbed vimb to load homepages endlessly
-  pkill -TERM -x unclutter
+  killall -TERM unclutter 2>/dev/null
+  ( winstance 'VimbT' && toggle unclutter ) &
 
   # tabbed appends winid to expanded command arguments, see vimb
+  # vimb embed terminates this function
   tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#fdf6e3' -u '#464F52' -U '#B2BBBD' vimb embed
-  winstance 'VimbT' && unclutter &
 }
 
 # use or setup socket (with tabs)
 if ! xdotool search -classname 'VimbT' >/dev/null ;then
   vimbt &
-  xdotool search --sync --onlyvisible --limit 1 --classname 'VimbT' >/dev/null
+  # wait for socket creation before loading startpage
+  until [ -S "$(grep socket /tmp/vimb.socket)" ]
+  do
+    sleep 0.1
+  done
 fi
 vimb socket $startpage
 
