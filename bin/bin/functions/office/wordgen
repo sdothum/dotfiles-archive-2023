@@ -10,16 +10,18 @@ usage() {
   echo "usage: [option=..]* $(basename $0) [<sentence>*]"
   echo "       options: wordlen=<length>   default '99'"
   echo "                size=<count>,      default '30000'"
-  echo "                punctuation=mixed, default unset == 'simple'"
+  echo "                punctuation=mixed, default 'simple'"
   echo "                corpus=<filename>, default 'practice'"
+  echo "                output=<filename>, default $punctuation"
   exit 1
 }
 
 typedir=$HOME/.config/Amphetype
 [ $wordlen ] || wordlen=99
 [ $size ] || size=30000
-[ $punctuation ] || unset punctuation
+[ $punctuation ] || punctuation=simple
 [ $corpus ] || corpus=practice
+[ $output ] || output=$punctuation
 corpus=$typedir/$corpus
 
 # typical sentence lengths
@@ -42,6 +44,7 @@ paragraphs=$(mktemp):pg
 if [ -e $corpus.words ] ;then
   if-no 'rebuild corpus' || rm -f $corpus.*
 fi
+
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if [ ! -e $corpus.words ] ;then
   notify low "Building $corpus.words" 'Please be patient..'
@@ -57,7 +60,8 @@ if [ ! -e $corpus.words ] ;then
                                          sed 's/< //' |
                                          head -$size >$corpus.corpus
 fi
-typefile="$typedir/$(cat $corpus.corpus | wc -l)-${corpus##*/}.txt"
+
+typefile="$typedir/$(cat $corpus.corpus | wc -l)-$output.txt"
 
 # .................................................................... Sentences
 
@@ -68,7 +72,10 @@ random() {
 
 # proper case sentences
 wordcase() {
-  if [ $punctuation ] ;then
+  if [ $punctuation = simple ] ;then
+    cat $lines | sed -re 's/^(.)/\U\1/' \
+                     -e 's/ $/./'
+  else
     # inject random punctuation
     while read line <&3
     do
@@ -80,35 +87,33 @@ wordcase() {
                          -e 's/ \././g' \
                          -e 's/[,\-]\.$/./'
     done 3< $lines
-  else
-    cat $lines | sed -re 's/^(.)/\U\1/' \
-                     -e 's/ $/./'
   fi
 }
 
-# inject random enclosing quotation marks
+# quote phrases?
 wordquote() {
-  if [ $punctuation ] ;then
+  if [ $punctuation = simple ] ;then
+    cat $words
+  else
+    # inject random enclosing quotation marks
     while read line <&3
     do
       quote=$(random 1 '\"' '')
       echo "$line" | sed -r "s/(.*) /$quote\1$quote /"
     done 3< $words
-  else
-    cat $words
   fi
 }
 
 # fold word groups
 wordhypen() {
-  if [ $punctuation ] ;then
+  if [ $punctuation = simple ] ;then
+    shuf $corpus.corpus | tr '\n' ' '
+  else
     # inject random hyphens
     for i in $(shuf $corpus.corpus)
     do
       echo $i | tr '\n' "$(random 2 '-' ' ')"
     done
-  else
-    shuf $corpus.corpus | tr '\n' ' '
   fi | fold -s --width=$(( $1 * 5 ))
 }
 
