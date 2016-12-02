@@ -15,7 +15,7 @@
 selection=$(xsel -o) && xsel -c
 if [ "$selection" ] ;then
   echo "$selection" | grep -q ' ' && unset selection
-  echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
+  echo "$selection" | grep -q '^[[:alpha:]]*$' || unset selection
 fi
 
 if [ "$selection" ] ;then

@@ -58,7 +58,7 @@ do
 
     SHELL) shift
            process=$@
-           [ $1 ] && cmd="-e $SHELL -c '$@'"
+           [ "$1" ] && cmd="-e $SHELL -c '$@'"
            break ;;
 
     *) process="$@"

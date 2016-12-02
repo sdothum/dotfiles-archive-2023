@@ -12,10 +12,11 @@
 #       in the dictionary history with the apostrophe being removed
 
 # lookup selection (unless it is a non-word), else present history tape
-selection=$(xsel -o) && xsel -c
+selection=$(xsel -o | head -1)
+xsel -c
 if [ "$selection" ] ;then
   echo "$selection" | grep -q ' ' && unset selection
-  echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
+  echo "$selection" | grep -q '^[[:alpha:]]*$' || unset selection
 fi
 
 if [ "$selection" ] ;then
