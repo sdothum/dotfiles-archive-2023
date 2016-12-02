@@ -40,9 +40,9 @@
 
     " .................................................. Quote enclose selection
 
-      " append . to enclosing %V to include last character of block
-      vnoremap '                   :s/\%V\(.*\)\%V./'\1'/<CR>
-      vnoremap "                   :s/\%V\(.*\)\%V./"\1"/<CR>
+      " extend enclosing %V 1 char right to enclose last character of block
+      vnoremap '                   :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "                   :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

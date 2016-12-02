@@ -28,9 +28,9 @@ vimbt() {
   [ $(hostname) = luna ] && prune_history &
   rm -f /run/user/1000/vimb/socket/*
 
-  # unclutter causes tabbed vimb to load homepages endlessly
-  killall -TERM unclutter 2>/dev/null
-  ( winstance 'VimbT' && toggle unclutter ) &
+ # unclutter (original) causes tabbed vimb to load homepages endlessly
+  # killall -TERM unclutter 2>/dev/null
+  # ( winstance 'VimbT' && toggle unclutter ) &
 
   # tabbed appends winid to expanded command arguments, see vimb
   # vimb embed terminates this function
@@ -40,7 +40,7 @@ vimbt() {
 # use or setup socket (with tabs)
 if ! xdotool search -classname 'VimbT' >/dev/null ;then
   vimbt &
-  # wait for socket creation before loading startpage
+  # wait for socket creation <silent>before loading startpage
   until [ -S "$(grep socket /tmp/vimb.socket)" ]
   do
     sleep 0.1
@@ -48,4 +48,4 @@ if ! xdotool search -classname 'VimbT' >/dev/null ;then
 fi
 vimb socket $startpage
 
-# vim: set ft=sh: #
+# vim: set ft=sh:

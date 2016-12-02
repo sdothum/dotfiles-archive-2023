@@ -15,7 +15,8 @@
   setroot
 # xcompmgr
 # shantz-xwinwrap-bzr [server]
-  unclutter
+# unclutter
+  unclutter-xfixes-git
 # xflux
 
 

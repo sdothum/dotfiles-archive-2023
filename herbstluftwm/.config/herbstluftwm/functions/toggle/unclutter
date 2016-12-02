@@ -13,8 +13,10 @@ if pidof unclutter >/dev/null ;then
 else
   # hc set action must precede unclutter initialization to avoid X_GetProperty error
   herbstclient set focus_follows_mouse 0
-  # unclutter doesn't play nice with X, so give it some initialization time
-  ( sleep 1 && unclutter -idle 1 -jitter 2 -root ) &
+  # unclutter (original) doesn't play nice with X, so give it some initialization time
+  # ( sleep 1 && unclutter -idle 1 -jitter 2 -root ) &
+  # unclutter-xfixes
+  unclutter --timeout 1 --jitter 2 --exclude-root --ignore-scrolling --fork
 fi
 
 # vim: set ft=sh: #

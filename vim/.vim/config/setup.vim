@@ -85,13 +85,13 @@
         autocmd setup BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
       " endif
 
-      imap <F1> <C-o>:help<Space>
-      nmap <F1> :help<Space>
-      vmap <F1> <C-o>:help<Space>
+      imap <F1>   <C-o>:help<Space>
+      nmap <F1>   :help<Space>
+      vmap <F1>   <C-o>:help<Space>
       " list my function and leader key assignments
-      imap <S-F1> <C-o>:!vkeys vim<CR>
-      nmap <S-F1> :!vkeys vim<CR>
-      vmap <S-F1> <C-o>:!vkeys vim<CR>
+      imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
+      nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>
+      vmap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
 
     " ..................................................................... Swap
 

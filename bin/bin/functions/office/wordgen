@@ -8,9 +8,9 @@
 
 usage() {
   echo "usage: [option=..]* $(basename $0) [<sentence>*]"
-  echo "       options: wordlen=<length>,  default '99'"
+  echo "       options: wordlen=<length>   default '99'"
   echo "                size=<count>,      default '30000'"
-  echo "                case=lower,        default 'proper'"
+  echo "                punctuation=mixed, default unset == 'simple'"
   echo "                corpus=<filename>, default 'practice'"
   exit 1
 }
@@ -18,11 +18,13 @@ usage() {
 typedir=$HOME/.config/Amphetype
 [ $wordlen ] || wordlen=99
 [ $size ] || size=30000
-[ $case ] || case=proper
+[ $punctuation ] || unset punctuation
 [ $corpus ] || corpus=practice
 corpus=$typedir/$corpus
 
+# typical sentence lengths
 # sentences='8 11 14 17'
+# short practice lengths
 sentences='5 6 7 8'
 
 [ "$1" = help ] && usage
@@ -64,42 +66,50 @@ random() {
   od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3"
 }
 
-# inject random punctuation
+# proper case sentences
 wordcase() {
-  if [ $case = proper ] ;then
-    sed -re 's/^(.)/\U\1/' \
-        -e "s/\"(.)([^\"]*)\"/\"\U\1\E\2$(random 3 '?' '')\", /g" \
-        -e 's/  */ /g' \
-        -e "s/ *$/$(random 6 '?' '.')/" \
-        -e 's/^\. //' \
-        -e 's/ \././g' \
-        -e 's/[,\-]\.$/./' -
+  if [ $punctuation ] ;then
+    # inject random punctuation
+    while read line <&3
+    do
+      echo "$line" | sed -re 's/^(.)/\U\1/' \
+                         -e "s/\"(.)([^\"]*)\"/\"\U\1\E\2$(random 3 '?' '')\", /g" \
+                         -e 's/  */ /g' \
+                         -e "s/ *$/$(random 6 '?' '.')/" \
+                         -e 's/^\. //' \
+                         -e 's/ \././g' \
+                         -e 's/[,\-]\.$/./'
+    done 3< $lines
   else
-    cat -
+    cat $lines | sed -re 's/^(.)/\U\1/' \
+                     -e 's/ $/./'
   fi
 }
 
-# inject random hyphens
-wordgroup() {
-  for i in $(shuf $corpus.corpus)
-  do
-    echo $i | tr '\n' "$(random 2 '-' ' ')"
-  done | fold -s --width=$(( $1 * 5 ))
+# inject random enclosing quotation marks
+wordquote() {
+  if [ $punctuation ] ;then
+    while read line <&3
+    do
+      quote=$(random 1 '\"' '')
+      echo "$line" | sed -r "s/(.*) /$quote\1$quote /"
+    done 3< $words
+  else
+    cat $words
+  fi
 }
 
-# build sentences
-wordgen() {
-  wordgroup $1 >$words
-  while read line <&3
-  do
-    quote=$(random 1 '\"' '')
-    echo "$line" | sed -r "s/(.*) /$quote\1$quote /"
-  done 3< $words >$lines
-  while read line <&3
-  do
-    echo "$line" | wordcase
-  done 3< $lines >>$paragraphs
-  echo >>$paragraphs
+# fold word groups
+wordhypen() {
+  if [ $punctuation ] ;then
+    # inject random hyphens
+    for i in $(shuf $corpus.corpus)
+    do
+      echo $i | tr '\n' "$(random 2 '-' ' ')"
+    done
+  else
+    shuf $corpus.corpus | tr '\n' ' '
+  fi | fold -s --width=$(( $1 * 5 ))
 }
 
 # ................................................................... Paragraphs
@@ -107,8 +117,12 @@ wordgen() {
 for i in $sentences
 do
   ditto "sentence length $i words"
-  wordgen $i
+  wordhypen $i >$words
+  wordquote >$lines
+  wordcase >>$paragraphs
+  echo >>$paragraphs
 done
+
 # add paragraph markers (reduced by subsequent shuf)
 sed -i -r 's/(.*)/\1\n/' $paragraphs
 
