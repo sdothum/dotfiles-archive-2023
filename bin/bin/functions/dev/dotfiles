@@ -69,9 +69,9 @@ pending() {
 }
 
 # any updates to push?
-[ "$(git diff --name-only HEAD | tee)" = '' ] && [ -z $1 ] && exit
-git diff --name-only HEAD | tee
-[ $1 ] && underline
+changes=$(git diff --name-only HEAD | tee)
+[ -z "$changes" ] && [ -z $1 ] && exit
+[ "$changes" ] && echo "$changes"
 
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
