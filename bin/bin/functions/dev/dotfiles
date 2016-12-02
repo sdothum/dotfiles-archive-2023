@@ -76,8 +76,7 @@ git diff --name-only HEAD | tee
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
 case $1 in
-  '') if-yes 'update repository' || exit
-      for i in $dotfiles
+  '') for i in $dotfiles
       do
         git add -v $i
       done
