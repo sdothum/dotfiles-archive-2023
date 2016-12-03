@@ -87,10 +87,12 @@ case $1 in
        do
          if [ -e $i ] ;then
            git add -fv $i
+           pending=true
          else
            usage
          fi
-       done ;;
+       done
+       [ $pending ] && pending ;;
 
   comment | amend)
             shift
