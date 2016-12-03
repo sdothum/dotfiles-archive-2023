@@ -1,0 +1,151 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Receive
+
+usage() {
+  echo "usage: $(basename $0)  'start | I'nitialize | l'og | t'ag"
+  exit 1
+}
+
+# disable fish autojump call
+export SHELL=dash
+. /etc/profile
+
+# mail poller (see offlineimap and imapfilter)
+# lifted from http://cpbl.wordpress.com/2009/11/07/alpine-offlineimap-and-gmail-under-ubuntu/
+interval=${interval:-15}
+[ -e /tmp/mailsync.new ] || touch /tmp/mailsync.new
+
+# ................................................................... Initialize
+
+# handle spaces in folder name for xapian with \'folder:"foo bar"\'
+tag_account() {
+  folder=$1
+  shift
+  ditto "$folder $@"
+  echo $folder | grep -q 'unknown$' && unset unknown || unknown=-unknown
+  notmuch tag --batch <<EOF
+              $@ -inbox $unknown \'folder:"$folder"\'
+              +new \'folder:"$folder"\' -- tag:unread
+EOF
+}
+
+# tag new messages
+tag_messages() {
+  trace 'Tagging mail messages..'
+  # notmuch tag +bodyshamanics -inbox folder:bodyshamanics/bodyshamanics
+  # notmuch tag +comments -inbox folder:comments/thedarnedestthing
+  # notmuch tag +private -inbox folder:steven/private
+  # notmuch tag +admin -inbox folder:thedarnedestthing/admin
+  # notmuch tag +webmaster -inbox folder:webmaster/webmaster
+  notmuch tag --batch <<EOF
+              +spam -inbox folder:bodyshamanics/[Gmail]/Spam
+              +spam -inbox folder:comments/[Gmail]/Spam
+              +spam -inbox folder:sdothum/[Gmail]/Spam
+              +spam -inbox folder:steven/[Gmail]/Spam
+              +spam -inbox folder:thedarnedestthing/[Gmail]/Spam
+              +spam -inbox folder:webmaster/[Gmail]/Spam
+              +trash -inbox folder:sdothum/[Gmail]/Trash
+EOF
+
+  # notmuch config set search.exclude_tags deleted spam trash
+  for i in $(find $HOME/Maildir -maxdepth 1 -type d -name '[a-z]*')
+  do
+    account=${i##*/}
+    case $account in
+      sdothum) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
+
+      patricia) tag_account $account/INBOX +phconsulting
+                tag_account "$account/[Gmail]/Sent Mail" +patricia ;;
+
+      *) case $account in
+           bodyshamanics    ) tag_account $account/INBOX +bodyshamanics +thedarnedestthing ;;
+           comments         ) tag_account $account/INBOX +comments +thedarnedestthing ;;
+           steven           ) tag_account $account/INBOX +private +thedarnedestthing ;;
+           thedarnedestthing) tag_account $account/INBOX +admin +thedarnedestthing ;;
+           webmaster        ) tag_account $account/INBOX +webmaster +thedarnedestthing ;;
+         esac ;;
+    esac
+  done
+
+  for i in $HOME/Maildir/sdothum/[A-Za-z]*
+  do
+    folder=${i##*/}
+    maildir=${i##*Maildir/}
+    tag_account $maildir +$folder
+    notmuch tag +sent folder:$maildir -- from:sdothum@gmail.com
+    # not all folders qualify +new tag
+    if echo $folder | egrep -qv 'admin|alerts|bodyshamanics|browsers|clients|comments|community|dailies|eagles|family|mail|notices|phconsulting|personal|powerpath|private|providers|ravens|services|software|store|webmaster|x11' ;then
+      notmuch tag -new folder:$maildir -- tag:unread
+    fi
+    if echo $folder | egrep -q 'alerts|clients|community|eagles|family|notices|phconsulting|personal|powerpath|providers|ravens|services|store' ;then
+      notmuch tag +attn folder:$maildir -- tag:new
+    fi
+  done
+}
+
+# initialize notmuch database
+initialize() {
+  if [ $(pgrep -cx mailsync) -gt 1 ] ;then
+    p mailsync
+    exit
+  fi
+  killall alot
+  killall notmuch
+  rm -rf $HOME/Maildir/.notmuch/dump-*
+  rm -rf $HOME/Maildir/.notmuch/xapian
+  notmuch setup
+  notmuch new
+  tag_messages
+  alot &
+}
+
+# ........................................................... mail server daemon
+
+# mail daemon (cron task)
+mail_daemon() {
+  # mailqueue status (mailqueue gt 2.. ?)
+  [ $(pgrep -cx mailsync) -gt 1 ] && exit
+  # trace 'Starting mailsync..'
+  while :
+  do
+    # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
+    mv -f /tmp/mailsync.new /tmp/mailsync.old
+    # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync.new
+    curl -u sdothum:maaike00 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync.new
+    cmp -s /tmp/mailsync.old /tmp/mailsync.new
+    if [ $? -eq 1 ] ;then
+      trace 'Starting offlineimap..'
+      # purge empty messages
+      find $HOME/Maildir/sdothum -type f -size 0 -exec rm -v {} \;
+      offlineimap -c $HOME/.offlineimaprc -o -u Basic >>/tmp/offlineimap.log
+      trace 'Starting imapfilter..'
+      imapfilter -v -c $HOME/.imapfilter/dovecot.lua >>/tmp/imapfilter.log
+      trace 'Starting notmuch..'
+      notmuch new >>/tmp/notmuch.log 2>&1
+      tag_messages
+      trace 'Cycling..'
+      sleep $interval
+    else
+      trace 'No new email'
+      break
+    fi
+  done
+}
+
+case $@ in
+  '') mail_daemon ;;
+  I*) initialize ;;
+
+  l*) ditto 'tail -f /tmp/mailsync.log'
+      tail -f /tmp/mailsync.log ;;
+
+  t*) tag_messages ;;
+  * ) usage ;;
+esac
+
+# vim: set ft=sh: #

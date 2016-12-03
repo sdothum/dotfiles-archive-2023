@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... E-mail
+
+# notmuch mail client
+ln -sf $HOME/.gtkrc-2.0.mine.dark $HOME/.gtkrc-2.0.mine
+gvim --role=notmuch -c NotMuch
+ln -sf $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
+
+# vim: set ft=sh: #

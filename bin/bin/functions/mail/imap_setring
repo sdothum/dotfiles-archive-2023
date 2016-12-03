@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... Security
+
+# see post_install/offlineimap
+# see imap_keyring
+setring() {
+  password=$(pass mail/$1/$2)
+  # echo "keyring.set_password(\"offlineimap\", \"$2@$1\", \"$password\")"
+  echo keyring set 'offlineimap' "$2@$1" "$password"
+  python -c "import keyring; keyring.set_password(\"offlineimap\", \"$2@$1\", \"$password\")"
+}
+
+setring 'gmail.com' 'sdothum'
+setring 'thedarnedestthing.com' 'bodyshamanics'
+setring 'thedarnedestthing.com' 'comments'
+setring 'thedarnedestthing.com' 'steven'
+setring 'thedarnedestthing.com' 'sdothum'
+setring 'thedarnedestthing.com' 'webmaster'
+
+# vim: set ft=sh: #

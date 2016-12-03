@@ -1,0 +1,21 @@
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... Security
+
+# return password
+# Usage: imap_password( <service>, <user> )
+
+import os
+import sys
+
+# keyring.get_password doesn't work, so using python-keyring commandline variant
+def imap_password(service, user):
+    return os.popen('keyring get ' + service + ' ' + user).read()[:-1]
+ 
+if __name__ == '__main__':
+    print imap_password('offlineimap', sys.argv[1])
