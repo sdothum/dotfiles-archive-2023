@@ -7,7 +7,7 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: [proof=true]  $(basename $0)  eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps  [<filelist>]"
+  echo "usage: $(basename $0)  [proof]  eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps  [<filelist>]"
   exit 1
 }
 
@@ -19,12 +19,15 @@ spacing='\singlespacing'
 fold=80
 
 # unset for direct printing, set for proofing and latex debugging
-# proof=true
-if [ -e $HOME/.proof ] ;then
+if [ "$1" = proof ] ;then
+  proof=true
+  shift
+elif [ -e $HOME/.proof ] ;then
   proof=true
 else
   lpstat -p $PRINTER >/dev/null 2>&1 || proof=true
 fi
+# proof reverts to outputting proof debug file
 [ $proof ] && proof=/tmp/pr.proof
 dotdot=/tmp/dotdot
 

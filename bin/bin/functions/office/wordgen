@@ -7,7 +7,7 @@
 # ........................................................ Random word generator
 
 usage() {
-  echo "usage: [option=..]* $(basename $0) [<sentence>*]"
+  echo "usage: $(basename $0)  [option=..]* [<sentence>*]"
   echo "       options: wordlen=<length>   default '99'"
   echo "                size=<count>,      default '30000'"
   echo "                punctuation=mixed, default 'simple'"
@@ -17,20 +17,42 @@ usage() {
 }
 
 typedir=$HOME/.config/Amphetype
-[ $wordlen ] || wordlen=99
-[ $size ] || size=30000
-[ $punctuation ] || punctuation=simple
-[ $corpus ] || corpus=practice
-[ $output ] || output=$punctuation
-corpus=$typedir/$corpus
 
 # typical sentence lengths
 # sentences='8 11 14 17'
 # short practice lengths
 sentences='5 6 7 8'
 
-[ "$1" = help ] && usage
-[ $1 ] && sentences=$@
+while :
+do
+  case $1 in
+    help) usage ;;
+
+    wordlen=*) $wordlen
+               shift ;;
+
+    size=*) $size
+            shift ;;
+
+    punctuation=*) $punctuation
+                   shift ;;
+
+    corpus=*) $corpus
+              shift ;;
+
+    output=*) $output
+              shift ;;
+
+    *) sentences=$@ ;;
+  esac
+done
+
+[ $wordlen ] || wordlen=99
+[ $size ] || size=30000
+[ $punctuation ] || punctuation=simple
+[ $corpus ] || corpus=practice
+[ $output ] || output=$punctuation
+corpus=$typedir/$corpus
 
 # rebuild corpus if corpus source updated
 # natural language corpus data by Peter Norvig at http://norvig.com/ngrams/

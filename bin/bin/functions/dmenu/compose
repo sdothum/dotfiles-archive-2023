@@ -6,6 +6,7 @@
 # ....................................................................... E-mail
 
 SEND='[ send         ]'
+EDIT='[ edit drafts  ]'
 PURGE='[ purge drafts ]'
 
 editors="emacs       \
@@ -43,7 +44,7 @@ compose_with() {
 }
 
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed "1i$SEND\n$PURGE" | dmenu 'Editor' $editor -no-custom) || exit
+while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in
     "$SEND") ;;
