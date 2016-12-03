@@ -31,7 +31,7 @@ EDIT='[ edit contacts    ]'
 # - addresses must include "user name" prefix
 # - proper case "user name"
 abook() {
-  time=15 notify low 'Updating dmenu addressbook cache' 'Please be patient..'
+  notify time=15 low 'Updating dmenu addressbook cache' 'Please be patient..'
   /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc): .*@' $maildir |
                            sed -re 's/(\xad|\x01)/ /g' \
                                -e 's/[,;] */\n/g' \
@@ -116,7 +116,7 @@ do
               break ;;
 
     "$CLIPBOARD") gpaste-client add "$addresses"
-                  time=10 notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
+                  notify time=10 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
                   break ;;
 
     "$ADD") if [ "$addresses" ] ;then

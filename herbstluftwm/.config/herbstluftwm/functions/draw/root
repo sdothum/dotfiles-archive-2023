@@ -114,7 +114,7 @@ color() {
 }
 
 select_blank() {
-  time=5 notify low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
+  notify time=5 low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r \
@@ -136,7 +136,7 @@ wallpaper() {
 
 # set background wallpaper
 select_wallpaper() {
-  time=5 notify low 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
+  notify time=5 low 'Desktop Wallpaper' '<Space>  Show next\n<Enter>  Select image'
   wallpaper
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked.. see ENV
   /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \

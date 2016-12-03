@@ -93,7 +93,7 @@
 
     " .................................................................. Writing
       Plug 'reedes/vim-litecorrect'
-      " Plug 'reedes/vim-penc
+      " Plug 'reedes/vim-pencil'
       " Plug 'reedes/vim-wordy'
       Plug 'vimwiki/vimwiki'
 

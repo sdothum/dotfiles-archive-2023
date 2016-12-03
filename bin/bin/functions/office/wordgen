@@ -138,6 +138,6 @@ rm -f $paragraphs
 
 head $typefile
 gpaste-client add $typefile
-time=10 notify low 'Amphetype import' "$typefile"
+notify time=10 low 'Amphetype import' "$typefile"
 
 # vim: set ft=sh: #

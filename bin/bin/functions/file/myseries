@@ -15,10 +15,10 @@ if-no "$title" && exit
 for i in $(seq 1 99)
 do
   [ $i -lt 10 ] && j=0$i || j=$i
-  episode=$(find . -name "${title}$j.*mkv" | grep -v sample)
+  episode=$(find . -maxdepth 1 -regex ".*${title}$j.*[Mm]kv" | grep -iv sample)
   [ -e "$episode" ] || break
   mkdir -v "${title%e}E$j"
-  find . -type f -name "${title}$j.*" -exec mv -v {} "${title%e}E$j/" \;
+  find . -maxdepth 1 -type f -name "${title}$j.*" -exec mv -v {} "${title%e}E$j/" \;
 done
 
 

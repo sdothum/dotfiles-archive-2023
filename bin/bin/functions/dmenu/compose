@@ -5,7 +5,8 @@
 
 # ....................................................................... E-mail
 
-SEND='[ send ]'
+SEND='[ send         ]'
+PURGE='[ purge drafts ]'
 
 editors="emacs       \
          focuswriter \
@@ -33,7 +34,7 @@ format_message() {
 
 compose_with() {
   format_message $2
-  folded=$(mktemp)
+  folded=$(mktemp -p $HOME/tmp)
   $1 $2
   fold -s -w 72 $2 >$folded
   cp -f $folded $2
@@ -42,15 +43,18 @@ compose_with() {
 }
 
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed "1i$SEND" | dmenu 'Editor' $editor -no-custom) || exit
+while editor=$(apps "$editors" | sed "1i$SEND\n$PURGE" | dmenu 'Editor' $editor -no-custom) || exit
 do
   case $editor in
     "$SEND") ;;
 
+    "$PURGE") rm -f $HOME/tmp/alot.*.draft
+              continue ;;
+
     vim) SHELL=/usr/bin/dash
          format_message $1
          gvim -f -c 'set filetype=mail' $1
-         cp $1 $1.draft
+         cp $1 $HOME/tmp/${1#/tmp/}.draft
          # cleanup sup mail draft histories
          find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
          history compose $editor ;;

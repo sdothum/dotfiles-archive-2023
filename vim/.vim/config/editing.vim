@@ -155,11 +155,9 @@
       vnoremap yD          "+D
 
       " normal/insert mode paste actions
-      " "+P paste before from clipboard
-      inoremap <C-v>       <C-o>"+p
-      nnoremap <C-v>       "+p
-      inoremap <C-S-v>     <ESC>"+pi
-      nnoremap <C-S-v>     "+P
+      " "+P pads space after insert
+      inoremap <C-v>       <ESC>"+pli
+      nnoremap <C-v>       h"+pl
 
   " Spelling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

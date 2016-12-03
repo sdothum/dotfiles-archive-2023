@@ -108,6 +108,7 @@
 
       " toggle fold tag / open all
       noremap <leader>z         za
+      noremap <leader>Z         zA
       noremap <leader><leader>z zR
 
     " ........................................................... Folding levels
