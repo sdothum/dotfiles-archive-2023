@@ -31,6 +31,7 @@ if [ -z $FOLDER ] ;then
     *   ) FOLDER=$HOME/tmp ;;
   esac
 fi
+catlg=$FOLDER/.${ext}s
 [ -e $FOLDER ] || mkdir -p $FOLDER
 
 if [ $ext = draft ] ;then
@@ -67,7 +68,7 @@ notes() {
 
 # item row
 highlight() {
-  file=$(previous ${ext}s)
+  file=$(previous $catlg)
   notes | grep -qn "$file" && echo $(( $(notes | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
 }
 
@@ -90,7 +91,7 @@ do
   esac
 
   case $action in
-    edit) history ${ext}s $file
+    edit) history $catlg $file
           gvim -f -c "set filetype=$ext" $file ;;
 
     clipboard) gpaste-client add "$file"
