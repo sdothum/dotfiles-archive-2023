@@ -1,0 +1,103 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ Notes
+
+# Usage: dmenu notes [<extension>] [<path>]
+
+  NEW='[ new          ]'
+PURGE='[ purge drafts ]'
+
+while :
+do
+  case $1 in
+    '') break ;;
+
+    */*) FOLDER=$1
+         shift ;;
+
+    *) ext=$1
+       shift ;;
+  esac
+done
+
+# housekeeping
+[ $ext ] || ext=note
+if [ -z $FOLDER ] ;then
+  case $ext in
+    note) FOLDER=$HOME/notes ;;
+    *   ) FOLDER=$HOME/tmp ;;
+  esac
+fi
+[ -e $FOLDER ] || mkdir -p $FOLDER
+
+if [ $ext = draft ] ;then
+  PROMPT="$NEW\n$PURGE"
+  offset=1
+else
+  NEW='[ new ]'
+  PROMPT=$NEW
+  offset=0
+fi
+
+# first descriptive line of file, mail subject line special case
+hint() {
+  hint=$(grep '^Subject:' $1)
+  [ "$hint" ] || hint=$(grep '[[:alpha:]]' $1 | head -1)
+  echo "$hint"
+}
+
+# list of files
+notes() {
+  count=0
+  files=$(find $FOLDER -name "*.$ext")
+  if [ "$files" ] ;then
+    for i in $files
+    do
+      count=$(( $count + 1 )) >/dev/null
+      echo "$(stat -c '%n^%y' $i | cut -d: -f1-2)/$count ^$SEP $(hint $i)"
+    done | sort
+  else
+    # empty folder
+    echo
+  fi
+}
+
+# item row
+highlight() {
+  file=$(previous ${ext}s)
+  notes | grep -qn "$file" && echo $(( $(notes | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
+}
+
+while note=$(notes |
+             cut -d^ -f2- |
+             sed "1i$PROMPT" |
+             column -s^ -t |
+             dmenu "$(echo $ext | sed -r 's/./\u&/')" $(highlight) -no-custom) || exit
+do
+  case $note in
+    "$NEW") file=$(mktemp -p $FOLDER --suffix=.$ext)
+            action=edit ;;
+
+    "$PURGE") mv $FOLDER/*.$ext /tmp
+              continue ;;
+
+    *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+       content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+       action=$(echo 'edit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom) ;;
+  esac
+
+  case $action in
+    edit) history ${ext}s $file
+          gvim -f -c "set filetype=$ext" $file ;;
+
+    clipboard) gpaste-client add "$file"
+               notify 10 'Ctrl-Alt-V' "$file" ;;
+
+    delete) mv $file /tmp ;;
+  esac
+done
+
+# vim: set ft=sh: #
