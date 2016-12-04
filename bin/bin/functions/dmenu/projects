@@ -12,10 +12,10 @@
 #   filename - posix filename expression
 #   eval     - posix shell expression that evaluates to a list of filenames
 
+EDIT='[ edit tags ]'
+
 # tag file containing project specs
 projects=$CONFIG/projects
-
-EDIT='[ edit tags ]'
 
 while files=$(sed "s/  *::  */^$SEP /" $projects |
               history projects |

@@ -7,6 +7,12 @@
 
 # Usage: dmenu abook [cache]
 
+    PASTE='[ paste        ]'
+CLIPBOARD='[ clipboard    ]'
+      ADD='[ add contacts ]'
+  REBUILD='[ rebuild database ]'
+     EDIT='[ edit contacts    ]'
+
 # select email contact addresses for insert into sup query
 maildir=${MAILDIR:-$HOME/Maildir}
 cache=$maildir/addressbook
@@ -15,12 +21,6 @@ cache=$maildir/addressbook
 # - tag :: name <address>,..
 contacts=$maildir/contacts
 patricia=$maildir/addressbook.patricia
-
-PASTE='[ paste        ]'
-CLIPBOARD='[ clipboard    ]'
-ADD='[ add contacts ]'
-REBUILD='[ rebuild database ]'
-EDIT='[ edit contacts    ]'
 
 # .................................................................. Build cache
 

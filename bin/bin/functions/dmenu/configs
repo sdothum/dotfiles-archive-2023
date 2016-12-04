@@ -7,10 +7,10 @@
 
 # Usage: dmenu configs [cache]
 
+REBUILD='[ rebuild database ]'
+
 # system conf files
 cache=$CACHEDIR/dmenu:configs
-
-REBUILD='[ rebuild database ]'
 
 # .................................................................. Build cache
 

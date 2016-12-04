@@ -12,9 +12,11 @@
       augroup filetype
         autocmd!
         autocmd Filetype conf    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype draft   setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
         autocmd Filetype fish    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
         autocmd Filetype haskell setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
         autocmd Filetype lua     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd Filetype mail    setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
         autocmd Filetype python  setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
         autocmd Filetype ruby    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
         autocmd Filetype shell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
@@ -25,7 +27,7 @@
 
     " ............................................................... Modifiable
 
-      let g:goyotypes = 'vimwiki\|mail'
+      let g:goyotypes = 'vimwiki\|mail\|draft'
 
       " [regex name, filetype, modifiable, wordcount] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
@@ -127,7 +129,6 @@
       endfunction
 
       " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
-      autocmd filetype Filetype mail setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
       autocmd filetype Filetype mail call ComposeMail()
 
 " files.vim

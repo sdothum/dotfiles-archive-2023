@@ -1,0 +1,68 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... E-mail
+
+  NEW='[ new          ]'
+PURGE='[ purge drafts ]'
+
+# draft folder
+DRAFTS=$HOME/tmp
+
+# first descriptive line of file
+hint() {
+  hint=$(grep '^Subject:' $1)
+  [ "$hint" ] || hint=$(grep '[[:alpha:]]' $1 | head -1)
+  echo "$hint"
+}
+
+# list of files
+drafts() {
+  count=0
+  for i in $(find $DRAFTS -name '*.draft')
+  do
+    count=$(( $count + 1 )) >/dev/null
+    echo "$(stat -c '%n^%y' $i | cut -d: -f1-2)/$count ^$SEP $(hint $i)"
+  done | sort
+}
+
+# item row
+highlight() {
+  file=$(previous drafts)
+  drafts | grep -qn "$file" && echo $(( $(drafts | grep -n "$file" | cut -d: -f1) + 1 )) || echo 0
+}
+
+while draft=$(drafts |
+              cut -d^ -f2- |
+              sed "1i$NEW\n$PURGE" |
+              column -s^ -t |
+              dmenu 'Draft' $(highlight) -no-custom) || exit
+do
+  case $draft in
+    "$NEW") file=$(mktemp -p $DRAFTS).eml.draft
+            action=edit ;;
+
+    "$PURGE") mv $HOME/tmp/*.draft /tmp
+              continue ;;
+
+    *) file=$(drafts | grep "$(echo $draft | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+       content=$(drafts | grep "$(echo $draft | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+       action=$(echo 'edit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom) ;;
+  esac
+
+  case $action in
+    edit) history drafts $file
+          gvim -f -c 'set filetype=draft' $file
+          exit ;;
+
+    clipboard) gpaste-client add "$file"
+               notify time=10 'Ctrl-Alt-V' "$file"
+               exit ;;
+
+    delete) mv $file /tmp ;;
+  esac
+done
+
+# vim: set ft=sh: #

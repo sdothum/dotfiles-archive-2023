@@ -5,10 +5,11 @@
 
 # ....................................................................... E-mail
 
-SEND='[ send         ]'
-EDIT='[ edit drafts  ]'
+ SEND='[ send         ]'
+ EDIT='[ edit drafts  ]'
 PURGE='[ purge drafts ]'
 
+# list of potential writing tools, verified by dmenu apps
 editors="emacs       \
          focuswriter \
          nano        \
@@ -43,28 +44,34 @@ compose_with() {
   history compose $editor
 }
 
+compose_vim() {
+  SHELL=/usr/bin/dash
+  format_message $1
+  gvim -f -c 'set filetype=mail' $1
+  cp $1 $HOME/tmp/${1#/tmp/}.draft
+  # cleanup sup mail draft histories
+  find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
+  history compose $editor
+}
+
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | dmenu 'Editor' $editor -no-custom) || exit
+while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | dmenu 'Compose' $editor -no-custom) || exit
 do
   case $editor in
     "$SEND") ;;
 
-    "$PURGE") rm -f $HOME/tmp/alot.*.draft
-              continue ;;
+    "$EDIT") command dmenu drafts
+             continue ;;
 
-    vim) SHELL=/usr/bin/dash
-         format_message $1
-         gvim -f -c 'set filetype=mail' $1
-         cp $1 $HOME/tmp/${1#/tmp/}.draft
-         # cleanup sup mail draft histories
-         find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
-         history compose $editor ;;
+    "$PURGE") mv $HOME/tmp/alot.*.draft /tmp
+              continue ;;
 
     focuswriter) compose_with focuswriter $1 ;;
     nano       ) compose_with pyroom $1 ;;
     pyroom     ) compose_with pyroom $1 ;;
     rubyroom   ) compose_with rubyroom $1 ;;
     wordgrinder) compose_with wordgrinder $1 ;;
+    vim        ) compose_vim $1 ;;
   esac
   exit
 done

@@ -5,28 +5,29 @@
 
 # ....................................................................... Movies
 
-# Usage: dmenu movies [animation | cache]
+# Usage: dmenu movies [cache] [animation]
 
 # Library structure:
 # ../videos
 #        ../movies
 #               ../title.YEAR.*  (movie)
 
+LAST='[ last viewed  ]'
+NAME='[ sort by name ]'
+DATE='[ sort by date ]'
+
+# preload cache option
 if [ "$1" = cache ] ;then
   cache=true
   shift
 fi
+
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
 mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
 # unset debug to remove exit from menu items
 debug='\nexit'
-
-LAST='[ last viewed  ]'
-NAME='[ sort by name ]'
-DATE='[ sort by date ]'
-
 
 # list latest movie additions first
 T=t

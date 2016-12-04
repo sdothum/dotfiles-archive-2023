@@ -7,15 +7,16 @@
 
 # Note: mpv --no-cache --quiet, are unique options used on this system for radio
 
-radio=/tmp/radio
+TOGGLE='[ toggle ]'
+ CLEAR='[ clear  ]'
+  EDIT='[ edit   ]'
+
 # access list csv format: <station>, <url>
 stations=$CONFIG/radio
 # connection lag time
 delay=0.5
-
-TOGGLE='[ toggle ]'
-CLEAR='[ clear  ]'
-EDIT='[ edit   ]'
+# currently playing
+radio=/tmp/radio
 
 playlist() {
   if [ -e $radio ] ;then

@@ -12,7 +12,7 @@
 #       the name is part of several descriptions)
 
 REBUILD='[ rebuild cache ]'
-set -x
+
 while :
 do
   if [ "$selection" ] ;then

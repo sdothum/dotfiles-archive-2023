@@ -7,11 +7,11 @@
 
 # Usage: dmenu ebooks [cache]
 
+REBUILD='[ rebuild database ]'
+
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$CACHEDIR/dmenu:ebooks
-
-REBUILD='[ rebuild database ]'
 
 # .............................................................. Kindle transfer
 

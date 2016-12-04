@@ -15,6 +15,7 @@ NAME='[ sort by name ]'
 DATE='[ sort by date ]'
 EDIT='[ edit         ]'
 
+# video library
 library=${LIBRARY:-/net/media/videos/${1:-series}}
 mytitles=$library/.mytitles
 sudo find $library -maxdepth 1 -user sonarr -exec chmod -c 755 {} \;
@@ -34,6 +35,8 @@ shows() {
   playlist $episodes "$playlist"
 }
 
+# initial row is most current show vs last viewed
+show=2
 while :
 do
   show=$(ls -1$T $library |

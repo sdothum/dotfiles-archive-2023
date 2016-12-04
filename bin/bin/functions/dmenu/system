@@ -5,6 +5,7 @@
 
 # ............................................................... System monitor
 
+# list of potential system tools, verified by dmenu apps
 monitors="glances \
           htop    \
           iftop   \

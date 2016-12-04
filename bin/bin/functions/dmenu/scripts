@@ -9,6 +9,7 @@
 
 filter='\.cache|\.deprecated|\.hg|makepkg'
 
+# list of user scripts and functions
 file=$(echo $(find -L $HOME/bin -type f) \
             $(find -L $HOME/build/archlinux -type f) \
             $(find -L $HOME/.config/herbstluftwm -type f) |

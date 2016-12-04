@@ -8,14 +8,14 @@
 # unset redundant for short album menus
 # redundant=true
 
-PLAYER='[ player  ]'
-ALBUMS='[ albums  ]'
-ARTIST='[ artist  ]'
+ PLAYER='[ player  ]'
+ ALBUMS='[ albums  ]'
+ ARTIST='[ artist  ]'
 LIBRARY='[ library ]'
-ALL='[ all      ]'
+    ALL='[ all     ]'
 
 # ...................................................................... Library
-set -x
+
 # library listings
 catlg() {
   mpc list $1 | sort -n

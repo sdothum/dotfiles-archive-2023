@@ -5,9 +5,9 @@
 
 # ..................................................................... Sysadmin
 
-DAEMON='[ daemon-reload   ]'
+  DAEMON='[ daemon-reload   ]'
 SERVICES='[ list services   ]'
-FILES='[ list-unit-files ]'
+   FILES='[ list-unit-files ]'
 
 # restart systemd process
 status() {
@@ -42,32 +42,32 @@ do
                       dmenu "${service%.service}" -no-custom) || break
        do
          case $action in
-           'start') sudo systemctl start $service
+           start) sudo systemctl start $service
+                  status
+                  break ;;
+
+           stop) sudo systemctl stop $service
+                 status
+                 break ;;
+
+           restart) sudo systemctl restart $service
                     status
                     break ;;
 
-           'stop') sudo systemctl stop $service
+           status) status
+                   break ;;
+
+           enable) sudo systemctl enable $service
+                   sudo systemctl start $service
                    status
                    break ;;
 
-           'restart') sudo systemctl restart $service
-                      status
-                      break ;;
+           disable) sudo systemctl stop $service
+                    sudo systemctl disable $service
+                    status
+                    break ;;
 
-           'status') status
-                     break ;;
-
-           'enable') sudo systemctl enable $service
-                     sudo systemctl start $service
-                     status
-                     break ;;
-
-           'disable') sudo systemctl stop $service
-                      sudo systemctl disable $service
-                      status
-                      break ;;
-
-           'edit') gvim -f $service ;;
+           edit) gvim -f $service ;;
          esac
          break
        done

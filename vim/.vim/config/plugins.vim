@@ -44,6 +44,7 @@
       let g:easy_align_delimiters =
         \{
         \  '>': { 'pattern': '>>\|=>\|>' }
+        \, '^': { 'pattern': '=', 'left_margin': 0, 'right_margin': 0, 'align': 'right' }
         \, '(': { 'pattern': '(', 'left_margin': 1, 'right_margin': 0 }
         \, ')': { 'pattern': ')', 'left_margin': 0 }
         \}
@@ -351,7 +352,7 @@
       let g:sneak#prompt       = '>'        " prompt
 
       " preserve s and remap to f
-      autocmd BufNewFile,BufRead * call Sneak_f()
+      autocmd plugin BufNewFile,BufRead * call Sneak_f()
 
     " ................................................................. Snipmate
 

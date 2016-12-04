@@ -9,10 +9,11 @@
 
 VIEWER='[ viewer ]'
 UPDATE='[ update ]'
-DARK='[ dark  ]'
-LIGHT='[ light ]'
-SAVE='[ save  ]'
+  DARK='[ dark  ]'
+ LIGHT='[ light ]'
+  SAVE='[ save  ]'
 
+# catalogue of root background colors
 root() {
   find $PALETTE -name '*png' | egrep '(dark|light)/' |
                                sed -r "s|.*/(.*)/(.*)/(.*).png|\3^$SEP \1 \2|" |

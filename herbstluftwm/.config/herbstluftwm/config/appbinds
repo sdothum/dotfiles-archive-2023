@@ -55,6 +55,7 @@ hc keybind Super-h                   spawn dmenu shistory
 hc keybind Super-Shift-i             spawn toggle term 'IRC' weechat
 hc keybind Super-m                   spawn dmenu music
 hc keybind Super-n                   spawn toggle xpad
+hc keybind Super-Shift-n             spawn dmenu drafts
 hc keybind Super-p                   spawn dmenu pass
 hc keybind Super-Shift-p             spawn proof
 hc keybind Super-Control-p           spawn pr eject
