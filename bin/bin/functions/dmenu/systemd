@@ -14,7 +14,7 @@ status() {
   if sudo systemctl status $service ;then
     notify "Systemd $action" "$(sudo systemctl --no-pager status $service)"
   else
-    notify time=0 "Systemd $action" "$(sudo systemctl --no-pager status $service)"
+    notify 0 "Systemd $action" "$(sudo systemctl --no-pager status $service)"
   fi
 }
 

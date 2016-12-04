@@ -44,7 +44,7 @@ do
           cut -d':' -f3-)
 
     if [ "$man" = "$REBUILD" ] ;then
-      notify time=5 low 'Updating manpage index cache' 'Please be patient..'
+      notify 5 low 'Updating manpage index cache' 'Please be patient..'
       sudo mandb 2>/dev/null
       continue
     fi

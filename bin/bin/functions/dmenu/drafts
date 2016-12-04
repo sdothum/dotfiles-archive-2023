@@ -58,7 +58,7 @@ do
           exit ;;
 
     clipboard) gpaste-client add "$file"
-               notify time=10 'Ctrl-Alt-V' "$file"
+               notify 10 'Ctrl-Alt-V' "$file"
                exit ;;
 
     delete) mv $file /tmp ;;

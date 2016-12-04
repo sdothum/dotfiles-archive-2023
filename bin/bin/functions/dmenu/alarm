@@ -58,7 +58,7 @@ alarm() {
   do
     sleep $delay
     if [ $repeat -gt 1 ] ;then
-      [ $(( $repeat - $i )) -gt 0 ] && notify time=0 "($i/$repeat)  $alert" ||
+      [ $(( $repeat - $i )) -gt 0 ] && notify 0 "($i/$repeat)  $alert" ||
                                        notify critical "($i/$repeat)  $alert" 'Finished!'
     else
       notify critical "$alert"

@@ -38,7 +38,7 @@ catlg() {
 }
 
 cache() {
-  notify time=5 low 'Movies' 'Caching library..'
+  notify 5 low 'Movies' 'Caching library..'
   # clean up titles
   mytitles $library >>$mytitles
   [ -e $playlist ] || echo >$playlist
