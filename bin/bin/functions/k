@@ -7,11 +7,16 @@
 # ...................................................................... Process
 
 usage() {
-  echo "usage: [sig=<signal>] $(basename $0) <regex>"
+  echo "usage: $(basename $0)  [sig=<signal>] <regex>"
   exit 1
 }
 
-sig=${sig:--TERM}
+case $1 in
+  sig=*) eval $1
+         shift ;;
+
+  *) sig=${sig:--TERM} ;;
+esac
 
 # persistent storage for regex to subvert nested shell expansion
 REGEX=/tmp/k:regex

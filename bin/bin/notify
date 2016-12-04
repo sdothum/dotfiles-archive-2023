@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: $(basename $0)  [time=seconds | console | low | normal | critical]* \"<summary>\" [\"<body>\"]"
+  echo "usage: $(basename $0)  [time=<seconds> | <seconds> | console | low | normal | critical]* \"<summary>\" [\"<body>\"]"
   exit 1
 }
 
@@ -21,6 +21,7 @@ fi
 while :
 do
   case $1 in
+    # long form required for handling numeric summary field
     time=*) expire="--expire-time=$(( ${1#time=} * 1000 ))"
             shift ;;
 
@@ -30,7 +31,13 @@ do
     low | normal | critical) urgency="-u $1"
                              shift ;;
 
-    *) break ;;
+    *) case $1 in
+         # none numeric field
+         '' | *[!0-9]*) break ;;
+
+         *) expire="--expire-time=$(( $1 * 1000 ))"
+            shift ;;
+       esac
   esac
 done
 

@@ -19,11 +19,13 @@ configure authentication else some channels will force #<channel>-unregistered\n
   cat <<EOF
 
 # server
+# set umode to block all unregistered spammers
 /server add znc localhost/7000
 /server add znc luna/7000
 /set irc.server.znc.username "znc"
 /set irc.server.znc.password "znc"
 /set irc.server.znc.autoconnect on
+/set irc.server.znc.command "/umode +R"
 /connect znc
 # add server networks on znc webpage before connecting to servers
 # freenode chat.freenode.net +6697
@@ -31,14 +33,21 @@ configure authentication else some channels will force #<channel>-unregistered\n
 # rizon irc.rizon.net +6697
 # gitter irc.gitter.im +6667 <password>
 # znc install adds freenode by default for #znc
+/server add oftc luna/7000 -username=znc/oftc -password=znc
+/set irc.server.oftc.autoconnect on
+/set irc.server.oftc.command "/umode +R"
+/connect oftc
 /server add rizon luna/7000 -username=znc/rizon -password=znc
 /set irc.server.rizon.autoconnect on
+/set irc.server.rizon.command "/umode +R"
 /connect rizon
 /server add nixers luna/7000 -username=znc/nixers -password=znc
 /set irc.server.nixers.autoconnect on
+/set irc.server.nixers.command "/umode +R"
 /connect nixers
 /server add gitter luna/7000 -username=znc/gitter -password=znc
 /set irc.server.gitter.autoconnect on
+/set irc.server.gitter.command "/umode +R"
 /connect gitter
 
 # scripts

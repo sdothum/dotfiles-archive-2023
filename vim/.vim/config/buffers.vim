@@ -124,7 +124,7 @@
       nmap <silent><leader>8 :set foldlevel=8<CR>
       nmap <silent><leader>9 :set foldlevel=9<CR>
 
-  " Printing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " System actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................... Print file
 
@@ -132,5 +132,10 @@
       command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki \"' . expand('%:t') . '\"'  | elseif expand('%:p') =~ 'Patricia' | execute '!pr wps' expand('%:t') | else | execute '!pr code' expand('%:t') | endif"
 
       nmap <silent><leader>ha :silent Hardcopy<CR>
+
+    " ............................................................ Open terminal
+
+      " open shell session in buffer directory
+      nmap <silent><leader>te :silent call system('term "vimterm" STACK')<CR>
 
 " buffers.vim

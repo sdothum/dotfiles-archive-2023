@@ -6,9 +6,14 @@
 
 # ...................................................................... History
 
-# Usage: shell=<shell> h [<regex>]
+# Usage: h [shell=<shell>] [<regex>]
 
-shell=${shell:-fish}
+case $1 in
+  shell=*) eval $1
+           shift ;;
+
+  *) shell=fish ;;
+esac
 
 # filter session history
 # filter out single word commands

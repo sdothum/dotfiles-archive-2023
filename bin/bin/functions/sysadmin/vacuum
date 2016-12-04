@@ -6,7 +6,7 @@
 
 # ......................................................... Housekeeping cleaner
 
-# Usage: vacuum [clean|CLEAN] [file, default=.vacuum]
+# Usage: vacuum [clean|CLEAN] [<file>, default=.vacuum]
 #
 # format: # comment
 #         = title

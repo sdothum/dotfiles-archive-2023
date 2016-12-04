@@ -7,11 +7,17 @@
 # .................................................................... Processes
 
 usage() {
-  echo "usage: [sig=<signal>] $(basename $0) <name>.."
+  echo "usage: $(basename $0)  [sig=<signal>] <name>.."
   exit 1
 }
 
-sig=${sig:--TERM}
+case $1 in
+  sig=*) eval $1
+         shift ;;
+
+  *) sig=${sig:--TERM} ;;
+esac
+
 
 # quick kill processes by name
 if [ $1 ] ;then
