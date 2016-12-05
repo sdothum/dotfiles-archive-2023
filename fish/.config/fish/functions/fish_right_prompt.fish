@@ -135,7 +135,7 @@ function fish_right_prompt --description 'Write out the right prompt'
         set_color normal
         test $TERM != "linux"
           and test $CMD_DURATION -gt (math "1000 * 10")
-            and notify low "$history[1]" "Returned $status, took "(cmd_duration)
+            and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
         return (true)
       end
     end

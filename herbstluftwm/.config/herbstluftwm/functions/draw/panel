@@ -186,10 +186,11 @@ title() {
 
 # clean up active window title (filter special characters, common prefixes)
 trim() {
-  echo $@ | sed -e 's/ *[(\|:].*//' \
-                  -e 's/ *[-] .*//' \
-                  -e 's/[[].*[]]//' \
-                  -e 's/https*//'
+  echo $@ | iconv -c -f utf-8 -t ascii |
+            sed -e 's/ *[(\|:].*//' \
+                -e 's/ *[-] .*//' \
+                -e 's/[[].*[]]//' \
+                -e 's/https*//'
 }
 
 # fifo read loop

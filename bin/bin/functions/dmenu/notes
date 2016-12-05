@@ -95,7 +95,8 @@ do
           gvim -f -c "set filetype=$ext" $file ;;
 
     clipboard) gpaste-client add "$file"
-               notify 10 'Ctrl-Alt-V' "$file" ;;
+               notify 10 'Ctrl-Alt-V' "$file"
+               exit ;;
 
     delete) mv $file /tmp ;;
   esac

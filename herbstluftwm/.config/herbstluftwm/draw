@@ -23,7 +23,7 @@ UM1440=230
 # laptops are arbitrary ratios of
 margins() {
   case $1 in
-    3440) echo 0 ;;
+    3440) echo $(( $SHADOW + $(herbstclient get window_gap) * 2 )) ;;
     2560) echo 86 ;;
     # 1680) is multihead && echo $(pixel_match $(margins 2560) $UM1680) || echo 42 ;;
     1680) echo 0 ;;

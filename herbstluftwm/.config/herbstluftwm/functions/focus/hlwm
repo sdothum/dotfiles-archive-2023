@@ -9,6 +9,7 @@
 # Usage: focus hlwm focus (switch to window)
 #        focus hlwm bring (bring window to current tag)
 #        focus hlwm       (focus or bring window)
+set -x
 
 action() {
   case $1 in
