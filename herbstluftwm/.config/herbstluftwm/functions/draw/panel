@@ -184,15 +184,6 @@ title() {
   title=$(query tname $tag)
 }
 
-# clean up active window title (filter special characters, common prefixes)
-trim() {
-  echo $@ | iconv -c -f utf-8 -t ascii |
-            sed -e 's/ *[(\|:].*//' \
-                -e 's/ *[-] .*//' \
-                -e 's/[[].*[]]//' \
-                -e 's/https*//'
-}
-
 # fifo read loop
 panel() {
   while read -r line
@@ -232,7 +223,7 @@ panel() {
               else
                 title="$title   ⮁   %{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
               fi
-              desc=$(trim ${line#?})
+              desc=$(asciititle ${line#?})
               [ "$desc" ] && title="$title   ⮁   ${desc}%{B-}%{F-}"
             fi
           fi ;;

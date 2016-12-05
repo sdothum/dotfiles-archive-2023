@@ -10,11 +10,7 @@
 
 instance=$(herbstclient attr clients.$1.instance)
 # convert utf-8 to ascii, otherwise focus hlwm may not list all winids
-title=$(herbstclient attr clients.$1.title |
-        iconv -c -f utf-8 -t ascii |
-        sed -re '/\(.*\).*VIM/s|(.*) \(.*/([^/]*/[^()]*)\).*|\2/\1|' \
-            -e 's/ [-+] .*//' \
-            -e 's/ at .*//')
+title=$(asciititle $(herbstclient attr clients.$1.title))
 # note: ^$SEP for use with dmenu column alignment, see focus hlwm, restore hidden
 echo "$instance^$SEP $title"
 

@@ -49,7 +49,7 @@ END
 
 # build catalogue
 ebooks() {
-  notify 5 low 'Updating library cache' 'Please be patient..'
+  notify low 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" |
        sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
            -e 's/ - .*//' \

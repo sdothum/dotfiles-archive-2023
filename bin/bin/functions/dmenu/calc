@@ -54,7 +54,7 @@ done
 
 if [ $ans ] ;then
   gpaste-client add "$ans"
-  notify 10 'Ctrl-Alt-V' "$ans"
+  notify 'Ctrl-Alt-V' "$ans"
 fi
 
 # vim: set ft=sh: #
