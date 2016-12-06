@@ -100,8 +100,8 @@ URxvt*fading:                 0               ! % brightness reduction on focus 
 URxvt*mapAlert:               true            ! de-iconify on bell alert
 URxvt*scrollBar:              false           ! maximize usable line width
 URxvt*shading:                20              ! % transparency level
-URxvt*transparent:            true
-! URxvt*transparent:          false
+! URxvt*transparent:          true
+URxvt*transparent:            false
 URxvt*visualBell:             true            ! blink window on bell
 
 ! scrolling

@@ -7,11 +7,12 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID| TABBED | TR | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID| TABBED| BG <colour> | TR | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, STACK, MAX, VERTICAL, HORIZONTAL, GRID herbstluftwm hooks for setting layout and geometry
 #        FORTUNE, login notifier message
-#        TR, disable urxvt pseudo transparency
+#        BG <colour>, colour is #hex
+#        TR, enable urxvt pseudo transparency
 #        VISIBLE, wait for window visibility
 #        WAIT, for process to complete before returning
 #        SHELL <command>, for simpler unquoted command passing
@@ -19,6 +20,7 @@
 
 SHELL=/usr/bin/dash
 TERM=urxvt
+bg='#707070'
 
 # first parameter may be title
 if [ "$1" ] ;then
@@ -53,7 +55,10 @@ do
     TABBED) tabbed='-pe tabbed'
             shift ;;
 
-    TR) tr='+tr'
+    BR) br="-br $2"
+        shift 2 ;;
+
+    TR) tr='-tr'
         shift ;;
 
     FORTUNE) touch $FORTUNE:term
@@ -81,9 +86,9 @@ if [ -z "$name" ] ;then
 fi
 
 if [ $stack ] ;then
-  $TERM $title $name $geometry $tabbed $tr $cmd
+  $TERM $title $name $geometry $tabbed $br $tr $cmd
 else
-  focus $TERM $title $name $geometry $tabbed $tr $cmd
+  focus $TERM $title $name $geometry $tabbed $br $tr $cmd
 fi
 
 if [ $visible ] && [ "$title" ] ;then
