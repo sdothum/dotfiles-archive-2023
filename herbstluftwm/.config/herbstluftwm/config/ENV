@@ -91,11 +91,6 @@ else
   export SHADOW=$(( $(grep '^shadow-radius =' $HOME/.compton.conf | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR ))
 fi
 
-# dynamic monocle frame height adjustment, (0) none
-# add urxvt lines (top and bottom) using .Xresources fontsize, see draw monitor
-export MONOCLE_SIZE=$(grep '^URxvt\*font:' $HOME/.Xresources | cut -d= -f2)
-[ $(query displaywidth 0) -lt 2560 ] && export MONOCLE_LINES=0 || export MONOCLE_LINES=4
-
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
 [ $(query displaywidth 0) -lt 1440 ] && PANEL_MARGIN=true
 

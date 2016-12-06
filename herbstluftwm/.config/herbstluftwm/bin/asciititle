@@ -1,6 +1,6 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="bin/asciititle $@" . $PARENT
+# [ $TRACE ] && CHILD="bin/asciititle $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
@@ -13,6 +13,6 @@
 echo $@ | iconv -c -f utf-8 -t ascii |
           sed -re '/\(.*\).*VIM/s|(.*) \(.*/([^/]*/[^()]*)\).*|\2/\1|' \
               -e 's/ [-+] .*//' \
-              -e 's/ at .*//'\
+              -e 's/ at .*//'
 
 # vim: set ft=sh: #

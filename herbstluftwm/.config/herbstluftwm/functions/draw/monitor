@@ -81,15 +81,6 @@ else
 fi
 [ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) ||
                                  marginY=0
-# reshape monocle frame by urxvt lines
-if [ $monocle -gt 0 ] && [ $MONOCLE_LINES -gt 0 ] ;then
-  monocleY=$(( $MONOCLE_SIZE * $MONOCLE_LINES ))
-  # frame effect, arbitrary compression of frame width in relation to frame height
-  monocle=$(( $monocle + $monocleY ))
-else
-  monocleY=0
-fi
-[ $margin -lt $monocleY ] && monocleY=$margin
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
@@ -106,9 +97,9 @@ case $@ in
          rm -f $FULLSCREEN:$TAG 2>/dev/null
          PRIMARY=$(printf '%dx%d%+d%+d' \
                           $(( $normal_width - $SHADOW )) \
-                          $(( $Y0 + $monocleY*2 - $margin*2 )) \
+                          $(( $Y0 - $margin*2 )) \
                           $(( $X1 + $marginX + $monocle )) \
-                          $(( $margin - $monocleY )) ) ;;
+                          $margin ) ;;
 
   conky*fullscreen) touch $FULLSCREEN:primary
                     touch $FULLSCREEN:$TAG
@@ -116,9 +107,9 @@ case $@ in
                       # desktop screens retain margins
                       PRIMARY=$(printf '%dx%d%+d%+d' \
                                        $(( $fullscreen_width - $SHADOW )) \
-                                       $(( $Y0 + $monocleY*2 - $margin*2 - $window_frame*2 - $panelY )) \
+                                       $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
                                        $(( $X1 + $marginX + $window_frame + $monocle )) \
-                                       $(( $margin - $monocleY + $window_frame )) )
+                                       $(( $margin + $window_frame )) )
                     else
                       # laptop screens fill to edge
                       PRIMARY=$(printf '%dx%d%+d%+d' \
@@ -133,15 +124,15 @@ case $@ in
              if [ $monocle -eq 0 ] ;then
                PRIMARY=$(printf '%dx%d%+d%+d' \
                                 $(( $X0 - $marginX*2 )) \
-                                $(( $Y0 - $margin*2 + $window_frame - $marginY - 2 )) \
+                                $(( $Y0 - $margin*2 + $window_frame - $marginY )) \
                                 $(( $X1 + $marginX )) \
                                 $margin )
              else
                PRIMARY=$(printf '%dx%d%+d%+d' \
                                 $normal_width \
-                                $(( $Y0 + $monocleY*2 + $window_frame - $marginY - 2 )) \
+                                $(( $Y0 - $margin*2 + $window_frame - $marginY )) \
                                 $(( $X1 + ($X0 - $normal_width)/2 )) \
-                                $(( $margin - $monocleY )) )
+                                $margin )
              fi ;;
 
   fullscreen) touch $FULLSCREEN:primary
@@ -169,7 +160,7 @@ case $@ in
              # bottom margin calculation adjusted for lower resolution than primary
              SECONDARY=$(printf '%dx%d%+d%+d' \
                                 $(( $X1 - $marginX*2 )) \
-                                $(( $Y1 - $margin*2 + $window_frame - $marginY - 2 )) \
+                                $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
                                 $marginX \
                                 $margin ) ;;
 
