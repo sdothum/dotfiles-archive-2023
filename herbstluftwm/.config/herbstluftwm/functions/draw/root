@@ -89,8 +89,10 @@ set_border() {
 blank() {
   if [ $1 ] ;then
     color=$1
+    echo blank >$SETROOT
   else
     color=$(randcolor)
+    rm -f $SETROOT
   fi
   echo $color >$COLOR
   setroot --blank-color "#$color" 2>/dev/null
@@ -159,11 +161,8 @@ unblur() {
 
 # remember current background state for autostart
 case $1 in
-  blank)   blank $2
-           rm -f $SETROOT ;;
-
-  restore) select_blank
-           echo blank >$SETROOT ;;
+  blank  ) blank $2 ;;
+  restore) select_blank ;;
 
   save) color=$(cat $COLOR)
         swatch $color

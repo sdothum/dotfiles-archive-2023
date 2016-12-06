@@ -9,34 +9,16 @@
 
 # Usage: draw <msg>, see functions/draw
 
-# um pixel pitch for primary and other monitors used
-# 34"   3440x1440
-# 30"   2560x1600
-# 22"   1680x1050
-# 15.4" 1440x900
-UM3440=231
-UM2560=250
-UM1680=282
-UM1440=230
-
-# match (visual) margins of secondary monitors to dell 30" 2560x1600 cinema display
+# match (visual) margins of secondary monitors to primary cinema/4K display
 # laptops are arbitrary ratios of
 margins() {
   case $1 in
     3440) echo $(( $SHADOW + $(herbstclient get window_gap) * 2 )) ;;
     2560) echo 86 ;;
-    # 1680) is multihead && echo $(pixel_match $(margins 2560) $UM1680) || echo 42 ;;
-    1680) echo 0 ;;
-    1440) echo 10 ;;
+    1680) is multihead && margins 3440 || echo 42 ;;
+    1440) echo 8 ;;
     *   ) echo 0 ;;
   esac
-}
-
-# dot pitch match (width, um pixel pitch) to dell 30" 2560x1600 cinema display
-pixel_match() {
-  # echo $(( ($1 * $UM2560) / $2 )
-  # visual correction of um calculation by 1.1 using dell 2209wa monitor reference
-  echo $1 $2 | awk "{ print int(\$1 * $UM2560 / \$2 / 1.1 + 0.5) }"
 }
 
 TAG=$(herbstclient attr monitors.focus.tag)

@@ -63,6 +63,8 @@ case $background in
   *        ) draw root blank ;;
 esac
 [ $PANEL_MARGIN ] && toggle panel || toggle conky
+# enable panel for secondary monitor by default
+touch $PANEL:1
 
 # initialize tag layouts
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'

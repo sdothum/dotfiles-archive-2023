@@ -154,10 +154,6 @@ case $@ in
 
   secondary) rm -f $FULLSCREEN:secondary 2>/dev/null
              rm -f $FULLSCREEN:$TAG 2>/dev/null
-             # create identical secondary monitor margins using dot pitch adjustment
-             margin=$(pixel_match $margin $UM1680)
-             marginX=$(pixel_match $marginX $UM1680)
-             # bottom margin calculation adjusted for lower resolution than primary
              SECONDARY=$(printf '%dx%d%+d%+d' \
                                 $(( $X1 - $marginX*2 )) \
                                 $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
