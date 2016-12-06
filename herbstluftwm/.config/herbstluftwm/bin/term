@@ -7,9 +7,9 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | MAX | FORTUNE | STACK | TABBED | TR | VISIBLE | WAIT ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID| TABBED | TR | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
 #        title (and default name string)
-#        FLOAT, MAX, STACK herbstluftwm hooks for setting layout and geometry
+#        FLOAT, STACK, MAX, VERTICAL, HORIZONTAL, GRID herbstluftwm hooks for setting layout and geometry
 #        FORTUNE, login notifier message
 #        TR, disable urxvt pseudo transparency
 #        VISIBLE, wait for window visibility
@@ -22,7 +22,7 @@ TERM=urxvt
 
 # first parameter may be title
 if [ "$1" ] ;then
-  if echo $1 | egrep -qv 'FLOAT|FORTUNE|MAX|STACK|SHELL' ;then
+  if echo $1 | egrep -qv 'FLOAT|STACK|MAX|VERTICAL|HORIZONTAL|GRID|FORTUNE|SHELL' ;then
     title="-title $(echo $1 | sed 's/ /_/g')"
     shift
   fi
@@ -35,14 +35,20 @@ do
            geometry='-geometry 1024x600+0+0'
            shift ;;
 
+    STACK) stack=true
+           shift ;;
+
     MAX) name='-name max'
          shift ;;
 
-    FORTUNE) touch $FORTUNE:term
-             shift ;;
+    VERTICAL) name='-name vertical'
+              shift ;;
 
-    STACK) stack=true
-           shift ;;
+    HORIZONTAL) name='-name horizontal'
+                shift ;;
+
+    GRID) name='-name grid'
+          shift ;;
 
     TABBED) tabbed='-pe tabbed'
             shift ;;
@@ -50,16 +56,19 @@ do
     TR) tr='+tr'
         shift ;;
 
-    VISIBLE) visible=true
+    FORTUNE) touch $FORTUNE:term
              shift ;;
-
-    WAIT) wait=true
-          shift ;;
 
     SHELL) shift
            process=$@
            [ "$1" ] && cmd="-e $SHELL -c '$@'"
            break ;;
+
+    VISIBLE) visible=true
+             shift ;;
+
+    WAIT) wait=true
+          shift ;;
 
     *) process="$@"
        cmd="-e $@"

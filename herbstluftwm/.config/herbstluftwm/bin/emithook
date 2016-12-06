@@ -34,7 +34,11 @@ do
     focus_frame ) [ -e $DYNAMIC ] && focus frame & ;;
 
     rule) case $rule in
-            max) herbstclient set_layout max & ;;
+            float     ) herbstclient pseudotile toggle & ;;
+            max       ) herbstclient set_layout max & ;;
+            vertical  ) herbstclient set_layout vertical & ;;
+            horizontal) herbstclient set_layout horizontal & ;;
+            grid      ) herbstclient set_layout grid & ;;
 
             fullscreen) if is primary ;then
                           ( [ -e $CONKY ] && draw monitor conky fullscreen ||

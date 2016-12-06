@@ -10,7 +10,8 @@ name=Scratchpad
 SCRATCHPAD=$HLWM:scratchpad
 # simple tabbed, tmux or byobu
 term=tmux
-
+# unset herbstluftwm layout to default to frame setting
+layout=VERTICAL
 
 [ $(pgrep -cf 'toggle scratchpad') -gt 1 ] && exit
 # kill any extra tmux sessions spawned (default 2 processes)..
@@ -73,9 +74,9 @@ focus_check
 # cancel out above focus frame
 focus frame
 case $term in
-  byobu) term $name FORTUNE byobu 'new-session -n ""' ;;
-  tmux ) term $name FORTUNE tmux 'new-session -n ""' ;;
-  *    ) term $name FORTUNE TABBED ;;
+  byobu) term $name FORTUNE $layout byobu 'new-session -n ""' ;;
+  tmux ) term $name FORTUNE $layout tmux 'new-session -n ""' ;;
+  *    ) term $name FORTUNE $layout TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$SCRATCHPAD

@@ -54,6 +54,12 @@ hc rule class=Transmission-gtk       tag=6
 hc rule title=NZB                    tag=6 focus=on switchtag=on
 hc rule title=Trace                  tag=6 focus=off
 
+# term placement
+hc rule instance=max                 focus=on switchtag=on hook=max
+hc rule instance=vertical            focus=on switchtag=on hook=vertical
+hc rule instance=horizontal          focus=on switchtag=on hook=horizontal
+hc rule instance=grid                focus=on switchtag=on hook=grid
+
 # special apps and dialogues
 # hc rule class=Amphetype            pseudotile=on
 hc rule title=blackscreen            monitor=1 fullscreen=on hook=fullscreen
@@ -65,8 +71,6 @@ hc rule class=float                  focus=on pseudotile=on
 hc rule class=Gvim                   focus=on hook=max
 hc rule windowrole=gvimdiff          focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                pseudotile=on
-# trap urxvt -name=max
-hc rule instance=max                 focus=on switchtag=on hook=max
 hc rule class=mpv                    index=1 focus=on switchtag=on fullscreen=off
 hc rule class=Plover                 pseudotile=on
 hc rule class=ROX-Filer              pseudotile=off

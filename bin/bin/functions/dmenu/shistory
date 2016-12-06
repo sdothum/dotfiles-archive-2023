@@ -19,7 +19,7 @@ case $shell in
        mv -f $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
 
-cmd=$(shell=$shell h |
+cmd=$(h shell=$shell |
       sed -re "s/^([^ ]*)  */\1 $SEP $UTF/" |
       column -s$UTF -t |
       dmenu 'History' -no-custom) || exit

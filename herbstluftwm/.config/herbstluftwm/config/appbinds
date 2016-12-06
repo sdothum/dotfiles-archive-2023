@@ -7,8 +7,8 @@
 # ........................................................ Applications keybinds
 
 hc keybind $Mod-Return               spawn toggle scratchpad
-hc keybind $Mod-Shift-Return         spawn term 'Terminal' FORTUNE
-hc keybind $Mod-Control-Return       spawn term 'Terminal' FORTUNE STACK
+hc keybind $Mod-Shift-Return         spawn term 'Terminal' FORTUNE VERTICAL
+hc keybind $Mod-Control-Return       spawn term 'Terminal' FORTUNE STACK VERTICAL
 hc keybind Super-Return              spawn dmenu manpages
 hc keybind Super-space               spawn dmenu run
 hc keybind Super-Shift-space         spawn dmenu systemd
