@@ -37,13 +37,16 @@
   font-manager
 # fontconfig
 # fontmatrix
-  ibfonts-meta-base
+# ibfonts-meta-base
 # infinality-bundle-fonts
   libxft
+  noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git
   terminus-font-ll2-td1
-# ttf-dejavu
+  ttf-courier-prime
+  ttf-dejavu
+  ttf-dejavu-sans-mono-powerline-git
 # ttf-fantasque-sans
   ttf-font-awesome
 # ttf-google-fonts-git
@@ -51,9 +54,11 @@
 # ttf-ionicons
 # ttf-iosevka
 # ttf-iosevka-hooky
+  ttf-liberation
 # ttf-mac-fonts
   ttf-ms-fonts
 # ttf-noto-sans-ib
+  ttf-symbola
 # ttf-ubuntu-font-family
 # xorg-fonts-type1
 # xorg-xlsfonts

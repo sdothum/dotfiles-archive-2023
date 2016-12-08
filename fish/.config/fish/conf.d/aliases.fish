@@ -49,7 +49,7 @@ alias traceroute 'mtr --report -c 1'
 
 # ...................................................................... Network
 
-alias friendlybear 'smbclient //friendlybear/patricia motu om'
+alias friendlybear 'smbclient -R bcast //friendlybear/patricia motu om'
 
 # ................................................................... Filesystem
 

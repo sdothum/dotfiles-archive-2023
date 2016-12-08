@@ -43,7 +43,9 @@
   nvidia               [nvidia]
   nvidia-340xx         [macbook]
 # nvidia-340xx-libgl   [macbook]
-  nvidia-libgl         [nvidia]
+  nvidia-340xx-utils   [macbook]
+# "see infinality install below"
+# nvidia-libgl         [nvidia]
   nvidia-utils         [nvidia]
   xf86-input-synaptics [laptop]
   xf86-video-ati       [lspci | grep VGA | grep -q ATI]
@@ -52,6 +54,7 @@
 
 = x11 server
 # ▔▔▔▔▔▔▔▔▔▔
+  cairo
   mesa
 # mesa-git
 # mesa-vdpau-git
@@ -63,9 +66,14 @@
 
 = infinality font rendering
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-? infinality-bundle
-? infinality-bundle-multilib [server]
-  infinality-bundle-fonts
+# infinality-bundle
+# infinality-bundle-multilib [server]
+# infinality-bundle-fonts
+? cairo-infinality
+? fontconfig-infinality
+? freetype2-infinality
+# "restore cairo conflict with mesa-libgl"
+? nvidia-libgl         [nvidia]
 
 
 = ncurses editor

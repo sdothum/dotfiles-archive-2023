@@ -8,6 +8,7 @@
 # Usage: dmenu notes [<extension>] [<path>]
 
   NEW='[ new          ]'
+ EDIT='[ edit         ]'
 PURGE='[ purge drafts ]'
 
 while :
@@ -35,11 +36,12 @@ catlg=$FOLDER/.${ext}s
 [ -e $FOLDER ] || mkdir -p $FOLDER
 
 if [ $ext = draft ] ;then
-  PROMPT="$NEW\n$PURGE"
+  PROMPT="$NEW\n$EDIT\n$PURGE"
   offset=1
 else
-  NEW='[ new ]'
-  PROMPT=$NEW
+  NEW='[ new  ]'
+  EDIT='[ edit ]'
+  PROMPT="$NEW\n$EDIT"
   offset=0
 fi
 
@@ -82,15 +84,19 @@ do
     "$NEW") file=$(mktemp -p $FOLDER --suffix=.$ext)
             action=edit ;;
 
+    "$EDIT") term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+
     "$PURGE") mv $FOLDER/*.$ext /tmp
               continue ;;
 
     *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
        content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-       action=$(echo 'edit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom) ;;
+       action=$(echo 'view\nedit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom) ;;
   esac
 
   case $action in
+    view) term "$file" MAX STACK WAIT less $file ;;
+
     edit) history $catlg $file
           gvim -f -c "set filetype=$ext" $file ;;
 
