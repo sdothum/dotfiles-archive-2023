@@ -98,7 +98,7 @@ do
     view) term "$file" MAX STACK WAIT less $file ;;
 
     edit) history $catlg $file
-          gvim -f -c "set filetype=$ext" $file ;;
+          gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
 
     clipboard) gpaste-client add "$file"
                notify 'Ctrl-Alt-V' "$file"

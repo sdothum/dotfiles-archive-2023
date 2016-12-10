@@ -76,7 +76,7 @@
   handbrake      [server]
 # handbrake-cli  [server]
 # k3b            [server]
-  mencoder       [server]
+  mkvtoolnix-cli [server]
 # soundconverter [server]
   transcode      [server]
   xfburn         [server]

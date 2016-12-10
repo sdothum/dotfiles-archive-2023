@@ -11,6 +11,8 @@
 #
 # Note:  duration defaults to minutes (not seconds)
 
+EDIT='[ edit ]'
+
 # non-numeric character escapes undesired dmenu match
 duration() {
   echo $1 | sed -re 's/^[^0-9]//' -e 's/([0-9])$/\1m/'
@@ -29,8 +31,13 @@ case $# in
      alert=$2
      repeat=$3 ;;
 
-  *) while delay=$(echo | history alarm | column -s^ -t | dmenu 'Duration [m]/s') || exit
+  *) while delay=$(echo | history alarm | sed "1i$EDIT" | column -s^ -t | dmenu 'Duration [m]/s') || exit
      do
+       if [ "$delay" = "$EDIT" ] ;then
+         gvim -f $HISTORY/alarm
+         continue
+       fi
+
        delay=$(unquote $delay)
        if echo $delay | grep -q "$SEP" ;then
          alert=$(echo $delay | sed "s/.*$SEP //")

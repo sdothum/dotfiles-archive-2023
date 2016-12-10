@@ -120,9 +120,9 @@ do
                   break ;;
 
     "$ADD") if [ "$addresses" ] ;then
-              desc=$(echo | dmenu 'Description') || continue
-              [ $desc ] || desc=Contacts
-              echo "\n$desc :: $addresses" >>$contacts
+              tag=$(echo | dmenu 'Tags') || continue
+              [ $tag ] || tag=Contacts
+              echo "\n$tag :: $addresses" >>$contacts
               unset addresses
               gvim -f $contacts
             fi ;;

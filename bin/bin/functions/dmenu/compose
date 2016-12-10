@@ -60,7 +60,7 @@ do
   case $editor in
     "$SEND") ;;
 
-    "$EDIT") command dmenu drafts
+    "$EDIT") command dmenu notes draft
              continue ;;
 
     "$PURGE") mv $HOME/tmp/alot.*.draft /tmp

@@ -14,7 +14,7 @@ usage() {
 # diff current sources with dotfiles git repo
 dotfiles=/net/depot/dotfiles
 current=$HOME/stow
-ignore='debian|makepkg|nixos|qmk_firmware|root|vps'
+ignore='backups|build|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
 
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
@@ -31,7 +31,7 @@ else
   exclude=-v
 fi
 
-for i in $(find $current/$1 -type f | egrep -v '/[.](build|deprecated|git|hg|history)' | egrep $exclude $filter)
+for i in $(find $current/$1 -type f | egrep -v '/[.](deprecated|git|hg|history|vimv)' | egrep $exclude $filter)
 do
   file=${i#*/stow/*/}
   unset blink

@@ -92,7 +92,7 @@ shortcut-add dt=http://deskthority.net/search.php?keywords=$0
 shortcut-add du=https://duckduckgo.com/?q=$0&ia=images
 shortcut-add eb=http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_sop=15&_nkw=$0&_pgn=2&_skc=50&rt=nc
 shortcut-add fg=http://www.reddit.com/r/FixedGearBicycle/search?q=$0&restrict_sr=on
-shortcut-add ge=https://nzbgeek.info/search/$0
+shortcut-add ge=https://nzbgeek.info/geekseek.php?moviesgeekseek=1&browsecategory=&browseincludewords=$0
 shortcut-add gh=https://geekhack.org/index.php?action=search2&search=$0
 shortcut-add gi=https://github.com/search?q=$0
 shortcut-add gm=https://www.google.com/maps?q=$0

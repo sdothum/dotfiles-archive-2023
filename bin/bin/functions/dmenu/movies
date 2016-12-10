@@ -12,7 +12,7 @@
 #        ../movies
 #               ../title.YEAR.*  (movie)
 
-LAST='[ last viewed  ]'
+LAST='[ last watched ]'
 NAME='[ sort by name ]'
 DATE='[ sort by date ]'
 

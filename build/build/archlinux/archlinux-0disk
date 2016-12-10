@@ -237,9 +237,9 @@ if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
       -e '/\/var\/lib/d' \
       -e '$a\
 \
-LABEL=Archlinux   /run/btrfs-root   btrfs   rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag   0 0\
+LABEL=Archlinux\t\t/run/btrfs-root\t\tbtrfs\t\trw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag\t\t0 0\
 \
-/run/btrfs-root/__current/ROOT/var/lib    /var/lib    none    bind    0 0' \
+/run/btrfs-root/__current/ROOT/var/lib\t\t/var/lib\t\tnone\t\tbind\t\t0 0' \
       /mnt/btrfs-boot/etc/fstab
 fi
 nano /mnt/btrfs-boot/etc/fstab
