@@ -39,8 +39,8 @@
       nmap <silent><leader>qq   :silent qall!<CR>
 
       " pre-write formatting
-      autocmd buffer BufWritePre * if &filetype !~ 'markdown\|vimwiki\|wiki' | call StripTrailingWhitespaces() | endif
-      autocmd buffer FocusLost   * if &filetype !~ 'markdown\|vimwiki\|wiki' | call StripTrailingWhitespaces() | endif
+      autocmd buffer BufWritePre * call StripTrailingWhitespaces()
+      autocmd buffer FocusLost   * call StripTrailingWhitespaces()
       " save on losing focus
       autocmd buffer FocusLost   * silent! :wall
 

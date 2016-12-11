@@ -27,8 +27,6 @@
 
     " ............................................................... Modifiable
 
-      let g:goyotypes = 'vimwiki\|mail\|draft'
-
       " [regex name, filetype, modifiable, wordcount] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " wordcount (0) no word count (1) statusline with wordcount
@@ -77,7 +75,6 @@
       endfunction
 
       " toggle modifiable attribute
-      " nmap <silent><C-F1>  :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
       nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " check filetype on open
@@ -102,7 +99,7 @@
         for index in reverse(range(2, len(g:vimwiki_list))) " skip journal" wiki(1)
           call Wiki(index)
         endfor
-        if &filetype =~ g:goyotypes         " reset cursorline (for last open for some reason..)
+        if GoyoFT()                         " reset cursorline (for last open for some reason..)
           call ToggleHiLite()
         endif
         redir END
@@ -110,7 +107,7 @@
 
       " open vimwiki ()
       autocmd filetype VimEnter * if argv (0) =~ '/vimwiki$' | bdelete | call OpenWikis() | endif
-      autocmd filetype VimEnter * if &filetype =~ g:goyotypes | call ToggleGoyo() | endif
+      autocmd filetype VimEnter * if GoyoFT() | call ToggleGoyo() | endif
 
     " ................................................................... E-mail
 

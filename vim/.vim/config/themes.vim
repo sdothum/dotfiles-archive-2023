@@ -85,8 +85,9 @@
         highlight VimwikiLink guifg=#268bd2 gui=bold
       endfunction
 
-      " toggle colour scheme, 1st usage causes one time initialization error, trap error instead
+      " toggle colour scheme
       function! LiteSwitch()
+        " trap and ignore initialization error
         call Quietly('LiteDFMClose')
         let &background = (&background == 'dark' ? 'light' : 'dark')
         call SetTheme()
@@ -133,7 +134,7 @@
       endfunction
 
       function! ToggleHiLite()
-        if &filetype =~ g:goyotypes
+        if GoyoFT()
           if s:contrast == 0
             " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
             call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
@@ -152,21 +153,22 @@
 
     " .............................................................. Switch font
 
-      " let s:font = 'Input\ Mono\ Compressed\'
-      " let s:font = 'PragmataPro\'
-      let s:font   = 'Iosevka\'
+      " let s:source_font = 'Input\ Mono\ Compressed\'
+      " let s:source_font = 'PragmataPro\'
+      let s:source_font   = 'Iosevka\'
+      let s:prose_font    = 'Courier\ Prime\'
 
       function! Fontspace(prose, source)
-        execute 'set guifont=' . s:font . ' ' . a:prose
-        execute 'set linespace=' .
-          \(
-          \  argv(0) == 'vimwiki' || expand('%:e') =~ '\(wiki\|eml\|draft\)$'
-          \  ? a:prose
-          \  : a:source
-          \)
+        if argv(0) == 'vimwiki' || expand('%:e') =~ '\(wiki\|eml\|draft\)$'
+          execute 'set guifont=' . s:prose_font . ' ' . a:prose
+          execute 'set linespace=' . a:prose
+        else
+          execute 'set guifont=' . s:source_font . ' ' . a:prose
+          execute 'set linespace=' . a:source
+        endif
       endfunction
 
-      " adjust font displays for various gpu's, liteDFM offsets to fit screens
+      " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
       function! FontSize(size)
         if system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
           " for desktop nvidia gpu
@@ -203,7 +205,7 @@
         " toggle fullscreen to reposition statusline (2x required to restore)
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
-        if &filetype !~ g:goyotypes
+        if ! GoyoFT()
           call Quietly('LiteDFMClose')
           call LiteType()
         endif
@@ -214,7 +216,7 @@
 
     " ............................................ Initial font and line spacing
 
-      " a bit of regex weirdness requiring *eml and not .*eml(?)
-      call FontSize(argv(0) =~ '\(vimwiki\|*eml\|.*draft\|.*md\)$' ? +1 : -1)
+      " a bit of regex weirdness requiring *eml(?)
+      call FontSize(argv(0) =~ '.*\(vimwiki\|draft\|*eml\|md\)$' ? +1 : -1)
 
 " themes.vim

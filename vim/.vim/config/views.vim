@@ -43,7 +43,7 @@
 
       function! LiteType()
         call SetTheme()
-        if &filetype =~ g:goyotypes
+        if GoyoFT()
           call ProseView()
           call DfmWriting()
         else
@@ -88,7 +88,7 @@
 
       " toggle goyo / litedfm
       function! ToggleGoyo()
-        if &filetype =~ g:goyotypes
+        if GoyoFT()
           if !exists('#goyo')               " goyo launched yet?
             execute 'LiteDFMClose'
             " width must be greater than textwidth, center vertical (to accomodate statusline)
@@ -115,9 +115,9 @@
       endfunction
 
       " with window resizing, goyo margins are newly calculated
-      autocmd view VimResized * if &filetype =~ g:goyotypes && g:goyorefresh == 0 | call ResetGoyo() | endif
+      autocmd view VimResized * if GoyoFT() && g:goyorefresh == 0 | call ResetGoyo() | endif
       " reset refresh indicator after awhile
-      autocmd view cursorhold * let g:goyorefresh = 0
+      autocmd view CursorHold * let g:goyorefresh = 0
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -136,7 +136,7 @@
       endfunction
 
       function! ToggleProof()
-        if &filetype =~ g:goyotypes         " toggle between writing and proofing modes
+        if GoyoFT()                         " toggle between writing and proofing modes
           if s:unfocused == g:dfm_unfocused
             execute 'Limelight!'
             execute 'highlight Normal guifg=' . g:dfm_proof

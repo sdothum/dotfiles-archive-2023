@@ -16,6 +16,13 @@
         endtry
       endfunction
 
+    " .......................................................... Goyo filestypes
+
+      " goyo filetyes
+      function! GoyoFT()
+        return &filetype =~ 'vimwiki\|mail\|draft'
+      endfunction
+
     " .................................................... Modified notification
 
       " replaces lightline: 'modified' : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
@@ -56,7 +63,7 @@
       " see https://dougblack.io/words/a-good-vimrc.html
       " strips trailing whitespace from all lines
       function! StripTrailingWhitespaces()
-        if &modifiable == 1
+        if &modifiable == 1 && &filetype !~ 'markdown\|vimwiki\|wiki'
           " save last search & cursor position
           let _s=@/
           let l = line(".")

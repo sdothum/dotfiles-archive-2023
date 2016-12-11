@@ -5,17 +5,21 @@
 
   " Sources ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ........................................................... Initialization
+
+      source ~/.vim/config/init.vim
+      source ~/.vim/config/bundles.vim
+
     " ................................................................. Settings
 
       source ~/.vim/config/setup.vim
-      source ~/.vim/config/bundles.vim
       source ~/.vim/config/abbrev.vim
       source ~/.vim/config/buffers.vim
       source ~/.vim/config/editing.vim
       source ~/.vim/config/plugins.vim
       source ~/.vim/config/ui.vim
 
-    " ................................................................. Software
+    " ............................................................... Extensions
 
       source ~/.vim/config/functions.vim
       source ~/.vim/config/coding.vim

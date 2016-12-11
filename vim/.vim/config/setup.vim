@@ -7,8 +7,6 @@
 
     " .................................................................... Setup
 
-      set nocompatible                      " disable vi-compatibility
-
       augroup setup
         autocmd!
       augroup END
@@ -24,16 +22,6 @@
       set ttyfast
       set timeout timeoutlen=1000 ttimeoutlen=100
       " set cryptmethod=blowfish            " encryption method
-
-    " ................................................................... Leader
-
-      let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
-      let g:mapleader = "\<Space>"
-      " let mapleader   = "\<BS>"           " use right thumb on planck keyboard
-      " let g:mapleader = "\<BS>"           " for better <space> responsiveness
-
-      " non-latent space insertion (for lining up text, conflicting leader sequences, etc.)
-      inoremap <C-Space> <Space>
 
     " .................................................................... Mark
 
@@ -64,20 +52,6 @@
 
 
   " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .............................................................. Config file
-
-      " quickly edit/reload the vimrc file
-      nmap <silent><leader>vim         :edit $MYVIMRC<CR>
-      " must switch to .vimrc first for unknown reason.. (bug?)
-      nmap <silent><leader><leader>vim :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
-
-      " load .vimrc after save
-      " autocmd setup BufWritePost $MYVIMRC      source $MVIMRC
-      autocmd setup bufwritepost $MYVIMRC nested source $MYVIMRC
-      autocmd setup BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
-      " PluginUpdate and config reload loses filetype, restore
-      autocmd setup BufWinEnter *.vim            set filetype=vim
 
     " ..................................................................... Help
 

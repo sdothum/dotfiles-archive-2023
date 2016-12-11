@@ -121,20 +121,30 @@
       let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
 
       if has("gui_running")
-        if s:powerline == 0
+        " can't use GoyoFT as plugin is initialized before buffer read
+        if argv (0) =~ 'vimwiki\|eml\|draft'
           let g:lightline =
             \{
             \  'colorscheme'  : 'solarized'
-            \, 'separator'    : { 'left' : '', 'right' : '' }
+            \, 'separator'    : { 'left' : '', 'right' : '' }
             \, 'subseparator' : { 'left' : '', 'right' : '' }
             \}
         else
-          let g:lightline =
-            \{
-            \  'colorscheme'  : 'solarized'
-            \, 'separator'    : { 'left' : '', 'right' : '' }
-            \, 'subseparator' : { 'left' : '', 'right' : '' }
-            \}
+          if s:powerline == 0
+            let g:lightline =
+              \{
+              \  'colorscheme'  : 'solarized'
+              \, 'separator'    : { 'left' : '', 'right' : '' }
+              \, 'subseparator' : { 'left' : '', 'right' : '' }
+              \}
+          else
+            let g:lightline =
+              \{
+              \  'colorscheme'  : 'solarized'
+              \, 'separator'    : { 'left' : '', 'right' : '' }
+              \, 'subseparator' : { 'left' : '', 'right' : '' }
+              \}
+          endif
         endif
       else
         let g:lightline =

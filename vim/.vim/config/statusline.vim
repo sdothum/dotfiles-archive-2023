@@ -87,9 +87,9 @@
       endfunction
 
       " line statistics off by default per buffer (declare flags to b:uffer)
-      " autocmd status bufread               * let b:code = 0
+      " autocmd status BufRead               * let b:code = 0
       " recalculate the long line warning when idle and after saving
-      autocmd status cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+      autocmd status CursorHold,BufWritePost * unlet! b:statusline_long_line_warning
 
     " ............................................................... Word count
 
@@ -180,9 +180,9 @@
       endfunction
 
       " recalculate the tab warning flag when idle and after writing
-      autocmd status cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+      autocmd status CursorHold,BufWritePost * unlet! b:statusline_tab_warning
       " recalculate the trailing whitespace warning when idle, and after saving
-      autocmd status cursorhold,bufwritepost * unlet! b:statusline_pad_warning
+      autocmd status CursorHold,BufWritePost * unlet! b:statusline_pad_warning
 
   " Enhanced statusline ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -220,7 +220,7 @@
 
       " context sensitive statusline content (prose words, code line statistics)
       function! ToggleInfo()
-        if &filetype =~ g:goyotypes
+        if GoyoFT()
           let g:wikistatus = (g:wikistatus == 0 ? 1 : 0)
           call ShowInfo(0)
         else

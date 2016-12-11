@@ -95,6 +95,7 @@
     " ............................................................. Line numbers
 
       set number                            " line numbers are good
+      set numberwidth=10
       set relativenumber
       " autocmd! InsertEnter * :set number   " toggle relative line numbers
       " autocmd! InsertLeave * :set relativenumber " auto line numbers
