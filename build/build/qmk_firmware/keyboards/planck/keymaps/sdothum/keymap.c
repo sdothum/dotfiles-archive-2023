@@ -90,6 +90,7 @@ enum planck_layers {
  ,_DVORAK
  ,_PLOVER
  ,_NUMBER
+ ,_NUMSYM
  ,_SYMBOL
  ,_NAVPAD
  ,_KEYTEST
@@ -133,16 +134,6 @@ enum tap_dance {
  ,_PLUS
  ,_QUOT
  ,_SLSH
- ,_1
- ,_2
- ,_3
- ,_4
- ,_5
- ,_6
- ,_7
- ,_8
- ,_E
- ,_F
 };
 
 // modifier keys
@@ -177,20 +168,13 @@ enum tap_dance {
 #define __Plus  TD    (_PLUS)
 #define __Quot  TD    (_QUOT)
 #define __Slsh  TD    (_SLSH)
-#define __1     TD    (_1)
-#define __2     TD    (_2)
-#define __3     TD    (_3)
-#define __4     TD    (_4)
-#define __5     TD    (_5)
-#define __6     TD    (_6)
-#define __7     TD    (_7)
-#define __8     TD    (_8)
-#define __E     TD    (_E)
-#define __F     TD    (_F)
 
-// adjust layer key
+// layer keys
 #define ADJUST  MO    (_ADJUST)
+#define SYMBOL  MO    (_NUMSYM)
 
+#define Colon   S(KC_SCLN)
+#define Bar     S(KC_BSLS)
 #define ___x___ KC_TRNS
 #define _______ KC_NO
 
@@ -287,7 +271,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // | ↑GUI |      |      |      |   {  |   }  |      |   7  |   8  |   9  |   E  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // | ↑Alt |      |   /  |   -  |   (  |   )  |      |   4  |   5  |   6  |   C  |   D  |
+  // | ↑Alt |Symbol|   /  |   -  |   (  |   )  |      |   4  |   5  |   6  |   C  |   D  |
   // |-----------------------------------------------------------------------------------|
   // | ^Alt |      |   *  |   +  |   [  |   ]  |      |   1  |   2  |   3  |   A  |   B  |
   // |-----------------------------------------------------------------------------------|
@@ -295,10 +279,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_SGui,   _______, KC_ASTR, KC_MINS, __Lcbr,  KC_RCBR, _______, __7,     __8,     KC_9,    __E,     __F    },
-    {_SAlt,   _______, __Slsh,  KC_PLUS, __Lprn,  KC_RPRN, _______, __4,     __5,     __6,     S(KC_C), S(KC_D)},
-    {_CAlt,   _______, _______, _______, __Lbrc,  KC_RBRC, _______, __1,     __2,     __3,     S(KC_A), S(KC_B)},
+    {_SGui,   _______, KC_ASTR, KC_MINS, __Lcbr,  KC_RCBR, _______, KC_7,    KC_8,    KC_9,    S(KC_E), S(KC_F)},
+    {_SAlt,   SYMBOL,  __Slsh,  KC_PLUS, __Lprn,  KC_RPRN, _______, KC_4,    KC_5,    KC_6,    S(KC_C), S(KC_D)},
+    {_CAlt,   _______, _______, _______, __Lbrc,  KC_RBRC, _______, KC_1,    KC_2,    KC_3,    S(KC_A), S(KC_B)},
     {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, Zero,    KC_DOT,  _______, _______, _______},
+  },
+
+// ........................................................ Number Layer Symbols
+//
+// http://www.keyboard-layout-editor.com/#/gists/9fad9e71abd3d48acf22e39716a0f232
+
+  // .-----------------------------------------------------------------------------------.
+  // |      |      |      |      |      |      |      |   &  |   *  |   ;  |   :  |   |  |
+  // |-----------------------------------------------------------------------------------|
+  // |      |  f() |      |      |      |      |      |   $  |   %  |   ^  |   C  |   D  |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |      |   !  |   @  |   #  |   A  |   B  |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |  f() |      |      | Space|   ,  |      |      |      |
+  // '-----------------------------------------------------------------------------------'
+
+  [_NUMSYM] = {
+    {_______, _______, _______, _______, _______, _______, _______, KC_AMPR, KC_ASTR, KC_SCLN, Colon,   Bar    },
+    {_______, ___x___, _______, _______, _______, _______, _______, KC_DLR,  KC_PERC, KC_CIRC, S(KC_C), S(KC_D)},
+    {_______, _______, _______, _______, _______, _______, _______, KC_EXLM, KC_AT,   KC_HASH, S(KC_A), S(KC_B)},
+    {_______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, _______, _______, _______},
   },
 
 // ................................................................ Symbol Layer
@@ -633,150 +638,6 @@ void slash(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void one(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_1);
-    unregister_code (KC_1);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_1);
-    unregister_code (KC_1);
-  }
-  reset_tap_dance(state);
-}
-
-void two(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_2);
-    unregister_code (KC_2);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_2);
-    unregister_code (KC_2);
-  }
-  reset_tap_dance(state);
-}
-
-void three(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_3);
-    unregister_code (KC_3);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_3);
-    unregister_code (KC_3);
-  }
-  reset_tap_dance(state);
-}
-
-void four(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_4);
-    unregister_code (KC_4);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_4);
-    unregister_code (KC_4);
-  }
-  reset_tap_dance(state);
-}
-
-void five(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_5);
-    unregister_code (KC_5);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_5);
-    unregister_code (KC_5);
-  }
-  reset_tap_dance(state);
-}
-
-void six(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_6);
-    unregister_code (KC_6);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_6);
-    unregister_code (KC_6);
-  }
-  reset_tap_dance(state);
-}
-
-void seven(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_7);
-    unregister_code (KC_7);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_7);
-    unregister_code (KC_7);
-  }
-  reset_tap_dance(state);
-}
-
-void eight(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_8);
-    unregister_code (KC_8);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_8);
-    unregister_code (KC_8);
-  }
-  reset_tap_dance(state);
-}
-
-void hexe(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_SCLN);
-    unregister_code (KC_SCLN);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_LSFT);
-    register_code   (KC_E);
-    unregister_code (KC_E);
-    unregister_code (KC_LSFT);
-  }
-  reset_tap_dance(state);
-}
-
-void hexf(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_BSLS);
-    unregister_code (KC_BSLS);
-    unregister_code (KC_LSFT);
-  } else {
-    register_code   (KC_LSFT);
-    register_code   (KC_F);
-    unregister_code (KC_F);
-    unregister_code (KC_LSFT);
-  }
-  reset_tap_dance(state);
-}
-
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren)
  ,[_LBRC] = ACTION_TAP_DANCE_FN (brace)
@@ -793,22 +654,30 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_PLUS] = ACTION_TAP_DANCE_FN (plus)
  ,[_QUOT] = ACTION_TAP_DANCE_FN (quote)
  ,[_SLSH] = ACTION_TAP_DANCE_FN (slash)
- ,[_1]    = ACTION_TAP_DANCE_FN (one)
- ,[_2]    = ACTION_TAP_DANCE_FN (two)
- ,[_3]    = ACTION_TAP_DANCE_FN (three)
- ,[_4]    = ACTION_TAP_DANCE_FN (four)
- ,[_5]    = ACTION_TAP_DANCE_FN (five)
- ,[_6]    = ACTION_TAP_DANCE_FN (six)
- ,[_7]    = ACTION_TAP_DANCE_FN (seven)
- ,[_8]    = ACTION_TAP_DANCE_FN (eight)
- ,[_E]    = ACTION_TAP_DANCE_FN (hexe)
- ,[_F]    = ACTION_TAP_DANCE_FN (hexf)
 };
 
 void persistant_default_layer_set(uint16_t default_layer)
 {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
+}
+
+void clear_layers()
+{
+  layer_off (_COLEMAK);
+  #ifdef QWERTY
+  layer_off (_QWERTY);
+  #endif
+  #ifdef DVORAK
+  layer_off (_DVORAK);
+  #endif
+  layer_off (_PLOVER);
+  layer_off (_NUMBER);
+  layer_off (_NUMSYM);
+  layer_off (_SYMBOL);
+  layer_off (_NAVPAD);
+  layer_off (_KEYTEST);
+  layer_off (_ADJUST);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -915,7 +784,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_colemak, false, 0);
 #endif
-        layer_off       (_ADJUST);
+        clear_layers();
         persistant_default_layer_set(1UL<<_COLEMAK);
       }
       return false;
@@ -926,7 +795,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_qwerty, false, 0);
 #endif
-        layer_off       (_ADJUST);
+        clear_layers();
         persistant_default_layer_set(1UL<<_QWERTY);
       }
       return false;
@@ -938,7 +807,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_dvorak, false, 0);
 #endif
-        layer_off       (_ADJUST);
+        clear_layers();
         persistant_default_layer_set(1UL<<_DVORAK);
       }
       return false;
@@ -950,11 +819,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         stop_all_notes();
         PLAY_NOTE_ARRAY (tone_plover, false, 0);
 #endif
-        layer_off       (_NUMBER);
-        layer_off       (_SYMBOL);
-        layer_off       (_NAVPAD);
-        layer_off       (_ADJUST);
-        layer_off       (_KEYTEST);
+        clear_layers();
         layer_on        (_PLOVER);
         if (!eeconfig_is_enabled()) {
             eeconfig_init();
@@ -964,9 +829,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         eeconfig_update_keymap(keymap_config.raw);
         // toggle plover application on, see herbstluftwm/config/appbinds
         register_code   (KC_LGUI);
-        register_code   (KC_MINS);
-        unregister_code (KC_MINS);
+        register_code   (KC_LSFT);
+        register_code   (KC_EQL);
+        unregister_code (KC_EQL);
         // unregister modifiers as late as possible (convention)
+        unregister_code (KC_LSFT);
         unregister_code (KC_LGUI);
       }
       return false;
@@ -976,12 +843,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);
 #endif
-        layer_off       (_PLOVER);
+        clear_layers();
         // toggle plover application off, see herbstluftwm/config/appbinds
         register_code   (KC_LGUI);
-        register_code   (KC_MINS);
-        unregister_code (KC_MINS);
+        register_code   (KC_LSFT);
+        register_code   (KC_EQL);
+        unregister_code (KC_EQL);
         // unregister modifiers as late as possible (convention)
+        unregister_code (KC_LSFT);
         unregister_code (KC_LGUI);
       }
       return false;
@@ -991,7 +860,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef AUDIO_ENABLE
         PLAY_NOTE_ARRAY (music_scale, false, 0);
 #endif
-        layer_off       (_ADJUST);
+        clear_layers();
         persistant_default_layer_set(1UL<<_KEYTEST);
       }
       return false;

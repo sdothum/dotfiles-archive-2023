@@ -61,6 +61,7 @@
 # python2-pyopenssl
   rsync
 # rtorrent
+# rutorrent
 # sabnzbd         [server]
 # sickbeard-git   [server]
   sonarr          [server]
