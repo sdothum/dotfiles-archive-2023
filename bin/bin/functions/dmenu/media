@@ -21,7 +21,7 @@ do
     nzb       ) exec toggle term 'NZB' nzbget --connect ;;
     references) command dmenu references ;;
     series    ) command dmenu series ;;
-    torrent   ) exec toggle tixati ;;
+    torrent   ) exec toggle term 'Torrent' rtorrent ;;
   esac
 done
 

@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... rorrent
+
+annotate "check port forwarding on router $(grep port_range $HOME/.rtorrent.rc)"
+
+# vim: set ft=sh: #

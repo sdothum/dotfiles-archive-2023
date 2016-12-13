@@ -20,7 +20,7 @@
       " check file sensitivity, even though may be sudoed
       " autocmd buffer BufRead     * if expand('%:p') !~ $HOME | set nomodifiable | endif
       " vim8 bug doesn't allow toggling &modifiable so set modifiable on globally
-      autocmd filetype BufRead   * if &filetype != 'help' | set modifiable | endif
+      autocmd buffer BufWinEnter * if &filetype != 'help' | set modifiable | endif
       " always switch to the current file directory, unless uri
       autocmd buffer BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
       " return to last edit position when opening files (You want this!)

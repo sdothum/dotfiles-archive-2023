@@ -60,15 +60,15 @@
 # par2cmdline-tbb
 # python2-pyopenssl
   rsync
-# rtorrent
-# rutorrent
+  rtorrent        [server]
+# rutorrent       [server]
 # sabnzbd         [server]
 # sickbeard-git   [server]
   sonarr          [server]
   syncthing
 # syncthing-git
   syncthing-inotify
-  tixati
+# tixati
 # transmission-gtk
 # unison
 # utserver
