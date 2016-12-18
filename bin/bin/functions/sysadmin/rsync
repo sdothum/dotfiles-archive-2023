@@ -132,32 +132,48 @@ case $@ in
          fi ;;
 
   pi) if server; then
-        rsync --delete-during --exclude=.deprecated --exclude=.hg \
-              $HOME/stow/bash/.bash_logout \
-              $HOME/stow/bash/.bash_profile \
-              $HOME/stow/bash/.bashrc $HOME/stow/bin/bin \
-              $HOME/stow/fonts/.fonts \
-              $HOME/stow/tmux/.tmux.conf \
-              $HOME/stow/X11/.xinitrc \
-              $HOME/stow/X11/.Xresources \
-              pi:$HOME/
-        rsync --delete-during --exclude=.deprecated --exclude=.hg \
-              $HOME/stow/dunst/.config/dunst \
-              $HOME/stow/fish/.config/fish \
-              $HOME/stow/fish/.config/chips \
-              $HOME/stow/herbstluftwm/.config/herbstluftwm \
-              pi:$HOME/.config/
-        rsync --delete-during --exclude=.deprecated \
-              $HOME/stow/bin/.local/bin \
-              pi:$HOME/.local/
-        rsync --delete-during --exclude=.deprecated --exclude=.hg --exclude=makepkg \
-              $HOME/stow/build/build/archlinux \
-              pi:$HOME/build/
-        ssh pi 'mkdir -p build/root/etc'
-        rsync --delete-during --exclude=.deprecated --exclude=.hg \
-              $HOME/stow/build/build/root/etc/profile.d \
-              $HOME/stow/build/build/root/etc/hosts \
-              pi:$HOME/build/root/etc/
+        # rsync --delete-during --exclude=.deprecated --exclude=.hg \
+        #       $HOME/stow/bash/.bash_logout \
+        #       $HOME/stow/bash/.bash_profile \
+        #       $HOME/stow/bash/.bashrc \
+        #       $HOME/stow/bin/bin \
+        #       $HOME/stow/fonts/.fonts \
+        #       $HOME/stow/images/images \
+        #       $HOME/stow/notmuch/.notmuch-config \
+        #       $HOME/stow/tmux/.tmux.conf \
+        #       $HOME/stow/weechat/.weechat \
+        #       $HOME/stow/X11/.xinitrc \
+        #       $HOME/stow/X11/.Xresources \
+        #       pi:$HOME/
+        # rsync --delete-during --exclude=.deprecated --exclude=.hg \
+        #       $HOME/stow/alot/.config/alot \
+        #       $HOME/stow/amphetype/.config/Amphetype \
+        #       $HOME/stow/dunst/.config/dunst \
+        #       $HOME/stow/fish/.config/fish \
+        #       $HOME/stow/fish/.config/chips \
+        #       $HOME/stow/herbstluftwm/.config/herbstluftwm \
+        #       $HOME/stow/qutebrowser/.config/qutebrowser \
+        #       $HOME/stow/vimb/.config/vimb \
+        #       pi:$HOME/.config/
+        # rsync --delete-during --exclude=.deprecated --exclude=.hg --exclude=backups \
+        #       $HOME/stow/vim/.vim \
+        #       $HOME/stow/vim/.vimrc \
+        #       pi:$HOME/
+        # rsync --delete-during --exclude=.deprecated \
+        #       $HOME/stow/bin/.local/bin \
+        #       pi:$HOME/.local/
+        rsync --delete-during \
+              /usr/share/icons/Paper \
+              pi:$HOME/.local/share/icons/
+        # rsync --delete-during --exclude=.deprecated --exclude=.hg --exclude=makepkg \
+        #       $HOME/stow/build/build/archlinux \
+        #       pi:$HOME/build/
+        # ssh pi 'mkdir -p build/root/etc'
+        # rsync --delete-during --exclude=.deprecated --exclude=.hg \
+        #       $HOME/stow/build/build/root/etc/profile.d \
+        #       $HOME/stow/build/build/root/etc/hosts \
+        #       $HOME/stow/build/build/root/etc/X11 \
+        #       pi:$HOME/build/root/etc/
       fi ;;
 
   server) if server ;then

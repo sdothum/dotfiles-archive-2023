@@ -13,6 +13,8 @@ if macbook ;then
   size=9
 elif nvidia ;then
   is display +1680 && size=10 || size=9
+elif arm ;then
+  size=9
 elif laptop ;then
   size=9
 else

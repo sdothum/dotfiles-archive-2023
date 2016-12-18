@@ -17,6 +17,7 @@ margins() {
     2560) echo 86 ;;
     1680) is multihead && margins 3440 || echo 42 ;;
     1440) echo 8 ;;
+    1360) echo 0 ;;
     *   ) echo 0 ;;
   esac
 }

@@ -1,11 +1,11 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# User_install
+# Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................. font-manager
+# ............................................................. infinality fonts
 
-sudo ln -sfv $HOME/.fonts /root/
+sudo sed -i -r '/^#export FREETYPE_PROPERTIES=/s/#(.*)=[0-9]*"$/\1=38"' /etc/profile.d/freetype2.sh
 
 # vim: set ft=sh: #

@@ -6,7 +6,7 @@
 
 # ............................................................... Toggle compton
 
-which compton >/dev/null || exit
+which compton >/dev/null 2>&1 || exit
 [ -e $COMPTON ] && rm -f $COMPTON || touch $COMPTON
 
 if [ -e $COMPTON ] ;then

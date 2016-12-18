@@ -76,8 +76,8 @@ fi
 server && thedarnedestthing
 server && vimwiki
 switch tag $WEB
-# qutebrowser &
 vimbt
+# $BROWSER &
 # xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
 
 # .............................................................. Cleanup desktop

@@ -28,8 +28,9 @@ done
 [ $ext ] || ext=note
 if [ -z $FOLDER ] ;then
   case $ext in
-    note) FOLDER=$HOME/notes ;;
-    *   ) FOLDER=$HOME/tmp ;;
+    note ) FOLDER=$HOME/notes ;;
+    draft) FOLDER=$HOME/drafts ;;
+    *    ) FOLDER=$HOME/tmp ;;
   esac
 fi
 catlg=$FOLDER/.${ext}s
@@ -55,7 +56,7 @@ hint() {
 # list of files
 notes() {
   count=0
-  files=$(find $FOLDER -name "*.$ext")
+  files=$(find -L $FOLDER -name "*.$ext")
   if [ "$files" ] ;then
     for i in $files
     do

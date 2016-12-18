@@ -7,7 +7,7 @@
 # ................................................................... Draw panel
 
 # Usage: draw panel <fifo>, see restore panel
-
+which lemonbar >/dev/null 2>&1 || exit
 fifo=${1#:}
 pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
 

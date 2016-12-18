@@ -8,7 +8,7 @@
 # .................................................... Set wallpaper color theme
 
 # if slickpicker doesn't return color value, only present once
-which slickpicker 2>/dev/null && color=true
+which slickpicker >/dev/null 2>&1 && color=true
 
 # see draw root
 while :

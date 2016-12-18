@@ -103,7 +103,7 @@ case $@ in
 
   conky*fullscreen) touch $FULLSCREEN:primary
                     touch $FULLSCREEN:$TAG
-                    if [ $X0 -gt 1024 ] ;then
+                    if [ $X0 -gt $MIN_DISPLAY ] ;then
                       # desktop screens retain margins
                       PRIMARY=$(printf '%dx%d%+d%+d' \
                                        $(( $fullscreen_width - $SHADOW )) \

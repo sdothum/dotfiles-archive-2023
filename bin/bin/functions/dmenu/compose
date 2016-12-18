@@ -36,7 +36,7 @@ format_message() {
 
 compose_with() {
   format_message $2
-  folded=$(mktemp -p $HOME/tmp)
+  folded=$(mktemp -p $HOME/drafts)
   $1 $2
   fold -s -w 72 $2 >$folded
   cp -f $folded $2
@@ -48,7 +48,7 @@ compose_vim() {
   SHELL=/usr/bin/dash
   format_message $1
   gvim -f -c 'set filetype=mail' $1
-  cp $1 $HOME/tmp/${1#/tmp/}.draft
+  cp $1 $HOME/drafts/${1#/drafts/}.draft
   # cleanup sup mail draft histories
   find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
   history compose $editor
@@ -63,7 +63,7 @@ do
     "$EDIT") command dmenu notes draft
              continue ;;
 
-    "$PURGE") mv $HOME/tmp/alot.*.draft /tmp
+    "$PURGE") mv $HOME/drafts/alot.*.draft /tmp
               continue ;;
 
     focuswriter) compose_with focuswriter $1 ;;

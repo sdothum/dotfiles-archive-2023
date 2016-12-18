@@ -9,6 +9,13 @@ source ./archlinux-functions
 user=shum
 
 
+heading 'configure boot parameters'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /boot/config.txt
+config_install /boot/config.txt
+checkpoint
+
+
 heading 'set and generate locale'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
@@ -17,12 +24,9 @@ export LANG=en_US.UTF-8
 locale-gen
 
 
-heading 'set timezone and clock'
+heading 'set timezone'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-# ls /usr/share/zoneinfo
-# ls /usr/share/zoneinfo/America
 ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
-hwclock --systohc --utc
 
 
 heading 'configure package manager'

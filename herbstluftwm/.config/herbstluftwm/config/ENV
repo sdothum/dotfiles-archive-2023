@@ -68,6 +68,9 @@ export NORMAL='#808080'
 
 # ........................................................... Margin adjustments
 
+# minimun display width for conky/panel monitor rules
+export MIN_DISPLAY=1360
+
 # left shift right monitor margin by shadow-radius*shadow_factor so conky doesn't cover shadow area
 export SHADOW_FACTOR=3
 
@@ -92,7 +95,9 @@ else
 fi
 
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-[ $(query displaywidth 0) -lt 1440 ] && PANEL_MARGIN=true
+[ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
+# assumes startx on primary display
+# is display -min && PANEL_MARGIN=true
 
 # ................................................................ Miscellaneous
 

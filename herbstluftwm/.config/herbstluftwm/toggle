@@ -86,7 +86,7 @@ if [ -e ${0%/toggle}/functions/toggle/$msg ] ;then
   . ${0%/toggle}/functions/toggle/$msg $@
 elif [ $msg = term ] ;then
   toggle_term $@
-elif which $msg >/dev/null ;then
+elif which $msg >/dev/null 2>&1 ;then
   toggle_app
 else
   usage $0

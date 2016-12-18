@@ -7,6 +7,7 @@
 # ................................................................ Refresh conky
 
 # reload .conkyrc (herbstluftwm spawn to avoid interactive shell hanging, see draw root)
+which conky >/dev/null 2>&1 || exit
 pkill -TERM -f '/usr/bin/conky' >/dev/null 2>&1
 [ -e $CONKY ] && herbstclient spawn conky
 

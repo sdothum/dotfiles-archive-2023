@@ -8,8 +8,9 @@
 
 # Usage: bundle_install bundle..
 #
-# format: # comment
+# format: # inline comment
 #         = title
+#         " quote
 #         + package             (to manually install afterwards)
 #         - package [condition] (to remove)
 #         ? package [condition] (confirm, see pm_install)
@@ -37,6 +38,9 @@ do
       '#' | '') continue ;;
 
       '=') title "$package $condition"
+           continue ;;
+
+      '"') ditto "$package $condition"
            continue ;;
 
       '+') heading "[ Manual install required.. ]   $package"

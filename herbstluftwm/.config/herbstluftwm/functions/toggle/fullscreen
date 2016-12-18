@@ -9,7 +9,7 @@
 # fullscreen with conky panel
 herbstclient lock
 restore tiled
-if is display +1024 ;then
+if is display +min ;then
   if is primary ;then
     # allow transitioning monocle directly to fullscreen
     [ -e $MONOCLE ] && toggle monocle fullscreen

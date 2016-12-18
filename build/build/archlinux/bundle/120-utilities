@@ -107,7 +107,7 @@
 # gamin
   glances
   gsmartcontrol
-# htop
+  htop
   iotop
 # memtester
 # mprime-bin [server]
@@ -125,7 +125,7 @@
 # sakura
 # terminator
 # termite-git
-  urxvt-font-size-git [server]
+# urxvt-font-size-git [server]
   urxvt-perls
   xterm
 

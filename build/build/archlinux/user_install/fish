@@ -14,5 +14,6 @@
 sudo cp -fv $HOME/.bash_logout /root/
 sudo cp -fv $HOME/.bash_profile /root/
 sudo cp -fv $HOME/.bashrc /root/
+sudo ln -sfv $HOME/.config/fish /root/.config/
 
 # vim: set ft=sh: #

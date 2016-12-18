@@ -39,7 +39,7 @@ set -x PASSWORD_STORE_CLIP_TIME 60
 
 # ..................................................................... Internet
 
-# default browser
+# default browser changes require login (Ctrl-d) for X11 autostart
 # set -x BROWSER chromium
 # set -x BROWSER luakit
 # set -x BROWSER qutebrowser

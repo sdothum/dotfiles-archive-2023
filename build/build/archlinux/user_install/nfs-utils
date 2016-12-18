@@ -26,13 +26,9 @@ elif ! grep -q 'net.*nfs4' /etc/fstab ;then
   sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
            -e '$a\
 luna:/net     /net               nfs4 rw,noatime,rsize=32768,wsize=32768,nolock,_netdev 0 0\
-' /etc/fstab
-  if [ $(hostname) != alarmpi ] ;then
-    sudo sed -i '$a\
 luna:/Maildir /home/$uid/Maildir nfs4 rw,noatime,rsize=32768,wsize=32768,nolock,_netdev 0 0\
 ' /etc/fstab
-    sudo sed -i "s/\$uid/$USER/" /etc/fstab
-  fi
+  sudo sed -i "s/\$uid/$USER/" /etc/fstab
 fi
 
 annotate 'update cliend hosts tables with nfs server address for luna'

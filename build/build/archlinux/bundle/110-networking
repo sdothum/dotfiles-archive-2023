@@ -63,4 +63,14 @@
 # ▔▔▔▔▔▔
   socat
 
+
+= sync
+# ▔▔▔▔
+# btsyncindicator
+# btsync
+  rsync
+  syncthing
+# syncthing-git
+  syncthing-inotify
+
 # vim: set ft=conf: #

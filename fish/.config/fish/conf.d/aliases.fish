@@ -41,7 +41,7 @@ alias umount 'sudo umount'
 
 alias font-manager 'font-manager ; sudo rm -f ~/.fonts.conf'
 alias fontmatrix 'fontmatrix ; sudo rm -f ~/.fonts.conf'
-alias htop 'glances'
+alias gtop 'glances'
 alias iotop 'sudo iotop'
 alias lpr 'lpr -P hp-LaserJet-1320-series'
 alias screenfetch 'fetch'
@@ -53,7 +53,6 @@ alias friendlybear 'smbclient -R bcast //friendlybear/patricia motu om'
 
 # ................................................................... Filesystem
 
-alias df "command df -h ; echo ; sudo btrfs filesystem df / ; echo ; sudo btrfs filesystem du -s '/home /opt /usr /var'"
 alias ducks "du -cks * | sort -rn | egrep -v '^0|total'"
 alias dud 'du -d 1 -h'
 

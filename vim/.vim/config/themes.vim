@@ -188,13 +188,22 @@
             call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 18
           endif
-        else
+        elseif system("lspci") =~ 'VGA .* Intel'
           " for ati/intel gpu's
           if &guifont =~ '12' || a:size < 0
             call Fontspace(11, 0)
             " let g:lite_dfm_left_offset = 22
           else
             call Fontspace(12, 0)
+            " let g:lite_dfm_left_offset = 18
+          endif
+        else
+          " for raspberry pi arm
+          if &guifont =~ '10' || a:size < 0
+            call Fontspace(9, 0)
+            " let g:lite_dfm_left_offset = 22
+          else
+            call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 18
           endif
         endif

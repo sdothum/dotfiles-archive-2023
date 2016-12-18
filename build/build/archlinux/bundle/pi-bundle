@@ -41,6 +41,12 @@ g term-ansicolor
   fish
 
 
+= system monitor
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  glances
+  htop
+
+
 = x11 drivers
 # ▔▔▔▔▔▔▔▔▔▔▔
   xf86-video-fbdev
@@ -54,10 +60,25 @@ g term-ansicolor
   xorg-server-xephyr
 
 
+= infinality font rendering
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+" replace freetype2, fontconfig and cairo packages
+? freetype2-infinality
+? fontconfig-infinality
+? cairo-infinality
+
+
+= ncurses editor
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gvim
+
+
 = terminal
 # ▔▔▔▔▔▔▔▔
-  rxvt-unicode
+" add armv7h to arch in pkgbuild
+? rxvt-unicode-patched
   tmux
+  urxvt-perls
 
 
 = window manager
@@ -78,8 +99,22 @@ g term-ansicolor
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   ack
   figlet
-  screenfetch
+  neofetch
   sudo
+
+
+= fonts and font managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  libxft
+  noto-fonts
+  terminus-font-ll2-td1
+  ttf-courier-prime
+  ttf-dejavu
+  ttf-dejavu-sans-mono-powerline-git
+  ttf-font-awesome
+  ttf-liberation
+  ttf-ms-fonts
+  ttf-symbola
 
 
 = package managers
@@ -104,24 +139,37 @@ g term-ansicolor
   nfs-utils
 
 
+= sync
+# ▔▔▔▔
+  rsync
+  syncthing
+  syncthing-inotify
+
+
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # "stest contained in dmenu package"
   dmenu
   dunst
+  gpaste
   libnotify
   rofi
 
 
 = gtk themes and engines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# gtk-engine-murrine
+  adapta-gtk-theme-deb
+  gtk-engine-murrine
+# "direct rsync from /usr/share/icons to .local/share"
+# paper-icon-theme-git
 
 
 = x11
 # ▔▔▔
   autocutsel
-  unclutter
+" add armv7h to arch in pkgbuild
+? setroot
+? unclutter-xfixes-git
   xdotool
   xf86-input-keyboard
   xf86-input-mouse
@@ -129,12 +177,28 @@ g term-ansicolor
 
 = file transfer
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
-  rsync
   wget
 
 
 = video players
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   omxplayer-git
+
+
+= internet
+# ▔▔▔▔▔▔▔▔
+  alot
+  qutebrowser
+  tabbed
+" add armv7h to arch in pkgbuild
+? vimb
+  weechat
+
+
+= applications
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+" add armv7h to arch in pkgbuild
+? amphetype-svn
+  feh
 
 # vim: set ft=conf: #
