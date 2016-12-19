@@ -100,7 +100,17 @@ g term-ansicolor
   ack
   figlet
   neofetch
+  stow
   sudo
+
+
+= file managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  ncdu
+  ranger
+  rox
+# tumbler
+  vifm
 
 
 = fonts and font managers
@@ -185,14 +195,20 @@ g term-ansicolor
   omxplayer-git
 
 
+= mail
+# ▔▔▔▔
+  alot
+  msmtp-mta
+
+
 = internet
 # ▔▔▔▔▔▔▔▔
-  alot
   qutebrowser
   tabbed
 " add armv7h to arch in pkgbuild
 ? vimb
   weechat
+  xmpppy
 
 
 = applications

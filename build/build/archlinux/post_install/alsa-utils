@@ -10,9 +10,4 @@
 # amixer sset Master unmute
 sudo usermod -a -G audio $USER
 
-[ arm ] && sudo sed -i '$a\
-dtparam=audio=on\
-hdmi_drive=2\
-' /boot/config.txt
-
 # vim: set ft=sh: #

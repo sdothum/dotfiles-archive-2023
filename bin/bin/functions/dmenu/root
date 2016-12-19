@@ -16,7 +16,7 @@ UPDATE='[ update ]'
 # catalogue of root background colors
 root() {
   find $PALETTE -name '*png' | egrep '(dark|light)/' |
-                               sed -r "s|.*/(.*)/(.*)/(.*).png|\3^$SEP \1 \2|" |
+                               sed -r "s,.*/(.*)/(.*)/(.*).png,\3^$SEP \1 \2," |
                                sort -r -k2 >$HISTORY/root
 }
 

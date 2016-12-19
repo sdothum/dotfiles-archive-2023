@@ -14,8 +14,8 @@ if [ ! -f /var/spool/cron/$USER ] ;then
   [ -d $HOME/tmp ] || mkdir $HOME/tmp
   server || comment='# '
   echo "0 * * * * /usr/sbin/logrotate -s $HOME/tmp/logrotate.status $HOME/.config/logrotate/logrotate.conf
-* * * * * /home/$USER/bin/mailqueue >>/tmp/mailqueue.log 2>&1
-${comment}* * * * * /home/$USER/bin/mailsync >>/tmp/mailsync.log 2>&1"  | sudo crontab -u $USER -
+* * * * * /home/$USER/bin/functions/mail/mailqueue >>/tmp/mailqueue.log 2>&1
+${comment}* * * * * /home/$USER/bin/functions/mail/mailsync >>/tmp/mailsync.log 2>&1"  | sudo crontab -u $USER -
 
   if [ ! -L $HOME/.msmtprc ] ;then
     ln -sfv $HOME/.msmtprc $HOME/.msmtprc

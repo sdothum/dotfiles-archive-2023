@@ -8,7 +8,10 @@
 
 ln -sf /usr/share/webapps/rutorrent /opt/nginx/html/
 
-grep -q rutorrent /etc/php/php.ini || sudo sed -i '/^open_basedir = "/s|= "|= "/etc/webapps/rutorrent/conf/:/usr/share/webapps/rutorrent/php/:/usr/share/webapps/rutorrent/:|' /etc/php/php.ini
+if ! grep -q rutorrent /etc/php/php.ini ;then
+  original /etc/php/php.ini
+  sudo sed -i '/^open_basedir = "/s|= "|= "/etc/webapps/rutorrent/conf/:/usr/share/webapps/rutorrent/php/:/usr/share/webapps/rutorrent/:|' /etc/php/php.ini
+fi
 
 grep -q scgi_port  $HOME/.rtorrent.rc || sed -i '$a\
 \

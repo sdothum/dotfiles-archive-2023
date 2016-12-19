@@ -16,6 +16,7 @@ sudo grpck
 if grep -qv '\--nodnsproxy' /lib/systemd/system/connman.service; then
 heading "restore connman dns"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /lib/systemd/system/connman.service
   sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
   sudo systemctl restart connman
 fi

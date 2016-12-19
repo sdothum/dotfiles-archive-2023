@@ -7,14 +7,14 @@
 # ......................................................... Revision differences
 
 usage() {
-  echo "usage: $(basename $0) <package> [filter]"
+  echo "usage: $(basename $0) <package> [select]"
   exit 1
 }
 
 # diff current sources with dotfiles git repo
 dotfiles=/net/depot/dotfiles
 current=$HOME/stow
-ignore='backups|build|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
+ignore='backups|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
 
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
@@ -25,13 +25,12 @@ if ! if-no "sync $dotfiles repo" ;then
 fi
 
 if [ $2 ] ;then
-  filter=$2
+  select=$2
 else
-  filter="$ignore"
-  exclude=-v
+  select='*'
 fi
 
-for i in $(find $current/$1 -type f | egrep -v '/[.](deprecated|git|hg|history|vimv)' | egrep $exclude $filter)
+for i in $(find $current/$1 -type f | egrep -v '/[.](deprecated|git|hg|history|vimv)' | egrep -v $ignore | egrep "$select")
 do
   file=${i#*/stow/*/}
   unset blink

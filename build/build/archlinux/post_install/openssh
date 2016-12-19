@@ -13,9 +13,7 @@ systemd enable sshd
 annotate "Generate public/private rsa key pair:\n
 ssh-keygen -t rsa -b 2048\n
 \n
-cat $HOME/.ssh/id_rsa.pub | ssh $USER@destination 'cat >> $HOME/.ssh/authorized_keys'\n
-or\n
--> FROM <- destination, ssh into server:\n
-ssh-copy-id $USER@destination"
+sshid <host> to enable passwordless login"
+# ssh-copy-id $USER@destination (?) doesn't work
 
 # vim: set ft=sh: #

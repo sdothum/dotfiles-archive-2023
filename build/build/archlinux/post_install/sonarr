@@ -8,9 +8,9 @@
 
 systemd enable sonarr
 annotate "configure sonarr http://localhost:8989/"
-if ! grep -q '^users:.*sonarr' ;then
-  grep -q '^users:.*:$' && sudo sed -r 's/^(users:.*)/\1sonarr/' ||
-                           sudo sed -r 's/^(users:.*)/\1,sonarr/'
+if ! grep -q '^users:.*sonarr' /etc/group ;then
+  grep -q '^users:.*:$' /etc/group && sudo sed -i -r 's/^(users:.*)/\1sonarr/' /etc/group ||
+                                      sudo sed -i -r 's/^(users:.*)/\1,sonarr/' /etc/group
 fi
 
 annotate allow sonarr users group access with sudo chmod -c 775 /net/media/videos/{series,anime}

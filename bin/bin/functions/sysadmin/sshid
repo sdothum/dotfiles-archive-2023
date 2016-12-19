@@ -1,20 +1,20 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Post_install
+# Sysadmin
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................................... genymotion
+# ...................................................... ssh-copy-id alternative
 
-original /etc/modules-load.d/virtualbox.conf
-sudo sed -i '$a\
-vboxnetflt\
-vboxnetadp\
-vboxpci\
-' /etc/modules-load.d/virtualbox.conf
+usage() {
+  echo "usage: $(basename $0) <host>"
+  exit 1
+}
 
-sudo modprobe vboxnetflt
-sudo modprobe vboxnetadp
-sudo modprobe vboxpci
+[ $1 ] && cat $HOME/.ssh/id_rsa.pub | ssh $USER@$1 'cat >> $HOME/.ssh/authorized_keys' ||
+          usage
+
+ditto 'testing ssh login to $1'
+ssh $1
 
 # vim: set ft=sh: #

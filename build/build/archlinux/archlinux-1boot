@@ -11,6 +11,7 @@ user=shum
 
 heading 'set and generate locale'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /etc/locale.gen
 sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
 echo LANG=en_US.UTF-8 >/etc/locale.conf
 export LANG=en_US.UTF-8
@@ -66,6 +67,7 @@ checkpoint
 
 heading 'configure package manager'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /etc/pacman.conf
 sed -i -e '/^\[options\]/aILoveCandy' \
     -e '/^#\[multilib\]/,+1s/^#//' \
     -e '/^#Color/s/^#//' \
@@ -102,6 +104,7 @@ heading "create \"$user\" user account"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 pm_install sudo
+original /etc/sudoers
 sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
     -e '/## Defaults specification/aDefaults insults' \
     /etc/sudoers
@@ -147,6 +150,7 @@ checkpoint
 heading 'configure btrfs in mkinitcpio.conf'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 # sed -i '/^HOOKS=/s/fsck/btrfs usr shutdown/' /etc/mkinitcpio.conf
+original /etc/mkinitcpio.conf
 sed -i '/^HOOKS=/s/fsck/btrfs/' /etc/mkinitcpio.conf
 nano /etc/mkinitcpio.conf
 mkinitcpio -p linux
