@@ -19,6 +19,4 @@ if [ "$orphans" ] ;then
   fi
 fi
 
-screenfetch
-
 # vim: set ft=sh: #

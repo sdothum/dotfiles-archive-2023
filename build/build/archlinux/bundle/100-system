@@ -95,6 +95,7 @@
   pacaur
 # package-query-git
 # packer
+  pkgfile
   pkgstats
   pkgtools
 # powerpill

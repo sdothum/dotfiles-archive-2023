@@ -44,7 +44,10 @@
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
+  nss-mdns
   nfs-utils
+  pygtk
+  python-dbus
 # nmap
 # nss-mdns
 # samba

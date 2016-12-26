@@ -72,6 +72,7 @@ hc rule class=Gvim                   focus=on hook=max
 hc rule windowrole=gvimdiff          focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                pseudotile=on
 hc rule class=mpv                    index=1 focus=on switchtag=on fullscreen=off
+hc rule title=omxplay                fullscreen=on hook=fullscreen
 hc rule class=Plover                 pseudotile=on
 hc rule class=ROX-Filer              pseudotile=off
 hc rule class=Savebox                pseudotile=off

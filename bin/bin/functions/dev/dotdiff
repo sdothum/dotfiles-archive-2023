@@ -7,7 +7,7 @@
 # ......................................................... Revision differences
 
 usage() {
-  echo "usage: $(basename $0) <package> [select]"
+  echo "usage: $(basename $0) <package> [folders]"
   exit 1
 }
 
@@ -25,12 +25,12 @@ if ! if-no "sync $dotfiles repo" ;then
 fi
 
 if [ $2 ] ;then
-  select=$2
+  folders=$2
 else
-  select='*'
+  folders='*'
 fi
 
-for i in $(find $current/$1 -type f | egrep -v '/[.](deprecated|git|hg|history|vimv)' | egrep -v $ignore | egrep "$select")
+for i in $(find $current/$1 -type f | egrep -v '/[.](deprecated|git|hg|history|vimv)' | egrep -v $ignore | egrep "$folders")
 do
   file=${i#*/stow/*/}
   unset blink

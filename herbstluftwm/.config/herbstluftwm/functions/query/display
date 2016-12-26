@@ -10,6 +10,6 @@
 #        typically, set -- $(query display) to reference X Y as $1 $2
 
 [ $1 ] && secondary=-r
-xrandr | grep '*' | sort $secondary | tail -1 | tr 'x' ' '
+xrandr 2>/dev/null | grep '*' | sort $secondary | tail -1 | tr 'x' ' '
 
 # vim: set ft=sh: #

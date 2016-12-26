@@ -1,0 +1,27 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................... omxplayer geometry
+
+view=$(previous geometry)
+geometry=$(echo "fullscreen\nsplit\ncorner" |
+           dmenu "$1" $view -no-custom) || exit 1
+
+# fit window in 1:1 layout frame for non-fullscreen view
+set -- $(query display)
+gap=$(herbstclient attr settings.window_gap)
+left=$(( $1 / 2 + $gap ))
+right=$(( $1 - $gap - 1 ))
+top=$(( $2 / 2 - 1 ))
+bottom=$2
+case $geometry in
+  fullscreen) echo ;;
+  split     ) echo " --win '\"$left 0 $right $bottom\"' --aspect-mode letterbox" ;;
+  corner    ) echo " --win '\"$left $top $right $bottom\"' --aspect-mode letterbox" ;;
+esac
+history geometry $geometry
+exit 0
+
+# vim: set ft=sh: #

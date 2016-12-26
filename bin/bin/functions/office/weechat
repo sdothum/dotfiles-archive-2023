@@ -10,6 +10,18 @@ ircservers=3
 timeout=300
 rm -f $HOME/.weechat/*.log
 
+# re-initialize disappearing(?) autoload links
+cd $HOME/.weechat/perl/autoload
+for i in ../*pl
+do
+  ln -s $i . 2>/dev/null
+done
+cd $HOME/.weechat/python/autoload
+for i in ../*py
+do
+  ln -s $i . 2>/dev/null
+done
+
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if server ;then

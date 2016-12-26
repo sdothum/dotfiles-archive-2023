@@ -9,12 +9,15 @@
 
 filter='\.cache|\.deprecated|\.hg|makepkg'
 
+files() {
+  ( find -L $HOME/bin -type f
+    find -L $HOME/build/archlinux -type f
+    find -L $HOME/.config/herbstluftwm -type f
+  ) | egrep -v "$filter"
+}
+
 # list of user scripts and functions
-file=$(echo $(find -L $HOME/bin -type f) \
-            $(find -L $HOME/build/archlinux -type f) \
-            $(find -L $HOME/.config/herbstluftwm -type f) |
-       tr ' ' '\n' |
-       egrep -v "$filter" |
+file=$(files |
        sed -e "s|$HOME/bin/|bin/|" \
            -e 's|.*/archlinux/|archlinux/|' \
            -e 's|.*/herbstluftwm/|herbstluftwm/|' |
@@ -29,8 +32,8 @@ if echo $file | grep -q "$SEP" ;then
   file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
 else
   # (tic) 'script for quick menu action
-  file=$(find $HOME -type f -name $(unquote $file) |
-         egrep -v "$filter" |
+  file=$(files |
+         grep "/$(unquote $file)$" |
          head -1 |
          sed "s|^$HOME/||")
   [ $file ] || exec dmenu scripts

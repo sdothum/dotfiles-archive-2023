@@ -30,7 +30,7 @@ echo $PATH | grep -q "$HOME/.local/bin"
 # ........................................................... System environment
 
 # default printer
-set -x PRINTER HP_LaserJet_1320_series
+set -x PRINTER HP_LaserJet_1320
 
 # gpg key
 test -S ~/.gnupg/S.gpg-agent

@@ -199,13 +199,7 @@
           endif
         else
           " for raspberry pi arm
-          if &guifont =~ '10' || a:size < 0
-            call Fontspace(9, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call Fontspace(10, 0)
-            " let g:lite_dfm_left_offset = 18
-          endif
+          call Fontspace(9, 0)
         endif
       endfunction
 

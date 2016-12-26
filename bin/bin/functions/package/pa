@@ -47,6 +47,7 @@ if [ -z $1 ] ;then
     echo "$pacnew"
     if-no 'merge .pacnew files' || dmenu pacnews
   fi
+  orphans
   if-no 'apply post arch install updates and cleanup' || $HOME/build/archlinux/archlinux-update
 else
   pacaur $@

@@ -11,17 +11,24 @@ usage() {
   exit 1
 }
 
+tree=/tmp/pd:r
+
 case $1 in
   '') usage ;;
 
-  r*) D=N
-      shift
-      dep='required by' ;;
+  r) echo >$tree
+     shift
+     pd R $@ ;;
 
-  n*) pacman -Qet
-      exit ;;
+  R) D=N
+     shift
+     dep='required by' ;;
 
-  *) D=D
+  n) pacman -Qet
+     exit ;;
+
+  *) echo >$tree
+     D=D
      dep='depends on' ;;
 esac
 
@@ -29,9 +36,30 @@ esac
 if [ $1 ] ;then
   for i in $@
   do
+    grep -q $i $tree && continue
     if [ "$(expac '%n' $i)" ] ;then
       # list source repository
-      echo "$(expac -S '%r/%n' $i) ($dep)$(expac "%$D" $i | sed 's/  */\n/g' | sort | sed 's/^/^/')" | column -s^ -t
+      pkgs=$(expac "%$D" $i | sed 's/  */\n/g' | sort)
+
+      # fix specific library dependency loop
+      # lib32-freetype2 depends on lib32-harfbuzz but is erroneously listed as dependency of lib32-harfbuzz!
+      if [ $D = N ] ;then
+        [ $i = lib32-harfbuzz ] && pkgs=$(echo $pkgs | grep -v lib32-freetype2)
+      fi
+      [ "$pkgs" ] || exit
+
+      echo "$(expac -S '%r/%n' $i) ($dep)$(echo "$pkgs" | sed 's/^/^/')" | column -s^ -t
+      echo $i >>$tree
+
+      # recurse through required by
+      if [ $D = N ] ;then
+        for j in $pkgs
+        do
+          grep -q $j $tree && continue
+          pd R $j
+          echo $j >>$tree
+        done
+      fi
     else
       ditto "\"$i\" not found"
     fi

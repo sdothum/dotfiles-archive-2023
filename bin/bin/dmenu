@@ -20,6 +20,8 @@ RSPACE="$SEP    "
 INDENT='   '
 UTF='□'
 
+# leader left or right
+lead=right
 leader='──────'
 # fg='#ADA693'
 fg='#FDF6E3'
@@ -112,6 +114,13 @@ previous() {
 
 # dmenu wrapper for sourced apps
 # usage: dmenu '<prompt>' [['<select>' | <row>] | -filter '<filter>'] [<option>*]
+
+# convert prompt right to lower case
+prompt() {
+  [ $lead = left ] && echo "${prompt}$leader   " ||
+                      echo "$leader   $(echo "$prompt" | tr [:upper:] [:lower:])"
+}
+
 dmenu() {
   # prompt string
   if [ "$1" ] ;then
@@ -157,7 +166,7 @@ dmenu() {
                  -padding $padding \
                  -fullscreen \
                  -filter "$filter" \
-                 -dmenu -p "${prompt}$leader   " \
+                 -dmenu -p "$(prompt)" \
                         -i \
                         -selected-row $row \
                         $@ \
@@ -180,7 +189,7 @@ dmenu() {
                  -padding $padding \
                  -fullscreen \
                  -filter "$filter" \
-                 -dmenu -p "${prompt}$leader   " \
+                 -dmenu -p "$(prompt)" \
                         -i \
                         -select "$select" \
                         $@ \

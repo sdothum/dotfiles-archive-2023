@@ -38,6 +38,7 @@ g term-ansicolor
 # ▔▔▔▔▔
   autojump
   dash
+  figlet
   fish
 
 
@@ -68,9 +69,11 @@ g term-ansicolor
 ? cairo-infinality
 
 
-= ncurses editor
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= editors
+# ▔▔▔▔▔▔▔
   gvim
+  texlive-core
+  texlive-latexextra
 
 
 = terminal
@@ -95,13 +98,11 @@ g term-ansicolor
   pulseaudio-alsa
 
 
-= system utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= admin
+# ▔▔▔▔▔
   ack
-  figlet
   neofetch
   stow
-  sudo
 
 
 = file managers
@@ -111,6 +112,14 @@ g term-ansicolor
   rox
 # tumbler
   vifm
+
+
+= cups printing
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cups
+  ghostscript
+  gsfonts
+  gutenprint
 
 
 = fonts and font managers
@@ -130,11 +139,14 @@ g term-ansicolor
 = package managers
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   downgrade
+  pkgfile
 
 
 = network
 # ▔▔▔▔▔▔▔
   connman
+  dnsmasq
+  dnsutils
 # networkmanager
 
 
@@ -146,7 +158,10 @@ g term-ansicolor
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
+  nss-mdns
   nfs-utils
+  pygtk
+  python-dbus
 
 
 = sync
@@ -201,20 +216,34 @@ g term-ansicolor
   msmtp-mta
 
 
-= internet
+= browsers
 # ▔▔▔▔▔▔▔▔
+  chromium
   qutebrowser
   tabbed
 " add armv7h to arch in pkgbuild
 ? vimb
+  w3m
+
+
+= internet
+# ▔▔▔▔▔▔▔▔
   weechat
   xmpppy
+
+
+= viewers
+# ▔▔▔▔▔▔▔
+  feh
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
 
 
 = applications
 # ▔▔▔▔▔▔▔▔▔▔▔▔
 " add armv7h to arch in pkgbuild
 ? amphetype-svn
-  feh
+  calc
 
 # vim: set ft=conf: #

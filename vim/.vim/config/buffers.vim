@@ -33,7 +33,7 @@
       " Fast saving
       nmap <silent><leader>w    :silent write!<CR>
       " sudo save
-      nmap <leader>W            :w !sudo tee % >/dev/null
+      nmap <leader>W            :silent write !sudo tee % >/dev/null<CR>
       " (write and) close all buffers
       nmap <silent><leader>zz   :silent wqall!<CR>
       nmap <silent><leader>qq   :silent qall!<CR>

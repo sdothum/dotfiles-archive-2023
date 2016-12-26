@@ -25,7 +25,7 @@ if ! pm_query $@ ;then
     [ $confirm ] && sudo pacman -S $@ || sudo pacman -S --noconfirm $@
   else
     echo "${_GREEN_}@ aur${nocolor_}"
-    [ $confirm ] && $pacaur -S $@ || $pacaur -S --noconfirm --noedit $@
+    [ $confirm ] && $pacaur -S $@ || $pacaur -S --noconfirm $@
   fi
 fi
 post_install $@

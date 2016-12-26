@@ -14,8 +14,9 @@ if [ $1 ] ;then
 else
   focus frame
   # hide cursor (make it dark!)
-  xterm -cr '#101010' \
-        -e "$fetch --size 340 --xoffset 55 --yoffset 30 \
+  xterm -cr '#010101' \
+        -e "$fetch --config off \
+                   --size 340 --xoffset 55 --yoffset 30 \
                    --image $(lname $HOME/images/backgrounds/default) \
                    --block_range 0 15 --gap 5 \
             && echo \

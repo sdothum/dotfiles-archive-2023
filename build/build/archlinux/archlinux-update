@@ -86,10 +86,11 @@ pacman -Qen | cut -d' ' -f1 | column -c$(tput cols)
 
 heading "clean pacman database"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-orphans
 # sudo pacman -Sc --noconfirm
 sudo paccache -rk4
 sudo paccache -ruk0
 sudo pacman-optimize
+
+fetch
 
 # vim: set ft=sh: #

@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ Memory / swap
+
+# lifted from http://www.sheenaustin.com/2012/08/18/reboot-server-if-it-runs-too-low-on-physical-memory-and-is-swapping-too-much/
+
+mem=$(free -m | grep Mem | awk '{ print $2 }')
+free=$(free -m | grep Mem | awk '{ print $4 }')
+swap=$(free -m | grep Swap | awk '{ print $2 }')
+used=$(free -m | grep Swap | awk '{ print $3 }')
+
+threshold=$(( $mem / 10 ))
+thrash=$(( $swap / 10 ))
+
+if [ $free -lt $threshold ] ;then
+  if [ $used -gt $thrash ] ;then
+    ditto "${free}M free memory" "${used}M used swap"
+    notify critical "${free}M free memory" "${used}M used swap"
+    exit
+  fi
+fi
+ditto 'memory / swap usage OK'
+
+# vim: set ft=sh: #

@@ -8,12 +8,22 @@
 
 # play media (see rox, dmenu movies, dmenu series)
 if arm; then
-  omxplayer "$(find "$@" -regextype posix-extended -regex '.*(mkv|MKV|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)"
+  geometry=$(dmenu geometry "${@##*/}") || exit
+  video=$(find "$@" -regextype posix-extended -regex '.*(mkv|Mkv|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)
+  notify "${@##*/}" '1/2  Speed\n+/-  Volume\nm/n  Subtitles'
+  # syncthing cpu usage can exacerbate video stuttering
+  systemd stop syncthing@$USER
+
+  # omxplayer keyboard shortcuts only available through terminal emulator
+  eval term 'omxplay' BLACKBOARD omxplayer $geometry "$video"
+  echo "${@##*/} -> $video" >>/tmp/omxplay.log
+  pwait "$video"
+  systemd start syncthing@$USER
 else
-  notify 'MPV' '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\nv/j  Subtitles'
+  notify "${@##*/}" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\nv/j  Subtitles'
   focus frame
   mpv --vf=eq "$@" >/dev/null 2>&1
-  # delete accidental
+  # delete accidental screenshots
   rm -f $HOME/mpv-shot*.jpg
 fi
 # refresh panel title on close

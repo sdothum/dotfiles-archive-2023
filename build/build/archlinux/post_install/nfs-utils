@@ -10,7 +10,8 @@ if server ;then
   original /etc/conf.d/nfs-server.conf
   # sudo sed -i '/NFSD_OPTS=""/s/""/"-N 2 -N 3"/' /etc/conf.d/nfs-server.conf
   sudo sed -i '/RPCNFSDARGS=""/s/""/"-N 2 -N 3"/' /etc/sysconfig/nfs
-  systemd enable rpcbind
+  # not required for nfs4
+  # systemd enable rpcbind
   systemd enable nfs-server
 
   original /etc/exports
@@ -24,7 +25,7 @@ if server ;then
   fi
 else
   sudo systemctl mask nfs-blkmap.service
-  systemd enable rpcbind
+  # systemd enable rpcbind
   systemd enable nfs-client.target
   systemd enable remote-fs.target
 fi

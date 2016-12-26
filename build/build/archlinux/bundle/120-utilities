@@ -63,6 +63,7 @@
 # hfsprogs
 # nfs-utils
   ntfs-3g
+  ntfs-3g-fuse
 
 
 = ripping
