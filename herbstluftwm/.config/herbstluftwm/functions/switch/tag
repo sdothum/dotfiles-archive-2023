@@ -26,5 +26,6 @@ restore monocle $tag
 
 focus window
 unlock
+is nonempty $tag || notify 1 "[$tag]" "$(query tname $tag)"
 
 # vim: set ft=sh: #

@@ -15,7 +15,8 @@ if arm; then
   systemd stop syncthing@$USER
 
   # omxplayer keyboard shortcuts only available through terminal emulator
-  eval term 'omxplay' BLACKBOARD omxplayer $geometry "$video"
+  # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${video%.*}.srt" --align center "$video"
+  eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center "$video"
   echo "${@##*/} -> $video" >>/tmp/omxplay.log
   pwait "$video"
   systemd start syncthing@$USER

@@ -11,6 +11,6 @@ if ! grep -q '^Out \${HOME}/documents' /etc/cups/cups-pdf.conf ;then
   sudo sed -i '/#Out/aOut ${HOME}/documents' /etc/cups/cups-pdf.conf
 fi
 
-systemd restart cups
+systemd restart org.cups.cupsd
 
 # vim: set ft=sh: #

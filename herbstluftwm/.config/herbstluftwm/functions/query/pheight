@@ -11,8 +11,11 @@
 # heights
 primary=20
 secondary=18
+monitor=$1
 
-case $1 in
+arm && monitor=tv
+case $monitor in
+  tv       ) echo $(( $(herbstclient attr settings.window_gap) + $(herbstclient attr settings.frame_gap) )) ;;
   primary  ) echo $primary ;;
   secondary) echo $secondary ;;
   *        ) is display =3440 && echo 20 || echo 18 ;;

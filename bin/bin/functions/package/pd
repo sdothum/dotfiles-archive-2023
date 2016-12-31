@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0)  'depends on <package> | n'o dependencies | r'equired by <package>"
+  echo "usage: $(basename $0)  n'o dependencies | depends o'n <package> | 'required by <package>"
   exit 1
 }
 
@@ -16,20 +16,20 @@ tree=/tmp/pd:r
 case $1 in
   '') usage ;;
 
-  r) echo >$tree
+  n) pacman -Qet
+     exit ;;
+
+  o) echo >$tree
+     D=D
      shift
-     pd R $@ ;;
+     dep='depends on' ;;
 
   R) D=N
      shift
      dep='required by' ;;
 
-  n) pacman -Qet
-     exit ;;
-
   *) echo >$tree
-     D=D
-     dep='depends on' ;;
+     pd R $@ ;;
 esac
 
 # package dependency

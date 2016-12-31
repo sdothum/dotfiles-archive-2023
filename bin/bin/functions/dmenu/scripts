@@ -37,7 +37,7 @@ else
          head -1 |
          sed "s|^$HOME/||")
   [ $file ] || exec dmenu scripts
-  history scripts "${file##*/}^$SEP $(echo $file | sed "s|^stow/[^/]*/||")"
+  history scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
 fi
 
 if [ -e $HOME/$file ] ;then

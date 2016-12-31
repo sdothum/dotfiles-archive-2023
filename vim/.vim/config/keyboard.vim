@@ -11,18 +11,26 @@
       " e.g. "h" becomes "m", "f" becomes "t" etc.
       " see thedarnedestthing.com
 
+      " hjkl mapping (0) hjkl (1) mnle
+      let s:mapping = 0
+
       function! Colemak()
-        " environment variable
-        if $COLEMAK_DH == 'true'
+        if s:mapping == 0
           " map home row (cluster) cursor movement
-          nnoremap l gk
-          vnoremap l gk
-          nnoremap m h
-          vnoremap m h
-          nnoremap n gj
-          vnoremap n gj
-          nnoremap e l
-          vnoremap e l
+          nnoremap k gk
+          vnoremap k gk
+          nnoremap j gj
+          vnoremap j gj
+        else
+          " map home row (cluster) cursor movement
+          nnoremap u gk
+          vnoremap u gk
+          nnoremap n h
+          vnoremap n h
+          nnoremap e gj
+          vnoremap e gj
+          nnoremap i l
+          vnoremap i l
 
           " recover vi keys (including caps for consistency)
           nnoremap f e
@@ -48,6 +56,9 @@
         endif
       endfunction
 
-      call Colemak()
+      " environment variable
+      if $COLEMAK_DH == 'true'
+        call Colemak()
+      endif
 
 " keyboard.vim

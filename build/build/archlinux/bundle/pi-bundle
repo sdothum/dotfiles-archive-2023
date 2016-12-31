@@ -105,6 +105,11 @@ g term-ansicolor
   stow
 
 
+= file compression tools
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  file-roller
+
+
 = file managers
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   ncdu
@@ -158,10 +163,10 @@ g term-ansicolor
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
-  nss-mdns
   nfs-utils
-  pygtk
-  python-dbus
+# nss-mdns
+# pygtk
+# python-dbus
 
 
 = sync
