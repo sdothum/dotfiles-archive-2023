@@ -577,7 +577,7 @@ img[src*='images/time.png'] {
 input[type="checkbox"] {
   height: 1.1em !important;
   width: 1.1em !important;
-  margin-top: 2px !important; 
+  margin-top: 2px !important;
   border-color: #CEC8B9 !important;
   background: -webkit-linear-gradient(#fdf6e3, #E4DECD) !important;
   box-shadow: none !important;
@@ -643,7 +643,7 @@ button.expandPrompt {
   letter-spacing: 2px !important;
   /* line-height: 48px !important; */
   line-height: 72px !important;
-  margin-left: 24px !important;
+  margin-left: 8px !important;
 }
 
 /* end of feed marker */

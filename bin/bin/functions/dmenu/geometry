@@ -9,13 +9,15 @@ view=$(previous geometry)
 geometry=$(echo "fullscreen\nsplit\ncorner" |
            dmenu "$1" $view -no-custom) || exit 1
 
-# fit window in 1:1 layout frame for non-fullscreen view
-set -- $(query display)
+# window size varies with window position: fullscreen > split > corner
 gap=$(herbstclient attr settings.window_gap)
-left=$(( $1 / 2 + $gap ))
+[ $geometry = split ] && ratio=3 || ratio=2
+set -- $(query display)
+left=$(( $1 / $ratio + $gap ))
 right=$(( $1 - $gap - 1 ))
 top=$(( $2 / 2 - 1 ))
 bottom=$2
+
 case $geometry in
   fullscreen) echo ;;
   split     ) echo " --win '\"$left 0 $right $bottom\"' --aspect-mode letterbox" ;;

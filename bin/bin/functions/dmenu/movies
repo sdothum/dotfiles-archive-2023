@@ -92,7 +92,7 @@ do
                  fi
                  history $playlist "$movie"
                  catlg
-                 play "$video"
+                 play "$video" "$movie"
                  break ;;
 
            mrqe) vimb "mr $movie" ;;

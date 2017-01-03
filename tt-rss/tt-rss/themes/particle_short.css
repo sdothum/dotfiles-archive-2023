@@ -6,21 +6,52 @@
 
 #feeds-holder .dijitTreeRow {
   font-size: 12px !important;
-  padding-top: 9px !important;
-  padding-bottom: 9px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 #feeds-holder #feedTree {
   /* padding-top: 35px !important; */
   padding-top: 0 !important;
   margin-top: 0 !important;
-  width: 200px !important;
+  width: 185px !important;
 }
 
 #feeds-holder {
   margin-left: -20px !important;
-  width: 200px !important;
+  width: 185px !important;
 }
+
+.cdm.expandable .cdmHeader div[style*="vertical-align : middle"] > .dijitCheckBox { display: none !important; }
+
+img[src*='images/mark_unset.png'] {
+  opacity: 0 !important;
+  margin-left: -24px !important;
+}
+
+img[src*='images/mark_set.png'] {
+  background: url('particle_images/star-empty.png') no-repeat !important;
+  opacity: .4 !important;
+  margin-left: -24px !important;
+}
+
+img[src*='images/pub_set.png'] {
+  display: none !important;
+}
+
+img[src*='images/pub_unset.png'] {
+  display: none !important;
+}
+
+.cdmHeader .hlFeed { margin-left: -10px !important; }
+
+span.updated { display: none !important; }
+
+.scoreWrap { display: none !important; }
+
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed { width: 95px !important; }
+
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed a { max-width: 75px !important; }
 
 /* #feeds-holder .counterNode { */
 /*   font-size: 10px !important; */

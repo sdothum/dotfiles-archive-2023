@@ -82,7 +82,8 @@ sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
 thedarnedestthing web :: thedarnedestthing
-tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*
+tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*.css
+tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/particle*.css
 uzbl :: $HOME/.config/uzbl/config
 vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb/history $HOME/.config/vimb/scripts.js $HOME/.config/vimb/style.css
 vim :: $HOME/.vimrc $HOME/.vim/config/*.vim

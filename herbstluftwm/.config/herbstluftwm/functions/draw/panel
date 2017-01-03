@@ -230,7 +230,7 @@ panel() {
             fi
           fi ;;
 
-      *_changed*) desktops ;;
+      *_changed*) desktops ;
     esac
 
     # empty desktop does not generate T message

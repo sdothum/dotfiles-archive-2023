@@ -6,11 +6,25 @@
 
 # ....................................................................... tt-rss
 
+# page view (long) with check boxes and timestamps (short) text mode shortcuts only
+view=short
+
 # override tt-rss theme, in lieu of selectable themes
 [ -e /srv/http/tt-rss/themes/default.css.original ] && exit
 original /srv/http/tt-rss/themes/default.css
 sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/particle_images /srv/http/tt-rss/themes/
-sudo cp -v $HOME/tt-rss/themes/particle_tall.css /srv/http/tt-rss/themes/default.css
+sudo cp -v $HOME/tt-rss/themes/particle_$view.css /srv/http/tt-rss/themes/default.css
 sudo systemctl restart tt-rss
+
+# shorten special filter headings
+original /srv/http/tt-rss/include/functions.php
+sudo sed -i -e 's/"Special"/"Articles"/' \
+         -e '/All articles/s/ articles//' \
+         -e '/Fresh articles/s/ articles//' \
+         -e '/Starred articles/s/ articles//' \
+         -e '/Published articles/s/ articles//' \
+         -e '/Archived articles/s/ articles//' \
+         -e '/Recently read/s/Recently r/R/' \
+         /srv/http/tt-rss/include/functions.php
 
 # vim: set ft=sh: #

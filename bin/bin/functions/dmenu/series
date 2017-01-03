@@ -81,7 +81,7 @@ do
     fi
 
     history $playlist "$episode"
-    play "$video"
+    play "$video" "$show $episode"
   done
 done
 

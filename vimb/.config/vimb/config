@@ -1,6 +1,8 @@
 nnoremap <BS> <C-o>
 nnoremap ; :
 nnoremap : ;
+nnoremap - zo
+nnoremap = zi
 nnoremap b :open !
 nnoremap B :tabopen !
 nnoremap d :quit<CR>
