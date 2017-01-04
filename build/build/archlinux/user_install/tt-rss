@@ -18,7 +18,7 @@ sudo systemctl restart tt-rss
 
 # shorten special filter headings
 original /srv/http/tt-rss/include/functions.php
-sudo sed -i -e 's/"Special"/"Articles"/' \
+sudo sed -i -e 's/"Special"/"Feeds"/' \
          -e '/All articles/s/ articles//' \
          -e '/Fresh articles/s/ articles//' \
          -e '/Starred articles/s/ articles//' \
