@@ -65,10 +65,6 @@ case $background in
   *        ) draw root blank ;;
 esac
 
-[ $PANEL_MARGIN ] && toggle panel || toggle conky
-# enable panel for secondary monitor by default
-touch $PANEL:1
-
 # initialize tag layouts
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 restore layout tags
@@ -77,7 +73,12 @@ restore layout tags
 
 if is multihead ;then
   draw monitor secondary
-elif arm ;then
+  toggle conky
+  # enable panel for secondary monitor by default
+  touch $PANEL:1
+elif nvidia ;then
+  toggle conky
+else
   draw monitor fullframe
   toggle panel
 fi
