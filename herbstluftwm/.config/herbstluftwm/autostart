@@ -15,6 +15,7 @@ dohc() {
     echo -n '> herbstclient chain' >>$TRACE
     echo $cmds | sed 's/ , /\n -> /g' >>$TRACE
   fi
+  # herbstclient chain $cmds
   herbstclient chain $cmds &
   unset cmds
 }
@@ -55,6 +56,7 @@ done
 # initialize desktop blur and panel / conky rules
 # enable conky early to avoid visual screen refresh
 toggle compton
+
 # appropriately wild herbstluftwm background color! see .xinitrc
 background=$(cat $SETROOT 2>/dev/null)
 case $background in
@@ -62,6 +64,7 @@ case $background in
   wallpaper) draw root wallpaper ;;
   *        ) draw root blank ;;
 esac
+
 [ $PANEL_MARGIN ] && toggle panel || toggle conky
 # enable panel for secondary monitor by default
 touch $PANEL:1
@@ -70,13 +73,22 @@ touch $PANEL:1
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
 restore layout tags
 
+# ..................................................................... Monitors
+
+if is multihead ;then
+  draw monitor secondary
+elif arm ;then
+  draw monitor fullframe
+  toggle panel
+fi
+
 # ................................................................ Startup suite
 
 # session startup stuff, see .xinitrc
-is multihead && draw monitor secondary
 if [ ! -e $HLWM:autostart ] ;then
   if arm ;then
     toggle unclutter
+    vimbt
   else
     # lock out desktop switching flickering
     herbstclient lock

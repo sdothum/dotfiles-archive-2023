@@ -30,7 +30,7 @@ echo $PATH | grep -q "$HOME/.local/bin"
 # ........................................................... System environment
 
 # default printer
-set -x PRINTER HP_LaserJet_1320
+set -x PRINTER HP_LaserJet_1320_series
 
 # gpg key
 test -S ~/.gnupg/S.gpg-agent
@@ -55,7 +55,8 @@ set -x NNTPSERVER news.sunnyusenet.com
 # ..................................................................... Defaults
 
 # default editor
-set -x EDITOR 'gvim -f'
+set -x EDITOR 'vi -e'
+set -x VISUAL 'gvim -f'
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
 # less prompt

@@ -176,6 +176,19 @@ g term-ansicolor
   syncthing-inotify
 
 
+= appearance
+# ▔▔▔▔▔▔▔▔▔▔
+  compton
+? setroot
+? unclutter-xfixes-git
+
+
+= desktop
+# ▔▔▔▔▔▔▔
+" add armv7h to arch in pkgbuild
+? lemonbar-xft-git
+
+
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # "stest contained in dmenu package"
@@ -194,12 +207,17 @@ g term-ansicolor
 # paper-icon-theme-git
 
 
+= window properties
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+" add armv7h to arch in pkgbuild
+? sutils-git
+? xtitle-git
+
+
 = x11
 # ▔▔▔
   autocutsel
 " add armv7h to arch in pkgbuild
-? setroot
-? unclutter-xfixes-git
   xdotool
   xf86-input-keyboard
   xf86-input-mouse

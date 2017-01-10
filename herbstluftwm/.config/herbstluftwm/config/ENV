@@ -49,7 +49,7 @@ export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 # ..................................................................... Desktops
 
 # desktops, see config/tags
-export TAG_NAMES='WEB CHAT PERSONAL WIKI MEDIA ADMIN'
+export TAG_NAMES='WEB CHAT MAIL WIKI MEDIA ADMIN'
 export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
 # export TAG_NAME = TAG
 for key in $TAGS
@@ -76,7 +76,8 @@ export SHADOW_FACTOR=3
 
 # conky lua syntax filter
 conkyrc() {
-  grep "^ *$1" $HOME/.conkyrc | sed -r 's/.*= *([0-9]*),.*/\1/'
+  [ -e $HOME/.conkyrc ] && grep "^ *$1" $HOME/.conkyrc | sed -r 's/.*= *([0-9]*),.*/\1/' ||
+                           echo 0
 }
 
 export CONKY_GAP=$(conkyrc 'gap_x')

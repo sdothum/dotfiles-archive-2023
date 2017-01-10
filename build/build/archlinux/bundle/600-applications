@@ -110,6 +110,7 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   gcstar
 # kodi                       [server]
+# minidlna                   [server]
 # plex-media-server-plexpass [server]
 # plex-media-server          [server]
 # xbmc
@@ -151,6 +152,7 @@
   mpv
 # smplayer
 # smplayer-themes
+# totem
 # umplayer
 # vlc
 # xvba-video [server]

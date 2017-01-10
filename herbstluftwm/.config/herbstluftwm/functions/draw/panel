@@ -7,6 +7,7 @@
 # ................................................................... Draw panel
 
 # Usage: draw panel <fifo>, see restore panel
+
 which lemonbar >/dev/null 2>&1 || exit
 fifo=${1#:}
 pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
@@ -100,8 +101,8 @@ if is multihead ;then
     secondaryX=$(query display secondary | awk '{ print $1 }')
     panel_offsetX=$(( $panel_offsetX - $secondaryX ))
   fi
-else
-  panel_offsetY=$(( $panel_offsetY + 2 ))
+# else
+#   panel_offsetY=$(( $panel_offsetY + 2 ))
 fi
 
 # ................................................................... Tag status
@@ -123,10 +124,10 @@ desktops() {
   for i in $TAGS
   do
     if echo $tags | grep -q $i ;then
-      echo $tags | grep -q " $i" && visible=true || unset visible
+      echo $tags | egrep -q "^$i| $i" && visible=true || unset visible
       echo $tags | grep -q "'$i" && hidden=true || unset hidden
       [ $CANDY ] && tag_symbol || tag=$i
-      if [ $i = $active ] ;then
+      if [ $i = "$active" ] ;then
         if [ $CANDY ] ;then
           format="%{B$DEFAULT_BG}"
           [ $visible ] && format="${format}%{F$ACTIVE_FG}"
@@ -137,7 +138,7 @@ desktops() {
                           format="${format}%{F$FREE_FG}"
           [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
         fi
-      elif [ $i = $inactive ] ;then
+      elif [ $i = "$inactive" ] ;then
         if [ $CANDY ] ;then
           format="%{B$DEFAULT_BG}"
           [ $visible ] && format="${format}%{F$INACTIVE_FG}"
@@ -162,10 +163,10 @@ desktops() {
       unset visible
       unset hidden
       [ $CANDY ] && tag=$FREE || tag=$i
-      if [ $i = $active ] ;then
+      if [ $i = "$active" ] ;then
         [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" ||
                       format="%{F$FREE_FG}%{B$ACTIVE_BG}"
-      elif [ $i = $inactive ] ;then
+      elif [ $i = "$inactive" ] ;then
         [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" ||
                       format="%{F$FREE_FG}%{B$INACTIVE_BG}"
       else
@@ -213,7 +214,7 @@ panel() {
             herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && hiding=true
           fi
           if [ $count -gt 0 ] ;then
-            if [ "$(query wname)" = ${line#?} ] ;then
+            if [ "$(query wname)" = "${line#?}" ] ;then
               if [ $hiding ] ;then
                 title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
               else
@@ -230,7 +231,7 @@ panel() {
             fi
           fi ;;
 
-      *_changed*) desktops ;
+      *_changed*) desktops ;;
     esac
 
     # empty desktop does not generate T message
@@ -246,9 +247,12 @@ panel() {
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
-clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P%{F-}${RSEP}%-d %b '%y" >$PANEL_FIFO:$fifo &
+# note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
+clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P%{F-}${RSEP}%-d %b '%y
+" >$PANEL_FIFO:$fifo &
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
-xtitle -sf 'T%s' >$PANEL_FIFO:$fifo &
+xtitle -sf 'T%s
+' >$PANEL_FIFO:$fifo &
 
 is display =3440 && size=8 || size=7
 

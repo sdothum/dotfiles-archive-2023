@@ -16,11 +16,10 @@ ORDER=0
 [ $ORDER -eq 0 ] && layouts="grid\nhorizontal\nmax\nvertical\n1:1\n1:2\n1:1:1" ||
                     layouts="1:1:1\n1:2\n1:1\ngrid\nhorizontal\nmax\nvertical"
 
-default='1:1:1'
-
 windows=$(herbstclient attr tags.focus.client_count)
 wcount=$(herbstclient attr tags.focus.curframe_wcount)
-winid=$(herbstclient attr clients.focus.winid)
+# suppress error caused by no window in focus
+winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
 
 # initial desktop layouts
 layout() {
@@ -162,8 +161,8 @@ case $1 in
          # unlock to enable focus borders
          herbstclient unlock ;;
 
-  *) layout=$default
-     layout=$(echo "$layouts" | dmenu 'Explode to Layout' $layout -no-custom) || exit
+  *) server && default='1:1:1' || default='1:1'
+     layout=$(echo "$layouts" | dmenu 'Explode to Layout' $default -no-custom) || exit
      restore windowed
      exec restore layout $layout ;;
 esac

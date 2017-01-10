@@ -665,12 +665,12 @@ void persistant_default_layer_set(uint16_t default_layer)
 void clear_layers()
 {
   layer_off (_COLEMAK);
-  #ifdef QWERTY
+#ifdef QWERTY
   layer_off (_QWERTY);
-  #endif
-  #ifdef DVORAK
+#endif
+#ifdef DVORAK
   layer_off (_DVORAK);
-  #endif
+#endif
   layer_off (_PLOVER);
   layer_off (_NUMBER);
   layer_off (_NUMSYM);

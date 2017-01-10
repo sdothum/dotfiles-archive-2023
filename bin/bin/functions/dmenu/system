@@ -5,31 +5,19 @@
 
 # ............................................................... System monitor
 
-# list of potential system tools, verified by dmenu apps
-monitors="glances \
-          htop    \
-          iftop   \
-          iotop   \
-          mtr     \
-          nethogs \
-          xrestop \
-"
+# meta dmenu menu!
+system=$(previous system)
+system=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlog ^$SEP watch\nsystem ^$SEP diagnostic" |
+          column -s^ -t |
+          dmenu 'System' "$system" -no-custom) || exit
 
-interface() {
-  ip link show | grep '^[0-9]' | cut -d: -f2 | dmenu 'Interface' -no-custom || exit
-}
-
-monitor=$(previous system)
-while monitor=$(apps "$monitors" | dmenu 'Monitor' $monitor -no-custom) || exit
-do
-  history system $monitor
-  case $monitor in
-    iftop  ) term "$monitor" $monitor $(interface) ;;
-    iotop  ) term "$monitor" SHELL $monitor ;;
-    nethogs) term "$monitor" sudo $monitor $(interface) ;;
-    *      ) term "$monitor" $monitor ;;
-  esac
-  exit
-done
+history system "$system"
+case $system in
+  journal*inspect  ) command dmenu journals ;;
+  journal*watch    ) command dmenu journals watch ;;
+  log*inspect      ) command dmenu logs ;;
+  log*watch        ) command dmenu logs watch ;;
+  system*diagnostic) command dmenu diagnostic ;;
+esac
 
 # vim: set ft=sh: #

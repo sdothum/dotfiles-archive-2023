@@ -61,7 +61,7 @@ if console ;then
 
     herbstluftwm) pkill -KILL -f 'herbst'
                   killall -KILL weechat 2>/dev/null
-                  rm -rf /tmp/herbst* ;;
+                  [ -e $HOME/.debug ] || rm -rf /tmp/herbst* ;;
 
     gnome    ) ;;
     i3       ) ;;

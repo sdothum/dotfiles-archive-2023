@@ -68,8 +68,8 @@ else
   padsize $width 11 1
 fi
 
-hlwm && monitor=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) ||
-        monitor=0
+hlwm && display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) ||
+        display=0
 
 # ............................................................... Available apps
 
@@ -151,7 +151,7 @@ dmenu() {
   # piped input precludes single eval usage to contruct select clause
   if [ $row ] ;then
     input=$(sed "s/^/$INDENT/" |
-            rofi -monitor $monitor \
+            rofi -monitor $display \
                  -bw 0 \
                  -font "$MONOFONT $fontsize" \
                  -eh 1 \
@@ -174,7 +174,7 @@ dmenu() {
            )
   else
     input=$(sed "s/^/$INDENT/" |
-            rofi -monitor $monitor \
+            rofi -monitor $display \
                  -bw 0 \
                  -font "$MONOFONT $fontsize" \
                  -eh 1 \

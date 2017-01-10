@@ -20,6 +20,15 @@
 # xflux
 
 
+= desktop
+# ▔▔▔▔▔▔▔
+# conky-lua
+  conky-lua-archers [laptop]
+  conky-lua-nv      [! laptop]
+# lemonbar-git
+  lemonbar-xft-git
+
+
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   autokey-gtk
@@ -27,9 +36,6 @@
 # clipit
 # colorgrab
   colors-git
-# conky-lua
-  conky-lua-archers [laptop]
-  conky-lua-nv      [! laptop]
 # "stest contained in dmenu package"
   dmenu
 # dmenu-xft-height
@@ -84,16 +90,16 @@
 # 2bwm
 # budgie-desktop-git
 # herbstluftwm
-# lemonbar-git
-  lemonbar-xft-git
-# libwm-git
 # openbox
+# wmutils-git
+
+
+= window properties
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# libwm-git
 # sprop-git
   sutils-git
-# sxhkd
-# sxhkd-git
 # wmname
-# wmutils-git
 # xdo-git
   xtitle-git
 # xwinfo-git
@@ -104,6 +110,8 @@
 # bspwm
 # bspwm-git
 # lua-posix
+# sxhkd
+# sxhkd-git
 
 
 = gnome

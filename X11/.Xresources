@@ -85,7 +85,7 @@ URxvt*saveLines:              9000            ! non-tmux window scroll back
 ! text
 ! URxvt*font:                 xft:Input Mono Compressed:size=10
 ! URxvt*font:                 xft:PragmataPro:size=10
-URxvt*font:                   xft:Iosevka Term:size=10
+URxvt*font:                   xft:Iosevka:size=10
 ! URxvt*letterSpace:          -1              ! xft adjustment (for vanilla urxvt)
 ! URxvt*linespace:            0               ! pixels between lines for added readability
 URxvt*internalBorder:         10              ! pixels from frame edge

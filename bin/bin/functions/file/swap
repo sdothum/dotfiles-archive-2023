@@ -22,7 +22,7 @@ if ([ -e $target ] && [ -e $destination ]) || ([ -d $target ] && [ -d $destinati
   mv $target $hold
   mv $destination $target
   mv $hold $destination
-  ditto "$destination -> <- $target"
+  ditto "$destination -> $target -> $destination"
 fi
 
 # vim: set ft=sh: #

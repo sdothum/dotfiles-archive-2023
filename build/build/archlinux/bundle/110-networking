@@ -56,8 +56,8 @@
 = proxies
 # ▔▔▔▔▔▔▔
 # adsuck
-# polipo
-# privoxy
+# polipo  [server]
+# privoxy [server]
 # squid
 
 
