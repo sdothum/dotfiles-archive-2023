@@ -352,6 +352,11 @@
 
       nmap <leader>' '.
 
+    " .......................................................... Simple-complete
+
+      set complete-=t
+      set complete-=i
+
     " .................................................................... Sneak
 
       " by default, use cc, cl for s, S

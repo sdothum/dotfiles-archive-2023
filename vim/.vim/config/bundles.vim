@@ -47,9 +47,10 @@
       " Plug 'vim-scripts/matchit.zip'
       " Plug 'SearchComplete'
       Plug 'justinmk/vim-sneak'
-      Plug 'ervandew/supertab'
+      " Plug 'ervandew/supertab'
       " Plug 'Lokaltog/vim-easymotion'
       Plug 'kshenoy/vim-signature'
+      Plug 'maxboisvert/vim-simple-complete'
 
     " .................................................................. Editing
 

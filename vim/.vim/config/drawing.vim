@@ -94,8 +94,11 @@
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing trailer
           if matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$') > ''
-            " normal $bhD
-            normal $bmD
+            if g:mnle == 0
+              normal $bhD
+            else
+              normal $bmD
+            endif
           endif
           normal $
           let l:col = g:linewidth - virtcol('.') - 1
@@ -136,13 +139,19 @@
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader
           if matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s') > ''
-            " execute 'normal ^wdf '
-            execute 'normal ^wdt x'
+            if g:mnle == 0
+              execute 'normal ^wdf '
+            else
+              execute 'normal ^wdt x'
+            endif
           endif
           call AppendTrailer(a:delimiter)
           " cut trailer and insert as leader!
-          " normal $bhD^whP
-          normal $bmD^wmP
+          if g:mnle == 0
+            normal $bhD^whP
+          else
+            normal $bmD^wmP
+          endif
           normal ^
         endif
       endfunction
@@ -173,8 +182,11 @@
       function! RightJustify()
         if matchstr(getline(line('.')), '\S') > ''
           if matchstr(getline(line('.')), '^ *') > '' " remove existing leader
-            " execute 'normal 0vwhd'
-            execute 'normal 0vwmd'
+            if g:mnle == 0
+              execute 'normal 0vwhd'
+            else
+              execute 'normal 0vwmd'
+            endif
           endif
           normal $
           let l:col = g:linewidth - virtcol('.') - 1

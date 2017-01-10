@@ -13,6 +13,7 @@
 
       " hjkl mapping (0) hjkl (1) mnle
       let s:mapping = 0
+      let g:mnle = 0
 
       function! Colemak()
         if s:mapping == 0
@@ -22,6 +23,7 @@
           nnoremap j gj
           vnoremap j gj
         else
+          let g:mnle = 1
           " map home row (cluster) cursor movement
           nnoremap u gk
           vnoremap u gk
