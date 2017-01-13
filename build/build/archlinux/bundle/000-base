@@ -52,27 +52,31 @@
   xf86-video-intel     [lspci | grep VGA | grep -q Intel]
   xf86-video-nouveau   [nvidia]
 
+
 = x11 server
 # ▔▔▔▔▔▔▔▔▔▔
-  cairo
   mesa
 # mesa-git
 # mesa-vdpau-git
+? nvidia-libgl      [nvidia]
   xorg-xinit
   xorg-server
   xorg-server-utils
 
 
-= infinality font rendering
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= font rendering
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cairo
+  freetype2
+  fontconfig
 # infinality-bundle
 # infinality-bundle-multilib [server]
 # infinality-bundle-fonts
-? cairo-infinality
-? fontconfig-infinality
-? freetype2-infinality
 # "restore cairo conflict with mesa-libgl"
-? nvidia-libgl         [nvidia]
+# cairo-infinality
+# fontconfig-infinality
+# freetype2-infinality
+  libxft
 
 
 = ncurses editor
@@ -92,7 +96,7 @@
 
 
 = virtualbox guest mode
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # virtualbox-guest-utils [ -n $(dmidecode --type 1 | grep VirtualBox) ]
 
 # vim: set ft=conf: #

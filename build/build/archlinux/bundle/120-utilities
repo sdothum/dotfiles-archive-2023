@@ -3,23 +3,20 @@
 
 # see bundle_install
 
-= admin
-# ▔▔▔▔▔
+= file
+# ▔▔▔▔
   ack
 # etc-update
-  expect
-# fetch-git
+# gamin
   mediainfo [server]
   mlocate
-  neofetch
-# pacnews-git
-# screenfetch
+# multitail
   stow
   tree
 
 
-= file compression tools
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= file compression
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # par2unrar
   file-roller
   p7zip
@@ -66,6 +63,18 @@
   ntfs-3g-fuse
 
 
+= info screens
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+# fetch-git
+  figlet
+  fortune-mod
+# fortune-mod-chucknorris
+  neofetch
+# pacnews-git
+# screenfetch
+# toilet
+
+
 = ripping
 # ▔▔▔▔▔▔▔
   audex          [server]
@@ -83,39 +92,39 @@
   xfburn         [server]
 
 
-= shell
-# ▔▔▔▔▔
+= shell tools
+# ▔▔▔▔▔▔▔▔▔▔▔
 # ansi-color
   autojump
 # bash-completion
 # bc
 # checkbashisms
+  expect
 # fasd
-  figlet
-  fortune-mod
-# fortune-mod-chucknorris
 # prezto-git
-# toilet
 # zsh-doc
 # zsh-autosuggestions
 # zsh-completions
 # zsh-syntax-highlighting
 
 
-= system monitor and test
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# bonnie++
-# gamin
+= system monitor
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   glances
   gsmartcontrol
   htop
   iotop
-# memtester
-# mprime-bin [server]
-# multitail
   smartmontools
 # sysstat
   xrestop
+
+
+= test
+# ▔▔▔▔
+# bonnie++
+# memtester
+# mprime-bin [server]
+
 
 
 = terminals

@@ -3,21 +3,24 @@
 
 # see bundle_install
 
-= network
-# ▔▔▔▔▔▔▔
+= connectivity
+# ▔▔▔▔▔▔▔▔▔▔▔▔
 # bluez
 # bluez-utils
 # "+ connman may interrupt connection requiring post install"
   connman
-  dnsmasq
-  dnsutils
-# dropbox-experimental
   gnome-bluetooth
 # ifenslave
 # networkmanager
 # network-manager-applet
 # wicd
 # wicd-gtk
+
+
+= network
+# ▔▔▔▔▔▔▔
+  dnsmasq
+  dnsutils
 
 
 = network monitor
@@ -38,12 +41,12 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   openssh
 # rssh
-  vsftpd
 
 
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
+# dropbox-experimental
   nfs-utils
 # nmap
 # nss-mdns
@@ -74,5 +77,6 @@
   syncthing
 # syncthing-git
   syncthing-inotify
+  vsftpd
 
 # vim: set ft=conf: #

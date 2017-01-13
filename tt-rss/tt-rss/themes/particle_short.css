@@ -22,6 +22,11 @@
   width: 185px !important;
 }
 
+img[src*='images/star.png'] {
+  background: url('particle_images/Bookmark.png') no-repeat !important;
+  opacity: 1.0 !important;
+}
+
 .cdm.expandable .cdmHeader div[style*="vertical-align : middle"] > .dijitCheckBox { display: none !important; }
 
 img[src*='images/mark_unset.png'] {
@@ -30,8 +35,11 @@ img[src*='images/mark_unset.png'] {
 }
 
 img[src*='images/mark_set.png'] {
-  background: url('particle_images/star-empty.png') no-repeat !important;
-  opacity: .4 !important;
+  background: url('particle_images/Bookmark.png') no-repeat !important;
+  -ms-transform: scale(0.8, 0.8);      /* IE 9 */
+  -webkit-transform: scale(0.8, 0.8); /* Safari */
+  transform: scale(0.8.0.8) !important;
+  opacity: .8 !important;
   margin-left: -24px !important;
 }
 

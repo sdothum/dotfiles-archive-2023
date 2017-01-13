@@ -16,8 +16,9 @@ g slim
 g term-ansicolor
 g thin
 g xapian-fu
+g xapian-ruby
 # xapian-ruby-bindings
-  ruby-xapian-ruby
+# ruby-xapian-ruby
 
 
 = web server (modules)

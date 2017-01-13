@@ -31,15 +31,10 @@
 # system-config-printer
 
 
-= fonts and font managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# cairo
-  font-manager
-# fontconfig
-# fontmatrix
+= fonts
+# ▔▔▔▔▔
 # ibfonts-meta-base
 # infinality-bundle-fonts
-  libxft
   noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git
@@ -64,6 +59,12 @@
 # xorg-xlsfonts
 
 
+= font managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  font-manager
+# fontmatrix
+
+
 = linux-ck kernel
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # linux-ck-atom    [atom]
@@ -85,8 +86,8 @@
   xf86-input-wacom          [server]
 
 
-= package managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= package management
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   aurvote
   cower
 # cower-git
@@ -114,18 +115,6 @@
   snapper
 
 
-= permissions and passwords
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  gksu
-  gnome-keyring
-# keepassx
-  pass
-  polkit-gnome
-# python-keyring
-# python-keyrings-alt
-  xclip
-
-
 = power
 # ▔▔▔▔▔
   acpi     [laptop]
@@ -133,6 +122,17 @@
 # "dead battery in macbook"
   tlp      [laptop && ! macbook]
   xfce4-power-manager
+
+
+= security
+# ▔▔▔▔▔▔▔▔
+  gksu
+  gnome-keyring
+# keepassx
+  pass
+  polkit-gnome
+# python-keyring
+# python-keyrings-alt
 
 
 = sound
@@ -166,7 +166,6 @@
   ntp
 # pmount
   preload
-+ qwertickle
   rlwrap
 # synapse
 # sysstat

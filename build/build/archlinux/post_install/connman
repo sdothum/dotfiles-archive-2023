@@ -1,13 +1,10 @@
-c!/usr/bin/dash
+#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
 # Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ...................................................................... connman
-
-systemd disable dhcpcd
-systemd disable netctl
 
 [ -d /etc/connman ] || sudo mkdir /etc/connman
 [ -f /etc/connman/main.conf ] || echo '[General]
@@ -17,11 +14,7 @@ systemd restart connman
 connmanctl enable wifi
 connmanctl scan wifi
 connmanctl services
-annotate "connmanctl> enable wifi\n
-connmanctl> scan wifi\n
-connmanctl> services\n
-connmanctl> ...\n
-connmanctl> agent on\n
+annotate "connmanctl> agent on\n
 connmanctl> connect [network]\n
 connmanctl> config [network] --autoconnect True"
 connmanctl
@@ -30,6 +23,8 @@ original /lib/systemd/system/connman.service
 # disable connman dnsproxy port 53 usage (conflicts with dnsmasq)
 sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
 
+systemd disable dhcpcd
+systemd disable netctl
 systemd enable connman
 
 # vim: set ft=sh: #

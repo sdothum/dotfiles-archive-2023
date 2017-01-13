@@ -27,30 +27,20 @@
   conky-lua-nv      [! laptop]
 # lemonbar-git
   lemonbar-xft-git
+# trayer-srg-git
 
 
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  autokey-gtk
-# autokey-py3
-# clipit
 # colorgrab
   colors-git
-# "stest contained in dmenu package"
-  dmenu
-# dmenu-xft-height
-# dmenu2
-  dunst
-  gpaste
 # gpick
-  libnotify
 # lxsession
   maim
-  rofi
 # scrot
 # shutter
 # slickpicker
-# xfce4-notifyd
+# slock
 # xfce4-screenshooter
 # xgrabcolor
 
@@ -79,10 +69,34 @@
 # xfce4-theme-numix-manjaro-themes
 
 
+= notification
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  dunst
+  libnotify
+# xfce4-notifyd
+
+
 = screensavers
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   rss-glx
   xscreensaver
+
+
+= user interface
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  autocutsel
+  autokey-gtk
+# autokey-py3
+# clipit
+# "stest contained in dmenu package"
+  dmenu
+# dmenu-xft-height
+# dmenu2
+  gpaste
+  rofi
+  xclip
+  xdotool
+  xsel
 
 
 = window managers
@@ -103,6 +117,8 @@
 # xdo-git
   xtitle-git
 # xwinfo-git
+  xorg-xprop
+  xorg-xwininfo
 
 
 = bspwm
@@ -132,15 +148,11 @@
 = x11
 # ▔▔▔
   arandr               [server]
-  autocutsel
   lib32-libglvnd       [nvidia]
   lib32-mesa-libgl     [laptop]
   lib32-nvidia-libgl   [nvidia]
   lib32-nvidia-utils   [nvidia]
   lxrandr              [server]
-# slock
-# trayer-srg-git
-  xdotool
   xf86-input-mouse
   xf86-input-keyboard
   xf86-input-synaptics [laptop]
@@ -148,8 +160,5 @@
   xorg-xev
   xorg-xinput
   xorg-xmessage
-  xorg-xprop
-  xorg-xwininfo
-  xsel
 
 # vim: set ft=conf: #

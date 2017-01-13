@@ -61,12 +61,11 @@ g term-ansicolor
   xorg-server-xephyr
 
 
-= infinality font rendering
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-" replace freetype2, fontconfig and cairo packages
-? freetype2-infinality
-? fontconfig-infinality
-? cairo-infinality
+= font rendering
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cairo
+  freetype2
+  fontconfig
 
 
 = editors
@@ -105,8 +104,8 @@ g term-ansicolor
   stow
 
 
-= file compression tools
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= file compression
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   file-roller
 
 
@@ -127,8 +126,8 @@ g term-ansicolor
   gutenprint
 
 
-= fonts and font managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= fonts
+# ▔▔▔▔▔
   libxft
   noto-fonts
   terminus-font-ll2-td1
@@ -189,22 +188,22 @@ g term-ansicolor
 ? lemonbar-xft-git
 
 
-= desktop utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# "stest contained in dmenu package"
-  dmenu
-  dunst
-  gpaste
-  libnotify
-  rofi
-
-
 = gtk themes and engines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   adapta-gtk-theme-deb
   gtk-engine-murrine
 # "direct rsync from /usr/share/icons to .local/share"
 # paper-icon-theme-git
+
+
+= user interface
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# "stest contained in dmenu package"
+  dmenu
+  dunst
+  gpaste
+  libnotify
+  rofi
 
 
 = window properties

@@ -21,7 +21,7 @@ original /srv/http/tt-rss/include/functions.php
 sudo sed -i -e 's/"Special"/"Feeds"/' \
          -e '/All articles/s/ articles//' \
          -e '/Fresh articles/s/ articles//' \
-         -e '/Starred articles/s/ articles//' \
+         -e 's/Starred articles/Marked/' \
          -e '/Published articles/s/ articles//' \
          -e '/Archived articles/s/ articles//' \
          -e '/Recently read/s/Recently r/R/' \

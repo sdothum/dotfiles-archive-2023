@@ -34,6 +34,7 @@
 # ▔▔▔▔▔▔▔
 # focuswriter
 # markdown
+# nvpy-git
 # pyroom
 # retext
 # rubyroom
@@ -62,6 +63,7 @@
 = keyboard
 # ▔▔▔▔▔▔▔▔
   plover
++ qwertickle
 
 
 = music
@@ -89,7 +91,6 @@
 # lightzone
 # sxiv
 # viewnior
-  webkitgtk2                    [server]
 
 
 = ripping
@@ -108,7 +109,7 @@
 
 = media server/player
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  gcstar
+# gcstar                     [server]
 # kodi                       [server]
 # minidlna                   [server]
 # plex-media-server-plexpass [server]
@@ -143,8 +144,8 @@
 # radiotray
 
 
-= video players
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= video
+# ▔▔▔▔▔
 # coriander  [server]
   gnome-mpv
 # livestreamer-curses

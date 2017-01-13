@@ -6,33 +6,37 @@
 = browsers
 # ▔▔▔▔▔▔▔▔
   chromium
-# chromium-pepper-flash
-  chromium-widevine
 # dwb-git
 # dwb-gtk3
 # elinks
 # firefox      [server]
-  flashplugin
 # haskell-hbro
 # jumanji-git
-# libunique
 # links
 # lispkit-browser
-# lua51-filesystem
-# luajit
 # luakit
 # lynx
 # midorio
-  pepper-flash
   qutebrowser
 # qutebrowser-git
 # surf
-  tabbed
 # uzbl-browser
   vimb
 # vimb-git
   w3m
-# webkitgtk2
+
+
+= browser addons
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# chromium-pepper-flash
+  chromium-widevine
+  flashplugin
+# libunique
+# lua51-filesystem
+# luajit
+  pepper-flash
+  tabbed
+  webkitgtk2 [server]
 
 
 = chat/twitter
@@ -51,23 +55,17 @@
 
 = file transfer
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
-# btsyncindicator
-# btsync
-# couchpotato-git [server]
+# couchpotato-git   [server]
 # flexget
   gftp
-  nzbget          [server]
+  nzbget            [server]
 # par2cmdline-tbb
 # python2-pyopenssl
-  rsync
-  rtorrent        [server]
-# rutorrent       [server]
-# sabnzbd         [server]
-# sickbeard-git   [server]
-  sonarr          [server]
-  syncthing
-# syncthing-git
-  syncthing-inotify
+  rtorrent          [server]
+# rutorrent         [server]
+# sabnzbd           [server]
+# sickbeard-git     [server]
+  sonarr            [server]
 # tixati
 # transmission-gtk
 # unison

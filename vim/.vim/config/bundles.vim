@@ -49,6 +49,7 @@
       Plug 'justinmk/vim-sneak'
       " Plug 'ervandew/supertab'
       " Plug 'Lokaltog/vim-easymotion'
+      " Plug 'lifepillar/vim-mucomplete'
       Plug 'kshenoy/vim-signature'
       Plug 'maxboisvert/vim-simple-complete'
 

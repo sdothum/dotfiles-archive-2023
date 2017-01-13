@@ -24,7 +24,7 @@ fi
 # X11 display managers usually start pulseaudio.. but we're using tiling window managers :-)
 pulseaudio --start
 # Enable automounting removable devices
-udiskie --use-udisks2 --automount --notify --no-tray &
+which udiskie >/dev/null 2>&1 && udiskie --use-udisks2 --automount --notify --no-tray &
 
 # ........................................................................ D-Bus
 
@@ -138,6 +138,7 @@ case $windowmanager in
   i3)     exec i3 ;;
   kde)    exec startkde ;;
   lxde)   exec lxsession ;;
+  lxqt)   exec startlxqt ;;
   mate)   exec mate-session ;;
   notion) exec notion ;;
 

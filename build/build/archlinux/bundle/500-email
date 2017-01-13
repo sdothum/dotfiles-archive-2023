@@ -3,6 +3,14 @@
 
 # see bundle_install
 
+
+= imap
+# ▔▔▔▔
+  dovecot
+  imapfilter
+  offlineimap
+
+
 = mail clients
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   alot
@@ -22,15 +30,12 @@
 # thunderbird
 
 
-= mail services
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= mail utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # archivemail
-  dovecot
-# imapdedup
-  imapfilter
 # mb2md
+# imapdedup
   msmtp-mta
-  offlineimap
   pam
   sharutils
 

@@ -9,7 +9,7 @@
 # ............................................................... Window manager
 
 usage() {
-  echo "usage: $(basename $0)  'start | 2bwm | awesome | bspwm | budgie | dwm | goomwwm | guile | herbstluftwm | i3 | notion | openbox | ratpoison | spectrwm | stumpwm | subtle | xfce4 | shell | wmii  | wmutils | xmonad"
+  echo "usage: $(basename $0)  'start | 2bwm | awesome | bspwm | budgie | dwm | goomwwm | guile | herbstluftwm | i3 | lxde | lxqt | notion | openbox | ratpoison | spectrwm | stumpwm | subtle | xfce4 | shell | wmii  | wmutils | xmonad"
   exit 1
 }
 
@@ -27,6 +27,8 @@ case $1 in
   he* ) echo herbstluftwm >$HOME/.windowmanager ;;
   i3  ) echo i3 >$HOME/.windowmanager ;;
   no* ) echo notion >$HOME/.windowmanager ;;
+  lxd*) echo lxde >$HOME/.windowmanager ;;
+  lxq*) echo lxqt >$HOME/.windowmanager ;;
   op* ) echo openbox >$HOME/.windowmanager ;;
   ra* ) echo ratpoison >$HOME/.windowmanager ;;
   sp* ) echo spectrwm >$HOME/.windowmanager ;;
@@ -67,6 +69,7 @@ if console ;then
     i3       ) ;;
     kde      ) ;;
     lxde     ) ;;
+    lxqt     ) ;;
     mate     ) ;;
     notion   ) ;;
     openbox  ) ;;

@@ -272,6 +272,16 @@
 
       let g:lite_dfm_left_offset = 22       " see themes.vim
 
+    " ............................................................... MUcomplete
+
+      set completeopt+=menuone
+      set shortmess+=c
+      set completeopt+=noinsert,noselect
+
+      " automatic completion
+      let g:mucomplete#enable_auto_at_startup = 1
+
+
     " ............................................................ Narrow region
 
       let g:nrrw_rgn_vert = 1               " open in vertical split buffer
@@ -356,6 +366,8 @@
 
       set complete-=t
       set complete-=i
+
+      " highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#839496 guibg=#002b36
 
     " .................................................................... Sneak
 
