@@ -11,13 +11,13 @@
 # complete package configuration
 if [ -s $HOME/build/archlinux/post_install/$1 ] ;then
   arch && echo "${_GREEN_}@ post_install/$1${_nocolor_}"
-  $HOME/build/archlinux/post_install/$1
+  . $HOME/build/archlinux/post_install/$1
 fi
 
 # apply user specific configuration
 if [ -s $HOME/build/archlinux/user_install/$1 ] ;then
   arch && echo "${_GREEN_}@ user_install/$1${_nocolor_}"
-  $HOME/build/archlinux/user_install/$1
+  . $HOME/build/archlinux/user_install/$1
 fi
 
 # vim: set ft=sh: #
