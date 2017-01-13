@@ -53,6 +53,8 @@ img[src*='images/pub_unset.png'] {
 
 .cdmHeader .hlFeed { margin-left: -10px !important; }
 
+.cdm.expandable.Selected .cdmHeader .hlFeed { margin-left: -46px !important; }
+
 span.updated { display: none !important; }
 
 .scoreWrap { display: none !important; }
