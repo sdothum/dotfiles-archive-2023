@@ -6,13 +6,24 @@
 
 # ................................................................. Media player
 
-# Usage: play <path> [<title>]
+# Usage: play <url> | <path> [<title>]
 
-# play media (see rox, dmenu movies, dmenu series)
+youtube=/tmp/youtube-dl
+
+# play media (see rox, dmenu movies, dmenu series, browsers..)
 [ "$2" ] && title=$2 || title=${1##*/}
 if arm; then
+  # youtube playback on raspberry pi architecture is unsupported
+  if echo $1 | grep -q http ;then
+    rm -f ${youtube:-/tmp/youtube-dl}.*
+    term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && youtube-dl -o $youtube "$1""
+    pwait "$youtube"
+    title=$youtube
+    video=$youtube.*
+  fi
+
   geometry=$(dmenu geometry "$title") || exit
-  video=$(find "$1" -regextype posix-extended -regex '.*(mkv|Mkv|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)
+  [ $video ] || video=$(find "$1" -regextype posix-extended -regex '.*(mkv|Mkv|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)
   notify "$title" '1/2  Speed\n+/-  Volume\nm/n  Subtitles'
   # syncthing cpu usage can exacerbate video stuttering
   systemd stop syncthing@$USER

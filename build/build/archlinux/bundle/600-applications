@@ -5,12 +5,12 @@
 
 = astronomy
 # ▔▔▔▔▔▔▔▔▔
-# celestia      [server]
-# google-earth  [server]
-# kdeedu-kstars [server]
-# gpredict-git  [server]
-# nightshade    [server]
-# xephem        [server]
+# celestia                      [server]
+# google-earth                  [server]
+# kdeedu-kstars                 [server]
+# gpredict-git                  [server]
+# nightshade                    [server]
+# xephem                        [server]
   stellarium
   wego-git
 
@@ -38,7 +38,7 @@
 # pyroom
 # retext
 # rubyroom
-# ted          [server]
+# ted                           [server]
   texlive-core
   texlive-latexextra
 # wordgrinder
@@ -46,18 +46,18 @@
 
 = fonts
 # ▔▔▔▔▔
-  fontforge     [server]
-  nodejs        [server]
-  npm           [server]
-  otfcc         [server]
-# ttf-wps-fonts [server]
-  ttfautohint   [server]
+  fontforge                     [server]
+  nodejs                        [server]
+  npm                           [server]
+  otfcc                         [server]
+# ttf-wps-fonts                 [server]
+  ttfautohint                   [server]
 
 
 = games
 # ▔▔▔▔▔
-  lsb-release [server]
-  steam       [server]
+  lsb-release                   [server]
+  steam                         [server]
 
 
 = keyboard
@@ -70,7 +70,7 @@
 # ▔▔▔▔▔
   beets
 # cli-visualizer
-  deadbeef       [server]
+  deadbeef                      [server]
   mpc
   mpd
   ncmpcpp
@@ -95,25 +95,25 @@
 
 = ripping
 # ▔▔▔▔▔▔▔
-# abcde           [server]
-  asunder         [server]
-  audacity        [server]
-# byzanz          [server]
-# byzanz-git      [server]
-# ffcast          [server]
-# gnome-subtitles [server]
-# jokosher        [server]
-# ruby-gtk2       [server]
-# rubyripper      [server]
+# abcde                         [server]
+  asunder                       [server]
+  audacity                      [server]
+# byzanz                        [server]
+# byzanz-git                    [server]
+# ffcast                        [server]
+# gnome-subtitles               [server]
+# jokosher                      [server]
+# ruby-gtk2                     [server]
+# rubyripper                    [server]
 
 
 = media server/player
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# gcstar                     [server]
-# kodi                       [server]
-# minidlna                   [server]
-# plex-media-server-plexpass [server]
-# plex-media-server          [server]
+# gcstar                        [server]
+# kodi                          [server]
+# minidlna                      [server]
+# plex-media-server-plexpass    [server]
+# plex-media-server             [server]
 # xbmc
 
 
@@ -126,13 +126,13 @@
 # galculator
   gnumeric
 # gsimplecal
-# kdeedu-ktouch [server]
+# kdeedu-ktouch                 [server]
 # klavaro
 # sc-im
   simpletimer-git
   speedcrunch
 # todotxt
-# wps-office    [server]
+# wps-office                    [server]
   wyrd
 # xpad
 
@@ -146,7 +146,7 @@
 
 = video
 # ▔▔▔▔▔
-# coriander  [server]
+# coriander                     [server]
   gnome-mpv
 # livestreamer-curses
 # minitube
@@ -156,15 +156,15 @@
 # totem
 # umplayer
 # vlc
-# xvba-video [server]
+# xvba-video                    [server]
   youtube-dl
 
 
 = viewers
 # ▔▔▔▔▔▔▔
-# calibre    [server]
+# calibre                       [server]
 # coolreader
-  epdfview   [server]
+  epdfview                      [server]
 # evince
   fbreader
   feh

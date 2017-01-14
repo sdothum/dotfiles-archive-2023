@@ -67,6 +67,7 @@
       Plug 'junegunn/vim-easy-align'
       Plug 'bimbalaszlo/vim-eightheader'
       Plug 'tpope/vim-surround'
+      Plug 'godlygeek/tabular'
 
     " ............................................................. Productivity
 

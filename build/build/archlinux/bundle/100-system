@@ -67,10 +67,10 @@
 
 = linux-ck kernel
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# linux-ck-atom    [atom]
-# linux-ck-headers [atom]
-# linux-ck-haswell [icore]
-# linux-ck-headers [icore]
+# linux-ck-atom             [atom]
+# linux-ck-headers          [atom]
+# linux-ck-haswell          [icore]
+# linux-ck-headers          [icore]
 # "intel microcode must be installed after ck kernel"
 
 
@@ -117,10 +117,10 @@
 
 = power
 # ▔▔▔▔▔
-  acpi     [laptop]
-# powertop [laptop]
+  acpi                      [laptop]
+# powertop                  [laptop]
 # "dead battery in macbook"
-  tlp      [laptop && ! macbook]
+  tlp                       [laptop && ! macbook]
   xfce4-power-manager
 
 

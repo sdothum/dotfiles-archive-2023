@@ -20,7 +20,7 @@
 
 = cpu power management
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  cpupower [laptop]
+  cpupower                   [laptop]
 
 
 = sound
@@ -39,18 +39,18 @@
 
 = x11 drivers
 # ▔▔▔▔▔▔▔▔▔▔▔
-  libglvnd             [nvidia]
-  nvidia               [nvidia]
-  nvidia-340xx         [macbook]
-# nvidia-340xx-libgl   [macbook]
-  nvidia-340xx-utils   [macbook]
-# "see infinality install below"
-# nvidia-libgl         [nvidia]
-  nvidia-utils         [nvidia]
-  xf86-input-synaptics [laptop]
-  xf86-video-ati       [lspci | grep VGA | grep -q ATI]
-  xf86-video-intel     [lspci | grep VGA | grep -q Intel]
-  xf86-video-nouveau   [nvidia]
+  libglvnd                   [nvidia]
+  nvidia                     [nvidia]
+  nvidia-340xx               [macbook]
+# nvidia-340xx-libgl         [macbook]
+  nvidia-340xx-utils         [macbook]
+# "see infinality below"
+# nvidia-libgl               [nvidia]
+  nvidia-utils               [nvidia]
+  xf86-input-synaptics       [laptop]
+  xf86-video-ati             [lspci | grep VGA | grep -q ATI]
+  xf86-video-intel           [lspci | grep VGA | grep -q Intel]
+  xf86-video-nouveau         [nvidia]
 
 
 = x11 server
@@ -58,7 +58,7 @@
   mesa
 # mesa-git
 # mesa-vdpau-git
-? nvidia-libgl      [nvidia]
+? nvidia-libgl               [nvidia]
   xorg-xinit
   xorg-server
   xorg-server-utils
@@ -97,6 +97,6 @@
 
 = virtualbox guest mode
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# virtualbox-guest-utils [ -n $(dmidecode --type 1 | grep VirtualBox) ]
+# virtualbox-guest-utils     [ -n $(dmidecode --type 1 | grep VirtualBox) ]
 
 # vim: set ft=conf: #

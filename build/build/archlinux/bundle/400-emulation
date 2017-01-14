@@ -17,13 +17,13 @@
 
 = wine for topaz
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  lib32-ncurses [server && icore]
-  lib32-mpg123  [server && icore]
-  winetricks    [server && icore]
-  playonlinux   [server && icore]
-  wine          [server && icore]
-  xdg-user-dirs [server && icore]
-  wine_gecko    [server && icore]
-  wine-mono     [server && icore]
+  lib32-ncurses                [server && icore]
+  lib32-mpg123                 [server && icore]
+  winetricks                   [server && icore]
+  playonlinux                  [server && icore]
+  wine                         [server && icore]
+  xdg-user-dirs                [server && icore]
+  wine_gecko                   [server && icore]
+  wine-mono                    [server && icore]
 
 # vim: set ft=conf: #

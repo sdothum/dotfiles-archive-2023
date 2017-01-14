@@ -19,7 +19,7 @@
             set number
           endif
         endif
-      endfunc
+      endfunction
 
       nmap <silent># :call ToggleNumber()<CR>
 

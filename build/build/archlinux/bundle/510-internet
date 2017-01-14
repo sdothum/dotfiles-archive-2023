@@ -9,7 +9,7 @@
 # dwb-git
 # dwb-gtk3
 # elinks
-# firefox      [server]
+# firefox           [server]
 # haskell-hbro
 # jumanji-git
 # links
@@ -36,7 +36,7 @@
 # luajit
   pepper-flash
   tabbed
-  webkitgtk2 [server]
+  webkitgtk2        [server]
 
 
 = chat/twitter

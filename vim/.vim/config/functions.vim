@@ -20,7 +20,7 @@
 
       " goyo filetyes
       function! GoyoFT()
-        return &filetype =~ 'vimwiki\|mail\|draft'
+        return &filetype =~ 'vimwiki\|mail\|markdown\|draft'
       endfunction
 
     " .................................................... Modified notification

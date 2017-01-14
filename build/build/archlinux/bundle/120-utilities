@@ -8,7 +8,7 @@
   ack
 # etc-update
 # gamin
-  mediainfo [server]
+  mediainfo           [server]
   mlocate
 # multitail
   stow
@@ -32,7 +32,7 @@
 # gnome-disk-utility
   gparted
   gptfdisk
-  samsung_magician [server || laptop]
+  samsung_magician    [server || laptop]
 # unetbootin
 
 
@@ -77,19 +77,19 @@
 
 = ripping
 # ▔▔▔▔▔▔▔
-  audex          [server]
-# asunder        [server]
-  cdrdao         [server]
-# dvd+rw-tools   [server]
-# dvdbackup      [server]
-  ffmpeg         [server]
-  handbrake      [server]
-# handbrake-cli  [server]
-# k3b            [server]
-  mkvtoolnix-cli [server]
-# soundconverter [server]
-  transcode      [server]
-  xfburn         [server]
+  audex               [server]
+# asunder             [server]
+  cdrdao              [server]
+# dvd+rw-tools        [server]
+# dvdbackup           [server]
+  ffmpeg              [server]
+  handbrake           [server]
+# handbrake-cli       [server]
+# k3b                 [server]
+  mkvtoolnix-cli      [server]
+# soundconverter      [server]
+  transcode           [server]
+  xfburn              [server]
 
 
 = shell tools
@@ -123,7 +123,7 @@
 # ▔▔▔▔
 # bonnie++
 # memtester
-# mprime-bin [server]
+# mprime-bin          [server]
 
 
 

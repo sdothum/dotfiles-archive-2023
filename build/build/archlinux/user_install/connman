@@ -9,7 +9,6 @@ hosts=$HOME/build/root/etc/hosts
 gateway=10.1.0.1
 
 # get network hosts table
-original /etc/hosts
 config_install L /etc/hosts
 
 # add host ip address

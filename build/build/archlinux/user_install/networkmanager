@@ -8,7 +8,6 @@
 hosts=$HOME/build/root/etc/hosts
 
 # get network hosts table
-original /etc/hosts
 config_install L /etc/hosts
 
 # add host ip address

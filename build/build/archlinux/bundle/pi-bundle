@@ -240,7 +240,7 @@ g term-ansicolor
 
 = browsers
 # ▔▔▔▔▔▔▔▔
-  chromium
+# chromium
   qutebrowser
   tabbed
 " add armv7h to arch in pkgbuild

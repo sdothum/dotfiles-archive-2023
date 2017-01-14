@@ -96,9 +96,11 @@
 
       set number                            " line numbers are good
       set numberwidth=10
-      set relativenumber
-      " autocmd! InsertEnter * :set number   " toggle relative line numbers
-      " autocmd! InsertLeave * :set relativenumber " auto line numbers
+      set number
+
+      " toggle relative line numbers
+      autocmd! InsertEnter * if ! GoyoFT() | set relativenumber | endif
+      autocmd! InsertLeave * if ! GoyoFT() | set norelativenumber | endif
 
     " ................................................... Status / command lines
 

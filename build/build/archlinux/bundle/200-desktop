@@ -7,14 +7,14 @@
 # ▔▔▔▔▔▔▔▔▔▔
 # breeze-obsidian-cursor-theme
 # breeze-snow-cursor-theme
-  compton             [! laptop]
+  compton              [! laptop]
 # compton-git
 # hsetroot
   lxappearance
 # nitrogen
   setroot
 # xcompmgr
-# shantz-xwinwrap-bzr [server]
+# shantz-xwinwrap-bzr  [server]
 # unclutter
   unclutter-xfixes-git
 # xflux
@@ -23,8 +23,8 @@
 = desktop
 # ▔▔▔▔▔▔▔
 # conky-lua
-  conky-lua-archers [laptop]
-  conky-lua-nv      [! laptop]
+  conky-lua-archers    [laptop]
+  conky-lua-nv         [! laptop]
 # lemonbar-git
   lemonbar-xft-git
 # trayer-srg-git

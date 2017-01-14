@@ -122,10 +122,10 @@
     separator_height = 1
 
     # Padding between text and separator.
-    padding = 13
+    padding = 12
 
     # Horizontal padding.
-    horizontal_padding = 45
+    horizontal_padding = 36
 
     # Define a color for the separator.
     # possible values are:
