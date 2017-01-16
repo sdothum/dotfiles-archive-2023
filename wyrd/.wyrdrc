@@ -13,7 +13,7 @@ set edit_any_command="$EDITOR \"%file%\""
 
 
 # templates for creating new appointments
-# %monname% -> month name, %mon% -> month number, %mday% -> day of the month, 
+# %monname% -> month name, %mon% -> month number, %mday% -> day of the month,
 # %year% -> year, %hour% -> hour, %min% -> minute, %wdayname% -> weekday name
 # %wday% -> weekday number
 set timed_template="REM %monname% %mday% %year% AT %hour%:%min% DURATION 1:00 MSG "
@@ -35,7 +35,7 @@ set busy_algorithm="1"
 # for busy_algorithm="2", assume that untimed reminders occupy this many minutes
 set untimed_duration="60"
 
-# if busy_algorithm="1", number of reminders per day allowed for each calendar 
+# if busy_algorithm="1", number of reminders per day allowed for each calendar
 # colorization level; if busy_algorithm="2", use number of hours of reminders
 # per day
 set busy_level1="1"   # level1 color
@@ -167,4 +167,4 @@ color right_divider      cyan default
 
 
 
-# arch-tag: DO_NOT_CHANGE_ee9bb855-2fde-4a61-8645-8ba31b35eaab 
+# arch-tag: DO_NOT_CHANGE_ee9bb855-2fde-4a61-8645-8ba31b35eaab

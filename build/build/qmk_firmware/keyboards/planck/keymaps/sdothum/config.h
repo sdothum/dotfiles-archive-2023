@@ -9,8 +9,4 @@
 // tap dance key press termination interval
 #define TAPPING_TERM   200
 
-// additional keyboard layouts
-// #define QWERTY
-// #define DVORAK
-
 #endif

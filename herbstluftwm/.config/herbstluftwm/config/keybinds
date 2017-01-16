@@ -42,8 +42,10 @@ hc keybind $Mod-Control-d              spawn draw root blank
 # focus monitor
 # hc keybind $Mod-apostrophe           cycle_monitor
 if [ $PLANCK ] ;then
-  hc keybind $Mod-semicolon            focus_monitor 1
-  hc keybind $Mod-backslash            focus_monitor 0
+  # hc keybind $Mod-semicolon          focus_monitor 1
+  # hc keybind $Mod-backslash          focus_monitor 0
+  hc keybind $Mod-Page_Down            focus_monitor 1
+  hc keybind $Mod-Page_Up              focus_monitor 0
 else
   # hc keybind $Mod-bracketleft        chain . focus_monitor 1 . emit_hook focus_window
   # hc keybind $Mod-bracketright       chain . focus_monitor 0 . emit_hook focus_window
@@ -85,10 +87,14 @@ else
   hc keybind $Mod-Shift-l              chain . shift right . emit_hook focus_changed
 fi
 if [ $PLANCK ] ;then
-  hc keybind $Mod-Shift-semicolon      spawn pin monitor 1
-  hc keybind $Mod-Shift-backslash      spawn pin monitor 0
-  hc keybind $Mod-Control-semicolon    spawn switch monitor 1
-  hc keybind $Mod-Control-backslash    spawn switch monitor 0
+  # hc keybind $Mod-Shift-semicolon    spawn pin monitor 1
+  # hc keybind $Mod-Shift-backslash    spawn pin monitor 0
+  # hc keybind $Mod-Control-semicolon  spawn switch monitor 1
+  # hc keybind $Mod-Control-backslash  spawn switch monitor 0
+  hc keybind $Mod-Shift-Page_Down      spawn pin monitor 1
+  hc keybind $Mod-Shift-Page_Up        spawn pin monitor 0
+  hc keybind $Mod-Control-Page_Down    spawn switch monitor 1
+  hc keybind $Mod-Control-Page_Up      spawn switch monitor 0
 else
   hc keybind $Mod-Shift-bracketleft    spawn pin monitor 1
   hc keybind $Mod-Shift-bracketright   spawn pin monitor 0
@@ -103,21 +109,32 @@ hc keybind $Mod-c                      spawn switch frames cycle +1
 hc keybind $Mod-Shift-c                spawn switch frames cycle -1
 hc keybind $Mod-period                 spawn switch frames cycle_frame +1
 hc keybind $Mod-comma                  spawn switch frames cycle_frame -1
-hc keybind $Mod-m                      jumpto urgent
+hc keybind $Mod-Shift-1                jumpto urgent
 
 # split frames
 # create an empty frame at the specified direction
-hc keybind $Mod-y                      split bottom 0.5
-hc keybind $Mod-o                      split right  0.5
-hc keybind $Mod-Shift-y                split bottom 0.666666
-hc keybind $Mod-Shift-o                split right  0.666666
-hc keybind $Mod-Control-y              split bottom 0.333333
-hc keybind $Mod-Control-o              split right  0.333333
+if [ $PLANCK ] ;then
+  hc keybind $Mod-o                      split bottom 0.5
+  hc keybind $Mod-semicolon              split right  0.5
+  hc keybind $Mod-Shift-o                split bottom 0.666666
+  hc keybind $Mod-Shift-semicolon        split right  0.666666
+  hc keybind $Mod-Control-o              split bottom 0.333333
+  hc keybind $Mod-Control-semicolon      split right  0.333333
+else
+  hc keybind $Mod-y                      split bottom 0.5
+  hc keybind $Mod-o                      split right  0.5
+  hc keybind $Mod-Shift-y                split bottom 0.666666
+  hc keybind $Mod-Shift-o                split right  0.666666
+  hc keybind $Mod-Control-y              split bottom 0.333333
+  hc keybind $Mod-Control-o              split right  0.333333
+fi
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space          spawn restore frames
 if [ $PLANCK ] ;then
-  hc keybind $Mod-apostrophe           spawn switch orientation +1
-  hc keybind $Mod-Shift-apostrophe     spawn switch orientation -1
+  # hc keybind $Mod-apostrophe         spawn switch orientation +1
+  # hc keybind $Mod-Shift-apostrophe   spawn switch orientation -1
+  hc keybind $Mod-h                    spawn switch orientation +1
+  hc keybind $Mod-Shift-h              spawn switch orientation -1
   hc keybind $Mod-Shift-period         spawn switch orientation +2
   hc keybind $Mod-Shift-comma          spawn switch orientation -2
 elif [ $COLEMAK_DH ] ;then
@@ -168,18 +185,11 @@ hc keybind $Mod-s                      chain . floating toggle . emit_hook focus
 hc keybind $Mod-f                      spawn toggle fullscreen
 hc keybind $Mod-p                      chain . pseudotile toggle . emit_hook focus_changed
 
-# hide and restore windows
-if [ $COLEMAK_DH ] ;then
-  hc keybind $Mod-h                    spawn pin ttag
-  hc keybind $Mod-Control-h            spawn restore window
-  hc keybind $Mod-Control-Shift-h      spawn restore windows
-  hc keybind $Mod-Shift-h              spawn restore hidden
-else
-  hc keybind $Mod-m                    spawn pin ttag
-  hc keybind $Mod-Control-m            spawn restore window
-  hc keybind $Mod-Control-Shift-m      spawn restore windows
-  hc keybind $Mod-Shift-m              spawn restore hidden
-fi
+# hide (pseudo minimize) and restore windows
+hc keybind $Mod-m                    spawn pin ttag
+hc keybind $Mod-Control-m            spawn restore window
+hc keybind $Mod-Control-Shift-m      spawn restore windows
+hc keybind $Mod-Shift-m              spawn restore hidden
 
 # mouse
 hc mouseunbind --all

@@ -50,7 +50,6 @@
       " clear messages after awhile to keep screen clean and distraction free!
       autocmd setup cursorhold * echo
 
-
   " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ..................................................................... Help

@@ -25,7 +25,7 @@ set -x KEYTIMEOUT 1
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
 echo $PATH | grep -q "$HOME/.local/bin"
-  or set -x PATH $PATH ~/.local/bin ~/.cabal/bin ~/.gem/ruby/2.3.0/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
+  or set -x PATH $PATH ~/.local/bin ~/.cabal/bin ~/.gem/ruby/(rubyver)/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
 
 # ........................................................... System environment
 
@@ -55,7 +55,8 @@ set -x NNTPSERVER news.sunnyusenet.com
 # ..................................................................... Defaults
 
 # default editor
-set -x EDITOR 'vi -e'
+# set -x EDITOR 'vi -e'
+set -x EDITOR 'gvim -f'
 set -x VISUAL 'gvim -f'
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'

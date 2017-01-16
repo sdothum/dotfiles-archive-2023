@@ -87,7 +87,6 @@
         endif
       endfunction
 
-
     " .................................................................. Sneak f
 
       " remap sneak_s to preserve s

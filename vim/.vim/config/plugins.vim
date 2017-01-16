@@ -116,7 +116,6 @@
 
     " ................................................................ Lightline
 
-
       let g:matchspace = ''                 " see ToggleSpaces coding.vim
       let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
 
@@ -274,12 +273,12 @@
 
     " ............................................................... MUcomplete
 
-      set completeopt+=menuone
-      set shortmess+=c
-      set completeopt+=noinsert,noselect
-
-      " automatic completion
-      let g:mucomplete#enable_auto_at_startup = 1
+      " set completeopt+=menuone
+      " set shortmess+=c
+      " set completeopt+=noinsert,noselect
+      "
+      " " automatic completion
+      " let g:mucomplete#enable_auto_at_startup = 1
 
 
     " ............................................................ Narrow region
@@ -333,7 +332,7 @@
 
     " ................................................................ Signature
 
-      " vim convention m'ark key conflics with my colemak-shift-dh layout
+      " vim convention m'ark key conflicts with my colemak-shift-dh layout
       " using apostrophe instead, preferable imo :-)
       let g:SignatureMap =
         \{
@@ -385,6 +384,10 @@
 
       let g:snipMate = get(g:, 'snipMate', {})
       let g:snipMate.scope_aliases = {}
+
+      " remap tab to avoid conflict with simple-complete
+      imap <C-e> <Plug>snipMateNextOrTrigger
+      smap <C-e> <Plug>snipMateNextOrTrigger
 
     " ................................................................. Supertab
 

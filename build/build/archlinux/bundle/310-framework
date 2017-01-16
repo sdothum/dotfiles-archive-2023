@@ -8,7 +8,6 @@
 # g exifr
 g kramdown
 g mail
-g passenger
 g rack
 g sanitize
 g sinatra
@@ -21,10 +20,11 @@ g xapian-ruby
 # ruby-xapian-ruby
 
 
-= web server (modules)
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= web server
+# ▔▔▔▔▔▔▔▔▔▔
 # nginx
 # nginx-passenger
+g passenger
   php
   php-fpm
   php-pgsql

@@ -12,13 +12,17 @@ hc keybind $Mod-Control-Return       spawn term 'Terminal' FORTUNE STACK VERTICA
 hc keybind Super-Return              spawn dmenu manpages
 hc keybind Super-space               spawn dmenu run
 hc keybind Super-Shift-space         spawn dmenu systemd
-hc keybind Super-grave               spawn toggle rox
 if [ $PLANCK ] ;then
-  hc keybind Super-semicolon         spawn pactl set-sink-volume $(sink) -3db
-  hc keybind Super-backslash         spawn pactl set-sink-volume $(sink) +3db
-  hc keybind Super-y                 spawn pactl set-sink-volume $(sink) 0db
-  hc keybind Super-Shift-y           spawn pactl set-sink-mute $(sink) toggle
-  hc keybind Super-Control-y         spawn toggle pavucontrol
+  # hc keybind Super-semicolon       spawn pactl set-sink-volume $(sink) -3db
+  # hc keybind Super-backslash       spawn pactl set-sink-volume $(sink) +3db
+  # hc keybind Super-y               spawn pactl set-sink-volume $(sink) 0db
+  # hc keybind Super-Shift-y         spawn pactl set-sink-mute $(sink) toggle
+  # hc keybind Super-Control-y       spawn toggle pavucontrol
+  hc keybind Super-y                 spawn pactl set-sink-volume $(sink) -3db
+  hc keybind Super-semicolon         spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-u                 spawn pactl set-sink-volume $(sink) 0db
+  hc keybind Super-Shift-u           spawn pactl set-sink-mute $(sink) toggle
+  hc keybind Super-Control-u         spawn toggle pavucontrol
 else
   hc keybind Super-bracketleft       spawn pactl set-sink-volume $(sink) -3db
   hc keybind Super-bracketright      spawn pactl set-sink-volume $(sink) +3db
@@ -29,10 +33,13 @@ fi
 hc keybind Super-equal               spawn dmenu calc
 if [ $PLANCK ] ;then
   hc keybind Super-Shift-equal       spawn toggle plover
+  # hc keybind Super-grave           spawn toggle rox
+  hc keybind Super-F2                spawn toggle rox
   hc keybind Super-slash             spawn toggle conky
   hc keybind Super-Shift-slash       spawn toggle panel
 else
   hc keybind Super-minus             spawn toggle plover
+  hc keybind Super-grave             spawn toggle rox
   hc keybind Super-backslash         spawn toggle conky
   hc keybind Super-Shift-backslash   spawn toggle panel
 fi
