@@ -49,7 +49,7 @@
 //   The num and sym keys together access the navigation pad layer
 //
 //   ,-----------------------------------------------------------------------------------.
-//   |  Kpd | Ctrl | GUI  | Alt  | Num  |Shift |Shift | Sym  | Alt  | GUI  | Ctrl | Rght |
+//   | Ctrl |  GUI |  Alt |  Esc | Space|  Tab |  Del | Bksp |  Ent | Down | Left |Right |
 //   `-----------------------------------------------------------------------------------'
 //
 // Hint
@@ -125,16 +125,27 @@ enum tap_dance {
 
 // modifier keys
 #define Q       GUI_T (SFT_T (KC_Q))
+#ifdef AO_MODIFIER
+#define A       ALT_T (SFT_T (KC_A))
+#define Z       ALT_T (CTL_T (KC_Z))
+#define Tab     SFT_T (CTL_T (KC_TAB))
+#define Del     SFT_T (CTL_T (KC_DEL))
+#define Up      ALT_T (CTL_T (KC_UP))
+#define O       ALT_T (SFT_T (KC_O))
+#else
+#define A       KC_A
 #define Z       ALT_T (SFT_T (KC_Z))
-#define Spc     SFT_T (KC_SPC)
 #define Tab     ALT_T (CTL_T (KC_TAB))
 #define Del     ALT_T (CTL_T (KC_DEL))
+#define Up      ALT_T (SFT_T (KC_UP))
+#define O       KC_O
+#endif
+#define Scln    GUI_T (SFT_T (KC_SCLN))
+#define Spc     SFT_T (KC_SPC)
 #define Bspc    SFT_T (KC_BSPC)
 #define Down    ALT_T (KC_DOWN)
 #define Left    GUI_T (KC_LEFT)
 #define Rght    CTL_T (KC_RGHT)
-#define Up      ALT_T (SFT_T (KC_UP))
-#define Scln    GUI_T (SFT_T (KC_SCLN))
 
 // tap dance keys
 #define __Lcbr  TD (_LCBR)
@@ -175,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK] = {
     {Q,       KC_W,    KC_F,    KC_P,    KC_V,    KC_GRV,  KC_BSLS, KC_J,    KC_L,    KC_U,    KC_Y,    Scln   },
-    {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_MINS, __Quot,  KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
+    {A,       KC_R,    KC_S,    KC_T,    KC_G,    KC_MINS, __Quot,  KC_M,    KC_N,    KC_E,    KC_I,    O      },
     {Z,       KC_X,    KC_C,    KC_D,    KC_B,    KC_EQL,  KC_SLSH, KC_K,    KC_H,    KC_COMM, KC_DOT,  Up     },
     {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Del,     Bspc,    Ent,     Down,    Left,    Rght   },
   },
