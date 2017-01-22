@@ -18,6 +18,10 @@ ph() {
   egrep '\[ALPM\] (installed|reinstalled|upgraded)' /var/log/pacman.log
 }
 
-[ $1 ] && ph | grep "$@" || ph
+if [ $1 ] ;then
+  ph | grep "$@"
+else
+  ph
+fi
 
 # vim: set ft=sh: #

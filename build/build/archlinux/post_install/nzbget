@@ -23,7 +23,7 @@ sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
     -e '/Server1.Connections=/s/=.*/=10/' \
     -e '/Category1.DestDir=/s|=.*|=/net/media/videos/movies|' \
     -e '/Category2.Name=Series/aCategory2.DestDir=/net/media/videos/series' \
-    -e '/^ControlIP=/s/=.*/=127.0.0.1/' \
+    -e '/^ControlIP=/s/=.*/=0.0.0.0/' \
     -e '/^ControlPassword=/s/=.*/=nzbget/' \
     -e '/^WriteBufferSize=/s/0/-1/' \
     -e '/^DeleteCleanupDisk=/s/yes/no/' \
@@ -31,5 +31,23 @@ sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
     -e '/^CursesGroup=/s/no/yes/' \
     -e '/^CursesTime=/s/no/yes/' \
     /usr/share/nzbget/nzbget.conf >$HOME/.nzbget
+
+echo '[Unit]
+Description=NZBGet Daemon for %I
+
+[Service]
+User=%i
+Type=forking
+ExecStart=/usr/bin/nzbget --daemon
+ExecStop=/usr/bin/nzbget --quit
+ExecReload=/usr/bin/nzbget --reload
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+' | sudo tee /usr/lib/systemd/system/nzbget@.service
+
+systemd enable nzbget@$USER
 
 # vim: set ft=sh: #

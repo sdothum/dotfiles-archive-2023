@@ -273,13 +273,12 @@
 
     " ............................................................... MUcomplete
 
-      " set completeopt+=menuone
-      " set shortmess+=c
-      " set completeopt+=noinsert,noselect
-      "
-      " " automatic completion
-      " let g:mucomplete#enable_auto_at_startup = 1
+      set completeopt+=menuone
+      set shortmess+=c
+      set completeopt+=noinsert,noselect
 
+      " automatic completion
+      let g:mucomplete#enable_auto_at_startup = 1
 
     " ............................................................ Narrow region
 
@@ -363,8 +362,8 @@
 
     " .......................................................... Simple-complete
 
-      set complete-=t
-      set complete-=i
+      " set complete-=t
+      " set complete-=i
 
       " highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#839496 guibg=#002b36
 

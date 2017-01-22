@@ -21,12 +21,9 @@ action=$1
 queue=$@
 
 case $action in
-  '') if ! pidof nzbget ;then
-        nzbget -o OutputMode=curses -s
-      else
-        underline $(timestamp)
-        nzbget -L G
-      fi ;;
+  '') pidof nzbget || systemd start nzbget@$USER
+      underline $(timestamp)
+      nzbget -L G ;;
 
   B*) nzb b $(nzb S $queue) ;;
 
@@ -68,7 +65,7 @@ case $action in
   p*) nzbget -E G P $queue
       nzb ;;
 
-  q*) nzbget -Q ;;
+  q*) systemd stop nzbget@$USER ;;
   r*) nzbget --rate $queue ;;
   S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
   s*) nzb | egrep -i $queue ;;

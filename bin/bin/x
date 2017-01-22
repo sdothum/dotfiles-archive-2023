@@ -49,7 +49,21 @@ if console ;then
   echo "${_GREEN_}$(figlet -t -f lean $wm)${_nocolor_}"
   # escape to shell prompt
   [ $wm = shell ] && exit
+
+  if [ ! -d /net/depot/dotfiles ] ;then
+    sudo mount /net
+    sudo mount $HOME/Maildir
+    touch /tmp/mount:nfs
+  fi
+
   pgrep startx >/dev/null || startx --
+
+  # suppress nfs messages to console when server is offline
+  if [ -f /tmp/mount:nfs ] ;then
+    sudo umount /net
+    sudo umount $HOME/Maildir
+    rm -f /tmp/mount:nfs
+  fi
 
   # session specific clean up
   case $wm in

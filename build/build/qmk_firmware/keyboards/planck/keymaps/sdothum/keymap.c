@@ -49,7 +49,7 @@
 //   The num and sym keys together access the navigation pad layer
 //
 //   ,-----------------------------------------------------------------------------------.
-//   | Ctrl |  GUI |  Alt |  Esc | Space|  Tab |  Del | Bksp |  Ent | Down | Left |Right |
+//   | Ctrl |  GUI |  Alt |  Esc | Space|  Tab |  Ent | Bksp |  Ent | Down | Left |Right |
 //   `-----------------------------------------------------------------------------------'
 //
 // Hint
@@ -85,6 +85,7 @@ extern keymap_config_t keymap_config;
 
 enum planck_layers {
   _COLEMAK = 0
+ ,_SHIFT
  ,_PLOVER
  ,_NUMBER
  ,_NUMSYM
@@ -108,9 +109,10 @@ enum planck_keycodes {
  ,_SAlt = OSM (MOD_LALT | MOD_LSFT)
  ,_CAlt = OSM (MOD_LALT | MOD_LCTL)
  ,_Sft  = OSM (MOD_LSFT)
+ ,_CSft = OSM (MOD_LSFT | MOD_LCTL)
  ,Dot   = LT  (_NUMBER, KC_DOT)
  ,Esc   = LT  (_NUMBER, KC_ESC)
- ,Ent   = LT  (_SYMBOL, KC_ENT)
+ ,Left  = LT  (_SYMBOL, KC_LEFT)
  ,Zero  = LT  (_SYMBOL, KC_0)
 };
 
@@ -129,42 +131,42 @@ enum tap_dance {
 #define A       ALT_T (SFT_T (KC_A))
 #define Z       ALT_T (CTL_T (KC_Z))
 #define Tab     SFT_T (CTL_T (KC_TAB))
-#define Del     SFT_T (CTL_T (KC_DEL))
-#define Up      ALT_T (CTL_T (KC_UP))
+#define Ent     SFT_T (CTL_T (KC_DEL))
+#define Quot    ALT_T (CTL_T (KC_QUOT))
 #define O       ALT_T (SFT_T (KC_O))
 #else
 #define A       KC_A
 #define Z       ALT_T (SFT_T (KC_Z))
 #define Tab     ALT_T (CTL_T (KC_TAB))
-#define Del     ALT_T (CTL_T (KC_DEL))
-#define Up      ALT_T (SFT_T (KC_UP))
+#define Ent     ALT_T (CTL_T (KC_ENT))
+#define Quot    ALT_T (SFT_T (KC_QUOT))
 #define O       KC_O
 #endif
 #define Scln    GUI_T (SFT_T (KC_SCLN))
 #define Spc     SFT_T (KC_SPC)
 #define Bspc    SFT_T (KC_BSPC)
+#define SLeft   S     (KC_LEFT)
 #define Down    ALT_T (KC_DOWN)
-#define Left    GUI_T (KC_LEFT)
+#define SDown   S     (KC_DOWN)
+#define Up      GUI_T (KC_UP)
+#define SUp     S     (KC_UP)
 #define Rght    CTL_T (KC_RGHT)
+#define SRght   S     (KC_RGHT)
 
 // tap dance keys
 #define __Lcbr  TD (_LCBR)
 #define __Lprn  TD (_LPRN)
 #define __Lbrc  TD (_LBRC)
-#define __Quot  TD (_QUOT)
 #define __Slsh  TD (_SLSH)
 #define __Plus  TD (_PLUS)
 
 // layer keys
+#define SHIFT   MO (_SHIFT)
 #define ADJUST  MO (_ADJUST)
 #define SYMBOL  MO (_NUMSYM)
 #define Ftwo    LT (_SYMREG, KC_F2)
 
 // keycodes
-#define Colon   S (KC_SCLN)
-#define Greater S (KC_DOT)
-#define Lessor  S (KC_COMM)
-#define Bar     S (KC_BSLS)
 #define ___x___ KC_TRNS
 #define _______ KC_NO
 
@@ -175,20 +177,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/f812508b6fbfcad6f9acd6c198a83e13
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  |   ~  |   \  |   J  |   L  |   U  |   Y  |   ;  |
+  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   A  |   R  |   S  |   T  |   G  |   -  |   "  |   M  |   N  |   E  |   I  |   O  |
+  // |   A  |   R  |   S  |   T  |   G  |   -  |   /  |   M  |   N  |   E  |   I  |   O  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   Z  |   X  |   C  |   D  |   B  |   =  |   /  |   K  |   H  |   ,  |   .  |  Up  |
+  // |   Z  |   X  |   C  |   D  |   B  |   =  |   `  |   K  |   H  |   ,  |   .  |   "  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab |  Del | Bksp |  Ent | Down | Left |Right |
+  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab |  Ent | Bksp | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_COLEMAK] = {
-    {Q,       KC_W,    KC_F,    KC_P,    KC_V,    KC_GRV,  KC_BSLS, KC_J,    KC_L,    KC_U,    KC_Y,    Scln   },
-    {A,       KC_R,    KC_S,    KC_T,    KC_G,    KC_MINS, __Quot,  KC_M,    KC_N,    KC_E,    KC_I,    O      },
-    {Z,       KC_X,    KC_C,    KC_D,    KC_B,    KC_EQL,  KC_SLSH, KC_K,    KC_H,    KC_COMM, KC_DOT,  Up     },
-    {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Del,     Bspc,    Ent,     Down,    Left,    Rght   },
+    {Q,       KC_W,    KC_F,    KC_P,    KC_V,    KC_CAPS, _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    Scln   },
+    {A,       KC_R,    KC_S,    KC_T,    KC_G,    KC_MINS, KC_SLSH, KC_M,    KC_N,    KC_E,    KC_I,    O      },
+    {Z,       KC_X,    KC_C,    KC_D,    KC_B,    KC_EQL,  KC_GRV,  KC_K,    KC_H,    KC_COMM, KC_DOT,  Quot   },
+    {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Ent,     Bspc,    Left,    Down,    Up,      Rght   },
   },
 
 // ...................................................................... Plover
@@ -246,9 +248,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_NUMSYM] = {
-    {_______, _______, _______, _______, _______, _______, _______, S(KC_E), KC_AMPR, KC_ASTR, Colon,   KC_SCLN},
-    {_______, _______, _______, _______, _______, _______, _______, S(KC_C), KC_DLR,  KC_PERC, KC_CIRC, Greater},
-    {_______, _______, ___x___, _______, _______, _______, _______, S(KC_A), KC_EXLM, KC_AT,   KC_HASH, Lessor },
+    {_______, _______, _______, _______, _______, _______, _______, S(KC_E), KC_AMPR, KC_ASTR, KC_COLN, KC_SCLN},
+    {_______, _______, _______, _______, _______, _______, _______, S(KC_C), KC_DLR,  KC_PERC, KC_CIRC, KC_GT  },
+    {_______, _______, ___x___, _______, _______, _______, _______, S(KC_A), KC_EXLM, KC_AT,   KC_HASH, KC_LT  },
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, ___x___, ___x___},
   },
 
@@ -483,6 +485,8 @@ void persistant_default_layer_set(uint16_t default_layer)
   default_layer_set(default_layer);
 }
 
+void clear_layers(void);
+
 void clear_layers()
 {
   layer_off (_COLEMAK);
@@ -565,7 +569,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    case Ent:
+    case Left:
       if (record->event.pressed) {
         layer_on        (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);

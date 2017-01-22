@@ -46,12 +46,12 @@
 
       " Plug 'vim-scripts/matchit.zip'
       " Plug 'SearchComplete'
-      Plug 'justinmk/vim-sneak'
       " Plug 'ervandew/supertab'
       " Plug 'Lokaltog/vim-easymotion'
-      " Plug 'lifepillar/vim-mucomplete'
+      Plug 'lifepillar/vim-mucomplete'
       Plug 'kshenoy/vim-signature'
-      Plug 'maxboisvert/vim-simple-complete'
+      " Plug 'maxboisvert/vim-simple-complete'
+      Plug 'justinmk/vim-sneak'
 
     " .................................................................. Editing
 
@@ -63,11 +63,11 @@
     " ............................................................... Formatting
 
       Plug 'auto-pairs'
+      Plug 'godlygeek/tabular'
       " Plug 'Townk/vim-autoclose'
       Plug 'junegunn/vim-easy-align'
       Plug 'bimbalaszlo/vim-eightheader'
       Plug 'tpope/vim-surround'
-      Plug 'godlygeek/tabular'
 
     " ............................................................. Productivity
 

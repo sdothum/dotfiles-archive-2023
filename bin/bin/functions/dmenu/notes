@@ -7,10 +7,6 @@
 
 # Usage: dmenu notes [<extension>] [<path>]
 
-  NEW='[ new          ]'
- EDIT='[ edit         ]'
-PURGE='[ purge drafts ]'
-
 while :
 do
   case $1 in
@@ -23,6 +19,7 @@ do
        shift ;;
   esac
 done
+NOTES=/tmp/dmenu:notes:$ext
 
 # housekeeping
 [ $ext ] || ext=note
@@ -37,6 +34,9 @@ catlg=$FOLDER/.${ext}s
 [ -e $FOLDER ] || mkdir -p $FOLDER
 
 if [ $ext = draft ] ;then
+  NEW='[ new   ]'
+  EDIT='[ edit  ]'
+  PURGE='[ purge ]'
   PROMPT="$NEW\n$EDIT\n$PURGE"
   offset=1
 else
@@ -57,10 +57,15 @@ hint() {
 notes() {
   count=0
   files=$(find -L $FOLDER -name "*.$ext")
+  rm -f $NOTES
   if [ "$files" ] ;then
     for i in $files
     do
       count=$(( $count + 1 )) >/dev/null
+      if [ "$search" ] ;then
+        egrep -iq "$search" $i || continue
+      fi
+      echo $i >>$NOTES
       echo "$(stat -c '%n^%y' $i | cut -d: -f1-2)/$count ^$SEP $(hint $i)"
     done | sort
   else
@@ -75,19 +80,27 @@ highlight() {
   notes | grep -qn "$file" && echo $(( $(notes | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
 }
 
+# to present grep'd file list enter:
+#   /regex to filter
+#   //     to clear filter
+search=''
 while note=$(notes |
              cut -d^ -f2- |
              sed "1i$PROMPT" |
              column -s^ -t |
-             dmenu "$(echo $ext | sed -r 's/./\u&/')" $(highlight) -no-custom) || exit
+             dmenu "$(echo $ext | sed -r 's/./\u&/')" $(highlight)) || exit
 do
   case $note in
+    /*) search="${note#*/}"
+        continue ;;
+
     "$NEW") file=$(mktemp -p $FOLDER --suffix=.$ext)
             action=edit ;;
 
     "$EDIT") term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
 
-    "$PURGE") mv $FOLDER/*.$ext /tmp
+    "$PURGE") [ -f $NOTES ] && mv $(sort -u $NOTES) /tmp
+              search=''
               continue ;;
 
     *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)

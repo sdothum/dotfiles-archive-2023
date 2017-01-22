@@ -24,8 +24,8 @@ nnoremap 7gt :sh! xdotool key --window $VIMB_XID ctrl+7<CR><Esc>
 nnoremap 8gt :sh! xdotool key --window $VIMB_XID ctrl+8<CR><Esc>
 nnoremap 9gt :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>
 nnoremap 0gt :sh! xdotool key --window $VIMB_XID ctrl+0<CR><Esc>
-nnoremap Q :eval! readable()<CR>
-nnoremap q :eval! simplyread()<CR>
+nnoremap V :eval! readable()<CR>
+nnoremap v :eval! simplyread()<CR>
 nnoremap K :sh! dmenu vimbk<CR>
 nnoremap x :sh! play %<CR>
 nnoremap X :eval! translate()<CR>
