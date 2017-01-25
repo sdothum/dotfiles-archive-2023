@@ -1,1 +1,0 @@
-/home/shum/stow/vim/.vim

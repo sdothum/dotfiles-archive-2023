@@ -9,7 +9,4 @@
 // tap dance key press termination interval
 #define TAPPING_TERM   200
 
-// AO modifier toggle
-// #define AO_MODIFIER
-
 #endif

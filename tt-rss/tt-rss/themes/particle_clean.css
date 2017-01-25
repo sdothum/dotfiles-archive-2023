@@ -22,10 +22,18 @@
   width: 185px !important;
 }
 
+/* img[src*='images/folder.png'] { background: url('particle_images/rss.png') no-repeat !important; } */
+
 img[src*='images/star.png'] {
   background: url('particle_images/Bookmark.png') no-repeat !important;
   opacity: 1.0 !important;
 }
+
+div#dijit__TreeNode_5 { display: none !important; }
+
+div#dijit__TreeNode_6 { display: none !important; }
+
+.dijitTreeLabel { margin-left: -1px !important; }
 
 .cdm.expandable .cdmHeader div[style*="vertical-align : middle"] > .dijitCheckBox { display: none !important; }
 
@@ -43,13 +51,9 @@ img[src*='images/mark_set.png'] {
   margin-left: -24px !important;
 }
 
-img[src*='images/pub_set.png'] {
-  display: none !important;
-}
+img[src*='images/pub_set.png'] { display: none !important; }
 
-img[src*='images/pub_unset.png'] {
-  display: none !important;
-}
+img[src*='images/pub_unset.png'] { display: none !important; }
 
 .cdmHeader .hlFeed { margin-left: -10px !important; }
 

@@ -88,7 +88,7 @@
 
     " ................................................................... System
 
-      Plug 'ramele/agrep'
+      " Plug 'ramele/agrep'
       " Plug 'Shougo/unite.vim'
       " Plug 'kana/vim-arpeggio'
       " Plug 'Shougo/vimfiler.vim'

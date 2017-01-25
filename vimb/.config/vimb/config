@@ -88,7 +88,7 @@ shortcut-add ca=http://www.canadacomputers.com/advanced_search_result.php?keywor
 shortcut-add cc=http://www.codecodex.com/wiki/Special:Search?search=$0&go=Go
 shortcut-add ch=https://www.colorcodehex.com/$0/
 shortcut-add co=http://www.costco.ca/CatalogSearch?storeId=10302&catalogId=11201&langId=-24&refine=&keyword=$0
-shortcut-add de=http://www.demonoid.ph/files/?query=$0
+shortcut-add de=http://www.dnoid.me/files/?query=$0
 shortcut-add di=http://dictionary.reference.com/browse/$0
 shortcut-add dt=http://deskthority.net/search.php?keywords=$0
 shortcut-add du=https://duckduckgo.com/?q=$0&ia=images
@@ -123,7 +123,6 @@ shortcut-add TD=http://thedarnedestthing.com/admin/:$0
 shortcut-add th=http://thesaurus.com/browse/$0
 shortcut-add to=http://www.tobaccoreviews.com/search?Blend=$0
 shortcut-add tu=http://tuebl.ca/search?utf8=%E2%9C%93&search=$0&button=
-shortcut-add tz=http://torrentz.eu/search?q=$0
 shortcut-add us=http://usenet-crawler.com/search/$0
 shortcut-add VP=http://thedarnedestthing.com/admin/:$0
 shortcut-add wa=http://thepaperwall.com/search.php?search=$0&submit=search

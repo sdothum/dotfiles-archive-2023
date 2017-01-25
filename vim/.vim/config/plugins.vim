@@ -314,21 +314,6 @@
       " let g:showmarks_enable = 0
       " let g:showmarks_include  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY'
 
-    " .......................................................... Solarized theme
-
-      let g:solarized_contrast   = 'high'   " preferred contrast level for light background
-      let g:solarized_hitrail    = 1
-      let g:solarized_termcolors = 256
-      let g:solarized_termtrans  = 1        " terminal transparency (0) off (1) on
-
-      colorscheme solarized
-      if has("gui_running")
-        set background=light
-      else
-        set background=dark
-      endif
-      syntax enable
-
     " ................................................................ Signature
 
       " vim convention m'ark key conflicts with my colemak-shift-dh layout
@@ -387,6 +372,24 @@
       " remap tab to avoid conflict with simple-complete
       imap <C-e> <Plug>snipMateNextOrTrigger
       smap <C-e> <Plug>snipMateNextOrTrigger
+
+    " .......................................................... Solarized theme
+
+      let g:solarized_contrast   = 'high'   " preferred contrast level for light background
+      let g:solarized_hitrail    = 1
+      let g:solarized_termcolors = 256
+      let g:solarized_termtrans  = 1        " terminal transparency (0) off (1) on
+
+      colorscheme solarized
+
+      if has("gui_running")
+        set background=light
+      else
+        set background=dark
+      endif
+      set termguicolors                     " for neovim
+
+      syntax enable
 
     " ................................................................. Supertab
 

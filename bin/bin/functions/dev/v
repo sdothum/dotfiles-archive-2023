@@ -34,6 +34,6 @@ hlwm && herbstclient set_layout max
 find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
 find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
 # avoid nfs mounts
-find $HOME -path $HOME/Maildir -prune -o -name '.viminf*.tmp' -exec rm -fv {} \;
+server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -fv {} \;
 
 # vim: set ft=sh: #
