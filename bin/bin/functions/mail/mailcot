@@ -23,3 +23,5 @@ send "c logout\n"
 sudo systemctl restart dovecot
 # expect cmdfile host user password
 expect /tmp/mailcot $(hostname) $USER dovecot
+
+# vim: set ft=sh: #
