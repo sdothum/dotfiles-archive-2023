@@ -71,7 +71,9 @@
     # bottom left
     # geometry = "0x5+60+60"
     # bottom left
-    geometry = "0x5+60-60"
+    # geometry = "0x5+60-60"
+    # bottom right
+    geometry = "0x5-60-60"
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.

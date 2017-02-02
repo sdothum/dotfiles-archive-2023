@@ -6,22 +6,32 @@
 # ........................................................... omxplayer geometry
 
 view=$(previous geometry)
-geometry=$(echo "fullscreen\nsplit\ncorner" |
+geometry=$(echo "fullscreen\nwide\ncorner" |
            dmenu "$1" $view -no-custom) || exit 1
 
-# window size varies with window position: fullscreen > split > corner
+# left edge = screen width * ratio
+TAG=$(herbstclient attr monitors.focus.tag)
+set -- $(sed 's/:/ /g' $LAYOUT:$TAG)
+case $# in
+  2) ratio="$1 / $(( $1 + $2 ))" ;;
+  3) ratio="$(( $1 + $2 )) / $(( $1 + $2 + $3 ))" ;;
+  *) ratio=1 ;;
+esac
+
+# window size varies with window position: fullscreen > wide > corner
 gap=$(herbstclient attr settings.window_gap)
-[ $geometry = split ] && ratio=3 || ratio=2
+pheight=$(query pheight)
+# width depth
 set -- $(query display)
-left=$(( $1 / $ratio + $gap ))
+left=$(( $1 * $ratio + $gap ))
 right=$(( $1 - $gap - 1 ))
-top=$(( $2 / 2 - 1 ))
+middle=$(( $2 / 2 + $gap - 1 ))
 bottom=$2
 
 case $geometry in
   fullscreen) echo ;;
-  split     ) echo " --win '\"$left 0 $right $bottom\"' --aspect-mode letterbox" ;;
-  corner    ) echo " --win '\"$left $top $right $bottom\"' --aspect-mode letterbox" ;;
+  wide      ) echo " --win '\"$left 0 $right $bottom\"' --aspect-mode letterbox" ;;
+  corner    ) echo " --win '\"$left $gap $right $middle\"' --aspect-mode letterbox" ;;
 esac
 history geometry $geometry
 exit 0

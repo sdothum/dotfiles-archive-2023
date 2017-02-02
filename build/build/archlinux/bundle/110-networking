@@ -34,7 +34,6 @@
 # netstat-nat
 # tcpflow
 # traceroute
-# wireshark-gtk
 
 
 = network security
@@ -54,6 +53,13 @@
 # python-dbus
 # samba
 # smbnetfs
+
+
+= penetration testing
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  metasploit    [server]
+  nmap          [server]
+# wireshark-gtk [server]
 
 
 = proxies

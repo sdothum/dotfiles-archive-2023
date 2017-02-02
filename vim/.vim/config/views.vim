@@ -16,6 +16,7 @@
       " source code style
       function! CodeView()
         " suppress tty ctermfg error messages
+        call Margin()
         call Quietly('LiteDFM')
         set showmode
         set laststatus=2                    " turn on statusline
@@ -147,6 +148,8 @@
             call DfmWriting()
           end
           call HiLite()
+        else
+          call CodeView()                   " refresh margin
         endif
         call Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
       endfunction

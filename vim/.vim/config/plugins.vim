@@ -269,7 +269,15 @@
 
     " .................................................................. LiteDFM
 
-      let g:lite_dfm_left_offset = 22       " see themes.vim
+      " let g:lite_dfm_left_offset = 22     " see themes.vim
+
+      " see views.vim
+      function! Margin()
+        " let g:lite_dfm_left_offset = max([0, min([22, (&columns - &textwidth - &numberwidth) / 2])])
+        let g:lite_dfm_left_offset = max([0, min([22, (&columns - &textwidth) / 2])])
+      endfunction
+
+      call Margin()
 
     " ............................................................... MUcomplete
 
@@ -360,6 +368,18 @@
       let g:sneak#absolute_dir = 0          " next follows direction of invocation
       let g:sneak#use_ic_scs   = 1          " use vim case setting
       let g:sneak#prompt       = '>'        " prompt
+
+      " remap sneak_s to preserve s
+      function! Sneak_f()
+        if !exists("g:sneak_f")
+          let g:sneak_f = 1
+          unmap s
+          unmap S
+          call Colemak()
+          nmap f <Plug>Sneak_s
+          nmap F <Plug>Sneak_S
+        endif
+      endfunction
 
       " preserve s and remap to f
       autocmd plugin BufNewFile,BufRead * call Sneak_f()
