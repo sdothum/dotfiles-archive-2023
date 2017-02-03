@@ -28,12 +28,12 @@ list() {
     ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"' | keymaps "F$i"
   done
 
-  # map key assignments
-  ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps "MAP"
-  echo
-
   # leader key assignments
   ack --nocolor "<leader>" *.vim | keymaps "LEADER"
+  echo
+
+  # map key assignments
+  ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps "MAP"
   echo
 }
 

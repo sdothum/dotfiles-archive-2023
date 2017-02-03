@@ -52,6 +52,11 @@
       " Plug 'Shougo/vimfiler.vim'
       " Plug 'Shougo/vimshell.vim'
 
+    " .......................................................... Version control
+
+      " Plug 'tpope/vim-fugitive'
+      " Plug 'ludovicchabant/vim-lawrencium'
+
   " Coding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ..................................................................... Atom
@@ -72,15 +77,11 @@
       Plug 'lifepillar/vim-mucomplete'
       " Plug 'maxboisvert/vim-simple-complete'
 
-    " ............................................................ Code Checking
+    " .......................................................... Syntax Checking
 
+      " Plug 'w0rp/ale'
       " Plug 'metakirby5/codi.vim'
       " Plug 'scrooloose/syntastic'
-
-    " .......................................................... Version control
-
-      " Plug 'tpope/vim-fugitive'
-      " Plug 'ludovicchabant/vim-lawrencium'
 
   " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

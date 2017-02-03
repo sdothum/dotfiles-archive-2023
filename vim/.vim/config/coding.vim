@@ -34,8 +34,8 @@
         endif
       endfunction
 
-      nmap <silent><Bar>  :call ToggleColumn()<CR>
-      nmap <leader><Bar>  :set colorcolumn=
+      nmap <silent><Bar> :call ToggleColumn()<CR>
+      nmap <leader><Bar> :set colorcolumn=
 
     " ....................................................... Trailing highlight
 
