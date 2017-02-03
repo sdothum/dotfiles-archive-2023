@@ -27,6 +27,10 @@
         call Cursor()
       endfunction
 
+      function! Cursor()
+        execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+      endfunction
+
     " ............................................................... Prose view
 
       " vimwiki prose style
@@ -56,6 +60,31 @@
         execute 'Limelight'
       endfunction
 
+      " dfm writing mode (single paragraph highlight)
+      function! DfmWriting()
+        execute 'highlight Normal guifg=' . g:dfm_unfocused
+        call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
+        let s:unfocused = g:dfm_unfocused
+        execute 'Limelight'
+        call ShowInfo(0)
+      endfunction
+
+      " toggle full document highlight
+      function! ToggleProof()
+        call Margin()
+        call Quietly('LiteDFM')
+        call HiLite()
+        if s:unfocused == g:dfm_unfocused
+          execute 'Limelight!'
+          execute 'highlight Normal guifg=' . g:dfm_proof
+          " call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
+          let s:unfocused = g:dfm_fg
+          call ShowInfo(1)
+        else
+          call DfmWriting()
+        end
+      endfunction
+
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................... Screen display
@@ -72,34 +101,7 @@
 
       " intial view mode: source code or prose
       autocmd view     BufEnter * call LiteType()
-      autocmd filetype VimEnter * if ProseFT() | call ProseView() | endif
-
-      function! Cursor()
-        execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
-      endfunction
-
-      function! DfmWriting()
-        execute 'highlight Normal guifg=' . g:dfm_unfocused
-        call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-        let s:unfocused = g:dfm_unfocused
-        execute 'Limelight'
-        call ShowInfo(0)
-      endfunction
-
-      function! ToggleProof()
-        call Margin()
-        call Quietly('LiteDFM')
-        call HiLite()
-        if s:unfocused == g:dfm_unfocused
-          execute 'Limelight!'
-          execute 'highlight Normal guifg=' . g:dfm_proof
-          " call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
-          let s:unfocused = g:dfm_fg
-          call ShowInfo(1)
-        else
-          call DfmWriting()
-        end
-      endfunction
+      autocmd filetype VimEnter * call LiteType()
 
       function! Refresh()
         if ProseFT()

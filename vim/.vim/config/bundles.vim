@@ -3,7 +3,7 @@
 " Bundles
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Plugin manager ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " bundles.vim must be sourced before plugins.vim
 
@@ -14,6 +14,8 @@
     " :PlugUpgrade (vim-plug)
     call plug#begin('~/.vim/plugged')
 
+  " User Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
     " ...................................................................... GUI
 
       " Plug 'junegunn/goyo.vim'
@@ -21,84 +23,110 @@
       Plug 'junegunn/limelight.vim'
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
-
-    " ........................................................ Buffer management
-
-      " Plug 'mileszs/ack.vim'
-      " Plug 'kien/ctrlp.vim'
-      Plug 'chrisbra/NrrwRgn'
-      " Plug 'duff/vim-scratch'
-
-    " ................................................................... Coding
-
-      Plug 'metakirby5/codi.vim'
-      " Plug 'mattn/emmet-vim'
-      " Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-      " Plug 'scrooloose/syntastic'
-      " Plug 'majutsushi/tagbar'
-      Plug 'tomtom/tcomment_vim'
-      Plug 'tomtom/tlib_vim'
-      Plug 'MarcWeber/vim-addon-mw-utils'
-      Plug 'tpope/vim-endwise'
-      Plug 'garbas/vim-snipmate'
-
-    " .................................................. Completion / navigation
-
-      " Plug 'vim-scripts/matchit.zip'
-      " Plug 'SearchComplete'
-      " Plug 'ervandew/supertab'
-      " Plug 'Lokaltog/vim-easymotion'
-      Plug 'lifepillar/vim-mucomplete'
-      Plug 'kshenoy/vim-signature'
-      " Plug 'maxboisvert/vim-simple-complete'
-      Plug 'justinmk/vim-sneak'
-
-    " .................................................................. Editing
-
-      Plug 'sjl/gundo.vim'
-      " Plug 'tpope/vim-abolish'
-      " Plug 'tpope/vim-repeat'
-      Plug 'vim-scripts/YankRing.vim'
-
-    " ............................................................... Formatting
-
-      Plug 'auto-pairs'
-      Plug 'godlygeek/tabular'
-      " Plug 'Townk/vim-autoclose'
-      Plug 'junegunn/vim-easy-align'
       Plug 'bimbalaszlo/vim-eightheader'
-      Plug 'tpope/vim-surround'
 
-    " ............................................................. Productivity
+    " ................................................................... Keymap
 
-      " Plug 'vim-scripts/calendar.vim--Matsumoto'
-      " Plug 'cwoac/nvim'
-      Plug 'vim-scripts/openurl.vim'
-      " Plug 'tpope/vim-fugitive'
-      " Plug 'ludovicchabant/vim-lawrencium'
+      " Plug 'kana/vim-arpeggio'
 
     " ...................................................... Syntax highlighting
 
       Plug 'kien/rainbow_parentheses.vim'
       Plug 'dag/vim-fish'
       Plug 'plasticboy/vim-markdown'
-      " Plug 'tpope/vim-markdown'
-      " Plug 'greyblake/vim-preview'
       Plug 'slim-template/vim-slim'
 
-    " ................................................................... System
+  " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-      " Plug 'ramele/agrep'
+    " ........................................................ Buffer management
+
+      " Plug 'kien/ctrlp.vim'
+      Plug 'chrisbra/NrrwRgn'
+      " Plug 'duff/vim-scratch'
+
+    " ............................................................. File / shell
+
+      " Plug 'mileszs/ack.vim'
+      Plug 'ramele/agrep'
       " Plug 'Shougo/unite.vim'
-      " Plug 'kana/vim-arpeggio'
       " Plug 'Shougo/vimfiler.vim'
       " Plug 'Shougo/vimshell.vim'
 
+  " Coding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ..................................................................... Atom
+
+      Plug 'tomtom/tcomment_vim'
+      Plug 'tomtom/tlib_vim'
+      Plug 'tpope/vim-surround'
+
+    " ..................................................................... HTML
+
+      " Plug 'mattn/emmet-vim'
+      " Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+    " ............................................................... Completion
+
+      Plug 'auto-pairs'
+      Plug 'tpope/vim-endwise'
+      Plug 'lifepillar/vim-mucomplete'
+      " Plug 'maxboisvert/vim-simple-complete'
+
+    " ............................................................ Code Checking
+
+      " Plug 'metakirby5/codi.vim'
+      " Plug 'scrooloose/syntastic'
+
+    " .......................................................... Version control
+
+      " Plug 'tpope/vim-fugitive'
+      " Plug 'ludovicchabant/vim-lawrencium'
+
+  " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ...................................................... Search / navigation
+
+      " Plug 'vim-scripts/matchit.zip'
+      " Plug 'SearchComplete'
+      " Plug 'majutsushi/tagbar'
+      Plug 'easymotion/vim-easymotion'
+      Plug 'kshenoy/vim-signature'
+      Plug 'justinmk/vim-sneak'
+
+    " ............................................................... Formatting
+
+      " Plug 'godlygeek/tabular'
+      Plug 'junegunn/vim-easy-align'
+
+    " ............................................................. Paste / undo
+
+      Plug 'sjl/gundo.vim'
+      " Plug 'tpope/vim-repeat'
+      Plug 'vim-scripts/YankRing.vim'
+
+    " ............................................................. Substitution
+
+      Plug 'tpope/vim-abolish'
+      Plug 'garbas/vim-snipmate'
+      Plug 'MarcWeber/vim-addon-mw-utils'
+
+  " Tools ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................. Notes / wiki
+
+      " Plug 'cwoac/nvim'
+      Plug 'vimwiki/vimwiki'
+
     " .................................................................. Writing
+
       Plug 'reedes/vim-litecorrect'
       " Plug 'reedes/vim-pencil'
       " Plug 'reedes/vim-wordy'
-      Plug 'vimwiki/vimwiki'
+
+    " .................................................................. Preview
+
+      " Plug 'vim-scripts/openurl.vim'
+      " Plug 'greyblake/vim-preview'
 
     call plug#end()
 

@@ -83,31 +83,6 @@
 
   " Documents ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................................... Wikis
-
-      function! Wiki(index)
-        " open vimwiki index file
-        execute 'normal ' . a:index . g:mapleader . "ww"
-        " vimenter bypasses other autocmds and filetype assignments
-        " producing an unitialized non-lightline (raw) statusline !!??
-        call CheckFiletype()
-      endfunction
-
-      function! OpenWikis()
-        " new 'maxhi' option is still a bit buggy
-        redir! >/tmp/vim.log
-        for index in reverse(range(2, len(g:vimwiki_list))) " skip journal" wiki(1)
-          call Wiki(index)
-        endfor
-        if ProseFT()                        " reset cursorline (for last open for some reason..)
-          call ToggleHiLite()
-        endif
-        redir END
-      endfunction
-
-      " open vimwiki ()
-      autocmd filetype VimEnter * if argv (0) =~ '/vimwiki$' | bdelete | call OpenWikis() | endif
-
     " ................................................................... E-mail
 
       function! ComposeMail()
