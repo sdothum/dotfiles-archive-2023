@@ -92,7 +92,7 @@
         let &background = (&background == 'dark' ? 'light' : 'dark')
         call SetTheme()
         call LiteType()
-        if exists('#goyo')
+        if ProseFT()
           call ToggleHiLite()
         else
           " match lightline to current colorscheme
@@ -134,7 +134,7 @@
       endfunction
 
       function! ToggleHiLite()
-        if GoyoFT()
+        if ProseFT()
           if s:contrast == 0
             " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
             call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
@@ -215,7 +215,7 @@
         " toggle fullscreen to reposition statusline (2x required to restore)
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
         call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
-        if ! GoyoFT()
+        if ! ProseFT()
           call Quietly('LiteDFMClose')
           call LiteType()
         endif

@@ -15,6 +15,7 @@
 
       let s:code       = 0                  " statusline buffer statistics toggle (0) off (1) on
       let s:prose      = 0
+      let s:wikistatus = 1                  " initial wikistatus, see statusline.vim
 
       augroup status
         autocmd!
@@ -205,11 +206,12 @@
 
       " see views.vim
       function! ShowInfo(proof)
-        if g:wikistatus == 1
+        if s:wikistatus == 1
           " set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}%{(&modified\ ?\ '\ +'\ :\ '')}
           execute 'set statusline=%{WikiInfo(' . a:proof . ')}'
           " goyo defines highlight term/gui reverse
-          execute 'highlight statusline guibg=' . g:dfm_status
+          execute 'highlight statusline guibg=' . g:dfm_status . ' guifg=' . g:dfm_bg
+          set laststatus=2
         else
           " simply hide statusline content
           execute 'highlight statusline guibg=' . g:dfm_bg
@@ -218,14 +220,14 @@
 
     " ........................................................ Toggle statusline
 
-      " context sensitive statusline content (prose words, code line statistics)
       function! ToggleInfo()
-        if GoyoFT()
-          let g:wikistatus = (g:wikistatus == 0 ? 1 : 0)
-          call ShowInfo(0)
+        if ProseFT()                        " toggle between writing and proofing modes
+          call ToggleProof()
         else
+          call CodeView()                   " refresh margin
           let s:code = (s:code == 0 ? 1 : 0)
         endif
+        call Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
       endfunction
 
       " toggle lightline/default vim statusline

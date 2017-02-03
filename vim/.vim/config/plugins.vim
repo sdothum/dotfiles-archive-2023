@@ -120,7 +120,7 @@
       let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
 
       if has("gui_running")
-        " can't use GoyoFT as plugin is initialized before buffer read
+        " can't use ProseFT as plugin is initialized before buffer read
         if argv (0) =~ 'vimwiki\|eml\|draft'
           let g:lightline =
             \{
@@ -274,7 +274,7 @@
       " see views.vim
       function! Margin()
         " let g:lite_dfm_left_offset = max([0, min([22, (&columns - &textwidth - &numberwidth) / 2])])
-        let g:lite_dfm_left_offset = max([0, min([22, (&columns - &textwidth) / 2])])
+        let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth) / 2])])
       endfunction
 
       call Margin()

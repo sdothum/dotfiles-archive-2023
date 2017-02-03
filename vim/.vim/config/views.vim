@@ -31,98 +31,48 @@
 
       " vimwiki prose style
       function! ProseView()
-        call s:GoyoEnter()
+        " silent !tmux set status off
+        set scrolloff=8
+        set foldcolumn=0
+        set colorcolumn=0
+        set noshowmode
+        set spell
+        " set numberwidth=1                 " goyo settings
+        " set nonumber
+        " set fillchars-=stl:.              " remove statusline fillchars '.' set by goyo.vim
+        " set fillchars+=stl:\ "
+        call DfmWriting()
         call LiteBackground()
         call HiLite()
-        execute 'highlight Normal guifg=' . g:dfm_unfocused
-        execute 'highlight CursorLineNr guifg=' . g:dfm_bg . ' guibg=' . g:dfm_bg
-        execute 'highlight PreProc guifg=' . g:dfm_code
+        execute 'highlight LineNr guifg='       . g:dfm_bg
+        execute 'highlight Normal guifg='       . g:dfm_unfocused
+        " execute 'highlight CursorLineNr guifg=' . g:dfm_bg . ' guibg=' . g:dfm_bg
+        execute 'highlight CursorLineNr guibg=' . g:dfm_bg
+        execute 'highlight PreProc guifg='      . g:dfm_code
         let s:unfocused = g:dfm_unfocused
+        call Margin()
+        call Quietly('LiteDFM')
         call Cursor()
         execute 'Limelight'
       endfunction
 
+  " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ........................................................... Screen display
+
       function! LiteType()
         call SetTheme()
-        if GoyoFT()
+        if ProseFT()
           call ProseView()
-          call DfmWriting()
+          set laststatus=0
         else
           call CodeView()
         endif
       endfunction
 
       " intial view mode: source code or prose
-      autocmd view BufEnter * call LiteType()
-
-  " Goyo ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .......................................................... Goyo prose view
-
-      let g:wikistatus = 1                  " initial wikistatus, see statusline.vim
-      let g:goyorefresh = 0                 " goyo refresh (0) pending (1) done
-
-      " goyo initialization hooks
-      function! s:GoyoEnter()
-        " silent !tmux set status off
-        set scrolloff=8
-        set numberwidth=1
-        set foldcolumn=0
-        set nonumber
-        set colorcolumn=0
-        set noshowmode
-        set fillchars-=stl:.                " remove statusline fillchars '.' set by goyo.vim
-        " set fillchars+=stl:\ "
-        call DfmWriting()
-      endfunction
-
-      " reset vimwiki link color
-      function! s:GoyoLeave()
-        execute 'Limelight!'
-        let &scrolloff = g:scrolloff        " silent !tmux set status on
-        set number
-        call VimWikiLink()                  " restore vimwiki link
-      endfunction
-
-      autocmd view User GoyoEnter nested call <SID>GoyoEnter()
-      autocmd view User GoyoLeave nested call <SID>GoyoLeave()
-
-      " toggle goyo / litedfm
-      function! ToggleGoyo()
-        if GoyoFT()
-          if !exists('#goyo')               " goyo launched yet?
-            execute 'LiteDFMClose'
-            " width must be greater than textwidth, center vertical (to accomodate statusline)
-            execute 'Goyo ' . (&textwidth + 1) . '+1x+0'
-          else
-            let l:buffer = bufnr('%')       " goyo! always returns to first buffer, so remember last
-            execute 'Goyo!'
-            call ProseView()                " turn on status when not in goyo view
-            execute 'buffer ' . l:buffer
-          endif
-          set spell                         " force spellcheck
-        endif
-      endfunction
-
-      " reset window margins by toggling goyo on and off (<C-w>= leaves number artifacts)
-      function! ResetGoyo()
-        let g:goyorefresh=1                 " prevent window manager resize loop
-        if exists('#goyo')
-          let l:buffer = bufnr('%')         " goyo! always returns to first buffer, so remember last
-          call ToggleGoyo()
-          execute 'buffer ' . l:buffer
-          call ToggleGoyo()
-        endif
-      endfunction
-
-      " with window resizing, goyo margins are newly calculated
-      autocmd view VimResized * if GoyoFT() && g:goyorefresh == 0 | call ResetGoyo() | endif
-      " reset refresh indicator after awhile
-      autocmd view CursorHold * let g:goyorefresh = 0
-
-  " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ...................................................... Screen display mode
+      autocmd view     BufEnter * call LiteType()
+      autocmd filetype VimEnter * if ProseFT() | call ProseView() | endif
 
       function! Cursor()
         execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
@@ -137,24 +87,33 @@
       endfunction
 
       function! ToggleProof()
-        if GoyoFT()                         " toggle between writing and proofing modes
-          if s:unfocused == g:dfm_unfocused
-            execute 'Limelight!'
-            execute 'highlight Normal guifg=' . g:dfm_proof
-            " call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
-            let s:unfocused = g:dfm_fg
-            call ShowInfo(1)
-          else
-            call DfmWriting()
-          end
-          call HiLite()
+        call Margin()
+        call Quietly('LiteDFM')
+        call HiLite()
+        if s:unfocused == g:dfm_unfocused
+          execute 'Limelight!'
+          execute 'highlight Normal guifg=' . g:dfm_proof
+          " call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
+          let s:unfocused = g:dfm_fg
+          call ShowInfo(1)
         else
-          call CodeView()                   " refresh margin
+          call DfmWriting()
+        end
+      endfunction
+
+      function! Refresh()
+        if ProseFT()
+          let lstatus = &laststatus
+          call Margin()
+          call Quietly('LiteDFM')
+          let &laststatus = lstatus
+        else
+          call CodeView()
         endif
         call Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
       endfunction
 
-      imap <silent><F11> <C-o>:call ToggleProof()<CR>
-      nmap <silent><F11> :call ToggleProof()<CR>
+      imap <silent><F11> <C-o>:call Refresh()<CR>
+      nmap <silent><F11> :call Refresh()<CR>
 
 " views.vim

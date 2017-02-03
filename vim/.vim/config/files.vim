@@ -99,7 +99,7 @@
         for index in reverse(range(2, len(g:vimwiki_list))) " skip journal" wiki(1)
           call Wiki(index)
         endfor
-        if GoyoFT()                         " reset cursorline (for last open for some reason..)
+        if ProseFT()                        " reset cursorline (for last open for some reason..)
           call ToggleHiLite()
         endif
         redir END
@@ -107,7 +107,6 @@
 
       " open vimwiki ()
       autocmd filetype VimEnter * if argv (0) =~ '/vimwiki$' | bdelete | call OpenWikis() | endif
-      autocmd filetype VimEnter * if GoyoFT() | call ToggleGoyo() | endif
 
     " ................................................................... E-mail
 

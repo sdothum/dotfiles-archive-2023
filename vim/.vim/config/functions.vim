@@ -16,10 +16,10 @@
         endtry
       endfunction
 
-    " .......................................................... Goyo filestypes
+    " ......................................................... Prose filestypes
 
-      " goyo filetyes
-      function! GoyoFT()
+      " distraction free filetyes
+      function! ProseFT()
         return &filetype =~ 'vimwiki\|mail\|markdown\|draft'
       endfunction
 
