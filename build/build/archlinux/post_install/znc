@@ -9,10 +9,10 @@ annotate "listen on port 7000, username/password znc/znc\n
 service identity with:\n
 /msg nickserv register <password> <email>\n
 or if already registered..\n
-/msg nickserv identity <password>\n
+/msg nickserv identify <password>\n
 enable sasl with:\n
 /msg *sasl Mechanism PLAIN\n
- /msg *sasl Set <nick> <password>\n
+/msg *sasl Set <nick> <password>\n
 freenode channels (znc):\n
 /join ##astronomy,#archlinux,#archlinux-arm,#archlinux-offtopic,#arduino,#atom\n
 /join #bash,#bspwm,#btrfs\n
@@ -23,7 +23,7 @@ freenode channels (znc):\n
 /join ##javascript,##linux,#latex,#lesswrong,#lisp\n
 /join ##math,#Mechboards\n
 /join #neovim,#nginx,#nixos,#notmuch\n
-/join #ocaml,#papyros,#passenger,#python\n
+/join #ocaml,#papyros,#passenger,##politics,#python\n
 /join #qutebrowser,##reddit-hockey,#raspberrypi,#rawtherapee,#ruby\n
 /join #sinatra,#sup\n
 /join #vim,#weechat,#znc\n

@@ -12,7 +12,8 @@
 # nightshade                    [server]
 # xephem                        [server]
   stellarium
-  wego-git
+  wego
+# wego-git
 
 
 = dictionaries
@@ -81,7 +82,8 @@
   darktable
 # dcraw                         [server]
   digikam                       [server]
-  dispcalgui                    [server]
+# dispcalgui                    [server]
+  displaycal                    [server]
   gimp                          [server]
   gimp-plugin-resynthesizer-git [server]
 # kdebase-workspace             [server]

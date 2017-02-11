@@ -15,7 +15,8 @@ if [ $1. = S. ] ;then
   shift
 fi
 
-which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
+# which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
+pacaur=yaourt
 
 heading : $@
 

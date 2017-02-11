@@ -5,26 +5,25 @@
 
 # ...................................................................... dovecot
 
+password=dovecot
+
 sed -e '/#C=/cC=CA' \
     -e '/#ST=/cST=Ontario' \
     -e '/#L=/cL=Ottawa' \
     -e '/#O=/cO=thedarnedestthing' \
     -e '/emailAddress=/cemailAddress=sdothum@gmail.com' \
-    /etc/ssl/dovecot-openssl.cnf.sample | sudo tee /etc/ssl/dovecot-openssl.cnf
+    /usr/share/doc/dovecot/dovecot-openssl.cnf | sudo tee /etc/ssl/dovecot-openssl.cnf
 
+sudo rm /etc/ssl/certs/dovecot.pem
+sudo rm /etc/ssl/private/dovecot.pem
 sudo /usr/lib/dovecot/mkcert.sh
+sudo cp /etc/ssl/certs/dovecot.pem /etc/ca-certificates/trust-source/anchors/dovecot.crt
+sudo trust extract-compat
+
 sudo cp -v /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot/
 sudo cp -rv /usr/share/doc/dovecot/example-config/conf.d /etc/dovecot/
-
-password=dovecot
 echo "$USER:{PLAIN}$password:$(id -u $USER):$(id -g $USER)::$HOME" >users
 sudo mv users /etc/dovecot/
-
-# should not be missing..
-if [ ! -f /etc/ssl/certs/dovecot.pem ] ;then
-  config_install /etc/ssl/certs/dovecot.pem
-  sudo chmod -c 444 /etc/ssl/certs/dovecot.pem
-fi
 
 original /etc/dovecot/conf.d/10-auth.conf
 sudo sed -i -e '/^!include auth-system.conf.ext/s/^/#/' \

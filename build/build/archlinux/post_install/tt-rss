@@ -21,12 +21,14 @@ sudo sed -i -e '/^include_path = ".:\/usr\/share\/pear"/s|"$|:/etc/webapps/tt-rs
 
 server && systemd restart postgresql
 if [ ! -d /srv/lib/postgresql/data/base ] ;then
-  su -c "echo \"create user ttrss with password 'ttrss';\" | psql" - postgres
-  su -c "echo \"alter user ttrss set work_mem='64MB';\" | psql" - postgres
-  su -c "echo \"create database ttrss;\" | psql" - postgres
-  su -c "echo \"grant all privileges on database ttrss to ttrss;\" | psql" - postgres
+  echo "echo \"create user ttrss with password 'ttrss';\" | psql" | su - postgres
+  echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
+  echo "echo \"create database ttrss;\" | psql" | su - postgres
+  echo "echo \"grant all privileges on database ttrss to ttrss;\" | psql" | su - postgres
 fi
 
+grep -q 'SELF_URL_PATH=http://localhost:8000/tt-rss/' /usr/lib/systemd/system/tt-rss.service ||
+     sudo sed -i '/Service/aEnvironment="SELF_URL_PATH=http://localhost:8000/tt-rss/"' /usr/lib/systemd/system/tt-rss.service
 server && systemd enable tt-rss || annotate "sudo systemctl start tt-rss"
 
 

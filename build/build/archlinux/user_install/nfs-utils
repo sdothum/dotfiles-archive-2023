@@ -25,9 +25,9 @@ elif ! grep -q 'net.*nfs4' /etc/fstab ;then
   sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
            -e '$a\
 luna:/net     /net               nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
-luna:/Maildir /home/$uid/Maildir nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
+luna:/Maildir /home/user/Maildir nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
 ' /etc/fstab
-  sudo sed -i "s/\$uid/$USER/" /etc/fstab
+  sudo sed -i "s/user/$USER/" /etc/fstab
 fi
 
 annotate 'update cliend hosts tables with nfs server address for luna'

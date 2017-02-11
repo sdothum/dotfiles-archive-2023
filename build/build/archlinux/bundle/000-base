@@ -6,16 +6,21 @@
 # install aur package managers FIRST !!
 = aur package manager
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-@ cower
-@ pacaur
-! pacaur -Sy
-  package-query
-  yaourt
+@ package-query
+@ yaourt
+! yaourt -Sy
+  cower
+  pacaur
 
 
 = entropy
 # ▔▔▔▔▔▔▔
   haveged
+
+
+= console font
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  terminus-font-ll2-td1
 
 
 = cpu power management
@@ -47,6 +52,7 @@
 # "see infinality below"
 # nvidia-libgl               [nvidia]
   nvidia-utils               [nvidia]
+  xf86-input-evdev
   xf86-input-synaptics       [laptop]
   xf86-video-ati             [lspci | grep VGA | grep -q ATI]
   xf86-video-intel           [lspci | grep VGA | grep -q Intel]

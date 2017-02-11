@@ -7,6 +7,9 @@
 
     " bundles.vim must be sourced before plugins.vim
 
+    " autocompletion plugin dependent on filetype
+    let ext = expand('%:e')
+
     filetype off                            " safe startup (vundle requirement)
 
     " see https://github.com/junegunn/vim-plug
@@ -74,8 +77,11 @@
 
       Plug 'auto-pairs'
       Plug 'tpope/vim-endwise'
-      Plug 'lifepillar/vim-mucomplete'
-      " Plug 'maxboisvert/vim-simple-complete'
+      if ext == 'wiki'
+        Plug 'lifepillar/vim-mucomplete'
+      else
+        Plug 'maxboisvert/vim-simple-complete'
+      endif
 
     " .......................................................... Syntax Checking
 

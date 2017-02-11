@@ -6,7 +6,7 @@
 # execute archlinux-pi as root
 
 source ./archlinux-functions
-user=shum
+user=motu
 
 
 heading 'configure boot parameters'

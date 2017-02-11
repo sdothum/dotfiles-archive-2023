@@ -75,8 +75,6 @@
       set guioptions-=m                     " no menubar
       set guioptions-=T                     " no toolbar
 
-      " Toggle full screen (for notion fkey compatibility)
-      " map <silent><S-F12> :call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')<CR>
       " Toggle Menu and Toolbar
       nnoremap <silent><F12> :call ToggleGui()<CR>
       inoremap <silent><F12> <C-o>:call ToggleGui()<CR>
@@ -88,8 +86,6 @@
       " set colorcolumn=45,80               " highlight column
       set colorcolumn=0                     " highlight column
       " see ToggleColumn functions.vim
-      " imap <S-F7>      <C-o>:set colorcolumn=
-      " nmap <S-F7>      :set colorcolumn=
       nmap <leader><Bar> :set colorcolumn=
 
     " ............................................................. Line numbers
@@ -123,9 +119,6 @@
       set listchars+=extends:>
       set listchars+=precedes:<
       " set listchars+=eol:¬
-
-      " toggle trailing white space highlight, see ToggleSpaces functions.vim
-      " nmap <silent><F2> :set list!<CR>
 
     " ...................................................... Syntax highlighting
 

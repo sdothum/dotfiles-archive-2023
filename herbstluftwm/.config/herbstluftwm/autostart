@@ -87,16 +87,19 @@ fi
 
 # session startup stuff, see .xinitrc
 if [ ! -e $HLWM:autostart ] ;then
-  if arm ;then
-    toggle unclutter
-    vimbt
-  else
-    # lock out desktop switching flickering
-    herbstclient lock
-    $HOME/bin/autostart
-    herbstclient unlock
-    # close dunst notifications
-    xdotool key ctrl+shift+space
+  # fresh installation has yet to install X apps!
+  if which xdotool >/dev/null 2>&1 ;then
+    if arm ;then
+      toggle unclutter
+      vimbt
+    else
+      # lock out desktop switching flickering
+      herbstclient lock
+      $HOME/bin/autostart
+      herbstclient unlock
+      # close dunst notifications
+      xdotool key ctrl+shift+space
+    fi
   fi
 fi
 touch $HLWM:autostart

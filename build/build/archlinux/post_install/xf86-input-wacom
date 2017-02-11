@@ -6,5 +6,6 @@
 #  ............................................................ xf86-input-wacom
 
 config_install /etc/X11/xorg.conf.d/10-evdev.conf
+# config_install /etc/X11/xorg.conf.d/10-libinput.conf
 
 # vim: set ft=sh: #

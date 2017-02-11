@@ -1,16 +1,10 @@
-#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Browser
+#  ............................................................ xf86-input-evdev
 
-if [ $1 ] ;then
-  /usr/bin/qutebrowser "$@"
-else
-  ping -c 1 -W 1 luna >/dev/null 2>&1 && TTRSS=luna || TTRSS=localhost
-  /usr/bin/qutebrowser http://$TTRSS:8000/tt-rss/
-fi
+config_install /etc/X11/xorg.conf.d/10-evdev.conf
 
 # vim: set ft=sh: #

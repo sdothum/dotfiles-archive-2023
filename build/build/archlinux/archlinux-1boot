@@ -22,8 +22,9 @@ heading 'set timezone and clock'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 # ls /usr/share/zoneinfo
 # ls /usr/share/zoneinfo/America
-ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
+# ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
 hwclock --systohc --utc
+timedatectl set-timezone Canada/Eastern
 
 
 heading 'set hostname'
@@ -186,7 +187,9 @@ if [ ! -d /home/$user/stow ] ;then
   pm_install rsync
   mkdir /net
   mount -L Share -t btrfs /net
-  [ -d /net/archive/home/$user ] && rsync -av /net/archive/home/$user /home/ || rsync -av /media/home/$user /home/
+  [ -d /net/archive/home/$user ] && rsync -av /net/archive/home/$user /home/
+  # assume usb image is contains most upto date scripts
+  rsync -av /media/home/$user /home/
 fi
 
 

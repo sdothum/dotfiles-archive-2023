@@ -131,7 +131,7 @@
     " ............................................................... Print file
 
       " a la vimb
-      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!pr wiki \"' . expand('%:t') . '\"'  | elseif expand('%:p') =~ 'Patricia' | execute '!pr wps' expand('%:t') | else | execute '!pr code' expand('%:t') | endif"
+      command! Hardcopy execute "if &filetype == 'vimwiki' | execute '!hardcory wiki \"' . expand('%:t') . '\"'  | elseif expand('%:p') =~ 'Patricia' | execute '!hardcory wps' expand('%:t') | else | execute '!hardcory code' expand('%:t') | endif"
 
       nmap <silent><leader>ha :silent Hardcopy<CR>
 

@@ -118,11 +118,6 @@
       " nmap <right>   <nop>
       " nmap <up>      <nop>
 
-      " avoid accidental F1
-      " imap <F1>      <ESC>
-      " nmap <F1>      <ESC>
-      " vmap <F1>      <ESC>
-
   " Search and completion ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ................................................................... Search

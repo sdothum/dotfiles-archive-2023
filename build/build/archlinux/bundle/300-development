@@ -56,10 +56,10 @@
 
 = software tools
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# arduino         [server]
-  avr-gcc-atmel   [server]
-  avr-libc-atmel  [server]
-  dfu-programmer  [server]
+# arduino         [!atom]
+  avr-gcc
+  avr-libc
+  dfu-programmer
   cmake
   gdb
   strace

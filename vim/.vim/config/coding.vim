@@ -93,15 +93,6 @@
 
       nmap <silent><leader><CR> :call ToggleWrap()<CR>
 
-      " " toggle pencil
-      " function! TogglePencil()
-      "   TogglePencil
-      "   echo PencilMode()
-      " endfunction
-      "
-      " imap <silent><F4> <C-o>:call TogglePencil()<CR>
-      " nmap <silent><F4> :call TogglePencil()<CR>
-
   " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .............................................................. Select text
@@ -228,7 +219,6 @@
         endif
       endfunction
 
-      " imap <silent><leader><leader>c <C-o>:call ToggleComment()<CR>
       imap <silent>,c <C-o>:call ToggleComment()<CR>
 
     " .......................................................... Code block text

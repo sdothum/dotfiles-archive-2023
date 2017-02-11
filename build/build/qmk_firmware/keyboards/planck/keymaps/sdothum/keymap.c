@@ -87,7 +87,6 @@ enum planck_layers {
   _COLEMAK = 0
  ,_LSHIFT
  ,_RSHIFT
- ,_NAVPLS
  ,_PLOVER
  ,_NUMBER
  ,_NUMSYM
@@ -96,6 +95,7 @@ enum planck_layers {
  ,_NAVPAD
  ,_KEYTEST
  ,_ADJUST
+ ,_MACRO
  ,_DYN
 };
 
@@ -108,6 +108,7 @@ enum planck_keycodes {
  ,_Ctl  = OSM (MOD_LCTL)
  ,_Gui  = OSM (MOD_LGUI)
  ,_Alt  = OSM (MOD_LALT)
+ ,_CSft = OSM (MOD_LSFT | MOD_LCTL)
  ,_SGui = OSM (MOD_LGUI | MOD_LSFT)
  ,_CGui = OSM (MOD_LGUI | MOD_LCTL)
  ,_SAlt = OSM (MOD_LALT | MOD_LSFT)
@@ -116,7 +117,8 @@ enum planck_keycodes {
  ,Dot   = LT  (_NUMBER, KC_DOT)
  ,Esc   = LT  (_NUMBER, KC_ESC)
  ,Spc   = LT  (_LSHIFT, KC_SPC)
- ,Tab   = LT  (_NAVPLS, KC_TAB)
+ ,Tab   = LT  (_NAVPAD, KC_TAB)
+ ,Bspc  = LT  (_MACRO, KC_BSPC)
  ,Ent   = LT  (_RSHIFT, KC_ENT)
  ,Left  = LT  (_SYMBOL, KC_LEFT)
  ,Zero  = LT  (_SYMBOL, KC_0)
@@ -134,7 +136,6 @@ enum tap_dance {
 };
 
 // modifier keys
-#define Bspc    SFT_T (CTL_T (KC_BSPC))
 #define SLeft   S     (KC_LEFT)
 #define Down    ALT_T (KC_DOWN)
 #define SDown   S     (KC_DOWN)
@@ -172,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/34a2cb32e4f9267275c08a8089ca2d3c
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  | Caps |  Dyn |   J  |   L  |   U  |   Y  |   ;  |
+  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   A  |   R  |   S  |   T  |   G  | ↑GUI | ^GUI |   M  |   N  |   E  |   I  |   O  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -182,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_COLEMAK] = {
-    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_CAPS, DYNAMIC, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
+    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_CAPS, _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
     {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _SGui,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
     {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _CAlt,   KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot },
     {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
@@ -193,58 +194,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/3e7b27b824d0c8b71f07354170756803
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  | Caps |  Dyn |   J  |   L  |   U  |   Y  |   ;  |
+  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   A  |   R  |   S  |   T  |   G  | ↑GUI | ^GUI |   M  |   N  |   E  |   I  |   O  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   Z  |   X  |   C  |   D  |   B  | ↑Alt | ^Alt |   K  |   H  |   /  |   ?  |   "  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |   -  | Left | Down |  Up  |Right |
+  // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   -  | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), KC_CAPS, DYNAMIC, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), KC_CAPS, _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _SGui,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _CAlt,   S(KC_K), S(KC_H), KC_SLSH, KC_QUES, KC_DQT },
-    {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    KC_MINS, SLeft,   SDown,   SUp,     SRght  },
+    {_Ctl,    _Gui,    _Alt,    Esc,     ___x___, Tab,     KC_DEL,  KC_MINS, SLeft,   SDown,   SUp,     SRght  },
   },
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  | Caps |  Dyn |   J  |   L  |   U  |   Y  |   ;  |
+  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   A  |   R  |   S  |   T  |   G  | ↑GUI | ^GUI |   M  |   N  |   E  |   I  |   O  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   Z  |   X  |   C  |   D  |   B  | ↑Alt | ^Alt |   K  |   H  |   ~  |   `  |   "  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // | Ctrl |  GUI |  Alt |  Esc |   _  |  Tab | Bksp |  Ent | Left | Down |  Up  |Right |
+  // | Ctrl |  GUI |  Alt |  Esc |   _  |  Tab | Bksp |  f() | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), KC_CAPS, DYNAMIC, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), KC_CAPS, _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _SGui,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _CAlt,   S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
-    {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    Ent,     SLeft,   SDown,   SUp,     SRght  },
-  },
-
-// ................................................................. Nav Colemak
-//
-// http://www.keyboard-layout-editor.com/#/gists/34a2cb32e4f9267275c08a8089ca2d3c
-
-  // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  | Caps |  Dyn |   J  |   L  |   U  |   Y  |   ;  |
-  // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   A  |   R  |   S  |   T  |   G  | ↑GUI | ^GUI |   M  |   N  |   E  |   I  |   O  |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   Z  |   X  |   C  |   D  |   B  | ↑Alt | ^Alt |   K  |   H  |   =  |   +  |   "  |
-  // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Home | PgDn | PgUp |  End |
-  // `-----------------------------------------------------------------------------------'
-
-  [_NAVPLS] = {
-    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_CAPS, DYNAMIC, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
-    {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _SGui,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
-    {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _CAlt,   KC_K,    KC_H,    KC_EQL,  KC_PLUS, __Quot },
-    {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    Ent,     KC_HOME, KC_PGDN, KC_PGUP, KC_END },
+    {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
   },
 
 // ...................................................................... Plover
@@ -353,75 +333,94 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/8a4b014d874ae0b15db613009fb7a4c9
 
   // .-----------------------------------------------------------------------------------.
-  // |Adjust|      |      |      |      |      |      |      | Home |  Up  |  End |      |
+  // |      |      |      |      |      |      |      |      | Home |  Up  |  End |      |
   // |-----------------------------------------------------------------------------------|
-  // | Caps |  GUI | Ctrl | Shift|      |      |      |      | Left | Down | Right|      |
+  // |      |      |  GUI | Ctrl | Shift|      |      |      | Left | Down | Right|      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      | Bksp |  Del |      |      |      |      | PgDn | PgUp |      |      |
+  // |      |      |      |      |      |      |      |      | PgDn | PgUp |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      |      |  f() |      |      |      |
+  // |      |      |      |      |      |  f() |      |   +  |      |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NAVPAD] = {
-    {ADJUST,  _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {KC_CAPS, _Gui,    _Ctl,    _Sft,    _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______},
-    {_______, _______, KC_BSPC, KC_DEL,  _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {_______, _______, _______, ___x___, _______, _______, _______, _______, ___x___, _______, _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
+    {_______, _______, _Gui,    _Ctl,    _Sft,    _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
+    {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
 
-// ...................................................... Test Non-printing Keys
+// ............................................................... Test All Keys
 
   // ,-----------------------------------------------------------------------------------.
   // |Adjust|   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   E  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   R  |
+  // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   .  |   C  |   G  |   A  |   T  |   S  |   B  |   D  |   L  |   D  |   U  |   R  |
+  // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
   // `-----------------------------------------------------------------------------------'
 
   [_KEYTEST] = {
-    {ADJUST,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT },
-    {KC_E,    KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_R   },
-    {KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT,  KC_DOT },
-    {KC_DOT,  KC_C,    KC_G,    KC_A,    KC_T,    KC_S,    KC_B,    KC_D,    KC_L,    KC_D,    KC_U,    KC_R   },
+    {ADJUST,  KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
+    {KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
+    {KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
+    {KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
   },
 
 // ................................................................ Adjust Layer
+//
+// http://www.keyboard-layout-editor.com/#/gists/ac56b98d8737118f2beef3d6855d760e
 
   // ,-----------------------------------------------------------------------------------.
-  // |  f() | Reset|Keytst|      |      |      |      |      |      |      |      |      |
+  // | Reset|Keytst|      |      |      |      |      |      |      |      |      |      |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |      |      |Aud on|Audoff|AGnorm|AGswap|      |      |Colemk|      |      |Plover|
+  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|Plover|      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |      |
+  // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |      |      |      |  f() |      |      |      |      |  f() |      |      |      |
   // `-----------------------------------------------------------------------------------'
 
   [_ADJUST] = {
-    {___x___, RESET,   KEYTEST, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {_______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, COLEMAK, _______, _______, PLOVER },
-    {MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______, _______},
+    {RESET,   KEYTEST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, PLOVER,  _______, _______},
+    {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // ......................................................... Dynamic Macro Layer
 
+  // ,-----------------------------------------------------------------------------------.
+  // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |      |      |      |      |      |      |      |  Dyn |      |      |      |      |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // |      |      |      |      |      |      |  f() |      |      |      |      |      |
+  // `-----------------------------------------------------------------------------------'
+
+  [_MACRO] = {
+    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, DYNAMIC, _______, _______, _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+  },
+
   // .-----------------------------------------------------------------------------------.
-  // |      | REC1 |      | PLY1 |      |      |  f() |      |      |      |      |      |
+  // |      | REC1 |      | PLY1 |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      | REC2 |      | PLY2 |      |      |      |      |      |      |      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |      | REC2 |      | PLY2 |      |      |      |  f() |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |      |      |      |      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |  f() |      |      |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_DYN] = {
-    {_______, RECORD1, _______, PLAY1,   _______, _______, ___x___, _______, _______, _______, _______, _______},
-    {_______, RECORD2, _______, PLAY2,   _______, _______, _______, _______, _______, _______, _______, _______},
+    {_______, RECORD1, RECORD2, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+    {_______, PLAY1,   PLAY2,   _______, _______, _______, _______, ___x___, _______, _______, _______, _______},
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
@@ -557,7 +556,6 @@ void clear_layers()
   layer_off (_COLEMAK);
   layer_off (_LSHIFT);
   layer_off (_RSHIFT);
-  layer_off (_NAVPLS);
   layer_off (_PLOVER);
   layer_off (_NUMBER);
   layer_off (_NUMSYM);
@@ -578,10 +576,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Dot:
       if (record->event.pressed) {
         layer_on        (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
       } else {
         layer_off       (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
@@ -593,10 +591,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Esc:
       if (record->event.pressed) {
         layer_on        (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
       } else {
         layer_off       (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
@@ -608,10 +606,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Left:
       if (record->event.pressed) {
         layer_on        (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
       } else {
         layer_off       (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);
@@ -623,10 +621,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Zero:
       if (record->event.pressed) {
         layer_on        (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
       } else {
         layer_off       (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _NAVPAD);
+        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);

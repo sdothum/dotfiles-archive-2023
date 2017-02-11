@@ -15,7 +15,7 @@ if-no "$title" && exit
 folder() {
   echo "$@" | grep -q 'e$' && echo "${@%e}E" || echo "$@"
 }
-set -x
+
 for i in $(seq 1 99)
 do
   [ $i -lt 10 ] && j=0$i || j=$i

@@ -47,8 +47,8 @@
 
       imap <silent>,,-               <C-o>:silent call Underline('▔')<CR><C-Return>
       nmap <silent><leader><leader>- :silent call Underline('▔')<CR><Down>
-      imap <silent>,,=               <C-o>:silent call Underline('▂')<CR><C-Return>
-      nmap <silent><leader><leader>= :silent call Underline('▂')<CR><Down>
+      imap <silent>,,_               <C-o>:silent call Underline('▂')<CR><C-Return>
+      nmap <silent><leader><leader>_ :silent call Underline('▂')<CR><Down>
 
     " .................................................................... Ruler
 
@@ -79,8 +79,8 @@
 
       imap <silent>,,--               <C-o>:silent call Drawline('▔')<CR>
       nmap <silent><leader><leader>-- :silent call Drawline('▔')<CR>
-      imap <silent>,,==               <C-o>:silent call Drawline('▂')<CR>
-      nmap <silent><leader><leader>== :silent call Drawline('▂')<CR>
+      imap <silent>,,__               <C-o>:silent call Drawline('▂')<CR>
+      nmap <silent><leader><leader>__ :silent call Drawline('▂')<CR>
 
     " .................................................................. Trailer
 
@@ -108,10 +108,10 @@
         endif
       endfunction
 
-      imap <silent>,__        <C-o>:silent call AppendTrailer('▁')<CR>
-      nmap <silent><leader>__ :silent call AppendTrailer('▁')<CR>
       imap <silent>,..        <C-o>:silent call AppendTrailer('.')<CR>
       nmap <silent><leader>.. :silent call AppendTrailer('.')<CR>
+      imap <silent>,__        <C-o>:silent call AppendTrailer('▁')<CR>
+      nmap <silent><leader>__ :silent call AppendTrailer('▁')<CR>
 
       " prompted trailer
       function! InputTrailer()
@@ -149,10 +149,10 @@
         endif
       endfunction
 
-      imap <silent>,_        <C-o>:silent call InsertLeader('▁')<CR>
-      nmap <silent><leader>_ :silent call InsertLeader('▁')<CR>
       imap <silent>,.        <C-o>:silent call InsertLeader('.')<CR>
       nmap <silent><leader>. :silent call InsertLeader('.')<CR>
+      imap <silent>,_        <C-o>:silent call InsertLeader('▁')<CR>
+      nmap <silent><leader>_ :silent call InsertLeader('▁')<CR>
 
       " prompted leader
       function! InputLeader()

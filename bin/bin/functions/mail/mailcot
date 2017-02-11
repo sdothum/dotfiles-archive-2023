@@ -6,6 +6,8 @@
 
 # ....................................................................... Server
 
+# Usage: mailcot [<hostname> [<user> [<password>]]]
+
 # test dovecot installation
 echo '# set timeout 5
 set host [lindex $argv 0]
@@ -22,6 +24,6 @@ send "c logout\n"
 
 sudo systemctl restart dovecot
 # expect cmdfile host user password
-expect /tmp/mailcot $(hostname) $USER dovecot
+expect /tmp/mailcot ${1:-$(hostname)} ${2:-$USER} ${3:-dovecot}
 
 # vim: set ft=sh: #

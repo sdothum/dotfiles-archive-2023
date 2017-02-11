@@ -92,7 +92,7 @@ function fish_right_prompt --description 'Write out the right prompt'
   end
 
   function folder
-    if test $HILIGHT -eq 1
+    if test 0$HILIGHT -eq 1
       set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
       set -l base (echo $folders | cut -f1 | rev)
       set -l parent (echo $folders | cut -f2 | rev)
@@ -116,25 +116,25 @@ function fish_right_prompt --description 'Write out the right prompt'
     set -l secs (math "$CMD_DURATION / 1000")
     set -l mins (math "$secs / 60")
     set -l hrs (math "$mins / 60")
-    if test $hrs -gt 0
+    if test 0$hrs -gt 0
       printf '%sh ' $hrs
       set mins (math "$mins - $hrs * 60")
       set secs (math "$secs - $hrs * 3600")
     end
-    test $hrs -gt 0 -o $mins -gt 0
+    test 0$hrs -gt 0 -o $mins -gt 0
       and printf '%sm ' $mins
     printf '%ss' (math "$secs - $mins * 60")
   end
 
   function duration
     if test $CMD_DURATION
-      if test $CMD_DURATION -gt 1000
+      if test 0$CMD_DURATION -gt 1000
         set_color $GREY
         glyph '  ^' '  ^'
         echo -n (cmd_duration $CMD_DURATION)
         set_color normal
         test $TERM != "linux"
-          and test $CMD_DURATION -gt (math "1000 * 10")
+          and test 0$CMD_DURATION -gt (math "1000 * 10")
             and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
         return (true)
       end
@@ -155,11 +155,11 @@ function fish_right_prompt --description 'Write out the right prompt'
       end
   end
 
-  test $POSTFIX -eq 1
+  test 0$POSTFIX -eq 1
     or timer
   gitstatus
   remote
   folder
-  test $POSTFIX -eq 1
+  test 0$POSTFIX -eq 1
     and timer
 end

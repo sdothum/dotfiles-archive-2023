@@ -29,7 +29,7 @@ case $1 in
      dep='required by' ;;
 
   *) echo >$tree
-     pd R $@ ;;
+     exec pd R $@ ;;
 esac
 
 # package dependency

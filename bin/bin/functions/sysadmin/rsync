@@ -7,7 +7,7 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)  backup | depot | home | pi | server | stow | ttrss | usb | vps | wiki | [--delete] <command>"
+  echo "usage: $(basename $0)  backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
   exit 1
 }
 
@@ -22,6 +22,7 @@ exclude_virtualbox="--exclude='VirtualBox VMs'"
 
 rsync_home() {
   rsync --delete-during --delete-excluded \
+        --exclude '.adblock*' \
         --exclude '.adobe' \
         --exclude '.atom' \
         --exclude '.bundler' \
@@ -39,6 +40,7 @@ rsync_home() {
         --exclude 'depot' \
         --exclude '.dropbox' \
         --exclude '.dropbox-dist' \
+        --exclude '.electron' \
         --exclude '.fonts.dist' \
         --exclude '.gem' \
         --exclude '.Genymobile' \
@@ -49,9 +51,11 @@ rsync_home() {
         --exclude 'google-chrome-unstable' \
         --exclude '.googleearth' \
         --exclude 'Gpredict' \
+        --exclude '*.iso' \
         --exclude '.kingsoft' \
         --exclude 'local-storage' \
         --exclude '.local/share/weechat' \
+        --exclude 'log' \
         --exclude 'logs' \
         --exclude '.macromedia' \
         --exclude 'Maildir' \
@@ -62,8 +66,10 @@ rsync_home() {
         --exclude 'mpv/watch_later' \
         --exclude '.node-gyp' \
         --exclude '.npm' \
+        --exclude '.nypy' \
         --exclude 'offline-storage' \
         --exclude '.offlineimap' \
+        --exclude '*pkg.tar.xz' \
         --exclude '.PlayOnLinux' \
         --exclude '.python-eggs' \
         --exclude 'sandbox/patricia' \
@@ -73,6 +79,7 @@ rsync_home() {
         --exclude 'Steam' \
         --exclude 'sublime-text-2' \
         --exclude 'sublime-text-3' \
+        --exclude '.sup' \
         --exclude '.sync' \
         --exclude '.SyncArchive' \
         --exclude '.sync-save' \
@@ -87,13 +94,14 @@ rsync_home() {
         --exclude 'vivaldi' \
         --exclude 'webkit' \
         --exclude '.wtftw' \
+        --exclude 'zeitgeist' \
         /home/$USER $@
   # syncthing index most often corrupted
   rm -rfv $@/$USER/.config/syncthing/index*
   sync
 }
 
-case $@ in
+case $1 in
   '') usage ;;
 
   backup) if server ;then
@@ -238,6 +246,8 @@ case $@ in
          rsync --delete-during /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
          rsync --delete-during /net/photos /run/media/$USER/My\ Passport/
          sync
+       elif [ -d /run/media/$USER/$2/home ] ;then
+         rsync_home /run/media/$USER/$2/home/
        else
          ditto "insert ($(hostname)/passport) usb drive"
        fi ;;

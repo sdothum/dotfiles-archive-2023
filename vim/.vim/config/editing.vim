@@ -14,35 +14,18 @@
       set textwidth=80                      " normally 78-80, see autocmd for mail
       let g:linewidth = &textwidth          " see coding.vim, drawing.vim, statusline.vim
 
-    " ...................................................... Trailing whitespace
-
-      " strip all trailing whitespace in the current file
-      " nmap <silent><C-F2>                :silent %s/\s\+$//<CR>:silent let @/=""<CR>
-      nmap <silent><leader><Space><Delete> :silent %s/\s\+$//<CR>:silent let @/=""<CR>
-
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <A-End>             ggVG
-
-      " " use Q for formatting the current paragraph (or selection)
-      " nnoremap Q                 gqap
-      " vnoremap Q                 gq
-      " " reformat paragraph, reformat and go to next
-      " " inoremap <silent><S-F4>  <ESC>mZ{gq}`Z:silent delmark Z<CR>a
-      " " nnoremap <S-F4>          {gq}j
-      " nnoremap <leader>[         {gq}j
-      " " add trailing space to paragragh lines
-      " " vnoremap <silent><S-F4>  V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
-      " vnoremap <silent><leader>] V:silent s/\(.*[^ ]\)\s*$/\1 /<CR>:silent nohlsearch<CR>
-      nnoremap Q                   {jv}kJvgq}}{j
-      vnoremap Q                   Jvgqj
+      nnoremap <A-End> ggVG
+      nnoremap Q       {jv}kJvgq}}{j
+      vnoremap Q       Jvgqj
 
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
-      vnoremap '                   :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
-      vnoremap "                   :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+      vnoremap '       :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "       :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -76,11 +59,7 @@
 
       :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
       :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
-      " nmap <silent><F3>                :silent retab<CR>
-      " nmap <silent><C-F3>              :silent Space2Tab<CR>
-      " vmap <silent><C-F3>              :silent Space2Tab<CR>
-      " nmap <silent><S-F3>              :silent Tab2Space<CR>
-      " vmap <silent><S-F3>              :silent Tab2Space<CR>
+
       nmap <silent><leader><tab>         :silent retab<CR>
       nmap <silent><leader><leader><tab> :silent Space2Tab<CR>
       vmap <silent><leader><leader><tab> :silent Space2Tab<CR>

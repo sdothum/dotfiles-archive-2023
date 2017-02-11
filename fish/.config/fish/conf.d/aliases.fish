@@ -16,7 +16,7 @@ end
 alias pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
 alias pn 'env D=N pd'
 alias pq 'pacman -Qii'
-alias ts "egrep -v '%|--:--|<=>' ~/typescript | less"
+alias ts "egrep -vi '%|--:--|<=>|\'.*\' -> \'.*\'|\[[ -co]*\]|/usr/|^(\+\+* |../../|/bin/| * (or)*c[cp](ld)* * | * gen * |automake: |cd | *check(ing)* |config.status: |configure.ac|configure: |copying |done |for | *from|g*cc |g-ir-scanner: |gpg: |in |installing |libtool(ize)*: |make |make\[.\] |making |mv |patching |recieving objects: |remote: |resolving deltas: |rm |tests/check|touch )' ~/typescript | less"
 alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
 
 # ...................................................................... Process

@@ -146,9 +146,6 @@
         endif
       endfunction
 
-      " imap <silent><S-F9> <C-o>:call ToggleHiLite()<CR>
-      " nmap <silent><S-F9> :call ToggleHiLite()<CR>
-
   " Font ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .............................................................. Switch font

@@ -33,12 +33,13 @@
 
 = fonts
 # ▔▔▔▔▔
+  adobe-base-14-fonts
 # ibfonts-meta-base
+#
 # infinality-bundle-fonts
   noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git
-  terminus-font-ll2-td1
   ttf-courier-prime
   ttf-dejavu
   ttf-dejavu-sans-mono-powerline-git

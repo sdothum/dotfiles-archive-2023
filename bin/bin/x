@@ -50,10 +50,12 @@ if console ;then
   # escape to shell prompt
   [ $wm = shell ] && exit
 
-  if [ ! -d /net/depot/dotfiles ] ;then
-    sudo mount /net
-    sudo mount $HOME/Maildir
-    touch /tmp/mount:nfs
+  if [ -f $HOME/.mount-nfs ] ;then
+    if [ ! -d /net/depot/dotfiles ] ;then
+      sudo mount /net
+      sudo mount $HOME/Maildir
+      touch /tmp/mount:nfs
+    fi
   fi
 
   pgrep startx >/dev/null || startx --

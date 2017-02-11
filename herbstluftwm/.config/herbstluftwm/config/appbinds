@@ -34,9 +34,9 @@ hc keybind Super-equal               spawn dmenu calc
 if [ $PLANCK ] ;then
   hc keybind Super-Shift-equal       spawn toggle plover
   # hc keybind Super-grave           spawn toggle rox
-  hc keybind Super-F2                spawn toggle rox
-  hc keybind Super-slash             spawn toggle conky
-  hc keybind Super-Shift-slash       spawn toggle panel
+  hc keybind Super-comma             spawn toggle rox
+  hc keybind Super-apostrophe        spawn toggle conky
+  hc keybind Super-period            spawn toggle panel
 else
   hc keybind Super-minus             spawn toggle plover
   hc keybind Super-grave             spawn toggle rox

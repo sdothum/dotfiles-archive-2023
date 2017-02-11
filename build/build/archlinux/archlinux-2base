@@ -38,7 +38,7 @@ sudo dirmngr </dev/null
 if grep -q 'keyserver hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf ;then
   original /etc/pacman.d/gnupg/gpg.conf
   # switch to non-ISP-blocked MIT server
-  sudo sed -i '/^keyserver hkp:/ckeyserver hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf
+  sudo sed -i '/^keyserver hkp:/s|hkp:.*|hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf
 fi
 
 # signature checking
@@ -51,6 +51,7 @@ fi
 title "update base"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 bundle_install $HOME/build/archlinux/bundle/[0]*
+fc-cache -fv
 
 
 title "installation errors:"

@@ -7,7 +7,7 @@
 # ▔▔▔▔▔▔▔▔▔▔
 # breeze-obsidian-cursor-theme
 # breeze-snow-cursor-theme
-  compton              [! laptop]
+  compton
 # compton-git
 # hsetroot
   lxappearance
@@ -23,8 +23,8 @@
 = desktop
 # ▔▔▔▔▔▔▔
 # conky-lua
-  conky-lua-archers    [laptop]
-  conky-lua-nv         [! laptop]
+" enable mpd and nvidia as required
+? conky-lua-archers
 # lemonbar-git
   lemonbar-xft-git
 # trayer-srg-git
@@ -47,7 +47,8 @@
 
 = gtk themes and engines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  adapta-gtk-theme-deb
+  adapta-gtk-theme
+# adapta-gtk-theme-deb
 # flatplat-theme
 # flattr-icon-theme-git
 # gtk-chtheme
@@ -85,8 +86,8 @@
 = user interface
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   autocutsel
-  autokey-gtk
-# autokey-py3
+# autokey-gtk
+  autokey-py3
 # clipit
 # "stest contained in dmenu package"
   dmenu

@@ -54,12 +54,12 @@
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
   exfat-utils
-  fuse
+  fuse-common
 # fuse-exfat
   gvfs
 # hfsprogs
 # nfs-utils
-  ntfs-3g
+# ntfs-3g
   ntfs-3g-fuse
 
 

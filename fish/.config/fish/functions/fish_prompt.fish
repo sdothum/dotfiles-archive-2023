@@ -49,7 +49,7 @@ function fish_prompt --description 'Write out the prompt'
   end
 
   function rcode
-    if test $RCODE -eq 0
+    if test 0$RCODE -eq 0
      space
     else
       set_color $RED

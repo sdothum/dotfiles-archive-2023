@@ -64,23 +64,23 @@
       " imap \               <C-o><Plug>(easymotion-s)
       nmap <leader>\         <Plug>(easymotion-s)
       " 2 keystroke binding (backslash inhibits use in insert mode)
-      imap <leader><leader>/ <C-o><Plug>(easymotion-s2)
+      imap ,,/               <C-o><Plug>(easymotion-s2)
       nmap <leader><leader>/ <Plug>(easymotion-s2)
 
       " line motions
-      imap <leader><leader>n <C-o><Plug>(easymotion-j)
+      imap ,,n               <C-o><Plug>(easymotion-j)
       nmap <leader><leader>n <Plug>(easymotion-j)
-      imap <leader><leader>l <C-o><Plug>(easymotion-k)
+      imap ,,l               <C-o><Plug>(easymotion-k)
       nmap <leader><leader>l <Plug>(easymotion-k)
 
       " word motions
-      imap <leader><leader>E <C-o><Plug>(easymotion-gE)
+      imap ,,E               <C-o><Plug>(easymotion-gE)
       nmap <leader><leader>E <Plug>(easymotion-gE)
-      imap <leader><leader>e <C-o><Plug>(easymotion-E)
+      imap ,,e               <C-o><Plug>(easymotion-E)
       nmap <leader><leader>e <Plug>(easymotion-E)
-      imap <leader><leader>W <C-o><Plug>(easymotion-B)
+      imap ,,W               <C-o><Plug>(easymotion-B)
       nmap <leader><leader>W <Plug>(easymotion-B)
-      imap <leader><leader>w <C-o><Plug>(easymotion-W)
+      imap ,,w               <C-o><Plug>(easymotion-W)
       nmap <leader><leader>w <Plug>(easymotion-W)
 
     " .............................................................. Eightheader
@@ -108,8 +108,6 @@
       let g:gundo_preview_bottom = 1
       let g:gundo_preview_height = 20
 
-      " nmap <silent><C-F7>  :GundoToggle<CR>
-      " nmap <silent><F3>    :GundoToggle<CR>
       nmap <silent><leader>u :GundoToggle<CR>
 
       autocmd plugin BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
@@ -245,10 +243,6 @@
         \, 'v'      : 'V'
         \, 'V'      : 'V-LINE'
         \}
-
-      " toggle lightline/default vim statusline
-      " imap <silent><C-F10> <C-o>:call lightline#toggle()<CR>
-      " nmap <silent><C-F10> :call lightline#toggle()<CR>
 
     " ................................................................ Limelight
 
@@ -463,6 +457,8 @@
 
     " .................................................................. Vimwiki
 
+      let g:vimwiki_table_mappings = 0
+
       let g:vimwiki_list =
         \[
         \  {
@@ -519,10 +515,6 @@
       let g:yankring_window_height     = 30 " horizontal window height
 
       nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
-      " nmap <silent><F7>    :YRShow<CR>
-      " imap <silent><F7>    <ESC>:YRShow<CR>
-      " nmap <silent><F2>    :YRShow<CR>
-      " imap <silent><F2>    <ESC>:YRShow<CR>
       nmap <silent><leader>y :YRShow<CR>
 
 " plugins.vim

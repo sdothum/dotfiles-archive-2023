@@ -57,7 +57,7 @@
 
 = penetration testing
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  metasploit    [server]
+# metasploit    [server]
   nmap          [server]
 # wireshark-gtk [server]
 
