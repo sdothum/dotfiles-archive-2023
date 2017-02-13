@@ -269,20 +269,7 @@ case $1 in
        trace 'updating => thedarnedestthing.com:/vimwiki'
        rsync -L --delete-during \
              $HOME/vimwiki \
-             thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
-       if server ;then
-         if ping -c 1 -W 1 $laptop >/dev/null ;then
-           trace "updating => $laptop:/srv/http/thedarnedestthing.com"
-           rsync -l --delete-during $exclude_http_local /srv/http/thedarnedestthing.com $laptop:/srv/http/
-         fi
-         if ping -c 1 -W 1 $netbook >/dev/null ;then
-           trace "updating => $netbook:/srv/http/thedarnedestthing.com"
-           rsync -l --delete-during $exclude_http_local /srv/http/thedarnedestthing.com $netbook:/srv/http/
-         fi
-       elif ping -c 1 -W 1 luna >/dev/null 2>&1 ;then
-         trace 'updating => luna:/srv/http/thedarnedestthing.com'
-         rsync $exclude_http_local /srv/http/thedarnedestthing.com luna:/srv/http/
-       fi ;;
+             thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/ ;;
 
     wiki) if ! if-no 'recover thedarnedestthing.com:/vimwiki' ;then
             trace "thedarnedestthing.com:/vimwiki => $(hostname)"

@@ -19,8 +19,9 @@
 
 = network
 # ▔▔▔▔▔▔▔
+  bind-tools
   dnsmasq
-  dnsutils
+# dnsutils
 
 
 = network monitor

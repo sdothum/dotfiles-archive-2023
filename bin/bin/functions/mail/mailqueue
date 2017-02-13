@@ -6,6 +6,8 @@
 
 # ......................................................................... Send
 
+# Usage: mailqueue [purge]
+
 # disable fish autojump call
 export SHELL=dash
 . /etc/profile
@@ -16,6 +18,11 @@ queue=$HOME/.msmtpqueue
 # mailqueue status (mailqueue gt 2.. ?)
 if [ $(pgrep -cx mailqueue) -gt 2 ] ;then
   ls -l $queue
+  exit
+fi
+
+if [ "$1" = purge ] ;then
+  rm -rfv $queue/*
   exit
 fi
 # trace 'Starting mailqueue..'

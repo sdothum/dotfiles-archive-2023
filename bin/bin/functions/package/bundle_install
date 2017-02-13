@@ -30,6 +30,10 @@ if [ $1 = check ] ;then
   gems=$(gem list | cut -d' ' -f1)
 fi
 
+rule() {
+  echo "$@" | sed -e 's/\[//' -e 's/\]//' || echo true
+}
+
 for i in $@
 do
   subject $(basename $i | cut -d- -f2-9)
@@ -58,26 +62,23 @@ do
            continue ;;
 
       '-' | '?' | '@' | 'a' | 'g')
-          [ "$condition" ] && condition="$(echo | $condition  sed -e 's/^\[//' -e 's/\]$//')" ||
-                              condition=true ;;
+          condition=$(rule "$condition") ;;
 
-      *) [ "$package" ] && condition="$(echo "$package" | sed -e 's/^\[//' -e 's/\]$//')" ||
-                           condition=true ;;
+      *) set -- $package $condition
+         package=$action
+         condition=$(rule "$@") ;;
     esac
 
     eval $condition || continue
+
     if [ $check ] ;then
       unset installed
       case $action in
         '-') continue ;;
         'g') echo "$gems" | grep -q "^$package$" && installed=true ;;
-
-        '+' | '?' | '@' | 'a') pacman -Q $package >/dev/null 2>&1 && installed=true ;;
-
-        *) package=$action
-           pacman -Q $package >/dev/null 2>&1 && installed=true ;;
+        *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
       esac
-      [ $installed ] && ditto $package || ditto "$package  ${_RED_}[ not installed ]"
+      [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[not installed]"
       continue
     fi
 
@@ -90,7 +91,7 @@ do
       '@') aur_install $package ;;
       'a') arm_install $package ;;
       'g') gem_install $package ;;
-      *  ) pm_install $action ;;
+      *  ) pm_install $package ;;
     esac
   done 3< $i
 done
