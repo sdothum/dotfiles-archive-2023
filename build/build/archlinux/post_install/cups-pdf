@@ -5,10 +5,7 @@
 
 # ..................................................................... cups-pdf
 
-original /etc/cups/cups-pdf.conf
-if ! grep -q '^Out \${HOME}/documents' /etc/cups/cups-pdf.conf ;then
-  sudo sed -i '/#Out/aOut ${HOME}/documents' /etc/cups/cups-pdf.conf
-fi
+conf /etc/cups/cups-pdf.conf '^Out \${HOME}/documents' '/#Out/aOut ${HOME}/documents'
 
 systemd restart org.cups.cupsd
 

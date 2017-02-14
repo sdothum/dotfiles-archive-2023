@@ -7,14 +7,9 @@
 
 ln -sf /usr/share/webapps/rutorrent /opt/nginx/html/
 
-if ! grep -q rutorrent /etc/php/php.ini ;then
-  original /etc/php/php.ini
-  sudo sed -i '/^open_basedir = "/s|= "|= "/etc/webapps/rutorrent/conf/:/usr/share/webapps/rutorrent/php/:/usr/share/webapps/rutorrent/:|' /etc/php/php.ini
-fi
-
-grep -q scgi_port  $HOME/.rtorrent.rc || sed -i '$a\
-\
-scgi_port = localhost:5000' $HOME/.rtorrent.rc
+conf /etc/php/php.ini 'rutorrent' \
+                      '/^open_basedir = "/s|= "|= "/etc/webapps/rutorrent/conf/:/usr/share/webapps/rutorrent/php/:/usr/share/webapps/rutorrent/:|'
+conf $HOME/.rtorrent.rc 'scgi_port = localhost:5000'
 
 sudo chmod 0777 /opt/nginx/html/rutorrent/share/settings
 sudo chmod 0777 /opt/nginx/html/rutorrent/share/torrents

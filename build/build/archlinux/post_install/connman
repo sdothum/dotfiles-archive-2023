@@ -14,8 +14,9 @@ connmanctl enable wifi
 connmanctl scan wifi
 connmanctl services
 annotate "connmanctl> agent on\n
-connmanctl> connect [network]\n
-connmanctl> config [network] --autoconnect True"
+connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask> <gateway>\n
+connmanctl> config [wireless] --ipv4 manual <ip address> <netmask> <gateway> --autoconnect True\n
+connmanctl> connect [wireless]\n"
 connmanctl
 
 original /lib/systemd/system/connman.service

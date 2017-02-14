@@ -33,8 +33,7 @@ nameserver 127.0.0.1' | sudo tee /etc/resolv.conf
 # prevent overwriting by other dnsproxy agents
 sudo chattr +i /etc/resolv.conf
 
-original /etc/dhcpcd.conf
-grep -q 'nohook resolv.conf' /etc/dhcpcd.conf || sudo sed -i '$anohook resolv.conf' /etc/dhcpcd.conf
+conf /etc/dhcpcd.conf 'nohook resolv.conf'
 systemd enable dnsmasq
 
 # vim: set ft=sh: #

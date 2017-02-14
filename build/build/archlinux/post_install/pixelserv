@@ -3,13 +3,8 @@
 # Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... networkmanager
+# .................................................................... pixelserv
 
-conf /etc/NetworkManager/NetworkManager.conf 'dhcp=dhcpcd'
-
-systemd enable dhcpcd
-systemd enable NetworkManager
-
-nmtui
+systemd enable pixelserv
 
 # vim: set ft=sh: #

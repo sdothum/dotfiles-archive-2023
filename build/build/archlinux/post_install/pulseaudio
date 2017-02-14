@@ -5,12 +5,7 @@
 
 # ................................................................... pulseaudio
 
-original /etc/pulse/default.pa
-if ! grep -q 'load-module module-switch-on-connect' /etc/pulse/default.pa ;then
-  sudo sed -i '$a\
-load-module module-switch-on-connect\
-' /etc/pulse/default.pa
-fi
+conf /etc/pulse/default.pa 'load-module module-switch-on-connect'
 
 # pm_query python-pyqt4 >/dev/null; and sudo sed -i '$a\
 # load-module module-equalizer-sink\
@@ -25,11 +20,7 @@ sudo usermod -a -G audio $USER
 
 # default 8196 inotify watches can easily be exhausted, so increase..
 echo "max_user_watches $(cat /proc/sys/fs/inotify/max_user_watches) -> $(echo 32768 | sudo tee /proc/sys/fs/inotify/max_user_watches)"
-if ! grep -q 'fs.inotify.max_user_watches=' /etc/sysctl.d/99-sysctl.conf ;then
-  sudo sed -i '$a\
-fs.inotify.max_user_watches=32768\
-' /etc/sysctl.d/99-sysctl.conf
-fi
+conf /etc/sysctl.d/99-sysctl.conf 'fs.inotify.max_user_watches=32768'
 
 annotate "pulseaudio -v[v[v]..] for diagnostics"
 

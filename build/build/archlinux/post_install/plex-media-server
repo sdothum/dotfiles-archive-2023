@@ -5,11 +5,8 @@
 
 # .............................................................. plexmediaserver
 
-if ! grep -q '/opt/plexmediaserver/Library/Application Support/Plex Media Server' /etc/conf.d/plexmediaserver ;then
-  original /etc/conf.d/plexmediaserver
-  sudo sed -i '/PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/s|=.*|=/opt/plexmediaserver/Library/Application\\ Support|' \
-           /etc/conf.d/plexmediaserver
-fi
+conf /etc/conf.d/plexmediaserver '/opt/plexmediaserver/Library/Application Support/Plex Media Server' \
+                                 '/PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/s|=.*|=/opt/plexmediaserver/Library/Application\\ Support|'
 
 sudo mkdir -p /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server 2>/dev/null
 sudo chown -cR plex:plex /opt/plexmediaserver/Library/Application\ Support

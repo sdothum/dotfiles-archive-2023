@@ -21,7 +21,7 @@
 # ▔▔▔▔▔▔▔
   bind-tools
   dnsmasq
-# dnsutils
+  dnsutils
 
 
 = network monitor
@@ -68,7 +68,7 @@
 # adsuck
 # polipo  [server]
 # privoxy [server]
-# squid
+  squid
 
 
 = socket

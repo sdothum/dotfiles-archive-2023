@@ -254,6 +254,10 @@ g term-ansicolor
   xmpppy
 
 
+= web server
+# ▔▔▔▔▔▔▔▔▔▔
+  pixelserv
+
 = viewers
 # ▔▔▔▔▔▔▔
   feh

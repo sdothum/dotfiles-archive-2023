@@ -87,4 +87,9 @@
 # ttaurter
   surfraw
 
+
+= web server
+# ▔▔▔▔▔▔▔▔▔▔
+  pixelserv         [arm]
+
 # vim: set ft=conf: #

@@ -5,11 +5,7 @@
 
 # ................................................................... autocutsel
 
-if ! grep -q autocutsel $HOME/.xinitrc ;then
-  sed -i '1a\
-autocutsel -fork &\
-autocutsel -selection PRIMARY -fork &\
-' $HOME/.xinitrc
-fi
+conf $HOME/.xinitrc 'autocutsel -fork &'
+conf $HOME/.xinitrc 'autocutsel -selection PRIMARY -fork &'
 
 # vim: set ft=sh: #

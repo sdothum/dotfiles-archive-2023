@@ -5,10 +5,6 @@
 
 # ......................................................................... gvim
 
-if ! grep -q '^EDITOR=vim' $HOME/.bashrc ;then
-  sed -i '$a\
-EDITOR=vim\
-' $HOME/.bashrc
-fi
+conf $HOME/.bashrc 'EDITOR=vim'
 
 # vim: set ft=sh: #

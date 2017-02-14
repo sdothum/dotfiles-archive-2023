@@ -5,13 +5,11 @@
 
 # .................................................................... ifenslave
 
-sudo cp /etc/netctl/examples/bonding /etc/netctl/bonding
-if ! grep -q "'enp9s0' 'enp10s0'" /etc/netctl/bonding ;then
-  sudo sed -i -e "s/eth0 eth2/'enp9s0' 'enp10s0'/" \
-           -e 's/static/dhcp/' \
-           -e '$aIP6=stateless' \
-           -e '/^Address.*/d' \
-           /etc/netctl/bonding
-fi
+sed -e "s/eth0 eth2/'enp9s0' 'enp10s0'/" \
+    -e 's/static/dhcp/' \
+    -e '$aIP6=stateless' \
+    -e '/^Address.*/d' \
+    /etc/netctl/examples/bonding |
+    sudo tee /etc/netctl/bonding
 
 # vim: set ft=sh: #

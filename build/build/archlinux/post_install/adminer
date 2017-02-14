@@ -5,12 +5,6 @@
 
 # ...................................................................... adminer
 
-if ! grep -q Adminer /etc/httpd/conf/httpd.conf ;then
-  original /etc/httpd/conf/httpd.conf
-  sudo sed -i '$a\
-# Adminer Configuration\
-Include conf/extra/httpd-adminer.conf\
-' /etc/httpd/conf/httpd.conf
-fi
+conf /etc/httpd/conf/httpd.conf 'Include conf/extra/httpd-adminer.conf'
 
 # vim: set ft=sh: #

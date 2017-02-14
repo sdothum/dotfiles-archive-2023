@@ -13,15 +13,9 @@ if server ;then
   # systemd enable rpcbind
   systemd enable nfs-server
 
-  original /etc/exports
   sudo mkdir -pv /srv/nfs4
-  if ! grep -q '^/srv/nfs4' /etc/exports ;then
-    sudo sed -i '$a\
-/srv/nfs4/        *(rw,fsid=root,sync,no_subtree_check)\
-' /etc/exports
-
-    sudo exportfs -rav
-  fi
+  conf /etc/exports '/srv/nfs4/        *(rw,fsid=root,sync,no_subtree_check)'
+  sudo exportfs -rav
 else
   sudo systemctl mask nfs-blkmap.service
   # rpcbind not required for nfs4
