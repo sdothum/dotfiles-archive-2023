@@ -95,8 +95,8 @@
       set number
 
       " toggle relative line numbers
-      autocmd! InsertEnter * if ! ProseFT() | set relativenumber | endif
-      autocmd! InsertLeave * if ! ProseFT() | set norelativenumber | endif
+      autocmd! InsertEnter * set relativenumber
+      autocmd! InsertLeave * set norelativenumber
 
     " ................................................... Status / command lines
 

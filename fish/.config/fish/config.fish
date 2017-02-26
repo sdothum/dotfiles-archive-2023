@@ -60,9 +60,13 @@ set -x EDITOR 'gvim -f'
 set -x VISUAL 'gvim -f'
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
+
 # less prompt
 set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
 set -x PAGER 'less'
+
+# fzf
+export FZF_DEFAULT_OPTS='--reverse --border --prompt="    ─────  " --height=15'
 
 # ..................................................... Development environments
 

@@ -102,6 +102,12 @@
         \| let b:endwise_words     = 'function,begin,if,while,for,switch'
         \| let b:endwise_syngroups = 'shFunctionKey'
 
+    " ...................................................................... Fzf
+
+      let g:fzf_launcher = 'term STACK WAIT SHELL %s'
+
+      nmap <leader><leader>b :FZF<CR>
+
     " ........................................................... Graphical undo
 
       let g:gundo_width          = 30

@@ -51,6 +51,8 @@
 
       " Plug 'mileszs/ack.vim'
       Plug 'ramele/agrep'
+      " /usr/bin/fzf package installed from arch repository
+      Plug 'junegunn/fzf'
       " Plug 'Shougo/unite.vim'
       " Plug 'Shougo/vimfiler.vim'
       " Plug 'Shougo/vimshell.vim'

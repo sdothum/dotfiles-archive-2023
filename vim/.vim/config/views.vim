@@ -21,6 +21,8 @@
         set showmode
         set laststatus=2                    " turn on statusline
         call LiteBackground()
+        execute 'highlight LineNr guifg='         . g:dfm_fg_line
+        execute 'highlight CursorLineNr guibg='   . g:dfm_bg
         call Cursor()
       endfunction
 
@@ -71,7 +73,6 @@
         if s:unfocused == g:dfm_unfocused
           execute 'Limelight!'
           execute 'highlight Normal guifg=' . g:dfm_proof
-          " call CursorLine(g:dfm_proof, g:dfm_bg, g:dfm_bg)
           let s:unfocused = g:dfm_fg
           call ShowInfo(1)
         else

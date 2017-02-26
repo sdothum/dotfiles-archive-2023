@@ -49,7 +49,7 @@
       " goto buffer (just fingering convenience)
       nmap <leader>b            :b<Space>
       " query current buffer
-      nmap <leader><leader>b    :echo expand('%:p')<CR>
+      nmap <leader>B            :echo expand('%:p')<CR>
 
       " silence vim's default (command line) file info message, note silent..silent
       vmap <silent><C-PageUp>   <ESC>:silent bprevious<CR>
