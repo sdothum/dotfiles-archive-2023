@@ -72,8 +72,8 @@ hc keybind Super-Control-q           spawn clack swap
 hc keybind Super-r                   spawn dmenu radio
 hc keybind Super-s                   spawn dmenu system
 hc keybind Super-t                   spawn dmenu media
-hc keybind Super-w                   spawn focus vimbt
-hc keybind Super-Shift-w             spawn focus qutebrowser
+hc keybind Super-w                   spawn focus qutebrowser
+hc keybind Super-Shift-w             spawn focus vimbt
 hc keybind Super-Control-w           spawn dmenu vimbk
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver

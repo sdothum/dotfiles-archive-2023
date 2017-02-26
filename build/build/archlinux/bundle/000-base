@@ -13,7 +13,7 @@
   pacaur
 
 
-SSH
+= entropy
 # ▔▔▔▔▔▔▔
   haveged
 
@@ -51,6 +51,7 @@ SSH
   nvidia-340xx-utils         [macbook]
 # "see infinality below"
 # nvidia-libgl               [nvidia]
+  nvidia-settings            [nvidia]
   nvidia-utils               [nvidia]
   xf86-input-evdev
   xf86-input-synaptics       [laptop]

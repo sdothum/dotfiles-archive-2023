@@ -14,7 +14,9 @@ if console ;then
 fi
 
 if [ -z $1 ] ;then
-  focus vim -g /tmp/scratch
+  file=$(find -type f 2>/dev/null | grep -v '.deprecated' | fzf)
+  [ "$file" ] || exit
+  focus vim -g $file
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
   file=$(echo $@)

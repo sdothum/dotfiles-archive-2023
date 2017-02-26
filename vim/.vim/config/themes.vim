@@ -10,7 +10,7 @@
       " further distraction free mode settings
       " foreground
       let g:dfm_fg_light        = 'brown'   " light foreground
-      let g:dfm_fg_dark         = '#cb4b16' " dark foreground
+      let g:dfm_fg_dark         = '#54D4FF' " dark foreground
       let g:dfm_proof_light     = '#002b36' " dark foreground
       let g:dfm_proof_dark      = '#fdf6e3' " light foreground
       let g:dfm_unfocused_light = '#002b36' " light grey surrounding text content
@@ -122,6 +122,7 @@
       " set prose cursorline theme
       function! HiLite()
         execute 'highlight CursorLine gui=none guibg=' . s:cursorline . ' guifg=' . s:foreground
+        execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
       endfunction
 
       function! CursorLine(fg, bg, BG)

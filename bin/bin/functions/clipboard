@@ -1,14 +1,12 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Browser
+# .................................................................... Clipboard
 
-blackboard
-toggle compton off
-chromium netflix
-toggle compton on
+# gpaste history add not available on raspberry pi
+arm && echo -n "$@" | xsel -b || gpaste-client add "$@"
 
 # vim: set ft=sh: #

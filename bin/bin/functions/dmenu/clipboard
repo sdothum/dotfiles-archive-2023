@@ -37,7 +37,7 @@ if [ "$clip" ] ;then
   clip=$(echo $clip | cut -d' ' -f1)
   xdotool type --delay 0 "$(gpaste-client get $clip)"
   # gpaste add removes duplicate entries and pushes stack :-)
-  gpaste-client add "$(gpaste-client get $clip)"
+  clipboard "$(gpaste-client get $clip)"
 fi
 rm -f $clipboard
 

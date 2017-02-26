@@ -20,17 +20,20 @@ gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient TapButton1=1 &
 pidof gpg-agent >/dev/null ||
       gpg-agent --homedir /home/shum/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
-ipfilter &
+server && ipfilter &
 xrdb -merge $HOME/.Xresources &
 
 # ........................................................... Daemons and caches
 
 server && adblock &
 # pidof dunst || dunst 2>/dev/null &
-pidof mpd || sleep 2 && mpd &
+if server && ! pidof mpd ;then
+  sleep 2
+  mpd &
+fi
 pidof urxvtd || urxvtd -q -o -f &
 # pidof xflux || xflux -l 45.4 -g -75.7
-dmenu movies cache
+server && dmenu movies cache
 
 # ....................................................... Desktop initialization
 
@@ -75,9 +78,7 @@ fi
 server && thedarnedestthing
 server && vimwiki
 switch tag $WEB
-vimbt
-# $BROWSER &
-# xdotool search --screen 0 --classname --onlyvisible --sync 'chromium' >/dev/null
+$BROWSER &
 
 # .............................................................. Cleanup desktop
 

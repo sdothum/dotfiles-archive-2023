@@ -26,7 +26,7 @@ cmd=$(h shell=$shell |
 
 cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
 notify 'Ctrl-Alt-V' "$(echo $cmd | sed -e 's/[&][&]/and/g' -e 's/[&]/ampersand/')"
-gpaste-client add "$cmd"
+clipboard "$cmd"
 xdotool type --delay 0 "$cmd"
 
 #* vim: set ft=sh: #

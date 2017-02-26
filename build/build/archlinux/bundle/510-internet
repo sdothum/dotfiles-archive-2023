@@ -90,6 +90,6 @@
 
 = web server
 # ▔▔▔▔▔▔▔▔▔▔
-  pixelserv         [arm]
+  pixelserv         [! server]
 
 # vim: set ft=conf: #

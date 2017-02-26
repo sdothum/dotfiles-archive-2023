@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Weather
+
+city='Ottawa,Canada'
+# bypass release dependent wego config file
+arm && location="-city $city" || location="-location $city"
+
+# cat worldweatheronline api key
+wego -backend worldweatheronline.com \
+     $location \
+     -days 2 \
+     $(cat $HOME/.wego)
+
+# vim: set ft=sh: #

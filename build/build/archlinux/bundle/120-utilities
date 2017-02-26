@@ -101,6 +101,7 @@
 # checkbashisms
   expect
 # fasd
+  fzf
 # prezto-git
 # zsh-doc
 # zsh-autosuggestions

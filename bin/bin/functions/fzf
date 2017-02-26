@@ -1,14 +1,12 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Browser
+# ................................................................. Fuzzy finder
 
-blackboard
-toggle compton off
-chromium netflix
-toggle compton on
+# wrapper, see v cf.fish
+/usr/bin/fzf --reverse --border --prompt="    ─────  " --height=15 $@
 
 # vim: set ft=sh: #

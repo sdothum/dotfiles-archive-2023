@@ -34,16 +34,16 @@ catlg=$FOLDER/.${ext}s
 [ -e $FOLDER ] || mkdir -p $FOLDER
 
 if [ $ext = draft ] ;then
-  NEW='[ new   ]'
-  EDIT='[ edit  ]'
-  PURGE='[ purge ]'
+  NEW='[ new    ]'
+  EDIT='[ manage ]'
+  PURGE='[ purge  ]'
   PROMPT="$NEW\n$EDIT\n$PURGE"
-  offset=1
+  offset=2
 else
-  NEW='[ new  ]'
-  EDIT='[ edit ]'
+  NEW='[ new    ]'
+  EDIT='[ manage ]'
   PROMPT="$NEW\n$EDIT"
-  offset=0
+  offset=1
 fi
 
 # first descriptive line of file, mail subject line special case
@@ -67,7 +67,7 @@ notes() {
       fi
       echo $i >>$NOTES
       echo "$(stat -c '%n^%y' $i | cut -d: -f1-2)/$count ^$SEP $(hint $i)"
-    done | sort
+    done | tac
   else
     # empty folder
     echo
@@ -105,20 +105,21 @@ do
 
     *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
        content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-       action=$(echo 'view\nedit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom) ;;
+       while action=$(echo 'view\nedit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom)
+       do
+         [ $action = view ] || break
+         term "$file" MAX STACK WAIT less $file
+       done ;;
   esac
 
+  history $catlg $file
   case $action in
-    view) term "$file" MAX STACK WAIT less $file ;;
+    edit  ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
+    delete) mv $file /tmp ;;
 
-    edit) history $catlg $file
-          gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
-
-    clipboard) gpaste-client add "$file"
+    clipboard) clipboard "$file"
                notify 'Ctrl-Alt-V' "$file"
                exit ;;
-
-    delete) mv $file /tmp ;;
   esac
 done
 

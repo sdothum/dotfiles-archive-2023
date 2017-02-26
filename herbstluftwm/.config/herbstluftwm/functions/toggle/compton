@@ -6,7 +6,13 @@
 
 # ............................................................... Toggle compton
 
+# Usage: toggle compton [off | on]
+
 which compton >/dev/null 2>&1 || exit
+case $1 in
+  off) [ -e $COMPTON ] || exit ;;
+  on ) [ -e $COMPTON ] && exit ;;
+esac
 [ -e $COMPTON ] && rm -f $COMPTON || touch $COMPTON
 
 if [ -e $COMPTON ] ;then

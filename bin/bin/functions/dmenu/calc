@@ -30,7 +30,7 @@ do
   if ans=$(calc -pd "$(eval echo $(eqn))") ;then
     if [ $ans ] ;then
       if echo $ans | grep -qv 'Error|Warning' ;then
-        gpaste-client add "$ans"
+        clipboard "$ans"
         count=$(( $count + 1 ))
         [ $count -gt 26 ] && count=0
         # initialize alpha variable (eval associative array, note export command)
@@ -53,7 +53,7 @@ do
 done
 
 if [ $ans ] ;then
-  gpaste-client add "$ans"
+  clipboard "$ans"
   notify 'Ctrl-Alt-V' "$ans"
 fi
 

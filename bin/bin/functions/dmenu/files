@@ -20,7 +20,7 @@ do
 
   file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
   history files "$file"
-  gpaste-client add "$file"
+  clipboard "$file"
   focus xdg-open "$file"
   break
 done

@@ -13,7 +13,7 @@
 
 NAME='[ sort by name ]'
 DATE='[ sort by date ]'
-EDIT='[ edit         ]'
+EDIT='[ manage       ]'
 
 # video library
 library=${LIBRARY:-/net/media/videos/${1:-series}}

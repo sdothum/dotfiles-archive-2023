@@ -6,11 +6,13 @@
 
 # ...................................................................... Browser
 
+server && font='-s fonts _monospace "10pt Iosevka"'
+
 if [ $1 ] ;then
-  /usr/bin/qutebrowser "$@"
+  eval /usr/bin/qutebrowser $font "$@"
 else
   ping -c 1 -W 1 luna >/dev/null 2>&1 && TTRSS=luna || TTRSS=localhost
-  /usr/bin/qutebrowser http://$TTRSS:8000/tt-rss/
+  eval /usr/bin/qutebrowser $font http://$TTRSS:8000/tt-rss/
 fi
 
 # vim: set ft=sh: #

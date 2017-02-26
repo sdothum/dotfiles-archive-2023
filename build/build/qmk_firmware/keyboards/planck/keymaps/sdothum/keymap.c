@@ -92,7 +92,7 @@ enum planck_layers {
  ,_NUMSYM
  ,_SYMBOL
  ,_SYMREG
- ,_NAVPAD
+ ,_FNCKEY
  ,_KEYTEST
  ,_ADJUST
  ,_MACRO
@@ -117,7 +117,7 @@ enum planck_keycodes {
  ,Dot   = LT  (_NUMBER, KC_DOT)
  ,Esc   = LT  (_NUMBER, KC_ESC)
  ,Spc   = LT  (_LSHIFT, KC_SPC)
- ,Tab   = LT  (_NAVPAD, KC_TAB)
+ ,Tab   = LT  (_FNCKEY, KC_TAB)
  ,Bspc  = LT  (_MACRO, KC_BSPC)
  ,Ent   = LT  (_RSHIFT, KC_ENT)
  ,Left  = LT  (_SYMBOL, KC_LEFT)
@@ -155,7 +155,7 @@ enum tap_dance {
 #define SHIFT   MO (_SHIFT)
 #define ADJUST  MO (_ADJUST)
 #define SYMBOL  MO (_NUMSYM)
-#define F_TWO   LT (_SYMREG, KC_F2)
+#define PGUP    LT (_SYMREG, KC_PGUP)
 #define DYNAMIC MO (_DYN)
 
 // keycodes
@@ -290,22 +290,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ................................................................ Symbol Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/4de2f55ab51732c6a664bbefaae7a2dd
+// http://www.keyboard-layout-editor.com/#/gists/b14e93e60f484a7e7c0d89351ea5c663
 
   // .-----------------------------------------------------------------------------------.
-  // |   {  |   \  |   *  |   &  |   }  |      |      |      |  F9  |  F10 |  F11 |  F12 |
+  // |   {  |   \  |   *  |   &  |   }  |      |      |      | Home |  Up  |  End |      |
   // |-----------------------------------------------------------------------------------|
-  // |   (  |   ^  |   %  |   $  |   )  |      |      |      |  F5  |  F6  |  F7  |  F8  |
+  // |   (  |   ^  |   %  |   $  |   )  |      |      |      | Left | Down | Right|      |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |   #  |   @  |   !  |   ]  |      |      |      |  F1  |  F2  |  F3  |  F4  |
+  // |   [  |   #  |   @  |   !  |   ]  |      |      |      | PgDn | PgUp |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |   .  |   |  |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR,  KC_RCBR, _______, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12 },
-    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,   KC_RPRN, _______, _______, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8  },
-    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM,  KC_RBRC, _______, _______, _______, KC_F1,   F_TWO,   KC_F3,   KC_F4  },
+    {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR,  KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
+    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,   KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______},
+    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM,  KC_RBRC, _______, _______, _______, KC_PGDN, PGUP,    _______, _______},
     {___x___, ___x___, ___x___, Dot,      KC_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
@@ -328,24 +328,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, ___x___, ___x___, KC_COLN, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
-// ............ ..................................................Navigation Pad
+// ............ .................................................. Function Keys
 //
-// http://www.keyboard-layout-editor.com/#/gists/8a4b014d874ae0b15db613009fb7a4c9
+// http://www.keyboard-layout-editor.com/#/gists/d937a7bb9dec5dc6e73b28bf95d4d517
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      | Home |  Up  |  End |      |
+  // |      |      |      |      |      |      |      |      |  F9  |  F10 |  F11 |  F12 |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |  GUI | Ctrl | Shift|      |      |      | Left | Down | Right|      |
+  // |      |  GUI | Ctrl | Shift|      |      |      |      |  F5  |  F6  |  F7  |  F8  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      | PgDn | PgUp |      |      |
+  // |      |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F4  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |  f() |      |   +  |      |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
-  [_NAVPAD] = {
-    {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {_______, _______, _Gui,    _Ctl,    _Sft,    _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
+  [_FNCKEY] = {
+    {_______, _______, _______, _______, _______, _______, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12 },
+    {_______, _Gui,    _Ctl,    _Sft,    _______, _______, _______, _______, KC_F5,   KC_F6,   KC_F7,   KC_F8  },
+    {_______, _______, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4  },
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
 
@@ -561,7 +561,7 @@ void clear_layers()
   layer_off (_NUMSYM);
   layer_off (_SYMBOL);
   layer_off (_SYMREG);
-  layer_off (_NAVPAD);
+  layer_off (_FNCKEY);
   layer_off (_KEYTEST);
   layer_off (_ADJUST);
 }

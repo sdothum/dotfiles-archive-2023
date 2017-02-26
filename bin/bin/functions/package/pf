@@ -1,14 +1,18 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Package
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Browser
+# ........................................................... Package management
 
-blackboard
-toggle compton off
-chromium netflix
-toggle compton on
+sudo pacman -Sy
+pacaur -Qu
+if-no 'upgrade system' && exit
+for i in $(pacaur --color never -Qu | awk '{ print $3 }')
+do
+  ditto $i
+  pm S $i
+done
 
 # vim: set ft=sh: #

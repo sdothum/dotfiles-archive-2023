@@ -85,9 +85,9 @@ alias treed 'sudo tree -aCdF'
 
 # ....................................................................... Search
 
-alias fd 'find . -type d'
-alias ff 'find . -type f'
-alias f 'find . -iname'
+alias fd 'find -type d'
+alias ff 'find -type f'
+alias f 'find -iname'
 alias g 'ack --ignore-case'
 alias gl 'ack -l --ignore-case'
 alias locate 'sudo locate'
@@ -118,4 +118,3 @@ alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
 alias ss 'sc-im'
 alias todo 'rlwrap todo-screen'
 alias uterm 'urxvt -sh 1'
-alias we 'wego'

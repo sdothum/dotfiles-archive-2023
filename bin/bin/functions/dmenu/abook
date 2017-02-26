@@ -111,11 +111,11 @@ do
 
     "$EDIT") gvim -f $contacts ;;
 
-    "$PASTE") gpaste-client add "$addresses"
+    "$PASTE") clipboard "$addresses"
               xdotool type --delay 0 "$addresses"
               break ;;
 
-    "$CLIPBOARD") gpaste-client add "$addresses"
+    "$CLIPBOARD") clipboard "$addresses"
                   notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
                   break ;;
 

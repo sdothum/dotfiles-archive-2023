@@ -21,9 +21,6 @@
         set showmode
         set laststatus=2                    " turn on statusline
         call LiteBackground()
-        execute 'highlight LineNr guifg='         . g:dfm_fg_line
-        " execute 'highlight CursorLineNr guibg=' . g:dfm_bg_line
-        execute 'highlight CursorLineNr guibg='   . g:dfm_bg
         call Cursor()
       endfunction
 
@@ -48,10 +45,7 @@
         call DfmWriting()
         call LiteBackground()
         call HiLite()
-        execute 'highlight LineNr guifg='       . g:dfm_bg
         execute 'highlight Normal guifg='       . g:dfm_unfocused
-        " execute 'highlight CursorLineNr guifg=' . g:dfm_bg . ' guibg=' . g:dfm_bg
-        execute 'highlight CursorLineNr guibg=' . g:dfm_bg
         execute 'highlight PreProc guifg='      . g:dfm_code
         let s:unfocused = g:dfm_unfocused
         call Margin()

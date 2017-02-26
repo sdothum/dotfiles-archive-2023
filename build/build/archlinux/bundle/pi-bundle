@@ -198,6 +198,7 @@ g term-ansicolor
 
 = user interface
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  autokey-py3
 # "stest contained in dmenu package"
   dmenu
   dunst
@@ -241,7 +242,7 @@ g term-ansicolor
 = browsers
 # ▔▔▔▔▔▔▔▔
 # chromium
-# qutebrowser
+  qutebrowser
   tabbed
 " add armv7h to arch in pkgbuild
 ? vimb
@@ -269,8 +270,10 @@ g term-ansicolor
 = applications
 # ▔▔▔▔▔▔▔▔▔▔▔▔
 " add armv7h to arch in pkgbuild
+  aiksaurus
 ? amphetype-svn
   calc
+  dictd
   wego
 
 # vim: set ft=conf: #
