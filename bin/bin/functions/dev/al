@@ -6,7 +6,7 @@
 
 # ....................................................................... Search
 
-# fix for ack -l limitation with escaped regex
-a --nocolor "$@" | cut -d: -f1 | uniq
+# ack --smart-case --nocolor "$@" | egrep -v "$(cat $HOME/.filter)" | cut -d: -f1 | uniq
+rg --color 'never' --regexp "$@" | egrep -v "$(cat $HOME/.filter)" | cut -d: -f1 | uniq
 
 # vim: set ft=sh: #

@@ -16,11 +16,7 @@ usage() {
 
 # v by content
 [ "$1" ] || usage
-file=$(rg --column --line-number \
-          --no-heading --no-messages \
-          --ignore-case --no-ignore \
-          --hidden --follow \
-          --maxdepth $depth \
+file=$(rg --maxdepth $depth \
           --glob "!*/*cache" \
           --glob "!*cache/*" \
           --glob "!.git/*" \

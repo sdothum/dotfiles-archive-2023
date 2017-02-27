@@ -66,7 +66,7 @@ set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
 set -x PAGER 'less'
 
 # fzf
-set -x FZF_DEFAULT_OPTS '--reverse --border --prompt="    ─────  " --height=15 --ansi'
+set -x FZF_DEFAULT_OPTS '--reverse --border --prompt="    ─────  " --height=20 --ansi'
 set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 # ..................................................... Development environments

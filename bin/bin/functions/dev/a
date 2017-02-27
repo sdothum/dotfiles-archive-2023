@@ -6,15 +6,8 @@
 
 # ....................................................................... Search
 
-# ignore archive folders and dmenui history
-filter='(\.deprecated|\.hg|makepkg|src)/|dmenu.*history|\.vimv|vimmappings'
+# ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$@" | egrep -v "$(cat $HOME/.filter)"
+rg --color 'always' --regexp "$@" | egrep -v "$(cat $HOME/.filter)"
 
-if [ "$1" = --nocolor ] ;then
-  nocolor=$1
-  shift
-fi
-
-ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $nocolor "$@" |
-    egrep -v "$filter"
 
 # vim: set ft=sh: #
