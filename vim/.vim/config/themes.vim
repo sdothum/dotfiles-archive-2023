@@ -10,7 +10,8 @@
       " further distraction free mode settings
       " foreground
       let g:dfm_fg_light        = 'brown'   " light foreground
-      let g:dfm_fg_dark         = '#54D4FF' " dark foreground
+      let g:dfm_fg_dark         = '#FFFF00' " dark foreground
+      let g:dfm_fg_dark_prose   = '#54D4FF' " dark foreground blue
       let g:dfm_proof_light     = '#002b36' " dark foreground
       let g:dfm_proof_dark      = '#fdf6e3' " light foreground
       let g:dfm_unfocused_light = '#002b36' " light grey surrounding text content
@@ -46,7 +47,11 @@
           let g:dfm_fg_line     = g:dfm_fg_line_light
           let g:dfm_status      = g:dfm_status_light
         else
-          let g:dfm_fg          = g:dfm_fg_dark
+          if ProseFT()
+            let g:dfm_fg        = g:dfm_fg_dark_prose
+          else
+            let g:dfm_fg        = g:dfm_fg_dark
+          endif
           let g:dfm_proof       = g:dfm_proof_dark
           let g:dfm_unfocused   = g:dfm_unfocused_dark
           let g:dfm_code        = g:dfm_code_dark
@@ -119,10 +124,19 @@
       let s:contrast   = 1                  " cursorline contrast (0) low (1) high
       let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
 
-      " set prose cursorline theme
+      function! Cursor()
+        execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+      endfunction
+
+      " set cursorline theme
       function! HiLite()
-        execute 'highlight CursorLine gui=none guibg=' . s:cursorline . ' guifg=' . s:foreground
-        execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
+        if ProseFT()
+          execute 'highlight CursorLine gui=none guibg='   . s:cursorline . ' guifg=' . s:foreground
+          execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
+        else
+          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
+        endif
+        call Cursor()
       endfunction
 
       function! CursorLine(fg, bg, BG)
@@ -135,16 +149,14 @@
       endfunction
 
       function! ToggleHiLite()
-        if ProseFT()
-          if s:contrast == 0
-            " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
-            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-          else
-            " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
-            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-          endif
-          call HiLite()
+        if s:contrast == 0
+          " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
+          call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
+        else
+          " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
+          call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
         endif
+        call HiLite()
       endfunction
 
   " Font ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -158,7 +170,7 @@
 
       function! Fontspace(prose, source)
         if argv(0) == 'vimwiki' || expand('%:e') =~ '\(wiki\|eml\|draft\)$'
-          execute 'set guifont=' . s:prose_font . ' ' . a:prose
+          execute 'set guifont=' . s:prose_font  . ' ' . a:prose
           execute 'set linespace=' . a:prose
         else
           execute 'set guifont=' . s:source_font . ' ' . a:prose

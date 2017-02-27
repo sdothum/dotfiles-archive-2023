@@ -1,0 +1,29 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... Editor
+
+usage() {
+  echo "usage: $(basename $0) <search>"
+  exit 1
+}
+
+# v by content
+[ "$1" ] || usage
+file=$(rg --column --line-number \
+          --no-heading --fixed-strings \
+          --ignore-case --no-ignore \
+          --hidden --follow \
+          --glob "!.git/*" \
+          --color "always" \
+          "$@" 2>/dev/null |
+       fzf |
+       nocolor |
+       cut -d: -f1)
+[ "$file" ] || exit
+v "$file"
+
+# vim: set ft=sh: #

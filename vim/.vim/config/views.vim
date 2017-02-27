@@ -21,13 +21,8 @@
         set showmode
         set laststatus=2                    " turn on statusline
         call LiteBackground()
-        execute 'highlight LineNr guifg='         . g:dfm_fg_line
-        execute 'highlight CursorLineNr guibg='   . g:dfm_bg
-        call Cursor()
-      endfunction
-
-      function! Cursor()
-        execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+        execute 'highlight LineNr guifg=' . g:dfm_fg_line
+        call HiLite()
       endfunction
 
     " ............................................................... Prose view
@@ -46,13 +41,12 @@
         " set fillchars+=stl:\ "
         call DfmWriting()
         call LiteBackground()
-        call HiLite()
-        execute 'highlight Normal guifg='       . g:dfm_unfocused
-        execute 'highlight PreProc guifg='      . g:dfm_code
+        execute 'highlight Normal guifg='  . g:dfm_unfocused
+        execute 'highlight PreProc guifg=' . g:dfm_code
         let s:unfocused = g:dfm_unfocused
         call Margin()
         call Quietly('LiteDFM')
-        call Cursor()
+        call HiLite()
         execute 'Limelight'
       endfunction
 
