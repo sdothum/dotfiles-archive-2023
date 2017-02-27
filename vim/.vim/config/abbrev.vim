@@ -43,7 +43,7 @@
       iabbrev dad.. (L)<CR>
         \:D(A):D<ESC>
 
-      iabbrev hope.. Hope this helps,<CR>, { 'dir': '~/.fzf', 'do': './install --all' }
+      iabbrev hope.. Hope this helps,<CR>
         \Steven<ESC>
 
       iabbrev kindest.. Kindest regards,<CR>

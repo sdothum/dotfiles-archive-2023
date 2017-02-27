@@ -128,7 +128,7 @@
 
       " ................................................. example: insert leader
 
-  function! InsertLeader(delimiter)
+      function! InsertLeader(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader
           if matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s') > ''

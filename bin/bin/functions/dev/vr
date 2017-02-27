@@ -14,12 +14,12 @@ usage() {
 # v by content
 [ "$1" ] || usage
 file=$(rg --column --line-number \
-          --no-heading --fixed-strings \
+          --no-heading --no-messages \
           --ignore-case --no-ignore \
           --hidden --follow \
           --glob "!.git/*" \
           --color "always" \
-          "$@" 2>/dev/null |
+          --regexp "$@" |
        fzf |
        nocolor |
        cut -d: -f1)

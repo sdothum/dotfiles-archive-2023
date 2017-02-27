@@ -36,10 +36,11 @@ g term-ansicolor
 
 = shell
 # ▔▔▔▔▔
-  autojump
+# autojump
   dash
   figlet
   fish
+  fzf
 
 
 = system monitor
