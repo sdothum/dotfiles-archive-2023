@@ -11,7 +11,7 @@ SHELL=/usr/bin/dash
 console || focus=focus
 
 if [ -z $1 ] ;then
-  file=$(find -type f 2>/dev/null | egrep -v "$FILTER" | fzf)
+  file=$(find -type f 2>/dev/null | filter | fzf)
   [ "$file" ] || exit
   $focus vim -g $file
 else

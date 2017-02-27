@@ -21,6 +21,7 @@ test -e /usr/share/fish/completions/autojump.fish
 set -x SHELL /usr/bin/fish
 set -x XTERM_SHELL /usr/bin/fish
 set -x KEYTIMEOUT 1
+set -x
 
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
@@ -67,13 +68,6 @@ set -x PAGER 'less'
 
 # fzf
 set -x FZF_DEFAULT_OPTS '--reverse --border --prompt="    ─────  " --height=20 --ansi'
-# rg filter
-if not test -f $HOME/.filter
-  cd $HOME/stow
-  stow egrep
-  cd -
-end
-test -f $HOME/.filter ;and set -x FILTER (cat $HOME/.filter) ;or set -x FILTER "$HOME/.filter not found"
 
 # ..................................................... Development environments
 

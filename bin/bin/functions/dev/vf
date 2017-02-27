@@ -19,9 +19,9 @@ case $1 in
         toggle focus
         dynamic=true
       fi
-      for i in $(find -L -type d  | egrep -v "$FILTER")
+      for i in $(find -L -type d  | filter)
       do
-        files=$(find -L $i -maxdepth 1 -type f | egrep -v "$FILTER")
+        files=$(find -L $i -maxdepth 1 -type f | filter)
         [ "$files" ] || continue
         echo
         echo $files | sed 's|.*/||'
@@ -30,8 +30,8 @@ case $1 in
       done
       [ $dynamic ] && toggle focus ;;
 
-  1 | 2 | 3 | 4) v $(find -L -maxdepth ${1:-1} -type f | egrep -v "$FILTER") ;;
-  *            ) v $(find -L -type f -name "$1" | egrep -v "$FILTER") ;;
+  1 | 2 | 3 | 4) v $(find -L -maxdepth ${1:-1} -type f | filter) ;;
+  *            ) v $(find -L -type f -name "$1" | filter) ;;
 esac
 
 # vim: set ft=sh: #

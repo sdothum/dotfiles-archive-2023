@@ -6,7 +6,11 @@
 
 # ....................................................................... Search
 
-# ack --smart-case --nocolor "$@" | filter | cut -d: -f1 | uniq
-rg --color 'never' --regexp "\"$@\"" | filter | cut -d: -f1 | uniq
+# Usage: pipe | filter
+
+filter='\.deprecated|\.hg|makepkg|src/|\.config/(bookmarks|history)|dmenu/\.history|network/adblock|\.vimv|vimmappings'
+
+# filter out home directory chaff from glob lists
+egrep -v "$filter"
 
 # vim: set ft=sh: #

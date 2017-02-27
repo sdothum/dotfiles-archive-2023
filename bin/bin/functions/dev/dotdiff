@@ -30,7 +30,7 @@ else
   folders='*'
 fi
 
-for i in $(find $current/$1 -type f | egrep -v "SFILTER" | egrep -v $ignore | egrep "$folders")
+for i in $(find $current/$1 -type f | filter | egrep -v $ignore | egrep "$folders")
 do
   file=${i#*/stow/*/}
   unset blink

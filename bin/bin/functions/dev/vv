@@ -24,7 +24,7 @@ file=$(rg --maxdepth $depth \
           --glob "!.stack/*" \
           --color "always" \
           --regexp "\"$@\"" |
-       egrep -v "$FILTER" |
+       filter |
        fzf --multi |
        nocolor |
        cut -d: -f1 |
