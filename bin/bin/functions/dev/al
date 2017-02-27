@@ -6,7 +6,7 @@
 
 # ....................................................................... Search
 
-# ack --smart-case --nocolor "$@" | egrep -v "$(cat $HOME/.filter)" | cut -d: -f1 | uniq
-rg --color 'never' --regexp "$@" | egrep -v "$(cat $HOME/.filter)" | cut -d: -f1 | uniq
+# ack --smart-case --nocolor "$@" | egrep -v "$FILTER" | cut -d: -f1 | uniq
+rg --color 'never' --regexp "\"$@\"" | egrep -v "$FILTER" | cut -d: -f1 | uniq
 
 # vim: set ft=sh: #

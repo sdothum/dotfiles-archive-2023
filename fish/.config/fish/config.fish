@@ -67,7 +67,13 @@ set -x PAGER 'less'
 
 # fzf
 set -x FZF_DEFAULT_OPTS '--reverse --border --prompt="    ─────  " --height=20 --ansi'
-set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+# rg filter
+if not test -f $HOME/.filter
+  cd $HOME/stow
+  stow egrep
+  cd -
+end
+test -f $HOME/.filter ;and set -x FILTER (cat $HOME/.filter) ;or set -x FILTER "$HOME/.filter not found"
 
 # ..................................................... Development environments
 

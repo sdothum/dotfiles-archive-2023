@@ -12,8 +12,8 @@ usage() {
 }
 
 case "$@" in
-  mobi) find . -maxdepth 1 -name '*.mobi' -exec mybooks {} \; ;;
-  epub) find . -maxdepth 1 -name '*.epub' -exec mybooks {} \; ;;
+  mobi) find -maxdepth 1 -name '*.mobi' -exec mybooks {} \; ;;
+  epub) find -maxdepth 1 -name '*.epub' -exec mybooks {} \; ;;
 
   *mobi | *epub) author=$(echo "$@" | sed -r 's/.* - (.*)\.(mobi|epub)/\1/')
                  [ -d "$author" ] || mkdir -v "$author"

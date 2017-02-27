@@ -23,11 +23,13 @@ file=$(rg --maxdepth $depth \
           --glob "!.hg/*" \
           --glob "!.stack/*" \
           --color "always" \
-          --regexp "$@" |
-       fzf |
+          --regexp "\"$@\"" |
+       egrep -v "$FILTER" |
+       fzf --multi |
        nocolor |
-       cut -d: -f1)
+       cut -d: -f1 |
+       uniq)
 [ "$file" ] || exit
-v "$file"
+v $file
 
 # vim: set ft=sh: #

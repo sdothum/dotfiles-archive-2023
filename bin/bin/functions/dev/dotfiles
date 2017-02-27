@@ -51,8 +51,8 @@ dotfiles="alot         \
 
 cd $HOME/stow
 # syncthing housekeeping
-find . -name '*.sync-conflict-*' -exec rm -f {} \;
-find . -name '*.syncthing.hsts.tmp' -exec rm -f {} \;
+find -name '*.sync-conflict-*' -exec rm -f {} \;
+find -name '*.syncthing.hsts.tmp' -exec rm -f {} \;
 
 commit() {
   echo

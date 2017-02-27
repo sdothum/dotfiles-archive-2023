@@ -6,8 +6,8 @@
 
 # ....................................................................... Search
 
-# ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$@" | egrep -v "$(cat $HOME/.filter)"
-rg --color 'always' --regexp "$@" | egrep -v "$(cat $HOME/.filter)"
+# ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$@" | egrep -v "$FILTER"
+rg --color 'always' --regexp "\"$@\"" | egrep -v "$FILTER"
 
 
 # vim: set ft=sh: #

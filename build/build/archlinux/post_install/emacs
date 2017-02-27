@@ -7,7 +7,7 @@
 
 rm -rf $HOME/.emacs.d
 rm -rf $HOME/.emacs
-git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 annotate 'launch emacs to complete spacemacs installation and prompts'
 
 # vim: set ft=sh: #

@@ -19,11 +19,11 @@ folder() {
 for i in $(seq 1 99)
 do
   [ $i -lt 10 ] && j=0$i || j=$i
-  episode=$(find . -maxdepth 1 -regex ".*${title}$j.*[Mm]kv" | grep -iv sample)
+  episode=$(find -maxdepth 1 -regex ".*${title}$j.*[Mm]kv" | grep -iv sample)
   [ -e "$episode" ] || continue
   folder="$(folder "$title")$j"
   mkdir -v "$folder"
-  find . -maxdepth 1 -type f -name "$folder.*" -exec mv -v {} "$folder/" \;
+  find -maxdepth 1 -type f -name "$folder.*" -exec mv -v {} "$folder/" \;
 done
 
 # vim: set ft=sh: #
