@@ -11,13 +11,21 @@ usage() {
   exit 1
 }
 
+# prevent resource sucking attempt to scan home directory
+[ $PWD = $HOME ] && depth=1 || depth=9
+
 # v by content
 [ "$1" ] || usage
 file=$(rg --column --line-number \
           --no-heading --no-messages \
           --ignore-case --no-ignore \
           --hidden --follow \
+          --maxdepth $depth \
+          --glob "!*/*cache" \
+          --glob "!*cache/*" \
           --glob "!.git/*" \
+          --glob "!.hg/*" \
+          --glob "!.stack/*" \
           --color "always" \
           --regexp "$@" |
        fzf |

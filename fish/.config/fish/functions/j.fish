@@ -1,4 +1,4 @@
-function j --description 'replace autojump with fuzzy jump'
+function j --description 'fuzzy jump'
   switch (count $argv)
     case 0
       find -type d 2>/dev/null | grep -v '.deprecated' | fzf | read dir
@@ -6,21 +6,13 @@ function j --description 'replace autojump with fuzzy jump'
       if test -d $argv[1]
         find $argv[1] -type d 2>/dev/null | grep -v '.deprecated' | fzf | read dir
       else
-        if pwd | grep -q $HOME
-          find $HOME -type d 2>/dev/null | grep -v '.deprecated' | fzf -q $argv[1] | read dir
-        else
-          find -type d 2>/dev/null | grep -v '.deprecated' | fzf -q $argv[1] | read dir
-        end
+        find $HOME -type d 2>/dev/null | grep -v '.deprecated' | fzf -q $argv[1] | read dir
       end
     case 2
       if test -d $argv[1]
         find $argv[1] -type d 2>/dev/null | grep -v '.deprecated' | fzf -q $argv[2] | read dir
       else
-        if pwd | grep -q $HOME
-          find $HOME -type d 2>/dev/null | grep -v '.deprecated' | grep "$argv[1]" | fzf -q $argv[2] | read dir
-        else
-          find -type d 2>/dev/null | grep -v '.deprecated' | grep "$argv[1]" | fzf -q $argv[2] | read dir
-        end
+        find $HOME -type d 2>/dev/null | grep -v '.deprecated' | grep "$argv[1]" | fzf -q $argv[2] | read dir
       end
   end
   cd $dir
