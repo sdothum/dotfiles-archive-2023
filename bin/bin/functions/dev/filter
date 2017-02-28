@@ -8,9 +8,11 @@
 
 # Usage: find.. | filter
 
-exclude='/(\.deprecated|\.hg|makepkg|PlayOnLinux|src/|\.config/(bookmarks|history)|dmenu/\.history|network/adblock|\.vimv|vimmappings)'
+dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
+conf='.config/(Abricotine|Clementine|cairo|chromium|google|qupzilla|sublime|umplayer|variety|vivaldi)'
+apps='dmenu/\.history|network/adblock|PlayOnLinux|\.vimv|vimmappings'
 
 # filter out home directory ch aff from glob lists
-egrep -v "$exclude"
+egrep -v "/($dirs|$conf|$apps)"
 
 # vim: set ft=sh: #
