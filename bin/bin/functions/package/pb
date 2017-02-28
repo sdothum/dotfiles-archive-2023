@@ -11,6 +11,7 @@ pacaur -Qu
 if-no 'upgrade system' && exit
 for i in $(pacaur --color never -Qu | awk '{ print $3 }')
 do
+  underline
   ditto $i
   pm S $i
 done

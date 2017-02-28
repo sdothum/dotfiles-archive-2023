@@ -6,11 +6,11 @@
 
 # ....................................................................... Search
 
-# Usage: pipe | filter
+# Usage: find.. | filter
 
-filter='\.deprecated|\.hg|makepkg|src/|\.config/(bookmarks|history)|dmenu/\.history|network/adblock|\.vimv|vimmappings'
+exclude='/(\.deprecated|\.hg|makepkg|PlayOnLinux|src/|\.config/(bookmarks|history)|dmenu/\.history|network/adblock|\.vimv|vimmappings)'
 
-# filter out home directory chaff from glob lists
-egrep -v "$filter"
+# filter out home directory ch aff from glob lists
+egrep -v "$exclude"
 
 # vim: set ft=sh: #

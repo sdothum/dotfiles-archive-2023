@@ -21,7 +21,6 @@ test -e /usr/share/fish/completions/autojump.fish
 set -x SHELL /usr/bin/fish
 set -x XTERM_SHELL /usr/bin/fish
 set -x KEYTIMEOUT 1
-set -x
 
 # paths
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
