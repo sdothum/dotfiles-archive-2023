@@ -1,6 +1,6 @@
 function j --description 'fuzzy jump'
 
-  set -g include  "^$HOME/(\.config|[[:alpha:]])"
+  set -l include  "^$HOME/(\.config|[[:alpha:]])"
 
   switch (count $argv)
     case 0
