@@ -10,9 +10,9 @@
 
 dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
 conf='.config/(Abricotine|Clementine|cairo|chromium|google|qupzilla|sublime|umplayer|variety|vivaldi)'
-apps='dmenu/\.history|network/adblock|PlayOnLinux|\.vimv|vimmappings'
+apps='\.config/(bookmarks|history)|\.history|network/adblock|PlayOnLinux|\.vimv|vimmappings'
 
-# filter out home directory ch aff from glob lists
-egrep -v "/($dirs|$conf|$apps)"
+# filter out home directory chaff from glob lists (note possible leading ansi escape sequences)
+egrep -v "((\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K])?|/)($dirs|$conf|$apps)"
 
 # vim: set ft=sh: #

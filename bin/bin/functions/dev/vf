@@ -26,7 +26,7 @@ case $1 in
         echo
         echo $files | sed 's|.*/||'
         if-yes "edit $i" || continue
-        gvim -f $files
+        v -f $files
       done
       [ $dynamic ] && toggle focus ;;
 

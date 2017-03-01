@@ -11,6 +11,12 @@ usage() {
   exit 1
 }
 
+exec 3< "$(readlink -m "$0")"
+if ! flock --exclusive --nonblock 3 ;then
+  echo 1>&2 "Instance $(basename $0) already running: exiting."
+  exit 1
+fi
+
 # disable fish autojump call
 export SHELL=dash
 . /etc/profile
@@ -90,10 +96,6 @@ EOF
 
 # initialize notmuch database
 initialize() {
-  if [ $(pgrep -cx mailsync) -gt 1 ] ;then
-    p mailsync
-    exit
-  fi
   killall alot
   killall notmuch
   rm -rf $HOME/Maildir/.notmuch/dump-*
@@ -108,8 +110,6 @@ initialize() {
 
 # mail daemon (cron task)
 mail_daemon() {
-  # mailqueue status (mailqueue gt 2.. ?)
-  [ $(pgrep -cx mailsync) -gt 1 ] && exit
   # trace 'Starting mailsync..'
   while :
   do

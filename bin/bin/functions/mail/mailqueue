@@ -14,17 +14,18 @@ export SHELL=dash
 
 # send mail poller with error notifier
 queue=$HOME/.msmtpqueue
-
-# mailqueue status (mailqueue gt 2.. ?)
-if [ $(pgrep -cx mailqueue) -gt 2 ] ;then
-  ls -l $queue
-  exit
-fi
-
 if [ "$1" = purge ] ;then
   rm -rfv $queue/*
   exit
 fi
+
+exec 3< "$(readlink -m "$0")"
+if ! flock --exclusive --nonblock 3 ;then
+  echo 1>&2 "Instance $(basename $0) already running: exiting."
+  ls -l $queue
+  exit 1
+fi
+
 # trace 'Starting mailqueue..'
 
 # mailqueue daemon (cron task)
