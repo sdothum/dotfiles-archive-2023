@@ -8,11 +8,12 @@
 
 # Usage: find.. | filter
 
+ansi='\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]'
 dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
 conf='.config/(Abricotine|Clementine|cairo|chromium|google|qupzilla|sublime|umplayer|variety|vivaldi)'
 apps='\.config/(bookmarks|history)|\.history|network/adblock|PlayOnLinux|\.vimv|vimmappings'
 
 # filter out home directory chaff from glob lists (note possible leading ansi escape sequences)
-egrep -v "((\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K])?|/)($dirs|$conf|$apps)"
+egrep -v "(($ansi)?|/)($dirs|$conf|$apps)"
 
 # vim: set ft=sh: #

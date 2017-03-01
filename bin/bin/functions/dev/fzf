@@ -1,20 +1,13 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Package
+# Dev
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ........................................................... Package management
+# ................................................................. Fuzzy finder
 
-# when pa/pacaur fails on aur packages
-sudo pacman -Sy
-pacaur -Qu
-if-yes 'upgrade system' || exit
-for i in $(pacaur --color never -Qu | awk '{ print $3 }')
-do
-  underline
-  ditto $i
-  yaourt -S $i
-done
+# fzf wrapper
+# eval /usr/bin/fzf --color=dark,hl:229,fg+:160,bg+:234,bg:234,marker:160,prompt:027 $@
+eval /usr/bin/fzf --color=dark,hl:226,fg+:255,bg+:234,bg:234,marker:160,prompt:027 $@
 
 # vim: set ft=sh: #

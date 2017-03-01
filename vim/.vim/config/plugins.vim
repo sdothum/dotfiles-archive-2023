@@ -11,33 +11,10 @@
         autocmd!
       augroup END
 
-    " ...................................................................... Ack
-
-      nmap <leader>A :Ack
-
     " ............................................................... Auto-pairs
 
       let g:AutoPairsMapBS    = 1           " auto delete symbol pairs
       let g:AutoPairsMapSpace = 0           " disabled to make iabbrev work!
-
-    " ................................................................... Ctrl-p
-
-      " let g:ctrlp_cache_dir           = $HOME . '/.cache/ctrlp'
-      " let g:ctrlp_clear_cache_on_exit = 0    " enable cross-session caching
-      " let g:ctrlp_follow_symlinks     = 1    " follow symbolic links
-      " let g:ctrlp_max_height          = 30   " results window height
-      " let g:ctrlp_mruf_case_sensitive = 0    " avoid duplicate entries
-      " let g:ctrlp_mruf_max            = 1000 " maximum mru entries to remember
-      " let g:ctrlp_open_multiple_files = 'i'  " open multiple files in hidden buffers
-      " let g:ctrlp_open_new_file       = 'v'  " <C-y> opens new file in vertical split
-      " let g:ctrlp_working_path_mode   = 0    " default to current directory
-      "
-      " " cannot silence vim's default file info message as with buffer keymaps
-      " " see autocmd cursorhold in setup.vim for delayed clear
-      " nmap <silent><leader>b :silent CtrlPBuffer<CR>
-      " nmap <silent><leader>M :silent CtrlPMixed<CR>
-      " nmap <silent><leader>m :silent CtrlPMRU<CR>
-      " nmap <silent><leader>B :silent CtrlP<CR>
 
     " ............................................................... Easy-align
 
@@ -104,6 +81,7 @@
 
     " ...................................................................... Fzf
 
+      " fzf doesn't really work well within gvim
       let g:fzf_launcher = 'term STACK WAIT SHELL %s'
 
       nmap <leader><leader>b :FZF<CR>
@@ -450,16 +428,6 @@
       nmap <leader>c <C-_><C-_>
       vmap <leader>c <C-_><C-_>
       " imap ,c <C-_><C-_>
-
-    " ................................................................. Vimfiler
-
-      " requires http://github.com/Shougo/unite.vim
-      " let g:vimfiler_as_default_explorer = 1" explorer mode
-      " nmap <silent><leader><leader>! :VimFiler<CR>
-
-    " ................................................................. Vimshell
-
-      " nmap <silent><leader>!         :VimShell<CR>
 
     " .................................................................. Vimwiki
 

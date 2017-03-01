@@ -47,15 +47,12 @@
       Plug 'chrisbra/NrrwRgn'
       " Plug 'duff/vim-scratch'
 
-    " ............................................................. File / shell
+    " ..................................................................... Grep
 
-      " Plug 'mileszs/ack.vim'
-      Plug 'ramele/agrep'
-      " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+      " just for shell key bindings (fzf installed via pacman)
+      Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' }
+      " fzf doesn't integrate well with gvim
       " Plug 'junegunn/fzf.vim'
-      " Plug 'Shougo/unite.vim'
-      " Plug 'Shougo/vimfiler.vim'
-      " Plug 'Shougo/vimshell.vim'
 
     " .......................................................... Version control
 
