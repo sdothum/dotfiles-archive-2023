@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/shum'
-let g:netrw_dirhist_2='/home/shum/stow/bin/bin/functions/dmenu/.history/∙'
-let g:netrw_dirhist_3='/home/shum/vimwiki'
-let g:netrw_dirhist_4='/home/shum/stow/tt-rss/tt-rss/themes/particle_images'
-let g:netrw_dirhist_5='/home/shum/stow/bin/bin/functions/dmenu/.history/∙'
-let g:netrw_dirhist_6='/home/shum/stow/build/build/archlinux/post_install'
