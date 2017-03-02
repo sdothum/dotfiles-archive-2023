@@ -19,7 +19,7 @@ disconnect() {
 # quit!
 cmd=$default
 while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
-            dmenu 'Session' $cmd -no-custom) || exit
+            rofi 'Session' $cmd -no-custom) || exit
 do
   case $cmd in
     lock  ) xscreensaver-command -lock ;;

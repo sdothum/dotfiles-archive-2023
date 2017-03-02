@@ -84,7 +84,7 @@ do
          history ebooks |
          column -s^ -t |
          sed "1i$REBUILD" |
-         dmenu 'E-book' 1 -filter "$author" -no-custom)
+         rofi 'E-book' 1 -filter \"$author\" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then
@@ -106,7 +106,7 @@ do
   mobi
   [ $mobi ] || epub
 
-  while action=$(echo "read\nedit\nkindle" | dmenu "$title" -no-custom) || break
+  while action=$(echo "read\nedit\nkindle" | rofi "$title" -no-custom) || break
   do
     case $action in
       read) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
@@ -126,7 +126,7 @@ do
                 mobi
               fi
 
-              kindle=$(echo | history kindle | dmenu '[ Address ]@kindle.com') || break
+              kindle=$(echo | history kindle | rofi '[ Address ]@kindle.com') || break
               kindle=${kindle%%@*}
               history kindle $kindle
               kindle=$kindle@kindle.com

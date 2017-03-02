@@ -16,7 +16,7 @@ urls() {
 while url=$(urls |
             column -s^ -t |
             sort |
-            dmenu 'Close URL' -no-custom) || exit
+            rofi 'Close URL' -no-custom) || exit
 do
   kill $(echo $url | cut -d' ' -f1)
 done

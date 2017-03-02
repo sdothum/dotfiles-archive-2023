@@ -22,7 +22,7 @@ fi
 if [ "$selection" ] ;then
   word=$selection
 else
-  word=$(echo | history dictionary | sed '1i[ thesaurus ]' | dmenu 'Dictionary') || exit
+  word=$(echo | history dictionary | sed '1i[ thesaurus ]' | rofi 'Dictionary') || exit
 fi
 [ "$word" = '[ thesaurus ]' ] && exec dmenu thesaurus
 word=$(unquote $word)
@@ -34,9 +34,9 @@ do
   # "No definitions found for $word" sorted above, hence, ordered match..
   echo "$hints" | tr '\n' ' ' | egrep -q 'definitions.*for.*found.*No'
   if [ $? -eq 0 ] ;then
-    word=$(echo | dmenu "No definitions found for \"$word\"") || exit
+    word=$(echo | rofi "No definitions found for \"$word\"") || exit
   else
-    word=$(echo "$hints" | dmenu 'Spelling Hints') || exit
+    word=$(echo "$hints" | rofi 'Spelling Hints') || exit
   fi
   word=$(unquote $word)
 done

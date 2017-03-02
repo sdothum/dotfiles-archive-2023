@@ -26,7 +26,7 @@ case $browser in
                       -e 's/\&\#xe[0-9];/e/g' \
                       -e 's/\&amp;/\&/g' \
                       -e 's/^[Rr][Ee]: //' |
-                  dmenu 'History' -no-custom |
+                  rofi 'History' -no-custom |
                   sed -r 's/.*(http.*)/\1/') ;;
 
   luakit) sqldb=$HOME/.local/share/luakit/history.db
@@ -34,14 +34,14 @@ case $browser in
           uri=$(echo "$query" |
                 sqlite3 $sqldb |
                 egrep -v "$filter" | sed 's/[|]/  ::  /g' |
-                dmenu 'History' -no-custom |
+                rofi 'History' -no-custom |
                 sed -r 's/.*(http.*)/\1/') ;;
 
   qutebrowser) history=$HOME/.local/share/qutebrowser/history
                uri=$(tac $history |
                      egrep -v "$filter" |
                      sed -r "s/[^ ]* ([^ ]*) (.*)/\2${LSPACE}${RSPACE}\1/g" | grep "$SEP" |
-                     dmenu 'History' -no-custom |
+                     rofi 'History' -no-custom |
                      sed -r 's/.*(http.*)/\1/') ;;
 
   vimb) history=$HOME/.config/vimb/history
@@ -49,7 +49,7 @@ case $browser in
               egrep -v "$filter" |
               sed -r "s/(.*)\t(.*)/\2${LSPACE}${RSPACE}\1/g" |
               grep "$SEP" |
-              dmenu 'History' -no-custom |
+              rofi 'History' -no-custom |
               sed -r 's/.*(http.*)/\1/') ;;
 
   *) exit ;;

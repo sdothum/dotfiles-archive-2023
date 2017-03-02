@@ -14,17 +14,17 @@ filemanagers="filelight \
 "
 
 # open directory
-while name=$(echo | history folders | dmenu 'Find Folder') || exit
+while name=$(echo | history folders | rofi 'Find Folder') || exit
 do
   [ $name ] || exit
   list=$(sudo locate -Aei $name)
   [ "$list" ] || continue
 
-  file=$(echo "$list" | dmenu 'Select Folder' -no-custom) || exit
+  file=$(echo "$list" | rofi 'Select Folder' -no-custom) || exit
 
   [ -d $file ] && dir=$file || dir=$(dirname $file)
   history folders "$dir"
-  while action=$(echo "term\n$(apps \"$filemanagers\")" | dmenu "$dir" -no-custom) || exit
+  while action=$(echo "term\n$(apps \"$filemanagers\")" | rofi "$dir" -no-custom) || exit
   do
     case $action in
       term) cd $dir

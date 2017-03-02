@@ -88,7 +88,7 @@ while note=$(notes |
              cut -d^ -f2- |
              sed "1i$PROMPT" |
              column -s^ -t |
-             dmenu "$(echo $ext | sed -r 's/./\u&/')" $(highlight)) || exit
+             rofi "$(echo $ext | sed -r 's/./\u&/')" $(highlight)) || exit
 do
   case $note in
     /*) search="${note#*/}"
@@ -105,7 +105,7 @@ do
 
     *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
        content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-       while action=$(echo 'view\nedit\nclipboard\ndelete' | dmenu "${content#* }" -no-custom)
+       while action=$(echo 'view\nedit\nclipboard\ndelete' | rofi "${content#* }" -no-custom)
        do
          [ $action = view ] || break
          term "$file" MAX STACK WAIT less $file

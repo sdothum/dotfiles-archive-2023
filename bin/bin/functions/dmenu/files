@@ -6,7 +6,7 @@
 # ........................................................................ Files
 
 # open file
-while name=$(echo | history files | dmenu 'Find File') || exit
+while name=$(echo | history files | rofi 'Find File') || exit
 do
   [ "$name" ] || exit
   list=$(sudo locate -Aei $name)
@@ -16,7 +16,7 @@ do
          sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
          sort |
          column -s^ -t |
-         dmenu 'Open File' -no-custom) || exit
+         rofi 'Open File' -no-custom) || exit
 
   file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
   history files "$file"

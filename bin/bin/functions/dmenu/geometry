@@ -7,7 +7,7 @@
 
 view=$(previous geometry)
 geometry=$(echo "fullscreen\nwide\ncorner" |
-           dmenu "$1" $view -no-custom) || exit 1
+           rofi "$1" $view -no-custom) || exit 1
 
 # left edge = screen width * ratio
 TAG=$(herbstclient attr monitors.focus.tag)

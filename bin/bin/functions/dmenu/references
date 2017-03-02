@@ -13,7 +13,7 @@ while book=$(ls -1 $library |
              grep '.pdf$' |
              sed 's/.pdf$//' |
              history references |
-             dmenu 'Document') || exit
+             rofi 'Document') || exit
 do
   history references "$book"
   [ $focus ] || focus frame && focus=true

@@ -25,7 +25,7 @@ file=$(files |
        sort |
        history scripts |
        column -s^ -t |
-       dmenu 'Edit Script') || exit
+       rofi 'Edit Script') || exit
 
 if echo $file | grep -q "$SEP" ;then
   history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"

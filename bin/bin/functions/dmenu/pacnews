@@ -15,7 +15,7 @@ do
     break
   fi
 
-  file=$(echo "$file" | dmenu 'Merge .pacnew' -no-custom) || break
+  file=$(echo "$file" | rofi 'Merge .pacnew' -no-custom) || break
   if [ $file ] ;then
     pacnew=$(sudo find /etc -wholename "/etc/$file.pacnew")
     cp -f $pacnew $copy
@@ -27,7 +27,7 @@ do
     # use updated .pacnew
     action='keep\ndelete\nuse'
     if ! sudo cmp $pacnew $copy ;then
-      update=$(echo 'no\nyes' | dmenu "Update $file" -no-custom) || continue
+      update=$(echo 'no\nyes' | rofi "Update $file" -no-custom) || continue
       if [ $update. = yes. ] ;then
         sudo cp $current /tmp
         sudo mv $pacnew $current
@@ -40,7 +40,7 @@ do
     # keep / restore / delete / use .pacnew
     while :
     do
-      action=$(echo "$action" | dmenu " $file.pacnew" -no-custom) || break
+      action=$(echo "$action" | rofi " $file.pacnew" -no-custom) || break
       case $action in
         keep   ) ;;
         restore) sudo cp $copy $pacnew ;;

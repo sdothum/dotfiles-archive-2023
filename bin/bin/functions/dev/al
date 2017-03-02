@@ -7,6 +7,6 @@
 # ....................................................................... Search
 
 # ack --smart-case --nocolor "$@" | filter | cut -d: -f1 | uniq
-rg --color 'never' --regexp "\"$@\"" | filter | cut -d: -f1 | uniq
+rgw --color 'never' --regexp "\"$@\"" | filter | cut -d: -f1 | uniq
 
 # vim: set ft=sh: #

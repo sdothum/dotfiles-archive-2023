@@ -16,7 +16,7 @@ file=$(previous logs)
 file=$(ls *.log |
        sort |
        sed 's/.log//' |
-       dmenu "$mode Log" $file -no-custom) || exit
+       rofi "$mode Log" $file -no-custom) || exit
 
 history logs $file
 case $mode in

@@ -34,7 +34,7 @@ hex() {
 while color=$( ( [ "$menu" ] && ( echo | history root | sed "1i$menu" ) ||
                                 ( echo | history root | sed "1i$VIEWER\n$UPDATE" ) ) |
               column -s^ -t |
-              dmenu 'Setroot') || exit
+              rofi 'Setroot') || exit
 do
   case $color in
     ''       ) break ;;
@@ -43,7 +43,7 @@ do
     "$DARK"  ) conky theme dark $bg ;;
     "$LIGHT" ) conky theme light $bg ;;
 
-    "$SAVE") hue=$(echo "$(themes)" | dmenu 'Colour') || exit
+    "$SAVE") hue=$(echo "$(themes)" | rofi 'Colour') || exit
                  contrast=$(cat $CONTRAST)
                  history root "$bg^$SEP $contrast $hue"
                  swatch $bg $hue

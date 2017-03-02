@@ -55,7 +55,7 @@ compose_vim() {
 }
 
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | dmenu 'Compose' $editor -no-custom) || exit
+while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | rofi 'Compose' $editor -no-custom) || exit
 do
   case $editor in
     "$SEND") ;;

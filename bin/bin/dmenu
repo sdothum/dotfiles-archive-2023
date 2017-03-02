@@ -4,7 +4,7 @@
 # X11 Dynamic Menu
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ........................................................... Dmenu rofi wrapper
+# .................................................................... Dmenu DSL
 
 # Usage: dmenu <function>
 # Note:  non-dmenu messages within $0/functions/dmenu
@@ -17,59 +17,7 @@ CONFIG=${0%/dmenu}/functions/dmenu/.config
 # content formatting items, see herbstluftwm env
 LSPACE="    $SEP"
 RSPACE="$SEP    "
-INDENT='   '
 UTF='□'
-
-# leader left or right
-lead=right
-leader='──────'
-wbg=argb:E0000000
-bg=argb:0000000
-fg=argb:FFFDF6E3
-abg=$bg
-hbg=$bg
-hfg=argb:FF25C0EF
-
-# allow subword match input (by inserting single quote symbol into input)
-unquote() {
-  echo $@ | sed "s/'//g"
-}
-
-# ................................................... Rofi fullscreen fill specs
-
-# fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
-# fill the actual physical display area, tweak rofi padding and fontsize
-# for 2560, 1680 (secondary), 1440, 1024 displays
-
-# set padding and fontsize
-padsize() {
-  # padding calculation = displaywidth / fontsize * factor
-  padding=$(( $1 / $2 * $3 ))
-  fontsize=$2
-}
-
-if hlwm; then
-  width=$(query displaywidth)
-else
-  # assumes single display
-  width=$(xrandr | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
-fi
-
-# tune padding to displaywidth / (font * factor) for current monitor resolutions in system
-if [ $width -gt 1920 ] ;then
-  padsize $width 14 '3 / 2'
-elif [ $width -gt 1680 ] ;then
-  padsize $width 12 '5 / 3'
-elif [ $width -gt 1440 ] ;then
-  padsize $width 11 2
-elif [ $width -gt 1024 ] ;then
-  padsize $width 13 2
-else
-  padsize $width 11 1
-fi
-
-hlwm && display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1) ||
-        display=0
 
 # ............................................................... Available apps
 
@@ -111,97 +59,12 @@ previous() {
   echo | history $1 | head -1
 }
 
-# ............................................................... Source wrapper
-
-# dmenu wrapper for sourced apps
-# usage: dmenu '<prompt>' [['<select>' | <row>] | -filter '<filter>'] [<option>*]
-
-# convert prompt right to lower case
-prompt() {
-  [ $lead = left ] && echo "${prompt}$leader   " ||
-                      echo "$leader   $(echo "$prompt" | tr [:upper:] [:lower:])"
-}
-
-dmenu() {
-  # prompt string
-  if [ "$1" ] ;then
-    prompt="$1  "
-    shift
-  fi
-
-  # select string
-  unset select
-  unset row
-  if [ "$1" ] ;then
-    # if not parameter
-    if [ "${1%%-*}" != '' ] ;then
-      echo "$1" | grep -q '^[0-9]*$' && row=$1 || select=$1
-      shift
-    fi
-  fi
-
-  # filter option (must precede remaining option list)
-  unset filter
-  if [ "$1" = -filter ] ;then
-    filter=$2
-    shift 2
-  fi
-
-  # use blank -mesg as added separator and indent pick list!
-  # piped input precludes single eval usage to contruct select clause
-  if [ $row ] ;then
-    input=$(sed "s/^/$INDENT/" |
-            rofi -monitor $display \
-                 -bw 0 \
-                 -font "$MONOFONT $fontsize" \
-                 -eh 1 \
-                 -color-enabled \
-                 -color-window $wbg,$wbg \
-                 -color-active $bg,$fg,$abg,$hbg,$hfg \
-                 -color-normal $bg,$fg,$abg,$hbg,$hfg \
-                 -color-urgent $bg,$fg,$abg,$hbg,$hfg \
-                 -line-margin $(( $fontsize + 2 )) \
-                 -separator-style none \
-                 -hide-scrollbar \
-                 -width 100 \
-                 -padding $padding \
-                 -fullscreen \
-                 -filter "$filter" \
-                 -dmenu -p "$(prompt)" \
-                        -i \
-                        -selected-row $row \
-                        $@ \
-           )
-  else
-    input=$(sed "s/^/$INDENT/" |
-            rofi -monitor $display \
-                 -bw 0 \
-                 -font "$MONOFONT $fontsize" \
-                 -eh 1 \
-                 -color-enabled \
-                 -color-window $wbg,$wbg \
-                 -color-active $bg,$fg,$abg,$hbg,$hfg \
-                 -color-normal $bg,$fg,$abg,$hbg,$hfg \
-                 -color-urgent $bg,$fg,$abg,$hbg,$hfg \
-                 -line-margin $(( $fontsize + 2 )) \
-                 -separator-style none \
-                 -hide-scrollbar \
-                 -width 100 \
-                 -padding $padding \
-                 -fullscreen \
-                 -filter "$filter" \
-                 -dmenu -p "$(prompt)" \
-                        -i \
-                        -select "$select" \
-                        $@ \
-           )
-  fi
-  # strip indent from input!
-  [ $? -eq 0 ] && echo "$input" | sed "s/^$INDENT//" ||
-                  return 1
-}
-
 # ......................................................................... Main
+
+# allow subword match input (by inserting single quote symbol into input)
+unquote() {
+  echo $@ | sed "s/'//g"
+}
 
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then

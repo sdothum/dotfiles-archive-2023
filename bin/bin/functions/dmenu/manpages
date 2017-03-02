@@ -40,7 +40,7 @@ do
           uniq |
           history man |
           sed "1i$REBUILD" |
-          dmenu 'Manpage' 1 |
+          rofi 'Manpage' 1 |
           cut -d':' -f3-)
 
     if [ "$man" = "$REBUILD" ] ;then
@@ -61,7 +61,7 @@ do
       page=$(whatis $man |
              sed "s/) *-/)^$SEP/" |
              column -s^ -t |
-             dmenu 'Section' -no-custom) || exit
+             rofi 'Section' -no-custom) || exit
     else
       page=$(whatis $man)
       singleton=true
@@ -84,7 +84,7 @@ do
 
       # print hard copy?
       set -- $page
-      hardcopy=$(echo 'no\nyes' | dmenu "Print $2 ($1)" -no-custom) || exit
+      hardcopy=$(echo 'no\nyes' | rofi "Print $2 ($1)" -no-custom) || exit
       if [ $hardcopy = yes ] ;then
         # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
         manpage=$(find /usr/share/man -name "$2.$1.gz")

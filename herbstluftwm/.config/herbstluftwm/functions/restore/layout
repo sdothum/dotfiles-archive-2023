@@ -173,7 +173,7 @@ case $1 in
          herbstclient unlock ;;
 
   *) server && default='1:1:1' || default='1:1'
-     layout=$(echo "$layouts" | dmenu 'Explode to Layout' $default -no-custom) || exit
+     layout=$(echo "$layouts" | rofi 'Explode to Layout' $default -no-custom) || exit
      restore windowed
      exec restore layout $layout ;;
 esac

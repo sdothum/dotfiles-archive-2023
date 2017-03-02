@@ -7,12 +7,12 @@
 # ....................................................................... Search
 
 # rg wrapper, calling script should set --color [always|never]
-eval /usr/bin/rg --line-number --no-heading --no-messages \
-                 --ignore-case --no-ignore \
-                 --hidden --follow \
-                 --colors 'path:fg:cyan' --colors 'path:style:bold' \
-                 --colors 'line:fg:cyan' --colors 'line:style:nobold' \
-                 --colors 'match:fg:yellow' --colors 'match:style:bold' \
-                 $@
+eval rg --line-number --no-heading --no-messages \
+        --ignore-case --no-ignore \
+        --hidden --follow \
+        --colors 'path:fg:cyan' --colors 'path:style:bold' \
+        --colors 'line:fg:cyan' --colors 'line:style:nobold' \
+        --colors 'match:fg:yellow' --colors 'match:style:bold' \
+        $@
 
 # vim: set ft=sh: #

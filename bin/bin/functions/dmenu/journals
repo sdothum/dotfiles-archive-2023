@@ -15,7 +15,7 @@ service=$(previous journals)
 service=$(stest -fl . |
           sort |
           sed 's/.service$//' |
-          dmenu "$mode Journal" $service -no-custom) || exit
+          rofi "$mode Journal" $service -no-custom) || exit
 
 history journals $service
 case $mode in

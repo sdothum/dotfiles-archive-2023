@@ -10,7 +10,7 @@ while :
 do
   script=$(ls -1 ${0%/dmenu}/functions/dmenu |
            egrep -v 'browser|compose|help|menu|urlib' |
-           dmenu 'Menu' "$script" -no-custom) || exit
+           rofi 'Menu' "$script" -no-custom) || exit
 
   command dmenu $script
 done

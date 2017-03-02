@@ -16,15 +16,15 @@ usage() {
 
 # v by content
 [ "$1" ] || usage
-file=$(rg --maxdepth $depth \
-          --glob "!*/*cache" \
-          --glob "!*cache/*" \
-          --glob "!.deprecated/*" \
-          --glob "!.git/*" \
-          --glob "!.hg/*" \
-          --glob "!.stack/*" \
-          --color "always" \
-          --regexp "\"$@\"" |
+file=$(rgw --maxdepth $depth \
+           --glob "!*/*cache" \
+           --glob "!*cache/*" \
+           --glob "!.deprecated/*" \
+           --glob "!.git/*" \
+           --glob "!.hg/*" \
+           --glob "!.stack/*" \
+           --color "always" \
+           --regexp "\"$@\"" |
        filter |
        fzf --multi |
        nocolor |
