@@ -77,7 +77,8 @@ history() {
   shell_history=$1_history
   shift
   if [ $1 ] ;then
-    $shell_history | ack "$@" | weekof
+    # $shell_history | ack "$@" | weekof
+    $shell_history | /usr/bin/rg --ignore-case --regexp "$@" | weekof
   else
     $shell_history | weekof -r
   fi

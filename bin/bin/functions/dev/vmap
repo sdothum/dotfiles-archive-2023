@@ -25,15 +25,18 @@ list() {
   for i in $(seq 1 12)
   do
     # fkey assignments
-    ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"' | keymaps "F$i"
+    # ack --nocolor "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"' | keymaps "F$i"
+    /usr/bin/rg --ignore-case "<.*F$i>" *.vim | grep -v 'vim:[0-9]*: *"' | keymaps "F$i"
   done
 
   # leader key assignments
-  ack --nocolor "<leader>" *.vim | keymaps "LEADER"
+  # ack --nocolor "<leader>" *.vim | keymaps "LEADER"
+  /usr/bin/rg --ignore-case "<leader>" *.vim | keymaps "LEADER"
   echo
 
   # map key assignments
-  ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps "MAP"
+  # ack --nocolor "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps "MAP"
+  /usr/bin/rg --ignore-case "map " *.vim | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps "MAP"
   echo
 }
 
