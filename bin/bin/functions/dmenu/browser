@@ -36,7 +36,7 @@ browsers="brave       \
 [ $2 ] && edit="1i$EDIT"
 
 browser=$default
-while browser=$(apps "$browsers" | sed "$edit" | rofi 'Browser' $browser -no-custom) || exit
+while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit
 do
   case ${browser} in
     "$EDIT") gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2

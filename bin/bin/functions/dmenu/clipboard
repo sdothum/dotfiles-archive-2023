@@ -31,7 +31,7 @@ clipboard
 clip=$(tac $clipboard |
        sed "s/ /^$SEP /" |
        column -s^ -t |
-       rofi 'Clipboard' -no-custom)
+       rmenu 'Clipboard' -no-custom)
 
 if [ "$clip" ] ;then
   clip=$(echo $clip | cut -d' ' -f1)

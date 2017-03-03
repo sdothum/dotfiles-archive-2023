@@ -20,6 +20,8 @@ usage() {
   exit 1
 }
 
+HISTORY=${HISTORY:-$HOME/tmp/.history}
+
 [ $1 ] || usage
 echo $1 | grep -qv '/' && history=$HISTORY/$1 ||
                           history=$1

@@ -25,7 +25,7 @@ do
             sort  |
             sed 's/.service$//' |
             sed "1i$DAEMON\n$SERVICES\n$FILES" |
-            rofi 'Systemd' -no-custom) || exit
+            rmenu 'Systemd' -no-custom) || exit
 
   case $service in
     "$DAEMON") sudo systemctl daemon-reload
@@ -39,7 +39,7 @@ do
        sudo systemctl status $service && actions='stop\nrestart' ||
                                          actions=start
        while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" |
-                      rofi "${service%.service}" -no-custom) || break
+                      rmenu "${service%.service}" -no-custom) || break
        do
          case $action in
            start) sudo systemctl start $service

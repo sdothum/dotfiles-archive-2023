@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="toggle/dmenu $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................... Toggle dmenu
+
+# Usage: toggle dmenu [off | on]
+
+case $1 in
+  off) [ -e $DMENU ] || exit ;;
+  on ) [ -e $DMENU ] && exit ;;
+esac
+[ -e $DMENU ] && rm -f $DMENU || touch $DMENU
+
+# vim: set ft=sh: #

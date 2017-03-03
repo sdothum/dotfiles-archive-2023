@@ -31,14 +31,14 @@ else
   hc keybind Super-Control-0         spawn toggle pavucontrol
 fi
 hc keybind Super-equal               spawn dmenu calc
+hc keybind Super-Shift-equal         spawn toggle plover
+hc keybind Super-Shift-minus         spawn toggle dmenu
 if [ $PLANCK ] ;then
-  hc keybind Super-Shift-equal       spawn toggle plover
   # hc keybind Super-grave           spawn toggle rox
   hc keybind Super-comma             spawn toggle rox
   hc keybind Super-apostrophe        spawn toggle conky
   hc keybind Super-period            spawn toggle panel
 else
-  hc keybind Super-minus             spawn toggle plover
   hc keybind Super-grave             spawn toggle rox
   hc keybind Super-backslash         spawn toggle conky
   hc keybind Super-Shift-backslash   spawn toggle panel

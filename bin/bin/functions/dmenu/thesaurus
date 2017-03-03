@@ -21,7 +21,7 @@ fi
 if [ "$selection" ] ;then
   word=$selection
 else
-  word=$(echo | history dictionary | sed '1i[ dictionary ]' | rofi 'Thesaurus') || exit
+  word=$(echo | history dictionary | sed '1i[ dictionary ]' | rmenu 'Thesaurus') || exit
 fi
 [ "$word" = '[ dictionary ]' ] && exec dmenu dict
 word=$(unquote $word)
@@ -31,7 +31,7 @@ while hints=$(aiksaurus "$word" 2>/dev/null)
 do
   echo $hints
     echo "$hints" | grep -q '\*\*\* No synonyms known. \*\*\*' || break
-  word=$(echo "$hints" | sed -e '1,2d' -e 's/\t//' | rofi 'Similar words') || exit
+  word=$(echo "$hints" | sed -e '1,2d' -e 's/\t//' | rmenu 'Similar words') || exit
   word=$(unquote $word)
 done
 

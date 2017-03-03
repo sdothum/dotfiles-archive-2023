@@ -34,7 +34,7 @@ hex() {
 while color=$( ( [ "$menu" ] && ( echo | history root | sed "1i$menu" ) ||
                                 ( echo | history root | sed "1i$VIEWER\n$UPDATE" ) ) |
               column -s^ -t |
-              rofi 'Setroot') || exit
+              rmenu 'Setroot') || exit
 do
   case $color in
     ''       ) break ;;
@@ -43,7 +43,7 @@ do
     "$DARK"  ) conky theme dark $bg ;;
     "$LIGHT" ) conky theme light $bg ;;
 
-    "$SAVE") hue=$(echo "$(themes)" | rofi 'Colour') || exit
+    "$SAVE") hue=$(echo "$(themes)" | rmenu 'Colour') || exit
                  contrast=$(cat $CONTRAST)
                  history root "$bg^$SEP $contrast $hue"
                  swatch $bg $hue
@@ -59,7 +59,7 @@ do
     *) hex $color || continue
        draw root blank $color
        bg=$color
-       # overlay conky panel over rofi screen!
+       # overlay conky panel over rmenu screen!
        draw conky
        menu="$DARK\n$LIGHT\n$SAVE" ;;
   esac

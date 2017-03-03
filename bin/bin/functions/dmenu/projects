@@ -19,7 +19,7 @@ while files=$(sed "s/  *::  */^$SEP /" $projects |
               history projects |
               column -s^ -t |
               sed -e "1i$EDIT" |
-              rofi 'Edit Project' 1 -no-custom) || exit
+              rmenu 'Edit Project' 1 -no-custom) || exit
 do
   case $files in
     "$EDIT") gvim -f $projects ;;

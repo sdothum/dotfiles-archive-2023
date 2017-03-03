@@ -15,7 +15,7 @@ if [ $1 ] ;then
   toggle=$1
 else
   xset q | grep -q 'DPMS is Enabled' && toggle=off || toggle=on
-  toggle=$(echo "$toggle\nlock" | rofi 'Toggle Screensaver' -no-custom) || exit
+  toggle=$(echo "$toggle\nlock" | rmenu 'Toggle Screensaver' -no-custom) || exit
 fi
 
 screensaver() {

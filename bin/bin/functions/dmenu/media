@@ -10,7 +10,7 @@ media=$(previous media)
 while :
 do
   media=$(echo "animation\nanime\nmovies\nseries\nebooks\nreferences\nnzb\ntorrent" |
-          rofi 'Media' $media -no-custom) || exit
+          rmenu 'Media' $media -no-custom) || exit
 
   history media $media
   case $media in

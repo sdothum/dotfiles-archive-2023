@@ -46,7 +46,7 @@ if window=$(echo $windows |
             sort |
             cut -d$DLM -f2 |
             column -s\^ -t |
-            rofi "${mode}Window$title$hidden" -no-custom) || exit ;then
+            rmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
   window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/ ^\1/" -e "s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
@@ -54,7 +54,7 @@ if window=$(echo $windows |
   if [ -z $mode ] ;then
     app=$(echo $window | cut -d^ -f1 | sed 's/.*\$//')
     title=$(echo $window | cut -d^ -f2)
-    action $(echo "focus\nraise\nclose" | rofi "$app ${title% }" -no-custom) || exit
+    action $(echo "focus\nraise\nclose" | rmenu "$app ${title% }" -no-custom) || exit
   fi
 
   case $mode in

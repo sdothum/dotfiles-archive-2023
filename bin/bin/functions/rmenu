@@ -1,0 +1,131 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................ Auto GUI/ncurses menu wrapper
+
+# Usage: rmenu '<prompt>' [['<select>' | <row>]] [<option>]*
+#              where, select - rofi select highlight
+#                     row    - rofi row highlight
+#                     option - rofi options e.g. -filter <filter> -no-custom
+#
+# Note:
+#   - Persistent ncurses mode set with ~/.dmenu, see toggle dmenu
+#   - Temporary ncurses mode set with variable DMENU, see bin/dmenu
+
+wbg=argb:E0000000
+bg=argb:0000000
+fg=argb:FFFDF6E3
+abg=$bg
+hbg=$bg
+hfg=argb:FF25C0EF
+
+# leader left or right
+lead=right
+leader='──────'
+INDENT='   '
+
+# .......................................................................... GUI
+
+if [ -z $NCURSES ] ;then
+  if hlwm; then
+    display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
+    width=$(query displaywidth)
+  elif pgrep startx >/dev/null ;then
+    display=0
+    width=$(xrandr 2>/dev/null | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
+  else
+    width=$(tput cols)
+  fi
+
+  # fullscreen only fills the herbstluftwm (virtual) monitor coordinates, so to
+  # fill the actual physical display area, tweak rofi padding and fontsize
+  # for 2560, 1680 (secondary), 1440, 1024 displays
+
+  # set padding and fontsize
+  padsize() {
+    # padding calculation = displaywidth / fontsize * factor
+    padding=$(( $1 / $2 * $3 ))
+    fontsize=$2
+  }
+
+  # tune padding to displaywidth / (font * factor) for current monitor resolutions in system
+  if [ $width -gt 1920 ] ;then
+    padsize $width 14 '3 / 2'
+  elif [ $width -gt 1680 ] ;then
+    padsize $width 12 '5 / 3'
+  elif [ $width -gt 1440 ] ;then
+    padsize $width 11 2
+  elif [ $width -gt 1024 ] ;then
+    padsize $width 13 2
+  else
+    padsize $width 11 1
+  fi
+fi
+
+# ....................................................................... Prompt
+
+if [ "$1" ] ;then
+  title="$1"
+  prompt="$1  "
+  shift
+fi
+# convert prompt right to lower case
+[ $lead = left ] && prompt="${prompt}$leader   " ||
+                    prompt="$leader   $(echo "$prompt" | tr [:upper:] [:lower:])"
+
+
+# ....................................................................... Select
+
+if [ "$1" ] ;then
+  # if not parameter
+  if [ "${1%%-*}" != '' ] ;then
+    echo "$1" | grep -q '^[0-9]*$' && select="-selected-row $1" ||
+                                      select="-select '$1'"
+    shift
+  fi
+fi
+
+# ......................................................................... Read
+
+if [ $display ] ;then
+  if [ -e $DMENU ] ;then
+    stdin=$(mktemp)
+    stdout=$(mktemp)
+    sed "s/^/$INDENT/" >$stdin
+    term "$title" STACK WAIT SHELL "cat $stdin | fzf --prompt=\\\"$prompt\\\" >$stdout"
+    input=$(cat $stdout)
+    rm $stdin $stdout
+    test -n "$input"
+  else
+    input=$(sed "s/^/$INDENT/" |
+            eval rofi -matching fuzzy \
+                      -monitor $display \
+                      -bw 0 \
+                      -color-active $bg,$fg,$abg,$hbg,$hfg \
+                      -color-enabled \
+                      -color-normal $bg,$fg,$abg,$hbg,$hfg \
+                      -color-urgent $bg,$fg,$abg,$hbg,$hfg \
+                      -color-window $wbg,$wbg \
+                      -eh 1 \
+                      -font \"$MONOFONT $fontsize\" \
+                      -fullscreen \
+                      -hide-scrollbar \
+                      -line-margin $(( $fontsize + 2 )) \
+                      -padding $padding \
+                      -separator-style none \
+                      -width 100 \
+                      -dmenu -p "\"$prompt\"" -i $select \
+                      $@ )
+  fi
+else
+  input=$(sed "s/^/$INDENT/" | fzf --prompt="\"$prompt\"")
+fi
+
+[ $? -ne 0 ] && exit 1
+# strip indent from input!
+echo "$input" | sed "s/^$INDENT//"
+
+# vim: set ft=sh: #

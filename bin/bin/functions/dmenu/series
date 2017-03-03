@@ -44,7 +44,7 @@ do
          sed -e 's/\./ /g' \
              -e "1i$EDIT" |
          sed "1i[ $(sortlist $T) ]" |
-         rofi 'Series' "$show" -no-custom) || exit
+         rmenu 'Series' "$show" -no-custom) || exit
 
   case $show in
     "$NAME") unset T
@@ -70,7 +70,7 @@ do
     [ $monitor ] && herbstclient focus_monitor $monitor
     # highlight most current episode viewed
     [ $episode ] || episode=$(shows | grep " $SEP$" | tail -1)
-    episode=$(shows | rofi "$show" $episode -no-custom) || break
+    episode=$(shows | rmenu "$show" $episode -no-custom) || break
     [ "$episode" ] || break
 
     episode=$(echo "$episode" | sed "s/ $SEP$//")

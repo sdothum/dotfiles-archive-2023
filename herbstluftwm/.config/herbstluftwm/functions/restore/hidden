@@ -29,9 +29,9 @@ if [ $count -gt 0 ] ;then
              cut -d$DLM -f1 |
              column -s\^ -t |
              sed "1i$ALL\n$LAST" |
-             rofi "Raise Window$title" -no-custom) || exit
+             rmenu "Raise Window$title" -no-custom) || exit
   else
-    window=$(echo $hidden | cut -d$DLM -f1 | column -s\^ -t | rofi "Raise Window$title" -no-custom)
+    window=$(echo $hidden | cut -d$DLM -f1 | column -s\^ -t | rmenu "Raise Window$title" -no-custom)
   fi
 
   if [ "$window" ] ;then

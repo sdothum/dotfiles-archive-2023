@@ -6,13 +6,15 @@
 
 # .................................................................... Dmenu DSL
 
-# Usage: dmenu <function>
+# Usage: dmenu [-] <function>
+#              where, '-' forces ncurses mode
 # Note:  non-dmenu messages within $0/functions/dmenu
 #        source $HOME/bin/dmenu
 #        POSIX standard for use with dash shell
 
 CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
 CONFIG=${0%/dmenu}/functions/dmenu/.config
+export HISTORY=$HOME/bin/functions/dmenu/.history
 
 # content formatting items, see herbstluftwm env
 LSPACE="    $SEP"
@@ -68,13 +70,11 @@ unquote() {
 
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then
-  # if hlwm; then
-  #   fullscreen mode windows hide dmenu
-  #   if query fullscreen ;then
-  #     toggle fullscreen
-  #     fullscreen=true
-  #   fi
-  # fi
+  # see toggle dmenu for persistent ncurses mode
+  if [ "$1" = '-' ] ;then
+    export NCURSES=ncurses
+    shift
+  fi
   msg=$1
   shift
   if [ -e ${0%/dmenu}/functions/dmenu/$msg ] ;then
@@ -86,5 +86,6 @@ if [ $(basename $0) = dmenu ] ;then
   hlwm && [ $fullscreen ] && toggle fullscreen
   # pidof gpaste-clieunt >/dev/null || gpaste-client &
 fi
+unset NCURSES
 
 # vim: set ft=sh: #

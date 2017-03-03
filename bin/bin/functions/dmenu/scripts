@@ -7,7 +7,7 @@
 
 # shell scripts excluding .man (see dmenu man)
 
-filter='\.cache|\.deprecated|\.hg|makepkg'
+filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
 
 files() {
   ( find -L $HOME/bin -type f
@@ -17,38 +17,44 @@ files() {
 }
 
 # list of user scripts and functions
-file=$(files |
-       sed -e "s|$HOME/bin/|bin/|" \
-           -e 's|.*/archlinux/|archlinux/|' \
-           -e 's|.*/herbstluftwm/|herbstluftwm/|' |
-       sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
-       sort |
-       history scripts |
-       column -s^ -t |
-       rofi 'Edit Script') || exit
-
-if echo $file | grep -q "$SEP" ;then
-  history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
-  file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
-else
-  # (tic) 'script for quick menu action
+while :
+do
   file=$(files |
-         grep "/$(unquote $file)$" |
-         head -1 |
-         sed "s|^$HOME/||")
-  [ $file ] || exec dmenu scripts
-  history scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
-fi
+        sed -e "s|$HOME/bin/|bin/|" \
+            -e 's|.*/archlinux/|archlinux/|' \
+            -e 's|.*/herbstluftwm/|herbstluftwm/|' |
+        sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
+        sort |
+        history scripts |
+        column -s^ -t |
+        rmenu "Edit Script$error" $file) || exit
 
-if [ -e $HOME/$file ] ;then
-  eval v $HOME/$file
-elif [ -e $HOME/build/$file ] ;then
-  eval v $HOME/build/$file
-elif [ -e $HOME/.config/$file ] ;then
-  eval v $HOME/.config/$file
-else
-  notify critical "$file" 'No longer in path.. correct dmenu history'
-  exec dmenu scripts
-fi
+  if echo $file | grep -q "$SEP" ;then
+    history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+    file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
+  else
+    # (tic) 'script for quick menu action
+    file=$(files |
+          grep "/$(unquote $file)$" |
+          head -1 |
+          sed "s|^$HOME/||")
+    [ $file ] || exec dmenu scripts
+    history scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
+  fi
+
+  if [ -e $HOME/$file ] ;then
+    eval v $HOME/$file
+  elif [ -e $HOME/build/$file ] ;then
+    eval v $HOME/build/$file
+  elif [ -e $HOME/.config/$file ] ;then
+    eval v $HOME/.config/$file
+  else
+    error=": ${file##*/} ∉ ${file%/*}"
+    sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/scripts
+    file=${file##*/}
+    continue
+  fi
+  break
+done
 
 # vim: set ft=sh: #

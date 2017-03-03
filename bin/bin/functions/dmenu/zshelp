@@ -10,7 +10,7 @@ page=$(zsh -c 'run-help' |
        sed -e '1,2d' -e 's/ /\n/g' |
        grep -v '^$' |
        sort -d |
-       rofi 'Help' -no-custom) || exit
+       rmenu 'Help' -no-custom) || exit
 
 term "$page" SHELL "run-help $page | less"
 

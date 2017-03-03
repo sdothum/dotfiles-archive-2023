@@ -24,7 +24,7 @@ eqn() {
 }
 
 count=0
-while eqn=$(echo $ribbon | column -s$UTF -t | rofi "Solve$error") || break
+while eqn=$(echo $ribbon | column -s$UTF -t | rmenu "Solve$error") || break
 do
   eqn=$(unquote $eqn)
   if ans=$(calc -pd "$(eval echo $(eqn))") ;then

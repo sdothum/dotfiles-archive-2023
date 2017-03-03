@@ -69,7 +69,7 @@ do
 
   movie=$(cat $catlg |
           sed "1i$(options)" |
-          rofi 'Movie' "$movie" -no-custom) || exit
+          rmenu 'Movie' "$movie" -no-custom) || exit
 
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
 
@@ -83,7 +83,7 @@ do
     *) movie=$(echo "$movie" | sed "s/ $SEP$//")
        while :
        do
-         action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rofi "$movie" -no-custom) || break
+         action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
          video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed -e 's/  (\([12][0-9][0-9][0-9]\))$/ \1/' -e 's/ /./g').*")
          case $action in
            play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then

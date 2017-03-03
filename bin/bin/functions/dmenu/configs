@@ -60,7 +60,7 @@ do
          history configs |
          sed -e "1i$REBUILD" |
          column -s^ -t |
-         rofi 'Edit Config' 1 -no-custom) || exit
+         rmenu 'Edit Config' 1 -no-custom) || exit
 
   if [ "$file" = "$REBUILD" ] ;then
     configs

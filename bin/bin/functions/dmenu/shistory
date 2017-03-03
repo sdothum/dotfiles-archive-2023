@@ -7,7 +7,7 @@
 
 shell=$(previous shistory)
 shell=$(echo "fish\nsh\nzsh" |
-        rofi 'Shell' $shell -no-custom) || exit
+        rmenu 'Shell' $shell -no-custom) || exit
 
 history shistory $shell
 case $shell in
@@ -22,7 +22,7 @@ esac
 cmd=$(h shell=$shell |
       sed -re "s/^([^ ]*)  */\1 $SEP $UTF/" |
       column -s$UTF -t |
-      rofi 'History' -no-custom) || exit
+      rmenu 'History' -no-custom) || exit
 
 cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
 notify 'Ctrl-Alt-V' "$(echo $cmd | sed -e 's/[&][&]/and/g' -e 's/[&]/ampersand/')"

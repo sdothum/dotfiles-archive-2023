@@ -39,7 +39,7 @@ url() {
   grep "$@" $stations | sed 's/.*, *//'
 }
 
-while station=$(playlist | sed 's/,.*//' | rofi "$(station)" -no-custom) || exit
+while station=$(playlist | sed 's/,.*//' | rmenu "$(station)" -no-custom) || exit
 do
   case $station in
     "$TOGGLE") if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then

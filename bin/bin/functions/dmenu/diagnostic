@@ -16,11 +16,11 @@ diagnostics="glances \
 "
 
 interface() {
-  ip link show | grep '^[0-9]' | cut -d: -f2 | rofi 'Interface' -no-custom || exit
+  ip link show | grep '^[0-9]' | cut -d: -f2 | rmenu 'Interface' -no-custom || exit
 }
 
 diagnostic=$(previous diagnostic)
-while diagnostic=$(apps "$diagnostics" | rofi 'Diagnostic' $diagnostic -no-custom) || exit
+while diagnostic=$(apps "$diagnostics" | rmenu 'Diagnostic' $diagnostic -no-custom) || exit
 do
   history diagnostic $diagnostic
   case $diagnostic in
