@@ -8,8 +8,8 @@
 # meta dmenu menu!
 system=$(previous system)
 system=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlog ^$SEP watch\nsystem ^$SEP diagnostic" |
-          column -s^ -t |
-          rofi 'System' "$system" -no-custom) || exit
+         column -s^ -t |
+         rofi 'System' "$system" -no-custom) || exit
 
 history system "$system"
 case $system in

@@ -5,12 +5,10 @@
 
 # ......................................................................... Edit
 
-# project list format:
-# tag... :: [ filename | $(eval) ]...
-# where,
-#   tag      - dmenu search tag
-#   filename - posix filename expression
-#   eval     - posix shell expression that evaluates to a list of filenames
+# Format: <tag> :: [ <filename> | $<(eval>) ]*
+#               where, tag      - dmenu search tag
+#                      filename - posix filename expression
+#                      eval     - posix shell expression that evaluates to a list of filenames
 
 EDIT='[ edit tags ]'
 

@@ -15,7 +15,7 @@ term=tmux
 # kill any extra tmux sessions spawned (default 2 processes)..
 kill -TERM $(pgrep -f 'tmux -u -2 -f' | sed '1,2d') 2>/dev/null
 
-# search [<option..> [<command>]]
+# search [<option>* [<command>]]
 search() {
   xdotool search --limit 1 --classname $1 $name $2 2>/dev/null
 }

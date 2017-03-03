@@ -6,7 +6,7 @@
 
 # ....................................................................... Editor
 
-# Usage: v [-f] [file]..
+# Usage: v [-f] [<file>]*
 
 # va va voom
 SHELL=/usr/bin/dash

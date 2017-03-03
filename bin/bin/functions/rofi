@@ -71,7 +71,8 @@ fi
 if [ "$1" ] ;then
   # if not parameter
   if [ "${1%%-*}" != '' ] ;then
-    echo "$1" | grep -q '^[0-9]*$' && select="-selected-row $1" || select="-select '$1'"
+    echo "$1" | grep -q '^[0-9]*$' && select="-selected-row $1" ||
+                                      select="-select '$1'"
     shift
   fi
 fi

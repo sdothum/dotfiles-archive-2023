@@ -6,7 +6,7 @@
 
 # ....................................................................... Search
 
-# Usage: find.. | filter
+# Usage: .. | filter
 
 ansi='\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]'
 dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
