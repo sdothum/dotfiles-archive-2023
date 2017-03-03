@@ -15,6 +15,10 @@
 
       " source code style
       function! CodeView()
+        " reset theme colours when transitioning from prose view
+        execute 'Limelight!'
+        colorscheme solarized
+        call lightline#colorscheme()
         " suppress tty ctermfg error messages
         call Margin()
         call Quietly('LiteDFM')
