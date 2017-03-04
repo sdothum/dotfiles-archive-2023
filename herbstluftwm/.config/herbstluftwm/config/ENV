@@ -24,10 +24,11 @@ export NOBLUR=$HOME/.noblur
 export SETROOT=$HOME/.setroot
 export WALLPAPER=$HOME/images/backgrounds/default
 
+export DMENU=$HOME/.ncurses
+
 export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
 export COMPTON=$HLWM:compton
-export DMENU=$HLWM:dmenu
 export CONKY=$HLWM:conky
 export CONTRAST=$CONKY:contrast
 export DYNAMIC=$HLWM:dynamic

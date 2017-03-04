@@ -65,9 +65,6 @@ set -x PLAYER 'mpv'
 set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
 set -x PAGER 'less'
 
-# fzf
-set -x FZF_DEFAULT_OPTS '--reverse --border --prompt="    ─────  " --height=20 --ansi'
-
 # ..................................................... Development environments
 
 # lua

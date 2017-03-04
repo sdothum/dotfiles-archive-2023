@@ -239,6 +239,8 @@
       if argc() == 1
         " a bit of regex weirdness requiring *eml(?)
         call FontSize(argv(0) =~ '.*\(wiki\|draft\|*eml\|md\)$' ? +1 : -1)
+      else
+        call FontSize(-1)
       endif
 
 " themes.vim

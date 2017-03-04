@@ -67,6 +67,12 @@ do
     TR) tr='-tr'
         shift ;;
 
+    VISIBLE) visible=true
+             shift ;;
+
+    WAIT) wait=true
+          shift ;;
+
     FORTUNE) touch $FORTUNE:term
              shift ;;
 
@@ -74,12 +80,6 @@ do
            process=$@
            [ "$1" ] && cmd="-e $SHELL -c '$@'"
            break ;;
-
-    VISIBLE) visible=true
-             shift ;;
-
-    WAIT) wait=true
-          shift ;;
 
     *) process="$@"
        cmd="-e $@"
