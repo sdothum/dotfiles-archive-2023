@@ -14,6 +14,13 @@ case $1 in
   on ) [ -e $COMPTON ] && exit ;;
 esac
 [ -e $COMPTON ] && rm -f $COMPTON || touch $COMPTON
+if [ -e $COMPTON ] ;then
+  rm -f $COMPTON
+  notify low 'Compton Compositing' Off
+else
+  touch $COMPTON
+  notify low 'Compton Compositing' On
+fi
 
 if [ -e $COMPTON ] ;then
   if ! pidof compton >/dev/null ;then

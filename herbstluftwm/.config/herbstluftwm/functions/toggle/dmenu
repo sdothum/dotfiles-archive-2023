@@ -12,6 +12,12 @@ case $1 in
   off) [ -e $DMENU ] || exit ;;
   on ) [ -e $DMENU ] && exit ;;
 esac
-[ -e $DMENU ] && rm -f $DMENU || touch $DMENU
+if [ -e $DMENU ] ;then
+  rm -f $DMENU
+  notify low 'Rofi Menu' On
+else
+  touch $DMENU
+  notify low 'FZF Ncurses Menu' On
+fi
 
 # vim: set ft=sh: #

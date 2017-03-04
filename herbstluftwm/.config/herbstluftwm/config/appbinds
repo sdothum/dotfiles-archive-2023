@@ -32,7 +32,7 @@ else
 fi
 hc keybind Super-equal               spawn dmenu calc
 hc keybind Super-Shift-equal         spawn toggle plover
-hc keybind Super-Shift-minus         spawn toggle dmenu
+hc keybind Super-BackSpace           spawn toggle dmenu
 if [ $PLANCK ] ;then
   # hc keybind Super-grave           spawn toggle rox
   hc keybind Super-comma             spawn toggle rox
