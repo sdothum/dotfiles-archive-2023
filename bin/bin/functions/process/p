@@ -1,14 +1,16 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
+# Process
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .................................................................... Processes
+# ...................................................................... Process
 
-# Usage: !p <name>
+# Usage: p <name> [<name>]*
 
-# no process && ..
-p $@ && exit 1 || exit 0
+# 'or' a list of process names
+list=$(echo $@ | tr ' ' '|')
+# trap !p call
+ps -ef --sort '-%cpu' | egrep -i "$list" 2>/dev/null | egrep -v " e?grep |$0 |$(which !p) |<defunct>"
 
 # vim: set ft=sh: #

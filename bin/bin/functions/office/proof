@@ -1,7 +1,7 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
+# Office
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ........................................................................ Print
@@ -15,7 +15,7 @@ if [ -e $proof ] ;then
 else
   touch $proof
   notify low 'PR Latex' 'Display proof'
-fi 
+fi
 
 
 # vim: set ft=sh: #

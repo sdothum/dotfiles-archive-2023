@@ -4,7 +4,7 @@
 # X11 Dynamic Menu
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ................................................ Auto GUI/ncurses menu wrapper
+# ..................................................... GUI/ncurses menu wrapper
 
 # Usage: rmenu '<prompt>' [['<select>' | <row>]] [<option>]*
 #              where, select - rofi select highlight
@@ -14,6 +14,11 @@
 # Note:
 #   - Persistent ncurses mode set with ~/.dmenu, see toggle dmenu
 #   - Temporary ncurses mode set with variable DMENU, see bin/dmenu
+
+usage() {
+  echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"
+  exit 1
+}
 
 wbg=argb:E0000000
 bg=argb:0000000
@@ -25,7 +30,7 @@ hfg=argb:FF25C0EF
 # leader left or right
 lead=right
 leader='──────'
-INDENT='   '
+indent='   '
 
 # .......................................................................... GUI
 
@@ -71,6 +76,8 @@ if [ "$1" ] ;then
   title="$1"
   prompt="$1  "
   shift
+else
+  usage
 fi
 # convert prompt right to lower case
 [ $lead = left ] && prompt="${prompt}$leader   " ||
@@ -94,13 +101,13 @@ if [ $display ] ;then
   if [ -e $DMENU ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
-    sed "s/^/$INDENT/" >$stdin
+    sed "s/^/$indent/" >$stdin
     term "$title" STACK WAIT SHELL "cat $stdin | fzf --prompt=\\\"$prompt\\\" >$stdout"
     input=$(cat $stdout)
     rm $stdin $stdout
     test -n "$input"
   else
-    input=$(sed "s/^/$INDENT/" |
+    input=$(sed "s/^/$indent/" |
             eval rofi -matching fuzzy \
                       -monitor $display \
                       -bw 0 \
@@ -121,11 +128,11 @@ if [ $display ] ;then
                       $@ )
   fi
 else
-  input=$(sed "s/^/$INDENT/" | fzf --prompt="\"$prompt\"")
+  input=$(sed "s/^/$indent/" | fzf --prompt="\"$prompt\"")
 fi
 
 [ $? -ne 0 ] && exit 1
 # strip indent from input!
-echo "$input" | sed "s/^$INDENT//"
+echo "$input" | sed "s/^$indent//"
 
 # vim: set ft=sh: #

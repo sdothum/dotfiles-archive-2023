@@ -1,15 +1,16 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
+# Process
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Script
+# ................................................................... Shell proc
 
-# Usage: . parent
-#        must be sourced in order to obtain correct parent id or called within
-#        a script that is itself sourced, see log trace as called from herbstluftwm
-#        example, see pabort
+# Usage: . ancestor
+#
+# Note: must be sourced in order to obtain correct parent id or called within a
+#       script that is itself sourced, see log/parent as called from herbstluftwm
+#       scripts
 
 ps -ef | grep $PPID |
          sort |

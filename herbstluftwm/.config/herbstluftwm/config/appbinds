@@ -53,10 +53,7 @@ hc keybind Super-c                   spawn dmenu clipboard
 hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
 hc keybind Super-e                   spawn dmenu scripts
-hc keybind Super-Shift-e             spawn dmenu projects
-hc keybind Super-Control-e           spawn dmenu configs
-hc keybind Super-f                   spawn dmenu files
-hc keybind Super-Shift-f             spawn dmenu folders
+hc keybind Super-Shift-e             spawn dmenu edit
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu shistory
 hc keybind Super-Shift-i             spawn toggle term 'IRC' weechat

@@ -12,12 +12,12 @@ TRACE=${TRACE:-/tmp/trace.log}
 # set ljust=true for left justified parent name
 unset ljust
 
-ancestor() {
-  proc=$(parent)
+parent() {
+  proc=$(ancestor)
   [ $ljust ] && echo "$proc                  " | sed -r 's/^(..................).*/\1/' ||
                 echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
 }
 
-echo "  $(ancestor) -> $CHILD" >>$TRACE
+echo "  $(parent) -> $CHILD" >>$TRACE
 
 # vim: set ft=sh: #
