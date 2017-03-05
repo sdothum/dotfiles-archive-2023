@@ -1,26 +1,26 @@
 #!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
+# Prompt
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Prompts
+# .................................................................. Affirmative
 
 sig=${sig:--TERM}
 
-# if no || ..
+# if yes && ..
 underline $1
 
 while :
 do
   rm -f /tmp/abort 2>/dev/null
-  printf 'continue? [No]/yes/abort : '
+  printf 'continue? [Yes]/no/abort : '
   # using bash's extended read functionality (over dash) for single character input
   IFS= read -rn1 CONTINUE
   echo
   case $CONTINUE in
-    n | N | '') exit 0 ;;
-    y | Y     ) exit 1 ;;
+    y | Y | '') exit 0 ;;
+    n | N     ) exit 1 ;;
 
     a | A) echo $PPID >/tmp/abort
            # try to cleanly close any child processes

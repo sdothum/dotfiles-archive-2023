@@ -39,7 +39,8 @@ dohc
 
 # ...................................................... Configuration framework
 
-for i in $HOME/.config/herbstluftwm/config/*
+# for i in $HOME/.config/herbstluftwm/config/*
+for i in ${0%/autostart}/config/*
 do
   ditto "loading herbstluftwm config ${i##*/}"
   . $i
