@@ -6,7 +6,6 @@
 
 # ................................................................. Fuzzy finder
 
-# export FZF_DEFAULT_OPTS='--reverse --border --prompt="    ─────  " --height=24 --ansi --color=dark,hl:226,fg+:255,bg+:234,bg:234,marker:160,prompt:027'
 export FZF_DEFAULT_OPTS='--reverse --border --prompt="    ─────  " --ansi --color=dark,hl:226,fg+:255,bg+:234,bg:234,marker:160,prompt:027'
 
 # fzf wrapper

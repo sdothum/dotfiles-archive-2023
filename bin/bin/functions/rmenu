@@ -73,7 +73,7 @@ fi
 # ....................................................................... Prompt
 
 if [ "$1" ] ;then
-  title="$1"
+  title=$1
   prompt="$1  "
   shift
 else
@@ -89,8 +89,13 @@ fi
 if [ "$1" ] ;then
   # if not parameter
   if [ "${1%%-*}" != '' ] ;then
-    echo "$1" | grep -q '^[0-9]*$' && select="-selected-row $1" ||
-                                      select="-select '$1'"
+    if echo "$1" | grep -q '^[0-9]*$' ;then
+      select="-selected-row $1"
+    else
+      # use ctrl-u to clear query and list all
+      query=$1
+      select="-select '$1'"
+    fi
     shift
   fi
 fi
@@ -102,7 +107,8 @@ if [ $display ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
     sed "s/^/$indent/" >$stdin
-    term "$title" STACK WAIT SHELL "cat $stdin | fzf --prompt=\\\"$prompt\\\" >$stdout"
+    # escape movie title (year) parentheses
+    term "$(escape $title)" STACK WAIT SHELL "cat $stdin | fzf --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(cat $stdout)
     rm $stdin $stdout
     test -n "$input"
