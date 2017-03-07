@@ -49,9 +49,9 @@
 
     " ..................................................................... Grep
 
-      " just for shell key bindings (fzf installed via pacman)
-      Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' }
-      " fzf doesn't integrate well with gvim
+      " fzf installed via pacman
+      " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' }
+      " fzf.vim doesn't integrate well with gvim
       " Plug 'junegunn/fzf.vim'
 
     " .......................................................... Version control

@@ -20,6 +20,9 @@ usage() {
   exit 1
 }
 
+# unset fzf query highlight to list all
+hilite=true
+
 wbg=argb:E0000000
 bg=argb:0000000
 fg=argb:FFFDF6E3
@@ -93,7 +96,7 @@ if [ "$1" ] ;then
       select="-selected-row $1"
     else
       # use ctrl-u to clear query and list all
-      query=$1
+      [ $hilite ] && query=$1
       select="-select '$1'"
     fi
     shift

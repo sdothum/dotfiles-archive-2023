@@ -8,7 +8,7 @@
 
 city='Ottawa,Canada'
 # bypass release dependent wego config file
-arm && location="-city $city" || location="-location $city"
+cpu arm && location="-city $city" || location="-location $city"
 
 # cat worldweatheronline api key
 wego -backend worldweatheronline.com \

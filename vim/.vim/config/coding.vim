@@ -35,11 +35,10 @@
       endfunction
 
       nmap <silent><Bar> :call ToggleColumn()<CR>
-      nmap <leader><Bar> :set colorcolumn=
 
     " ....................................................... Trailing highlight
 
-      " toggle trailing whitespace highlight
+      " toggle trailing whitespace highlight and indentation levels
       function! ToggleSpaces()
         set list!
         if &list == 0

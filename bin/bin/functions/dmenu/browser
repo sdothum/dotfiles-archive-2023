@@ -40,7 +40,7 @@ while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-cu
 do
   case ${browser} in
     "$EDIT") gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
-             command dmenu bookmarks ;;
+             dmenu bookmarks ;;
 
     brave | chromium | dwb | \
     firefox | google-chrome | hbro | iceweasel | jumanji | \

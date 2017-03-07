@@ -68,22 +68,22 @@
 
 = linux-ck kernel
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# linux-ck-atom             [atom]
-# linux-ck-headers          [atom]
-# linux-ck-haswell          [icore]
-# linux-ck-headers          [icore]
+# linux-ck-atom             [cpu atom]
+# linux-ck-headers          [cpu atom]
+# linux-ck-haswell          [cpu i7]
+# linux-ck-headers          [cpu i7]
 # "intel microcode must be installed after ck kernel"
 
 
 = hardware
 # ▔▔▔▔▔▔▔▔
   dmidecode
-# gpointing-device-settings [macbook]
+# gpointing-device-settings [gpu macbook]
   hwinfo
   intel-ucode
   lm_sensors
-  mbpfan-git                [macbook]
-  nvidiabl                  [macbook]
+  mbpfan-git                [gpu macbook]
+  nvidiabl                  [gpu macbook]
   xf86-input-wacom          [server]
 
 
@@ -121,7 +121,7 @@
   acpi                      [laptop]
 # powertop                  [laptop]
 # "dead battery in macbook"
-  tlp                       [laptop && ! macbook]
+  tlp                       [laptop && ! gpu macbook]
   xfce4-power-manager
 
 

@@ -149,10 +149,10 @@
 = x11
 # ▔▔▔
   arandr               [server]
-  lib32-libglvnd       [nvidia]
+  lib32-libglvnd       [gpu nvidia]
   lib32-mesa-libgl     [laptop]
-  lib32-nvidia-libgl   [nvidia]
-  lib32-nvidia-utils   [nvidia]
+  lib32-nvidia-libgl   [gpu nvidia]
+  lib32-nvidia-utils   [gpu nvidia]
   lxrandr              [server]
   xf86-input-mouse
   xf86-input-keyboard

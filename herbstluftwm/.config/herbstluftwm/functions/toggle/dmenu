@@ -12,6 +12,7 @@ case $1 in
   off) [ -e $DMENU ] || exit ;;
   on ) [ -e $DMENU ] && exit ;;
 esac
+
 if [ -e $DMENU ] ;then
   rm -f $DMENU
   notify low 'Rofi Menu' On

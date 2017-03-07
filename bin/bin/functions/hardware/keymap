@@ -13,8 +13,29 @@ usage() {
 
 [ -e /etc/vconsole.conf ] || echo qwerty | sudo tee /etc/vconsole.conf
 
+# the finger friendly layout
+colemak() {
+  if [ -e $HOME/.Xmodmap ] ;then
+    xmodmap $HOME/.Xmodmap
+    layout=Shift-DH
+  else
+    setxkbmap us -variant colemak
+    left_shift_key
+  fi
+  sudo sed -i '/^KEYMAP/cKEYMAP=colemak' /etc/vconsole.conf
+  notify low 'Keyboard Layout' "Colemak $layout"
+}
+
+# ugh.. only if you insist!
+qwerty() {
+  setxkbmap us -variant basic
+  left_shift_key
+  sudo sed -i '/^KEYMAP/cKEYMAP=us' /etc/vconsole.conf
+  notify low 'Keyboard Layout' 'Qwerty'
+}
+
 # toggle qwerty and colemak variants
-case $@ in
+case $1 in
   c*) colemak ;;
   q*) qwerty ;;
   t*) grep -q qwerty /etc/vconsole.conf && colemak || qwerty ;;

@@ -13,7 +13,7 @@
 
 # AUR package manager
 if [ -z $1 ] ;then
-  if arm ;then
+  if cpu arm ;then
     sudo pacman -Syu
     exit
   fi

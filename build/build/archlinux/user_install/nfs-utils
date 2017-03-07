@@ -12,12 +12,15 @@ if server ;then
   if ! grep -q 'Maildir.*bind' /etc/fstab ;then
     sudo sed -i '$a\
 /home/$uid/Maildir /srv/nfs4/Maildir none bind 0 0\
+/home/$uid/stow    /srv/nfs4/Maildir none bind 0 0\
 /net               /srv/nfs4/net     none bind 0 0\
 ' /etc/fstab
 
-    sudo sed -i '$a\
-/srv/nfs4/Maildir *(rw,sync,no_subtree_check,nohide)\
-/srv/nfs4/net     *(rw,sync,no_subtree_check,nohide)\
+    sudo sed -i -e '\|/srv/nfs4|s/,sync,/,sync,no_wdelay,/' \
+             -e '$a\
+/srv/nfs4/Maildir *(rw,sync,no_wdelay,no_subtree_check,nohide)\
+/srv/nfs4/stow    *(rw,sync,no_wdelay,no_subtree_check,nohide)\
+/srv/nfs4/net     *(rw,sync,no_wdelay,no_subtree_check,nohide)\
 ' /etc/exports
     sudo exportfs -rav
   fi
@@ -25,7 +28,8 @@ elif ! grep -q 'net.*nfs4' /etc/fstab ;then
   sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
            -e '$a\
 luna:/net     /net               nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
-luna:/Maildir /home/user/Maildir nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
+luna:/Maildir /home/user/Maildir nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,fsc,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
+luna:/stow    /home/user/stow    nfs4 rw,noauto,noatime,rsize=8192,wsize=8192,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
 ' /etc/fstab
   sudo sed -i "s/user/$USER/" /etc/fstab
 fi

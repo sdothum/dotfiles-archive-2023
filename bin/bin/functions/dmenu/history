@@ -9,7 +9,7 @@
 filter='/accounts|acronym|color(codehex|combos|hexa)|dictionary|duckduckgo|ERROR:|fontbureau|google.com/mail|localhost|luakit:|Page not found|[Ss]earch|thedarnedestthing|thesaurus|tt-rss'
 
 # select source
-browser=$(command dmenu urlsrc)
+browser=$(dmenu urlsrc)
 case $browser in
   chromium) history=$HOME/.config/chromium/Default/History
             cp $history $history.copy

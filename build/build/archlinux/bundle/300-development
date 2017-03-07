@@ -56,7 +56,7 @@
 
 = software tools
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# arduino         [! atom]
+# arduino         [! cpu atom]
   avr-gcc
   avr-libc
   dfu-programmer

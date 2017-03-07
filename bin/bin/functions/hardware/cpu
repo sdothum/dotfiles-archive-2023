@@ -1,0 +1,30 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... CPU
+
+usage() {
+  echo "usage: $(basename $0) [i7 | atom | arm]"
+  exit 1
+}
+
+# usage: processor <name> <field> <delimeter>
+processor() {
+  [ "$(cat /proc/cpuinfo | grep 'model name' | sed 's/model name.*: //' | uniq | cut -d' ' -f$2 | cut -d$3 -f1)" = $1 ] || return
+  echo $1 | tr '[:upper:]' '[:lower:]'
+  exit
+}
+
+case $1 in
+  '') processor i7   '3' '-'
+      processor Atom '2' '('
+      processor ARM  '1' 'v' ;;
+
+  i7 | atom | arm) [ $(cpu) = $1 ] ;;
+  *              ) usage ;;
+esac
+
+# vim: set ft=sh: #

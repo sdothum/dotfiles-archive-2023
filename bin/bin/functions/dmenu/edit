@@ -12,11 +12,11 @@ edit=$(echo "projects\nscripts\nconfigs\nfiles\nfolders" |
 
 history edit $edit
 case $edit in
-  projects) command dmenu projects ;;
-  scripts ) command dmenu scripts ;;
-  configs ) command dmenu configs ;;
-  files   ) command dmenu files ;;
-  folders ) command dmenu folders ;;
+  projects) dmenu projects ;;
+  scripts ) dmenu scripts ;;
+  configs ) dmenu configs ;;
+  files   ) dmenu files ;;
+  folders ) dmenu folders ;;
 esac
 
 # vim: set ft=sh: #

@@ -14,13 +14,13 @@ do
 
   history media $media
   case $media in
-    animation ) command dmenu movies animation ;;
-    anime     ) command dmenu series anime ;;
-    ebooks    ) command dmenu ebooks ;;
-    movies    ) command dmenu movies ;;
+    animation ) dmenu movies animation ;;
+    anime     ) dmenu series anime ;;
+    ebooks    ) dmenu ebooks ;;
+    movies    ) dmenu movies ;;
     nzb       ) exec toggle term 'NZB' nzbget --connect ;;
-    references) command dmenu references ;;
-    series    ) command dmenu series ;;
+    references) dmenu references ;;
+    series    ) dmenu series ;;
     torrent   ) exec toggle term 'Torrent' rtorrent ;;
   esac
 done

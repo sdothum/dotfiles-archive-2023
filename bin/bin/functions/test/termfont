@@ -10,11 +10,11 @@
 # see urxvt wrapper
 
 # test arm first to avoid spurious lspci messages
-if arm ;then
+if cpu arm ;then
   size=9
-elif macbook ;then
+elif gpu macbook ;then
   size=9
-elif nvidia ;then
+elif gpu nvidia ;then
   is display +1680 && size=10 || { is display +1440 && size=8 || size=9; }
 elif laptop ;then
   size=9

@@ -151,7 +151,8 @@ g term-ansicolor
 # ▔▔▔▔▔▔▔
   connman
   dnsmasq
-  dnsutils
+# dnsutils
+  bind-tools
 # networkmanager
 
 
@@ -163,6 +164,8 @@ g term-ansicolor
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
+" add armv7h to arch in pkgbuild
+? cachefilesd
   nfs-utils
 # nss-mdns
 # pygtk
@@ -172,8 +175,8 @@ g term-ansicolor
 = sync
 # ▔▔▔▔
   rsync
-  syncthing
-  syncthing-inotify
+# syncthing
+# syncthing-inotify
 
 
 = appearance

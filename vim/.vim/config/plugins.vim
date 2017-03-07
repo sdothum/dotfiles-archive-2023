@@ -81,10 +81,10 @@
 
     " ...................................................................... Fzf
 
-      " fzf doesn't really work well within gvim
-      let g:fzf_launcher = 'term STACK WAIT SHELL %s'
-
-      nmap <leader><leader>b :FZF<CR>
+      " " fzf doesn't really work well within gvim
+      " let g:fzf_launcher = 'term STACK WAIT SHELL %s'
+      "
+      " nmap <leader><leader>b :FZF<CR>
 
     " ........................................................... Graphical undo
 
@@ -235,8 +235,8 @@
       let g:limelight_priority            = 1 " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
       " see views.vim
-      " autocmd! User GoyoEnter Limelight
-      " autocmd! User GoyoLeave Limelight!
+      " autocmd! plugin User GoyoEnter Limelight
+      " autocmd! plugin User GoyoLeave Limelight!
 
     " .............................................................. Litecorrect
 

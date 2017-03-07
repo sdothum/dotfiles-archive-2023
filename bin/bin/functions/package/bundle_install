@@ -73,12 +73,13 @@ do
 
     if [ $check ] ;then
       unset installed
+      unset gem
       case $action in
         '-') continue ;;
-        'g') echo "$gems" | grep -q "^$package$" && installed=true ;;
+        'g') echo "$gems" | grep -q "^$package$" && installed=true || gem='gem ' ;;
         *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
       esac
-      [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[not installed]"
+      [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[${gem}not installed]"
       continue
     fi
 

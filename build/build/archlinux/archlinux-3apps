@@ -8,8 +8,8 @@ script-check
 
 # this install setup
 bfq() {
-  atom && return 0
-  # icore && return 0
+  cpu atom && return 0
+  # cpu i7 && return 0
   return 1
 }
 

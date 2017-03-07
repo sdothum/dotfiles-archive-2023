@@ -20,7 +20,7 @@ cache=$maildir/addressbook
 # - name <address>
 # - tag :: name <address>,..
 contacts=$maildir/contacts
-patricia=$maildir/addressbook.patricia
+# patricia=$maildir/addressbook.patricia
 
 # .................................................................. Build cache
 

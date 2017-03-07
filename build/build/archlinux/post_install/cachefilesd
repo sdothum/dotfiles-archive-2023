@@ -1,12 +1,13 @@
-#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Hardware
+# Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .......................................................................... GPU
+# .................................................................... nfs cache
 
-# if macbook nvidia gpu
-lspci | grep VGA | grep -q NVIDIA
+sudo mkdir /var/cache/fscache
+original /etc/cachefilesd.conf
+sudo sed -i '/^secctx/s/^/#/' /etc/cachefilesd.conf
+systemd enable cachefilesd
 
 # vim: set ft=sh: #

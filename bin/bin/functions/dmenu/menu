@@ -12,7 +12,7 @@ do
            egrep -v 'browser|compose|help|menu|urlib' |
            rmenu 'Menu' "$script" -no-custom) || exit
 
-  command dmenu $script
+  dmenu $script
 done
 
 # vim: set ft=sh: #

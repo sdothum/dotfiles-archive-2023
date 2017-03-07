@@ -46,6 +46,7 @@
           let g:dfm_bg_line     = g:dfm_bg_line_light
           let g:dfm_fg_line     = g:dfm_fg_line_light
           let g:dfm_status      = g:dfm_status_light
+          execute 'highlight IndentGuidesOdd guibg=' . g:dfm_bg_line_dark
         else
           if ProseFT()
             let g:dfm_fg        = g:dfm_fg_dark_prose
@@ -60,6 +61,7 @@
           let g:dfm_bg_line     = g:dfm_bg_line_dark
           let g:dfm_fg_line     = g:dfm_fg_line_dark
           let g:dfm_status      = g:dfm_status_dark
+          execute 'highlight IndentGuidesOdd guibg=' . g:dfm_bg_line_light
         endif
       endfunction
 

@@ -17,7 +17,7 @@
 #        draw root toggle, toggle background blur mode
 #        draw root wallpaper, draw background
 
-# arm && exit
+# cpu arm && exit
 
 SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle

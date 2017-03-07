@@ -28,6 +28,13 @@ if [ $USER != root ] ;then
       fi
     fi
 
+    # initialize nfs file caches, where applicable
+    if cpu arm ;then
+      find $HOME/stow >/dev/null &
+      cd stow
+      find >/dev/null &
+    fi
+
     # not connected to local network
     server || ping -c 1 -W 1 www.google.ca >/dev/null 2>&1 || sudo wifi-menu
     which wego >/dev/null 2>&1 && we &

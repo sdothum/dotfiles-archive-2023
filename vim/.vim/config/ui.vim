@@ -83,10 +83,7 @@
 
     " ........................................................... Column margins
 
-      " set colorcolumn=45,80               " highlight column
       set colorcolumn=0                     " highlight column
-      " see ToggleColumn functions.vim
-      nmap <leader><Bar> :set colorcolumn=
 
     " ............................................................. Line numbers
 

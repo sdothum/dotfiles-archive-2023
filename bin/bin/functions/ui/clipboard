@@ -7,6 +7,6 @@
 # .................................................................... Clipboard
 
 # gpaste history add not available on raspberry pi
-arm && echo -n "$@" | xsel -b || gpaste-client add "$@"
+cpu arm && echo -n "$@" | xsel -b || gpaste-client add "$@"
 
 # vim: set ft=sh: #

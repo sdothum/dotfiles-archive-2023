@@ -13,7 +13,7 @@ primary=20
 secondary=18
 monitor=$1
 
-arm && monitor=primary
+cpu arm && monitor=primary
 case $monitor in
   tv       ) echo $(( $(herbstclient attr settings.window_gap) + $(herbstclient attr settings.frame_gap) )) ;;
   primary  ) echo $primary ;;
