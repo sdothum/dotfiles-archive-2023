@@ -104,6 +104,9 @@ alias X x
 
 # ......................................................................... Edit
 
+alias de 'dmenu - edit'
+alias dp 'dmenu - projects'
+alias ds 'dmenu - scripts'
 alias nv 'nvpy'
 alias sd 'sdiff -b -E -W -w(tput cols)'
 alias vd 'gvimdiff --role=gvimdiff'

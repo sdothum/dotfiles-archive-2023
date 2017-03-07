@@ -96,6 +96,22 @@
 
       autocmd plugin BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
 
+    " ............................................................ Indent guides
+
+      " see coding.vim, theme.vim
+      let g:indent_guides_auto_colors = 0
+
+      " subtle highlighting of even indents only
+      function! IndentTheme()
+        if &background == 'light'
+          execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
+          execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_light
+        else
+          execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_dark
+          execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_dark
+        endif
+      endfunction
+
     " ................................................................ Lightline
 
       let g:matchspace = ''                 " see ToggleSpaces coding.vim

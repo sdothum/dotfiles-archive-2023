@@ -27,6 +27,7 @@
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
       Plug 'bimbalaszlo/vim-eightheader'
+      Plug 'nathanaelkane/vim-indent-guides'
 
     " ................................................................... Keymap
 
