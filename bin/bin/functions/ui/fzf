@@ -6,7 +6,7 @@
 
 # ................................................................. Fuzzy finder
 
-# see bin/dmenu usage
+# see bin/dmenu
 [ $NCURSES ] || reverse=--reverse
 
 export FZF_DEFAULT_OPTS="--cycle $reverse --border --prompt='    ─────  ' --ansi --color=dark,hl:226,fg+:255,bg+:234,bg:234,marker:160,prompt:027"

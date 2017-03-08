@@ -15,6 +15,9 @@
 CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
 CONFIG=${0%/dmenu}/functions/dmenu/.config
 export HISTORY=$HOME/bin/functions/dmenu/.history
+# currently playing, see music, radia
+MUSIC=/tmp/audio:music
+RADIO=/tmp/audio:radio
 
 # content formatting items, see herbstluftwm env
 LSPACE="    $SEP"

@@ -92,6 +92,7 @@ alias f 'find -iname'
 # alias gl 'ack -l --ignore-case'
 alias locate 'sudo locate'
 alias mgrep 'pcregrep -M'
+alias wh 'which'
 
 # ...................................................................... Desktop
 
@@ -106,6 +107,7 @@ alias X x
 
 alias de 'dmenu - edit'
 alias dp 'dmenu - projects'
+alias dr 'dmenu - run'
 alias ds 'dmenu - scripts'
 alias nv 'nvpy'
 alias sd 'sdiff -b -E -W -w(tput cols)'

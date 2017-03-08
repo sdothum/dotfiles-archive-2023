@@ -26,8 +26,6 @@
       Plug 'junegunn/limelight.vim'
       Plug 'bilalq/lite-dfm'
       Plug 'altercation/vim-colors-solarized'
-      Plug 'bimbalaszlo/vim-eightheader'
-      Plug 'nathanaelkane/vim-indent-guides'
 
     " ................................................................... Keymap
 
@@ -62,11 +60,16 @@
 
   " Coding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ..................................................................... Atom
+    " ..................................................................... Aids
+
+      Plug 'bimbalaszlo/vim-eightheader'
+      Plug 'nathanaelkane/vim-indent-guides'
+      Plug 'tpope/vim-surround'
+
+    " ............................................................... Commenting
 
       Plug 'tomtom/tcomment_vim'
       Plug 'tomtom/tlib_vim'
-      Plug 'tpope/vim-surround'
 
     " ..................................................................... HTML
 

@@ -129,7 +129,8 @@ do
         library) ncmpcpp ;;
 
         clear) mpc clear
-               break ;;
+               rm -f $MUSIC
+               exit ;;
       esac
       continue
     done
@@ -184,6 +185,7 @@ do
         play) mpc clear >/dev/null
               echo "$playlist" | mpc add >/dev/null
               mpc play
+              echo "$playlist" >$MUSIC
               exit ;;
 
         add   ) echo "$playlist" | mpc add >/dev/null ;;

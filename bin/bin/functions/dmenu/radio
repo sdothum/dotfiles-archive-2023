@@ -15,11 +15,9 @@ TOGGLE='[ toggle ]'
 stations=$CONFIG/radio
 # connection lag time
 delay=0.5
-# currently playing
-radio=/tmp/radio
 
 playlist() {
-  if [ -e $radio ] ;then
+  if [ -e $RADIO ] ;then
     cat $stations | sed "1i$TOGGLE\n$CLEAR\n$EDIT"
   else
     cat $stations | sed '1i[ edit ]'
@@ -32,7 +30,7 @@ stop() {
 }
 
 station() {
-  [ -e $radio ] && cat $radio || echo 'Radio'
+  [ -e $RADIO ] && cat $RADIO || echo 'Radio'
 }
 
 url() {
@@ -45,12 +43,12 @@ do
     "$TOGGLE") if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
                  stop
                else
-                 mpv --no-cache --quiet $(url $(cat $radio)) &
+                 mpv --no-cache --quiet $(url $(cat $RADIO)) &
                fi
                exit ;;
 
     "$CLEAR") stop
-              rm -f $radio
+              rm -f $RADIO
               exit ;;
 
     "$EDIT") gvim -f $stations ;;
@@ -63,10 +61,10 @@ do
          mpv --no-cache --quiet $url &
          sleep $delay
          if pgrep -f 'mpv --no-cache --quiet' ;then
-           echo "$station" >$radio
+           echo "$station" >$RADIO
            exit
          else
-           rm -f $radio
+           rm -f $RADIO
          fi
        fi ;;
   esac

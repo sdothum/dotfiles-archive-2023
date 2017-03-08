@@ -45,8 +45,7 @@ else
 fi
 hc keybind Super-F1                  spawn dmenu menu
 hc keybind Super-Shift-F1            spawn keymap toggle
-hc keybind Super-a                   spawn dmenu abook
-hc keybind Super-Shift-a             spawn toggle term 'Mail' alot
+hc keybind Super-a                   spawn dmenu audio
 hc keybind Super-b                   spawn dmenu history
 hc keybind Super-Shift-b             spawn dmenu bookmarks
 hc keybind Super-c                   spawn dmenu clipboard
@@ -57,7 +56,8 @@ hc keybind Super-Shift-e             spawn dmenu edit
 hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu shistory
 hc keybind Super-Shift-i             spawn toggle term 'IRC' weechat
-hc keybind Super-m                   spawn dmenu music
+hc keybind Super-m                   spawn dmenu abook
+hc keybind Super-Shift-m             spawn toggle term 'Mail' alot
 hc keybind Super-n                   spawn dmenu notes
 hc keybind Super-Shift-n             spawn dmenu notes draft
 hc keybind Super-p                   spawn dmenu pass
@@ -66,7 +66,6 @@ hc keybind Super-Control-p           spawn pr eject
 hc keybind Super-q                   spawn toggle amphetype
 hc keybind Super-Shift-q             spawn clack
 hc keybind Super-Control-q           spawn clack swap
-hc keybind Super-r                   spawn dmenu radio
 hc keybind Super-s                   spawn dmenu system
 hc keybind Super-t                   spawn dmenu media
 hc keybind Super-w                   spawn focus qutebrowser
