@@ -27,7 +27,7 @@ filter() {
   history=$(mktemp)
   egrep "$1" $2
   egrep -v "$1" $2 >$history
-  mv -f $history $2
+  mv $history $2
 }
 
 if [ "$1" = '-' ] ;then

@@ -114,7 +114,7 @@ mail_daemon() {
   while :
   do
     # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
-    mv -f /tmp/mailsync.new /tmp/mailsync.old
+    mv /tmp/mailsync.new /tmp/mailsync.old
     # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync.new
     curl -u sdothum:maaike00 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync.new
     cmp -s /tmp/mailsync.old /tmp/mailsync.new

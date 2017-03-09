@@ -115,7 +115,7 @@ do
 
       edit) if grep -q "$book" $(history)/ebooks ;then
               grep -v "$book" $(history)/ebooks >/tmp/ebooks
-              mv -f /tmp/ebooks $(history)/ebooks
+              mv /tmp/ebooks $(history)/ebooks
             fi
             book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
             term "$title" WAIT vifm "${book%/*}" "$book" ;;

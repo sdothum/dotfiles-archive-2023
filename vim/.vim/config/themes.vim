@@ -27,7 +27,9 @@
       let g:dfm_cursor_light    = '#54D4FF' " ia writer blue cursor
       let g:dfm_cursor_dark     = '#DA4716' " reddish cursor
       let g:dfm_bg_line_light   = '#eee8d5' " solarized light cursorline
+      let g:dfm_bg_column_light = '#E2D7B6' " solarized light column
       let g:dfm_bg_line_dark    = '#073642' " solarized dark cursorline
+      let g:dfm_bg_column_dark  = '#0A4C5C' " solarized dark column
       let g:dfm_fg_line_light   = '#cccccc' " light grey line numbers
       let g:dfm_fg_line_dark    = '#444444' " dark grey line numbers
 

@@ -18,7 +18,7 @@ do
   file=$(echo "$file" | rmenu 'Merge .pacnew' -no-custom) || break
   if [ $file ] ;then
     pacnew=$(sudo find /etc -wholename "/etc/$file.pacnew")
-    cp -f $pacnew $copy
+    cp $pacnew $copy
     current=${pacnew%.pacnew}
     echo $current
     # gvimdiff for colorscheme, role for herbstluftwm rule

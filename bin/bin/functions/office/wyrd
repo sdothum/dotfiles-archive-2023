@@ -8,7 +8,7 @@
 
 # appointments and todo
 # if wyrd crashes (common tiling wm problem), restart
-cp -f $HOME/.reminders /tmp/
+cp $HOME/.reminders /tmp/
 while :
 do
   pidof wyrd || ( sleep 1 && /usr/bin/wyrd 2>>/tmp/wyrd.log )

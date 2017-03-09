@@ -93,8 +93,8 @@
       endfunction
 
       " intial view mode: source code or prose
-      autocmd view     BufEnter * call LiteType()
-      autocmd filetype VimEnter * call LiteType()
+      autocmd view BufEnter * call LiteType()
+      autocmd view VimEnter * call LiteType()
 
       function! Refresh()
         if ProseFT()

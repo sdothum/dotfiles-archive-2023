@@ -16,7 +16,7 @@ case $shell in
   sh  ) ;;
 
   zsh) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
-       mv -f $HOME/.zhistory.vacuum $HOME/.zhistory ;;
+       mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
 
 cmd=$(h shell=$shell |

@@ -5,6 +5,10 @@
 
   " Formatting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+      augroup editing
+        autocmd!
+      augroup END
+
     " ........................................................... Input settings
 
       set formatoptions=qrn1j               " coding options
@@ -96,7 +100,7 @@
 
       " prevent cascading paste insert
       set pastetoggle=<F2>
-      autocmd! InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
+      autocmd editing InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
       " see yankring for plugin equivalent

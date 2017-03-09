@@ -5,6 +5,10 @@
 
   " Behaviour ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+      augroup ui
+        autocmd!
+      augroup END
+
     " ................................................................ Attention
 
       set noerrorbells                      " don't beep
@@ -92,8 +96,8 @@
       set number
 
       " toggle relative line numbers
-      autocmd! InsertEnter * set relativenumber
-      autocmd! InsertLeave * set norelativenumber
+      autocmd! ui InsertEnter * set relativenumber
+      autocmd! ui InsertLeave * set norelativenumber
 
     " ................................................... Status / command lines
 

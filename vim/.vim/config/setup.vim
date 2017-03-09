@@ -54,9 +54,7 @@
 
     " ..................................................................... Help
 
-      " if $HOST == 'monad'                 " open help in maximum horizontal split
-        autocmd setup BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
-      " endif
+      autocmd setup BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 
       imap <F1>           <C-o>:help<Space>
       nmap <F1>           :help<Space>

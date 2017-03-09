@@ -42,7 +42,7 @@ case $1 in
       fi ;;
 
   I) if-no 'initialize password store' && exit 1
-      [ -d $STORE ] && mv -fv $STORE $STORE.save
+      [ -d $STORE ] && mv -v $STORE $STORE.save
       /usr/bin/pass init sdothum@gmail.com
       annotate 'import (rebuild) your password store' ;;
 

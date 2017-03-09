@@ -101,14 +101,24 @@
       " see coding.vim, theme.vim
       let g:indent_guides_auto_colors = 0
 
-      " subtle highlighting of even indents only
+      " subtle highlighting of even indents only, see coding.vim
       function! IndentTheme()
         if &background == 'light'
           execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
           execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_light
+          if g:ruler == 2
+            execute 'highlight ColorColumn guibg='    . g:dfm_bg_column_light
+          else
+            execute 'highlight ColorColumn guibg='    . g:dfm_bg_line_light
+          endif
         else
           execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_dark
           execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_dark
+          if g:ruler == 2
+            execute 'highlight ColorColumn guibg='    . g:dfm_bg_column_dark
+          else
+            execute 'highlight ColorColumn guibg='    . g:dfm_bg_line_dark
+          endif
         endif
       endfunction
 

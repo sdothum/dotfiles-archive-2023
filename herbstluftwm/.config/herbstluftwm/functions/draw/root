@@ -201,11 +201,11 @@ if [ ! -e $BLANK ] ;then
   background=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e $background ] ;then
-    cp -f $background $THEME
+    cp $background $THEME
   else
     term 'Theme' STACK SHELL walltheme
     pwait walltheme
-    cp -f $THEME $background
+    cp $THEME $background
   fi
   set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) |
                grep 'Triadic Color' |

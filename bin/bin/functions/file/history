@@ -36,7 +36,7 @@ inject() {
   fi
   # remove duplicate history entries
   echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" $2)" | sed '/^$/d' >$update
-  mv -f $update $2
+  mv $update $2
 }
 
 # update history or show it

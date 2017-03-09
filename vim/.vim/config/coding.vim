@@ -5,6 +5,10 @@
 
   " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+      augroup coding
+        autocmd!
+      augroup END
+
     " ........................................................... Line numbering
 
       " toggle relative number, line number and no numbering
@@ -25,13 +29,25 @@
 
     " ............................................................. Column ruler
 
-      " toggle colorcolumns, add 1st non-blank character in current line to margins list :-)
+      " see plugins.vim IndentTheme()
+      let g:ruler = 0
+
+      " toggle colorcolumn modes
       function! ToggleColumn()
-        if &colorcolumn == col('.')
-          let &colorcolumn = 0
+        if g:ruler == 0
+          let g:ruler = 1
+            let &colorcolumn = col('.')
+            autocmd coding CursorMoved,CursorMovedI * let &colorcolumn = col('.')
         else
-          let &colorcolumn = col('.')
+          if g:ruler == 1
+            let g:ruler = 2
+            autocmd! coding
+          else
+            let g:ruler = 0
+            let &colorcolumn = 0
+          endif
         endif
+        call IndentTheme()
       endfunction
 
       nmap <silent><Bar>      :call ToggleColumn()<CR>

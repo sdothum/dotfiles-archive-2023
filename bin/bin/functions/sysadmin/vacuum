@@ -38,7 +38,7 @@ clean() {
   ditto "vacuum $file"
   [ $clean ] || return
   case $clean in
-    clean) sudo mv -vf $file /tmp/ ;;
+    clean) sudo mv -v $file /tmp/ ;;
     CLEAN) sudo rm -rvf $file ;;
   esac
 }

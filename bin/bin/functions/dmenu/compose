@@ -39,7 +39,7 @@ compose_with() {
   folded=$(mktemp -p $HOME/drafts)
   $1 $2
   fold -s -w 72 $2 >$folded
-  cp -f $folded $2
+  cp $folded $2
   mv $folded $folded.draft
   history compose $editor
 }
