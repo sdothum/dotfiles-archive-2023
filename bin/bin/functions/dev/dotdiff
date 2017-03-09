@@ -14,7 +14,6 @@ usage() {
 # diff current sources with dotfiles git repo
 dotfiles=/net/depot/dotfiles
 current=$HOME/stow
-ignore='backups|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
 
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
@@ -24,28 +23,6 @@ if ! if-no "sync $dotfiles repo" ;then
   git clone git@github.com:sdothum/dotfiles.git $dotfiles
 fi
 
-if [ $2 ] ;then
-  folders=$2
-else
-  folders='*'
-fi
-
-for i in $(find $current/$1 -type f | filter | egrep -v $ignore | egrep "$folders")
-do
-  file=${i#*/stow/*/}
-  unset blink
-  while :
-  do
-    echo "${_green_}${blink}-> $file${_nocolor_}"
-    if ! diff $i $dotfiles/$1/$file ;then
-      # see herbstluftwm gvimdiff rule
-      if-no "edit $file" && break ||
-                            gvimdiff -f --role=gvimdiff $i $dotfiles/$1/$file
-      blink=${_blink_}
-    else
-      break
-    fi
-  done
-done
+dirdiff $current/$1 $dotfiles/$1 "$2"
 
 # vim: set ft=sh: #

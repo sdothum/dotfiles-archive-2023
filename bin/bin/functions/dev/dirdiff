@@ -1,0 +1,45 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................ Directory differences
+
+usage() {
+  echo "usage: $(basename $0) <directory> <directory> <regex>"
+  exit 1
+}
+
+ignore='backups|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
+
+[ $# -lt 2 ] && usage
+[ $# -gt 3 ] && usage
+[ -d $1 ] || usage
+[ -d $2 ] || usage
+
+if [ $3 ] ;then
+  regex=$3
+else
+  regex='*'
+fi
+
+for i in $(find $1 -type f | filter | egrep -v $ignore | egrep "$regex")
+do
+  file=$(echo $i | sed "s|.*/*$1/||")
+  unset blink
+  while :
+  do
+    echo "${_green_}${blink}-> $file${_nocolor_}"
+    if ! diff $i $2/$file ;then
+      # see herbstluftwm gvimdiff rule
+      if-no "edit $file" && break ||
+                            gvimdiff -f --role=gvimdiff $i $2/$file
+      blink=${_blink_}
+    else
+      break
+    fi
+  done
+done
+
+# vim: set ft=sh: #

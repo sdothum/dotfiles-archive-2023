@@ -34,7 +34,8 @@
         endif
       endfunction
 
-      nmap <silent><Bar> :call ToggleColumn()<CR>
+      nmap <silent><Bar>      :call ToggleColumn()<CR>
+      nmap <silent><Bar><Bar> :IndentGuidesToggle<CR>:call IndentTheme()<CR>
 
     " ....................................................... Trailing highlight
 
@@ -45,13 +46,10 @@
           match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
           " echo ''
           let g:matchspace = ''
-          IndentGuidesDisable
         else
           match ExtraWhitespace /\s\+$/
           " echo 'List invisibles ON'
           let g:matchspace = '■'
-          IndentGuidesEnable
-          call IndentTheme()
         end
       endfunction
 
