@@ -26,8 +26,8 @@
       source ~/.vim/config/drawing.vim
       source ~/.vim/config/files.vim
       source ~/.vim/config/statusline.vim
-      source ~/.vim/config/views.vim
       source ~/.vim/config/themes.vim
+      source ~/.vim/config/views.vim
 
    " .................................................................. Keyboard
 

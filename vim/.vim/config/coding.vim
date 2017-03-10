@@ -36,8 +36,8 @@
       function! ToggleColumn()
         if g:ruler == 0
           let g:ruler = 1
-            let &colorcolumn = col('.')
-            autocmd coding CursorMoved,CursorMovedI * let &colorcolumn = col('.')
+          let &colorcolumn = col('.')
+          autocmd coding CursorMoved,CursorMovedI * let &colorcolumn = col('.')
         else
           if g:ruler == 1
             let g:ruler = 2

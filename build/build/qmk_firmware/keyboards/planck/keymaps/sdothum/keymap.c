@@ -136,6 +136,7 @@ enum tap_dance {
 };
 
 // modifier keys
+#define Caps    SFT_T (KC_CAPS)
 #define SLeft   S     (KC_LEFT)
 #define Down    ALT_T (KC_DOWN)
 #define SDown   S     (KC_DOWN)
@@ -183,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_COLEMAK] = {
-    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    KC_CAPS, _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
+    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    Caps,    _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
     {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _SGui,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
     {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _CAlt,   KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot },
     {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
@@ -204,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), KC_CAPS, _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), Caps,    _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _SGui,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _CAlt,   S(KC_K), S(KC_H), KC_SLSH, KC_QUES, KC_DQT },
     {_Ctl,    _Gui,    _Alt,    Esc,     ___x___, Tab,     KC_DEL,  KC_MINS, SLeft,   SDown,   SUp,     SRght  },
@@ -221,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), KC_CAPS, _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), Caps,    _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _SGui,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _CAlt,   S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
     {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
