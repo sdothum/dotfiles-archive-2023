@@ -6,6 +6,10 @@
 
 # ....................................................... Window manager restart
 
+# startup applications
+IRC=$HOME/.irc
+THEDARNEDESTTHING=$HOME/.thedarnedestthing
+
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
 
@@ -60,7 +64,7 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 # ................................................................ Terminal apps
 
 [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
-if [ -e $HOME/.irc ] ;then
+if [ -e $IRC ] ;then
   if server ;then
     herbstclient focus_monitor 1
     # wait for window visibility before switching monitors, for urxvt font handling
@@ -75,8 +79,10 @@ fi
 
 # .................................................................. Window apps
 
-server && thedarnedestthing
-server && vimwiki
+if [ -e $THEDARNEDESTTHING ] ;then
+  thedarnedestthing
+  vimwiki
+fi
 switch tag $WEB
 $BROWSER &
 
