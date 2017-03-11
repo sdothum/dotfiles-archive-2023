@@ -109,9 +109,11 @@ div#notify.notify.notify_progress { display: none !important; }
 
 #feeds-holder .dijitTreeRowSelected .counterNode { background: #7FAE00 !important; }
 
-#feeds-holder .dijitTreeExpando {871c1c
+#feeds-holder .dijitTreeExpando {
+  margin: -1px 0 1px 10px;
   opacity: 0 !important;
   margin-right: -16px !important;
+  padding-left: 15px !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando { opacity: .75 !important; }

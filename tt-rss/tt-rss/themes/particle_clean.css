@@ -33,7 +33,7 @@ div#dijit__TreeNode_5 { display: none !important; }
 
 div#dijit__TreeNode_6 { display: none !important; }
 
-.dijitTreeLabel { margin-left: -1px !important; }
+.dijitTreeLabel { margin-left: 6px !important; }
 
 .cdm.expandable .cdmHeader div[style*="vertical-align : middle"] > .dijitCheckBox { display: none !important; }
 
