@@ -7,7 +7,7 @@
 # ....................................................................... Device
 
 usage() {
-  echo "usage: $(basename $0)  ata | label | usb | uuid"
+  echo "usage: $(basename $0) ata | label | usb | uuid"
   exit 1
 }
 

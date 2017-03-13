@@ -7,7 +7,7 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)  backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
+  echo "usage: $(basename $0) backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
   exit 1
 }
 

@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................... dmenu launcher
+
+EDIT='[ edit ]'
+
+# run list format: <command>, e.g. term 'title' program
+pgms=$CONFIG/toggle
+
+pgm=$(previous toggle)
+while pgm=$(rev $pgms | cut -d' ' -f1 | rev | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit
+do
+  case $pgm in
+    "$EDIT") gvim -f $pgms ;;
+
+    *) history toggle $pgm
+       exec toggle $(grep $pgm $pgms) ;;
+  esac
+done
+
+# vim: set ft=sh: #

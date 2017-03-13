@@ -7,7 +7,7 @@
 # ....................................................................... Tablet
 
 usage() {
-  echo "usage: $(basename $0)  DVI-'0 | DVI-'1 | l'eft | r'ight | a'll"
+  echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ight | a'll"
   exit 1
 }
 

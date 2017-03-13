@@ -6,9 +6,9 @@
 
 # ........................................................ Applications keybinds
 
-hc keybind Super-Return              spawn term 'Terminal' FORTUNE VERTICAL
-hc keybind Super-Shift-Return        spawn term 'Terminal' FORTUNE STACK VERTICAL
-hc keybind Super-Control-Return      spawn toggle scratchpad
+hc keybind Super-Return              spawn toggle scratchpad
+hc keybind Super-Shift-Return        spawn term 'Terminal' FORTUNE VERTICAL
+hc keybind Super-Control-Return      spawn term 'Terminal' FORTUNE STACK VERTICAL
 hc keybind Super-space               spawn dmenu run
 hc keybind Super-Shift-space         spawn dmenu manpages
 hc keybind Super-Control-space       spawn dmenu systemd
@@ -35,7 +35,7 @@ hc keybind Super-Shift-equal         spawn toggle plover
 hc keybind Super-BackSpace           spawn toggle dmenu
 if [ $PLANCK ] ;then
   # hc keybind Super-grave           spawn toggle rox
-  hc keybind Super-Control-comma     spawn toggle rox
+  hc keybind Super-comma             spawn toggle rox
   hc keybind Super-apostrophe        spawn toggle conky
   hc keybind Super-period            spawn toggle panel
 else
@@ -44,7 +44,7 @@ else
   hc keybind Super-Shift-backslash   spawn toggle panel
 fi
 hc keybind Super-F1                  spawn dmenu menu
-hc keybind Super-Shift-F1            spawn keymap toggle
+hc keybind Super-Control-F1          spawn keymap toggle
 hc keybind Super-a                   spawn dmenu audio
 hc keybind Super-b                   spawn dmenu history
 hc keybind Super-Shift-b             spawn dmenu bookmarks
@@ -53,27 +53,22 @@ hc keybind Super-d                   spawn dmenu thesaurus
 hc keybind Super-Shift-d             spawn dmenu dict
 hc keybind Super-e                   spawn dmenu scripts
 hc keybind Super-Shift-e             spawn dmenu edit
-hc keybind Super-Control-g           spawn toggle term 'Calendar' wyrd
 hc keybind Super-h                   spawn dmenu shistory
-hc keybind Super-Control-i           spawn toggle term 'IRC' weechat
 hc keybind Super-m                   spawn dmenu abook
-hc keybind Super-Control-m           spawn toggle term 'Mail' alot
 hc keybind Super-n                   spawn dmenu notes
 hc keybind Super-Shift-n             spawn dmenu notes draft
 hc keybind Super-p                   spawn dmenu pass
-hc keybind Super-Shift-p             spawn proof
-hc keybind Super-Control-p           spawn pr eject
-hc keybind Super-q                   spawn clack
+hc keybind Super-Shift-p             spawn hardcopy eject
+hc keybind Super-Control-p           spawn proof toggle
 hc keybind Super-Shift-q             spawn clack swap
-hc keybind Super-Control-q           spawn toggle amphetype
+hc keybind Super-Control-q           spawn clack toggle
 hc keybind Super-s                   spawn dmenu system
-hc keybind Super-t                   spawn dmenu media
-hc keybind Super-w                   spawn focus qutebrowser
-hc keybind Super-Shift-w             spawn focus vimbt
-hc keybind Super-Control-w           spawn dmenu vimbk
+hc keybind Super-t                   spawn dmenu toggle
+hc keybind Super-Shift-t             spawn focus $BROWSER
+hc keybind Super-Control-t           spawn dmenu vimbk
+hc keybind Super-w                   spawn dmenu media
 hc keybind Super-x                   spawn dmenu halt
 hc keybind Super-Shift-x             spawn dmenu screensaver
 hc keybind Super-z                   spawn dmenu alarm
-hc keybind Super-Control-z           spawn toggle simpletimer
 
 # vim: set ft=sh: #

@@ -40,7 +40,7 @@
 #   colorI [color9 mono-2]
 
 usage() {
-  echo "usage: $(basename $0) theme  test | contrast | light | dark  <hex colour>"
+  echo "usage: $(basename $0) theme test | contrast | light | dark <hex colour>"
   exit 1
 }
 

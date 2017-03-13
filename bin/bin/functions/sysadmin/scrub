@@ -7,7 +7,7 @@
 # ................................................................... Filesystem
 
 usage() {
-  echo "usage: $(basename $0)  a'll | c'ancel | I'nitialize | s'tatus  [boot | net | share | backup]"
+  echo "usage: $(basename $0) a'll | c'ancel | I'nitialize | s'tatus [boot | net | share | backup]"
   exit 1
 }
 

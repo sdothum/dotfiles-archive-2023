@@ -22,7 +22,7 @@
 #         CLEAN == remove files
 
 usage() {
-  echo "usage: $(basename $0)  [clean|CLEAN] [file, default=.$(basename $0)]"
+  echo "usage: $(basename $0) [clean|CLEAN] [file, default=.$(basename $0)]"
   exit 1
 }
 

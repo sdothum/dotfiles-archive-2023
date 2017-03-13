@@ -7,7 +7,7 @@
 # ....................................................................... E-mail
 
 usage() {
-  echo "usage: $(basename $0)  'start | d'ump | f'orce | I'nitialize | l'og | R'estore | r'esync | S'ync maildirs | s'ync <folder>"
+  echo "usage: $(basename $0) 'start | d'ump | f'orce | I'nitialize | l'og | R'estore | r'esync | S'ync maildirs | s'ync <folder>"
   exit 1
 }
 

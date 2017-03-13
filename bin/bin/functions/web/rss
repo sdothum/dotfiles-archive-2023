@@ -7,7 +7,7 @@
 # .................................................................. Syndication
 
 usage() {
-  echo "usage: $(basename $0)  'start | I'nitialize | i'mport <opml>"
+  echo "usage: $(basename $0) 'start | I'nitialize | i'mport <opml>"
   exit 1
 }
 

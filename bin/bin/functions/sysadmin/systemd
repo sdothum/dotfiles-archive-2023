@@ -7,7 +7,7 @@
 # ...................................................................... Systemd
 
 usage() {
-  echo "usage: $(basename $0)  status | disable | enable | restart | start | stop | toggle  <service>"
+  echo "usage: $(basename $0) status | disable | enable | restart | start | stop | toggle <service>"
   exit 1
 }
 

@@ -7,7 +7,7 @@
 
 # btrfs filesystem disk free stats
 usage() {
-  echo "usage: conky $(basename $0) fs [ decimal | percent ]"
+  echo "usage: conky $(basename $0) fs [decimal | percent]"
   exit 1
 }
 

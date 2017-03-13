@@ -9,7 +9,7 @@
 # ............................................................... Window manager
 
 usage() {
-  echo "usage: $(basename $0)  'start | 2bwm | awesome | bspwm | budgie | dwm | goomwwm | guile | herbstluftwm | i3 | lxde | lxqt | notion | openbox | ratpoison | spectrwm | stumpwm | subtle | xfce4 | shell | wmii  | wmutils | xmonad"
+  echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | dwm | goomwwm | guile | herbstluftwm | i3 | lxde | lxqt | notion | openbox | ratpoison | spectrwm | stumpwm | subtle | xfce4 | shell | wmii | wmutils | xmonad"
   exit 1
 }
 

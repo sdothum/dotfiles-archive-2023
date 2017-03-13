@@ -7,7 +7,7 @@
 # ......................................................................... Kill
 
 usage() {
-  echo "usage: $(basename $0)  [sig=<signal>] <regex>"
+  echo "usage: $(basename $0) [sig=<signal>] <regex>"
   exit 1
 }
 

@@ -6,16 +6,24 @@
 
 # ........................................................................ Print
 
-# toggle proof, see pr
-proof=$HOME/.proof
+usage() {
+  echo "usage: $(basename $0) [on | off | toggle]"
+  exit 1
+}
 
-if [ -e $proof ] ;then
-  rm -f $proof
-  notify low 'PR Latex' 'Print hardcopy'
-else
-  touch $proof
-  notify low 'PR Latex' 'Display proof'
-fi
+PROOF=${PROOF:-$HOME/.proof}
 
+case $1 in
+  '') [ -e $PROOF ] && notify low 'Hardcopy Latex' 'Display proof' ||
+                       notify low 'Hardcopy Latex' 'Print hardcopy'
+      exit ;;
+
+  on    ) touch $PROOF ;;
+  off   ) rm -f $PROOF ;;
+  toggle) [ -e $PROOF ] && proof off || proof on ;;
+  *     ) usage ;;
+esac
+
+proof
 
 # vim: set ft=sh: #

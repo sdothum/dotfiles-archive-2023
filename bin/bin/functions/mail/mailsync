@@ -7,7 +7,7 @@
 # ...................................................................... Receive
 
 usage() {
-  echo "usage: $(basename $0)  'start | I'nitialize | l'og | t'ag"
+  echo "usage: $(basename $0) 'start | I'nitialize | l'og | t'ag"
   exit 1
 }
 

@@ -6,7 +6,10 @@
 
 # ..................................................................... Keyboard
 
-# Usage: clack [swap]
+usage() {
+  echo "usage: $(basename $0) [on | off | toggle | swap]"
+  exit 1
+}
 
 hint() {
     notify 'Typewriter Sounds' '↑ Super-Shift Minus\n↓ Super-Minus'
@@ -14,19 +17,15 @@ hint() {
     mpg123 -o pulse /usr/share/qwertickle/typewriter-return.mp3 &
 }
 
-if [ -z $1 ] ;then
-  # toggle typewriter sounds!
-  if pidof qwertickle ;then
-    killall qwertickle
-    notify low 'Typewriter Sounds' 'Off'
-  else
-    qwertickle &
-    hint
-  fi
-else
-  # swap enter key sounds (see post_install/qwertickle)
-  sudo swap /usr/share/qwertickle/typewriter-return.mp3 /usr/share/qwertickle/typewriter-return.mp3.swap
-  pidof qwertickle && hint || clicky
-fi
+case $1 in
+  ''    ) ;;
+  on    ) pidof qwertickle || qwertickle & ;;
+  off   ) killall qwertickle ;;
+  toggle) pidof qwertickle && clack off || clack on ;;
+  swap  ) sudo swap /usr/share/qwertickle/typewriter-return.mp3 /usr/share/qwertickle/typewriter-return.mp3.swap ;;
+  *     ) usage ;;
+esac
+
+pidof qwertickle && hint || notify low 'Typewriter Sounds' 'Off'
 
 # vim: set ft=sh: #

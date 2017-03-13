@@ -7,9 +7,11 @@
 # ........................................................................ Print
 
 usage() {
-  echo "usage: $(basename $0)  [proof]  eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps  [<filelist>]"
+  echo "usage: $(basename $0) [proof] eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps [<filelist>]"
   exit 1
 }
+
+PROOF=${PROOF:-$HOME/.proof}
 
 # raspberry pi could not print using /tmp (?)
 # TMP=$HOME/tmp
@@ -26,7 +28,7 @@ fold=80
 if [ "$1" = proof ] ;then
   proof=true
   shift
-elif [ -e $HOME/.proof ] ;then
+elif [ -e $PROOF ] ;then
   proof=true
 else
   lpstat -p $PRINTER >/dev/null 2>&1 || proof=true

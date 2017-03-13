@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: $(basename $0)  [time=<seconds> | <seconds> | console | low | normal | critical]* \"<summary>\" [\"<body>\"]"
+  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | low | normal | critical]* \"<summary>\" [\"<body>\"]"
   exit 1
 }
 

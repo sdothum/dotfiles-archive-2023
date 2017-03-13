@@ -7,7 +7,7 @@
 # ..................................................................... Password
 
 usage() {
-  echo "usage: $(basename $0)  <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | l'ist | m'v <name> <'name> | R'm <name>"
+  echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | l'ist | m'v <name> <'name> | R'm <name>"
   exit 1
 }
 

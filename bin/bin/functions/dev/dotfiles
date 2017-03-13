@@ -9,7 +9,7 @@
 # .......................................................................... Git
 
 usage() {
-  echo "usage: $(basename $0)  [<stowdir>..] | add <path/filespec>.. | comment [<comment>] | edit | ignore | init | list | undo | rm <dir>"
+  echo "usage: $(basename $0) [<stowdir>..] | add <path/filespec>.. | comment [<comment>] | edit | ignore | init | list | undo | rm <dir>"
   exit 1
 }
 

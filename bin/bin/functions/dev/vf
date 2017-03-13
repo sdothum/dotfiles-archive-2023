@@ -7,7 +7,7 @@
 # ....................................................................... Editor
 
 usage() {
-  echo "usage: $(basename $0)  <maxdepth> | <name>"
+  echo "usage: $(basename $0) <maxdepth> | <name>"
   exit 1
 }
 

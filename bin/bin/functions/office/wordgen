@@ -7,7 +7,7 @@
 # ........................................................ Random word generator
 
 usage() {
-  echo "usage: $(basename $0)  [option=..]* [<sentence>*]"
+  echo "usage: $(basename $0) [option=..]* [<sentence>*]"
   echo "       options: wordlen=<length>   default '99'"
   echo "                size=<count>,      default '30000'"
   echo "                punctuation=mixed, default 'simple'"
