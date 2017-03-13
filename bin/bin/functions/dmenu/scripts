@@ -12,6 +12,7 @@ filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
 files() {
   ( find -L $HOME/bin -type f
     find -L $HOME/build/archlinux -type f
+    find -L $HOME/.config/fish -type f
     find -L $HOME/.config/herbstluftwm -type f
   ) | egrep -v "$filter"
 }
@@ -22,6 +23,7 @@ do
   file=$(files |
         sed -e "s|$HOME/bin/|bin/|" \
             -e 's|.*/archlinux/|archlinux/|' \
+            -e 's|.*/fish/|fish/|' \
             -e 's|.*/herbstluftwm/|herbstluftwm/|' |
         sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
         sort |

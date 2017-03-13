@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .............................................................. Directory cache
+
+# Usage: fcache [<dir>)
+
+# speed up fuzzy jump searches (especially arm), see shell/j j.fish
+cache=/tmp/fcache$(echo $1 | tr '/' ':')
+if [ -e $cache ] ;then
+  cat $cache
+else
+  [ -L $1 ] && link='-L'
+  pgrep -f "find $link" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$cache
+  find $link $1 -type d 2>/dev/null | filter
+fi
+
+# vim: set ft=sh: #

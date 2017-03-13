@@ -45,7 +45,7 @@ else
   hc keybind Super-Shift-backslash  spawn toggle panel
 fi
 hc keybind Super-F1                 spawn keymap toggle
-hc keybind Super-a                  spawn dmenu audio
+hc keybind Super-a                  spawn dmenu abook
 hc keybind Super-b                  spawn dmenu history
 hc keybind Super-Shift-b            spawn dmenu bookmarks
 hc keybind Super-c                  spawn dmenu clipboard
@@ -54,7 +54,7 @@ hc keybind Super-Shift-d            spawn dmenu dict
 hc keybind Super-e                  spawn dmenu scripts
 hc keybind Super-Shift-e            spawn dmenu edit
 hc keybind Super-h                  spawn dmenu shistory
-hc keybind Super-m                  spawn dmenu abook
+hc keybind Super-m                  spawn dmenu audio
 hc keybind Super-n                  spawn dmenu notes
 hc keybind Super-Shift-n            spawn dmenu notes draft
 hc keybind Super-p                  spawn dmenu pass
