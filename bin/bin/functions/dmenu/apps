@@ -8,15 +8,15 @@
 EDIT='[ edit ]'
 
 # run list format: <command>, e.g. term 'title' program
-pgms=$CONFIG/toggle
+pgms=$CONFIG/apps
 
-pgm=$(previous toggle)
+pgm=$(previous apps)
 while pgm=$(rev $pgms | cut -d' ' -f1 | rev | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit
 do
   case $pgm in
     "$EDIT") gvim -f $pgms ;;
 
-    *) history toggle $pgm
+    *) history apps $pgm
        exec toggle $(grep $pgm $pgms) ;;
   esac
 done
