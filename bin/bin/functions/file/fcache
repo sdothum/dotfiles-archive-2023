@@ -12,6 +12,12 @@ usage() {
   exit 1
 }
 
+# Note: non-directory caches automatically update their associated directory caches via stest
+#       but directory caches (used in fuzzy jumping) require manual updating, as required,
+#       to avoid triggering unnecessary file scans (directory trees being restructured far
+#       less frequently than regular file creation/deletion)
+
+
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
@@ -38,7 +44,7 @@ if [ -e $cache ] && [ -z $refresh ] ;then
   [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || exec cat $cache
 fi
 
-[ $refresh ] && notify "$1" 'Refreshing fcache'
+# [ $refresh ] && notify "$1" 'Refreshing fcache'
 [ -L $1 ] && link='-L'
 pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$dcache
 pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache
