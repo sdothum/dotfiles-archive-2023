@@ -14,9 +14,7 @@
 EDIT='[ edit ]'
 
 # non-numeric character escapes undesired dmenu match
-duration() {
-  echo $1 | sed -re 's/^[^0-9]//' -e 's/([0-9])$/\1m/'
-}
+duration() { echo $1 | sed -re 's/^[^0-9]//' -e 's/([0-9])$/\1m/'; }
 
 case $# in
   1) delay=$(duration $1)

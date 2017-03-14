@@ -23,13 +23,9 @@ root() {
 # rebuild swatches
 [ $1 ] && root
 
-themes() {
-  find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'
-}
+themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
 
-hex() {
-  echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'
-}
+hex() { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'; }
 
 while color=$( ( [ "$menu" ] && ( echo | history root | sed "1i$menu" ) ||
                                 ( echo | history root | sed "1i$VIEWER\n$UPDATE" ) ) |

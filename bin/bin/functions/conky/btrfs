@@ -13,17 +13,11 @@ usage() {
 
 [ $1 ] || usage
 
-stat() {
-  sudo /usr/bin/btrfs filesystem usage -g $1 | grep "^ *$2" | cut -d: -f2 | cut -dG -f1
-}
+stat() { sudo /usr/bin/btrfs filesystem usage -g $1 | grep "^ *$2" | cut -d: -f2 | cut -dG -f1; }
 
-decimal() {
-  echo "$1 .05 + 1 k 1 / p" | dc
-}
+decimal() { echo "$1 .05 + 1 k 1 / p" | dc; }
 
-percent() {
-  echo "$1 .5 + 0 k 1 / p" | dc
-}
+percent() { echo "$1 .5 + 0 k 1 / p" | dc; }
 
 used=$(stat $1 'Used:')
 

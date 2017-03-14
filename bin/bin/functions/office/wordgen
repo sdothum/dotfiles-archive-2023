@@ -88,9 +88,7 @@ typefile="$typedir/$(cat $corpus.corpus | wc -l)-$output.txt"
 # .................................................................... Sentences
 
 # usage: random <modulo> <match> <unmatch>
-random() {
-  od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3"
-}
+random() { od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3"; }
 
 # proper case sentences
 wordcase() {

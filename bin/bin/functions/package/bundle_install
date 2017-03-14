@@ -30,9 +30,7 @@ if [ $1 = check ] ;then
   gems=$(gem list | cut -d' ' -f1)
 fi
 
-rule() {
-  echo "$@" | sed -e 's/\[//' -e 's/\]//' || echo true
-}
+rule() { echo "$@" | sed -e 's/\[//' -e 's/\]//' || echo true; }
 
 for i in $@
 do

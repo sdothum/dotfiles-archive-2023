@@ -99,9 +99,7 @@ scheme() {
   [ $1 = paper ] && paper || ink
 }
 
-monochromatic() {
-  echo "$hex" | grep Monochromatic | cut -d/ -f$1
-}
+monochromatic() { echo "$hex" | grep Monochromatic | cut -d/ -f$1; }
 
 # see conky palette
 hexgen() {
@@ -122,9 +120,7 @@ hexgen() {
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
 
-complimentary () {
-  conky palette $1 | grep -a Complementary | head -1 | cut -d/ -f6
-}
+complimentary () { conky palette $1 | grep -a Complementary | head -1 | cut -d/ -f6; }
 
 # ................................................................... Conky text
 

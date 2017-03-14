@@ -29,13 +29,9 @@ stop() {
   pkill -TERM -f 'mpv --no-cache --quiet' >/dev/null 2>&1
 }
 
-station() {
-  [ -e $RADIO ] && cat $RADIO || echo 'Radio'
-}
+station() { [ -e $RADIO ] && cat $RADIO || echo 'Radio'; }
 
-url() {
-  grep "$@" $stations | sed 's/.*, *//'
-}
+url() { grep "$@" $stations | sed 's/.*, *//'; }
 
 while station=$(playlist | sed 's/,.*//' | rmenu "$(station)" -no-custom) || exit
 do

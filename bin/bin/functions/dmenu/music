@@ -17,9 +17,7 @@ LIBRARY='[ library ]'
 # ...................................................................... Library
 
 # library listings
-catlg() {
-  mpc list $1 | sort -n
-}
+catlg() { mpc list $1 | sort -n; }
 
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
@@ -54,9 +52,7 @@ albums() {
 # ............................................................. Playback control
 
 # playlist
-current() {
-  mpc current
-}
+current() { mpc current; }
 
 next() {
   track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)")
@@ -68,9 +64,7 @@ previous() {
   [ "$track" ] && echo "  $track"
 }
 
-tracks() {
-  echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'
-}
+tracks() { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'; }
 
 info() {
   stats=$(mpc status | sed -n '2p')
@@ -79,9 +73,7 @@ info() {
 }
 
 # toggle state
-status() {
-  mpc status | grep -q "$@" && echo off || echo on
-}
+status() { mpc status | grep -q "$@" && echo off || echo on; }
 
 ncmpcpp() {
   pidof ncmpcpp >/dev/null || term 'Music' ncmpcpp

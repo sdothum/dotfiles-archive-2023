@@ -52,23 +52,17 @@ playlist() {
 }
 
 # playlist order
-sortlist() {
-  [ $1 ] && echo 'sort by name' || echo 'sort by date'
-}
+sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date'; }
 
 # .......................................................... Most recent history
 
 # usage: previous <function>, refer to history usage in dmenu functions
-previous() {
-  echo | history $1 | head -1
-}
+previous() { echo | history $1 | head -1; }
 
 # ......................................................................... Main
 
 # allow subword match input (by inserting single quote symbol into input)
-unquote() {
-  echo $@ | sed "s/'//g"
-}
+unquote() { echo $@ | sed "s/'//g"; }
 
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then
