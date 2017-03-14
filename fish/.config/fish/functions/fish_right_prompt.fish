@@ -157,7 +157,8 @@ function fish_right_prompt --description 'Write out the right prompt'
 
   test 0$POSTFIX -eq 1
     or timer
-  gitstatus
+  cpu arm
+    or gitstatus
   remote
   folder
   test 0$POSTFIX -eq 1
