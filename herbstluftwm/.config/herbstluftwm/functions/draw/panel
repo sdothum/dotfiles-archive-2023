@@ -108,9 +108,7 @@ fi
 # ................................................................... Tag status
 
 # eye candy tag icons
-tag_symbol() {
-  [ $visible ] && tag=$OCCUPIED || tag=$FREE
-}
+tag_symbol() { [ $visible ] && tag=$OCCUPIED || tag=$FREE; }
 
 desktops() {
   active=$(query tag)

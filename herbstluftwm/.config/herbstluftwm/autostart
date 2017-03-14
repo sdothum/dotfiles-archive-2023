@@ -6,9 +6,7 @@
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # chain herbstclient commands (note: keybind chains use ".")
-hc() {
-  cmds="$cmds , $@"
-}
+hc() { cmds="$cmds , $@"; }
 
 dohc() {
   if [ $TRACE ]; then

@@ -40,9 +40,7 @@ xy 0 $(query display)
 is multihead && xy 1 $(query display secondary)
 
 # XxY+X'+Y' monitor configuration
-monitor() {
-  herbstclient list_monitors | grep "^$1:" | cut -d' ' -f2
-}
+monitor() { herbstclient list_monitors | grep "^$1:" | cut -d' ' -f2; }
 
 # currently defined monitors
 PRIMARY=$(monitor 0)
