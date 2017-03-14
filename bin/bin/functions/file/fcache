@@ -7,26 +7,41 @@
 # ................................................................... Find cache
 
 usage() {
-  echo "usage: $(basename $0) [type] [<dir>]"
+  echo "usage: $(basename $0) [type] <dir>"
+  echo "usage: $(basename $0) - <dir>, force directory cache update"
   exit 1
 }
+
+CACHEDIR=${CACHEDIR:-$HOME/.cache}
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in
   b | c | d | f | l | p | s) type=$1
                              shift ;;
 
+  '-') refresh=true
+       type=d
+       shift ;;
+
   *) [ $# -eq 1 ] || usage
-     type=f ;;
+     type=d ;;
 esac
 
-cache=/tmp/fcache:$type$(echo $1 | tr '/' ':')
-if [ -e $cache ] ;then
-  cat $cache
-else
-  [ -L $1 ] && link='-L'
-  pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache
-  find $link $1 -type $type 2>/dev/null | filter
+cname() { echo $1 | tr '/' ':'; }
+
+cache=$CACHEDIR/fcache:$type$(cname $1)
+dcache=$CACHEDIR/fcache:d$(cname $1)
+
+# if unchanged files in non-directory search, return cache
+# note: always returns directory cache
+if [ -e $cache ] && [ -z $refresh ] ;then
+  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || exec cat $cache
 fi
+
+[ $refresh ] && notify "$1" 'Refreshing fcache'
+[ -L $1 ] && link='-L'
+pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$dcache
+pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache
+find $link $1 -type $type 2>/dev/null | filter
 
 # vim: set ft=sh: #

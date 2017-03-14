@@ -6,18 +6,26 @@
 
 # ................................................................... Fuzzy jump
 
+# Usage: j [-] [<dir>]
+
+# refresh directory cache, see fcache
+if [ "$1" = '-' ] ;then
+  refresh=$1
+  shift
+fi
+
 # fish shell ignores non-fish cd's, see j.fish instead
 case $# in
-  0) pwd | grep -q $HOME && dir=$(fcache d $HOME | fzf) ||
-                            dir=$(fcache d $PWD | fzf) ;;
+  0) pwd | grep -q $HOME && dir=$(fcache $refresh $HOME | fzf) ||
+                            dir=$(fcache $refresh $PWD | fzf) ;;
 
-  1) [ -d $1 ] && dir=$(fcache d $1 | fzf) ||
-                  dir=$(fcache d $HOME | fzf -q $1) ;;
+  1) [ -d $1 ] && dir=$(fcache $refresh $1 | fzf) ||
+                  dir=$(fcache $refresh $HOME | fzf -q $1) ;;
 
-  2) [ -d $1 ] && dir=$(fcache d $1 | fzf -q $2) ||
-                  dir=$(fcache d $HOME | egrep "$1" | fzf -q $2) ;;
+  2) [ -d $1 ] && dir=$(fcache $refresh $1 | fzf -q $2) ||
+                  dir=$(fcache $refresh $HOME | egrep "$1" | fzf -q $2) ;;
 esac
 
-cd $dir
+[ $dir ] && cd $dir
 
 # vim: set ft=sh: #

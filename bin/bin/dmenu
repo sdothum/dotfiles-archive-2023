@@ -12,7 +12,6 @@
 #        source $HOME/bin/dmenu
 #        POSIX standard for use with dash shell
 
-CACHEDIR=${XDG_CACHE_HOME:-$HOME/.cache}
 CONFIG=${0%/dmenu}/functions/dmenu/.config
 export HISTORY=$HOME/bin/functions/dmenu/.history
 # currently playing, see music, radia

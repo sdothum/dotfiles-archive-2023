@@ -23,6 +23,7 @@ set -x XTERM_SHELL /usr/bin/fish
 set -x KEYTIMEOUT 1
 
 # paths
+set -x CACHEDIR $HOME/.cache
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
 echo $PATH | grep -q "$HOME/.local/bin"
   or set -x PATH $PATH ~/.local/bin ~/.cabal/bin ~/.gem/ruby/(rubyver)/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null

@@ -10,10 +10,10 @@
 filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
 
 files() {
-  fcache $HOME/bin
-  fcache $HOME/build/archlinux
-  fcache $HOME/.config/fish
-  fcache $HOME/.config/herbstluftwm
+  fcache f $HOME/bin
+  fcache f $HOME/build/archlinux
+  fcache f $HOME/.config/fish
+  fcache f $HOME/.config/herbstluftwm
 }
 
 # list of user scripts and functions
