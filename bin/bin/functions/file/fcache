@@ -4,18 +4,29 @@
 # Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .............................................................. Directory cache
+# ................................................................... Find cache
 
-# Usage: fcache [<dir>)
+usage() {
+  echo "usage: $(basename $0) [type] [<dir>]"
+  exit 1
+}
 
-# speed up fuzzy jump searches (especially arm), see shell/j j.fish
-cache=/tmp/fcache$(echo $1 | tr '/' ':')
+# speed up fuzzy searches (especially arm), see shell/j j.fish
+case $1 in
+  b | c | d | f | l | p | s) type=$1
+                             shift ;;
+
+  *) [ $# -eq 1 ] || usage
+     type=f ;;
+esac
+
+cache=/tmp/fcache:$type$(echo $1 | tr '/' ':')
 if [ -e $cache ] ;then
   cat $cache
 else
   [ -L $1 ] && link='-L'
-  pgrep -f "find $link" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$cache
-  find $link $1 -type d 2>/dev/null | filter
+  pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache
+  find $link $1 -type $type 2>/dev/null | filter
 fi
 
 # vim: set ft=sh: #

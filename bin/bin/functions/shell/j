@@ -8,14 +8,14 @@
 
 # fish shell ignores non-fish cd's, see j.fish instead
 case $# in
-  0) pwd | grep -q $HOME && dir=$(fcache $HOME | fzf) ||
-                            dir=$(fcache $PWD | fzf) ;;
+  0) pwd | grep -q $HOME && dir=$(fcache d $HOME | fzf) ||
+                            dir=$(fcache d $PWD | fzf) ;;
 
-  1) [ -d $1 ] && dir=$(fcache $1 | fzf) ||
-                  dir=$(fcache $HOME | fzf -q $1) ;;
+  1) [ -d $1 ] && dir=$(fcache d $1 | fzf) ||
+                  dir=$(fcache d $HOME | fzf -q $1) ;;
 
-  2) [ -d $1 ] && dir=$(fcache $1 | fzf -q $2) ||
-                  dir=$(fcache $HOME | egrep "$1" | fzf -q $2) ;;
+  2) [ -d $1 ] && dir=$(fcache d $1 | fzf -q $2) ||
+                  dir=$(fcache d $HOME | egrep "$1" | fzf -q $2) ;;
 esac
 
 cd $dir

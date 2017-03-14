@@ -10,11 +10,10 @@
 filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
 
 files() {
-  ( find -L $HOME/bin -type f
-    find -L $HOME/build/archlinux -type f
-    find -L $HOME/.config/fish -type f
-    find -L $HOME/.config/herbstluftwm -type f
-  ) | egrep -v "$filter"
+  fcache $HOME/bin
+  fcache $HOME/build/archlinux
+  fcache $HOME/.config/fish
+  fcache $HOME/.config/herbstluftwm
 }
 
 # list of user scripts and functions
