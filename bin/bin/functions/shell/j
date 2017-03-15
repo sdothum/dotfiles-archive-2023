@@ -6,7 +6,7 @@
 
 # ................................................................... Fuzzy jump
 
-# Usage: j [-] [<dir>]
+# Usage: j [-] [<dir>] [<pattern>]
 
 # refresh directory cache, see fcache
 if [ "$1" = '-' ] ;then
@@ -14,7 +14,7 @@ if [ "$1" = '-' ] ;then
   shift
 fi
 
-# fish shell ignores non-fish cd's, see j.fish instead
+# fish shell ignores non-fish cd's, see j.fish
 case $# in
   0) pwd | grep -q $HOME && dir=$(fcache $refresh $HOME | fzf) ||
                             dir=$(fcache $refresh $PWD | fzf) ;;

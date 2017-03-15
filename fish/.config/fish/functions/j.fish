@@ -1,4 +1,4 @@
-function j --description 'fuzzy jump'
+function j --description 'usage: j [-] [<dir>] [<pattern>]'
   if test (count $argv) -gt 0
     if test $argv[1] = '-'
       set refresh $argv[1]

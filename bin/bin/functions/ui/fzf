@@ -9,7 +9,7 @@
 # see bin/dmenu
 [ $NCURSES ] || reverse=--reverse
 
-export FZF_DEFAULT_OPTS="--cycle $reverse --border --prompt='    ─────  ' --ansi --color=dark,hl:226,fg+:255,bg+:234,bg:234,marker:160,prompt:027"
+export FZF_DEFAULT_OPTS="--cycle $reverse --border --prompt='    ─────  ' --ansi --color=dark,hl:226,hl+:226,fg+:051,bg+:234,bg:234,marker:160,prompt:027"
 
 # fzf wrapper
 eval /usr/bin/fzf $@

@@ -133,6 +133,7 @@ enum tap_dance {
  ,_LCBR
  ,_GT
  ,_QUOT
+ ,_CAPS
 };
 
 // modifier keys
@@ -151,6 +152,7 @@ enum tap_dance {
 #define __Lbrc  TD (_LBRC)
 #define __Gt    TD (_GT)
 #define __Quot  TD (_QUOT)
+#define __Caps  TD (_CAPS)
 
 // layer keys
 #define SHIFT   MO (_SHIFT)
@@ -184,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_COLEMAK] = {
-    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    Caps,    _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
+    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    __Caps,  _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
     {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _CAlt,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
     {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _SGui,   KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot },
     {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
@@ -205,7 +207,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), Caps,    _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), __Caps,  _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _CAlt,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _SGui,   S(KC_K), S(KC_H), KC_SLSH, KC_QUES, KC_DQT },
     {_Ctl,    _Gui,    _Alt,    Esc,     ___x___, Tab,     KC_DEL,  KC_MINS, SLeft,   SDown,   SUp,     SRght  },
@@ -222,7 +224,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), Caps,    _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), __Caps,  _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _CAlt,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _SGui,   S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
     {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
@@ -536,12 +538,24 @@ void quote(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void caps(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code   (KC_CAPS);
+    unregister_code (KC_CAPS);
+  } else {
+    set_oneshot_mods (MOD_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren)
  ,[_LBRC] = ACTION_TAP_DANCE_FN (brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN (curly)
  ,[_GT]   = ACTION_TAP_DANCE_FN (angle)
  ,[_QUOT] = ACTION_TAP_DANCE_FN (quote)
+ ,[_CAPS] = ACTION_TAP_DANCE_FN (caps)
 };
 
 void persistant_default_layer_set(uint16_t default_layer)

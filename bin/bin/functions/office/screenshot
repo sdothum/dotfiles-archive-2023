@@ -28,6 +28,7 @@ else
 fi
 
 png=$(mktemp).png
+trap "rm -f $png" EXIT
 sleep $delay && /usr/bin/maim $opts $png
 mv -v $png $target
 

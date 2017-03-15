@@ -29,6 +29,7 @@ else
 fi
 
 mkv=$(mktemp).mkv
+trap "rm -f $mkv" EXIT
 sleep $delay
 echo
 echo "${_YELLOW_}━━━━━━━━━  Press [q] to stop recording  ━━━━━━━━━${_nocolor_}"

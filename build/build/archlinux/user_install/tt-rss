@@ -20,7 +20,7 @@ original /srv/http/tt-rss/include/functions.php
 sudo sed -i -e 's/"Special"/"Feeds"/' \
          -e 's/All articles/● All/' \
          -e 's/Fresh articles/● Fresh/' \
-         -e 's/Starred articles/● Bookmark/' \
+         -e 's/Starred articles/● Pinned/' \
          -e 's/Published articles/● Published/' \
          -e 's/Archived articles/● Archived/' \
          -e 's/Recently read/● Read/' \

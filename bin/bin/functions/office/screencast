@@ -38,6 +38,7 @@ if server ;then
   esac
 
   webm=$(mktemp).webm
+  trap "rm -f $webm" EXIT
   exec -a $pidname ffmpeg -f x11grab \
                           -s $xy -an \
                           -r $framerate \
@@ -55,8 +56,6 @@ if server ;then
   if if-yes 'stop recording and save' ;then
     kill -TERM $(pidof -s $pidname)
     mv -v $webm $target
-  else
-    rm -f $webm
   fi
 fi
 

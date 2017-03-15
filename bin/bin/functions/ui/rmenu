@@ -109,11 +109,11 @@ if [ $display ] ;then
   if [ -e $DMENU ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
+    trap "rm -f $stdin $stdout" EXIT
     sed "s/^/$indent/" >$stdin
     # escape movie title (year) parentheses
     term "$(escape $title)" STACK WAIT SHELL "cat $stdin | fzf --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(cat $stdout)
-    rm $stdin $stdout
     test -n "$input"
   else
     input=$(sed "s/^/$indent/" |

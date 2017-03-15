@@ -7,6 +7,7 @@
 
 # update .pacnew system configs
 copy=$(mktemp)
+trap "rm -f $copy" EXIT
 while :
 do
   file=$(sudo find /etc -name '*.pacnew' | sed -e 's|^/etc/||' -e 's/.pacnew$//')
@@ -55,6 +56,5 @@ do
     break
   fi
 done
-rm -f $copy
 
 # vim: set ft=sh: #

@@ -15,12 +15,12 @@ histsize=1000
 # see dhistory for external browser history access
 prune_history() {
   work=$(mktemp)
+  trap "rm -f $work" EXIT
   [ -e $histfile.vimb ] || touch $histfile.vimb
   # remove duplicate records
   cat $histfile.vimb $histfile | perl -ne 'print unless $seen{$_}++' >$work
   head -$(( $(cat $work | wc -l) - $histsize )) $work >$histfile.vimb
   tail -$histsize $work >$histfile
-  rm -f $work
 }
 
 vimbt() {
