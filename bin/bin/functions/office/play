@@ -9,6 +9,8 @@
 # Usage: play <url> | <path> [<title>]
 
 youtube=/tmp/youtube-dl
+# cleanup accidental screenshots and youtube-dl
+trap "rm -f $HOME/mpv-shot*.jpg $youtube.*" EXIT
 
 blackboard
 toggle compton off
@@ -17,7 +19,6 @@ toggle compton off
 if cpu arm; then
   # youtube playback on raspberry pi architecture is unsupported
   if echo $1 | grep -q http ;then
-    rm -f ${youtube:-/tmp/youtube-dl}.*
     term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && youtube-dl -o $youtube "$1""
     pwait "$youtube"
     title=$youtube
@@ -40,8 +41,6 @@ else
   notify "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\nv/j  Subtitles'
   focus frame
   mpv --vf=eq "$1" >/dev/null 2>&1
-  # delete accidental screenshots
-  rm -f $HOME/mpv-shot*.jpg
 fi
 # refresh panel title on close
 focus window

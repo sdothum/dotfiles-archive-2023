@@ -18,8 +18,11 @@ current=$HOME/stow
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
 
-if ! if-no "sync $dotfiles repo" ;then
-  rm -rf $dotfiles
+if [ -d $dotfiles ] ;then
+  cd $dotfiles
+  if-no "sync $dotfiles repo" || git pull
+  cd -
+else
   git clone git@github.com:sdothum/dotfiles.git $dotfiles
 fi
 

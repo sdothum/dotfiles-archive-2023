@@ -132,7 +132,7 @@ wallpaper() {
   [ -L $WALLPAPER ] && exists $WALLPAPER ||
                        ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   rm -f $BLANK
-  rm -f $THEME 2>/dev/null
+  rm -f $THEME
   herbstclient attr theme.normal.color $NORMAL
 }
 
@@ -149,7 +149,7 @@ select_wallpaper() {
 shuffle() {
   ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
   rm -f $BLANK
-  rm -f $THEME 2>/dev/null
+  rm -f $THEME
 }
 
 # ...................................................................... Setroot
@@ -168,7 +168,7 @@ case $1 in
         swatch $color
         notify low 'Background Color' "$color saved" ;;
 
-  select) rm -f $SHUFFLE 2>/dev/null
+  select) rm -f $SHUFFLE
           select_wallpaper
           echo wallpaper >$SETROOT ;;
 

@@ -20,6 +20,7 @@ do
   esac
 done
 NOTES=/tmp/dmenu:notes:$ext
+trap "rm -f $NOTES" EXIT
 
 # housekeeping
 [ $ext ] || ext=note

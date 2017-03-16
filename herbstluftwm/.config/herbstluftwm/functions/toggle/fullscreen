@@ -30,8 +30,8 @@ herbstclient chain . fullscreen toggle . unlock
 
 tag=$(herbstclient attr monitors.focus.tag)
 # clear any previously set monocle state (on other monitor or conky)
-is fullscreen && rm -f $MONOCLE:$tag >/dev/null ||
-                 rm -f $MONOCLE:conky >/dev/null
+is fullscreen && rm -f $MONOCLE:$tag ||
+                 rm -f $MONOCLE:conky
 touch_panel
 
 # vim: set ft=sh: #

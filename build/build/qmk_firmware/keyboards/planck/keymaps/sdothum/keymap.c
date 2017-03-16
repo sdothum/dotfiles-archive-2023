@@ -137,7 +137,6 @@ enum tap_dance {
 };
 
 // modifier keys
-#define Caps    SFT_T (KC_CAPS)
 #define SLeft   S     (KC_LEFT)
 #define Down    ALT_T (KC_DOWN)
 #define SDown   S     (KC_DOWN)

@@ -15,7 +15,7 @@ italic='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
 cd /net/depot
 if [ -d Iosevka ] ;then
   cd Iosevka
-  rm -rf build dist 2>/dev/null
+  rm -rf build dist
   cp parameters.toml.original parameters.toml
   git pull origin master
 else

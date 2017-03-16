@@ -22,8 +22,8 @@ RUBY_HEAP_FREE_MIN=100000
 
 killsup() {
   kill -TERM $(pgrep -cx /usr/bin/sup) 2>/dev/null
-  sudo rm $HOME/.sup/lock 2>/dev/null
-  sudo rm $HOME/.sup/xapian/flintlock 2>/dev/null
+  sudo rm $HOME/.sup/lock
+  sudo rm $HOME/.sup/xapian/flintlock
 }
 
 case $1 in
@@ -55,7 +55,7 @@ case $1 in
 
   I*) if if-yes 'initialize xapian database' ;then
         killsup
-        sudo rm -r $HOME/.sup/xapian 2>/dev/null
+        sudo rm -r $HOME/.sup/xapian
       fi
       sup ;;
 

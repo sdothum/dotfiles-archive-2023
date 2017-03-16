@@ -58,7 +58,7 @@ if is primary ;then
     # allow toggling fullscreen (width) and monocle frame, else just max current window
     restore mono
     herbstclient chain . set_layout max . jumpto $winid
-    rm -f $FULLSCREEN:$tag 2>/dev/null
+    rm -f $FULLSCREEN:$tag
   else
     # allow transitioning to full fullscreen, see draw monitor
     if ! is fullscreen ;then

@@ -9,6 +9,7 @@
 truncate=320
 # quick security pass
 clipboard=/tmp/dmenu:clipboard
+trap "rm -f $clipboard" EXIT
 
 clipboard() {
   # trim multiline content (corrupts list format otherwise)
@@ -39,6 +40,5 @@ if [ "$clip" ] ;then
   # gpaste add removes duplicate entries and pushes stack :-)
   clipboard "$(gpaste-client get $clip)"
 fi
-rm -f $clipboard
 
 # vim: set ft=sh: #

@@ -55,7 +55,7 @@ fi
 
 # prune snapper logs
 rollback=$(( $(sudo grep 'NUMBER_LIMIT=' /etc/snapper/configs/root | cut -d\" -f2) / 2 ))
-sudo rm -v $(ls -1 /var/local/log/pacupg/*.log | head -n -$rollback) 2>/dev/null
+sudo rm -v $(ls -1 /var/local/log/pacupg/*.log | head -n -$rollback)
 # clear status
 exit 0
 

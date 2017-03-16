@@ -18,8 +18,8 @@ EDIT='[ manage       ]'
 # video library
 library=${LIBRARY:-/net/media/videos/${1:-series}}
 mytitles=$library/.mytitles
-sudo find $library -maxdepth 1 -type f -user sonarr -exec chmod -R 755 {} \;
-sudo find $library -maxdepth 1 -type f -user sonarr -exec chown -R shum:users {} \;
+sudo find $library -maxdepth 2 -type d -user sonarr -exec chmod -R 755 {} \;
+sudo find $library -maxdepth 2 -type d -user sonarr -exec chown -R shum:users {} \;
 # clean up titles
 mytitles $library >>$mytitles
 

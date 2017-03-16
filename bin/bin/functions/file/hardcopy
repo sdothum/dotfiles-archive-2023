@@ -177,7 +177,7 @@ print() {
            exec hardcopy "${1%.pdf}.ps" ;;
 
     *) output="$TMP/$(basename $1).pdf"
-       rm -f "$output" 2>&1
+       trap "rm -f $output" EXIT
        format "$1" ;;
   esac
   if [ $proof ] ;then

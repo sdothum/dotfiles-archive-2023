@@ -8,6 +8,8 @@
 
 fortune=/usr/bin/fortune
 user=shum
+# see (herbstluftwm) term
+trap "rm -f $FORTUNE:term" EXIT
 
 # console login check
 if console ;then
@@ -22,8 +24,6 @@ elif [ -e $FORTUNE:term ] ;then
     # one fortune is enough
     [ -e $HOME/.fortune ] && rm -f $FORTUNE || touch $FORTUNE
   fi
-  # see (herbstluftwm) term
-  rm -f $FORTUNE:term 2>/dev/null
 fi
 
 # vim: set ft=sh: #
