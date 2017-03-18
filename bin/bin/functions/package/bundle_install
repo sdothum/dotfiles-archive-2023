@@ -15,9 +15,10 @@
 #         - package [condition] (to remove)
 #         ? package [condition] (confirm, see pm_install)
 #           package [condition] (noconfirm)
-#         @ aur [condition]     (aur makepkg)
-#         a arm [condition]     (aur makepkg for raspberry pi)
-#         g gem [condition]
+#         @ aur     [condition] (aur makepkg)
+#         a arm     [condition] (aur makepkg for raspberry pi)
+#         g gem     [condition]
+#         m make    [condition] (make_install script)
 #         ! command [options]   (execute)
 #
 #         where, condition = [command] or [[[expression]]] as short form for test
@@ -59,7 +60,7 @@ do
       '!') [ $check ] || eval $package $condition
            continue ;;
 
-      '-' | '?' | '@' | 'a' | 'g')
+      '-' | '?' | '@' | a | g | m)
           condition=$(rule "$condition") ;;
 
       *) set -- $package $condition
@@ -88,8 +89,9 @@ do
 
       '?') pm_install S $package ;;
       '@') aur_install $package ;;
-      'a') arm_install $package ;;
-      'g') gem_install $package ;;
+      a  ) arm_install $package ;;
+      g  ) gem_install $package ;;
+      m  ) make_install $package ;;
       *  ) pm_install $package ;;
     esac
   done 3< $i

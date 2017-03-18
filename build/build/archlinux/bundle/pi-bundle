@@ -247,7 +247,9 @@ g term-ansicolor
 # ▔▔▔▔▔▔▔▔
 # chromium
   qutebrowser
-  tabbed
+  surf
+# tabbed
+m tabbed
 " add armv7h to arch in pkgbuild
 ? vimb
   w3m

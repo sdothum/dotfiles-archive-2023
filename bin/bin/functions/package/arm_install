@@ -6,7 +6,8 @@
 
 # ............................................................ AUR install (arm)
 
-package=$@
+package=$1
+heading : $package
 cd /tmp
 trap "sudo rm -r /tmp/$package*" EXIT
 

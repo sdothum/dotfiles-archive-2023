@@ -4,19 +4,10 @@
 # Package
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ........................................................... Package management
+# ......................................................... Distribution install
 
-# remove orphans
-orphans=$(pacman -Qdtq)
-
-if [ "$orphans" ] ;then
-  echo $orphans
-  if ! if-no 'remove orphan packages' ;then
-    for i in $orphans
-    do
-      sudo pacman -Rsn $i
-    done
-  fi
-fi
+heading : $1
+cd /tmp
+. $HOME/build/archlinux/make_install/$1
 
 # vim: set ft=sh: #

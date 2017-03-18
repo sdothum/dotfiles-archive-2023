@@ -76,6 +76,7 @@ if [ -e $IRC ] ;then
   fi
 fi
 [ -e $HOME/.mail ] && term 'Mail' alot
+[ -e $HOME/.calendar ] && term 'Calendar' wyrd
 
 # .................................................................. Window apps
 

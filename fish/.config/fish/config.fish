@@ -44,8 +44,8 @@ set -x PASSWORD_STORE_CLIP_TIME 60
 # default browser changes require login (Ctrl-d) for X11 autostart
 # set -x BROWSER chromium
 # set -x BROWSER luakit
-set -x BROWSER qutebrowser
-# set -x BROWSER vimb
+# set -x BROWSER qutebrowser
+set -x BROWSER vimbt
 
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118

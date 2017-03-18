@@ -154,11 +154,11 @@ enum tap_dance {
 #define __Caps  TD (_CAPS)
 
 // layer keys
-#define SHIFT   MO (_SHIFT)
-#define ADJUST  MO (_ADJUST)
-#define SYMBOL  MO (_NUMSYM)
-#define REGEX   MO (_SYMREG)
-#define DYNAMIC MO (_DYN)
+#define SHIFT   MO  (_SHIFT)
+#define ADJUST  MO  (_ADJUST)
+#define SYMBOL  OSL (_NUMSYM)
+#define REGEX   OSL (_SYMREG)
+#define DYNAMIC OSL (_DYN)
 
 // keycodes
 #define ___x___ KC_TRNS

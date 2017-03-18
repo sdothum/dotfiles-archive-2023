@@ -6,7 +6,8 @@
 
 # ..................................................................... IRC chat
 
-ircservers=3
+# depends on how many servers auto-connected
+ircservers=$(cat $HOME/.irc)
 timeout=300
 rm -f $HOME/.weechat/*.log
 

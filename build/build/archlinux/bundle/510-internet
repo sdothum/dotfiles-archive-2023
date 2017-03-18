@@ -19,7 +19,7 @@
 # midorio
   qutebrowser
 # qutebrowser-git
-# surf
+  surf
 # uzbl-browser
   vimb
 # vimb-git
@@ -35,7 +35,8 @@
 # lua51-filesystem
 # luajit
   pepper-flash
-  tabbed
+# tabbed
+m tabbed
   webkitgtk2        [server]
 
 
