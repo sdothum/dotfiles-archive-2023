@@ -190,7 +190,6 @@
         \{
         \  'absolutepath' : '%F'
         \, 'atom'         : '%{synIDattr(synID(line("."),col("."),1),"name")}'
-        \, 'basepath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") : ""}'
         \, 'bytepercent'  : '%{BytePercent()}%%'
         \, 'bufnum'       : '%n'
         \, 'charvalue'    : '%b'
@@ -211,8 +210,6 @@
         \, 'percentwin'   : '%P'
         \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
         \, 'relativepath' : '%f'
-        \, 'rootpath'     : '%{expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*" ? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") : ""}'
-        \, 'topbottom'    : '%{line("w0") == 1 ? (line("w$") == line("$") ? "▯" : "▼") : line("w$") == line("$") ? "▲" : ""}'
         \}
 
       let g:lightline.component_visible_condition =
@@ -237,6 +234,9 @@
         \, 'spaces'      : 'Spaces'
         \, 'specialchar' : 'SpecialChar'
         \, 'wordcount'   : 'WordCount'
+        \, 'rootpath'    : 'RootPath'
+        \, 'basepath'    : 'BasePath'
+        \, 'topbottom'   : 'TopBottom'
         \}
 
       let g:lightline.mode_map =
@@ -253,6 +253,43 @@
         \, 'v'      : 'V'
         \, 'V'      : 'V-LINE'
         \}
+
+      function! TopBottom()
+        if line('w0') == 1
+          return line('w$') == line('$') ? '▯' : '▼'
+        else
+          return line('w$') == line('$') ? '▲' : ''
+        endif
+      endfunction
+
+      function! RootPath()
+        if expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
+          " return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
+          let root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
+          if root == ''
+            return root
+          else
+            if root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
+              return root
+            else
+              let root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
+              let root = substitute(root, $HOME, '~', '')
+              let root = substitute(root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
+              return root
+            endif
+          endif
+        else
+          return ''
+        endif
+      endfunction
+
+      function! BasePath()
+        if expand('%:p') =~ '.*[/][^/]*[/][^/]*'
+          return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*', '\1', '')
+        else
+          return ''
+        endif
+      endfunction
 
     " ................................................................ Limelight
 
