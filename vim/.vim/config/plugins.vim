@@ -274,8 +274,10 @@
             else
               let root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
               let root = substitute(root, $HOME, '~', '')
+              let base = substitute(root, '.*[/]\([^/]*\)$', '\1', '')
+              let root = substitute(root, '[^/]*$', '', '')
               let root = substitute(root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
-              return root
+              return root . base
             endif
           endif
         else
