@@ -1,15 +1,18 @@
-#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# Make
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Iosevka
+# ...................................................................... iosevka
 
 # Usage: iosevka [amphetype]
 
-upright='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
-italic='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey'
+shape='sans'
+alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
+math='v-zero-slashed v-tilde-low v-asterisk-high v-caret-high v-brace-curly'
+symbol='v-paragraph-high v-at-long v-eszet-sulzbacher'
+upright="$shape $alpha $math $symbol"
+italic="$shape $alpha $math $symbol"
 
 # build hooky [i l] single-storey [a g] character set
 cd /net/depot
@@ -37,11 +40,11 @@ else
     /net/depot/Iosevka/parameters.toml
 fi
 
-make STYLE_UPRIGHT="$upright" STYLE_ITALIC="$italic"
+make custom-config upright="$upright" italic="$italic"
+make custom
+
 rm -rf $HOME/.fonts/iosevka$amphetype
-rm -rf $HOME/.fonts/iosevka$amphetype-slab
-cp -rv dist/iosevka $HOME/.fonts/iosevka$amphetype
-cp -rv dist/iosevka-slab $HOME/.fonts/iosevka$amphetype-slab
+cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$amphetype
 sudo fc-cache -fv
 
 # vim: set ft=sh: #

@@ -34,9 +34,8 @@
 = fonts
 # ▔▔▔▔▔
   adobe-base-14-fonts
-# ibfonts-meta-base
-#
-# infinality-bundle-fonts
+m iosevka             [server]
+m iosevka\\ amphetype [server]
   noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git

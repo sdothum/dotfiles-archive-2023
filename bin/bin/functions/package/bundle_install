@@ -22,7 +22,9 @@
 #         ! command [options]   (execute)
 #
 #         where, condition = [command] or [[[expression]]] as short form for test
-#         e.g. package [[[ $(hostname) = server ]]]
+#                     e.g. package [[[ $(hostname) = server ]]]
+#                make script may contain options with double backslashes
+#                     e.g. m iosevka\\ amphetype [server]
 
 [ $1 ] || exit
 if [ $1 = check ] ;then
@@ -72,13 +74,14 @@ do
 
     if [ $check ] ;then
       unset installed
-      unset gem
+      unset pkg
       case $action in
         '-') continue ;;
-        'g') echo "$gems" | grep -q "^$package$" && installed=true || gem='gem ' ;;
+        g  ) echo "$gems" | grep -q "^$package$" && installed=true || pkg='gem ' ;;
+        m  ) pkg='make_install possibly '
         *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
       esac
-      [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[${gem}not installed]"
+      [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[${pkg}not installed]"
       continue
     fi
 
