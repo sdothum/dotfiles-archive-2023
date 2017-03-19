@@ -25,7 +25,8 @@
       Plug 'itchyny/lightline.vim'
       Plug 'junegunn/limelight.vim'
       Plug 'bilalq/lite-dfm'
-      Plug 'altercation/vim-colors-solarized'
+      " Plug 'altercation/vim-colors-solarized' breaks synIDattr with vim8
+      Plug 'lifepillar/vim-solarized8'
 
     " ................................................................... Keymap
 
@@ -48,10 +49,8 @@
 
     " ..................................................................... Grep
 
-      " fzf installed via pacman
-      " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' }
-      " fzf.vim doesn't integrate well with gvim
-      " Plug 'junegunn/fzf.vim'
+      " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' } installed via pacman
+      " Plug 'junegunn/fzf.vim' doesn't integrate well with gvim
 
     " .......................................................... Version control
 

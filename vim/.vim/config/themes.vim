@@ -5,6 +5,10 @@
 
   " The look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+      augroup theme
+        autocmd!
+      augroup END
+
     " .......................................................... Text and cursor
 
       " further distraction free mode settings
@@ -101,6 +105,11 @@
         " trap and ignore initialization error
         call Quietly('LiteDFMClose')
         let &background = (&background == 'dark' ? 'light' : 'dark')
+        if &background == 'light'
+          colorscheme solarized8_light_high
+        else
+          colorscheme solarized8_dark_high
+        endif
         call SetTheme()
         call LiteType()
         if ProseFT()
@@ -112,17 +121,43 @@
             let g:lightline.colorscheme = 'solarized_light'
           else
             let g:lightline.colorscheme = 'solarized_dark'
-          end
+          endif
           call lightline#init()
           call lightline#colorscheme()
           call lightline#update()
         endif
         call VimWikiLink()                  " restore vimwiki link
         call IndentTheme()
+        call LiteFix()
       endfunction
 
-      imap <silent><F9> <C-o>:call LiteSwitch()<CR>
-      nmap <silent><F9> :call LiteSwitch()<CR>
+      function! LiteFix()
+        " fix colour shifts resulting from toggling(!)
+        if &background == 'light'
+          highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33 guifg=#fdf6e3 guibg=#268bd2
+          highlight LightlineLeft_normal_0_1  ctermfg=33 ctermbg=244 guifg=#268bd2 guibg=#839496
+          highlight LightlineLeft_normal_1    ctermfg=230 ctermbg=244 guifg=#fdf6e3 guibg=#839496
+          highlight LightlineLeft_normal_1_2  ctermfg=244 ctermbg=187 guifg=#839496 guibg=#eee8d5
+          highlight LightlineRight_normal_0   ctermfg=230 ctermbg=239 guifg=#fdf6e3 guibg=#586e75
+          highlight LightlineRight_normal_0_1 ctermfg=239 ctermbg=244 guifg=#586e75 guibg=#839496
+          highlight LightlineRight_normal_1   ctermfg=230 ctermbg=244 guifg=#fdf6e3 guibg=#839496
+          highlight LightlineRight_normal_1_2 ctermfg=244 ctermbg=187 guifg=#839496 guibg=#eee8d5
+        else
+          highlight LightlineLeft_normal_0    ctermfg=234 ctermbg=33 guifg=#002b36 guibg=#268bd2
+          highlight LightlineLeft_normal_0_1  ctermfg=33 ctermbg=240 guifg=#268bd2 guibg=#657b83
+          highlight LightlineLeft_normal_1    ctermfg=234 ctermbg=240 guifg=#002b36 guibg=#657b83
+          highlight LightlineLeft_normal_1_2  ctermfg=240 ctermbg=235 guifg=#657b83 guibg=#073642
+          highlight LightlineRight_normal_0   ctermfg=234 ctermbg=245 guifg=#002b36 guibg=#93a1a1
+          highlight LightlineRight_normal_0_1 ctermfg=245 ctermbg=240 guifg=#93a1a1 guibg=#657b83
+          highlight LightlineRight_normal_1   ctermfg=234 ctermbg=240 guifg=#002b36 guibg=#657b83
+          highlight LightlineRight_normal_1_2 ctermfg=240 ctermbg=235 guifg=#657b83 guibg=#073642
+        endif
+      endfunction
+
+      nmap <silent><F9>         :call LiteSwitch()<CR>
+      nmap <silent><leader><F9> :call LiteFix()<CR>
+
+      autocmd theme BufEnter * call LiteFix()
 
   " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -238,7 +273,6 @@
         endif
       endfunction
 
-      imap <silent><C-F9> <C-o>:call FontSwitch()<CR>
       nmap <silent><C-F9> :call FontSwitch()<CR>
 
     " ............................................ Initial font and line spacing

@@ -189,7 +189,6 @@
       let g:lightline.component =
         \{
         \  'absolutepath' : '%F'
-        \, 'atom'         : '%{synIDattr(synID(line("."),col("."),1),"name")}'
         \, 'bytepercent'  : '%{BytePercent()}%%'
         \, 'bufnum'       : '%n'
         \, 'charvalue'    : '%b'
@@ -214,8 +213,7 @@
 
       let g:lightline.component_visible_condition =
         \{
-        \  'atom'        : '(synIDattr(synID(line("."),col("."),1),"name") != "")'
-        \, 'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+        \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
         \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
         \, 'column'      : '(getline(line(".")) != "")'
         \, 'matchspace'  : '(g:matchspace != "")'
@@ -237,6 +235,7 @@
         \, 'rootpath'    : 'RootPath'
         \, 'basepath'    : 'BasePath'
         \, 'topbottom'   : 'TopBottom'
+        \, 'atom'        : 'Atom'
         \}
 
       let g:lightline.mode_map =
@@ -253,6 +252,12 @@
         \, 'v'      : 'V'
         \, 'V'      : 'V-LINE'
         \}
+
+      function! Atom()
+        let atom = synIDattr(synID(line('.'), col('.'), 1), 'name')
+        " plugin bug(?)
+        return atom =~ 'Lightline' ? '' : atom
+      endfunction
 
       function! TopBottom()
         if line('w0') == 1
@@ -438,17 +443,11 @@
 
     " .......................................................... Solarized theme
 
-      let g:solarized_contrast   = 'high'   " preferred contrast level for light background
-      let g:solarized_hitrail    = 1
-      let g:solarized_termcolors = 256
-      let g:solarized_termtrans  = 1        " terminal transparency (0) off (1) on
-
-      colorscheme solarized
+      let g:solarized_termtrans = 1         " terminal transparency (0) off (1) on
 
       if has("gui_running")
         set background=light
-      else
-        set background=dark
+        colorscheme solarized8_light_high
       endif
       set termguicolors                     " for neovim
 
