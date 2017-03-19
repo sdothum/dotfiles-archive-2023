@@ -21,15 +21,18 @@
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <A-End> ggVG
-      nnoremap Q       {jv}kJvgq}}{j
-      vnoremap Q       Jvgqj
+      nnoremap <A-End>      ggVG
+      " retain cursor position for insert mode reformatting
+      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      " otherwise advance cursor to next paragraph
+      nnoremap <F4>         {jv}kJvgq}}{j
+      vnoremap <F4>         Jvgqj
 
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
-      vnoremap '       :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
-      vnoremap "       :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+      vnoremap '            :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "            :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
   " Indenting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

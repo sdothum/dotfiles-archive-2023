@@ -154,8 +154,8 @@
         endif
       endfunction
 
-      nmap <silent><F9>         :call LiteSwitch()<CR>
-      nmap <silent><leader><F9> :call LiteFix()<CR>
+      nmap <silent><F7>         :call LiteSwitch()<CR>
+      nmap <silent><leader><F7> :call LiteFix()<CR>
 
       autocmd theme BufEnter * call LiteFix()
 
@@ -273,7 +273,7 @@
         endif
       endfunction
 
-      nmap <silent><C-F9> :call FontSwitch()<CR>
+      nmap <silent><C-F7> :call FontSwitch()<CR>
 
     " ............................................ Initial font and line spacing
 

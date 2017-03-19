@@ -231,7 +231,7 @@
       endfunction
 
       " toggle lightline/default vim statusline
-      imap <silent><F10> <C-o>:call ToggleInfo()<CR>
-      nmap <silent><F10> :call ToggleInfo()<CR>
+      imap <silent><F8> <C-o>:call ToggleInfo()<CR>
+      nmap <silent><F8> :call ToggleInfo()<CR>
 
 " statusline.vim
