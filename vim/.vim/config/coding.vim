@@ -66,7 +66,7 @@
           match ExtraWhitespace /\s\+$/
           " echo 'List invisibles ON'
           let g:matchspace = '■'
-        end
+        endif
       endfunction
 
       nmap <silent><leader><Space> :call ToggleSpaces()<CR>

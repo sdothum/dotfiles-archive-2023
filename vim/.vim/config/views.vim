@@ -74,7 +74,7 @@
           call ShowInfo(1)
         else
           call DfmWriting()
-        end
+        endif
       endfunction
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

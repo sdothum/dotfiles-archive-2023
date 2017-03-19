@@ -90,7 +90,7 @@
           execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
           execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
           execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-        end
+        endif
       endfunction
 
     " ............................................................ Switch colour
