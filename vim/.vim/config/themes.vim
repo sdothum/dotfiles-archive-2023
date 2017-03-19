@@ -134,8 +134,8 @@
       function! LiteFix()
         " fix colour shifts resulting from toggling(!)
         if &background == 'light'
-          highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33 guifg=#fdf6e3 guibg=#268bd2
-          highlight LightlineLeft_normal_0_1  ctermfg=33 ctermbg=244 guifg=#268bd2 guibg=#839496
+          highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33  guifg=#fdf6e3 guibg=#268bd2
+          highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=244 guifg=#268bd2 guibg=#839496
           highlight LightlineLeft_normal_1    ctermfg=230 ctermbg=244 guifg=#fdf6e3 guibg=#839496
           highlight LightlineLeft_normal_1_2  ctermfg=244 ctermbg=187 guifg=#839496 guibg=#eee8d5
           highlight LightlineRight_normal_0   ctermfg=230 ctermbg=239 guifg=#fdf6e3 guibg=#586e75
@@ -143,8 +143,8 @@
           highlight LightlineRight_normal_1   ctermfg=230 ctermbg=244 guifg=#fdf6e3 guibg=#839496
           highlight LightlineRight_normal_1_2 ctermfg=244 ctermbg=187 guifg=#839496 guibg=#eee8d5
         else
-          highlight LightlineLeft_normal_0    ctermfg=234 ctermbg=33 guifg=#002b36 guibg=#268bd2
-          highlight LightlineLeft_normal_0_1  ctermfg=33 ctermbg=240 guifg=#268bd2 guibg=#657b83
+          highlight LightlineLeft_normal_0    ctermfg=234 ctermbg=33  guifg=#002b36 guibg=#268bd2
+          highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=240 guifg=#268bd2 guibg=#657b83
           highlight LightlineLeft_normal_1    ctermfg=234 ctermbg=240 guifg=#002b36 guibg=#657b83
           highlight LightlineLeft_normal_1_2  ctermfg=240 ctermbg=235 guifg=#657b83 guibg=#073642
           highlight LightlineRight_normal_0   ctermfg=234 ctermbg=245 guifg=#002b36 guibg=#93a1a1
