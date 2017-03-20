@@ -6,7 +6,7 @@
 
 # ............................................................... Restore layout
 
-# Usage: restore layout [ tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 ]
+# Usage: restore layout [ tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | default ]
 
 # default master pane left or right
 MASTER=${MASTER:-left}
@@ -88,9 +88,9 @@ halves() {
     herbstclient load $1 '(split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))'
     # fill empty frames
     if [ $MASTER = left ] ;then
-      [ $windows -eq 2 ] && herbstclient shift right
+      [ $windows -ge 2 ] && herbstclient shift right
     else
-      [ $windows -eq 2 ] && herbstclient shift left
+      [ $windows -ge 2 ] && herbstclient shift left
     fi
   fi
 }
@@ -133,7 +133,7 @@ thirds() {
                          . focus_edge right . cycle_layout 1 vertical \
                          . focus_edge left . split explode 0.5 \
                          . focus_edge left . cycle_layout 1 vertical \
-                         . shift right . cycle_layout 1 vertical
+                         . shift right . cycle_layout 1 vertical >/dev/null
       # fill empty frames
       [ $windows -ge 3 ] && [ $windows -le 4 ] && herbstclient shift left
     else
@@ -142,7 +142,7 @@ thirds() {
                          . focus_edge left . cycle_layout 1 vertical \
                          . focus_edge right . split explode 0.5 \
                          . focus_edge right . cycle_layout 1 vertical \
-                         . shift left . cycle_layout 1 vertical
+                         . shift left . cycle_layout 1 vertical >/dev/null
       # fill empty frames
       [ $windows -ge 3 ] && [ $windows -le 4 ] && herbstclient shift right
     fi
@@ -150,6 +150,12 @@ thirds() {
 }
 
 # ....................................................................... Select
+
+default() {
+  is display +1920 && echo '1:1:1' ||
+                      is display +1440 && echo '1:1' ||
+                                          echo 'max'
+}
 
 case $1 in
   tags) for i in $TAGS
@@ -172,8 +178,10 @@ case $1 in
          # unlock to enable focus borders
          herbstclient unlock ;;
 
-  *) server && default='1:1:1' || default='1:1'
-     layout=$(echo "$layouts" | rmenu 'Explode to Layout' $default -no-custom) || exit
+  default) restore windowed
+           exec restore layout $(default) ;;
+
+  *) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
      restore windowed
      exec restore layout $layout ;;
 esac

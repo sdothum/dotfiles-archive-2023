@@ -12,8 +12,8 @@
 #                     option - rofi options e.g. -filter <filter> -no-custom
 #
 # Note:
-#   - Persistent ncurses mode set with ~/.dmenu, see toggle dmenu
-#   - Temporary ncurses mode set with variable DMENU, see bin/dmenu
+#   - Persistent ncurses mode set with ~/.ncurses, see toggle ncurses
+#   - Temporary ncurses mode set with variable TERMINAL, see bin/dmenu
 
 usage() {
   echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"
@@ -37,7 +37,7 @@ indent='   '
 
 # .......................................................................... GUI
 
-if [ -z $NCURSES ] ;then
+if [ -z $TERMINAL ] ;then
   if hlwm; then
     display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
     width=$(query displaywidth)
@@ -106,7 +106,7 @@ fi
 # ......................................................................... Read
 
 if [ $display ] ;then
-  if [ -e $DMENU ] ;then
+  if [ -e $NCURSES ] ;then
     stdin=$(mktemp)
     stdout=$(mktemp)
     trap "rm -f $stdin $stdout" EXIT

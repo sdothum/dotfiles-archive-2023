@@ -72,13 +72,19 @@ zsh_history() { zsh -c "export HISTFILE=$ZSH ; export HISTSIZE=10000 ; fc -R ; f
 history() {
   shell_history=$1_history
   shift
-  if [ $1 ] ;then
+  # terminal invocation?
+  if [ -t 1 ] ;then
+    cmd=$($shell_history | cut -d' ' -f3- | fzf -q "$@")
+    hlwm && xdotool type --delay 0 "$cmd" ||
+            echo "$cmd"
+  elif [ $1 ] ;then
     # $shell_history | ack "$@" | weekof
     $shell_history | /usr/bin/rg --ignore-case --regexp "$@" | weekof
   else
     $shell_history | weekof -r
   fi
 }
+
 
 case $shell in
   dash     ) history $shell $@ ;;

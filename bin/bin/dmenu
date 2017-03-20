@@ -7,7 +7,7 @@
 # .................................................................... Dmenu DSL
 
 # Usage: dmenu [-] <function>
-#              where, '-' forces ncurses mode
+#              where, '-' disables in terminal command line mode
 # Note:  non-dmenu messages within $0/functions/dmenu
 #        source $HOME/bin/dmenu
 #        POSIX standard for use with dash shell
@@ -67,8 +67,9 @@ unquote() { echo $@ | sed "s/'//g"; }
 # if not sourced, execute dmenu message
 if [ $(basename $0) = dmenu ] ;then
   # see toggle dmenu for persistent ncurses mode
+  [ -t 1 ] && export TERMINAL=true
   if [ "$1" = '-' ] ;then
-    export NCURSES=ncurses
+    unset TERMINAL
     shift
   fi
   msg=$1
@@ -82,6 +83,6 @@ if [ $(basename $0) = dmenu ] ;then
   hlwm && [ $fullscreen ] && toggle fullscreen
   # pidof gpaste-clieunt >/dev/null || gpaste-client &
 fi
-unset NCURSES
+unset TERMINAL
 
 # vim: set ft=sh: #

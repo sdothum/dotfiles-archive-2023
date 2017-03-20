@@ -1,23 +1,23 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="toggle/dmenu $@" . $PARENT
+[ $TRACE ] && CHILD="toggle/ncurses $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... Toggle dmenu
+# ............................................................... Toggle ncurses
 
-# Usage: toggle dmenu [off | on]
+# Usage: toggle ncurses [off | on]
 
 case $1 in
-  off) [ -e $DMENU ] || exit ;;
-  on ) [ -e $DMENU ] && exit ;;
+  off) [ -e $NCURSES ] || exit ;;
+  on ) [ -e $NCURSES ] && exit ;;
 esac
 
-if [ -e $DMENU ] ;then
-  rm -f $DMENU
+if [ -e $NCURSES ] ;then
+  rm -f $NCURSES
   notify low 'Rofi Menu' On
 else
-  touch $DMENU
+  touch $NCURSES
   notify low 'FZF Ncurses Menu' On
 fi
 

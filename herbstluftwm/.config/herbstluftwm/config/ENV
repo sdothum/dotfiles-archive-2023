@@ -24,7 +24,7 @@ export NOBLUR=$HOME/.noblur
 export SETROOT=$HOME/.setroot
 export WALLPAPER=$HOME/images/backgrounds/default
 
-export DMENU=$HOME/.ncurses
+export NCURSES=$HOME/.ncurses
 
 export BLANK=$HLWM:blank
 export BORDER=$HLWM:border

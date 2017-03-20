@@ -254,9 +254,7 @@
         \}
 
       function! Atom()
-        let atom = synIDattr(synID(line('.'), col('.'), 1), 'name')
-        " plugin bug(?)
-        return atom =~ 'Lightline' ? '' : atom
+        return synIDattr(synID(line('.'), col('.'), 1), 'name')
       endfunction
 
       function! TopBottom()
