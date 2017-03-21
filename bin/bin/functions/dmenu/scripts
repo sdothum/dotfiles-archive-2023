@@ -20,15 +20,15 @@ files() {
 while :
 do
   file=$(files |
-        sed -e "s|$HOME/bin/|bin/|" \
-            -e 's|.*/archlinux/|archlinux/|' \
-            -e 's|.*/fish/|fish/|' \
-            -e 's|.*/herbstluftwm/|herbstluftwm/|' |
-        sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
-        sort |
-        history scripts |
-        column -s^ -t |
-        rmenu "Edit Script$error" $file) || exit
+         sed -e "s|$HOME/bin/|bin/|" \
+             -e 's|.*/archlinux/|archlinux/|' \
+             -e 's|.*/fish/|fish/|' \
+             -e 's|.*/herbstluftwm/|herbstluftwm/|' |
+         sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
+         sort |
+         history scripts |
+         column -s^ -t |
+         rmenu "Edit Script$error" $file) || exit
 
   if echo $file | grep -q "$SEP" ;then
     history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
@@ -36,9 +36,9 @@ do
   else
     # (tic) 'script for quick menu action
     file=$(files |
-          grep "/$(unquote $file)$" |
-          head -1 |
-          sed "s|^$HOME/||")
+           grep "/$(unquote $file)$" |
+           head -1 |
+           sed "s|^$HOME/||")
     [ $file ] || exec dmenu scripts
     history scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
   fi

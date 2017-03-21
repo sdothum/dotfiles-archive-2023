@@ -7,7 +7,7 @@
 # ..................................................................... IRC chat
 
 # depends on how many servers auto-connected
-ircservers=$(cat $HOME/.irc)
+IRC=$HOME/.irc
 timeout=300
 rm -f $HOME/.weechat/*.log
 
@@ -31,6 +31,7 @@ if server ;then
     ditto 'waiting for ZNC server connections to complete'
 
     count=0
+    [ -e $IRC ] && ircservers=$(cat $IRC) || ircservers=1
     while :
     do
       [ $(sudo ss -apt | grep znc | grep ESTAB | wc -l) -ge $ircservers ] && break

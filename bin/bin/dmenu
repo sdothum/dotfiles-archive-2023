@@ -65,6 +65,7 @@ previous() { echo | history $1 | head -1; }
 unquote() { echo $@ | sed "s/'//g"; }
 
 # if not sourced, execute dmenu message
+trap 'unset TERMINAL' EXIT
 if [ $(basename $0) = dmenu ] ;then
   # see toggle dmenu for persistent ncurses mode
   [ -t 1 ] && export TERMINAL=true
@@ -83,6 +84,5 @@ if [ $(basename $0) = dmenu ] ;then
   hlwm && [ $fullscreen ] && toggle fullscreen
   # pidof gpaste-clieunt >/dev/null || gpaste-client &
 fi
-unset TERMINAL
 
 # vim: set ft=sh: #

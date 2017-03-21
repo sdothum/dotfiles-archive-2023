@@ -8,7 +8,7 @@
 # meta dmenu menu!
 edit=$(previous edit)
 edit=$(echo "projects\nscripts\nconfigs\nfiles\nfolders" |
-        rmenu 'Edit' $edit -no-custom) || exit
+       rmenu 'Edit' $edit -no-custom) || exit
 
 history edit $edit
 case $edit in
