@@ -69,6 +69,7 @@ fish_history() { fish -c "history --show-time='%s %W '"; }
 
 zsh_history() { zsh -c "export HISTFILE=$ZSH ; export HISTSIZE=10000 ; fc -R ; fc -l -t '%W' 1"; }
 
+# interactively paste into terminal session or pass filtered history list (see dmenu shistory)
 history() {
   shell_history=$1_history
   shift

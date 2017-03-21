@@ -5,14 +5,20 @@
 
 # ...................................................................... iosevka
 
-# Usage: iosevka [amphetype]
+# Usage: iosevka [double | amphetype]
+
+if [ "$1" = double ] ;then
+  storey=$1
+  shift
+fi
 
 shape='sans'
-alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
+# alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
+alpha='v-l-hooky v-i-hooky v-g-singlestorey v-m-longleg'
 math='v-zero-slashed v-tilde-low v-asterisk-high v-caret-high v-brace-curly'
 symbol='v-paragraph-high v-at-long v-eszet-sulzbacher'
-upright="$shape $alpha $math $symbol"
-italic="$shape $alpha $math $symbol"
+upright="$shape $alpha v-a-${storey:-single}storey $math $symbol"
+italic="$shape $alpha v-a-singlestorey $math $symbol"
 
 # build hooky [i l] single-storey [a g] character set
 cd /net/depot
