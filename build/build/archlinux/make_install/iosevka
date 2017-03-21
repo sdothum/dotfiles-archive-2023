@@ -5,12 +5,16 @@
 
 # ...................................................................... iosevka
 
-# Usage: iosevka [double | amphetype]
+usage() {
+  echo "usage: $(basename $0) [double | amphetype]"
+  exit 1
+}
 
-if [ "$1" = double ] ;then
-  storey=$1
-  shift
-fi
+case $1 in
+  double   ) storey=$1 ;;
+  amphetype) amphetype=-amphetype ;;
+  *        ) usage ;;
+esac
 
 shape='sans'
 # alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
@@ -35,13 +39,13 @@ fi
 # ensure node.js is uptodate
 npm install
 
-if [ $1 ] ;then
-  amphetype=-amphetype
-  sed -i -re "/^family =/s/'Iosevka'/'Iosevka-amphetype'/" \
+if [ $amphetype ] ;then
+  sed -i -re "/^family =/s/'Iosevka'/'Iosevka$amphetype'/" \
     -e "/^leading =/s/= ([0-9]*)/= 1850/" \
     /net/depot/Iosevka/parameters.toml
 else
-  sed -i -re "/^family =/s/'Iosevka-.*'/'Iosevka'/" \
+  [ $storey ] && storey=-$storey
+  sed -i -re "/^family =/s/'Iosevka-.*'/'Iosevka$storey'/" \
     -e "/^leading =/s/= ([0-9]*)/= 1250/" \
     /net/depot/Iosevka/parameters.toml
 fi
@@ -49,8 +53,9 @@ fi
 make custom-config upright="$upright" italic="$italic"
 make custom
 
-rm -rf $HOME/.fonts/iosevka$amphetype
-cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$amphetype
+rm -rf $HOME/.fonts/iosevka$storey$amphetype
+cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$storey$amphetype
 sudo fc-cache -fv
+fc-cache -fv
 
 # vim: set ft=sh: #

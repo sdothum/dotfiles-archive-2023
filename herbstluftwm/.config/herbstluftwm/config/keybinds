@@ -24,8 +24,8 @@ hc keybind $Mod-equal                  spawn toggle focus
 hc keybind $Mod-minus                  spawn focus borders 3
 hc keybind $Mod-Shift-minus            spawn toggle borders
 if [ $PLANCK ] ;then
-  hc keybind $Mod-slash                spawn toggle unclutter
-  hc keybind $Mod-Shift-slash          spawn toggle compton
+  hc keybind $Mod-apostrophe           spawn toggle compton
+  hc keybind $Mod-Shift-apostrophe     spawn toggle unclutter
 else
   hc keybind $Mod-backslash            spawn toggle unclutter
   hc keybind $Mod-Shift-backslash      spawn toggle compton
@@ -131,8 +131,6 @@ fi
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space          spawn restore frames
 if [ $PLANCK ] ;then
-  # hc keybind $Mod-apostrophe         spawn switch orientation +1
-  # hc keybind $Mod-Shift-apostrophe   spawn switch orientation -1
   hc keybind $Mod-h                    spawn switch orientation +1
   hc keybind $Mod-Shift-h              spawn switch orientation -1
   hc keybind $Mod-Shift-period         spawn switch orientation +2

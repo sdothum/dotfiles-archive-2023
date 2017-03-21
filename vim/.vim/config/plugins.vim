@@ -29,37 +29,6 @@
       vmap <Enter>   <Plug>(EasyAlign)
       nmap <leader>a <Plug>(EasyAlign)
 
-    " ............................................................... Easymotion
-
-      let g:EasyMotion_do_mapping = 0       " disable default mappings
-      let g:EasyMotion_smartcase = 1        " turn on case sensitive feature
-
-      " bi-directional find motion
-      " avoid conflict with regular vim search!
-      nmap <leader>/         <Plug>(easymotion-sn)
-      " one key binding
-      " imap \               <C-o><Plug>(easymotion-s)
-      nmap <leader>\         <Plug>(easymotion-s)
-      " 2 keystroke binding (backslash inhibits use in insert mode)
-      imap ,,/               <C-o><Plug>(easymotion-s2)
-      nmap <leader><leader>/ <Plug>(easymotion-s2)
-
-      " line motions
-      imap ,,n               <C-o><Plug>(easymotion-j)
-      nmap <leader><leader>n <Plug>(easymotion-j)
-      imap ,,l               <C-o><Plug>(easymotion-k)
-      nmap <leader><leader>l <Plug>(easymotion-k)
-
-      " word motions
-      imap ,,E               <C-o><Plug>(easymotion-gE)
-      nmap <leader><leader>E <Plug>(easymotion-gE)
-      imap ,,e               <C-o><Plug>(easymotion-E)
-      nmap <leader><leader>e <Plug>(easymotion-E)
-      imap ,,W               <C-o><Plug>(easymotion-B)
-      nmap <leader><leader>W <Plug>(easymotion-B)
-      imap ,,w               <C-o><Plug>(easymotion-W)
-      nmap <leader><leader>w <Plug>(easymotion-W)
-
     " .............................................................. Eightheader
 
       " justified fold headers
@@ -340,7 +309,7 @@
 
     " ................................................................. Open URL
 
-      nmap <silent><leader>o :OpenUrl<CR>
+      " nmap <silent><leader>o :OpenUrl<CR>
 
     " ................................................................... Pencil
 
@@ -362,11 +331,6 @@
       autocmd plugin Syntax   * RainbowParenthesesLoadRound
       autocmd plugin Syntax   * RainbowParenthesesLoadSquare
       autocmd plugin VimEnter * RainbowParenthesesToggle
-
-    " ................................................................ Showmarks
-
-      " let g:showmarks_enable = 0
-      " let g:showmarks_include  = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY'
 
     " ................................................................ Signature
 
@@ -415,20 +379,20 @@
       let g:sneak#use_ic_scs   = 1          " use vim case setting
       let g:sneak#prompt       = '>'        " prompt
 
-      " remap sneak_s to preserve s
-      function! Sneak_f()
-        if !exists("g:sneak_f")
-          let g:sneak_f = 1
-          unmap s
-          unmap S
-          call Colemak()
-          nmap f <Plug>Sneak_s
-          nmap F <Plug>Sneak_S
-        endif
-      endfunction
-
-      " preserve s and remap to f
-      autocmd plugin BufNewFile,BufRead * call Sneak_f()
+      " " remap sneak_s to preserve s
+      " function! Sneak_f()
+      "   if !exists("g:sneak_f")
+      "     let g:sneak_f = 1
+      "     unmap s
+      "     unmap S
+      "     call Colemak()
+      "     nmap f <Plug>Sneak_s
+      "     nmap F <Plug>Sneak_S
+      "   endif
+      " endfunction
+      "
+      " " preserve s and remap to f
+      " autocmd plugin BufNewFile,BufRead * call Sneak_f()
 
     " ................................................................. Snipmate
 
@@ -439,7 +403,7 @@
       imap <C-e> <Plug>snipMateNextOrTrigger
       smap <C-e> <Plug>snipMateNextOrTrigger
 
-    " .......................................................... Solarized theme
+    " ............................................................... Solarized8
 
       let g:solarized_termtrans = 1         " terminal transparency (0) off (1) on
 
@@ -450,12 +414,6 @@
       set termguicolors                     " for neovim
 
       syntax enable
-
-    " ................................................................. Supertab
-
-      " vimwiki uses <tab> for tables PLUS space leader benefits from use of tab
-      " let g:SuperTabMappingForward = '<C-Tab>'
-      " let g:SuperTabMappingBackward = '<C-S-Tab>'
 
     " ................................................................ Syntastic
 

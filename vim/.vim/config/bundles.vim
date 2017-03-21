@@ -22,11 +22,11 @@
     " ...................................................................... GUI
 
       " Plug 'junegunn/goyo.vim'
-      Plug 'itchyny/lightline.vim'
-      Plug 'junegunn/limelight.vim'
-      Plug 'bilalq/lite-dfm'
+      Plug 'itchyny/lightline.vim'          " statusline
+      Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
+      Plug 'bilalq/lite-dfm'                " distraction free mode
       " Plug 'altercation/vim-colors-solarized' breaks synIDattr with vim8
-      Plug 'lifepillar/vim-solarized8'
+      Plug 'lifepillar/vim-solarized8'      " colour theme
 
     " ................................................................... Keymap
 
@@ -34,17 +34,17 @@
 
     " ...................................................... Syntax highlighting
 
-      Plug 'kien/rainbow_parentheses.vim'
-      Plug 'dag/vim-fish'
-      Plug 'plasticboy/vim-markdown'
-      Plug 'slim-template/vim-slim'
+      Plug 'kien/rainbow_parentheses.vim'   " parentheses highlighting
+      Plug 'dag/vim-fish'                   " shell highlighting
+      Plug 'plasticboy/vim-markdown'        " markdown highlighting
+      Plug 'slim-template/vim-slim'         " dsl highlighting
 
   " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................ Buffer management
 
       " Plug 'kien/ctrlp.vim'
-      Plug 'chrisbra/NrrwRgn'
+      Plug 'chrisbra/NrrwRgn'               " edit selected text region
       " Plug 'duff/vim-scratch'
 
     " ..................................................................... Grep
@@ -61,14 +61,14 @@
 
     " ..................................................................... Aids
 
-      Plug 'bimbalaszlo/vim-eightheader'
-      Plug 'nathanaelkane/vim-indent-guides'
-      Plug 'tpope/vim-surround'
+      Plug 'bimlas/vim-eightheader'         " custom foldtext
+      Plug 'nathanaelkane/vim-indent-guides' " colourized indent columns
+      Plug 'tpope/vim-surround'             " pairwise c'hange, d'elete, y'ank
 
     " ............................................................... Commenting
 
-      Plug 'tomtom/tcomment_vim'
-      Plug 'tomtom/tlib_vim'
+      Plug 'tomtom/tcomment_vim'            " toggle comment
+      Plug 'tomtom/tlib_vim'                " toggle comment library
 
     " ..................................................................... HTML
 
@@ -77,12 +77,12 @@
 
     " ............................................................... Completion
 
-      Plug 'auto-pairs'
-      Plug 'tpope/vim-endwise'
+      Plug 'auto-pairs'                     " insert/delete pairs
+      Plug 'tpope/vim-endwise'              " add 'end' statement
       if ext == 'wiki'
-        Plug 'lifepillar/vim-mucomplete'
+        Plug 'lifepillar/vim-mucomplete'    " tab completion
       else
-        Plug 'maxboisvert/vim-simple-complete'
+        Plug 'maxboisvert/vim-simple-complete' " enter completion
       endif
 
     " .......................................................... Syntax Checking
@@ -95,40 +95,36 @@
 
     " ...................................................... Search / navigation
 
-      " Plug 'vim-scripts/matchit.zip'
-      " Plug 'SearchComplete'
       " Plug 'majutsushi/tagbar'
-      Plug 'easymotion/vim-easymotion'
-      Plug 'kshenoy/vim-signature'
-      Plug 'justinmk/vim-sneak'
+      Plug 'kshenoy/vim-signature'          " toggle marks
+      Plug 'justinmk/vim-sneak'             " jump to location
 
     " ............................................................... Formatting
 
       " Plug 'godlygeek/tabular'
-      Plug 'junegunn/vim-easy-align'
+      Plug 'junegunn/vim-easy-align'        " align text objects
 
     " ............................................................. Paste / undo
 
-      Plug 'sjl/gundo.vim'
+      Plug 'sjl/gundo.vim'                  " undo history
       " Plug 'tpope/vim-repeat'
-      Plug 'vim-scripts/YankRing.vim'
+      Plug 'vim-scripts/YankRing.vim'       " yank history
 
-    " ............................................................. Substitution
+    " ................................................................. Snippets
 
-      Plug 'tpope/vim-abolish'
-      Plug 'garbas/vim-snipmate'
-      Plug 'MarcWeber/vim-addon-mw-utils'
+      Plug 'garbas/vim-snipmate'            " snippets
+      Plug 'MarcWeber/vim-addon-mw-utils'   " snippet library
 
   " Tools ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................. Notes / wiki
 
       " Plug 'cwoac/nvim'
-      Plug 'vimwiki/vimwiki'
+      Plug 'vimwiki/vimwiki'                " wiki / markdown
 
     " .................................................................. Writing
 
-      Plug 'reedes/vim-litecorrect'
+      Plug 'reedes/vim-litecorrect'         " auto correction
       " Plug 'reedes/vim-pencil'
       " Plug 'reedes/vim-wordy'
 
