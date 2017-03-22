@@ -83,8 +83,6 @@
       " no more reaching for shift or esc keys, reverse key values
       nnoremap ;       :
       vnoremap ;       :
-      nnoremap :       ;
-      vnoremap :       ;
       " imap kk        <ESC>
       " command mode insertion (paste) of current yank buffer
       " cmap <C-v>     <C-r>"

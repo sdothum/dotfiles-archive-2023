@@ -429,19 +429,20 @@
 
     " ................................................................... Tagbar
 
-      " " let g:tagbar_ctags_bin = 'ctags-exuberant'
-      " nmap <silent><leader>t :TagbarToggle<CR>
+      " let g:tagbar_ctags_bin = 'ctags-exuberant'
+      nmap <silent><leader>t :TagbarToggle<CR>
 
-      " " see ctags.cnf
-      " " from http://stackoverflow.com/questions/7037055/ctags-vimwiki-vim-and-tagbar-plugin
-        " let g:tagbar_type_vimwiki =․
-        "   \{
-        "   \  'ctagstype' : 'vimwiki'
-        "   \, 'kinds'     : [
-        "   \  'h:header'
-        "   \, ]
-        "   \, 'sort'      : 0
-        "   \}
+      " see https://github.com/vimwiki/utils/blob/master/vwtags.py
+      let g:tagbar_type_vimwiki =
+          \{
+          \  'ctagstype'   : 'vimwiki'
+          \ , 'kinds'      : ['h:header']
+          \ , 'sro'        : '&&&'
+          \ , 'kind2scope' : {'h':'header'}
+          \ , 'sort'       : 0
+          \ , 'ctagsbin'   : '~/.vim/vwtags.py'
+          \ , 'ctagsargs'  : 'default'
+          \}
 
     " ................................................................ T-comment
 

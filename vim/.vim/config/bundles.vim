@@ -29,27 +29,24 @@
 
     " ..................................................................... Info
 
+      " Plug 'metakirby5/codi.vim'              " async evaluator
+      " Plug 'scrooloose/syntastic'             " lint
       " Plug 'reedes/vim-wordy'                 " word usage
       Plug 'itchyny/lightline.vim'              " statusline
+      Plug 'majutsushi/tagbar'                  " ctags
       Plug 'bimlas/vim-eightheader'             " custom foldtext
-      Plug 'nathanaelkane/vim-indent-guides'    " colourized indent columns
 
     " ................................................................... Keymap
 
       " Plug 'kana/vim-arpeggio'                " key chords
 
-    " ...................................................... Syntax highlighting
+    " ............................................................. Highlighting
 
       Plug 'kien/rainbow_parentheses.vim'       " parentheses highlighting
       Plug 'dag/vim-fish'                       " shell highlighting
+      Plug 'nathanaelkane/vim-indent-guides'    " colourized indent columns
       Plug 'plasticboy/vim-markdown'            " markdown highlighting
       Plug 'slim-template/vim-slim'             " dsl highlighting
-
-    " .......................................................... Syntax Checking
-
-      " Plug 'metakirby5/codi.vim'              " async evaluator
-      " Plug 'scrooloose/syntastic'             " lint
-      Plug 'reedes/vim-litecorrect'             " auto correction
 
   " Buffers ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -58,7 +55,6 @@
       " Plug 'kien/ctrlp.vim'                   " fuzzy finder
       " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' } installed via pacman
       " Plug 'junegunn/fzf.vim' doesn't integrate well with gvim
-      " Plug 'majutsushi/tagbar'                " tags buffer
       " Plug 'duff/vim-scratch'                 " scratch buffer
       Plug 'chrisbra/NrrwRgn'                   " visual block buffer
 
@@ -98,6 +94,7 @@
       " Plug 'mattn/emmet-vim'                  " html
       Plug 'auto-pairs'                         " insert/delete pairs
       Plug 'tpope/vim-endwise'                  " add 'end' statement
+      Plug 'reedes/vim-litecorrect'             " spelling
       if ext == 'wiki'
         Plug 'lifepillar/vim-mucomplete'        " tab completion
       else
