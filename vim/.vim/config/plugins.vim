@@ -313,16 +313,16 @@
 
     " ................................................................... Pencil
 
-      " let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
-      " let g:pencil#textwidth       = 72     " 74 (def)
-      " let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
-      " let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
-      " let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
-      "
-      " autocmd plugin Filetype mail         call pencil#init()
-      " autocmd plugin FileType markdown,mkd call pencil#init()
-      " autocmd plugin Filetype text         call pencil#init()
-      " autocmd plugin Filetype vimwiki      call pencil#init()
+      let g:pencil#wrapModeDefault = 'hard' " 'hard' (def), 'soft'
+      let g:pencil#textwidth       = 72     " 74 (def)
+      let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
+      let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
+      let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
+
+      autocmd plugin Filetype mail         call pencil#init()
+      autocmd plugin FileType markdown,mkd call pencil#init()
+      autocmd plugin Filetype text         call pencil#init()
+      autocmd plugin Filetype vimwiki      call pencil#init()
 
     " ...................................................... Rainbow parentheses
 
@@ -378,6 +378,7 @@
       let g:sneak#absolute_dir = 0          " next follows direction of invocation
       let g:sneak#use_ic_scs   = 1          " use vim case setting
       let g:sneak#prompt       = '>'        " prompt
+      let g:sneak#label        = 1          " label mode
 
       " " remap sneak_s to preserve s
       " function! Sneak_f()
@@ -403,7 +404,7 @@
       imap <C-e> <Plug>snipMateNextOrTrigger
       smap <C-e> <Plug>snipMateNextOrTrigger
 
-    " ............................................................... Solarized8
+    " ................................................................ Solarized
 
       let g:solarized_termtrans = 1         " terminal transparency (0) off (1) on
 
@@ -443,6 +444,9 @@
         "   \}
 
     " ................................................................ T-comment
+
+      " effectively disable leader2 to avoid conflicts with drawing.vim
+      let g:tcommentMapLeader2 = '✘'
 
       " see ToggleComment functions.vim
       nmap <leader>c <C-_><C-_>

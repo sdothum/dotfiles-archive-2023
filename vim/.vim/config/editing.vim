@@ -102,7 +102,7 @@
     " ................................................................ Shortcuts
 
       " prevent cascading paste insert
-      set pastetoggle=<F2>
+      set pastetoggle=<F3>
       autocmd editing InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
@@ -140,10 +140,13 @@
       vnoremap yd         "+d
       vnoremap yD         "+D
 
-      " normal/insert mode paste actions
-      " "+P pads space after insert
-      inoremap <C-v>      <ESC>"+pli
-      nnoremap <C-v>      h"+pl
+      " " normal/insert mode paste actions
+      " " "+P pads space after insert
+      " " note: to enter visual block mode type v<C-v>
+      " inoremap <C-v>    <ESC>"+pli
+      " nnoremap <C-v>    h"+pl
+      imap <F2>           <ESC>"+pli
+      nmap <F2>           h"+pl
 
   " Spelling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

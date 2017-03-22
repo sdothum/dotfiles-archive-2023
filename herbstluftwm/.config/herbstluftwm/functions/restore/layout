@@ -175,6 +175,7 @@ case $1 in
          # may already be in lock state, see toggle monocle
          [ -e $LOCK ] || herbstclient lock
          $layout $TAG
+         notify low "Layout $TAG" "$1"
          # unlock to enable focus borders
          herbstclient unlock ;;
 
