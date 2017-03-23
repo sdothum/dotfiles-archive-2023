@@ -5,11 +5,7 @@
 
   " The look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-      augroup theme
-        autocmd!
-      augroup END
-
-    " .......................................................... Text and cursor
+    " .................................................................... Setup
 
       " further distraction free mode settings
       " foreground
@@ -40,6 +36,12 @@
       " statusline
       let g:dfm_status_light    = '#073642' " light statusline
       let g:dfm_status_dark     = '#eee8d5' " dark statusline
+
+      augroup theme
+        autocmd!
+      augroup END
+
+    " .......................................................... Text and cursor
 
       function! SetTheme()
         if &background == 'light'

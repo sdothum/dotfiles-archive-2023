@@ -3,6 +3,58 @@
 " Keyboard
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
+  " Keyboard (re)mappings ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .................................................................... Setup
+
+      let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
+      let g:mapleader = "\<Space>"
+
+      augroup kbd
+        autocmd!
+      augroup END
+
+    " ....................................................... Backspace settings
+
+      set backspace=indent,eol,start        " allow backspace in insert mode
+      set whichwrap=b,s,h,l,<,>,[,]         " backspace and cursor keys wrap
+
+    " .......................................................... Modal switching
+
+      " no more reaching for shift or esc keys, reverse key values
+      nnoremap ;       :
+      vnoremap ;       :
+      " imap kk        <ESC>
+
+    " ......................................................... Cursor movements
+
+      " up/down by screen lines, not file lines
+      nnoremap j       gj
+      nnoremap k       gk
+      " up/down by paragraph sentence
+      nmap <C-S-Left>  {{)
+      nmap <C-S-Right> })
+
+      " insert mode local region cursor movements
+      " <C-h> is overridden by auto-pairs delete <BS> when enabled
+      " imap <C-h>     <Left>
+      " imap <C-j>     <Down>
+      " imap <C-k>     <Up>
+      " imap <C-l>     <Right>
+
+    " ............................................................. Disable keys
+
+      " affirm vim modal usage but these keys are remapped below anyway :-)
+      " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
+      " imap <down>    <nop>
+      " imap <left>    <nop>
+      " imap <right>   <nop>
+      " imap <up>      <nop>
+      " nmap <down>    <nop>
+      " nmap <left>    <nop>
+      " nmap <right>   <nop>
+      " nmap <up>      <nop>
+
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh
@@ -62,5 +114,59 @@
       if $COLEMAK_DH == 'true'
         call Colemak()
       endif
+
+  " Keyboard shortcuts ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................. Copy / paste
+
+      " prevent cascading paste insert
+      set pastetoggle=<F3>
+      autocmd kbd InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
+
+      " yank from the cursor to the end of the line, to be consistent with C and D.
+      " see yankring for plugin equivalent
+      nnoremap Y          y$
+      " reselect/reyank text just pasted
+      nnoremap <leader>v  gv
+      nnoremap <leader>V  gvy
+      map <leader>p       pgvy
+
+      " highlight last inserted text
+      nnoremap <leader>i  `[v`]
+
+    " ...................................................... Sentence operations
+
+      " use "as" suffix for outer sentence
+      " change sentence
+      nnoremap <leader>cc cis
+      " cut sentence
+      nnoremap <leader>dd dis
+      " yank sentence
+      nnoremap <leader>yy yis
+
+    " .................................................... Clipboard cut / paste
+
+      nnoremap <C-a>      "ggVG+y
+
+      " visual mode yank/cut clipboard actions
+      " "+Y yank line to clipboard
+      vnoremap <C-c>      "+y
+      vnoremap ys         "+y
+      vnoremap yS         "+Y
+      " "+D cut line to clipboard
+      vnoremap <C-d>      "+d
+      vnoremap yd         "+d
+      vnoremap yD         "+D
+
+      " " normal/insert mode paste actions
+      " " "+P pads space after insert
+      " " note: to enter visual block mode type v<C-v>
+      " inoremap <C-v>    <ESC>"+pli
+      " nnoremap <C-v>    h"+pl
+      imap <F2>           <ESC>"+pli
+      nmap <F2>           h"+pl
+      " command mode insertion (paste) of current yank buffer
+      " cmap <C-v>        <C-r>"
+      cmap <F2>           <C-r>"
 
 " keyboard.vim

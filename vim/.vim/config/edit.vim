@@ -1,77 +1,31 @@
 " sdothum - 2016 (c) wtfpl
 
-" Coding
+" Edit
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " Visual aids ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-      augroup coding
-        autocmd!
-      augroup END
-
-    " ........................................................... Line numbering
-
-      " toggle relative number, line number and no numbering
-      function! ToggleNumber()
-        if (&relativenumber == 1 && &number == 1)
-          set norelativenumber
-        else
-          if (&relativenumber == 0 && &number == 1)
-            set nonumber
-          else
-            set relativenumber
-            set number
-          endif
-        endif
-      endfunction
-
-      nmap <silent># :call ToggleNumber()<CR>
-
-    " ............................................................. Column ruler
-
-      " see plugins.vim IndentTheme()
-      let g:ruler = 0
-
-      " toggle colorcolumn modes
-      function! ToggleColumn()
-        if g:ruler == 0
-          let g:ruler = 1
-          let &colorcolumn = col('.')
-          autocmd coding CursorMoved,CursorMovedI * let &colorcolumn = col('.')
-        else
-          if g:ruler == 1
-            let g:ruler = 2
-            autocmd! coding
-          else
-            let g:ruler = 0
-            let &colorcolumn = 0
-          endif
-        endif
-        call IndentTheme()
-      endfunction
-
-      nmap <silent><Bar>      :call ToggleColumn()<CR>
-      nmap <silent><Bar><Bar> :IndentGuidesToggle<CR>:call IndentTheme()<CR>
-
-    " ....................................................... Trailing highlight
-
-      " toggle trailing whitespace highlight and indentation levels
-      function! ToggleSpaces()
-        set list!
-        if &list == 0
-          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
-          " echo ''
-          let g:matchspace = ''
-        else
-          match ExtraWhitespace /\s\+$/
-          " echo 'List invisibles ON'
-          let g:matchspace = '■'
-        endif
-      endfunction
-
-      nmap <silent><leader><Space> :call ToggleSpaces()<CR>
-
   " Line wrap ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .................................................. Insert line / paragraph
+
+      " continue inserting in new line a la textmate command-enter
+      " ctrl-enter only works with gvim due to terminal limitation :-(
+      " see InsertWrap coding.vim
+      " inoremap <C-CR>                <C-o>o
+      " similarly, open curly braces and continue inserting in indented body
+      inoremap <S-CR>                  <CR><C-o>O<Tab>
+
+      " break line (in .wiki)
+      nnoremap <silent><leader><Enter> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
+
+      " insert blank line above/below
+      nnoremap <silent><leader><Up>    :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
+      nnoremap <silent><leader><Down>  :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
+
+    " .............................................................. Delete line
+
+      " delete blank line above/below
+      nnoremap <silent><C-Up>          m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Down>        m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
     " ......................................................... Insert line wrap
 
@@ -140,7 +94,18 @@
       vmap <A-PageUp>   {
       vmap <A-PageDown> }
 
-    " ...................................................... Vertical text shift
+    " ....................................................... Shift left / right
+
+      " see Vertical Text Shifting functions.vim
+      nnoremap <S-Left>  <<
+      nnoremap <S-Right> >>
+      inoremap <S-Left>  <C-d>
+      inoremap <S-Right> <C-t>
+      " preserve selection when indenting
+      vnoremap <S-Right> >gv
+      vnoremap <S-Left>  <gv
+
+    " .......................................................... Shift up / down
 
       " see editing.vim for left/right key mappings
       " see https://github.com/gorkunov/vimconfig.git
@@ -202,6 +167,27 @@
 
   " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ............................................................. Convert tabs
+
+      :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
+      :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
+
+      nmap <silent><leader><tab>         :silent retab<CR>
+      nmap <silent><leader><leader><tab> :silent Space2Tab<CR>
+      vmap <silent><leader><leader><tab> :silent Space2Tab<CR>
+      nmap <silent><leader><tab><tab>    :silent Tab2Space<CR>
+      vmap <silent><leader><tab><tab>    :silent Tab2Space<CR>
+
+    " ...................................................... Reformat paragraghs
+
+      " select all
+      nnoremap <A-End>      ggVG
+      " retain cursor position for insert mode reformatting
+      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      " otherwise advance cursor to next paragraph
+      nnoremap <F4>         {jv}kJvgq}}{j
+      vnoremap <F4>         Jvgqj
+
     " ............................................................. Comment text
 
       " toggle comment, see T-comment plugins.vim
@@ -237,6 +223,12 @@
 
       imap <silent>,c <C-o>:call ToggleComment()<CR>
 
+    " .................................................. Quote enclose selection
+
+      " extend enclosing %V 1 char right to enclose last character of block
+      vnoremap '      :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "      :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+
     " .......................................................... Code block text
 
       " convert wiki text lines into code block lines
@@ -254,4 +246,4 @@
       nnoremap <silent><leader>` V:call CodeBlock()<CR>
       vmap <silent><leader>`     :call CodeBlock()<CR>
 
-" coding.vim
+" edit.vim

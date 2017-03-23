@@ -5,17 +5,18 @@
 
   " Plugin manager ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " bundles.vim must be sourced before plugins.vim
+    " .................................................................... Setup
 
-    " autocompletion plugin dependent on filetype
-    let ext = expand('%:e')
+      " bundles.vim must be sourced before plugins.vim
 
-    filetype off                                " safe startup (vundle requirement)
+      " autocompletion plugin dependent on filetype
+      let ext = expand('%:e')
+      filetype off                              " safe startup (vundle requirement)
 
-    " see https://github.com/junegunn/vim-plug
-    " :PlugInstall/PlugUpdate/PlugClean
-    " :PlugUpgrade (vim-plug)
-    call plug#begin('~/.vim/plugged')
+      " see https://github.com/junegunn/vim-plug
+      " :PlugInstall/PlugUpdate/PlugClean
+      " :PlugUpgrade (vim-plug)
+      call plug#begin('~/.vim/plugged')
 
   " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -104,10 +105,14 @@
       Plug 'MarcWeber/vim-addon-mw-utils'       " snippet library
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
 
-    call plug#end()
+  " Plugin manager ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    filetype plugin on
-    filetype indent on                          " required
-    filetype on
+    " ................................................................... Finish
+
+      call plug#end()
+
+      filetype plugin on
+      filetype indent on                        " required
+      filetype on
 
 " bundles.vim

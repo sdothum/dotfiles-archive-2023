@@ -446,7 +446,7 @@
 
     " ................................................................ T-comment
 
-      " effectively disable leader2 to avoid conflicts with drawing.vim
+      " effectively disable leader2 to avoid conflicts with lines.vim
       let g:tcommentMapLeader2 = '✘'
 
       " see ToggleComment functions.vim

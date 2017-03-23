@@ -5,20 +5,32 @@
 
   " Behaviour ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " .................................................................... Setup
+
       augroup ui
         autocmd!
       augroup END
 
-    " ................................................................ Attention
+      augroup column
+        autocmd!
+      augroup END
+
+    " ................................................................... Alerts
 
       set noerrorbells                      " don't beep
-      set gcr=a:blinkon0                    " disable cursor blink
-      set mousehide                         " hide mouse when typing
       set shortmess+=filmnrxoOtT            " abbrev. of messages (avoids "hit enter")
       set visualbell                        " no sounds
 
+      " recover last error message
+      nmap <leader>e :echo errmsg<CR>
+
+      " clear messages after awhile to keep screen clean and distraction free!
+      autocmd setup cursorhold * echo
+
     " .................................................................. Display
 
+      set gcr=a:blinkon0                    " disable cursor blink
+      set mousehide                         " hide mouse when typing
       set t_Co=256                          " 256 color support
       set viewoptions=folds,options,cursor,unix,slash
       set virtualedit=block                 " allow virtual editing in Visual block mode
@@ -79,6 +91,17 @@
       set guioptions-=m                     " no menubar
       set guioptions-=T                     " no toolbar
 
+      " toggle gui menu
+      function! ToggleGui()
+        if &guioptions =~# 'T'
+          set guioptions-=T
+          set guioptions-=m
+        else
+          set guioptions+=T
+          set guioptions+=m
+        endif
+      endfunction
+
       " Toggle Menu and Toolbar
       nnoremap <silent><F12> :call ToggleGui()<CR>
       inoremap <silent><F12> <C-o>:call ToggleGui()<CR>
@@ -89,15 +112,55 @@
 
       set colorcolumn=0                     " highlight column
 
+      " see plugins.vim IndentTheme()
+      let g:ruler = 0
+
+      " toggle colorcolumn modes
+      function! ToggleColumn()
+        if g:ruler == 0
+          let g:ruler = 1
+          let &colorcolumn = col('.')
+          autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
+        else
+          if g:ruler == 1
+            let g:ruler = 2
+            autocmd! column
+          else
+            let g:ruler = 0
+            let &colorcolumn = 0
+          endif
+        endif
+        call IndentTheme()
+      endfunction
+
+      nmap <silent><Bar>      :call ToggleColumn()<CR>
+      nmap <silent><Bar><Bar> :IndentGuidesToggle<CR>:call IndentTheme()<CR>
+
     " ............................................................. Line numbers
 
       set number                            " line numbers are good
       set numberwidth=10
       set number
 
+      " toggle relative number, line number and no numbering
+      function! ToggleNumber()
+        if (&relativenumber == 1 && &number == 1)
+          set norelativenumber
+        else
+          if (&relativenumber == 0 && &number == 1)
+            set nonumber
+          else
+            set relativenumber
+            set number
+          endif
+        endif
+      endfunction
+
+      nmap <silent># :call ToggleNumber()<CR>
+
       " toggle relative line numbers
-      autocmd! ui InsertEnter * set relativenumber
-      autocmd! ui InsertLeave * set norelativenumber
+      autocmd ui InsertEnter * set relativenumber
+      autocmd ui InsertLeave * set norelativenumber
 
     " ................................................... Status / command lines
 
@@ -109,9 +172,14 @@
 
   " Highlighting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ...................................................... Syntax highlighting
+
+      set omnifunc=syntaxcomplete#Complete
+      syntax on                             " turn on syntax highlighting
+
     " ...................................................... White space markers
 
-      set nolist                           " display tabs and trailing spaces visually
+      set nolist                            " display tabs and trailing spaces visually
       set listchars="tab:▸\<Space>"
 
       " set listchars+=trail:_
@@ -121,9 +189,20 @@
       set listchars+=precedes:<
       " set listchars+=eol:¬
 
-    " ...................................................... Syntax highlighting
+      " toggle trailing whitespace highlight and indentation levels
+      function! ToggleSpaces()
+        set list!
+        if &list == 0
+          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
+          " echo ''
+          let g:matchspace = ''
+        else
+          match ExtraWhitespace /\s\+$/
+          " echo 'List invisibles ON'
+          let g:matchspace = '■'
+        endif
+      endfunction
 
-      set omnifunc=syntaxcomplete#Complete
-      syntax on                             " turn on syntax highlighting
+      nmap <silent><leader><Space> :call ToggleSpaces()<CR>
 
 " ui.vim

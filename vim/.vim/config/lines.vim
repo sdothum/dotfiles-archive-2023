@@ -1,6 +1,6 @@
 " sdothum - 2016 (c) wtfpl
 
-" Drawing
+" Lines
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Comment line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -159,4 +159,4 @@
       imap <silent>,<Right> <C-o>:silent call RightJustify()<CR>
       nmap <silent>,<Right> :silent call RightJustify()<CR>
 
-" drawing.vim
+" lines.vim
