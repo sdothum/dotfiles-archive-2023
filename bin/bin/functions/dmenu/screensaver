@@ -20,7 +20,7 @@ fi
 
 screensaver() {
   xset s on +dpms
-  pidof xscreensaver >/dev/null || ( xscreensaver -no-splash & )
+  pidof xscreensaver >/dev/null || xscreensaver -no-splash &
 }
 
 case $toggle in

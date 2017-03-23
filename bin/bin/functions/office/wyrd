@@ -11,7 +11,7 @@
 cp $HOME/.reminders /tmp/
 while :
 do
-  pidof wyrd || ( sleep 1 && /usr/bin/wyrd 2>>/tmp/wyrd.log )
+  pidof wyrd || { sleep 1 && /usr/bin/wyrd 2>>/tmp/wyrd.log; }
 done
 
 # vim: set ft=sh: #

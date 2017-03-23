@@ -35,7 +35,7 @@ if [ $USER != root ] ;then
     fi
 
     # pre-initialize arm fuzzy searches
-    nohup fcache + $HOME &
+    nohup fcache + $HOME >/dev/null &
     weather &
   fi
 
