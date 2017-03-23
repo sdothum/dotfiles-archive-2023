@@ -7,7 +7,6 @@
 # ................................................................ Session login
 
 fortune=/usr/bin/fortune
-user=shum
 # see (herbstluftwm) term
 trap "rm -f $FORTUNE:term" EXIT
 
@@ -18,7 +17,7 @@ elif [ -e $FORTUNE:term ] ;then
   if [ ! -e $FORTUNE ] ;then
     if which $fortune >/dev/null 2>&1 ;then
       # su notify to apply user notification (spec)
-      [ $USER = root ] && /usr/bin/su -c "/home/$user/bin/notify 10 critical \"$(fortune)\"" - $user 2>/dev/null ||
+      [ $USER = root ] && /usr/bin/su -c "/home/$USER/bin/notify 10 critical \"$(fortune)\"" - $USER 2>/dev/null ||
                           notify 10 "$(fortune)" 2>/dev/null
     fi
     # one fortune is enough

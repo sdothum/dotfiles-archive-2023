@@ -9,6 +9,7 @@
 usage() {
   echo "usage: $(basename $0) [type] <dir>"
   echo "usage: $(basename $0) - <dir>, force directory cache update"
+  echo "usage: $(basename $0) + <dir>, directory cache creation only"
   exit 1
 }
 
@@ -16,7 +17,6 @@ usage() {
 #       but directory caches (used in fuzzy jumping) require manual updating, as required,
 #       to avoid triggering unnecessary file scans (directory trees being restructured far
 #       less frequently than regular file creation/deletion)
-
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 
@@ -26,6 +26,10 @@ case $1 in
                              shift ;;
 
   '-') refresh=true
+       type=d
+       shift ;;
+
+  '+') create=true
        type=d
        shift ;;
 
@@ -41,13 +45,15 @@ dcache=$CACHEDIR/fcache:d$(cname $1)
 # if unchanged files in non-directory search, return cache
 # note: always returns directory cache
 if [ -e $cache ] && [ -z $refresh ] ;then
-  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || exec cat $cache
+  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) ||
+                    [ $create ] && exit ||
+                                   exec cat $cache
 fi
 
 # [ $refresh ] && notify "$1" 'Refreshing fcache'
 [ -L $1 ] && link='-L'
 pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$dcache
 pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache
-[ $refresh ] || find $link $1 -type $type 2>/dev/null | filter
+[ $refresh ] || [ $create ] || find $link $1 -type $type 2>/dev/null | filter
 
 # vim: set ft=sh: #
