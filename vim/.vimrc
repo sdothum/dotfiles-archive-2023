@@ -14,14 +14,17 @@
     " ................................................................. Settings
 
       source ~/.vim/config/buffers.vim
+      source ~/.vim/config/files.vim
       source ~/.vim/config/gui.vim
       source ~/.vim/config/settings.vim
 
-    " .................................................................... Rules
+    " .................................................................. Editing
 
       source ~/.vim/config/edit.vim
-      source ~/.vim/config/files.vim
       source ~/.vim/config/lines.vim
+
+    " ................................................................... Layout
+
       source ~/.vim/config/status.vim
       source ~/.vim/config/themes.vim
       source ~/.vim/config/views.vim

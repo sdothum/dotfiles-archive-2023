@@ -8,7 +8,7 @@
     " .................................................................. Leaders
 
       " macros assume the first word is the comment delimiter
-      let g:linedrawing = '▁▔▂'             " declare multibytes, see status.vim
+      let g:linedrawing = '▁─▔▂'            " declare multibytes, see status.vim
 
     " ................................................................ Underline
 
@@ -72,6 +72,8 @@
 
       imap <silent>,.. <C-o>:silent call AppendTrailer('.')<CR>
       nmap <silent>,.. :silent call AppendTrailer('.')<CR>
+      imap <silent>,-- <C-o>:silent call AppendTrailer('─')<CR>
+      nmap <silent>,-- :silent call AppendTrailer('─')<CR>
       imap <silent>,__ <C-o>:silent call AppendTrailer('▁')<CR>
       nmap <silent>,__ :silent call AppendTrailer('▁')<CR>
 

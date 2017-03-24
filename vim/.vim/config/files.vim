@@ -80,6 +80,7 @@
 
       " toggle modifiable attribute
       nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+      nmap <leader>ft        :set filetype<Space>
 
       " check filetype on open
       autocmd filetype BufNewFile,BufRead * call CheckFiletype()

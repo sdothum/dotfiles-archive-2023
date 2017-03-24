@@ -3,9 +3,11 @@ snippet usage
 		echo "usage: $(basename $${0:0}) ${1:text}"
 		exit 1
 	}
+endsnippet
 
 snippet ``
 	$(${1:text})
+endsnippet
 
 snippet dash
 	#!/usr/bin/dash
@@ -14,6 +16,7 @@ snippet dash
 	${1:text}
 
 	# vim: set ft=sh: #
+endsnippet
 
 snippet sh
 	#!/bin/sh
@@ -22,5 +25,6 @@ snippet sh
 	${1:text}
 
 	# vim: set ft=sh: #
+endsnippet
 
 # vim: set ft=snippet: #

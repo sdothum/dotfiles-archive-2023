@@ -317,6 +317,16 @@
       let g:pencil#joinspaces      = 0      " 0=one_space (def), 1=two_spaces
       let g:pencil#cursorwrap      = 1      " 0=disable, 1=enable (def)
       let g:pencil#autoformat      = 1      " 0=manual, 1=auto (def)
+      let g:pencil#mode_indicators =
+          \{
+          \  'hard' : 'Hard Pencil'
+          \, 'auto' : 'Auto Pencil'
+          \, 'soft' : 'Soft Pencil'
+          \, 'off'  : 'No Pencil'
+          \}
+
+      imap <F5> <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
+      nmap <F5> :silent TogglePencil<CR>:echo PencilMode()<CR>
 
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
@@ -397,10 +407,13 @@
     " ................................................................. Snipmate
 
       let g:snipMate = get(g:, 'snipMate', {})
-      let g:snipMate.scope_aliases = {}
       " see CheckFiletype() files.vim
-      let g:snipMate.scope_aliases['new'] = 'conf,fish,hs,ruby,sh,zsh'
-      let g:snipMate.scope_aliases['text'] = 'mail,markdown'
+      let g:snipMate.scope_aliases =
+            \{
+            \  'new'      : 'conf,fish,hs,ruby,sh,zsh'
+            \, 'markdown' : 'vimwiki'
+            \, 'text'     : 'mail'
+            \}
 
       " remap tab to avoid conflict with simple-complete
       imap <C-e>     <Plug>snipMateNextOrTrigger
