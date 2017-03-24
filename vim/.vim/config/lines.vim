@@ -5,7 +5,7 @@
 
   " Comment line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................................. Leaders
+    " .................................................................... Setup
 
       " macros assume the first word is the comment delimiter
       let g:linedrawing = '▁─▔▂'            " declare multibytes, see status.vim

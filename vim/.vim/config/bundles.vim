@@ -62,7 +62,7 @@
       " Plug 'tpope/vim-fugitive'               " github wrapper
       " Plug 'ludovicchabant/vim-lawrencium'    " mercurial wrapper
 
-    " .................................................................... Files
+    " ................................................................ Documents
 
       " Plug 'cwoac/nvim'                       " notational velocity
       " Plug 'greyblake/vim-preview'            " markdown

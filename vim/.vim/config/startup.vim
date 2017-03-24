@@ -1,6 +1,6 @@
 " sdothum - 2016 (c) wtfpl
 
-" Start
+" Startup
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Vim ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -9,7 +9,7 @@
 
       set nocompatible                      " disable vi-compatibility
 
-      augroup start
+      augroup startup
         autocmd!
       augroup END
 
@@ -47,8 +47,8 @@
       nmap <silent><leader><leader>vim :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
 
       " load .vimrc after save
-      autocmd start BufWritePost $MYVIMRC nested source $MYVIMRC
-      autocmd start BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
-      autocmd start BufWinEnter  *.vim           set filetype=vim
+      autocmd startup BufWritePost $MYVIMRC nested source $MYVIMRC
+      autocmd startup BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
+      autocmd startup BufWinEnter  *.vim           set filetype=vim
 
-" start.vim
+" startup.vim

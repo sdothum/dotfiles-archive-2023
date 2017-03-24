@@ -7,16 +7,16 @@
 
     " .................................................................. Startup
 
-      source ~/.vim/config/start.vim
+      source ~/.vim/config/startup.vim
       source ~/.vim/config/bundles.vim
       source ~/.vim/config/functions.vim
 
     " ................................................................. Settings
 
+      source ~/.vim/config/settings.vim
       source ~/.vim/config/buffers.vim
       source ~/.vim/config/files.vim
       source ~/.vim/config/gui.vim
-      source ~/.vim/config/settings.vim
 
     " .................................................................. Editing
 

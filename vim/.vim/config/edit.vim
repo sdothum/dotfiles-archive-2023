@@ -3,9 +3,9 @@
 " Edit
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " Line wrap ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Line ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................. Insert line / paragraph
+    " .............................................................. Insert line
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
@@ -19,12 +19,6 @@
       " insert blank line above/below
       nnoremap <silent><leader><Up>    :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
       nnoremap <silent><leader><Down>  :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
-
-    " .............................................................. Delete line
-
-      " delete blank line above/below
-      nnoremap <silent><C-Up>          m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
-      nnoremap <silent><C-Down>        m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
     " ......................................................... Insert line wrap
 
@@ -44,23 +38,21 @@
 
       inoremap <silent><C-Return> <C-o>:call InsertWrap()<CR>
 
-    " ......................................................... Toggle line wrap
+    " ...................................................... Reformat paragraghs
 
-      function! ToggleWrap()
-        if &formatoptions =~ 't'
-          NoPencil
-          let &formatoptions = g:codeoptions
-          echo 'Automatic line wrap OFF'
-        elseif &formatoptions == g:codeoptions
-          Pencil
-          set formatoptions=tqwan1
-          echo 'Automatic line wrap ON'
-        else
-          set formatoptions
-        endif
-      endfunction
+      " select all
+      nnoremap <A-End>      ggVG
+      " retain cursor position for insert mode reformatting
+      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      " otherwise advance cursor to next paragraph
+      nnoremap <F4>         {jv}kJvgq}}{j
+      vnoremap <F4>         Jvgqj
 
-      nmap <silent><leader><CR> :call ToggleWrap()<CR>
+    " .............................................................. Delete line
+
+      " delete blank line above/below
+      nnoremap <silent><C-Up>          m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Down>        m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
   " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -174,16 +166,6 @@
       vmap <silent><leader><leader><tab> :silent Space2Tab<CR>
       nmap <silent><leader><tab><Space>  :silent Tab2Space<CR>
       vmap <silent><leader><tab><Space>  :silent Tab2Space<CR>
-
-    " ...................................................... Reformat paragraghs
-
-      " select all
-      nnoremap <A-End>      ggVG
-      " retain cursor position for insert mode reformatting
-      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
-      " otherwise advance cursor to next paragraph
-      nnoremap <F4>         {jv}kJvgq}}{j
-      vnoremap <F4>         Jvgqj
 
     " .................................................. Quote enclose selection
 

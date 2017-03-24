@@ -10,62 +10,29 @@
       let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
       let g:mapleader = "\<Space>"
 
+      " unshift command mode
+      nnoremap ; :
+      vnoremap ; :
+
       augroup kbd
         autocmd!
       augroup END
-
-    " ....................................................... Backspace settings
-
-      set backspace=indent,eol,start        " allow backspace in insert mode
-      set whichwrap=b,s,h,l,<,>,[,]         " backspace and cursor keys wrap
-
-    " .......................................................... Modal switching
-
-      " no more reaching for shift or esc keys, reverse key values
-      nnoremap ;       :
-      vnoremap ;       :
-      " imap kk        <ESC>
-
-    " ......................................................... Cursor movements
-
-      " up/down by screen lines, not file lines
-      nnoremap j       gj
-      nnoremap k       gk
-      " up/down by paragraph sentence
-      nmap <C-S-Left>  {{)
-      nmap <C-S-Right> })
-
-      " insert mode local region cursor movements
-      " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap <C-h>     <Left>
-      " imap <C-j>     <Down>
-      " imap <C-k>     <Up>
-      " imap <C-l>     <Right>
-
-    " ............................................................. Disable keys
-
-      " affirm vim modal usage but these keys are remapped below anyway :-)
-      " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
-      " imap <down>    <nop>
-      " imap <left>    <nop>
-      " imap <right>   <nop>
-      " imap <up>      <nop>
-      " nmap <down>    <nop>
-      " nmap <left>    <nop>
-      " nmap <right>   <nop>
-      " nmap <up>      <nop>
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh
 
       " Note: scripts are affected by the mappings below!
-      " e.g. "h" becomes "m", "f" becomes "t" etc.
-      " see thedarnedestthing.com
+      "       e.g. "h" becomes "m", "f" becomes "t" etc.
+      "       see thedarnedestthing.com
 
       " hjkl mapping (0) hjkl (1) mnle
       let s:mapping = 0
-      let g:mnle = 0
+      let g:mnle    = 0
+
+      " up/down by screen lines, not file lines
+      nnoremap j     gj
+      nnoremap k     gk
 
       function! Colemak()
         if s:mapping == 0
@@ -114,6 +81,39 @@
       if $COLEMAK_DH == 'true'
         call Colemak()
       endif
+
+  " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ....................................................... Backspace settings
+
+      set backspace=indent,eol,start        " allow backspace in insert mode
+      set whichwrap=b,s,h,l,<,>,[,]         " backspace and cursor keys wrap
+
+    " ......................................................... Cursor movements
+
+      " up/down by paragraph sentence
+      nmap <C-S-Left>  {{)
+      nmap <C-S-Right> })
+
+      " insert mode local region cursor movements
+      " <C-h> is overridden by auto-pairs delete <BS> when enabled
+      " imap <C-h>     <Left>
+      " imap <C-j>     <Down>
+      " imap <C-k>     <Up>
+      " imap <C-l>     <Right>
+
+    " ............................................................. Disable keys
+
+      " affirm vim modal usage but these keys are remapped below anyway :-)
+      " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
+      " imap <down>    <nop>
+      " imap <left>    <nop>
+      " imap <right>   <nop>
+      " imap <up>      <nop>
+      " nmap <down>    <nop>
+      " nmap <left>    <nop>
+      " nmap <right>   <nop>
+      " nmap <up>      <nop>
 
   " Keyboard shortcuts ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
