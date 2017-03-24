@@ -72,6 +72,10 @@
             endif
           endfor
         endif
+        " see Snipmate plugins.vim
+        if &filetype == ''
+          let &filetype = 'new'
+        endif
       endfunction
 
       " toggle modifiable attribute

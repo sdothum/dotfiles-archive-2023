@@ -172,8 +172,8 @@
       nmap <silent><leader><tab>         :silent retab<CR>
       nmap <silent><leader><leader><tab> :silent Space2Tab<CR>
       vmap <silent><leader><leader><tab> :silent Space2Tab<CR>
-      nmap <silent><leader><tab><tab>    :silent Tab2Space<CR>
-      vmap <silent><leader><tab><tab>    :silent Tab2Space<CR>
+      nmap <silent><leader><tab><Space>  :silent Tab2Space<CR>
+      vmap <silent><leader><tab><Space>  :silent Tab2Space<CR>
 
     " ...................................................... Reformat paragraghs
 

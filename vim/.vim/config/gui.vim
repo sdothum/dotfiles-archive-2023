@@ -1,6 +1,6 @@
 " sdothum - 2016 (c) wtfpppl
 
-" UI
+" GUI
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Behaviour ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -112,7 +112,7 @@
 
       set colorcolumn=0                     " highlight column
 
-      " see plugins.vim IndentTheme()
+      " see IndentTheme() plugins.vim
       let g:ruler = 0
 
       " toggle colorcolumn modes

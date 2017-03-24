@@ -1,7 +1,11 @@
-snippet a
+snippet url
 	[${1:text}](http://${2:url})
 
 snippet img
 	![${1:text}](/images/${2:file}.jpg)
+
+snippet date
+	`tolower(strftime("%A, %-d %B %Y"))`
+endsnippet
 
 # vim: set ft=snippet: #

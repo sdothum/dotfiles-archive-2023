@@ -10,11 +10,9 @@
       source ~/.vim/config/start.vim
       source ~/.vim/config/bundles.vim
       source ~/.vim/config/functions.vim
-      source ~/.vim/config/plugins.vim
 
     " ................................................................. Settings
 
-      source ~/.vim/config/abbrev.vim
       source ~/.vim/config/buffers.vim
       source ~/.vim/config/gui.vim
       source ~/.vim/config/settings.vim

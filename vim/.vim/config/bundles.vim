@@ -105,14 +105,16 @@
       Plug 'MarcWeber/vim-addon-mw-utils'       " snippet library
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
 
-  " Plugin manager ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ................................................................... Finish
+    " ................................................................ Configure
 
       call plug#end()
 
       filetype plugin on
       filetype indent on                        " required
       filetype on
+
+      source ~/.vim/config/plugins.vim
 
 " bundles.vim

@@ -67,10 +67,9 @@
 
     " ............................................................ Indent guides
 
-      " see coding.vim, theme.vim
       let g:indent_guides_auto_colors = 0
 
-      " subtle highlighting of even indents only, see coding.vim
+      " subtle highlighting of even indents only, see gui.vim, theme.vim
       function! IndentTheme()
         if &background == 'light'
           execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
@@ -93,7 +92,7 @@
 
     " ................................................................ Lightline
 
-      let g:matchspace = ''                 " see ToggleSpaces coding.vim
+      let g:matchspace = ''                 " see ToggleSpaces() gui.vim
       let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
 
       if has("gui_running")
@@ -399,10 +398,14 @@
 
       let g:snipMate = get(g:, 'snipMate', {})
       let g:snipMate.scope_aliases = {}
+      " see CheckFiletype() files.vim
+      let g:snipMate.scope_aliases['new'] = 'conf,fish,hs,ruby,sh,zsh'
+      let g:snipMate.scope_aliases['text'] = 'mail,markdown'
 
       " remap tab to avoid conflict with simple-complete
-      imap <C-e> <Plug>snipMateNextOrTrigger
-      smap <C-e> <Plug>snipMateNextOrTrigger
+      imap <C-e>     <Plug>snipMateNextOrTrigger
+      smap <C-e>     <Plug>snipMateNextOrTrigger
+      nmap <leader>e :SnipMateLoadScope<Space>
 
     " ................................................................ Solarized
 

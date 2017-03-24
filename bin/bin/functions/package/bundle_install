@@ -78,7 +78,7 @@ do
       case $action in
         '-') continue ;;
         g  ) echo "$gems" | grep -q "^$package$" && installed=true || pkg='gem ' ;;
-        m  ) pkg='make_install possibly '
+        m  ) pkg='make_install possibly ' ;;
         *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
       esac
       [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[${pkg}not installed]"
