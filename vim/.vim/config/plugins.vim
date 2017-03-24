@@ -320,6 +320,18 @@
 
       imap <C-e> <Plug>(neosnippet_expand_or_jump)
 
+    " ............................................................ Nerdcommenter
+
+      let g:NERDSpaceDelims            = 1
+      let g:NERDCompactSexyComs        = 1
+      let g:NERDDefaultAlign           = 'left'
+      let g:NERDCustomDelimiters       = { 'c': { 'left': '//','right': '' } }
+      let g:NERDCommentEmptyLines      = 1
+      let g:NERDTrimTrailingWhitespace = 1
+
+      " insert mode analogue to nmap <leader>c<Space>
+      imap <silent>,c, <Plug>NERDCommenterToggle
+
     " ................................................................. Open URL
 
       " nmap <silent><leader>o :OpenUrl<CR>
@@ -457,16 +469,6 @@
           \, 'ctagsbin'   : '~/.vim/vwtags.py'
           \, 'ctagsargs'  : 'default'
           \}
-
-    " ................................................................ T-comment
-
-      " effectively disable leader2 to avoid conflicts with lines.vim
-      let g:tcommentMapLeader2 = '✘'
-
-      " see ToggleComment functions.vim
-      nmap <leader>c <C-_><C-_>
-      vmap <leader>c <C-_><C-_>
-      " imap ,c <C-_><C-_>
 
     " .................................................................. Vimwiki
 

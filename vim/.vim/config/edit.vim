@@ -185,41 +185,6 @@
       nnoremap <F4>         {jv}kJvgq}}{j
       vnoremap <F4>         Jvgqj
 
-    " ............................................................. Comment text
-
-      " toggle comment, see T-comment plugins.vim
-      function! ToggleComment()
-        let l:col = virtcol('.')
-        let l:len = virtcol('$')
-        " suffix empty line from successive ToggleComment's
-        " (for cycles: empty commented -> uncommented -> empty commented..)
-        if matchstr(getline(line('.')), '\s') > ''
-          let l:mark = l:col
-        else
-          let l:mark = 0
-        endif
-        " toggle comment line
-        execute "normal :TComment\<CR>"
-        " reposition cursor when uncommenting autocomment line (creates "" line)
-        if matchstr(getline(line('.')), '\S') == ''
-          execute 'normal ' . l:col . 'a '
-          execute "normal a\<BS>"
-        endif
-        " loose column repositioning calculation for beginning and end of line
-        " but not all near edge corner cases are accounted for
-        if virtcol('.') > 1 && virtcol('.') < virtcol('$') - 1
-          if virtcol('$') > l:len
-            execute 'normal ' . (virtcol('$') - l:len) . 'e'
-          else
-            if virtcol('$') < l:len
-              execute 'normal ' . (l:len - virtcol('$')) . 'm'
-            endif
-          endif
-        endif
-      endfunction
-
-      imap <silent>,c <C-o>:call ToggleComment()<CR>
-
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
