@@ -7,7 +7,7 @@
 
     " .................................................................... Setup
 
-      augroup ui
+      augroup gui
         autocmd!
       augroup END
 
@@ -25,7 +25,7 @@
       nmap <leader>e :echo errmsg<CR>
 
       " clear messages after awhile to keep screen clean and distraction free!
-      autocmd setup cursorhold * echo
+      autocmd gui cursorhold * echo
 
     " .................................................................. Display
 
@@ -74,7 +74,7 @@
 
       set cursorline                        " highlight current line
 
-      set guicursor=a:block                 " mode aware cursors, see solarized functions.vim
+      set guicursor=a:block                 " mode aware cursors
       set guicursor+=o:hor50-Cursor
       set guicursor+=n:Cursor
       set guicursor+=i-ci-sm:ver25-InsertCursor
@@ -159,8 +159,8 @@
       nmap <silent># :call ToggleNumber()<CR>
 
       " toggle relative line numbers
-      autocmd ui InsertEnter * set relativenumber
-      autocmd ui InsertLeave * set norelativenumber
+      autocmd gui InsertEnter * set relativenumber
+      autocmd gui InsertLeave * set norelativenumber
 
     " ................................................... Status / command lines
 
@@ -205,4 +205,4 @@
 
       nmap <silent><leader><Space> :call ToggleSpaces()<CR>
 
-" ui.vim
+" gui.vim

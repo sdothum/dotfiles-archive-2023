@@ -9,7 +9,6 @@
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
-      " see InsertWrap coding.vim
       " inoremap <C-CR>                <C-o>o
       " similarly, open curly braces and continue inserting in indented body
       inoremap <S-CR>                  <CR><C-o>O<Tab>
@@ -96,7 +95,6 @@
 
     " ....................................................... Shift left / right
 
-      " see Vertical Text Shifting functions.vim
       nnoremap <S-Left>  <<
       nnoremap <S-Right> >>
       inoremap <S-Left>  <C-d>
@@ -107,7 +105,6 @@
 
     " .......................................................... Shift up / down
 
-      " see editing.vim for left/right key mappings
       " see https://github.com/gorkunov/vimconfig.git
       function! s:MoveLineUp()
         call s:MoveLineOrVisualUp('.', '')

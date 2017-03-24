@@ -15,7 +15,7 @@
 
       let s:code       = 0                  " statusline buffer statistics toggle (0) off (1) on
       let s:prose      = 0
-      let s:wikistatus = 1                  " initial wikistatus, see statusline.vim
+      let s:wikistatus = 1                  " initial wikistatus
 
       augroup status
         autocmd!
@@ -234,4 +234,4 @@
       imap <silent><F8> <C-o>:call ToggleInfo()<CR>
       nmap <silent><F8> :call ToggleInfo()<CR>
 
-" statusline.vim
+" status.vim

@@ -5,41 +5,39 @@
 
   " Comment line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    let g:linedrawing = '▁▔▂'             " declare multibytes, see statusline.vim
+    " .................................................................. Leaders
+
+      " macros assume the first word is the comment delimiter
+      let g:linedrawing = '▁▔▂'             " declare multibytes, see status.vim
 
     " ................................................................ Underline
 
       " example: draw underline
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-
-      " for simplification, assumes first word of line is comment delimiter
       function! Underline(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           execute 'normal yypwv$r' . a:delimiter
         endif
+        normal $
       endfunction
 
-      imap <silent>,,- <C-o>:silent call Underline('▔')<CR><C-Return>
-      nmap <silent>,,- :silent call Underline('▔')<CR><Down>
-      imap <silent>,,_ <C-o>:silent call Underline('▂')<CR><C-Return>
-      nmap <silent>,,_ :silent call Underline('▂')<CR><Down>
+      imap <silent>,,- <C-o>:silent call Underline('▔')<CR>
+      nmap <silent>,,- :silent call Underline('▔')<CR>
+      imap <silent>,,_ <C-o>:silent call Underline('▂')<CR>
+      nmap <silent>,,_ :silent call Underline('▂')<CR>
 
     " .................................................................... Ruler
 
       " example: draw ruler
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-      " note: to insert a ruler on an empty line (virtual column position), add a <space>
-      " character, else in insert mode, the ruler will positioned using column 1
-
       function! Drawline(delimiter)
         call Underline(a:delimiter)
-        normal $
         if virtcol('.') < g:linewidth       " for mirrored left/right margin spacing
           " let l:col = g:linewidth - virtcol('.') - l:col + 1
           let l:col   = g:linewidth - virtcol('.')
           execute 'normal ' . l:col . 'a' . a:delimiter
         endif
-        normal o
+        normal $
       endfunction
 
       imap <silent>,,-- <C-o>:silent call Drawline('▔')<CR>
@@ -50,7 +48,6 @@
     " .................................................................. Trailer
 
       " example: append trailer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
       function! AppendTrailer(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing trailer
@@ -69,7 +66,7 @@
             execute 'normal ' . l:col . 'a' . a:delimiter
             set formatoptions+=c
           endif
-          normal o
+          normal $
         endif
       endfunction
 
@@ -92,7 +89,6 @@
     " ................................................................... Leader
 
       " ................................................. example: insert leader
-
       function! InsertLeader(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader
@@ -110,7 +106,7 @@
           else
             normal $bmD^wmP
           endif
-          normal o
+          normal $
         endif
       endfunction
 
@@ -134,29 +130,16 @@
       imap <silent>,? <C-o>:call InputLeader()<CR>
       nmap <silent>,? :call InputLeader()<CR>
 
-      function! RightJustify()
-        if matchstr(getline(line('.')), '\S') > ''
-          if matchstr(getline(line('.')), '^ *') > '' " remove existing leader
-            if g:mnle == 0
-              execute 'normal 0vwhd'
-            else
-              execute 'normal 0vwmd'
-            endif
-          endif
-          normal $
-          let l:col = g:linewidth - virtcol('.') - 1
-          if l:col > 0
-            set formatoptions-=c            " suppress potential comment line wrapping
-            normal ^
-            execute 'normal ' . l:col . 'i '
-            execute 'normal a '
-            set formatoptions+=c
-          endif
-        endif
-        normal o
+    " .................................................................. Justify
+
+      "                                                         example: justify
+      function! Justify()
+        call InsertLeader('▔')
+        execute ':s/▔/ /'
+        normal $
       endfunction
 
-      imap <silent>,<Right> <C-o>:silent call RightJustify()<CR>
-      nmap <silent>,<Right> :silent call RightJustify()<CR>
+      imap <silent>,<Right> <C-o>:silent call Justify()<CR>
+      nmap <silent>,<Right> :silent call Justify()<CR>
 
 " lines.vim

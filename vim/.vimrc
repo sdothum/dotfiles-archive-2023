@@ -5,7 +5,7 @@
 
   " Sources ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ........................................................... Initialization
+    " .................................................................. Startup
 
       source ~/.vim/config/start.vim
       source ~/.vim/config/bundles.vim
@@ -14,17 +14,17 @@
 
     " ................................................................. Settings
 
-      source ~/.vim/config/setup.vim
       source ~/.vim/config/abbrev.vim
       source ~/.vim/config/buffers.vim
-      source ~/.vim/config/ui.vim
+      source ~/.vim/config/gui.vim
+      source ~/.vim/config/settings.vim
 
-    " ............................................................... Extensions
+    " .................................................................... Rules
 
       source ~/.vim/config/edit.vim
       source ~/.vim/config/files.vim
       source ~/.vim/config/lines.vim
-      source ~/.vim/config/statusline.vim
+      source ~/.vim/config/status.vim
       source ~/.vim/config/themes.vim
       source ~/.vim/config/views.vim
 
