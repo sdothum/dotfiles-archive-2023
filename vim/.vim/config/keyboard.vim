@@ -120,7 +120,7 @@
     " ............................................................. Copy / paste
 
       " prevent cascading paste insert
-      set pastetoggle=<F2>
+      set pastetoggle=<F3>
       autocmd kbd InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
@@ -163,10 +163,10 @@
       " " note: to enter visual block mode type v<C-v>
       " inoremap <C-v>    <ESC>"+pli
       " nnoremap <C-v>    h"+pl
-      imap <F3>           <ESC>"+pli
-      nmap <F3>           h"+pl
+      imap <F2>           <ESC>"+pli
+      nmap <F2>           h"+pl
       " command mode insertion (paste) of current yank buffer
       " cmap <C-v>        <C-r>"
-      cmap <F3>           <C-r>"
+      cmap <F2>           <C-r>"
 
 " keyboard.vim

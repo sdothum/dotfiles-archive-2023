@@ -7,8 +7,6 @@
 
     " .................................................................... Setup
 
-      " bundles.vim must be sourced before plugins.vim
-
       " autocompletion plugin dependent on filetype
       let ext = expand('%:e')
       filetype off                              " safe startup (vundle requirement)
@@ -94,6 +92,7 @@
 
       " Plug 'mattn/emmet-vim'                  " html
       Plug 'auto-pairs'                         " insert/delete pairs
+      Plug 'Shougo/neosnippet'                  " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling
       if ext == 'wiki'
@@ -101,8 +100,6 @@
       else
         Plug 'maxboisvert/vim-simple-complete'  " enter completion
       endif
-      Plug 'garbas/vim-snipmate'                " snippets
-      Plug 'MarcWeber/vim-addon-mw-utils'       " snippet library
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

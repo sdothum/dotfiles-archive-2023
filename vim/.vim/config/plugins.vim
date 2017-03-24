@@ -306,6 +306,20 @@
 
       let g:nrrw_rgn_vert = 1               " open in vertical split buffer
 
+    " ............................................................... Neosnippet
+
+      let g:neosnippet#snippets_directory = '~/.vim/snippets'
+      let g:neosnippet#enable_snipmate_compatibility = 1
+      " see CheckFiletype() files.vim
+      let g:neosnippet#scope_aliases =
+          \{
+          \  'new'      : 'conf,fish,hs,ruby,sh,zsh'
+          \, 'markdown' : 'vimwiki'
+          \, 'text'     : 'mail'
+          \}
+
+      imap <C-e> <Plug>(neosnippet_expand_or_jump)
+
     " ................................................................. Open URL
 
       " nmap <silent><leader>o :OpenUrl<CR>
@@ -325,8 +339,8 @@
           \, 'off'  : 'No Pencil'
           \}
 
-      imap <F5> <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
-      nmap <F5> :silent TogglePencil<CR>:echo PencilMode()<CR>
+      imap <F6> <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
+      nmap <F6> :silent TogglePencil<CR>:echo PencilMode()<CR>
 
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
@@ -403,22 +417,6 @@
       "
       " " preserve s and remap to f
       " autocmd plugin BufNewFile,BufRead * call Sneak_f()
-
-    " ................................................................. Snipmate
-
-      let g:snipMate = get(g:, 'snipMate', {})
-      " see CheckFiletype() files.vim
-      let g:snipMate.scope_aliases =
-            \{
-            \  'new'      : 'conf,fish,hs,ruby,sh,zsh'
-            \, 'markdown' : 'vimwiki'
-            \, 'text'     : 'mail'
-            \}
-
-      " remap tab to avoid conflict with simple-complete
-      imap <C-e>     <Plug>snipMateNextOrTrigger
-      smap <C-e>     <Plug>snipMateNextOrTrigger
-      nmap <leader>e :SnipMateLoadScope<Space>
 
     " ................................................................ Solarized
 
