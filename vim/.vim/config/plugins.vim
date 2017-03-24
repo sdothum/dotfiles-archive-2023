@@ -330,7 +330,7 @@
       let g:NERDTrimTrailingWhitespace = 1
 
       " insert mode analogue to nmap <leader>c<Space>
-      imap <silent>,c, <Plug>NERDCommenterToggle
+      imap ,c, <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
 
     " ................................................................. Open URL
 
