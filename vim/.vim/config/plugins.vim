@@ -308,7 +308,7 @@
 
     " ............................................................... Neosnippet
 
-      let g:neosnippet#snippets_directory = '~/.vim/snippets'
+      let g:neosnippet#snippets_directory            = '~/.vim/snippets'
       let g:neosnippet#enable_snipmate_compatibility = 1
       " see CheckFiletype() files.vim
       let g:neosnippet#scope_aliases =
