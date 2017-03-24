@@ -322,12 +322,12 @@
 
     " ............................................................ Nerdcommenter
 
-      let g:NERDSpaceDelims            = 1
-      let g:NERDCompactSexyComs        = 1
+      let g:NERDSpaceDelims            = 1  " space after comment delimiter
+      let g:NERDCompactSexyComs        = 1  " prettify multi-line
       let g:NERDDefaultAlign           = 'left'
       let g:NERDCustomDelimiters       = { 'c': { 'left': '//','right': '' } }
-      let g:NERDCommentEmptyLines      = 1
-      let g:NERDTrimTrailingWhitespace = 1
+      let g:NERDCommentEmptyLines      = 1  " comment blank lines
+      let g:NERDTrimTrailingWhitespace = 1  " trim trailing whitespace
 
       " insert mode analogue to nmap <leader>c<Space>
       imap ,c, <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
