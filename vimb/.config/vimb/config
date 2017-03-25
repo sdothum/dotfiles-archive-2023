@@ -5,6 +5,7 @@ nnoremap - zo
 nnoremap + zi
 nnoremap b :open !
 nnoremap B :tabopen !
+nnoremap c :sh! chromium %<CR>
 nnoremap d :quit<CR>
 nnoremap D :quit!<CR>
 nnoremap H :open http://luna:8000/tt-rss/<CR>

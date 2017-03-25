@@ -59,13 +59,15 @@ img[src*='images/pub_unset.png'] { display: none !important; }
 
 .cdm.expandable.Selected .cdmHeader .hlFeed { margin-left: -46px !important; }
 
-/* span.updated { display: none !important; } */
 span.updated {
   position: absolute !important;
   left: 4px !important;
   top: 24px !important;
   font-size: 0.75em !important;
+  color: #bbb !important;
 }
+
+.Selected span.updated { top: 12px !important; }
 
 .scoreWrap { display: none !important; }
 
