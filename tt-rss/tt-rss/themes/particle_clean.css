@@ -67,7 +67,11 @@ span.updated {
   color: #aaa !important;
 }
 
-.Selected span.updated { top: 12px !important; }
+.Selected span.updated {
+  /* top: 12px !important; */
+  top: 5px !important;
+  left: 9px !important;
+}
 
 .scoreWrap { display: none !important; }
 
