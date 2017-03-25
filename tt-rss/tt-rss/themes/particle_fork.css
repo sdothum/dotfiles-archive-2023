@@ -115,12 +115,17 @@ div#notify.notify.notify_progress { display: none !important; }
   opacity: 0 !important;
   margin-right: -16px !important;
   /* padding-left: 17px !important; */
+  padding-left: 0px !important;
+}
+
+#feeds-holder .dijitTreeRow:hover .dijitTreeExpando {
+  opacity: .75 !important;
   padding-left: 11px !important;
 }
 
-#feeds-holder .dijitTreeRow:hover .dijitTreeExpando { opacity: .75 !important; }
+#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; }
 
-#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: .75 !important; }
+#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened:hover { opacity: .75 !important; }
 
 #feeds-holder { background: #eee !important; }
 
