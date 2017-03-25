@@ -64,7 +64,7 @@ span.updated {
   left: 4px !important;
   top: 24px !important;
   font-size: 0.75em !important;
-  color: #bbb !important;
+  color: #aaa !important;
 }
 
 .Selected span.updated { top: 12px !important; }
