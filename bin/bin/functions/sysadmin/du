@@ -13,7 +13,9 @@ esac
 
 # display du and corrected btrfs du
 /usr/bin/du -hd1 $dir 2>/dev/null
-echo
-sudo btrfs filesystem du -s $dir
+if which /usr/bin/btrfs 2>/dev/null ;then
+  echo
+  sudo btrfs filesystem du -s $dir
+fi
 
 # vim: set ft=sh: #

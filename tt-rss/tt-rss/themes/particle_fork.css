@@ -110,10 +110,12 @@ div#notify.notify.notify_progress { display: none !important; }
 #feeds-holder .dijitTreeRowSelected .counterNode { background: #7FAE00 !important; }
 
 #feeds-holder .dijitTreeExpando {
-  margin: -1px 0 1px 15px;
+  /* margin: -1px 0 1px 15px; */
+  margin: -1px 0 1px 11px;
   opacity: 0 !important;
   margin-right: -16px !important;
-  padding-left: 17px !important;
+  /* padding-left: 17px !important; */
+  padding-left: 11px !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando { opacity: .75 !important; }
@@ -645,7 +647,8 @@ button.expandPrompt {
   letter-spacing: 2px !important;
   /* line-height: 48px !important; */
   line-height: 72px !important;
-  margin-left: 13px !important;
+  /* margin-left: 13px !important; */
+  margin-left: 9px !important;
 }
 
 /* end of feed marker */
