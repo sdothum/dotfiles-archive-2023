@@ -75,6 +75,13 @@ span.updated {
 
 div#headlines-frame[is-cat="0"] span.updated { display: none !important; }
 
+div#headlines-frame[feed-id="-1"] span.updated { display: block !important; }
+/* div#headlines-frame[feed-id="-2"] span.updated { display: block !important; } */
+div#headlines-frame[feed-id="-3"] span.updated { display: block !important; }
+div#headlines-frame[feed-id="-4"] span.updated { display: block !important; }
+/* div#headlines-frame[feed-id="-5"] span.updated { display: block !important; } */
+div#headlines-frame[feed-id="-6"] span.updated { display: block !important; }
+
 .scoreWrap { display: none !important; }
 
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed { width: 95px !important; }
