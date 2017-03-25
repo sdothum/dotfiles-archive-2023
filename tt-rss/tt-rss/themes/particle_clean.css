@@ -73,6 +73,8 @@ span.updated {
   left: 9px !important;
 }
 
+div#headlines-frame[is-cat="0"] span.updated { display: none !important; }
+
 .scoreWrap { display: none !important; }
 
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed { width: 95px !important; }

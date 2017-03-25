@@ -310,6 +310,8 @@
 
       let g:neosnippet#snippets_directory            = '~/.vim/snippets'
       let g:neosnippet#enable_snipmate_compatibility = 1
+      " disable all runtime snippets
+      let g:neosnippet#disable_runtime_snippets      = { '_' : 1 }
       " see CheckFiletype() files.vim
       let g:neosnippet#scope_aliases =
           \{
