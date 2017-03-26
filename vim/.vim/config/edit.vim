@@ -41,7 +41,7 @@
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <A-End>           ggVG
+      nnoremap <C-a>             ggVG
       " retain cursor position for insert mode reformatting
       inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
       " otherwise advance cursor to next paragraph

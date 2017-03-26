@@ -304,7 +304,12 @@
 
     " ............................................................ Narrow region
 
-      let g:nrrw_rgn_vert = 0               " open in horizontal split buffer
+      let g:nrrw_rgn_vert          = 0       " open in horizontal split buffer
+			let g:nrrw_topbot_leftright  = 'botright'
+			let g:nrrw_rgn_nomap_nr      = 1      " disable nr mappings
+			let g:nrrw_rgn_nomap_Nr      = 1
+			let g:nrrw_rgn_resize_window = 'relative'
+			let g:nrrw_rgn_rel_min       = 50     " relative window size
 
       function! CloseNR()
         if expand('%t') =~ 'NrrwRgn'
@@ -412,8 +417,8 @@
 
     " .......................................................... Simple-complete
 
-      " set complete-=t
-      " set complete-=i
+      set complete-=t
+      set complete-=i
 
       " highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#839496 guibg=#002b36
 
@@ -465,14 +470,10 @@
       " set statusline+=%{SyntasticStatuslineFlag()}
       " set statusline+=%*
 
-    " .................................................................. Tabular
-
-      nmap <leader>t :Tabularize<Space>
-
     " ................................................................... Tagbar
 
       " let g:tagbar_ctags_bin = 'ctags-exuberant'
-      nmap <silent><leader>T :TagbarToggle<CR>
+      nmap <silent><leader>t :TagbarToggle<CR>
 
       " see https://github.com/vimwiki/utils/blob/master/vwtags.py
       let g:tagbar_type_vimwiki =
@@ -488,6 +489,7 @@
 
     " .................................................................. Vimwiki
 
+      " disable tab for autocompletion
       let g:vimwiki_table_mappings = 0
 
       let g:vimwiki_list =

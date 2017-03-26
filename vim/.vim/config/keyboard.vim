@@ -146,17 +146,13 @@
 
     " .................................................... Clipboard cut / paste
 
-      nnoremap <C-a>      "ggVG+y
-
       " visual mode yank/cut clipboard actions
-      " "+Y yank line to clipboard
-      vnoremap <C-c>      "+y
-      vnoremap ys         "+y
-      vnoremap yS         "+Y
-      " "+D cut line to clipboard
-      vnoremap <C-d>      "+d
-      vnoremap yd         "+d
-      vnoremap yD         "+D
+      " "+Y yank to clipboard
+      vnoremap <C-F2>          "+y
+      vnoremap <C-S-F2>        "+Y
+      " "+D cut to clipboard
+      vnoremap <C-F2>          "+d
+      vnoremap <C-S-F2>        "+D
 
       " " normal/insert mode paste actions
       " " "+P pads space after insert

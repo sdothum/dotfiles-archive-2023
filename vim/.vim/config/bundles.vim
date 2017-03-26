@@ -82,7 +82,6 @@
 
     " ............................................................... Formatting
 
-      " Plug 'godlygeek/tabular'                " markdown tables
       Plug 'scrooloose/nerdcommenter'           " toggle comment
       Plug 'junegunn/vim-easy-align'            " align text objects
       Plug 'reedes/vim-pencil'                  " dynamic paragraph formatting
