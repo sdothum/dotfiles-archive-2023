@@ -1,17 +1,26 @@
 snippet usage
 	usage() {
-		echo "usage: $(basename $${0:0}) ${1:text}"
+		echo "usage: $(basename $${1:0}) ${2:text}"
 		exit 1
 	}
+	${0}
+
+snippet flock
+	exec 3< "$(readlink -m "$${1:0}")"
+	if ! flock --exclusive --nonblock 3 2>/dev/null ;then
+		echo 1>&2 "Instance $(basename $${2:0}) already running: exiting."
+		exit 1
+	fi
+	${0}
 
 snippet ``
-	$(${1:text})
+	$(${0:text})
 
 snippet dash
 	#!/usr/bin/dash
 	# sdothum - 2016 (c) wtfpl
 
-	${1:text}
+	${0:text}
 
 	# vim: set ft=sh: #
 
@@ -19,7 +28,7 @@ snippet sh
 	#!/bin/sh
 	# sdothum - 2016 (c) wtfpl
 
-	${1:text}
+	${0:text}
 
 	# vim: set ft=sh: #
 

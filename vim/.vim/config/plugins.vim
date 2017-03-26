@@ -335,7 +335,8 @@
           \, 'text'     : 'mail'
           \}
 
-      imap <C-e> <Plug>(neosnippet_expand_or_jump)
+      imap <C-e> <Plug>(neosnippet_expand)
+      smap <C-e> <Plug>(neosnippet_jump)
 
     " ............................................................ Nerdcommenter
 

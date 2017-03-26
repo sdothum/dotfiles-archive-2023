@@ -7,7 +7,12 @@
 
 # ............................................................... Emit hook trap
 
-[ $(pgrep -cx emithook) -gt 1 ] && exit
+exec 3< "$(readlink -m "$0")"
+if ! flock --exclusive --nonblock 3 2>/dev/null ;then
+  echo 1>&2 "Instance $(basename $0) already running: exiting."
+  exit 1
+fi
+
 # touch $DYNAMIC (see toggle focus)
 monitor=$(herbstclient attr monitors.focus.index)
 
