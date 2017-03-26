@@ -1,4 +1,5 @@
 snippet usage
+options head
 	usage() {
 		echo "usage: $(basename $${1:0}) ${2:text}"
 		exit 1
@@ -6,6 +7,7 @@ snippet usage
 	${0}
 
 snippet flock
+options head
 	exec 3< "$(readlink -m "$${1:0}")"
 	if ! flock --exclusive --nonblock 3 2>/dev/null ;then
 		echo 1>&2 "Instance $(basename $${2:0}) already running: exiting."
@@ -17,6 +19,7 @@ snippet ``
 	$(${0:text})
 
 snippet dash
+options head
 	#!/usr/bin/dash
 	# sdothum - 2016 (c) wtfpl
 
@@ -25,6 +28,7 @@ snippet dash
 	# vim: set ft=sh: #
 
 snippet sh
+options head
 	#!/bin/sh
 	# sdothum - 2016 (c) wtfpl
 

@@ -120,7 +120,8 @@ div#notify.notify.notify_progress { display: none !important; }
 
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando {
   opacity: .75 !important;
-  padding-left: 11px !important;
+  /* padding-left: 11px !important; */
+  padding-left: 14px !important;
 }
 
 #feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; }
@@ -640,11 +641,13 @@ button.expandPrompt {
 /* div#header-wrap * { background: #fdf6e3 !important; } */
 #ttrssPrefs * { border-radius: 0 !important; }
 
+#feeds-holder { padding-top: 33px !important; }
+
 /* 'logo' */
 #feeds-holder:before{
-  content: "●particle" !important;
+  content: "●graviton" !important;
   /* font: 28px 'Liberation Sans Narrow', 'PT Sans Narrow', Helvetica, Arial, sans-serif !important; */
-  font: 32px Helvetica, Arial, sans-serif !important;
+  font: 22px Helvetica, Arial, sans-serif !important;
   /* color: #2A363B !important; */
   color: #871c1c !important;
   /* color: #b5423f !important; */
@@ -663,7 +666,7 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content: "refresh●particle" !important;
+  content: "refresh●graviton" !important;
   /* font: 18px 'Liberation Sans Narrow', 'PT Sans Narrow', Helvetica, Arial, sans-serif !important; */
   font: 18px Helvetica, Arial, sans-serif !important;
   color: #b5423f !important;
