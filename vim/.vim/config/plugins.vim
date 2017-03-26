@@ -306,8 +306,15 @@
 
       let g:nrrw_rgn_vert = 0               " open in horizontal split buffer
 
-      nmap <leader>n <Plug>NrrwrgnDo
-      xmap <leader>n <Plug>NrrwrgnDo
+      function! CloseNR()
+        if expand('%t') =~ 'NrrwRgn'
+          execute ':wq'
+        endif
+      endfunction
+
+      " apply refresh to narrow region buffer to apply layout defaults!
+      vmap <leader>n <Plug>NrrwrgnDo:call Refresh()<CR>
+      nmap <leader>n :call CloseNR()<CR>
 
     " ............................................................... Neosnippet
 
