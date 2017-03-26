@@ -108,6 +108,6 @@
       endfunction
 
       imap <silent><F9> <C-o>:call Refresh()<CR>
-      nmap <silent><F9> :call Refresh()<CR>
+      nmap <silent><F9>      :call Refresh()<CR>
 
 " views.vim

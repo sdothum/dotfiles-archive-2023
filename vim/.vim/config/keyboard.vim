@@ -31,8 +31,8 @@
       let g:mnle    = 0
 
       " up/down by screen lines, not file lines
-      nnoremap j     gj
-      nnoremap k     gk
+      nnoremap     j gj
+      nnoremap     k gk
 
       function! Colemak()
         if s:mapping == 0
@@ -129,7 +129,7 @@
       " reselect/reyank text just pasted
       nnoremap <leader>v  gv
       nnoremap <leader>V  gvy
-      map <leader>p       pgvy
+      map      <leader>p  pgvy
 
       " highlight last inserted text
       nnoremap <leader>i  `[v`]
@@ -161,12 +161,9 @@
       " " normal/insert mode paste actions
       " " "+P pads space after insert
       " " note: to enter visual block mode type v<C-v>
-      " inoremap <C-v>    <ESC>"+pli
-      " nnoremap <C-v>    h"+pl
-      imap <F2>           <ESC>"+pli
-      nmap <F2>           h"+pl
+      imap      <F2>      <ESC>"+pli
+      nmap      <F2>           h"+pl
       " command mode insertion (paste) of current yank buffer
-      " cmap <C-v>        <C-r>"
-      cmap <F2>           <C-r>"
+      cmap      <F2>      <C-r>"
 
 " keyboard.vim

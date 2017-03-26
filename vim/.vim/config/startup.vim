@@ -42,9 +42,9 @@
     " .............................................................. Config file
 
       " quickly edit/reload the vimrc file
-      nmap <silent><leader>vim         :edit $MYVIMRC<CR>
+      nmap <silent><leader>vi         :edit $MYVIMRC<CR>
       " must switch to .vimrc first for unknown reason.. (bug?)
-      nmap <silent><leader><leader>vim :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
+      nmap <silent><leader><leader>vi :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
 
       " load .vimrc after save
       autocmd startup BufWritePost $MYVIMRC nested source $MYVIMRC

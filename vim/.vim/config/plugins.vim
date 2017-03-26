@@ -276,10 +276,10 @@
 
     " .............................................................. Litecorrect
 
-      autocmd plugin Filetype mail           call litecorrect#init()
-      autocmd plugin FileType markdown,mkd   call litecorrect#init()
-      autocmd plugin Filetype text           call litecorrect#init()
-      autocmd plugin Filetype vimwiki        call litecorrect#init()
+      autocmd plugin Filetype mail         call litecorrect#init()
+      autocmd plugin FileType markdown,mkd call litecorrect#init()
+      autocmd plugin Filetype text         call litecorrect#init()
+      autocmd plugin Filetype vimwiki      call litecorrect#init()
 
     " .................................................................. LiteDFM
 
@@ -304,7 +304,10 @@
 
     " ............................................................ Narrow region
 
-      let g:nrrw_rgn_vert = 1               " open in vertical split buffer
+      let g:nrrw_rgn_vert = 0               " open in horizontal split buffer
+
+      nmap <leader>n <Plug>NrrwrgnDo
+      xmap <leader>n <Plug>NrrwrgnDo
 
     " ............................................................... Neosnippet
 
@@ -455,10 +458,14 @@
       " set statusline+=%{SyntasticStatuslineFlag()}
       " set statusline+=%*
 
+    " .................................................................. Tabular
+
+      nmap <leader>t :Tabularize<Space>
+
     " ................................................................... Tagbar
 
       " let g:tagbar_ctags_bin = 'ctags-exuberant'
-      nmap <silent><leader>t :TagbarToggle<CR>
+      nmap <silent><leader>T :TagbarToggle<CR>
 
       " see https://github.com/vimwiki/utils/blob/master/vwtags.py
       let g:tagbar_type_vimwiki =

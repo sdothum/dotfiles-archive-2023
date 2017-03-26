@@ -54,14 +54,14 @@
       " silence vim's default (command line) file info message, note silent..silent
       vmap <silent><C-PageUp>   <ESC>:silent bprevious<CR>
       imap <silent><C-PageUp>   <ESC>:silent bprevious<CR>
-      nmap <silent><C-PageUp>   :silent bprevious<CR>
+      nmap <silent><C-PageUp>        :silent bprevious<CR>
       vmap <silent><C-PageDown> <ESC>:silent bnext<CR>
       imap <silent><C-PageDown> <ESC>:silent bnext<CR>
-      nmap <silent><C-PageDown> :silent bnext<CR>
+      nmap <silent><C-PageDown>      :silent bnext<CR>
       " switch to previously edited/viewed buffer
       vmap <silent><C-BS>       <ESC>:silent e #<CR>
       imap <silent><C-BS>       <ESC>:silent e #<CR>
-      nmap <silent><C-BS>       :silent e #<CR>
+      nmap <silent><C-BS>            :silent e #<CR>
 
   " Window actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

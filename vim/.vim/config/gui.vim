@@ -103,7 +103,7 @@
       endfunction
 
       " Toggle Menu and Toolbar
-      nnoremap <silent><F12> :call ToggleGui()<CR>
+      nnoremap <silent><F12>      :call ToggleGui()<CR>
       inoremap <silent><F12> <C-o>:call ToggleGui()<CR>
 
   " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

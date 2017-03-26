@@ -232,6 +232,6 @@
 
       " toggle lightline/default vim statusline
       imap <silent><F8> <C-o>:call ToggleInfo()<CR>
-      nmap <silent><F8> :call ToggleInfo()<CR>
+      nmap <silent><F8>      :call ToggleInfo()<CR>
 
 " status.vim

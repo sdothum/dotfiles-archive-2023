@@ -9,9 +9,9 @@
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
-      " inoremap <C-CR>                <C-o>o
+      " inoremap <C-CR> <C-o>o
       " similarly, open curly braces and continue inserting in indented body
-      inoremap <S-CR>                  <CR><C-o>O<Tab>
+      inoremap <S-CR>   <CR><C-o>O<Tab>
 
       " break line (in .wiki)
       nnoremap <silent><leader><Enter> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
@@ -41,18 +41,18 @@
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <A-End>      ggVG
+      nnoremap <A-End>           ggVG
       " retain cursor position for insert mode reformatting
       inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
       " otherwise advance cursor to next paragraph
-      nnoremap <F4>         {jv}kJvgq}}{j
-      vnoremap <F4>         Jvgqj
+      nnoremap <F4>              {jv}kJvgq}}{j
+      vnoremap <F4>              Jvgqj
 
     " .............................................................. Delete line
 
       " delete blank line above/below
-      nnoremap <silent><C-Up>          m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
-      nnoremap <silent><C-Down>        m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Up>   m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
   " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -145,8 +145,8 @@
       " shift text up / down
       imap <silent><S-Up>   <ESC>:call <SID>MoveLineUp()<CR>a
       imap <silent><S-Down> <ESC>:call <SID>MoveLineDown()<CR>a
-      nmap <silent><S-Up>   :call <SID>MoveLineUp()<CR>
-      nmap <silent><S-Down> :call <SID>MoveLineDown()<CR>
+      nmap <silent><S-Up>        :call <SID>MoveLineUp()<CR>
+      nmap <silent><S-Down>      :call <SID>MoveLineDown()<CR>
       vmap <silent><S-Up>   <ESC>:call <SID>MoveVisualUp()<CR>
       vmap <silent><S-Down> <ESC>:call <SID>MoveVisualDown()<CR>
 
@@ -170,8 +170,8 @@
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
-      vnoremap '      :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
-      vnoremap "      :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+      vnoremap ' :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap " :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
     " .......................................................... Code block text
 
@@ -188,6 +188,6 @@
 
       " markup wiki code blocks
       nnoremap <silent><leader>` V:call CodeBlock()<CR>
-      vmap <silent><leader>`     :call CodeBlock()<CR>
+      vmap     <silent><leader>` :call CodeBlock()<CR>
 
 " edit.vim
