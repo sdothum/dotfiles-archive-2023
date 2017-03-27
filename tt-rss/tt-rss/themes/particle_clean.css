@@ -61,7 +61,7 @@ img[src*='images/pub_unset.png'] { display: none !important; }
 
 span.updated {
   position: absolute !important;
-  left: 4px !important;
+  left: 2px !important;
   top: 24px !important;
   font-size: 0.75em !important;
   color: #aaa !important;
