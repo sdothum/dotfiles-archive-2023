@@ -6,9 +6,15 @@
 
 # .......................................................... the darnedest thing
 
+usage() {
+  echo "usage: $(basename $0) [<thread>]"
+  exit 1
+}
+
 switch tag $WIKI
 # vim config rule for vimwiki requires being in home directory
 cd $HOME
-focus gvim --role=thedarnedestthing $HOME/vimwiki/colophon/index.wiki
+thread=${1:-colophon}
+focus gvim --role=thedarnedestthing $HOME/vimwiki/$thread/index.wiki
 
-# vim: set ft=sh: #
+#  vim: set ft=sh: #

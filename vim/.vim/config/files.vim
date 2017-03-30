@@ -7,7 +7,7 @@
 
     " .................................................................... Setup
 
-      nmap <leader>f :set filetype<Space>
+      nmap <leader>f :set filetype=
 
       augroup filetype
         autocmd!

@@ -7,7 +7,7 @@
 
 # ............................................................ Toggle operations
 
-# Usage: toggle <msg>, start/stop visible app or raise app to current desktop
+# Usage: toggle <msg> [<option>]*, start/stop visible app or raise app to current desktop
 #        toggle term <msg>, start/stop visible terminal app or goto terminal desktop (tag)
 
 # refresh in panel title to update frame status, see draw panel
@@ -85,7 +85,7 @@ if [ -e ${0%/toggle}/functions/toggle/$msg ] ;then
 elif [ $msg = term ] ;then
   toggle_term $@
 elif which $msg >/dev/null 2>&1 ;then
-  toggle_app
+  toggle_app $@
 else
   usage $0
 fi

@@ -122,6 +122,8 @@ enum planck_keycodes {
  ,Ent   = LT  (_RSHIFT, KC_ENT)
  ,Left  = LT  (_SYMBOL, KC_LEFT)
  ,Zero  = LT  (_SYMBOL, KC_0)
+ ,Dn    = LT  (_SYMREG, KC_DOWN)
+ ,Gt    = 0
  ,DYNAMIC_MACRO_RANGE
 };
 
@@ -131,7 +133,7 @@ enum tap_dance {
   _LPRN = 0
  ,_LBRC
  ,_LCBR
- ,_GT
+ ,_LT
  ,_QUOT
  ,_CAPS
 };
@@ -149,15 +151,13 @@ enum tap_dance {
 #define __Lcbr  TD (_LCBR)
 #define __Lprn  TD (_LPRN)
 #define __Lbrc  TD (_LBRC)
-#define __Gt    TD (_GT)
+#define __Lt    TD (_LT)
 #define __Quot  TD (_QUOT)
 #define __Caps  TD (_CAPS)
 
 // layer keys
 #define SHIFT   MO  (_SHIFT)
 #define ADJUST  MO  (_ADJUST)
-#define SYMBOL  OSL (_NUMSYM)
-#define REGEX   OSL (_SYMREG)
 #define DYNAMIC OSL (_DYN)
 
 // keycodes
@@ -259,15 +259,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // |   (  |   <  |   >  |  Alt |   )  |      |      |   C  |   4  |   5  |   6  |   D  |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |Symbol|      | ↑Alt |   ]  |      |      |   A  |   1  |   2  |   3  |   B  |
+  // |   [  |      |      | ↑Alt |   ]  |      |      |   A  |   1  |   2  |   3  |   B  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |  f() |      |       |      |  =  |   0  |   .  |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
     {__Lcbr,  _______, _______, _CAlt,   KC_RCBR, _______, _______, S(KC_E), KC_7,    KC_8,    KC_9,    S(KC_F)},
-    {__Lprn,  KC_LT,   __Gt,    _Alt,    KC_RPRN, _______, _______, S(KC_C), KC_4,    KC_5,    KC_6,    S(KC_D)},
-    {__Lbrc,  SYMBOL,  _______, _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    S(KC_B)},
+    {__Lprn,  __Lt,    Gt,      _Alt,    KC_RPRN, _______, _______, S(KC_C), KC_4,    KC_5,    KC_6,    S(KC_D)},
+    {__Lbrc,  _______, _______, _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    S(KC_B)},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  Zero,    KC_DOT,  ___x___, ___x___},
   },
 
@@ -276,17 +276,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |   &  |   *  |   /  |   :  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |   $  |   %  |   ^  |   -  |
+  // |      |      |  f() |      |      |      |      |      |   $  |   %  |   ^  |   -  |
   // |-----------------------------------------------------------------------------------|
-  // |      |  f() |      |      |      |      |      |      |   !  |   @  |   #  |   +  |
+  // |      |      |      |      |      |      |      |      |   !  |   @  |   #  |   +  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |  f() |      |      |      |      | Space|   ,  |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMSYM] = {
     {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_AMPR, KC_ASTR, KC_SLSH, KC_COLN},
-    {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_DLR,  KC_PERC, KC_CIRC, KC_MINS},
-    {_______, ___x___, _______, _______, _______, _______, _______, ___x___, KC_EXLM, KC_AT,   KC_HASH, KC_PLUS},
+    {_______, _______, ___x___, _______, _______, _______, _______, ___x___, KC_DLR,  KC_PERC, KC_CIRC, KC_MINS},
+    {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_EXLM, KC_AT,   KC_HASH, KC_PLUS},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, ___x___, ___x___},
   },
 
@@ -299,15 +299,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // |   (  |   ^  |   %  |   $  |   )  |      |      |      | Left | Down | Right|      |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |   #  |   @  |   !  |   ]  |      |      |      | PgDn | PgUp | Regex|      |
+  // |   [  |   #  |   @  |   !  |   ]  |      |      |      | PgDn | PgUp |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |   .  |   |  |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
     {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR,  KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,   KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______},
-    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM,  KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, REGEX,   _______},
+    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,   KC_RPRN, _______, _______, _______, KC_LEFT, Dn,      KC_RGHT, _______},
+    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM,  KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
     {___x___, ___x___, ___x___, Dot,      KC_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
@@ -316,17 +316,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |   ?  |   +  |   ~  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   <  |   >  |   =  |      |      |      |      |      |      |      |      |
+  // |      |   <  |   >  |   =  |      |      |      |      |      |  f() |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   3  |   2  |   1  |      |      |      |      |      |      |  f() |      |
+  // |      |   3  |   2  |   1  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |   :  |      |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMREG] = {
     {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, _______, _______, _______, _______},
-    {___x___, KC_LABK, KC_RABK, KC_EQL,  ___x___, _______, _______, _______, _______, _______, _______, _______},
-    {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, ___x___, _______},
+    {___x___, KC_LABK, KC_RABK, KC_EQL,  ___x___, _______, _______, _______, _______, ___x___, _______, _______},
+    {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, KC_COLN, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
@@ -512,8 +512,8 @@ void angle(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_LEFT);
   } else {
     register_code   (KC_LSFT);
-    register_code   (KC_DOT);
-    unregister_code (KC_DOT);
+    register_code   (KC_COMM);
+    unregister_code (KC_COMM);
     unregister_code (KC_LSFT);
   }
   reset_tap_dance(state);
@@ -552,7 +552,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [_LPRN] = ACTION_TAP_DANCE_FN (paren)
  ,[_LBRC] = ACTION_TAP_DANCE_FN (brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN (curly)
- ,[_GT]   = ACTION_TAP_DANCE_FN (angle)
+ ,[_LT]   = ACTION_TAP_DANCE_FN (angle)
  ,[_QUOT] = ACTION_TAP_DANCE_FN (quote)
  ,[_CAPS] = ACTION_TAP_DANCE_FN (caps)
 };
@@ -580,6 +580,19 @@ void clear_layers()
   layer_off (_ADJUST);
 }
 
+static uint16_t key_timer = 0;
+
+void matrix_scan_user(void)
+{
+  // simulate LT (_NUMSYM, KC_GT): turn on _NUMSYM layer
+  if (key_timer != 0) {
+    if (timer_elapsed(key_timer) > TAPPING_TERM) {
+      key_timer = 0;
+      layer_on (_NUMSYM);
+    }
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   if (!process_record_dynamic_macro(keycode, record)) {
@@ -587,6 +600,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 
   switch (keycode) {
+    // simulate LT (_NUMSYM, KC_GT): type GT key
+    case Gt:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+      } else {
+        layer_off           (_NUMSYM);
+        if (key_timer > 0) {
+          if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            register_code   (KC_LSFT);
+            register_code   (KC_DOT);
+            unregister_code (KC_DOT);
+            unregister_code (KC_LSFT);
+          }
+        }
+        key_timer = 0;
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
     case Dot:
       if (record->event.pressed) {
         layer_on        (_NUMBER);

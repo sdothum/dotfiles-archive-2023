@@ -1,9 +1,16 @@
 term 'Mail' alot
 amphetype
-patricia-video
+netflix
+patricia-video # Patricia :: video
 qutebrowser
 simpletimer
 vimbt
-vimwiki
+vimwiki colophon # wiki :: colophon
+vimwiki healing # wiki :: healing
+vimwiki notes # wiki :: notes
+vimwiki shadowsandlight # wiki :: shadows and light
+vimwiki thedarnedestthing # wiki :: the darnedest thing
+vimwiki thestory # wiki :: the story
+vimwiki truthordie # wiki :: truth or die
 term 'IRC' weechat
 term 'Calendar' wyrd

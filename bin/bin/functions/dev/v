@@ -6,21 +6,29 @@
 
 # ....................................................................... Editor
 
-# Usage: v [-f] [<file>]*
+# Usage: v [-f | -c <command>]* [<file>]*
 
 # va va voom
 SHELL=/usr/bin/dash
 hlwm && [ -e $DYNAMIC ] && focus=focus
 
-if [ "$1" = '-f' ] ;then
-  fg=-f
-  shift
-fi
+while :
+do
+  case $1 in
+    -f) fg=-f
+        shift ;;
+
+    -c) cmd="-c '$2'"
+        shift 2 ;;
+
+    *) break ;;
+  esac
+done
 
 if [ -z $1 ] ;then
   file=$(find -type f 2>/dev/null | filter | fzf --multi)
   [ "$file" ] || exit
-  $focus vim -g $fg $file
+  $focus vim -g $fg $cmd $file
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
   file=$(echo $@)
@@ -35,7 +43,7 @@ fi
 hlwm && herbstclient set_layout max
 count=$(echo $file | wc -w)
 [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
-eval $focus $sudo vim -g $fg $file
+eval $focus $sudo vim -g $fg $cmd $file
 
 # syncthing housekeeping (unless vim fg, housekeeping is staggered)
 find $HOME/.vim/backups -size 0 -exec rm -fv {} \;

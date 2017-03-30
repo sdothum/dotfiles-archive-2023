@@ -210,10 +210,11 @@
       " let s:source_font = 'Input\ Mono\ Compressed\'
       " let s:source_font = 'PragmataPro\'
       let s:source_font   = 'Iosevka\'
-      let s:prose_font    = 'Courier\ Prime\'
+      " let s:prose_font  = 'Courier\ Prime\'
+      let s:prose_font    = 'Iosevka\'
 
       function! Fontspace(prose, source)
-        if argv(0) == 'vimwiki' || expand('%:e') =~ '\(wiki\|eml\|draft\)$'
+        if expand('%:e') =~ 'wiki\|eml\|draft'
           execute 'set guifont=' . s:prose_font  . ' ' . a:prose
           execute 'set linespace=' . a:prose
         else

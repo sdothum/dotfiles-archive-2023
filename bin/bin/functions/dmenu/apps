@@ -7,17 +7,31 @@
 
 EDIT='[ edit ]'
 
-# run list format: <command>, e.g. term 'title' program
+# run list format: <command> [# <comment>]
+#             e.g. term 'title' program
+#                  program # description
+
 pgms=$CONFIG/apps
 
+apps() {
+  while read app <&3
+  do
+    if echo $app | grep -q '#' ;then
+      echo $(echo $app | cut -d'#' -f2)
+    else
+      echo $app | rev | cut -d' ' -f1 | rev
+    fi
+  done 3< $pgms
+}
+
 pgm=$(previous apps)
-while pgm=$(rev $pgms | cut -d' ' -f1 | rev | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit
+while pgm=$(apps | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit
 do
   case $pgm in
     "$EDIT") gvim -f $pgms ;;
 
-    *) history apps $pgm
-       exec toggle $(grep $pgm $pgms) ;;
+    *) history apps "$pgm"
+       exec toggle $(grep "$pgm" $pgms) ;;
   esac
 done
 

@@ -8,7 +8,7 @@
 
 # v by content
 files=$(al "$@")
-v $files
+v -c "/$@" $files
 count=$(echo "$files" | wc -l)
 [ $count -gt 1 ] && notify low "$count files to edit"
 

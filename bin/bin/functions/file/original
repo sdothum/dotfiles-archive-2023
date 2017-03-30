@@ -6,18 +6,22 @@
 
 # ......................................................... Distribution install
 
+usage() {
+  echo "usage: $(basename $0) [-f] <file>"
+  exit 1
+}
+
 # replace previous original?
 if [ $1. = -f. ] ;then
-  file=$2
-  sudo rm $file.original
-else
-  file=$1
+  shift
+  sudo rm $1.original
 fi
-[ -e $file.original ] && exit 1
+[ "$1" ] || usage &&
+            [ -e $1.original ] && exit 1
 
 # save distribution original
-if [ -e $file ] ;then
-  ditto "copying $(sudo cp -pRv $file $file.original)"
+if [ -e $1 ] ;then
+  ditto "copying $(sudo cp -pRv $1 $1.original)"
   exit 0
 fi
 exit 1

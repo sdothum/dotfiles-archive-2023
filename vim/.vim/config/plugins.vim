@@ -97,7 +97,7 @@
 
       if has("gui_running")
         " can't use ProseFT as plugin is initialized before buffer read
-        if argv (0) =~ 'vimwiki\|eml\|draft'
+        if argv (0) =~ '\.(vimwiki\|eml\|draft)$'
           let g:lightline =
             \{
             \  'colorscheme'  : 'solarized'
@@ -278,7 +278,6 @@
 
       autocmd plugin Filetype mail         call litecorrect#init()
       autocmd plugin FileType markdown,mkd call litecorrect#init()
-      autocmd plugin Filetype text         call litecorrect#init()
       autocmd plugin Filetype vimwiki      call litecorrect#init()
 
     " .................................................................. LiteDFM
@@ -335,7 +334,7 @@
           \, 'text'     : 'mail'
           \}
 
-      imap <C-e> <Plug>(neosnippet_expand)
+      imap <C-e> <Plug>(neosnippet_expand_or_jump)
       smap <C-e> <Plug>(neosnippet_jump)
 
     " ............................................................ Nerdcommenter
@@ -347,12 +346,8 @@
       let g:NERDCommentEmptyLines      = 1  " comment blank lines
       let g:NERDTrimTrailingWhitespace = 1  " trim trailing whitespace
 
-      " insert mode analogue to nmap <leader>c<Space>
-      imap ,c, <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
-
-    " ................................................................. Open URL
-
-      " nmap <silent><leader>o :OpenUrl<CR>
+      map <leader>c <Plug>NERDCommenterToggle
+      imap ,c       <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
 
     " ................................................................... Pencil
 
@@ -374,7 +369,6 @@
 
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
-      autocmd plugin Filetype text         call pencil#init()
       autocmd plugin Filetype vimwiki      call pencil#init()
 
     " ...................................................... Rainbow parentheses
@@ -477,9 +471,9 @@
       nmap <silent><leader>t :TagbarToggle<CR>
 
       " see https://github.com/vimwiki/utils/blob/master/vwtags.py
-      let g:tagbar_type_vimwiki =
+      let g:tagbar_type_markdown =
           \{
-          \  'ctagstype'  : 'vimwiki'
+          \  'ctagstype'  : 'markdown'
           \, 'kinds'      : ['h:header']
           \, 'sro'        : '&&&'
           \, 'kind2scope' : {'h':'header'}
@@ -488,58 +482,74 @@
           \, 'ctagsargs'  : 'default'
           \}
 
+    " ..................................................................... Viki
+
+      if g:wiki == 'viki'
+        let g:vikiMapLeader  = '<leader>v'
+        let g:vikiHomePage   = '~/vimwiki'
+        let g:vikiIndex      = 'index'
+        let g:vikiNameSuffix = '.wiki'
+
+        autocmd plugin BufRead  *.wiki   set filetype=markdown
+        autocmd plugin BufEnter *.wiki   nmap <BS> <leader>vb
+        autocmd plugin BufLeave *.wiki   nunmap <BS>
+        autocmd plugin Filetype markdown VikiMinorMode
+        autocmd plugin Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      endif
+
     " .................................................................. Vimwiki
 
-      " disable tab for autocompletion
-      let g:vimwiki_table_mappings = 0
+      if g:wiki == 'vimviki'
+        " disable tab for autocompletion
+        let g:vimwiki_table_mappings = 0
 
-      let g:vimwiki_list =
-        \[
-        \  {
-        \    'path'      : '~/vimwiki/thedarnedestthing/'
-        \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/thestory/'
-        \,   'path_html' : '~/vimwiki/thestory/html/'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/truthordie/'
-        \,   'path_html' : '~/vimwiki/truthordie/html/'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/shadowsandlight/'
-        \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/healing/'
-        \,   'path_html' : '~/vimwiki/healing/html/'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/colophon/'
-        \,   'path_html' : '~/vimwiki/colophon/html/'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/notes/'
-        \,   'path_html' : '~/vimwiki/notes/html/'
-        \  }
-        \]
+        let g:vimwiki_list =
+          \[
+          \  {
+          \    'path'      : '~/vimwiki/thedarnedestthing/'
+          \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/thestory/'
+          \,   'path_html' : '~/vimwiki/thestory/html/'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/truthordie/'
+          \,   'path_html' : '~/vimwiki/truthordie/html/'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/shadowsandlight/'
+          \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/healing/'
+          \,   'path_html' : '~/vimwiki/healing/html/'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/colophon/'
+          \,   'path_html' : '~/vimwiki/colophon/html/'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/notes/'
+          \,   'path_html' : '~/vimwiki/notes/html/'
+          \  }
+          \]
 
-      " header highlighting
-      highlight VimwikiHeader1 guifg=#d70000
-      highlight VimwikiHeader2 guifg=#af005f
-      highlight VimwikiHeader3 guifg=#5f5faf
-      highlight VimwikiHeader4 guifg=#0087ff
-      highlight VimwikiHeader5 guifg=#00afaf
-      highlight VimwikiHeader6 guifg=#5f8700
+        " header highlighting
+        highlight VimwikiHeader1 guifg=#d70000
+        highlight VimwikiHeader2 guifg=#af005f
+        highlight VimwikiHeader3 guifg=#5f5faf
+        highlight VimwikiHeader4 guifg=#0087ff
+        highlight VimwikiHeader5 guifg=#00afaf
+        highlight VimwikiHeader6 guifg=#5f8700
 
-      " override highlight link
-      autocmd plugin Filetype vimwiki  call VimWikiLink()
-      autocmd plugin BufEnter *.wiki   set filetype=vimwiki
-      autocmd plugin Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd plugin Filetype vimwiki  setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
-      " see arch install patch to initialize s:vimwiki_autowriteall
+        " override highlight link
+        autocmd plugin Filetype vimwiki call VimWikiLink()
+        autocmd plugin BufEnter *.wiki  set filetype=vimwiki
+        autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+        " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
+        " see arch install patch to initialize s:vimwiki_autowriteall
+      endif
 
     " ................................................................. Yankring
 

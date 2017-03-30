@@ -7,8 +7,10 @@
 
     " .................................................................... Setup
 
+      let g:wiki = 'vimwiki'
       " autocompletion plugin dependent on filetype
-      let ext = expand('%:e')
+      let ext    = expand('%:e')
+
       filetype off                              " safe startup (vundle requirement)
 
       " see https://github.com/junegunn/vim-plug
@@ -62,11 +64,16 @@
       " Plug 'tpope/vim-fugitive'               " github wrapper
       " Plug 'ludovicchabant/vim-lawrencium'    " mercurial wrapper
 
-    " ................................................................ Documents
+    " ................................................................ Hypertext
 
+      " Plug 'tomtom/autolinker_vim'            " Hypertext link
       " Plug 'cwoac/nvim'                       " notational velocity
       " Plug 'greyblake/vim-preview'            " markdown
-      Plug 'vimwiki/vimwiki'                    " markdown wiki
+      if g:wiki == 'viki'
+        Plug 'tomtom/viki_vim'                  " markdown wiki
+      else
+        Plug 'vimwiki/vimwiki'                  " markdown wiki
+      endif
 
   " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -93,7 +100,7 @@
       Plug 'Shougo/neosnippet'                  " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling
-      if ext == 'wiki'
+      if ext == 'wiki' && g:wiki == 'vimwiki'
         Plug 'lifepillar/vim-mucomplete'        " tab completion
       else
         Plug 'maxboisvert/vim-simple-complete'  " enter completion
@@ -101,6 +108,14 @@
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ................................................................ Libraries
+
+      if g:wiki == 'viki'
+        Plug 'tomtom/hookcursormoved_vim'       " cursor movement triggers
+        Plug 'tomtom/setsyntax_vim'             " set options under cursor
+        Plug 'tomtom/tlib_vim'                  " utility functions
+      endif
 
     " ................................................................ Configure
 

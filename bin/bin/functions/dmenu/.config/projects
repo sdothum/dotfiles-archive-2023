@@ -93,6 +93,7 @@ vim snippets :: $HOME/.vim/snippets/*
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/*tape.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
 www website :: $(find -L /srv/http/thedarnedestthing.com/application -regextype posix-extended -regex '.*(rb|slim)')
+www website :: $(find $HOME/stow/thedarnedestthing -regextype posix-extended -regex '.*(rb|slim)')
 x11 xresources :: $HOME/.Xresources $HOME/.xinitrc $HOME/.Xmodmap* $HOME/bin/x
 xmonad :: $HOME/.xmonad/xmonad.hs $HOME/.xmonad/conkyrc.dzen $HOME/.xmobarrc $HOME/bin/autostart
 zsh functions :: $(find $HOME/.zsh/ -type f)
