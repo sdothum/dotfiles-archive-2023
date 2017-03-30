@@ -123,7 +123,7 @@ enum planck_keycodes {
  ,Left  = LT  (_SYMBOL, KC_LEFT)
  ,Zero  = LT  (_SYMBOL, KC_0)
  ,Dn    = LT  (_SYMREG, KC_DOWN)
- ,Gt    = 0
+ ,Gt    = -1  // Gt = LT (_NUMSYM, KC_GT) requires matrix_scan_user and process_record_user for modified key-codes
  ,DYNAMIC_MACRO_RANGE
 };
 
