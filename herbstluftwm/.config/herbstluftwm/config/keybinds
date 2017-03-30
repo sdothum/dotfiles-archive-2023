@@ -131,10 +131,10 @@ fi
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space          spawn restore frames
 if [ $PLANCK ] ;then
-  hc keybind $Mod-h                    spawn switch orientation +1
-  hc keybind $Mod-Shift-h              spawn switch orientation -1
+  hc keybind $Mod-Shift-h              spawn switch orientation -2
+  hc keybind $Mod-comma                spawn switch orientation +1
+  hc keybind $Mod-Shift-comma          spawn switch orientation -1
   hc keybind $Mod-Shift-period         spawn switch orientation +2
-  hc keybind $Mod-Shift-comma          spawn switch orientation -2
 elif [ $COLEMAK_DH ] ;then
   hc keybind $Mod-slash                spawn switch orientation +1
   hc keybind $Mod-Shift-slash          spawn switch orientation -1
