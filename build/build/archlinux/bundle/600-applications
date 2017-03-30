@@ -164,6 +164,7 @@
 
 = viewers
 # ▔▔▔▔▔▔▔
+# acroread                      [server]
 # calibre                       [server]
 # coolreader
   epdfview                      [server]
