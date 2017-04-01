@@ -19,7 +19,7 @@
     " ......................................................... Prose filestypes
 
       " distraction free filetyes
-      function! ProseFT()
+      function! Prose()
         return &filetype =~ 'vimwiki\|mail\|markdown\|draft'
       endfunction
 

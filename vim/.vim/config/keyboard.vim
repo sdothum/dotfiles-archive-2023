@@ -149,10 +149,10 @@
       " visual mode yank/cut clipboard actions
       " "+Y yank to clipboard
       vnoremap <C-F2>          "+y
-      vnoremap <C-S-F2>        "+Y
+      vnoremap <S-F2>          "+Y
       " "+D cut to clipboard
       vnoremap <C-F2>          "+d
-      vnoremap <C-S-F2>        "+D
+      vnoremap <S-F2>          "+D
 
       " " normal/insert mode paste actions
       " " "+P pads space after insert

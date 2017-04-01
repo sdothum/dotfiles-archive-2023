@@ -104,7 +104,7 @@
       " defer lightline settings because plugin is initialized before buffers are read
       function! LightLine()
         if has("gui_running")
-          if ProseFT()
+          if Prose()
             " prose line height makes for ugly powerline graphics
             let g:lightline =
               \{

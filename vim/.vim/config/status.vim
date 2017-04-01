@@ -221,7 +221,7 @@
     " ........................................................ Toggle statusline
 
       function! ToggleInfo()
-        if ProseFT()                        " toggle between writing and proofing modes
+        if Prose()                          " toggle between writing and proofing modes
           call ToggleProof()
         else
           call CodeView()                   " refresh margin

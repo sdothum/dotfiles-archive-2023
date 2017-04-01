@@ -83,7 +83,7 @@
 
       function! LiteType()
         call SetTheme()
-        if ProseFT()
+        if Prose()
           call ProseView()
           set laststatus=0
         else
@@ -96,7 +96,7 @@
       autocmd view VimEnter * call LiteType()
 
       function! Refresh()
-        if ProseFT()
+        if Prose()
           let lstatus = &laststatus
           call Margin()
           call Quietly('LiteDFM')

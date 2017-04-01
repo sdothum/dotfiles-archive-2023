@@ -57,7 +57,7 @@
           execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
           execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_dark
         else
-          if ProseFT()
+          if Prose()
             let g:dfm_fg        = g:dfm_fg_dark_prose
           else
             let g:dfm_fg        = g:dfm_fg_dark
@@ -113,7 +113,7 @@
           colorscheme solarized8_dark_high
         endif
         call LiteType()
-        if ProseFT()
+        if Prose()
           call ToggleHiLite()
         else
           " match lightline to current colorscheme
@@ -132,8 +132,10 @@
         call LiteFix()
       endfunction
 
+      nmap <silent><F7> :call LiteSwitch()<CR>
+
       function! LiteFix()
-        " fix colour shifts resulting from toggling(!)
+        " fix solarized colour shifts resulting from toggling(!)
         if &background == 'light'
           highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33  guifg=#fdf6e3 guibg=#268bd2
           highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=244 guifg=#268bd2 guibg=#839496
@@ -155,8 +157,7 @@
         endif
       endfunction
 
-      nmap <silent><F7>         :call LiteSwitch()<CR>
-      nmap <silent><leader><F7> :call LiteFix()<CR>
+      nmap <silent><C-F7> :call LiteFix()<CR>
 
       autocmd theme BufEnter * call LiteFix()
 
@@ -173,7 +174,7 @@
 
       " set cursorline theme
       function! HiLite()
-        if ProseFT()
+        if Prose()
           execute 'highlight CursorLine gui=none guibg='   . s:cursorline . ' guifg=' . s:foreground
           execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
         else
@@ -214,7 +215,7 @@
       let s:prose_font    = 'Iosevka\'
 
       function! Fontspace(prose, source)
-        if ProseFT()
+        if Prose()
           execute 'set guifont=' . s:prose_font  . ' ' . a:prose
           execute 'set linespace=' . a:prose
         else
@@ -236,7 +237,7 @@
             call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(11, 1)
+            call Fontspace(11, 2)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* NVIDIA'
@@ -245,7 +246,7 @@
             call Fontspace(9, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(10, 1)
+            call Fontspace(10, 2)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* Intel'
@@ -264,7 +265,7 @@
             call Fontspace(8, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(9, 1)
+            call Fontspace(9, 2)
             " let g:lite_dfm_left_offset = 18
           endif
         endif
@@ -275,16 +276,16 @@
         call ToggleGui()
       endfunction
 
-      autocmd theme BufEnter * call FontSize(ProseFT() ? +1 : -1)
+      autocmd theme BufEnter * call FontSize(Prose() ? +1 : -1)
 
       function! FontSwitch()
         call FontSize(s:size == -1 ? +1 : -1)
-        if ! ProseFT()
+        if ! Prose()
           call Quietly('LiteDFMClose')
           call LiteType()
         endif
       endfunction
 
-      nmap <silent><C-F7> :call FontSwitch()<CR>
+      nmap <silent><S-F7> :call FontSwitch()<CR>
 
 " themes.vim
