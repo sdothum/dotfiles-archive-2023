@@ -5,7 +5,7 @@
 
 # ....................................................................... nzbget
 
-[ -e $HOME/.session ] || mkdir -v $HOME/.session
+mkdir -pv $HOME/.session || exit 1
 
 provider=$(passphrase usenet/provider)
 email=$(passphrase uid/$provider)

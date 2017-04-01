@@ -16,7 +16,7 @@ if [ -z $uri ] ;then
 fi
 
 repo=/net/depot/$1
-# [ -d ${repo%$1} ] || mkdir -pv ${repo%$1}
+# mkdir -pv ${repo%$1} || exit 1
 git clone $uri $repo
 
 # do post install for previously installed package dependencies

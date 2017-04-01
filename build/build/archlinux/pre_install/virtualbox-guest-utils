@@ -5,6 +5,6 @@
 
 # ................................................................... virtualbox
 
-[ -d /media ] || sudo mkdir /media
+sudo mkdir /media
 
 # vim: set ft=sh: #

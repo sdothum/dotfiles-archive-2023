@@ -56,8 +56,8 @@ if sudo test ! -f /root/.forward ;then
 heading "root setup"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   # sudo ln -sfv $HOME/.config/xfce4 /root/.config/
-  sudo mkdir -v /root/tmp
-  sudo mkdir -v /root/log
+  sudo mkdir -pv /root/tmp
+  sudo mkdir -pv /root/log
   passphrase uid/gmail | sudo tee /root/.forward
   original /root/.config
   ln -sf $USER/.config /root/

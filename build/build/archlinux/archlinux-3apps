@@ -13,8 +13,8 @@ bfq() {
   return 1
 }
 
-[ -d $HOME/tmp ] || mkdir $HOME/tmp
-[ -d $HOME/logs ] || mkdir $HOME/logs
+mkdir $HOME/tmp || exit 1
+mkdir $HOME/logs || exit 1
 
 
 title "bundle installs"

@@ -5,7 +5,7 @@
 
 # ..................................................................... todo.txt
 
-[ -f $HOME/.todo ] || mkdir -pv $HOME/.todo
+mkdir -pv $HOME/.todo || exit 1
 [ -L $HOME/.todo ] || ln -sf $HOME/.todo $HOME/
 original $HOME/.todo/config
 # note: tilde '$HOME' not recognized as home directory

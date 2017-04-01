@@ -5,8 +5,8 @@
 
 # .......................................................................... mpd
 
-[ -d $HOME/.mpd ] || mkdir -v $HOME/.mpd
-[ -e $HOME/.mpd/playlists ] || mkdir -v $HOME/.mpd/playlists
+mkdir -pv $HOME/.mpd || exit 1
+mkdir -pv $HOME/.mpd/playlists || exit 1
 touch $HOME/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
 
 # annotate "configure $HOME/.mpdconf for non-root access to local mpd files"

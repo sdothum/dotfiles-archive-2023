@@ -111,7 +111,7 @@ case $1 in
           fi ;;
 
   home) if if-yes "backup $HOME to /net/archive" ;then
-          [ -d /net/archive$HOME ] || mkdir -pv /net/archive/home
+          mkdir -pv /net/archive/home || exit 1
           rsync --delete-during $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
                 $HOME /net/archive/home/
         fi ;;
@@ -186,16 +186,16 @@ case $1 in
 
   server) if server ;then
             if if-yes 'backup media server databases to /net/archive' ;then
-              [ -d /net/archive/var/lib ] || mkdir -pv /net/archive/var/lib
+              mkdir -pv /net/archive/var/lib || exit 1
               sudo rsync -av --delete-during /var/lib/sonarr /net/archive/var/lib/
               [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
-                mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support
+                mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support || exit 1
               sudo rsync -av --delete-during \
                          /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
                          /net/archive/opt/plexmediaserver/Library/Application\ Support/
-              [ -d /net/archive/srv/lib ] || sudo mkdir -p /net/archive/srv/lib
+              mkdir -p /net/archive/srv/lib || exit 1
               sudo rsync -av --delete-during /srv/lib/postgres /net/archive/srv/lib/
-              [ -d /net/archive/etc/webapps/tt-rss ] || sudo mkdir -p /net/archive/etc/webapps/tt-rss
+              mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
               sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
             fi
           fi ;;
@@ -242,7 +242,7 @@ case $1 in
          rsync_home /media/home/
          rsync $HOME/.password-store /media/home/$USER/
        elif [ -d /run/media/$USER/My\ Passport ] ;then
-         [ -d /run/media/$USER/My\ Passport/media ] || mkdir -v /run/media/$USER/My\ Passport/media
+         mkdir -v /run/media/$USER/My\ Passport/media || exit 1
          rsync --delete-during /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
          rsync --delete-during /net/photos /run/media/$USER/My\ Passport/
          sync

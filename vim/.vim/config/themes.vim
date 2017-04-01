@@ -237,7 +237,7 @@
             call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(11, 2)
+            call Fontspace(11, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* NVIDIA'
@@ -246,7 +246,7 @@
             call Fontspace(9, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(10, 2)
+            call Fontspace(10, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* Intel'
@@ -265,7 +265,7 @@
             call Fontspace(8, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(9, 2)
+            call Fontspace(9, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         endif

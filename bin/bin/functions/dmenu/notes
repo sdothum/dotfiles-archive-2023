@@ -32,7 +32,7 @@ if [ -z $FOLDER ] ;then
   esac
 fi
 catlg=$FOLDER/.${ext}s
-[ -e $FOLDER ] || mkdir -p $FOLDER
+mkdir -p $FOLDER || exit 1
 
 if [ $ext = draft ] ;then
   NEW='[ new    ]'

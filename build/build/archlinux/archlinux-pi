@@ -99,7 +99,7 @@ checkpoint
 
 heading 'enable tty autologin'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-mkdir -v /etc/systemd/system/getty@tty1.service.d
+mkdir -pv /etc/systemd/system/getty@tty1.service.d
 echo "[Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/systemd/system/getty@tty1.service.d/autologin.conf

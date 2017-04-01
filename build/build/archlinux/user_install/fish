@@ -5,8 +5,8 @@
 
 # ......................................................................... fish
 
-# [ -d /root/.config ] || sudo mkdir -pv /root/.config
-# [ -d /root/.local/share/ ] || sudo mkdir -pv /root/.local/share/
+# sudo mkdir -pv /root/.config
+# sudo mkdir -pv /root/.local/share/
 # sudo ln -sfv $HOME/.config/fish /root/.config/
 # sudo ln -sfv $HOME/.config/omf /root/.config/
 # sudo ln -sfv $HOME/.local/share/omf /root/.local/share/

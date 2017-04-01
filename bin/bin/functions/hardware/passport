@@ -10,7 +10,7 @@
 if [ -e /run/media/shum/My\ Passport ] ;then
   device=$(mount -l | grep '/run/media/shum/My Passport' | cut -d' ' -f1)
   sudo fusermount -u /run/media/shum/My\ Passport
-  [ -d '/media/My Passport' ] || sudo mkdir -v '/media/My Passport'
+  mkdir -pv '/media/My Passport' || exit 1
   sudo mount -t exfat -o nls=utf8,rw $device /media/My\ Passport
   /usr/bin/rox /media/My\ Passport
 elif mount -l | grep '/media/My Passport' ;then

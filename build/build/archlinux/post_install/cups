@@ -23,6 +23,6 @@ systemd enable org.cups.cupsd
 annotate "http://localhost:631 to configure cups-pdf and network shared printers"
 
 # the usual documents directory
-[ -d $HOME/documents ] || mkdir -v $HOME/documents
+mkdir -pv $HOME/documents || exit 1
 
 # vim: set ft=sh: #

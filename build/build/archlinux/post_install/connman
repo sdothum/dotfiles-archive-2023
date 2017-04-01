@@ -5,7 +5,7 @@
 
 # ...................................................................... connman
 
-[ -d /etc/connman ] || sudo mkdir /etc/connman
+sudo mkdir /etc/connman
 [ -f /etc/connman/main.conf ] || echo '[General]
 PreferredTechnologies=ethernet,wifi' | sudo tee /etc/connman/main.conf
 systemd restart connman

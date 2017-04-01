@@ -14,7 +14,7 @@ size=180x180
 
 if [ $2 ] ;then
   swatch=$PALETTE/$(cat $CONTRAST)/$2
-  [ -e $swatch ] || mkdir -p $swatch
+  mkdir -p $swatch || exit 1
   convert -size $size xc:"#$1" $swatch/$1.png
 else
   convert -size $size xc:"#$1" $PALETTE/$1.png

@@ -31,7 +31,7 @@ title "pacman key server"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 rm -rf $HOME/.gnupg/*
 sudo rm -r /root/.gnupg/*
-sudo mkdir /root/.gnupg 2>/dev/null
+sudo mkdir -p /root/.gnupg
 sudo touch /root/.gnupg/dirmngr_ldapservers.conf
 sudo dirmngr </dev/null
 

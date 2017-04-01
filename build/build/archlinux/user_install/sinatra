@@ -7,7 +7,7 @@
 
 # install nginx web site dependency
 if [ ! -d /srv/http/thedarnedestthing.com ] ;then
-  sudo mkdir -v /srv/http/thedarnedestthing.com
+  sudo mkdir -pv /srv/http/thedarnedestthing.com
   sudo chown -c $USER:users /srv/http/thedarnedestthing.com
   if server ;then
     # rsync -av $USER@monad:/srv/http/thedarnedestthing.com /srv/http/

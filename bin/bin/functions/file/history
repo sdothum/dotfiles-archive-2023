@@ -31,7 +31,7 @@ shift
 inject() {
   update=$(mktemp).history
   if [ ! -e $2 ] ;then
-    mkdir -p ${2%/*}
+    mkdir -p ${2%/*} || exit 1
     touch $2
   fi
   # remove duplicate history entries

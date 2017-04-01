@@ -163,7 +163,7 @@ configure authentication else some channels will force #<channel>-unregistered\n
 EOF
 fi
 
-mkdir -pv $HOME/.local/share/weechat/logs
+mkdir -pv $HOME/.local/share/weechat/logs || exit 1
 conf $HOME/.weechat/logger.conf "$HOME/.local/share/weechat/logs" '/path = /cpath = "$HOME/.local/share/weechat/logs"'
 # abbreviate vimode inputbar indicator
 conf $HOME/.weechat/python/vimode.py 'return mode\\[0\\]' 's/return mode/return mode[0]/'

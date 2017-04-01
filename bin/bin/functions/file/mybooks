@@ -16,7 +16,7 @@ case "$@" in
   epub) find -maxdepth 1 -name '*.epub' -exec mybooks {} \; ;;
 
   *mobi | *epub) author=$(echo "$@" | sed -r 's/.* - (.*)\.(mobi|epub)/\1/')
-                 [ -d "$author" ] || mkdir -v "$author"
+                 mkdir -pv "$author" || exit 1
                  mv -v "$@" "$author" ;;
 
   *) usage ;;
