@@ -94,132 +94,141 @@
 
       let g:matchspace = ''                 " see ToggleSpaces() gui.vim
       let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
+      let g:lightline  =
+        \{
+        \  'colorscheme'  : 'solarized'
+        \, 'separator'    : { 'left' : '', 'right' : '' }
+        \, 'subseparator' : { 'left' : '', 'right' : '' }
+        \}
 
-      if has("gui_running")
-        " can't use ProseFT as plugin is initialized before buffer read
-        if argv (0) =~ '\.(vimwiki\|eml\|draft)$'
-          let g:lightline =
-            \{
-            \  'colorscheme'  : 'solarized'
-            \, 'separator'    : { 'left' : '', 'right' : '' }
-            \, 'subseparator' : { 'left' : '', 'right' : '' }
-            \}
-        else
-          if s:powerline == 0
+      " defer lightline settings because plugin is initialized before buffers are read
+      function! LightLine()
+        if has("gui_running")
+          if ProseFT()
+            " prose line height makes for ugly powerline graphics
             let g:lightline =
               \{
               \  'colorscheme'  : 'solarized'
-              \, 'separator'    : { 'left' : '', 'right' : '' }
+              \, 'separator'    : { 'left' : '', 'right' : '' }
               \, 'subseparator' : { 'left' : '', 'right' : '' }
               \}
           else
-            let g:lightline =
-              \{
-              \  'colorscheme'  : 'solarized'
-              \, 'separator'    : { 'left' : '', 'right' : '' }
-              \, 'subseparator' : { 'left' : '', 'right' : '' }
-              \}
+            if s:powerline == 0
+              let g:lightline =
+                \{
+                \  'colorscheme'  : 'solarized'
+                \, 'separator'    : { 'left' : '', 'right' : '' }
+                \, 'subseparator' : { 'left' : '', 'right' : '' }
+                \}
+            else
+              let g:lightline =
+                \{
+                \  'colorscheme'  : 'solarized'
+                \, 'separator'    : { 'left' : '', 'right' : '' }
+                \, 'subseparator' : { 'left' : '', 'right' : '' }
+                \}
+            endif
           endif
         endif
-      else
-        let g:lightline =
+
+        let g:lightline.active =
           \{
-          \  'colorscheme'  : 'solarized'
-          \, 'separator'    : { 'left' : '', 'right' : '' }
-          \, 'subseparator' : { 'left' : '', 'right' : '' }
+          \  'left'  : [ [ 'mode', 'paste', 'matchspace' ]
+          \,             [ 'rootpath', 'basepath', 'filename' ]
+          \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
+          \            ]
+          \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
+          \,             [ 'topbottom', 'bytepercent', 'linecount' ]
+          \,             [ 'atom', 'specialchar', 'column' ]
+          \            ]
           \}
-      endif
 
-      let g:lightline.active =
-        \{
-        \  'left'  : [ [ 'mode', 'paste', 'matchspace' ]
-        \,             [ 'rootpath', 'basepath', 'filename' ]
-        \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
-        \            ]
-        \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
-        \,             [ 'topbottom', 'bytepercent', 'linecount' ]
-        \,             [ 'atom', 'specialchar', 'column' ]
-        \            ]
-        \}
+        let g:lightline.inactive =
+          \{
+          \  'left'  : [ [ 'filename' ] ]
+          \, 'right' : [ [ 'linecount' ] ]
+          \}
 
-      let g:lightline.inactive =
-        \{
-        \  'left'  : [ [ 'filename' ] ]
-        \, 'right' : [ [ 'linecount' ] ]
-        \}
+        let g:lightline.tabline =
+          \{
+          \  'left'  : [ [ 'tabs' ] ]
+          \, 'right' : [ [ 'close' ] ]
+          \}
 
-      let g:lightline.tabline =
-        \{
-        \  'left'  : [ [ 'tabs' ] ]
-        \, 'right' : [ [ 'close' ] ]
-        \}
+        let g:lightline.component =
+          \{
+          \  'absolutepath' : '%F'
+          \, 'bytepercent'  : '%{BytePercent()}%%'
+          \, 'bufnum'       : '%n'
+          \, 'charvalue'    : '%b'
+          \, 'charvaluehex' : '%B'
+          \, 'close'        : '%999X X '
+          \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
+          \, 'fileencoding' : '%{strlen(&fenc) ? &fenc : &enc}'
+          \, 'fileformat'   : '%{&fileformat}'
+          \, 'filename'     : '%t'
+          \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
+          \, 'linecount'    : '%L'
+          \, 'lineinfo'     : '%3l:%-2v'
+          \, 'line'         : '%l'
+          \, 'matchspace'   : '%{g:matchspace}'
+          \, 'mode'         : '%{lightline#mode()}'
+          \, 'paste'        : '%{&paste ? "PASTE" : ""}'
+          \, 'percent'      : '%-0p%%'
+          \, 'percentwin'   : '%P'
+          \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
+          \, 'relativepath' : '%f'
+          \}
 
-      let g:lightline.component =
-        \{
-        \  'absolutepath' : '%F'
-        \, 'bytepercent'  : '%{BytePercent()}%%'
-        \, 'bufnum'       : '%n'
-        \, 'charvalue'    : '%b'
-        \, 'charvaluehex' : '%B'
-        \, 'close'        : '%999X X '
-        \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
-        \, 'fileencoding' : '%{strlen(&fenc) ? &fenc : &enc}'
-        \, 'fileformat'   : '%{&fileformat}'
-        \, 'filename'     : '%t'
-        \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
-        \, 'linecount'    : '%L'
-        \, 'lineinfo'     : '%3l:%-2v'
-        \, 'line'         : '%l'
-        \, 'matchspace'   : '%{g:matchspace}'
-        \, 'mode'         : '%{lightline#mode()}'
-        \, 'paste'        : '%{&paste ? "PASTE" : ""}'
-        \, 'percent'      : '%-0p%%'
-        \, 'percentwin'   : '%P'
-        \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
-        \, 'relativepath' : '%f'
-        \}
+        let g:lightline.component_visible_condition =
+          \{
+          \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+          \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
+          \, 'column'      : '(getline(line(".")) != "")'
+          \, 'matchspace'  : '(g:matchspace != "")'
+          \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
+          \, 'paste'       : '&paste'
+          \, 'readonly'    : '(&filetype != "help" && &readonly)'
+          \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
+          \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
+          \}
 
-      let g:lightline.component_visible_condition =
-        \{
-        \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-        \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
-        \, 'column'      : '(getline(line(".")) != "")'
-        \, 'matchspace'  : '(g:matchspace != "")'
-        \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
-        \, 'paste'       : '&paste'
-        \, 'readonly'    : '(&filetype != "help" && &readonly)'
-        \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
-        \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
-        \}
+        let g:lightline.component_function =
+          \{
+          \  'indent'      : 'Indent'
+          \, 'linesizes'   : 'LineSizes'
+          \, 'modified'    : 'Modified'
+          \, 'spaces'      : 'Spaces'
+          \, 'specialchar' : 'SpecialChar'
+          \, 'wordcount'   : 'WordCount'
+          \, 'rootpath'    : 'RootPath'
+          \, 'basepath'    : 'BasePath'
+          \, 'topbottom'   : 'TopBottom'
+          \, 'atom'        : 'Atom'
+          \}
 
-      let g:lightline.component_function =
-        \{
-        \  'indent'      : 'Indent'
-        \, 'linesizes'   : 'LineSizes'
-        \, 'modified'    : 'Modified'
-        \, 'spaces'      : 'Spaces'
-        \, 'specialchar' : 'SpecialChar'
-        \, 'wordcount'   : 'WordCount'
-        \, 'rootpath'    : 'RootPath'
-        \, 'basepath'    : 'BasePath'
-        \, 'topbottom'   : 'TopBottom'
-        \, 'atom'        : 'Atom'
-        \}
+        let g:lightline.mode_map =
+          \{
+          \  '?'      : ' '
+          \, 'c'      : 'C'
+          \, "\<C-s>" : 'S-BLOCK'
+          \, "\<C-v>" : 'V-BLOCK'
+          \, 'i'      : 'I'
+          \, 'n'      : 'N'
+          \, 'R'      : 'R'
+          \, 's'      : 'S'
+          \, 'S'      : 'S-LINE'
+          \, 'v'      : 'V'
+          \, 'V'      : 'V-LINE'
+          \}
 
-      let g:lightline.mode_map =
-        \{
-        \  '?'      : ' '
-        \, 'c'      : 'C'
-        \, "\<C-s>" : 'S-BLOCK'
-        \, "\<C-v>" : 'V-BLOCK'
-        \, 'i'      : 'I'
-        \, 'n'      : 'N'
-        \, 'R'      : 'R'
-        \, 's'      : 'S'
-        \, 'S'      : 'S-LINE'
-        \, 'v'      : 'V'
-        \, 'V'      : 'V-LINE'
-        \}
+        " must disable lightline to allow new settings to be laaded
+        call lightline#disable()
+        call lightline#init()
+        call lightline#enable()
+      endfunction
+
+      autocmd plugin BufEnter * call LightLine()
 
       function! Atom()
         return synIDattr(synID(line('.'), col('.'), 1), 'name')
@@ -471,9 +480,9 @@
       nmap <silent><leader>t :TagbarToggle<CR>
 
       " see https://github.com/vimwiki/utils/blob/master/vwtags.py
-      let g:tagbar_type_markdown =
+      let g:tagbar_type_vimwiki =
           \{
-          \  'ctagstype'  : 'markdown'
+          \  'ctagstype'  : 'vimwiki'
           \, 'kinds'      : ['h:header']
           \, 'sro'        : '&&&'
           \, 'kind2scope' : {'h':'header'}
@@ -529,7 +538,6 @@
 
       " override highlight link
       autocmd plugin Filetype vimwiki call VimWikiLink()
-      autocmd plugin BufEnter *.wiki  set filetype=vimwiki
       autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
       " see arch install patch to initialize s:vimwiki_autowriteall

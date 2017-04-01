@@ -23,6 +23,10 @@
         return &filetype =~ 'vimwiki\|mail\|markdown\|draft'
       endfunction
 
+      function! Markdown()
+        return &filetype =~ 'vimwiki\|markdown'
+      endfunction
+
     " .................................................... Modified notification
 
       " replaces lightline: 'modified' : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
@@ -63,7 +67,7 @@
       " see https://dougblack.io/words/a-good-vimrc.html
       " strips trailing whitespace from all lines
       function! StripTrailingWhitespaces()
-        if &modifiable == 1 && &filetype !~ 'markdown\|vimwiki\|wiki'
+        if &modifiable == 1 && ! Markdown()
           " save last search & cursor position
           let _s=@/
           let l = line(".")

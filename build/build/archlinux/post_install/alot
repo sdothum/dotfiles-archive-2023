@@ -12,6 +12,6 @@ sudo sed -i "/string = d.strftime('%b %Y')/s|%Y|%d/%y|" $helper
 # arrow head
 decoration=$(find /usr/lib -name urwidtrees)/decoration.py
 original $decoration
-sudo sed -i -re "s/^( *arrow_tip_char=u').*/\1\\\\u25c7',/" $decoration
+sudo sed -i -re "s/^( *arrow_tip_char=u').*/\1\\\\u257c',/" $decoration
 
 # vim: set ft=sh: #

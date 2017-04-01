@@ -112,7 +112,6 @@
         else
           colorscheme solarized8_dark_high
         endif
-        call SetTheme()
         call LiteType()
         if ProseFT()
           call ToggleHiLite()
@@ -207,6 +206,7 @@
 
     " .............................................................. Switch font
 
+      let s:size          = 0
       " let s:source_font = 'Input\ Mono\ Compressed\'
       " let s:source_font = 'PragmataPro\'
       let s:source_font   = 'Iosevka\'
@@ -214,7 +214,7 @@
       let s:prose_font    = 'Iosevka\'
 
       function! Fontspace(prose, source)
-        if expand('%:e') =~ 'wiki\|eml\|draft'
+        if ProseFT()
           execute 'set guifont=' . s:prose_font  . ' ' . a:prose
           execute 'set linespace=' . a:prose
         else
@@ -225,13 +225,18 @@
 
       " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
       function! FontSize(size)
+        if s:size == a:size
+          return
+        endif
+        let s:size = a:size
+
         if system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
           " for desktop nvidia gpu
           if &guifont =~ '11' || a:size < 0
             call Fontspace(10, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(11, 0)
+            call Fontspace(11, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* NVIDIA'
@@ -240,7 +245,7 @@
             call Fontspace(9, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(10, 0)
+            call Fontspace(10, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         elseif system("lspci") =~ 'VGA .* Intel'
@@ -249,7 +254,7 @@
             call Fontspace(11, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(12, 0)
+            call Fontspace(12, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         else
@@ -259,17 +264,21 @@
             call Fontspace(8, 0)
             " let g:lite_dfm_left_offset = 22
           else
-            call Fontspace(9, 0)
+            call Fontspace(9, 1)
             " let g:lite_dfm_left_offset = 18
           endif
         endif
+
+        " fix statusline/commandline position (drawn outside window)
+        sleep 10m                           " delay long enough for font refresh
+        call ToggleGui()
+        call ToggleGui()
       endfunction
 
+      autocmd theme BufEnter * call FontSize(ProseFT() ? +1 : -1)
+
       function! FontSwitch()
-        call FontSize(0)
-        " toggle fullscreen to reposition statusline (2x required to restore)
-        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
-        call system('wmctrl -ir ' . v:windowid . ' -b toggle,fullscreen')
+        call FontSize(s:size == -1 ? +1 : -1)
         if ! ProseFT()
           call Quietly('LiteDFMClose')
           call LiteType()
@@ -277,14 +286,5 @@
       endfunction
 
       nmap <silent><C-F7> :call FontSwitch()<CR>
-
-    " ............................................ Initial font and line spacing
-
-      if argc() == 1
-        " a bit of regex weirdness requiring *eml(?)
-        call FontSize(argv(0) =~ '.*\(wiki\|draft\|*eml\|md\)$' ? +1 : -1)
-      else
-        call FontSize(-1)
-      endif
 
 " themes.vim

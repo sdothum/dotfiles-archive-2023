@@ -45,10 +45,14 @@ count=$(echo $file | wc -w)
 [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
 eval $focus $sudo vim -g $fg $cmd $file
 
-# syncthing housekeeping (unless vim fg, housekeeping is staggered)
-find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
-find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
-# avoid nfs mounts
-server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -fv {} \;
+housekeeping() {
+  # syncthing housekeeping (unless vim fg, housekeeping is staggered)
+  find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
+  find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
+  # avoid nfs mounts
+  server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -fv {} \;
+}
+
+housekeeping &
 
 # vim: set ft=sh: #
