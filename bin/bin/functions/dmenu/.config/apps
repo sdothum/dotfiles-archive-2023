@@ -1,6 +1,8 @@
-term 'Mail' alot
 amphetype
+term 'Calendar' wyrd # calendar
 chromium
+term 'IRC' weechat # irc
+term 'Mail' alot # mail
 netflix
 patricia-video # Patricia :: video
 qutebrowser
@@ -13,5 +15,3 @@ vimwiki shadowsandlight # wiki :: shadows and light
 vimwiki thedarnedestthing # wiki :: the darnedest thing
 vimwiki thestory # wiki :: the story
 vimwiki truthordie # wiki :: truth or die
-term 'IRC' weechat
-term 'Calendar' wyrd

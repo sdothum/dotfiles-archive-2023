@@ -7,7 +7,6 @@
 
     " .................................................................... Setup
 
-      let g:wiki = 'vimwiki'
       " autocompletion plugin dependent on filetype
       let ext    = expand('%:e')
 
@@ -66,14 +65,9 @@
 
     " ................................................................ Hypertext
 
-      " Plug 'tomtom/autolinker_vim'            " Hypertext link
       " Plug 'cwoac/nvim'                       " notational velocity
       " Plug 'greyblake/vim-preview'            " markdown
-      if g:wiki == 'viki'
-        Plug 'tomtom/viki_vim'                  " markdown wiki
-      else
-        Plug 'vimwiki/vimwiki'                  " markdown wiki
-      endif
+      Plug 'vimwiki/vimwiki'                    " markdown wiki
 
   " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -100,7 +94,7 @@
       Plug 'Shougo/neosnippet'                  " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling
-      if ext == 'wiki' && g:wiki == 'vimwiki'
+      if ext == 'wiki'
         Plug 'lifepillar/vim-mucomplete'        " tab completion
       else
         Plug 'maxboisvert/vim-simple-complete'  " enter completion
@@ -108,14 +102,6 @@
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ................................................................ Libraries
-
-      if g:wiki == 'viki'
-        Plug 'tomtom/hookcursormoved_vim'       " cursor movement triggers
-        Plug 'tomtom/setsyntax_vim'             " set options under cursor
-        Plug 'tomtom/tlib_vim'                  " utility functions
-      endif
 
     " ................................................................ Configure
 

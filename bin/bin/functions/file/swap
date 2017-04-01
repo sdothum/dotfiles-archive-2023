@@ -19,9 +19,9 @@ target=${1%/}
 destination=${2%/}
 hold=$RANDOM.$target
 if ([ -e $target ] && [ -e $destination ]) || ([ -d $target ] && [ -d $destination ]) ;then
-  mv $target $hold
-  mv $destination $target
-  mv $hold $destination
+  sudo mv $target $hold
+  sudo mv $destination $target
+  sudo mv $hold $destination
   ditto "$destination -> $target" "$target -> $destination"
 fi
 

@@ -482,74 +482,57 @@
           \, 'ctagsargs'  : 'default'
           \}
 
-    " ..................................................................... Viki
-
-      if g:wiki == 'viki'
-        let g:vikiMapLeader  = '<leader>v'
-        let g:vikiHomePage   = '~/vimwiki'
-        let g:vikiIndex      = 'index'
-        let g:vikiNameSuffix = '.wiki'
-
-        autocmd plugin BufRead  *.wiki   set filetype=markdown
-        autocmd plugin BufEnter *.wiki   nmap <BS> <leader>vb
-        autocmd plugin BufLeave *.wiki   nunmap <BS>
-        autocmd plugin Filetype markdown VikiMinorMode
-        autocmd plugin Filetype markdown setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      endif
-
     " .................................................................. Vimwiki
 
-      if g:wiki == 'vimviki'
-        " disable tab for autocompletion
-        let g:vimwiki_table_mappings = 0
+      " disable tab for autocompletion
+      let g:vimwiki_table_mappings = 0
 
-        let g:vimwiki_list =
-          \[
-          \  {
-          \    'path'      : '~/vimwiki/thedarnedestthing/'
-          \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/thestory/'
-          \,   'path_html' : '~/vimwiki/thestory/html/'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/truthordie/'
-          \,   'path_html' : '~/vimwiki/truthordie/html/'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/shadowsandlight/'
-          \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/healing/'
-          \,   'path_html' : '~/vimwiki/healing/html/'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/colophon/'
-          \,   'path_html' : '~/vimwiki/colophon/html/'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/notes/'
-          \,   'path_html' : '~/vimwiki/notes/html/'
-          \  }
-          \]
+      let g:vimwiki_list =
+        \[
+        \  {
+        \    'path'      : '~/vimwiki/thedarnedestthing/'
+        \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
+        \  }
+        \, {
+        \    'path'      : '~/vimwiki/thestory/'
+        \,   'path_html' : '~/vimwiki/thestory/html/'
+        \  }
+        \, {
+        \    'path'      : '~/vimwiki/truthordie/'
+        \,   'path_html' : '~/vimwiki/truthordie/html/'
+        \  }
+        \, {
+        \    'path'      : '~/vimwiki/shadowsandlight/'
+        \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
+        \  }
+        \, {
+        \    'path'      : '~/vimwiki/healing/'
+        \,   'path_html' : '~/vimwiki/healing/html/'
+        \  }
+        \, {
+        \    'path'      : '~/vimwiki/colophon/'
+        \,   'path_html' : '~/vimwiki/colophon/html/'
+        \  }
+        \, {
+        \    'path'      : '~/vimwiki/notes/'
+        \,   'path_html' : '~/vimwiki/notes/html/'
+        \  }
+        \]
 
-        " header highlighting
-        highlight VimwikiHeader1 guifg=#d70000
-        highlight VimwikiHeader2 guifg=#af005f
-        highlight VimwikiHeader3 guifg=#5f5faf
-        highlight VimwikiHeader4 guifg=#0087ff
-        highlight VimwikiHeader5 guifg=#00afaf
-        highlight VimwikiHeader6 guifg=#5f8700
+      " header highlighting
+      highlight VimwikiHeader1 guifg=#d70000
+      highlight VimwikiHeader2 guifg=#af005f
+      highlight VimwikiHeader3 guifg=#5f5faf
+      highlight VimwikiHeader4 guifg=#0087ff
+      highlight VimwikiHeader5 guifg=#00afaf
+      highlight VimwikiHeader6 guifg=#5f8700
 
-        " override highlight link
-        autocmd plugin Filetype vimwiki call VimWikiLink()
-        autocmd plugin BufEnter *.wiki  set filetype=vimwiki
-        autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-        " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
-        " see arch install patch to initialize s:vimwiki_autowriteall
-      endif
+      " override highlight link
+      autocmd plugin Filetype vimwiki call VimWikiLink()
+      autocmd plugin BufEnter *.wiki  set filetype=vimwiki
+      autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
+      " see arch install patch to initialize s:vimwiki_autowriteall
 
     " ................................................................. Yankring
 

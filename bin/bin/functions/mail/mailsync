@@ -11,9 +11,11 @@ usage() {
   exit 1
 }
 
-exec 3< "$(readlink -m "$0")"
-if ! flock --exclusive --nonblock 3 2>/dev/null ;then
-  echo 1>&2 "Instance $(basename $0) already running: exiting."
+exec 3>"/tmp/flock:$(basename $0)"
+if flock -n 3 2>/dev/null ;then
+  echo $$ 1>&3
+else
+  echo 1>&2 "$(basename $0) already running: exiting."
   exit 1
 fi
 
