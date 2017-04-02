@@ -28,21 +28,21 @@
 
     " ............................................................... Modifiable
 
-      " [regex name, filetype, modifiable, wordcount] rule tuple
+      " [ regex name, filetype, modifiable, wordcount ] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " wordcount (0) no word count (1) statusline with wordcount
       " note "/name" to represent "^name"
       let s:nametypes =
         \[
-        \  ['conf$', 'conf', 1, 0]
-        \, ['config$', 'conf', 1, 0]
-        \, ['eml$', 'mail', 1, 1]
-        \, ['error$', 'log', 0, 0]
-        \, ['log$', 'log', 0, 0]
-        \, ['rc$', 'rc', 1, 0]
-        \, ['txt$', 'text', 0, 1]
-        \, ['wiki$', 'vimwiki', 1, 1]
-        \, ['\(^\|/\)readme', 'text', 0, 1]
+        \  [ 'conf$',          'conf',    1, 0 ]
+        \, [ 'config$',        'conf',    1, 0 ]
+        \, [ 'eml$',           'mail',    1, 1 ]
+        \, [ 'error$',         'log',     0, 0 ]
+        \, [ 'log$',           'log',     0, 0 ]
+        \, [ 'rc$',            'rc',      1, 0 ]
+        \, [ 'txt$',           'text',    0, 1 ]
+        \, [ 'wiki$',          'vimwiki', 1, 1 ]
+        \, [ '\(^\|/\)readme', 'text',    0, 1 ]
         \]
 
       " [regex fileinfo, filetype, modifiable, readonly] rule tuple
@@ -50,14 +50,14 @@
       " readonly (0) not set (1) set
       let s:contenttypes =
         \[
-        \  ['binary', 'binary', 0, 1]
-        \, ['no read permission', 'binary', 0, 1]
-        \, ['text', 'text', 1, 0]
+        \  [ 'binary',             'binary', 0, 1 ]
+        \, [ 'no read permission', 'binary', 0, 1 ]
+        \, [ 'text',               'text',   1, 0 ]
         \]
 
       " set buffer attributes by known filetypes
       function! CheckFiletype()
-        for [name, filetype, modifiable, wordcount] in s:nametypes
+        for [ name, filetype, modifiable, wordcount ] in s:nametypes
           if expand('%') =~ name
             let &filetype = (&filetype == '' ? filetype : &filetype)
             let &modifiable = modifiable
@@ -65,7 +65,7 @@
           endif
         endfor
         if &filetype == ''                  " by file content if not autodetected
-          for [content, filetype, modifiable, readonly] in s:contenttypes
+          for [ content, filetype, modifiable, readonly ] in s:contenttypes
             if system('file -i ' . expand('%') . '|cut -d: -f2') =~ content
               let &filetype = filetype
               let &modifiable = modifiable

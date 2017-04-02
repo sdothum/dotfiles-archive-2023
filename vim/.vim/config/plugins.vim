@@ -20,10 +20,10 @@
 
       let g:easy_align_delimiters =
         \{
-        \  '>': { 'pattern': '>>\|=>\|>' }
-        \, '^': { 'pattern': '=', 'left_margin': 0, 'right_margin': 0, 'align': 'right' }
-        \, '(': { 'pattern': '(', 'left_margin': 1, 'right_margin': 0 }
-        \, ')': { 'pattern': ')', 'left_margin': 0 }
+        \  '>' : { 'pattern' : '>>\|=>\|>' }
+        \, '^' : { 'pattern' : '=',        'left_margin' : 0, 'right_margin' : 0, 'align' : 'right' }
+        \, '(' : { 'pattern' : '(',        'left_margin' : 1, 'right_margin' : 0 }
+        \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
         \}
 
       vmap <Enter>   <Plug>(EasyAlign)
@@ -97,7 +97,7 @@
       let g:lightline  =
         \{
         \  'colorscheme'  : 'solarized'
-        \, 'separator'    : { 'left' : '', 'right' : '' }
+        \, 'separator'    : { 'left' : '',  'right' : ''  }
         \, 'subseparator' : { 'left' : '', 'right' : '' }
         \}
 
@@ -109,7 +109,7 @@
             let g:lightline =
               \{
               \  'colorscheme'  : 'solarized'
-              \, 'separator'    : { 'left' : '', 'right' : '' }
+              \, 'separator'    : { 'left' : '',  'right' : ''  }
               \, 'subseparator' : { 'left' : '', 'right' : '' }
               \}
           else
@@ -133,25 +133,25 @@
 
         let g:lightline.active =
           \{
-          \  'left'  : [ [ 'mode', 'paste', 'matchspace' ]
-          \,             [ 'rootpath', 'basepath', 'filename' ]
+          \  'left'  : [ [ 'mode',     'paste',    'matchspace' ]
+          \,             [ 'rootpath', 'basepath', 'filename'   ]
           \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
           \            ]
-          \, 'right' : [ [ 'indent', 'spaces', 'filetype' ]
+          \, 'right' : [ [ 'indent',    'spaces',      'filetype'  ]
           \,             [ 'topbottom', 'bytepercent', 'linecount' ]
-          \,             [ 'atom', 'specialchar', 'column' ]
+          \,             [ 'atom',      'specialchar', 'column'    ]
           \            ]
           \}
 
         let g:lightline.inactive =
           \{
-          \  'left'  : [ [ 'filename' ] ]
+          \  'left'  : [ [ 'filename'  ] ]
           \, 'right' : [ [ 'linecount' ] ]
           \}
 
         let g:lightline.tabline =
           \{
-          \  'left'  : [ [ 'tabs' ] ]
+          \  'left'  : [ [ 'tabs'  ] ]
           \, 'right' : [ [ 'close' ] ]
           \}
 
@@ -293,14 +293,6 @@
 
       " let g:lite_dfm_left_offset = 22     " see themes.vim
 
-      " see views.vim
-      function! Margin()
-        " let g:lite_dfm_left_offset = max([0, min([22, (&columns - &textwidth - &numberwidth) / 2])])
-        let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth) / 2])])
-      endfunction
-
-      call Margin()
-
     " ............................................................... MUcomplete
 
       set completeopt+=menuone
@@ -351,7 +343,7 @@
       let g:NERDSpaceDelims            = 1  " space after comment delimiter
       let g:NERDCompactSexyComs        = 1  " prettify multi-line
       let g:NERDDefaultAlign           = 'left'
-      let g:NERDCustomDelimiters       = { 'c': { 'left': '//','right': '' } }
+      let g:NERDCustomDelimiters       = { 'c' : { 'left' : '//','right' : '' } }
       let g:NERDCommentEmptyLines      = 1  " comment blank lines
       let g:NERDTrimTrailingWhitespace = 1  " trim trailing whitespace
 
@@ -468,7 +460,7 @@
       let g:syntastic_auto_jump      = 0
       let g:syntastic_auto_loc_list  = 1
       let g:syntastic_enable_signs   = 1
-      let g:syntastic_quiet_messages = {'level':'warnings'}
+      let g:syntastic_quiet_messages = { 'level' : 'warnings' }
 
       " set statusline+=%#warningmsg#
       " set statusline+=%{SyntasticStatuslineFlag()}
@@ -483,9 +475,9 @@
       let g:tagbar_type_vimwiki =
           \{
           \  'ctagstype'  : 'vimwiki'
-          \, 'kinds'      : ['h:header']
+          \, 'kinds'      : [ 'h:header' ]
           \, 'sro'        : '&&&'
-          \, 'kind2scope' : {'h':'header'}
+          \, 'kind2scope' : { 'h' : 'header' }
           \, 'sort'       : 0
           \, 'ctagsbin'   : '~/.vim/vwtags.py'
           \, 'ctagsargs'  : 'default'

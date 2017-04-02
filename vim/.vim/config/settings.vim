@@ -53,9 +53,9 @@
       " set thesaurus=/usr/share/dict/thesaurus
       " set complete+=s                     " disabled, selection list too long
 
-      highlight SpellBad guisp=red gui=undercurl,bold guifg=brown
-      highlight SpellCap guisp=red gui=undercurl,bold guifg=black
-      highlight SpellRare guisp=red gui=undercurl,bold guifg=blue
+      highlight SpellBad   guisp=red gui=undercurl,bold guifg=brown
+      highlight SpellCap   guisp=red gui=undercurl,bold guifg=black
+      highlight SpellRare  guisp=red gui=undercurl,bold guifg=blue
       highlight SpellLocal guisp=red gui=undercurl,bold guifg=green
 
   " Format ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -100,7 +100,7 @@
       set tabstop=2                         " global tab width
 
       cabbrev spaces set expandtab
-      cabbrev tabs set noexpandtab
+      cabbrev tabs   set noexpandtab
 
   " Search / completion ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

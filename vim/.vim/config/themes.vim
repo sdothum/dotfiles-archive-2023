@@ -78,7 +78,7 @@
     " .................................................................. Margins
 
       " match marks margin and whitespace colours to background
-      function! LiteBackground()
+      function! Margin()
         execute 'highlight ShowMarksHLl      guibg=' . g:dfm_bg
         execute 'highlight SignColumn        guibg=' . g:dfm_bg
         execute 'highlight InsertCursor      guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
@@ -93,6 +93,11 @@
           execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
           execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
         endif
+
+        " let g:lite_dfm_left_offset = max([ 0, min( [ 22, (&columns - &textwidth - &numberwidth) / 2 ]) ])
+        let g:lite_dfm_left_offset = max([ 1, min([ 22, (&columns - &textwidth) / 2 ]) ])
+        call Quietly('LiteDFM')
+        call HiLite()
       endfunction
 
     " ............................................................ Switch colour
@@ -169,7 +174,8 @@
       let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
 
       function! Cursor()
-        execute 'highlight Cursor guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+        " execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . (&background == 'light' ? '#333333' : '#cccccc')
       endfunction
 
       " set cursorline theme
@@ -178,7 +184,7 @@
           execute 'highlight CursorLine gui=none guibg='   . s:cursorline . ' guifg=' . s:foreground
           execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
         else
-          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
+          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg     . ' guifg=' . g:dfm_fg
         endif
         call Cursor()
       endfunction
@@ -216,10 +222,10 @@
 
       function! Fontspace(prose, source)
         if Prose()
-          execute 'set guifont=' . s:prose_font  . ' ' . a:prose
+          execute 'set guifont='   . s:prose_font  . ' ' . a:prose
           execute 'set linespace=' . a:prose
         else
-          execute 'set guifont=' . s:source_font . ' ' . a:prose
+          execute 'set guifont='   . s:source_font . ' ' . a:prose
           execute 'set linespace=' . a:source
         endif
       endfunction
