@@ -174,8 +174,7 @@
       let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
 
       function! Cursor()
-        " execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
-        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . (&background == 'light' ? '#333333' : '#cccccc')
+        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
       endfunction
 
       " set cursorline theme

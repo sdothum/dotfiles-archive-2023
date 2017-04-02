@@ -17,10 +17,9 @@
       function! CodeView()
         " reset theme colours when transitioning from prose view
         call lightline#colorscheme()
-        " suppress tty ctermfg error messages
         call Margin()
-        set showmode
         set laststatus=2                    " turn on statusline
+        set showmode
         execute 'highlight LineNr guifg=' . g:dfm_fg_line
       endfunction
 
@@ -29,28 +28,27 @@
       " vimwiki prose style
       function! ProseView()
         " silent !tmux set status off
-        set scrolloff=8
-        set foldcolumn=0
         set colorcolumn=0
+        set foldcolumn=0
         set noshowmode
+        set scrolloff=8
         set spell
         " set numberwidth=1                 " goyo settings
         " set nonumber
         " set fillchars-=stl:.              " remove statusline fillchars '.' set by goyo.vim
         " set fillchars+=stl:\ "
-        call DfmWriting()
         execute 'highlight Normal guifg='  . g:dfm_unfocused
         execute 'highlight PreProc guifg=' . g:dfm_code
-        let s:unfocused = g:dfm_unfocused
+        call DfmWriting()
         call Margin()
         execute 'Limelight'
       endfunction
 
       " dfm writing mode (single paragraph highlight)
       function! DfmWriting()
+        let s:unfocused = g:dfm_unfocused
         execute 'highlight Normal guifg=' . g:dfm_unfocused
         call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-        let s:unfocused = g:dfm_unfocused
         call ShowInfo(0)
       endfunction
 
@@ -58,8 +56,8 @@
       function! ToggleProof()
         call Margin()
         if s:unfocused == g:dfm_unfocused
-          execute 'highlight Normal guifg=' . g:dfm_proof
           let s:unfocused = g:dfm_fg
+          execute 'highlight Normal guifg=' . g:dfm_proof
           call ShowInfo(1)
           execute 'Limelight!'
         else
