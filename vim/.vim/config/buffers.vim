@@ -131,9 +131,17 @@
     " ............................................................... Print file
 
       " a la vimb
-      command! Hardcopy execute "if Markdown() | execute '!hardcopy wiki \"' . expand('%:t') . '\"'  | elseif expand('%:p') =~ 'Patricia' | execute '!hardcopy wps' expand('%:t') | else | execute '!hardcopy code' expand('%:t') | endif"
+      function! Hardcopy()
+        if Markdown()
+          execute '!hardcopy wiki \"' . expand('%:t') . '\"'
+        elseif expand('%:p') =~ 'Patricia'
+          execute '!hardcopy wps' expand('%:t')
+        else
+          execute '!hardcopy code' expand('%:t')
+        endif
+      endfunction
 
-      nmap <silent><leader>ha :silent Hardcopy<CR>
+      nmap <silent><leader>ha :silent call Hardcopy()<CR>:echo 'Printing..'<CR>
 
     " ............................................................ Open terminal
 

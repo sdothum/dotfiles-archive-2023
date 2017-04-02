@@ -41,7 +41,7 @@
         autocmd!
       augroup END
 
-    " .......................................................... Text and cursor
+    " .................................................................. Palette
 
       function! SetTheme()
         if &background == 'light'
@@ -75,10 +75,28 @@
         endif
       endfunction
 
-    " .................................................................. Margins
+    " ............................................................... Cursorline
+
+      let s:contrast   = 1                  " cursorline contrast (0) low (1) high
+      let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
+
+      function! Cursor()
+        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+      endfunction
+
+      function! CursorLine(fg, bg, BG)
+        let s:foreground = a:fg
+        if s:cursorline != a:bg
+          let s:cursorline = a:bg
+        else
+          let s:cursorline = a:BG
+        endif
+      endfunction
+
+    " ....................................................... Margins and select
 
       " match marks margin and whitespace colours to background
-      function! Margin()
+      function! HiLite()
         execute 'highlight ShowMarksHLl      guibg=' . g:dfm_bg
         execute 'highlight SignColumn        guibg=' . g:dfm_bg
         execute 'highlight InsertCursor      guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
@@ -93,12 +111,19 @@
           execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
           execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
         endif
-
+        if Prose()
+          execute 'highlight CursorLine gui=none guibg='   . s:cursorline . ' guifg=' . s:foreground
+          execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
+        else
+          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg     . ' guifg=' . g:dfm_fg
+        endif
+        call Cursor()
         " let g:lite_dfm_left_offset = max([ 0, min( [ 22, (&columns - &textwidth - &numberwidth) / 2 ]) ])
         let g:lite_dfm_left_offset = max([ 1, min([ 22, (&columns - &textwidth) / 2 ]) ])
         call Quietly('LiteDFM')
-        call HiLite()
       endfunction
+
+    " Theme ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................ Switch colour
 
@@ -117,9 +142,14 @@
         else
           colorscheme solarized8_dark_high
         endif
-        call LiteType()
         if Prose()
-          call ToggleHiLite()
+          if s:contrast == 0
+            " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
+            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
+          else
+            " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
+            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
+          endif
         else
           " match lightline to current colorscheme
           " see https://github.com/itchyny/lightline.vim/issues/104
@@ -132,6 +162,7 @@
           call lightline#colorscheme()
           call lightline#update()
         endif
+        call LiteType()
         call VimWikiLink()                  " restore vimwiki link
         call IndentTheme()
         call LiteFix()
@@ -165,48 +196,6 @@
       nmap <silent><C-F7> :call LiteFix()<CR>
 
       autocmd theme BufEnter * call LiteFix()
-
-  " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ............................................................... Cursorline
-
-      let s:contrast   = 1                  " cursorline contrast (0) low (1) high
-      let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
-
-      function! Cursor()
-        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
-      endfunction
-
-      " set cursorline theme
-      function! HiLite()
-        if Prose()
-          execute 'highlight CursorLine gui=none guibg='   . s:cursorline . ' guifg=' . s:foreground
-          execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
-        else
-          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg     . ' guifg=' . g:dfm_fg
-        endif
-        call Cursor()
-      endfunction
-
-      function! CursorLine(fg, bg, BG)
-        let s:foreground = a:fg
-        if s:cursorline != a:bg
-          let s:cursorline = a:bg
-        else
-          let s:cursorline = a:BG
-        endif
-      endfunction
-
-      function! ToggleHiLite()
-        if s:contrast == 0
-          " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
-          call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-        else
-          " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
-          call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-        endif
-        call HiLite()
-      endfunction
 
   " Font ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
