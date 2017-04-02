@@ -43,7 +43,7 @@
 
     " .................................................................. Palette
 
-      function! SetTheme()
+      function! Palette()
         if &background == 'light'
           let g:dfm_fg          = g:dfm_fg_light
           let g:dfm_proof       = g:dfm_proof_light
@@ -54,8 +54,6 @@
           let g:dfm_bg_line     = g:dfm_bg_line_light
           let g:dfm_fg_line     = g:dfm_fg_line_light
           let g:dfm_status      = g:dfm_status_light
-          execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
-          execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_dark
         else
           if Prose()
             let g:dfm_fg        = g:dfm_fg_dark_prose
@@ -70,8 +68,6 @@
           let g:dfm_bg_line     = g:dfm_bg_line_dark
           let g:dfm_fg_line     = g:dfm_fg_line_dark
           let g:dfm_status      = g:dfm_status_dark
-          execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_dark
-          execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_dark
         endif
       endfunction
 
@@ -93,29 +89,33 @@
         endif
       endfunction
 
-    " ....................................................... Margins and select
+    " ................................................................... Screen
 
-      " match marks margin and whitespace colours to background
-      function! HiLite()
-        execute 'highlight ShowMarksHLl      guibg=' . g:dfm_bg
-        execute 'highlight SignColumn        guibg=' . g:dfm_bg
-        execute 'highlight InsertCursor      guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
+      " margins, selection and cursor
+      function! Theme()
+        execute 'highlight ShowMarksHLl            guibg=' . g:dfm_bg
+        execute 'highlight SignColumn              guibg=' . g:dfm_bg
+        execute 'highlight InsertCursor            guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
         if &background == 'light'
-          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
-          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight ExtraWhitespace       guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
+          execute 'highlight VisualCursor          guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor         guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor         guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight IndentGuidesOdd       guibg=' . g:dfm_bg_light
+          execute 'highlight IndentGuidesEven      guibg=' . g:dfm_bg_line_dark
         else
-          execute 'highlight ExtraWhitespace guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg_light
-          execute 'highlight VisualCursor    guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor   guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight ExtraWhitespace       guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg_light
+          execute 'highlight VisualCursor          guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor         guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor         guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight IndentGuidesOdd       guibg=' . g:dfm_bg_dark
+          execute 'highlight IndentGuidesEven      guibg=' . g:dfm_bg_line_dark
         endif
         if Prose()
-          execute 'highlight CursorLine gui=none guibg='   . s:cursorline . ' guifg=' . s:foreground
-          execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline . ' guifg=' . s:foreground
+          execute 'highlight CursorLine   gui=none guibg=' . s:cursorline       . ' guifg=' . s:foreground
+          execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline       . ' guifg=' . s:foreground
         else
-          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg     . ' guifg=' . g:dfm_fg
+          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
         endif
         call Cursor()
         " let g:lite_dfm_left_offset = max([ 0, min( [ 22, (&columns - &textwidth - &numberwidth) / 2 ]) ])
@@ -123,14 +123,9 @@
         call Quietly('LiteDFM')
       endfunction
 
-    " Theme ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+    " Contrast ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................ Switch colour
-
-      " restore vimwiki link
-      function! VimWikiLink()
-        highlight VimwikiLink guifg=#268bd2 gui=bold
-      endfunction
 
       " toggle colour scheme
       function! LiteSwitch()
@@ -165,7 +160,6 @@
         call LiteType()
         call VimWikiLink()                  " restore vimwiki link
         call IndentTheme()
-        call LiteFix()
       endfunction
 
       nmap <silent><F7> :call LiteSwitch()<CR>

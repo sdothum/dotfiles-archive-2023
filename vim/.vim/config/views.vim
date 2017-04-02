@@ -17,10 +17,11 @@
       function! CodeView()
         " reset theme colours when transitioning from prose view
         call lightline#colorscheme()
-        call HiLite()
+        call Theme()
         set laststatus=2                    " turn on statusline
         set showmode
         execute 'highlight LineNr guifg=' . g:dfm_fg_line
+        call LiteFix()
       endfunction
 
     " ............................................................... Prose view
@@ -40,7 +41,7 @@
         execute 'highlight Normal guifg='  . g:dfm_unfocused
         execute 'highlight PreProc guifg=' . g:dfm_code
         call DfmWriting()
-        call HiLite()
+        call Theme()
         execute 'Limelight'
       endfunction
 
@@ -54,7 +55,7 @@
 
       " toggle full document highlight
       function! ToggleProof()
-        call HiLite()
+        call Theme()
         if s:unfocused == g:dfm_unfocused
           let s:unfocused = g:dfm_fg
           execute 'highlight Normal guifg=' . g:dfm_proof
@@ -71,7 +72,7 @@
     " ........................................................... Screen display
 
       function! LiteType()
-        call SetTheme()
+        call Palette()
         if Prose()
           call ProseView()
           set laststatus=0
@@ -87,7 +88,7 @@
       function! Refresh()
         if Prose()
           let lstatus = &laststatus
-          call HiLite()
+          call Theme()
           let &laststatus = lstatus
         else
           call CodeView()

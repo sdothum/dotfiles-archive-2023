@@ -528,7 +528,11 @@
       highlight VimwikiHeader5 guifg=#00afaf
       highlight VimwikiHeader6 guifg=#5f8700
 
-      " override highlight link
+      " restore vimwiki link
+      function! VimWikiLink()
+        highlight VimwikiLink guifg=#268bd2 gui=bold
+      endfunction
+
       autocmd plugin Filetype vimwiki call VimWikiLink()
       autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
