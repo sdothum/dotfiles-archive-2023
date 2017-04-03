@@ -158,8 +158,6 @@
           call lightline#update()
         endif
         call LiteType()
-        call VimWikiLink()                  " restore vimwiki link
-        call IndentTheme()
       endfunction
 
       nmap <silent><F7> :call LiteSwitch()<CR>

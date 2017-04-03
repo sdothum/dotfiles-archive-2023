@@ -32,12 +32,14 @@
     " .............................................................. Eightheader
 
       " justified fold headers
-      let &foldtext = "EightHeaderFolds(
-        \ '\\=s:fullwidth',
-        \ 'left',
-        \ [ repeat( '  ', v:foldlevel - 1 ), ' ', '' ],
-        \ '\\= s:foldlines . \" lines\"',
-        \ '' )"
+      let &foldtext =
+        \"EightHeaderFolds(
+        \  '\\=s:fullwidth'
+        \, 'left'
+        \, [ repeat( '  ', v:foldlevel - 1 ), ' ', '' ]
+        \, '\\= s:foldlines . \" lines\"'
+        \, ''
+        \)"
 
     " .................................................................. Endwise
 
@@ -304,7 +306,7 @@
 
     " ............................................................ Narrow region
 
-      let g:nrrw_rgn_vert          = 0       " open in horizontal split buffer
+      let g:nrrw_rgn_vert          = 0      " open in horizontal split buffer
 			let g:nrrw_topbot_leftright  = 'botright'
 			let g:nrrw_rgn_nomap_nr      = 1      " disable nr mappings
 			let g:nrrw_rgn_nomap_Nr      = 1
@@ -347,8 +349,8 @@
       let g:NERDCommentEmptyLines      = 1  " comment blank lines
       let g:NERDTrimTrailingWhitespace = 1  " trim trailing whitespace
 
-      map <leader>c <Plug>NERDCommenterToggle
-      imap ,c       <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
+      map  <leader>c <Plug>NERDCommenterToggle
+      imap ,c        <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
 
     " ................................................................... Pencil
 

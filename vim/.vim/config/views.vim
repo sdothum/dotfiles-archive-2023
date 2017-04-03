@@ -21,6 +21,7 @@
         set laststatus=2                    " turn on statusline
         set showmode
         execute 'highlight LineNr guifg=' . g:dfm_fg_line
+        call IndentTheme()
         call LiteFix()
       endfunction
 
@@ -31,6 +32,7 @@
         " silent !tmux set status off
         set colorcolumn=0
         set foldcolumn=0
+        set laststatus=0
         set noshowmode
         set scrolloff=8
         set spell
@@ -42,6 +44,7 @@
         execute 'highlight PreProc guifg=' . g:dfm_code
         call DfmWriting()
         call Theme()
+        call VimWikiLink()                  " restore vimwiki link
         execute 'Limelight'
       endfunction
 
@@ -75,7 +78,6 @@
         call Palette()
         if Prose()
           call ProseView()
-          set laststatus=0
         else
           call CodeView()
         endif
