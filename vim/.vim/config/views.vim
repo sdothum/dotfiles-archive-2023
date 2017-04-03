@@ -40,8 +40,6 @@
         " set nonumber
         " set fillchars-=stl:.              " remove statusline fillchars '.' set by goyo.vim
         " set fillchars+=stl:\ "
-        execute 'highlight Normal guifg='  . g:dfm_unfocused
-        execute 'highlight PreProc guifg=' . g:dfm_code
         call DfmWriting()
         call Theme()
         call VimWikiLink()                  " restore vimwiki link
@@ -50,9 +48,8 @@
 
       " dfm writing mode (single paragraph highlight)
       function! DfmWriting()
-        let s:unfocused = g:dfm_unfocused
         execute 'highlight Normal guifg=' . g:dfm_unfocused
-        call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
+        let s:unfocused = g:dfm_unfocused
         call ShowInfo(0)
       endfunction
 
@@ -60,8 +57,8 @@
       function! ToggleProof()
         call Theme()
         if s:unfocused == g:dfm_unfocused
-          let s:unfocused = g:dfm_fg
           execute 'highlight Normal guifg=' . g:dfm_proof
+          let s:unfocused = g:dfm_proof
           call ShowInfo(1)
           execute 'Limelight!'
         else

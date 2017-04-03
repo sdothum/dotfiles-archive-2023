@@ -71,56 +71,37 @@
         endif
       endfunction
 
-    " ............................................................... Cursorline
-
-      let s:contrast   = 1                  " cursorline contrast (0) low (1) high
-      let s:cursorline = g:dfm_bg_light     " declare cursorline, colour is arbitrary
-
-      function! Cursor()
-        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
-      endfunction
-
-      function! CursorLine(fg, bg, BG)
-        let s:foreground = a:fg
-        if s:cursorline != a:bg
-          let s:cursorline = a:bg
-        else
-          let s:cursorline = a:BG
-        endif
-      endfunction
-
     " ................................................................... Screen
 
       " margins, selection and cursor
       function! Theme()
-        execute 'highlight ShowMarksHLl            guibg=' . g:dfm_bg
-        execute 'highlight SignColumn              guibg=' . g:dfm_bg
-        execute 'highlight InsertCursor            guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
-        if &background == 'light'
-          execute 'highlight ExtraWhitespace       guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
-          execute 'highlight VisualCursor          guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor         guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor         guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight IndentGuidesOdd       guibg=' . g:dfm_bg_light
-          execute 'highlight IndentGuidesEven      guibg=' . g:dfm_bg_line_dark
-        else
-          execute 'highlight ExtraWhitespace       guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg_light
-          execute 'highlight VisualCursor          guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor         guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor         guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight IndentGuidesOdd       guibg=' . g:dfm_bg_dark
-          execute 'highlight IndentGuidesEven      guibg=' . g:dfm_bg_line_dark
-        endif
-        if Prose()
-          execute 'highlight CursorLine   gui=none guibg=' . s:cursorline       . ' guifg=' . s:foreground
-          execute 'highlight CursorLineNr gui=bold guibg=' . s:cursorline       . ' guifg=' . s:foreground
-        else
-          execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
-        endif
-        call Cursor()
-        " let g:lite_dfm_left_offset = max([ 0, min( [ 22, (&columns - &textwidth - &numberwidth) / 2 ]) ])
         let g:lite_dfm_left_offset = max([ 1, min([ 22, (&columns - &textwidth) / 2 ]) ])
         call Quietly('LiteDFM')
+        execute 'highlight ShowMarksHLl          guibg=' . g:dfm_bg
+        execute 'highlight SignColumn            guibg=' . g:dfm_bg
+        execute 'highlight InsertCursor          guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
+        if &background == 'light'
+          execute 'highlight ExtraWhitespace     guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
+          execute 'highlight VisualCursor        guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor       guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor       guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
+          execute 'highlight IndentGuidesOdd     guibg=' . g:dfm_bg_light
+          execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
+        else
+          execute 'highlight ExtraWhitespace     guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg_light
+          execute 'highlight VisualCursor        guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight ReplaceCursor       guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight CommandCursor       guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
+          execute 'highlight IndentGuidesOdd     guibg=' . g:dfm_bg_dark
+          execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
+        endif
+        execute 'highlight CursorLine   gui=none guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
+        execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
+        call Cursor()
+      endfunction
+
+      function! Cursor()
+        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
       endfunction
 
     " Contrast ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -137,15 +118,7 @@
         else
           colorscheme solarized8_dark_high
         endif
-        if Prose()
-          if s:contrast == 0
-            " call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg_line)
-            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-          else
-            " call CursorLine(g:dfm_fg, g:dfm_bg_line, g:dfm_bg)
-            call CursorLine(g:dfm_fg, g:dfm_bg, g:dfm_bg)
-          endif
-        else
+        if ! Prose()
           " match lightline to current colorscheme
           " see https://github.com/itchyny/lightline.vim/issues/104
           if &background == 'light'

@@ -95,7 +95,8 @@
     " ................................................................ Lightline
 
       let g:matchspace = ''                 " see ToggleSpaces() gui.vim
-      let s:powerline  = 0                  " powerline symbol slant (0) lower (1) upper
+      " powerline symbol slant (0) lower (1) upper
+      let s:powerline  = ("$POWERLINE" > '' ? $POWERLINE : 0)
       let g:lightline  =
         \{
         \  'colorscheme'  : 'solarized'
