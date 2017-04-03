@@ -94,9 +94,9 @@
         " email has blank lines inserted externally (via sed) for replys to
         " avoid the previously messy and unpredictable editing mode vim commands
         " see bin/dcompose
-        execute 'normal 4G'
+        execute 'normal! 4G'
         if matchstr(getline(5), '\S') > ''
-          execute 'normal Yp'
+          execute 'normal! Yp'
         endif
         execute 'startinsert'
       endfunction

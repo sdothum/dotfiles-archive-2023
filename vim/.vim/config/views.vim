@@ -43,6 +43,7 @@
         call DfmWriting()
         call Theme()
         call VimWikiLink()                  " restore vimwiki link
+        execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
         execute 'Limelight'
       endfunction
 

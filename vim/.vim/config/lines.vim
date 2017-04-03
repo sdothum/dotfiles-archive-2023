@@ -16,9 +16,9 @@
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
       function! Underline(delimiter)
         if matchstr(getline(line('.')), '\S') > ''
-          execute 'normal yypwv$r' . a:delimiter
+          execute 'normal! yypwv$r' . a:delimiter
         endif
-        normal $
+        normal! $
       endfunction
 
       imap <silent>,,- <C-o>:silent call Underline('▔')<CR>
@@ -35,9 +35,9 @@
         if virtcol('.') < g:linewidth       " for mirrored left/right margin spacing
           " let l:col = g:linewidth - virtcol('.') - l:col + 1
           let l:col   = g:linewidth - virtcol('.')
-          execute 'normal ' . l:col . 'a' . a:delimiter
+          execute 'normal! ' . l:col . 'a' . a:delimiter
         endif
-        normal $
+        normal! $
       endfunction
 
       imap <silent>,,-- <C-o>:silent call Drawline('▔')<CR>
@@ -52,21 +52,17 @@
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing trailer
           if matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$') > ''
-            if g:mnle == 0
-              normal $bhD
-            else
-              normal $bmD
-            endif
+            normal! $bhD
           endif
-          normal $
+          normal! $
           let l:col = g:linewidth - virtcol('.') - 1
           if l:col > 0
             set formatoptions-=c            " suppress potential comment line wrapping
-            execute 'normal a '
-            execute 'normal ' . l:col . 'a' . a:delimiter
+            execute 'normal! a '
+            execute 'normal! ' . l:col . 'a' . a:delimiter
             set formatoptions+=c
           endif
-          normal $
+          normal! $
         endif
       endfunction
 
@@ -95,20 +91,12 @@
         if matchstr(getline(line('.')), '\S') > ''
           " remove existing leader
           if matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s') > ''
-            if g:mnle == 0
-              execute 'normal ^wdf '
-            else
-              execute 'normal ^wdt x'
-            endif
+            execute 'normal! ^wdf '
           endif
           call AppendTrailer(a:delimiter)
           " cut trailer and insert as leader!
-          if g:mnle == 0
-            normal $bhD^whP
-          else
-            normal $bmD^wmP
-          endif
-          normal $
+          normal! $bhD^whP
+          normal! $
         endif
       endfunction
 
@@ -138,7 +126,7 @@
       function! Justify()
         call InsertLeader('▔')
         execute ':s/▔/ /'
-        normal $
+        normal! $
       endfunction
 
       imap <silent>,<Right> <C-o>:silent call Justify()<CR>

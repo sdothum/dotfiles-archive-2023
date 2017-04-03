@@ -28,11 +28,11 @@
         set formatoptions-=c
         set formatoptions-=r
         set formatoptions-=o
-        normal ^
+        normal! ^
         let l:pos = col('.')
-        normal o
+        normal! o
         " align line indentation
-        execute 'normal a' . repeat(' ', l:pos)
+        execute 'normal! a' . repeat(' ', l:pos)
         let &formatoptions = l:formatoptions
       endfunction
 
@@ -60,22 +60,22 @@
 
       function! ParagraphAbove()
         if matchstr(getline(line('.')), '\S') == ''
-          normal {
+          normal! {
           if matchstr(getline(line('.')), '\S') == ''
-            normal j
+            normal! j
           endif
         endif
-        normal }lV{
+        normal! }lV{
       endfunction
 
       function! ParagraphBelow()
         if matchstr(getline(line('.')), '\S') == ''
-          normal }
+          normal! }
           if matchstr(getline(line('.')), '\S') == ''
-            normal k
+            normal! k
           endif
         endif
-        normal {nV}
+        normal! {nV}
       endfunction
 
       " select paragragh
@@ -108,12 +108,12 @@
 
       function! s:MoveVisualUp()
         call s:MoveLineOrVisualUp("'<", "'<,'>")
-        normal gv
+        normal! gv
       endfunction
 
       function! s:MoveVisualDown()
         call s:MoveLineOrVisualDown("'>", "'<,'>")
-        normal gv
+        normal! gv
       endfunction
 
       function! s:MoveLineOrVisualUp(line_getter, range)
@@ -177,13 +177,13 @@
 
       " convert wiki text lines into code block lines
       function! CodeBlock()
-        execute "silent! normal :s/\\(.*\\)/`\\1`/\<CR>"
+        execute "silent! normal  :s/\\(.*\\)/`\\1`/\<CR>"
         " preserve leading spaces with wiki markdown
-        execute "silent! normal gv:s/^` /`^ /\<CR>"
-        execute "silent! normal gv:s/^``/`^ `/e\<CR>"
+        execute "silent! normal! gv:s/^` /`^ /\<CR>"
+        execute "silent! normal! gv:s/^``/`^ `/e\<CR>"
         " convert [[ test ]], see thedarnedestthing markdown
-        execute "silent! normal gv:s/ \\[\\[ / [[] /e\<CR>"
-        execute "silent! normal gv:s/ \\]\\] / []] /e\<CR>"
+        execute "silent! normal! gv:s/ \\[\\[ / [[] /e\<CR>"
+        execute "silent! normal! gv:s/ \\]\\] / []] /e\<CR>"
       endfunction
 
       " markup wiki code blocks

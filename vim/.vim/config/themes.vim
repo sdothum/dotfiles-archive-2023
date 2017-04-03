@@ -24,8 +24,8 @@
       let g:dfm_bg_dark         = '#002b36' " solarized dark background
 
       " cursor line
-      let g:dfm_cursor_light    = '#54D4FF' " ia writer blue cursor
-      let g:dfm_cursor_dark     = '#DA4716' " reddish cursor
+      let g:dfm_cursor_light    = '#00ACE4' " bluish cursor
+      let g:dfm_cursor_dark     = '#EC7146' " reddish cursor
       let g:dfm_bg_line_light   = '#eee8d5' " solarized light cursorline
       let g:dfm_bg_column_light = '#E2D7B6' " solarized light column
       let g:dfm_bg_line_dark    = '#073642' " solarized dark cursorline
@@ -79,6 +79,7 @@
         call Quietly('LiteDFM')
         execute 'highlight ShowMarksHLl          guibg=' . g:dfm_bg
         execute 'highlight SignColumn            guibg=' . g:dfm_bg
+        execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
         execute 'highlight InsertCursor          guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
         if &background == 'light'
           execute 'highlight ExtraWhitespace     guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
@@ -95,8 +96,6 @@
           execute 'highlight IndentGuidesOdd     guibg=' . g:dfm_bg_dark
           execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
         endif
-        execute 'highlight CursorLine   gui=none guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
-        execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
         call Cursor()
       endfunction
 

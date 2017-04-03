@@ -107,7 +107,7 @@
         let b:wordcount = ''
         let l:statusmsg = v:statusmsg
         let l:position  = getpos('.')       " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
-        execute "silent normal g\<C-g>"
+        execute "silent normal! g\<C-g>"
         if v:statusmsg != '--No lines in buffer--'
           let b:wordcount = str2nr(split(v:statusmsg)[11])
         endif
@@ -127,7 +127,7 @@
               " show hex value, not interested in ascii keyboard characters
               if l:char !~ s:ascii && l:char != "'"
                 let l:statusmsg = v:statusmsg
-                normal ga
+                normal! ga
                 let l:hex       = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
                 let v:statusmsg = l:statusmsg
                 " clear ga information!
