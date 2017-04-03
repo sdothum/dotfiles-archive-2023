@@ -27,22 +27,20 @@
       "       see thedarnedestthing.com
 
       " hjkl mapping (0) hjkl (1) mnle
-      let s:mapping = 0
-      let g:mnle    = 0
+      let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
 
       " up/down by screen lines, not file lines
       nnoremap j          gj
       nnoremap k          gk
 
       function! Colemak()
-        if s:mapping == 0
+        if s:mnle == 0
           " map home row (cluster) cursor movement
           nnoremap k      gk
           vnoremap k      gk
           nnoremap j      gj
           vnoremap j      gj
         else
-          let g:mnle = 1
           " map home row (cluster) cursor movement
           nnoremap u      gk
           vnoremap u      gk
