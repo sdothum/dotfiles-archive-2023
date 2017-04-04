@@ -639,7 +639,7 @@ button.expandPrompt {
 
 /* 'logo' */
 #main:after{
-  content: "●graviton" !important;
+  content: "●gravit○n" !important;
   /* font: 28px 'Liberation Sans Narrow', 'PT Sans Narrow', Helvetica, Arial, sans-serif !important; */
   font: 22px Helvetica, Arial, sans-serif !important;
   /* color: #2A363B !important; */
@@ -659,7 +659,7 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content: "refresh●graviton" !important;
+  content: "refresh●gravit○n" !important;
   /* font: 18px 'Liberation Sans Narrow', 'PT Sans Narrow', Helvetica, Arial, sans-serif !important; */
   font: 18px Helvetica, Arial, sans-serif !important;
   color: #b5423f !important;
