@@ -132,7 +132,7 @@
         call LiteType()
       endfunction
 
-      nmap <silent><F7> :call LiteSwitch()<CR>
+      nmap <silent><F7>   :call LiteSwitch()<CR>
 
       function! LiteFix()
         " fix solarized colour shifts resulting from toggling(!)

@@ -7,11 +7,20 @@
 # ........................................................ Directory differences
 
 usage() {
-  echo "usage: $(basename $0) <directory> <directory> <regex>"
+  echo "usage: $(basename $0) [-b] <directory> <directory> <regex>"
   exit 1
 }
 
 ignore='backups|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
+
+# ignore leading and trailing whitespace
+if [ "$1" = '-b' ] ;then
+  B=true
+  shift
+  one=$(mktemp)
+  two=$(mktemp)
+  trap "rm -f $one $two" EXIT
+fi
 
 [ $# -lt 2 ] && usage
 [ $# -gt 3 ] && usage
@@ -24,6 +33,16 @@ else
   regex='*'
 fi
 
+compare() {
+  if [ $B ] ;then
+    sed 's/  */ /g' $1 >$one
+    sed 's/  */ /g' $2 >$two
+    diff $one $two
+  else
+    diff $1 $2
+  fi
+}
+
 for i in $(find $1 -type f | filter | egrep -v $ignore | egrep "$regex")
 do
   file=$(echo $i | sed "s|.*/*$1/||")
@@ -31,7 +50,7 @@ do
   while :
   do
     echo "${_green_}${blink}-> $file${_nocolor_}"
-    if ! diff $i $2/$file ;then
+    if ! compare $i $2/$file ;then
       # see herbstluftwm gvimdiff rule
       if-no "edit $file" && break ||
                             gvimdiff -f --role=gvimdiff $i $2/$file

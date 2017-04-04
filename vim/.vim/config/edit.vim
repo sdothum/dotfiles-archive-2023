@@ -11,14 +11,14 @@
       " ctrl-enter only works with gvim due to terminal limitation :-(
       " inoremap <C-CR> <C-o>o
       " similarly, open curly braces and continue inserting in indented body
-      inoremap <S-CR>   <CR><C-o>O<Tab>
+      inoremap <S-CR>                    <CR><C-o>O<Tab>
 
       " break line (in .wiki)
-      nnoremap <silent><leader><Enter> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
+      nnoremap <silent><leader><Enter>   :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
 
       " insert blank line above/below
-      nnoremap <silent><leader><Up>    :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
-      nnoremap <silent><leader><Down>  :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
+      nnoremap <silent><leader><Up>      :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
+      nnoremap <silent><leader><Down>    :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
 
     " ......................................................... Insert line wrap
 
@@ -36,23 +36,23 @@
         let &formatoptions = l:formatoptions
       endfunction
 
-      inoremap <silent><C-Return> <C-o>:call InsertWrap()<CR>
+      inoremap <silent><C-Return>   <C-o>:call InsertWrap()<CR>
 
     " ...................................................... Reformat paragraghs
 
       " select all
-      nnoremap <C-a>             ggVG
+      nnoremap <C-a>                     ggVG
       " retain cursor position for insert mode reformatting
-      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      inoremap <silent><F4>         <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
       " otherwise advance cursor to next paragraph
-      nnoremap <F4>              {jv}kJvgq}}{j
-      vnoremap <F4>              Jvgqj
+      nnoremap <F4>                      {jv}kJvgq}}{j
+      vnoremap <F4>                      Jvgqj
 
     " .............................................................. Delete line
 
       " delete blank line above/below
-      nnoremap <silent><C-Up>   m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
-      nnoremap <silent><C-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Up>            m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
+      nnoremap <silent><C-Down>          m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
   " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -79,21 +79,21 @@
       endfunction
 
       " select paragragh
-      nmap <silent><A-PageUp>   :call ParagraphAbove()<CR>
-      nmap <silent><A-PageDown> :call ParagraphBelow()<CR>
+      nmap <silent><A-PageUp>            :call ParagraphAbove()<CR>
+      nmap <silent><A-PageDown>          :call ParagraphBelow()<CR>
       " extend paragraph selection
-      vmap <A-PageUp>   {
-      vmap <A-PageDown> }
+      vmap <A-PageUp>                    {
+      vmap <A-PageDown>                  }
 
     " ....................................................... Shift left / right
 
-      nnoremap <S-Left>  <<
-      nnoremap <S-Right> >>
-      inoremap <S-Left>  <C-d>
-      inoremap <S-Right> <C-t>
+      nnoremap <S-Left>                  <<
+      nnoremap <S-Right>                 >>
+      inoremap <S-Left>                  <C-d>
+      inoremap <S-Right>                 <C-t>
       " preserve selection when indenting
-      vnoremap <S-Right> >gv
-      vnoremap <S-Left>  <gv
+      vnoremap <S-Right>                 >gv
+      vnoremap <S-Left>                  <gv
 
     " .......................................................... Shift up / down
 
@@ -143,16 +143,16 @@
       endfunction
 
       " shift text up / down
-      imap <silent><S-Up>   <ESC>:call <SID>MoveLineUp()<CR>a
-      imap <silent><S-Down> <ESC>:call <SID>MoveLineDown()<CR>a
-      nmap <silent><S-Up>        :call <SID>MoveLineUp()<CR>
-      nmap <silent><S-Down>      :call <SID>MoveLineDown()<CR>
-      vmap <silent><S-Up>   <ESC>:call <SID>MoveVisualUp()<CR>
-      vmap <silent><S-Down> <ESC>:call <SID>MoveVisualDown()<CR>
+      imap <silent><S-Up>           <ESC>:call <SID>MoveLineUp()<CR>a
+      imap <silent><S-Down>         <ESC>:call <SID>MoveLineDown()<CR>a
+      nmap <silent><S-Up>                :call <SID>MoveLineUp()<CR>
+      nmap <silent><S-Down>              :call <SID>MoveLineDown()<CR>
+      vmap <silent><S-Up>           <ESC>:call <SID>MoveVisualUp()<CR>
+      vmap <silent><S-Down>         <ESC>:call <SID>MoveVisualDown()<CR>
 
       " move visual block with automatic alignment!
-      vnoremap L :m '<-2<CR>gv=gv
-      vnoremap N :m '>+1<CR>gv=gv
+      vnoremap L                         :m '<-2<CR>gv=gv
+      vnoremap N                         :m '>+1<CR>gv=gv
 
   " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -170,8 +170,8 @@
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
-      vnoremap ' :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
-      vnoremap " :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+      vnoremap '                         :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "                         :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
     " .......................................................... Code block text
 
@@ -187,7 +187,7 @@
       endfunction
 
       " markup wiki code blocks
-      nnoremap <silent><leader>` V:call CodeBlock()<CR>
-      vmap     <silent><leader>` :call CodeBlock()<CR>
+      nnoremap <silent><leader>`         V:call CodeBlock()<CR>
+      vmap     <silent><leader>`         :call CodeBlock()<CR>
 
 " edit.vim

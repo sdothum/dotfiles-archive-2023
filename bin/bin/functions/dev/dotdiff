@@ -7,13 +7,18 @@
 # ......................................................... Revision differences
 
 usage() {
-  echo "usage: $(basename $0) <package> [folders]"
+  echo "usage: $(basename $0) [-b] <package> [folders]"
   exit 1
 }
 
 # diff current sources with dotfiles git repo
 dotfiles=/net/depot/dotfiles
 current=$HOME/stow
+
+if [ "$1" = '-b' ] ;then
+  B=$1
+  shift
+fi
 
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
@@ -26,6 +31,6 @@ else
   git clone git@github.com:sdothum/dotfiles.git $dotfiles
 fi
 
-dirdiff $current/$1 $dotfiles/$1 "$2"
+dirdiff $B $current/$1 $dotfiles/$1 "$2"
 
 # vim: set ft=sh: #

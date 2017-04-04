@@ -8,7 +8,7 @@
     " .................................................................... Setup
 
       " autocompletion plugin dependent on filetype
-      let ext    = expand('%:e')
+      let ext = expand('%:e')
 
       filetype off                              " safe startup (vundle requirement)
 

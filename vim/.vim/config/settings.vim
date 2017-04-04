@@ -24,13 +24,13 @@
 
       autocmd setup BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 
-      imap <F1>           <C-o>:help<Space>
-      nmap <F1>                :help<Space>
-      vmap <F1>           <C-o>:help<Space>
+      imap <F1>            <C-o>:help<Space>
+      nmap <F1>                 :help<Space>
+      vmap <F1>            <C-o>:help<Space>
       " list my function and leader key assignments
-      imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
-      nmap <silent><S-F1>      :silent !term 'vmap' vmap<CR>
-      vmap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
+      imap <silent><S-F1>  <C-o>:silent !term 'vmap' vmap<CR>
+      nmap <silent><S-F1>       :silent !term 'vmap' vmap<CR>
+      vmap <silent><S-F1>  <C-o>:silent !term 'vmap' vmap<CR>
 
     "  ............................................................ Undo history
 
@@ -42,7 +42,7 @@
       set undolevels=1000                   " maximum number of changes that can be undone
       set undoreload=10000                  " maximum number lines to save for undo
       " easier redo
-      map U <C-r>
+      map U                <C-r>
 
     " .............................................................. Spell check
 
@@ -115,18 +115,18 @@
 
       " use extended regex statements for searches (unfortunately, must set
       " manually for search and replace)
-      nmap /         /\v
-      vmap /         /\v
+      nmap /                    /\v
+      vmap /                    /\v
       " clear search highlight
-      nmap <silent>\ :noh<CR>
+      nmap <silent>\            :noh<CR>
 
       " tab to bracket pairs
-      nmap <Tab>     %
-      vmap <Tab>     %
+      nmap <Tab>                %
+      vmap <Tab>                %
 
       " repeat latest f,t,F,T see modal searching remaps above
-      nnoremap ,,    ;
-      vnoremap ,,    ;
+      nnoremap ,,               ;
+      vnoremap ,,               ;
 
     " ........................................................... Tab completion
 

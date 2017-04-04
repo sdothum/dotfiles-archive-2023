@@ -20,9 +20,9 @@
         call Theme()
         set laststatus=2                    " turn on statusline
         set showmode
-        execute 'highlight LineNr guifg=' . g:dfm_fg_line
         call IndentTheme()
         call LiteFix()
+        execute 'highlight LineNr guifg=' . g:dfm_fg_line
       endfunction
 
     " ............................................................... Prose view
