@@ -11,10 +11,7 @@
 }
 
 #feeds-holder #feedTree {
-  /* padding-top: 32px !important; */
-  /* padding-top: 57px !important; */
   padding-top: 0 !important;
-  margin-top: 0 !important;
   width: 215px !important;
 }
 

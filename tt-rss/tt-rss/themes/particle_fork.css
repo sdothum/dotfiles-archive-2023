@@ -63,15 +63,11 @@ div#notify.notify.notify_progress { display: none !important; }
 
 /* #main_toolbar_form > .dijitButton:hover .dijitButtonContents { color: #555; } */
 
-#feeds-holder #feedTree { padding-top: 30px !important; }
+#feeds-holder #feedTree { padding: 0 0 0 0 !important; }
 
 #feeds-holder .dijitTreeRow {
   /* font-family: 'Liberation Sans Narrow', 'PT Sans Narrow', Helvetica, Arial, sans-serif !important; */
   font-family: bold 10px Helvetica, Arial, sans-serif !important;
-  /* font-size: 13px !important; */
-  /* font-size: 10px !important; */
-  /* padding-top: 11px !important; */
-  /* padding-bottom: 11px !important; */
   border-top-left-radius: 36px !important;
   border-bottom-left-radius: 36px !important;
 }
@@ -446,8 +442,6 @@ span.updated { color: #999 !important; }
 /* extras */
 .cdmFeedTitle .title { font-family: Helvetica, Arial, sans-serif !important; }
 
-#feeds-holder { padding-top: 10px !important; }
-
 /* PREFERENCES **************************************************************/
 /* from prefs.css */
 /* @24 */
@@ -641,10 +635,10 @@ button.expandPrompt {
 /* div#header-wrap * { background: #fdf6e3 !important; } */
 #ttrssPrefs * { border-radius: 0 !important; }
 
-#feeds-holder { padding-top: 33px !important; }
+#feeds-holder { margin-top: 128px !important; }
 
 /* 'logo' */
-#feeds-holder:before{
+#main:after{
   content: "●graviton" !important;
   /* font: 28px 'Liberation Sans Narrow', 'PT Sans Narrow', Helvetica, Arial, sans-serif !important; */
   font: 22px Helvetica, Arial, sans-serif !important;
@@ -653,10 +647,9 @@ button.expandPrompt {
   /* color: #b5423f !important; */
   text-shadow: 0 1px 1px #fff !important;
   letter-spacing: 2px !important;
-  /* line-height: 48px !important; */
-  line-height: 72px !important;
-  /* margin-left: 13px !important; */
-  margin-left: 9px !important;
+  margin-left: 18px !important;
+  position: fixed !important;
+  margin-top: 54px !important;
 }
 
 /* end of feed marker */
