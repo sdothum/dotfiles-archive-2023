@@ -11,8 +11,8 @@
       let g:mapleader = "\<Space>"
 
       " unshift command mode
-      nnoremap ;          :
-      vnoremap ;          :
+      nnoremap ; :
+      vnoremap ; :
 
       augroup kbd
         autocmd!
@@ -30,48 +30,48 @@
       let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
 
       " up/down by screen lines, not file lines
-      nnoremap j          gj
-      nnoremap k          gk
+      nnoremap j         gj
+      nnoremap k         gk
 
       function! Colemak()
         if s:mnle == 0
           " map home row (cluster) cursor movement
-          nnoremap k      gk
-          vnoremap k      gk
-          nnoremap j      gj
-          vnoremap j      gj
+          nnoremap k     gk
+          vnoremap k     gk
+          nnoremap j     gj
+          vnoremap j     gj
         else
           " map home row (cluster) cursor movement
-          nnoremap u      gk
-          vnoremap u      gk
-          nnoremap n      h
-          vnoremap n      h
-          nnoremap e      gj
-          vnoremap e      gj
-          nnoremap i      l
-          vnoremap i      l
+          nnoremap u     gk
+          vnoremap u     gk
+          nnoremap n     h
+          vnoremap n     h
+          nnoremap e     gj
+          vnoremap e     gj
+          nnoremap i     l
+          vnoremap i     l
 
           " recover vi keys (including caps for consistency)
-          nnoremap f      e
-          vnoremap f      e
-          nnoremap F      E
-          vnoremap F      E
-          nnoremap h      m
-          vnoremap h      m
-          nnoremap k      n
-          vnoremap k      n
-          nnoremap K      N
-          vnoremap K      N
+          nnoremap f     e
+          vnoremap f     e
+          nnoremap F     E
+          vnoremap F     E
+          nnoremap h     m
+          vnoremap h     m
+          nnoremap k     n
+          vnoremap k     n
+          nnoremap K     N
+          vnoremap K     N
 
           " combine find and till commands
-          nnoremap t      f
-          vnoremap t      f
-          nnoremap T      F
-          vnoremap T      F
-          nnoremap <A-t>  t
-          vnoremap <A-t>  t
-          nnoremap <C-t>  T
-          vnoremap <C-t>  T
+          nnoremap t     f
+          vnoremap t     f
+          nnoremap T     F
+          vnoremap T     F
+          nnoremap <A-t> t
+          vnoremap <A-t> t
+          nnoremap <C-t> T
+          vnoremap <C-t> T
         endif
       endfunction
 
@@ -90,28 +90,28 @@
     " ......................................................... Cursor movements
 
       " up/down by paragraph sentence
-      nmap <C-S-Left>     {{)
-      nmap <C-S-Right>    })
+      nmap <C-S-Left>    {{)
+      nmap <C-S-Right>   })
 
       " insert mode local region cursor movements
       " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap <C-h>        <Left>
-      " imap <C-j>        <Down>
-      " imap <C-k>        <Up>
-      " imap <C-l>        <Right>
+      " imap <C-h>       <Left>
+      " imap <C-j>       <Down>
+      " imap <C-k>       <Up>
+      " imap <C-l>       <Right>
 
     " ............................................................. Disable keys
 
       " affirm vim modal usage but these keys are remapped below anyway :-)
       " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
-      " imap <down>       <nop>
-      " imap <left>       <nop>
-      " imap <right>      <nop>
-      " imap <up>         <nop>
-      " nmap <down>       <nop>
-      " nmap <left>       <nop>
-      " nmap <right>      <nop>
-      " nmap <up>         <nop>
+      " imap <down>      <nop>
+      " imap <left>      <nop>
+      " imap <right>     <nop>
+      " imap <up>        <nop>
+      " nmap <down>      <nop>
+      " nmap <left>      <nop>
+      " nmap <right>     <nop>
+      " nmap <up>        <nop>
 
   " Keyboard shortcuts ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -119,18 +119,20 @@
 
       " prevent cascading paste insert
       set pastetoggle=<F3>
-      autocmd kbd InsertLeave * set nopaste     " disable paste mode when leaving Insert Mode
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
       " see yankring for plugin equivalent
-      nnoremap Y          y$
+      nnoremap Y         y$
       " reselect/reyank text just pasted
-      nnoremap <leader>v  gv
-      nnoremap <leader>V  gvy
-      map      <leader>p  pgvy
+      nnoremap <leader>v gv
+      nnoremap <leader>V gvy
+      map      <leader>p pgvy
 
       " highlight last inserted text
-      nnoremap <leader>i  `[v`]
+      nnoremap <leader>i `[v`]
+
+      " disable paste mode when leaving Insert Mode
+      autocmd kbd InsertLeave * set nopaste
 
     " ...................................................... Sentence operations
 
@@ -149,15 +151,15 @@
       vnoremap <C-F2>     "+y
       vnoremap <S-F2>     "+Y
       " "+D cut to clipboard
-      vnoremap <C-F2>     "+d
-      vnoremap <S-F2>     "+D
+      vnoremap <C-F3>     "+d
+      vnoremap <S-F3>     "+D
 
       " " normal/insert mode paste actions
       " " "+P pads space after insert
       " " note: to enter visual block mode type v<C-v>
-      imap      <F2> <ESC>"+pli
-      nmap      <F2>      h"+pl
+      imap <F2>      <ESC>"+pli
+      nmap <F2>           h"+pl
       " command mode insertion (paste) of current yank buffer
-      cmap      <F2> <C-r>"
+      cmap <F2>      <C-r>"
 
 " keyboard.vim

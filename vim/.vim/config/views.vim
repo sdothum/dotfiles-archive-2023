@@ -96,7 +96,7 @@
         call Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
       endfunction
 
-      imap <silent><F9> <C-o>:call Refresh()<CR>
-      nmap <silent><F9>      :call Refresh()<CR>
+      imap <silent><F9>  <C-o>:call Refresh()<CR>
+      nmap <silent><F9>       :call Refresh()<CR>
 
 " views.vim

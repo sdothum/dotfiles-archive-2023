@@ -1,36 +1,38 @@
 nnoremap <BS> <C-o>
-nnoremap ; :
-nnoremap : ;
-nnoremap - zo
-nnoremap = zi
-nnoremap b :open !
-nnoremap B :tabopen !
-nnoremap d :quit<CR>
-nnoremap D :quit!<CR>
-nnoremap H :open http://luna:8000/tt-rss/<CR>
-nnoremap K :sh! dmenu vimbk<CR>
-nnoremap O :tabopen<Space>
-nnoremap S :set statusbar!<CR><Esc>
-nnoremap t :open !/
-nnoremap T :tabopen !/
-nnoremap w :sh! focus vimb %<CR>
-nnoremap W :sh! focus chromium %<CR>
-nnoremap x :sh! play %<CR>
-nnoremap X :eval! translate()<CR>
-nnoremap Z :eval! readable()<CR>
-nnoremap z :eval! simplyread()<CR>
-nnoremap gt :sh! xdotool key --window $VIMB_XID ctrl+shift+l<CR><Esc>
-nnoremap gT :sh! xdotool key --window $VIMB_XID ctrl+shift+h<CR><Esc>
-nnoremap 1gt :sh! xdotool key --window $VIMB_XID ctrl+1<CR><Esc>
-nnoremap 2gt :sh! xdotool key --window $VIMB_XID ctrl+2<CR><Esc>
-nnoremap 3gt :sh! xdotool key --window $VIMB_XID ctrl+3<CR><Esc>
-nnoremap 4gt :sh! xdotool key --window $VIMB_XID ctrl+4<CR><Esc>
-nnoremap 5gt :sh! xdotool key --window $VIMB_XID ctrl+5<CR><Esc>
-nnoremap 6gt :sh! xdotool key --window $VIMB_XID ctrl+6<CR><Esc>
-nnoremap 7gt :sh! xdotool key --window $VIMB_XID ctrl+7<CR><Esc>
-nnoremap 8gt :sh! xdotool key --window $VIMB_XID ctrl+8<CR><Esc>
-nnoremap 9gt :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>
-nnoremap 0gt :sh! xdotool key --window $VIMB_XID ctrl+0<CR><Esc>
+# nnoremap ;    :
+# nnoremap :    ;
+nnoremap -    zo
+nnoremap =    zi
+nnoremap b    :open !
+nnoremap B    :tabopen !
+nnoremap d    :quit<CR>
+nnoremap D    :quit!<CR>
+nnoremap H    :open http://luna:8000/tt-rss/<CR>
+nnoremap K    :sh! dmenu vimbk<CR>
+nnoremap O    :tabopen<Space>
+nnoremap p    ;o
+nnoremap P    ;t
+nnoremap S    :set statusbar!<CR><Esc>
+nnoremap t    :open !/
+nnoremap T    :tabopen !/
+nnoremap w    :sh! focus vimb %<CR>
+nnoremap W    :sh! focus chromium %<CR>
+nnoremap x    :sh! play %<CR>
+nnoremap X    :eval! translate()<CR>
+nnoremap Z    :eval! readable()<CR>
+nnoremap z    :eval! simplyread()<CR>
+nnoremap gt   :sh! xdotool key --window $VIMB_XID ctrl+shift+l<CR><Esc>
+nnoremap gT   :sh! xdotool key --window $VIMB_XID ctrl+shift+h<CR><Esc>
+nnoremap 1gt  :sh! xdotool key --window $VIMB_XID ctrl+1<CR><Esc>
+nnoremap 2gt  :sh! xdotool key --window $VIMB_XID ctrl+2<CR><Esc>
+nnoremap 3gt  :sh! xdotool key --window $VIMB_XID ctrl+3<CR><Esc>
+nnoremap 4gt  :sh! xdotool key --window $VIMB_XID ctrl+4<CR><Esc>
+nnoremap 5gt  :sh! xdotool key --window $VIMB_XID ctrl+5<CR><Esc>
+nnoremap 6gt  :sh! xdotool key --window $VIMB_XID ctrl+6<CR><Esc>
+nnoremap 7gt  :sh! xdotool key --window $VIMB_XID ctrl+7<CR><Esc>
+nnoremap 8gt  :sh! xdotool key --window $VIMB_XID ctrl+8<CR><Esc>
+nnoremap 9gt  :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>
+nnoremap 0gt  :sh! xdotool key --window $VIMB_XID ctrl+0<CR><Esc>
 
 # augroup mygroup
 #   autocmd LoadCommited https://www.youtube.com/watch* :shell mpv %<CR>

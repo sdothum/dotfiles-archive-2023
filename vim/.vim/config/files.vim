@@ -7,7 +7,7 @@
 
     " .................................................................... Setup
 
-      nmap <leader>f         :set filetype=
+      nmap <leader>f             :set filetype=
 
       augroup filetype
         autocmd!
@@ -83,8 +83,10 @@
       nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " check filetype on open
-      autocmd filetype BufNewFile,BufRead * call CheckFiletype()
-      autocmd filetype BufWinEnter        *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
+      autocmd filetype BufNewFile,BufRead *
+        \ call CheckFiletype()
+      autocmd filetype BufWinEnter        *.txt,*.txt.gz
+        \ if &filetype == 'help' | set nomodifiable | endif
 
   " Documents ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
