@@ -296,12 +296,18 @@ div#notify.notify.notify_progress { display: none !important; }
   border-bottom: 1px solid #fdf6e3 !important;
 }
 
+.cdm.expandable .cdmHeader, .hl {
+  background: none !important;
+  border: 1px solid #fdf6e3 !important;
+}
+
 .cdm.expandable:not(.active) .cdmHeader:hover,
 .hl:hover {
   background: none !important;
   /* border: 1px solid #e77471 !important; */
-  border-top: 1px solid #e77471 !important;
-  border-bottom: 1px solid #e77471 !important;
+  /* border-top: 1px solid #e77471 !important; */
+  /* border-bottom: 1px solid #e77471 !important; */
+  border-left: 1px solid #e77471 !important;
 }
 
 .cdm.expandable .cdmHeader div[style*="vertical-align : middle"] > * { padding-bottom: 3px !important; }
