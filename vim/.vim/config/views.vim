@@ -87,7 +87,7 @@
 
       function! Refresh()
         if Prose()
-          let lstatus = &laststatus
+          let lstatus     = &laststatus
           call Theme()
           let &laststatus = lstatus
         else

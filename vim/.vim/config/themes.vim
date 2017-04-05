@@ -7,39 +7,55 @@
 
     " .................................................................... Setup
 
-      " further distraction free mode settings
-      " foreground
-      let g:dfm_fg_light        = 'brown'   " light foreground
-      let g:dfm_fg_dark         = '#FFFF00' " dark foreground
-      let g:dfm_fg_dark_prose   = '#54D4FF' " dark foreground blue
-      let g:dfm_proof_light     = '#002b36' " dark foreground
-      let g:dfm_proof_dark      = '#fdf6e3' " light foreground
-      let g:dfm_unfocused_light = '#002b36' " light grey surrounding text content
-      let g:dfm_unfocused_dark  = '#fdf6e3' " dark grey surrounding text content
-      let g:dfm_code_light      = '#859900' " light code foreground
-      let g:dfm_code_dark       = '#859900' " dark code foreground
-
-      " background
-      let g:dfm_bg_light        = '#fdf6e3' " solarized light (paper) background
-      let g:dfm_bg_dark         = '#002b36' " solarized dark background
-
-      " cursor line
-      let g:dfm_cursor_light    = '#00ACE4' " bluish cursor
-      let g:dfm_cursor_dark     = '#EC7146' " reddish cursor
-      let g:dfm_bg_line_light   = '#eee8d5' " solarized light cursorline
-      let g:dfm_bg_column_light = '#E2D7B6' " solarized light column
-      let g:dfm_bg_line_dark    = '#073642' " solarized dark cursorline
-      let g:dfm_bg_column_dark  = '#0A4C5C' " solarized dark column
-      let g:dfm_fg_line_light   = '#cccccc' " light grey line numbers
-      let g:dfm_fg_line_dark    = '#444444' " dark grey line numbers
-
-      " statusline
-      let g:dfm_status_light    = '#073642' " light statusline
-      let g:dfm_status_dark     = '#eee8d5' " dark statusline
+      " solarized colour pallette (see vim-solarized8)
+      let s:rgb_0    = '#073642'            " base02 dark highlight
+      " let s:rgb_1  = '#dc322f'            " red
+      " let s:rgb_2  = '#719e07'            " green
+      " let s:rgb_3  = '#b58900'            " yellow
+      let s:rgb_4    = '#268bd2'            " blue
+      " let s:rgb_5  = '#d33682'            " magenta
+      " let s:rgb_6  = '#2aa198'            " cyan
+      let s:rgb_7    = '#eee8d5'            " base2 light highlight
+      let s:rgb_8    = '#002b36'            " base03 dark bg
+      " let s:rgb_9  = '#cb4b16'            " orange
+      let s:rgb_10   = '#586e75'            " base01 darkest grey
+      let s:rgb_11   = '#657b83'            " base00 dark grey
+      let s:rgb_12   = '#839496'            " base0 light grey
+      " let s:rgb_13 = '#6c71c4'            " violet
+      let s:rgb_14   = '#93a1a1'            " base1 lightest grey
+      let s:rgb_15   = '#fdf6e3'            " base3 light bg
 
       augroup theme
         autocmd!
       augroup END
+
+    " ......................................................... DFM colour masks
+
+      " foreground
+      let g:dfm_fg_light        = 'brown'   " light foreground
+      let g:dfm_fg_dark         = 'yellow'  " dark foreground
+      let g:dfm_proof_light     = s:rgb_8   " dark foreground
+      let g:dfm_proof_dark      = s:rgb_15  " light foreground
+      let g:dfm_unfocused_light = s:rgb_8   " light grey surrounding text content
+      let g:dfm_unfocused_dark  = s:rgb_15  " dark grey surrounding text content
+
+      " background
+      let g:dfm_bg_light        = s:rgb_15  " solarized light (paper) background
+      let g:dfm_bg_dark         = s:rgb_8   " solarized dark background
+
+      " cursor line
+      let g:dfm_cursor_light    = '#00ACE4' " light bluish cursor
+      let g:dfm_cursor_dark     = '#EC7146' " dark reddish cursor
+      let g:dfm_bg_line_light   = s:rgb_7   " light cursorline
+      let g:dfm_bg_line_dark    = s:rgb_0   " dark cursorline
+      let g:dfm_bg_column_light = '#E2D7B6' " light column
+      let g:dfm_bg_column_dark  = '#0A4C5C' " dark column
+      let g:dfm_fg_line_light   = '#cccccc' " light line numbers
+      let g:dfm_fg_line_dark    = '#555555' " dark line numbers
+
+      " statusline
+      let g:dfm_status_light    = s:rgb_0   " light statusline
+      let g:dfm_status_dark     = s:rgb_7   " dark statusline
 
     " .................................................................. Palette
 
@@ -48,21 +64,15 @@
           let g:dfm_fg          = g:dfm_fg_light
           let g:dfm_proof       = g:dfm_proof_light
           let g:dfm_unfocused   = g:dfm_unfocused_light
-          let g:dfm_code        = g:dfm_code_light
           let g:dfm_bg          = g:dfm_bg_light
           let g:dfm_cursor      = g:dfm_cursor_light
           let g:dfm_bg_line     = g:dfm_bg_line_light
           let g:dfm_fg_line     = g:dfm_fg_line_light
           let g:dfm_status      = g:dfm_status_light
         else
-          if Prose()
-            let g:dfm_fg        = g:dfm_fg_dark_prose
-          else
-            let g:dfm_fg        = g:dfm_fg_dark
-          endif
+          let g:dfm_fg          = g:dfm_fg_dark
           let g:dfm_proof       = g:dfm_proof_dark
           let g:dfm_unfocused   = g:dfm_unfocused_dark
-          let g:dfm_code        = g:dfm_code_dark
           let g:dfm_bg          = g:dfm_bg_dark
           let g:dfm_cursor      = g:dfm_cursor_dark
           let g:dfm_bg_line     = g:dfm_bg_line_dark
@@ -137,23 +147,23 @@
       function! LiteFix()
         " fix solarized colour shifts resulting from toggling(!)
         if &background == 'light'
-          highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33  guifg=#fdf6e3 guibg=#268bd2
-          highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=244 guifg=#268bd2 guibg=#839496
-          highlight LightlineLeft_normal_1    ctermfg=230 ctermbg=244 guifg=#fdf6e3 guibg=#839496
-          highlight LightlineLeft_normal_1_2  ctermfg=244 ctermbg=187 guifg=#839496 guibg=#eee8d5
-          highlight LightlineRight_normal_0   ctermfg=230 ctermbg=239 guifg=#fdf6e3 guibg=#586e75
-          highlight LightlineRight_normal_0_1 ctermfg=239 ctermbg=244 guifg=#586e75 guibg=#839496
-          highlight LightlineRight_normal_1   ctermfg=230 ctermbg=244 guifg=#fdf6e3 guibg=#839496
-          highlight LightlineRight_normal_1_2 ctermfg=244 ctermbg=187 guifg=#839496 guibg=#eee8d5
+          execute 'highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33  guifg=' . s:rgb_15 ' guibg=' . s:rgb_4
+          execute 'highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=244 guifg=' . s:rgb_4  ' guibg=' . s:rgb_12
+          execute 'highlight LightlineLeft_normal_1    ctermfg=230 ctermbg=244 guifg=' . s:rgb_15 ' guibg=' . s:rgb_12
+          execute 'highlight LightlineLeft_normal_1_2  ctermfg=244 ctermbg=187 guifg=' . s:rgb_12 ' guibg=' . s:rgb_7
+          execute 'highlight LightlineRight_normal_0   ctermfg=230 ctermbg=239 guifg=' . s:rgb_15 ' guibg=' . s:rgb_10
+          execute 'highlight LightlineRight_normal_0_1 ctermfg=239 ctermbg=244 guifg=' . s:rgb_10 ' guibg=' . s:rgb_12
+          execute 'highlight LightlineRight_normal_1   ctermfg=230 ctermbg=244 guifg=' . s:rgb_15 ' guibg=' . s:rgb_12
+          execute 'highlight LightlineRight_normal_1_2 ctermfg=244 ctermbg=187 guifg=' . s:rgb_12 ' guibg=' . s:rgb_7
         else
-          highlight LightlineLeft_normal_0    ctermfg=234 ctermbg=33  guifg=#002b36 guibg=#268bd2
-          highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=240 guifg=#268bd2 guibg=#657b83
-          highlight LightlineLeft_normal_1    ctermfg=234 ctermbg=240 guifg=#002b36 guibg=#657b83
-          highlight LightlineLeft_normal_1_2  ctermfg=240 ctermbg=235 guifg=#657b83 guibg=#073642
-          highlight LightlineRight_normal_0   ctermfg=234 ctermbg=245 guifg=#002b36 guibg=#93a1a1
-          highlight LightlineRight_normal_0_1 ctermfg=245 ctermbg=240 guifg=#93a1a1 guibg=#657b83
-          highlight LightlineRight_normal_1   ctermfg=234 ctermbg=240 guifg=#002b36 guibg=#657b83
-          highlight LightlineRight_normal_1_2 ctermfg=240 ctermbg=235 guifg=#657b83 guibg=#073642
+          execute 'highlight LightlineLeft_normal_0    ctermfg=234 ctermbg=33  guifg=' . s:rgb_8  ' guibg=' . s:rgb_4
+          execute 'highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=240 guifg=' . s:rgb_4  ' guibg=' . s:rgb_11
+          execute 'highlight LightlineLeft_normal_1    ctermfg=234 ctermbg=240 guifg=' . s:rgb_8  ' guibg=' . s:rgb_11
+          execute 'highlight LightlineLeft_normal_1_2  ctermfg=240 ctermbg=235 guifg=' . s:rgb_11 ' guibg=' . s:rgb_0
+          execute 'highlight LightlineRight_normal_0   ctermfg=234 ctermbg=245 guifg=' . s:rgb_8  ' guibg=' . s:rgb_14
+          execute 'highlight LightlineRight_normal_0_1 ctermfg=245 ctermbg=240 guifg=' . s:rgb_14 ' guibg=' . s:rgb_11
+          execute 'highlight LightlineRight_normal_1   ctermfg=234 ctermbg=240 guifg=' . s:rgb_8  ' guibg=' . s:rgb_11
+          execute 'highlight LightlineRight_normal_1_2 ctermfg=240 ctermbg=235 guifg=' . s:rgb_11 ' guibg=' . s:rgb_0
         endif
       endfunction
 

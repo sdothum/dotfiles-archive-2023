@@ -9,7 +9,7 @@
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
-      " inoremap <C-CR> <C-o>o
+      " inoremap <C-CR>                <C-o>o
       " similarly, open curly braces and continue inserting in indented body
       inoremap <S-CR>                  <CR><C-o>O<Tab>
 

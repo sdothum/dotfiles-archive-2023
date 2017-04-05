@@ -59,7 +59,7 @@
       function! CheckFiletype()
         for [ name, filetype, modifiable, wordcount ] in s:nametypes
           if expand('%') =~ name
-            let &filetype = (&filetype == '' ? filetype : &filetype)
+            let &filetype   = (&filetype == '' ? filetype : &filetype)
             let &modifiable = modifiable
             break
           endif
@@ -67,9 +67,9 @@
         if &filetype == ''                  " by file content if not autodetected
           for [ content, filetype, modifiable, readonly ] in s:contenttypes
             if system('file -i ' . expand('%') . '|cut -d: -f2') =~ content
-              let &filetype = filetype
+              let &filetype   = filetype
               let &modifiable = modifiable
-              let &readonly = readonly
+              let &readonly   = readonly
             endif
           endfor
         endif

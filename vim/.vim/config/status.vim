@@ -25,8 +25,8 @@
 
       function! BytePercent()
         " let byte = line2byte(line('.') + 1) - 1
-        let byte = line2byte(line('.')) + col('.') - 1
-        let size = line2byte(line('$') + 1) - 1
+        let byte   = line2byte(line('.')) + col('.') - 1
+        let size   = line2byte(line('$') + 1) - 1
         return (line("w0") != 1 && line("w$") != line("$")) ? (byte * 100) / size : ''
       endfunction
 
@@ -59,7 +59,7 @@
 
       " return a list containing the lengths of the long lines in this buffer
       function! s:LongLines()
-        let l:spaces = repeat(' ', &tabstop)
+        let l:spaces    = repeat(' ', &tabstop)
         " trap multibyte line drawing characters used by "ruler" and "underline"
         let l:line_lens = map(getline(1,'$'),
           \ 'len(substitute(v:val =~ s:multibytes
@@ -70,8 +70,8 @@
 
       " find the median of the given array of numbers
       function! s:Median(nums)
-        let l:nums = SortNumbers(a:nums)    " original code incorrectly sorted by text
-        let l:size = len(l:nums)
+        let l:nums     = SortNumbers(a:nums) " original code incorrectly sorted by text
+        let l:size     = len(l:nums)
         if l:size % 2 == 1
           let l:middle = (l:size-1)/2
           return l:nums[l:middle]
@@ -104,14 +104,14 @@
         if s:code == 0 && s:prose == 0
           return ''
         endif
-        let b:wordcount = ''
-        let l:statusmsg = v:statusmsg
-        let l:position  = getpos('.')       " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
+        let b:wordcount   = ''
+        let l:statusmsg   = v:statusmsg
+        let l:position    = getpos('.')     " g<C-g> prevents (cursor from) appending to EOL in vim 7.4
         execute "silent normal! g\<C-g>"
         if v:statusmsg != '--No lines in buffer--'
           let b:wordcount = str2nr(split(v:statusmsg)[11])
         endif
-        let v:statusmsg = l:statusmsg
+        let v:statusmsg   = l:statusmsg
         " go back (to EOL if need be)
         call setpos('.', l:position)
         return b:wordcount
@@ -123,7 +123,7 @@
         if mode() == 'n'                    " getline() test fails on switch into insert mode
           try
             if getline(line('.')) != ''     " ignore newline (is NUL)
-              let l:char = getline('.')[col('.')-1]
+              let l:char        = getline('.')[col('.')-1]
               " show hex value, not interested in ascii keyboard characters
               if l:char !~ s:ascii && l:char != "'"
                 let l:statusmsg = v:statusmsg
@@ -192,7 +192,7 @@
       " center dfm indicator / proofing statusline
       function! WikiInfo(proof)
         try                                 " trap snippet insertion interruption
-          let s:prose = 1
+          let s:prose  = 1
           if a:proof == 0
             let l:name = (&modified ? '' : '')
           else

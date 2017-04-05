@@ -118,7 +118,7 @@
       " toggle colorcolumn modes
       function! ToggleColumn()
         if g:ruler == 0
-          let g:ruler = 1
+          let g:ruler      = 1
           let &colorcolumn = col('.')
           autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
         else
@@ -126,7 +126,7 @@
             let g:ruler = 2
             autocmd! column
           else
-            let g:ruler = 0
+            let g:ruler      = 0
             let &colorcolumn = 0
           endif
         endif
