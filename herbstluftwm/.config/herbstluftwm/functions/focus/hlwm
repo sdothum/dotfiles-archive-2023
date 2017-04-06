@@ -6,9 +6,7 @@
 
 # ................................................................. Focus window
 
-# Usage: focus hlwm focus (switch to window)
-#        focus hlwm bring (bring window to current tag)
-#        focus hlwm       (focus or bring window)
+# Usage: focus hlwm focus [focus | raise | close]
 
 action() {
   case $1 in
@@ -18,7 +16,7 @@ action() {
            tag=$(herbstclient attr monitors.focus.tag)
            title=" to $(query tname $tag)" ;;
 
-    close) mode=Close ;;
+    close) mode='Close ' ;;
     *    ) return 1 ;;
   esac
 }
@@ -60,7 +58,7 @@ if window=$(echo $windows |
   case $mode in
     Close*) herbstclient close "$(echo $window | cut -d$DLM -f3)"
             # desktop cleanup loop
-            exec focus hlwm ;;
+            exec focus hlwm close ;;
 
     Raise*) focus frame
             herbstclient bring "$(echo $window | cut -d$DLM -f3)" ;;

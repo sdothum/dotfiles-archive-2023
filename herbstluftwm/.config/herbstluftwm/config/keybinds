@@ -16,8 +16,8 @@ hc keybind $Mod-Shift-q                spawn quit
 hc keybind $Mod-Control-Shift-r        reload
 hc keybind $Mod-w                      chain . close_or_remove . emit_hook focus_window
 hc keybind $Mod-Return                 spawn focus hlwm
-hc keybind $Mod-Shift-Return           spawn focus hlwm focus
-hc keybind $Mod-Control-Return         spawn focus hlwm raise
+hc keybind $Mod-Shift-Return           spawn focus hlwm raise
+hc keybind $Mod-Control-Return         spawn focus hlwm close
 hc keybind $Mod-equal                  spawn toggle focus
 
 # UI appearance

@@ -111,7 +111,7 @@ div#notify.notify.notify_progress { display: none !important; }
   opacity: 0 !important;
   margin-right: -16px !important;
   /* padding-left: 17px !important; */
-  padding-left: 0px !important;
+  padding-left: 2px !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando {
@@ -281,8 +281,8 @@ div#notify.notify.notify_progress { display: none !important; }
 
 .cdm.expandable .cdmHeader,
 .hl {
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
+  padding-top: 0px !important;
+  padding-bottom: 6px !important;
 }
 
 .cdm.expandable.active .cdmHeader { margin-bottom: -6px !important; }

@@ -44,12 +44,12 @@
       let g:dfm_bg_dark         = s:rgb_8   " solarized dark background
 
       " cursor line
-      let g:dfm_cursor_light    = '#00ACE4' " light bluish cursor
-      let g:dfm_cursor_dark     = '#EC7146' " dark reddish cursor
+      let g:dfm_cursor_light    = '#52A5E0' " light cursor (lighter shade of rgb_4)
+      let g:dfm_cursor_dark     = '#E56865' " dark cursor (lighter shade of rgb_1)
       let g:dfm_bg_line_light   = s:rgb_7   " light cursorline
       let g:dfm_bg_line_dark    = s:rgb_0   " dark cursorline
-      let g:dfm_bg_column_light = '#E2D7B6' " light column
-      let g:dfm_bg_column_dark  = '#0A4C5C' " dark column
+      let g:dfm_bg_column_light = '#E2D7B6' " light column (darker shade of rgb_7)
+      let g:dfm_bg_column_dark  = '#0A4C5C' " dark column (lighter shade of rgb_0)
       let g:dfm_fg_line_light   = '#cccccc' " light line numbers
       let g:dfm_fg_line_dark    = '#555555' " dark line numbers
 
