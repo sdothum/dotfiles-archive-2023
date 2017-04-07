@@ -108,7 +108,7 @@ div.notice {
 
 div.warning {
   background: #fff7d5;
-  border-color: #e7d796;;
+  border-color: #e7d796;
 }
 
 div.error {
@@ -612,7 +612,7 @@ a:hover { text-decoration: underline; }
   display: inline-block;
   border-radius: 3px;
   background-color: #fec;
-  color: #444;
+color: #444;
   font-weight: bold;
 }
 

@@ -61,14 +61,14 @@ span.updated {
   position: absolute !important;
   left: 2px !important;
   top: 18px !important;
-  font-size: 0.75em !important;
+  font-size: 7pt !important;
   color: #aaa !important;
 }
 
 .Selected span.updated {
   /* top: 12px !important; */
   top: 5px !important;
-  left: 9px !important;
+  left: 7px !important;
 }
 
 div#headlines-frame[is-cat="0"] span.updated { display: none !important; }
@@ -85,6 +85,8 @@ div#headlines-frame[feed-id="-6"] span.updated { display: block !important; }
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed { width: 95px !important; }
 
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed a { max-width: 75px !important; }
+
+div#notify.notify { display: none !important; }
 
 /* #feeds-holder .counterNode { */
 /*   font-size: 10px !important; */

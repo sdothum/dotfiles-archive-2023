@@ -282,7 +282,7 @@ div#notify.notify.notify_progress { display: none !important; }
 .cdm.expandable .cdmHeader,
 .hl {
   padding-top: 0px !important;
-  padding-bottom: 6px !important;
+  padding-bottom: 11px !important;
 }
 
 .cdm.expandable.active .cdmHeader { margin-bottom: -6px !important; }
@@ -358,7 +358,7 @@ span.updated { color: #999 !important; }
 .cdm.expandable .author,
 .hlTitle .contentPreview {
   font: 13px Helvetica, Arial, sans-serif !important;
-  line-height: 1.6 !important;
+  line-height: 1.5 !important;
   color: #555 !important;
 }
 

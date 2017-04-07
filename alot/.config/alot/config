@@ -21,7 +21,8 @@ search_threads_sort_order = newest_first
 show_count_in_tag_list    = messages
 theme                     = my.theme
 # thread_authors_me       = '◕‿◕'
-thread_authors_me         = '●_●'
+# thread_authors_me       = '●_●'
+thread_authors_me         = '●ᵔ●'
 thread_subject            = oldest
 
 [accounts]
