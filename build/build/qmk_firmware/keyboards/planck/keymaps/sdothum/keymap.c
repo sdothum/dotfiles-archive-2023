@@ -87,24 +87,28 @@ enum planck_layers {
   _COLEMAK = 0
  ,_LSHIFT
  ,_RSHIFT
- ,_PLOVER
+ ,_SFTNAV
  ,_NUMBER
  ,_NUMSYM
  ,_SYMBOL
  ,_SYMREG
  ,_FNCKEY
- ,_KEYTEST
- ,_ADJUST
  ,_MACRO
+ ,_PLOVER
+ ,_ADJUST
+ ,_KEYTEST
  ,_DYN
 };
 
 // update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE
+ ,Gt          // Gt    = LT (_NUMSYM, KC_GT)      requires matrix_scan_user and process_record_user
+ ,SLeft       // SLeft = LT (_SYMBOL, S(KC_LEFT)) for modified key-codes
  ,PLOVER
  ,PLOVEX
  ,KEYTEST
+ ,DYNAMIC_MACRO_RANGE
  ,_Ctl  = OSM (MOD_LCTL)
  ,_Gui  = OSM (MOD_LGUI)
  ,_Alt  = OSM (MOD_LALT)
@@ -123,8 +127,6 @@ enum planck_keycodes {
  ,Left  = LT  (_SYMBOL, KC_LEFT)
  ,Zero  = LT  (_SYMBOL, KC_0)
  ,Dn    = LT  (_SYMREG, KC_DOWN)
- ,Gt    = -1  // Gt = LT (_NUMSYM, KC_GT) requires matrix_scan_user and process_record_user for modified key-codes
- ,DYNAMIC_MACRO_RANGE
 };
 
 #include "dynamic_macro.h"
@@ -139,7 +141,6 @@ enum tap_dance {
 };
 
 // modifier keys
-#define SLeft   S     (KC_LEFT)
 #define Down    ALT_T (KC_DOWN)
 #define SDown   S     (KC_DOWN)
 #define Up      GUI_T (KC_UP)
@@ -156,13 +157,21 @@ enum tap_dance {
 #define __Caps  TD (_CAPS)
 
 // layer keys
-#define SHIFT   MO  (_SHIFT)
-#define ADJUST  MO  (_ADJUST)
-#define DYNAMIC OSL (_DYN)
+#define SHIFT   MO (_SHIFT)
+#define ADJUST  MO (_ADJUST)
+#define DYNAMIC MO (_DYN)
 
 // keycodes
 #define ___x___ KC_TRNS
 #define _______ KC_NO
+#define S_DOWN  S(KC_DOWN)
+#define S_END   S(KC_END)
+#define S_HOME  S(KC_HOME)
+#define S_LEFT  S(KC_LEFT)
+#define S_PGDN  S(KC_PGDN)
+#define S_PGUP  S(KC_PGUP)
+#define S_RGHT  S(KC_RGHT)
+#define S_UP    S(KC_UP)
 #define RECORD1 DYN_REC_START1
 #define RECORD2 DYN_REC_START2
 #define PLAY1   DYN_MACRO_PLAY1
@@ -227,6 +236,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _CAlt,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _SGui,   S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
     {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
+  },
+
+// ...................................................... Shift Navigation Layer
+
+  // .-----------------------------------------------------------------------------------.
+  // |      |      |      |      |      |      |      |      | ↑Home|  ↑Up | ↑End |      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |      |      | ↑Left| ↑Down|↑Right|      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |      |      | ↑PgDn| ↑PgUp|      |      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |  f() |      |      |      |  f() |      |      |      |
+  // '-----------------------------------------------------------------------------------'
+
+  [_SFTNAV] = {
+    {_______, _______, _______, _______, _______, _______, _______, _______, S_HOME,  S_UP,    S_END,   _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, S_LEFT,  S_DOWN,  S_RGHT,  _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, S_PGDN,  S_PGUP,  _______, _______},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // ...................................................................... Plover
@@ -305,10 +333,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR,  KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,   KC_RPRN, _______, _______, _______, KC_LEFT, Dn,      KC_RGHT, _______},
-    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM,  KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {___x___, ___x___, ___x___, Dot,      KC_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
+    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, Dn,      KC_RGHT, _______},
+    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
+    {___x___, ___x___, ___x___, Dot,     KC_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // .......................................................... Symbol Layer Regex
@@ -411,9 +439,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
 
   // .-----------------------------------------------------------------------------------.
-  // |      | REC1 |      | PLY1 |      |      |      |      |      |      |      |      |
+  // |      | REC1 | REC2 |      |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      | REC2 |      | PLY2 |      |      |      |  f() |      |      |      |      |
+  // |      | PLY1 | PLY2 |      |      |      |      |  f() |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -581,6 +609,7 @@ void clear_layers()
 }
 
 static uint16_t key_timer = 0;
+static int      layer     = 0;
 
 void matrix_scan_user(void)
 {
@@ -588,7 +617,10 @@ void matrix_scan_user(void)
   if (key_timer != 0) {
     if (timer_elapsed(key_timer) > TAPPING_TERM) {
       key_timer = 0;
-      layer_on (_NUMSYM);
+      if (layer != 0) {
+        layer_on (layer);
+        layer   = 0;
+      }
     }
   }
 }
@@ -604,6 +636,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Gt:
       if (record->event.pressed) {
         key_timer = timer_read();
+        layer     = _NUMSYM;
       } else {
         layer_off           (_NUMSYM);
         if (key_timer > 0) {
@@ -615,6 +648,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
           }
         }
         key_timer = 0;
+        layer     = 0;
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
+    // simulate LT (_SFTNAV, S(KC_LEFT)): type S(KC_LEFT) key
+    case SLeft:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        layer     = _SFTNAV;
+      } else {
+        layer_off           (_SFTNAV);
+        if (key_timer > 0) {
+          if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            register_code   (KC_LSFT);
+            register_code   (KC_LEFT);
+            unregister_code (KC_LEFT);
+            unregister_code (KC_LSFT);
+          }
+        }
+        key_timer = 0;
+        layer     = 0;
         // undo sticky modifiers
         unregister_code (KC_LGUI);
         unregister_code (KC_LSFT);

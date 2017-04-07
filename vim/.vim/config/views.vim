@@ -7,6 +7,9 @@
 
     " .................................................................... Setup
 
+      " mixed view (filetype) handling
+      let s:view = 0
+
       augroup view
         autocmd!
       augroup END
@@ -15,36 +18,42 @@
 
       " source code style
       function! CodeView()
-        " reset theme colours when transitioning from prose view
-        call lightline#colorscheme()
+        " restore CursorLine syntax highlighting (if altered by ProseView)
+        if s:view != 0
+          syntax enable
+        endif
+        let s:view = 0
+        execute 'Limelight!'
         call Theme()
-        set laststatus=2                    " turn on statusline
-        set showmode
         call IndentTheme()
         call LiteFix()
         execute 'highlight LineNr guifg=' . g:dfm_fg_line
+        call lightline#colorscheme()
+        set laststatus=2                    " turn on statusline
+        set showmode
       endfunction
 
     " ............................................................... Prose view
 
       " vimwiki prose style
       function! ProseView()
+        let s:view = 1
         " silent !tmux set status off
+        " set numberwidth=1                 " goyo settings
+        " set nonumber
+        " set fillchars-=stl:.              " remove statusline fillchars '.' set by goyo.vim
+        " set fillchars+=stl:\ "
+        call Theme()
+        call DfmWriting()
+        call VimWikiLink()                  " restore vimwiki link
+        execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
+        execute 'Limelight'
         set colorcolumn=0
         set foldcolumn=0
         set laststatus=0
         set noshowmode
         set scrolloff=8
         set spell
-        " set numberwidth=1                 " goyo settings
-        " set nonumber
-        " set fillchars-=stl:.              " remove statusline fillchars '.' set by goyo.vim
-        " set fillchars+=stl:\ "
-        call DfmWriting()
-        call Theme()
-        call VimWikiLink()                  " restore vimwiki link
-        execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
-        execute 'Limelight'
       endfunction
 
       " dfm writing mode (single paragraph highlight)
