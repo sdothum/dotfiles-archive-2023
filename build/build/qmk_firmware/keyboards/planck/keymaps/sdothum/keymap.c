@@ -103,30 +103,30 @@ enum planck_layers {
 // update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE
- ,Gt          // Gt    = LT (_NUMSYM, KC_GT)      requires matrix_scan_user and process_record_user
- ,SLeft       // SLeft = LT (_SYMBOL, S(KC_LEFT)) for modified key-codes
+ ,Gt        // Gt    = LT (_NUMSYM, KC_GT)      LT macro does not handle modified key-codes
+ ,SLeft     // SLeft = LT (_SYMBOL, S(KC_LEFT)) LT macro does not handle modified key-codes
+ ,Spc       // Spc   = LT  (_LSHIFT, KC_SPC)    additional handling for SLeft (if enabled :-)
  ,PLOVER
  ,PLOVEX
  ,KEYTEST
  ,DYNAMIC_MACRO_RANGE
- ,_Ctl  = OSM (MOD_LCTL)
- ,_Gui  = OSM (MOD_LGUI)
- ,_Alt  = OSM (MOD_LALT)
- ,_CSft = OSM (MOD_LSFT | MOD_LCTL)
- ,_SGui = OSM (MOD_LGUI | MOD_LSFT)
- ,_CGui = OSM (MOD_LGUI | MOD_LCTL)
- ,_SAlt = OSM (MOD_LALT | MOD_LSFT)
- ,_CAlt = OSM (MOD_LALT | MOD_LCTL)
- ,_Sft  = OSM (MOD_LSFT)
- ,Dot   = LT  (_NUMBER, KC_DOT)
- ,Esc   = LT  (_NUMBER, KC_ESC)
- ,Spc   = LT  (_LSHIFT, KC_SPC)
- ,Tab   = LT  (_FNCKEY, KC_TAB)
- ,Bspc  = LT  (_MACRO, KC_BSPC)
- ,Ent   = LT  (_RSHIFT, KC_ENT)
- ,Left  = LT  (_SYMBOL, KC_LEFT)
- ,Zero  = LT  (_SYMBOL, KC_0)
- ,Dn    = LT  (_SYMREG, KC_DOWN)
+ ,_Ctl    = OSM (MOD_LCTL)
+ ,_Gui    = OSM (MOD_LGUI)
+ ,_Alt    = OSM (MOD_LALT)
+ ,_CSft   = OSM (MOD_LSFT | MOD_LCTL)
+ ,_SGui   = OSM (MOD_LGUI | MOD_LSFT)
+ ,_CGui   = OSM (MOD_LGUI | MOD_LCTL)
+ ,_SAlt   = OSM (MOD_LALT | MOD_LSFT)
+ ,_CAlt   = OSM (MOD_LALT | MOD_LCTL)
+ ,_Sft    = OSM (MOD_LSFT)
+ ,Dot     = LT  (_NUMBER, KC_DOT)
+ ,Esc     = LT  (_NUMBER, KC_ESC)
+ ,Tab     = LT  (_FNCKEY, KC_TAB)
+ ,Bspc    = LT  (_MACRO, KC_BSPC)
+ ,Ent     = LT  (_RSHIFT, KC_ENT)
+ ,Left    = LT  (_SYMBOL, KC_LEFT)
+ ,Zero    = LT  (_SYMBOL, KC_0)
+ ,Dn      = LT  (_SYMREG, KC_DOWN)
 };
 
 #include "dynamic_macro.h"
@@ -613,13 +613,12 @@ static int      layer     = 0;
 
 void matrix_scan_user(void)
 {
-  // simulate LT (_NUMSYM, KC_GT): turn on _NUMSYM layer
+  // simulate LT (layer, key) for modified key value, see process_record_user
   if (key_timer != 0) {
     if (timer_elapsed(key_timer) > TAPPING_TERM) {
       key_timer = 0;
       if (layer != 0) {
         layer_on (layer);
-        layer   = 0;
       }
     }
   }
@@ -632,7 +631,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 
   switch (keycode) {
-    // simulate LT (_NUMSYM, KC_GT): type GT key
+    // simulate LT (_NUMSYM, KC_GT): type KC_GT key
     case Gt:
       if (record->event.pressed) {
         key_timer = timer_read();
@@ -664,12 +663,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         layer     = _SFTNAV;
       } else {
         layer_off           (_SFTNAV);
+        // Spc keycode handler may have switched effective navigation layout!
+        layer_off           (_SYMBOL);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
             register_code   (KC_LSFT);
             register_code   (KC_LEFT);
             unregister_code (KC_LEFT);
             unregister_code (KC_LSFT);
+          }
+        }
+        key_timer = 0;
+        layer     = 0;
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
+    // simulate LT (_LSHIFT, KC_SPC): type KC_SPC key
+    case Spc:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        layer     = _LSHIFT;
+      } else {
+        layer_off           (_LSHIFT);
+        // if the Sleft key is down, switch to the normal navigation cluster :-)
+        if (layer == _SFTNAV) {
+          layer_off         (_SFTNAV);
+          layer_on          (_SYMBOL);
+        }
+        if (key_timer > 0) {
+          if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            register_code   (KC_SPC);
+            unregister_code (KC_SPC);
           }
         }
         key_timer = 0;
