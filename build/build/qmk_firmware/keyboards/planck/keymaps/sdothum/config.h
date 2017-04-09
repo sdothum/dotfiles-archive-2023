@@ -10,6 +10,6 @@
 #define TAPPING_TERM   200
 
 // reserve dynamic macro buffer size
-#define DYNAMIC_MACRO_SIZE 64
+#define DYNAMIC_MACRO_SIZE 32
 
 #endif

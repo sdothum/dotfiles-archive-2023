@@ -100,9 +100,7 @@ enum planck_keycodes {
   COLEMAK = SAFE_RANGE
  ,Gt        // Gt    = LT (_NUMSYM, KC_GT)      LT macro does not handle modified key-codes
  ,SLeft     // SLeft = LT (_SFTNAV, S(KC_LEFT)) LT macro does not handle modified key-codes
- ,Spc       // Spc   = LT (_LSHIFT, KC_SPC)     additional handling for SLeft (if enabled :-)
  ,Pipe      // Pipe  = LT (_SFTNAV, S(KC_BSLS)) LT macro does not handle modified key-codes
- ,Left      // Left  = LT (_SYMBOL, KC_LEFT)    additional handling for SLeft (if enabled :-)
  ,DYNAMIC_MACRO_RANGE
  ,_Ctl    = OSM (MOD_LCTL)
  ,_Gui    = OSM (MOD_LGUI)
@@ -115,9 +113,11 @@ enum planck_keycodes {
  ,_Sft    = OSM (MOD_LSFT)
  ,Dot     = LT  (_NUMBER, KC_DOT)
  ,Esc     = LT  (_NUMBER, KC_ESC)
+ ,Spc     = LT  (_LSHIFT, KC_SPC)           // see process_record_user() for extended handling of SLeft
  ,Tab     = LT  (_FNCKEY, KC_TAB)
  ,Bspc    = LT  (_MACRO, KC_BSPC)
  ,Ent     = LT  (_RSHIFT, KC_ENT)
+ ,Left    = LT  (_SYMBOL, KC_LEFT)          // see process_record_user() for extended handling of Pipe
  ,Zero    = LT  (_SYMBOL, KC_0)
  ,Dn      = LT  (_SYMREG, KC_DOWN)
 };
@@ -652,24 +652,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    // simulate LT (_LSHIFT, KC_SPC): type KC_SPC key
+    // LT (_LSHIFT, KC_SPC) handling extensions
     case Spc:
       if (record->event.pressed) {
-        key_timer = timer_read();
+        key_timer = 0;
         thumb     = thumb | LEFT;
-        layer     = _LSHIFT;
+        layer     = 0;
       }
       else {
-        layer_off           (_LSHIFT);
         // shift mode _SFTNAV only while Spc down, else _SYMBOL
         layer_off           (_SFTNAV);
-        if (key_timer > 0) {
-          if (timer_elapsed(key_timer) < TAPPING_TERM) {
-            register_code   (KC_SPC);
-            unregister_code (KC_SPC);
-          }
-        }
-        else if (thumb & RIGHT) {
+        if (thumb & RIGHT) {
           layer_on          (_SYMBOL);
         }
         thumb     = thumb & ~LEFT;
@@ -716,24 +709,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    // simulate LT (_SYMBOL, KC_LEFT): type KC_LEFT key
+    // LT (_SYMBOL, KC_LEFT) handling extensions
     case Left:
       if (record->event.pressed) {
-        key_timer = timer_read();
+        key_timer = 0;
         thumb     = thumb | RIGHT;
-        layer     = _SYMBOL;
+        layer     = 0;
       }
       else {
-        layer_off           (_SYMBOL);
         // shift mode _SFTNAV only while Left down, else _LSHIFT
         layer_off           (_SFTNAV);
-        if (key_timer > 0) {
-          if (timer_elapsed(key_timer) < TAPPING_TERM) {
-            register_code   (KC_LEFT);
-            unregister_code (KC_LEFT);
-          }
-        }
-        else if (thumb & LEFT) {
+        if (thumb & LEFT) {
           layer_on          (_LSHIFT);
         }
         thumb     = thumb & ~RIGHT;
