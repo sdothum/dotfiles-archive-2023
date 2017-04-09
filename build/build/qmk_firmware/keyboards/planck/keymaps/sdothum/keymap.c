@@ -34,9 +34,6 @@
 //   The navigation pad provides a single hand right thumb activated cluster
 //   with left hand modifiers
 //
-//   Plover layer toggling has added binding to the herbstluftwm window manager
-//   to enable/disable the necessary plover software
-//
 //   Adjust layer is enabled from the navigation layer i.e. num+sym+Q
 //   to prevent accidental keyboard reset
 //
@@ -87,16 +84,14 @@ enum planck_layers {
   _COLEMAK = 0
  ,_LSHIFT
  ,_RSHIFT
- ,_SFTNAV
  ,_NUMBER
  ,_NUMSYM
  ,_SYMBOL
  ,_SYMREG
+ ,_SFTNAV
  ,_FNCKEY
- ,_MACRO
- ,_PLOVER
  ,_ADJUST
- ,_KEYTEST
+ ,_MACRO
  ,_DYN
 };
 
@@ -104,11 +99,10 @@ enum planck_layers {
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE
  ,Gt        // Gt    = LT (_NUMSYM, KC_GT)      LT macro does not handle modified key-codes
- ,SLeft     // SLeft = LT (_SYMBOL, S(KC_LEFT)) LT macro does not handle modified key-codes
- ,Spc       // Spc   = LT  (_LSHIFT, KC_SPC)    additional handling for SLeft (if enabled :-)
- ,PLOVER
- ,PLOVEX
- ,KEYTEST
+ ,SLeft     // SLeft = LT (_SFTNAV, S(KC_LEFT)) LT macro does not handle modified key-codes
+ ,Spc       // Spc   = LT (_LSHIFT, KC_SPC)     additional handling for SLeft (if enabled :-)
+ ,Pipe      // Pipe  = LT (_SFTNAV, S(KC_BSLS)) LT macro does not handle modified key-codes
+ ,Left      // Left  = LT (_SYMBOL, KC_LEFT)    additional handling for SLeft (if enabled :-)
  ,DYNAMIC_MACRO_RANGE
  ,_Ctl    = OSM (MOD_LCTL)
  ,_Gui    = OSM (MOD_LGUI)
@@ -124,7 +118,6 @@ enum planck_keycodes {
  ,Tab     = LT  (_FNCKEY, KC_TAB)
  ,Bspc    = LT  (_MACRO, KC_BSPC)
  ,Ent     = LT  (_RSHIFT, KC_ENT)
- ,Left    = LT  (_SYMBOL, KC_LEFT)
  ,Zero    = LT  (_SYMBOL, KC_0)
  ,Dn      = LT  (_SYMREG, KC_DOWN)
 };
@@ -238,46 +231,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
   },
 
-// ...................................................... Shift Navigation Layer
-
-  // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      | ↑Home|  ↑Up | ↑End |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      | ↑Left| ↑Down|↑Right|      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      | ↑PgDn| ↑PgUp|      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |  f() |      |      |      |  f() |      |      |      |
-  // '-----------------------------------------------------------------------------------'
-
-  [_SFTNAV] = {
-    {_______, _______, _______, _______, _______, _______, _______, _______, S_HOME,  S_UP,    S_END,   _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, S_LEFT,  S_DOWN,  S_RGHT,  _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, S_PGDN,  S_PGUP,  _______, _______},
-    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
-  },
-
-// ...................................................................... Plover
-//
-// http://www.keyboard-layout-editor.com/#/gists/7296e3f601a6bb2eee2aa8f034c58a27
-
-  // ,-----------------------------------------------------------------------------------.
-  // |   #  |   #  |   #  |   #  |   #  |      |   #  |   #  |   #  |   #  |   #  |   #  |
-  // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   S  |   T  |   P  |   H  |   *  |      |   *  |   F  |   P  |   L  |   T  |   D  |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   S  |   K  |   W  |   R  |   *  |      |   *  |   R  |   B  |   G  |   S  |   Z  |
-  // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |      |      |   A  |   O  |      |      |      |   E  |   U  |      |      | Exit |
-  // `-----------------------------------------------------------------------------------'
-
-  [_PLOVER] = {
-    {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    _______, KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-    {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-    {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    _______, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-    {_______, _______, KC_C,    KC_V,    _______, _______, _______, KC_N,    KC_M,    _______, _______, PLOVEX },
-  },
-
 // ................................................................ Number Layer
 //
 // http://www.keyboard-layout-editor.com/#/gists/538d5196b49574fffda305a0f845c794
@@ -336,7 +289,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
     {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, Dn,      KC_RGHT, _______},
     {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {___x___, ___x___, ___x___, Dot,     KC_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, Dot,     Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // .......................................................... Symbol Layer Regex
@@ -356,6 +309,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, KC_LABK, KC_RABK, KC_EQL,  ___x___, _______, _______, _______, _______, ___x___, _______, _______},
     {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, KC_COLN, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+  },
+
+// ...................................................... Shift Navigation Layer
+
+  // .-----------------------------------------------------------------------------------.
+  // |      |      |      |      |      |      |      |      | ↑Home|  ↑Up | ↑End |      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |      |      | ↑Left| ↑Down|↑Right|      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |      |      |      |      | ↑PgDn| ↑PgUp|      |      |
+  // |-----------------------------------------------------------------------------------|
+  // |      |      |      |      |  f() |      |      |      |  f() |      |      |      |
+  // '-----------------------------------------------------------------------------------'
+
+  [_SFTNAV] = {
+    {_______, _______, _______, _______, _______, _______, _______, _______, S_HOME,  S_UP,    S_END,   _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, S_LEFT,  S_DOWN,  S_RGHT,  _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, S_PGDN,  S_PGUP,  _______, _______},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // ............ .................................................. Function Keys
@@ -379,33 +351,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
 
-// ............................................................... Test All Keys
-
-  // ,-----------------------------------------------------------------------------------.
-  // |Adjust|   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
-  // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
-  // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |   .  |
-  // `-----------------------------------------------------------------------------------'
-
-  [_KEYTEST] = {
-    {ADJUST,  KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
-    {KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
-    {KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
-    {KC_A,    KC_B,    KC_C,    KC_D,    KC_E,    KC_F,    KC_G,    KC_H,    KC_I,    KC_J,    KC_K,    KC_L   },
-  },
-
 // ................................................................ Adjust Layer
 //
 // http://www.keyboard-layout-editor.com/#/gists/ac56b98d8737118f2beef3d6855d760e
 
   // ,-----------------------------------------------------------------------------------.
-  // | Reset|Keytst|      |      |      |      |      |      |      |      |      |      |
+  // | Reset|      |      |      |      |      |      |      |      |      |      |      |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|Plover|      |      |
+  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|      |      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -413,8 +366,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_ADJUST] = {
-    {RESET,   KEYTEST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, PLOVER,  _______, _______},
+    {RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, _______,  _______, _______},
     {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
@@ -463,8 +416,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            ,Q__NOTE(_E7  )
 float tone_startup[][2]   = SONG (STARTUP_SOUND);
 float tone_colemak[][2]   = SONG (COLEMAK_SOUND);
-float tone_plover[][2]    = SONG (PLOVER_SOUND);
-float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
 float tone_caps_on[][2]   = SONG (CAPSLOCK_ON_SOUND);
 float tone_caps_off[][2]  = SONG (CAPSLOCK_OFF_SOUND);
 float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND);
@@ -482,7 +433,8 @@ void paren(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_LSFT);
     register_code   (KC_LEFT);
     unregister_code (KC_LEFT);
-  } else {
+  }
+  else {
     register_code   (KC_LSFT);
     register_code   (KC_9);
     unregister_code (KC_9);
@@ -500,7 +452,8 @@ void brace(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_RBRC);
     register_code   (KC_LEFT);
     unregister_code (KC_LEFT);
-  } else {
+  }
+  else {
     register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
   }
@@ -518,7 +471,8 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_LSFT);
     register_code   (KC_LEFT);
     unregister_code (KC_LEFT);
-  } else {
+  }
+  else {
     register_code   (KC_LSFT);
     register_code   (KC_LBRC);
     unregister_code (KC_LBRC);
@@ -538,7 +492,8 @@ void angle(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_LSFT);
     register_code   (KC_LEFT);
     unregister_code (KC_LEFT);
-  } else {
+  }
+  else {
     register_code   (KC_LSFT);
     register_code   (KC_COMM);
     unregister_code (KC_COMM);
@@ -558,7 +513,8 @@ void quote(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_LSFT);
     register_code   (KC_LEFT);
     unregister_code (KC_LEFT);
-  } else {
+  }
+  else {
     register_code   (KC_QUOT);
     unregister_code (KC_QUOT);
   }
@@ -570,7 +526,8 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
   if (state->count > 1) {
     register_code   (KC_CAPS);
     unregister_code (KC_CAPS);
-  } else {
+  }
+  else {
     set_oneshot_mods (MOD_LSFT);
   }
   reset_tap_dance(state);
@@ -598,14 +555,15 @@ void clear_layers()
   layer_off (_COLEMAK);
   layer_off (_LSHIFT);
   layer_off (_RSHIFT);
-  layer_off (_PLOVER);
   layer_off (_NUMBER);
   layer_off (_NUMSYM);
   layer_off (_SYMBOL);
   layer_off (_SYMREG);
+  layer_off (_SFTNAV);
   layer_off (_FNCKEY);
-  layer_off (_KEYTEST);
   layer_off (_ADJUST);
+  layer_off (_MACRO);
+  layer_off (_DYN);
 }
 
 static uint16_t key_timer = 0;
@@ -624,6 +582,10 @@ void matrix_scan_user(void)
   }
 }
 
+#define    LEFT    1
+#define    RIGHT   2
+static int thumb = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   if (!process_record_dynamic_macro(keycode, record)) {
@@ -636,7 +598,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       if (record->event.pressed) {
         key_timer = timer_read();
         layer     = _NUMSYM;
-      } else {
+      }
+      else {
         layer_off           (_NUMSYM);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
@@ -660,8 +623,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case SLeft:
       if (record->event.pressed) {
         key_timer = timer_read();
+        thumb     = thumb | RIGHT;
         layer     = _SFTNAV;
-      } else {
+      }
+      else {
         layer_off           (_SFTNAV);
         // Spc keycode handler may have switched effective navigation layout!
         layer_off           (_SYMBOL);
@@ -673,6 +638,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
             unregister_code (KC_LSFT);
           }
         }
+        else if (thumb & LEFT) {
+          layer_on          (_LSHIFT);
+        }
+        thumb     = thumb & ~RIGHT;
         key_timer = 0;
         layer     = 0;
         // undo sticky modifiers
@@ -687,20 +656,87 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Spc:
       if (record->event.pressed) {
         key_timer = timer_read();
+        thumb     = thumb | LEFT;
         layer     = _LSHIFT;
-      } else {
+      }
+      else {
         layer_off           (_LSHIFT);
-        // if the Sleft key is down, switch to the normal navigation cluster :-)
-        if (layer == _SFTNAV) {
-          layer_off         (_SFTNAV);
-          layer_on          (_SYMBOL);
-        }
+        // shift mode _SFTNAV only while Spc down, else _SYMBOL
+        layer_off           (_SFTNAV);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
             register_code   (KC_SPC);
             unregister_code (KC_SPC);
           }
         }
+        else if (thumb & RIGHT) {
+          layer_on          (_SYMBOL);
+        }
+        thumb     = thumb & ~LEFT;
+        key_timer = 0;
+        layer     = 0;
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
+    // simulate LT (_SFTNAV, S(KC_BSLS)): type S(KC_BSLS) key
+    case Pipe:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        thumb     = thumb | LEFT;
+        layer     = _SFTNAV;
+      }
+      else {
+        layer_off           (_SFTNAV);
+        // Left keycode handler may have switched effective navigation layout!
+        layer_off           (_LSHIFT);
+        if (key_timer > 0) {
+          if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            register_code   (KC_LSFT);
+            register_code   (KC_BSLS);
+            unregister_code (KC_BSLS);
+            unregister_code (KC_LSFT);
+          }
+        }
+        else if (thumb & RIGHT) {
+          layer_on          (_SYMBOL);
+        }
+        thumb     = thumb & ~LEFT;
+        key_timer = 0;
+        layer     = 0;
+        // undo sticky modifiers
+        unregister_code (KC_LGUI);
+        unregister_code (KC_LSFT);
+        unregister_code (KC_LCTL);
+      }
+      // LT hack
+      // return false;
+      break;
+    // simulate LT (_SYMBOL, KC_LEFT): type KC_LEFT key
+    case Left:
+      if (record->event.pressed) {
+        key_timer = timer_read();
+        thumb     = thumb | RIGHT;
+        layer     = _SYMBOL;
+      }
+      else {
+        layer_off           (_SYMBOL);
+        // shift mode _SFTNAV only while Left down, else _LSHIFT
+        layer_off           (_SFTNAV);
+        if (key_timer > 0) {
+          if (timer_elapsed(key_timer) < TAPPING_TERM) {
+            register_code   (KC_LEFT);
+            unregister_code (KC_LEFT);
+          }
+        }
+        else if (thumb & LEFT) {
+          layer_on          (_LSHIFT);
+        }
+        thumb     = thumb & ~RIGHT;
         key_timer = 0;
         layer     = 0;
         // undo sticky modifiers
@@ -715,7 +751,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       if (record->event.pressed) {
         layer_on        (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      } else {
+      }
+      else {
         layer_off       (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
@@ -730,7 +767,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       if (record->event.pressed) {
         layer_on        (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      } else {
+      }
+      else {
         layer_off       (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
@@ -741,26 +779,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT hack
       // return false;
       break;
-    case Left:
-      if (record->event.pressed) {
-        layer_on        (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      } else {
-        layer_off       (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
-      break;
+    // case Left:
+    //   if (record->event.pressed) {
+    //     layer_on        (_SYMBOL);
+    //     update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
+    //   }
+    //   else {
+    //     layer_off       (_SYMBOL);
+    //     update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
+    //     // undo sticky modifiers
+    //     unregister_code (KC_LGUI);
+    //     unregister_code (KC_LSFT);
+    //     unregister_code (KC_LCTL);
+    //   }
+    //   // LT hack
+    //   // return false;
+    //   break;
     case Zero:
       if (record->event.pressed) {
         layer_on        (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      } else {
+      }
+      else {
         layer_off       (_SYMBOL);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
@@ -781,58 +821,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       return false;
       break;
-    case PLOVER:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        stop_all_notes();
-        PLAY_NOTE_ARRAY (tone_plover, false, 0);
-#endif
-        clear_layers();
-        layer_on        (_PLOVER);
-        if (!eeconfig_is_enabled()) {
-            eeconfig_init();
-        }
-        keymap_config.raw = eeconfig_read_keymap();
-        keymap_config.nkro = 1;
-        eeconfig_update_keymap(keymap_config.raw);
-        // toggle plover application on, see herbstluftwm/config/appbinds
-        register_code   (KC_LGUI);
-        register_code   (KC_LSFT);
-        register_code   (KC_EQL);
-        unregister_code (KC_EQL);
-        // unregister modifiers as late as possible (convention)
-        unregister_code (KC_LSFT);
-        unregister_code (KC_LGUI);
-      }
-      return false;
-      break;
-    case PLOVEX:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);
-#endif
-        clear_layers();
-        // toggle plover application off, see herbstluftwm/config/appbinds
-        register_code   (KC_LGUI);
-        register_code   (KC_LSFT);
-        register_code   (KC_EQL);
-        unregister_code (KC_EQL);
-        // unregister modifiers as late as possible (convention)
-        unregister_code (KC_LSFT);
-        unregister_code (KC_LGUI);
-      }
-      return false;
-      break;
-    case KEYTEST:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY (music_scale, false, 0);
-#endif
-        clear_layers();
-        persistant_default_layer_set(1UL<<_KEYTEST);
-      }
-      return false;
-      break;
   }
   return true;
 }
@@ -845,6 +833,7 @@ void matrix_init_user(void)
 }
 
 #ifdef AUDIO_ENABLE
+#ifdef BACKLIGHT_ENABLE
 void led_set_user(uint8_t usb_led)
 {
   static uint8_t old_usb_led = 0;
@@ -854,13 +843,15 @@ void led_set_user(uint8_t usb_led)
     if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
       // if capslock LED is turning on
       PLAY_NOTE_ARRAY(tone_caps_on,  false, 0);
-    } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
+    }
+    else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
       // if capslock LED is turning off
       PLAY_NOTE_ARRAY(tone_caps_off, false, LEGATO);
     }
   }
   old_usb_led = usb_led;
 }
+#endif
 
 void startup_user()
 {

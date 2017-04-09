@@ -7,14 +7,17 @@
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap>"
+  echo "usage: $(basename $0) <keymap> [dfu]"
   exit 1
 }
 
 [ $1 ] || usage
+
+if-no 'sync qmk_firmware repo' || { cd $HOME/build/qmk_firmware; git pull; }
+
 cd $HOME/build/qmk_firmware/keyboards/planck
-sudo make clean
-sudo make KEYMAP=$1 dfu
+sudo make clean >/dev/null
+sudo make KEYMAP=$1 $2
 sudo chown -R $USER:users $HOME/build/qmk_firmware
 cd -
 

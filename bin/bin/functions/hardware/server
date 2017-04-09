@@ -7,6 +7,7 @@
 # ...................................................................... Machine
 
 # server
-[ $(hostname) = luna ]
+# [ $(hostname) = luna ]
+cpu i7
 
 # vim: set ft=sh: #

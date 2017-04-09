@@ -9,7 +9,7 @@
 
       " regex list of multibyte characters used for line drawing
       " note: files using other multibyte characters will produce incorrect statistics
-      let s:indicators = '▶■‾↑⩾'            " multibyte statusline indicators
+      let s:indicators = '▶■≈⌉'             " multibyte statusline indicators
       let s:multibytes = '[' . g:linedrawing . s:indicators . ']'
       let s:ascii      = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
@@ -46,11 +46,11 @@
             let long_line_lens = s:LongLines()
             if len(long_line_lens) > 0
               let b:statusline_long_line_warning =
-                \  '⩾ ' . len(long_line_lens) . '='
-                \. ' ‾' . s:Median(long_line_lens)
-                \. ' '  . max(long_line_lens) . '↑'
+                \         len(long_line_lens) . '>'
+                \. ' ≈' . s:Median(long_line_lens)
+                \. ' ⌉'  . max(long_line_lens)
             else
-              let b:statusline_long_line_warning = '⩾'
+              let b:statusline_long_line_warning = '0>'
             endif
           endif
         endif
