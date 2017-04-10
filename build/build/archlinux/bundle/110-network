@@ -8,7 +8,7 @@
 # bluez
 # bluez-utils
 # "+ connman may interrupt connection requiring post install"
-  connman
+d connman
   gnome-bluetooth
 # ifenslave
 # networkmanager

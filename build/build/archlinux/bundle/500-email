@@ -22,7 +22,7 @@
 # geary-git
 # * gpgme
 # * highline
-  notmuch
+d notmuch
 # notmuch-vim
 # re-alpine
 # ruby-gme

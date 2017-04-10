@@ -24,7 +24,7 @@ g xapian-ruby
 # ▔▔▔▔▔▔▔▔▔▔
 # nginx
 # nginx-passenger
-g passenger
+d passenger
   php
   php-fpm
   php-pgsql

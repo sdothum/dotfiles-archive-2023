@@ -76,10 +76,10 @@ windowmanager=$1
 
 # ...................................................................... Display
 
-# Setup multihead display
-# [ $(hostname) = luna ] && xrandr --output DFP10 --mode 1680x1050 --rate 60 --output DFP11 --primary --mode 2560x1600 --rate 60 --right-of DFP10
-# [ $(hostname) = luna ] && [ $windowmanager != budgie ] && xrandr --output DVI-1 --primary --mode 2560x1600 --rate 60 --right-of DVI-0
-[ $(hostname) = luna ] && [ $windowmanager != budgie ] && xrandr --output HDMI-0 --primary --mode 3440x1440 --rate 60 --right-of DVI-D-0 --dpi 96
+case $(hostname) in
+  luna ) xrandr --output HDMI-0 --primary --mode 3440x1440 --rate 60 --right-of DVI-D-0 --dpi 96 ;;
+  lumen) xrandr --output LVDS-1-1 --primary --mode 1920x1080 --rate 60 --dpi 96 ;;
+esac
 
 # ............................................................... Window manager
 

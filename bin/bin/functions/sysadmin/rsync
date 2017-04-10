@@ -55,7 +55,8 @@ rsync_home() {
         --exclude '.kingsoft' \
         --exclude 'local-storage' \
         --exclude '.local/share/weechat' \
-        --exclude 'log' \
+        --exclude '.log' \
+        --exclude '/log/' \
         --exclude 'logs' \
         --exclude '.macromedia' \
         --exclude 'Maildir' \
@@ -242,7 +243,7 @@ case $1 in
          rsync_home /media/home/
          rsync $HOME/.password-store /media/home/$USER/
        elif [ -d /run/media/$USER/My\ Passport ] ;then
-         mkdir -v /run/media/$USER/My\ Passport/media || exit 1
+         mkdir -pv /run/media/$USER/My\ Passport/media || exit 1
          rsync --delete-during /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
          rsync --delete-during /net/photos /run/media/$USER/My\ Passport/
          sync

@@ -312,6 +312,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
 
 // ...................................................... Shift Navigation Layer
+//
+// http://www.keyboard-layout-editor.com/#/gists/3e7b27b824d0c8b71f07354170756803
+// http://www.keyboard-layout-editor.com/#/gists/b14e93e60f484a7e7c0d89351ea5c663
 
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      | ↑Home|  ↑Up | ↑End |      |
@@ -422,103 +425,63 @@ float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND);
 float tone_goodbye[][2]   = SONG (GOODBYE_SOUND);
 #endif
 
-void paren(qk_tap_dance_state_t *state, void *user_data)
+#define S_NEVER  0
+#define S_SINGLE 1
+#define S_DOUBLE 2
+#define S_ALWAYS S_SINGLE | S_DOUBLE
+
+void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right)
 {
   if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_9);
-    unregister_code (KC_9);
-    register_code   (KC_0);
-    unregister_code (KC_0);
-    unregister_code (KC_LSFT);
-    register_code   (KC_LEFT);
-    unregister_code (KC_LEFT);
+    if (shift & S_DOUBLE) {
+      register_code   (KC_LSFT);
+    }
+    register_code     (left);
+    unregister_code   (left);
+    register_code     (right);
+    unregister_code   (right);
+    if (shift & S_DOUBLE) {
+      unregister_code (KC_LSFT);
+    }
+    register_code     (KC_LEFT);
+    unregister_code   (KC_LEFT);
   }
   else {
-    register_code   (KC_LSFT);
-    register_code   (KC_9);
-    unregister_code (KC_9);
-    unregister_code (KC_LSFT);
+    if (shift & S_SINGLE) {
+      register_code   (KC_LSFT);
+    }
+    register_code     (left);
+    unregister_code   (left);
+    if (shift & S_SINGLE) {
+      unregister_code (KC_LSFT);
+    }
   }
   reset_tap_dance(state);
+}
+
+void paren(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_9, KC_0);
 }
 
 void brace(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    register_code   (KC_LBRC);
-    unregister_code (KC_LBRC);
-    register_code   (KC_RBRC);
-    unregister_code (KC_RBRC);
-    register_code   (KC_LEFT);
-    unregister_code (KC_LEFT);
-  }
-  else {
-    register_code   (KC_LBRC);
-    unregister_code (KC_LBRC);
-  }
-  reset_tap_dance(state);
+  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC);
 }
 
 void curly(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_LBRC);
-    unregister_code (KC_LBRC);
-    register_code   (KC_RBRC);
-    unregister_code (KC_RBRC);
-    unregister_code (KC_LSFT);
-    register_code   (KC_LEFT);
-    unregister_code (KC_LEFT);
-  }
-  else {
-    register_code   (KC_LSFT);
-    register_code   (KC_LBRC);
-    unregister_code (KC_LBRC);
-    unregister_code (KC_LSFT);
-  }
-  reset_tap_dance(state);
+  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC);
 }
 
 void angle(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_COMM);
-    unregister_code (KC_COMM);
-    register_code   (KC_DOT);
-    unregister_code (KC_DOT);
-    unregister_code (KC_LSFT);
-    register_code   (KC_LEFT);
-    unregister_code (KC_LEFT);
-  }
-  else {
-    register_code   (KC_LSFT);
-    register_code   (KC_COMM);
-    unregister_code (KC_COMM);
-    unregister_code (KC_LSFT);
-  }
-  reset_tap_dance(state);
+  tap_pair(state, S_ALWAYS, KC_COMM, KC_DOT);
 }
 
 void quote(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    register_code   (KC_LSFT);
-    register_code   (KC_QUOT);
-    unregister_code (KC_QUOT);
-    register_code   (KC_QUOT);
-    unregister_code (KC_QUOT);
-    unregister_code (KC_LSFT);
-    register_code   (KC_LEFT);
-    unregister_code (KC_LEFT);
-  }
-  else {
-    register_code   (KC_QUOT);
-    unregister_code (KC_QUOT);
-  }
-  reset_tap_dance(state);
+  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT);
 }
 
 void caps(qk_tap_dance_state_t *state, void *user_data)
@@ -548,9 +511,7 @@ void persistant_default_layer_set(uint16_t default_layer)
   default_layer_set(default_layer);
 }
 
-void clear_layers(void);
-
-void clear_layers()
+void clear_layers(void)
 {
   layer_off (_COLEMAK);
   layer_off (_LSHIFT);
@@ -600,7 +561,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         layer     = _NUMSYM;
       }
       else {
-        layer_off           (_NUMSYM);
+        layer_off   (_NUMSYM);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
             register_code   (KC_LSFT);
@@ -613,7 +574,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         layer     = 0;
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -627,9 +588,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         layer     = _SFTNAV;
       }
       else {
-        layer_off           (_SFTNAV);
+        layer_off   (_SFTNAV);
         // Spc keycode handler may have switched effective navigation layout!
-        layer_off           (_SYMBOL);
+        layer_off   (_SYMBOL);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
             register_code   (KC_LSFT);
@@ -639,14 +600,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
           }
         }
         else if (thumb & LEFT) {
-          layer_on          (_LSHIFT);
+          layer_on  (_LSHIFT);
         }
         thumb     = thumb & ~RIGHT;
         key_timer = 0;
         layer     = 0;
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -661,16 +622,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       else {
         // shift mode _SFTNAV only while Spc down, else _SYMBOL
-        layer_off           (_SFTNAV);
+        layer_off   (_SFTNAV);
         if (thumb & RIGHT) {
-          layer_on          (_SYMBOL);
+          layer_on  (_SYMBOL);
         }
         thumb     = thumb & ~LEFT;
         key_timer = 0;
         layer     = 0;
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -684,9 +645,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         layer     = _SFTNAV;
       }
       else {
-        layer_off           (_SFTNAV);
+        layer_off   (_SFTNAV);
         // Left keycode handler may have switched effective navigation layout!
-        layer_off           (_LSHIFT);
+        layer_off   (_LSHIFT);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
             register_code   (KC_LSFT);
@@ -696,14 +657,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
           }
         }
         else if (thumb & RIGHT) {
-          layer_on          (_SYMBOL);
+          layer_on  (_SYMBOL);
         }
         thumb     = thumb & ~LEFT;
         key_timer = 0;
         layer     = 0;
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -718,16 +679,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       else {
         // shift mode _SFTNAV only while Left down, else _LSHIFT
-        layer_off           (_SFTNAV);
+        layer_off   (_SFTNAV);
         if (thumb & LEFT) {
-          layer_on          (_LSHIFT);
+          layer_on  (_LSHIFT);
         }
         thumb     = thumb & ~RIGHT;
         key_timer = 0;
         layer     = 0;
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -735,15 +696,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case Dot:
       if (record->event.pressed) {
-        layer_on        (_NUMBER);
+        layer_on    (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
       }
       else {
-        layer_off       (_NUMBER);
+        layer_off   (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -751,15 +712,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case Esc:
       if (record->event.pressed) {
-        layer_on        (_NUMBER);
+        layer_on    (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
       }
       else {
-        layer_off       (_NUMBER);
+        layer_off   (_NUMBER);
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack
@@ -791,7 +752,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
         // undo sticky modifiers
         unregister_code (KC_LGUI);
-        unregister_code (KC_LSFT);
+        unregister_code (KC_LALT);
         unregister_code (KC_LCTL);
       }
       // LT hack

@@ -11,10 +11,9 @@ heading : $package
 cd /tmp
 trap "sudo rm -r /tmp/$package*" EXIT
 
-curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/$package.tar.gz
-tar xzf $package.tar.gz
+git clone https://aur.archlinux.org/$package.git
 cd $package
 makepkg -s
-sudo pacman -U --noconfirm $package*tar.xz
+sudo pacman -U --noconfirm $package*pkg.tar.xz
 
 # vim: set ft=sh: #

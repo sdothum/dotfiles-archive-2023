@@ -1,0 +1,30 @@
+# deferred packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= mail clients
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  notmuch
+
+
+= chat/twitter
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  znc
+
+
+= security
+# ▔▔▔▔▔▔▔▔
+  pass
+
+
+= web server
+# ▔▔▔▔▔▔▔▔▔▔
+g passenger
+
+
+= connectivity
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  connman
+
+# vim: set ft=conf: #
