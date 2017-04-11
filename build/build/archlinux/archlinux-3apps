@@ -19,7 +19,7 @@ mkdir -p $HOME/logs || exit 1
 
 title "bundle installs"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-bundle_install $HOME/build/archlinux/bundle/[1-8]*
+bundle_install $HOME/build/archlinux/bundle/[1-9]*
 
 
 title "custom installs"

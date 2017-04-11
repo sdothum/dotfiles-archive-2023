@@ -121,7 +121,7 @@ m iosevka\\ amphetype [server]
 # powertop                  [laptop]
 # "dead battery in macbook"
   tlp                       [laptop && ! gpu macbook]
-  xfce4-power-manager
+d xfce4-power-manager
 
 
 = security

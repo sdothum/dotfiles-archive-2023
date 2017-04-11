@@ -239,7 +239,7 @@
 
       function! TopBottom()
         if line('w0') == 1
-          return line('w$') == line('$') ? '▮' : '▼'
+          return line('w$') == line('$') ? '' : '▼'
         else
           return line('w$') == line('$') ? '▲' : ''
         endif

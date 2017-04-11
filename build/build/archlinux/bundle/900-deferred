@@ -3,6 +3,17 @@
 
 # see bundle_install
 
+= power
+# ▔▔▔▔▔
+  xfce4-power-manager
+
+
+= desktop
+# ▔▔▔▔▔▔▔
+" enable mpd and nvidia as required
+? conky-lua-archers
+
+
 = mail clients
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   notmuch
@@ -10,6 +21,7 @@
 
 = chat/twitter
 # ▔▔▔▔▔▔▔▔▔▔▔▔
+  centerim5-git
   znc
 
 

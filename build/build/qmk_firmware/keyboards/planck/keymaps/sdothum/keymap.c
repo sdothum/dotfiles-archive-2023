@@ -413,16 +413,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef AUDIO_ENABLE
-#define CAPSLOCK_ON_SOUND   E__NOTE(_E7  ) \
-                           ,Q__NOTE(_GS7 )
-#define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7 ) \
-                           ,Q__NOTE(_E7  )
-float tone_startup[][2]   = SONG (STARTUP_SOUND);
-float tone_colemak[][2]   = SONG (COLEMAK_SOUND);
-float tone_caps_on[][2]   = SONG (CAPSLOCK_ON_SOUND);
-float tone_caps_off[][2]  = SONG (CAPSLOCK_OFF_SOUND);
-float music_scale[][2]    = SONG (MUSIC_SCALE_SOUND);
-float tone_goodbye[][2]   = SONG (GOODBYE_SOUND);
+#define CAPSLOCK_ON_SOUND   E__NOTE(_E7) \
+                           ,Q__NOTE(_GS7)
+#define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7) \
+                           ,Q__NOTE(_E7)
+float tone_startup[][2]  =  SONG(STARTUP_SOUND);
+float tone_colemak[][2]  =  SONG(COLEMAK_SOUND);
+float tone_caps_on[][2]  =  SONG(CAPSLOCK_ON_SOUND);
+float tone_caps_off[][2] =  SONG(CAPSLOCK_OFF_SOUND);
+float music_scale[][2]   =  SONG(MUSIC_SCALE_SOUND);
+float tone_goodbye[][2]  =  SONG(GOODBYE_SOUND);
 #endif
 
 #define S_NEVER  0
@@ -434,26 +434,26 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right)
 {
   if (state->count > 1) {
     if (shift & S_DOUBLE) {
-      register_code   (KC_LSFT);
+      register_code  (KC_LSFT);
     }
-    register_code     (left);
-    unregister_code   (left);
-    register_code     (right);
-    unregister_code   (right);
+    register_code    (left);
+    unregister_code  (left);
+    register_code    (right);
+    unregister_code  (right);
     if (shift & S_DOUBLE) {
-      unregister_code (KC_LSFT);
+      unregister_code(KC_LSFT);
     }
-    register_code     (KC_LEFT);
-    unregister_code   (KC_LEFT);
+    register_code    (KC_LEFT);
+    unregister_code  (KC_LEFT);
   }
   else {
     if (shift & S_SINGLE) {
-      register_code   (KC_LSFT);
+      register_code  (KC_LSFT);
     }
-    register_code     (left);
-    unregister_code   (left);
+    register_code    (left);
+    unregister_code  (left);
     if (shift & S_SINGLE) {
-      unregister_code (KC_LSFT);
+      unregister_code(KC_LSFT);
     }
   }
   reset_tap_dance(state);
@@ -491,18 +491,18 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
     unregister_code (KC_CAPS);
   }
   else {
-    set_oneshot_mods (MOD_LSFT);
+    set_oneshot_mods(MOD_LSFT);
   }
   reset_tap_dance(state);
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [_LPRN] = ACTION_TAP_DANCE_FN (paren)
- ,[_LBRC] = ACTION_TAP_DANCE_FN (brace)
- ,[_LCBR] = ACTION_TAP_DANCE_FN (curly)
- ,[_LT]   = ACTION_TAP_DANCE_FN (angle)
- ,[_QUOT] = ACTION_TAP_DANCE_FN (quote)
- ,[_CAPS] = ACTION_TAP_DANCE_FN (caps)
+  [_LPRN] = ACTION_TAP_DANCE_FN(paren)
+ ,[_LBRC] = ACTION_TAP_DANCE_FN(brace)
+ ,[_LCBR] = ACTION_TAP_DANCE_FN(curly)
+ ,[_LT]   = ACTION_TAP_DANCE_FN(angle)
+ ,[_QUOT] = ACTION_TAP_DANCE_FN(quote)
+ ,[_CAPS] = ACTION_TAP_DANCE_FN(caps)
 };
 
 void persistant_default_layer_set(uint16_t default_layer)
@@ -513,18 +513,26 @@ void persistant_default_layer_set(uint16_t default_layer)
 
 void clear_layers(void)
 {
-  layer_off (_COLEMAK);
-  layer_off (_LSHIFT);
-  layer_off (_RSHIFT);
-  layer_off (_NUMBER);
-  layer_off (_NUMSYM);
-  layer_off (_SYMBOL);
-  layer_off (_SYMREG);
-  layer_off (_SFTNAV);
-  layer_off (_FNCKEY);
-  layer_off (_ADJUST);
-  layer_off (_MACRO);
-  layer_off (_DYN);
+  layer_off(_COLEMAK);
+  layer_off(_LSHIFT);
+  layer_off(_RSHIFT);
+  layer_off(_NUMBER);
+  layer_off(_NUMSYM);
+  layer_off(_SYMBOL);
+  layer_off(_SYMREG);
+  layer_off(_SFTNAV);
+  layer_off(_FNCKEY);
+  layer_off(_ADJUST);
+  layer_off(_MACRO);
+  layer_off(_DYN);
+}
+
+void clear_sticky(void)
+{
+  // undo sticky modifiers
+  unregister_code (KC_LALT);
+  unregister_code (KC_LGUI);
+  unregister_code (KC_LCTL);
 }
 
 static uint16_t key_timer = 0;
@@ -547,6 +555,50 @@ void matrix_scan_user(void)
 #define    RIGHT   2
 static int thumb = 0;
 
+void shift_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, int set_layer, int overlay_layer, int rollover_layer)
+{
+  if (record->event.pressed) {
+    key_timer = timer;
+    thumb     = thumb | side;
+    layer     = set_layer;
+  }
+  else {
+    layer_off   (_SFTNAV);
+    // Spc keycode handler may have switched effective navigation layout!
+    if (overlay_layer) {
+      layer_off (overlay_layer);
+    }
+    if (key_timer > 0) {
+      if (timer_elapsed(key_timer) < TAPPING_TERM) {
+        register_code  (KC_LSFT);
+        register_code  (shift_key);
+        unregister_code(shift_key);
+        unregister_code(KC_LSFT);
+      }
+    }
+    else if (thumb & (side == LEFT ? RIGHT : LEFT)) {
+      layer_on  (rollover_layer);
+    }
+    thumb     = thumb & ~side;
+    key_timer = 0;
+    layer     = 0;
+    clear_sticky();
+  }
+}
+
+void tri_layer(keyrecord_t *record, int set_layer)
+{
+  if (record->event.pressed) {
+    layer_on        (set_layer);
+    update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
+  }
+  else {
+    layer_off       (set_layer);
+    update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
+    clear_sticky();
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   if (!process_record_dynamic_macro(keycode, record)) {
@@ -554,7 +606,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 
   switch (keycode) {
-    // simulate LT (_NUMSYM, KC_GT): type KC_GT key
+    // simulate LT (_NUMSYM, KC_GT)
     case Gt:
       if (record->event.pressed) {
         key_timer = timer_read();
@@ -564,204 +616,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         layer_off   (_NUMSYM);
         if (key_timer > 0) {
           if (timer_elapsed(key_timer) < TAPPING_TERM) {
-            register_code   (KC_LSFT);
-            register_code   (KC_DOT);
-            unregister_code (KC_DOT);
-            unregister_code (KC_LSFT);
+            register_code  (KC_LSFT);
+            register_code  (KC_DOT);
+            unregister_code(KC_DOT);
+            unregister_code(KC_LSFT);
           }
         }
         key_timer = 0;
         layer     = 0;
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
+        clear_sticky();
       }
-      // LT hack
-      // return false;
       break;
-    // simulate LT (_SFTNAV, S(KC_LEFT)): type S(KC_LEFT) key
+    // simulate LT (_SFTNAV, S(KC_LEFT))
     case SLeft:
-      if (record->event.pressed) {
-        key_timer = timer_read();
-        thumb     = thumb | RIGHT;
-        layer     = _SFTNAV;
-      }
-      else {
-        layer_off   (_SFTNAV);
-        // Spc keycode handler may have switched effective navigation layout!
-        layer_off   (_SYMBOL);
-        if (key_timer > 0) {
-          if (timer_elapsed(key_timer) < TAPPING_TERM) {
-            register_code   (KC_LSFT);
-            register_code   (KC_LEFT);
-            unregister_code (KC_LEFT);
-            unregister_code (KC_LSFT);
-          }
-        }
-        else if (thumb & LEFT) {
-          layer_on  (_LSHIFT);
-        }
-        thumb     = thumb & ~RIGHT;
-        key_timer = 0;
-        layer     = 0;
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      shift_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     // LT (_LSHIFT, KC_SPC) handling extensions
     case Spc:
-      if (record->event.pressed) {
-        key_timer = 0;
-        thumb     = thumb | LEFT;
-        layer     = 0;
-      }
-      else {
-        // shift mode _SFTNAV only while Spc down, else _SYMBOL
-        layer_off   (_SFTNAV);
-        if (thumb & RIGHT) {
-          layer_on  (_SYMBOL);
-        }
-        thumb     = thumb & ~LEFT;
-        key_timer = 0;
-        layer     = 0;
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      shift_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
-    // simulate LT (_SFTNAV, S(KC_BSLS)): type S(KC_BSLS) key
+    // simulate LT (_SFTNAV, S(KC_BSLS))
     case Pipe:
-      if (record->event.pressed) {
-        key_timer = timer_read();
-        thumb     = thumb | LEFT;
-        layer     = _SFTNAV;
-      }
-      else {
-        layer_off   (_SFTNAV);
-        // Left keycode handler may have switched effective navigation layout!
-        layer_off   (_LSHIFT);
-        if (key_timer > 0) {
-          if (timer_elapsed(key_timer) < TAPPING_TERM) {
-            register_code   (KC_LSFT);
-            register_code   (KC_BSLS);
-            unregister_code (KC_BSLS);
-            unregister_code (KC_LSFT);
-          }
-        }
-        else if (thumb & RIGHT) {
-          layer_on  (_SYMBOL);
-        }
-        thumb     = thumb & ~LEFT;
-        key_timer = 0;
-        layer     = 0;
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      shift_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     // LT (_SYMBOL, KC_LEFT) handling extensions
     case Left:
-      if (record->event.pressed) {
-        key_timer = 0;
-        thumb     = thumb | RIGHT;
-        layer     = 0;
-      }
-      else {
-        // shift mode _SFTNAV only while Left down, else _LSHIFT
-        layer_off   (_SFTNAV);
-        if (thumb & LEFT) {
-          layer_on  (_LSHIFT);
-        }
-        thumb     = thumb & ~RIGHT;
-        key_timer = 0;
-        layer     = 0;
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      shift_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
       break;
     case Dot:
-      if (record->event.pressed) {
-        layer_on    (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      }
-      else {
-        layer_off   (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      tri_layer(record, _NUMBER);
       break;
     case Esc:
-      if (record->event.pressed) {
-        layer_on    (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      }
-      else {
-        layer_off   (_NUMBER);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      tri_layer(record, _NUMBER);
       break;
+    // see Left LT extension above
     // case Left:
-    //   if (record->event.pressed) {
-    //     layer_on        (_SYMBOL);
-    //     update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-    //   }
-    //   else {
-    //     layer_off       (_SYMBOL);
-    //     update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-    //     // undo sticky modifiers
-    //     unregister_code (KC_LGUI);
-    //     unregister_code (KC_LSFT);
-    //     unregister_code (KC_LCTL);
-    //   }
-    //   // LT hack
-    //   // return false;
+    //   tri_layer(record, _SYMBOL);
     //   break;
     case Zero:
-      if (record->event.pressed) {
-        layer_on        (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-      }
-      else {
-        layer_off       (_SYMBOL);
-        update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-        // undo sticky modifiers
-        unregister_code (KC_LGUI);
-        unregister_code (KC_LALT);
-        unregister_code (KC_LCTL);
-      }
-      // LT hack
-      // return false;
+      tri_layer(record, _SYMBOL);
       break;
     case COLEMAK:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY (tone_colemak, false, 0);
+        PLAY_NOTE_ARRAY(tone_colemak, false, 0);
 #endif
         clear_layers();
         persistant_default_layer_set(1UL<<_COLEMAK);
@@ -803,12 +701,12 @@ void led_set_user(uint8_t usb_led)
 void startup_user()
 {
   _delay_ms(20); // gets rid of tick
-  PLAY_NOTE_ARRAY (tone_startup, false, 0);
+  PLAY_NOTE_ARRAY(tone_startup, false, 0);
 }
 
 void shutdown_user()
 {
-  PLAY_NOTE_ARRAY (tone_goodbye, false, 0);
+  PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
   _delay_ms(150);
   stop_all_notes();
 }
@@ -820,7 +718,7 @@ void music_on_user(void)
 
 void music_scale_user(void)
 {
-  PLAY_NOTE_ARRAY (music_scale, false, 0);
+  PLAY_NOTE_ARRAY(music_scale, false, 0);
 }
 #endif
 

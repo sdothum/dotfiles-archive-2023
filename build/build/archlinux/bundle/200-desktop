@@ -24,7 +24,7 @@
 # ▔▔▔▔▔▔▔
 # conky-lua
 " enable mpd and nvidia as required
-? conky-lua-archers
+d conky-lua-archers
 # lemonbar-git
   lemonbar-xft-git
 # trayer-srg-git

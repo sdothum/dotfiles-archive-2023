@@ -55,8 +55,7 @@ rsync_home() {
         --exclude '.kingsoft' \
         --exclude 'local-storage' \
         --exclude '.local/share/weechat' \
-        --exclude '.log' \
-        --exclude '/log/' \
+        --exclude 'log' \
         --exclude 'logs' \
         --exclude '.macromedia' \
         --exclude 'Maildir' \
@@ -239,6 +238,9 @@ case $1 in
 
   usb) if [ -d /run/media/$USER/$(hostname)/home ] ;then
          rsync_home /run/media/$USER/$(hostname)/home/
+         rsync --delete-during $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/bin/functions/
+         rsync --delete-during $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/stow/mail/
+         sync
        elif [ -d /media/home ] ;then
          rsync_home /media/home/
          rsync $HOME/.password-store /media/home/$USER/
