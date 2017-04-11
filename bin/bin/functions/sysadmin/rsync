@@ -238,8 +238,8 @@ case $1 in
 
   usb) if [ -d /run/media/$USER/$(hostname)/home ] ;then
          rsync_home /run/media/$USER/$(hostname)/home/
-         rsync --delete-during $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/bin/functions/
-         rsync --delete-during $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/stow/mail/
+         rsync --delete-during $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
+         rsync --delete-during $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
          sync
        elif [ -d /media/home ] ;then
          rsync_home /media/home/

@@ -82,6 +82,7 @@ extern keymap_config_t keymap_config;
 
 enum planck_layers {
   _COLEMAK = 0
+ ,_PLOVER
  ,_LSHIFT
  ,_RSHIFT
  ,_NUMBER
@@ -91,35 +92,33 @@ enum planck_layers {
  ,_SFTNAV
  ,_FNCKEY
  ,_ADJUST
- ,_MACRO
  ,_DYN
 };
 
-// update_tri_layer hack from https://www.reddit.com/r/olkb/comments/4x3dei/hack_too_ugly_to_live/?ref=search_posts
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE
- ,Gt        // Gt    = LT (_NUMSYM, KC_GT)      LT macro does not handle modified key-codes
- ,SLeft     // SLeft = LT (_SFTNAV, S(KC_LEFT)) LT macro does not handle modified key-codes
- ,Pipe      // Pipe  = LT (_SFTNAV, S(KC_BSLS)) LT macro does not handle modified key-codes
+ ,PLOVER
+ ,PLOVEX
+ ,Gt        // pseudo LT (_NUMSYM, KC_GT)      for modified key-codes, see process_record_user()
+ ,SLeft     // pseudo LT (_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
+ ,Pipe      // pseudo LT (_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
  ,DYNAMIC_MACRO_RANGE
- ,_Ctl    = OSM (MOD_LCTL)
- ,_Gui    = OSM (MOD_LGUI)
- ,_Alt    = OSM (MOD_LALT)
- ,_CSft   = OSM (MOD_LSFT | MOD_LCTL)
- ,_SGui   = OSM (MOD_LGUI | MOD_LSFT)
- ,_CGui   = OSM (MOD_LGUI | MOD_LCTL)
- ,_SAlt   = OSM (MOD_LALT | MOD_LSFT)
- ,_CAlt   = OSM (MOD_LALT | MOD_LCTL)
- ,_Sft    = OSM (MOD_LSFT)
- ,Dot     = LT  (_NUMBER, KC_DOT)
- ,Esc     = LT  (_NUMBER, KC_ESC)
- ,Spc     = LT  (_LSHIFT, KC_SPC)           // see process_record_user() for extended handling of SLeft
- ,Tab     = LT  (_FNCKEY, KC_TAB)
- ,Bspc    = LT  (_MACRO, KC_BSPC)
- ,Ent     = LT  (_RSHIFT, KC_ENT)
- ,Left    = LT  (_SYMBOL, KC_LEFT)          // see process_record_user() for extended handling of Pipe
- ,Zero    = LT  (_SYMBOL, KC_0)
- ,Dn      = LT  (_SYMREG, KC_DOWN)
+ ,_Ctl    = OSM(MOD_LCTL)
+ ,_Gui    = OSM(MOD_LGUI)
+ ,_Alt    = OSM(MOD_LALT)
+ ,_CSft   = OSM(MOD_LSFT | MOD_LCTL)
+ ,_SGui   = OSM(MOD_LGUI | MOD_LSFT)
+ ,_CGui   = OSM(MOD_LGUI | MOD_LCTL)
+ ,_SAlt   = OSM(MOD_LALT | MOD_LSFT)
+ ,_CAlt   = OSM(MOD_LALT | MOD_LCTL)
+ ,_Sft    = OSM(MOD_LSFT)
+ ,Esc     = LT (_NUMBER, KC_ESC)
+ ,Spc     = LT (_LSHIFT, KC_SPC)           // see process_record_user() for extended handling of Spc
+ ,Tab     = LT (_FNCKEY, KC_TAB)
+ ,Bspc    = LT (_ADJUST, KC_BSPC)
+ ,Ent     = LT (_RSHIFT, KC_ENT)
+ ,Left    = LT (_SYMBOL, KC_LEFT)          // see process_record_user() for extended handling of Left
+ ,Dn      = LT (_SYMREG, KC_DOWN)
 };
 
 #include "dynamic_macro.h"
@@ -134,25 +133,25 @@ enum tap_dance {
 };
 
 // modifier keys
-#define Down    ALT_T (KC_DOWN)
-#define SDown   S     (KC_DOWN)
-#define Up      GUI_T (KC_UP)
-#define SUp     S     (KC_UP)
-#define Rght    CTL_T (KC_RGHT)
-#define SRght   S     (KC_RGHT)
+#define Down    ALT_T(KC_DOWN)
+#define SDown   S    (KC_DOWN)
+#define Up      GUI_T(KC_UP)
+#define SUp     S    (KC_UP)
+#define Rght    CTL_T(KC_RGHT)
+#define SRght   S    (KC_RGHT)
 
 // tap dance keys
-#define __Lcbr  TD (_LCBR)
-#define __Lprn  TD (_LPRN)
-#define __Lbrc  TD (_LBRC)
-#define __Lt    TD (_LT)
-#define __Quot  TD (_QUOT)
-#define __Caps  TD (_CAPS)
+#define __Lcbr  TD(_LCBR)
+#define __Lprn  TD(_LPRN)
+#define __Lbrc  TD(_LBRC)
+#define __Lt    TD(_LT)
+#define __Quot  TD(_QUOT)
+#define __Caps  TD(_CAPS)
 
 // layer keys
-#define SHIFT   MO (_SHIFT)
-#define ADJUST  MO (_ADJUST)
-#define DYNAMIC MO (_DYN)
+#define SHIFT   MO(_SHIFT)
+#define ADJUST  MO(_ADJUST)
+#define DYNAMIC MO(_DYN)
 
 // keycodes
 #define ___x___ KC_TRNS
@@ -191,6 +190,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _CAlt,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
     {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _SGui,   KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot },
     {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
+  },
+
+// ...................................................................... Plover
+//
+// http://www.keyboard-layout-editor.com/#/gists/7296e3f601a6bb2eee2aa8f034c58a27
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   #  |   #  |   #  |   #  |   #  |      |   #  |   #  |   #  |   #  |   #  |   #  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   S  |   T  |   P  |   H  |   *  |      |   *  |   F  |   P  |   L  |   T  |   D  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   S  |   K  |   W  |   R  |   *  |      |   *  |   R  |   B  |   G  |   S  |   Z  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // |      |      |   A  |   O  |      |      |      |   E  |   U  |      |      | Exit |
+  // `-----------------------------------------------------------------------------------'
+
+  [_PLOVER] = {
+    {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    _______, KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
+    {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+    {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    _______, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+    {_______, _______, KC_C,    KC_V,    _______, _______, _______, KC_N,    KC_M,    _______, _______, PLOVEX },
   },
 
 // ............................................................... Shift Colemak
@@ -249,7 +269,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {__Lcbr,  _______, _______, _CAlt,   KC_RCBR, _______, _______, S(KC_E), KC_7,    KC_8,    KC_9,    S(KC_F)},
     {__Lprn,  __Lt,    Gt,      _Alt,    KC_RPRN, _______, _______, S(KC_C), KC_4,    KC_5,    KC_6,    S(KC_D)},
     {__Lbrc,  _______, _______, _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    S(KC_B)},
-    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  Zero,    KC_DOT,  ___x___, ___x___},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  ___x___, ___x___},
   },
 
 // ........................................................ Number Layer Symbols
@@ -289,7 +309,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
     {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, Dn,      KC_RGHT, _______},
     {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {___x___, ___x___, ___x___, Dot,     Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, KC_DOT,  Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // .......................................................... Symbol Layer Regex
@@ -359,45 +379,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/ac56b98d8737118f2beef3d6855d760e
 
   // ,-----------------------------------------------------------------------------------.
-  // | Reset|      |      |      |      |      |      |      |      |      |      |      |
+  // |      |      |      |     |      |      |      |      |      |      |      | Reset|
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|      |      |      |
+  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |  Dyn |      |Colemk|      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |      |      |      |  f() |      |      |      |      |  f() |      |      |      |
+  // |      |      |      |      |      |      |  f() |      |      |      |      |Plover|
   // `-----------------------------------------------------------------------------------'
 
   [_ADJUST] = {
-    {RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, _______,  _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET  },
+    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, DYNAMIC, _______, COLEMAK, _______, _______},
     {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, _______, _______, _______},
-    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
-  },
-
-// ......................................................... Dynamic Macro Layer
-
-  // ,-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
-  // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |      |      |      |      |      |      |      |  Dyn |      |      |      |      |
-  // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
-  // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |      |      |      |      |      |      |  f() |      |      |      |      |      |
-  // `-----------------------------------------------------------------------------------'
-
-  [_MACRO] = {
-    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, DYNAMIC, _______, _______, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, PLOVER },
   },
 
   // .-----------------------------------------------------------------------------------.
-  // |      | REC1 | REC2 |      |      |      |      |      |      |      |      |      |
+  // | REC1 | REC2 | PLAY1| PLAY2|      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      | PLY1 | PLY2 |      |      |      |      |  f() |      |      |      |      |
+  // |      |      |      |      |      |      |      |  f() |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -405,8 +406,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_DYN] = {
-    {_______, RECORD1, RECORD2, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {_______, PLAY1,   PLAY2,   _______, _______, _______, _______, ___x___, _______, _______, _______, _______},
+    {RECORD1, RECORD2, PLAY1,   PLAY2,   _______, _______, _______, _______, _______, _______, _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, ___x___, _______, _______, _______, _______},
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
@@ -417,12 +418,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            ,Q__NOTE(_GS7)
 #define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7) \
                            ,Q__NOTE(_E7)
-float tone_startup[][2]  =  SONG(STARTUP_SOUND);
-float tone_colemak[][2]  =  SONG(COLEMAK_SOUND);
-float tone_caps_on[][2]  =  SONG(CAPSLOCK_ON_SOUND);
-float tone_caps_off[][2] =  SONG(CAPSLOCK_OFF_SOUND);
-float music_scale[][2]   =  SONG(MUSIC_SCALE_SOUND);
-float tone_goodbye[][2]  =  SONG(GOODBYE_SOUND);
+float tone_startup[][2]   = SONG(STARTUP_SOUND);
+float tone_colemak[][2]   = SONG(COLEMAK_SOUND);
+float tone_plover[][2]    = SONG (PLOVER_SOUND);
+float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
+float tone_caps_on[][2]   = SONG(CAPSLOCK_ON_SOUND);
+float tone_caps_off[][2]  = SONG(CAPSLOCK_OFF_SOUND);
+float music_scale[][2]    = SONG(MUSIC_SCALE_SOUND);
+float tone_goodbye[][2]   = SONG(GOODBYE_SOUND);
 #endif
 
 #define S_NEVER  0
@@ -443,8 +446,9 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right)
     if (shift & S_DOUBLE) {
       unregister_code(KC_LSFT);
     }
-    register_code    (KC_LEFT);
-    unregister_code  (KC_LEFT);
+    // cursor placement removed for opposite effect within vim :-)
+    // register_code  (KC_LEFT);
+    // unregister_code(KC_LEFT);
   }
   else {
     if (shift & S_SINGLE) {
@@ -523,7 +527,6 @@ void clear_layers(void)
   layer_off(_SFTNAV);
   layer_off(_FNCKEY);
   layer_off(_ADJUST);
-  layer_off(_MACRO);
   layer_off(_DYN);
 }
 
@@ -535,12 +538,23 @@ void clear_sticky(void)
   unregister_code (KC_LCTL);
 }
 
+void toggle_plover(void)
+{
+  // toggle window manager plover application, see herbstluftwm/config/appbinds
+  register_code   (KC_LGUI);
+  register_code   (KC_LSFT);
+  register_code   (KC_RGHT);
+  unregister_code (KC_RGHT);
+  unregister_code (KC_LSFT);
+  unregister_code (KC_LGUI);
+}
+
 static uint16_t key_timer = 0;
 static int      layer     = 0;
 
 void matrix_scan_user(void)
 {
-  // simulate LT (layer, key) for modified key value, see process_record_user
+  // set layer of LT (layer, key) for modified key value, see process_record_user()
   if (key_timer != 0) {
     if (timer_elapsed(key_timer) > TAPPING_TERM) {
       key_timer = 0;
@@ -558,13 +572,14 @@ static int thumb = 0;
 void shift_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, int set_layer, int overlay_layer, int rollover_layer)
 {
   if (record->event.pressed) {
+    // set layer, see matrix_scan_user()
     key_timer = timer;
     thumb     = thumb | side;
     layer     = set_layer;
   }
   else {
     layer_off   (_SFTNAV);
-    // Spc keycode handler may have switched effective navigation layout!
+    // opposite thumb keycode handler may have switched effective layer!
     if (overlay_layer) {
       layer_off (overlay_layer);
     }
@@ -576,25 +591,13 @@ void shift_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, i
         unregister_code(KC_LSFT);
       }
     }
+    // rollover to opposite thumb layer
     else if (thumb & (side == LEFT ? RIGHT : LEFT)) {
       layer_on  (rollover_layer);
     }
     thumb     = thumb & ~side;
     key_timer = 0;
     layer     = 0;
-    clear_sticky();
-  }
-}
-
-void tri_layer(keyrecord_t *record, int set_layer)
-{
-  if (record->event.pressed) {
-    layer_on        (set_layer);
-    update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
-  }
-  else {
-    layer_off       (set_layer);
-    update_tri_layer(_NUMBER, _SYMBOL, _ADJUST);
     clear_sticky();
   }
 }
@@ -606,7 +609,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 
   switch (keycode) {
-    // simulate LT (_NUMSYM, KC_GT)
+    // emulate LT (_NUMSYM, KC_GT)
     case Gt:
       if (record->event.pressed) {
         key_timer = timer_read();
@@ -627,7 +630,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         clear_sticky();
       }
       break;
-    // simulate LT (_SFTNAV, S(KC_LEFT))
+    // emulate LT (_SFTNAV, S(KC_LEFT))
     case SLeft:
       shift_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
@@ -635,26 +638,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case Spc:
       shift_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
-    // simulate LT (_SFTNAV, S(KC_BSLS))
+    // emulate LT (_SFTNAV, S(KC_BSLS))
     case Pipe:
       shift_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     // LT (_SYMBOL, KC_LEFT) handling extensions
     case Left:
       shift_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
-      break;
-    case Dot:
-      tri_layer(record, _NUMBER);
-      break;
-    case Esc:
-      tri_layer(record, _NUMBER);
-      break;
-    // see Left LT extension above
-    // case Left:
-    //   tri_layer(record, _SYMBOL);
-    //   break;
-    case Zero:
-      tri_layer(record, _SYMBOL);
       break;
     case COLEMAK:
       if (record->event.pressed) {
@@ -663,6 +653,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
         clear_layers();
         persistant_default_layer_set(1UL<<_COLEMAK);
+      }
+      return false;
+      break;
+    case PLOVER:
+      if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_NOTE_ARRAY (tone_plover, false, 0);
+#endif
+        clear_layers();
+        layer_on        (_PLOVER);
+        if (!eeconfig_is_enabled()) {
+            eeconfig_init();
+        }
+        keymap_config.raw = eeconfig_read_keymap();
+        keymap_config.nkro = 1;
+        eeconfig_update_keymap(keymap_config.raw);
+        toggle_plover();
+      }
+      return false;
+      break;
+    case PLOVEX:
+      if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+        PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);
+#endif
+        layer_off(_PLOVER);
+        clear_layers();
+        toggle_plover();
       }
       return false;
       break;
@@ -682,8 +701,7 @@ void matrix_init_user(void)
 void led_set_user(uint8_t usb_led)
 {
   static uint8_t old_usb_led = 0;
-  // gets rid of tick
-  _delay_ms(10);
+  _delay_ms(10);                            // gets rid of tick
   if (!is_playing_notes()) {
     if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
       // if capslock LED is turning on
@@ -700,7 +718,7 @@ void led_set_user(uint8_t usb_led)
 
 void startup_user()
 {
-  _delay_ms(20); // gets rid of tick
+  _delay_ms(20);                            // gets rid of tick
   PLAY_NOTE_ARRAY(tone_startup, false, 0);
 }
 

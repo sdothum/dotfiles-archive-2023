@@ -75,8 +75,8 @@
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      nmap <leader>s            <C-w>v<C-w>l
-      nmap <leader>S            <C-w>s<C-w>l
+      nmap <leader>S            <C-w>v<C-w>l
+      nmap <leader>s            <C-w>s<C-w>l
       " maximize left:right / top:bottom
       nmap <leader>Z            <C-w><Bar>
       nmap <leader>z            <C-w>_
