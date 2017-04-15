@@ -18,7 +18,7 @@ file=$(ls *.log |
        sed 's/.log//' |
        rmenu "$mode Log" $file -no-custom) || exit
 
-history logs $file
+mhistory logs $file
 case $mode in
   View ) [ $file ] && term "$file" MAX less $file.log ;;
   Watch) [ $file ] && term "$file" tail -f $file.log ;;

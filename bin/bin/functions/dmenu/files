@@ -6,7 +6,7 @@
 # ........................................................................ Files
 
 # open file
-while name=$(echo | history files | rmenu 'Find File') || exit
+while name=$(echo | mhistory files | rmenu 'Find File') || exit
 do
   [ "$name" ] || exit
   list=$(sudo locate -Aei $name)
@@ -19,7 +19,7 @@ do
          rmenu 'Open File' -no-custom) || exit
 
   file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
-  history files "$file"
+  mhistory files "$file"
   clipboard "$file"
   focus xdg-open "$file"
   break

@@ -11,7 +11,7 @@ system=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlo
          column -s^ -t |
          rmenu 'System' "$system" -no-custom) || exit
 
-history system "$system"
+mhistory system "$system"
 case $system in
   journal*inspect  ) dmenu journals ;;
   journal*watch    ) dmenu journals watch ;;

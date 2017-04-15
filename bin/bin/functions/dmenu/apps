@@ -30,7 +30,7 @@ do
   case $pgm in
     "$EDIT") gvim -f $pgms ;;
 
-    *) history apps "$pgm"
+    *) mhistory apps "$pgm"
        exec toggle $(grep "$pgm" $pgms) ;;
   esac
 done

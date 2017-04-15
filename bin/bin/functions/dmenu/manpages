@@ -38,7 +38,7 @@ do
           cut -d' ' -f1 |
           sort -d |
           uniq |
-          history man |
+          mhistory man |
           sed "1i$REBUILD" |
           rmenu 'Manpage' 1 |
           cut -d':' -f3-)
@@ -71,7 +71,7 @@ do
 
     # display man page
     if [ "$page" ] ;then
-      history man $man
+      mhistory man $man
       # xsel -c
       term "$page" MAX $stack WAIT man "$page"
 

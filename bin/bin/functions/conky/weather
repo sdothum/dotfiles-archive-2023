@@ -9,14 +9,7 @@
 
 [ $# -gt 1 ] && debug=true
 
-# connection test
-count=0
-while ! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1
-do
-  sleep 1
-  count=$(( $count + 1 ))
-  [ $count -gt 5 ] && exit
-done
+connect || exit
 
 # http://www.weatheroffice.gc.ca/business/index_e.html for city codes
 case $1 in

@@ -57,7 +57,7 @@ sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date'; }
 # .......................................................... Most recent history
 
 # usage: previous <function>, refer to history usage in dmenu functions
-previous() { echo | history $1 | head -1; }
+previous() { echo | mhistory $1 | head -1; }
 
 # ......................................................................... Main
 

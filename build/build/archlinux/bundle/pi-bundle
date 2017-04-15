@@ -10,8 +10,10 @@
 = aur package manager
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 a package-query
-a yaourt
+@ yaourt
 ! yaourt -Sy
+? cower
+  pacaur
 
 
 = core
@@ -51,6 +53,7 @@ g term-ansicolor
 
 = x11 drivers
 # ▔▔▔▔▔▔▔▔▔▔▔
+  xf86-input-evdev
   xf86-video-fbdev
 
 
@@ -102,6 +105,7 @@ g term-ansicolor
 # ▔▔▔▔▔
   ack
   neofetch
+  ripgrep
   stow
 
 
@@ -149,11 +153,13 @@ g term-ansicolor
 
 = network
 # ▔▔▔▔▔▔▔
-  connman
+" drops internet connection
+d connman
   dnsmasq
 # dnsutils
   bind-tools
 # networkmanager
+  ntp
 
 
 = network security
@@ -182,6 +188,7 @@ g term-ansicolor
 = appearance
 # ▔▔▔▔▔▔▔▔▔▔
   compton
+  lxappearance
 ? setroot
 ? unclutter-xfixes-git
 
@@ -197,7 +204,7 @@ g term-ansicolor
   adapta-gtk-theme-deb
   gtk-engine-murrine
 # "direct rsync from /usr/share/icons to .local/share"
-# paper-icon-theme-git
+  paper-icon-theme
 
 
 = user interface
@@ -281,5 +288,11 @@ m tabbed
   calc
   dictd
   wego
+
+
+= deferred
+= ▔▔▔▔▔▔▔▔
+" reboot to connect and configure autoconnect
+  connman
 
 # vim: set ft=conf: #

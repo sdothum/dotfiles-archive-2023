@@ -27,4 +27,5 @@ function j --description 'usage: j [-] [<dir>] [<pattern>]'
       end
   end
   test -n $dir ;and cd $dir
+  console ;and clear
 end

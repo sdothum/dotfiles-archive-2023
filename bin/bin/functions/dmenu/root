@@ -27,8 +27,8 @@ themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
 
 hex() { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'; }
 
-while color=$( { [ "$menu" ] && { echo | history root | sed "1i$menu"; } ||
-                                { echo | history root | sed "1i$VIEWER\n$UPDATE"; }; } |
+while color=$( { [ "$menu" ] && { echo | mhistory root | sed "1i$menu"; } ||
+                                { echo | mhistory root | sed "1i$VIEWER\n$UPDATE"; }; } |
               column -s^ -t |
               rmenu 'Setroot') || exit
 do
@@ -41,7 +41,7 @@ do
 
     "$SAVE") hue=$(echo "$(themes)" | rmenu 'Colour') || exit
                  contrast=$(cat $CONTRAST)
-                 history root "$bg^$SEP $contrast $hue"
+                 mhistory root "$bg^$SEP $contrast $hue"
                  swatch $bg $hue
                  ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
 
@@ -49,7 +49,7 @@ do
              bg=$(echo $color | cut -d' ' -f1)
              draw root blank $bg
              ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
-             history root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+             mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
              break ;;
 
     *) hex $color || continue

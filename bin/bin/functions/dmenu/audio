@@ -13,7 +13,7 @@ audio=$(previous audio)
 audio=$(echo "music\nradio" |
         rmenu 'Listen to' $audio -no-custom) || exit
 
-history audio $audio
+mhistory audio $audio
 case $audio in
   music) dmenu music ;;
   radio) dmenu radio ;;

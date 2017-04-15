@@ -41,7 +41,7 @@ compose_with() {
   fold -s -w 72 $2 >$folded
   cp $folded $2
   mv $folded $folded.draft
-  history compose $editor
+  mhistory compose $editor
 }
 
 compose_vim() {
@@ -51,7 +51,7 @@ compose_vim() {
   cp $1 $HOME/drafts/${1#/tmp/}.draft
   # cleanup sup mail draft histories
   find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
-  history compose $editor
+  mhistory compose $editor
 }
 
 editor=$(previous compose)

@@ -12,7 +12,7 @@ usage() {
 }
 
 vga() {
-  lspci 2>/dev/null | grep VGA | grep -q $1 || return
+  lspci 2>/dev/null | grep VGA | grep -q "$1" || return
   echo $1 | tr '[:upper:]' '[:lower:]'
   exit
 }

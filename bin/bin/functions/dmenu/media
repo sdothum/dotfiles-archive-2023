@@ -12,7 +12,7 @@ do
   media=$(echo "animation\nanime\nmovies\nseries\nebooks\nreferences\nnzb\ntorrent" |
           rmenu 'Media' $media -no-custom) || exit
 
-  history media $media
+  mhistory media $media
   case $media in
     animation ) dmenu movies animation ;;
     anime     ) dmenu series anime ;;

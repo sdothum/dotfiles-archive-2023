@@ -11,20 +11,20 @@ else
   annotate "within weechat session, copy and paste each of the command blocks below\n
 colorize_lines.pl may need to be reinstalled\n
 configure authentication else some channels will force #<channel>-unregistered\n
-"/go #python"\n
-"/msg nickserv identify <username> <password>"\n
-"/msg *sasl RequireAuth yes"\n
-"/msg *sasl Set <username> <password>""
+/go #python\n
+/msg nickserv identify <username> <password>\n
+/msg *sasl RequireAuth yes\n
+/msg *sasl Set <username> <password>"
   cat <<EOF
 
 # server
 # set umode to block all unregistered spammers
 /server add znc localhost/7000
 /server add znc luna/7000
-/set irc.server.znc.username "znc"
-/set irc.server.znc.password "znc"
+/set irc.server.znc.username 'znc'
+/set irc.server.znc.password 'znc'
 /set irc.server.znc.autoconnect on
-/set irc.server.znc.command "/umode +R"
+/set irc.server.znc.command '/umode +R'
 /connect znc
 # add server networks on znc webpage before connecting to servers
 # freenode chat.freenode.net +6697
@@ -34,19 +34,19 @@ configure authentication else some channels will force #<channel>-unregistered\n
 # znc install adds freenode by default for #znc
 /server add oftc luna/7000 -username=znc/oftc -password=znc
 /set irc.server.oftc.autoconnect on
-/set irc.server.oftc.command "/umode +R"
+/set irc.server.oftc.command '/umode +R'
 /connect oftc
 /server add rizon luna/7000 -username=znc/rizon -password=znc
 /set irc.server.rizon.autoconnect on
-/set irc.server.rizon.command "/umode +R"
+/set irc.server.rizon.command '/umode +R'
 /connect rizon
 /server add nixers luna/7000 -username=znc/nixers -password=znc
 /set irc.server.nixers.autoconnect on
-/set irc.server.nixers.command "/umode +R"
+/set irc.server.nixers.command '/umode +R'
 /connect nixers
 /server add gitter luna/7000 -username=znc/gitter -password=znc
 /set irc.server.gitter.autoconnect on
-/set irc.server.gitter.command "/umode +R"
+/set irc.server.gitter.command '/umode +R'
 /connect gitter
 
 # scripts
@@ -82,12 +82,12 @@ configure authentication else some channels will force #<channel>-unregistered\n
 
 # urlserver
 /set plugins.var.python.urlserver.http_hostname "$(hostname)"
-/set plugins.var.python.urlserver.http_port "34545"
-/set plugins.var.python.urlserver.http_allowed_ips "^(127.0.0.1|10.1.*)$"
-/set plugins.var.python.urlserver.http_url_prefix "lambda"
+/set plugins.var.python.urlserver.http_port '34545'
+/set plugins.var.python.urlserver.http_allowed_ips '^(127.0.0.1|10.1.*)$'
+/set plugins.var.python.urlserver.http_url_prefix 'lambda'
 
 # theme
-/set buffers.look.name_crop_suffix "…"
+/set buffers.look.name_crop_suffix '…'
 /set buffers.look.name_size_max 11
 /set buffers.color.current_bg default
 /set buffers.color.current_fg 226
@@ -97,18 +97,18 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set buffers.look.indenting off
 /set buffers.look.show_number off
 
-/set weechat.bar.buffers.items "buffers"
-/set weechat.bar.buffers.position "left"
+/set weechat.bar.buffers.items 'buffers'
+/set weechat.bar.buffers.position 'left'
 /set weechat.bar.buffers.separator on
 /set weechat.bar.buffers.size_max 12
 
-/set weechat.bar.input.items "+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+inputtape"
+/set weechat.bar.input.items '+buffer_short_name [+mode_indicator+(away)+ input_search+ input_paste+ vi_buffer+] input_text+inputtape'
 /set weechat.bar.nicklist.hidden on
 /set weechat.bar.status.hidden on
 /set weechat.bar.title.hidden on
 /set weechat.bar.vi_cmd.hidden on
-# /set weechat.bar.input.items "[input_prompt]+(away),[input_search],[input_paste],input_text"
-# "[..indicators..]" using "+" (instead of comma "," which wraps with spaces)
+# /set weechat.bar.input.items '[input_prompt]+(away),[input_search],[input_paste],input_text'
+# '[..indicators..]' using '+' (instead of comma ',' which wraps with spaces)
 /set buffers.look.indenting on
 /set buffers.look.show_number off
 
@@ -124,31 +124,31 @@ configure authentication else some channels will force #<channel>-unregistered\n
 # /set weechat.color.separator 030
 
 /set weechat.look.buffer_notify_default message
-/set weechat.look.buffer_time_format ""
+/set weechat.look.buffer_time_format ''
 /set weechat.look.color_real_white on
 /set weechat.look.day_change_message_1date %a, %d %b %Y
 /set weechat.look.day_change_message_2dates %a, %d %b %Y
 /set weechat.look.mouse on
-/set weechat.look.prefix_action "▷"
+/set weechat.look.prefix_action '▷'
 /set weechat.look.prefix_align_max 15
 /set weechat.look.prefix_align_min 15
-/set weechat.look.prefix_align_more "…"
-/set weechat.look.prefix_error "⚑ "
-/set weechat.look.prefix_join "◥"
-/set weechat.look.prefix_network "⚡"
-/set weechat.look.prefix_quit "◣"
-# /set weechat.look.prefix_same_nick "→"
-/set weechat.look.prefix_same_nick "⇢"
-/set weechat.look.prefix_suffix " "
+/set weechat.look.prefix_align_more '…'
+/set weechat.look.prefix_error '⚑ '
+/set weechat.look.prefix_join '◥'
+/set weechat.look.prefix_network '⚡'
+/set weechat.look.prefix_quit '◣'
+# /set weechat.look.prefix_same_nick '→'
+/set weechat.look.prefix_same_nick '⇢'
+/set weechat.look.prefix_suffix ' '
 /set weechat.look.read_marker none
 /set weechat.look.save_layout_on_exit all
-/set weechat.look.separator_horizontal " "
-/set weechat.look.separator_vertical " "
-# /set weechat.look.prefix_suffix "│"
-# /set weechat.look.read_marker_string "  ⇣ "
-# /set weechat.look.separator_horizontal "─"
-# /set weechat.look.separator_horizontal "⋅"
-# /set weechat.look.separator_vertical ""
+/set weechat.look.separator_horizontal ' '
+/set weechat.look.separator_vertical ' '
+# /set weechat.look.prefix_suffix '│'
+# /set weechat.look.read_marker_string '  ⇣ '
+# /set weechat.look.separator_horizontal '─'
+# /set weechat.look.separator_horizontal '⋅'
+# /set weechat.look.separator_vertical ''
 
 # keybinds
 /key bind ctrl-B /bar toggle buffers
@@ -164,7 +164,7 @@ EOF
 fi
 
 mkdir -pv $HOME/.local/share/weechat/logs || exit 1
-conf $HOME/.weechat/logger.conf "$HOME/.local/share/weechat/logs" '/path = /cpath = "$HOME/.local/share/weechat/logs"'
+conf $HOME/.weechat/logger.conf $HOME/.local/share/weechat/logs "/path = /cpath = "$HOME/.local/share/weechat/logs""
 # abbreviate vimode inputbar indicator
 conf $HOME/.weechat/python/vimode.py 'return mode\\[0\\]' 's/return mode/return mode[0]/'
 

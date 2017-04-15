@@ -81,7 +81,7 @@ epub() {
 while :
 do
   book=$(cat $cache |
-         history ebooks |
+         mhistory ebooks |
          column -s^ -t |
          sed "1i$REBUILD" |
          rmenu 'E-book' 1 -filter \"$author\" -no-custom)
@@ -109,7 +109,7 @@ do
   while action=$(echo "read\nedit\nkindle" | rmenu "$title" -no-custom) || break
   do
     case $action in
-      read) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+      read) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
             [ $focus ] || focus frame && focus=true
             [ $mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
 
@@ -120,15 +120,15 @@ do
             book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
             term "$title" WAIT vifm "${book%/*}" "$book" ;;
 
-      kindle) history ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+      kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
               if [ -z $mobi ] ;then
                 kindlegen "$epub"
                 mobi
               fi
 
-              kindle=$(echo | history kindle | rmenu '[ Address ]@kindle.com') || break
+              kindle=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
               kindle=${kindle%%@*}
-              history kindle $kindle
+              mhistory kindle $kindle
               kindle=$kindle@kindle.com
               account=$(grep $USER /etc/aliases | cut -d' ' -f2)
               boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="

@@ -90,7 +90,7 @@ do
                    notify critical "$movie" "Duplicate movie files found"
                    term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
                  fi
-                 history $playlist "$movie"
+                 mhistory $playlist "$movie"
                  catlg
                  play "$video" "$movie"
                  break ;;
@@ -106,7 +106,7 @@ do
                    catlg
                    break ;;
 
-           mark) history $playlist "$movie"
+           mark) mhistory $playlist "$movie"
                  catlg
                  break ;;
 

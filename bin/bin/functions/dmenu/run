@@ -16,8 +16,8 @@ unset IFS
 stest -dqr -n $CACHE $PATHS && stest -flx $PATHS | sort -u | tee "$CACHE" >/dev/null
 
 # no text prompt message (unique to run vs other menu functions)
-cmd=$(cat $CACHE | history run | rmenu '""' -no-custom) || exit
-history run "$cmd"
+cmd=$(cat $CACHE | mhistory run | rmenu '""' -no-custom) || exit
+mhistory run "$cmd"
 focus $cmd
 
 

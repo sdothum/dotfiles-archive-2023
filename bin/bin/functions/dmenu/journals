@@ -17,7 +17,7 @@ service=$(stest -fl . |
           sed 's/.service$//' |
           rmenu "$mode Journal" $service -no-custom) || exit
 
-history journals $service
+mhistory journals $service
 case $mode in
   View ) [ $service ] && term "$service" journalctl -u $service.service ;;
   Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;

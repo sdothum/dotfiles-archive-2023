@@ -1,7 +1,7 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Web
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # ...................................................................... Weather
@@ -9,6 +9,8 @@
 city='Ottawa,Canada'
 # bypass release dependent wego config file
 cpu arm && location="-city $city" || location="-location $city"
+
+connect confirm || exit
 
 # cat worldweatheronline api key
 wego -backend worldweatheronline.com \

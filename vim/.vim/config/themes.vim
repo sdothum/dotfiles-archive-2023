@@ -199,7 +199,16 @@
         endif
         let s:size = a:size
 
-        if system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
+        if system("lspci") =~ 'VGA .*\[GeForce GT 650M\]'
+          " for desktop nvidia gpu
+          if &guifont =~ '12' || a:size < 0
+            call Fontspace(11, 0)
+            " let g:lite_dfm_left_offset = 22
+          else
+            call Fontspace(12, 1)
+            " let g:lite_dfm_left_offset = 18
+          endif
+        elseif system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
           " for desktop nvidia gpu
           if &guifont =~ '11' || a:size < 0
             call Fontspace(10, 0)

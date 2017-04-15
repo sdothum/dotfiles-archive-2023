@@ -14,7 +14,7 @@ filemanagers="filelight \
 "
 
 # open directory
-while name=$(echo | history folders | rmenu 'Find Folder') || exit
+while name=$(echo | mhistory folders | rmenu 'Find Folder') || exit
 do
   [ $name ] || exit
   list=$(sudo locate -Aei $name)
@@ -23,7 +23,7 @@ do
   file=$(echo "$list" | rmenu 'Select Folder' -no-custom) || exit
 
   [ -d $file ] && dir=$file || dir=$(dirname $file)
-  history folders "$dir"
+  mhistory folders "$dir"
   while action=$(echo "term\n$(apps \"$filemanagers\")" | rmenu "$dir" -no-custom) || exit
   do
     case $action in

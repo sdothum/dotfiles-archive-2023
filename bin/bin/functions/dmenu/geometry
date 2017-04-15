@@ -33,7 +33,7 @@ case $geometry in
   wide      ) echo " --win '\"$left 0 $right $bottom\"' --aspect-mode letterbox" ;;
   corner    ) echo " --win '\"$left $gap $right $middle\"' --aspect-mode letterbox" ;;
 esac
-history geometry $geometry
+mhistory geometry $geometry
 exit 0
 
 # vim: set ft=sh: #

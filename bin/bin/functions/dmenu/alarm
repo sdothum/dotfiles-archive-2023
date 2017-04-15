@@ -29,7 +29,7 @@ case $# in
      alert=$2
      repeat=$3 ;;
 
-  *) while delay=$(echo | history alarm | sed "1i$EDIT" | column -s^ -t | rmenu 'Duration [m]/s') || exit
+  *) while delay=$(echo | mhistory alarm | sed "1i$EDIT" | column -s^ -t | rmenu 'Duration [m]/s') || exit
      do
        if [ "$delay" = "$EDIT" ] ;then
          gvim -f $HISTORY/alarm
@@ -58,7 +58,7 @@ esac
                      notify "$alert" "$delay"
 
 alarm() {
-  echo $alert | grep -iq test || history alarm "$delay^$SEP $alert"
+  echo $alert | grep -iq test || mhistory alarm "$delay^$SEP $alert"
   for i in $(seq 1 $repeat)
   do
     sleep $delay

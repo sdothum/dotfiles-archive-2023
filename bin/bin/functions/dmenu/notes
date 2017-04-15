@@ -113,8 +113,8 @@ do
        done ;;
   esac
 
-  history $catlg $file
   case $action in
+  mhistory $catlg $file
     edit  ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
     delete) mv $file /tmp ;;
 

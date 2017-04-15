@@ -4,7 +4,7 @@
 # Sysadmin
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... Syncing
+# ................................................................ Rsync wrapper
 
 usage() {
   echo "usage: $(basename $0) backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
@@ -240,6 +240,8 @@ case $1 in
          rsync_home /run/media/$USER/$(hostname)/home/
          rsync --delete-during $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
          rsync --delete-during $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
+         mkdir -p  /run/media/$USER/$(hostname)/home/$USER.cache
+         rsync $HOME/.cache/fcache:* /run/media/$USER/$(hostname)/home/$USER/.cache/
          sync
        elif [ -d /media/home ] ;then
          rsync_home /media/home/

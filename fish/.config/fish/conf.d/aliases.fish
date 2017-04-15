@@ -46,6 +46,7 @@ alias iotop 'sudo iotop'
 alias lpr 'lpr -P hp-LaserJet-1320-series'
 alias screenfetch 'fetch'
 alias traceroute 'mtr --report -c 1'
+alias who 'command w'
 
 # ...................................................................... Network
 
@@ -79,7 +80,6 @@ alias lr 'ls -LAR'
 alias lt 'll -t'
 alias path 'echo $PATH'
 alias pp 'pwd'
-alias stow 'stow -t ~ -v'
 alias tree 'sudo tree -aCF'
 alias treed 'sudo tree -aCdF'
 
@@ -92,7 +92,7 @@ alias f 'find -iname'
 # alias gl 'ack -l --ignore-case'
 alias locate 'sudo locate'
 alias mgrep 'pcregrep -M'
-alias wh 'which'
+alias w 'which'
 
 # ...................................................................... Desktop
 

@@ -21,7 +21,7 @@ fi
 if [ "$selection" ] ;then
   word=$selection
 else
-  word=$(echo | history dictionary | sed '1i[ dictionary ]' | rmenu 'Thesaurus') || exit
+  word=$(echo | mhistory dictionary | sed '1i[ dictionary ]' | rmenu 'Thesaurus') || exit
 fi
 [ "$word" = '[ dictionary ]' ] && exec dmenu dict
 word=$(unquote $word)
@@ -36,7 +36,7 @@ do
 done
 
 # spawn thesaurus within terminal command to select (hilight) next word
-history dictionary "$word"
+mhistory dictionary "$word"
 lastword=$word
 term "$word" STACK SHELL "aiksaurus \"$word\" | less && dmenu thesaurus"
 

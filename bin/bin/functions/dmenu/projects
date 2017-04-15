@@ -16,7 +16,7 @@ EDIT='[ edit tags ]'
 projects=$CONFIG/projects
 
 while files=$(sed "s/  *::  */^$SEP /" $projects |
-              history projects |
+              mhistory projects |
               column -s^ -t |
               sed -e "1i$EDIT" |
               rmenu 'Edit Project' 1 -no-custom) || exit
@@ -24,7 +24,7 @@ do
   case $files in
     "$EDIT") gvim -f $projects ;;
 
-    *) history projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+    *) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
        eval v ${files#*$SEP}
        exit ;;
    esac

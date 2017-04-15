@@ -26,12 +26,12 @@ do
              -e 's|.*/herbstluftwm/|herbstluftwm/|' |
          sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
          sort |
-         history scripts |
+         mhistory scripts |
          column -s^ -t |
          rmenu "Edit Script$error" $file) || exit
 
   if echo $file | grep -q "$SEP" ;then
-    history scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+    mhistory scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
     file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
   else
     # (tic) 'script for quick menu action
@@ -40,7 +40,7 @@ do
            head -1 |
            sed "s|^$HOME/||")
     [ $file ] || exec dmenu scripts
-    history scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
+    mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
   fi
 
   if [ -e $HOME/$file ] ;then

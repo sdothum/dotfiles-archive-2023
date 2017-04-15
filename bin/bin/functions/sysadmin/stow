@@ -1,0 +1,38 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Stow wrapper
+
+usage() {
+  echo "usage: $(basename $0) sync | clean | check | [D | R] <directory>"
+  exit 1
+}
+
+STOW=$HOME/stow
+
+link() {
+  for i in $STOW/*
+  do
+    [ -d $i ] || continue
+    # on directory == application, apply link action
+    rule='which ${i##*/} >/dev/null 2>&1 '$@' ${i##*/}'
+    eval $rule
+  done
+}
+
+case $1 in
+  ''   ) usage ;;
+  sync ) link '&& stow' ;;
+  clean) link '|| stow D' ;;
+  check) link '&& ditto' ;;
+
+  D | R) [ $2 ] || usage
+         /usr/bin/stow -d $STOW -$1 $2 ;;
+
+  *) /usr/bin/stow -d $STOW -S $1 ;;
+esac
+
+# vim: set ft=sh: #

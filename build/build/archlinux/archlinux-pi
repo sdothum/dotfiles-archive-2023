@@ -6,7 +6,7 @@
 # execute archlinux-pi as root
 
 source ./archlinux-functions
-user=motu
+user=shum
 
 
 heading 'configure boot parameters'
@@ -27,7 +27,7 @@ locale-gen
 
 heading 'set timezone'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
+timedatectl set-timezone Canada/Eastern
 
 
 heading 'configure package manager'
@@ -45,6 +45,9 @@ heading 'configure network'
 [ "$hostname" = luna ] && systemctl enable dhcpcd.service
 # heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
 # [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+# remove possible symlink
+rm /etc/hosts
+config_install /etc/hosts
 
 
 heading 'installing wireless tools'
@@ -61,8 +64,22 @@ echo noarp >/etc/dhcpcd.conf
 checkpoint
 
 
-heading 'set sudo groups'
+heading "root setup"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# sudo ln -sfv $HOME/.config/xfce4 /root/.config/
+mkdir -pv /root/tmp
+mkdir -pv /root/log
+mv /root/.config /root/.config.original
+ln -sf /home/$user/.config /root/
+ln -sf /home/$user/.fonts /root/
+ln -sf /home/$user/.forward /root/
+original /root/.bashrc
+ln -sf /home/$user/.bashrc /root/
+
+
+heading "user $user setup"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+userdel -r alarm
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 pm_install sudo
@@ -103,6 +120,18 @@ mkdir -pv /etc/systemd/system/getty@tty1.service.d
 echo "[Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/systemd/system/getty@tty1.service.d/autologin.conf
+
+
+heading 'sync home directory'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mkdir -p /home/$user/Maildir
+chown $user:users /home/$user/Maildir
+mkdir -p /net
+chown root:users /net
+if [ ! -d /home/$user/stow ] ;then
+  pm_install rsync
+  rsync -av /media/home/$user /home/
+fi
 
 
 heading 'install bundle'

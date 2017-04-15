@@ -20,10 +20,10 @@ interface() { ip link show | grep '^[0-9]' | cut -d: -f2 | rmenu 'Interface' -no
 diagnostic=$(previous diagnostic)
 while diagnostic=$(apps "$diagnostics" | rmenu 'Diagnostic' $diagnostic -no-custom) || exit
 do
-  history diagnostic $diagnostic
+  mhistory diagnostic $diagnostic
   case $diagnostic in
     iftop  ) term "$diagnostic" $diagnostic $(interface) ;;
-    iotop  ) term "$diagnostic" SHELL $diagnostic ;;
+    iotop  ) term "$diagnostic" sudo $diagnostic ;;
     nethogs) term "$diagnostic" sudo $diagnostic $(interface) ;;
     *      ) term "$diagnostic" $diagnostic ;;
   esac

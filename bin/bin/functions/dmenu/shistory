@@ -9,7 +9,7 @@ shell=$(previous shistory)
 shell=$(echo "fish\nsh\nzsh" |
         rmenu 'Shell' $shell -no-custom) || exit
 
-history shistory $shell
+mhistory shistory $shell
 case $shell in
   dash) $DASHELL ;;
   fish) ;;

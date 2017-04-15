@@ -22,7 +22,7 @@ fi
 if [ "$selection" ] ;then
   word=$selection
 else
-  word=$(echo | history dictionary | sed '1i[ thesaurus ]' | rmenu 'Dictionary') || exit
+  word=$(echo | mhistory dictionary | sed '1i[ thesaurus ]' | rmenu 'Dictionary') || exit
 fi
 [ "$word" = '[ thesaurus ]' ] && exec dmenu thesaurus
 word=$(unquote $word)
@@ -42,7 +42,7 @@ do
 done
 
 # spawn ddict within terminal command to select (hilight) next word
-history dictionary "$word"
+mhistory dictionary "$word"
 term "$word" STACK SHELL "dict \"$word\" | less && dmenu dict"
 
 # vim: set ft=sh: #

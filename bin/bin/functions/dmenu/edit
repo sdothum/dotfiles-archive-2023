@@ -10,7 +10,7 @@ edit=$(previous edit)
 edit=$(echo "projects\nscripts\nconfigs\nfiles\nfolders" |
        rmenu 'Edit' $edit -no-custom) || exit
 
-history edit $edit
+mhistory edit $edit
 case $edit in
   projects) dmenu projects ;;
   scripts ) dmenu scripts ;;

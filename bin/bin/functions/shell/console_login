@@ -6,12 +6,6 @@
 
 # ................................................................ Console login
 
-weather() {
-  # if not connected to local network
-  server || ping -c 1 -W 1 www.google.ca >/dev/null 2>&1 || sudo wifi-menu
-  which wego >/dev/null 2>&1 && we
-}
-
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
   if console && [ ! -e /tmp/login:console ];then
@@ -36,7 +30,7 @@ if [ $USER != root ] ;then
 
     # pre-initialize arm fuzzy searches
     nohup fcache + $HOME 2>/dev/null &
-    weather &
+    we &
   fi
 
   # reset keyboard layout
