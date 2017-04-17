@@ -252,7 +252,7 @@ herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s
 ' >$PANEL_FIFO:$fifo &
 
-is display +1920 || gpu inspiron && size=$(fontsize) || size=$(( $(fontsize) - 1 ))
+is display +1920 || is display =1680 && size=$(fontsize) || size=$(( $(fontsize) - 1 ))
 
 cat $PANEL_FIFO:$fifo \
   | panel \
