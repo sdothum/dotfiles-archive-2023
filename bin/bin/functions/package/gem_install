@@ -13,5 +13,6 @@ else
   heading : $1
   gem install --no-rdoc --no-ri $1
 fi
+post_install $1
 
 # vim: set ft=sh: #

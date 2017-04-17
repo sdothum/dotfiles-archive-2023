@@ -260,8 +260,8 @@ d \ connman
 # chromium
   qutebrowser
   surf
-# tabbed
-m tabbed
+d " install under X to calculate correct tab fontsize
+d m tabbed
 " add armv7h to arch in pkgbuild
 ? vimb
   w3m

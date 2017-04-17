@@ -14,8 +14,7 @@ tar xzf tabbed-$version.tar.gz
 cd tabbed-$version
 wget http://tools.suckless.org/tabbed/patches/tabbed-$version-xft.diff
 patch -p1 < tabbed-$version-xft.diff
-server && sed -i '/monospace-/s/-[0-9]*/-10/' config.h ||
-          sed -i '/monospace-/s/-[0-9]*/-9/' config.h
+sed -i "/monospace-/s/-[0-9]*/-$(fontsize)/" config.def.h
 
 make
 sudo make install
