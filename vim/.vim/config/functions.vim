@@ -31,19 +31,19 @@
 
       " replaces lightline: 'modified' : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
       function! Modified()
-        if &filetype == "help"
+        if &filetype == 'help'
           return ''
         endif
         if &modified
           if b:modified == 0
             " path must have one parent directory i.e. does not resolve /root filenames
-            let l:rootpath = expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*"
-              \? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*[/][^/]*", "\\1", "") . '/'
+            let l:rootpath = expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
+              \? substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '') . '/'
               \: '/'
-            let l:basepath = expand("%:p") =~ ".*[/][^/]*[/][^/]*"
-              \? substitute(expand("%:p"), ".*[/]\\([^/]*\\)[/][^/]*", "\\1", "") . '/'
+            let l:basepath = expand('%:p') =~ '.*[/][^/]*[/][^/]*'
+              \? substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*', '\1', '') . '/'
               \: ''
-            call system('notify time=3 critical "' . l:rootpath . l:basepath . expand("%:t") . '" "Modified"')
+            call system('notify time=3 critical "' . l:rootpath . l:basepath . expand('%:t') . '" "Modified"')
             let b:modified = 1
           endif
           return '+'

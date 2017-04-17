@@ -8,6 +8,6 @@
 
 # Usage: is nonempty <tag>
 
-herbstclient compare tags.by-name.$1.client_count gt 0
+herbstclient compare "tags.by-name.$1.client_count" gt 0 2>/dev/null
 
 # vim: set ft=sh: #

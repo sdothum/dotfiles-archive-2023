@@ -178,6 +178,11 @@ d connman
 # python-dbus
 
 
+= proxies
+# ▔▔▔▔▔▔▔
+  squid
+
+
 = sync
 # ▔▔▔▔
   rsync

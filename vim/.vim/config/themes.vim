@@ -198,53 +198,15 @@
           return
         endif
         let s:size = a:size
+        let l:size = system('fontsize')
+        let l:guif = substitute(&guifont, '\([0-9]*\)', '\1', '')
 
-        if system("lspci") =~ 'VGA .*\[GeForce GT 650M\]'
-          " for desktop nvidia gpu
-          if &guifont =~ '12' || a:size < 0
-            call Fontspace(11, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call Fontspace(12, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
-        elseif system("lspci") =~ 'VGA .*\[GeForce GTX 970\]'
-          " for desktop nvidia gpu
-          if &guifont =~ '11' || a:size < 0
-            call Fontspace(10, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call Fontspace(11, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
-        elseif system("lspci") =~ 'VGA .* NVIDIA'
-          " for macbook nvidia gpu
-          if &guifont =~ '10' || a:size < 0
-            call Fontspace(9, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call Fontspace(10, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
-        elseif system("lspci") =~ 'VGA .* Intel'
-          " for ati/intel gpu's
-          if &guifont =~ '12' || a:size < 0
-            call Fontspace(11, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call Fontspace(12, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
+        if l:guif == (l:size + 1) || a:size < 0
+          call Fontspace(l:size, 0)
+          " let g:lite_dfm_left_offset = 22
         else
-          " for raspberry pi arm
-          " call Fontspace(9, 0)
-          if &guifont =~ '9' || a:size < 0
-            call Fontspace(8, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call Fontspace(9, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
+          call Fontspace(l:size + 1, 1)
+          " let g:lite_dfm_left_offset = 18
         endif
 
         " fix statusline/commandline position (drawn outside window)

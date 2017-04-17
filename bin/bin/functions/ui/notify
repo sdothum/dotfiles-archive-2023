@@ -41,25 +41,27 @@ do
   esac
 done
 
-echo "$(timestamp) $USER:${urgency#-u} \"$1\" \"$2\"" >>/tmp/notify.log
+ONE=${1#\\}
+TWO=${2#\\}
+echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 
 if console || [ $console ] ;then
-  [ "$2" ] && echo "${_YELLOW_}-> $1\n${_CYAN_} -> $2${_nocolor_}" ||
-            echo "${_YELLOW_}-> $1${_nocolor_}"
+  [ "$TWO" ] && echo "${_YELLOW_}-> $ONE\n${_CYAN_} -> $TWO${_nocolor_}" ||
+            echo "${_YELLOW_}-> $ONE${_nocolor_}"
 else
   case $# in
     0) usage ;;
 
-    1) if [ $(echo "$1" | wc -l) -eq 1 ] ;then
-         DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" &
+    1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
+         DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &
        else
          # set first line as heading for a single multiline message
-         heading=$(echo "$1" | sed '2,$d')
-         body=$(echo "$1" | sed '1d')
+         heading=$(echo "$ONE" | sed '2,$d')
+         body=$(echo "$ONE" | sed '1d')
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$heading" "$body" &
        fi ;;
 
-    2) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$1" "$2" & ;;
+    2) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
     *) usage ;;
   esac
 fi

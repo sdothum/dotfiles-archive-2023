@@ -75,7 +75,7 @@ if is multihead ;then
   toggle conky
   # enable panel for secondary monitor by default
   touch $PANEL:1
-elif gpu nvidia ;then
+elif is display +1920 ;then
   toggle conky
 else
   draw monitor fullframe

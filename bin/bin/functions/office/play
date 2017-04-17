@@ -8,6 +8,8 @@
 
 # Usage: play <url> | <path> [<title>]
 
+fontsize=36
+
 youtube=/tmp/youtube-dl
 # cleanup accidental screenshots and youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg $youtube.*" EXIT
@@ -40,7 +42,7 @@ if cpu arm; then
 else
   notify "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\nv/j  Subtitles'
   focus frame
-  mpv --vf=eq "$1" >/dev/null 2>&1
+  mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
 fi
 # refresh panel title on close
 focus window

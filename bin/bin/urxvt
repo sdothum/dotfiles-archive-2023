@@ -8,11 +8,13 @@
 
 export SHELL=/usr/bin/fish
 
+font="xft:$MONOFONT:size=$(fontsize)"
+
 # URxvt client/server
-eval urxvtc -fn $(termfont) $@
+eval urxvtc -fn $font $@
 if [ $? -eq 2 ] ;then
   urxvtd -q -o -f 2>/tmp/urxvt.log
-  eval urxvtc -fn $(termfont) $@
+  eval urxvtc -fn $font $@
 fi
 
 # vim: set ft=sh: #

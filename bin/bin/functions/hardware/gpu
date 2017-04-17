@@ -18,16 +18,18 @@ vga() {
 }
 
 case $1 in
-  '') vga NVIDIA
+  '') vga 'GeForce 8600M GT'
+      vga 'GeForce GT 650M'
+      vga NVIDIA
       vga ATI
       vga Intel
-      vga 'GeForce 8600M GT'
       # lspci fails on raspberry pi
       echo arm ;;
 
   display             ) xrandr 2>/dev/null | grep '*' | awk '{ print $1 }' ;;
-  nvidia | ati | intel) [ $(gpu) = $1 ] ;;
-  macbook             ) [ $(gpu) = 'geforce 8600m gt' ] ;;
+  nvidia | ati | intel) [ "$(gpu)" = $1 ] ;;
+  macbook             ) [ "$(gpu)" = 'geforce 8600m gt' ] ;;
+  inspiron            ) [ "$(gpu)" = 'geforce gt 650m' ] ;;
   *                   ) usage ;;
 esac
 
