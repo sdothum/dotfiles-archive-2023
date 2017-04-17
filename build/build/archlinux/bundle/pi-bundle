@@ -294,10 +294,4 @@ m tabbed
   dictd
   wego
 
-
-= deferred
-= ▔▔▔▔▔▔▔▔
-" reboot to connect and configure autoconnect
-  connman
-
 # vim: set ft=conf: #
