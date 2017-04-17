@@ -153,8 +153,8 @@ g term-ansicolor
 
 = network
 # ▔▔▔▔▔▔▔
-" drops internet connection
-d connman
+d " drops internet connection
+d \ connman
   dnsmasq
 # dnsutils
   bind-tools

@@ -23,8 +23,8 @@
 = desktop
 # ▔▔▔▔▔▔▔
 # conky-lua
-" enable mpd and nvidia as required
-d conky-lua-archers
+d " enable mpd and nvidia as required
+d ? conky-lua-archers
 # lemonbar-git
   lemonbar-xft-git
 # trayer-srg-git

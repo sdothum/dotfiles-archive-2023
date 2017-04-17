@@ -42,7 +42,7 @@ m tabbed
 
 = chat/twitter
 # ▔▔▔▔▔▔▔▔▔▔▔▔
-d centerim5-git
+d \ centerim5-git
 # finch
 # pidgin
 # skype
@@ -51,7 +51,7 @@ d centerim5-git
   weechat
 # xchat
   xmpppy
-d znc
+d \ znc
 
 
 = file transfer

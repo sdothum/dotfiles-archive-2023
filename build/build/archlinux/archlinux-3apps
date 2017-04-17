@@ -19,7 +19,10 @@ mkdir -p $HOME/logs || exit 1
 
 title "bundle installs"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-bundle_install $HOME/build/archlinux/bundle/[1-9]*
+# 1xx - 7xx, distro install bundles
+#       8xx, custom install bundles
+#       9xx, generated deferred install bundles, see bundle_install [check]
+bundle_install $HOME/build/archlinux/bundle/[1-7]*
 
 
 title "custom installs"

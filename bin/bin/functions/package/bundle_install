@@ -11,27 +11,36 @@
 # format: # inline comment
 #         = title
 #         " quote
-#         + package             (to manually install afterwards)
-#         - package [condition] (to remove)
-#         ? package [condition] (confirm, see pm_install)
-#           package [condition] (noconfirm)
-#         @ aur     [condition] (aur makepkg)
-#         a arm     [condition] (aur makepkg for raspberry pi)
-#         d package [condition] (deferred install comment)
-#         g gem     [condition]
-#         m make    [condition] (make_install script)
-#         ! command [options]   (execute)
+#         + package                    (to manually install afterwards)
+#         - package        [condition] (to remove)
+#         ? package        [condition] (confirm, see pm_install)
+#           package        [condition] (noconfirm)
+#         @ aur            [condition] (aur makepkg)
+#         a arm            [condition] (aur makepkg for raspberry pi)
+#         d action package [condition] (deferred install)
+#         g gem            [condition]
+#         m make           [condition] (make_install script)
+#         ! command        [options]   (execute)
 #
 #         where, condition = [command] or [[[expression]]] as short form for test
 #                     e.g. package [[[ $(hostname) = server ]]]
 #                make script may contain options with double backslashes
 #                     e.g. m iosevka\\ amphetype [server]
+#                use '\' as default (space) action placeholder for deferred rule
+#                     e.g. d \ package [condition]
 
 [ $1 ] || exit
+
 if [ $1 = check ] ;then
   check=true
   shift
   gems=$(gem list | cut -d' ' -f1)
+fi
+
+echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
+deferred=$BDIR/900-deferred
+if [ -e $deferred ] ;then
+  if-no 'clear last defer bundle' || rm -f $deferred
 fi
 
 rule() { echo "$@" | sed -e 's/\[//' -e 's/\]//' || echo true; }
@@ -94,12 +103,17 @@ do
       '?') pm_install S $package ;;
       '@') aur_install $package ;;
       a  ) arm_install $package ;;
-      d  ) heading "[ Deferred install ]   $package" ;;
+      d  ) echo "$package $condition" | sed 's/^ /  /' >>$deferred ;;
       g  ) gem_install $package ;;
       m  ) make_install $package ;;
       *  ) pm_install $package ;;
     esac
   done 3< $i
 done
+
+if [ -e $deferred ] ;then
+  cat $deferred
+  if-yes 'install deferred pacages' && bundle_install $deferred
+fi
 
 # vim: set ft=sh: #
