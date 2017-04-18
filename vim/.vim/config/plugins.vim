@@ -536,14 +536,13 @@
         highlight VimwikiLink guifg=#268bd2 gui=bold
       endfunction
 
-      " <CR> conflicts with simple-complete
+      " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
       function! VimWikiRemap()
         if !exists('b:vimwiki_remap')
           let b:vimwiki_remap = 1
-          unmap    <silent><buffer> <CR>
           iunmap   <silent><buffer> <CR>
-          nmap     <silent><buffer> <Tab> <Plug>VimwikiFollowLink
-          inoremap <silent><buffer> <Tab> <Esc>:VimwikiReturn 1 5<CR>
+          inoremap <expr>  <buffer> <C-PageDown> vimwiki#tbl#kbd_tab()
+          inoremap <expr>  <buffer> <C-PageUp>   vimwiki#tbl#kbd_shift_tab()
         endif
       endfunction
 

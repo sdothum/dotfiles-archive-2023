@@ -8,7 +8,7 @@
     " .................................................................... Setup
 
       " mixed view (filetype) handling
-      let s:view = 0
+      let s:view      = 0
 
       augroup view
         autocmd!
@@ -59,16 +59,16 @@
       " dfm writing mode (single paragraph highlight)
       function! DfmWriting()
         execute 'highlight Normal guifg=' . g:dfm_unfocused
-        let s:unfocused = g:dfm_unfocused
+        let s:proof = 0
         call ShowInfo(0)
       endfunction
 
       " toggle full document highlight
       function! ToggleProof()
         call Theme()
-        if s:unfocused == g:dfm_unfocused
+        if s:proof == 0
           execute 'highlight Normal guifg=' . g:dfm_proof
-          let s:unfocused = g:dfm_proof
+          let s:proof = 1
           call ShowInfo(1)
           execute 'Limelight!'
         else

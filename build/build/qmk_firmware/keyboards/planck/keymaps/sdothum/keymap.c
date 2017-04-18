@@ -100,6 +100,7 @@ enum planck_keycodes {
  ,PLOVER
  ,PLOVEX
  ,Gt        // pseudo LT (_NUMSYM, KC_GT)      for modified key-codes, see process_record_user()
+ ,STab      // pseudo LT (_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,SLeft     // pseudo LT (_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,Pipe      // pseudo LT (_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
  ,DYNAMIC_MACRO_RANGE
@@ -241,14 +242,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   Z  |   X  |   C  |   D  |   B  | ↑Alt | ↑GUI |   K  |   H  |   ~  |   `  |   "  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // | Ctrl |  GUI |  Alt |  Esc |   _  |  Tab | Bksp |  f() | Left | Down |  Up  |Right |
+  // | Ctrl |  GUI |  Alt |  Esc |   _  | ↑Tab | Bksp |  f() | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
     {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), __Caps,  _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _CAlt,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _SGui,   S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
-    {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, Tab,     Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
+    {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, STab,    Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
   },
 
 // ................................................................ Number Layer
@@ -569,7 +570,7 @@ void matrix_scan_user(void)
 #define    RIGHT   2
 static int thumb = 0;
 
-void shift_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, int set_layer, int overlay_layer, int rollover_layer)
+void rolling_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, int set_layer, int overlay_layer, int rollover_layer)
 {
   if (record->event.pressed) {
     // set layer, see matrix_scan_user()
@@ -602,6 +603,29 @@ void shift_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, i
   }
 }
 
+void modifier_layer(keyrecord_t *record, uint16_t timer, int shift_key, int set_layer)
+{
+  if (record->event.pressed) {
+    // set layer, see matrix_scan_user()
+    key_timer = timer_read();
+    layer     = set_layer;
+  }
+  else {
+    layer_off   (set_layer);
+    if (key_timer > 0) {
+      if (timer_elapsed(key_timer) < TAPPING_TERM) {
+        register_code  (KC_LSFT);
+        register_code  (shift_key);
+        unregister_code(shift_key);
+        unregister_code(KC_LSFT);
+      }
+    }
+    key_timer = 0;
+    layer     = 0;
+    clear_sticky();
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   if (!process_record_dynamic_macro(keycode, record)) {
@@ -611,40 +635,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   switch (keycode) {
     // emulate LT (_NUMSYM, KC_GT)
     case Gt:
-      if (record->event.pressed) {
-        key_timer = timer_read();
-        layer     = _NUMSYM;
-      }
-      else {
-        layer_off   (_NUMSYM);
-        if (key_timer > 0) {
-          if (timer_elapsed(key_timer) < TAPPING_TERM) {
-            register_code  (KC_LSFT);
-            register_code  (KC_DOT);
-            unregister_code(KC_DOT);
-            unregister_code(KC_LSFT);
-          }
-        }
-        key_timer = 0;
-        layer     = 0;
-        clear_sticky();
-      }
+      modifier_layer(record, timer_read(), KC_DOT, _NUMSYM);
+      break;
+    // emulate LT (_FNCKEY, S(KC_TAB))
+    case STab:
+      modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
       break;
     // emulate LT (_SFTNAV, S(KC_LEFT))
     case SLeft:
-      shift_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
+      rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     // LT (_LSHIFT, KC_SPC) handling extensions
     case Spc:
-      shift_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
+      rolling_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
     // emulate LT (_SFTNAV, S(KC_BSLS))
     case Pipe:
-      shift_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
+      rolling_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     // LT (_SYMBOL, KC_LEFT) handling extensions
     case Left:
-      shift_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
+      rolling_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
       break;
     case COLEMAK:
       if (record->event.pressed) {
