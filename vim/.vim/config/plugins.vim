@@ -536,8 +536,20 @@
         highlight VimwikiLink guifg=#268bd2 gui=bold
       endfunction
 
+      " <CR> conflicts with simple-complete
+      function! VimWikiRemap()
+        if !exists('b:vimwiki_remap')
+          let b:vimwiki_remap = 1
+          unmap    <silent><buffer> <CR>
+          iunmap   <silent><buffer> <CR>
+          nmap     <silent><buffer> <Tab> <Plug>VimwikiFollowLink
+          inoremap <silent><buffer> <Tab> <Esc>:VimwikiReturn 1 5<CR>
+        endif
+      endfunction
+
       autocmd plugin Filetype vimwiki call VimWikiLink()
       autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      autocmd plugin BufEnter *       if &filetype == 'vimwiki' | call VimWikiRemap() | endif
       " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
       " see arch install patch to initialize s:vimwiki_autowriteall
 

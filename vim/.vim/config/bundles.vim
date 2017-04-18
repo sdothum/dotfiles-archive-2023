@@ -7,9 +7,6 @@
 
     " .................................................................... Setup
 
-      " autocompletion plugin dependent on filetype
-      let ext = expand('%:e')
-
       filetype off                              " safe startup (vundle requirement)
 
       " see https://github.com/junegunn/vim-plug
@@ -43,10 +40,8 @@
     " ............................................................. Highlighting
 
       Plug 'kien/rainbow_parentheses.vim'       " parentheses highlighting
-      Plug 'dag/vim-fish'                       " shell highlighting
       Plug 'nathanaelkane/vim-indent-guides'    " colourized indent columns
-      Plug 'plasticboy/vim-markdown'            " markdown highlighting
-      Plug 'slim-template/vim-slim'             " dsl highlighting
+      Plug 'sheerun/vim-polyglot'               " multilingual highlighting
 
   " Buffers ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -93,11 +88,7 @@
       Plug 'Shougo/neosnippet'                  " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling
-      if ext == 'wiki'
-        Plug 'lifepillar/vim-mucomplete'        " tab completion
-      else
-        Plug 'maxboisvert/vim-simple-complete'  " enter completion
-      endif
+      Plug 'maxboisvert/vim-simple-complete'    " enter completion
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

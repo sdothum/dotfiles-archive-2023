@@ -9,6 +9,8 @@
 # startup applications
 IRC=$HOME/.irc
 THEDARNEDESTTHING=$HOME/.thedarnedestthing
+MAIL=$HOME/.mail
+CALENDAR=$HOME/.calendar
 
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
@@ -75,8 +77,8 @@ if [ -e $IRC ] ;then
     term 'IRC' VISIBLE weechat
   fi
 fi
-[ -e $HOME/.mail ] && term 'Mail' alot
-[ -e $HOME/.calendar ] && term 'Calendar' wyrd
+[ -e $MAIL ] && term 'Mail' alot
+[ -e $CALENDAR ] && term 'Calendar' wyrd
 
 # .................................................................. Window apps
 
