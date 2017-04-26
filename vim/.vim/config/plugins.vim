@@ -496,30 +496,37 @@
         \  {
         \    'path'      : '~/vimwiki/thedarnedestthing/'
         \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \, {
         \    'path'      : '~/vimwiki/thestory/'
         \,   'path_html' : '~/vimwiki/thestory/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \, {
         \    'path'      : '~/vimwiki/truthordie/'
         \,   'path_html' : '~/vimwiki/truthordie/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \, {
         \    'path'      : '~/vimwiki/shadowsandlight/'
         \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \, {
         \    'path'      : '~/vimwiki/healing/'
         \,   'path_html' : '~/vimwiki/healing/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \, {
         \    'path'      : '~/vimwiki/colophon/'
         \,   'path_html' : '~/vimwiki/colophon/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \, {
         \    'path'      : '~/vimwiki/notes/'
         \,   'path_html' : '~/vimwiki/notes/html/'
+        \,   'syntax'    : 'markdown'
         \  }
         \]
 

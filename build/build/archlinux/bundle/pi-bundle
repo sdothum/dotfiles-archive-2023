@@ -215,6 +215,7 @@ d \ connman
 = user interface
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   autokey-py3
+  dbus-glib
 # "stest contained in dmenu package"
   dmenu
   dunst

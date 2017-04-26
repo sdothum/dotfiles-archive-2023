@@ -67,6 +67,13 @@
       function! ToggleProof()
         call Theme()
         if s:proof == 0
+          if &filetype == 'vimwiki'
+            " hack to apply more robust markdown syntax highlighting
+            set filetype=markdown
+            call ProseView()
+            " force margin centering
+            call Refresh()
+          endif
           execute 'highlight Normal guifg=' . g:dfm_proof
           let s:proof = 1
           call ShowInfo(1)

@@ -34,13 +34,6 @@
 //   The navigation pad provides a single hand right thumb activated cluster
 //   with left hand modifiers
 //
-//   Adjust layer is enabled from the navigation layer i.e. num+sym+Q
-//   to prevent accidental keyboard reset
-//
-//   Tri-layer toggling requires defining toggle layer hack for the zero key
-//   and dot keys of the number and symbol layers, else num+sym navigation
-//   layer is inaccessible -- pretty cool!
-//
 // Modifier clusters
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   The num and sym keys together access the navigation pad layer
@@ -99,7 +92,6 @@ enum planck_keycodes {
   COLEMAK = SAFE_RANGE
  ,PLOVER
  ,PLOVEX
- ,Gt        // pseudo LT (_NUMSYM, KC_GT)      for modified key-codes, see process_record_user()
  ,STab      // pseudo LT (_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,SLeft     // pseudo LT (_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,Pipe      // pseudo LT (_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
@@ -119,13 +111,13 @@ enum planck_keycodes {
  ,Bspc    = LT (_ADJUST, KC_BSPC)
  ,Ent     = LT (_RSHIFT, KC_ENT)
  ,Left    = LT (_SYMBOL, KC_LEFT)          // see process_record_user() for extended handling of Left
- ,Dn      = LT (_SYMREG, KC_DOWN)
 };
 
 #include "dynamic_macro.h"
 
 enum tap_dance {
-  _LPRN = 0
+  _SPRN = 0
+ ,_LPRN
  ,_LBRC
  ,_LCBR
  ,_LT
@@ -143,6 +135,7 @@ enum tap_dance {
 
 // tap dance keys
 #define __Lcbr  TD(_LCBR)
+#define __Sprn  TD(_SPRN)
 #define __Lprn  TD(_LPRN)
 #define __Lbrc  TD(_LBRC)
 #define __Lt    TD(_LT)
@@ -150,6 +143,7 @@ enum tap_dance {
 #define __Caps  TD(_CAPS)
 
 // layer keys
+#define SYMREG  MO(_SYMREG)
 #define SHIFT   MO(_SHIFT)
 #define ADJUST  MO(_ADJUST)
 #define DYNAMIC MO(_DYN)
@@ -259,17 +253,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |   {  |      |      | ^Alt |   }  |      |      |   E  |   7  |   8  |   9  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // |   (  |   <  |   >  |  Alt |   )  |      |      |   C  |   4  |   5  |   6  |   D  |
+  // |   (  | Ctrl |  GUI |  Alt |   )  |      |      |   C  |   4  |   5  |   6  |   D  |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |      |      | ↑Alt |   ]  |      |      |   A  |   1  |   2  |   3  |   B  |
+  // |   [  |   <  |   >  | ↑Alt |   ]  |      |      |   A  |   1  |   2  |   3  |   B  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |  f() |      |       |      |  =  |   0  |   .  |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
     {__Lcbr,  _______, _______, _CAlt,   KC_RCBR, _______, _______, S(KC_E), KC_7,    KC_8,    KC_9,    S(KC_F)},
-    {__Lprn,  __Lt,    Gt,      _Alt,    KC_RPRN, _______, _______, S(KC_C), KC_4,    KC_5,    KC_6,    S(KC_D)},
-    {__Lbrc,  _______, _______, _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    S(KC_B)},
+    {__Sprn,  _Ctl,    _Gui,    _Alt,    KC_RPRN, _______, _______, S(KC_C), KC_4,    KC_5,    KC_6,    S(KC_D)},
+    {__Lbrc,  __Lt,    KC_GT,   _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    S(KC_B)},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  ___x___, ___x___},
   },
 
@@ -287,7 +281,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUMSYM] = {
     {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_AMPR, KC_ASTR, KC_SLSH, KC_COLN},
-    {_______, _______, ___x___, _______, _______, _______, _______, ___x___, KC_DLR,  KC_PERC, KC_CIRC, KC_MINS},
+    {___x___, _______, _______, _______, _______, _______, _______, ___x___, KC_DLR,  KC_PERC, KC_CIRC, KC_MINS},
     {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_EXLM, KC_AT,   KC_HASH, KC_PLUS},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, ___x___, ___x___},
   },
@@ -297,20 +291,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/b14e93e60f484a7e7c0d89351ea5c663
 
   // .-----------------------------------------------------------------------------------.
-  // |   {  |   \  |   *  |   &  |   }  |      |      |      | Home |  Up  |  End |      |
+  // |   {  |   .  |   *  |   &  |   }  |      |      |      | Home |  Up  |  End |      |
   // |-----------------------------------------------------------------------------------|
   // |   (  |   ^  |   %  |   $  |   )  |      |      |      | Left | Down | Right|      |
   // |-----------------------------------------------------------------------------------|
   // |   [  |   #  |   @  |   !  |   ]  |      |      |      | PgDn | PgUp |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |   .  |   |  |      |      |      |  f() |      |      |      |
+  // |      |      |      |   \  |   |  |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {__Lcbr,  KC_BSLS, KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, Dn,      KC_RGHT, _______},
+    {__Lcbr,  KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
+    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, SYMREG },
     {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {___x___, ___x___, ___x___, KC_DOT,  Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, KC_BSLS, Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // .......................................................... Symbol Layer Regex
@@ -318,17 +312,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |   ?  |   +  |   ~  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   <  |   >  |   =  |      |      |      |      |      |  f() |      |      |
+  // |      |   3  |   2  |   1  |      |      |      |      |      |      |      |  f() |
   // |-----------------------------------------------------------------------------------|
-  // |      |   3  |   2  |   1  |      |      |      |      |      |      |      |      |
+  // |      |   <  |   >  |   =  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |   :  |      |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMREG] = {
     {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, _______, _______, _______, _______},
-    {___x___, KC_LABK, KC_RABK, KC_EQL,  ___x___, _______, _______, _______, _______, ___x___, _______, _______},
-    {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, _______, _______},
+    {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, _______, ___x___},
+    {___x___, __Lt,    KC_GT,   KC_EQL,  ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, KC_COLN, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
@@ -384,7 +378,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |  Dyn |      |Colemk|      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |      |      |      |
+  // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |   <  |   >  |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |      |      |      |      |      |      |  f() |      |      |      |      |Plover|
   // `-----------------------------------------------------------------------------------'
@@ -392,7 +386,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET  },
     {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, DYNAMIC, _______, COLEMAK, _______, _______},
-    {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, _______, _______, _______},
+    {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, __Lt,    KC_GT,   _______},
     {_______, _______, _______, _______, _______, _______, ___x___, _______, _______, _______, _______, PLOVER },
   },
 
@@ -429,12 +423,28 @@ float music_scale[][2]    = SONG(MUSIC_SCALE_SOUND);
 float tone_goodbye[][2]   = SONG(GOODBYE_SOUND);
 #endif
 
+static uint16_t key_timer = 0;
+static int      layer     = 0;
+
+void matrix_scan_user(void)
+{
+  // set layer of LT (layer, key) for modified key value, see process_record_user()
+  if (key_timer != 0) {
+    if (timer_elapsed(key_timer) > TAPPING_TERM) {
+      key_timer = 0;
+      if (layer != 0) {
+        layer_on (layer);
+      }
+    }
+  }
+}
+
 #define S_NEVER  0
 #define S_SINGLE 1
 #define S_DOUBLE 2
 #define S_ALWAYS S_SINGLE | S_DOUBLE
 
-void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right)
+void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int set_layer)
 {
   if (state->count > 1) {
     if (shift & S_DOUBLE) {
@@ -451,6 +461,12 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right)
     // register_code  (KC_LEFT);
     // unregister_code(KC_LEFT);
   }
+  else if (state->pressed) {
+    if (set_layer != 0) {
+      key_timer = state->timer;             // see quantum/process_keycode/process_tap_dance.c
+      layer     = set_layer;
+    }
+  }
   else {
     if (shift & S_SINGLE) {
       register_code  (KC_LSFT);
@@ -464,29 +480,40 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right)
   reset_tap_dance(state);
 }
 
+void paren_layer(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, _NUMSYM);
+}
+
+void layer_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  layer_off(layer);
+  layer = 0;
+}
+
 void paren(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_9, KC_0);
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, 0);
 }
 
 void brace(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC);
+  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0);
 }
 
 void curly(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC);
+  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
 }
 
 void angle(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_COMM, KC_DOT);
+  tap_pair(state, S_ALWAYS, KC_COMM, KC_DOT, 0);
 }
 
 void quote(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT);
+  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
 }
 
 void caps(qk_tap_dance_state_t *state, void *user_data)
@@ -502,7 +529,11 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [_LPRN] = ACTION_TAP_DANCE_FN(paren)
+  [_SPRN] = {
+    .fn = { NULL, paren_layer, layer_reset },
+    .user_data = NULL
+  }
+ ,[_LPRN] = ACTION_TAP_DANCE_FN(paren)
  ,[_LBRC] = ACTION_TAP_DANCE_FN(brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN(curly)
  ,[_LT]   = ACTION_TAP_DANCE_FN(angle)
@@ -548,22 +579,6 @@ void toggle_plover(void)
   unregister_code (KC_RGHT);
   unregister_code (KC_LSFT);
   unregister_code (KC_LGUI);
-}
-
-static uint16_t key_timer = 0;
-static int      layer     = 0;
-
-void matrix_scan_user(void)
-{
-  // set layer of LT (layer, key) for modified key value, see process_record_user()
-  if (key_timer != 0) {
-    if (timer_elapsed(key_timer) > TAPPING_TERM) {
-      key_timer = 0;
-      if (layer != 0) {
-        layer_on (layer);
-      }
-    }
-  }
 }
 
 #define    LEFT    1
@@ -633,10 +648,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 
   switch (keycode) {
-    // emulate LT (_NUMSYM, KC_GT)
-    case Gt:
-      modifier_layer(record, timer_read(), KC_DOT, _NUMSYM);
-      break;
     // emulate LT (_FNCKEY, S(KC_TAB))
     case STab:
       modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
