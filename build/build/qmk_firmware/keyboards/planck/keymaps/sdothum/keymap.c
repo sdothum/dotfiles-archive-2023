@@ -79,9 +79,9 @@ enum planck_layers {
  ,_LSHIFT
  ,_RSHIFT
  ,_NUMBER
- ,_NUMSYM
+ ,_HEXSYM
  ,_SYMBOL
- ,_SYMREG
+ ,_REGEX
  ,_SFTNAV
  ,_FNCKEY
  ,_ADJUST
@@ -143,7 +143,7 @@ enum tap_dance {
 #define __Caps  TD(_CAPS)
 
 // layer keys
-#define SYMREG  MO(_SYMREG)
+#define REGEX   MO(_REGEX)
 #define SHIFT   MO(_SHIFT)
 #define ADJUST  MO(_ADJUST)
 #define DYNAMIC MO(_DYN)
@@ -246,44 +246,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, STab,    Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
   },
 
-// ................................................................ Number Layer
+// ......................................................... Number Keypad Layer
 //
 // http://www.keyboard-layout-editor.com/#/gists/538d5196b49574fffda305a0f845c794
 
   // .-----------------------------------------------------------------------------------.
-  // |   {  |      |      | ^Alt |   }  |      |      |   E  |   7  |   8  |   9  |   F  |
+  // |   {  |      |      | ^Alt |   }  |      |      |      |   7  |   8  |   9  |   /  |
   // |-----------------------------------------------------------------------------------|
-  // |   (  | Ctrl |  GUI |  Alt |   )  |      |      |   C  |   4  |   5  |   6  |   D  |
+  // |   (  | Ctrl |  GUI |  Alt |   )  |      |      |      |   4  |   5  |   6  |   *  |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |   <  |   >  | ↑Alt |   ]  |      |      |   A  |   1  |   2  |   3  |   B  |
+  // |   [  |   <  |   >  | ↑Alt |   ]  |      |      |      |   1  |   2  |   3  |   -  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |       |      |  =  |   0  |   .  |      |      |
+  // |      |      |      |  f() |      |       |      |  =  |   0  |   .  |   :  |   +  |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {__Lcbr,  _______, _______, _CAlt,   KC_RCBR, _______, _______, S(KC_E), KC_7,    KC_8,    KC_9,    S(KC_F)},
-    {__Sprn,  _Ctl,    _Gui,    _Alt,    KC_RPRN, _______, _______, S(KC_C), KC_4,    KC_5,    KC_6,    S(KC_D)},
-    {__Lbrc,  __Lt,    KC_GT,   _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    S(KC_B)},
-    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  ___x___, ___x___},
+    {__Lcbr,  _______, _______, _CAlt,   KC_RCBR, _______, _______, ___x___, KC_7,    KC_8,    KC_9,    KC_SLSH},
+    {__Sprn,  _Ctl,    _Gui,    _Alt,    KC_RPRN, _______, _______, ___x___, KC_4,    KC_5,    KC_6,    KC_ASTR},
+    {__Lbrc,  __Lt,    KC_GT,   _SAlt,   KC_RBRC, _______, _______, ___x___, KC_1,    KC_2,    KC_3,    KC_MINS},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  KC_COLN, KC_PLUS},
   },
 
-// ........................................................ Number Layer Symbols
+// .................................................... Number Layer Hex Symbols
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      |   &  |   *  |   /  |   :  |
+  // |      |      |      |      |      |      |      |   E  |   &  |   *  |   ~  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |  f() |      |      |      |      |      |   $  |   %  |   ^  |   -  |
+  // |  f() |      |      |      |      |      |      |   C  |   $  |   %  |   ^  |   D  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |   !  |   @  |   #  |   +  |
+  // |      |      |      |      |      |      |      |   A  |   !  |   @  |   #  |   B  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      |      | Space|   ,  |      |      |
+  // |      |      |      |  f() |      |      |      |      | Space|   ,  |   \  |   |  |
   // '-----------------------------------------------------------------------------------'
 
-  [_NUMSYM] = {
-    {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_AMPR, KC_ASTR, KC_SLSH, KC_COLN},
-    {___x___, _______, _______, _______, _______, _______, _______, ___x___, KC_DLR,  KC_PERC, KC_CIRC, KC_MINS},
-    {_______, _______, _______, _______, _______, _______, _______, ___x___, KC_EXLM, KC_AT,   KC_HASH, KC_PLUS},
-    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, ___x___, ___x___},
+  [_HEXSYM] = {
+    {_______, _______, _______, _______, _______, _______, _______, S(KC_E), KC_AMPR, KC_ASTR, KC_TILD, S(KC_F)},
+    {___x___, _______, _______, _______, _______, _______, _______, S(KC_C), KC_DLR,  KC_PERC, KC_CIRC, S(KC_D)},
+    {_______, _______, _______, _______, _______, _______, _______, S(KC_A), KC_EXLM, KC_AT,   KC_HASH, S(KC_B)},
+    {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, KC_BSLS, KC_PIPE},
   },
 
 // ................................................................ Symbol Layer
@@ -302,7 +302,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL] = {
     {__Lcbr,  KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, SYMREG },
+    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, REGEX  },
     {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
     {___x___, ___x___, ___x___, KC_BSLS, Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
@@ -319,7 +319,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |      |      |      |   :  |      |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
-  [_SYMREG] = {
+  [_REGEX] = {
     {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, _______, ___x___},
     {___x___, __Lt,    KC_GT,   KC_EQL,  ___x___, _______, _______, _______, _______, _______, _______, _______},
@@ -482,7 +482,7 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int s
 
 void paren_layer(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_9, KC_0, _NUMSYM);
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, _HEXSYM);
 }
 
 void layer_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -553,9 +553,9 @@ void clear_layers(void)
   layer_off(_LSHIFT);
   layer_off(_RSHIFT);
   layer_off(_NUMBER);
-  layer_off(_NUMSYM);
+  layer_off(_HEXSYM);
   layer_off(_SYMBOL);
-  layer_off(_SYMREG);
+  layer_off(_REGEX);
   layer_off(_SFTNAV);
   layer_off(_FNCKEY);
   layer_off(_ADJUST);
