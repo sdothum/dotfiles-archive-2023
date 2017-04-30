@@ -116,8 +116,7 @@ div#notify.notify.notify_progress { display: none !important; }
 
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando {
   opacity: .75 !important;
-  /* padding-left: 11px !important; */
-  padding-left: 14px !important;
+  /* padding-left: 14px !important; */
 }
 
 #feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; }
@@ -654,7 +653,7 @@ button.expandPrompt {
   text-shadow: 0 1px 1px #fff !important;
   letter-spacing: 2px !important;
   position: fixed !important;
-  margin-top: 85px !important;
+  margin-top: 70px !important;
 }
 
 /* end of feed marker */

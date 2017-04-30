@@ -5,7 +5,7 @@
 /* STYLING ******************************************************************/
 
 /* right align logo */
-#main:after{ margin-left: 70px !important; }
+#main:after{ margin-left: 60px !important; }
 
 #feeds-holder .dijitTreeRow {
   font-size: 12px !important;
@@ -13,15 +13,23 @@
   padding-bottom: 9px !important;
 }
 
+#feeds-holder .dijitTreeLabel {
+  float: right !important;
+  margin-right: 1px !important;
+}
+
 #feeds-holder #feedTree {
   padding-top: 0 !important;
-  width: 185px !important;
+  width: 175px !important;
 }
 
 #feeds-holder {
   margin-left: -20px !important;
-  width: 185px !important;
+  width: 175px !important;
 }
+
+#feeds-holder .dijitTreeLabel[id="dijit__TreeNode_1_label"] { margin-right: 18px !important; }
+#feeds-holder .dijitTreeLabel[id="dijit__TreeNode_7_label"] { margin-right: 18px !important; }
 
 /* img[src*='images/folder.png'] { background: url('particle_images/rss.png') no-repeat !important; } */
 
@@ -99,27 +107,4 @@ div#notify.notify { display: none !important; }
 /*   border-radius: 10px !important; */
 /*   padding: 0 5px 0 5px; */
 /*   /* margin: 2px 13px !important; */ */
-/* } */
-
-/* my mods ******************************************************************/
-/* div#content-insert { */
-/*   /* padding-right: 264px !important; */ */
-/*   /* max-width: 1038px !important; */ */
-/*   padding-right: 292px !important; */
-/*   max-width: 998px !important; */
-/* } */
-/*  */
-/* #toolbar { */
-/*   /* max-width: 1185px !important; */ */
-/*   max-width: 1048px !important; */
-/* } */
-/*  */
-/* #headlines-frame { */
-/*   /* max-width: 1115px !important; */ */
-/*   max-width: 978px !important; */
-/* } */
-/*  */
-/* #headlines-toolbar { */
-/*   /* max-width: 1115px !important; */ */
-/*   max-width: 978px !important; */
 /* } */

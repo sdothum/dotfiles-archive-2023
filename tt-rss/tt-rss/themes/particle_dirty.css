@@ -23,24 +23,4 @@
   width: 215px !important;
 }
 
-/* my mods ******************************************************************/
-
-/* div#content-insert { */
-/*   padding-right: 322px !important; */
-/*   max-width: 968px !important; */
-/* } */
-/*  */
-/* #toolbar { */
-/*   /* max-width: 1150px !important; */ */
-/*   max-width: 1018px !important; */
-/* } */
-/*  */
-/* #headlines-frame { */
-/*   /* max-width: 1080px !important; */ */
-/*   max-width: 938px !important; */
-/* } */
-/*  */
-/* #headlines-toolbar { */
-/*   /* max-width: 1080px !important; */ */
-/*   max-width: 938px !important; */
-/* } */
+#feeds-holder .dijitTreeRow:hover .dijitTreeExpando { padding-left: 14px !important; }

@@ -7,8 +7,8 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)(server) 'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r'ate <queue>"
-  echo "usage: $(basename $0)(queue) B|b'ottom | C'lear | D|d'elete | P|p'ause | s'earch | T|t'op | U|u'npause <queue>"
+  echo "usage: $(basename $0)(server) 'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r@'te <queue>"
+  echo "usage: $(basename $0)(queue) B|b'ottom | C'lear | D|d'elete | P|p'ause | R|r'esume | s'earch | T|t'op <queue>"
   echo ' -> nzb d <GID,GID-GID,..>'
   echo ' -> nzb D <title>'
   exit 1
@@ -25,6 +25,7 @@ case $action in
       underline $(timestamp)
       nzbget -L G ;;
 
+  @)  nzbget --rate $queue ;;
   B*) nzb b $(nzb S $queue) ;;
 
   b*) nzbget -E G B $queue
@@ -66,17 +67,16 @@ case $action in
       nzb ;;
 
   q*) systemd stop nzbget@$USER ;;
-  r*) nzbget --rate $queue ;;
+  R*) nzb r $(nzb S $queue) ;;
+
+  r*) nzbget -E G U $queue
+      nzb ;;
+
   S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
   s*) nzb | egrep -i $queue ;;
   T*) nzb t $(nzb S $queue) ;;
 
   t*) nzbget -E G T $queue
-      nzb ;;
-
-  U*) nzb u $(nzb S $queue) ;;
-
-  u*) nzbget -E G U $queue
       nzb ;;
 
   *) usage ;;
