@@ -6,12 +6,13 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) [double | amphetype]"
+  echo "usage: $(basename $0) iosevka [double | amphetype]"
   exit 1
 }
 
-case $1 in
-  double   ) storey=$1 ;;
+case $2 in
+  ''       ) ;;
+  double   ) storey=$2 ;;
   amphetype) amphetype=-amphetype ;;
   *        ) usage ;;
 esac
@@ -22,7 +23,9 @@ alpha='v-l-hooky v-i-hooky v-g-singlestorey v-m-longleg'
 math='v-zero-slashed v-tilde-low v-asterisk-high v-caret-high v-brace-curly'
 symbol='v-paragraph-high v-at-long v-eszet-sulzbacher'
 upright="$shape $alpha v-a-${storey:-single}storey $math $symbol"
+design=$upright
 italic="$shape $alpha v-a-singlestorey $math $symbol"
+oblique=$italic
 
 # build hooky [i l] single-storey [a g] character set
 cd /net/depot
@@ -50,7 +53,7 @@ else
     /net/depot/Iosevka/parameters.toml
 fi
 
-make custom-config upright="$upright" italic="$italic"
+make custom-config upright="$upright" italic="$italic" design="$design" oblique="$oblique"
 make custom
 
 rm -rf $HOME/.fonts/iosevka$storey$amphetype

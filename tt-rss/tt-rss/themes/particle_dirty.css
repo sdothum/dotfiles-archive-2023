@@ -4,6 +4,9 @@
 
 /* STYLING ******************************************************************/
 
+/* right align logo */
+#main:after{ margin-left: 100px !important; }
+
 #feeds-holder .dijitTreeRow {
   font-size: 12px !important;
   padding-top: 10px !important;

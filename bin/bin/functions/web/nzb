@@ -17,7 +17,7 @@ usage() {
 # curses nzb control
 list_delay=60
 action=$1
-(( $# )) && shift
+[ $1 ] && shift
 queue=$@
 
 case $action in

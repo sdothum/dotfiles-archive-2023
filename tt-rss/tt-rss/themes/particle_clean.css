@@ -4,6 +4,9 @@
 
 /* STYLING ******************************************************************/
 
+/* right align logo */
+#main:after{ margin-left: 70px !important; }
+
 #feeds-holder .dijitTreeRow {
   font-size: 12px !important;
   padding-top: 9px !important;
@@ -70,6 +73,9 @@ span.updated {
   top: 5px !important;
   left: 7px !important;
 }
+
+/* unfortunately, span.updated doesn't come immedidiately after .collapseBtn */
+/* .collapseBtn:hover + .Selected span.updated { color: #999 !important; } */
 
 div#headlines-frame[is-cat="0"] span.updated { display: none !important; }
 

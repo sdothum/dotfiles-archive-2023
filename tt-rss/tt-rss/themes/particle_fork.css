@@ -641,7 +641,7 @@ button.expandPrompt {
 /* div#header-wrap * { background: #fdf6e3 !important; } */
 #ttrssPrefs * { border-radius: 0 !important; }
 
-#feeds-holder { margin-top: 128px !important; }
+#feeds-holder { margin-top: 125px !important; }
 
 /* 'logo' */
 #main:after{
@@ -653,9 +653,8 @@ button.expandPrompt {
   /* color: #b5423f !important; */
   text-shadow: 0 1px 1px #fff !important;
   letter-spacing: 2px !important;
-  margin-left: 18px !important;
   position: fixed !important;
-  margin-top: 54px !important;
+  margin-top: 85px !important;
 }
 
 /* end of feed marker */
