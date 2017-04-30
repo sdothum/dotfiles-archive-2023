@@ -70,7 +70,7 @@ div#notify.notify.notify_progress { display: none !important; }
   font-family: bold 10px Helvetica, Arial, sans-serif !important;
   border-top-left-radius: 36px !important;
   border-bottom-left-radius: 36px !important;
-  margin-left: 3px !important;
+  margin-left: 5px !important;
 }
 
 #feeds-holder .dijitTreeRowSelected {
@@ -97,7 +97,7 @@ color: #fdf6e3 !important;
   font-size: 10px !important;
   border-radius: 10px !important;
   margin: 2px 0 2px 10px !important;
-  padding: 0 6px 0 6px;
+  padding: 0 6px 0 7px;
 }
 
 #feeds-holder .counterNode.aux { background: #871c1c !important; }
