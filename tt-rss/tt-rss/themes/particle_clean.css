@@ -5,17 +5,18 @@
 /* STYLING ******************************************************************/
 
 /* right align logo */
-#main:after{ margin-left: 60px !important; }
+#main:after{ margin-left: 58px !important; }
 
 #feeds-holder .dijitTreeRow {
   font-size: 12px !important;
   padding-top: 9px !important;
   padding-bottom: 9px !important;
+  padding-right: 15px !important;
 }
 
 #feeds-holder .dijitTreeLabel {
   float: right !important;
-  margin-right: 1px !important;
+  margin-right: 5px !important;
 }
 
 #feeds-holder #feedTree {
@@ -28,8 +29,8 @@
   width: 175px !important;
 }
 
-#feeds-holder .dijitTreeLabel[id="dijit__TreeNode_1_label"] { margin-right: 18px !important; }
-#feeds-holder .dijitTreeLabel[id="dijit__TreeNode_7_label"] { margin-right: 18px !important; }
+/* #feeds-holder .dijitTreeLabel[id="dijit__TreeNode_1_label"] { margin-right: 18px !important; } */
+/* #feeds-holder .dijitTreeLabel[id="dijit__TreeNode_7_label"] { margin-right: 18px !important; } */
 
 /* img[src*='images/folder.png'] { background: url('particle_images/rss.png') no-repeat !important; } */
 

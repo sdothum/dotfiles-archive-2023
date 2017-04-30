@@ -293,6 +293,7 @@ d m tabbed
 ? amphetype-svn
   calc
   dictd
+  youtube-dl
   wego
 
 # vim: set ft=conf: #

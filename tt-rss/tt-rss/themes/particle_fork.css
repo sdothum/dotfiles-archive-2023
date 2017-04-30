@@ -70,13 +70,14 @@ div#notify.notify.notify_progress { display: none !important; }
   font-family: bold 10px Helvetica, Arial, sans-serif !important;
   border-top-left-radius: 36px !important;
   border-bottom-left-radius: 36px !important;
+  margin-left: 3px !important;
 }
 
 #feeds-holder .dijitTreeRowSelected {
   /* background: rgba(0,0,0,.05) url('particle_images/noise.png') 0 repeat !important; */
   /* background: #2A363B !important; */
   background: #871c1c !important;
-  color: #fff !important;
+color: #fdf6e3 !important;
 }
 
 #feeds-holder .dijitTreeLabel.Unread { font-weight: normal !important; }
@@ -95,7 +96,7 @@ div#notify.notify.notify_progress { display: none !important; }
   /* font-size: 9px !important; */
   font-size: 10px !important;
   border-radius: 10px !important;
-  margin: 2px 13px !important;
+  margin: 2px 0 2px 10px !important;
   padding: 0 6px 0 6px;
 }
 
@@ -132,8 +133,8 @@ div#notify.notify.notify_progress { display: none !important; }
 
 #feeds-holder .dijitTreeRowSelected:hover {
   /* background: #2A363B !important; */
-  background: #b5423f url('particle_images/noise.png') 0 repeat !important;
-  color: #AEE239 !important;
+  background: #c62929 url('particle_images/noise.png') 0 repeat !important;
+color: #ffff00 !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .counterNode.aux { background: #AEE239 !important; }
