@@ -77,7 +77,7 @@ div#notify.notify.notify_progress { display: none !important; }
   /* background: rgba(0,0,0,.05) url('particle_images/noise.png') 0 repeat !important; */
   /* background: #2A363B !important; */
   background: #871c1c !important;
-color: #fdf6e3 !important;
+  color: #fdf6e3 !important;
 }
 
 #feeds-holder .dijitTreeLabel.Unread { font-weight: normal !important; }
@@ -104,7 +104,10 @@ color: #fdf6e3 !important;
 
 #feeds-holder .dijitTreeRow:hover .counterNode { color: #2A363B !important; }
 
-#feeds-holder .dijitTreeRowSelected .counterNode { background: #7FAE00 !important; }
+#feeds-holder .dijitTreeRowSelected .counterNode { 
+  background: #AEE239 !important; 
+  color: #333 !important; 
+}
 
 #feeds-holder .dijitTreeExpando {
   /* margin: -1px 0 1px 15px; */
@@ -134,10 +137,13 @@ color: #fdf6e3 !important;
 #feeds-holder .dijitTreeRowSelected:hover {
   /* background: #2A363B !important; */
   background: #c62929 url('particle_images/noise.png') 0 repeat !important;
-color: #ffff00 !important;
+  color: #ffff00 !important;
 }
 
-#feeds-holder .dijitTreeRow:hover .counterNode.aux { background: #AEE239 !important; }
+#feeds-holder .dijitTreeRowSelected:hover .counterNode {
+  background: #719b17 !important;
+  color: #fdf6e3 !important;
+}
 
 /* main */
 #toolbar {
