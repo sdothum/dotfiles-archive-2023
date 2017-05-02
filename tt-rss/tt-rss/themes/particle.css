@@ -1,0 +1,132 @@
+@import url("particle_fork.css");
+
+/* clean condensed layout */
+
+/* STYLING ******************************************************************/
+
+/* right align logo */
+#main:after{
+  margin-left:       58px !important;
+}
+
+#feeds-holder .dijitTreeRow {
+  font-size:         12px !important;
+  padding-top:       9px !important;
+  padding-bottom:    9px !important;
+  padding-right:     15px !important;
+}
+
+#feeds-holder .dijitTreeLabel {
+  float:             right !important;
+  margin-right:      5px !important;
+}
+
+#feeds-holder #feedTree {
+  padding-top:       0 !important;
+  width:             175px !important;
+}
+
+#feeds-holder {
+  margin-left:       -20px !important;
+  width:             175px !important;
+}
+
+img[src*='images/star.png'] {
+  background:        url('particle_images/Bookmark.png') no-repeat !important;
+  opacity:           1.0 !important;
+}
+
+div#dijit__TreeNode_5 {
+  display:           none !important;
+}
+
+div#dijit__TreeNode_6 {
+  display:           none !important;
+}
+
+.dijitTreeLabel {
+  margin-left:       6px !important;
+}
+
+.cdm.expandable .cdmHeader div[style*="vertical-align : middle"] > .dijitCheckBox {
+  display:           none !important;
+}
+
+img[src*='images/mark_unset.png'] {
+  opacity:           0 !important;
+  margin-left:       -24px !important;
+}
+
+img[src*='images/mark_set.png'] {
+  background:        url('particle_images/Bookmark.png') no-repeat !important;
+  -ms-transform:     scale(0.8, 0.8);      /* IE 9 */
+  -webkit-transform: scale(0.8, 0.8); /* Safari */
+  transform:         scale(0.8.0.8) !important;
+  opacity:           .8 !important;
+  margin-left:       -24px !important;
+}
+
+img[src*='images/pub_set.png'] {
+  display:           none !important;
+}
+
+img[src*='images/pub_unset.png'] {
+  display:           none !important;
+}
+
+.cdmHeader .hlFeed {
+  margin-left:       -10px !important;
+}
+
+.cdm.expandable.Selected .cdmHeader .hlFeed {
+  margin-left:       -46px !important;
+}
+
+span.updated {
+  position:          absolute !important;
+  left:              2px !important;
+  top:               18px !important;
+  font-size:         7pt !important;
+  color:             #aaa !important;
+}
+
+.Selected span.updated {
+  /* top:            12px !important; */
+  top:               5px !important;
+  left:              7px !important;
+}
+
+div#headlines-frame[is-cat="0"] span.updated {
+  display:           none !important;
+}
+
+div#headlines-frame[feed-id="-1"] span.updated {
+  display:           block !important;
+}
+
+div#headlines-frame[feed-id="-3"] span.updated {
+  display:           block !important;
+}
+div#headlines-frame[feed-id="-4"] span.updated {
+  display:           block !important;
+}
+
+div#headlines-frame[feed-id="-6"] span.updated {
+  display:           block !important;
+}
+
+.scoreWrap {
+  display:           none !important;
+}
+
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
+  width:             95px !important;
+}
+
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed a {
+  max-width:         75px !important;
+}
+
+div#notify.notify {
+  display:           none !important;
+}
