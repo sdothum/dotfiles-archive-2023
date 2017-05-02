@@ -270,7 +270,7 @@ esac
 [ $noshift ] || shift
 
 # filenames may have blanks, hence, usage of while vs for i in $@
-while [ $# -gt 0 ]
+while [ $1 ]
 do
   # set date to file modification date
   time=$(date -r "$1" +'%B %-d, %Y')

@@ -46,6 +46,5 @@ list() {
 cd $HOME/.vim/config
 # f1 vim call uses more
 [ $title ] && list | less -RX || list | more
-cd - >/dev/null
 
 # vim: set ft=sh: #

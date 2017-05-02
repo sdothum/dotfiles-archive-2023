@@ -58,7 +58,6 @@ case $1 in
         sudo rm -r $HOME/Maildir/*
         cd $HOME/stow
         stow mail
-        cd -
         imap 1 $2
         annotate "index with "mailcot"\n
 filter with "imap f allmail"\n

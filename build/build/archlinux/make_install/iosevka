@@ -6,23 +6,41 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [double | amphetype]"
+  echo "usage: $(basename $0) iosevka [double | single | amphetype] [leading <height>]"
   exit 1
 }
 
-case $2 in
-  ''       ) ;;
-  double   ) storey=$2 ;;
-  amphetype) amphetype=-amphetype ;;
-  *        ) usage ;;
-esac
+# basename is make_install, $1 == iosevka
+shift
+storey=double
+leading=1250
+
+while [ $1 ]
+do
+  case $1 in
+    double) storey=double ;;
+
+    single) storey=single
+            family=-single ;;
+
+    amphetype) storey=double
+               family=-amphetype
+               leading=1850 ;;
+
+    leading) leading=$2
+             shift ;;
+
+    *) usage ;;
+  esac
+  shift
+done
 
 shape='sans'
 # alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
 alpha='v-l-hooky v-i-hooky v-g-singlestorey v-m-longleg'
 math='v-zero-slashed v-tilde-low v-asterisk-high v-caret-high v-brace-curly'
 symbol='v-paragraph-high v-at-long v-eszet-sulzbacher'
-upright="$shape $alpha v-a-${storey:-single}storey $math $symbol"
+upright="$shape $alpha v-a-${storey}storey $math $symbol"
 design=$upright
 italic="$shape $alpha v-a-singlestorey $math $symbol"
 oblique=$italic
@@ -42,22 +60,15 @@ fi
 # ensure node.js is uptodate
 npm install
 
-if [ $amphetype ] ;then
-  sed -i -re "/^family =/s/'Iosevka'/'Iosevka$amphetype'/" \
-    -e "/^leading =/s/= ([0-9]*)/= 1850/" \
+sed -i -re "/^family =/s/'Iosevka'/'Iosevka$family'/" \
+    -e "/^leading =/s/= ([0-9]*)/= $leading/" \
     /net/depot/Iosevka/parameters.toml
-else
-  [ $storey ] && storey=-$storey
-  sed -i -re "/^family =/s/'Iosevka-.*'/'Iosevka$storey'/" \
-    -e "/^leading =/s/= ([0-9]*)/= 1250/" \
-    /net/depot/Iosevka/parameters.toml
-fi
 
 make custom-config upright="$upright" italic="$italic" design="$design" oblique="$oblique"
 make custom
 
-rm -rf $HOME/.fonts/iosevka$storey$amphetype
-cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$storey$amphetype
+rm -rf $HOME/.fonts/iosevka$family
+cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$family
 sudo fc-cache -fv
 fc-cache -fv
 

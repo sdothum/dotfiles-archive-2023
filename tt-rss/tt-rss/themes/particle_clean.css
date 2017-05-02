@@ -29,9 +29,6 @@
   width: 175px !important;
 }
 
-/* #feeds-holder .dijitTreeLabel[id="dijit__TreeNode_1_label"] { margin-right: 18px !important; } */
-/* #feeds-holder .dijitTreeLabel[id="dijit__TreeNode_7_label"] { margin-right: 18px !important; } */
-
 /* img[src*='images/folder.png'] { background: url('particle_images/rss.png') no-repeat !important; } */
 
 img[src*='images/star.png'] {
@@ -109,3 +106,4 @@ div#notify.notify { display: none !important; }
 /*   padding: 0 5px 0 5px; */
 /*   /* margin: 2px 13px !important; */ */
 /* } */
+

@@ -103,6 +103,7 @@
 # fasd
   fzf
 # prezto-git
+  pv
   ripgrep
 # zsh-doc
 # zsh-autosuggestions

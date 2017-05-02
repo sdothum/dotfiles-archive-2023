@@ -82,8 +82,7 @@ pass I || exit" >$image
      done
      echo "rm -f $image" >>$image
      chmod -c 700 $image
-     zip -mP "$(passphrase pass/master)" ${image%.sh} $image
-     cd - ;;
+     zip -mP "$(passphrase pass/master)" ${image%.sh} $image ;;
 
   *) if [ $# -eq 1 ] ;then
        if password=$(/usr/bin/pass $1) ;then

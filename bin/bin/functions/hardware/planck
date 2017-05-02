@@ -13,12 +13,11 @@ usage() {
 
 [ $1 ] || usage
 
-if-no 'sync qmk_firmware repo' || { cd $HOME/build/qmk_firmware; git pull; }
+if-no 'sync qmk_firmware repo' || ( cd $HOME/build/qmk_firmware && git pull )
 
 cd $HOME/build/qmk_firmware/keyboards/planck
 sudo make clean >/dev/null
 sudo make KEYMAP=$1 $2
 sudo chown -R $USER:users $HOME/build/qmk_firmware
-cd -
 
 # vim: set ft=sh: #

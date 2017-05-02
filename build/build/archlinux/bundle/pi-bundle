@@ -43,6 +43,7 @@ g term-ansicolor
   figlet
   fish
   fzf
+  pv
 
 
 = system monitor

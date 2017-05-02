@@ -136,6 +136,4 @@ case $1 in
      [ $pending ] && pending ;;
 esac
 
-cd - >/dev/null
-
 # vim: set ft=sh: #
