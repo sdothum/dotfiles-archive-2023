@@ -324,7 +324,7 @@ div#notify.notify.notify_progress {
 }
 
 .cdm.expandable:not(.active) .cdmHeader span.updated {
-  padding-top:               8px !important;
+  padding-top:               6px !important;
 }
 
 .cdm.expandable.active .cdmHeader span.updated {
@@ -405,6 +405,11 @@ span.updated {
 .hlLeft > *,
 .hlRight > * {
   margin-top:                -5px !important;
+}
+
+.cdm.expandable:not(.active) .cdmHeader > * {
+  padding-top:               0 !important;
+  padding-bottom:            9px !important;
 }
 
 .cdmHeader .hlFeed a {
