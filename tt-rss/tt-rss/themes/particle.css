@@ -51,7 +51,7 @@ div#dijit__TreeNode_6 {
   margin-left:    6px !important;
 }
 
-.cdm.expandable .cdmHeader div[style*="vertical-align: middle"] > .dijitCheckBox {
+.cdm.expandable .dijitCheckBox {
   display:        none !important;
 }
 
@@ -61,13 +61,13 @@ img[src*='images/mark_unset.png'] {
 }
 
 img[src*='images/mark_set.png'] {
-  -ms-transform:     scale(0.8, 0.8); /* IE 9 */
-  -webkit-transform: scale(0.8, 0.8); /* Safari */
-
   background:     url('particle_images/Bookmark.png') no-repeat !important;
   transform:      scale(0.8.0.8) !important;
   opacity:        .8 !important;
   margin-left:    -24px !important;
+
+  -ms-transform:     scale(0.8, 0.8); /* IE 9 */
+  -webkit-transform: scale(0.8, 0.8); /* Safari */
 }
 
 img[src*='images/pub_set.png'] {

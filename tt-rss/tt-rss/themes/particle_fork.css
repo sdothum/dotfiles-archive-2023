@@ -632,9 +632,9 @@ input[type="checkbox"] {
 /* border radius for radio*/
 /* border radius for checkbox */
 input[type="checkbox"] {
-  -webkit-border-radius:     0 !important;
-
   border-radius:             0 !important;
+
+  -webkit-border-radius:     0 !important;
 }
 
 /* hover state */
