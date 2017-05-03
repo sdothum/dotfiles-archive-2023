@@ -1,16 +1,5 @@
 @import url("particle_base.css");
 
-/* FROM TT-RSS.CSS **********************************************************/
-/* @66 */
-/* @129 */
-/* @227 */
-/* @268 */
-/* @422 */
-/* @611 */
-/* @745 */
-/* @882 */
-/* @933 */
-/* @1029 */
 /* RESET ********************************************************************/
 
 html {
@@ -635,80 +624,4 @@ input[type="checkbox"] {
   border-radius:             0 !important;
 
   -webkit-border-radius:     0 !important;
-}
-
-/* hover state */
-/* active state */
-/* focus state */
-/* input checked border color */
-/* radio checked */
-/* checkbox checked */
-/* disabled input */
-/* style label for disabled input */
-/* MODS *********************************************************************/
-
-select.attachments {
-  font-size:                 12px !important;
-  color:                     #999 !important;
-}
-
-button.expandPrompt {
-  background:                #2A363B !important;
-  color:                     #fff !important;
-  font-size:                 12px !important;
-  border:                    none !important;
-  border-radius:             0 12px 12px 0 !important;
-}
-
-#ttrssPrefs * {
-  border-radius:             0 !important;
-}
-
-#feeds-holder {
-  margin-top:                125px !important;
-}
-
-/* 'logo' */
-#main:after {
-  content:                   "●gravit○n" !important;
-  font:                      22px Helvetica, Arial, sans-serif !important;
-  color:                     #871c1c !important;
-  text-shadow:               0 1px 1px #fff !important;
-  letter-spacing:            2px !important;
-  position:                  fixed !important;
-  margin-top:                70px !important;
-}
-
-/* end of feed marker */
-#headlines-spacer {
-  position:                  relative !important;
-  height:                    100% !important;
-}
-
-#headlines-spacer:after {
-  content:                   "refresh●gravit○n" !important;
-  font:                      18px Helvetica, Arial, sans-serif !important;
-  color:                     #b5423f !important;
-  text-shadow:               0 1px 1px #fff !important;
-  letter-spacing:            1px !important;
-  position:                  absolute !important;
-  bottom:                    0 !important;
-  right:                     -35px !important;
-  left:                      -35px !important;
-  padding:                   10px !important;
-  background:                #ddd url('particle_images/noise.png') 0 repeat !important;
-  text-align:                center !important;
-}
-
-.whiteBox + #headlines-spacer {
-  display:                   none !important;
-}
-
-/* disable and cover the floating title white space on feed refresh! */
-#floatingTitle:not(:empty) {
-  display:                   none !important;
-}
-
-#headlines-frame:before {
-  margin-top:                -25px !important;
 }

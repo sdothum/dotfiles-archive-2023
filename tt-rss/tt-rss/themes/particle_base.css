@@ -380,13 +380,13 @@ img,
 #main_toolbar_form,
 .actionChooser {
   display:             table-cell;
-  /* white-space:             nowrap; */
+  /* white-space:      nowrap; */
 }
 
 .actionChooser {
   position:            absolute;
   text-align:          right;
-  /* position:                absolute; */
+  /* position:         absolute; */
   top:                 4px;
   right:               7px;
 }
@@ -585,7 +585,7 @@ a:hover {
 }
 
 #ttrssMain .dijitDialogCloseIcon:before {
-  content:                    '\00d7';
+  content:             '\00d7';
 }
 
 #ttrssMain .dijitDialogPaneContent {
@@ -1821,7 +1821,7 @@ input[type="radio"]:checked:before {
 input[type="checkbox"]:checked:before {
   font-weight:         bold;
   color:               rgba(0,0,0,.7);
-  content:                    '\2713';
+  content:             '\2713';
   margin-left:         2px;
   font-size:           .9em;
 
