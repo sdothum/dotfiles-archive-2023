@@ -25,7 +25,7 @@
       nmap <leader>e           :echo errmsg<CR>
 
       " clear messages after awhile to keep screen clean and distraction free!
-      autocmd gui cursorhold * echo
+      autocmd gui CursorHold * echo
 
     " .................................................................. Display
 

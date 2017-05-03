@@ -45,7 +45,7 @@
         " set fillchars+=stl:\ "
         call Theme()
         call DfmWriting()
-        call VimWikiLink()                  " restore vimwiki link
+        call VimwikiLink()                  " restore vimwiki link
         execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
         execute 'Limelight'
         set colorcolumn=0
@@ -69,6 +69,7 @@
         if s:proof == 0
           if &filetype == 'vimwiki'
             " hack to apply more robust markdown syntax highlighting
+            " note: this hack may break vimwiki navigation in the future!
             set filetype=markdown
             call ProseView()
             " force margin centering
