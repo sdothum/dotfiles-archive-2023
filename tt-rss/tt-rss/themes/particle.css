@@ -1,4 +1,4 @@
-@import url("particle_fork.css");
+@import url('particle_fork.css');
 
 /* clean condensed layout
  *
@@ -147,20 +147,21 @@ button.expandPrompt {
   border-radius:  0 !important;
 }
 
-#feeds-holder {
-  margin-top:     125px !important;
-}
-
-/* 'logo' */
+/* 'logo' hack adjusts width for #feed-holder right alignment */
 #main:after {
-  content:        "●gravit○n" !important;
+  content:        '●gravit○n' !important;
   font:           22px Helvetica, Arial, sans-serif !important;
   color:          #871c1c !important;
   text-shadow:    0 1px 1px #fff !important;
   letter-spacing: 2px !important;
   position:       fixed !important;
   margin-top:     70px !important;
-  margin-left:    58px !important;
+  width:          167px !important;
+  text-align:     right !important;
+}
+
+#feeds-holder {
+  margin-top:     125px !important;
 }
 
 /* end of feed marker */
@@ -170,7 +171,7 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content:        "refresh●gravit○n" !important;
+  content:        'refresh●gravit○n' !important;
   font:           18px Helvetica, Arial, sans-serif !important;
   color:          #b5423f !important;
   text-shadow:    0 1px 1px #fff !important;
