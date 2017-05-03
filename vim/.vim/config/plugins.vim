@@ -14,7 +14,11 @@
     " ...................................................................... Ale
 
       let g:ale_sign_column_always = 1
-      let g:ale_linter_aliases     = { 'vimwiki' : 'markdown' }
+      let g:ale_linter_aliases     =
+        \{
+        \  'vimwiki' : 'markdown'
+        \, 'mail'    : 'markdown'
+        \}
 
       nmap <silent> <C-k> <Plug>(ale_previous_wrap)
       nmap <silent> <C-j> <Plug>(ale_next_wrap)
