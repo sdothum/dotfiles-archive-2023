@@ -11,6 +11,14 @@
         autocmd!
       augroup END
 
+    " ...................................................................... Ale
+
+      let g:ale_sign_column_always = 1
+      let g:ale_linter_aliases     = { 'vimwiki' : 'markdown' }
+
+      nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+      nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
     " ............................................................... Auto-pairs
 
       let g:AutoPairsMapBS    = 1           " auto delete symbol pairs
@@ -19,12 +27,12 @@
     " ............................................................... Easy-align
 
       let g:easy_align_delimiters =
-        \{
-        \  '>' : { 'pattern' : '>>\|=>\|>' }
-        \, '^' : { 'pattern' : '=',        'left_margin' : 0, 'right_margin' : 0, 'align' : 'right' }
-        \, '(' : { 'pattern' : '(',        'left_margin' : 1, 'right_margin' : 0 }
-        \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
-        \}
+            \{
+            \  '>' : { 'pattern' : '>>\|=>\|>' }
+            \, '^' : { 'pattern' : '=',        'left_margin' : 0, 'right_margin' : 0, 'align' : 'right' }
+            \, '(' : { 'pattern' : '(',        'left_margin' : 1, 'right_margin' : 0 }
+            \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
+            \}
 
       vmap <Enter>   <Plug>(EasyAlign)
       nmap <leader>a <Plug>(EasyAlign)

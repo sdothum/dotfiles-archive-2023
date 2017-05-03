@@ -294,6 +294,7 @@ d m tabbed
 ? amphetype-svn
   calc
   dictd
+  python-proselint
   youtube-dl
   wego
 

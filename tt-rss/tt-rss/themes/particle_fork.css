@@ -148,6 +148,11 @@ div#notify.notify.notify_progress {
   color:                     #fdf6e3 !important;
 }
 
+#feeds-holder .dijitTreeRow:hover .counterNode.aux {
+  background:                #c62929 !important;
+  color:                     #fdf6e3 !important;
+}
+
 /* main */
 #toolbar {
   margin-right:              -19px !important;

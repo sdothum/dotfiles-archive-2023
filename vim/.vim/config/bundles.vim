@@ -63,6 +63,10 @@
       " Plug 'greyblake/vim-preview'            " markdown
       Plug 'vimwiki/vimwiki'                    " markdown wiki
 
+    " ................................................................... Linter
+
+      Plug 'w0rp/ale'                           " asynchronous lint engine
+
   " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................... Navigation
