@@ -47,8 +47,10 @@
       nmap <silent><leader><leader>vi :buffer .vimrc<CR>:autocmd!<CR>:source $MYVIMRC<CR>
 
       " load .vimrc after save
-      autocmd startup BufWritePost $MYVIMRC nested source $MYVIMRC
-      autocmd startup BufWritePost ~/.vim/config/* buffer $MYVIMRC | source $MYVIMRC
-      autocmd startup BufWinEnter  *.vim           set filetype=vim
+      autocmd! startup BufWritePost $MYVIMRC        nested
+        \ source $MYVIMRC | call Refresh()
+      autocmd! startup BufWritePost ~/.vim/config/* nested
+        \ buffer $MYVIMRC | source $MYVIMRC | call Refresh()
+      autocmd  startup BufWinEnter  *.vim           set filetype=vim
 
 " startup.vim

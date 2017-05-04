@@ -142,7 +142,7 @@
         call LiteType()
       endfunction
 
-      nmap <silent><F7> :call LiteSwitch()<CR>
+      nmap <silent><F7>   :call LiteSwitch()<CR>
 
       function! LiteFix()
         " fix solarized colour shifts resulting from toggling(!)
@@ -167,7 +167,7 @@
         endif
       endfunction
 
-      nmap <silent><C-F7>      :call LiteFix()<CR>
+      nmap <silent><C-F7> :call LiteFix()<CR>
 
       autocmd theme BufEnter * call LiteFix()
 
@@ -225,6 +225,6 @@
         endif
       endfunction
 
-      nmap <silent><S-F7>      :call FontSwitch()<CR>
+      nmap <silent><S-F7> :call FontSwitch()<CR>
 
 " themes.vim

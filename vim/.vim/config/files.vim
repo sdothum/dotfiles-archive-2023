@@ -12,11 +12,11 @@
       augroup filetype
         autocmd!
         autocmd Filetype conf    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-        autocmd Filetype draft   setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
+        autocmd Filetype draft   setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
         autocmd Filetype fish    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
         autocmd Filetype haskell setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
         autocmd Filetype lua     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-        autocmd Filetype mail    setlocal spell wrap enc=utf-8 formatoptions=twa1 textwidth=72 syntax=mail
+        autocmd Filetype mail    setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
         autocmd Filetype python  setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
         autocmd Filetype ruby    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
         autocmd Filetype shell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2

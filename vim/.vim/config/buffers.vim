@@ -18,50 +18,54 @@
     " .............................................................. Buffer open
 
       " check file sensitivity, even though may be sudoed
-      " autocmd buffer BufRead   *   if expand('%:p') !~ $HOME | set nomodifiable | endif
+      " autocmd buffer BufRead   *
+      "   \ if expand('%:p') !~ $HOME | set nomodifiable | endif
       " vim8 bug doesn't allow toggling &modifiable so set modifiable on globally
-      autocmd buffer BufWinEnter *   if &filetype != 'help' | set modifiable | endif
+      autocmd buffer BufWinEnter *
+        \ if &filetype != 'help' | set modifiable | endif
       " always switch to the current file directory, unless uri
-      autocmd buffer BufEnter    *   if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
+      autocmd buffer BufEnter    *
+        \ if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
       " return to last edit position when opening files (You want this!)
-      autocmd buffer BufReadPost *   if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
+      autocmd buffer BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
 
     " ...................................................... Buffer close / save
 
       " close buffer
-      nmap <silent><leader>d         :silent bdelete!<CR>
+      nmap <silent><leader>d    :silent bdelete!<CR>
       " Fast saving
-      nmap <silent><leader>w         :silent write!<CR>
+      nmap <silent><leader>w    :silent write!<CR>
       " sudo save
-      nmap <leader>W                 :silent write !sudo tee % >/dev/null<CR>
+      nmap <leader>W            :silent write !sudo tee % >/dev/null<CR>
       " (write and) close buffers
-      nmap <silent><leader>zz        :silent wqall!<CR>
-      nmap <silent><leader>qq        :silent qall!<CR>
+      nmap <silent><leader>zz   :silent wqall!<CR>
+      nmap <silent><leader>qq   :silent qall!<CR>
 
       " pre-write formatting
-      autocmd buffer BufWritePre *   call StripTrailingWhitespaces()
-      autocmd buffer FocusLost   *   call StripTrailingWhitespaces()
+      autocmd buffer BufWritePre * call StripTrailingWhitespaces()
+      autocmd buffer FocusLost   * call StripTrailingWhitespaces()
       " save on losing focus
-      autocmd buffer FocusLost   *   silent! :wall
+      autocmd buffer FocusLost   * silent! :wall
 
     " ......................................................... Buffer switching
 
       " goto buffer (just fingering convenience)
-      nmap <leader>b                 :b<Space>
+      nmap <leader>b            :b<Space>
       " query current buffer
-      nmap <leader>B                 :echo expand('%:p')<CR>
+      nmap <leader>B            :echo expand('%:p')<CR>
 
       " silence vim's default (command line) file info message, note silent..silent
       vmap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
       imap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
-      nmap <silent><S-PageUp>        :silent bprevious<CR>
+      nmap <silent><S-PageUp>   :silent bprevious<CR>
       vmap <silent><S-PageDown> <ESC>:silent bnext<CR>
       imap <silent><S-PageDown> <ESC>:silent bnext<CR>
-      nmap <silent><S-PageDown>      :silent bnext<CR>
+      nmap <silent><S-PageDown> :silent bnext<CR>
       " switch to previously edited/viewed buffer
       vmap <silent><C-BS>       <ESC>:silent e #<CR>
       imap <silent><C-BS>       <ESC>:silent e #<CR>
-      nmap <silent><C-BS>            :silent e #<CR>
+      nmap <silent><C-BS>       :silent e #<CR>
 
   " Window actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -109,22 +113,22 @@
       set foldnestmax=3                     " deepest fold is 3 levels
 
       " toggle fold tag / open all
-      noremap <leader>z              za
-      noremap <leader>Z              zA
-      noremap <leader><leader>z      zR
+      noremap <leader>z         za
+      noremap <leader>Z         zA
+      noremap <leader><leader>z zR
 
     " ........................................................... Folding levels
 
-      nmap <silent><leader>0         :set foldlevel=0<CR>
-      nmap <silent><leader>1         :set foldlevel=1<CR>
-      nmap <silent><leader>2         :set foldlevel=2<CR>
-      nmap <silent><leader>3         :set foldlevel=3<CR>
-      nmap <silent><leader>4         :set foldlevel=4<CR>
-      nmap <silent><leader>5         :set foldlevel=5<CR>
-      nmap <silent><leader>6         :set foldlevel=6<CR>
-      nmap <silent><leader>7         :set foldlevel=7<CR>
-      nmap <silent><leader>8         :set foldlevel=8<CR>
-      nmap <silent><leader>9         :set foldlevel=9<CR>
+      nmap <silent><leader>0    :set foldlevel=0<CR>
+      nmap <silent><leader>1    :set foldlevel=1<CR>
+      nmap <silent><leader>2    :set foldlevel=2<CR>
+      nmap <silent><leader>3    :set foldlevel=3<CR>
+      nmap <silent><leader>4    :set foldlevel=4<CR>
+      nmap <silent><leader>5    :set foldlevel=5<CR>
+      nmap <silent><leader>6    :set foldlevel=6<CR>
+      nmap <silent><leader>7    :set foldlevel=7<CR>
+      nmap <silent><leader>8    :set foldlevel=8<CR>
+      nmap <silent><leader>9    :set foldlevel=9<CR>
 
   " System actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -141,11 +145,11 @@
         endif
       endfunction
 
-      nmap <silent><leader>ha        :silent call Hardcopy()<CR>:echo 'Printing..'<CR>
+      nmap <silent><leader>ha   :silent call Hardcopy()<CR>:echo 'Printing..'<CR>
 
     " ............................................................ Open terminal
 
       " open shell session in buffer directory
-      nmap <silent><leader>te        :silent call system('term "vimterm" STACK')<CR>
+      nmap <silent><leader>te   :silent call system('term "vimterm" STACK')<CR>
 
 " buffers.vim
