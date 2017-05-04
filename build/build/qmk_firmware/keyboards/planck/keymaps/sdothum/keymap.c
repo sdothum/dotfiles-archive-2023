@@ -464,8 +464,7 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int s
   }
   else if (state->pressed) {
     if (set_layer != 0) {
-      key_timer = state->timer;             // see quantum/process_keycode/process_tap_dance.c
-      layer     = set_layer;
+      layer_on(set_layer);
     }
   }
   else {
@@ -486,10 +485,9 @@ void paren_layer(qk_tap_dance_state_t *state, void *user_data)
   tap_pair(state, S_ALWAYS, KC_9, KC_0, _HEXSYM);
 }
 
-void layer_reset(qk_tap_dance_state_t *state, void *user_data)
+void hexsym_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  layer_off(layer);
-  layer = 0;
+  layer_off(_HEXSYM);
 }
 
 void paren(qk_tap_dance_state_t *state, void *user_data)
@@ -534,10 +532,10 @@ void space(qk_tap_dance_state_t *state, void *user_data)
   if (state->count > 1) {
     register_code  (KC_SPC);
     unregister_code(KC_SPC);
-    register_code  (KC_LSFT);
+    layer_on(_LSHIFT);
   }
   else if (state->pressed) {
-    register_code  (KC_LSFT);
+    layer_on(_LSHIFT);
   }
   else {
     register_code  (KC_SPC);
@@ -548,12 +546,12 @@ void space(qk_tap_dance_state_t *state, void *user_data)
 
 void shift_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  unregister_code(KC_LSFT);
+  layer_off(_LSHIFT);
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_SPRN] = {
-    .fn = { NULL, paren_layer, layer_reset },
+    .fn = { NULL, paren_layer, hexsym_reset },
     .user_data = NULL
   }
   ,[_SPC] = {
