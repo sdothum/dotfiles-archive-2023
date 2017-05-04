@@ -7,7 +7,7 @@
 #define PREVENT_STUCK_MODIFIERS
 
 // tap dance key press termination interval
-#define TAPPING_TERM   200
+#define TAPPING_TERM   250
 
 // reserve dynamic macro buffer size
 #define DYNAMIC_MACRO_SIZE 32

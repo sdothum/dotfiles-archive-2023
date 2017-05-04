@@ -447,6 +447,7 @@ void matrix_scan_user(void)
 
 void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int set_layer)
 {
+  // double tap: left right
   if (state->count > 1) {
     if (shift & S_DOUBLE) {
       register_code  (KC_LSFT);
@@ -462,11 +463,13 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int s
     // register_code  (KC_LEFT);
     // unregister_code(KC_LEFT);
   }
+  // down: layer
   else if (state->pressed) {
     if (set_layer != 0) {
       layer_on(set_layer);
     }
   }
+  // tap: left
   else {
     if (shift & S_SINGLE) {
       register_code  (KC_LSFT);
@@ -530,14 +533,23 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
+  // double tap down: repeating space
+  if (state->count > 2) {
+    register_code  (KC_SPC);
+    unregister_code(KC_SPC);
+    register_code  (KC_SPC);
+  }
+  // tap down: space shift
+  else if (state->count > 1) {
     register_code  (KC_SPC);
     unregister_code(KC_SPC);
     layer_on(_LSHIFT);
   }
+  // down: shift
   else if (state->pressed) {
     layer_on(_LSHIFT);
   }
+  // tap: space
   else {
     register_code  (KC_SPC);
     unregister_code(KC_SPC);
@@ -547,6 +559,7 @@ void space(qk_tap_dance_state_t *state, void *user_data)
 
 void shift_reset(qk_tap_dance_state_t *state, void *user_data)
 {
+  unregister_code(KC_SPC);
   layer_off(_LSHIFT);
 }
 
