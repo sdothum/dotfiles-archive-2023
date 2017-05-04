@@ -106,11 +106,10 @@ enum planck_keycodes {
  ,_CAlt   = OSM(MOD_LALT | MOD_LCTL)
  ,_Sft    = OSM(MOD_LSFT)
  ,Esc     = LT (_NUMBER, KC_ESC)
- ,Spc     = LT (_LSHIFT, KC_SPC)           // see process_record_user() for extended handling of Spc
  ,Tab     = LT (_FNCKEY, KC_TAB)
  ,Bspc    = LT (_ADJUST, KC_BSPC)
  ,Ent     = LT (_RSHIFT, KC_ENT)
- ,Left    = LT (_SYMBOL, KC_LEFT)          // see process_record_user() for extended handling of Left
+ ,Left    = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling of Left
 };
 
 #include "dynamic_macro.h"
@@ -123,6 +122,7 @@ enum tap_dance {
  ,_LT
  ,_QUOT
  ,_CAPS
+ ,_SPC
 };
 
 // modifier keys
@@ -141,6 +141,7 @@ enum tap_dance {
 #define __Lt    TD(_LT)
 #define __Quot  TD(_QUOT)
 #define __Caps  TD(_CAPS)
+#define __Spc   TD(_SPC)                    // see process_record_user() for extended handling of Spc
 
 // layer keys
 #define REGEX   MO(_REGEX)
@@ -184,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    __Caps,  _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
     {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _CAlt,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
     {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _SGui,   KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot },
-    {_Ctl,    _Gui,    _Alt,    Esc,     Spc,     Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
+    {_Ctl,    _Gui,    _Alt,    Esc,     __Spc,   Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
   },
 
 // ...................................................................... Plover
@@ -519,8 +520,8 @@ void quote(qk_tap_dance_state_t *state, void *user_data)
 void caps(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
-    register_code   (KC_CAPS);
-    unregister_code (KC_CAPS);
+    register_code  (KC_CAPS);
+    unregister_code(KC_CAPS);
   }
   else {
     set_oneshot_mods(MOD_LSFT);
@@ -528,9 +529,35 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void space(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code  (KC_SPC);
+    unregister_code(KC_SPC);
+    register_code  (KC_LSFT);
+  }
+  else if (state->pressed) {
+    register_code  (KC_LSFT);
+  }
+  else {
+    register_code  (KC_SPC);
+    unregister_code(KC_SPC);
+  }
+  reset_tap_dance(state);
+}
+
+void shift_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_code(KC_LSFT);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_SPRN] = {
     .fn = { NULL, paren_layer, layer_reset },
+    .user_data = NULL
+  }
+  ,[_SPC] = {
+    .fn = { NULL, space, shift_reset },
     .user_data = NULL
   }
  ,[_LPRN] = ACTION_TAP_DANCE_FN(paren)
@@ -657,7 +684,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     // LT (_LSHIFT, KC_SPC) handling extensions
-    case Spc:
+    case __Spc:
       rolling_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
     // emulate LT (_SFTNAV, S(KC_BSLS))
