@@ -527,6 +527,7 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+// augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
