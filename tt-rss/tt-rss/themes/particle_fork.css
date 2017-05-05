@@ -88,8 +88,8 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected .counterNode {
-  background:                #AEE239 !important;
-  color:                     #333 !important;
+  background:                #ecf4ff !important;
+  color:                     #871c1c !important;
 }
 
 #feeds-holder .dijitTreeExpando {

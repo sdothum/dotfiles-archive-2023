@@ -634,7 +634,7 @@ a:hover {
   width:               100%;
   height:              100%;
   text-align:          center;
-  background:          #eee url('particle_images/noise.png') 0 repeat !important ;
+  background:          #eee url('particle_images/noise.png') 0 repeat !important;
 }
 
 #overlay:before {
