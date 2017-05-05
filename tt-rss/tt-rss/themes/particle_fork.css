@@ -124,7 +124,7 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRow:hover {
-  background:                #ddd url('particle_images/noise.png') 0 repeat !important;
+  background:                #e7dec3 url('particle_images/noise.png') 0 repeat !important;
   color:                     #2A363B !important;
 }
 
@@ -137,7 +137,7 @@ div#notify.notify.notify_progress {
   /* background:             #AEE239 !important; */
   /* color:                  #2A363B !important; */
   background:                #859900 !important;
-  color:                     #fdf6e3 !important;
+  color:                     #ffffff !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .counterNode.aux {
