@@ -124,7 +124,7 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRow:hover {
-  background:                #e7dec3 url('particle_images/noise.png') 0 repeat !important;
+  background:                #dfd4b1 url('particle_images/noise.png') 0 repeat !important;
   color:                     #2A363B !important;
 }
 
