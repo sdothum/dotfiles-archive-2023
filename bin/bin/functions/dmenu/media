@@ -9,7 +9,7 @@
 media=$(previous media)
 while :
 do
-  media=$(echo "animation\nanime\nmovies\nseries\nebooks\nreferences\nnzb\ntorrent" |
+  media=$(echo "animation\nanime\nmovies\nnetflix\nseries\nebooks\nreferences\nnzb\ntorrent" |
           rmenu 'Media' $media -no-custom) || exit
 
   mhistory media $media
@@ -22,6 +22,9 @@ do
     references) dmenu references ;;
     series    ) dmenu series ;;
     torrent   ) exec toggle term 'Torrent' rtorrent ;;
+
+    netflix) netflix
+             pwait netflix ;;
   esac
 done
 

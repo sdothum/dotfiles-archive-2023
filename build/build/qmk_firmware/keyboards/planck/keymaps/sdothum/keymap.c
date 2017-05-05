@@ -17,16 +17,9 @@
 //   avr-libc-atmel
 //   dfu-programmer
 //
-// Attention
-// ▔▔▔▔▔▔▔▔▔
-//   Turn layer_off _ADJUST before setting default layer, else a usb reset
-//   will be necessary (disconnect, connect) after changing layouts
-//
 // Notes
 // ▔▔▔▔▔
 //   ** S P L I T ** Layout
-//
-//   New colemak-dh, number, symbol/function, navigation pad and dynamic macro layers
 //
 //   Autocompletion tap dance key pairs (),[],{} are available from the
 //   number/symbol layer, as well as, numerous (un)shift key values
@@ -85,7 +78,6 @@ enum planck_layers {
  ,_SFTNAV
  ,_FNCKEY
  ,_ADJUST
- ,_DYN
 };
 
 enum planck_keycodes {
@@ -95,7 +87,6 @@ enum planck_keycodes {
  ,STab      // pseudo LT (_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,SLeft     // pseudo LT (_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,Pipe      // pseudo LT (_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
- ,DYNAMIC_MACRO_RANGE
  ,_Ctl    = OSM(MOD_LCTL)
  ,_Gui    = OSM(MOD_LGUI)
  ,_Alt    = OSM(MOD_LALT)
@@ -111,8 +102,6 @@ enum planck_keycodes {
  ,Ent     = LT (_RSHIFT, KC_ENT)
  ,Left    = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling of Left
 };
-
-#include "dynamic_macro.h"
 
 enum tap_dance {
   _SPRN = 0
@@ -146,8 +135,6 @@ enum tap_dance {
 // layer keys
 #define REGEX   MO(_REGEX)
 #define SHIFT   MO(_SHIFT)
-#define ADJUST  MO(_ADJUST)
-#define DYNAMIC MO(_DYN)
 
 // keycodes
 #define ___x___ KC_TRNS
@@ -160,10 +147,6 @@ enum tap_dance {
 #define S_PGUP  S(KC_PGUP)
 #define S_RGHT  S(KC_RGHT)
 #define S_UP    S(KC_UP)
-#define RECORD1 DYN_REC_START1
-#define RECORD2 DYN_REC_START2
-#define PLAY1   DYN_MACRO_PLAY1
-#define PLAY2   DYN_MACRO_PLAY2
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -202,12 +185,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |      |      |   A  |   O  |      |      |      |   E  |   U  |      |      | Exit |
   // `-----------------------------------------------------------------------------------'
 
-  [_PLOVER] = {
-    {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    _______, KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-    {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-    {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    _______, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-    {_______, _______, KC_C,    KC_V,    _______, _______, _______, KC_N,    KC_M,    _______, _______, PLOVEX },
-  },
+  // [_PLOVER] = {
+  //   {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    _______, KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
+  //   {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+  //   {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    _______, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+  //   {_______, _______, KC_C,    KC_V,    _______, _______, _______, KC_N,    KC_M,    _______, _______, PLOVEX },
+  // },
 
 // ............................................................... Shift Colemak
 //
@@ -370,14 +353,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
 
-// ................................................................ Adjust Layer
+// .......................................................... Macro Adjust Layer
 //
 // http://www.keyboard-layout-editor.com/#/gists/ac56b98d8737118f2beef3d6855d760e
 
   // ,-----------------------------------------------------------------------------------.
-  // |      |      |      |     |      |      |      |      |      |      |      | Reset|
+  // |      |      |      |            |      |      |      |      |      |      | Reset|
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |  Dyn |      |Colemk|      |      |
+  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|      |      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |   <  |   >  |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -386,26 +369,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET  },
-    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, DYNAMIC, _______, COLEMAK, _______, _______},
+    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, _______, _______, _______},
     {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, __Lt,    KC_GT,   _______},
     {_______, _______, _______, _______, _______, _______, ___x___, _______, _______, _______, _______, PLOVER },
-  },
-
-  // .-----------------------------------------------------------------------------------.
-  // | REC1 | REC2 | PLAY1| PLAY2|      |      |      |      |      |      |      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |  f() |      |      |      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |      |      |      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |  f() |      |      |      |      |      |
-  // '-----------------------------------------------------------------------------------'
-
-  [_DYN] = {
-    {RECORD1, RECORD2, PLAY1,   PLAY2,   _______, _______, _______, _______, _______, _______, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, ___x___, _______, _______, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
   },
 };
 
@@ -598,7 +564,6 @@ void clear_layers(void)
   layer_off(_SFTNAV);
   layer_off(_FNCKEY);
   layer_off(_ADJUST);
-  layer_off(_DYN);
 }
 
 void clear_sticky(void)
@@ -682,10 +647,6 @@ void modifier_layer(keyrecord_t *record, uint16_t timer, int shift_key, int set_
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-  if (!process_record_dynamic_macro(keycode, record)) {
-    return false;
-  }
-
   switch (keycode) {
     // emulate LT (_FNCKEY, S(KC_TAB))
     case STab:

@@ -18,6 +18,10 @@ div#notify.notify.notify_progress {
 
 /* BASE LAYOUT **************************************************************/
 
+#main {
+  background:                #eee8d5 !important;
+}
+
 #main-toolbar {
   border:                    none !important;
   background:                none !important;
@@ -40,13 +44,14 @@ div#notify.notify.notify_progress {
 }
 
 .titleWrap a.title:hover {
-  color:                     #8FBE00 !important;
+  color:                     #859900 !important;
 }
 
 /* feed tree */
 
 #feeds-holder #feedTree {
   padding:                   0 0 0 0 !important;
+  background:                #eee8d5 !important;
 }
 
 #feeds-holder .dijitTreeRow {
@@ -88,7 +93,7 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected .counterNode {
-  background:                #ecf4ff !important;
+  background:                #eee8d5 !important;
   color:                     #871c1c !important;
 }
 
@@ -129,7 +134,9 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected:hover .counterNode {
-  background:                #719b17 !important;
+  /* background:             #AEE239 !important; */
+  /* color:                  #2A363B !important; */
+  background:                #859900 !important;
   color:                     #fdf6e3 !important;
 }
 
@@ -249,7 +256,7 @@ div#notify.notify.notify_progress {
 .cdm.expanded.Unread.marked a.title:hover,
 .cdm.expandable.Unread.marked a.title:hover,
 .titleWrap a.title:hover {
-  color:                     #8FBE00 !important;
+  color:                     #859900 !important;
 }
 
 .cdm.expanded:not(.Unread) a.title:visited,
@@ -341,7 +348,7 @@ div#notify.notify.notify_progress {
 }
 
 .cdm.expandable.active a.title:hover {
-  color:                     #8FBE00 !important;
+  color:                     #859900 !important;
 }
 
 span.updated {
