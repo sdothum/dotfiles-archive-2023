@@ -134,15 +134,16 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected:hover .counterNode {
-  /* background:             #AEE239 !important; */
-  /* color:                  #2A363B !important; */
-  background:                #859900 !important;
-  color:                     #ffffff !important;
+  /* background:             #859900 !important; */
+  /* color:                  #ffffff !important; */
+  background:                #AEE239 !important;
+  color:                     #2A363B !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .counterNode.aux {
+  /* background:             #c62929 !important; */
   background:                #c62929 !important;
-  color:                     #fdf6e3 !important;
+  color:                     #ffffff !important;
 }
 
 /* main */
