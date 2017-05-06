@@ -44,7 +44,7 @@ div#notify.notify.notify_progress {
 }
 
 .titleWrap a.title:hover {
-  color:                     #859900 !important;
+  color:                     #2aa198 !important;
 }
 
 /* feed tree */
@@ -134,7 +134,7 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected:hover .counterNode {
-  /* background:             #859900 !important; */
+  /* background:             #2aa198 !important; */
   /* color:                  #ffffff !important; */
   background:                #AEE239 !important;
   color:                     #2A363B !important;
@@ -257,7 +257,7 @@ div#notify.notify.notify_progress {
 .cdm.expanded.Unread.marked a.title:hover,
 .cdm.expandable.Unread.marked a.title:hover,
 .titleWrap a.title:hover {
-  color:                     #859900 !important;
+  color:                     #2aa198 !important;
 }
 
 .cdm.expanded:not(.Unread) a.title:visited,
@@ -349,7 +349,7 @@ div#notify.notify.notify_progress {
 }
 
 .cdm.expandable.active a.title:hover {
-  color:                     #859900 !important;
+  color:                     #2aa198 !important;
 }
 
 span.updated {
