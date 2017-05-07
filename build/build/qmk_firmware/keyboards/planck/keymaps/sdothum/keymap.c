@@ -87,69 +87,65 @@ enum planck_keycodes {
   COLEMAK = SAFE_RANGE
  ,PLOVER
  ,PLOVEX
- ,STab      // pseudo LT (_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
- ,SLeft     // pseudo LT (_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
- ,Pipe      // pseudo LT (_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
- ,_Ctl    = OSM(MOD_LCTL)
- ,_Gui    = OSM(MOD_LGUI)
- ,_Alt    = OSM(MOD_LALT)
- ,_CSft   = OSM(MOD_LSFT | MOD_LCTL)
- ,_SGui   = OSM(MOD_LGUI | MOD_LSFT)
- ,_CGui   = OSM(MOD_LGUI | MOD_LCTL)
- ,_SAlt   = OSM(MOD_LALT | MOD_LSFT)
- ,_CAlt   = OSM(MOD_LALT | MOD_LCTL)
- ,_Sft    = OSM(MOD_LSFT)
- ,Esc     = LT (_NUMBER, KC_ESC)
- ,Tab     = LT (_FNCKEY, KC_TAB)
- ,Bspc    = LT (_ADJUST, KC_BSPC)
- ,Ent     = LT (_RSHIFT, KC_ENT)
- ,Left    = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling of Left
-};
-
-enum tap_dance {
-  _SPRN = 0
- ,_LPRN
- ,_LBRC
- ,_LCBR
- ,_LT
- ,_QUOT
- ,_CAPS
- ,_SPC
+ ,P_TAB     // pseudo LT(_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
+ ,P_LEFT    // pseudo LT(_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
+ ,P_PIPE    // pseudo LT(_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
+ ,L_BSPC  = LT (_ADJUST, KC_BSPC)
+ ,L_ENT   = LT (_RSHIFT, KC_ENT)
+ ,L_ESC   = LT (_NUMBER, KC_ESC)
+ ,L_LEFT  = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling of Left
+ ,L_TAB   = LT (_FNCKEY, KC_TAB)
+ ,O_ALT   = OSM(MOD_LALT)
+ ,O_CALT  = OSM(MOD_LALT | MOD_LCTL)
+ ,O_CGUI  = OSM(MOD_LGUI | MOD_LCTL)
+ ,O_CSFT  = OSM(MOD_LSFT | MOD_LCTL)
+ ,O_CTL   = OSM(MOD_LCTL)
+ ,O_GUI   = OSM(MOD_LGUI)
+ ,O_SALT  = OSM(MOD_LALT | MOD_LSFT)
+ ,O_SFT   = OSM(MOD_LSFT)
+ ,O_SGUI  = OSM(MOD_LGUI | MOD_LSFT)
 };
 
 // modifier keys
-#define Down    ALT_T(KC_DOWN)
-#define SDown   S    (KC_DOWN)
-#define Up      GUI_T(KC_UP)
-#define SUp     S    (KC_UP)
-#define Rght    CTL_T(KC_RGHT)
-#define SRght   S    (KC_RGHT)
+#define A_DOWN  ALT_T(KC_DOWN)
+#define C_RGHT  CTL_T(KC_RGHT)
+#define G_UP    GUI_T(KC_UP)
+#define S_DOWN  S    (KC_DOWN)
+#define S_END   S    (KC_END)
+#define S_HOME  S    (KC_HOME)
+#define S_LEFT  S    (KC_LEFT)
+#define S_PGDN  S    (KC_PGDN)
+#define S_PGUP  S    (KC_PGUP)
+#define S_RGHT  S    (KC_RGHT)
+#define S_UP    S    (KC_UP)
 
 // tap dance keys
-#define __Lcbr  TD(_LCBR)
-#define __Sprn  TD(_SPRN)
-#define __Lprn  TD(_LPRN)
-#define __Lbrc  TD(_LBRC)
-#define __Lt    TD(_LT)
-#define __Quot  TD(_QUOT)
-#define __Caps  TD(_CAPS)
-#define __Spc   TD(_SPC)                    // see process_record_user() for extended handling of Spc
+enum tap_dance {
+  _CAPS = 0
+ ,_LBRC
+ ,_LCBR
+ ,_LPRN
+ ,_LT
+ ,_QUOT
+ ,_SPC
+ ,_SPRN
+};
+
+#define T_CAPS  TD(_CAPS)
+#define T_LBRC  TD(_LBRC)
+#define T_LCBR  TD(_LCBR)
+#define T_LPRN  TD(_LPRN)
+#define T_LT    TD(_LT)
+#define T_QUOT  TD(_QUOT)
+#define T_SPC   TD(_SPC)                    // see process_record_user() for extended handling of Spc
+#define T_SPRN  TD(_SPRN)
 
 // layer keys
-#define REGEX   MO(_REGHEX)
-#define SHIFT   MO(_SHIFT)
+#define M_REGEX MO(_REGHEX)
 
 // keycodes
 #define ___x___ KC_TRNS
 #define _______ KC_NO
-#define S_DOWN  S(KC_DOWN)
-#define S_END   S(KC_END)
-#define S_HOME  S(KC_HOME)
-#define S_LEFT  S(KC_LEFT)
-#define S_PGDN  S(KC_PGDN)
-#define S_PGUP  S(KC_PGUP)
-#define S_RGHT  S(KC_RGHT)
-#define S_UP    S(KC_UP)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -168,10 +164,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_COLEMAK] = {
-    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    __Caps,  _CSft,   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN},
-    {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    _CAlt,   _CGui,   KC_M,    KC_N,    KC_E,    KC_I,    KC_O   },
-    {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    _SAlt,   _SGui,   KC_K,    KC_H,    KC_COMM, KC_DOT,  __Quot },
-    {_Ctl,    _Gui,    _Alt,    Esc,     __Spc,   Tab,     Bspc,    Ent,     Left,    Down,    Up,      Rght   },
+    {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    T_CAPS,  O_CSFT,   KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN},
+    {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    O_CALT,  O_CGUI,   KC_M,    KC_N,    KC_E,    KC_I,   KC_O   },
+    {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    O_SALT,  O_SGUI,   KC_K,    KC_H,    KC_COMM, KC_DOT, T_QUOT },
+    {O_CTL,   O_GUI,   O_ALT,   L_ESC,   T_SPC,   L_TAB,   L_BSPC,   L_ENT,   L_LEFT,  A_DOWN,  G_UP,   C_RGHT },
   },
 
 // ...................................................................... Plover
@@ -210,10 +206,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), __Caps,  _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
-    {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _CAlt,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
-    {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _SGui,   S(KC_K), S(KC_H), KC_SLSH, KC_QUES, KC_DQT },
-    {_Ctl,    _Gui,    _Alt,    Esc,     ___x___, Tab,     KC_DEL,  KC_MINS, SLeft,   SDown,   SUp,     SRght  },
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), T_CAPS,  O_CSFT, S(KC_J),  S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), O_CALT,  O_CGUI,  S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), O_SALT,  O_SGUI,  S(KC_K), S(KC_H), KC_SLSH, KC_QUES, KC_DQT },
+    {O_CTL,    O_GUI,    O_ALT, L_ESC,   ___x___, L_TAB,   KC_DEL,  KC_MINS, P_LEFT,  S_DOWN,  S_UP,    S_RGHT },
   },
 
   // ,-----------------------------------------------------------------------------------.
@@ -227,10 +223,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), __Caps,  _CSft,   S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
-    {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _CAlt,   _CGui,   S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
-    {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), _SAlt,   _SGui,   S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
-    {_Ctl,    _Gui,    _Alt,    Esc,     KC_UNDS, STab,    Bspc,    ___x___, SLeft,   SDown,   SUp,     SRght  },
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), T_CAPS,  O_CSFT,  S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+    {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), O_CALT,  O_CGUI,  S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), O_SALT,  O_SGUI,  S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
+    {O_CTL,   O_GUI,   O_ALT,   L_ESC,   KC_UNDS, P_TAB,   L_BSPC,  ___x___, P_LEFT,  S_DOWN,  S_UP,    S_RGHT },
   },
 
 // ......................................................... Number Keypad Layer
@@ -248,9 +244,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {__Lcbr,  _______, _______, _CAlt,   KC_RCBR, _______, _______, S(KC_C), KC_7,    KC_8,    KC_9,    KC_SLSH},
-    {__Sprn,  _Ctl,    _Gui,    _Alt,    KC_RPRN, _______, _______, S(KC_B), KC_4,    KC_5,    KC_6,    KC_ASTR},
-    {__Lbrc,  __Lt,    KC_GT,   _SAlt,   KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    KC_MINS},
+    {T_LCBR,  _______, _______, O_CALT,  KC_RCBR, _______, _______, S(KC_C), KC_7,    KC_8,    KC_9,    KC_SLSH},
+    {T_SPRN,  O_CTL,    O_GUI,    O_ALT, KC_RPRN, _______, _______, S(KC_B), KC_4,    KC_5,    KC_6,    KC_ASTR},
+    {T_LBRC,  T_LT,    KC_GT,   O_SALT,  KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    KC_MINS},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  KC_COLN, KC_PLUS},
   },
 
@@ -269,10 +265,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {__Lcbr,  KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {__Lprn,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, REGEX  },
-    {__Lbrc,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {___x___, ___x___, ___x___, KC_BSLS, Pipe,    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {T_LCBR,  KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
+    {T_LPRN,  KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, M_REGEX},
+    {T_LBRC,  KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
+    {___x___, ___x___, ___x___, KC_BSLS, P_PIPE,  ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
 // ....................................................... Number Symbol Overlay
@@ -292,7 +288,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_REGHEX] = {
     {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, S(KC_F), KC_AMPR, KC_ASTR, KC_TILD, ___x___},
     {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, S(KC_E), KC_DLR,  KC_PERC, KC_CIRC, ___x___},
-    {___x___, __Lt,    KC_GT,   KC_EQL,  ___x___, _______, _______, S(KC_D), KC_EXLM, KC_AT,   KC_HASH, ___x___},
+    {___x___, T_LT,    KC_GT,   KC_EQL,  ___x___, _______, _______, S(KC_D), KC_EXLM, KC_AT,   KC_HASH, ___x___},
     {___x___, ___x___, ___x___, KC_COLN, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_COMM, KC_BSLS, KC_PIPE},
   },
 
@@ -313,7 +309,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SFTNAV] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, S_HOME,  S_UP,    S_END,   _______},
-    {_______, _Ctl,    _Gui,    _Alt,    _______, _______, _______, _______, S_LEFT,  S_DOWN,  S_RGHT,  _______},
+    {_______, O_CTL,   O_GUI,   O_ALT,   _______, _______, _______, _______, S_LEFT,  S_DOWN,  S_RGHT,  _______},
     {_______, _______, _______, _______, _______, _______, _______, _______, S_PGDN,  S_PGUP,  _______, _______},
     {_______, _______, _______, _______, ___x___, _______, _______, _______, ___x___, _______, _______, _______},
   },
@@ -334,7 +330,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FNCKEY] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12 },
-    {_Sft,    _Ctl,    _Gui,    _Alt,    _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
+    {O_SFT,   O_CTL,   O_GUI,   O_ALT,   _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10 },
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
@@ -344,7 +340,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/ac56b98d8737118f2beef3d6855d760e
 
   // ,-----------------------------------------------------------------------------------.
-  // |      |      |      |            |      |      |      |      |      |      | Reset|
+  // |      |      |      |      |      |      |      |      |      |      |      | Reset|
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|      |      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -356,24 +352,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET  },
     {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, _______, _______, _______},
-    {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, __Lt,    KC_GT,   _______},
+    {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, T_LT,    KC_GT,   _______},
     {_______, _______, _______, _______, _______, _______, ___x___, _______, _______, _______, _______, PLOVER },
   },
 };
 
 #ifdef AUDIO_ENABLE
-#define CAPSLOCK_ON_SOUND   E__NOTE(_E7) \
+#define CAPSLOCK_ON_SOUND   E__NOTE(_E7)  \
                            ,Q__NOTE(_GS7)
 #define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7) \
                            ,Q__NOTE(_E7)
-float tone_startup[][2]   = SONG(STARTUP_SOUND);
-float tone_colemak[][2]   = SONG(COLEMAK_SOUND);
-float tone_plover[][2]    = SONG (PLOVER_SOUND);
-float tone_plover_gb[][2] = SONG (PLOVER_GOODBYE_SOUND);
-float tone_caps_on[][2]   = SONG(CAPSLOCK_ON_SOUND);
-float tone_caps_off[][2]  = SONG(CAPSLOCK_OFF_SOUND);
-float music_scale[][2]    = SONG(MUSIC_SCALE_SOUND);
-float tone_goodbye[][2]   = SONG(GOODBYE_SOUND);
+float tone_startup[][2]   = SONG   (STARTUP_SOUND);
+float tone_colemak[][2]   = SONG   (COLEMAK_SOUND);
+float tone_plover[][2]    = SONG   (PLOVER_SOUND);
+float tone_plover_gb[][2] = SONG   (PLOVER_GOODBYE_SOUND);
+float tone_caps_on[][2]   = SONG   (CAPSLOCK_ON_SOUND);
+float tone_caps_off[][2]  = SONG   (CAPSLOCK_OFF_SOUND);
+float music_scale[][2]    = SONG   (MUSIC_SCALE_SOUND);
+float tone_goodbye[][2]   = SONG   (GOODBYE_SOUND);
 #endif
 
 static uint16_t key_timer = 0;
@@ -445,43 +441,6 @@ void reghex_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off(_REGHEX);
 }
 
-void paren(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_9, KC_0, 0);
-}
-
-void brace(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0);
-}
-
-void curly(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
-}
-
-void angle(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_COMM, KC_DOT, 0);
-}
-
-void quote(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
-}
-
-void caps(qk_tap_dance_state_t *state, void *user_data)
-{
-  if (state->count > 1) {
-    register_code  (KC_CAPS);
-    unregister_code(KC_CAPS);
-  }
-  else {
-    set_oneshot_mods(MOD_LSFT);
-  }
-  reset_tap_dance(state);
-}
-
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -515,21 +474,58 @@ void shift_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off(_LSHIFT);
 }
 
+void angle(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_COMM, KC_DOT, 0);
+}
+
+void brace(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0);
+}
+
+void caps(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    register_code  (KC_CAPS);
+    unregister_code(KC_CAPS);
+  }
+  else {
+    set_oneshot_mods(MOD_LSFT);
+  }
+  reset_tap_dance(state);
+}
+
+void curly(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
+}
+
+void paren(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, 0);
+}
+
+void quote(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_SPRN] = {
-    .fn = { NULL, paren_layer, reghex_reset },
+    .fn        = { NULL, paren_layer, reghex_reset },
     .user_data = NULL
   }
   ,[_SPC] = {
-    .fn = { NULL, space, shift_reset },
+    .fn        = { NULL, space, shift_reset },
     .user_data = NULL
   }
- ,[_LPRN] = ACTION_TAP_DANCE_FN(paren)
+ ,[_CAPS] = ACTION_TAP_DANCE_FN(caps)
  ,[_LBRC] = ACTION_TAP_DANCE_FN(brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN(curly)
+ ,[_LPRN] = ACTION_TAP_DANCE_FN(paren)
  ,[_LT]   = ACTION_TAP_DANCE_FN(angle)
  ,[_QUOT] = ACTION_TAP_DANCE_FN(quote)
- ,[_CAPS] = ACTION_TAP_DANCE_FN(caps)
 };
 
 void persistant_default_layer_set(uint16_t default_layer)
@@ -634,23 +630,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
     // emulate LT (_FNCKEY, S(KC_TAB))
-    case STab:
+    case P_TAB:
       modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
       break;
     // emulate LT (_SFTNAV, S(KC_LEFT))
-    case SLeft:
+    case P_LEFT:
       rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     // LT (_LSHIFT, KC_SPC) handling extensions
-    case __Spc:
+    case T_SPC:
       rolling_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
     // emulate LT (_SFTNAV, S(KC_BSLS))
-    case Pipe:
+    case P_PIPE:
       rolling_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     // LT (_SYMBOL, KC_LEFT) handling extensions
-    case Left:
+    case L_LEFT:
       rolling_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
       break;
     case COLEMAK:
