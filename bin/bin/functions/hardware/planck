@@ -7,17 +7,34 @@
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap> [dfu]"
+  echo "usage: $(basename $0) <keymap> [<string>] [dfu]"
   exit 1
 }
 
+QMK=$HOME/build/qmk_firmware
+PLANCK=$QMK/keyboards/planck
+KEYMAP=$PLANCK/keymaps/$1
+
 [ $1 ] || usage
+keymap=$1
+shift
 
-if-no 'sync qmk_firmware repo' || ( cd $HOME/build/qmk_firmware && git pull )
+if-no 'sync qmk_firmware repo' || ( cd $QMK && git pull )
 
-cd $HOME/build/qmk_firmware/keyboards/planck
+# compile time macro sting
+grep -q COMPILE_STRING $KEYMAP/config.h || sed -i '$a#define COMPILE_STRING' $KEYMAP/config.h
+case $1 in
+  '' | dfu) sed -i 's|.*COMPILE_STRING|// #define COMPILE_STRING|' $KEYMAP/config.h ;;
+
+  *) sed -i 's/.*COMPILE_STRING/#define COMPILE_STRING/' $KEYMAP/config.h
+     echo "SEND_STRING(\"$1\");" >$KEYMAP/compile_string.h
+     shift ;;
+esac
+
+cd $PLANCK
 sudo make clean >/dev/null
-sudo make KEYMAP=$1 $2
-sudo chown -R $USER:users $HOME/build/qmk_firmware
+sudo make KEYMAP=$keymap $1
+sudo chown -R $USER:users $QMK
+rm -f $KEYMAP/compile_string.h
 
 # vim: set ft=sh: #

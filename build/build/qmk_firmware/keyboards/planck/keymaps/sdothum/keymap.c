@@ -87,9 +87,9 @@ enum planck_keycodes {
   COLEMAK = SAFE_RANGE
  ,PLOVER
  ,PLOVEX
- ,P_TAB     // pseudo LT(_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,P_LEFT    // pseudo LT(_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,P_PIPE    // pseudo LT(_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
+ ,P_TAB     // pseudo LT(_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,L_BSPC  = LT (_ADJUST, KC_BSPC)
  ,L_ENT   = LT (_RSHIFT, KC_ENT)
  ,L_ESC   = LT (_NUMBER, KC_ESC)
@@ -127,6 +127,7 @@ enum tap_dance {
  ,_LPRN
  ,_LT
  ,_QUOT
+ ,_SEND
  ,_SPC
  ,_SPRN
 };
@@ -137,6 +138,7 @@ enum tap_dance {
 #define T_LPRN  TD(_LPRN)
 #define T_LT    TD(_LT)
 #define T_QUOT  TD(_QUOT)
+#define T_SEND  TD(_SEND)                   // compile time macro string
 #define T_SPC   TD(_SPC)                    // see process_record_user() for extended handling of Spc
 #define T_SPRN  TD(_SPRN)
 
@@ -321,7 +323,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |  F7  |  F8  |  F9  |  F12 |
   // |-----------------------------------------------------------------------------------|
-  // | Ctrl |  GUI |  Alt | Shift|      |      |      |      |  F4  |  F5  |  F6  |  F11 |
+  // | Ctrl |  GUI |  Alt | Shift| Send |      |      |      |  F4  |  F5  |  F6  |  F11 |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |
   // |-----------------------------------------------------------------------------------|
@@ -330,7 +332,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FNCKEY] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12 },
-    {O_SFT,   O_CTL,   O_GUI,   O_ALT,   _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
+    {O_SFT,   O_CTL,   O_GUI,   O_ALT,   T_SEND,  _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10 },
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
@@ -511,6 +513,15 @@ void quote(qk_tap_dance_state_t *state, void *user_data)
   tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
 }
 
+void send(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+#ifdef COMPILE_STRING
+#include "compile_string.h"
+#endif
+  }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_SPRN] = {
     .fn        = { NULL, paren_layer, reghex_reset },
@@ -526,6 +537,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_LPRN] = ACTION_TAP_DANCE_FN(paren)
  ,[_LT]   = ACTION_TAP_DANCE_FN(angle)
  ,[_QUOT] = ACTION_TAP_DANCE_FN(quote)
+ ,[_SEND] = ACTION_TAP_DANCE_FN(send)
 };
 
 void persistant_default_layer_set(uint16_t default_layer)

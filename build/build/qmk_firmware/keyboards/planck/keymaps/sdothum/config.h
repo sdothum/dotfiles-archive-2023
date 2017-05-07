@@ -12,4 +12,7 @@
 // reserve dynamic macro buffer size
 #define DYNAMIC_MACRO_SIZE 24
 
+// compile time macro string
+#define COMPILE_STRING
+
 #endif
