@@ -15,4 +15,6 @@
 // compile time macro string
 #define COMPILE_STRING
 
+// development code
+// #define DEV_CODE
 #endif

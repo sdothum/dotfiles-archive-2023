@@ -364,18 +364,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            ,Q__NOTE(_GS7)
 #define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7) \
                            ,Q__NOTE(_E7)
-float tone_startup[][2]   = SONG   (STARTUP_SOUND);
-float tone_colemak[][2]   = SONG   (COLEMAK_SOUND);
-float tone_plover[][2]    = SONG   (PLOVER_SOUND);
+float tone_startup  [][2] = SONG   (STARTUP_SOUND);
+float tone_colemak  [][2] = SONG   (COLEMAK_SOUND);
+float tone_plover   [][2] = SONG   (PLOVER_SOUND);
 float tone_plover_gb[][2] = SONG   (PLOVER_GOODBYE_SOUND);
-float tone_caps_on[][2]   = SONG   (CAPSLOCK_ON_SOUND);
-float tone_caps_off[][2]  = SONG   (CAPSLOCK_OFF_SOUND);
-float music_scale[][2]    = SONG   (MUSIC_SCALE_SOUND);
-float tone_goodbye[][2]   = SONG   (GOODBYE_SOUND);
+float tone_caps_on  [][2] = SONG   (CAPSLOCK_ON_SOUND);
+float tone_caps_off [][2] = SONG   (CAPSLOCK_OFF_SOUND);
+float music_scale   [][2] = SONG   (MUSIC_SCALE_SOUND);
+float tone_goodbye  [][2] = SONG   (GOODBYE_SOUND);
 #endif
 
 static uint16_t key_timer = 0;
-static int      layer     = 0;
+static int      keymap    = 0;
 
 void matrix_scan_user(void)
 {
@@ -383,11 +383,17 @@ void matrix_scan_user(void)
   if (key_timer != 0) {
     if (timer_elapsed(key_timer) > TAPPING_TERM) {
       key_timer = 0;
-      if (layer != 0) {
-        layer_on (layer);
+      if (keymap != 0) {
+        layer_on(keymap);
       }
     }
   }
+}
+
+void tap_key(int kc)
+{
+  register_code  (kc);
+  unregister_code(kc);
 }
 
 #define S_NEVER  0
@@ -395,17 +401,15 @@ void matrix_scan_user(void)
 #define S_DOUBLE 2
 #define S_ALWAYS S_SINGLE | S_DOUBLE
 
-void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int set_layer)
+void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int layer)
 {
   // double tap: left right
   if (state->count > 1) {
     if (shift & S_DOUBLE) {
-      register_code  (KC_LSFT);
+      register_code(KC_LSFT);
     }
-    register_code    (left);
-    unregister_code  (left);
-    register_code    (right);
-    unregister_code  (right);
+    tap_key(left);
+    tap_key(right);
     if (shift & S_DOUBLE) {
       unregister_code(KC_LSFT);
     }
@@ -415,17 +419,16 @@ void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int s
   }
   // down: layer
   else if (state->pressed) {
-    if (set_layer != 0) {
-      layer_on(set_layer);
+    if (layer != 0) {
+      layer_on(layer);
     }
   }
   // tap: left
   else {
     if (shift & S_SINGLE) {
-      register_code  (KC_LSFT);
+      register_code(KC_LSFT);
     }
-    register_code    (left);
-    unregister_code  (left);
+    tap_key(left);
     if (shift & S_SINGLE) {
       unregister_code(KC_LSFT);
     }
@@ -438,24 +441,37 @@ void paren_layer(qk_tap_dance_state_t *state, void *user_data)
   tap_pair(state, S_ALWAYS, KC_9, KC_0, _REGHEX);
 }
 
-void reghex_reset(qk_tap_dance_state_t *state, void *user_data)
+void paren_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   layer_off(_REGHEX);
 }
 
+#ifdef DEV_CODE
+void modifier(void (*f)(uint8_t))
+{
+  if (keyboard_report->mods & MOD_BIT(KC_LCTL)) {
+    (*f)(KC_LCTL);
+  }
+  else if (keyboard_report->mods & MOD_BIT(KC_LGUI)) {
+    (*f)(KC_LGUI);
+  }
+  else if (keyboard_report->mods & MOD_BIT(KC_LALT)) {
+    (*f)(KC_LALT);
+  }
+}
+#endif
+
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
-void space(qk_tap_dance_state_t *state, void *user_data)
+void shift(qk_tap_dance_state_t *state, void *user_data)
 {
   // double tap down: repeating space
   if (state->count > 2) {
-    register_code  (KC_SPC);
-    unregister_code(KC_SPC);
-    register_code  (KC_SPC);
+    tap_key      (KC_SPC);
+    register_code(KC_SPC);
   }
   // tap down: space shift
   else if (state->count > 1) {
-    register_code  (KC_SPC);
-    unregister_code(KC_SPC);
+    tap_key (KC_SPC);
     layer_on(_LSHIFT);
   }
   // down: shift
@@ -464,8 +480,13 @@ void space(qk_tap_dance_state_t *state, void *user_data)
   }
   // tap: space
   else {
-    register_code  (KC_SPC);
-    unregister_code(KC_SPC);
+#ifdef DEV_CODE
+    modifier(register_code);
+#endif
+    tap_key (KC_SPC);
+#ifdef DEV_CODE
+    modifier(unregister_code);
+#endif
   }
   reset_tap_dance(state);
 }
@@ -473,7 +494,7 @@ void space(qk_tap_dance_state_t *state, void *user_data)
 void shift_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_code(KC_SPC);
-  layer_off(_LSHIFT);
+  layer_off      (_LSHIFT);
 }
 
 void angle(qk_tap_dance_state_t *state, void *user_data)
@@ -489,8 +510,7 @@ void brace(qk_tap_dance_state_t *state, void *user_data)
 void caps(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
-    register_code  (KC_CAPS);
-    unregister_code(KC_CAPS);
+    tap_key(KC_CAPS);
   }
   else {
     set_oneshot_mods(MOD_LSFT);
@@ -524,11 +544,11 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_SPRN] = {
-    .fn        = { NULL, paren_layer, reghex_reset },
+    .fn        = { NULL, paren_layer, paren_reset },
     .user_data = NULL
   }
   ,[_SPC] = {
-    .fn        = { NULL, space, shift_reset },
+    .fn        = { NULL, shift, shift_reset },
     .user_data = NULL
   }
  ,[_CAPS] = ACTION_TAP_DANCE_FN(caps)
@@ -543,7 +563,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 void persistant_default_layer_set(uint16_t default_layer)
 {
   eeconfig_update_default_layer(default_layer);
-  default_layer_set(default_layer);
+  default_layer_set            (default_layer);
 }
 
 void clear_layers(void)
@@ -562,78 +582,75 @@ void clear_layers(void)
 void clear_sticky(void)
 {
   // undo sticky modifiers
-  unregister_code (KC_LALT);
-  unregister_code (KC_LGUI);
-  unregister_code (KC_LCTL);
+  unregister_code(KC_LALT);
+  unregister_code(KC_LGUI);
+  unregister_code(KC_LCTL);
 }
 
 void toggle_plover(void)
 {
   // toggle window manager plover application, see herbstluftwm/config/appbinds
-  register_code   (KC_LGUI);
-  register_code   (KC_LSFT);
-  register_code   (KC_RGHT);
-  unregister_code (KC_RGHT);
-  unregister_code (KC_LSFT);
-  unregister_code (KC_LGUI);
+  register_code  (KC_LGUI);
+  register_code  (KC_LSFT);
+  tap_key        (KC_RGHT);
+  unregister_code(KC_LSFT);
+  unregister_code(KC_LGUI);
 }
 
 #define    LEFT    1
 #define    RIGHT   2
 static int thumb = 0;
 
-void rolling_layer(keyrecord_t *record, uint16_t timer, int side, int shift_key, int set_layer, int overlay_layer, int rollover_layer)
+void rolling_layer(keyrecord_t *record, uint16_t timer, int side, int kc, int layer, int overlay_layer, int rollover_layer)
 {
   if (record->event.pressed) {
     // set layer, see matrix_scan_user()
     key_timer = timer;
     thumb     = thumb | side;
-    layer     = set_layer;
+    keymap    = layer;
   }
   else {
-    layer_off   (_SFTNAV);
+    layer_off  (_SFTNAV);
     // opposite thumb keycode handler may have switched effective layer!
     if (overlay_layer) {
-      layer_off (overlay_layer);
+      layer_off(overlay_layer);
     }
     if (key_timer > 0) {
       if (timer_elapsed(key_timer) < TAPPING_TERM) {
         register_code  (KC_LSFT);
-        register_code  (shift_key);
-        unregister_code(shift_key);
+        tap_key        (kc);
         unregister_code(KC_LSFT);
       }
     }
     // rollover to opposite thumb layer
     else if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-      layer_on  (rollover_layer);
+      layer_on(rollover_layer);
     }
     thumb     = thumb & ~side;
     key_timer = 0;
-    layer     = 0;
+    keymap    = 0;
     clear_sticky();
   }
 }
 
-void modifier_layer(keyrecord_t *record, uint16_t timer, int shift_key, int set_layer)
+void modifier_layer(keyrecord_t *record, uint16_t timer, int kc, int layer)
 {
   if (record->event.pressed) {
     // set layer, see matrix_scan_user()
     key_timer = timer_read();
-    layer     = set_layer;
+    keymap    = layer;
   }
   else {
-    layer_off   (set_layer);
+    layer_off(layer);
     if (key_timer > 0) {
       if (timer_elapsed(key_timer) < TAPPING_TERM) {
         register_code  (KC_LSFT);
-        register_code  (shift_key);
-        unregister_code(shift_key);
+        tap_key        (kc);
         unregister_code(KC_LSFT);
       }
     }
     key_timer = 0;
-    layer     = 0;
+    keymap    = 0;
     clear_sticky();
   }
 }
@@ -675,14 +692,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
         stop_all_notes();
-        PLAY_NOTE_ARRAY (tone_plover, false, 0);
+        PLAY_NOTE_ARRAY(tone_plover, false, 0);
 #endif
         clear_layers();
-        layer_on        (_PLOVER);
+        layer_on(_PLOVER);
         if (!eeconfig_is_enabled()) {
-            eeconfig_init();
+          eeconfig_init();
         }
-        keymap_config.raw = eeconfig_read_keymap();
+        keymap_config.raw  = eeconfig_read_keymap();
         keymap_config.nkro = 1;
         eeconfig_update_keymap(keymap_config.raw);
         toggle_plover();
@@ -692,7 +709,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case PLOVEX:
       if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY (tone_plover_gb, false, 0);
+        PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
 #endif
         layer_off(_PLOVER);
         clear_layers();
@@ -733,14 +750,14 @@ void led_set_user(uint8_t usb_led)
 
 void startup_user()
 {
-  _delay_ms(20);                            // gets rid of tick
+  _delay_ms      (20);                      // gets rid of tick
   PLAY_NOTE_ARRAY(tone_startup, false, 0);
 }
 
 void shutdown_user()
 {
   PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
-  _delay_ms(150);
+  _delay_ms      (150);
   stop_all_notes();
 }
 

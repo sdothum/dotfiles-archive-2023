@@ -152,6 +152,11 @@ g term-ansicolor
   pkgfile
 
 
+= security
+# ▔▔▔▔▔▔▔▔
+d pass
+
+
 = network
 # ▔▔▔▔▔▔▔
 d " drops internet connection

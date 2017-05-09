@@ -7,3 +7,5 @@
 
 console_login
 user_login
+# clear 'fish' tmux window name
+tmux rename-window ''
