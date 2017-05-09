@@ -446,7 +446,19 @@ void paren_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off(_REGHEX);
 }
 
-#ifdef DEV_CODE
+// tap dance persistant mods, see process_record_user
+static int mods = 0;
+
+void tap_mods(keyrecord_t *record, uint16_t keycode)
+{
+  if (record->event.pressed) {
+    mods |= MOD_BIT(keycode);
+  }
+  else {
+    mods &= ~(MOD_BIT(keycode));
+  }
+}
+
 void modifier(void (*f)(uint8_t))
 {
   if (keyboard_report->mods & MOD_BIT(KC_LCTL)) {
@@ -455,11 +467,10 @@ void modifier(void (*f)(uint8_t))
   else if (keyboard_report->mods & MOD_BIT(KC_LGUI)) {
     (*f)(KC_LGUI);
   }
-  else if (keyboard_report->mods & MOD_BIT(KC_LALT)) {
+  else if (mods & MOD_BIT(KC_LALT)) {
     (*f)(KC_LALT);
   }
 }
-#endif
 
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void shift(qk_tap_dance_state_t *state, void *user_data)
@@ -480,13 +491,9 @@ void shift(qk_tap_dance_state_t *state, void *user_data)
   }
   // tap: space
   else {
-#ifdef DEV_CODE
     modifier(register_code);
-#endif
     tap_key (KC_SPC);
-#ifdef DEV_CODE
     modifier(unregister_code);
-#endif
   }
   reset_tap_dance(state);
 }
@@ -658,6 +665,24 @@ void modifier_layer(keyrecord_t *record, uint16_t timer, int kc, int layer)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
+    case O_CTL:
+      tap_mods(record, KC_LCTL);
+      break;
+    case O_GUI:
+      tap_mods(record, KC_LGUI);
+      break;
+    case O_ALT:
+      tap_mods(record, KC_LALT);
+      break;
+    case A_DOWN:
+      tap_mods(record, KC_LALT);
+      break;
+    case G_UP:
+      tap_mods(record, KC_LGUI);
+      break;
+    case C_RGHT:
+      tap_mods(record, KC_LCTL);
+      break;
     // emulate LT (_FNCKEY, S(KC_TAB))
     case P_TAB:
       modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
