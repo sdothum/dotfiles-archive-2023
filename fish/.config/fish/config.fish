@@ -49,7 +49,8 @@ set -x BROWSER vimbt
 
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
-# [ -z (pidof squid3) ] ;or set -x HTTP_PROXY localhost:3128
+[ -z (pidof squid3) ] ;or set -x HTTP_PROXY localhost:3128
+# set -x HTTP_PROXY luna:3128
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com

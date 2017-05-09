@@ -20,8 +20,9 @@
         \, 'mail'    : 'markdown'
         \}
 
-      nmap <silent>                 <C-k> <Plug>(ale_previous_wrap)
-      nmap <silent>                 <C-j> <Plug>(ale_next_wrap)
+      nmap <silent><C-k>                      <Plug>(ale_previous_wrap)
+      nmap <silent><C-j>                      <Plug>(ale_next_wrap)
+      nmap <silent><C-?>                      <Plug>(ale_detail)
 
     " ............................................................... Auto-pairs
 
@@ -38,8 +39,8 @@
             \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
             \}
 
-      vmap <Enter>                  <Plug>(EasyAlign)
-      nmap <leader>a                <Plug>(EasyAlign)
+      vmap <Enter>                            <Plug>(EasyAlign)
+      nmap <leader>a                          <Plug>(EasyAlign)
 
     " .............................................................. Eightheader
 
@@ -67,7 +68,7 @@
       " " fzf doesn't really work well within gvim
       " let g:fzf_launcher = 'term STACK WAIT SHELL %s'
       "
-      " nmap <leader><leader>b      :FZF<CR>
+      " nmap <leader><leader>b                :FZF<CR>
 
     " ........................................................... Graphical undo
 
@@ -75,7 +76,7 @@
       let g:gundo_preview_bottom = 1
       let g:gundo_preview_height = 20
 
-      nmap <silent><leader>u        :GundoToggle<CR>
+      nmap <silent><leader>u                  :GundoToggle<CR>
 
       autocmd plugin BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
 
@@ -333,8 +334,8 @@
       endfunction
 
       " apply refresh to narrow region buffer to apply layout defaults!
-      vmap <leader>n                <Plug>NrrwrgnDo:call Refresh()<CR>
-      nmap <leader>n                :call CloseNR()<CR>
+      vmap <leader>n                          <Plug>NrrwrgnDo:call Refresh()<CR>
+      nmap <leader>n                          :call CloseNR()<CR>
 
     " ............................................................... Neosnippet
 
@@ -350,8 +351,8 @@
           \, 'text'     : 'mail'
           \}
 
-      imap <C-e>                    <Plug>(neosnippet_expand_or_jump)
-      smap <C-e>                    <Plug>(neosnippet_jump)
+      imap <C-e>                              <Plug>(neosnippet_expand_or_jump)
+      smap <C-e>                              <Plug>(neosnippet_jump)
 
     " ............................................................ Nerdcommenter
 
@@ -362,8 +363,8 @@
       let g:NERDCommentEmptyLines      = 1  " comment blank lines
       let g:NERDTrimTrailingWhitespace = 1  " trim trailing whitespace
 
-      map  <leader>c                <Plug>NERDCommenterToggle
-      imap ,c                       <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
+      map  <leader>c                          <Plug>NERDCommenterToggle
+      imap ,c                                 <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
 
     " ................................................................... Pencil
 
@@ -380,8 +381,8 @@
           \, 'off'  : 'No Pencil'
           \}
 
-      imap <F6>                     <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
-      nmap <F6>                     :silent TogglePencil<CR>:echo PencilMode()<CR>
+      imap <F6>                               <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
+      nmap <F6>                               :silent TogglePencil<CR>:echo PencilMode()<CR>
 
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
@@ -424,7 +425,7 @@
         \, 'ListBufferMarkers' : "'?"
         \}
 
-      nmap <leader>'                '.
+      nmap <leader>'                          '.
 
     " .......................................................... Simple-complete
 
@@ -447,11 +448,11 @@
       " function! Sneak_f()
       "   if !exists("g:sneak_f")
       "     let g:sneak_f = 1
-      "     unmap                   s
-      "     unmap                   S
+      "     unmap                             s
+      "     unmap                             S
       "     call Colemak()
-      "     nmap f                  <Plug>Sneak_s
-      "     nmap F                  <Plug>Sneak_S
+      "     nmap f                            <Plug>Sneak_s
+      "     nmap F                            <Plug>Sneak_S
       "   endif
       " endfunction
       "
@@ -484,7 +485,7 @@
     " ................................................................... Tagbar
 
       " let g:tagbar_ctags_bin = 'ctags-exuberant'
-      nmap <silent><leader>t        :TagbarToggle<CR>
+      nmap <silent><leader>t                  :TagbarToggle<CR>
 
       " see https://github.com/vimwiki/utils/blob/master/vwtags.py
       let g:tagbar_type_vimwiki =
@@ -559,9 +560,9 @@
       function! VimwikiRemap()
         if !exists('b:vimwiki_remap')
           let b:vimwiki_remap       = 1
-          iunmap   <silent><buffer> <CR>
-          inoremap <expr>           <buffer> <C-PageDown> vimwiki#tbl#kbd_tab()
-          inoremap <expr>           <buffer> <C-PageUp>   vimwiki#tbl#kbd_shift_tab()
+          iunmap   <silent><buffer>           <CR>
+          inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
+          inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
         endif
       endfunction
 
@@ -579,7 +580,7 @@
       let g:yankring_enabled           = 1  " disable yankring because of macro conflict
       let g:yankring_window_height     = 30 " horizontal window height
 
-      nmap <silent>Y                :<C-U>YRYankCount 'y$'<CR>
-      nmap <silent><leader>y        :YRShow<CR>
+      nmap <silent>Y                          :<C-U>YRYankCount 'y$'<CR>
+      nmap <silent><leader>y                  :YRShow<CR>
 
 " plugins.vim
