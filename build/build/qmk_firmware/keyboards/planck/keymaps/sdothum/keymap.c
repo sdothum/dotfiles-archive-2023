@@ -446,7 +446,8 @@ void paren_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off(_REGHEX);
 }
 
-// tap dance persistant mods, see process_record_user
+// tap dance persistant mods, see process_record_user()
+// keyboard_report->mods appears to be cleared by tap dance(?)
 static int mods = 0;
 
 void tap_mods(keyrecord_t *record, uint16_t keycode)
@@ -459,12 +460,13 @@ void tap_mods(keyrecord_t *record, uint16_t keycode)
   }
 }
 
+// (un)register modifier
 void modifier(void (*f)(uint8_t))
 {
-  if (keyboard_report->mods & MOD_BIT(KC_LCTL)) {
+  if (mods & MOD_BIT(KC_LCTL)) {
     (*f)(KC_LCTL);
   }
-  else if (keyboard_report->mods & MOD_BIT(KC_LGUI)) {
+  else if (mods & MOD_BIT(KC_LGUI)) {
     (*f)(KC_LGUI);
   }
   else if (mods & MOD_BIT(KC_LALT)) {
