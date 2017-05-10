@@ -50,12 +50,6 @@
 //
 //   c++ commenting style is used throughout
 //
-//   Proper case naming for modifier key names to avoid define conflicts (DOWN
-//   and UP in particular) adds readability bonus
-//
-//   _One shot modifier keymap table defines
-//   __Double tap modifier keymap table defines
-//
 // Change history
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   See http://thedarnedestthing.com/planck%20constant
@@ -129,7 +123,6 @@ enum tap_dance {
  ,_QUOT
  ,_SEND
  ,_SPC
- ,_SPRN
 };
 
 #define TD_CAPS TD(_CAPS)
@@ -140,7 +133,6 @@ enum tap_dance {
 #define TD_QUOT TD(_QUOT)
 #define TD_SEND TD(_SEND)                   // compile time macro string
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc
-#define TD_SPRN TD(_SPRN)
 
 // layer keys
 #define MO_RHEX MO(_REGHEX)
@@ -247,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUMBER] = {
     {TD_LCBR, _______, _______, OS_CALT, KC_RCBR, _______, _______, S(KC_C), KC_7,    KC_8,    KC_9,    KC_SLSH},
-    {TD_SPRN, OS_CTL,  OS_GUI,  OS_ALT,  KC_RPRN, _______, _______, S(KC_B), KC_4,    KC_5,    KC_6,    KC_ASTR},
+    {TD_LPRN, OS_CTL,  OS_GUI,  OS_ALT,  KC_RPRN, _______, _______, S(KC_B), KC_4,    KC_5,    KC_6,    KC_ASTR},
     {TD_LBRC, TD_LT,   KC_GT,   OS_SALT, KC_RBRC, _______, _______, S(KC_A), KC_1,    KC_2,    KC_3,    KC_MINS},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  KC_COLN, KC_PLUS},
   },
@@ -375,11 +367,11 @@ float tone_goodbye  [][2] = SONG   (GOODBYE_SOUND);
 #endif
 
 static uint16_t key_timer = 0;
-static int      keymap    = 0;
+static uint8_t  keymap    = 0;
 
+// set layer of LT (layer, key) for modified key value, see process_record_user()
 void matrix_scan_user(void)
 {
-  // set layer of LT (layer, key) for modified key value, see process_record_user()
   if (key_timer != 0) {
     if (timer_elapsed(key_timer) > TAPPING_TERM) {
       key_timer = 0;
@@ -390,65 +382,16 @@ void matrix_scan_user(void)
   }
 }
 
-void tap_key(int kc)
+// register simple key press
+void tap_key(uint16_t keycode)
 {
-  register_code  (kc);
-  unregister_code(kc);
-}
-
-#define S_NEVER  0
-#define S_SINGLE 1
-#define S_DOUBLE 2
-#define S_ALWAYS S_SINGLE | S_DOUBLE
-
-void tap_pair(qk_tap_dance_state_t *state, int shift, int left, int right, int layer)
-{
-  // double tap: left right
-  if (state->count > 1) {
-    if (shift & S_DOUBLE) {
-      register_code(KC_LSFT);
-    }
-    tap_key(left);
-    tap_key(right);
-    if (shift & S_DOUBLE) {
-      unregister_code(KC_LSFT);
-    }
-    // cursor placement removed for opposite effect within vim :-)
-    // register_code  (KC_LEFT);
-    // unregister_code(KC_LEFT);
-  }
-  // down: layer
-  else if (state->pressed) {
-    if (layer != 0) {
-      layer_on(layer);
-    }
-  }
-  // tap: left
-  else {
-    if (shift & S_SINGLE) {
-      register_code(KC_LSFT);
-    }
-    tap_key(left);
-    if (shift & S_SINGLE) {
-      unregister_code(KC_LSFT);
-    }
-  }
-  reset_tap_dance(state);
-}
-
-void paren_layer(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_9, KC_0, _REGHEX);
-}
-
-void paren_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  layer_off(_REGHEX);
+  register_code  (keycode);
+  unregister_code(keycode);
 }
 
 // tap dance persistant mods, see process_record_user()
 // keyboard_report->mods appears to be cleared by tap dance(?)
-static int mods = 0;
+static uint8_t mods = 0;
 
 void tap_mods(keyrecord_t *record, uint16_t keycode)
 {
@@ -474,12 +417,11 @@ void modifier(void (*f)(uint8_t))
   }
 }
 
-// augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
-void shift(qk_tap_dance_state_t *state, void *user_data)
+// augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <space><shift> sequences
+void space(qk_tap_dance_state_t *state, void *user_data)
 {
   // double tap down: repeating space
   if (state->count > 2) {
-    tap_key      (KC_SPC);
     register_code(KC_SPC);
   }
   // tap down: space shift
@@ -500,10 +442,64 @@ void shift(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-void shift_reset(qk_tap_dance_state_t *state, void *user_data)
+void space_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_code(KC_SPC);
   layer_off      (_LSHIFT);
+}
+
+// tap dance shift rules
+#define S_NEVER  0
+#define S_SINGLE 1
+#define S_DOUBLE 2
+#define S_ALWAYS S_SINGLE | S_DOUBLE
+
+// tap dance symbol pairs
+void tap_pair(qk_tap_dance_state_t *state, uint16_t shift, uint16_t left, uint16_t right, uint8_t layer)
+{
+  // double tap: left right
+  if (state->count > 1) {
+    if (shift & S_DOUBLE) {
+      register_code(KC_LSFT);
+    }
+    tap_key(left);
+    tap_key(right);
+    if (shift & S_DOUBLE) {
+      unregister_code(KC_LSFT);
+    }
+#ifdef TD_VIM
+    // place cursor between symbol pair a la vim :-)
+    register_code  (KC_LEFT);
+    unregister_code(KC_LEFT);
+#endif
+  }
+  // down: layer
+  else if (state->pressed) {
+    if (layer != 0) {
+      layer_on(layer);
+    }
+  }
+  // tap: left
+  else {
+    if (shift & S_SINGLE) {
+      register_code(KC_LSFT);
+    }
+    tap_key(left);
+    if (shift & S_SINGLE) {
+      unregister_code(KC_LSFT);
+    }
+  }
+  reset_tap_dance(state);
+}
+
+void paren(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, _REGHEX);
+}
+
+void paren_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  layer_off(_REGHEX);
 }
 
 void angle(qk_tap_dance_state_t *state, void *user_data)
@@ -532,11 +528,6 @@ void curly(qk_tap_dance_state_t *state, void *user_data)
   tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
 }
 
-void paren(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_9, KC_0, 0);
-}
-
 void quote(qk_tap_dance_state_t *state, void *user_data)
 {
   tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
@@ -552,18 +543,17 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [_SPRN] = {
-    .fn        = { NULL, paren_layer, paren_reset },
+   [_SPC] = {
+    .fn        = { NULL, space, space_reset },
     .user_data = NULL
   }
-  ,[_SPC] = {
-    .fn        = { NULL, shift, shift_reset },
+  ,[_LPRN] = {
+    .fn        = { NULL, paren, paren_reset },
     .user_data = NULL
   }
  ,[_CAPS] = ACTION_TAP_DANCE_FN(caps)
  ,[_LBRC] = ACTION_TAP_DANCE_FN(brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN(curly)
- ,[_LPRN] = ACTION_TAP_DANCE_FN(paren)
  ,[_LT]   = ACTION_TAP_DANCE_FN(angle)
  ,[_QUOT] = ACTION_TAP_DANCE_FN(quote)
  ,[_SEND] = ACTION_TAP_DANCE_FN(send)
@@ -606,11 +596,11 @@ void toggle_plover(void)
   unregister_code(KC_LGUI);
 }
 
-#define    LEFT    1
-#define    RIGHT   2
-static int thumb = 0;
+#define        LEFT    1
+#define        RIGHT   2
+static uint8_t thumb = 0;
 
-void rolling_layer(keyrecord_t *record, uint16_t timer, int side, int kc, int layer, int overlay_layer, int rollover_layer)
+void rolling_layer(keyrecord_t *record, uint16_t timer, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay_layer, uint8_t rollover_layer)
 {
   if (record->event.pressed) {
     // set layer, see matrix_scan_user()
@@ -627,7 +617,7 @@ void rolling_layer(keyrecord_t *record, uint16_t timer, int side, int kc, int la
     if (key_timer > 0) {
       if (timer_elapsed(key_timer) < TAPPING_TERM) {
         register_code  (KC_LSFT);
-        tap_key        (kc);
+        tap_key        (keycode);
         unregister_code(KC_LSFT);
       }
     }
@@ -642,7 +632,7 @@ void rolling_layer(keyrecord_t *record, uint16_t timer, int side, int kc, int la
   }
 }
 
-void modifier_layer(keyrecord_t *record, uint16_t timer, int kc, int layer)
+void modifier_layer(keyrecord_t *record, uint16_t timer, uint16_t keycode, uint8_t layer)
 {
   if (record->event.pressed) {
     // set layer, see matrix_scan_user()
@@ -654,7 +644,7 @@ void modifier_layer(keyrecord_t *record, uint16_t timer, int kc, int layer)
     if (key_timer > 0) {
       if (timer_elapsed(key_timer) < TAPPING_TERM) {
         register_code  (KC_LSFT);
-        tap_key        (kc);
+        tap_key        (keycode);
         unregister_code(KC_LSFT);
       }
     }

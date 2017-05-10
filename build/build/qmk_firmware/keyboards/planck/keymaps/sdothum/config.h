@@ -15,4 +15,7 @@
 // compile time macro string
 #define COMPILE_STRING
 
+// tap dance vim cursor placement
+// #define TD_VIM
+
 #endif
