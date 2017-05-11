@@ -85,7 +85,6 @@ enum planck_keycodes {
  ,PS_PIPE   // pseudo LT(_SFTNAV, S(KC_BSLS)) for modified key-codes, see process_record_user()
  ,PS_TAB    // pseudo LT(_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,LT_BSPC = LT (_ADJUST, KC_BSPC)
- ,LT_ENT  = LT (_RSHIFT, KC_ENT)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
  ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling of Left
  ,LT_TAB  = LT (_FNCKEY, KC_TAB)
@@ -116,6 +115,7 @@ enum planck_keycodes {
 // tap dance keys
 enum tap_dance {
   _CAPS = 0
+ ,_ENT
  ,_LBRC
  ,_LCBR
  ,_LPRN
@@ -126,6 +126,7 @@ enum tap_dance {
 };
 
 #define TD_CAPS TD(_CAPS)
+#define TD_ENT  TD(_ENT)
 #define TD_LBRC TD(_LBRC)
 #define TD_LCBR TD(_LCBR)
 #define TD_LPRN TD(_LPRN)
@@ -161,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {KC_Q,    KC_W,    KC_F,    KC_P,    KC_V,    TD_CAPS, OS_CSFT,  KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN},
     {KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    OS_CALT, OS_CGUI,  KC_M,    KC_N,    KC_E,    KC_I,   KC_O   },
     {KC_Z,    KC_X,    KC_C,    KC_D,    KC_B,    OS_SALT, OS_SGUI,  KC_K,    KC_H,    KC_COMM, KC_DOT, TD_QUOT},
-    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  LT_ENT,  LT_LEFT, AT_DOWN, GT_UP,  CT_RGHT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT,  LT_LEFT, AT_DOWN, GT_UP,  CT_RGHT},
   },
 
 // ...................................................................... Plover
@@ -372,10 +373,10 @@ static uint8_t  keymap    = 0;
 // set layer of LT (layer, key) for modified key value, see process_record_user()
 void matrix_scan_user(void)
 {
-  if (key_timer != 0) {
+  if (key_timer) {
     if (timer_elapsed(key_timer) > TAPPING_TERM) {
       key_timer = 0;
-      if (keymap != 0) {
+      if (keymap) {
         layer_on(keymap);
       }
     }
@@ -417,35 +418,67 @@ void modifier(void (*f)(uint8_t))
   }
 }
 
-// augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <space><shift> sequences
-void space(qk_tap_dance_state_t *state, void *user_data)
+// set tap dance shift layer immediately to overcome tap dance latency
+void tap_layer(keyrecord_t *record, uint8_t layer)
 {
-  // double tap down: repeating space
-  if (state->count > 2) {
-    register_code(KC_SPC);
+  if (record->event.pressed) {
+    layer_on(layer);
   }
-  // tap down: space shift
+  else {
+    layer_off(layer);
+  }
+}
+
+// tap dance LT emulation!
+void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
+{
+  // double tap down: repeating keycode
+  if (state->count > 2) {
+    register_code(keycode);
+  }
+  // tap down: keycode shift
   else if (state->count > 1) {
-    tap_key (KC_SPC);
-    layer_on(_LSHIFT);
+    tap_key (keycode);
+    layer_on(layer);
   }
   // down: shift
   else if (state->pressed) {
-    layer_on(_LSHIFT);
+    layer_on(layer);
   }
-  // tap: space
+  // tap: keycode
   else {
     modifier(register_code);
-    tap_key (KC_SPC);
+    tap_key (keycode);
     modifier(unregister_code);
   }
-  reset_tap_dance(state);
+}
+
+void tap_reset(uint16_t keycode, uint8_t layer)
+{
+  unregister_code(keycode);
+  layer_off      (layer);
+}
+
+// augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
+void enter(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_shift(state, KC_ENT, _RSHIFT);
+}
+
+void enter_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_reset(KC_ENT, _RSHIFT);
+}
+
+// augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
+void space(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_shift(state, KC_SPC, _LSHIFT);
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  unregister_code(KC_SPC);
-  layer_off      (_LSHIFT);
+  tap_reset(KC_SPC, _LSHIFT);
 }
 
 // tap dance shift rules
@@ -475,7 +508,7 @@ void tap_pair(qk_tap_dance_state_t *state, uint16_t shift, uint16_t left, uint16
   }
   // down: layer
   else if (state->pressed) {
-    if (layer != 0) {
+    if (layer) {
       layer_on(layer);
     }
   }
@@ -543,20 +576,15 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-   [_SPC] = {
-    .fn        = { NULL, space, space_reset },
-    .user_data = NULL
-  }
-  ,[_LPRN] = {
-    .fn        = { NULL, paren, paren_reset },
-    .user_data = NULL
-  }
- ,[_CAPS] = ACTION_TAP_DANCE_FN(caps)
- ,[_LBRC] = ACTION_TAP_DANCE_FN(brace)
- ,[_LCBR] = ACTION_TAP_DANCE_FN(curly)
- ,[_LT]   = ACTION_TAP_DANCE_FN(angle)
- ,[_QUOT] = ACTION_TAP_DANCE_FN(quote)
- ,[_SEND] = ACTION_TAP_DANCE_FN(send)
+  [_CAPS] = ACTION_TAP_DANCE_FN         (caps)
+ ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
+ ,[_LBRC] = ACTION_TAP_DANCE_FN         (brace)
+ ,[_LCBR] = ACTION_TAP_DANCE_FN         (curly)
+ ,[_LPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, paren, paren_reset)
+ ,[_LT]   = ACTION_TAP_DANCE_FN         (angle)
+ ,[_QUOT] = ACTION_TAP_DANCE_FN         (quote)
+ ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
+ ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
 };
 
 void persistant_default_layer_set(uint16_t default_layer)
@@ -675,25 +703,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case CT_RGHT:
       tap_mods(record, KC_LCTL);
       break;
-    // emulate LT (_FNCKEY, S(KC_TAB))
-    case PS_TAB:
-      modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
-      break;
-    // emulate LT (_SFTNAV, S(KC_LEFT))
-    case PS_LEFT:
-      rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
-      break;
-    // LT (_LSHIFT, KC_SPC) handling extensions
     case TD_SPC:
+      tap_layer    (record, _LSHIFT);
+      // LT (_LSHIFT, KC_RIGHT) handling extensions
       rolling_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
-    // emulate LT (_SFTNAV, S(KC_BSLS))
+    case TD_ENT:
+      tap_layer    (record, _RSHIFT);
+      break;
     case PS_PIPE:
+      // emulate LT (_SFTNAV, S(KC_BSLS))
       rolling_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
-    // LT (_SYMBOL, KC_LEFT) handling extensions
+    case PS_TAB:
+      // emulate LT (_FNCKEY, S(KC_TAB))
+      modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
+      break;
     case LT_LEFT:
+      // LT (_SYMBOL, KC_LEFT) handling extensions
       rolling_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
+      break;
+    case PS_LEFT:
+      // emulate LT (_SFTNAV, S(KC_LEFT))
+      rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     case COLEMAK:
       if (record->event.pressed) {
