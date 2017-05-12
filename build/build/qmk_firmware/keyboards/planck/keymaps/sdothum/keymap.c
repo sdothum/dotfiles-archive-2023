@@ -502,7 +502,7 @@ void tap_pair(qk_tap_dance_state_t *state, uint16_t shift, uint16_t left, uint16
       tap_key(left);
       tap_key(right);
     }
-#ifdef TD_VIM
+#ifdef VIM_CURSOR
     // place cursor between symbol pair a la vim :-)
     tap_key(KC_LEFT);
 #endif
@@ -612,6 +612,7 @@ void clear_layers(void)
 
 void clear_sticky(void)
 {
+  key_timer = 0;
   // undo sticky modifiers
   unregister_code(KC_LALT);
   unregister_code(KC_LGUI);
@@ -673,7 +674,7 @@ void plovex(keyrecord_t *record)
 #define        RIGHT   2
 static uint8_t thumb = 0;
 
-void opposing_thumbs(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay_layer, uint8_t rollover_layer)
+void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay, uint8_t rollover)
 {
   if (record->event.pressed) {
     key_timer = timer_read();
@@ -681,20 +682,19 @@ void opposing_thumbs(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_
     layer_on(layer);
   }
   else {
-    layer_off  (_SFTNAV);
+    layer_off(_SFTNAV);
     // opposite thumb keycode may have switched effective layer!
-    if (overlay_layer) {
-      layer_off(overlay_layer);
+    if (overlay) {
+      layer_off(overlay);
     }
     // note shifted keycodes with current layout swaps
     if (!key_press(keycode)) {
       // rollover to opposite thumb layer?
       if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-        layer_on(rollover_layer);
+        layer_on(rollover);
       }
     }
     thumb     = thumb & ~side;
-    key_timer = 0;
     clear_sticky();
   }
 }
@@ -709,7 +709,6 @@ void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
     layer_off(layer);
     // for shifted keycodes, hence, LT_SHIFT
     key_press(keycode);
-    key_timer = 0;
     clear_sticky();
   }
 }
@@ -750,7 +749,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case TD_SPC:
       // LT (_LSHIFT, KC_SPC) emulation, see tap dance space
-      opposing_thumbs(record, LEFT, _LSHIFT, 0, 0, _SYMBOL);
+      shift_nav(record, LEFT, _LSHIFT, 0, 0, _SYMBOL);
       break;
     case TD_ENT:
       // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
@@ -758,7 +757,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case PS_PIPE:
       // LT (_SFTNAV, S(KC_BSLS)) emulation
-      opposing_thumbs(record, LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
+      shift_nav(record, LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     case PS_TAB:
       // LT (_FNCKEY, S(KC_TAB)) emulation
@@ -766,11 +765,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case LT_LEFT:
       // LT (_SYMBOL, KC_LEFT) emulation
-      opposing_thumbs(record, RIGHT, 0, 0, 0, _LSHIFT);
+      shift_nav(record, RIGHT, 0, 0, 0, _LSHIFT);
       break;
     case PS_LEFT:
       // LT (_SFTNAV, S(KC_LEFT)) emulation
-      opposing_thumbs(record, RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
+      shift_nav(record, RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     case COLEMAK:
       colemak(record);
@@ -817,16 +816,16 @@ void led_set_user(uint8_t usb_led)
 }
 #endif
 
-void startup_user()
+void startup_user(void)
 {
-  _delay_ms      (20);                      // gets rid of tick
+  _delay_ms(20);                            // gets rid of tick
   PLAY_NOTE_ARRAY(tone_startup, false, 0);
 }
 
-void shutdown_user()
+void shutdown_user(void)
 {
   PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
-  _delay_ms      (150);
+  _delay_ms(150);
   stop_all_notes();
 }
 

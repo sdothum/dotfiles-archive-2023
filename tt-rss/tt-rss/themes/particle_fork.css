@@ -98,11 +98,8 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeExpando {
-  /* margin:                 -1px 0 1px 15px; */
-  margin:                    -1px 0 1px 11px;
-  margin-right:              -16px !important;
+  margin:                    -1px -16px 1px 11px !important;
   opacity:                   0 !important;
-  /* padding-left:           17px !important; */
   padding-left:              2px !important;
 }
 

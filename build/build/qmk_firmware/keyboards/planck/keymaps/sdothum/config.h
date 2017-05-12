@@ -16,6 +16,6 @@
 #define COMPILE_STRING
 
 // tap dance vim cursor placement
-// #define TD_VIM
+// #define VIM_CURSOR
 
 #endif

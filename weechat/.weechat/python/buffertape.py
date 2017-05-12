@@ -39,7 +39,7 @@ buffertape_char = '••'
 indent = -1
 
 settings = {
-    "modulo_interval"         : '20',   # print a new timestamp every X minutes of the hour
+    "modulo_interval"         : '15',   # print a new timestamp every X minutes of the hour
     "center"                  : '1',    # (0) left justify (1) center
 }
 
