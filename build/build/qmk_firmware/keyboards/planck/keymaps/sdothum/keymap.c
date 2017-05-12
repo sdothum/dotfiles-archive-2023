@@ -367,21 +367,7 @@ float music_scale   [][2] = SONG   (MUSIC_SCALE_SOUND);
 float tone_goodbye  [][2] = SONG   (GOODBYE_SOUND);
 #endif
 
-static uint16_t key_timer = 0;
-static uint8_t  keymap    = 0;
-
-// set layer of LT (layer, key) for modified key value, see process_record_user()
-void matrix_scan_user(void)
-{
-  if (key_timer) {
-    if (timer_elapsed(key_timer) > TAPPING_TERM) {
-      key_timer = 0;
-      if (keymap) {
-        layer_on(keymap);
-      }
-    }
-  }
-}
+// .................................................................. Primitives
 
 // register simple key press
 void tap_key(uint16_t keycode)
@@ -390,8 +376,31 @@ void tap_key(uint16_t keycode)
   unregister_code(keycode);
 }
 
+void shift_key(uint16_t keycode)
+{
+  register_code  (KC_LSFT);
+  tap_key        (keycode);
+  unregister_code(KC_LSFT);
+}
+
+static uint16_t key_timer = 0;
+
+// key press for LT (layer, key) emulation
+bool key_press(uint16_t keycode)
+{
+  if (key_timer) {
+    if (timer_elapsed(key_timer) < TAPPING_TERM) {
+      shift_key(keycode);
+      return true;
+    }
+  }
+  return false;
+}
+
+// ................................................................... Mod Masks
+
 // tap dance persistant mods, see process_record_user()
-// keyboard_report->mods appears to be cleared by tap dance(?)
+// keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
 void tap_mods(keyrecord_t *record, uint16_t keycode)
@@ -418,7 +427,9 @@ void modifier(void (*f)(uint8_t))
   }
 }
 
-// set tap dance shift layer immediately to overcome tap dance latency
+// ......................................................... Tap Dance Sequences
+
+// set tap dance shift layer immediately to avoid tap dance latency, see process_record_user()
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   if (record->event.pressed) {
@@ -429,7 +440,7 @@ void tap_layer(keyrecord_t *record, uint8_t layer)
   }
 }
 
-// tap dance LT emulation!
+// tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
 {
   // double tap down: repeating keycode
@@ -481,6 +492,8 @@ void space_reset(qk_tap_dance_state_t *state, void *user_data)
   tap_reset(KC_SPC, _LSHIFT);
 }
 
+// ............................................................. Tap Dance Pairs
+
 // tap dance shift rules
 #define S_NEVER  0
 #define S_SINGLE 1
@@ -493,17 +506,16 @@ void tap_pair(qk_tap_dance_state_t *state, uint16_t shift, uint16_t left, uint16
   // double tap: left right
   if (state->count > 1) {
     if (shift & S_DOUBLE) {
-      register_code(KC_LSFT);
+      shift_key(left);
+      shift_key(right);
     }
-    tap_key(left);
-    tap_key(right);
-    if (shift & S_DOUBLE) {
-      unregister_code(KC_LSFT);
+    else {
+      tap_key(left);
+      tap_key(right);
     }
 #ifdef TD_VIM
     // place cursor between symbol pair a la vim :-)
-    register_code  (KC_LEFT);
-    unregister_code(KC_LEFT);
+    tap_key(KC_LEFT);
 #endif
   }
   // down: layer
@@ -515,11 +527,10 @@ void tap_pair(qk_tap_dance_state_t *state, uint16_t shift, uint16_t left, uint16
   // tap: left
   else {
     if (shift & S_SINGLE) {
-      register_code(KC_LSFT);
+      shift_key(left);
     }
-    tap_key(left);
-    if (shift & S_SINGLE) {
-      unregister_code(KC_LSFT);
+    else {
+      tap_key(left);
     }
   }
   reset_tap_dance(state);
@@ -545,6 +556,18 @@ void brace(qk_tap_dance_state_t *state, void *user_data)
   tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0);
 }
 
+void curly(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
+}
+
+void quote(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
+}
+
+// ............................................................ Tap Dance Single
+
 void caps(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
@@ -554,16 +577,6 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
     set_oneshot_mods(MOD_LSFT);
   }
   reset_tap_dance(state);
-}
-
-void curly(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
-}
-
-void quote(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_DOUBLE, KC_QUOT, KC_QUOT, 0);
 }
 
 void send(qk_tap_dance_state_t *state, void *user_data)
@@ -586,6 +599,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
 };
+
+// ..................................................................... Keymaps
 
 void persistant_default_layer_set(uint16_t default_layer)
 {
@@ -614,15 +629,56 @@ void clear_sticky(void)
   unregister_code(KC_LCTL);
 }
 
+void colemak(keyrecord_t *record)
+{
+  if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+    PLAY_NOTE_ARRAY(tone_colemak, false, 0);
+#endif
+    clear_layers();
+    persistant_default_layer_set(1UL<<_COLEMAK);
+  }
+}
+
 void toggle_plover(void)
 {
   // toggle window manager plover application, see herbstluftwm/config/appbinds
   register_code  (KC_LGUI);
-  register_code  (KC_LSFT);
-  tap_key        (KC_RGHT);
-  unregister_code(KC_LSFT);
+  shift_key      (KC_RGHT);
   unregister_code(KC_LGUI);
 }
+
+void plover(keyrecord_t *record)
+{
+  if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+    PLAY_NOTE_ARRAY(tone_plover, false, 0);
+#endif
+    clear_layers();
+    layer_on(_PLOVER);
+    if (!eeconfig_is_enabled()) {
+      eeconfig_init();
+    }
+    keymap_config.raw  = eeconfig_read_keymap();
+    keymap_config.nkro = 1;
+    eeconfig_update_keymap(keymap_config.raw);
+    toggle_plover();
+  }
+}
+
+void plovex(keyrecord_t *record)
+{
+  if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+    PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
+#endif
+    layer_off(_PLOVER);
+    clear_layers();
+    toggle_plover();
+  }
+}
+
+// .............................................................. Dynamic Layers
 
 #define        LEFT    1
 #define        RIGHT   2
@@ -631,10 +687,9 @@ static uint8_t thumb = 0;
 void rolling_layer(keyrecord_t *record, uint16_t timer, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay_layer, uint8_t rollover_layer)
 {
   if (record->event.pressed) {
-    // set layer, see matrix_scan_user()
     key_timer = timer;
     thumb     = thumb | side;
-    keymap    = layer;
+    layer_on(layer);
   }
   else {
     layer_off  (_SFTNAV);
@@ -642,20 +697,14 @@ void rolling_layer(keyrecord_t *record, uint16_t timer, uint8_t side, uint16_t k
     if (overlay_layer) {
       layer_off(overlay_layer);
     }
-    if (key_timer > 0) {
-      if (timer_elapsed(key_timer) < TAPPING_TERM) {
-        register_code  (KC_LSFT);
-        tap_key        (keycode);
-        unregister_code(KC_LSFT);
+    if (!key_press(keycode)) {
+      // rollover to opposite thumb layer
+      if (thumb & (side == LEFT ? RIGHT : LEFT)) {
+        layer_on(rollover_layer);
       }
-    }
-    // rollover to opposite thumb layer
-    else if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-      layer_on(rollover_layer);
     }
     thumb     = thumb & ~side;
     key_timer = 0;
-    keymap    = 0;
     clear_sticky();
   }
 }
@@ -663,24 +712,18 @@ void rolling_layer(keyrecord_t *record, uint16_t timer, uint8_t side, uint16_t k
 void modifier_layer(keyrecord_t *record, uint16_t timer, uint16_t keycode, uint8_t layer)
 {
   if (record->event.pressed) {
-    // set layer, see matrix_scan_user()
     key_timer = timer_read();
-    keymap    = layer;
+    layer_on(layer);
   }
   else {
     layer_off(layer);
-    if (key_timer > 0) {
-      if (timer_elapsed(key_timer) < TAPPING_TERM) {
-        register_code  (KC_LSFT);
-        tap_key        (keycode);
-        unregister_code(KC_LSFT);
-      }
-    }
+    key_press(keycode);
     key_timer = 0;
-    keymap    = 0;
     clear_sticky();
   }
 }
+
+// ................................................................... Main Loop
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -704,12 +747,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       tap_mods(record, KC_LCTL);
       break;
     case TD_SPC:
-      tap_layer    (record, _LSHIFT);
-      // LT (_LSHIFT, KC_RIGHT) handling extensions
+      tap_layer(record, _LSHIFT);
+      // LT (_LSHIFT, KC_SPC) handling extensions
       rolling_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
       break;
     case TD_ENT:
-      tap_layer    (record, _RSHIFT);
+      tap_layer(record, _RSHIFT);
       break;
     case PS_PIPE:
       // emulate LT (_SFTNAV, S(KC_BSLS))
@@ -728,47 +771,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     case COLEMAK:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_colemak, false, 0);
-#endif
-        clear_layers();
-        persistant_default_layer_set(1UL<<_COLEMAK);
-      }
+      colemak(record);
       return false;
       break;
     case PLOVER:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        stop_all_notes();
-        PLAY_NOTE_ARRAY(tone_plover, false, 0);
-#endif
-        clear_layers();
-        layer_on(_PLOVER);
-        if (!eeconfig_is_enabled()) {
-          eeconfig_init();
-        }
-        keymap_config.raw  = eeconfig_read_keymap();
-        keymap_config.nkro = 1;
-        eeconfig_update_keymap(keymap_config.raw);
-        toggle_plover();
-      }
+      plover(record);
       return false;
       break;
     case PLOVEX:
-      if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-        PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
-#endif
-        layer_off(_PLOVER);
-        clear_layers();
-        toggle_plover();
-      }
+      plovex(record);
       return false;
       break;
   }
   return true;
 }
+
+// ....................................................................... Audio
 
 void matrix_init_user(void)
 {
