@@ -16,8 +16,8 @@ nnoremap S    :set statusbar!<CR><Esc>
 nnoremap t    :open !/
 nnoremap T    :tabopen !/
 nnoremap w    :sh! focus vimb %<CR>
-nnoremap W    :sh! focus chromium %<CR>
-nnoremap ww   :sh! term 'w3m' w3m %<CR>
+nnoremap ww   :sh! focus chromium %<CR>
+nnoremap W    :sh! term 'w3m' w3m %<CR>
 nnoremap x    :sh! play %<CR>
 nnoremap X    :eval! translate()<CR>
 nnoremap Z    :eval! readable()<CR>

@@ -86,7 +86,7 @@ enum planck_keycodes {
  ,PS_TAB    // pseudo LT(_FNCKEY, S(KC_TAB))  for modified key-codes, see process_record_user()
  ,LT_BSPC = LT (_ADJUST, KC_BSPC)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
- ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling of Left
+ ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling
  ,LT_TAB  = LT (_FNCKEY, KC_TAB)
  ,OS_ALT  = OSM(MOD_LALT)
  ,OS_CALT = OSM(MOD_LALT | MOD_LCTL)
@@ -367,7 +367,7 @@ float music_scale   [][2] = SONG   (MUSIC_SCALE_SOUND);
 float tone_goodbye  [][2] = SONG   (GOODBYE_SOUND);
 #endif
 
-// .................................................................. Primitives
+// .............................................................. Key Primitives
 
 // register simple key press
 void tap_key(uint16_t keycode)
@@ -385,10 +385,10 @@ void shift_key(uint16_t keycode)
 
 static uint16_t key_timer = 0;
 
-// key press for LT (layer, key) emulation
+// key press for rolling LT (layer, key) emulation
 bool key_press(uint16_t keycode)
 {
-  if (key_timer) {
+  if (keycode) {
     if (timer_elapsed(key_timer) < TAPPING_TERM) {
       shift_key(keycode);
       return true;
@@ -428,17 +428,6 @@ void modifier(void (*f)(uint8_t))
 }
 
 // ......................................................... Tap Dance Sequences
-
-// set tap dance shift layer immediately to avoid tap dance latency, see process_record_user()
-void tap_layer(keyrecord_t *record, uint8_t layer)
-{
-  if (record->event.pressed) {
-    layer_on(layer);
-  }
-  else {
-    layer_off(layer);
-  }
-}
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
@@ -678,27 +667,28 @@ void plovex(keyrecord_t *record)
   }
 }
 
-// .............................................................. Dynamic Layers
+// .................................................................... Layering
 
 #define        LEFT    1
 #define        RIGHT   2
 static uint8_t thumb = 0;
 
-void rolling_layer(keyrecord_t *record, uint16_t timer, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay_layer, uint8_t rollover_layer)
+void opposing_thumbs(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay_layer, uint8_t rollover_layer)
 {
   if (record->event.pressed) {
-    key_timer = timer;
+    key_timer = timer_read();
     thumb     = thumb | side;
     layer_on(layer);
   }
   else {
     layer_off  (_SFTNAV);
-    // opposite thumb keycode handler may have switched effective layer!
+    // opposite thumb keycode may have switched effective layer!
     if (overlay_layer) {
       layer_off(overlay_layer);
     }
+    // note shifted keycodes with current layout swaps
     if (!key_press(keycode)) {
-      // rollover to opposite thumb layer
+      // rollover to opposite thumb layer?
       if (thumb & (side == LEFT ? RIGHT : LEFT)) {
         layer_on(rollover_layer);
       }
@@ -709,7 +699,7 @@ void rolling_layer(keyrecord_t *record, uint16_t timer, uint8_t side, uint16_t k
   }
 }
 
-void modifier_layer(keyrecord_t *record, uint16_t timer, uint16_t keycode, uint8_t layer)
+void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
 {
   if (record->event.pressed) {
     key_timer = timer_read();
@@ -717,9 +707,21 @@ void modifier_layer(keyrecord_t *record, uint16_t timer, uint16_t keycode, uint8
   }
   else {
     layer_off(layer);
+    // for shifted keycodes, hence, LT_SHIFT
     key_press(keycode);
     key_timer = 0;
     clear_sticky();
+  }
+}
+
+// set tap dance shift layer immediately to avoid tap dance latency
+void tap_layer(keyrecord_t *record, uint8_t layer)
+{
+  if (record->event.pressed) {
+    layer_on(layer);
+  }
+  else {
+    layer_off(layer);
   }
 }
 
@@ -747,28 +749,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       tap_mods(record, KC_LCTL);
       break;
     case TD_SPC:
-      tap_layer(record, _LSHIFT);
-      // LT (_LSHIFT, KC_SPC) handling extensions
-      rolling_layer(record, 0, LEFT, 0, 0, 0, _SYMBOL);
+      // LT (_LSHIFT, KC_SPC) emulation, see tap dance space
+      opposing_thumbs(record, LEFT, _LSHIFT, 0, 0, _SYMBOL);
       break;
     case TD_ENT:
+      // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
       tap_layer(record, _RSHIFT);
       break;
     case PS_PIPE:
-      // emulate LT (_SFTNAV, S(KC_BSLS))
-      rolling_layer(record, timer_read(), LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
+      // LT (_SFTNAV, S(KC_BSLS)) emulation
+      opposing_thumbs(record, LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     case PS_TAB:
-      // emulate LT (_FNCKEY, S(KC_TAB))
-      modifier_layer(record, timer_read(), KC_TAB, _FNCKEY);
+      // LT (_FNCKEY, S(KC_TAB)) emulation
+      lt_shift(record, KC_TAB, _FNCKEY);
       break;
     case LT_LEFT:
-      // LT (_SYMBOL, KC_LEFT) handling extensions
-      rolling_layer(record, 0, RIGHT, 0, 0, 0, _LSHIFT);
+      // LT (_SYMBOL, KC_LEFT) emulation
+      opposing_thumbs(record, RIGHT, 0, 0, 0, _LSHIFT);
       break;
     case PS_LEFT:
-      // emulate LT (_SFTNAV, S(KC_LEFT))
-      rolling_layer(record, timer_read(), RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
+      // LT (_SFTNAV, S(KC_LEFT)) emulation
+      opposing_thumbs(record, RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     case COLEMAK:
       colemak(record);
