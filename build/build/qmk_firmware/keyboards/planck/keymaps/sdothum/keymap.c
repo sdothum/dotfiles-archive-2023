@@ -438,8 +438,8 @@ void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
   }
   // tap down: keycode shift
   else if (state->count > 1) {
-    tap_key (keycode);
     layer_on(layer);
+    tap_key (keycode);
   }
   // down: shift
   else if (state->pressed) {
@@ -600,6 +600,7 @@ void persistant_default_layer_set(uint16_t default_layer)
 void clear_layers(void)
 {
   layer_off(_COLEMAK);
+  layer_off(_PLOVER);
   layer_off(_LSHIFT);
   layer_off(_RSHIFT);
   layer_off(_NUMBER);
@@ -610,7 +611,7 @@ void clear_layers(void)
   layer_off(_ADJUST);
 }
 
-void clear_sticky(void)
+void clear_mods(void)
 {
   key_timer = 0;
   // undo sticky modifiers
@@ -662,7 +663,6 @@ void plovex(keyrecord_t *record)
 #ifdef AUDIO_ENABLE
     PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
 #endif
-    layer_off(_PLOVER);
     clear_layers();
     toggle_plover();
   }
@@ -674,14 +674,11 @@ void plovex(keyrecord_t *record)
 #define        RIGHT   2
 static uint8_t thumb = 0;
 
-void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay, uint8_t rollover)
+void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t overlay, uint8_t layer)
 {
   if (record->event.pressed) {
     key_timer = timer_read();
     thumb     = thumb | side;
-    if (layer) {
-      layer_on(layer);
-    }
   }
   else {
     layer_off(_SFTNAV);
@@ -693,29 +690,29 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
     if (!key_press(keycode)) {
       // rollover to opposite thumb layer?
       if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-        layer_on(rollover);
+        layer_on(layer);
       }
     }
     thumb = thumb & ~side;
-    clear_sticky();
+    clear_mods();
   }
 }
 
 void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
 {
   if (record->event.pressed) {
-    key_timer = timer_read();
     layer_on(layer);
+    key_timer = timer_read();
   }
   else {
     layer_off(layer);
     // for shifted keycodes, hence, LT_SHIFT
     key_press(keycode);
-    clear_sticky();
+    clear_mods();
   }
 }
 
-// set shift layer asap to prevent tap dance layer latency errors
+// set layer asap to prevent macro latency errors, e.g. tap dance, LT!
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   if (record->event.pressed) {
@@ -749,30 +746,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case CT_RGHT:
       tap_mods(record, KC_LCTL);
       break;
+    case LT_ESC:
+      tap_layer(record, _NUMBER);
+      break;
     case TD_SPC:
       tap_layer(record, _LSHIFT);
       // LT (_LSHIFT, KC_SPC) emulation, see tap dance space
-      shift_nav(record, LEFT, 0, 0, 0, _SYMBOL);
+      shift_nav(record, LEFT, 0, 0, _SYMBOL);
       break;
     case TD_ENT:
       // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
       tap_layer(record, _RSHIFT);
       break;
     case PS_PIPE:
+      tap_layer(record, _SFTNAV);
       // LT (_SFTNAV, S(KC_BSLS)) emulation
-      shift_nav(record, LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
+      shift_nav(record, LEFT, KC_BSLS, _LSHIFT, _SYMBOL);
       break;
     case PS_TAB:
       // LT (_FNCKEY, S(KC_TAB)) emulation
       lt_shift(record, KC_TAB, _FNCKEY);
       break;
     case LT_LEFT:
-      // LT (_SYMBOL, KC_LEFT) emulation
-      shift_nav(record, RIGHT, 0, 0, 0, _LSHIFT);
+      tap_layer(record, _SYMBOL);
+      // LT (_SYMBOL, KC_LEFT) extension
+      shift_nav(record, RIGHT, 0, 0, _LSHIFT);
       break;
     case PS_LEFT:
+      tap_layer(record, _SFTNAV);
       // LT (_SFTNAV, S(KC_LEFT)) emulation
-      shift_nav(record, RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
+      shift_nav(record, RIGHT, KC_LEFT, _SYMBOL, _LSHIFT);
       break;
     case COLEMAK:
       colemak(record);
