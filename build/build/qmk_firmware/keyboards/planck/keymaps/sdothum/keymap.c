@@ -679,7 +679,9 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
   if (record->event.pressed) {
     key_timer = timer_read();
     thumb     = thumb | side;
-    layer_on(layer);
+    if (layer) {
+      layer_on(layer);
+    }
   }
   else {
     layer_off(_SFTNAV);
@@ -694,7 +696,7 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
         layer_on(rollover);
       }
     }
-    thumb     = thumb & ~side;
+    thumb = thumb & ~side;
     clear_sticky();
   }
 }
@@ -713,7 +715,7 @@ void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
   }
 }
 
-// set tap dance shift layer immediately to avoid tap dance latency
+// set shift layer asap to prevent tap dance layer latency errors
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   if (record->event.pressed) {
@@ -748,8 +750,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       tap_mods(record, KC_LCTL);
       break;
     case TD_SPC:
+      tap_layer(record, _LSHIFT);
       // LT (_LSHIFT, KC_SPC) emulation, see tap dance space
-      shift_nav(record, LEFT, _LSHIFT, 0, 0, _SYMBOL);
+      shift_nav(record, LEFT, 0, 0, 0, _SYMBOL);
       break;
     case TD_ENT:
       // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
