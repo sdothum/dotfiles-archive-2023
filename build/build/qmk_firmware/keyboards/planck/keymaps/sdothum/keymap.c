@@ -403,12 +403,19 @@ bool key_press(uint16_t keycode)
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-void tap_mods(keyrecord_t *record, uint16_t keycode)
+// set modifier asap to overcome one shot macro latency errors
+void tap_mods(keyrecord_t *record, uint16_t keycode, bool enable)
 {
   if (record->event.pressed) {
+    if (enable) {
+      register_code(keycode);
+    }
     mods |= MOD_BIT(keycode);
   }
   else {
+    if (enable) {
+      unregister_code(keycode);
+    }
     mods &= ~(MOD_BIT(keycode));
   }
 }
@@ -611,7 +618,7 @@ void clear_layers(void)
   layer_off(_ADJUST);
 }
 
-void clear_mods(void)
+void clear_sticky(void)
 {
   key_timer = 0;
   // undo sticky modifiers
@@ -674,14 +681,15 @@ void plovex(keyrecord_t *record)
 #define        RIGHT   2
 static uint8_t thumb = 0;
 
-void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t overlay, uint8_t layer)
+void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t overlay, uint8_t rollover)
 {
   if (record->event.pressed) {
+    // layer_on via tap_layer(), see process_record_user()
     key_timer = timer_read();
     thumb     = thumb | side;
   }
   else {
-    layer_off(_SFTNAV);
+    layer_off(layer);
     // opposite thumb keycode may have switched effective layer!
     if (overlay) {
       layer_off(overlay);
@@ -690,11 +698,11 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t over
     if (!key_press(keycode)) {
       // rollover to opposite thumb layer?
       if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-        layer_on(layer);
+        layer_on(rollover);
       }
     }
     thumb = thumb & ~side;
-    clear_mods();
+    clear_sticky();
   }
 }
 
@@ -708,11 +716,12 @@ void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
     layer_off(layer);
     // for shifted keycodes, hence, LT_SHIFT
     key_press(keycode);
-    clear_mods();
+    clear_sticky();
   }
 }
 
-// set layer asap to prevent macro latency errors, e.g. tap dance, LT!
+// set layer asap to overcome macro latency errors, notably tap dance and LT usage
+// this routine inexplicably (?) sets layer_on() faster than can be done in shift_nav()
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   if (record->event.pressed) {
@@ -729,22 +738,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
     case OS_CTL:
-      tap_mods(record, KC_LCTL);
+      tap_mods(record, KC_LCTL, 1);
       break;
     case OS_GUI:
-      tap_mods(record, KC_LGUI);
+      tap_mods(record, KC_LGUI, 1);
       break;
     case OS_ALT:
-      tap_mods(record, KC_LALT);
+      tap_mods(record, KC_LALT, 1);
       break;
     case AT_DOWN:
-      tap_mods(record, KC_LALT);
+      tap_mods(record, KC_LALT, 0);
       break;
     case GT_UP:
-      tap_mods(record, KC_LGUI);
+      tap_mods(record, KC_LGUI, 0);
       break;
     case CT_RGHT:
-      tap_mods(record, KC_LCTL);
+      tap_mods(record, KC_LCTL, 0);
       break;
     case LT_ESC:
       tap_layer(record, _NUMBER);
@@ -752,7 +761,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case TD_SPC:
       tap_layer(record, _LSHIFT);
       // LT (_LSHIFT, KC_SPC) emulation, see tap dance space
-      shift_nav(record, LEFT, 0, 0, _SYMBOL);
+      shift_nav(record, LEFT, 0, _LSHIFT, 0, _SYMBOL);
       break;
     case TD_ENT:
       // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
@@ -761,7 +770,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case PS_PIPE:
       tap_layer(record, _SFTNAV);
       // LT (_SFTNAV, S(KC_BSLS)) emulation
-      shift_nav(record, LEFT, KC_BSLS, _LSHIFT, _SYMBOL);
+      shift_nav(record, LEFT, KC_BSLS, _SFTNAV, _LSHIFT, _SYMBOL);
       break;
     case PS_TAB:
       // LT (_FNCKEY, S(KC_TAB)) emulation
@@ -770,12 +779,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case LT_LEFT:
       tap_layer(record, _SYMBOL);
       // LT (_SYMBOL, KC_LEFT) extension
-      shift_nav(record, RIGHT, 0, 0, _LSHIFT);
+      shift_nav(record, RIGHT, 0, _SYMBOL, 0, _LSHIFT);
       break;
     case PS_LEFT:
       tap_layer(record, _SFTNAV);
       // LT (_SFTNAV, S(KC_LEFT)) emulation
-      shift_nav(record, RIGHT, KC_LEFT, _SYMBOL, _LSHIFT);
+      shift_nav(record, RIGHT, KC_LEFT, _SFTNAV, _SYMBOL, _LSHIFT);
       break;
     case COLEMAK:
       colemak(record);
