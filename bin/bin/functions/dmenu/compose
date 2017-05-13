@@ -46,9 +46,11 @@ compose_with() {
 
 compose_vim() {
   SHELL=/usr/bin/dash
+  DRAFT=$HOME/drafts/${1#/tmp/}.draft
   format_message $1
-  gvim -f -c 'set filetype=mail' $1
-  cp $1 $HOME/drafts/${1#/tmp/}.draft
+  cp $1 $DRAFT
+  gvim -f -c 'set filetype=mail' -c 'call FontSize(1)' $DRAFT
+  cp $DRAFT $1
   # cleanup sup mail draft histories
   find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
   mhistory compose $editor

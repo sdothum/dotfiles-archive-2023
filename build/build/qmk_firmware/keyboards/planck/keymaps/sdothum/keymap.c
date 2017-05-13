@@ -403,19 +403,12 @@ bool key_press(uint16_t keycode)
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-// set modifier asap to overcome one shot macro latency errors
-void tap_mods(keyrecord_t *record, uint16_t keycode, bool enable)
+void tap_mods(keyrecord_t *record, uint16_t keycode)
 {
   if (record->event.pressed) {
-    if (enable) {
-      register_code(keycode);
-    }
     mods |= MOD_BIT(keycode);
   }
   else {
-    if (enable) {
-      unregister_code(keycode);
-    }
     mods &= ~(MOD_BIT(keycode));
   }
 }
@@ -738,22 +731,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
     case OS_CTL:
-      tap_mods(record, KC_LCTL, 1);
+      tap_mods(record, KC_LCTL);
       break;
     case OS_GUI:
-      tap_mods(record, KC_LGUI, 1);
+      tap_mods(record, KC_LGUI);
       break;
     case OS_ALT:
-      tap_mods(record, KC_LALT, 1);
+      tap_mods(record, KC_LALT);
       break;
     case AT_DOWN:
-      tap_mods(record, KC_LALT, 0);
+      tap_mods(record, KC_LALT);
       break;
     case GT_UP:
-      tap_mods(record, KC_LGUI, 0);
+      tap_mods(record, KC_LGUI);
       break;
     case CT_RGHT:
-      tap_mods(record, KC_LCTL, 0);
+      tap_mods(record, KC_LCTL);
       break;
     case LT_ESC:
       tap_layer(record, _NUMBER);
