@@ -89,7 +89,7 @@ while note=$(notes |
              cut -d^ -f2- |
              sed "1i$PROMPT" |
              column -s^ -t |
-             rmenu "$(echo $ext | sed -r 's/./\u&/')" $(highlight)) || exit
+             rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit
 do
   case $note in
     /*) search="${note#*/}"

@@ -6,7 +6,7 @@
 # ........................................................... omxplayer geometry
 
 view=$(previous geometry)
-geometry=$(echo "fullscreen\nwide\ncorner" |
+geometry=$(echo "wide\nfullscreen\ncorner" |
            rmenu "$1" $view -no-custom) || exit 1
 
 # left edge = screen width * ratio

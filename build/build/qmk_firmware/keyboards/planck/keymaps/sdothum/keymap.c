@@ -611,15 +611,6 @@ void clear_layers(void)
   layer_off(_ADJUST);
 }
 
-void clear_sticky(void)
-{
-  key_timer = 0;
-  // undo sticky modifiers
-  unregister_code(KC_LALT);
-  unregister_code(KC_LGUI);
-  unregister_code(KC_LCTL);
-}
-
 void colemak(keyrecord_t *record)
 {
   if (record->event.pressed) {
@@ -694,8 +685,9 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
         layer_on(rollover);
       }
     }
-    thumb = thumb & ~side;
-    clear_sticky();
+    clear_mods();
+    thumb     = thumb & ~side;
+    key_timer = 0;
   }
 }
 
@@ -709,7 +701,8 @@ void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
     layer_off(layer);
     // for shifted keycodes, hence, LT_SHIFT
     key_press(keycode);
-    clear_sticky();
+    clear_mods();
+    key_timer = 0;
   }
 }
 

@@ -116,8 +116,10 @@
 
       " use extended regex statements for searches (unfortunately, must set
       " manually for search and replace)
-      nmap /                    /\v
-      vmap /                    /\v
+      nmap //                   /\v
+      vmap //                   /\v
+      " most often use s, over s/ for searching..
+      cmap //                   \v
       " clear search highlight
       nmap <silent>\            :noh<CR>
 
