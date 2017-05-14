@@ -19,7 +19,11 @@ KEYMAP=$PLANCK/keymaps/$1
 keymap=$1
 shift
 
-if-no 'sync qmk_firmware repo' || ( cd $QMK && git pull )
+if ! if-no 'sync qmk_firmware repo' ;then
+  original -f -q $QMK
+  cd $QMK
+  git pull
+fi
 
 # compile time macro sting
 grep -q COMPILE_STRING $KEYMAP/config.h || sed -i '$a#define COMPILE_STRING' $KEYMAP/config.h

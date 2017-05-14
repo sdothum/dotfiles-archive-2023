@@ -668,16 +668,10 @@ void persistant_default_layer_set(uint16_t default_layer)
 
 void clear_layers(void)
 {
-  layer_off(_COLEMAK);
-  layer_off(_PLOVER);
-  layer_off(_LSHIFT);
-  layer_off(_RSHIFT);
-  layer_off(_NUMBER);
-  layer_off(_REGHEX);
-  layer_off(_SYMBOL);
-  layer_off(_SFTNAV);
-  layer_off(_FNCKEY);
-  layer_off(_ADJUST);
+  uint8_t layer;
+  for (layer = _COLEMAK; layer <= _ADJUST; layer++) {
+    layer_off(layer);
+  }
 }
 
 void colemak(keyrecord_t *record)

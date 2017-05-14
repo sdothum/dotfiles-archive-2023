@@ -7,21 +7,37 @@
 # ......................................................... Distribution install
 
 usage() {
-  echo "usage: $(basename $0) [-f] <file>"
+  echo "usage: $(basename $0) [-f | -q]* <file>"
   exit 1
 }
 
-# replace previous original?
-if [ $1. = -f. ] ;then
-  shift
-  sudo rm $1.original
-fi
-[ "$1" ] || usage &&
-            [ -e $1.original ] && exit 1
+V=-v
+while :
+do
+  case $1 in
+    -f) eval sudo rm -rf \$$#.original
+        shift
+        continue ;;
+
+    -q) unset V
+        shift
+        continue ;;
+
+    '') usage ;;
+    * ) break ;;
+  esac
+done
+
+[ -e $1.original ] && exit 1
 
 # save distribution original
 if [ -e $1 ] ;then
-  ditto "copying $(sudo cp -pRv $1 $1.original)"
+  if [ $V ] ;then
+    ditto "copying $(sudo cp -pR $V $1 $1.original)"
+  else
+    ditto "copying $1 $1.original"
+    sudo cp -pR $1 $1.original
+  fi
   exit 0
 fi
 exit 1
