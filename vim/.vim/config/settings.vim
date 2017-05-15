@@ -120,6 +120,7 @@
       vmap //                   /\v
       " most often use s, over s/ for searching..
       cmap //                   \v
+      cmap ??                   \C
       " clear search highlight
       nmap <silent>\            :noh<CR>
 

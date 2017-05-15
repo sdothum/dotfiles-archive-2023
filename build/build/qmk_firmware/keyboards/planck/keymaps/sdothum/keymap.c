@@ -385,7 +385,7 @@ void shift_key(uint16_t keycode)
 
 static uint16_t key_timer = 0;
 
-// key press for rolling shift_nav() and lt_shift() macros
+// key press for com_layer() and lts_layer() macros
 bool key_press(uint16_t keycode)
 {
   if (keycode) {
@@ -595,16 +595,17 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define        RIGHT   2
 static uint8_t thumb = 0;
 
-// LEFT (KC_SPC, S(KC_BSLS)), RIGHT (KC_LEFT, S(KC_LEFT)) opposite thumb shift_nav() combinations..
+// LEFT (KC_SPC, S(KC_BSLS)), RIGHT (KC_LEFT, S(KC_LEFT)) opposite thumb combinations, see process_record_user()
 // up,   up   -> _COLEMAK
 // up,   down -> _SYMBOL
 // down, up   -> _NUMBER
-// down, down -> _SFTNAV (default rollover layer)
-#define DEFAULT_ROLLOVER _SFTNAV
+// down, down -> _SFTNAV
+#define THUMBS_DOWN _SFTNAV
 
-static uint8_t rollover = DEFAULT_ROLLOVER;
+static uint8_t overlayer = THUMBS_DOWN;
 
-void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t opposing_layer)
+// left right layer combinations
+void com_layer(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t default_layer)
 {
   if (record->event.pressed) {
     // layer_on via tap_layer(), see process_record_user()
@@ -613,17 +614,16 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
   }
   else {
     layer_off(layer);
-    // opposite shift_nav() thumb may have switched effective layer!
-    if (rollover) {
-      layer_off(rollover);
-      rollover = DEFAULT_ROLLOVER;
+    // opposite com_layer() thumb may have switched effective layer!
+    if (overlayer) {
+      layer_off(overlayer);
+      overlayer = THUMBS_DOWN;
     }
-    // thumb down? see rollover table above
     if (!key_press(keycode)) {
-      // rollover to opposite thumb layer?
+      // opposite thumb down? see left right combination layer table above
       if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-        layer_on(opposing_layer);
-        rollover = opposing_layer;
+        layer_on(default_layer);
+        overlayer = default_layer;
       }
     }
     clear_mods();
@@ -632,7 +632,8 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
   }
 }
 
-void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
+// LT for S(keycode)
+void lts_layer(keyrecord_t *record, uint16_t keycode, uint8_t layer)
 {
   if (record->event.pressed) {
     layer_on(layer);
@@ -648,7 +649,7 @@ void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
 }
 
 // set layer asap to overcome macro latency errors, notably tap dance and LT usage
-// this routine inexplicably (?) sets layer_on() faster than can be done in shift_nav()
+// this routine inexplicably (?) sets layer_on() faster than can be done in com_layer()
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   if (record->event.pressed) {
@@ -751,8 +752,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case TD_SPC:
       tap_layer(record, _LSHIFT);
-      // LT (_LSHIFT, KC_SPC) rollover emulation, see tap dance space
-      shift_nav(record, LEFT, 0, _LSHIFT, _SYMBOL);
+      // LT (_LSHIFT, KC_SPC) left right combination layer, see tap dance space
+      com_layer(record, LEFT, 0, _LSHIFT, _SYMBOL);
       break;
     case TD_ENT:
       tap_layer(record, _RSHIFT);
@@ -760,22 +761,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case PS_PIPE:
       tap_layer(record, _SFTNAV);
-      // LT (_SFTNAV, S(KC_BSLS)) rollover emulation
-      shift_nav(record, LEFT, KC_BSLS, _SFTNAV, _SYMBOL);
+      // LT (_SFTNAV, S(KC_BSLS)) left right combination layer
+      com_layer(record, LEFT, KC_BSLS, _SFTNAV, _SYMBOL);
       break;
     case PS_TAB:
       // LT (_FNCKEY, S(KC_TAB)) emulation
-      lt_shift(record, KC_TAB, _FNCKEY);
+      lts_layer(record, KC_TAB, _FNCKEY);
       break;
     case LT_LEFT:
       tap_layer(record, _SYMBOL);
-      // LT (_SYMBOL, KC_LEFT) rollover emulation
-      shift_nav(record, RIGHT, 0, _SYMBOL, _LSHIFT);
+      // LT (_SYMBOL, KC_LEFT) left right combination layer
+      com_layer(record, RIGHT, 0, _SYMBOL, _LSHIFT);
       break;
     case PS_LEFT:
       tap_layer(record, _SFTNAV);
-      // LT (_SFTNAV, S(KC_LEFT)) rollover emulation
-      shift_nav(record, RIGHT, KC_LEFT, _SFTNAV, _LSHIFT);
+      // LT (_SFTNAV, S(KC_LEFT)) left right combination layer
+      com_layer(record, RIGHT, KC_LEFT, _SFTNAV, _LSHIFT);
       break;
     case COLEMAK:
       colemak(record);
