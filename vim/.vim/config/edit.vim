@@ -14,7 +14,7 @@
       inoremap <S-CR>                    <CR><C-o>O<Tab>
 
       " break line (in .wiki)
-      nnoremap <silent><leader><Enter>   :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
+      nnoremap <silent><leader><S-CR>    :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
 
       " insert blank line above/below
       nnoremap <silent><leader><Up>      :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>

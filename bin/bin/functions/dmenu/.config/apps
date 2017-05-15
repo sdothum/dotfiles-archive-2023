@@ -5,6 +5,7 @@ hardcopy eject
 term 'Mail' alot # mail
 patricia-video # Patricia :: video
 simpletimer
+$(which thedarnedestthing) # http :: the darnedest thing
 vimwiki colophon # wiki :: colophon
 vimwiki healing # wiki :: healing
 vimwiki notes # wiki :: notes

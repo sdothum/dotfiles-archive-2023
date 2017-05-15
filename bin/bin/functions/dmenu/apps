@@ -31,7 +31,7 @@ do
     "$EDIT") gvim -f $pgms ;;
 
     *) mhistory apps "$pgm"
-       exec toggle $(grep "$pgm" $pgms) ;;
+       eval exec toggle $(grep "$pgm" $pgms) ;;
   esac
 done
 

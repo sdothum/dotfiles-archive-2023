@@ -385,7 +385,7 @@ void shift_key(uint16_t keycode)
 
 static uint16_t key_timer = 0;
 
-// key press for rolling LT (layer, key) emulation
+// key press for rolling shift_nav() and lt_shift() macros
 bool key_press(uint16_t keycode)
 {
   if (keycode) {
@@ -432,11 +432,11 @@ void modifier(void (*f)(uint8_t))
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
 {
-  // double tap down: repeating keycode
+  // double tap plus down: repeating keycode
   if (state->count > 2) {
     register_code(keycode);
   }
-  // tap down: keycode shift
+  // tap plus down: keycode shift
   else if (state->count > 1) {
     layer_on(layer);
     tap_key (keycode);
@@ -599,9 +599,10 @@ static uint8_t thumb = 0;
 // up,   up   -> _COLEMAK
 // up,   down -> _SYMBOL
 // down, up   -> _NUMBER
-// down, down -> _SFTNAV
+// down, down -> _SFTNAV (default rollover layer)
+#define DEFAULT_ROLLOVER _SFTNAV
 
-static uint8_t rollover = 0;
+static uint8_t rollover = DEFAULT_ROLLOVER;
 
 void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t opposing_layer)
 {
@@ -615,7 +616,7 @@ void shift_nav(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t laye
     // opposite shift_nav() thumb may have switched effective layer!
     if (rollover) {
       layer_off(rollover);
-      rollover = 0;
+      rollover = DEFAULT_ROLLOVER;
     }
     // thumb down? see rollover table above
     if (!key_press(keycode)) {
