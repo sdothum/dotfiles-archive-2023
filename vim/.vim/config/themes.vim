@@ -194,25 +194,27 @@
 
       " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
       function! FontSize(size)
-        if s:size == a:size
-          return
-        endif
-        let s:size = a:size
-        let l:size = system('fontsize')
-        let l:guif = substitute(&guifont, '\([0-9]*\)', '\1', '')
+        if $DISPLAY > ''
+          if s:size == a:size
+            return
+          endif
+          let s:size = a:size
+          let l:size = system('fontsize')
+          let l:guif = substitute(&guifont, '\([0-9]*\)', '\1', '')
 
-        if l:guif == (l:size + 1) || a:size < 0
-          call Fontspace(l:size, 0)
-          " let g:lite_dfm_left_offset = 22
-        else
-          call Fontspace(l:size + 1, 1)
-          " let g:lite_dfm_left_offset = 18
-        endif
+          if l:guif == (l:size + 1) || a:size < 0
+            call Fontspace(l:size, 0)
+            " let g:lite_dfm_left_offset = 22
+          else
+            call Fontspace(l:size + 1, 1)
+            " let g:lite_dfm_left_offset = 18
+          endif
 
-        " fix statusline/commandline position (drawn outside window)
-        sleep 10m                           " delay long enough for font refresh
-        call ToggleGui()
-        call ToggleGui()
+          " fix statusline/commandline position (drawn outside window)
+          sleep 10m                           " delay long enough for font refresh
+          call ToggleGui()
+          call ToggleGui()
+        endif
       endfunction
 
       autocmd theme BufEnter * call FontSize(Prose() ? +1 : -1)
