@@ -11,7 +11,7 @@
 # va va voom
 SHELL=/usr/bin/dash
 hlwm && [ -e $DYNAMIC ] && focus=focus
-console || G=-g
+console && unset focus || G=-g
 
 while :
 do
@@ -41,7 +41,8 @@ else
     sudo='sudo -s'
   fi
 fi
-hlwm && herbstclient set_layout max
+
+[ $focus ] && herbstclient set_layout max
 count=$(echo $file | wc -w)
 [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
 eval $focus $sudo vim $G $fg $cmd $file

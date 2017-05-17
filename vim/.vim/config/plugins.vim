@@ -152,11 +152,13 @@
 
         let g:lightline.active =
           \{
-          \  'left'  : [ [ 'mode',     'paste',    'matchspace' ]
+          \  'left'  : [
+          \              [ 'mode',     'paste',    'matchspace' ]
           \,             [ 'rootpath', 'basepath', 'filename'   ]
           \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
           \            ]
-          \, 'right' : [ [ 'indent',    'spaces',      'filetype'  ]
+          \, 'right' : [
+          \              [ 'indent',    'spaces',      'filetype'  ]
           \,             [ 'topbottom', 'bytepercent', 'linecount' ]
           \,             [ 'atom',      'specialchar', 'column'    ]
           \            ]
@@ -164,7 +166,10 @@
 
         let g:lightline.inactive =
           \{
-          \  'left'  : [ [ 'filename'  ] ]
+          \  'left'  : [
+          \              [ 'indicator' ]
+          \,             [ 'filename'  ]
+          \,           ]
           \, 'right' : [ [ 'linecount' ] ]
           \}
 
@@ -187,6 +192,7 @@
           \, 'fileformat'   : '%{&fileformat}'
           \, 'filename'     : '%t'
           \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
+          \, 'indicator'    : '%{&modified ? "+" : " "}'
           \, 'linecount'    : '%L'
           \, 'lineinfo'     : '%3l:%-2v'
           \, 'line'         : '%l'
