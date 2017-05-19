@@ -45,6 +45,7 @@ set auto-resize-window=true
 set auto-shrink-images=true
 # set ca-bundle=~/.config/vimb/ca-bundle.crt
 # set closed-max-items=20
+set default-zoom=100
 set download-path=/net/downloads/http
 # set download-path=/home/shum/sandbox/
 set editor-command="gvim -f"

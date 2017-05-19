@@ -192,7 +192,7 @@
           \, 'fileformat'   : '%{&fileformat}'
           \, 'filename'     : '%t'
           \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
-          \, 'indicator'    : '%{&modified ? "+" : " "}'
+          \, 'indicator'    : '%{Modified(1)}'
           \, 'linecount'    : '%L'
           \, 'lineinfo'     : '%3l:%-2v'
           \, 'line'         : '%l'

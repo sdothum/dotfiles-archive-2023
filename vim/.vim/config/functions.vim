@@ -30,9 +30,10 @@
     " .................................................... Modified notification
 
       " replaces lightline: 'modified' : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
-      function! Modified()
+      function! Modified(...)
+        let unmod = a:0 > 0 ? ' ' : ''
         if &filetype == 'help'
-          return ''
+          return unmod
         endif
         if &modified
           if b:modified == 0
@@ -50,7 +51,7 @@
         endif
         let b:modified = 0
         if &modifiable
-          return ''
+          return unmod
         endif
         return '-'
       endfunction

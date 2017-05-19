@@ -71,6 +71,7 @@
 
     " ............................................................... Navigation
 
+      " Plug 'wellle/targets.vim'               " text objects
       Plug 'kshenoy/vim-signature'              " toggle marks
       Plug 'justinmk/vim-sneak'                 " jump to location
 
