@@ -66,9 +66,12 @@ extern keymap_config_t keymap_config;
 
 enum planck_layers {
   _COLEMAK = 0
+ ,_QWERTY
  ,_PLOVER
- ,_LSHIFT
- ,_RSHIFT
+ ,_LCOLEMAK
+ ,_RCOLEMAK
+ ,_LQWERTY
+ ,_RQWERTY
  ,_NUMBER
  ,_SYMBOL
  ,_REGHEX
@@ -77,8 +80,12 @@ enum planck_layers {
  ,_ADJUST
 };
 
+static uint8_t _LSHIFT = _LCOLEMAK;
+static uint8_t _RSHIFT = _RCOLEMAK;
+
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE
+ ,QWERTY
  ,PLOVER
  ,PLOVEX
  ,PS_LEFT   // pseudo LT(_SFTNAV, S(KC_LEFT)) for modified key-codes, see process_record_user()
@@ -165,6 +172,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT,  LT_LEFT, AT_DOWN, GT_UP,  CT_RGHT},
   },
 
+// ...................................................................... Qwerty
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   W  |   E  |   R  |   T  | Caps |^Shift|   Y  |   U  |   I  |   O  |   P  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   A  |   S  |   D  |   F  |   G  | ^Alt | ^GUI |   H  |   J  |   K  |   L  |   ;  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   Z  |   X  |   C  |   V  |   B  | ↑Alt | ↑GUI |   N  |   M  |   ,  |   .  |   "  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  |Right |
+  // `-----------------------------------------------------------------------------------'
+
+  [_QWERTY] = {
+    {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_T,    KC_Y,     KC_Y,    KC_U,    KC_I,    KC_O,   KC_P   },
+    {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_G,    KC_H,     KC_H,    KC_J,    KC_K,    KC_L,   KC_SCLN},
+    {KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_B,    KC_N,     KC_N,    KC_M,    KC_COMM, KC_DOT, TD_QUOT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT,  LT_LEFT, AT_DOWN, GT_UP,  CT_RGHT},
+  },
+
 // ...................................................................... Plover
 //
 // http://www.keyboard-layout-editor.com/#/gists/7296e3f601a6bb2eee2aa8f034c58a27
@@ -191,7 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/3e7b27b824d0c8b71f07354170756803
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   ;  |
+  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   :  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   A  |   R  |   S  |   T  |   G  | ^Alt | ^GUI |   M  |   N  |   E  |   I  |   O  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -200,15 +226,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   -  | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
-  [_LSHIFT] = {
-    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), TD_CAPS, OS_CSFT,S(KC_J),  S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
+  [_LCOLEMAK] = {
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), TD_CAPS, OS_CSFT, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), OS_CALT, OS_CGUI, S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), OS_SALT, OS_SGUI, S(KC_K), S(KC_H), KC_SLSH, KC_QUES, KC_DQT },
     {OS_CTL,   OS_GUI, OS_ALT,  LT_ESC,  ___x___, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   ;  |
+  // |   Q  |   W  |   F  |   P  |   V  | Caps |^Shift|   J  |   L  |   U  |   Y  |   :  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   A  |   R  |   S  |   T  |   G  | ^Alt | ^GUI |   M  |   N  |   E  |   I  |   O  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -217,10 +243,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // | Ctrl |  GUI |  Alt |  Esc |   _  | ↑Tab | Bksp |  f() | Left | Down |  Up  |Right |
   // `-----------------------------------------------------------------------------------'
 
-  [_RSHIFT] = {
+  [_RCOLEMAK] = {
     {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_V), TD_CAPS, OS_CSFT, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), OS_CALT, OS_CGUI, S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
     {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_B), OS_SALT, OS_SGUI, S(KC_K), S(KC_H), KC_TILD, KC_GRV,  KC_DQT },
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_UNDS, PS_TAB,  LT_BSPC, ___x___, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
+// ................................................................ Shift QWERTY
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   W  |   E  |   R  |   T  | Caps |^Shift|   Y  |   U  |   I  |   O  |   P  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   A  |   S  |   D  |   F  |   G  | ^Alt | ^GUI |   H  |   J  |   K  |   L  |   :  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   Z  |   X  |   C  |   V  |   B  | ↑Alt | ↑GUI |   N  |   M  |   /  |   ?  |   "  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   -  | Left | Down |  Up  |Right |
+  // `-----------------------------------------------------------------------------------'
+
+  [_LQWERTY] = {
+    {S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T), TD_CAPS, OS_CSFT, S(KC_Y), S(KC_U), S(KC_I), S(KC_O), S(KC_P)},
+    {S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G), OS_CALT, OS_CGUI, S(KC_H), S(KC_J), S(KC_K), S(KC_L), KC_COLN},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B), OS_SALT, OS_SGUI, S(KC_N), S(KC_M), KC_SLSH, KC_QUES, KC_DQT },
+    {OS_CTL,   OS_GUI, OS_ALT,  LT_ESC,  ___x___, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   W  |   E  |   R  |   T  | Caps |^Shift|   Y  |   U  |   I  |   O  |   P  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   A  |   S  |   D  |   F  |   G  | ^Alt | ^GUI |   H  |   J  |   K  |   L  |   :  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   Z  |   X  |   C  |   V  |   B  | ↑Alt | ↑GUI |   N  |   M  |   ~  |   `  |   "  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc |   _  | ↑Tab | Bksp |  f() | Left | Down |  Up  |Right |
+  // `-----------------------------------------------------------------------------------'
+
+  [_RQWERTY] = {
+    {S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T), TD_CAPS, OS_CSFT, S(KC_Y), S(KC_U), S(KC_I), S(KC_O), S(KC_P)},
+    {S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G), OS_CALT, OS_CGUI, S(KC_H), S(KC_J), S(KC_K), S(KC_L), KC_COLN},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B), OS_SALT, OS_SGUI, S(KC_N), S(KC_M), KC_TILD, KC_GRV,  KC_DQT },
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_UNDS, PS_TAB,  LT_BSPC, ___x___, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
@@ -337,7 +399,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |      |      |      | Reset|
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |      |Colemk|      |      |      |
+  // |AGnorm|Voice-|Audoff|Musoff|MIDIof|      |      |Qwerty|Colemk|      |      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |AGswap|Voice+|Aud on|Mus on|MIDIon|      |      |      |      |   <  |   >  |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -346,7 +408,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET  },
-    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, _______, COLEMAK, _______, _______, _______},
+    {AG_NORM, MUV_DE,  AU_OFF,  MU_OFF,  MI_OFF,  _______, _______, QWERTY,  COLEMAK, _______, _______, _______},
     {AG_SWAP, MUV_IN,  AU_ON,   MU_ON,   MI_ON,   _______, _______, _______, _______, TD_LT,   KC_GT,   _______},
     {_______, _______, _______, _______, _______, _______, ___x___, _______, _______, _______, _______, PLOVER },
   },
@@ -359,6 +421,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            ,Q__NOTE(_E7)
 float tone_startup  [][2] = SONG   (STARTUP_SOUND);
 float tone_colemak  [][2] = SONG   (COLEMAK_SOUND);
+float tone_qwerty   [][2] = SONG   (QWERTY_SOUND);
 float tone_plover   [][2] = SONG   (PLOVER_SOUND);
 float tone_plover_gb[][2] = SONG   (PLOVER_GOODBYE_SOUND);
 float tone_caps_on  [][2] = SONG   (CAPSLOCK_ON_SOUND);
@@ -684,6 +747,21 @@ void colemak(keyrecord_t *record)
 #endif
     clear_layers();
     persistant_default_layer_set(1UL<<_COLEMAK);
+    _LSHIFT = _LCOLEMAK;
+    _RSHIFT = _RCOLEMAK;
+  }
+}
+
+void qwerty(keyrecord_t *record)
+{
+  if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+    PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
+#endif
+    clear_layers();
+    persistant_default_layer_set(1UL<<_QWERTY);
+    _LSHIFT = _LQWERTY;
+    _RSHIFT = _RQWERTY;
   }
 }
 
@@ -780,6 +858,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case COLEMAK:
       colemak(record);
+      return false;
+      break;
+    case QWERTY:
+      qwerty(record);
       return false;
       break;
     case PLOVER:
