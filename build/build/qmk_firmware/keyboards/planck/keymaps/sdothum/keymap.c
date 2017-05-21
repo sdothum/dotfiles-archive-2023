@@ -859,19 +859,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case COLEMAK:
       colemak(record);
       return false;
-      break;
     case QWERTY:
       qwerty(record);
       return false;
-      break;
     case PLOVER:
       plover(record);
       return false;
-      break;
     case PLOVEX:
       plovex(record);
       return false;
-      break;
   }
   return true;
 }
