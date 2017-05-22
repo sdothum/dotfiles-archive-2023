@@ -65,8 +65,13 @@
 extern keymap_config_t keymap_config;
 
 enum planck_layers {
+#ifdef COLEMAK
   _COLEMAK = 0
  ,_QWERTY
+#else
+  _QWERTY = 0
+ ,_COLEMAK
+#endif
  ,_PLOVER
  ,_LCOLEMAK
  ,_RCOLEMAK
@@ -80,8 +85,13 @@ enum planck_layers {
  ,_ADJUST
 };
 
+#ifdef COLEMAK
 static uint8_t _LSHIFT = _LCOLEMAK;
 static uint8_t _RSHIFT = _RCOLEMAK;
+#else
+static uint8_t _LSHIFT = _LQWERTY;
+static uint8_t _RSHIFT = _RQWERTY;
+#endif
 
 enum planck_keycodes {
   COLEMAK = SAFE_RANGE
@@ -734,7 +744,7 @@ void persistant_default_layer_set(uint16_t default_layer)
 void clear_layers(void)
 {
   uint8_t layer;
-  for (layer = _COLEMAK; layer <= _ADJUST; layer++) {
+  for (layer = 0; layer <= _ADJUST; layer++) {
     layer_off(layer);
   }
 }
@@ -924,6 +934,3 @@ void music_scale_user(void)
   PLAY_NOTE_ARRAY(music_scale, false, 0);
 }
 #endif
-
-// set ft comment style
-// vim: set ft=cpp: //

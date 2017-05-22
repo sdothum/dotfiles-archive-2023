@@ -18,4 +18,7 @@
 // tap dance vim cursor placement
 // #define VIM_CURSOR
 
+// default QWERTY keymap unless
+#define COLEMAK COLEMAK
+
 #endif
