@@ -89,7 +89,7 @@
     " ............................................................... Completion
 
       " Plug 'mattn/emmet-vim'                  " html
-      Plug 'auto-pairs'                         " insert/delete pairs
+      Plug 'jiangmiao/auto-pairs'               " insert/delete pairs
       Plug 'Shougo/neosnippet'                  " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling

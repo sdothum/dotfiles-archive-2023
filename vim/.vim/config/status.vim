@@ -46,9 +46,9 @@
             let long_line_lens = s:LongLines()
             if len(long_line_lens) > 0
               let b:statusline_long_line_warning =
-                \         len(long_line_lens) . '>'
-                \. ' ≈' . s:Median(long_line_lens)
-                \. ' ⌉'  . max(long_line_lens)
+                  \         len(long_line_lens) . '>'
+                  \. ' ≈' . s:Median(long_line_lens)
+                  \. ' ⌉'  . max(long_line_lens)
             else
               let b:statusline_long_line_warning = '0>'
             endif
@@ -62,9 +62,9 @@
         let l:spaces    = repeat(' ', &tabstop)
         " trap multibyte line drawing characters used by "ruler" and "underline"
         let l:line_lens = map(getline(1,'$'),
-          \ 'len(substitute(v:val =~ s:multibytes
-          \? substitute(v:val, s:multibytes, " ", "g")
-          \: v:val, "\\t", l:spaces, "g"))')
+            \ 'len(substitute(v:val =~ s:multibytes
+            \? substitute(v:val, s:multibytes, " ", "g")
+            \: v:val, "\\t", l:spaces, "g"))')
         return filter(l:line_lens, 'v:val > g:linewidth')
       endfunction
 

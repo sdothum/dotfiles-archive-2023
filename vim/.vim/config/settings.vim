@@ -23,7 +23,7 @@
     " ..................................................................... Help
 
       autocmd setup BufWinEnter *.txt,*.txt.gz
-        \ if &filetype == 'help' | wincmd _ | endif
+            \ if &filetype == 'help' | wincmd _ | endif
 
       imap <F1>                 <C-o>:help<Space>
       nmap <F1>                 :help<Space>

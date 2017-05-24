@@ -17,10 +17,10 @@
       let g:ale_sign_error         = '✕'
       let g:ale_sign_warning       = '⚠'
       let g:ale_linter_aliases     =
-        \{
-        \  'vimwiki' : 'markdown'
-        \, 'mail'    : 'markdown'
-        \}
+          \{
+          \  'vimwiki' : 'markdown'
+          \, 'mail'    : 'markdown'
+          \}
 
       nmap <silent><C-k>                      <Plug>(ale_previous_wrap)
       nmap <silent><C-j>                      <Plug>(ale_next_wrap)
@@ -35,12 +35,12 @@
     " ............................................................... Easy-align
 
       let g:easy_align_delimiters =
-            \{
-            \  '>' : { 'pattern' : '>>\|=>\|>' }
-            \, '^' : { 'pattern' : '=',        'left_margin' : 0, 'right_margin' : 0, 'align' : 'right' }
-            \, '(' : { 'pattern' : '(',        'left_margin' : 1, 'right_margin' : 0 }
-            \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
-            \}
+          \{
+          \  '>' : { 'pattern' : '>>\|=>\|>' }
+          \, '^' : { 'pattern' : '=',        'left_margin' : 0, 'right_margin' : 0, 'align' : 'right' }
+          \, '(' : { 'pattern' : '(',        'left_margin' : 1, 'right_margin' : 0 }
+          \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
+          \}
 
       vmap <Enter>                            <Plug>(EasyAlign)
       nmap <leader>a                          <Plug>(EasyAlign)
@@ -49,22 +49,22 @@
 
       " justified fold headers
       let &foldtext =
-        \"EightHeaderFolds(
-        \  '\\=s:fullwidth'
-        \, 'left'
-        \, [ repeat( '  ', v:foldlevel - 1 ), ' ', '' ]
-        \, '\\= s:foldlines . \" lines\"'
-        \, ''
-        \)"
+          \"EightHeaderFolds(
+          \  '\\=s:fullwidth'
+          \, 'left'
+          \, [ repeat( '  ', v:foldlevel - 1 ), ' ', '' ]
+          \, '\\= s:foldlines . \" lines\"'
+          \, ''
+          \)"
 
     " .................................................................. Endwise
 
       " add fish shell syntax rule
       " see ~/.vim/plugged/vim-fish/syntax/fish.vim
       autocmd plugin FileType fish
-        \  let b:endwise_addition  = 'end'
-        \| let b:endwise_words     = 'function,begin,if,while,for,switch'
-        \| let b:endwise_syngroups = 'shFunctionKey'
+           \  let b:endwise_addition  = 'end'
+           \| let b:endwise_words     = 'function,begin,if,while,for,switch'
+           \| let b:endwise_syngroups = 'shFunctionKey'
 
     " ...................................................................... Fzf
 
@@ -114,11 +114,11 @@
       " powerline symbol slant (0) lower (1) upper
       let s:powerline  = ("$POWERLINE" > '' ? $POWERLINE : 0)
       let g:lightline  =
-        \{
-        \  'colorscheme'  : 'solarized'
-        \, 'separator'    : { 'left' : '',  'right' : ''  }
-        \, 'subseparator' : { 'left' : '', 'right' : '' }
-        \}
+          \{
+          \  'colorscheme'  : 'solarized'
+          \, 'separator'    : { 'left' : '',  'right' : ''  }
+          \, 'subseparator' : { 'left' : '', 'right' : '' }
+          \}
 
       " defer lightline settings because plugin is initialized before buffers are read
       function! LightLine()
@@ -126,126 +126,126 @@
           if Prose()
             " prose line height makes for ugly powerline graphics
             let g:lightline =
-              \{
-              \  'colorscheme'  : 'solarized'
-              \, 'separator'    : { 'left' : '',  'right' : ''  }
-              \, 'subseparator' : { 'left' : '', 'right' : '' }
-              \}
+                \{
+                \  'colorscheme'  : 'solarized'
+                \, 'separator'    : { 'left' : '',  'right' : ''  }
+                \, 'subseparator' : { 'left' : '', 'right' : '' }
+                \}
           else
             if s:powerline == 0
               let g:lightline =
-                \{
-                \  'colorscheme'  : 'solarized'
-                \, 'separator'    : { 'left' : '', 'right' : '' }
-                \, 'subseparator' : { 'left' : '', 'right' : '' }
-                \}
+                  \{
+                  \  'colorscheme'  : 'solarized'
+                  \, 'separator'    : { 'left' : '', 'right' : '' }
+                  \, 'subseparator' : { 'left' : '', 'right' : '' }
+                  \}
             else
               let g:lightline =
-                \{
-                \  'colorscheme'  : 'solarized'
-                \, 'separator'    : { 'left' : '', 'right' : '' }
-                \, 'subseparator' : { 'left' : '', 'right' : '' }
-                \}
+                  \{
+                  \  'colorscheme'  : 'solarized'
+                  \, 'separator'    : { 'left' : '', 'right' : '' }
+                  \, 'subseparator' : { 'left' : '', 'right' : '' }
+                  \}
             endif
           endif
         endif
 
         let g:lightline.active =
-          \{
-          \  'left'  : [
-          \              [ 'mode',     'paste',    'matchspace' ]
-          \,             [ 'rootpath', 'basepath', 'filename'   ]
-          \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
-          \            ]
-          \, 'right' : [
-          \              [ 'indent',    'spaces',      'filetype'  ]
-          \,             [ 'topbottom', 'bytepercent', 'linecount' ]
-          \,             [ 'atom',      'specialchar', 'column'    ]
-          \            ]
-          \}
+            \{
+            \  'left'  : [
+            \              [ 'mode',     'paste',    'matchspace' ]
+            \,             [ 'rootpath', 'basepath', 'filename'   ]
+            \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
+            \            ]
+            \, 'right' : [
+            \              [ 'indent',    'spaces',      'filetype'  ]
+            \,             [ 'topbottom', 'bytepercent', 'linecount' ]
+            \,             [ 'atom',      'specialchar', 'column'    ]
+            \            ]
+            \}
 
         let g:lightline.inactive =
-          \{
-          \  'left'  : [
-          \              [ 'indicator' ]
-          \,             [ 'filename'  ]
-          \,           ]
-          \, 'right' : [ [ 'linecount' ] ]
-          \}
+            \{
+            \  'left'  : [
+            \              [ 'indicator' ]
+            \,             [ 'filename'  ]
+            \,           ]
+            \, 'right' : [ [ 'linecount' ] ]
+            \}
 
         let g:lightline.tabline =
-          \{
-          \  'left'  : [ [ 'tabs'  ] ]
-          \, 'right' : [ [ 'close' ] ]
-          \}
+            \{
+            \  'left'  : [ [ 'tabs'  ] ]
+            \, 'right' : [ [ 'close' ] ]
+            \}
 
         let g:lightline.component =
-          \{
-          \  'absolutepath' : '%F'
-          \, 'bytepercent'  : '%{BytePercent()}%%'
-          \, 'bufnum'       : '%n'
-          \, 'charvalue'    : '%b'
-          \, 'charvaluehex' : '%B'
-          \, 'close'        : '%999X X '
-          \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
-          \, 'fileencoding' : '%{strlen(&fenc) ? &fenc : &enc}'
-          \, 'fileformat'   : '%{&fileformat}'
-          \, 'filename'     : '%t'
-          \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
-          \, 'indicator'    : '%{Modified(1)}'
-          \, 'linecount'    : '%L'
-          \, 'lineinfo'     : '%3l:%-2v'
-          \, 'line'         : '%l'
-          \, 'matchspace'   : '%{g:matchspace}'
-          \, 'mode'         : '%{lightline#mode()}'
-          \, 'paste'        : '%{&paste ? "PASTE" : ""}'
-          \, 'percent'      : '%-0p%%'
-          \, 'percentwin'   : '%P'
-          \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
-          \, 'relativepath' : '%f'
-          \}
+            \{
+            \  'absolutepath' : '%F'
+            \, 'bytepercent'  : '%{BytePercent()}%%'
+            \, 'bufnum'       : '%n'
+            \, 'charvalue'    : '%b'
+            \, 'charvaluehex' : '%B'
+            \, 'close'        : '%999X X '
+            \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
+            \, 'fileencoding' : '%{strlen(&fenc) ? &fenc : &enc}'
+            \, 'fileformat'   : '%{&fileformat}'
+            \, 'filename'     : '%t'
+            \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
+            \, 'indicator'    : '%{Modified(1)}'
+            \, 'linecount'    : '%L'
+            \, 'lineinfo'     : '%3l:%-2v'
+            \, 'line'         : '%l'
+            \, 'matchspace'   : '%{g:matchspace}'
+            \, 'mode'         : '%{lightline#mode()}'
+            \, 'paste'        : '%{&paste ? "PASTE" : ""}'
+            \, 'percent'      : '%-0p%%'
+            \, 'percentwin'   : '%P'
+            \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
+            \, 'relativepath' : '%f'
+            \}
 
         let g:lightline.component_visible_condition =
-          \{
-          \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-          \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
-          \, 'column'      : '(getline(line(".")) != "")'
-          \, 'matchspace'  : '(g:matchspace != "")'
-          \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
-          \, 'paste'       : '&paste'
-          \, 'readonly'    : '(&filetype != "help" && &readonly)'
-          \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
-          \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
-          \}
+            \{
+            \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+            \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
+            \, 'column'      : '(getline(line(".")) != "")'
+            \, 'matchspace'  : '(g:matchspace != "")'
+            \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
+            \, 'paste'       : '&paste'
+            \, 'readonly'    : '(&filetype != "help" && &readonly)'
+            \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
+            \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
+            \}
 
         let g:lightline.component_function =
-          \{
-          \  'indent'      : 'Indent'
-          \, 'linesizes'   : 'LineSizes'
-          \, 'modified'    : 'Modified'
-          \, 'spaces'      : 'Spaces'
-          \, 'specialchar' : 'SpecialChar'
-          \, 'wordcount'   : 'WordCount'
-          \, 'rootpath'    : 'RootPath'
-          \, 'basepath'    : 'BasePath'
-          \, 'topbottom'   : 'TopBottom'
-          \, 'atom'        : 'Atom'
-          \}
+            \{
+            \  'indent'      : 'Indent'
+            \, 'linesizes'   : 'LineSizes'
+            \, 'modified'    : 'Modified'
+            \, 'spaces'      : 'Spaces'
+            \, 'specialchar' : 'SpecialChar'
+            \, 'wordcount'   : 'WordCount'
+            \, 'rootpath'    : 'RootPath'
+            \, 'basepath'    : 'BasePath'
+            \, 'topbottom'   : 'TopBottom'
+            \, 'atom'        : 'Atom'
+            \}
 
         let g:lightline.mode_map =
-          \{
-          \  '?'      : ' '
-          \, 'c'      : 'C'
-          \, "\<C-s>" : 'S-BLOCK'
-          \, "\<C-v>" : 'V-BLOCK'
-          \, 'i'      : 'I'
-          \, 'n'      : 'N'
-          \, 'R'      : 'R'
-          \, 's'      : 'S'
-          \, 'S'      : 'S-LINE'
-          \, 'v'      : 'V'
-          \, 'V'      : 'V-LINE'
-          \}
+            \{
+            \  '?'      : ' '
+            \, 'c'      : 'C'
+            \, "\<C-s>" : 'S-BLOCK'
+            \, "\<C-v>" : 'V-BLOCK'
+            \, 'i'      : 'I'
+            \, 'n'      : 'N'
+            \, 'R'      : 'R'
+            \, 's'      : 'S'
+            \, 'S'      : 'S-LINE'
+            \, 'v'      : 'V'
+            \, 'V'      : 'V-LINE'
+            \}
 
         " must disable lightline to allow new settings to be laaded
         call lightline#disable()
@@ -410,29 +410,29 @@
       " vim convention m'ark key conflicts with my colemak-shift-dh layout
       " using apostrophe instead, preferable imo :-)
       let g:SignatureMap =
-        \{
-        \  'Leader'            : "'"
-        \, 'PlaceNextMark'     : "',"
-        \, 'ToggleMarkAtLine'  : "'."
-        \, 'PurgeMarksAtLine'  : "'-"
-        \, 'DeleteMark'        : "''"
-        \, 'PurgeMarks'        : "'<Space>"
-        \, 'PurgeMarkers'      : "'<BS>"
-        \, 'GotoNextLineAlpha' : "']"
-        \, 'GotoPrevLineAlpha' : "'["
-        \, 'GotoNextSpotAlpha' : "`]"
-        \, 'GotoPrevSpotAlpha' : "`["
-        \, 'GotoNextLineByPos' : "]'"
-        \, 'GotoPrevLineByPos' : "['"
-        \, 'GotoNextSpotByPos' : "]`"
-        \, 'GotoPrevSpotByPos' : "[`"
-        \, 'GotoNextMarker'    : "[+"
-        \, 'GotoPrevMarker'    : "[-"
-        \, 'GotoNextMarkerAny' : "]="
-        \, 'GotoPrevMarkerAny' : "[="
-        \, 'ListBufferMarks'   : "'/"
-        \, 'ListBufferMarkers' : "'?"
-        \}
+          \{
+          \  'Leader'            : "'"
+          \, 'PlaceNextMark'     : "',"
+          \, 'ToggleMarkAtLine'  : "'."
+          \, 'PurgeMarksAtLine'  : "'-"
+          \, 'DeleteMark'        : "''"
+          \, 'PurgeMarks'        : "'<Space>"
+          \, 'PurgeMarkers'      : "'<BS>"
+          \, 'GotoNextLineAlpha' : "']"
+          \, 'GotoPrevLineAlpha' : "'["
+          \, 'GotoNextSpotAlpha' : "`]"
+          \, 'GotoPrevSpotAlpha' : "`["
+          \, 'GotoNextLineByPos' : "]'"
+          \, 'GotoPrevLineByPos' : "['"
+          \, 'GotoNextSpotByPos' : "]`"
+          \, 'GotoPrevSpotByPos' : "[`"
+          \, 'GotoNextMarker'    : "[+"
+          \, 'GotoPrevMarker'    : "[-"
+          \, 'GotoNextMarkerAny' : "]="
+          \, 'GotoPrevMarkerAny' : "[="
+          \, 'ListBufferMarks'   : "'/"
+          \, 'ListBufferMarkers' : "'?"
+          \}
 
       nmap <leader>'                          '.
 
@@ -514,43 +514,43 @@
       let g:vimwiki_table_mappings = 0
 
       let g:vimwiki_list =
-        \[
-        \  {
-        \    'path'      : '~/vimwiki/thedarnedestthing/'
-        \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/thestory/'
-        \,   'path_html' : '~/vimwiki/thestory/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/truthordie/'
-        \,   'path_html' : '~/vimwiki/truthordie/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/shadowsandlight/'
-        \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/healing/'
-        \,   'path_html' : '~/vimwiki/healing/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/colophon/'
-        \,   'path_html' : '~/vimwiki/colophon/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \, {
-        \    'path'      : '~/vimwiki/notes/'
-        \,   'path_html' : '~/vimwiki/notes/html/'
-        \,   'syntax'    : 'markdown'
-        \  }
-        \]
+          \[
+          \  {
+          \    'path'      : '~/vimwiki/thedarnedestthing/'
+          \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/thestory/'
+          \,   'path_html' : '~/vimwiki/thestory/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/truthordie/'
+          \,   'path_html' : '~/vimwiki/truthordie/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/shadowsandlight/'
+          \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/healing/'
+          \,   'path_html' : '~/vimwiki/healing/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/colophon/'
+          \,   'path_html' : '~/vimwiki/colophon/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \, {
+          \    'path'      : '~/vimwiki/notes/'
+          \,   'path_html' : '~/vimwiki/notes/html/'
+          \,   'syntax'    : 'markdown'
+          \  }
+          \]
 
       " header highlighting
       highlight VimwikiHeader1 guifg=#d70000
@@ -578,7 +578,7 @@
       autocmd plugin Filetype vimwiki call VimwikiLink()
       autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       autocmd plugin BufEnter *
-        \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
+            \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
       " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
       " see arch install patch to initialize s:vimwiki_autowriteall
 

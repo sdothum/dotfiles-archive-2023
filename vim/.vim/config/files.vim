@@ -33,27 +33,27 @@
       " wordcount (0) no word count (1) statusline with wordcount
       " note "/name" to represent "^name"
       let s:nametypes =
-        \[
-        \  [ 'conf$',          'conf',    1, 0 ]
-        \, [ 'config$',        'conf',    1, 0 ]
-        \, [ 'eml$',           'mail',    1, 1 ]
-        \, [ 'error$',         'log',     0, 0 ]
-        \, [ 'log$',           'log',     0, 0 ]
-        \, [ 'rc$',            'rc',      1, 0 ]
-        \, [ 'txt$',           'text',    0, 1 ]
-        \, [ 'wiki$',          'vimwiki', 1, 1 ]
-        \, [ '\(^\|/\)readme', 'text',    0, 1 ]
-        \]
+          \[
+          \  [ 'conf$',          'conf',    1, 0 ]
+          \, [ 'config$',        'conf',    1, 0 ]
+          \, [ 'eml$',           'mail',    1, 1 ]
+          \, [ 'error$',         'log',     0, 0 ]
+          \, [ 'log$',           'log',     0, 0 ]
+          \, [ 'rc$',            'rc',      1, 0 ]
+          \, [ 'txt$',           'text',    0, 1 ]
+          \, [ 'wiki$',          'vimwiki', 1, 1 ]
+          \, [ '\(^\|/\)readme', 'text',    0, 1 ]
+          \]
 
       " [regex fileinfo, filetype, modifiable, readonly] rule tuple
       " modifiable (0) nomodifiable (1) modifiable
       " readonly (0) not set (1) set
       let s:contenttypes =
-        \[
-        \  [ 'binary',             'binary', 0, 1 ]
-        \, [ 'no read permission', 'binary', 0, 1 ]
-        \, [ 'text',               'text',   1, 0 ]
-        \]
+          \[
+          \  [ 'binary',             'binary', 0, 1 ]
+          \, [ 'no read permission', 'binary', 0, 1 ]
+          \, [ 'text',               'text',   1, 0 ]
+          \]
 
       " set buffer attributes by known filetypes
       function! CheckFiletype()
@@ -84,9 +84,9 @@
 
       " check filetype on open
       autocmd filetype BufNewFile,BufRead *
-        \ call CheckFiletype()
+            \ call CheckFiletype()
       autocmd filetype BufWinEnter        *.txt,*.txt.gz
-        \ if &filetype == 'help' | set nomodifiable | endif
+            \ if &filetype == 'help' | set nomodifiable | endif
 
   " Documents ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
