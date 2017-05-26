@@ -13,13 +13,12 @@ class String
   include Term::ANSIColor
 end
 
-# cleanup media title names
-begin
-  pwd = ENV['PWD']
-  unless ARGV[0].nil?
-    exit if File.file?(ARGV[0])
-    Dir.chdir(ARGV[0])
-  end
+# 3 letter word$ exclusions from file extension case conversion
+$exclude = /Who|Bee/
+
+def mytitles(directory)
+  pwd = Dir.pwd
+  Dir.chdir(directory)
   list = Dir.glob("*")
   list.sort.each do |filename|
     # newname = File.basename(filename, File.extname(filename))
@@ -33,14 +32,31 @@ begin
       .gsub(/(\d)x(\d\d)/i, 'S0\1E\2')
       .gsub(/\.$/, '')
       .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize }
+      .gsub(/\w+$/) { |word| (word.length == 3 and word.length != filename.length and word !~ $exclude) ? word.downcase : word }
       # .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize } + File.extname(filename)
     print "#{filename}".gsub(/ s /, "'s ")
     unless filename == newname
       print " -> #{newname}".yellow.bold
-      File.rename(filename, newname) unless filename == newname
+      begin
+        File.rename(filename, newname)
+      rescue
+        print "\n.. duplicate directory #{newname.yellow.bold}".red
+      end
     end
     print "\n"
+    mytitles(newname) if File.directory?(newname)
   end
+  Dir.chdir(pwd)
+end
+
+# cleanup media title names
+begin
+  pwd = Dir.pwd
+  unless ARGV[0].nil?
+    exit if File.file?(ARGV[0])
+    Dir.chdir(ARGV[0])
+  end
+  mytitles(Dir.pwd)
   Dir.chdir(pwd)
 rescue
   print ".. invalid directory #{ARGV[0].bold}\n".red unless ARGV[0] =~ /\//

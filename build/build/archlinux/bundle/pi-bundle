@@ -102,6 +102,17 @@ g term-ansicolor
   pulseaudio-alsa
 
 
+= system utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cronie
+  ntp
+" add armv7h to arch in pkgbuild
+? preload
+  rlwrap
+# udiskie
+  zramswap
+
+
 = admin
 # ▔▔▔▔▔
   ack
@@ -165,7 +176,6 @@ d \ connman
 # dnsutils
   bind-tools
 # networkmanager
-  ntp
 
 
 = network security
@@ -241,7 +251,7 @@ d \ connman
 # ▔▔▔
   autocutsel
 " add armv7h to arch in pkgbuild
-  xdotool
+? xdotool
   xf86-input-keyboard
   xf86-input-mouse
 
@@ -294,8 +304,8 @@ d m tabbed
 
 = applications
 # ▔▔▔▔▔▔▔▔▔▔▔▔
-" add armv7h to arch in pkgbuild
   aiksaurus
+" add armv7h to arch in pkgbuild
 ? amphetype-svn
   calc
   dictd
