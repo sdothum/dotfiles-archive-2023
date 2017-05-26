@@ -30,7 +30,7 @@ hlwm && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   # clean up episodes
-  mytitles "$series" >>$mytitles
+  mytitles -R "$series" >>$mytitles
   ls -1 "$series" | sed -r 's/.*((S[0-9][0-9]E[0-9][0-9])(-*E[0-9][0-9])*).*/\1/' | sort >$episodes
   playlist $episodes "$playlist"
 }

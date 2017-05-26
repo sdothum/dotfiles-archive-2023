@@ -7,6 +7,8 @@
 
 # ....................................................................... Rename
 
+# Usage: mytitles [-R] [<directory>]
+
 require 'term/ansicolor'
 
 class String
@@ -15,6 +17,7 @@ end
 
 # 3 letter word$ exclusions from file extension case conversion
 $exclude = /Who|Bee/
+$recurse = false
 
 def mytitles(directory)
   pwd = Dir.pwd
@@ -44,20 +47,21 @@ def mytitles(directory)
       end
     end
     print "\n"
-    mytitles(newname) if File.directory?(newname)
+    mytitles(newname) if $recurse and File.directory?(newname)
   end
   Dir.chdir(pwd)
 end
 
 # cleanup media title names
 begin
-  pwd = Dir.pwd
   unless ARGV[0].nil?
-    exit if File.file?(ARGV[0])
-    Dir.chdir(ARGV[0])
+    if ARGV[0] == '-R'
+      $recurse = true
+      ARGV.shift
+    end
   end
-  mytitles(Dir.pwd)
-  Dir.chdir(pwd)
+  exit if File.file?(ARGV[0]) unless ARGV[0].nil?
+  mytitles(ARGV[0].nil? ? Dir.pwd : ARGV[0])
 rescue
   print ".. invalid directory #{ARGV[0].bold}\n".red unless ARGV[0] =~ /\//
 end
