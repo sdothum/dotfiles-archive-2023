@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="restore/tiled $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .............................................................. Root background
+
+# see draw root
+background=$(cat $SETROOT 2>/dev/null)
+case $background in
+  blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
+  wallpaper) draw root wallpaper ;;
+  *        ) draw root blank ;;
+esac
+
+# vim: set ft=sh: #

@@ -89,12 +89,14 @@ set_border() {
 blank() {
   if [ $1 ] ;then
     color=$1
-    echo blank >$SETROOT
+    # blackboard reserved for media playback background to allow desktop restoration
+    [ $color = 000000 ] || echo blank >$SETROOT
   else
     color=$(randcolor)
     rm -f $SETROOT
   fi
-  echo $color >$COLOR
+  # blackboard reserved for media playback background
+  [ $color = 000000 ] || echo $color >$COLOR
   setroot --blank-color "#$color" 2>/dev/null
   contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
   if [ "$contrast" = dark ] ;then

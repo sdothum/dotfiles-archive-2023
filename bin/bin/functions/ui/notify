@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | low | normal | critical]* \"<summary>\" [\"<body>\"]"
+  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | cron | low | normal | critical]* \"<summary>\" [\"<body>\"]"
   exit 1
 }
 
@@ -22,36 +22,31 @@ while :
 do
   case $1 in
     # long form required for handling numeric summary field
-    time=*) expire="--expire-time=$(( ${1#time=} * 1000 ))"
-            shift ;;
-
-    console) console=true
-             shift ;;
-
-    low | normal | critical) urgency="-u $1"
-                             shift ;;
+    time=*                 ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
+    console                ) console=true ;;
+    cron                   ) cron=true ;;
+    low | normal | critical) urgency="-u $1" ;;
 
     *) case $1 in
          # none numeric field
          '' | *[!0-9]*) break ;;
-
-         *) expire="--expire-time=$(( $1 * 1000 ))"
-            shift ;;
+         *            ) expire="--expire-time=$(( $1 * 1000 ))" ;;
        esac
   esac
+  shift
 done
 
 ONE=${1#\\}
 TWO=${2#\\}
 echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 
-if console || [ $console ] ;then
+if [ $console ] ;then
   [ "$TWO" ] && echo "${_YELLOW_}-> $ONE\n${_CYAN_} -> $TWO${_nocolor_}" ||
             echo "${_YELLOW_}-> $ONE${_nocolor_}"
 else
+  # allow cron jobs to bypass console test and display to X
+  [ $cron ] || { console && return; }
   case $# in
-    0) usage ;;
-
     1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &
        else

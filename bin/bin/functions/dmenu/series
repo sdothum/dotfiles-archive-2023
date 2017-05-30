@@ -20,6 +20,7 @@ library=${LIBRARY:-/net/media/videos/${1:-series}}
 mytitles=$library/.mytitles
 sudo find $library -maxdepth 2 -type d -user sonarr -exec chmod -R 755 {} \;
 sudo find $library -maxdepth 2 -type d -user sonarr -exec chown -R shum:users {} \;
+find $library -name '*sample*' -exec rm {} \; &
 # clean up titles
 mytitles $library >>$mytitles
 
@@ -44,7 +45,7 @@ do
          sed -e 's/\./ /g' \
              -e "1i$EDIT" |
          sed "1i[ $(sortlist $T) ]" |
-         rmenu 'Series' "$show" -no-custom) || exit
+         rmenu 'Series' "$show" -no-custom) || break
 
   case $show in
     "$NAME") unset T

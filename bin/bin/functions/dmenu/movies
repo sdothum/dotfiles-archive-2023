@@ -15,6 +15,7 @@
 LAST='[ last watched ]'
 NAME='[ sort by name ]'
 DATE='[ sort by date ]'
+EDIT='[ manage       ]'
 
 # preload cache option
 if [ "$1" = cache ] ;then
@@ -22,12 +23,14 @@ if [ "$1" = cache ] ;then
   shift
 fi
 
+nzb=/net/downloads/nzbs/completed
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
 mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
 # unset debug to remove exit from menu items
 debug='\nexit'
+find $library -name '*sample*' -exec rm {} \; &
 
 # list latest movie additions first
 T=t
@@ -52,8 +55,9 @@ fi
 [ $cache ] && exit
 
 options() {
-  grep -q '[^ ]' $playlist && echo "$LAST\\\n[ $(sortlist $T) ]" ||
-                              echo "[ $(sortlist $T) ]"
+  [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$EDIT" || unset edit
+  grep -q '[^ ]' $playlist && echo "$LAST\\\n[ $(sortlist $T) ]$edit" ||
+                              echo "[ $(sortlist $T) ]$edit"
 }
 
 while :
@@ -69,7 +73,7 @@ do
 
   movie=$(cat $catlg |
           sed "1i$(options)" |
-          rmenu 'Movie' "$movie" -no-custom) || exit
+          rmenu 'Movie' "$movie" -no-custom) || break
 
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
 
@@ -79,6 +83,13 @@ do
 
     "$DATE") T=t
              continue ;;
+
+    "$EDIT") pkill -TERM 'ROX-Filer'
+             rox $nzb
+             rox $library
+             pwait "ROX-Filer $nzb"
+             # force dmenu focus (continue within do loop doesn't guarantee focus)
+             exec dmenu movies $1 ;;
 
     *) movie=$(echo "$movie" | sed "s/ $SEP$//")
        while :

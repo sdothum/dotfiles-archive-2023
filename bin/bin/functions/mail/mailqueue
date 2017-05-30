@@ -36,12 +36,12 @@ if [ $(ls -l $queue | wc -l) -gt 1 ] ;then
   # reset any mangled mail permissions
   [ $(stat --format '%a' $HOME/stow/msmtp/.msmtprc) -ne 600 ] && chmod -c 600 $HOME/.msmtprc
   errmsg=$(/usr/local/bin/msmtp-runqueue.sh)
-  echo $errmsg
-  if echo $errmsg | grep -q FAILURE ;then
-    notify critical 'Check Mail Queue..' "$(echo $errmsg | sed -n 2p)"
+  echo "$errmsg"
+  if echo "$errmsg" | grep -q FAILURE ;then
+    notify critical cron 'Check Mail Queue..' "$(echo $errmsg | sed -n 2p)"
   else
-    [ $count -eq 1 ] && notify low 'Mail Queue' '1 message sent' ||
-                        notify low 'Mail Queue' "$count messages sent"
+    [ $count -eq 1 ] && notify low cron 'Mail Queue' '1 message sent' ||
+                        notify low cron 'Mail Queue' "$count messages sent"
   fi
 else
   trace 'No mail'

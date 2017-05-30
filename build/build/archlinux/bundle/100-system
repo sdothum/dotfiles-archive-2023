@@ -169,8 +169,9 @@ d \ pass
   rlwrap
 # synapse
 # sysstat
+  systemd-swap
   udiskie
 # watcher
-  zramswap
+# zramswap
 
 # vim: set ft=conf: #

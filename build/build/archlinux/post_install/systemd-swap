@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. systemd-swap
+
+original /etc/systemd/swap.conf
+sudo sed -i 's/^zram_enabled=0/zram_enabled=1/' /etc/systemd/swap.conf
+systemd enable systemd-swap
+
+# vim: set ft=sh: #

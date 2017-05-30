@@ -9,7 +9,7 @@
 # Usage: play <url> | <path> [<title>]
 
 fontsize=36
-set -x
+
 youtube=/tmp/youtube-dl
 # cleanup accidental screenshots and youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg $youtube.*" EXIT
@@ -47,5 +47,6 @@ fi
 # refresh panel title on close
 focus window
 toggle compton on
+restore root
 
 # vim: set ft=sh: #

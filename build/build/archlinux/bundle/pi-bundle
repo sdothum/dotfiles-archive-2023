@@ -109,8 +109,8 @@ g term-ansicolor
 " add armv7h to arch in pkgbuild
 ? preload
   rlwrap
+  systemd-swap
 # udiskie
-  zramswap
 
 
 = admin
