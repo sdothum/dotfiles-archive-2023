@@ -143,6 +143,11 @@ div#notify.notify.notify_progress {
   color:                     #ffffff !important;
 }
 
+img[src*="images/indicator_tiny.gif"] {
+  height:                    12px !important;
+  padding-bottom:            2px !important;
+}
+
 /* main */
 #toolbar {
   margin-right:              -19px !important;
