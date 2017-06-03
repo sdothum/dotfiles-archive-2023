@@ -310,6 +310,9 @@
 
     " .............................................................. Litecorrect
 
+      nnoremap <C-s>                          [s1z=<c-o>
+      inoremap <C-s>                          <c-g>u<Esc>[s1z=`]A<c-g>u
+
       autocmd plugin Filetype mail         call litecorrect#init()
       autocmd plugin FileType markdown,mkd call litecorrect#init()
       autocmd plugin Filetype vimwiki      call litecorrect#init()

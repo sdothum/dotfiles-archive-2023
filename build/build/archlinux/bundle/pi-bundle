@@ -199,6 +199,11 @@ d \ connman
   squid
 
 
+= socket
+# ▔▔▔▔▔▔
+  socat
+
+
 = sync
 # ▔▔▔▔
   rsync

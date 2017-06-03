@@ -9,21 +9,49 @@
 
 filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
 
+# search these project library folders..
+source() {
+  echo $HOME/bin
+  echo $HOME/build/archlinux
+  echo $HOME/.config/fish
+  echo $HOME/.config/herbstluftwm
+  echo $HOME/stow/orbit
+}
+
 files() {
-  fcache f $HOME/bin
-  fcache f $HOME/build/archlinux
-  fcache f $HOME/.config/fish
-  fcache f $HOME/.config/herbstluftwm
+  for i in $(source)
+  do
+    fache f $i
+  done
+}
+
+# shorten path references for menu
+abbreviate() {
+  for i in $(source)
+  do
+    trim="$trim -e 's|$i/|${i##*/}/|'"
+  done
+  eval sed $trim
+}
+
+# recover full pathname
+expand() {
+  for i in $(source)
+  do
+    prefix=${i%/*}
+    if [ -e $prefix/$1 ] ;then
+      echo $prefix/$1
+      return 0
+    fi
+  done
+  return 1
 }
 
 # list of user scripts and functions
 while :
 do
   file=$(files |
-         sed -e "s|$HOME/bin/|bin/|" \
-             -e 's|.*/archlinux/|archlinux/|' \
-             -e 's|.*/fish/|fish/|' \
-             -e 's|.*/herbstluftwm/|herbstluftwm/|' |
+         abbreviate |
          sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
          sort |
          mhistory scripts |
@@ -43,12 +71,8 @@ do
     mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
   fi
 
-  if [ -e $HOME/$file ] ;then
-    eval v $HOME/$file
-  elif [ -e $HOME/build/$file ] ;then
-    eval v $HOME/build/$file
-  elif [ -e $HOME/.config/$file ] ;then
-    eval v $HOME/.config/$file
+  if expand $file >/dev/null ;then
+    eval v $(expand $file)
   else
     error=": ${file##*/} ∉ ${file%/*}"
     sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/scripts

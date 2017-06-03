@@ -35,7 +35,8 @@ case $1 in
                    ;tabopen $@<CR>" |
                socat - unix-connect:$(grep socket /tmp/vimb.socket) ;;
 
-  *) /usr/bin/vimb --cmd="$statusfont" \
+  *) cpu arm && exec vimbt "$@"
+     /usr/bin/vimb --cmd="$statusfont" \
                    --cmd="$sslfont" \
                    --cmd="$sslinvalidfont" \
                    --cmd="$inputfont" \

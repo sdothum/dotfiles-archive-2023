@@ -8,9 +8,11 @@
 
 usage() {
   echo "usage: $(basename $0)(server) 'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r@'te <queue>"
-  echo "usage: $(basename $0)(queue) B|b'ottom | C'lear | D|d'elete | P|p'ause | R|r'esume | s'earch | T|t'op <queue>"
+  echo "usage: $(basename $0)(queue) B|b'ottom | D|d'elete | P|p'ause | R|r'esume | s'earch | T|t'op <queue>"
+  echo "usage: $(basename $0)(queue) C'lear"
   echo ' -> nzb d <GID,GID-GID,..>'
   echo ' -> nzb D <title>'
+  echo ' -> nzb C == nzb D queue'
   exit 1
 }
 
@@ -21,7 +23,7 @@ action=$1
 queue=$@
 
 case $action in
-  '') pidof nzbget || systemd start nzbget@$USER
+  '') pidof nzbget >/dev/null || systemd start nzbget@$USER
       underline $(timestamp)
       nzbget -L G ;;
 
@@ -73,7 +75,13 @@ case $action in
       nzb ;;
 
   S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
-  s*) nzb | egrep -i $queue ;;
+
+  s*) if [ "$queue" = queue ] ;then
+        nzb | egrep '^\['
+      else
+        nzb | egrep -i $queue
+      fi ;;
+
   T*) nzb t $(nzb S $queue) ;;
 
   t*) nzbget -E G T $queue
