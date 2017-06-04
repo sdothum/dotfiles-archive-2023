@@ -6,11 +6,11 @@
 # ........................................................................ Files
 
 # list of potential filemanagers, verified by dmenu apps
-filemanagers="filelight \
-              ncdu      \
-              ranger    \
-              rox       \
-              thunar    \
+filemanagers="filelight
+              ncdu
+              ranger
+              rox
+              thunar
 "
 
 # open directory

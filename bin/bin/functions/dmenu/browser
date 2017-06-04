@@ -12,25 +12,25 @@ EDIT='[ edit ]'
 # default=$BROWSER
 default=chromium
 
-browsers="brave       \
-          chromium    \
-          dwb         \
-          elinks      \
-          firefox     \
-          hbro        \
-          iceweasel   \
-          jumanji     \
-          lispkit     \
-          luakit      \
-          midori      \
-          opera       \
-          qutebrowser \
-          vimb        \
-          vimbt       \
-          surf        \
-          uzbl        \
-          w3m         \
-          xombrero    \
+browsers="brave
+          chromium
+          dwb
+          elinks
+          firefox
+          hbro
+          iceweasel
+          jumanji
+          lispkit
+          luakit
+          midori
+          opera
+          qutebrowser
+          vimb
+          vimbt
+          surf
+          uzbl
+          w3m
+          xombrero
 "
 
 [ $2 ] && edit="1i$EDIT"

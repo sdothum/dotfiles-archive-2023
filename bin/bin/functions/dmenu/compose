@@ -10,13 +10,13 @@
 PURGE='[ purge drafts ]'
 
 # list of potential writing tools, verified by dmenu apps
-editors="emacs       \
-         focuswriter \
-         nano        \
-         pyroom      \
-         rubyroom    \
-         vim         \
-         wordgrinder \
+editors="emacs
+         focuswriter
+         nano
+         pyroom
+         rubyroom
+         vim
+         wordgrinder
 "
 
 format_message() {

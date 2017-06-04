@@ -10,16 +10,15 @@
 filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
 
 # search these project library folders..
-source() {
-  echo $HOME/bin
-  echo $HOME/build/archlinux
-  echo $HOME/.config/fish
-  echo $HOME/.config/herbstluftwm
-  echo $HOME/stow/orbit
-}
+sources="$HOME/bin
+         $HOME/build/archlinux
+         $HOME/.config/fish
+         $HOME/.config/herbstluftwm
+         $HOME/stow/orbit
+"
 
 files() {
-  for i in $(source)
+  for i in $sources
   do
     fache f $i
   done
@@ -27,7 +26,7 @@ files() {
 
 # shorten path references for menu
 abbreviate() {
-  for i in $(source)
+  for i in $sources
   do
     trim="$trim -e 's|$i/|${i##*/}/|'"
   done
@@ -36,7 +35,7 @@ abbreviate() {
 
 # recover full pathname
 expand() {
-  for i in $(source)
+  for i in $sources
   do
     prefix=${i%/*}
     if [ -e $prefix/$1 ] ;then

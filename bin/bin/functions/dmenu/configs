@@ -11,36 +11,26 @@ REBUILD='[ rebuild database ]'
 
 # system conf files
 cache=$CACHEDIR/dmenu:configs
+include='.*(cfg|conf(ig)*|ini|rc)'
+exclude='backups|cairo|chromium|depot|geany|google|libreoffice|sandbox|(s|u)mplayer|tint2|Trash|vundle|xfce4|\.(azureus|bundler|cache|deprecated|dropbox|gem|ghc|gimp|hg|kde|mozilla|opera|original|PlayOnLinux|save|stversions|vim|xbmc|xmonad)'
 
 # .................................................................. Build cache
 
 configs() {
   notify low 'Updating dmenu config cache' 'Please be patient..'
-  exclude='\.azureus|backups|\.bundler|\.cache|cairo|chromium|depot|\.deprecated|\.dropbox|geany|\.gem|\.ghc|\.gimp|google|\.hg|\.kde|libreoffice|\.mozilla|\.opera|\.original|\.PlayOnLinux|sandbox|\.save|\.stversions|(s|u)mplayer|tint2|Trash|\.vim|vundle|\.xbmc|\.xmonad|xfce4'
 
   # convert spaces in filenames to tilde and convert back after joining!
   # avoid nfs mounts
   echo $HOME/build/root/var/spool/cron/$USER \
-       $(sudo find -L /etc -maxdepth 1 -type f | egrep -v '\.original') \
-       $(sudo find /etc -type f -regex '.*cfg' | sed 's/ /:/g') \
-       $(sudo find /etc -type f -regextype posix-extended -regex '.*conf(ig)*' | egrep -v 'asciidoc|bluetooth|dbus-1|fonts|ghostscript|sane\.d' | sed 's/ /:/g') \
-       $(sudo find /etc -type f -regextype posix-extended -regex '.*/conf(ig)*.*' | egrep -v 'exim4|fonts' | sed 's/ /:/g') \
-       $(sudo find /etc -type f -regex '.*ini' | sed 's/ /:/g') \
-       $(sudo find /etc -type f -regex '.*rc' | egrep -v 'Muttrc' | sed 's/ /:/g') \
-       $(sudo find /opt -type f -regextype posix-extended -regex '.*conf(ig)*' | egrep -v '\.git' | sed 's/ /:/g') \
-       $(sudo find /opt -type f -regex '.*ini' | sed 's/ /:/g') \
-       $(sudo find /usr/lib/systemd/system/ -type f) \
        $([ -d /var/adsuck ] && sudo find /var/adsuck -type f | sed 's/ /:/g') \
-       $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*cfg' | egrep -v "$exclude" | sed 's/ /:/g') \
-       $(find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex '.*conf(ig)*' | egrep -v "$exclude" | sed 's/ /:/g') \
-       $(find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex '.*/conf(ig)*.*' | egrep -v "$exclude" | sed 's/ /:/g') \
-       $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*ini' | egrep -v "$exclude" | sed 's/ /:/g') \
-       $(find $HOME -path $HOME/Maildir -prune -o -type f -regex '.*rc' | egrep -v "$exclude" | sed 's/ /:/g') |
-         tr ' ' '\n' |
-         sed -re 's/:/ /g' \
-             -e "s|(.*)/([^/]*)$|\2^$SEP \1|" |
-         sort -u |
-         sed -e '1i
+       $(sudo find /etc -type f | egrep -v 'certs|examples|fonts|ppd|_key$|\.(0|1|aspx|browser|colors|crt|css|dat|db|desktop|ext|gpg|ja|js|key|map|menu|original|pacnew|pem|properties|pub|png|service|socket|tex|xml|xsl)$') \
+       $(sudo find /opt -type f -regextype posix-extended -regex "$include" | egrep -v '\.git' | sed 's/ /:/g') \
+       $(sudo find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex "$include" 2>/dev/null | egrep -v "$exclude" | sed 's/ /:/g') |
+       tr ' ' '\n' |
+       sed -re 's/:/ /g' \
+           -e "s|(.*)/([^/]*)$|\2^$SEP \1|" |
+       sort -u |
+       sed -e '1i
 ' >$cache
   notify low 'Update of dmenu config cache' '..Complete'
   sleep 1

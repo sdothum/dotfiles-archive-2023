@@ -32,8 +32,8 @@ do
                notify low 'Systemd daemon-reload'
                break ;;
 
-    "$SERVICES") term 'services' systemctl --type service --all ;;
-    "$FILES"   ) term 'unit-files' systemctl list-unit-files ;;
+    "$SERVICES") term 'services' WAIT systemctl --type service --all ;;
+    "$FILES"   ) term 'unit-files' WAIT systemctl list-unit-files ;;
 
     *) service=$service.service
        sudo systemctl status $service && actions='stop\nrestart' ||
