@@ -14,13 +14,13 @@ do
 
   mhistory media $media
   case $media in
-    animation ) dmenu movies animation ;;
-    anime     ) dmenu series anime ;;
-    ebooks    ) dmenu ebooks ;;
-    movies    ) dmenu movies ;;
+    animation ) exec dmenu movies animation ;;
+    anime     ) exec dmenu series anime ;;
+    ebooks    ) exec dmenu ebooks ;;
+    movies    ) exec dmenu movies ;;
     nzb       ) exec toggle term 'NZB' nzbget --connect ;;
-    references) dmenu references ;;
-    series    ) dmenu series ;;
+    references) exec dmenu references ;;
+    series    ) exec dmenu series ;;
     torrent   ) exec toggle term 'Torrent' rtorrent ;;
 
     netflix) netflix

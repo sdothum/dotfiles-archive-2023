@@ -7,8 +7,6 @@
 
 # shell scripts excluding .man (see dmenu man)
 
-filter='\.cache|\.deprecated|\.git|\.hg|makepkg'
-
 # search these project library folders..
 sources="$HOME/bin
          $HOME/build/archlinux
@@ -20,7 +18,7 @@ sources="$HOME/bin
 files() {
   for i in $sources
   do
-    fache f $i
+    fcache f $i
   done
 }
 

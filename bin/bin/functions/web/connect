@@ -11,10 +11,12 @@ usage() {
   exit 1
 }
 
+# see wego and console_login
+site=darksky.net
 timeout=5
 
 count=0
-while ! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1
+while ! ping -c 1 -W 1 $site >/dev/null 2>&1
 do
   sleep 1
   count=$(( $count + 1 ))

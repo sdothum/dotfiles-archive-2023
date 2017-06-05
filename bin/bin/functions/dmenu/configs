@@ -32,6 +32,7 @@ configs() {
        sort -u |
        sed -e '1i
 ' >$cache
+
   notify low 'Update of dmenu config cache' '..Complete'
   sleep 1
 }
