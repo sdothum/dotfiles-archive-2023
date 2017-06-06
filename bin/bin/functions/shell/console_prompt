@@ -1,0 +1,25 @@
+#!/usr/bin/python
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................... restore console prompt
+
+# Usage: sudo console_prompt
+
+import fcntl
+import sys
+import termios
+import curses
+import os
+
+# cosmetic only fix for backgrounded processes with output to tty devices!
+curses.initscr()
+(y, x) = curses.getsyx()
+if x == 0:
+    with open(os.ttyname(sys.stdout.fileno()), 'w') as fd:
+        # issue backspace to force prompt refresh, see we
+        fcntl.ioctl(fd, termios.TIOCSTI, '\b')
+
+# vim: set ft=python: #
