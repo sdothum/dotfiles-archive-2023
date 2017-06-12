@@ -22,9 +22,7 @@ do
     references) exec dmenu references ;;
     series    ) exec dmenu series ;;
     torrent   ) exec toggle term 'Torrent' rtorrent ;;
-
-    netflix) netflix
-             pwait netflix ;;
+    netflix   ) exec netflix ;;
   esac
 done
 

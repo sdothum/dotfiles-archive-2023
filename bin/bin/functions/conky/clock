@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ Conky
+
+# Usage: conky clock [on | off]
+
+CONKYRC=${CONKYRC:-$HOME/.conkyrc.qclocktwo}
+
+if pgrep -f "conky -c $CONKYRC" >/dev/null ;then
+  [ "$1" = on ] || pkill -f "conky -c $CONKYRC"
+else
+  [ "$1" = off ] || /usr/bin/conky -c $CONKYRC 2>/dev/null &
+fi
+
+# vim: set ft=sh: #

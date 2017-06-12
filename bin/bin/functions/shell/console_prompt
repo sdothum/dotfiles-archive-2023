@@ -14,12 +14,13 @@ import termios
 import curses
 import os
 
-# cosmetic only fix for backgrounded processes with output to tty devices!
-curses.initscr()
-(y, x) = curses.getsyx()
-if x == 0:
-    with open(os.ttyname(sys.stdout.fileno()), 'w') as fd:
-        # issue backspace to force prompt refresh, see we
-        fcntl.ioctl(fd, termios.TIOCSTI, '\b')
+# cosmetic fix for backgrounded process output during console login!
+if os.ttyname(sys.stdout.fileno()) == '/dev/tty1':
+    curses.initscr()
+    (y, x) = curses.getsyx()
+    if x == 0:
+        with open('/dev/tty1', 'w') as fd:
+            # issue backspace to force prompt refresh, see we
+            fcntl.ioctl(fd, termios.TIOCSTI, '\b')
 
 # vim: set ft=python: #

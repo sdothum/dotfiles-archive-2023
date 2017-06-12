@@ -35,6 +35,8 @@ d ? conky-lua-archers
 # colorgrab
   colors-git
 # gpick
+# i3lock
+  alock-git
 # lxsession
   maim
 # scrot

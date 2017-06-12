@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-STOW=$HOME/stow
+echo $PWD | grep -q /stow && STOW=$PWD || STOW=$HOME/stow
 
 link() {
   for i in $STOW/*

@@ -103,6 +103,9 @@ fi
 
 # ................................................................ Miscellaneous
 
+# conky clock secondary monitor
+# export CONKY_Q2=$HOME/stow/conky/$(query displaywidth 1)x$(query displayheight 1)/.conkyrc.qclocktwo
+export CONKY_Q2=$HOME/stow/conky/1680x1050/.conkyrc.qclocktwo
 # terminal font
 export MONOFONT=Iosevka
 # dmenu line item marker

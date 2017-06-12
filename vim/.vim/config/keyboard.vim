@@ -11,8 +11,11 @@
       let g:mapleader     = "\<Space>"
 
       " unshift command mode
-      nnoremap ;          :
-      vnoremap ;          :
+      " nnoremap ;        :
+      " vnoremap ;        :
+      " shift (not applied as requires global usage of noremap for :command)
+      " nnoremap :        ;
+      " vnoremap :        ;
 
       augroup kbd
         autocmd!

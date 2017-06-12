@@ -54,6 +54,7 @@ hc keybind Super-Shift-d            spawn dmenu dict
 hc keybind Super-e                  spawn dmenu scripts
 hc keybind Super-Shift-e            spawn dmenu edit
 hc keybind Super-h                  spawn dmenu shistory
+hc keybind Super-l                  spawn lock_screen
 hc keybind Super-m                  spawn dmenu audio
 hc keybind Super-n                  spawn dmenu notes
 hc keybind Super-Shift-n            spawn dmenu notes draft
@@ -67,6 +68,8 @@ hc keybind Super-r                  spawn dmenu apps
 hc keybind Super-Shift-r            spawn focus $BROWSER
 hc keybind Super-Control-r          spawn dmenu vimbk
 hc keybind Super-s                  spawn dmenu system
+hc keybind Super-t                  spawn conky clock
+hc keybind Super-Shift-t            spawn env CONKYRC=$CONKY_Q2 conky clock
 hc keybind Super-w                  spawn dmenu media
 hc keybind Super-x                  spawn dmenu halt
 hc keybind Super-Shift-x            spawn dmenu screensaver

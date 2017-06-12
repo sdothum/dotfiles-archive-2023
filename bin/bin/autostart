@@ -87,7 +87,7 @@ if [ -e $THEDARNEDESTTHING ] ;then
   vimwiki
 fi
 switch tag $WEB
-$BROWSER &
+cpu arm || $BROWSER &
 
 # .............................................................. Cleanup desktop
 

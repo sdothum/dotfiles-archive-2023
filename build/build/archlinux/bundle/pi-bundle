@@ -172,7 +172,7 @@ d pass
 # ▔▔▔▔▔▔▔
 d " drops internet connection
 d \ connman
-  dnsmasq
+# dnsmasq
 # dnsutils
   bind-tools
 # networkmanager
@@ -196,7 +196,7 @@ d \ connman
 
 = proxies
 # ▔▔▔▔▔▔▔
-  squid
+# squid
 
 
 = socket
@@ -221,8 +221,15 @@ d \ connman
 
 = desktop
 # ▔▔▔▔▔▔▔
+  conky
 " add armv7h to arch in pkgbuild
 ? lemonbar-xft-git
+
+
+= desktop utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+" add armv7h to arch in pkgbuild
+? alock-git
 
 
 = gtk themes and engines
@@ -297,7 +304,7 @@ d m tabbed
 
 = web server
 # ▔▔▔▔▔▔▔▔▔▔
-  pixelserv
+# pixelserv
 
 = viewers
 # ▔▔▔▔▔▔▔

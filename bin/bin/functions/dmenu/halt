@@ -22,7 +22,7 @@ while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
             rmenu 'Session' $cmd -no-custom) || exit
 do
   case $cmd in
-    lock  ) xscreensaver-command -lock ;;
+    lock  ) lock_screen ;;
     logout) sudo kill -TERM X ;;
 
     suspend) [ -e /sbin/systemctl ] && sudo systemctl suspend ||

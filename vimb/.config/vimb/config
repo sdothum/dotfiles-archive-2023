@@ -69,6 +69,7 @@ set status-color-fg=#fdf6e3
 # set home-page=https://wiki.archlinux.org/index.php/Special:Random
 set home-page=https://www.archlinux.org/
 # set home-page=https://bbs.archlinux.org/viewforum.php?id=49
+# set proxy=false
 set smooth-scrolling=true
 set spacial-navigation=true
 set spell-checking=true

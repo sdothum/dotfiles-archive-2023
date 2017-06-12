@@ -40,6 +40,7 @@ if cpu arm; then
   pwait "$video"
   # systemd start syncthing@$USER
 else
+  # server && env CONKYRC=$CONKY_Q2 conky clock on
   notify "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\n#    Language\nv/j  Subtitles'
   focus frame
   mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
@@ -47,6 +48,5 @@ fi
 # refresh panel title on close
 focus window
 toggle compton on
-restore root
 
 # vim: set ft=sh: #

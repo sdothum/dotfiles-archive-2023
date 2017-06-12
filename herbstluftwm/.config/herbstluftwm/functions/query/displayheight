@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/displaywidth $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................... Display height
+
+# Usage: query displayheight [<monitor>]
+#        default, display current monitor display height
+#        monitor (0) primary (1) secondary, etc.
+
+# in pixels
+[ $1 ] && monitor=$1 || monitor=$(herbstclient attr monitors.focus.index)
+xrandr 2>/dev/null | egrep '[*+] |[*+]$' | cut -dx -f2 | cut -d' ' -f1 | sed "$(( $monitor + 1 ))q;d"
+
+# vim: set ft=sh: #

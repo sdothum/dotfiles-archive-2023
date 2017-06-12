@@ -5,31 +5,9 @@
 
 # ........................................................................ squid
 
-CONF=/etc/squid/squid.conf
-
-conf $CONF 'acl localnet src 10.0.0.0/8'
-conf $CONF 'acl Safe_ports port 32400   # plexmediaserver'
-conf $CONF 'acl Safe_ports port 631     # cups'
-conf $CONF 'acl Safe_ports port 6789    # nzbget'
-conf $CONF 'cache_peer 127.0.0.1 parent 8118 7 no-digest no-query no-netdb-exchange'
-conf $CONF 'forwarded_for delete'
-conf $CONF 'hierarchy_stoplist cgi-bin ?'
-conf $CONF 'http_access allow localnet'
-conf $CONF 'never_direct allow all'
-conf $CONF 'reply_header_access From deny all'
-conf $CONF 'reply_header_access Link deny all'
-conf $CONF 'reply_header_access Referer deny all'
-conf $CONF 'reply_header_access Server deny all'
-conf $CONF 'reply_header_access User-Agent deny all'
-conf $CONF 'reply_header_access WWW-Authenticate deny all'
-conf $CONF 'request_header_access Cache-Control deny all'
-conf $CONF 'request_header_access From deny all'
-conf $CONF 'request_header_access Link deny all'
-conf $CONF 'request_header_access Referer deny all'
-conf $CONF 'request_header_access Server deny all'
-conf $CONF 'request_header_access WWW-Authenticate deny all'
-conf $CONF 'shutdown_lifetime 0 seconds'
-conf $CONF 'via off'
+config_install /etc/squid/squid.conf
+systemd stop squid
+sudo squid -zN -z
 
 systemd enable squid
 

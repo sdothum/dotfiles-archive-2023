@@ -10,5 +10,7 @@
 # Usage: blackboard [<hexcolor>]
 
 draw root blank ${1:-000000}
+# present conky clock on secondary monitor
+server && CONKYRC=$CONKY_Q2 conky clock on
 
 # vim: set ft=sh: #
