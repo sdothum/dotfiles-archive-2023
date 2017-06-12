@@ -7,11 +7,8 @@
 # ...................................................................... Browser
 
 blackboard
-trap 'restore root' EXIT
-toggle compton off
 
 chromium netflix
 pwait 'chromium.*netflix'
-toggle compton on
 
 # vim: set ft=sh: #

@@ -36,8 +36,6 @@ shows() {
   playlist $episodes "$playlist"
 }
 
-trap 'restore root' EXIT
-
 # initial row is most current show vs last viewed
 show=2
 while :

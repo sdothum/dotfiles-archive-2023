@@ -52,10 +52,6 @@ done
 
 # ...................................................................... Desktop
 
-# initialize desktop blur and panel / conky rules
-# enable conky early to avoid visual screen refresh
-toggle compton on
-
 # appropriately wild herbstluftwm background color! see .xinitrc
 restore desktop
 

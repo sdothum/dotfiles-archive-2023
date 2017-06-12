@@ -60,8 +60,6 @@ options() {
                               echo "[ $(sortlist $T) ]$edit"
 }
 
-trap 'restore root' EXIT
-
 while :
 do
   # rebuilding catalogue?

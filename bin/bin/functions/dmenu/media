@@ -9,21 +9,27 @@
 media=$(previous media)
 while :
 do
-  media=$(echo "animation\nanime\nmovies\nnetflix\nseries\nebooks\nreferences\nnzb\ntorrent" |
+  media=$(echo "animation\nanime\nmovies\nnetflix\nseries\npatricia\nebooks\nreferences\nnzb\ntorrent" |
           rmenu 'Media' $media -no-custom) || exit
 
+  # videos turn on blackboard so..
+  trap 'restore root' EXIT
   mhistory media $media
+
+  # source instead of exec to allow trap
   case $media in
-    animation ) exec dmenu movies animation ;;
-    anime     ) exec dmenu series anime ;;
-    ebooks    ) exec dmenu ebooks ;;
-    movies    ) exec dmenu movies ;;
-    nzb       ) exec toggle term 'NZB' nzbget --connect ;;
-    references) exec dmenu references ;;
-    series    ) exec dmenu series ;;
-    torrent   ) exec toggle term 'Torrent' rtorrent ;;
-    netflix   ) exec netflix ;;
+    animation ) . dmenu movies animation ;;
+    anime     ) . dmenu series anime ;;
+    ebooks    ) . dmenu ebooks ;;
+    movies    ) . dmenu movies ;;
+    nzb       ) . toggle term 'NZB' nzbget --connect ;;
+    patricia  ) . patricia-video ;;
+    references) . dmenu references ;;
+    series    ) . dmenu series ;;
+    torrent   ) . toggle term 'Torrent' rtorrent ;;
+    netflix   ) . netflix ;;
   esac
+  break
 done
 
 # vim: set ft=sh: #

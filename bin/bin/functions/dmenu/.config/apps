@@ -4,7 +4,6 @@ term 'IRC' weechat # chat
 hardcopy eject
 term 'Trace' tail -f /tmp/herbstluftwm.log # herbstluftwm :: log
 term 'Mail' alot # mail
-patricia-video # Patricia :: video
 simpletimer
 $(which thedarnedestthing) # http :: the darnedest thing
 vimwiki colophon # wiki :: colophon
