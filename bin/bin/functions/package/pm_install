@@ -28,8 +28,8 @@ if ! pm_query $@ ;then
     echo "${_GREEN_}@ aur${nocolor_}"
     [ $confirm ] && $pacaur -S $@ || $pacaur -S --noconfirm $@
   fi
+  post_install $@
 fi
-post_install $@
 
 unset confirm
 

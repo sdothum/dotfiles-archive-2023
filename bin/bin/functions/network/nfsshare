@@ -1,17 +1,16 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Network
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .......................................................... Getting things done
+# .................................................................... NFS share
 
-cp $HOME/.reminders /tmp/
-
-# if wyrd crashes (common tiling wm problem), restart
-while :
+# nfs automount unreliable on arm with btrfs
+mount | grep -q nfs4 && exit
+for i in $(grep nfs4 /etc/fstab | cut -d' ' -f1)
 do
-  pidof wyrd || { sleep 1 && /usr/bin/wyrd 2>>/tmp/wyrd.log; }
+  sudo mount $i
 done
 
 # vim: set ft=sh: #

@@ -19,6 +19,6 @@
 // #define VIM_CURSOR
 
 // default QWERTY keymap unless
-// #define COLEMAK COLEMAK
+#define COLEMAK COLEMAK
 
 #endif

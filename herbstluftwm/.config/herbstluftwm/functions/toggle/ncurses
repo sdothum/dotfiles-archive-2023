@@ -8,6 +8,12 @@
 
 # Usage: toggle ncurses [off | on]
 
+# rofi hangs arm devices
+if cpu arm ;then
+  touch $NCURSES
+  exit
+fi
+
 case $1 in
   off) [ -e $NCURSES ] || exit ;;
   on ) [ -e $NCURSES ] && exit ;;

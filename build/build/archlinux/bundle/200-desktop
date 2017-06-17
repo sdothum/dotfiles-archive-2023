@@ -43,6 +43,7 @@ d ? conky-lua-archers
 # shutter
 # slickpicker
 # slock
+  xautolock
 # xfce4-screenshooter
 # xgrabcolor
 
@@ -159,7 +160,6 @@ d ? conky-lua-archers
   xf86-input-mouse
   xf86-input-keyboard
   xf86-input-synaptics [laptop]
-  xorg-server-xephyr
   xorg-xev
   xorg-xinput
   xorg-xmessage

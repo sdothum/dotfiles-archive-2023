@@ -14,7 +14,7 @@
 # AUR package manager
 if [ -z $1 ] ;then
   if cpu arm ;then
-    sudo pacman -Syu
+    pacaur -Syuu
     exit
   fi
   mirrorlist Canada
@@ -35,7 +35,7 @@ if [ -z $1 ] ;then
 
   # pacupg $aur doen'reate new boot snapshot, see $pacaur
   if [ $pacaur ] ;then
-    pacaur -Syu --aur
+    pacaur -Syuu --aur
     pacupg
   else
     pacupg $aur

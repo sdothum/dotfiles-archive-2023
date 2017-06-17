@@ -10,10 +10,13 @@ default=shutdown
 # disconnect nfs to prevent shutdown wait..
 disconnect() {
   if ! server ;then
+    pgrep rsync >/dev/null && notify critical 'Rsync in progress' 'Waiting..'
+    pwait rsync
     sudo umount /net
     sudo umount /home/shum/Maildir
     sudo systemctl stop nfs-config
   fi
+  quit
 }
 
 # quit!
@@ -29,12 +32,10 @@ do
                                        sudo pm-suspend ;;
 
     reboot) disconnect
-            quit
             [ -e /sbin/systemctl ] && sudo systemctl reboot ||
                                       sudo shutdown -r now ;;
 
     shutdown) disconnect
-              quit
               [ -e /sbin/systemctl ] && sudo systemctl poweroff ||
                                         sudo shutdown -h now ;;
   esac

@@ -6,11 +6,13 @@
 
 # ....................................................... Window manager restart
 
-# startup applications
-IRC=$HOME/.irc
-THEDARNEDESTTHING=$HOME/.thedarnedestthing
-MAIL=$HOME/.mail
-CALENDAR=$HOME/.calendar
+# initial window applications (flags)
+CALENDAR=$SESSION/calendar
+DEBUG=$SESSION/debug
+IRC=$SESSION/irc
+MAIL=$SESSION/mail
+THEDARNEDESTTHING=$SESSION/thedarnedestthing
+WEB=$SESSION/browser
 
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
@@ -55,7 +57,7 @@ autocutsel -selection PRIMARY -fork &
 #           -k "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX.cal" \
 #           -s "L 2209WA 2014-02-04 2.2 M-S 3xCurve+MTX" 2>/dev/null
 # fi
-server && dmenu screensaver on
+# server && dmenu screensaver on
 
 # ................................................................. Systray apps
 
@@ -65,17 +67,12 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 
 # ................................................................ Terminal apps
 
-# [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
+[ -e $DEBUG ] && [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
 if [ -e $IRC ] ;then
-  if server ;then
-    herbstclient focus_monitor 1
-    # wait for window visibility before switching monitors, for urxvt font handling
-    term 'IRC' VISIBLE weechat
-    herbstclient focus_monitor 0
-  else
-    switch tag $CHAT
-    term 'IRC' VISIBLE weechat
-  fi
+  server && herbstclient focus_monitor 1 || switch tag $CHAT
+  # wait for window visibility before switching monitors, for urxvt font handling
+  term 'IRC' VISIBLE weechat
+  server && herbstclient focus_monitor 0
 fi
 [ -e $MAIL ] && term 'Mail' alot
 [ -e $CALENDAR ] && term 'Calendar' wyrd
@@ -87,7 +84,7 @@ if [ -e $THEDARNEDESTTHING ] ;then
   vimwiki
 fi
 switch tag $WEB
-cpu arm || $BROWSER &
+[ -e $WEB ] && $BROWSER &
 
 # .............................................................. Cleanup desktop
 

@@ -5,14 +5,27 @@
 
 # ........................................................................ Conky
 
-# Usage: conky clock [on | off]
+# Usage: conky clock
+usage() {
+  echo "usage: $(basename $0) clock [auto | on | off]"
+  exit 1
+}
 
 CONKYRC=${CONKYRC:-$HOME/.conkyrc.qclocktwo}
+[ -e $CONKYRC ] || exit
 
-if pgrep -f "conky -c $CONKYRC" >/dev/null ;then
-  [ "$1" = on ] || pkill -f "conky -c $CONKYRC"
-else
-  [ "$1" = off ] || /usr/bin/conky -c $CONKYRC 2>/dev/null &
-fi
+clock() {
+  pgrep -f "conky -c $CONKYRC" >/dev/null
+}
+
+case $1 in
+  auto) xset s off -dpms
+        pidof xautolock >/dev/null || xautolock -time 10 -locker 'conky clock on' & ;;
+
+  on ) clock || /usr/bin/conky -c $CONKYRC 2>/dev/null & ;;
+  off) clock && pkill -f "conky -c $CONKYRC" ;;
+  '' ) clock && conky clock off || conky clock on ;;
+  *  ) usage ;;
+esac
 
 # vim: set ft=sh: #

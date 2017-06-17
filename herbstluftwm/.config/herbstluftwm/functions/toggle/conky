@@ -6,7 +6,7 @@
 
 # ................................................. Toggle conky desktop padding
 
-[ -e /usr/bin/conky ] || exit
+cpu arm && exit
 [ -e $CONKY ] && rm -f $CONKY || touch $CONKY
 
 # set conky monitor layout

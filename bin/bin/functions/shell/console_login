@@ -30,8 +30,15 @@ if [ $USER != root ] ;then
 
     # pre-initialize arm fuzzy searches
     nohup fcache + $HOME 2>/dev/null &
-    we &
-    cpu arm && nohup arm_clock 2>/dev/null &
+    if cpu arm ;then
+      nohup arm_clock 2>/dev/null &
+      # in case pi is offline during development on main server
+      nohup rsync -q arm 2>/dev/null &
+      sleep 1
+      pgrep -f "rsync arm" >/dev/null || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
+    else
+      we &
+    fi
   fi
 
   # reset keyboard layout

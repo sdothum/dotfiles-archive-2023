@@ -8,6 +8,8 @@
 
 # Usage: v [-f | -c <command>]* [<file>]*
 
+ACTIVE="$HOME/stow/bin $HOME/stow/herbstluftwm"
+
 # va va voom
 SHELL=/usr/bin/dash
 hlwm && [ -e $DYNAMIC ] && focus=focus
@@ -29,7 +31,6 @@ done
 if [ -z $1 ] ;then
   file=$(find -type f 2>/dev/null | filter | fzf --multi)
   [ "$file" ] || exit
-  $focus vim $G $fg $cmd $file
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
   file=$(echo $@)
@@ -48,13 +49,19 @@ count=$(echo $file | wc -w)
 eval $focus $sudo vim $G $fg $cmd $file
 
 housekeeping() {
-  # syncthing housekeeping (unless vim fg, housekeeping is staggered)
   find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
   find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
-  # avoid nfs mounts
+  # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -fv {} \;
+  # synchronize raspberry pi (manually sync lesser active files)
+  if cpu arm ;then
+    rsync -q $ACTIVE $HOME/stownfs/
+  else
+    ping -c 1 -W 1 pi >/dev/null 2>&1 || exit
+    rsync -q $ACTIVE pi:$HOME/stow/
+  fi
 }
 
-housekeeping &
+(pwait "vim.*$G.*$fg.*$cmd.*$file" && housekeeping) &
 
 # vim: set ft=sh: #

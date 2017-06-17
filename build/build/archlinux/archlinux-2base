@@ -57,6 +57,10 @@ fc-cache -fv
 title "installation errors:"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
-ditto "reboot, then x (startx)"
+
+ditto 'exit console (script)'
+ditto "login as user $user"
+ditto 'startx (x)'
+ditto 'archlinux-3apps'
 
 # vim: set ft=sh: #

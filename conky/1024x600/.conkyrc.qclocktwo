@@ -5,7 +5,7 @@ conky.config = {
 	default_shade_color = '#000000',
 	double_buffer = true,
 	draw_shades = true,
-	font = 'Noto Mono:size=18',
+	font = 'Noto Mono:size=12',
 	gap_x = 0,
 	gap_y = 0,
   maximum_width = 1024,
@@ -22,7 +22,7 @@ conky.config = {
 };
 
 conky.text = [[
-${voffset 202}
+${voffset 185}
 ${alignc}${color}I T ${color1}L ${color}I S ${color1}A S T I M E
 ${alignc}${if_match ${exec date +"%M"} < 35}${if_match ${exec date +"%M"} >= 15}${if_match ${exec date +"%M"} < 20}${color}${endif}${endif}A ${color1}C ${if_match ${exec date +"%M"} >= 15}${if_match ${exec date +"%M"} < 20}${color}${endif}${endif}Q U A R T E R ${color1}D C
 ${alignc}${if_match ${exec date +"%M"} >= 20}${if_match ${exec date +"%M"} < 30}${color}${endif}${endif}T W E N T Y ${if_match ${exec date +"%M"} >= 25}${if_match ${exec date +"%M"} < 30}${color}${endif}${else}${color1}${endif}${if_match ${exec date +"%M"} >= 5}${if_match ${exec date +"%M"} < 10}${color}${endif}${endif}F I V E ${color1}X

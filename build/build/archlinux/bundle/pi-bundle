@@ -7,92 +7,6 @@
 # then run rsync pi from main server to install scripts and proceed with
 # archlinux-pi
 
-= aur package manager
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-a package-query
-@ yaourt
-! yaourt -Sy
-? cower
-  pacaur
-
-
-= core
-# ▔▔▔▔
-  bc
-  expac
-  net-tools
-# wireless_tools
-
-
-= entropy
-# ▔▔▔▔▔▔▔
-# haveged
-
-
-= languages
-# ▔▔▔▔▔▔▔▔▔
-  python
-  ruby
-g term-ansicolor
-
-
-= shell
-# ▔▔▔▔▔
-# autojump
-  dash
-  figlet
-  fish
-  fzf
-  pv
-
-
-= system monitor
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  glances
-  htop
-
-
-= x11 drivers
-# ▔▔▔▔▔▔▔▔▔▔▔
-  xf86-input-evdev
-  xf86-video-fbdev
-
-
-= x11 server
-# ▔▔▔▔▔▔▔▔▔▔
-  xorg-xinit
-  xorg-server
-  xorg-server-utils
-  xorg-server-xephyr
-
-
-= font rendering
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  cairo
-  freetype2
-  fontconfig
-
-
-= editors
-# ▔▔▔▔▔▔▔
-  gvim
-  texlive-core
-  texlive-latexextra
-
-
-= terminal
-# ▔▔▔▔▔▔▔▔
-" add armv7h to arch in pkgbuild
-? rxvt-unicode-patched
-  tmux
-  urxvt-perls
-
-
-= window manager
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  herbstluftwm
-
-
 = sound
 # ▔▔▔▔▔
   alsa-utils
@@ -105,9 +19,10 @@ g term-ansicolor
 = system utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cronie
+  logrotate
   ntp
-" add armv7h to arch in pkgbuild
-? preload
+d " add armv7h to arch in pkgbuild
+d ? preload
   rlwrap
   systemd-swap
 # udiskie
@@ -166,28 +81,41 @@ g term-ansicolor
 = security
 # ▔▔▔▔▔▔▔▔
 d pass
+  sudo
 
 
-= network
-# ▔▔▔▔▔▔▔
-d " drops internet connection
-d \ connman
+= system monitor
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  glances
+  htop
+
+
+= terminal multiplexors
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  tmux
+
+
+= network utilities
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  dialog
 # dnsmasq
 # dnsutils
   bind-tools
+  iw
 # networkmanager
 
 
 = network security
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   openssh
+  wpa_supplicant
 
 
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
-" add armv7h to arch in pkgbuild
-? cachefilesd
+d " add armv7h to arch in pkgbuild
+d ? cachefilesd
   nfs-utils
 # nss-mdns
 # pygtk
@@ -215,21 +143,23 @@ d \ connman
 # ▔▔▔▔▔▔▔▔▔▔
   compton
   lxappearance
-? setroot
-? unclutter-xfixes-git
+d " add armv7h to arch in pkgbuild
+d ? setroot
+d ? unclutter-xfixes-git
 
 
 = desktop
 # ▔▔▔▔▔▔▔
   conky
-" add armv7h to arch in pkgbuild
-? lemonbar-xft-git
+d " add armv7h to arch in pkgbuild
+d ? lemonbar-xft-git
 
 
 = desktop utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-" add armv7h to arch in pkgbuild
-? alock-git
+d " add armv7h to arch in pkgbuild
+d ? alock-git
+  xautolock
 
 
 = gtk themes and engines
@@ -254,16 +184,15 @@ d \ connman
 
 = window properties
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-" add armv7h to arch in pkgbuild
-? sutils-git
-? xtitle-git
+d " add armv7h to arch in pkgbuild
+d ? sutils-git
+d ? xtitle-git
 
 
 = x11
 # ▔▔▔
   autocutsel
-" add armv7h to arch in pkgbuild
-? xdotool
+  xdotool
   xf86-input-keyboard
   xf86-input-mouse
 
@@ -271,6 +200,19 @@ d \ connman
 = file transfer
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   wget
+
+
+= editors
+# ▔▔▔▔▔▔▔
+  texlive-core
+  texlive-latexextra
+
+
+= languages
+# ▔▔▔▔▔▔▔▔▔
+  python
+  ruby
+g term-ansicolor
 
 
 = video players
@@ -289,10 +231,10 @@ d \ connman
 # chromium
   qutebrowser
   surf
-d " install under X to calculate correct tab fontsize
+d " tabbed compiled to custom font size
 d m tabbed
-" add armv7h to arch in pkgbuild
-? vimb
+d " add armv7h to arch in pkgbuild
+d ? vimb
   w3m
 
 
@@ -317,12 +259,18 @@ d m tabbed
 = applications
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   aiksaurus
-" add armv7h to arch in pkgbuild
-? amphetype-svn
+d " add armv7h to arch in pkgbuild
+d ? amphetype-svn
   calc
   dictd
   python-proselint
   youtube-dl
   wego
+
+
+= network
+# ▔▔▔▔▔▔▔
+d " drops internet connection (do last!)
+d * connman
 
 # vim: set ft=conf: #

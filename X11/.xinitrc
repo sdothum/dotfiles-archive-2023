@@ -121,9 +121,10 @@ case $windowmanager in
   dwm)      exec dwm ;;
 
   herbstluftwm) pkill -KILL -f 'herbst'
-                rm -f /tmp/herbstluftwm:*
+                export ROOT=$HOME/tmp
+                rm -f $ROOT/herbstluftwm:*
                 # enable debug trace by referencing log file
-                export TRACE=/tmp/herbstluftwm.log
+                export TRACE=$ROOT/herbstluftwm.log
                 export PANEL_BOTTOM=true
                 # export PANEL_MARGIN=true
                 # setroot (wallpaper) last wallpaper (blank) last blank wall, otherwise random blank wall
@@ -132,7 +133,7 @@ case $windowmanager in
                 . $HOME/.config/herbstluftwm/config/ENV
                 # initial build install?
                 which xdotool >/dev/null || urxvt &
-                exec herbstluftwm >/tmp/herbstluftwm.log 2>&1 ;;
+                exec herbstluftwm >$ROOT/herbstluftwm.log 2>&1 ;;
 
   gnome)  exec gnome-session ;;
   i3)     exec i3 ;;

@@ -13,7 +13,7 @@ term=tmux
 
 [ $(pgrep -cf 'toggle scratchpad') -gt 1 ] && exit
 # kill any extra tmux sessions spawned (default 2 processes)..
-kill -TERM $(pgrep -f 'tmuu -2 -f' | sed '1,2d') 2>/dev/null
+kill -TERM $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
 
 # search [<option>* [<command>]]
 search() { xdotool search --limit 1 --classname $1 $name $2 2>/dev/null; }
@@ -67,9 +67,8 @@ focus_check
 focus frame
 # cannot use layout options with term due to classname conflict (overwrites "Scratchpad")
 case $term in
-  byobu) term $name FORTUNE byobu 'new-session -n ""' ;;
-  tmux ) term $name FORTUNE tmux 'new-session -n ""' ;;
-  *    ) term $name FORTUNE TABBED ;;
+  byobu | tmux) term $name FORTUNE $term 'new-session -n ""' ;;
+  *           ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$SCRATCHPAD

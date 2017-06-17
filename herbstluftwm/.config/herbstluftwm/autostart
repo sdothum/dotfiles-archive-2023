@@ -117,4 +117,8 @@ toggle focus
 focus frame
 focus window
 
+# pseudo screen saver
+# cpu arm || conky clock auto
+conky clock auto
+
 # vim: set ft=sh: #

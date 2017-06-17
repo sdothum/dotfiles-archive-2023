@@ -14,17 +14,18 @@ export SHELL=/usr/bin/dash
 export XDG_CONFIG_HOME=$HOME/.config
 export ROOT=${ROOT:-/tmp}
 export HLWM=$ROOT/herbstluftwm
+export SESSION=$HOME/.session
 
 # ............................................................ Persistent states
 
 export PALETTE=$HOME/images/colors
 export BACKGROUND=$PALETTE/default
 export COLOR=$BACKGROUND:color
-export NOBLUR=$HOME/.noblur
-export SETROOT=$HOME/.setroot
 export WALLPAPER=$HOME/images/backgrounds/default
 
-export NCURSES=$HOME/.ncurses
+export NCURSES=$SESSION/ncurses
+export NOBLUR=$SESSION/noblur
+export SETROOT=$SESSION/setroot
 
 export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
@@ -97,7 +98,7 @@ else
 fi
 
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-[ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
+hlwm && [ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
 # assumes startx on primary display
 # is display -min && PANEL_MARGIN=true
 

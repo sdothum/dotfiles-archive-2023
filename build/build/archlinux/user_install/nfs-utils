@@ -5,14 +5,14 @@
 
 # .......................................................................... nfs
 
-# network share email database
+# network share dotfile, email and media databases
 if server ;then
   sudo mkdir -pv /srv/nfs4/Maildir
   sudo mkdir -pv /srv/nfs4/net
   if ! grep -q 'Maildir.*bind' /etc/fstab ;then
     sudo sed -i '$a\
 /home/$uid/Maildir /srv/nfs4/Maildir none bind 0 0\
-/home/$uid/stow    /srv/nfs4/Maildir none bind 0 0\
+/home/$uid/stow    /srv/nfs4/stow    none bind 0 0\
 /net               /srv/nfs4/net     none bind 0 0\
 ' /etc/fstab
 
@@ -25,16 +25,25 @@ if server ;then
     sudo exportfs -rav
   fi
 elif ! grep -q 'net.*nfs4' /etc/fstab ;then
+  # dotfile share is mirrored on arm to retain max stow IO performance, see v (housekeeping)
   sudo sed -i -e '/^LABEL=.*\/net.*btrfs/s/^/# /' \
            -e '$a\
 luna:/net     /net               nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
 luna:/Maildir /home/user/Maildir nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,fsc,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
 ' /etc/fstab
   cpu arm && sudo sed -i '$a\
-luna:/stow    /home/user/stow    nfs4 rw,auto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
+luna:/stow    /home/user/stownfs nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\
 ' /etc/fstab
   sudo sed -i "s/user/$USER/" /etc/fstab
 fi
+
+# configure nfs share automount for arm
+# if ! grep -q nfsshare /var/spool/cron/$USER 2>/dev/null ;then
+#   cpu arm || comment='# '
+#   echo "$(crontab -l)
+# ${comment}* * * * * /home/$USER/bin/functions/network/nfsshare >>/tmp/nfsshare.log 2>&1"  |
+#        sudo crontab -u $USER -
+# fi
 
 annotate 'update cliend hosts tables with nfs server address for luna'
 

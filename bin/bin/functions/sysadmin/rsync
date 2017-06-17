@@ -7,9 +7,14 @@
 # ................................................................ Rsync wrapper
 
 usage() {
-  echo "usage: $(basename $0) backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
+  echo "usage: $(basename $0) [-q] arm | backup | depot | home | pi | server | stow | stownfs | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
   exit 1
 }
+
+if [ "$1" = '-q' ] ;then
+  quiet=-q
+  shift
+fi
 
 laptop=lumen
 netbook=monad
@@ -89,7 +94,6 @@ rsync_home() {
         --exclude 'Trash' \
         --exclude '.unison' \
         --exclude '.vim/backups' \
-        --exclude '.vim/plugged' \
         --exclude 'VirtualBox VMs' \
         --exclude 'vivaldi' \
         --exclude 'webkit' \
@@ -102,11 +106,12 @@ rsync_home() {
 }
 
 case $1 in
-  '') usage ;;
+  '' ) usage ;;
+  arm) cpu arm && rsync $HOME/stownfs/* $HOME/stow/ ;;
 
   backup) if server ;then
             if if-yes 'backup /net to /backup' ;then
-              rsync -av --delete-during /net/* /backup/
+              rsync --delete-during /net/* /backup/
             fi
           fi ;;
 
@@ -230,6 +235,8 @@ case $1 in
             rsync --exclude=.SyncArchive $HOME/stow $USER@luna:$HOME/
         fi ;;
 
+  stownfs) cpu arm && rsync $HOME/stow/* $HOME/stownfs/ ;;
+
   ttrss) if server ;then
            rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
          else
@@ -282,7 +289,7 @@ case $1 in
                   $HOME/
           fi ;;
 
-  *) /usr/bin/rsync -av --exclude='lost+found' $@ ;;
+  *) /usr/bin/rsync -av --exclude='lost+found' $quiet $@ ;;
 esac
 
 # vim: set ft=sh: #

@@ -28,7 +28,6 @@
 = disk utilities
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   convmv
-  dos2unix
 # gnome-disk-utility
   gparted
   gptfdisk

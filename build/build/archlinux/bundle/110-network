@@ -8,7 +8,7 @@
 # bluez
 # bluez-utils
 d " connman post install disrupts internet connection, install last
-d \ connman
+d * connman
   gnome-bluetooth
 # ifenslave
 # networkmanager

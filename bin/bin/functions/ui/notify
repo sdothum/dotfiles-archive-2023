@@ -42,10 +42,10 @@ echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 
 if [ $console ] ;then
   [ "$TWO" ] && echo "${_YELLOW_}-> $ONE\n${_CYAN_} -> $TWO${_nocolor_}" ||
-            echo "${_YELLOW_}-> $ONE${_nocolor_}"
+                echo "${_YELLOW_}-> $ONE${_nocolor_}"
 else
   # allow cron jobs to bypass console test and display to X
-  [ $cron ] || { console && return; }
+  [ $cron ] || { console && exit; }
   case $# in
     1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &

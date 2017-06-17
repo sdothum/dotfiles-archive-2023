@@ -15,6 +15,7 @@
 #         - package        [condition] (to remove)
 #         ? package        [condition] (confirm, see pm_install)
 #           package        [condition] (noconfirm)
+#         * package        [condition] (noconfirm)
 #         @ aur            [condition] (aur makepkg)
 #         a arm            [condition] (aur makepkg for raspberry pi)
 #         d action package [condition] (deferred install)
@@ -30,6 +31,7 @@
 #                     e.g. d \ package [condition]
 
 [ $1 ] || exit
+console && export VISUAL='vim -f'
 
 if [ $1 = check ] ;then
   check=true
@@ -72,15 +74,15 @@ do
       '!') [ $check ] || eval $package $condition
            continue ;;
 
-      '-' | '?' | '@' | a | d | g | m)
-          condition=$(rule "$condition") ;;
+      '-' | '?' | '*' | '@' | a | g | m) rule=$(rule "$condition") ;;
+      d                                ) rule=true ;;
 
       *) set -- $package $condition
          package=$action
-         condition=$(rule "$@") ;;
+         rule=$(rule "$@") ;;
     esac
 
-    eval $condition || continue
+    eval $rule || continue
 
     if [ $check ] ;then
       unset installed
@@ -103,7 +105,7 @@ do
       '?') pm_install S $package ;;
       '@') aur_install $package ;;
       a  ) arm_install $package ;;
-      d  ) echo "$package $condition" | sed 's/^ /  /' >>$deferred ;;
+      d  ) echo "$package $condition" >>$deferred ;;
       g  ) gem_install $package ;;
       m  ) make_install $package ;;
       *  ) pm_install $package ;;

@@ -20,6 +20,7 @@
 
 = console font
 # ▔▔▔▔▔▔▔▔▔▔▔▔
+  dos2unix
   terminus-font-ll2-td1
 
 
@@ -67,9 +68,21 @@
 # mesa-vdpau-git
 ? nvidia-libgl               [gpu nvidia]
   xorg-xinit
+  xorg-xrandr
   xorg-server
-  xorg-server-utils
- font rendering
+
+
+= x11 server utilities
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# xorg-apps
+  xorg-xinput
+  xorg-xmodmap
+  xorg-xrandr
+  xorg-xrdb
+  xorg-xset
+
+
+= font rendering
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cairo
   freetype2

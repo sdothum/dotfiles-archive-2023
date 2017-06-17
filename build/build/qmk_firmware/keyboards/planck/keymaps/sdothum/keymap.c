@@ -131,7 +131,8 @@ enum planck_keycodes {
 
 // tap dance keys
 enum tap_dance {
-  _CAPS = 0
+  _ARCH = 0
+ ,_CAPS
  ,_ENT
  ,_LBRC
  ,_LCBR
@@ -142,6 +143,7 @@ enum tap_dance {
  ,_SPC
 };
 
+#define TD_ARCH TD(_ARCH)
 #define TD_CAPS TD(_CAPS)
 #define TD_ENT  TD(_ENT)
 #define TD_LBRC TD(_LBRC)
@@ -397,7 +399,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FNCKEY] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12 },
-    {OS_SFT,  OS_CTL,  OS_GUI,  OS_ALT,  TD_SEND, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
+    {OS_SFT,  OS_CTL,  OS_GUI,  OS_ALT,  TD_SEND, TD_ARCH, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10 },
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
@@ -630,6 +632,14 @@ void quote(qk_tap_dance_state_t *state, void *user_data)
 
 // ............................................................ Tap Dance Single
 
+// vi change arch pkgbuild architecture to 'any'
+void arch(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) {
+    SEND_STRING(":%s/arch=(.*)/arch=('any')\n");
+  }
+}
+
 void caps(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
@@ -641,6 +651,7 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+// compile time macro string, see functions/hardware planck script
 void send(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
@@ -651,7 +662,8 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [_CAPS] = ACTION_TAP_DANCE_FN         (caps)
+  [_ARCH] = ACTION_TAP_DANCE_FN         (arch)
+ ,[_CAPS] = ACTION_TAP_DANCE_FN         (caps)
  ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
  ,[_LBRC] = ACTION_TAP_DANCE_FN         (brace)
  ,[_LCBR] = ACTION_TAP_DANCE_FN         (curly)

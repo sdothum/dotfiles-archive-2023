@@ -22,7 +22,7 @@
 SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
 
-trap 'toggle compton on' EXIT
+toggle compton on
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50

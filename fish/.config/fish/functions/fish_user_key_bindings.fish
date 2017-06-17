@@ -2,4 +2,4 @@ function fish_user_key_bindings
   bind \cs 'prepend_command sudo'
 end
 
-fzf_key_bindings
+test -e /usr/bin/fzf ;and fzf_key_bindings

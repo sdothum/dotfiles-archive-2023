@@ -3,10 +3,28 @@
 
 # archlinux boot configuration
 # login as user alarm
-# execute archlinux-pi as root
+# execute archlinux-pi as root and mount usb on /media
+
+if [ $USER != root ] ;then
+  echo 'su - root'
+  exit
+fi
 
 source ./archlinux-functions
 user=shum
+
+wifi-menu
+
+
+heading "first up: sudo"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install sudo
+original /etc/sudoers
+sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
+    -e '/## Defaults specification/aDefaults insults' \
+    /etc/sudoers
+cat /etc/sudoers
+checkpoint
 
 
 heading 'configure boot parameters'
@@ -64,9 +82,25 @@ echo noarp >/etc/dhcpcd.conf
 checkpoint
 
 
+heading "add primary user $user"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+useradd -m -g users -G wheel,storage,power -s /bin/bash $user
+passwd $user
+
+sed -e '/alarm/s/1000:1000/1001:100/' \
+    -e "/$user/s/1001:100/1000:100/" \
+    /etc/passwd
+mv -v /home/$user /home/anonymous
+mv -v /home/alarm /home/$user
+mv -v /home/anonymous /home/alarm
+chown -R $user:users /home/$user
+chown -R alarm:users /home/alarm
+checkpoint
+
+
 heading "root setup"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# sudo ln -sfv $HOME/.config/xfce4 /root/.config/
+# ln -sfv $HOME/.config/xfce4 /root/.config/
 mkdir -pv /root/tmp
 mkdir -pv /root/log
 mv /root/.config /root/.config.original
@@ -77,24 +111,10 @@ original /root/.bashrc
 ln -sf /home/$user/.bashrc /root/
 
 
-heading "user $user setup"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-userdel -r alarm
-useradd -m -g users -G wheel,storage,power -s /bin/bash $user
-passwd $user
-pm_install sudo
-original /etc/sudoers
-sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
-    -e '/## Defaults specification/aDefaults insults' \
-    /etc/sudoers
-EDITOR=nano visudo
-# cat /etc/sudoers
-checkpoint
-
-
 heading 'install base-devel'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 pm_install base-devel
+pm_install dos2unix
 # pm_install expac
 pm_install git
 pm_install gnome-keyring
@@ -124,20 +144,27 @@ ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/sys
 
 heading 'sync home directory'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-mkdir -p /home/$user/Maildir
-chown $user:users /home/$user/Maildir
-mkdir -p /net
+# mkdir -p /home/$user/Maildir
+# chown $user:users /home/$user/Maildir
+# mkdir -p /net
 chown root:users /net
 if [ ! -d /home/$user/stow ] ;then
   pm_install rsync
   rsync -av /media/home/$user /home/
+  chown -R $user:users /home/$user
 fi
+
+
+title "installation errors:"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
 
 heading 'install bundle'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-
-annotate 'reboot and run "bundle_install bundle/pi_bundle"'
+ditto 'exit console (script)'
+ditto "login as user $user"
+ditto 'bundle_install pi_base'
 
 
 # vim: set ft=sh: #

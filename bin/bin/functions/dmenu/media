@@ -16,18 +16,17 @@ do
   trap 'restore root' EXIT
   mhistory media $media
 
-  # source instead of exec to allow trap
   case $media in
-    animation ) . dmenu movies animation ;;
-    anime     ) . dmenu series anime ;;
-    ebooks    ) . dmenu ebooks ;;
-    movies    ) . dmenu movies ;;
-    nzb       ) . toggle term 'NZB' nzbget --connect ;;
-    patricia  ) . patricia-video ;;
-    references) . dmenu references ;;
-    series    ) . dmenu series ;;
-    torrent   ) . toggle term 'Torrent' rtorrent ;;
-    netflix   ) . netflix ;;
+    animation ) dmenu movies animation ;;
+    anime     ) dmenu series anime ;;
+    ebooks    ) dmenu ebooks ;;
+    movies    ) dmenu movies ;;
+    nzb       ) toggle term 'NZB' nzbget --connect ;;
+    patricia  ) patricia-video ;;
+    references) dmenu references ;;
+    series    ) dmenu series ;;
+    torrent   ) toggle term 'Torrent' rtorrent ;;
+    netflix   ) netflix ;;
   esac
   break
 done

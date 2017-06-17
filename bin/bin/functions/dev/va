@@ -8,7 +8,8 @@
 
 # v by content
 files=$(al "$@")
-v -c "/\v$@" $files
+# regex passed as search command causes file name mangling
+echo "$@" | grep -q '^[[:alnum:]]*$' && v -c "/\v$@" $files || v $files
 count=$(echo "$files" | wc -l)
 [ $count -gt 1 ] && notify low "$count files to edit"
 

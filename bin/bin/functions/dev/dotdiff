@@ -7,26 +7,37 @@
 # ......................................................... Revision differences
 
 usage() {
-  echo "usage: $(basename $0) [-b] <package> [folders]"
+  echo "usage: $(basename $0) [checkout <commit>] [-b] <package> [folders]"
   exit 1
 }
 
 # diff current sources with dotfiles git repo
 dotfiles=/net/depot/dotfiles
 current=$HOME/stow
+[ -d $dotfiles ] || git clone git@github.com:sdothum/dotfiles.git $dotfiles
 
-if [ "$1" = '-b' ] ;then
-  B=$1
-  shift
-fi
+while :
+do
+  case $1 in
+    checkout) cd $dotfiles
+              git pull
+              git checkout $2
+              shift 2
+              nosync=true ;;
+
+    -b) B=$1
+        shift ;;
+
+    *) break ;;
+  esac
+done
+
 
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
 
-if [ -d $dotfiles ] ;then
+if [ -z $nosync ] ;then
   if-no "sync $dotfiles repo" || ( cd $dotfiles && git pull )
-else
-  git clone git@github.com:sdothum/dotfiles.git $dotfiles
 fi
 
 dirdiff $B $current/$1 $dotfiles/$1 "$2"

@@ -29,7 +29,7 @@ checkpoint() {
 }
 
 original() {
-  [ -f $@.original ] || sudo cp -v $@ $@.original
+  [ -f $@.original ] || cp -v $@ $@.original
 }
 
 connect() {

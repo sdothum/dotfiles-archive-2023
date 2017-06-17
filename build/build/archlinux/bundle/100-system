@@ -121,7 +121,7 @@ m iosevka\\ amphetype [server]
 # powertop                  [laptop]
 # "dead battery in macbook"
   tlp                       [laptop && ! gpu macbook]
-d \ xfce4-power-manager
+d * xfce4-power-manager
 
 
 = security
@@ -129,7 +129,7 @@ d \ xfce4-power-manager
   gksu
   gnome-keyring
 # keepassx
-d \ pass
+d * pass
   polkit-gnome
 # python-keyring
 # python-keyrings-alt
@@ -163,6 +163,7 @@ d \ pass
 # dcron
 # incron
 # lxinput-qt-git
+  logrotate
   ntp
 # pmount
   preload

@@ -1,0 +1,21 @@
+" add armv7h to arch in pkgbuild
+? preload
+pass 
+" add armv7h to arch in pkgbuild
+? cachefilesd
+" add armv7h to arch in pkgbuild
+? setroot
+? unclutter-xfixes-git
+" add armv7h to arch in pkgbuild
+? lemonbar-xft-git
+" add armv7h to arch in pkgbuild
+? alock-git
+" add armv7h to arch in pkgbuild
+? sutils-git
+? xtitle-git
+" add armv7h to arch in pkgbuild
+? vimb
+" add armv7h to arch in pkgbuild
+? amphetype-svn
+" drops internet connection (do last!)
+* connman
