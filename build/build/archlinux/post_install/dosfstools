@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... dosfstools
+
+# fix dirty bit on vfat boot partition
+cpu arm || exit
+sudo umount /boot
+sudo fsck.vfat -trawl /dev/mmcblk0p1
+
+# vim: set ft=sh: #

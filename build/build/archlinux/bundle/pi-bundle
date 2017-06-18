@@ -164,7 +164,7 @@ d ? alock-git
 
 = gtk themes and engines
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  adapta-gtk-theme-deb
+  adapta-gtk-theme
   gtk-engine-murrine
 # "direct rsync from /usr/share/icons to .local/share"
   paper-icon-theme
