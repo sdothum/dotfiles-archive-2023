@@ -50,6 +50,7 @@ ln -sf stow/nvpy/.nvpy.cfg                          .nvpy.cfg
 ln -sf stow/imap/.offlineimaprc                     .offlineimaprc
 ln -sf stow/firefox/.pentadactylrc                  .pentadactylrc
 ln -sf stow/pyradio/.pyradio                        .pyradio
+ln -sf stow/qmk_firmware/qmk_firmware               qmk_firmware
 ln -sf stow/remind/.reminders                       .reminders
 ln -sf stow/rtorrent/.rtorrent.rc                   .rtorrent.rc
 ln -sf stow/rubyroom/.rubyroomrc                    .rubyroomrc
