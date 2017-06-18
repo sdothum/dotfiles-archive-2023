@@ -15,8 +15,8 @@ if [ $1. = S. ] ;then
   shift
 fi
 
-# which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
-pacaur=yaourt
+which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
+[ $pacaur = pacaur ] && edit=-edit
 
 heading : $@
 
@@ -26,7 +26,7 @@ if ! pm_query $@ ;then
     [ $confirm ] && sudo pacman -S $@ || sudo pacman -S --noconfirm $@
   else
     echo "${_GREEN_}@ aur${nocolor_}"
-    [ $confirm ] && $pacaur -S $@ || $pacaur -S --noconfirm $@
+    [ $confirm ] && $pacaur -S $edit $@ || $pacaur -S --noconfirm $@
   fi
   post_install $@
 fi

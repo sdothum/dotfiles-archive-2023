@@ -8,7 +8,7 @@
 
 # Usage: v [-f | -c <command>]* [<file>]*
 
-ACTIVE="$HOME/stow/bin $HOME/stow/build $HOME/stow/herbstluftwm"
+ACTIVE="$HOME/stow/bin $HOME/stow/build $HOME/stow/herbstluftwm $HOME/stow/vimwiki"
 
 # va va voom
 SHELL=/usr/bin/dash
