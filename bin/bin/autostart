@@ -67,7 +67,7 @@ pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
 
 # ................................................................ Terminal apps
 
-[ -e $DEBUG ] && [ $TRACE ] && term 'Trace' tail -f /tmp/herbstluftwm.log
+[ -e $DEBUG ] && [ $TRACE ] && term 'Trace' tail -f $ROOT/herbstluftwm.log
 if [ -e $IRC ] ;then
   server && herbstclient focus_monitor 1 || switch tag $CHAT
   # wait for window visibility before switching monitors, for urxvt font handling

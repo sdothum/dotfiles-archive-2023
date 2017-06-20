@@ -9,15 +9,6 @@
 
       set nocompatible                      " disable vi-compatibility
 
-      augroup startup
-        autocmd!
-      augroup END
-
-   " .................................................................. Keyboard
-
-      " first, get <leader>
-      source ~/.vim/config/keyboard.vim
-
     " ................................................................... System
 
       set lazyredraw                        " don't redraw while executing macros
@@ -36,19 +27,5 @@
       set directory=~/tmp,/tmp              " keep swap files in one location
       set noswapfile                        " turn off swap files
       set nowritebackup
-
-  " Reload settings ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .............................................................. Config file
-
-      nmap <silent><leader>..         :autocmd!<CR>:source $MYVIMRC<CR>:call Refresh()<CR>
-      nmap <silent><leader><leader>.. :edit $MYVIMRC<CR>
-
-      " load .vimrc after save
-      " autocmd! startup BufWritePost $MYVIMRC nested
-      "        \ source $MYVIMRC | call Refresh()
-      " autocmd! startup BufWritePost * nested
-      "        \ if expand('%:e') =~ 'vim' | source $MYVIMRC | call Refresh() | endif
-      autocmd  startup BufWinEnter  *.vim set filetype=vim
 
 " startup.vim

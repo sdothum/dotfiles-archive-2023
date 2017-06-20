@@ -15,6 +15,18 @@
         autocmd!
       augroup END
 
+    " .............................................................. Config file
+
+      nmap <silent><leader>..         :autocmd!<CR>:source $MYVIMRC<CR>:call Refresh()<CR>
+      nmap <silent><leader><leader>.. :edit $MYVIMRC<CR>
+
+      " load .vimrc after save
+      " autocmd! startup BufWritePost $MYVIMRC nested
+      "        \ source $MYVIMRC | call Refresh()
+      " autocmd! startup BufWritePost * nested
+      "        \ if expand('%:e') =~ 'vim' | source $MYVIMRC | call Refresh() | endif
+      autocmd buffer BufWinEnter  *.vim set filetype=vim
+
     " .............................................................. Buffer open
 
       " check file sensitivity, even though may be sudoed
@@ -43,10 +55,10 @@
       nmap <silent><leader>qq   :silent qall!<CR>
 
       " pre-write formatting
-      autocmd buffer BufWritePre * call StripTrailingWhitespaces()
+      autocmd buffer BufWritePre * call StripTrailingWhitespaces() | call SyncNFS()
       autocmd buffer FocusLost   * call StripTrailingWhitespaces()
       " save on losing focus
-      autocmd buffer FocusLost   * silent! :wall
+      autocmd buffer FocusLost   * silent! :wall | call SyncNFS()
 
     " ......................................................... Buffer switching
 

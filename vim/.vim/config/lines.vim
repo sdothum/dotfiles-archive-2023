@@ -5,11 +5,6 @@
 
   " Comment line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................................... Setup
-
-      " macros assume the first word is the comment delimiter
-      let g:linedrawing = '▁─▔▂'            " declare multibytes, see status.vim
-
     " ................................................................ Underline
 
       " example: draw underline

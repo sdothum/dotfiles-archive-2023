@@ -83,4 +83,22 @@
         endif
       endfunction
 
+      " ..................................................... Sync arm nfs share
+
+      let s:stow    = $HOME . '/stow'
+      let s:backups = $HOME . '/stow/vim/.vim/backups '
+
+      function! SyncNFS()
+        if expand('%:p:h') =~ s:stow
+          execute ':silent !syncnfs ' . s:backups . expand('%:p:h')
+        else
+          " symbolic link to stow directory?
+          let path = substitute(system('lname ' . expand('%:p')), '\(.*\)[/][^/]*', '\1', '')
+          if path =~ '^\(../\)*stow/'
+            let path = $HOME . substitute(path, '^\(../\)*\(stow/.*\)', '/\2', '')
+            execute ':silent !syncnfs ' . s:backups . path
+          endif
+        endif
+      endfunction
+
 " functions.vim

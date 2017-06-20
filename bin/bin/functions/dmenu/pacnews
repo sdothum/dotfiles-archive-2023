@@ -29,7 +29,7 @@ do
     action='keep\ndelete\nuse'
     if ! sudo cmp $pacnew $copy ;then
       update=$(echo 'no\nyes' | rmenu "Update $file" -no-custom) || continue
-      if [ $update. = yes. ] ;then
+      if [ "$update" = yes ] ;then
         sudo cp $current /tmp
         sudo mv $pacnew $current
         continue

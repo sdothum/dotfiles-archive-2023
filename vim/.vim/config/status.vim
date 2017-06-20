@@ -7,6 +7,8 @@
 
     " .................................................................... Setup
 
+      let g:linedrawing = '▁─▔▂'            " declare multibytes, see lines.vim
+
       " regex list of multibyte characters used for line drawing
       " note: files using other multibyte characters will produce incorrect statistics
       let s:indicators = '▶■≈⌉'             " multibyte statusline indicators

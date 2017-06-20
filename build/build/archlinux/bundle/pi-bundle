@@ -137,6 +137,7 @@ d ? cachefilesd
   rsync
 # syncthing
 # syncthing-inotify
+d ? watchman
 
 
 = appearance

@@ -85,5 +85,6 @@ d * connman
 # syncthing-git
   syncthing-inotify
   vsftpd
+  watchman
 
 # vim: set ft=conf: #

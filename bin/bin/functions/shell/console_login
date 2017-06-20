@@ -29,7 +29,7 @@ if [ $USER != root ] ;then
     fi
 
     # pre-initialize arm fuzzy searches
-    nohup fcache + $HOME 2>/dev/null &
+    nohup fcache + $HOME 2>/dev/null
     if cpu arm ;then
       nohup arm_clock 2>/dev/null &
       # in case pi is offline during development on main server

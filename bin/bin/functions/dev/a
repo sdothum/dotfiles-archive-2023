@@ -6,7 +6,7 @@
 
 # ....................................................................... Search
 
-# ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$@" | filter
-rgw --color 'always' --regexp "\"$@\"" | filter
+# ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$@" | filter '.*:[0-9]+:'
+rgw --color 'always' --regexp "'$@'" | filter '.*:[0-9]*:'
 
 # vim: set ft=sh: #

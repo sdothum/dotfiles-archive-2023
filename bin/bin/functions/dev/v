@@ -8,8 +8,6 @@
 
 # Usage: v [-f | -c <command>]* [<file>]*
 
-ACTIVE="$HOME/stow/bin $HOME/stow/build $HOME/stow/herbstluftwm $HOME/stow/vimwiki"
-
 # va va voom
 SHELL=/usr/bin/dash
 hlwm && [ -e $DYNAMIC ] && focus=focus
@@ -24,7 +22,7 @@ do
     -c) cmd="-c '$2'"
         shift 2 ;;
 
-    *) break ;;
+     *) break ;;
   esac
 done
 
@@ -49,17 +47,12 @@ count=$(echo $file | wc -w)
 eval $focus $sudo vim $G $fg $cmd $file
 
 housekeeping() {
-  find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
+  pidof vim >/dev/null && exit
   find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
+  find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -fv {} \;
-  # synchronize raspberry pi (manually sync lesser active files)
-  if cpu arm ;then
-    rsync -q $ACTIVE $HOME/stownfs/
-  else
-    ping -c 1 -W 1 pi >/dev/null 2>&1 || exit
-    rsync -q $ACTIVE pi:$HOME/stow/
-  fi
+  syncnfs
 }
 
 (pwait "vim.*$G.*$fg.*$cmd.*$file" && housekeeping) &

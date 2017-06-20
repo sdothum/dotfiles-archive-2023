@@ -4,16 +4,18 @@
 # Dev
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Search
+# .................................................................. Search rule
 
-# Usage: .. | filter
+# Usage: .. | filter [<regex>]
 
+# filter out home directory chaff from glob lists (note possible leading ansi escape sequences)
 ansi='\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]'
+# directory exclusions
 dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
 conf='.config/(Abricotine|Clementine|cairo|chromium|google|qupzilla|sublime|umplayer|variety|vivaldi)'
 apps='\.config/(bookmarks|history)|\.history|network/adblock|PlayOnLinux|\.vimv|vimmappings'
 
-# filter out home directory chaff from glob lists (note possible leading ansi escape sequences)
-egrep -v "(($ansi)?|/)($dirs|$conf|$apps)"
+# <regex> restricts filter to filename portion of input list, see a and al
+egrep -v "\($ansi\)?.*\($dirs|$conf|$apps\)$@"
 
 # vim: set ft=sh: #

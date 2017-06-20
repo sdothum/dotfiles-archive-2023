@@ -86,7 +86,7 @@ tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*.css
 tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/particle*.css
 uzbl :: $HOME/.config/uzbl/config
 vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb/history $HOME/.config/vimb/scripts.js $HOME/.config/vimb/style.css
-vim :: $HOME/.vimrc $HOME/.vim/config/*.vim
+vim :: $HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim
 vim settings :: $HOME/.vimrc $(grep -L 'function!' $HOME/.vim/config/*.vim)
 vim functions :: $(grep -l 'function!' $HOME/.vim/config/*.vim)
 vim snippets :: $HOME/.vim/snippets/*

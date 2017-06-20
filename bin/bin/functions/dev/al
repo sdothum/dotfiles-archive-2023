@@ -6,7 +6,7 @@
 
 # ....................................................................... Search
 
-# ack --smart-case --nocolor "$@" | filter | cut -d: -f1 | uniq
-rgw --color 'never' --regexp "\"$@\"" | filter | cut -d: -f1 | uniq
+# ack --smart-case --nocolor "$@" | filter '.*:[0-9]+:' | cut -d: -f1 | uniq
+rgw --color 'never' --regexp "'$@'" | filter '.*:[0-9]+:' | cut -d: -f1 | uniq
 
 # vim: set ft=sh: #
