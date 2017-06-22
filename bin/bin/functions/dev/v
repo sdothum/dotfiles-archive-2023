@@ -46,6 +46,7 @@ count=$(echo $file | wc -w)
 [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
 eval $focus $sudo vim $G $fg $cmd $file
 
+# syncnfs requires source file paths be fully qualified ~/stow references
 housekeeping() {
   pidof vim >/dev/null && exit
   find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;

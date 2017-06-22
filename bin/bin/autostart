@@ -79,10 +79,7 @@ fi
 
 # .................................................................. Window apps
 
-if [ -e $THEDARNEDESTTHING ] ;then
-  thedarnedestthing
-  vimwiki
-fi
+[ -e $THEDARNEDESTTHING ] && thedarnedestthing
 switch tag $WEB
 [ -e $WEB ] && $BROWSER &
 

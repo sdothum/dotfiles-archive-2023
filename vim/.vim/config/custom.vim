@@ -255,49 +255,6 @@
 
       autocmd plugin BufEnter * call LightLine()
 
-      function! Atom()
-        return synIDattr(synID(line('.'), col('.'), 1), 'name')
-      endfunction
-
-      function! TopBottom()
-        if line('w0') == 1
-          return line('w$') == line('$') ? '' : '▼'
-        else
-          return line('w$') == line('$') ? '▲' : ''
-        endif
-      endfunction
-
-      function! RootPath()
-        if expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
-          " return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
-          let root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
-          if root == ''
-            return root
-          else
-            if root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
-              return root
-            else
-              let root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
-              let root = substitute(root, $HOME, '~', '')
-              let base = substitute(root, '.*[/]\([^/]*\)$', '\1', '')
-              let root = substitute(root, '[^/]*$', '', '')
-              let root = substitute(root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
-              return root . base
-            endif
-          endif
-        else
-          return ''
-        endif
-      endfunction
-
-      function! BasePath()
-        if expand('%:p') =~ '.*[/][^/]*[/][^/]*'
-          return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*', '\1', '')
-        else
-          return ''
-        endif
-      endfunction
-
     " ................................................................ Limelight
 
       let g:limelight_default_coefficient = 0.8

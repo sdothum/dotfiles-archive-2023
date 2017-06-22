@@ -36,19 +36,19 @@ if [ "$1" = qwerty ] || [ "$1" = colemak ] ;then
 fi
 
 # compile time macro sting
-grep -q COMPILE_STRING $KEYMAP/config.h || sed -i '$a#define COMPILE_STRING' $KEYMAP/config.h
+grep -q PRIVATE_STRING $KEYMAP/config.h || sed -i '$a#define PRIVATE_STRING' $KEYMAP/config.h
 case $1 in
-  '' | dfu) sed -i 's|.*COMPILE_STRING|// #define COMPILE_STRING|' $KEYMAP/config.h ;;
+  '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $KEYMAP/config.h ;;
 
-  *) sed -i 's/.*COMPILE_STRING/#define COMPILE_STRING/' $KEYMAP/config.h
-     echo "SEND_STRING(\"$1\");" >$KEYMAP/compile_string.h
+  *) trap "rm $KEYMAP/private_string.h" EXIT
+     sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $KEYMAP/config.h
+     echo "SEND_STRING(\"$1\");" >$KEYMAP/private_string.h
      shift ;;
 esac
 
 cd $PLANCK
 sudo make clean >/dev/null
-sudo make KEYMAP=$keymap $1
+sudo make  KEYMAP=$keymap $1
 sudo chown -R $USER:users $QMK
-rm -f $KEYMAP/compile_string.h
 
 # vim: set ft=sh: #

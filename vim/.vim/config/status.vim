@@ -229,6 +229,7 @@
           call CodeView()                   " refresh margin
           let s:code = (s:code == 0 ? 1 : 0)
         endif
+        call Refresh()                      " if margins not properly set, do it now
         call Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
       endfunction
 

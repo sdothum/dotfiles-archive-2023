@@ -16,6 +16,35 @@
         endtry
       endfunction
 
+    " ............................................................. Numeric sort
+
+      " sort compare by numeric (not string) value
+      function! s:CompareNumber(i1, i2)
+        return a:i1 - a:i2
+      endfunction
+
+      function! SortNumbers(nums)
+        return sort(a:nums, '<SID>CompareNumber')
+      endfunction
+
+    " ......................................................... Strip whitespace
+
+      " see https://dougblack.io/words/a-good-vimrc.html
+      " strips trailing whitespace from all lines
+      function! StripTrailingWhitespaces()
+        if &modifiable == 1 && ! Markdown()
+          " save last search & cursor position
+          let _s = @/
+          let l  = line(".")
+          let c  = col(".")
+          %s/\s\+$//e
+          let @/ = _s
+          call cursor(l, c)
+        endif
+      endfunction
+
+  " Files ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
     " ......................................................... Prose filestypes
 
       " distraction free filetyes
@@ -26,6 +55,18 @@
       function! Markdown()
         return &filetype =~ 'vimwiki\|markdown'
       endfunction
+
+      " ..................................................... Sync arm nfs share
+
+      " arm device mirrors ~/stow directory with nfs share:/stow for ~/stow performance
+      function! SyncNFS()
+        if &modified
+          " vim backups added by syncnfs
+          execute ':silent !syncnfs ' . expand('%:p')
+        endif
+      endfunction
+
+    " Status line ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................... Modified notification
 
@@ -56,48 +97,53 @@
         return '-'
       endfunction
 
-    " ............................................................. Numeric sort
+    " ..................................................................... Atom
 
-      " sort compare by numeric (not string) value
-      function! s:CompareNumber(i1, i2)
-        return a:i1 - a:i2
+      " attribute at cursor position
+      function! Atom()
+        return synIDattr(synID(line('.'), col('.'), 1), 'name')
       endfunction
 
-      function! SortNumbers(nums)
-        return sort(a:nums, '<SID>CompareNumber')
-      endfunction
-
-    " ......................................................... Strip whitespace
-
-      " see https://dougblack.io/words/a-good-vimrc.html
-      " strips trailing whitespace from all lines
-      function! StripTrailingWhitespaces()
-        if &modifiable == 1 && ! Markdown()
-          " save last search & cursor position
-          let _s = @/
-          let l  = line(".")
-          let c  = col(".")
-          %s/\s\+$//e
-          let @/ = _s
-          call cursor(l, c)
+      function! TopBottom()
+        if line('w0') == 1
+          return line('w$') == line('$') ? '' : '▼'
+        else
+          return line('w$') == line('$') ? '▲' : ''
         endif
       endfunction
 
-      " ..................................................... Sync arm nfs share
+    " ................................................................. Pathname
 
-      let s:stow    = $HOME . '/stow'
-      let s:backups = $HOME . '/stow/vim/.vim/backups '
-
-      function! SyncNFS()
-        if expand('%:p:h') =~ s:stow
-          execute ':silent !syncnfs ' . s:backups . expand('%:p:h')
-        else
-          " symbolic link to stow directory?
-          let path = substitute(system('lname ' . expand('%:p')), '\(.*\)[/][^/]*', '\1', '')
-          if path =~ '^\(../\)*stow/'
-            let path = $HOME . substitute(path, '^\(../\)*\(stow/.*\)', '/\2', '')
-            execute ':silent !syncnfs ' . s:backups . path
+      " abbreviated path spec
+      function! RootPath()
+        if expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
+          " return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
+          let root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
+          if root == ''
+            return root
+          else
+            if root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
+              return root
+            else
+              let root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
+              let root = substitute(root, $HOME, '~', '')
+              let base = substitute(root, '.*[/]\([^/]*\)$', '\1', '')
+              let root = substitute(root, '[^/]*$', '', '')
+              let root = substitute(root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
+              return root . base
+            endif
           endif
+        else
+          return ''
+        endif
+      endfunction
+
+      " current directory
+      function! BasePath()
+        if expand('%:p') =~ '.*[/][^/]*[/][^/]*'
+          return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*', '\1', '')
+        else
+          return ''
         endif
       endfunction
 

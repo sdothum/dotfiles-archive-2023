@@ -25,7 +25,7 @@ configs() {
        $([ -d /var/adsuck ] && sudo find /var/adsuck -type f | sed 's/ /:/g') \
        $(sudo find /etc -type f | egrep -v 'certs|examples|fonts|ppd|_key$|\.(0|1|aspx|browser|colors|crt|css|dat|db|desktop|ext|gpg|ja|js|key|map|menu|original|pacnew|pem|properties|pub|png|service|socket|tex|xml|xsl)$') \
        $(sudo find /opt -type f -regextype posix-extended -regex "$include" | egrep -v '\.git' | sed 's/ /:/g') \
-       $(sudo find $HOME -path $HOME/Maildir -prune -o -type f -regextype posix-extended -regex "$include" 2>/dev/null | egrep -v "$exclude" | sed 's/ /:/g') |
+       $(sudo find $HOME ! -path "$HOME/Maildir/*" ! -path "$HOME/stownfs/*" -type f -regextype posix-extended -regex "$include" 2>/dev/null | egrep -v "$exclude" | sed 's/ /:/g') |
        tr ' ' '\n' |
        sed -re 's/:/ /g' \
            -e "s|(.*)/([^/]*)$|\2^$SEP \1|" |

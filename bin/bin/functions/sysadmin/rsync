@@ -26,7 +26,7 @@ exclude_http_local="--exclude=thedarnedestthing.db --exclude=log"
 exclude_virtualbox="--exclude='VirtualBox VMs'"
 
 rsync_home() {
-  rsync --delete-during --delete-excluded \
+  rsync --delete --delete-excluded \
         --exclude '.adblock*' \
         --exclude '.adobe' \
         --exclude '.atom' \
@@ -107,23 +107,23 @@ rsync_home() {
 
 case $1 in
   '' ) usage ;;
-  arm) cpu arm && rsync $HOME/stownfs/* $HOME/stow/ ;;
+  arm) cpu arm && rsync --delete $HOME/stownfs/* $HOME/stow/ ;;
 
   backup) if server ;then
             if if-yes 'backup /net to /backup' ;then
-              rsync --delete-during /net/* /backup/
+              rsync --delete /net/* /backup/
             fi
           fi ;;
 
   home) if if-yes "backup $HOME to /net/archive" ;then
           mkdir -pv /net/archive/home || exit 1
-          rsync --delete-during $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
+          rsync --delete $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
                 $HOME /net/archive/home/
         fi ;;
 
   depot) if server ;then
            if-yes "backup depot to $laptop" &&
-             rsync --delete-during /net/depot $laptop:/net/
+             rsync --delete /net/depot $laptop:/net/
          else
            if-no 'update depot to luna' ||
              rsync /net/depot luna:/net/
@@ -136,8 +136,8 @@ case $1 in
                sudo mkdir /net/media
                sudo chown -c $USER:users /net/media
              fi
-             rsync --delete-during $USER@luna:.mpd $HOME/
-             rsync --delete-during luna:/net/media/music /net/media/
+             rsync --delete $USER@luna:.mpd $HOME/
+             rsync --delete luna:/net/media/music /net/media/
              mpd 2>/dev/null &
            fi
          else
@@ -145,7 +145,7 @@ case $1 in
          fi ;;
 
   pi) if server; then
-        # rsync --delete-during --exclude=.deprecated --exclude=.hg \
+        # rsync --delete --exclude=.deprecated --exclude=.hg \
         #       $HOME/stow/bash/.bash_logout \
         #       $HOME/stow/bash/.bash_profile \
         #       $HOME/stow/bash/.bashrc \
@@ -158,7 +158,7 @@ case $1 in
         #       $HOME/stow/X11/.xinitrc \
         #       $HOME/stow/X11/.Xresources \
         #       pi:$HOME/
-        # rsync --delete-during --exclude=.deprecated --exclude=.hg \
+        # rsync --delete --exclude=.deprecated --exclude=.hg \
         #       $HOME/stow/alot/.config/alot \
         #       $HOME/stow/amphetype/.config/Amphetype \
         #       $HOME/stow/dunst/.config/dunst \
@@ -168,21 +168,21 @@ case $1 in
         #       $HOME/stow/qutebrowser/.config/qutebrowser \
         #       $HOME/stow/vimb/.config/vimb \
         #       pi:$HOME/.config/
-        # rsync --delete-during --exclude=.deprecated --exclude=.hg --exclude=backups \
+        # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=backups \
         #       $HOME/stow/vim/.vim \
         #       $HOME/stow/vim/.vimrc \
         #       pi:$HOME/
-        # rsync --delete-during --exclude=.deprecated \
+        # rsync --delete --exclude=.deprecated \
         #       $HOME/stow/bin/.local/bin \
         #       pi:$HOME/.local/
-        rsync --delete-during \
+        rsync --delete \
               /usr/share/icons/Paper \
               pi:$HOME/.local/share/icons/
-        # rsync --delete-during --exclude=.deprecated --exclude=.hg --exclude=makepkg \
+        # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=makepkg \
         #       $HOME/stow/build/build/archlinux \
         #       pi:$HOME/build/
         # ssh pi 'mkdir -p build/root/etc'
-        # rsync --delete-during --exclude=.deprecated --exclude=.hg \
+        # rsync --delete --exclude=.deprecated --exclude=.hg \
         #       $HOME/stow/build/build/root/etc/profile.d \
         #       $HOME/stow/build/build/root/etc/hosts \
         #       $HOME/stow/build/build/root/etc/X11 \
@@ -192,14 +192,14 @@ case $1 in
   server) if server ;then
             if if-yes 'backup media server databases to /net/archive' ;then
               mkdir -pv /net/archive/var/lib || exit 1
-              sudo rsync -av --delete-during /var/lib/sonarr /net/archive/var/lib/
+              sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
               [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
                 mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support || exit 1
-              sudo rsync -av --delete-during \
+              sudo rsync -av --delete \
                          /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
                          /net/archive/opt/plexmediaserver/Library/Application\ Support/
               mkdir -p /net/archive/srv/lib || exit 1
-              sudo rsync -av --delete-during /srv/lib/postgres /net/archive/srv/lib/
+              sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
               mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
               sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
             fi
@@ -208,15 +208,15 @@ case $1 in
   SERVER) if server ;then
             if ! if-no 'restore media server databases from /net/archive' ;then
               sudo systemctl stop sonarr
-              sudo rsync -av --delete-during /net/archive/var/lib/sonarr /var/lib/
+              sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
               sudo systemctl start sonarr
               sudo systemctl stop plexmediaserver
-              sudo rsync -av --delete-during \
+              sudo rsync -av --delete \
                          /net/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
                          /opt/plexmediaserver/Library/Application\ Support/
               sudo systemctl start plexmediaserver
               sudo systemctl stop postgres
-              sudo rsync -av --delete-during /net/archive/srv/lib/postgres /srv/lib/
+              sudo rsync -av --delete /net/archive/srv/lib/postgres /srv/lib/
               sudo systemctl start postgres
               sudo systemctl stop tt-rss
               sudo rsync -av /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
@@ -227,15 +227,15 @@ case $1 in
   stow) if server ;then
           sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
           if-yes "backup stow to $laptop" &&
-            rsync --delete-during --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
+            rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
           if-yes "backup stow to $netbook" &&
-            rsync --delete-during --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
+            rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
         else
           if-no 'update stow to luna' ||
             rsync --exclude=.SyncArchive $HOME/stow $USER@luna:$HOME/
         fi ;;
 
-  stownfs) cpu arm && rsync $HOME/stow/* $HOME/stownfs/ ;;
+  stownfs) cpu arm && rsync --delete $HOME/stow/* $HOME/stownfs/ ;;
 
   ttrss) if server ;then
            rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
@@ -245,8 +245,8 @@ case $1 in
 
   usb) if [ -d /run/media/$USER/$(hostname)/home ] ;then
          rsync_home /run/media/$USER/$(hostname)/home/
-         rsync --delete-during $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
-         rsync --delete-during $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
+         rsync --delete $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
+         rsync --delete $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
          mkdir -p  /run/media/$USER/$(hostname)/home/$USER.cache
          rsync $HOME/.cache/fcache:* /run/media/$USER/$(hostname)/home/$USER/.cache/
          sync
@@ -255,8 +255,8 @@ case $1 in
          rsync $HOME/.password-store /media/home/$USER/
        elif [ -d /run/media/$USER/My\ Passport ] ;then
          mkdir -pv /run/media/$USER/My\ Passport/media || exit 1
-         rsync --delete-during /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
-         rsync --delete-during /net/photos /run/media/$USER/My\ Passport/
+         rsync --delete /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
+         rsync --delete /net/photos /run/media/$USER/My\ Passport/
          sync
        elif [ -d /run/media/$USER/$2/home ] ;then
          rsync_home /run/media/$USER/$2/home/
@@ -268,10 +268,10 @@ case $1 in
        # trace 'saving => stow:/application'
        # rsync -rltuv /srv/http/thedarnedestthing.com/application $HOME/thedarnedestthing.com/
        trace 'updating => thedarnedestthing.com:/application'
-       rsync -L --delete-during --exclude=vimwiki $exclude_http_local \
+       rsync -L --delete --exclude=vimwiki $exclude_http_local \
              /srv/http/thedarnedestthing.com/application \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/
-       rsync --delete-during \
+       rsync --delete \
              /home/$USER/stow/thedarnedestthing/thedarnedestthing.com/application/public/images \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
        rsync /srv/http/thedarnedestthing.com/application/thedarnedestthing.db \
@@ -279,7 +279,7 @@ case $1 in
        rsync /srv/http/thedarnedestthing.com/application/log/restart.txt \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/log/
        trace 'updating => thedarnedestthing.com:/vimwiki'
-       rsync -L --delete-during \
+       rsync -L --delete \
              $HOME/vimwiki \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/ ;;
 
