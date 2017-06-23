@@ -134,6 +134,11 @@
       nnoremap ,,               ;
       vnoremap ,,               ;
 
+    " .................................................................. Replace
+
+      nmap %                    :%s
+      vmap %                    :%s
+
     " ........................................................... Tab completion
 
       set wildignore=.cache/**,cache/**     " stuff to ignore when tab completing

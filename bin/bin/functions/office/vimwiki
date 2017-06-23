@@ -15,6 +15,6 @@ switch tag $WIKI
 # vim config rule for vimwiki requires being in home directory
 cd $HOME
 thread=${1:-colophon}
-focus gvim --role=thedarnedestthing $HOME/vimwiki/$thread/index.wiki
+focus v --role thedarnedestthing $HOME/vimwiki/$thread/index.wiki
 
 #  vim: set ft=sh: #

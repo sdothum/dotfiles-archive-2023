@@ -22,6 +22,9 @@ do
     -c) cmd="-c '$2'"
         shift 2 ;;
 
+    --role) role="$1 $2"
+            shift 2 ;;
+
      *) break ;;
   esac
 done
@@ -44,7 +47,7 @@ fi
 [ $focus ] && herbstclient set_layout max
 count=$(echo $file | wc -w)
 [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
-eval $focus $sudo vim $G $fg $cmd $file
+eval $focus $sudo vim $G $role $fg $cmd $file
 
 # syncnfs requires source file paths be fully qualified ~/stow references
 housekeeping() {
