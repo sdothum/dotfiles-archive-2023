@@ -77,7 +77,7 @@ if [ $(basename $0) = dmenu ] ;then
   msg=$1
   shift
   if [ -e ${0%/dmenu}/functions/dmenu/$msg ] ;then
-    [ $(pgrep -cf "dmenu $msg") -gt 1 ] && exit
+    [ $(pgrep -cf "dmenu $msg") -gt 1 ] && { notify critical "dmenu $msg" 'Already running..' && exit; }
     . ${0%/dmenu}/functions/dmenu/$msg $@
   else
     usage $0

@@ -21,11 +21,11 @@ do
     anime     ) dmenu series anime ;;
     ebooks    ) dmenu ebooks ;;
     movies    ) dmenu movies ;;
-    nzb       ) toggle term 'NZB' WAIT nzbget --connect ;;
+    nzb       ) toggle term 'NZB' nzbget --connect ;;
     patricia  ) patricia-video ;;
     references) dmenu references ;;
     series    ) dmenu series ;;
-    torrent   ) toggle term 'Torrent' WAIT rtorrent ;;
+    torrent   ) toggle term 'Torrent' rtorrent ;;
     netflix   ) netflix ;;
   esac
   break
