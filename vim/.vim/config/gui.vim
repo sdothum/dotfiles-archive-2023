@@ -138,9 +138,9 @@
 
     " ............................................................. Line numbers
 
-      set number                            " line numbers are good
-      set numberwidth=10
       set number
+      set numberwidth=10
+      set relativenumber
 
       " toggle relative number, line number and no numbering
       function! ToggleNumber()
@@ -159,8 +159,8 @@
       nmap <silent>#               :call ToggleNumber()<CR>
 
       " toggle relative line numbers
-      autocmd gui InsertEnter * set relativenumber
-      autocmd gui InsertLeave * set norelativenumber
+      " autocmd gui InsertEnter * set norelativenumber
+      " autocmd gui InsertLeave * set relativenumber
 
     " ................................................... Status / command lines
 

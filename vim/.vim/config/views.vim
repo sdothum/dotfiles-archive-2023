@@ -7,8 +7,7 @@
 
     " .................................................................... Setup
 
-      " mixed view (filetype) handling
-      let s:view      = 0
+      let s:view       = 0                  " mixed view (filetype) handling
 
       augroup view
         autocmd!

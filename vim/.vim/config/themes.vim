@@ -7,7 +7,9 @@
 
     " .................................................................... Setup
 
-      " solarized colour pallette (see vim-solarized8)
+      let s:cursorline = 0                  " visible (0) off (1) on
+
+      " solarized colour palette (see vim-solarized8)
       let s:rgb_0    = '#073642'            " base02 dark highlight
       " let s:rgb_1  = '#dc322f'            " red
       " let s:rgb_2  = '#719e07'            " green
@@ -69,6 +71,9 @@
           let g:dfm_bg_line     = g:dfm_bg_line_light
           let g:dfm_fg_line     = g:dfm_fg_line_light
           let g:dfm_status      = g:dfm_status_light
+          let g:dfm_cursorline  = s:cursorline == 0 ? g:dfm_bg_light : g:dfm_bg_line_light
+          let g:dfm_linenr_ins  = g:dfm_bg_light
+          let g:dfm_linenr_cmd  = Prose() ? g:dfm_bg_light : g:dfm_fg_line_light
         else
           let g:dfm_fg          = g:dfm_fg_dark
           let g:dfm_proof       = g:dfm_proof_dark
@@ -78,8 +83,14 @@
           let g:dfm_bg_line     = g:dfm_bg_line_dark
           let g:dfm_fg_line     = g:dfm_fg_line_dark
           let g:dfm_status      = g:dfm_status_dark
+          let g:dfm_cursorline  = s:cursorline == 0 ? g:dfm_bg_dark : g:dfm_bg_line_dark
+          let g:dfm_linenr_ins  = g:dfm_bg_dark
+          let g:dfm_linenr_cmd  = Prose() ? g:dfm_bg_dark : g:dfm_fg_line_dark
         endif
       endfunction
+
+      autocmd theme InsertEnter * execute 'highlight LineNr guifg=' . g:dfm_linenr_ins
+      autocmd theme InsertLeave * execute 'highlight LineNr guifg=' . g:dfm_linenr_cmd
 
     " ................................................................... Screen
 
@@ -106,6 +117,7 @@
           execute 'highlight IndentGuidesOdd     guibg=' . g:dfm_bg_dark
           execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
         endif
+        execute 'highlight CursorLine gui=none   guibg=' . g:dfm_cursorline
         call Cursor()
       endfunction
 

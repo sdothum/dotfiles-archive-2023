@@ -16,7 +16,7 @@ CACHEDIR=${CACHEDIR:-$HOME/.cache}
 watch=$CACHEDIR/syncnfs
 undo=$HOME/stow/vim/.vim/backups
 history=$HOME/stow/bin/bin/functions/dmenu/.history
-remote=pi:
+arm=pi:
 log=/tmp/syncnfs.log
 
 [ -e $watch ] || touch $watch
@@ -55,7 +55,7 @@ if [ $1 ] ;then
   register $history
 else
   if [ -s $watch ] ;then
-    cpu arm && nfs=nfs || arm=$remote
+    cpu arm && nfs=nfs || remote=$arm
     files=$(egrep -v '(/\.vim/backups|/dmenu/.history)$' $watch | sed "s|$HOME/stow/||")
     trace "Syncing ${remote}stow$nfs\n${_YELLOW_}$files" >>$log
     notify "Syncing ${remote}stow$nfs" "$(echo "$files")"
