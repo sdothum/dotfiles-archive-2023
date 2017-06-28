@@ -114,21 +114,15 @@
       set showmatch                         " set show matching parenthesis
       set smartcase                         " ignore case if search pattern is all lowercase
 
-      " use extended regex statements for searches (unfortunately, must set
-      " manually for search and replace)
-      nmap --                   /\v
-      vmap --                   /\v
-      nmap __                   /\C
-      vmap __                   /\C
-      " most often use s, over s/ for searching..
-      cmap --                   \v
-      cmap __                   \C
-      " clear search highlight
-      nmap <silent>\            :noh<CR>
-
       " tab to bracket pairs
       nmap <Tab>                %
       vmap <Tab>                %
+      " while at it.. use extended regex statements for searches!
+      cmap %%                   \v
+      cmap ^^                   \C
+
+      " clear search highlight
+      nmap <silent>\            :noh<CR>
 
       " repeat latest f,t,F,T see modal searching remaps above
       nnoremap ,,               ;
@@ -137,7 +131,7 @@
     " .................................................................. Replace
 
       nmap %                    :%s
-      vmap %                    :%s
+      vmap %                    :s
 
     " ........................................................... Tab completion
 

@@ -27,6 +27,7 @@ export NCURSES=$SESSION/ncurses
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
 
+export BLACKBOARD=$HLWM:blackboard
 export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
 export COMPTON=$HLWM:compton

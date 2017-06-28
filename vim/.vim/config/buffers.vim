@@ -52,6 +52,7 @@
       nmap <leader>W            :silent write !sudo tee % >/dev/null<CR>
       " (write and) close buffers
       nmap <silent><leader>zz   :silent wqall!<CR>
+      nmap <silent><leader>xx   :silent wqall!<CR>
       nmap <silent><leader>qq   :silent qall!<CR>
 
       " pre-write formatting

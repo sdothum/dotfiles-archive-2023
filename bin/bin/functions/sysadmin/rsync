@@ -106,8 +106,11 @@ rsync_home() {
 }
 
 case $1 in
-  '' ) usage ;;
-  arm) cpu arm && rsync --delete $HOME/stownfs/* $HOME/stow/ ;;
+  '') usage ;;
+
+  arm) cpu arm || exit
+       rsync --delete $HOME/stownfs/bin $HOME/stownfs/herbstluftwm $HOME/stow/
+       rsync --delete $HOME/stownfs/ $HOME/stow ;;
 
   backup) if server ;then
             if if-yes 'backup /net to /backup' ;then

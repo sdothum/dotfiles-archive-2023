@@ -6,7 +6,9 @@
 
 # .............................................................. Root background
 
-# see draw root
+# see play
+rm $BLACKBOARD
+
 background=$(cat $SETROOT 2>/dev/null)
 case $background in
   blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;

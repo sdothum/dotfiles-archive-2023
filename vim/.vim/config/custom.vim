@@ -320,8 +320,8 @@
           \, 'text'     : 'mail'
           \}
 
-      imap <C-e>                              <Plug>(neosnippet_expand_or_jump)
-      smap <C-e>                              <Plug>(neosnippet_jump)
+      imap <C-x>                              <Plug>(neosnippet_expand_or_jump)
+      smap <C-x>                              <Plug>(neosnippet_jump)
 
     " ............................................................ Nerdcommenter
 
@@ -359,11 +359,10 @@
 
     " ...................................................... Rainbow parentheses
 
-      autocmd plugin Syntax   *            RainbowParenthesesLoadBraces
-      autocmd plugin Syntax   *            RainbowParenthesesLoadChevrons
-      autocmd plugin Syntax   *            RainbowParenthesesLoadRound
-      autocmd plugin Syntax   *            RainbowParenthesesLoadSquare
-      autocmd plugin VimEnter *            RainbowParenthesesToggle
+      " let g:rainbow#max_level = 16
+      " let g:rainbow#pairs     = [['(', ')'], ['[', ']'], ['{', '}']]
+
+      " RainbowParentheses                    " activate
 
     " ................................................................ Signature
 
@@ -397,6 +396,12 @@
       nmap <leader>'                          '.
 
     " .......................................................... Simple-complete
+
+      let g:vsc_tab_complete               = 1        " enable/disable tab key completion mapping
+      let g:vsc_type_complete              = 1        " enable/disable as-you-type completion
+      let g:vsc_completion_command         = "\<C-P>" " completion command used
+      let g:vsc_reverse_completion_command = "\<C-N>" " reverse completion command used
+      let g:vsc_type_complete_length       = 3        " trigger on number of characters
 
       set complete-=t
       set complete-=i

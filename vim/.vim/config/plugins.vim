@@ -36,10 +36,11 @@
     " ................................................................... Keymap
 
       " Plug 'kana/vim-arpeggio'                " key chords
+      Plug 'tpope/vim-rsi'                      " readline keybindings
 
     " ............................................................. Highlighting
 
-      Plug 'kien/rainbow_parentheses.vim'       " parentheses highlighting
+      " Plug 'junegunn/rainbow_parentheses.vim' " parentheses highlighting
       Plug 'nathanaelkane/vim-indent-guides'    " colourized indent columns
       Plug 'sheerun/vim-polyglot'               " multilingual highlighting
 
@@ -90,7 +91,8 @@
 
       " Plug 'mattn/emmet-vim'                  " html
       Plug 'jiangmiao/auto-pairs'               " insert/delete pairs
-      Plug 'Shougo/neosnippet'                  " snippets
+      Plug 'Shougo/neocomplete.vim'             " required by snippets
+      Plug 'Shougo/neosnippet.vim'              " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling
       Plug 'maxboisvert/vim-simple-complete'    " enter completion

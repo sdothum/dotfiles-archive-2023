@@ -23,6 +23,8 @@ if ! if-no 'sync qmk_firmware repo' ;then
   original -f -q $QMK
   cd $QMK
   git pull
+  rm -rf $QMK/lib
+  find $QMK/keyboards -maxdepth 1 ! -name planck -exec rm -r {} \;
 fi
 
 # default keymap

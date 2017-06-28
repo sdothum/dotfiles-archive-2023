@@ -9,10 +9,12 @@
 
 # Usage: blackboard [<hexcolor>]
 
+[ -e $BLACKBOARD ] && exit
 draw root blank ${1:-000000}
 toggle compton off
 
-# present conky clock on secondary monitor
+# present conky clock on secondary monitor (draw root refresh clears clock)
 server && CONKYRC=$CONKY_Q2 conky clock on
+touch $BLACKBOARD
 
 # vim: set ft=sh: #
