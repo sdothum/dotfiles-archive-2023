@@ -149,7 +149,7 @@ button.expandPrompt {
 }
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
-#main:after {
+#ttrssMain #main:after {
   content:        '●gravit○n' !important;
   font:           22px Helvetica, Arial, sans-serif !important;
   color:          #871c1c !important;

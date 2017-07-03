@@ -60,6 +60,7 @@
       " Plug 'ludovicchabant/vim-lawrencium'    " mercurial wrapper
 
     " ................................................................ Hypertext
+
       " Plug 'cwoac/nvim'                       " notational velocity
       " Plug 'greyblake/vim-preview'            " markdown
       Plug 'vimwiki/vimwiki'                    " markdown wiki

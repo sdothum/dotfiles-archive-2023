@@ -7,8 +7,8 @@
 # ........................................................ Applications keybinds
 
 hc keybind Super-Return             spawn toggle scratchpad
-hc keybind Super-Shift-Return       spawn term 'Terminal' FORTUNE VERTICAL
-hc keybind Super-Control-Return     spawn term 'Terminal' FORTUNE STACK VERTICAL
+hc keybind Super-Shift-Return       spawn term 'Terminal' FORTUNE VERTICAL tmux 'new-session -n ""'
+hc keybind Super-Control-Return     spawn term 'Terminal' FORTUNE STACK VERTICAL tmux 'new-session -n ""'
 hc keybind Super-space              spawn dmenu run
 hc keybind Super-Shift-space        spawn dmenu manpages
 hc keybind Super-Control-space      spawn dmenu systemd

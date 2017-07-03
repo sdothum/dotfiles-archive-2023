@@ -22,7 +22,7 @@
       set visualbell                        " no sounds
 
       " recover last error message
-      nmap <leader>e               :echo errmsg<CR>
+      nmap <leader>e :echo errmsg<CR>
 
       " clear messages after awhile to keep screen clean and distraction free!
       autocmd gui CursorHold * echo
@@ -50,17 +50,17 @@
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1
       " easier horizontal scrolling
-      noremap <C-Left>             zL
-      noremap <C-Right>            zH
+      noremap <C-Left>       zL
+      noremap <C-Right>      zH
 
       " space now commandeered as leader by spacemacs wannabe :-)
       " " manual jump scrolling
       " if $HOST == 'monad'
-      "   nnoremap <Space>         10jzz
-      "   nnoremap <S-Space>       10kzz
+      "   nnoremap <Space>   10jzz
+      "   nnoremap <S-Space> 10kzz
       " else
-      "   nnoremap <Space>         30jzz
-      "   nnoremap <S-Space>       30kzz
+      "   nnoremap <Space>   30jzz
+      "   nnoremap <S-Space> 30kzz
       " endif
 
   " Terminal ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -103,8 +103,8 @@
       endfunction
 
       " Toggle Menu and Toolbar
-      nnoremap <silent><F12>       :call ToggleGui()<CR>
-      inoremap <silent><F12>       <C-o>:call ToggleGui()<CR>
+      nnoremap <silent><F12> :call ToggleGui()<CR>
+      inoremap <silent><F12> <C-o>:call ToggleGui()<CR>
 
   " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -133,8 +133,8 @@
         call IndentTheme()
       endfunction
 
-      nmap <silent><Bar>           :call ToggleColumn()<CR>
-      nmap <silent><leader><Bar>   :IndentGuidesToggle<CR>:call IndentTheme()<CR>
+      nmap <silent><Bar>         :call ToggleColumn()<CR>
+      nmap <silent><leader><Bar> :IndentGuidesToggle<CR>:call IndentTheme()<CR>
 
     " ............................................................. Line numbers
 
@@ -156,7 +156,7 @@
         endif
       endfunction
 
-      nmap <silent>#               :call ToggleNumber()<CR>
+      nmap <silent># :call ToggleNumber()<CR>
 
       " toggle relative line numbers
       " autocmd gui InsertEnter * set norelativenumber

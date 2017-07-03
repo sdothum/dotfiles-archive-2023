@@ -7,7 +7,7 @@
 
     " .................................................................... Setup
 
-      nmap <leader>f             :set filetype=
+      nmap <leader>f :set filetype=
 
       augroup filetype
         autocmd!

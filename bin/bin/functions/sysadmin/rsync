@@ -238,7 +238,7 @@ case $1 in
             rsync --exclude=.SyncArchive $HOME/stow $USER@luna:$HOME/
         fi ;;
 
-  stownfs) cpu arm && rsync --delete $HOME/stow/* $HOME/stownfs/ ;;
+  stownfs) cpu arm && rsync --delete $HOME/stow/ $HOME/stownfs ;;
 
   ttrss) if server ;then
            rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/

@@ -25,13 +25,13 @@
       autocmd setup BufWinEnter *.txt,*.txt.gz
             \ if &filetype == 'help' | wincmd _ | endif
 
-      imap <F1>                 <C-o>:help<Space>
-      nmap <F1>                 :help<Space>
-      vmap <F1>                 <C-o>:help<Space>
+      imap <F1>           <C-o>:help<Space>
+      nmap <F1>           :help<Space>
+      vmap <F1>           <C-o>:help<Space>
       " list my function and leader key assignments
-      imap <silent><S-F1>       <C-o>:silent !term 'vmap' vmap<CR>
-      nmap <silent><S-F1>       :silent !term 'vmap' vmap<CR>
-      vmap <silent><S-F1>       <C-o>:silent !term 'vmap' vmap<CR>
+      imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
+      nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>
+      vmap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
 
     "  ............................................................ Undo history
 
@@ -43,7 +43,7 @@
       set undolevels=1000                   " maximum number of changes that can be undone
       set undoreload=10000                  " maximum number lines to save for undo
       " easier redo
-      map U                     <C-r>
+      map U <C-r>
 
     " .............................................................. Spell check
 
@@ -115,23 +115,23 @@
       set smartcase                         " ignore case if search pattern is all lowercase
 
       " tab to bracket pairs
-      nmap <Tab>                %
-      vmap <Tab>                %
+      nmap     <Tab>     %
+      vmap     <Tab>     %
       " while at it.. use extended regex statements for searches!
-      cmap %%                   \v
-      cmap ^^                   \C
+      cmap     %%        \v
+      cmap     ^^        \C
 
       " clear search highlight
-      nmap <silent>\            :noh<CR>
+      nmap     <silent>\ :noh<CR>
 
       " repeat latest f,t,F,T see modal searching remaps above
-      nnoremap ,,               ;
-      vnoremap ,,               ;
+      nnoremap ,,        ;
+      vnoremap ,,        ;
 
     " .................................................................. Replace
 
-      nmap %                    :%s
-      vmap %                    :s
+      nmap     %         :%s
+      vmap     %         :s
 
     " ........................................................... Tab completion
 

@@ -13,7 +13,7 @@
     " .................................................................. Plugins
 
       source ~/.vim/config/plugins.vim
-      source ~/.vim/config/custom.vim
+      source ~/.vim/config/control.vim
 
     " .................................................................. Buffers
 

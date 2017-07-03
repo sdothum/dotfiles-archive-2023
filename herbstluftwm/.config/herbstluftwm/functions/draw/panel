@@ -247,11 +247,11 @@ panel() {
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 # clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M  %S %P%{F-}${RSEP}%-d  %b '%y
-clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P%{F-}${RSEP}%-d  %b '%y
+clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P%{F-}${RSEP}%-d  %b  '%y
 " >$PANEL_FIFO:$fifo &
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s
-' >$PANEL_FIFO:$fifo &
+' >$PANEL_FIFO:$fifo 2>/dev/null &
 
 size=$(( $(fontsize) - 1 ))
 

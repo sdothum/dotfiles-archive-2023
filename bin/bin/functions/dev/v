@@ -30,8 +30,9 @@ do
 done
 
 if [ -z $1 ] ;then
-  file=$(find -type f 2>/dev/null | filter | fzf --multi)
-  [ "$file" ] || exit
+  [ $PWD = $HOME ] && depth=1 || depth=9
+  # force ncurses mode, see fzf wrapper
+  file=$(find -maxdepth $depth -type f 2>/dev/null | filter | TERMINAL=true rmenu 'Edit' --multi) || exit
 else
   # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
   file=$(echo $@)

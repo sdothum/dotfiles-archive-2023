@@ -16,10 +16,10 @@
         normal! $
       endfunction
 
-      imap <silent>,,-      <C-o>:silent call Underline('▔')<CR>
-      nmap <silent>,,-      :silent call Underline('▔')<CR>
-      imap <silent>,,_      <C-o>:silent call Underline('▂')<CR>
-      nmap <silent>,,_      :silent call Underline('▂')<CR>
+      imap <silent>,,- <C-o>:silent call Underline('▔')<CR>
+      nmap <silent>,,- :silent call Underline('▔')<CR>
+      imap <silent>,,_ <C-o>:silent call Underline('▂')<CR>
+      nmap <silent>,,_ :silent call Underline('▂')<CR>
 
     " .................................................................... Ruler
 
@@ -35,10 +35,10 @@
         normal! $
       endfunction
 
-      imap <silent>,,--     <C-o>:silent call Drawline('▔')<CR>
-      nmap <silent>,,--     :silent call Drawline('▔')<CR>
-      imap <silent>,,__     <C-o>:silent call Drawline('▂')<CR>
-      nmap <silent>,,__     :silent call Drawline('▂')<CR>
+      imap <silent>,,-- <C-o>:silent call Drawline('▔')<CR>
+      nmap <silent>,,-- :silent call Drawline('▔')<CR>
+      imap <silent>,,__ <C-o>:silent call Drawline('▂')<CR>
+      nmap <silent>,,__ :silent call Drawline('▂')<CR>
 
     " .................................................................. Trailer
 
@@ -61,12 +61,12 @@
         endif
       endfunction
 
-      imap <silent>,..      <C-o>:silent call AppendTrailer('.')<CR>
-      nmap <silent>,..      :silent call AppendTrailer('.')<CR>
-      imap <silent>,--      <C-o>:silent call AppendTrailer('─')<CR>
-      nmap <silent>,--      :silent call AppendTrailer('─')<CR>
-      imap <silent>,__      <C-o>:silent call AppendTrailer('▁')<CR>
-      nmap <silent>,__      :silent call AppendTrailer('▁')<CR>
+      imap <silent>,.. <C-o>:silent call AppendTrailer('.')<CR>
+      nmap <silent>,.. :silent call AppendTrailer('.')<CR>
+      imap <silent>,-- <C-o>:silent call AppendTrailer('─')<CR>
+      nmap <silent>,-- :silent call AppendTrailer('─')<CR>
+      imap <silent>,__ <C-o>:silent call AppendTrailer('▁')<CR>
+      nmap <silent>,__ :silent call AppendTrailer('▁')<CR>
 
       " prompted trailer
       function! InputTrailer()
@@ -76,8 +76,8 @@
         endif
       endfunction
 
-      imap <silent>,??      <C-o>:call InputTrailer()<CR>
-      nmap <silent>,??      :call InputTrailer()<CR>
+      imap <silent>,?? <C-o>:call InputTrailer()<CR>
+      nmap <silent>,?? :call InputTrailer()<CR>
 
     " ................................................................... Leader
 
@@ -95,10 +95,10 @@
         endif
       endfunction
 
-      imap <silent>,.       <C-o>:silent call InsertLeader('.')<CR>
-      nmap <silent>,.       :silent call InsertLeader('.')<CR>
-      imap <silent>,_       <C-o>:silent call InsertLeader('▁')<CR>
-      nmap <silent>,_       :silent call InsertLeader('▁')<CR>
+      imap <silent>,. <C-o>:silent call InsertLeader('.')<CR>
+      nmap <silent>,. :silent call InsertLeader('.')<CR>
+      imap <silent>,_ <C-o>:silent call InsertLeader('▁')<CR>
+      nmap <silent>,_ :silent call InsertLeader('▁')<CR>
 
       " prompted leader
       function! InputLeader()
@@ -112,8 +112,8 @@
         endif
       endfunction
 
-      imap <silent>,?       <C-o>:call InputLeader()<CR>
-      nmap <silent>,?       :call InputLeader()<CR>
+      imap <silent>,? <C-o>:call InputLeader()<CR>
+      nmap <silent>,? :call InputLeader()<CR>
 
     " .................................................................. Justify
 
