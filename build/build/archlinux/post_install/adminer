@@ -5,6 +5,6 @@
 
 # ...................................................................... adminer
 
-conf /etc/httpd/conf/httpd.conf 'Include conf/extra/httpd-adminer.conf'
+ifnsed /etc/httpd/conf/httpd.conf 'Include conf/extra/httpd-adminer.conf'
 
 # vim: set ft=sh: #

@@ -5,8 +5,8 @@
 
 # ...................................................................... mlocate
 
-conf /etc/updatedb.conf ' .cache Trash backups' '/^PRUNENAMES/s/"$/ .cache Trash backups"/'
-conf /etc/updatedb.conf ' /net /bkup' '/^PRUNEPATHS/s|"$| /net /bkup"|'
+ifnsed /etc/updatedb.conf ' .cache Trash backups' '/^PRUNENAMES/s/"$/ .cache Trash backups"/'
+ifnsed /etc/updatedb.conf ' /net /bkup' '/^PRUNEPATHS/s|"$| /net /bkup"|'
 
 sudo updatedb &
 

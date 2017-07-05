@@ -50,6 +50,11 @@ d ? preload
   vifm
 
 
+= file systems
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  dosfstools
+
+
 = cups printing
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   cups

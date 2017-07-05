@@ -5,7 +5,7 @@
 
 # ............................................................... networkmanager
 
-conf /etc/NetworkManager/NetworkManager.conf 'dhcp=dhcpcd'
+ifnsed /etc/NetworkManager/NetworkManager.conf 'dhcp=dhcpcd'
 
 systemd enable dhcpcd
 systemd enable NetworkManager

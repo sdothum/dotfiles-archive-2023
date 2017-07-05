@@ -5,6 +5,6 @@
 
 # ......................................................................... gvim
 
-conf $HOME/.bashrc 'EDITOR=vim'
+ifnsed $HOME/.bashrc 'EDITOR=vim'
 
 # vim: set ft=sh: #

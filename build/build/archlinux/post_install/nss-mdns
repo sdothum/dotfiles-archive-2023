@@ -5,7 +5,7 @@
 
 # ..................................................................... nss-mdns
 
-conf /etc/nsswitch.conf 'mdns_minimal' '/^hosts:/s/ resolve/ mdns_minimal resolve/'
+ifnsed /etc/nsswitch.conf 'mdns_minimal' '/^hosts:/s/ resolve/ mdns_minimal resolve/'
 
 systemd restart avahi-daemon
 annotate 'avahi-discover to list network shareable devices'

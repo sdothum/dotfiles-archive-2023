@@ -8,10 +8,7 @@
 systemd enable sonarr
 annotate "configure sonarr http://localhost:8989/\n
 set advanced create folders off"
-if ! grep -q '^users:.*sonarr' /etc/group ;then
-  grep -q '^users:.*:$' /etc/group && sudo sed -i -r 's/^(users:.*)/\1sonarr/' /etc/group ||
-                                      sudo sed -i -r 's/^(users:.*)/\1,sonarr/' /etc/group
-fi
+ifnsed /etc/group '^users:.*sonarr' 's/^\(users:.*\)/\1,sonarr/; s/:,/:/'
 
 annotate allow sonarr users group access with sudo chmod -c 775 /net/media/videos/{series,anime}
 

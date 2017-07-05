@@ -5,7 +5,7 @@
 
 # ..................................................................... cups-pdf
 
-conf /etc/cups/cups-pdf.conf '^Out \${HOME}/documents' '/#Out/aOut ${HOME}/documents'
+ifnsed /etc/cups/cups-pdf.conf '^Out \${HOME}/documents' '/#Out/aOut ${HOME}/documents'
 
 systemd restart org.cups.cupsd
 

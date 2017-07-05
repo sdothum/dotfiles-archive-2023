@@ -5,9 +5,9 @@
 
 # ...................................................................... privoxy
 
-conf /etc/privoxy/config '^enable-edit-actions.*1' '/^enable-edit-actions/s/0/1/'
+ifnsed /etc/privoxy/config '^enable-edit-actions.*1' '/^enable-edit-actions/s/0/1/'
 if [ -f /usr/bin/polipo ] ;then
-  conf /etc/privoxy/config 'forward / localhost:8123'
+  ifnsed /etc/privoxy/config 'forward / localhost:8123'
 fi
 
 systemd enable privoxy

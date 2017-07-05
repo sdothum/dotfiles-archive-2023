@@ -14,7 +14,7 @@ if server ;then
   systemd enable nfs-server
 
   sudo mkdir -pv /srv/nfs4
-  conf /etc/exports '/srv/nfs4/        *(rw,fsid=root,sync,no_subtree_check)'
+  ifnsed /etc/exports '/srv/nfs4/        *(rw,fsid=root,sync,no_subtree_check)'
   sudo exportfs -rav
 else
   sudo systemctl mask nfs-blkmap.service

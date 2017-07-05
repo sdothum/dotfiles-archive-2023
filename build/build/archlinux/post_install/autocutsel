@@ -5,7 +5,7 @@
 
 # ................................................................... autocutsel
 
-conf $HOME/.xinitrc 'autocutsel -fork &'
-conf $HOME/.xinitrc 'autocutsel -selection PRIMARY -fork &'
+ifnsed $HOME/.xinitrc 'autocutsel -fork &'
+ifnsed $HOME/.xinitrc 'autocutsel -selection PRIMARY -fork &'
 
 # vim: set ft=sh: #

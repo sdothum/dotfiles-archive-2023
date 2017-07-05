@@ -5,6 +5,6 @@
 
 # ................................................................ terminus-font
 
-conf /etc/vconsole.conf 'FONT=ter-116n'
+ifnsed /etc/vconsole.conf 'FONT=ter-116n'
 
 # vim: set ft=sh: #

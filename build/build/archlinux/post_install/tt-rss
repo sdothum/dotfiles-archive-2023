@@ -27,7 +27,7 @@ if [ ! -d /srv/lib/postgresql/data/base ] ;then
   echo "echo \"grant all privileges on database ttrss to ttrss;\" | psql" | su - postgres
 fi
 
-conf /usr/lib/systemd/system/tt-rss.service 'SELF_URL_PATH=http://localhost:8000/tt-rss/' \
+ifnsed /usr/lib/systemd/system/tt-rss.service 'SELF_URL_PATH=http://localhost:8000/tt-rss/' \
                                             '/Service/aEnvironment="SELF_URL_PATH=http://localhost:8000/tt-rss/"'
 
 server && systemd enable tt-rss || annotate "sudo systemctl start tt-rss"

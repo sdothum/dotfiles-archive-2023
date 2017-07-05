@@ -6,7 +6,7 @@
 # ....................................................................... prezto
 
 # tailor dash session login / logout
-conf /etc/dash/zlogin 'echo ${_yellow_}' '1iecho ${_yellow_}---'
-conf /etc/dash/zlogout '#source .*zlogout' '/^source .*zlogout/s/^/#/'
+ifnsed /etc/dash/zlogin 'echo ${_yellow_}' '1iecho ${_yellow_}---'
+ifnsed /etc/dash/zlogout '#source .*zlogout' '/^source .*zlogout/s/^/#/'
 
 # vim: set ft=sh: #

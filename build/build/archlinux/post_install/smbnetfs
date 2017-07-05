@@ -14,13 +14,13 @@ if [ -z $(cat /etc/samba/smb.conf | grep usershare) ] ;then
   sudo chown -c root:$USERSHARES_GROUP $USERSHARES_DIR
   sudo chmod -c 01770 $USERSHARES_DIR
 
-  conf /etc/samba/smb.conf 'usershare path = /var/lib/samba/usershares' '/\[global\]/ausershare path = /var/lib/samba/usershares'
-  conf /etc/samba/smb.conf 'usershare max shares = 100' '/\[global\]/ausershare max shares = 100'
-  conf /etc/samba/smb.conf 'usershare allow guests = yes' '/\[global\]/ausershare allow guests = yes'
-  conf /etc/samba/smb.conf 'usershare owner only = False' '/\[global\]/ausershare owner only = False'
+  ifnsed /etc/samba/smb.conf 'usershare path = /var/lib/samba/usershares' '/\[global\]/ausershare path = /var/lib/samba/usershares'
+  ifnsed /etc/samba/smb.conf 'usershare max shares = 100' '/\[global\]/ausershare max shares = 100'
+  ifnsed /etc/samba/smb.conf 'usershare allow guests = yes' '/\[global\]/ausershare allow guests = yes'
+  ifnsed /etc/samba/smb.conf 'usershare owner only = False' '/\[global\]/ausershare owner only = False'
   sudo usermod -a -G $USERSHARES_GROUP $USER
 
-  conf /etc/fuse.conf '^user_allow_other' '/^#user_allow_other/s/#//'
+  ifnsed /etc/fuse.conf '^user_allow_other' '/^#user_allow_other/s/#//'
   sudo modprobe fuse
 fi
 

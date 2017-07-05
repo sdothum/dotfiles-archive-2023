@@ -166,8 +166,8 @@ EOF
 fi
 
 mkdir -pv $HOME/.local/share/weechat/logs || exit 1
-conf $HOME/.weechat/logger.conf $HOME/.local/share/weechat/logs "/path = /cpath = "$HOME/.local/share/weechat/logs""
+ifnsed $HOME/.weechat/logger.conf $HOME/.local/share/weechat/logs "/path = /cpath = "$HOME/.local/share/weechat/logs""
 # abbreviate vimode inputbar indicator
-conf $HOME/.weechat/python/vimode.py 'return mode\\[0\\]' 's/return mode/return mode[0]/'
+ifnsed $HOME/.weechat/python/vimode.py 'return mode\\[0\\]' 's/return mode/return mode[0]/'
 
 # vim: set ft=sh: #
