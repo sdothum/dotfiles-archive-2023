@@ -56,8 +56,8 @@ hc keybind Super-Shift-e            spawn dmenu edit
 hc keybind Super-h                  spawn dmenu shistory
 hc keybind Super-l                  spawn lock_screen
 hc keybind Super-m                  spawn dmenu audio
-hc keybind Super-n                  spawn dmenu notes
-hc keybind Super-Shift-n            spawn dmenu notes draft
+hc keybind Super-n                  spawn dmenu notes draft
+hc keybind Super-Shift-n            spawn dmenu notes
 hc keybind Super-p                  spawn dmenu pass
 hc keybind Super-Shift-p            spawn proof toggle
 hc keybind Super-Control-p          spawn hardcopy eject

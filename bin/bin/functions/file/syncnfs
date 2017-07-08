@@ -64,9 +64,9 @@ else
     do
       if cpu arm ;then
         target=$HOME/stownfs${i#$HOME/stow}
-        rsync $i ${target%/*}/ >>$log
+        rsync --delete $i ${target%/*}/ >>$log
       else
-        rsync $i ${remote}${i%/*}/ >>$log
+        rsync --delete $i ${remote}${i%/*}/ >>$log
       fi
     done
   fi

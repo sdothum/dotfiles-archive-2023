@@ -137,7 +137,7 @@ if [ $display ] ;then
                       $@ )
   fi
 else
-  input=$(sed "s/^/$indent/" | fzf --prompt="\"$prompt\"" $@)
+  input=$(sed "s/^/$indent/" | fzf --prompt="\"$prompt\"")
 fi
 
 [ $? -ne 0 ] && exit 1

@@ -11,10 +11,7 @@ usage() {
   exit 1
 }
 
-if [ "$1" = '-q' ] ;then
-  quiet=-q
-  shift
-fi
+[ "$1" = '-q' ] && { shift; quiet=-q; }
 
 laptop=lumen
 netbook=monad

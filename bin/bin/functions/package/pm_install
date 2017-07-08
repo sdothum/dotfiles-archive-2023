@@ -10,10 +10,7 @@
 
 # Usage: pm_install [--confirm] <package>
 
-if [ "$1" = S ] ;then
-  confirm=true
-  shift
-fi
+[ "$1" = S ] && { shift; confirm=true; }
 
 which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
 [ $pacaur = pacaur ] && edit=--edit

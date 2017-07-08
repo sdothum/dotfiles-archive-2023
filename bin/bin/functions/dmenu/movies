@@ -18,10 +18,7 @@ DATE='[ sort by date ]'
 EDIT='[ manage       ]'
 
 # preload cache option
-if [ "$1" = cache ] ;then
-  cache=true
-  shift
-fi
+[ "$1" = cache ] && { shift; cache=true; }
 
 nzb=/net/downloads/nzbs/completed
 library=${LIBRARY:-/net/media/videos/${1:-movies}}

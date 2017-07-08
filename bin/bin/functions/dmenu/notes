@@ -57,6 +57,7 @@ hint() {
 # list of files
 notes() {
   count=0
+  find -L $FOLDER -type f -size 0c -exec rm {} \;
   files=$(find -L $FOLDER -name "*.$ext")
   rm -f $NOTES
   if [ "$files" ] ;then

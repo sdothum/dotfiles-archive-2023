@@ -21,12 +21,13 @@ status() {
 cd /usr/lib/systemd/system/
 while :
 do
-  service=$(stest -fl . |
-            sort  |
-            sed 's/.service$//' |
+  service=$(systemctl list-unit-files -t service --no-legend |
+            sed -r "s|  *|^$SEP |" |
+            column -s^ -t |
             sed "1i$DAEMON\n$SERVICES\n$FILES" |
             rmenu 'Systemd' -no-custom) || exit
 
+  service=${service%% *$SEP*}
   case $service in
     "$DAEMON") sudo systemctl daemon-reload
                notify low 'Systemd daemon-reload'

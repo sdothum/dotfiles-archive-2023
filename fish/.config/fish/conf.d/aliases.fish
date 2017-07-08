@@ -39,12 +39,14 @@ alias umount 'sudo umount'
 
 # ....................................................................... System
 
+alias blame 'systemd-analyse blame'
 alias font-manager 'font-manager ; sudo rm -f ~/.fonts.conf'
 alias fontmatrix 'fontmatrix ; sudo rm -f ~/.fonts.conf'
 alias gtop 'glances'
 alias iotop 'sudo iotop'
 alias lpr 'lpr -P hp-LaserJet-1320-series'
 alias screenfetch 'fetch'
+alias services "systemctl list-units -t service --no-pager --no-legend | grep active | egrep -v 'systemd|exited' | cut -d' ' -f1"
 alias traceroute 'mtr --report -c 1'
 alias who 'command w'
 

@@ -1,0 +1,48 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................... Word frequency
+
+# Usage: W [[list] <letter>*]
+
+WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
+
+alphabet='e t a o i n s r h l d c u m f p g w y b v k x j q z'
+digraph='th he an in er on re ed nd ha at en es of nt ea ti to io le is ou ar as de rt ve'
+trigraph='the and tha ent ion tio for nde has nce tis oft men ing'
+double='ss ee tt ff ll mm oo'
+
+[ "$1" = list ] && { shift; list=true; }
+
+frequency() {
+  underline
+  for i in $@
+  do
+    echo $i $(grep -i $i $WORDS | wc -l)
+  done | sort -nr -k2
+}
+
+list() {
+  for i in $@
+  do
+    underline
+    grep -i $i $WORDS | awk '{ print $1 }' | tr '\n' ' '
+    echo
+  done
+}
+
+if [ $1 ] ;then
+  frequency $@
+  # list really only makes sense for single inquiry
+  [ $list ] && list $@
+else
+  frequency $double
+  frequency $trigraph
+  frequency $digraph
+  frequency $alphabet
+fi
+
+# vim: set ft=sh: #
