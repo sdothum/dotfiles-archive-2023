@@ -1,7 +1,0 @@
-audio.sources=pulse
-audio.pulse.source=1
-visualizer.spectrum.bar.width=1
-visualizer.spectrum.bar.spacing=0
-visualizer.spectrum.character=|
-# audio.stereo.enabled=false
-# visualizer.spectrum.falloff.mode=fill
