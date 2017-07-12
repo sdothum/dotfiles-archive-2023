@@ -60,6 +60,7 @@
 # nfs-utils
 # ntfs-3g
   ntfs-3g-fuse
+  watchman
 
 
 = info screens
@@ -106,6 +107,16 @@
   ripgrep
 # zsh-doc
 # zsh-autosuggestions
+
+      " ..................................................... Sync arm nfs share
+
+      " arm device mirrors ~/stow directory with nfs share:/stow for ~/stow performance
+      function! SyncNFS()
+        if &modified
+          " vim backups added by syncnfs
+          execute ':silent !syncnfs ' . expand('%:p')
+        endif
+      endfunction
 # zsh-completions
 # zsh-syntax-highlighting
 

@@ -53,6 +53,8 @@ d ? preload
 = file systems
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
+d " add armv7h to arch in pkgbuild
+d ? watchman
 
 
 = cups printing

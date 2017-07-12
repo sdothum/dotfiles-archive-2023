@@ -6,6 +6,8 @@
 
 # ................................................................ Console login
 
+RSYNC=$SESSION/rsync
+
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
   if console && [ ! -e /tmp/login:console ];then
@@ -33,9 +35,13 @@ if [ $USER != root ] ;then
     if cpu arm ;then
       nohup arm_clock 2>/dev/null &
       # in case pi is offline during development on main server
-      nohup rsync -q arm 2>/dev/null &
-      sleep 1
-      pgrep -f "rsync arm" >/dev/null || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
+      if [ -e $RSYNC ] ;then
+        nohup rsync -q arm 2>/dev/null &
+        sleep 1
+        pgrep -f "rsync arm" >/dev/null || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
+      else
+        pidof syncthing >/dev/null || wsync
+      fi
     else
       we &
     fi

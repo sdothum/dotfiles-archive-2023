@@ -56,9 +56,9 @@
       nmap <silent><leader>qq :silent qall!<CR>
 
       " pre-write formatting
-      autocmd buffer BufLeave    * call StripTrailingWhitespaces() | call SyncNFS()
-      autocmd buffer BufWritePre * call StripTrailingWhitespaces() | call SyncNFS()
-      autocmd buffer FocusLost   * call StripTrailingWhitespaces() | call SyncNFS()
+      autocmd buffer BufLeave    * call StripTrailingWhitespaces()
+      autocmd buffer BufWritePre * call StripTrailingWhitespaces()
+      autocmd buffer FocusLost   * call StripTrailingWhitespaces()
       " save on losing focus
       autocmd buffer FocusLost   * silent! :wall
 

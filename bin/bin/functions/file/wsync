@@ -1,0 +1,78 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ watchman sync
+
+# Usage: wsync -a | -s | [<path>]*
+
+CACHEDIR=${CACHEDIR:-$HOME/.cache}
+SESSION=${SESSION:-$HOME/.session}
+WATCH=$CACHEDIR/wsync
+SYNC=$SESSION/wsync
+LOG=/tmp/wsync.log
+
+# watchman
+ROOT=$HOME/stow
+CMD=wsync
+NAME=$CMD
+
+# hosts
+ARM=pi
+MASTER=luna
+
+[ -e $WATCH ] || touch $WATCH
+# server is always online but satellite arm device may be offline (and sync on boot)
+cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit; }
+cpu arm && target=$MASTER: || target=$ARM:
+
+info() {
+  name=$(echo $file | filter | sed "s|$HOME/stow/||")
+  if [ $name ] ;then
+    trace "$1 ${target}stow ${_YELLOW_}$name" >>$LOG
+    notify low "$1 ${target}stow" "$name"
+  fi
+}
+
+register() {
+  if [ -f "$file" ] ;then
+    info Register
+    grep -qx "${file%/*}" $WATCH || echo ${file%/*} >>$WATCH
+  fi
+  unset file
+}
+
+queue () {
+  for i in $@
+  do
+    if [ -d "$ROOT/${i%/*}" ] ;then
+      register
+      file="$ROOT/$i"
+    else
+      file="$file $i"
+    fi
+  done
+  register
+}
+
+archive() {
+  while read file <&3
+  do
+    info Sync
+    to="${target}${file%/*}/"
+    echo rsync -d "$file" "$to" >>$LOG
+    /usr/bin/rsync -avz -d --delete "$file" "$to" >>$LOG 2>&1
+  done 3< $WATCH
+  > $WATCH
+}
+
+case $1 in
+  '') pidof watchman >/dev/null && cat $WATCH || watchman -- trigger $ROOT $NAME -- $CMD ;;
+  -a) archive & ;;
+  -s) archive && watchman shutdown-server ;;
+  * ) queue $@ && [ -f $SYNC ] && archive & ;;
+esac
+
+# vim: set ft=sh: #

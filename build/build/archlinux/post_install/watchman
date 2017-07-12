@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... watchman
+
+ROOT=$HOME/stow
+
+# increase iwatches
+sudo sysctl fs.inotify.max_user_watches=32768
+echo fs.inotify.max_user_watches=32768 | sudo tee /usr/lib/sysctl.d/90-override.conf
+
+# see wsync
+watchman watch-project $ROOT
+
+# vim: set ft=sh: #

@@ -50,14 +50,13 @@ count=$(echo $file | wc -w)
 [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
 eval $focus $sudo vim $G $role $fg $cmd $file
 
-# syncnfs requires source file paths be fully qualified ~/stow references
+# postpone cleanup till done with all vim sessions
 housekeeping() {
   pidof vim >/dev/null && exit
   find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
   find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -fv {} \;
-  syncnfs
 }
 
 (pwait "vim.*$G.*$fg.*$cmd.*$file" && housekeeping) &

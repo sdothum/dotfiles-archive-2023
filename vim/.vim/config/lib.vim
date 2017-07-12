@@ -56,16 +56,6 @@
         return &filetype =~ 'vimwiki\|markdown'
       endfunction
 
-      " ..................................................... Sync arm nfs share
-
-      " arm device mirrors ~/stow directory with nfs share:/stow for ~/stow performance
-      function! SyncNFS()
-        if &modified
-          " vim backups added by syncnfs
-          execute ':silent !syncnfs ' . expand('%:p')
-        endif
-      endfunction
-
     " Status line ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................... Modified notification

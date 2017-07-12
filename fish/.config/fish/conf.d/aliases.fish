@@ -39,7 +39,7 @@ alias umount 'sudo umount'
 
 # ....................................................................... System
 
-alias blame 'systemd-analyse blame'
+alias blame 'systemd-analyze blame'
 alias font-manager 'font-manager ; sudo rm -f ~/.fonts.conf'
 alias fontmatrix 'fontmatrix ; sudo rm -f ~/.fonts.conf'
 alias gtop 'glances'

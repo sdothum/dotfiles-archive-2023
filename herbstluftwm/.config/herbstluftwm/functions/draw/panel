@@ -23,6 +23,9 @@ PANEL_FONT='Noto Sans'
 UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
+# seconds indicator: none, blink, circle, square
+[ -e $SESSION/panel ] && SECONDS=$(cat $SESSION/panel)
+
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
 # fontawesome utf icons
@@ -190,7 +193,24 @@ panel() {
   while read -r line
   do
     case $line in
-      S*) system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
+      S*) case $SECONDS in
+            b*) [ "$ind" = '●' ] && ind='○' || ind='●' ;;
+
+            c*) [ "$ind" = '◓' ] && ind='◑' ||
+                  { [ "$ind" = '◑' ] && ind='◒' ||
+                    { [ "$ind" = '◒' ] && ind='◐' || ind='◓'; }; } ;;
+
+            s*) [ "$ind" = '⬒' ] && ind='⬔' ||
+                  { [ "$ind" = '⬔' ] && ind='◨' ||
+                    { [ "$ind" = '◨' ] && ind='◪' ||
+                      { [ "$ind" = '◪' ] && ind='⬓' ||
+                        { [ "$ind" = '⬓' ] && ind='⬕' ||
+                          { [ "$ind" = '⬕' ] && ind='◧' ||
+                            { [ "$ind" = '◧' ] && ind='◩' || ind='⬒'; }; }; }; }; }; } ;;
+          esac
+          [ $ind ] && indicator="  $ind"
+          line="${line%F-*}F-}$indicator${line#*F-?}"
+          system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
 
       T*) title
           count=$(herbstclient attr tags.focus.client_count)
