@@ -1,8 +1,0 @@
-%template diary
-# Diary
-
-## 2012
-
-### October
-    * [2012-10-05][]
-

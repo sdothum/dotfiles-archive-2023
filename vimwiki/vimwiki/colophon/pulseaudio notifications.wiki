@@ -1,4 +1,0 @@
-to enable audio notifications in [pidgin](http://sourceforge.net/apps/trac/smartmontools/wiki), in tools :: preferences :: sounds :: 
-sound command..
-
-`paplay --volume=24576 --device=alsa_output.usb-Burr-Brown_from_TI_USB_Audio_DAC-00-DAC.analog-stereo --property=media.role=event %s`

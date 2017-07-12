@@ -1,8 +1,0 @@
-today a moment of insanity struck and I ended up adding text searching to this
-site. Tagging waits. It wasn't by design but I surprised myself how easily
-I was able to implement it. I really need to stop! though, the search feature
-will encourage me to document the technical side of things more thoroughly
-going forward as it is so nimble.
-
-Now for real, to get back to adding content so that search is meaningful for
-the site. It's the darnedest..
