@@ -1,0 +1,133 @@
+StartChar: uni0245
+Encoding: 581 581 509
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 9
+MDAP[rnd]
+NPUSHW
+ 3
+ 5
+ 9
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 20
+ 9
+ 1
+DELTAP1
+PUSHW_2
+ 10
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_3
+ 0
+ 9
+ 10
+SRP1
+SRP2
+IP
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 5
+MDRP[rp0,grey]
+PUSHW_1
+ 5
+MDAP[rnd]
+PUSHW_2
+ 4
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 14
+MDRP[rp0,grey]
+PUSHW_1
+ 14
+MDAP[rnd]
+PUSHW_2
+ 15
+ 3
+MIRP[rp0,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 9
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 9
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 5
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 5
+ 5
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 9
+SRP0
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 56
+ 1
+ 1
+DELTAP1
+PUSHW_1
+ 5
+SRP0
+PUSHW_1
+ 15
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 56
+ 18
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+530 1300 m 1,0,-1
+ 399 754 l 2,1,2
+ 289 295 289 295 289 88 c 2,3,-1
+ 289 0 l 1,4,-1
+ 113 0 l 1,5,-1
+ 113 88 l 2,6,7
+ 113 315 113 315 248 852 c 2,8,-1
+ 431 1580 l 1,9,-1
+ 629 1580 l 1,10,-1
+ 812 852 l 2,11,12
+ 947 315 947 315 947 88 c 2,13,-1
+ 947 0 l 1,14,-1
+ 771 0 l 1,15,-1
+ 771 88 l 2,16,17
+ 771 295 771 295 661 754 c 2,18,-1
+ 530 1300 l 1,0,-1
+EndSplineSet
+EndChar

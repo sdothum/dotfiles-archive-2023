@@ -1,0 +1,10 @@
+StartChar: Iishortcyrillic
+Encoding: 1049 1049 628
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+Refer: 2649 -1 N 1 0 0 1 1 370 3
+Refer: 2689 -1 N 1 0 0 1 0 0 2
+EndChar

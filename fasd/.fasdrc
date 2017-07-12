@@ -1,0 +1,3 @@
+_FASD_SINK=/tmp/fasd.log
+_FASD_SHELL=/bin/dash
+_FASD_FUZZY=2

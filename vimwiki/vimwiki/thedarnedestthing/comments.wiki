@@ -1,0 +1,33 @@
+a few words about comments to this site are in order, as the mechanism 
+is somewhat unique. 
+
+Unlike most schemes deployed on the internet which attempt to thwart 
+spammers by requiring site registration and logins, or 
+[CATPCHA](http://en.wikipedia.org/wiki/CAPTCHA) input, this site 
+utilizes email filtering. By doing so, you can use your favourite email 
+client to compose your thoughts without need to register or go cross 
+eyed.
+
+Also note, comments are not posted to the web site in real time. Expect 
+some delay for your comment to show up until the automated comment 
+processing is more rigorously tested.
+
+The aim is to make commenting as painless as possible so that you can 
+participate on this site. Through the use of multiple spam filtering 
+layers, the garbage that afflicts many a site is avoided. As well, 
+trolls can be blacklisted and their incoming emails discarded -- not 
+that I expect this site to inflame such discussion.
+
+As well, you can rest assured that your contact information is safe. 
+Email addresses and contact information are not retained on the web 
+server, nor are they used for any purpose. Signatures following the 
+standard double dash delimiter are automatically deleted from 
+correspondence and, address and phone number information, is masked out 
+by the server side application.
+ 
+From time to time, the application may need to be enhanced to more 
+accurately filter out contact information which may have inadvertently 
+escaped filtering. A note to the 
+[webmaster][mailto:webmaster@thedarnedestthing.com] can expedite the 
+necessary correction. Corrections to content will be reflected on the 
+site once adjustments are made to the filtering mechanism.

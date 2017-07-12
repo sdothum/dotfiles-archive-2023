@@ -1,0 +1,31 @@
+"
+" readable hotkey generated and manually tweaked from
+" http://readable.tastefulwords.com/#
+"
+:qmark r javascript:(function(){_readableOptions={'text_font':'Helvetica,%20quote(Helvetica%20Neuve),%20Arial,%20Tahoma,%20sans-serif','text_font_monospace':'quote(Latin%20Modern%20Mono%20Caps)','text_font_header':'Helvetica','text_size':'13px','text_line_height':'1.5','box_width':'31em','color_text':'#FFFFFF','color_background':'#404040','color_links':'#00EEFF','text_align':'normal','base':'web_readability','custom_css':''};if(document.getElementsByTagName('body').length>0);else{return;}if(window.$readable){if(window.$readable.bookmarkletTimer){return;}}else{window.$readable={};}window.$readable.bookmarkletTimer=true;window.$readable.options=_readableOptions;if(window.$readable.bookmarkletClicked){window.$readable.bookmarkletClicked();return;}_readableScript=document.createElement('script');_readableScript.setAttribute('src','http://readable-static.tastefulwords.com/target.js?rand='+encodeURIComponent(Math.random()));document.getElementsByTagName('body')[0].appendChild(_readableScript);})()
+:map <A-R> gor
+:map <F4> gor
+"
+" fullscreen work arounds
+"
+":set fullscreen
+:set showtabline=never
+:set guioptions+=m
+:toolbarhide Add-on Bar
+"
+" google reader navigation
+"
+":set passkeys+=google.*/reader:jknpNPXOsvomAghauTepr12=-?<PageUp><PageDown><F8><F9>
+":map <F8> APO
+":map <F9> ANO
+:set passkeys+=google.*/reader:jknpNPXOsvomAghauTepr12=-?<PageUp><PageDown>
+"
+" delicious bookmark
+"
+:set passkeys+=*:<C-S-M>
+"
+" tiddlywiki shortcuts 
+"
+":set passkeys+=.*TiddlyWiki:<A-S-N><A-S-J><Esc>
+:set passkeys+=.*TiddlyWiki:<A-S-F><C-S-CR><C-CR><A-S-S>
+"

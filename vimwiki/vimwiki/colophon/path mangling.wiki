@@ -1,0 +1,87 @@
+user scripts are commonly dropped into the user *$HOME/bin* directory. 
+Add this directory to the *PATH* environment variable with
+
+```export PATH=$HOME/bin:$PATH```
+
+[ljust]in your shell script's initialization file and all the user 
+scripts and applications placed there can be located and executed.
+
+All you have to do when adding scripts to the *bin* directory is make 
+sure the filenames are unique. Sometimes this can require prefixing 
+otherwise simple descriptive script names where similar functionality 
+exists for multiple environments -- both to create unique filenames and 
+to group families of scripts together.
+
+While the system */usr/bin* directory commonly contains 1000's of 
+program names, having even a 100 user scripts can feel unorganized when 
+placed in the single *$HOME/bin* directory -- if you are like me and 
+often revisit your coding.
+
+Having a plethora of custom scripts, and wishing to better organize them 
+for management and maintenance purposes, and because sometimes I simply 
+forget what tools I have written, I created a directory hierarchy for 
+the scripts..
+
+`/home`
+`^     /bin`
+`^         /functions`
+`^                   /conky`
+`^                   /demo`
+`^                   /dmenu`
+`^                         /.config`
+`^                         /.history`
+`^                   /file`
+`^                   /hardware`
+`^                   /log`
+`^                   /mail`
+`^                   /network`
+`^                   /office`
+`^                   /package`
+`^                   /sysadmin`
+
+[ljust]Note: The dmenu (folder) scripts are launched by a *dmenu* 
+[wrapper][rofi] script.
+
+## profile.d
+
+the *PATH* environment variable is easily set at user login time by 
+a path shell script in the */etc/profile.d* directory..
+
+`[ $USER = root ] && exit`
+`^ `
+`if [ -d "$HOME/bin" ] ; then`
+`^  PATH=$(echo $PATH | sed "s|$HOME/bin:||")`
+`^  for i in $(find -L $HOME/bin -type d | grep -v '/\.' | sort -r)`
+`^  do`
+`^    PATH="${i}:$PATH"`
+`^  done`
+`fi`
+
+[ljust]Note: Dot (.) directories are omitted from the *PATH*.
+
+## .xinitrc
+
+tiling window managers are commonly customized with additional scripts 
+-- stacking manangers less so with custom scripting. By convention, 
+these window manager specific scripts commonly reside in the default 
+configuration directory of the window manager.
+
+This directory separation allows similar functions between window 
+managers to have the same shell script name. 
+
+A simple function in the *.xinitrc* X11 startup file, inserts the path 
+for the specific window manager to the *PATH* when called with the 
+window manager configuration directory..
+
+`setpath() {`
+`^  export PATH=$(echo $@:$(echo $PATH | sed "s|$@:||g"))`
+`}`
+
+[ljust]taking care not to duplicate the *PATH* reference if the X11 
+session is restarted more than once.
+
+For herbstluftwm..
+
+`setpath $HOME/.config/herbstluftwm`
+
+[ljust]is invoked prior to launching the window manager.

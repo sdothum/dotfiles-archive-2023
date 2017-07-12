@@ -1,0 +1,227 @@
+StartChar: DiamondUnderbar
+Encoding: 9050 9050 1253
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 5
+MDAP[rnd]
+PUSHW_1
+ 4
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 156
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 236
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 169
+ 4
+ 185
+ 4
+ 2
+DELTAP1
+PUSHW_1
+ 1
+MDRP[rp0,grey]
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 5
+SRP0
+PUSHW_1
+ 6
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 7
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 5
+ 166
+ 7
+ 182
+ 7
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 227
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 147
+ 7
+ 1
+DELTAP1
+PUSHW_1
+ 2
+MDRP[rp0,grey]
+PUSHW_1
+ 2
+MDAP[rnd]
+PUSHW_1
+ 6
+SRP0
+PUSHW_1
+ 8
+MDRP[rp0,grey]
+PUSHW_1
+ 5
+SRP0
+PUSHW_1
+ 9
+MDRP[rp0,grey]
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 10
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 9
+ 143
+ 10
+ 159
+ 10
+ 175
+ 10
+ 191
+ 10
+ 4
+DELTAP1
+PUSHW_3
+ 11
+ 5
+ 6
+SRP1
+SRP2
+IP
+PUSHW_1
+ 4
+SRP0
+PUSHW_1
+ 12
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 161
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 129
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 144
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 176
+ 12
+ 1
+DELTAP1
+PUSHW_1
+ 11
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 5
+MDAP[rnd]
+PUSHW_1
+ 9
+MDAP[rnd]
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+PUSHW_3
+ 4
+ 9
+ 5
+SRP1
+SRP2
+IP
+PUSHW_1
+ 4
+SRP0
+PUSHW_1
+ 12
+MDRP[rp0,grey]
+PUSHW_1
+ 10
+MDRP[rp0,grey]
+PUSHW_1
+ 7
+MDRP[rp0,grey]
+PUSHW_1
+ 5
+SRP0
+PUSHW_1
+ 11
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 190
+ 11
+ 1
+DELTAP1
+PUSHW_1
+ 9
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 177
+ 13
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+70 -326 m 1,0,-1
+ 70 -180 l 1,1,-1
+ 990 -180 l 1,2,-1
+ 990 -326 l 1,3,-1
+ 70 -326 l 1,0,-1
+60 790 m 1,4,-1
+ 464 1350 l 1,5,-1
+ 596 1350 l 1,6,-1
+ 1000 790 l 1,7,-1
+ 596 230 l 1,8,-1
+ 464 230 l 1,9,-1
+ 60 790 l 1,4,-1
+820 790 m 1,10,-1
+ 530 1192 l 1,11,-1
+ 240 790 l 1,12,-1
+ 530 388 l 1,13,-1
+ 820 790 l 1,10,-1
+EndSplineSet
+EndChar

@@ -1,0 +1,39 @@
+before there was [mutt](http://www.mutt.org/), the email client that 
+"sucked less". However, after discovering [Sup 
+mail](http://supmua.org/), yet another 
+[curses](http://en.wikipedia.org/wiki/Ncurses) based (plain text) 
+terminal application, there was no turning back. With 
+[IMAP](http://en.wikipedia.org/wiki/Imap) 
+[Maildir](http://en.wikipedia.org/wiki/Maildir) labeling, combined with 
+incoming inbox or archive assignment, and intelligent Gmail conversation 
+threading, it is email consumption as it should be for distraction free 
+management of large volumes of mail (yes, I subscribe to too many 
+lists..).
+
+Sup doesn't [gem](http://en.wikipedia.org/wiki/RubyGems) install easily 
+on [Debian](http://www.debian.org/) because [Xapian](http://xapian.org/) 
+is a gem install requirement -- and it is already part of the Debian 
+core install, hence, the conflict when the gem install of Xapian is 
+attempted. Fortunately, there is a Debian package for Sup to satisfy its 
+dependencies. Unfortunately, it is built from the master branch which 
+does not provide IMAP Maildir sync.
+
+As I use [OfflineImap](http://offlineimap.org/) and 
+[IMAPFilter](https://github.com/lefcha/imapfilter/) extensively for 
+managing my IMAP accounts across all my computers, I copy the Sup 
+development fork from [Edward 
+Yang](http://gitorious.org/~ezyang/sup/ezyang/commits/maildir-sync/) to 
+provide IMAP Maildir sync. A very minor patch is required to util.rb 
+which, quite likely, is a Debian/[RVM](https://rvm.io/) rubygems issue 
+specific to my system..
+
+`sed -i '1i\`
+`require "iconv"' util.rb`
+
+To run the Sup fork with the sources copied to the /opt/sup/ directory..
+
+`ruby -I/opt/sup/lib /opt/sup/bin/sup`
+
+And when using RVM1.9.1..
+
+`ruby -I/opt/sup/lib -I/usr/lib/ruby/1.9.1/x86_64-linux -I/usr/lib/ruby/1.9.1 /opt/sup/bin/sup`

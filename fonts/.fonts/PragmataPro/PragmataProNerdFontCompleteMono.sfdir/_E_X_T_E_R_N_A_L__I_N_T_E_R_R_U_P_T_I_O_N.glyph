@@ -1,0 +1,21 @@
+StartChar: EXTERNAL_INTERRUPTION
+Encoding: 57354 57354 1644
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+436 -1 m 1,0,-1
+ 589 761 l 1,1,-1
+ 266 646 l 1,2,-1
+ 229 673 l 1,3,-1
+ 333 1541 l 1,4,-1
+ 817 1539 l 1,5,-1
+ 663 1000 l 1,6,-1
+ 1050 1117 l 1,7,-1
+ 1073 1082 l 1,8,-1
+ 524 -1 l 1,9,-1
+ 436 -1 l 1,0,-1
+EndSplineSet
+EndChar

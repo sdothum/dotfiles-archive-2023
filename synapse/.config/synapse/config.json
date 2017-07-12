@@ -1,0 +1,8 @@
+{
+  "ui" : {
+    "global" : {
+      "ui-type" : "default",
+      "show-indicator" : false
+    }
+  }
+}

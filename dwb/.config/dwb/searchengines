@@ -1,0 +1,38 @@
+go  http://www.google.com/search?nomo=1&hl=en&source=hp&q=XXX
+am  http://www.amazon.ca/s/ref=nb_sb_noss?url=search-alias&field-keywords=XXX
+an  http://www.anime-planet.com/anime/all?name=XXX
+ap  https://www.archlinux.org/packages/?sort=&maintainer=&flagged=&arch=any&q=XXX
+ar  http://www.google.com/search?nomo=1&hl=en&source=hp&q=archlinux  XXX
+au  https://aur.archlinux.org/packages/?O=0&C=0&SeB=nd&outdated=&SB=n&SO=a&PP=50&do_Search=Go&K=XXX
+aw  https://wiki.archlinux.org/index.php?title=Special:Search&search=XXX
+bi  http://www.bing.com/search?q=XXX
+bs  http://www.binsearch.net?q=XXX
+bu  http://bugs.debian.org/XXX
+cr  http://crunchbanglinux.org/forums/search/?action=search&keywords=XXX&show_as=topics
+de  http://www.delicious.com/search?p=XXX&user=shum
+di  http://dictionary.reference.com/browse/XXX
+du  http://duckduckgo.com/?q=XXX&t=debian
+ei  http://8tracks.com/explore/songs/XXX
+ge  https://01100111011001010110010101101011.info/search/XXX?t=2000
+gi  https://github.com/search?q=XXX
+ho  http://www.haskell.org/hoogle/?hoogle=XXX
+im  http://www.imdb.com/find?s=all&q=XXX
+ki  http://kat.ph/usearch/XXX  category:movies/
+lu  http://luakit.org/search/index/luakit?q=XXX
+mr  http://www.mrqe.com/search?q=XXX
+ne  https://newztown.co.za/search/XXX?t=2000
+nm  https://nmatrix.co.za/search/XXX
+nz  https://nzbx.co/s?q=XXX
+pr  http://predb.me/?search=XXX
+re  http://www.google.com/search?nomo=1&hl=en&source=hp&q=review XXX
+ro  http://www.rottentomatoes.com/search/?search=XXX
+rs  http://ctrlq.org/rss/
+ru  http://www.google.com/search?nomo=1&hl=en&source=hp&q=rumor XXX
+sf  http://sf.net/search/?words=XXX
+so  http://songza.com/search/?q=XXX
+su  http://www.subtitleseeker.com/search/TITLES/XXX
+th  http://thesaurus.com/browse/XXX
+us  http://usenet-crawler.com/search/XXX?t=2000
+wi  http://en.wikipedia.org/wiki/Special:Search?search=XXX
+yo  http://www.youtube.com/results?search_query=XXX
+wo  http://www.wolframalpha.com/input/?i=XXX

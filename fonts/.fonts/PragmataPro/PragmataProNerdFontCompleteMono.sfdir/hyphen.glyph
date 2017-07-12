@@ -1,0 +1,59 @@
+StartChar: hyphen
+Encoding: 45 45 16
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 2
+MDAP[rnd]
+NPUSHW
+ 3
+ 32
+ 2
+ 1
+DELTAP1
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 47
+ 3
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 3
+MDAP[rnd]
+NPUSHW
+ 5
+ 15
+ 3
+ 31
+ 3
+ 2
+DELTAP1
+PUSHW_2
+ 0
+ 1
+MIRP[rp0,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+815 698 m 1,0,-1
+ 244 698 l 1,1,-1
+ 244 874 l 1,2,-1
+ 815 874 l 1,3,-1
+ 815 698 l 1,0,-1
+EndSplineSet
+Substitution2: "'sinf' Scientific Inferiors in Greek lookup 9 subtable" minussub
+Substitution2: "'sinf' Scientific Inferiors in Cyrillic lookup 8 subtable" minussub
+Substitution2: "'sinf' Scientific Inferiors in Latin lookup 7 subtable" minussub
+Substitution2: "'sups' Superscript lookup 2 subtable" minussuperior
+Substitution2: "'sups' Superscript lookup 1 subtable" minussuperior
+Substitution2: "'sups' Superscript in Latin lookup 0 subtable" minussuperior
+EndChar

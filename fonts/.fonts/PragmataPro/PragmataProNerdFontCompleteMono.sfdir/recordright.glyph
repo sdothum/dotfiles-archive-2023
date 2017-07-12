@@ -1,0 +1,11 @@
+StartChar: recordright
+Encoding: 8471 8471 892
+Width: 1060
+GlyphClass: 3
+Flags: W
+LayerCount: 2
+Fore
+Refer: 1381 9439 N 1 0 0 1 0 0 3
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" parenleft p parenright
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" parenleft P parenright
+EndChar

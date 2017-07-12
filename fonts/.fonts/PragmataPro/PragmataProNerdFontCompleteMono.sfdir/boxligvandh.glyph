@@ -1,0 +1,111 @@
+StartChar: boxligvandh
+Encoding: 9532 9532 1442
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 2
+MDAP[rnd]
+PUSHW_1
+ 6
+MDAP[rnd]
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 2
+SRP0
+PUSHW_2
+ 5
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 8
+MDRP[rp0,grey]
+PUSHW_1
+ 2
+SRP0
+PUSHW_1
+ 11
+MDRP[rp0,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 3
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 3
+ 15
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 1
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 1
+ 19
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 10
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 10
+ 7
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 1
+SRP0
+PUSHW_2
+ 0
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 1
+SRP0
+PUSHW_1
+ 5
+MDRP[rp0,grey]
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 8
+MDRP[rp0,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+0 705 m 1,0,-1
+ 0 871 l 1,1,-1
+ 447 871 l 1,2,-1
+ 447 1950 l 1,3,-1
+ 613 1950 l 1,4,-1
+ 613 871 l 1,5,-1
+ 1060 871 l 1,6,-1
+ 1060 705 l 1,7,-1
+ 613 705 l 1,8,-1
+ 613 -375 l 1,9,-1
+ 447 -375 l 1,10,-1
+ 447 705 l 1,11,-1
+ 0 705 l 1,0,-1
+EndSplineSet
+EndChar

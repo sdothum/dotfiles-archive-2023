@@ -1,0 +1,551 @@
+StartChar: six
+Encoding: 54 54 25
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 7
+MDAP[rnd]
+PUSHW_1
+ 0
+MDAP[rnd]
+NPUSHW
+ 3
+ 48
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 80
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 16
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 143
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 0
+ 7
+ 16
+ 7
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 176
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 96
+ 9
+ 112
+ 9
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 231
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 105
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 12
+ 12
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 42
+ 12
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 168
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 182
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 54
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 88
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 73
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 109
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 47
+ 13
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 140
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 121
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 7
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 20
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 122
+ 14
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 70
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 97
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 112
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 136
+ 17
+ 1
+DELTAP1
+PUSHW_1
+ 7
+SRP0
+PUSHW_2
+ 18
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 128
+ 18
+ 1
+DELTAP1
+PUSHW_1
+ 0
+SRP0
+PUSHW_2
+ 24
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 143
+ 24
+ 1
+DELTAP1
+PUSHW_1
+ 18
+SRP0
+PUSHW_1
+ 29
+MDRP[rp0,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 21
+MDAP[rnd]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 10
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 10
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 3
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 3
+ 5
+MIAP[no-rnd]
+EIF
+NPUSHW
+ 3
+ 130
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 112
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 99
+ 5
+ 115
+ 5
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 128
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 143
+ 8
+ 1
+DELTAP1
+PUSHW_1
+ 10
+SRP0
+PUSHW_1
+ 12
+MDRP[rp0,grey]
+PUSHW_1
+ 12
+MDAP[rnd]
+NPUSHW
+ 3
+ 19
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 5
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 234
+ 12
+ 250
+ 12
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 203
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 109
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 174
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 44
+ 12
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 186
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 70
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 84
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 51
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 34
+ 12
+ 1
+DELTAP1
+PUSHW_1
+ 10
+SRP0
+PUSHW_2
+ 15
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 13
+MDRP[rp0,grey]
+PUSHW_1
+ 13
+MDAP[rnd]
+NPUSHW
+ 5
+ 221
+ 13
+ 237
+ 13
+ 2
+DELTAP1
+NPUSHW
+ 5
+ 191
+ 13
+ 207
+ 13
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 87
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 118
+ 13
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 143
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 91
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 159
+ 23
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 127
+ 23
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 141
+ 23
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 5
+ 23
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 127
+ 25
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 142
+ 25
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 107
+ 25
+ 1
+DELTAP1
+PUSHW_1
+ 21
+SRP0
+PUSHW_2
+ 27
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 100
+ 30
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 86
+ 30
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 115
+ 30
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 129
+ 30
+ 1
+DELTAP1
+PUSHW_1
+ 3
+SRP0
+PUSHW_2
+ 32
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 101
+ 34
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 84
+ 34
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 113
+ 34
+ 129
+ 34
+ 2
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+950 475 m 0,0,1
+ 950 239 950 239 839 109.5 c 128,-1,2
+ 728 -20 728 -20 555 -20 c 0,3,4
+ 394 -20 394 -20 276.5 109.5 c 128,-1,5
+ 159 239 159 239 159 548 c 2,6,-1
+ 159 1014 l 2,7,8
+ 159 1313 159 1313 272 1457.5 c 128,-1,9
+ 385 1602 385 1602 574 1602 c 0,10,11
+ 786 1602 786 1602 922 1386 c 1,12,-1
+ 778 1286 l 1,13,14
+ 711 1442 711 1442 576 1442 c 0,15,16
+ 464 1442 464 1442 400 1350.5 c 128,-1,17
+ 336 1259 336 1259 336 1014 c 2,18,-1
+ 336 794 l 1,19,20
+ 431 968 431 968 608 968 c 0,21,22
+ 762 968 762 968 856 842.5 c 128,-1,23
+ 950 717 950 717 950 475 c 0,0,1
+774 475 m 0,24,25
+ 774 667 774 667 719 737 c 128,-1,26
+ 664 807 664 807 576 807 c 0,27,28
+ 387 807 387 807 336 582 c 1,29,30
+ 336 294 336 294 398.5 217 c 128,-1,31
+ 461 140 461 140 556 140 c 0,32,33
+ 647 140 647 140 710.5 217 c 128,-1,34
+ 774 294 774 294 774 475 c 0,24,25
+EndSplineSet
+Substitution2: "'dnom' Denominators in Greek lookup 15 subtable" .notdef
+Substitution2: "'dnom' Denominators in Cyrillic lookup 14 subtable" .notdef
+Substitution2: "'dnom' Denominators in Latin lookup 13 subtable" .notdef
+Substitution2: "'sinf' Scientific Inferiors in Greek lookup 9 subtable" sixinferior
+Substitution2: "'sinf' Scientific Inferiors in Cyrillic lookup 8 subtable" sixinferior
+Substitution2: "'sinf' Scientific Inferiors in Latin lookup 7 subtable" sixinferior
+Substitution2: "'frac' Diagonal Fractions in Latin lookup 4 subtable" sixsuperior
+Substitution2: "'sups' Superscript lookup 2 subtable" sixsuperior
+Substitution2: "'sups' Superscript lookup 1 subtable" sixsuperior
+Substitution2: "'sups' Superscript in Latin lookup 0 subtable" sixsuperior
+EndChar

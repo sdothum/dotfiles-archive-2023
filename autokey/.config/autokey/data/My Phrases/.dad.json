@@ -1,0 +1,31 @@
+{
+    "usageCount": 4, 
+    "omitTrigger": false, 
+    "prompt": false, 
+    "description": ";dad", 
+    "abbreviation": {
+        "wordChars": "[\\w]", 
+        "abbreviations": [
+            ";dad"
+        ], 
+        "immediate": true, 
+        "ignoreCase": true, 
+        "backspace": true, 
+        "triggerInside": false
+    }, 
+    "hotkey": {
+        "hotKey": null, 
+        "modifiers": []
+    }, 
+    "modes": [
+        1
+    ], 
+    "showInTrayMenu": false, 
+    "matchCase": false, 
+    "filter": {
+        "regex": null, 
+        "isRecursive": false
+    }, 
+    "type": "phrase", 
+    "sendMode": "kb"
+}

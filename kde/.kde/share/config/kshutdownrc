@@ -1,0 +1,14 @@
+[General]
+Selected Action=shutdown
+Selected Trigger=time-from-now
+
+[KDE Action Restrictions]
+action/help_about_kde=false
+action/help_contents=false
+action/help_report_bug=false
+
+[KShutdown Action extras]
+Command=
+
+[KShutdown Trigger time-from-now]
+Date Time=2000,1,1,1,0,0

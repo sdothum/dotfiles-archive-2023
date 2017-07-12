@@ -1,0 +1,81 @@
+distraction free writing applications abound for Windows, Mac OSX and to 
+a lesser extent Linux. Most, aside from a simplified interface and look, 
+simply launch the writing application in fullscreen mode, thereby hiding 
+any other application windows. Some add minimalist backgrounds and can 
+even play contemplative background sounds or mimic old styled typewriter 
+keys, along with rudimentary spellcheck and formatting options.
+
+All nice and dandy. But none, IMO, offer what can be achieved with vim 
+-- both in customization and editing power. The latter is not surprising 
+given vim offers significantly more than the typical WYSIWYG interface 
+of these basic applications. Fortunately, for me, vim enthusiasts have 
+created plugins to implement their vision of a distraction free editing 
+environment for which I have settled on..
+
+- [LiteDFM](http://bilalquadri.com/blog/2013/11/27/removing-distractions-from-vim/) 
+  distraction free mode plugin
+- [Goyo](https://github.com/junegunn/goyo.vim) distraction free mode plugin
+- [Limelight](https://github.com/junegunn/limelight.vim) visual hyper 
+  focus writing plugin
+  
+## litedfm
+
+was the second distraction free plugin I tried and settled on. Similar 
+to [vimroom](http://projects.mikewest.org/vimroom/), it takes a simpler 
+approach by essentially adjusting the left margin and hiding the line 
+numbers -- rather than by manipulating split window regions to perfectly 
+centre the page layout. The left margin indentation is limited by vim to 
+22 characters but is adequate for distraction free coding.
+
+I use LiteDFM exclusively for editing source code so actually prefer to 
+have line numbers showing which requires resetting the line number 
+highlight (which is hidden by default)..
+
+`execute 'highlight LineNr guifg='       . g:dfm_fg_line`
+`execute 'highlight CursorLineNr guibg=' . g:dfm_bg`
+
+[ljust]where, the *g:dfm* variables are colour codes matching my vim 
+colorscheme.
+
+This layout format could ultimately have been defined explicitly in the 
+*.vimrc* configuration but using the plugin is convenient..
+
+![LiteDFM](/images/litedfm.jpg)
+
+## goyo / limelight
+
+used with non-source code files provides a more familiar distraction 
+free layout with page like margins surrounding the text. Combined with 
+Limelight, writing focus can be further enhanced..
+
+![Limelight composing](/images/limelight.jpg)
+
+[ljust]Note: the single UTF-8 character statusline indicator -- a flame 
+symbol, in this example -- flagging an
+unsaved modified file (blank otherwise) for the ultimate informative 
+minimalism.
+
+Prior to using the Limelight plugin, I simply highlighted the cursor 
+line and dimmed all unfocused lines slightly -- easily defined in the 
+*.vimrc* configuration -- which was effective. But combining cursor line 
+highlighting within paragraph (range configurable) highlighting is even 
+better IMO. 
+
+Full page proofing mode presents an easily readable text page..
+
+![Goyo](/images/goyo.jpg)
+
+[ljust]with filename and word count statusline -- little details that 
+are not configurable with other distraction free applications. (Of 
+course, some applications may have other features that are of importance 
+to you.)
+
+My setup does not automatically invoke fullscreen mode. Toggling 
+herbstluftwm into the custom monocle view is easily enough done. More 
+often than not, while writing wiki articles in particular, I have 
+a browser open adjacently for quick review of the markdown content. 
+
+One's personal workflow is what counts. And distraction free 
+applications can play a part in that.
+ 
+

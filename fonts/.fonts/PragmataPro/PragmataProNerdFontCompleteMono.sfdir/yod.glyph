@@ -1,0 +1,58 @@
+StartChar: yod
+Encoding: 1497 1497 760
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 5
+MDAP[rnd]
+PUSHW_1
+ 1
+SRP0
+PUSHW_2
+ 9
+ 3
+MIRP[rp0,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+MDAP[rnd]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 6
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 6
+ 9
+MIAP[no-rnd]
+EIF
+PUSHW_2
+ 4
+ 1
+MIRP[rp0,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+613 513 m 1,0,-1
+ 613 734 l 2,1,2
+ 613 972 613 972 447 1003 c 2,3,-1
+ 267 1037 l 1,4,-1
+ 267 1172 l 1,5,-1
+ 394 1172 l 1,6,-1
+ 457 1160 l 2,7,8
+ 790 1097 790 1097 790 734 c 2,9,-1
+ 790 513 l 1,10,-1
+ 613 513 l 1,0,-1
+EndSplineSet
+EndChar

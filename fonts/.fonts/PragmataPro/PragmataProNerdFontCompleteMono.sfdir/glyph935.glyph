@@ -1,0 +1,25 @@
+StartChar: glyph935
+Encoding: 8722 8722 935
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+SVTCA[y-axis]
+PUSHW_3
+ 3
+ 0
+ 3
+CALL
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+970 707 m 1,0,-1
+ 89 707 l 1,1,-1
+ 89 873 l 1,2,-1
+ 970 873 l 1,3,-1
+ 970 707 l 1,0,-1
+EndSplineSet
+EndChar

@@ -1,0 +1,23 @@
+settings for..
+
+## debian linux
+
+reboot after modifying..
+
+`sed -i 's/XKBVARIANT=""/XKBVARIANT="colemak"/' /etc/default/keyboard`
+
+## windows 8
+
+install [Colemak](http://colemak.com/wiki/index.php?title=Windows). Then..
+
+- open Control Panel → Clock, Language, and Region → Language → Advanced
+  Settings
+
+    - under "Override for Windows display language"
+        - choose "Use language list (recommended)"
+        - click "Apply language settings to the welcome screen..."
+        - under "Administrative" tab
+            - click "Copy settings"
+
+    - under "Override for default input method"
+        - select "Colemak..."

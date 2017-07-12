@@ -1,0 +1,24 @@
+homeopathic software comes with cost and the most annoying hardware 
+license protection schemes -- I don't know what that says about 
+homeopaths at large!
+
+## pre-install
+
+for Windows 8..
+
+* download the most recent 64-bit version of [CodeMeter
+  Runtime](http://www.wibu.com/en-us/downloads-user-software.html) and
+  copy into the /Others/Protection/Windows/ install folder before
+  installing (otherwise, an "invalid signal error" will be encountered)
+
+* copy install folder onto Windows desktop (install will not work from a
+  network drive)
+
+## activation
+
+manually launch c:/RadarOpus/activator
+
+* activation key for version 1.32  
+**UNPEK-9NN9J-2EL72-BS8HV-PLWBM**
+
+* enter serial number

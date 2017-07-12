@@ -1,0 +1,8 @@
+email to leslie and geoff regarding ohip coverage in lieu of mom's relocation
+
+1080p laptops
+
+to change shell do syntax to 
+while/for ... ;do
+
+sed -e :a -e '$!N;s/\n *do *$/ ;do/;ta' -e 'P;D'  FILE

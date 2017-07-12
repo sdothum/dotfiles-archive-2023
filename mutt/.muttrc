@@ -1,0 +1,31 @@
+# ~/.mutt/muttrc
+# Main configuration based on
+# http://www.physics.drexel.edu/liki/index.php/Mutt
+
+# this is where your local mail directory is located
+set mbox_type = Maildir
+set folder = ~/.mail
+# cache headers for faster startup
+set header_cache = ~/.mail/cache/headers
+
+# the list of mailboxes created by offlineimap
+# source ~/.mutt/mailboxes
+source ~/.mutt/mailboxesrc
+# macro index,pager $ "<shell-escape>offlineimap -o<enter>" "synchronize mailboxes"
+
+# other global configuration files to include
+source ~/.mutt/commonrc
+# source ~/.mutt/colorsrc
+# source ~/.mutt/my.solarized-dark-256.muttrc
+source ~/.mutt/my.solarized-light-256.muttrc
+source ~/.mutt/extensionsrc
+#source ~/.mutt/pgprc
+
+# the inbox that will open by default
+set spoolfile = "+sdothum/gmail"
+folder-hook +sdothum/.* "source ~/.mutt/gmailrc"
+folder-hook +bodyshamanics/.* "source ~/.mutt/bodyshamanicsrc"
+folder-hook +comments/.* "source ~/.mutt/commentsrc"
+folder-hook +steven/.* "source ~/.mutt/stevenrc"
+folder-hook +thedarnedestthing/.* "source ~/.mutt/sdothumrc"
+folder-hook +webmaster/.* "source ~/.mutt/webmasterrc"

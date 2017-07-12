@@ -1,0 +1,69 @@
+StartChar: dotmacron
+Encoding: 65540 -1 2650
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 6
+MDAP[rnd]
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 12
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 6
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,min,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 13
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 13
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 9
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 13
+SRP0
+PUSHW_1
+ 14
+MDRP[rp0,min,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+645 1384 m 0,0,1
+ 645 1338 645 1338 612.5 1303.5 c 128,-1,2
+ 580 1269 580 1269 529 1269 c 0,3,4
+ 479 1269 479 1269 446.5 1303.5 c 128,-1,5
+ 414 1338 414 1338 414 1384 c 0,6,7
+ 414 1431 414 1431 446.5 1465 c 128,-1,8
+ 479 1499 479 1499 529 1499 c 0,9,10
+ 580 1499 580 1499 612.5 1465 c 128,-1,11
+ 645 1431 645 1431 645 1384 c 0,0,1
+886 1580 m 1,12,-1
+ 173 1580 l 1,13,-1
+ 173 1704 l 1,14,-1
+ 886 1704 l 1,15,-1
+ 886 1580 l 1,12,-1
+EndSplineSet
+EndChar

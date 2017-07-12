@@ -1,0 +1,32 @@
+# jumanji configuration
+# search engines
+searchengine ggl http://www.google.com/search?q=%s
+searchengine wiki http://en.wikipedia.org/w/index.php?search=%s
+# browser settings
+set homepage http://thedarnedestthing
+set auto_save 60
+set single_instance true
+# Use privoxy for adblocking
+set proxy localhost:8118 
+# look n feel
+# set font monospace normal 9
+set width 1024
+set height 600
+set statusbar false
+# set stylesheet file:///home/shum/.config/jumanji/style.css 
+# follow hints
+# script ~/.config/jumanji/scripts/hints.js
+# downloads
+set download_dir ~/downloads/
+# set download_command terminator -e "/usr/bin/wget --load-cookies ~/.config/jumanji/cookies '%s' -O '%s'";
+# keybindings
+map <C-,> 	nav_history previous
+map <C-.> 	nav_history next
+map <C-i> 	zoom in
+map <C-o> 	zoom out
+map <C-g>h 	goto_homepage
+map <C-g>p 	goto_parent_dir
+#
+# readable hotkey
+#
+map <F4> script (function(){_readableOptions={'text_font':'Helvetica,%20quote(Helvetica%20Neuve),%20Arial,%20Tahoma,%20sans-serif','text_font_monospace':'quote(Latin%20Modern%20Mono%20Caps)','text_font_header':'Helvetica','text_size':'14px','text_line_height':'1.5','box_width':'30em','color_text':'#FFFFFF','color_background':'#404040','color_links':'#00EEFF','text_align':'normal','base':'web_readability','custom_css':''};if(document.getElementsByTagName('body').length>0);else{return;}if(window.$readable){if(window.$readable.bookmarkletTimer){return;}}else{window.$readable={};}window.$readable.bookmarkletTimer=true;window.$readable.options=_readableOptions;if(window.$readable.bookmarkletClicked){window.$readable.bookmarkletClicked();return;}_readableScript=document.createElement('script');_readableScript.setAttribute('src','http://readable-static.tastefulwords.com/target.js?rand='+encodeURIComponent(Math.random()));document.getElementsByTagName('body')[0].appendChild(_readableScript);})()

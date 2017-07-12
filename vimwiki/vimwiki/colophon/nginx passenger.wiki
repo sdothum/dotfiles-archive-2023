@@ -1,0 +1,29 @@
+this site now uses the [Nginx](http://wiki.nginx.org/Main) HTTP server 
+with the [Phusion Passenger](https://www.phusionpassenger.com/) 
+application server. This simplifies the Nginx configuration 
+considerably whilst adding the deployment benefits of Phusion Passenger, 
+notably, being able to promote site wide enhancements without needing to 
+restart the Nginx HTTP server.
+
+Adding Phusion Passenger to an existing Ruby/Gems environment couldn't 
+be simpler..
+
+`gem install passenger`
+`passenger-install-nginx-module`
+
+This particular web site follows the default convention for deploying 
+[Sinatra](http://www.sinatrarb.com/) applications. The [Nginx 
+proxy][nginx proxy] configuration is now reduced to..
+
+`server {`
+`^  listen 80;`
+`^  server_name thedarnedestthing.com;`
+`^  root /srv/www/thedarnedestthing.com/application/public;`
+`^  passenger_enabled on;`
+`}`
+
+The only oddity along the way I discovered with the migration to Phusion 
+Passenger was that inline [Slim](http://slim-lang.com/) HTML templates 
+no longer appeared to work and required that template specifications 
+reside in the standard _application/views_ folder. Not a bad thing, but 
+it did have me scratching my head for awhile.

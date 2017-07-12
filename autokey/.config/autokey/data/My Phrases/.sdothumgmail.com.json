@@ -1,0 +1,31 @@
+{
+    "type": "phrase",
+    "prompt": false,
+    "modes": [
+        1
+    ],
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    },
+    "matchCase": false,
+    "abbreviation": {
+        "abbreviations": [
+            "ssd"
+        ],
+        "wordChars": "[\\w]",
+        "backspace": true,
+        "immediate": true,
+        "triggerInside": false,
+        "ignoreCase": false
+    },
+    "omitTrigger": false,
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
+    "showInTrayMenu": false,
+    "description": "sdothum@gmail.com",
+    "sendMode": "kb",
+    "usageCount": 0
+}

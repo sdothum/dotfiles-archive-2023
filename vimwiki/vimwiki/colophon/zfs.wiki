@@ -1,0 +1,174 @@
+i migrated from mdadm/XFS to [ZFS][zfs] once I discovered an 
+alternative to ZFS-fuse, the standard ZFS Debian package (whose 
+performance and feature set were dated). ZFS had been limited to Solaris 
+and FreeBSD prior to [ZFS on Linux](http://zfsonlinux.org/) as a kernel 
+module.
+
+ZFS obviates the need for mdadm and LVM, allows creating volumes (pools) 
+using persistent device-ids, data checksum and self-healing, 
+deduplication, on the fly compression, file system management and a host 
+of other features. In short, everything that Linux 
+[btrfs](https://btrfs.wiki.kernel.org/index.php/Main_Page) hopes to be 
+and then some.
+
+The only downside is that ZFS is unlikely to ever be part of a native 
+Linux kernel because of licensing conflicts, despite being open source, 
+which makes a full ZFS root installation rather involved. But ZFS on 
+Linux provides a kernel module which allows it to be utilized for my 
+primary need: RAID storage of my media, backup snapshots and software 
+depot.
+
+## install kernel modules
+
+make a source directory for downloading and compiling the SPL and ZFS 
+modules..
+
+`wget http://github.com/downloads/zfsonlinux/spl/spl-0.6.2.tar.gz`
+`apt-get install build-essential gawk alien fakeroot linux-headers-(uname -r)`
+`tar -xf spl-0.6.2.tar.gz`
+`cd spl-0.6.2`
+`./configure`
+`make deb`
+`sudo dpkg -i *.deb`
+`^ `
+`wget http://github.com/downloads/zfsonlinux/zfs/zfs-0.6.2.tar.gz`
+`apt-get install zlib1g-dev uuid-dev libblkid-dev libselinux-dev parted 
+lsscsi`
+`tar -xf zfs-0.6.2.tar.gz`
+`cd zfs-0.6.2`
+`./configure`
+`make deb`
+`sudo dpkg -i *.deb`
+
+The manual build is currently required for Linux kernels greater than 
+3.9. For Linux kernel 3.9, a Debian package, courtesy of the ZFS On 
+Linux contributors may be used instead..
+
+`sudo wget 
+http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_1%7Ewheezy_all.deb`
+`sudo dpkg -i zfsonlinux_1~wheezy_all.deb`
+`sudo apt-get update`
+`sudo apt-get -y install debian-zfs`
+
+## create a raid10 array
+
+ZFS allows you to create any number of RAID configurations. I always 
+seem to migrate back to RAID level 10 for its simplicity, performance 
+and less stressful impact on the array when resilvering needs to be done 
+(when a failed drive is replaced).
+
+Get the list of device-ids from /dev/disk/by-id/.. and optimally order 
+your mirrors so that disks of varying age and model (which you can 
+determine from the device-ids) are paired to minimize the risk of losing 
+a mirrored pair simutaneously or during a rebuild.
+
+No partitioning of the drives is necessary, ZFS takes care of that all 
+for you. To create an 8 disk 4TB RAID10 pool named _tank_ and a mount 
+point named /net (the default is /pool)..
+
+`sudo zpool create -o ashift=12 tank \`
+`mirror \`
+`scsi-SATA_ST1000DM005_HD1S246J9EC314043 \`
+`scsi-SATA_SAMSUNG_HD103SJS246JDWZ105419 \`
+`mirror \`
+`scsi-SATA_SAMSUNG_HD103UJS13PJDWS612178 \`
+`scsi-SATA_SAMSUNG_HD103SJS246JDWZ105420 \`
+`mirror \`
+`scsi-SATA_SAMSUNG_HD103SJS246J1KSA14245 \`
+`scsi-SATA_ST1000DM005_HD1S246J90C332795 \`
+`mirror \`
+`scsi-SATA_ST1000DM005_HD1S246J9FC320076 \`
+`scsi-SATA_SAMSUNG_HD103UJS13PJDWS612179 \`
+`-m /net`
+
+## monitor the array
+
+`zpool status`
+`zpool iostat [interval [count]]`
+`zdb -C`
+`zfs list`
+`zfs get all`
+`zfs history`
+
+Monitor the health of the physical disks with [smartmontools][].
+
+## restore a pool
+
+if a pool has disappeared upon a reboot, for example, after a power 
+failure, and doesn't show with a zpool status or zfs list, the pool can 
+be listed and restored with..
+
+`zpool import`
+`zpool import -f tank`
+
+The import may need to be forced because zfs may think the pool is in 
+use by another system preventing its import in the first place.
+
+If the zpool.cache somehow becomes stale and all the pools are not 
+mounting at boot, refresh the zpool.cache with..
+
+`zpool export tank`
+`zpool import tank`
+
+## remove and replace (failed) drives
+
+`zpool replace -f tank [device-id] [with device-id]`
+
+If a drive is beginning to show signs of imminent failure, you can issue 
+the replace command to insert a new drive instead of removing the 
+defective drive with the offline command and triggering a resilver by 
+adding a new drive to the mirror.
+
+If larger capacity drives have been inserted into the pool and 
+autoexpand is not set on, issue the online command to expand the pool by 
+the size of the new drives with..
+
+`zpool online -e tank [device-id]`
+
+## rebuild an array
+
+`zpool scrub tank`
+
+Note: resilvering an array is I/O intensive.
+
+## touching the surface
+
+ZFS has a large set of commands available using the zpool and zfs 
+commands for exporting, importing and upgrading pools, creating 
+filesystems (essentially logical volumes), setting the attributes of a 
+filesystem (compression, size, share status, mount point, etc.) and for 
+destroying (removing) filesystems and pools, etc. For example..
+
+`zfs create tank/[filesystem]`
+`zfs set compression=on tank/[filesystem]`
+`zfs set dedup=off tank`
+`zfs set autoexpand=on tank`
+`zfs set mountpoint=/[mountpoint] tank/[filesystem]`
+`zfs rename tank/[filesystem] tank/[to filesystem]`
+`zfs unmount tank/[filesystem]`
+`zfs destroy tank/[filesystem]`
+`zpool destroy tank`
+
+Furthermore, you can tweak performance with the inclusion of SSD drives 
+for caching and logging -- its performance for me is fine as is so I 
+have not been compelled to go down that path. ZFS uses gobs of RAM but 
+its feature set and performance outclass any hardware specific RAID 
+controller, whilst being non-proprietary. Plus it is all administered 
+from the OS and makes doing so, so much simpler than the conventional 
+method of partitioning drives, using mdadm and LVM, formatting for a 
+particular filesystem and reparing it as required, etc. -- a win win.
+
+## create raid0 backup
+
+`zpool create pond \`
+`scsi-SATA_WD_My_BookWU2Q10098319 \`
+`scsi-SATA_WDC_WD10EARX-00_WD-WCC0T0755003 \`
+`-m /bkup`
+`^ `
+`zfs set compression=on pond`
+`zfs set dedup=off pond`
+
+Using some spare drives lying around, a 4TB RAID0 pool from 2TB and 
+2 1TB drives were created to provide a backup volume for the RAID10 pool 
+above. (You can never have too many backups -- even of a redundant 
+array). How easy is that!

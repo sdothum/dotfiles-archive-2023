@@ -1,0 +1,8 @@
+[$Version]
+update_info=kfmclient_3_2.upd:kfmclient_3_2
+
+[HTML Settings]
+AutomaticDetectionLanguage=1
+
+[Undo]
+Number of Closed Windows=11

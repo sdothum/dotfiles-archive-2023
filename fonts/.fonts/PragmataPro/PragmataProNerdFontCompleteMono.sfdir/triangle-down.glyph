@@ -1,0 +1,14 @@
+StartChar: triangle-down
+Encoding: 62539 62539 2561
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+0 1154 m 1,0,-1
+ 530 386 l 1,1,-1
+ 1060 1154 l 1,2,-1
+ 0 1154 l 1,0,-1
+EndSplineSet
+EndChar

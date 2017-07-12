@@ -1,0 +1,239 @@
+# General information.  See the fully annotated example more information
+# https://github.com/jgoerzen/offlineimap/blob/master/offlineimap.conf
+
+# ...................................................................... General
+
+[general]
+metadata = ~/.offlineimap
+# accounts = sdothum,bodyshamanics,comments,steven,thedarnedestthing,webmaster
+# maxsyncaccounts = 6
+accounts = sdothum,bodyshamanics,comments,steven,thedarnedestthing,webmaster,patricia
+maxsyncaccounts = 7
+ignore-readonly = no
+socktimeout = 60
+fsync = no
+# see post_install offlineimap
+# pythonfile = /home/shum/bin/functions/mail/imap_keyring
+
+# wheezy release changed ui keywords to lower!
+# disable verbose output for cron
+#ui = TTY.TTYUI
+#ui = ttyui
+#ui = CURSES.BLINKENLIGHTS
+#ui = blinkenlights
+# */5 * * * * exec /usr/local/bin/start-daemon -n19 -c2 -p7 python /usr/bin/offlineimap
+#ui = quiet
+ui = basic
+
+# for mutt folderlist only
+# [mbnames]
+# enabled = yes
+# filename = ~/.mutt/mailboxes
+# header = "mailboxes "
+# peritem = "+%(accountname)s/%(foldername)s"
+# sep = " "
+# footer = "\n"
+
+# ..................................................................... Accounts
+
+[Account sdothum]
+localrepository = local-sdothum
+remoterepository = remote-sdothum
+autorefresh = 1
+quick = -1
+# Call imapfilter to perform filtering on the mailbox after synching
+# postsynchook = imapfilter -v -c ~/.imapfilter/dovecot.lua >> /tmp/imapfilter.log
+
+[Account bodyshamanics]
+localrepository = local-bodyshamanics
+remoterepository = remote-bodyshamanics
+autorefresh = 10
+quick = -1
+
+[Account comments]
+localrepository = local-comments
+remoterepository = remote-comments
+autorefresh = 1
+quick = -1
+
+[Account steven]
+localrepository = local-steven
+remoterepository = remote-steven
+autorefresh = 10
+quick = -1
+
+[Account thedarnedestthing]
+localrepository = local-thedarnedestthing
+remoterepository = remote-thedarnedestthing
+autorefresh = 10
+quick = -1
+
+[Account webmaster]
+localrepository = local-webmaster
+remoterepository = remote-webmaster
+autorefresh = 10
+quick = -1
+
+[Account patricia]
+localrepository = local-patricia
+remoterepository = remote-patricia
+autorefresh = 1
+quick = -1
+
+# Repositories ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+# see .imapfilter/dovecot.lua
+
+# ...................................................................... sdothum
+
+[Repository local-sdothum]
+type = Maildir
+localfolders = /home/shum/Maildir/sdothum
+sep = /
+
+[Repository remote-sdothum]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = sdothum@gmail.com
+# remotepasseval = imap_password("offlineimap", "sdothum@gmail.com")
+remotepass = maaike00
+maxconnections = 3
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['SENT', '[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/sent', '[Gmail]/Sent Mail' '[Gmail]/Starred']
+
+# ............................................................ thedarnedestthing
+
+[Repository local-thedarnedestthing]
+type = Maildir
+localfolders = /home/shum/Maildir/thedarnedestthing
+sep = /
+
+[Repository remote-thedarnedestthing]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = sdothum@thedarnedestthing.com
+# remotepasseval = imap_password("offlineimap", "sdothum@thedarnedestthing.com")
+remotepass = maaike00
+maxconnections = 2
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/Starred', '[Gmail]/Trash']
+
+# ................................................................ bodyshamanics
+
+[Repository local-bodyshamanics]
+type = Maildir
+localfolders = /home/shum/Maildir/bodyshamanics
+sep = /
+
+[Repository remote-bodyshamanics]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = bodyshamanics@thedarnedestthing.com
+# remotepasseval = imap_password("offlineimap", "bodyshamanics@thedarnedestthing.com")
+remotepass = maaike01
+maxconnections = 2
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/Starred', '[Gmail]/Trash']
+
+# ..................................................................... comments
+
+[Repository local-comments]
+type = Maildir
+localfolders = /home/shum/Maildir/comments
+sep = /
+
+[Repository remote-comments]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = comments@thedarnedestthing.com
+# remotepasseval = imap_password("offlineimap", "comments@thedarnedestthing.com")
+remotepass = maaike02
+maxconnections = 2
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/Starred', '[Gmail]/Trash']
+
+# ....................................................................... steven
+
+[Repository local-steven]
+type = Maildir
+localfolders = /home/shum/Maildir/steven
+sep = /
+
+[Repository remote-steven]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = steven@thedarnedestthing.com
+# remotepasseval = imap_password("offlineimap", "steven@thedarnedestthing.com")
+remotepass = maaike03
+maxconnections = 2
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/Starred', '[Gmail]/Trash']
+
+# .................................................................... webmaster
+
+[Repository local-webmaster]
+type = Maildir
+localfolders = /home/shum/Maildir/webmaster
+sep = /
+
+[Repository remote-webmaster]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = webmaster@thedarnedestthing.com
+# remotepasseval = imap_password("offlineimap", "webmaster@thedarnedestthing.com")
+remotepass = maaike04
+maxconnections = 2
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/Starred', '[Gmail]/Trash']
+
+# ..................................................................... patricia
+
+[Repository local-patricia]
+type = Maildir
+localfolders = /home/shum/Maildir/patricia
+sep = /
+
+[Repository remote-patricia]
+type = Gmail
+remotehost = imap.gmail.com
+auth_mechanisms = LOGIN
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = phdotconsulting@gmail.com
+# remotepasseval = imap_password("offlineimap", "phdotconsulting@gmail.com")
+remotepass = integrated
+maxconnections = 2
+holdconnectionopen = no
+keepalive = 60
+realdelete = no
+folderfilter = lambda foldername: foldername not in ['SENT', '[Gmail]/All Mail', '[Gmail]/Chats', '[Gmail]/Important', '[Gmail]/Starred', '[Gmail]/Trash', 'Healing', 'Healing/Healing 2016', 'Junk E-mail', 'Kindle', "Mom's death July 7, 2013", 'ProServices', 'Sairin', 'S. Sivananda', 'Steven']

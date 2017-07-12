@@ -1,0 +1,32 @@
+changes continue. Lots of them, both hardware and software. New 
+[Poker 2][keyboards#poker-2] keyboard, stabilized overclocked 
+motherboard.. and, not least of which, a new window manager, 
+[herbstluftwm][].
+
+The look of the colophon section, in particular, has changed 
+significantly, for anyone perusing code. I still eschew the convention 
+of scrolling code block windows, just because I like to see all the code 
+at a glance (so I can catch typos) -- but, hopefully, it is better 
+formatted and highlighted now.
+
+The result of all these changes is that corrections and amendments have 
+been made to the site. As stated elsewhere, the nature of the site 
+engine is that any amendments to content update the chronological order 
+of information presented by the site. Sometimes, material will be pushed 
+out, and amended for a time afterwards -- not exactly how a publication 
+works normally, but this whole site is probably the furthest from 
+normal..
+
+The many small editing changes, in particular, to the colophon section 
+has resulted in many articles' chronological order being altered, even 
+for minor alterations -- there is a mechanism built into the site to 
+accommodate such actions but forgot to take a snapshot, doh! So anyone 
+following the coding side of things, spot the changes, if you can 
+-- there were no coding corrections, though..
+
+So, that's it. There was a bit of push to get some technical content 
+written up, more to test the site changes, than anything. I hope to 
+return to the primary purpose of the site, the nature of our collective 
+[story][about the story]..
+
+

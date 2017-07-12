@@ -1,0 +1,38 @@
+p + p { text-indent: 0.0em; }
+
+div#results h2:first-child { margin-top: 0; }
+
+#results h2 a { color: #aaa; }
+
+.article a, a.article {
+  font-family: Verdana,Geneva,"DejaVu Sans",sans-serif;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #ccc;
+}
+
+.opening a:hover { background-color: #ddd; }
+
+#results { margin-top: 2.0em; }
+
+#results .article a {
+  font-family: Verdana,Geneva,"DejaVu Sans",sans-serif;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #fcc;
+  padding-bottom: 1px;
+}
+
+#results .article, #results .opening { line-height: 1.0em; }
+
+span.block a {
+  font-family: Verdana,Geneva,"DejaVu Sans",sans-serif;
+  display: block;
+}
+
+span.thread {
+  font-size: 0.85em;
+  color: #999;
+}
+
+span.comments { color: #c77070 !important; }

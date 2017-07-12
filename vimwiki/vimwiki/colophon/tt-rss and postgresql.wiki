@@ -1,0 +1,77 @@
+when Google killed its Google Reader service, the hunt for an alternate 
+aggregator service began. I and everyone else who were used to Google's 
+free service were now scrambling to other providers, many whose servers 
+were not prepared for the influx of new users. Further service 
+disruptions and performance constraints eventually led to the idea of 
+hosting my own aggregator and be done with it.
+
+[Tiny Tiny RSS](http://tt-rss.org/redmine/projects/tt-rss/wiki), or 
+tt-rss, to the rescue. Relatively straight forward to install with 
+several useful plugin extensions and skinning to boot. When I consider 
+all the hours spent repeatedly customizing CSS templates for Google 
+Reader to get the clean look and layout I prefer, every time Google 
+altered their service, I wonder how it took me so long to find tt-rss 
+which betters what I was trying to replace!
+
+I use tt-rss with [PostgreSQL](http://www.postgresql.org/). Version 
+upgrades to PostgreSQL are to be expected on Debian Sid, requiring that 
+the database be migrated, if you want to keep your Sid install current. 
+
+## back up the database
+
+Before updating the PostgreSQL packages..
+
+`su - postgres`
+`pg_dumpall > dump.sql`
+`exit`
+`# make a safe copy of the data`
+`cp ~postgres/dump.sql $HOME/`
+
+Exporting the tt-rss OPML data might not be a bad idea to do at this 
+time as well.
+
+## update postgresql
+
+`sudo apt-get purge postgresql-<old.version>`
+`sudo apt-get install postgresql-<new.version>`
+`# backup client authentication file and change socket authentication 
+method`
+`sudo cp
+/etc/postgresql/<new.version>/main/pg_hba.conf
+/etc/postgresql/<new.version>/main/pg_hba.conf.dist`
+`sudo sed -i 's/^\(local *all *all *\) peer/\1 md5/' 
+/etc/postgresql/<new.version>/main/pg_hba.conf`
+
+Purging the old version of PostgreSQL will also remove the old database.
+
+## restore the database
+
+`su - postgres`
+`psql < dump.sql`
+`exit`
+`# remove copies of the data`
+`sudo rm ~postgres/dump.sql $HOME/dump.sql`
+
+## gotchas
+
+If a Debian distribution upgrade is made, upgrading PostgreSQL before 
+the above steps are taken -- it happens -- a second PostgreSQL instance 
+will be created utilizing a different port. _kill_ the newer instance 
+(as stopping the PostgreSQL service will terminate both server 
+instances)..
+
+`ps -ef | grep postgresql`
+`sudo kill <newer.pid>`
+
+Backup the data and then purge the older PostgreSQL package (which will 
+stop the remaining PostgreSQL instance and remove its associated 
+database).
+
+Restore the default PostgreSQL port configuration (which the existing 
+tt-rss configuration references) and restart the upgraded PostgreSQL 
+server.. 
+
+`sudo sed -i 's/port = 543./port = 5432/' /etc/postgresql/<new.version>/main/postgresql.conf`
+`sudo /etc/init.d/postgresql start`
+
+Restore the database and you are ready to go!

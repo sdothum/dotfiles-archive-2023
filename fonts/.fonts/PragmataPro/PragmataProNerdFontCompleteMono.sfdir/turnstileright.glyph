@@ -1,0 +1,19 @@
+StartChar: turnstileright
+Encoding: 8867 8867 1080
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+768 392 m 1,0,-1
+ 768 713 l 1,1,-1
+ 66 713 l 1,2,-1
+ 66 869 l 1,3,-1
+ 768 869 l 1,4,-1
+ 768 1190 l 1,5,-1
+ 934 1190 l 1,6,-1
+ 934 392 l 1,7,-1
+ 768 392 l 1,0,-1
+EndSplineSet
+EndChar

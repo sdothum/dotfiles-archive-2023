@@ -1,0 +1,49 @@
+are erased every time the firmware for the camera is updated. Who can 
+complain, considering the post end-of-product-life [support 
+Fuji](http://www.fujifilm.com/support/digital_cameras/software/firmware/x/finepix_x100/index.html) 
+has provided, which is unheard of in this digital age of disposable 
+electronic appliances!
+
+My current custom jpeg settings..
+
+## custom 1
+
+| setting         |             |
+|-----------------|-------------|
+| iso             | 200         |
+| dynamic range   | auto        |
+| film simulation | astia       |
+| white balance   | auto        |
+| color           | medium-high |
+| sharpness       | hard        |
+| highlight tone  | soft        |
+| shadow tone     | standard    |
+| noise reduction | low         |
+
+## custom 2
+
+| setting         |                   |
+|-----------------|-------------------|
+| iso             | 200               |
+| dynamic range   | auto              |
+| film simulation | b&w yellow filter |
+| white balance   | auto              |
+| color           | --                |
+| sharpness       | hard              |
+| highlight tone  | medium-soft       |
+| shadow tone     | medium-hard       |
+| noise reduction | low               |
+
+## custom 3
+
+| setting         |                |
+|-----------------|----------------|
+| iso             | 200            |
+| dynamic range   | auto           |
+| film simulation | b&w red filter |
+| white balance   | auto           |
+| color           | --             |
+| sharpness       | hard           |
+| highlight tone  | standard       |
+| shadow tone     | hard           |
+| noise reduction | low            |

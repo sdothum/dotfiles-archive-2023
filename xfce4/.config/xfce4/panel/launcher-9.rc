@@ -1,0 +1,12 @@
+[Entry 0]
+Name=File Manager
+Comment=Manage files and folders
+Icon=Thunar
+Exec=thunar
+Terminal=false
+StartupNotify=true
+
+[Global]
+MoveFirst=false
+ArrowPosition=0
+

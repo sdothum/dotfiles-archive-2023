@@ -1,0 +1,15 @@
+deployment has become a project of its own -- got the vps server running the
+[Sinatra](http://www.sinatrarb.com/) application with a hasty
+[Nginx](http://wiki.nginx.org/Main) proxy configuration (that still 
+managed to
+take more time than I anticipated). Sleep does wonders and the configuration is
+what it should be in the morning -- clean and simple.
+
+I thought the day would end with a clean up of the startup scripts, in
+anticipation of rolling out future site enhancements. Then I discovered
+[Phusion Passenger](https://www.phusionpassenger.com/) which simplified 
+my
+Nginx/Sinatra configuration further -- albeit with a complete rebuild of the
+[Nginx](http://wiki.nginx.org/Main) server -- whilst adding some 
+deployment
+niceties (you have to be a dork..)

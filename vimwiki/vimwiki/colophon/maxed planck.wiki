@@ -1,0 +1,116 @@
+no sooner said, than undone.. or at least revisited! Taking advantage of 
+the QMK firmware, keys have been overloaded with complimentary modifier, 
+one shot and double tap actions to increase the power of each layer. 
+
+With redundant, albeit conveniently placed, modifiers accessible with 
+the left and right hand pinkies, it did not take long to realize that 
+these keys could instead be defined as multi-key modifiers, simplifying 
+key chords immensely and providing a much broader set of modifier keys 
+around the perimeter of the keyboard. Strangely, it takes a bit of 
+getting used to, disengaging from the memorized finger contortions 
+necessary for holding down common modifier key combinations. But, taking 
+advantage of
+the common chords used for desktop navigation and editing, it should be 
+short order to adapt to the new and reduced fingering sequences.
+
+The ease of defining [double tap keys][planck 
+refactored#double-tap-keys] with the Planck keyboard, further allows 
+extending the character set of each layer by overloading the keys, 
+thereby, lessening the need to switch between the number and symbol 
+layers, and favouring single hand entry. This is particularly useful for 
+entering number values, and constructing [regular 
+expressions](https://en.wikipedia.org/wiki/Regular_expression) during 
+coding. While working with regular expressions precludes touch typing, 
+due to the forethought that is necessary, not needing to alternate 
+layers is advantageous and feels more fluid.. with practice.
+
+Regardless, the firmware coding cost is minimal, so why not!
+
+The following legends illustrate the Planck layers resulting from the 
+application of this added functionality. Pink keys toggle layers and are 
+shown as red keys while depressed. Cyan keys are one shot keys. Purple 
+keys are double tap keys. Light green keys without legends inherit the 
+defined key on the default Colemak layer. Blank light grey keys have no 
+key action for the layer.
+
+## default colemak layer
+
+and modifier keys..
+
+![Default Colemak layer](/images/keyboard-layout-default.jpg)
+
+Modifiers when held down or depressed as one shot keys are available in 
+left/right hand positions for ease of constructing multi-key chords. The 
+multi-key pinkie modifiers **Shift-GUI**, **Shift-Alt**, **Ctrl-Alt** 
+and **Ctrl-Shift**, along with one shot keys are particularly useful for 
+simplifying complex key chords.
+
+Double tapping the **Quote** inserts enclosing **Double Quote**'s.
+
+## number layer
+
+and double tap keys..
+
+![Number layer](/images/keyboard-layout-number.jpg)
+
+Double tap symbols to type numeric values such as hexadecimal color 
+constants, dollar amounts, percentages, binary values, etc. Numeric 
+arrays and lists are easily entered without needing to switch layers.
+
+Normalizing the common key pairs between the number and symbol layers, 
+and the default Colemak layer, eases finger memory. The familiar numeric 
+keypad layout (with the uniquely added hexadecimal extension) is easily 
+adapted to without effort.
+
+## symbol layer
+
+and double tap and one shot modifier keys..
+
+![Symbol layer](/images/keyboard-layout-symbol.jpg)
+
+Double tap symbols and numbers to construct regular expressions for 
+programming and text manipulation. I seldom define more than three regex 
+substitution groups (referenced by **Backslash** **Digit**), six should 
+be plenty!
+
+Combine one shot modifier keys to construct function key chords -- left 
+pinkie multi-key modifiers further simplify chording. Mirroring the 
+numeric keypad for the symbol layer layout all but eliminates the 
+learning curve for the left hand. Pretty sweet.
+
+## navigation layer
+
+and one shot modifier keys..
+
+![Navigation layer](/images/keyboard-layout-navigation.jpg)
+
+Combine one shot modifier keys to press navigation key chords. Note the 
+**Caps Lock** key which, separate from the default Colemak layer, 
+prevents accidental toggling, yet is still easily enabled. Besides, 
+SHOUTING is not good messaging etiquette :-)
+
+The **Adjust** key, safely tucked away on the navigation layer, raises 
+the Planck configuration layer which assigns the default layout, sets 
+LED and audio levels, and resets the keyboard for reflashing the 
+firmware. 
+
+## plover layer
+
+learn steno!..
+
+![Plover layer](/images/keyboard-layout-plover.jpg)
+
+With the exception of the steep learning curve required to master 
+stenographic (chord based) typing with the Plover layer, the layers 
+provided for regular typing are remarkably easy to use. 
+
+No lengthy finger memory training required as the number layer keypad, 
+and its mirrored counterpart for the symbol layer, feel both familiar 
+and natural. And the use of double tap keys on those layers to extend 
+single hand entry while on those layers furthers the advantage of this 
+diminutive keyboard over its full sized relatives, not to mention the 
+immense benefits of its finger friendly symmetrical layout over the 
+pervasive staggered keyboards.
+
+Planck Ortholinear plus QMK rules!
+

@@ -1,0 +1,2 @@
+#! /bin/sh
+exec vimb-detached file://$(echo $@ | sed -e 's/ /%%20/g')

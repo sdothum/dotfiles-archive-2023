@@ -1,0 +1,13 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+. adjustment layer	ergo planck.wiki	/^== adjustment layer ==$/;"	h
+. function key layer	ergo planck.wiki	/^== function key layer ==$/;"	h
+. legend	ergo planck.wiki	/^== legend ==$/;"	h
+. mirror mirror	ergo planck.wiki	/^== mirror mirror ==$/;"	h
+. navigation plus	ergo planck.wiki	/^== navigation plus ==$/;"	h
+. shift shift	ergo planck.wiki	/^== shift shift ==$/;"	h
+. split layout	ergo planck.wiki	/^== split layout ==$/;"	h

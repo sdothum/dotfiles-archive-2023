@@ -1,0 +1,8 @@
+set adblocker-filterlist /home/shum/.config/dwb/adblock_lists
+tabopen http://localhost/tt-rss/
+tabopen http://www.usenet-crawler.com/movies?t=2040
+tabopen http://songza.com/
+set adblocker true
+set adblocker false
+help
+dwb:help

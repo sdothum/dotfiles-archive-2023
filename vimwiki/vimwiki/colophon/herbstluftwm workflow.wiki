@@ -1,0 +1,146 @@
+a lot of *nix users [rice][ricing] their desktops to personalize the 
+look of their operating environments. A choice of wallpapers, GUI theme 
+and careful window placements can look very artful.
+
+I am no less inclined, spending countless hours connected to the web and 
+the open source community. A beautiful environment to work in, and that 
+includes one's desktop, just puts finishing touches to the experience.
+
+All that being said, workflow is just as important, if not more so -- 
+certainly for someone such as myself who has an aversion to using the 
+mouse and fiddling with window size and placement. herbstluftwm is 
+wholly capable of competing with stacking window managers for window 
+layouts. But what makes it supremely effective is its tiling 
+organization of the visual desktop space.
+
+I've covered elsewhere in this site the many extensions I have made to 
+the basic [herbstluftwm][?] configuration to include..
+
+- dynamic window placement to balance frames
+- dynamic window focus to avoid empty frame focus on application close
+- distraction free monocle layout proportions (versus fullscreen mode)
+- automatic desktop layout restore on focus and monitor swap*
+- quick monitor and frame swapping with focus directions
+- [hide/unhide][herbstluftwm hiding] windows per desktop
+- pulsating borders to indicate overlapped windows
+- virtual monitors to [show/hide the conky][herbstluftwm#conky] system 
+  information panel
+- single status bar to follow monitor focus and hint monitor geometry 
+  width
+- blur background if a window is present on the desktop
+- etc.!
+
+[ljust]* Monitor geometries are global when set. Restore appropriate 
+monitor geometry for desktop regaining focus.
+
+## dynamic window placement & focus
+
+in my configuration, the herbstluftwm window close action is trapped to 
+enable dynamic window focus and layout management. However, application 
+windows closed via their own application mechanism escape event 
+detection by herbstluftwm.
+
+However, a simple polling mechanism is availble: conky (a simple shell 
+script could also be substituted to implement this). This conky 
+configuration
+updates itself with the active window title. By hooking layout and 
+window focus requirements into the active window title script, dynamic 
+window management can be facilitated for these window close events.
+
+One use case requires attention, though: frame selection for dynamic 
+window placement. When a new window is opened, the next available frame 
+is selected with empty frames having priority -- doing so balances 
+window placement on the desktop. However, the window focus method 
+triggered when no active window is present -- to dynamically focus the 
+next window -- conflicts with this rule.
+
+To avoid this deadly embrace, a persistent lock flag is set in the focus 
+frame script..
+
+`touch $LOCK`
+`herbstclient lock`
+`is fullscreen && toggle fullscreen`
+`herbstclient cycle_frame -1`
+`frames=$(herbstclient attr tags.by-name.$TAG.frame_count)`
+`^ `
+`for i in $(seq 1 $frames)`
+`do`
+`^  herbstclient cycle_frame 1`
+`^  herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 && break`
+`done`
+`^ `
+`herbstclient chain . set_layout vertical . unlock`
+`rm -f $LOCK`
+
+[ljust]The *$LOCK* file is exported in the herbstluftwm configuration 
+script. To inhibit the concurrent conky title script's focus window behaviour..
+
+`name=$(herbstclient attr clients.focus.instance 2>/dev/null)`
+`if [ "$name" ] ; then`
+`^  if [ $(echo $name | wc -w) -eq 1 ] ;then`
+`^    echo $name`
+`^  else`
+`^    herbstclient attr clients.focus.class 2>/dev/null`
+`^  fi`
+`else`
+`^  [ -e $FULLSCREEN ] && draw refresh`
+`^  [ -e $LOCK ] || pidof rofi >/dev/null && exit`
+`^  if [ -e $DYNAMIC ] && is nonempty $(query tag) ;then`
+`^    [ -e $FOCUS ] || focus window`
+`^  else`
+`^    herbstclient emit_hook focus_changed`
+`^  fi`
+`fi`
+
+## status bar focus
+
+one novel feature of this herbstluftwm configuration is a status bar 
+which follows the monitor focus. This gives immediate visual 
+confirmation of the active monitor and application and keeps the 
+unfocused monitors clean.
+
+Originally, this was achieved by killing and respawning the 
+[lemonbar](https://github.com/LemonBoy/bar) panel script on the 
+appropriate monitor. This was not without its own problems: in use case 
+testing, while switching back and forth between monitors as rapidly as 
+possible, the queued terminations can disable the status bar completely. 
+This condition is addressed by spawning a secondary background process 
+to check that the status bar, in fact, is running after a delay and 
+respawn as required. Not elegant but it works.
+
+A lag is apparent when switching monitors as the status bar is respawned 
+-- not significant but still noticeable. Because the status bar reflects 
+the virtual monitor geometry which can be toggled to differing widths 
+depending on the distraction free mode in use, this status bar creation 
+can occur frequently.
+
+A more responsive solution is to create, as required, the appropriate 
+status bar and use *xdotool* to manage the visibility of the panels. 
+Doing so, renders the status bar handling instantaneous (save for the 
+initial creation) and eliminates the complexity of the former solution..
+
+`if is primary ;then`
+`^  [ -e $CONKY ] && conky=':conky'`
+`^  [ -e $MONOCLE ] && monocle=':monocle'`
+`fi`
+`^ `
+`fifo="$(herbstclient attr monitors.focus.index)$conky$monocle"`
+`^ `
+`xdotool search --onlyvisible --limit 1 --maxdepth 1 --name 'lemonbar' windowunmap >/dev/null`
+`[ -e $PANEL ] || exit`
+`^ `
+`echo "$PANEL_FIFO:$fifo" >$PANEL_FIFO`
+`xdotool search --limit 1 --maxdepth 1 --name "lemonbar:$fifo\$" windowmap >/dev/null && exit`
+`exec draw panel $fifo`
+
+[ljust]The *$fifo* variable defines the particular lemonbar fifo created 
+by the draw panel script 
+and subsequently referenced. In my multihead setup, half a dozen status 
+bar panels can ultimately be spawned depending on the monitors and 
+layouts referenced within a particular session.
+
+Until the *WinterBreeze* version of herbstluftwm is released, I don't 
+expect I'll be tweaking this environment much more, save for code 
+refactoring and addressing the odd corner case. The [dotfiles][] for 
+this herbstluftwm configuration can be found 
+[here](https://github.com/sdothum/dotfiles/).

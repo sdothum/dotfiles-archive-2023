@@ -1,0 +1,4 @@
+[roxterm options]
+warn_close=0
+colour_scheme=GTK
+prefer_dark_theme=0

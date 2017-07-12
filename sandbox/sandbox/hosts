@@ -1,0 +1,24 @@
+#
+# /etc/hosts: static lookup table for host names
+#
+
+#<ip-address>	<hostname.domain.org>	<hostname>
+127.0.0.1	localhost.localdomain	localhost
+::1		localhost.localdomain	localhost
+
+# End of file
+
+# 127.0.0.1     localhost thedarnedestthing ttrss
+127.0.0.1       localhost ttrss
+10.1.0.4        lumen
+10.1.0.10       luna thedarnedestthing
+10.1.0.6        monad
+10.1.0.2        pi
+10.1.0.14       ph
+162.250.190.112 thedarnedestthing.com
+
+# block these ad script sites
+127.0.0.1       googleadservices.com
+127.0.0.1       clrsrv.com
+127.0.0.1       doubleclick.net
+

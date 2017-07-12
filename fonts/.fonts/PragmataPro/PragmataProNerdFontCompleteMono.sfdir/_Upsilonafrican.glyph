@@ -1,0 +1,310 @@
+StartChar: Upsilonafrican
+Encoding: 433 433 369
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 25
+MDAP[rnd]
+NPUSHW
+ 3
+ 112
+ 25
+ 1
+DELTAP1
+PUSHW_1
+ 7
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 5
+ 111
+ 7
+ 127
+ 7
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 191
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 0
+ 7
+ 16
+ 7
+ 2
+DELTAP1
+PUSHW_1
+ 12
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 15
+ 12
+ 1
+DELTAP1
+PUSHW_2
+ 4
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 8
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 15
+ 8
+ 1
+DELTAP1
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 10
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 5
+ 23
+ 10
+ 39
+ 10
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 6
+ 10
+ 1
+DELTAP1
+PUSHW_1
+ 25
+SRP0
+PUSHW_1
+ 20
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 0
+ 20
+ 1
+DELTAP1
+PUSHW_1
+ 25
+SRP0
+PUSHW_1
+ 22
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 9
+ 22
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 24
+ 22
+ 40
+ 22
+ 2
+DELTAP1
+PUSHW_1
+ 25
+SRP0
+PUSHW_1
+ 24
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 0
+ 24
+ 1
+DELTAP1
+PUSHW_1
+ 20
+SRP0
+PUSHW_2
+ 28
+ 3
+MIRP[rp0,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 24
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 24
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 16
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 16
+ 5
+MIAP[no-rnd]
+EIF
+PUSHW_2
+ 0
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 103
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 151
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 118
+ 0
+ 1
+DELTAP1
+PUSHW_1
+ 24
+SRP0
+PUSHW_1
+ 26
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 53
+ 26
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 22
+ 26
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 109
+ 26
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 127
+ 26
+ 143
+ 26
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 170
+ 26
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 70
+ 26
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 2
+ 26
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 32
+ 26
+ 1
+DELTAP1
+PUSHW_1
+ 6
+MDRP[rp0,grey]
+PUSHW_1
+ 24
+SRP0
+PUSHW_1
+ 7
+MDRP[rp0,grey]
+PUSHW_1
+ 24
+SRP0
+PUSHW_2
+ 23
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 10
+MDRP[rp0,grey]
+NPUSHW
+ 5
+ 148
+ 14
+ 164
+ 14
+ 2
+DELTAP1
+NPUSHW
+ 5
+ 148
+ 18
+ 164
+ 18
+ 2
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+531 135 m 2,0,1
+ 620 135 620 135 680.5 196.5 c 128,-1,2
+ 741 258 741 258 741 431 c 2,3,-1
+ 741 1006 l 2,4,5
+ 741 1260 741 1260 603 1358 c 1,6,-1
+ 603 1580 l 1,7,-1
+ 930 1580 l 1,8,-1
+ 930 1425 l 1,9,-1
+ 721 1425 l 1,10,11
+ 918 1304 918 1304 918 956 c 2,12,-1
+ 918 506 l 2,13,14
+ 918 207 918 207 805 92.5 c 128,-1,15
+ 692 -22 692 -22 530 -22 c 256,16,17
+ 368 -22 368 -22 255 92.5 c 128,-1,18
+ 142 207 142 207 142 506 c 2,19,-1
+ 142 956 l 2,20,21
+ 142 1304 142 1304 339 1425 c 1,22,-1
+ 130 1425 l 1,23,-1
+ 130 1580 l 1,24,-1
+ 457 1580 l 1,25,-1
+ 457 1358 l 1,26,27
+ 319 1260 319 1260 319 1006 c 2,28,-1
+ 319 431 l 2,29,30
+ 319 258 319 258 379.5 196.5 c 128,-1,31
+ 440 135 440 135 529 135 c 2,32,-1
+ 531 135 l 2,0,1
+EndSplineSet
+EndChar

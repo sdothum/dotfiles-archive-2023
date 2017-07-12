@@ -1,0 +1,96 @@
+the [Colemak Shift-DH][colemak shift-dh] introduced left/right hand 
+diagonal 
+fingering symmetry which alleviates the left hand wrist twist of most keyboard layouts.
+
+Lately, I have been playing with optimizing the keyboard experience by 
+changing the keycap orientation and layout to minimize finger movement 
+and improve hand position even more!
+
+Three things were done to my original Poker 2 fitted with Cherry profile 
+keycaps and my Colemak Shift-DH layout..
+
+- The R2 row was replaced by R4 row keycaps, rotated 180 degrees
+- Similarly, the top R1 row is rotated 180 degrees
+- The left hand position is shifted back out one key to the left (as in 
+  a typical layout) with my Colemak Shift-DH layout **equal**, 
+  **minus**, **slash** and **backslash** keys moved the vacated row 
+  positions
+  
+The key rotation of the Cherry profile keycaps effectively forms 
+a concave side profile to the keyboard, further minimizing finger reach. 
+It is very noticeable. Using blank keycaps makes this very easy to 
+implement. If you are short R4 keycaps, you can swap the R2 keycaps with 
+the R4 row instead for a close approximation.
+
+This results in a keyboard profile, top to bottom, with..
+
+- Rotated R1
+- Rotated R4
+- R3
+- R4 (or swapped R2)
+- Rotated R4 (space bar and modifier keys)
+
+![Rotated keycaps](/images/ergo_keycap_orientation.jpg)
+
+[ljust]My space bar row already had the keycaps rotated 180 degrees. 
+This most notibly improves thumb contact feel.
+
+The shifting of the left side special characters, while losing easy 
+pinky finger reach, further separates the left hand from the right. It 
+is only an additional 1U key width separation but again, is a very 
+noticeable improvement in hand and arm positioning. It does impose an 
+index finger stretch to reach the special characters but their low 
+frequency usage offsets the inconvenience -- whilst gaining pinky key 
+access to my more frequently used **Esc** key.
+
+<code>    `~  1 2 3 4 5 6   7 8 9 0 = [  ]</code>
+`^    Esc  Q W F P B -   J L U Y ; '  Del`
+`^     Tab  A R S T G /   M N E I O  Enter`
+`^     Shift X C D V Z   \ K H , .  Shift`
+<code>Ctrl  Win  Alt    Space    Backspace  Fn  Pn  Ctrl</code>
+
+[ljust]with **Fn** (thumb) held down..
+
+<code>     ^^  F1 F2 F3 F4 F5 F6   F7 F8 F9 F10 F11 F12  PgUp</code>
+`^      *  7 8 9 R T Y   U I O Home Up End  PgDn`
+`CapsLock  4 5 6 F G H   J K L Left Down  Right`
+`^        0  1 2 3 V B   N M , . /  Shift`
+<code>Ctrl  Win  .    Space    Alt  Fn  Pn  Ctrl</code>
+
+[ljust]with **Pn** held down..
+
+`^   Esc  1 2 3 4 5   6 7 8 9 0 - =  Backspace`
+`^    Tab  Q W E R T   Y U I O P [ ]  \`
+`CapsLock  A S D F G   H J K L ; '  Enter`
+`^    Shift  Z X C V B   N M , . /  Shift`
+<code>Ctrl  Win  Alt    Space    Alt  Fn  Pn  `~</code>
+
+[ljust]Refer to the [GuiFn][poker 2#guifn] guide for the navigation 
+cluster assignments.
+
+## ergonomics
+
+not so strangely, is also somewhat subjective, not merely physics. 
+
+After several days of typing with the layout above, I found the index 
+finger stretch for the special characters felt more strained than the 
+former pinky finger stretch to the **Esc**, **Tab** and **backslash** 
+characters of my original Colemak Shift-DH layout -- that and the 
+persistent pinky reach in particular for the **hyphen** and **slash** 
+characters.
+
+Leaving the number row in its usual positioning with the relocated 
+**equal** sign, though, was easily adapted to and, in fact, even feels 
+better to me -- aided by the particular color coding of my blank keycaps 
+which now highlights the **equal** key -- probably because I was never 
+a proficient number row typist (which should be rectified with my new 
+Planck keyboard and the use of keyboard layers).
+
+So, until my second Planck kit arrives, this is the latest hybridized 
+layout I prefer..
+
+<code>    `~  1 2 3 4 5 6   7 8 9 0 = [  ]</code>
+`^    Esc  - Q W F P B   J L U Y ; '  Del`
+`^     Tab  / A R S T G   M N E I O  Enter`
+`^    \  Shift X C D V Z   K H , .  Shift`
+<code>Ctrl  Win  Alt    Space    Backspace  Fn  Pn  Ctrl</code>

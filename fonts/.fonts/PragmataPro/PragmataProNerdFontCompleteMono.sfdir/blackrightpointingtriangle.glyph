@@ -1,0 +1,17 @@
+StartChar: blackrightpointingtriangle
+Encoding: 9654 9654 1548
+Width: 1060
+GlyphClass: 3
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+1060 794 m 1,0,-1
+ 108 244 l 1,1,-1
+ 108 1343 l 1,2,-1
+ 1060 794 l 1,0,-1
+EndSplineSet
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" p l a y
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" P l a y
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" P L A Y
+EndChar

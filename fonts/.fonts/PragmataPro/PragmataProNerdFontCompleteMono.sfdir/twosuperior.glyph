@@ -1,0 +1,354 @@
+StartChar: twosuperior
+Encoding: 178 178 116
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 18
+MDAP[rnd]
+PUSHW_1
+ 2
+MDAP[rnd]
+NPUSHW
+ 3
+ 32
+ 2
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 95
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 47
+ 18
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 39
+ 18
+ 1
+DELTAP1
+PUSHW_1
+ 18
+SRP0
+PUSHW_1
+ 7
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 176
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 134
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 149
+ 12
+ 1
+DELTAP1
+PUSHW_1
+ 2
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,grey]
+PUSHW_1
+ 13
+MDAP[rnd]
+NPUSHW
+ 7
+ 39
+ 13
+ 55
+ 13
+ 71
+ 13
+ 3
+DELTAP2
+NPUSHW
+ 3
+ 6
+ 13
+ 1
+DELTAP2
+PUSHW_1
+ 2
+SRP0
+PUSHW_1
+ 23
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 18
+SRP0
+PUSHW_1
+ 24
+MDRP[rp0,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 15
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 15
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 1
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 1
+ 13
+MIAP[no-rnd]
+EIF
+NPUSHW
+ 3
+ 32
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 43
+ 4
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 251
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 201
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 183
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 167
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 89
+ 5
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 249
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 9
+ 5
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 41
+ 5
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 249
+ 5
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 198
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 180
+ 5
+ 1
+DELTAP1
+PUSHW_1
+ 15
+SRP0
+PUSHW_1
+ 10
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 12
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 9
+ 12
+ 12
+ 28
+ 12
+ 44
+ 12
+ 60
+ 12
+ 4
+DELTAP1
+NPUSHW
+ 5
+ 60
+ 12
+ 76
+ 12
+ 2
+DELTAP2
+PUSHW_1
+ 15
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 9
+ 67
+ 13
+ 83
+ 13
+ 99
+ 13
+ 115
+ 13
+ 4
+DELTAP1
+NPUSHW
+ 3
+ 2
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 19
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 87
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 67
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 49
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 32
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 24
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 55
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 181
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 203
+ 21
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 170
+ 21
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 183
+ 21
+ 1
+DELTAP1
+PUSHW_1
+ 1
+SRP0
+PUSHW_1
+ 23
+MDRP[rp0,min,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+795 673 m 1,0,-1
+ 281 673 l 1,1,-1
+ 281 726 l 2,2,3
+ 281 885 281 885 438 1061 c 2,4,-1
+ 582 1221 l 2,5,6
+ 646 1290 646 1290 646 1371 c 0,7,8
+ 646 1416 646 1416 617 1443.5 c 128,-1,9
+ 588 1471 588 1471 535 1471 c 0,10,11
+ 431 1471 431 1471 389 1358 c 1,12,-1
+ 266 1431 l 1,13,14
+ 360 1602 360 1602 535 1602 c 0,15,16
+ 654 1602 654 1602 724.5 1535.5 c 128,-1,17
+ 795 1469 795 1469 795 1366 c 0,18,19
+ 795 1249 795 1249 697 1140 c 2,20,-1
+ 553 981 l 2,21,22
+ 446 862 446 862 438 803 c 1,23,-1
+ 795 803 l 1,24,-1
+ 795 673 l 1,0,-1
+EndSplineSet
+Substitution2: "Single Substitution lookup 16 subtable" .notdef
+EndChar

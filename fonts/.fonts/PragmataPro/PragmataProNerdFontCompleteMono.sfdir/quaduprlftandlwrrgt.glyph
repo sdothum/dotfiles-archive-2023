@@ -1,0 +1,69 @@
+StartChar: quaduprlftandlwrrgt
+Encoding: 9626 9626 1536
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 7
+MDAP[rnd]
+PUSHW_1
+ 3
+MDAP[rnd]
+PUSHW_1
+ 5
+MDAP[rnd]
+PUSHW_1
+ 2
+MDAP[rnd]
+SVTCA[y-axis]
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 7
+MDAP[rnd]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 2
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 2
+ 15
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 5
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 5
+ 7
+MIAP[no-rnd]
+EIF
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+529 788 m 1,0,-1
+ 0 788 l 1,1,-1
+ 0 1950 l 1,2,-1
+ 529 1950 l 1,3,-1
+ 529 788 l 1,0,-1
+1060 -375 m 1,4,-1
+ 531 -375 l 1,5,-1
+ 531 788 l 1,6,-1
+ 1060 788 l 1,7,-1
+ 1060 -375 l 1,4,-1
+EndSplineSet
+EndChar

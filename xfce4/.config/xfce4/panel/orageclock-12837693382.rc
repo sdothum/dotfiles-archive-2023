@@ -1,0 +1,15 @@
+show_frame=false
+fg_set=true
+fg=55512R 55512G 55512B
+bg_set=false
+timezone=
+width_set=false
+height_set=false
+show0=true
+data0=%X %x
+font0=
+show1=false
+show2=false
+tooltip=%A %d %B %Y/%V
+hib_timing=false
+

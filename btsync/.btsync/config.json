@@ -1,0 +1,31 @@
+{
+    "device_name" : "My Sync Device"
+  , "listening_port" : 44444                       // 0 - randomize port
+
+  , "storage_path" : "/home/shum/.sync"
+
+  // , "pid_file" : "/home/shum/.btsync/btsync.pid"
+
+  , "check_for_updates" : true
+  , "use_upnp" : true                              // use UPnP for port mapping
+
+  , "download_limit" : 0
+  , "upload_limit" : 0
+
+  , "webui" :
+    {
+        "listen" : "0.0.0.0:8888"
+    }
+
+  , "disk_low_priority" : true
+  , "folder_rescan_interval" : 120
+  , "lan_encrypt_data" : true
+  , "lan_use_tcp" : false
+  , "max_file_size_diff_for_patching" : 1000
+  , "max_file_size_for_versioning" : 1000
+  , "rate_limit_local_peers" : false
+  , "sync_max_time_diff" : 600
+  , "sync_trash_ttl" : 10
+}
+
+// vim:set ft=json //

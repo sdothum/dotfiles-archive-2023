@@ -1,0 +1,20 @@
+VOIP reset
+
+if no dial tone can be established, even after resetting the voip modem, press on the phone handset..
+
+****
+
+After the voice menu, press..
+
+101#
+0#
+1
+
+to save. After the voice menu, press..
+
+73738#
+1
+
+to save. The modem should connect to voip server and restore modem LED confirmation.
+
+

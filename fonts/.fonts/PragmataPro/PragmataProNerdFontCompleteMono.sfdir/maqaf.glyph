@@ -1,0 +1,15 @@
+StartChar: maqaf
+Encoding: 1470 1470 744
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+279 1015 m 1,0,-1
+ 279 1172 l 1,1,-1
+ 781 1172 l 1,2,-1
+ 781 1015 l 1,3,-1
+ 279 1015 l 1,0,-1
+EndSplineSet
+EndChar

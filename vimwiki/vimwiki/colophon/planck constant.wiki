@@ -1,0 +1,311 @@
+
+![Split Planck with cherry profile keys](/images/planck-constant.jpg)
+
+[ljust]the current Planck (keyboard) state as documented on this site 
+and 
+[dotfiles](https://github.com/sdothum/dotfiles/tree/master/qmk_firmware/qmk_firmware/keyboards/planck/keymaps/sdothum).
+This page is a continuously updated explanation and history of the [keyboard
+layout iterations](http://thedarnedestthing.com/search?query=planck).
+
+Notes in the accompanying keyboard descriptions pertain to layout and firmware
+design. The coding specifics of some of the more unique features of this
+particular Planck keyboard implementation can be found [here][planck polish].
+
+## change history
+
+since *finalizing* the [ergo wide layout][ergo planck] concept with the centre
+two columns dedicated to modifier chords, tweaks still manage to make their way
+into the firmware to accommodate (my particular) application and desktop
+workflow. 
+
+Little niggles ultimately led to normalizing keys and key relationships 
+between layers to make the layers feel as natural, logical and easy to 
+remember as possible -- the mirroring of the left hand key pairs on the 
+*number* and *symbol* layers is a prime example. All symbol key layer 
+relationships have undergone a degree of placement rationalization and 
+usage refinement -- with emphasis on coding needs. 
+
+In chronological order, a long list of tweaks (whose number must be an indicator
+of approaching completion -- or not)! As only the current layouts are
+illustrated below, it will be somewhat challenging to picture the many keymap
+transitions from the [ergo wide layout][ergo planck] starting point. However,
+the list itself should provide a sense of the iterative process involved in the
+refinement of this particular Planck layout..
+
+- the centre column pairings of **Shift-GUI**, **Ctrl-GUI** and 
+  **Shift-Alt**, **Ctrl-Alt** changed to **Ctrl-Alt**, **Ctrl-GUI** and 
+  **Shift-Alt**, **Shift-GUI** effectively aligning **Alt** and **GUI** 
+  modifiers in their own columns, a grouping which better suits the 
+  needs of the window manager work flow
+- the *number layer* **Symbol Layer** key is moved left one column 
+  position and the *symbol layer* **Regex Layer** key is similarly moved 
+  right one column position and are now toggled with the ring fingers 
+  which feel less cramped than their former middle finger assignment
+- the **Caps Lock** key is now a one shot modifier **Shift** key (which 
+  is double tapped to toggle the **Caps Lock**), completing the set of 
+  one shot modifiers
+- the **Function** keys have been remapped to match the numeric keypad layout of
+  the *number layer*, naturally
+- the double tap key pairs of the *number layer* have been normalized 
+  with the *symbol layer* by swapping their key positions with the outer 
+  column modifier keys (used mainly for window manager desktop actions) 
+  which, while looking odd, retain a comfortable pinkie-index finger 
+  roll
+- the *number layer* column of one shot modifier keys has been changed 
+  to dedicated **Alt** modifier chords in optimal row positions (for 
+  window manager desktop actions)
+- the *number layer* **Symbol Layer** and *symbol layer* **Regex Layer** keys
+  are now positioned in their most obvious location (how was any other location
+  considered?) -- the middle finger home row! -- with the **Right 
+  Angle** key
+  now defined as a double tap key
+- added a *Shift Navigation* cluster layer to the left *Shift 
+  Layer*, completing the quadruplet (Ctrl, Meta, 
+  Alt, Shift) of single modifier navigation 
+  chords -- the thumb **Shift** avoids the reach required for the centre 
+  column *one shot modifier* **Shift** key
+- added the same *Shift Navigation* cluster layer to the *Symbol 
+  Layer* including switching between *shifted* and 
+  *unshifted* navigation codes by simply releasing/pressing the **Left 
+  Shift** / **Pipe** key while the **Left** (cursor) / **Symbol Layer** key is 
+  held down, whilst allowing rolling between the *Shift* and 
+  *Symbol* layers seamlessly without the need to lift both thumbs off their
+  respective keys to switch layers (easier to appreciate in use than explain!)
+- dropped the *Plover Layer* (and other test code) to accommodate the 
+  increased size of the latest code base and available flash RAM
+- recovered sufficient RAM space to re-add the *Plover Layer* by 
+  dropping the dedicated *Macro Layer* (which defined only a single 
+  key, the **Dynamic Macro** key) and refactoring the keymap code -- the popular
+  Planck *Tri-Layer Toggle* (using the **Number** and **Symbol** layer keys
+  together) is now dropped in favour of a single **Backspace** / **Macro** key
+  (labeled **Adjust**) to raise the *Adjustment Layer* and the **Dynamic
+  Macro** key
+- added the complement of home row *one shot modifiers* to the *Function Key*
+  and *Shift Navigation* cluster layers
+- added the obvious (but overlooked) **Shift-Tab** to the *right* 
+  *Shift Layer*
+- added the complement of home row *one shot modifiers* to the *Number Layer*
+  (shifting the **Symbol Overlay Layer** key to the pinkie), moving the
+  **Angle Brackets** down one row
+- moved the **Angle Brackets** down one row on the *Symbol Layer*, and shifted
+  the **Regex Overlay Layer** key to the pinkie to mirror the *Number Layer* 
+- swapped the **Dot** and **Backslash** keys on the *Symbol Layer* to rolling
+  finger positions
+- added the **Angle Brackets** to the *Adjust Layer* in their familiar shift
+  positions (**Comma** and **Dot** keys), mirroring the *Number* and *Symbol*
+  layers
+- redefined the *Number Layer* as a numeric keypad with basic mathematical
+  operators -- calculator mode being somewhat more useful than straight
+  hexadecimal input -- and assigned the **Hexadecimal** characters to the Hex
+  *Symbol Overlay Layer* (whose index/pinkie finger locations still look
+  somewhat odd but remain easy to remember) along with the **Backslash**,
+  **Pipe** and **Tilde** keys 
+- not a layout change, but fixed the frequent new sentence (left thumb *tap* plus *down*) **Space** plus
+  **Shift** sequence which the *process_user_function* firmware latency (as
+  coded) can fail to recognize during rapid touch typing -- auto-repeating
+  **Space** now requires left thumb *double tap* plus *down*, and **Modifier
+  Space** chords are limited to *one shot modifier* key plus **Space**
+- dropped the *Dynamic Macro Layer* to reduce reported flash memory size below
+  100% -- macro recording was being truncated even with reduced buffer
+  allocation
+- redesigned the *Number Layer* and its associated *Hexadecimal Overlay Layer*
+  layouts,
+  moving the **A B C** hexadecimal keys to the *Number Layer* and **D E F** keys
+  in their overlay position, so the
+  *Hexadecimal Overlay Layer* and *Regex Overlay Layer* of the *Symbol Layer*
+  can be defined as a single layer (freeing up precious bytes of flash memory
+  space)
+- in lieu of dynamic macro strings, added a compile time double tap macro string
+  to the *Function Key Layer* (which is flash persistent) -- one is good enough
+  for now
+- fixed the *one shot modifier* restriction side effect of the *tap dance*
+  **Space Shift** sequence to recognize all **Modifier Space** chords
+- corrected similar latency issue with rapid new paragraph (right thumb *tap*
+  plus *down*) **Enter** plus **Shift** key sequence -- with *double tap* plus
+  *down* to produce auto-repeating **Enter**
+- squeezed in QWERTY layout and associated left/right *Shift Layers* (with similar symbol mappings
+  for non-alpha keys)
+- left symbol (pair) "double tap" keys can now be triple tapped to place the
+  cursor inside the enclosing right character
+- the *Adjust Layer* now omits all unused QMK firmware settings, relocating
+  the remaining firmware settings to the left hand side and moving the custom
+  macro keys to the right (with corresponding adjustments to the *Function Key*
+  and *Plover* layers)
+- lining up the centre column modifiers with the *one shot modifiers*
+  of the *Numberic Keypad Layer*, swapping the home row **Ctrl-Alt** and **Ctrl-GUI**
+  keys with the top row **Shift** keys of the centre column 
+- completed the available *triple tap* symbol key pairs 
+- Colemak layout tweaking, swapping the **Z**, **V** and **X** keys
+
+## symmetry and overloading
+
+while the *Shift*, *Number* and *Symbol* layers and 
+their overlay layers may appear daunting at first glance, a closer examination
+reveals a high degree of symmetry and normalization across the layers, with the
+application of simple shift values for many of the overlay keys (to reduce
+unnecessary alternate hand layer toggling).
+
+The clustering or keypad approach to numbers and symbols is, perhaps, the
+distinguishing feature of this particular keyboard layout design (aside from the
+wide layout) -- which, IMO, is more effective than the traditional row oriented
+layouts (at least, I was never proficient at touch typing the numbers and
+symbols on full sized keyboards).
+
+The *Shift Layers*, in particular, add the convenience of remapping 
+the opposite **Shift** key and other non-alpha keys to provide 
+surprisingly effective access to special characters which the wide layout would
+otherwise seem to omit. For programmers, the opposite thumb access to the **Minus** and **Underscore**
+symbols, and the **Tilde** and **Slash** keys, make for easy entry of mnemonics
+and path names, as an example. 
+
+The keypad and cluster organization applied to other layers similarly require
+little effort to adopt -- of course, having arrived at this design is largely
+a result of my own fingering disposition, pleasant surprises aside. Overloading
+keys to *shift* values further eases memorization.
+
+## legend
+
+![Keyboard layout legend](/images/keyboard-layout-legend.jpg) 
+
+## default colemak layout
+
+this Colemak layout is based on the [Colemak
+Mod-DH](https://colemakmods.github.io/mod-dh/) layout with a few adjustments,
+notably, the repositioning of the **Z**, **X**, **V** and **B** keys from the
+published layout..
+
+![Ergo Colemak DH layout](/images/keyboard-layout-colemak-fn.jpg) 
+
+[ljust]See [Colemak Mod-XVCG][colemak mod-xvcg] for latest deviation from the
+standard layout!
+
+The **B** is returned to its QWERTY position -- this is a higher frequency
+character and feels better placed there. Not requiring for my use case, the
+QWERTY/Colemak **ZXCV** bottom row cluster, the **Z**, **X** and **V**
+placements can occupy more optimal fingering positions -- in particular, the
+**V**. While a clear violation of the Colemak design goal with these common
+modifier keys, these keys are also easily adapted to in their new positions --
+a win from a pure typing perspective.
+
+Similarly, the **M** character, being a higher frequency character than the
+**K**, is swapped with it on the home row. As well, it feels much less of
+a reach than on a staggered keyboard. 
+
+Lastly, the **Quote** replaces the **Slash** character being more useful -- all
+is not lost, see the *Shift Layers* below for the equally easy to reach
+**Slash** and **Question Mark**.
+
+
+## shift layers 
+
+in order to overload keys, most notably, the **Comma**, **Dot**, 
+**Tab**, **Backspace** and **Shift** keys themselves, left and right 
+*Shift* layers are defined in place of the **Shift** modifier..
+
+![Shift overlay layouts](/images/keyboard-layout-shift-shift.jpg)
+
+In usage, the overloading of the **Comma** and **Dot** keys actually feels quite
+natural -- no more long finger reaches -- with the added bonus of the *home*
+path name constructions. Similarly, the readily accessible **Minus** and
+**Underscore** feel equally easy to insert.
+
+[Switching](Switching) between *Shift* and *Navigation* modes does not require
+fully releasing the associated layer key, permitting rolling between layers. See
+the *Symbol Navigation Layer*. 
+
+## numeric keypad layer 
+
+the *Numberic Keypad Layer* and its *shift* symbol overlay share half the
+hexadecimal character set so that the primary layer may define the traditional
+keypad mathematical operators..
+
+![Number layer](/images/keyboard-layout-number-kpad.jpg)
+
+Also, splitting the hexadecimal characters between two layers (freeing the right
+column mapping) also allows merging the *Number* and *Symbol* overlay layers
+into a single layer for raising (from a firmware perspective) -- see *[Number
+Symbol Overlay Layer][planck constant#number-symbol-overlay-layer]*.
+
+## symbol navigation layer
+
+switching between *Shift* and *Navigation* modes does not require fully  
+releasing the associated layer key, permitting rolling between layers. See the
+*[Shift Layers][planck constant#shift-layers]*..
+
+![Symbol navigation layer](/images/keyboard-layout-symbol-nav.jpg)
+
+## number symbol overlay layer 
+
+the actual single overlay layer referenced by the *Number* and *Symbol* layers
+via the left and right pinkie finger layer keys..
+
+![Number symbol overlay layer](/images/keyboard-layout-number-symbol-overlay.jpg)
+
+## function key layer
+
+![Function key layer](/images/keyboard-layout-fnkeys.jpg)
+
+The **Plus** key completes overloading the **Equal** (**Backspace**) key. See
+the *[Shift Layers][planck constant#shift-layers]*. 
+
+## qwerty 
+
+![QWERTY layout](/images/keyboard-layout-qwerty.jpg)
+
+QWERTY *Shift Layers* similarly map left/right *Shift* symbols as defined for
+the Colemak layout. See the *[Shift Layers][planck constant#shift-layers]*.
+
+## plover
+
+![Plover layout](/images/keyboard-layout-ergo-plover.jpg)
+
+## adjustment layer 
+
+the *Dynamic Macro Layer* (no longer required with the latest QMK software) was
+merged with the *Adjustment Layer* and subsequently disabled for flash memory
+space. Dropping unused (for my usage) firmware settings permitted dividing up
+the board into left side keyboard control assignments and right side key codes..
+
+![Adjustment layer](/images/keyboard-layout-adjust-macro.jpg)
+
+[ljust]Note: *Audio ON* is defined to enable audio should it be 
+inadvertently unavailable on keyboard boot -- there is never a need to disable 
+it!
+
+In lieu of dynamic macro strings, two compile time double tap macro
+strings are available, one defined within the source configuration and the
+other at firmware compile time. See the *planck* build script in the hardware
+[dotfiles](https://github.com/sdothum/dotfiles/tree/master/bin/bin/functions/hardware).
+
+The **Angle Bracket** keys complete overloading the **Comma** and **Dot** keys.
+See the *[Shift Layers][planck constant#shift-layers]*.
+
+## dynamic macro recording
+
+is a nifty feature of QMK software and has been relaxed to no longer require 
+its own dedicaed *_DYN* layer. It was dropped from this keyboard because of its 
+flash memory requirements. Losing its buffer contents on USB disconnect also 
+limited its utility -- hence, the two compile time macro keyboard shortcuts 
+provided with this layout.
+
+For dynamic keyboard shortcuts, ultimately, macro recording desktop software
+provide much more flexibility, such as *autokey* for Linux which allows an
+unlimited number of persistent strings to be recorded.
+
+## boundaries
+
+available memory for flashing on the current board revision is 28K 
+(0x7000). The dozen layers, double tap definitions, dynamic macros and 
+*shift navigation* left/right layer rollover currently consume over 99% of the
+available RAM -- compilation actually reports 100% usage despite recent changes
+which should cause over utilization!
+
+Any significant future enhancements to this base will likely require 
+sacrificing a feature or two. Dynamic macros and double tap definitions 
+would likely be the first casualties should I have any other bright 
+ideas. 
+
+See [change history][planck constant#change-history]. But the latest compile
+time macro string, *Space Shift* / *Enter Shift* sequence handling, and *Number
+Layer* with corresponding overlay (and subsequent flash memory recovery), may
+stand the test of time..

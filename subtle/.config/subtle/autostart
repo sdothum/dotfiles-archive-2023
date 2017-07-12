@@ -1,0 +1,145 @@
+#!/bin/sh
+## notion startup script (based on openbox autostart script)
+set -x
+
+# for vim plugins using system() calls
+#SHELL=/bin/sh
+
+# :. set primary monitor and set maximum resolution
+# see /etc/gdm/Init/Default and .xinitrc
+#
+#xrandr --output DVI-1 --primary --mode 2560x1600 --rate 60 --right-of DVI-0
+#
+# :.
+
+# from fish
+#function p; /bin/ps -ef | /bin/egrep -i "$argv" 2>/dev/null | /bin/egrep -v egrep; end
+# !p process; and command... (process not found)
+# !p process; or command...  (process found)
+#function !p; return (p $argv | wc -l); end
+
+ps() { /bin/ps -ef | /bin/egrep "$1" | /bin/egrep -v "egrep|$0" ; }
+notps() { return $(ps "$1" | wc -l) ; }
+
+# startup daemon in background if not already running
+# note: still must force bg command for sleep statements to prevent display delay e.g. "(... sleep ...) &" 
+startup () { notps "$1" && $@ & }
+sudostartup () { notps "$1" && sudo $@ & }
+
+## Start session manager
+startup lxsession
+
+## Launch panel
+#startup stalonetray -p
+#killall trayion; [ $(hostname) = luna ] && startup trayion -iconsize 28 || startup trayion -iconsize 20
+
+## Enable power management
+sudostartup xfce4-power-manager
+
+## Start Thunar Daemon
+startup thunar --daemon
+
+## Set desktop wallpaper
+nitrogen --restore &
+
+## Enable Eyecandy - off by default, uncomment one of the commands below.
+## Note: cairo-compmgr prefers a sleep delay, else it tends to produce
+## odd shadows/quirks around tint2 & Conky.
+#(sleep 10s && cb-compmgr --cairo-compmgr) &
+#startup cb-compmgr --xcompmgr
+killall compton; (sleep 10s && compton) &
+
+## Launch network manager applet
+(sleep 3s && startup nm-applet) &
+
+## Detect and configure touchpad. See 'man synclient' for more info.
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+    synclient VertEdgeScroll=1 &
+    synclient TapButton1=1 &
+fi
+
+## Start xscreensaver
+notps xbmc && startup xscreensaver -no-splash
+
+## Start Conky after a slight delay
+# :. dual column for netbook...
+#(sleep 3s && conky -q) &
+(sleep 3s && startup conkywonky) &
+# :.
+
+# :. determine audio card number before initializing mixer
+# no longer required with pulseaudio
+#[ $(hostname) = luna ] && ~/bin/asound-usb.sh
+# :.
+## Start volumeicon after a slight delay
+killall volumeicon; (sleep 3s && startup volumeicon) &
+
+## Start Clipboard manager
+(sleep 3s && startup parcellite) &
+
+## Bad Nautilus, minimises the impact of running Nautilus under
+## an Openbox session by applying some gconf settings. Safe to delete.
+#cb-bad-nautilus &
+
+## The following command will set-up a keyboard map selection tool when
+## running in a live session.
+#cb-setxkbmap-live &
+
+## cb-welcome - post-installation script, will not run in a live session and
+## only runs once. Safe to remove.
+#(sleep 10s && cb-welcome --firstrun) &
+
+## cb-fortune - have Statler say a little adage
+#(sleep 120s && cb-fortune) &
+
+# Autostart the Dropbox deamon
+#(sleep 30s && ~/.dropbox-dist/dropboxd) &
+(notps .dropbox-dist/dropbox && sleep 15s && ~/.dropbox-dist/dropboxd) &
+
+# :. all my stuff !!
+# extend left shift key to international backslash key
+# remap caps lock to backspace
+[ -f /etc/X11/Xmodmap ] && xmodmap /etc/X11/Xmodmap
+
+# background processes
+# autokey and guake startup on their own...
+startup synapse -s
+#startup autokey
+notps /bin/autokey && autokey &
+startup artha
+notps mpd && mpd
+
+# allow rtorrent and sendmail to restart if lock left dangling
+rm -f ~/.nzbget.paused 2>/dev/null
+rm -f ~/.session/rtorrent.lock 2>/dev/null
+rm -f ~/.msmtpqueue/.lock 2>/dev/null
+#screen &
+export TERM=xterm-256color
+#startup tmux attach
+
+# wiki server
+#notps thedarnedestthing && thedarnedestthing.sh
+
+# some other apps
+pong=$(/bin/ping -c 1 ftp.debian.org | grep -c "64 bytes")
+[ "$pong" -lt "1" ] && delay=30s || delay=0s
+[ $(hostname) = luna ] && startup luakit || (sleep $delay && startup luakit) &
+
+#startup gvim
+startup pidgin
+[ $(hostname) = luna ] && startup pavucontrol &
+
+# using terminal to startup frame designated cli apps
+# note: a red activity message will clutter the main windows until the applications receive focus
+(notps mutt && sleep 3s && xfce4-terminal -T Mail --role mail -e "fish -c mutt") &
+#(notps irssi && sleep 3s && xfce4-terminal -T Mail --role chat -e irssi) &
+(notps newsbeuter && sleep 3s && xfce4-terminal -T "RSS Reader" --role $([ $(hostname) = luna ] && echo rss || echo document ) -e "fish -c news") &
+[ $(hostname) = luna ] && (notps slrn && sleep 3s && xfce4-terminal -T Usenet --role usenet -e slrn) &
+[ $(hostname) = luna ] && (notps nzbget && sleep 3s && xfce4-terminal -T NZB --role nzb -e "fish -c nzb") &
+[ $(hostname) = luna ] && (notps rtorrent && sleep 3s && xfce4-terminal -T BitTorrent --role bittorrent -e rtorrent) &
+killall TTYtter; [ $(hostname) = luna ] && (sleep 3s && xfce4-terminal -T Twitter --role bittorrent -e "fish -c twitter") &
+killall offlineimap; (sleep 3s && xfce4-terminal -T IMAP --role $([ $(hostname) = luna ] && echo imap || echo mail) -e "fish -c imap") &
+[ $(hostname) = luna ] && (notps ncmpcpp && sleep 3s && xfce4-terminal -T Music --role music -e ncmpcpp) &
+[ $(hostname) = luna ] && (notps pyradio && sleep 3s && xfce4-terminal -T Radio --role radio -e pyradio) &
+[ $(hostname) = luna ] && (notps htop && sleep 3s && xfce4-terminal -T Process --role process -e htop) &
+

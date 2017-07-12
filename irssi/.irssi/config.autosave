@@ -1,0 +1,92 @@
+servers = (
+  {
+    address = "localhost";
+    chatnet = "Bitlbee";
+    port = "6667";
+    use_ssl = "no";
+    ssl_verify = "no";
+    autoconnect = "yes";
+  },
+  #{
+  #  address = "irc.freenode.net";
+  #  chatnet = "Freenode";
+  #  port = "6667";
+  #  autoconnect = "yes";
+  #}
+);
+
+settings = {
+  core = {
+    real_name = "Steven Hum";
+    user_name = "shum";
+    nick = "shum";
+    timestamp_format = "%H:%M:%S";
+  };
+
+  "fe-text" = {
+    actlist_sort = "refnum";
+    term_force_colors = "yes";
+    autostick_split_windows = "no";
+  };
+
+  "fe-common/core" = {
+    autocreate_own_query = "no";
+    autocreate_query_level = "DCCMSGS";
+    use_status_window = "no";
+    use_msgs_window = "no";
+    autoclose_windows = "no";
+    reuse_unused_windows = "yes";
+    windows_auto_renumber = "no";
+    print_active_channel = "yes";
+    theme = "madcow";
+  };
+
+  "perl/core/scripts" = {
+    awl_display_key = "[$Q] %n$H$C$S";
+    awl_block = "-15";
+  };
+};
+
+chatnets = {
+  Bitlbee = {
+    type = "IRC";
+    autosendcmd = "/^msg -bitlbee &bitlbee identify sdothum; wait -bitlbee 2000";
+  };
+  Freenode = { type = "IRC"; };
+  MSN = { type = "msn"; };
+};
+
+hilights = ( { text = "shum"; nick = "yes"; word = "yes"; } );
+#statusbar = { default = { dccstat = { }; }; };
+statusbar = {
+  default = {
+    awl_0 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_0 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+  };
+};
+keyboard = ( { key = "F1"; id = "command"; data = "window next"; } );
+windows = {
+  1 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "&bitlbee";
+        tag = "Bitlbee";
+      }
+    );
+  };
+  2 = { name = "hilight"; };
+};
+mainwindows = {
+  1 = { first_line = "16"; lines = "50"; };
+  2 = { first_line = "1"; lines = "15"; };
+};
+ignores = (
+  { level = "JOINS PARTS QUITS NICKS"; channels = ( "#mwsf" ); }
+);

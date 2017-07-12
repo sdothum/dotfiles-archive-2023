@@ -1,0 +1,31 @@
+#!/bin/bash
+
+action=$1
+shift
+
+[ "$action" = "usage" ] && {
+  echo "  Customized archive:"
+  echo "    archive KEYWORD"
+  echo "      Moves done items containing KEYWORD from todo.txt to done.txt and removes blank lines."
+  echo "    archive ITEM#"
+  echo "      Moves done item number ITEM# and removes blank lines."
+  echo "    Note that if KEYWORD is a number it is considered as an ITEM# number"
+  echo ""
+  exit
+}
+
+KEYWORD=$1
+if [[ "$KEYWORD" =~ ^[0-9]+$ ]]; then
+    # we got an ITEM to archive
+    [ $TODOTXT_VERBOSE -gt 0 ] && sed "$KEYWORD!d" "$TODO_FILE"
+    sed "$KEYWORD!d" "$TODO_FILE" >> "$DONE_FILE"
+    sed -i.bak "${KEYWORD}d" "$TODO_FILE"
+else
+    # we got a keyword, or nothing
+    [ $TODOTXT_VERBOSE -gt 0 ] && grep "^x .*$KEYWORD" "$TODO_FILE"
+    grep "^x .*$KEYWORD" "$TODO_FILE" >> "$DONE_FILE"
+    sed -i.bak "/^x .*$KEYWORD/d" "$TODO_FILE"
+fi
+[ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO:  $TODO_FILE archived."
+#defragment blank lines
+sed -i.bak -e '/./!d' "$TODO_FILE"

@@ -1,0 +1,23 @@
+decorations 1
+height 200
+width 200
+confirm_destroy 1
+edit_lock 0
+sticky_on_start 0
+tray_enabled 0
+tray_click_configuration 1
+back rgb(32,48,48)
+use_back 1
+text rgb(253,246,227)
+use_text 1
+fontname Iosevka 11
+toolbar 1
+auto_hide_toolbar 1
+scrollbar 1
+buttons New, Delete, Separator, Cut, Copy, Paste
+autostart_wait_systray 1
+autostart_delay 0
+autostart_new_pad 0
+autostart_display_pads 0
+hide_from_taskbar 0
+hide_from_task_switcher 0

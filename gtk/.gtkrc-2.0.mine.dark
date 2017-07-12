@@ -1,0 +1,7 @@
+gtk-can-change-accels=1
+style "vimfix" {
+  # bg[NORMAL] = "#1B1D1E" # this matches my gVim theme 'Normal' bg color.
+  bg[NORMAL] = "#002B36" # solaris dark
+  # bg[NORMAL] = "#FDF6E3" # solaris (paper) light
+}
+widget "vim-main-window.*GtkForm" style "vimfix"

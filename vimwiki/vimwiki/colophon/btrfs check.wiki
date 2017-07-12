@@ -1,0 +1,48 @@
+btrfs is not yet fully production ready, missing the auto repair 
+functionality that most Linux users are familiar with other filesystems, 
+such as, ext4. A kernel panic (not uncommon when tinkering with 
+overclocking a system) can result in a number of (subsequent) "btrfs 
+check" warning messages on the partition. These can be alarming but my 
+experience thus far has been that these errors are benign.  
+
+The errors I have encountered appear to be more problematic for root 
+partitions, in that, I have not encountered this problem with non-root 
+btrfs partitions (probably the luck of the draw that no disk writes were 
+in progress).
+
+## directory errors
+
+_"unresolved ref dir #.. index #.. maxlen #.. name ... filetype #.. 
+[errors](errors) #.., no dir item, no dir index"_ 
+
+[ljust]can show up on a "btrfs check". It appears to be a benign 
+message, as a scrub of the volume in question yields no errors. This 
+condition can go undetected for a long time unless one routinely checks 
+the boot volume after a system crash.
+
+This has been repairable by mounting the volume -- "btrfs check" cannot 
+be run on a mounted volume -- finding the file referenced by name (often 
+one associated with a daemon or server process) and performing the 
+following steps..
+
+- backup the referenced file e.g. cp file file.save
+- move the referenced file e.g. mv file file.tmp
+- umount the partition
+- run _"btrfs check /path"_
+- run _"btrfs check --repair /path"_ if necessary
+- run _"btrfs check /path"_ which should now be free of errors if all 
+went well
+- mount the filesystem
+- restore file from file.save
+
+## cache errors
+
+_"cache and super generation don't match"_ 
+
+[ljust]error is often produced after a "btrfs check --repair". It 
+appears to be a benign error message and can be repaired (removed) by..
+
+- changing "space_cache" to "clear_cache" in /etc/fstab
+- rebooting and allowing for clear_cache to complete
+- restoring "space_cache" in /etc/fstab
+- rebooting

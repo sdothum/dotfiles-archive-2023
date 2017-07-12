@@ -1,0 +1,65 @@
+uB: tabopen http://localhost:8080/
+
+uC: tabopen http://localhost:631/
+
+uc: tabopen http://localhost:5050/
+
+ue: tabopen http://8tracks.com/
+
+uF: tabopen http://www.theweathernetwork.com/hourly-weather-forecast/canada/ontario/ottawa
+
+uf: tabopen http://www.theweathernetwork.com/weather/canada/ontario/ottawa
+
+uj: tabopen http://www.jango.com/profiles/54787964?l=0
+
+uK: tabopen https://01100111011001010110010101101011.info/preindex
+
+uk: tabopen https://01100111011001010110010101101011.info/search/nzbgeek?t=2040
+
+um: tabopen https://mail.google.com/mail/u/0/?shva=1#inbox
+
+un: tabopen http://localhost:6789/nzbget:maaike/
+
+uP: tabopen http://config.privoxy.org/
+
+up: tabopen http://localhost:32400/web/index.html#!/dashboard
+
+uR: tabopen http://luna/tt-rss/prefs.php
+
+ur: tabopen http://luna/tt-rss/
+
+uS: tabopen http://localhost:8081/comingEpisodes/
+
+us: tabopen http://songza.com/
+
+uT: tabopen http://localhost/tt-rss/prefs.php
+
+ut: tabopen http://localhost/tt-rss/
+
+uU: tabopen http://www.usenet-crawler.com/forum/
+
+uu: tabopen http://www.usenet-crawler.com/movies?t=2040
+        function (w) w:new_tab("http://www.usenet-crawler.com/search/yify?t=2040") end),
+
+uW: tabopen http://thedarnedestthing.com/admin/do%20:
+
+uw: tabopen http://thedarnedestthing.com/the%20darnedest%20thing
+
+uX: tabopen http://localhost:32400/web/index.html#!/dashboard
+
+ux: (function(){var%20t=((window.getSelection&&window.getSelection())||(document.getSelection&&document.getSelection())||(document.selection&&document.selection.createRange&&document.selection.createRange().text));var%20e=(document.charset||document.characterSet);if(t!=''){location.href='http://translate.google.com/translate_t?text='+t+'&hl=en&langpair=auto|en&tbb=1&ie='+e;}else{location.href='http://translate.google.com/translate?u='+escape(location.href)+'&hl=en&langpair=auto|en&tbb=1&ie='+e;};;}())
+
+uZ: tabopen http://newztown.co.za/forum/
+
+uz: tabopen https://www.newztown.co.za/movies?t=2040
+
+@F8@: tabopen http://thedarnedestthing/
+
+Shift @F8@: tabopen http://thedarnedestthing/resources
+
+Control @F8@: tabopen http://thedarnedestthing/admin/do%20:
+
+@F7@: tabopen http://thedarnedestthing/admin/do%20:draft
+
+Shift @F7@: tabopen http://thedarnedestthing/admin/do%20:orphan
+

@@ -1,0 +1,97 @@
+
+inevitably, shell scripting a suite of herbstluftwm window manager hidd
+functions led to considering recoding the scripts, originally written in 
+[zsh](http://zsh.sourceforge.net/) to 
+[dash](https://en.wikipedia.org/wiki/Almquist_shell). The decision to 
+move to dash for all user shell scripts was predicated on its superior 
+speed.
+
+While zsh is feature laden and still used as my interactive shell, dash 
+is lightweight and more fleet of foot. Of course, some shell scripts 
+challenged their conversion to 
+[POSIX](https://en.wikipedia.org/wiki/POSIX) with features like arrays 
+and globbing not part of the POSIX shell language specification, but the 
+exercise was worth it for the portability -- and efficiency.
+
+Post conversion to dash, a *$HOME/bin* [directory hierarchy][path 
+mangling] was created to organize the shell scripts by function. That 
+led to rethinking the naming of the herbstluftwm scripts residing in 
+*$HOME/.config/herbstluftwm* whose functions were identified by common 
+prefixes such as **draw**, **toggle**, **query**, etc.
+
+A pseudo high level shell language 
+[DSL](https://en.wikipedia.org/wiki/Domain-specific_language) was 
+created with the syntax..
+
+| Field               | Value for herbstluftwm  |
+| --                  | --                      |
+| command             | draw, toggle, query ... |
+| object              | monitor, panel, tag ... |
+| optional parameters | fullscreen, kill ...    |
+
+[ljust]for a command syntax..
+
+`command object`
+`command object parameters..`
+
+## template
+
+by refactoring the window manager scripts by their function, and 
+sourcing the scripts from a common shell script, a simple DSL is 
+created. 
+
+Normally, shell scripts are written to source one or more scripts 
+containing a library of common functions and settings. Instead, the 
+**command** script containing the common functions and settings 
+*sources* the **object** script providing the command syntax described 
+above..
+
+`function() {...}`
+`export ...`
+`...`
+`msg=$1`
+`shift`
+`if [ -e ${0%/command}/functions/command/$msg ] ;then`
+`^  . ${0%/command}/functions/command/$msg $@`
+`else`
+`^  usage $0`
+`fi`
+
+The *usage* script lists the valid **objects** for the command command 
+when incorrectly called i.e. the **object** does not exist..
+
+`name=$(basename $@)`
+`dir=$(dirname $@)`
+`funcs=$(ls -1 $dir/functions/$name)`
+`echo ".. $name  $(echo $funcs | sed 's/ / \| /g')"`
+
+By having a common **command** script source the relevant **object** 
+script, a certain language like elegance is achieved. Of course, an 
+argument could be easily be made to simply retain unique descriptive 
+script names, sourcing the relevant script library and foregoing the 
+directory hiearchy. 
+
+In this implementation for herbstluftwm, not all **command** scripts 
+contained refactored code common to their **objects**. Regardless, this 
+approach allows a natural directory hierarchy with a negligible 
+execution time penalty.
+
+## herbstluftwm
+
+refactoring the scripts for herbstluftwm created the following script 
+organization under *$HOME/.config/herbstluftwm/* (**commands**) and 
+*$HOME/.config/herbstluftwm/functions/[command]/* (**objects**)..
+
+| Command | Object                                                                                                          |
+| --      | --                                                                                                              |
+| draw    | border, monitor, panel, refresh, root                                                                           |
+| focus   | frame, hlwm, window                                                                                             |
+| hide    | window                                                                                                          |
+| query   | conky, count, desktop, display, fullscreen, hidden, monocle, multihead, primary, rez, tag, ttag, window, winids |
+| switch  | frames, layout, monitor, out, tag, window                                                                       |
+| restore | frames, hidden, window, windows                                                                               |
+| toggle  | cinema, compton, conky, focus, fullscreen, max, monocle, panel, scratchpad, unclutter                           |
+
+Refer to the [dotfiles](https://github.com/sdothum/dotfiles) for 
+examples of the actual scripts. Note the *toggle* script which includes 
+logic to spawn system wide applications not specific to herbstluftwm.

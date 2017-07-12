@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="PreferencesDialog">
+    <option name="LastOpened" value="lookAndFeelOptions"/>
+  </group>
+  <group name="Web Browser">
+    <option name="Name" value="Browser"/>
+  </group>
+</config>

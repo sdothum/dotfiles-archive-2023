@@ -1,0 +1,35 @@
+Config { bgColor = "#314853"
+       --bgColor = "#5e7b89"
+       --bgColor = "#26292C"
+
+       , fgColor = "#eeeeee"
+       , font    = "xft:Arial:size=12"
+
+       , position = Static { xpos = 0 , ypos = 1060 , width = 1920 , height = 20  }
+
+       , commands = [ Run Cpu [ "-t", "<total>%"
+                              , "-L", "3"
+                              , "-H", "50"
+                              , "--minwidth", "3"
+                              , "--normal", "#ccaa26"
+                              , "--high", "#ff6347"] 10
+                    , Run Memory [ "-t", "<usedratio>%"
+                                 , "--minwidth", "3"
+                                 , "--normal", "#ccaa26"
+                                 , "--high", "#ff6347"] 10
+                    , Run Battery [ "-t", "<left>%"
+                                  , "--minwidth", "3"
+                                  , "-L", "33"
+                                  , "--low", "#ff6347"] 10
+                    , Run ThermalZone 0 ["-t", "<temp>"] 10
+                    , Run ThermalZone 1 ["-t", "<temp>"] 10
+                    , Run DiskU [("/", "<free>")] [] 10
+                    , Run Date "%a %b %_d %k:%M" "date" 10
+                    , Run Kbd [("us", "EN"), ("bg", "BG")]
+                    , Run StdinReader ]
+
+       , sepChar = "%"
+       , alignSep = "}{"
+
+       , template = " %StdinReader% } CPU%cpu%  MEM%memory%  BAT%battery%  %thermal0%/%thermal1%C  %disku% { <fc=#ccaa26>%date%</fc> %kbd% "
+       }

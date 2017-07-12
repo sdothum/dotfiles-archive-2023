@@ -1,0 +1,13 @@
+well, it didn't take long to return to a more classical hand positioning 
+for touch typing (versus the flattened fingering I was experimenting 
+with). With that, I have returned to the original [Colemak 
+Shift-DH][colemak shift-dh] layout after playing with the [Shift-mod 
+**CV**][shift-mod layout] keymap swap -- that it didn't appear to impact 
+typing negatively was expected but finger memory of some bigrams is much 
+happier with the return..
+
+<code>^ ^ ^ ^ <span class='brown'>`~ ^ = 1 2 3 4 5 6 ^ ^ 7 8 9 0 [^ ^ ]</span></code>
+<code>^ ^ ^ ^ Tab^ ^ <span class='brown'>- Q W F P B ^ ^ J L U Y ; '</span>^ ^ Del</code>
+<code>^ ^ ^ ^  Esc^ ^ <span class='brown'>/ A R S T G ^ ^ M N E I O</span>^ ^ Enter</code>
+<code>^ ^ ^ ^ <span class='brown'>\</span>^ ^ Shift <span class='brown'>X C D V Z ^ ^ K H , .</span>^ ^ Shift</code>
+<code>Ctrl^ ^ Win^ ^ Alt^ ^ ^  Space^ ^ ^  Backspace^ ^ Fn^ ^ Pn^ ^ Ctrl</code>

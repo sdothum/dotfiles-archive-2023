@@ -1,0 +1,451 @@
+StartChar: three
+Encoding: 51 51 22
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 30
+MDAP[rnd]
+PUSHW_1
+ 11
+MDAP[rnd]
+NPUSHW
+ 3
+ 205
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 87
+ 0
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 166
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 88
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 73
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 58
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 187
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 43
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 90
+ 1
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 153
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 103
+ 1
+ 119
+ 1
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 134
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 16
+ 30
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 128
+ 30
+ 1
+DELTAP1
+PUSHW_1
+ 30
+SRP0
+PUSHW_2
+ 6
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 16
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 144
+ 11
+ 1
+DELTAP1
+PUSHW_1
+ 30
+SRP0
+PUSHW_1
+ 26
+MDRP[rp0,grey]
+PUSHW_1
+ 26
+MDAP[rnd]
+NPUSHW
+ 3
+ 102
+ 26
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 83
+ 26
+ 1
+DELTAP2
+PUSHW_2
+ 15
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 101
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 72
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 42
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 57
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 118
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 85
+ 20
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 132
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 169
+ 21
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 201
+ 21
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 85
+ 21
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 150
+ 34
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 12
+MDAP[rnd]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 23
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 23
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 33
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 33
+ 5
+MIAP[no-rnd]
+EIF
+NPUSHW
+ 3
+ 132
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 90
+ 1
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 196
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 115
+ 1
+ 1
+DELTAP1
+PUSHW_2
+ 3
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 101
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 115
+ 5
+ 131
+ 5
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 74
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 31
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 175
+ 12
+ 1
+DELTAP1
+PUSHW_1
+ 12
+SRP0
+PUSHW_2
+ 9
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 70
+ 14
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 108
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 139
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 121
+ 16
+ 1
+DELTAP1
+PUSHW_1
+ 23
+SRP0
+PUSHW_2
+ 18
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 202
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 138
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 121
+ 20
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 84
+ 20
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 121
+ 25
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 143
+ 27
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 110
+ 27
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 123
+ 27
+ 1
+DELTAP1
+PUSHW_3
+ 28
+ 12
+ 9
+SRP1
+SRP2
+IP
+NPUSHW
+ 3
+ 101
+ 29
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 116
+ 29
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 130
+ 31
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+100 240 m 1,0,-1
+ 244 336 l 1,1,2
+ 318 140 318 140 517 140 c 0,3,4
+ 620 140 620 140 689 212 c 128,-1,5
+ 758 284 758 284 758 466 c 0,6,7
+ 758 638 758 638 676.5 700 c 128,-1,8
+ 595 762 595 762 487 762 c 2,9,-1
+ 410 762 l 1,10,-1
+ 410 912 l 1,11,-1
+ 487 912 l 2,12,13
+ 579 912 579 912 652.5 977.5 c 128,-1,14
+ 726 1043 726 1043 726 1182 c 0,15,16
+ 726 1318 726 1318 667 1380 c 128,-1,17
+ 608 1442 608 1442 517 1442 c 0,18,19
+ 349 1442 349 1442 275 1245 c 1,20,-1
+ 131 1341 l 1,21,22
+ 277 1602 277 1602 518 1602 c 0,23,24
+ 688 1602 688 1602 795.5 1487.5 c 128,-1,25
+ 903 1373 903 1373 903 1182 c 0,26,27
+ 903 928 903 928 693 837 c 1,28,29
+ 935 769 935 769 935 466 c 0,30,31
+ 935 228 935 228 817 104 c 128,-1,32
+ 699 -20 699 -20 518 -20 c 0,33,34
+ 246 -20 246 -20 100 240 c 1,0,-1
+EndSplineSet
+Substitution2: "'dnom' Denominators in Greek lookup 15 subtable" .notdef
+Substitution2: "'dnom' Denominators in Cyrillic lookup 14 subtable" .notdef
+Substitution2: "'dnom' Denominators in Latin lookup 13 subtable" .notdef
+Substitution2: "'sinf' Scientific Inferiors in Greek lookup 9 subtable" threeinferior
+Substitution2: "'sinf' Scientific Inferiors in Cyrillic lookup 8 subtable" threeinferior
+Substitution2: "'sinf' Scientific Inferiors in Latin lookup 7 subtable" threeinferior
+Substitution2: "'frac' Diagonal Fractions in Latin lookup 4 subtable" threesuperior
+Substitution2: "'sups' Superscript lookup 2 subtable" threesuperior
+Substitution2: "'sups' Superscript lookup 1 subtable" threesuperior
+Substitution2: "'sups' Superscript in Latin lookup 0 subtable" threesuperior
+EndChar

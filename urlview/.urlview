@@ -1,0 +1,4 @@
+REGEXP (((http|https|ftp|gopher)|mailto)[.:][^ >"\t]*|www\.[-a-z0-9.]+)[^ .,;\t>">\):]
+#COMMAND w3m %s 
+#COMMAND lynx -accept_all_cookies %s 
+COMMAND links %s 

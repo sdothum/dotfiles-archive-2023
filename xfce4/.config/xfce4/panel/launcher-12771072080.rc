@@ -1,0 +1,12 @@
+[Global]
+MoveFirst=false
+ArrowPosition=0
+
+[Entry 0]
+Name=Editor
+Comment=gedit text editor
+Icon=gedit-icon
+Exec=gedit
+Terminal=false
+StartupNotify=false
+

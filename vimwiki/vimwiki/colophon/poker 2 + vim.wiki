@@ -1,0 +1,89 @@
+allows for some additional keyboard mappings, in particular, for the 
+keys most difficult to reach but often used.
+
+Remapping the **Esc** and **Del** keys is one experiment I have been 
+trying out -- the **Tab** key is one of the few keys that vim is unable 
+to remap via its config file. Muscle memory gets a bit in the way 
+initially but in the long run, it should be a win for the pinkies..
+
+| action           | setting        | key |
+| --               | --             |     |
+| Fn + right Ctrl  |                |     |
+| Tab              | Esc            |     |
+| Pn               |                |     |
+| Esc              | Tab            |     |
+| Pn               |                |     |
+| \                | Fn + Backspace | Del |
+| Pn               |                |     |
+| Backspace        | \              |     |
+| Pn               |                |     |
+| Fn + right Ctrl  |                |     |
+| Fn + right Shift |                |     |
+
+Discarding the redundant **Backspace** key that was present with the 
+[GuiFn][poker 2#guifn] configuration, the **Del** key it defined may 
+similarly be removed..
+
+| action           | setting |
+| --               | --      |
+| Fn + right Ctrl  |         |
+| Fn + /           | /       |
+| Pn               |         |
+| Fn + right Ctrl  |         |
+| Fn + right Shift |         |
+
+## vim layout
+
+with **Fn + right Shift** enabled..
+
+`^    Tab  1 2 3 4 5   6 7 8 9 0 - =  \`
+`^     Esc  Q W F P G   J L U Y ; [ ]  Del`
+`Backspace  A R S T D   H N E I O '  Enter`
+`^     Shift  Z X C V B   K M , . /  Shift`
+<code>Ctrl  Win  Alt    Space    Alt  Fn  Pn  `~</code>
+
+[ljust]with **Fn** (thumb) held down..
+
+`^    Tab  F1 F2 F3 F4 F5   F6 F7 F8 F9 F10 F11 F12  PgUp`
+`^     Esc  Q W F P G   J L U Y Home Up End  PgDn`
+`Backspace  A R S T D   H N E I Left Down  Right`
+`^     Shift  Z X C V B   K M , . /  Shift`
+<code>Ctrl  Win  Alt    Space    Alt  Fn  Pn  `~</code>
+
+## lhne
+
+**HJKL** comprise the familiar Qwerty home row navigation keys for vim. 
+ This doesn't work out so well for Colemak, even if the keys are all 
+ right index finger positions -- being somewhat confusing with their 
+ placement and corresponding action.
+
+Taking a page from gamers and their Qwerty **WASD** navigation key 
+cluster, remapping the Colemak **LHNE** keys in the vim configuration is 
+intuitive 
+-- more so than the original Qwerty home row assignment IMO -- with 
+ minimal impact to vim's default key assignments..
+  
+`" nnoremap h h`
+`" vnoremap h h`
+`nnoremap n gj`
+`vnoremap n gj`
+`nnoremap e l`
+`vnoremap e l`
+`nnoremap l gk`
+`vnoremap l gk`
+`^ `
+`nnoremap f e`
+`vnoremap f e`
+`nnoremap F E`
+`vnoremap F E`
+`nnoremap k n`
+`vnoremap k n`
+`nnoremap K N`
+`vnoremap K N`
+
+[ljust]requiring just the **E** "end" and **N** "next" keys to be 
+remapped which conveniently can be mapped to their Qwerty positions. 
+Serendipity!
+
+**Note:** these key remappings will affect any scripts using the default 
+ vim navigation keys and will need to be changed accordingly.

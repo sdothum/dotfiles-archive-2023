@@ -1,0 +1,63 @@
+photo processing in Linux with popular commercial tools is easily
+accomplished by installing the applications in VirtualBox with their
+OS. However, it is possible to run some Windows applications in Linux
+using the Windows emulator
+[Wine](http://en.wikipedia.org/wiki/Wine_(software)). Some products
+like Adobe
+[Lightroom](http://en.wikipedia.org/wiki/Adobe_Photoshop_Lightroom)
+are more problematic to run under Wine, but some plugins for
+Lightroom can be -- and if one is willing to forego Lightroom for
+Linux alternatives, there are several compelling options, such as
+[digiKam](http://en.wikipedia.org/wiki/DigiKam) and
+[LightZone](http://en.wikipedia.org/wiki/LightZone).
+
+Wine itself can be somewhat involved to setup Windows applications and
+the necessary Windows library dependencies.
+[PlayOnLinux](http://en.wikipedia.org/wiki/PlayOnLinux) can simplify the
+process considerably with its pre-installed common libraries.
+
+## Installing Topaz
+
+execute "playonlinux" and select "install a program", then "install a
+non-listed program" to create a 32 bit "bottle" named "Topaz". The
+initial application to be installed should be Topaz Fusion Express2
+which is the manager for the individual Topaz products. Create a
+"Topaz Fusion Express2" shortcut for it at the prompt.
+
+Add the remaining Topaz applications by "updating an existing
+application" ("install a program" may need to be selected twice to
+display the "install a non-listed program" link) and selecting the
+"Topaz" volume (do not create additional shortcuts as Topaz plugins are
+opened via Topaz Fusion Express2). 
+
+An error message complaining about a "noexec mounted filesystem"
+may occur, depending on your specific Linux install. Ignore and press 
+"next" to complete installation of the Windows application. The common 
+Windows' dialogue popups should look familiar.
+
+After all the Topaz applications are installed, open a terminal 
+window and execute the following shell command to create the symbolic 
+links (if the Topaz libraries are not found by the applications)..
+
+`for i in  ~/.PlayOnLinux/wineprefix/Topaz/drive_c/Program\ Files/Common\ Files/Topaz\ Labs/*; do`
+`^ ^ ln -svf "$i" ~/.PlayOnLinux/wineprefix/Topaz/drive_c/windows/system32/`
+`done`
+
+## digiKam and Topaz
+
+open digiKam. Right click on any image and "open with", then "other", 
+navigating to the "~/.PlayOnLinux/shortcuts/Topaz Fusion Express2" 
+shortcut previously created. Check the "remember application" check 
+box to place the shortcut on the drop down menu and you are good to 
+go!
+
+It may be necessary to run VirtualBox to have access to your complete
+investment in commercial photo processing software. But it is more
+direct to be able to run the powerful suite of Topaz applications
+natively in Linux and manage your image library within Linux.
+digiKam, as an open source project, is evolving rapidly and is an
+impressive product in its own right -- worthy of a look if wish to work
+in Linux.
+
+
+

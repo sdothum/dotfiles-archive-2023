@@ -1,0 +1,3 @@
+#!/usr/bin/dash
+echo "  $@" >>$HOME/.vacuum
+grep -q '^# vim: set ft=conf: #' $HOME/.vacuum || echo '# vim: set ft=conf: #' >>$HOME/.vacuum

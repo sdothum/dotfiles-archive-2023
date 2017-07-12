@@ -1,0 +1,38 @@
+[mpd](http://mpd.wikia.com/wiki/Music_Player_Daemon_Wiki) is a great 
+music player daemon, especially when used with the 
+[ncmpcpp](http://ncmpcpp.rybczak.net/screenshots.php) client. By 
+default, mpd is installed under user mpd which prevents playing 
+simutaneous audio streams within 
+[PulseAudio](http://www.freedesktop.org/wiki/Software/PulseAudio).
+
+To enable playing multiple concurrent audio streams with 
+PulseAudio..
+
+`cp /etc/mpd.conf ~/.mpdconf`
+
+And edit the following in ~/.mpdconf..
+
+`music_directory         "/net/media/music"`
+`playlist_directory      "~/.mpd/playlists"`
+`db_file                 "~/.mpd/tag_cache"`
+`log_file                "~/tmp/mpd.log"`
+`pid_file                "~/.mpd/pid"`
+`state_file              "~/.mpd/state"`
+`sticker_file            "~/.mpd/sticker.sql"`
+`#user                   "mpd"   # default to current user`
+`auto_update             "yes"`
+`follow_outside_symlinks "yes"`
+`follow_inside_symlinks  "yes"`
+`audio_output {`
+`^    type                "pulse"`
+`^    name                "My MPD PulseAudio Output"`
+`}`
+
+Disable the mpd systemd (or corresponding init.d) service and launch 
+locally for the user with..
+
+`# sudo /etc/init.d/mpd stop`
+`# sudo update-rc.d -f mpd remove`
+`sudo systemctl stop mpd.service`
+`sudo systemctl disable mpd.service`
+`mpd &`

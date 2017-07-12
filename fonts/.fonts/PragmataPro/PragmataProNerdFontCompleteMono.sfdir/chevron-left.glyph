@@ -1,0 +1,17 @@
+StartChar: chevron-left
+Encoding: 62590 62590 2612
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+818 1410 m 1,0,-1
+ 1010 1218 l 1,1,-1
+ 530 770 l 1,2,-1
+ 1010 322 l 1,3,-1
+ 818 130 l 1,4,-1
+ 178 770 l 1,5,-1
+ 818 1410 l 1,0,-1
+EndSplineSet
+EndChar

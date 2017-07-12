@@ -1,0 +1,18 @@
+[roxterm profile]
+colour_scheme=Tango
+background_type=1
+saturation=1.000000
+full_screen=0
+maximise=1
+always_show_tabs=0
+show_add_tab_btn=0
+hide_menubar=1
+show_resize_grip=0
+scrollbar_pos=0
+scrollback_lines=99999
+font=Inconsolata Medium 12
+scroll_on_output=0
+scroll_on_keystroke=1
+browser=luakit
+dir_filer=roxfiler
+background_img=/home/shum/images/wallpapers/dubai.jpg

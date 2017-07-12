@@ -1,0 +1,51 @@
+since getting the [Poker 2][poker 2] mechanical keyboard, it has been 
+weeks of exploration -- reviewing the merits of various keyboard 
+layouts, and examining and unlearning the left hand impositions learned 
+from classical touch typing. 
+
+The possibilities of designing a more ergonomic keyboard layout are made 
+practical with a programmable keyboard which can be easily configured 
+and simply plugged into any computer I happen to be working on. Without, 
+I would have stuck with the accessible and effective Colemak layout.
+
+Discovering the [Colemak mod-DH][colemak mod-dh] was revelatory. That 
+led to creating an ANSI [Colemak Curl mod][colemak curl-shift] version 
+which focused on further balancing and correcting left and right hand 
+motions, while facilitating home row reach of keys with reduced index 
+and pinkie finger reaches.
+
+It is unusual in design, with the relocation of the 
+**left Shift** key, not to mention the right shift of the whole 
+(modified) Colemak layout altogether -- I don't expect adoption of this 
+scheme. But it has been such an ergonomically natural transition, with 
+significantly reduced travel for the fingers, that it is impossible for 
+me to go back to layouts I had expected would be difficult to lose.
+
+The left hand curl was a surprisingly simple unlearning of the subtle 
+(but cumulatively stressful) wrist twist that is required to type bottom 
+row characters. And the right shift of the overall keyboard layout, 
+while seemingly drastic, maintains the important Colemak fingering 
+relationships.
+
+I think I have finally fine tuned the placement of the left hand 
+**equal**, **hyphen** (minus), **slash** and **backslash** symbols 
+ column cluster, both aesthetically and ergonomically, to this left hand 
+ right hand layout..
+
+<code>^ ^ ^ ^ `~ ^ = 1 2 3 4 5 6 ^ ^ 7 8 9 0 [^ ^ ]</code>
+`^ ^ ^ ^ Tab^ ^ - Q W F P B ^ ^ J L U Y ; '^ ^ Del`
+`^ ^ ^ ^  Esc^ ^ / A R S T G ^ ^ M N E I O^ ^ Enter`
+`^ ^ ^ ^ \^ ^ Shift X C D V Z ^ ^ K H , .^ ^ Shift`
+<code>Ctrl^ ^ Win^ ^ Alt^ ^ ^  Space^ ^ ^  Backspace^ ^ Fn^ ^ Pn^ ^ Ctrl</code>
+
+The new **backslash** position doesn't look out of place as much as 
+I had expected, being almost in the mirror position of its former 
+placement on the right. The symmetry and symbol keys look "correct" (for 
+a *nix and Vim user) and are easily reached. 
+
+This is the current keyboard layout that works enormously well for me. 
+I say "current" because for weeks I was certain each layout change would 
+be the last! The Poker 2 keyboard. Cherry MX Reds. Colemak. Curl mod 
+tweaks. A [geekhackers'](https://geekhack.org/) nirvana..
+
+

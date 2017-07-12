@@ -1,0 +1,41 @@
+gtk_color_scheme = "green:#11ffeb\nbg_selected:#007269\nbg_normal:#232323\nfg_normal:#f5f5f5\nfg_selected:#ffffff\n"
+
+style "throbber"
+{
+	fg[NORMAL] = @green
+	bg[NORMAL] = shade (1.5 ,@bg_normal)
+}
+
+style "synapse"
+{
+	bg[NORMAL] = @bg_normal
+	bg[SELECTED] = @bg_selected
+	base[SELECTED] =@bg_selected
+	fg[NORMAL] = @fg_normal
+	fg[SELECTED] = @fg_normal
+	
+	base[NORMAL] = lighter (lighter (@bg_normal))
+	base[SELECTED] = @bg_selected
+	text[NORMAL] = @fg_normal
+	text[SELECTED] = @fg_normal
+
+	engine "murrine"
+	{
+		contrast = 0.6
+		arrowstyle = 2
+		reliefstyle = 3
+		highlight_shade = 1.0
+		glazestyle = 0
+		gradient_shades = {1.2, 1.0, 1.0, 0.8}
+		roundness = 4
+		lightborder_shade = 1.26
+		lightborderstyle = 1
+		separatorstyle = 1
+	}
+}
+
+widget_class "*SynapseWindow*" style "synapse"
+
+#widget_class "*SynapseGuiListView*" style : highest "listview"
+
+widget_class "*SynapseGuiMenuThrobber*" style : highest "throbber"

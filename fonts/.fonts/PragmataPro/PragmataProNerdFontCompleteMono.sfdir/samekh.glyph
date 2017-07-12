@@ -1,0 +1,247 @@
+StartChar: samekh
+Encoding: 1505 1505 768
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 9
+MDAP[rnd]
+PUSHW_1
+ 3
+MDAP[rnd]
+NPUSHW
+ 3
+ 16
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 239
+ 9
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 0
+ 9
+ 16
+ 9
+ 2
+DELTAP1
+PUSHW_1
+ 9
+SRP0
+PUSHW_1
+ 8
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 240
+ 8
+ 1
+DELTAP1
+PUSHW_1
+ 9
+SRP0
+PUSHW_1
+ 10
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 5
+ 15
+ 10
+ 31
+ 10
+ 2
+DELTAP1
+PUSHW_1
+ 3
+SRP0
+PUSHW_2
+ 11
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 9
+SRP0
+PUSHW_2
+ 14
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 8
+SRP0
+PUSHW_2
+ 15
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 11
+ 166
+ 15
+ 182
+ 15
+ 198
+ 15
+ 214
+ 15
+ 230
+ 15
+ 5
+DELTAP1
+NPUSHW
+ 9
+ 103
+ 15
+ 119
+ 15
+ 135
+ 15
+ 151
+ 15
+ 4
+DELTAP1
+NPUSHW
+ 3
+ 7
+ 15
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 71
+ 15
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 247
+ 15
+ 1
+DELTAP1
+NPUSHW
+ 7
+ 22
+ 15
+ 38
+ 15
+ 54
+ 15
+ 3
+DELTAP1
+NPUSHW
+ 3
+ 86
+ 15
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 0
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 0
+ 9
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 8
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 8
+ 5
+MIAP[no-rnd]
+EIF
+NPUSHW
+ 3
+ 92
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 10
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 106
+ 5
+ 122
+ 5
+ 2
+DELTAP1
+PUSHW_1
+ 0
+SRP0
+PUSHW_2
+ 9
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 14
+MDRP[rp0,grey]
+PUSHW_1
+ 8
+SRP0
+PUSHW_1
+ 15
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 191
+ 15
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 206
+ 15
+ 222
+ 15
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 172
+ 15
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+58 1172 m 1,0,-1
+ 612 1172 l 2,1,2
+ 945 1172 945 1172 945 840 c 2,3,-1
+ 945 489 l 2,4,5
+ 945 78 945 78 598 14 c 2,6,-1
+ 522 0 l 1,7,-1
+ 262 0 l 1,8,-1
+ 131 1016 l 1,9,-1
+ 58 1016 l 1,10,-1
+ 58 1172 l 1,0,-1
+768 857 m 2,11,12
+ 768 1016 768 1016 626 1016 c 2,13,-1
+ 306 1016 l 1,14,-1
+ 409 136 l 1,15,-1
+ 582 169 l 2,16,17
+ 768 204 768 204 768 421 c 2,18,-1
+ 768 857 l 2,11,12
+EndSplineSet
+EndChar

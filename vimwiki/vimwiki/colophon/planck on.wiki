@@ -1,0 +1,41 @@
+![Planck with Cherry profile keycaps](/images/planck-cherry-thumbs.jpg)
+
+[ljust]just as I thought I was done, typing revealed one last(?) change!
+
+Double tapping on the [number layer][maxed planck#number-layer] was 
+a clever way to allow keying symbols that would have otherwise required 
+either, shifting to the [symbol layer][maxed planck#symbol-layer] or 
+adding a **Shift** modifier to the number layer. 
+
+![Number layer](/images/keyboard-layout-number.jpg)
+
+Alternating layers is disruptive to typing flow. And, replacing one of 
+the existing modifier assignments with the **Shift** key, given the 
+modifier consistency across layers, is also undesirable. But there is 
+a downside to double tapping on the number layer, as clever as it is: 
+repeating digits is not that uncommon and efficient data entry easily 
+triggers unintentional transformation of repeating digits to their 
+corresponding double tap
+symbols.
+
+The solution? Another key assigned togglable layer was created! Leaving 
+the existing modifiers untouched, the left pinkie toggles the 
+corresponding symbol layer as defined below..
+
+![Number layer and symbols](/images/keyboard-layout-number-symbol.jpg)
+
+If the **Symbol** layer key had simply been defined as a **Shift** key 
+instead, all of the shift symbols for the numbers **1** to **9** would 
+have been easily available from the number layer. 
+
+Choosing instead to map a corresponding symbol layer, however, allows 
+adding the **Space**, **Comma**, **Semi-colon**, **Colon** and **Bar** 
+characters for added convenience in entering lists of numbers. Of 
+particular note, the **Space** key is not otherwise available to the 
+number layer because the left thumb is already occupied toggling the 
+layer itself, the **Space** key being assigned to right of the 
+**Number** layer key as can be seen [here][thumb plancking].
+
+This last change preserves what the original double tapping design 
+provided, with even a few beneficial additions. This could be the final 
+firmware flash..

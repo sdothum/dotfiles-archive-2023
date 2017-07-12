@@ -1,0 +1,274 @@
+StartChar: AE
+Encoding: 198 198 136
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 8
+MDAP[rnd]
+PUSHW_1
+ 17
+MDAP[rnd]
+PUSHW_1
+ 6
+MDAP[rnd]
+NPUSHW
+ 3
+ 159
+ 17
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 32
+ 17
+ 1
+DELTAP1
+PUSHW_1
+ 17
+SRP0
+PUSHW_1
+ 2
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 160
+ 6
+ 1
+DELTAP1
+PUSHW_1
+ 6
+SRP0
+PUSHW_2
+ 3
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 73
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 110
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 88
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 8
+ 7
+ 24
+ 7
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 16
+ 8
+ 1
+DELTAP1
+PUSHW_1
+ 17
+SRP0
+PUSHW_2
+ 11
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 8
+SRP0
+PUSHW_1
+ 12
+MDRP[rp0,grey]
+PUSHW_1
+ 12
+MDAP[rnd]
+PUSHW_1
+ 11
+SRP0
+PUSHW_1
+ 14
+MDRP[rp0,grey]
+PUSHW_1
+ 8
+SRP0
+PUSHW_1
+ 16
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 37
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 104
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 201
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 153
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 118
+ 19
+ 134
+ 19
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 52
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 67
+ 19
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 2
+MDAP[rnd]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 8
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 8
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 0
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 0
+ 5
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 4
+MDRP[rp0,grey]
+PUSHW_1
+ 8
+SRP0
+PUSHW_2
+ 9
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 11
+MDRP[rp0,grey]
+PUSHW_1
+ 11
+MDAP[rnd]
+PUSHW_2
+ 14
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 0
+SRP0
+PUSHW_2
+ 16
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 2
+SRP0
+PUSHW_2
+ 17
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 138
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 156
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 106
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 121
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 20
+ 18
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+990 0 m 1,0,-1
+ 483 0 l 1,1,-1
+ 483 547 l 1,2,-1
+ 245 547 l 1,3,-1
+ 245 0 l 1,4,-1
+ 69 0 l 1,5,-1
+ 69 569 l 1,6,-1
+ 397 1580 l 1,7,-1
+ 990 1580 l 1,8,-1
+ 990 1424 l 1,9,-1
+ 659 1424 l 1,10,-1
+ 659 905 l 1,11,-1
+ 949 905 l 1,12,-1
+ 949 748 l 1,13,-1
+ 659 748 l 1,14,-1
+ 659 157 l 1,15,-1
+ 990 157 l 1,16,-1
+ 990 0 l 1,0,-1
+483 704 m 1,17,-1
+ 483 1311 l 1,18,-1
+ 284 704 l 1,19,-1
+ 483 704 l 1,17,-1
+EndSplineSet
+EndChar

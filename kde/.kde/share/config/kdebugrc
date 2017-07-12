@@ -1,0 +1,56 @@
+[KSharedDataCache]
+InfoOutput=4
+
+[digikam]
+InfoOutput=4
+
+[dolphin]
+InfoOutput=4
+
+[filelight]
+InfoOutput=4
+
+[kbuildsycoca4]
+InfoOutput=4
+
+[kcmshell]
+InfoOutput=4
+
+[kdecore (KConfigSkeleton)]
+InfoOutput=2
+
+[kdecore (KLibrary)]
+InfoOutput=2
+
+[kdecore (services)]
+InfoOutput=2
+
+[kded]
+InfoOutput=4
+
+[kglobalaccel]
+InfoOutput=4
+
+[kio (delegateanimationhandler)]
+InfoOutput=4
+
+[kio_trash]
+InfoOutput=4
+
+[knotify]
+InfoOutput=4
+
+[konqueror]
+InfoOutput=4
+
+[kshutdown]
+InfoOutput=4
+
+[kstars]
+InfoOutput=4
+
+[ktouch]
+InfoOutput=4
+
+[unnamed app]
+InfoOutput=4

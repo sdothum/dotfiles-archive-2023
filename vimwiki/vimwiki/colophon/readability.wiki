@@ -1,0 +1,205 @@
+
+was originally released by [arc90](http://www.arc90.com/) as a Java 
+bookmarklet which reformatted web pages for reading, devoid of the 
+increasingly distracting artefacts adorning web pages. Coined 
+[Readability](https://www.readability.com/about), it spawned similar 
+content applications, such as 
+[Readable](http://readable.tastefulwords.com/).
+
+## simplyread
+
+is a Javascript from [suckless.org](http://njw.me.uk/simplyread/) which 
+can be integrated into [vimb][] and other browsers -- it was intended 
+for [surf](http://surf.suckless.org/) -- to provide similar 
+_readability_ formatting.
+
+The script has been modified to provide the distraction free "look" 
+I prefer and to handle sites I typically use it with (mainly news sites 
+I peruse through RSS feeds). The **srstyle** CSS assignment is [pretty 
+printed](https://en.wikipedia.org/wiki/Prettyprint) to allow easier 
+maintenance..
+
+`if(window.content && window.content.document && window.content.document.simplyread_original === undefined) window.content.document.simplyread_original = false;`
+`^ `
+`function simplyread(nostyle, nolinks)`
+`{`
+`^  function count_p(parenttag)`
+`^  {`
+`^    var n = 0;`
+`^    var c = parenttag.childNodes;`
+`^    for (var i = 0; i < c.length; i++) {`
+`^      if (c[i].tagName == "p" || c[i].tagName == "P")`
+`^        n++;`
+`^    }`
+`^    return n;`
+`^  }`
+`^ `
+`^  var doc;`
+`^  doc = (document.body === undefined)`
+`^        ? window.content.document : document;`
+`^  if (doc.simplyread_original) {`
+`^    doc.body.innerHTML = doc.simplyread_original;`
+`^    for (var i = 0; i < doc.styleSheets.length; i++)`
+`^      doc.styleSheets[i].disabled = false;`
+`^    doc.simplyread_original = false`
+`^    return 0;`
+`^  }`
+`^  doc.simplyread_original = doc.body.innerHTML;`
+`^  doc.body.innerHTML = doc.body.innerHTML.replace(/<br[^>]*>\s*<br[^>]*>/g, "<p>");`
+`^ `
+`^  var biggest_num = 0;`
+`^  var biggest_tag;`
+`^  var t = doc.getElementsByTagName("*");`
+`^  for (var i = 0; i < t.length; i++) {`
+`^    var p_num = count_p(t[i]);`
+`^    if (p_num > biggest_num) {`
+`^      biggest_num = p_num;`
+`^      biggest_tag = t[i];`
+`^    }`
+`^  }`
+`^  if (biggest_num == 0) return 1;`
+`^ `
+`^  var fresh = doc.createElement("div");`
+`^  fresh.innerHTML = biggest_tag.innerHTML;`
+`^  fresh.innerHTML = fresh.innerHTML.replace(/<\/?font[^>]*>/g, "");`
+`^  fresh.innerHTML = fresh.innerHTML.replace(/style="[^"]*"/g, "");`
+`^  if(nolinks)`
+`^    fresh.innerHTML = fresh.innerHTML.replace(/<\/?a[^>]*>/g, "");`
+`^  fresh.innerHTML = fresh.innerHTML.replace(/<\/?span[^>]*>/g, "");`
+`^  fresh.innerHTML = fresh.innerHTML.replace(/<style[^>]*>/g, "<style media=\"aural\">"); /* ensures contents of style tag are ignored */`
+`^ `
+`^  for (var i = 0; i < doc.styleSheets.length; i++)`
+`^    doc.styleSheets[i].disabled = true;`
+`^ `
+`^  srstyle =`
+`^    "* {" +`
+`^    "  color: #000;" +`
+`^    "  font-family: Arial, sans-serif;" +`
+`^    "}" +`
+`^    "body {" +`
+`^    "  background: #fdf6e3 none;" +`
+`^    "  font-size: 0.85em;" +`
+`^    "}" +`
+`^    "h1 {" +`
+`^    "  font-size: 1.85em;" +`
+`^    "  font-weight: normal;" +`
+`^    "  text-align: center;" +`
+`^    "  text-transform: lowercase;" +`
+`^    "}" +`
+`^    "h2,h3,h4 {" +`
+`^    "  font-weight: bold;" +`
+`^    "}" +`
+`^    "p {" +`
+`^    "  color: #444;" +`
+`^    "  font-family: Verdana, sans-serif;" +`
+`^    "  line-height: 1.65em;" +`
+`^    "  margin: 0 auto;" +`
+`^    "  padding-bottom: 1.35em;" +`
+`^    "  text-indent: 1.6em;" +`
+`^    "}" +`
+`^    "p a {" +`
+`^    "  color: #B3431E;" +`
+`^    "  font-family: Verdana, sans-serif;" +`
+`^    "}" +`
+`^    "li {" +`
+`^    "  padding-bottom: 0.55em;" +`
+`^    "}" +`
+`^    "code {" +`
+`^    "  color: #4B4D4E;" +`
+`^    "  display: block;" +`
+`^    "  font-family: Inconsolata, monospace;" +`
+`^    "  font-size: 0.85em;" +`
+`^    "  line-height: 1.45em; " +`
+`^    "  text-indent: 0em;" +`
+`^    "}" +`
+`^    "img {" +`
+`^    "  display: block;" +`
+`^    "  max-width: 32em;" +`
+`^    "  height: auto;" +`
+`^    "}" +`
+`^    ".caption,.hidden,.image,.photo,.share-help,.sharetools,.story-header,.video,.visually-hidden {" +`
+`^    "  display: none;" +`
+`^    "}" +`
+`^    "div#sr {" +`
+`^    "  hyphens: auto;" +`
+`^    "  margin: auto;" +`
+`^    "  padding: 8em;" +`
+`^    "  padding-top: 2em;" +`
+`^    "  text-align: normal;" +`
+`^    "  text-rendering: optimizeLegibility;" +`
+`^    "  width: 32em;" +`
+`^    "}";`
+`^ `
+`^  doc.body.innerHTML =`
+`^    "<style type=\"text/css\">" + (nostyle ? "" : srstyle) + "</style>" +`
+`^    "<div id=\"sr\">" + "<h1>"+doc.title+"</h1>" + fresh.innerHTML + "</div>";`
+`^ `
+`^  return 0;`
+`}`
+
+[ljust]The **srstyle** CSS rules are updated as necessary to handle 
+specific sites. 
+
+_Simplyread_ cannot handle all web sites -- some deviate severely from 
+web page layout conventions -- but it is vastly faster than the 
+Readability bookmarklet which must process the web page remotely. Using 
+the keybind in vimb, it is easily accessible and enhances reading web 
+content immensely.
+
+## readable
+
+from [TastefulWords.com](http://readable.tastefulwords.com/) is 
+generated as a single line Java bookmarklet. Inserted into the vimb 
+_scripts.js_ file, it has been pretty printed (formatted) to allow 
+further fine tuning of the display properties to my liking..
+
+`function readable()`
+`{`
+`^  _readableOptions = {`
+`^    'base':                'blueprint',`
+`^    'box_width':           '32em',`
+`^    'color_background':    '#FDF6E3',`
+`^    'color_links':         '#99CCFF',`
+`^    'color_text':          '#1B1D1E',`
+`^    'custom_css':          'h1 { font-weight: normal; text-align: center !important; text-transform: lowercase; } h2,h3,h4 { font-weight: normal; text-align: right !important; text-transform: lowercase; } p { color: #444; padding-bottom: 0.35em ; text-indent: 1.6em; } p a { color: #B3431E; } code { display: block; line-height: 1.45em; margin-left: 1.65em; text-indent: -1.65em; } img { display: block; max-width: 32em; height: auto; }',`
+`^    'text_align':          'normal',`
+`^    'text_font_header':    'Helvetica, quote(Helvetica Neuve), Arial, Tahoma, sans-serif',`
+`^    'text_font':           'Verdana, Geneva, Helvetica Neue, Arial, DejaVu Sans, sans-serif',`
+`^    'text_font_monospace': 'Inconsolata',`
+`^    'text_line_height':    '1.65em',`
+`^    'text_size':           '0.85em',`
+`^  };`
+`^ `
+`^  if (document.getElementsByTagName('body').length>0)`
+`^    ;`
+`^  else`
+`^    return;`
+`^ `
+`^  if (window.$readable) {`
+`^    if (window.$readable.bookmarkletTimer)`
+`^      return;`
+`^  }`
+`^  else`
+`^    window.$readable={};`
+`^ `
+`^  window.$readable.bookmarkletTimer=true;`
+`^  window.$readable.options=_readableOptions;`
+`^  if (window.$readable.bookmarkletClicked) {`
+`^    window.$readable.bookmarkletClicked();`
+`^    return;`
+`^  }`
+`^ `
+`^  _readableScript=document.createElement('script');`
+`^  _readableScript.setAttribute('src','http://readable-static.tastefulwords.com/target.js?rand='+encodeURIComponent(Math.random()));`
+`^  document.getElementsByTagName('body')[0].appendChild(_readableScript);`
+`}`
+
+_Readable_ is used for web pages which _Simplyread_ does not handle 
+-- and there still remain sites that even it cannot fully convert. There 
+ is a slight lag time (compared to _Simplyread_) to reformat a web page 
+ due to the server 
+ Javascript that must be referenced but it is a small penalty.
+ 
+ With both these scripts defined in my vimb _config_, most web pages can 
+ be read distraction free of all the noise that tends to permeate web site 
+ designs these days..

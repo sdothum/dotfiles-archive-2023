@@ -1,0 +1,292 @@
+a random collection of code fragments used to solve various *nix 
+installation problems encountered over time, after upgrades, etc.
+
+I have been meaning to keep a journal of little fixes but, up until now, 
+never have had the discipline to do so. That's because most of these 
+little fixes are that: little. Either a quick command line action or an 
+enhancement to a script. They seem trivial at the time of resolution but 
+often required pulling up a manpage or a little digging to resolve.
+
+My analogue memory is porous, as is evidenced by the fact that I am 
+certain there are plenty of anecdotal gems but can remember naught. So, 
+without further adieu, time to start recording these maintenance forays 
+as I (re)stumble across them..
+
+## 404
+
+when the Archlinux repository databases do not match the actual packages 
+residing on the servers, pacman errors out with..
+
+`error: failed retrieving file '<package>.pkg.tar.xz' from <url> : The requested URL returned error: 404`
+
+This can result from having a stale dated pacman database installed 
+which can be updated with..
+
+`pacman -Syy`
+
+While infrequent, it is also not uncommon for..
+
+`pacman -Syu`
+
+to fail because, while the database may be up to date, the packages 
+themselves have not yet finished being updated on the servers. Patience 
+is a virtue. Try again later.
+
+## curl
+
+allows you to pull down the URL content of a website which is useful for 
+scraping information. If nothing appears to be downloaded, most likely, 
+the webpage has been relocated. This can be verified with..
+
+`curl -silent -v http://..`
+
+[ljust] which will list the message "*.. Moved Permanently*".
+
+To have **curl** follow the link to the webpage's new location..
+
+`curl -silent -L http://..`
+
+## dash
+
+shell is my scripting shell of choice. I used to write bash and zsh 
+scripts for their syntactical richness but now script in dash because of 
+that. Without all of the syntactical shortcuts, dash runs circles around 
+bash and zsh. Its usage for window management was the reason for 
+switching back to this streamlined shell.
+
+Aside from the POSIX language restrictions, using **eval** to simulate the 
+occasional array, **printf** for enhanced **echo** commands, and enclosing 
+variables within double quotes for tests (to handle embedded **Spaces**) 
+are the most common differences. As an added benefit, POSIX conformity 
+ensures platform portability and keeps your shell scripting skills 
+honed.
+
+## dbus
+
+does not inherit the **DISPLAY** environment on window manager startup. 
+This will cause daemon notifications such as that issued from *udiskie* 
+to fail. For Arch Linux, in *.xinitrc* source..
+
+`. /etc/X11/xinit/xinitrc.d/50-systemd-user.sh`
+
+## fish
+
+shell is a non-POSIX interactive shell which has been my daily terminal 
+driver despite the fact that I code all shell scripts for POSIX 
+compliant *dash*. A benign startup *test index* error message occurred 
+after a recent update which curiously affected only one computer! This 
+was ultimately caused by a file which had an errant keybind function 
+reference whose cause remains unknown. It's recurrence was cleared by..
+
+`rm $HOME/.config/fish/fishd.(hostname)`
+
+## freetype2
+
+to approximate **infinality** like font rendering, enable the following 
+configurations..
+
+`sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d`
+`sudo ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d`
+
+## goyo
+
+clears the statusline by default for a distraction free presentation of 
+the page. Even if you set the statusline in an call to your own 
+initialization function..
+
+`autocmd User GoyoEnter nested call <SID>GoyoEnter()`
+
+To prevent [Goyo](https://github.com/junegunn/goyo.vim) from overwriting 
+your attempts to set a minimal statusline (why would you be using Goyo 
+otherwise!), edit the plugin *autoload/goyo.vim* file..
+
+`function! s:hide_statusline()`
+`^  let &l:statusline = &statusline`
+`endfunction`
+
+## group and passwd
+
+systemd boot message: "Failed to start Verify integrity of password and 
+group files". 
+
+A package removal can orphan group and passwd file settings. Check and 
+correct with..
+
+`sudo grpck`
+`sudo pwck`
+
+## infinality
+
+**freetype2** is slowly integrating the subpixel hinting of the 
+**infinality** patches bringing it closer to the rendering provided by 
+**infinality**. Switching back and forth between these font rendering 
+packages, depending on the platform, can result in the replacement of an 
+installed video card specific mesa library with the generic xorg 
+**mesa-libgl**. This can cause the X desktop environment to appear 
+broken with **infinality** -- with conky graphics not displaying, fonts 
+not appearing, text input not registering, etc.
+
+The solution is to reinstall the necessary video card specific mesa 
+library, such as **nvidia-libgl**. The caveat is to always pay attention 
+to what libraries are *replaced* when switching back and forth between 
+packages.
+
+## inotify watches
+
+if *inotify watches* become exhausted, applications such as *pulseaudio* can
+fail to load completely and *Xorg* can appear stalled (while waiting for
+subprocesses which are hampered by inotify resources). Messages in related
+logs and the systemd journal will identify that the inotify resources are
+exhausted.
+
+To verify the current maximum number of *inotify watches* and set a new session
+limit..
+
+`cat /proc/sys/fs/inotify/max_user_watches`
+`sudo sysctl fs.inotify.max_user_watches=32768`
+
+To increase the value to a suitably large number..
+
+`echo fs.inotify.max_user_watches=32768 | sudo tee /etc/sysctl.d/99-sysctl.conf` 
+
+[ljust]on Archlinux..
+
+`echo fs.inotify.max_user_watches=32768 | sudo tee /usr/lib/sysctl.d/90-override.conf`
+
+## lightline
+
+has useful colour schemes matching available vim color theme plugins, 
+such as *solarized*. To get a bit more contrast with the light solarized 
+theme command mode field, edit the plugin 
+*colorsheme/solarized'_light.vim* file..
+
+`let s:p.normal.left = [ [ s:base02, s:blue ], [ s:base3, s:base01 ] ]`
+`let s:p.insert.left = [ [ s:base02, s:green ], [ s:base3, s:base01 ] ]`
+`let s:p.replace.left = [ [ s:base02, s:red ], [ s:base3, s:base01 ] ]`
+`let s:p.visual.left = [ [ s:base02, s:magenta ], [ s:base3, s:base01 ] ]`
+
+## pacman
+
+the latest major upgrade to **pacman 5.0** broke **package-query** which is 
+a dependency of many Arch Linux package management utilities. The option 
+for my package management workflow was to either wait for upstream to 
+correct the problem or rebuild the packages to use the new **libalpm** 
+library..
+
+`pacaur -S --rebuild cower`
+`pacaur -S --rebuild yaourt package-query`
+
+On rare occasions, a keyring update can hang on a deadly embrace with 
+itself. This can be rectified with..
+
+`pacman -S archlinux-keyring`
+
+[ljust]or failing that..
+
+`pacman-key --populate`
+
+[ljust]before continuing with the remaining package updates.
+
+## pacaur
+
+can be fooled into thinking a development **git-latest** package needs 
+updating even though the **--devel** flag is not enabled. It is actually 
+a **cower** related issue which can be identified with..
+
+`cower -u`
+
+There is not much that can be done with the offending package other than 
+**--ignore**'ing it until a new github release of the package is 
+available.
+
+## passenger
+
+major ruby 2.x language updates will break the nginx passenger 
+application -- namely, this website. Updating the ruby environment 
+requires updating the ruby gems, including passenger, and rebuilding 
+the nginx server and passenger client with..
+
+`$[[HOME/.gem/ruby/2.x.0/gems/passenger-x.x.x/bin/passenger-config]] compile-agent`
+`$HOME/.gem/ruby/2.x.0/gems/passenger-x.x.x/bin/passenger-install-nginx-module`
+
+Update the *nginx.conf* passenger root reference with..
+
+`passenger_root ~/.gem/ruby/2.x.0/gems/passenger-x.x.x;`
+
+## raspberry pi
+
+media playback can suffer from audio stuttering over NFS. To solve this, 
+adjust the buffering in */etc/fstab*..
+
+`luna:/net    /net    nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev    0 0`
+
+## sed
+
+allows modifying file content with the **--in-place** flag. However, if 
+the file referenced is symlinked, the symbolic link will be broken and 
+a file by that name created. To update the linked file instead..
+
+`sed -i --follow-symlinks ..`
+
+## vim
+
+some plugins and colorscheme themes alter the statusline *fillchars* 
+resulting in the expected **Space** characters of the statusline being 
+filled with a non-blank character such as a **Caret** or **Period**. 
+Yuck!
+
+To set spaces on the statusline, add to the *fillchars*..
+
+`set fillchars+=stl:\ ,stlnc:\ "`
+
+[ljust]Note: a **Space** character follows each **Backslash** character. 
+The **DoubleQuote** is simply a comment insertion to highlight the 
+trailing blank.
+
+A more reliable method, in case multiple specifications are defined in 
+the string for the same character, is to explicitly redefine (reset) the 
+*fillchars* with..
+
+`set fillchars=stl:\ ,stlnc:\ "`
+
+[ljust]or remove the conflicting specification with (for example)..
+
+`set fillchars-=stl:.`
+
+## vimwiki
+
+in order to be able to use the **Tab** key for 
+[snipmate](https://github.com/garbas/vim-snipmate) expansion, remap 
+[vimwiki's](https://github.com/vimwiki/vimwiki) use of the key for 
+tables in the plugin *ftplugin/vimwiki.vim* file..
+
+`if g:vimwiki_table_mappings`
+`^  inoremap <expr> <buffer> <S-Tab> vimwiki#tbl#kbd_tab()`
+`^  inoremap <expr> <buffer> <C-S-Tab> vimwiki#tbl#kbd_shift_tab()`
+`endif`
+
+## xorg
+
+the message upon exiting a X11 session (stopping X)..
+
+`X server lost bad font path element.. Directory does not exist or has wrong permissions`
+
+[ljust]is a benign warning and most likely results from user fonts in 
+*$HOME/.fonts*. This warning can be corrected with..
+
+`cd $HOME`
+`mkfontdir`
+`mkfontscale`
+
+Similarly, the message..
+
+`couldn't access control socket: /run/user/1000/keyring/control: No such file or directory`
+
+[ljust]is a benign *gnome-keyring-daemon* warning and can be corrected 
+with..
+
+`sudo sed -i '$asession optional pam_gnome_keyring.so auto_start \`
+`auth optional pam_gnome_keyring.so' /etd/pam.d/login`
+`sudo sed -i '$apassword optional pam_gnome_keyring.so' /etc/pam.d/passwd` 
+
+After making these changes, restart the X server.

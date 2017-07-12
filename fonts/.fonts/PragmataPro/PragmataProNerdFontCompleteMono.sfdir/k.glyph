@@ -1,0 +1,335 @@
+StartChar: k
+Encoding: 107 107 78
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 8
+MDAP[rnd]
+PUSHW_1
+ 0
+MDAP[rnd]
+NPUSHW
+ 3
+ 25
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 186
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 82
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 112
+ 0
+ 1
+DELTAP1
+PUSHW_2
+ 1
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 180
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 166
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 0
+ 8
+ 1
+DELTAP1
+PUSHW_1
+ 8
+SRP0
+PUSHW_2
+ 9
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 5
+MDRP[rp0,grey]
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 14
+MDRP[rp0,grey]
+PUSHW_1
+ 14
+MDAP[rnd]
+PUSHW_2
+ 13
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 5
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 166
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 24
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 57
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 89
+ 18
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 247
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 6
+ 18
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 99
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 112
+ 18
+ 128
+ 18
+ 2
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 13
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 13
+ 9
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 8
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 8
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 7
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 7
+ 5
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 1
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 138
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 106
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 41
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 121
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 217
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 24
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 180
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 57
+ 10
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 190
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 68
+ 10
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 66
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 83
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 50
+ 11
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 54
+ 17
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 6
+ 18
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 70
+ 18
+ 86
+ 18
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 26
+ 19
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 59
+ 19
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 218
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 86
+ 19
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 68
+ 19
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+970 0 m 1,0,-1
+ 794 0 l 1,1,2
+ 786 129 786 129 667 301 c 2,3,-1
+ 492 552 l 1,4,-1
+ 361 392 l 1,5,-1
+ 361 0 l 1,6,-1
+ 185 0 l 1,7,-1
+ 185 1580 l 1,8,-1
+ 361 1580 l 1,9,-1
+ 361 609 l 1,10,-1
+ 620 928 l 2,11,12
+ 749 1087 749 1087 753 1172 c 1,13,-1
+ 929 1172 l 1,14,-1
+ 927 1134 l 2,15,16
+ 921 1041 921 1041 752 834 c 2,17,-1
+ 611 661 l 1,18,-1
+ 793 397 l 2,19,20
+ 960 156 960 156 967 41 c 2,21,-1
+ 970 0 l 1,0,-1
+EndSplineSet
+EndChar

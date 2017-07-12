@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="Indicator">
+    <option name="Type" value="2"/>
+  </group>
+  <group name="LookAndFeelOptionsDialog">
+    <option name="SelectedTab" value="Margins"/>
+    <option name="Width" value="420"/>
+  </group>
+  <group name="Options">
+    <option name="BottomMargin" value="75"/>
+    <option name="Height" value="1398"/>
+    <option name="LeftMargin" value="250"/>
+    <option name="RightMargin" value="250"/>
+    <option name="TopMargin" value="125"/>
+    <option name="Width" value="1038"/>
+    <option name="XPosition" value="2000"/>
+    <option name="YPosition" value="21"/>
+  </group>
+  <group name="ReadingOptionsDialog">
+    <option name="SelectedTab" value="Scrolling"/>
+    <option name="Width" value="406"/>
+  </group>
+  <group name="Style">
+    <option name="Base:fontFamily" value="Liberation Sans"/>
+    <option name="Preformatted text:fontFamily" value="Courier"/>
+    <option name="Regular Paragraph:alignment" value="4"/>
+    <option name="Regular Paragraph:lineSpacePercent" value="140"/>
+    <option name="Regular Paragraph:spaceAfter" value="5"/>
+    <option name="Regular Paragraph:spaceBefore" value="10"/>
+  </group>
+  <group name="SystemOptionsDialog">
+    <option name="SelectedTab" value="Config"/>
+  </group>
+  <group name="ToggleButtonGroup">
+    <option name="booksOrder" value="byAuthor"/>
+  </group>
+</config>

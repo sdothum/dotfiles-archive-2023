@@ -1,0 +1,13 @@
+# the darnedest thing
+## css
+   - [ ] implement solarized theme
+   - [ ] header design
+## wiki
+   - [ ] implement tagging
+   - [ ] implement blogging
+   - [ ] implement site update
+## site
+   - [ ] transcribe nanoki content
+   - [ ] secure hosting service
+   - [ ] update dns
+   - [ ] transfer url registration service

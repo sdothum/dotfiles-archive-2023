@@ -1,0 +1,2 @@
+#!/usr/bin/dash
+convert "$@" ${@%.jpg}.png

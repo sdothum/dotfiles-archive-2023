@@ -1,0 +1,575 @@
+SplineFontDB: 3.0
+FontName: PragmataProNerdFontCompleteMono
+FullName: PragmataPro Nerd Font Complete Mono
+FamilyName: PragmataPro
+Weight: Book
+Copyright: Copyright (c) 2010 by Fabrizio Schiavi - http://www.fsd.it/. All rights reserved.
+Version: 0.8
+ItalicAngle: 0
+UnderlinePosition: -455
+UnderlineWidth: 60
+Ascent: 1638
+Descent: 410
+InvalidEm: 0
+sfntRevision: 0x0000020c
+LayerCount: 2
+Layer: 0 1 "Back" 1
+Layer: 1 1 "Fore" 0
+XUID: [1021 792 -1728000155 7059856]
+StyleMap: 0x0000
+FSType: 260
+OS2Version: 3
+OS2_WeightWidthSlopeOnly: 0
+OS2_UseTypoMetrics: 0
+CreationTime: 1283251320
+ModificationTime: 1492441735
+PfmFamily: 17
+TTFWeight: 400
+TTFWidth: 5
+LineGap: 0
+VLineGap: 0
+Panose: 2 0 5 9 3 0 0 2 0 4
+OS2TypoAscent: 1580
+OS2TypoAOffset: 0
+OS2TypoDescent: -365
+OS2TypoDOffset: 0
+OS2TypoLinegap: 0
+OS2WinAscent: 1950
+OS2WinAOffset: 0
+OS2WinDescent: 375
+OS2WinDOffset: 0
+HheadAscent: 1950
+HheadAOffset: 0
+HheadDescent: -375
+HheadDOffset: 0
+OS2SubXSize: 1434
+OS2SubYSize: 1331
+OS2SubXOff: 0
+OS2SubYOff: 293
+OS2SupXSize: 1434
+OS2SupYSize: 1331
+OS2SupXOff: 0
+OS2SupYOff: 928
+OS2StrikeYSize: 102
+OS2StrikeYPos: 512
+OS2CapHeight: 1580
+OS2XHeight: 1172
+OS2FamilyClass: 2057
+OS2Vendor: 'fsdf'
+OS2CodePages: 200000bf.dfd70000
+OS2UnicodeRanges: a0000aff.5000fdeb.00000000.00000000
+Lookup: 1 0 0 "'sups' Superscript in Latin lookup 0" { "'sups' Superscript in Latin lookup 0 subtable" ("superior") } ['sups' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'sups' Superscript lookup 1" { "'sups' Superscript lookup 1 subtable" ("superior") } ['sups' ('cyrl' <'dflt' > 'latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'sups' Superscript lookup 2" { "'sups' Superscript lookup 2 subtable" ("superior") } ['sups' ('grek' <'dflt' > 'latn' <'dflt' > ) ]
+Lookup: 4 0 0 "'frac' Diagonal Fractions in Latin lookup 3" { "'frac' Diagonal Fractions in Latin lookup 3 subtable"  } ['frac' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'frac' Diagonal Fractions in Latin lookup 4" { "'frac' Diagonal Fractions in Latin lookup 4 subtable"  } ['frac' ('latn' <'dflt' > ) ]
+Lookup: 6 0 0 "'frac' Diagonal Fractions in Latin lookup 5" { "'frac' Diagonal Fractions in Latin lookup 5 subtable"  } ['frac' ('latn' <'dflt' > ) ]
+Lookup: 6 0 0 "'frac' Diagonal Fractions in Latin lookup 6" { "'frac' Diagonal Fractions in Latin lookup 6 contextual 0"  "'frac' Diagonal Fractions in Latin lookup 6 contextual 1"  } ['frac' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'sinf' Scientific Inferiors in Latin lookup 7" { "'sinf' Scientific Inferiors in Latin lookup 7 subtable"  } ['sinf' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'sinf' Scientific Inferiors in Cyrillic lookup 8" { "'sinf' Scientific Inferiors in Cyrillic lookup 8 subtable"  } ['sinf' ('cyrl' <'dflt' > ) ]
+Lookup: 1 0 0 "'sinf' Scientific Inferiors in Greek lookup 9" { "'sinf' Scientific Inferiors in Greek lookup 9 subtable"  } ['sinf' ('grek' <'dflt' > ) ]
+Lookup: 4 0 0 "'dlig' Discretionary Ligatures in Latin lookup 10" { "'dlig' Discretionary Ligatures in Latin lookup 10 subtable"  } ['dlig' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'dlig' Discretionary Ligatures in Latin lookup 11" { "'dlig' Discretionary Ligatures in Latin lookup 11 subtable"  } ['dlig' ('latn' <'dflt' > ) ]
+Lookup: 4 0 0 "'dlig' Discretionary Ligatures in Latin lookup 12" { "'dlig' Discretionary Ligatures in Latin lookup 12 subtable"  } ['dlig' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'dnom' Denominators in Latin lookup 13" { "'dnom' Denominators in Latin lookup 13 subtable"  } ['dnom' ('latn' <'dflt' > ) ]
+Lookup: 1 0 0 "'dnom' Denominators in Cyrillic lookup 14" { "'dnom' Denominators in Cyrillic lookup 14 subtable"  } ['dnom' ('cyrl' <'dflt' > ) ]
+Lookup: 1 0 0 "'dnom' Denominators in Greek lookup 15" { "'dnom' Denominators in Greek lookup 15 subtable"  } ['dnom' ('grek' <'dflt' > ) ]
+Lookup: 1 0 0 "Single Substitution lookup 16" { "Single Substitution lookup 16 subtable"  } []
+MarkAttachClasses: 1
+DEI: 91125
+ChainSub2: coverage "'frac' Diagonal Fractions in Latin lookup 6 contextual 1" 0 0 0 1
+ 1 1 0
+  Coverage: 129 twosuperior threesuperior onesuperior zerosuperior foursuperior fivesuperior sixsuperior sevensuperior eightsuperior ninesuperior
+  BCoverage: 7 .notdef
+ 1
+  SeqLookup: 0 "Single Substitution lookup 16"
+EndFPST
+ChainSub2: coverage "'frac' Diagonal Fractions in Latin lookup 6 contextual 0" 0 0 0 1
+ 1 1 0
+  Coverage: 129 twosuperior threesuperior onesuperior zerosuperior foursuperior fivesuperior sixsuperior sevensuperior eightsuperior ninesuperior
+  BCoverage: 14 slash fraction
+ 1
+  SeqLookup: 0 "Single Substitution lookup 16"
+EndFPST
+ChainSub2: coverage "'frac' Diagonal Fractions in Latin lookup 5 subtable" 0 0 0 1
+ 1 1 0
+  Coverage: 5 slash
+  BCoverage: 129 twosuperior threesuperior onesuperior zerosuperior foursuperior fivesuperior sixsuperior sevensuperior eightsuperior ninesuperior
+ 1
+  SeqLookup: 0 "Single Substitution lookup 16"
+EndFPST
+TtTable: prep
+PUSHW_1
+ 0
+CALL
+SVTCA[y-axis]
+PUSHW_3
+ 1
+ 2
+ 2
+CALL
+SVTCA[x-axis]
+PUSHW_3
+ 3
+ 2
+ 2
+CALL
+SVTCA[x-axis]
+PUSHW_8
+ 3
+ 64
+ 53
+ 41
+ 30
+ 18
+ 0
+ 8
+CALL
+PUSHW_8
+ 4
+ 23
+ 19
+ 15
+ 11
+ 7
+ 0
+ 8
+CALL
+SVTCA[y-axis]
+PUSHW_8
+ 1
+ 71
+ 58
+ 45
+ 32
+ 20
+ 0
+ 8
+CALL
+PUSHW_8
+ 2
+ 23
+ 19
+ 15
+ 11
+ 7
+ 0
+ 8
+CALL
+SVTCA[y-axis]
+PUSHW_3
+ 5
+ 8
+ 7
+CALL
+PUSHW_1
+ 0
+DUP
+RCVT
+RDTG
+ROUND[Black]
+RTG
+WCVTP
+EndTTInstrs
+TtTable: fpgm
+PUSHW_1
+ 0
+FDEF
+MPPEM
+PUSHW_1
+ 9
+LT
+IF
+PUSHB_2
+ 1
+ 1
+INSTCTRL
+EIF
+PUSHW_1
+ 511
+SCANCTRL
+PUSHW_1
+ 128
+SCVTCI
+PUSHW_2
+ 9
+ 3
+SDS
+SDB
+ENDF
+PUSHW_1
+ 1
+FDEF
+DUP
+DUP
+RCVT
+ROUND[Black]
+WCVTP
+PUSHB_1
+ 1
+ADD
+ENDF
+PUSHW_1
+ 2
+FDEF
+PUSHW_1
+ 1
+LOOPCALL
+POP
+ENDF
+PUSHW_1
+ 3
+FDEF
+DUP
+GC[cur]
+PUSHB_1
+ 3
+CINDEX
+GC[cur]
+GT
+IF
+SWAP
+EIF
+DUP
+ROLL
+DUP
+ROLL
+MD[grid]
+ABS
+ROLL
+DUP
+GC[cur]
+DUP
+ROUND[Grey]
+SUB
+ABS
+PUSHB_1
+ 4
+CINDEX
+GC[cur]
+DUP
+ROUND[Grey]
+SUB
+ABS
+GT
+IF
+SWAP
+NEG
+ROLL
+EIF
+MDAP[rnd]
+DUP
+PUSHB_1
+ 0
+GTEQ
+IF
+ROUND[Black]
+DUP
+PUSHB_1
+ 0
+EQ
+IF
+POP
+PUSHB_1
+ 64
+EIF
+ELSE
+ROUND[Black]
+DUP
+PUSHB_1
+ 0
+EQ
+IF
+POP
+PUSHB_1
+ 64
+NEG
+EIF
+EIF
+MSIRP[no-rp0]
+ENDF
+PUSHW_1
+ 4
+FDEF
+DUP
+GC[cur]
+PUSHB_1
+ 4
+CINDEX
+GC[cur]
+GT
+IF
+SWAP
+ROLL
+EIF
+DUP
+GC[cur]
+DUP
+ROUND[White]
+SUB
+ABS
+PUSHB_1
+ 4
+CINDEX
+GC[cur]
+DUP
+ROUND[White]
+SUB
+ABS
+GT
+IF
+SWAP
+ROLL
+EIF
+MDAP[rnd]
+MIRP[rp0,min,rnd,black]
+ENDF
+PUSHW_1
+ 5
+FDEF
+MPPEM
+DUP
+PUSHB_1
+ 3
+MINDEX
+LT
+IF
+LTEQ
+IF
+PUSHB_1
+ 128
+WCVTP
+ELSE
+PUSHB_1
+ 64
+WCVTP
+EIF
+ELSE
+POP
+POP
+DUP
+RCVT
+PUSHB_1
+ 192
+LT
+IF
+PUSHB_1
+ 192
+WCVTP
+ELSE
+POP
+EIF
+EIF
+ENDF
+PUSHW_1
+ 6
+FDEF
+DUP
+DUP
+RCVT
+ROUND[Black]
+WCVTP
+PUSHB_1
+ 1
+ADD
+DUP
+DUP
+RCVT
+RDTG
+ROUND[Black]
+RTG
+WCVTP
+PUSHB_1
+ 1
+ADD
+ENDF
+PUSHW_1
+ 7
+FDEF
+PUSHW_1
+ 6
+LOOPCALL
+ENDF
+PUSHW_1
+ 8
+FDEF
+MPPEM
+DUP
+PUSHB_1
+ 3
+MINDEX
+GTEQ
+IF
+PUSHB_1
+ 64
+ELSE
+PUSHB_1
+ 0
+EIF
+ROLL
+ROLL
+DUP
+PUSHB_1
+ 3
+MINDEX
+GTEQ
+IF
+SWAP
+POP
+PUSHB_1
+ 128
+ROLL
+ROLL
+ELSE
+ROLL
+SWAP
+EIF
+DUP
+PUSHB_1
+ 3
+MINDEX
+GTEQ
+IF
+SWAP
+POP
+PUSHW_1
+ 192
+ROLL
+ROLL
+ELSE
+ROLL
+SWAP
+EIF
+DUP
+PUSHB_1
+ 3
+MINDEX
+GTEQ
+IF
+SWAP
+POP
+PUSHW_1
+ 256
+ROLL
+ROLL
+ELSE
+ROLL
+SWAP
+EIF
+DUP
+PUSHB_1
+ 3
+MINDEX
+GTEQ
+IF
+SWAP
+POP
+PUSHW_1
+ 320
+ROLL
+ROLL
+ELSE
+ROLL
+SWAP
+EIF
+DUP
+PUSHW_1
+ 3
+MINDEX
+GTEQ
+IF
+PUSHB_1
+ 3
+CINDEX
+RCVT
+PUSHW_1
+ 384
+LT
+IF
+SWAP
+POP
+PUSHW_1
+ 384
+SWAP
+POP
+ELSE
+PUSHB_1
+ 3
+CINDEX
+RCVT
+SWAP
+POP
+SWAP
+POP
+EIF
+ELSE
+POP
+EIF
+WCVTP
+ENDF
+PUSHW_1
+ 9
+FDEF
+MPPEM
+GTEQ
+IF
+RCVT
+WCVTP
+ELSE
+POP
+POP
+EIF
+ENDF
+EndTTInstrs
+ShortTable: cvt  21
+  39
+  160
+  498
+  176
+  498
+  0
+  20
+  -365
+  19
+  1172
+  22
+  1580
+  22
+  660
+  22
+  1950
+  20
+  1037
+  1
+  871
+  1
+EndShort
+ShortTable: maxp 16
+  1
+  0
+  2728
+  2270
+  92
+  75
+  5
+  1
+  0
+  0
+  10
+  0
+  512
+  1412
+  3
+  1
+EndShort
+LangName: 1033 "" "" "Regular" "FabrizioSchiavi-http://www.fsd.it/: PragmataPro: 2010" "" "Version 0.8" "" "PragmataPro is a trademark of Fabrizio Schiavi - http://www.fsd.it/." "Fabrizio Schiavi - http://www.fsd.it/" "Fabrizio Schiavi" "Copyright (c) 2010 by Fabrizio Schiavi - http://www.fsd.it/. All rights reserved." "http://www.fsd.it/" "http://www.fsd.it/" "" "http://www.fsd.it/fonts/eula.htm" "" "PragmataPro" "Regular" "PragmataPro Nerd Font Complete Mono"
+LangName: 65535 "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz PWN10022931337"
+GaspTable: 3 8 2 20 1 65535 3 0
+Encoding: UnicodeBmp
+UnicodeInterp: none
+NameList: AGL For New Fonts
+DisplaySize: -48
+AntiAlias: 1
+FitToEm: 0
+WinInfo: 57460 20 19
+EndSplineFont

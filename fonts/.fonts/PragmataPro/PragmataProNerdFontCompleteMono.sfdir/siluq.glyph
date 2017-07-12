@@ -1,0 +1,15 @@
+StartChar: siluq
+Encoding: 1469 1469 743
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+480 11 m 1,0,-1
+ 579 11 l 1,1,-1
+ 579 -365 l 1,2,-1
+ 480 -365 l 1,3,-1
+ 480 11 l 1,0,-1
+EndSplineSet
+EndChar

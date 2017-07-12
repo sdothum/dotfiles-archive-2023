@@ -1,0 +1,17 @@
+it has been a meandering route to this place -- starting out as a proof 
+of concept with shell scripts cobbled together to massage vimwiki text 
+files into html, to Ruby scripts and then to a Ruby Sinatra web 
+application. Hardware upgrades, water cooling, overclocking.. all made 
+the journey interesting.
+
+This section is as much a repository of notes about the system this site 
+is built from as anything. It is my humble contribution back to the 
+internet community which has served me at every turn when I have tripped 
+over a technical problem -- both hardware and software. It is a constant 
+source of learning.
+
+There is still much to document. And to explore. The search for the 
+ultimate user interface is a never ending personal one. Saving 
+keystrokes may seem like a needless exercise but it's probably as close 
+to any amount of "control" that is achievable -- which, ironically, is 
+what this site set out to explore in the nature of our being. 

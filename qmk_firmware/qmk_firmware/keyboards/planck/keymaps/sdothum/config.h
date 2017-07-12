@@ -9,14 +9,11 @@
 // tap dance key press termination interval
 #define TAPPING_TERM   250
 
-// reserve dynamic macro buffer size
-#define DYNAMIC_MACRO_SIZE 24
+// compile time macro string, see functions/hardware planck script
+#define PRIVATE_STRING
 
-// compile time macro string
-#define COMPILE_STRING
-
-// tap dance vim cursor placement
-// #define VIM_CURSOR
+// compile time macro string, must be in quotes
+#define PUBLIC_STRING ":%s/arch=(.*)/arch=('any')\n"
 
 // default QWERTY keymap unless
 #define COLEMAK COLEMAK

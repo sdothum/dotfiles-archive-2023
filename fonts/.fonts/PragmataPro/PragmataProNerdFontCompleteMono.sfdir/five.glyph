@@ -1,0 +1,454 @@
+StartChar: five
+Encoding: 53 53 24
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 16
+MDAP[rnd]
+PUSHW_1
+ 0
+MDAP[rnd]
+NPUSHW
+ 3
+ 128
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 16
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 180
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 101
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 118
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 55
+ 5
+ 71
+ 5
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 165
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 244
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 132
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 122
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 107
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 170
+ 6
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 72
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 199
+ 6
+ 1
+DELTAP1
+PUSHW_2
+ 11
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 5
+ 0
+ 16
+ 16
+ 16
+ 2
+DELTAP1
+NPUSHW
+ 5
+ 80
+ 16
+ 96
+ 16
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 144
+ 16
+ 1
+DELTAP1
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 17
+MDRP[rp0,grey]
+PUSHW_1
+ 17
+MDAP[rnd]
+PUSHW_1
+ 16
+SRP0
+PUSHW_2
+ 19
+ 3
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 150
+ 22
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 165
+ 22
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 20
+MDAP[rnd]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 16
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 16
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 3
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 3
+ 5
+MIAP[no-rnd]
+EIF
+NPUSHW
+ 3
+ 107
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 114
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 129
+ 1
+ 1
+DELTAP1
+PUSHW_1
+ 5
+MDRP[rp0,grey]
+PUSHW_1
+ 5
+MDAP[rnd]
+NPUSHW
+ 3
+ 34
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 19
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 116
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 246
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 87
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 102
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 133
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 196
+ 5
+ 212
+ 5
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 51
+ 5
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 48
+ 5
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 176
+ 5
+ 1
+DELTAP1
+PUSHW_1
+ 3
+SRP0
+PUSHW_2
+ 8
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 6
+MDRP[rp0,grey]
+PUSHW_1
+ 6
+MDAP[rnd]
+NPUSHW
+ 3
+ 114
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 5
+ 34
+ 6
+ 50
+ 6
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 99
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 72
+ 6
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 19
+ 6
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 147
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 178
+ 6
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 129
+ 6
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 160
+ 6
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 85
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 114
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 128
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 126
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 93
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 138
+ 12
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 15
+ 20
+ 1
+DELTAP1
+PUSHW_1
+ 20
+SRP0
+PUSHW_2
+ 14
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 16
+SRP0
+PUSHW_2
+ 19
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 141
+ 23
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 124
+ 23
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 101
+ 23
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+921 493 m 0,0,1
+ 921 248 921 248 803 114 c 128,-1,2
+ 685 -20 685 -20 516 -20 c 0,3,4
+ 259 -20 259 -20 129 224 c 1,5,-1
+ 273 319 l 1,6,7
+ 347 140 347 140 515 140 c 0,8,9
+ 606 140 606 140 675 221.5 c 128,-1,10
+ 744 303 744 303 744 493 c 0,11,12
+ 744 685 744 685 676 761.5 c 128,-1,13
+ 608 838 608 838 454 838 c 2,14,-1
+ 220 838 l 1,15,-1
+ 220 1580 l 1,16,-1
+ 888 1580 l 1,17,-1
+ 888 1430 l 1,18,-1
+ 396 1430 l 1,19,-1
+ 396 998 l 1,20,-1
+ 485 998 l 2,21,22
+ 681 998 681 998 801 880.5 c 128,-1,23
+ 921 763 921 763 921 493 c 0,0,1
+EndSplineSet
+Substitution2: "'dnom' Denominators in Greek lookup 15 subtable" .notdef
+Substitution2: "'dnom' Denominators in Cyrillic lookup 14 subtable" .notdef
+Substitution2: "'dnom' Denominators in Latin lookup 13 subtable" .notdef
+Substitution2: "'sinf' Scientific Inferiors in Greek lookup 9 subtable" fiveinferior
+Substitution2: "'sinf' Scientific Inferiors in Cyrillic lookup 8 subtable" fiveinferior
+Substitution2: "'sinf' Scientific Inferiors in Latin lookup 7 subtable" fiveinferior
+Substitution2: "'frac' Diagonal Fractions in Latin lookup 4 subtable" fivesuperior
+Substitution2: "'sups' Superscript lookup 2 subtable" fivesuperior
+Substitution2: "'sups' Superscript lookup 1 subtable" fivesuperior
+Substitution2: "'sups' Superscript in Latin lookup 0 subtable" fivesuperior
+EndChar

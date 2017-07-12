@@ -1,0 +1,82 @@
+StartChar: dotaccent
+Encoding: 729 729 524
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 6
+MDAP[rnd]
+NPUSHW
+ 3
+ 63
+ 6
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 0
+ 6
+ 1
+DELTAP1
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 48
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 160
+ 0
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 9
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 9
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 63
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 175
+ 3
+ 1
+DELTAP1
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+665 1445 m 0,0,1
+ 665 1389 665 1389 625 1349.5 c 128,-1,2
+ 585 1310 585 1310 529 1310 c 256,3,4
+ 473 1310 473 1310 433.5 1349.5 c 128,-1,5
+ 394 1389 394 1389 394 1445 c 0,6,7
+ 394 1502 394 1502 433.5 1541 c 128,-1,8
+ 473 1580 473 1580 529 1580 c 256,9,10
+ 585 1580 585 1580 625 1541 c 128,-1,11
+ 665 1502 665 1502 665 1445 c 0,0,1
+EndSplineSet
+EndChar

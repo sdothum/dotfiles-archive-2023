@@ -1,0 +1,13 @@
+%template index "notes"
+[crepes][]
+[du puy lentils][]
+[five spice peanuts][]
+[green mung bean soup][]
+[kimchi][]
+[my patricia][]
+[notes][]
+[patricia][]
+[sara, treatment][]
+[sarita][]
+[voip reset][]
+[will and testament][]

@@ -1,0 +1,37 @@
+# You can edit this file by hand.
+# The # character at the beginning of a line comments out the line.
+# Blank lines are ignored.
+
+# The Default color scheme is used for any directory that does not have
+# a specified scheme.  A color scheme set for a base directory will also
+# be used for the sub directories.
+
+# The standard ncurses colors are: 
+# Black = 0
+# Red = 1
+# Green = 2
+# Yellow = 3
+# Blue = 4
+# Magenta = 5
+# Cyan = 6
+# White = 7
+
+# COLORSCHEME=OneWordDescription
+# DIRECTORY=/Full/Path/To/Base/Directory
+# COLOR=Window_name=foreground_color_number=background_color_number
+
+
+COLORSCHEME=Default
+DIRECTORY=/
+COLOR=MENU=white=black
+COLOR=BORDER=red=black
+COLOR=WIN=white=black
+COLOR=STATUS_BAR=blue=black
+COLOR=CURR_LINE=white=red
+COLOR=DIRECTORY=blue=black
+COLOR=LINK=black=black
+COLOR=SOCKET=magenta=black
+COLOR=DEVICE=yellow=black
+COLOR=EXECUTABLE=green=black
+COLOR=SELECTED=white=black
+COLOR=CURRENT=red=black

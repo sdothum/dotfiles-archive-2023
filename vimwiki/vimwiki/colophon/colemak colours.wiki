@@ -1,0 +1,47 @@
+after several months of using my Colemak Shift-DH layout, I have finally 
+arrived at a tri-coloured keyboard layout which highlights the modifier, 
+home row and function layer -- left number keypad and right navigation 
+cluster (see [Colemak Shift-DH][colemak shift-dh] for the function 
+layer layouts) -- key regions..
+
+<code>^ ^ ^ ^ `~ ^ = <span class='brown'>1 2</span> 3 4 <span class='brown'>5 6</span> ^ ^ 7 8 <span class='brown'>9 0</span> [^ ^ ]</code>
+<code>^ ^ ^ ^ <span class='blue'>Esc</span>^ ^ - <span class='brown'>Q W</span> F P B ^ ^ J L U <span class='brown'>Y ; '</span>^ ^ <span class='blue'>Del</span></code>
+<code>^ ^ ^ ^  <span class='blue'>Tab</span>^ ^ / <span class='brown'>A R</span> S <span class='blue'>T</span> G ^ ^ M <span class='blue'>N</span> E <span class='brown'>I O</span>^ ^ <span class='blue'>Enter</span></code>
+<code>^ ^ ^ ^ \^ ^ <span class='blue'>Shift</span> <span class='brown'>X V</span> D C Z ^ ^ K H , .^ ^ <span class='blue'>Shift</span></code>
+<code><span class='blue'>Ctrl^ ^ Win^ ^ Alt^ ^ ^ </span> Space^ ^ ^  Backspace^ ^ <span class='blue'>Fn^ ^ Pn^ ^ Ctrl</span></code>
+
+[ljust]It looks weird in coloured type but surprisingly works IMO with 
+dark grey modifiers, light grey function layer and biege alpha keycaps. 
+The visual symmetry of this particular layout is evident in many ways -- 
+an unexpected bonus to its ergonomic effectiveness.
+
+The common index finger home row heys with a physical bump out (bar or 
+nipple) or indentation (scoop) have been replaced with regular dark grey 
+keycaps instead. This feels much better to my index fingers, even if an 
+initial glance is required to position the hands in their home row 
+position. 
+
+![Poker 2 with Colemak Shift-DH tri-colour highlights](/images/colemak_colours.jpg)
+
+[ljust]The **Space** bar and **Backspace** key are biege but look 
+lighter from this angle due to their inverted position for a more 
+natural thumb contact (as are left **Ctrl**, **Alt** and right **Fn** 
+keys of the bottom row).
+
+The contrasting home row keycaps also provide a visual reference point 
+for the adjacent keys of multi-key combinations -- which have not yet 
+been instilled in my touch typing memory. Similarly, I have alternating 
+light grey keycaps in the number row for quicker visual reference -- 
+most useful again for the (modifier combination) numeric function keys.
+
+Why the use of blank keys and coloured keycaps? The Colemak Shift-DH 
+layout moves several keys out of their QWERTY row positions. Unless you 
+are using keycaps that have a uniformly flat profile such as DSA 
+profile, shifting printed keys out of their row positions would impart 
+physical changes to the row they land on. Also, even with a flat keycap 
+profile, the modifier keys which cannot be swapped, would have incorrect 
+legends. And the inverted bottom row keys would have upside-down 
+legends! Besides, blank keycaps are just more aesthetic!
+
+Armed with a keycap puller and more keycaps than most people have 
+invested in their keyboards, there is no end of creative possibility!

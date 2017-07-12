@@ -1,0 +1,63 @@
+## initial virtualbox configuration
+
+mac OSX can be run under virtualization software. It is somewhat 
+involved and, unfortunately, limited in that, to date, no virtualbox 
+guest addition has been developed to provide full OSX functionality 
+(display and device management in particular) and provisions beyond a 
+maximum of 2GB RAM and 1 CPU. It is unfortunate because I prefer (not 
+surprisingly) OSX's BSD underpinnings to Windows. Alas, this suffices to 
+allow checking this site under Safari without needing to fire up my mac.
+
+| Parameter  | Setting         |
+|------------|-----------------|
+| Name       | Snow Leopard    |
+| Space      | 20GB            |
+| RAM        | 2048MB          |
+| Video RAM  | 128MB           |
+| Video      | 3D Acceleration |
+| Audio      | HDA             |
+| Boot Order | DVD, Hard Disk  |
+
+Manually execute the following commands..
+
+`vboxmanage modifyvm "Snow Leopard" --firmware efi64`
+`vboxmanage setextradata "Snow Leopard" VBoxInternal2/EfiGopMode 4`
+
+Add the SmcDeviceKey line below the EfiGopMode line created above to the 
+~/VirtualBox VMS/Snow Leopard.vbox file..
+
+`<ExtraDataItem name=="VBoxInternal2/EfiGopMode" value=="4"/>`
+`<ExtraDataItem name=="VBoxInternal2/SmcDeviceKey"
+value=="ourhardworkbythesewordsguardedpleasedontsteal(c)^$AppleComputerInc"/>`
+
+## install osx
+
+from install disk in DVD drive, select Disk Utilities and partition OSX 
+disk.
+
+Install OSX, then install from internet, colemak keyboard layout (and 
+give your hands a break from QUERTY!) and OSX updates (saving your vbox 
+image beforehand is not a bad idea either, in case Apple updates kill 
+your fresh install).
+
+## post install
+
+to upgrade to 2 CPUs, delete the following kext (move into a deprecated 
+folder) _after_ updating software and rebooting.
+
+Note: you must restore this kext before any subsequent software updates 
+because, if you forget, you will likely have to do a complete reinstall, 
+making this a somewhat dubious enhancement..
+
+`mkdir /System/Library/Extensions/deprecated`
+`mv /System/Library/Extensions/AppleIntelCPUPowerManagement.kext /System/Library/Extensions/deprecated`
+
+| Parameter | Setting |
+|-----------|---------|
+| CPUs      | 2       |
+
+To upgrade the screen resolution to 1920x1200 (as close as I can get to 
+my 2560x1600 capable monitor) execute..
+
+`vboxmanage setextradata "Snow Leopard" VBoxInternal2/EfiGopMode 5`
+

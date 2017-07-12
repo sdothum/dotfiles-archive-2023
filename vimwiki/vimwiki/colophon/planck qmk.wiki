@@ -1,0 +1,308 @@
+software easily allow programming the layers and key actions that make the
+Planck such a uniquely powerful 40% keyboard. For many, the robust QMK library
+of available keyboard macros is sufficient for constructing their ultimate
+keyboard. 
+
+If that is insufficient, any shortcomings due to personal use cases or specific
+macro deficiencies, can be addressed with custom programming. As alluded to in
+the layout [change history][planck constant#change-history], two particular issues are
+addressed on this Planck..
+
+- rapid layer toggling, pertaining specifically to the **Space** key for **Space
+  Shift** and **Enter** key for **Enter Shift** key sequences
+- implementing seamless transitioning between alternating thumb 
+  activated layers -- including dual thumb layer, a la *tri-layer* -- without
+  need to release the thumb key for the desired layer first
+
+The brief bullet descriptions are probably unclear to those unfamiliar with QMK
+software. I refer you to the [Planck layouts][planck constant], the [source
+code](https://github.com/sdothum/dotfiles/tree/master/qmk_firmware/qmk_firmware/keyboards/planck/keymaps/sdothum),
+and the excellent [wiki](https://github.com/qmk/qmk_firmware/wiki) resource. 
+
+## layer toggling
+
+is beautifully handled with the [LT
+macro](https://github.com/qmk/qmk_firmware/wiki/Macros) and is used to define
+a key so that tapped, it registers the key value, and when held down, it raises
+a keyboard layer. 
+
+On this Planck, *Shift* layers are defined in place of using the **Shift**
+modifier (and associated MT macro), in order to assign more commonly used
+symbols to the left and right shift layers. (As an aside, defining layers costs
+96 bytes, so is very memory cost effective -- coding just a few custom keycode
+handlers can easily exceed a single layer table, hence, their use in place of
+the **Shift** modifier plus custom keycode programming.)
+
+The LT macro is the natural candidate for the **Space**/**Shift** and
+**Enter**/**Shift** thumb keys. However, rapid touch typing of new sentence,
+**Space** plus **Shift**, or new paragraph, **Enter** plus **Shift**, can defeat
+the desired LT macro behaviour. Compile time adjustment of the *TAPPING_TERM*
+value can tweak the sensitivity of the key press logic -- how long to
+distinguish between key tap and key down -- but that also incurs side effects on
+other macros, notably, the *tap dance* macro.
+
+LT's latency behaviour for rapid **Space Shift** and **Enter Shift** is a deal
+breaker (as would probably be, MT). So..
+
+## tap shift
+
+to the rescue. By utilizing, ironically, the *tap dance* macro to overcome
+latency issues, the desired behaviour can be achieved..
+
+| key press | result | 
+| -- |
+| tap | keycode |
+| down | shift layer |
+| tap plus down | keycode plus shift layer |
+| double tap plus down | auto-repeat keycode |
+
+*Tap dance* isn't without its own issues but these are easily addressed by the
+*tap_layer* routine to set the *Shift* layer immediately (for whatever reason,
+doing so within the *tap_shift* routine suffers the LT macro's latency issue)
+and mod mask primitives to handle modifiers (*tap dance* appears to clear the
+mod masks)..
+
+`void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)`
+`{`
+`^  if (state->count > 2) {`
+`^    register_code(keycode);`
+`^  }`
+`^  else if (state->count > 1) {`
+`^    layer_on(layer);`
+`^    tap_key (keycode);`
+`^  }`
+`^  else if (state->pressed) {`
+`^    layer_on(layer);`
+`^  }`
+`^  else {`
+`^    modifier(register_code);`
+`^    tap_key (keycode);`
+`^    modifier(unregister_code);`
+`^  }`
+`}`
+`^ `
+`void tap_reset(uint16_t keycode, uint8_t layer)`
+`{`
+`^  unregister_code(keycode);`
+`^  layer_off      (layer);`
+`}`
+
+The *tap dance* configuration for **Space**/**Shift** and **Enter**/**Shift**..
+
+`void enter(qk_tap_dance_state_t *state, void *user_data)`
+`{`
+`^  tap_shift(state, KC_ENT, _RSHIFT);`
+`}`
+`^ `
+`void enter_reset(qk_tap_dance_state_t *state, void *user_data)`
+`{`
+`^  tap_reset(KC_ENT, _RSHIFT);`
+`}`
+`^ `
+`void space(qk_tap_dance_state_t *state, void *user_data)`
+`{`
+`^  tap_shift(state, KC_SPC, _LSHIFT);`
+`}`
+`^ `
+`void space_reset(qk_tap_dance_state_t *state, void *user_data)`
+`{`
+`^  tap_reset(KC_SPC, _LSHIFT);`
+`}`
+`^ `
+`qk_tap_dance_action_t tap_dance_actions[] = {`
+`^  [_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)`
+`^ ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)`
+`};`
+
+## rolling layers
+
+address a particular use case, whereby, layers are raised dependent on the down
+state of a key. This doesn't sound particularly unique in lieu of the many QMK
+layer handling macros available. 
+
+However, the distinguishing feature is the ability to switch seamlessly between
+four layers using only two key assignments without needing to ensure both
+assigned layer activation keys have been released between layer changes. It
+feels more natural in use than it is to explain.
+
+This particular use case involves being able to shift between the following four
+keyboard layers from any layer in use by simply pressing or releasing the
+associated thumb layer key without needing to return to the default layer
+first..
+
+| left thumb | right thumb | layer |
+| -- |
+| up |   up   | default |
+| up |   down | symbol / navigation |
+| down | up   | numeric keypad |
+| down | down | shift navigation | 
+
+[ljust]and evolved largely as a result of Vim editor mappings for navigating and
+editing buffers. I imagine this could be even more useful to those with
+multilingual character set needs to provide a more fluid transitioning between
+layers.
+
+## combination layer
+
+`#define        LEFT    1`
+`#define        RIGHT   2`
+`static uint8_t thumb = 0;`
+`^ `
+`#define THUMBS_DOWN _SFTNAV`
+`static uint8_t overlayer = THUMBS_DOWN;`
+`^ `
+`void com_layer(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t layer, uint8_t default_layer)`
+`{`
+`^  if (record->event.pressed) {`
+`^    key_timer = timer_read();`
+`^    thumb     = thumb | side;`
+`^  }`
+`^  else {`
+`^    layer_off(layer);`
+`^    if (overlayer) {`
+`^      layer_off(overlayer);`
+`^      overlayer = THUMBS_DOWN;`
+`^    }`
+`^    if (!key_press(keycode)) {`
+`^      if (thumb & (side == LEFT ? RIGHT : LEFT)) {`
+`^        layer_on(default_layer);`
+`^        overlayer = default_layer;`
+`^      }`
+`^    }`
+`^    clear_mods();`
+`^    thumb     = thumb & ~side;`
+`^    key_timer = 0;`
+`^  }`
+`}`
+
+Keycode definitions for the combination layers described above -- note the
+immediate setting of the keycode's associated layer with the *tap_layer* 
+routine
+to overcome latency issues..
+
+`bool process_record_user(uint16_t keycode, keyrecord_t *record)`
+`{`
+`^  switch (keycode) {`
+`^    case TD_SPC:`
+`^      tap_layer(record, _LSHIFT);`
+`^      com_layer(record, LEFT, 0, _LSHIFT, _SYMBOL);`
+`^      break;`
+`^    case PS_PIPE:`
+`^      tap_layer(record, _SFTNAV);`
+`^      com_layer(record, LEFT, KC_BSLS, _SFTNAV, _SYMBOL);`
+`^      break;`
+`^    case LT_LEFT:`
+`^      tap_layer(record, _SYMBOL);`
+`^      com_layer(record, RIGHT, 0, _SYMBOL, _LSHIFT);`
+`^      break;`
+`^    case PS_LEFT:`
+`^      tap_layer(record, _SFTNAV);`
+`^      com_layer(record, RIGHT, KC_LEFT, _SFTNAV, _LSHIFT);`
+`^      break;`
+`^  }`
+`^  return true;`
+`}`
+
+## layer functions 
+
+for raising a layer immediately..
+
+`void tap_layer(keyrecord_t *record, uint8_t layer)`
+`{`
+`^  if (record->event.pressed) {`
+`^    layer_on(layer);`
+`^  }`
+`^  else {`
+`^    layer_off(layer);`
+`^  }`
+`}`
+
+For completeness, this LT like routine (which can easily be modified to be more
+generic) handles *Shift* keycodes..
+
+`void lts_layer(keyrecord_t *record, uint16_t keycode, uint8_t layer)`
+`{`
+`^  if (record->event.pressed) {`
+`^    layer_on(layer);`
+`^    key_timer = timer_read();`
+`^  }`
+`^  else {`
+`^    layer_off(layer);`
+`^    key_press(keycode);`
+`^    clear_mods();`
+`^    key_timer = 0;`
+`^  }`
+`}`
+
+## keycode functions
+
+some simple keycode registration routines refactored over time..
+
+`void tap_key(uint16_t keycode)`
+`{`
+`^  register_code  (keycode);`
+`^  unregister_code(keycode);`
+`}`
+`^ `
+`void shift_key(uint16_t keycode)`
+`{`
+`^  register_code  (KC_LSFT);`
+`^  tap_key        (keycode);`
+`^  unregister_code(KC_LSFT);`
+`}`
+`^ `
+`static uint16_t key_timer = 0;`
+`^ `
+`bool key_press(uint16_t keycode)`
+`{`
+`^  if (keycode) {`
+`^    if (timer_elapsed(key_timer) < TAPPING_TERM) {`
+`^      shift_key(keycode);`
+`^      return true;`
+`^    }`
+`^  }`
+`^  return false;`
+`}`
+
+## mod masks
+
+routines to save existing modifier states and apply them subsequently within
+*tap dance* functions..
+
+`static uint8_t mods = 0;`
+`^ `
+`void tap_mods(keyrecord_t *record, uint16_t keycode)`
+`{`
+`^  if (record->event.pressed) {`
+`^    register_code  (keycode);`
+`^    mods |= MOD_BIT(keycode);`
+`^  }`
+`^  else {`
+`^    unregister_code(keycode);`
+`^    mods &= ~(MOD_BIT(keycode));`
+`^  }`
+`}`
+`^ `
+`void modifier(void (*f)(uint8_t))`
+`{`
+`^  if (mods & MOD_BIT(KC_LCTL)) {`
+`^    (*f)(KC_LCTL);`
+`^  }`
+`^  if (mods & MOD_BIT(KC_LGUI)) {`
+`^    (*f)(KC_LGUI);`
+`^  }`
+`^  if (mods & MOD_BIT(KC_LALT)) {`
+`^    (*f)(KC_LALT);`
+`^  }`
+`}` 
+
+Again, refer to the
+[dotfiles](https://github.com/sdothum/dotfiles/tree/master/qmk_firmware/qmk_firmware/keyboards/planck/keymaps/sdothum),
+for the inline comments and to gain more insight into this Planck implementation
+-- in particular, to understand the keycode and keymap (layer) definitions
+referenced in the code snippets above. 
+
+These enhancements work for me but, as always, YMMV. I hope this aids 
+and
+inspires you to explore what is possible to achieve with the QMK software and
+a Planck!

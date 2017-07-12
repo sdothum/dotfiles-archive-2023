@@ -1,0 +1,19 @@
+StartChar: assertion
+Encoding: 8870 8870 1083
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+296 252 m 1,0,-1
+ 296 1330 l 1,1,-1
+ 462 1330 l 1,2,-1
+ 462 869 l 1,3,-1
+ 894 869 l 1,4,-1
+ 894 713 l 1,5,-1
+ 462 713 l 1,6,-1
+ 462 252 l 1,7,-1
+ 296 252 l 1,0,-1
+EndSplineSet
+EndChar

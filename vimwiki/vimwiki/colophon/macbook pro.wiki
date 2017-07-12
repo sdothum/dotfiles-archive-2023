@@ -1,0 +1,68 @@
+intel based macbook pro's make good Linux laptops. But some 
+configuration is required to tune their installation.
+
+## fan control
+
+out of the box, Linux Macbooks tend to run their CPU fans rather 
+incessantly -- it is not a subtle sound. To better sync the fan to CPU 
+utilization, install *mbpfan-git* from the Archlinux AUR (or similar), 
+then..
+
+`sudo modprobe applesmc`
+`sudo modprobe coretemp`
+`echo applesmc | sudo tee /etc/modules-load.d/applesmc.conf`
+`echo coretemp | sudo tee /etc/modules-load.d/coretemp.conf`
+`sudo systemctl enable mbpfan`
+`sudo systemctl start mbpfan`
+
+Macbook Pro's run notoriously hot. You don't want to run them on your 
+lap unless you are facing a winter chill. Fan control doesn't alleviate 
+this characteristic of Macbooks but it does minimize the annoyance of an 
+unnecessarily full throttled fan.
+
+## touchpad
+
+to restore rudimentary touchpad gestures, install the 
+*xf86-input-synaptics* package. Then configure the Xorg file 
+*/etc/X11/xorg.conf.d/60-synaptics.conf* with..
+
+`Section "InputClass"`
+`^    Identifier "touchpad catchall"`
+`^    Driver "synaptics"`
+`^    MatchIsTouchpad "on"`
+`^    MatchDevicePath "/dev/input/event*"`
+`^    Option "SHMConfig" "on"`
+`^    Option "TapButton1" "1"`
+`^    Option "TapButton2" "3"`
+`^    Option "TapButton3" "2"`
+`^    Option "PalmDetect" "on"`
+`^    Option "VertEdgeScroll" "off"`
+`^    Option "HorizEdgeScroll" "off"`
+`^    Option "CornerCoasting" "off"`
+`^    Option "EdgeMotionUseAlways" "off"`
+`EndSection`
+
+This provides 2 finger scrolling and button tapping gestures.
+
+## startup chime and grub
+
+by default, macbooks power up with a very distinctive chime sound, then 
+perform an EFI boot sequence which results in a significant delay before 
+the legacy *GRUB* boot loader is found to load Linux (if you install 
+Linux the most common way without using the EFI). 
+
+If you find the startup chime annoying and want to run stealth, on boot 
+up, press **&lt;Option-Command-P-R&gt;** to reset the firmware (if 
+necessary). Then, using the OSX install disk, boot up while pressing the 
+**C** key to load the OSX installer and open a utilities *terminal* 
+window.
+
+Enter the following to suppress the startup chime and avoid the default 
+EFI loader delay..
+
+`nvram SystemAudioVolume=%80`
+`bless --device /dev/disk0s2 --setboot --legacy`
+
+[ljust]In my case, I allocated a swap partition in /dev/disk0s1, hence, 
+GRUB will be found in /dev/disk0s2.
+

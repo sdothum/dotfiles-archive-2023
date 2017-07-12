@@ -1,0 +1,23 @@
+removable devices on many desktop systems is facilitated by the 
+[Thunar](http://docs.xfce.org/xfce/thunar/start) file manager (and 
+Thunar volume manager) with the 
+[GVFS](https://wiki.gnome.org/Projects/gvfs) virtual filesystem. If 
+Thunar is running, then any removable devices plugged in are 
+automounted. And that is the snag: Thunar must be running in order for 
+the device to be made available to other applications (unless they are 
+capable of mounting the device themselves). For users of stacking window 
+managers (mouse driven GUI desktops) this is largely a non-issue as 
+Thunar or a similarly equipped file manager is likely the most common 
+application launched to access the media.
+
+Enter [udiskie](https://github.com/coldfix/udiskie), a storage device 
+manager for handling removable media. It can be invoked within the 
+.xinitrc or autostart script as..
+
+`udiskie --use-udisks2`
+
+The volume will be automounted on "/run/media/$USER/{partition label}" 
+and be available to any application. When done accessing the device, you 
+can simply remove the media to automatically unmount it.
+
+Easy peasy.

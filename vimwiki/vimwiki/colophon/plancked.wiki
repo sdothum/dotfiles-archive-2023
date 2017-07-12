@@ -1,0 +1,115 @@
+![Plancks with Zealios 62g Tactile, Gateron 35g Linear Clear and Mathias 35g Linear Red key switches](/images/planck_zealios_gateron_mathias.jpg)
+
+[ljust]a picture can be worth a thousand words. 
+[keyboard-editor-layout.com](http://www.keyboard-layout-editor.com/) is 
+used to realize the Planck layouts described [here][plancking].
+
+## colemak dh
+
+the default layout..
+
+![Colemak DH](/images/keyboard_layout_colemak_dh.jpg)
+
+[ljust]where my fingers rest most of the time. Thumbs operating the 
+**Space**, **Backspace**, **Tab**, **Delete** and **Shift** (see 
+*modifiers*) keys relieve the weak pinkies of their typical keyboard 
+responsibilities and further allows design of keyboard layers with home 
+row emphasis.
+
+One slight nuance introduced and deviating from all Colemak variants is 
+the relocation of the **Slash** key. In this case, swapping with the 
+**Quote** -- the rationale being that **Quote** has a higher frequency 
+of use.. Ever trying to minimize pinkie travel.
+
+## modifiers
+
+by programming [QMK](https://github.com/jackhumbert/qmk_firmware) layer 
+and modifier toggle key actions, the 40% layout of 48 keys looses little 
+to conventional 104 key keyboards..
+
+![Modifiers](/images/keyboard_layout_modifiers.jpg)
+
+[ljust]while gaining significant ergonomic benefits by minimizing finger 
+travel and providing left/right hand fingering symmetry. The latter 
+cannot be over emphasized.
+
+Duplicating the **Shift**, **Ctrl** and **GUI** modifiers for the left 
+and right pinkies permits alternate modifier key combinations that are 
+otherwise awkward on conventional keyboards with their confined bottom 
+row assignment of the modifier keys.
+
+The **Right** cursor key begs to have a function or layer attached to 
+it. Perhaps a line drawing or special characters set.. It's usually the 
+other way around with keyboards: being constrained in some sort of way.
+
+![Planck with Cherry keycaps](/images/planck_with_cherry_keycaps.jpg)
+
+## symbol layer
+
+is defined with numbers on the QWERTY row, placing the numeric keys much 
+closer than standard layouts, and the more frequently used **Shift** 
+*numeric* symbols on the home row. Individual left and right thumb keys 
+allow toggling the layer for either hand..
+
+![Symbol layer](/images/keyboard_layout_number_symbol_layer.jpg)
+
+**Brace** and **Curly Bracket** pairs are also conveniently placed to 
+allow finger rolling by locating the **F7** through **F12** keys along 
+the sides of the keyboard. By utilizing the *tap key* feature of the QMK 
+software, double tapping the *left* **Parenthesis**, **Brace** and 
+**Curly Bracket** automatically complete the symbol pair!
+
+## hexadecimal keypad
+
+is toggled by holding down the **Equal** key of the 
+[Colemak layer][plancked#colemak-dh], the only layer modifier not 
+conveniently enabled by the thumbs (but it is easily depressed with the 
+edge of the palm without moving the left hand from the home row)..
+
+![Hexadecimal keypad](/images/keyboard_layout_hexadecimal_layer.jpg)
+
+[ljust]Lefties can be easily accomodated by placing the navigation 
+cluster under the left hand and relocating the activation key to the 
+**Right** cursor key.
+
+## navigation cluster
+
+by using the thumbs to hold down the left **Tab** and right **Delete** 
+keys of the [Colemak layer][plancked#colemak-dh] *together*, cursor 
+controls are available when not utilizing my system wide Vim navigation 
+cluster keys..
+
+![Navigation keypad](/images/keyboard_layout_symbol_navigation_layer.jpg)
+
+[ljust]This is a variant of the [GuiFn][poker 2#guifn] navigation 
+cluster I programmed on layer 2 of the Poker 2 keyboard and found second 
+nature to use. While both thumbs must be engaged to enable this layer on 
+the Planck, the thumb keys are in a more natural location than the Poker 
+2 **Fn** key which requires shifting the hand laterally one key to 
+access the cluster.
+
+Placing modifiers under the opposite hand home row provides convenient 
+navigation key combinations. As occurs with layout usage, the 
+[prior location][plancking#navigation-layer] of the **Backspace** and 
+**Delete** keys under the right hand has been moved to the left -- for 
+the symmetry, more ergonomic fingering assignment and functional cluster 
+separation. The is the beauty of the Planck with its ease of programming 
+and reflashing.
+
+## plover steno
+ 
+actually outputs [QWERTY][plancking#plover] (note the *number row* at 
+the top and the *ZXCV row* on the modifier row) but the Plover steno 
+software transposes the keyboard to..
+
+![Plover steno](/images/keyboard_layout_plover.jpg)
+
+[ljust]And, yes, there exists only a subset of the alphabet and those 
+are duplicate letters you see for the right and left hands, as well. 
+Thumbs rest on the vowels and fingers *between* the two alpha rows!
+Welcome to the world of phonetic finger chord typing.
+
+The **Exit** key restores to the default [Colemak 
+keyboard][plancked#colemak-dh] layout.
+
+![Planck steno with 3D keycaps](/images/planck_steno.jpg)

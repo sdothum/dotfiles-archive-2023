@@ -1,0 +1,232 @@
+the Fuji X100T is a significantly different beast from its X100 
+ancestor. 
+
+
+It not only sports Fuji's X-Trans sensor versus the original Bayer 
+sensor but has a completely re-engineered optical viewfinder system 
+which has been augmented with a digital LED rangefinder overlay window. 
+Add the **Q** menu system and a myriad number of enhancements and I need 
+to read the manual on the camera.
+
+Its pedigree is obvious but there are now many more ways of configuring 
+its operation to make the instrument all that much quicker to use.
+
+## function buttons
+
+yes, plural. The X100T now sports 7 programmable function button 
+shortcuts -- from an original one of -- into the menu system whose 
+settings can be altered with the **Up**/**Down** menu ring pads or rotating the 
+**command dial**..
+
+| button            | function               |
+| --                | --                     |
+| fn                | dynamic range          |
+| up (menu ring)    | focus area             |
+| left (menu ring)  | focus area             |
+| right (menu ring) | focus area             |
+| down (menu ring)  | focus area             |
+| delete            | macro                  |
+| wifi              | neutral density filter |
+
+[ljust]Pressing the **Menu OK** button or the **shutter** button (halfway), 
+completes the selection. **Back** cancels the selection.
+
+It seems like a waste to assign an extra 3 buttons to *focus area* but 
+this provides a more intuitive use of the direction pad ring without 
+need for repositioning the thumb. Besides, it simplifies function button 
+memorization which is easily compensated for by the **Q** menu.
+
+## q menu
+
+allows for 16 quick menu selections from a 4x4 list which is navigated 
+with the direction pads of the menu ring and set by rotating the **command 
+dial**..
+
+| q  |                |              |                 |                 |
+| -- | --             | --           | --              | --              |
+|    | custom setting | iso          | white balance   | noise reduction |
+|    | flash mode     | flash^ +/-   | image quality   | image size      |
+|    | photometry     | self timer   | highlight tone  | shadow tone     |
+|    | face detect    | shutter type | film simulation | colour          |
+
+[ljust]Pressing the **Menu OK** button or the **shutter** button 
+(halfway), completes the selection. **Back** cancels the selection. 
+
+## custom settings
+
+between the function buttons and the **Q** menu, pretty much all the 
+image settings one might adjust are at the finger tips, 
+eliminating the need to drill down into the camera's menu system. 
+
+Even use of the **Q** menu is significantly reduced with the number 
+of custom settings that are available to configure all manner of 
+shooting preferences. These settings have been lifted from [Clifton 
+Beard's](http://cliftonbeard.zenfolio.com/blog/2014/12/fuji-x100t-user-opinion-custom-settings-q-menu) 
+review of the X100T..
+
+#### custom1 classic chrome
+
+| setting         |                |
+| --              | --             |
+| iso             | auto 2         |
+| dynamic range   | dr100          |
+| film simulation | classic chrome |
+| white balance   | auto           |
+| color           | 0              |
+| sharpness       | +1             |
+| highlight tone  | -2             |
+| shadow tone     | -2             |
+| noise reduction | -2             |
+
+#### custom2 provia std
+
+| setting         |            |
+| --              | --         |
+| iso             | auto 2     |
+| dynamic range   | dr100      |
+| film simulation | provia std |
+| white balance   | auto       |
+| color           | 0          |
+| sharpness       | 0          |
+| highlight tone  | -1         |
+| shadow tone     | -1         |
+| noise reduction | -1         |
+
+#### custom3 astia soft
+
+| setting         |            |
+| --              | --         |
+| iso             | auto 2     |
+| dynamic range   | dr100      |
+| film simulation | astia soft |
+| white balance   | auto       |
+| color           | 0          |
+| sharpness       | +1         |
+| highlight tone  | -2         |
+| shadow tone     | -2         |
+| noise reduction | -2         |
+
+
+#### custom4 velvia vivid
+
+| setting         |              |
+| --              | --           |
+| iso             | auto 1       |
+| dynamic range   | dr100        |
+| film simulation | velvia vivid |
+| white balance   | auto         |
+| color           | -1           |
+| sharpness       | +1           |
+| highlight tone  | -2           |
+| shadow tone     | -2           |
+| noise reduction | -2           |
+
+#### custom5 pro-neg std
+
+| setting         |             |
+| --              | --          |
+| iso             | auto 2      |
+| dynamic range   | dr100       |
+| film simulation | pro-neg std |
+| white balance   | auto        |
+| color           | 0           |
+| sharpness       | 0           |
+| highlight tone  | -1          |
+| shadow tone     | -2          |
+| noise reduction | -2          |
+
+#### custom6 pro-neg hi
+
+| setting         |            |
+| --              | --         |
+| iso             | auto 2     |
+| dynamic range   | dr100      |
+| film simulation | pro-neg hi |
+| white balance   | auto       |
+| color           | 0          |
+| sharpness       | 0          |
+| highlight tone  | -2         |
+| shadow tone     | -2         |
+| noise reduction | -2         |
+
+#### custom7 monochrome+yellow
+
+| setting         |             |
+| --              | --          |
+| iso             | auto 2      |
+| dynamic range   | dr100       |
+| film simulation | mono+yellow |
+| white balance   | auto        |
+| color           | 0           |
+| sharpness       | +1          |
+| highlight tone  | -1          |
+| shadow tone     | -1          |
+| noise reduction | -2          |
+
+Other black and white *film simulations* are easily enough switched to 
+from the **Q** menu when the need arises. Classic Chrome and monochrome 
+are my mainstays which are quickly dialed in with a single right or left 
+turn of the command dial.
+
+## auto iso
+
+settings for the custom settings above..
+
+#### auto1 detail
+
+| setting             |      |
+| --                  | --   |
+| default sensitivity | 200  |
+| max sensitivity     | 800  |
+| min shutter speed   | 1/60 |
+
+#### auto2 general
+
+| setting             |       |
+| --                  | --    |
+| default sensitivity | 200   |
+| max sensitivity     | 3200  |
+| min shutter speed   | 1/100 |
+
+#### auto3 low light
+
+| setting             |       |
+| --                  | --    |
+| default sensitivity | 200   |
+| max sensitivity     | 6400  |
+| min shutter speed   | 1/125 |
+
+## camera setup
+
+these final settings optimize my street photography needs which address 
+maximum battery life, focus speed and operation, and unobtrusiveness..
+
+#### shooting menu
+
+| setting           | option             |               |
+| --                | --                 | --            |
+| ae/af-lock mode   |                    | on/off switch |
+| ae/af-lock button |                    | af lock only  |
+| autofocus setting | af mode            | area          |
+|                   | af-s priority      | focus         |
+|                   | pre-af             | off           |
+|                   | corrected af frame | on            |
+| interlock spot ae |                    | on            |
+| long exposure nr  |                    | on            |
+| mf assist         |                    | split         |
+| shutter type      |                    | mechanical    |
+
+#### set-up menu
+
+| setting            | option            |                 |
+| --                 | --                | --              |
+| power management   | auto power off    | 2 min           |
+|                    | ovf power save    | off             |
+|                    | high performance  | on              |
+| screen set-up      | image display     | off             |
+|                    | autorotate pb     | off             |
+|                    | focus scale units | feet            |
+| sound set-up       | operation vol     | off             |
+|                    | shutter vol       | off             |
+|                    |                   |                 |
+| view mode (button) |                   | viewfinder only |

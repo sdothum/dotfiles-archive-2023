@@ -1,0 +1,336 @@
+StartChar: SlopeBar
+Encoding: 9024 9024 1227
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 6
+MDAP[rnd]
+PUSHW_1
+ 2
+MDAP[rnd]
+NPUSHW
+ 3
+ 40
+ 2
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 4
+ 2
+ 1
+DELTAP1
+PUSHW_1
+ 1
+SRP0
+PUSHW_1
+ 3
+MDRP[rp0,grey]
+PUSHW_1
+ 3
+MDAP[rnd]
+NPUSHW
+ 3
+ 31
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 120
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 70
+ 3
+ 1
+DELTAP1
+PUSHW_1
+ 4
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 133
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 86
+ 4
+ 102
+ 4
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 54
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 150
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 165
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 180
+ 4
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 3
+ 4
+ 1
+DELTAP1
+PUSHW_1
+ 2
+SRP0
+PUSHW_1
+ 5
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 179
+ 5
+ 1
+DELTAP1
+PUSHW_1
+ 2
+SRP0
+PUSHW_1
+ 11
+MDRP[rp0,grey]
+PUSHW_1
+ 11
+MDAP[rnd]
+NPUSHW
+ 3
+ 169
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 106
+ 11
+ 122
+ 11
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 42
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 95
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 74
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 186
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 55
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 208
+ 11
+ 224
+ 11
+ 2
+DELTAP1
+PUSHW_1
+ 8
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 178
+ 8
+ 1
+DELTAP1
+PUSHW_1
+ 6
+SRP0
+PUSHW_1
+ 9
+MDRP[rp0,grey]
+PUSHW_1
+ 9
+MDAP[rnd]
+NPUSHW
+ 3
+ 8
+ 9
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 79
+ 9
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 16
+ 9
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 48
+ 9
+ 1
+DELTAP1
+PUSHW_1
+ 10
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 5
+ 25
+ 10
+ 41
+ 10
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 170
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 187
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 138
+ 10
+ 1
+DELTAP1
+NPUSHW
+ 9
+ 73
+ 10
+ 89
+ 10
+ 105
+ 10
+ 121
+ 10
+ 4
+DELTAP1
+NPUSHW
+ 3
+ 153
+ 10
+ 1
+DELTAP1
+SVTCA[y-axis]
+PUSHW_1
+ 1
+MDAP[rnd]
+PUSHW_1
+ 4
+MDAP[rnd]
+PUSHW_1
+ 10
+MDAP[rnd]
+PUSHW_1
+ 1
+SRP0
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 25
+ 4
+ 1
+DELTAP1
+PUSHW_1
+ 4
+SRP0
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 1
+SRP0
+PUSHW_1
+ 5
+MDRP[rp0,grey]
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 8
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 21
+ 10
+ 1
+DELTAP1
+PUSHW_1
+ 10
+SRP0
+PUSHW_1
+ 9
+MDRP[rp0,min,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+96 717 m 1,0,-1
+ 96 863 l 1,1,-1
+ 428 863 l 1,2,-1
+ 181 1599 l 1,3,-1
+ 319 1646 l 1,4,-1
+ 582 863 l 1,5,-1
+ 964 863 l 1,6,-1
+ 964 717 l 1,7,-1
+ 631 717 l 1,8,-1
+ 878 -19 l 1,9,-1
+ 740 -66 l 1,10,-1
+ 477 717 l 1,11,-1
+ 96 717 l 1,0,-1
+EndSplineSet
+EndChar

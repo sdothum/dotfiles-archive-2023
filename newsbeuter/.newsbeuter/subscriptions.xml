@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+    <head>
+        <title>s.hum subscriptions in Google Reader</title>
+    </head>
+    <body>
+        <outline
+            text="Comments on: Surprise at Photokina? Low and High end X model coming!"
+            title="Comments on: Surprise at Photokina? Low and High end X model coming!"
+            type="rss"
+            xmlUrl="http://www.fujirumors.com/surprise-at-photokina-low-and-high-end-x-model-coming/feed/" htmlUrl="http://www.fujirumors.com/surprise-at-photokina-low-and-high-end-x-model-coming/"/>
+        <outline text="Fuji Rumors" title="Fuji Rumors" type="rss"
+            xmlUrl="http://www.fujirumors.com/feed/" htmlUrl="http://www.fujirumors.com"/>
+        <outline text="Inside 206-105" title="Inside 206-105" type="rss"
+            xmlUrl="http://feeds.feedburner.com/ezyang" htmlUrl="http://blog.ezyang.com/"/>
+        <outline title="Programming" text="Programming">
+            <outline text="Beginning Lua Programming - Slashdot"
+                title="Beginning Lua Programming - Slashdot" type="rss"
+                xmlUrl="http://rss.slashdot.org/Slashdot/slashdot" htmlUrl="http://slashdot.org/"/>
+            <outline text="Ruby Inside" title="Ruby Inside" type="rss"
+                xmlUrl="http://feeds.feedburner.com/RubyInside" htmlUrl="http://www.rubyinside.com/"/>
+            <outline text="RubyCorner" title="RubyCorner" type="rss"
+                xmlUrl="http://rubycorner.com/feeds/updated/rss20" htmlUrl="http://www.rubycorner.com"/>
+            <outline text="RubyLearning Blog" title="RubyLearning Blog"
+                type="rss"
+                xmlUrl="http://feeds.feedburner.com/LearningRubyBlog" htmlUrl="http://rubylearning.com/blog"/>
+            <outline text="The Programming Language Lua"
+                title="The Programming Language Lua" type="rss"
+                xmlUrl="http://www.lua.org/news.rss" htmlUrl="http://www.lua.org/news.html"/>
+        </outline>
+        <outline title="Fuji X100" text="Fuji X100">
+            <outline
+                text="Fuji X100 Enthusiasts Forum - A Community Dedicated to the Fujifilm FinePix X100 Digital Camera"
+                title="Fuji X100 Enthusiasts Forum - A Community Dedicated to the Fujifilm FinePix X100 Digital Camera"
+                type="rss"
+                xmlUrl="http://www.x100enthusiasts.com/discussions/feed.rss" htmlUrl="http://www.fujixseries.com/discussions/feed.rss"/>
+            <outline
+                text="Fujifilm SLR/X100 Talk Forum: Digital Photography Review (dpreview.com)"
+                title="Fujifilm SLR/X100 Talk Forum: Digital Photography Review (dpreview.com)"
+                type="rss"
+                xmlUrl="http://www.dpreview.com/feeds/forums/forum1020.xml" htmlUrl="http://forums.dpreview.com/forums/forum.asp?forum=1020"/>
+            <outline text="Rangefinderforum.com - Fuji X100"
+                title="Rangefinderforum.com - Fuji X100" type="rss"
+                xmlUrl="http://www.rangefinderforum.com/forums/external.php?type=RSS2&amp;forumids=159" htmlUrl="http://www.rangefinderforum.com/forums"/>
+            <outline text="Serious Compacts - Fuji X100 Open Talk Forum"
+                title="Serious Compacts - Fuji X100 Open Talk Forum"
+                type="rss"
+                xmlUrl="http://www.seriouscompacts.com/external.php?type=RSS2&amp;forumids=53" htmlUrl="http://www.seriouscompacts.com/"/>
+            <outline text="x100 Forum" title="x100 Forum" type="rss"
+                xmlUrl="http://www.x100forum.com/index.php?/rss/forums/1-x100-forum/" htmlUrl="http://www.fujix-forum.com"/>
+        </outline>
+        <outline title="Anime" text="Anime">
+            <outline text="Anime News Network"
+                title="Anime News Network" type="rss"
+                xmlUrl="http://www.animenewsnetwork.com/main-feed/rss.xml" htmlUrl="http://www.animenewsnetwork.com/"/>
+            <outline text="Anime Online" title="Anime Online" type="rss"
+                xmlUrl="http://www.animeonline.net/external.php?type=RSS2" htmlUrl="http://www.animeonline.net/"/>
+            <outline
+                text="Anime, Anime Reviews, Anime News, &amp; Manga - Mania.com"
+                title="Anime, Anime Reviews, Anime News, &amp; Manga - Mania.com"
+                type="rss"
+                xmlUrl="http://www.mania.com/mania_recent_articles_and_news_category_0.html?format=rss" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fwww.mania.com%2Fmania_recent_articles_and_news_category_0.html%3Fformat%3Drss"/>
+            <outline text="Recently added anime - Anime-Planet.com"
+                title="Recently added anime - Anime-Planet.com"
+                type="rss"
+                xmlUrl="http://www.anime-planet.com/rss/recentlyaddedanime.xml" htmlUrl="http://www.anime-planet.com/anime/"/>
+        </outline>
+        <outline title="Astronomy" text="Astronomy">
+            <outline text="Bad Astronomy Blog"
+                title="Bad Astronomy Blog" type="rss"
+                xmlUrl="http://feeds.feedburner.com/BadAstronomyBlog" htmlUrl="http://blogs.discovermagazine.com/badastronomy"/>
+            <outline text="Discover | Space" title="Discover | Space"
+                type="rss"
+                xmlUrl="http://discovermagazine.com/topics/space/rss.xml" htmlUrl="http://discovermagazine.com/rss/topic-feeds/space-physics"/>
+            <outline text="New Scientist | Space"
+                title="New Scientist | Space" type="rss"
+                xmlUrl="http://feeds.newscientist.com/space" htmlUrl="http://www.newscientist.com/"/>
+            <outline text="NYT | Space &amp; Cosmos"
+                title="NYT | Space &amp; Cosmos" type="rss"
+                xmlUrl="http://feeds.nytimes.com/nyt/rss/Space" htmlUrl="http://www.nytimes.com/pages/science/space/index.html?partner=rss&amp;emc=rss"/>
+            <outline text="PHYSorg | Space &amp; Earth News"
+                title="PHYSorg | Space &amp; Earth News" type="rss"
+                xmlUrl="http://www.physorg.com/rss-feed/space-news/" htmlUrl="http://phys.org/space-news/"/>
+            <outline text="SkyandTelescope.com's Most Recent Articles"
+                title="SkyandTelescope.com's Most Recent Articles"
+                type="rss"
+                xmlUrl="http://www.skyandtelescope.com/MostRecent.rss" htmlUrl="http://www.skyandtelescope.com/r?19=960&amp;32=3186&amp;7=162446&amp;40=http%3A%2F%2FSkyandTelescope.com"/>
+            <outline text="SkyTonight.com" title="SkyTonight.com"
+                type="rss"
+                xmlUrl="http://www.skyandtelescope.com/latestastronomyonline.rss" htmlUrl="http://www.skyandtelescope.com/r?19=960&amp;32=3186&amp;7=162511&amp;40=http%3A%2F%2Fskyandtelescope.comcommunity%2Fskyblog%2F"/>
+            <outline text="SPACE.com" title="SPACE.com" type="rss"
+                xmlUrl="http://www.space.com/syn/space.xml" htmlUrl="http://www.space.com/"/>
+            <outline text="Universe Today" title="Universe Today"
+                type="rss"
+                xmlUrl="http://www.universetoday.com/universetoday.xml" htmlUrl="http://www.universetoday.com"/>
+        </outline>
+        <outline title="Science" text="Science">
+            <outline text="NYT | Research" title="NYT | Research"
+                type="rss"
+                xmlUrl="http://feeds.nytimes.com/nyt/rss/Research" htmlUrl="http://www.nytimes.com/pages/health/research/index.html?partner=rss&amp;emc=rss"/>
+            <outline text="NYT | Science" title="NYT | Science"
+                type="rss"
+                xmlUrl="http://feeds.nytimes.com/nyt/rss/Science" htmlUrl="http://www.nytimes.com/pages/science/index.html?partner=rss&amp;emc=rss"/>
+            <outline text="Popular Science" title="Popular Science"
+                type="rss" xmlUrl="http://www.popsci.com/full-feed" htmlUrl="http://www.popsci.com"/>
+            <outline text="Reuters | Science" title="Reuters | Science"
+                type="rss"
+                xmlUrl="http://feeds.reuters.com/reuters/scienceNews?format=xml" htmlUrl="http://www.reuters.com"/>
+            <outline text="ScienceDaily" title="ScienceDaily" type="rss"
+                xmlUrl="http://www.sciencedaily.com/newsfeed.xml" htmlUrl="http://www.sciencedaily.com/news/"/>
+            <outline text="Scientific American"
+                title="Scientific American" type="rss"
+                xmlUrl="http://www.scientificamerican.com/xml/sciam.xml" htmlUrl="http://www.scientificamerican.com"/>
+            <outline text="Skeptic.com" title="Skeptic.com" type="rss"
+                xmlUrl="http://www.skeptic.com/feed/?cat=-35" htmlUrl="http://www.skeptic.com"/>
+            <outline text="Wired Science" title="Wired Science"
+                type="rss"
+                xmlUrl="http://www.wired.com/wiredscience/feed/" htmlUrl="http://www.wired.com/wiredscience"/>
+        </outline>
+        <outline title="Poetry" text="Poetry">
+            <outline text="Poem of the Day" title="Poem of the Day"
+                type="rss"
+                xmlUrl="http://feeds.poetryfoundation.org/PoetryFoundation/PoemOfTheDayText" htmlUrl="http://www.poetryfoundation.org/"/>
+            <outline text="Poetry Magazine" title="Poetry Magazine"
+                type="rss"
+                xmlUrl="http://feeds.poetryfoundation.org/PoetryMagazine" htmlUrl="http://www.poetryfoundation.org/"/>
+            <outline text="PoetryFoundation.org"
+                title="PoetryFoundation.org" type="rss"
+                xmlUrl="http://feeds.poetryfoundation.org/poetryfoundation/index" htmlUrl="http://www.poetryfoundation.org/"/>
+        </outline>
+        <outline title="Nature" text="Nature">
+            <outline text="Discover | Human Origins"
+                title="Discover | Human Origins" type="rss"
+                xmlUrl="http://discovermagazine.com/topics/human-origins/rss.xml" htmlUrl="http://discovermagazine.com/rss/topic-feeds/living-world"/>
+            <outline text="Discover | Living World"
+                title="Discover | Living World" type="rss"
+                xmlUrl="http://discovermagazine.com/topics/living-world/rss.xml" htmlUrl="http://discovermagazine.com/rss/topic-feeds/living-world"/>
+        </outline>
+        <outline title="Linux" text="Linux">
+            <outline text="Aaron Toponce" title="Aaron Toponce"
+                type="rss" xmlUrl="http://feeds.feedburner.com/pthree" htmlUrl="http://pthree.org"/>
+            <outline text="CrunchBang Linux Forums"
+                title="CrunchBang Linux Forums" type="rss"
+                xmlUrl="http://crunchbanglinux.org/forums/feed/rss/" htmlUrl="http://crunchbang.org/forums/index.php"/>
+            <outline text="DistroWatch.com: News"
+                title="DistroWatch.com: News" type="rss"
+                xmlUrl="http://distrowatch.com/news/dw.xml" htmlUrl="http://distrowatch.com/"/>
+            <outline text="Hawk Host Blog" title="Hawk Host Blog"
+                type="rss" xmlUrl="http://blog.hawkhost.com/feed/" htmlUrl="http://blog.hawkhost.com"/>
+            <outline
+                text="Linux Journal - The Original Magazine of the Linux Community"
+                title="Linux Journal - The Original Magazine of the Linux Community"
+                type="rss"
+                xmlUrl="http://www.linuxjournal.com/node/feed" htmlUrl="http://www.linuxjournal.com/"/>
+            <outline text="Linux Today" title="Linux Today" type="rss"
+                xmlUrl="http://linuxtoday.com/backend/biglt.rss" htmlUrl="http://www.linuxtoday.com/"/>
+            <outline text="TuxRadar feed" title="TuxRadar feed"
+                type="rss" xmlUrl="http://www.tuxradar.com/rss" htmlUrl="http://www.tuxradar.com/rss"/>
+            <outline text="Web Upd8 - Ubuntu / Linux blog"
+                title="Web Upd8 - Ubuntu / Linux blog" type="rss"
+                xmlUrl="http://feeds.feedburner.com/webupd8" htmlUrl="http://www.webupd8.org/"/>
+        </outline>
+        <outline title="Advaita" text="Advaita">
+            <outline text="Stanford Encyclopedia of Philosophy"
+                title="Stanford Encyclopedia of Philosophy" type="rss"
+                xmlUrl="http://plato.stanford.edu/rss/sep.xml" htmlUrl="http://plato.stanford.edu/"/>
+            <outline
+                text="Vedānta, Advaita [Internet Encyclopedia of Philosophy]"
+                title="Vedānta, Advaita [Internet Encyclopedia of Philosophy]"
+                type="rss" xmlUrl="http://www.iep.utm.edu/feed/" htmlUrl="http://www.iep.utm.edu"/>
+        </outline>
+        <outline title="Humour" text="Humour">
+            <outline text="Cracked: All Posts"
+                title="Cracked: All Posts" type="rss"
+                xmlUrl="http://feeds.feedburner.com/CrackedRSS" htmlUrl="http://www.cracked.com"/>
+            <outline text="Dilbert Daily Strip"
+                title="Dilbert Daily Strip" type="rss"
+                xmlUrl="http://feeds.feedburner.com/DilbertDailyStrip" htmlUrl="http://dilbert.com/"/>
+            <outline text="PHD Comics" title="PHD Comics" type="rss"
+                xmlUrl="http://www.phdcomics.com/gradfeed.php" htmlUrl="http://www.phdcomics.com"/>
+            <outline text="Quotes of the Day" title="Quotes of the Day"
+                type="rss"
+                xmlUrl="http://www.quotationspage.com/data/qotd.rss" htmlUrl="http://www.quotationspage.com/qotd.html"/>
+            <outline text="The Onion" title="The Onion" type="rss"
+                xmlUrl="http://feeds.theonion.com/theonion/daily" htmlUrl="http://www.theonion.com/"/>
+            <outline text="xkcd.com" title="xkcd.com" type="rss"
+                xmlUrl="http://xkcd.com/rss.xml" htmlUrl="http://xkcd.com/"/>
+        </outline>
+        <outline title="Art" text="Art">
+            <outline text="subblue" title="subblue" type="rss"
+                xmlUrl="http://feeds.feedburner.com/subblue" htmlUrl="http://www.subblue.com/"/>
+            <outline text="Twitter / audiotool"
+                title="Twitter / audiotool" type="rss"
+                xmlUrl="http://twitter.com/statuses/user_timeline/24387924.rss" htmlUrl="http://twitter.com/audiotool"/>
+        </outline>
+        <outline title="Hardware" text="Hardware">
+            <outline text="ATI Proprietary Linux Driver Releases"
+                title="ATI Proprietary Linux Driver Releases" type="rss"
+                xmlUrl="http://feeds.amd.com/catalystlinux/" htmlUrl="http://www.amd.com/"/>
+        </outline>
+        <outline title="Ideas" text="Ideas">
+            <outline text="Big Think" title="Big Think" type="rss"
+                xmlUrl="http://feeds.feedburner.com/bigthink/main" htmlUrl="http://bigthink.com/"/>
+            <outline text="Dangerous Minds" title="Dangerous Minds"
+                type="rss"
+                xmlUrl="http://feeds.feedburner.com/dangerousminds/dot/net" htmlUrl="http://dangerousminds.net/"/>
+            <outline text="io9" title="io9" type="rss"
+                xmlUrl="http://io9.com/index.xml" htmlUrl="http://io9.com"/>
+            <outline text="RealitySandwich - Home Page"
+                title="RealitySandwich - Home Page" type="rss"
+                xmlUrl="http://www.realitysandwich.com/rss/new" htmlUrl="http://www.realitysandwich.com/rss/new"/>
+            <outline text="TEDTalks (video)" title="TEDTalks (video)"
+                type="rss"
+                xmlUrl="http://feeds.feedburner.com/tedtalks_video" htmlUrl="http://www.ted.com/talks/list"/>
+        </outline>
+        <outline title="Rumours" text="Rumours">
+            <outline text="Boing Boing" title="Boing Boing" type="rss"
+                xmlUrl="http://feeds.feedburner.com/boingboing/iBag" htmlUrl="http://boingboing.net"/>
+            <outline text="DVICE" title="DVICE" type="rss"
+                xmlUrl="http://dvice.com/atom.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fdvice.com%2Fatom.xml"/>
+            <outline text="Gizmodo" title="Gizmodo" type="rss"
+                xmlUrl="http://gizmodo.com/index.xml" htmlUrl="http://gizmodo.com"/>
+            <outline text="Kotaku" title="Kotaku" type="rss"
+                xmlUrl="http://kotaku.com/index.xml" htmlUrl="http://kotaku.com"/>
+        </outline>
+        <outline title="Film" text="Film">
+            <outline text="Horror Squad" title="Horror Squad" type="rss"
+                xmlUrl="http://www.horrorsquad.com/rss.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fwww.horrorsquad.com%2Frss.xml"/>
+            <outline text="Metacritic.com | Film"
+                title="Metacritic.com | Film" type="rss"
+                xmlUrl="http://www.metacritic.com/rss/movie/film.xml" htmlUrl="http://www.metacritic.com"/>
+            <outline text="New Yorker | Movies"
+                title="New Yorker | Movies" type="rss"
+                xmlUrl="http://feeds.newyorker.com/services/rss/feeds/movies.xml" htmlUrl="http://www.newyorker.com/rss/feeds/movies.xml"/>
+            <outline text="NYT | Movies" title="NYT | Movies" type="rss"
+                xmlUrl="http://feeds.nytimes.com/nyt/rss/Movies" htmlUrl="http://www.nytimes.com/pages/movies/index.html?partner=rss&amp;emc=rss"/>
+            <outline text="ScifiSquad.com" title="ScifiSquad.com"
+                type="rss" xmlUrl="http://www.scifisquad.com/rss.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fwww.scifisquad.com%2Frss.xml"/>
+        </outline>
+        <outline title="Photography" text="Photography">
+            <outline text="Aperture Users Network"
+                title="Aperture Users Network" type="rss"
+                xmlUrl="http://aperture.maccreate.com/feed/" htmlUrl="http://aperture.maccreate.com"/>
+            <outline text="Camera Labs" title="Camera Labs" type="rss"
+                xmlUrl="http://www.cameralabs.com/feed/cameralabs.xml" htmlUrl="http://www.cameralabs.com/"/>
+            <outline text="CoffeeGeek" title="CoffeeGeek" type="rss"
+                xmlUrl="http://coffeegeek.tumblr.com/rss" htmlUrl="http://coffeegeek.tumblr.com/"/>
+            <outline text="DigiCamReview" title="DigiCamReview"
+                type="rss"
+                xmlUrl="http://feeds.feedburner.com/Digicamreview" htmlUrl="http://www.digicamreview.com"/>
+            <outline text="Digital Camera Resource"
+                title="Digital Camera Resource" type="rss"
+                xmlUrl="http://www.dcresource.com/newsfeed/news.rdf" htmlUrl="http://www.dcresource.com"/>
+            <outline text="Digital Photography School"
+                title="Digital Photography School" type="rss"
+                xmlUrl="http://feeds.feedburner.com/DigitalPhotographySchool" htmlUrl="http://digital-photography-school.com"/>
+            <outline text="Enticing the Light"
+                title="Enticing the Light" type="rss"
+                xmlUrl="http://feeds.feedburner.com/EnticingTheLight" htmlUrl="http://enticingthelight.com"/>
+            <outline text="Imaging Resource" title="Imaging Resource"
+                type="rss"
+                xmlUrl="http://www.imaging-resource.com/news.xml" htmlUrl="http://www.imaging-resource.com/news"/>
+            <outline text="Leica Rumors" title="Leica Rumors" type="rss"
+                xmlUrl="http://feeds.feedburner.com/LeicaRumors" htmlUrl="http://leicarumors.com"/>
+            <outline
+                text="News: Digital Photography Review (dpreview.com)"
+                title="News: Digital Photography Review (dpreview.com)"
+                type="rss"
+                xmlUrl="http://www.dpreview.com/feeds/news.xml" htmlUrl="http://www.dpreview.com/news/"/>
+            <outline text="Raw File" title="Raw File" type="rss"
+                xmlUrl="http://www.wired.com/rawfile/feed/" htmlUrl="http://www.wired.com/rawfile"/>
+            <outline text="Ronald R. Martinsen's Photography Blog"
+                title="Ronald R. Martinsen's Photography Blog"
+                type="rss"
+                xmlUrl="http://ronmart.blogspot.com/feeds/posts/default?alt=rss" htmlUrl="http://www.ronmartblog.com/"/>
+            <outline text="Tao of Leica" title="Tao of Leica" type="rss"
+                xmlUrl="http://www.imx.nl/photo/page152/files/page152.xml" htmlUrl="http://www.imx.nl/photo/index.html"/>
+            <outline text="The Luminous Landscape"
+                title="The Luminous Landscape" type="rss"
+                xmlUrl="http://www.luminous-landscape.com/whatsnew/rssfeed.php" htmlUrl="http://www.luminous-landscape.com"/>
+            <outline text="The Online Photographer"
+                title="The Online Photographer" type="rss"
+                xmlUrl="http://feeds.feedburner.com/typepad/ZSjz?format=xml" htmlUrl="http://theonlinephotographer.typepad.com/the_online_photographer/"/>
+            <outline text="TheLightroomLab.com"
+                title="TheLightroomLab.com" type="rss"
+                xmlUrl="http://thelightroomlab.com/feed/" htmlUrl="http://thelightroomlab.com"/>
+        </outline>
+        <outline title="Shamanism" text="Shamanism">
+            <outline text="Power Path" title="Power Path" type="rss"
+                xmlUrl="http://www.thepowerpath.com/index.php?format=feed&amp;type=rss" htmlUrl="http://www.thepowerpath.com/index.php/component/content/?view=featured"/>
+            <outline text="Suite101: Paganism/Wicca"
+                title="Suite101: Paganism/Wicca" type="rss"
+                xmlUrl="http://rss.suite101.com/paganismwicca.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Frss.suite101.com%2Fpaganismwicca.xml"/>
+            <outline text="Tribe.net | Shamanism"
+                title="Tribe.net | Shamanism" type="rss"
+                xmlUrl="http://shamanism.tribe.net/threads/rss" htmlUrl="http://shamanism.tribe.net/threads/rss"/>
+            <outline text="WordPress | Shamanism"
+                title="WordPress | Shamanism" type="rss"
+                xmlUrl="http://wordpress.com/tag/shamanism/feed/" htmlUrl="http://en.wordpress.com/tag/shamanism/"/>
+        </outline>
+    </body>
+</opml>

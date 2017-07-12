@@ -1,0 +1,218 @@
+there are expressive programming languages. And then there are 
+beautiful ones. [Haskell](http://www.haskell.org/haskellwiki/Haskell), 
+a pure functional programming language, is such a language with its 
+mathematical eloquence.
+
+Transitioning from imperative languages to Haskell can entail more than 
+a brain cramp -- the purity of the language lacks the common control 
+structures that give imperative languages their familiar linear 
+organization: the learning curve is steep. Instead, the syntax is 
+equational, the mathematical roots of the language being very apparent. 
+It's a difficult journey across the landscape of lazy evaluation, 
+static typing, functors, monoids and monads, but worth it just for the 
+insightful possibilities and the exercise of seeing in terms of 
+equations versus sequential operations.
+
+The functional pattern matching is reminiscent of object oriented 
+message dispatching which, with the power of its type declaratives, can 
+create solutions that read very much like a domain specific language. 
+It takes awhile to grok the power of static typing, type classes and 
+instances, which lie at the heart of the language and facilitate such 
+eloquent solutions.
+
+Haskell is way beyond my ken -- though, I have been fine tuning my 
+[Xmonad](http://xmonad.org/) desktop environment which is written in 
+Haskell as a means of immersing myself in its delightful power. It is 
+used in academia for esoteric problem domains. I love the 
+[Ruby](http://www.ruby-lang.org/en/) programming language. But there is 
+a hypnotically alluring quality to Haskell's mathematical form, which 
+sings the language of the universe.
+
+## type class hiearchy
+
+| class      | subclass of        | prelude instances                                     |
+| --         | --                 | --                                                    |
+| Show       |                    | All Prelude types                                     |
+| Read       |                    | All except IO, (->)                                   |
+| Bounded    |                    | Int, Char, Bool, (), Ordering, tuples                 |
+| Eq         |                    | All except IO, (->)                                   |
+| Enum       |                    | (), Bool, Char, Ordering, Int, Integer, Float, Double |
+| Ord        | Eq                 | All except (->), IO, IOError                          |
+| Ix         | Ord                | Int, Integer, Char, Bool, Enum, tuples                |
+| Num        | Eq                 | Int, Integer, Float, Double                           |
+| Real       | Ord, Num           | Int, Integer, Float, Double                           |
+| Fractional | Num                | Float, Double                                         |
+| Integral   | Enum, Real         | Int, Integer                                          |
+| RealFrac   | Real               | Float, Double                                         |
+| Floating   | Fractional         | Float, Double                                         |
+| RealFloat  | RealFrac, Floating | Float, Double                                         |
+| Functor    |                    | IO, [], Maybe                                         |
+| Monad      |                    | IO, [], Maybe                                         |
+| MonadPlus  | Monad              | IO, [], Maybe                                         |
+
+Note: Haskell type classes are not to be confused with object oriented 
+class specifications
+
+## functors
+
+`class Functor f where`
+`^    fmap :: (a -> b) -> f a -> f b`
+
+### prelude
+
+`instance Functor [] where`
+`^    fmap = map`
+`^ `
+`instance Functor Maybe where`
+`^    fmap f (Just x) = Just (f x)`
+`^    fmap f Nothing = Nothing`
+`^ `
+`instance Functor (Either a) where`
+`^    fmap f (Right x) = Right (f x)`
+`^    fmap f (Left x) = Left x `
+
+### functor laws
+
+`fmap id = id`
+`fmap (f . g) = fmap f . fmap g`
+
+## applicative functors
+
+`class (Functor f) => Applicative f where`
+`^    pure :: a -> f a`
+`^    (<*>) :: f (a -> b) -> f a -> f b`
+`^ `
+`^    (<$>) :: (a -> b) -> f a -> f b`
+`^    f <$> x = fmap f x `
+
+### control.applicative
+
+`instance Applicative Maybe where`
+`^    pure = Just`
+`^    Nothing <*> _ = Nothing`
+`^    (Just f) <*> something = fmap f something`
+`^ `
+`instance Applicative [] where`
+`^    pure x = [x]`
+`^    fs <*> xs = [f x | f <- fs, x <- xs]`
+`^ `
+`instance Applicative IO where`
+`^    pure = return`
+`^    a <*> b = do`
+`^        f <- a`
+`^        x <- b`
+`^        return (f x)`
+`^ `
+`instance Applicative ((->) r) where`
+`^    pure x = (\_ -> x)`
+`^    f <*> g = \x -> f x (g x)`
+
+### applicative functor laws
+
+`pure id <*> v = v`
+`pure (.) <*> u <*> v <*> w = u <*> (v <*> w)`
+`pure f <*> pure x = pure (f x)`
+`u <*> pure y = pure ($ y) <*> u`
+
+## monoids
+
+`class Monoid m where`
+`^    mempty :: m`
+`^    mappend :: m -> m -> m`
+`^ `
+`^    mconcat :: [m] -> m`
+`^    mconcat = foldr mappend mempty`
+
+### data.monoid
+
+`instance Monoid [a] where`
+`^    mempty = []`
+`^    mappend = (++) `
+`^ `
+`newtype Any = Any { getAny :: Bool }`
+`^    deriving (Eq, Ord, Read, Show, Bounded)`
+`^ `
+`instance Monoid Any where`
+`^    mempty = Any False`
+`^    Any x ^'mappend^' Any y = Any (x || y)`
+`^ `
+`newtype All = All { getAll :: Bool }`
+`^    deriving (Eq, Ord, Read, Show, Bounded)`
+`^ `
+`instance Monoid All where`
+`^    mempty = All True`
+`^    All x ^'mappend^' All y = All (x && y)`
+`^ `
+`instance Monoid Ordering where`
+`^    mempty = EQ`
+`^    LT ^'mappend^' _ = LT`
+`^    EQ ^'mappend^' y = y`
+`^    GT ^'mappend^' _ = GT`
+`^ `
+`instance Monoid a => Monoid (Maybe a) where`
+`^    mempty = Nothing`
+`^    Nothing ^'mappend^' m = m`
+`^    m ^'mappend^' Nothing = m`
+`^    Just m1 ^'mappend^' Just m2 = Just (m1 ^'mappend^' m2)`
+
+### monoid laws
+
+`mempty ^'mappend^' x = x`
+`x ^'mappend^' mempty = x`
+`(x ^'mappend^' y) ^'mappend^' z = x ^'mappend^' (y ^'mappend^' z)`
+
+## monads
+
+`class (Applicative m) => Monad m where`
+`^    return :: a -> m a`
+`^    (>>=) :: m a -> (a -> m b) -> m b`
+`^ `
+`^    (>>) :: m a -> m b -> m b`
+`^    x >> y = x >>= \_ -> y`
+`^ `
+`^    fail :: String -> m a`
+`^    fail msg = error msg`
+
+Note: the class constraint _Applicative m_ is not part of the formal 
+definition of the monad class -- it is inferred. _return_ is equivalent 
+to _pure_ of applicative functors.
+
+### control.monad
+
+`instance Monad Maybe where`
+`^    return x = Just x`
+`^    Nothing >>= f = Nothing`
+`^    Just x >>= f = f x`
+`^    fail _ = Nothing`
+`^ `
+`instance Monad [] where`
+`^    return x = [x]`
+`^    xs >>= f = concat (map f xs)`
+`^    fail _ = []`
+
+### monad laws
+
+`Left Identity:  return x >>= f = f x`
+`Right Identity: m >>= return = m`
+`Associativity:  (m >>= f) >>= g = m >>= (\x -> f x >>= g)`
+
+### do notation
+
+`foo :: IO ()`
+`foo = ... >>= (\x ->`
+`^      ... >>`
+`^      ... >>= (\y ->`
+`^      ... (.. x .. y)))`
+
+[ljust]can be expressed with Haskell's syntactic sugar as..
+
+`foo :: IO ()`
+`foo = do`
+`^    x <- ...`
+`^    ...`
+`^    y <- ...`
+`^    ... (.. x .. y)`
+
+[ljust]which is just different syntax for chaining monadic values. In 
+effect, monads sequence operations to simulate stateful or imperative 
+computations.

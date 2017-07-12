@@ -1,0 +1,8 @@
+--langdef=vimwiki
+--langmap=vimwiki:.wiki
+--regex-vimwiki=/^=[ \t]+(.+)[ \t]+=$/\1/h,header/
+--regex-vimwiki=/^==[ \t]+(.+)[ \t]+==$/. \1/h,header/
+--regex-vimwiki=/^===[ \t]+(.+)[ \t]+===$/.   \1/h,header/
+--regex-vimwiki=/^====[ \t]+(.+)[ \t]+====$/.     \1/h,header/
+--regex-vimwiki=/^=====[ \t]+(.+)[ \t]+=====$/.       \1/h,header/
+--regex-vimwiki=/^======[ \t]+(.+)[ \t]+======$/.         \1/h,header/

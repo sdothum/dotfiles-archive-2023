@@ -1,0 +1,20 @@
+StartChar: sheva
+Encoding: 1456 1456 731
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+468 -118 m 1,0,-1
+ 468 6 l 1,1,-1
+ 591 6 l 1,2,-1
+ 591 -118 l 1,3,-1
+ 468 -118 l 1,0,-1
+468 -365 m 1,4,-1
+ 468 -241 l 1,5,-1
+ 591 -241 l 1,6,-1
+ 591 -365 l 1,7,-1
+ 468 -365 l 1,4,-1
+EndSplineSet
+EndChar

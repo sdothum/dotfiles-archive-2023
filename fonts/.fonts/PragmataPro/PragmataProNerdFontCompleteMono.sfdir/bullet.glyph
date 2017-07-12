@@ -1,0 +1,42 @@
+StartChar: bullet
+Encoding: 8226 8226 839
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 6
+MDAP[rnd]
+PUSHW_1
+ 0
+MDRP[rp0,grey]
+PUSHW_1
+ 0
+MDAP[rnd]
+SVTCA[y-axis]
+PUSHW_1
+ 9
+MDAP[rnd]
+PUSHW_1
+ 3
+MDRP[rp0,grey]
+PUSHW_1
+ 3
+MDAP[rnd]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+878 851 m 256,0,1
+ 878 707 878 707 775.5 604.5 c 128,-1,2
+ 673 502 673 502 529 502 c 256,3,4
+ 385 502 385 502 283 604.5 c 128,-1,5
+ 181 707 181 707 181 851 c 256,6,7
+ 181 995 181 995 283 1097 c 128,-1,8
+ 385 1199 385 1199 529 1199 c 256,9,10
+ 673 1199 673 1199 775.5 1097 c 128,-1,11
+ 878 995 878 995 878 851 c 256,0,1
+EndSplineSet
+EndChar

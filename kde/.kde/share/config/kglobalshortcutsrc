@@ -1,0 +1,9 @@
+[kshutdown]
+_k_friendly_name=KShutdown
+kshutdown/cancel=none,none,Cancel
+kshutdown/hibernate=none,none,Hibernate Computer
+kshutdown/lock=none,none,Lock Screen
+kshutdown/logout=none,none,Logout
+kshutdown/reboot=none,none,Restart Computer
+kshutdown/shutdown=none,none,Turn Off Computer
+kshutdown/suspend=none,none,Suspend Computer

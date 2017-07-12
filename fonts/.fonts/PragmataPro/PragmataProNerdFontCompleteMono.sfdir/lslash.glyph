@@ -1,0 +1,336 @@
+StartChar: lslash
+Encoding: 322 322 260
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 7
+MDAP[rnd]
+NPUSHW
+ 3
+ 36
+ 0
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 70
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 167
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 55
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 199
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 214
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 181
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 244
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 67
+ 0
+ 1
+DELTAP2
+PUSHW_2
+ 2
+ 3
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 6
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 58
+ 10
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 73
+ 10
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 184
+ 10
+ 1
+DELTAP1
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 11
+MDRP[rp0,grey]
+PUSHW_1
+ 6
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,grey]
+PUSHW_1
+ 2
+SRP0
+PUSHW_1
+ 15
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 53
+ 17
+ 1
+DELTAP2
+SVTCA[y-axis]
+PUSHW_1
+ 4
+MDAP[rnd]
+PUSHW_1
+ 14
+MDAP[rnd]
+NPUSHW
+ 3
+ 27
+ 0
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 43
+ 1
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 29
+ 1
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 137
+ 1
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 152
+ 1
+ 1
+DELTAP1
+PUSHW_1
+ 4
+SRP0
+PUSHW_2
+ 2
+ 1
+MIRP[rp0,rnd,grey]
+PUSHW_1
+ 6
+MDRP[rp0,grey]
+PUSHW_1
+ 7
+MDRP[rp0,grey]
+NPUSHW
+ 3
+ 23
+ 8
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 10
+ 8
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 123
+ 8
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 253
+ 8
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 45
+ 8
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 218
+ 8
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 136
+ 8
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 150
+ 8
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 70
+ 8
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 41
+ 10
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 102
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 135
+ 11
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 21
+ 11
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 146
+ 11
+ 1
+DELTAP1
+PUSHW_1
+ 14
+SRP0
+PUSHW_2
+ 12
+ 1
+MIRP[rp0,rnd,grey]
+NPUSHW
+ 3
+ 39
+ 16
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 183
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 58
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 231
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 5
+ 70
+ 16
+ 86
+ 16
+ 2
+DELTAP1
+NPUSHW
+ 3
+ 149
+ 16
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 24
+ 17
+ 1
+DELTAP2
+NPUSHW
+ 3
+ 37
+ 17
+ 1
+DELTAP2
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+903 1083 m 1,0,-1
+ 629 860 l 1,1,-1
+ 629 157 l 1,2,-1
+ 880 157 l 1,3,-1
+ 880 0 l 1,4,-1
+ 200 0 l 1,5,-1
+ 200 157 l 1,6,-1
+ 452 157 l 1,7,-1
+ 452 714 l 1,8,-1
+ 299 590 l 1,9,-1
+ 188 707 l 1,10,-1
+ 452 922 l 1,11,-1
+ 452 1424 l 1,12,-1
+ 240 1424 l 1,13,-1
+ 240 1580 l 1,14,-1
+ 629 1580 l 1,15,-1
+ 629 1066 l 1,16,-1
+ 792 1200 l 1,17,-1
+ 903 1083 l 1,0,-1
+EndSplineSet
+EndChar

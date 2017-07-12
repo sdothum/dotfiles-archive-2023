@@ -1,0 +1,5 @@
+[TimeZones]
+LocalZone=Canada/Eastern
+ZoneinfoDir=/usr/share/zoneinfo
+Zonetab=/usr/share/zoneinfo/zone.tab
+ZonetabCache=

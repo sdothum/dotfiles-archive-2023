@@ -1,0 +1,20 @@
+StartChar: sofpasuq
+Encoding: 1475 1475 749
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+641 222 m 1,0,-1
+ 641 0 l 1,1,-1
+ 419 0 l 1,2,-1
+ 419 222 l 1,3,-1
+ 641 222 l 1,0,-1
+641 1173 m 1,4,-1
+ 641 951 l 1,5,-1
+ 419 951 l 1,6,-1
+ 419 1173 l 1,7,-1
+ 641 1173 l 1,4,-1
+EndSplineSet
+EndChar

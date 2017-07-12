@@ -1,0 +1,27 @@
+the search field can be found at the top of every page to the right of 
+the site name in a faint box outline with ellipsis (...) and can filter 
+for any article containing the search criteria entered.
+
+Search criteria may contain a list of one or more words of the form..
+
+| expression | filter                              |
+| --         | --                                  |
+| word       | any article containing word         |
+| prefix*    | any article containing partial word |
+| +word      | article must contain word           |
+| +prefix*   | article must contain partial word   |
+| -word      | article must not contain word       |
+
+Note the use of the asterisk (*), plus (+) and minus (-) symbols with 
+the search expressions. When applied, there should be no spaces between 
+the word and the symbol.
+
+The search will yield a list of articles matching the criteria from any 
+thread in chronological order, most recent first (unless the search 
+criteria is too restrictive and nothing is found).
+
+The search engine is very nimble and is a very effective way to navigate 
+this site once one is familiar with the nature of its content. Failing 
+that, pulling up the [[index]] or [[date]] page and using the browser's 
+own text search capability on the page provides another means for 
+searching on article titles.

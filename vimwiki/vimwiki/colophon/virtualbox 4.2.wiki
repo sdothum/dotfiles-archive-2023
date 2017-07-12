@@ -1,0 +1,30 @@
+as of this writing, has not been merged into the official Debian 
+repositories but is required if you want to run Windows 8, which the 
+"guest additions" for, are still somewhat short of full OpenGL video 
+support which prevents usage of some applications like Nik HDR Pro 2 and 
+Color Efex Pro 4 photo software (which need to be able to identify 
+specific video cards, unfortunately).
+
+Not being available through the Debian repositories, there can be a 
+problem with the virtualbox USB initialization for guest OS access. The 
+script /usr/share/virtualbox/VBoxCreateUSBNode.sh cannot be found by 
+udev on my LVM configuration because the /usr filesystem is not yet 
+mounted. To circumvent this startup error so the shell script is visible 
+from the root filesystem at boot..
+
+`cp /usr/share/virtualbox/VBoxCreateUSBNode.sh /root`
+`umount /usr/local`
+`umount /usr`
+`mkdir -p /usr/share/virtualbox`
+`mv /root/VBoxCreateUSBNode.sh /usr/share/virtualbox/`
+
+Another irritant is that the vboxdrv module appears not to load at boot 
+which then requires the following to be executed prior to launching a 
+guest OS for the first time..
+
+`/etc/init.d/vboxdrv setup`
+
+To avoid this after every reboot..
+
+`echo >>/etc/modules         # ensure a linefeed terminates file`
+`echo vboxdrv >>/etc/modules`

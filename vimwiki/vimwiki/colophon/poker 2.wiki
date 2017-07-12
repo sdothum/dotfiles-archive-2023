@@ -1,0 +1,246 @@
+configuration of the Pn layer allows mapping keyboard and function key 
+combinations to provide the shortcuts necessary to emulate a full 104 
+key keyboard. Such a setup allows typing with minimal hand movement and 
+actually, IMO, is more efficient to use!
+
+## initial setup
+
+the [Colemak][colemak] keyboard layout uses the **CapsLock** as 
+a **backspace** key. Also, moving the *nix common **grave**/**tilde** to 
+its own key avoids the otherwise necessary **Fn + Esc** key combination. 
+To do so..
+
+| action             | setting   | key |
+| --                 | --        |     |
+| Power              | off       |     |
+| Dip Switches 1,3,4 | off       |     |
+| Dip Switch 2       | on        |     |
+| Power              | on        |     |
+| Fn + right Ctrl    |           |     |
+| Caps Lock          | Backspace |     |
+| Pn                 |           |     |
+| Right Ctrl         | Fn + Esc  | `~  |
+| Pn                 |           |     |
+| Fn + right Ctrl    |           |     |
+| Fn + right Shift   |           |     |
+
+
+Dip switch 2 moves the **grave**/**tilde** to the **right Ctrl** which 
+is convenient for frequent usage. However, the **right Ctrl** also needs 
+to programmed for the Pn layer, hence, the assignment of **Fn + Esc** to 
+the 
+**right Ctrl**. 
+
+The **Fn + right Ctrl** key combination initiates and terminates programming 
+mode. The single **Pn** key action stores the defined mapping. The **Fn + right 
+Shift** enables the Pn layer permanently so you do not need to press **Pn** key 
+to invoke the new mappings.
+
+## colemak
+
+is easy enough to obtain in Linux via the keymap settings. Then the 
+qwerty keyboard layout is mapped to Colemak. But you can easily 
+configure the Pn layer to convert the Poker 2 into a Colemak keyboard so 
+it can be used with any computer as such..
+
+| action           | setting |
+| --               | --      |
+| Fn + right Ctrl  |         |
+| e                | f       |
+| Pn               |         |
+| r                | p       |
+| Pn               |         |
+| t                | g       |
+| Pn               |         |
+| y                | j       |
+| Pn               |         |
+| u                | l       |
+| Pn               |         |
+| i                | u       |
+| Pn               |         |
+| o                | y       |
+| Pn               |         |
+| p                | ;       |
+| Pn               |         |
+| s                | r       |
+| Pn               |         |
+| d                | s       |
+| Pn               |         |
+| f                | t       |
+| Pn               |         |
+| g                | d       |
+| Pn               |         |
+| j                | n       |
+| Pn               |         |
+| k                | e       |
+| Pn               |         |
+| l                | i       |
+| Pn               |         |
+| ;                | o       |
+| Pn               |         |
+| n                | k       |
+| Pn               |         |
+| Fn + right Ctrl  |         |
+| Fn + right Shift |         |
+
+[ljust]and you now have a Colemak keyboard enabled. Any layout can be defined!
+
+## left fn key
+
+a left hand **Fn** key can be useful for the upper F-key ranges, other Pn layer 
+programming, and avoiding awkward **Fn** key combinations and finger stretches 
+with the **Shift**, **Ctrl**, **Win** (Super), and **Alt** keys.
+
+Not surprisingly, the Poker 2 can assign a left hand **Fn** key. Dip 
+switch 3 turned on turns the **Win** key into a left hand **Fn** key, 
+but then the **Win** key needs to be mapped elsewhere (the **right Alt** 
+key is an option) or is lost. A solution is to map the **Fn** key to the 
+**CapsLock**, preserving the 
+**Win** key (position). To do so..
+
+| action           | setting  |
+| --               | --       |
+| Power            | off      |
+| Dip Switches 2-4 | off      |
+| Dip Switch 1     | on       |
+| Power            | on       |
+| Fn + right Ctrl  |          |
+| Win              | CapsLock |
+| Pn               |          |
+| Fn + right Ctrl  |          |
+| Power            | off      |
+| Dip Switch 2-3   | on       |
+| Power            | on       |
+| Fn + right Shift |          |
+
+Done! Dip switch 3 enables the **left Fn** key, normally to the **Win** 
+key, but since the **Win** key is mapped to the **CapsLock**, the **left 
+Fn** is now the **CapsLock** and the **Win** key remains a **Win** key. 
+Whew!
+
+Doing so loses the **CapsLock** as a **backspace** key above, something 
+which, as a Colemak user, I have come to appreciate -- especially with 
+all the inadvertent key presses while acclimating to new ultra light 
+linear Cherry Red key switches! 
+
+## guifn
+
+enter the [GuiFn](https://geekhack.org/index.php?topic=57723.0)
+function key layout which eliminates the need for a left hand **Fn** key.
+
+GuiFn implements a right hand (activated with thumb on the **Fn** key) 
+navigation key cluster which is, IMO, more effective than the split left hand 
+**Fn + WASD** cursor layout 
+-- that gamers are used to -- and right hand **Fn 
+ + Home**/**End**/**PgUp**/**PgDn** (assigned to the semi-colon, period, quote 
+ and slash) keys. 
+
+In fact, once your muscle memory is established, it is quicker to use than the 
+dedicated navigation control cluster of a tenkeyless or full keyboard. To 
+configure the Pn layer..
+
+| action           | setting        | navigation |
+| --               | --             |            |
+| Fn + right Ctrl  |                |            |
+| Fn + ;           | Fn + a         | Right      |
+| Pn               |                |            |
+| Fn + '           | Fn + s         | Down       |
+| Pn               |                |            |
+| Fn + Enter       | Fn + d         | Left       |
+| Pn               |                |            |
+| Fn + [           | Fn + w         | Up         |
+| Pn               |                |            |
+| Fn + p           | Fn + ;         | Home       |
+| Pn               |                |            |
+| Fn + ]           | Fn + ,         | End        |
+| Pn               |                |            |
+| Fn + Backspace   | Fn + '         | PgUp       |
+| Pn               |                |            |
+| Fn + \           | Fn + /         | PgDn       |
+| Pn               |                |            |
+| Fn + /           | Fn + Backspace | Del        |
+| Fn + right Ctrl  |                |            |
+| Fn + right Shift |                |            |
+
+Flip the **Fn** key around so it slopes downward (the "Fn" legend will be 
+upside down) as this will feel more natural to the thumb and can be located by 
+feel. 
+
+Now the Poker 2 is really beginning to feel customized (just need to add 
+an anodized milled [aluminium base][keyboards#tex-aluminium-case]!)..
+
+## the layouts
+
+with **Fn + right Shift** enabled..
+
+`^    Esc  1 2 3 4 5   6 7 8 9 0 - =  Backspace`
+`^     Tab  Q W F P G   J L U Y ; [ ]  \`
+`Backspace  A R S T D   H N E I O '  Enter`
+`^     Shift  Z X C V B   K M , . /  Shift`
+<code>Ctrl  Win  Alt    Space    Alt  Fn  Pn  `~</code>
+
+[ljust]with **Fn** (thumb) held down..
+
+`^   Esc  F1 F2 F3 F4 F5   F6 F7 F8 F9 F10 F11 F12  PgUp`
+`^    Tab  Q W E R T   Y U I O Home Up End  PgDn`
+`CapsLock  A S D F G   H J K L Left Down  Right`
+`^    Shift  Z X C V B   N M , . /  Shift`
+<code>Ctrl  Win  Alt    Space    Alt  Fn  Pn  `~</code>
+
+[ljust]with **Pn** held down..
+
+`^   Esc  1 2 3 4 5   6 7 8 9 0 - =  Backspace`
+`^    Tab  Q W E R T   Y U I O P [ ]  \`
+`CapsLock  A S D F G   H J K L ; '  Enter`
+`^    Shift  Z X C V B   N M , . /  Shift`
+<code>Ctrl  Win  Alt    Space    Alt  Fn  Pn  `~</code>
+
+For completeness, all remaining default Poker 2 Fn keys can be 
+programmed to be indifferent to the **Fn** key to allow modifiers on 
+those keys to work even if the **Fn** key is held down..
+
+| action           | setting |
+| --               | --      |
+| Fn + right Ctrl  |         |
+| Fn + w           | w       |
+| Pn               |         |
+| Fn + a           | a       |
+| Pn               |         |
+| Fn + s           | s       |
+| Pn               |         |
+| Fn + d           | d       |
+| Pn               |         |
+| Fn + z           | z       |
+| Pn               |         |
+| Fn + x           | x       |
+| Pn               |         |
+| Fn + c           | c       |
+| Pn               |         |
+| Fn + v           | v       |
+| Pn               |         |
+| Fn + b           | b       |
+| Pn               |         |
+| Fn + r           | r       |
+| Pn               |         |
+| Fn + y           | y       |
+| Pn               |         |
+| Fn + f           | f       |
+| Pn               |         |
+| Fn + g           | g       |
+| Pn               |         |
+| Fn + h           | h       |
+| Pn               |         |
+| Fn + n           | n       |
+| Pn               |         |
+| Fn + m           | m       |
+| Pn               |         |
+| Fn + ,           | ,       |
+| Pn               |         |
+| Fn + .           | .       |
+| Pn               |         |
+| Fn + right Ctrl  |         |
+| Fn + right Shift |         |
+
+The possibilities are endless with the programmable function layer of 
+the Poker 2. You can easily roll your own..
+

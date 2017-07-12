@@ -1,0 +1,67 @@
+converting to [rofi][] from dmenu, it turns out, proved to be just the 
+beginning. Its extended dmenu feature set refocused attention on the 
+format possibilities of the menu content -- not that there was anything 
+dmenu restricted. 
+
+![Rofi projects dmenu](/images/rofi_projects.jpg)
+
+But [ricing](https://www.reddit.com/r/unixporn/wiki/index) has its own 
+lure..
+
+## columnar output
+
+[column](http://man7.org/linux/man-pages/man1/column.1.html) is a text 
+formatting tool that space aligns text. This is facilitated by inserting 
+a separator character into the menu content -- of course, the 
+[dmenu functions][rofi#dmenu] must also accommodate these new **Space** 
+formatted lines..
+
+`selection=$(... \`
+`^          | ... \`
+`^          | column -s\^^ -t \`
+`^          | ... \`
+`^          | dmenu "Prompt..." -no-custom) || exit`
+
+[ljust]where, the **caret** (^) character in this example is the column 
+separator in the input list to dmenu a.k.a. [rofi][rofi#rofi].
+
+## indenting
+
+to add a bit of uniqueness to this rofi usage, the input lines are also 
+indented below the prompt message. This adds a touch of readability to 
+the minimalist presentation which omits the commonly used background 
+colour highlight (I use full transparency)..
+
+`INDENT='   '`
+`fontsize=...`
+`padding=...`
+`...`
+`dmenu() {`
+`^  prompt=...`
+`^  select=...`
+`^  ...`
+`^  input=$(sed "s/^/$INDENT/" \`
+`^        | rofi -bg black -bc black -bw 0 -fg '#FDF6E3' -hlbg black -hlfg '#25C0EF' \`
+`^               -font "PragmataPro $fontsize" -eh 2 \`
+`^               -opacity 85 -separator-style none -hide-scrollbar \`
+`^               -lines $lines -width 100 -fixed-num-lines -padding $padding \`
+`^               -dmenu -p "$prompt──────   " -i -mesg ' ' -select "$select" $@ \`
+`^        )`
+`^  [ $? -eq 0 ] && echo "$input" | sed "s/^^$INDENT//" || return 1`
+`}`
+
+[ljust]Stripping the indent padding before returning the "result" makes 
+for a seamless implementation. 
+
+Together with columnar formatting of menu content (where applicable), 
+readability and aesthetics are improved..
+
+![Rofi columns with indenting](/images/rofi_columns.jpg)
+
+[ljust]Note: the menu list looks unsorted because this dmenu function 
+prepends the normal sorted project file list with the *history* of 
+previously selected items! 
+
+Rofi. I use it a LOT and continually refine the rofi scripts to 
+streamline my workflow. As per usual, the [dotfiles][] can be found 
+[here](https://github.com/sdothum/dotfiles).

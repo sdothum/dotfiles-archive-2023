@@ -1,0 +1,27 @@
+# BACKEND to be used
+backend=worldweatheronline.com
+# LOCATION to be queried
+city=Ottawa,Canada
+# NUMBER of days of weather forecast to be displayed
+days=3
+# FRONTEND to be used
+frontend=ascii-art-table
+# json frontend: do not indent the output
+jsn-no-indent=false
+# UNITSYSTEM to use for output.
+# Choices are: metric, imperial, si
+units=metric
+# wwo backend: the api KEY to use
+wwo-api-key=158e2e7d2c471ab8815d5ee9e8ba3
+# wwo backend: the LANGUAGE to request from wwo
+wwo-lang=en
+
+
+# The following options are probably deprecated and not used currently!
+aat-coords=false
+aat-monochrome=false
+forecast-api-key=
+forecast-debug=false
+forecast-lang=en
+location=40.748,-73.985
+wwo-debug=false

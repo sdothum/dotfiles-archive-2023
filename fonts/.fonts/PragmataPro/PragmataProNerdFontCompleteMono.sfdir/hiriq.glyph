@@ -1,0 +1,15 @@
+StartChar: hiriq
+Encoding: 1460 1460 735
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+468 -259 m 1,0,-1
+ 468 -136 l 1,1,-1
+ 591 -136 l 1,2,-1
+ 591 -259 l 1,3,-1
+ 468 -259 l 1,0,-1
+EndSplineSet
+EndChar

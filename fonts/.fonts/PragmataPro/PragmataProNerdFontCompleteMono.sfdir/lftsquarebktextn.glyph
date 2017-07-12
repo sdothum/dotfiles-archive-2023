@@ -1,0 +1,53 @@
+StartChar: lftsquarebktextn
+Encoding: 9122 9122 1320
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 0
+MDAP[rnd]
+PUSHW_2
+ 1
+ 3
+MIRP[rp0,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 0
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 0
+ 15
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 3
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 3
+ 7
+MIAP[no-rnd]
+EIF
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+306 1950 m 1,0,-1
+ 472 1950 l 1,1,-1
+ 472 -375 l 1,2,-1
+ 306 -375 l 1,3,-1
+ 306 1950 l 1,0,-1
+EndSplineSet
+EndChar

@@ -1,0 +1,69 @@
+StartChar: arc
+Encoding: 8978 8978 1190
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 4
+MDAP[rnd]
+PUSHW_1
+ 10
+MDAP[rnd]
+PUSHW_1
+ 4
+SRP0
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 10
+SRP0
+PUSHW_1
+ 11
+MDRP[rp0,min,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 7
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 7
+ 9
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 11
+MDRP[rp0,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+530 1048 m 256,0,1
+ 388 1048 388 1048 288.5 958.5 c 128,-1,2
+ 189 869 189 869 155 747 c 1,3,-1
+ 12 779 l 1,4,5
+ 58 950 58 950 197 1072 c 128,-1,6
+ 336 1194 336 1194 530 1194 c 256,7,8
+ 724 1194 724 1194 863 1072 c 128,-1,9
+ 1002 950 1002 950 1048 779 c 1,10,-1
+ 905 747 l 1,11,12
+ 871 869 871 869 771.5 958.5 c 128,-1,13
+ 672 1048 672 1048 530 1048 c 256,0,1
+EndSplineSet
+EndChar

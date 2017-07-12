@@ -1,0 +1,7 @@
+#---------------------------------------------
+# TINT2CONF CONFIG FILE
+default_theme = /home/shum/.config/tint2/text_only_2.tint2rc
+cmd_property = /usr/bin/env python /usr/bin/tintwizard.py
+width = 900
+height = 429
+

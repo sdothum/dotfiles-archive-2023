@@ -1,0 +1,18 @@
+StartChar: whiterightpointingtriangle
+Encoding: 9655 9655 1549
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+1060 794 m 1,0,-1
+ 108 244 l 1,1,-1
+ 108 1343 l 1,2,-1
+ 1060 794 l 1,0,-1
+234 1126 m 1,3,-1
+ 234 462 l 1,4,-1
+ 807 793 l 1,5,-1
+ 234 1126 l 1,3,-1
+EndSplineSet
+EndChar

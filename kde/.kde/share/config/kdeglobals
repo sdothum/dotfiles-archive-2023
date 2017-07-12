@@ -1,0 +1,20 @@
+[$Version]
+update_info=kded.upd:kde3.0,kdeui.upd:kde4/migrate_from_kde3_icon_theme
+
+[KFileDialog Settings]
+Automatically select filename extension=true
+Breadcrumb Navigation=true
+Decoration position=0
+LocationCombo Completionmode=5
+PathCombo Completionmode=5
+Previews=false
+Recent URLs[$e]=/usr/share/kde4/apps/ktouch/
+Show Bookmarks=false
+Show Full Path=false
+Show Speedbar=true
+Show hidden files=false
+Sort by=Name
+Sort directories first=true
+Sort reversed=false
+Speedbar Width=100
+View Style=Simple

@@ -1,0 +1,410 @@
+while [tiling window managers](https://en.wikipedia.org/wiki/Tiling_window_manager)
+are my preferred desktop environment to work in, it is 
+[dmenu](http://tools.suckless.org/dmenu/) that is the glue and allows my 
+workflow to be completely keyboard driven.
+
+With simple keybindings defined in the sxhkdrc configuration, dmenu 
+functions can be defined to select from a list and..
+
+- launch a program
+- restart a systemd process
+- open a man page
+- open a history URL item in your browser of choice
+- ditto a bookmark URL
+- locate and open a file
+- edit a system config file
+- edit a group of project source files
+- return a password
+- return a list of email addresses (readily available in the clipboard)
+- compose an email in your editor of choice
+- add music to a playlist
+- control the playlist music daemon
+- solve a mathematical equation
+- exit system
+- pretty much anything you care to script that can use a pick list!
+
+dmenu is window manager agnostic but appears more aligned with tiling 
+window managers being keyboard driven (versus the mouse driven 
+disposition of stacking window managers).
+
+## dmenu
+
+`#!/bin/sh`
+`$(dwrapper) $(echo "$@" | grep -q '[-]p ' || echo '-p Run') $@`
+
+Present a single row of menu items. If no prompt is provided, the 
+standard "Run" prompt is used. 
+
+## dlist
+
+`#!/bin/sh`
+`echo $(dwrapper) -l 12`
+
+Present a list of menu items, 12 lines deep.
+
+## dwrapper
+
+`#!/bin/sh`
+`echo /usr/bin/dmenu -i -fn 'Arial-10' -sb '#4E9258' -sf '#fff' -nb "#333" -h 22`
+
+A dmenu wrapper is created to provide an easy way to enforce 
+a consistent _look_ to all the scripts which call dmenu.
+I use the [Xft](https://en.wikipedia.org/wiki/Xft) 
+[patched version](http://tools.suckless.org/dmenu/patches/xft) of dmenu 
+to have a wider choice of fonts available.
+
+The following scripts illustrate just a few uses of dmenu..
+
+## run program
+
+`#!/bin/sh`
+`cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}`
+`if [[] -d "$cachedir" []]; then`
+`^  cache=$cachedir/dmenu_run`
+`else`
+`^  cache=$HOME/.dmenu_cache`
+`fi`
+`(`
+`^  IFS=:`
+`^  if stest -dqr -n "$cache" $PATH; then`
+`^    run=$(stest -flx $PATH | sort -u |sed '1iscratchpad\nterm\npseudoframe' | tee "$cache" | dmenu "$@") || exit`
+`^  else`
+`^    run=$(dmenu "$@" < "$cache") || exit`
+`^  fi`
+`^  [[] -n $run []] && $run`
+`)`
+
+bspwm terminal applications are conveniently inserted at the top of the 
+list.
+
+## restart systemd process
+
+`#!/bin/sh`
+`cd /usr/lib/systemd/system/`
+`while true`
+`do`
+`^  service=$(stest -fl . \`
+`^    | sort  \`
+`^    | sed '1i[ list services ]\n[ list-unit-files ]' \`
+`^    | $(dwrapper) -p 'Restart') || break`
+`^ `
+`^  case $service in`
+`^    '[ list services ]')    /usr/bin/urxvt -title 'list services' -e systemctl -t service -a ;;`
+`^    '[ list-unit-files ]')  /usr/bin/urxvt -title 'list-unit-files' -e systemctl list-unit-files ;;`
+`^    *)                      sudo systemctl restart $service`
+`^                            break`
+`^                            ;;`
+`^  esac`
+`done`
+
+## open man page
+
+`#!/bin/sh`
+`page=$(apropos . \`
+`^     | cut -d' ' -f1 \`
+`^     | sort -d \`
+`^     | uniq \`
+`^     | sed '1iremind\nbspwm' \`
+`^     | $(dwrapper) -p 'Man Page' \`
+`^     | cut -d':' -f3-)`
+`[[] $page []] && apropos . | cut -d' ' -f1 | grep -q "$page" && urxvtc -title "man $page" -e man "$page"`
+
+## open bookmark url
+
+`#!/bin/sh`
+`sqldb=~/.local/share/luakit/bookmarks.db`
+`query='select title, tags, uri from bookmarks order by tags,title ASC;'`
+`^ `
+`uri=$(echo "$query" \`
+`^    | sqlite3 $sqldb \`
+`^    | sed 's/[|]/  ::  /g' \`
+`^    | $(dlist) -p 'Bookmark' \`
+`^    | sed 's/.* :: .* :: \(.*\)/\1/')`
+`[[] $uri []] && dbrowser "$uri"`
+
+[ljust]with dbrowser..
+
+`#!/bin/sh`
+`function m() {`
+`^  which $@ >/dev/null 2>&1 && echo -n "$@\\n"`
+`}`
+`^ `
+`while browser=$(echo -e \`
+`^                        $(m vimb) \`
+`^                        $(m chromium) \`
+`^                        ... \`
+`^                        $(m w3m) \`
+`^                        $(m xombrero) \`
+`^              | $(dwrapper) -p 'Browser') || exit`
+`do`
+`^  case ${browser# } in`
+`^    elinks \`
+`^  | w3m)            urxvtc -title "$browser" -e $browser $@`
+`^                    ;;`
+`^    chromium \`
+`^  | dwb \`
+`^  | ... \`
+`^  | vimb \`
+`^  | xombrero)       eval $browser $@`
+`^                    ;;`
+`^    *)              echo ".. unknown browser: $browser"`
+`^                    continue`
+`^                    ;;`
+`^  esac`
+`^  exit`
+`done`
+
+## open file
+
+`#!/bin/sh`
+`while name=$(xsel -o | $(dwrapper) -p 'Find File') || exit`
+`do`
+`^  [[] $name []] || exit`
+`^  list=$(sudo locate -A -e -i $name)`
+`^  [[] $list []] || continue`
+`^  file=$(echo -e "$list" | $(dlist) -p 'Open') || exit`
+`^  echo -n "$file" | xsel -b -i`
+`^  xdg-open "$file"`
+`done`
+
+## edit project files
+
+`#!/bin/sh`
+`files=$(cat ~/.config/dmenu/edit-list | $(dlist) -p 'Edit' | cut -d':' -f3-)`
+`[[] $files []] && zsh -c "v $files"`
+
+[ljust]where, edit-list is a text file containing single line file 
+specs..
+
+`tag... :: [ filename | $(eval) ]...`
+
+[ljust]where,
+
+- _tag_ is a list of dmenu search tags
+- _::_ is the tag field separator (as defined by this particular script)
+- _filename_ is a posix filename expression
+- _eval_ is a posix shell expression that evaluates to a list of 
+filenames
+- any number of filename and eval expressions, space separated, can be 
+defined per file spec
+
+[ljust]with v (vim) script..
+
+`#!/usr/bin/zsh`
+`SHELL=/bin/sh`
+`[[] -z $DISPLAY && $(tty) = /dev/tty* []] || gui=-g`
+`^ `
+`find ~/.vim/backups -size 0 -exec rm -fv {} \;`
+`find ~ -name '.viminf*.tmp' -exec rm -fv {} \;`
+`if [[] -z $* []]; then`
+`^  vim $gui /tmp/scratch`
+`elif [[] ! -f $1 []]; then`
+`^  vim $gui $@`
+`elif is_owned $1; then`
+`^  vim $gui $@`
+`else`
+`^  sudo -s vim $gui $@`
+`^  find ~/.vim/backups -user root -exec sudo chown -v ${USER}:users {} \;`
+`fi`
+
+With an easily updated edit-list file, common sets of files are readily 
+available for editing with just a few keystrokes.
+
+## ribbon calculator
+
+`#!/bin/sh`
+`vars=( $(echo {a..z}) )`
+`count=-1`
+`ribbon='Solve'`
+`while eqn=$(echo | $(dwrapper) -p "$ribbon")`
+`do`
+`^  [[] $eqn []] || exit`
+`^  if ans=$(calc -pd "$(eval echo $(echo $eqn | sed 's/\([a-z]\)/$\1/g'))"); then`
+`^    echo -n "$ans" | xsel -i`
+`^    count=$(( $count + 1 ))`
+`^    [[] $count -gt 25 []] && count=0`
+`^    eval ${vars[$count]}=$ans`
+`^    ribbon="$ribbon    $(eval echo ${vars[$count]}=$ans)"`
+`^  fi`
+`done`
+
+## dictionary lookup
+
+`#!/bin/sh`
+`word=$(xsel -o | $(dwrapper) -p 'Lookup Word') || exit`
+`^ `
+`while hints=$(dict "$word" 2>&1 >/dev/null | cut -d':' -f2 | xargs -n1 | sort -u -f)`
+`do`
+`^  [[] $word []] || exit`
+`^  [[] $hints []] || break`
+`^  echo $hints | sed "s/$word *//" | grep -q 'definitions for found No'`
+`^  if [[] $? -eq 0 []]; then`
+`^    word=$($(dwrapper) -p "No definitions found for \"$word\"") || exit`
+`^  else`
+`^    word=$(echo -e "$hints" | $(dwrapper) -p 'Hints') || exit`
+`^  fi`
+`done`
+`urxvtc -title "$word" -e sh -c "dict \"$word\" | less"`
+
+## address book
+
+`#!/bin/sh`
+`maildir=~/Maildir`
+`addressbook=$maildir/addressbook`
+`^ `
+`function dinit() {`
+`^  notify "Updating dmenu addressbook cache" "Please be patient.."`
+`^  /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc):' $maildir \`
+`^    | grep '@' \`
+`^    | sed -e 's/\(\xad\|\x01\)/ /g' \`
+`^          -e 's/[,;] */\n/g' \`
+`^          -e 's/["]//g' \`
+`^          -e "s/[']//g" \`
+`^          -e 's/<br>//' \`
+`^          -e 's/<mailto:[^>]*>//' \`
+`^          -e 's/\t/ /g' \`
+`^          -e 's/  *$//' \`
+`^          -e 's/^  *//' \`
+`^          -e 's/  */ /g' \`
+`^          -e 's/^To: //I' \`
+`^          -e 's/^From: //I' \`
+`^          -e 's/^Cc: //I' \`
+`^          -e 's/^Bcc: //I' \`
+`^    | grep '^[^<].*<.*>$' \`
+`^    | grep -v '@.*<' \`
+`^    | grep -iv '\(^[^a-z]\|[=]\)' \`
+`^    | grep -Piv '<comments(?!@thedarnedestthing)' \`
+`^    | grep -iv '\(\(hello\|info\)@\)' \`
+`^    | grep -iv '\(announce\|automated\|confirm\|contact\|help\|invitations\|market\|news\|notification\|promo\|reply\|review\|subscribe\|welcome\)' \`
+`^    | grep -iv '\(feedspot\|github\|via linkedin\|yahoogroups\)' \`
+`^    | sort -f \`
+`^    | uniq -i \`
+`^    > $addressbook`
+`^  notify "Update of dmenu addressbook cache" "..Complete"`
+`}`
+`^ `
+`[[] -s $addressbook []] || dinit`
+`while true`
+`do`
+`^  address=$(cat $addressbook | sed -e '1i[ clipboard ]\n[ rebuild database ]' | $(dlist) -p 'Email Address') || break`
+`^  case "$address" in`
+`^    '[ clipboard ]')        break ;;`
+`^    '[ rebuild database ]') dinit ;;`
+`^    *)                      [[] $addresses []] && addresses=$addresses,$address || addresses=$address ;;`
+`^  esac`
+`done`
+`^ `
+`if [[] $addresses []]; then`
+`^  # echo -n "$addresses" | xclip`
+`^  echo -n "$addresses" | xsel -i`
+`^  time=10000 notify "Ctrl-Alt-V" "$(echo $addresses | sed 's/ <\S*>//g')"`
+`fi`
+
+[ljust]with notify popup..
+
+`#!/bin/sh`
+`[[] $time []] && expire="--expire-time=$time"`
+`case "$#" in`
+`^  0)  echo '.. notify  "heading"  ["line1\nline2.."]' ;;`
+`^  1)  sudo -u $USER notify-send $expire --icon=task-complete "$1" & ;;`
+`^  2)  sudo -u $USER notify-send $expire --icon=task-complete "$1" "$2" & ;;`
+`esac`
+
+The address book database is compiled to..
+
+- exclude major lists correspondence
+- exclude news and announcement items
+- exclude malformed addresses
+- reject unexpected characters
+- restrict addresses to those with a "user name" prefix
+
+E-mail addresses are concatenated and returned in the clipboard and can 
+be pasted into any document or e-mail client.
+
+## play music
+
+`#!/bin/sh`
+`function playlist() {`
+`^  if (( $(mpc playlist | /usr/bin/wc -l) )); then`
+`^    mpc list artist | sort -n \`
+`^                    | sed -e "1i[ next ]\n[ toggle ]\n[ stop ]"`
+`^  else`
+`^    mpc list artist | sort -n`
+`^  fi`
+`}`
+`^ `
+`mpc list artist 2>/dev/null || exit`
+`while artist=$(playlist | $(dwrapper) -p 'Artist') || exit`
+`do`
+`^  case $artist in`
+`^    '[ next ]')   mpc play`
+`^                  mpc next`
+`^                  echo ".. toggling playlist"`
+`^                  # exit`
+`^                  ;;`
+`^    '[ toggle ]') mpc toggle`
+`^                  echo ".. toggling playlist"`
+`^                  exit`
+`^                  ;;`
+`^    '[ stop ]')   mpc stop`
+`^                  echo ".. stopping playlist"`
+`^                  exit`
+`^                  ;;`
+`^  esac`
+`^  [[] $artist = '[ next ]' []] && exec dmusic`
+`^  more=true`
+`^  while [[] $more []]`
+`^  do`
+`^    if [[] $(mpc list album artist "$artist" | wc -l) > 1 []]; then`
+`^      album=$(mpc list album artist "$artist" | sort -n \`
+`^                                              | sed '1i[ all ]' \`
+`^                                              | $(dwrapper) -p 'Album') || break`
+`^    else`
+`^      album=$(mpc list album artist "$artist" | sort -n \`
+`^                                              | $(dwrapper) -p 'Album' -l 1) || break`
+`^      more=`
+`^    fi`
+`^    if [[] $album = '[ all ]' []]; then`
+`^      playlist=$(mpc find artist "$artist")`
+`^      music="all songs available from $artist"`
+`^      more=`
+`^    else`
+`^      playlist=$(mpc find artist "$artist" album "$album")`
+`^      music="$artist :: $album"`
+`^    fi`
+`^    while action=$(echo -e "play\nadd\ninsert" | $(dwrapper) -p 'Playlist') || break`
+`^    do`
+`^      case $action in`
+`^        add)      echo -e "$playlist" | mpc add >/dev/null`
+`^                  echo ".. adding $music to the playlist"`
+`^                  ;;`
+`^        insert)   echo -e "$playlist" | mpc insert >/dev/null`
+`^                  echo ".. inserting $music into the playlist"`
+`^                  ;;`
+`^        play)     mpc clear >/dev/null`
+`^                  echo -e "$playlist" | mpc add >/dev/null`
+`^                  echo ".. playlist cleared. Adding $music to the playlist"`
+`^                  ;;`
+`^        *)        echo ".. invalid action: $action"`
+`^                  continue`
+`^                  ;;`
+`^      esac`
+`^      break`
+`^    done`
+`^    mpc play >/dev/null`
+`^  done`
+`done`
+
+What makes dmenu so useful is the ease of calling it in scripts to 
+select a menu item out of a large list of newline separated entries. The 
+search engine facilitates partial matches, refining the list of 
+available entries as you type. It does not require understanding 
+[regex](https://en.wikipedia.org/wiki/Regular_expression) pattern 
+matching constructs -- in fact, if you are unfamiliar with such, dmenu 
+will astound you with its facility even more!
+
+Typically, items are found with just a few keystrokes which can include 
+unordered space delimited partial words or keystrokes. Its magic needs 
+to be seen to be appreciated.
+
+dmenu. It's _da menu_ !

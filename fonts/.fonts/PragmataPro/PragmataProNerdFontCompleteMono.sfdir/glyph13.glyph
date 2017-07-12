@@ -1,0 +1,163 @@
+StartChar: glyph13
+Encoding: 42 42 13
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 4
+MDAP[rnd]
+NPUSHW
+ 3
+ 32
+ 4
+ 1
+DELTAP1
+PUSHW_1
+ 3
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 0
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 15
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 115
+ 0
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 128
+ 0
+ 1
+DELTAP1
+PUSHW_1
+ 4
+SRP0
+PUSHW_1
+ 7
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 3
+ 143
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 124
+ 7
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 0
+ 7
+ 1
+DELTAP1
+PUSHW_1
+ 9
+MDRP[rp0,grey]
+PUSHW_1
+ 4
+SRP0
+PUSHW_1
+ 12
+MDRP[rp0,grey]
+PUSHW_1
+ 3
+SRP0
+PUSHW_1
+ 13
+MDRP[rp0,grey]
+PUSHW_1
+ 0
+SRP0
+PUSHW_1
+ 16
+MDRP[rp0,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 12
+MDAP[rnd]
+NPUSHW
+ 3
+ 31
+ 12
+ 1
+DELTAP1
+PUSHW_1
+ 9
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 7
+ 0
+ 9
+ 16
+ 9
+ 32
+ 9
+ 3
+DELTAP1
+PUSHW_1
+ 7
+MDRP[rp0,min,rnd,grey]
+PUSHW_1
+ 0
+MDRP[rp0,grey]
+PUSHW_1
+ 7
+SRP0
+PUSHW_1
+ 4
+MDRP[rp0,min,rnd,grey]
+NPUSHW
+ 7
+ 0
+ 4
+ 16
+ 4
+ 32
+ 4
+ 3
+DELTAP1
+PUSHW_1
+ 9
+SRP0
+PUSHW_1
+ 16
+MDRP[rp0,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+932 829 m 1,0,-1
+ 853 694 l 1,1,-1
+ 600 850 l 1,2,-1
+ 607 552 l 1,3,-1
+ 452 552 l 1,4,-1
+ 459 850 l 1,5,-1
+ 206 694 l 1,6,-1
+ 127 829 l 1,7,-1
+ 389 971 l 1,8,-1
+ 127 1114 l 1,9,-1
+ 206 1248 l 1,10,-1
+ 459 1093 l 1,11,-1
+ 452 1390 l 1,12,-1
+ 607 1390 l 1,13,-1
+ 600 1093 l 1,14,-1
+ 853 1248 l 1,15,-1
+ 932 1114 l 1,16,-1
+ 670 971 l 1,17,-1
+ 932 829 l 1,0,-1
+EndSplineSet
+Substitution2: "'dlig' Discretionary Ligatures in Latin lookup 11 subtable" blackstar
+EndChar

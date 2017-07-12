@@ -1,0 +1,12 @@
+[Entry 0]
+Name=Settings
+Comment=Launch Xfce's settings manager
+Icon=xfce4-settings
+Exec=xfce4-settings-manager
+Terminal=false
+StartupNotify=false
+
+[Global]
+MoveFirst=false
+ArrowPosition=0
+

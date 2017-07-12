@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="window_ontop" mtime="1337560967" type="bool" value="false"/>
+	<entry name="window_height" mtime="1323143889" type="int" value="100"/>
+	<entry name="default_shell" mtime="1337560967" type="string">
+		<stringvalue>/usr/bin/fish</stringvalue>
+	</entry>
+	<entry name="compat_delete" mtime="1337560967" type="string">
+		<stringvalue>delete-sequence</stringvalue>
+	</entry>
+	<entry name="compat_backspace" mtime="1337560967" type="string">
+		<stringvalue>ascii-delete</stringvalue>
+	</entry>
+	<entry name="use_default_font" mtime="1337560967" type="bool" value="true"/>
+	<entry name="scroll_keystroke" mtime="1337560967" type="bool" value="true"/>
+	<entry name="history_size" mtime="1337560967" type="int" value="1500"/>
+	<entry name="use_scrollbar" mtime="1323143903" type="bool" value="false"/>
+	<entry name="window_tabbar" mtime="1330441638" type="bool" value="false"/>
+	<entry name="window_losefocus" mtime="1337560967" type="bool" value="false"/>
+	<entry name="prompt_on_quit" mtime="1337560967" type="bool" value="true"/>
+	<entry name="use_popup" mtime="1323202080" type="bool" value="false"/>
+	<entry name="use_trayicon" mtime="1337560967" type="bool" value="true"/>
+</gconf>

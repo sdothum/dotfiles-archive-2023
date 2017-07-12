@@ -1,0 +1,276 @@
+minimalist browsers seem to go hand-in-hand with tiling window managers. 
+They are typically lightweight (memory wise), allow keyboard control, 
+maximize viewing real estate by hiding the ubiquitous URL bar and other 
+menu/bookmark bars, and are highly configurable.
+
+[vimb](https://fanglingsu.github.io/vimb/) came under my radar by 
+happenstance. Up until now, 
+[luakit](https://github.com/mason-larobina/luakit) had been my go-to 
+browser since circa 2010. Visually and even operationally, many browsers 
+mimicked luakit, written in various dialects, of which, I have used 
+[dwb](http://portix.bitbucket.org/dwb/), 
+[surf](http://surf.suckless.org/), 
+[hbro](https://github.com/k0ral/hbro), 
+[jumanji](https://pwmt.org/projects/jumanji/), [uzbl](http://uzbl.org/), 
+and most recently, 
+[qutebrowser](https://github.com/The-Compiler/qutebrowser). Some 
+required customization via source language coding in C, Lua, Python, 
+Haskell or shell programming. Others utilized extensive configuration 
+files.
+
+The recent announcement of qutebrowser stirred interest in checking out 
+the web browser landscape. Luakit development has been dormant for 
+a number of years and qutebrowser looked fresh. For a version 0.x 
+release, qutebrowser is remarkably stable. But it still lacks, at this 
+juncture, a lot of features important to me 
+-- bookmarks and history recording/searching for one -- and the QT5 
+ Webkit which it is based on is still somewhat buggy.
+
+That's when vimb caught my eye. Inspired by 
+[Vimprobable](http://sourceforge.net/p/vimprobable/wiki/Home/), 
+a browser that takes a modal approach similar to the [vim][grokking vim] 
+editor, vimb
+seemed like it could be the upgrade ticket and fit more seamlessly into 
+the vim universe I do so much writing in.
+
+## keyboard mappings
+
+first off, my vimb _config_ file maps command mode "**:**" with the 
+semi-colon (switching the colon and semi-colon) -- a convention that is 
+carried over from my vim setup -- and a few mappings for opening 
+bookmarks (and bookmarks with a **slash** tag prefix for quick 
+launches)! Keymaps for tab control ([below][vimb#vimb-wrapper]) and 
+[readability][] Javascripts complete the keybinds..
+
+`nnoremap ; :`
+`nnoremap : ;`
+`nnoremap b :open !`
+`nnoremap B :tabopen !`
+`nnoremap d :quit<CR>`
+`nnoremap D :quit!<CR>`
+`nnoremap O :tabopen `
+`nnoremap t :open !/`
+`nnoremap T :tabopen !/`
+`nnoremap gt :sh! xdotool key --window $VIMB_XID ctrl+shift+l<CR><Esc>`
+`nnoremap gT :sh! xdotool key --window $VIMB_XID ctrl+shift+h<CR><Esc>`
+`nnoremap 1gt :sh! xdotool key --window $VIMB_XID ctrl+1<CR><Esc>`
+`nnoremap 2gt :sh! xdotool key --window $VIMB_XID ctrl+2<CR><Esc>`
+`...`
+`nnoremap 9gt :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>`
+`nnoremap 0gt :sh! xdotool key --window $VIMB_XID ctrl+0<CR><Esc>`
+`nnoremap q :eval! simplyread()<CR>`
+`nnoremap Q :eval! readable()<CR>`
+
+Bookmark searching is similar to history searching. Type the search 
+terms and press _tab_ to reveal the results of the search. By creating 
+specifically formatted bookmark tags that can guarantee a single search 
+result, oft used web pages can be fetched with just a few keystrokes to 
+pull from the _bookmark_ file..
+
+`http://8tracks.com/   8tracks internet radio | Free music playlists | Best app for music   music 8tracks /8t`
+`http://localhost:32400/web/index.html#!/dashboard   Plex Media Manager   manager media plex server /pl`
+`http://localhost:631/   Home - CUPS 2.0.1   cups printing /cu`
+`http://localhost:8000/tt-rss/#f=-3&c=0   (30068) Tiny Tiny RSS   tt-rss ttrss /tt`
+`http://localhost:8080/   Syncthing | luna   syncthing /sy`
+`...`
+`https://aur.archlinux.org/   AUR (en) - Home   archlinux aur database /au`
+`https://mail.google.com/mail/u/0/#inbox   Inbox (419) - sdothum@gmail.com - Gmail   gmail /gm`
+`http://songza.com/   Songza - Listen to Music Curated by Music Experts   songza music /za`
+`https://www.archlinux.org/news/   Arch Linux - News   arch linux news /ar`
+`http://thedarnedestthing.com/the%20darnedest%20thing   the darnedest thing   the darnedest thing tdt vps /TD`
+
+[ljust]The use of the forward slash "**/**" for the two letter tag may 
+not be the best tag character to use, but it can be changed at a later 
+date easily enough.
+
+## settings
+
+some vimb behaviors and settings are enabled to customize the look and 
+feel of the browser -- the way I like it -- whose descriptions and many 
+other settings
+can be found [here](https://fanglingsu.github.io/vimb/man.html)..
+
+`set download-path=/net/downloads/http`
+`set editor-command="gvim -f"`
+`set fontsize=12px`
+`set history-max-items=99999`
+`set input-autohide=true`
+`set input-bg-normal=#464f52`
+`set input-fg-normal=#fdf6e3`
+`set home-page=https://www.archlinux.org/`
+`set smooth-scrolling=true`
+`set spacial-navigation=true`
+`set spell-checking=true`
+`set statusbar=false`
+`set webinspector=true`
+
+## shortcuts
+
+vimb allows defining search engine associations with simple acronyms 
+after the ":open" and ":tabopen" commands, of which, a few(!) are listed 
+to give an idea of how nimble the browser can become as a tool..
+
+`shortcut-default du`
+`shortcut-add ab=https://bbs.archlinux.org/search.php?action=search&author=&forums=&search_in=0&sort_by=0&sort_dir=DESC&show_as=topics&keywords=$0`
+`shortcut-add al=http://www.allmusic.com/search/all/$0`
+`shortcut-add ar=https://duckduckgo.com/?q=arch%20linux%20$0`
+`shortcut-add au=https://aur.archlinux.org/packages/?O=0&C=0&SeB=nd&outdated=&SB=n&SO=a&PP=50&do_Search=Go&K=$0`
+`shortcut-add aw=https://wiki.archlinux.org/index.php?title=Special:Search&search=$0`
+`shortcut-add di=http://dictionary.reference.com/browse/$0`
+`shortcut-add du=https://duckduckgo.com/?q=$0&ia=images`
+`shortcut-add gi=https://github.com/search?q=$0`
+`shortcut-add go=https://encrypted.google.com/search?q=$0`
+`...`
+`shortcut-add ha=http://www.haskell.org/hoogle/?hoogle=$0`
+`shortcut-add im=http://www.imdb.com/find?s=all&q=$0`
+`shortcut-add ja=http://www.jango.com/music/$0`
+`shortcut-add mr=http://www.mrqe.com/search?q=$0`
+`shortcut-add re=https://duckduckgo.com/?q=review%20$0`
+`shortcut-add ro=http://www.rottentomatoes.com/search/?search=$0`
+`shortcut-add wi=http://en.wikipedia.org/w/index.php?title=Special:Search&search=$0`
+`shortcut-add wo=http://www.wolframalpha.com/input/?i=$0`
+`shortcut-add yo=http://www.youtube.com/results?search_query=$0`
+`shortcut-add za=http://songza.com/search/?q=$0`
+
+[ljust]The acronyms -- I happen to like two letter assignments -- 
+followed by any number of search terms couldn't be any easier!
+
+## vimb wrapper
+
+tabs are not natively built into vimb which may seem like a huge 
+drawback -- though, there are instances in which such behaviour may be 
+preferable for security. A URL _:tabopen_ or passed to vimb or link 
+_Control-clicked_ will, by default, open a new instance (window) of 
+vimb. 
+
+But there are means to emulate the browser tabs common to other browsers 
+and to open URLs in a common vimb window. This requires 
+[tabbed](http://tools.suckless.org/tabbed/) and sockets..
+
+`#!/bin/sh`
+`histfile=~/.config/vimb/history`
+`histsize=1000`
+`^ `
+`function prune_history() {`
+`^  work=$(mktemp)`
+`^  [[] -f $histfile.vimb []] || touch $histfile.vimb`
+`^  cat $histfile.vimb $histfile > $work`
+`^  head -$(( $(cat $work | wc -l) - $histsize )) $work > $histfile.vimb`
+`^  tail -$histsize $work > $histfile`
+`}`
+`^ `
+`if xdotool search -classname 'VimbT'; then`
+`^  echo ";tabopen $@<CR>" | socat - unix-connect:$(grep 'socket' /tmp/vimb.socket)`
+`else`
+`^  [[] $(hostname) = luna []] && prune_history`
+`^  tabbed -f -n 'VimbT' -ps+1 -t '#B3431E' -T '#FFFFFF' -u '#464F52' -U '#AAAAAA' /usr/bin/vimb --socket --dump --embed > /tmp/vimb.socket`
+`fi`
+
+There is a lot going on here. First, _prune_history_ was written to keep 
+the history available to the browser to a reasonable size. This is done 
+purely for performance reasons -- an excessively large history file 
+slows down vimb history searches _and_ quiting, something I discovered 
+after porting over my 30K luakit history to vimb! My vimb configuration 
+is shared across computers via [syncthing](http://syncthing.net/) so 
+only the primary workstation triggers pruning the history. [dmenu][] is 
+used to access the older (pruned) history records (see 
+[below][vimb#history]).
+
+On first launch, the history is pruned and _tabbed_ invokes vimb which 
+dumps the socket information for persistent access. Subsequent calls to 
+vimb connect to vimb via its socket.
+
+Note: that the URL command passed to vimb is with a (semi-colon) 
+_;tabopen_ (not a colon)! This is because of the colon and semi-colon 
+keybinds [above][vimb#keyboard-mappings] which swap the colon and 
+semi-colon keys!
+
+Now, all external calls to vimb from any source, via the _vimb_ wrapper, 
+will open the URL in a new tab! Unlike most browsers which typically 
+divide the tab space available by the number of opened tabs until the 
+tabs themselves become unusably truncated, _tabbed_ maintains a minimum 
+tab width with automatic scroll indicators, maximizing the active tab 
+width where possible -- quite novel and effective!
+
+## javascripts
+
+vimb loads the _scripts.js_ file on every page load. This allows 
+inserting [userscripts](http://userscripts-mirror.org/index.html) to be 
+triggered on page events -- I haven't tried this myself but it should be 
+possible for the available events that vimb is able to trap -- and 
+mapping user defined actions to keys. 
+
+Any number of functions can be placed in the _scripts.js_ file for 
+reference in the vimb _config_ file. [Distraction free 
+scripts][readability] are defined in the _config_ keymaps 
+[above][vimb#keyboard-mappings].
+
+## history
+
+dmenu is used to allow searching the entire browser history (current 
+plus pruned) which, combined with the [socket][vimb#vimb-wrapper] 
+connection, provides seamless history reference..
+
+`#!/bin/sh`
+`filter='ERROR:|localhost|luakit:|Page not found|[Ss]earch'`
+`case $BROWSER in`
+`^  luakit)   sqldb=~/.local/share/luakit/history.db`
+`^            query="select datetime(last_visit,'unixepoch'), title, uri from history order by last_visit DESC;"`
+`^            uri=$(echo "$query" \`
+`^                | sqlite3 $sqldb \`
+`^                | egrep -v "$filter" \`
+`^                | sed 's/[|]/  ::  /g' \`
+`^                | $(dlist) -p 'Web History:' \`
+`^                | sed -r 's/.* :: .* :: (.*)/\1/')`
+`^            ;;`
+`^  vimb|*)   histfile=~/.config/vimb/history`
+`^            uri=$(tac $histfile $histfile.vimb \`
+`^                | egrep -v "$filter" \`
+`^                | sed "s/\t/  ::  /g" \`
+`^                | $(dlist) -p 'Web History:' \`
+`^                | sed -r 's/(.*) :: .*/\1/')`
+`^            ;;`
+`esac`
+`[[] $uri []] && dbrowser "$uri"`
+
+[ljust]The [dbrowser][dmenu#open-bookmark-url] script allows opening 
+the selected URL with any browser which is useful for the rare web site 
+not rendered properly by WebKitGTK.
+
+## defaults
+
+last, but not least, the shell environment should set the default 
+browser and path (if not already set) it can be found in..
+
+`export BROWSER=vimb`
+`export PATH=$HOME/bin:/usr/bin:$PATH`
+
+[ljust]and for [URxvt][urxvt] terminal users, URLs on the console 
+screen can be opened with..
+
+`URxvt*perl-ext-common: default,matcher`
+`URxvt*url-launcher:    vimb`
+
+[ljust]vimb: similar in many ways to luakit and other minimalistic 
+browsers I use and difficult to differentiate by look between them. One 
+of the great features I find with vimb (and surf), is that refreshing 
+a page does not "home" the web page which is extremely useful for 
+tweaking style sheets or previewing web content changes -- which I do 
+a lot.
+
+For all its nimbleness, it is not without its "quirks", if they can be 
+called that. For instance, because "tabs" are essentially overlapped 
+instances of vimb occupying a single window, history undo can seem 
+limited -- only the last page closed is "remembered", not all closed 
+"tabs", nor is the go back/forward history for that restored page 
+available. It can be a bit disorienting if comprehensive history undo is 
+something relied upon extensively in your browser workflow -- though, 
+every web page visited can be found in vimb's history search. It may 
+become more intuitive and less unsettling in time 
+-- and less problematic when I am just surfing and not tinkering with 
+ vimb itself.
+
+Qutebrowser (and [lispkit](https://github.com/AeroNotix/lispkit)) 
+remains on the horizon. But vimb with its "vim-ness" in configuration 
+and use make it very powerful and familiar
+-- and the browser I currently find myself exploring and using. 

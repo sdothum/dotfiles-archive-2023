@@ -1,0 +1,96 @@
+#---------------------------------------------
+# TINT2 CONFIG FILE
+#---------------------------------------------
+
+#---------------------------------------------
+# BACKGROUND AND BORDER
+#---------------------------------------------
+rounded = 0
+border_width = 1
+background_color = #262729 100
+border_color = #ffffff 100
+
+rounded = 0
+border_width = 1
+background_color = #ffffff 0
+border_color = #6c9eab 100
+
+rounded = 0
+border_width = 0
+background_color = #e88f2e 100
+border_color = #ffffff 0
+
+#---------------------------------------------
+# PANEL
+#---------------------------------------------
+panel_monitor = all
+panel_position = bottom center
+panel_size = 94% 30
+panel_margin = 0 0
+panel_padding = 7 2
+font_shadow = 0
+panel_background_id = 1
+wm_menu = 0
+
+#---------------------------------------------
+# TASKBAR
+#---------------------------------------------
+taskbar_mode = multi_desktop
+#taskbar_mode = single_desktop
+taskbar_padding = 1 0 1
+taskbar_background_id = 2
+
+#---------------------------------------------
+# TASKS
+#---------------------------------------------
+task_icon = 1
+task_text = 0
+task_width = 32
+task_centered = 1
+task_padding = 6 3
+task_font = sans 7
+task_font_color = #ffffff 70
+task_active_font_color = #ffffff 85
+task_background_id = 0
+task_active_background_id = 3
+
+#---------------------------------------------
+# SYSTRAYBAR
+#---------------------------------------------
+systray_padding = 2 4 5
+systray_background_id = 0
+
+#---------------------------------------------
+# CLOCK
+#---------------------------------------------
+time1_format = %I:%M %p
+time1_font = sans 12
+#time2_format = %s
+#time2_font = sans 6
+clock_font_color = #ffffff 100
+clock_padding = 2 0
+clock_background_id = 0
+#clock_lclick_command = xclock
+clock_rclick_command = orage
+
+#---------------------------------------------
+# BATTERY
+#---------------------------------------------
+battery = 0
+battery_low_status = 10
+battery_low_cmd = notify-send "battery low"
+bat1_font = sans 8
+bat2_font = sans 6
+battery_font_color = #ffffff 76
+battery_padding = 1 0
+battery_background_id = 0
+
+
+#---------------------------------------------
+# MOUSE ACTION ON TASK
+#---------------------------------------------
+mouse_middle = none
+mouse_right = close
+mouse_scroll_up = toggle
+mouse_scroll_down = iconify
+

@@ -1,0 +1,24 @@
+StartChar: arrowdown
+Encoding: 8595 8595 900
+Width: 1060
+GlyphClass: 3
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+188 262 m 1,0,-1
+ 456 262 l 1,1,-1
+ 456 863 l 1,2,-1
+ 604 863 l 1,3,-1
+ 604 262 l 1,4,-1
+ 872 262 l 1,5,-1
+ 530 -80 l 1,6,-1
+ 188 262 l 1,0,-1
+EndSplineSet
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" d o w n
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" b o t t o m
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" D o w n
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" D O W N
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" B o t t o m
+Ligature2: "'dlig' Discretionary Ligatures in Latin lookup 12 subtable" B O T T O M
+EndChar

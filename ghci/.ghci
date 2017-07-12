@@ -1,0 +1,3 @@
+:set prompt "ghci> "
+:set +t
+:set -fwarn-name-shadowing

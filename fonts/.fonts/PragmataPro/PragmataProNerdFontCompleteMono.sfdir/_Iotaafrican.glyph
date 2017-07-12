@@ -1,0 +1,81 @@
+StartChar: Iotaafrican
+Encoding: 406 406 343
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 0
+MDAP[rnd]
+PUSHW_1
+ 6
+MDAP[rnd]
+PUSHW_1
+ 0
+SRP0
+PUSHW_2
+ 1
+ 3
+MIRP[rp0,rnd,grey]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 0
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 0
+ 11
+MIAP[no-rnd]
+EIF
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 8
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 8
+ 5
+MIAP[no-rnd]
+EIF
+NPUSHW
+ 3
+ 117
+ 3
+ 1
+DELTAP1
+NPUSHW
+ 3
+ 100
+ 3
+ 1
+DELTAP1
+PUSHW_2
+ 5
+ 1
+MIRP[rp0,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+303 1580 m 1,0,-1
+ 480 1580 l 1,1,-1
+ 480 430 l 2,2,3
+ 480 280 480 280 541.5 218 c 128,-1,4
+ 603 156 603 156 689 156 c 2,5,-1
+ 900 156 l 1,6,-1
+ 900 0 l 1,7,-1
+ 688 0 l 2,8,9
+ 529 0 529 0 416 114 c 128,-1,10
+ 303 228 303 228 303 485 c 2,11,-1
+ 303 1580 l 1,0,-1
+EndSplineSet
+EndChar

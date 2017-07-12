@@ -1,0 +1,17 @@
+[KFileDialog Settings]
+Height 600=450
+Recent Files[$e]=colemak.ktouch.xml,/usr/share/kde4/apps/ktouch/colemak.ktouch.xml
+Width 1024=871
+
+[Keyboard]
+CurrentKeyboardFile[$e]=/usr/share/kde4/apps/ktouch/keyboard/english/en.keyboard.xml
+KeyboardFont=DejaVu Sans,9,-1,5,50,0,0,0,0,0
+
+[MainWindow]
+Height 600=552
+State=AAAA/wAAAAD9AAAAAAAABAAAAAHXAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
+ToolBarsMovable=Disabled
+Width 1024=1024
+
+[Notification Messages]
+KeyboardLayoutChangeInfo=false

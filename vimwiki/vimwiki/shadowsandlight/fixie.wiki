@@ -1,0 +1,22 @@
+[draft]
+
+| part           | description | price |
+| --             | --          | --    |
+| frameset       |             |       |
+| size           |             |       |
+| drive          |             |       |
+| crank length   |             |       |
+| gear ratio     | 48:17       |       |
+| pedals         |             |       |
+| shoes          |             |       |
+| handlebar      | bullhorn    |       |
+| headset length |             |       |
+| seat           |             |       |
+| post           |             |       |
+| hubs           |             |       |
+| spokes         |             |       |
+| rims           |             |       |
+| tires          |             |       |
+| brakes, front  |             |       |
+| brakes, rear   |             |       |
+|                |             |       |

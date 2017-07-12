@@ -1,0 +1,168 @@
+[tag] linux window manager herbstluftwm 
+
+i've been living with herbstluftwm for half a year now. It's here to 
+stay as I continue to fashion it to my workflow idiosyncrasies, 
+including keybinds adapted to my [Colemak Shift-DH][colemak shift-dh] 
+layout.
+
+![All windows visible](/images/herbstluftwm_full.jpg)
+
+## hide window
+
+has been further augmented from the window handling described 
+[here][herbstluftwm hiding] to add restoring windows by application, 
+versus the original FILO (first in, last out) window order..
+
+`function hidden_windows() {`
+`^  for i in $(herbstclient attr clients | grep '0x')`
+`^  do`
+`^    if herbstclient attr clients.$i | grep -q "'$tag"; then`
+`^      window=$(herbstclient attr clients.$i | grep 'title' | cut -d'"' -f2)`
+`^      [[] $hidden []] && hidden="$hidden\n$window" || hidden="$window"`
+`^    fi`
+`^  done`
+`^  [[] $hidden []] && return 0 || return 1`
+`}`
+`^ `
+
+`function unhide() {`
+`^  for i in $(herbstclient attr clients | grep '0x')`
+`^  do`
+`^    if herbstclient attr clients.$i | grep -q "$@"; then`
+`^      winid=${i%.}`
+`^      break`
+`^    fi`
+`^  done`
+`^  [[] $winid []] && herbstclient chain . use $tag .  bring $winid`
+`}`
+`^ `
+`function unhide_window() {`
+`^  case $window in`
+`^    '[ all ]')    hide_window 0 ;;`
+`^    '[ last ]')   hide_window -1 ;;`
+`^    *)            unhide "$window"`
+`^                  release_ticktag $tag`
+`^                  ;;`
+`^  esac`
+`}`
+`^ `
+`tag=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d'"' -f2)`
+`case "$@" in`
+`^  +1)   herbstclient dump "'$tag" || herbstclient add "'$tag"`
+`^        herbstclient move "'$tag"`
+`^        ;;`
+`^  -1)   if herbstclient dump "'$tag"; then`
+`^          herbstclient chain . lock . use "'$tag"`
+`^          winid=$(herbstclient attr clients.focus.winid)`
+`^          herbstclient chain . use $tag . bring $winid . unlock`
+`^          release_ticktag $tag`
+`^        fi`
+`^        ;;`
+`^  0)    herbstclient dump "'$tag" && herbstclient merge_tag "'$tag" ;;`
+`^  *)    if hidden_windows; then`
+`^          if (( $(echo -e $hidden | wc -l) - 1 )); then`
+`^            if window=$(echo -e $hidden | sort | sed "1i[ all ]\n[ last ]" | $(dwrapper) -p "Raise Window □ $tag"); then`
+`^              unhide_window`
+`^            fi`
+`^          else`
+`^            if window=$(echo -e $hidden | sort | $(dwrapper) -p "Raise Window □ $tag"); then`
+`^              unhide_window`
+`^            fi`
+`^          fi`
+`^        fi`
+`^        ;;`
+`esac`
+
+[ljust]If more than one window for the tag (desktop) is hidden, the 
+[dmenu][dmenu2] lists "all" or "last" window actions.
+
+![Hidden windows tied to desktop](/images/herbstluftwm_desktop.jpg)
+
+The herbstluftwm autostart keybinds to hide and restore windows..
+
+`hc keybind $Mod-h               spawn hide_window +1`
+`hc keybind $Mod-Control-h       spawn hide_window -1`
+`hc keybind $Mod-Control-Shift-h spawn hide_window 0`
+`hc keybind $Mod-Shift-h         spawn hide_window`
+
+As my herbstluftwm configuration organizes my numbered tags by function 
+-- browsing, IRC/messaging, email/calendar, music/audio, etc. 
+ -- *hide_window* allows managing the visible content on each of these 
+  desktops.
+
+  But what of referencing windows in general? Enter..
+
+## window tabbing
+
+a hotkeyed pop up window (application) menu bar similar to that found in 
+many desktop environments such as, OSX..
+
+`[[ $* []] && mode='Raise' || mode='Focus'`
+`^ `
+`function attr() {`
+`^  herbstclient attr clients.$2 | grep " s - $1 " | awk '{ print $5; }'`
+`}`
+`^ `
+`function instance() {`
+`^  attr "instance" "$@"`
+`}`
+`^ `
+`function tag() {`
+`^  tag=$(attr "tag" "$@")`
+`^  echo $tag | grep -q "'" && echo " – ${tag#\'}" || echo " □ $tag"`
+`}`
+`^ `
+`for i in $(herbstclient attr clients | grep '0x')`
+`do`
+`^  window="$(tag $i):$(instance $i)$(tag $i):$i"`
+`^  [[] $windows []] && windows="$windows\n$window" || windows="$window"`
+`done`
+`^ `
+`if window=$(echo -e $windows | sort | cut -d: -f2 | $(dwrapper) -p "$mode Window"); then`
+`^  window=$(echo -e $windows | grep "$window")`
+`^  tag=$(echo $window | sed 's/.* [□–] \([0-9]\):0x.*/\1/')`
+`^  if [[] $* ]]; then`
+`^    herbstclient bring "$(echo $window | sed 's/.*:\(.*\)/\1/')"`
+`^  elif echo $window | grep ' □ [0-9]:0x'; then`
+`^    herbstclient chain . use "$tag" . jumpto "$(echo $window | sed 's/.*:\(.*\)/\1/')"`
+`^  else`
+`^    herbstclient chain . use "$tag" . bring "$(echo $window | sed 's/.*:\(.*\)/\1/')"`
+`^  fi`
+`^  echo $window | grep ' – [0-9]:0x' && release_ticktag $tag`
+`fi`
+
+[ljust]Visible windows are represented with a *box* "□" *tag*, hidden or 
+minimized windows with an *em-dash* "--" *tag*, in tag (desktop) number 
+order. 
+
+![All herbstluftwm windows](/images/herbstluftwm_windows.jpg)
+
+The beauty lies in the minimal number of keystrokes required to filter 
+the menu list to a desktop with a single digit, an application with one 
+or more characters. Tabbing, of course, can also be used to cycle 
+through the list for selection.
+
+The herbstluftwm autostart keybinds to focus and raise (bring) windows..
+
+`hc keybind Super-Tab           spawn dhlwm`
+`hc keybind Super-Control-Tab   spawn dhlwm bring`
+
+## release tick'tag
+
+is a housekeeping script which merges empty tag placeholders used for 
+hidden windows (by not being keybind accessible). It is only required by 
+[Conky][herbstluftwm hiding#conky-desktop] for properly toggling 
+the desktop indicator which is colored if hidden windows exist for that 
+tag..
+
+`if [[] $(herbstclient dump "'$@" | wc -w) -le 2 ]]; then`
+`^  herbstclient merge_tag "'$@"`
+`fi`
+
+![Conky tag highlight](/images/herbstluftwm_minimize.jpg)
+
+This pretty much customizes herbstluftwm to my workflow preferences. 
+Once "winterbreeze", the next iteration of herbstluftwm is released with 
+frame attributes, I may get hooked on some other attribute gymnastics. 
+
+For now, herbstluftwm's keyboard agility equals productivity.

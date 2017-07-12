@@ -1,0 +1,5 @@
+[draft] for this site was inspired by a wiki based web app called 
+[Nanoki](http://martin.lncc.br/nanoki) written in 
+[Lua](http://www.lua.org/about.html), a scripting language I had been 
+investigating at the time. Its clean monochromatic layout is 
+reminiscent of the [distraction free editors] 

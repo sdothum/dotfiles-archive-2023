@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+action=$1
+shift
+item=$1
+shift
+param="$*"
+
+pattern=" t:\([0-9]\{2,4\}[^A-Za-z0-9]\)\{2\}[0-9]\{2,4\}" # not enforcing any particular format
+
+function usage {
+  echo "  Customized date threshold:"
+	echo "    $(basename $0) [<item> <date>|mv <date>|rm]"
+	echo "      Set, modify or remove date threshold of an item."
+	echo "      If arguments are omitted, all scheduled tasks are listed."
+	echo "      Intended for use with futureTasks \
+(http://github.com/FND/todo.txt-cli/blob/extensions/futureTasks)."
+	echo "      Examples:"
+	echo "        $ $TODO_SH $(basename $0) 42 tomorrow"
+	echo "        $ $TODO_SH $(basename $0) 42 mv 7 days"
+	echo "        $ $TODO_SH $(basename $0) 42 rm"
+	echo ""
+	exit
+}
+
+function list {
+	$TODO_FULL_SH -x list | grep "$pattern"
+}
+
+function add {
+	item=$1
+	threshold=$2
+
+	flag=`sed -e "$item!d" "$TODO_FILE" | grep "$pattern"`
+
+	if [ -z "$flag" ]; then
+		$TODO_FULL_SH append $item "t:"`date -d "$threshold" +%F`
+	else
+		echo "ERROR: #$item already has a date threshold - use replace instead"
+	fi
+}
+
+function remove {
+	item=$1
+	task=`sed -e "$item!d" \
+			-e "s/^[0-9]* //" \
+			-e "s/^([A-Z])* //" \
+			-e "s/$pattern//" \
+			"$TODO_FILE"` # remove item number, priority and threshold
+	$TODO_FULL_SH replace $item "$task" # NB: retains priority
+}
+
+function replace {
+	item=$1
+	threshold=$2
+	remove $item
+	add $item "$threshold"
+}
+
+[ "$action" = "usage" ] && usage
+
+if [ -z $item ]; then
+	list
+elif [ "$param" = "rm" ]; then
+	remove $item
+elif [[ "$param" == mv* ]]; then
+	threshold=${param#mv }
+	replace $item "$threshold"
+else
+	add $item "$param"
+fi

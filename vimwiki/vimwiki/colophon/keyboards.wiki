@@ -1,0 +1,132 @@
+i have lost count of all the keyboards that I have owned and used.  Ones 
+I remember..
+
+- IBM Model-M with buckling springs
+- numerous Logitech rubber dome keyboards
+- Microsoft keyboards including the MS Ergonomic 
+series (which are very comfortable to type on but, unfortunately, use 
+rubber dome keyswitches)
+- Apple Alps keyswitch and wireless chicklet keyboards
+- Matias Tactile Pro with Alps keyswitches
+
+As much as I like the MS ergonomic keyboard designs, there is something 
+about the tactile feel and "clack" of mechanical keys derived from 
+a long affair with manual and electric typewriters, hammering out 
+Gestetner copy for high school publications aeons ago. Today, it's the 
+traditional rectangular desktop keyboard -- with the [Colemak][colemak] 
+keymap layout -- that I pound away on.
+
+## majestouch 1
+
+the keyboard I have had for a very long time is the 
+[tenkeyless](http://deskthority.net/wiki/Tenkeyless_keyboard) Filco 
+[Majestouch 
+1](http://deskthority.net/review-f45/filco-majestouch-2-tenkeyless-t1088.html) 
+with [Cherry MX Blue](http://deskthority.net/wiki/Cherry_MX_Blue) 
+mechanical switches.
+
+The Cherry Blues are notoriously loud when the keystrokes are bottomed 
+out on the plate of this hefty keyboard -- music to my ears and fine for 
+solitary writing. But if you press lightly without bottoming out the 
+keys, you can hear the subtle click of the keyswitch, characteristic of 
+the Blues. Most of the noise is created at the end of the downstroke 
+where the vector meets the keyboard plate. 
+
+## o-rings
+
+enter O-rings. I finally got around to taking an hour to clean the 
+keyboard and install these [O-ring 
+dampeners](http://www.wasdkeyboards.com/index.php/products/keyboard-accessories/cherry-mx-rubber-o-ring-switch-dampeners-125pcs.html). 
+
+They cushion the bottom of the keystroke, pamper your fingers and wrist, 
+and leave the MX Blues with just their distinctive "click". As well, the 
+0.4mm O-rings shorten the keystroke to just beyond the key's activation 
+point (where the key registers with the computer), further enhancing the 
+responsiveness of the keyboard.
+
+It is like getting a new and even better (subjectively) keyboard for 
+a pittance -- though, if you like bottoming out your keys, it might not 
+be your cup of tea. YMMV with other O-ring thicknesses and hardnesses, 
+and Cherry switch types but the right combo can transform your typing 
+experience.
+
+## audio emulation
+
+audible feedback is not just limited to the mechanical sounds produced 
+by the keyboard switches themselves. Keystrokes can be augmented by 
+software. While this may sound excessive, applications like 
+[qwertickle](https://github.com/aitjcize/Qwertickle) can enhance the 
+typing experience by furthering the "typewriter" illusion -- obviously, 
+my ingrained fondness of typewriters makes this so.
+
+[bspwm][] can easily be configured to toggle qwertickle to turn 
+typewriter sounds off and on, as well as, volume. The sounds through 
+computer speakers elicit a relaxing rhythm to writing, distinguishing 
+printable characters from space bar, return key and backspace -- only 
+with all the advantages of a word processing editor! 
+
+The aural interaction with the physical key strokes alters ones 
+perception, making the typing feel more tactile in a pleasing and softer 
+way. All an illusion, of course. But a delight for the fingers to dance 
+to.
+
+## poker 2
+
+is a [60% keyboard](http://deskthority.net/wiki/60%25) devoid of 
+separate function and cursor control keys, making it look diminuative 
+and smaller than it actually is -- the keycaps are still full size. 
+Function key combinations provide the complete keyset which, at first 
+glance, would appear to be a disadvantage. 
+
+However, once the finger memory is established, it is actually, IMO, 
+a more efficient keyboard to type on. Your hands stay on the home row 
+without requiring shifting the hands to the top or right to strike the 
+function row or navigation cluster. In addition, the keyboard is 
+[programmable][poker 2] to customize the layout and function of the keys 
+(Colemak layout in this case) providing endless possibilies. Plus, the 
+mouse, when required (and seldomly with a tiling window manager) is 
+closer to the keyboard for easy access.
+
+With ultra light linear Cherry Red key switches -- models are available 
+with the complete range of Cherry key switches --
+and O-rings (0.2mm red) installed, the [Poker 
+2](http://imagehost.vendio.com/a/35122654/aview/POKER2-1.jpg) is a joy 
+to type on with a completely different feel to the Cherry Blue Filco. 
+And the desk has never looked so spacious!
+
+## tex aluminium case
+
+the stock ABS Poker 2 case tilts the keyboard in the conventional manner 
+(back to front) but my preference is for a flat, if not inverted tilt. 
+Adding a [green Tex aluminium 
+case](http://mechanicalkeyboards.com/shop/index.php?l=product_detail&p=616) 
+levels out the keyboard, lowers it and adds mass, as well as, 
+a beautiful anodized finish. Fix a pair of small vinyl bumpers to the 
+front of the case and you have a negative tilting keyboard!
+
+Adding between the keyboard plate/PCB and aluminium base, a run of 
+pliable Weather Shield [Crack 
+Seal](http://www.homehardware.ca/en/rec/index.htm/Hardware/Builders/Weatherstrip/Miscellaneous/Brown-Crackseal-Weatherstripping/_/N-2pqfZ67l/Ne-67n/Ntk-All_EN/R-I2393056?Ntt=crack+seal) 
+dampens key vibration, as well as, further adding mass to the keyboard. 
+
+Seat a 1/2" (three strands) wide strip between each of the grooved 
+aisles. Aside from the USB and dip switch case cutouts and screw posts, 
+notch the front Crack Seal piece under the space bar to accommodate the 
+small protruding surface mounted component on the PCB (for ease of flush 
+mounting the PCB to the Crack Seal).
+
+Add a layer of tissue paper or thin plastic wrap between the Crack Seal 
+and the PCB to make future disassembly easy -- otherwise, the keyboard 
+assembly will need to be pried carefully from the tacky Crack Seal. The 
+easiest way to do so, in this case, is to gently pry up one of the sides 
+with a tape wrapped jewelers screwdriver (to prevent marring the 
+anodized finish), then run a credit card around the edges of the 
+keyboard plate to separate the PCB from the Crack Seal.
+
+Together, the Tex case and Crack Seal, elevate the feel of the Poker 
+2 keyboard considerably. If you prefer the tilt of the original ABS 
+case, one could line it with Crack Seal, with extra layers to 
+accommodate the keyboard case depth -- to similarly dampen and weight 
+it, and save some serious change!
+
+This combo has ended my keyboard search. For now..

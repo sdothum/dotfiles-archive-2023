@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "config.dtd">
+<panels>
+	<panel>
+		<properties>
+			<property name="size" value="28"/>
+			<property name="monitor" value="0"/>
+			<property name="screen-position" value="5"/>
+			<property name="fullwidth" value="0"/>
+			<property name="xoffset" value="0"/>
+			<property name="yoffset" value="311"/>
+			<property name="handlestyle" value="0"/>
+			<property name="autohide" value="1"/>
+			<property name="transparency" value="100"/>
+			<property name="activetrans" value="0"/>
+		</properties>
+		<items>
+			<item name="launcher" id="7"/>
+			<item name="launcher" id="9"/>
+			<item name="launcher" id="10"/>
+			<item name="launcher" id="12771072080"/>
+			<item name="separator" id="12771073931"/>
+			<item name="launcher" id="12771074092"/>
+			<item name="launcher" id="12771074753"/>
+		</items>
+	</panel>
+	<panel>
+		<properties>
+			<property name="size" value="28"/>
+			<property name="monitor" value="0"/>
+			<property name="screen-position" value="11"/>
+			<property name="fullwidth" value="1"/>
+			<property name="xoffset" value="0"/>
+			<property name="yoffset" value="771"/>
+			<property name="handlestyle" value="0"/>
+			<property name="autohide" value="0"/>
+			<property name="transparency" value="0"/>
+			<property name="activetrans" value="1"/>
+		</properties>
+		<items>
+			<item name="pager" id="12837694004"/>
+			<item name="tasklist" id="12837693893"/>
+			<item name="systray" id="12837695320"/>
+			<item name="orageclock" id="12837693382"/>
+		</items>
+	</panel>
+</panels>

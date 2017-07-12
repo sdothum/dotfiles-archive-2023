@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-mixer" version="1.0">
+  <property name="sound-card" type="string" value="PlaybackBuiltinAudioAnalogStereoPulseAudioMixer"/>
+  <property name="sound-cards" type="empty">
+    <property name="PlaybackUSBAudioDACAnalogStereoPulseAudioMixer" type="array">
+      <value type="string" value="Master"/>
+    </property>
+    <property name="HDAudioGenericAlsamixer" type="array">
+      <value type="string" value="IEC958"/>
+    </property>
+    <property name="USBAudioDACAlsamixer" type="array">
+      <value type="string" value="PCM"/>
+    </property>
+    <property name="HDAIntelAlsamixer" type="array">
+      <value type="string" value="Master"/>
+    </property>
+    <property name="PlaybackSimultaneousoutputtoBuiltinAudioAnalogStereoPulseAudioMixer" type="array">
+      <value type="string" value="Master"/>
+    </property>
+    <property name="PlaybackBuiltinAudioAnalogStereoPulseAudioMixer" type="array">
+      <value type="string" value="Master"/>
+    </property>
+    <property name="PlaybackPCM2706AudioCodecAnalogStereoPulseAudioMixer" type="array">
+      <value type="string" value="Master"/>
+    </property>
+    <property name="CaptureBuiltinAudioAnalogStereoPulseAudioMixer" type="array">
+      <value type="string" value="Master"/>
+    </property>
+  </property>
+  <property name="window-height" type="int" value="598"/>
+  <property name="window-width" type="int" value="1022"/>
+  <property name="active-card" type="string" value="PlaybackBuiltinAudioAnalogStereoPulseAudioMixer"/>
+  <property name="volume-step-size" type="uint" value="5"/>
+</channel>

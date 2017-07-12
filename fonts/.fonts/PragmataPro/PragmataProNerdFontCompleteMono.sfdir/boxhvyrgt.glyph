@@ -1,0 +1,43 @@
+StartChar: boxhvyrgt
+Encoding: 9594 9594 1504
+Width: 1060
+GlyphClass: 2
+Flags: W
+TtInstrs:
+PUSHW_1
+ 3
+MDAP[rnd]
+PUSHW_1
+ 0
+MDAP[rnd]
+SVTCA[y-axis]
+PUSHW_1
+ 0
+RCVT
+IF
+PUSHW_1
+ 3
+MDAP[rnd]
+ELSE
+PUSHW_2
+ 3
+ 17
+MIAP[no-rnd]
+EIF
+PUSHW_2
+ 2
+ 2
+MIRP[rp0,rnd,grey]
+IUP[y]
+IUP[x]
+EndTTInstrs
+LayerCount: 2
+Fore
+SplineSet
+1060 1037 m 1,0,-1
+ 1060 539 l 1,1,-1
+ 530 539 l 1,2,-1
+ 530 1037 l 1,3,-1
+ 1060 1037 l 1,0,-1
+EndSplineSet
+EndChar

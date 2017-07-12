@@ -1,0 +1,16 @@
+StartChar: uniE0B6
+Encoding: 57526 57526 1648
+Width: 1060
+GlyphClass: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+1104 1977 m 1,0,1
+ 843 1977 843 1977 576 1805 c 0,2,3
+ 44 1460 44 1460 44 770 c 128,-1,4
+ 44 80 44 80 576 -261 c 1,5,6
+ 843 -437 843 -437 1104 -437 c 1,7,-1
+ 1104 1977 l 1,0,1
+EndSplineSet
+EndChar

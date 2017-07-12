@@ -1,0 +1,98 @@
+[rubber o-ring][keyboards#o-rings] dampeners with clickety [Cherry MX 
+Blue](http://deskthority.net/wiki/Cherry_MX_Blue) switches improved the 
+typing experience on the Filco Majestouch significantly, by mitigating the bottoming 
+out of the keystroke, whilst shaving a hair off the keystroke travel.
+
+[Cherry MX Red](http://deskthority.net/wiki/Cherry_MX_Red) switches on 
+the [Poker 2][poker 2] are linear switches with no tactile actuation 
+point. They are silky smooth and have the lightest activation sensitivity 
+which can be trying to type on if one rests the fingers heavily on the 
+keys. But if you can develop a light touch, Cherry MX Reds let your 
+fingers type effortlessly.
+
+Having no tactile actuation point like the Cherry MX Blues, it is very 
+easy to bottom out the Reds. O-rings applied to the keycaps provide..
+
+- Dampening of the key at the bottom of the keystroke, cushioning the 
+finger
+- Reduction of the key travel
+- Subtle key return "bounce" back, if you bottom out
+- Silencing of keyboard plate ringing caused by bottoming out
+
+It is possible to develop a very light touch on the Cherry MX 
+Reds, rhythmically dancing over the keys without bottoming out when one 
+is in the typing "zone". Shortening the key travel distance helps 
+cultivate the muscle memory and finger sensitivity. Conversely, O-rings also make mashing the keys 
+quicker for those who like bottoming out the keys as they type.
+
+The improved finger motions of the [Colemak Curl][colemak curl-shift] 
+mods inevitably brought attention to the mechanical action of they 
+keyboard itself. With a set of thick "blue" and thin "red" O-rings, the 
+Poker 2 layout can be finger tuned..
+
+## key travel
+
+(max) no O-rings &nbsp;>&nbsp; **red** &nbsp;>&nbsp; **blue** &nbsp;>&nbsp; **red + red** 
+&nbsp;>&nbsp; **blue + red** (min)
+
+[ljust](double) "red + red" O-rings: character set..
+
+<code>    <span class='brown'>`~  = 1 2 3 4 5 6   7 8 9 0 [  ]</span></code>
+<code>    Tab  <span class='brown'>- Q W F P B   J L U Y ; '</span>  Del</code>
+<code>     Esc  <span class='brown'>/ A R S T G   M N E I O</span>  Enter</code>
+<code>    <span class='brown'>\</span>  Shift <span class='brown'>X C D V Z   K H , .</span>  Shift</code>
+<code>Ctrl  Win  Alt    Space    Backspace  Fn  Pn  Ctrl</code>
+
+[ljust](combined) "blue + red" O-rings: pinky modifiers..
+
+<code>    `~  = 1 2 3 4 5 6   7 8 9 0 [  ]</code>
+<code>    <span class='brown'>Tab</span>  - Q W F P B   J L U Y ; '  <span class='brown'>Del</span></code>
+<code>     <span class='brown'>Esc</span>  / A R S T G   M N E I O  <span class='brown'>Enter</span></code>
+<code>    \  <span class='brown'>Shift</span> X C D V Z   K H , .  <span class='brown'>Shift</span></code>
+<code><span class='brown'>Ctrl</span>  Win  Alt    Space    Backspace  Fn  Pn  <span class='brown'>Ctrl</span></code>
+
+[ljust](single) "blue" O-rings: dampened thumb keys (in inverted 
+position, except **Pn**)..
+
+<code>    `~  = 1 2 3 4 5 6   7 8 9 0 [  ]</code>
+<code>    Tab  - Q W F P B   J L U Y ; '  Del</code>
+<code>     Esc  / A R S T G   M N E I O  Enter</code>
+<code>    \  Shift X C D V Z   K H , .  Shift</code>
+<code>Ctrl  <span class='brown'>Win  Alt    Space    Backspace  Fn  Pn</span>  Ctrl</code>
+
+The key travel is shortened for the keys requiring finger reaches and 
+slight hand movement -- I have smallish hands. Larger hands may prefer 
+single or double "red" O-rings all around. The modifier keys -- 
+**Shift** and **Ctrl** -- benefit especially from the shortened key 
+ travel because they are held down -- which is tricky to sustain at the 
+ actuation point without bottoming out -- rather than struck.
+
+Not everyone likes O-rings. Some like mashing the keys to the bottom 
+plate and the sound it produces. For myself, the ergonomic Colemak Curl 
+mod with tuned key travel and a practiced light touch make for 
+effortless and quiet typing -- though, I sometimes augment the 
+experience with software generated 
+[typewriter sounds][keyboards#audio-emulation]! 
+
+## keyboard slope
+
+the final ergonomic tweak is to alter the keyboard tilt to a [negative 
+slope](http://ergo.human.cornell.edu/AHTutorials/typingposture.html). 
+
+Most keyboards have a positive slope or forward tilt. Some, like the 
+[Tex aluminium case][keyboards#tex-aluminium-case] for the Poker 2, 
+also have a flat position. The Tex case can be fitted with four tiny 
+rubber domed feet to provide a low profile, making the keyboard appear 
+to hover over the desk 
+-- quite eye catching!
+
+However, placing the large rubber domed feet (which would normally be 
+applied to the back) to the front of the keyboard case, imparts a slight 
+negative slope or backward tilt. This allows for a much more relaxed 
+wrist angle position (with the keyboard on a tray at the proper height). 
+Comfort over looks! (it doesn't really look that odd, the angle being 
+slight, but enough to be effective).
+
+This keyboard will be connected to every computer I use from here on in. 
+And the new "[Cherry][cherry profile]" profile keycaps on the way, with 
+their lower profile, should refine the typing experience even more!
