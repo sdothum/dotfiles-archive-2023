@@ -1,7 +1,0 @@
-# HTTP Cookie File
-# http://www.netscape.com/newsref/std/cookie_spec.html
-# This is a generated file!  Do not edit.
-# To delete cookies, use the Cookie Manager.
-
-localhost	FALSE	/tt-rss	FALSE	1431373101	feedTreeSaveSelectedCookie	root%2FCAT%3A3
-localhost	FALSE	/tt-rss	FALSE	1431373093	feedTreeSaveStateCookie	root%2Croot%2FCAT%3A-1%2Croot%2FCAT%3A-1%2FFEED%3A-3%2Croot%2FCAT%
