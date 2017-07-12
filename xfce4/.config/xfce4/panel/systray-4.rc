@@ -1,9 +1,0 @@
-[Global]
-ShowFrame=false
-Rows=1
-
-[Applications]
-networkmanager applet=false
-dropbox=false
-orage=false
-
