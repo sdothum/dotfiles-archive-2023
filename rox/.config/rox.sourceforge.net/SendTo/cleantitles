@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-term "cleantitles" mytitles $(dirname "$@")

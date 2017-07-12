@@ -1,2 +1,0 @@
-#!/usr/bin/dash
-term "par2unrar" par2unrar "$@"
