@@ -1,5 +1,0 @@
-[$Version]
-update_info=kded.upd:kde3.0
-
-[Notification Messages]
-phonon_forget_devices_Capture: HDA Intel, ALC272X Analog (Default Audio Device)_Output: HDA Intel, ALC272X Analog (Default Audio Device)=false
