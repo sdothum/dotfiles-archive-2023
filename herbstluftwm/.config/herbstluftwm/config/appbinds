@@ -13,11 +13,11 @@ hc keybind Super-space              spawn dmenu run
 hc keybind Super-Shift-space        spawn dmenu manpages
 hc keybind Super-Control-space      spawn dmenu systemd
 if [ $PLANCK ] ;then
-  # hc keybind                      Super-semicolon       spawn pactl set-sink-volume $(sink) -3db
-  # hc keybind                      Super-backslash       spawn pactl set-sink-volume $(sink) +3db
-  # hc keybind                      Super-y               spawn pactl set-sink-volume $(sink) 0db
-  # hc keybind                      Super-Shift-y         spawn pactl set-sink-mute $(sink) toggle
-  # hc keybind                      Super-Control-y       spawn toggle pavucontrol
+  # hc keybind Super-semicolon      spawn pactl set-sink-volume $(sink) -3db
+  # hc keybind Super-backslash      spawn pactl set-sink-volume $(sink) +3db
+  # hc keybind Super-y              spawn pactl set-sink-volume $(sink) 0db
+  # hc keybind Super-Shift-y        spawn pactl set-sink-mute $(sink) toggle
+  # hc keybind Super-Control-y      spawn toggle pavucontrol
   hc keybind Super-y                spawn pactl set-sink-volume $(sink) -3db
   hc keybind Super-semicolon        spawn pactl set-sink-volume $(sink) +3db
   hc keybind Super-u                spawn pactl set-sink-volume $(sink) 0db
@@ -33,7 +33,7 @@ fi
 hc keybind Super-equal              spawn dmenu calc
 hc keybind Super-BackSpace          spawn toggle ncurses
 if [ $PLANCK ] ;then
-  # hc keybind                      Super-grave           spawn toggle rox
+  # hc keybind Super-grave          spawn toggle rox
   hc keybind Super-period           spawn toggle rox
   hc keybind Super-Shift-Right      spawn toggle plover
   hc keybind Super-apostrophe       spawn toggle conky

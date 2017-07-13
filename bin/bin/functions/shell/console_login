@@ -40,7 +40,7 @@ if [ $USER != root ] ;then
         sleep 1
         pgrep -f "rsync arm" >/dev/null || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
       else
-        pidof syncthing >/dev/null || wsync
+        wsync -v
       fi
     else
       we &

@@ -6,7 +6,7 @@
 
 # ................................................................ watchman sync
 
-# Usage: wsync -a | -s | [<path>]*
+# Usage: wsync -a | -s | -v | [<path>]*
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 SESSION=${SESSION:-$HOME/.session}
@@ -30,7 +30,7 @@ cpu arm && target=$MASTER: || target=$ARM:
 
 info() {
   name=$(echo $file | filter | sed "s|$HOME/stow/||")
-  if [ $name ] ;then
+  if [ "$name" ] ;then
     trace "$1 ${target}stow ${_YELLOW_}$name" >>$LOG
     notify low "$1 ${target}stow" "$name"
   fi
@@ -68,10 +68,15 @@ archive() {
   > $WATCH
 }
 
+watch() {
+  pidof watchman >/dev/null && cat $WATCH || watchman -- trigger $ROOT $NAME -- $CMD
+}
+
 case $1 in
-  '') pidof watchman >/dev/null && cat $WATCH || watchman -- trigger $ROOT $NAME -- $CMD ;;
+  '') watch && cpu arm && pidof syncthing >/dev/null && systemd stop syncthing@$USER ;;
   -a) archive & ;;
-  -s) archive && watchman shutdown-server ;;
+  -s) archive && { watchman shutdown-server; systemd start syncthing@$USER; } ;;
+  -v) pidof syncthing >/dev/null || watch ;;
   * ) queue $@ && [ -f $SYNC ] && archive & ;;
 esac
 

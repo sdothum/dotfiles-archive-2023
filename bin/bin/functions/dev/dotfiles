@@ -17,35 +17,19 @@ usage() {
 # see .gitignore, to remove items from remote repository
 # git rm --cached <filespec>
 # git rm --cached -r <dir>
-dotfiles="alot         \
-          amphetype    \
-          astroid      \
+dotfiles="amphetype    \
           bash         \
           bin          \
           bspwm        \
           build        \
-          byobu        \
           compton      \
           conky        \
-          dunst        \
           fish         \
           herbstluftwm \
-          infinality   \
-          luakit       \
-          mpd          \
-          mpv          \
-          music        \
-          notion       \
-          qutebrowser  \
           README.md    \
           sxhkd        \
           tt-rss       \
           vim          \
-          vimb         \
-          weechat      \
-          X11          \
-          xmonad       \
-          wyrd         \
           zsh          \
 "
 
@@ -69,7 +53,7 @@ pending() {
 }
 
 # any updates to push?
-changes=$(git diff --name-only HEAD | tee)
+changes=$(git diff --name-only)
 [ -z "$changes" ] && [ -z $1 ] && exit
 [ "$changes" ] && echo "$changes"
 

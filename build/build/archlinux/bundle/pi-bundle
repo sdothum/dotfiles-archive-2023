@@ -121,8 +121,8 @@ d pass
 = network share
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
-d " add armv7h to arch in pkgbuild
-d ? cachefilesd
+# d " add armv7h to arch in pkgbuild
+# d ? cachefilesd
   nfs-utils
 # nss-mdns
 # pygtk
