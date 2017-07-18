@@ -402,6 +402,8 @@
 
       " set after loading plugins
       autocmd plugin VimEnter * highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
+      " match command line tab menu
+      autocmd plugin VimEnter * highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
 
     " .................................................................... Sneak
 
