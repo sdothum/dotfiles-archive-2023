@@ -1,6 +1,6 @@
 function fish_right_prompt --description 'Write out the right prompt'
   set -g HILIGHT 1
-  set -g POSTFIX 1
+  set -g POSTFIX 0
 
   if test $TERM = "linux"
     set -g GREY   'red'
@@ -129,13 +129,19 @@ function fish_right_prompt --description 'Write out the right prompt'
   function duration
     if test $CMD_DURATION
       if test 0$CMD_DURATION -gt 1000
-        set_color $GREY
-        glyph '  ^' '  ^'
+        test 0$POSTFIX -eq 1
+          and set_color $GREY
+          and glyph '  ^' '  ^'
         echo -n (cmd_duration $CMD_DURATION)
         set_color normal
         test $TERM != "linux"
           and test 0$CMD_DURATION -gt (math "1000 * 10")
             and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
+        test 0$POSTFIX -eq 1
+          or begin
+            set_color $GREY
+            glyph '^' '^'
+          end
         return (true)
       end
     end

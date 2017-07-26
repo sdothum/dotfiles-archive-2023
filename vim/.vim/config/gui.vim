@@ -162,6 +162,13 @@
       " autocmd gui InsertEnter * set norelativenumber
       " autocmd gui InsertLeave * set relativenumber
 
+    " .................................................................... Menus
+
+      " reset menu highlight after loading autocompletion plugin
+      autocmd plugin BufWinEnter * highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
+      " match command line tab menu
+      autocmd plugin BufWinEnter * highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
+
     " ................................................... Status / command lines
 
       " see Lightline plugins.vim

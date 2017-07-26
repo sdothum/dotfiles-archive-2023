@@ -278,15 +278,6 @@
 
       " let g:lite_dfm_left_offset = 22     " see themes.vim
 
-    " ............................................................... MUcomplete
-
-      " set completeopt+=menuone
-      " set shortmess+=c
-      " set completeopt+=noinsert,noselect
-      "
-      " " automatic completion
-      " let g:mucomplete#enable_auto_at_startup = 1
-
     " ............................................................ Narrow region
 
       let g:nrrw_rgn_vert          = 0      " open in horizontal split buffer
@@ -305,6 +296,20 @@
       " apply refresh to narrow region buffer to apply layout defaults!
       vmap <leader>n <Plug>NrrwrgnDo:call Refresh()<CR>
       nmap <leader>n :call CloseNR()<CR>
+
+    " .............................................................. Neocomplete
+
+      let g:neocomplete#enable_at_startup                 = 1
+      let g:neocomplete#enable_smart_case                 = 1
+      let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+      " inoremap <expr><Tab>  neocomplete#start_manual_complete()
+      " inoremap <expr><TAB>  pumvisible() ? "\<Down>" :
+    	"   \ neocomplete#start_manual_complete()
+      inoremap <silent><expr><TAB>
+	      \ pumvisible() ? "\<C-n>" :
+	      \ <SID>check_back_space() ? "\<TAB>" :
+	      \ neocomplete#start_manual_complete()
 
     " ............................................................... Neosnippet
 
@@ -357,13 +362,6 @@
       autocmd plugin FileType markdown,mkd call pencil#init()
       autocmd plugin Filetype vimwiki      call pencil#init()
 
-    " ...................................................... Rainbow parentheses
-
-      " let g:rainbow#max_level = 16
-      " let g:rainbow#pairs     = [['(', ')'], ['[', ']'], ['{', '}']]
-
-      " RainbowParentheses                    " activate
-
     " ................................................................ Signature
 
       " vim convention m'ark key conflicts with my colemak-shift-dh layout
@@ -394,16 +392,6 @@
           \}
 
       nmap <leader>' '.
-
-    " .......................................................... Simple-complete
-
-      set complete-=t
-      set complete-=i
-
-      " set after loading plugins
-      autocmd plugin VimEnter * highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
-      " match command line tab menu
-      autocmd plugin VimEnter * highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
 
     " .................................................................... Sneak
 

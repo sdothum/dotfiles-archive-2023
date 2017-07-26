@@ -66,6 +66,7 @@ focus_check
 # cancel out above focus frame
 focus frame
 # cannot use layout options with term due to classname conflict (overwrites "Scratchpad")
+export TMUX=scratchpad
 case $term in
   byobu | tmux) term $name FORTUNE $term 'new-session -n ""' ;;
   *           ) term $name FORTUNE TABBED ;;

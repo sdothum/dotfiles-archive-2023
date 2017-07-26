@@ -40,7 +40,6 @@
 
     " ............................................................. Highlighting
 
-      " Plug 'junegunn/rainbow_parentheses.vim' " parentheses highlighting
       Plug 'nathanaelkane/vim-indent-guides'    " colourized indent columns
       Plug 'sheerun/vim-polyglot'               " multilingual highlighting
 
@@ -49,7 +48,7 @@
     " ............................................................... Management
 
       " Plug 'kien/ctrlp.vim'                   " fuzzy finder
-      " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' } installed via pacman
+      " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --key-bindings' } " installed via pacman
       " Plug 'junegunn/fzf.vim' doesn't integrate well with gvim
       " Plug 'duff/vim-scratch'                 " scratch buffer
       Plug 'chrisbra/NrrwRgn'                   " visual block buffer
@@ -96,8 +95,8 @@
       Plug 'Shougo/neosnippet.vim'              " snippets
       Plug 'tpope/vim-endwise'                  " add 'end' statement
       Plug 'reedes/vim-litecorrect'             " spelling
-      Plug 'maxboisvert/vim-simple-complete'    " enter completion
       Plug 'tpope/vim-surround'                 " pairwise c'hange, d'elete, y'ank
+      Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
