@@ -18,4 +18,7 @@
 // default QWERTY keymap unless
 #define COLEMAK COLEMAK
 
+// thumb key tap-shift() double tap: one shot shift (0) off (1) on
+#define DT_SHIFT 1
+
 #endif
