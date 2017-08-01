@@ -258,8 +258,7 @@ case $1 in
        perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" |
             sed -r 's/^(\xe3\x80\x80)*/\n/' |
             punctuation |
-            sed -e 's/^\.*  *//' \
-                -e 's/  */ /g' |
+            sed 's/^\.*  *//; s/  */ /g' |
             stdin ;;
 
   *) fontsize=8

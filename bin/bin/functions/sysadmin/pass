@@ -73,7 +73,7 @@ case $1 in
      rm -fv ${image%.sh}.zip
      echo "#!/usr/bin/dash
 pass I || exit" >$image
-     names=$(find $STORE -name '*.gpg' | sed -e "s|$STORE/||g" -e 's/.gpg$//')
+     names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
      for i in $names
      do
        ditto "exporting $i"

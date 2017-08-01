@@ -65,7 +65,7 @@ fi
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if [ ! -e $corpus.words ] ;then
   notify low "Building $corpus.words" 'Please be patient..'
-  sort -nr --key=2 $typedir/100K-word.database | sed -re 's/\t.*//' -e 's/(.*)/\L\1/' |
+  sort -nr --key=2 $typedir/100K-word.database | sed -r 's/\t.*//; s/(.*)/\L\1/' |
                                                  egrep "$regex" |
                                                  egrep -v '^(.|..)$' |
                                                  egrep -x ".{1,$wordlen}" >$corpus.words
@@ -91,8 +91,7 @@ random() { od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3"; }
 # proper case sentences
 wordcase() {
   if [ $punctuation = simple ] ;then
-    cat $lines | sed -re 's/^(.)/\U\1/' \
-                     -e 's/ $/./'
+    cat $lines | sed -r 's/^(.)/\U\1/; s/ $/./'
   else
     # inject random punctuation
     while read line <&3

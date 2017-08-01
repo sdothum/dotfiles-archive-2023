@@ -306,6 +306,12 @@
       " inoremap <expr><Tab>  neocomplete#start_manual_complete()
       " inoremap <expr><TAB>  pumvisible() ? "\<Down>" :
     	"   \ neocomplete#start_manual_complete()
+
+    	function! s:check_back_space() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~ '\s'
+      endfunction
+
       inoremap <silent><expr><TAB>
 	      \ pumvisible() ? "\<C-n>" :
 	      \ <SID>check_back_space() ? "\<TAB>" :
@@ -553,6 +559,7 @@
       let g:yankring_dot_repeat_yank   = 1  " allow repeating yankring action
       let g:yankring_enabled           = 1  " disable yankring because of macro conflict
       let g:yankring_window_height     = 30 " horizontal window height
+      let g:yankring_zap_keys          = '' " disable (conflicts with sneak)
 
       nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
       nmap <silent><leader>y :YRShow<CR>

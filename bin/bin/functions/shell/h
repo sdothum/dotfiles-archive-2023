@@ -90,7 +90,7 @@ history() {
 case $shell in
   dash     ) history $shell $@ ;;
   fish     ) history fish $@ ;;
-  bash | sh) echo history | sh -i | sed -e 's/^ *//' -e 's/  */ /g' | egrep -v "$filter" | tac ;;
+  bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | egrep -v "$filter" | tac ;;
   zsh      ) history zsh $@ ;;
   *        ) $shell -c history | grep "$@" ;;
 esac

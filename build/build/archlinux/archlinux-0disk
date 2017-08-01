@@ -202,7 +202,7 @@ if [ "$rescue" = n ] ;then
 heading 'choose repo mirrors'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 original /etc/pacman.d/mirrorlist
-sudo sed -i -e '/^Server =/s/^/#/' -e '/Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
+sudo sed -i '/^Server =/s/^/#/; /Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
 grep '^Server' /etc/pacman.d/mirrorlist
 checkpoint
 

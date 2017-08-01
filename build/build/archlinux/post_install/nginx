@@ -6,7 +6,7 @@
 # ........................................................................ nginx
 
 original /opt/nginx/conf/nginx.conf
-sudo sed -i -e '/^    }/a\
+sudo sed -i '/^    }/a\
 \
     # nginx emply gif module to adblock everything from dnsmasq! (replacement for pixelserv)\
     server {\

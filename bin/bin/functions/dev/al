@@ -6,7 +6,17 @@
 
 # ....................................................................... Search
 
+usage() {
+  echo "usage: $(basename $0) <regex>"
+  exit 1
+}
+
 # ack --smart-case --nocolor "$@" | filter '.*:[0-9]+:' | cut -d: -f1 | uniq
-[ "$1" ] && rgw --color 'never' --regexp "'$@'" | filter '.*:[0-9]+:' | cut -d: -f1 | uniq
+[ "$1" ] || usage
+if echo $@ | grep -q '"' ;then
+  rgw --color 'never' --regexp \'$@\' | filter '.*:[0-9]*:' | cut -d: -f1 | uniq
+else
+  rgw --color 'never' --regexp \"$@\" | filter '.*:[0-9]*:' | cut -d: -f1 | uniq
+fi
 
 # vim: set ft=sh: #

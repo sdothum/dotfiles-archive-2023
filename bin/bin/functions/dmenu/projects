@@ -18,7 +18,7 @@ projects=$CONFIG/projects
 while files=$(sed "s/  *::  */^$SEP /" $projects |
               mhistory projects |
               column -s^ -t |
-              sed -e "1i$EDIT" |
+              sed "1i$EDIT" |
               rmenu 'Edit Project' 1 -no-custom) || exit
 do
   case $files in

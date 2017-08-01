@@ -33,7 +33,7 @@ find $library -name '*sample*' -exec rm {} \; &
 T=t
 catlg() {
   cat /dev/null >$catlg
-  ls -1$T $library | sed -re 's/\./ /g' -e 's/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
+  ls -1$T $library | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
   playlist /tmp/dmenu:movies $playlist >$catlg &
 }
 
@@ -92,7 +92,7 @@ do
        while :
        do
          action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
-         video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed -e 's/  (\([12][0-9][0-9][0-9]\))$/ \1/' -e 's/ /./g').*")
+         video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g').*")
          case $action in
            play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
                    notify critical "$movie" "Duplicate movie files found"

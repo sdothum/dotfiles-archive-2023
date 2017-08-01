@@ -11,9 +11,9 @@
 WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
 
 alphabet='e t a o i n s r h l d c u m f p g w y b v k x j q z'
-digraph='th he an in er on re ed nd ha at en es of nt ea ti to io le is ou ar as de rt ve'
-trigraph='the and tha ent ion tio for nde has nce tis oft men ing'
-double='ss ee tt ff ll mm oo'
+digraph='in on an es re te en ti ar at le ra al or ed nt is ro de co se it to io as he ha nd et ve ea th ou rt sa em'
+trigraph='ing ion tio ent and men nde nce for the tis tha'
+double='ss ee tt ff ll mm oo rr nn pp'
 
 [ "$1" = list ] && { shift; list=true; }
 
@@ -22,7 +22,9 @@ frequency() {
   for i in $@
   do
     echo $i $(grep -i $i $WORDS | wc -l)
-  done | sort -nr -k2
+  done | sort -nr -k2 |
+         awk '{ sum += $2; print; gsub(/./, "-", $1); hdg = length($1) > length(hdg) ? $1 : hdg } END { print hdg, sum }' |
+         column -s' ' -t
 }
 
 list() {

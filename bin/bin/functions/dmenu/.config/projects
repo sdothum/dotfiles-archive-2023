@@ -30,6 +30,7 @@ dmenu dictionary :: $HOME/bin/functions/dmenu/dict $HOME/bin/functions/dmenu/the
 dmenu history :: $HOME/bin/functions/dmenu/.history/*
 dmenu playlist :: $(find /net/media/videos/ -maxdepth 3 -name '.playlist' | sed 's/ /\\\\ /g')
 dmenu tags :: $HOME/bin/functions/dmenu/.config/edit $HOME/bin/dmenu
+dunst :: $(find $HOME/stow/dunst -type f)
 dwb :: $(find $HOME/.config/dwb/ -type f -maxdepth 1)
 fasd jump :: $HOME/.fasd
 fish functions :: $HOME/.config/fish/functions/*.fish

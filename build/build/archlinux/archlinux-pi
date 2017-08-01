@@ -51,9 +51,7 @@ timedatectl set-timezone Canada/Eastern
 heading 'configure package manager'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 original /etc/pacman.conf
-sed -i -e '/^\[options\]/aILoveCandy' \
-    -e '/^#Color/s/^#//' \
-    /etc/pacman.conf
+sed -i '/^\[options\]/aILoveCandy; /^#Color/s/^#//' \ /etc/pacman.conf
 pacman -Sy
 checkpoint
 

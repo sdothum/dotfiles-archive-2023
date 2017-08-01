@@ -46,7 +46,7 @@ if window=$(echo $windows |
             column -s\^ -t |
             rmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
-  window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/ ^\1/" -e "s/ *($SEP)/^\1/")
+  window=$(echo $window | sed -r "s/ *([$VISIBLE$INVISIBLE])/ ^\1/; s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
   TAG=$(echo $window | cut -d$DLM -f1)
   if [ -z $mode ] ;then

@@ -13,6 +13,7 @@ IRC=$SESSION/irc
 MAIL=$SESSION/mail
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
 WEB=$SESSION/browser
+WSYNC=$SESSION/wsync
 
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
@@ -42,6 +43,7 @@ fi
 pidof urxvtd || urxvtd -q -o -f &
 # pidof xflux || xflux -l 45.4 -g -75.7
 server && dmenu movies cache
+[ -e $WSYNC ] && wsync &
 
 # ....................................................... Desktop initialization
 

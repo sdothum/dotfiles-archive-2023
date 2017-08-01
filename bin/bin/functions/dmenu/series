@@ -42,8 +42,7 @@ while :
 do
   show=$(ls -1$T $library |
          grep -v ' ' |
-         sed -e 's/\./ /g' \
-             -e "1i$EDIT" |
+         sed "s/\./ /g; 1i$EDIT" |
          sed "1i[ $(sortlist $T) ]" |
          rmenu 'Series' "$show" -no-custom) || break
 

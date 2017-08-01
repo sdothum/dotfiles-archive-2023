@@ -69,7 +69,9 @@ archive() {
 }
 
 watch() {
-  pidof watchman >/dev/null && cat $WATCH || watchman -- trigger $ROOT $NAME -- $CMD
+  pidof watchman >/dev/null && cat $WATCH || notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD |
+                                                                      sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//' \
+                                                                    )"
 }
 
 case $1 in

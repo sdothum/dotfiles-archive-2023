@@ -25,7 +25,7 @@ d " add armv7h to arch in pkgbuild
 d ? preload
   rlwrap
   systemd-swap
-# udiskie
+  udiskie
 
 
 = admin
@@ -53,6 +53,7 @@ d ? preload
 = file systems
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
+  exfat-utils
 d " add armv7h to arch in pkgbuild
 d ? watchman
 

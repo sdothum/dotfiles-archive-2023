@@ -22,11 +22,11 @@ trap "rm -f $wikis" EXIT
               find -L $dir -name '*wiki' | grep -v '\.deprecated' >$wikis
 
 gs() {
-  action=$(egrep "$(echo "$1" | sed -r 's|.*s/([^/]*)/.*|\1|')" "$wiki" | sed -re "$1")
+  action=$(egrep "$(echo "$1" | sed -r 's|.*s/([^/]*)/.*|\1|')" "$wiki" | sed -r "$1")
   [ "$action" ] || return
   annotate "$1"
   echo "$action"
-  [ $check ] || sed -i -re "$1" "$wiki"
+  [ $check ] || sed -i -r "$1" "$wiki"
 }
 
 while read wiki <&3
