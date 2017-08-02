@@ -147,6 +147,7 @@ enum tap_dance {
  ,_QUOT
  ,_SEND
  ,_SPC
+ ,_TILD
 };
 
 #define TD_CAPS TD(_CAPS)
@@ -164,6 +165,7 @@ enum tap_dance {
 #define TD_QUOT TD(_QUOT)
 #define TD_SEND TD(_SEND)                   // config.h defined macro string
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc
+#define TD_TILD TD(_TILD)
 
 // layer keys
 #define MO_NHEX MO(_NUMHEX)
@@ -171,6 +173,9 @@ enum tap_dance {
 
 // keycodes
 #define ___x___ KC_TRNS
+#ifdef _______
+#undef _______
+#endif
 #define _______ KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -270,7 +275,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RCOLEMAK] = {
     {S(KC_Q), S(KC_W), S(KC_C), S(KC_P), S(KC_Z), OS_CALT, OS_CGUI, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), TD_COLN},
     {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), OS_SALT, OS_SGUI, S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
-    {S(KC_X), S(KC_V), S(KC_F), S(KC_D), S(KC_B), TD_CAPS, OS_CSFT, S(KC_K), S(KC_H), KC_TILD, TD_GRV,  TD_DQOT},
+    {S(KC_X), S(KC_V), S(KC_F), S(KC_D), S(KC_B), TD_CAPS, OS_CSFT, S(KC_K), S(KC_H), TD_TILD, TD_GRV,  TD_DQOT},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_UNDS, PS_TAB,  LT_BSPC, ___x___, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
@@ -306,7 +311,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RQWERTY] = {
     {S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T), OS_CALT, OS_CGUI, S(KC_Y), S(KC_U), S(KC_I), S(KC_O), S(KC_P)},
     {S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G), OS_SALT, OS_SGUI, S(KC_H), S(KC_J), S(KC_K), S(KC_L), TD_COLN},
-    {S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B), TD_CAPS, OS_CSFT, S(KC_N), S(KC_M), KC_TILD, TD_GRV,  TD_DQOT},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B), TD_CAPS, OS_CSFT, S(KC_N), S(KC_M), TD_TILD, TD_GRV,  TD_DQOT},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_UNDS, PS_TAB,  LT_BSPC, ___x___, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
@@ -342,7 +347,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_NUMSYM] = {
-    {_______, _______, _______, ___x___, _______, _______, _______, _______, KC_AMPR, KC_ASTR, KC_TILD, KC_COLN},
+    {_______, _______, _______, ___x___, _______, _______, _______, _______, KC_AMPR, KC_ASTR, TD_TILD, KC_COLN},
     {___x___, ___x___, ___x___, ___x___, _______, _______, _______, _______, KC_DLR,  KC_PERC, KC_CIRC, KC_PIPE},
     {_______, _______, _______, ___x___, _______, _______, _______, _______, KC_EXLM, KC_AT,   KC_HASH, KC_X   },
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_SPC,  KC_BSLS, _______, _______},
@@ -397,7 +402,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // '-----------------------------------------------------------------------------------'
 
   [_SYMREG] = {
-    {___x___, TD_COLN, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, ___x___, ___x___, ___x___, _______},
+    {___x___, TD_COLN, KC_PLUS, TD_TILD, ___x___, _______, _______, _______, ___x___, ___x___, ___x___, _______},
     {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, ___x___, ___x___, ___x___, ___x___},
     {___x___, KC_QUES, KC_SLSH, KC_EQL,  ___x___, _______, _______, _______, ___x___, ___x___, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
@@ -473,15 +478,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            ,Q__NOTE(_GS7)
 #define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7) \
                            ,Q__NOTE(_E7)
-float tone_startup  [][2] = SONG   (STARTUP_SOUND);
-float tone_colemak  [][2] = SONG   (COLEMAK_SOUND);
-float tone_qwerty   [][2] = SONG   (QWERTY_SOUND);
-float tone_plover   [][2] = SONG   (PLOVER_SOUND);
-float tone_plover_gb[][2] = SONG   (PLOVER_GOODBYE_SOUND);
-float tone_caps_on  [][2] = SONG   (CAPSLOCK_ON_SOUND);
-float tone_caps_off [][2] = SONG   (CAPSLOCK_OFF_SOUND);
+float song_startup  [][2] = SONG   (STARTUP_SOUND);
+float song_colemak  [][2] = SONG   (COLEMAK_SOUND);
+float song_qwerty   [][2] = SONG   (QWERTY_SOUND);
+float song_plover   [][2] = SONG   (PLOVER_SOUND);
+float song_plover_gb[][2] = SONG   (PLOVER_GOODBYE_SOUND);
+float song_caps_on  [][2] = SONG   (CAPSLOCK_ON_SOUND);
+float song_caps_off [][2] = SONG   (CAPSLOCK_OFF_SOUND);
 float music_scale   [][2] = SONG   (MUSIC_SCALE_SOUND);
-float tone_goodbye  [][2] = SONG   (GOODBYE_SOUND);
+float song_goodbye  [][2] = SONG   (GOODBYE_SOUND);
 #endif
 
 // .......................................................... Keycode Primitives
@@ -573,7 +578,7 @@ void symhex_reset(qk_tap_dance_state_t *state, void *user_data)
   clear_oneshot_layer_state(ONESHOT_PRESSED);
 }
 
-// ......................................................... Tap Dance Sequences
+// ............................................. Tap Dance Shift/Layer Sequences
 
 static uint8_t dt_shift = 0;
 
@@ -755,6 +760,7 @@ void private(qk_tap_dance_state_t *state, void *user_data)
 #include "private_string.h"
 #endif
   }
+  reset_tap_dance(state);
 }
 
 // config.h defined string
@@ -763,6 +769,17 @@ void send(qk_tap_dance_state_t *state, void *user_data)
   if (state->count > 1) {
     SEND_STRING(PUBLIC_STRING);
   }
+  reset_tap_dance(state);
+}
+
+// special unix home directory
+void tilde(qk_tap_dance_state_t *state, void *user_data)
+{
+  shift_key(KC_GRV);
+  if (state->count > 1) {
+    tap_key(KC_SLSH);
+  }
+  reset_tap_dance(state);
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -780,6 +797,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_QUOT] = ACTION_TAP_DANCE_FN         (quote)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
+ ,[_TILD] = ACTION_TAP_DANCE_FN         (tilde)
 };
 
 // .............................................................. Dynamic Layers
@@ -874,7 +892,7 @@ void colemak(keyrecord_t *record)
 {
   if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-    PLAY_NOTE_ARRAY(tone_colemak, false, 0);
+    PLAY_SONG(song_colemak);
 #endif
     clear_layers();
     persistant_default_layer_set(1UL<<_COLEMAK);
@@ -887,7 +905,7 @@ void qwerty(keyrecord_t *record)
 {
   if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-    PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
+    PLAY_SONG(song_qwerty);
 #endif
     clear_layers();
     persistant_default_layer_set(1UL<<_QWERTY);
@@ -908,7 +926,7 @@ void plover(keyrecord_t *record)
 {
   if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-    PLAY_NOTE_ARRAY(tone_plover, false, 0);
+    PLAY_SONG(song_plover);
 #endif
     clear_layers();
     layer_on(_PLOVER);
@@ -926,7 +944,7 @@ void plovex(keyrecord_t *record)
 {
   if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
-    PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
+    PLAY_SONG(song_plover_gb);
 #endif
     layer_off(_PLOVER);
     toggle_plover();
@@ -1021,11 +1039,11 @@ void led_set_user(uint8_t usb_led)
   if (!is_playing_notes()) {
     if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
       // if capslock LED is turning on
-      PLAY_NOTE_ARRAY(tone_caps_on,  false, 0);
+      PLAY_SONG(song_caps_on);
     }
     else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
       // if capslock LED is turning off
-      PLAY_NOTE_ARRAY(tone_caps_off, false, LEGATO);
+      PLAY_SONG(song_caps_off);
     }
   }
   old_usb_led = usb_led;
@@ -1035,12 +1053,12 @@ void led_set_user(uint8_t usb_led)
 void startup_user(void)
 {
   _delay_ms(20);                            // gets rid of tick
-  PLAY_NOTE_ARRAY(tone_startup, false, 0);
+  PLAY_SONG(song_startup);
 }
 
 void shutdown_user(void)
 {
-  PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
+  PLAY_SONG(song_goodbye);
   _delay_ms(150);
   stop_all_notes();
 }
@@ -1052,6 +1070,6 @@ void music_on_user(void)
 
 void music_scale_user(void)
 {
-  PLAY_NOTE_ARRAY(music_scale, false, 0);
+  PLAY_SONG(music_scale);
 }
 #endif
