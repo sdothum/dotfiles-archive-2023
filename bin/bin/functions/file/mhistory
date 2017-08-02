@@ -45,9 +45,9 @@ if [ "$1" ] ;then
 else
   [ -e $history ] || touch $history
   # create uniq list by subtracting history from stdin
-  cat $history | sed -r 's/(.*)/^\1$/' >/tmp/history.regex
-  grep -vf /tmp/history.regex - >/tmp/history.nonmatch
-  cat $history /tmp/history.nonmatch
+  cat $history | sed -r 's/(.*)/^\1$/' >/tmp/history:regex
+  grep -vf /tmp/history:regex - >/tmp/history:nonmatch
+  cat $history /tmp/history:nonmatch
 fi
 
 # vim: set ft=sh: #

@@ -17,6 +17,7 @@ EDIT='[ manage       ]'
 
 # video library
 library=${LIBRARY:-/net/media/videos/${1:-series}}
+libext=$(find /run/media/$USER -maxdepth 2 -type d -name "${library##*/}" 2>/dev/null)
 mytitles=$library/.mytitles
 sudo find $library -maxdepth 2 -type d -user sonarr -exec chmod -R 755 {} \;
 sudo find $library -maxdepth 2 -type d -user sonarr -exec chown -R shum:users {} \;
@@ -74,7 +75,9 @@ do
     [ "$episode" ] || break
 
     episode=$(echo "$episode" | sed "s/ $SEP$//")
-    video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
+    unset video
+    [ -n "$libext" ] && video=$(find "$libext/${series##*/}" -maxdepth 1 -regex ".*$episode.*" 2>/dev/null)
+    [ -z "$video" ] && video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify critical "$show" "Duplicate episodes found"
       sleep 3

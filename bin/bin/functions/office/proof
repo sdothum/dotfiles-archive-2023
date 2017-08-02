@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-PROOF=${PROOF:-$HOME/.proof}
+PROOF=${PROOF:-$SESSION/proof}
 
 case $1 in
   '') [ -e $PROOF ] && notify low 'Hardcopy Latex' 'Display proof' ||

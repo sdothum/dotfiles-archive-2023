@@ -22,6 +22,7 @@ EDIT='[ manage       ]'
 
 nzb=/net/downloads/nzbs/completed
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
+libext=$(find /run/media/$USER -maxdepth 2 -type d -name "${library##*/}" 2>/dev/null)
 mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
@@ -92,7 +93,10 @@ do
        while :
        do
          action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
-         video=$(find $library -maxdepth 1 -regex ".*$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g').*")
+         unset video
+         title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
+         [ -n "$libext" ] && video=$(find $libext -maxdepth 1 -regex ".*${title}.*")
+         [ -z "$video" ] && video=$(find $library -maxdepth 1 -regex ".*${title}.*")
          case $action in
            play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
                    notify critical "$movie" "Duplicate movie files found"

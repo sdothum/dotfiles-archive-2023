@@ -36,9 +36,11 @@ if cpu arm; then
 
   # omxplayer keyboard shortcuts only available through terminal emulator
   # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${video%.*}.srt" --align center "$video"
-  eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center "$video"
+  # media filenames with embedded blanks are messy to handle, use symbolic link instead!
+  ln -sf "$video" /tmp/play:link
+  eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
   echo "$title -> $video" >>/tmp/omxplay.log
-  pwait "$video"
+  pwait /tmp/play:link
   # systemd start syncthing@$USER
 else
   # server && env CONKYRC=$CONKY_Q2 conky clock on

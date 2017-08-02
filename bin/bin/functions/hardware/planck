@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-QMK=$HOME/qmk_firmware
+QMK=$HOME/stow/qmk_firmware/qmk_firmware
 PLANCK=$QMK/keyboards/planck
 KEYMAP=$PLANCK/keymaps/$1
 
@@ -20,11 +20,15 @@ keymap=$1
 shift
 
 if ! if-no 'sync qmk_firmware repo' ;then
-  original -f -q $QMK
-  cd $QMK
-  git pull
+  mv -f $QMK $HOME/tmp/
+  cd $QMK/..
+  # don't need whole repo so clone it to avoid git messages
+  git clone https://github.com/qmk/qmk_firmware.git
   rm -rf $QMK/lib
   find $QMK/keyboards -maxdepth 1 ! -name planck -exec rm -r {} \;
+  find $KEYMAP -maxdepth 1 ! -name $1 -exec rm -r {} \;
+  # restore current keymap
+  cp -r $HOME/tmp/${KEYMAP#*qmk_firmware/} $KEYMAP/..
 fi
 
 # default keymap

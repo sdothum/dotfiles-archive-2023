@@ -63,7 +63,7 @@ archive() {
     info Sync
     to="${target}${file%/*}/"
     echo rsync -d "$file" "$to" >>$LOG
-    /usr/bin/rsync -avz -d --delete "$file" "$to" >>$LOG 2>&1
+    /usr/bin/rsync -avz --update -d --delete "$file" "$to" >>$LOG 2>&1
   done 3< $WATCH
   > $WATCH
 }
