@@ -474,19 +474,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef AUDIO_ENABLE
-#define CAPSLOCK_ON_SOUND   E__NOTE(_E7)  \
-                           ,Q__NOTE(_GS7)
-#define CAPSLOCK_OFF_SOUND  E__NOTE(_GS7) \
-                           ,Q__NOTE(_E7)
-float song_startup  [][2] = SONG   (STARTUP_SOUND);
-float song_colemak  [][2] = SONG   (COLEMAK_SOUND);
-float song_qwerty   [][2] = SONG   (QWERTY_SOUND);
-float song_plover   [][2] = SONG   (PLOVER_SOUND);
-float song_plover_gb[][2] = SONG   (PLOVER_GOODBYE_SOUND);
-float song_caps_on  [][2] = SONG   (CAPSLOCK_ON_SOUND);
-float song_caps_off [][2] = SONG   (CAPSLOCK_OFF_SOUND);
-float music_scale   [][2] = SONG   (MUSIC_SCALE_SOUND);
-float song_goodbye  [][2] = SONG   (GOODBYE_SOUND);
+float song_startup  [][2] = SONG(STARTUP_SOUND);
+float song_colemak  [][2] = SONG(COLEMAK_SOUND);
+float song_qwerty   [][2] = SONG(QWERTY_SOUND);
+float song_plover   [][2] = SONG(PLOVER_SOUND);
+float song_plover_gb[][2] = SONG(PLOVER_GOODBYE_SOUND);
+float song_caps_on  [][2] = SONG(CAPS_LOCK_ON_SOUND);
+float song_caps_off [][2] = SONG(CAPS_LOCK_OFF_SOUND);
+float music_scale   [][2] = SONG(MUSIC_SCALE_SOUND);
+float song_goodbye  [][2] = SONG(GOODBYE_SOUND);
 #endif
 
 // .......................................................... Keycode Primitives
@@ -576,6 +572,30 @@ void symhex_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   layer_off(_NUMHEX);
   clear_oneshot_layer_state(ONESHOT_PRESSED);
+}
+// .................................................. Tap Dance Insert Sequences
+
+void tilde(qk_tap_dance_state_t *state, void *user_data)
+{
+  // double tap plus down: repeating keycode
+  if (state->count > 2) {
+    register_code(KC_LSFT);
+    register_code(KC_GRV);
+  }
+  // tap: keycode
+  else {
+    shift_key(KC_GRV);
+    // double tap: unix home directory
+    if (state->count > 1) {
+      tap_key(KC_SLSH);
+    }
+  }
+}
+
+void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_code(KC_GRV);
+  unregister_code(KC_LSFT);
 }
 
 // ............................................. Tap Dance Shift/Layer Sequences
@@ -772,16 +792,6 @@ void send(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
-// special unix home directory
-void tilde(qk_tap_dance_state_t *state, void *user_data)
-{
-  shift_key(KC_GRV);
-  if (state->count > 1) {
-    tap_key(KC_SLSH);
-  }
-  reset_tap_dance(state);
-}
-
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_CAPS] = ACTION_TAP_DANCE_FN         (caps)
  ,[_COLN] = ACTION_TAP_DANCE_FN         (colon)
@@ -797,7 +807,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_QUOT] = ACTION_TAP_DANCE_FN         (quote)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
- ,[_TILD] = ACTION_TAP_DANCE_FN         (tilde)
+ ,[_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
 };
 
 // .............................................................. Dynamic Layers
