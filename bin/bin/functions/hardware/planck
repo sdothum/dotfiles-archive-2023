@@ -24,11 +24,11 @@ if ! if-no 'sync qmk_firmware repo' ;then
   cd $QMK/..
   # don't need whole repo so clone it to avoid git messages
   git clone https://github.com/qmk/qmk_firmware.git
-  rm -rf $QMK/lib
-  find $QMK/keyboards -maxdepth 1 ! -name planck -exec rm -r {} \;
-  find $KEYMAP -maxdepth 1 ! -name $1 -exec rm -r {} \;
+  # rm -rf $QMK/lib
+  # find $QMK/keyboards -maxdepth 1 ! -name planck -exec rm -r {} \;
+  # find $KEYMAP -maxdepth 1 ! -name $1 -exec rm -r {} \;
   # restore current keymap
-  cp -r $HOME/tmp/${KEYMAP#*qmk_firmware/} $KEYMAP/..
+  cp -r $HOME/tmp/${KEYMAP#*qmk_firmware/} ${KEYMAP%/*}
 fi
 
 # default keymap
@@ -53,8 +53,8 @@ case $1 in
 esac
 
 cd $PLANCK
-sudo make clean >/dev/null
-sudo make  KEYMAP=$keymap $1
+sudo make planck-$keymap-clean
+[ $1 ] && sudo make planck-$keymap-dfu || sudo make planck-$keymap
 sudo chown -R $USER:users $QMK
 
 # vim: set ft=sh: #
