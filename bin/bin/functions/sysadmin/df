@@ -7,7 +7,7 @@
 # ................................................................... Df wrapper
 
 /usr/bin/df -h
-if [ -e /usr/bin/btrfs ] ;then
+if [ -e /usr/bin/btrfs ] && server ;then
   echo
   sudo btrfs filesystem df /
   echo

@@ -11,7 +11,9 @@
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 SESSION=${SESSION:-$HOME/.session}
 WATCH=$CACHEDIR/wsync
+IGNORE=$WATCH:ignore
 SYNC=$SESSION/wsync
+VERBOSE=$SYNC:verbose
 LOG=/tmp/wsync.log
 
 # watchman
@@ -30,7 +32,7 @@ cpu arm && target=$MASTER: || target=$ARM:
 
 info() {
   name=$(echo $file | filter | sed "s|$HOME/stow/||")
-  if [ "$name" ] ;then
+  if [ -n "$name" ] ;then
     trace "$1 ${target}stow ${_YELLOW_}$name" >>$LOG
     notify low "$1 ${target}stow" "$name"
   fi
@@ -38,7 +40,7 @@ info() {
 
 register() {
   if [ -f "$file" ] ;then
-    info Register
+    ( [ -e $VERBOSE ] || [ ! -e $SYNC ] ) && info Register
     grep -qx "${file%/*}" $WATCH || echo ${file%/*} >>$WATCH
   fi
   unset file
@@ -69,17 +71,31 @@ archive() {
 }
 
 watch() {
-  pidof watchman >/dev/null && cat $WATCH || notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD |
-                                                                      sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//' \
-                                                                    )"
+  if pidof watchman >/dev/null ;then
+    cat $WATCH
+  else
+    # trap random watchman initialization flooding and reset watch queue
+    notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//')"
+    touch $IGNORE
+    trap "rm -f $IGNORE" EXIT
+    while :
+    do
+      sleep 60
+      pkill -f 'wsync .*/.*' || break
+    done
+    notify low 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
+    >$WATCH
+  fi
 }
 
 case $1 in
-  '') watch && cpu arm && pidof syncthing >/dev/null && systemd stop syncthing@$USER ;;
+  '') cpu arm && pidof syncthing >/dev/null && systemd stop syncthing@$USER
+      watch ;;
+
   -a) archive & ;;
   -s) archive && { watchman shutdown-server; systemd start syncthing@$USER; } ;;
   -v) pidof syncthing >/dev/null || watch ;;
-  * ) queue $@ && [ -f $SYNC ] && archive & ;;
+  * ) queue $@ && [ -e $SYNC ] && archive & ;;
 esac
 
 # vim: set ft=sh: #

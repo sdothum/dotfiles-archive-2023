@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-QMK=$HOME/stow/qmk_firmware/qmk_firmware
+QMK=$HOME/qmk_firmware
 PLANCK=$QMK/keyboards/planck
 KEYMAP=$PLANCK/keymaps/$1
 
@@ -19,16 +19,13 @@ KEYMAP=$PLANCK/keymaps/$1
 keymap=$1
 shift
 
+# update keymap from stow repo
+mkdir $KEYMAP 2>/dev/null
+cp -f $HOME/stow/qmk_firmware/${KEYMAP#$HOME/}/* $KEYMAP/
+
 if ! if-no 'sync qmk_firmware repo' ;then
-  mv -f $QMK $HOME/tmp/
-  cd $QMK/..
-  # don't need whole repo so clone it to avoid git messages
-  git clone https://github.com/qmk/qmk_firmware.git
-  # rm -rf $QMK/lib
-  # find $QMK/keyboards -maxdepth 1 ! -name planck -exec rm -r {} \;
-  # find $KEYMAP -maxdepth 1 ! -name $1 -exec rm -r {} \;
-  # restore current keymap
-  cp -r $HOME/tmp/${KEYMAP#*qmk_firmware/} ${KEYMAP%/*}
+  cd $QMK
+  git pull
 fi
 
 # default keymap
@@ -46,7 +43,7 @@ grep -q PRIVATE_STRING $KEYMAP/config.h || sed -i '$a#define PRIVATE_STRING' $KE
 case $1 in
   '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $KEYMAP/config.h ;;
 
-  *) trap "rm $KEYMAP/private_string.h" EXIT
+  *) trap "rm -f $KEYMAP/private_string.h" EXIT
      sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $KEYMAP/config.h
      echo "SEND_STRING(\"$1\");" >$KEYMAP/private_string.h
      shift ;;

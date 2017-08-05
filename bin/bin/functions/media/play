@@ -51,5 +51,6 @@ fi
 
 # refresh panel title on close
 focus window
+pgrep -f 'dmenu (series|movies)' || restore root
 
 # vim: set ft=sh: #

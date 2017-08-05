@@ -41,7 +41,7 @@ vimbt() {
 if ! xdotool search -classname 'VimbT' >/dev/null ;then
   vimbt &
   # wait for socket creation <silent>before loading startpage
-  until [ -S "$(grep socket /tmp/vimb.socket)" ]
+  until [ -S "$(grep socket /tmp/vimb:socket)" ]
   do
     sleep 0.1
   done

@@ -13,7 +13,7 @@ esac
 
 # display du and corrected btrfs du
 /usr/bin/du -hd1 $dir 2>/dev/null
-if which /usr/bin/btrfs 2>/dev/null ;then
+if [ -e /usr/bin/btrfs ] && server ;then
   echo
   sudo btrfs filesystem du -s $dir
 fi
