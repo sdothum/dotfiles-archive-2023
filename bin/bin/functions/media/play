@@ -15,6 +15,7 @@ youtube=/tmp/youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg $youtube.*" EXIT
 
 blackboard
+conky clock stop
 
 # play media (see rox, dmenu movies, dmenu series, browsers..)
 [ "$2" ] && title=$2 || title=${1##*/}
@@ -52,5 +53,6 @@ fi
 # refresh panel title on close
 focus window
 pgrep -f 'dmenu (series|movies)' || restore root
+conky clock auto
 
 # vim: set ft=sh: #

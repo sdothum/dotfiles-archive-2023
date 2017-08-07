@@ -19,7 +19,8 @@ pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
 
 # panel fonts
 # ICON_FONT=FontAwesome
-PANEL_FONT='Noto Sans'
+# PANEL_FONT='Noto Sans'
+PANEL_FONT='Iosevka'
 UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
@@ -36,9 +37,9 @@ CANDY=true
 OCCUPIED='●'
 FREE='○'
 # tag bar separator (visual spacing)
-TAG_PAD='  '
-LSEP='      '
-RSEP='      '
+TAG_PAD=' '
+LSEP='    '
+RSEP='    '
 
 # panel theme
 # alpha channel for panel transparency with compton
@@ -193,23 +194,46 @@ panel() {
   while read -r line
   do
     case $line in
-      S*) case $SECONDS in
-            b*) [ "$ind" = '●' ] && ind='○' || ind='●' ;;
-
-            c*) [ "$ind" = '◓' ] && ind='◑' ||
-                  { [ "$ind" = '◑' ] && ind='◒' ||
-                    { [ "$ind" = '◒' ] && ind='◐' || ind='◓'; }; } ;;
-
-            s*) [ "$ind" = '⬒' ] && ind='⬔' ||
-                  { [ "$ind" = '⬔' ] && ind='◨' ||
-                    { [ "$ind" = '◨' ] && ind='◪' ||
-                      { [ "$ind" = '◪' ] && ind='⬓' ||
-                        { [ "$ind" = '⬓' ] && ind='⬕' ||
-                          { [ "$ind" = '⬕' ] && ind='◧' ||
-                            { [ "$ind" = '◧' ] && ind='◩' || ind='⬒'; }; }; }; }; }; } ;;
+      S*) bar=${line#*|}
+          bar=${bar%|*}
+          case $bar in
+            0*     ) bar=' ' ;;
+            1*     ) bar='▁' ;;
+            2*     ) bar='▂' ;;
+            3*     ) bar='▃' ;;
+            4*     ) bar='▄' ;;
+            50 | 51) bar='▅' ;;
+            52 | 53) bar='▆' ;;
+            54     ) bar='▇' ;;
+            55     ) bar='█' ;;
+            56     ) bar='▓' ;;
+            57     ) bar='▒' ;;
+            58     ) bar='░' ;;
+            59     ) bar='▔' ;;
           esac
-          [ $ind ] && indicator="  $ind"
-          line="${line%F-*}F-}$indicator${line#*F-?}"
+
+          if [ $SECONDS ] ;then
+            case $SECONDS in
+              b*) [ "$tic" = '●' ] && tic='○' || tic='●' ;;
+
+              c*) [ "$tic" = '◓' ] && tic='◑' ||
+                    { [ "$tic" = '◑' ] && tic='◒' ||
+                      { [ "$tic" = '◒' ] && tic='◐' || tic='◓'; }; } ;;
+
+              s*) [ "$tic" = '⬒' ] && tic='⬔' ||
+                    { [ "$tic" = '⬔' ] && tic='◨' ||
+                      { [ "$tic" = '◨' ] && tic='◪' ||
+                        { [ "$tic" = '◪' ] && tic='⬓' ||
+                          { [ "$tic" = '⬓' ] && tic='⬕' ||
+                            { [ "$tic" = '⬕' ] && tic='◧' ||
+                              { [ "$tic" = '◧' ] && tic='◩' || tic='⬒'; }; }; }; }; }; } ;;
+            esac
+            bar="$bar $tic"
+          fi
+
+          # line="${line%%|*}%{F-}$bar${line##*|}"
+          line="${line%%|*}$bar%{F-}${line##*|}"
+          # system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
           system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
 
       T*) title
@@ -267,20 +291,21 @@ panel() {
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 # clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M  %S %P%{F-}${RSEP}%-d  %b '%y
-clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P%{F-}${RSEP}%-d  %b  '%y
+clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P  |%S|%{F-}${RSEP}%-d %b '%y
 " >$PANEL_FIFO:$fifo &
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s
 ' >$PANEL_FIFO:$fifo 2>/dev/null &
 
-size=$(( $(fontsize) - 1 ))
+fontsize=$(fontsize)
+utfsize=$(( $fontsize - 1 ))
 
 cat $PANEL_FIFO:$fifo \
   | panel \
   | lemonbar -d -n "lemonbar:$fifo" \
              -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
              -u $PANEL_UNDERLINE \
-             -f "$PANEL_FONT:size=$size" -f "$UTF8_FONT:size=$size" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+             -f "$PANEL_FONT:size=$fontsize" -f "$UTF8_FONT:size=$utfsize" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #

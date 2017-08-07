@@ -271,9 +271,9 @@ case $1 in
        rsync -L --delete --exclude=vimwiki $exclude_http_local \
              /srv/http/thedarnedestthing.com/application \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/
-       rsync --delete \
-             /home/$USER/stow/thedarnedestthing/thedarnedestthing.com/application/public/images \
-             thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
+       # rsync --delete \
+       #       /home/$USER/stow/thedarnedestthing/thedarnedestthing.com/application/public/images \
+       #       thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
        rsync /srv/http/thedarnedestthing.com/application/thedarnedestthing.db \
              thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/
        rsync /srv/http/thedarnedestthing.com/application/log/restart.txt \

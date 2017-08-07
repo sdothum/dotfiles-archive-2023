@@ -7,7 +7,7 @@
 
 # Usage: conky clock
 usage() {
-  echo "usage: $(basename $0) clock [auto | on | off]"
+  echo "usage: $(basename $0) clock [auto | stop | on | off]"
   exit 1
 }
 
@@ -21,6 +21,9 @@ clock() {
 case $1 in
   auto) xset s off -dpms
         pidof xautolock >/dev/null || xautolock -time 10 -locker 'conky clock on' & ;;
+
+  stop) xset s on -dpms
+        pidof xautolock >/dev/null && killall xautolock ;;
 
   on ) clock || /usr/bin/conky -c $CONKYRC 2>/dev/null & ;;
   off) clock && pkill -f "conky -c $CONKYRC" ;;
