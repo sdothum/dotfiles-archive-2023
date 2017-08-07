@@ -24,8 +24,10 @@ PANEL_FONT='Iosevka'
 UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
-# seconds indicator: none, blink, circle, square
-[ -e $SESSION/panel ] && SECONDS=$(cat $SESSION/panel)
+# seconds indicator: none (unset), blink, circle, square
+[ -e $SESSION/panel:tic ] && { SECONDS=$(cat $SESSION/panel:tic);  SECONDS=${SECONDS:-square}; }
+# minute bar 5 second countdown
+[ -e $SESSION/panel:fade ] && FADE=true
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -205,10 +207,10 @@ panel() {
             50 | 51) bar='▅' ;;
             52 | 53) bar='▆' ;;
             54     ) bar='▇' ;;
-            55     ) bar='█' ;;
-            56     ) bar='▓' ;;
-            57     ) bar='▒' ;;
-            58     ) bar='░' ;;
+            55     ) [ $FADE ] && bar='█' || bar='░' ;;
+            56     ) [ $FADE ] && bar='▓' || bar='▒' ;;
+            57     ) [ $FADE ] && bar='▒' || bar='▓' ;;
+            58     ) [ $FADE ] && bar='░' || bar='█' ;;
             59     ) bar='▔' ;;
           esac
 
