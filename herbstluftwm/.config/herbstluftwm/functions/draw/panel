@@ -19,8 +19,8 @@ pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
 
 # panel fonts
 # ICON_FONT=FontAwesome
-# UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_FONT='Iosevka'
+UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
 # seconds indicator: none (unset), blink, circle, square
@@ -206,15 +206,15 @@ panel() {
             3*                    ) bar='▅' ;;
             40 | 41 | 42 | 43 | 44) bar='▆' ;;
             4*                    ) bar='▇' ;;
-            50                    ) bar='█' ;;
-            51                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG} %{B-}%{F-}" ;;
-            52                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▁%{B-}%{F-}" ;;
-            53                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▂%{B-}%{F-}" ;;
-            54                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▃%{B-}%{F-}" ;;
-            55                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▄%{B-}%{F-}" ;;
-            56                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▅%{B-}%{F-}" ;;
-            57                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▆%{B-}%{F-}" ;;
-            58                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▇%{B-}%{F-}" ;;
+            50 | 51 | 52 | 53 | 54) bar='█' ;;
+            55                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG} %{B-}%{F-}" ;;
+            # 52                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▁%{B-}%{F-}" ;;
+            56                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▂%{B-}%{F-}" ;;
+            # 54                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▃%{B-}%{F-}" ;;
+            57                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▄%{B-}%{F-}" ;;
+            # 56                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▅%{B-}%{F-}" ;;
+            58                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▆%{B-}%{F-}" ;;
+            # 58                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▇%{B-}%{F-}" ;;
             59                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}█%{B-}%{F-}" ;;
           esac
 
@@ -303,12 +303,15 @@ herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s
 ' >$PANEL_FIFO:$fifo 2>/dev/null &
 
+fontsize=$(fontsize)
+utfsize=$(( $fontsize - 1 ))
+
 cat $PANEL_FIFO:$fifo \
   | panel \
   | lemonbar -d -n "lemonbar:$fifo" \
              -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
              -u $PANEL_UNDERLINE \
-             -f "$PANEL_FONT:size=$(fontsize)" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+             -f "$PANEL_FONT:size=$fontsize" -f "$UTF8_FONT:size=$utfsize" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #
