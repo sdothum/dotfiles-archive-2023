@@ -23,8 +23,9 @@ PANEL_FONT='Iosevka'
 UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
-# seconds indicator: none (unset), blink, circle, square
-[ -e $SESSION/panel:tic ] && { SECONDS=$(cat $SESSION/panel:tic);  SECONDS=${SECONDS:-square}; }
+# tic indicator: none (unset), blink, circle, square
+[ -e $SESSION/panel:tic ] && { TIC=$(cat $SESSION/panel:tic);  TIC=${TIC:-square}; }
+[ -e $SESSION/panel:bar ] && BAR=true
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -195,31 +196,31 @@ panel() {
   while read -r line
   do
     case $line in
-      S*) bar=${line#*|}
-          bar=${bar%|*}
-          case $bar in
-            0*                    ) bar=' ' ;;
-            1*                    ) bar='▁' ;;
-            20 | 21 | 22 | 23 | 24) bar='▂' ;;
-            2*                    ) bar='▃' ;;
-            30 | 31 | 32 | 33 | 34) bar='▄' ;;
-            3*                    ) bar='▅' ;;
-            40 | 41 | 42 | 43 | 44) bar='▆' ;;
-            4*                    ) bar='▇' ;;
-            50 | 51 | 52 | 53 | 54) bar='█' ;;
-            55                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG} %{B-}%{F-}" ;;
-            # 52                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▁%{B-}%{F-}" ;;
-            56                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▂%{B-}%{F-}" ;;
-            # 54                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▃%{B-}%{F-}" ;;
-            57                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▄%{B-}%{F-}" ;;
-            # 56                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▅%{B-}%{F-}" ;;
-            58                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▆%{B-}%{F-}" ;;
-            # 58                  ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}▇%{B-}%{F-}" ;;
-            59                    ) bar="%{F$DEFAULT_BG}%{B$ACTIVE_FG}█%{B-}%{F-}" ;;
-          esac
+      S*) unset ind
+          if [ $BAR ] ;then
+            bar=${line#*|}
+            bar=${bar%|*}
+            case $bar in
+              0*    ) bar=' ' ;;
+              1*    ) bar='▁' ;;
+              2[0-4]) bar='▂' ;;
+              2*    ) bar='▃' ;;
+              3[0-4]) bar='▄' ;;
+              3*    ) bar='▅' ;;
+              4[0-4]) bar='▆' ;;
+              4*    ) bar='▇' ;;
+              5[0-4]) bar='█' ;;
+              55    ) bar='▇' ;;
+              56    ) bar='▆' ;;
+              57    ) bar='▅' ;;
+              58    ) bar='▃' ;;
+              59    ) bar='▁' ;;
+            esac
+            ind="  $bar"
+          fi
 
-          if [ $SECONDS ] ;then
-            case $SECONDS in
+          if [ $TIC ] ;then
+            case $TIC in
               b*) [ "$tic" = '●' ] && tic='○' || tic='●' ;;
 
               c*) [ "$tic" = '◓' ] && tic='◑' ||
@@ -234,11 +235,10 @@ panel() {
                             { [ "$tic" = '⬕' ] && tic='◧' ||
                               { [ "$tic" = '◧' ] && tic='◩' || tic='⬒'; }; }; }; }; }; } ;;
             esac
-            bar="$bar $tic"
+            [ "$ind" ] && ind="$ind $tic" || ind="  $tic"
           fi
 
-          # line="${line%%|*}%{F-}$bar${line##*|}"
-          line="${line%%|*}$bar%{F-}${line##*|}"
+          line="${line%%|*}$ind%{F-}${line##*|}"
           # system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
           system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
 
@@ -297,7 +297,7 @@ panel() {
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 # clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M  %S %P%{F-}${RSEP}%-d  %b '%y
-clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P  |%S|%{F-}${RSEP}%-d %b '%y
+clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P|%S|%{F-}${RSEP}%-d %b '%y
 " >$PANEL_FIFO:$fifo &
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s
