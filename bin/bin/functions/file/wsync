@@ -20,6 +20,7 @@ LOG=/tmp/wsync.log
 ROOT=$HOME/stow
 CMD=wsync
 NAME=$CMD
+SCAN=5
 
 # hosts
 ARM=pi
@@ -78,10 +79,15 @@ watch() {
     notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//')"
     touch $IGNORE
     trap "rm -f $IGNORE" EXIT
-    while :
+    scan=true
+    while [ $scan ]
     do
-      sleep 60
-      pkill -f 'wsync .*/.*' || break
+      unset scan
+      for i in $(seq 1 $SCAN)
+      do
+        sleep 1
+        pkill -f 'wsync .*/.*' && scan=true
+      done
     done
     notify low 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
     >$WATCH
