@@ -539,10 +539,11 @@
       " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
       function! VimwikiRemap()
         if !exists('b:vimwiki_remap')
-          let b:vimwiki_remap       = 1
+          let b:vimwiki_remap = 1
           iunmap   <silent><buffer>           <CR>
           inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
           inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
+          call RefreshGui()
         endif
       endfunction
 

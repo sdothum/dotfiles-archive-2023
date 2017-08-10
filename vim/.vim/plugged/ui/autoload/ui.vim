@@ -11,7 +11,6 @@
       let s:view          = 0               " mixed view (filetype) handling
       let s:wikiinfo      = 1               " initial wikiinfo
 
-      let s:size          = 0
       " let s:source_font = 'Input\ Mono\ Compressed\'
       " let s:source_font = 'PragmataPro\'
       let s:source_font   = 'Iosevka\'
@@ -195,33 +194,8 @@
         endif
       endfunction
 
-      " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
-      function! ui#FontSize(size)
-        if $DISPLAY > ''
-          if s:size == a:size
-            return
-          endif
-          let s:size = a:size
-          let l:size = system('fontsize')
-          let l:guif = substitute(&guifont, '\([0-9]*\)', '\1', '')
-
-          if l:guif == (l:size + 1) || a:size < 0
-            call ui#Fontspace(l:size, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call ui#Fontspace(l:size + 1, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
-
-          " fix statusline/commandline position (drawn outside window)
-          sleep 10m                           " delay long enough for font refresh
-          call ToggleGui()
-          call ToggleGui()
-        endif
-      endfunction
-
       function! ui#FontSwitch()
-        call ui#FontSize(s:size == -1 ? +1 : -1)
+        call FontSize(g:size == -1 ? +1 : -1)
         if ! Prose()
           call Quietly('LiteDFMClose')
           call ui#LiteType()
@@ -321,7 +295,7 @@
       " center dfm indicator / proofing statusline
       function! ui#WikiInfo(proof)
         try                                 " trap snippet insertion interruption
-          let s:prose  = 1
+          let g:prose  = 1
           if a:proof == 0
             let l:name = (&modified ? '' : '')
           else
@@ -336,7 +310,7 @@
       function! ui#ShowInfo(proof)
         if s:wikiinfo == 1
           " set statusline=%=%{expand('%:t:r')}\ \\ %{WordCount()}%{(&modified\ ?\ '\ +'\ :\ '')}
-          execute 'set statusline=%{WikiInfo(' . a:proof . ')}'
+          execute 'set statusline=%{ui#WikiInfo(' . a:proof . ')}'
           " goyo defines highlight term/gui reverse
           execute 'highlight statusline guibg=' . g:dfm_status . ' guifg=' . g:dfm_bg
           set laststatus=2

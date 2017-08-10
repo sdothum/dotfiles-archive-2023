@@ -7,6 +7,8 @@
 
     " .................................................................... Setup
 
+      let g:size = 0                        " font size
+
       augroup ui
         autocmd!
       augroup END
@@ -29,9 +31,34 @@
 
     " .............................................................. Switch font
 
+      " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
+      function! FontSize(size)
+        if $DISPLAY > ''
+          if g:size == a:size
+            return
+          endif
+          let g:size = a:size
+          let l:size = system('fontsize')
+          let l:guif = substitute(&guifont, '\([0-9]*\)', '\1', '')
+
+          if l:guif == (l:size + 1) || a:size < 0
+            call ui#Fontspace(l:size, 0)
+            " let g:lite_dfm_left_offset = 22
+          else
+            call ui#Fontspace(l:size + 1, 1)
+            " let g:lite_dfm_left_offset = 18
+          endif
+
+          " fix statusline/commandline position (drawn outside window)
+          sleep 10m                           " delay long enough for font refresh
+          call RefreshGui()
+        endif
+      endfunction
+
       nmap <silent><S-F7> :call ui#FontSwitch()<CR>
 
-      autocmd ui BufEnter * call ui#FontSize(Prose() ? +1 : -1)
+      " also called from dmenu compose script
+      autocmd ui BufEnter * call FontSize(Prose() ? +1 : -1)
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

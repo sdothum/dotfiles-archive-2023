@@ -109,7 +109,7 @@
       " match command line tab menu
       autocmd gui BufWinEnter * highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
       " toggle in/out to fill window
-      autocmd gui VimEnter    * call ToggleGui() | call ToggleGui()
+      autocmd gui VimEnter    * call RefreshGui()
 
     " ................................................... Status / command lines
 

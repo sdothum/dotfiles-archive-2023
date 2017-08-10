@@ -75,6 +75,11 @@
         endif
       endfunction
 
+      function! RefreshGui()
+        call ToggleGui()
+        call ToggleGui()
+      endfunction
+
       " Toggle Menu and Toolbar
       nnoremap <silent><F12> :call ToggleGui()<CR>
       inoremap <silent><F12> <C-o>:call ToggleGui()<CR>
