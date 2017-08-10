@@ -1,6 +1,6 @@
 " sdothum - 2016 (c) wtfpl
 
-" Draw
+" Line Headings
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
   " Comment line styles ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -127,4 +127,4 @@
       imap <silent>,<Right> <C-o>:silent call Justify()<CR>
       nmap <silent>,<Right> :silent call Justify()<CR>
 
-" lines.vim
+" line-headings.vim

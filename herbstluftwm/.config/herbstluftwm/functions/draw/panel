@@ -202,13 +202,13 @@ panel() {
             bar=${bar%|*}
             case $bar in
               0*    ) bar=' ' ;;
-              1*    ) bar='▁' ;;
-              2[0-4]) bar='▂' ;;
-              2*    ) bar='▃' ;;
-              3[0-4]) bar='▄' ;;
-              3*    ) bar='▅' ;;
-              4[0-4]) bar='▆' ;;
-              4*    ) bar='▇' ;;
+              1*    ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
+              2[0-4]) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
+              2*    ) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
+              3[0-4]) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
+              3*    ) bar="%{F$DEFAULT_FG}▅%{F-}" ;;
+              4[0-4]) bar="%{F$DEFAULT_FG}▆%{F-}" ;;
+              4*    ) bar="%{F$DEFAULT_FG}▇%{F-}" ;;
               5[0-4]) bar='█' ;;
               55    ) bar='▇' ;;
               56    ) bar='▆' ;;
@@ -235,6 +235,7 @@ panel() {
                             { [ "$tic" = '⬕' ] && tic='◧' ||
                               { [ "$tic" = '◧' ] && tic='◩' || tic='⬒'; }; }; }; }; }; } ;;
             esac
+            tic="%{F$DEFAULT_FG}$tic%{F-}"
             [ "$ind" ] && ind="$ind $tic" || ind="  $tic"
           fi
 

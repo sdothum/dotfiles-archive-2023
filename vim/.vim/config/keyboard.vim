@@ -21,68 +21,6 @@
         autocmd!
       augroup END
 
-  " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ......................................................... Colemak-shift-dh
-
-      " Note: scripts are affected by the mappings below!
-      "       e.g. "h" becomes "m", "f" becomes "t" etc.
-      "       see thedarnedestthing.com
-
-      " hjkl mapping (0) hjkl (1) mnle
-      let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
-
-      " up/down by screen lines, not file lines
-      nnoremap     j     gj
-      nnoremap     k     gk
-
-      function! Colemak()
-        if s:mnle == 0
-          " map home row (cluster) cursor movement
-          nnoremap k     gk
-          vnoremap k     gk
-          nnoremap j     gj
-          vnoremap j     gj
-        else
-          " map home row (cluster) cursor movement
-          nnoremap u     gk
-          vnoremap u     gk
-          nnoremap n     h
-          vnoremap n     h
-          nnoremap e     gj
-          vnoremap e     gj
-          nnoremap i     l
-          vnoremap i     l
-
-          " recover vi keys (including caps for consistency)
-          nnoremap f     e
-          vnoremap f     e
-          nnoremap F     E
-          vnoremap F     E
-          nnoremap h     m
-          vnoremap h     m
-          nnoremap k     n
-          vnoremap k     n
-          nnoremap K     N
-          vnoremap K     N
-
-          " combine find and till commands
-          nnoremap t     f
-          vnoremap t     f
-          nnoremap T     F
-          vnoremap T     F
-          nnoremap <A-t> t
-          vnoremap <A-t> t
-          nnoremap <C-t> T
-          vnoremap <C-t> T
-        endif
-      endfunction
-
-      " environment variable
-      if $COLEMAK_DH == 'true'
-        call Colemak()
-      endif
-
   " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ....................................................... Backspace settings
@@ -92,29 +30,33 @@
 
     " ......................................................... Cursor movements
 
+      " up/down by screen lines, not file lines
+      nnoremap j           gj
+      nnoremap k           gk
+
       " up/down by paragraph sentence
-      nmap <C-S-Left>  {{)
-      nmap <C-S-Right> })
+      nmap     <C-S-Left>  {{)
+      nmap     <C-S-Right> })
 
       " insert mode local region cursor movements
       " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap <C-h>     <Left>
-      " imap <C-j>     <Down>
-      " imap <C-k>     <Up>
-      " imap <C-l>     <Right>
+      " imap   <C-h>       <Left>
+      " imap   <C-j>       <Down>
+      " imap   <C-k>       <Up>
+      " imap   <C-l>       <Right>
 
     " ............................................................. Disable keys
 
       " affirm vim modal usage but these keys are remapped below anyway :-)
       " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
-      " imap <down>    <nop>
-      " imap <left>    <nop>
-      " imap <right>   <nop>
-      " imap <up>      <nop>
-      " nmap <down>    <nop>
-      " nmap <left>    <nop>
-      " nmap <right>   <nop>
-      " nmap <up>      <nop>
+      " imap   <down>      <nop>
+      " imap   <left>      <nop>
+      " imap   <right>     <nop>
+      " imap   <up>        <nop>
+      " nmap   <down>      <nop>
+      " nmap   <left>      <nop>
+      " nmap   <right>     <nop>
+      " nmap   <up>        <nop>
 
   " Keyboard shortcuts ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

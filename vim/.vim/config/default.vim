@@ -22,8 +22,7 @@
 
     " ..................................................................... Help
 
-      autocmd setup BufWinEnter *.txt,*.txt.gz
-            \ if &filetype == 'help' | wincmd _ | endif
+      autocmd setup BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 
       imap <F1>           <C-o>:help<Space>
       nmap <F1>           :help<Space>
@@ -69,24 +68,6 @@
       set nojoinspaces                      " force single spacing after sentence punctuation!
       set textwidth=80                      " normally 78-80, see autocmd for mail
       let g:linewidth   = &textwidth        " see lines.vim, status.vim
-
-    " ................................................................ Line wrap
-
-      function! ToggleWrap()
-        if &formatoptions =~ 't'
-          NoPencil
-          let &formatoptions = g:codeoptions
-          echo 'Automatic line wrap OFF'
-        elseif &formatoptions == g:codeoptions
-          Pencil
-          set formatoptions=tqwan1
-          echo 'Automatic line wrap ON'
-        else
-          set formatoptions
-        endif
-      endfunction
-
-      nmap <silent><leader><CR> :call ToggleWrap()<CR>
 
     " ..................................................................... Tabs
 

@@ -14,6 +14,10 @@
       " :PlugUpgrade (vim-plug)
       call plug#begin('~/.vim/plugged')
 
+    " ................................................................... System
+
+      Plug 'core'                               " system wide primitives
+
   " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ................................................................... Layout
@@ -22,6 +26,7 @@
       " Plug 'altercation/vim-colors-solarized' breaks synIDattr with vim8
       Plug 'junegunn/limelight.vim'             " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                    " distraction free mode
+      Plug 'ui'                                 " theme
       Plug 'lifepillar/vim-solarized8'          " colour theme
 
     " ..................................................................... Info
@@ -29,6 +34,7 @@
       " Plug 'metakirby5/codi.vim'              " async evaluator
       " Plug 'scrooloose/syntastic'             " lint
       " Plug 'reedes/vim-wordy'                 " word usage
+      Plug 'info'                               " statusline info
       Plug 'itchyny/lightline.vim'              " statusline
       Plug 'majutsushi/tagbar'                  " ctags
       Plug 'bimlas/vim-eightheader'             " custom foldtext
@@ -84,6 +90,7 @@
     " ............................................................... Formatting
 
       Plug 'scrooloose/nerdcommenter'           " toggle comment
+      Plug 'heading'                            " heading formatter
       Plug 'junegunn/vim-easy-align'            " align text objects
       Plug 'reedes/vim-pencil'                  " dynamic paragraph formatting
 
