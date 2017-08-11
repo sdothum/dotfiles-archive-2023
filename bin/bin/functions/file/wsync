@@ -20,7 +20,7 @@ LOG=/tmp/wsync.log
 ROOT=$HOME/stow
 CMD=wsync
 NAME=$CMD
-SCAN=5
+SCAN=10
 
 # hosts
 ARM=pi
