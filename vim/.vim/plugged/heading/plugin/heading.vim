@@ -66,7 +66,7 @@
 
     " .................................................................. Justify
 
-      "                                                         example: justify
+      "                                                   example: right justify
 
       execute 'imap <silent>'g:heading_map_prefix . "<Right>" "<C-o>:silent call heading#Justify()<CR>"
       execute 'nmap <silent>'g:heading_map_prefix . "<Right>" ":silent call heading#Justify()<CR>"
