@@ -20,7 +20,7 @@ LOG=/tmp/wsync.log
 ROOT=$HOME/stow
 CMD=wsync
 NAME=$CMD
-SCAN=10
+SCAN=5
 
 # hosts
 ARM=pi
@@ -35,7 +35,7 @@ info() {
   name=$(echo $file | filter | sed "s|$HOME/stow/||")
   if [ -n "$name" ] ;then
     trace "$1 ${target}stow ${_YELLOW_}$name" >>$LOG
-    notify low "$1 ${target}stow" "$name"
+    notify "$1 ${target}stow" "$name"
   fi
 }
 
@@ -88,8 +88,10 @@ watch() {
         sleep 1
         pkill -f 'wsync .*/.*' && scan=true
       done
+      # adjust for initialization latency
+      [ $scan ] || { [ -s $WATCH ] || scan=true ; }
     done
-    notify low 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
+    notify 3 critical 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
     >$WATCH
   fi
 }

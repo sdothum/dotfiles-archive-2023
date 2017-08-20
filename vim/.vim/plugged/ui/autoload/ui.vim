@@ -23,7 +23,7 @@
       let s:rgb_0    = '#073642'            " base02 dark highlight
       " let s:rgb_1  = '#dc322f'            " red
       " let s:rgb_2  = '#719e07'            " green
-      " let s:rgb_3  = '#b58900'            " yellow
+      let s:rgb_3    = '#b58900'            " yellow
       let s:rgb_4    = '#268bd2'            " blue
       " let s:rgb_5  = '#d33682'            " magenta
       " let s:rgb_6  = '#2aa198'            " cyan
@@ -121,6 +121,8 @@
           execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
         endif
         execute 'highlight CursorLine gui=none   guibg=' . g:dfm_cursorline
+        execute 'highlight ALEErrorSign          guifg=' . g:dfm_fg
+        execute 'highlight ALEWarningSign        guifg=' . s:rgb_3
         call ui#Cursor()
       endfunction
 

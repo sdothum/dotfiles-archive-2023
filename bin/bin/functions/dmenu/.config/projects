@@ -15,6 +15,7 @@ byobu :: $HOME/.config/byobu/* $HOME/.config/byobu/.*
 compton :: $HOME/stow/compton/*/.compton.conf
 conky all :: $(find $HOME/stow/conky/3440x1440 -type f -name '*conky*') $(find $HOME/stow/conky/3440x1440 -type f -name '*conky*') $(find $HOME/stow/conky/1920x1080 -type f -name '*conky*') $(find $HOME/stow/conky/1024x600 -type f -name '*conky*')
 conky :: $HOME/.conkyrc $HOME/.conky/conky*
+conky clock :: $(find $HOME/stow/conky -type f -name '*clock*')
 conky lumen :: $(find $HOME/stow/conky/1920x1080 -type f -name '*conky*')
 conky luna :: $(find $HOME/stow/conky/3440x1440 -type f -name '*conky*')
 conky monad :: $(find $HOME/stow/conky/1024x600 -type f -name '*conky*')

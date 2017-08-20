@@ -99,7 +99,7 @@ do
          [ -z "$video" ] && video=$(find $library -maxdepth 1 -regex ".*${title}.*")
          case $action in
            play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
-                   notify critical "$movie" "Duplicate movie files found"
+                   notify 3 critical "$movie" "Duplicate movie files found"
                    term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
                  fi
                  mhistory $playlist "$movie"

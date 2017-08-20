@@ -10,7 +10,7 @@ default=shutdown
 # disconnect nfs to prevent shutdown wait..
 disconnect() {
   if ! server ;then
-    pgrep rsync >/dev/null && notify critical 'Rsync in progress' 'Waiting..'
+    pgrep rsync >/dev/null && notify 3 critical 'Rsync in progress' 'Waiting..'
     pwait rsync
     sudo umount /net
     sudo umount /home/shum/Maildir

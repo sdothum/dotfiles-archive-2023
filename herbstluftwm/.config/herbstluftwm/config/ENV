@@ -23,6 +23,7 @@ export BACKGROUND=$PALETTE/default
 export COLOR=$BACKGROUND:color
 export WALLPAPER=$HOME/images/backgrounds/default
 
+export CONTRAST=$SESSION/contrast
 export NCURSES=$SESSION/ncurses
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot

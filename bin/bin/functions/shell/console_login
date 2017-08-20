@@ -12,6 +12,7 @@ RSYNC=$SESSION/rsync
 if [ $USER != root ] ;then
   if console && [ ! -e /tmp/login:console ];then
     tty >/tmp/login:console
+    sudo find /var/log/journal -name '*~' -exec rm {} \;
 
     # assign deadline scheduler to SSD boot drive
     if [ $(hostname) = luna ] && [ ! -e /tmp/ssd:scheduler ] ;then

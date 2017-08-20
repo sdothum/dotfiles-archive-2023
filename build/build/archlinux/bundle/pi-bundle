@@ -168,6 +168,7 @@ d ? lemonbar-xft-git
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 d " add armv7h to arch in pkgbuild
 d ? alock-git
+  python-pywal
   xautolock
 
 

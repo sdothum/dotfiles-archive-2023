@@ -1,28 +1,26 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="bin/walltheme $@" . $PARENT
+[ $TRACE ] && CHILD="bin/walpick $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 # .................................................... Set wallpaper color theme
 
-# if slickpicker doesn't return color value, only present once
-which slickpicker >/dev/null 2>&1 && color=true
-
 # see draw root
-while :
+conky theme wal
+loop=true
+while [ $loop ]
 do
-  if [ $color ] ;then
-    color=$(slickpicker)
-    color=${color#\#}
-  fi
-  if [ $color ] ;then
-    conky theme test $color
-  else
-    conky theme test "$(randcolor)"
-  fi
-  if-no 'keep conky theme' || break
+  for i in $(seq 1 16)
+  do
+    color=$(sed "$i!d" $HOME/.cache/wal/colors)
+    ditto "color$(( i - 1 ))='$color'"
+    conky theme test ${color#?}
+    if [ $? = 0 ] ;then
+      if-no 'keep conky theme' || { cp $THEME $(query theme); unset loop; break; }
+    fi
+  done
 done
 
 # vim: set ft=sh: #

@@ -29,7 +29,7 @@ do
       [ $(whatis "$man" | wc -l) -eq 0 ] && unset man
     fi
     if [ -z $man ] ;then
-      notify critical "$selection" "No manual entry found"
+      notify 3 critical "$selection" "No manual entry found"
       exit
     fi
   else
@@ -92,7 +92,7 @@ do
           zcat $manpage | groff -man -Tps | lpr -P $PRINTER
           pr eject
         else
-          notify critical "$page" "man $1 section not found"
+          notify 3 critical "$page" "man $1 section not found"
         fi
       fi
     fi

@@ -52,7 +52,7 @@ do
          column -s^ -t |
          rmenu 'Edit Config' 1 -no-custom) || exit
 
-  if [ "$file" = "$REBUILD" ] ;then
+  if [ "${file%]*}]" = "$REBUILD" ] ;then
     configs
     continue
   fi

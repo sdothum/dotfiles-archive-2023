@@ -72,16 +72,16 @@ ${goto 67}${color3}${voffset -4}${font Noto Sans:size=9}${time %b}${voffset -1} 
 ${voffset 17}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -5}
 ${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
-${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${offset 141}${exec query tag}${font Noto Sans:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${offset 141}${exec query tag}${font Noto Sans:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
 ${voffset -72}
 ${else}
-${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 141}${font Noto Sans:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${exec query tag}
+${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 141}${font Noto Sans:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${exec query tag}
 ${voffset -249}
 ${endif}
 ${font}${color2}${alignr}${exec query wname}
 ${voffset 93}
 
-${voffset -2}
+${voffset -12}
 ${goto 50}${font}${color1}${texeci 900 conky weather}
 ${goto 60}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
 ${goto 70}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary

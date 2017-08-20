@@ -12,7 +12,7 @@ fontsize=36
 
 youtube=/tmp/youtube-dl
 # cleanup accidental screenshots and youtube-dl
-trap "rm -f $HOME/mpv-shot*.jpg $youtube.*" EXIT
+trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
 blackboard
 conky clock stop
@@ -23,10 +23,15 @@ conky clock stop
 if cpu arm; then
   # youtube playback on raspberry pi architecture is unsupported
   if echo $1 | grep -q http ;then
+    rm $youtube.*
     term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && youtube-dl -o $youtube "$1""
     pwait "$youtube"
     title=$youtube
-    video=$youtube.*
+    video=$(find ${youtube%/youtube-dl} -name 'youtube-dl*')
+    if [ ${video##*.} = webm ] ;then
+      ffmpeg -i "$video" "${video%webm}mp4"
+      video="${video%webm}mp4"
+    fi
   fi
 
   geometry=$(dmenu geometry "$title") || exit

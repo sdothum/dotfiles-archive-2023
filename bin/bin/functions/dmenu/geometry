@@ -19,13 +19,17 @@ case $# in
 esac
 
 # window size varies with window position: fullscreen > wide > corner
-gap=$(herbstclient attr settings.window_gap)
+frame=$(herbstclient attr settings.frame_gap)
+window=$(herbstclient attr settings.window_gap)
+gap=$(( $frame + $window ))
 pheight=$(query pheight)
 # width depth
 set -- $(query display)
-left=$(( $1 * $ratio + $gap ))
-right=$(( $1 - $gap - 1 ))
-middle=$(( $2 / 2 + $gap - 1 ))
+# horizontal length = width - 2*gap
+left=$(( $gap + ($1 - $gap * 2) * $ratio + $gap / 2 ))
+right=$(( $1 - $gap ))
+# vertical length = depth - gap - panel
+middle=$(( $gap + ($2 - $gap - pheight) / 2 - $window / 2 ))
 bottom=$2
 
 case $geometry in
@@ -34,6 +38,6 @@ case $geometry in
   corner    ) echo " --win '\"$left $gap $right $middle\"' --aspect-mode letterbox" ;;
 esac
 mhistory geometry $geometry
-exit 0
+exit
 
 # vim: set ft=sh: #

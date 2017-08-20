@@ -68,7 +68,7 @@ ${goto 96}${color}${font Noto Sans:size=18}${time %e}
 ${goto 57}${color1}${voffset -19}${font Noto Sans:size=9}${time %A}
 ${goto 66}${color3}${voffset -2}${font Noto Sans:size=8}${time %b}${voffset -2}  ${color5}${font Noto Sans:size=12}'${time %y}
 ${voffset 22}${font}${color3}${alignr}${time %-Vw  /  %-jd}
-${voffset -196}${font Noto Sans:size=40:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color2}${endif}${alignr} ${exec query tag}
+${voffset -196}${font Noto Sans:size=40:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${alignr} ${exec query tag}
 
 ${voffset -207}
 ${font}${color2}${alignr}${exec query wname}

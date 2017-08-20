@@ -39,6 +39,7 @@ d ? conky-lua-archers
   alock-git
 # lxsession
   maim
+  python-pywal
 # scrot
 # shutter
 # slickpicker

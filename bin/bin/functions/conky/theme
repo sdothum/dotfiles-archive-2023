@@ -40,7 +40,7 @@
 #   colorI [color9 mono-2]
 
 usage() {
-  echo "usage: $(basename $0) theme test | contrast | light | dark <hex colour>"
+  echo "usage: $(basename $0) theme wal | test | contrast | light | dark <hex colour>"
   exit 1
 }
 
@@ -120,7 +120,7 @@ hexgen() {
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
 
-complimentary () { conky palette $1 | grep -a Complementary | head -1 | cut -d/ -f6; }
+# complimentary () { conky palette $1 | grep -a Complementary | head -1 | cut -d/ -f6; }
 
 # ................................................................... Conky text
 
@@ -138,6 +138,18 @@ ink() {
 
 # ....................................................................... Themes
 
+wal() {
+  command wal -ceq -i $WALLPAPER
+  default_color=$(sed '2!d' $HOME/.cache/wal/colors)
+  hexgen ${default_color#?}
+  luminance +$default_color && ink || paper
+}
+
+theme() {
+  echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nLUARINGS=$LUARINGS\nPANEL=$PANEL\n" >$THEME
+  draw conky
+}
+
 action=$1
 shift
 case $action in
@@ -149,31 +161,30 @@ case $action in
   light) if [ $# -eq 1 ] ;then
            hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f18)
            paper
-           complimentary $1
            echo dark >$CONTRAST
+           theme
          fi ;;
 
   dark) if [ $# -eq 1 ] ;then
           hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f2)
           ink
-          complimentary $1
           echo light >$CONTRAST
+          theme
         fi ;;
 
   test) if [ $# -eq 1 ] ;then
           hexgen $1
           luminance +$default_color && paper || ink
+          theme
           if ! if-no "change contrast" ;then
             luminance -$default_color && paper || ink
+            theme
           fi
-          complimentary $1
         fi ;;
 
-  *) usage ;;
+  wal) wal ;;
+  *  ) usage ;;
 esac
 
-echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nLUARINGS=$LUARINGS\nPANEL=$PANEL\n" >$THEME
-
-draw conky
 
 # vim: set ft=sh: #
