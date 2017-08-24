@@ -27,6 +27,10 @@
 //   The navigation pad provides a single hand right thumb activated cluster
 //   with left hand modifiers
 //
+//   #define PRIVATE_STRING includes private_string.h, a user defined code
+//   block for the PRIV tap dance e.g. SEND_STRING("secret messape"),
+//   see function private()
+//
 // Modifier clusters
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   The num and sym keys together access the navigation pad layer
@@ -53,6 +57,7 @@
 // Change history
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   See http://thedarnedestthing.com/planck%20constant
+//   See http://thedarnedestthing.com/planck%20done
 
 #include "config.h"
 #include "planck.h"
@@ -106,6 +111,7 @@ enum planck_keycodes {
  ,LT_BSPC = LT (_ADJUST, KC_BSPC)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
  ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling
+ ,LT_PGDN = LT (_SYMREG, KC_PGDN)
  ,LT_TAB  = LT (_FNCKEY, KC_TAB)
  ,OS_ALT  = OSM(MOD_LALT)
  ,OS_CALT = OSM(MOD_LALT | MOD_LCTL)
@@ -123,11 +129,6 @@ enum planck_keycodes {
 #define CT_RGHT CTL_T(KC_RGHT)
 #define GT_UP   GUI_T(KC_UP)
 #define S_DOWN  S    (KC_DOWN)
-#define S_END   S    (KC_END)
-#define S_HOME  S    (KC_HOME)
-#define S_LEFT  S    (KC_LEFT)
-#define S_PGDN  S    (KC_PGDN)
-#define S_PGUP  S    (KC_PGUP)
 #define S_RGHT  S    (KC_RGHT)
 #define S_UP    S    (KC_UP)
 
@@ -171,7 +172,6 @@ enum tap_dance {
 
 // layer keys
 #define MO_NHEX MO(_NUMHEX)
-#define OS_SREG OSL(_SYMREG)
 
 // keycodes
 #define ___x___ KC_TRNS
@@ -429,25 +429,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, _______, _______, _______, _______, _______},
   },
 
-// ................................................................ Symbol Layer
+// ..................................................... Symbol Navigation Layer
 //
 // http://www.keyboard-layout-editor.com/#/gists/475b46cf0546fd102b5d7cb729c490a6
 
   // .-----------------------------------------------------------------------------------.
-  // |   {  |   .  |   *  |   &  |   }  |      |      |      | Home |  Up  |  End |      |
+  // |   {  |   .  |   *  |   &  |   }  |      |      |      | Home |  Up  |  End | PgUp |
   // |-----------------------------------------------------------------------------------|
-  // |   (  |   ^  |   %  |   $  |   )  |      |      |      | Left | Down | Right|Regex |
+  // |   (  |   ^  |   %  |   $  |   )  |      |      |      | Left | Down | Right| PgDn |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |   #  |   @  |   !  |   ]  |      |      |      | PgDn | PgUp |      |      |
+  // |   [  |   #  |   @  |   !  |   ]  |      |      |      |      |   <  |   >  |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   <  |   >  |   \  |   |  |      |      |      |  f() |      |      |      |
+  // |      |      |      |   \  |   |  |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {TD_LCBR, KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  _______},
-    {TD_LPRN, KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, OS_SREG},
-    {TD_LBRC, KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, KC_PGDN, KC_PGUP, _______, _______},
-    {___x___, KC_LT,   KC_GT,   KC_BSLS, PS_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
+    {TD_LCBR, KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
+    {TD_LPRN, KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, LT_PGDN},
+    {TD_LBRC, KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, _______, TD_LT,   TD_GT,   _______},
+    {___x___, ___x___, ___x___, KC_BSLS, PS_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
   // .-----------------------------------------------------------------------------------.
@@ -467,25 +467,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
-// ...................................................... Shift Navigation Layer
+// ................................................... Modifier Navigation Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/3e7b27b824d0c8b71f07354170756803
-// http://www.keyboard-layout-editor.com/#/gists/b14e93e60f484a7e7c0d89351ea5c663
+// http://www.keyboard-layout-editor.com/#/gists/ac32fffbcac0ec3770f3e5f1c3baca78
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      | ↑Home|  ↑Up | ↑End |      |
+  // |      |      |      |      |      |      |      |      | Home |  Up  |  End | PgUp |
   // |-----------------------------------------------------------------------------------|
-  // |      | Ctrl |  GUI |  Alt |      |      |      |      | ↑Left| ↑Down|↑Right|      |
+  // | Shift| Ctrl |  GUI |  Alt |      |      |      |      | Left | Down | Right| PgDn |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      | ↑PgDn| ↑PgUp|      |      |
+  // |      |      |      |      |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |  f() |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SFTNAV] = {
-    {_______, _______, _______, _______, _______, _______, _______, _______, S_HOME,  S_UP,    S_END,   _______},
-    {_______, OS_CTL,  OS_GUI,  OS_ALT,  _______, _______, _______, _______, S_LEFT,  S_DOWN,  S_RGHT,  _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, S_PGDN,  S_PGUP,  _______, _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
+    {OS_SFT,  OS_CTL,  OS_GUI,  OS_ALT,  _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, LT_PGDN},
+    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
     {_______, _______, _______, _______, ___x___, _______, _______, _______, ___x___, _______, _______, _______},
   },
 
@@ -496,7 +495,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |  F7  |  F8  |  F9  |  F12 |
   // |-----------------------------------------------------------------------------------|
-  // | Ctrl |  GUI |  Alt | Shift|      |      |      |      |  F4  |  F5  |  F6  |  F11 |
+  // | Shift| Ctrl |  GUI |  Alt |      |      |      |      |  F4  |  F5  |  F6  |  F11 |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |
   // |-----------------------------------------------------------------------------------|
@@ -519,7 +518,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |Aud on| Reset|      |      |      |      |      |      | PRIV |  PUB |      |      |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |      |      |      |      |      |      |      |      |      |   <  |   >  |      |
+  // |      |      |      |      |      |      |      |      |      |      |      |      |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |      |      |      |      |      |Plover|  f() |      |      |      |      |      |
   // `-----------------------------------------------------------------------------------'
@@ -527,7 +526,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] = {
     {QWERTY,  _______, COLEMAK, _______, _______, _______, _______, _______, _______, _______, _______, _______},
     {AU_ON,   RESET,   _______, _______, _______, _______, _______, _______, TD_PRIV, TD_SEND, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, _______, _______, TD_LT,   TD_GT,   _______},
+    {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
     {_______, _______, _______, _______, _______, PLOVER , ___x___, _______, _______, _______, _______, _______},
   },
 };
