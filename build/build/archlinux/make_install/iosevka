@@ -69,6 +69,8 @@ make custom
 
 rm -rf $HOME/.fonts/iosevka$family
 cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$family
+[ -e /net/depot/nerd-fonts/font-patcher ] &&
+  /net/depot/nerd-fonts/font-patcher -l -s --powerlineextra --careful $HOME/.fonts/iosevka$family/iosevka-custom-regular.ttf
 sudo fc-cache -fv
 fc-cache -fv
 

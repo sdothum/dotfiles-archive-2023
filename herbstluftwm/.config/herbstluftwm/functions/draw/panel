@@ -26,6 +26,7 @@ PANEL_UNDERLINE=2
 # tic indicator: none (unset), blink, circle, square
 [ -e $SESSION/panel:tic ] && { TIC=$(cat $SESSION/panel:tic);  TIC=${TIC:-square}; }
 [ -e $SESSION/panel:bar ] && BAR=true
+[ -e $SESSION/panel:weather ] && WEATHER=true
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -193,6 +194,12 @@ title() {
   title=$(query tname $tag)
 }
 
+weather() {
+  weather="$(conky weather)"
+}
+# initialize
+[ $WEATHER ] && weather
+
 # fifo read loop
 panel() {
   while read -r line
@@ -241,8 +248,13 @@ panel() {
             [ "$ind" ] && ind="$ind $tic" || ind="  $tic"
           fi
 
+          if [ $WEATHER ] ;then
+            minute=${line#*:?}
+            [ ${minute%% *} = 0 ] && weather
+          fi
+          line="${line%%^*}$weather${line#*^}"
+
           line="${line%%|*}$ind%{F-}${line##*|}"
-          # system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
           system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
 
       T*) title
@@ -299,8 +311,7 @@ panel() {
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
-# clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M  %S %P%{F-}${RSEP}%-d  %b '%y
-clock -i 1 -sf "S%A${RSEP}%{F$ACTIVE_FG}%-I:%M %P|%S|%{F-}${RSEP}%-d %b '%y
+clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y
 " >$PANEL_FIFO:$fifo &
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s

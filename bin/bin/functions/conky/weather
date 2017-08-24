@@ -56,11 +56,9 @@ if [ $debug ] ;then
 fi
 
 if [ -z $FEELSLIKE ] ;then
-  echo ${CURRENT}${TEMPERATURE}C
+  [ -n "$CURRENT" ] && echo "${CURRENT%, } ● ${TEMPERATURE}C" || echo "${TEMPERATURE}C"
 else
-  #echo ${CURRENT}${TEMPERATURE}C, Feels Like ${FEELSLIKE}C
-  echo ${CURRENT}${TEMPERATURE}C, Feels ${FEELSLIKE}C
-  #echo ${CURRENT}${TEMPERATURE}C/${FEELSLIKE}C
+  [ -n "$CURRENT" ] && echo "${CURRENT%, } ● ${TEMPERATURE}C Feels ${FEELSLIKE}C" || echo "${TEMPERATURE}C Feels ${FEELSLIKE}C"
 fi
 
 # vim: set ft=sh: #

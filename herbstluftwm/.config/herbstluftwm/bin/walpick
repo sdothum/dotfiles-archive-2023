@@ -7,20 +7,33 @@
 
 # .................................................... Set wallpaper color theme
 
-# see draw root
-conky theme wal
-loop=true
-while [ $loop ]
-do
-  for i in $(seq 1 16)
+# Usage: walpick [<hexcolor>]
+
+confirm() {
+  if [ $? = 0 ] ;then
+    if-no 'keep conky theme' && return 1 || { cp $THEME $(query theme); unset loop; return 0; }
+  else
+    return 1
+  fi
+}
+
+if [ $1 ] ;then
+  conky theme test $1
+  confirm
+else
+  # see draw root
+  conky theme wal
+  loop=true
+  while [ $loop ]
   do
-    color=$(sed "$i!d" $HOME/.cache/wal/colors)
-    ditto "color$(( i - 1 ))='$color'"
-    conky theme test ${color#?}
-    if [ $? = 0 ] ;then
-      if-no 'keep conky theme' || { cp $THEME $(query theme); unset loop; break; }
-    fi
+    for i in $(seq 1 16)
+    do
+      color=$(sed "$i!d" $HOME/.cache/wal/colors)
+      ditto "color$(( i - 1 ))='$color'"
+      conky theme test ${color#?}
+      confirm && break
+    done
   done
-done
+fi
 
 # vim: set ft=sh: #

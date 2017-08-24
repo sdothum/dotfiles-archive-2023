@@ -12,10 +12,10 @@ usage() {
 }
 
 rss() {
-  if ping -c 1 -W 1 luna >/dev/null 2>&1 ;then
-    sed -i 's,http://localhost/tt-rss,http://luna/tt-rss,' $HOME/.newsbeuter/config
+  if ping -c 1 -W 1 $SERVER >/dev/null 2>&1 ;then
+    sed -i "s,http://localhost/tt-rss,http://$SERVER/tt-rss," $HOME/.newsbeuter/config
   else
-    sed -i 's,http://luna/tt-rss,http://localhost/tt-rss,' $HOME/.newsbeuter/config
+    sed -i "s,http://$SERVER/tt-rss,http://localhost/tt-rss," $HOME/.newsbeuter/config
   fi
 }
 

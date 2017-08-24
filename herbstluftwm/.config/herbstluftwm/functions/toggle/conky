@@ -47,7 +47,7 @@ fi
 # ........................................................................ Panel
 
 # panel persistence
-if [ -e $CONKY ] ;then
+if [ -e $CONKY ] && [ -e $SESSION/panel:conky ];then
   # disable panel on conky
   [ -e $PANEL:$(herbstclient attr monitors.focus.index) ] && toggle panel || restore panel
 else

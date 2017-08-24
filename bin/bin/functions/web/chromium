@@ -8,7 +8,7 @@
 
 chrome=/usr/bin/chromium
 netflix=http://www.netflix.com/ca
-hosts='luna lumen monad pi'
+hosts=$(grep '^10.1.0' /etc/hosts | awk '{ print $2 }')
 
 # release remote instance
 unset instance

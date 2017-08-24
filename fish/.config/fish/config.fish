@@ -33,14 +33,19 @@ echo $PATH | grep -q "$HOME/.local/bin"
 set -x LC_ALL en_US.UTF-8
 set -x LANG en_US.UTF-8
 
-# default printer
-set -x PRINTER HP_LaserJet_1320_series
-set -x PROOF $HOME/.proof
-
 # gpg key
 test -S ~/.gnupg/S.gpg-agent
   and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
 set -x PASSWORD_STORE_CLIP_TIME 60
+
+# .......................................................... Network environment
+
+# default printer
+set -x PRINTER HP_LaserJet_1320_series
+set -x PROOF $HOME/.proof
+
+# main server
+set -x SERVER luna
 
 # ..................................................................... Internet
 

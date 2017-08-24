@@ -125,19 +125,19 @@ case $1 in
            if-yes "backup depot to $laptop" &&
              rsync --delete /net/depot $laptop:/net/
          else
-           if-no 'update depot to luna' ||
-             rsync /net/depot luna:/net/
+           if-no "update depot to $SERVER" ||
+             rsync /net/depot $SERVER:/net/
          fi ;;
 
   music) if laptop ;then
-           if if-yes 'replicate mpd music database from luna' ;then
+           if if-yes "replicate mpd music database from $SERVER" ;then
              killall mpd
              if [ ! -d /net/media ] ;then
                sudo mkdir /net/media
                sudo chown -c $USER:users /net/media
              fi
-             rsync --delete $USER@luna:.mpd $HOME/
-             rsync --delete luna:/net/media/music /net/media/
+             rsync --delete $USER@$SERVER:.mpd $HOME/
+             rsync --delete $SERVER:/net/media/music /net/media/
              mpd 2>/dev/null &
            fi
          else
@@ -231,8 +231,8 @@ case $1 in
           if-yes "backup stow to $netbook" &&
             rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
         else
-          if-no 'update stow to luna' ||
-            rsync --exclude=.SyncArchive $HOME/stow $USER@luna:$HOME/
+          if-no "update stow to $SERVER" ||
+            rsync --exclude=.SyncArchive $HOME/stow $USER@$SERVER:$HOME/
         fi ;;
 
   stownfs) cpu arm && rsync --delete $HOME/stow/ $HOME/stownfs ;;
@@ -240,7 +240,7 @@ case $1 in
   ttrss) if server ;then
            rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
          else
-           rsync /srv/http/tt-rss/themes/my*.css luna:/srv/http/tt-rss/themes/
+           rsync /srv/http/tt-rss/themes/my*.css $SERVER:/srv/http/tt-rss/themes/
          fi ;;
 
   usb) if [ -d /run/media/$USER/$(hostname)/home ] ;then

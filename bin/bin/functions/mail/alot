@@ -11,7 +11,7 @@ maildir=$HOME/Maildir/thedarnedestthing
 
 if ! server ;then
   if [ ! -d $maildir ] ;then
-    ssh luna sudo systemctl restartd nfs-server
+    ssh $SERVER sudo systemctl restartd nfs-server
     sudo mount $HOME/Maildir
   fi
 fi

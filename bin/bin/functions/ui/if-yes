@@ -20,9 +20,7 @@ do
   case $CONTINUE in
     y | Y | '') exit 0 ;;
     n | N     ) exit 1 ;;
-
-    a | A) kill $sig $PPID
-           break ;;
+    a | A     ) { kill $sig $PPID; break; } ;;
   esac
 done
 

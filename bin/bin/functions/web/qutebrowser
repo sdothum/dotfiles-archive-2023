@@ -11,7 +11,7 @@ server && font='-s fonts _monospace "10pt Iosevka"'
 if [ $1 ] ;then
   eval /usr/bin/qutebrowser $font "$@"
 else
-  ping -c 1 -W 1 luna >/dev/null 2>&1 && TTRSS=luna || TTRSS=localhost
+  ping -c 1 -W 1 $SERVER >/dev/null 2>&1 && TTRSS=$SERVER || TTRSS=localhost
   eval /usr/bin/qutebrowser $font http://$TTRSS:8000/tt-rss/
 fi
 
