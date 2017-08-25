@@ -111,7 +111,7 @@ enum planck_keycodes {
  ,LT_BSPC = LT (_ADJUST, KC_BSPC)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
  ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling
- ,LT_PGDN = LT (_SYMREG, KC_PGDN)
+ ,LT_LFTX = LT (_SYMREG, KC_LEFT)
  ,LT_TAB  = LT (_FNCKEY, KC_TAB)
  ,OS_ALT  = OSM(MOD_LALT)
  ,OS_CALT = OSM(MOD_LALT | MOD_LCTL)
@@ -144,7 +144,7 @@ enum tap_dance {
  ,_LCBR
  ,_LPRN
  ,_LT
- ,_NHEX
+ ,_SHEX
  ,_PRIV
  ,_QUOT
  ,_SEND
@@ -163,15 +163,12 @@ enum tap_dance {
 #define TD_LCBR TD(_LCBR)
 #define TD_LPRN TD(_LPRN)
 #define TD_LT   TD(_LT)
-#define TD_NHEX TD(_NHEX)
+#define TD_SHEX TD(_SHEX)
 #define TD_PRIV TD(_PRIV)                   // compile time macro string, provided in private_string.h
 #define TD_QUOT TD(_QUOT)
 #define TD_SEND TD(_SEND)                   // config.h defined macro string
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc
 #define TD_TILD TD(_TILD)
-
-// layer keys
-#define MO_NHEX MO(_NUMHEX)
 
 // keycodes
 #define ___x___ KC_TRNS
@@ -379,26 +376,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // http://www.keyboard-layout-editor.com/#/gists/5e11e5e90ee2b40cb5caf0f9231f23f7
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      | ^Alt |      |      |      |      |   7  |   8  |   9  |   /  |
+  // |      |      | ^Alt |      |      |      |      |      |   7  |   8  |   9  |   /  |
   // |-----------------------------------------------------------------------------------|
-  // |   (  | Ctrl |  GUI |  Alt |      |      |      |      |   4  |   5  |   6  |   *  |
+  // | Ctrl |  GUI |  Alt | Shift|      |      |      |      |   4  |   5  |   6  |   *  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      | ↑Alt |      |      |      |      |   1  |   2  |   3  |   -  |
+  // |      |      | ↑Alt |      |      |      |      |      |   1  |   2  |   3  |   -  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |  f() |      |       |      |  =  |   0  |   .  |   ,  |   +  |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_______, _______, _______, OS_CALT, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_SLSH},
-    {TD_NHEX, OS_CTL,  OS_GUI,  OS_ALT,  _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_ASTR},
-    {_______, _______, _______, OS_SALT, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS},
+    {_______, _______, OS_CALT, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_SLSH},
+    {OS_CTL,  OS_GUI,  OS_ALT,  TD_SHEX, _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_ASTR},
+    {_______, _______, OS_SALT, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, KC_EQL,  KC_0,    KC_DOT,  KC_COMM, KC_PLUS},
   },
 
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |   &  |   *  |   ~  |   :  |
   // |-----------------------------------------------------------------------------------|
-  // |  f() |      |      |      |      |      |      |      |   $  |   %  |   ^  |   |  |
+  // |      |      |      |  f() |      |      |      |      |   $  |   %  |   ^  |   |  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |   !  |   @  |   #  |   X  |
   // |-----------------------------------------------------------------------------------|
@@ -415,7 +412,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |   }  |   {  |   D  |   E  |   F  |
   // |-----------------------------------------------------------------------------------|
-  // |  f() |      |      |      |      |      |      |   )  |   (  |   A  |   B  |   C  |
+  // |      |      |      |  f() |      |      |      |   )  |   (  |   A  |   B  |   C  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |   ]  |   [  |   <  |   >  |   G  |
   // |-----------------------------------------------------------------------------------|
@@ -445,7 +442,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL] = {
     {TD_LCBR, KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
-    {TD_LPRN, KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, LT_PGDN},
+    {TD_LPRN, KC_CIRC, KC_PERC, KC_DLR,  KC_RPRN, _______, _______, _______, LT_LFTX, KC_DOWN, KC_RGHT, KC_PGDN},
     {TD_LBRC, KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, _______, TD_LT,   TD_GT,   _______},
     {___x___, ___x___, ___x___, KC_BSLS, PS_PIPE, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
@@ -453,7 +450,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |   :  |   +  |   ~  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   3  |   2  |   1  |      |      |      |      |      |      |      |  f() |
+  // |      |   3  |   2  |   1  |      |      |      |      |  f() |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |   ?  |   /  |   =  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -467,14 +464,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___},
   },
 
-// ................................................... Modifier Navigation Layer
+// ...................................................... Shift Navigation Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/ac32fffbcac0ec3770f3e5f1c3baca78
+// http://www.keyboard-layout-editor.com/#/gists/3e7b27b824d0c8b71f07354170756803
+// http://www.keyboard-layout-editor.com/#/gists/b14e93e60f484a7e7c0d89351ea5c663
 
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      | Home |  Up  |  End | PgUp |
   // |-----------------------------------------------------------------------------------|
-  // | Shift| Ctrl |  GUI |  Alt |      |      |      |      | Left | Down | Right| PgDn |
+  // | Ctrl |  GUI |  Alt | Shift|      |      |      |      | Left | Down | Right| PgDn |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
@@ -483,7 +481,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SFTNAV] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
-    {OS_SFT,  OS_CTL,  OS_GUI,  OS_ALT,  _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, LT_PGDN},
+    {OS_CTL,  OS_GUI,  OS_ALT,  OS_SFT,  _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
     {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
     {_______, _______, _______, _______, ___x___, _______, _______, _______, ___x___, _______, _______, _______},
   },
@@ -495,7 +493,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |  F7  |  F8  |  F9  |  F12 |
   // |-----------------------------------------------------------------------------------|
-  // | Shift| Ctrl |  GUI |  Alt |      |      |      |      |  F4  |  F5  |  F6  |  F11 |
+  // | Ctrl |  GUI |  Alt | Shift|      |      |      |      |  F4  |  F5  |  F6  |  F11 |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |
   // |-----------------------------------------------------------------------------------|
@@ -504,7 +502,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FNCKEY] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12 },
-    {OS_SFT,  OS_CTL,  OS_GUI,  OS_ALT,  _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
+    {OS_CTL,  OS_GUI,  OS_ALT,  OS_SFT,  _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10 },
     {_______, _______, _______, _______, _______, ___x___, _______, KC_PLUS, _______, _______, _______, _______},
   },
@@ -894,7 +892,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_LCBR] = ACTION_TAP_DANCE_FN         (curly)
  ,[_LPRN] = ACTION_TAP_DANCE_FN         (paren)
  ,[_LT]   = ACTION_TAP_DANCE_FN         (lesser)
- ,[_NHEX] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symhex, symhex_reset)
+ ,[_SHEX] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symhex, symhex_reset)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_QUOT] = ACTION_TAP_DANCE_FN         (quote)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
