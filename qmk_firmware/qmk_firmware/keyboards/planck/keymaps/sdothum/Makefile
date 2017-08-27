@@ -3,7 +3,7 @@
 #   the appropriate keymap folder that will get included automatically
 
 BOOTMAGIC_ENABLE = no   # virtual DIP switch configuration(+1000)
-MOUSEKEY_ENABLE  = no   # mouse keys(+4700)
+MOUSEKEY_ENABLE  = yes  # mouse keys(+4700)
 EXTRAKEY_ENABLE  = no   # audio control and System control(+450)
 CONSOLE_ENABLE   = no   # console for debug(+400)
 COMMAND_ENABLE   = no   # commands for debug and configuration
