@@ -56,8 +56,21 @@
 //
 // Change history
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-//   See http://thedarnedestthing.com/planck%20constant
+//   See http://thedarnedestthing.com/planck%20history
 //   See http://thedarnedestthing.com/planck%20done
+//   See http://thedarnedestthing.com/planck%20constant
+//
+// Matrix finger effort
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+//   ,-----------------------------------------------------------------------------------.
+//   |  3.5 |  2.4 |  2.0 |  2.2 |  3.5 |             |  3.5 |  2.2 |  2.0 |  2.4 |  3.5 |
+//   |------+------+------+------+------+------+------+------+------+------+------+------|
+//   |  1.5 |  1.2 |  1.0 |  1.0 |  2.9 |             |  2.9 |  1.0 |  1.0 |  1.2 |  1.5 |
+//   |------+------+------+------+------+------+------+------+------+------+------+------|
+//   |  3.5 |  2.8 |  2.5 |  1.7 |  2.6 |             |  2.6 |  1.7 |  2.5 |  2.8 |  3.5 |
+//   `-----------------------------------------------------------------------------------'
+//
+//   See https://colemakmods.github.io/mod-dh/analyze.html
 
 #include "config.h"
 #include "planck.h"
@@ -615,7 +628,7 @@ bool key_press(uint16_t keycode, uint8_t shift)
   return false;
 }
 
-// ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
+// ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes, see process_record_user()
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
 {
   if (record->event.pressed) {
@@ -1002,7 +1015,7 @@ void com_layer(keyrecord_t *record, uint8_t side, uint16_t keycode, uint8_t shif
   }
 }
 
-// LT for S(keycode)
+// LT for S(keycode), see process_record_user()
 void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
 {
   if (record->event.pressed) {
