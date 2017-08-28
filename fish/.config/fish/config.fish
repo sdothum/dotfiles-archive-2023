@@ -84,3 +84,10 @@ set -x LUA_INIT "@$HOME/.luarc"
 set -x RI '--format ansi --no-pager'
 # for xmonad onhost
 set -x HOST (hostname)
+
+# ...................................................................... Session
+
+console_login
+user_login
+# clear 'fish' tmux window name
+pidof tmux >/dev/null ;and tmux rename-window ''

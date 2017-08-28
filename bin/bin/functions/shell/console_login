@@ -13,6 +13,7 @@ if [ $USER != root ] ;then
   if console && [ ! -e /tmp/login:console ];then
     tty >/tmp/login:console
     sudo find /var/log/journal -name '*~' -exec rm {} \;
+    # SERVER=$(grep 10.1.0.10 /etc/hosts | awk '{ print $2 }')
 
     # assign deadline scheduler to SSD boot drive
     if [ $(hostname) = $SERVER ] && [ ! -e /tmp/ssd:scheduler ] ;then
