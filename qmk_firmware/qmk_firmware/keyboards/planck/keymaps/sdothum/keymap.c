@@ -197,7 +197,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ..................................................................... Colemak
 #ifdef QWCGZ
-// http://www.keyboard-layout-editor.com/#/gists/0635407fa56e07f0c4c5b82008cc34de
+// http://www.keyboard-layout-editor.com/#/gists/9ecfcbee4c332b5141bfeab966759fde
 
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   W  |   C  |   G  |   Z  | ^Alt | ^GUI |   J  |   L  |   U  |   Y  |   ;  |
@@ -278,7 +278,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ............................................................... Shift Colemak
 #ifdef QWCGZ
-// http://www.keyboard-layout-editor.com/#/gists/79ac0e96e84072ad0d092fc008d31623
+// http://www.keyboard-layout-editor.com/#/gists/8fa64e71484881b496d326f162959823
 
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   W  |   C  |   G  |   Z  | ^Alt | ^GUI |   J  |   L  |   U  |   Y  |   :  |
