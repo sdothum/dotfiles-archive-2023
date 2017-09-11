@@ -214,8 +214,15 @@ d ? xtitle-git
 
 = editors
 # ▔▔▔▔▔▔▔
+  ctags
   texlive-core
   texlive-latexextra
+
+
+= java
+# ▔▔▔▔
+  icedtea-web
+  jre7-openjdk
 
 
 = languages

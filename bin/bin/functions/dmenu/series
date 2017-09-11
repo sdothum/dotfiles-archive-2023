@@ -76,8 +76,8 @@ do
 
     episode=$(echo "$episode" | sed "s/ $SEP$//")
     unset video
-    [ -n "$libext" ] && video=$(find "$libext/${series##*/}" -maxdepth 1 -regex ".*$episode.*" 2>/dev/null)
-    [ -z "$video" ] && video=$(find "$series" -maxdepth 1 -regex ".*$episode.*")
+    [ -n "$libext" ] && video=$(find "$libext/${series##*/}" -maxdepth 1 -type d -regex ".*$episode.*" 2>/dev/null)
+    [ -z "$video" ] && video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify 3 critical "$show" "Duplicate episodes found"
       sleep 3

@@ -159,7 +159,7 @@
             \            ]
             \, 'right' : [
             \              [ 'indent',    'spaces',      'filetype'  ]
-            \,             [ 'topbottom', 'bytepercent', 'linecount' ]
+            \,             [ 'topbottom', 'linepercent', 'linecount' ]
             \,             [ 'atom',      'specialchar', 'column'    ]
             \            ]
             \}
@@ -182,7 +182,7 @@
         let g:lightline.component =
             \{
             \  'absolutepath' : '%F'
-            \, 'bytepercent'  : '%{BytePercent()}%%'
+            \, 'linepercent'  : '%{LinePercent()}'
             \, 'bufnum'       : '%n'
             \, 'charvalue'    : '%b'
             \, 'charvaluehex' : '%B'
@@ -208,7 +208,7 @@
         let g:lightline.component_visible_condition =
             \{
             \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-            \, 'bytepercent' : '(line("w0") != 1 && line("w$") != line("$"))'
+            \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
             \, 'column'      : '(getline(line(".")) != "")'
             \, 'matchspace'  : '(g:matchspace != "")'
             \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'

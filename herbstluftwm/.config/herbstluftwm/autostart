@@ -63,11 +63,11 @@ restore layout tags
 
 if is multihead ;then
   draw monitor secondary
-  toggle conky
+  [ -e $SESSION/conky ] && toggle conky || toggle panel
   # enable panel for secondary monitor by default
   touch $PANEL:1
 elif is display +1920 ;then
-  toggle conky
+  [ -e $SESSION/conky ] && toggle conky || toggle panel
 else
   draw monitor fullframe
   toggle panel

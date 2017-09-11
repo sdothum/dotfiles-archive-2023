@@ -10,14 +10,15 @@ usage() {
   echo "usage: $(basename $0) [option=..]* [<sentence>*]"
   echo "       options: wordlen=<length>   default '99'"
   echo "                size=<count>,      default '30000'"
-  echo "                regex=<regex>,     default '[a-z]"
+  echo "                regex=<regex>,     default 'a-z"
   echo "                punctuation=mixed, default 'simple'"
   echo "                corpus=<filename>, default 'practice'"
   echo "                output=<filename>, default $punctuation"
   exit 1
 }
 
-typedir=$HOME/.config/Amphetype
+CACHEDIR=${CACHEDIR:-$HOME/.cache}/Amphetype:
+DICTIONARY=$HOME/.config/Amphetype/unique.words
 
 # typical sentence lengths
 # sentences='8 11 14 17'
@@ -41,12 +42,12 @@ done
 
 [ $wordlen ]     || wordlen=99
 [ $size ]        || size=30000
-[ $regex ]       || regex='[a-z]'
+[ $regex ]       || regex='a-z'
 [ $punctuation ] || punctuation=simple
-[ $corpus ]      || corpus=practice
-[ $output ]      || output=$punctuation
+[ $corpus ]      || corpus=$regex
+[ $output ]      || output=$corpus-$punctuation
 [ $sentences ]   || sentences='5 6 7 8'
-corpus=$typedir/$corpus
+corpus=$CACHEDIR$corpus
 
 # rebuild corpus if corpus source updated
 # natural language corpus data by Peter Norvig at http://norvig.com/ngrams/
@@ -65,10 +66,11 @@ fi
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if [ ! -e $corpus.words ] ;then
   notify low "Building $corpus.words" 'Please be patient..'
-  sort -nr --key=2 $typedir/100K-word.database | sed -r 's/\t.*//; s/(.*)/\L\1/' |
-                                                 egrep "$regex" |
-                                                 egrep -v '^(.|..)$' |
-                                                 egrep -x ".{1,$wordlen}" >$corpus.words
+  # strip frequency count if present
+  shuf $DICTIONARY | sed -r 's/\t.*//; s/(.*)/\L\1/' |
+                     egrep "[$regex]" |
+                     egrep -v '^(.|..)$' |
+                     egrep -x ".{1,$wordlen}" >$corpus.words
 
   # arbitrarily remove all questionable spellingssed -r 's/([ &;(){}])/\\\\\1/g'
   cat $corpus.words | aspell --ignore-case -a |
@@ -81,7 +83,7 @@ if [ ! -e $corpus.words ] ;then
                                          head -$size >$corpus.corpus
 fi
 
-typefile="$typedir/$(cat $corpus.corpus | wc -l)-$output.txt"
+typefile="$CACHEDIR$(cat $corpus.corpus | wc -l)-$output.txt"
 
 # .................................................................... Sentences
 
@@ -150,6 +152,7 @@ sed -i -r 's/(.*)/\1\n/' $paragraphs
 
 shuf $paragraphs >$typefile
 
+ditto $typefile
 head $typefile
 gpaste-client add $typefile
 notify low 'Amphetype import' "$typefile"

@@ -122,7 +122,7 @@
         endif
         execute 'highlight CursorLine gui=none   guibg=' . g:dfm_cursorline
         execute 'highlight ALEErrorSign          guifg=' . g:dfm_fg
-        execute 'highlight ALEWarningSign        guifg=' . s:rgb_3
+        execute 'highlight ALEWarningSign        guifg=' . g:dfm_cursor
         call ui#Cursor()
       endfunction
 

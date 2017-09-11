@@ -7,9 +7,11 @@
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap> [colemak|qwerty] [<string>] [dfu]"
+  echo "usage: $(basename $0) <keymap> [colemax|mod-dh|qwerty] [<string>] [dfu]"
   exit 1
 }
+
+KEYMAPS='(COLEMAX|MOD_DH|QWERTY)'
 
 QMK=$HOME/qmk_firmware
 PLANCK=$QMK/keyboards/planck
@@ -30,13 +32,10 @@ fi
 
 # default keymap
 case $1 in
-  qwerty) sed -i 's|.*COLEMAK|// #define COLEMAK COLEMAK|' $KEYMAP/config.h ;;
-  *     ) sed -i 's|.*COLEMAK|#define COLEMAK COLEMAK|' $KEYMAP/config.h ;;
+  qwerty) sed -i -r "s/#define.*$KEYMAPS/#define QWERTY/" $KEYMAP/config.h; shift ;;
+  mod-dh) sed -i -r "s/#define.*$KEYMAPS/#define MOD_DH/" $KEYMAP/config.h; shift ;;
+  *     ) sed -i -r "s/#define.*$KEYMAPS/#define COLEMAX/" $KEYMAP/config.h; [ "$1" = colemax ] && shift ;;
 esac
-
-if [ "$1" = qwerty ] || [ "$1" = colemak ] ;then
-  shift
-fi
 
 # compile time macro sting
 grep -q PRIVATE_STRING $KEYMAP/config.h || sed -i '$a#define PRIVATE_STRING' $KEYMAP/config.h

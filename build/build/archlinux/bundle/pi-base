@@ -63,6 +63,7 @@ a package-query
   xorg-xmodmap
   xorg-xrandr
   xorg-xrdb
+  xorg-xrefresh
   xorg-xset
 
 

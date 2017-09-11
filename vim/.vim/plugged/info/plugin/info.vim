@@ -28,9 +28,9 @@
 
       " replaces lightline: 'modified' : '%{&filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "⎯"}'
       function! Modified(...)
-        let unmod = a:0 > 0 ? ' ' : ''
+        let l:unmod = a:0 > 0 ? ' ' : ''
         if &filetype == 'help'
-          return unmod
+          return l:unmod
         endif
         if &modified
           if b:modified == 0
@@ -48,7 +48,7 @@
         endif
         let b:modified = 0
         if &modifiable
-          return unmod
+          return l:unmod
         endif
         return '-'
       endfunction
@@ -74,19 +74,19 @@
       function! RootPath()
         if expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
           " return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
-          let root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
-          if root == ''
-            return root
+          let l:root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
+          if l:root == ''
+            return l:root
           else
-            if root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
-              return root
+            if l:root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
+              return l:root
             else
-              let root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
-              let root = substitute(root, $HOME, '~', '')
-              let base = substitute(root, '.*[/]\([^/]*\)$', '\1', '')
-              let root = substitute(root, '[^/]*$', '', '')
-              let root = substitute(root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
-              return root . base
+              let l:root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
+              let l:root = substitute(l:root, $HOME, '~', '')
+              let l:base = substitute(l:root, '.*[/]\([^/]*\)$', '\1', '')
+              let l:root = substitute(l:root, '[^/]*$', '', '')
+              let l:root = substitute(l:root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
+              return l:root . l:base
             endif
           endif
         else
@@ -107,11 +107,13 @@
 
     " ................................................. Byte position percentage
 
-      function! BytePercent()
-        " let byte = line2byte(line('.') + 1) - 1
-        let byte   = line2byte(line('.')) + col('.') - 1
-        let size   = line2byte(line('$') + 1) - 1
-        return (line("w0") != 1 && line("w$") != line("$")) ? (byte * 100) / size : ''
+      " let s:super = ['^', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹']
+
+      function! LinePercent()
+        let l:line = line('.') - 1
+        let l:last = line('$') - 1
+        " return (l:line != 0 && l:line != l:last) ? '╻' . s:super[l:line * 10 / l:last] : ''
+        return (l:line != 0 && l:line != l:last) ? '╻' . (l:line * 10 / l:last) : ''
       endfunction
 
     " ................................................................ Line info

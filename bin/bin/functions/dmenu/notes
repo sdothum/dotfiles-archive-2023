@@ -43,6 +43,8 @@ if [ $ext = draft ] ;then
 else
   NEW='[ new    ]'
   EDIT='[ manage ]'
+  # must set purge to avoid case statement match, see below
+  PURGE='[ nop ]'
   PROMPT="$NEW\n$EDIT"
   offset=1
 fi
@@ -96,14 +98,14 @@ do
     /*) search="${note#*/}"
         continue ;;
 
-    "$NEW") file=$(mktemp -p $FOLDER --suffix=.$ext)
-            action=edit ;;
+    "$NEW"*) file=$(mktemp -p $FOLDER --suffix=.$ext)
+             action=edit ;;
 
-    "$EDIT") term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+    "$EDIT"*) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
 
-    "$PURGE") [ -f $NOTES ] && mv $(sort -u $NOTES) /tmp
-              search=''
-              continue ;;
+    "$PURGE"*) [ -f $NOTES ] && mv $(sort -u $NOTES) /tmp
+               search=''
+               continue ;;
 
     *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
        content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)

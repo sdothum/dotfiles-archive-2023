@@ -46,7 +46,11 @@ esac
 # start X11 from init console
 if console ;then
   wm=$(cat $HOME/.windowmanager)
-  echo "${_GREEN_}$(figlet -t -f lean $wm)${_nocolor_}"
+  # echo "${_GREEN_}$(figlet -t -f lean $wm)${_nocolor_}"
+  echo ${_GREEN_}
+  # avoid dash shell echo "$(figlet)" escape character issues
+  figlet -t -d $HOME/.fonts/figlet -f s-relief $wm
+  echo ${_nocolor_}
   # escape to shell prompt
   [ $wm = shell ] && exit
 

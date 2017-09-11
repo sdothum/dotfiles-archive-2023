@@ -210,21 +210,22 @@ panel() {
             bar=${line#*|}
             bar=${bar%|*}
             case $bar in
-              0[2367]) bar='•' ;;
-              0*     ) bar=' ' ;;
-              1*     ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
-              2[0-4] ) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
-              2*     ) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
-              3[0-4] ) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
-              3*     ) bar="%{F$DEFAULT_FG}▅%{F-}" ;;
-              4[0-4] ) bar="%{F$DEFAULT_FG}▆%{F-}" ;;
-              4*     ) bar="%{F$DEFAULT_FG}▇%{F-}" ;;
-              5[0-4] ) bar='█' ;;
-              55     ) bar='▇' ;;
-              56     ) bar='▆' ;;
-              57     ) bar='▅' ;;
-              58     ) bar='▃' ;;
-              59     ) bar='▁' ;;
+              0[23] ) bar='─' ;;
+              0[67] ) bar='═' ;;
+              0*    ) bar=' ' ;;
+              1*    ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
+              2[0-4]) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
+              2*    ) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
+              3[0-4]) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
+              3*    ) bar="%{F$DEFAULT_FG}▅%{F-}" ;;
+              4[0-4]) bar="%{F$DEFAULT_FG}▆%{F-}" ;;
+              4*    ) bar="%{F$DEFAULT_FG}▇%{F-}" ;;
+              5[0-4]) bar='█' ;;
+              55    ) bar='▇' ;;
+              56    ) bar='▆' ;;
+              57    ) bar='▅' ;;
+              58    ) bar='▃' ;;
+              59    ) bar='▁' ;;
             esac
             ind="  $bar"
           fi

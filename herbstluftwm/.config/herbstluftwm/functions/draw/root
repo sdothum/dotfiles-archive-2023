@@ -98,16 +98,18 @@ blank() {
     color=$(randcolor)
     rm -f $SETROOT
   fi
-  # blackboard reserved for media playback background
-  [ $color = 000000 ] || echo $color >$COLOR
   setroot --blank-color "#$color" 2>/dev/null
-  contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
-  if [ "$contrast" = dark ] ;then
-    set_border "$(conky theme light $color)"
-  elif [ "$contrast" = light ] ;then
-    set_border "$(conky theme dark $color)"
-  else
-    set_border "$(conky theme contrast $color)"
+  # blackboard reserved for media playback background
+  if [ $color != 000000 ] ;then
+    echo $color >$COLOR
+    contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
+    if [ "$contrast" = dark ] ;then
+      set_border "$(conky theme light $color)"
+    elif [ "$contrast" = light ] ;then
+      set_border "$(conky theme dark $color)"
+    else
+      set_border "$(conky theme contrast $color)"
+    fi
   fi
   echo $color >$BLANK
   # make inactive border invisible!

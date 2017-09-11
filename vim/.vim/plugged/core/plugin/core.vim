@@ -40,12 +40,12 @@
       function! StripTrailingWhitespaces()
         if &modifiable == 1 && ! Markdown()
           " save last search & cursor position
-          let _s = @/
-          let l  = line(".")
-          let c  = col(".")
+          let l:_s = @/
+          let l:l  = line(".")
+          let l:c  = col(".")
           %s/\s\+$//e
-          let @/ = _s
-          call cursor(l, c)
+          let @/ = l:_s
+          call cursor(l:l, l:c)
         endif
       endfunction
 
