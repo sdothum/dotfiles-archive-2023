@@ -9,19 +9,16 @@
 // tap dance key press termination interval
 #define TAPPING_TERM   250
 
-// compile time macro string, see functions/hardware planck script
+// compile time macro string, see functions/hardware planck script (undefine otherwise)
 #define PRIVATE_STRING
 
 // compile time macro string, must be in quotes
 #define PUBLIC_STRING ":%s/arch=(.*)/arch=('any')\n"
 
-// default QWERTY keymap unless
-#define COLEMAK COLEMAK
-
 // thumb key tap-shift() double tap: one shot shift (0) off (1) on
 #define DT_SHIFT 1
 
-// Colemak layout version QWCGZ (default QWCPZ)
-#define QWCGZ
+// Layout COLEKAX, MOD_DH (Colemak), QWERTY (default)
+#define COLEMAX
 
 #endif
