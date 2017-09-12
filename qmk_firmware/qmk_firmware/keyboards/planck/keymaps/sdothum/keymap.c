@@ -72,8 +72,6 @@ extern keymap_config_t keymap_config;
 // LT layers must occupy layers 0..15
 enum planck_layers {
   _COLEMAX = 0
- ,_MOD_DH
- ,_QWERTY
  ,_NUMBER
  ,_NUMSYM
  ,_NUMHEX
@@ -84,13 +82,15 @@ enum planck_layers {
  ,_FNCBKT
  ,_EDIT
  ,_ADJUST
- ,_PLOVER
  ,_LCOLEMAX
  ,_RCOLEMAX
+ ,_MOD_DH
  ,_LMOD_DH
  ,_RMOD_DH
+ ,_QWERTY
  ,_LQWERTY
  ,_RQWERTY
+ ,_PLOVER
  ,_END                                      // see clear_layers()
 };
 
