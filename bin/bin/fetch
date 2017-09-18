@@ -17,7 +17,8 @@ else
   xterm -cr '#010101' \
         -e "$fetch --config off \
                    --size 340 --xoffset 55 --yoffset 30 \
-                   --image $(lname $HOME/images/backgrounds/default) \
+                   --backend w3m \
+                   --w3m $(lname $HOME/images/backgrounds/default) \
                    --block_range 0 15 --gap 5 \
             && echo \
             && read CLOSE \

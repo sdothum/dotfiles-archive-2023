@@ -18,12 +18,19 @@ double='ss ee tt ff ll mm oo rr nn pp'
 [ "$1" = list ] && { shift; list=true; }
 
 frequency() {
+  for i in $(grep -i $i $WORDS | cut -f2)
+  do
+    echo $i
+  done | awk '{ freq += $1 } END { print freq }'
+}
+
+corpus() {
   underline
   for i in $@
   do
-    echo $i $(grep -i $i $WORDS | wc -l)
-  done | sort -nr -k2 |
-         awk '{ sum += $2; print; gsub(/./, "-", $1); hdg = length($1) > length(hdg) ? $1 : hdg } END { print hdg, sum }' |
+    echo $i $(grep -i $i $WORDS | wc -l) $(frequency $i)
+  done | sort -nr -k3 |
+    awk '{ cnt += $2; freq += $3; printf("%s %d %'"'"'d\n", $1, $2, $3); gsub(/./, "-", $1); hdg = length($1) > length(hdg) ? $1 : hdg } END { printf("%s %d %'"'"'d\n", hdg, cnt, freq) }' |
          column -s' ' -t
 }
 
@@ -37,14 +44,14 @@ list() {
 }
 
 if [ $1 ] ;then
-  frequency $@
+  corpus $@
   # list really only makes sense for single inquiry
   [ $list ] && list $@
 else
-  frequency $double
-  frequency $trigraph
-  frequency $digraph
-  frequency $alphabet
+  corpus $double
+  corpus $trigraph
+  corpus $digraph
+  corpus $alphabet
 fi
 
 # vim: set ft=sh: #

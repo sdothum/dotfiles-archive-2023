@@ -9,7 +9,7 @@
 # maximum number of package versions
 depth=4
 
-if if-no 'remove archived packages' ;then
+if if-no 'remove ALL local archived packages' ;then
   sudo paccache -rk$depth
   sudo paccache -ruk0
   sudo pacman-optimize

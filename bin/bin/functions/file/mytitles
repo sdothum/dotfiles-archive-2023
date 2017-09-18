@@ -27,7 +27,7 @@ def mytitles(directory)
     # newname = File.basename(filename, File.extname(filename))
     newname = filename
       .gsub(/\((\d\d\d\d)\)/, '\1')
-      .gsub(/[,._'()\[\]{}]/, ' ')
+      .gsub(/[,._\-'()\[\]{}]/, ' ')
       .gsub(/ s /, "'s ")
       .gsub(/ t /, "'t ")
       .gsub(/ +/,'.')

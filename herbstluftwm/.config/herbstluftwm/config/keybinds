@@ -58,7 +58,12 @@ hc keybind $Mod-Left                   focus_edge left
 hc keybind $Mod-Down                   focus_edge down
 hc keybind $Mod-Up                     focus_edge up
 hc keybind $Mod-Right                  focus_edge right
-if [ $COLEMAK_DH ] ;then
+if [ $ADNW ] ;then
+  hc keybind $Mod-s                    focus left
+  hc keybind $Mod-a                    focus down
+  hc keybind $Mod-o                    focus up
+  hc keybind $Mod-e                    focus right
+elif [ $COLEMAK_DH ] ;then
   hc keybind $Mod-n                    focus left
   hc keybind $Mod-e                    focus down
   hc keybind $Mod-u                    focus up
@@ -75,7 +80,12 @@ hc keybind $Mod-Shift-Left             shift_edge left
 hc keybind $Mod-Shift-Down             shift_edge down
 hc keybind $Mod-Shift-Up               shift_edge up
 hc keybind $Mod-Shift-Right            shift_edge right
-if [ $COLEMAK_DH ] ;then
+if [ $ADNW ] ;then
+  hc keybind $Mod-Shift-s              chain . shift left  . emit_hook focus_changed
+  hc keybind $Mod-Shift-a              chain . shift down  . emit_hook focus_changed
+  hc keybind $Mod-Shift-o              chain . shift up    . emit_hook focus_changed
+  hc keybind $Mod-Shift-e              chain . shift right . emit_hook focus_changed
+elif [ $COLEMAK_DH ] ;then
   hc keybind $Mod-Shift-n              chain . shift left  . emit_hook focus_changed
   hc keybind $Mod-Shift-e              chain . shift down  . emit_hook focus_changed
   hc keybind $Mod-Shift-u              chain . shift up    . emit_hook focus_changed
@@ -114,11 +124,17 @@ hc keybind $Mod-Shift-1                jumpto urgent
 # split frames
 # create an empty frame at the specified direction
 if [ $PLANCK ] ;then
-  hc keybind $Mod-o                    split bottom 0.5
+  if [ $ADNW ] ;then
+    hc keybind $Mod-i                  split bottom 0.5
+    hc keybind $Mod-Shift-i            split bottom 0.666666
+    hc keybind $Mod-Control-i          split bottom 0.333333
+  else
+    hc keybind $Mod-o                  split bottom 0.5
+    hc keybind $Mod-Shift-o            split bottom 0.666666
+    hc keybind $Mod-Control-o          split bottom 0.333333
+  fi
   hc keybind $Mod-semicolon            split right  0.5
-  hc keybind $Mod-Shift-o              split bottom 0.666666
   hc keybind $Mod-Shift-semicolon      split right  0.666666
-  hc keybind $Mod-Control-o            split bottom 0.333333
   hc keybind $Mod-Control-semicolon    split right  0.333333
 else
   hc keybind $Mod-y                    split bottom 0.5
@@ -131,7 +147,11 @@ fi
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space          spawn restore frames
 if [ $PLANCK ] ;then
-  hc keybind $Mod-Shift-h              spawn switch orientation -2
+  if [ $ADNW ] ;then
+    hc keybind $Mod-Shift-g            spawn switch orientation -2
+  else
+    hc keybind $Mod-Shift-h            spawn switch orientation -2
+  fi
   hc keybind $Mod-comma                spawn switch orientation +1
   hc keybind $Mod-Shift-comma          spawn switch orientation -1
   hc keybind $Mod-Shift-period         spawn switch orientation +2
@@ -148,7 +168,12 @@ fi
 
 # resize frames
 resizestep=0.025
-if [ $COLEMAK_DH ] ;then
+if [ $ADNW ] ;then
+  hc keybind $Mod-Control-s            resize left  +$resizestep
+  hc keybind $Mod-Control-a            resize down  +$resizestep
+  hc keybind $Mod-Control-o            resize up    +$resizestep
+  hc keybind $Mod-Control-e            resize right +$resizestep
+elif [ $COLEMAK_DH ] ;then
   hc keybind $Mod-Control-n            resize left  +$resizestep
   hc keybind $Mod-Control-e            resize down  +$resizestep
   hc keybind $Mod-Control-u            resize up    +$resizestep
@@ -182,8 +207,8 @@ hc keybind $Mod-Control-1              spawn restore layout max
 hc keybind $Mod-Control-2              spawn restore layout 2:3
 hc keybind $Mod-Control-3              spawn restore layout 1:2
 hc keybind $Mod-space                  spawn toggle max
-hc keybind $Mod-Shift-space            spawn switch layout
-hc keybind $Mod-s                      chain . floating toggle . emit_hook focus_changed
+hc keybind $Mod-shift-space            spawn switch layout
+hc keybind $Mod-Shift-f                chain . floating toggle . emit_hook focus_changed
 hc keybind $Mod-f                      spawn toggle fullscreen
 hc keybind $Mod-p                      chain . pseudotile toggle . emit_hook focus_changed
 
