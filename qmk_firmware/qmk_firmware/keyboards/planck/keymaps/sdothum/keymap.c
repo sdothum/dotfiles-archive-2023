@@ -305,56 +305,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ............................................................... ADNW Balanced
 #ifdef ADNW
-// http://www.keyboard-layout-editor.com/#/gists/9ecfcbee4c332b5141bfeab966759fde
+// http://www.keyboard-layout-editor.com/#/gists/ac5433fd0cf34a6a4bdb921dea77e875
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Z  |   P  |   H  |   M  |   Q  | ^Alt | ^GUI |   X  |   F  |   O  |   U  |   ;  |
+  // |   X  |   P  |   L  |   M  |   Q  | ^Alt | ^GUI |   J  |   C  |   O  |   U  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   C  |   N  |   R  |   T  |   V  | ↑Alt | ↑GUI |   J  |   S  |   A  |   E  |   I  |
+  // |   H  |   N  |   R  |   T  |   V  | ↑Alt | ↑GUI |   K  |   S  |   A  |   E  |   I  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   W  |   B  |   L  |   D  |   K  | Caps |^Shift|   Y  |   G  |   ,  |   "  |   .  |
+  // |   F  |   B  |   .  |   D  |   W  | Caps |^Shift|   Z  |   G  |   ,  |   Y  |   "  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_BASE] = {
-    {KC_Z,    KC_P,    KC_H,    KC_M,    KC_Q,    OS_CALT, OS_CGUI,  KC_X,   KC_F,    KC_O,    KC_U,    KC_SCLN},
-    {KC_C,    KC_N,    KC_R,    KC_T,    KC_V,    OS_SALT, OS_SGUI,  KC_J,   KC_S,    KC_A,    KC_E,    KC_I   },
-    {KC_W,    KC_B,    KC_L,    KC_D,    KC_K,    TD_CAPS, OS_CSFT,  KC_Y,   KC_G,    KC_COMM, TD_QUOT, KC_DOT },
+    {KC_X,    KC_P,    KC_L,    KC_M,    KC_Q,    OS_CALT, OS_CGUI,  KC_J,   KC_C,    KC_O,    KC_U,    KC_SCLN},
+    {KC_H,    KC_N,    KC_R,    KC_T,    KC_V,    OS_SALT, OS_SGUI,  KC_K,   KC_S,    KC_A,    KC_E,    KC_I   },
+    {KC_F,    KC_B,    KC_DOT,  KC_D,    KC_W,    TD_CAPS, OS_CSFT,  KC_Z,   KC_G,    KC_COMM, KC_Y,    TD_QUOT},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
   },
 
+// http://www.keyboard-layout-editor.com/#/gists/b52ee9eb9806360ca4de24f380480cea
+
   // ,-----------------------------------------------------------------------------------.
-  // |   Z  |   P  |   H  |   M  |   Q  | ^Alt | ^GUI |   X  |   F  |   O  |   U  |   :  |
+  // |   X  |   P  |   L  |   M  |   Q  | ^Alt | ^GUI |   J  |   C  |   O  |   U  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   C  |   N  |   R  |   T  |   V  | ↑Alt | ↑GUI |   J  |   S  |   A  |   E  |   I  |
+  // |   H  |   N  |   R  |   T  |   V  | ↑Alt | ↑GUI |   K  |   S  |   A  |   E  |   I  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   W  |   B  |   L  |   D  |   K  | Caps |^Shift|   Y  |   G  |   /  |   "  |   ?  |
+  // |   F  |   B  |   /  |   D  |   W  | Caps |^Shift|   Z  |   G  |   ?  |   Y  |   "  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   -  | Left | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
-    {S(KC_Z), S(KC_P), S(KC_H), S(KC_M), S(KC_Q), OS_CALT, OS_CGUI, S(KC_X), S(KC_F), S(KC_O), S(KC_U), TD_COLN},
-    {S(KC_C), S(KC_N), S(KC_R), S(KC_T), S(KC_V), OS_SALT, OS_SGUI, S(KC_J), S(KC_S), S(KC_A), S(KC_E), S(KC_I)},
-    {S(KC_W), S(KC_B), S(KC_L), S(KC_D), S(KC_K), TD_CAPS, OS_CSFT, S(KC_Y), S(KC_G), KC_SLSH, TD_DQOT, KC_QUES},
+    {S(KC_X), S(KC_P), S(KC_L), S(KC_M), S(KC_Q), OS_CALT, OS_CGUI, S(KC_J), S(KC_C), S(KC_O), S(KC_U), TD_COLN},
+    {S(KC_H), S(KC_N), S(KC_R), S(KC_T), S(KC_V), OS_SALT, OS_SGUI, S(KC_K), S(KC_S), S(KC_A), S(KC_E), S(KC_I)},
+    {S(KC_F), S(KC_B), KC_SLSH, S(KC_D), S(KC_W), TD_CAPS, OS_CSFT, S(KC_Z), S(KC_G), KC_QUES, S(KC_Y), TD_DQOT},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Z  |   P  |   H  |   M  |   Q  | ^Alt | ^GUI |   X  |   F  |   O  |   U  |   :  |
+  // |   X  |   P  |   L  |   M  |   Q  | ^Alt | ^GUI |   J  |   C  |   O  |   U  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   C  |   N  |   R  |   T  |   V  | ↑Alt | ↑GUI |   J  |   S  |   A  |   E  |   I  |
+  // |   H  |   N  |   R  |   T  |   V  | ↑Alt | ↑GUI |   K  |   S  |   A  |   E  |   I  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   W  |   B  |   L  |   D  |   K  | Caps |^Shift|   Y  |   G  |   ~  |   "  |   `  |
+  // |   F  |   B  |   ~  |   D  |   W  | Caps |^Shift|   Z  |   G  |   `  |   Y  |   "  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc |   _  | ↑Tab | Bksp |  f() | Left | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
-    {S(KC_Z), S(KC_P), S(KC_H), S(KC_M), S(KC_Q), OS_CALT, OS_CGUI, S(KC_X), S(KC_F), S(KC_O), S(KC_U), TD_COLN},
-    {S(KC_C), S(KC_N), S(KC_R), S(KC_T), S(KC_V), OS_SALT, OS_SGUI, S(KC_J), S(KC_S), S(KC_A), S(KC_E), S(KC_I)},
-    {S(KC_W), S(KC_B), S(KC_L), S(KC_D), S(KC_K), TD_CAPS, OS_CSFT, S(KC_Y), S(KC_G), TD_TILD, TD_DQOT, TD_GRV },
+    {S(KC_X), S(KC_P), S(KC_L), S(KC_M), S(KC_Q), OS_CALT, OS_CGUI, S(KC_J), S(KC_C), S(KC_O), S(KC_U), TD_COLN},
+    {S(KC_H), S(KC_N), S(KC_R), S(KC_T), S(KC_V), OS_SALT, OS_SGUI, S(KC_K), S(KC_S), S(KC_A), S(KC_E), S(KC_I)},
+    {S(KC_F), S(KC_B), TD_TILD, S(KC_D), S(KC_W), TD_CAPS, OS_CSFT, S(KC_Z), S(KC_G), TD_GRV,  S(KC_Y), TD_DQOT},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_UNDS, PS_TAB,  LT_BSPC, ___fn__, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 #endif
