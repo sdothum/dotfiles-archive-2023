@@ -367,17 +367,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   K  |   H  |   E  |   A  |   "  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
+  // |   K  |   H  |   E  |   A  |   .  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   J  |   ,  |   .  |   I  |   ;  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
+  // |   J  |   ;  |   "  |   I  |   ,  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_BASE] = {
     {KC_Q,    KC_Y,    KC_O,    KC_U,    KC_X,    OS_CALT, OS_CGUI,  KC_G,   KC_C,    KC_R,    KC_F,    KC_Z   },
-    {KC_K,    KC_H,    KC_E,    KC_A,    TD_QUOT, OS_SALT, OS_SGUI,  KC_D,   KC_S,    KC_T,    KC_N,    KC_B   },
-    {KC_J,    KC_COMM, KC_DOT,  KC_I,    KC_SCLN, TD_CAPS, OS_CSFT,  KC_W,   KC_M,    KC_L,    KC_P,    KC_V   },
+    {KC_K,    KC_H,    KC_E,    KC_A,    KC_DOT,  OS_SALT, OS_SGUI,  KC_D,   KC_S,    KC_T,    KC_N,    KC_B   },
+    {KC_J,    KC_SCLN, TD_QUOT, KC_I,    KC_COMM, TD_CAPS, OS_CSFT,  KC_W,   KC_M,    KC_L,    KC_P,    KC_V   },
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
   },
 
@@ -386,34 +386,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   K  |   H  |   E  |   A  |   "  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
+  // |   K  |   H  |   E  |   A  |   ~  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   J  |   ~  |   `  |   I  |   :  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
+  // |   J  |   :  |   "  |   I  |   `  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   -  | Left | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
     {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
-    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), TD_DQOT, OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
-    {S(KC_J), TD_TILD, TD_GRV,  S(KC_I), TD_COLN, TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), TD_TILD, OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
+    {S(KC_J), TD_COLN, TD_DQOT, S(KC_I), TD_GRV,  TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   K  |   H  |   E  |   A  |   "  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
+  // |   K  |   H  |   E  |   A  |   ?  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   J  |   /  |   ?  |   I  |   :  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
+  // |   J  |   :  |   "  |   I  |   /  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc |   _  | ↑Tab | Bksp |  f() | Left | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
     {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
-    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), TD_DQOT, OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
-    {S(KC_J), KC_SLSH, KC_QUES, S(KC_I), TD_COLN, TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_QUES, OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
+    {S(KC_J), TD_COLN, TD_DQOT, S(KC_I), KC_SLSH, TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_UNDS, PS_TAB,  LT_BSPC, ___fn__, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 #endif
