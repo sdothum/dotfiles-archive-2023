@@ -72,7 +72,7 @@ extern keymap_config_t keymap_config;
 #ifndef BEAKL8
 #ifndef BEAKLEZ
 #ifndef COLEMAX
-#ifndef MOD_DH
+#ifndef COLEMAK
 #define QWERTY
 #endif
 #endif
@@ -87,12 +87,10 @@ enum planck_layers {
  ,_PLOVER
  ,_NUMBER
  ,_NUMSYM
- ,_NUMHEX
  ,_SYMBOL
  ,_SYMREG
  ,_MOUSE
  ,_FNCKEY
- ,_FNCBKT
  ,_EDIT
  ,_ADJUST
 };
@@ -101,13 +99,15 @@ enum planck_keycodes {
   BASE = SAFE_RANGE
  ,PLOVER
  ,PLOVEX
- ,PS_PERC   // pseudo ALT_T(S(KC_5))            for modified key-codes, see process_record_user()
  ,PS_CIRC   // pseudo GUI_T(S(KC_6))            for modified key-codes, see process_record_user()
  ,PS_DLR    // pseudo SFT_T(S(KC_4))            for modified key-codes, see process_record_user()
+ ,PS_PERC   // pseudo ALT_T(S(KC_5))            for modified key-codes, see process_record_user()
+ ,PS_LPRN   // pseudo CTL_T(S(KC_9))            for modified key-codes, see process_record_user()
  ,PS_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,PS_PIPE   // pseudo LT   (_MOUSE, S(KC_BSLS)) for modified key-codes, see process_record_user()
  ,PS_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB)) for modified key-codes, see process_record_user()
  ,LT_0    = LT (_ADJUST, KC_0)
+ ,LT_A    = LT (_NUMSYM, KC_A)
  ,LT_BSLS = LT (_ADJUST, KC_BSLS)
  ,LT_BSPC = LT (_EDIT,   KC_BSPC)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
@@ -121,13 +121,17 @@ enum planck_keycodes {
  ,OS_CTL  = OSM(MOD_LCTL)
  ,OS_GUI  = OSM(MOD_LGUI)
  ,OS_SALT = OSM(MOD_LALT | MOD_LSFT)
+ ,OS_SFT  = OSM(MOD_LSFT)
  ,OS_SGUI = OSM(MOD_LGUI | MOD_LSFT)
 };
 
 // modifier keys
+#define AT_B    ALT_T(KC_B)
 #define AT_DOWN ALT_T(KC_DOWN)
 #define CT_RGHT CTL_T(KC_RGHT)
+#define GT_C    GUI_T(KC_C)
 #define GT_UP   GUI_T(KC_UP)
+#define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 
 #define S_DOWN  S    (KC_DOWN)
 #define S_RGHT  S    (KC_RGHT)
@@ -137,6 +141,7 @@ enum planck_keycodes {
 enum tap_dance {
   _CAPS = 0
  ,_COLN
+ ,_COMM
  ,_DQOT
  ,_ENT
  ,_FBKT
@@ -148,6 +153,9 @@ enum tap_dance {
  ,_LT
  ,_PRIV
  ,_QUOT
+ ,_RBRC
+ ,_RCBR
+ ,_RPRN
  ,_SEND
  ,_SHEX
  ,_SPC
@@ -156,10 +164,10 @@ enum tap_dance {
 
 #define TD_CAPS TD(_CAPS)
 #define TD_COLN TD(_COLN)
+#define TD_COMM TD(_COMM)
 #define TD_PERC TD(_PERC)
 #define TD_DQOT TD(_DQOT)
 #define TD_ENT  TD(_ENT)
-#define TD_FBKT TD(_FBKT)
 #define TD_GRV  TD(_GRV)
 #define TD_GT   TD(_GT)
 #define TD_LBRC TD(_LBRC)
@@ -168,8 +176,10 @@ enum tap_dance {
 #define TD_LT   TD(_LT)
 #define TD_PRIV TD(_PRIV)                   // compile time macro string, provided in private_string.h
 #define TD_QUOT TD(_QUOT)
+#define TD_RBRC TD(_RBRC)
+#define TD_RCBR TD(_RCBR)
+#define TD_RPRN TD(_RPRN)
 #define TD_SEND TD(_SEND)                   // config.h defined macro string
-#define TD_SHEX TD(_SHEX)
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc
 #define TD_TILD TD(_TILD)
 
@@ -191,7 +201,7 @@ enum tap_dance {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// ..................................................................... Colemak
+// ..................................................................... ColemaX
 #ifdef COLEMAX
 // http://www.keyboard-layout-editor.com/#/gists/9ecfcbee4c332b5141bfeab966759fde
 
@@ -250,7 +260,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
 
 // .............................................................. Colemak Mod-DH
-#ifdef MOD_DH
+#ifdef COLEMAK
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   W  |   F  |   P  |   B  | ^Alt | ^GUI |   J  |   L  |   U  |   Y  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -495,94 +505,77 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ......................................................... Number Keypad Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/5e11e5e90ee2b40cb5caf0f9231f23f7
+// http://www.keyboard-layout-editor.com/#/gists/369b861dcae7d219a11ea9b8fbfe88f1
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      | ^Alt |      |      |      |      |      |   7  |   8  |   9  |   /  |
+  // |      |   F  |   E  |   D  |      |      |      |   /  |   7  |   8  |   9  |   *  |
   // |-----------------------------------------------------------------------------------|
-  // | Ctrl |  GUI |  Alt | Shift|      |      |      |      |   4  |   5  |   6  |   *  |
+  // | Ctrl |   C  |   B  |   A  |      |      |      |   .  |   4  |   5  |   6  |   -  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      | ↑Alt |      |      |      |      |      |   1  |   2  |   3  |   -  |
+  // |      |   #  | ↑Alt |   G  |      |      |      |   ,  |   1  |   2  |   3  |   +  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |       |      |  =  |   0  |   .  |   ,  |   +  |
+  // |      |      |      |  f() |      |       |      |  =  |   0  |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMBER] = {
-    {_______, _______, OS_CALT, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_SLSH},
-    {OS_CTL,  OS_GUI,  OS_ALT,  TD_SHEX, _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_ASTR},
-    {_______, _______, OS_SALT, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS},
-    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_EQL,  LT_0,    KC_DOT,  KC_COMM, KC_PLUS},
+    {_______, KC_F,    MT_E,    KC_D,    _______, _______, _______, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_ASTR},
+    {OS_CTL,  GT_C,    AT_B,    LT_A,    _______, _______, _______, KC_DOT,  KC_4,    KC_5,    KC_6,    KC_MINS},
+    {_______, KC_HASH, OS_SALT, S(KC_G), _______, _______, _______, TD_COMM, KC_1,    KC_2,    KC_3,    KC_PLUS},
+    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_EQL,  LT_0,    ___x___, ___x___, ___x___},
   },
 
   // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |      |   &  |   ~  |   ?  |   :  |
+  // |      |      |      |      |      |      |      |   {  |   &  |   ~  |   :  |   }  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      |      |   $  |   %  |   ^  |   |  |
+  // |      |      |      |  f() |      |      |      |   (  |   $  |   %  |   ^  |   )  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |      |   !  |   @  |   #  |   X  |
+  // |      |      |      |      |      |      |      |   [  |   x  |   <  |   >  |   ]  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      | Space|   \  |      |      |      |
+  // |      |      |      |  f() |      |      |      |   |  |   \  |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_NUMSYM] = {
-    {_______, _______, _______, ___x___, _______, _______, _______, _______, KC_AMPR, KC_TILD, KC_QUES, KC_COLN},
-    {___x___, ___x___, ___x___, ___fn__, _______, _______, _______, _______, KC_DLR,  KC_PERC, KC_CIRC, KC_PIPE},
-    {_______, _______, _______, ___x___, _______, _______, _______, _______, KC_EXLM, KC_AT,   KC_HASH, KC_X   },
-    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_SPC,  KC_BSLS, _______, _______, _______},
-  },
-
-  // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |   }  |   D  |   E  |   F  |   {  |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      |   )  |   A  |   B  |   C  |   (  |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |   ]  |   G  |   <  |   >  |   [  |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      |      |      |      |      |      |
-  // '-----------------------------------------------------------------------------------'
-
-  [_NUMHEX] = {
-    {_______, _______, _______, ___x___, _______, _______, _______, KC_RCBR, S(KC_D), S(KC_E), S(KC_F), TD_LCBR},
-    {___x___, ___x___, ___x___, ___fn__, _______, _______, _______, KC_RPRN, S(KC_A), S(KC_B), S(KC_C), TD_LPRN},
-    {_______, _______, _______, ___x___, _______, _______, _______, KC_RBRC, S(KC_G), KC_LT,   KC_GT,   TD_LBRC},
-    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, _______, _______, _______, _______, _______},
+    {_______, _______, _______, ___x___, _______, _______, _______, TD_LCBR, KC_AMPR, KC_TILD, KC_COLN, KC_RCBR},
+    {___x___, ___x___, ___x___, ___fn__, _______, _______, _______, TD_LPRN, KC_DLR,  KC_PERC, KC_CIRC, KC_RPRN},
+    {_______, _______, _______, ___x___, _______, _______, _______, TD_LBRC, KC_X,    KC_LT,   KC_GT,   KC_RBRC},
+    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_PIPE, KC_BSLS, ___x___, ___x___, ___x___},
   },
 
 // ..................................................... Symbol Navigation Layer
 //
-// http://www.keyboard-layout-editor.com/#/gists/475b46cf0546fd102b5d7cb729c490a6
+// http://www.keyboard-layout-editor.com/#/gists/df5aa22deeca8a811e0c7a86a0269d8f
 
   // .-----------------------------------------------------------------------------------.
   // |   {  |   .  |   *  |   &  |   }  |      |      |      | Home |  Up  |  End | PgUp |
   // |-----------------------------------------------------------------------------------|
   // |   (  |   ^  |   %  |   $  |   )  |      |      |      | Left | Down | Right| PgDn |
   // |-----------------------------------------------------------------------------------|
-  // |   [  |   #  |   @  |   !  |   ]  |      |      |      |      |   <  |   >  |      |
+  // |   [  |   #  |   @  |   !  |   ]  |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |   \  |   |  |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMBOL] = {
-    {TD_LCBR, KC_DOT,  KC_ASTR, KC_AMPR, KC_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
-    {TD_LPRN, PS_CIRC, PS_PERC, PS_DLR,  KC_RPRN, _______, _______, _______, LT_LFTX, KC_DOWN, KC_RGHT, KC_PGDN},
-    {TD_LBRC, KC_HASH, KC_AT,   KC_EXLM, KC_RBRC, _______, _______, _______, _______, KC_LT,   KC_GT,   _______},
+    {KC_LCBR, KC_DOT,  KC_ASTR, KC_AMPR, TD_RCBR, _______, _______, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
+    {PS_LPRN, PS_CIRC, PS_PERC, PS_DLR,  TD_RPRN, _______, _______, _______, LT_LFTX, KC_DOWN, KC_RGHT, KC_PGDN},
+    {KC_LBRC, KC_HASH, KC_AT,   KC_EXLM, TD_RBRC, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, LT_BSLS, PS_PIPE, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, ___x___},
   },
 
   // .-----------------------------------------------------------------------------------.
-  // |      |   ?  |   ~  |   :  |      |      |      |      |      |      |      |      |
+  // |      |   ?  |   +  |   ~  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |   3  |   2  |   1  |      |      |      |      |  f() |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   +  |   /  |   =  |      |      |      |      |      |      |      |      |
+  // |      |   <  |   >  |   =  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMREG] = {
-    {___x___, KC_QUES, KC_TILD, KC_COLN, ___x___, _______, _______, _______, ___x___, ___x___, ___x___, ___x___},
+    {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, ___x___, ___x___, ___x___, ___x___},
     {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, ___fn__, ___x___, ___x___, ___x___},
-    {___x___, KC_PLUS, KC_SLSH, KC_EQL,  ___x___, _______, _______, _______, _______, ___x___, ___x___, _______},
+    {___x___, KC_LT,   KC_GT,   KC_EQL,  ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___},
   },
 
@@ -609,7 +602,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ............ .................................................. Function Keys
 //
-// http://www.keyboard-layout-editor.com/#/gists/e9d0b2bd2807ba74bfbdbb75915dad61
+// http://www.keyboard-layout-editor.com/#/gists/dc580fd2504d1328913f8044a9861378
 
   // .-----------------------------------------------------------------------------------.
   // |      |      |      |      |      |      |      |      |  F7  |  F8  |  F9  |  F12 |
@@ -623,26 +616,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FNCKEY] = {
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12 },
-    {OS_CTL,  OS_GUI,  OS_ALT,  TD_FBKT, _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
+    {OS_CTL,  OS_GUI,  OS_ALT,  OS_SFT,  _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11 },
     {_______, _______, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10 },
     {_______, _______, _______, _______, _______, ___fn__, _______, KC_PLUS, _______, _______, _______, _______},
-  },
-
-  // .-----------------------------------------------------------------------------------.
-  // |      |      |      |      |      |      |      |   }  |   {  |      |      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |  f() |      |      |      |   )  |   (  |      |      |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |   ]  |  [   |   <  |   >  |      |
-  // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |  f() |      | Space|      |      |      |      |
-  // '-----------------------------------------------------------------------------------'
-
-  [_FNCBKT] = {
-    {_______, _______, _______, _______, _______, _______, _______, KC_RCBR, TD_LCBR, _______, _______, _______},
-    {_______, _______, _______, ___fn__, _______, _______, _______, KC_RPRN, TD_LPRN, _______, _______, _______},
-    {_______, _______, _______, _______, _______, _______, _______, KC_RBRC, TD_LBRC, TD_LT,   TD_GT,   _______},
-    {_______, _______, _______, _______, _______, ___fn__, _______, KC_SPC,  _______, _______, _______, _______},
   },
 
 // .................................................................. Short Cuts
@@ -784,44 +760,6 @@ void modifier(void (*f)(uint8_t))
   }
 }
 
-// ............................................................ Tap Dance Layers
-
-void fncbkt(qk_tap_dance_state_t *state, void *user_data)
-{
-  // down: hex layer
-  if (state->pressed) {
-    layer_on(_FNCBKT);
-  }
-  // tap: one shot shift
-  else {
-    set_oneshot_mods(MOD_LSFT);
-  }
-}
-
-void fncbkt_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  layer_off(_FNCBKT);
-}
-
-void symhex(qk_tap_dance_state_t *state, void *user_data)
-{
-  // down: hex layer
-  if (state->pressed) {
-    layer_on(_NUMHEX);
-  }
-  // tap: symbol layer
-  else {
-    layer_on(_NUMSYM);
-    set_oneshot_layer(_NUMSYM, ONESHOT_START);
-  }
-}
-
-void symhex_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  layer_off(_NUMHEX);
-  clear_oneshot_layer_state(ONESHOT_PRESSED);
-}
-
 // ......................................................... Triple Dance Insert
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
@@ -937,8 +875,10 @@ void symbol_pair(uint8_t shift, uint16_t left, uint16_t right)
   }
 }
 
+#define CLOSE 1
+
 // tap dance symbol pairs
-void tap_pair(qk_tap_dance_state_t *state, uint8_t shift, uint16_t left, uint16_t right, uint8_t modifier)
+void tap_pair(qk_tap_dance_state_t *state, uint8_t shift, uint16_t left, uint16_t right, uint8_t modifier, uint8_t close)
 {
   // triple tap: left right with cursor between symbol pair a la vim :-)
   if (state->count > 2) {
@@ -955,13 +895,13 @@ void tap_pair(qk_tap_dance_state_t *state, uint8_t shift, uint16_t left, uint16_
       register_code(modifier);
     }
   }
-  // tap: left
+  // tap: left (close: right)
   else {
     if (shift & S_SINGLE) {
-      shift_key(left);
+      shift_key(close ? right : left);
     }
     else {
-      tap_key(left);
+      tap_key(close ? right : left);
     }
   }
   if (!modifier) {
@@ -969,39 +909,59 @@ void tap_pair(qk_tap_dance_state_t *state, uint8_t shift, uint16_t left, uint16_
   }
 }
 
-void brace(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0);
-}
-
-void curly(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0);
-}
-
 void doublequote(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_QUOT, KC_QUOT, 0);
+  tap_pair(state, S_ALWAYS, KC_QUOT, KC_QUOT, 0, 0);
 }
 
 void grave(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_NEVER, KC_GRV, KC_GRV, 0);
+  tap_pair(state, S_NEVER, KC_GRV, KC_GRV, 0, 0);
 }
 
-void paren(qk_tap_dance_state_t *state, void *user_data)
+void lbrace(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_9, KC_0, KC_LCTL);
+  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0, 0);
 }
 
-void paren_reset(qk_tap_dance_state_t *state, void *user_data)
+void lcurly(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0, 0);
+}
+
+void lparen(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, KC_LCTL, 0);
+}
+
+void lparen_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_code(KC_LCTL);
 }
 
 void quote(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_NEVER, KC_QUOT, KC_QUOT, 0);
+  tap_pair(state, S_NEVER, KC_QUOT, KC_QUOT, 0, 0);
+}
+
+void rbrace(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0, CLOSE);
+}
+
+void rcurly(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_LBRC, KC_RBRC, 0, CLOSE);
+}
+
+void rparen(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, KC_LCTL, CLOSE);
+}
+
+void rparen_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_code(KC_LCTL);
 }
 
 // ............................................................ Tap Dance Insert
@@ -1016,6 +976,15 @@ void colon(qk_tap_dance_state_t *state, void *user_data)
   }
   else {
     shift_key(KC_SCLN);
+  }
+  reset_tap_dance(state);
+}
+
+void comma(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_key(KC_COMM);
+  if (state->count > 1) {
+    tap_key(KC_SPC);
   }
   reset_tap_dance(state);
 }
@@ -1084,19 +1053,21 @@ void caps(qk_tap_dance_state_t *state, void *user_data)
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_CAPS] = ACTION_TAP_DANCE_FN         (caps)
  ,[_COLN] = ACTION_TAP_DANCE_FN         (colon)
+ ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DQOT] = ACTION_TAP_DANCE_FN         (doublequote)
  ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
- ,[_FBKT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fncbkt, fncbkt_reset)
  ,[_GT]   = ACTION_TAP_DANCE_FN         (greater)
  ,[_GRV]  = ACTION_TAP_DANCE_FN         (grave)
- ,[_LBRC] = ACTION_TAP_DANCE_FN         (brace)
- ,[_LCBR] = ACTION_TAP_DANCE_FN         (curly)
- ,[_LPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, paren, paren_reset)
+ ,[_LBRC] = ACTION_TAP_DANCE_FN         (lbrace)
+ ,[_LCBR] = ACTION_TAP_DANCE_FN         (lcurly)
+ ,[_LPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lparen, lparen_reset)
  ,[_LT]   = ACTION_TAP_DANCE_FN         (lesser)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_QUOT] = ACTION_TAP_DANCE_FN         (quote)
+ ,[_RBRC] = ACTION_TAP_DANCE_FN         (rbrace)
+ ,[_RCBR] = ACTION_TAP_DANCE_FN         (rcurly)
+ ,[_RPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rparen, rparen_reset)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
- ,[_SHEX] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symhex, symhex_reset)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
  ,[_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
 };
@@ -1256,10 +1227,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case OS_GUI:
       tap_mods(record, KC_LGUI);
       break;
-    case PS_PERC:
-      // ALT_T(S(KC_5))
-      mt_shift(record, KC_LALT, KC_5);
-      break;
     case PS_CIRC:
       // GUI_T(S(KC_6))
       mt_shift(record, KC_LGUI, KC_6);
@@ -1267,6 +1234,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case PS_DLR:
       // SFT_T(S(KC_4))
       mt_shift(record, KC_LSFT, KC_4);
+      break;
+    case PS_LPRN:
+      // CTL_T(S(KC_9))
+      mt_shift(record, KC_LCTL, KC_9);
+      break;
+    case PS_PERC:
+      // ALT_T(S(KC_5))
+      mt_shift(record, KC_LALT, KC_5);
       break;
     case PS_LEFT:
       tap_layer(record, _MOUSE);
