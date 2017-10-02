@@ -72,6 +72,7 @@ extern keymap_config_t keymap_config;
 // appears to be 0..15 layer limit
 enum planck_layers {
   _BASE = 0
+ ,_SHIFT
  ,_LSHIFT
  ,_RSHIFT
  ,_PLOVER
@@ -213,6 +214,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
   },
 
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_W), S(KC_C), S(KC_G), S(KC_Z), OS_CALT, OS_CGUI, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_SCLN},
+    {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_B), OS_SALT, OS_SGUI, S(KC_K), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
+    {S(KC_X), S(KC_V), S(KC_F), S(KC_D), S(KC_P), TD_CAPS, OS_CSFT, S(KC_M), S(KC_H), KC_COMM, KC_DOT,  TD_QUOT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
 // http://www.keyboard-layout-editor.com/#/gists/8fa64e71484881b496d326f162959823
 
   // ,-----------------------------------------------------------------------------------.
@@ -269,6 +277,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
   },
 
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_B), OS_CALT, OS_CGUI, S(KC_J), S(KC_L), S(KC_U), S(KC_Y), KC_SCLN},
+    {S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), OS_SALT, OS_SGUI, S(KC_M), S(KC_N), S(KC_E), S(KC_I), S(KC_O)},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_V), TD_CAPS, OS_CSFT, S(KC_K), S(KC_H), KC_COMM, KC_DOT,  TD_QUOT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   W  |   F  |   P  |   B  | ^Alt | ^GUI |   J  |   L  |   U  |   Y  |   :  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -322,6 +337,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {KC_H,    KC_I,    KC_E,    KC_A,    TD_QUOT, OS_SALT, OS_SGUI,  KC_L,   KC_S,    KC_T,    KC_N,    KC_W   },
     {KC_SCLN, KC_COMM, KC_J,    KC_DOT,  KC_X,    TD_CAPS, OS_CSFT,  KC_B,   KC_D,    KC_M,    KC_P,    KC_Z   },
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
+  },
+
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_K), OS_CALT, OS_CGUI, S(KC_F), S(KC_G), S(KC_R), S(KC_C), S(KC_V)},
+    {S(KC_H), S(KC_I), S(KC_E), S(KC_A), TD_QUOT, OS_SALT, OS_SGUI, S(KC_L), S(KC_S), S(KC_T), S(KC_N), S(KC_W)},
+    {KC_SCLN, KC_COMM, S(KC_J), KC_DOT,  S(KC_X), TD_CAPS, OS_CSFT, S(KC_B), S(KC_D), S(KC_M), S(KC_P), S(KC_Z)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_UNDS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
 // http://www.keyboard-layout-editor.com/#/gists/8bd8208cd4792a10ccbff660372750e9
@@ -382,6 +404,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
   },
 
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_DOT,  OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
+    {S(KC_J), KC_SCLN, TD_QUOT, S(KC_I), KC_COMM, TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_UNDS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
 // http://www.keyboard-layout-editor.com/#/gists/8bd8208cd4792a10ccbff660372750e9
 
   // ,-----------------------------------------------------------------------------------.
@@ -419,6 +448,71 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
 #endif
 
+// ..................................................................... BEAKL X
+#ifdef BEAKLX
+// http://www.keyboard-layout-editor.com/#/gists/249312bcc3b6ab02be1fe0ace57f2405
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   K  |   H  |   E  |   A  |   .  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   J  |   ;  |   "  |   I  |   ,  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
+  // `-----------------------------------------------------------------------------------'
+
+  [_BASE] = {
+    {KC_Q,    KC_Y,    KC_O,    KC_U,    KC_X,    OS_CALT, OS_CGUI,  KC_G,   KC_C,    KC_R,    KC_F,    KC_Z   },
+    {KC_K,    KC_H,    KC_E,    KC_A,    KC_DOT,  OS_SALT, OS_SGUI,  KC_D,   KC_S,    KC_T,    KC_N,    KC_B   },
+    {KC_J,    KC_SCLN, TD_QUOT, KC_I,    KC_COMM, TD_CAPS, OS_CSFT,  KC_W,   KC_M,    KC_L,    KC_P,    KC_V   },
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
+  },
+
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_DOT,  OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
+    {S(KC_J), KC_SCLN, TD_QUOT, S(KC_I), KC_COMM, TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_UNDS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
+// http://www.keyboard-layout-editor.com/#/gists/7af107f03a4a1f06f5a4af35994e3d77
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   {  |   *  |   }  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   K  |   (  |   !  |   )  |   ~  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   J  |   :  |   "  |   I  |   `  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   _  | Left | Down |  Up  | Right|
+  // `-----------------------------------------------------------------------------------'
+
+  [_LSHIFT] = {
+    {S(KC_Q), KC_LCBR, KC_ASTR, TD_RCBR, S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
+    {S(KC_K), PS_LPRN, KC_EXLM, TD_RPRN, TD_TILD, OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
+    {S(KC_J), TD_COLN, TD_DQOT, S(KC_I), TD_GRV,  TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_UNDS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   [  |   +  |   ]  |   Z  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   K  |   H  |   E  |   A  |   ?  | ↑Alt | ↑GUI |   D  |   <  |   =  |   >  |   B  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   J  |   :  |   "  |   I  |   /  | Caps |^Shift|   W  |   M  |   L  |   P  |   V  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc |   -  | ↑Tab | Bksp |  f() | Left | Down |  Up  | Right|
+  // `-----------------------------------------------------------------------------------'
+
+  [_RSHIFT] = {
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), TD_LBRC, KC_PLUS, KC_RBRC, S(KC_Z)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_QUES, OS_SALT, OS_SGUI, S(KC_D), TD_LT,   KC_EQL,  TD_GT,   S(KC_B)},
+    {S(KC_J), TD_COLN, TD_DQOT, S(KC_I), KC_SLSH, TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  KC_MINS, PS_TAB,  LT_BSPC, ___fn__, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+#endif
+
 // ...................................................................... Qwerty
 #ifdef QWERTY
   // ,-----------------------------------------------------------------------------------.
@@ -436,6 +530,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    OS_SALT, OS_SGUI,  KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN},
     {KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    TD_CAPS, OS_CSFT,  KC_N,   KC_M,    KC_COMM, KC_DOT,  TD_QUOT},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC,  TD_ENT, LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
+  },
+
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T), OS_CALT, OS_CGUI, S(KC_Y), S(KC_U), S(KC_I), S(KC_O), S(KC_P)},
+    {S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G), OS_SALT, OS_SGUI, S(KC_H), S(KC_J), S(KC_K), S(KC_L), KC_SCLN},
+    {S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B), TD_CAPS, OS_CSFT, S(KC_N), S(KC_M), KC_COMM, KC_DOT,  TD_QUOT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_MINS, PS_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
   // ,-----------------------------------------------------------------------------------.
@@ -520,7 +621,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |  f() |      |      |      |   (  |   $  |   %  |   ^  |   )  |
   // |-----------------------------------------------------------------------------------|
-  // |      |      |      |      |      |      |      |   [  |   ~  |   <  |   >  |   ]  |
+  // |      |      |      |      |      |      |      |   [  |   <  |   ~  |   >  |   ]  |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |  f() |      |      |      |   |  |   \  |      |      |      |
   // '-----------------------------------------------------------------------------------'
@@ -528,7 +629,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NUMSYM] = {
     {_______, _______, _______, ___x___, _______, _______, _______, TD_LCBR, KC_AMPR, KC_QUES, KC_COLN, KC_RCBR},
     {___x___, ___x___, ___x___, ___fn__, _______, _______, _______, TD_LPRN, KC_DLR,  KC_PERC, KC_CIRC, KC_RPRN},
-    {_______, _______, _______, ___x___, _______, _______, _______, TD_LBRC, KC_TILD, KC_LT,   KC_GT,   KC_RBRC},
+    {_______, _______, _______, ___x___, _______, _______, _______, TD_LBRC, KC_LT,   KC_TILD, KC_GT,   KC_RBRC},
     {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_PIPE, KC_BSLS, ___x___, ___x___, ___x___},
   },
 
@@ -558,7 +659,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // |      |   3  |   2  |   1  |      |      |      |      |  f() |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   <  |   >  |   =  |      |      |      |      |      |      |      |      |
+  // |      |   <  |   =  |   >  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
@@ -566,7 +667,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_SYMREG] = {
     {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, ___x___, ___x___, ___x___, ___x___},
     {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, ___fn__, ___x___, ___x___, ___x___},
-    {___x___, KC_LT,   KC_GT,   KC_EQL,  ___x___, _______, _______, _______, _______, _______, _______, _______},
+    {___x___, KC_LT,   KC_EQL,  KC_GT,   ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___},
   },
 
@@ -792,8 +893,9 @@ void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
     tap_key (keycode);
     if (DT_SHIFT) {
       // set_oneshot_mods(MOD_LSFT);
-      layer_on(layer);
-      set_oneshot_layer(layer, ONESHOT_START);
+      // layer_on(layer);
+      layer_on(_SHIFT);
+      set_oneshot_layer(_SHIFT, ONESHOT_START);
       dt_shift = 1;
     }
     else {
