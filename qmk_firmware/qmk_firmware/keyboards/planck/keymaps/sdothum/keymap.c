@@ -97,10 +97,10 @@ enum planck_keycodes {
  ,PS_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,PS_PIPE   // pseudo LT   (_MOUSE, S(KC_BSLS)) for modified key-codes, see process_record_user()
  ,PS_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB)) for modified key-codes, see process_record_user()
- ,LT_0    = LT (_ADJUST, KC_0)
  ,LT_A    = LT (_NUMSYM, KC_A)
  ,LT_BSLS = LT (_ADJUST, KC_BSLS)
  ,LT_BSPC = LT (_EDIT,   KC_BSPC)
+ ,LT_EQL  = LT (_ADJUST, KC_EQL)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
  ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling
  ,LT_LFTX = LT (_SYMREG, KC_LEFT)
@@ -613,7 +613,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, KC_F,    MT_E,    KC_D,    _______, _______, _______, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_ASTR},
     {OS_CTL,  GT_C,    AT_B,    LT_A,    _______, _______, _______, KC_DOT,  KC_4,    KC_5,    KC_6,    KC_MINS},
     {_______, KC_HASH, MT_X,    S(KC_G), _______, _______, _______, TD_COMM, KC_1,    KC_2,    KC_3,    KC_PLUS},
-    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_EQL,  LT_0,    ___x___, ___x___, ___x___},
+    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_0,    LT_EQL,  ___x___, ___x___, ___x___},
   },
 
   // .-----------------------------------------------------------------------------------.
