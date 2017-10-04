@@ -97,10 +97,14 @@ enum planck_keycodes {
  ,PS_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT)) for modified key-codes, see process_record_user()
  ,PS_PIPE   // pseudo LT   (_MOUSE, S(KC_BSLS)) for modified key-codes, see process_record_user()
  ,PS_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB)) for modified key-codes, see process_record_user()
+#ifdef THUMB_0
+ ,LT_EQL  = LT (_ADJUST, KC_EQL)
+#else
+ ,LT_0    = LT (_ADJUST, KC_0)
+#endif
  ,LT_A    = LT (_NUMSYM, KC_A)
  ,LT_BSLS = LT (_ADJUST, KC_BSLS)
  ,LT_BSPC = LT (_EDIT,   KC_BSPC)
- ,LT_EQL  = LT (_ADJUST, KC_EQL)
  ,LT_ESC  = LT (_NUMBER, KC_ESC)
  ,LT_LEFT = LT (_SYMBOL, KC_LEFT)           // see process_record_user() for extended handling
  ,LT_LFTX = LT (_SYMREG, KC_LEFT)
@@ -448,8 +452,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
 #endif
 
-// ..................................................................... BEAKL X
-#ifdef BEAKLX
+// .................................................................... BEAKL 8P
+#ifdef BEAKL8P
 // http://www.keyboard-layout-editor.com/#/gists/249312bcc3b6ab02be1fe0ace57f2405
 
   // ,-----------------------------------------------------------------------------------.
@@ -606,6 +610,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |-----------------------------------------------------------------------------------|
   // |      |   #  |   X  |   G  |      |      |      |   ,  |   1  |   2  |   3  |   +  |
   // |-----------------------------------------------------------------------------------|
+  // |      |      |      |  f() |      |       |      |  0  |   =  |      |      |      |
   // |      |      |      |  f() |      |       |      |  =  |   0  |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
@@ -613,7 +618,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, KC_F,    MT_E,    KC_D,    _______, _______, _______, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_ASTR},
     {OS_CTL,  GT_C,    AT_B,    LT_A,    _______, _______, _______, KC_DOT,  KC_4,    KC_5,    KC_6,    KC_MINS},
     {_______, KC_HASH, MT_X,    S(KC_G), _______, _______, _______, TD_COMM, KC_1,    KC_2,    KC_3,    KC_PLUS},
+#ifdef THUMB_0
     {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_0,    LT_EQL,  ___x___, ___x___, ___x___},
+#else
+    {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_EQL,  LT_0,    ___x___, ___x___, ___x___},
+#endif
   },
 
   // .-----------------------------------------------------------------------------------.
@@ -881,26 +890,39 @@ void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
 
 static uint8_t dt_shift = 0;
 
+void double_shift(uint16_t keycode, uint8_t layer)
+{
+  tap_key (keycode);
+  if (DT_SHIFT) {
+    // set_oneshot_mods(MOD_LSFT);
+    // layer_on(layer);
+    layer_on(_SHIFT);
+    set_oneshot_layer(_SHIFT, ONESHOT_START);
+    dt_shift = 1;
+  }
+  else {
+    layer_on(layer);
+  }
+}
+
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
 {
-  // double tap plus down: repeating keycode
+  // double tap plus down
   if (state->count > 2) {
-    register_code(keycode);
+    // double enter shift
+    if (keycode == KC_ENT) {
+      tap_key     (keycode);
+      double_shift(keycode, layer);
+    }
+    // repeating keycode
+    else {
+      register_code(keycode);
+    }
   }
   // tap plus down (or double tap): keycode (one shot) shift
   else if (state->count > 1) {
-    tap_key (keycode);
-    if (DT_SHIFT) {
-      // set_oneshot_mods(MOD_LSFT);
-      // layer_on(layer);
-      layer_on(_SHIFT);
-      set_oneshot_layer(_SHIFT, ONESHOT_START);
-      dt_shift = 1;
-    }
-    else {
-      layer_on(layer);
-    }
+    double_shift(keycode, layer);
   }
   // down: shift
   else if (state->pressed) {

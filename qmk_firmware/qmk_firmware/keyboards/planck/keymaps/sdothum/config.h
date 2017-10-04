@@ -18,7 +18,10 @@
 // thumb key tap-shift() double tap: one shot shift (0) off (1) on
 #define DT_SHIFT 1
 
-// Layout COLEKAX, MOD_DH (Colemak), QWERTY (default)
-#define COLEMAX
+// number layer 0 position KEYPAD_0, THUMB_0
+#define THUMB_0
+
+// Layout BEAKL*, COLEKA*, QWERTY (default)
+#define BEAKL8P
 
 #endif
