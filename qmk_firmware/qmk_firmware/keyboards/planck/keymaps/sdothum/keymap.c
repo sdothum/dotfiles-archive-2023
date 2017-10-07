@@ -151,6 +151,7 @@ enum tap_dance {
  ,_QUOT
  ,_RBRC
  ,_RCBR
+ ,_RNGL
  ,_RPRN
  ,_SEND
  ,_SHEX
@@ -174,6 +175,7 @@ enum tap_dance {
 #define TD_QUOT TD(_QUOT)
 #define TD_RBRC TD(_RBRC)
 #define TD_RCBR TD(_RCBR)
+#define TD_RNGL TD(_RNGL)
 #define TD_RPRN TD(_RPRN)
 #define TD_SEND TD(_SEND)                   // config.h defined macro string
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc
@@ -666,17 +668,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |      |   ?  |   +  |   ~  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   3  |   2  |   1  |      |      |      |      |  f() |      |      |      |
+  // |      |   <  |   =  |   >  |      |      |      |      |  f() |      |      |      |
   // |-----------------------------------------------------------------------------------|
-  // |      |   <  |   =  |   >  |      |      |      |      |      |      |      |      |
+  // |      |   3  |   2  |   1  |      |      |      |      |      |      |      |      |
   // |-----------------------------------------------------------------------------------|
   // |      |      |      |      |      |      |      |      |  f() |      |      |      |
   // '-----------------------------------------------------------------------------------'
 
   [_SYMREG] = {
     {___x___, KC_QUES, KC_PLUS, KC_TILD, ___x___, _______, _______, _______, ___x___, ___x___, ___x___, ___x___},
-    {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, ___fn__, ___x___, ___x___, ___x___},
-    {___x___, KC_LT,   KC_EQL,  KC_GT,   ___x___, _______, _______, _______, _______, _______, _______, _______},
+    {___x___, KC_LT,   KC_EQL,  TD_RNGL, ___x___, _______, _______, _______, ___fn__, ___x___, ___x___, ___x___},
+    {___x___, KC_3,    KC_2,    KC_1,    ___x___, _______, _______, _______, _______, _______, _______, _______},
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___},
   },
 
@@ -1059,6 +1061,11 @@ void quote(qk_tap_dance_state_t *state, void *user_data)
   tap_pair(state, S_NEVER, KC_QUOT, KC_QUOT, 0, 0);
 }
 
+void rangle(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_pair(state, S_ALWAYS, KC_COMM, KC_DOT, 0, CLOSE);
+}
+
 void rbrace(qk_tap_dance_state_t *state, void *user_data)
 {
   tap_pair(state, S_NEVER, KC_LBRC, KC_RBRC, 0, CLOSE);
@@ -1181,6 +1188,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_QUOT] = ACTION_TAP_DANCE_FN         (quote)
  ,[_RBRC] = ACTION_TAP_DANCE_FN         (rbrace)
  ,[_RCBR] = ACTION_TAP_DANCE_FN         (rcurly)
+ ,[_RNGL] = ACTION_TAP_DANCE_FN         (rangle)
  ,[_RPRN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rparen, rparen_reset)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
