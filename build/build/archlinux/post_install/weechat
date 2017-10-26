@@ -136,11 +136,13 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set weechat.look.prefix_align_min 15
 /set weechat.look.prefix_align_more '…'
 /set weechat.look.prefix_error '⚑ '
-/set weechat.look.prefix_join '◥'
+# /set weechat.look.prefix_join '◥'
+# /set weechat.look.prefix_quit '◣'
+/set weechat.look.prefix_join '>'
+/set weechat.look.prefix_quit '<'
 /set weechat.look.prefix_network '⚡'
-/set weechat.look.prefix_quit '◣'
 # /set weechat.look.prefix_same_nick '→'
-/set weechat.look.prefix_same_nick '⇢'
+/set weechat.look.prefix_same_nick '…'
 /set weechat.look.prefix_suffix ' '
 /set weechat.look.read_marker none
 /set weechat.look.save_layout_on_exit all

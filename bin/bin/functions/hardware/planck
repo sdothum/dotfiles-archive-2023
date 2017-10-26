@@ -7,15 +7,18 @@
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap> [adnw|colemax|mod-dh] [<string>] [dfu]"
+  echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty]  [steno [nomouse]]  [<string>] [dfu]"
   exit 1
 }
 
-KEYMAPS='(COLEMAX|MOD_DH|QWERTY)'
+KEYMAPS='(ADNW|BEAKL|COLEM|QWERTY).*'
 
 QMK=$HOME/qmk_firmware
 PLANCK=$QMK/keyboards/planck
 KEYMAP=$PLANCK/keymaps/$1
+CONFIG=$KEYMAP/config.h
+MAKEFILE=$KEYMAP/Makefile
+PRIVATE=$KEYMAP/private_string.h
 
 [ $1 ] || usage
 keymap=$1
@@ -32,20 +35,28 @@ fi
 
 # default keymap
 case $1 in
-  adnw   ) sed -i -r "s/#define.*$KEYMAPS/#define ADNW/" $KEYMAP/config.h; shift ;;
-  colemax) sed -i -r "s/#define.*$KEYMAPS/#define COLEMAX/" $KEYMAP/config.h; [ "$1" = colemax ] && shift ;;
-  mod-dh ) sed -i -r "s/#define.*$KEYMAPS/#define MOD_DH/" $KEYMAP/config.h; shift ;;
-  *      ) ditto 'qwerty'
+  adnw* | beakl* | colem*) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG ;;
+  *                      ) usage ;;
 esac
+shift
+
+# steno (mouse may need to be mandisabled in config.h)
+if [ "$1" = steno ] ;then
+  sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
+  shift
+  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+else
+  sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
+fi
 
 # compile time macro sting
-grep -q PRIVATE_STRING $KEYMAP/config.h || sed -i '$a#define PRIVATE_STRING' $KEYMAP/config.h
+grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING' $CONFIG
 case $1 in
-  '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $KEYMAP/config.h ;;
+  '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
 
-  *) trap "rm -f $KEYMAP/private_string.h" EXIT
-     sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $KEYMAP/config.h
-     echo "SEND_STRING(\"$1\");" >$KEYMAP/private_string.h
+  *) trap "rm -f $PRIVATE" EXIT
+     sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
+     echo "SEND_STRING(\"$1\");" >$PRIVATE
      shift ;;
 esac
 

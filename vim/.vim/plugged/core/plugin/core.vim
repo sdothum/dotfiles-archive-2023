@@ -63,7 +63,7 @@
     " ......................................................... Colemak-shift-dh
 
       " environment variable
-      if $COLEMAK_DH == 'true'
+      if $COLEMAK == 'true'
         call core#Colemak()
       endif
 

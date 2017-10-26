@@ -11,6 +11,7 @@ CALENDAR=$SESSION/calendar
 DEBUG=$SESSION/debug
 IRC=$SESSION/irc
 MAIL=$SESSION/mail
+TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
 WEB=$SESSION/browser
 WSYNC=$SESSION/wsync
@@ -84,6 +85,7 @@ fi
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing
 switch tag $WEB
 [ -e $WEB ] && $BROWSER &
+[ -e $TERM ] && toggle scratchpad
 
 # .............................................................. Cleanup desktop
 

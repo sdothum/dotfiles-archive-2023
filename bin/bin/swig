@@ -1,0 +1,4 @@
+#!/usr/bin/dash
+
+cpu arm && export SWIG_FEATURES=-cpperraswarn
+/usr/bin/swig $@

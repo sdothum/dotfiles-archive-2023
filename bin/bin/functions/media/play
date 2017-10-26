@@ -30,14 +30,16 @@ if cpu arm; then
     title=$youtube
     video=$(find ${youtube%/youtube-dl} -name 'youtube-dl*')
     if [ ${video##*.} = webm ] ;then
-      ssh $SERVER ffmpeg -i "$video" "${video%webm}mp4"
-      video="${video%webm}mp4"
+      term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER ffmpeg -y -i "$video" "${video%.*}.mp4""
+      ssh $SERVER ffmpeg -i "$video" "${video%.*}.mp4"
+      pwait "${video%.*}.mp4"
+      video="${video%.*}.mp4"
     fi
   fi
 
   geometry=$(dmenu geometry "$title") || exit
   [ $video ] || video=$(find "$1" -regextype posix-extended -regex '.*(mkv|Mkv|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)
-  notify 0 low "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles'
+  notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
   # syncthing cpu usage can exacerbate video stuttering
   # systemd stop syncthing@$USER
 
@@ -49,11 +51,15 @@ if cpu arm; then
   echo "$title -> $video" >>/tmp/omxplay.log
   pwait /tmp/play:link
   # systemd start syncthing@$USER
+  # clear notification
+  xdotool key Ctrl+space
 else
   # server && env CONKYRC=$CONKY_Q2 conky clock on
-  notify 0 low "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\n#    Language\nv/j  Subtitles'
+  notify 0 blackboard "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\n#    Language\nv/j  Subtitles\nv    Toggle'
   focus frame
   mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
+  # clear notification
+  ( pwait "mpv --vf=eq $1"; xdotool key Ctrl+space ) &
 fi
 
 # refresh panel title on close

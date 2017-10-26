@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | cron | low | normal | critical]* \"<summary>\" [\"<body>\"]"
+  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | cron | low | normal | critical | blackboard]* \"<summary>\" [\"<body>\"]"
   exit 1
 }
 
@@ -26,6 +26,7 @@ do
     console                ) console=true ;;
     cron                   ) cron=true ;;
     low | normal | critical) urgency="-u $1" ;;
+    blackboard             ) urgency="-h string:bgcolor:#000000" ;;
 
     *) case $1 in
          # none numeric field

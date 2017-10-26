@@ -125,6 +125,8 @@
 
       set omnifunc=syntaxcomplete#Complete
       syntax on                             " turn on syntax highlighting
+      " refresh highlighting on arm
+      autocmd gui CursorHold * if ! Prose() | execute 'set filetype=' . &filetype | endif
 
     " ...................................................... White space markers
 

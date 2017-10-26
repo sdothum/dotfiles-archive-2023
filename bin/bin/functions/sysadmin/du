@@ -12,7 +12,7 @@ case $1 in
 esac
 
 # display du and corrected btrfs du
-/usr/bin/du -hd1 $dir 2>/dev/null
+/usr/bin/du -d1 -h $dir 2>/dev/null
 if [ -e /usr/bin/btrfs ] && server ;then
   echo
   sudo btrfs filesystem du -s $dir

@@ -38,6 +38,13 @@ test -S ~/.gnupg/S.gpg-agent
   and set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent
 set -x PASSWORD_STORE_CLIP_TIME 60
 
+# ..................................................................... Hardware
+
+# unset to use qwerty keyboard wasd mappings
+set -x BEAKL true
+# set -x COLEMAK true
+set -x PLANCK true
+
 # .......................................................... Network environment
 
 # default printer

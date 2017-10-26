@@ -24,7 +24,7 @@ usage() {
 # hilite=true
 
 wbg=argb:E0000000
-bg=argb:0000000
+bg=argb:00000000
 fg=argb:FFFDF6E3
 abg=$bg
 hbg=$bg
@@ -120,11 +120,11 @@ if [ $display ] ;then
             eval rofi -matching fuzzy \
                       -monitor $display \
                       -bw 0 \
-                      -color-active $bg,$fg,$abg,$hbg,$hfg \
                       -color-enabled \
-                      -color-normal $bg,$fg,$abg,$hbg,$hfg \
-                      -color-urgent $bg,$fg,$abg,$hbg,$hfg \
-                      -color-window $wbg,$wbg \
+                      -color-active "$bg,$fg,$abg,$hbg,$hfg" \
+                      -color-normal "$bg,$fg,$abg,$hbg,$hfg" \
+                      -color-urgent "$bg,$fg,$abg,$hbg,$hfg" \
+                      -color-window "$wbg,$wbg" \
                       -eh 1 \
                       -font \"$MONOFONT $fontsize\" \
                       -fullscreen \

@@ -7,6 +7,6 @@
 # ...................................................................... Machine
 
 # server
-[ $(hostname) = $SERVER ]
+[ $(hostname) = "$SERVER" ]
 
 # vim: set ft=sh: #

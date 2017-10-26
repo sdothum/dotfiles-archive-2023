@@ -54,11 +54,6 @@ alias who 'command w'
 
 alias friendlybear 'smbclient -R bcast //friendlybear/patricia motu om'
 
-# ................................................................... Filesystem
-
-alias ducks "du -cks * | sort -rn | egrep -v '^0|total'"
-alias dud 'du -d 1 -h'
-
 # ......................................................................... File
 
 alias cp 'cp -i'
@@ -74,6 +69,7 @@ alias t 'tail -f'
 
 # .................................................................... Directory
 
+alias dus "/usr/bin/du -hs * | sort -h"
 alias l1 'ls -1'
 alias ldot 'ls -lAd .*'
 alias ll 'ls -lA'

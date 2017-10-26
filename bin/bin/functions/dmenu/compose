@@ -22,12 +22,16 @@ editors="emacs
 format_message() {
   # insert 2 line feed characters into reply for vim cursor positioning and spacing
   # note required search order
-  if grep -q '^--- Begin forwarded message from ' $1 ;then
+  if pcregrep -Mq '^Subject: .*\n\n^--- Begin forwarded message from ' $1 ;then
     sed -i '/^--- Begin forwarded message from /i\
 \
 ' $1
-  elif grep -q '^Excerpts from .* message of ' $1 ;then
+  elif pcregrep -Mq '^Subject: .*\n\n^Excerpts from .* message of ' $1 ;then
     sed -i '/^Excerpts from .* message of /i\
+\
+' $1
+  elif pcregrep -Mq '^Subject: .*\n\n^Quoting .* (.*)' $1 ;then
+    sed -i '/^Quoting .* (.*)/i\
 \
 ' $1
   fi
@@ -49,7 +53,7 @@ compose_vim() {
   DRAFT=$HOME/drafts/${1#/tmp/}.draft
   format_message $1
   cp $1 $DRAFT
-  gvim -f -c 'set filetype=mail' -c 'call FontSize(1)' $DRAFT
+  gvim -f -c 'set filetype=mail' -c 'call FontSize(1)' -c 'normal 5G' $DRAFT
   cp $DRAFT $1
   # cleanup sup mail draft histories
   find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
