@@ -10,7 +10,7 @@ usage() {
   echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty]  [steno [nomouse]]  [<string>] [dfu]"
   exit 1
 }
-
+set -x
 KEYMAPS='(ADNW|BEAKL|COLEM|QWERTY).*'
 
 QMK=$HOME/qmk_firmware
@@ -22,11 +22,12 @@ PRIVATE=$KEYMAP/private_string.h
 
 [ $1 ] || usage
 keymap=$1
+[ $1 = splitography ] && splitography=true
 shift
 
 # update keymap from stow repo
 mkdir $KEYMAP 2>/dev/null
-cp -f $HOME/stow/qmk_firmware/${KEYMAP#$HOME/}/* $KEYMAP/
+cp -fv $HOME/stow/planck/${KEYMAP#$HOME/}/* $KEYMAP/
 
 if ! if-no 'sync qmk_firmware repo' ;then
   cd $QMK
@@ -35,30 +36,31 @@ fi
 
 # default keymap
 case $1 in
-  adnw* | beakl* | colem*) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG ;;
-  *                      ) usage ;;
+  adnw* | beakl* | colem*) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG; shift ;;
+  *                      ) [ $splitography ] || usage ;;
 esac
-shift
 
-# steno (mouse may need to be mandisabled in config.h)
-if [ "$1" = steno ] ;then
-  sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
-  shift
-  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
-else
-  sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
+if [ ! $splitography ] ;then
+  # steno (mouse may need to be mandisabled in config.h)
+  if [ "$1" = steno ] ;then
+    sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
+    shift
+    [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+  else
+    sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
+  fi
+
+  # compile time macro sting
+  grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING' $CONFIG
+  case $1 in
+    '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
+
+    *) trap "rm -f $PRIVATE" EXIT
+      sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
+      echo "SEND_STRING(\"$1\");" >$PRIVATE
+      shift ;;
+  esac
 fi
-
-# compile time macro sting
-grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING' $CONFIG
-case $1 in
-  '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
-
-  *) trap "rm -f $PRIVATE" EXIT
-     sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
-     echo "SEND_STRING(\"$1\");" >$PRIVATE
-     shift ;;
-esac
 
 cd $PLANCK
 sudo make planck-$keymap-clean

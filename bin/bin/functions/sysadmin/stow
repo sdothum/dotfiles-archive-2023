@@ -30,9 +30,9 @@ case $1 in
   check) link '&& ditto' ;;
 
   D | R) [ $2 ] || usage
-         /usr/bin/stow -t $HOME -d $STOW -$1 -v $2 ;;
+         /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ;;
 
-  *) /usr/bin/stow -t $HOME -d $STOW -S -v $1 ;;
+  *) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
 esac
 
 # vim: set ft=sh: #

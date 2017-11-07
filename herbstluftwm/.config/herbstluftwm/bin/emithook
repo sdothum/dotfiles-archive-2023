@@ -46,6 +46,7 @@ do
             vertical  ) herbstclient set_layout vertical & ;;
             horizontal) herbstclient set_layout horizontal & ;;
             grid      ) herbstclient set_layout grid & ;;
+            menu      ) draw monitor menu & ;;
 
             fullscreen) if is primary ;then
                           ( [ -e $CONKY ] && draw monitor conky fullscreen ||

@@ -11,6 +11,7 @@
 #        draw monitor fullframe, hidden conky view
 #        draw monitor fullscreen, fullscreen view
 #        draw monitor secondary [fullscreen], secondary monitor view
+#        draw monitor menu
 
 SHADOW=${SHADOW:-1}
 # load theme
@@ -165,6 +166,22 @@ case $@ in
                                            $Y1 \
                                            0 \
                                            0 ) ;;
+
+  menu) if is primary ;then
+          touch $FULLSCREEN:primary
+          PRIMARY=$(printf '%dx%d%+d%+d' \
+                          $X0 \
+                          $Y0 \
+                          $X1 \
+                          0 )
+        else
+          touch $FULLSCREEN:secondary
+          SECONDARY=$(printf '%dx%d%+d%+d' \
+                            $X1 \
+                            $Y1 \
+                            0 \
+                            0 )
+        fi ;;
 esac
 
 # configure multihead..

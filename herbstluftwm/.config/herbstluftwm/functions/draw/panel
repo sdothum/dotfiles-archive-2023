@@ -250,9 +250,10 @@ panel() {
             [ "$ind" ] && ind="$ind $tic" || ind="  $tic"
           fi
 
+          # refresh every 10 minutes
           if [ $WEATHER ] ;then
             minute=${line#*:?}
-            [ ${minute%% *} = 0 ] && weather
+            [ ${minute%%\%*} = 0 ] && weather
           fi
           line="${line%%^*}$weather${line#*^}"
 

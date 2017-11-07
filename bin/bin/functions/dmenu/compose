@@ -22,8 +22,8 @@ editors="emacs
 format_message() {
   # insert 2 line feed characters into reply for vim cursor positioning and spacing
   # note required search order
-  if pcregrep -Mq '^Subject: .*\n\n^--- Begin forwarded message from ' $1 ;then
-    sed -i '/^--- Begin forwarded message from /i\
+  if pcregrep -Mq '^Subject: .*\n\n^Forwarded message from ' $1 ;then
+    sed -i '/^Forwarded message from /i\
 \
 ' $1
   elif pcregrep -Mq '^Subject: .*\n\n^Excerpts from .* message of ' $1 ;then

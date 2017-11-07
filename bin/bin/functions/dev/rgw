@@ -8,8 +8,7 @@
 
 # rg wrapper, calling script should set --color [always|never]
 eval rg --line-number --no-heading --no-messages \
-        --ignore-case --no-ignore \
-        --hidden --follow \
+        --hidden --follow --smart-case \
         --colors 'path:fg:cyan' --colors 'path:style:bold' \
         --colors 'line:fg:cyan' --colors 'line:style:nobold' \
         --colors 'match:fg:yellow' --colors 'match:style:bold' \

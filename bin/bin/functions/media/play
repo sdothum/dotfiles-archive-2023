@@ -9,12 +9,13 @@
 # Usage: play <url> | <path> [<title>]
 
 fontsize=36
+menu=$SESSION/term:menu
+ncurses=$SESSION/ncurses
 
 youtube=/net/downloads/http/youtube-dl
 # cleanup accidental screenshots and youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
-blackboard
 conky clock stop
 
 # play media (see rox, dmenu movies, dmenu series, browsers..)
@@ -38,6 +39,9 @@ if cpu arm; then
   fi
 
   geometry=$(dmenu geometry "$title") || exit
+  rm $menu
+  blackboard
+
   [ $video ] || video=$(find "$1" -regextype posix-extended -regex '.*(mkv|Mkv|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)
   notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
   # syncthing cpu usage can exacerbate video stuttering
@@ -50,16 +54,22 @@ if cpu arm; then
   eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
   echo "$title -> $video" >>/tmp/omxplay.log
   pwait /tmp/play:link
+
   # systemd start syncthing@$USER
   # clear notification
   xdotool key Ctrl+space
+  touch $menu
 else
+  rm $menu
+  touch $ncurses
+  blackboard
   # server && env CONKYRC=$CONKY_Q2 conky clock on
   notify 0 blackboard "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\n#    Language\nv/j  Subtitles\nv    Toggle'
   focus frame
   mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
   # clear notification
   ( pwait "mpv --vf=eq $1"; xdotool key Ctrl+space ) &
+  rm $ncurses
 fi
 
 # refresh panel title on close

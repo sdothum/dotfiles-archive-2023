@@ -70,6 +70,9 @@ set -x HTTP_PROXY http://luna:3128/
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
 
+# tt-rss
+set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
+
 # ..................................................................... Defaults
 
 # default editor

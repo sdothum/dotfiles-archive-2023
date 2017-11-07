@@ -77,8 +77,8 @@ if [ -e $IRC ] ;then
   term 'IRC' VISIBLE weechat
   server && herbstclient focus_monitor 0
 fi
-[ -e $MAIL ] && term 'Mail' alot
 [ -e $CALENDAR ] && term 'Calendar' wyrd
+[ -e $MAIL ] && term 'Mail' alot
 
 # .................................................................. Window apps
 

@@ -19,7 +19,7 @@ touch_panel() { xtitle -f 'T%s' >$(cat $PANEL_FIFO); }
 close() {
   tag=$(herbstclient attr clients.$1.tag)
   # kill instance if already visible
-  [ $tag -ne $(query tag) ] && [ $tag -ne $(query tag inactive) ] && return 1
+  [ $tag != "$(query tag)" ] && [ $tag != "$(query tag inactive)" ] && return 1
   herbstclient close $1
   # clear panel title as required
   focus window
@@ -34,8 +34,9 @@ toggle_term() {
       if herbstclient compare clients.$i.instance = $1 ;then
         if ! close $i ;then
           # goto desktop
-          herbstclient use $tag
-          herbstclient focus $i
+          herbstclient use ${tag#\'}
+          [ -e $DYNAMIC ] && focus frame
+          herbstclient bring $i
         fi
         break
       fi

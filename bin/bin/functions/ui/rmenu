@@ -37,6 +37,8 @@ indent='   '
 
 # .......................................................................... GUI
 
+[ -e $SESSION/term:menu ] && window=MENU || window=STACK
+
 if [ -z $TERMINAL ] ;then
   if hlwm; then
     display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
@@ -112,7 +114,7 @@ if [ $display ] ;then
     trap "rm -f $stdin $stdout" EXIT
     sed "s/^/$indent/" >$stdin
     # escape movie title (year) parentheses
-    term "$(escape $title)" STACK WAIT SHELL "cat $stdin | fzf --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
+    term "$(escape $title)" WAIT $window SHELL "cat $stdin | fzf --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(cat $stdout)
     test -n "$input"
   else
