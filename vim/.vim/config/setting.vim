@@ -153,7 +153,7 @@
         let g:lightline.active =
             \{
             \  'left'  : [
-            \              [ 'mode',     'paste',    'matchspace' ]
+            \              [ 'mode',     'paste',    'matchspace', 'bufnum' ]
             \,             [ 'rootpath', 'basepath', 'filename'   ]
             \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
             \            ]
@@ -182,8 +182,7 @@
         let g:lightline.component =
             \{
             \  'absolutepath' : '%F'
-            \, 'linepercent'  : '%{LinePercent()}'
-            \, 'bufnum'       : '%n'
+            \, 'bufnum'       : '%{BufCount() != "1‥1" ? BufCount() : ""}'
             \, 'charvalue'    : '%b'
             \, 'charvaluehex' : '%B'
             \, 'close'        : '%999X X '
@@ -208,6 +207,7 @@
         let g:lightline.component_visible_condition =
             \{
             \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+            \, 'bufnum'      : '(BufCount() != "1‥1")'
             \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
             \, 'column'      : '(getline(line(".")) != "")'
             \, 'matchspace'  : '(g:matchspace != "")'
@@ -221,6 +221,7 @@
         let g:lightline.component_function =
             \{
             \  'indent'      : 'Indent'
+            \, 'linepercent' : 'LinePercent'
             \, 'linesizes'   : 'LineSizes'
             \, 'modified'    : 'Modified'
             \, 'spaces'      : 'Spaces'

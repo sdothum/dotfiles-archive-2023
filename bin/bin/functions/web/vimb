@@ -35,15 +35,18 @@ case $1 in
                    ;tabopen $@<CR>" |
                socat - unix-connect:$(grep socket /tmp/vimb:socket) ;;
 
-  *) cpu arm && exec vimbt "$@"
-     /usr/bin/vimb --cmd="$statusfont" \
-                   --cmd="$sslfont" \
-                   --cmd="$sslinvalidfont" \
-                   --cmd="$inputfont" \
-                   --cmd="$inputerrorfont" \
-                   --cmd="$completionfont" \
-                   "$@" 2>>/tmp/vimb.log
-     focus instance VimbT ;;
+  *) if cpu arm ;then
+       vimbt "$@"
+       focus instance VimbT
+     else
+       /usr/bin/vimb --cmd="$statusfont" \
+                     --cmd="$sslfont" \
+                     --cmd="$sslinvalidfont" \
+                     --cmd="$inputfont" \
+                     --cmd="$inputerrorfont" \
+                     --cmd="$completionfont" \
+                     "$@" 2>>/tmp/vimb.log
+     fi ;;
 esac
 
 # vim: set ft=sh: #

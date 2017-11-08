@@ -13,6 +13,7 @@
     " .................................................................. Plugins
 
       source ~/.vim/config/plugin.vim
+      source ~/.vim/config/lib.vim
       source ~/.vim/config/setting.vim
 
     " ................................................................. Settings
