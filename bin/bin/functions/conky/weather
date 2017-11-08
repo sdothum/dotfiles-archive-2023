@@ -32,6 +32,8 @@ if [ $debug ] ;then
 fi
 
 CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/&.*$/, "", $0); print }')
+# truncate 0.x decimal temperature
+echo $CURRENT | grep -q ' -*0\.[0-9]' && CURRENT=$(echo $CURRENT | sed 's/ -0\../ 0/')
 if [ $debug ] ;then
   echo Current .. $CURRENT
   echo

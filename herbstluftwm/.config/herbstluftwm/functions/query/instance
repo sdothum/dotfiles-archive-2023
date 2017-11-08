@@ -1,11 +1,10 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="focus/instance $@" . $PARENT
+# [ $TRACE ] && CHILD="query/instance $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... Focus instance
-
+# ............................................................... Instance winid
 usage() {
   echo "usage: focus $(basename $0) <instance>"
   exit 1
@@ -13,12 +12,12 @@ usage() {
 
 [ $1 ] || usage
 
-# for non-herbstluftwm scripts to focus windows, see dmenu music
-winid=$(query instance $1)
-if [ $winid ] ;then
-  herbstclient jumpto $winid
-  return 0
-fi
-return 1
+for i in $(query winids)
+do
+  if herbstclient compare clients.$i.instance = $1 ;then
+    echo $i
+  fi
+done
+echo ''
 
 # vim: set ft=sh: #

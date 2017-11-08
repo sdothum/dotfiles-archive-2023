@@ -29,18 +29,15 @@ close() {
 # special term processing toggles on unique title
 toggle_term() {
   if xdotool search --limit 1 --classname "$1" >/dev/null ;then
-    for i in $(query winids)
-    do
-      if herbstclient compare clients.$i.instance = $1 ;then
-        if ! close $i ;then
-          # goto desktop
-          herbstclient use ${tag#\'}
-          [ -e $DYNAMIC ] && focus frame
-          herbstclient bring $i
-        fi
-        break
+    winid=$(query instance $1)
+    if [ $winid ] ;then
+      if ! close $winid ;then
+        # goto desktop
+        herbstclient use ${tag#\'}
+        [ -e $DYNAMIC ] && focus frame
+        herbstclient bring $winid
       fi
-    done
+    fi
   else
     # see term (urxvt)
     $msg $@
@@ -60,17 +57,18 @@ toggle_app() {
     app=${app:-$msg}
     lock
     focus=true
-    for i in $(query winids)
-    do
-      if herbstclient compare clients.$i.instance = $app ;then
+    winids=$(query instance $app)
+    if [ "$winids" ] ;then
+      for i in $winids
+      do
         if ! close $i ;then
           # stack windows
           [ $focus ] && focus frame
           unset focus
           herbstclient bring $i
         fi
-      fi
-    done
+      done
+    fi
     unlock
   else
     focus $msg $@

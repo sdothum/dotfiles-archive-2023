@@ -34,7 +34,7 @@ else
   hc keybind $Mod-Shift-backslash      spawn toggle compton
 fi
 
-# wallpaper background
+# wallpaper background (toggle) blur
 hc keybind $Mod-b                      spawn draw root select
 hc keybind $Mod-Shift-b                spawn draw root shuffle
 hc keybind $Mod-Control-b              spawn draw root toggle

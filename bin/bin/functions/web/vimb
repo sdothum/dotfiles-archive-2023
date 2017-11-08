@@ -42,7 +42,8 @@ case $1 in
                    --cmd="$inputfont" \
                    --cmd="$inputerrorfont" \
                    --cmd="$completionfont" \
-                   "$@" 2>>/tmp/vimb.log ;;
+                   "$@" 2>>/tmp/vimb.log
+     focus instance VimbT ;;
 esac
 
 # vim: set ft=sh: #

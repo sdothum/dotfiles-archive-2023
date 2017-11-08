@@ -51,14 +51,11 @@ fi
 focus_check
 
 # check winid's just in case.. it happens!
-for i in $(query winids)
-do
-  if herbstclient compare clients.$i.instance = $name ;then
-    echo $i >$SCRATCHPAD
-    herbstclient bring $i 2>/dev/null
-    break
-  fi
-done
+winid=$(query instance $name)
+if [ $winid ] ;then
+  echo $winid >$SCRATCHPAD
+  herbstclient bring $winid 2>/dev/null
+fi
 focus_check
 
 # .......................................................... Create new instance
