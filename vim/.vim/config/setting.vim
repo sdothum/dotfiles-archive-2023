@@ -153,12 +153,12 @@
         let g:lightline.active =
             \{
             \  'left'  : [
-            \              [ 'mode',     'paste',    'matchspace', 'bufnum' ]
-            \,             [ 'rootpath', 'basepath', 'filename'   ]
-            \,             [ 'readonly', 'modified', 'wordcount', 'linesizes' ]
+            \              [ 'mode',      'paste',     'matchspace', 'bufnum' ]
+            \,             [ 'rootpath',  'basepath',  'filename'   ]
+            \,             [ 'wordcount', 'linesizes', 'readonly',   'modified' ]
             \            ]
             \, 'right' : [
-            \              [ 'indent',    'spaces',      'filetype'  ]
+            \              [ 'indent',    'spaces',      'filetype', 'bufcnt' ]
             \,             [ 'topbottom', 'linepercent', 'linecount' ]
             \,             [ 'atom',      'specialchar', 'column'    ]
             \            ]
@@ -182,7 +182,8 @@
         let g:lightline.component =
             \{
             \  'absolutepath' : '%F'
-            \, 'bufnum'       : '%{BufCount() != "1‥1" ? BufCount() : ""}'
+            \, 'bufcnt'       : '%{BufCount() > 1 ? BufCount() : ""}'
+            \, 'bufnum'       : '%{BufCount() > 1 ? bufnr("%") : ""}'
             \, 'charvalue'    : '%b'
             \, 'charvaluehex' : '%B'
             \, 'close'        : '%999X X '
@@ -207,7 +208,8 @@
         let g:lightline.component_visible_condition =
             \{
             \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-            \, 'bufnum'      : '(BufCount() != "1‥1")'
+            \, 'bufcnt'      : '(BufCount() > 1)'
+            \, 'bufnum'      : '(BufCount() > 1)'
             \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
             \, 'column'      : '(getline(line(".")) != "")'
             \, 'matchspace'  : '(g:matchspace != "")'

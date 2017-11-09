@@ -11,12 +11,8 @@ usage() {
   exit 1
 }
 
-# ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' "$@" | filter '.*:[0-9]+:'
 [ "$1" ] || usage
-if echo $@ | grep -q '"' ;then
-  rgw --color 'always' --regexp \'$@\' | filter '.*:[0-9]*:'
-else
-  rgw --color 'always' --regexp \"$@\" | filter '.*:[0-9]*:'
-fi
+
+ack --smart-case --color --color-match='bold yellow' "$@" | filter '.*:[0-9]+:'
 
 # vim: set ft=sh: #

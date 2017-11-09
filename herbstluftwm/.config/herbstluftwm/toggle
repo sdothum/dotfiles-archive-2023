@@ -32,7 +32,7 @@ toggle_term() {
     winid=$(query instance $1)
     if [ $winid ] ;then
       if ! close $winid ;then
-        # goto desktop
+        # goto desktop (unhide)
         herbstclient use ${tag#\'}
         [ -e $DYNAMIC ] && focus frame
         herbstclient bring $winid

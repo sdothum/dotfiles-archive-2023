@@ -13,7 +13,7 @@ ansi='\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]'
 # directory exclusions
 dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
 conf='.config/(Abricotine|Clementine|cairo|chromium|google|qupzilla|sublime|umplayer|variety|vivaldi)'
-apps='\.config/(bookmarks|history)|\.history|\.local|network/adblock|PlayOnLinux|\.vim/(backups|plugged)|vimb|\.vimv|vimmappings'
+apps='\.local|network/adblock|PlayOnLinux|\.vim/(backups|plugged)|\.vimv|vimmappings'
 
 # <regex> restricts filter to filename portion of input list, see a and al
 egrep -v "\($ansi\)?.*\($dirs|$conf|$apps\)$@"

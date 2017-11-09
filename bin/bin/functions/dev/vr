@@ -11,26 +11,17 @@ usage() {
   exit 1
 }
 
-# prevent resource sucking attempt to scan home directory
-[ $PWD = $HOME ] && depth=1 || depth=9
-
 # v by content
 [ "$1" ] || usage
-file=$(rgw --maxdepth $depth \
-           --glob "!*/*cache" \
-           --glob "!*cache/*" \
-           --glob "!.deprecated/*" \
-           --glob "!.git/*" \
-           --glob "!.hg/*" \
-           --glob "!.stack/*" \
-           --color "always" \
-           --regexp "\"$@\"" |
-       filter |
-       fzf --multi |
-       nocolor |
-       cut -d: -f1 |
-       uniq)
-[ "$file" ] || exit
-v $file
+
+files=$(a "$@" |
+        fzf --multi |
+        nocolor |
+        cut -d: -f1 |
+        uniq)
+
+[ "$files" ] || exit
+
+v $files
 
 # vim: set ft=sh: #

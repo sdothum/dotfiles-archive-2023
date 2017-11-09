@@ -68,7 +68,7 @@ nzb :: $HOME/.nzbget
 openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
 planck sdothum :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/sdothum/* $HOME/bin/functions/hardware/planck
-planck splitography :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/splitography/* $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/sdothum/keymap.c $HOME/bin/functions/hardware/planck
+planck splitography :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/splitography/* $HOME/bin/functions/hardware/planck
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*
