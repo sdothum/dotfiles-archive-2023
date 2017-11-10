@@ -156,6 +156,9 @@ default() {
                                           echo 'max'
 }
 
+# restore default monitor margins
+[ $1 ] && [ -e $MONOCLE ] && toggle monocle
+
 case $1 in
   tags) for i in $TAGS
         do

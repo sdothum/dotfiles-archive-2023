@@ -277,7 +277,7 @@ panel() {
           if is fullscreen ;then
             [ $count -gt 1 ] && hiding=true
           elif herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
-            herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && hiding=true
+            is layout max && hiding=true
           fi
           if [ $count -gt 0 ] ;then
             if [ "$(query wname)" = "${line#?}" ] ;then

@@ -1,18 +1,12 @@
-#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/layout $@" . $PARENT
 
-# Dev
+# herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Search
+# ................................................................. Query layout
 
-usage() {
-  echo "usage: $(basename $0) [-w] <regex>"
-  exit 1
-}
-
-[ "$1" ] || usage
-
-a -l --nocolor --silent $@
+# return layout of focused frame
+herbstclient layout | grep '\[FOCUS\]' | awk '{ print $2 }' | cut -d: -f1
 
 # vim: set ft=sh: #

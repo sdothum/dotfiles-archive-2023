@@ -7,12 +7,17 @@
 # ....................................................................... Search
 
 usage() {
-  echo "usage: $(basename $0) <regex>"
+  echo "usage: $(basename $0) [-w] <regex>"
   exit 1
 }
 
 [ "$1" ] || usage
 
-ack --smart-case --color --color-match='bold yellow' "$@" | filter '.*:[0-9]+:'
+# see .agignore
+ag --follow --hidden --skip-vcs-ignores \
+   --smart-case \
+   --nobreak --noheading \
+   --color --color-path='1;34' --color-line-number='1;33' --color-match='1;37' \
+   $@
 
 # vim: set ft=sh: #

@@ -43,7 +43,7 @@ is fullscreen && exit
 
 # visually highlight border for stacked windows
 if herbstclient compare tags.by-name.$TAG.curframe_wcount gt 1 ;then
-  herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && exec draw border pulsar
+  is layout max && exec draw border pulsar
 else
   herbstclient attr theme.active.color "#$BORDER"
 fi

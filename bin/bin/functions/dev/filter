@@ -8,14 +8,15 @@
 
 # Usage: .. | filter [<regex>]
 
+IGNORE=$HOME/.agignore
+
 # filter out home directory chaff from glob lists (note possible leading ansi escape sequences)
 ansi='\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]'
+
 # directory exclusions
-dirs='\.?cache|.*cache/|\.deprecated|\.git|\.hg|makepkg|src|\.stack'
-conf='.config/(Abricotine|Clementine|cairo|chromium|google|qupzilla|sublime|umplayer|variety|vivaldi)'
-apps='\.local|network/adblock|PlayOnLinux|\.vim/(backups|plugged)|\.vimv|vimmappings'
+ignore=$(egrep -v '^#|^ *$' $IGNORE | sed -e 's/^\./\\./' | tr '\n' '|')
 
 # <regex> restricts filter to filename portion of input list, see a and al
-egrep -v "\($ansi\)?.*\($dirs|$conf|$apps\)$@"
+egrep -v "\($ansi\)?.*\($ignore\)$@"
 
 # vim: set ft=sh: #

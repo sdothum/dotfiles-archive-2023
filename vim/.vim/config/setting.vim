@@ -87,7 +87,7 @@
 
       let g:indent_guides_auto_colors = 0
 
-      " subtle highlighting of even indents only, see gui.vim, theme.vim
+      " subtle highlighting of even indents only, see gui.vim, ui.vim
       function! IndentTheme()
         if &background == 'light'
           execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
@@ -264,7 +264,7 @@
       let g:limelight_paragraph_span      = 0 " include preceding/following paragraphs
       let g:limelight_priority            = 1 " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
-      " see views.vim
+      " see ui.vim
       " autocmd! plugin User GoyoEnter     Limelight
       " autocmd! plugin User GoyoLeave     Limelight!
 
@@ -279,7 +279,7 @@
 
     " .................................................................. LiteDFM
 
-      " let g:lite_dfm_left_offset = 22     " see themes.vim
+      " let g:lite_dfm_left_offset = 22     " see ui.vim
 
     " ............................................................ Narrow region
 
@@ -326,7 +326,7 @@
       let g:neosnippet#enable_snipmate_compatibility = 1
       " disable all runtime snippets
       let g:neosnippet#disable_runtime_snippets      = { '_' : 1 }
-      " see CheckFiletype() files.vim
+      " see CheckFiletype() core.vim
       let g:neosnippet#scope_aliases =
           \{
           \  'new'      : 'conf,fish,hs,ruby,sh,zsh'

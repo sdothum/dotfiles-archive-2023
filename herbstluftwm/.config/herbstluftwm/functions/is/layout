@@ -1,18 +1,13 @@
-#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="is/layout $@" . $PARENT
 
-# Dev
+# herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Search
+# ....................................................................... Layout
 
-usage() {
-  echo "usage: $(basename $0) [-w] <regex>"
-  exit 1
-}
+# Usage: is layout <layout>
 
-[ "$1" ] || usage
-
-a -l --nocolor --silent $@
+[ $(herbstclient layout | grep '\[FOCUS\]' | awk '{ print $2 }') = $1: ]
 
 # vim: set ft=sh: #

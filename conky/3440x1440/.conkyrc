@@ -140,19 +140,19 @@ ${voffset 10}
 ${goto 70}${font Noto Sans:size=18:style=Bold}${color3}NET${color2}${font Noto Sans:size=7:style=Bold}${color0} eno1 ${alignr}${addr eno1}
 ${goto 90}${color7}${downspeedgraph eno1 25,0}
 ${voffset -38}${goto 90}${color8}${upspeedgraph eno1 25,0}
-${voffset -5}${goto 90}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed eno1}}↑   ${lua_parse bandwidth ${downspeed eno1}}↓
+${voffset -5}${goto 90}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed eno1}}U   ${lua_parse bandwidth ${downspeed eno1}}D
 #
 # ${goto 90}${color2}${font Noto Sans:size=7:style=Bold}${color1}enp10s0 ${alignr}${addr enp10s0}
 # ${goto 90}${color7}${downspeedgraph enp10s0 25,0}
 # ${voffset -38}${goto 90}${color8}${upspeedgraph enp10s0 25,0}
-# ${voffset -5}${goto 90}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed enp10s0}}↑   ${lua_parse bandwidth ${downspeed enp10s0}}↓
+# ${voffset -5}${goto 90}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed enp10s0}}U   ${lua_parse bandwidth ${downspeed enp10s0}}D
 
 ${voffset 30}
 ${goto 90}${color2}${font Noto Sans:size=7:style=Bold}${color}${wireless_essid wlp4s0}
 ${goto 90}${color2}${font Noto Sans:size=7:style=Bold}${color0}wlp4s0 ${alignr}${addr wlp4s0}
 ${goto 90}${color7}${downspeedgraph wlp4s0 25,0}
 ${voffset -38}${goto 90}${color8}${upspeedgraph wlp4s0 25,0}
-${voffset -5}${goto 90}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp4s0}}↑   ${lua_parse bandwidth ${downspeed wlp4s0}}↓
+${voffset -5}${goto 90}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp4s0}}U   ${lua_parse bandwidth ${downspeed wlp4s0}}D
 
 ${goto 90}${font Noto Sans:size=7:style=Bold}${color2}IP${alignr}${tcp_portmon 1 65535 count}  open  DPORT
 ${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  0}${alignr 1}${tcp_portmon 1 65535 rport  0}

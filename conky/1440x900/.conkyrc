@@ -122,7 +122,7 @@ ${goto 85}${color2}${font Noto Sans:size=6:style=Bold}${color}${wireless_essid w
 ${goto 85}${font Noto Sans:size=6:style=Bold}${color0}wls4 ${alignr}${addr wls4}${font Noto Sans:size=6}
 ${goto 85}${color7}${downspeedgraph wls4 20,0}
 ${voffset -33}${goto 85}${color8}${upspeedgraph wls4 20,0}
-${voffset -5}${goto 85}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wls4}}↑   ${lua_parse bandwidth ${downspeed wls4}}↓
+${voffset -5}${goto 85}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wls4}}U   ${lua_parse bandwidth ${downspeed wls4}}D
 ]];
 
 -- vim: set ft=lua : --

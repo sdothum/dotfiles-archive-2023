@@ -10,7 +10,7 @@ usage() {
   echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty]  [steno [nomouse]]  [<string>] [dfu]"
   exit 1
 }
-set -x
+
 KEYMAPS='(ADNW|BEAKL|COLEM|QWERTY).*'
 
 QMK=$HOME/qmk_firmware

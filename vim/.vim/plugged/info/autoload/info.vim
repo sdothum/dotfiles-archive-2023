@@ -29,11 +29,11 @@
             let long_line_lens = info#LongLines()
             if len(long_line_lens) > 0
               let b:statusline_long_line_warning =
-                  \         len(long_line_lens) . ':'
-                  \. ' >' . info#Median(long_line_lens)
-                  \. ' ^' . max(long_line_lens)
+                  \  len(long_line_lens)         . ': '
+                  \. info#Median(long_line_lens) . '< '
+                  \. max(long_line_lens)         . '^'
             else
-              let b:statusline_long_line_warning = '0>'
+              let b:statusline_long_line_warning = '0: -- --'
             endif
           endif
         endif

@@ -104,7 +104,8 @@
   fzf
 # prezto-git
   pv
-  ripgrep
+# ripgrep
+  the_silver_searcher
 # zsh-doc
 # zsh-autosuggestions
 # zsh-completions
@@ -127,7 +128,6 @@
 # bonnie++
 # memtester
 # mprime-bin          [server]
-
 
 
 = terminals

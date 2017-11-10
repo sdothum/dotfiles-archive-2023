@@ -28,12 +28,12 @@ d ? preload
   udiskie
 
 
-= admin
-# ▔▔▔▔▔
+= file
+# ▔▔▔▔
   ack
-  neofetch
-  ripgrep
+# ripgrep
   stow
+  the_silver_searcher
 
 
 = file compression
@@ -56,6 +56,11 @@ d ? preload
   exfat-utils
 d " add armv7h to arch in pkgbuild
 d ? watchman
+
+
+= info screens
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  neofetch
 
 
 = cups printing
@@ -223,6 +228,11 @@ d ? xtitle-git
 # ▔▔▔▔
   icedtea-web
   jre7-openjdk
+
+
+= software tools
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  time
 
 
 = languages
