@@ -173,7 +173,7 @@
 
   [_TXBLSHIFT] = {
     {_______, S(KC_Q), KC_LCBR, KC_ASTR, TD_RCBR, S(KC_X), S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z), _______},
-    {_______, S(KC_K), PS_LPRN, KC_EXLM, TD_RPRN, TD_TILD, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B), PLOVER },
+    {_______, S(KC_K), SM_LPRN, KC_EXLM, TD_RPRN, TD_TILD, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B), PLOVER },
     {_______, S(KC_J), TD_COLN, TD_DQOT, S(KC_I), TD_GRV,  S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V), _______},
     {_______, _______, _______, _______, ___fn__, _______, _______, KC_UNDS, KC_DEL,  _______, _______, _______},
   },
