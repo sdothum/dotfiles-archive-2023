@@ -31,8 +31,11 @@
 // number layer 0 position KEYPAD_0, THUMB_0
 #define THUMB_0
 
-// Layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
+// layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
 #define BEAKL8P
+
+// home block symbol clustes defined (no overlays required, undefine otherwise)
+#define HOME_BLOCK
 
 // sync app on steno layer
 #define LAUNCH_PLOVER

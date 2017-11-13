@@ -79,11 +79,9 @@ enum planck_layers {
  ,_RSHIFT
  ,_PLOVER
  ,_NUMBER
- ,_SYMBOL
-#ifndef BEAKL8
  ,_NUMSYM
+ ,_SYMBOL
  ,_SYMREG
-#endif
  ,_MOUSE
  ,_FNCKEY
  ,_EDIT
@@ -99,13 +97,14 @@ enum planck_keycodes {
   BASE = SAFE_RANGE
  ,PLOVER
  ,PLOEXIT
- ,PS_CIRC   // pseudo GUI_T(S(KC_6))            for modified key-codes, see process_record_user()
- ,PS_DLR    // pseudo SFT_T(S(KC_4))            for modified key-codes, see process_record_user()
- ,PS_PERC   // pseudo ALT_T(S(KC_5))            for modified key-codes, see process_record_user()
- ,PS_LPRN   // pseudo CTL_T(S(KC_9))            for modified key-codes, see process_record_user()
- ,PS_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT)) for modified key-codes, see process_record_user()
- ,PS_PIPE   // pseudo LT   (_MOUSE, S(KC_BSLS)) for modified key-codes, see process_record_user()
- ,PS_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB)) for modified key-codes, see process_record_user()
+ ,PS_CIRC   // pseudo GUI_T(S(KC_6))                      for modified key-codes, see process_record_user()
+ ,PS_DLR    // pseudo SFT_T(S(KC_4))                      for modified key-codes, see process_record_user()
+ ,PS_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for modified key-codes, see process_record_user()
+ ,PS_PERC   // pseudo ALT_T(S(KC_5))                      for modified key-codes, see process_record_user()
+ ,PS_LPRN   // pseudo CTL_T(S(KC_9))                      for modified key-codes, see process_record_user()
+ ,PS_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT))           for modified key-codes, see process_record_user()
+ ,PS_PIPE   // pseudo LT   (_MOUSE, S(KC_BSLS))           for modified key-codes, see process_record_user()
+ ,PS_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB))           for modified key-codes, see process_record_user()
 #ifdef STENO_ENABLE
 #include "planck_keycodes_steno.h"
 #endif
@@ -133,7 +132,6 @@ enum planck_keycodes {
 #define GT_C    GUI_T(KC_C)
 #define GT_UP   GUI_T(KC_UP)
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
-#define MT_G    MT   (MOD_LALT | MOD_LSFT, KC_G)
 #define MT_X    MT   (MOD_LALT | MOD_LSFT, KC_X)
 
 #define S_DOWN  S    (KC_DOWN)
@@ -218,7 +216,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // .................................................................... BEAKL EZ
 #ifdef BEAKLEZ
-
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   Y  |   O  |   U  |   K  | ^Alt | ^GUI |   F  |   G  |   R  |   C  |   V  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -280,7 +277,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ..................................................................... BEAKL 8
 #ifdef BEAKL8
-
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -403,7 +399,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // .................................................................... BEAKL 10
 #ifdef BEAKL10
-
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   H  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   D  |   N  |   M  |   V  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -526,7 +521,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ..................................................................... ColemaX
 #ifdef COLEMAX
-
   // ,-----------------------------------------------------------------------------------.
   // |   Q  |   W  |   C  |   G  |   Z  | ^Alt | ^GUI |   J  |   L  |   U  |   Y  |   ;  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -672,7 +666,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
 
 // ......................................................... Number Keypad Layer
-#ifdef BEAKL8P
+#ifdef HOME_BLOCK
   // .-----------------------------------------------------------------------------------.
   // |      |   F  |   E  |   D  |      |      |      |   /  |   7  |   8  |   9  |   *  |
   // |-----------------------------------------------------------------------------------|
@@ -686,7 +680,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NUMBER] = {
     {_______, KC_F,    MT_E,    KC_D,    _______, _______, _______, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_ASTR},
     {OS_CTL,  GT_C,    AT_B,    LT_A,    _______, _______, _______, TD_DOT,  KC_4,    KC_5,    KC_6,    KC_MINS},
-    {_______, KC_HASH, MT_G,    KC_BSLS, _______, _______, _______, TD_COMM, KC_1,    KC_2,    KC_3,    KC_PLUS},
+    {_______, KC_HASH, PS_G,    KC_BSLS, _______, _______, _______, TD_COMM, KC_1,    KC_2,    KC_3,    KC_PLUS},
     {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_0,    ADJUST,  ___x___, ___x___, ___x___},
   },
 #else
@@ -729,8 +723,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___, KC_PIPE, KC_BSLS, ___x___, ___x___, ___x___},
   },
 #endif
+
 // ..................................................... Symbol Navigation Layer
-#ifdef BEAKL8P
+#ifdef HOME_BLOCK
   // .-----------------------------------------------------------------------------------.
   // |      |   .  |   *  |   &  |      |      |      |      | Home |  Up  |  End | PgUp |
   // |-----------------------------------------------------------------------------------|
@@ -782,6 +777,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___fn__, ___x___, ___x___, ___x___},
   },
 #endif
+
 // ............................................................... Mouse Actions
 
   // .-----------------------------------------------------------------------------------.
@@ -910,14 +906,20 @@ bool key_press(uint16_t keycode, uint8_t shift)
 }
 
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
-void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
+void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 {
   if (record->event.pressed) {
-    register_code (modifier);
+    register_code(modifier);
+    if (modifier2) {
+      register_code(modifier2);
+    }
     key_timer = timer_read();
   }
   else {
-    unregister_code (modifier);
+    unregister_code(modifier);
+    if (modifier2) {
+      unregister_code(modifier2);
+    }
     if (timer_elapsed(key_timer) < TAPPING_TERM) {
       shift_key(keycode);
     }
@@ -1087,7 +1089,7 @@ void symbol_pair(uint8_t shift, uint16_t left, uint16_t right)
 #define CLOSE 1
 
 // tap dance symbol pairs
-void tap_pair(qk_tap_dance_state_t *state, uint8_t shift, uint16_t left, uint16_t right, uint8_t modifier, uint8_t close)
+void tap_pair(qk_tap_dance_state_t *state, uint8_t shift, uint16_t left, uint16_t right, uint16_t modifier, uint8_t close)
 {
   // triple tap: left right with cursor between symbol pair a la vim :-)
   if (state->count > 2) {
@@ -1170,7 +1172,7 @@ void rcurly(qk_tap_dance_state_t *state, void *user_data)
 
 void rparen(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_pair(state, S_ALWAYS, KC_9, KC_0, KC_LCTL, CLOSE);
+  tap_pair(state, S_ALWAYS, KC_9, KC_0, 0, CLOSE);
 }
 
 void rparen_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -1490,19 +1492,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case PS_CIRC:
       // GUI_T(S(KC_6))
-      mt_shift(record, KC_LGUI, KC_6);
+      mt_shift(record, KC_LGUI, 0, KC_6);
       break;
     case PS_DLR:
       // SFT_T(S(KC_4))
-      mt_shift(record, KC_LSFT, KC_4);
+      mt_shift(record, KC_LSFT, 0, KC_4);
+      break;
+    case PS_G:
+      // MT(MOD_LALT | MOD_LSFT, S(KC_G))
+      mt_shift(record, KC_LALT, KC_LSFT, KC_G);
       break;
     case PS_LPRN:
       // CTL_T(S(KC_9))
-      mt_shift(record, KC_LCTL, KC_9);
+      mt_shift(record, KC_LCTL, 0, KC_9);
       break;
     case PS_PERC:
       // ALT_T(S(KC_5))
-      mt_shift(record, KC_LALT, KC_5);
+      mt_shift(record, KC_LALT, 0, KC_5);
       break;
     case PS_LEFT:
       tap_layer(record, _MOUSE);
