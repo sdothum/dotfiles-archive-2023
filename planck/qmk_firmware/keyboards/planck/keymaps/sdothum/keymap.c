@@ -363,7 +363,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   Y  |   {  |   }  |   X  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
+  // |   Q  |   Y  |   {  |   }  |   $  | ^Alt | ^GUI |   G  |   C  |   R  |   F  |   Z  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   K  |   H  |   <  |   >  |   ~  | ↑Alt | ↑GUI |   D  |   S  |   T  |   N  |   B  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -373,14 +373,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_LSHIFT] = {
-    {S(KC_Q), S(KC_Y), KC_LCBR, KC_RCBR, S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
+    {S(KC_Q), S(KC_Y), KC_LCBR, KC_RCBR, KC_DLR,  OS_CALT, OS_CGUI, S(KC_G), S(KC_C), S(KC_R), S(KC_F), S(KC_Z)},
     {S(KC_K), S(KC_H), TD_LT,   TD_GT,   TD_TILD, OS_SALT, OS_SGUI, S(KC_D), S(KC_S), S(KC_T), S(KC_N), S(KC_B)},
     {S(KC_J), TD_COLN, KC_EXLM, KC_EQL,  TD_GRV,  TD_CAPS, OS_CSFT, S(KC_W), S(KC_M), S(KC_L), S(KC_P), S(KC_V)},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_UNDS, SL_LEFT, S_DOWN,  S_UP,    S_RGHT },
   },
 
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   [  |   ]  |   F  |   Z  |
+  // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   ^  |   [  |   ]  |   F  |   Z  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   K  |   H  |   E  |   A  |   ?  | ↑Alt | ↑GUI |   |  |   (  |   )  |   N  |   B  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -390,7 +390,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // `-----------------------------------------------------------------------------------'
 
   [_RSHIFT] = {
-    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), KC_LBRC, KC_RBRC, S(KC_F), S(KC_Z)},
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, KC_CIRC, KC_LBRC, KC_RBRC, S(KC_F), S(KC_Z)},
     {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_QUES, OS_SALT, OS_SGUI, KC_PIPE, KC_LPRN, KC_RPRN, S(KC_N), S(KC_B)},
     {S(KC_J), TD_COLN, TD_DQOT, S(KC_I), KC_SLSH, TD_CAPS, OS_CSFT, KC_BSLS, KC_DLR,  KC_ASTR, S(KC_P), S(KC_V)},
     {OS_CTL,  OS_GUI,  OS_ALT,  KC_CAPS, KC_MINS, SL_TAB,  LT_BSPC, ___fn__, SL_LEFT, S_DOWN,  S_UP,    S_RGHT },
