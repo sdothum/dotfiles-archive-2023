@@ -458,6 +458,68 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
 #endif
 
+// ............................................................... BEAKL Mash Up
+#ifdef BEAKLMU
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   G  |   D  |   N  |   M  |   Z  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   K  |   H  |   E  |   A  |   .  | ↑Alt | ↑GUI |   C  |   S  |   R  |   T  |   W  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   J  |   ;  |   "  |   I  |   ,  | Caps |^Shift|   B  |   P  |   L  |   F  |   V  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
+  // `-----------------------------------------------------------------------------------'
+
+  [_BASE] = {
+    {KC_Q,    KC_Y,    KC_O,    KC_U,    KC_X,    OS_CALT, OS_CGUI, KC_G,    KC_D,    KC_N,    KC_M,    KC_Z   },
+    {KC_K,    KC_H,    KC_E,    KC_A,    KC_DOT,  OS_SALT, OS_SGUI, KC_C,    KC_S,    KC_R,    KC_T,    KC_W   },
+    {KC_J,    KC_SCLN, TD_QUOT, KC_I,    KC_COMM, TD_CAPS, OS_CSFT, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC, TD_ENT,  LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
+  },
+
+  [_SHIFT] = {
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, S(KC_G), S(KC_D), S(KC_N), S(KC_M), S(KC_Z)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_DOT,  OS_SALT, OS_SGUI, S(KC_C), S(KC_S), S(KC_R), S(KC_T), S(KC_W)},
+    {S(KC_J), KC_SCLN, TD_QUOT, S(KC_I), KC_COMM, TD_CAPS, OS_CSFT, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  LT_TAB,  LT_BSPC, TD_ENT,  LT_LEFT, AT_DOWN, GT_UP,   CT_RGHT},
+  },
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   Y  |   {  |   }  |   $  | ^Alt | ^GUI |   G  |   D  |   N  |   M  |   Z  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   K  |   H  |   <  |   >  |   ~  | ↑Alt | ↑GUI |   C  |   S  |   R  |   T  |   W  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   J  |   :  |   !  |   =  |   `  | Caps |^Shift|   B  |   P  |   L  |   F  |   V  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt |  Esc |  f() |  Tab |  Del |   _  | Left | Down |  Up  | Right|
+  // `-----------------------------------------------------------------------------------'
+
+  [_LSHIFT] = {
+    {S(KC_Q), S(KC_Y), KC_LCBR, KC_RCBR, KC_DLR,  OS_CALT, OS_CGUI, S(KC_G), S(KC_D), S(KC_N), S(KC_M), S(KC_Z)},
+    {S(KC_K), S(KC_H), TD_LT,   TD_GT,   TD_TILD, OS_SALT, OS_SGUI, S(KC_C), S(KC_S), S(KC_R), S(KC_T), S(KC_W)},
+    {S(KC_J), TD_COLN, KC_EXLM, KC_EQL,  TD_GRV,  TD_CAPS, OS_CSFT, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  ___fn__, LT_TAB,  KC_DEL,  KC_UNDS, SL_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+
+  // ,-----------------------------------------------------------------------------------.
+  // |   Q  |   Y  |   O  |   U  |   X  | ^Alt | ^GUI |   ^  |   [  |   ]  |   M  |   Z  |
+  // |------+------+------+------+------+-------------+------+------+------+------+------|
+  // |   K  |   H  |   E  |   A  |   ?  | ↑Alt | ↑GUI |   |  |   (  |   )  |   T  |   W  |
+  // |------+------+------+------+------+------|------+------+------+------+------+------|
+  // |   J  |   :  |   "  |   I  |   /  | Caps |^Shift|   \  |   $  |   *  |   F  |   V  |
+  // |------+------+------+------+------+------+------+------+------+------+------+------|
+  // | Ctrl |  GUI |  Alt | Caps |   -  | ↑Tab | Bksp |  f() | Left | Down |  Up  | Right|
+  // `-----------------------------------------------------------------------------------'
+
+  [_RSHIFT] = {
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_X), OS_CALT, OS_CGUI, KC_CIRC, KC_LBRC, KC_RBRC, S(KC_M), S(KC_Z)},
+    {S(KC_K), S(KC_H), S(KC_E), S(KC_A), KC_QUES, OS_SALT, OS_SGUI, KC_PIPE, KC_LPRN, KC_RPRN, S(KC_T), S(KC_W)},
+    {S(KC_J), TD_COLN, TD_DQOT, S(KC_I), KC_SLSH, TD_CAPS, OS_CSFT, KC_BSLS, KC_DLR,  KC_ASTR, S(KC_F), S(KC_V)},
+    {OS_CTL,  OS_GUI,  OS_ALT,  KC_CAPS, KC_MINS, SL_TAB,  LT_BSPC, ___fn__, SL_LEFT, S_DOWN,  S_UP,    S_RGHT },
+  },
+#endif
+
+
 // .............................................................. Colemak Mod-DH
 #ifdef COLEMAK
   // ,-----------------------------------------------------------------------------------.

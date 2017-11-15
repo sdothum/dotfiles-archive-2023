@@ -32,7 +32,7 @@
 #define THUMB_0
 
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
-#define BEAKL8P
+#define BEAKLMU
 
 // home block symbol clustes defined (no overlays required, undefine otherwise)
 #define HOME_BLOCK
