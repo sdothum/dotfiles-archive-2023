@@ -69,7 +69,9 @@ do
   fi
 
   if expand $file >/dev/null ;then
-    eval v $(expand $file)
+    v $(expand $file)
+    # history file cleanup usually precedes impending edit
+    expand $file | grep -q dmenu/.history && { pwait "v $(expand $file)"; dmenu edit; }
   else
     error=": ${file##*/} ∉ ${file%/*}"
     sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/scripts

@@ -23,9 +23,11 @@
   aspell
   aspell-en
   dictd
-# dictd-foldoc
-# dictd-gcide
-# dictd-moby-thesaurus
+# dict-gcide
+# dict-foldoc
+# dict-wikt-en-all
+  dict-wn
+m dict-moby-thesaurus
   hunspell
   hunspell-en
 # hunspell-en-ca
@@ -131,12 +133,13 @@
 # gsimplecal
 # kdeedu-ktouch                 [server]
 # klavaro
+  remind
 # sc-im
   simpletimer-git
   speedcrunch
 # todotxt
 # wps-office                    [server]
-  wyrd
+# wyrd
 # xpad
 
 

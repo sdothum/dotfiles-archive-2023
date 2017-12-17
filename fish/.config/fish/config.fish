@@ -59,8 +59,10 @@ set -x SERVER luna
 # default browser changes require login (Ctrl-d) for X11 autostart
 # set -x BROWSER chromium
 # set -x BROWSER luakit
-# set -x BROWSER qutebrowser
-set -x BROWSER vimbt
+set -x BROWSER qutebrowser
+# set -x BROWSER surf
+# set -x BROWSER vimb
+# set -x BROWSER vimbt
 
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
@@ -71,7 +73,7 @@ set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
 
 # tt-rss
-set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
+set -x SELF_URL_PATH 'http://luna:8000/tt-rss/#f=39&c=1'
 
 # ..................................................................... Defaults
 

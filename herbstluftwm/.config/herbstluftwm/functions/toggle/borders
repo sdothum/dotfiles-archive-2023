@@ -9,7 +9,7 @@
 NORMAL=$HLWM:normal
 
 # no borders focusing aid
-[ $(pgrep -cf 'focus borders') -gt 1 ] && exit
+pstat + 'focus borders' && exit
 [ -e $NORMAL ] || herbstclient attr theme.normal.color >$NORMAL
 
 # no borders

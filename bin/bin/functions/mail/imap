@@ -93,7 +93,7 @@ crontab with "mailsync""
         ditto 'imapfilter processing on'
       fi ;;
 
-  *) usage ;;
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

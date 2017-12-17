@@ -10,13 +10,9 @@
 while :
 do
   case $1 in
-    '') break ;;
-
-    */*) FOLDER=$1
-         shift ;;
-
-    *) ext=$1
-       shift ;;
+    '' ) break ;;
+    */*) FOLDER=$1; shift ;;
+    *  ) ext=$1; shift ;;
   esac
 done
 NOTES=/tmp/dmenu:notes:$ext
@@ -95,31 +91,29 @@ while note=$(notes |
              rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit
 do
   case $note in
-    /*) search="${note#*/}"
-        continue ;;
+    /*      ) search="${note#*/}"; continue ;;
+    "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
 
-    "$NEW"*) file=$(mktemp -p $FOLDER --suffix=.$ext)
-             action=edit ;;
+    "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext)
+              action=edit ;;
 
-    "$EDIT"*) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+    "$PURGE") [ -f $NOTES ] && mv $(sort -u $NOTES) /tmp
+              search=''
+              continue ;;
 
-    "$PURGE"*) [ -f $NOTES ] && mv $(sort -u $NOTES) /tmp
-               search=''
-               continue ;;
-
-    *) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
-       content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-       while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom)
-       do
-         [ $action = view ] || break
-         term "$file" MAX STACK WAIT less $file
-       done ;;
+    *       ) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+              content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+              while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom)
+              do
+                [ $action = view ] || break
+                term "$file" MAX STACK WAIT less $file
+              done ;;
   esac
 
   mhistory $catlg $file
   case $action in
-    edit  ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
-    delete) mv $file /tmp ;;
+    edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
+    delete   ) mv $file /tmp ;;
 
     clipboard) clipboard "$file"
                notify 'Ctrl-Alt-V' "$file"

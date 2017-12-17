@@ -11,7 +11,7 @@
 # mark content division
 echo
 drawline '▁' ${_green_}
-heading '\ ' $@
+heading ' ' $@
 drawline '▔' ${_green_}
 
 # vim: set ft=sh: #

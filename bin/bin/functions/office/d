@@ -7,6 +7,10 @@
 # ................................................................... Dictionary
 
 # see dmenu dict
-dict $1 >/dev/null && dict $1 | less
+if pstat dictd ;then
+  dict $1 >/dev/null && dict $1 | less
+else
+  [ $(ssh $SERVER dict $1 | wc -l) -gt 1 ] && ssh $SERVER dict $1 | less
+fi
 
 # vim: set ft=sh: #

@@ -158,35 +158,42 @@ default() {
 
 # restore default monitor margins
 [ $1 ] && [ -e $MONOCLE ] && toggle monocle
+[ $1 ] && is fullscreen && toggle fullscreen
 
 case $1 in
-  tags) for i in $TAGS
-        do
-          layout $i
-        done
-        exit ;;
+  tags      ) for i in $TAGS
+              do
+                layout $i
+              done
+              exit ;;
 
-  grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1)
-         layout=$1
-         case $layout in
-           1:1  ) layout=halves ;;
-           1:2  ) layout=onethird ;;
-           2:3  ) layout=twofifths ;;
-           1:1:1) layout=thirds ;;
-         esac
-         # may already be in lock state, see toggle monocle
-         [ -e $LOCK ] || herbstclient lock
-         $layout $TAG
-         notify low "Layout $TAG" "$1"
-         # unlock to enable focus borders
-         herbstclient unlock ;;
+  1:1      |\
+  2:3      |\
+  1:2      |\
+  1:1:1    |\
+  grid     |\
+  max      |\
+  vertical |\
+  horizontal) layout=$1
+              case $layout in
+                1:1  ) layout=halves ;;
+                1:2  ) layout=onethird ;;
+                2:3  ) layout=twofifths ;;
+                1:1:1) layout=thirds ;;
+              esac
+              # may already be in lock state, see toggle monocle
+              [ -e $LOCK ] || herbstclient lock
+              $layout $TAG
+              notify low "Layout $TAG" "$1"
+              # unlock to enable focus borders
+              herbstclient unlock ;;
 
-  default) restore windowed
-           exec restore layout $(default) ;;
+  default   ) restore windowed
+              exec restore layout $(default) ;;
 
-  *) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
-     restore windowed
-     exec restore layout $layout ;;
+  *         ) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
+              restore windowed
+              exec restore layout $layout ;;
 esac
 
 if [ $windows -gt 1 ] &&  [ $layout != max ] ;then

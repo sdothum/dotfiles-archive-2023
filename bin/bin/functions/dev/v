@@ -6,7 +6,7 @@
 
 # ....................................................................... Editor
 
-# Usage: v [-f | -c <command>]* [<file>]*
+# Usage: v [--quote | --role <role> | -f | -c <command>]* [<file>]*
 
 # va va voom
 SHELL=/usr/bin/dash
@@ -16,16 +16,11 @@ console && unset focus || G=-g
 while :
 do
   case $1 in
-    -f) fg=-f
-        shift ;;
-
-    -c) cmd="-c '$2'"
-        shift 2 ;;
-
-    --role) role="$1 $2"
-            shift 2 ;;
-
-     *) break ;;
+    --quote) q='"'; shift ;;
+    --role ) role="--role $2"; shift 2 ;;
+    -f     ) fg=-f; shift ;;
+    -c     ) cmd="-c '$2'"; shift 2 ;;
+     *     ) break ;;
   esac
 done
 
@@ -45,14 +40,18 @@ else
   fi
 fi
 
-[ $focus ] && herbstclient set_layout max
-count=$(echo $file | wc -w)
-[ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
-eval $focus $sudo vim $G $role $fg $cmd $file
+if [ -z $q ] ;then
+  count=$(echo $file | wc -w)
+  [ $count -gt 1 ] && notify 'Gvim' "$count files to edit"
+fi
+
+[ $focus ] && focus frame
+# --quote used for single space separated filename
+eval $sudo vim $G $role $fg $cmd ${q}$file${q} 2>>/tmp/vim.log
 
 # postpone cleanup till done with all vim sessions
 housekeeping() {
-  pidof vim >/dev/null && exit
+  pstat vim && exit
   find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
   find $HOME/.vim/backups -size 0 -exec rm -fv {} \;
   rm -f $HOME/.vim/backups/%tmp%*

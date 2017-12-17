@@ -1,4 +1,4 @@
-"the sdothum - 2016 (c) wtfpl
+" sdothum - 2016 (c) wtfpl
 
 " Config
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
@@ -13,10 +13,9 @@
     " .................................................................. Plugins
 
       source ~/.vim/config/plugin.vim
-      source ~/.vim/config/lib.vim
       source ~/.vim/config/setting.vim
 
-    " ................................................................. Settings
+    " ................................................................... Config
 
       source ~/.vim/config/buffer.vim
       source ~/.vim/config/default.vim

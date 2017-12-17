@@ -34,13 +34,18 @@ if [ $USER != root ] ;then
 
     # pre-initialize arm fuzzy searches
     nohup fcache + $HOME 2>/dev/null
+
+    # gtd calendar
+    echo
+    reminder
+
     if cpu arm ;then
       nohup arm_clock 2>/dev/null &
       # in case pi is offline during development on main server
       if [ -e $RSYNC ] ;then
         nohup rsync -q arm 2>/dev/null &
         sleep 1
-        pgrep -f "rsync arm" >/dev/null || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
+        pstat 'rsync arm' || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
       else
         wsync -v
       fi

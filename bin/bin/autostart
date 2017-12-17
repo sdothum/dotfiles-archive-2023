@@ -9,12 +9,16 @@
 # initial window applications (flags)
 CALENDAR=$SESSION/calendar
 DEBUG=$SESSION/debug
+IM=$SESSION/im
 IRC=$SESSION/irc
 MAIL=$SESSION/mail
+REMINDER=$SESSION/reminder
 TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
 WEB=$SESSION/browser
-WSYNC=$SESSION/wsync
+
+# reminder delay (allow desktop to initialize)
+delay=2
 
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
@@ -28,7 +32,7 @@ rm -f /srv/http/tt-rss/lock/*
 gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient VertEdgeScroll=1 &
 # laptop && synclient TapButton1=1 &
-pidof gpg-agent >/dev/null ||
+pstat gpg-agent ||
       gpg-agent --homedir /home/shum/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 server && ipfilter &
 xrdb -merge $HOME/.Xresources &
@@ -36,13 +40,13 @@ xrdb -merge $HOME/.Xresources &
 # ........................................................... Daemons and caches
 
 server && adblock &
-# pidof dunst || dunst 2>/dev/null &
-if server && ! pidof mpd ;then
+# pstat dunst || dunst 2>/dev/null &
+if server && ! pstat mpd ;then
   sleep 2
   mpd &
 fi
-pidof urxvtd || urxvtd -q -o -f &
-# pidof xflux || xflux -l 45.4 -g -75.7
+pstat urxvtd || urxvtd -q -o -f &
+# pstat xflux || xflux -l 45.4 -g -75.7
 server && dmenu movies cache
 [ -e $WSYNC ] && wsync &
 
@@ -64,19 +68,24 @@ autocutsel -selection PRIMARY -fork &
 
 # ................................................................. Systray apps
 
-pgrep -f autokey-gtk >/dev/null || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
-pidof gpaste-client >/dev/null || gpaste-client start &
-pidof xfce4-power-manager >/dev/null || xfce4-power-manager 2>/dev/null &
+pstat 'autokey-gtk --verbose' || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
+pstat gpaste-client || gpaste-client start &
+pstat xfce4-power-manager || xfce4-power-manager 2>/dev/null &
 
 # ................................................................ Terminal apps
 
 [ -e $DEBUG ] && [ $TRACE ] && term 'Trace' tail -f $ROOT/herbstluftwm.log
+if [ -e $IM ] ;then
+  server && herbstclient focus_monitor 1 || switch tag $CHAT
+  # wait for window visibility before switching monitors, for urxvt font handling
+  term 'IM' VISIBLE centerim5
+fi
 if [ -e $IRC ] ;then
   server && herbstclient focus_monitor 1 || switch tag $CHAT
   # wait for window visibility before switching monitors, for urxvt font handling
   term 'IRC' VISIBLE weechat
-  server && herbstclient focus_monitor 0
 fi
+server && herbstclient focus_monitor 0
 [ -e $CALENDAR ] && term 'Calendar' wyrd
 [ -e $MAIL ] && term 'Mail' alot
 
@@ -86,10 +95,11 @@ fi
 switch tag $WEB
 [ -e $WEB ] && $BROWSER &
 [ -e $TERM ] && toggle scratchpad
+[ -e $REMINDER ] && ( sleep $delay; dmenu reminder ) &
 
 # .............................................................. Cleanup desktop
 
-pidof unclutter >/dev/null || toggle unclutter
+pstat unclutter || toggle unclutter
 # autocutsel leaves a small square of black pixels in the bottom right corner
 (xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 

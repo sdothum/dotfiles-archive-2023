@@ -21,7 +21,7 @@ elif [ -e $FORTUNE:term ] ;then
                           notify 10 "$(fortune)" 2>/dev/null
     fi
     # one fortune is enough
-    [ -e $HOME/.fortune ] && rm -f $FORTUNE || touch $FORTUNE
+    [ -e $SESSION/fortune ] && rm -f $FORTUNE || touch $FORTUNE
   fi
 fi
 

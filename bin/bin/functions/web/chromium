@@ -35,8 +35,9 @@ unlock() {
 }
 
 # close (unlock) any remote instances
-pidof chromium >/dev/null || unlock $(echo $hosts | sed "s/$(hostname)//")
+pstat chromium || unlock $(echo $hosts | sed "s/$(hostname)//")
 
-[ "$1" = netflix ] && focus $chrome -app=$netflix || focus $chrome $@
+# [ "$1" = netflix ] && focus $chrome -app=$netflix || focus $chrome $@
+[ "$1" = netflix ] && $chrome -app=$netflix || $chrome $@
 
 # vim: set ft=sh: #

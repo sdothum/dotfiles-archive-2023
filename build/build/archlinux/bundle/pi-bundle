@@ -73,6 +73,7 @@ d ? watchman
 
 = fonts
 # ▔▔▔▔▔
+  adobe-base-14-fonts
   libxft
   noto-fonts
   terminus-font-ll2-td1
@@ -255,20 +256,24 @@ g term-ansicolor
 
 = browsers
 # ▔▔▔▔▔▔▔▔
-# chromium
+  chromium
   qutebrowser
   surf
-d " tabbed compiled to custom font size
-d m tabbed
-d " add armv7h to arch in pkgbuild
-d ? vimb
+# d " tabbed compiled to custom font size
+# d m tabbed
+# d " add armv7h to arch in pkgbuild
+# d ? vimb
   w3m
 
 
-= internet
-# ▔▔▔▔▔▔▔▔
+= chat/twitter
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  bitlbee
+# d " add armv7h to arch in pkgbuild
+# d ? centerim5-git
+  libotr
   weechat
-  xmpppy
+# xmpppy
 
 
 = web server
@@ -291,6 +296,7 @@ d ? amphetype-svn
   calc
   dictd
   python-proselint
+  remind
   youtube-dl
   wego
 

@@ -12,7 +12,9 @@ usage() {
 }
 
 [ "$1" ] || usage
+[ "$1" = -w ] && { w=-w; shift; }
 
-a -l --nocolor --silent $@
+# pass parms via env
+AG="$w -l --nocolor --silent" a "$@"
 
 # vim: set ft=sh: #

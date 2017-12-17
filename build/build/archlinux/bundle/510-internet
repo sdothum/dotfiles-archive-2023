@@ -21,7 +21,7 @@
 # qutebrowser-git
   surf
 # uzbl-browser
-  vimb
+# vimb
 # vimb-git
   w3m
 
@@ -37,20 +37,22 @@
   pepper-flash
 # tabbed
 m tabbed
-  webkitgtk2        [server]
+# webkitgtk2        [server]
 
 
 = chat/twitter
 # ▔▔▔▔▔▔▔▔▔▔▔▔
-d * centerim5-git
+  bitlbee
+# d * centerim5-git
 # finch
+  libotr
 # pidgin
 # skype
 # python-twitter
 # turses
   weechat
 # xchat
-  xmpppy
+# xmpppy
 d * znc
 
 

@@ -6,13 +6,28 @@
 
 # ...................................................................... Browser
 
-server && font='-s fonts _monospace "10pt Iosevka"'
+startpage='http://luna:8000/tt-rss/#f=39&c=1'
+size=10pt
+
+server && font="-s fonts.completion.category '$size'
+                -s fonts.completion.entry '$size'
+                -s fonts.debug_console '$size'
+                -s fonts.downloads '$size'
+                -s fonts.hints '$size'
+                -s fonts.keyhint '$size'
+                -s fonts.messages.error '$size'
+                -s fonts.messages.info '$size'
+                -s fonts.messages.warning '$size'
+                -s fonts.prompts '$size'
+                -s fonts.statusbar '$size'
+                -s fonts.tabs '$size'
+"
 
 if [ $1 ] ;then
-  eval /usr/bin/qutebrowser $font "$@"
+  /usr/bin/qutebrowser --target tab --override-restore $font "$@"
 else
   ping -c 1 -W 1 $SERVER >/dev/null 2>&1 && TTRSS=$SERVER || TTRSS=localhost
-  eval /usr/bin/qutebrowser $font http://$TTRSS:8000/tt-rss/
+  /usr/bin/qutebrowser --target tab --override-restore $font "$startpage"
 fi
 
 # vim: set ft=sh: #

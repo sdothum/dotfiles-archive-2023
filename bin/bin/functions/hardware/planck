@@ -7,7 +7,7 @@
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty]  [steno [nomouse]]  [<string>] [dfu]"
+  echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty | splitography ]  [steno [nomouse]]  [<string>] [dfu]"
   exit 1
 }
 
@@ -25,19 +25,23 @@ keymap=$1
 [ $1 = splitography ] && splitography=true
 shift
 
-# update keymap from stow repo
-mkdir $KEYMAP 2>/dev/null
-cp -fv $HOME/stow/planck/${KEYMAP#$HOME/}/* $KEYMAP/
-
 if ! if-no 'sync qmk_firmware repo' ;then
   cd $QMK
   git pull
 fi
 
+# update keymap from stow repo
+mkdir $KEYMAP 2>/dev/null
+cp -f $HOME/stow/planck/${KEYMAP#$HOME/}/* $KEYMAP/
+
 # default keymap
 case $1 in
-  adnw* | beakl* | colem*) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG; shift ;;
-  *                      ) [ $splitography ] || usage ;;
+  adnw*  |\
+  beakl* |\
+  colem* |\
+  qwerty) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG; shift ;;
+
+  *     ) [ $splitography ] || usage ;;
 esac
 
 if [ ! $splitography ] ;then
@@ -55,16 +59,16 @@ if [ ! $splitography ] ;then
   case $1 in
     '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
 
-    *) trap "rm -f $PRIVATE" EXIT
-      sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
-      echo "SEND_STRING(\"$1\");" >$PRIVATE
-      shift ;;
+    *       ) trap "rm -f $PRIVATE" EXIT
+              sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
+              echo "SEND_STRING(\"$1\");" >$PRIVATE
+              shift ;;
   esac
 fi
 
-cd $PLANCK
-sudo make planck-$keymap-clean
-[ $1 ] && sudo make planck-$keymap-dfu || sudo make planck-$keymap
+cd $QMK
+sudo make planck:$keymap:clean
+[ "$1" = dfu ] && sudo make planck:$keymap:dfu || sudo make planck:$keymap
 sudo chown -R $USER:users $QMK
 
 # vim: set ft=sh: #

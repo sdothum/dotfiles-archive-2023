@@ -59,30 +59,24 @@ do
     # echo "action=$action package=$package condition=$condition"
     case $action in
       '#' | '') continue ;;
+      '='     ) title "$package $condition"; continue ;;
+      '"'     ) [ $check ] || ditto "$package $condition"; continue ;;
+      '!'     ) [ $check ] || $package $condition; continue ;;
+      d       ) rule=true ;;
 
-      '=') title "$package $condition"
-           continue ;;
-
-      '"') [ $check ] || ditto "$package $condition"
-           continue ;;
-
-      '+') if [ -z $check ] ;then
-             heading "[ Manual install required.. ]   $package"
-             continue
-           fi ;;
-
-      '!') [ $check ] || eval $package $condition
-           continue ;;
+      '+'     ) if [ -z $check ] ;then
+                  heading "[ Manual install required.. ]   $package"
+                  continue
+                fi ;;
 
       '-' | '?' | '*' | '@' | a | g | m) rule=$(rule "$condition") ;;
-      d                                ) rule=true ;;
 
-      *) set -- $package $condition
-         package=$action
-         rule=$(rule "$@") ;;
+      *       ) set -- $package $condition
+                package=$action
+                rule=$(rule "$@") ;;
     esac
 
-    eval $rule || continue
+    $rule || continue
 
     if [ $check ] ;then
       unset installed

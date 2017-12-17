@@ -21,12 +21,12 @@ emit_hook() {
   herbstclient emit_hook $@
   # trap hook..
   if [ -e $DYNAMIC ] ;then
-    until pgrep -f "$process" >/dev/null
+    until pstat "$process"
     do
       sleep $delay
     done
     # ..then wait for completion
-    while pgrep -f "$process" >/dev/null
+    while pstat "$process"
     do
       sleep $delay
     done

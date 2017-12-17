@@ -8,6 +8,13 @@
 
 [ -e $DYNAMIC ] || exit
 
+# prevent premature focus window request from conky polling, see query wname
+# focus window can shift focus out of an empty frame selected by focus frame above
+touch $FOCUS
+cpu arm && delay=2 || delay=1
+( sleep $delay && rm -f $FOCUS ) &
+
+
 # fill empty grid locations once
 # fill=true
 unset fill

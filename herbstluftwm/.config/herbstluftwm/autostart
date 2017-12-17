@@ -23,6 +23,8 @@ dohc() {
 # re-entrant (startx) cleanup
 pkill -TERM -f 'panel' &
 pkill -TERM -f 'pulsar' &
+# cleanup errant socket locations
+find $HOME/.config/herbstluftwm -name scratchpad -type s -exec rm {} \;
 
 # unlock, just to be sure
 hc emit_hook reload
@@ -63,11 +65,11 @@ restore layout tags
 
 if is multihead ;then
   draw monitor secondary
-  [ -e $SESSION/conky ] && toggle conky || toggle panel
+  [ -e $SCONKY ] && toggle conky || toggle panel
   # enable panel for secondary monitor by default
   touch $PANEL:1
 elif is display +1920 ;then
-  [ -e $SESSION/conky ] && toggle conky || toggle panel
+  [ -e $SCONKY ] && toggle conky || toggle panel
 else
   draw monitor fullframe
   toggle panel

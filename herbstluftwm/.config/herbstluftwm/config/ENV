@@ -16,17 +16,12 @@ export ROOT=${ROOT:-/tmp}
 export HLWM=$ROOT/herbstluftwm
 export SESSION=$HOME/.session
 
-# ............................................................ Persistent states
+# .................................................................... WM states
 
 export PALETTE=$HOME/images/colors
 export BACKGROUND=$PALETTE/default
 export COLOR=$BACKGROUND:color
 export WALLPAPER=$HOME/images/backgrounds/default
-
-export CONTRAST=$SESSION/contrast
-export NCURSES=$SESSION/ncurses
-export NOBLUR=$SESSION/noblur
-export SETROOT=$SESSION/setroot
 
 export BLACKBOARD=$HLWM:blackboard
 export BLANK=$HLWM:blank
@@ -49,6 +44,27 @@ export THEME=$HLWM:theme
 export WALL=${WALL:-.}
 
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
+
+# ............................................................... Session states
+
+# wm states
+export CONTRAST=$SESSION/contrast
+export NOBLUR=$SESSION/noblur
+export SETROOT=$SESSION/setroot
+
+# application states
+export MENU=$SESSION/term:menu
+export NCURSES=$SESSION/ncurses
+export PROOF=$SESSION/proof
+export SCONKY=$SESSION/conky
+export WSYNC=$SESSION/wsync
+
+# panel attributes
+export SPANEL=$SESSION/panel
+export BLINKER=$SPANEL:blinker
+export BAR=$SPANEL:bar
+export PCONKY=$SPANEL:conky
+export WEATHER=$SPANEL:weather
 
 # ..................................................................... Desktops
 
@@ -109,11 +125,17 @@ hlwm && [ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
 # conky clock secondary monitor
 # export CONKY_Q2=$HOME/stow/conky/$(query displaywidth 1)x$(query displayheight 1)/.conkyrc.qclocktwo
 export CONKY_Q2=$HOME/stow/conky/1680x1050/.conkyrc.qclocktwo
+
 # terminal font
 export MONOFONT=Iosevka
-# dmenu line item marker
-export SEP='∙'
+
 # dmenu line column delimeter (must not match dmenu content), see restore hidden, focus hlwm
 export DLM='$'
+# dmenu line item marker
+export SEP='∙'
+
+# panel info separators
+export LSEP='    '
+export RSEP='    '
 
 # vim: set ft=sh: #

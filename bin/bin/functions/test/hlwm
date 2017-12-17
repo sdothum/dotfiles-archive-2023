@@ -6,6 +6,6 @@
 
 # ................................................................. herbstluftwm
 
-pidof herbstluftwm >/dev/null
+pstat herbstluftwm
 
 # vim: set ft=sh: #

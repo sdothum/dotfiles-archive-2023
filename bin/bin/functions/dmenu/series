@@ -16,9 +16,12 @@ DATE='[ sort by date ]'
 EDIT='[ manage       ]'
 
 # video library
-library=${LIBRARY:-/net/media/videos/${1:-series}}
-libext=$(find /run/media/$USER -maxdepth 2 -type d -name "${library##*/}" 2>/dev/null)
+category=${1:-series}
+library=${LIBRARY:-/net/media/videos/$category}
+
+preprocess=${0%/dmenu}/functions/dmenu/.d/$category
 mytitles=$library/.mytitles
+
 if server ;then
   sudo find $library -maxdepth 2 -type d -user sonarr -exec chmod -R 755 {} \;
   sudo find $library -maxdepth 2 -type d -user sonarr -exec chown -R shum:users {} \;
@@ -28,12 +31,7 @@ else
 fi
 find $library -name '*sample*' -exec rm {} \; &
 # clean up titles
-if [ -e $library/The.Daily.Show ] ;then
-  for i in $(find $library/The.Daily.Show -maxdepth 1 -type d -regex '.*\.20[0-9][0-9]\.[0-9][0-9]\.[0-9][0-9]\..*')
-  do
-    mv $i $(echo $i | sed -r 's/\.20([0-9][0-9])\.([0-9][0-9])\.([0-9][0-9])\./.S\1E\2.\3./')
-  done
-fi
+[ -e $preprocess ] && . $preprocess
 mytitles $library >>$mytitles
 
 # list latest television series additions first
@@ -43,8 +41,8 @@ hlwm && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   # clean up episodes
-  mytitles -R "$series" >>$mytitles
-  ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)\..*/\1/' | sort >$episodes
+  mytitles "$series" >>$mytitles
+  ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\1/' | sort >$episodes
   playlist $episodes "$playlist"
 }
 
@@ -59,11 +57,8 @@ do
          rmenu 'Series' "$show" -no-custom) || break
 
   case $show in
-    "$NAME") unset T
-             continue ;;
-
-    "$DATE") T=t
-             continue ;;
+    "$NAME") unset T; continue ;;
+    "$DATE") T=t; continue ;;
 
     "$EDIT") pkill -TERM 'ROX-Filer'
              rox $library
@@ -71,9 +66,9 @@ do
              # force dmenu focus (continue within do loop doesn't guarantee focus)
              exec dmenu series $1 ;;
 
-    *) series="$library/$(echo $show | sed 's/ /./g')"
-       playlist="$series/.playlist"
-       [ -e "$playlist" ] || echo >"$playlist" ;;
+    *      ) series="$library/$(echo $show | sed 's/ /./g')"
+             playlist="$series/.playlist"
+             [ -e "$playlist" ] || echo >"$playlist" ;;
   esac
 
   while :
@@ -86,9 +81,7 @@ do
     [ "$episode" ] || break
 
     episode=$(echo "$episode" | sed "s/ $SEP$//")
-    unset video
-    [ -n "$libext" ] && video=$(find "$libext/${series##*/}" -maxdepth 1 -type d -regex ".*$episode.*" 2>/dev/null)
-    [ -z "$video" ] && video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
+    video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify 3 critical "$show" "Duplicate episodes found"
       sleep 3

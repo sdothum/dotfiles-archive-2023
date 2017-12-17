@@ -10,7 +10,7 @@ default=shutdown
 # disconnect nfs to prevent shutdown wait..
 disconnect() {
   if ! server ;then
-    pgrep rsync >/dev/null && notify 3 critical 'Rsync in progress' 'Waiting..'
+    pstat rsync && notify 3 critical 'Rsync in progress' 'Waiting..'
     pwait rsync
     sudo umount /net
     sudo umount /home/shum/Maildir
@@ -25,15 +25,15 @@ while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
             rmenu 'Session' $cmd -no-custom) || exit
 do
   case $cmd in
-    lock  ) lock_screen ;;
-    logout) sudo kill -TERM X ;;
+    lock    ) lock_screen ;;
+    logout  ) sudo kill -TERM X ;;
 
-    suspend) [ -e /sbin/systemctl ] && sudo systemctl suspend ||
-                                       sudo pm-suspend ;;
+    suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend ||
+                                        sudo pm-suspend ;;
 
-    reboot) disconnect
-            [ -e /sbin/systemctl ] && sudo systemctl reboot ||
-                                      sudo shutdown -r now ;;
+    reboot  ) disconnect
+              [ -e /sbin/systemctl ] && sudo systemctl reboot ||
+                                        sudo shutdown -r now ;;
 
     shutdown) disconnect
               [ -e /sbin/systemctl ] && sudo systemctl poweroff ||

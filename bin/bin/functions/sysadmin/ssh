@@ -18,7 +18,7 @@ if hlwm ;then
     host=$1
     shift
     Y="-Y $USER@$host"
-  elif pgrep tmux >/dev/null ;then
+  elif pstat tmux ;then
     # update tmux window as required
     if [ "$(query wname 2>/dev/null)" = Scratchpad ] ;then
       title="^$(tmux list-windows | grep '\*' | cut -d' ' -f2 | sed 's/\*//')"

@@ -10,7 +10,7 @@
 
 which lemonbar >/dev/null 2>&1 || exit
 fifo=${1#:}
-pgrep -f "^lemonbar -d -n lemonbar:$fifo " && exit
+pstat "^lemonbar -d -n lemonbar:$fifo " && exit
 
 # .................................................................. Panel theme
 
@@ -24,9 +24,7 @@ UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
 # tic indicator: none (unset), blink, circle, square
-[ -e $SESSION/panel:tic ] && { TIC=$(cat $SESSION/panel:tic);  TIC=${TIC:-square}; }
-[ -e $SESSION/panel:bar ] && BAR=true
-[ -e $SESSION/panel:weather ] && WEATHER=true
+[ -e $BLINKER ] && { TIC=$(cat $BLINKER);  TIC=${TIC:-square}; }
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -43,8 +41,7 @@ FREE='□'
 # FREE='◇'
 # tag bar separator (visual spacing)
 TAG_PAD=' '
-LSEP='    '
-RSEP='    '
+# TAG_PAD='  '
 
 # panel theme
 # alpha channel for panel transparency with compton
@@ -195,10 +192,12 @@ title() {
 }
 
 weather() {
-  weather="$(conky weather)"
+  weather="$(conky weather panel)"
+  unset update_weather
 }
+
 # initialize
-[ $WEATHER ] && weather
+[ -e $WEATHER ] && weather
 
 # fifo read loop
 panel() {
@@ -206,7 +205,7 @@ panel() {
   do
     case $line in
       S*) unset ind
-          if [ $BAR ] ;then
+          if [ -e $BAR ] ;then
             bar=${line#*|}
             bar=${bar%|*}
             case $bar in
@@ -251,9 +250,12 @@ panel() {
           fi
 
           # refresh every 10 minutes
-          if [ $WEATHER ] ;then
+          if [ -e $WEATHER ] ;then
             minute=${line#*:?}
-            [ ${minute%%\%*} = 0 ] && weather
+            case ${minute%%\%*} in
+              0) [ $update_weather ] && weather ;;
+              *) update_weather=true ;;
+            esac
           fi
           line="${line%%^*}$weather${line#*^}"
 

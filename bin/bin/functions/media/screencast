@@ -28,13 +28,13 @@ if server ;then
     r* | *1) xy=2560x1600
              offset=+1680,0 ;;
 
-    a*) xy=4240x1600 ;;
+    a*     ) xy=4240x1600 ;;
 
-    k*) kill -TERM $(pidof -s $pidname)
-        ls -l /tmp/*.webm
-        exit ;;
+    k*     ) kill -TERM $(pidof -s $pidname)
+             ls -l /tmp/*.webm
+             exit ;;
 
-    *) usage ;;
+    *      ) usage ;;
   esac
 
   webm=$(mktemp).webm
@@ -51,7 +51,7 @@ if server ;then
                           -loglevel quiet \
                           $webm &
   shift
-  [ $1 ] && eval $@
+  [ $1 ] && $@
 
   if if-yes 'stop recording and save' ;then
     kill -TERM $(pidof -s $pidname)

@@ -12,8 +12,8 @@ CACHEDIR=${CACHEDIR:-$HOME/.cache}
 SESSION=${SESSION:-$HOME/.session}
 WATCH=$CACHEDIR/wsync
 IGNORE=$WATCH:ignore
-SYNC=$SESSION/wsync
-VERBOSE=$SYNC:verbose
+WSYNC=${WSYNC:-$SESSION/wsync}
+VERBOSE=$WSYNC:verbose
 LOG=/tmp/wsync.log
 
 # watchman
@@ -40,7 +40,7 @@ info() {
 
 register() {
   if [ -f "$file" ] ;then
-    ( [ -e $VERBOSE ] || [ ! -e $SYNC ] ) && info Register
+    ( [ -e $VERBOSE ] || [ ! -e $WSYNC ] ) && info Register
     grep -qx "${file%/*}" $WATCH || echo ${file%/*} >>$WATCH
   fi
   unset file
@@ -71,7 +71,7 @@ archive() {
 }
 
 watch() {
-  if pidof watchman >/dev/null ;then
+  if pstat watchman ;then
     cat $WATCH
   else
     # trap random watchman initialization flooding and reset watch queue
@@ -96,13 +96,13 @@ watch() {
 }
 
 case $1 in
-  '') cpu arm && pidof syncthing >/dev/null && systemd stop syncthing@$USER
+  '') cpu arm && pstat syncthing && systemd stop syncthing@$USER
       watch ;;
 
   -a) archive & ;;
   -s) archive && { watchman shutdown-server; systemd start syncthing@$USER; } ;;
-  -v) pidof syncthing >/dev/null || watch ;;
-  * ) queue $@ && [ -e $SYNC ] && archive & ;;
+  -v) pstat syncthing || watch ;;
+  * ) queue $@ && [ -e $WSYNC ] && archive & ;;
 esac
 
 # vim: set ft=sh: #

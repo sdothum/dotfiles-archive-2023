@@ -19,7 +19,7 @@ link() {
     [ -d $i ] || continue
     # on directory == application, apply link action
     rule='which ${i##*/} >/dev/null 2>&1 '$@' ${i##*/}'
-    eval $rule
+    $rule
   done
 }
 
@@ -32,7 +32,7 @@ case $1 in
   D | R) [ $2 ] || usage
          /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ;;
 
-  *) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
+  *    ) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
 esac
 
 # vim: set ft=sh: #

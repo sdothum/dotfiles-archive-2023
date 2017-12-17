@@ -40,7 +40,7 @@ ${offset 3200}${if_match ${exec date +"%I"} == 12}${color}${else}${color1}${endi
 ${offset 3200}${if_match ${exec date +"%I"} == 3}${color}${else}${color1}${endif}F O U R ${if_match ${exec date +"%I"} == 4}${color}${else}${color1}${endif}F I V E ${if_match ${exec date +"%I"} == 1}${color}${else}${color1}${endif}T W O
 ${offset 3200}${if_match ${exec date +"%I"} == 7}${color}${else}${color1}${endif}E I G H T${if_match ${exec date +"%I"} == 10}${color}${else}${color1}${endif} E L E V E N
 ${offset 3200}${if_match ${exec date +"%I"} == 6}${color}${else}${color1}${endif}S E V E N${if_match ${exec date +"%I"} == 11}${color}${else}${color1}${endif} T W E L V E
-${offset 3200}${if_match ${exec date +"%I"} == 9}${color}${else}${color1}${endif}T E N ${endif}${color1}S E ${if_match ${exec date +"%M"} < 5}${color}${endif}O C L O C K
+${offset 3200}${if_match ${exec date +"%I"} == 9}${color}${else}${color1}${endif}T E N ${endif}${color1}S ${if_match ${exec date +"%M"} < 5}${color}O ' C L O C K${else}E O C L O C K${endif}
 ]];
 
 -- vim: set ft=lua : --

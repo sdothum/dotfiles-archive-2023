@@ -22,7 +22,6 @@ EDIT='[ manage       ]'
 
 nzb=/net/downloads/nzbs/completed
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
-libext=$(find /run/media/$USER -maxdepth 2 -type d -name "${library##*/}" 2>/dev/null)
 mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
@@ -41,7 +40,7 @@ catlg() {
 cache() {
   notify low 'Movies' 'Caching library..'
   # clean up titles
-  mytitles -R $library >>$mytitles
+  mytitles $library >>$mytitles
   [ -e $playlist ] || echo >$playlist
   catlg
 }
@@ -76,11 +75,8 @@ do
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
 
   case $movie in
-    "$NAME") unset T
-             continue ;;
-
-    "$DATE") T=t
-             continue ;;
+    "$NAME") unset T; continue ;;
+    "$DATE") T=t; continue ;;
 
     "$EDIT") pkill -TERM 'ROX-Filer'
              rox $nzb
@@ -89,42 +85,40 @@ do
              # force dmenu focus (continue within do loop doesn't guarantee focus)
              exec dmenu movies $1 ;;
 
-    *) movie=$(echo "$movie" | sed "s/ $SEP$//")
-       while :
-       do
-         action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
-         unset video
-         title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
-         [ -n "$libext" ] && video=$(find "$libext" -maxdepth 1 -type d -regex ".*${title}.*")
-         [ -z "$video" ] && video=$(find $library -maxdepth 1 -type d -regex ".*${title}.*")
-         case $action in
-           play) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
-                   notify 3 critical "$movie" "Duplicate movie files found"
-                   term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
-                 fi
-                 mhistory $playlist "$movie"
-                 catlg
-                 play "$video" "$movie"
-                 break ;;
+    *      ) movie=$(echo "$movie" | sed "s/ $SEP$//")
+             while :
+             do
+               action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
+               title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
+               video=$(find $library -maxdepth 1 -type d -regex ".*/${title}.*")
+               case $action in
+                 play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
+                           notify 3 critical "$movie" "Duplicate movie files found"
+                           term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
+                         fi
+                         mhistory $playlist "$movie"
+                         catlg
+                         play "$video" "$movie"
+                         break ;;
 
-           mrqe) vimb "mr $movie" ;;
-           imdb) vimb "im $movie" ;;
+                 mrqe  ) vimb "mr $movie" ;;
+                 imdb  ) vimb "im $movie" ;;
 
-           manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
-                   catlg
-                   break ;;
+                 manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
+                         catlg
+                         break ;;
 
-           delete) rm -rf "$video"
-                   catlg
-                   break ;;
+                 delete) rm -rf "$video"
+                         catlg
+                         break ;;
 
-           mark) mhistory $playlist "$movie"
-                 catlg
-                 break ;;
+                 mark  ) mhistory $playlist "$movie"
+                         catlg
+                         break ;;
 
-           exit) exit ;;
-         esac
-       done ;;
+                 exit  ) exit ;;
+               esac
+             done ;;
   esac
 done
 

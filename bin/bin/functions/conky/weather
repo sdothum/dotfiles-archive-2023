@@ -5,26 +5,31 @@
 
 # ........................................................................ Conky
 
-# Usage: conky weather <city> [debug]
-
-[ $# -gt 1 ] && debug=true
+# Usage: conky weather <city> [panel | debug]
 
 connect || exit
 
 # http://www.weatheroffice.gc.ca/business/index_e.html for city codes
 case $1 in
-  calgary  ) city=ab-52 ;;
-  halifax  ) city=ns-19 ;;
-  kingston ) city=on-69 ;;
-  nanaimo  ) city=bc-20 ;;
-  nelson   ) city=bc-37 ;;
-  vancouver) city=bc-74 ;;
-  victoria ) city=bc-85 ;;
+  calgary  ) city=ab-52; shift ;;
+  halifax  ) city=ns-19; shift ;;
+  kingston ) city=on-69; shift ;;
+  nanaimo  ) city=bc-20; shift ;;
+  nelson   ) city=bc-37; shift ;;
+  vancouver) city=bc-74; shift ;;
+  victoria ) city=bc-85; shift ;;
+  ottawa   ) city=on-52; shift ;;
   *        ) city=on-52 ;;
 esac
 
-# WEATHER=$(curl --silent "http://www.weatheroffice.gc.ca/rss/city/${city}_e.xml?source=ignitionfork#stream/feed%2Fhttp%3A%2F%2Fwww.weatheroffice.gc.ca%2Frss%2Fcity%2F${city}_e.xml")
-WEATHER=$(curl --silent "http://weather.gc.ca/rss/city/${city}_e.xml?source=ignitionfork")
+sep=', '
+case $1 in
+  debug) debug=true ;;
+  panel) sep=$RSEP ;;
+esac
+
+# scrape weather synopsis
+WEATHER=$(curl --silent "https://weather.gc.ca/rss/city/${city}_e.xml?source=ignitionfork")
 if [ $debug ] ;then
   echo Weather .. $WEATHER
   echo
@@ -57,9 +62,9 @@ if [ $debug ] ;then
 fi
 
 if [ -z $FEELSLIKE ] ;then
-  [ -n "$CURRENT" ] && echo "${CURRENT%, } ● ${TEMPERATURE}C" || echo "${TEMPERATURE}C"
+  [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}C" || echo "${TEMPERATURE}C"
 else
-  [ -n "$CURRENT" ] && echo "${CURRENT%, } ● ${TEMPERATURE}C Feels ${FEELSLIKE}C" || echo "${TEMPERATURE}C Feels ${FEELSLIKE}C"
+  [ -n "$CURRENT" ] && echo "${CURRENT%, }$sep${TEMPERATURE}C Feels ${FEELSLIKE}C" || echo "${TEMPERATURE}C Feels ${FEELSLIKE}C"
 fi
 
 # vim: set ft=sh: #

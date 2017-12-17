@@ -11,7 +11,7 @@ SCRATCHPAD=$HLWM:scratchpad
 # simple tabbed, tmux or byobu
 term=tmux
 
-[ $(pgrep -cf 'toggle scratchpad') -gt 1 ] && exit
+pstat + 'toggle scratchpad' && exit
 # kill any extra tmux sessions spawned (default 2 processes)..
 kill -TERM $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
 

@@ -8,7 +8,7 @@
 radio=/tmp/radio
 
 if [ -e $radio ] ;then
-  pgrep -f 'mpv --no-cache --quiet' >/dev/null && cat $radio
+  pstat 'mpv --no-cache --quiet' && cat $radio
 fi
 
 # vim: set ft=sh: #

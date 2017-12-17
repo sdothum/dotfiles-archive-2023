@@ -16,20 +16,20 @@ tree=/tmp/pd:r
 case $1 in
   '') usage ;;
 
-  n) pacman -Qet
-     exit ;;
+  n ) pacman -Qet
+      exit ;;
 
-  d) echo >$tree
-     D=D
-     shift
-     dep='depends on' ;;
+  d ) echo >$tree
+      D=D
+      shift
+      dep='depends on' ;;
 
-  R) D=N
-     shift
-     dep='required by' ;;
+  R ) D=N
+      shift
+      dep='required by' ;;
 
-  *) echo >$tree
-     exec pd R $@ ;;
+  * ) echo >$tree
+      exec pd R $@ ;;
 esac
 
 # package dependency
@@ -52,14 +52,14 @@ if [ $1 ] ;then
       echo $i >>$tree
 
       # recurse through required by
-      if [ $D = N ] ;then
-        for j in $pkgs
-        do
-          grep -q $j $tree && continue
-          pd R $j
-          echo $j >>$tree
-        done
-      fi
+      # if [ $D = N ] ;then
+      #   for j in $pkgs
+      #   do
+      #     grep -q $j $tree && continue
+      #     pd R $j
+      #     echo $j >>$tree
+      #   done
+      # fi
     else
       ditto "\"$i\" not found"
     fi

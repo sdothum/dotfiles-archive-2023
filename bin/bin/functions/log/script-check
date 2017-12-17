@@ -7,7 +7,7 @@
 # .......................................................................... Log
 
 # abort condition
-if ! pgrep -x script ;then
+if ! pstat script ;then
   ditto 'run "script" to log stdout messages'
   # kill script called from
   exit

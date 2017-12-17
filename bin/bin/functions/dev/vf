@@ -13,25 +13,25 @@ usage() {
 
 # v by directory depth or name
 case $1 in
-  help) usage ;;
+  help ) usage ;;
 
-  '') if [ -e $DYNAMIC ] ;then
-        toggle focus
-        dynamic=true
-      fi
-      for i in $(find -L -type d  | filter)
-      do
-        files=$(find -L $i -maxdepth 1 -type f | filter)
-        [ "$files" ] || continue
-        echo
-        echo $files | sed 's|.*/||'
-        if-yes "edit $i" || continue
-        v -f $files
-      done
-      [ $dynamic ] && toggle focus ;;
+  ''   ) if [ -e $DYNAMIC ] ;then
+           toggle focus
+           dynamic=true
+         fi
+         for i in $(find -L -type d  | filter)
+         do
+           files=$(find -L $i -maxdepth 1 -type f | filter)
+           [ "$files" ] || continue
+           echo
+           echo $files | sed 's|.*/||'
+           if-yes "edit $i" || continue
+           v -f $files
+         done
+         [ $dynamic ] && toggle focus ;;
 
-  1 | 2 | 3 | 4) v $(find -L -maxdepth ${1:-1} -type f | filter) ;;
-  *            ) v $(find -L -type f -name "$1" | filter) ;;
+  [1-4]) v $(find -L -maxdepth ${1:-1} -type f | filter) ;;
+  *    ) v $(find -L -type f -name "$1" | filter) ;;
 esac
 
 # vim: set ft=sh: #

@@ -39,25 +39,25 @@ do
     "$DARK"  ) conky theme dark $bg ;;
     "$LIGHT" ) conky theme light $bg ;;
 
-    "$SAVE") hue=$(echo "$(themes)" | rmenu 'Colour') || exit
+    "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
                  contrast=$(cat $CONTRAST)
                  mhistory root "$bg^$SEP $contrast $hue"
                  swatch $bg $hue
                  ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
 
-    *dark* | *light*)
-             bg=$(echo $color | cut -d' ' -f1)
-             draw root blank $bg
-             ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
-             mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
-             break ;;
+    *dark* |\
+    *light*  ) bg=$(echo $color | cut -d' ' -f1)
+               draw root blank $bg
+               ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
+               mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+               break ;;
 
-    *) hex $color || continue
-       draw root blank $color
-       bg=$color
-       # overlay conky panel over rmenu screen!
-       draw conky
-       menu="$DARK\n$LIGHT\n$SAVE" ;;
+    *        ) hex $color || continue
+               draw root blank $color
+               bg=$color
+               # overlay conky panel over rmenu screen!
+               draw conky
+               menu="$DARK\n$LIGHT\n$SAVE" ;;
   esac
 done
 

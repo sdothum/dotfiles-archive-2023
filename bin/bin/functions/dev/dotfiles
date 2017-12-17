@@ -60,65 +60,68 @@ pending() {
 # $@ substitution within complex expressions is more predictably handled by var substitution
 unset pending
 case $1 in
-  '') for i in $dotfiles
-      do
-        git add -v $i
-      done
-      pending ;;
+  help   ) usage ;;
 
-  add) shift
-       for i in $@
-       do
-         if [ -e $i ] ;then
-           git add -fv $i
-           pending=true
-         else
-           usage
-         fi
-       done
-       [ $pending ] && pending ;;
+  ''     ) for i in $dotfiles
+           do
+             git add -v $i
+           done
+           pending ;;
 
-  comment | amend)
-            shift
-            DESC=$@
-            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
-                           git commit --amend ;;
+  add    ) shift
+           for i in $@
+           do
+             if [ -e $i ] ;then
+               git add -fv $i
+               pending=true
+             else
+               usage
+             fi
+           done
+           [ $pending ] && pending ;;
 
-  edit | ignore) gvim .gitignore ;;
-  help         ) usage ;;
+  amend |\
+  comment) shift
+           DESC=$@
+           [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
+                          git commit --amend ;;
 
-  init) git init
-        git add README.md
-        git commit --message="refresh commit"
-        git remote add origin https://github.com/sdothum/dotfiles.git
-        git push -u origin master
-        git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
+  edit |\
+  ignore ) gvim .gitignore ;;
 
-  list) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
-  log ) git log | less ;;
+  init   ) git init
+           git add README.md
+           git commit --message="refresh commit"
+           git remote add origin https://github.com/sdothum/dotfiles.git
+           git push -u origin master
+           git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
 
-  undo | redo | reset)
-         git reset --soft HEAD~
-         dotfiles ;;
+  list   ) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+  log    ) git log | less ;;
 
-  rm) shift
-      if [ $1 ] ;then
-        DESC=$@
-        git rm -r --cached $DESC
-        git commit --message="Remove directory \"$DESC\""
-        git push origin master
-      fi ;;
+  undo |\
+  redo |\
+  reset  ) git reset --soft HEAD~
+           dotfiles ;;
 
-  *) for i in $@
-     do
-       if [ -e $i ] ;then
-         git add -v $i
-         pending=true
-       else
-         usage
-       fi
-     done
-     [ $pending ] && pending ;;
+  rm     ) shift
+           if [ $1 ] ;then
+             DESC=$@
+             git rm -r --cached $DESC
+             git commit --message="Remove directory \"$DESC\""
+             git push origin master
+           fi ;;
+
+  *      ) for i in $@
+           do
+             if [ -e $i ] ;then
+               git add -v $i
+               pending=true
+             else
+               usage
+             fi
+           done
+           [ $pending ] && pending ;;
 esac
 
 # vim: set ft=sh: #

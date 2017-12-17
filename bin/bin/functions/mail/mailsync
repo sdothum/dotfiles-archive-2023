@@ -65,18 +65,18 @@ EOF
   do
     account=${i##*/}
     case $account in
-      sdothum) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
+      sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
 
       patricia) tag_account $account/INBOX +phconsulting
                 tag_account "$account/[Gmail]/Sent Mail" +patricia ;;
 
-      *) case $account in
-           bodyshamanics    ) tag_account $account/INBOX +bodyshamanics +thedarnedestthing ;;
-           comments         ) tag_account $account/INBOX +comments +thedarnedestthing ;;
-           steven           ) tag_account $account/INBOX +private +thedarnedestthing ;;
-           thedarnedestthing) tag_account $account/INBOX +admin +thedarnedestthing ;;
-           webmaster        ) tag_account $account/INBOX +webmaster +thedarnedestthing ;;
-         esac ;;
+      *       ) case $account in
+                  bodyshamanics    ) tag_account $account/INBOX +bodyshamanics +thedarnedestthing ;;
+                  comments         ) tag_account $account/INBOX +comments +thedarnedestthing ;;
+                  steven           ) tag_account $account/INBOX +private +thedarnedestthing ;;
+                  thedarnedestthing) tag_account $account/INBOX +admin +thedarnedestthing ;;
+                  webmaster        ) tag_account $account/INBOX +webmaster +thedarnedestthing ;;
+                esac ;;
     esac
   done
 

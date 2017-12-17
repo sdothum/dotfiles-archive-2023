@@ -36,33 +36,33 @@ url() { grep "$@" $stations | sed 's/.*, *//'; }
 while station=$(playlist | sed 's/,.*//' | rmenu "$(station)" -no-custom) || exit
 do
   case $station in
-    "$TOGGLE") if pgrep -f 'mpv --no-cache --quiet' >/dev/null ;then
+    "$TOGGLE") if pstat 'mpv --no-cache --quiet' ;then
                  stop
                else
                  mpv --no-cache --quiet $(url $(cat $RADIO)) &
                fi
                exit ;;
 
-    "$CLEAR") stop
-              rm -f $RADIO
-              exit ;;
+    "$CLEAR" ) stop
+               rm -f $RADIO
+               exit ;;
 
-    "$EDIT") gvim -f $stations ;;
+    "$EDIT"  ) gvim -f $stations ;;
 
-    *) pgrep -f 'mpv --no-cache --quiet' >/dev/null && stop
-       # quotes required "$station"
-       url=$(url "$station")
-       if [ "$url" ] ;then
-         # mpv --no-cache $station &
-         mpv --no-cache --quiet $url &
-         sleep $delay
-         if pgrep -f 'mpv --no-cache --quiet' ;then
-           echo "$station" >$RADIO
-           exit
-         else
-           rm -f $RADIO
-         fi
-       fi ;;
+    *        ) pstat 'mpv --no-cache --quiet' && stop
+               # quotes required "$station"
+               url=$(url "$station")
+               if [ "$url" ] ;then
+                 # mpv --no-cache $station &
+                 mpv --no-cache --quiet $url &
+                 sleep $delay
+                 if pstat 'mpv --no-cache --quiet' ;then
+                   echo "$station" >$RADIO
+                   exit
+                 else
+                   rm -f $RADIO
+                 fi
+               fi ;;
   esac
 done
 

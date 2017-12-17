@@ -25,9 +25,9 @@ case $1 in
   off) wireless | grep 'address=' && connmanctl disconnect $network ;;
   on ) wireless | grep 'address=' || connmanctl connect $network ;;
 
-  *) connmanctl services --properties $network
-     echo
-     usage ;;
+  *  ) connmanctl services --properties $network
+       echo
+       usage ;;
 esac
 
 # vim: set ft=sh: #

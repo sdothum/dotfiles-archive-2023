@@ -7,24 +7,48 @@
 # ................................................................... Postgresql
 
 usage() {
-  echo "usage: $(basename $0) 9.x"
+  echo "usage: $(basename $0) pre | post [<version.X>]"
   exit 1
 }
 
-[ $1 ] || usage
+# Note: - pre upgrade workflow assumes "ignorepkg postgresql" has been set
+#       - post upgrade workflow assumes no postgresql <version.X> has been skipped
 
 # upgrade postgresql database
-stop postgresql
-sudo pacman -S --needed postgresql-old-upgrade
+case $1 in
+  pre ) vsn=$(psql --version | cut -d' ' -f3)
+        systemd start postgresql
+        [ -e /var/lib/postgres/dump.sql-$vsn ] || echo "pg_dumpall > dump.sql-$vsn" | su - postgres
+        systemd stop postgresql
+        if [ ! -e /var/lib/postgres/data-$vsn ] ;then
+          echo "mv data data-$vsn" | su - postgres
+          echo 'mkdir data' | su - postgres
+          echo 'chmod 700 data' | su - postgres
+        fi
 
-sudo chown -c postgres:postgres /var/lib/postgres/
-su -c "mv /var/lib/postgres/data /var/lib/postgres/data-$1" - postgresql
-su -c "mkdir /var/lib/postgres/data" - postgresql
-su -c "initdb --locale en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data" - postgresql
-su -c "pg_upgrade -b /opt/pgsql-$1/bin/ -B /usr/bin/ -d /var/lib/postgres/data-$1 -D /var/lib/postgres/data" - postgresql
+        sudo pacman -S postgresql
+        echo 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data' | su - postgres
+        systemd start postgresql
+        sudo systemctl daemon-reload
+        echo "psql < dump.sql-$vsn" | su - postgres
+        if-no "remove /var/lib/postgres/dump.sql-$vsn" || sudo rm /var/lib/postgres/dump.sql-$vsn
+        if-no "remove /var/lib/postgres/data-$vsn" || sudo rm -r /var/lib/postgres/data-$vsn ;;
 
-sudo pacman -R postgresql-old-upgrade
-start postgresql
-if-no "remove /var/lib/postgres/data-$1" || sudo rm -r /var/lib/postgres/data-$1
+  post) systemd stop postgresql
+        sudo pacman -S --needed postgresql-old-upgrade
+
+        # sudo chown -c postgres:postgres /var/lib/postgres/
+        echo "mv data data-$1" | su - postgres
+        echo 'mkdir data' | su - postgres
+        echo 'chmod 700 data' | su - postgres
+        echo 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data' | su - postgres
+        echo "pg_upgrade -b /opt/pgsql-$1/bin/ -B /usr/bin/ -d /var/lib/postgres/data-$1 -D /var/lib/postgres/data" | su - postgres
+
+        sudo pacman -R postgresql-old-upgrade
+        systemd start postgresql
+        if-no "remove /var/lib/postgres/data-$1" || sudo rm -r /var/lib/postgres/data-$1 ;;
+
+  *   ) usage ;;
+esac
 
 # vim: set ft=sh: #

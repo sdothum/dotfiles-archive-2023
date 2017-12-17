@@ -75,18 +75,18 @@ if [ $(basename $0) = dmenu ] ;then
     shift
   fi
   msg=$1
-  shift
   # unhide desktop
   is multihead || conky clock off
-  if [ -e ${0%/dmenu}/functions/dmenu/$msg ] ;then
-    [ $(pgrep -cf "dmenu $msg") -gt 1 ] && { notify 3 critical "> dmenu $msg" 'Already running..' && exit; }
+  if [ -f ${0%/dmenu}/functions/dmenu/$msg ] ;then
+    pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..'; exit; }
+    shift
     . ${0%/dmenu}/functions/dmenu/$msg $@
   else
     usage $0
   fi
   # restore
   hlwm && [ $fullscreen ] && toggle fullscreen
-  # pidof gpaste-clieunt >/dev/null || gpaste-client &
+  # pstat gpaste-client || gpaste-client &
 fi
 
 # vim: set ft=sh: #

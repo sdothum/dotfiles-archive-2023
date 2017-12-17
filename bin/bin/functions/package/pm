@@ -28,7 +28,7 @@ else
   else
     # no dash option shorthand for noconfirm :-)
     echo $action | grep -q '^-' && action="-$action $edit" || action="-$action --noconfirm"
-    eval $pacaur $action $@
+    $pacaur $action $@
   fi
 fi
 

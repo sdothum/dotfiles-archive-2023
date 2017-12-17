@@ -108,16 +108,16 @@ do
   while action=$(echo "read\nedit\nkindle" | rmenu "$title" -no-custom) || break
   do
     case $action in
-      read) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
-            [ $focus ] || focus frame && focus=true
-            [ $mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
+      read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+              [ $focus ] || focus frame && focus=true
+              [ $mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
 
-      edit) if grep -q "$book" $(history)/ebooks ;then
-              grep -v "$book" $(history)/ebooks >/tmp/ebooks
-              mv /tmp/ebooks $(history)/ebooks
-            fi
-            book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
-            term "$title" WAIT vifm "${book%/*}" "$book" ;;
+      edit  ) if grep -q "$book" $(history)/ebooks ;then
+                grep -v "$book" $(history)/ebooks >/tmp/ebooks
+                mv /tmp/ebooks $(history)/ebooks
+              fi
+              book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
+              term "$title" WAIT vifm "${book%/*}" "$book" ;;
 
       kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
               if [ -z $mobi ] ;then

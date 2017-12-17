@@ -17,6 +17,6 @@ do
   shift
 done
 
-xdotool search --limit 1 --maxdepth 1 --screen 0 --classname $options 'Conky' $1 >/dev/null
+xdotool search --maxdepth 1 --screen 0 --classname $options 'Conky' $1 >/dev/null
 
 # vim: set ft=sh: #

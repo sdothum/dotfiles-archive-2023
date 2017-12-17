@@ -19,7 +19,7 @@ image=$(basename $0).sh
 case $1 in
   '') usage ;;
 
-  a) if [ $# -eq 3 ] ;then
+  a ) if [ $# -eq 3 ] ;then
         echo "$3\n$3" >/tmp/pass
         /usr/bin/pass insert --force $2 </tmp/pass
         pass $2
@@ -27,26 +27,26 @@ case $1 in
         usage
       fi ;;
 
-  G) if [ $# -eq 2 ] ;then
+  G ) if [ $# -eq 2 ] ;then
         /usr/bin/pass generate --no-symbols --force --clip $2 12
         pass $2
       else
         usage
       fi ;;
 
-  g) if [ $# -eq 2 ] ;then
+  g ) if [ $# -eq 2 ] ;then
         /usr/bin/pass generate --force --clip $2 12
         pass $2
       else
         usage
       fi ;;
 
-  I) if-no 'initialize password store' && exit 1
+  I ) if-no 'initialize password store' && exit 1
       [ -d $STORE ] && mv -v $STORE $STORE.save
       /usr/bin/pass init sdothum@gmail.com
       annotate 'import (rebuild) your password store' ;;
 
-  i) if [ $# -eq 3 ] ;then
+  i ) if [ $# -eq 3 ] ;then
         ditto "importing $2"
         echo "$3\n$3" >/tmp/pass
         /usr/bin/pass insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1
@@ -54,54 +54,54 @@ case $1 in
         usage
       fi ;;
 
-  l) shift && /usr/bin/pass $@ ;;
+  l )  shift && /usr/bin/pass $@ ;;
 
-  m) if [ $# -eq 3 ] ;then
+  m ) if [ $# -eq 3 ] ;then
         /usr/bin/pass mv --force $2 $3
         pass $3
       else
         usage
       fi ;;
 
-  R) if [ $# -eq 2 ] ;then
+  R ) if [ $# -eq 2 ] ;then
         /usr/bin/pass rm --recursive --force $2
       else
         usage
       fi ;;
 
-  X) cd $XDIR
-     rm -fv ${image%.sh}.zip
-     echo "#!/usr/bin/dash
-pass I || exit" >$image
-     names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
-     for i in $names
-     do
-       ditto "exporting $i"
-       key=$(/usr/bin/pass $i | sed "s/'/'\"'\"'/")
-       echo "pass i $i '$key'" >>$image
-     done
-     echo "rm -f $image" >>$image
-     chmod -c 700 $image
-     zip -mP "$(passphrase pass/master)" ${image%.sh} $image ;;
+  X ) cd $XDIR
+      rm -fv ${image%.sh}.zip
+      echo "#!/usr/bin/dash
+  pass I || exit" >$image
+      names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
+      for i in $names
+      do
+        ditto "exporting $i"
+        key=$(/usr/bin/pass $i | sed "s/'/'\"'\"'/")
+        echo "pass i $i '$key'" >>$image
+      done
+      echo "rm -f $image" >>$image
+      chmod -c 700 $image
+      zip -mP "$(passphrase pass/master)" ${image%.sh} $image ;;
 
-  *) if [ $# -eq 1 ] ;then
-       if password=$(/usr/bin/pass $1) ;then
-         # interactive mode?
-         if ps -ef | grep $PPID | grep $SHELL ;then
-           [ -e $HOME/.password-store/username/${1#*/}.gpg ] && username=$(/usr/bin/pass username/${1#*/}) ||
-                                                                username=$(/usr/bin/pass username/default)
-           echo "$username\n$password"
-           notify $1 "$username\n$password"
-           /usr/bin/pass --clip $1
-         else
-           echo $password
-         fi
-       else
-         usage
-       fi
-     else
-       usage
-     fi ;;
+  * ) if [ $# -eq 1 ] ;then
+        if password=$(/usr/bin/pass $1) ;then
+          # interactive mode?
+          if ps -ef | grep $PPID | grep $SHELL ;then
+            [ -e $HOME/.password-store/username/${1#*/}.gpg ] && username=$(/usr/bin/pass username/${1#*/}) ||
+                                                                  username=$(/usr/bin/pass username/default)
+            echo "$username\n$password"
+            notify $1 "$username\n$password"
+            /usr/bin/pass --clip $1
+          else
+            echo $password
+          fi
+        else
+          usage
+        fi
+      else
+        usage
+      fi ;;
 esac
 
 # vim: set ft=sh: #

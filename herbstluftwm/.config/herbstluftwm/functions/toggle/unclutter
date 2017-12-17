@@ -7,7 +7,7 @@
 # ............................................................. Toggle unclutter
 
 # current workflow is to hide cursor with mouse off (that's why we prefer keyboards!)
-if pidof unclutter >/dev/null ;then
+if pstat unclutter ;then
   killall -TERM unclutter 2>/dev/null
   herbstclient set focus_follows_mouse 1
 else

@@ -14,23 +14,14 @@
 
 TAG=$(herbstclient attr monitors.focus.tag)
 
-# disable query wname conky polling rules
-focus_app() {
-  touch $FOCUS
-  focus frame
-  # prevent premature focus window request from conky polling, see query wname
-  # focus window can shift focus out of an empty frame selected by focus frame above
-  ( sleep 1 && rm -f $FOCUS ) &
-  $msg $@ &
-}
-
 msg=$1
 [ $msg ] && shift || usage $0
 if [ -e ${0%/focus}/functions/focus/$msg ] ;then
   . ${0%/focus}/functions/focus/$msg $@
 elif which $msg >/dev/null 2>&1 ;then
   # dynamic app window creation
-  focus_app $@
+  focus frame
+  $msg $@ &
 else
   usage $0
 fi

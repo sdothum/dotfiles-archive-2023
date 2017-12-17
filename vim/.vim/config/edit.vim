@@ -41,22 +41,29 @@
     " .............................................................. Select text
 
       " extend paragraph selection
-      vmap     <A-PageUp>   {
-      vmap     <A-PageDown> }
+      vmap     <A-PageUp>        {
+      vmap     <A-PageDown>      }
 
     " .................................................................... Shift
 
-      nnoremap <S-Left>     <<
-      nnoremap <S-Right>    >>
-      inoremap <S-Left>     <C-d>
-      inoremap <S-Right>    <C-t>
+      " softwidth shifts
+      nnoremap <S-Left>          <<
+      nnoremap <S-Right>         >>
+      inoremap <S-Left>          <C-d>
+      inoremap <S-Right>         <C-t>
       " preserve selection when indenting
-      vnoremap <S-Right>    >gv
-      vnoremap <S-Left>     <gv
+      vnoremap <S-Left>          <gv
+      vnoremap <S-Right>         >gv
+
+      " byte shift left / right
+      nnoremap <leader><S-Left>  :s/^ //<CR>:silent nohlsearch<CR>
+      nnoremap <leader><S-Right> :s/^/ /<CR>:silent nohlsearch<CR>
+      vnoremap <leader><S-Left>  :s/^ //<CR>:silent nohlsearch<CR>gv
+      vnoremap <leader><S-Right> :s/^/ /<CR>:silent nohlsearch<CR>gv
 
       " move visual block with automatic alignment!
-      vnoremap L            :m '<-2<CR>gv=gv
-      vnoremap N            :m '>+1<CR>gv=gv
+      vnoremap L                 :m '<-2<CR>gv=gv
+      vnoremap N                 :m '>+1<CR>gv=gv
 
   " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

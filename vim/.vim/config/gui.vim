@@ -104,6 +104,8 @@
 
     " .................................................................... Theme
 
+      " hide tilde marker
+      autocmd gui BufWinEnter * highlight EndOfBuffer ctermfg=bg guifg=bg
       " reset menu highlight after loading autocompletion plugin
       autocmd gui BufWinEnter * highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
       " match command line tab menu
@@ -126,7 +128,7 @@
       set omnifunc=syntaxcomplete#Complete
       syntax on                             " turn on syntax highlighting
       " refresh highlighting on arm
-      autocmd gui CursorHold * if ! Prose() | execute 'set filetype=' . &filetype | endif
+      autocmd gui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
 
     " ...................................................... White space markers
 

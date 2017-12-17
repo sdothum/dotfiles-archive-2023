@@ -41,59 +41,37 @@ border() {
 while [ "$1" ]
 do
   case $1 in
-    FLOAT) name='-name float'
-           geometry='-geometry 1024x600+0+0'
-           shift ;;
-
-    STACK) stack=true
-           shift ;;
-
-    MAX) name='-name max'
-         shift ;;
-
-    VERTICAL) name='-name vertical'--smart-case
-              shift ;;
-
-    HORIZONTAL) name='-name horizontal'
+    FLOAT     ) name='-name float'
+                geometry='-geometry 1024x600+0+0'
                 shift ;;
 
-    GRID) name='-name grid'
-          shift ;;
+    STACK     ) stack=true; shift ;;
+    MAX       ) name='-name max'; shift ;;
+    VERTICAL  ) name='-name vertical'--smart-case; shift ;;
+    HORIZONTAL) name='-name horizontal'; shift ;;
+    GRID      ) name='-name grid'; shift ;;
+    TABBED    ) tabbed='-pe tabbed'; shift ;;
+    BG        ) attr="-bg $2"; shift 2 ;;
+    BLACKBOARD) attr="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'"; shift ;;
+    TR        ) tr='-tr'; shift ;;
+    VISIBLE   ) visible=true; shift ;;
+    WAIT      ) wait=true; shift ;;
+    FORTUNE   ) touch $FORTUNE:term; shift ;;
 
-    TABBED) tabbed='-pe tabbed'
-            shift ;;
-
-    BG) attr="-bg $2"
-        shift 2 ;;
-
-    BLACKBOARD) attr="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'"
+    MENU      ) name="-name menu"
+                stack=true
+                size=$(( $(fontsize) + 4 ))
+                attr="$attr -b $(border) -sh 80 -fn xft:$MONOFONT:size=$size -lsp $(( $size / 4 * 3 ))"
                 shift ;;
 
-    TR) tr='-tr'
-        shift ;;
+    SHELL     ) shift
+                process=$@
+                [ "$1" ] && cmd="-e $SHELL -c '$@'"
+                break ;;
 
-    VISIBLE) visible=true
-             shift ;;
-
-    WAIT) wait=true
-          shift ;;
-
-    FORTUNE) touch $FORTUNE:term
-             shift ;;
-
-    MENU) name="-name menu"
-          size=$(( $(fontsize) + 4 ))
-          attr="$attr -b $(border) -sh 80 -fn xft:$MONOFONT:size=$size -lsp $(( $size / 4 * 3 ))"
-          shift ;;
-
-    SHELL) shift
-           process=$@
-           [ "$1" ] && cmd="-e $SHELL -c '$@'"
-           break ;;
-
-    *) process="$@"
-       cmd="-e $@"
-       break ;;
+    *         ) process="$@"
+                cmd="-e $@"
+                break ;;
   esac
 done
 

@@ -62,7 +62,7 @@ if console ;then
     fi
   fi
 
-  pgrep startx >/dev/null || startx --
+  pstat startx || startx --
 
   # suppress nfs messages to console when server is offline
   if [ -f /tmp/mount:nfs ] ;then
@@ -73,36 +73,36 @@ if console ;then
 
   # session specific clean up
   case $wm in
-    2bwm    ) ;;
-    awesome ) ;;
-    bspwm   ) ;;
-    budgie  ) ;;
-    cinnamon) ;;
-    goomwwm ) ;;
-    dwm     ) ;;
+    2bwm        ) ;;
+    awesome     ) ;;
+    bspwm       ) ;;
+    budgie      ) ;;
+    cinnamon    ) ;;
+    goomwwm     ) ;;
+    dwm         ) ;;
 
     herbstluftwm) pkill -KILL -f 'herbst'
                   killall -KILL qutebrowser 2>/dev/null
                   killall -KILL weechat 2>/dev/null ;;
 
-    gnome    ) ;;
-    i3       ) ;;
-    kde      ) ;;
-    lxde     ) ;;
-    lxqt     ) ;;
-    mate     ) ;;
-    notion   ) ;;
-    openbox  ) ;;
-    ratpoison) ;;
-    razor-qt ) ;;
-    spectrwm ) ;;
-    stumpwm  ) ;;
-    subtle   ) ;;
-    wmii     ) ;;
-    wmutils  ) ;;
-    wtftw    ) ;;
-    xfce     ) ;;
-    xmonad   ) ;;
+    gnome       ) ;;
+    i3          ) ;;
+    kde         ) ;;
+    lxde        ) ;;
+    lxqt        ) ;;
+    mate        ) ;;
+    notion      ) ;;
+    openbox     ) ;;
+    ratpoison   ) ;;
+    razor-qt    ) ;;
+    spectrwm    ) ;;
+    stumpwm     ) ;;
+    subtle      ) ;;
+    wmii        ) ;;
+    wmutils     ) ;;
+    wtftw       ) ;;
+    xfce        ) ;;
+    xmonad      ) ;;
   esac
 
   cpu arm && { if-no 'start syncthing' || wsync -s; }

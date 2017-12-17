@@ -14,7 +14,7 @@ if [ -e /run/media/shum/My\ Passport ] ;then
   sudo mount -t exfat -o nls=utf8,rw $device /media/My\ Passport
   /usr/bin/rox /media/My\ Passport
 elif mount -l | grep '/media/My Passport' ;then
-  pgrep -f 'ROX-Filer /media/My Passport' && pkill -TERM -f 'ROX-Filer /media/My Passport'
+  pstat 'ROX-Filer /media/My Passport' && pkill -TERM -f 'ROX-Filer /media/My Passport'
   sudo umount /media/My\ Passport
 else
   notify 'My Passport' 'Reconnect drive to establish /dev/.. assignment\nthen rerun "passport" to mount drive'

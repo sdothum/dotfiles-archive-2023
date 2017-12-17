@@ -29,9 +29,9 @@ do
 
   service=${service%% *$SEP*}
   case $service in
-    "$DAEMON") sudo systemctl daemon-reload
-               notify low 'Systemd daemon-reload'
-               break ;;
+    "$DAEMON"  ) sudo systemctl daemon-reload
+                 notify low 'Systemd daemon-reload'
+                 break ;;
 
     "$SERVICES") term 'services' WAIT systemctl --type service --all ;;
     "$FILES"   ) term 'unit-files' WAIT systemctl list-unit-files ;;
@@ -43,32 +43,32 @@ do
                       rmenu "${service%.service}" -no-custom) || break
        do
          case $action in
-           start) sudo systemctl start $service
-                  status
-                  break ;;
+           start  ) sudo systemctl start $service
+                    status
+                    break ;;
 
-           stop) sudo systemctl stop $service
-                 status
-                 break ;;
+           stop   ) sudo systemctl stop $service
+                    status
+                    break ;;
 
            restart) sudo systemctl restart $service
                     status
                     break ;;
 
-           status) status
-                   break ;;
+           status ) status
+                    break ;;
 
-           enable) sudo systemctl enable $service
-                   sudo systemctl start $service
-                   status
-                   break ;;
+           enable ) sudo systemctl enable $service
+                    sudo systemctl start $service
+                    status
+                    break ;;
 
            disable) sudo systemctl stop $service
                     sudo systemctl disable $service
                     status
                     break ;;
 
-           edit) gvim -f $service ;;
+           edit   ) v -f $service ;;
          esac
          break
        done

@@ -19,13 +19,13 @@ hint() {
 
 case $1 in
   ''    ) ;;
-  on    ) pidof qwertickle || qwertickle & ;;
+  on    ) pstat qwertickle || qwertickle & ;;
   off   ) killall qwertickle ;;
-  toggle) pidof qwertickle && clack off || clack on ;;
+  toggle) pstat qwertickle && clack off || clack on ;;
   swap  ) sudo swap /usr/share/qwertickle/typewriter-return.mp3 /usr/share/qwertickle/typewriter-return.mp3.swap ;;
   *     ) usage ;;
 esac
 
-pidof qwertickle && hint || notify low 'Typewriter Sounds' 'Off'
+pstat qwertickle && hint || notify low 'Typewriter Sounds' 'Off'
 
 # vim: set ft=sh: #

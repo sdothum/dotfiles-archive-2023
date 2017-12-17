@@ -23,11 +23,11 @@ action=$1
 queue=$@
 
 case $action in
-  '') pidof nzbget >/dev/null || systemd start nzbget@$USER
+  '') pstat nzbget || systemd start nzbget@$USER
       underline $(timestamp)
       nzbget -L G ;;
 
-  @)  nzbget --rate $queue ;;
+  @ )  nzbget --rate $queue ;;
   B*) nzb b $(nzb S $queue) ;;
 
   b*) nzbget -E G B $queue
@@ -87,7 +87,7 @@ case $action in
   t*) nzbget -E G T $queue
       nzb ;;
 
-  *) usage ;;
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

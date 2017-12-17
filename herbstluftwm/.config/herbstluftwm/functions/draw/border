@@ -30,7 +30,7 @@ pulsar() {
 # so a subsequent emit_hook can kill the pulsar instance!
 if [ "$1" = pulsar ] ;then
   # trap concurrent requests to create pulsating borders
-  [ $(pgrep -cf 'draw border pulsar') -gt 1 ] && exit
+  pstat + 'draw border pulsar' && exit
   pulsar
   exit
 fi

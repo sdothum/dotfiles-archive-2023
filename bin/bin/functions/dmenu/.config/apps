@@ -1,8 +1,8 @@
 amphetype
-term 'Calendar' wyrd # calendar
-term 'IRC' weechat # chat
 hardcopy eject
 term 'Trace' tail -f /tmp/herbstluftwm.log # herbstluftwm :: log
+term 'IM' centerim5 # im
+term 'IRC' weechat # irc
 term 'Mail' alot # mail
 simpletimer
 $(which thedarnedestthing) # http :: the darnedest thing

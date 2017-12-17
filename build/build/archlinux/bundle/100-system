@@ -92,6 +92,7 @@ m iosevka\\ amphetype [server]
   cower
 # cower-git
   downgrade
+  dpkg
 # nix
   pacaur
 # package-query-git

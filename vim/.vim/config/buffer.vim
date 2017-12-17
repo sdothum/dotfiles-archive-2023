@@ -19,7 +19,7 @@
 
     " .................................................................... Setup
 
-      nmap <leader>f :set filetype=
+      " nmap <leader>f :set filetype=
 
       autocmd buffer Filetype conf     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd buffer Filetype draft    setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
@@ -27,6 +27,7 @@
       autocmd buffer Filetype haskell  setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd buffer Filetype lua      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd buffer Filetype mail     setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
+      autocmd buffer Filetype markdown setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       autocmd buffer Filetype python   setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
       autocmd buffer Filetype ruby     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
       autocmd buffer Filetype shell    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
@@ -53,8 +54,8 @@
       nmap <silent><leader><leader>.. :edit $MYVIMRC<CR>
 
       " load .vimrc after save
-      " autocmd! startup BufWritePost $MYVIMRC nested source $MYVIMRC | call Refresh()
-      " autocmd! startup BufWritePost * nested        if expand('%:e') =~ 'vim' | source $MYVIMRC | call Refresh() | endif
+      " autocmd! buffer BufWritePost $MYVIMRC nested source $MYVIMRC | call Refresh()
+      " autocmd! buffer BufWritePost * nested        if expand('%:e') =~ 'vim' | source $MYVIMRC | call Refresh() | endif
 
     " .............................................................. Buffer open
 
@@ -89,10 +90,10 @@
 
     " ......................................................... Buffer switching
 
-      " goto buffer (just fingering convenience)
-      nmap <leader>b            :b<Space>
-      " query current buffer
-      nmap <leader>B            :echo expand('%:p')<CR>
+      " " goto buffer (just fingering convenience)
+      " nmap <leader>b          :b<Space>
+      " " query current buffer
+      " nmap <leader>B          :echo expand('%:p')<CR>
 
       " silence vim's default (command line) file info message, note silent..silent
       vmap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
@@ -169,4 +170,4 @@
       nmap    <silent><leader>8 :set foldlevel=8<CR>
       nmap    <silent><leader>9 :set foldlevel=9<CR>
 
-" buffers.vim
+" buffer.vim

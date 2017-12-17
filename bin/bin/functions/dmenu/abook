@@ -106,28 +106,30 @@ do
   address=${address#*$SEP }
 
   case $address in
-    "$REBUILD") abook
-                unset addresses ;;
+    "$REBUILD"  ) abook
+                  unset addresses ;;
 
-    "$EDIT") gvim -f $contacts ;;
+    "$EDIT"     ) gvim -f $contacts ;;
 
-    "$PASTE") clipboard "$addresses"
-              xdotool type --delay 0 "$addresses"
-              break ;;
+    "$PASTE"    ) clipboard "$addresses"
+                  # allow application to regain focus
+                  cpu arm && sleep 2
+                  xdotool type --delay 0 "$addresses"
+                  break ;;
 
     "$CLIPBOARD") clipboard "$addresses"
                   notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
                   break ;;
 
-    "$ADD") if [ "$addresses" ] ;then
-              tag=$(echo | rmenu 'Tags') || continue
-              [ $tag ] || tag=Contacts
-              echo "\n$tag :: $addresses" >>$contacts
-              unset addresses
-              gvim -f $contacts
-            fi ;;
+    "$ADD"      ) if [ "$addresses" ] ;then
+                    tag=$(echo | rmenu 'Tags') || continue
+                    [ $tag ] || tag=Contacts
+                    echo "\n$tag :: $addresses" >>$contacts
+                    unset addresses
+                    gvim -f $contacts
+                  fi ;;
 
-    *) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
+    *           ) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
   esac
 done
 

@@ -1,0 +1,41 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Splitography
+
+usage() {
+  echo "usage: $(basename $0) <keymap>"
+  exit 1
+}
+
+KEYMAPS='DEFAULT'
+
+ROOT=$HOME
+ROOT=/net/depot
+QMK=$ROOT/qmk_firmware
+SPLITOGRAPHY=$QMK/keyboards/splitography
+KEYMAP=$SPLITOGRAPHY/keymaps/$1
+
+[ $1 ] || usage
+keymap=$1
+shift
+
+if ! if-no 'sync qmk_firmware repo' ;then
+  cd $QMK
+  git pull
+fi
+
+# update keymap from stow repo
+mkdir -p $KEYMAP 2>/dev/null
+cp -f $HOME/stow/splitography/${SPLITOGRAPHY#$ROOT/}/* $SPLITOGRAPHY/ 2>/dev/null
+cp -f $HOME/stow/splitography/${KEYMAP#$ROOT/}/* $KEYMAP/
+
+cd $QMK
+sudo make splitography:$keymap:clean
+[ "$1" = dfu ] && sudo make splitography:$keymap:dfu || sudo make splitography:$keymap
+sudo chown -R $USER:users $QMK
+
+# vim: set ft=sh: #

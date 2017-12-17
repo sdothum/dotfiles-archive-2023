@@ -46,9 +46,9 @@ case $1 in
   I*) sudo rm /var/lib/btrfs/*.* ;;
   s*) show $(volume $2) ;;
 
-  *) sudo btrfs scrub start -Bd $(volume $@) &
-     which term >/dev/null 2>&1 && ( term "$@" SHELL "scrub s $@" & ) ||
-                                   scrub s $@ ;;
+  * ) sudo btrfs scrub start -Bd $(volume $@) &
+      which term >/dev/null 2>&1 && ( term "$@" SHELL "scrub s $@" & ) ||
+                                    scrub s $@ ;;
 esac
 
 # vim: set ft=sh: #

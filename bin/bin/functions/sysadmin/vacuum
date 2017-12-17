@@ -27,8 +27,7 @@ usage() {
 }
 
 case $1 in
-  clean | CLEAN) clean=$1
-                 shift ;;
+  clean | CLEAN) clean=$1; shift ;;
 esac
 
 [ $1 ] && rules=$@ || rules=.$(basename $0)
@@ -49,31 +48,27 @@ do
   # echo "action=$action file=$file package=$package"
   case $action in
     '#' | '') continue ;;
+    '='     ) title "$file $package"; continue ;;
+    '!'     ) ;;
 
-    '=') title "$file $package"
-         continue ;;
-
-    '!') ;;
-
-    *) package=$file
-       file=$action ;;
+    *       ) package=$file
+              file=$action ;;
   esac
 
   [ -e $file ] || continue
   echo $file | grep -q "^\($HOME\)*[./]*$" && continue
 
   case $action in
-    '!') clean
-         continue ;;
+    '!') clean; continue ;;
 
-    *) if [ $package ] ;then
-         pm $package >/dev/null || unset package
-       elif [ $clean ] ;then
-         if-no "remove $file" || package=true
-       else
-         ditto "remove ? $file"
-         unset package
-      fi ;;
+    *  ) if [ $package ] ;then
+           pm $package >/dev/null || unset package
+         elif [ $clean ] ;then
+           if-no "remove $file" || package=true
+         else
+           ditto "remove ? $file"
+           unset package
+         fi ;;
   esac
 
   [ $package ] && clean

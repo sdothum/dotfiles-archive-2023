@@ -16,10 +16,8 @@ FISH=$HOME/.local/share/fish/fish_history
 ZSH=$HOME/.zhistory
 
 case $1 in
-  shell=*) eval $1
-           shift ;;
-
-  *) shell=fish ;;
+  shell=*) eval $1; shift ;;
+  *      ) shell=fish ;;
 esac
 
 # purge from history

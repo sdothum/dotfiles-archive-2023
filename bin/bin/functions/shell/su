@@ -7,7 +7,7 @@
 # ........................................................................... su
 
 # manually pass ssh env to su session (see prompt shum)
-[ $SSH_CLIENT ] && echo $SSH_CLIENT >/tmp/.ssh_client
+[ "$SSH_CLIENT" ] && echo $SSH_CLIENT >/tmp/.ssh_client
 sudo /usr/bin/su $@
 
 # vim: set ft=sh: #

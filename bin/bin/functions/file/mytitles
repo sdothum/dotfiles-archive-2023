@@ -7,7 +7,8 @@
 
 # ....................................................................... Rename
 
-# Usage: mytitles [-R] [<directory>]
+# Usage: mytitles [<recursions>] [<directory>]
+#        <recursions> (1) default (0) full
 
 require 'term/ansicolor'
 
@@ -15,11 +16,11 @@ class String
   include Term::ANSIColor
 end
 
-# 3 letter word$ exclusions from file extension case conversion
-$exclude = /Who|Bee/
-$recurse = false
+# word$ exclusions from file extension case conversion
+$ext = /Avi|Divx|M4v|Mkv|Mp4|Wmv/
+$recurse = 1
 
-def mytitles(directory)
+def mytitles(recurse, directory)
   pwd = Dir.pwd
   Dir.chdir(directory)
   list = Dir.glob("*")
@@ -35,8 +36,8 @@ def mytitles(directory)
       .gsub(/(\d)x(\d\d)/i, 'S0\1E\2')
       .gsub(/\.$/, '')
       .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize }
-      .gsub(/\w+$/) { |word| (word.length == 3 and word.length != filename.length and word !~ $exclude) ? word.downcase : word }
-      # .gsub(/\w+/) { |word| word =~ /S\d+E\d+/ ? word : word.capitalize } + File.extname(filename)
+      .gsub(/\w+/) { |word| (word =~ /Ii+/) ? word.upcase : word }
+      .gsub(/\w+$/) { |word| (word.length <= 4 and word.length != filename.length and word =~ $ext) ? word.downcase : word }
     print "#{filename}".gsub(/ s /, "'s ")
     unless filename == newname
       print " -> #{newname}".yellow.bold
@@ -47,7 +48,7 @@ def mytitles(directory)
       end
     end
     print "\n"
-    mytitles(newname) if $recurse and File.directory?(newname)
+    mytitles(recurse - 1, newname) if recurse != 1 and File.directory?(newname)
   end
   Dir.chdir(pwd)
 end
@@ -55,13 +56,13 @@ end
 # cleanup media title names
 begin
   unless ARGV[0].nil?
-    if ARGV[0] == '-R'
-      $recurse = true
+    if ARGV[0] =~ /^[0-9]*$/
+      $recurse = ARGV[0].to_i
       ARGV.shift
     end
   end
   exit if File.file?(ARGV[0]) unless ARGV[0].nil?
-  mytitles(ARGV[0].nil? ? Dir.pwd : ARGV[0])
+  mytitles($recurse, ARGV[0].nil? ? Dir.pwd : ARGV[0])
 rescue
   print ".. invalid directory #{ARGV[0].bold}\n".red unless ARGV[0] =~ /\//
 end

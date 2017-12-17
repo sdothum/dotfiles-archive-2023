@@ -37,7 +37,7 @@ dwb :: $(find $HOME/.config/dwb -type f -maxdepth 1)
 fasd jump :: $HOME/.fasd
 fish functions :: $HOME/.config/fish/functions/*.fish
 fish shell :: $HOME/.config/fish/*.fish $HOME/.config/fish/conf.d/*.fish
-fonts mono :: $HOME/.config/fontconfig/*.conf $HOME/.config/fontconfig/conf.d/*.conf $HOME/.config/alot.config $HOME/.config/dunst/dunstrc $HOME/.config/qutebrowser/qutebrowser.conf $HOME/.vim/config/themes.vim $HOME/bin/functions/file/pr
+fonts mono :: $HOME/.config/fontconfig/*.conf $HOME/.config/fontconfig/conf.d/*.conf $HOME/.config/alot.config $HOME/.config/dunst/dunstrc $HOME/.config/qutebrowser/qutebrowser.conf $HOME/.vim/custom/ui.vim $HOME/bin/functions/file/pr
 git dotfiles :: $HOME/bin/functions/sysadmin/dotfiles $HOME/stow/.gitignore
 group etc :: /etc/group
 grub :: /etc/default/grub
@@ -72,13 +72,13 @@ planck splitography :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/s
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*
-qutebrowser :: $HOME/.config/qutebrowser/*.conf $HOME/.config/qutebrowser/quickmarks $HOME/.config/qutebrowser/bookmarks/*
+qutebrowser :: $HOME/.config/qutebrowser/*conf* $HOME/.config/qutebrowser/quickmarks $HOME/.config/qutebrowser/bookmarks/*
 rox actions :: $(find $HOME/.config/rox.sourceforge.net/SendTo -type f)
 rss feeds :: $HOME/.config/newsbeuter/config
 signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
-splitography :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography -type f)
+splitography :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography -type f) $HOME/bin/functions/hardware/splitography
 subtle :: $HOME/.config/subtle/subtle.rb
 sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
@@ -88,9 +88,9 @@ thedarnedestthing web :: thedarnedestthing
 tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*.css
 tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/particle*.css
 uzbl :: $HOME/.config/uzbl/config
-vim :: $HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/plugged -regextype posix-extended -regex '.*/(core|heading|info|ui)/.*vim')
+vim :: $HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
 vim settings :: $HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim
-vim functions :: $(find $HOME/.vim/plugged -regextype posix-extended -regex '.*/(core|heading|info|ui)/.*vim')
+vim functions :: $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
 vim snippets :: $HOME/.vim/snippets/*
 vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb/history $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/*tape.py

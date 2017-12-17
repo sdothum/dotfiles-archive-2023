@@ -53,14 +53,13 @@ do
          rmenu 'Edit Config' 1 -no-custom) || exit
 
   case $file in
-    "$REBUILD"*) configs
-                 continue ;;
+    "$REBUILD") configs; continue ;;
   esac
 
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
   file=$(echo $file | sed -r "s|^(.*)  *${SEP}  *(.*)|\2/\1|; s/ /\\\\\\\\ /")
-  eval v $file
+  v $file
   exit
 done
 

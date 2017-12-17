@@ -19,6 +19,7 @@
       let g:ale_linter_aliases     =
           \{
           \  'vimwiki' : 'markdown'
+          \, 'wiki'    : 'markdown'
           \, 'mail'    : 'markdown'
           \}
 
@@ -31,6 +32,13 @@
 
       let g:AutoPairsMapBS    = 1           " auto delete symbol pairs
       let g:AutoPairsMapSpace = 0           " disabled to make iabbrev work!
+
+    " ................................................................... Ctrl-P
+
+      let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:30,results:30'
+
+      nmap <silent><leader>b :CtrlPBuffer<CR>
+      nmap <silent><leader>f :CtrlPCurWD<CR>
 
     " ............................................................... Easy-align
 
@@ -52,7 +60,7 @@
           \"EightHeaderFolds(
           \  '\\=s:fullwidth'
           \, 'left'
-          \, [ repeat( '  ', v:foldlevel - 1 ), ' ', '' ]
+          \, [repeat( '  ', v:foldlevel - 1 ), ' ', '']
           \, '\\= s:foldlines . \" lines\"'
           \, ''
           \)"
@@ -108,6 +116,13 @@
         endif
       endfunction
 
+    " .................................................................. LeaderF
+
+      " let g:Lf_StlSeparator = { 'left' : '', 'right' : '' }
+      "
+      " nmap <silent><leader>b :LeaderfBufferAll<CR>
+      " nmap <silent><leader>f :LeaderfFile<CR>
+
     " ................................................................ Lightline
 
       let g:matchspace = ''                 " see ToggleSpaces() gui.vim
@@ -152,37 +167,31 @@
 
         let g:lightline.active =
             \{
-            \  'left'  : [
-            \              [ 'mode',      'paste',     'matchspace', 'bufnum' ]
-            \,             [ 'rootpath',  'basepath',  'filename'   ]
-            \,             [ 'wordcount', 'linesizes', 'readonly',   'modified' ]
-            \            ]
-            \, 'right' : [
-            \              [ 'indent',    'spaces',      'filetype', 'bufcnt' ]
-            \,             [ 'topbottom', 'linepercent', 'linecount' ]
-            \,             [ 'atom',      'specialchar', 'column'    ]
-            \            ]
+            \  'left'  : [['mode',        'paste',     'matchspace',  'bufnum'               ]
+            \,            ['bufcount',    'rootpath',  'rootname',    'basename', 'filename' ]
+            \,            ['indent',      'spaces',    'readonly',    'modified'             ]]
+            \, 'right' : [['wordcount',   'atom',      'filetype'                            ]
+            \,            ['lineinfo',    'topbottom', 'linepercent', 'linecount'            ]
+            \,            ['specialchar', 'column',    'columninfo'                          ]]
             \}
 
         let g:lightline.inactive =
             \{
-            \  'left'  : [
-            \              [ 'indicator' ]
-            \,             [ 'filename'  ]
-            \,           ]
-            \, 'right' : [ [ 'linecount' ] ]
+            \  'left'  : [['indicator']
+            \,            ['filename' ]]
+            \, 'right' : [['linecount']]
             \}
 
         let g:lightline.tabline =
             \{
-            \  'left'  : [ [ 'tabs'  ] ]
-            \, 'right' : [ [ 'close' ] ]
+            \  'left'  : [['tabs' ]]
+            \, 'right' : [['close']]
             \}
 
         let g:lightline.component =
             \{
             \  'absolutepath' : '%F'
-            \, 'bufcnt'       : '%{BufCount() > 1 ? BufCount() : ""}'
+            \, 'bufcount'     : '%{BufCount() > 1 ? BufCount() : ""}'
             \, 'bufnum'       : '%{BufCount() > 1 ? bufnr("%") : ""}'
             \, 'charvalue'    : '%b'
             \, 'charvaluehex' : '%B'
@@ -207,32 +216,35 @@
 
         let g:lightline.component_visible_condition =
             \{
-            \  'basepath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-            \, 'bufcnt'      : '(BufCount() > 1)'
+            \  'basename'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
+            \, 'bufcount'    : '(BufCount() > 1)'
             \, 'bufnum'      : '(BufCount() > 1)'
-            \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
             \, 'column'      : '(getline(line(".")) != "")'
+            \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
             \, 'matchspace'  : '(g:matchspace != "")'
             \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
             \, 'paste'       : '&paste'
             \, 'readonly'    : '(&filetype != "help" && &readonly)'
+            \, 'rootname'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
             \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
             \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
             \}
 
         let g:lightline.component_function =
             \{
-            \  'indent'      : 'Indent'
+            \  'atom'        : 'Atom'
+            \, 'basename'    : 'BaseName'
+            \, 'columninfo'  : 'ColumnInfo'
+            \, 'indent'      : 'Indent'
+            \, 'lineinfo'    : 'LineInfo'
             \, 'linepercent' : 'LinePercent'
-            \, 'linesizes'   : 'LineSizes'
             \, 'modified'    : 'Modified'
+            \, 'rootname'    : 'RootName'
+            \, 'rootpath'    : 'RootPath'
             \, 'spaces'      : 'Spaces'
             \, 'specialchar' : 'SpecialChar'
-            \, 'wordcount'   : 'WordCount'
-            \, 'rootpath'    : 'RootPath'
-            \, 'basepath'    : 'BasePath'
             \, 'topbottom'   : 'TopBottom'
-            \, 'atom'        : 'Atom'
+            \, 'wordcount'   : 'WordCount'
             \}
 
         let g:lightline.mode_map =
@@ -279,16 +291,16 @@
 
     " .................................................................. LiteDFM
 
-      " let g:lite_dfm_left_offset = 22     " see ui.vim
+      let g:lite_dfm_left_offset = 22       " see ui.vim
 
     " ............................................................ Narrow region
 
       let g:nrrw_rgn_vert          = 0      " open in horizontal split buffer
-			let g:nrrw_topbot_leftright  = 'botright'
-			let g:nrrw_rgn_nomap_nr      = 1      " disable nr mappings
-			let g:nrrw_rgn_nomap_Nr      = 1
-			let g:nrrw_rgn_resize_window = 'relative'
-			let g:nrrw_rgn_rel_min       = 50     " relative window size
+      let g:nrrw_topbot_leftright  = 'botright'
+      let g:nrrw_rgn_nomap_nr      = 1      " disable nr mappings
+      let g:nrrw_rgn_nomap_Nr      = 1
+      let g:nrrw_rgn_resize_window = 'relative'
+      let g:nrrw_rgn_rel_min       = 50     " relative window size
 
       function! CloseNR()
         if expand('%t') =~ 'NrrwRgn'
@@ -308,17 +320,17 @@
 
       " inoremap <expr><Tab>  neocomplete#start_manual_complete()
       " inoremap <expr><TAB>  pumvisible() ? "\<Down>" :
-    	"   \ neocomplete#start_manual_complete()
+      "   \ neocomplete#start_manual_complete()
 
-    	function! s:check_back_space() abort
+      function! s:check_back_space() abort
         let col = col('.') - 1
         return !col || getline('.')[col - 1]  =~ '\s'
       endfunction
 
       inoremap <silent><expr><TAB>
-	      \ pumvisible() ? "\<C-n>" :
-	      \ <SID>check_back_space() ? "\<TAB>" :
-	      \ neocomplete#start_manual_complete()
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ neocomplete#start_manual_complete()
 
     " ............................................................... Neosnippet
 
@@ -367,6 +379,7 @@
       imap <F6> <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
       nmap <F6> :silent TogglePencil<CR>:echo PencilMode()<CR>
 
+      autocmd plugin Filetype draft        call pencil#init()
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
       autocmd plugin Filetype vimwiki      call pencil#init()
@@ -456,14 +469,14 @@
 
     " ................................................................ Syntastic
 
-      let g:syntastic_auto_jump      = 0
-      let g:syntastic_auto_loc_list  = 1
-      let g:syntastic_enable_signs   = 1
-      let g:syntastic_quiet_messages = { 'level' : 'warnings' }
-
-      " set statusline+=%#warningmsg#
-      " set statusline+=%{SyntasticStatuslineFlag()}
-      " set statusline+=%*
+      " let g:syntastic_auto_jump      = 0
+      " let g:syntastic_auto_loc_list  = 1
+      " let g:syntastic_enable_signs   = 1
+      " let g:syntastic_quiet_messages = { 'level' : 'warnings' }
+      "
+      " " set statusline+=%#warningmsg#
+      " " set statusline+=%{SyntasticStatuslineFlag()}
+      " " set statusline+=%*
 
     " ................................................................... Tagbar
 
@@ -474,7 +487,7 @@
       let g:tagbar_type_vimwiki =
           \{
           \  'ctagstype'  : 'vimwiki'
-          \, 'kinds'      : [ 'h:header' ]
+          \, 'kinds'      : ['h:header']
           \, 'sro'        : '&&&'
           \, 'kind2scope' : { 'h' : 'header' }
           \, 'sort'       : 0
@@ -484,78 +497,79 @@
 
     " .................................................................. Vimwiki
 
-      " disable tab for autocompletion
-      let g:vimwiki_table_mappings = 0
-
-      let g:vimwiki_list =
-          \[
-          \  {
-          \    'path'      : '~/vimwiki/thedarnedestthing/'
-          \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/thestory/'
-          \,   'path_html' : '~/vimwiki/thestory/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/truthordie/'
-          \,   'path_html' : '~/vimwiki/truthordie/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/shadowsandlight/'
-          \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/healing/'
-          \,   'path_html' : '~/vimwiki/healing/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/colophon/'
-          \,   'path_html' : '~/vimwiki/colophon/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \, {
-          \    'path'      : '~/vimwiki/notes/'
-          \,   'path_html' : '~/vimwiki/notes/html/'
-          \,   'syntax'    : 'markdown'
-          \  }
-          \]
-
-      " header highlighting
-      highlight VimwikiHeader1 guifg=#d70000
-      highlight VimwikiHeader2 guifg=#af005f
-      highlight VimwikiHeader3 guifg=#5f5faf
-      highlight VimwikiHeader4 guifg=#0087ff
-      highlight VimwikiHeader5 guifg=#00afaf
-      highlight VimwikiHeader6 guifg=#5f8700
-
-      " restore vimwiki link
-      function! VimwikiLink()
-        highlight VimwikiLink guifg=#268bd2 gui=bold
-      endfunction
-
-      " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
-      function! VimwikiRemap()
-        if !exists('b:vimwiki_remap')
-          let b:vimwiki_remap = 1
-          iunmap   <silent><buffer>           <CR>
-          inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
-          inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
-          call RefreshGui()
-        endif
-      endfunction
-
-      autocmd plugin Filetype vimwiki call VimwikiLink()
-      autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd plugin BufEnter *
-            \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
-      " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
-      " see arch install patch to initialize s:vimwiki_autowriteall
+      " " disable tab for autocompletion
+      " let g:vimwiki_table_mappings = 0
+      " let g:vimwiki_table_auto_fmt = 0
+      "
+      " let g:vimwiki_list =
+      "     \[
+      "     \  {
+      "     \    'path'      : '~/vimwiki/thedarnedestthing/'
+      "     \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \, {
+      "     \    'path'      : '~/vimwiki/thestory/'
+      "     \,   'path_html' : '~/vimwiki/thestory/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \, {
+      "     \    'path'      : '~/vimwiki/truthordie/'
+      "     \,   'path_html' : '~/vimwiki/truthordie/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \, {
+      "     \    'path'      : '~/vimwiki/shadowsandlight/'
+      "     \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \, {
+      "     \    'path'      : '~/vimwiki/healing/'
+      "     \,   'path_html' : '~/vimwiki/healing/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \, {
+      "     \    'path'      : '~/vimwiki/colophon/'
+      "     \,   'path_html' : '~/vimwiki/colophon/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \, {
+      "     \    'path'      : '~/vimwiki/notes/'
+      "     \,   'path_html' : '~/vimwiki/notes/html/'
+      "     \,   'syntax'    : 'markdown'
+      "     \  }
+      "     \]
+      "
+      " " header highlighting
+      " highlight VimwikiHeader1 guifg=#d70000
+      " highlight VimwikiHeader2 guifg=#af005f
+      " highlight VimwikiHeader3 guifg=#5f5faf
+      " highlight VimwikiHeader4 guifg=#0087ff
+      " highlight VimwikiHeader5 guifg=#00afaf
+      " highlight VimwikiHeader6 guifg=#5f8700
+      "
+      " " restore vimwiki link
+      " function! VimwikiLink()
+      "   highlight VimwikiLink guifg=#268bd2 gui=bold
+      " endfunction
+      "
+      " " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
+      " function! VimwikiRemap()
+      "   if !exists('b:vimwiki_remap')
+      "     let b:vimwiki_remap = 1
+      "     iunmap   <silent><buffer>           <CR>
+      "     inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
+      "     inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
+      "     call RefreshGui()
+      "   endif
+      " endfunction
+      "
+      " autocmd plugin Filetype vimwiki call VimwikiLink()
+      " autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      " autocmd plugin BufEnter *
+      "       \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
+      " " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
+      " " see arch install patch to initialize s:vimwiki_autowriteall
 
     " ................................................................. Yankring
 
@@ -568,4 +582,4 @@
       nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
       nmap <silent><leader>y :YRShow<CR>
 
-" plugins.vim
+" setting.vim

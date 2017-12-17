@@ -103,193 +103,193 @@ rsync_home() {
 }
 
 case $1 in
-  '') usage ;;
+  ''     ) usage ;;
 
-  arm) cpu arm || exit
-       rsync --delete $HOME/stownfs/bin $HOME/stownfs/herbstluftwm $HOME/stow/
-       rsync --delete $HOME/stownfs/ $HOME/stow ;;
+  arm    ) cpu arm || exit
+           rsync --delete $HOME/stownfs/bin $HOME/stownfs/herbstluftwm $HOME/stow/
+           rsync --delete $HOME/stownfs/ $HOME/stow ;;
 
-  backup) if server ;then
-            if if-yes 'backup /net to /backup' ;then
-              rsync --delete /net/* /backup/
-            fi
-          fi ;;
-
-  home) if if-yes "backup $HOME to /net/archive" ;then
-          mkdir -pv /net/archive/home || exit 1
-          rsync --delete $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
-                $HOME /net/archive/home/
-        fi ;;
-
-  depot) if server ;then
-           if-yes "backup depot to $laptop" &&
-             rsync --delete /net/depot $laptop:/net/
-         else
-           if-no "update depot to $SERVER" ||
-             rsync /net/depot $SERVER:/net/
-         fi ;;
-
-  music) if laptop ;then
-           if if-yes "replicate mpd music database from $SERVER" ;then
-             killall mpd
-             if [ ! -d /net/media ] ;then
-               sudo mkdir /net/media
-               sudo chown -c $USER:users /net/media
+  backup ) if server ;then
+             if if-yes 'backup /net to /backup' ;then
+               rsync --delete /net/* /backup/
              fi
-             rsync --delete $USER@$SERVER:.mpd $HOME/
-             rsync --delete $SERVER:/net/media/music /net/media/
-             mpd 2>/dev/null &
-           fi
-         else
-           ditto "initiate update request from $laptop"
-         fi ;;
+           fi ;;
 
-  pi) if server; then
-        # rsync --delete --exclude=.deprecated --exclude=.hg \
-        #       $HOME/stow/bash/.bash_logout \
-        #       $HOME/stow/bash/.bash_profile \
-        #       $HOME/stow/bash/.bashrc \
-        #       $HOME/stow/bin/bin \
-        #       $HOME/stow/fonts/.fonts \
-        #       $HOME/stow/images/images \
-        #       $HOME/stow/notmuch/.notmuch-config \
-        #       $HOME/stow/tmux/.tmux.conf \
-        #       $HOME/stow/weechat/.weechat \
-        #       $HOME/stow/X11/.xinitrc \
-        #       $HOME/stow/X11/.Xresources \
-        #       pi:$HOME/
-        # rsync --delete --exclude=.deprecated --exclude=.hg \
-        #       $HOME/stow/alot/.config/alot \
-        #       $HOME/stow/amphetype/.config/Amphetype \
-        #       $HOME/stow/dunst/.config/dunst \
-        #       $HOME/stow/fish/.config/fish \
-        #       $HOME/stow/fish/.config/chips \
-        #       $HOME/stow/herbstluftwm/.config/herbstluftwm \
-        #       $HOME/stow/qutebrowser/.config/qutebrowser \
-        #       $HOME/stow/vimb/.config/vimb \
-        #       pi:$HOME/.config/
-        # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=backups \
-        #       $HOME/stow/vim/.vim \
-        #       $HOME/stow/vim/.vimrc \
-        #       pi:$HOME/
-        # rsync --delete --exclude=.deprecated \
-        #       $HOME/stow/bin/.local/bin \
-        #       pi:$HOME/.local/
-        rsync --delete \
-              /usr/share/icons/Paper \
-              pi:$HOME/.local/share/icons/
-        # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=makepkg \
-        #       $HOME/stow/build/build/archlinux \
-        #       pi:$HOME/build/
-        # ssh pi 'mkdir -p build/root/etc'
-        # rsync --delete --exclude=.deprecated --exclude=.hg \
-        #       $HOME/stow/build/build/root/etc/profile.d \
-        #       $HOME/stow/build/build/root/etc/hosts \
-        #       $HOME/stow/build/build/root/etc/X11 \
-        #       pi:$HOME/build/root/etc/
-      fi ;;
+  home   ) if if-yes "backup $HOME to /net/archive" ;then
+             mkdir -pv /net/archive/home || exit 1
+             rsync --delete $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
+                   $HOME /net/archive/home/
+           fi ;;
 
-  server) if server ;then
-            if if-yes 'backup media server databases to /net/archive' ;then
-              mkdir -pv /net/archive/var/lib || exit 1
-              sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
-              [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
-                mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support || exit 1
-              sudo rsync -av --delete \
-                         /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
-                         /net/archive/opt/plexmediaserver/Library/Application\ Support/
-              mkdir -p /net/archive/srv/lib || exit 1
-              sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
-              mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
-              sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
-            fi
-          fi ;;
+  depot  ) if server ;then
+             if-yes "backup depot to $laptop" &&
+               rsync --delete /net/depot $laptop:/net/
+           else
+             if-no "update depot to $SERVER" ||
+               rsync /net/depot $SERVER:/net/
+           fi ;;
 
-  SERVER) if server ;then
-            if ! if-no 'restore media server databases from /net/archive' ;then
-              sudo systemctl stop sonarr
-              sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
-              sudo systemctl start sonarr
-              sudo systemctl stop plexmediaserver
-              sudo rsync -av --delete \
-                         /net/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
-                         /opt/plexmediaserver/Library/Application\ Support/
-              sudo systemctl start plexmediaserver
-              sudo systemctl stop postgres
-              sudo rsync -av --delete /net/archive/srv/lib/postgres /srv/lib/
-              sudo systemctl start postgres
-              sudo systemctl stop tt-rss
-              sudo rsync -av /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
-              sudo systemctl start tt-rss
-            fi
-          fi ;;
+  music  ) if laptop ;then
+             if if-yes "replicate mpd music database from $SERVER" ;then
+               killall mpd
+               if [ ! -d /net/media ] ;then
+                 sudo mkdir /net/media
+                 sudo chown -c $USER:users /net/media
+               fi
+               rsync --delete $USER@$SERVER:.mpd $HOME/
+               rsync --delete $SERVER:/net/media/music /net/media/
+               mpd 2>/dev/null &
+             fi
+           else
+             ditto "initiate update request from $laptop"
+           fi ;;
 
-  stow) if server ;then
-          sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
-          if-yes "backup stow to $laptop" &&
-            rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
-          if-yes "backup stow to $netbook" &&
-            rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
-        else
-          if-no "update stow to $SERVER" ||
-            rsync --exclude=.SyncArchive $HOME/stow $USER@$SERVER:$HOME/
-        fi ;;
+  pi     ) if server; then
+             # rsync --delete --exclude=.deprecated --exclude=.hg \
+             #       $HOME/stow/bash/.bash_logout \
+             #       $HOME/stow/bash/.bash_profile \
+             #       $HOME/stow/bash/.bashrc \
+             #       $HOME/stow/bin/bin \
+             #       $HOME/stow/fonts/.fonts \
+             #       $HOME/stow/images/images \
+             #       $HOME/stow/notmuch/.notmuch-config \
+             #       $HOME/stow/tmux/.tmux.conf \
+             #       $HOME/stow/weechat/.weechat \
+             #       $HOME/stow/X11/.xinitrc \
+             #       $HOME/stow/X11/.Xresources \
+             #       pi:$HOME/
+             # rsync --delete --exclude=.deprecated --exclude=.hg \
+             #       $HOME/stow/alot/.config/alot \
+             #       $HOME/stow/amphetype/.config/Amphetype \
+             #       $HOME/stow/dunst/.config/dunst \
+             #       $HOME/stow/fish/.config/fish \
+             #       $HOME/stow/fish/.config/chips \
+             #       $HOME/stow/herbstluftwm/.config/herbstluftwm \
+             #       $HOME/stow/qutebrowser/.config/qutebrowser \
+             #       $HOME/stow/vimb/.config/vimb \
+             #       pi:$HOME/.config/
+             # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=backups \
+             #       $HOME/stow/vim/.vim \
+             #       $HOME/stow/vim/.vimrc \
+             #       pi:$HOME/
+             # rsync --delete --exclude=.deprecated \
+             #       $HOME/stow/bin/.local/bin \
+             #       pi:$HOME/.local/
+             rsync --delete \
+                   /usr/share/icons/Paper \
+                   pi:$HOME/.local/share/icons/
+             # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=makepkg \
+             #       $HOME/stow/build/build/archlinux \
+             #       pi:$HOME/build/
+             # ssh pi 'mkdir -p build/root/etc'
+             # rsync --delete --exclude=.deprecated --exclude=.hg \
+             #       $HOME/stow/build/build/root/etc/profile.d \
+             #       $HOME/stow/build/build/root/etc/hosts \
+             #       $HOME/stow/build/build/root/etc/X11 \
+             #       pi:$HOME/build/root/etc/
+           fi ;;
+
+  server ) if server ;then
+             if if-yes 'backup media server databases to /net/archive' ;then
+               mkdir -pv /net/archive/var/lib || exit 1
+               sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
+               [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
+                 mkdir -pv /net/archive/opt/plexmediaserver/Library/Application\ Support || exit 1
+               sudo rsync -av --delete \
+                          /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                          /net/archive/opt/plexmediaserver/Library/Application\ Support/
+               mkdir -p /net/archive/srv/lib || exit 1
+               sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
+               mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
+               sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
+             fi
+           fi ;;
+
+  SERVER ) if server ;then
+             if ! if-no 'restore media server databases from /net/archive' ;then
+               sudo systemctl stop sonarr
+               sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
+               sudo systemctl start sonarr
+               sudo systemctl stop plexmediaserver
+               sudo rsync -av --delete \
+                          /net/archive/opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server \
+                          /opt/plexmediaserver/Library/Application\ Support/
+               sudo systemctl start plexmediaserver
+               sudo systemctl stop postgres
+               sudo rsync -av --delete /net/archive/srv/lib/postgres /srv/lib/
+               sudo systemctl start postgres
+               sudo systemctl stop tt-rss
+               sudo rsync -av /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
+               sudo systemctl start tt-rss
+             fi
+           fi ;;
+
+  stow   ) if server ;then
+             sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
+             if-yes "backup stow to $laptop" &&
+               rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
+             if-yes "backup stow to $netbook" &&
+               rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
+           else
+             if-no "update stow to $SERVER" ||
+               rsync --exclude=.SyncArchive $HOME/stow $USER@$SERVER:$HOME/
+           fi ;;
 
   stownfs) cpu arm && rsync --delete $HOME/stow/ $HOME/stownfs ;;
 
-  ttrss) if server ;then
-           rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
-         else
-           rsync /srv/http/tt-rss/themes/my*.css $SERVER:/srv/http/tt-rss/themes/
-         fi ;;
+  ttrss  ) if server ;then
+             rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/
+           else
+             rsync /srv/http/tt-rss/themes/my*.css $SERVER:/srv/http/tt-rss/themes/
+           fi ;;
 
-  usb) if [ -d /run/media/$USER/$(hostname)/home ] ;then
-         rsync_home /run/media/$USER/$(hostname)/home/
-         rsync --delete $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
-         rsync --delete $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
-         mkdir -p  /run/media/$USER/$(hostname)/home/$USER.cache
-         rsync $HOME/.cache/fcache:* /run/media/$USER/$(hostname)/home/$USER/.cache/
-         sync
-       elif [ -d /media/home ] ;then
-         rsync_home /media/home/
-         rsync $HOME/.password-store /media/home/$USER/
-       elif [ -d /run/media/$USER/My\ Passport ] ;then
-         mkdir -pv /run/media/$USER/My\ Passport/media || exit 1
-         rsync --delete /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
-         rsync --delete /net/photos /run/media/$USER/My\ Passport/
-         sync
-       elif [ -d /run/media/$USER/$2/home ] ;then
-         rsync_home /run/media/$USER/$2/home/
-       else
-         ditto "insert ($(hostname)/passport) usb drive"
-       fi ;;
+  usb    ) if [ -d /run/media/$USER/$(hostname)/home ] ;then
+             rsync_home /run/media/$USER/$(hostname)/home/
+             rsync --delete $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
+             rsync --delete $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
+             mkdir -p  /run/media/$USER/$(hostname)/home/$USER.cache
+             rsync $HOME/.cache/fcache:* /run/media/$USER/$(hostname)/home/$USER/.cache/
+             sync
+           elif [ -d /media/home ] ;then
+             rsync_home /media/home/
+             rsync $HOME/.password-store /media/home/$USER/
+           elif [ -d /run/media/$USER/My\ Passport ] ;then
+             mkdir -pv /run/media/$USER/My\ Passport/media || exit 1
+             rsync --delete /net/media/videos/series /run/media/$USER/My\ Passport/media/videos/
+             rsync --delete /net/photos /run/media/$USER/My\ Passport/
+             sync
+           elif [ -d /run/media/$USER/$2/home ] ;then
+             rsync_home /run/media/$USER/$2/home/
+           else
+             ditto "insert ($(hostname)/passport) usb drive"
+           fi ;;
 
-  vps) sudo touch /srv/http/thedarnedestthing.com/application/log/restart.txt
-       # trace 'saving => stow:/application'
-       # rsync -rltuv /srv/http/thedarnedestthing.com/application $HOME/thedarnedestthing.com/
-       trace 'updating => thedarnedestthing.com:/application'
-       rsync -L --delete --exclude=vimwiki $exclude_http_local \
-             /srv/http/thedarnedestthing.com/application \
-             thedarnedestthing.com:/srv/http/thedarnedestthing.com/
-       # rsync --delete \
-       #       /home/$USER/stow/thedarnedestthing/thedarnedestthing.com/application/public/images \
-       #       thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
-       rsync /srv/http/thedarnedestthing.com/application/thedarnedestthing.db \
-             thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/
-       rsync /srv/http/thedarnedestthing.com/application/log/restart.txt \
-             thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/log/
-       trace 'updating => thedarnedestthing.com:/vimwiki'
-       rsync -L --delete \
-             $HOME/vimwiki \
-             thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/ ;;
+  vps    ) sudo touch /srv/http/thedarnedestthing.com/application/log/restart.txt
+           # trace 'saving => stow:/application'
+           # rsync -rltuv /srv/http/thedarnedestthing.com/application $HOME/thedarnedestthing.com/
+           trace 'updating => thedarnedestthing.com:/application'
+           rsync -L --delete --exclude=vimwiki $exclude_http_local \
+                 /srv/http/thedarnedestthing.com/application \
+                 thedarnedestthing.com:/srv/http/thedarnedestthing.com/
+           # rsync --delete \
+           #       /home/$USER/stow/thedarnedestthing/thedarnedestthing.com/application/public/images \
+           #       thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/
+           rsync /srv/http/thedarnedestthing.com/application/thedarnedestthing.db \
+                 thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/
+           rsync /srv/http/thedarnedestthing.com/application/log/restart.txt \
+                 thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/log/
+           trace 'updating => thedarnedestthing.com:/vimwiki'
+           rsync -L --delete \
+                 $HOME/vimwiki \
+                 thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/ ;;
 
-    wiki) if ! if-no 'recover thedarnedestthing.com:/vimwiki' ;then
-            trace "thedarnedestthing.com:/vimwiki => $(hostname)"
-            rsync thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki \
-                  $HOME/
-          fi ;;
+  wiki   ) if ! if-no 'recover thedarnedestthing.com:/vimwiki' ;then
+             trace "thedarnedestthing.com:/vimwiki => $(hostname)"
+             rsync thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki \
+                   $HOME/
+           fi ;;
 
-  *) /usr/bin/rsync -av --update --exclude='lost+found' $quiet $@ ;;
+  *      ) /usr/bin/rsync -av --update --exclude='lost+found' $quiet $@ ;;
 esac
 
 # vim: set ft=sh: #

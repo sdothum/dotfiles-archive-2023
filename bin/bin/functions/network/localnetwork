@@ -23,16 +23,16 @@ case $1 in
        sudo systemctl enable znc ;;
 
   # use local network server services
-  on) sudo systemctl enable connman
-      sudo systemctl disable dhcpcd
-      sudo systemctl disable dovecot
-      sudo systemctl disable nginx
-      sudo systemctl disable php-fpm
-      sudo systemctl disable postgresql
-      sudo systemctl disable tt-rss
-      sudo systemctl disable znc ;;
+  on ) sudo systemctl enable connman
+       sudo systemctl disable dhcpcd
+       sudo systemctl disable dovecot
+       sudo systemctl disable nginx
+       sudo systemctl disable php-fpm
+       sudo systemctl disable postgresql
+       sudo systemctl disable tt-rss
+       sudo systemctl disable znc ;;
 
-  *) usage ;;
+  *  ) usage ;;
 esac
 
 # vim: set ft=sh: #

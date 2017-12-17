@@ -158,32 +158,32 @@ case $action in
               luminance +$1 && exec conky theme dark $1 || exec conky theme light $1
             fi ;;
 
-  light) if [ $# -eq 1 ] ;then
-           hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f18)
-           paper
-           echo dark >$CONTRAST
-           theme
-         fi ;;
+  light   ) if [ $# -eq 1 ] ;then
+              hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f18)
+              paper
+              echo dark >$CONTRAST
+              theme
+            fi ;;
 
-  dark) if [ $# -eq 1 ] ;then
-          hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f2)
-          ink
-          echo light >$CONTRAST
-          theme
-        fi ;;
+  dark    ) if [ $# -eq 1 ] ;then
+              hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f2)
+              ink
+              echo light >$CONTRAST
+              theme
+            fi ;;
 
-  test) if [ $# -eq 1 ] ;then
-          hexgen $1
-          luminance +$default_color && paper || ink
-          theme
-          if ! if-no "change contrast" ;then
-            luminance -$default_color && paper || ink
-            theme
-          fi
-        fi ;;
+  test    ) if [ $# -eq 1 ] ;then
+              hexgen $1
+              luminance +$default_color && paper || ink
+              theme
+              if ! if-no "change contrast" ;then
+                luminance -$default_color && paper || ink
+                theme
+              fi
+            fi ;;
 
-  wal) wal ;;
-  *  ) usage ;;
+  wal     ) wal ;;
+  *       ) usage ;;
 esac
 
 

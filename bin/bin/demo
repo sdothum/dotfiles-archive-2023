@@ -26,11 +26,11 @@ demo() {
       '#') continue ;;
 
       '!') shift
-           eval $@
+           $@
            sleep $DELAY ;;
 
-      *) [ "$line" ] && eval xdotool key --delay 5 $line
-         sleep $DELAY ;;
+      *  ) [ "$line" ] && xdotool key --delay 5 $line
+           sleep $DELAY ;;
     esac
   done
 }

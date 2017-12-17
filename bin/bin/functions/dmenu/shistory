@@ -15,8 +15,8 @@ case $shell in
   fish) ;;
   sh  ) ;;
 
-  zsh) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
-       mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
+  zsh ) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
+        mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
 
 cmd=$(h shell=$shell |

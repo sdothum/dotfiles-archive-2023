@@ -12,10 +12,8 @@ usage() {
 }
 
 case $1 in
-  sig=*) eval $1
-         shift ;;
-
-  *) sig=${sig:--TERM} ;;
+  sig=*) eval $1; shift ;;
+  *    ) sig=${sig:--TERM} ;;
 esac
 
 # persistent storage for regex to subvert nested shell expansion

@@ -15,7 +15,7 @@ usage() {
 host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')
 
 case $i in
-  '') pidof slrn || slrn -h $host ;;
+  '') pstat slrn || slrn -h $host ;;
 
   f*) killall slrn 2>/dev/null
       usenet ;;
@@ -24,7 +24,7 @@ case $i in
       slrn -h $host -d
       usenet ;;
 
-  *) usage ;;
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

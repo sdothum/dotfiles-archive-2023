@@ -19,12 +19,15 @@ processor() {
 }
 
 case $1 in
-  '') processor i7   '3' '-'
-      processor Atom '2' '('
-      processor ARM  '1' 'v' ;;
+  ''  ) processor i7   '3' '-'
+        processor Atom '2' '('
+        processor ARM  '1' 'v' ;;
 
-  i7 | atom | arm) [ $(cpu) = $1 ] ;;
-  *              ) usage ;;
+  i7  |\
+  arm |\
+  atom) [ $(cpu) = $1 ] ;;
+
+  *   ) usage ;;
 esac
 
 # vim: set ft=sh: #

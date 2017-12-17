@@ -53,7 +53,7 @@ compose_vim() {
   DRAFT=$HOME/drafts/${1#/tmp/}.draft
   format_message $1
   cp $1 $DRAFT
-  gvim -f -c 'set filetype=mail' -c 'call FontSize(1)' -c 'normal 5G' $DRAFT
+  gvim -f -c 'set filetype=mail' $DRAFT
   cp $DRAFT $1
   # cleanup sup mail draft histories
   find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
@@ -64,14 +64,9 @@ editor=$(previous compose)
 while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | rmenu 'Compose' $editor -no-custom) || exit
 do
   case $editor in
-    "$SEND") ;;
-
-    "$EDIT") dmenu notes draft
-             continue ;;
-
-    "$PURGE") mv $HOME/drafts/alot.*.draft /tmp
-              continue ;;
-
+    "$SEND"    ) ;;
+    "$EDIT"    ) dmenu notes draft; continue ;;
+    "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp; continue ;;
     focuswriter) compose_with focuswriter $1 ;;
     nano       ) compose_with pyroom $1 ;;
     pyroom     ) compose_with pyroom $1 ;;

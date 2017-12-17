@@ -20,7 +20,7 @@ rss() {
 }
 
 case $1 in
-  '') if ! pidof newsbeuter ;then
+  '') if ! pstat newsbeuter ;then
         rss
         newsbeuter -C $HOME/.newsbeuter/config
       else
@@ -30,12 +30,12 @@ case $1 in
   I*) sudo rm $HOME/.newsbeuter/cache.db 2>/dev/null
       rss ;;
 
-  i*) if ! pidof newsbeuter ;then
+  i*) if ! pstat newsbeuter ;then
         rss
         newsbeuter -C $HOME/.newsbeuter/config -i $2
       fi ;;
 
-  *) usage ;;
+  * ) usage ;;
 esac
 
 # vim: set ft=sh: #

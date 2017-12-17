@@ -5,6 +5,12 @@
 
 # .......................................................................... znc
 
+# add server networks on znc webpage before connecting to servers
+# freenode chat.freenode.net +6697
+# oftc irc.oftc.net +6697
+# rizon irc.rizon.net +6697
+# gitter irc.gitter.im +6667 <password>
+# znc install adds freenode by default for #znc
 annotate "listen on port 7000, username/password znc/znc\n
 service identity with:\n
 /msg nickserv register <password> <email>\n
@@ -30,7 +36,7 @@ freenode channels (znc):\n
 gitter channels:\n
 /join #syl20bnr/spacemacs\n
 oftc channels:\n
-/join #fish,#suckless\n
+/join #bitlbee,#fish,#suckless\n
 rizon channels:\n
 /join #anime-planet.com,#haruhichan,#rice"
 sudo -u znc znc --makeconf

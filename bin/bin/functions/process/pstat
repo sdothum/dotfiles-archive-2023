@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Process
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Stat process
+
+# Usage: pstat <pattern> | <command>
+#        pstat <+> <pattern>, where + tests for multiple instances
+
+# pstat test will include itself for simple command line patterns
+[ "$1" = '+' ] && { instance=2; shift; } || instance=1
+
+if [ "${1% *}" != "$1" ] ;then
+  # regex "or" command line patterns will not count the pstat call
+  [ "${1%|*}" = "$1"  ] || instance=$(( $instance - 1 ))
+  [ $(pgrep -cf "$1") -gt $instance ]
+else
+  pgrep -x $1 >/dev/null
+fi
+
+# vim: set ft=sh: #

@@ -7,10 +7,11 @@
 # ................................................................. Media player
 
 # Usage: play <url> | <path> [<title>]
+#
+# Note: <path> may be a media file or folder containing such
 
 fontsize=36
-menu=$SESSION/term:menu
-ncurses=$SESSION/ncurses
+ext='avi|Avi|divx|Divx|m4v|M4v|mkv|Mkv|mp4|Mp4|wmv|Wmv'
 
 youtube=/net/downloads/http/youtube-dl
 # cleanup accidental screenshots and youtube-dl
@@ -39,10 +40,17 @@ if cpu arm; then
   fi
 
   geometry=$(dmenu geometry "$title") || exit
-  rm $menu
+  rm $MENU
   blackboard
 
-  [ $video ] || video=$(find "$1" -regextype posix-extended -regex '.*(mkv|Mkv|mp4|Mp4|avi|divx|m4v|wmv)' | grep -v sample)
+  if [ -z $video ] ;then
+    [ -d "$1" ] && path=$1 || path=${1%/*}
+    # attached usb drive?
+    libext=$(find /run/media/$USER -maxdepth 3 -type d -name "$(basename $(dirname "$path"))" 2>/dev/null)
+    [ -n "$libext" ] && video=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
+    [ -z "$video" ] && video=$path
+    video=$(find "$video" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
+  fi
   notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
   # syncthing cpu usage can exacerbate video stuttering
   # systemd stop syncthing@$USER
@@ -53,15 +61,17 @@ if cpu arm; then
   ln -sf "$video" /tmp/play:link
   eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
   echo "$title -> $video" >>/tmp/omxplay.log
+  # accomodate arm term omxplayer lag time variance
+  sleep 1
   pwait /tmp/play:link
 
   # systemd start syncthing@$USER
   # clear notification
   xdotool key Ctrl+space
-  touch $menu
+  touch $MENU
 else
-  rm $menu
-  touch $ncurses
+  rm $MENU
+  touch $NCURSES
   blackboard
   # server && env CONKYRC=$CONKY_Q2 conky clock on
   notify 0 blackboard "$title" '1/2  Contrast\n3/4  Brightness\n5/6  Gamma\n7/8  Saturation\n9/0  Volume\n-/+  &lt;Ctrl&gt; Audio Delay\n#    Language\nv/j  Subtitles\nv    Toggle'
@@ -69,12 +79,12 @@ else
   mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
   # clear notification
   ( pwait "mpv --vf=eq $1"; xdotool key Ctrl+space ) &
-  rm $ncurses
+  rm $NCURSES
 fi
 
 # refresh panel title on close
 focus window
-pgrep -f 'dmenu (series|movies)' || restore root
+pstat 'dmenu (media|movies|series)' || restore root
 conky clock auto
 
 # vim: set ft=sh: #

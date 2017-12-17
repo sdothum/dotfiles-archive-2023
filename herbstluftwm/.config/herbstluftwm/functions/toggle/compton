@@ -23,11 +23,11 @@ else
 fi
 
 if [ -e $COMPTON ] ;then
-  if ! pidof compton >/dev/null ;then
+  if ! pstat compton ;then
     compton >/tmp/compton.log 2>&1 &
     # xscreensaver -no-splash &
   fi
-elif pidof compton >/dev/null ;then
+elif pstat compton ;then
   killall -TERM compton
   # killall -TERM xscreensaver
 fi

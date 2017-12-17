@@ -30,20 +30,20 @@ abg=$bg
 hbg=$bg
 hfg=argb:FF25C0EF
 
-# leader left or right
+# leader left or right (prompt case Right, RIGHT, right)
 lead=right
 leader='──────'
 indent='   '
 
 # .......................................................................... GUI
 
-[ -e $SESSION/term:menu ] && window=MENU || window=STACK
+[ -e $MENU ] && window=MENU || window=STACK
 
 if [ -z $TERMINAL ] ;then
   if hlwm; then
     display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
     width=$(query displaywidth)
-  elif pgrep startx >/dev/null ;then
+  elif pstat startx ;then
     display=0
     width=$(xrandr 2>/dev/null | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
   else
@@ -86,7 +86,11 @@ else
 fi
 # convert prompt right to lower case
 [ $lead = left ] && prompt="${prompt}$leader   " ||
-                    prompt="$leader   $(echo "$prompt" | tr [:upper:] [:lower:])"
+                    case $lead in
+                      RIGHT) prompt="$leader   $(echo "$prompt" | tr [:lower:] [:upper:])" ;;
+                      right) prompt="$leader   $(echo "$prompt" | tr [:upper:] [:lower:])" ;;
+                      *    ) prompt="$leader   $prompt" ;;
+                    esac
 
 
 # ....................................................................... Select
@@ -105,6 +109,10 @@ if [ "$1" ] ;then
   fi
 fi
 
+# fzf --print-query
+parms=$@
+[ "${parms#*-no-custom}" = "$parms" ] && print=--print-query
+
 # ......................................................................... Read
 
 if [ $display ] ;then
@@ -114,9 +122,9 @@ if [ $display ] ;then
     trap "rm -f $stdin $stdout" EXIT
     sed "s/^/$indent/" >$stdin
     # escape movie title (year) parentheses
-    term "$(escape $title)" WAIT $window SHELL "cat $stdin | fzf --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
-    input=$(cat $stdout)
-    test -n "$input"
+    term "$(escape $title)" WAIT $window SHELL "cat $stdin | fzf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
+    input=$(tail -1 $stdout)
+    [ -n "$input" ]
   else
     input=$(sed "s/^/$indent/" |
             eval rofi -matching fuzzy \
@@ -139,7 +147,8 @@ if [ $display ] ;then
                       $@ )
   fi
 else
-  input=$(sed "s/^/$indent/" | fzf --prompt="\"$prompt\"")
+  input=$(sed "s/^/$indent/" | fzf $print --prompt="\"$prompt\"" | tail -1)
+  [ -n "$input" ]
 fi
 
 [ $? -ne 0 ] && exit 1

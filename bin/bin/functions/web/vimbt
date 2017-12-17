@@ -6,11 +6,10 @@
 
 # ...................................................................... Browser
 
-[ $1 ] && startpage="$@" || startpage=http://luna:8000/tt-rss/
-
 # prune in-browser history for performance
 histfile=$HOME/.config/vimb/history
 histsize=1000
+winid=/tmp/tabbed:winid
 
 # see dhistory for external browser history access
 prune_history() {
@@ -34,18 +33,14 @@ vimbt() {
 
   # tabbed appends winid to expanded command arguments, see vimb
   # vimb embed terminates this function
-  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#fdf6e3' -u '#464F52' -U '#B2BBBD' vimb embed
+  tabbed -c -n 'VimbT' -ps+1 -t '#B3431E' -T '#fdf6e3' -u '#464F52' -U '#B2BBBD' >$winid
 }
 
 # use or setup socket (with tabs)
 if ! xdotool search -classname 'VimbT' >/dev/null ;then
   vimbt &
-  # wait for socket creation <silent>before loading startpage
-  until [ -S "$(grep socket /tmp/vimb:socket)" ]
-  do
-    sleep 0.1
-  done
+  xdotool search --sync --onlyvisible --limit 1 --classname VimbT >/dev/null
 fi
-vimb socket $startpage
+/usr/bin/vimb -e $(cat $winid) &
 
 # vim: set ft=sh:

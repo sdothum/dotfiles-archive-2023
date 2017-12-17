@@ -22,17 +22,21 @@ while :
 do
   case $1 in
     # long form required for handling numeric summary field
-    time=*                 ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
-    console                ) console=true ;;
-    cron                   ) cron=true ;;
-    low | normal | critical) urgency="-u $1" ;;
-    blackboard             ) urgency="-h string:bgcolor:#000000" ;;
+    time=*    ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
+    console   ) console=true ;;
+    cron      ) cron=true ;;
 
-    *) case $1 in
-         # none numeric field
-         '' | *[!0-9]*) break ;;
-         *            ) expire="--expire-time=$(( $1 * 1000 ))" ;;
-       esac
+    low    |\
+    normal |\
+    critical  ) urgency="-u $1" ;;
+
+    blackboard) urgency="-h string:bgcolor:#000000" ;;
+
+    *         ) case $1 in
+                  # none numeric field
+                  '' | *[!0-9]*) break ;;
+                  *            ) expire="--expire-time=$(( $1 * 1000 ))" ;;
+                esac
   esac
   shift
 done

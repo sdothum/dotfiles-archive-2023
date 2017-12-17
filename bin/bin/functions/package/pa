@@ -17,7 +17,8 @@ if [ -z $1 ] ;then
     pacaur -Syuu
     exit
   fi
-  mirrorlist Canada
+  # mirrorlist Canada
+  mirrorlist
   sudo pacman-key -u
   # pacaur -Syu --repo
   # pacaur -Su --aur --noconfirm

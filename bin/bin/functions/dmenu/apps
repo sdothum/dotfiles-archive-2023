@@ -3,9 +3,9 @@
 # X11 Dynamic Menu
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... dmenu launcher
+# ........................................................ Configurable launcher
 
-EDIT='[ edit ]'
+EDIT='[ edit menu ]'
 
 # run list format: <command> [# <comment>]
 #             e.g. term 'title' program
@@ -30,8 +30,8 @@ do
   case $pgm in
     "$EDIT") gvim -f $pgms ;;
 
-    *) mhistory apps "$pgm"
-       eval exec toggle $(grep "$pgm" $pgms) ;;
+    *      ) mhistory apps "$pgm"
+             exec toggle $(grep "$pgm" $pgms) ;;
   esac
 done
 

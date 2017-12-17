@@ -24,9 +24,9 @@ do
   case $files in
     "$EDIT") gvim -f $projects ;;
 
-    *) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
-       eval v ${files#*$SEP}
-       exit ;;
+    *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+             eval v ${files#*$SEP}
+             exit ;;
    esac
 done
 

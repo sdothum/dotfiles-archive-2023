@@ -25,10 +25,8 @@ do
               shift 2
               nosync=true ;;
 
-    -b) B=$1
-        shift ;;
-
-    *) break ;;
+    -b      ) B=$1; shift ;;
+    *       ) break ;;
   esac
 done
 

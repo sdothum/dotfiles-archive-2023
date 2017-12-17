@@ -12,7 +12,6 @@ for i in $VARS
 do
   count=$(( $count + 1 ))
   eval VAR$count=$i
-  # eval echo \$VAR$count
 done
 
 # clean up input equation
