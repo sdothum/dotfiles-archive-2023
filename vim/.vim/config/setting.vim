@@ -150,14 +150,14 @@
             if s:powerline == 0
               let g:lightline =
                   \{
-                  \  'colorscheme'  : 'solarized'
+                  \  'colorscheme'  : 'mysolarized'
                   \, 'separator'    : { 'left' : '', 'right' : '' }
                   \, 'subseparator' : { 'left' : '', 'right' : '' }
                   \}
             else
               let g:lightline =
                   \{
-                  \  'colorscheme'  : 'solarized'
+                  \  'colorscheme'  : 'mysolarized'
                   \, 'separator'    : { 'left' : '', 'right' : '' }
                   \, 'subseparator' : { 'left' : '', 'right' : '' }
                   \}
@@ -167,12 +167,13 @@
 
         let g:lightline.active =
             \{
-            \  'left'  : [['mode',        'paste',     'matchspace',  'bufnum'               ]
-            \,            ['bufcount',    'rootpath',  'rootname',    'basename', 'filename' ]
-            \,            ['indent',      'spaces',    'readonly',    'modified'             ]]
-            \, 'right' : [['wordcount',   'atom',      'filetype'                            ]
-            \,            ['lineinfo',    'topbottom', 'linepercent', 'linecount'            ]
-            \,            ['specialchar', 'column',    'columninfo'                          ]]
+            \  'left'  : [['mode',        'paste',     'matchspace',  'bufnum'   ]
+            \,            ['bufcount',    'rootpath',  'rootname',    'basename' ]
+            \,            ['filename',    'indent',    'spaces'                  ]
+            \,            ['readonly',    'modified'                             ]]
+            \, 'right' : [['wordcount',   'atom',      'filetype'                ]
+            \,            ['lineinfo',    'topbottom', 'linepercent', 'linecount']
+            \,            ['specialchar', 'column',    'columninfo'              ]]
             \}
 
         let g:lightline.inactive =
@@ -216,17 +217,13 @@
 
         let g:lightline.component_visible_condition =
             \{
-            \  'basename'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*")'
-            \, 'bufcount'    : '(BufCount() > 1)'
+            \  'bufcount'    : '(BufCount() > 1)'
             \, 'bufnum'      : '(BufCount() > 1)'
-            \, 'column'      : '(getline(line(".")) != "")'
             \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
             \, 'matchspace'  : '(g:matchspace != "")'
             \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
             \, 'paste'       : '&paste'
             \, 'readonly'    : '(&filetype != "help" && &readonly)'
-            \, 'rootname'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
-            \, 'rootpath'    : '(expand("%:p") =~ ".*[/][^/]*[/][^/]*[/][^/]*")'
             \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
             \}
 
@@ -262,7 +259,7 @@
             \, 'V'      : 'V-LINE'
             \}
 
-        " must disable lightline to allow new settings to be laaded
+        " must disable lightline to allow new settings to be loaded
         call lightline#disable()
         call lightline#init()
         call lightline#enable()

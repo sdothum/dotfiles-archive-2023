@@ -334,7 +334,7 @@
       " center dfm indicator / proofing statusline
       function! ui#WikiInfo(proof)
         try                                 " trap snippet insertion interruption
-          let g:prose  = 1
+          let g:prose = 1
           if a:proof == 0
             let l:name = (&modified ? '' : '')
           else

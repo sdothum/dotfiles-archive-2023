@@ -14,7 +14,8 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:ruler = 0                       " colorcolumn mode
+      let g:matchspace = ''                 " see ToggleSpaces() gui.vim
+      let g:ruler      = 0                  " colorcolumn mode
 
       augroup core
         autocmd!
@@ -91,6 +92,10 @@
       nmap <silent>#               :call core#ToggleNumber()<CR>
 
     " ...................................................... White space markers
+
+      function! MatchSpace()
+        return g:matchspace
+      endfunction
 
       nmap <silent><leader><Space> :call core#ToggleSpaces()<CR>
 
