@@ -50,7 +50,7 @@ hc rule title=Radio                      tag=5 focus=off
 # hc rule class=Rrip_gui                 tag=5 focus=on switchtag=on
 hc rule class=Smplayer                   tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
 hc rule class=Umplayer                   tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
-hc rule class=Kodi                       tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
+# hc rule class=Kodi                     tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
 hc rule class=Gimp                       tag=5 monitor=5 focus=on switchtag=on
 hc rule class=Darktable                  tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Digikam                    tag=5 monitor=5 focus=on switchtag=on

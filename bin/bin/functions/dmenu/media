@@ -9,7 +9,7 @@
 media=$(previous media)
 while :
 do
-  media=$(echo "animation\nanime\nmovies\nnetflix\nseries\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
+  media=$(echo "animation\nanime\nkodi\nmovies\nnetflix\nseries\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
           rmenu 'Media' $media -no-custom) || exit
 
   # videos turn on blackboard so..
@@ -20,6 +20,7 @@ do
     animation ) dmenu movies animation ;;
     anime     ) dmenu series anime ;;
     ebooks    ) { dmenu ebooks; break; } ;;
+    kodi      ) kodi ;;
     movies    ) dmenu movies ;;
     netflix   ) netflix ;;
     nzb       ) { toggle term 'NZB' nzbget --connect; break; } ;;

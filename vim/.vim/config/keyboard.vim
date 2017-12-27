@@ -17,10 +17,6 @@
       " nnoremap : ;
       " vnoremap : ;
 
-      augroup kbd
-        autocmd!
-      augroup END
-
   " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ....................................................... Backspace settings
@@ -75,6 +71,10 @@
 
       " highlight last inserted text
       nnoremap <leader>i `[v`]
+
+      augroup kbd
+        autocmd!
+      augroup END
 
       " disable paste mode when leaving Insert Mode
       autocmd kbd InsertLeave * set nopaste

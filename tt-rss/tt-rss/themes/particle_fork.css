@@ -80,8 +80,8 @@ div#notify.notify.notify_progress {
   background:                #84ac96;
   font-size:                 10px !important;
   border-radius:             10px !important;
-  margin:                    2px 0 2px 10px !important;
-  padding:                   0 6px 0 7px;
+  margin:                    1px 0 2px 10px !important;
+  padding:                   1px 6px 0 7px !important;
 }
 
 #feeds-holder .counterNode.aux {

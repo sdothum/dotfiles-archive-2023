@@ -5,12 +5,6 @@
 
   " Registers ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................................... Setup
-
-      augroup default
-        autocmd!
-      augroup END
-
     " .................................................................... Marks
 
       set viminfo='100,f1                   " save up to 100 marks, enable capital marks
@@ -18,9 +12,18 @@
       " delete all marks in current buffer, see signature plugin
       " nmap <silent><leader>'' :delmarks!<CR>
 
+      " ................................................................. Macros
+
+      " repeat last macro
+      nnoremap Q @@
+
   " Databases ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ..................................................................... Help
+
+      augroup default
+        autocmd!
+      augroup END
 
       autocmd default BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 

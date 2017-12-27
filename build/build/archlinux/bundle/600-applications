@@ -115,7 +115,7 @@ m dict-moby-thesaurus
 = media server/player
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # gcstar                        [server]
-# kodi                          [server]
+  kodi                          [server]
 # minidlna                      [server]
 # plex-media-server-plexpass    [server]
 # plex-media-server             [server]

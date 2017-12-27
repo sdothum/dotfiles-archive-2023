@@ -125,7 +125,6 @@
 
     " ................................................................ Lightline
 
-      let g:matchspace = ''                 " see ToggleSpaces() gui.vim
       " powerline symbol slant (0) lower (1) upper
       let s:powerline  = ("$POWERLINE" > '' ? $POWERLINE : 0)
       let g:lightline  =
@@ -206,7 +205,6 @@
             \, 'linecount'    : '%L'
             \, 'lineinfo'     : '%3l:%-2v'
             \, 'line'         : '%l'
-            \, 'matchspace'   : '%{g:matchspace}'
             \, 'mode'         : '%{lightline#mode()}'
             \, 'paste'        : '%{&paste ? "PASTE" : ""}'
             \, 'percent'      : '%-0p%%'
@@ -220,7 +218,6 @@
             \  'bufcount'    : '(BufCount() > 1)'
             \, 'bufnum'      : '(BufCount() > 1)'
             \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
-            \, 'matchspace'  : '(g:matchspace != "")'
             \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
             \, 'paste'       : '&paste'
             \, 'readonly'    : '(&filetype != "help" && &readonly)'
@@ -235,6 +232,7 @@
             \, 'indent'      : 'Indent'
             \, 'lineinfo'    : 'LineInfo'
             \, 'linepercent' : 'LinePercent'
+            \, 'matchspace'  : 'MatchSpace'
             \, 'modified'    : 'Modified'
             \, 'rootname'    : 'RootName'
             \, 'rootpath'    : 'RootPath'

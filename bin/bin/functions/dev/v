@@ -48,6 +48,8 @@ fi
 [ $focus ] && focus frame
 # --quote used for single space separated filename
 eval $sudo vim $G $role $fg $cmd ${q}$file${q} 2>>/tmp/vim.log
+# prevent premature startup termination
+cpu arm && sleep 3
 
 # postpone cleanup till done with all vim sessions
 housekeeping() {

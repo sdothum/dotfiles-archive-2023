@@ -9,10 +9,8 @@
 
 #feeds-holder .dijitTreeRow {
   font-size:      12px !important;
-  padding-top:    7px !important;
-  padding-bottom: 7px !important;
-  padding-right:  15px !important;
-  margin:         5px 0 5px !important;
+  padding:        6px 15px 5px 0 !important;
+  margin:         12px 0 12px !important;
 }
 
 #feeds-holder .dijitTreeLabel {

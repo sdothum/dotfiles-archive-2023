@@ -5,13 +5,6 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................................... Setup
-
-      " see IndentTheme() settings.vim
-      augroup column
-        autocmd!
-      augroup END
-
     " ............................................................. Numeric sort
 
       " sort compare by numeric (not string) value
@@ -89,6 +82,11 @@
       " hjkl mapping (0) hjkl (1) mnle
       let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
 
+      " see IndentTheme() settings.vim
+      augroup column
+        autocmd!
+      augroup END
+
       " toggle colorcolumn modes
       function! core#ToggleColumn()
         if g:ruler == 0
@@ -123,17 +121,37 @@
         endif
       endfunction
 
-    " ...................................................... White space markers
+    " .......................................... White space / soft wrap markers
+
+      " soft wrap marker
+      function! core#Soft()
+        " filetype dependent textwidth
+        if exists('s:soft')
+          call matchdelete(s:soft)
+        endif
+        highlight SoftWrap cterm=underline gui=underline
+        let s:soft = '\%' . (&textwidth + 1) . 'v'
+        let s:soft = matchadd('SoftWrap', s:soft)
+      endfunction
+
+      augroup soft
+        autocmd!
+      augroup END
 
       " toggle trailing whitespace highlight and indentation levels
       function! core#ToggleSpaces()
         set list!
         if &list == 0
           match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
+          call matchdelete(s:soft)
+          unlet s:soft
+          autocmd! soft
           " echo ''
           let g:matchspace = ''
         else
           match ExtraWhitespace /\s\+$/
+          call core#Soft()
+          autocmd soft BufEnter * call core#Soft()
           " echo 'List invisibles ON'
           let g:matchspace = '■'
         endif
@@ -321,7 +339,8 @@
         call ui#FontSize(1)
         " gg/.. cannot be combined into single expression (produces unpredictable results)
         execute 'normal! gg'
-        execute 'normal! ' . search('\n\n\n', 'e') . 'G'
+        " execute 'normal! ' . search('\n\n\n', 'e') . 'G'
+        execute 'normal! ' . (search('^Subject: ') + 2) . 'G'
         execute 'startinsert'
       endfunction
 
