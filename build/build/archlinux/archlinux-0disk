@@ -23,14 +23,16 @@ fi
 heading 'boot disk'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 ls -l /dev/disk/by-id | grep -v part | grep ata
-read -p "Boot disk /dev/sd? [a-z]: " disk
+read -p "Boot disk /dev/sd? [a-z] | /dev/mmcblk? [0]: " disk
 if [ -z $disk ] ;then
   echo 'invalid disk reference.. aborting'
   exit
 fi
+[ $disk = 0 ] && device=/dev/mmcblk${disk} || device=/dev/sd${disk}
 echo
 read -p 'Partition and format disk as btrfs? [y|N]: ' format
 [ $format ] || format=N
+diskutil=fdisk
 if [ "$format" = y ] ;then
   # already mounted?
   # mount | grep -q /dev/sd${disk}1 && umount -v /dev/sd${disk}1
@@ -58,8 +60,8 @@ if [ "$format" = y ] ;then
            echo '  ..' ;;
   esac
   sleep 3s
-  $diskutil /dev/sd${disk}
-  $diskutil -l /dev/sd${disk}
+  $diskutil $device
+  $diskutil -l $device
   checkpoint
   if [ ! -z $stripe ] ;then
     echo
@@ -70,37 +72,39 @@ if [ "$format" = y ] ;then
   fi
 
   # reread partition tables
-  hdparm -z /dev/sd${disk}
+  hdparm -z $device
   cat /proc/partitions
   checkpoint
+fi
 
+partition() {
+  case $diskutil in
+    fdisk) $diskutil -l $device | grep "$@" | cut -d' ' -f1 ;;
+    gdisk) $diskutil -l $device | grep "$@" | awk '{ print $1; }' ;;
+  esac
+}
+
+efi=$(partition EFI)
+boot=$(partition boot)
+swap=$(partition swap)
+root=$(partition root)
+# mbr disk is not labeled
+[ $root ] || root=$(partition 'Linux$')
+
+if [ "$format" = y ] ;then
   heading 'format btrfs disk partition'
-  partition() {
-    case $diskutil in
-      fdisk) $diskutil -l /dev/sd${disk} | grep "$@" | cut -d' ' -f1 | cut -c9 ;;
-      gdisk) $diskutil -l /dev/sd${disk} | grep "$@" | awk '{ print $1; }' ;;
-    esac
-  }
-
-  efi=$(partition EFI)
-  boot=$(partition boot)
-  swap=$(partition swap)
-  root=$(partition root)
-  # mbr disk is not labeled
-  [ $root ] || root=$(partition 'Linux$')
-
-  [ $efi ] && mkfs.fat -n EFI -F32 /dev/sd${disk}${efi}
-  [ $boot ] && mkfs.ext2 -L boot /dev/sd${disk}${boot}
+  [ $efi ] && mkfs.fat -n EFI -F32 $efi
+  [ $boot ] && mkfs.ext2 -L boot $boot
 
   if [ $swap ] ;then
-    mkswap -L Swap /dev/sd${disk}${swap}
+    mkswap -L Swap $swap
     swapon -L Swap
   fi
 
   if [ -z $stripe ] ;then
-    mkfs.btrfs -f -L Archlinux /dev/sd${disk}${root}
+    mkfs.btrfs -f -L Archlinux $root
   else
-    mkfs.btrfs -f -L Archlinux -d raid0 /dev/sd${disk}${root} /dev/sd${stripe}
+    mkfs.btrfs -f -L Archlinux -d raid0 $root /dev/sd${stripe}
   fi
   checkpoint
 fi
@@ -111,8 +115,8 @@ mkdir -pv /mnt/btrfs-root
 read -p "SSD boot drive? [y|N]: " ssd
 [ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=,ssd,discard
 mount=defaults,noatime,autodefrag,space_cache${ssd}
-echo "mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root"
-mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root
+echo "mount -v -o ${mount} $root /mnt/btrfs-root"
+mount -v -o ${mount} $root /mnt/btrfs-root
 checkpoint
 
 
@@ -166,19 +170,19 @@ checkpoint
 heading 'mount subvolumes'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 mkdir -pv /mnt/btrfs-boot
-mount -v -o ${mount},nodev,subvol=__current/ROOT /dev/sd${disk}${root} /mnt/btrfs-boot
+mount -v -o ${mount},nodev,subvol=__current/ROOT $root /mnt/btrfs-boot
 [ "$net" = y ] && mkdir -pv /mnt/btrfs-boot/net
 mkdir -pv /mnt/btrfs-boot/home
 mkdir -pv /mnt/btrfs-boot/opt
 mkdir -pv /mnt/btrfs-boot/srv
 mkdir -pv /mnt/btrfs-boot/var/lib/pacman
 mkdir -pv /mnt/btrfs-boot/.snapshots
-[ "$net" = y ] && mount -v -o ${mount},nodev,subvol=__current/net /dev/sd${disk}${root} /mnt/btrfs-boot/net
-mount -v -o ${mount},nodev,subvol=__current/home /dev/sd${disk}${root} /mnt/btrfs-boot/home
-mount -v -o ${mount},nodev,subvol=__current/opt /dev/sd${disk}${root} /mnt/btrfs-boot/opt
-mount -v -o ${mount},nodev,subvol=__current/srv /dev/sd${disk}${root} /mnt/btrfs-boot/srv
-mount -v -o ${mount},nodev,noexec,subvol=__current/var /dev/sd${disk}${root} /mnt/btrfs-boot/var
-mount -v -o ${mount},nodev,noexec,subvol=__snapshot/.snapshots /dev/sd${disk}${root} /mnt/btrfs-boot/.snapshots
+[ "$net" = y ] && mount -v -o ${mount},nodev,subvol=__current/net $root /mnt/btrfs-boot/net
+mount -v -o ${mount},nodev,subvol=__current/home $root /mnt/btrfs-boot/home
+mount -v -o ${mount},nodev,subvol=__current/opt $root /mnt/btrfs-boot/opt
+mount -v -o ${mount},nodev,subvol=__current/srv $root /mnt/btrfs-boot/srv
+mount -v -o ${mount},nodev,noexec,subvol=__current/var $root /mnt/btrfs-boot/var
+mount -v -o ${mount},nodev,noexec,subvol=__snapshot/.snapshots $root /mnt/btrfs-boot/.snapshots
 # bind /var/lib/pacman data to ROOT for system snapshots
 mkdir -pv /mnt/btrfs-boot/var/lib/pacman
 mkdir -pv /mnt/btrfs-root/__current/ROOT/var/lib/pacman
@@ -189,11 +193,11 @@ heading 'mount efi/boot partitions'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 if [ $boot ] ;then
   mkdir -pv /mnt/btrfs-boot/boot
-  mount -v /dev/sd${disk}${boot} /mnt/btrfs-boot/boot
+  mount -v $boot /mnt/btrfs-boot/boot
 fi
 if [ $efi ] ;then
   mkdir -pv /mnt/btrfs-boot/boot/efi
-  mount -v /dev/sd${disk}${efi} /mnt/btrfs-boot/boot/efi
+  mount -v $efi /mnt/btrfs-boot/boot/efi
 fi
 checkpoint
 

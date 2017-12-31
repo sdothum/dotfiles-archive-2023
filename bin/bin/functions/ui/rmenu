@@ -69,7 +69,7 @@ if [ -z $TERMINAL ] ;then
   elif [ $width -gt 1440 ] ;then
     padsize $width 11 2
   elif [ $width -gt 1024 ] ;then
-    padsize $width 13 2
+    padsize $width 11 '3 / 2'
   else
     padsize $width 11 1
   fi

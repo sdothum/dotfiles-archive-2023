@@ -11,14 +11,16 @@
 # update aur kludge to prevent pacupg --aur from re-installing aur package updates
 # pacaur=true
 
+country=Canada
+
 # AUR package manager
 if [ -z $1 ] ;then
   if cpu arm ;then
     pacaur -Syuu
     exit
   fi
-  # mirrorlist Canada
-  mirrorlist
+  # mirrorlist
+  if-no "mirrorlist $country" || mirrorlist $country
   sudo pacman-key -u
   # pacaur -Syu --repo
   # pacaur -Su --aur --noconfirm

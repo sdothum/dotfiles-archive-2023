@@ -25,8 +25,8 @@ set -x KEYTIMEOUT 1
 # paths
 set -x CACHEDIR $HOME/.cache
 set -x CDPATH . .. ../.. ~ ~/.config ~/stow /usr / ^/dev/null
-echo $PATH | grep -q "$HOME/.local/bin"
-  or set -x PATH $PATH ~/.local/bin ~/.cabal/bin ~/.gem/ruby/(rubyver)/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
+echo $PATH | grep -q "$HOME/.gem/ruby/(rubyver)/bin"
+  or set -x PATH $PATH ~/.gem/ruby/(rubyver)/bin ~/.cabal/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
 
 # ........................................................... System environment
 

@@ -20,10 +20,12 @@ clock() {
 
 case $1 in
   auto) xset s off -dpms
-        pstat xautolock || xautolock -time 10 -locker 'conky clock on' & ;;
+        pstat xautolock || xautolock -time 10 -locker 'conky clock on' &
+        notify low 'Que Clock Two' 'Auto' ;;
 
   stop) xset s on -dpms
-        pstat xautolock && killall xautolock ;;
+        pstat xautolock && killall xautolock
+        notify low 'Que Clock Two' 'Stopped' ;;
 
   on  ) clock || /usr/bin/conky -c $CONKYRC 2>/dev/null & ;;
   off ) clock && pkill -f "conky -c $CONKYRC" ;;

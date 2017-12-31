@@ -230,8 +230,11 @@ fi
 hc keybind $Mod-x                       spawn restore layout
 hc keybind $Mod-Control-0               spawn restore layout default
 hc keybind $Mod-Control-1               spawn restore layout max
-hc keybind $Mod-Control-2               spawn restore layout 2:3
-hc keybind $Mod-Control-3               spawn restore layout 1:2
+hc keybind $Mod-Control-2               spawn restore layout halves
+hc keybind $Mod-Control-3               spawn restore layout thirds
+hc keybind $Mod-Control-4               spawn restore layout quarters
+hc keybind $Mod-Control-5               spawn restore layout 2:3
+hc keybind $Mod-Control-6               spawn restore layout 1:2
 hc keybind $Mod-space                   spawn toggle max
 hc keybind $Mod-Shift-space             spawn switch layout
 hc keybind $Mod-Shift-f                 chain . floating toggle . emit_hook focus_changed

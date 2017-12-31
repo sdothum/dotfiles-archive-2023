@@ -7,7 +7,7 @@
 # .......................................................................... CPU
 
 usage() {
-  echo "usage: $(basename $0) [i7 | atom | arm]"
+  echo "usage: $(basename $0) [i7 | celeron | atom | arm]"
   exit 1
 }
 
@@ -19,15 +19,17 @@ processor() {
 }
 
 case $1 in
-  ''  ) processor i7   '3' '-'
-        processor Atom '2' '('
-        processor ARM  '1' 'v' ;;
+  ''      ) processor i7      '3' '-'
+            processor Celeron '2' '('
+            processor Atom    '2' '('
+            processor ARM     '1' 'v' ;;
 
-  i7  |\
-  arm |\
-  atom) [ $(cpu) = $1 ] ;;
+  i7      |\
+  celeron |\
+  arm     |\
+  atom    ) [ $(cpu) = $1 ] ;;
 
-  *   ) usage ;;
+  *       ) usage ;;
 esac
 
 # vim: set ft=sh: #

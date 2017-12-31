@@ -13,7 +13,7 @@
 [ "$1" = S ] && { shift; confirm=true; }
 
 which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
-[ $pacaur = pacaur ] && edit=--edit
+[ $pacaur = pacaur ] && { edit=--edit; noedit=--noedit; }
 
 heading : $@
 
@@ -23,7 +23,7 @@ if ! pm_query $@ ;then
     [ $confirm ] && sudo pacman -S $@ || sudo pacman -S --noconfirm $@
   else
     echo "${_GREEN_}@ aur${nocolor_}"
-    [ $confirm ] && $pacaur -S $edit $@ || $pacaur -S --noconfirm $@
+    [ $confirm ] && $pacaur -S $edit $@ || $pacaur -S --noconfirm $noedit $@
   fi
   post_install $@
 fi

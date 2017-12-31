@@ -17,6 +17,7 @@
 # luakit
 # lynx
 # midorio
+  qt5-webkit
   qutebrowser
 # qutebrowser-git
   surf
@@ -85,7 +86,8 @@ d * znc
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # newsbeuter
   php-gd
-  php-mcrypt
+# php-mcrypt
+  php70-mcrypt
   tt-rss
 # ttaurter
   surfraw

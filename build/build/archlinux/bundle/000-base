@@ -21,7 +21,7 @@
 = console font
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   dos2unix
-  terminus-font-ll2-td1
+# terminus-font-ll2-td1
 
 
 = cpu power management
@@ -57,7 +57,7 @@
   xf86-input-evdev
   xf86-input-synaptics       [laptop]
   xf86-video-ati             [gpu ati]
-  xf86-video-intel           [gpu Intel]
+  xf86-video-intel           [gpu intel]
   xf86-video-nouveau         [gpu nvidia]
 
 

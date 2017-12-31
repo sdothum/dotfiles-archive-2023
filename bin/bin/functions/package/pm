@@ -13,7 +13,7 @@ usage() {
 
 [ $1 ] || usage
 which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
-[ $pacaur = pacaur ] && edit=--edit
+[ $pacaur = pacaur ] && { edit=--edit; noedit=--noedit; }
 
 # default (no options) to package query
 
@@ -27,7 +27,7 @@ else
     sudo pacman -Rns --noconfirm $@
   else
     # no dash option shorthand for noconfirm :-)
-    echo $action | grep -q '^-' && action="-$action $edit" || action="-$action --noconfirm"
+    echo $action | grep -q '^-' && action="-$action $edit" || action="-$action --noconfirm $noedit"
     $pacaur $action $@
   fi
 fi

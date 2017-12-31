@@ -148,6 +148,17 @@ thirds() {
   fi
 }
 
+quarters() {
+  echo 1:1:1:1 >$LAYOUT:$1
+  # apply some loose window pre-positioning
+  restore thirds
+  if [ "$load" ] || [ $windows -lt 4 ] ;then
+    herbstclient load $1 '(split horizontal:0.750000:0 (split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))))'
+  else
+    herbstclient load $1 '(split horizontal:0.750000:0 (split horizontal:0.333300:0 (clients vertical:0) (split horizontal:0.500000:0 (clients vertical:0) (clients vertical:0))))'
+  fi
+}
+
 # ....................................................................... Select
 
 default() {
@@ -172,7 +183,10 @@ case $1 in
   1:2      |\
   1:1:1    |\
   grid     |\
+  halves   |\
   max      |\
+  quarters |\
+  thirds   |\
   vertical |\
   horizontal) layout=$1
               case $layout in

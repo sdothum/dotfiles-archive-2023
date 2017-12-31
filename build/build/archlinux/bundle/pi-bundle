@@ -288,6 +288,11 @@ g term-ansicolor
   zathura-pdf-mupdf
 
 
+= media server/player
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  kodi-rpi
+
+
 = applications
 # ▔▔▔▔▔▔▔▔▔▔▔▔
   aiksaurus

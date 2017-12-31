@@ -160,11 +160,12 @@ checkpoint
 
 heading 'installing bootloader'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-[ $disk ] || read -p "Boot disk /dev/sd? [a-z]: " disk
+[ $disk ] || read -p "Boot disk /dev/sd? [a-z] | /dev/mmcblk? [0]: " disk
 if [ -z $disk ] ;then
   echo 'invalid disk reference.. aborting'
   exit
 fi
+[ $disk = 0 ] && device=/dev/mmcblk${disk} || device=/dev/sd${disk}
 if mount | grep -q vfat ;then
   pm_install refind-efi
   refind-install
@@ -174,7 +175,7 @@ if mount | grep -q vfat ;then
   grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck
 else
   pm_install grub-bios
-  grub-install --target=i386-pc --recheck /dev/sd${disk}
+  grub-install --target=i386-pc --recheck $device
 fi
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 grub-mkconfig -o /boot/grub/grub.cfg
