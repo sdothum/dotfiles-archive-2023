@@ -76,7 +76,7 @@ do
 
   case $movie in
     "$NAME") unset T; continue ;;
-    "$DATE") T=t; continue ;;
+    "$DATE") T=t;     continue ;;
 
     "$EDIT") pkill -TERM 'ROX-Filer'
              rox $nzb
@@ -85,7 +85,7 @@ do
              # force dmenu focus (continue within do loop doesn't guarantee focus)
              exec dmenu movies $1 ;;
 
-    *      ) movie=$(echo "$movie" | sed "s/ $SEP$//")
+    *      ) movie=$(echo "$movie" | sed "s/^$SEP //")
              while :
              do
                action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break

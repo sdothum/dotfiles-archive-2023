@@ -4,7 +4,7 @@
 # see bundle_install
 
 = astronomy
-# ▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔
 # celestia                      [server]
 # google-earth                  [server]
 # kdeedu-kstars                 [server]
@@ -17,7 +17,7 @@
 
 
 = dictionaries
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   aiksaurus
 # artha
   aspell
@@ -33,8 +33,14 @@ m dict-moby-thesaurus
 # hunspell-en-ca
 
 
+= ebooks
+= ▔▔▔▔▔▔
+  calibre                       [server]
+  kindlegen
+
+
 = editors
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # focuswriter
 # markdown
 # nvpy-git
@@ -49,7 +55,7 @@ m dict-moby-thesaurus
 
 
 = fonts
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   fontforge                     [server]
   nodejs                        [server]
   npm                           [server]
@@ -59,19 +65,19 @@ m dict-moby-thesaurus
 
 
 = games
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   lsb-release                   [server]
   steam                         [server]
 
 
 = keyboard
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
   plover
 + qwertickle
 
 
 = music
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   beets
 # cli-visualizer
   deadbeef                      [server]
@@ -81,7 +87,7 @@ m dict-moby-thesaurus
 
 
 = photography
-# ▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔
   darktable
 # dcraw                         [server]
   digikam                       [server]
@@ -99,7 +105,7 @@ m dict-moby-thesaurus
 
 
 = ripping
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # abcde                         [server]
   asunder                       [server]
   audacity                      [server]
@@ -113,7 +119,7 @@ m dict-moby-thesaurus
 
 
 = media server/player
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # gcstar                        [server]
   kodi
 # minidlna                      [server]
@@ -123,7 +129,7 @@ m dict-moby-thesaurus
 
 
 = productivity
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   abiword
   amphetype-svn
   calc
@@ -134,7 +140,7 @@ m dict-moby-thesaurus
 # kdeedu-ktouch                 [server]
 # klavaro
   remind
-# sc-im
+  sc-im
   simpletimer-git
   speedcrunch
 # todotxt
@@ -144,14 +150,14 @@ m dict-moby-thesaurus
 
 
 = radio
-# ▔▔▔▔▔
+= ▔▔▔▔▔
 # "pyradio requires module pkg_resources"
 # pyradio-git
 # radiotray
 
 
 = video
-# ▔▔▔▔▔
+= ▔▔▔▔▔
 # coriander                     [server]
   gnome-mpv
 # livestreamer-curses
@@ -167,9 +173,8 @@ m dict-moby-thesaurus
 
 
 = viewers
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # acroread                      [server]
-# calibre                       [server]
 # coolreader
   epdfview                      [server]
 # evince

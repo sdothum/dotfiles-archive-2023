@@ -4,7 +4,7 @@
 # see bundle_install
 
 = file
-# ▔▔▔▔
+= ▔▔▔▔
   ack
 # etc-update
 # gamin
@@ -16,7 +16,7 @@
 
 
 = file compression
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # par2unrar
   file-roller
   p7zip
@@ -26,7 +26,7 @@
 
 
 = disk utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   convmv
 # gnome-disk-utility
   gparted
@@ -36,7 +36,7 @@
 
 
 = file managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # ffmpegthumbnailer
 # filelight
   ncdu
@@ -50,7 +50,7 @@
 
 
 = file systems
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
   exfat-utils
   fuse-common
@@ -64,7 +64,7 @@
 
 
 = info screens
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
 # fetch-git
   figlet
   fortune-mod
@@ -76,7 +76,7 @@
 
 
 = ripping
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
   audex               [server]
 # asunder             [server]
   cdrdao              [server]
@@ -93,7 +93,7 @@
 
 
 = shell tools
-# ▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔
 # ansi-color
 # autojump
 # bash-completion
@@ -104,7 +104,7 @@
   fzf
 # prezto-git
   pv
-# ripgrep
+  ripgrep
   the_silver_searcher
 # zsh-doc
 # zsh-autosuggestions
@@ -113,7 +113,7 @@
 
 
 = system monitor
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   glances
   gsmartcontrol
   htop
@@ -124,14 +124,16 @@
 
 
 = test
-# ▔▔▔▔
+= ▔▔▔▔
 # bonnie++
 # memtester
 # mprime-bin          [server]
 
 
 = terminals
-# ▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔
+# alacritty-git
+# kitty
 # putty
 # roxterm
 # rxvt-unicode
@@ -144,7 +146,7 @@
 
 
 = terminal multiplexors
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # byobu
 # screen
   tmux

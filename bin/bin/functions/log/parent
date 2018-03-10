@@ -18,6 +18,6 @@ parent() {
                 echo "                  $proc" | sed -r 's/.*(..................)$/\1/'
 }
 
-echo "  $(parent) -> $CHILD" >>$TRACE
+echo "$(date "+%M'%S")  $(parent) -> $CHILD" >>$TRACE
 
 # vim: set ft=sh: #

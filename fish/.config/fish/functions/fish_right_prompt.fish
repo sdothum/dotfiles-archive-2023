@@ -3,11 +3,14 @@ function fish_right_prompt --description 'Write out the right prompt'
   set -g POSTFIX 0
 
   if test $TERM = "linux"
-    set -g GREY   'red'
-    set -g YELLOW 'green'
+    set -g GREY     'red'
+    set -g YELLOW   'green'
   else
-    set -g GREY   '666'
-    set -g YELLOW 'FC3'
+    # set -g GREY   '666'
+    # set -g YELLOW 'FC3'
+    # quantum colour palette
+    set -g GREY     'aebbc5'
+    set -g YELLOW   'd5b875'
   end
 
   function glyph

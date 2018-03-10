@@ -60,10 +60,11 @@ heading "root setup"
   sudo mkdir -pv /root/log
   passphrase uid/gmail | sudo tee /root/.forward
   original /root/.config
-  ln -sf $USER/.config /root/
-  ln -sf $USER/.fonts /root/
+  sudo ln -sf $HOME/bin /root/
+  sudo ln -sf $HOME/.config /root/
+  sudo ln -sf $HOME/.fonts /root/
   original /root/.bashrc
-  ln -sf $USER/.bashrc /root/
+  sudo ln -sf $HOME/.bashrc /root/
 fi
 
 

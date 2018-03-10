@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .............................................................. Perl strip curl
+
+usage() {
+  echo "usage: $(basename $0) <url>"
+  exit 1
+}
+
+[ $1 ] && curl --silent -L $@ | perl -0777 -MHTML::Strip -nlE 'say HTML::Strip->new->parse($_)' 2>/dev/null || usage
+
+# vim: set ft=sh: #

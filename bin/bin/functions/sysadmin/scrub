@@ -11,6 +11,8 @@ usage() {
   exit 1
 }
 
+interval=15
+
 # butterfs maintenance
 volume() {
   case $@ in
@@ -30,7 +32,7 @@ show() {
     trace "$@"
     sudo btrfs scrub status $V
     p scrub | grep -q "btrfs scrub start -Bd $V" || break
-    sleep 60
+    sleep $interval
   done
   [ $in_progress ] || press-enter
 }

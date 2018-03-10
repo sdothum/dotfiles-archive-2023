@@ -1,5 +1,5 @@
 " =============================================================================
-" Filename: autoload/lightline/colorscheme/mysolarized.vim
+" Filename: autoload/lightline/colorscheme/solarized_dark.vim
 " Author: itchyny
 " License: MIT License
 " Last Change: 2017/11/25 11:13:46.
@@ -25,16 +25,31 @@ let s:cuicolors = {
       \ }
 
 " The following condition only applies for the console and is the same
-" condition vim-colors-mysolarized uses to determine which set of colors
+" condition vim-colors-solarized_dark uses to determine which set of colors
 " to use.
-let s:mysolarized_termcolors = get(g:, 'mysolarized_termcolors', 256)
-if s:mysolarized_termcolors != 256 && &t_Co >= 16
+let s:solarized_dark_termcolors = get(g:, 'solarized_dark_termcolors', 256)
+if s:solarized_dark_termcolors != 256 && &t_Co >= 16
   let s:cuiindex = 0
-elseif s:mysolarized_termcolors == 256
+elseif s:solarized_dark_termcolors == 256
   let s:cuiindex = 1
 else
   let s:cuiindex = 2
 endif
+
+" quantum colour palette (dark)
+" let s:gray1  = '#263238'
+" let s:gray2  = '#2c3a41'
+" let s:gray3  = '#425762'
+" let s:gray4  = '#658494'
+" let s:gray5  = '#aebbc5'
+" let s:red    = '#dd7186'
+" let s:green  = '#87bb7c'
+" let s:yellow = '#d5b875'
+" let s:blue   = '#70ace5'
+" let s:purple = '#a48add'
+" let s:cyan   = '#69c5ce'
+" let s:orange = '#d7956e'
+" let s:indigo = '#7681de'
 
 let s:base03 = [ '#002b36', s:cuicolors.base03[s:cuiindex] ]
 let s:base02 = [ '#073642', s:cuicolors.base02[s:cuiindex] ]
@@ -53,6 +68,15 @@ let s:blue = [ '#268bd2', s:cuicolors.blue[s:cuiindex] ]
 let s:cyan = [ '#2aa198', s:cuicolors.cyan[s:cuiindex] ]
 let s:green = [ '#859900', s:cuicolors.green[s:cuiindex] ]
 
+" quantum dark themed
+let s:base02 = [ '#2c3a41', s:cuicolors.base02[s:cuiindex] ]
+let s:blue = [ '#70ace5', s:cuicolors.blue[s:cuiindex] ]
+let s:green = [ '#87bb7c', s:cuicolors.green[s:cuiindex] ]
+let s:magenta = [ '#7681de', s:cuicolors.magenta[s:cuiindex] ]
+let s:orange = [ '#d7956e', s:cuicolors.orange[s:cuiindex] ]
+let s:red = [ '#dd7186', s:cuicolors.red[s:cuiindex] ]
+let s:yellow = [ '#d5b875', s:cuicolors.yellow[s:cuiindex] ]
+
 if lightline#colorscheme#background() ==# 'light'
   let [ s:base03, s:base3 ] = [ s:base3, s:base03 ]
   let [ s:base02, s:base2 ] = [ s:base2, s:base02 ]
@@ -65,9 +89,9 @@ let s:p.normal.left = [ [ s:base03, s:blue ], [ s:base03, s:base1 ], [ s:base03,
 let s:p.normal.right = [ [ s:base03, s:base1 ], [ s:base03, s:base00 ] ]
 let s:p.inactive.right = [ [ s:base03, s:base00 ], [ s:base0, s:base02 ] ]
 let s:p.inactive.left =  [ [ s:base0, s:base02 ], [ s:base0, s:base02 ] ]
-let s:p.insert.left = [ [ s:base03, s:magenta ], [ s:base03, s:base1 ], [ s:base03, s:base00 ], [ s:magenta, s:base02 ] ]
+let s:p.insert.left = [ [ s:base03, s:orange ], [ s:base03, s:base1 ], [ s:base03, s:base00 ], [ s:magenta, s:base02 ] ]
 let s:p.replace.left = [ [ s:base03, s:red ], [ s:base03, s:base1 ], [ s:base03, s:base00 ], [ s:red, s:base02 ] ]
-let s:p.visual.left = [ [ s:base03, s:green ], [ s:base03, s:base1 ], [ s:base03, s:base00 ], [ s:green, s:base02 ] ]
+let s:p.visual.left = [ [ s:base03, s:yellow ], [ s:base03, s:base1 ], [ s:base03, s:base00 ], [ s:green, s:base02 ] ]
 let s:p.normal.middle = [ [ s:base1, s:base02 ] ]
 let s:p.inactive.middle = [ [ s:base01, s:base02 ] ]
 let s:p.tabline.left = [ [ s:base03, s:base00 ] ]
@@ -77,4 +101,4 @@ let s:p.tabline.right = copy(s:p.normal.right)
 let s:p.normal.error = [ [ s:base03, s:red ] ]
 let s:p.normal.warning = [ [ s:base03, s:yellow ] ]
 
-let g:lightline#colorscheme#mysolarized#palette = lightline#colorscheme#flatten(s:p)
+let g:lightline#colorscheme#solarized_dark#palette = lightline#colorscheme#flatten(s:p)

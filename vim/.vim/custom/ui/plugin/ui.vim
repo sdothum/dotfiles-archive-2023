@@ -23,53 +23,43 @@
       autocmd ui InsertEnter * execute 'highlight LineNr guifg=' . g:dfm_linenr_ins
       autocmd ui InsertLeave * execute 'highlight LineNr guifg=' . g:dfm_linenr_cmd
 
-    " Contrast ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " UI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................................................ Switch colour
+    " .............................................................. Switch mode
 
-      nmap <silent><F7>   :call ui#LiteSwitch()<CR>
-      nmap <silent><C-F7> :call ui#LiteFix()<CR>
-
-      autocmd ui BufEnter * call ui#LiteFix()
-
-  " Font ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .............................................................. Switch font
-
-      nmap <silent><S-F7> :call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
-
-      " also called from dmenu compose script
-      autocmd ui BufEnter * call ui#FontSize(Prose() ? 1 : 0)
-
-  " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ........................................................... Screen display
-
-      function! Refresh()
-        if Prose()
-          let lstatus     = &laststatus
-          call ui#Theme()
-          let &laststatus = lstatus
-        else
-          call ui#CodeView()
-        endif
-        call ui#Cursor()                       " restore cursor (fullscreen toggling reverts defaults)
-      endfunction
-
-      imap <silent><F9> <C-o>:call Refresh()<CR>
-      nmap <silent><F9> :call Refresh()<CR>
+      nmap <silent><F7>   :call ui#SwitchView()<CR>
+      imap <silent><F7>   <C-o>:call ui#SwitchView()<CR>
+      vmap <silent><F7>   <C-o>:call ui#SwitchView()<CR>
 
       " intial view mode: source code or prose
       autocmd ui BufEnter * call ui#LiteType()
-      autocmd ui VimEnter * call ui#LiteType()
-
-  " Enhanced statusline ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................ Toggle statusline
 
       " toggle lightline/default vim statusline
-      imap <silent><F8> <C-o>:call ui#ToggleInfo()<CR>
-      nmap <silent><F8> :call ui#ToggleInfo()<CR>
+      nmap <silent><S-F7> :call ui#ToggleInfo()<CR>
+      imap <silent><S-F7> <C-o>:call ui#ToggleInfo()<CR>
+      vmap <silent><S-F7> <C-o>:call ui#ToggleInfo()<CR>
+
+  " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................ Switch colour
+
+      nmap <silent><F8>   :call ui#LiteSwitch()<CR>
+      imap <silent><F8>   <C-o>:call ui#LiteSwitch()<CR>
+      vmap <silent><F8>   <C-o>:call ui#LiteSwitch()<CR>
+
+    " ......................................................... Switch font size
+
+      nmap <silent><S-F9> :call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
+      imap <silent><S-F9> <C-o>:call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
+      vmap <silent><S-F9> <C-o>:call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
+
+    " ................................................................... Redraw
+
+      nmap <silent><F9>   :call ui#Retheme()<CR>
+      imap <silent><F9>   <C-o>:call ui#Retheme()<CR>
+      vmap <silent><F9>   <C-o>:call ui#Retheme()<CR>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

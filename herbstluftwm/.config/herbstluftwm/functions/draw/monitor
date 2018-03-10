@@ -69,7 +69,9 @@ margin=$(( $desktop_margin - $window_frame ))
 # frame and window gap changes will skew the left margin along the X axis
 [ $RICE ] && marginX=$(( $margin * $RICE )) ||
              marginX=$margin
-conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
+# conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
+# latest xorg messed alignment option, now using gap X origin offset
+conkyX=$(( $CONKY_WIDTH + $CONKY_OUTER + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then

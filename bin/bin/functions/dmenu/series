@@ -58,7 +58,7 @@ do
 
   case $show in
     "$NAME") unset T; continue ;;
-    "$DATE") T=t; continue ;;
+    "$DATE") T=t;     continue ;;
 
     "$EDIT") pkill -TERM 'ROX-Filer'
              rox $library
@@ -76,11 +76,11 @@ do
     # focus monitor menu originally presented on
     [ $monitor ] && herbstclient focus_monitor $monitor
     # highlight most current episode viewed
-    [ $episode ] || episode=$(shows | grep " $SEP$" | tail -1)
+    [ $episode ] || episode=$(shows | grep "^$SEP " | tail -1)
     episode=$(shows | rmenu "$show" $episode -no-custom) || break
     [ "$episode" ] || break
 
-    episode=$(echo "$episode" | sed "s/ $SEP$//")
+    episode=$(echo "$episode" | sed "s/^$SEP //")
     video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify 3 critical "$show" "Duplicate episodes found"

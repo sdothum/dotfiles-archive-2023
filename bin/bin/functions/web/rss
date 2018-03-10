@@ -27,7 +27,7 @@ case $1 in
         p newsbeuter
       fi ;;
 
-  I*) sudo rm $HOME/.newsbeuter/cache.db 2>/dev/null
+  I*) rm -f $HOME/.newsbeuter/cache.db
       rss ;;
 
   i*) if ! pstat newsbeuter ;then

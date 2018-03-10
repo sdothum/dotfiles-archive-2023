@@ -17,7 +17,7 @@ post_install $1
 
 # cleanup package directory for subsequent arch rebuilds
 sudo find $HOME/build/archlinux/makepkg -user root -exec sudo chown -c $USER:users {} \;
-sudo rm -rv $HOME/build/archlinux/makepkg/$1/pkg 2>/dev/null
-sudo rm -rv $HOME/build/archlinux/makepkg/$1/src 2>/dev/null
+sudo rm -frv $HOME/build/archlinux/makepkg/$1/pkg
+sudo rm -frv $HOME/build/archlinux/makepkg/$1/src
 
 # vim: set ft=sh: #

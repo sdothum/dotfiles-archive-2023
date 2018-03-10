@@ -5,6 +5,27 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ............................................................... Redraw gui
+
+      let s:delay = '100m'                  " redraw delay, see ui#FontSize()
+
+      " toggle in/out to fill window
+      function! core#RedrawGui()
+        execute 'sleep ' . s:delay
+        call core#ToggleGui()
+        call core#ToggleGui()
+      endfunction
+
+    " .............................................................. Reload vim
+
+      function! core#Vimrc()
+        " after editing vim configs
+        execute 'wall'
+        autocmd!
+        source $MYVIMRC
+        call ui#Retheme()
+      endfunction
+
     " ............................................................. Numeric sort
 
       " sort compare by numeric (not string) value
@@ -12,16 +33,41 @@
         return a:i1 - a:i2
       endfunction
 
+      function! core#SortNumbers(nums)
+        return sort(a:nums, 'core#CompareNumber')
+      endfunction
+
     " ............................................................... Print file
 
-      " a la vimb
+      " latex printing
       function! core#Hardcopy()
-        if Markdown()
+        if core#Markdown()
           execute '!hardcopy wiki \"' . expand('%:t') . '\"'
         elseif expand('%:p') =~ 'Patricia'
           execute '!hardcopy wps' expand('%:t')
         else
           execute '!hardcopy code' expand('%:t')
+        endif
+      endfunction
+
+    " ....................................................... Error message trap
+
+      " ignore 1st time error messages from plugins (uninitialized s:variables)
+      function! core#Quietly(command)
+        try
+          execute a:command
+        catch /.*/
+          " discard messages, do nothing
+        endtry
+      endfunction
+
+    " .............................................................. Debug trace
+
+      function! core#Trace(msg)
+        if $VIMTRACE > ''
+          " escape problematic shell commandline characters
+          silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log'
+          " sleep 1000m
         endif
       endfunction
 
@@ -33,14 +79,11 @@
       "       e.g. "h" becomes "m", "f" becomes "t" etc.
       "       see thedarnedestthing.com
 
+      " hjkl mapping (0) hjkl (1) mnle
+      let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
+
       function! core#Colemak()
-        if s:mnle == 0
-          " map home row (cluster) cursor movement
-          nnoremap k     gk
-          vnoremap k     gk
-          nnoremap j     gj
-          vnoremap j     gj
-        else
+        if s:mnle != 0
           " map home row (cluster) cursor movement
           nnoremap u     gk
           vnoremap u     gk
@@ -77,12 +120,36 @@
 
   " GUI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ............................... Gvim Options (make it look like terminal!)
+
+      " toggle gui menu
+      function! core#ToggleGui()
+        if &guioptions =~# 'T'
+          set guioptions-=T
+          set guioptions-=m
+        else
+          set guioptions+=T
+          set guioptions+=m
+        endif
+      endfunction
+
+    " ................................................................. No tilde
+
+      function! core#NoTilde()
+        call core#Trace('core#NoTilde()')
+        " hide tilde marker (not applicable to console)
+        if $DISPLAY > ''
+          execute 'highlight EndOfBuffer guifg=' . g:dfm_bg
+          " reset menu highlight after loading autocompletion plugin
+          highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
+          " match command line tab menu
+          highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
+        endif
+      endfunction
+
     " ........................................................... Column margins
 
-      " hjkl mapping (0) hjkl (1) mnle
-      let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
-
-      " see IndentTheme() settings.vim
+      " see ui#IndentTheme()
       augroup column
         autocmd!
       augroup END
@@ -93,16 +160,14 @@
           let g:ruler      = 1
           let &colorcolumn = col('.')
           autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
+        elseif g:ruler == 1
+          let g:ruler      = 2
+          autocmd! column
         else
-          if g:ruler == 1
-            let g:ruler = 2
-            autocmd! column
-          else
-            let g:ruler      = 0
-            let &colorcolumn = 0
-          endif
+          let g:ruler      = 0
+          let &colorcolumn = 0
         endif
-        call IndentTheme()
+        call ui#IndentTheme()
       endfunction
 
     " ............................................................. Line numbers
@@ -111,13 +176,11 @@
       function! core#ToggleNumber()
         if (&relativenumber == 1 && &number == 1)
           set norelativenumber
+        elseif (&relativenumber == 0 && &number == 1)
+          set nonumber
         else
-          if (&relativenumber == 0 && &number == 1)
-            set nonumber
-          else
-            set relativenumber
-            set number
-          endif
+          set relativenumber
+          set number
         endif
       endfunction
 
@@ -142,7 +205,7 @@
       function! core#ToggleSpaces()
         set list!
         if &list == 0
-          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :-)
+          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :)
           call matchdelete(s:soft)
           unlet s:soft
           autocmd! soft
@@ -157,7 +220,17 @@
         endif
       endfunction
 
+      function! core#MatchSpace()
+        return g:matchspace
+      endfunction
+
   " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................. Buffer count
+
+      function! core#BufCount()
+        return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+      endfunction
 
     " ................................................................ Line wrap
 
@@ -172,6 +245,33 @@
           echo 'Automatic line wrap ON'
         else
           set formatoptions
+        endif
+      endfunction
+
+    " ......................................................... Strip whitespace
+
+      " see https://dougblack.io/words/a-good-vimrc.html
+      " strips trailing whitespace from all lines
+      function! core#StripTrailingWhitespaces()
+        if &modifiable == 1 && ! core#Markdown()
+          " save last search & cursor position
+          let l:_s = @/
+          let l:l  = line(".")
+          let l:c  = col(".")
+          %s/\s\+$//e
+          let @/ = l:_s
+          call cursor(l:l, l:c)
+        endif
+      endfunction
+
+  " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................. Toggle spell
+
+      function! core#ToggleSpell()
+        execute 'let &spell=' . (&spell == 0 ? 1 : 0)
+        if PencilMode() != ''
+          execute &spell == 0 ? 'NoPencil' : 'Pencil'
         endif
       endfunction
 
@@ -277,6 +377,29 @@
 
   " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ......................................................... Prose filestypes
+
+      " distraction free filetyes
+      function! core#Prose()
+        return &filetype =~ 'vimwiki\|wiki\|mail\|markdown\|draft\|note'
+      endfunction
+
+      function! core#Markdown()
+        return &filetype =~ 'vimwiki\|wiki\|markdown'
+      endfunction
+
+    " ................................................................... Tagbar
+
+      function! core#Tagbar()
+        return &filetype == 'tagbar'
+      endfunction
+
+    " ................................................................ Protected
+
+      function! core#Protected()
+        return &filetype == 'help' || mode() == 't'
+      endfunction
+
     " ............................................................... Modifiable
 
       " [regex name, filetype, modifiable, wordcount] rule tuple
@@ -287,9 +410,11 @@
           \[
           \  ['conf$',          'conf',     1, 0]
           \, ['config$',        'conf',     1, 0]
+          \, ['draft$',         'markdown', 1, 1]
           \, ['eml$',           'mail',     1, 1]
           \, ['error$',         'log',      0, 0]
           \, ['log$',           'log',      0, 0]
+          \, ['note$',          'markdown', 1, 1]
           \, ['rc$',            'rc',       1, 0]
           \, ['txt$',           'text',     0, 1]
           \, ['wiki$',          'markdown', 1, 1]
@@ -335,7 +460,7 @@
       function! core#ComposeMail()
         " email has blank lines inserted externally (via sed) for replys to
         " avoid the previously messy and unpredictable editing mode vim commands
-        " see bin/dcompose
+        " see dmenu compose
         call ui#FontSize(1)
         " gg/.. cannot be combined into single expression (produces unpredictable results)
         execute 'normal! gg'

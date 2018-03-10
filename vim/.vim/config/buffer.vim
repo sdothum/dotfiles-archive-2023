@@ -21,22 +21,24 @@
 
       " nmap <leader>f :set filetype=
 
-      autocmd buffer Filetype conf     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype draft    setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
-      autocmd buffer Filetype fish     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype haskell  setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype lua      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype mail     setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
-      autocmd buffer Filetype markdown setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd buffer Filetype python   setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
-      autocmd buffer Filetype ruby     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype shell    setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype sh       setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype slim     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype snippet  setlocal nospell noexpandtab tabstop=2 shiftwidth=2
-      autocmd buffer Filetype vim      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype conf      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype draft     setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
+      autocmd buffer Filetype fish      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype haskell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype lua       setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype mail      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
+      autocmd buffer Filetype markdown  setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      autocmd buffer Filetype note      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+      autocmd buffer Filetype python    setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
+      autocmd buffer Filetype ruby      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype shell     setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype sh        setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype slim      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+      autocmd buffer Filetype snippet   setlocal nospell noexpandtab tabstop=2 shiftwidth=2
+      autocmd buffer Filetype vim       setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
-      autocmd buffer BufWinEnter *.vim set filetype=vim
+      autocmd buffer BufWinEnter *.vim  set filetype=vim
+      autocmd buffer BufWinEnter *.wiki set filetype=markdown
 
     " ............................................................... Modifiable
 
@@ -50,19 +52,18 @@
 
     " .............................................................. Config file
 
-      nmap <silent><leader>..         :autocmd!<CR>:source $MYVIMRC<CR>:call Refresh()<CR>
-      nmap <silent><leader><leader>.. :edit $MYVIMRC<CR>
+      " when updates won't break the current vim session!
+      command! Vimrc call core#Vimrc()
 
-      " load .vimrc after save
-      " autocmd! buffer BufWritePost $MYVIMRC nested source $MYVIMRC | call Refresh()
-      " autocmd! buffer BufWritePost * nested        if expand('%:e') =~ 'vim' | source $MYVIMRC | call Refresh() | endif
+      " autocmd! buffer BufWritePost * nested if expand('%:e') =~ 'vim' | call core#Vimrc() | endif
 
     " .............................................................. Buffer open
 
       " check file sensitivity, even though may be sudoed
       " autocmd buffer BufRead   * if expand('%:p') !~ $HOME | set nomodifiable | endif
       " vim8 bug doesn't allow toggling &modifiable so set modifiable on globally
-      autocmd buffer BufWinEnter * if &filetype != 'help' | set modifiable | endif
+      " mode check for fzf terminal window
+      autocmd buffer BufWinEnter * if !core#Protected() | set modifiable | endif
       " always switch to the current file directory, unless uri
       autocmd buffer BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
       " return to last edit position when opening files (You want this!)
@@ -77,14 +78,13 @@
       " sudo save
       nmap <leader>W          :silent write !sudo tee % >/dev/null<CR>
       " (write and) close buffers
-      nmap <silent><leader>zz :silent wqall!<CR>
-      nmap <silent><leader>xx :silent wqall!<CR>
+      nmap <silent><leader>ww :silent wqall!<CR>
       nmap <silent><leader>qq :silent qall!<CR>
 
       " pre-write formatting
-      autocmd buffer BufLeave    * call StripTrailingWhitespaces()
-      autocmd buffer BufWritePre * call StripTrailingWhitespaces()
-      autocmd buffer FocusLost   * call StripTrailingWhitespaces()
+      autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
+      autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
+      autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
       " save on losing focus
       autocmd buffer FocusLost   * silent! :wall
 
@@ -95,51 +95,57 @@
       " " query current buffer
       " nmap <leader>B          :echo expand('%:p')<CR>
 
-      " silence vim's default (command line) file info message, note silent..silent
-      vmap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
-      imap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
-      nmap <silent><S-PageUp>   :silent bprevious<CR>
-      vmap <silent><S-PageDown> <ESC>:silent bnext<CR>
-      imap <silent><S-PageDown> <ESC>:silent bnext<CR>
-      nmap <silent><S-PageDown> :silent bnext<CR>
+      " " silence vim's default (command line) file info message, note silent..silent
+      " vmap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
+      " imap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
+      " nmap <silent><S-PageUp>   :silent bprevious<CR>
+      " vmap <silent><S-PageDown> <ESC>:silent bnext<CR>
+      " imap <silent><S-PageDown> <ESC>:silent bnext<CR>
+      " nmap <silent><S-PageDown> :silent bnext<CR>
+
+      " planck keyboard specific buffer navigation key assignments
+      " nmap <silent>-            :silent bprevious<CR>
+      " nmap <silent>+            :silent bnext<CR>
+      nmap <silent><Delete>       :silent bprevious<CR>
+      nmap <silent>_              :silent bnext<CR>
       " switch to previously edited/viewed buffer
-      vmap <silent><C-BS>       <ESC>:silent e #<CR>
-      imap <silent><C-BS>       <ESC>:silent e #<CR>
-      nmap <silent><C-BS>       :silent e #<CR>
+      nmap <silent><BS>           :silent e #<CR>
 
   " Window actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .......................................................... Window handling
 
       " kill (close) current window
-      nmap <leader>q   <C-w>q
+      noremap <leader>q  <C-w>q
       " close all other windows
-      nmap <leader>Q   <C-w>o
+      noremap <leader>Q  <C-w>o
 
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      nmap <leader>S   <C-w>v<C-w>l
-      nmap <leader>s   <C-w>s<C-w>l
+      noremap <leader>Z  <C-w>v<C-w>l
+      noremap <leader>z  <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      nmap <leader>Z   <C-w><Bar>
-      nmap <leader>z   <C-w>_
-      " adjust viewports to the same size
-      nmap <leader>=   <C-w>=
+      noremap <leader>ZZ <C-w><Bar>
+      noremap <leader>zz <C-w>_
+      " adjust all splits to the same size
+      noremap <leader>=  <C-w>=
 
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
       " switch to left / right split
-      " nmap <C-m>     <C-w>h
-      " nmap <C-e>     <C-w>l
-      nmap <C-S-Left>  <C-w>h
-      nmap <C-S-Right> <C-w>l
+      " noremap <C-m>    <C-w>h
+      " noremap <C-e>    <C-w>l
+      noremap <C-Left>   <C-w>h
+      noremap <C-Right>  <C-w>l
       " switch to top / bottom split
-      " nmap <C-l>     <C-w>k
-      " nmap <C-n>     <C-w>j
-      nmap <C-S-Up>    <C-w>k
-      nmap <C-S-Down>  <C-w>j
+      " noremap <C-l>    <C-w>k
+      " noremap <C-n>    <C-w>j
+      noremap <C-Up>     <C-w>k
+      noremap <C-Down>   <C-w>j
+      " switch windows
+      noremap <C-w>      <C-w><C-w>
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -153,9 +159,9 @@
       set foldnestmax=3                     " deepest fold is 3 levels
 
       " toggle fold tag / open all
-      noremap         <leader>z za
-      noremap         <leader>Z zA
-      noremap <leader><leader>z zR
+      " noremap         <leader>z za
+      " noremap         <leader>Z zA
+      " noremap <leader><leader>z zR
 
     " ........................................................... Folding levels
 

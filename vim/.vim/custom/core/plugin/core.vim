@@ -14,118 +14,60 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:matchspace = ''                 " see ToggleSpaces() gui.vim
+      let g:matchspace = ''                 " statusline indicator, see core#ToggleSpaces()
       let g:ruler      = 0                  " colorcolumn mode
 
       augroup core
         autocmd!
       augroup END
 
-    " ....................................................... Error message trap
-
-      " ignore 1st time error messages from plugins (uninitialized s:variables)
-      function! Quietly(command)
-        try
-          execute a:command
-        catch /.*/
-          " discard messages, do nothing
-        endtry
-      endfunction
-
-    " ............................................................. Numeric sort
-
-      function! SortNumbers(nums)
-        return sort(a:nums, 'core#CompareNumber')
-      endfunction
-
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................ Open terminal
 
       " open shell session in buffer directory
-      nmap <silent><leader>te :silent call system('term "vimterm" STACK')<CR>
+      command! Term silent call system('term "vimterm" STACK')
 
     " ............................................................... Print file
 
-      nmap <silent><leader>ha :silent call core#Hardcopy()<CR>:echo 'Printing..'<CR>
+      command! Hardcopy silent call core#Hardcopy()<CR>:echo 'Printing..'
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh
 
       " environment variable
-      if $COLEMAK == 'true'
+      if $COLEMAK > ''
         call core#Colemak()
       endif
 
   " GUI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................... Gvim Options (make it look like terminal!)
+    " .................................................... Gvim menu and toolbar
 
-      " toggle gui menu
-      function! ToggleGui()
-        if &guioptions =~# 'T'
-          set guioptions-=T
-          set guioptions-=m
-        else
-          set guioptions+=T
-          set guioptions+=m
-        endif
-      endfunction
+      if $DISPLAY > ''
+        autocmd core VimEnter * call core#RedrawGui()
+      endif
 
-      function! RefreshGui()
-        call ToggleGui()
-        call ToggleGui()
-      endfunction
+      nnoremap <silent><F12>       :call core#ToggleGui()<CR>
+      inoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR>
+      vnoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR>
 
-      " Toggle Menu and Toolbar
-      nnoremap <silent><F12>       :call ToggleGui()<CR>
-      inoremap <silent><F12>       <C-o>:call ToggleGui()<CR>
-
-    " ........................................................... Column margins
+    " .................................................. Column and line numbers
 
       nmap <silent><Bar>           :call core#ToggleColumn()<CR>
-      nmap <silent><leader><Bar>   :IndentGuidesToggle<CR>:call IndentTheme()<CR>
-
-    " ............................................................. Line numbers
-
+      nmap <silent><leader><Bar>   :IndentGuidesToggle<CR>
       nmap <silent>#               :call core#ToggleNumber()<CR>
 
     " ...................................................... White space markers
-
-      function! MatchSpace()
-        return g:matchspace
-      endfunction
 
       nmap <silent><leader><Space> :call core#ToggleSpaces()<CR>
 
   " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................................................. Buffer count
-
-      function! BufCount()
-        return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-      endfunction
-
     " ................................................................ Line wrap
 
       nmap <silent><leader><CR> :call core#ToggleWrap()<CR>
-
-    " ......................................................... Strip whitespace
-
-      " see https://dougblack.io/words/a-good-vimrc.html
-      " strips trailing whitespace from all lines
-      function! StripTrailingWhitespaces()
-        if &modifiable == 1 && ! Markdown()
-          " save last search & cursor position
-          let l:_s = @/
-          let l:l  = line(".")
-          let l:c  = col(".")
-          %s/\s\+$//e
-          let @/ = l:_s
-          call cursor(l:l, l:c)
-        endif
-      endfunction
 
   " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -156,17 +98,6 @@
       vmap     <silent><leader>`  :call core#CodeBlock()<CR>
 
   " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ......................................................... Prose filestypes
-
-      " distraction free filetyes
-      function! Prose()
-        return &filetype =~ 'vimwiki\|wiki\|mail\|markdown\|draft'
-      endfunction
-
-      function! Markdown()
-        return &filetype =~ 'vimwiki\|wiki\|markdown'
-      endfunction
 
     " ............................................................... Modifiable
 

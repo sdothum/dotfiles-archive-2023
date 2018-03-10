@@ -73,7 +73,7 @@ history() {
   shift
   # terminal invocation?
   if [ -t 1 ] ;then
-    cmd=$($shell_history | cut -d' ' -f3- | fzf -q "$@")
+    cmd=$($shell_history | cut -d' ' -f3- | fZf -q "$@")
     hlwm && xdotool type --delay 0 "$cmd" ||
             echo "$cmd"
   elif [ $1 ] ;then

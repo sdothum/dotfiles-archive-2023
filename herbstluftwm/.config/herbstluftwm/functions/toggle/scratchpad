@@ -6,7 +6,7 @@
 
 # ............................................................ Toggle scratchpad
 
-name=Scratchpad
+name=scratchpad
 SCRATCHPAD=$HLWM:scratchpad
 # simple tabbed, tmux or byobu
 term=tmux
@@ -65,8 +65,9 @@ focus frame
 # cannot use layout options with term due to classname conflict (overwrites "Scratchpad")
 export TMUX=scratchpad
 case $term in
-  byobu | tmux) term $name FORTUNE $term 'new-session -n ""' ;;
-  *           ) term $name FORTUNE TABBED ;;
+  byobu) tmux_new FORTUNE ;;
+  tmux ) tmux_new FORTUNE ;;
+  *    ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$SCRATCHPAD

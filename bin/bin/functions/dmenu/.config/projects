@@ -88,8 +88,8 @@ thedarnedestthing web :: thedarnedestthing
 tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*.css
 tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/particle*.css
 uzbl :: $HOME/.config/uzbl/config
-vim :: $HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
-vim settings :: $HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim
+vim :: $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim') $HOME/.ctags
+vim settings :: $HOME/.vim/config/*.vim $HOME/.ctags
 vim functions :: $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
 vim snippets :: $HOME/.vim/snippets/*
 vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb/history $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css

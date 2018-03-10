@@ -47,12 +47,14 @@ while read action file package <&3
 do
   # echo "action=$action file=$file package=$package"
   case $action in
-    '#' | '') continue ;;
-    '='     ) title "$file $package"; continue ;;
-    '!'     ) ;;
+    '' |\
+    '#') continue ;;
 
-    *       ) package=$file
-              file=$action ;;
+    '=') title "$file $package"; continue ;;
+    '!') ;;
+
+    *  ) package=$file
+         file=$action ;;
   esac
 
   [ -e $file ] || continue

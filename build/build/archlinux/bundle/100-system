@@ -4,7 +4,7 @@
 # see bundle_install
 
 = codecs
-# ▔▔▔▔▔▔
+= ▔▔▔▔▔▔
 # gnash-common
   gst-libav
   gst-plugins-base
@@ -15,7 +15,7 @@
 
 
 = cups printing
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   cups
 # cups-filters
   cups-pdf
@@ -25,17 +25,19 @@
   ghostscript
   gsfonts
   gutenprint
-# hplip
+  hplip
 # python2-pyq5
 # splix
 # system-config-printer
 
 
 = fonts
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   adobe-base-14-fonts
+# ephifonts-no-helvetica
 m iosevka             [server]
 m iosevka\\ amphetype [server]
+m iosevka\\ proof     [server]
   noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git
@@ -60,13 +62,14 @@ m iosevka\\ amphetype [server]
 
 
 = font managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   font-manager
 # fontmatrix
+  fontmatrix-git
 
 
 = linux-ck kernel
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # linux-ck-atom             [cpu atom]
 # linux-ck-headers          [cpu atom]
 # linux-ck-haswell          [cpu i7]
@@ -75,7 +78,7 @@ m iosevka\\ amphetype [server]
 
 
 = hardware
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
   dmidecode
 # gpointing-device-settings [gpu macbook]
   hwinfo
@@ -87,7 +90,7 @@ m iosevka\\ amphetype [server]
 
 
 = package management
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   aurvote
   cower
 # cower-git
@@ -109,7 +112,7 @@ m iosevka\\ amphetype [server]
 
 
 = package rollback (btrfs)
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   grub-btrfs-git
   pacupg
 # snap-pac
@@ -117,7 +120,7 @@ m iosevka\\ amphetype [server]
 
 
 = power
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   acpi                      [laptop]
 # powertop                  [laptop]
 # "dead battery in macbook"
@@ -126,7 +129,7 @@ d * xfce4-power-manager
 
 
 = security
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
   gksu
   gnome-keyring
 # keepassx
@@ -137,7 +140,7 @@ d * pass
 
 
 = sound
-# ▔▔▔▔▔
+= ▔▔▔▔▔
 # alsa-firmware
   alsa-plugins
   lib32-alsa-plugins
@@ -158,7 +161,7 @@ d * pass
 
 
 = system utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # anacron
   cronie
 # dcron

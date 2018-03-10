@@ -122,7 +122,7 @@ if [ $display ] ;then
     trap "rm -f $stdin $stdout" EXIT
     sed "s/^/$indent/" >$stdin
     # escape movie title (year) parentheses
-    term "$(escape $title)" WAIT $window SHELL "cat $stdin | fzf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
+    term "$(escape $title)" WAIT $window SHELL "cat $stdin | fZf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(tail -1 $stdout)
     [ -n "$input" ]
   else
@@ -147,7 +147,7 @@ if [ $display ] ;then
                       $@ )
   fi
 else
-  input=$(sed "s/^/$indent/" | fzf $print --prompt="\"$prompt\"" | tail -1)
+  input=$(sed "s/^/$indent/" | fZf $print --prompt="\"$prompt\"" | tail -1)
   [ -n "$input" ]
 fi
 

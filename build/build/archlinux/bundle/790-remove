@@ -4,7 +4,7 @@
 # see bundle_install, to list packages see pi
 
 = filesystems
-# ▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔
 # - dmraid
 - jfsutils
 - lvm2
@@ -14,7 +14,7 @@
 
 
 = network
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # - gssproxy
 
 # vim: set ft=conf: #

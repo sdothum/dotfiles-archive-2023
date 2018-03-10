@@ -39,7 +39,7 @@ if server ;then
       count=$(( $count + 1 ))
       if [ $count -ge $timeout ] ;then
         notify critical "Weechat" "$timeout second ZNC server IRC timeout"
-        exit
+        exit 1
       fi
     done
 

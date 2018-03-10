@@ -4,7 +4,7 @@
 # see bundle_install
 
 = browsers
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
   chromium
 # dwb-git
 # dwb-gtk3
@@ -15,7 +15,7 @@
 # links
 # lispkit-browser
 # luakit
-# lynx
+  lynx
 # midorio
   qt5-webkit
   qutebrowser
@@ -28,7 +28,7 @@
 
 
 = browser addons
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # chromium-pepper-flash
   chromium-widevine
   flashplugin
@@ -42,7 +42,7 @@ m tabbed
 
 
 = chat/twitter
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   bitlbee
 # d * centerim5-git
 # finch
@@ -58,7 +58,7 @@ d * znc
 
 
 = file transfer
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # couchpotato-git   [server]
 # flexget
   gftp
@@ -78,12 +78,17 @@ d * znc
 
 
 = usenet mail
-# ▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔
 # slrn
 
 
+= utilities
+= ▔▔▔▔▔▔▔▔▔
+  perl-html-strip
+
+
 = web aggregators
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # newsbeuter
   php-gd
 # php-mcrypt
@@ -94,7 +99,7 @@ d * znc
 
 
 = web server
-# ▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔
   pixelserv         [! server]
 
 # vim: set ft=conf: #

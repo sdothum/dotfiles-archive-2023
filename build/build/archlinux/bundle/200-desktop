@@ -4,7 +4,7 @@
 # see bundle_install
 
 = appearance
-# ▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔
 # breeze-obsidian-cursor-theme
 # breeze-snow-cursor-theme
   compton
@@ -21,17 +21,18 @@
 
 
 = desktop
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # conky-lua
 d " enable mpd and nvidia as required
 d ? conky-lua-archers
+# d ? conky-lua-nv
 # lemonbar-git
   lemonbar-xft-git
 # trayer-srg-git
 
 
 = desktop utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # colorgrab
   colors-git
 # gpick
@@ -50,7 +51,7 @@ d ? conky-lua-archers
 
 
 = gtk themes and engines
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   adapta-gtk-theme
 # adapta-gtk-theme-deb
 # flatplat-theme
@@ -75,20 +76,20 @@ d ? conky-lua-archers
 
 
 = notification
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   dunst
   libnotify
 # xfce4-notifyd
 
 
 = screensavers
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   rss-glx
   xscreensaver
 
 
 = user interface
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   autocutsel
 # autokey-gtk
   autokey-py3
@@ -105,7 +106,7 @@ d ? conky-lua-archers
 
 
 = window managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # 2bwm
 # budgie-desktop-git
 # herbstluftwm
@@ -114,7 +115,7 @@ d ? conky-lua-archers
 
 
 = window properties
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # libwm-git
 # sprop-git
   sutils-git
@@ -127,7 +128,7 @@ d ? conky-lua-archers
 
 
 = bspwm
-# ▔▔▔▔▔
+= ▔▔▔▔▔
 # bspwm
 # bspwm-git
 # lua-posix
@@ -136,14 +137,14 @@ d ? conky-lua-archers
 
 
 = gnome
-# ▔▔▔▔▔
+= ▔▔▔▔▔
 # gnome-control-center
 # gnome-shell
 # gnome-tweak-tool
 
 
 = xmonad
-# ▔▔▔▔▔▔
+= ▔▔▔▔▔▔
 # dzen2
 # haskell-xmonad
 # haskell-xmonad-contrib
@@ -151,7 +152,7 @@ d ? conky-lua-archers
 
 
 = x11
-# ▔▔▔
+= ▔▔▔
   arandr               [server]
   lib32-libglvnd       [gpu nvidia]
   lib32-mesa-libgl     [laptop]

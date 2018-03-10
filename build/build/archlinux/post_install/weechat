@@ -87,14 +87,21 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set plugins.var.python.urlserver.http_url_prefix 'lambda'
 
 # theme
+# /set buffers.color.current_bg default
+# /set buffers.color.current_fg 226
+# /set buffers.color.default_fg 237
+# /set buffers.color.hotlist_message_fg 024
+# /set buffers.color.none_channel_fg 004
+/set buffers.color.current_bg default
+/set buffers.color.current_fg 114
+/set buffers.color.default_fg 059
+/set buffers.color.hotlist_message_fg 186
+/set buffers.color.none_channel_fg 023
+# /set buffers.look.indenting off
+/set buffers.look.indenting on
+/set buffers.look.show_number off
 /set buffers.look.name_crop_suffix '…'
 /set buffers.look.name_size_max 11
-/set buffers.color.current_bg default
-/set buffers.color.current_fg 226
-/set buffers.color.default_fg 237
-/set buffers.color.hotlist_message_fg 024
-/set buffers.color.none_channel_fg 004
-/set buffers.look.indenting off
 /set buffers.look.show_number off
 
 /set weechat.bar.buffers.items 'buffers'
@@ -111,13 +118,17 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set weechat.bar.vi_cmd.hidden on
 # /set weechat.bar.input.items '[input_prompt]+(away),[input_search],[input_paste],input_text'
 # '[..indicators..]' using '+' (instead of comma ',' which wraps with spaces)
-/set buffers.look.indenting on
-/set buffers.look.show_number off
 
-/set weechat.color.chat_time 142
-/set weechat.color.chat 032
-/set weechat.color.chat_inactive_window 240
-/set weechat.color.status_name cyan
+# /set weechat.color.chat_time 142
+# /set weechat.color.chat 032
+# /set weechat.color.chat_inactive_window 240
+# /set weechat.color.status_name cyan
+# /set weechat.color.chat_nick_self blue
+/set weechat.color.chat_time 180
+/set weechat.color.chat 140
+/set weechat.color.chat_inactive_window 059
+/set weechat.color.status_name 114
+/set weechat.color.chat_nick_self 074
 # /set weechat.color.chat_delimiters 238
 # /set weechat.color.chat_prefix_more 238
 # /set weechat.color.chat_prefix_suffix 196
@@ -130,6 +141,7 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set weechat.look.color_real_white on
 /set weechat.look.day_change_message_1date %a, %d %b %Y
 /set weechat.look.day_change_message_2dates %a, %d %b %Y
+# /set weechat.look.mouse on
 /set weechat.look.mouse off
 /set weechat.look.prefix_action '▷'
 /set weechat.look.prefix_align_max 15
@@ -141,8 +153,8 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set weechat.look.prefix_join '>'
 /set weechat.look.prefix_quit '<'
 /set weechat.look.prefix_network '⚡'
-# /set weechat.look.prefix_same_nick '→'
-/set weechat.look.prefix_same_nick '…'
+# /set weechat.look.prefix_same_nick '…'
+/set weechat.look.prefix_same_nick '→'
 /set weechat.look.prefix_suffix ' '
 /set weechat.look.read_marker none
 /set weechat.look.save_layout_on_exit all

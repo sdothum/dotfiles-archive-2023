@@ -85,7 +85,7 @@ pacman -Qen | cut -d' ' -f1 | column -c$(tput cols)
 
 heading "clean pacman database"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-pacompress
+pa_compress
 
 fetch
 

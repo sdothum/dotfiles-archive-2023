@@ -5,14 +5,14 @@
 
 
 = imap
-# ▔▔▔▔
+= ▔▔▔▔
   dovecot
   imapfilter
   offlineimap
 
 
 = mail clients
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   alot     [! server]
   alot-git [server]
 # astroid  [server]
@@ -32,7 +32,7 @@ d * notmuch
 
 
 = mail utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # archivemail
 # mb2md
 # imapdedup
@@ -42,7 +42,7 @@ d * notmuch
 
 
 = mime
-# ▔▔▔▔
+= ▔▔▔▔
 # antiword
   catdoc
   docx2txt

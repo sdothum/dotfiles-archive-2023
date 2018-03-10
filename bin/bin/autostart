@@ -7,8 +7,9 @@
 # ....................................................... Window manager restart
 
 # initial window applications (flags)
+AUTOCONNECT=$SESSION/autoconnect
+CMST=$SESSION/cmst
 CALENDAR=$SESSION/calendar
-DEBUG=$SESSION/debug
 IM=$SESSION/im
 IRC=$SESSION/irc
 MAIL=$SESSION/mail
@@ -49,6 +50,12 @@ pstat urxvtd || urxvtd -q -o -f &
 # pstat xflux || xflux -l 45.4 -g -75.7
 server && dmenu movies cache
 [ -e $WSYNC ] && wsync &
+if [ -e $AUTOCONNECT ] ;then
+  killall autoconnect
+  term 'Autoconnect' autoconnect
+else
+  [ -e $CMST ] && cmst &
+fi
 
 # ....................................................... Desktop initialization
 
@@ -74,7 +81,6 @@ pstat xfce4-power-manager || xfce4-power-manager 2>/dev/null &
 
 # ................................................................ Terminal apps
 
-[ -e $DEBUG ] && [ $TRACE ] && term 'Trace' tail -f $ROOT/herbstluftwm.log
 if [ -e $IM ] ;then
   server && herbstclient focus_monitor 1 || switch tag $CHAT
   # wait for window visibility before switching monitors, for urxvt font handling

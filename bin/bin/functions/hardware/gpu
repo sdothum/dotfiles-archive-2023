@@ -28,7 +28,9 @@ case $1 in
 
   display ) xrandr 2>/dev/null | grep '*' | awk '{ print $1 }' ;;
 
-  ati | intel | nvidia) [ "$(gpu)" = $1 ] ;;
+  ati     |\
+  intel   |\
+  nvidia  ) [ "$(gpu)" = $1 ] ;;
 
   macbook ) [ "$(gpu)" = 'geforce 8600m gt' ] ;;
   inspiron) [ "$(gpu)" = 'geforce gt 650m' ] ;;

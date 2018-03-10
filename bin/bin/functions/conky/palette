@@ -4,13 +4,31 @@
 # X11 Desktop
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................... Scrape colorcodehex.com
+# ......................................................... Scrape colorhexa.com
 
 usage() {
-  echo "usage: conky $(basename $0) <hexcolor>"
+  echo "usage: conky $(basename $0) <hexcolor> <scheme>"
   exit 1
 }
 
-[ $1 ] && curl --silent -L "https://www.colorcodehex.com/$1/" || usage
+[ $2 ] || usage
+
+# flatten content into single line
+colors=$(pcurl https://www.colorhexa.com/$1)
+echo $colors |
+     sed -re "s/.*Color Schemes with .$1 //" \
+         -e "s/(Complementary Color) /\1\n/" \
+         -e "s/(Analogous Color) /\1\n/" \
+         -e "s/(Split Complementary Color) /\1\n/" \
+         -e "s/(Triadic Color) /\1\n/" \
+         -e "s/(Tetradic Color) /\1\n/" \
+         -e "s/(Monochromatic Color) /\1\n/" \
+         -e "s/Alternatives to #$1.*//" \
+         -e 's/#...... rgb\([^)]*\)//g' |
+     grep $2 |
+     sed -e "s/  $2.*//" \
+         -e 's/#//g' \
+         -e 's/  /\n/g'
 
 # vim: set ft=sh: #
+

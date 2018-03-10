@@ -72,15 +72,9 @@ setblur() {
 # create pulsar border color gradient
 set_border() {
   # echo $1 >$BORDER
-  conky palette $1 |
-        grep color_light_1 |
-        sed 's/<\/font>/\n/g' |
-        sed  's/.*<font>//g' |
-        grep '^#' |
-        cut -d'#' -f2 |
-        tac >$PULSAR
+  conky palette $1 'Monochromatic' | tac >$PULSAR
   # set border to midtone
-  sed '10q;d' $PULSAR >$BORDER
+  head -1 $PULSAR >$BORDER
   # use tee to append file into itself
   tac $PULSAR | tee >>$PULSAR
   # refresh border of active window
@@ -202,21 +196,20 @@ setblur >$SETBLUR
 [ -e $BLANK ] || setroot ${primary#?:} ${secondary#?:} &
 
 # apply conky theme to .conkyrc, $THEME unset above if new background
-if [ ! -e $BLANK ] ;then
-  [ -e $THEME ] && exit
-  background=$(query theme)
-  # load theme or generate a theme from the border colour
-  if [ -e $background ] ;then
-    cp $background $THEME
-    draw conky
-  else
-    term 'Theme' STACK SHELL walpick
-    pwait walpick
+if [ -e $HOME/.conkyrc ] ;then
+  if [ ! -e $BLANK ] ;then
+    [ -e $THEME ] && exit
+    background=$(query theme)
+    # load theme or generate a theme from the border colour
+    if [ -e $background ] ;then
+      cp $background $THEME
+      [ -e $SCONKY ] && draw conky
+    else
+      term 'Theme' STACK SHELL walpick
+      pwait walpick
+    fi
+    set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | head -1)
   fi
-  set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) |
-              grep 'Triadic Color' |
-              head -1 |
-              cut -d/ -f10)
 fi
 
 # restart panels with new theme

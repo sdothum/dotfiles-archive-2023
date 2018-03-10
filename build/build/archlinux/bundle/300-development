@@ -4,7 +4,7 @@
 # see bundle_install
 
 = database management
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # adminer
   pgadmin3
   postgresql
@@ -14,24 +14,25 @@
 
 
 = document formatting
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # csstidy
   enscript
 
 
 = editors
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # atom-editor     [server]
 # atom-editor-bin [server]
-  ctags
+# ctags
   emacs           [server]
 # neovim
 # neovim-git
 # sublime-text
+  universal-ctags-git
 
 
 = haskell
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # cabal-install
 # "ghc must be installed before other haskell packages"
   ghc
@@ -42,20 +43,20 @@
 
 
 = java
-# ▔▔▔▔
+= ▔▔▔▔
   icedtea-web
   jre7-openjdk
 
 
 = prototyping
-# ▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔
 # tcc
   python-setuptools
   ruby
 
 
 = software tools
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # arduino         [! cpu atom]
   avr-gcc
   avr-libc
@@ -67,7 +68,7 @@
 
 
 = version control
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # vcsh-git
 # hgview
   git

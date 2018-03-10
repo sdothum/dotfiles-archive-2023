@@ -13,9 +13,9 @@ echo '> mount /dev/sd<usb>1 /media'
 
 heading 'connect interface'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-if ! ping -c1 www.archlinux.org 2>&1 >/dev/null ;then
+if ! ping -c1 www.google.ca 2>&1 >/dev/null ;then
   connect
-  ping -c1 www.archlinux.org
+  ping -c1 www.google.ca
   checkpoint
 fi
 

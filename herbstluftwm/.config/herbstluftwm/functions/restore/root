@@ -7,7 +7,7 @@
 # .............................................................. Root background
 
 # see play
-rm $BLACKBOARD
+rm -f $BLACKBOARD
 
 background=$(cat $SETROOT 2>/dev/null)
 case $background in

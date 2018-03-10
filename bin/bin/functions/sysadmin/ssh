@@ -20,7 +20,7 @@ if hlwm ;then
     Y="-Y $USER@$host"
   elif pstat tmux ;then
     # update tmux window as required
-    if [ "$(query wname 2>/dev/null)" = Scratchpad ] ;then
+    if [ "$(query wname 2>/dev/null)" = scratchpad ] ;then
       title="^$(tmux list-windows | grep '\*' | cut -d' ' -f2 | sed 's/\*//')"
       # rsync command expands to "host rsync .."
       host=$1

@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. Export path
+
+# Usage: . $HOME/bin/functions/shell/user_path
+
+# import user path for batch scripts that don't inherit session env, e.g. cron tasks
+export SHELL=dash
+. /etc/profile
+
+# vim: set ft=sh: #

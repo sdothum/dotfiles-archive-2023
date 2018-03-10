@@ -8,7 +8,7 @@
 
 # ......................................................... Distribution install
 
-# Usage: pm_install [--confirm] <package>
+# Usage: pm_install [--confirm | S] <package>
 
 [ "$1" = S ] && { shift; confirm=true; }
 

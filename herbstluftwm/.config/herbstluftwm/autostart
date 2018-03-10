@@ -5,6 +5,8 @@
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
+HLWMTRACE=$SESSION/hlwmtrace
+
 # chain herbstclient commands (note: keybind chains use ".")
 hc() { cmds="$cmds , $@"; }
 
@@ -77,21 +79,18 @@ fi
 
 # ................................................................ Startup suite
 
+[ -e $HLWMTRACE ] && [ $TRACE ] && term 'Trace' tail -f $ROOT/herbstluftwm.log
+
 # session startup stuff, see .xinitrc
 if [ ! -e $HLWM:autostart ] ;then
   # fresh installation has yet to install X apps!
   if which xdotool >/dev/null 2>&1 ;then
-    # if cpu arm ;then
-    #   toggle unclutter
-    #   vimbt
-    # else
-      # lock out desktop switching flickering
-      herbstclient lock
-      $HOME/bin/autostart
-      herbstclient unlock
-      # close dunst notifications
-      xdotool key ctrl+shift+space
-    # fi
+    # lock out desktop switching flickering
+    herbstclient lock
+    $HOME/bin/autostart
+    herbstclient unlock
+    # close dunst notifications
+    xdotool key ctrl+shift+space
   fi
 fi
 touch $HLWM:autostart

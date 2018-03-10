@@ -58,19 +58,25 @@ do
   do
     # echo "action=$action package=$package condition=$condition"
     case $action in
-      '' ) continue ;;
-      '#') continue ;;
-      '=') title "$package $condition"; continue ;;
-      '"') [ $check ] || ditto "$package $condition"; continue ;;
-      '!') [ $check ] || $package $condition; continue ;;
-      '+') [ -z $check ] && { heading "[ Manual install required.. ]   $package"; continue; } ;;
-      d  ) [ "$package" = '"' ] && continue; rule=true ;;
+      ''  ) continue ;;
+      '#' ) continue ;;
+      '=' ) echo $package | grep '^[[:alpha:]]' && title "$package $condition";    continue ;;
+      '"' ) [ $check ] || ditto "$package $condition";                             continue ;;
+      '!' ) [ $check ] || $package $condition;                                     continue ;;
+      '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package"; continue; } ;;
+      d   ) [ "$package" = '"' ] &&                                                continue; rule=true ;;
 
-      '-' | '?' | '*' | '@' | a | g | m) rule=$(rule "$condition") ;;
+      '-' |\
+      '?' |\
+      '*' |\
+      '@' |\
+      a   |\
+      g   |\
+      m   ) rule=$(rule "$condition") ;;
 
-      *  ) set -- $package $condition
-           package=$action
-           rule=$(rule "$@") ;;
+      *   ) set -- $package $condition
+            package=$action
+            rule=$(rule "$@") ;;
     esac
 
     eval $rule || continue

@@ -5,7 +5,7 @@
 
 # install aur package managers FIRST !!
 = aur package manager
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 @ package-query
 @ yaourt
 ! yaourt -Sy
@@ -14,28 +14,28 @@
 
 
 = entropy
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
   haveged
 
 
 = console font
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   dos2unix
 # terminus-font-ll2-td1
 
 
 = cpu power management
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cpupower                   [laptop]
 
 
 = sound
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   alsa-utils
 
 
 = shell
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   dash
 # fasd
   fish
@@ -44,7 +44,7 @@
 
 
 = x11 drivers
-# ▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔
   libglvnd                   [gpu nvidia]
   nvidia                     [gpu nvidia]
   nvidia-340xx               [gpu macbook]
@@ -55,14 +55,15 @@
   nvidia-settings            [gpu nvidia]
   nvidia-utils               [gpu nvidia]
   xf86-input-evdev
-  xf86-input-synaptics       [laptop]
+  # xf86-input-synaptics     [laptop]
+  xf86-input-libinput
   xf86-video-ati             [gpu ati]
   xf86-video-intel           [gpu intel]
   xf86-video-nouveau         [gpu nvidia]
 
 
 = x11 server
-# ▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔
   mesa
 # mesa-git
 # mesa-vdpau-git
@@ -83,7 +84,7 @@
 
 
 = font rendering
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cairo
   freetype2
   fontconfig
@@ -98,23 +99,23 @@
 
 
 = ncurses editor
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   gvim
 
 
 = terminal
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
   rxvt-unicode-patched
 
 
 = window manager
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # herbstluftwm
   herbstluftwm-git
 
 
 = virtualbox guest mode
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # virtualbox-guest-utils     [ -n $(dmidecode --type 1 | grep VirtualBox) ]
 
 # vim: set ft=conf: #

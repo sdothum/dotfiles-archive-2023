@@ -33,13 +33,6 @@
       let g:AutoPairsMapBS    = 1           " auto delete symbol pairs
       let g:AutoPairsMapSpace = 0           " disabled to make iabbrev work!
 
-    " ................................................................... Ctrl-P
-
-      let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:30,results:30'
-
-      nmap <silent><leader>b :CtrlPBuffer<CR>
-      nmap <silent><leader>f :CtrlPCurWD<CR>
-
     " ............................................................... Easy-align
 
       let g:easy_align_delimiters =
@@ -76,10 +69,37 @@
 
     " ...................................................................... Fzf
 
-      " " fzf doesn't really work well within gvim
-      " let g:fzf_launcher = 'term STACK WAIT SHELL %s'
-      "
-      " nmap <leader><leader>b :FZF<CR>
+      let g:fzf_colors =
+          \{
+          \  'fg'      : ['fg', 'Normal']
+          \, 'bg'      : ['bg', 'Normal']
+          \, 'hl'      : ['fg', 'Special']
+          \, 'fg+'     : ['fg', 'CursorLine']
+          \, 'bg+'     : ['bg', 'CursorLine']
+          \, 'hl+'     : ['fg', 'Special']
+          \, 'info'    : ['fg', 'Special']
+          \, 'border'  : ['fg', 'Ignore']
+          \, 'prompt'  : ['fg', 'Directory']
+          \, 'pointer' : ['fg', 'Special']
+          \, 'marker'  : ['fg', 'Special']
+          \, 'spinner' : ['fg', 'Special']
+          \, 'header'  : ['fg', 'Directory']
+          \}
+
+      function! FzfColors()
+        " g:fzf_colors initializes fzf only once, so override cursorline color (cannot seem to set other colors, such as hl+)
+        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . ui#color('g:dfm_fg_' . &background)
+
+        " hide bottom fzf window identifier
+        execute 'highlight fzf1 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
+        execute 'highlight fzf2 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
+        execute 'highlight fzf3 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
+      endfunction
+
+      nmap <silent><leader>b :Buffers<CR>
+      nmap <silent><leader>l :Lines<CR>
+      nmap <silent><leader>m :Marks<CR>
+      " nmap <leader>f       :FZF<CR>       " see notational-fzf for extended content search
 
     " ........................................................... Graphical undo
 
@@ -93,35 +113,8 @@
 
     " ............................................................ Indent guides
 
+      " subtle highlighting of even indents only, see core#ToggleColumn(), ui#IndentTheme()
       let g:indent_guides_auto_colors = 0
-
-      " subtle highlighting of even indents only, see gui.vim, ui.vim
-      function! IndentTheme()
-        if &background == 'light'
-          execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_light
-          execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_light
-          if g:ruler == 2
-            execute 'highlight ColorColumn guibg='    . g:dfm_bg_column_light
-          else
-            execute 'highlight ColorColumn guibg='    . g:dfm_bg_line_light
-          endif
-        else
-          execute 'highlight IndentGuidesOdd guibg='  . g:dfm_bg_dark
-          execute 'highlight IndentGuidesEven guibg=' . g:dfm_bg_line_dark
-          if g:ruler == 2
-            execute 'highlight ColorColumn guibg='    . g:dfm_bg_column_dark
-          else
-            execute 'highlight ColorColumn guibg='    . g:dfm_bg_line_dark
-          endif
-        endif
-      endfunction
-
-    " .................................................................. LeaderF
-
-      " let g:Lf_StlSeparator = { 'left' : '', 'right' : '' }
-      "
-      " nmap <silent><leader>b :LeaderfBufferAll<CR>
-      " nmap <silent><leader>f :LeaderfFile<CR>
 
     " ................................................................ Lightline
 
@@ -134,33 +127,23 @@
           \, 'subseparator' : { 'left' : '', 'right' : '' }
           \}
 
-      " defer lightline settings because plugin is initialized before buffers are read
+      " defer lightline settings because plugin is initialized before buffers are read, see ui#LiteLine()
       function! LightLine()
         if has("gui_running")
-          if Prose()
-            " prose line height makes for ugly powerline graphics
+          if s:powerline == 0
             let g:lightline =
                 \{
-                \  'colorscheme'  : 'solarized'
-                \, 'separator'    : { 'left' : '',  'right' : ''  }
+                \  'colorscheme'  : g:colors_name
+                \, 'separator'    : { 'left' : '', 'right' : '' }
                 \, 'subseparator' : { 'left' : '', 'right' : '' }
                 \}
           else
-            if s:powerline == 0
-              let g:lightline =
-                  \{
-                  \  'colorscheme'  : 'mysolarized'
-                  \, 'separator'    : { 'left' : '', 'right' : '' }
-                  \, 'subseparator' : { 'left' : '', 'right' : '' }
-                  \}
-            else
-              let g:lightline =
-                  \{
-                  \  'colorscheme'  : 'mysolarized'
-                  \, 'separator'    : { 'left' : '', 'right' : '' }
-                  \, 'subseparator' : { 'left' : '', 'right' : '' }
-                  \}
-            endif
+            let g:lightline =
+                \{
+                \  'colorscheme'  : g:colors_name
+                \, 'separator'    : { 'left' : '', 'right' : '' }
+                \, 'subseparator' : { 'left' : '', 'right' : '' }
+                \}
           endif
         endif
 
@@ -191,8 +174,8 @@
         let g:lightline.component =
             \{
             \  'absolutepath' : '%F'
-            \, 'bufcount'     : '%{BufCount() > 1 ? BufCount() : ""}'
-            \, 'bufnum'       : '%{BufCount() > 1 ? bufnr("%") : ""}'
+            \, 'bufcount'     : '%{core#BufCount() > 1 ? core#BufCount() : ""}'
+            \, 'bufnum'       : '%{core#BufCount() > 1 ? bufnr("%") : ""}'
             \, 'charvalue'    : '%b'
             \, 'charvaluehex' : '%B'
             \, 'close'        : '%999X X '
@@ -201,7 +184,7 @@
             \, 'fileformat'   : '%{&fileformat}'
             \, 'filename'     : '%t'
             \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
-            \, 'indicator'    : '%{Modified(1)}'
+            \, 'indicator'    : '%{info#Modified(1)}'
             \, 'linecount'    : '%L'
             \, 'lineinfo'     : '%3l:%-2v'
             \, 'line'         : '%l'
@@ -209,37 +192,41 @@
             \, 'paste'        : '%{&paste ? "PASTE" : ""}'
             \, 'percent'      : '%-0p%%'
             \, 'percentwin'   : '%P'
-            \, 'readonly'     : '%{&filetype == "help" ? "" : &readonly ? "" : ""}'
+            \, 'readonly'     : '%{core#Protected() ? "" : &readonly ? "  " : &modifiable ? "" : "  "}'
             \, 'relativepath' : '%f'
             \}
 
+        " tagbar suppression doesn't work (for some reason) so disable lightline, see core#Tagbar()
         let g:lightline.component_visible_condition =
             \{
-            \  'bufcount'    : '(BufCount() > 1)'
-            \, 'bufnum'      : '(BufCount() > 1)'
-            \, 'linepercent' : '(line(".") != 1 && line(".") != line("$"))'
-            \, 'modified'    : '(&filetype != "help" && (&modified || !&modifiable))'
+            \  'atom'        : '(!core#Tagbar())'
+            \, 'basename'    : '(!core#Tagbar())'
+            \, 'bufcount'    : '(core#BufCount() > 1)'
+            \, 'bufnum'      : '(core#BufCount() > 1)'
+            \, 'column'      : '(!core#Tagbar())'
+            \, 'linepercent' : '(line(".") != 1 && line(".") != line("$") && !core#Tagbar())'
+            \, 'mode'        : '(!core#Tagbar())'
             \, 'paste'       : '&paste'
-            \, 'readonly'    : '(&filetype != "help" && &readonly)'
-            \, 'topbottom'   : '(line("w0") == 1 || line("w$") == line("$"))'
+            \, 'readonly'    : '(&filetype != "help" && (&readonly || !&modifiable))'
+            \, 'topbottom'   : '((line("w0") == 1 || line("w$") == line("$")) && !core#Tagbar())'
             \}
 
         let g:lightline.component_function =
             \{
-            \  'atom'        : 'Atom'
-            \, 'basename'    : 'BaseName'
-            \, 'columninfo'  : 'ColumnInfo'
-            \, 'indent'      : 'Indent'
-            \, 'lineinfo'    : 'LineInfo'
-            \, 'linepercent' : 'LinePercent'
-            \, 'matchspace'  : 'MatchSpace'
-            \, 'modified'    : 'Modified'
-            \, 'rootname'    : 'RootName'
-            \, 'rootpath'    : 'RootPath'
-            \, 'spaces'      : 'Spaces'
-            \, 'specialchar' : 'SpecialChar'
-            \, 'topbottom'   : 'TopBottom'
-            \, 'wordcount'   : 'WordCount'
+            \  'atom'        : 'info#Atom'
+            \, 'basename'    : 'info#BaseName'
+            \, 'columninfo'  : 'info#ColumnInfo'
+            \, 'indent'      : 'info#Indent'
+            \, 'lineinfo'    : 'info#LineInfo'
+            \, 'linepercent' : 'info#LinePercent'
+            \, 'matchspace'  : 'core#MatchSpace'
+            \, 'modified'    : 'info#Modified'
+            \, 'rootname'    : 'info#RootName'
+            \, 'rootpath'    : 'info#RootPath'
+            \, 'spaces'      : 'info#Spaces'
+            \, 'specialchar' : 'info#SpecialChar'
+            \, 'topbottom'   : 'info#TopBottom'
+            \, 'wordcount'   : 'info#WordCount'
             \}
 
         let g:lightline.mode_map =
@@ -253,17 +240,11 @@
             \, 'R'      : 'R'
             \, 's'      : 'S'
             \, 'S'      : 'S-LINE'
+            \, 't'      : '🔍'
             \, 'v'      : 'V'
             \, 'V'      : 'V-LINE'
             \}
-
-        " must disable lightline to allow new settings to be loaded
-        call lightline#disable()
-        call lightline#init()
-        call lightline#enable()
       endfunction
-
-      autocmd plugin BufEnter * call LightLine()
 
     " ................................................................ Limelight
 
@@ -271,7 +252,7 @@
       let g:limelight_paragraph_span      = 0 " include preceding/following paragraphs
       let g:limelight_priority            = 1 " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
-      " see ui.vim
+      " see ui#ToggleProof(), ui#CodeView()
       " autocmd! plugin User GoyoEnter     Limelight
       " autocmd! plugin User GoyoLeave     Limelight!
 
@@ -280,13 +261,20 @@
       nnoremap <C-s> [s1z=<c-o>
       inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
+      " correction related, but really bound to Pencil
+      nmap <silent><F6> :silent call core#ToggleSpell()<CR>
+      imap <silent><F6> <C-o>:silent call core#ToggleSpell()<CR>
+      vmap <silent><F6> <C-o>:silent call core#ToggleSpell()<CR>
+
+      autocmd plugin Filetype draft        call litecorrect#init()
+      autocmd plugin Filetype note         call litecorrect#init()
       autocmd plugin Filetype mail         call litecorrect#init()
       autocmd plugin FileType markdown,mkd call litecorrect#init()
       autocmd plugin Filetype vimwiki      call litecorrect#init()
 
     " .................................................................. LiteDFM
 
-      let g:lite_dfm_left_offset = 22       " see ui.vim
+      let g:lite_dfm_left_offset = 22       " see ui#Margin()
 
     " ............................................................ Narrow region
 
@@ -304,7 +292,7 @@
       endfunction
 
       " apply refresh to narrow region buffer to apply layout defaults!
-      vmap <leader>n <Plug>NrrwrgnDo:call Refresh()<CR>
+      vmap <leader>n <Plug>NrrwrgnDo:call ui#Retheme()<CR>
       nmap <leader>n :call CloseNR()<CR>
 
     " .............................................................. Neocomplete
@@ -333,7 +321,7 @@
       let g:neosnippet#enable_snipmate_compatibility = 1
       " disable all runtime snippets
       let g:neosnippet#disable_runtime_snippets      = { '_' : 1 }
-      " see CheckFiletype() core.vim
+      " see core#CheckFiletype()
       let g:neosnippet#scope_aliases =
           \{
           \  'new'      : 'conf,fish,hs,ruby,sh,zsh'
@@ -353,8 +341,47 @@
       let g:NERDCommentEmptyLines      = 1  " comment blank lines
       let g:NERDTrimTrailingWhitespace = 1  " trim trailing whitespace
 
+      " <leader>cs to force commenting of first line comment
       map  <leader>c <Plug>NERDCommenterToggle
       imap ,c        <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
+
+    " ........................................................... Notational-fzf
+
+      " buffers load after plugins so parse command line for filename
+      function! ArgFile()
+        if argc() > 0
+          return argv(argc() - 1)
+        endif
+        return ''
+      endfunction
+
+      let g:nv_search_paths          = ['./'] " default search from current directory
+      let g:nv_default_extension     = ''
+      let g:nv_main_directory        = './'   " create new notes in current directory
+      let g:nv_use_short_pathnames   = 1
+      let g:nv_create_note_window    = 'edit'
+      let g:nv_preview_width         = 45
+
+      " notational path rules: [regex, rootpath, ext]
+      " note: regex magic is not enabled at this stage so force with '\v'
+      let s:set_notational           = [['.wiki$',                           ['~/vimwiki', '~/drafts'],  'wiki' ]
+          \,                            ['.draft$',                          ['~/drafts'],               'draft']
+          \,                            ['.note$',                           ['~/notes'],                'note' ]
+          \,                            ['\v([~]|' . $HOME . '|/stow)/bin/', ['~/bin'],                  ''     ]
+          \,                            ['.vim/',                            ['~/.vim/config'],          'vim'  ]
+          \,                            ['herbstluftwm/',                    ['~/.config/herbstluftwm'], ''     ]
+          \,                            ['archlinux/',                       ['~/build/archlinux'],      ''     ]]
+
+      " dynamically setup notational-fzf :)
+      for i in s:set_notational
+        if ArgFile() =~ i[0]
+          let g:nv_search_paths      = i[1]
+          let g:nv_default_extension = i[2]
+          break
+        endif
+      endfor
+
+      nnoremap <silent><leader>f :NV<CR>
 
     " ................................................................... Pencil
 
@@ -371,18 +398,20 @@
           \, 'off'  : 'No Pencil'
           \}
 
-      imap <F6> <C-o>:silent TogglePencil<CR>:echo PencilMode()<CR>
-      nmap <F6> :silent TogglePencil<CR>:echo PencilMode()<CR>
-
       autocmd plugin Filetype draft        call pencil#init()
+      autocmd plugin Filetype note         call pencil#init()
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
       autocmd plugin Filetype vimwiki      call pencil#init()
 
+    " .................................................................. Quantum
+
+      let g:quantum_italics=1               " italicize comments
+
     " ................................................................ Signature
 
       " vim convention m'ark key conflicts with my colemak-shift-dh layout
-      " using apostrophe instead, preferable imo :-)
+      " using apostrophe instead, preferable imo :)
       let g:SignatureMap =
           \{
           \  'Leader'            : "'"
@@ -408,8 +437,6 @@
           \, 'ListBufferMarkers' : "'?"
           \}
 
-      nmap <leader>' '.
-
     " .................................................................... Sneak
 
       " by default, use cc, cl for s, S
@@ -426,7 +453,7 @@
       "     let g:sneak_f = 1
       "     unmap s
       "     unmap S
-      "     call Colemak()
+      "     call core#Colemak()
       "     nmap f <Plug>Sneak_s
       "     nmap F <Plug>Sneak_S
       "   endif
@@ -435,60 +462,80 @@
       " " preserve s and remap to f
       " autocmd plugin BufNewFile,BufRead * call Sneak_f()
 
-      "replace 'f' with 1-char Sneak
-      nmap f <Plug>Sneak_f
-      nmap F <Plug>Sneak_F
-      xmap f <Plug>Sneak_f
-      xmap F <Plug>Sneak_F
-      omap f <Plug>Sneak_f
-      omap F <Plug>Sneak_F
-      "replace 't' with 1-char Sneak
-      nmap t <Plug>Sneak_t
-      nmap T <Plug>Sneak_T
-      xmap t <Plug>Sneak_t
-      xmap T <Plug>Sneak_T
-      omap t <Plug>Sneak_t
-      omap T <Plug>Sneak_T
+      " sneak maps s, S == cc
+      nmap <leader>s cl
+
+      " replace 'f' with 1-char Sneak
+      nmap f         <Plug>Sneak_f
+      nmap F         <Plug>Sneak_F
+      xmap f         <Plug>Sneak_f
+      xmap F         <Plug>Sneak_F
+      omap f         <Plug>Sneak_f
+      omap F         <Plug>Sneak_F
+      " replace 't' with 1-char Sneak
+      nmap t         <Plug>Sneak_t
+      nmap T         <Plug>Sneak_T
+      xmap t         <Plug>Sneak_t
+      xmap T         <Plug>Sneak_T
+      omap t         <Plug>Sneak_t
+      omap T         <Plug>Sneak_T
 
     " ................................................................ Solarized
 
       let g:solarized_termtrans = 1         " terminal transparency (0) off (1) on
 
       if has("gui_running")
-        set background=light
-        colorscheme solarized8_light_high
+        " follow the sun, see crontab
+        if !empty(glob('~/.session/colorscheme'))
+          colorscheme quantum
+          set background=dark
+        else
+          colorscheme solarized8_high
+          set background=light
+        endif
       endif
       set termguicolors                     " for neovim
 
       syntax enable
 
-    " ................................................................ Syntastic
-
-      " let g:syntastic_auto_jump      = 0
-      " let g:syntastic_auto_loc_list  = 1
-      " let g:syntastic_enable_signs   = 1
-      " let g:syntastic_quiet_messages = { 'level' : 'warnings' }
-      "
-      " " set statusline+=%#warningmsg#
-      " " set statusline+=%{SyntasticStatuslineFlag()}
-      " " set statusline+=%*
-
     " ................................................................... Tagbar
 
-      " let g:tagbar_ctags_bin = 'ctags-exuberant'
-      nmap <silent><leader>t :TagbarToggle<CR>
+      " let g:tagbar_ctags_bin    = 'ctags-exuberant'
+      let g:tagbar_map_togglesort = 'r'     " preserve sneak s
 
-      " see https://github.com/vimwiki/utils/blob/master/vwtags.py
-      let g:tagbar_type_vimwiki =
+      " markdown via .ctags
+      let g:tagbar_type_markdown =
           \{
-          \  'ctagstype'  : 'vimwiki'
-          \, 'kinds'      : ['h:header']
-          \, 'sro'        : '&&&'
-          \, 'kind2scope' : { 'h' : 'header' }
-          \, 'sort'       : 0
-          \, 'ctagsbin'   : '~/.vim/vwtags.py'
-          \, 'ctagsargs'  : 'default'
+          \  'ctagstype'  : 'markdown'
+          \, 'kinds'      : ['h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3']
           \}
+
+      " " see https://github.com/jszakmeister/markdown2ctags
+      " let g:tagbar_type_markdown =
+      "     \{
+      "     \  'ctagstype'  : 'markdown'
+      "     \, 'ctagsbin'   : '~/.vim/bin/markdown2ctags.py'
+      "     \, 'ctagsargs'  : '-f - --sort=yes'
+      "     \, 'kinds'      : ['s:sections', 'i:images']
+      "     \, 'sro'        : '|'
+      "     \, 'kind2scope' : { 's' : 'section' }
+      "     \, 'sort'       : 0
+      "     \}
+
+      " " see https://github.com/vimwiki/utils/blob/master/vwtags.py
+      " let g:tagbar_type_vimwiki =
+      "     \{
+      "     \  'ctagstype'  : 'vimwiki'
+      "     \, 'kinds'      : ['h:header']
+      "     \, 'sro'        : '&&&'
+      "     \, 'kind2scope' : { 'h' : 'header' }
+      "     \, 'sort'       : 0
+      "     \, 'ctagsbin'   : '~/.vim/bin/vwtags.py'
+      "     \, 'ctagsargs'  : 'default'
+      "     \}
+
+      " suppress unnecessary lightline processing
+      nmap <silent><leader>t :TagbarOpenAutoClose<CR>:call lightline#disable()<CR>
 
     " .................................................................. Vimwiki
 
@@ -555,7 +602,7 @@
       "     iunmap   <silent><buffer>           <CR>
       "     inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
       "     inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
-      "     call RefreshGui()
+      "     call core#RefreshGui()
       "   endif
       " endfunction
       "
@@ -568,11 +615,12 @@
 
     " ................................................................. Yankring
 
-      let g:yankring_default_menu_mode = 1  " menu on with no shortcut
-      let g:yankring_dot_repeat_yank   = 1  " allow repeating yankring action
-      let g:yankring_enabled           = 1  " disable yankring because of macro conflict
-      let g:yankring_window_height     = 30 " horizontal window height
-      let g:yankring_zap_keys          = '' " disable (conflicts with sneak)
+      let g:yankring_default_menu_mode  = 1  " menu on with no shortcut
+      let g:yankring_dot_repeat_yank    = 1  " allow repeating yankring action
+      let g:yankring_enabled            = 1  " disable yankring because of macro conflict
+      let g:yankring_min_element_length = 5  " minimum yankring size
+      let g:yankring_window_height      = 30 " horizontal window height
+      let g:yankring_zap_keys           = '' " disable (conflicts with sneak)
 
       nmap <silent>Y         :<C-U>YRYankCount 'y$'<CR>
       nmap <silent><leader>y :YRShow<CR>

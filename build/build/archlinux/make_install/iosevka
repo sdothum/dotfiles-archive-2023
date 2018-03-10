@@ -6,34 +6,55 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [double | single | amphetype] [leading <height>]"
+  echo "usage: $(basename $0) iosevka [double | single | amphetype | code | proof | patch ] [leading <height>]"
   exit 1
 }
+
+nerdfonts='--fontawesome --fontawesomeextension --octicons --powersymbols'
 
 # basename is make_install, $1 == iosevka
 shift
 storey=double
 leading=1250
+descender=0
 
 while [ $1 ]
 do
   case $1 in
-    double) storey=double ;;
+    double   ) storey=double ;;
 
-    single) storey=single
-            family=-single ;;
+    single   ) storey=single
+               family=-single ;;
 
     amphetype) storey=double
                family=-amphetype
-               leading=1850 ;;
+               # 1.5 spacing
+               leading=1875 ;;
 
-    leading) leading=$2
-             shift ;;
+    code     ) storey=double
+               design=ligset-haskell ;;
 
-    *) usage ;;
+    proof    ) storey=double
+               family=-proof
+               # double spacing
+               leading=2500 ;;
+
+    patch    ) patch=true ;;
+
+    leading  ) leading=$2
+               shift ;;
+
+    *        ) usage ;;
   esac
   shift
 done
+
+# balance leading/descender spacing
+if [ $leading -gt 1250 ] ;then
+  pad=$(( $leading - 1250 ))
+  descender=$(( $pad / 3 ))
+  leading=$(( 1250 + ($pad - $descender) ))
+fi
 
 shape='sans'
 # alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
@@ -41,7 +62,7 @@ alpha='v-l-hooky v-i-hooky v-g-singlestorey v-m-longleg'
 math='v-zero-slashed v-tilde-low v-asterisk-high v-caret-high v-brace-curly'
 symbol='v-paragraph-high v-at-long v-eszet-sulzbacher'
 upright="$shape $alpha v-a-${storey}storey $math $symbol"
-design=$upright
+design=${design:-$upright}
 italic="$shape $alpha v-a-singlestorey $math $symbol"
 oblique=$italic
 
@@ -51,26 +72,38 @@ if [ -d Iosevka ] ;then
   cd Iosevka
   rm -rf build dist
   cp parameters.toml.original parameters.toml
-  git pull origin master
+  if-no 'sync iosevka repo' || git pull origin master
 else
   git clone https://github.com/be5invis/Iosevka.git
   cd Iosevka
   original parameters.toml
 fi
-# ensure node.js is uptodate
-npm install
 
-sed -i -re "/^family =/s/'Iosevka'/'Iosevka$family'/" \
-    -e "/^leading =/s/= ([0-9]*)/= $leading/" \
-    /net/depot/Iosevka/parameters.toml
+if [ -z $patch ] ;then
+  # ensure node.js is uptodate
+  npm install
 
-make custom-config upright="$upright" italic="$italic" design="$design" oblique="$oblique"
-make custom
+  sed -i -re "/^family =/s/'Iosevka'/'Iosevka$family'/" \
+      -e "/^leading =/s/= ([0-9]*)/= $leading/" \
+      -e "/^descenderPad =/s/= ([0-9]*)/= $descender/" \
+      /net/depot/Iosevka/parameters.toml
 
-rm -rf $HOME/.fonts/iosevka$family
-cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$family
-[ -e /net/depot/nerd-fonts/font-patcher ] &&
-  /net/depot/nerd-fonts/font-patcher -l -s --powerlineextra --careful $HOME/.fonts/iosevka$family/iosevka-custom-regular.ttf
+  make custom-config upright="$upright" italic="$italic" oblique="$oblique" design="$design"
+  make custom
+
+  rm -rf $HOME/.fonts/iosevka$family
+  cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$family
+fi
+
+# patch font
+if [ -e /net/depot/nerd-fonts/font-patcher ] ;then
+  rm -f /tmp/Iosevka*ttf
+  /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerlineextra -out /tmp $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
+  mv /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
+  /net/depot/nerd-fonts/font-patcher $nerdfonts -out /tmp $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
+  mv /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
+fi
+
 sudo fc-cache -fv
 fc-cache -fv
 

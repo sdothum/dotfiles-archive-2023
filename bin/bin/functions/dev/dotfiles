@@ -80,13 +80,13 @@ case $1 in
            done
            [ $pending ] && pending ;;
 
-  amend |\
+  amend  |\
   comment) shift
            DESC=$@
            [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
                           git commit --amend ;;
 
-  edit |\
+  edit   |\
   ignore ) gvim .gitignore ;;
 
   init   ) git init
@@ -99,8 +99,8 @@ case $1 in
   list   ) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
   log    ) git log | less ;;
 
-  undo |\
-  redo |\
+  undo   |\
+  redo   |\
   reset  ) git reset --soft HEAD~
            dotfiles ;;
 

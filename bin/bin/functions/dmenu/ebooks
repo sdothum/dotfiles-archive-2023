@@ -12,6 +12,8 @@ REBUILD='[ rebuild database ]'
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
 cache=$CACHEDIR/dmenu:ebooks
+kindle=/run/media/$USER/Kindle/documents/
+# export CLOUDCONVERT_API_KEY=$(cat $HOME/.cloudconvert_api_key)
 
 # .............................................................. Kindle transfer
 
@@ -22,7 +24,7 @@ Content-Type: multipart/mixed; boundary="$boundary"
 MIME-Version: 1.0
 Subject: $title
 From: $account
-To: $kindle
+To: $address
 
 --$boundary
 Content-Type: text/plain; charset="utf-8"
@@ -35,10 +37,10 @@ $title attached.
 Content-Type: application/octet-stream
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="${mobi##*/}"
+Content-Disposition: attachment; filename="${azw3##*/}"
 
 END
-                base64 "$mobi"
+                base64 "$azw3"
                 cat - <<END
 
 --$boundary--
@@ -50,8 +52,8 @@ END
 # build catalogue
 ebooks() {
   notify low 'Updating library cache' 'Please be patient..'
-  find $library -maxdepth 3 -regex ".*\(mobi\|epub\)" |
-       sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub)|\1$SEP\3|" \
+  find $library -maxdepth 3 -regex ".*\(mobi\|epub\|azw3\|azw\)" |
+       sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw)|\1$SEP\3|" \
            -e 's/ - .*//; s/ \([0-9]*\)//' \
            -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
        sort -u >$cache
@@ -75,8 +77,18 @@ epub() {
   epub=$(find $library -regex "$epub")
 }
 
-# ..................................................................... E-reader
+azw3() {
+  azw3=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.azw3|")
+  azw3=$(find $library -regex "$azw3")
+}
 
+azw() {
+  azw=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.azw|")
+  azw=$(find $library -regex "$azw")
+}
+
+# ..................................................................... E-reader
+set -x
 while :
 do
   book=$(cat $cache |
@@ -101,38 +113,50 @@ do
   author="${book#*$SEP } "
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
-  unset mobi epub
-  mobi
-  [ $mobi ] || epub
+  unset mobi epub azw3
+
+  azw3
+  [ "$azw3" ] || { mobi; [ "$mobi" ] || { epub; [ "$epub" ] || azw; }; }
+  file=$azw3$mobi$epub$azw
 
   while action=$(echo "read\nedit\nkindle" | rmenu "$title" -no-custom) || break
   do
     case $action in
       read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
               [ $focus ] || focus frame && focus=true
-              [ $mobi ] && FBReader "$mobi" || FBReader "$epub" ;;
+              FBReader "$file" ;;
 
       edit  ) if grep -q "$book" $(history)/ebooks ;then
                 grep -v "$book" $(history)/ebooks >/tmp/ebooks
                 mv /tmp/ebooks $(history)/ebooks
               fi
-              book=$(echo ${mobi%/*} | sed -r 's/([ ()])/\\\1/g')
+              book=$(echo ${file%/*} | sed -r 's/([ ()])/\\\1/g')
               term "$title" WAIT vifm "${book%/*}" "$book" ;;
 
       kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
-              if [ -z $mobi ] ;then
-                kindlegen "$epub"
-                mobi
+              if [ -z "$azw3" ] ;then
+                find /tmp -maxdepth 1 -name '*azw3' -exec rm {} \;
+                notify low "$title" 'Converting to azw3..'
+                # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
+                # use calibre conversion module
+                output="/tmp/${file##*/}"
+                ebook-convert "$file" "${output%.*}.azw3" >/tmp/ebook-convert.log
               fi
 
-              kindle=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
-              kindle=${kindle%%@*}
-              mhistory kindle $kindle
-              kindle=$kindle@kindle.com
-              account=$(grep $USER /etc/aliases | cut -d' ' -f2)
-              boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
-              email | /usr/local/bin/msmtp-enqueue.sh -t &
-              notify low "$title" "$kindle" ;;
+              # usb or cloud?
+              if [ -d $kindle ] ;then
+                find /tmp -maxdepth 1 -name '*azw3' -exec mv {} $kindle \;
+                notify low "$title" "$kindle"
+              else
+                address=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
+                address=${address%%@*}
+                mhistory kindle $address
+                address=$address@kindle.com
+                account=$(grep $USER /etc/aliases | cut -d' ' -f2)
+                boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
+                email | /usr/local/bin/msmtp-enqueue.sh -t &
+                notify low "$title" "$address"
+              fi ;;
     esac
     break
   done

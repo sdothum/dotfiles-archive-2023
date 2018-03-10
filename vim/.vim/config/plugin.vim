@@ -17,9 +17,11 @@
     " ................................................................... System
 
       let code   = { 'for' : ['c', 'cpp', 'haskell', 'lua', 'ruby', 'sh', 'snippets', 'vim'] }
-      let prose  = { 'for' : ['draft', 'mail', 'markdown', 'vimwiki', 'wiki'] }
+      let prose  = { 'for' : ['draft', 'mail', 'markdown', 'note', 'vimwiki', 'wiki'] }
 
       Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+      " Plug 'tpope/vim-scriptease'         " debugger
+      " Plug 'tpope/vim-dispatch'           " launch async shell command
       Plug '~/.vim/custom/core'             " system wide primitives
 
   " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -28,17 +30,19 @@
 
       " Plug 'junegunn/goyo.vim'            " distraction free mode
       " Plug 'altercation/vim-colors-solarized' breaks synIDattr with vim8
-      Plug 'junegunn/limelight.vim', prose  " hyperfocus highlighting
+      Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
-      Plug 'lifepillar/vim-solarized8'      " colour theme
+      Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
+      Plug 'lifepillar/vim-solarized8'      " solarized theme
       Plug '~/.vim/custom/ui'               " theme
 
     " ..................................................................... Info
 
       " Plug 'metakirby5/codi.vim'          " async evaluator
+      " Plug 'machakann/vim-highlightedyank' " yank highlighter
       " Plug 'reedes/vim-wordy'             " word usage
       Plug 'itchyny/lightline.vim'          " statusline
-      Plug 'majutsushi/tagbar', { 'on' : 'TagbarToggle' } " ctags
+      Plug 'majutsushi/tagbar', { 'on' : 'TagbarOpenAutoClose' } " ctags
       Plug 'bimlas/vim-eightheader'         " custom foldtext
       Plug '~/.vim/custom/info'             " statusline info
 
@@ -50,6 +54,7 @@
     " ............................................................. Highlighting
 
       " Plug 'xtal8/traces.vim'             " ex pattern/range highlghting
+      Plug 'romainl/vim-cool'               " auto clear search highlighting
       Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' } " colourized indent columns
       Plug 'sheerun/vim-polyglot'           " multilingual highlighting
 
@@ -57,11 +62,7 @@
 
     " ............................................................... Management
 
-      " Plug 'junegunn/fzf', { 'dir' : '~/.fzf', 'do' : './install --key-bindings' } " installed via pacman
-      " Plug 'junegunn/fzf.vim' doesn't integrate well with gvim
       " Plug 'duff/vim-scratch'             " scratch buffer
-      Plug 'ctrlpvim/ctrlp.vim'             " fuzzy finder
-      " Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " fuzzy finder
       Plug 'chrisbra/NrrwRgn', { 'on' : 'NrrwrgnDo' } " visual block buffer
 
     " .......................................................... Version control
@@ -71,14 +72,14 @@
 
     " ................................................................ Hypertext
 
-      " Plug 'cwoac/nvim'                   " notational velocity
       " Plug 'greyblake/vim-preview'        " markdown
-      " Plug 'lervag/wiki'
       " Plug 'vimwiki/vimwiki'              " markdown wiki
+      " Plug 'lervag/wiki'
+      Plug 'junegunn/fzf.vim'               " fuzzy finder
+      Plug 'Alok/notational-fzf-vim'        " fzf note search
 
     " ................................................................... Linter
 
-      " Plug 'scrooloose/syntastic'         " lint
       Plug 'w0rp/ale'                       " asynchronous lint engine
 
   " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -98,7 +99,7 @@
 
       Plug 'scrooloose/nerdcommenter'       " toggle comment
       Plug 'junegunn/vim-easy-align'        " align text objects
-      Plug 'reedes/vim-pencil', prose       " dynamic paragraph formatting
+      Plug 'reedes/vim-pencil'              " dynamic paragraph formatting
       Plug '~/.vim/custom/heading'          " heading formatter
 
     " ............................................................... Completion

@@ -27,6 +27,7 @@ if [ -z $FOLDER ] ;then
     *    ) FOLDER=$HOME/tmp ;;
   esac
 fi
+ARCHIVE=$FOLDER/archive
 catlg=$FOLDER/.${ext}s
 mkdir -p $FOLDER || exit 1
 
@@ -53,41 +54,42 @@ hint() {
 }
 
 # list of files
-notes() {
-  count=0
-  find -L $FOLDER -type f -size 0c -exec rm {} \;
-  files=$(find -L $FOLDER -name "*.$ext")
+cache() {
+  find -L $FOLDER -maxdepth 1 -type f -size 0c -exec rm {} \;
+  files=$(find -L $FOLDER -maxdepth 1 -name "*.$ext")
   rm -f $NOTES
+  notify low "Updating ${ext}s cache" 'Please be patient..'
   if [ "$files" ] ;then
     for i in $files
     do
-      count=$(( $count + 1 )) >/dev/null
       if [ "$search" ] ;then
         egrep -iq "$search" $i || continue
       fi
-      echo $i >>$NOTES
-      echo "$(stat -c '%n^%y' $i | cut -d: -f1-2)/$count ^$SEP $(hint $i)"
-    done | tac
+      echo "$i^$(stat -c '%y' $i | cut -d. -f1) ^$SEP $(hint $i)"
+    done | sort -k2 -t^ -r >>$NOTES
   else
     # empty folder
-    echo
+    >$NOTES
   fi
 }
 
+cache
+
 # item row
 highlight() {
-  file=$(previous $catlg)
-  notes | grep -qn "$file" && echo $(( $(notes | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
+  # file=$(previous $catlg)
+  file=$mhistory
+  cat $NOTES | grep -qn "$file" && echo $(( $(cat $NOTES | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
 }
 
 # to present grep'd file list enter:
 #   /regex to filter
 #   //     to clear filter
 search=''
-while note=$(notes |
+while note=$(cat $NOTES |
              cut -d^ -f2- |
-             sed "1i$PROMPT" |
              column -s^ -t |
+             sed "1i$PROMPT" |
              rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit
 do
   case $note in
@@ -95,14 +97,16 @@ do
     "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
 
     "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext)
+              update=true
               action=edit ;;
 
-    "$PURGE") [ -f $NOTES ] && mv $(sort -u $NOTES) /tmp
+    "$PURGE") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
               search=''
+              cache
               continue ;;
 
-    *       ) file=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
-              content=$(notes | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+    *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+              content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
               while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom)
               do
                 [ $action = view ] || break
@@ -110,15 +114,22 @@ do
               done ;;
   esac
 
-  mhistory $catlg $file
+  # mhistory $catlg $file
+  mhistory=$file
   case $action in
     edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
-    delete   ) mv $file /tmp ;;
+
+    delete   ) mv $file /tmp
+               update=true
+               sed -i "\|$file|s|$|  (DELETED)|" $NOTES ;;
 
     clipboard) clipboard "$file"
                notify 'Ctrl-Alt-V' "$file"
                exit ;;
   esac
+
+  [ $update ] && cache
+  unset update
 done
 
 # vim: set ft=sh: #

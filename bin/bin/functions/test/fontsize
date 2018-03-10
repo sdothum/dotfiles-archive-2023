@@ -12,6 +12,8 @@
 # test arm first to avoid spurious lspci messages
 if cpu arm ;then
   size=8
+elif cpu celeron ;then
+  size=10
 elif gpu macbook ;then
   size=9
 elif gpu inspiron; then

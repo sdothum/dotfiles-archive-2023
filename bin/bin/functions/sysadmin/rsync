@@ -289,7 +289,7 @@ case $1 in
                    $HOME/
            fi ;;
 
-  *      ) /usr/bin/rsync -av --update --exclude='lost+found' $quiet $@ ;;
+  *      ) /usr/bin/rsync -av --delete --update --exclude='lost+found' $quiet $@ ;;
 esac
 
 # vim: set ft=sh: #

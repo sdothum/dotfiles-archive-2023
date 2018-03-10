@@ -15,7 +15,7 @@ usage() {
 [ "$1" ] || usage
 
 files=$(a "$@" |
-        fzf --multi |
+        fZf --multi |
         nocolor |
         cut -d: -f1 |
         uniq)

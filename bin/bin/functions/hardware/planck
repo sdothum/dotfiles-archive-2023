@@ -39,12 +39,12 @@ case $1 in
   adnw*  |\
   beakl* |\
   colem* |\
-  qwerty) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG; shift ;;
+  qwerty ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG; shift ;;
 
-  *     ) [ $splitography ] || usage ;;
+  *      ) [ $splitography ] || usage ;;
 esac
 
-if [ ! $splitography ] ;then
+if [ -z $splitography ] ;then
   # steno (mouse may need to be mandisabled in config.h)
   if [ "$1" = steno ] ;then
     sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
@@ -57,12 +57,13 @@ if [ ! $splitography ] ;then
   # compile time macro sting
   grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING' $CONFIG
   case $1 in
-    '' | dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
+    '' |\
+    dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
 
-    *       ) trap "rm -f $PRIVATE" EXIT
-              sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
-              echo "SEND_STRING(\"$1\");" >$PRIVATE
-              shift ;;
+    *  ) trap "rm -f $PRIVATE" EXIT
+         sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
+         echo "SEND_STRING(\"$1\");" >$PRIVATE
+         shift ;;
   esac
 fi
 

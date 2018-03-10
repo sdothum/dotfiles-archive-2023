@@ -7,132 +7,158 @@
 
     " .................................................................... Setup
 
-      let g:icons         = ''            " multibyte statusline indicators
-      let g:font_type     = -1              " current font setting (0) source (1) prose
+      let g:font_type           = -1        " current font setting (0) source (1) prose
+      let s:font_step           = 1         " in point size
+      let s:cursorline          = 0         " visible (0) off (1) on
+      let s:wikiinfo            = 1         " statusline (0) off (1) on
+      let s:initial_view        = 1         " prose (0) dfm (1) proof
+      let s:sync                = 0         " sync (0) off (1) indent guides
 
-      let s:cursorline    = 0               " visible (0) off (1) on
-      let s:view          = 0               " mixed view (filetype) handling
-      let s:wikiinfo      = 1               " initial wikiinfo
-      let s:proof         = 1               " (0) dfm (1) proof
-      let s:delay         = '250m'          " font size change gui redraw delay
-      let s:font_step     = 1               " in point size
+      " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
+      let s:source_font         = 'Iosevka\'
+      let s:prose_font          = 'Iosevka-proof\'
 
-      " let s:source_font = 'Input\ Mono\ Compressed\'
-      " let s:source_font = 'PragmataPro\'
-      let s:source_font   = 'Iosevka\'
-      " let s:prose_font  = 'Courier\ Prime\'
-      let s:prose_font    = 'Iosevka\'
+    " .............................................................. Color codes
 
-    " .................................................................. Palette
+      " solarized colour palette (light)
+      let s:rgb_0               = '#073642' " base02 dark highlight
+      let s:rgb_1               = '#dc322f' " red
+      let s:rgb_2               = '#719e07' " green
+      let s:rgb_3               = '#b58900' " yellow
+      let s:rgb_4               = '#268bd2' " blue
+      let s:rgb_5               = '#d33682' " magenta
+      let s:rgb_6               = '#2aa198' " cyan
+      let s:rgb_7               = '#eee8d5' " base2 light highlight
+      let s:rgb_8               = '#002b36' " base03 dark bg
+      let s:rgb_9               = '#cb4b16' " orange
+      let s:rgb_10              = '#586e75' " base01 darkest grey
+      let s:rgb_11              = '#657b83' " base00 dark grey
+      let s:rgb_12              = '#839496' " base0 light grey
+      let s:rgb_13              = '#6c71c4' " violet
+      let s:rgb_14              = '#93a1a1' " base1 lightest grey
+      let s:rgb_15              = '#fdf6e3' " base3 light bg
 
-      " solarized colour palette (see vim-solarized8)
-      let s:rgb_0    = '#073642'            " base02 dark highlight
-      " let s:rgb_1  = '#dc322f'            " red
-      " let s:rgb_2  = '#719e07'            " green
-      let s:rgb_3    = '#b58900'            " yellow
-      let s:rgb_4    = '#268bd2'            " blue
-      " let s:rgb_5  = '#d33682'            " magenta
-      " let s:rgb_6  = '#2aa198'            " cyan
-      let s:rgb_7    = '#eee8d5'            " base2 light highlight
-      let s:rgb_8    = '#002b36'            " base03 dark bg
-      " let s:rgb_9  = '#cb4b16'            " orange
-      let s:rgb_10   = '#586e75'            " base01 darkest grey
-      let s:rgb_11   = '#657b83'            " base00 dark grey
-      let s:rgb_12   = '#839496'            " base0 light grey
-      " let s:rgb_13 = '#6c71c4'            " violet
-      let s:rgb_14   = '#93a1a1'            " base1 lightest grey
-      let s:rgb_15   = '#fdf6e3'            " base3 light bg
+      " quantum colour palette (dark)
+      let s:gray1               = '#263238' " 023 (005f5f)
+      let s:gray2               = '#2c3a41' " 023 (005f5f)
+      let s:gray3               = '#425762' " 059 (5f5f5f)
+      let s:gray4               = '#658494' " 066 (5f8787)
+      let s:gray5               = '#aebbc5' " 146 (afafd7)
+      let s:blue                = '#70ace5' " 074 (5fafd7)
+      let s:cyan                = '#69c5ce' " 080 (5fd7d7)
+      let s:green               = '#87bb7c' " 108 (87af87)
+      let s:indigo              = '#7681de' " 104 (8787d7)
+      let s:orange              = '#d7956e' " 173 (d7875f)
+      let s:purple              = '#a48add' " 140 (af87d7)
+      let s:red                 = '#dd7186' " 168 (d75f87)
+      let s:yellow              = '#d5b875' " 180 (d7af87)
 
     " ......................................................... DFM colour masks
 
       " foreground
-      let g:dfm_fg_light        = 'brown'   " light foreground
-      let g:dfm_fg_dark         = 'yellow'  " dark foreground
-      let g:dfm_proof_light     = s:rgb_8   " dark foreground
-      let g:dfm_proof_dark      = s:rgb_15  " light foreground
-      let g:dfm_unfocused_light = s:rgb_8   " light grey surrounding text content
-      let g:dfm_unfocused_dark  = s:rgb_15  " dark grey surrounding text content
+      let g:dfm_fg_light        = '#000000' " light foreground (high contrast)
+      let g:dfm_fg_dark         = '#ffffff' " dark foreground (high contrast)
+      let s:dfm_proof_light     = s:rgb_10  " dark foreground
+      let s:dfm_proof_dark      = s:gray5   " light foreground
 
       " background
-      let g:dfm_bg_light        = s:rgb_15  " solarized light (paper) background
-      let g:dfm_bg_dark         = s:rgb_8   " solarized dark background
+      let s:dfm_bg_light        = s:rgb_15  " solarized light (paper) background
+      let s:dfm_bg_dark         = s:gray1   " quantum dark background
+      let s:dfm_vsplit_light    = s:rgb_15  " invisible split
+      let s:dfm_vsplit_dark     = s:gray1   " invisible split
 
       " cursor line
-      let g:dfm_cursor_light    = '#52A5E0' " light cursor (lighter shade of rgb_4)
-      let g:dfm_cursor_dark     = '#E56865' " dark cursor (lighter shade of rgb_1)
-      let g:dfm_bg_line_light   = s:rgb_7   " light cursorline
-      let g:dfm_bg_line_dark    = s:rgb_0   " dark cursorline
-      let g:dfm_bg_column_light = '#E2D7B6' " light column (darker shade of rgb_7)
-      let g:dfm_bg_column_dark  = '#0A4C5C' " dark column (lighter shade of rgb_0)
-      let g:dfm_fg_line_light   = '#cccccc' " light line numbers
-      let g:dfm_fg_line_dark    = '#555555' " dark line numbers
+      let s:dfm_cursor_light    = '#20bbfc' " iA Writer
+      let s:dfm_cursor_dark     = '#20bbfc' " iA Writer
+      let s:dfm_bg_line_light   = s:rgb_7   " light cursorline
+      let s:dfm_bg_line_dark    = s:gray2   " dark cursorline
+      let s:dfm_bg_column_light = '#E2D7B6' " light column (darker shade of rgb_7)
+      let s:dfm_bg_column_dark  = '#0A4C5C' " dark column (lighter shade of rgb_0)
+      let s:dfm_fg_line_light   = s:rgb_14  " light line numbers
+      let s:dfm_fg_line_dark    = s:gray4   " dark line numbers
 
       " statusline
-      let g:dfm_status_light    = s:rgb_0   " light statusline
-      let g:dfm_status_dark     = s:rgb_7   " dark statusline
+      let s:dfm_bg_status_light = s:rgb_15  " light statusline
+      let s:dfm_bg_status_dark  = s:gray1   " dark statusline
+      let s:dfm_fg_status_light = s:rgb_0   " light statusline
+      let s:dfm_fg_status_dark  = s:rgb_7   " dark statusline
 
     " .................................................................. Palette
 
       function! ui#Palette()
-        if &background == 'light'
-          let g:dfm_fg          = g:dfm_fg_light
-          let g:dfm_proof       = g:dfm_proof_light
-          let g:dfm_unfocused   = g:dfm_unfocused_light
-          let g:dfm_bg          = g:dfm_bg_light
-          let g:dfm_cursor      = g:dfm_cursor_light
-          let g:dfm_bg_line     = g:dfm_bg_line_light
-          let g:dfm_fg_line     = g:dfm_fg_line_light
-          let g:dfm_status      = g:dfm_status_light
-          let g:dfm_cursorline  = s:cursorline == 0 ? g:dfm_bg_light : g:dfm_bg_line_light
-          let g:dfm_linenr_ins  = g:dfm_bg_light
-          let g:dfm_linenr_cmd  = Prose() ? g:dfm_bg_light : g:dfm_fg_line_light
-        else
-          let g:dfm_fg          = g:dfm_fg_dark
-          let g:dfm_proof       = g:dfm_proof_dark
-          let g:dfm_unfocused   = g:dfm_unfocused_dark
-          let g:dfm_bg          = g:dfm_bg_dark
-          let g:dfm_cursor      = g:dfm_cursor_dark
-          let g:dfm_bg_line     = g:dfm_bg_line_dark
-          let g:dfm_fg_line     = g:dfm_fg_line_dark
-          let g:dfm_status      = g:dfm_status_dark
-          let g:dfm_cursorline  = s:cursorline == 0 ? g:dfm_bg_dark : g:dfm_bg_line_dark
-          let g:dfm_linenr_ins  = g:dfm_bg_dark
-          let g:dfm_linenr_cmd  = Prose() ? g:dfm_bg_dark : g:dfm_fg_line_dark
-        endif
+        call core#Trace('ui#Palette()')
+        execute 'let s:dfm_fg          = g:dfm_fg_'                     . &background
+        execute 'let s:dfm_proof       = s:dfm_proof_'                  . &background
+        execute 'let g:dfm_bg          = s:dfm_bg_'                     . &background
+        execute 'let s:dfm_vsplit      = s:dfm_vsplit_'                 . &background
+        execute 'let s:dfm_cursor      = s:dfm_cursor_'                 . &background
+        execute 'let s:dfm_bg_line     = s:dfm_bg_line_'                . &background
+        execute 'let s:dfm_fg_line     = s:dfm_fg_line_'                . &background
+        execute 'let s:dfm_bg_status   = s:dfm_bg_status_'              . &background
+        execute 'let s:dfm_fg_status   = s:dfm_fg_status_'              . &background
+        execute 'let s:dfm_cursorline  = s:cursorline == 0 ? s:dfm_bg_' . &background . ' : s:dfm_bg_line_' . &background
+        execute 'let g:dfm_linenr_ins  = s:dfm_bg_'                     . &background
       endfunction
 
-    " ................................................................... Screen
+    " ............................................................. Colour theme
+
+      function! ui#color(color)
+        execute 'return ' . a:color
+      endfunction
 
       " margins, selection and cursor
       function! ui#Theme()
+        call core#Trace('ui#Theme()')
+        let l:background = &background == 'light' ? 'dark' : 'light'
+        execute 'highlight ExtraWhitespace     guibg=' . ui#color('s:dfm_cursor_'  . l:background) . ' guifg=' . ui#color('s:dfm_bg_' . l:background)
+        execute 'highlight VisualCursor        guibg=' . ui#color('s:dfm_cursor_'  . l:background) . ' guifg=' . g:dfm_bg
+        execute 'highlight ReplaceCursor       guibg=' . ui#color('s:dfm_cursor_'  . l:background) . ' guifg=' . g:dfm_bg
+        execute 'highlight CommandCursor       guibg=' . ui#color('s:dfm_cursor_'  . l:background) . ' guifg=' . g:dfm_bg
+        execute 'highlight IndentGuidesEven    guibg=' . ui#color('s:dfm_bg_line_' . l:background)
+        execute 'highlight IndentGuidesOdd     guibg=' . ui#color('s:dfm_bg_'      . &background)
+        execute 'highlight VertSplit           guibg=' . s:dfm_vsplit                              . ' guifg=' . s:dfm_vsplit
+        execute 'highlight ShowMarksHLl        guibg=' . g:dfm_bg
+        execute 'highlight SignColumn          guibg=' . g:dfm_bg
+        execute 'highlight InsertCursor        guibg=' . s:dfm_cursor                              . ' guifg=' . g:dfm_bg
+        execute 'highlight CursorLine gui=none guibg=' . s:dfm_cursorline
+        execute 'highlight Cursor gui=bold     guibg=' . s:dfm_cursor                              . ' guifg=' . g:dfm_bg
+        execute 'highlight ALEErrorSign        guifg=' . s:dfm_fg
+        execute 'highlight ALEWarningSign      guifg=' . s:dfm_cursor
+        call FzfColors()                    " see setting.vim
+        call ui#IndentTheme()
         call ui#Margin()
-        execute 'highlight ShowMarksHLl          guibg=' . g:dfm_bg
-        execute 'highlight SignColumn            guibg=' . g:dfm_bg
-        execute 'highlight CursorLineNr gui=bold guibg=' . g:dfm_bg           . ' guifg=' . g:dfm_fg
-        execute 'highlight InsertCursor          guibg=' . g:dfm_cursor       . ' guifg=' . g:dfm_bg
-        if &background == 'light'
-          execute 'highlight ExtraWhitespace     guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg_dark
-          execute 'highlight VisualCursor        guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor       guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor       guibg=' . g:dfm_cursor_dark  . ' guifg=' . g:dfm_bg
-          execute 'highlight IndentGuidesOdd     guibg=' . g:dfm_bg_light
-          execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
-        else
-          execute 'highlight ExtraWhitespace     guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg_light
-          execute 'highlight VisualCursor        guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight ReplaceCursor       guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight CommandCursor       guibg=' . g:dfm_cursor_light . ' guifg=' . g:dfm_bg
-          execute 'highlight IndentGuidesOdd     guibg=' . g:dfm_bg_dark
-          execute 'highlight IndentGuidesEven    guibg=' . g:dfm_bg_line_dark
-        endif
-        execute 'highlight CursorLine gui=none   guibg=' . g:dfm_cursorline
-        execute 'highlight ALEErrorSign          guifg=' . g:dfm_fg
-        execute 'highlight ALEWarningSign        guifg=' . g:dfm_cursor
-        call ui#Cursor()
+        call ui#LineNr()
+        call core#NoTilde()
       endfunction
 
-      function! ui#Cursor()
-        execute 'highlight Cursor gui=bold guibg=' . g:dfm_cursor . ' guifg=' . g:dfm_bg
+      function! ui#LineNr()
+        call core#Trace('ui#LineNr()')
+        execute 'highlight CursorLineNr ' . (g:view == 0 ? 'gui=bold guifg=' . ui#color('g:dfm_fg_' . &background)
+                \                                        : 'gui=none guifg=' . (b:proof == 0 ? g:dfm_bg : s:dfm_fg_line))
+        let g:dfm_linenr_cmd = g:view == 0  ? s:dfm_fg_line  : g:dfm_bg
+      endfunction
+
+      function! ui#IndentTheme()
+        call core#Trace('ui#IndentTheme()')
+        execute 'highlight IndentGuidesOdd  guibg=' . ui#color('s:dfm_bg_'        . &background)
+        execute 'highlight IndentGuidesEven guibg=' . ui#color('s:dfm_bg_line_'   . &background)
+        if g:ruler == 2
+          execute 'highlight ColorColumn    guibg=' . ui#color('s:dfm_bg_column_' . &background)
+        else
+          execute 'highlight ColorColumn    guibg=' . ui#color('s:dfm_bg_line_'   . &background)
+        endif
+        if s:sync == 1                      " refresh any indent guides, see ui#LiteSwitch()
+          execute 'IndentGuidesToggle'
+          execute 'IndentGuidesToggle'
+          let s:sync = 0
+        endif
+      endfunction
+
+      function! ui#Retheme()
+        call core#Trace('ui#Refresh()')
+        let lstatus     = &laststatus
+        call ui#SetView()
+        let &laststatus = lstatus
       endfunction
 
     " Contrast ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -141,102 +167,58 @@
 
       " toggle colour scheme
       function! ui#LiteSwitch()
+        call core#Trace('ui#LiteSwitch()')
         " trap and ignore initialization error
-        call Quietly('LiteDFMClose')
-        let &background = (&background == 'dark' ? 'light' : 'dark')
+        call core#Quietly('LiteDFMClose')
         if &background == 'light'
-          colorscheme solarized8_light_high
+          let &background = 'dark'
+          colorscheme quantum
         else
-          colorscheme solarized8_dark_high
+          let &background = 'light'
+          colorscheme solarized8_high
         endif
-        if ! Prose()
-          " match lightline to current colorscheme
-          " see https://github.com/itchyny/lightline.vim/issues/104
-          if &background == 'light'
-            let g:lightline.colorscheme = 'solarized_light'
-          else
-            let g:lightline.colorscheme = 'solarized_dark'
-          endif
-          call lightline#init()
-          call lightline#colorscheme()
-          call lightline#update()
-        endif
+        let s:sync = 1                      " see ui#IndentTheme()
         call ui#LiteType()
-      endfunction
-
-      function! ui#LiteFix()
-        " fix solarized colour shifts resulting from toggling(!)
-        if &background == 'light'
-          execute 'highlight LightlineLeft_normal_0    ctermfg=230 ctermbg=33  guifg=' . s:rgb_15 ' guibg=' . s:rgb_4
-          execute 'highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=244 guifg=' . s:rgb_4  ' guibg=' . s:rgb_12
-          execute 'highlight LightlineLeft_normal_1    ctermfg=230 ctermbg=244 guifg=' . s:rgb_15 ' guibg=' . s:rgb_12
-          execute 'highlight LightlineLeft_normal_1_2  ctermfg=244 ctermbg=187 guifg=' . s:rgb_12 ' guibg=' . s:rgb_7
-          execute 'highlight LightlineRight_normal_0   ctermfg=230 ctermbg=239 guifg=' . s:rgb_15 ' guibg=' . s:rgb_10
-          execute 'highlight LightlineRight_normal_0_1 ctermfg=239 ctermbg=244 guifg=' . s:rgb_10 ' guibg=' . s:rgb_12
-          execute 'highlight LightlineRight_normal_1   ctermfg=230 ctermbg=244 guifg=' . s:rgb_15 ' guibg=' . s:rgb_12
-          execute 'highlight LightlineRight_normal_1_2 ctermfg=244 ctermbg=187 guifg=' . s:rgb_12 ' guibg=' . s:rgb_7
-        else
-          execute 'highlight LightlineLeft_normal_0    ctermfg=234 ctermbg=33  guifg=' . s:rgb_8  ' guibg=' . s:rgb_4
-          execute 'highlight LightlineLeft_normal_0_1  ctermfg=33  ctermbg=240 guifg=' . s:rgb_4  ' guibg=' . s:rgb_11
-          execute 'highlight LightlineLeft_normal_1    ctermfg=234 ctermbg=240 guifg=' . s:rgb_8  ' guibg=' . s:rgb_11
-          execute 'highlight LightlineLeft_normal_1_2  ctermfg=240 ctermbg=235 guifg=' . s:rgb_11 ' guibg=' . s:rgb_0
-          execute 'highlight LightlineRight_normal_0   ctermfg=234 ctermbg=245 guifg=' . s:rgb_8  ' guibg=' . s:rgb_14
-          execute 'highlight LightlineRight_normal_0_1 ctermfg=245 ctermbg=240 guifg=' . s:rgb_14 ' guibg=' . s:rgb_11
-          execute 'highlight LightlineRight_normal_1   ctermfg=234 ctermbg=240 guifg=' . s:rgb_8  ' guibg=' . s:rgb_11
-          execute 'highlight LightlineRight_normal_1_2 ctermfg=240 ctermbg=235 guifg=' . s:rgb_11 ' guibg=' . s:rgb_0
-        endif
       endfunction
 
   " Font ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .............................................................. Switch font
 
-      " balance left right margins
+      " balance left right margins with font size changes
       function! ui#Margin()
+        call core#Trace('ui#Margin()')
         let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth) / 2])])
-        call Quietly('LiteDFM')
+        call core#Quietly('LiteDFM')
       endfunction
 
-      function! ui#Fontspace(prose, source)
-        if Prose()
-          execute 'set guifont='   . s:prose_font  . ' ' . a:prose
-          execute 'set linespace=' . a:prose
-        else
-          execute 'set guifont='   . s:source_font . ' ' . a:prose
-          execute 'set linespace=' . a:source
+      function! ui#Font(size)
+        call core#Trace('ui#Font()')
+        execute 'set guifont='   . (core#Prose() ? s:prose_font : s:source_font)  . ' ' . a:size
+        if exists('s:size')
+          call core#RedrawGui()             " gui redrawi for font size change
         endif
+        let s:size = a:size
       endfunction
 
       " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
       function! ui#FontSize(type)
+        call core#Trace('ui#FontSize()')
         if $DISPLAY > ''
-          if g:font_type == a:type
-            return
+          if g:font_type != a:type
+            let g:font_type = a:type
+            let l:size      = system('fontsize')
+            call ui#Font(a:type == 0 ? l:size : l:size + s:font_step)
+            set laststatus=2                " turn on statusline
           endif
-          let g:font_type = a:type
-          let l:size      = system('fontsize')
-          let l:guif      = substitute(&guifont, '\([0-9]*\)', '\1', '')
-
-          if l:guif == (l:size + s:font_step) || a:type == 0
-            call ui#Fontspace(l:size, 0)
-            " let g:lite_dfm_left_offset = 22
-          else
-            call ui#Fontspace(l:size + s:font_step, 1)
-            " let g:lite_dfm_left_offset = 18
-          endif
-
-          " fix statusline/commandline position (drawn outside window)
-          execute 'sleep ' . s:delay
-          call RefreshGui()
-          execute 'sleep ' . s:delay
-          call ui#Margin()
         endif
       endfunction
 
       function! ui#FontSwitch()
+        call core#Trace('ui#FontSwitch()')
         call ui#FontSize(g:font_type == 1 ? 0 : 1)
-        if ! Prose()
-          call Quietly('LiteDFMClose')
+        if !core#Prose()
+          call core#Quietly('LiteDFMClose')
           call ui#LiteType()
         endif
       endfunction
@@ -245,72 +227,111 @@
 
     " ................................................................ Code view
 
+      function! ui#LiteLine()
+        call core#Trace('ui#LiteLine()')
+        if g:view == 0
+          " disable lightline to allow new settings to be loaded
+          call lightline#disable()
+          call LightLine()                  " see setting.vim
+          " match lightline to current colorscheme
+          " see https://github.com/itchyny/lightline.vim/issues/104
+          " force load with different colorscheme name (only difference to solarized_light)
+          execute "let g:lightline.colorscheme = 'solarized_" . &background . "'"
+          call lightline#init()
+          call lightline#colorscheme()
+          call lightline#update()
+          call lightline#enable()
+        endif
+        set laststatus=2                    " turn on statusline
+      endfunction
+
       " source code style
       function! ui#CodeView()
-        " restore CursorLine syntax highlighting (if altered by ProseView)
-        if s:view != 0
-          syntax enable
-        endif
-        let s:view = 0
+        call core#Trace('ui#CodeView()')
+        let g:view = 0
+        " restore CursorLine syntax highlighting before applying themes
+        syntax enable
         if exists('g:loaded_limelight')
           execute 'Limelight!'
         endif
         call ui#Theme()
-        call IndentTheme()
-        call ui#LiteFix()
-        execute 'highlight LineNr guifg=' . g:dfm_fg_line
-        call lightline#colorscheme()
-        set laststatus=2                    " turn on statusline
+        call ui#LiteLine()
+        execute 'highlight LineNr guifg=' . s:dfm_fg_line
         set showmode
       endfunction
 
-    " ............................................................... Prose view
+    " .................................................... Distraction free view
 
       " vimwiki prose style
-      function! ui#ProseView()
-        let s:view  = 1
-        let s:proof = 1
+      function! ui#DfmView(...)
+        call core#Trace('ui#DfmView()')
+        let g:view  = 1
         " silent !tmux set status off
         " set numberwidth=1                 " goyo settings
         " set nonumber
         " set fillchars-=stl:.              " remove statusline fillchars '.' set by goyo.vim
         " set fillchars+=stl:\ "
-        call ui#Theme()
         if &filetype == 'vimwiki'
           call VimwikiLink()                " restore vimwiki link
         endif
-        execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . g:dfm_fg
+        execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . s:dfm_fg
         set colorcolumn=0
         set foldcolumn=0
         set laststatus=0
         set noshowmode
         set scrolloff=8
-        set spell
-        call ui#ShowInfo(1)
+        if core#Prose()
+          set spell
+        else
+          set nospell
+        endif
+        if !a:0
+          " initialize view mode (negate toggle)
+          let b:proof = b:proof == 0 ? 1 : 0
+          call ui#ToggleProof()
+        endif
       endfunction
 
       " toggle full document highlight
       function! ui#ToggleProof()
+        call core#Trace('ui#ToggleProof()')
+        let b:proof = b:proof == 0 ? 1 : 0
         call ui#Theme()
-        if s:proof == 0
+        execute 'highlight Normal guifg=' . s:dfm_proof
+        if b:proof == 1
           if &filetype == 'vimwiki'
             " hack to apply more robust markdown syntax highlighting
             " note: this hack may break vimwiki navigation in the future!
             set filetype=markdown
-            call ui#ProseView()
+            call ui#DfmView(0)
             " force margin centering
-            call Refresh()
+            call ui#Retheme()
           endif
-          execute 'highlight Normal guifg=' . g:dfm_proof
-          let s:proof = 1
           call ui#ShowInfo(1)
           execute 'Limelight!'
         else
-          execute 'highlight Normal guifg=' . g:dfm_unfocused
-          let s:proof = 0
           call ui#ShowInfo(0)
           execute 'Limelight'
         endif
+      endfunction
+
+    " .............................................................. Switch View
+
+      function! ui#SetView()
+        call core#Trace('ui#SetView()')
+        if g:view == 0
+          call ui#CodeView()
+        else
+          call ui#DfmView()
+        endif
+      endfunction
+
+      function! ui#SwitchView()
+        call core#Trace('ui#SwitchView()')
+        let l:col = col('.')
+        let g:view = g:view == 0 ? 1 : 0
+        call ui#SetView()
+        execute 'normal! ' . l:col . '|'
       endfunction
 
   " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -318,13 +339,17 @@
     " ........................................................... Screen display
 
       function! ui#LiteType()
+        call core#Trace('ui#LiteType()')
+        call ui#FontSize(core#Prose() ? 1 : 0)
         call ui#Palette()
-        if Prose()
-          call ui#ProseView()
-        else
-          call ui#CodeView()
+        if !exists('b:proof')
+          let b:proof = s:initial_view
         endif
-        call Refresh()                      " if margins not properly set, do it now
+        if exists('g:view')
+          call ui#SetView()
+        else
+          call ui#DfmView()                 " the default startup view
+        endif
       endfunction
 
   " Enhanced statusline ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -333,12 +358,15 @@
 
       " center dfm indicator / proofing statusline
       function! ui#WikiInfo(proof)
+        " call core#Trace('ui#WikiInfo()')
         try                                 " trap snippet insertion interruption
           let g:prose = 1
           if a:proof == 0
-            let l:name = (&modified ? '' : '')
+            let l:name = (&modified ? '' : '')
           else
-            let l:name = expand('%:t:r') . (&modified ? '    ' : '    ')  . WordCount()
+            let l:name = expand('%:t' . (core#Prose() ? ':r' : ''))
+                \        . (&modified ? '    ' : '    ')
+                \        . (core#Prose() ? info#WordCount() : col('.'))
           endif
           let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
           return l:leader . l:name
@@ -347,11 +375,12 @@
       endfunction
 
       function! ui#ShowInfo(proof)
+        call core#Trace('ui#ShowInfo()')
         call lightline#disable()
         if s:wikiinfo == 1
           execute 'set statusline=%{ui#WikiInfo(' . a:proof . ')}'
-          " goyo defines highlight term/gui reverse
-          execute 'highlight statusline guibg=' . g:dfm_status . ' guifg=' . g:dfm_bg
+          " undo statusline gui=reverse
+          execute 'highlight statusline gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
           set laststatus=2
         else
           " simply hide statusline content
@@ -360,20 +389,20 @@
       endfunction
 
       function! ui#RefreshInfo()
-        call ui#ShowInfo(s:proof)
+        call core#Trace('ui#RefreshInfo()')
+        call ui#ShowInfo(b:proof)
       endfunction
 
     " ........................................................ Toggle statusline
 
       function! ui#ToggleInfo()
-        if Prose()                          " toggle between writing and proofing modes
+        call core#Trace('ui#ToggleInfo()')
+        if core#Prose()                     " toggle between writing and proofing modes
           call ui#ToggleProof()
         else
           call ui#CodeView()                " refresh margin
           let g:code = (g:code == 0 ? 1 : 0)
         endif
-        call Refresh()                      " if margins not properly set, do it now
-        call ui#Cursor()                    " restore cursor (fullscreen toggling reverts defaults)
       endfunction
 
 " ui.vim

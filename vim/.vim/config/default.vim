@@ -3,36 +3,24 @@
 " Defaults
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " Registers ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .................................................................... Marks
-
-      set viminfo='100,f1                   " save up to 100 marks, enable capital marks
-      set viminfo^=%                        " remember info about open buffers on close
-      " delete all marks in current buffer, see signature plugin
-      " nmap <silent><leader>'' :delmarks!<CR>
-
-      " ................................................................. Macros
-
-      " repeat last macro
-      nnoremap Q @@
-
   " Databases ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ..................................................................... Help
+    " .................................................................... Setup
 
       augroup default
         autocmd!
       augroup END
 
+    " ..................................................................... Help
+
       autocmd default BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 
-      imap <F1>           <C-o>:help<Space>
       nmap <F1>           :help<Space>
+      imap <F1>           <C-o>:help<Space>
       vmap <F1>           <C-o>:help<Space>
       " list my function and leader key assignments
-      imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
       nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>
+      imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
       vmap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
 
     "  ............................................................ Undo history
@@ -61,6 +49,25 @@
       highlight SpellRare  guisp=red gui=undercurl,bold guifg=blue
       highlight SpellLocal guisp=red gui=undercurl,bold guifg=green
 
+  " Registers ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .................................................................... Marks
+
+      set viminfo='100,f1                   " save up to 100 marks, enable capital marks
+      set viminfo^=%                        " remember info about open buffers on close
+      " delete all marks in current buffer, see signature plugin
+      " nmap <silent><leader>'' :delmarks!<CR>
+
+      " ................................................................. Macros
+
+      " quick q macro
+      nnoremap <C-q>      @q
+      " edit q macro
+      nnoremap <leader>.. :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
+      " repeat last macro
+      nnoremap Q          @@
+
+
   " Format ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ..................................................................... Line
@@ -70,7 +77,7 @@
       " double spaces at the end of a wrapped line, becomes <br> by markdown
       set nojoinspaces                      " force single spacing after sentence punctuation!
       set textwidth=80                      " normally 78-80, see autocmd for mail
-      let g:linewidth   = &textwidth        " see info.vim
+      let g:linewidth = &textwidth          " see info#LongLines(), heading.vim
 
     " ..................................................................... Tabs
 
@@ -95,27 +102,28 @@
       set hlsearch                          " hilight searches by default
       set ignorecase                        " ignore case when searching
       set incsearch                         " find the next match as we type the search
+      set magic                             " regex magic
       set showmatch                         " set show matching parenthesis
       set smartcase                         " ignore case if search pattern is all lowercase
 
       " tab to bracket pairs
-      nmap     <Tab>     %
-      vmap     <Tab>     %
-      " while at it.. use extended regex statements for searches!
-      cmap     %%        \v
-      cmap     ^^        \C
+      nmap     <Tab>        %
+      vmap     <Tab>        %
+      " disable magic and case sensitivity
+      cmap     %%           \M
+      cmap     ^^           \C
 
       " clear search highlight
-      nmap     <silent>\ :noh<CR>
+      nmap     <silent>\    :noh<CR>
 
       " repeat latest f,t,F,T see modal searching remaps above
-      nnoremap ,,        ;
-      vnoremap ,,        ;
+      nnoremap ,,           ;
+      vnoremap ,,           ;
 
     " .................................................................. Replace
 
-      nmap     %%        :%s
-      vmap     %%        :s
+      nmap     %%           :%s
+      vmap     %%           :s
 
     " ........................................................... Tab completion
 

@@ -4,7 +4,7 @@
 # see bundle_install
 
 = virtual machines
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # dkms                         [cpu i7]
   virtualbox-host-modules-arch [cpu i7]
   virtualbox                   [cpu i7]
@@ -16,7 +16,7 @@
 
 
 = wine for topaz
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   lib32-ncurses                [cpu i7]
   lib32-mpg123                 [cpu i7]
   winetricks                   [cpu i7]

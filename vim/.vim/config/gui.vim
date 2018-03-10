@@ -45,11 +45,11 @@
       let g:scrolloff = &scrolloff
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1
-      " easier horizontal scrolling
-      noremap <C-Left>       zL
-      noremap <C-Right>      zH
+      " horizontal scrolling
+      noremap <C-S-Left>     zL
+      noremap <C-S-Right>    zH
 
-      " space now commandeered as leader by spacemacs wannabe :-)
+      " space now commandeered as leader by spacemacs wannabe :)
       " " manual jump scrolling
       " if $HOST == 'monad'
       "   nnoremap <Space>   10jzz
@@ -102,17 +102,6 @@
       " autocmd gui InsertEnter * set norelativenumber
       " autocmd gui InsertLeave * set relativenumber
 
-    " .................................................................... Theme
-
-      " hide tilde marker
-      autocmd gui BufWinEnter * highlight EndOfBuffer ctermfg=bg guifg=bg
-      " reset menu highlight after loading autocompletion plugin
-      autocmd gui BufWinEnter * highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
-      " match command line tab menu
-      autocmd gui BufWinEnter * highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
-      " toggle in/out to fill window
-      autocmd gui VimEnter    * call RefreshGui()
-
     " ................................................... Status / command lines
 
       " see Lightline plugins.vim
@@ -128,7 +117,7 @@
       set omnifunc=syntaxcomplete#Complete
       syntax on                             " turn on syntax highlighting
       " refresh highlighting on arm
-      autocmd gui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
+      autocmd gui CursorHold * if !core#Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
 
     " ...................................................... White space markers
 

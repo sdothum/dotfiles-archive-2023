@@ -14,6 +14,7 @@ usage() {
   echo "                punctuation=mixed, default 'simple'"
   echo "                corpus=<filename>, default 'practice'"
   echo "                output=<filename>, default $punctuation"
+  echo "                ise,               default no British 'ise' conversion"
   exit 1
 }
 
@@ -33,6 +34,7 @@ do
     punctuation=*) eval $1 ;;
     corpus=*     ) eval $1 ;;
     output=*     ) eval $1 ;;
+    ise          ) ise='s/(...[^s])iz((e[drs]*|ation)([ -]|$))/\1is\2/gI' ;;
 
     *) sentences=$@
        break ;;
@@ -133,7 +135,8 @@ wordhypen() {
     do
       echo $i | tr '\n' "$(random 2 '-' ' ')"
     done
-  fi | fold -s --width=$(( $1 * 5 ))
+  # apply ise conversion
+  fi | sed -r "$ise" | fold -s --width=$(( $1 * 5 ))
 }
 
 # ................................................................... Paragraphs

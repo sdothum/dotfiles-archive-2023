@@ -39,8 +39,8 @@ browser=$default
 while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit
 do
   case ${browser} in
-    "$EDIT"    ) gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
-                 dmenu bookmarks ;;
+    "$EDIT"       ) gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
+                    dmenu bookmarks ;;
 
     brave         |\
     chromium      |\
@@ -58,12 +58,12 @@ do
     uzbl          |\
     vimb          |\
     vimbt         |\
-    xombrero   ) focus $browser "$1" ;;
+    xombrero      ) focus $browser "$1" ;;
 
-    qutebrowser) focus qutebrowser --target tab "$1" ;;
+    qutebrowser   ) focus qutebrowser --target tab "$1" ;;
 
-    w3m |\
-    elinks     ) term "$browser" $browser "$1" ;;
+    w3m           |\
+    elinks        ) term "$browser" $browser "$1" ;;
   esac
   exit
 done

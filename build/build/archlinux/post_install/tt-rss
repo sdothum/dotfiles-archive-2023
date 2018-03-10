@@ -28,7 +28,7 @@ if [ ! -d /srv/lib/postgresql/data/base ] ;then
 fi
 
 ifnsed /usr/lib/systemd/system/tt-rss.service 'SELF_URL_PATH=http://localhost:8000/tt-rss/' \
-                                            '/Service/aEnvironment="SELF_URL_PATH=http://localhost:8000/tt-rss/"'
+                                              '/Service/aEnvironment="SELF_URL_PATH=http://localhost:8000/tt-rss/"'
 
 server && systemd enable tt-rss || annotate "sudo systemctl start tt-rss"
 

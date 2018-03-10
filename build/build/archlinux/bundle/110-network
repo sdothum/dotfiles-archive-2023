@@ -4,7 +4,7 @@
 # see bundle_install
 
 = connectivity
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
 # bluez
 # bluez-utils
 d " connman post install disrupts internet connection, install last
@@ -19,14 +19,14 @@ d * cmst
 
 
 = network
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
   bind-tools
   dnsmasq
   dnsutils
 
 
 = network monitor
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # tcptrack
 # dstat
   iftop
@@ -39,13 +39,13 @@ d * cmst
 
 
 = network security
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   openssh
 # rssh
 
 
 = network share
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
 # dropbox-experimental
   nfs-utils
@@ -58,14 +58,14 @@ d * cmst
 
 
 = penetration testing
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # metasploit    [server]
   nmap          [server]
 # wireshark-gtk [server]
 
 
 = proxies
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # adsuck
 # polipo  [server]
 # privoxy [server]
@@ -73,12 +73,12 @@ d * cmst
 
 
 = socket
-# ▔▔▔▔▔▔
+= ▔▔▔▔▔▔
   socat
 
 
 = sync
-# ▔▔▔▔
+= ▔▔▔▔
 # btsyncindicator
 # btsync
   rsync

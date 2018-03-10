@@ -37,7 +37,7 @@ hc keybind Super-equal              spawn dmenu calc
 hc keybind Super-BackSpace          spawn toggle ncurses
 if [ $PLANCK ] ;then
   if [ $BEAKL ] ;then
-    hc keybind Super-z              spawn toggle rox
+    hc keybind Super-x              spawn toggle rox
   else
     hc keybind Super-period         spawn toggle rox
   fi
@@ -50,7 +50,8 @@ else
   hc keybind Super-backslash        spawn toggle conky
   hc keybind Super-Shift-backslash  spawn toggle panel
 fi
-hc keybind Super-F1                 spawn keymap toggle
+# hc keybind Super-F1               spawn keymap toggle
+hc keybind Super-F1                 spawn dmenu menu
 hc keybind Super-a                  spawn dmenu abook
 hc keybind Super-b                  spawn dmenu wiki
 hc keybind Super-Shift-b            spawn dmenu apps
@@ -61,15 +62,14 @@ hc keybind Super-Shift-d            spawn dmenu dict
 hc keybind Super-e                  spawn dmenu scripts
 hc keybind Super-Shift-e            spawn dmenu edit
 hc keybind Super-h                  spawn dmenu shistory
+hc keybind Super-Shift-k            spawn clack toggle
+hc keybind Super-Control-k          spawn clack swap
 hc keybind Super-l                  spawn lock_screen
 hc keybind Super-n                  spawn dmenu notes draft
 hc keybind Super-Shift-n            spawn dmenu notes
 hc keybind Super-p                  spawn dmenu pass
 hc keybind Super-Shift-p            spawn proof toggle
 hc keybind Super-Control-p          spawn hardcopy eject
-hc keybind Super-q                  spawn dmenu menu
-hc keybind Super-Shift-q            spawn clack toggle
-hc keybind Super-Control-q          spawn clack swap
 hc keybind Super-s                  spawn dmenu system
 hc keybind Super-t                  spawn conky clock
 hc keybind Super-Shift-t            spawn env CONKYRC=$CONKY_Q2 conky clock
@@ -80,7 +80,7 @@ hc keybind Super-w                  spawn focus $BROWSER
 hc keybind Super-Shift-w            spawn dmenu history
 hc keybind Super-Control-w          spawn dmenu bookmarks
 hc keybind Super-Shift-Control-w    spawn kill -KILL $BROWSER
-hc keybind Super-x                  spawn dmenu halt
-hc keybind Super-Shift-x            spawn dmenu screensaver
+hc keybind Super-z                  spawn dmenu halt
+hc keybind Super-Shift-z            spawn dmenu screensaver
 
 # vim: set ft=sh: #

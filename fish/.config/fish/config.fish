@@ -67,7 +67,7 @@ set -x BROWSER qutebrowser
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
 # [ -z (pidof squid) ] ;or set -x HTTP_PROXY http://localhost:3128/
-set -x HTTP_PROXY http://luna:3128/
+# set -x HTTP_PROXY http://luna:3128/
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
@@ -81,9 +81,11 @@ set -x SELF_URL_PATH 'http://luna:8000/tt-rss/#f=39&c=1'
 # set -x EDITOR 'vi -e'
 set -x EDITOR 'gvim -f'
 set -x VISUAL 'gvim -f'
+# fzf-vim theme
+set -x FZF_DEFAULT_OPTS "--cycle --reverse  --prompt='    ─────  ' --ansi --color=dark,hl:#dc322f,hl+:#dc322f,fg+:232,bg+:#fdf6e3,bg:#fdf6e3,marker:160,prompt:#268bd2,info:#268bd2"
+
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
-
 # less prompt
 set -x LESS '-RX -P ?B %f  %lt-%lb/%L  %Pb\%: [pipe]  %lt-%lb/\.\.'
 set -x PAGER 'less'
@@ -99,7 +101,8 @@ set -x HOST (hostname)
 
 # ...................................................................... Session
 
+set -x SESSION $HOME/.session
 console_login
 user_login
 # clear 'fish' tmux window name
-pidof tmux >/dev/null ;and tmux rename-window ''
+pidof tmux >/dev/null ;and begin console ;or tmux rename-window '' ;end

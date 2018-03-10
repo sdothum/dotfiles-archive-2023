@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................. cloudconvert-cli
+
+sudo npm install -g cloudconvert-cli
+annotate 'requires CLOUDCONVERT_API_KEY'
+
+# vim: set ft=sh: #

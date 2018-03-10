@@ -4,15 +4,20 @@ function fish_prompt --description 'Write out the prompt'
 
   # console prompt hacks for the anal..
   if test $TERM = "linux"
-    set -g YELLOW 'normal'
-    set -g ORANGE 'red'
-    set -g RED    'red'
-    set -g BLUE   'blue'
+    set -g YELLOW   'normal'
+    set -g ORANGE   'red'
+    set -g RED      'red'
+    set -g BLUE     'blue'
   else
-    set -g YELLOW 'FC6'
-    set -g ORANGE 'F60'
-    set -g RED    'F00'
-    set -g BLUE   '03F'
+    # set -g YELLOW 'FC6'
+    # set -g ORANGE 'F60'
+    # set -g RED    'F00'
+    # set -g BLUE   '03F'
+    # quantum colour palette
+    set -g YELLOW   'd5b875'
+    set -g ORANGE   'd7956e'
+    set -g RED      'dd7186'
+    set -g BLUE     '70ace5'
   end
   set -g BLINK (printf "\e[5m")
   set -g NOBLINK (printf "\e[25m")

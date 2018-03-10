@@ -9,7 +9,6 @@
 # ...................................................................... Heading
 
 # mark content division
-echo
 drawline '▁' ${_green_}
 heading ' ' $@
 drawline '▔' ${_green_}

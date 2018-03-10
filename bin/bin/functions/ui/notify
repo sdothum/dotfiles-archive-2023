@@ -26,16 +26,18 @@ do
     console   ) console=true ;;
     cron      ) cron=true ;;
 
-    low    |\
-    normal |\
+    low       |\
+    normal    |\
     critical  ) urgency="-u $1" ;;
 
     blackboard) urgency="-h string:bgcolor:#000000" ;;
 
     *         ) case $1 in
                   # none numeric field
-                  '' | *[!0-9]*) break ;;
-                  *            ) expire="--expire-time=$(( $1 * 1000 ))" ;;
+                  ''      |\
+                  *[!0-9]*) break ;;
+
+                  *       ) expire="--expire-time=$(( $1 * 1000 ))" ;;
                 esac
   esac
   shift

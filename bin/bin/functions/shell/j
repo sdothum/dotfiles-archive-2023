@@ -13,14 +13,14 @@
 
 # fish shell ignores non-fish cd's, see j.fish
 case $# in
-  0) pwd | grep -q $HOME && dir=$(fcache $refresh $HOME | fzf) ||
-                            dir=$(fcache $refresh $PWD | fzf) ;;
+  0) pwd | grep -q $HOME && dir=$(fcache $refresh $HOME | fZf) ||
+                            dir=$(fcache $refresh $PWD | fZf) ;;
 
-  1) [ -d $1 ] && dir=$(fcache $refresh $1 | fzf) ||
-                  dir=$(fcache $refresh $HOME | fzf -q $1) ;;
+  1) [ -d $1 ] && dir=$(fcache $refresh $1 | fZf) ||
+                  dir=$(fcache $refresh $HOME | fZf -q $1) ;;
 
-  2) [ -d $1 ] && dir=$(fcache $refresh $1 | fzf -q $2) ||
-                  dir=$(fcache $refresh $HOME | egrep "$1" | fzf -q $2) ;;
+  2) [ -d $1 ] && dir=$(fcache $refresh $1 | fZf -q $2) ||
+                  dir=$(fcache $refresh $HOME | egrep "$1" | fZf -q $2) ;;
 esac
 
 [ $dir ] && cd $dir

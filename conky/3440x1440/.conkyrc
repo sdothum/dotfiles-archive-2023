@@ -18,13 +18,16 @@ conky.config = {
 
   double_buffer = true,
   no_buffers = true,
--- text_buffer_size 2048
+  -- text_buffer_size 2048
 
--- span 2 monitors! 1680+2560 (0:4239) minus panel width
--- span 2 monitors!
-  alignment = 'top_right',
-  gap_x = 29,
-  gap_y = 29,
+  -- span 2 monitors! 1680+3440 (0:5119) minus panel width
+  -- display = 'HDMI-0',
+  -- alignment = 'top_right',
+  -- gap_x = 29,
+  -- gap_y = 29,
+  -- latest xorg requires offset from 0x0 of primary monitor
+  gap_x = 3224,
+  gap_y = -355,
   minimum_width = 190, minimum_height = 1440,
   maximum_width = 190,
   own_window = true,

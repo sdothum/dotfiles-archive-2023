@@ -4,7 +4,7 @@
 # see bundle_install
 
 = sinatra web framework
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # g exifr
 g kramdown
 g mail
@@ -21,7 +21,7 @@ g xapian-ruby
 
 
 = web server
-# ▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔
 # nginx
 # nginx-passenger
 d g passenger

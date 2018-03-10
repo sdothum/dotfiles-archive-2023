@@ -8,7 +8,7 @@
 # archlinux-pi
 
 = sound
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   alsa-utils
   alsa-plugins
   pavucontrol
@@ -17,7 +17,7 @@
 
 
 = system utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cronie
   logrotate
   ntp
@@ -29,7 +29,7 @@ d ? preload
 
 
 = file
-# ▔▔▔▔
+= ▔▔▔▔
   ack
 # ripgrep
   stow
@@ -37,12 +37,12 @@ d ? preload
 
 
 = file compression
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   file-roller
 
 
 = file managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   ncdu
   ranger
   rox
@@ -51,7 +51,7 @@ d ? preload
 
 
 = file systems
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
   exfat-utils
 d " add armv7h to arch in pkgbuild
@@ -59,12 +59,12 @@ d ? watchman
 
 
 = info screens
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   neofetch
 
 
 = cups printing
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   cups
   ghostscript
   gsfonts
@@ -72,7 +72,7 @@ d ? watchman
 
 
 = fonts
-# ▔▔▔▔▔
+= ▔▔▔▔▔
   adobe-base-14-fonts
   libxft
   noto-fonts
@@ -87,25 +87,25 @@ d ? watchman
 
 
 = package managers
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   downgrade
   pkgfile
 
 
 = security
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
 d pass
   sudo
 
 
 = system monitor
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   glances
   htop
 
 
 = terminal multiplexors
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   tmux
 
 
@@ -120,13 +120,13 @@ d pass
 
 
 = network security
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   openssh
   wpa_supplicant
 
 
 = network share
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   avahi
 # d " add armv7h to arch in pkgbuild
 # d ? cachefilesd
@@ -137,17 +137,17 @@ d pass
 
 
 = proxies
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 # squid
 
 
 = socket
-# ▔▔▔▔▔▔
+= ▔▔▔▔▔▔
   socat
 
 
 = sync
-# ▔▔▔▔
+= ▔▔▔▔
   rsync
 # syncthing
 # syncthing-inotify
@@ -155,7 +155,7 @@ d ? watchman
 
 
 = appearance
-# ▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔
   compton
   lxappearance
 d " add armv7h to arch in pkgbuild
@@ -164,14 +164,14 @@ d ? unclutter-xfixes-git
 
 
 = desktop
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
   conky
 d " add armv7h to arch in pkgbuild
 d ? lemonbar-xft-git
 
 
 = desktop utilities
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 d " add armv7h to arch in pkgbuild
 d ? alock-git
   python-pywal
@@ -179,7 +179,7 @@ d ? alock-git
 
 
 = gtk themes and engines
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   adapta-gtk-theme
   gtk-engine-murrine
 # "direct rsync from /usr/share/icons to .local/share"
@@ -187,7 +187,7 @@ d ? alock-git
 
 
 = user interface
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   autokey-py3
   dbus-glib
 # "stest contained in dmenu package"
@@ -199,14 +199,14 @@ d ? alock-git
 
 
 = window properties
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 d " add armv7h to arch in pkgbuild
 d ? sutils-git
 d ? xtitle-git
 
 
 = x11
-# ▔▔▔
+= ▔▔▔
   autocutsel
   xdotool
   xf86-input-keyboard
@@ -214,48 +214,50 @@ d ? xtitle-git
 
 
 = file transfer
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   wget
 
 
 = editors
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
   ctags
   texlive-core
   texlive-latexextra
 
 
 = java
-# ▔▔▔▔
+= ▔▔▔▔
   icedtea-web
   jre7-openjdk
 
 
 = software tools
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   time
 
 
 = languages
-# ▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔
   python
   ruby
 g term-ansicolor
 
 
 = video players
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   omxplayer-git
 
 
 = mail
-# ▔▔▔▔
+= ▔▔▔▔
+" add export CFLAGS="-D_FILE_OFFSET_BITS=64" to package() of pkgbuild
+? python2-gpg
   alot
   msmtp-mta
 
 
 = browsers
-# ▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔
   chromium
   qutebrowser
   surf
@@ -267,7 +269,7 @@ g term-ansicolor
 
 
 = chat/twitter
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   bitlbee
 # d " add armv7h to arch in pkgbuild
 # d ? centerim5-git
@@ -277,11 +279,11 @@ g term-ansicolor
 
 
 = web server
-# ▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔
 # pixelserv
 
 = viewers
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
   feh
   zathura
   zathura-ps
@@ -289,12 +291,12 @@ g term-ansicolor
 
 
 = media server/player
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   kodi-rpi
 
 
 = applications
-# ▔▔▔▔▔▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   aiksaurus
 d " add armv7h to arch in pkgbuild
 d ? amphetype-svn
@@ -307,7 +309,7 @@ d ? amphetype-svn
 
 
 = network
-# ▔▔▔▔▔▔▔
+= ▔▔▔▔▔▔▔
 d " drops internet connection (do last!)
 d * connman
 

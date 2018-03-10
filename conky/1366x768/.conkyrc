@@ -1,0 +1,120 @@
+-- sdothum - 2016 (c) wtfpl
+
+-- X11 Desktop
+-- ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+-- ....................................................................... Conky
+
+-- see bin/functions/conky/theme
+
+conky.config = {
+
+  background = true,
+  update_interval = 1,
+
+  cpu_avg_samples = 2,
+  net_avg_samples = 2,
+  temperature_unit = 'celsius',
+
+  double_buffer = true,
+  no_buffers = true,
+-- text_buffer_size 2048
+
+  alignment = 'top_right',
+  gap_x = 14,
+  gap_y = 14,
+  minimum_width = 185, minimum_height = 600,
+  maximum_width = 185,
+  own_window = true,
+-- own_window_type panel
+  own_window_type = 'dock',
+  own_window_transparent = true,
+-- own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+  own_window_hints = 'sticky,above',
+  border_inner_margin = 0,
+  border_outer_margin = 14,
+
+  draw_shades = false,
+  draw_outline = false,
+  draw_borders = false,
+  draw_graph_borders = false,
+
+  override_utf8_locale = true,
+  use_xft = true,
+  font = 'Noto Sans:size=7',
+  xftalpha = 0.5,
+  uppercase = false,
+
+  default_color = io.popen('conky color default_color'):read(),
+  color0 = io.popen('conky color color0'):read(),
+  color1 = io.popen('conky color color1'):read(),
+  color2 = io.popen('conky color color2'):read(),
+  color3 = io.popen('conky color color3'):read(),
+  color4 = io.popen('conky color color4'):read(),
+  color5 = io.popen('conky color color5'):read(),
+  color6 = io.popen('conky color color6'):read(),
+  color7 = io.popen('conky color color7'):read(),
+  color8 = io.popen('conky color color8'):read(),
+  color9 = io.popen('conky color color9'):read(),
+
+  lua_load = '~/.conky/conky-rings.lua',
+  lua_draw_hook_post = 'main',
+
+};
+
+conky.text = [[
+-- ${voffset 14}
+-- ${goto 80}${color}${font Noto Sans:size=22}${time %e}
+-- ${goto 50}${color1}${voffset -25}${font Noto Sans:size=10}${time %A}
+-- ${goto 65}${color2}${voffset -2}${font Noto Sans:size=9}${time %b}${voffset -2} ${color3}${font Noto Sans:size=12}'${time %y}
+-- ${voffset 10}${font}${color3}${alignr}${time %-Vw  /  %-jd}
+-- ${voffset -137}${font Noto Sans:size=30:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${alignr} ${exec query tag}
+--
+-- ${voffset -37}
+-- ${goto 55}${font}${color1}${texeci 900 conky weather}
+-- # ${goto 65}${font}${color2}${texeci 900 conky weather kingston} ${alignr}Kingston
+-- # ${goto 65}${font}${color3}${texeci 900 conky weather calgary} ${alignr}Calgary
+-- ${goto 65}${font}${color2}${kernel} ${alignr}${uptime}
+-- # ${goto 75}${font}${color3}${nodename} ${alignr}${fs_type /var}
+-- ${voffset -148}
+-- ${font}${color2}${alignr}${exec query wname}
+-- ${voffset 105}
+--
+-- # ${goto 75}${font Noto Sans:size=7:style=Bold}${color}MPD ${alignr}${mpd_status}
+-- # # ${goto 75}${font}${color1}volume
+-- # ${goto 75}${font}${color0}${lua_parse null ${mpd_title}}
+-- # ${goto 75}${font}${color0}${alignr}${lua_parse null ${mpd_artist}}
+-- ${goto 75}${color7}${loadgraph 15,0}
+-- ${voffset -28}${goto 75}${color8}${diskiograph 15,0}
+-- ${voffset -5}${goto 75}${font}${color1}Load   ${loadavg 1}   ${loadavg 2}   ${loadavg 3} ${alignr}${lua_parse bandwidth ${diskio}}
+--
+-- ${voffset 20}
+-- ${goto 75}${font Noto Sans:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq) + 2 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
+-- # ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//' | sort | tail -1}°C
+-- # ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec echo "1 k $(sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//') + 2 / .5 + 0 k 1 / p" | dc}°C
+-- ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${acpitemp}°C
+-- # ${goto 75}${font Noto Sans:size=7:style=Bold}${color1}${threads} processes ${alignr}${cpu cpu0}%
+-- ${goto 75}${font}${color1}${top name 1}${alignr}${top cpu 1}%
+-- ${goto 75}${font}${color2}${top name 2}${alignr}${top cpu 2}%
+-- ${goto 75}${font}${color3}${top name 3}${alignr}${top cpu 3}%
+-- # ${goto 75}${font}${color2}GPU  ${alignr}${hwmon 1 temp 1}°C
+-- ${goto 75}${color7}${cpugraph 15,0}
+-- ${voffset -5}${goto 75}${font}${color1}${threads} processes ${alignr}${cpu cpu0}%
+--
+-- ${voffset 20}
+-- ${goto 75}${font Noto Sans:size=7:style=Bold}${color}MEM ${alignr}${mem}
+-- # ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}swap ${alignr}${lua_parse swap ${swap}}
+-- ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}/boot   ${color}(swap) ${alignr}${exec conky btrfs /}GiB
+-- ${goto 75}${font}${color1}${top_mem name 1}${alignr}${top_mem mem_res 1}
+-- ${goto 75}${font}${color2}${top_mem name 2}${alignr}${top_mem mem_res 2}
+-- ${goto 75}${font}${color3}${top_mem name 3}${alignr}${top_mem mem_res 3}
+--
+-- ${voffset 20}
+-- ${goto 75}${font Noto Sans:size=7:style=Bold}${color}${wireless_essid wlo1} ${alignr}${addr wlo1}${font Noto Sans:size=7}
+-- ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Battery ${alignr}${lua_parse battery ${battery_time}}
+-- ${goto 75}${color7}${downspeedgraph wlo1 15,0}
+-- ${voffset -28}${goto 75}${color8}${upspeedgraph wlo1 15,0}
+-- ${voffset -5}${goto 75}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlo1}}U   ${lua_parse bandwidth ${downspeed wlo1}}D
+]];
+
+-- vim: set ft=lua : --

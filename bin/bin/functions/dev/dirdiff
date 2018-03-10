@@ -11,15 +11,13 @@ usage() {
   exit 1
 }
 
-ignore='backups|debian|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
+ignore='backups|debian|\.history|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
 
 # ignore leading and trailing whitespace
 if [ "$1" = '-b' ] ;then
-  B=true
+  w=-w
+  diffopt='set diffopt+=iwhite'
   shift
-  one=$(mktemp)
-  two=$(mktemp)
-  trap "rm -f $one $two" EXIT
 fi
 
 [ $# -lt 2 ] && usage
@@ -33,16 +31,6 @@ else
   regex='*'
 fi
 
-compare() {
-  if [ $B ] ;then
-    sed 's/  */ /g' $1 >$one
-    sed 's/  */ /g' $2 >$two
-    diff $one $two
-  else
-    diff $1 $2
-  fi
-}
-
 for i in $(find $1 -type f | filter | egrep -v $ignore | egrep "$regex")
 do
   file=$(echo $i | sed "s|.*/*$1/||")
@@ -50,10 +38,9 @@ do
   while :
   do
     echo "${_green_}${blink}-> $file${_nocolor_}"
-    if ! compare $i $2/$file ;then
+    if ! diff $w $i $2/$file ;then
       # see herbstluftwm gvimdiff rule
-      if-no "edit $file" && break ||
-                            gvimdiff -f --role=gvimdiff $i $2/$file
+      if-no "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff $i $2/$file
       blink=${_blink_}
     else
       break

@@ -12,7 +12,7 @@ usage() {
 }
 
 # diff current sources with dotfiles git repo
-dotfiles=/net/depot/dotfiles
+dotfiles=${dotfiles:-/net/depot/dotfiles}
 current=$HOME/stow
 [ -d $dotfiles ] || git clone git@github.com:sdothum/dotfiles.git $dotfiles
 
@@ -25,7 +25,7 @@ do
               shift 2
               nosync=true ;;
 
-    -b      ) B=$1; shift ;;
+    -b      ) w=$1; shift ;;
     *       ) break ;;
   esac
 done
@@ -38,6 +38,6 @@ if [ -z $nosync ] ;then
   if-no "sync $dotfiles repo" || ( cd $dotfiles && git pull )
 fi
 
-dirdiff $B $current/$1 $dotfiles/$1 "$2"
+dirdiff $w $current/$1 $dotfiles/$1 "$2"
 
 # vim: set ft=sh: #

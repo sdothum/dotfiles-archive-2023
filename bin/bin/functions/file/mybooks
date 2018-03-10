@@ -12,15 +12,15 @@ usage() {
 }
 
 case "$@" in
-  mobi ) find -maxdepth 1 -name '*.mobi' -exec mybooks {} \; ;;
-  epub ) find -maxdepth 1 -name '*.epub' -exec mybooks {} \; ;;
+  mobi  ) find -maxdepth 1 -name '*.mobi' -exec mybooks {} \; ;;
+  epub  ) find -maxdepth 1 -name '*.epub' -exec mybooks {} \; ;;
 
   *mobi |\
-  *epub) author=$(echo "$@" | sed -r 's/.* - (.*)\.(mobi|epub)/\1/')
-                  mkdir -pv "$author" || exit 1
-                  mv -v "$@" "$author" ;;
+  *epub ) author=$(echo "$@" | sed -r 's/.* - (.*)\.(mobi|epub)/\1/')
+          mkdir -pv "$author" || exit 1
+          mv -v "$@" "$author" ;;
 
-  *    ) usage ;;
+  *     ) usage ;;
 esac
 
 # vim: set ft=sh: #

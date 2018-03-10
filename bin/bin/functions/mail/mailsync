@@ -11,18 +11,10 @@ usage() {
   exit 1
 }
 
-exec 3>"/tmp/flock:$(basename $0)"
-if flock -n 3 2>/dev/null ;then
-  echo $$ 1>&3
-else
-  echo 1>&2 "$(basename $0) already running: exiting."
-  exit 1
-fi
+# import user path
+. $HOME/bin/functions/shell/user_path
 
-# disable fish autojump call
-export SHELL=dash
-. /etc/profile
-
+slock $(basename $0) $$ || exit 1
 # mail poller (see offlineimap and imapfilter)
 # lifted from http://cpbl.wordpress.com/2009/11/07/alpine-offlineimap-and-gmail-under-ubuntu/
 interval=${interval:-15}
@@ -118,7 +110,7 @@ mail_daemon() {
     # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
     mv /tmp/mailsync:new /tmp/mailsync:old
     # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync:new
-    curl -u sdothum:maaike00 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync:new
+    curl -u sdothum:patricia1948 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync:new
     cmp -s /tmp/mailsync:old /tmp/mailsync:new
     if [ $? -eq 1 ] ;then
       trace 'Starting offlineimap..'
