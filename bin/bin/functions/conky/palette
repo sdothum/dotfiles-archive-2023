@@ -7,7 +7,7 @@
 # ......................................................... Scrape colorhexa.com
 
 usage() {
-  echo "usage: conky $(basename $0) <hexcolor> <scheme>"
+  echo "usage: conky $(basename $0) <hexcolor>  Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Shade | Tint | Tone"
   exit 1
 }
 
@@ -15,20 +15,24 @@ usage() {
 
 # flatten content into single line
 colors=$(pcurl https://www.colorhexa.com/$1)
-echo $colors |
-     sed -re "s/.*Color Schemes with .$1 //" \
-         -e "s/(Complementary Color) /\1\n/" \
-         -e "s/(Analogous Color) /\1\n/" \
-         -e "s/(Split Complementary Color) /\1\n/" \
-         -e "s/(Triadic Color) /\1\n/" \
-         -e "s/(Tetradic Color) /\1\n/" \
-         -e "s/(Monochromatic Color) /\1\n/" \
-         -e "s/Alternatives to #$1.*//" \
-         -e 's/#...... rgb\([^)]*\)//g' |
-     grep $2 |
-     sed -e "s/  $2.*//" \
-         -e 's/#//g' \
-         -e 's/  /\n/g'
+echo $colors | sed -re "s/.*Color Schemes with [#]$1 //" \
+                   -e "s/(Complementary) Color /\1\n/" \
+                   -e "s/(Analogous) Color /\1\n/" \
+                   -e "s/(Split) Complementary Color /\1\n/" \
+                   -e "s/(Triadic) Color /\1\n/" \
+                   -e "s/(Tetradic) Color /\1\n/" \
+                   -e "s/(Monochromatic) Color /\1\n/" \
+                   -e "s/Alternatives to [#]$1 .* is the lightest one. //" \
+                   -e "s/(Shade) Color Variation /\1\n/" \
+                   -e "s/(Tint) Color Variation /\1\n/" \
+                   -e "s/Tones of [#]$1.*is the most saturated one. //" \
+                   -e "s/(Tone) Color Variation /\1\n/" \
+                   -e "s/Color Blindness Simulator.*//" \
+                   -e 's/#...... rgb\([^)]*\)//g' |
+               grep "$2" |
+               sed -e "s/  $2//" \
+                   -e 's/#//g' \
+                   -e 's/  / /g'
 
 # vim: set ft=sh: #
 

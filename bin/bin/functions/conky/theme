@@ -27,6 +27,7 @@
 #   color0=0x[hex colour]
 #   color6=0x[hex colour]
 #
+# deprecated due to colorcodehex unreachable
 # theming formula uses ColorCodeHex tables..
 # base = https://www.colorcodehex.com/[hex colour]/
 #   default_color [base]
@@ -99,28 +100,26 @@ scheme() {
   [ $1 = paper ] && paper || ink
 }
 
-monochromatic() { echo "$hex" | grep Monochromatic | cut -d/ -f$1; }
+chromatic() { echo "$hex" | cut -d' ' -f$1; }
 
 # see conky palette
 hexgen() {
   default_color=$1
-  hex=$(conky palette $default_color)
-  color0=$(monochromatic 10)
-  color9=$(echo "$hex" | grep Complementary | head -1 | cut -d/ -f6)
-  colorA=$(monochromatic 6)
+  hex=$(conky palette $default_color Monochromatic)
+  color0=$(chromatic 5)
+  colorA=$(chromatic 4)
+  color9=$(conky palette $default_color Triadic | cut -d' ' -f3)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-  hex=$(conky palette $color0)
-  color6=$(monochromatic 2)
-  color7=$(monochromatic 10)
+  hex=$(conky palette $color0 Monochromatic)
+  color6=$(chromatic 2)
+  color7=$(chromatic 7)
   color8=$color0
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
-  hex=$(conky palette $color9)
-  colorI=$(monochromatic 6)
+  hex=$(conky palette $color9 Monochromatic)
+  colorI=$(chromatic 5)
   # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
   colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
 }
-
-# complimentary () { conky palette $1 | grep -a Complementary | head -1 | cut -d/ -f6; }
 
 # ................................................................... Conky text
 
@@ -159,14 +158,14 @@ case $action in
             fi ;;
 
   light   ) if [ $# -eq 1 ] ;then
-              hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f18)
+              hexgen $(conky palette $1 Shade | cut -d' ' -f4)
               paper
               echo dark >$CONTRAST
               theme
             fi ;;
 
   dark    ) if [ $# -eq 1 ] ;then
-              hexgen $(conky palette $1 | grep -a Monochromatic  | cut -d/ -f2)
+              hexgen $(conky palette $1 Tint | cut -d' ' -f4)
               ink
               echo light >$CONTRAST
               theme
@@ -185,6 +184,5 @@ case $action in
   wal     ) wal ;;
   *       ) usage ;;
 esac
-
 
 # vim: set ft=sh: #
