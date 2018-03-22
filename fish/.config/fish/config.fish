@@ -59,9 +59,9 @@ set -x SERVER luna
 # default browser changes require login (Ctrl-d) for X11 autostart
 # set -x BROWSER chromium
 # set -x BROWSER luakit
-set -x BROWSER qutebrowser
+# set -x BROWSER qutebrowser
 # set -x BROWSER surf
-# set -x BROWSER vimb
+set -x BROWSER vimb
 # set -x BROWSER vimbt
 
 # proxies

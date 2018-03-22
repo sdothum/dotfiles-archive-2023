@@ -14,7 +14,7 @@ hc keybind Super-Shift-Return       spawn focus hlwm raise
 hc keybind Super-Control-Return     spawn focus hlwm close
 hc keybind Super-space              spawn dmenu run
 hc keybind Super-Shift-space        spawn dmenu manpages
-hc keybind Super-Control-space      spawn dmenu systemd
+hc keybind Super-Control-space      spawn kill -KILL dmenu
 if [ $PLANCK ] ;then
   # hc keybind Super-semicolon      spawn pactl set-sink-volume $(sink) -3db
   # hc keybind Super-backslash      spawn pactl set-sink-volume $(sink) +3db
@@ -70,7 +70,8 @@ hc keybind Super-Shift-n            spawn dmenu notes
 hc keybind Super-p                  spawn dmenu pass
 hc keybind Super-Shift-p            spawn proof toggle
 hc keybind Super-Control-p          spawn hardcopy eject
-hc keybind Super-s                  spawn dmenu system
+hc keybind Super-s                  spawn dmenu systemd
+hc keybind Super-Shift-s            spawn dmenu system
 hc keybind Super-t                  spawn conky clock
 hc keybind Super-Shift-t            spawn env CONKYRC=$CONKY_Q2 conky clock
 hc keybind Super-Control-t          spawn dmenu alarm

@@ -8,7 +8,7 @@
 ln -sf /usr/share/webapps/rutorrent /opt/nginx/html/
 
 ifnsed /etc/php/php.ini 'rutorrent' \
-                      '/^open_basedir = "/s|= "|= "/etc/webapps/rutorrent/conf/:/usr/share/webapps/rutorrent/php/:/usr/share/webapps/rutorrent/:|'
+                        '/^open_basedir = "/s|= "|= "/etc/webapps/rutorrent/conf/:/usr/share/webapps/rutorrent/php/:/usr/share/webapps/rutorrent/:|'
 ifnsed $HOME/.rtorrent.rc 'scgi_port = localhost:5000'
 
 sudo chmod 0777 /opt/nginx/html/rutorrent/share/settings

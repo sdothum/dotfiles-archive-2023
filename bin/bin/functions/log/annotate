@@ -11,7 +11,7 @@
 # initial leader
 [ $leader ] || leader=.
 
-__annotate() {
+annotate() {
   while read line
   do
     # indent=$(echo "$(tput cols) - $(echo $line | wc -L) - 3" | bc)
@@ -22,7 +22,7 @@ __annotate() {
   done
 }
 
-echo $@ | __annotate
+echo $@ | annotate
 unset leader
 
 # vim: set ft=sh: #

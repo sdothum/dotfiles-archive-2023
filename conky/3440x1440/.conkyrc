@@ -32,10 +32,10 @@ conky.config = {
   maximum_width = 190,
   own_window = true,
 -- own_window_type panel
-  own_window_type = 'dock',
+  own_window_type = 'panel',
   own_window_transparent = true,
 -- own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below,above
-  own_window_hints = 'undecorated,below',
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
   border_inner_margin = 0,
   border_outer_margin = 29,
 

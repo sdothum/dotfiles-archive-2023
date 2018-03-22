@@ -32,8 +32,8 @@ hfg=argb:FF25C0EF
 
 # leader left or right (prompt case Right, RIGHT, right)
 lead=right
-leader='──────'
-indent='   '
+leader='───────'
+indent='       '
 
 # .......................................................................... GUI
 
@@ -142,6 +142,8 @@ if [ $display ] ;then
                       -line-margin $(( $fontsize + 2 )) \
                       -padding $padding \
                       -separator-style none \
+                      -theme-str "'inputbar { padding: 1.2em; }'" \
+                      -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
                       -width 100 \
                       -dmenu -p "\"$prompt\"" -i $select \
                       $@ )

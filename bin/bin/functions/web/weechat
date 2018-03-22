@@ -9,47 +9,70 @@
 # depends on how many servers auto-connected
 IRC=$HOME/.irc
 timeout=300
-rm -f $HOME/.weechat/*.log
 
-# re-initialize disappearing(?) autoload links
-cd $HOME/.weechat/perl/autoload
-for i in ../*pl
-do
-  ln -s $i . 2>/dev/null
-done
-cd $HOME/.weechat/python/autoload
-for i in ../*py
-do
-  ln -s $i . 2>/dev/null
-done
+initialize() {
+  rm -f $HOME/.weechat/*.log
+
+  # re-initialize disappearing(?) autoload links
+  cd $HOME/.weechat/perl/autoload
+  for i in ../*pl
+  do
+    ln -s $i . 2>/dev/null
+  done
+
+  cd $HOME/.weechat/python/autoload
+  for i in ../*py
+  do
+    ln -s $i . 2>/dev/null
+  done
+}
+
+# wait for znc server
+connect() {
+  count=0
+  [ -e $IRC ] && ircservers=$(cat $IRC) || ircservers=1
+  while :
+  do
+    [ $(sudo ss -apt | grep znc | grep ESTAB | wc -l) -ge $ircservers ] && break
+    sleep 1
+    count=$(( $count + 1 ))
+    if [ $count -ge $timeout ] ;then
+      notify critical "Weechat" "$timeout second ZNC server IRC timeout"
+      exit 1
+    fi
+  done
+}
+
+# kill remote weechat instances
+unlock() {
+  for i in $(remotehosts)
+  do
+    if ping -c 1 -W 1 $i >/dev/null 2>&1 ;then
+      if /usr/bin/ssh $i -- pkill -TERM -f 'weechat' 2>/dev/null ;then
+        host=$i
+        break
+      fi
+    fi
+  done
+}
 
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if server ;then
+  initialize
   if pstat znc ;then
     ditto 'launching weechat'
     ditto 'waiting for ZNC server connections to complete'
-
-    count=0
-    [ -e $IRC ] && ircservers=$(cat $IRC) || ircservers=1
-    while :
-    do
-      [ $(sudo ss -apt | grep znc | grep ESTAB | wc -l) -ge $ircservers ] && break
-      sleep 1
-      count=$(( $count + 1 ))
-      if [ $count -ge $timeout ] ;then
-        notify critical "Weechat" "$timeout second ZNC server IRC timeout"
-        exit 1
-      fi
-    done
-
+    connect
     notify low "Weechat" "$count seconds to ZNC server IRC connection"
     /usr/bin/weechat
   else
     ditto 'znc server not running'
   fi
 else
-  /usr/bin/weechat
+  # close (unlock) any remote instances
+  pstat "ssh $SERVER -t weechat" && notify "Weechat" 'Instance already runnig' ||
+                                    { unlock; ssh $SERVER -t weechat; }
 fi
 
 # vim: set ft=sh: #

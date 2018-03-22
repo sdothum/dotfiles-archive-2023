@@ -14,6 +14,7 @@ elif [ $(ls -1 /net/downloads/nzbs/completed | wc -l) -gt 0 ] ;then
 else
   start=/net/downloads/http
 fi
+
 # see appbinds, toggle rox focuses frame
 /usr/bin/rox $start 2>>/tmp/rox.log
 

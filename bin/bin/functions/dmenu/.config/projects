@@ -78,7 +78,9 @@ rss feeds :: $HOME/.config/newsbeuter/config
 signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
-splitography :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography -type f) $HOME/bin/functions/hardware/splitography
+splitography default :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
+splitography beakl :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl -type f) $HOME/bin/functions/hardware/splitography
+splitography dvorak :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f) $HOME/bin/functions/hardware/splitography
 subtle :: $HOME/.config/subtle/subtle.rb
 sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb

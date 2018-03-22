@@ -7,17 +7,20 @@
 # ................................................................. Splitography
 
 usage() {
-  echo "usage: $(basename $0) <keymap>"
+  echo "usage: $(basename $0) <keymap>  [steno [nomouse]]  [<string>] [dfu]"
   exit 1
 }
 
 KEYMAPS='DEFAULT'
 
 ROOT=$HOME
-ROOT=/net/depot
+# ROOT=/net/depot
 QMK=$ROOT/qmk_firmware
 SPLITOGRAPHY=$QMK/keyboards/splitography
 KEYMAP=$SPLITOGRAPHY/keymaps/$1
+CONFIG=$KEYMAP/config.h
+MAKEFILE=$KEYMAP/Makefile
+PRIVATE=$KEYMAP/private_string.h
 
 [ $1 ] || usage
 keymap=$1
@@ -32,6 +35,27 @@ fi
 mkdir -p $KEYMAP 2>/dev/null
 cp -f $HOME/stow/splitography/${SPLITOGRAPHY#$ROOT/}/* $SPLITOGRAPHY/ 2>/dev/null
 cp -f $HOME/stow/splitography/${KEYMAP#$ROOT/}/* $KEYMAP/
+
+# steno (mouse may need to be mandisabled in config.h)
+if [ "$1" = steno ] ;then
+  sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
+  shift
+  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+else
+  sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
+fi
+
+# compile time macro sting
+grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING' $CONFIG
+case $1 in
+  '' |\
+  dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
+
+  *  ) trap "rm -f $PRIVATE" EXIT
+       sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
+       echo "SEND_STRING(\"$1\");" >$PRIVATE
+       shift ;;
+esac
 
 cd $QMK
 sudo make splitography:$keymap:clean

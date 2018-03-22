@@ -13,7 +13,11 @@ fi
 source ./archlinux-functions
 user=shum
 
-wifi-menu
+if ! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1 ;then
+  wifi-menu
+fi
+pacman -Syu
+checkpoint
 
 
 heading "first up: sudo"
@@ -30,7 +34,7 @@ checkpoint
 heading 'configure boot parameters'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 original /boot/config.txt
-config_install /boot/config.txt
+# config_install /boot/config.txt
 checkpoint
 
 
@@ -51,7 +55,9 @@ timedatectl set-timezone Canada/Eastern
 heading 'configure package manager'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 original /etc/pacman.conf
-sed -i '/^\[options\]/aILoveCandy; /^#Color/s/^#//' \ /etc/pacman.conf
+sed -i -e '/^\[options\]/aILoveCandy' \
+    -e '/^#Color/s/^#//' \
+    /etc/pacman.conf
 pacman -Sy
 checkpoint
 
@@ -85,9 +91,14 @@ heading "add primary user $user"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 
-sed -e '/alarm/s/1000:1000/1001:100/' \
-    -e "/$user/s/1001:100/1000:100/" \
+sed -i -re '/^alarm/s/[0-9]+:[0-9]+/1001:100/' \
+    -e "/^$user/s/[0-9]+:[0-9]+/1000:100/" \
     /etc/passwd
+sed -i -re '/^users/s/[0-9]+/100/' \
+    -e '/^alarm/s/[0-9]+/1001/' \
+    -e "/^$user/s/[0-9]+/1000/" \
+    /etc/group
+
 mv -v /home/$user /home/anonymous
 mv -v /home/alarm /home/$user
 mv -v /home/anonymous /home/alarm
@@ -152,6 +163,9 @@ if [ ! -d /home/$user/stow ] ;then
   chown -R $user:users /home/$user
 fi
 
+
+# import user path
+. /home/$user/bin/functions/shell/user_path
 
 title "installation errors:"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂

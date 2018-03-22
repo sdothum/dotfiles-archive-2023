@@ -1,1 +1,12 @@
-g passenger
+? preload
+pass
+? watchman
+? setroot
+? unclutter-xfixes-git
+? lemonbar-xft-git
+? alock-git
+? sutils-git
+? xtitle-git
+? amphetype-svn
+? wego-git
+* connman

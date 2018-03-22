@@ -68,7 +68,7 @@ unquote() { echo $@ | sed "s/'//g"; }
 # if not sourced, execute dmenu message
 trap 'unset TERMINAL' EXIT
 if [ $(basename $0) = dmenu ] ;then
-  # see toggle dmenu for persistent ncurses mode
+  # see toggle ncurses for persistent ncurses mode
   [ -t 1 ] && export TERMINAL=true
   if [ "$1" = '-' ] ;then
     unset TERMINAL

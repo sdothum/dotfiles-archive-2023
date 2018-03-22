@@ -15,6 +15,7 @@ if if-no 'remove ALL local archived packages' ;then
   sudo pacman-optimize
 else
   sudo pacman -Sc --noconfirm
+  rm -rf $HOME/.cache/pacaur/*
 fi
 
 # vim: set ft=sh: #

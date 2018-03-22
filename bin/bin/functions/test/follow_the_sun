@@ -10,12 +10,12 @@ usage() {
   echo "usage: $(basename $0) <city>"
   exit 1
 }
-
+set -x
 # import user path
 . $HOME/bin/functions/shell/user_path
 
 LOCATION=$HOME/.session/location
-COLORSCHEME=$HOME/.session/colorscheme
+COLORSCHEME=$HOME/.session/follow_the_sun
 # location offset from ottawa (system) time in -%H%M, +%H%M
 offset=+0000
 

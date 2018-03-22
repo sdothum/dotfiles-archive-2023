@@ -64,7 +64,7 @@ do
       '"' ) [ $check ] || ditto "$package $condition";                             continue ;;
       '!' ) [ $check ] || $package $condition;                                     continue ;;
       '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package"; continue; } ;;
-      d   ) [ "$package" = '"' ] &&                                                continue; rule=true ;;
+      d   ) rule=true ;;
 
       '-' |\
       '?' |\

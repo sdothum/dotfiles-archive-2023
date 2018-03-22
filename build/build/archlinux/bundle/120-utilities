@@ -28,6 +28,7 @@
 = disk utilities
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   convmv
+  etcher
 # gnome-disk-utility
   gparted
   gptfdisk

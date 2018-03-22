@@ -9,7 +9,7 @@
 typescript=$HOME/typescript
 
 # new session log
-__script() {
+script() {
   ditto "saving previous to $HOME/log/typescript.log"
   mkdir -pv $HOME/log || exit 1
   cat $typescript >>$HOME/log/typescript.log
@@ -18,7 +18,7 @@ __script() {
 
 # capture automated install script output
 if [ -e $typescript ] ;then
-  if-no 'create fresh typescript log' || __script
+  if-no 'create fresh typescript log' || script
 fi
 
 /usr/bin/script -a $typescript

@@ -9,6 +9,8 @@
 SERVICES='[ list services   ]'
    FILES='[ list-unit-files ]'
 
+lib=/usr/lib/systemd/system/
+
 # restart systemd process
 status() {
   if sudo systemctl status $service ;then
@@ -18,7 +20,7 @@ status() {
   fi
 }
 
-cd /usr/lib/systemd/system/
+cd $lib
 while :
 do
   service=$(systemctl list-unit-files -t service --no-legend |
@@ -36,8 +38,7 @@ do
     "$SERVICES") term 'services' WAIT systemctl --type service --all ;;
     "$FILES"   ) term 'unit-files' WAIT systemctl list-unit-files ;;
 
-    *) service=$service.service
-       sudo systemctl status $service && actions='stop\nrestart' ||
+    *) sudo systemctl status $service && actions='stop\nrestart' ||
                                          actions=start
        while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" |
                       rmenu "${service%.service}" -no-custom) || break
@@ -68,7 +69,7 @@ do
                     status
                     break ;;
 
-           edit   ) v -f $service ;;
+           edit   ) v -f $lib/$service ;;
          esac
          break
        done

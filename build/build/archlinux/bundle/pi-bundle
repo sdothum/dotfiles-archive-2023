@@ -54,8 +54,6 @@ d ? preload
 = ▔▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
   exfat-utils
-d " add armv7h to arch in pkgbuild
-d ? watchman
 
 
 = info screens
@@ -76,12 +74,12 @@ d ? watchman
   adobe-base-14-fonts
   libxft
   noto-fonts
-  terminus-font-ll2-td1
+# terminus-font-ll2-td1
   ttf-courier-prime
   ttf-dejavu
   ttf-dejavu-sans-mono-powerline-git
   ttf-font-awesome
-  ttf-liberation
+# ttf-liberation
   ttf-ms-fonts
   ttf-symbola
 
@@ -149,8 +147,8 @@ d pass
 = sync
 = ▔▔▔▔
   rsync
-# syncthing
-# syncthing-inotify
+  syncthing
+# syncthing-inotify-git
 d ? watchman
 
 
@@ -218,6 +216,11 @@ d ? xtitle-git
   wget
 
 
+= utilities
+= ▔▔▔▔▔▔▔▔▔
+  perl-html-strip
+
+
 = editors
 = ▔▔▔▔▔▔▔
   ctags
@@ -250,31 +253,32 @@ g term-ansicolor
 
 = mail
 = ▔▔▔▔
-" add export CFLAGS="-D_FILE_OFFSET_BITS=64" to package() of pkgbuild
-? python2-gpg
-  alot
+d " add export CFLAGS="-D_FILE_OFFSET_BITS=64" to package() of pkgbuild
+d ? python2-gpg
+d * alot
   msmtp-mta
 
 
 = browsers
 = ▔▔▔▔▔▔▔▔
   chromium
+  qt5-webkit
   qutebrowser
   surf
 # d " tabbed compiled to custom font size
 # d m tabbed
-# d " add armv7h to arch in pkgbuild
-# d ? vimb
+d " add armv7h to arch in pkgbuild
+d ? vimb
   w3m
 
 
 = chat/twitter
 = ▔▔▔▔▔▔▔▔▔▔▔▔
-  bitlbee
+# bitlbee
 # d " add armv7h to arch in pkgbuild
 # d ? centerim5-git
-  libotr
-  weechat
+# libotr
+# weechat
 # xmpppy
 
 
@@ -302,10 +306,15 @@ d " add armv7h to arch in pkgbuild
 d ? amphetype-svn
   calc
   dictd
+  dict-wn
+m dict-moby-thesaurus
+  hunspell
+  hunspell-en
   python-proselint
   remind
   youtube-dl
-  wego
+d " add armv7h to arch in pkgbuild
+d ? wego-git
 
 
 = network

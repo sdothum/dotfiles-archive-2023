@@ -486,7 +486,7 @@
 
       if has("gui_running")
         " follow the sun, see crontab
-        if !empty(glob('~/.session/colorscheme'))
+        if !empty(glob('~/.session/follow_the_sun'))
           colorscheme quantum
           set background=dark
         else
