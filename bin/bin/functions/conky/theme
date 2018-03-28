@@ -175,7 +175,7 @@ case $action in
               hexgen $1
               luminance +$default_color && paper || ink
               theme
-              if ! if-no "change contrast" ;then
+              if ! ifno "change contrast" ;then
                 luminance -$default_color && paper || ink
                 theme
               fi

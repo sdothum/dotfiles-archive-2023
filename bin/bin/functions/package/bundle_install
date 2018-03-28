@@ -42,7 +42,7 @@ fi
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
 if [ -e $deferred ] ;then
-  if-no 'clear last defer bundle' || rm -f $deferred
+  ifno 'clear last defer bundle' || rm -f $deferred
 fi
 
 rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
@@ -112,7 +112,7 @@ done
 
 if [ -e $deferred ] ;then
   cat $deferred
-  if-yes 'install deferred pacages' && bundle_install $deferred
+  ifyes 'install deferred pacages' && bundle_install $deferred
 fi
 
 # vim: set ft=sh: #

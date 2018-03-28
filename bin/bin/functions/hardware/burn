@@ -17,11 +17,11 @@ case $@ in
 
   dvd) if [ $(ls -l /net/downloads/dvd/ | wc -l) -gt 1 ] ;then
          ls -l /net/downloads/dvd/
-         if-no 'erase directory' && exit
+         ifno 'erase directory' && exit
          dvdbackup -i /dev/dvd -o /net/downloads/dvd/ -M
          title=$(basename /net/downloads/dvd/*)
          genisoimage -dvd-video -udf -V "$title" -o /net/downloads/dvd/dvd.iso "$title"
-         if-yes 'burn iso to dvd' && burn iso
+         ifyes 'burn iso to dvd' && burn iso
        fi ;;
 
   iso) if [ -e /net/downloads/dvd/dvd.iso ] ;then
@@ -29,9 +29,9 @@ case $@ in
        fi ;;
 
   *  ) if [ $(ls -l /media/cdrom0/ | wc -l) -eq 1 ] ;then
-         if-yes 'new session (initialize)' && growisofs -Z /dev/dvd -R -J $@
+         ifyes 'new session (initialize)' && growisofs -Z /dev/dvd -R -J $@
        else
-         if-yes 'merge session (append)' && growisofs -M /dev/dvd -R -J $@
+         ifyes 'merge session (append)' && growisofs -M /dev/dvd -R -J $@
        fi
        ditto 'eject and select cdrom in thunar before next merge' ;;
 esac

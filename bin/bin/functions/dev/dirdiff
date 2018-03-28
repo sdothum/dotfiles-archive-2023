@@ -40,7 +40,7 @@ do
     echo "${_green_}${blink}-> $file${_nocolor_}"
     if ! diff $w $i $2/$file ;then
       # see herbstluftwm gvimdiff rule
-      if-no "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff $i $2/$file
+      ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff $i $2/$file
       blink=${_blink_}
     else
       break

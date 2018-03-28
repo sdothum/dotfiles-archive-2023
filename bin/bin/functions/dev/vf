@@ -25,7 +25,7 @@ case $1 in
            [ "$files" ] || continue
            echo
            echo $files | sed 's|.*/||'
-           if-yes "edit $i" || continue
+           ifyes "edit $i" || continue
            v -f $files
          done
          [ $dynamic ] && toggle focus ;;

@@ -15,7 +15,7 @@ W='[a-zA-Z0-9]'
 
 [ $1 ] && dir=$1 || dir=$PWD
 [ -d $dir ] || exit 1
-if-no "convert $dir" && check=true
+ifno "convert $dir" && check=true
 wikis=$(mktemp)
 trap "rm -f $wikis" EXIT
 [ $check ] && find -L $dir -name '*wiki' | egrep -v '\.deprecated|diary' >$wikis ||
@@ -47,7 +47,7 @@ do
   gs '/^=== /s/^=== (.*) ===/*** \1/'
   gs '/^== /s/^== (.*) ==/** \1/'
   gs '/^= /s/^= (.*) =/* \1/'
-  [ $check ] && { if-yes "$wiki" || exit 1; }
+  [ $check ] && { ifyes "$wiki" || exit 1; }
 done 3< $wikis
 
 # vim: set ft=sh: #

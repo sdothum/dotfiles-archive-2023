@@ -66,7 +66,7 @@ do
     *  ) if [ $package ] ;then
            pm $package >/dev/null || unset package
          elif [ $clean ] ;then
-           if-no "remove $file" || package=true
+           ifno "remove $file" || package=true
          else
            ditto "remove ? $file"
            unset package

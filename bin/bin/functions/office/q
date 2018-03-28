@@ -14,7 +14,7 @@ if [ "$file" ] ;then
   if [ $(echo "$file" | wc -l) -gt 1 ] ;then
     for i in $file
     do
-      if-yes $i && cat $i
+      ifyes $i && cat $i
     done
   else
     cat $file

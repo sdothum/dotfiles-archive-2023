@@ -8,7 +8,7 @@
 # create public key
 annotate 'regenerate gpg key if required and refresh .pass tree'
 if [ -d $HOME/.gnupg ] ;then
-  if-no 'regenerate key pair' || gpg --full-gen-key
+  ifno 'regenerate key pair' || gpg --full-gen-key
 else
   gpg --full-gen-key
 fi

@@ -29,19 +29,19 @@ del_pkg() {
   done
 }
 
-# $@ expansion in grep and if-yes truncated, so..
+# $@ expansion in grep and ifyes truncated, so..
 pkgs=$@
 ignored=$(grep '^ *IgnorePkg.*' $conf)
 echo $ignored
 if [ -z $1 ] ;then
   ignored=$(echo $ignored | sed 's/^.*= *//')
   if [ "$ignored" ] ;then
-    if-no "reinstate $ignored" || del_pkg $ignored
+    ifno "reinstate $ignored" || del_pkg $ignored
   fi
 elif grep -q "^ *IgnorePkg.*$1" $conf ;then
-  if-yes "reinstate $pkgs" && del_pkg $pkgs
+  ifyes "reinstate $pkgs" && del_pkg $pkgs
 else
-  if-yes "ignore $pkgs" && add_pkg $pkgs
+  ifyes "ignore $pkgs" && add_pkg $pkgs
 fi
 
 # vim: set ft=sh: #

@@ -7,7 +7,7 @@
 
 # ....................................................................... Rename
 
-# Usage: mytitles [<recursions>] [<directory>]
+# Usage: retitle [<recursions>] [<directory>]
 #        <recursions> (1) default (0) full
 
 require 'term/ansicolor'
@@ -20,7 +20,7 @@ end
 $ext = /Avi|Divx|M4v|Mkv|Mp4|Wmv/
 $recurse = 1
 
-def mytitles(recurse, directory)
+def retitle(recurse, directory)
   pwd = Dir.pwd
   Dir.chdir(directory)
   list = Dir.glob("*")
@@ -48,7 +48,7 @@ def mytitles(recurse, directory)
       end
     end
     print "\n"
-    mytitles(recurse - 1, newname) if recurse != 1 and File.directory?(newname)
+    retitle(recurse - 1, newname) if recurse != 1 and File.directory?(newname)
   end
   Dir.chdir(pwd)
 end
@@ -62,7 +62,7 @@ begin
     end
   end
   exit if File.file?(ARGV[0]) unless ARGV[0].nil?
-  mytitles($recurse, ARGV[0].nil? ? Dir.pwd : ARGV[0])
+  retitle($recurse, ARGV[0].nil? ? Dir.pwd : ARGV[0])
 rescue
   print ".. invalid directory #{ARGV[0].bold}\n".red unless ARGV[0] =~ /\//
 end

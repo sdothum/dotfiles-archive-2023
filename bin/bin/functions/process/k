@@ -24,7 +24,7 @@ abort() {
   for i in $(pgrep -f "$@")
   do
     p $i | grep -v $0 || continue
-    if-no "kill $i" && continue || sudo kill $sig $i
+    ifno "kill $i" && continue || sudo kill $sig $i
     # break
   done
 }

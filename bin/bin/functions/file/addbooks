@@ -7,13 +7,13 @@
 # ................................................................. ebook folder
 
 usage() {
-  echo "usage: $(basename $0) mobi | epub"
+  echo "usage: $(basename $0) mobi | epub | <ebook>, from current directory"
   exit 1
 }
 
 case "$@" in
-  mobi  ) find -maxdepth 1 -name '*.mobi' -exec mybooks {} \; ;;
-  epub  ) find -maxdepth 1 -name '*.epub' -exec mybooks {} \; ;;
+  mobi  ) find -maxdepth 1 -name '*.mobi' -exec addbooks {} \; ;;
+  epub  ) find -maxdepth 1 -name '*.epub' -exec addbooks {} \; ;;
 
   *mobi |\
   *epub ) author=$(echo "$@" | sed -r 's/.* - (.*)\.(mobi|epub)/\1/')

@@ -26,7 +26,7 @@ PRIVATE=$KEYMAP/private_string.h
 keymap=$1
 shift
 
-if ! if-no 'sync qmk_firmware repo' ;then
+if ! ifno 'sync qmk_firmware repo' ;then
   cd $QMK
   git pull
 fi

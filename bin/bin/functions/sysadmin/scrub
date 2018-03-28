@@ -34,7 +34,7 @@ show() {
     p scrub | grep -q "btrfs scrub start -Bd $V" || break
     sleep $interval
   done
-  [ $in_progress ] || press-enter
+  [ $in_progress ] || press_enter
 }
 
 case $1 in

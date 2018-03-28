@@ -26,7 +26,7 @@ case $1 in
         offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
         ditto 'offlineimap running'
       fi
-      if-yes '.. watch offlineimap log' && imap l ;;
+      ifyes '.. watch offlineimap log' && imap l ;;
 
   1*) if [ $2 ] ;then
         offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
@@ -46,12 +46,12 @@ case $1 in
           imapfilter -v -c $IMAPFILTER/$2.lua
         else
           imapfilter -v -c $IMAPFILTER/$filter >>/tmp/imapfilter.log 2>&1 &
-          if-yes '.. watch imapfilter log' && imap L
+          ifyes '.. watch imapfilter log' && imap L
         fi
       fi ;;
 
   I*) killall offlineimap 2>/dev/null
-      if ! if-no 'delete all maildirs and reload from gmail' ;then
+      if ! ifno 'delete all maildirs and reload from gmail' ;then
         sudo systemctl stop dovecot
         # sudo rm -r $HOME/.mutt/cache/*
         sudo rm -r $HOME/.offlineimap/*

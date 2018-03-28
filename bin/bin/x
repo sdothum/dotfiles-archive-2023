@@ -105,7 +105,7 @@ if console ;then
     xmonad      ) ;;
   esac
 
-  cpu arm && { if-no 'start syncthing' || wsync -s; }
+  cpu arm && { ifno 'start syncthing' || wsync -s; }
 else
   # already in X11 session
   ditto 'window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'

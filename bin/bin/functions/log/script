@@ -18,7 +18,7 @@ script() {
 
 # capture automated install script output
 if [ -e $typescript ] ;then
-  if-no 'create fresh typescript log' || script
+  ifno 'create fresh typescript log' || script
 fi
 
 /usr/bin/script -a $typescript

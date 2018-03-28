@@ -10,7 +10,7 @@
 file=$1
 
 if [ -e $file.save ] || [ -d $file.save ] ;then
-  if-yes "overwrite \"$file.save\"" || exit 1
+  ifyes "overwrite \"$file.save\"" || exit 1
 fi
 
 # save distribution copy

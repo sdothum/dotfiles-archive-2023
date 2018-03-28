@@ -12,7 +12,7 @@ do
   color=$(echo $i | sed -r 's|.*/(.*).png|\1|')
   setroot --blank-color "#$color" 2>/dev/null
   echo ${i#*colors/}
-  if-no 'delete this background' || rm -f $i
+  ifno 'delete this background' || rm -f $i
 done
 
 # vim: set ft=sh: #

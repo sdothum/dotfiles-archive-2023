@@ -23,10 +23,11 @@ SEARCH='[ search       ]'
 
 nzb=/net/downloads/nzbs/completed
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
-mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
 usenet=https://nzbgeek.info/geekseek.php?c=2040
+retitle=$library/.retitle
+rm -f $retitle
 
 # unset debug to remove exit from menu items
 debug='\nexit'
@@ -43,7 +44,7 @@ catlg() {
 cache() {
   notify low 'Movies' 'Caching library..'
   # clean up titles
-  mytitles $library >>$mytitles
+  retitle $library >>$retitle
   [ -e $playlist ] || echo >$playlist
   catlg
 }

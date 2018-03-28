@@ -9,7 +9,7 @@
 # when pa/pacaur fails on aur packages
 sudo pacman -Sy
 pacaur -Qu
-if-yes 'upgrade system' || exit
+ifyes 'upgrade system' || exit
 for i in $(pacaur --color never -Qu | awk '{ print $3 }')
 do
   underline

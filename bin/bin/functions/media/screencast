@@ -53,7 +53,7 @@ if server ;then
   shift
   [ $1 ] && $@
 
-  if if-yes 'stop recording and save' ;then
+  if ifyes 'stop recording and save' ;then
     kill -TERM $(pidof -s $pidname)
     mv -v $webm $target
   fi

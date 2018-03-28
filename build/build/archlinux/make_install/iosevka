@@ -72,7 +72,7 @@ if [ -d Iosevka ] ;then
   cd Iosevka
   rm -rf build dist
   cp parameters.toml.original parameters.toml
-  if-no 'sync iosevka repo' || git pull origin master
+  ifno 'sync iosevka repo' || git pull origin master
 else
   git clone https://github.com/be5invis/Iosevka.git
   cd Iosevka

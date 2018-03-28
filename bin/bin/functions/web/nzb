@@ -34,7 +34,7 @@ case $action in
       nzb ;;
 
   C*) nzb
-      if-yes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
+      ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
 
   c*) nzbget -o OutputMode=curses -C ;;
 
@@ -43,7 +43,7 @@ case $action in
   d*) nzbget -E G D $queue
       nzb ;;
 
-  I*) if if-yes 'clear history and queue' ;then
+  I*) if ifyes 'clear history and queue' ;then
         killall nzbget 2>/dev/null
         # delay required for server shutdown (cannot use "nzb q")
         sleep 1

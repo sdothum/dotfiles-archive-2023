@@ -35,7 +35,7 @@ done
 [ -d $HOME/stow/$1 ] || usage
 
 if [ -z $nosync ] ;then
-  if-no "sync $dotfiles repo" || ( cd $dotfiles && git pull )
+  ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull )
 fi
 
 dirdiff $w $current/$1 $dotfiles/$1 "$2"

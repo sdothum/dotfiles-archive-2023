@@ -22,7 +22,8 @@ library=${LIBRARY:-/net/media/videos/$category}
 sonarr=http://$SERVER:8989/
 
 preprocess=${0%/dmenu}/functions/dmenu/.d/$category
-mytitles=$library/.mytitles
+retitle=$library/.retitle
+rm -f $retitle
 
 if server ;then
   sudo find $library -maxdepth 2 -type d -user sonarr -exec chmod -R 755 {} \;
@@ -34,7 +35,7 @@ fi
 find $library -name '*sample*' -exec rm {} \; &
 # clean up titles
 [ -e $preprocess ] && . $preprocess
-mytitles $library >>$mytitles
+retitle $library >>$retitle
 
 # list latest television series additions first
 T=t
@@ -43,7 +44,7 @@ hlwm && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   # clean up episodes
-  mytitles "$series" >>$mytitles
+  retitle "$series" >>$retitle
   ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\1/' | sort >$episodes
   playlist $episodes "$playlist"
 }

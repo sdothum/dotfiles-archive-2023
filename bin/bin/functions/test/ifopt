@@ -6,8 +6,8 @@
 
 # ....................................................................... Option
 
-# "if-opt" char list
-# if-opt && ..
+# "ifopt" char list
+# ifopt && ..
 option=$1
 shift
 echo "$*" | grep -q " *\-[[:alnum:]]*$option"

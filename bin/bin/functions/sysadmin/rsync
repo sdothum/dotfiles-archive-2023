@@ -110,27 +110,27 @@ case $1 in
            rsync --delete $HOME/stownfs/ $HOME/stow ;;
 
   backup ) if server ;then
-             if if-yes 'backup /net to /backup' ;then
+             if ifyes 'backup /net to /backup' ;then
                rsync --delete /net/* /backup/
              fi
            fi ;;
 
-  home   ) if if-yes "backup $HOME to /net/archive" ;then
+  home   ) if ifyes "backup $HOME to /net/archive" ;then
              mkdir -pv /net/archive/home || exit 1
              rsync --delete $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
                    $HOME /net/archive/home/
            fi ;;
 
   depot  ) if server ;then
-             if-yes "backup depot to $laptop" &&
+             ifyes "backup depot to $laptop" &&
                rsync --delete /net/depot $laptop:/net/
            else
-             if-no "update depot to $SERVER" ||
+             ifno "update depot to $SERVER" ||
                rsync /net/depot $SERVER:/net/
            fi ;;
 
   music  ) if laptop ;then
-             if if-yes "replicate mpd music database from $SERVER" ;then
+             if ifyes "replicate mpd music database from $SERVER" ;then
                killall mpd
                if [ ! -d /net/media ] ;then
                  sudo mkdir /net/media
@@ -190,7 +190,7 @@ case $1 in
            fi ;;
 
   server ) if server ;then
-             if if-yes 'backup media server databases to /net/archive' ;then
+             if ifyes 'backup media server databases to /net/archive' ;then
                mkdir -pv /net/archive/var/lib || exit 1
                sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
                [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
@@ -206,7 +206,7 @@ case $1 in
            fi ;;
 
   SERVER ) if server ;then
-             if ! if-no 'restore media server databases from /net/archive' ;then
+             if ! ifno 'restore media server databases from /net/archive' ;then
                sudo systemctl stop sonarr
                sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
                sudo systemctl start sonarr
@@ -226,12 +226,12 @@ case $1 in
 
   stow   ) if server ;then
              sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
-             if-yes "backup stow to $laptop" &&
+             ifyes "backup stow to $laptop" &&
                rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
-             if-yes "backup stow to $netbook" &&
+             ifyes "backup stow to $netbook" &&
                rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
            else
-             if-no "update stow to $SERVER" ||
+             ifno "update stow to $SERVER" ||
                rsync --exclude=.SyncArchive $HOME/stow $USER@$SERVER:$HOME/
            fi ;;
 
@@ -283,7 +283,7 @@ case $1 in
                  $HOME/vimwiki \
                  thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/ ;;
 
-  wiki   ) if ! if-no 'recover thedarnedestthing.com:/vimwiki' ;then
+  wiki   ) if ! ifno 'recover thedarnedestthing.com:/vimwiki' ;then
              trace "thedarnedestthing.com:/vimwiki => $(hostname)"
              rsync thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki \
                    $HOME/

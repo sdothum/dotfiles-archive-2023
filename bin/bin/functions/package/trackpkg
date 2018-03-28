@@ -31,7 +31,7 @@ add_pkg() {
 }
 
 del_pkg() {
-if-yes "no longer track:  $(grep "^$@" $conf | cut -d: -f2)" && for i in $@
+ifyes "no longer track:  $(grep "^$@" $conf | cut -d: -f2)" && for i in $@
   do
     sed -i "/^$i/d" $conf
   done

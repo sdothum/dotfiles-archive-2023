@@ -62,7 +62,7 @@ trap "rm -f $words $lines $paragraphs" EXIT
 
 # rebuild corpus from new wordfile
 if [ -e $corpus.words ] ;then
-  if-no 'rebuild corpus' || rm -f $corpus.*
+  ifno 'rebuild corpus' || rm -f $corpus.*
 fi
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)

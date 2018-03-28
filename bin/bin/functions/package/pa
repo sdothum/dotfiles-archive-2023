@@ -20,7 +20,7 @@ if [ -z $1 ] ;then
     exit
   fi
   # mirrorlist
-  if-no "mirrorlist $country" || mirrorlist $country
+  ifno "mirrorlist $country" || mirrorlist $country
   sudo pacman-key -u
   # pacaur -Syu --repo
   # pacaur -Su --aur --noconfirm
@@ -29,8 +29,8 @@ if [ -z $1 ] ;then
   [ -x /etc/grub.d/41_snapshots-btrfs ] || sudo chmod -c 755 /etc/grub.d/41_snapshots-btrfs
   snapper --verbose cleanup number
 
-  # if-no && (a) || (b) shortform cannot be used because return of (a) may be false
-  if if-no 'upgrade --devel packages' ;then
+  # ifno && (a) || (b) shortform cannot be used because return of (a) may be false
+  if ifno 'upgrade --devel packages' ;then
     aur=--aur
   else
     aur=--devel
@@ -48,10 +48,10 @@ if [ -z $1 ] ;then
   pacnew=$(sudo find /etc -name '*.pacnew')
   if [ "$pacnew" ] ;then
     echo "$pacnew"
-    if-no 'merge .pacnew files' || dmenu pacnews
+    ifno 'merge .pacnew files' || dmenu pacnews
   fi
   orphans
-  if-no 'apply post arch install updates and cleanup' || $HOME/build/archlinux/archlinux-update
+  ifno 'apply post arch install updates and cleanup' || $HOME/build/archlinux/archlinux-update
 else
   pacaur $@
 fi
