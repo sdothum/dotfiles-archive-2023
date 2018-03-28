@@ -30,13 +30,13 @@ layout() {
       2) max        '2' ;;
       3) thirds     '3' ;;
       4) thirds     '4' ;;
-      5) onethird   '5' ;;
+      5) max        '5' ;;
       6) thirds     '6' ;;
     esac
   elif is display +1440 ;then
     case $1 in
       1) halves     '1' ;;
-      2) max        '2' ;;
+      2) twofifths  '2' ;;
       3) halves     '3' ;;
       4) halves     '4' ;;
       5) horizontal '5' ;;

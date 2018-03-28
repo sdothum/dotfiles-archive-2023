@@ -31,9 +31,7 @@ done
 [ $service ] || { [ -e $SERVICE ] && service=$(cat $SERVICE); }
 [ $service ] || usage
 
-connected() {
-  ping -c 1 -W 1 $dns >/dev/null 2>&1
-}
+connected() { ping -c 1 -W 1 $dns >/dev/null 2>&1; }
 
 # login to web portal if required
 if ! connected ;then

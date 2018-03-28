@@ -32,9 +32,7 @@ if [ "$1" ] ;then
 fi
 
 # menu border calculation
-border() {
-  echo $(( $(query displayheight) * 2 / 15 ))
-}
+border() { echo $(( $(query displayheight) * 2 / 15 )); }
 
 while [ "$1" ]
 do

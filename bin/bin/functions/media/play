@@ -18,6 +18,9 @@ youtube=/net/downloads/http/youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
 conky clock stop
+[ -e $DYNAMIC ] && { rm $DYNAMIC; dynamic=true; }
+[ -e $NCURSES ] && ncurses=true
+touch $NCURSES
 
 # play media (see rox, dmenu movies, dmenu series, browsers..)
 [ "$2" ] && title=$2 || title=${1##*/}
@@ -71,7 +74,6 @@ if cpu arm; then
   touch $MENU
 else
   rm $MENU
-  touch $NCURSES
   blackboard
   # server && env CONKYRC=$CONKY_Q2 conky clock on
   notify 0 blackboard "$title" "1/2  Contrast         5/6  Gamma\n3/4  Brightness       7/8  Saturation\n9/0  Volume             m  Mute\n-/+  ^Audio Delay       #  Language\nj/J  Subtitles          v  Toggle\nx/z  Subtitle Delay              .."
@@ -79,12 +81,13 @@ else
   mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
   # clear notification
   ( pwait "mpv --vf=eq $1"; xdotool key Ctrl+space ) &
-  rm $NCURSES
 fi
 
 # refresh panel title on close
 focus window
 pstat 'dmenu (media|movies|series)' || restore root
 conky clock auto
+[ $dynamic ] && touch $DYNAMIC
+[ $ncurses ] || rm $NCURSES
 
 # vim: set ft=sh: #

@@ -68,8 +68,8 @@ do
                # force dmenu focus (continue within do loop doesn't guarantee focus)
                exec dmenu series $1 ;;
 
-    "$SEARCH") $BROWSER $sonarr
-               pwait "$BROWSER $sonarr"
+    "$SEARCH") surf $sonarr
+               pwait "surf $sonarr"
                continue ;;
 
     *        ) series="$library/$(echo $show | sed 's/ /./g')"
@@ -83,7 +83,7 @@ do
     [ $monitor ] && herbstclient focus_monitor $monitor
     # highlight most current episode viewed
     [ $episode ] || episode=$(shows | grep "^$SEP " | tail -1)
-    episode=$(shows | rmenu "$show" $episode -no-custom) || break
+    episode=$(shows | rmenu "$show" "$SEP $episode" -no-custom) || break
     [ "$episode" ] || break
 
     episode=$(echo "$episode" | sed "s/^$SEP //")

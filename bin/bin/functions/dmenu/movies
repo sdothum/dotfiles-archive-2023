@@ -16,6 +16,7 @@ LAST='[ last watched ]'
 NAME='[ sort by name ]'
 DATE='[ sort by date ]'
 EDIT='[ manage       ]'
+SEARCH='[ search       ]'
 
 # preload cache option
 [ "$1" = cache ] && { shift; cache=true; }
@@ -25,6 +26,8 @@ library=${LIBRARY:-/net/media/videos/${1:-movies}}
 mytitles=$library/.mytitles
 playlist=$library/.playlist
 catlg=$CACHEDIR/dmenu:${1:-movies}
+usenet=https://nzbgeek.info/geekseek.php?c=2040
+
 # unset debug to remove exit from menu items
 debug='\nexit'
 find $library -name '*sample*' -exec rm {} \; &
@@ -53,7 +56,7 @@ fi
 
 options() {
   [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$EDIT" || unset edit
-  grep -q '[^ ]' $playlist && echo "$LAST\\\n[ $(sortlist $T) ]$edit" ||
+  grep -q '[^ ]' $playlist && echo "$LAST\\\n$SEARCH\\\n[ $(sortlist $T) ]$edit" ||
                               echo "[ $(sortlist $T) ]$edit"
 }
 
@@ -75,50 +78,54 @@ do
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
 
   case $movie in
-    "$NAME") unset T; continue ;;
-    "$DATE") T=t;     continue ;;
+    "$NAME")   unset T; continue ;;
+    "$DATE")   T=t;     continue ;;
 
-    "$EDIT") pkill -TERM 'ROX-Filer'
-             rox $nzb
-             rox $library
-             pwait "ROX-Filer $nzb"
-             # force dmenu focus (continue within do loop doesn't guarantee focus)
-             exec dmenu movies $1 ;;
+    "$EDIT")   pkill -TERM 'ROX-Filer'
+               rox $nzb
+               rox $library
+               pwait "ROX-Filer $nzb"
+               # force dmenu focus (continue within do loop doesn't guarantee focus)
+               exec dmenu movies $1 ;;
 
-    *      ) movie=$(echo "$movie" | sed "s/^$SEP //")
-             while :
-             do
-               action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
-               title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
-               video=$(find $library -maxdepth 1 -type d -regex ".*/${title}.*")
-               case $action in
-                 play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
-                           notify 3 critical "$movie" "Duplicate movie files found"
-                           term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
-                         fi
-                         mhistory $playlist "$movie"
-                         catlg
-                         play "$video" "$movie"
-                         break ;;
+    "$SEARCH") surf $usenet
+               pwait "surf $usenet"
+               continue ;;
 
-                 mrqe  ) vimb "mr $movie" ;;
-                 imdb  ) vimb "im $movie" ;;
+    *      )   movie=$(echo "$movie" | sed "s/^$SEP //")
+               while :
+               do
+                 action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
+                 title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
+                 video=$(find $library -maxdepth 1 -type d -regex ".*/${title}.*")
+                 case $action in
+                   play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
+                             notify 3 critical "$movie" "Duplicate movie files found"
+                             term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
+                           fi
+                           mhistory $playlist "$movie"
+                           catlg
+                           play "$video" "$movie"
+                           break ;;
 
-                 manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
-                         catlg
-                         break ;;
+                   mrqe  ) vimb "mr $movie" ;;
+                   imdb  ) vimb "im $movie" ;;
 
-                 delete) rm -rf "$video"
-                         catlg
-                         break ;;
+                   manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
+                           catlg
+                           break ;;
 
-                 mark  ) mhistory $playlist "$movie"
-                         catlg
-                         break ;;
+                   delete) rm -rf "$video"
+                           catlg
+                           break ;;
 
-                 exit  ) exit ;;
-               esac
-             done ;;
+                   mark  ) mhistory $playlist "$movie"
+                           catlg
+                           break ;;
+
+                   exit  ) exit ;;
+                 esac
+               done ;;
   esac
 done
 

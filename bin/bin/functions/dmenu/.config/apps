@@ -1,9 +1,11 @@
 amphetype
+digikam
 hardcopy eject
 term 'Trace' tail -f /tmp/herbstluftwm.log # herbstluftwm :: log
 term 'IM' centerim5 # im
 term 'IRC' weechat # irc
 term 'Mail' alot # mail
+rawtherapee
 simpletimer
 $(which thedarnedestthing) # http :: the darnedest thing
 vimwiki colophon # wiki :: colophon

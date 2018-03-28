@@ -65,10 +65,14 @@ hc keybind $Mod-Down                    focus_edge down
 hc keybind $Mod-Up                      focus_edge up
 hc keybind $Mod-Right                   focus_edge right
 if [ $BEAKL ] ;then
+  # hc keybind $Mod-t                   focus left
+  # hc keybind $Mod-s                   focus down
+  # hc keybind $Mod-r                   focus up
+  # hc keybind $Mod-n                   focus right
   hc keybind $Mod-t                     focus left
-  hc keybind $Mod-s                     focus down
-  hc keybind $Mod-r                     focus up
-  hc keybind $Mod-n                     focus right
+  hc keybind $Mod-r                     focus down
+  hc keybind $Mod-n                     focus up
+  hc keybind $Mod-s                     focus right
   # hc keybind $Mod-s                   focus left
   # hc keybind $Mod-r                   focus down
   # hc keybind $Mod-n                   focus up
@@ -91,10 +95,14 @@ hc keybind $Mod-Shift-Down              shift_edge down
 hc keybind $Mod-Shift-Up                shift_edge up
 hc keybind $Mod-Shift-Right             shift_edge right
 if [ $BEAKL ] ;then
+  # hc keybind $Mod-Shift-t             chain . shift left  . emit_hook focus_changed
+  # hc keybind $Mod-Shift-s             chain . shift down  . emit_hook focus_changed
+  # hc keybind $Mod-Shift-r             chain . shift up    . emit_hook focus_changed
+  # hc keybind $Mod-Shift-n             chain . shift right . emit_hook focus_changed
   hc keybind $Mod-Shift-t               chain . shift left  . emit_hook focus_changed
-  hc keybind $Mod-Shift-s               chain . shift down  . emit_hook focus_changed
-  hc keybind $Mod-Shift-r               chain . shift up    . emit_hook focus_changed
-  hc keybind $Mod-Shift-n               chain . shift right . emit_hook focus_changed
+  hc keybind $Mod-Shift-r               chain . shift down  . emit_hook focus_changed
+  hc keybind $Mod-Shift-n               chain . shift up    . emit_hook focus_changed
+  hc keybind $Mod-Shift-s               chain . shift right . emit_hook focus_changed
   # hc keybind $Mod-Shift-s             chain . shift left  . emit_hook focus_changed
   # hc keybind $Mod-Shift-r             chain . shift down  . emit_hook focus_changed
   # hc keybind $Mod-Shift-n             chain . shift up    . emit_hook focus_changed
@@ -183,10 +191,14 @@ fi
 # resize frames
 resizestep=0.025
 if [ $BEAKL ] ;then
+  # hc keybind $Mod-Control-t           resize left  +$resizestep
+  # hc keybind $Mod-Control-s           resize down  +$resizestep
+  # hc keybind $Mod-Control-r           resize up    +$resizestep
+  # hc keybind $Mod-Control-n           resize right +$resizestep
   hc keybind $Mod-Control-t             resize left  +$resizestep
-  hc keybind $Mod-Control-s             resize down  +$resizestep
-  hc keybind $Mod-Control-r             resize up    +$resizestep
-  hc keybind $Mod-Control-n             resize right +$resizestep
+  hc keybind $Mod-Control-r             resize down  +$resizestep
+  hc keybind $Mod-Control-n             resize up    +$resizestep
+  hc keybind $Mod-Control-s             resize right +$resizestep
   # hc keybind $Mod-Control-s           resize left  +$resizestep
   # hc keybind $Mod-Control-r           resize down  +$resizestep
   # hc keybind $Mod-Control-n           resize up    +$resizestep

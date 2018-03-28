@@ -72,11 +72,9 @@ setblur() {
 # create pulsar border color gradient
 set_border() {
   # echo $1 >$BORDER
-  conky palette $1 'Monochromatic' | tac >$PULSAR
+  conky palette $1 'Monochromatic' >$PULSAR
   # set border to midtone
-  head -1 $PULSAR >$BORDER
-  # use tee to append file into itself
-  tac $PULSAR | tee >>$PULSAR
+  cut -d' ' -f1 $PULSAR >$BORDER
   # refresh border of active window
   herbstclient attr theme.active.color "#$(cat $BORDER)"
 }
@@ -208,7 +206,7 @@ if [ -e $HOME/.conkyrc ] ;then
       term 'Theme' STACK SHELL walpick
       pwait walpick
     fi
-    set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | head -1)
+    set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f1)
   fi
 fi
 

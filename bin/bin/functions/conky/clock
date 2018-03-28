@@ -14,9 +14,7 @@ usage() {
 CONKYRC=${CONKYRC:-$HOME/.conkyrc.qclocktwo}
 [ -e $CONKYRC ] || exit
 
-clock() {
-  pstat "conky -c $CONKYRC"
-}
+clock() { pstat "conky -c $CONKYRC"; }
 
 case $1 in
   auto) xset s off -dpms

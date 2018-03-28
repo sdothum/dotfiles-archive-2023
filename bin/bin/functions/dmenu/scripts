@@ -14,6 +14,7 @@ sources="$HOME/bin
          $HOME/.config/herbstluftwm
          $HOME/stow/orbit
          $HOME/.vim/config
+         $HOME/.weechat/python
 "
 
 files() {
@@ -24,13 +25,17 @@ files() {
 }
 
 # shorten path references for menu
-abbreviate() {
-  for i in $sources
-  do
-    trim="$trim -e 's|$i/|${i##*/}/|'"
-  done
-  eval sed $trim
-}
+for i in $sources
+do
+  case $i in
+    */.vim*    |\
+    */.weechat*) trim="$trim -e 's|$i/|.${i##*/.}/|'" ;;
+
+    *          ) trim="$trim -e 's|$i/|${i##*/}/|'" ;;
+  esac
+done
+
+abbreviate() { eval sed $trim; }
 
 # recover full pathname
 expand() {

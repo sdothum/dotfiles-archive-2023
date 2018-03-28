@@ -7,9 +7,11 @@
 # ..................................................... Draw active border color
 
 # below 0.045 can cause (hw dependent) resource hogging
-frequency=0.066
+# frequency=0.066
+frequency=0.15
 
-[ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='FFFFFF AAAAAA 555555  000000 555555 AAAAAA'
+[ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='FFFFFF AAAAAA 555555  000000'
+colors="$colors $(echo $colors | reverse)"
 [ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER=000000
 
 pulsar() {

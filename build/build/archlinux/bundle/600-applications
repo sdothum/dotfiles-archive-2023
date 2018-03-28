@@ -88,7 +88,7 @@ m dict-moby-thesaurus
 
 = photography
 = ▔▔▔▔▔▔▔▔▔▔▔
-  darktable
+# darktable
 # dcraw                         [server]
   digikam                       [server]
 # dispcalgui                    [server]
@@ -98,7 +98,7 @@ m dict-moby-thesaurus
 # kdebase-workspace             [server]
 # kipi-plugins                  [server]
 # photivo-hg                    [server]
-# rawtherapee                   [server]
+  rawtherapee                   [server]
 # lightzone
 # sxiv
 # viewnior

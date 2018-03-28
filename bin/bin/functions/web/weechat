@@ -10,6 +10,19 @@
 IRC=$HOME/.irc
 timeout=300
 
+# kill remote weechat instances
+unlock() {
+  for i in $(remotehosts)
+  do
+    if ping -c 1 -W 1 $i >/dev/null 2>&1 ;then
+      if /usr/bin/ssh $i -- pkill -TERM -f 'weechat' 2>/dev/null ;then
+        host=$i
+        break
+      fi
+    fi
+  done
+}
+
 initialize() {
   rm -f $HOME/.weechat/*.log
 
@@ -43,22 +56,10 @@ connect() {
   done
 }
 
-# kill remote weechat instances
-unlock() {
-  for i in $(remotehosts)
-  do
-    if ping -c 1 -W 1 $i >/dev/null 2>&1 ;then
-      if /usr/bin/ssh $i -- pkill -TERM -f 'weechat' 2>/dev/null ;then
-        host=$i
-        break
-      fi
-    fi
-  done
-}
-
 # wait for znc to establish connections
 # connections = irc servers X (times) 2, e.g. freenode + rizon = 4
 if server ;then
+  unlock
   initialize
   if pstat znc ;then
     ditto 'launching weechat'

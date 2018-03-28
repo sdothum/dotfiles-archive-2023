@@ -79,8 +79,8 @@ hc keybind Super-v                  spawn dmenu media
 hc keybind Super-Shift-v            spawn dmenu audio
 hc keybind Super-w                  spawn focus $BROWSER
 hc keybind Super-Shift-w            spawn dmenu history
-hc keybind Super-Control-w          spawn dmenu bookmarks
-hc keybind Super-Shift-Control-w    spawn kill -KILL $BROWSER
+hc keybind Super-Shift-Control-w    spawn dmenu bookmarks
+hc keybind Super-Control-w          spawn kill -KILL $BROWSER
 hc keybind Super-z                  spawn dmenu halt
 hc keybind Super-Shift-z            spawn dmenu screensaver
 

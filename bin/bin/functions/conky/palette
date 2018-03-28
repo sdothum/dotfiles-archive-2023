@@ -7,7 +7,7 @@
 # ......................................................... Scrape colorhexa.com
 
 usage() {
-  echo "usage: conky $(basename $0) <hexcolor>  Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Shade | Tint | Tone"
+  echo "usage: $(basename $0) palette <hexcolor>  Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Shade | Tint | Tone"
   exit 1
 }
 
