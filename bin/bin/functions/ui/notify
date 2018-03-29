@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | cron | low | normal | critical | blackboard]* \"<summary>\" [\"<body>\"]"
+  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | cron | low | normal | critical | blackboard]* [<color>] \"<summary>\" [[<color>] \"<body>\"]"
   exit 1
 }
 
@@ -43,13 +43,15 @@ do
   shift
 done
 
+[ "$(echo $1 | nocolor)" = '' ] && { color1=$1; shift; } || color1=${_YELLOW_}
 ONE=${1#\\}
+[ "$(echo $2 | nocolor)" = '' ] && { color2=$2; shift; } || color2=${_CYAN_}
 TWO=${2#\\}
-echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 
+echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 if [ $console ] ;then
-  [ "$TWO" ] && echo "${_YELLOW_}-> $ONE\n${_CYAN_} -> $TWO${_nocolor_}" ||
-                echo "${_YELLOW_}-> $ONE${_nocolor_}"
+  [ "$TWO" ] && echo "${color1}-> $ONE\n${color2} -> $TWO${_nocolor_}" ||
+                echo "${color1}-> $ONE${_nocolor_}"
 else
   # allow cron jobs to bypass console test and display to X
   [ $cron ] || { console && exit; }

@@ -365,7 +365,7 @@
             let l:name = (&modified ? '' : '')
           else
             let l:name = expand('%:t' . (core#Prose() ? ':r' : ''))
-                \        . (&modified ? '      ' : '      ')
+                \        . (&modified ? '      ' : '      ')
                 \        . (core#Prose() ? info#WordCount() : col('.'))
           endif
           let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)

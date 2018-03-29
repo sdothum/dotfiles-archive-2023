@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-if [ $1 ] ;then
+if [ "$1" ] ;then
   /usr/bin/surf "$@"
 else
   ping -c 1 -W 1 $SERVER >/dev/null 2>&1 && TTRSS=$SERVER || TTRSS=localhost

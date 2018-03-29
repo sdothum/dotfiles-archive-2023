@@ -1,0 +1,32 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................... Update web gallery
+
+usage() {
+  echo "usage: $(basename $0) <gallery> [<jpeg>]*"
+  exit 1
+}
+
+ROOT=/srv/http/thedarnedestthing.com/application/public/images
+FOLIO=${FOLIO:-0.folio}
+
+server || exit 1
+[ "$1" ] && gallery="$FOLIO/$1" || usage
+
+GALLERY="$ROOT/$gallery"
+[ -d "$GALLERY" ] || { ditto ${_RED_} "$gallery"; mkdir -p "$GALLERY"; }
+shift
+[ $1 ] && files="$@" || files=$(ls *.jpg)
+
+for i in $files
+do
+  ditto "$gallery $i"
+  convert -size 1600 $i $GALLERY/$i
+  convert -size 320  $i $GALLERY/{i%.jpg}_1.jpg
+done
+
+# vim: set ft=sh: #

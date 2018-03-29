@@ -22,7 +22,7 @@ if ! pm_query $@ ;then
   if pacman -Ss $@ | grep -q --regex="/$@ " ;then
     [ $confirm ] && sudo pacman -S $@ || sudo pacman -S --noconfirm $@
   else
-    echo "${_GREEN_}@ aur${nocolor_}"
+    echo "${_GREEN_}@ aur${_nocolor_}"
     [ $confirm ] && $pacaur -S $edit $@ || $pacaur -S --noconfirm $noedit $@
   fi
   post_install $@

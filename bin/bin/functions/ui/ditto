@@ -6,6 +6,8 @@
 
 # ..................................................................... Notifier
 
-notify console "$1" "$2"
+# Usage: ditto [<color>] <message> [[<color>] <detail>]
+
+notify console "$1" "$2" "$3" "$4"
 
 # vim: set ft=sh: #

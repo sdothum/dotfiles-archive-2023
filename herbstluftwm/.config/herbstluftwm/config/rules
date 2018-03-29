@@ -92,6 +92,7 @@ hc rule class=Savebox                    pseudotile=off
 # hc rule title=scratchpad               pseudotile=on
 hc rule class=Simpletimer                pseudotile=on
 hc rule class=Slickpicker                pseudotile=on
+hc rule class=Surf                       focus=on hook=max
 hc rule class=Vimb                       focus=on hook=max
 hc rule class=Vlc                        focus=on switchtag=on fullscreen=on hook=fullscreen
 hc rule class=Zathura                    focus=on hook=max

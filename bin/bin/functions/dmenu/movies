@@ -109,8 +109,13 @@ do
                            play "$video" "$movie"
                            break ;;
 
-                   mrqe  ) vimb "mr $movie" ;;
-                   imdb  ) vimb "im $movie" ;;
+                   mrqe  ) surf "http://www.mrqe.com/search?q=$movie"
+                           pwait "surf http://www.mrqe.com/search?q=$movie"
+                           ;;
+
+                   imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"
+                           pwait "surf http://www.imdb.com/find?s=all&q=$movie"
+                           ;;
 
                    manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
                            catlg
