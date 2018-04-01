@@ -9,9 +9,6 @@
 // tap dance key press termination interval
 #define TAPPING_TERM 250
 
-// fix dual function timing
-#define PERMISSIVE_HOLD
-
 // smooth mouse motion
 // #define MOUSEKEY_INTERVAL    20
 // #define MOUSEKEY_DELAY       0
@@ -31,13 +28,23 @@
 // number layer 0 position KEYPAD_0, THUMB_0
 #define THUMB_0
 
+// home block shift symbol clustes defined (no overlays required for extended symbols, undefine otherwise)
+#define SHIFT_SYMBOLS
+
+// center column TT assignments (undefine for OSM chords)
+#define CENTER_TT
+#define TAPPING_TOGGLE 1
+
+// home row modifiers
+#define HOME_MODS
+// fix dual function timing
+#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT
+
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
-#define BEAKLMU
+#define BEAKL8TX
 
-// home block symbol clustes defined (no overlays required, undefine otherwise)
-#define HOME_BLOCK
-
-// sync app on steno layer
-#define LAUNCH_PLOVER
+// sync app with window manager keybind hook defined in plover_keymap.h
+#define PLOVER_KEYMAP
 
 #endif
