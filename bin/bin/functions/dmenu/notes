@@ -7,12 +7,11 @@
 
 # Usage: dmenu notes [<extension>] [<path>]
 
-while :
-do
+while : ;do
   case $1 in
     '' ) break ;;
-    */*) FOLDER=$1; shift ;;
-    *  ) ext=$1; shift ;;
+    */*) FOLDER=$1 ; shift ;;
+    *  ) ext=$1 ; shift ;;
   esac
 done
 NOTES=/tmp/dmenu:notes:$ext
@@ -60,11 +59,8 @@ cache() {
   rm -f $NOTES
   notify low "Updating ${ext}s cache" 'Please be patient..'
   if [ "$files" ] ;then
-    for i in $files
-    do
-      if [ "$search" ] ;then
-        egrep -iq "$search" $i || continue
-      fi
+    for i in $files ;do
+      [ "$search" ] && { egrep -iq "$search" $i || continue ;}
       echo "$i^$(stat -c '%y' $i | cut -d. -f1) ^$SEP $(hint $i)"
     done | sort -k2 -t^ -r >>$NOTES
   else
@@ -90,10 +86,9 @@ while note=$(cat $NOTES |
              cut -d^ -f2- |
              column -s^ -t |
              sed "1i$PROMPT" |
-             rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit
-do
+             rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
   case $note in
-    /*      ) search="${note#*/}"; continue ;;
+    /*      ) search="${note#*/}" ; continue ;;
     "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
 
     "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext)

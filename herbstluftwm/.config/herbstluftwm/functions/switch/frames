@@ -10,7 +10,7 @@
 #        this structure is required because keybind chaining is not sequential!
 
 herbstclient lock
-if is fullscreen; then
+if is fullscreen ;then
   # fullscreen=true
   # retain monocle view
   if [ -e $MONOCLE ] ;then

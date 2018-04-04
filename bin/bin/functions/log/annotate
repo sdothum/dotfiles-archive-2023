@@ -4,7 +4,7 @@
 # Log
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ...................................................................... Comment
 
@@ -12,12 +12,11 @@
 [ $leader ] || leader=.
 
 annotate() {
-  while read line
-  do
+  while read line ;do
     # indent=$(echo "$(tput cols) - $(echo $line | wc -L) - 3" | bc)
     indent=$(( $(tput cols) - $(echo $line | wc -L) - 3 ))
     [ $indent -gt 0 ] && leader=$(head -c $indent </dev/zero | tr '\0' "$leader")
-    log "${_CYAN_}⚡ $leader $line${_nocolor_}"
+    log "${__CYAN}⚡ $leader $line${NOCOLOR}"
     leader=' '
   done
 }

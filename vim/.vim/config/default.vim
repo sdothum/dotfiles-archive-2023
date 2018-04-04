@@ -64,7 +64,7 @@
       nnoremap <C-q>      @q
       " edit q macro
       nnoremap <leader>.. :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
-      " repeat last macro
+      " repeat last macro played @{0-9a-z":*}
       nnoremap Q          @@
 
 
@@ -107,23 +107,23 @@
       set smartcase                         " ignore case if search pattern is all lowercase
 
       " tab to bracket pairs
-      nmap     <Tab>        %
-      vmap     <Tab>        %
+      nmap     <Tab>      %
+      vmap     <Tab>      %
       " disable magic and case sensitivity
-      cmap     %%           \M
-      cmap     ^^           \C
+      cmap     %%         \M
+      cmap     ^^         \C
 
       " clear search highlight
-      nmap     <silent>\    :noh<CR>
+      nmap     <silent>\  :noh<CR>
 
       " repeat latest f,t,F,T see modal searching remaps above
-      nnoremap ,,           ;
-      vnoremap ,,           ;
+      nnoremap ,,         ;
+      vnoremap ,,         ;
 
     " .................................................................. Replace
 
-      nmap     %%           :%s
-      vmap     %%           :s
+      nmap     %%         :%s
+      vmap     %%         :s
 
     " ........................................................... Tab completion
 

@@ -13,8 +13,7 @@ herbstclient compare clients.focus.instance != '' 2>/dev/null && exit
 frames=$(query fcount $TAG)
 lock cycle_frame -1
 
-for i in $(seq 1 $frames)
-do
+for i in $(seq 1 $frames) ;do
   herbstclient cycle_frame 1
   herbstclient compare tags.by-name.$TAG.curframe_wcount gt 0 && break
   # empty desktop, return to original frame

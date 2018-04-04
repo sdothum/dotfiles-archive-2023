@@ -15,8 +15,7 @@ while ! wego -backend forecast.io \
              -location $city \
              -days 2 \
              $(cat $HOME/.wego) \
-             $@ 2>/dev/null
-do
+             $@ 2>/dev/null ;do
   # arm on boot delay..
   sleep 1
 done

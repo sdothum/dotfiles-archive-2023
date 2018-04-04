@@ -255,12 +255,15 @@
       function! core#StripTrailingWhitespaces()
         if &modifiable == 1 && ! core#Markdown()
           " save last search & cursor position
-          let l:_s = @/
-          let l:l  = line(".")
-          let l:c  = col(".")
-          %s/\s\+$//e
-          let @/ = l:_s
-          call cursor(l:l, l:c)
+          " let l:_s = @/
+          " let l:l  = line(".")
+          " let l:c  = col(".")
+          let s:view = winsaveview()
+          %s/\s\+$//e                       " EOL
+          %s/\(\n\r\?\)\+\%$//e             " EOF
+          call winrestview(s:view)
+          " let @/ = l:_s
+          " call cursor(l:l, l:c)
         endif
       endfunction
 

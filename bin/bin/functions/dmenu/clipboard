@@ -18,8 +18,7 @@ clipboard() {
 
 # delete from the bottom of the queue to preserve indexes
 clipboard
-while read index word <&3
-do
+while read index word <&3 ;do
   len=$(echo "$word" | wc -c)
   if [ $len -ge 6 ] && [ $len -le 12 ] ;then
     notify 3 critical "$word" "Delete clipboard $index"

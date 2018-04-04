@@ -12,7 +12,7 @@ usage() {
 }
 
 [ "$1" ] || usage
-[ "$1" = -w ] && { w=-w; shift; }
+[ "$1" = -w ] && { w=-w ; shift ;}
 
 # see .agignore and al
 ag --follow --hidden --skip-vcs-ignores \

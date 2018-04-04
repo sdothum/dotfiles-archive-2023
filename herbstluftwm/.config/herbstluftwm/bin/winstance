@@ -14,10 +14,8 @@ start=$(date '+%s')
 
 delay=0.01
 
-while :
-do
-  for i in $(herbstclient attr clients | egrep '0x|focus')
-  do
+while : ;do
+  for i in $(herbstclient attr clients | egrep '0x|focus') ;do
     herbstclient compare clients.${i%.}.instance = $1 && exit 0
   done
   sleep $delay

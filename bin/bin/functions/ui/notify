@@ -4,7 +4,7 @@
 # X11 Desktop
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ..................................................................... Notifier
 
@@ -14,12 +14,9 @@ usage() {
 }
 
 # enable cron notifications, see .xinitrc
-if [ -r $HOME/.dbus/Xdbus ]; then
-  . $HOME/.dbus/Xdbus
-fi
+[ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus
 
-while :
-do
+while : ;do
   case $1 in
     # long form required for handling numeric summary field
     time=*    ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
@@ -43,18 +40,18 @@ do
   shift
 done
 
-[ "$(echo $1 | nocolor)" = '' ] && { color1=$1; shift; } || color1=${_YELLOW_}
+[ "$(echo $1 | nocolor)" = '' ] && { color1=$1 ; shift ;} || color1=${__YELLOW}
 ONE=${1#\\}
-[ "$(echo $2 | nocolor)" = '' ] && { color2=$2; shift; } || color2=${_CYAN_}
+[ "$2" ] && [ "$(echo $2 | nocolor)" = '' ] && { color2=$2 ; shift ;} || color2=${GREEN}
 TWO=${2#\\}
 
 echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 if [ $console ] ;then
-  [ "$TWO" ] && echo "${color1}-> $ONE\n${color2} -> $TWO${_nocolor_}" ||
-                echo "${color1}-> $ONE${_nocolor_}"
+  [ "$TWO" ] && echo "${color1}-> $ONE\n${color2} -> $TWO${NOCOLOR}" ||
+                echo "${color1}-> $ONE${NOCOLOR}"
 else
   # allow cron jobs to bypass console test and display to X
-  [ $cron ] || { console && exit; }
+  [ $cron ] || { console && exit ;}
   case $# in
     1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &

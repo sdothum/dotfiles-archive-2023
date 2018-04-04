@@ -29,14 +29,7 @@ UTF='□'
 # return list of existing applications
 apps() {
   unset apps
-  for i in $@
-  do
-    # if [ -n "$(find /usr/bin -name $i)" ] ;then
-    #   apps="$apps$i "
-    # fi
-    # allow user named browser scripts
-    apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")"
-  done
+  for i in $@ ;do apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")" ;done
   echo $apps | sed 's/ /\n/g'
 }
 
@@ -44,8 +37,7 @@ apps() {
 
 # usage:  playlist library played, see dmenu series/movies
 playlist() {
-  cat $2 | while read line
-  do
+  cat $2 | while read line ;do
     [ "$line" ] && grep -q "$line" $1 &&
                    sed -i "/^$line/s/^$line/$SEP $line/" $1
   done
@@ -53,17 +45,17 @@ playlist() {
 }
 
 # playlist order
-sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date'; }
+sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date' ;}
 
 # .......................................................... Most recent history
 
 # usage: previous <function>, refer to history usage in dmenu functions
-previous() { echo | mhistory $1 | head -1; }
+previous() { echo | mhistory $1 | head -1 ;}
 
 # ......................................................................... Main
 
 # allow subword match input (by inserting single quote symbol into input)
-unquote() { echo $@ | sed "s/'//g"; }
+unquote() { echo $@ | sed "s/'//g" ;}
 
 # if not sourced, execute dmenu message
 trap 'unset TERMINAL' EXIT
@@ -82,7 +74,7 @@ if [ $(basename $0) = dmenu ] ;then
       scripts |\
       projects) ;;
 
-      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..'; exit; } ;;
+      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..' ; exit ;} ;;
     esac
     shift
     . ${0%/dmenu}/functions/dmenu/$msg $@

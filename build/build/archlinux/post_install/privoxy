@@ -6,9 +6,7 @@
 # ...................................................................... privoxy
 
 ifnsed /etc/privoxy/config '^enable-edit-actions.*1' '/^enable-edit-actions/s/0/1/'
-if [ -f /usr/bin/polipo ] ;then
-  ifnsed /etc/privoxy/config 'forward / localhost:8123'
-fi
+[ -f /usr/bin/polipo ] && ifnsed /etc/privoxy/config 'forward / localhost:8123'
 
 systemd enable privoxy
 # annotate "configure browser proxies to localhost:8118"

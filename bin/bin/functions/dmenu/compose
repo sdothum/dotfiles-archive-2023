@@ -62,12 +62,11 @@ compose_vim() {
 }
 
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | rmenu 'Compose' $editor -no-custom) || exit
-do
+while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | rmenu 'Compose' $editor -no-custom) || exit ;do
   case $editor in
     "$SEND"    ) ;;
-    "$EDIT"    ) dmenu notes draft;                 continue ;;
-    "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp; continue ;;
+    "$EDIT"    ) dmenu notes draft ;                 continue ;;
+    "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp ; continue ;;
     focuswriter) compose_with focuswriter $1 ;;
     nano       ) compose_with pyroom $1 ;;
     pyroom     ) compose_with pyroom $1 ;;

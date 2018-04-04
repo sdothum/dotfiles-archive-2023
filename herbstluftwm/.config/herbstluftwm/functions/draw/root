@@ -44,9 +44,7 @@ exists() {
 
 # ............................................................. Per monitor blur
 
-if [ "$1" = toggle ] ;then
-  [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR
-fi
+[ "$1" = toggle ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR ;}
 
 # occupied or empty desktop, setroot record structure:
 # 1: occupied (blurred image)

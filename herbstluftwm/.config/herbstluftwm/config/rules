@@ -17,84 +17,84 @@ hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG'                      focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 # desktop application groups
-hc rule class=tabbed                     tag=1 focus=on
-hc rule windowrole='.* Tiny RSS'         tag=1 focus=on
-hc rule class=Vimb                       tag=1 index=0 focus=on once
-# hc rule class=chromium                 tag=1
-hc rule class=dwb                        tag=1
-hc rule class=luakit                     tag=1
-# hc rule class=qutebrowser              tag=1 once
-hc rule title=RSS                        tag=1 index=1 focus=off
-hc rule class=Minitube                   tag=1
-hc rule class=VimbT                      tag=1 once
-# hc rule title=IM                       tag=2 index=0 focus=on
-# hc rule title=IRC                      tag=2 index=1 focus=on
-hc rule title=IM                         tag=2 focus=on
-hc rule title=IRC                        tag=2 focus=on
-hc rule title=Messenger                  tag=2 focus=on
-hc rule class=Pidgin                     tag=2
-hc rule title=Twitter                    tag=2
-hc rule class=Astroid                    tag=3 focus=on
-hc rule class=Geary                      tag=3
-hc rule title=IMAP                       tag=3
-hc rule title=Mail                       tag=3 index=0 focus=on switchtag=on
-hc rule title=Calendar                   tag=3 index=1 focus=on switchtag=on
-hc rule title=Usenet                     tag=3
-# hc rule class=Surf                     tag=4
-hc rule windowrole='the darnedest thing' tag=4 index=1 focus=on
+hc rule class=tabbed                       tag=1 focus=on
+hc rule windowrole="'.* Tiny RSS'"         tag=1 focus=on
+hc rule class=Vimb                         tag=1 index=0 focus=on once
+# hc rule class=chromium                   tag=1
+hc rule class=dwb                          tag=1
+hc rule class=luakit                       tag=1
+# hc rule class=qutebrowser                tag=1 once
+hc rule title=RSS                          tag=1 index=1 focus=off
+hc rule class=Minitube                     tag=1
+hc rule class=VimbT                        tag=1 once
+# hc rule title=IM                         tag=2 index=0 focus=on
+# hc rule title=IRC                        tag=2 index=1 focus=on
+hc rule title=IM                           tag=2 focus=on
+hc rule title=IRC                          tag=2 focus=on
+hc rule title=Messenger                    tag=2 focus=on
+hc rule class=Pidgin                       tag=2
+hc rule title=Twitter                      tag=2
+hc rule class=Astroid                      tag=3 focus=on
+hc rule class=Geary                        tag=3
+hc rule title=IMAP                         tag=3
+hc rule title=Mail                         tag=3 index=0 focus=on switchtag=on
+hc rule title=Calendar                     tag=3 index=1 focus=on switchtag=on
+hc rule title=Usenet                       tag=3
+# hc rule class=Surf                       tag=4
+hc rule windowrole="'the darnedest thing'" tag=4 index=1 focus=on
 # chromium title (class) doesn't appear to be trapped
-hc rule title=thedarnedestthing          tag=4 index=1 focus=on
-hc rule class=mplayer2                   tag=5
-hc rule title=Music                      tag=5 focus=on pseudotile=on
-hc rule title=Radio                      tag=5 focus=off
-# hc rule class=Rrip_gui                 tag=5 focus=on switchtag=on
-hc rule class=Smplayer                   tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
-hc rule class=Umplayer                   tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
-# hc rule class=Kodi                     tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
-hc rule class=Gimp                       tag=5 monitor=5 focus=on switchtag=on
-hc rule class=Darktable                  tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
-hc rule class=digikam                    tag=5 monitor=5 focus=on switchtag=on
-hc rule class=Rawtherapee                tag=5 monitor=5 focus=on switchtag=on
-hc rule class=VirtualBox                 tag=5 monitor=0 focus=on switchtag=on
-# hc rule class=Thunar                   tag=6 focus=on switchtag=on
-hc rule title=Autoconnect                tag=6 focus=off
-hc rule title=Ping                       tag=6 focus=off
-hc rule class=cmst                       tag=6 focus=on switchtag=on
-hc rule class=Tixati                     tag=6 focus=on switchtag=on
-hc rule class=Transmission-gtk           tag=6
-hc rule title=NZB                        tag=6 focus=on switchtag=on
-hc rule title=Trace                      tag=6 focus=off
+hc rule title=thedarnedestthing            tag=4 index=1 focus=on
+hc rule class=mplayer2                     tag=5
+hc rule title=Music                        tag=5 focus=on pseudotile=on
+hc rule title=Radio                        tag=5 focus=off
+# hc rule class=Rrip_gui                   tag=5 focus=on switchtag=on
+hc rule class=Smplayer                     tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
+hc rule class=Umplayer                     tag=5 index=1 monitor=5 focus=on switchtag=on fullscreen=off
+# hc rule class=Kodi                       tag=5 index=1 monitor=5 focus=on switchtag=on hook=fullscreen
+hc rule class=Gimp                         tag=5 monitor=5 focus=on switchtag=on
+hc rule class=Darktable                    tag=5 monitor=5 focus=on switchtag=on fullscreen=on hook=fullscreen
+hc rule class=digikam                      tag=5 monitor=5 focus=on switchtag=on
+hc rule class=Rawtherapee                  tag=5 monitor=5 focus=on switchtag=on
+hc rule class=VirtualBox                   tag=5 monitor=0 focus=on switchtag=on
+# hc rule class=Thunar                     tag=6 focus=on switchtag=on
+hc rule title=Autoconnect                  tag=6 focus=off
+hc rule title=Ping                         tag=6 focus=off
+hc rule class=cmst                         tag=6 focus=on switchtag=on
+hc rule class=Tixati                       tag=6 focus=on switchtag=on
+hc rule class=Transmission-gtk             tag=6
+hc rule title=NZB                          tag=6 focus=on switchtag=on
+hc rule title=Trace                        tag=6 focus=off
 
 # term placement
-hc rule instance=max                     focus=on switchtag=on hook=max
-hc rule instance=menu                    focus=on switchtag=on fullscreen=on hook=menu
-hc rule instance=vertical                focus=on switchtag=on hook=vertical
-hc rule instance=horizontal              focus=on switchtag=on hook=horizontal
-hc rule instance=grid                    focus=on switchtag=on hook=grid
+hc rule instance=max                       focus=on switchtag=on hook=max
+hc rule instance=menu                      focus=on switchtag=on fullscreen=on hook=menu
+hc rule instance=vertical                  focus=on switchtag=on hook=vertical
+hc rule instance=horizontal                focus=on switchtag=on hook=horizontal
+hc rule instance=grid                      focus=on switchtag=on hook=grid
 
 # special apps and dialogues
-# hc rule class=Amphetype                pseudotile=on
-hc rule title=blackscreen                monitor=1 fullscreen=on hook=fullscreen
-hc rule class=Colorgrab                  pseudotile=on
-hc rule class=feh                        focus=on switchtag=on
-hc rule class=File-roller                pseudotile=off
-hc rule class=float                      focus=on pseudotile=on
-# hc rule class=Gnome-mpv                pseudotile=on
-hc rule class=Gvim                       focus=on hook=max
-hc rule windowrole=gvimdiff              focus=on fullscreen=on hook=fullscreen
-hc rule class=Klavaro                    pseudotile=on
-hc rule class=mpv                        index=1 focus=on switchtag=on fullscreen=off
-hc rule title=omxplay                    fullscreen=on hook=fullscreen
-hc rule class=Plover                     pseudotile=on
-hc rule class=qutebrowser                focus=on hook=max
-hc rule class=ROX-Filer                  pseudotile=off
-hc rule class=Savebox                    pseudotile=off
-# hc rule title=scratchpad               pseudotile=on
-hc rule class=Simpletimer                pseudotile=on
-hc rule class=Slickpicker                pseudotile=on
-hc rule class=Surf                       focus=on hook=max
-hc rule class=Vimb                       focus=on hook=max
-hc rule class=Vlc                        focus=on switchtag=on fullscreen=on hook=fullscreen
-hc rule class=Zathura                    focus=on hook=max
+# hc rule class=Amphetype                  pseudotile=on
+hc rule title=blackscreen                  monitor=1 fullscreen=on hook=fullscreen
+hc rule class=Colorgrab                    pseudotile=on
+hc rule class=feh                          focus=on switchtag=on
+hc rule class=File-roller                  pseudotile=off
+hc rule class=float                        pseudotile=on focus=on
+# hc rule class=Gnome-mpv                  pseudotile=on
+hc rule class=Gvim                         focus=on hook=max
+hc rule windowrole=gvimdiff                focus=on fullscreen=on hook=fullscreen
+hc rule class=Klavaro                      pseudotile=on
+hc rule class=mpv                          focus=on switchtag=on fullscreen=off index=1
+hc rule title=omxplay                      fullscreen=on hook=fullscreen
+hc rule class=Plover                       pseudotile=on
+hc rule class=qutebrowser                  focus=on hook=max
+hc rule class=ROX-Filer                    pseudotile=off
+hc rule class=Savebox                      pseudotile=off
+# hc rule title=scratchpad                 pseudotile=on
+hc rule class=Simpletimer                  pseudotile=on
+hc rule class=Slickpicker                  pseudotile=on
+hc rule class=Surf                         focus=on hook=max
+hc rule class=Vimb                         focus=on hook=max
+hc rule class=Vlc                          focus=on switchtag=on fullscreen=on hook=fullscreen
+hc rule class=Zathura                      focus=on hook=max
 
 # vim: set ft=sh: #

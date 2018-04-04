@@ -27,7 +27,7 @@ usage() {
 }
 
 case $1 in
-  clean | CLEAN) clean=$1; shift ;;
+  clean | CLEAN) clean=$1 ; shift ;;
 esac
 
 [ $1 ] && rules=$@ || rules=.$(basename $0)
@@ -43,14 +43,13 @@ clean() {
 }
 
 # preserve stdin fd for package manager prompts
-while read action file package <&3
-do
+while read action file package <&3 ;do
   # echo "action=$action file=$file package=$package"
   case $action in
     '' |\
     '#') continue ;;
 
-    '=') title "$file $package"; continue ;;
+    '=') title "$file $package" ; continue ;;
     '!') ;;
 
     *  ) package=$file
@@ -61,7 +60,7 @@ do
   echo $file | grep -q "^\($HOME\)*[./]*$" && continue
 
   case $action in
-    '!') clean; continue ;;
+    '!') clean ; continue ;;
 
     *  ) if [ $package ] ;then
            pm $package >/dev/null || unset package

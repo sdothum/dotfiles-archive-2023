@@ -7,7 +7,7 @@
 # ........................................................................ Theme
 
 # tree_style string passed to hc
-hc set tree_style                     '"╾│ ├└╼─┐"'
+hc set tree_style                     "'╾│ ├└╼─┐'"
 hc attr theme.tiling.reset            1
 hc attr theme.floating.reset          1
 

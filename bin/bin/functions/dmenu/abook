@@ -100,8 +100,7 @@ addresslist() {
 
 # ................................................................. Address book
 
-while :
-do
+while : ;do
   address=$(addresslist | rmenu "$(ribbon)" -no-custom) || exit
   address=${address#*$SEP }
 

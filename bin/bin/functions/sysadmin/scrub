@@ -27,8 +27,7 @@ show() {
   V=$(volume $@)
   [ $V ] || usage
   p scrub | grep -q "btrfs scrub start -Bd $V" || in_progress=$@
-  while :
-  do
+  while : ;do
     trace "$@"
     sudo btrfs scrub status $V
     p scrub | grep -q "btrfs scrub start -Bd $V" || break

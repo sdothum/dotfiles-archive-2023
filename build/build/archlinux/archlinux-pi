@@ -13,9 +13,7 @@ fi
 source ./archlinux-functions
 user=shum
 
-if ! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1 ;then
-  wifi-menu
-fi
+! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1 && wifi-menu
 pacman -Syu
 checkpoint
 

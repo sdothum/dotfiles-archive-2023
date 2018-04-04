@@ -73,7 +73,7 @@ crontab with "mailsync""
   l*) ditto 'tail -f /tmp/offlineimap.log'
       tail -f /tmp/offlineimap.log &
       pwait "offlineimap -c $OFFLINEIMAPRC"
-      pkill -TERM -f 'tail -f /tmp/offlineimap.log';;
+      pkill -TERM -f 'tail -f /tmp/offlineimap.log' ;;
 
   Q*) if !p 'python.*offlineimap.*offlineimaprc' ;then
         offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 &

@@ -16,7 +16,7 @@ FISH=$HOME/.local/share/fish/fish_history
 ZSH=$HOME/.zhistory
 
 case $1 in
-  shell=*) eval $1; shift ;;
+  shell=*) eval $1 ; shift ;;
   *      ) shell=fish ;;
 esac
 
@@ -54,7 +54,7 @@ filter='^[^ ]*  *(([^ ]*)|((cd|h|kk*|l[alrst]*|pa*|r|x|z)( *| .*)))$'
 week=$(date '+%W')
 weekof() {
   # calculation assumes history size does not span more than one calendar year
-  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" |
+  awk "{ if (\$2<=$week) \$2=($week - \$2) ; else \$2=(53 - \$2 + $week) ; print \$0 }" |
       grep '^[0-9]* ' |
       sort -k 3 |
       uniq -f 2 |
@@ -63,9 +63,9 @@ weekof() {
       egrep -v "$filter"
 }
 
-fish_history() { fish -c "history --show-time='%s %W '"; }
+fish_history() { fish -c "history --show-time='%s %W '" ;}
 
-zsh_history() { zsh -c "export HISTFILE=$ZSH ; export HISTSIZE=10000 ; fc -R ; fc -l -t '%W' 1"; }
+zsh_history() { zsh -c "export HISTFILE=$ZSH ; export HISTSIZE=10000 ; fc -R ; fc -l -t '%W' 1" ;}
 
 # interactively paste into terminal session or pass filtered history list (see dmenu shistory)
 history() {
@@ -88,7 +88,7 @@ history() {
 case $shell in
   dash     ) history $shell $@ ;;
   fish     ) history fish $@ ;;
-  bash | sh) echo history | sh -i | sed 's/^ *//; s/  */ /g' | egrep -v "$filter" | tac ;;
+  bash | sh) echo history | sh -i | sed 's/^ *// ; s/  */ /g' | egrep -v "$filter" | tac ;;
   zsh      ) history zsh $@ ;;
   *        ) $shell -c history | grep "$@" ;;
 esac

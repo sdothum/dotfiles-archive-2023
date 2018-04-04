@@ -19,7 +19,7 @@ EDIT='[ manage       ]'
 SEARCH='[ search       ]'
 
 # preload cache option
-[ "$1" = cache ] && { shift; cache=true; }
+[ "$1" = cache ] && { shift ; cache=true ;}
 
 nzb=/net/downloads/nzbs/completed
 library=${LIBRARY:-/net/media/videos/${1:-movies}}
@@ -37,7 +37,7 @@ find $library -name '*sample*' -exec rm {} \; &
 T=t
 catlg() {
   cat /dev/null >$catlg
-  ls -1$T $library | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
+  ls -1$T $library | sed -r 's/\./ /g ; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
   playlist /tmp/dmenu:movies $playlist >$catlg &
 }
 
@@ -50,9 +50,7 @@ cache() {
 }
 
 # any new media added?
-if [ ! -s $catlg ] || stest -dqr -n $catlg $library ;then
-  cache
-fi
+[ ! -s $catlg ] || stest -dqr -n $catlg $library && cache
 [ $cache ] && exit
 
 options() {
@@ -61,8 +59,7 @@ options() {
                               echo "[ $(sortlist $T) ]$edit"
 }
 
-while :
-do
+while : ;do
   # rebuilding catalogue?
   if [ ! -s $catlg ] ;then
     sleep 0.1
@@ -79,8 +76,8 @@ do
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
 
   case $movie in
-    "$NAME")   unset T; continue ;;
-    "$DATE")   T=t;     continue ;;
+    "$NAME")   unset T ; continue ;;
+    "$DATE")   T=t ;     continue ;;
 
     "$EDIT")   pkill -TERM 'ROX-Filer'
                rox $nzb
@@ -94,10 +91,9 @@ do
                continue ;;
 
     *      )   movie=$(echo "$movie" | sed "s/^$SEP //")
-               while :
-               do
+               while : ;do
                  action=$(echo "play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
-                 title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
+                 title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/ ; s/ /./g')
                  video=$(find $library -maxdepth 1 -type d -regex ".*/${title}.*")
                  case $action in
                    play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then

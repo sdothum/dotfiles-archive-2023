@@ -73,9 +73,8 @@ case $1 in
       rm -fv ${image%.sh}.zip
       echo "#!/usr/bin/dash
   pass I || exit" >$image
-      names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
-      for i in $names
-      do
+      names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g ; s/.gpg$//")
+      for i in $names ;do
         ditto "exporting $i"
         key=$(/usr/bin/pass $i | sed "s/'/'\"'\"'/")
         echo "pass i $i '$key'" >>$image

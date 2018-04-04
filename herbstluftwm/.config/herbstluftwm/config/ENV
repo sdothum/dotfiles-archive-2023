@@ -72,10 +72,7 @@ export WEATHER=$SPANEL:weather
 export TAG_NAMES='WEB CHAT MAIL WIKI MEDIA ADMIN'
 export TAGS="$(seq 1 $(echo $TAG_NAMES | sed 's/ /\n/g' | wc -l))"
 # export TAG_NAME = TAG
-for key in $TAGS
-do
-  export $(echo $TAG_NAMES | awk "{ print \$$key }")=$key
-done
+for key in $TAGS ;do export $(echo $TAG_NAMES | awk "{ print \$$key }")=$key ;done
 
 # dmenu window state icons
 export VISIBLE='■'

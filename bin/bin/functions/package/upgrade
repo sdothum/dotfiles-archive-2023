@@ -18,11 +18,8 @@ if [ -z $1 ] ;then
   usage
 fi
 
-for i in $@
-do
-  if grep -q "^ *IgnorePkg.*$i" $conf ;then
-    sudo sed -i "/^ *IgnorePkg.*$i/s/ $i//" $conf
-  fi
+for i in $@ ;do
+  grep -q "^ *IgnorePkg.*$i" $conf && sudo sed -i "/^ *IgnorePkg.*$i/s/ $i//" $conf
   pm S $i
 done
 

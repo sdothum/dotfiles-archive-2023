@@ -80,7 +80,7 @@ fi
 partition() {
   case $diskutil in
     fdisk) $diskutil -l $device | grep "$@" | cut -d' ' -f1 ;;
-    gdisk) $diskutil -l $device | grep "$@" | awk '{ print $1; }' ;;
+    gdisk) $diskutil -l $device | grep "$@" | awk '{ print $1 ;}' ;;
   esac
 }
 
@@ -206,7 +206,7 @@ if [ "$rescue" = n ] ;then
 heading 'choose repo mirrors'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 original /etc/pacman.d/mirrorlist
-sudo sed -i '/^Server =/s/^/#/; /Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
+sudo sed -i '/^Server =/s/^/#/ ; /Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
 grep '^Server' /etc/pacman.d/mirrorlist
 checkpoint
 

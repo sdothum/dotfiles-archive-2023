@@ -16,10 +16,10 @@ elif cpu celeron ;then
   size=10
 elif gpu macbook ;then
   size=9
-elif gpu inspiron; then
+elif gpu inspiron ;then
   size=10
 elif gpu nvidia ;then
-  is display +1920 && size=11 || { is display +1440 && size=8 || size=9; }
+  is display +1920 && size=11 || { is display +1440 && size=8 || size=9 ;}
 elif laptop ;then
   size=9
 else

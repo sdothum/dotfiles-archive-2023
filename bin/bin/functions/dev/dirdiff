@@ -31,17 +31,15 @@ else
   regex='*'
 fi
 
-for i in $(find $1 -type f | filter | egrep -v $ignore | egrep "$regex")
-do
+for i in $(find $1 -type f | filter | egrep -v $ignore | egrep "$regex") ;do
   file=$(echo $i | sed "s|.*/*$1/||")
   unset blink
-  while :
-  do
-    echo "${_green_}${blink}-> $file${_nocolor_}"
+  while : ;do
+    echo "${GREEN}${blink}-> $file${NOCOLOR}"
     if ! diff $w $i $2/$file ;then
       # see herbstluftwm gvimdiff rule
       ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff $i $2/$file
-      blink=${_blink_}
+      blink=${BLINK}
     else
       break
     fi

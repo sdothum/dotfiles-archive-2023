@@ -18,10 +18,9 @@ fi
 # touch $DYNAMIC (see toggle focus)
 monitor=$(herbstclient attr monitors.focus.index)
 
-herbstclient --idle '(focus_.*|rule)' | while read hook rule winid
-do
+herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   # script lock to suppress unnecessary emit hook message processing
-  # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE; continue; }
+  # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE ; continue ;}
   [ -e $LOCK ] && continue
   [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
 
@@ -56,7 +55,7 @@ do
                                  fi ;;
 
                      # experimental only..
-                     # focus_frame) [ -e $DYNAMIC ] && ( focus frame; bring $winid ) & ;;
+                     # focus_frame) [ -e $DYNAMIC ] && ( focus frame ; bring $winid ) & ;;
                      *         ) [ $TRACE ] && echo "> undefined rule: $hook [$rule] $winid" >>$TRACE ;;
                    esac ;;
 

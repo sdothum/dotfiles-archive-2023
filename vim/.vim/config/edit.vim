@@ -9,16 +9,16 @@
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
-      " inoremap <C-CR>               <C-o>o
+      " inoremap <C-CR>           <C-o>o
       " similarly, open curly braces and continue inserting in indented body
-      inoremap <S-CR>                 <CR><C-o>O<Tab>
+      inoremap <S-CR>             <CR><C-o>O<Tab>
 
       " break line (in .wiki)
       nnoremap <silent><leader><S-CR> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
 
       " duplicate line
-      nnoremap <C-CR>                 :t.<CR>
-      inoremap <C-CR>                 <C-o>:t.<CR>
+      nnoremap <C-CR>             :t.<CR>
+      inoremap <C-CR>             <C-o>:t.<CR>
 
       " insert blank line above/below
       nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
@@ -85,7 +85,7 @@
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
-      vnoremap '                            :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
-      vnoremap "                            :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+      vnoremap '                  :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "                  :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
 " edit.vim

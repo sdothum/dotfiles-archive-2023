@@ -12,8 +12,7 @@ is display -1440 && hc set default_frame_layout 2 ||
 hc rename default '1' || true
 
 # configured by tag number, references by-name (not index value)
-for key in $TAGS
-do
+for key in $TAGS ;do
   hc add $key
   hc keybind $Mod-$key spawn switch tag $key
   # hc keybind $Mod-Shift-$key move_index $key

@@ -17,7 +17,7 @@ LIBRARY='[ library ]'
 # ...................................................................... Library
 
 # library listings
-catlg() { mpc list $1 | sort -n; }
+catlg() { mpc list $1 | sort -n ;}
 
 artists() {
   if [ $(mpc playlist | wc -l) -gt 0 ] ;then
@@ -52,7 +52,7 @@ albums() {
 # ............................................................. Playback control
 
 # playlist
-current() { mpc current; }
+current() { mpc current ;}
 
 next() {
   track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)")
@@ -64,7 +64,7 @@ previous() {
   [ "$track" ] && echo "  $track"
 }
 
-tracks() { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'; }
+tracks() { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|' ;}
 
 info() {
   stats=$(mpc status | sed -n '2p')
@@ -73,7 +73,7 @@ info() {
 }
 
 # toggle state
-status() { mpc status | grep -q "$@" && echo off || echo on; }
+status() { mpc status | grep -q "$@" && echo off || echo on ;}
 
 ncmpcpp() {
   pstat ncmpcpp || term 'Music' ncmpcpp
@@ -86,15 +86,13 @@ ncmpcpp() {
 mpc list artist >/dev/null 2>&1 || exit
 # player controls on entry, note: cannot compare to null string
 [ "$(current)" != '' ] && artist="$PLAYER"
-while :
-do
+while : ;do
   [ "$artist" = "$PLAYER" ] || artist=$(artists | rmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = "$PLAYER" ] ;then
     unset artist
     while cmd=$(echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nlibrary\nclear" |
                 column -s^ -t |
-                rmenu "$(info)" "${cmd%% *}" -no-custom) || break
-    do
+                rmenu "$(info)" "${cmd%% *}" -no-custom) || break ;do
       case $cmd in
         toggle*on |\
         toggle*off) mpc toggle
@@ -131,8 +129,7 @@ do
 
   # inner loop by artist
   more=true
-  while [ $more ]
-  do
+  while [ $more ] ;do
     if [ $(albums | wc -l) -gt 1 ] ;then
       case $artist in
         "$ALBUMS") album=$(albums | rmenu 'Album' "$album" -no-custom) || break ;;
@@ -171,8 +168,7 @@ do
     esac
 
     # playlist action
-    while action=$(echo 'play\nadd\ninsert' | rmenu "$music" -no-custom) || break
-    do
+    while action=$(echo 'play\nadd\ninsert' | rmenu "$music" -no-custom) || break ;do
       case $action in
         play  ) mpc clear >/dev/null
                 echo "$playlist" | mpc add >/dev/null

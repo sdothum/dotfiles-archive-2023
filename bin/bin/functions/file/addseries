@@ -12,10 +12,9 @@ ifno 'clean up episode filenames' || mytitles
 title=$(ls -1 | head -1 | sed -r 's/(.*\.[sS][0-9]*[eE])[0-9]*\..*/\1/')
 ifno "$title" && exit
 
-folder() { echo "$@" | grep -q 'e$' && echo "${@%e}E" || echo "$@"; }
+folder() { echo "$@" | grep -q 'e$' && echo "${@%e}E" || echo "$@" ;}
 
-for i in $(seq 1 99)
-do
+for i in $(seq 1 99) ;do
   [ $i -lt 10 ] && j=0$i || j=$i
   episode=$(find -maxdepth 1 -regex ".*${title}$j.*\([Mm]kv\|avi\)" | grep -iv sample)
   [ -e "$episode" ] || continue

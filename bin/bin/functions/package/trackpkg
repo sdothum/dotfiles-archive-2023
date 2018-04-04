@@ -17,8 +17,7 @@ conf=$HOME/.trackpkg
 which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
 
 add_pkg() {
-  for i in $@
-  do
+  for i in $@ ;do
     pkg=$(am $i)
     if [ $(echo $pkg | wc -l) -eq 2 ] ;then
       echo "$i:$(echo $pkg | head -1 | sed 's/ (.*)//')" >>$conf
@@ -31,16 +30,13 @@ add_pkg() {
 }
 
 del_pkg() {
-ifyes "no longer track:  $(grep "^$@" $conf | cut -d: -f2)" && for i in $@
-  do
-    sed -i "/^$i/d" $conf
-  done
+  ifyes "no longer track:  $(grep "^$@" $conf | cut -d: -f2)" &&
+    for i in $@ ;do sed -i "/^$i/d" $conf ;done
   trackpkg
 }
 
 chk_pkg() {
-  for i in $(cut -d: -f1 $conf)
-  do
+  for i in $(cut -d: -f1 $conf) ;do
     j=$(grep "^$i" $conf | cut -d: -f1)
     k=$(grep "^$i" $conf | cut -d: -f2)
     # echo $j :: $k

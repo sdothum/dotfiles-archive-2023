@@ -23,15 +23,14 @@ root() {
 # rebuild swatches
 [ $1 ] && root
 
-themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
+themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]' ;}
 
-hex() { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'; }
+hex() { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$' ;}
 
-while color=$( { [ "$menu" ] && { echo | mhistory root | sed "1i$menu"; } ||
-                                { echo | mhistory root | sed "1i$VIEWER\n$UPDATE"; }; } |
+while color=$( { [ "$menu" ] && { echo | mhistory root | sed "1i$menu" ;} ||
+                                { echo | mhistory root | sed "1i$VIEWER\n$UPDATE" ;} ;} |
               column -s^ -t |
-              rmenu 'Setroot') || exit
-do
+              rmenu 'Setroot') || exit ;do
   case $color in
     ''       ) break ;;
     "$VIEWER") exec draw root restore ;;

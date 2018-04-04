@@ -28,8 +28,7 @@ fi
 word=$(unquote $word)
 
 # swap stderr with stdout to capture dict word not found hints
-while hints=$(dict "$word" 2>&1 >/dev/null | cut -d: -f2 | xargs -n1 | sort -uf)
-do
+while hints=$(dict "$word" 2>&1 >/dev/null | cut -d: -f2 | xargs -n1 | sort -uf) ;do
   [ "$hints" ] || break
   # "No definitions found for $word" sorted above, hence, ordered match..
   echo "$hints" | tr '\n' ' ' | egrep -q 'definitions.*for.*found.*No'

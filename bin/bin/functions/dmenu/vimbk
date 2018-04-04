@@ -6,15 +6,9 @@
 # ...................................................... Force vimb tabbed close
 
 # list open vimb tabs
-urls() {
-  for i in $(pgrep -f 'vimb .* http')
-  do
-    echo "$i ^$SEP $(p $i | sed 's/.*http/http/')"
-  done
-}
+urls() { for i in $(pgrep -f 'vimb .* http') ;do echo "$i ^$SEP $(p $i | sed 's/.*http/http/')" ;done ;}
 
-while [ "$(urls)" ]
-do
+while [ "$(urls)" ] ;do
   url=$(urls |
         column -s^ -t |
         sort |

@@ -40,10 +40,10 @@ dotdot=$TMP/dotdot
 # ............................................................... Latex preamble
 
 # must escape certain latex characters for fancyhdr and cat body
-escape() { echo $@ | sed -r 's/([#$%&_])/\\\1/g'; }
+escape() { echo $@ | sed -r 's/([#$%&_])/\\\1/g' ;}
 
 # reverse word order
-reverse() { awk '{ for (i=$NF; i>1; i--) printf("%s ", $i) }'; }
+reverse() { awk '{ for (i=$NF ; i>1 ; i--) printf("%s ", $i) }' ;}
 
 # title truncation footwork
 truncate() {
@@ -52,7 +52,7 @@ truncate() {
   echo "$lines" | head -1
 }
 
-dotdot() { cat $dotdot; }
+dotdot() { cat $dotdot ;}
 
 format() {
   if [ "$title" ] ;then
@@ -268,8 +268,7 @@ esac
 [ $noshift ] || shift
 
 # filenames may have blanks, hence, usage of while vs for i in $@
-while [ $1 ]
-do
+while [ $1 ] ;do
   # set date to file modification date
   time=$(date -r "$1" +'%B %-d, %Y')
   print "$1"

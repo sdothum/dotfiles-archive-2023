@@ -15,11 +15,10 @@ diagnostics="glances
              xrestop
 "
 
-interface() { ip link show | grep '^[0-9]' | cut -d: -f2 | rmenu 'Interface' -no-custom || exit; }
+interface() { ip link show | grep '^[0-9]' | cut -d: -f2 | rmenu 'Interface' -no-custom || exit ;}
 
 diagnostic=$(previous diagnostic)
-while diagnostic=$(apps "$diagnostics" | rmenu 'Diagnostic' $diagnostic -no-custom) || exit
-do
+while diagnostic=$(apps "$diagnostics" | rmenu 'Diagnostic' $diagnostic -no-custom) || exit ;do
   mhistory diagnostic $diagnostic
   case $diagnostic in
     iftop  ) term "$diagnostic" $diagnostic $(interface) ;;

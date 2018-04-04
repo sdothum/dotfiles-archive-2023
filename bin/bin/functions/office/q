@@ -12,10 +12,7 @@
 file=$(find . -name "$1" -type f | egrep -v '.deprecated|.hg')
 if [ "$file" ] ;then
   if [ $(echo "$file" | wc -l) -gt 1 ] ;then
-    for i in $file
-    do
-      ifyes $i && cat $i
-    done
+    for i in $file ;do ifyes $i && cat $i ;done
   else
     cat $file
   fi

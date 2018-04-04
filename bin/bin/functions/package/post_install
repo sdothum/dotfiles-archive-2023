@@ -4,19 +4,19 @@
 # Package
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ......................................................... Distribution install
 
 # complete package configuration
 if [ -s $HOME/build/archlinux/post_install/$1 ] ;then
-  arch && echo "${_GREEN_}@ post_install/$1${_nocolor_}"
+  arch && echo "${__GREEN}@ post_install/$1${NOCOLOR}"
   . $HOME/build/archlinux/post_install/$1
 fi
 
 # apply user specific configuration
 if [ -s $HOME/build/archlinux/user_install/$1 ] ;then
-  arch && echo "${_GREEN_}@ user_install/$1${_nocolor_}"
+  arch && echo "${__GREEN}@ user_install/$1${NOCOLOR}"
   . $HOME/build/archlinux/user_install/$1
 fi
 

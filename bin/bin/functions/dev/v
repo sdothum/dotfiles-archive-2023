@@ -13,19 +13,18 @@ SHELL=/usr/bin/dash
 LOG=/tmp/vim.log
 vimtrace=$HOME/.session/vimtrace
 sudo rm -f $LOG
-[ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true; term 'vimtrace' tail -f $LOG; }
+[ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true ; term 'vimtrace' tail -f $LOG ;}
 
 hlwm && [ -e $DYNAMIC ] && focus=focus
 console && unset focus || G=-g
 [ -e $SESSION/vim ] && fg=-f
 
-while :
-do
+while : ;do
   case $1 in
-    --quote) q='"';            shift ;;
-    --role ) role="--role $2"; shift 2 ;;
-    -f     ) fg=-f;            shift ;;
-    -c     ) cmd="-c '$2'";    shift 2 ;;
+    --quote) q='"' ;            shift ;;
+    --role ) role="--role $2" ; shift 2 ;;
+    -f     ) fg=-f ;            shift ;;
+    -c     ) cmd="-c '$2'" ;    shift 2 ;;
      *     ) break ;;
   esac
 done

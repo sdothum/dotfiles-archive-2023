@@ -7,6 +7,6 @@
 # ........................................................................ Regex
 
 # reverse word order
-awk '{ for (i=NF; i>1; i--) printf("%s ",$i); print $1; }'
+awk '{ for (i=NF ; i>1 ; i--) printf("%s ",$i) ; print $1 ;}'
 
 # vim: set ft=sh: #

@@ -6,8 +6,7 @@
 # ........................................................................ Files
 
 # open file
-while name=$(echo | mhistory files | rmenu 'Find File') || exit
-do
+while name=$(echo | mhistory files | rmenu 'Find File') || exit ;do
   [ "$name" ] || exit
   list=$(sudo locate -Aei $name)
   [ "$list" ] || continue

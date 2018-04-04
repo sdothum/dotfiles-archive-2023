@@ -18,14 +18,14 @@ youtube=/net/downloads/http/youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
 conky clock stop
-[ -e $DYNAMIC ] && { rm $DYNAMIC; dynamic=true; }
+[ -e $DYNAMIC ] && { rm $DYNAMIC ; dynamic=true ;}
 [ -e $NCURSES ] && ncurses=true
 touch $NCURSES
 
 # play media (see rox, dmenu movies, dmenu series, browsers..)
 [ "$2" ] && title=$2 || title=${1##*/}
 
-if cpu arm; then
+if cpu arm ;then
   # youtube playback on raspberry pi architecture is unsupported
   if echo $1 | grep -q http ;then
     rm $youtube*
@@ -80,7 +80,7 @@ else
   focus frame
   mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
   # clear notification
-  ( pwait "mpv --vf=eq $1"; xdotool key Ctrl+space ) &
+  ( pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space ) &
 fi
 
 # refresh panel title on close

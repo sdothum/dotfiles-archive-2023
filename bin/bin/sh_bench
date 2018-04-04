@@ -16,22 +16,20 @@ sh_bench() (
   o=-c sh=$(command -v "$1") ; shift
   [ -z "${sh##*busybox}" ] && o='ash -c'
   set -- "$sh" $o "'$(cat <&3)'" -- "$@"
-  time env - "$sh" $o "while echo; do echo; done|$*"
+  time env - "$sh" $o "while echo ;do echo ;done|$*"
 ) 3<<-\SCRIPT
   i="${2:-1}" l="${1:-100}" d="${3:-
 }"
   set -- "\$((n=\$n\${n:++\$i}))\$d"
   set -- $1$1$1$1$1$1$1$1$1$1
-  while read m
-  do
+  while read m ;do
     [ $(($i*50+${n:=-$i})) -gt "$(($l-$i))" ] || eval echo -n \""$1$1$1$1$1"\"
     [ $((n=$i+$n)) -gt "$(($l-$i))" ] && echo "$n" && exit
     echo -n "$n$d"
   done
 SCRIPT
 
-for sh in $shells
-do
+for sh in $shells ;do
   sh_bench $sh 20 5 $sh 2>/dev/null
   sh_bench $sh 500000 | wc -l
   echo

@@ -57,8 +57,7 @@ case $action in
   l*) ditto "tail -f /tmp/nzbget.log | g 'error|warning'"
       tail -f /tmp/nzbget.log | g 'error|warning' ;;
 
-  L*) while :
-      do
+  L*) while : ;do
         nzb
         sleep $list_delay
       done ;;

@@ -81,7 +81,9 @@ spacemacs :: $HOME/.spacemacs
 splitography default :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
 splitography beakl8 :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl8 -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklmu :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklmz :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmz -type f) $HOME/bin/functions/hardware/splitography
 splitography dvorak :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f) $HOME/bin/functions/hardware/splitography
+splitography dvorakmu :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f) $HOME/bin/functions/hardware/splitography
 subtle :: $HOME/.config/subtle/subtle.rb
 sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb

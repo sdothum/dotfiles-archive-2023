@@ -73,6 +73,7 @@ a package-query
   cairo
   freetype2
   fontconfig
+  libxft
 
 
 = ncurses editors

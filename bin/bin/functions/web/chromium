@@ -13,8 +13,7 @@ netflix=http://www.netflix.com/ca
 unset instance
 unlock() {
   browser=${chrome##*/}
-  for i in $(remotehosts)
-  do
+  for i in $(remotehosts) ;do
     if ping -c 1 -W 1 $i >/dev/null 2>&1 ;then
       if /usr/bin/ssh $i -- killall -TERM $browser 2>/dev/null ;then
         host=$i
@@ -23,12 +22,7 @@ unlock() {
     fi
   done
   # let instance die..
-  if [ $host ] ;then
-    while /usr/bin/ssh $host -- pgrep -f $browser >/dev/null
-    do
-      sleep 0.1
-    done
-  fi
+  [ $host ] && while /usr/bin/ssh $host -- pgrep -f $browser >/dev/null ;do sleep 0.1 ;done
   # purge user profile lock
   rm -f $HOME/.config/$browser/SingletonLock
 }

@@ -11,14 +11,14 @@ connect || exit
 
 # http://www.weatheroffice.gc.ca/business/index_e.html for city codes
 case $1 in
-  calgary  ) city=ab-52; shift ;;
-  halifax  ) city=ns-19; shift ;;
-  kingston ) city=on-69; shift ;;
-  nanaimo  ) city=bc-20; shift ;;
-  nelson   ) city=bc-37; shift ;;
-  vancouver) city=bc-74; shift ;;
-  victoria ) city=bc-85; shift ;;
-  ottawa   ) city=on-52; shift ;;
+  calgary  ) city=ab-52 ; shift ;;
+  halifax  ) city=ns-19 ; shift ;;
+  kingston ) city=on-69 ; shift ;;
+  nanaimo  ) city=bc-20 ; shift ;;
+  nelson   ) city=bc-37 ; shift ;;
+  vancouver) city=bc-74 ; shift ;;
+  victoria ) city=bc-85 ; shift ;;
+  ottawa   ) city=on-52 ; shift ;;
   *        ) city=on-52 ;;
 esac
 
@@ -36,7 +36,7 @@ if [ $debug ] ;then
   read input
 fi
 
-CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0); gsub(/&.*$/, "", $0); print }')
+CURRENT=$(echo $WEATHER | awk '/Current Conditions:/ { gsub(/.*Current Conditions: */, "", $0) ; gsub(/&.*$/, "", $0) ; print }')
 if [ $debug ] ;then
   echo Current .. $CURRENT
   echo
@@ -44,7 +44,7 @@ if [ $debug ] ;then
 fi
 
 # round temperature
-TEMPERATURE=$(echo $CURRENT | awk '{ gsub(/[^-0-9.]*/, "", $0); $0 = $0 + ($0 < 0 ? -0.5 : 0.5); gsub(/\.[0-9]/, "", $0); print }')
+TEMPERATURE=$(echo $CURRENT | awk '{ gsub(/[^-0-9.]*/, "", $0) ; $0 = $0 + ($0 < 0 ? -0.5 : 0.5) ; gsub(/\.[0-9]/, "", $0) ; print }')
 [ $TEMPERATURE = -0 ] && TEMPERATURE=0
 CURRENT=$(echo $CURRENT | sed 's/[-0-9.]//g')
 if [ $debug ] ;then
@@ -54,7 +54,7 @@ if [ $debug ] ;then
   read input
 fi
 
-FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0); gsub(/ .*$/, "", $0); print }')
+FEELSLIKE=$(echo $WEATHER | awk '/(Wind Chill|Humidex):/ { gsub(/.*(Wind Chill|Humidex):[^ ]* /, "", $0) ; gsub(/ .*$/, "", $0) ; print }')
 if [ $debug ] ;then
   echo Feels like .. \"$FEELSLIKE\"
   echo

@@ -54,7 +54,7 @@ ebooks() {
   notify low 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 3 -regex ".*\(mobi\|epub\|azw3\|azw\)" |
        sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw)|\1$SEP\3|" \
-           -e 's/ - .*//; s/ \([0-9]*\)//' \
+           -e 's/ - .*// ; s/ \([0-9]*\)//' \
            -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
        sort -u >$cache
   notify low 'Update of library cache' '..Complete'
@@ -88,9 +88,8 @@ azw() {
 }
 
 # ..................................................................... E-reader
-set -x
-while :
-do
+
+while : ;do
   book=$(cat $cache |
          mhistory ebooks |
          column -s^ -t |
@@ -116,11 +115,10 @@ do
   unset mobi epub azw3
 
   azw3
-  [ "$azw3" ] || { mobi; [ "$mobi" ] || { epub; [ "$epub" ] || azw; }; }
+  [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || azw ;} ;}
   file=$azw3$mobi$epub$azw
 
-  while action=$(echo "read\nedit\nkindle" | rmenu "$title" -no-custom) || break
-  do
+  while action=$(echo "read\nedit\nkindle" | rmenu "$title" -no-custom) || break ;do
     case $action in
       read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
               [ $focus ] || focus frame && focus=true

@@ -4,7 +4,7 @@
 # Office
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ................................................................... Screencast
 
@@ -32,11 +32,11 @@ mkv=$(mktemp).mkv
 trap "rm -f $mkv" EXIT
 sleep $delay
 echo
-echo "${_YELLOW_}━━━━━━━━━  Press [q] to stop recording  ━━━━━━━━━${_nocolor_}"
+echo "${__YELLOW}━━━━━━━━━  Press [q] to stop recording  ━━━━━━━━━${NOCOLOR}"
 echo
 ffmpeg -f x11grab -r 25 $opts -vcodec libx264 -preset ultrafast -crf 0 $mkv
 echo
-echo "${_YELLOW_}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${_nocolor_}"
+echo "${__YELLOW}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${NOCOLOR}"
 echo
 
 ffmpeg -i $mkv \

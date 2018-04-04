@@ -14,7 +14,7 @@ usage() {
 [ "$1" = help ] && usage
 
 # package history
-ph() { egrep '\[ALPM\] (installed|reinstalled|upgraded)' /var/log/pacman.log; }
+ph() { egrep '\[ALPM\] (installed|reinstalled|upgraded)' /var/log/pacman.log ;}
 
 if [ $1 ] ;then
   ph | grep "$@"

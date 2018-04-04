@@ -27,8 +27,7 @@ frames=$(query fcount $TAG)
 
 # cycle back to original frame unless empty frame found
 herbstclient cycle_frame 1
-for i in $(seq 1 $frames)
-do
+for i in $(seq 1 $frames) ;do
   herbstclient cycle_frame 1
   # right fill the desktop to to avoid visual frame gaps
   if herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 ;then
@@ -37,16 +36,14 @@ do
   fi
 done
 
-for i in $(seq 1 $frames)
-do
+for i in $(seq 1 $frames) ;do
   herbstclient cycle_frame 1
   herbstclient compare tags.by-name.$TAG.curframe_wcount = 0 && break
   if [ $i -ge $frames ] ;then
     if [ $fill ] ;then
       # all frames occupied, look for an empty grid region then
       herbstclient cycle_frame -1
-      for i in $(seq 1 $frames)
-      do
+      for i in $(seq 1 $frames) ;do
         herbstclient cycle_frame 1
         is layout grid && [ $(expr $(herbstclient attr tags.focus.curframe_wcount) % 2) -gt 0 ] && break
         if [ $i -ge $frames ] ;then

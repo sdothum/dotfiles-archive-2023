@@ -12,7 +12,7 @@ usage() {
 }
 
 case $1 in
-  sig=*) eval $1; shift ;;
+  sig=*) eval $1 ; shift ;;
   *    ) sig=${sig:--TERM} ;;
 esac
 
@@ -21,8 +21,7 @@ REGEX=/tmp/k:regex
 
 # kill by process set
 abort() {
-  for i in $(pgrep -f "$@")
-  do
+  for i in $(pgrep -f "$@") ;do
     p $i | grep -v $0 || continue
     ifno "kill $i" && continue || sudo kill $sig $i
     # break

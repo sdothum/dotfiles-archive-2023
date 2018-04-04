@@ -16,8 +16,7 @@ usage() {
 [ -n "$2" ] || usage
 
 # batch vim edit (using vim vs vi to preserve edit history)
-for i in $(al "$1")
-do
+for i in $(al "$1") ;do
   ditto "$i"
   vim -c "$2" -c 'wq' $i
 done

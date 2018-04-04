@@ -30,11 +30,8 @@ keymaps() {
 }
 
 maps() {
-  for i in $(seq 1 12)
-  do
-    # fkey assignments
-    ag --ignore-case "<.*F$i>" $vimrc | grep -v 'vim:[0-9]*: *"' | keymaps
-  done
+  # fkey assignments
+  for i in $(seq 1 12) ;do ag --ignore-case "<.*F$i>" $vimrc | grep -v 'vim:[0-9]*: *"' | keymaps ;done
 
   # leader key assignments
   ag --ignore-case "<leader>" $vimrc | keymaps
@@ -54,11 +51,8 @@ list() {
 }
 
 vmap() {
-  for i in $(seq 1 12)
-  do
-    # fkey assignments
-    grep -i "<.*F$i>" $index | list F$i
-  done
+  # fkey assignments
+  for i in $(seq 1 12) ;do grep -i "<.*F$i>" $index | list F$i ;done
 
   # leader key assignments
   grep -i "<leader>" $index | list LEADER

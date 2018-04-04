@@ -16,8 +16,7 @@ dotfiles=${dotfiles:-/net/depot/dotfiles}
 current=$HOME/stow
 [ -d $dotfiles ] || git clone git@github.com:sdothum/dotfiles.git $dotfiles
 
-while :
-do
+while : ;do
   case $1 in
     checkout) cd $dotfiles
               git pull
@@ -25,7 +24,7 @@ do
               shift 2
               nosync=true ;;
 
-    -b      ) w=$1; shift ;;
+    -b      ) w=$1 ; shift ;;
     *       ) break ;;
   esac
 done
@@ -34,9 +33,7 @@ done
 [ $1 ] || usage
 [ -d $HOME/stow/$1 ] || usage
 
-if [ -z $nosync ] ;then
-  ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull )
-fi
+[ -z $nosync ] && { ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull ) ;}
 
 dirdiff $w $current/$1 $dotfiles/$1 "$2"
 

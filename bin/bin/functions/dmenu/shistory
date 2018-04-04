@@ -25,7 +25,7 @@ cmd=$(h shell=$shell |
       rmenu 'History' -no-custom) || exit
 
 cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
-notify 'Ctrl-Alt-V' "$(echo $cmd | sed 's/[&][&]/and/g; s/[&]/ampersand/')"
+notify 'Ctrl-Alt-V' "$(echo $cmd | sed 's/[&][&]/and/g ; s/[&]/ampersand/')"
 clipboard "$cmd"
 xdotool type --delay 0 "$cmd"
 

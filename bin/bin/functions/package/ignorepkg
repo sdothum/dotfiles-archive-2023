@@ -10,8 +10,7 @@
 conf=/etc/pacman.conf
 
 add_pkg() {
-  for i in $@
-  do
+  for i in $@ ;do
     if grep -m 1 -q '^ *IgnorePkg' $conf ;then
       sudo sed -i "s/^ *IgnorePkg.*/& $i/" $conf
     else
@@ -21,11 +20,8 @@ add_pkg() {
 }
 
 del_pkg() {
-  for i in $@
-  do
-    if grep -q "^ *IgnorePkg.*$i" $conf ;then
-      sudo sed -i "/^ *IgnorePkg.*$i/s/ $i//" $conf
-    fi
+  for i in $@ ;do
+    grep -q "^ *IgnorePkg.*$i" $conf && sudo sed -i "/^ *IgnorePkg.*$i/s/ $i//" $conf
   done
 }
 
@@ -35,9 +31,7 @@ ignored=$(grep '^ *IgnorePkg.*' $conf)
 echo $ignored
 if [ -z $1 ] ;then
   ignored=$(echo $ignored | sed 's/^.*= *//')
-  if [ "$ignored" ] ;then
-    ifno "reinstate $ignored" || del_pkg $ignored
-  fi
+  [ "$ignored" ] && { ifno "reinstate $ignored" || del_pkg $ignored ;}
 elif grep -q "^ *IgnorePkg.*$1" $conf ;then
   ifyes "reinstate $pkgs" && del_pkg $pkgs
 else

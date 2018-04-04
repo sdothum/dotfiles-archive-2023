@@ -14,8 +14,7 @@ usage() {
 echo $PWD | grep -q /stow && STOW=$PWD || STOW=$HOME/stow
 
 link() {
-  for i in $STOW/*
-  do
+  for i in $STOW/* ;do
     [ -d $i ] || continue
     # on directory == application, apply link action
     rule='which ${i##*/} >/dev/null 2>&1 '$@' ${i##*/}'

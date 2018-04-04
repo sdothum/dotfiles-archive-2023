@@ -4,7 +4,7 @@
 # Dev
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # .......................................................................... Git
 
@@ -46,9 +46,9 @@ commit() {
 
 pending() {
   underline
-  printf "commit? [Abort]/comment.. : ${_YELLOW_}"
+  printf "commit? [Abort]/comment.. : ${__YELLOW}"
   read DESC
-  printf "${_nocolor_}"
+  printf "${NOCOLOR}"
   [ "$DESC" ] && commit
 }
 
@@ -62,15 +62,11 @@ unset pending
 case $1 in
   help   ) usage ;;
 
-  ''     ) for i in $dotfiles
-           do
-             git add -v $i
-           done
+  ''     ) for i in $dotfiles ;do git add -v $i ;done
            pending ;;
 
   add    ) shift
-           for i in $@
-           do
+           for i in $@ ;do
              if [ -e $i ] ;then
                git add -fv $i
                pending=true
@@ -112,8 +108,7 @@ case $1 in
              git push origin master
            fi ;;
 
-  *      ) for i in $@
-           do
+  *      ) for i in $@ ;do
              if [ -e $i ] ;then
                git add -v $i
                pending=true

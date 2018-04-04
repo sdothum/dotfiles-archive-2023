@@ -11,7 +11,7 @@
 
 confirm() {
   if [ $? = 0 ] ;then
-    ifno 'keep conky theme' && return 1 || { cp $THEME $(query theme); unset loop; return 0; }
+    ifno 'keep conky theme' && return 1 || { cp $THEME $(query theme) ; unset loop ; return 0 ;}
   else
     return 1
   fi
@@ -24,10 +24,8 @@ else
   # see draw root
   conky theme wal
   loop=true
-  while [ $loop ]
-  do
-    for i in $(seq 1 16)
-    do
+  while [ $loop ] ;do
+    for i in $(seq 1 16) ;do
       color=$(sed "$i!d" $HOME/.cache/wal/colors)
       ditto "color$(( i - 1 ))='$color'"
       conky theme test ${color#?}

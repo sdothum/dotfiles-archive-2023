@@ -4,7 +4,7 @@
 # Log
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # .......................................................................... Log
 
@@ -33,15 +33,15 @@ elif echo $1 | grep -q '^[0-9]$' ;then
   message=$@
 else
   level=0
-  message=${_WHITE_}$@
+  message=${__WHITE}$@
 fi
 
 if [ $level -le $tracelevel ] ;then
   log -n "$(timestamp)"
-  # [ $level -gt 0 ] && log -n " ${_RED_}$level>"
-  [ $level -gt 0 ] && log -n " ${_RED_}$level>"
+  # [ $level -gt 0 ] && log -n " ${__RED}$level>"
+  [ $level -gt 0 ] && log -n " ${__RED}$level>"
   # message passed may contain set_color commands, so reset at end
-  log " ${_nocolor_}$message${_nocolor_}"
+  log " ${NOCOLOR}$message${NOCOLOR}"
 fi
 
 # vim: set ft=sh: #

@@ -4,23 +4,23 @@ function fish_prompt --description 'Write out the prompt'
 
   # console prompt hacks for the anal..
   if test $TERM = "linux"
-    set -g YELLOW   'normal'
-    set -g ORANGE   'red'
-    set -g RED      'red'
-    set -g BLUE     'blue'
+    set -g _warning   'normal'
+    set -g _leader    'red'
+    set -g _error     'red'
+    set -g _bgjob     'blue'
   else
-    # set -g YELLOW 'FC6'
-    # set -g ORANGE 'F60'
-    # set -g RED    'F00'
-    # set -g BLUE   '03F'
+    # set -g _warning 'FC6'
+    # set -g _leader  'F60'
+    # set -g _error   'F00'
+    # set -g _bgjob   '03F'
     # quantum colour palette
-    set -g YELLOW   'd5b875'
-    set -g ORANGE   'd7956e'
-    set -g RED      'dd7186'
-    set -g BLUE     '70ace5'
+    set -g _warning   'd5b875'  # yellow
+    set -g _leader    'd7956e'  # orange
+    set -g _error     'dd7186'  # red
+    set -g _bgjob     '70ace5'  # blue
   end
-  set -g BLINK (printf "\e[5m")
-  set -g NOBLINK (printf "\e[25m")
+  # set -g BLINK (printf "\e[5m")
+  # set -g NOBLINK (printf "\e[25m")
 
   function glyph
     if test $TERM = "linux"
@@ -38,8 +38,8 @@ function fish_prompt --description 'Write out the prompt'
 
   function bgjobs
     if jobs -c | egrep -qv '^(Command|fasd|autojump)'
-      set_color $BLUE
-      glyph '⊛' 'o'
+      set_color $_bgjob
+      glyph '◔' '+'
     else
       space
     end
@@ -47,7 +47,7 @@ function fish_prompt --description 'Write out the prompt'
 
   function root
     if test "$USER" = root
-      set_color $YELLOW
+      set_color $_warning
       # ⚡ takes up 2 byte positions ??
       # echo -n $BLINK(glyph '⚡' 'z')$NOBLINK
       echo -n $BLINK(glyph '❱' 'z')$NOBLINK
@@ -60,13 +60,13 @@ function fish_prompt --description 'Write out the prompt'
     if test 0$RCODE -eq 0
      space
     else
-      set_color $RED
+      set_color $_error
       glyph '✖' 'x'
     end
   end
 
   function leader
-    set_color $ORANGE
+    set_color $_leader
     if test "$fish_key_bindings" = "fish_vi_key_bindings"
       switch $fish_bind_mode
         case default

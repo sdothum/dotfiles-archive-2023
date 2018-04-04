@@ -4,13 +4,13 @@
 # Log
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ...................................................................... Heading
 
 # mark content division
-drawline '▁' ${_green_}
+drawline '▁' ${GREEN}
 heading ' ' $@
-drawline '▔' ${_green_}
+drawline '▔' ${GREEN}
 
 # vim: set ft=sh: #

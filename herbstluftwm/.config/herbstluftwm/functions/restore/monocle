@@ -9,7 +9,7 @@
 # Usage: restore monocle <tag>
 
 # has associated tag view (monocle layout) changed?
-if is primary; then
+if is primary ;then
   if [ -e $MONOCLE ] || [ -e $MONOCLE:$1 ] ;then
     [ -e $MONOCLE ] && [ -e $MONOCLE:$1 ] && exit
     if [ -e $MONOCLE ] && [ ! -e $MONOCLE:$1 ] ;then

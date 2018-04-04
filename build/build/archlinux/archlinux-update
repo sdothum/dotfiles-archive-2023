@@ -13,7 +13,7 @@ heading "verify group and passwd files"
 sudo grpck
 
 
-if grep -qv '\--nodnsproxy' /lib/systemd/system/connman.service; then
+if grep -qv '\--nodnsproxy' /lib/systemd/system/connman.service ;then
 heading "restore connman dns"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   original /lib/systemd/system/connman.service

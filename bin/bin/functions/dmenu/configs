@@ -27,7 +27,7 @@ configs() {
        $(sudo find /opt -type f -regextype posix-extended -regex "$include" | egrep -v '\.git' | sed 's/ /:/g') \
        $(sudo find $HOME ! -path "$HOME/Maildir/*" ! -path "$HOME/stownfs/*" -type f -regextype posix-extended -regex "$include" 2>/dev/null | egrep -v "$exclude" | sed 's/ /:/g') |
        tr ' ' '\n' |
-       sed -r "s/:/ /g; s|(.*)/([^/]*)$|\2^$SEP \1|" |
+       sed -r "s/:/ /g ; s|(.*)/([^/]*)$|\2^$SEP \1|" |
        sort -u |
        sed '1i
 ' >$cache
@@ -44,8 +44,7 @@ fi
 
 # .................................................................. Edit config
 
-while :
-do
+while : ;do
   file=$(cat $cache |
          mhistory configs |
          sed "1i$REBUILD" |
@@ -53,12 +52,12 @@ do
          rmenu 'Edit Config' 1 -no-custom) || exit
 
   case $file in
-    "$REBUILD") configs; continue ;;
+    "$REBUILD") configs ; continue ;;
   esac
 
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
-  file=$(echo $file | sed -r "s|^(.*)  *${SEP}  *(.*)|\2/\1|; s/ /\\\\\\\\ /")
+  file=$(echo $file | sed -r "s|^(.*)  *${SEP}  *(.*)|\2/\1| ; s/ /\\\\\\\\ /")
   v $file
   exit
 done

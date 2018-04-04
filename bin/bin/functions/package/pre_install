@@ -4,13 +4,13 @@
 # Package
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ......................................................... Distribution install
 
 # clean up environment for possible re-install of package
 if [ -s $HOME/build/archlinux/pre_install/$1 ] ;then
-  arch && echo "${_GREEN_}@ pre_install/$1${_nocolor_}"
+  arch && echo "${__GREEN}@ pre_install/$1${NOCOLOR}"
   . $HOME/build/archlinux/pre_install/$1
 fi
 

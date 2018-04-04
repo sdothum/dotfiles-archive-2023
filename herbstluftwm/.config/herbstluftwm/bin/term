@@ -32,27 +32,26 @@ if [ "$1" ] ;then
 fi
 
 # menu border calculation
-border() { echo $(( $(query displayheight) * 2 / 15 )); }
+border() { echo $(( $(query displayheight) * 2 / 15 )) ;}
 
-while [ "$1" ]
-do
+while [ "$1" ] ;do
   case $1 in
     FLOAT     ) name='-name float'
                 geometry='-geometry 1024x600+0+0'
                 shift ;;
 
-    STACK     ) stack=true;                                                   shift ;;
-    MAX       ) name='-name max';                                             shift ;;
-    VERTICAL  ) name='-name vertical'--smart-case;                            shift ;;
-    HORIZONTAL) name='-name horizontal';                                      shift ;;
-    GRID      ) name='-name grid';                                            shift ;;
-    TABBED    ) tabbed='-pe tabbed';                                          shift ;;
-    BG        ) attr="-bg $2";                                                shift 2 ;;
-    BLACKBOARD) attr="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'"; shift ;;
-    TR        ) tr='-tr';                                                     shift ;;
-    VISIBLE   ) visible=true;                                                 shift ;;
-    WAIT      ) wait=true;                                                    shift ;;
-    FORTUNE   ) touch $FORTUNE:term;                                          shift ;;
+    STACK     ) stack=true ;                                                   shift ;;
+    MAX       ) name='-name max' ;                                             shift ;;
+    VERTICAL  ) name='-name vertical'--smart-case ;                            shift ;;
+    HORIZONTAL) name='-name horizontal' ;                                      shift ;;
+    GRID      ) name='-name grid' ;                                            shift ;;
+    TABBED    ) tabbed='-pe tabbed' ;                                          shift ;;
+    BG        ) attr="-bg $2" ;                                                shift 2 ;;
+    BLACKBOARD) attr="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'" ; shift ;;
+    TR        ) tr='-tr' ;                                                     shift ;;
+    VISIBLE   ) visible=true ;                                                 shift ;;
+    WAIT      ) wait=true ;                                                    shift ;;
+    FORTUNE   ) touch $FORTUNE:term ;                                          shift ;;
 
     MENU      ) name="-name menu"
                 stack=true
@@ -71,9 +70,7 @@ do
   esac
 done
 
-if [ -z "$name" ] ;then
-  [ "$title" ] && name="-name ${title#* }"
-fi
+[ -z "$name" ] && [ "$title" ] && name="-name ${title#* }"
 
 if [ $stack ] ;then
   $TERM $title $name $geometry $tabbed $attr $tr $cmd
@@ -81,12 +78,8 @@ else
   focus $TERM $title $name $geometry $tabbed $attr $tr $cmd
 fi
 
-if [ $visible ] && [ "$title" ] ;then
-  xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
-fi
+[ $visible ] && [ "$title" ] && xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
 
-if [ $wait ] ;then
-  pwait "$process"
-fi
+[ $wait ] && pwait "$process"
 
 # vim: set ft=sh: #

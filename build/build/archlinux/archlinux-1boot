@@ -50,9 +50,7 @@ fi
 
 heading 'check kvm compatibility'
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-if [ $(cat /etc/hostname) = monad ] ;then
-  config_install /etc/modprobe.d/blacklist-kvm.conf
-fi
+[ $(cat /etc/hostname) = monad ] && config_install /etc/modprobe.d/blacklist-kvm.conf
 checkpoint
 
 

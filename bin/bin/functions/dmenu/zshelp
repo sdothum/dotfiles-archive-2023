@@ -7,7 +7,7 @@
 
 # dmenu zsh help pages
 page=$(zsh -c 'run-help' |
-       sed '1,2d; s/ /\n/g' |
+       sed '1,2d ; s/ /\n/g' |
        grep -v '^$' |
        sort -d |
        rmenu 'Help' -no-custom) || exit

@@ -13,7 +13,7 @@ usage() {
 
 [ $1 ] || usage
 which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
-[ $pacaur = pacaur ] && { edit=--edit; noedit=--noedit; }
+[ $pacaur = pacaur ] && { edit=--edit ; noedit=--noedit ;}
 
 # default (no options) to package query
 

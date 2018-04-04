@@ -18,8 +18,7 @@ DELAY=1
 #   xdotool key command (everything else)
 
 demo() {
-  echo "$PLAYBACK" | while read line
-  do
+  echo "$PLAYBACK" | while read line ;do
     [ $TRACE ] && echo $line
     set -- $(echo $line)
     case $1 in

@@ -15,8 +15,8 @@ copy_image() {
   filename = basename $1
   date = stat -c '%y' $1 | cut -d' ' -f1
   year = echo $date | cut -d- -f1
-  [ -d $LIBRARY/$year ]       || { ditto ${_RED_} $year; mkdir $LIBRARY/$year; }
-  [ -d $LIBRARY/$year/$date ] || { ditto ${_GREEN_} "$year / $date"; mkdir $LIBRARY/$year/$date; }
+  [ -d $LIBRARY/$year ]       || { ditto ${__RED} $year ; mkdir $LIBRARY/$year ;}
+  [ -d $LIBRARY/$year/$date ] || { ditto ${__GREEN} "$year / $date" ; mkdir $LIBRARY/$year/$date ;}
 
   if [ -e $LIBRARY/$year/$date/$filename ] ;then
     $filename
@@ -27,12 +27,7 @@ copy_image() {
   fi
 }
 
-camera() {
-  for i in $1/*
-  do
-    copy_image $i
-  done
-}
+camera() { for i in $1/* ;do copy_image $i ;done ;}
 
 case ${MEDIA##*/} in
   *FUJI ) camera $MEDIA ;;

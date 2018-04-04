@@ -28,7 +28,7 @@ checkpoint() {
   echo
 }
 
-original() { [ -f $@.original ] || cp -v $@ $@.original; }
+original() { [ -f $@.original ] || cp -v $@ $@.original ;}
 
 connect() {
   if [ $(cat /sys/class/net/enp1s0/openstate 2>/dev/null) = up ] ;then

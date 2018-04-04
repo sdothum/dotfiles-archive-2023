@@ -13,8 +13,7 @@
 
 REBUILD='[ rebuild cache ]'
 
-while :
-do
+while : ;do
   if [ "$selection" ] ;then
     echo "$selection" | grep -q ' ' && unset selection
     echo "$selection" | grep -qv '[[:alpha:]]' && unset selection
@@ -54,8 +53,7 @@ do
 
 
   # loop where multiple entries
-  while :
-  do
+  while : ;do
     # list possible man sections!
     if [ $(whatis $man | wc -l) -gt 1 ] ;then
       page=$(whatis $man |

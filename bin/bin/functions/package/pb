@@ -10,8 +10,8 @@
 sudo pacman -Sy
 pacaur -Qu
 ifyes 'upgrade system' || exit
-for i in $(pacaur --color never -Qu | awk '{ print $3 }')
-do
+
+for i in $(pacaur --color never -Qu | awk '{ print $3 }') ;do
   underline
   ditto $i
   yaourt -S $i

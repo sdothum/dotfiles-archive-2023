@@ -21,8 +21,7 @@ status() {
 }
 
 cd $lib
-while :
-do
+while : ;do
   service=$(systemctl list-unit-files -t service --no-legend |
             sed -r "s|  *|^$SEP |" |
             column -s^ -t |
@@ -41,8 +40,7 @@ do
     *) sudo systemctl status $service && actions='stop\nrestart' ||
                                          actions=start
        while action=$(echo "$actions\nstatus\nenable\ndisable\nedit" |
-                      rmenu "${service%.service}" -no-custom) || break
-       do
+                      rmenu "${service%.service}" -no-custom) || break ;do
          case $action in
            start  ) sudo systemctl start $service
                     status

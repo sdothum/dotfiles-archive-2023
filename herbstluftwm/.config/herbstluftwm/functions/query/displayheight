@@ -12,6 +12,6 @@
 
 # in pixels
 [ $1 ] && monitor=$1 || monitor=$(herbstclient attr monitors.focus.index)
-xrandr 2>/dev/null | egrep '[*+] |[*+]$' | cut -dx -f2 | cut -d' ' -f1 | sed "$(( $monitor + 1 ))q;d"
+xrandr 2>/dev/null | egrep '[*+] |[*+]$' | cut -dx -f2 | cut -d' ' -f1 | sed "$(( $monitor + 1 ))q ;d"
 
 # vim: set ft=sh: #

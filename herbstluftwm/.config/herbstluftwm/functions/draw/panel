@@ -24,7 +24,7 @@ UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
 # tic indicator: none (unset), blink, circle, square
-[ -e $BLINKER ] && { TIC=$(cat $BLINKER);  TIC=${TIC:-square}; }
+[ -e $BLINKER ] && { TIC=$(cat $BLINKER) ; TIC=${TIC:-square} ;}
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -73,8 +73,7 @@ monitor=$(herbstclient attr monitors.focus.index)
 
 # geometry has the format: X Y W H
 geometry='X:Y:W:H'
-for i in $(herbstclient monitor_rect $monitor)
-do
+for i in $(herbstclient monitor_rect $monitor) ;do
   eval monitor${geometry%%:*}=$i
   geometry=${geometry#*:}
 done
@@ -114,19 +113,15 @@ fi
 # ................................................................... Tag status
 
 # eye candy tag icons
-tag_symbol() { [ $visible ] && tag=$OCCUPIED || tag=$FREE; }
+tag_symbol() { [ $visible ] && tag=$OCCUPIED || tag=$FREE ;}
 
 desktops() {
   active=$(query tag)
   inactive=$(query tag inactive)
   unset tags
-  for i in $(query winids)
-  do
-    tags="$tags $(herbstclient attr clients.$i.tag)"
-  done
+  for i in $(query winids) ;do tags="$tags $(herbstclient attr clients.$i.tag)" ;done
   unset desktops
-  for i in $TAGS
-  do
+  for i in $TAGS ;do
     if echo $tags | grep -q $i ;then
       echo $tags | egrep -q "^$i| $i" && visible=true || unset visible
       echo $tags | grep -q "'$i" && hidden=true || unset hidden
@@ -201,8 +196,7 @@ weather() {
 
 # fifo read loop
 panel() {
-  while read -r line
-  do
+  while read -r line ;do
     case $line in
       S*) unset ind
           if [ -e $BAR ] ;then
@@ -235,7 +229,7 @@ panel() {
 
               c*) [ "$tic" = '◓' ] && tic='◑' ||
                     { [ "$tic" = '◑' ] && tic='◒' ||
-                      { [ "$tic" = '◒' ] && tic='◐' || tic='◓'; }; } ;;
+                      { [ "$tic" = '◒' ] && tic='◐' || tic='◓' ;} ;} ;;
 
               s*) [ "$tic" = '⬒' ] && tic='⬔' ||
                     { [ "$tic" = '⬔' ] && tic='◨' ||
@@ -243,7 +237,7 @@ panel() {
                         { [ "$tic" = '◪' ] && tic='⬓' ||
                           { [ "$tic" = '⬓' ] && tic='⬕' ||
                             { [ "$tic" = '⬕' ] && tic='◧' ||
-                              { [ "$tic" = '◧' ] && tic='◩' || tic='⬒'; }; }; }; }; }; } ;;
+                              { [ "$tic" = '◧' ] && tic='◩' || tic='⬒' ;} ;} ;} ;} ;} ;} ;;
             esac
             tic="%{F$DEFAULT_FG}$tic%{F-}"
             [ "$ind" ] && ind="$ind $tic" || ind="  $tic"

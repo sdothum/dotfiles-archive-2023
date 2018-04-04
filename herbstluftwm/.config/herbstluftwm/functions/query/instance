@@ -12,12 +12,7 @@ usage() {
 
 [ $1 ] || usage
 
-for i in $(query winids)
-do
-  if herbstclient compare clients.$i.instance = $1 ;then
-    echo $i
-  fi
-done
+for i in $(query winids) ;do herbstclient compare clients.$i.instance = $1 && echo $i ;done
 echo ''
 
 # vim: set ft=sh: #

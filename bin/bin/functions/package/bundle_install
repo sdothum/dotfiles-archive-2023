@@ -41,29 +41,25 @@ fi
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
-if [ -e $deferred ] ;then
-  ifno 'clear last defer bundle' || rm -f $deferred
-fi
+[ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred ;}
 
-rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
+rule() { echo "$@" | sed 's/\[// ; s/\]//' || echo true ;}
 
-for i in $@
-do
+for i in $@ ;do
   subject $(basename $i | cut -d- -f2-9)
 
   # preserve stdin fd for package manager prompts
   # note: (action package) map to (package condition) for default noconfirm install
   #       (package condition) map to (command options) for ! execute
-  while read action package condition <&3
-  do
+  while read action package condition <&3 ;do
     # echo "action=$action package=$package condition=$condition"
     case $action in
       ''  ) continue ;;
       '#' ) continue ;;
-      '=' ) echo $package | grep '^[[:alpha:]]' && title "$package $condition";    continue ;;
-      '"' ) [ $check ] || ditto "$package $condition";                             continue ;;
-      '!' ) [ $check ] || $package $condition;                                     continue ;;
-      '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package"; continue; } ;;
+      '=' ) echo $package | grep '^[[:alpha:]]' && title "$package $condition" ;    continue ;;
+      '"' ) [ $check ] || ditto "$package $condition" ;                             continue ;;
+      '!' ) [ $check ] || $package $condition ;                                     continue ;;
+      '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package" ; continue ;} ;;
       d   ) rule=true ;;
 
       '-' |\
@@ -92,13 +88,13 @@ do
         m  ) pkg='make_install possibly ' ;;
         *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
       esac
-      [ $installed ] && ditto $package || ditto "$package  ${_RED_}${_blink_}[${pkg}not installed]"
+      [ $installed ] && ditto $package || ditto "$package  ${__RED}${BLINK}[${pkg}not installed]"
       continue
     fi
 
     # package management
     case $action in
-      '-') heading "[ Uninstalling.. ]   $package"; pm R $package ;;
+      '-') heading "[ Uninstalling.. ]   $package" ; pm R $package ;;
       '?') pm_install S $package ;;
       '@') aur_install $package ;;
       a  ) arm_install $package ;;

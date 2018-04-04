@@ -23,7 +23,7 @@ case $1 in
 
   start  ) sudo systemctl start $2 ;;
   stop   ) sudo systemctl stop $2 ;;
-  reload ) sudo systemctl daemon-reload; exit ;;
+  reload ) sudo systemctl daemon-reload ; exit ;;
   restart) sudo systemctl restart $2 ;;
 
   toggle ) if sudo systemctl status $2 | grep -q 'Active: active' ;then

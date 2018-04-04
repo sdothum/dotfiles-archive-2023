@@ -20,18 +20,17 @@ delay=5
 . $HOME/bin/functions/shell/user_path
 
 slock $(basename $0) $$ || exit 1
-while [ $1 ]
-do
+while [ $1 ] ;do
   case $1 in
-    force       ) rm -f $flock; shift ;;
-    quiet       ) quiet=true; shift ;;
-    *managed_psk) service=$i; shift ;;
+    force       ) rm -f $flock ; shift ;;
+    quiet       ) quiet=true ; shift ;;
+    *managed_psk) service=$i ; shift ;;
   esac
 done
-[ $service ] || { [ -e $SERVICE ] && service=$(cat $SERVICE); }
+[ $service ] || { [ -e $SERVICE ] && service=$(cat $SERVICE) ;}
 [ $service ] || usage
 
-connected() { ping -c 1 -W 1 $dns >/dev/null 2>&1; }
+connected() { ping -c 1 -W 1 $dns >/dev/null 2>&1 ;}
 
 # login to web portal if required
 if ! connected ;then
@@ -41,20 +40,17 @@ if ! connected ;then
 fi
 
 trace 'Autoconnect started'
-while true
-do
+while : ;do
   sleep 1
   connected && continue
   unset outage
 
   # brute force restart on local network that frequently drops connection
-  while ! connected
-  do
+  while ! connected ;do
     trace 'Re-establishing network connection..'
     [ $quiet ] || notify $delay critical cron 'Network unreachable' "Reconnecting $service"
     connmanctl connect $service 2>/dev/null
-    for i in $(seq 1 $delay)
-    do
+    for i in $(seq 1 $delay) ;do
       sleep 1
       outage=$(( ${outage:-0} + 1 ))
       connected && break

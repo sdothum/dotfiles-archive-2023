@@ -8,9 +8,8 @@
 # update .pacnew system configs
 copy=$(mktemp)
 trap "rm -f $copy" EXIT
-while :
-do
-  file=$(sudo find /etc -name '*.pacnew' | sed 's|^/etc/||; s/.pacnew$//')
+while : ;do
+  file=$(sudo find /etc -name '*.pacnew' | sed 's|^/etc/|| ; s/.pacnew$//')
   if [ -z "$file" ] ;then
     [ -e $copy ] && ditto 'zero (0) outstanding .pacnew files'
     break
@@ -39,8 +38,7 @@ do
     fi
 
     # keep / restore / delete / use .pacnew
-    while :
-    do
+    while : ;do
       action=$(echo "$action" | rmenu " $file.pacnew" -no-custom) || break
       case $action in
         keep   ) ;;

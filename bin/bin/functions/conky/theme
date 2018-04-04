@@ -100,7 +100,7 @@ scheme() {
   [ $1 = paper ] && paper || ink
 }
 
-chromatic() { echo "$hex" | cut -d' ' -f$1; }
+chromatic() { echo "$hex" | cut -d' ' -f$1 ;}
 
 # see conky palette
 hexgen() {

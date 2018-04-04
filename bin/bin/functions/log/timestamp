@@ -4,12 +4,12 @@
 # Log
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ......................................................................... Date
 
 # common date string for consistent script logging
 # date '+%a %m.%d %I:%M %S%P'
-date "+${_YELLOW_}⚡ ${_green_}%a %-I:%M %S%P${_nocolor_}"
+date "+${__YELLOW}⚡ ${GREEN}%a %-I:%M %S%P${NOCOLOR}"
 
 # vim: set ft=sh: #

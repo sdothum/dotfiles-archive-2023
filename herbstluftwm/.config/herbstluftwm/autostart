@@ -8,14 +8,19 @@
 HLWMTRACE=$SESSION/hlwmtrace
 
 # chain herbstclient commands (note: keybind chains use ".")
-hc() { cmds="$cmds , $@"; }
+hc() {
+  # cannot chain parameters "'containing spaces'"
+  chain=true
+  for i ;do [ "${i% *}" != "$i" ] && { unset chain ; break ;} ;done
+  [ $chain ] && cmds="$cmds , $@" || { [ $TRACE ] && echo herbstclient $@ >>$TRACE ; eval herbstclient $@ ;}
+}
 
 dohc() {
-  if [ $TRACE ]; then
+  if [ $TRACE ] ;then
     echo -n '> herbstclient chain' >>$TRACE
-    echo $cmds | sed 's/ , /\n -> /g' >>$TRACE
+    echo "$cmds" | sed 's/ , /\n -> /g' >>$TRACE
+    # echo herbstclient chain $cmds >>$TRACE
   fi
-  # herbstclient chain $cmds
   herbstclient chain $cmds &
   unset cmds
 }
@@ -42,8 +47,7 @@ dohc
 # ...................................................... Configuration framework
 
 # for i in $HOME/.config/herbstluftwm/config/*
-for i in ${0%/autostart}/config/*
-do
+for i in ${0%/autostart}/config/* ;do
   ditto "loading herbstluftwm config ${i##*/}"
   . $i
   # add dummy hc cmd for any sources that don't e.g. ENV

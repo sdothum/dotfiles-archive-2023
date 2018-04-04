@@ -72,7 +72,6 @@ d ? preload
 = fonts
 = ▔▔▔▔▔
   adobe-base-14-fonts
-  libxft
   noto-fonts
 # terminus-font-ll2-td1
   ttf-courier-prime

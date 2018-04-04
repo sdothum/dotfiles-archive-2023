@@ -43,7 +43,7 @@
     " ............................................................... Modifiable
 
       " toggle modifiable attribute
-      nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+      nmap <silent><leader>-      :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " protected help
       autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
@@ -72,14 +72,14 @@
     " ...................................................... Buffer close / save
 
       " close buffer
-      nmap <silent><leader>d  :silent bdelete!<CR>
+      nmap <silent><leader>d      :silent bdelete!<CR>
       " Fast saving
-      nmap <silent><leader>w  :silent write!<CR>
+      nmap <silent><leader>w      :silent write!<CR>
       " sudo save
-      nmap <leader>W          :silent write !sudo tee % >/dev/null<CR>
+      nmap <leader>W              :silent write !sudo tee % >/dev/null<CR>
       " (write and) close buffers
-      nmap <silent><leader>ww :silent wqall!<CR>
-      nmap <silent><leader>qq :silent qall!<CR>
+      nmap <silent><leader>ww     :silent wqall!<CR>
+      nmap <silent><leader>qq     :silent qall!<CR>
 
       " pre-write formatting
       autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
@@ -91,9 +91,9 @@
     " ......................................................... Buffer switching
 
       " " goto buffer (just fingering convenience)
-      " nmap <leader>b          :b<Space>
+      " nmap <leader>b            :b<Space>
       " " query current buffer
-      " nmap <leader>B          :echo expand('%:p')<CR>
+      " nmap <leader>B            :echo expand('%:p')<CR>
 
       " " silence vim's default (command line) file info message, note silent..silent
       " vmap <silent><S-PageUp>   <ESC>:silent bprevious<CR>
@@ -116,36 +116,36 @@
     " .......................................................... Window handling
 
       " kill (close) current window
-      noremap <leader>q  <C-w>q
+      noremap <leader>q           <C-w>q
       " close all other windows
-      noremap <leader>Q  <C-w>o
+      noremap <leader>Q           <C-w>o
 
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      noremap <leader>Z  <C-w>v<C-w>l
-      noremap <leader>z  <C-w>s<C-w>l
+      noremap <leader>Z           <C-w>v<C-w>l
+      noremap <leader>z           <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      noremap <leader>ZZ <C-w><Bar>
-      noremap <leader>zz <C-w>_
+      noremap <leader>ZZ          <C-w><Bar>
+      noremap <leader>zz          <C-w>_
       " adjust all splits to the same size
-      noremap <leader>=  <C-w>=
+      noremap <leader>=           <C-w>=
 
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
       " switch to left / right split
-      " noremap <C-m>    <C-w>h
-      " noremap <C-e>    <C-w>l
-      noremap <C-Left>   <C-w>h
-      noremap <C-Right>  <C-w>l
+      " noremap <C-m>             <C-w>h
+      " noremap <C-e>             <C-w>l
+      noremap <C-Left>            <C-w>h
+      noremap <C-Right>           <C-w>l
       " switch to top / bottom split
-      " noremap <C-l>    <C-w>k
-      " noremap <C-n>    <C-w>j
-      noremap <C-Up>     <C-w>k
-      noremap <C-Down>   <C-w>j
+      " noremap <C-l>             <C-w>k
+      " noremap <C-n>             <C-w>j
+      noremap <C-Up>              <C-w>k
+      noremap <C-Down>            <C-w>j
       " switch windows
-      noremap <C-w>      <C-w><C-w>
+      noremap <C-w>               <C-w><C-w>
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -165,15 +165,15 @@
 
     " ........................................................... Folding levels
 
-      nmap    <silent><leader>0 :set foldlevel=0<CR>
-      nmap    <silent><leader>1 :set foldlevel=1<CR>
-      nmap    <silent><leader>2 :set foldlevel=2<CR>
-      nmap    <silent><leader>3 :set foldlevel=3<CR>
-      nmap    <silent><leader>4 :set foldlevel=4<CR>
-      nmap    <silent><leader>5 :set foldlevel=5<CR>
-      nmap    <silent><leader>6 :set foldlevel=6<CR>
-      nmap    <silent><leader>7 :set foldlevel=7<CR>
-      nmap    <silent><leader>8 :set foldlevel=8<CR>
-      nmap    <silent><leader>9 :set foldlevel=9<CR>
+      nmap    <silent><leader>0   :set foldlevel=0<CR>
+      nmap    <silent><leader>1   :set foldlevel=1<CR>
+      nmap    <silent><leader>2   :set foldlevel=2<CR>
+      nmap    <silent><leader>3   :set foldlevel=3<CR>
+      nmap    <silent><leader>4   :set foldlevel=4<CR>
+      nmap    <silent><leader>5   :set foldlevel=5<CR>
+      nmap    <silent><leader>6   :set foldlevel=6<CR>
+      nmap    <silent><leader>7   :set foldlevel=7<CR>
+      nmap    <silent><leader>8   :set foldlevel=8<CR>
+      nmap    <silent><leader>9   :set foldlevel=9<CR>
 
 " buffer.vim

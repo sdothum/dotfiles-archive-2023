@@ -40,7 +40,7 @@ indent='       '
 [ -e $MENU ] && window=MENU || window=STACK
 
 if [ -z $TERMINAL ] ;then
-  if hlwm; then
+  if hlwm ;then
     display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
     width=$(query displaywidth)
   elif pstat startx ;then

@@ -14,11 +14,11 @@
 EDIT='[ edit ]'
 
 # non-numeric character escapes undesired dmenu match
-duration() { echo $1 | sed -r 's/^[^0-9]//; s/([0-9])$/\1m/'; }
+duration() { echo $1 | sed -r 's/^[^0-9]// ; s/([0-9])$/\1m/' ;}
 
 case $# in
   1) delay=$(duration $1)
-     alert=$(echo $delay | sed -r 's/(.*)s/\1 seconds/; s/(.*)m/\1 minutes/')
+     alert=$(echo $delay | sed -r 's/(.*)s/\1 seconds/ ; s/(.*)m/\1 minutes/')
      repeat=1 ;;
 
   2) delay=$(duration $1)
@@ -29,8 +29,7 @@ case $# in
      alert=$2
      repeat=$3 ;;
 
-  *) while delay=$(echo | mhistory alarm | sed "1i$EDIT" | column -s^ -t | rmenu 'Duration [m]/s') || exit
-     do
+  *) while delay=$(echo | mhistory alarm | sed "1i$EDIT" | column -s^ -t | rmenu 'Duration [m]/s') || exit ;do
        if [ "$delay" = "$EDIT" ] ;then
          gvim -f $HISTORY/alarm
          continue
@@ -59,8 +58,7 @@ esac
 
 alarm() {
   echo $alert | grep -iq test || mhistory alarm "$delay^$SEP $alert"
-  for i in $(seq 1 $repeat)
-  do
+  for i in $(seq 1 $repeat) ;do
     sleep $delay
     if [ $repeat -gt 1 ] ;then
       [ $(( $repeat - $i )) -gt 0 ] && notify 0 "($i/$repeat)  $alert" ||

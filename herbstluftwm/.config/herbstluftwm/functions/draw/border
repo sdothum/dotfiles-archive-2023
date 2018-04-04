@@ -15,10 +15,8 @@ colors="$colors $(echo $colors | reverse)"
 [ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER=000000
 
 pulsar() {
-  while :
-  do
-    for i in $colors
-    do
+  while : ;do
+    for i in $colors ;do
       # don't let processes queue up on a slower system..
       pkill -TERM -f 'herbstclient attr theme.active.color'
       # disable spawning as bg process if desktop resource issues occur

@@ -14,8 +14,7 @@ EDIT='[ edit menu ]'
 pgms=$CONFIG/apps
 
 apps() {
-  while read app <&3
-  do
+  while read app <&3 ;do
     if echo $app | grep -q '#' ;then
       echo $(echo $app | cut -d'#' -f2)
     else
@@ -25,8 +24,7 @@ apps() {
 }
 
 pgm=$(previous apps)
-while pgm=$(apps | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit
-do
+while pgm=$(apps | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit ;do
   case $pgm in
     "$EDIT") gvim -f $pgms ;;
 

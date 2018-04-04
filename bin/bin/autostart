@@ -101,7 +101,7 @@ server && herbstclient focus_monitor 0
 switch tag $WEB
 [ -e $WEB ] && $BROWSER &
 [ -e $TERM ] && toggle scratchpad
-[ -e $REMINDER ] && ( sleep $delay; dmenu reminder ) &
+[ -e $REMINDER ] && ( sleep $delay ; dmenu reminder ) &
 
 # .............................................................. Cleanup desktop
 

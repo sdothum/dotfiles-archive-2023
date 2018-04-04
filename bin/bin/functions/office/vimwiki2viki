@@ -29,8 +29,7 @@ gs() {
   [ $check ] || sed -i -r "$1" "$wiki"
 }
 
-while read wiki <&3
-do
+while read wiki <&3 ;do
   [ -d "$wiki" ] && continue
   heading "$wiki"
   gs "s/^[*][*]($W)/__\1/g"
@@ -47,7 +46,7 @@ do
   gs '/^=== /s/^=== (.*) ===/*** \1/'
   gs '/^== /s/^== (.*) ==/** \1/'
   gs '/^= /s/^= (.*) =/* \1/'
-  [ $check ] && { ifyes "$wiki" || exit 1; }
+  [ $check ] && { ifyes "$wiki" || exit 1 ;}
 done 3< $wikis
 
 # vim: set ft=sh: #

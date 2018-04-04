@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-[ "$1" = '-q' ] && { shift; quiet=-q; }
+[ "$1" = '-q' ] && { shift ; quiet=-q ;}
 
 laptop=lumen
 netbook=monad
@@ -109,11 +109,7 @@ case $1 in
            rsync --delete $HOME/stownfs/bin $HOME/stownfs/herbstluftwm $HOME/stow/
            rsync --delete $HOME/stownfs/ $HOME/stow ;;
 
-  backup ) if server ;then
-             if ifyes 'backup /net to /backup' ;then
-               rsync --delete /net/* /backup/
-             fi
-           fi ;;
+  backup ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/ ;} ;;
 
   home   ) if ifyes "backup $HOME to /net/archive" ;then
              mkdir -pv /net/archive/home || exit 1
@@ -144,7 +140,7 @@ case $1 in
              ditto "initiate update request from $laptop"
            fi ;;
 
-  pi     ) if server; then
+  pi     ) if server ;then
              # rsync --delete --exclude=.deprecated --exclude=.hg \
              #       $HOME/stow/bash/.bash_logout \
              #       $HOME/stow/bash/.bash_profile \

@@ -12,7 +12,7 @@ usage() {
 }
 
 [ "$1" ] || usage
-[ "$1" = -w ] && { w=-w; shift; }
+[ "$1" = -w ] && { w=-w ; shift ;}
 
 # pass parms via env
 AG="$w -l --nocolor --silent" a "$@"

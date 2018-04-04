@@ -4,14 +4,14 @@
 # Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ${_colors_} defined in env
+# ${COLORS} defined in env
 
 # ....................................................................... Prompt
 
 # standardized terminal prompt
 [ $1 ] && cue="$@" || cue="to continue"
 echo
-echo "${_YELLOW_}━━━━━━━━━  Press [Enter] $cue  ━━━━━━━━━${_nocolor_}\n"
+echo "${__YELLOW}━━━━━━━━━  Press [Enter] $cue  ━━━━━━━━━${NOCOLOR}\n"
 read CONTINUE
 
 # vim: set ft=sh: #

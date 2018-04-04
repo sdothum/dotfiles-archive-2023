@@ -53,8 +53,7 @@ tag_messages() {
 EOF
 
   # notmuch config set search.exclude_tags deleted spam trash
-  for i in $(find $HOME/Maildir -maxdepth 1 -type d -name '[a-z]*')
-  do
+  for i in $(find $HOME/Maildir -maxdepth 1 -type d -name '[a-z]*') ;do
     account=${i##*/}
     case $account in
       sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
@@ -72,8 +71,7 @@ EOF
     esac
   done
 
-  for i in $HOME/Maildir/sdothum/[A-Za-z]*
-  do
+  for i in $HOME/Maildir/sdothum/[A-Za-z]* ;do
     folder=${i##*/}
     maildir=${i##*Maildir/}
     tag_account $maildir +$folder
@@ -105,12 +103,11 @@ initialize() {
 # mail daemon (cron task)
 mail_daemon() {
   # trace 'Starting mailsync..'
-  while :
-  do
+  while : ;do
     # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
     mv /tmp/mailsync:new /tmp/mailsync:old
-    # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync:new
-    curl -u sdothum:patricia1948 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' >/tmp/mailsync:new
+    # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
+    curl -u sdothum:patricia1948 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
     cmp -s /tmp/mailsync:old /tmp/mailsync:new
     if [ $? -eq 1 ] ;then
       trace 'Starting offlineimap..'

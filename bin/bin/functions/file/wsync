@@ -27,13 +27,13 @@ ARM=pi
 
 [ -e $WATCH ] || touch $WATCH
 # server is always online but satellite arm device may be offline (and sync on boot)
-cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit; }
+cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit ;}
 cpu arm && target=$SERVER: || target=$ARM:
 
 info() {
   name=$(echo $file | filter | sed "s|$HOME/stow/||")
   if [ -n "$name" ] ;then
-    trace "$1 ${target}stow ${_YELLOW_}$name" >>$LOG
+    trace "$1 ${target}stow ${__YELLOW}$name" >>$LOG
     notify "$1 ${target}stow" "$name"
   fi
 }
@@ -47,8 +47,7 @@ register() {
 }
 
 queue () {
-  for i in $@
-  do
+  for i in $@ ;do
     if [ -d "$ROOT/${i%/*}" ] ;then
       register
       file="$ROOT/$i"
@@ -60,8 +59,7 @@ queue () {
 }
 
 archive() {
-  while read file <&3
-  do
+  while read file <&3 ;do
     info Sync
     to="${target}${file%/*}/"
     echo rsync -d "$file" "$to" >>$LOG
@@ -75,20 +73,18 @@ watch() {
     cat $WATCH
   else
     # trap random watchman initialization flooding and reset watch queue
-    notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//')"
+    notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d ; s/^ *//g ; s/"//g ; s/,$//')"
     touch $IGNORE
     trap "rm -f $IGNORE" EXIT
     scan=true
-    while [ $scan ]
-    do
+    while [ $scan ] ;do
       unset scan
-      for i in $(seq 1 $SCAN)
-      do
+      for i in $(seq 1 $SCAN) ;do
         sleep 1
         pkill -f 'wsync .*/.*' && scan=true
       done
       # adjust for initialization latency
-      [ $scan ] || { [ -s $WATCH ] || scan=true ; }
+      [ $scan ] || { [ -s $WATCH ] || scan=true ;}
     done
     notify 3 critical 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
     >$WATCH
@@ -100,7 +96,7 @@ case $1 in
       watch ;;
 
   -a) archive & ;;
-  -s) archive && { watchman shutdown-server; systemd start syncthing@$USER; } ;;
+  -s) archive && { watchman shutdown-server ; systemd start syncthing@$USER ;} ;;
   -v) pstat syncthing || watch ;;
   * ) queue $@ && [ -e $WSYNC ] && archive & ;;
 esac

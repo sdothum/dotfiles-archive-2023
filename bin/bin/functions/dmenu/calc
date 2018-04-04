@@ -8,8 +8,7 @@
 # initialize varname table
 VARS='a b c d e f g h i j k l m n o p q r s t u v w x y z'
 count=0
-for i in $VARS
-do
+for i in $VARS ;do
   count=$(( $count + 1 ))
   eval VAR$count=$i
 done
@@ -23,8 +22,7 @@ eqn() {
 }
 
 count=0
-while eqn=$(echo $ribbon | column -s$UTF -t | rmenu "Solve$error") || break
-do
+while eqn=$(echo $ribbon | column -s$UTF -t | rmenu "Solve$error") || break ;do
   eqn=$(unquote $eqn)
   if ans=$(calc -pd "$(eval echo $(eqn))") ;then
     if [ $ans ] ;then

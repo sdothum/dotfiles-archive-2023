@@ -39,7 +39,7 @@ case $1 in
   adnw*  |\
   beakl* |\
   colem* |\
-  qwerty ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG; shift ;;
+  qwerty ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG ; shift ;;
 
   *      ) [ $splitography ] || usage ;;
 esac
@@ -49,7 +49,7 @@ if [ -z $splitography ] ;then
   if [ "$1" = steno ] ;then
     sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
     shift
-    [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+    [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE ; shift ;}
   else
     sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
   fi

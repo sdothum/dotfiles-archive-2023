@@ -1,16 +1,17 @@
 function fish_right_prompt --description 'Write out the right prompt'
   set -g HILIGHT 1
   set -g POSTFIX 0
+  set -g VERBOSE 0
 
   if test $TERM = "linux"
-    set -g GREY     'red'
-    set -g YELLOW   'green'
+    set -g _info   'red'
+    set -g _loc    'green'
   else
-    # set -g GREY   '666'
-    # set -g YELLOW 'FC3'
+    # set -g _info '666'
+    # set -g _loc  'FC3'
     # quantum colour palette
-    set -g GREY     'aebbc5'
-    set -g YELLOW   'd5b875'
+    set -g _info   'aebbc5'  # grey
+    set -g _loc    'd5b875'  # yellow
   end
 
   function glyph
@@ -28,7 +29,7 @@ function fish_right_prompt --description 'Write out the right prompt'
     end
 
     if not set -q __fish_git_prompt_color_branch
-      set -g __fish_git_prompt_color_branch magenta --bold
+      set -g __fish_git_prompt_color_branch magenta --bold:::
     end
     if not set -q __fish_git_prompt_showupstream
       set -g __fish_git_prompt_showupstream 'informative'
@@ -86,9 +87,9 @@ function fish_right_prompt --description 'Write out the right prompt'
   function remote
     echo -n '  '
     if test -n "$SSH_CLIENT"
-      set_color $YELLOW
+      set_color $_loc
       echo -n (hostname)
-      set_color $GREY
+      set_color $_info
       echo ':'
       set_color normal
     end
@@ -101,9 +102,9 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -l parent (echo $folders | cut -f2 | rev)
       set -l tree (echo $folders | cut -f3- | rev | sed -re 's|([^\t.])[^\t]*\t*|\1/|g' -e 's|\t||g')
       set_color yellow
-      set -l path (echo "/$tree/$parent/"(set_color $YELLOW)"$base" | sed -e 's|///*|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
+      set -l path (echo "/$tree/$parent/"(set_color $_loc)"$base" | sed -e 's|///*|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
       test "$path" = '~'
-        and set -l path (set_color $YELLOW)~
+        and set -l path (set_color $_loc)~
       echo -n $path
     else
       set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
@@ -120,20 +121,31 @@ function fish_right_prompt --description 'Write out the right prompt'
     set -l mins (math "$secs / 60")
     set -l hrs (math "$mins / 60")
     if test 0$hrs -gt 0
-      printf '%sh ' $hrs
+      if test $VERBOSE -gt 0
+        printf '%sh ' $hrs
+      else
+        printf '%s,' $hrs
+      end
       set mins (math "$mins - $hrs * 60")
       set secs (math "$secs - $hrs * 3600")
     end
-    test 0$hrs -gt 0 -o $mins -gt 0
-      and printf '%sm ' $mins
-    printf '%ss' (math "$secs - $mins * 60")
+    if test $VERBOSE -gt 0
+      test 0$hrs -gt 0 -o $mins -gt 0
+        and printf '%sm ' $mins
+      printf '%ss' (math "$secs - $mins * 60")
+    else
+      test 0$hrs -gt 0 -o $mins -gt 0
+        and printf '%s' $mins
+        or printf '0'
+      printf "'%s" (math "$secs - $mins * 60")
+    end
   end
 
   function duration
     if test $CMD_DURATION
       if test 0$CMD_DURATION -gt 1000
         test 0$POSTFIX -eq 1
-          and set_color $GREY
+          and set_color $_info
           and glyph '  ^' '  ^'
         echo -n (cmd_duration $CMD_DURATION)
         set_color normal
@@ -142,7 +154,7 @@ function fish_right_prompt --description 'Write out the right prompt'
             and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
         test 0$POSTFIX -eq 1
           or begin
-            set_color $GREY
+            set_color $_info
             glyph '^' '^'
           end
         return (true)
@@ -152,7 +164,7 @@ function fish_right_prompt --description 'Write out the right prompt'
   end
 
   function time
-    set_color $GREY
+    set_color $_info
     date '+  %-I:%M %S'
     set_color normal
   end

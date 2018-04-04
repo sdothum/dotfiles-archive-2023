@@ -14,7 +14,7 @@ usage() {
 KEYMAPS='DEFAULT'
 
 ROOT=$HOME
-# ROOT=/net/depot
+ROOT=/net/depot
 QMK=$ROOT/qmk_firmware
 SPLITOGRAPHY=$QMK/keyboards/splitography
 KEYMAP=$SPLITOGRAPHY/keymaps/$1
@@ -40,7 +40,7 @@ cp -f $HOME/stow/splitography/${KEYMAP#$ROOT/}/* $KEYMAP/
 if [ "$1" = steno ] ;then
   sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
   shift
-  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE ; shift ;}
 else
   sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
 fi

@@ -12,10 +12,7 @@ orphans=$(pacman -Qdtq)
 if [ "$orphans" ] ;then
   echo $orphans
   if ! ifno 'remove orphan packages' ;then
-    for i in $orphans
-    do
-      sudo pacman -Rsn $i
-    done
+    for i in $orphans ;do sudo pacman -Rsn $i ;done
   fi
 fi
 
