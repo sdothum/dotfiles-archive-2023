@@ -48,10 +48,11 @@ commit() {
 
 pending() {
   underline
-  printf "commit? [Abort]/comment.. : ${__YELLOW}"
+  printf "commit? [Abort]/comment.. : ${__WHITE}"
   read DESC
   printf "${NOCOLOR}"
-  [ "$DESC" ] && commit
+  [ "$DESC" ] || exit 1
+  ifyes "Push: $DESC" && commit
 }
 
 # any updates to push?
