@@ -51,7 +51,7 @@
 extern keymap_config_t keymap_config;
 
 enum splitography_layers {
-  _QWERTY = 0
+  _DVORAK = 0
  ,_TXBOLT
  ,_PLOVER
  ,_BLUE
@@ -62,9 +62,9 @@ enum splitography_layers {
 };
 
 enum splitography_keycodes {
-  QWERTY = SAFE_RANGE
- ,QWERTY1
- ,QWERTY2
+  DVORAK = SAFE_RANGE
+ ,DVORAK1
+ ,DVORAK2
  ,TXBOLT
  ,PLOVER
  ,BLUE
@@ -88,24 +88,24 @@ enum splitography_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// ...................................................................... Qwerty
+// ...................................................................... Dvorak
 //
 // http://www.keyboard-layout-editor.com/#/gists/1b04ce6be0cee6e5d2998b2a8efb8b09
 
   // ,-----------------------------------------------------------------------------------.
-  // |  Esc |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+  // |  Esc |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
   // -------|------+------+------+------+------+------+------+------+------+-------------|
-  // |  Alt |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | Enter|
+  // |  Alt |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  | Enter|
   // -------|------+------+------+------+------+------+------+------+------+-------------|
-  // | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |  GUI |
+  // | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |  GUI |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |Orange| Blue | Space| Ctrl |                           |
   // `-----------------------------------------------------------------------------------'
 
-  [_QWERTY] = {
-    {KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
-    {KC_LALT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT },
-    {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LGUI},
+  [_DVORAK] = {
+    {KC_ESC,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC},
+    {KC_LALT, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_ENT },
+    {KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_LGUI},
     {_______, _______, _______, _______, ORANGE,  BLUE,    KC_SPC,  KC_LCTL, _______, _______, _______, _______},
   },
 
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // .-----------------------------------------------------------------------------------.
   // |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
   // |-----------------------------------------------------------------------------------|
-  // |  Alt | Stop | Prev | Play | Next | +Vol |      |      |      |   [  |   ]  |   '  |
+  // |  Alt | Stop | Prev | Play | Next | +Vol |      |      |      |   [  |   ]  |   /  |
   // |-----------------------------------------------------------------------------------|
   // | Shift| Undo |  Cut | Copy | Paste| -Vol | Mute |      |      |   -  |   =  |  GUI |
   // |-----------------------------------------------------------------------------------|
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BLUE] = {
     {KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______},
-    {KC_LALT, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU, _______, _______, _______, KC_LBRC, KC_RBRC, KC_QUOT},
+    {KC_LALT, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU, _______, _______, _______, KC_LBRC, KC_RBRC, KC_SLSH},
     {KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   KC_VOLD, KC_MUTE, _______, _______, KC_MINS, KC_EQL,  KC_LGUI},
     {_______, _______, _______, _______, ORANGE,  ___x___, KC_DEL,  KC_LCTL, _______, _______, _______, _______},
   },
@@ -189,7 +189,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NUM] = {
     {_______, _______, _______, _______, _______, _______, KC_PSLS, KC_P7,   KC_P8,   KC_P9,   KC_PMNS, _______},
     {KC_LALT, KC_HOME, KC_UP,   KC_END,  KC_PGUP, _______, KC_PAST, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, KC_ENT },
-    {KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, QWERTY,  KC_P0,   KC_P1,   KC_P2,   KC_P3,   _______, KC_LGUI},
+    {KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, DVORAK,  KC_P0,   KC_P1,   KC_P2,   KC_P3,   _______, KC_LGUI},
     {_______, _______, _______, _______, _______, _______, _______, KC_LCTL, _______, _______, _______, _______},
   },
 
@@ -200,17 +200,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |   1  |   1  |   1  |   1  |   1  |   1  |   1  |   1  |   1  |   1  |   1  |   1  |
   // +-------------+------+------+------+------+------+------+------+------+------+------|
-  // |Qwerty|   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
+  // |Dvorak|   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
   // +------|------+------+------+------+------+------+------+------+------+------+------|
-  // |Qwerty|   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
+  // |Dvorak|   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
   // +------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |   A  |   O  |   E  |   U  |                           |
   // `-----------------------------------------------------------------------------------'
 
   [_PLOVER] = {
     {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-    {QWERTY1, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-    {QWERTY2, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+    {DVORAK1, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+    {DVORAK2, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
     {_______, _______, _______, _______, KC_C,    KC_V,    KC_N,    KC_M,    _______, _______, _______, _______},
   },
 
@@ -221,17 +221,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ,-----------------------------------------------------------------------------------.
   // |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |Qwerty|   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
+  // |Dvorak|   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |Qwerty|   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
+  // |Dvorak|   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |   A  |   O  |   E  |   U  |                           |
   // `-----------------------------------------------------------------------------------'
 
   [_TXBOLT] = {
     {STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,  STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC },
-    {QWERTY1, STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1, STN_ST3, STN_FR,  STN_PR,  STN_LR,  STN_TR,  STN_DR },
-    {QWERTY2, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2, STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR },
+    {DVORAK1, STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1, STN_ST3, STN_FR,  STN_PR,  STN_LR,  STN_TR,  STN_DR },
+    {DVORAK2, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2, STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR },
     {_______, _______, _______, _______, STN_A,   STN_O,   STN_E,   STN_U,   _______, _______, _______, _______},
   },
 
@@ -247,16 +247,16 @@ void clear_layers(void)
   }
 }
 
-#define QWERTY_1  1
-#define QWERTY_2  2
-#define QWERTY_12 3
-static uint8_t qwerty_n = 0;
+#define DVORAK_1  1
+#define DVORAK_2  2
+#define DVORAK_12 3
+static uint8_t dvorak_n = 0;
 
-void qwerty(void)
+void dvorak(void)
 {
-  qwerty_n = 0;
+  dvorak_n = 0;
   clear_layers();
-  set_single_persistent_default_layer(_QWERTY);
+  set_single_persistent_default_layer(_DVORAK);
 }
 
 void plover(keyrecord_t *record)
@@ -284,29 +284,29 @@ void txbolt(void)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode) {
-    case QWERTY:
+    case DVORAK:
       if (record->event.pressed) {
-        qwerty();
+        dvorak();
       }
       return false;
-    case QWERTY1:
+    case DVORAK1:
       if (record->event.pressed) {
-        qwerty_n = qwerty_n | QWERTY_1;
-        if (qwerty_n == QWERTY_12) {
-          qwerty();
+        dvorak_n = dvorak_n | DVORAK_1;
+        if (dvorak_n == DVORAK_12) {
+          dvorak();
         }
       } else {
-        qwerty_n = qwerty_n & ~QWERTY_1;
+        dvorak_n = dvorak_n & ~DVORAK_1;
       }
       return false;
-    case QWERTY2:
+    case DVORAK2:
       if (record->event.pressed) {
-        qwerty_n = qwerty_n | QWERTY_2;
-        if (qwerty_n == QWERTY_12) {
-          qwerty();
+        dvorak_n = dvorak_n | DVORAK_2;
+        if (dvorak_n == DVORAK_12) {
+          dvorak();
         }
       } else {
-        qwerty_n = qwerty_n & ~QWERTY_2;
+        dvorak_n = dvorak_n & ~DVORAK_2;
       }
       return false;
     case BLUE:

@@ -67,7 +67,7 @@
 
 
 #include "config.h"
-#include "planck.h"
+#include "splitography.h"
 #include "action_layer.h"
 #ifdef STENO_ENABLE
 #include "keymap_steno.h"
@@ -101,8 +101,6 @@ enum planck_layers {
  ,_SYMREG
 #endif
  ,_EDIT
- ,_QWERTY
- ,_ADJUST
  ,_END_LAYERS
 };
 
@@ -117,9 +115,8 @@ enum planck_keycodes {
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SM_LPRN   // pseudo CTL_T(S(KC_9))                      for shifted key-codes, see process_record_user()
- ,SL_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT))           for shifted key-codes, see process_record_user()
- ,SP_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
- ,SL_PIPE   // pseudo LT   (_ADJUST, S(KC_BSLS))          for shifted key-codes, see process_record_user()
+ ,SL_DEL    // pseudo LT   (_MOUSE, S(KC_DEL))            for shifted key-codes, see process_record_user()
+ ,SL_PIPE   // pseudo LT   (_EDIT, S(KC_BSLS))            for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB))           for shifted key-codes, see process_record_user()
 #ifdef CENTER_TT
  ,TT_ESC
@@ -152,33 +149,25 @@ enum planck_keycodes {
 #define HOME_H  GUI_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
 #define HOME_A  SFT_T(KC_A)
-#if defined(BEAKLMU) || defined(BEAKLSP)
 #define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  GUI_T(KC_S)
 #define HOME_W  CTL_T(KC_W)
-#else
-#define HOME_T  SFT_T(KC_T)
-#define HOME_S  ALT_T(KC_S)
-#define HOME_N  GUI_T(KC_N)
-#define HOME_B  CTL_T(KC_B)
-#endif
 #else
 #define HOME_K  KC_K
 #define HOME_H  KC_H
 #define HOME_E  KC_E
 #define HOME_A  KC_A
 #define HOME_T  KC_T
+#define HOME_R  KC_R
 #define HOME_S  KC_S
-#define HOME_N  KC_N
-#define HOME_B  KC_B
+#define HOME_W  KC_W
 #endif
 
 #define S_DOWN  S    (KC_DOWN)
-#define S_LEFT  S    (KC_LEFT)
 #define S_RGHT  S    (KC_RGHT)
-#define S_TAB   S    (KC_TAB)
 #define S_UP    S    (KC_UP)
+#define S_TAB   S    (KC_TAB)
 
 #include "tapdance.h"
 
@@ -199,15 +188,10 @@ enum planck_keycodes {
 #define TMCOPY  LALT(LCTL(KC_C))
 #define TMPASTE LALT(LCTL(KC_V))
 #define LT_BSLS LT  (_MOUSE,  KC_BSLS)      // see process_record_user() for extended handling
-#define LT_BSPC LT  (_EDIT,   KC_BSPC)
-#define SP_LEFT LT  (_EDIT,   KC_LEFT)
+#define LT_BSPC LT  (_SYMBOL, KC_BSPC)      // see process_record_user() for extended handling
 #define LT_ESC  LT  (_NUMBER, KC_ESC)
-#define LT_LEFT LT  (_SYMBOL, KC_LEFT)      // see process_record_user() for extended handling
-#define SP_BSPC LT  (_SYMBOL, KC_BSPC)      // see process_record_user() for extended handling
 #define LT_TAB  LT  (_FNCKEY, KC_TAB)
-#define LT_INS  LT  (_FNCKEY, KC_INS)
-#define LT_ALTG LT  (_FNCKEY, KC_RALT)
-#define ADJUST  MO  (_ADJUST)
+#define ADJUST  MO  (_EDIT)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
@@ -219,11 +203,7 @@ enum planck_keycodes {
 #define OS_SGUI OSM (MOD_LGUI | MOD_LSFT)
 
 #ifdef CENTER_TT
-#ifdef BEAKLSP
-#define CNTR_TL OSM (MOD_LSFT)
-#else
 #define CNTR_TL TT  (_TTFNCKEY)
-#endif
 #define CNTR_TR KC_CAPS
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
@@ -234,14 +214,14 @@ enum planck_keycodes {
 #define CNTR_TR OSM (MOD_LGUI | MOD_LCTL)
 #define CNTR_HL OSM (MOD_LALT | MOD_LSFT)
 #define CNTR_HR OSM (MOD_LGUI | MOD_LSFT)
-#define CNTR_BL TD  (_CAPS)
+#define CNTR_BL TD(_CAPS)
 #define CNTR_BR OSM (MOD_LSFT | MOD_LCTL)
 #endif
 
 #ifdef THUMB_0
-#define LT_EQL  LT  (_ADJUST, KC_EQL)
+#define LT_EQL  LT  (_EDIT, KC_EQL)
 #else
-#define LT_0    LT  (_ADJUST, KC_0)
+#define LT_0    LT  (_EDIT, KC_0)
 #endif
 #ifndef SHIFT_SYMBOLS
 #define LT_A    LT  (_NUMSYM, KC_A)
@@ -252,9 +232,7 @@ enum planck_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-#include "beakl.h"
-#include "colemak.h"
-#include "qwerty.h"
+#include "base_layout.h"
 #include "steno_layout.h"
 
 // ...................................................... Number / Function Keys
@@ -318,33 +296,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case AT_DOWN:
 #ifdef HOME_MODS
     case HOME_E:
-#if defined(BEAKLMU) || defined(BEAKLSP)
     case HOME_R:
-#else
-    case HOME_S:
-#endif
 #endif
       tap_mods(record, KC_LALT);
       break;
     case CT_RGHT:
 #ifdef HOME_MODS
     case HOME_K:
-#if defined(BEAKLMU) || defined(BEAKLSP)
     case HOME_W:
-#else
-    case HOME_B:
-#endif
 #endif
       tap_mods(record, KC_LCTL);
       break;
     case GT_UP:
 #ifdef HOME_MODS
     case HOME_H:
-#if defined(BEAKLMU) || defined(BEAKLSP)
     case HOME_S:
-#else
-    case HOME_N:
-#endif
 #endif
       tap_mods(record, KC_LGUI);
       break;
@@ -368,8 +334,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
       tap_layer(record, _NUMBER);
       break;
-    case LT_LEFT:
-    case SP_BSPC:
+    case LT_BSPC:
       tap_layer(record, _SYMBOL);
       // LT (_SYMBOL, KC_LEFT) left right combination layer
       tri_layer(record, RIGHT, 0, 0, _SYMBOL, _LSHIFT, _MOUSE);
@@ -408,19 +373,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // LT (_MOUSE, KC_BSLS) left right combination layer, see #define LT_BSLS
       tri_layer(record, LEFT, 0, 0, _MOUSE, _SYMBOL, _MOUSE);
       break;
-    case SL_LEFT:
+    case SL_DEL:
       tap_layer(record, _MOUSE);
-      // LT (_MOUSE, S(KC_LEFT)) left right combination layer
-      tri_layer(record, RIGHT, SHIFT, KC_LEFT, _MOUSE, _LSHIFT, _MOUSE);
-      break;
-    case SP_DEL:
-      tap_layer(record, _MOUSE);
-      // LT (_MOUSE, S(KC_LEFT)) left right combination layer
+      // LT (_MOUSE, S(KC_DEL)) left right combination layer
       tri_layer(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSHIFT, _MOUSE);
       break;
     case SL_PIPE:
-      // LT (_ADJUST, S(KC_BSLS)) emulation
-      lt_shift(record, KC_BSLS, _ADJUST);
+      // LT (_EDIT, S(KC_BSLS)) emulation
+      lt_shift(record, KC_BSLS, _EDIT);
       break;
     case SL_TAB:
       // LT (_FNCKEY, S(KC_TAB)) emulation
