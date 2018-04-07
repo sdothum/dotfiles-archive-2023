@@ -43,15 +43,15 @@ m iosevka\\ proof     [server]
 # powerline-fonts-git
   ttf-courier-prime
   ttf-dejavu
-  ttf-dejavu-sans-mono-powerline-git
+# ttf-dejavu-sans-mono-powerline-git
 # ttf-fantasque-sans
-  ttf-font-awesome
+# ttf-font-awesome
 # ttf-google-fonts-git
 # ttf-inconsolata
 # ttf-ionicons
 # ttf-iosevka
 # ttf-iosevka-hooky
-  ttf-liberation
+# ttf-liberation
 # ttf-mac-fonts
   ttf-ms-fonts
 # ttf-noto-sans-ib

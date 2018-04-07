@@ -335,7 +335,7 @@ select.attachments {
 /* RESET ********************************************************************/
 
 html {
-  font:                12px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font:                12px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif;
 }
 
 :focus {
@@ -970,7 +970,7 @@ a:hover {
 #feed_title,
 #floatingTitle .title,
 .postHeader .postTitle a {
-  font:                normal normal bold 16px/16px Helvetica, sans-serif;
+  font:                normal normal bold 16px/16px 'Helvetica Neue',Helvetica sans-serif;
   text-rendering:      optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
@@ -1147,7 +1147,7 @@ a:hover {
 .cdm.expanded .title {
   display:             block;
   margin-bottom:       5px;
-  font:                normal normal bold 28px/33px Helvetica, sans-serif;
+  font:                normal normal bold 28px/33px 'Helvetica Neue',Helvetica sans-serif;
   text-rendering:      optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
@@ -1459,7 +1459,7 @@ div.articleNote {
 .postContent h6 {
   margin-top:          35px;
   margin-bottom:       14px;
-  font-family:         Helvetica, sans-serif;
+  font-family:         'Helvetica Neue',Helvetica sans-serif;
   font-weight:         bold;
   text-rendering:      optimizeLegibility;
 
@@ -1536,7 +1536,7 @@ div.articleNote {
 }
 
 .cdmFeedTitle .title {
-  font:                normal normal bold 18px/24px Helvetica, sans-serif;
+  font:                normal normal bold 18px/24px 'Helvetica Neue',Helvetica sans-serif;
   padding-right:       7px;
   text-rendering:      optimizeLegibility;
 

@@ -5,30 +5,31 @@
 
 # ........................................................................ Media
 
+# videos turn on blackboard so..
+trap 'restore root' EXIT
+
 # meta dmenu menu!
 media=$(previous media)
 while : ;do
   media=$(echo "animation\nanime\nkodi\nmovies\nnetflix\nseries\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
           rmenu 'Media' $media -no-custom) || exit
 
-  # videos turn on blackboard so..
-  trap 'restore root' EXIT
   mhistory media $media
 
   case $media in
     animation ) dmenu movies animation ;;
     anime     ) dmenu series anime ;;
-    ebooks    ) { dmenu ebooks ; break ;} ;;
-    kodi      ) kodi ;;
+    ebooks    ) dmenu ebooks ; break ;;
+    kodi      ) videomode on ; kodi ; videomode off ;;
     movies    ) dmenu movies ;;
     netflix   ) netflix ;;
-    nzb       ) { toggle term 'NZB' nzbget --connect ; break ;} ;;
+    nzb       ) toggle term 'NZB' nzbget --connect ; break ;;
     patricia  ) play /net/media/patricia/Patricia/Patricia.mp4 ;;
-    references) { dmenu references ; break ;} ;;
+    references) dmenu references ; break ;;
     series    ) dmenu series ;;
     #thought* ) play https://youtu.be/OBk3ynRbtsw ;;
     thought*  ) play /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
-    torrent   ) { toggle term 'Torrent' rtorrent ; break ;} ;;
+    torrent   ) toggle term 'Torrent' rtorrent ; break ;;
   esac
 done
 

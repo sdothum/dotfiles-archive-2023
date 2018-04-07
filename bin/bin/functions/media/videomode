@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ Media session
+
+usage() {
+  echo "usage: $(basename $0) on | off"
+  exit 1
+}
+
+V_DYNAMIC=/tmp/$(basename $0):dynamic
+V_NCURSES=/tmp/$(basename $0):ncurses
+
+case $1 in
+  on ) [ -e $DYNAMIC ] && { rm $DYNAMIC ; touch $V_DYNAMIC ;}
+       [ -e $NCURSES ] && touch $V_NCURSES
+       rm $MENU
+       touch $NCURSES
+       conky clock stop
+       blackboard ;;
+
+  off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC ; rm $V_DYNAMIC ;}
+       [ -e $V_NCURSES ] || { rm $NCURSES ; rm $V_NCURSES ;}
+       conky clock auto
+       # refresh panel title on close
+       focus window
+       pstat 'dmenu (media|movies|series)' || restore root ;;
+
+  *  ) usage ;;
+esac

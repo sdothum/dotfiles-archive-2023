@@ -362,10 +362,10 @@
         try                                 " trap snippet insertion interruption
           let g:prose = 1
           if a:proof == 0
-            let l:name = (&modified ? '' : '')
+            let l:name = (&modified ? g:modified_ind : '')
           else
             let l:name = expand('%:t' . (core#Prose() ? ':r' : ''))
-                \        . (&modified ? '      ' : '      ')
+                \        . (&modified ? '   ' . g:modified_ind . '   ' : '   ' . g:unmodified_ind . '   ')
                 \        . (core#Prose() ? info#WordCount() : col('.'))
           endif
           let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)

@@ -3,7 +3,7 @@
 /* RESET ********************************************************************/
 
 html {
-  font-family:               Helvetica, Arial, sans-serif !important;
+  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
 }
 
 div#notify.notify.notify_progress {
@@ -55,7 +55,7 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRow {
-  font-family:               bold 10px Helvetica, Arial, sans-serif !important;
+  font-family:               bold 10px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
   border-top-left-radius:    36px !important;
   border-bottom-left-radius: 36px !important;
   margin-left:               5px !important;
@@ -183,7 +183,7 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 #headlines-toolbar > .r span#cancel_search {
-  font-family:               Helvetica, Arial, sans-serif !important;
+  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
   font-size:                 12px !important;
   text-align:                right !important;
   margin-left:               10px !important;
@@ -192,7 +192,7 @@ img[src*="images/indicator_tiny.gif"] {
 #feed_title,
 #floatingTitle .title,
 .postHeader .postTitle a {
-  font:                      normal 12px Helvetica, Arial, sans-serif !important;
+  font:                      normal 12px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
 }
 
 #feed_title,
@@ -232,7 +232,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 .cdm.expandable.active .title,
 .cdm.expanded .title {
-  font:                      bold 18px Helvetica, Arial, sans-serif !important;
+  font:                      bold 18px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
   color:                     #b5423f !important;
 }
 
@@ -279,7 +279,7 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 .hlFeed a {
-  font:                      11px Helvetica, Arial, sans-serif !important;
+  font:                      11px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
 }
 
 .cdm.expanded:hover + .cdm.expanded {
@@ -385,14 +385,14 @@ span.updated {
 /* articles - common */
 .cdm .title,
 .hlTitle {
-  font:                      bold 14px Helvetica, Arial, sans-serif !important;
+  font:                      bold 14px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
   color:                     #b5423f !important;
 }
 
 .cdm .cdmExcerpt,
 .cdm.expandable .author,
 .hlTitle .contentPreview {
-  font:                      13px Helvetica, Arial, sans-serif !important;
+  font:                      13px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
   line-height:               1.6 !important;
   color:                     #555 !important;
 }
@@ -469,7 +469,7 @@ span.updated {
 .postContent h5,
 .cdmContentInner h6,
 .postContent h6 {
-  font-family:               Helvetica, Arial, sans-serif !important;
+  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
 }
 
 .hlContent .contentPreview {
@@ -483,7 +483,7 @@ span.updated {
 
 /* extras */
 .cdmFeedTitle .title {
-  font-family:               Helvetica, Arial, sans-serif !important;
+  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
 }
 
 /* PREFERENCES **************************************************************/

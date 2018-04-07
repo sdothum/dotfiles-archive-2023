@@ -67,25 +67,15 @@ if [ ! -s $cache ] || [ $1 ] ;then
   [ $1 ] && exit
 fi
 
-mobi() {
-  mobi=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.mobi|")
-  mobi=$(find $library -regex "$mobi")
+file() {
+  path=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2/\1( \\\\(.*)*\.$1|")
+  find $library -regextype egrep -regex "$path"
 }
 
-epub() {
-  epub=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.epub|")
-  epub=$(find $library -regex "$epub")
-}
-
-azw3() {
-  azw3=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.azw3|")
-  azw3=$(find $library -regex "$azw3")
-}
-
-azw() {
-  azw=$(echo $book | sed -r "s|^(.*)  *${SEP}  *(.*)|.*\2.*\1.*\.azw|")
-  azw=$(find $library -regex "$azw")
-}
+mobi() { mobi=$(file mobi) ;}
+epub() { epub=$(file epub) ;}
+azw3() { azw3=$(file azw3) ;}
+azw()  { azw=$(file azw) ;}
 
 # ..................................................................... E-reader
 
@@ -100,6 +90,7 @@ while : ;do
   if [ -z "$book" ] ;then
     if [ "$author" ] ;then
       unset author
+      unset matching
       continue
     else
       exit
@@ -112,13 +103,13 @@ while : ;do
   author="${book#*$SEP } "
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
-  unset mobi epub azw3
+  unset mobi epub azw3 azw
 
-  azw3
-  [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || azw ;} ;}
+  azw3 ; [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || azw ;} ;}
   file=$azw3$mobi$epub$azw
 
-  while action=$(echo "read\nedit\nkindle" | rmenu "$title" -no-custom) || break ;do
+  [ -d $kindle ] && options='kindle\nedit\nread' || options='read\nedit\nkindle'
+  while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do
     case $action in
       read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
               [ $focus ] || focus frame && focus=true
@@ -158,6 +149,8 @@ while : ;do
     esac
     break
   done
+  # show list of author's books next
+  export matching=normal
 done
 
 # vim: set ft=sh: #

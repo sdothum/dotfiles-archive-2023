@@ -14,6 +14,7 @@
 # Note:
 #   - Persistent ncurses mode set with ~/.ncurses, see toggle ncurses
 #   - Temporary ncurses mode set with variable TERMINAL, see bin/dmenu
+#   - rofi matching method can be set with env variable "matching"
 
 usage() {
   echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"
@@ -127,7 +128,7 @@ if [ $display ] ;then
     [ -n "$input" ]
   else
     input=$(sed "s/^/$indent/" |
-            eval rofi -matching fuzzy \
+            eval rofi -matching ${matching:-fuzzy} \
                       -monitor $display \
                       -bw 0 \
                       -color-enabled \

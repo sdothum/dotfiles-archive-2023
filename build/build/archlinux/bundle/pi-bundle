@@ -76,7 +76,7 @@ d ? preload
 # terminus-font-ll2-td1
   ttf-courier-prime
   ttf-dejavu
-  ttf-dejavu-sans-mono-powerline-git
+# ttf-dejavu-sans-mono-powerline-git
   ttf-font-awesome
 # ttf-liberation
   ttf-ms-fonts
@@ -223,6 +223,7 @@ d ? xtitle-git
 = editors
 = ▔▔▔▔▔▔▔
   ctags
+  python-proselint
   texlive-core
   texlive-latexextra
 
@@ -248,6 +249,7 @@ g term-ansicolor
 = video players
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔
   omxplayer-git
+  youtube-dl
 
 
 = mail
@@ -285,6 +287,35 @@ d ? vimb
 = ▔▔▔▔▔▔▔▔▔▔
 # pixelserv
 
+
+= astronomy
+= ▔▔▔▔▔▔▔▔▔
+d " add armv7h to arch in pkgbuild
+d ? wego-git
+
+
+= dictionaries
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  aiksaurus
+  dictd
+  dict-wn
+m dict-moby-thesaurus
+  hunspell
+  hunspell-en
+
+
+= keyboard
+= ▔▔▔▔▔▔▔▔
+  plover
+
+
+= productivity
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+d " add armv7h to arch in pkgbuild
+d ? amphetype-svn
+  remind
+
+
 = viewers
 = ▔▔▔▔▔▔▔
   feh
@@ -298,22 +329,9 @@ d ? vimb
   kodi-rpi
 
 
-= applications
+= productivity
 = ▔▔▔▔▔▔▔▔▔▔▔▔
-  aiksaurus
-d " add armv7h to arch in pkgbuild
-d ? amphetype-svn
   calc
-  dictd
-  dict-wn
-m dict-moby-thesaurus
-  hunspell
-  hunspell-en
-  python-proselint
-  remind
-  youtube-dl
-d " add armv7h to arch in pkgbuild
-d ? wego-git
 
 
 = network

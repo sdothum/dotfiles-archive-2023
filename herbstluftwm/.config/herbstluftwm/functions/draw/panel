@@ -20,7 +20,6 @@ pstat "^lemonbar -d -n lemonbar:$fifo " && exit
 # panel fonts
 # ICON_FONT=FontAwesome
 PANEL_FONT='Iosevka'
-UTF8_FONT='DejaVu Sans Mono for Powerline'
 PANEL_UNDERLINE=2
 
 # tic indicator: none (unset), blink, circle, square
@@ -324,7 +323,7 @@ cat $PANEL_FIFO:$fifo \
   | lemonbar -d -n "lemonbar:$fifo" \
              -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
              -u $PANEL_UNDERLINE \
-             -f "$PANEL_FONT:size=$fontsize" -f "$UTF8_FONT:size=$utfsize" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+             -f "$PANEL_FONT:size=$fontsize" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #
