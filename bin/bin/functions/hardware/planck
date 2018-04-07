@@ -20,8 +20,7 @@ CONFIG=$KEYMAP/config.h
 MAKEFILE=$KEYMAP/Makefile
 PRIVATE=$KEYMAP/private_string.h
 
-# gcc #include
-CPATH=$KEYMAP/common
+export CPATH=$KEYMAP/common
 
 [ $1 ] || usage
 keymap=$1
@@ -35,7 +34,7 @@ fi
 
 # update keymap from stow repo
 mkdir $KEYMAP 2>/dev/null
-cp -f $HOME/stow/planck/${KEYMAP#$HOME/}/* $KEYMAP/
+rsync -avq -KL --delete --exclude .deprecated $HOME/stow/planck/${KEYMAP#$HOME/}/* $KEYMAP/
 
 # default keymap
 case $1 in
@@ -72,7 +71,7 @@ fi
 
 cd $QMK
 sudo make planck:$keymap:clean
-[ "$1" = dfu ] && sudo make planck:$keymap:dfu || sudo make planck:$keymap
+[ "$1" = dfu ] && sudo CPATH=$CPATH make planck:$keymap:dfu || make planck:$keymap
 sudo chown -R $USER:users $QMK
 
 # vim: set ft=sh: #

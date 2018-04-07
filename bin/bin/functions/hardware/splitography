@@ -14,7 +14,7 @@ usage() {
 KEYMAPS='DEFAULT'
 
 ROOT=$HOME
-# ROOT=/net/depot
+ROOT=/net/depot
 QMK=$ROOT/qmk_firmware
 SPLITOGRAPHY=$QMK/keyboards/splitography
 KEYMAP=$SPLITOGRAPHY/keymaps/$1
@@ -22,8 +22,7 @@ CONFIG=$KEYMAP/config.h
 MAKEFILE=$KEYMAP/Makefile
 PRIVATE=$KEYMAP/private_string.h
 
-# gcc #include
-CPATH=$KEYMAP/common
+export CPATH=$KEYMAP/common
 
 [ $1 ] || usage
 keymap=$1
@@ -36,8 +35,7 @@ fi
 
 # update keymap from stow repo
 mkdir -p $KEYMAP 2>/dev/null
-cp -f $HOME/stow/splitography/${SPLITOGRAPHY#$ROOT/}/* $SPLITOGRAPHY/ 2>/dev/null
-cp -f $HOME/stow/splitography/${KEYMAP#$ROOT/}/* $KEYMAP/
+rsync -avq -KL --delete --exclude .deprecated $HOME/stow/splitography/${SPLITOGRAPHY#$ROOT/}/* $SPLITOGRAPHY/ 2>/dev/null
 
 # steno (mouse may need to be mandisabled in config.h)
 if [ "$1" = steno ] ;then
@@ -62,7 +60,7 @@ esac
 
 cd $QMK
 sudo make splitography:$keymap:clean
-[ "$1" = dfu ] && sudo make splitography:$keymap:dfu || sudo make splitography:$keymap
+[ "$1" = dfu ] && sudo CPATH=$CPATH make splitography:$keymap:dfu || make splitography:$keymap
 sudo chown -R $USER:users $QMK
 
 # vim: set ft=sh: #
