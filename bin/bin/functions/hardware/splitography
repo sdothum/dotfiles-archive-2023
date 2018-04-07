@@ -22,6 +22,9 @@ CONFIG=$KEYMAP/config.h
 MAKEFILE=$KEYMAP/Makefile
 PRIVATE=$KEYMAP/private_string.h
 
+# gcc #include
+CPATH=$KEYMAP/common
+
 [ $1 ] || usage
 keymap=$1
 shift
