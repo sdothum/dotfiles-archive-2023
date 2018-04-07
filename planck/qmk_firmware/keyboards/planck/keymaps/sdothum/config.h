@@ -44,7 +44,7 @@
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
 #define BEAKL8TX
 
-// sync app with window manager keybind hook defined in plover_keymap.h
-#define PLOVER_KEYMAP
+// sync app with window manager keybind hook defined in plover_keybind.h
+#define PLOVER_KEYBIND
 
 #endif
