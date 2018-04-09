@@ -131,6 +131,11 @@
       " adjust all splits to the same size
       noremap <leader>=           <C-w>=
 
+      nnoremap <Up>               :resize +5<CR>
+      nnoremap <Down>             :resize -5<CR>
+      nnoremap <Left>             :vertical resize -5<CR>
+      nnoremap <Right>            :vertical resize +5<CR>
+
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
@@ -145,7 +150,7 @@
       noremap <C-Up>              <C-w>k
       noremap <C-Down>            <C-w>j
       " switch windows
-      noremap <C-w>               <C-w><C-w>
+      " noremap <C-w>             <C-w><C-w>
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

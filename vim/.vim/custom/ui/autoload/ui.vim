@@ -362,14 +362,16 @@
         try                                 " trap snippet insertion interruption
           let g:prose = 1
           if a:proof == 0
-            let l:name = (&modified ? g:modified_ind : '')
+            let l:info = (&modified ? g:modified_ind : '')
+            let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
+            return l:leader . l:info
           else
-            let l:name = expand('%:t' . (core#Prose() ? ':r' : ''))
-                \        . (&modified ? '   ' . g:modified_ind . '   ' : '   ' . g:unmodified_ind . '   ')
-                \        . (core#Prose() ? info#WordCount() : col('.'))
+            let l:name = expand('%:t' . (core#Prose() ? ':r' : '')) . '   '
+            " fixed center point on file status
+            let l:leader = repeat(' ', (winwidth(0) / 2) - strlen(l:name))
+            let l:info = (&modified ? g:modified_ind : g:unmodified_ind) . '   ' . (core#Prose() ? info#WordCount() : col('.'))
+            return l:leader . l:name . l:info
           endif
-          let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
-          return l:leader . l:name
         catch
         endtry
       endfunction

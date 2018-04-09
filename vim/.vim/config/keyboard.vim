@@ -10,13 +10,6 @@
       let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
       let g:mapleader = "\<Space>"
 
-      " unshift command mode
-      " nnoremap ; :
-      " vnoremap ; :
-      " shift (not applied as requires global usage of noremap for :command)
-      " nnoremap : ;
-      " vnoremap : ;
-
       augroup kbd
         autocmd!
       augroup END

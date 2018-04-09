@@ -5,7 +5,7 @@ conky.config = {
 	default_shade_color = '#000000',
 	double_buffer = true,
 	draw_shades = true,
-	font = 'Noto Mono:size=18',
+	font = 'Noto Sans Mono:size=18',
 	gap_x = 0,
 	gap_y = 0,
   maximum_width = 1200,

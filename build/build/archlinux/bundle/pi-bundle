@@ -33,7 +33,6 @@ d ? preload
   ack
 # ripgrep
   stow
-  the_silver_searcher
 
 
 = file compression
@@ -59,6 +58,14 @@ d ? preload
 = info screens
 = ▔▔▔▔▔▔▔▔▔▔▔▔
   neofetch
+
+
+= shell tools
+= ▔▔▔▔▔▔▔▔▔▔▔
+  fzf
+  pv
+  ripgrep
+  the_silver_searcher
 
 
 = cups printing

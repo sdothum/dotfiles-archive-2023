@@ -847,9 +847,9 @@ a:hover {
   -webkit-transition:  color .3s;
 }
 
-#feeds-holder .counterNode.aux {
-  background:          #666;
-}
+/* #feeds-holder .counterNode.aux { */
+/*   background:          #666; */
+/* } */
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
   background:          #AEE239;

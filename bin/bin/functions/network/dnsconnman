@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Connect
+
+connect && exit
+
+trace 'Re-establishing dns..'
+stopd connman
+restartd dnsmaasq
+startd connman
+
+# vim: set ft=sh: #

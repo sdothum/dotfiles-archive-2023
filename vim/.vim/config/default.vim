@@ -110,20 +110,16 @@
       nmap     <Tab>      %
       vmap     <Tab>      %
       " disable magic and case sensitivity
-      cmap     %%         \M
+      cmap     %%         \v
       cmap     ^^         \C
 
       " clear search highlight
       nmap     <silent>\  :noh<CR>
 
-      " repeat latest f,t,F,T see modal searching remaps above
-      nnoremap ,,         ;
-      vnoremap ,,         ;
-
     " .................................................................. Replace
 
-      nmap     %%         :%s
-      vmap     %%         :s
+      nmap     %%         :%s,\v
+      vmap     %%         :s,\v
 
     " ........................................................... Tab completion
 

@@ -40,8 +40,6 @@ a package-query
   dash
   figlet
   fish
-  fzf
-  pv
 
 
 = x11 drivers
