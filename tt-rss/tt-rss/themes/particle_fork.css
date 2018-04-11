@@ -62,12 +62,20 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected {
-  background:                #871c1c !important;
-  color:                     #fdf6e3 !important;
-  /* background:                #eee8d5 !important; */
-  /* border-style:              solid !important; */
-  /* border-width:              1px 0 1px 1px !important; */
-  /* border-color:              #b5423f !important; */
+  /* background:                #871c1c !important; */
+  /* color:                     #fdf6e3 !important; */
+  background:                #eee8d5 !important;
+  background:                #fdf6e3 !important;
+  color:                     #2a363b !important;
+  border-style:              solid !important;
+  border-width:              1px 0 1px 1px !important;
+  border-color:              #b5423f !important;
+  transition:                background 0s linear;
+
+  -webkit-transition:        background 0s linear;
+  -moz-transition:           background 0s linear;
+  -ms-transition:            background 0s linear;
+  -o-transition:             background 0s linear;
 }
 
 #feeds-holder .dijitTreeLabel.Unread {
@@ -142,15 +150,17 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected .counterNode {
-  background:                #871c1c !important;
-  color:                     #e9cb88 !important;
-  /* color:                     #b5423f !important; */
-  /* background:                #eee8d5 !important; */
+  /* background:                #871c1c !important; */
+  /* color:                     #e9cb88 !important; */
+  color:                     #b5423f !important;
+  background:                #eee8d5 !important;
+  background:                #fdf6e3 !important;
 }
 
 #feeds-holder .dijitTreeRowSelected:hover .counterNode {
-  background:                #c62929 url('particle_images/noise.png') 0 repeat !important;
-  color:                     #dfd4b1 !important;
+  /* background:                #c62929 url('particle_images/noise.png') 0 repeat !important; */
+  /* color:                     #dfd4b1 !important; */
+  background:                #fdf6e3 !important;
 }
 
 /* #feeds-holder .dijitTreeRow:hover .counterNode.aux { */
@@ -187,8 +197,9 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected:hover {
-  background:                #c62929 url('particle_images/noise.png') 0 repeat !important;
-  color:                     #ffffff !important;
+  /* background:                #c62929 url('particle_images/noise.png') 0 repeat !important; */
+  /* color:                     #ffffff !important; */
+  background:                #fdf6e3 !important;
 }
 
 img[src*="images/indicator_tiny.gif"] {
