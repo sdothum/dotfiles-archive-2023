@@ -362,9 +362,7 @@
         try                                 " trap snippet insertion interruption
           let g:prose = 1
           if a:proof == 0
-            let l:info = (&modified ? g:modified_ind : '')
-            let l:leader = repeat(' ', (winwidth(0) - strlen(l:name)) / 2 + 2)
-            return l:leader . l:info
+            return &modified ? repeat(' ', winwidth(0) / 2) . g:modified_ind : ''
           else
             let l:name = expand('%:t' . (core#Prose() ? ':r' : '')) . '   '
             " fixed center point on file status

@@ -64,6 +64,10 @@ div#notify.notify.notify_progress {
 #feeds-holder .dijitTreeRowSelected {
   background:                #871c1c !important;
   color:                     #fdf6e3 !important;
+  /* background:                #eee8d5 !important; */
+  /* border-style:              solid !important; */
+  /* border-width:              1px 0 1px 1px !important; */
+  /* border-color:              #b5423f !important; */
 }
 
 #feeds-holder .dijitTreeLabel.Unread {
@@ -112,10 +116,10 @@ div#notify.notify.notify_progress {
 
 #feeds-holder .counterNode {
   color:                     #b5423f !important;
-  background:                #eee8d5;
+  background:                #eee8d5 !important;
   font-size:                 10px !important;
   border-radius:             10px !important;
-  margin:                    1px 0 2px 9px !important;
+  margin:                    1px 0 2px 7px !important;
   padding:                   1px 6px 0 7px !important;
   transition:                color 0s;
 
@@ -140,6 +144,8 @@ div#notify.notify.notify_progress {
 #feeds-holder .dijitTreeRowSelected .counterNode {
   background:                #871c1c !important;
   color:                     #e9cb88 !important;
+  /* color:                     #b5423f !important; */
+  /* background:                #eee8d5 !important; */
 }
 
 #feeds-holder .dijitTreeRowSelected:hover .counterNode {
@@ -347,7 +353,8 @@ img[src*="images/indicator_tiny.gif"] {
 .cdm.expandable .cdmHeader,
 .hl {
   padding-top:               0 !important;
-  padding-bottom:            11px !important;
+  /* padding-bottom:            11px !important; */
+  padding-bottom:            5px !important;
 }
 
 .cdm.expandable.active .cdmHeader {

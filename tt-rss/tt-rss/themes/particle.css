@@ -9,8 +9,8 @@
 
 #feeds-holder .dijitTreeRow {
   font-size:      12px !important;
-  padding:        6px 15px 5px 0 !important;
-  margin:         -10px 0 22px !important;
+  padding:        5px 15px 4px 0 !important;
+  margin:         -9px 0 21px !important;
 }
 
 #feeds-holder .dijitTreeLabel {
@@ -148,7 +148,7 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:        '● gravit○n' !important;
+  content:        '∙● gravit○n' !important;
   font:           22px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
   color:          #871c1c !important;
   text-shadow:    0 1px 1px #fff !important;

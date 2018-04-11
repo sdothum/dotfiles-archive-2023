@@ -603,6 +603,16 @@ void clear_tt(void)
 // txbolt plover run state
 static uint8_t plover = 0;
 
+void toggle_plover(uint8_t state)
+{
+  if (plover != state) {
+#ifdef PLOVER_KEYBIND
+#include "plover_keybind.h"
+#endif
+    plover = state;
+  }
+}
+
 void base_layer(void)
 {
 #ifdef AUDIO_ENABLE
@@ -615,16 +625,7 @@ void base_layer(void)
 #endif
   clear_layers();
   set_single_persistent_default_layer(_BASE);
-}
-
-void toggle_plover(uint8_t state)
-{
-  if (plover != state) {
-#ifdef PLOVER_KEYBIND
-#include "plover_keybind.h"
-#endif
-    plover = state;
-  }
+  toggle_plover(0);
 }
 
 void steno(keyrecord_t *record)

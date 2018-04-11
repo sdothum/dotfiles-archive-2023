@@ -59,7 +59,7 @@ luakit :: $HOME/.config/luakit/*.lua $HOME/.local/share/luakit/styles/custom.css
 mime :: $HOME/.mailcap $HOME/.local/share/applications/mimeapps.list
 mpd music :: $HOME/.mpdconf
 msmtp sendmail :: $HOME/.msmtprc
-mutt mail :: $HOME/.muttrc $HOME/.mutt/commonrc $HOME/.mutt/extensionsrc $HOME/.mutt/aliases
+mutt mail :: $HOME/.muttrc $HOME/.mutt/cogronrc $HOME/.mutt/extensionsrc $HOME/.mutt/aliases
 ncmpcpp music :: $HOME/.ncmpcpp/config
 nginx web :: $HOME/build/root/etc/nginx/sites-available/default
 nixos :: $HOME/build/nixos/nixos-*
@@ -67,7 +67,7 @@ notion :: $HOME/.notion/*.lua $HOME/bin/autostart
 nzb :: $HOME/.nzbget
 openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
-planck sdothum :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/sdothum/* $HOME/bin/functions/hardware/planck
+planck sdothum :: $(find  -L $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/sdothum -type f) $HOME/bin/functions/hardware/planck
 planck splitography :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/splitography/* $HOME/bin/functions/hardware/planck
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
@@ -78,12 +78,13 @@ rss feeds :: $HOME/.config/newsbeuter/config
 signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
-splitography default :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
-splitography beakl8 :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl8 -type f) $HOME/bin/functions/hardware/splitography
-splitography beaklmu :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu -type f) $HOME/bin/functions/hardware/splitography
-splitography beaklmz :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmz -type f) $HOME/bin/functions/hardware/splitography
-splitography dvorak :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f) $HOME/bin/functions/hardware/splitography
-splitography dvorakmu :: $(find $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f) $HOME/bin/functions/hardware/splitography
+splitography default :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
+splitography beakl8 :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl8 -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklmu :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklgr :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklgr -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklmz :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmz -type f) $HOME/bin/functions/hardware/splitography
+splitography dvorak :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f) $HOME/bin/functions/hardware/splitography
+splitography dvorakmu :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f) $HOME/bin/functions/hardware/splitography
 subtle :: $HOME/.config/subtle/subtle.rb
 sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
