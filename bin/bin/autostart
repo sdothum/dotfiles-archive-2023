@@ -49,7 +49,6 @@ fi
 pstat urxvtd || urxvtd -q -o -f &
 # pstat xflux || xflux -l 45.4 -g -75.7
 server && dmenu movies cache
-[ -e $WSYNC ] && wsync &
 if [ -e $AUTOCONNECT ] ;then
   killall autoconnect
   term 'Autoconnect' autoconnect

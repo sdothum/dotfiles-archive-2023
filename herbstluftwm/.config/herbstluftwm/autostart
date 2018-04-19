@@ -125,6 +125,6 @@ focus window
 # pseudo screen saver
 # cpu arm || conky clock auto
 conky clock auto
-rm $NCURSES
+rm -f $NCURSES
 
 # vim: set ft=sh: #

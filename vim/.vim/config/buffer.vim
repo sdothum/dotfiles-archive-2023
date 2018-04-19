@@ -71,14 +71,18 @@
 
     " ...................................................... Buffer close / save
 
-      " close buffer
-      nmap <silent><leader>d      :silent bdelete!<CR>
-      " Fast saving
+      " close all other buffers (and newly created no name buffer)
+      command! Singleton %bd | e # | bd #
+
+      " (sudo) save
       nmap <silent><leader>w      :silent write!<CR>
-      " sudo save
       nmap <leader>W              :silent write !sudo tee % >/dev/null<CR>
       " (write and) close buffers
+      nmap <silent><leader>d      :silent bdelete!<CR>
+      nmap <silent><leader>dd     :%bd!<CR>
+      nmap <silent><leader>D      :silent Singleton<CR>
       nmap <silent><leader>ww     :silent wqall!<CR>
+      " discard quit
       nmap <silent><leader>qq     :silent qall!<CR>
 
       " pre-write formatting

@@ -23,7 +23,7 @@ trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 if cpu arm ;then
   # youtube playback on raspberry pi architecture is unsupported
   if echo $1 | grep -q http ;then
-    rm $youtube*
+    rm -f $youtube*
     # leverage cpu power of network server for download and media conversion
     term youtube-dl FLOAT SHELL "ditto youtube-dl "$1" && ssh $SERVER youtube-dl -o $youtube "$1""
     pwait "$youtube"

@@ -5,14 +5,13 @@
 
 # ........................................................................ Media
 
-# videos turn on blackboard so..
-trap 'restore root' EXIT
+video='play kodi netflix'
 
 # meta dmenu menu!
 media=$(previous media)
 while : ;do
   media=$(echo "animation\nanime\nkodi\nmovies\nnetflix\nseries\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
-          rmenu 'Media' $media -no-custom) || exit
+          rmenu 'Media' $media -no-custom) || break
 
   mhistory media $media
 
@@ -32,5 +31,9 @@ while : ;do
     torrent   ) toggle term 'Torrent' rtorrent ; break ;;
   esac
 done
+
+# videos turn on blackboard but wait for all video instances to end
+for i in $video ;do pstat "$i " && exit ;done
+restore root
 
 # vim: set ft=sh: #

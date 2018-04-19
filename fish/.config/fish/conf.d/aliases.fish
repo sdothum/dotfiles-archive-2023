@@ -110,7 +110,7 @@ alias dr 'dmenu - run'
 alias ds 'dmenu - scripts'
 alias nv 'nvpy'
 alias sd 'sdiff -b -E -W -w(tput cols)'
-alias vd 'gvimdiff --role=gvimdiff'
+alias vd 'rm -f $HOME/.session/follow_the_sun ; gvimdiff --role=gvimdiff'
 
 # .................................................................. Application
 

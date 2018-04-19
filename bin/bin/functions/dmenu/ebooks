@@ -115,12 +115,13 @@ while : ;do
               [ $focus ] || focus frame && focus=true
               FBReader "$file" ;;
 
-      edit  ) if grep -q "$book" $(history)/ebooks ;then
-                grep -v "$book" $(history)/ebooks >/tmp/ebooks
-                mv /tmp/ebooks $(history)/ebooks
+      edit  ) if grep -q "$book" $HISTORY/ebooks ;then
+                grep -v "$book" $HISTORY/ebooks >/tmp/ebooks
+                mv /tmp/ebooks $HISTORY/ebooks
               fi
               book=$(echo ${file%/*} | sed -r 's/([ ()])/\\\1/g')
-              term "$title" WAIT vifm "${book%/*}" "$book" ;;
+              term "$title" vifm "${book%/*}" "$book"
+              pwait "vifm .*$title" ;;
 
       kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
               if [ -z "$azw3" ] ;then

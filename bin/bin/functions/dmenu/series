@@ -80,8 +80,8 @@ while : ;do
   while : ;do
     # focus monitor menu originally presented on
     [ $monitor ] && herbstclient focus_monitor $monitor
-    # highlight most current episode viewed
-    [ $episode ] || episode=$(shows | grep "^$SEP " | tail -1)
+    # highlight last episode viewed
+    [ $episode ] || { [ -e "$playlist" ] && episode=$(head -1 "$playlist") || unset playlist ;}
     episode=$(shows | rmenu "$show" "$episode" -no-custom) || break
     [ "$episode" ] || break
 

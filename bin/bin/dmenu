@@ -71,10 +71,11 @@ if [ $(basename $0) = dmenu ] ;then
   is multihead || conky clock off
   if [ -f ${0%/dmenu}/functions/dmenu/$msg ] ;then
     case $msg in
+      media   |\
       scripts |\
       projects) ;;
 
-      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..' ; exit ;} ;;
+      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..' ; exit 1 ;} ;;
     esac
     shift
     . ${0%/dmenu}/functions/dmenu/$msg $@

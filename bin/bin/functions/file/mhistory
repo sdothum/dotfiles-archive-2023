@@ -6,10 +6,10 @@
 
 # ............................................................. Playback history
 
-# Usage: history < name | path > <string>  (update history with string)
+# Usage: mhistory <name | path> <string>  (update history with string)
 #        ** OR **
-#          .. | history <file> | ..  (append history content)
-# Note:  echo | history <file> | ..  (must use echo if not prepending content)
+#          .. | mhistory <file> | ..  (append history content)
+# Note:  echo | mhistory <file> | ..  (must use echo if not prepending content)
 #        <string> assumes no dmenu function has a valid null select value
 #
 #        Under dash, scripts can execute this command, but shells with in-built

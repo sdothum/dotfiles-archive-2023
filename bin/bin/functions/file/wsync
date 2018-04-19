@@ -96,7 +96,7 @@ case $1 in
       watch ;;
 
   -a) archive & ;;
-  -s) archive && { watchman shutdown-server ; systemd start syncthing@$USER ;} ;;
+  -s) archive && (watchman shutdown-server ; systemd start syncthing@$USER &) ;;
   -v) pstat syncthing || watch ;;
   * ) queue $@ && [ -e $WSYNC ] && archive & ;;
 esac

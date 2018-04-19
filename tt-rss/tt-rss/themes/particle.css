@@ -9,13 +9,13 @@
 
 #feeds-holder .dijitTreeRow {
   font-size:      12px !important;
-  padding:        5px 15px 4px 0 !important;
-  margin:         -9px 0 21px !important;
+  padding:        6px 15px 5px 0 !important;
+  margin:         12px 0 12px !important;
 }
 
 #feeds-holder .dijitTreeLabel {
   float:          right !important;
-  margin-right:   2px !important;
+  margin-right:   5px !important;
 }
 
 #feeds-holder #feedTree {
@@ -148,24 +148,19 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:        '∙● gravit○n' !important;
-  font:           22px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  content:        '●particle' !important;
+  font:           22px Helvetica, Arial, sans-serif !important;
   color:          #871c1c !important;
   text-shadow:    0 1px 1px #fff !important;
   letter-spacing: 2px !important;
   position:       fixed !important;
-  /* margin-top:     77px !important; */
-  /* margin-top:     163px !important; */
-  margin-top:     108px !important;         /* holder width b of golden ratio a+b  */
+  margin-top:     70px !important;
   width:          167px !important;
   text-align:     right !important;
 }
 
 #feeds-holder {
-  /* margin-top:     165px !important; */
-  /* margin-top:     273px !important; */
-  /* margin-top:     216px !important; */
-  margin-top:     197px !important;         /* holder width + title font size */
+  margin-top:     125px !important;
 }
 
 /* end of feed marker */
@@ -175,8 +170,8 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content:        'refresh ● gravit○n' !important;
-  font:           18px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  content:        'refresh●particle' !important;
+  font:           18px Helvetica, Arial, sans-serif !important;
   color:          #b5423f !important;
   text-shadow:    0 1px 1px #fff !important;
   letter-spacing: 1px !important;

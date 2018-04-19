@@ -103,6 +103,7 @@ d ? conky-lua-archers
   xclip
   xdotool
   xsel
+  xvkbd
 
 
 = window managers

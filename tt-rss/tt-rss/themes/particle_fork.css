@@ -3,7 +3,7 @@
 /* RESET ********************************************************************/
 
 html {
-  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font-family:               Helvetica, Arial, sans-serif !important;
 }
 
 div#notify.notify.notify_progress {
@@ -55,27 +55,15 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRow {
-  font-family:               bold 10px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font-family:               bold 10px Helvetica, Arial, sans-serif !important;
   border-top-left-radius:    36px !important;
   border-bottom-left-radius: 36px !important;
   margin-left:               5px !important;
 }
 
 #feeds-holder .dijitTreeRowSelected {
-  /* background:                #871c1c !important; */
-  /* color:                     #fdf6e3 !important; */
-  background:                #eee8d5 !important;
-  background:                #fdf6e3 !important;
-  color:                     #2a363b !important;
-  border-style:              solid !important;
-  border-width:              1px 0 1px 1px !important;
-  border-color:              #b5423f !important;
-  transition:                background 0s linear;
-
-  -webkit-transition:        background 0s linear;
-  -moz-transition:           background 0s linear;
-  -ms-transition:            background 0s linear;
-  -o-transition:             background 0s linear;
+  background:                #871c1c !important;
+  color:                     #fdf6e3 !important;
 }
 
 #feeds-holder .dijitTreeLabel.Unread {
@@ -88,85 +76,26 @@ div#notify.notify.notify_progress {
   padding-right:             16px !important;
 }
 
-/* #feeds-holder .counterNode { */
-/*   background:                #84ac96; */
-/*   font-size:                 10px !important; */
-/*   border-radius:             10px !important; */
-/*   margin:                    1px 0 2px 10px !important; */
-/*   padding:                   1px 6px 0 7px !important; */
-/* } */
-/*  */
-/* #feeds-holder .counterNode.aux { */
-/*   background:                #871c1c !important; */
-/* } */
-/*  */
-/* #feeds-holder .dijitTreeRow:hover .counterNode { */
-/*   color:                     #2A363B !important; */
-/* } */
-/*  */
-/* #feeds-holder .dijitTreeRowSelected .counterNode { */
-/*   background:                #eee8d5 !important; */
-/*   color:                     #871c1c !important; */
-/* } */
-/*  */
-/* #feeds-holder .dijitTreeRowSelected:hover .counterNode { */
-/*   [> background:             #2aa198 !important; <] */
-/*   [> color:                  #ffffff !important; <] */
-/*   background:                #AEE239 !important; */
-/*   color:                     #2A363B !important; */
-/* } */
-/*  */
-/* #feeds-holder .dijitTreeRow:hover .counterNode.aux { */
-/*   [> background:             #c62929 !important; <] */
-/*   background:                #c62929 !important; */
-/*   color:                     #ffffff !important; */
-/* } */
-
 #feeds-holder .counterNode {
-  color:                     #b5423f !important;
-  background:                #eee8d5 !important;
+  background:                #84ac96;
   font-size:                 10px !important;
   border-radius:             10px !important;
-  margin:                    1px 0 2px 7px !important;
+  margin:                    1px 0 2px 10px !important;
   padding:                   1px 6px 0 7px !important;
-  transition:                color 0s;
-
-  -webkit-transition:        color 0s;
 }
 
 #feeds-holder .counterNode.aux {
-  background:                #eee8d5 !important;
+  background:                #871c1c !important;
 }
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
-  background:                #dfd4b1 url('particle_images/noise.png') 0 repeat !important;
-  color:                     #871c1c !important;
-  transition:                background 0s linear;
-
-  -webkit-transition:        background 0s linear;
-  -moz-transition:           background 0s linear;
-  -ms-transition:            background 0s linear;
-  -o-transition:             background 0s linear;
+  color:                     #2A363B !important;
 }
 
 #feeds-holder .dijitTreeRowSelected .counterNode {
-  /* background:                #871c1c !important; */
-  /* color:                     #e9cb88 !important; */
-  color:                     #b5423f !important;
   background:                #eee8d5 !important;
-  background:                #fdf6e3 !important;
+  color:                     #871c1c !important;
 }
-
-#feeds-holder .dijitTreeRowSelected:hover .counterNode {
-  /* background:                #c62929 url('particle_images/noise.png') 0 repeat !important; */
-  /* color:                     #dfd4b1 !important; */
-  background:                #fdf6e3 !important;
-}
-
-/* #feeds-holder .dijitTreeRow:hover .counterNode.aux { */
-/*   background:                #dfd4b1 url('particle_images/noise.png') 0 repeat !important; */
-/*   color:                     #871c1c !important; */
-/* } */
 
 #feeds-holder .dijitTreeExpando {
   margin:                    -1px -16px 1px 11px !important;
@@ -197,9 +126,21 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected:hover {
-  /* background:                #c62929 url('particle_images/noise.png') 0 repeat !important; */
-  /* color:                     #ffffff !important; */
-  background:                #fdf6e3 !important;
+  background:                #c62929 url('particle_images/noise.png') 0 repeat !important;
+  color:                     #ffffff !important;
+}
+
+#feeds-holder .dijitTreeRowSelected:hover .counterNode {
+  /* background:             #2aa198 !important; */
+  /* color:                  #ffffff !important; */
+  background:                #AEE239 !important;
+  color:                     #2A363B !important;
+}
+
+#feeds-holder .dijitTreeRow:hover .counterNode.aux {
+  /* background:             #c62929 !important; */
+  background:                #c62929 !important;
+  color:                     #ffffff !important;
 }
 
 img[src*="images/indicator_tiny.gif"] {
@@ -242,7 +183,7 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 #headlines-toolbar > .r span#cancel_search {
-  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font-family:               Helvetica, Arial, sans-serif !important;
   font-size:                 12px !important;
   text-align:                right !important;
   margin-left:               10px !important;
@@ -251,7 +192,7 @@ img[src*="images/indicator_tiny.gif"] {
 #feed_title,
 #floatingTitle .title,
 .postHeader .postTitle a {
-  font:                      normal 12px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:                      normal 12px Helvetica, Arial, sans-serif !important;
 }
 
 #feed_title,
@@ -291,7 +232,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 .cdm.expandable.active .title,
 .cdm.expanded .title {
-  font:                      bold 18px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:                      bold 18px Helvetica, Arial, sans-serif !important;
   color:                     #b5423f !important;
 }
 
@@ -338,7 +279,7 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 .hlFeed a {
-  font:                      11px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:                      11px Helvetica, Arial, sans-serif !important;
 }
 
 .cdm.expanded:hover + .cdm.expanded {
@@ -364,8 +305,7 @@ img[src*="images/indicator_tiny.gif"] {
 .cdm.expandable .cdmHeader,
 .hl {
   padding-top:               0 !important;
-  /* padding-bottom:            11px !important; */
-  padding-bottom:            5px !important;
+  padding-bottom:            11px !important;
 }
 
 .cdm.expandable.active .cdmHeader {
@@ -445,14 +385,14 @@ span.updated {
 /* articles - common */
 .cdm .title,
 .hlTitle {
-  font:                      bold 14px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:                      bold 14px Helvetica, Arial, sans-serif !important;
   color:                     #b5423f !important;
 }
 
 .cdm .cdmExcerpt,
 .cdm.expandable .author,
 .hlTitle .contentPreview {
-  font:                      13px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:                      13px Helvetica, Arial, sans-serif !important;
   line-height:               1.6 !important;
   color:                     #555 !important;
 }
@@ -529,7 +469,7 @@ span.updated {
 .postContent h5,
 .cdmContentInner h6,
 .postContent h6 {
-  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font-family:               Helvetica, Arial, sans-serif !important;
 }
 
 .hlContent .contentPreview {
@@ -543,7 +483,7 @@ span.updated {
 
 /* extras */
 .cdmFeedTitle .title {
-  font-family:               'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font-family:               Helvetica, Arial, sans-serif !important;
 }
 
 /* PREFERENCES **************************************************************/

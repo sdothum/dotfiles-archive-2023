@@ -14,10 +14,6 @@ if [ -s $HOME/build/archlinux/post_install/$1 ] ;then
   . $HOME/build/archlinux/post_install/$1
 fi
 
-# apply user specific configuration
-if [ -s $HOME/build/archlinux/user_install/$1 ] ;then
-  arch && echo "${__GREEN}@ user_install/$1${NOCOLOR}"
-  . $HOME/build/archlinux/user_install/$1
-fi
+user_install $1
 
 # vim: set ft=sh: #

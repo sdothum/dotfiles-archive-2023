@@ -45,7 +45,6 @@ exists() {
 # ............................................................. Per monitor blur
 
 [ "$1" = toggle ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR ;}
-
 # occupied or empty desktop, setroot record structure:
 # 1: occupied (blurred image)
 # 0: empty (raw image)
@@ -204,7 +203,7 @@ if [ -e $HOME/.conkyrc ] ;then
       term 'Theme' STACK SHELL walpick
       pwait walpick
     fi
-    set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f1)
+    set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
   fi
 fi
 

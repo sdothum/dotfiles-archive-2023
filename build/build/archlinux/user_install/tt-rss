@@ -5,11 +5,14 @@
 
 # ....................................................................... tt-rss
 
+theme=axiom
+
 # override tt-rss theme, in lieu of selectable themes
 # [ -e /srv/http/tt-rss/themes/default.css.original ] && exit
 original /srv/http/tt-rss/themes/compact.css
-sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/particle_images /srv/http/tt-rss/themes/
-sudo ln -sf $HOME/tt-rss/themes/particle.css /srv/http/tt-rss/themes/compact.css
+sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/*_images /srv/http/tt-rss/themes/
+for i in $HOME/tt-rss/themes/$theme*css ;do sudo ln -sfv $i /srv/http/tt-rss/themes/${i##*/} ;done
+sudo ln -sfv /srv/http/tt-rss/themes/$theme.css /srv/http/tt-rss/themes/compact.css
 sudo systemctl restart tt-rss
 
 # shorten special filter headings

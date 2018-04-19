@@ -68,7 +68,8 @@ nzb :: $HOME/.nzbget
 openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
 planck sdothum :: $(find  -L $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/sdothum -type f) $HOME/bin/functions/hardware/planck
-planck splitography :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/splitography/* $HOME/bin/functions/hardware/planck
+planck hiea :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/hiea/* $HOME/bin/functions/hardware/planck
+planck algr :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/algr/* $HOME/bin/functions/hardware/planck
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*
@@ -79,9 +80,11 @@ signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
 splitography default :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
+splitography hiea :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hiea -type f) $HOME/bin/functions/hardware/splitography
 splitography beakl8 :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl8 -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklmu :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklgr :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklgr -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklhi :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklhi -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklmz :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmz -type f) $HOME/bin/functions/hardware/splitography
 splitography dvorak :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f) $HOME/bin/functions/hardware/splitography
 splitography dvorakmu :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f) $HOME/bin/functions/hardware/splitography
@@ -91,14 +94,14 @@ sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
 thedarnedestthing web :: thedarnedestthing
-tinytinyrss ttrss :: /srv/http/tt-rss/themes/particle*.css
-tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/particle*.css
+tinytinyrss ttrss :: /srv/http/tt-rss/themes/axiom*.css
+tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/axiom*.css
 uzbl :: $HOME/.config/uzbl/config
 vim :: $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim') $HOME/.ctags
 vim settings :: $HOME/.vim/config/*.vim $HOME/.ctags
 vim functions :: $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
 vim snippets :: $HOME/.vim/snippets/*
-vimb :: $HOME/.config/vimb/bookmark $HOME/.config/vimb/config $HOME/.config/vimb/history $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css
+vimb :: $(find -L $HOME/.config/vimb -name config) $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css $HOME/.config/vimb/bookmark $HOME/.config/vimb/history
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/*tape.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
 www website :: $(find -L /srv/http/thedarnedestthing.com/application -regextype posix-extended -regex '.*(rb|slim)')

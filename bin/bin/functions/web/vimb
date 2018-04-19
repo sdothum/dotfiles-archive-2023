@@ -6,59 +6,39 @@
 
 # ...................................................................... Browser
 
-# Usage: vimb  [ embed | socket ] <url>, see vimbt
+# Usage: vimb <url>
 
 [ $1 ] && startpage="$@" || startpage='http://luna:8000/tt-rss/#f=39&c=1'
 
-size=$(fontsize)
-statusfont="set monospace-font-size $size"
-sslfont="set status-ssl-font=monospace $size"
-sslinvalidfont="set status-sslinvalid-font=monospace bold $size"
-inputfont="set input-font-normal=monospace $size"
-inputerrorfont="set input-font-error=monospace bold $size"
-completionfont="set completion-font=monospace $size"
+CONFIG=$HOME/.config/vimb
 
-font="--cmd='$statusfont'
-      --cmd='$sslfont'
-      --cmd='$sslinvalidfont'
-      --cmd='$inputfont'
-      --cmd='$inputerrorfont'
-      --cmd='$completionfont'
-"
+font=Iosevka
+size=$(fontsize)pt
+host=$(hostname)
+delay=3
 
-case $1 in
-  embed ) /usr/bin/vimb --cmd="$statusfont" \
-                        --cmd="$sslfont" \
-                        --cmd="$sslinvalidfont" \
-                        --cmd="$inputfont" \
-                        --cmd="$inputerrorfont" \
-                        --cmd="$completionfont" \
-                        --socket --dump --embed $2 >/tmp/vimb:socket 2>>/tmp/vimb.log ;;
+[ -e $CONFIG/$host ] && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
+[ $size = 10pt ]     && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 
-  socket) shift
-          echo -e ";$statusfont<CR>\
-                   ;$sslfont<CR>\
-                   ;$sslinvalidfont<CR>\
-                   ;$inputfont<CR>\
-                   ;$inputerrorfont<CR>\
-                   ;$completionfont<CR>\
-                   ;tabopen $@<CR>" |
-               socat - unix-connect:$(grep socket /tmp/vimb:socket) ;;
+mkdir $CONFIG/$host
+sed "s/;font:10pt [^;]*;/;font:$size $font;/" $CONFIG/config >$CONFIG/$host/config
+exec vimb
 
-  *    ) /usr/bin/vimb "$startpage" 2>>/tmp/vimb.log ;;
+# defunct substitution for version 2.x -c option
 
-  *    ) if cpu arm ;then
-           vimbt "$@"
-           focus instance VimbT
-         else
-           /usr/bin/vimb --cmd="$statusfont" \
-                         --cmd="$sslfont" \
-                         --cmd="$sslinvalidfont" \
-                         --cmd="$inputfont" \
-                         --cmd="$inputerrorfont" \
-                         --cmd="$completionfont" \
-                         "$startpage" 2>>/tmp/vimb.log
-         fi ;;
-esac
+/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &
+
+completion_css=":set completion\-css=color:#d3d0c8;background\-color:#393939;font:$size $font;"
+completion_hover_css=":set completion\-hover\-css=color:#d3d0c8;background\-color:#393939;font:$size $font;"
+completion_selected_css=":set completion\-selected\-css=color:#d3d0c8;background\-color:#515151;font:$size $font;"
+input_css=":set input\-css=color:#d3d0c8;background\-color:#393939;font:$size $font;"
+input_error_css=":set input\-error\-css=color:#f2777a;background\-color:#393939;font:$size $font;"
+status_css=":set status\-css=color:#ffcc66;background\-color:#393939;font:$size $font;"
+status_ssl_css=":set status\-ssl\-css=color:#99cc99;background\-color:#393939;font:$size $font;"
+status_ssl_invalid_css=":set status\-ssl\-invalid\-css=color:#f2777a;background\-color:#393939;font:$size $font;"
+
+sleep $delay
+# xvkbd -window Vimb -text ...
+xvkbd -text "$completion_css\r$completion_hover_css\r$completion_selected_css\r$input_css\r$input_error_css\r$status_css\r$status_ssl_css\r$status_ssl_invalid_css\r"
 
 # vim: set ft=sh: #

@@ -66,6 +66,8 @@
       let s:dfm_bg_dark         = s:gray1   " quantum dark background
       let s:dfm_vsplit_light    = s:rgb_15  " invisible split
       let s:dfm_vsplit_dark     = s:gray1   " invisible split
+      let s:dfm_folded_light    = s:gray5   " vimdiff fold
+      let s:dfm_folded_dark     = s:gray4   " vimdiff fold
 
       " cursor line
       let s:dfm_cursor_light    = '#20bbfc' " iA Writer
@@ -90,6 +92,7 @@
         execute 'let s:dfm_fg          = g:dfm_fg_'                     . &background
         execute 'let s:dfm_proof       = s:dfm_proof_'                  . &background
         execute 'let g:dfm_bg          = s:dfm_bg_'                     . &background
+        execute 'let s:dfm_folded      = s:dfm_folded_'                 . &background
         execute 'let s:dfm_vsplit      = s:dfm_vsplit_'                 . &background
         execute 'let s:dfm_cursor      = s:dfm_cursor_'                 . &background
         execute 'let s:dfm_bg_line     = s:dfm_bg_line_'                . &background
@@ -116,6 +119,7 @@
         execute 'highlight CommandCursor       guibg=' . ui#color('s:dfm_cursor_'  . l:background) . ' guifg=' . g:dfm_bg
         execute 'highlight IndentGuidesEven    guibg=' . ui#color('s:dfm_bg_line_' . l:background)
         execute 'highlight IndentGuidesOdd     guibg=' . ui#color('s:dfm_bg_'      . &background)
+        execute 'highlight Folded              guibg=' . s:dfm_folded                              . ' guifg=' . g:dfm_bg
         execute 'highlight VertSplit           guibg=' . s:dfm_vsplit                              . ' guifg=' . s:dfm_vsplit
         execute 'highlight ShowMarksHLl        guibg=' . g:dfm_bg
         execute 'highlight SignColumn          guibg=' . g:dfm_bg

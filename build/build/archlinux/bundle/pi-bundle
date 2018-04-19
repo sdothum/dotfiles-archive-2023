@@ -215,6 +215,7 @@ d ? xtitle-git
   xdotool
   xf86-input-keyboard
   xf86-input-mouse
+  xvkbd
 
 
 = file transfer

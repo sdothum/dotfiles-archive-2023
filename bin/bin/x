@@ -62,7 +62,9 @@ if console ;then
     fi
   fi
 
-  pstat startx || startx --
+  pstat startx && exit
+  cpu arm && { ifno 'sync with syncthing' && wsync || wsync -s ;}
+  startx --
 
   # suppress nfs messages to console when server is offline
   if [ -f /tmp/mount:nfs ] ;then
@@ -105,7 +107,7 @@ if console ;then
     xmonad      ) ;;
   esac
 
-  cpu arm && { ifno 'start syncthing' || wsync -s ;}
+  cpu arm && { pstat syncthing || { ifno 'start syncthing' || wsync -s ;};}
 else
   # already in X11 session
   ditto 'window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'

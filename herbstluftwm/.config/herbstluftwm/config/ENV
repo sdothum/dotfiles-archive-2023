@@ -80,7 +80,7 @@ export INVISIBLE='□'
 
 # focus aid, see focus border
 export FOCUS_WIDTH=5
-export BORDER_WIDTH=3
+export BORDER_WIDTH=2
 export NORMAL='#808080'
 
 # ........................................................... Margin adjustments
