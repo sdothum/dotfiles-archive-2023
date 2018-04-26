@@ -7,14 +7,14 @@
 # .............................................................. Draw background
 
 # Usage: draw root [ blank [<color>] | restore | save ]
-#        draw root [ select | shuffle | toggle | wallpaper ]
+#        draw root [ select | shuffle | blur | wallpaper ]
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
 #        draw root restore, restore background color
 #        draw root save, save background color
 #        draw root select, select default background and disable shuffling
 #        draw root shuffle, enable random background shuffling
-#        draw root toggle, toggle background blur mode
+#        draw root blur, toggle background blur mode
 #        draw root wallpaper, draw background
 
 # cpu arm && exit
@@ -44,7 +44,7 @@ exists() {
 
 # ............................................................. Per monitor blur
 
-[ "$1" = toggle ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR ;}
+[ "$1" = blur ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR ;}
 # occupied or empty desktop, setroot record structure:
 # 1: occupied (blurred image)
 # 0: empty (raw image)

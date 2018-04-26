@@ -6,7 +6,7 @@
 
 # ................................................................ watchman sync
 
-# Usage: wsync -a | -s | -v | [<path>]*
+# Usage: wsync [-a | -s | -v | [<path>]*]
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 SESSION=${SESSION:-$HOME/.session}
@@ -34,7 +34,7 @@ info() {
   name=$(echo $file | filter | sed "s|$HOME/stow/||")
   if [ -n "$name" ] ;then
     trace "$1 ${target}stow ${__YELLOW}$name" >>$LOG
-    notify "$1 ${target}stow" "$name"
+    notify X "$1 ${target}stow" "$name"
   fi
 }
 
@@ -73,7 +73,7 @@ watch() {
     cat $WATCH
   else
     # trap random watchman initialization flooding and reset watch queue
-    notify low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d ; s/^ *//g ; s/"//g ; s/,$//')"
+    notify X low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d ; s/^ *//g ; s/"//g ; s/,$//')"
     touch $IGNORE
     trap "rm -f $IGNORE" EXIT
     scan=true
@@ -86,18 +86,18 @@ watch() {
       # adjust for initialization latency
       [ $scan ] || { [ -s $WATCH ] || scan=true ;}
     done
-    notify 3 critical 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
+    notify X 3 critical 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
     >$WATCH
   fi
 }
 
 case $1 in
   '') cpu arm && pstat syncthing && systemd stop syncthing@$USER
-      watch ;;
+      watch & ;;
 
   -a) archive & ;;
-  -s) archive && (watchman shutdown-server ; systemd start syncthing@$USER &) ;;
-  -v) pstat syncthing || watch ;;
+  -s) archive && (watchman shutdown-server ; pstat syncthing || systemd start syncthing@$USER &) ;;
+  -v) pstat syncthing || watch & ;;
   * ) queue $@ && [ -e $WSYNC ] && archive & ;;
 esac
 

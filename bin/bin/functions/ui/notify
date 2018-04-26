@@ -9,7 +9,7 @@
 # ..................................................................... Notifier
 
 usage() {
-  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | cron | low | normal | critical | blackboard]* [<color>] \"<summary>\" [[<color>] \"<body>\"]"
+  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | X | low | normal | critical | blackboard]* [<color>] \"<summary>\" [[<color>] \"<body>\"]"
   exit 1
 }
 
@@ -21,7 +21,7 @@ while : ;do
     # long form required for handling numeric summary field
     time=*    ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
     console   ) console=true ;;
-    cron      ) cron=true ;;
+    X         ) X=true ;;
 
     low       |\
     normal    |\
@@ -51,7 +51,7 @@ if [ $console ] ;then
                 echo "${color1}-> $ONE${NOCOLOR}"
 else
   # allow cron jobs to bypass console test and display to X
-  [ $cron ] || { console && exit ;}
+  [ $X ] || { console && exit ;}
   case $# in
     1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
          DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &

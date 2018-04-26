@@ -7,9 +7,11 @@
 # ...................................................................... Receive
 
 usage() {
-  echo "usage: $(basename $0) 'start | I'nitialize | l'og | t'ag"
+  echo "usage: $(basename $0) 'start | I'nitialize | l'og | t'ag | 1'pass"
   exit 1
 }
+
+MAILDIR=$HOME/Maildir
 
 # import user path
 . $HOME/bin/functions/shell/user_path
@@ -53,7 +55,7 @@ tag_messages() {
 EOF
 
   # notmuch config set search.exclude_tags deleted spam trash
-  for i in $(find $HOME/Maildir -maxdepth 1 -type d -name '[a-z]*') ;do
+  for i in $(find $MAILDIR -maxdepth 1 -type d -name '[a-z]*') ;do
     account=${i##*/}
     case $account in
       sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
@@ -71,7 +73,7 @@ EOF
     esac
   done
 
-  for i in $HOME/Maildir/sdothum/[A-Za-z]* ;do
+  for i in $MAILDIR/sdothum/[A-Za-z]* ;do
     folder=${i##*/}
     maildir=${i##*Maildir/}
     tag_account $maildir +$folder
@@ -86,12 +88,24 @@ EOF
   done
 }
 
+one_pass() {
+  trace 'Starting offlineimap..'
+  # purge empty messages
+  find $MAILDIR/sdothum -type f -size 0 -exec rm -fv {} \;
+  offlineimap -c $HOME/.offlineimaprc -o -u Basic >>/tmp/offlineimap.log
+  trace 'Starting imapfilter..'
+  imapfilter -v -c $HOME/.imapfilter/dovecot.lua >>/tmp/imapfilter.log
+  trace 'Starting notmuch..'
+  notmuch new >>/tmp/notmuch.log 2>&1
+  tag_messages
+}
+
 # initialize notmuch database
 initialize() {
   killall alot
   killall notmuch
-  rm -rf $HOME/Maildir/.notmuch/dump-*
-  rm -rf $HOME/Maildir/.notmuch/xapian
+  rm -rf $MAILDIR/.notmuch/dump-*
+  rm -rf $MAILDIR/.notmuch/xapian
   notmuch setup
   notmuch new
   tag_messages
@@ -107,18 +121,10 @@ mail_daemon() {
     # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
     mv /tmp/mailsync:new /tmp/mailsync:old
     # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
-    curl -u sdothum:patricia1948 --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
+    curl -u sdothum:$(cat $MAILDIR/.mailsync) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
     cmp -s /tmp/mailsync:old /tmp/mailsync:new
     if [ $? -eq 1 ] ;then
-      trace 'Starting offlineimap..'
-      # purge empty messages
-      find $HOME/Maildir/sdothum -type f -size 0 -exec rm -fv {} \;
-      offlineimap -c $HOME/.offlineimaprc -o -u Basic >>/tmp/offlineimap.log
-      trace 'Starting imapfilter..'
-      imapfilter -v -c $HOME/.imapfilter/dovecot.lua >>/tmp/imapfilter.log
-      trace 'Starting notmuch..'
-      notmuch new >>/tmp/notmuch.log 2>&1
-      tag_messages
+      one_pass
       trace 'Cycling..'
       sleep $interval
     else
@@ -136,6 +142,7 @@ case $@ in
       tail -f /tmp/mailsync.log ;;
 
   t*) tag_messages ;;
+  1*) one_pass ;;
   * ) usage ;;
 esac
 

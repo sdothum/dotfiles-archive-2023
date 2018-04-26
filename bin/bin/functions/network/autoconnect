@@ -48,7 +48,7 @@ while : ;do
   # brute force restart on local network that frequently drops connection
   while ! connected ;do
     trace 'Re-establishing network connection..'
-    [ $quiet ] || notify $delay critical cron 'Network unreachable' "Reconnecting $service"
+    [ $quiet ] || notify X $delay critical 'Network unreachable' "Reconnecting $service"
     connmanctl connect $service 2>/dev/null
     for i in $(seq 1 $delay) ;do
       sleep 1
@@ -59,7 +59,7 @@ while : ;do
 
   # trap connman autoconnect that bypasses while loop
   if [ $outage ] ;then
-    [ $quiet ] || notify $delay low cron 'Network established' "$outage seconds"
+    [ $quiet ] || notify X $delay low 'Network established' "$outage seconds"
     trace 'Connected'
   fi
 done

@@ -34,6 +34,7 @@
 = fonts
 = ▔▔▔▔▔
   adobe-base-14-fonts
+# ephifonts
 # ephifonts-no-helvetica
 m iosevka             [server]
 m iosevka\\ amphetype [server]

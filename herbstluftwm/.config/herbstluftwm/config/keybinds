@@ -40,7 +40,7 @@ fi
 # wallpaper background (toggle) blur
 hc keybind $Mod-b                       spawn draw root select
 hc keybind $Mod-Shift-b                 spawn draw root shuffle
-hc keybind $Mod-Control-b               spawn draw root toggle
+hc keybind $Mod-Control-b               spawn draw root blur
 hc keybind $Mod-d                       spawn dmenu root
 hc keybind $Mod-Shift-d                 spawn draw root save
 hc keybind $Mod-Control-d               spawn draw root blank

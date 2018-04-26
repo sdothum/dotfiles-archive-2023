@@ -22,7 +22,7 @@ fi
 mkdir -p $HOME/tmp
 
 if [ ! -L $HOME/.msmtprc ] ;then
-  ln -sfv $HOME/.msmtprc $HOME/.msmtprc
+  ln -sfv $HOME/stow/msmtp/.msmtprc $HOME/.msmtprc
   chmod -c 600 $HOME/.msmtprc
 fi
 

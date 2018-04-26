@@ -30,10 +30,10 @@ if [ $(ls -l $queue | wc -l) -gt 1 ] ;then
   errmsg=$(/usr/local/bin/msmtp-runqueue.sh)
   echo "$errmsg"
   if echo "$errmsg" | grep -q FAILURE ;then
-    notify critical cron 'Check Mail Queue..' "$(echo $errmsg | sed -n 2p)"
+    notify X critical 'Check Mail Queue..' "$(echo $errmsg | sed -n 2p)"
   else
-    [ $count -eq 1 ] && notify cron 'Mail Queue' '1 message sent' ||
-                        notify cron 'Mail Queue' "$count messages sent"
+    [ $count -eq 1 ] && notify X 'Mail Queue' '1 message sent' ||
+                        notify X 'Mail Queue' "$count messages sent"
   fi
 else
   trace 'No mail'

@@ -7,6 +7,6 @@
 
 # rebuild font caches
 sudo rm -r $HOME/.fontconfig/*
-sudo fc-cache -fv
+fc-cache -fv
 
 # vim: set ft=sh: #

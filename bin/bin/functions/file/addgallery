@@ -13,6 +13,7 @@ usage() {
 
 ROOT=/srv/http/thedarnedestthing.com/application/public/images
 FOLIO=${FOLIO:-0.folio}
+quality=92
 
 server || exit 1
 [ "$1" ] && gallery="$FOLIO/$1" || usage
@@ -24,8 +25,8 @@ shift
 
 for i in $files ;do
   ditto "$gallery $i"
-  convert -size 1600 $i $GALLERY/$i
-  convert -size 320  $i $GALLERY/{i%.jpg}_1.jpg
+  convert -size 1600 -quality $quality $i $GALLERY/$i
+  convert -size 320  -quality $quality $i $GALLERY/{i%.jpg}_1.jpg
 done
 
 # vim: set ft=sh: #

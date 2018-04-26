@@ -95,7 +95,7 @@ sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
 thedarnedestthing web :: thedarnedestthing
 tinytinyrss ttrss :: /srv/http/tt-rss/themes/axiom*.css
-tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/axiom*.css
+tinytinyrss ttrss :: $HOME/stow/tt-rss/tt-rss/themes/axiom*.css $HOME/stow/tt-rss/tt-rss/themes/.save/axiom*.css
 uzbl :: $HOME/.config/uzbl/config
 vim :: $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim') $HOME/.ctags
 vim settings :: $HOME/.vim/config/*.vim $HOME/.ctags

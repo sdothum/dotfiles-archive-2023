@@ -104,7 +104,6 @@ if [ -e /net/depot/nerd-fonts/font-patcher ] ;then
   mv /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
 fi
 
-sudo fc-cache -fv
 fc-cache -fv
 
 # vim: set ft=sh: #

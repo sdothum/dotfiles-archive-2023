@@ -127,11 +127,11 @@
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      noremap <leader>Z           <C-w>v<C-w>l
-      noremap <leader>z           <C-w>s<C-w>l
+      noremap <leader>z           <C-w>v<C-w>l
+      noremap <leader>Z           <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      noremap <leader>ZZ          <C-w><Bar>
-      noremap <leader>zz          <C-w>_
+      noremap <leader>zz          <C-w><Bar>
+      noremap <leader>ZZ          <C-w>_
       " adjust all splits to the same size
       noremap <leader>=           <C-w>=
 

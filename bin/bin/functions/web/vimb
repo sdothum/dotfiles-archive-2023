@@ -11,20 +11,22 @@
 [ $1 ] && startpage="$@" || startpage='http://luna:8000/tt-rss/#f=39&c=1'
 
 CONFIG=$HOME/.config/vimb
+common='bookmark cookies history style.css'
 
 font=Iosevka
 size=$(fontsize)pt
 host=$(hostname)
-delay=3
 
 [ -e $CONFIG/$host ] && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 [ $size = 10pt ]     && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 
 mkdir $CONFIG/$host
 sed "s/;font:10pt [^;]*;/;font:$size $font;/" $CONFIG/config >$CONFIG/$host/config
+for i in $common ;do ln -sf $CONFIG/$i $CONFIG/$host/ ;done
 exec vimb
 
-# defunct substitution for version 2.x -c option
+# defunct substitution for version 2.x -c option, replaced by profiles
+delay=3
 
 /usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &
 
