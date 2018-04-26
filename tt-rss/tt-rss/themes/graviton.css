@@ -1,0 +1,203 @@
+@import url('graviton_fork.css');
+
+/* clean condensed layout
+ *
+ * see user_install tt-rss for functions.php feed categories customization
+ */
+
+/* STYLING ******************************************************************/
+
+#feeds-holder .dijitTreeRow {
+  font-size:      12px !important;
+  padding:        5px 15px 4px 0 !important;
+  margin:         -9px 0 21px !important;
+}
+
+#feeds-holder .dijitTreeLabel {
+  float:          right !important;
+  margin-right:   2px !important;
+}
+
+#feeds-holder #feedTree {
+  padding-top:    0 !important;
+  width:          175px !important;
+}
+
+#feeds-holder {
+  margin-left:    -20px !important;
+  width:          175px !important;
+}
+
+img[src*='images/star.png'] {
+  background:     url('graviton_images/Bookmark.png') no-repeat !important;
+  opacity:        1.0 !important;
+}
+
+div#dijit__TreeNode_5 {
+  display:        none !important;
+}
+
+div#dijit__TreeNode_6 {
+  display:        none !important;
+}
+
+.dijitTreeLabel {
+  margin-left:    6px !important;
+}
+
+.cdm.expandable .dijitCheckBox {
+  display:        none !important;
+}
+
+img[src*='images/mark_unset.png'] {
+  opacity:        0 !important;
+  margin-left:    -24px !important;
+}
+
+img[src*='images/mark_set.png'] {
+  background:     url('graviton_images/Bookmark.png') no-repeat !important;
+  transform:      scale(0.8.0.8) !important;
+  opacity:        .8 !important;
+  margin-left:    -24px !important;
+
+  -ms-transform:     scale(0.8, 0.8); /* IE 9 */
+  -webkit-transform: scale(0.8, 0.8); /* Safari */
+}
+
+img[src*='images/pub_set.png'] {
+  display:        none !important;
+}
+
+img[src*='images/pub_unset.png'] {
+  display:        none !important;
+}
+
+.cdmHeader .hlFeed {
+  margin-left:    -10px !important;
+}
+
+.cdm.expandable.Selected .cdmHeader .hlFeed {
+  margin-left:    -46px !important;
+}
+
+span.updated {
+  position:       absolute !important;
+  left:           2px !important;
+  top:            18px !important;
+  font-size:      7pt !important;
+  color:          #aaa !important;
+}
+
+.Selected span.updated {
+  /* top:            12px !important; */
+  top:            5px !important;
+  left:           7px !important;
+}
+
+div#headlines-frame[is-cat="0"] span.updated {
+  display:        none !important;
+}
+
+div#headlines-frame[feed-id="-1"] span.updated {
+  display:        block !important;
+}
+
+div#headlines-frame[feed-id="-3"] span.updated {
+  display:        block !important;
+}
+div#headlines-frame[feed-id="-4"] span.updated {
+  display:        block !important;
+}
+
+div#headlines-frame[feed-id="-6"] span.updated {
+  display:        block !important;
+}
+
+.scoreWrap {
+  display:        none !important;
+}
+
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
+  width:          95px !important;
+}
+
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed a {
+  max-width:      75px !important;
+}
+
+div#notify.notify {
+  display:        none !important;
+}
+
+select.attachments {
+  font-size:      12px !important;
+  color:          #999 !important;
+}
+
+button.expandPrompt {
+  background:     #2A363B !important;
+  color:          #fff !important;
+  font-size:      12px !important;
+  border:         none !important;
+  border-radius:  0 12px 12px 0 !important;
+}
+
+#ttrssPrefs * {
+  border-radius:  0 !important;
+}
+
+/* 'logo' hack adjusts width for #feed-holder right alignment */
+#ttrssMain #main:after {
+  content:        '∙● gravit○n' !important;
+  font:           22px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  color:          #871c1c !important;
+  text-shadow:    0 1px 1px #fff !important;
+  letter-spacing: 2px !important;
+  position:       fixed !important;
+  /* margin-top:     77px !important; */
+  /* margin-top:     163px !important; */
+  margin-top:     108px !important;         /* holder width b of golden ratio a+b  */
+  width:          167px !important;
+  text-align:     right !important;
+}
+
+#feeds-holder {
+  /* margin-top:     165px !important; */
+  /* margin-top:     273px !important; */
+  /* margin-top:     216px !important; */
+  margin-top:     197px !important;         /* holder width + title font size */
+}
+
+/* end of feed marker */
+#headlines-spacer {
+  position:       relative !important;
+  height:         100% !important;
+}
+
+#headlines-spacer:after {
+  content:        'refresh ● gravit○n' !important;
+  font:           18px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  color:          #b5423f !important;
+  text-shadow:    0 1px 1px #fff !important;
+  letter-spacing: 1px !important;
+  position:       absolute !important;
+  bottom:         0 !important;
+  right:          -35px !important;
+  left:           -35px !important;
+  padding:        10px !important;
+  background:     #ddd url('graviton_images/noise.png') 0 repeat !important;
+  text-align:     center !important;
+}
+
+.whiteBox + #headlines-spacer {
+  display:        none !important;
+}
+
+/* disable and cover the floating title white space on feed refresh! */
+#floatingTitle:not(:empty) {
+  display:        none !important;
+}
+
+#headlines-frame:before {
+  margin-top:     -25px !important;
+}

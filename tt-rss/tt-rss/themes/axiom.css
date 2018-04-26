@@ -1,0 +1,252 @@
+@import url('axiom_fork.css');
+
+/* clean condensed layout
+ *
+ * see user_install tt-rss for functions.php feed categories customization
+ */
+
+/* STYLING ******************************************************************/
+
+/* category menu width ard right hand counter position */
+#feeds-holder .dijitTreeRow {
+  font:                       12px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  padding:                    3px 15px 1px 0;
+  margin:                     -7px 0 23px;
+}
+
+#feeds-holder .dijitTreeLabel {
+  float:                      right;
+  margin-right:               6px;
+}
+
+#feeds-holder #feedTree {
+  padding-top:                0;
+  width:                      175px;
+}
+
+#feeds-holder {
+  margin-left:                -20px;
+  width:                      175px !important;
+}
+
+img[src*='images/star.png'] {
+  background:                 url('axiom_images/Bookmark.png') no-repeat;
+  opacity:                    1.0;
+}
+
+/* restore non-category node colour */
+div#dijit__TreeNode_2 *,
+div#dijit__TreeNode_3 *,
+div#dijit__TreeNode_4 *,
+div#dijit__TreeNode_7 * {
+  color:                      #555;
+}
+
+div#dijit__TreeNode_2 img.tinyFeedIcon,
+div#dijit__TreeNode_3 img.tinyFeedIcon,
+div#dijit__TreeNode_4 img.tinyFeedIcon,
+div#dijit__TreeNode_7 img.tinyFeedIcon {
+  display:                    none;
+}
+
+div#dijit__TreeNode_5,
+div#dijit__TreeNode_6 {
+  display:                    none;
+}
+
+.dijitTreeLabel {
+  margin-left:                6px;
+}
+
+.cdm.expandable .dijitCheckBox {
+  display:                    none;
+}
+
+/* fill any backgnoud gaps resulting from fullscreen display */
+.dijitContainer {
+  background-color:           #fdf6e3;
+}
+
+/* .cdm.expandable:not(.active) .cdmHeader a.title { */
+/*   font:                       16px'Helvetica Narrow','Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   font-weight:                bold; */
+/* } */
+
+/* highlight colour */
+.cdm.expanded:not(.Unread) a.title:hover,
+.cdm.expandable:not(.Unread) a.title:hover,
+.cdm.expanded.Unread.marked a.title:hover,
+.cdm.expandable.Unread.marked a.title:hover,
+.titleWrap a.title:hover {
+  color:                      #32c0b5 !important;   /* cyan */
+  color:                      #fa4d49 !important;   /* pink */
+  color:                      #039dde !important;   /* blue */
+}
+
+.hlFeed a:hover {
+  color:                      #039dde;              /* blue */
+}
+
+/* maximum content width setting */
+.cdm.expandable.active,
+.cdmContentInner p,
+.postContent p {
+  max-width:                  100%;   /* fullscreen width */
+  max-width:                  70em;
+}
+
+#toolbar {
+  max-width:                  80em;
+}
+
+.cdmHeader span {
+  max-width:                  62.5em;
+}
+
+/* fit button bar width to above active border */
+.cdm .collapseBtn {
+  max-width:                  100%;
+}
+
+/* uncomment for fullscreen width */
+/* #toolbar, */
+/* .cdm.expandable.active, */
+/* .cdmHeader span, */
+/* .cdm .collapseBtn, */
+/* .cdmContentInner p, */
+/* .postContent p { */
+/*   max-width:                  100%; */
+/* } */
+
+img[src*='images/mark_unset.png'] {
+  opacity:                    0 !important;
+  margin-left:                -24px;
+}
+
+img[src*='images/mark_set.png'] {
+  background:                 url('axiom_images/Bookmark.png') no-repeat !important;
+  transform:                  scale(0.8.0.8);
+  opacity:                    .8;
+  margin-left:                -24px;
+  -ms-transform:              scale(0.8, 0.8); /* IE 9 */
+  -webkit-transform:          scale(0.8, 0.8); /* Safari */
+}
+
+.Selected img[src*='images/mark_set.png'] {
+  margin-top:                 -9px !important;
+}
+
+/* img[src*='images/pub_set.png'], */
+/* img[src*='images/pub_unset.png'] { */
+/*   display:                    none; */
+/* } */
+
+/* reposition date below feed label, must declare font to set desired size */
+:not(.Selected) span.updated {
+  position:                   absolute;
+  left:                       2px;
+  top:                        20px;
+  font:                       9px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #aaa;
+  display:                    inline-block;
+  width:                      85px;
+  white-space:                nowrap;
+  overflow:                   hidden;
+  text-overflow:              ellipsis;
+}
+
+/* date position on expanded collapse button bar */
+.Selected span.updated {
+  top:                        10px;
+  left:                       16px;
+}
+
+/* hlfeed does not exist when a non-category feeds-holder row is selected */
+.cdm.expandable div:not(.hlFeed) span.titleWrap + span.updated {
+  top:                        6px;
+}
+
+/* div#headlines-frame[is-cat="0"] span.updated { */
+/*   display:                    none; */
+/* } */
+/*  */
+/* div#headlines-frame[feed-id="-1"] span.updated, */
+/* div#headlines-frame[feed-id="-3"] span.updated, */
+/* div#headlines-frame[feed-id="-4"] span.updated, */
+/* div#headlines-frame[feed-id="-6"] span.updated { */
+/*   display:                    block; */
+/* } */
+
+.scoreWrap,
+div#notify.notify {
+  display:                    none;
+}
+
+select.attachments {
+  font-size:                  12px;
+  color:                      #999;
+}
+
+button.expandPrompt {
+  background:                 #2A363B;
+  color:                      #fff;
+  font-size:                  12px;
+  border:                     none;
+  border-radius:              0 12px 12px 0;
+}
+
+#ttrssPrefs * {
+  border-radius:              0;
+}
+
+/* 'logo' hack adjusts width for #feed-holder right alignment */
+#ttrssMain #main:after {
+  content:                    '∙● axi○m';
+  display:                    block;
+  font:                       22px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #871c1c;
+  text-shadow:                0 1px 1px #fff;
+  letter-spacing:             2px;
+  position:                   fixed;
+  margin-top:                 108px;         /* holder width b of golden ratio a+b  */
+  width:                      167px;
+  text-align:                 right;
+}
+
+#feeds-holder {
+  margin-top:                 197px;         /* holder width + title font size */
+}
+
+/* end of feed marker */
+#headlines-spacer {
+  position:                   relative;
+  height:                     100%;
+}
+
+#headlines-spacer:after {
+  content:                    'refresh ∙●∙ axi○m';
+  font:                       18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #b5423f;
+  text-shadow:                0 1px 1px #fff;
+  letter-spacing:             1px;
+  position:                   absolute;
+  bottom:                     0;
+  right:                      -35px;
+  left:                       -35px;
+  padding:                    10px;
+  background:                 #ddd url('axiom_images/noise.png') 0 repeat;
+  text-align:                 center;
+}
+
+.whiteBox + #headlines-spacer {
+  display:                    none;
+}
+
+/* disable and cover the floating title white space on feed refresh! */
+#floatingTitle:not(:empty) {
+  display:                    none;
+}
+
+#headlines-frame:before {
+  margin-top:                 -25px;
+}
