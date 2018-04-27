@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-# Usage: vimb <url>
+# Usage: vimb [<url>] | config [<zoom>]
 
 [ $1 ] && startpage="$@" || startpage='http://luna:8000/tt-rss/#f=39&c=1'
 
@@ -16,13 +16,20 @@ common='bookmark cookies history style.css'
 font=Iosevka
 size=$(fontsize)pt
 host=$(hostname)
+zoom=$2
 
+config() {
+  mkdir $CONFIG/$host
+  sed "s/;font:10pt [^;]*;/;font:$size $font;/" $CONFIG/config >$CONFIG/$host/config
+  [ $zoom ] && sed -i "s/default-zoom=.*/default-zoom=$zoom/" $CONFIG/$host/config
+  for i in $common ;do ln -sf $CONFIG/$i $CONFIG/$host/ ;done
+}
+
+[ "$1" = config ] && config
 [ -e $CONFIG/$host ] && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 [ $size = 10pt ]     && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 
-mkdir $CONFIG/$host
-sed "s/;font:10pt [^;]*;/;font:$size $font;/" $CONFIG/config >$CONFIG/$host/config
-for i in $common ;do ln -sf $CONFIG/$i $CONFIG/$host/ ;done
+config
 exec vimb
 
 # defunct substitution for version 2.x -c option, replaced by profiles

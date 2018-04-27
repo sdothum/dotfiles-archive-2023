@@ -112,7 +112,8 @@ while note=$(cat $NOTES |
   # mhistory $catlg $file
   mhistory=$file
   case $action in
-    edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file ;;
+    edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file
+               update=true ;;
 
     delete   ) mv $file /tmp
                update=true

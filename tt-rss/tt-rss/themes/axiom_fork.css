@@ -186,8 +186,9 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 #main-toolbar {
-  font-size:                  12px;
-  /* margin-left:                28px; */
+  font-size:                  11px;
+  margin-left:                35px;
+  padding-left:               10px;
 }
 
 #main-toolbar .dijitButtonText:not(:hover) {

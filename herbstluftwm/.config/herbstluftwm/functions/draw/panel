@@ -202,8 +202,8 @@ panel() {
             bar=${line#*|}
             bar=${bar%|*}
             case $bar in
-              0[23] ) bar='─' ;;
-              0[67] ) bar='═' ;;
+              # 0[23] ) bar='─' ;;
+              # 0[67] ) bar='═' ;;
               0*    ) bar=' ' ;;
               1*    ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
               2[0-4]) bar="%{F$DEFAULT_FG}▂%{F-}" ;;

@@ -34,6 +34,30 @@ img[src*='images/star.png'] {
   opacity:                    1.0;
 }
 
+/* comment out the div#dijit__TreeNode_1 rules to allow hiding the general filters */
+
+/* don't highlight topmost category as it is never minimized and is truncated by the logo block */
+div#dijit__TreeNode_1 .dijitTreeRowSelected.dijitTreeRow,
+div#dijit__TreeNode_1 .dijitTreeRow:hover {
+  background:                 #eee8d5;
+  border-color:               #eee8d5;
+}
+
+div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando {
+  display:                    none;
+}
+
+/* but restore the highlight for the subordinate filters */
+div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRow:hover {
+  background:                 #e7dec3 url('axiom_images/noise.png') 0 repeat;
+}
+
+div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
+div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow:hover {
+  background:                 #fdf6e3;
+  border-color:               #b5423f;
+}
+
 /* restore non-category node colour */
 div#dijit__TreeNode_2 *,
 div#dijit__TreeNode_3 *,
