@@ -1,6 +1,6 @@
 @import url('axiom_fork.css');
 
-/* clean condensed distraction free layout
+/* clean condensed distraction free layout -- formatted for gtkwebkit and qtwebkit
  *
  * optimized for "combined feed display" with "enable feed categories", see preferences
  *
@@ -42,7 +42,7 @@ img[src*='images/star.png'] {
 div#dijit__TreeNode_1 .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeRow:hover {
   background:                 #eee8d5;
-  border-color:               #eee8d5;
+  border-color:               #fdf6e3;
 }
 
 div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando {

@@ -155,7 +155,7 @@ div#notify.notify.notify_progress {
 #feeds-holder .dijitTreeRow:hover {
   background:                 #e7dec3 url('axiom_images/noise.png') 0 repeat;
   color:                      #2A363B;
-  border-color:               #e7dec3 url('axiom_images/noise.png') 0 repeat;
+  border-color:               #fdf6e3;
 }
 
 /* un/comment to highlight open icons where applicable */
