@@ -5,18 +5,23 @@
 
 # ....................................................................... tt-rss
 
+TTRSS=/srv/http/tt-rss
+THEMES=$TTRSS/themes
+FEEDS=$TTRSS/classes/feeds.php
+
+# my distraction free theme
 theme=axiom
+button="${theme}_images/close.png"
 
 # override tt-rss theme, in lieu of selectable themes
-# [ -e /srv/http/tt-rss/themes/default.css.original ] && exit
-original /srv/http/tt-rss/themes/compact.css
-sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/*_images /srv/http/tt-rss/themes/
-for i in $HOME/tt-rss/themes/$theme*css ;do sudo ln -sfv $i /srv/http/tt-rss/themes/${i##*/} ;done
-sudo ln -sfv /srv/http/tt-rss/themes/$theme.css /srv/http/tt-rss/themes/compact.css
-sudo systemctl restart tt-rss
+# [ -e $THEMES/default.css.original ] && exit
+original $THEMES/compact.css
+sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/*_images $THEMES/
+for i in $HOME/tt-rss/themes/$theme*css ;do sudo ln -sfv $i $THEMES/${i##*/} ;done
+sudo ln -sfv $THEMES/$theme.css $THEMES/compact.css
 
 # shorten special filter headings
-original /srv/http/tt-rss/classes/feeds.php
+original $FEEDS
 sudo sed -i -e 's/"Special"/"Orbit"/' \
          -e 's/All articles/○∙ all/' \
          -e 's/Fresh articles/○∙ fresh/' \
@@ -24,6 +29,9 @@ sudo sed -i -e 's/"Special"/"Orbit"/' \
          -e 's/Published articles/○∙ published/' \
          -e 's/Archived articles/○∙ archived/' \
          -e 's/Recently read/○∙ read/' \
-         /srv/http/tt-rss/classes/feeds.php
+         $FEEDS
+[ -e $HOME/tt-rss/themes/$button ] && sudo sed -i -e "s|images/collapse.png|$button|" $FEEDS
+
+sudo systemctl restart tt-rss
 
 # vim: set ft=sh: #

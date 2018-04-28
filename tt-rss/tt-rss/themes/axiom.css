@@ -1,6 +1,8 @@
 @import url('axiom_fork.css');
 
-/* clean condensed layout
+/* clean condensed distraction free layout
+ *
+ * optimized for "combined feed display" with "enable feed categories", see preferences
  *
  * see user_install tt-rss for functions.php feed categories customization
  */
@@ -36,7 +38,7 @@ img[src*='images/star.png'] {
 
 /* comment out the div#dijit__TreeNode_1 rules to allow hiding the general filters */
 
-/* don't highlight topmost category as it is never minimized and is truncated by the logo block */
+/* don't highlight topmost category as it is not a filter and is truncated by the logo block */
 div#dijit__TreeNode_1 .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeRow:hover {
   background:                 #eee8d5;
@@ -56,6 +58,19 @@ div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow:hover {
   background:                 #fdf6e3;
   border-color:               #b5423f;
+}
+
+/* disable mouse selection by covering it, but doesn't prevent keyboard selection */
+div#dijit__TreeNode_1.dijitTreeIsRoot:after {
+  content:                    'Orbit';
+  display:                    block;
+  font:                       12px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      transparent;  /* uncomment to tweak positioning and padding */
+  position:                   absolute;
+  margin-top:                 -203px;
+  padding-bottom:             3px;
+  width:                      154px;
+  text-align:                 right;
 }
 
 /* restore non-category node colour */
@@ -181,8 +196,8 @@ img[src*='images/mark_set.png'] {
 
 /* date position on expanded collapse button bar */
 .Selected span.updated {
-  top:                        10px;
-  left:                       16px;
+  padding-top:                1px !important;
+  left:                       17px;
 }
 
 /* hlfeed does not exist when a non-category feeds-holder row is selected */

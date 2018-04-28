@@ -62,8 +62,7 @@ toggle_app() {
       for i in $winids ;do
         if ! close $i ;then
           # stack windows
-          [ $focus ] && focus frame
-          unset focus
+          [ $focus ] && { focus frame; unset focus ;}
           herbstclient bring $i
         fi
       done
