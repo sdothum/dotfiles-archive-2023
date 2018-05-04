@@ -226,6 +226,20 @@
 
   " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
+    " ........................................................ Close diff buffer
+
+      " delete any new diff buffer, see buffer.vim DiffOrig
+      function! core#CloseDiffOrig()
+        wincmd h
+        if expand('%') == ''
+          bdelete!
+          " restore pre-diff settings or subsequent DiffOrig will be *off*
+          diffoff
+          return 1
+        endif
+        return 0
+      endfunction
+
     " ............................................................. Buffer count
 
       function! core#BufCount()

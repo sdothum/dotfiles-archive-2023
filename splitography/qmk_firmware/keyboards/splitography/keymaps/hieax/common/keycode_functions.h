@@ -90,6 +90,9 @@ void modifier(void (*f)(uint8_t))
   if (mods & MOD_BIT(KC_LSFT)) {
     (*f)(KC_LSFT);
   }
+  if (mods & MOD_BIT(KC_RSFT)) {
+    (*f)(KC_RSFT);
+  }
 }
 
 // .................................................... Triple Dance Shift/Layer
@@ -545,20 +548,32 @@ void thumb_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyc
 // }
 // #endif
 
-// LT for S(keycode)
-void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
+// extended LT macro for [shift]keycode [modifier]layer
+void lt(keyrecord_t *record, uint8_t shift, uint16_t keycode, uint16_t modifier, uint8_t layer)
 {
   if (record->event.pressed) {
     key_timer = timer_read();
+    if (modifier) {
+      register_code(modifier);
+    }
     layer_on(layer);
   }
   else {
+    if (modifier) {
+      unregister_code(modifier);
+    }
     layer_off(layer);
     // for shifted keycodes, hence, LT_SHIFT
-    key_press(SHIFT, keycode);
+    key_press(shift, keycode);
     clear_mods();
     key_timer = 0;
   }
+}
+
+// LT for S(keycode)
+void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
+{
+  lt(record, SHIFT, keycode, 0, layer);
 }
 
 // set layer asap to overcome macro latency errors, notably tap dance and LT usage
@@ -588,6 +603,63 @@ void clear_layers(void)
     layer_off(layer);
   }
 }
+
+#ifdef HOME_MODS
+// home row layer/shift key state, see tap_mods() and keymap.c
+#define LSYMBOL MOD_BIT(KC_LSFT)
+#define RSYMBOL MOD_BIT(KC_RSFT)
+
+void home_state(void) {
+  // if only the shift key, raise the opposite hand symbol layer
+  if (mods == LSYMBOL) {
+    layer_on(_LSYMBOL);
+  }
+  else if (mods == RSYMBOL) {
+    layer_on(_RSYMBOL);
+  }
+  // or combine modifiers
+  else if (mods & LSYMBOL) {
+    register_code(KC_LSFT);
+  }
+  else if (mods & RSYMBOL) {
+    register_code(KC_RSFT);
+  }
+}
+
+// home row layer/shift
+void symbol_shift(keyrecord_t *record, uint16_t keycode)
+{
+  if (keycode) {
+    if (record->event.pressed) {
+      key_timer = timer_read();
+      home_state();
+    }
+    else {
+      // clear layer/shift state
+      if (keycode == KC_A) {
+        layer_off(_LSYMBOL);
+        unregister_code(KC_LSFT);
+      }
+      else if (keycode == KC_T) {
+        layer_off(_RSYMBOL);
+        unregister_code(KC_RSFT);
+      }
+      // no other modifier enabled, issue keycode
+      if (~mods) {
+        key_press(NOSHIFT, keycode);
+      }
+      key_timer = 0;
+    }
+  }
+  else {
+    // a non-shift modifier disables symbol layer
+    layer_off(_LSYMBOL);
+    layer_off(_RSYMBOL);
+    // update home layer/shift state
+    home_state();
+  }
+}
+#endif
 
 #ifdef CENTER_TT
 static uint16_t tt_keycode = 0;             // current TT keycode

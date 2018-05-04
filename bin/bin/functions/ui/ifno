@@ -9,7 +9,7 @@
 sig=${sig:--TERM}
 
 # if no || ..
-underline $1
+underline $@
 
 while : ;do
   printf 'continue? [No]/yes/abort : '

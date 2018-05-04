@@ -144,6 +144,12 @@ div#notify.notify.notify_progress {
   opacity:                    0;
 }
 
+/* CSS4 spec */
+/* #feeds-holder .dijitTreeRow:has(.dijitTreeExpandoOpened) { */
+/*   opacity:                    0; */
+/*   border-color:               #fdf6e3; */
+/* } */
+
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpandoOpened {
   opacity:                    .15;
 }

@@ -96,7 +96,8 @@
         execute 'highlight fzf3 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
       endfunction
 
-      nmap <silent><leader>b :Buffers<CR>
+      " close any diff buffer before leaving buffer
+      nmap <silent><leader>b :silent call core#CloseDiffOrig()<CR>:Buffers<CR>
       nmap <silent><leader>l :Lines<CR>
       nmap <silent><leader>m :Marks<CR>
       " nmap <leader>f       :FZF<CR>       " see notational-fzf for extended content search

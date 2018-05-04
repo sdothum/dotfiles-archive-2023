@@ -30,6 +30,7 @@
 
       " Plug 'junegunn/goyo.vim'            " distraction free mode
       " Plug 'altercation/vim-colors-solarized' breaks synIDattr with vim8
+      " Plug 'andreypopp/vim-colors-plain'
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme

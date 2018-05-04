@@ -14,7 +14,8 @@
 #   https://github.com/SilentBob999/adblock.git
 #   http://www.linksysinfo.org/index.php?threads/addon-add-blocking.25663/
 
-LOG=/tmp/adblock.log
+ADBLOCK=/tmp/adblock
+LOG=$ADBLOCK.log
 
 [ -d $HOME/adblock ] || mkdir -v $HOME/adblock
 cd $HOME/adblock
@@ -22,65 +23,71 @@ rm -f adblock
 
 trace "Generating adblock.." >>$LOG
 
+addblock() {
+  cat >$ADBLOCK:$1
+  cat $ADBLOCK:$1 >>adblock
+  wc -l $ADBLOCK:$1
+}
+
 if [ -z $1 ] ;then
   ditto 'downloading file from YoYo.org'
   wget -qO- http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts 2>>$LOG |
-      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock YoYo.org
 
   ditto 'downloading file from SomeoneWhoCares.org'
   wget -qO- http://someonewhocares.org/hosts/zero/ 2>>$LOG |
-      grep '0\.0\.0\.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' >>adblock
+      grep '0\.0\.0\.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' | addblock SomeoneWhoCares.org
 
   ditto 'downloading file from MVPS.org'
   wget -qO- http://winhelp2002.mvps.org/hosts.txt 2>>$LOG |
-      grep 0\.0\.0\.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+      grep 0\.0\.0\.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' | addblock MVPS.org
 
   # ditto 'downloading file from HPHosts'
   # wget -qO- http://hosts-file.net/download/hosts.txt 2>>$LOG |
-  #      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' >>adblock
+  #      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock HPHosts
 
   blacklist() {
-    awk '{sub(/^127.0.0.1/, "0.0.0.0")} /^0.0.0.0/' >>adblock
+    awk '{sub(/^127.0.0.1/, "0.0.0.0")} /^0.0.0.0/' | addblock $1
   }
 
   ditto 'downloading file from MalwareDomainList.com'
-  wget -qO- "http://www.malwaredomainlist.com/hostslist/hosts.txt" 2>>$LOG | blacklist
+  wget -qO- "http://www.malwaredomainlist.com/hostslist/hosts.txt" 2>>$LOG | blacklist MalwareDomainList.com
 
   ditto 'downloading adtracking file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/ad_servers.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/ad_servers.txt" 2>>$LOG | blacklist Hosts-File.net:ad_servers
 
   ditto 'downloading malware file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/emd.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/emd.txt" 2>>$LOG | blacklist Hosts-File.net:emd
 
   ditto 'downloading exploit file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/exp.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/exp.txt" 2>>$LOG | blacklist Hosts-File.net:exp
 
   ditto 'downloading fraud file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/fsa.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/fsa.txt" 2>>$LOG | blacklist Hosts-File.net:fsa
 
   # ditto 'downloading spamming file from Hosts-File.net'
-  # wget -qO- "http://hosts-file.net/grm.txt" 2>>$LOG | blacklist
+  # wget -qO- "http://hosts-file.net/grm.txt" 2>>$LOG | blacklist Hosts-File.net:grm
   #
   # ditto 'downloading site spamming file from Hosts-File.net'
-  # wget -qO- "http://hosts-file.net/hfs.txt" 2>>$LOG | blacklist
+  # wget -qO- "http://hosts-file.net/hfs.txt" 2>>$LOG | blacklist Hosts-File.net:hfs
 
   ditto 'downloading hijack file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/hjk.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/hjk.txt" 2>>$LOG | blacklist Hosts-File.net:hjk
 
   ditto 'downloading marketing file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/mmt.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/mmt.txt" 2>>$LOG | blacklist Hosts-File.net:mmt
 
   ditto 'downloading pharmacy file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/pha.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/pha.txt" 2>>$LOG | blacklist Hosts-File.net:pha
 
   # ditto 'downloading piracy file from Hosts-File.net'
-  # wget -qO- "http://hosts-file.net/psh.txt" 2>>$LOG | blacklist
+  # wget -qO- "http://hosts-file.net/psh.txt" 2>>$LOG | blacklist Hosts-File.net:psh
 
   ditto 'downloading adtracking file from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/wrz.txt" 2>>$LOG | blacklist
+  wget -qO- "http://hosts-file.net/wrz.txt" 2>>$LOG | blacklist Hosts-File.net:wrz
 
   ditto 'downloading file from ADaway.org'
-  wget -qO- "http://adaway.org/hosts.txt" 2>>$LOG | blacklist
+  wget -qO- "http://adaway.org/hosts.txt" 2>>$LOG | blacklist ADaway.org
 
   ditto 'writing changes to zone file'
   sed -re 's/^(0\.0\.0\.0)  */\1\t/' \
@@ -89,8 +96,8 @@ if [ -z $1 ] ;then
       -e '/^(0\.0\.0\.0)\t(0\.0\.0\.0)$/d' adblock |
       tr [:upper:] [:lower:] |
       tr '\r' '\n' |
-      sort -f |
-      uniq >adblock.uniq
+      sort |
+      uniq -u >adblock.uniq
 fi
 
 if [ -e blacklist ] ;then

@@ -42,12 +42,18 @@ img[src*='images/star.png'] {
 div#dijit__TreeNode_1 .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeRow:hover {
   background:                 #eee8d5;
+  border-color:               #eee8d5;
+}
+
+div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
+div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRow:hover {
+  background:                 #eee8d5;
   border-color:               #fdf6e3;
 }
 
-div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando {
-  display:                    none;
-}
+/* div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando { */
+/*   display:                    none; */
+/* } */
 
 /* but restore the highlight for the subordinate filters */
 div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRow:hover {
@@ -61,17 +67,17 @@ div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow:hover {
 }
 
 /* disable mouse selection by covering it, but doesn't prevent keyboard selection */
-div#dijit__TreeNode_1.dijitTreeIsRoot:after {
-  content:                    'Orbit';
-  display:                    block;
-  font:                       12px 'Helvetica Neue',Helvetica,Arial sans-serif;
-  color:                      transparent;  /* uncomment to tweak positioning and padding */
-  position:                   absolute;
-  margin-top:                 -203px;
-  padding-bottom:             3px;
-  width:                      154px;
-  text-align:                 right;
-}
+/* div#dijit__TreeNode_1.dijitTreeIsRoot:after { */
+/*   content:                    'Orbit'; */
+/*   display:                    block; */
+/*   font:                       12px 'Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   color:                      transparent;  [> uncomment to tweak positioning and padding <] */
+/*   position:                   absolute; */
+/*   margin-top:                 -203px; */
+/*   padding-bottom:             3px; */
+/*   width:                      154px; */
+/*   text-align:                 right; */
+/* } */
 
 /* restore non-category node colour */
 div#dijit__TreeNode_2 *,
@@ -135,11 +141,15 @@ div#dijit__TreeNode_6 {
 }
 
 #toolbar {
-  max-width:                  80em;
+  max-width:                  77em;
 }
 
 .cdmHeader span {
   max-width:                  62.5em;
+}
+
+span.titleWrap {
+  max-width:                  60em;
 }
 
 /* fit button bar width to above active border */
@@ -159,14 +169,14 @@ div#dijit__TreeNode_6 {
 
 img[src*='images/mark_unset.png'] {
   opacity:                    0 !important;
-  margin-left:                -24px;
+  margin-left:                -23px;
 }
 
 img[src*='images/mark_set.png'] {
   background:                 url('axiom_images/Bookmark.png') no-repeat !important;
   transform:                  scale(0.8.0.8);
   opacity:                    .8;
-  margin-left:                -24px;
+  margin-left:                -23px;
   -ms-transform:              scale(0.8, 0.8); /* IE 9 */
   -webkit-transform:          scale(0.8, 0.8); /* Safari */
 }

@@ -28,7 +28,10 @@ shift
 
 if ! ifno 'sync qmk_firmware repo' ;then
   cd $QMK
-  git pull
+  git remote add upstream https://github.com/qmk/qmk_firmware.git
+  git fetch upstream
+  git checkout master
+  git rebase upstream/master
 fi
 
 # update keymap from stow repo

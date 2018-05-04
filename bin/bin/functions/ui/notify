@@ -28,14 +28,7 @@ while : ;do
     critical  ) urgency="-u $1" ;;
 
     blackboard) urgency="-h string:bgcolor:#000000" ;;
-
-    *         ) case $1 in
-                  # none numeric field
-                  ''      |\
-                  *[!0-9]*) break ;;
-
-                  *       ) expire="--expire-time=$(( $1 * 1000 ))" ;;
-                esac
+    *         ) echo $1 | grep '^[[:digit:]]*$' && expire="--expire-time=$(( $1 * 1000 ))" || break ;;
   esac
   shift
 done

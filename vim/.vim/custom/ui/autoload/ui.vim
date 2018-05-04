@@ -278,6 +278,7 @@
         if &filetype == 'vimwiki'
           call VimwikiLink()                " restore vimwiki link
         endif
+        " un/comment to have monochromatic cursor line (looses vimdiff highlighting)
         execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . s:dfm_fg
         set colorcolumn=0
         set foldcolumn=0

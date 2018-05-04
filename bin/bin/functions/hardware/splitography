@@ -14,7 +14,7 @@ usage() {
 KEYMAPS='DEFAULT'
 
 ROOT=$HOME
-ROOT=/net/depot
+# ROOT=/net/depot
 QMK=$ROOT/qmk_firmware
 SPLITOGRAPHY=$QMK/keyboards/splitography
 KEYMAP=$SPLITOGRAPHY/keymaps/$1
@@ -30,7 +30,10 @@ shift
 
 if ! ifno 'sync qmk_firmware repo' ;then
   cd $QMK
-  git pull
+  git remote add upstream https://github.com/qmk/qmk_firmware.git
+  git fetch upstream
+  git checkout master
+  git rebase upstream/master
 fi
 
 # update keymap from stow repo
