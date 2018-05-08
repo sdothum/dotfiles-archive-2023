@@ -26,6 +26,6 @@ sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/s
 
 systemd disable dhcpcd
 systemd disable netctl
-systemd enaEthernetble connman
+systemd enable connman
 
 # vim: set ft=sh: #

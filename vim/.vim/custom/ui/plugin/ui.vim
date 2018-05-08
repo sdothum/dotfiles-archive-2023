@@ -25,21 +25,21 @@
 
   " UI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .............................................................. Switch mode
-
-      nmap <silent><F7>   :call ui#SwitchView()<CR>
-      imap <silent><F7>   <C-o>:call ui#SwitchView()<CR>
-      vmap <silent><F7>   <C-o>:call ui#SwitchView()<CR>
-
-      " intial view mode: source code or prose
-      autocmd ui BufEnter * call ui#LiteType()
-
     " ........................................................ Toggle statusline
 
       " toggle lightline/default vim statusline
-      nmap <silent><S-F7> :call ui#ToggleInfo()<CR>
-      imap <silent><S-F7> <C-o>:call ui#ToggleInfo()<CR>
-      vmap <silent><S-F7> <C-o>:call ui#ToggleInfo()<CR>
+      nmap <silent><F7>   :call ui#ToggleInfo()<CR>
+      imap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
+      vmap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
+
+    " .............................................................. Switch mode
+
+      nmap <silent><S-F7> :call ui#SwitchView()<CR>
+      imap <silent><S-F7> <C-o>:call ui#SwitchView()<CR>
+      vmap <silent><S-F7> <C-o>:call ui#SwitchView()<CR>
+
+      " intial view mode: source code or prose
+      autocmd ui BufEnter * call ui#LiteType()
 
   " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

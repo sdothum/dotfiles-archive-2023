@@ -94,10 +94,9 @@ if [ -z $1 ] ;then
       -e 's/ .*//' \
       -e '/^(0\.0\.0\.0)\t*$/d' \
       -e '/^(0\.0\.0\.0)\t(0\.0\.0\.0)$/d' adblock |
-      tr [:upper:] [:lower:] |
-      tr '\r' '\n' |
-      sort |
-      uniq -u >adblock.uniq
+      tr [:upper:] [:lower:] | tr '\r' '\n' |
+      sort | uniq \
+      >adblock.uniq
 fi
 
 if [ -e blacklist ] ;then

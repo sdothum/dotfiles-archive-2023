@@ -13,6 +13,8 @@
       let s:wikiinfo            = 1         " statusline (0) off (1) on
       let s:initial_view        = 1         " prose (0) dfm (1) proof
       let s:sync                = 0         " sync (0) off (1) indent guides
+      let s:info                = 0         " statusline (0) dfm (1) expanded
+      let g:padding             = '   '     " expanded statusline padding
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let s:source_font         = 'Iosevka\'
@@ -84,6 +86,10 @@
       let s:dfm_bg_status_dark  = s:gray1   " dark statusline
       let s:dfm_fg_status_light = s:rgb_0   " light statusline
       let s:dfm_fg_status_dark  = s:rgb_7   " dark statusline
+      let s:dfm_fg_user1_light  = s:rgb_0   " light statusline
+      let s:dfm_fg_user1_dark   = s:rgb_7   " dark statusline
+      let s:dfm_fg_user2_light  = s:rgb_4   " light statusline
+      let s:dfm_fg_user2_dark   = s:cyan    " dark statusline
 
     " .................................................................. Palette
 
@@ -99,6 +105,8 @@
         execute 'let s:dfm_fg_line     = s:dfm_fg_line_'                . &background
         execute 'let s:dfm_bg_status   = s:dfm_bg_status_'              . &background
         execute 'let s:dfm_fg_status   = s:dfm_fg_status_'              . &background
+        execute 'let s:dfm_fg_user1    = s:dfm_fg_user1_'               . &background
+        execute 'let s:dfm_fg_user2    = s:dfm_fg_user2_'               . &background
         execute 'let s:dfm_cursorline  = s:cursorline == 0 ? s:dfm_bg_' . &background . ' : s:dfm_bg_line_' . &background
         execute 'let g:dfm_linenr_ins  = s:dfm_bg_'                     . &background
       endfunction
@@ -120,6 +128,8 @@
         execute 'highlight IndentGuidesEven    guibg=' . ui#color('s:dfm_bg_line_' . l:background)
         execute 'highlight IndentGuidesOdd     guibg=' . ui#color('s:dfm_bg_'      . &background)
         execute 'highlight Folded              guibg=' . s:dfm_folded                              . ' guifg=' . g:dfm_bg
+        execute 'highlight User1               guibg=' . g:dfm_bg                                  . ' guifg=' . s:dfm_fg_user1
+        execute 'highlight User2               guibg=' . g:dfm_bg                                  . ' guifg=' . s:dfm_fg_user2
         execute 'highlight VertSplit           guibg=' . s:dfm_vsplit                              . ' guifg=' . s:dfm_vsplit
         execute 'highlight ShowMarksHLl        guibg=' . g:dfm_bg
         execute 'highlight SignColumn          guibg=' . g:dfm_bg
@@ -192,7 +202,8 @@
       " balance left right margins with font size changes
       function! ui#Margin()
         call core#Trace('ui#Margin()')
-        let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth) / 2])])
+        " account for linenr <space> text
+        let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth - 4) / 2])])
         call core#Quietly('LiteDFM')
       endfunction
 
@@ -254,12 +265,16 @@
         call core#Trace('ui#CodeView()')
         let g:view = 0
         " restore CursorLine syntax highlighting before applying themes
-        syntax enable
+        " syntax enable
         if exists('g:loaded_limelight')
           execute 'Limelight!'
         endif
         call ui#Theme()
-        call ui#LiteLine()
+        if exists('g:loaded_lightline')
+          call ui#LiteLine()
+        else
+          call ui#ShowStatusline()
+        endif
         execute 'highlight LineNr guifg=' . s:dfm_fg_line
         set showmode
       endfunction
@@ -366,27 +381,43 @@
         " call core#Trace('ui#WikiInfo()')
         try                                 " trap snippet insertion interruption
           let g:prose = 1
-          if a:proof == 0
-            return &modified ? repeat(' ', winwidth(0) / 2) . g:modified_ind : ''
+          if core#Prose() && a:proof == 0
+            return info#Escape(info#Leader('') . '  %{info#UnModified(0)}%*')
           else
-            let l:name = expand('%:t' . (core#Prose() ? ':r' : '')) . '   '
-            " fixed center point on file status
-            let l:leader = repeat(' ', (winwidth(0) / 2) - strlen(l:name))
-            let l:info = (&modified ? g:modified_ind : g:unmodified_ind) . '   ' . (core#Prose() ? info#WordCount() : col('.'))
-            return l:leader . l:name . l:info
+            let l:name     = '%{info#Name()}   '
+            if s:info == 0
+              let l:leader = '%{info#Leader(info#Name())}'
+            else
+              let l:path   = '%{info#Path()}'
+              let l:leader = '%{info#Leader(info#Path() . g:padding . info#Name())}'
+            endif
+            let l:name     = '%1*' . l:name
+            let l:info     = '%{info#UnModified(1)}   %{info#PosWordsCol()}%*'
+            if s:info == 1
+              let l:name   = '%2*' . l:path . '%*' . g:padding . l:name
+              let l:info   = l:info . g:padding . '%2*%{info#Atom()}  %{info#SpecialChar()}%*'
+            endif
+            return info#Escape(l:leader . l:name . l:info)
           endif
         catch
         endtry
       endfunction
 
+      function! ui#ShowStatusline()
+        " undo statusline gui=reverse
+        execute 'highlight statusline gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
+        set laststatus=2
+      endfunction
+
       function! ui#ShowInfo(proof)
         call core#Trace('ui#ShowInfo()')
-        call lightline#disable()
+        if exists('g:loaded_lightline')
+          call lightline#disable()
+        endif
         if s:wikiinfo == 1
-          execute 'set statusline=%{ui#WikiInfo(' . a:proof . ')}'
-          " undo statusline gui=reverse
-          execute 'highlight statusline gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
-          set laststatus=2
+          " execute 'set statusline=%{ui#WikiInfo(' . a:proof . ')}'
+          execute 'set statusline=' . ui#WikiInfo(a:proof)
+          call ui#ShowStatusline()
         else
           " simply hide statusline content
           execute 'highlight statusline guibg=' . g:dfm_bg
@@ -402,11 +433,16 @@
 
       function! ui#ToggleInfo()
         call core#Trace('ui#ToggleInfo()')
+        let s:info = (s:info == 0 ? 1 : 0)
         if core#Prose()                     " toggle between writing and proofing modes
           call ui#ToggleProof()
         else
+          call ui#ShowInfo(b:proof)
           call ui#CodeView()                " refresh margin
           let g:code = (g:code == 0 ? 1 : 0)
+          if !exists('g:loaded_lightline')
+            call ui#SwitchView()            " clear linenr
+          endif
         endif
       endfunction
 

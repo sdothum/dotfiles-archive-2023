@@ -7,6 +7,10 @@
 
 # see post_install/passenger-install-nginx-module for adblock trap
 # nginx empty gif module replaces pixelserv
+# Primus nameservers
+# nameserver 216.254.141.2
+# nameserver 216.254.136.227
+# nameserver 64.26.147.9
 echo '# Google nameservers
 nameserver 8.8.8.8
 nameserver 8.8.4.4

@@ -540,79 +540,81 @@
 
     " .................................................................. Vimwiki
 
-      " " disable tab for autocompletion
-      " let g:vimwiki_table_mappings = 0
-      " let g:vimwiki_table_auto_fmt = 0
-      "
-      " let g:vimwiki_list =
-      "     \[
-      "     \  {
-      "     \    'path'      : '~/vimwiki/thedarnedestthing/'
-      "     \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \, {
-      "     \    'path'      : '~/vimwiki/thestory/'
-      "     \,   'path_html' : '~/vimwiki/thestory/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \, {
-      "     \    'path'      : '~/vimwiki/truthordie/'
-      "     \,   'path_html' : '~/vimwiki/truthordie/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \, {
-      "     \    'path'      : '~/vimwiki/shadowsandlight/'
-      "     \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \, {
-      "     \    'path'      : '~/vimwiki/healing/'
-      "     \,   'path_html' : '~/vimwiki/healing/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \, {
-      "     \    'path'      : '~/vimwiki/colophon/'
-      "     \,   'path_html' : '~/vimwiki/colophon/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \, {
-      "     \    'path'      : '~/vimwiki/notes/'
-      "     \,   'path_html' : '~/vimwiki/notes/html/'
-      "     \,   'syntax'    : 'markdown'
-      "     \  }
-      "     \]
-      "
-      " " header highlighting
-      " highlight VimwikiHeader1 guifg=#d70000
-      " highlight VimwikiHeader2 guifg=#af005f
-      " highlight VimwikiHeader3 guifg=#5f5faf
-      " highlight VimwikiHeader4 guifg=#0087ff
-      " highlight VimwikiHeader5 guifg=#00afaf
-      " highlight VimwikiHeader6 guifg=#5f8700
-      "
-      " " restore vimwiki link
-      " function! VimwikiLink()
-      "   highlight VimwikiLink guifg=#268bd2 gui=bold
-      " endfunction
-      "
-      " " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
-      " function! VimwikiRemap()
-      "   if !exists('b:vimwiki_remap')
-      "     let b:vimwiki_remap = 1
-      "     iunmap   <silent><buffer>           <CR>
-      "     inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
-      "     inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
-      "     call core#RefreshGui()
-      "   endif
-      " endfunction
-      "
-      " autocmd plugin Filetype vimwiki call VimwikiLink()
-      " autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      " autocmd plugin BufEnter *
-      "       \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
-      " " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
-      " " see arch install patch to initialize s:vimwiki_autowriteall
+      if exists("g:loaded_vimwiki")
+        " disable tab for autocompletion
+        let g:vimwiki_table_mappings = 0
+        let g:vimwiki_table_auto_fmt = 0
+
+        let g:vimwiki_list =
+            \[
+            \  {
+            \    'path'      : '~/vimwiki/thedarnedestthing/'
+            \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \, {
+            \    'path'      : '~/vimwiki/thestory/'
+            \,   'path_html' : '~/vimwiki/thestory/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \, {
+            \    'path'      : '~/vimwiki/truthordie/'
+            \,   'path_html' : '~/vimwiki/truthordie/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \, {
+            \    'path'      : '~/vimwiki/shadowsandlight/'
+            \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \, {
+            \    'path'      : '~/vimwiki/healing/'
+            \,   'path_html' : '~/vimwiki/healing/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \, {
+            \    'path'      : '~/vimwiki/colophon/'
+            \,   'path_html' : '~/vimwiki/colophon/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \, {
+            \    'path'      : '~/vimwiki/notes/'
+            \,   'path_html' : '~/vimwiki/notes/html/'
+            \,   'syntax'    : 'markdown'
+            \  }
+            \]
+
+        " header highlighting
+        highlight VimwikiHeader1 guifg=#d70000
+        highlight VimwikiHeader2 guifg=#af005f
+        highlight VimwikiHeader3 guifg=#5f5faf
+        highlight VimwikiHeader4 guifg=#0087ff
+        highlight VimwikiHeader5 guifg=#00afaf
+        highlight VimwikiHeader6 guifg=#5f8700
+
+        " restore vimwiki link
+        function! VimwikiLink()
+          highlight VimwikiLink guifg=#268bd2 gui=bold
+        endfunction
+
+        " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
+        function! VimwikiRemap()
+          if !exists('b:vimwiki_remap')
+            let b:vimwiki_remap = 1
+            iunmap   <silent><buffer>           <CR>
+            inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
+            inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
+            call core#RefreshGui()
+          endif
+        endfunction
+
+        autocmd plugin Filetype vimwiki call VimwikiLink()
+        autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
+        autocmd plugin BufEnter *
+              \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
+        " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
+        " see arch install patch to initialize s:vimwiki_autowriteall
+      endif
 
     " ................................................................. Yankring
 
