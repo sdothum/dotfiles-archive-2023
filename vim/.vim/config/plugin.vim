@@ -16,8 +16,8 @@
 
     " ................................................................... System
 
-      let code   = { 'for' : ['c', 'cpp', 'haskell', 'lua', 'ruby', 'sh', 'snippets', 'vim'] }
-      let prose  = { 'for' : ['draft', 'mail', 'markdown', 'note', 'vimwiki', 'wiki'] }
+      let code  = { 'for' : ['c', 'cpp', 'haskell', 'lua', 'ruby', 'sh', 'snippets', 'vim'] }
+      let prose = { 'for' : ['draft', 'mail', 'markdown', 'note', 'wiki'] }
 
       Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
       " Plug 'tpope/vim-scriptease'         " debugger
@@ -28,9 +28,7 @@
 
     " ................................................................... Layout
 
-      " Plug 'junegunn/goyo.vim'            " distraction free mode
-      " Plug 'altercation/vim-colors-solarized' breaks synIDattr with vim8
-      " Plug 'andreypopp/vim-colors-plain'
+      " Plug 'andreypopp/vim-colors-plain'  " monochrome
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
@@ -40,9 +38,7 @@
     " ..................................................................... Info
 
       " Plug 'metakirby5/codi.vim'          " async evaluator
-      " Plug 'machakann/vim-highlightedyank' " yank highlighter
       " Plug 'reedes/vim-wordy'             " word usage
-      Plug 'itchyny/lightline.vim'          " statusline
       Plug 'majutsushi/tagbar', { 'on' : 'TagbarOpenAutoClose' } " ctags
       Plug 'bimlas/vim-eightheader'         " custom foldtext
       Plug '~/.vim/custom/info'             " statusline info
@@ -73,9 +69,7 @@
 
     " ................................................................ Hypertext
 
-      " Plug 'greyblake/vim-preview'        " markdown
-      " Plug 'vimwiki/vimwiki'              " markdown wiki
-      " Plug 'lervag/wiki'
+      " Plug 'lervag/wiki'                  " vimwiki clone
       Plug 'junegunn/fzf.vim'               " fuzzy finder
       Plug 'Alok/notational-fzf-vim'        " fzf note search
 

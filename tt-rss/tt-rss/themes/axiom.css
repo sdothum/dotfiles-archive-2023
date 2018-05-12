@@ -250,7 +250,7 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:                    '∙● axi○m';
+  content:                    '∙● axi◯m';
   display:                    block;
   font:                       22px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                      #871c1c;
@@ -273,7 +273,7 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content:                    'refresh ∙●∙ axi○m';
+  content:                    'refresh ∙●∙ axi◯m';
   font:                       18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                      #b5423f;
   text-shadow:                0 1px 1px #fff;

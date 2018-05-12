@@ -20,14 +20,14 @@
 
     " ......................................................... DFM colour masks
 
-      autocmd ui InsertEnter * execute 'highlight LineNr guifg=' . g:dfm_linenr_ins
-      autocmd ui InsertLeave * execute 'highlight LineNr guifg=' . g:dfm_linenr_cmd
+      autocmd ui InsertEnter * call ui#LineNr('i')
+      autocmd ui InsertLeave * call ui#LineNr('n')
 
   " UI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................ Toggle statusline
 
-      " toggle lightline/default vim statusline
+      " toggle statusline details
       nmap <silent><F7>   :call ui#ToggleInfo()<CR>
       imap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
       vmap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
@@ -60,6 +60,8 @@
       nmap <silent><F9>   :call ui#Retheme()<CR>
       imap <silent><F9>   <C-o>:call ui#Retheme()<CR>
       vmap <silent><F9>   <C-o>:call ui#Retheme()<CR>
+
+      autocmd ui FocusGained * silent! call ui#Margin()
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

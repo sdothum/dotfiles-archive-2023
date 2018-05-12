@@ -18,9 +18,8 @@
       let g:ale_sign_warning       = '⚑'
       let g:ale_linter_aliases     =
           \{
-          \  'vimwiki' : 'markdown'
-          \, 'wiki'    : 'markdown'
-          \, 'mail'    : 'markdown'
+          \  'wiki' : 'markdown'
+          \, 'mail' : 'markdown'
           \}
 
       nmap <silent><C-k> <Plug>(ale_previous_wrap)
@@ -88,7 +87,7 @@
 
       function! FzfColors()
         " g:fzf_colors initializes fzf only once, so override cursorline color (cannot seem to set other colors, such as hl+)
-        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . ui#color('g:dfm_fg_' . &background)
+        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . ui#Value('g:dfm_fg_' . &background)
 
         " hide bottom fzf window identifier
         execute 'highlight fzf1 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
@@ -117,145 +116,11 @@
       " subtle highlighting of even indents only, see core#ToggleColumn(), ui#IndentTheme()
       let g:indent_guides_auto_colors = 0
 
-    " ................................................................ Lightline
-
-      " powerline symbol slant (0) lower (1) upper
-      let s:powerline  = ("$POWERLINE" > '' ? $POWERLINE : 0)
-      let g:lightline  =
-          \{
-          \  'colorscheme'  : 'solarized'
-          \, 'separator'    : { 'left' : '',  'right' : ''  }
-          \, 'subseparator' : { 'left' : '', 'right' : '' }
-          \}
-
-      " defer lightline settings because plugin is initialized before buffers are read, see ui#LiteLine()
-      function! LightLine()
-        if has("gui_running")
-          if s:powerline == 0
-            let g:lightline =
-                \{
-                \  'colorscheme'  : g:colors_name
-                \, 'separator'    : { 'left' : '', 'right' : '' }
-                \, 'subseparator' : { 'left' : '', 'right' : '' }
-                \}
-          else
-            let g:lightline =
-                \{
-                \  'colorscheme'  : g:colors_name
-                \, 'separator'    : { 'left' : '', 'right' : '' }
-                \, 'subseparator' : { 'left' : '', 'right' : '' }
-                \}
-          endif
-        endif
-
-        let g:lightline.active =
-            \{
-            \  'left'  : [['mode',        'paste',     'matchspace',  'bufnum'   ]
-            \,            ['bufcount',    'rootpath',  'rootname',    'basename' ]
-            \,            ['filename',    'indent',    'spaces'                  ]
-            \,            ['readonly',    'modified'                             ]]
-            \, 'right' : [['wordcount',   'atom',      'filetype'                ]
-            \,            ['lineinfo',    'topbottom', 'linepercent', 'linecount']
-            \,            ['specialchar', 'column',    'columninfo'              ]]
-            \}
-
-        let g:lightline.inactive =
-            \{
-            \  'left'  : [['indicator']
-            \,            ['filename' ]]
-            \, 'right' : [['linecount']]
-            \}
-
-        let g:lightline.tabline =
-            \{
-            \  'left'  : [['tabs' ]]
-            \, 'right' : [['close']]
-            \}
-
-        let g:lightline.component =
-            \{
-            \  'absolutepath' : '%F'
-            \, 'bufcount'     : '%{core#BufCount() > 1 ? core#BufCount() : ""}'
-            \, 'bufnum'       : '%{core#BufCount() > 1 ? bufnr("%") : ""}'
-            \, 'charvalue'    : '%b'
-            \, 'charvaluehex' : '%B'
-            \, 'close'        : '%999X X '
-            \, 'column'       : '%{getline(line(".")) == "" ? "" : virtcol(".")}'
-            \, 'fileencoding' : '%{strlen(&fenc) ? &fenc : &enc}'
-            \, 'fileformat'   : '%{&fileformat}'
-            \, 'filename'     : '%t'
-            \, 'filetype'     : '%{strlen(&filetype) ? &filetype : "no ft"}'
-            \, 'indicator'    : '%{info#Modified(1)}'
-            \, 'linecount'    : '%L'
-            \, 'lineinfo'     : '%3l:%-2v'
-            \, 'line'         : '%l'
-            \, 'mode'         : '%{lightline#mode()}'
-            \, 'paste'        : '%{&paste ? "PASTE" : ""}'
-            \, 'percent'      : '%-0p%%'
-            \, 'percentwin'   : '%P'
-            \, 'readonly'     : '%{core#Protected() ? "" : &readonly ? "  " : &modifiable ? "" : "  "}'
-            \, 'relativepath' : '%f'
-            \}
-
-        " tagbar suppression doesn't work (for some reason) so disable lightline, see core#Tagbar()
-        let g:lightline.component_visible_condition =
-            \{
-            \  'atom'        : '(!core#Tagbar())'
-            \, 'basename'    : '(!core#Tagbar())'
-            \, 'bufcount'    : '(core#BufCount() > 1)'
-            \, 'bufnum'      : '(core#BufCount() > 1)'
-            \, 'column'      : '(!core#Tagbar())'
-            \, 'linepercent' : '(line(".") != 1 && line(".") != line("$") && !core#Tagbar())'
-            \, 'mode'        : '(!core#Tagbar())'
-            \, 'paste'       : '&paste'
-            \, 'readonly'    : '(&filetype != "help" && (&readonly || !&modifiable))'
-            \, 'topbottom'   : '((line("w0") == 1 || line("w$") == line("$")) && !core#Tagbar())'
-            \}
-
-        let g:lightline.component_function =
-            \{
-            \  'atom'        : 'info#Atom'
-            \, 'basename'    : 'info#BaseName'
-            \, 'columninfo'  : 'info#ColumnInfo'
-            \, 'indent'      : 'info#Indent'
-            \, 'lineinfo'    : 'info#LineInfo'
-            \, 'linepercent' : 'info#LinePercent'
-            \, 'matchspace'  : 'core#MatchSpace'
-            \, 'modified'    : 'info#Modified'
-            \, 'rootname'    : 'info#RootName'
-            \, 'rootpath'    : 'info#RootPath'
-            \, 'spaces'      : 'info#Spaces'
-            \, 'specialchar' : 'info#SpecialChar'
-            \, 'topbottom'   : 'info#TopBottom'
-            \, 'wordcount'   : 'info#WordCount'
-            \}
-
-        let g:lightline.mode_map =
-            \{
-            \  '?'      : ' '
-            \, 'c'      : 'C'
-            \, "\<C-s>" : 'S-BLOCK'
-            \, "\<C-v>" : 'V-BLOCK'
-            \, 'i'      : 'I'
-            \, 'n'      : 'N'
-            \, 'R'      : 'R'
-            \, 's'      : 'S'
-            \, 'S'      : 'S-LINE'
-            \, 't'      : '🔍'
-            \, 'v'      : 'V'
-            \, 'V'      : 'V-LINE'
-            \}
-      endfunction
-
     " ................................................................ Limelight
 
-      let g:limelight_default_coefficient = 0.8
+      " let g:limelight_default_coefficient = 0.8
       let g:limelight_paragraph_span      = 0 " include preceding/following paragraphs
       let g:limelight_priority            = 1 " -1 to hlsearch highlight all paragraphs, 1 per paragraph
-
-      " see ui#ToggleProof(), ui#CodeView()
-      " autocmd! plugin User GoyoEnter     Limelight
-      " autocmd! plugin User GoyoLeave     Limelight!
 
     " .............................................................. Litecorrect
 
@@ -271,7 +136,6 @@
       autocmd plugin Filetype note         call litecorrect#init()
       autocmd plugin Filetype mail         call litecorrect#init()
       autocmd plugin FileType markdown,mkd call litecorrect#init()
-      autocmd plugin Filetype vimwiki      call litecorrect#init()
 
     " .................................................................. LiteDFM
 
@@ -325,9 +189,8 @@
       " see core#CheckFiletype()
       let g:neosnippet#scope_aliases =
           \{
-          \  'new'      : 'conf,fish,hs,ruby,sh,zsh'
-          \, 'markdown' : 'vimwiki'
-          \, 'text'     : 'mail'
+          \  'new'  : 'conf,fish,hs,ruby,sh,zsh'
+          \, 'text' : 'mail'
           \}
 
       imap <C-x> <Plug>(neosnippet_expand_or_jump)
@@ -403,7 +266,6 @@
       autocmd plugin Filetype note         call pencil#init()
       autocmd plugin Filetype mail         call pencil#init()
       autocmd plugin FileType markdown,mkd call pencil#init()
-      autocmd plugin Filetype vimwiki      call pencil#init()
 
     " .................................................................. Quantum
 
@@ -523,98 +385,7 @@
       "     \, 'sort'       : 0
       "     \}
 
-      " " see https://github.com/vimwiki/utils/blob/master/vwtags.py
-      " let g:tagbar_type_vimwiki =
-      "     \{
-      "     \  'ctagstype'  : 'vimwiki'
-      "     \, 'kinds'      : ['h:header']
-      "     \, 'sro'        : '&&&'
-      "     \, 'kind2scope' : { 'h' : 'header' }
-      "     \, 'sort'       : 0
-      "     \, 'ctagsbin'   : '~/.vim/bin/vwtags.py'
-      "     \, 'ctagsargs'  : 'default'
-      "     \}
-
-      " suppress unnecessary lightline processing
-      nmap <silent><leader>t :TagbarOpenAutoClose<CR>:call lightline#disable()<CR>
-
-    " .................................................................. Vimwiki
-
-      if exists("g:loaded_vimwiki")
-        " disable tab for autocompletion
-        let g:vimwiki_table_mappings = 0
-        let g:vimwiki_table_auto_fmt = 0
-
-        let g:vimwiki_list =
-            \[
-            \  {
-            \    'path'      : '~/vimwiki/thedarnedestthing/'
-            \,   'path_html' : '~/vimwiki/thedarnedestthing/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \, {
-            \    'path'      : '~/vimwiki/thestory/'
-            \,   'path_html' : '~/vimwiki/thestory/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \, {
-            \    'path'      : '~/vimwiki/truthordie/'
-            \,   'path_html' : '~/vimwiki/truthordie/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \, {
-            \    'path'      : '~/vimwiki/shadowsandlight/'
-            \,   'path_html' : '~/vimwiki/shadowsandlight/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \, {
-            \    'path'      : '~/vimwiki/healing/'
-            \,   'path_html' : '~/vimwiki/healing/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \, {
-            \    'path'      : '~/vimwiki/colophon/'
-            \,   'path_html' : '~/vimwiki/colophon/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \, {
-            \    'path'      : '~/vimwiki/notes/'
-            \,   'path_html' : '~/vimwiki/notes/html/'
-            \,   'syntax'    : 'markdown'
-            \  }
-            \]
-
-        " header highlighting
-        highlight VimwikiHeader1 guifg=#d70000
-        highlight VimwikiHeader2 guifg=#af005f
-        highlight VimwikiHeader3 guifg=#5f5faf
-        highlight VimwikiHeader4 guifg=#0087ff
-        highlight VimwikiHeader5 guifg=#00afaf
-        highlight VimwikiHeader6 guifg=#5f8700
-
-        " restore vimwiki link
-        function! VimwikiLink()
-          highlight VimwikiLink guifg=#268bd2 gui=bold
-        endfunction
-
-        " resolve <CR>, <Tab> conflicts with autocompletion (simple-complete)
-        function! VimwikiRemap()
-          if !exists('b:vimwiki_remap')
-            let b:vimwiki_remap = 1
-            iunmap   <silent><buffer>           <CR>
-            inoremap <expr><buffer><C-PageDown> vimwiki#tbl#kbd_tab()
-            inoremap <expr><buffer><C-PageUp>   vimwiki#tbl#kbd_shift_tab()
-            call core#RefreshGui()
-          endif
-        endfunction
-
-        autocmd plugin Filetype vimwiki call VimwikiLink()
-        autocmd plugin Filetype vimwiki setlocal nocp spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-        autocmd plugin BufEnter *
-              \ if &filetype == 'vimwiki' | call VimwikiRemap() | endif
-        " cannot trap s:setup_buffer_leave() to avoid initialization error on 1st link
-        " see arch install patch to initialize s:vimwiki_autowriteall
-      endif
+      nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
     " ................................................................. Yankring
 

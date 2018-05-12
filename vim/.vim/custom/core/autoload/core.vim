@@ -63,8 +63,10 @@
 
     " .............................................................. Debug trace
 
+      let g:trace = $VIMTRACE > '' ? 1 : 0
+
       function! core#Trace(msg)
-        if $VIMTRACE > ''
+        if g:trace == 1
           " escape problematic shell commandline characters
           silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log'
           " sleep 1000m
@@ -80,7 +82,7 @@
       "       see thedarnedestthing.com
 
       " hjkl mapping (0) hjkl (1) mnle
-      let s:mnle = ("$MNLE" > '' ? $MNLE : 0)
+      let s:mnle = "$MNLE" > '' ? $MNLE : 0
 
       function! core#Colemak()
         if s:mnle != 0
@@ -210,18 +212,12 @@
           unlet s:soft
           autocmd! soft
           " echo ''
-          let g:matchspace = ''
         else
           match ExtraWhitespace /\s\+$/
           call core#Soft()
           autocmd soft BufEnter * call core#Soft()
           " echo 'List invisibles ON'
-          let g:matchspace = '■'
         endif
-      endfunction
-
-      function! core#MatchSpace()
-        return g:matchspace
       endfunction
 
   " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -398,11 +394,11 @@
 
       " distraction free filetyes
       function! core#Prose()
-        return &filetype =~ 'vimwiki\|wiki\|mail\|markdown\|draft\|note'
+        return &filetype =~ 'wiki\|mail\|markdown\|draft\|note'
       endfunction
 
       function! core#Markdown()
-        return &filetype =~ 'vimwiki\|wiki\|markdown'
+        return &filetype =~ 'wiki\|markdown'
       endfunction
 
     " ................................................................... Tagbar
@@ -484,18 +480,6 @@
         " execute 'normal! ' . search('\n\n\n', 'e') . 'G'
         execute 'normal! ' . (search('^Subject: ') + 2) . 'G'
         execute 'startinsert'
-      endfunction
-
-    " ......................................................... Vimwiki markdown
-
-      " reformat vimwiki markdown table
-      function! core#ReformatVimwikiTable()
-        let l:filetype=&filetype
-        set laststatus=1
-        set filetype=vimwiki
-        execute 'normal gww'
-        execute 'set filetype=' . l:filetype
-        call ui#RefreshInfo()
       endfunction
 
 " core.vim

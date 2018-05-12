@@ -19,7 +19,7 @@ while : ;do
   case $CONTINUE in
     n | N | '') exit 0 ;;
     y | Y     ) exit 1 ;;
-    a | A     ) { kill $sig $PPID ; break ;} ;;
+    a | A     ) { kill $sig ${TMPPID:-$PPID} ; break ;} ;;  # see tmout
   esac
 done
 

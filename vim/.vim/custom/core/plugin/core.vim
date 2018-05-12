@@ -14,8 +14,7 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:matchspace = ''                 " statusline indicator, see core#ToggleSpaces()
-      let g:ruler      = 0                  " colorcolumn mode
+      let g:ruler = 0                       " colorcolumn mode
 
       augroup core
         autocmd!
@@ -31,6 +30,10 @@
     " ............................................................... Print file
 
       command! Hardcopy silent call core#Hardcopy()<CR>:echo 'Printing..'
+
+    " .................................................................... Debug
+
+      nnoremap <silent><S-F12>     :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -108,11 +111,6 @@
 
       " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
       autocmd core Filetype mail call core#ComposeMail()
-
-    " ......................................................... Vimwiki markdown
-
-      " reformat vimwiki markdown table
-      nmap <silent><leader><leader>v :silent call core#ReformatVimwikiTable()<CR>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

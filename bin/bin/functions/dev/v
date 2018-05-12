@@ -12,7 +12,7 @@
 SHELL=/usr/bin/dash
 LOG=/tmp/vim.log
 vimtrace=$HOME/.session/vimtrace
-sudo rm -f $LOG
+echo >$LOG
 [ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true ; term 'vimtrace' tail -f $LOG ;}
 
 hlwm && [ -e $DYNAMIC ] && focus=focus

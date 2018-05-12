@@ -104,7 +104,6 @@
 
     " ................................................... Status / command lines
 
-      " see Lightline plugins.vim
       set laststatus=2                      " always show status line
       set ruler                             " show cursor position in status line
       set noshowcmd                         " show incomplete cmds in command line

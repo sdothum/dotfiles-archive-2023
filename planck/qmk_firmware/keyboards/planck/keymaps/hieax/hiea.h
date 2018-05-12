@@ -62,19 +62,19 @@
   },
 #ifdef HOME_MODS
   // ,-----------------------------------------------------------------------------------.
-  // |   Q  |   Y  |   O  |   U  |   Z  |  Fn  | Caps |   `  |   [  |   ]  |   ^  |   X  |
+  // |   Q  |   Y  |   O  |   U  |   Z  |  Fn  | Caps |   `  |   [  |   ^  |   ]  |   X  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   H  |   I  |   E  |  f() |   ?  |Cursor| Mouse|   |  |   (  |   )  |   $  |   W  |
+  // |   H  |   I  |   E  |  f() |   ?  |Cursor| Mouse|   |  |   (  |   $  |   )  |   W  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   J  |   :  |   "  |   K  |   /  |  Num | Regex|   \  |   {  |   }  |   #  |   V  |
+  // |   J  |   :  |   "  |   K  |   /  |  Num | Regex|   \  |   {  |   #  |   }  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Esc | Space|  Ins | Left |   +  | Space| Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_LSYMBOL] = {
-    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_SL, CNTR_TR, TD_GRV,  KC_LBRC, KC_RBRC, KC_CIRC, S(KC_X)},
-    {HOME_H,  HOME_I,  HOME_E,  ___fn__, KC_QUES, CNTR_HL, CNTR_HR, KC_PIPE, KC_LPRN, KC_RPRN, KC_DLR,  S(KC_W)},
-    {S(KC_J), TD_COLN, TD_DQOT, S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_BSLS, KC_LCBR, KC_RCBR, KC_HASH, S(KC_V)},
+    {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_SL, CNTR_TR, TD_GRV,  KC_LBRC, KC_CIRC, KC_RBRC, S(KC_X)},
+    {HOME_H,  HOME_I,  HOME_E,  ___fn__, KC_QUES, CNTR_HL, CNTR_HR, KC_PIPE, KC_LPRN, KC_DLR,  KC_RPRN, S(KC_W)},
+    {S(KC_J), TD_COLN, TD_DQOT, S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_BSLS, KC_LCBR, KC_HASH, KC_RCBR, S(KC_V)},
     {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  SL_INS,  SP_LEFT, KC_PLUS, SL_SPC,  AT_DOWN, GT_UP,   CT_RGHT},
   },
 
