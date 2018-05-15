@@ -7,7 +7,7 @@
 # ....................................................................... Device
 
 usage() {
-  echo "usage: $(basename $0) ata | label | usb | uuid"
+  echo "usage: $(basename $0) ata | label | path | usb | uuid"
   exit 1
 }
 
@@ -16,6 +16,7 @@ case $1 in
   ''   ) usage ;;
   ata  ) ls --color -l /dev/disk/by-id/*ata* ;;
   label) ls --color -l /dev/disk/by-label/* ;;
+  path ) ls --color -l /dev/disk/by-path/* ;;
   usb  ) ls --color -l /dev/disk/by-id/*usb* ;;
   uuid ) ls --color -l /dev/disk/by-uuid/* ;;
   *    ) ls --color -l /dev/disk/by-id/ | grep --color=never -i $1 ;;

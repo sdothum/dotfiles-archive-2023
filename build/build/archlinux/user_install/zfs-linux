@@ -1,0 +1,23 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... zfs
+
+sudo mkdir -pv /net/archive
+sudo mkdir -pv /net/depot/virtualbox
+sudo mkdir -pv /net/depot/vms
+sudo mkdir -pv /net/downloads/depot
+sudo mkdir -pv /net/downloads/http
+sudo mkdir -pv /net/downloads/nzbs
+sudo mkdir -pv /net/downloads/torrents
+sudo mkdir -pv /net/media/ebooks
+sudo mkdir -pv /net/media/music
+sudo mkdir -pv /net/media/videos/animation
+sudo mkdir -pv /net/media/videos/anime
+sudo mkdir -pv /net/media/videos/movies
+sudo mkdir -pv /net/media/videos/series
+sudo mkdir -pv /net/media/videos/tutorials
+sudo mkdir -pv /net/photos
+permissions /net

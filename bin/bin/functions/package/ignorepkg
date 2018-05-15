@@ -6,8 +6,12 @@
 
 # ........................................................... Package management
 
+# Usage: ignorepkg [-f] [<package>]
+
 # add/remove ignore packages
 conf=/etc/pacman.conf
+
+[ $1 = '-f' ] && { shift; force=$1 ;}
 
 add_pkg() {
   for i in $@ ;do
@@ -28,10 +32,13 @@ del_pkg() {
 # $@ expansion in grep and ifyes truncated, so..
 pkgs=$@
 ignored=$(grep '^ *IgnorePkg.*' $conf)
-echo $ignored
+[ $force ] || echo $ignored
 if [ -z $1 ] ;then
   ignored=$(echo $ignored | sed 's/^.*= *//')
   [ "$ignored" ] && { ifno "reinstate $ignored" || del_pkg $ignored ;}
+elif [ $force ] ;then
+  grep -q "^ *IgnorePkg.*$1" $conf || add_pkg $pkgs
+  grep '^ *IgnorePkg.*' $conf
 elif grep -q "^ *IgnorePkg.*$1" $conf ;then
   ifyes "reinstate $pkgs" && del_pkg $pkgs
 else

@@ -65,13 +65,13 @@ d * znc
   nzbget            [server]
 # par2cmdline-tbb
 # python2-pyopenssl
-  rtorrent          [server]
+# rtorrent          [server]
 # rutorrent         [server]
 # sabnzbd           [server]
 # sickbeard-git     [server]
   sonarr            [server]
-# tixati
-# transmission-gtk
+  tixati
+  transmission-gtk
 # unison
 # utserver
   wget

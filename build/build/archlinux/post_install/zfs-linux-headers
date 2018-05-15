@@ -1,13 +1,10 @@
 # sdothum - 2016 (c) wtfpl
 
-# User_install
+# Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ...................................................................... dovecot
+# .......................................................................... zfs
 
-# re-initialize dovecot database
-systemd stop dovecot
-find $HOME/Maildir -name 'dovecot*' -exec rm -fv {} \;
-systemd restart dovecot
-
-# vim: set ft=sh: #
+# must sync to current linux version
+ignorepkg -f linux-headers
+ignorepkg -f zfs-linux-headers

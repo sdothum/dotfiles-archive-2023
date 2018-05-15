@@ -32,6 +32,6 @@ sudo sed -i -e 's/"Special"/"Orbit"/' \
          $FEEDS
 [ -e $HOME/tt-rss/themes/$button ] && sudo sed -i -e "s|images/collapse.png|$button|" $FEEDS
 
-sudo systemctl restart tt-rss
+systemd restart tt-rss
 
 # vim: set ft=sh: #

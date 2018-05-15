@@ -64,6 +64,8 @@ if console ;then
 
   pstat startx && exit
   cpu arm && { tmout ifyes 'sync with watchman' && wsync || wsync -s ;}
+  # mount any dangling nfs shares
+  sudo mount -a
   startx --
 
   # suppress nfs messages to console when server is offline

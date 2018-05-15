@@ -62,6 +62,9 @@
 # ntfs-3g
   ntfs-3g-fuse
 # watchman
+  zfs-linux           [server]
+  zfs-linux-headers   [server]
+d znapzend            [server]
 
 
 = info screens

@@ -29,14 +29,13 @@ heading "/net/* directories"
   sudo mkdir -pv /net/downloads/torrents
   sudo mkdir -pv /net/media/ebooks
   sudo mkdir -pv /net/media/music
-  sudo mkdir -pv /net/media/videosres
   sudo mkdir -pv /net/media/videos/animation
   sudo mkdir -pv /net/media/videos/anime
   sudo mkdir -pv /net/media/videos/movies
   sudo mkdir -pv /net/media/videos/series
   sudo mkdir -pv /net/media/videos/tutorials
   sudo mkdir -pv /net/photos
-  permissions net
+  permissions /net
 fi
 
 
@@ -48,7 +47,7 @@ heading "/net/* directories"
   sudo mkdir -pv /net/downloads/http
   sudo mkdir -pv /net/downloads/nzbs
   sudo mkdir -pv /net/downloads/torrents
-  permissions net
+  permissions /net
 fi
 
 
