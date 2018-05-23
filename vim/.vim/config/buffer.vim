@@ -172,10 +172,19 @@
 
       set foldenable                        " fold by default
       set foldlevelstart=10                 " open most folds by default
+      " set foldlevelstart=1
       set foldnestmax=10                    " 10 nested fold max
-      set foldmethod=indent                 " fold based on indent
-      " set foldmethod=syntax               " folding based on syntax
-      set foldnestmax=3                     " deepest fold is 3 levels
+      " set foldmethod=indent               " fold based on indent
+      set foldmethod=syntax                 " folding based on syntax
+
+      let javaScript_fold=1                 " JavaScript
+      let perl_fold=1                       " Perl
+      let php_folding=1                     " PHP
+      let r_syntax_folding=1                " R
+      let ruby_fold=1                       " Ruby
+      let sh_fold_enabled=1                 " sh
+      let vimsyn_folding='af'               " Vim script
+      let xml_syntax_folding=1              " XML
 
       " toggle fold tag / open all
       " noremap         <leader>z za

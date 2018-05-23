@@ -5,11 +5,11 @@
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   Reset keyboard or press hw reset button on base (hole)
 //
-//   cd qmk_firmware/keyboards/planck
-//   sudo make KEYMAP=sdothum dfu
+//   cd qmk_firmware/keyboards/splitography
+//   sudo make KEYMAP=<keymap> dfu
 //
-//   sudo make clean          (good practice before flashing)
-//   sudo make KEYMAP=sdothum (to compile check)
+//   sudo make clean           (good practice before flashing)
+//   sudo make KEYMAP=<keymap> (to compile check)
 //
 // Package requirements (for arch linux)
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -21,29 +21,12 @@
 // ▔▔▔▔▔
 //   ** E R G O   W I D E   S P L I T ** Layout
 //
-//   Autocompletion tap dance key pairs (),[],{} are available from the
-//   number/symbol layer, as well as, numerous (un)shift key values
-//
 //   The navigation pad provides a single hand right thumb activated cluster
 //   with left hand modifiers
 //
 //   #define PRIVATE_STRING includes private_string.h, a user defined code
 //   block for the PRIV tap dance e.g. SEND_STRING("secret messape"),
 //   see function private()
-//
-// Modifier clusters
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-//   The num and sym keys together access the navigation pad layer
-//
-//   ,-----------------------------------------------------------------------------------.
-//   | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
-//   `-----------------------------------------------------------------------------------'
-//
-// Hint
-// ▔▔▔▔
-//   For sculpted keycaps such as Cherry or OEM profile, reverse the Alt, Num,
-//   Shift, Shift, Nav, Sym keycaps for more ergonomic thumb orientation and
-//   actuation
 //
 // Code
 // ▔▔▔▔
@@ -56,8 +39,7 @@
 //
 // Change history
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-//   See http://thedarnedestthing.com/planck%20constant
-//   See http://thedarnedestthing.com/planck%20done
+//   See http://thedarnedestthing.com/colophon
 
 
 
@@ -114,11 +96,6 @@ enum planck_keycodes {
  ,SM_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SM_W      // pseudo MT   (MOD_LGUI | MOD_LSFT, S(KC_W)) for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, S(KC_DEL))            for shifted key-codes, see process_record_user()
- ,SL_BSPC   // pseudo LT   (S(_SYMBOL), KC_BSPC)          for home row shifted GUIFN
-#ifdef HOME_MODS
- ,HOME_A    // pseudo SFT_T(KC_A)
- ,HOME_T    // pseudo SFT_T(KC_T)
-#endif
 #ifdef CENTER_TT
  ,TT_ESC
 #endif
@@ -145,6 +122,8 @@ enum planck_keycodes {
 #define HOME_H  GUI_T(KC_H)
 #define HOME_I  CTL_T(KC_I)
 #define HOME_E  ALT_T(KC_E)
+#define HOME_A  SFT_T(KC_A)
+#define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #define HOME_W  GUI_T(KC_W)
@@ -191,7 +170,6 @@ enum planck_keycodes {
 
 #ifdef CENTER_TT
 #define CNTR_TL TT  (_TTFNCKEY)
-#define CNTR_SL LM  (_TTFNCKEY, MOD_LSFT)
 #define CNTR_TR     KC_CAPS
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
@@ -199,7 +177,6 @@ enum planck_keycodes {
 #define CNTR_BR TT  (_TTREGEX)
 #else
 #define CNTR_TL OSM (MOD_LALT | MOD_LCTL)
-#define CNTR_SL OSM (MOD_LALT | MOD_LCTL)
 #define CNTR_TR OSM (MOD_LGUI | MOD_LCTL)
 #define CNTR_HL OSM (MOD_LALT | MOD_LSFT)
 #define CNTR_HR OSM (MOD_LGUI | MOD_LSFT)
@@ -283,36 +260,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case HOME_E:
     case HOME_R:
       tap_mods(record, KC_LALT);
-      symbol_shift(record, 0);
       break;
     case HOME_H:
     case HOME_W:
       tap_mods(record, KC_LGUI);
-      symbol_shift(record, 0);
       break;
     case HOME_I:
     case HOME_S:
       tap_mods(record, KC_LCTL);
-      symbol_shift(record, 0);
       break;
     case HOME_A:
       tap_mods(record, KC_LSFT);
-      symbol_shift(record, KC_A);
       break;
     case HOME_T:
-      tap_mods(record, KC_RSFT);
-      symbol_shift(record, KC_T);
+      tap_mods(record, KC_RSFT);            // note: SFT_T actually uses KC_LSFT
+      break;
+    // special shift layer mappings
+    case KC_DOT:
+      if (hr_shift(record, KC_RSFT, SHIFT, KC_GRV)) {
+        return false;
+      }
+      break;
+    case KC_COMM:
+      if (hr_shift(record, KC_RSFT, NOSHIFT, KC_GRV)) {
+        return false;
+      }
       break;
 #endif
-    case SL_BSPC:
-      lt(record, NOSHIFT, KC_BSPC, KC_LSFT, _SYMBOL);
-      break;
 #ifdef CENTER_TT
     case TT_ESC:
       clear_tt();                           // exit TT layer
       return false;
 #endif
     case LT_ESC:
+#ifdef HOME_MODS
+      if (hr_shift(record, KC_RSFT, SHIFT, KC_TAB)) {
+        return false;
+      }
+#endif
 #ifdef CENTER_TT
       if (tt_keycode != 0) {
         clear_tt();                         // exit TT layer
@@ -354,29 +339,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       // ALT_T(S(KC_5))
       mt_shift(record, KC_LALT, 0, KC_5);
       break;
-    case TD_ENT:
-      tap_layer(record, _RSHIFT);
-      // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
-      break;
     case LT_BSLS:
       tap_layer(record, _MOUSE);
       // LT (_MOUSE, KC_BSLS) left right combination layer, see #define LT_BSLS
       thumb_layer(record, LEFT, 0, 0, _MOUSE, _SYMBOL);
       break;
     case LT_BSPC:
+#ifdef HOME_MODS
+      if (hr_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) {
+        return false;
+      }
+#endif
       tap_layer(record, _SYMBOL);
       // LT (_SYMBOL, KC_LEFT) left right combination layer
-      thumb_layer(record, RIGHT, 0, 0, _SYMBOL, _LSHIFT);
+      thumb_layer(record, RIGHT, 0, 0, _SYMBOL, _LSYMBOL);
       break;
     case SL_DEL:
       tap_layer(record, _MOUSE);
       // LT (_MOUSE, S(KC_DEL)) left right combination layer
-      thumb_layer(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSHIFT);
+      thumb_layer(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
+      break;
+    case TD_ENT:
+#ifdef HOME_MODS
+      if (hr_shift(record, KC_LSFT, SHIFT, KC_MINS)) {
+        return false;
+      }
+#endif
+      tap_layer(record, _RSYMBOL);
+      // LT (_RSHIFT, KC_ENT) emulation, see tap dance enter
       break;
     case TD_SPC:
-      tap_layer(record, _LSHIFT);
+#ifdef HOME_MODS
+      if (hr_shift(record, KC_RSFT, NOSHIFT, KC_MINS)) {
+        return false;
+      }
+#endif
+      tap_layer(record, _LSYMBOL);
       // LT (_LSHIFT, KC_SPC) left right combination layer, see tap dance TD_SPC
-      thumb_layer(record, LEFT, 0, 0, _LSHIFT, _SYMBOL);
+      thumb_layer(record, LEFT, 0, 0, _LSYMBOL, _SYMBOL);
       break;
 #ifdef CENTER_TT
     case CNTR_TL:

@@ -117,7 +117,7 @@ enum planck_keycodes {
  ,SL_LEFT   // pseudo LT   (_MOUSE, S(KC_LEFT))           for shifted key-codes, see process_record_user()
  ,SP_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_FNCKEY, S(KC_TAB))           for shifted key-codes, see process_record_user()
- ,SL_SPC    // pseudo LT   (S(_SYMBOL), KC_SPC)           for home row shifted GUIFN
+ ,SL_BSPC   // pseudo LT   (S(_SYMBOL), KC_BSPC)          for home row shifted GUIFN
  ,SL_INS    // pseudo LT   (S(_FNCKEY), KC_INS)           for home row shifted GUIFN
 #ifdef HOME_MODS
  ,HOME_A    // pseudo SFT_T(KC_A)
@@ -328,8 +328,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       tap_mods(record, KC_LCTL);
       break;
 #endif
-    case SL_SPC:
-      lt(record, NOSHIFT, KC_SPC, KC_LSFT, _SYMBOL);
+    case SL_BSPC:
+      lt(record, NOSHIFT, KC_BSPC, KC_LSFT, _SYMBOL);
       break;
     case SL_INS:
       lt(record, NOSHIFT, KC_INS, KC_LSFT, _FNCKEY);
@@ -445,6 +445,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case PLOVER:
       steno(record);
       return false;
+    default:
+      key_timer = 0;                        // regular keycode, clear timer in keycode_functions.h
   }
   return true;
 }

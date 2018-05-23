@@ -89,7 +89,7 @@ ${voffset -28}${goto 75}${color8}${diskiograph 15,0}
 ${voffset -5}${goto 75}${font}${color1}Load   ${loadavg 1}   ${loadavg 2}   ${loadavg 3} ${alignr}${lua_parse bandwidth ${diskio}}
 
 ${voffset 20}
-${goto 75}${font Noto Sans:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq) + 2 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
+${goto 75}${font Noto Sans:size=7:style=Bold}${color}${execi 3600 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)//' -e 's/ CPU//'} ${alignr}${exec echo "3 k $(sudo cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq) + 2 / 1000000 / .005 + 2 k 1 / p" | dc}Ghz
 # ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//' | sort | tail -1}°C
 # ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${exec echo "1 k $(sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  (.*$//') + 2 / .5 + 0 k 1 / p" | dc}°C
 ${goto 75}${font Noto Sans:size=7:style=Bold}${color0}Temp ${alignr}${acpitemp}°C

@@ -14,7 +14,7 @@ usage() {
 KEYMAPS='DEFAULT'
 
 ROOT=$HOME
-# ROOT=/net/depot
+ROOT=/net/depot
 QMK=$ROOT/qmk_firmware
 SPLITOGRAPHY=$QMK/keyboards/splitography
 KEYMAP=$SPLITOGRAPHY/keymaps/$1

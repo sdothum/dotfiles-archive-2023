@@ -68,14 +68,14 @@
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   J  |   :  |   "  |   K  |   /  |  Num | Regex|   \  |   {  |   #  |   }  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // | Ctrl |  GUI |  Alt |  Esc | Space|  Ins | Left |   +  | Space| Down |  Up  | Right|
+  // | Ctrl |  GUI |  Alt |  Esc | Space|  Ins | Left |   +  | Bksp | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
 
   [_LSYMBOL] = {
     {S(KC_Q), S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_SL, CNTR_TR, TD_GRV,  KC_LBRC, KC_CIRC, KC_RBRC, S(KC_X)},
     {HOME_H,  HOME_I,  HOME_E,  ___fn__, KC_QUES, CNTR_HL, CNTR_HR, KC_PIPE, KC_LPRN, KC_DLR,  KC_RPRN, S(KC_W)},
     {S(KC_J), TD_COLN, TD_DQOT, S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_BSLS, KC_LCBR, KC_HASH, KC_RCBR, S(KC_V)},
-    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  SL_INS,  SP_LEFT, KC_PLUS, SL_SPC,  AT_DOWN, GT_UP,   CT_RGHT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  TD_SPC,  SL_INS,  SP_LEFT, KC_PLUS, SL_BSPC, AT_DOWN, GT_UP,   CT_RGHT},
   },
 
   // ,-----------------------------------------------------------------------------------.

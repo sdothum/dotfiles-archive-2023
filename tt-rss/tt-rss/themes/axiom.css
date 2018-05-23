@@ -13,7 +13,7 @@
 #feeds-holder .dijitTreeRow {
   font:                       12px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   padding:                    3px 15px 1px 0;
-  margin:                     -7px 0 23px;
+  margin:                     -6px 0 24px;  /* adjust top to position topmost label */
 }
 
 #feeds-holder .dijitTreeLabel {
@@ -250,9 +250,9 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:                    '∙● axi◯m';
+  content:                    '∙● axᴉ◯m';
   display:                    block;
-  font:                       22px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                       18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                      #871c1c;
   text-shadow:                0 1px 1px #fff;
   letter-spacing:             2px;
@@ -260,6 +260,7 @@ button.expandPrompt {
   margin-top:                 108px;         /* holder width b of golden ratio a+b  */
   width:                      167px;
   text-align:                 right;
+  text-decoration:            overline;
 }
 
 #feeds-holder {
@@ -273,7 +274,7 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content:                    'refresh ∙●∙ axi◯m';
+  content:                    'refresh ∙●∙ axᴉ◯m';
   font:                       18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                      #b5423f;
   text-shadow:                0 1px 1px #fff;

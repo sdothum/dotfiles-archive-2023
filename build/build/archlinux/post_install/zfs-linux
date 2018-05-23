@@ -18,19 +18,19 @@ config() {
   zfs get compressratio $1
 }
 
-sudo zpool create -f -m /net -o ashift=12 tank \
-                  mirror ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795 \
-                         ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 \
-                  mirror ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857955 \
-                         ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ
-config tank
-# export nfs share
-sudo zfs set sharenfs='rw=@10.1.0.0/240' tank
-
-sudo zpool create -f -m /backup -o ashift=12 pond \
+sudo zpool create -f -m /net -o ashift=12 pool \
                   ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV \
                   ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
-config pond
+config pool
+# export nfs share
+# sudo zfs set sharenfs='rw=@10.1.0.0/240' pool
+
+sudo zpool create -f -m /backup -o ashift=12 tank \
+                  mirror ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795 \
+                         ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 \
+                  mirror ata-WDC_WD30EFRX-68N32N0_WD-WCC7K4DADSCU \
+                         ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ
+config tank
 
 systemd enable zfs.target
 systemd enable zfs-import-cache

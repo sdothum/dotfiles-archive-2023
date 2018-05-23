@@ -8,7 +8,7 @@
 
 # clean up episodes
 ls
-ifno 'clean up episode filenames' || mytitles
+ifno 'clean up episode filenames' || retitle
 title=$(ls -1 | head -1 | sed -r 's/(.*\.[sS][0-9]*[eE])[0-9]*\..*/\1/')
 ifno "$title" && exit
 

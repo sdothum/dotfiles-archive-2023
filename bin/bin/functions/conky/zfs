@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ Conky
+
+# zfs filesystem disk usage stat
+usage() {
+  echo "usage: zfs $(basename $0) pool"
+  exit 1
+}
+
+[ $1 ] || usage
+
+# percent used
+zpool list $1 | tail -1 | sed -r 's/.* ([0-9]*)% .*/\1/'
+
+# vim: set ft=sh: #

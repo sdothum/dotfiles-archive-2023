@@ -37,7 +37,7 @@ sudo sed -i "/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs"
 [ -e /etc/dovecot/dh.pem ] || openssl dhparam 2048 | sudo tee /etc/dovecot/dh.pem
 original /etc/dovecot/conf.d/10-ssl.conf
 if grep -qv '^ssl_dh =' /etc/dovecot/conf.d/10-ssl.conf ;then
-  sudo sed '/^ssl_key =/assl_dh = <\/etc\/dovecot\/dh.pem' /etc/dovecot/conf.d/10-ssl.conf
+  sudo sed -i 's/^#ssl_dh =/ssl_dh =/' /etc/dovecot/conf.d/10-ssl.conf
 fi
 
 server && systemd enable dovecot || annotate "sudo systemctl start dovecot"

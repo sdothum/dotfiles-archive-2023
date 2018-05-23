@@ -251,7 +251,7 @@ gauge = {
 },
 {
     -- name='fs_used_perc',           arg='/net',                      max_value=100,
-    name='exec',                   arg='conky btrfs /net percent',  max_value=100,
+    name='exec',                   arg='conky zfs pool',            max_value=100,
     x=84,                          y=917,
     graph_radius=25,
     graph_thickness=3,
