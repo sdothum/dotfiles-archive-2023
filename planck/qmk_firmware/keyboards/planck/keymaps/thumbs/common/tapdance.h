@@ -1,1 +1,1 @@
-../../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu/common/tapdance.h
+../../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/thumbs/common/tapdance.h

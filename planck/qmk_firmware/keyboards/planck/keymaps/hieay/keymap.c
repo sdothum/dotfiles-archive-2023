@@ -6,10 +6,10 @@
 //   Reset keyboard or press hw reset button on base (hole)
 //
 //   cd qmk_firmware/keyboards/planck
-//   sudo make KEYMAP=<keymap> dfu
+//   sudo make KEYMAP=sdothum dfu
 //
-//   sudo make clean           (good practice before flashing)
-//   sudo make KEYMAP=<keymap> (to compile check)
+//   sudo make clean          (good practice before flashing)
+//   sudo make KEYMAP=sdothum (to compile check)
 //
 // Package requirements (for arch linux)
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -24,10 +24,27 @@
 //   Autocompletion tap dance key pairs (),[],{} are available from the
 //   number/symbol layer, as well as, numerous (un)shift key values
 //
+//   The navigation pad provides a single hand right thumb activated cluster
+//   with left hand modifiers
+//
 //   #define PRIVATE_STRING includes private_string.h, a user defined code
 //   block for the PRIV tap dance e.g. SEND_STRING("secret messape"),
 //   see function private()
-///
+//
+// Modifier clusters
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+//   The num and sym keys together access the navigation pad layer
+//
+//   ,-----------------------------------------------------------------------------------.
+//   | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
+//   `-----------------------------------------------------------------------------------'
+//
+// Hint
+// ▔▔▔▔
+//   For sculpted keycaps such as Cherry or OEM profile, reverse the Alt, Num,
+//   Shift, Shift, Nav, Sym keycaps for more ergonomic thumb orientation and
+//   actuation
+//
 // Code
 // ▔▔▔▔
 //   This source is shamelessly based on the "default" planck layout
@@ -49,7 +66,7 @@
 
 
 #include "config.h"
-#include "splitography.h"
+#include "planck.h"
 #include "action_layer.h"
 #ifdef STENO_ENABLE
 #include "keymap_steno.h"
@@ -73,6 +90,7 @@ enum planck_layers {
  ,_FNCKEY
  ,_MOUSE
  ,_EDIT
+ ,_ADJUST
 #ifdef CENTER_TT
  ,_TTNUMBER
  ,_TTREGEX
@@ -92,9 +110,10 @@ enum planck_keycodes {
  ,SM_DLR    // pseudo SFT_T(S(KC_4))                      for shifted key-codes, see process_record_user()
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
- ,SL_DEL    // pseudo LT   (_EDIT, KC_DEL)                for shifted key-codes, see process_record_user()
- ,SL_BSPC   // pseudo LT   (S(_MOUSE), KC_BSPC)
- ,SL_TAB    // pseudo LT   (S(_MOUSE), KC_TAB)
+ ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
+ ,SP_DEL    // pseudo LT   (_ADJUST, KC_DEL)
+ ,SL_EQL    // pseudo LT   (_MOUSE, KC_EQL)
+ ,SL_TAB    // pseudo LT   (_ADJUST, KC_TAB)
 #ifdef CENTER_TT
  ,TT_ESC
 #endif
@@ -109,12 +128,14 @@ enum planck_keycodes {
  ,LT_N    = LT (_FNCKEY,  KC_N)
  ,LT_M    = LT (_RSYMBOL, KC_M)
 #endif
- ,PS_BASE
 };
 
 // modifier keys
 #define AT_B    ALT_T(KC_B)
+#define AT_DOWN ALT_T(KC_DOWN)
+#define CT_RGHT CTL_T(KC_RGHT)
 #define GT_C    CTL_T(KC_C)
+#define GT_UP   GUI_T(KC_UP)
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 #define ST_A    SFT_T(KC_A)
 #ifdef HOME_MODS
@@ -138,7 +159,10 @@ enum planck_keycodes {
 #endif
 
 #define S_DOWN  S    (KC_DOWN)
+#define S_LEFT  S    (KC_LEFT)
+#define S_RGHT  S    (KC_RGHT)
 #define S_TAB   S    (KC_TAB)
+#define S_UP    S    (KC_UP)
 
 #include "tapdance.h"
 
@@ -159,8 +183,9 @@ enum planck_keycodes {
 #define TMCOPY  LALT(LCTL(KC_C))
 #define TMPASTE LALT(LCTL(KC_V))
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
-#define LT_DEL  LT  (_EDIT, KC_DEL)
 #define LT_ESC  LT  (_LSYMBOL, KC_ESC)
+#define SP_LEFT LT  (_EDIT,   KC_LEFT)
+#define LT_INS  LT  (_NUMBER, KC_INS)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
@@ -184,11 +209,18 @@ enum planck_keycodes {
 #define CNTR_BR OSM (MOD_LSFT | MOD_LCTL)
 #endif
 
+// LT can only reference layers 0-15
+#ifdef THUMB_0
+#define LT_EQL  LT  (_ADJUST, KC_EQL)
+#else
+#define LT_0    LT  (_ADJUST, KC_0)
+#endif
+
 // ........................................................ Default Alpha Layout
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-#include "base_layout.h"
+#include "hiea.h"
 #include "steno_layout.h"
 
 // ...................................................... Number / Function Keys
@@ -217,7 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ........................................................... User Keycode Trap
 
-#include "keycode_functions.c"
+#include "keycode_functions.h"
 
 #define BASE_1  1
 #define BASE_2  2
@@ -253,77 +285,84 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LCTL);
     break;
   case HOME_A:
-    tap_mods(record, KC_LSFT);
-    break;
-  case HOME_T:
-    tap_mods(record, KC_RSFT);              // note: SFT_T actually uses KC_LSFT
-    break;
-  // special shift layer mappings
-  case KC_DOT:
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
-    break;
-  case KC_COMM:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV)) { return false; }
-    break;
+  tap_mods(record, KC_LSFT);
+  break;
+case HOME_T:
+  tap_mods(record, KC_RSFT);            // note: SFT_T actually uses KC_LSFT
+  break;
+// special shift layer mappings
+case KC_DOT:
+  if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
+  break;
+case KC_COMM:
+  if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV)) { return false; }
+  break;
 #endif
+  case AT_DOWN:
+    tap_mods(record, KC_LALT);
+    break;
+  case CT_RGHT:
+    tap_mods(record, KC_LGUI);
+    break;
+  case GT_UP:
+    tap_mods(record, KC_LCTL);
+    break;
+  case SP_DEL:
+    lt(record, NOSHIFT, KC_DEL, 0, _ADJUST);
+    break;
+  case SL_TAB:
+    lt(record, SHIFT, KC_TAB, 0, _ADJUST);
+    break;
 #ifdef CENTER_TT
   case TT_ESC:
     clear_tt();                             // exit TT layer
-    return false;
+  return false;
 #endif
-  case S_TAB:
-    if (raise_number(record, LEFT)) { return false; }
-    break;
-  case OS_ALT:
-    tap_mods(record, KC_LALT);
-    break;
-  case OS_CTL:
-    tap_mods(record, KC_LCTL);
-    break;
-  case OS_GUI:
-    tap_mods(record, KC_LGUI);
-    break;
-  case SM_CIRC:
-    mt_shift(record, KC_LGUI, 0, KC_6);
-    break;
-  case SM_DLR:
-    mt_shift(record, KC_LSFT, 0, KC_4);
-    break;
-  case SM_G:
-    mt_shift(record, KC_LALT, KC_LSFT, KC_G);
-    break;
-  case SM_PERC:
-    mt_shift(record, KC_LALT, 0, KC_5);
-    break;
-  case TD_SPC:
-    if (raise_number(record, RIGHT)) { return false; }
-    tap_layer(record, _LSHIFT);
-    break;
-  case TD_ENT:
-    tap_layer(record, _RSHIFT);
-    break;
-  case SL_BSPC:
-    lt(record, NOSHIFT, KC_BSPC, 0, _MOUSE);
-    break;
-  case LT_ESC:
-    if (raise_number(record, LEFT)) { return false; }
+case LT_ESC:
 #ifdef CENTER_TT
-    if (tt_keycode != 0) {
-      clear_tt();                           // exit TT layer
-      return false;
-    }
+  if (tt_keycode != 0) {
+    clear_tt();                           // exit TT layer
+    return false;
+  }
 #endif
-    thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
-    break;
-  case SL_TAB:
-    thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
-    break;
-  case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
-    break;
-  case LT_BSPC:
-    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
-    break;
+  tap_layer(record, _LSYMBOL);
+  break;
+case OS_ALT:
+  tap_mods(record, KC_LALT);
+  break;
+case OS_CTL:
+  tap_mods(record, KC_LCTL);
+  break;
+case OS_GUI:
+  tap_mods(record, KC_LGUI);
+  break;
+case SM_CIRC:
+  mt_shift(record, KC_LGUI, 0, KC_6);
+  break;
+case SM_DLR:
+  mt_shift(record, KC_LSFT, 0, KC_4);
+  break;
+case SM_G:
+  mt_shift(record, KC_LALT, KC_LSFT, KC_G);
+  break;
+case SM_PERC:
+  mt_shift(record, KC_LALT, 0, KC_5);
+  break;
+case TD_ENT:
+  tap_layer(record, _RSHIFT);
+  break;
+case LT_BSPC:
+  thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSHIFT);
+  break;
+case SL_DEL:
+  thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSHIFT);
+  break;
+case SL_EQL:
+  thumb_roll(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _RSYMBOL);
+  break;
+case TD_SPC:
+  thumb_roll(record, LEFT, 0, 0, _LSHIFT, _RSYMBOL);
+  break;
 #ifdef CENTER_TT
   case CNTR_TL:
   case CNTR_TR:
@@ -359,4 +398,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   return true;
 }
 
-#include "init.c"
+#include "init.h"

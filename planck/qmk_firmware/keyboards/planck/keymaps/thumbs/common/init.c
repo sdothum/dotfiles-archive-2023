@@ -1,0 +1,1 @@
+../../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/thumbs/common/init.c

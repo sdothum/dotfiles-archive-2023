@@ -217,7 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ........................................................... User Keycode Trap
 
-#include "keycode_functions.c"
+#include "keycode_functions.h"
 
 #define BASE_1  1
 #define BASE_2  2
@@ -271,6 +271,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     clear_tt();                             // exit TT layer
     return false;
 #endif
+  case LT_ESC:
+    if (raise_number(record, LEFT)) { return false; }
+#ifdef CENTER_TT
+    if (tt_keycode != 0) {
+      clear_tt();                           // exit TT layer
+      return false;
+    }
+#endif
+    thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
+    break;
   case S_TAB:
     if (raise_number(record, LEFT)) { return false; }
     break;
@@ -295,34 +305,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case SM_PERC:
     mt_shift(record, KC_LALT, 0, KC_5);
     break;
-  case TD_SPC:
-    if (raise_number(record, RIGHT)) { return false; }
-    tap_layer(record, _LSHIFT);
-    break;
   case TD_ENT:
     tap_layer(record, _RSHIFT);
+    break;
+  case LT_BSPC:
+    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
   case SL_BSPC:
     lt(record, NOSHIFT, KC_BSPC, 0, _MOUSE);
     break;
-  case LT_ESC:
-    if (raise_number(record, LEFT)) { return false; }
-#ifdef CENTER_TT
-    if (tt_keycode != 0) {
-      clear_tt();                           // exit TT layer
-      return false;
-    }
-#endif
-    thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
+  case SL_DEL:
+    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
     break;
   case SL_TAB:
     thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
     break;
-  case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
-    break;
-  case LT_BSPC:
-    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
+  case TD_SPC:
+    if (raise_number(record, RIGHT)) { return false; }
+    tap_layer(record, _LSHIFT);
     break;
 #ifdef CENTER_TT
   case CNTR_TL:
@@ -359,4 +359,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   return true;
 }
 
-#include "init.c"
+#include "init.h"

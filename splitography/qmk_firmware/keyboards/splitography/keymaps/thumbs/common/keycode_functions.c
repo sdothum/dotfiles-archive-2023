@@ -360,11 +360,11 @@ void dot(qk_tap_dance_state_t *state, void *user_data)
 // compile time macro string, see functions/hardware planck script
 void private(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
 #ifdef PRIVATE_STRING
+  if (state->count > 1) {
 #include "private_string.h"
-#endif
   }
+#endif
   reset_tap_dance(state);
 }
 
@@ -427,7 +427,7 @@ static uint8_t thumb = 0;
 // rolling thumb combinations, see process_record_user()
 // up,   up   -> _BASE
 // up,   down -> _RSYMBOL
-// down, up   -> _LSYMBOL
+// down, up   -> _LSYMBOL                   // _LSHIFT on planck for thumb position
 // down, down -> _MOUSE                     // see layer keycodes that raise mouse layer
 
 static uint8_t overlayer = 0;
@@ -545,7 +545,8 @@ bool raise_number(keyrecord_t *record, uint8_t side)
 }
 
 #ifdef CENTER_TT
-static uint16_t tt_keycode = 0;             // current TT keycode
+// current TT keycode
+static uint16_t tt_keycode = 0;
 
 void clear_tt(void)
 {

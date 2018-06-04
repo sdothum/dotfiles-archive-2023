@@ -249,7 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ........................................................... User Keycode Trap
 
-#include "keycode_functions.h"
+#include "keycode_functions.c"
 
 #define BASE_1  1
 #define BASE_2  2
@@ -355,6 +355,7 @@ case TD_SPC:
   thumb_roll(record, LEFT, 0, 0, _LSHIFT, _RSYMBOL);
   break;
 case SL_EQL:
+  // note: TD_SPC interferes with successive '=' in rollover mode (not an in use issue)
   thumb_roll(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _RSYMBOL);
   break;
 case SL_DEL:
@@ -398,4 +399,4 @@ case LT_BSPC:
   return true;
 }
 
-#include "init.h"
+#include "init.c"

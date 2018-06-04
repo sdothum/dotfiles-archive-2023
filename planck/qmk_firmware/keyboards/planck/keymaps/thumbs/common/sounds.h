@@ -1,1 +1,1 @@
-../../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu/common/sounds.h
+../../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/thumbs/common/sounds.h
