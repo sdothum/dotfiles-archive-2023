@@ -117,5 +117,6 @@ cat adblock.uniq adblock.blacklist >>adblock.hosts
 ditto "blacklisting $(wc -l adblock.hosts | cut -d' ' -f1) hosts"
 ditto 'reloading DNS server'
 systemd restart dnsmasq
+touch $ADBLOCK
 
 # vim: set ft=sh: #

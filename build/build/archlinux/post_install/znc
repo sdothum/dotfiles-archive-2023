@@ -36,7 +36,7 @@ freenode channels (znc):\n
 gitter channels:\n
 /join #syl20bnr/spacemacs\n
 oftc channels:\n
-/join #bitlbee,#fish,#suckless\n
+/join #bcachefs,#bitlbee,#fish,#suckless\n
 rizon channels:\n
 /join #anime-planet.com,#haruhichan,#rice"
 sudo -u znc znc --makeconf

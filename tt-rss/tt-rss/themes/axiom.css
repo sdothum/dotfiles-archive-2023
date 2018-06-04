@@ -48,7 +48,8 @@ div#dijit__TreeNode_1 .dijitTreeRow:hover {
 div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRow:hover {
   background:                 #eee8d5;
-  border-color:               #fdf6e3;
+  /* border-color:               #fdf6e3; */
+  border-color:               #e7dec3 url('axiom_images/noise.png') 0 repeat;
 }
 
 /* div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando { */
@@ -64,6 +65,12 @@ div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow:hover {
   background:                 #fdf6e3;
   border-color:               #b5423f;
+}
+
+/* lack of counternode requires centering */
+div#dijit__TreeNode_7 .dijitTreeRow {
+  padding-top:                3px;
+  padding-bottom:             2px;
 }
 
 /* disable mouse selection by covering it, but doesn't prevent keyboard selection */
@@ -182,7 +189,7 @@ img[src*='images/mark_set.png'] {
 }
 
 .Selected img[src*='images/mark_set.png'] {
-  margin-top:                 -9px !important;
+  margin-top:                 -7px !important;
 }
 
 /* img[src*='images/pub_set.png'], */
@@ -258,7 +265,7 @@ button.expandPrompt {
   letter-spacing:             2px;
   position:                   fixed;
   margin-top:                 108px;         /* holder width b of golden ratio a+b  */
-  width:                      167px;
+  width:                      164px;
   text-align:                 right;
   text-decoration:            overline;
 }

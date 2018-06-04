@@ -7,6 +7,7 @@
 # ....................................................... Window manager restart
 
 # initial window applications (flags)
+ADBLOCK=/tmp/adblock
 AUTOCONNECT=$SESSION/autoconnect
 CMST=$SESSION/cmst
 CALENDAR=$SESSION/calendar
@@ -40,7 +41,7 @@ xrdb -merge $HOME/.Xresources &
 
 # ........................................................... Daemons and caches
 
-server && adblock &
+server && [ ! -e $ADBLOCK ] && adblock &
 # pstat dunst || dunst 2>/dev/null &
 if server && ! pstat mpd ;then
   sleep 2

@@ -3,10 +3,13 @@
 # Post_install
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .......................................................................... zfs
+# ..................................................................... bcachefs
 
-# must sync to current linux version
-ignorepkg -f linux-headers
-ignorepkg -f zfs-linux-headers
+if ! grep -q 'bcachefs' /etc/pacman.conf ;then
+  sudo sed -i '$a[bcachefs]
+SigLevel = PackageOptional
+Server = https://kitsunemimi.pw/bcachefs-repo/' /etc/pacman.conf
+  sudo pacman -Syy
+fi
 
 # vim: set ft=sh: #

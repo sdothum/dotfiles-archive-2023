@@ -161,7 +161,8 @@ div#notify.notify.notify_progress {
 #feeds-holder .dijitTreeRow:hover {
   background:                 #e7dec3 url('axiom_images/noise.png') 0 repeat;
   color:                      #2A363B;
-  border-color:               #fdf6e3;
+  /* border-color:               #fdf6e3; */
+  border-color:               #e7dec3 url('axiom_images/noise.png') 0 repeat;
 }
 
 /* un/comment to highlight open icons where applicable */
@@ -397,7 +398,7 @@ div[style="vertical-align : middle"] {
 .cdm.expandable.active .hlFeed {
   margin-top:                 -10px;
   margin-left:                -47px;
-  padding-top:                3px !important;
+  padding-top:                4px !important;
 }
 
 .cdm.expandable.active a.title:hover {

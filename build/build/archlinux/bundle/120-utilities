@@ -8,7 +8,7 @@
   ack
 # etc-update
 # gamin
-  mediainfo           [server]
+  mediainfo              [server]
   mlocate
 # multitail
   stow
@@ -32,7 +32,7 @@
 # gnome-disk-utility
   gparted
   gptfdisk
-  samsung_magician    [server || laptop]
+  samsung_magician       [server || laptop]
 # unetbootin
 
 
@@ -52,19 +52,25 @@
 
 = file systems
 = ▔▔▔▔▔▔▔▔▔▔▔▔
+  # bcachefs-tools         [server]
+  # linux-bcachefs         [server]
+  # linux-bcachefs-docs    [server]
+  # linux-bcachefs-headers [server]
+  btrbk
   dosfstools
   exfat-utils
   fuse-common
 # fuse-exfat
   gvfs
 # hfsprogs
+  mbuffer
 # nfs-utils
 # ntfs-3g
   ntfs-3g-fuse
 # watchman
-  zfs-linux           [server]
-  zfs-linux-headers   [server]
-d znapzend            [server]
+# zfs-linux              [server]
+# zfs-linux-headers      [server]
+# d znapzend             [server]
 
 
 = info screens
@@ -81,19 +87,19 @@ d znapzend            [server]
 
 = ripping
 = ▔▔▔▔▔▔▔
-  audex               [server]
-# asunder             [server]
-  cdrdao              [server]
-# dvd+rw-tools        [server]
-# dvdbackup           [server]
-  ffmpeg              [server]
-  handbrake           [server]
-# handbrake-cli       [server]
-# k3b                 [server]
-  mkvtoolnix-cli      [server]
-# soundconverter      [server]
-  transcode           [server]
-  xfburn              [server]
+  audex                  [server]
+# asunder                [server]
+  cdrdao                 [server]
+# dvd+rw-tools           [server]
+# dvdbackup              [server]
+  ffmpeg                 [server]
+  handbrake              [server]
+# handbrake-cli          [server]
+# k3b                    [server]
+  mkvtoolnix-cli         [server]
+# soundconverter         [server]
+  transcode              [server]
+  xfburn                 [server]
 
 
 = shell tools
@@ -131,7 +137,7 @@ d znapzend            [server]
 = ▔▔▔▔
 # bonnie++
 # memtester
-# mprime-bin          [server]
+# mprime-bin             [server]
 
 
 = terminals
@@ -144,7 +150,7 @@ d znapzend            [server]
 # sakura
 # terminator
 # termite-git
-# urxvt-font-size-git [server]
+# urxvt-font-size-git    [server]
   urxvt-perls
   xterm
 

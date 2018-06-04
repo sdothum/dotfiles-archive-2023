@@ -11,3 +11,5 @@ znapzendzetup create --sudo --recursive \
                      DST '1week=>1hour,1month=>1day,1year=>1week' tank
 
 systemd enable znapzend
+
+# vim: set ft=sh: #

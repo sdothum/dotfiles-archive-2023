@@ -69,6 +69,7 @@ openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
 planck sdothum :: $(find  -L $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/sdothum -type f) $HOME/bin/functions/hardware/planck
 planck hiea :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/hiea/* $HOME/bin/functions/hardware/planck
+planck hieay :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/hieay/* $HOME/bin/functions/hardware/planck
 planck hieax :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/hieax/* $HOME/bin/functions/hardware/planck
 planck hieaxs :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/hieaxs/* $HOME/bin/functions/hardware/planck
 planck algr :: $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps/algr/* $HOME/bin/functions/hardware/planck
@@ -84,6 +85,7 @@ spacemacs :: $HOME/.spacemacs
 splitography default :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
 splitography hiea :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hiea -type f) $HOME/bin/functions/hardware/splitography
 splitography hieaxs :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hieaxs -type f) $HOME/bin/functions/hardware/splitography
+splitography hieay :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hieay -type f) $HOME/bin/functions/hardware/splitography
 splitography hieax :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hieax -type f) $HOME/bin/functions/hardware/splitography
 splitography beakl8 :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl8 -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklmu :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu -type f) $HOME/bin/functions/hardware/splitography

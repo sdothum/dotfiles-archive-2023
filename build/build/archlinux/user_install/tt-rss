@@ -11,7 +11,7 @@ FEEDS=$TTRSS/classes/feeds.php
 
 # my distraction free theme
 theme=axiom
-button="${theme}_images/close.png"
+button='images/close.png'
 
 # override tt-rss theme, in lieu of selectable themes
 # [ -e $THEMES/default.css.original ] && exit
@@ -30,7 +30,10 @@ sudo sed -i -e 's/"Special"/"Orbit"/' \
          -e 's/Archived articles/○∙ archived/' \
          -e 's/Recently read/○∙ read/' \
          $FEEDS
-[ -e $HOME/tt-rss/themes/$button ] && sudo sed -i -e "s|images/collapse.png|$button|" $FEEDS
+if [ -e $HOME/tt-rss/themes/${theme}_$button ] ;then
+  sudo sed -i -e "s|images/collapse.png|$button|" $FEEDS
+  sudo ln -s $THEMES/${theme}_$button $TTRSS/images/
+fi
 
 systemd restart tt-rss
 

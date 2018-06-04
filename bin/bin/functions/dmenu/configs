@@ -51,9 +51,10 @@ while : ;do
          column -s^ -t |
          rmenu 'Edit Config' 1 -no-custom) || exit
 
-  case $file in
-    "$REBUILD") configs ; continue ;;
-  esac
+   if [ "${file%]*}]" = "$REBUILD" ] ;then
+      configs
+      continue
+    fi
 
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!

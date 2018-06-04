@@ -19,13 +19,11 @@ configure authentication else some channels will force #<channel>-unregistered\n
 
 # server
 # set umode to block all unregistered spammers
-/server add znc localhost/7000
-/server add znc luna/7000
-/set irc.server.znc.username 'znc'
-/set irc.server.znc.password 'znc'
-/set irc.server.znc.autoconnect on
-/set irc.server.znc.command '/umode +R'
-/connect znc
+# /server add freenode localhost/7000 -username=znc/freenode -password=znc
+/server add freenode luna/7000 -username=znc/freenode -password=znc
+/set irc.server.freenode.autoconnect on
+/set irc.server.freenode.command '/umode +R'
+/connect freenode
 # add server networks on znc webpage before connecting to servers
 # freenode chat.freenode.net +6697
 # oftc irc.oftc.net +6697

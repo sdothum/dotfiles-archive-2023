@@ -62,6 +62,8 @@
       let g:dfm_fg_dark         = '#ffffff' " dark foreground (high contrast)
       let s:dfm_proof_light     = '#dddddd' " dark foreground
       let s:dfm_proof_dark      = '#444444' " light foreground
+      let s:dfm_ale_light       = s:rgb_1
+      let s:dfm_ale_dark        = s:red
 
       " background
       let s:dfm_bg_light        = s:rgb_15  " solarized light (paper) background
@@ -135,8 +137,8 @@
         execute 'highlight InsertCursor        guibg=' . s:dfm_cursor                                . ' guifg=' . g:dfm_bg
         execute 'highlight CursorLine gui=none guibg=' . s:dfm_cursorline
         execute 'highlight Cursor gui=bold     guibg=' . s:dfm_cursor                                . ' guifg=' . g:dfm_bg
-        execute 'highlight ALEErrorSign        guifg=' . s:dfm_fg
-        execute 'highlight ALEWarningSign      guifg=' . s:dfm_cursor
+        execute 'highlight ALEErrorSign        guifg=' . ui#Value('s:dfm_ale_'    . l:background)
+        execute 'highlight ALEWarningSign      guifg=' . s:dfm_fg
         call FzfColors()                    " see setting.vim
         call ui#IndentTheme()
         call ui#Margin()
