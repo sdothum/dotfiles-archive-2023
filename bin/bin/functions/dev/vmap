@@ -52,7 +52,7 @@ list() {
 vmap() {
   for i in $(seq 1 12) ;do ag --ignore-case --nonumbers "<.*F$i>" $index:fkey | list F$i ;done
   cat $index:leader | list LEADER
-  cat $index:map | list MAP
+  cat $index:map | list KEYMAP
 }
 
 # vim <S-F1> call uses more

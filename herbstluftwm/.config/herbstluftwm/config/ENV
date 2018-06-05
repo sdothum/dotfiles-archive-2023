@@ -61,8 +61,7 @@ export WSYNC=$SESSION/wsync
 
 # panel attributes
 export SPANEL=$SESSION/panel
-export BLINKER=$SPANEL:blinker
-export BAR=$SPANEL:bar
+export TICKER=$SPANEL:ticker
 export PCONKY=$SPANEL:conky
 export WEATHER=$SPANEL:weather
 

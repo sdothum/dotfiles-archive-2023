@@ -262,7 +262,7 @@
     " .................................................... Distraction free view
 
       " prose style
-      function! ui#DfmView(...)
+      function! ui#DfmView()
         call core#Trace('ui#DfmView()')
         let s:view = 1
         " silent !tmux set status off
@@ -278,11 +278,9 @@
         else
           set nospell
         endif
-        if !a:0
-          " initialize view mode (negate toggle)
-          let b:proof = b:proof == 0 ? 1 : 0
-          call ui#ToggleProof()
-        endif
+        " initialize view mode (negate toggle)
+        let b:proof = b:proof == 0 ? 1 : 0
+        call ui#ToggleProof()
       endfunction
 
     " .............................................................. Switch View
@@ -407,12 +405,14 @@
 
       function! ui#ToggleInfo()
         call core#Trace('ui#ToggleInfo()')
+        let l:col = col('.')
         let s:info = (s:info == 0 ? 1 : 0)
         if core#Prose()                     " toggle between writing and proofing modes
           call ui#ToggleProof()
         else
           call ui#ShowInfo(b:proof)
         endif
+        execute 'normal! ' . l:col . '|'
       endfunction
 
 " ui.vim

@@ -22,8 +22,8 @@ pstat "^lemonbar -d -n lemonbar:$fifo " && exit
 PANEL_FONT='Iosevka'
 PANEL_UNDERLINE=2
 
-# tic indicator: none (unset), blink, circle, square
-[ -e $BLINKER ] && { TIC=$(cat $BLINKER) ; TIC=${TIC:-square} ;}
+# tic indicator: none (unset), dot, circle, rectangle, meter, tape, seconds
+[ -e $TICKER ] && { TIC=$(cat $TICKER) ; TIC=${TIC:-tape} ;}
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -198,57 +198,78 @@ panel() {
   while read -r line ;do
     case $line in
       S*) unset ind
-          if [ -e $BAR ] ;then
-            bar=${line#*|}
-            bar=${bar%|*}
-            case $bar in
-              00      ) bar=' ' ;;
-              0[2468] ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
-              0[13579]) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
-              10      ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
-              1[2468] ) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
-              1[13579]) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
-              20      ) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
-              2[2468] ) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
-              2[13579]) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
-              30      ) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
-              3[2468] ) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
-              3[13579]) bar="%{F$DEFAULT_FG}▅%{F-}" ;;
-              40      ) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
-              4[2468] ) bar="%{F$DEFAULT_FG}▅%{F-}" ;;
-              4[13579]) bar="%{F$DEFAULT_FG}▆%{F-}" ;;
-              50      ) bar="%{F$DEFAULT_FG}│%{F-}" ;;
-              51      ) bar="%{F$DEFAULT_FG}┃%{F-}" ;;
-              52      ) bar="%{F$DEFAULT_FG}█%{F-}" ;;
-              53      ) bar="%{F$DEFAULT_FG}▇%{F-}" ;;
-              54      ) bar="%{F$DEFAULT_FG}▆%{F-}" ;;
-              55      ) bar="%{F$DEFAULT_FG}▅%{F-}" ;;
-              56      ) bar="%{F$DEFAULT_FG}▄%{F-}" ;;
-              57      ) bar="%{F$DEFAULT_FG}▃%{F-}" ;;
-              58      ) bar="%{F$DEFAULT_FG}▂%{F-}" ;;
-              59      ) bar="%{F$DEFAULT_FG}▁%{F-}" ;;
-            esac
-            ind="  $bar"
-          fi
-
           if [ $TIC ] ;then
             case $TIC in
-              b*) [ "$tic" = '●' ] && tic='○' || tic='●' ;;
+              d*) [ "$tic" = '●' ] && tic='○' || tic='●' ;;
 
               c*) [ "$tic" = '◓' ] && tic='◑' ||
                     { [ "$tic" = '◑' ] && tic='◒' ||
                       { [ "$tic" = '◒' ] && tic='◐' || tic='◓' ;} ;} ;;
 
-              s*) [ "$tic" = '⬒' ] && tic='⬔' ||
+              r*) [ "$tic" = '⬒' ] && tic='⬔' ||
                     { [ "$tic" = '⬔' ] && tic='◨' ||
                       { [ "$tic" = '◨' ] && tic='◪' ||
                         { [ "$tic" = '◪' ] && tic='⬓' ||
                           { [ "$tic" = '⬓' ] && tic='⬕' ||
                             { [ "$tic" = '⬕' ] && tic='◧' ||
                               { [ "$tic" = '◧' ] && tic='◩' || tic='⬒' ;} ;} ;} ;} ;} ;} ;;
+
+              m*) tic=${line#*|}
+                  tic=${tic%|*}
+                  case $tic in
+                    00      ) tic=' ' ;;
+                    0[2468] ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+                    0[13579]) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+                    10      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+                    1[2468] ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+                    1[13579]) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+                    20      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+                    2[2468] ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+                    2[13579]) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+                    30      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+                    3[2468] ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+                    3[13579]) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+                    40      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+                    4[2468] ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+                    4[13579]) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
+                    50      ) tic="%{F$DEFAULT_FG}│%{F-}" ;;
+                    51      ) tic="%{F$DEFAULT_FG}┃%{F-}" ;;
+                    52      ) tic="%{F$DEFAULT_FG}█%{F-}" ;;
+                    53      ) tic="%{F$DEFAULT_FG}▇%{F-}" ;;
+                    54      ) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
+                    55      ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+                    56      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+                    57      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+                    58      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+                    59      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+                  esac ;;
+
+              s*) tic=${line#*|}
+                  tic=${tic%|*}
+                  tic=${tic#0} ;;
+
+              t*) tic=${line#*|}
+                  tic=${tic%|*}
+                  if [ ${tic%%:*} -lt 10 ] ;then
+                    # hours 0 - 9, cycle aligns on ten second intervals
+                    slen=11
+                    pos=${tic##*:}
+                    # pos=$(( ${pos%??} % 10 )) # crashes in dash (memory leak on arm?)
+                    pos=$(echo "${pos%??} % 10" | bc)
+                    [ $pos = 0 ] && pos=10
+                  else
+                    # hours 10 - 12, format string continously cycles
+                    slen=12
+                    pos=$(( ${pos:-0} + 1 ))
+                    [ $pos -gt 10 ] && pos=0
+                  fi
+                  tic="$(echo "$tic" | tail -c $(( $slen - $pos )))$(echo "$tic" | head -c $pos)" ;;
             esac
             tic="%{F$DEFAULT_FG}$tic%{F-}"
-            [ "$ind" ] && ind="$ind $tic" || ind="  $tic"
+            case $TIC in
+              s* | t*) ind="$tic" ;;
+              *      ) ind="  $tic" ;;
+            esac
           fi
 
           # refresh every 10 minutes
@@ -318,8 +339,12 @@ panel() {
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
-clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y
-" >$PANEL_FIFO:$fifo &
+case $TIC in
+  s* | t*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y
+" >$PANEL_FIFO:$fifo & ;;
+  *      ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y
+" >$PANEL_FIFO:$fifo & ;;
+esac
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 xtitle -sf 'T%s
 ' >$PANEL_FIFO:$fifo 2>/dev/null &

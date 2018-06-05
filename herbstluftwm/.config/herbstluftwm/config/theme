@@ -28,7 +28,7 @@ hc set mouse_recenter_gap             0
 hc set smart_frame_surroundings       0
 hc set smart_window_surroundings      0
 # hc set window_gap                   $SHADOW
-hc set window_gap                     3
+# hc set window_gap                   3
 
 hc attr theme.active.color            red
 hc attr theme.active.inner_color      '#808080'
@@ -52,7 +52,7 @@ elif is display -2560 ;then
   hc set window_gap                   2
   hc set frame_gap                    $(( $SHADOW * 2 / 3 ))
 else
-  hc set window_gap                   3
+  hc set window_gap                   14
 fi
 
 # vim: set ft=sh: #

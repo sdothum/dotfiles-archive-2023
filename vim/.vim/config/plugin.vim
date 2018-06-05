@@ -104,7 +104,7 @@
       Plug 'Shougo/neocomplete.vim'         " required by snippets
       Plug 'Shougo/neosnippet.vim'          " snippets
       Plug 'tpope/vim-endwise', code        " add 'end' statement
-      Plug 'reedes/vim-litecorrect', prose  " spelling
+      Plug 'reedes/vim-litecorrect', prose  " autocorrections
       Plug 'tpope/vim-surround'             " pairwise c'hange, d'elete, y'ank
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

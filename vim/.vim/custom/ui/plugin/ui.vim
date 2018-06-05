@@ -32,6 +32,10 @@
       imap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
       vmap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
 
+      " auto dfm writing
+      autocmd ui InsertEnter * if core#Prose() | call ui#ToggleProof(0) | endif
+      autocmd ui InsertLeave * if core#Prose() | call ui#ToggleProof(1) | endif
+
     " .............................................................. Switch mode
 
       nmap <silent><S-F7> :call ui#SwitchView()<CR>
