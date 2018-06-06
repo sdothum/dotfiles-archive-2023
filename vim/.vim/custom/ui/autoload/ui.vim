@@ -403,8 +403,13 @@
 
     " ........................................................ Toggle statusline
 
-      function! ui#ToggleInfo()
+      function! ui#ToggleInfo(...)
         call core#Trace('ui#ToggleInfo()')
+        if a:0                              " exiting insert mode? see plugin/ui.vim autocmd
+          if b:proof == s:initial_view      " already default view?
+            return
+          endif
+        endif
         let l:col = col('.')
         let s:info = (s:info == 0 ? 1 : 0)
         if core#Prose()                     " toggle between writing and proofing modes

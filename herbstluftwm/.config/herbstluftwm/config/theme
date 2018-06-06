@@ -20,7 +20,7 @@ hc set frame_bg_transparent           1
 hc set frame_border_active_color      white
 hc set frame_border_normal_color      black
 hc set frame_border_width             0
-hc set frame_gap                      $SHADOW
+# hc set frame_gap                    $SHADOW
 hc set frame_padding                  0
 hc set frame_transparent_width        0
 hc set gapless_grid                   1
@@ -52,7 +52,8 @@ elif is display -2560 ;then
   hc set window_gap                   2
   hc set frame_gap                    $(( $SHADOW * 2 / 3 ))
 else
-  hc set window_gap                   14
+  hc set window_gap                   10
+  hc set frame_gap                    $(( $SHADOW * 3 / 4 ))
 fi
 
 # vim: set ft=sh: #

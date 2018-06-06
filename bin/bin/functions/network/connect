@@ -12,7 +12,7 @@ usage() {
 }
 
 # see wego and console_login
-site=darksky.net
+site=www.google.ca
 timeout=5
 
 count=0
