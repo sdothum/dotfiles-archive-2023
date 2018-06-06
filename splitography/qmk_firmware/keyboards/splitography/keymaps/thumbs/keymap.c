@@ -168,7 +168,6 @@ enum planck_keycodes {
 
 #ifdef CENTER_TT
 #define CNTR_TL TT  (_TTFNCKEY)
-#define CNTR_SL LM  (_TTFNCKEY, MOD_LSFT)
 #define CNTR_TR     KC_CAPS
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
@@ -176,7 +175,6 @@ enum planck_keycodes {
 #define CNTR_BR TT  (_TTREGEX)
 #else
 #define CNTR_TL OSM (MOD_LALT | MOD_LCTL)
-#define CNTR_SL OSM (MOD_LALT | MOD_LCTL)
 #define CNTR_TR OSM (MOD_LGUI | MOD_LCTL)
 #define CNTR_HL OSM (MOD_LALT | MOD_LSFT)
 #define CNTR_HR OSM (MOD_LGUI | MOD_LSFT)
@@ -268,7 +266,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 #ifdef CENTER_TT
   case TT_ESC:
-    clear_tt();                             // exit TT layer
+    tt_clear();                             // exit TT layer
     return false;
 #endif
   case S_TAB:
@@ -309,7 +307,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (raise_number(record, LEFT)) { return false; }
 #ifdef CENTER_TT
     if (tt_keycode != 0) {
-      clear_tt();                           // exit TT layer
+      tt_clear();                           // exit TT layer
       return false;
     }
 #endif
@@ -332,8 +330,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case CNTR_BL:
   case CNTR_BR:
     // return to base layer first if different TT layer selected
-    if (tt_keycode != keycode && tt_keycode != 0) { clear_tt(); }
-    tt_keycode = keycode;
+    if (tt_keycode != keycode && tt_keycode != 0) { tt_clear(); }
+    tt_escape(record, keycode);
     break;
 #endif
 // #ifdef STENO_ENABLE

@@ -11,6 +11,7 @@
 ! yaourt -Sy
   cower
   pacaur
+  pkg-config
 
 
 = entropy

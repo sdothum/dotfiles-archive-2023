@@ -32,7 +32,7 @@
       imap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
       vmap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
 
-      " default dfm writing
+      " default dfm writing, InsertChange required for insert mode F7 toggle
       autocmd ui InsertEnter  * if core#Prose() | call ui#ToggleInfo() | endif
       autocmd ui InsertChange * if core#Prose() | call ui#ToggleInfo() | endif
       autocmd ui InsertLeave  * if core#Prose() | call ui#ToggleInfo(1) | endif

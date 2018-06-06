@@ -99,6 +99,7 @@ m iosevka\\ proof     [server]
   dpkg
 # nix
   pacaur
+  package-query
 # package-query-git
 # packer
   pkgfile
