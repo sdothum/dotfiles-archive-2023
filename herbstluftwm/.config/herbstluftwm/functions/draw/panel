@@ -252,18 +252,18 @@ panel() {
                   tic=${tic%|*}
                   if [ ${tic%%:*} -lt 10 ] ;then
                     # hours 0 - 9, cycle aligns on ten second intervals
-                    slen=11
+                    len=11
                     pos=${tic##*:}
                     # pos=$(( ${pos%??} % 10 )) # crashes in dash (memory leak on arm?)
                     pos=$(echo "${pos%??} % 10" | bc)
                     [ $pos = 0 ] && pos=10
                   else
                     # hours 10 - 12, format string continously cycles
-                    slen=12
+                    len=12
                     pos=$(( ${pos:-0} + 1 ))
                     [ $pos -gt 10 ] && pos=0
                   fi
-                  tic="$(echo "$tic" | tail -c $(( $slen - $pos )))$(echo "$tic" | head -c $pos)" ;;
+                  tic="$(echo "$tic" | tail -c $(( $len - $pos )))$(echo "$tic" | head -c $pos)" ;;
             esac
             tic="%{F$DEFAULT_FG}$tic%{F-}"
             case $TIC in

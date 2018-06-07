@@ -10,7 +10,7 @@ THEMES=$TTRSS/themes
 FEEDS=$TTRSS/classes/feeds.php
 
 # my distraction free theme
-theme=axiom
+theme=linear
 button='images/close.png'
 
 # override tt-rss theme, in lieu of selectable themes

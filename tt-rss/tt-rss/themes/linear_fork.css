@@ -1,0 +1,678 @@
+@import url('linear_base.css');
+
+/* RESET ********************************************************************/
+
+html {
+  font-family:                'Helvetica Neue',Helvetica,Arial sans-serif;
+}
+
+div#notify.notify.notify_progress {
+  display:                    none;
+}
+
+#toolbar,
+#headlines-toolbar,
+#headlines-frame {
+  background-color:           #fdf6e3;
+}
+
+/* BASE LAYOUT **************************************************************/
+
+#main {
+  background:                 #eee8d5;
+}
+
+#main-toolbar {
+  border:                     none;
+  background:                 none;
+}
+
+.dijitSplitter {
+  width:                      0 !important;
+}
+
+/* STYLING ******************************************************************/
+
+#content-wrap .dijitArrowButtonInner {
+  opacity:                    0;
+}
+
+#overlay_inner .dijitProgressBar {
+  border:                     1px solid #ddd;
+  border-radius:              0;
+}
+
+.titleWrap a.title:hover {
+  color:                      #2aa198;
+}
+
+/* feed tree */
+
+/* zero padding glues highlight selection to right margin on zooming changes */
+#feeds-holder #feedTree {
+  padding:                    0 0 0 0;
+  background:                 #eee8d5;
+}
+
+#feeds-holder .dijitTreeRow {
+  font-family:                bold 10px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  margin-left:                5px;
+  border-style:               solid;
+  border-width:               1px 0 0;
+  border-color:               #eee8d5;
+}
+
+/* dim non-category nodes */
+#feeds-holder .dijitTreeRow {
+  color:                      #999;
+}
+
+/* categories */
+#feeds-holder .dijitTreeRow [aria-expanded="false"],
+#feeds-holder .dijitTreeRow [aria-expanded="true"] {
+  color:                      #555;
+}
+
+#feeds-holder .dijitTreeRowSelected {
+  color:                      #2a363b;
+  background:                 #eee8d5;
+  border-style:               solid;
+  border-width:               1px 0 0;
+  border-color:               #b5423f;
+  transition:                 background 0s linear;
+  -webkit-transition:         background 0s linear;
+  -moz-transition:            background 0s linear;
+  -ms-transition:             background 0s linear;
+  -o-transition:              background 0s linear;
+}
+
+#feeds-holder .dijitTreeLabel.Unread {
+  font-weight:                normal;
+}
+
+/* #feeds-holder img.feedIcon, */
+/* #feeds-holder .labelColorIndicator { */
+/*   left:                       7px; */
+/*   padding-right:              16px; */
+/* } */
+
+/* match line height to feed label font to preserve horizontal scaling alignment */
+#feeds-holder .counterNode {
+  font:                       10px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #b5423f;
+  background:                 none;
+  padding:                    1px 1px 1px 3px;
+  transition:                 color 0s;
+  -webkit-transition:         color 0s;
+}
+
+#feeds-holder .counterNode.aux {
+  background:                 none;
+}
+
+#feeds-holder .dijitTreeRow:hover .counterNode {
+  color:                      #871c1c;
+  transition:                 background 0s linear;
+  background:                 #eee8d5;
+  -webkit-transition:         background 0s linear;
+  -moz-transition:            background 0s linear;
+  -ms-transition:             background 0s linear;
+  -o-transition:              background 0s linear;
+}
+
+#feeds-holder .dijitTreeRowSelected .counterNode {
+  color:                      #b5423f;
+  background:                 #eee8d5;
+}
+
+#feeds-holder .dijitTreeRowSelected:hover .counterNode {
+  background:                 #eee8d5;
+  color:                      #b5423f;
+}
+
+/* open/close category icon */
+#feeds-holder .dijitTreeExpando {
+  margin:                     0 -16px 1px 11px;
+  padding-left:               0;
+  opacity:                    0;
+}
+
+#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened {
+  opacity:                    0;
+}
+
+/* CSS4 spec */
+/* #feeds-holder .dijitTreeRow:has(.dijitTreeExpandoOpened) { */
+/*   opacity:                    0; */
+/*   border-color:               #fdf6e3; */
+/* } */
+
+#feeds-holder .dijitTreeRow:hover .dijitTreeExpandoOpened {
+  opacity:                    .15;
+}
+
+/* #feeds-holder { */
+/*   background:                 #eee; */
+/* } */
+
+#feeds-holder .dijitTreeRow:hover {
+  color:                      #2A363B;
+  /* border-color:               #fdf6e3; */
+  border-color:               #aaa;
+}
+
+/* un/comment to highlight open icons where applicable */
+/* #feeds-holder .dijitTreeRow:hover .dijitTreeExpando { */
+/*   opacity:                    .15; */
+/* } */
+
+#feeds-holder .dijitTreeRowSelected:hover {
+  color:                      #2A363B;
+  border-style:               solid;
+  border-width:               1px 0 0;
+  border-color:               #b5423f;
+}
+
+#feeds-holder .dijitTreeRowSelected:hover .dijitTreeExpando {
+  opacity:                    .15;
+}
+
+/* set category refresh progress bar height and center over open icon position */
+img[src*="images/indicator_tiny.gif"] {
+  height:                     12px;
+  margin-bottom:              1px;
+}
+
+/* main */
+#toolbar {
+  margin-right:               -19px;
+}
+
+#main-toolbar {
+  font-size:                  11px;
+  margin-left:                35px;
+  padding-left:               10px;
+}
+
+#main-toolbar .dijitButtonText:not(:hover) {
+  color:                      #aaa;
+}
+
+/* #headlines-toolbar { */
+/*   padding-left:               35px; */
+/*   padding-right:              15px; */
+/* } */
+/*  */
+/* #headlines-toolbar { */
+/*   padding-bottom:             15px; */
+/* } */
+/*  */
+/* #headlines-toolbar span.r { */
+/*   margin-top:                 -2px; */
+/* } */
+/*  */
+/* #headlines-toolbar > .r span#selected_prompt { */
+/*   margin-top:                 2px; */
+/* } */
+/*  */
+/* #headlines-toolbar .r a img.noborder { */
+/*   margin-top:                 -1px; */
+/* } */
+/*  */
+/* #headlines-toolbar > .r span#cancel_search { */
+/*   font-family:                'Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   font-size:                  12px; */
+/*   text-align:                 right; */
+/*   margin-left:                10px; */
+/* } */
+
+#feed_title,
+#floatingTitle .title,
+.postHeader .postTitle a {
+  font:                       normal 12px 'Helvetica Neue',Helvetica,Arial sans-serif;
+}
+
+#feed_title,
+#feed_title a {
+  color:                      #999;
+}
+
+/* articles - expandable / separate */
+.cdm.expandable,
+.hl {
+  margin-bottom:              0;
+  margin-top:                 10px;
+}
+
+/* articles - expandable.active / expanded */
+
+/* left feed / update column width*/
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
+  width:                      95px;
+  margin-left:                -95px;
+}
+
+/* maximum fillable content area */
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed a {
+  max-width:                  85px;
+}
+
+/* position titleWrap relative to the checkbox because hlfeed does not exist
+ * when a non-category feeds-holder row is selected */
+div[style="vertical-align : middle"] {
+  width:                      85px;
+}
+
+/* extend the content area to the right margin */
+.cdm span.titleWrap {
+  margin-right:               -95px;
+}
+
+.cdm.expandable.active,
+.cdm.expanded {
+  border:                     none;
+  border-top:                 1px solid #eee;
+  border-bottom:              1px solid #fff;
+  border-radius:              0;
+  margin-bottom:              0;
+}
+
+/* .cdm.expandable.active .cdmHeader, */
+.cdm.expanded .cdmHeader {
+  padding:                    36px 34px 0;
+}
+
+.cdm.expandable.active .title,
+.cdm.expanded .title {
+  font:                       bold 18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #b5423f;
+  margin-top:                 -1px;
+  margin-left:                -3px;
+}
+
+.cdm.expanded:not(.Unread) .title,
+.cdm.expandable:not(.Unread) .title {
+  color:                      #666 !important;
+}
+
+.cdm.expanded.active:not(.Unread) .title,
+.cdm.expandable.active:not(.Unread) .title {
+  color:                      #b5423f !important;
+}
+
+.cdm.expanded:not(.Unread) a.title:visited,
+.cdm.expandable:not(.Unread) a.title:visited,
+.cdm.expanded.Unread.marked a.title:visited,
+.cdm.expandable.Unread.marked a.title:visited,
+.titleWrap a.title:visited {
+  color:                      #3FB1B5 !important;
+}
+
+.cdm.expanded:hover + .cdm.expanded {
+  border-top:                 1px solid #fff;
+}
+
+.cdm.expanded:hover {
+  border-top:                 1px solid #e77471;
+  border-bottom:              1px solid #e77471;
+}
+
+.cdm.expandable.active {
+  padding-top:                54px;
+  border-top:                 1px solid #ddd !important;
+  border-bottom:              1px solid #ddd !important;
+}
+
+.cdm.expandable.active:hover {
+  border-top:                 1px solid #e77471 !important;
+  border-bottom:              1px solid #e77471 !important;
+}
+
+/* collapse button bar, set line height for left hand date alignment */
+.collapseBtn:hover {
+  font:                       11px/11px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  background:                 #ffd8d5 url('linear_images/noise.png') 0 repeat;
+  padding-bottom:             6px;
+}
+
+.cdm.expandable .cdmHeader,
+.hl {
+  padding-top:                0 !important;
+  padding-bottom:             5px;
+}
+
+.cdm.expandable.active .cdmHeader {
+  margin-bottom:              -6px;
+}
+
+.cdm.expandable:not(.active) .cdmHeader,
+.hl {
+  border-top:                 1px solid #fdf6e3;
+  border-bottom:              1px solid #fdf6e3;
+}
+
+.cdm.expandable .cdmHeader,
+.hl {
+  background:                 none;
+  border:                     1px solid #fdf6e3;
+}
+
+.cdm.expandable:not(.active) .cdmHeader:hover,
+.hl:hover {
+  background:                 none;
+  border-left:                1px solid #e77471;
+}
+
+.cdm.expandable .cdmHeader div[style*="vertical-align: middle"] > * {
+  padding-bottom:             3px;
+}
+
+/* align date to collapse button bar line height */
+.cdm.expandable.active .cdmHeader span.updated {
+  font:                       9px/11px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #999;
+  margin-top:                 -25px;
+}
+
+.cdm.expandable.active div:not(.hlFeed) span.titleWrap + span.updated {
+  top:                        34px;
+}
+
+/* .cdm.expandable:not(.active) .cdmHeader > div:first-child > *, */
+/* .cdm.expandable:not(.active) .cdmHeader > .scoreWrap > * { */
+/*   margin-top:                 0 !important; */
+/* } */
+
+/* column position */
+.cdmHeader .hlFeed {
+  font:                       11px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  margin-left:                -10px;
+}
+
+/* expanded position */
+.cdm.expandable.active .hlFeed {
+  margin-top:                 -10px;
+  margin-left:                -47px;
+  padding-top:                4px !important;
+}
+
+.cdm.expandable.active a.title:hover {
+  color:                      #2aa198;
+}
+
+span.updated {
+  color:                      #999;
+}
+
+.cdm.expandable,
+#headlines-frame .hl {
+  border:                     none;
+}
+
+#headlines-frame .hl:hover {
+  background:                 #eee url('linear_images/noise.png') 0 repeat;
+}
+
+.hlScorePic,
+#headlines-frame .cdm.expandable .tinyFeedIcon {
+  display:                    none;
+}
+
+/* articles - common */
+.cdm .title,
+.hlTitle {
+  font:                       bold 14px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #b5423f !important;
+}
+
+/* excerpt content */
+.cdm .cdmExcerpt,
+.cdm.expandable .author,
+.hlTitle .contentPreview {
+  font:                       13px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                      #aaa;
+}
+
+.cdm.Unread .cdmExcerpt,
+.cdm.Unread.expandable .author,
+.hl.Unread .hlTitle .contentPreview {
+  color:                      #555;
+}
+
+/* add a bit of visual separation */
+.cdm.expandable .author {
+  padding-left:               1px;
+  padding-right:              5px;
+}
+
+.cdmHeader .titleWrap .author {
+  color:                      #555 !important;
+}
+
+.postTitle a {
+  display:                    block;
+}
+
+/* .hlLeft > *, */
+/* .hlRight > * { */
+/*   margin-top:                 -5px; */
+/* } */
+
+/* spacing between headlines */
+.cdm.expandable:not(.active) .cdmHeader > * {
+  padding-top:                0;
+  padding-bottom:             0;
+}
+
+.cdmHeader .hlFeed a {
+  padding-left:               0;
+  background:                 none !important;
+}
+
+/* expanded content */
+.cdmContentInner {
+  padding:                    0 34px;
+  color:                      #444;
+}
+
+/* spacing at bottom of expanded article */
+.cdmFooter {
+  padding-bottom:             9px !important;
+}
+
+/* opacity of replacement close icon to match category column, see modified feeds.php */
+.collapseBtn img {
+  opacity:                    0;
+}
+
+.cdm.expandable.active:hover .collapseBtn img {
+  opacity:                    .15;
+}
+
+/* social media link clusters */
+.cdmIntermediate,
+.cdmContentInner span span div,
+.cdmFooter span,
+.cdmFooter span *,
+.cdmFooter div {
+  display:                    none;
+}
+
+
+/* floating title extensions */
+/* #floatingTitle { */
+/*   background-color:           #fdf6e3; */
+/* } */
+/*  */
+/* #floatingTitle a.title { */
+/*   display:                    block; */
+/* } */
+/*  */
+/* #floatingTitle span.updated { */
+/*   padding-top:                8px; */
+/* } */
+/*  */
+/* #floatingTitle div.scoreWrap { */
+/*   padding-top:                9px; */
+/* } */
+/*  */
+/* #floatingTitle .titleWrap span { */
+/*   display:                    none; */
+/* } */
+
+.cdmContentInner h1,
+.postContent h1,
+.cdmContentInner h2,
+.postContent h2,
+.cdmContentInner h3,
+.postContent h3,
+.cdmContentInner h4,
+.postContent h4,
+.cdmContentInner h5,
+.postContent h5,
+.cdmContentInner h6,
+.postContent h6 {
+  font-family:                'Helvetica Neue',Helvetica,Arial sans-serif;
+}
+
+/* normal or non-cdm view with variable hlfeed and updated widths */
+
+/* .hlContent .contentPreview { */
+/*   padding-left:               5px; */
+/* } */
+
+.postHeader {
+  background:                 #eee url('linear_images/noise.png') 0 repeat;
+  padding-top:                25px !important;
+}
+
+/* dirty kludge to ciean up non-cdm view */
+.hl > .hlFeed a {
+  background:                 none !important;
+  white-space:                nowrap;
+}
+
+.hl .dijitCheckBox {
+  display:                    none;
+}
+
+.hlUpdated {
+  padding-right:              3px;
+  margin-left:                0px;
+  padding-left:               0px;
+}
+
+#content-insert {
+  margin-top:                 -5px;
+}
+
+/* #headlines-frame { */
+/*   border-style:               solid; */
+/*   border-width:               0 0 1px; */
+/*   border-color:               #b5423f; */
+/* } */
+
+.postHeader .postTitle a {
+  font-size:                  16px;
+  font-weight:                bold;
+  color:                      #b5423f;
+}
+
+.postHeader .postDate {
+  margin-top:                 3px;
+  padding-left:               10px;
+  padding-right:              5px;
+}
+
+/* can only close non-cdm expanded view with keyboard 'cause all buttons removed */
+.postHeader div[clear="both"],
+.postHeader div.postTags,
+.postContent div,
+.postContent span {
+  display:                    none !important;
+}
+
+/* extras */
+.cdmFeedTitle .title {
+  font-family:                'Helvetica Neue',Helvetica,Arial sans-serif;
+}
+
+/* PREFERENCES **************************************************************/
+/* from prefs.css */
+/* @24 */
+/* @51 */
+/* 101 */
+/* layout */
+/* content */
+/* ICONS ********************************************************************/
+
+img.tinyFeedIcon {
+  display:                    none;
+}
+
+#feeds-holder .dijitTreeRow:hover img.tinyFeedIcon {
+  opacity:                    0;
+}
+
+/* #headlines-toolbar span.r img[src*='images/pub_set.png'], */
+/* .scoreWrap span img[src*='images/pub_set.png'] { */
+/*   display:                    none; */
+/* } */
+
+img[src*='images/mark_unset.png'] {
+  background:                 url('linear_images/star-empty.png') no-repeat;
+  opacity:                    .2;
+  height:                     16px;
+  padding-right:              16px;
+  width:                      0;
+  display:                    inline-block;
+}
+
+img[src*='images/mark_set.png'] {
+  background:                 url('linear_images/star.png') no-repeat;
+  opacity:                    .6;
+  height:                     16px;
+  padding-right:              16px;
+  width:                      0;
+  display:                    inline-block;
+}
+
+img[src*='images/pub_set.png'],
+img[src*='images/pub_unset.png'],
+img[src*='images/folder.png'],
+img[src*='images/fresh.png'],
+img[src*='images/star.png'],
+img[src*='images/feed.png'],
+img[src*='images/archive.png'],
+img[src*='images/time.png'] {
+  display:                    none;
+}
+
+/* SCROLLBARS ***************************************************************/
+
+::-webkit-scrollbar {
+  width:                      0;
+}
+
+/* CHECKBOX *****************************************************************/
+
+/* base styles */
+input[type="checkbox"] {
+  height:                     1.1em;
+  width:                      1.1em;
+  margin-top:                 2px;
+  border-color:               #CEC8B9;
+  background:                 -webkit-linear-gradient(#fdf6e3, #E4DECD);
+  box-shadow:                 none;
+}
+
+/* border radius for radio*/
+/* border radius for checkbox */
+input[type="checkbox"] {
+  border-radius:              0;
+  -webkit-border-radius:      0;
+}
+
+input[type="text"] {
+  background-color:           #fefefe;
+}

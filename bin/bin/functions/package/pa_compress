@@ -9,11 +9,11 @@
 # maximum number of package versions
 depth=4
 
-if ifno 'remove ALL local archived packages' ;then
-  sudo paccache -rk$depth
-  sudo paccache -ruk0
-  sudo pacman-optimize
-else
+sudo paccache -rk$depth
+sudo paccache -ruk0
+which pacman-optimize >/dev/null 2>&1 && sudo pacman-optimize
+
+if ! ifno 'remove ALL local archived packages' ;then
   sudo pacman -Sc --noconfirm
   rm -rf $HOME/.cache/pacaur/*
 fi
