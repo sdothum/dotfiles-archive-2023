@@ -111,7 +111,7 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
-  color:                      #871c1c;
+  color:                      #b5423f;
   transition:                 background 0s linear;
   background:                 #eee8d5;
   -webkit-transition:         background 0s linear;
@@ -155,27 +155,25 @@ div#notify.notify.notify_progress {
 /*   background:                 #eee; */
 /* } */
 
-#feeds-holder .dijitTreeRow:hover {
-  color:                      #2A363B;
-  /* border-color:               #fdf6e3; */
-  border-color:               #aaa;
+#feeds-holder .dijitTreeRow:hover .dijitTreeLabel {
+  color:                      #b5423f;
 }
 
 /* un/comment to highlight open icons where applicable */
-/* #feeds-holder .dijitTreeRow:hover .dijitTreeExpando { */
-/*   opacity:                    .15; */
-/* } */
+#feeds-holder .dijitTreeRow:hover .dijitTreeExpando {
+  opacity:                    .15;
+}
 
 #feeds-holder .dijitTreeRowSelected:hover {
-  color:                      #2A363B;
   border-style:               solid;
   border-width:               1px 0 0;
   border-color:               #b5423f;
 }
 
-#feeds-holder .dijitTreeRowSelected:hover .dijitTreeExpando {
-  opacity:                    .15;
-}
+/* uncomment to highlight open icons */
+/* #feeds-holder .dijitTreeRowSelected:hover .dijitTreeExpando { */
+/*   opacity:                    .15; */
+/* } */
 
 /* set category refresh progress bar height and center over open icon position */
 img[src*="images/indicator_tiny.gif"] {
@@ -271,8 +269,6 @@ div[style="vertical-align : middle"] {
 .cdm.expandable.active,
 .cdm.expanded {
   border:                     none;
-  border-top:                 1px solid #eee;
-  border-bottom:              1px solid #fff;
   border-radius:              0;
   margin-bottom:              0;
 }
@@ -308,22 +304,8 @@ div[style="vertical-align : middle"] {
   color:                      #3FB1B5 !important;
 }
 
-.cdm.expanded:hover + .cdm.expanded {
-  border-top:                 1px solid #fff;
-}
-
-.cdm.expanded:hover {
-  border-top:                 1px solid #e77471;
-  border-bottom:              1px solid #e77471;
-}
-
 .cdm.expandable.active {
   padding-top:                54px;
-  border-top:                 1px solid #ddd !important;
-  border-bottom:              1px solid #ddd !important;
-}
-
-.cdm.expandable.active:hover {
   border-top:                 1px solid #e77471 !important;
   border-bottom:              1px solid #e77471 !important;
 }
@@ -360,7 +342,6 @@ div[style="vertical-align : middle"] {
 .cdm.expandable:not(.active) .cdmHeader:hover,
 .hl:hover {
   background:                 none;
-  border-left:                1px solid #e77471;
 }
 
 .cdm.expandable .cdmHeader div[style*="vertical-align: middle"] > * {

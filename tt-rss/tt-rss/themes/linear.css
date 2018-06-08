@@ -42,7 +42,6 @@ img[src*='images/star.png'] {
 div#dijit__TreeNode_1 .dijitTreeRowSelected.dijitTreeRow,
 div#dijit__TreeNode_1 .dijitTreeRow:hover {
   background:                 #eee8d5;
-  border-color:               #aaa;
 }
 
 div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
@@ -53,12 +52,6 @@ div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRow:hover {
 /* div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando { */
 /*   display:                    none; */
 /* } */
-
-
-div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
-div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow:hover {
-  border-color:               #b5423f;
-}
 
 /* lack of counternode requires centering */
 div#dijit__TreeNode_7 .dijitTreeRow {
@@ -118,6 +111,15 @@ div#dijit__TreeNode_6 {
 /* } */
 
 /* highlight colour */
+.cdm.expandable:not(.active) .cdmHeader:hover *,
+.hl:hover * {
+  color:                      #b5423f !important;
+}
+
+.cdm.expandable:not(.active) .cdmHeader a.title:hover {
+  color:                      #039dde !important;
+}
+
 .cdm.expanded:not(.Unread) a.title:hover,
 .cdm.expandable:not(.Unread) a.title:hover,
 .cdm.expanded.Unread.marked a.title:hover,
