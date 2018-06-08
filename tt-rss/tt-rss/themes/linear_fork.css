@@ -307,7 +307,7 @@ div[style="vertical-align : middle"] {
 .cdm.expandable.active {
   padding-top:                54px;
   border-top:                 1px solid #e77471 !important;
-  border-bottom:              1px solid #e77471 !important;
+  /* border-bottom:              1px solid #e77471 !important; */
 }
 
 /* collapse button bar, set line height for left hand date alignment */
