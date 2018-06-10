@@ -41,7 +41,7 @@ maps() {
 }
 
 [ "$1" = help ] && usage
-[ -e $index:map ] && ! stest -qr -n $index:map $vimrc || { notify 'Vim' 'Generating maps' ; maps ;}
+[ -e $index:map ] && { stest -qr -n $index:map $vimrc || { notify 'Vim' 'Generating maps' ; maps ;};}
 [ $1 ] || title=true
 
 list() {

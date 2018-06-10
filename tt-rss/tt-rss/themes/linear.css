@@ -13,7 +13,7 @@
 #feeds-holder .dijitTreeRow {
   font:                       12px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   padding:                    3px 15px 1px 0;
-  margin:                     -6px 0 24px;  /* adjust top to position topmost label */
+  margin:                     -7px 0 26px;  /* adjust top to position topmost label */
 }
 
 #feeds-holder .dijitTreeLabel {
@@ -36,57 +36,7 @@ img[src*='images/star.png'] {
   opacity:                    1.0;
 }
 
-/* comment out the div#dijit__TreeNode_1 rules to allow hiding the general filters */
-
-/* don't highlight topmost category as it is not a filter and is truncated by the logo block */
-div#dijit__TreeNode_1 .dijitTreeRowSelected.dijitTreeRow,
-div#dijit__TreeNode_1 .dijitTreeRow:hover {
-  background:                 #eee8d5;
-}
-
-div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRowSelected.dijitTreeRow,
-div#dijit__TreeNode_1 .dijitTreeNode .dijitTreeRow:hover {
-  background:                 #eee8d5;
-}
-
-/* div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpando { */
-/*   display:                    none; */
-/* } */
-
-/* lack of counternode requires centering */
-div#dijit__TreeNode_7 .dijitTreeRow {
-  padding-top:                3px;
-  padding-bottom:             2px;
-}
-
-/* disable mouse selection by covering it, but doesn't prevent keyboard selection */
-/* div#dijit__TreeNode_1.dijitTreeIsRoot:after { */
-/*   content:                    'Orbit'; */
-/*   display:                    block; */
-/*   font:                       12px 'Helvetica Neue',Helvetica,Arial sans-serif; */
-/*   color:                      transparent;  [> uncomment to tweak positioning and padding <] */
-/*   position:                   absolute; */
-/*   margin-top:                 -203px; */
-/*   padding-bottom:             3px; */
-/*   width:                      154px; */
-/*   text-align:                 right; */
-/* } */
-
-/* restore non-category node colour */
-div#dijit__TreeNode_2 *,
-div#dijit__TreeNode_3 *,
-div#dijit__TreeNode_4 *,
-div#dijit__TreeNode_7 * {
-  color:                      #555;
-}
-
-div#dijit__TreeNode_2 img.tinyFeedIcon,
-div#dijit__TreeNode_3 img.tinyFeedIcon,
-div#dijit__TreeNode_4 img.tinyFeedIcon,
-div#dijit__TreeNode_7 img.tinyFeedIcon {
-  display:                    none;
-}
-
+/* drop published and archived filters */
 div#dijit__TreeNode_5,
 div#dijit__TreeNode_6 {
   display:                    none;
@@ -103,6 +53,12 @@ div#dijit__TreeNode_6 {
 /* fill any backgnoud gaps resulting from fullscreen display */
 .dijitContainer {
   background-color:           #fdf6e3;
+}
+
+/* only highlight category labels */
+.dijitTreeRowSelected span.dijitFolderOpened  + .dijitTreeLabel,
+.dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel {
+  color:                      #b5423f !important;
 }
 
 /* .cdm.expandable:not(.active) .cdmHeader a.title { */
@@ -252,21 +208,23 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:                    '\00a0\00a0∙● axᴉ◯m';
+  content:                    '\00a0\00a0\00a0\00a0∙● axᴉ◯m\00a0\00a0';
+  content:                    '\00a0\00a0\00a0∙● axᴉ◯m\00a0';
   display:                    block;
-  font:                       18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                       16px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                      #871c1c;
   text-shadow:                0 1px 1px #fff;
   letter-spacing:             2px;
   position:                   fixed;
-  margin-top:                 108px;         /* holder width b of golden ratio a+b  */
+  margin-top:                 85px;          /* ~ holder width x 0.5  */
   width:                      164px;
   text-align:                 right;
   text-decoration:            overline;
 }
 
+/* top of feed category selection list */
 #feeds-holder {
-  margin-top:                 197px;         /* holder width + title font size */
+  margin-top:                 175px;         /* holder width */
 }
 
 /* end of feed marker */

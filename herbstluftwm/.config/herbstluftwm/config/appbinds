@@ -46,7 +46,7 @@ hc keybind Super-Control-equal        spawn toggle plover
 hc keybind Super-BackSpace            spawn toggle ncurses
 if [ $PLANCK ] ;then
   if [ $BEAKL ] ;then
-    hc keybind Super-x                spawn toggle rox
+    hc keybind Super-z                spawn toggle rox
   else
     hc keybind Super-period           spawn toggle rox
   fi

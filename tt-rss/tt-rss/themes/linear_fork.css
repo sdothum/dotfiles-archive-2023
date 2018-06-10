@@ -60,6 +60,8 @@ div#notify.notify.notify_progress {
   border-style:               solid;
   border-width:               1px 0 0;
   border-color:               #eee8d5;
+  transition:                 opacity 0s;
+  -webkit-transition:         opacity 0s;
 }
 
 /* dim non-category nodes */
@@ -74,7 +76,6 @@ div#notify.notify.notify_progress {
 }
 
 #feeds-holder .dijitTreeRowSelected {
-  color:                      #2a363b;
   background:                 #eee8d5;
   border-style:               solid;
   border-width:               1px 0 0;
@@ -112,8 +113,8 @@ div#notify.notify.notify_progress {
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
   color:                      #b5423f;
-  transition:                 background 0s linear;
   background:                 #eee8d5;
+  transition:                 background 0s linear;
   -webkit-transition:         background 0s linear;
   -moz-transition:            background 0s linear;
   -ms-transition:             background 0s linear;
@@ -134,7 +135,10 @@ div#notify.notify.notify_progress {
 #feeds-holder .dijitTreeExpando {
   margin:                     0 -16px 1px 11px;
   padding-left:               0;
+  padding-bottom:             0;
   opacity:                    0;
+  transition:                 opacity 0s;
+  -webkit-transition:         opacity 0s;
 }
 
 #feeds-holder .dijitTreeRow .dijitTreeExpandoOpened {

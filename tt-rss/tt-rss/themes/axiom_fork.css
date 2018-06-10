@@ -114,7 +114,7 @@ div#notify.notify.notify_progress {
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
   background:                 #e7dec3 url('axiom_images/noise.png') 0 repeat;
-  color:                      #871c1c;
+  color:                      #b5423f;
   transition:                 background 0s linear;
   -webkit-transition:         background 0s linear;
   -moz-transition:            background 0s linear;
