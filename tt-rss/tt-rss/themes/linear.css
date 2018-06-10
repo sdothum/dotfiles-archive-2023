@@ -61,6 +61,14 @@ div#dijit__TreeNode_6 {
   color:                      #b5423f !important;
 }
 
+/* non-category node highlight exception for feed filters */
+div#dijit__TreeNode_2 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel {
+  color:                      #b5423f !important;
+}
+
 /* .cdm.expandable:not(.active) .cdmHeader a.title { */
 /*   font:                       16px'Helvetica Narrow','Helvetica Neue',Helvetica,Arial sans-serif; */
 /*   font-weight:                bold; */
