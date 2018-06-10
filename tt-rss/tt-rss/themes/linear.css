@@ -23,12 +23,12 @@
 
 #feeds-holder #feedTree {
   padding-top:                0;
-  width:                      175px;
+  width:                      170px;
 }
 
 #feeds-holder {
-  margin-left:                -20px;
-  width:                      175px !important;
+  margin-left:                -15px;
+  width:                      170px !important;
 }
 
 img[src*='images/star.png'] {
@@ -232,7 +232,7 @@ button.expandPrompt {
 
 /* top of feed category selection list */
 #feeds-holder {
-  margin-top:                 175px;         /* holder width */
+  margin-top:                 170px;         /* holder width */
 }
 
 /* end of feed marker */
