@@ -59,10 +59,10 @@ case $1 in
         cd $HOME/stow
         stow mail
         imap 1 $2
-        annotate "index with "mailcot"\n
-filter with "imap f allmail"\n
-tag with "mailsync I"\n
-crontab with "mailsync""
+        mailcot
+        imap f allmail
+        mailsync I
+        annotate 'crontab with "mailsync"'
       fi ;;
 
   L*) ditto 'tail -f /tmp/imapfilter.log'

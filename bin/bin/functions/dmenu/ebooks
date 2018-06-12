@@ -15,7 +15,7 @@
 REBUILD='[ rebuild database ]'
 
 # ebook library
-library=${LIBRARY:-/net/media/ebooks/${1:-Library}}
+library=${LIBRARY:-/net/media/ebooks/${1:-library}}
 cache=$CACHEDIR/dmenu:ebooks
 kindle=/run/media/$USER/Kindle/documents/
 # export CLOUDCONVERT_API_KEY=$(cat $HOME/.cloudconvert_api_key)
@@ -61,8 +61,8 @@ END
 ebooks() {
   [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3 -type d) || return; }
   notify low 'Updating library cache' 'Please be patient..'
-  find $library -maxdepth 3 -regex ".*\(mobi\|epub\|azw3\|azw\)" |
-       sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw)|\1$SEP\3|" \
+  find $library -maxdepth 3 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
+       sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw\|kfx)|\1$SEP\3|" \
            -e 's/(.*) - .*/\1/ ; s/ \(.*\)//' \
            -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
        sort -u >$cache
@@ -88,6 +88,7 @@ mobi() { mobi=$(file mobi) ;}
 epub() { epub=$(file epub) ;}
 azw3() { azw3=$(file azw3) ;}
 azw()  { azw=$(file azw) ;}
+kfx()  { azw=$(file kfx) ;}
 
 # ..................................................................... E-reader
 
@@ -117,7 +118,7 @@ while : ;do
   title=$(echo $title | sed 's/ *$//g')
   unset mobi epub azw3 azw
 
-  azw3 ; [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || azw ;} ;}
+  azw3 ; [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || { azw ; [ "$azw" ] || kfx ;};};}
   file=$azw3$mobi$epub$azw
   [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks; continue; }
 
@@ -143,15 +144,16 @@ while : ;do
               # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
               # use calibre conversion module
               output="/tmp/${file##*/}"
-              option=$(echo -n "default\nembed font\njustify\nall" | rmenu 'export options' -no-custom) || break
+              option=$(echo -n "default\nembed font\njustify off\nall" | rmenu 'export options' -no-custom) || break
+              justify='--change-justification=justify'
               case $option in
                 default) unset option ;;
                 *font  ) option="--embed-font-family=$embed_font" ;;
-                justify) option='--change-justification=justify' ;;
-                all    ) option="--embed-font-family=$embed_font --change-justification=justify" ;;
+                just*  ) unset justify ;;
+                all    ) option="--embed-font-family=$embed_font"; unset justify ;;
               esac
               # convert even .azw3 to inject folder title and author
-              ebook-convert "$file" "${output%.*}.azw3" --title="$title" --authors="$author" $option >/tmp/ebook-convert.log
+              ebook-convert "$file" "${output%.*}.azw3" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log
 
               # usb or cloud?
               if [ -d $kindle ] ;then
