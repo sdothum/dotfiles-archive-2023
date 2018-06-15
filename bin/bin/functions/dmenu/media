@@ -6,11 +6,12 @@
 # ........................................................................ Media
 
 video='play kodi netflix'
+sonarr=http://$SERVER:8989/
 
 # meta dmenu menu!
 media=$(previous media)
 while : ;do
-  media=$(echo "animation\nanime\nkodi\nmovies\nnetflix\nseries\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
+  media=$(echo "animation\nanime\nkodi\nmovies\nnetflix\nseries\nsonarr\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
           rmenu 'Media' $media -no-custom) || break
 
   mhistory media $media
@@ -26,6 +27,7 @@ while : ;do
     patricia  ) play /net/media/patricia/Patricia/Patricia.mp4 ;;
     references) dmenu references ; break ;;
     series    ) dmenu series ;;
+    sonarr    ) surf $sonarr ;;
     #thought* ) play https://youtu.be/OBk3ynRbtsw ;;
     thought*  ) play /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
     torrent   ) toggle term 'Torrent' rtorrent ; break ;;

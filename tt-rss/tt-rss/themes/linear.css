@@ -80,18 +80,17 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel {
   color:                      #b5423f !important;
 }
 
-.cdm.expandable:not(.active) .cdmHeader a.title:hover {
-  color:                      #039dde !important;
-}
+/* .cdm.expandable:not(.active) .cdmHeader:hover .title { */
+/*   color:                      #282828 !important; */
+/* } */
 
+.cdm.expandable:not(.active) .cdmHeader a.title:hover,
 .cdm.expanded:not(.Unread) a.title:hover,
 .cdm.expandable:not(.Unread) a.title:hover,
 .cdm.expanded.Unread.marked a.title:hover,
 .cdm.expandable.Unread.marked a.title:hover,
 .titleWrap a.title:hover {
-  color:                      #32c0b5 !important;   /* cyan */
-  color:                      #fa4d49 !important;   /* pink */
-  color:                      #039dde !important;   /* blue */
+  color:                      #039dde !important;
 }
 
 .hlFeed a:hover {

@@ -778,8 +778,8 @@ a:hover {
   overflow:                   hidden;
   text-overflow:              ellipsis;
   color:                      #666;
-  transition:                 color .2s;
-  -webkit-transition:         color .2s;
+  /* transition:                 color .2s; */
+  /* -webkit-transition:         color .2s; */
 }
 
 #feeds-holder .dijitTreeRow,
@@ -829,17 +829,17 @@ a:hover {
   padding:                    1px 5px 0 5px;
   font-size:                  11px;
   color:                      #fefefe;
-  transition:                 color .3s;
-  -webkit-transition:         color .3s;
+  /* transition:                 color .3s; */
+  /* -webkit-transition:         color .3s; */
 }
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
   background:                 #AEE239;
-  transition:                 background .2s linear;
-  -webkit-transition:         background .2s linear;
-  -moz-transition:            background .2s linear;
-  -ms-transition:             background .2s linear;
-  -o-transition:              background .2s linear;
+  /* transition:                 background .2s linear; */
+  /* -webkit-transition:         background .2s linear; */
+  /* -moz-transition:            background .2s linear; */
+  /* -ms-transition:             background .2s linear; */
+  /* -o-transition:              background .2s linear; */
 }
 
 #feeds-holder .dijitTreeRowSelected .counterNode {
@@ -851,8 +851,8 @@ a:hover {
   margin:                     -1px 0 1px 5px;
   background:                 url('linear_images/open.png') no-repeat;
   opacity:                    .2;
-  transition:                 opacity .2s;
-  -webkit-transition:         opacity .2s;
+  /* transition:                 opacity .2s; */
+  /* -webkit-transition:         opacity .2s; */
 }
 
 #feeds-holder .dijitTreeExpando:hover {
@@ -1816,8 +1816,8 @@ div.dijitInline.dijitTreeRow {
   transition:                 color .2s linear;
   color:                      #AEE239;
   text-decoration:            none;
-  -webkit-transition:         color .2s linear;
-  -moz-transition:            color .2s linear;
-  -ms-transition:             color .2s linear;
-  -o-transition:              color .2s linear;
+  /* -webkit-transition:         color .2s linear; */
+  /* -moz-transition:            color .2s linear; */
+  /* -ms-transition:             color .2s linear; */
+  /* -o-transition:              color .2s linear; */
 }

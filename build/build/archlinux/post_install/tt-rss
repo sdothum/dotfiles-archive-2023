@@ -7,6 +7,8 @@
 
 sudo mkdir -pv /srv/http
 [ -L /srv/http/tt-rss ] || sudo ln -sfv /usr/share/webapps/tt-rss /srv/http/
+for i in images upload export js ;do sudo mkdir -pv /var/lib/tt-rss/cache/$i ;done
+sudo chmod -R 777 /var/lib/tt-rss/cache/*
 
 [ -d /var/lib/tt-rss ] && sudo chown -cR http:http /var/lib/tt-rss
 annotate "initialize database and config.php\n
