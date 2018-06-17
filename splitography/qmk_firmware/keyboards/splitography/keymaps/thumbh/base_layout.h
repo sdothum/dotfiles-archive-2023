@@ -90,7 +90,7 @@
 
   [_RSYMBOL] = {
     {TD_COLN, KC_DOT,  KC_ASTR, KC_AMPR, _______, ___x___, ___x___, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
-    {SM_TILD, TD_LT,   SM_PERC, TD_GT,   KC_QUES, ___x___, ___x___, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
+    {SG_TILD, TD_LT,   SA_PERC, TD_GT,   KC_QUES, ___x___, ___x___, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
     {_______, KC_PLUS, KC_AT,   KC_EXLM, KC_SLSH, ___x___, ___x___, _______, _______, _______, _______, _______},
     {_______, _______, _______, _______, SL_TAB,  TD_EQL,  ___x___, ___fn__, _______, _______, _______, _______},
   },

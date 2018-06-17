@@ -117,11 +117,14 @@
       " imap <silent><S-PageDown> <ESC>:silent bnext<CR>
       " nmap <silent><S-PageDown> :silent bnext<CR>
 
-      " planck keyboard specific buffer navigation key assignments
-      " nmap <silent>-            :silent bprevious<CR>
-      " nmap <silent>+            :silent bnext<CR>
-      nmap <silent><Delete>       :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
-      nmap <silent>_              :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+      " splitography/planck thumb H keyboard specific buffer navigation key assignments
+      if $BEAKL > ''
+        nmap <silent><Delete>     :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
+        nmap <silent><Enter>      :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+      else
+        nmap <silent>-            :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
+        nmap <silent>+            :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+      endif
       " switch to previously edited/viewed buffer
       nmap <silent><BS>           :silent call core#CloseDiffOrig()<CR>:silent edit #<CR>
 

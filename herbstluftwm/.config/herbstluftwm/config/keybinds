@@ -29,7 +29,7 @@ hc keybind $Mod-0                       spawn toggle focus
 # UI appearance
 hc keybind $Mod-minus                   spawn focus borders 3
 hc keybind $Mod-Shift-minus             spawn toggle borders
-if [ $PLANCK ] ;then
+if [ $BEAKL ] ;then
   hc keybind $Mod-apostrophe            spawn toggle compton
   hc keybind $Mod-Shift-apostrophe      spawn toggle unclutter
 else
@@ -47,7 +47,7 @@ hc keybind $Mod-Control-d               spawn draw root blank
 
 # focus monitor
 # hc keybind $Mod-apostrophe            cycle_monitor
-if [ $PLANCK ] ;then
+if [ $BEAKL ] ;then
   # hc keybind $Mod-semicolon           focus_monitor 1
   # hc keybind $Mod-backslash           focus_monitor 0
   hc keybind $Mod-Page_Down             focus_monitor 1
@@ -118,7 +118,7 @@ else
   hc keybind $Mod-Shift-k               chain . shift up    . emit_hook focus_changed
   hc keybind $Mod-Shift-l               chain . shift right . emit_hook focus_changed
 fi
-if [ $PLANCK ] ;then
+if [ $BEAKL ] ;then
   # hc keybind $Mod-Shift-semicolon     spawn pin monitor 1
   # hc keybind $Mod-Shift-backslash     spawn pin monitor 0
   # hc keybind $Mod-Control-semicolon   spawn switch monitor 1
@@ -145,16 +145,10 @@ hc keybind $Mod-Shift-1                 jumpto urgent
 
 # split frames
 # create an empty frame at the specified direction
-if [ $PLANCK ] ;then
-  if [ $BEAKL ] ;then
-    hc keybind $Mod-i                   split bottom 0.5
-    hc keybind $Mod-Shift-i             split bottom 0.666666
-    hc keybind $Mod-Control-i           split bottom 0.333333
-  else
-    hc keybind $Mod-o                   split bottom 0.5
-    hc keybind $Mod-Shift-o             split bottom 0.666666
-    hc keybind $Mod-Control-o           split bottom 0.333333
-  fi
+if [ $BEAKL ] ;then
+  hc keybind $Mod-i                     split bottom 0.5
+  hc keybind $Mod-Shift-i               split bottom 0.666666
+  hc keybind $Mod-Control-i             split bottom 0.333333
   hc keybind $Mod-semicolon             split right  0.5
   hc keybind $Mod-Shift-semicolon       split right  0.666666
   hc keybind $Mod-Control-semicolon     split right  0.333333
@@ -168,12 +162,8 @@ else
 fi
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space           spawn restore frames
-if [ $PLANCK ] ;then
-  if [ $BEAKL ] ;then
-    hc keybind $Mod-Shift-g             spawn switch orientation -2
-  else
-    hc keybind $Mod-Shift-h             spawn switch orientation -2
-  fi
+if [ $BEAKL ] ;then
+  hc keybind $Mod-Shift-g               spawn switch orientation -2
   hc keybind $Mod-comma                 spawn switch orientation +1
   hc keybind $Mod-Shift-comma           spawn switch orientation -1
   hc keybind $Mod-Shift-period          spawn switch orientation +2
@@ -225,18 +215,11 @@ hc keybind $Mod-Control-comma           use_index -1 --skip-visible
 hc keybind $Mod-BackSpace               spawn switch tag
 
 # set layout
-if [ $PLANCK ] ;then
-  if [ $BEAKL ] ;then
-    hc keybind $Mod-Control-Shift-equal spawn toggle monocle
-  else
-    hc keybind $Mod-Control-equal       spawn toggle monocle
-  fi
-else
-  hc keybind $Mod-grave                 spawn toggle monocle
-fi
 if [ $BEAKL ] ;then
+  hc keybind $Mod-Control-Shift-equal   spawn toggle monocle
   hc keybind $Mod-q                     remove
 else
+  hc keybind $Mod-grave                 spawn toggle monocle
   hc keybind $Mod-r                     remove
 fi
 hc keybind $Mod-x                       spawn restore layout

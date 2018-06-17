@@ -107,10 +107,10 @@ enum planck_keycodes {
  ,BASE2
  ,PLOVER
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
- ,SM_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
- ,SM_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
+ ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
+ ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
- ,SP_DEL    // pseudo LT   (_ADJUST, KC_DEL)
+ ,SL_DELE   // pseudo LT   (_ADJUST, KC_DEL)
  ,SL_EQL    // pseudo LT   (_MOUSE, KC_EQL)
  ,SL_TAB    // pseudo LT   (_ADJUST, KC_TAB)
 #ifdef CENTER_TT
@@ -304,7 +304,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case GT_UP:
     tap_mods(record, KC_LCTL);
     break;
-  case SP_DEL:
+  case SL_DELE:
     lt(record, NOSHIFT, KC_DEL, 0, _ADJUST);
     break;
   case SL_TAB:
@@ -327,10 +327,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
     break;
-  case SM_PERC:
+  case SA_PERC:
     mt_shift(record, KC_LALT, 0, KC_5);
     break;
-  case SM_TILD:
+  case SG_TILD:
     mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
   case LT_H:

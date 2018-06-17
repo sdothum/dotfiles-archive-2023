@@ -1,11 +1,11 @@
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 // this is the style you want to emulate.
 //
-// To flash planck firmware
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// To flash splitography firmware
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 //   Reset keyboard or press hw reset button on base (hole)
 //
-//   cd qmk_firmware/keyboards/planck
+//   cd qmk_firmware/keyboards/splitography
 //   sudo make KEYMAP=<keymap> dfu
 //
 //   sudo make clean           (good practice before flashing)
@@ -61,7 +61,7 @@
 
 extern keymap_config_t keymap_config;
 
-enum planck_layers {
+enum splitography_layers {
   _BASE = 0
  ,_SHIFT
  ,_LSHIFT
@@ -83,15 +83,15 @@ enum planck_layers {
  ,_END_LAYERS
 };
 
-enum planck_keycodes {
+enum splitography_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
  ,PLOVER
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
- ,SM_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
- ,SM_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
- ,SL_DEL    // pseudo LT   (_EDIT, KC_DEL)                for shifted key-codes, see process_record_user()
+ ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
+ ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
+ ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (S(_MOUSE), KC_TAB)
 #ifdef CENTER_TT
  ,TT_ESC
@@ -279,10 +279,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
     break;
-  case SM_PERC:
+  case SA_PERC:
     mt_shift(record, KC_LALT, 0, KC_5);
     break;
-  case SM_TILD:
+  case SG_TILD:
     mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
   case LT_H:
