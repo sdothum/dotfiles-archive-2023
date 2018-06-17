@@ -398,9 +398,10 @@ span.updated {
 .cdm.expandable .author {
   padding-left:               1px;
   padding-right:              5px;
+  white-space:                normal;
 }
 
-.cdmHeader .titleWrap .author {
+.cdmHeader .titleWrap author {
   color:                      #555 !important;
 }
 

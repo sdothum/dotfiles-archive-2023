@@ -6,10 +6,10 @@
 //   Reset keyboard or press hw reset button on base (hole)
 //
 //   cd qmk_firmware/keyboards/planck
-//   sudo make KEYMAP=sdothum dfu
+//   sudo make KEYMAP=<keymap> dfu
 //
-//   sudo make clean          (good practice before flashing)
-//   sudo make KEYMAP=sdothum (to compile check)
+//   sudo make clean           (good practice before flashing)
+//   sudo make KEYMAP=<keymap> (to compile check)
 //
 // Package requirements (for arch linux)
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -24,27 +24,10 @@
 //   Autocompletion tap dance key pairs (),[],{} are available from the
 //   number/symbol layer, as well as, numerous (un)shift key values
 //
-//   The navigation pad provides a single hand right thumb activated cluster
-//   with left hand modifiers
-//
 //   #define PRIVATE_STRING includes private_string.h, a user defined code
 //   block for the PRIV tap dance e.g. SEND_STRING("secret messape"),
 //   see function private()
-//
-// Modifier clusters
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-//   The num and sym keys together access the navigation pad layer
-//
-//   ,-----------------------------------------------------------------------------------.
-//   | Ctrl |  GUI |  Alt |  Esc | Space|  Tab | Bksp |  Ent | Left | Down |  Up  | Right|
-//   `-----------------------------------------------------------------------------------'
-//
-// Hint
-// ▔▔▔▔
-//   For sculpted keycaps such as Cherry or OEM profile, reverse the Alt, Num,
-//   Shift, Shift, Nav, Sym keycaps for more ergonomic thumb orientation and
-//   actuation
-//
+///
 // Code
 // ▔▔▔▔
 //   This source is shamelessly based on the "default" planck layout
@@ -66,7 +49,7 @@
 
 
 #include "config.h"
-#include "planck.h"
+#include "splitography.h"
 #include "action_layer.h"
 #ifdef STENO_ENABLE
 #include "keymap_steno.h"
@@ -90,7 +73,6 @@ enum planck_layers {
  ,_FNCKEY
  ,_MOUSE
  ,_EDIT
- ,_ADJUST
 #ifdef CENTER_TT
  ,_TTNUMBER
  ,_TTREGEX
@@ -109,10 +91,8 @@ enum planck_keycodes {
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SM_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
- ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
- ,SP_DEL    // pseudo LT   (_ADJUST, KC_DEL)
- ,SL_EQL    // pseudo LT   (_MOUSE, KC_EQL)
- ,SL_TAB    // pseudo LT   (_ADJUST, KC_TAB)
+ ,SL_DEL    // pseudo LT   (_EDIT, KC_DEL)                for shifted key-codes, see process_record_user()
+ ,SL_TAB    // pseudo LT   (S(_MOUSE), KC_TAB)
 #ifdef CENTER_TT
  ,TT_ESC
 #endif
@@ -131,10 +111,7 @@ enum planck_keycodes {
 
 // modifier keys
 #define AT_B    ALT_T(KC_B)
-#define AT_DOWN ALT_T(KC_DOWN)
-#define CT_RGHT CTL_T(KC_RGHT)
 #define CT_C    CTL_T(KC_C)
-#define GT_UP   GUI_T(KC_UP)
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 #define ST_A    SFT_T(KC_A)
 #ifdef HOME_MODS
@@ -157,11 +134,6 @@ enum planck_keycodes {
 #define HOME_W  KC_W
 #endif
 
-#define S_DOWN  S    (KC_DOWN)
-#define S_LEFT  S    (KC_LEFT)
-#define S_RGHT  S    (KC_RGHT)
-#define S_UP    S    (KC_UP)
-
 #include "tapdance.h"
 
 // keycodes
@@ -180,11 +152,9 @@ enum planck_keycodes {
 #define UNDO    LCTL(KC_Z)
 #define TMCOPY  LALT(LCTL(KC_C))
 #define TMPASTE LALT(LCTL(KC_V))
-#define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
+#define LT_DEL  LT  (_EDIT, KC_DEL)
 #define LT_ESC  LT  (_LSYMBOL, KC_ESC)
 #define LT_H    LT  (_LSHIFT, KC_H)
-#define LT_INS  LT  (_NUMBER, KC_INS)
-#define LT_LEFT LT  (_EDIT,   KC_LEFT)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
@@ -204,13 +174,6 @@ enum planck_keycodes {
 #define CNTR_HR OSM (MOD_LGUI | MOD_LSFT)
 #define CNTR_BL TD  (_CAPS)
 #define CNTR_BR OSM (MOD_LSFT | MOD_LCTL)
-#endif
-
-// LT can only reference layers 0-15
-#ifdef THUMB_0
-#define LT_EQL  LT  (_ADJUST, KC_EQL)
-#else
-#define LT_0    LT  (_ADJUST, KC_0)
 #endif
 
 // ........................................................ Default Alpha Layout
@@ -295,26 +258,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV)) { return false; }
     break;
 #endif
-  case AT_DOWN:
-    tap_mods(record, KC_LALT);
-    break;
-  case CT_RGHT:
-    tap_mods(record, KC_LGUI);
-    break;
-  case GT_UP:
-    tap_mods(record, KC_LCTL);
-    break;
-  case SP_DEL:
-    lt(record, NOSHIFT, KC_DEL, 0, _ADJUST);
-    break;
-  case SL_TAB:
-    lt(record, SHIFT, KC_TAB, 0, _ADJUST);
-    break;
 #ifdef CENTER_TT
   case TT_ESC:
     tt_clear();                             // exit TT layer
     return false;
 #endif
+  case KC_TAB:
+    if (raise_number(record, LEFT)) { return false; }
+    break;
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
@@ -335,29 +286,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_H:
     if (raise_number(record, RIGHT)) { return false; }
-    thumb_roll(record, LEFT, 0, 0, _LSHIFT, _RSYMBOL);
+    tap_layer(record, _LSHIFT);
     break;
   case TD_ENT:
-    tap_layer(record, _RSHIFT);
+    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
   case LT_ESC:
+    if (raise_number(record, LEFT)) { return false; }
 #ifdef CENTER_TT
     if (tt_keycode != 0) {
       tt_clear();                           // exit TT layer
       return false;
     }
 #endif
-    tap_layer(record, _LSYMBOL);
+    thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
-  case SL_EQL:
-    // note: TD_SPC interferes with successive '=' in rollover mode (not an in use issue)
-    thumb_roll(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _RSYMBOL);
+  case SL_TAB:
+    thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
     break;
   case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSHIFT);
-    break;
-  case LT_BSPC:
-    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSHIFT);
+    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
     break;
 #ifdef CENTER_TT
   case CNTR_TL:

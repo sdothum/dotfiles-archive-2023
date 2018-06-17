@@ -180,11 +180,10 @@ enum planck_keycodes {
 #define UNDO    LCTL(KC_Z)
 #define TMCOPY  LALT(LCTL(KC_C))
 #define TMPASTE LALT(LCTL(KC_V))
-#define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
 #define LT_ESC  LT  (_LSYMBOL, KC_ESC)
 #define LT_H    LT  (_LSHIFT, KC_H)
-#define LT_INS  LT  (_NUMBER, KC_INS)
 #define LT_LEFT LT  (_EDIT,   KC_LEFT)
+#define LT_INS  LT  (_NUMBER, KC_INS)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
@@ -338,7 +337,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     thumb_roll(record, LEFT, 0, 0, _LSHIFT, _RSYMBOL);
     break;
   case TD_ENT:
-    tap_layer(record, _RSHIFT);
+    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSHIFT);
     break;
   case LT_ESC:
 #ifdef CENTER_TT
@@ -355,9 +354,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case SL_DEL:
     thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSHIFT);
-    break;
-  case LT_BSPC:
-    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSHIFT);
     break;
 #ifdef CENTER_TT
   case CNTR_TL:
