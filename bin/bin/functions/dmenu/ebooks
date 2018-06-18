@@ -45,10 +45,10 @@ $title attached.
 Content-Type: application/octet-stream
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="${azw3##*/}"
+Content-Disposition: attachment; filename="${mobi##*/}"
 
 END
-                base64 "$azw3"
+                base64 "$mobi"
                 cat - <<END
 
 --$boundary--
@@ -139,8 +139,9 @@ while : ;do
               ebooks ;;
 
       kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
-              find /tmp -maxdepth 1 -name '*azw3' -exec rm {} \;
-              notify low "$title" 'Converting to azw3..'
+              [ -d $kindle ] && format=azw3 || format=mobi
+              find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
+              notify low "$title" "Converting to $format.."
               # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
               # use calibre conversion module
               output="/tmp/${file##*/}"
@@ -153,14 +154,15 @@ while : ;do
                 all    ) option="--embed-font-family=$embed_font"; unset justify ;;
               esac
               # convert even .azw3 to inject folder title and author
-              ebook-convert "$file" "${output%.*}.azw3" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log
+              ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log
 
               # usb or cloud?
               if [ -d $kindle ] ;then
-                find /tmp -maxdepth 1 -name '*azw3' -exec mv -f {} $kindle \;
+                find /tmp -maxdepth 1 -name "*$format" -exec mv -f {} $kindle \;
                 sync &
                 notify low "$title" "$kindle"
               else
+                mobi=$(find /tmp -maxdepth 1 -name "*$format")
                 address=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
                 address=${address%%@*}
                 mhistory kindle $address

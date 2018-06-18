@@ -335,20 +335,20 @@
         execute 'normal! ' . l:col . '|'
       endfunction
 
-    " .......................................................... CSS block align
+    " ......................................................... Insert line wrap
 
-      " just position cursor on a line with an opening '{'
-      function! core#CssBlockAlign()
-        " calculate indent width to '.* { '
-        let l:indent = repeat(' ', len(substitute(getline(line('.')), '[{].*', '  ', '')))
-        let l:start = line('.') + 1
-        " end of block
-        normal! }
-        let l:end   = line('.') - 1
-        execute ':' . l:start . ',' . l:end . 's/^ */' . l:indent . '/'
-        " next block candidate
-        let @/='{.*[^}] *$'
-        normal! n
+      " insert line while disabling auto-commenting
+      function! core#InsertWrap()
+        let l:formatoptions = &formatoptions
+        set formatoptions-=c
+        set formatoptions-=r
+        set formatoptions-=o
+        normal! ^
+        let l:pos = col('.')
+        normal! o
+        " align line indentation
+        execute 'normal! a' . repeat(' ', l:pos)
+        let &formatoptions = l:formatoptions
       endfunction
 
   " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -375,22 +375,6 @@
         normal! {nV}
       endfunction
 
-    " ......................................................... Insert line wrap
-
-      " insert line while disabling auto-commenting
-      function! core#InsertWrap()
-        let l:formatoptions = &formatoptions
-        set formatoptions-=c
-        set formatoptions-=r
-        set formatoptions-=o
-        normal! ^
-        let l:pos = col('.')
-        normal! o
-        " align line indentation
-        execute 'normal! a' . repeat(' ', l:pos)
-        let &formatoptions = l:formatoptions
-      endfunction
-
     " .......................................................... Code block text
 
       " convert wiki text lines into code block lines
@@ -402,6 +386,22 @@
         " convert [[test]], see thedarnedestthing markdown
         execute "silent! normal! gv:s/ \\[\\[ / [[] /e\<CR>"
         execute "silent! normal! gv:s/ \\]\\] / []] /e\<CR>"
+      endfunction
+
+    " .......................................................... CSS block align
+
+      " just position cursor on a line with an opening '{'
+      function! core#CssBlockAlign()
+        " calculate indent width to '.* { '
+        let l:indent = repeat(' ', len(substitute(getline(line('.')), '[{].*', '  ', '')))
+        let l:start = line('.') + 1
+        " end of block
+        normal! }
+        let l:end   = line('.') - 1
+        execute ':' . l:start . ',' . l:end . 's/^ */' . l:indent . '/'
+        " next block candidate
+        let @/='{.*[^}] *$'
+        normal! n
       endfunction
 
   " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

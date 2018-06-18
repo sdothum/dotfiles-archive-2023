@@ -93,9 +93,9 @@
       vmap <silent><S-Up>         <ESC>:call core#MoveVisualUp()<CR>
       vmap <silent><S-Down>       <ESC>:call core#MoveVisualDown()<CR>
 
-    " .......................................................... CSS block align
+    " ......................................................... Insert line wrap
 
-      nnoremap <silent><F5>       :call core#CssBlockAlign()<CR>
+      inoremap <silent><C-Return> <C-o>:call core#InsertWrap()<CR>
 
   " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -105,15 +105,15 @@
       nmap <silent><A-PageUp>     :call core#ParagraphAbove()<CR>
       nmap <silent><A-PageDown>   :call core#ParagraphBelow()<CR>
 
-    " ......................................................... Insert line wrap
-
-      inoremap <silent><C-Return> <C-o>:call core#InsertWrap()<CR>
-
     " .......................................................... Code block text
 
       " markup wiki code blocks
       nnoremap <silent><leader>`  V:call core#CodeBlock()<CR>
       vmap     <silent><leader>`  :call core#CodeBlock()<CR>
+
+    " .......................................................... CSS block align
+
+      nnoremap <silent><F5>       :call core#CssBlockAlign()<CR>
 
   " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
