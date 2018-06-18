@@ -149,6 +149,15 @@
         endif
       endfunction
 
+    " ............................................................. Toggle spell
+
+      function! core#ToggleSpell()
+        execute 'let &spell=' . (&spell == 0 ? 1 : 0)
+        if PencilMode() != ''
+          execute &spell == 0 ? 'NoPencil' : 'Pencil'
+        endif
+      endfunction
+
     " ........................................................... Column margins
 
       " see ui#IndentTheme()
@@ -279,39 +288,6 @@
 
   " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................................................. Toggle spell
-
-      function! core#ToggleSpell()
-        execute 'let &spell=' . (&spell == 0 ? 1 : 0)
-        if PencilMode() != ''
-          execute &spell == 0 ? 'NoPencil' : 'Pencil'
-        endif
-      endfunction
-
-    " .............................................................. Select text
-
-      function! core#ParagraphAbove()
-        if matchstr(getline(line('.')), '\S') == ''
-          normal! {
-          if matchstr(getline(line('.')), '\S') == ''
-            normal! j
-          endif
-        endif
-        normal! }lV{
-      endfunction
-
-      function! core#ParagraphBelow()
-        if matchstr(getline(line('.')), '\S') == ''
-          normal! }
-          if matchstr(getline(line('.')), '\S') == ''
-            normal! k
-          endif
-        endif
-        normal! {nV}
-      endfunction
-
-  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
     " .......................................................... Shift up / down
 
       " see https://github.com/gorkunov/vimconfig.git
@@ -357,6 +333,46 @@
         let l:col = virtcol('.')
         execute 'silent! ' . a:move
         execute 'normal! ' . l:col . '|'
+      endfunction
+
+    " .......................................................... CSS block align
+
+      " just position cursor on a line with an opening '{'
+      function! core#CssBlockAlign()
+        " calculate indent width to '.* { '
+        let l:indent = repeat(' ', len(substitute(getline(line('.')), '[{].*', '  ', '')))
+        let l:start = line('.') + 1
+        " end of block
+        normal! }
+        let l:end   = line('.') - 1
+        execute ':' . l:start . ',' . l:end . 's/^ */' . l:indent . '/'
+        " next block candidate
+        let @/='{.*[^}] *$'
+        normal! n
+      endfunction
+
+  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .............................................................. Select text
+
+      function! core#ParagraphAbove()
+        if matchstr(getline(line('.')), '\S') == ''
+          normal! {
+          if matchstr(getline(line('.')), '\S') == ''
+            normal! j
+          endif
+        endif
+        normal! }lV{
+      endfunction
+
+      function! core#ParagraphBelow()
+        if matchstr(getline(line('.')), '\S') == ''
+          normal! }
+          if matchstr(getline(line('.')), '\S') == ''
+            normal! k
+          endif
+        endif
+        normal! {nV}
       endfunction
 
     " ......................................................... Insert line wrap

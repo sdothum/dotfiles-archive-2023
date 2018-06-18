@@ -81,13 +81,7 @@
 
       nmap <silent><leader><CR> :call core#ToggleWrap()<CR>
 
-  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .............................................................. Select text
-
-      " select paragragh
-      nmap <silent><A-PageUp>     :call core#ParagraphAbove()<CR>
-      nmap <silent><A-PageDown>   :call core#ParagraphBelow()<CR>
+  " Edit ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .......................................................... Shift up / down
 
@@ -98,6 +92,18 @@
       nmap <silent><S-Down>       :call core#MoveLineDown()<CR>
       vmap <silent><S-Up>         <ESC>:call core#MoveVisualUp()<CR>
       vmap <silent><S-Down>       <ESC>:call core#MoveVisualDown()<CR>
+
+    " .......................................................... CSS block align
+
+      nnoremap <silent><F5>       :call core#CssBlockAlign()<CR>
+
+  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .............................................................. Select text
+
+      " select paragragh
+      nmap <silent><A-PageUp>     :call core#ParagraphAbove()<CR>
+      nmap <silent><A-PageDown>   :call core#ParagraphBelow()<CR>
 
     " ......................................................... Insert line wrap
 
