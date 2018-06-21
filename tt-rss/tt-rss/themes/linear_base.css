@@ -116,23 +116,23 @@ div.error {
   border-color:          #ff0000;
 }
 
-div.warning img,
+div.error img,
 div.notice img,
-div.error img {
+div.warning img {
   margin-right:          4px;
   vertical-align:        middle;
 }
 
-div.warning span,
+div.error span,
 div.notice span,
-div.error span {
+div.warning span {
   display:               table-cell;
   vertical-align:        middle;
 }
 
 /* @422 */
-img.markedPic,
-img.pubPic {
+img.pubPic,
+img.markedPic {
   cursor:                pointer;
   vertical-align:        middle;
 }
@@ -391,9 +391,9 @@ a:hover { text-decoration: underline; }
 #main .dijitSplitterThumb { display: none; }
 
 #content-wrap .dijitSelect,
-#content-wrap .dijitButtonContents,
 #content-wrap .dijitButtonNode,
-#content-wrap .dijitArrowButton {
+#content-wrap .dijitArrowButton,
+#content-wrap .dijitButtonContents {
   border-color:          transparent;
   background:            transparent;
   color:                 #999;
@@ -404,8 +404,8 @@ a:hover { text-decoration: underline; }
 
 #main_toolbar_form > * { margin-right: 5px; }
 
-#content-wrap .dijitButtonContents,
-#content-wrap .dijitButtonText {
+#content-wrap .dijitButtonText,
+#content-wrap .dijitButtonContents {
   padding-left:          0;
   padding-right:         0;
 }
@@ -551,8 +551,8 @@ a:hover { text-decoration: underline; }
   height:                90%;
 }
 
-#overlay:before,
-#overlay_inner {
+#overlay_inner,
+#overlay:before {
   display:               inline-block;
   vertical-align:        middle;
 }
@@ -642,8 +642,8 @@ a:hover { text-decoration: underline; }
 }
 
 #main_toolbar_form > .dijitButton .dijitButtonContents,
-#main_toolbar_form > .dijitButton .dijitButtonContents:before,
-#main_toolbar_form > .dijitButton .dijitButtonContents:after {
+#main_toolbar_form > .dijitButton .dijitButtonContents:after,
+#main_toolbar_form > .dijitButton .dijitButtonContents:before {
   position:              absolute;
   width:                 16px;
   border-top:            3px solid;
@@ -661,8 +661,8 @@ a:hover { text-decoration: underline; }
   -webkit-transition:    color .5s;
 }
 
-#main_toolbar_form > .dijitButton .dijitButtonContents:before,
-#main_toolbar_form > .dijitButton .dijitButtonContents:after {
+#main_toolbar_form > .dijitButton .dijitButtonContents:after,
+#main_toolbar_form > .dijitButton .dijitButtonContents:before {
   content:               '';
   top:                   3px;
   left:                  0;
@@ -855,17 +855,17 @@ a:hover { text-decoration: underline; }
 }
 
 /* articles - expandable / separate */
-.cdm.expandable,
-.hl {
+.hl,
+.cdm.expandable {
   border:                1px solid transparent;
   border-top-color:      #eee;
   border-bottom-color:   #eee;
   margin-bottom:         -1px;
 }
 
-.cdm.expandable:not(.active) .cdmHeader:hover,
 .hl:hover,
-.collapseBtn:hover {
+.collapseBtn:hover,
+.cdm.expandable:not(.active) .cdmHeader:hover {
   background:            rgba(0,0,0,.038);
   cursor:                pointer;
 }
@@ -873,9 +873,9 @@ a:hover { text-decoration: underline; }
 .hl,
 .cdm.expandable .cdmHeader { display: table; }
 
-.cdm.expandable .cdmHeader > *,
 .hl > *,
-#floatingTitle > * {
+#floatingTitle > *,
+.cdm.expandable .cdmHeader > * {
   display:               table-cell;
   padding:               5px;
 }
@@ -923,8 +923,8 @@ a:hover { text-decoration: underline; }
 .cdm.expanded .cdmHeader > *:last-child,
 .cdm.expandable.active .cdmHeader > *:last-child { padding-right: 0; }
 
-.cdm.expandable:not(.active) .cdmHeader > div:first-child,
-.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed,
+.cdm.expandable:not(.active) .cdmHeader > div:first-child {
   order:                 1;
   /* old flexbox */
   -moz-box-ordinal-group:1;
@@ -970,8 +970,8 @@ a:hover { text-decoration: underline; }
 .cdm.expanded .cdmHeader > .titleWrap,
 .cdm.expandable.active .cdmHeader .titleWrap { padding: 0; }
 
-.cdm.expandable.active .title,
-.cdm.expanded .title {
+.cdm.expanded .title,
+.cdm.expandable.active .title {
   display:               block;
   margin-bottom:         5px;
   font:                  normal normal bold 28px/33px 'Helvetica Neue',Helvetica sans-serif;
@@ -979,21 +979,21 @@ a:hover { text-decoration: underline; }
   -webkit-font-smoothing:antialiased;
 }
 
-.cdm.expandable.active .cdmHeader > div:first-child,
-.cdm.expandable.active .cdmHeader .hlFeed,
-.cdm.expandable.active .cdmHeader .updated,
-.cdm.expandable.active .cdmHeader .scoreWrap,
-.cdm.expanded .cdmHeader > div:first-child,
 .cdm.expanded .cdmHeader .hlFeed,
 .cdm.expanded .cdmHeader .updated,
-.cdm.expanded .cdmHeader .scoreWrap {
+.cdm.expanded .cdmHeader .scoreWrap,
+.cdm.expandable.active .cdmHeader .hlFeed,
+.cdm.expandable.active .cdmHeader .updated,
+.cdm.expanded .cdmHeader > div:first-child,
+.cdm.expandable.active .cdmHeader .scoreWrap,
+.cdm.expandable.active .cdmHeader > div:first-child {
   position:              absolute;
   top:                   34px;
   padding:               0;
 }
 
-.cdm.expandable.active .cdmHeader > div:first-child,
-.cdm.expanded .cdmHeader > div:first-child { left: 34px; }
+.cdm.expanded .cdmHeader > div:first-child,
+.cdm.expandable.active .cdmHeader > div:first-child { left: 34px; }
 
 .cdm.expanded .cdmHeader .hlFeed,
 .cdm.expandable.active .cdmHeader .hlFeed { left: 80px; }
@@ -1026,8 +1026,8 @@ div.articleNote {
 
 .cdm > hr { display: none; }
 
-.cdm .title,
-.hlTitle {
+.hlTitle,
+.cdm .title {
   font-size:             13px;
   font-weight:           bold;
 }
@@ -1057,11 +1057,11 @@ div.articleNote {
 .hlTitle a,
 .cdm .title { text-decoration: none; }
 
-.cdmHeader img,
-.cdmHeader input,
-.cdmFooter img,
 .hl img,
 .hl input,
+.cdmHeader img,
+.cdmFooter img,
+.cdmHeader input,
 #floatingTitle img,
 #floatingTitle input {
   vertical-align:        middle;
@@ -1090,16 +1090,16 @@ div.articleNote {
 .cdmHeader > *,
 #floatingTitle > * { vertical-align: baseline; }
 
-.cdmHeader .titleWrap,
 .hl .hlTitle,
+.cdmHeader .titleWrap,
 #floatingTitle .titleWrap {
   width:                 100%;
   line-height:           16px;
 }
 
-.cdmHeader .updated,
-.cdmHeader .hlFeed,
 .hlUpdated,
+.cdmHeader .hlFeed,
+.cdmHeader .updated,
 #floatingTitle .updated {
   font-size:             11px;
   line-height:           18px;
@@ -1205,8 +1205,8 @@ div.articleNote {
 
 #floatingTitle .scoreWrap { padding-right: 0; }
 
-#floatingTitle > div:first-child:after,
-#floatingTitle .scoreWrap:after {
+#floatingTitle .scoreWrap:after,
+#floatingTitle > div:first-child:after {
   content:               '';
   display:               block;
   width:                 40px;
@@ -1217,26 +1217,26 @@ div.articleNote {
 #floatingTitle .hlLabelRef { display: none; }
 
 /* article content */
-.cdmContentInner,
-.postContent {
+.postContent,
+.cdmContentInner {
   clear:                 both;
   overflow:              auto;
   font-size:             14px;
   line-height:           1.7;
 }
 
-.cdmContentInner h1,
 .postContent h1,
-.cdmContentInner h2,
 .postContent h2,
-.cdmContentInner h3,
 .postContent h3,
-.cdmContentInner h4,
 .postContent h4,
-.cdmContentInner h5,
 .postContent h5,
-.cdmContentInner h6,
-.postContent h6 {
+.postContent h6,
+.cdmContentInner h1,
+.cdmContentInner h2,
+.cdmContentInner h3,
+.cdmContentInner h4,
+.cdmContentInner h5,
+.cdmContentInner h6 {
   margin-top:            35px;
   margin-bottom:         14px;
   font-family:           'Helvetica Neue',Helvetica sans-serif;
@@ -1251,15 +1251,15 @@ div.articleNote {
 .postContent tr,
 .cdmContentInner tr { vertical-align: top }
 
-.cdmContentInner img,
-.postContent img {
+.postContent img,
+.cdmContentInner img {
   max-width:             100%;
   width:                 auto;
   height:                auto;
 }
 
-.cdmContentInner figure,
-.postContent figure {
+.postContent figure,
+.cdmContentInner figure {
   margin:                1em 0;
   font-size:             12px;
   font-style:            italic;
@@ -1268,10 +1268,10 @@ div.articleNote {
 .postContent pre,
 .cdmContentInner pre { white-space: pre-wrap; }
 
-.cdmContentInner q,
 .postContent q,
-.cdmContentInner blockquote,
-.postContent blockquote {
+.cdmContentInner q,
+.postContent blockquote,
+.cdmContentInner blockquote {
   display:               block;
   margin:                1em 0;
   padding:               0 0 0 1em;
@@ -1332,16 +1332,16 @@ div.articleNote {
 /* from prefs.css */
 
 /* @24 */
-#pref-filter-wrap,
-#pref-filter-header,
-#pref-filter-content,
-#pref-label-wrap,
-#pref-label-header,
-#pref-label-content,
 #pref-user-wrap,
+#pref-label-wrap,
+#pref-filter-wrap,
 #pref-user-header,
+#pref-label-header,
 #pref-user-content,
+#pref-filter-header,
+#pref-label-content,
 #pref-instance-wrap,
+#pref-filter-content,
 #pref-instance-header,
 #pref-instance-content {
   margin:                0;
@@ -1372,8 +1372,8 @@ div.inactiveFeedHolder {
 div.filterTestHolder,
 div.prefFeedOPMLHolder { border-width: 1px; }
 
-ul.selfUpdateList,
-ul.userFeedList {
+ul.userFeedList,
+ul.selfUpdateList {
   height:                200px;
   overflow:              auto;
   list-style-type:       none;
@@ -1386,8 +1386,8 @@ ul.userFeedList {
 }
 
 div#feedlistLoading,
-div#filterlistLoading,
-div#labellistLoading {
+div#labellistLoading,
+div#filterlistLoading {
   text-align:            center;
   padding:               5px;
   color:                 #555;
@@ -1443,9 +1443,9 @@ table.prefErrorLog td.timestamp { color: #555; }
   margin-bottom:         3px;
 }
 
+#ttrssPrefs .prefHelp,
 #ttrssPrefs .feedParam,
-#ttrssPrefs .labelParam,
-#ttrssPrefs .prefHelp {
+#ttrssPrefs .labelParam {
   font-size:             11px;
   color:                 #999;
 }

@@ -13,7 +13,7 @@
 #feeds-holder .dijitTreeRow {
   font:                  12px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   padding:               3px 15px 1px 0;
-  margin:                -7px 0 26px;  /* adjust top to position topmost label */
+  margin:                -7px 0 26px; /* adjust top to position topmost label */
 }
 
 #feeds-holder .dijitTreeLabel {
@@ -35,6 +35,10 @@ img[src*='images/star.png'] {
   background:            url('linear_images/Bookmark.png') no-repeat;
   opacity:               1.0;
 }
+
+div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
+
+div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15; }
 
 /* drop published and archived filters */
 div#dijit__TreeNode_5,
@@ -58,7 +62,7 @@ div#dijit__TreeNode_4 .dijitTreeRowSelected .dijitTreeLabel,
 div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !important; }
 
 /* .cdm.expandable:not(.active) .cdmHeader a.title { */
-/*   font:                  16px'Helvetica Narrow','Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   font:                  16px 'Helvetica Narrow','Helvetica Neue',Helvetica,Arial sans-serif; */
 /*   font-weight:           bold; */
 /* } */
 
@@ -66,22 +70,22 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !im
 .hl:hover *,
 .cdm.expandable:not(.active) .cdmHeader:hover * { color: #b5423f !important; }
 
-/* .cdm.expandable:not(.active) .cdmHeader:hover .title { color: #282828 !important; } */
+.cdm.expandable.Unread:not(.active) .cdmHeader:hover .title { color: #282828 !important; }
 
-.cdm.expandable:not(.active) .cdmHeader a.title:hover,
+.titleWrap a.title:hover,
 .cdm.expanded:not(.Unread) a.title:hover,
-.cdm.expandable:not(.Unread) a.title:hover,
 .cdm.expanded.Unread.marked a.title:hover,
+.cdm.expandable:not(.Unread) a.title:hover,
 .cdm.expandable.Unread.marked a.title:hover,
-.titleWrap a.title:hover { color: #039dde !important; }
+.cdm.expandable:not(.active) .cdmHeader a.title:hover { color: #039dde !important; }
 
 .hlFeed a:hover { color: #039dde; /* blue */ }
 
 /* maximum content width setting */
-.cdm.expandable.active,
+.postContent p,
 .cdmContentInner p,
-.postContent p {
-  max-width:             100%;   /* fullscreen width */
+.cdm.expandable.active {
+  max-width:             100%; /* fullscreen width */
   max-width:             70em;
 }
 
@@ -118,9 +122,6 @@ img[src*='images/mark_set.png'] {
 
 .Selected img[src*='images/mark_set.png'] { margin-top: -7px !important; }
 
-/* img[src*='images/pub_set.png'], */
-/* img[src*='images/pub_unset.png'] { display: none; } */
-
 /* reposition date below feed label, must declare font to set desired size */
 :not(.Selected) span.updated {
   position:              absolute;
@@ -144,13 +145,6 @@ img[src*='images/mark_set.png'] {
 /* hlfeed does not exist when a non-category feeds-holder row is selected */
 .cdm.expandable div:not(.hlFeed) span.titleWrap + span.updated { top: 6px; }
 
-/* div#headlines-frame[is-cat="0"] span.updated { display: none; } */
-/*  */
-/* div#headlines-frame[feed-id="-1"] span.updated, */
-/* div#headlines-frame[feed-id="-3"] span.updated, */
-/* div#headlines-frame[feed-id="-4"] span.updated, */
-/* div#headlines-frame[feed-id="-6"] span.updated { display: block; } */
-
 .scoreWrap,
 div#notify.notify { display: none; }
 
@@ -171,7 +165,6 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:               '\00a0\00a0\00a0\00a0∙● axᴉ◯m\00a0\00a0';
   content:               '\00a0\00a0\00a0∙● axᴉ◯m\00a0';
   display:               block;
   font:                  16px 'Helvetica Neue',Helvetica,Arial sans-serif;
@@ -179,7 +172,7 @@ button.expandPrompt {
   text-shadow:           0 1px 1px #fff;
   letter-spacing:        2px;
   position:              fixed;
-  margin-top:            85px;     /* ~ holder width x 0.5  */
+  margin-top:            85px; /* ~ holder width x 0.5  */
   width:                 164px;
   text-align:            right;
   text-decoration:       overline;

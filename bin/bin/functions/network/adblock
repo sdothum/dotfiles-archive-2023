@@ -17,6 +17,8 @@
 ADBLOCK=/tmp/adblock
 LOG=$ADBLOCK.log
 
+connect || exit
+
 [ -d $HOME/adblock ] || mkdir -v $HOME/adblock
 cd $HOME/adblock
 rm -f adblock

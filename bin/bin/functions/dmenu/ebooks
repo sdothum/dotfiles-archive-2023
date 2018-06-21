@@ -61,8 +61,8 @@ END
 ebooks() {
   [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3 -type d) || return; }
   notify low 'Updating library cache' 'Please be patient..'
-  find $library -maxdepth 3 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
-       sed -re "s|$library/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw\|kfx)|\1$SEP\3|" \
+  find $library -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
+       sed -re "s|$library/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw\|kfx)|\1$SEP\3|" \
            -e 's/(.*) - .*/\1/ ; s/ \(.*\)//' \
            -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
        sort -u >$cache

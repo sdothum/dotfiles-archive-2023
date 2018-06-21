@@ -268,7 +268,9 @@
         " silent !tmux set status off
         " un/comment to have monochromatic cursor line (looses vimdiff highlighting)
         execute 'highlight CursorLine gui=none guibg=' . g:dfm_bg . ' guifg=' . s:dfm_fg
-        set colorcolumn=0
+        if core#Prose() || g:ruler == 0
+          set colorcolumn=0
+        endif
         set foldcolumn=0
         set laststatus=0
         set noshowmode

@@ -81,6 +81,12 @@
 
       nmap <silent><leader><CR> :call core#ToggleWrap()<CR>
 
+    " ..................................................... Save cursor position
+
+      " only works for simple :buffer actions (not plugin pane selection)
+      autocmd core BufWinLeave * let b:winview = winsaveview()
+      autocmd core BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | endif
+
   " Edit ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .......................................................... Shift up / down

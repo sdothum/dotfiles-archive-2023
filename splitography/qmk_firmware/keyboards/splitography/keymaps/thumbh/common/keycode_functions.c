@@ -103,15 +103,15 @@ void double_shift(uint16_t keycode, uint8_t layer)
 }
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
-void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer)
+void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer)
 {
-  if (state->count > 2) {                                       // double tap plus down
-    if (keycode == KC_ENT) {                                    // double enter shift
+  if (state->count > 2) {
+    if (triple) {                                               // triple tap -> double keycode + shift
       tap_key     (keycode);
       double_shift(keycode, layer);
-    } else { register_code(keycode); }                          // repeating keycode
+    } else { register_code(keycode); }                          // double tap plus down -> keycode...
   }
-  else if (state->count > 1) { double_shift(keycode, layer); }  // tap plus down (or double tap)
+  else if (state->count > 1) { double_shift(keycode, layer); }  // tap plus down or double tap -> keycode + shift
   else if (state->pressed)   { layer_on(layer); }               // down: shift
   else {                                                        // tap: keycode
     modifier(register_code);
@@ -129,10 +129,12 @@ void tap_reset(uint16_t keycode, uint8_t layer)
   } else { layer_off(layer); }
 }
 
+#define REPEATING 0
+
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void enter(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_shift(state, KC_ENT, _RSHIFT);
+  tap_shift(state, KC_ENT, SHIFT, _RSHIFT);                     // triple tap -> double enter + shift
 }
 
 void enter_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -143,7 +145,7 @@ void enter_reset(qk_tap_dance_state_t *state, void *user_data)
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_shift(state, KC_SPC, _RSHIFT);
+  tap_shift(state, KC_SPC, REPEATING, _RSHIFT);                 // triple tap -> space...
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)

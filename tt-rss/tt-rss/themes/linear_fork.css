@@ -50,8 +50,8 @@ div#notify.notify.notify_progress { display: none; }
 #feeds-holder .dijitTreeRow { color: #999; }
 
 /* categories */
-#feeds-holder .dijitTreeRow [aria-expanded="false"],
-#feeds-holder .dijitTreeRow [aria-expanded="true"] { color: #555; }
+#feeds-holder .dijitTreeRow [aria-expanded="true"],
+#feeds-holder .dijitTreeRow [aria-expanded="false"] { color: #555; }
 
 #feeds-holder .dijitTreeRowSelected {
   background:            #eee8d5;
@@ -61,12 +61,6 @@ div#notify.notify.notify_progress { display: none; }
 }
 
 #feeds-holder .dijitTreeLabel.Unread { font-weight: normal; }
-
-/* #feeds-holder img.feedIcon, */
-/* #feeds-holder .labelColorIndicator { */
-/*   left:                  7px; */
-/*   padding-right:         16px; */
-/* } */
 
 /* match line height to feed label font to preserve horizontal scaling alignment */
 #feeds-holder .counterNode {
@@ -103,7 +97,7 @@ div#notify.notify.notify_progress { display: none; }
 
 #feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
 
-#feeds-holder .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15; }
+#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: .15; }
 
 /* #feeds-holder { background: #eee; } */
 
@@ -166,8 +160,8 @@ img[src*="images/indicator_tiny.gif"] {
 #feed_title a { color: #999; }
 
 /* articles - expandable / separate */
-.cdm.expandable,
-.hl {
+.hl,
+.cdm.expandable {
   margin-bottom:         0;
   margin-top:            10px;
 }
@@ -190,8 +184,8 @@ div[style="vertical-align : middle"] { width: 85px; }
 /* extend the content area to the right margin */
 .cdm span.titleWrap { margin-right: -95px; }
 
-.cdm.expandable.active,
-.cdm.expanded {
+.cdm.expanded,
+.cdm.expandable.active {
   border:                none;
   border-radius:         0;
   margin-bottom:         0;
@@ -200,8 +194,8 @@ div[style="vertical-align : middle"] { width: 85px; }
 /* .cdm.expandable.active .cdmHeader, */
 .cdm.expanded .cdmHeader { padding: 36px 34px 0; }
 
-.cdm.expandable.active .title,
-.cdm.expanded .title {
+.cdm.expanded .title,
+.cdm.expandable.active .title {
   font:                  bold 18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #b5423f;
   margin-top:            -1px;
@@ -233,28 +227,28 @@ div[style="vertical-align : middle"] { width: 85px; }
   padding-bottom:        6px;
 }
 
-.cdm.expandable .cdmHeader,
-.hl {
+.hl,
+.cdm.expandable .cdmHeader {
   padding-top:           0 !important;
   padding-bottom:        5px;
 }
 
 .cdm.expandable.active .cdmHeader { margin-bottom: -6px; }
 
-.cdm.expandable:not(.active) .cdmHeader,
-.hl {
+.hl,
+.cdm.expandable:not(.active) .cdmHeader {
   border-top:            1px solid #fdf6e3;
   border-bottom:         1px solid #fdf6e3;
 }
 
-.cdm.expandable .cdmHeader,
-.hl {
+.hl,
+.cdm.expandable .cdmHeader {
   background:            none;
   border:                1px solid #fdf6e3;
 }
 
-.cdm.expandable:not(.active) .cdmHeader:hover,
-.hl:hover { background: none; }
+.hl:hover,
+.cdm.expandable:not(.active) .cdmHeader:hover { background: none; }
 
 .cdm.expandable .cdmHeader div[style*="vertical-align: middle"] > * { padding-bottom: 3px; }
 
@@ -294,8 +288,8 @@ span.updated { color: #999; }
 #headlines-frame .cdm.expandable .tinyFeedIcon { display: none; }
 
 /* articles - common */
-.cdm .title,
-.hlTitle {
+.hlTitle,
+.cdm .title {
   font:                  bold 14px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #b5423f !important;
 }
@@ -311,6 +305,18 @@ span.updated { color: #999; }
 .cdm.Unread .cdmExcerpt,
 .cdm.Unread.expandable .author,
 .hl.Unread .hlTitle .contentPreview { color: #555; }
+
+/* chop long urls */
+.cdm.expandable .cdmExcerpt {
+  overflow-wrap:         break-word;
+  word-wrap:             break-word;
+  -ms-word-break:        break-all;
+  word-break:            break-word;
+  -ms-hyphens:           auto;
+  -moz-hyphens:          auto;
+  -webkit-hyphens:       auto;
+  hyphens:               auto;
+}
 
 /* add a bit of visual separation */
 .cdm.expandable .author {
@@ -352,11 +358,11 @@ span.updated { color: #999; }
 .cdm.expandable.active:hover .collapseBtn img { opacity: .15; }
 
 /* social media link clusters */
-.cdmIntermediate,
-.cdmContentInner span span div,
+.cdmFooter div,
 .cdmFooter span,
+.cdmIntermediate,
 .cdmFooter span *,
-.cdmFooter div { display: none; }
+.cdmContentInner span span div { display: none; }
 
 /* floating title extensions */
 /* #floatingTitle { background-color: #fdf6e3; } */

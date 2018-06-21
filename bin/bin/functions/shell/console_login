@@ -16,20 +16,23 @@ if [ $USER != root ] ;then
     # SERVER=$(grep 10.1.0.10 /etc/hosts | awk '{ print $2 }')
 
     # assign deadline scheduler to SSD boot drive
-    if [ $(hostname) = $SERVER ] && [ ! -e /tmp/ssd:scheduler ] ;then
-      ssd=$(ls -l /dev/disk/by-id/*ata* | grep Samsung_SSD | head -1 | cut -d/ -f7)
-      if [ $ssd ] ;then
-        # virtual block devices must be referenced explicitly
-        case $ssd in
-          sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
-          sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
-          sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
-          sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
-          sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
-        esac
-        notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
-        echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler
+    if [ $(hostname) = $SERVER ] ;then
+      if [ ! -e /tmp/ssd:scheduler ] ;then
+        ssd=$(ls -l /dev/disk/by-id/*ata* | grep Samsung_SSD | head -1 | cut -d/ -f7)
+        if [ $ssd ] ;then
+          # virtual block devices must be referenced explicitly
+          case $ssd in
+            sda)  echo deadline | sudo tee /sys/block/sda/queue/scheduler >/dev/null ;;
+            sdb)  echo deadline | sudo tee /sys/block/sdb/queue/scheduler >/dev/null ;;
+            sdc)  echo deadline | sudo tee /sys/block/sdc/queue/scheduler >/dev/null ;;
+            sdd)  echo deadline | sudo tee /sys/block/sdd/queue/scheduler >/dev/null ;;
+            sde)  echo deadline | sudo tee /sys/block/sde/queue/scheduler >/dev/null ;;
+          esac
+          notify "Assigned [deadline] scheduler to SSD" "/dev/$ssd"
+          echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler
+        fi
       fi
+      # [ -e /tmp/adblock ] || adblock &
     fi
 
     # pre-initialize arm fuzzy searches

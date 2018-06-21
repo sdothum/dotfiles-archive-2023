@@ -7,7 +7,7 @@
 # ................................................................ Rsync wrapper
 
 usage() {
-  echo "usage: $(basename $0) [-q] arm | backup | depot | home | pi | server | stow | stownfs | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
+  echo "usage: $(basename $0) [-q] arm | backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
   exit 1
 }
 
@@ -106,8 +106,7 @@ case $1 in
   ''     ) usage ;;
 
   arm    ) cpu arm || exit
-           rsync --delete $HOME/stownfs/bin $HOME/stownfs/herbstluftwm $HOME/stow/
-           rsync --delete $HOME/stownfs/ $HOME/stow ;;
+           rsync --exclude=adblock $USER@$SERVER:$HOME/stow $HOME/ ;;
 
   backup ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/ ;} ;;
 
@@ -230,8 +229,6 @@ case $1 in
              ifno "update stow to $SERVER" ||
                rsync --exclude=.SyncArchive $HOME/stow $USER@$SERVER:$HOME/
            fi ;;
-
-  stownfs) cpu arm && rsync --delete $HOME/stow/ $HOME/stownfs ;;
 
   ttrss  ) if server ;then
              rsync /srv/http/tt-rss/themes/my*.css $laptop:/srv/http/tt-rss/themes/

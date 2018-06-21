@@ -15,25 +15,12 @@ hc keybind Super-$Mod-Return          spawn focus hlwm close
 hc keybind Super-space                spawn dmenu run
 hc keybind Super-Control-space        spawn dmenu manpages
 hc keybind Super-$Mod-space           spawn kill -KILL dmenu
-if [ $PLANCK ] ;then
-  if [ $BEAKL ] ;then
-    hc keybind Super-1                spawn pactl set-sink-volume $(sink) -3db
-    hc keybind Super-2                spawn pactl set-sink-volume $(sink) 0db
-    hc keybind Super-3                spawn pactl set-sink-volume $(sink) +3db
-    hc keybind Super-0                spawn pactl set-sink-mute $(sink) toggle
-    hc keybind Super-$Mod-0           spawn toggle pavucontrol
-  else
-    # hc keybind Super-semicolon      spawn pactl set-sink-volume $(sink) -3db
-    # hc keybind Super-backslash      spawn pactl set-sink-volume $(sink) +3db
-    # hc keybind Super-y              spawn pactl set-sink-volume $(sink) 0db
-    # hc keybind Super-Control-y      spawn pactl set-sink-mute $(sink) toggle
-    # hc keybind Super-$Mod-y         spawn toggle pavucontrol
-    hc keybind Super-y                spawn pactl set-sink-volume $(sink) -3db
-    hc keybind Super-semicolon        spawn pactl set-sink-volume $(sink) +3db
-    hc keybind Super-u                spawn pactl set-sink-volume $(sink) 0db
-    hc keybind Super-Control-u        spawn pactl set-sink-mute $(sink) toggle
-    hc keybind Super-$Mod-u           spawn toggle pavucontrol
-  fi
+if [ $BEAKL ] ;then
+  hc keybind Super-1                  spawn pactl set-sink-volume $(sink) -3db
+  hc keybind Super-2                  spawn pactl set-sink-volume $(sink) 0db
+  hc keybind Super-3                  spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-0                  spawn pactl set-sink-mute $(sink) toggle
+  hc keybind Super-$Mod-0             spawn toggle pavucontrol
 else
   hc keybind Super-bracketleft        spawn pactl set-sink-volume $(sink) -3db
   hc keybind Super-bracketright       spawn pactl set-sink-volume $(sink) +3db
@@ -44,12 +31,8 @@ fi
 hc keybind Super-equal                spawn dmenu calc
 hc keybind Super-Control-equal        spawn toggle plover
 hc keybind Super-BackSpace            spawn toggle ncurses
-if [ $PLANCK ] ;then
-  if [ $BEAKL ] ;then
-    hc keybind Super-x                spawn toggle rox
-  else
-    hc keybind Super-period           spawn toggle rox
-  fi
+if [ $BEAKL ] ;then
+  hc keybind Super-x                  spawn toggle rox
   hc keybind Super-apostrophe         spawn toggle conky
   hc keybind Super-Control-apostrophe spawn toggle panel
 else
