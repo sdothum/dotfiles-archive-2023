@@ -103,7 +103,7 @@ void double_shift(uint16_t keycode, uint8_t layer)
 }
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
-void tap_shift(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer)
+void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer)
 {
   if (state->count > 2) {
     if (triple) {                                               // triple tap -> double keycode + shift
@@ -129,12 +129,15 @@ void tap_reset(uint16_t keycode, uint8_t layer)
   } else { layer_off(layer); }
 }
 
-#define REPEATING 0
+#define REPEATING    0
+#ifndef ENTER_TOGGLE
+#define ENTER_TOGGLE _RSHIFT
+#endif
 
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void enter(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_shift(state, KC_ENT, SHIFT, _RSHIFT);                     // triple tap -> double enter + shift
+  tap_lt(state, KC_ENT, SHIFT, ENTER_TOGGLE);                   // triple tap -> double enter + shift
 }
 
 void enter_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -145,7 +148,7 @@ void enter_reset(qk_tap_dance_state_t *state, void *user_data)
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_shift(state, KC_SPC, REPEATING, _RSHIFT);                 // triple tap -> space...
+  tap_lt(state, KC_SPC, REPEATING, _RSHIFT);                    // triple tap -> space...
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -445,7 +448,7 @@ void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyco
     if (biton32(layer_state) == _MOUSE) { layer_off(_MOUSE); }  // both thumbs needed
     else if (thumb_dn_layer != _MOUSE) { layer_off(thumb_dn_layer); }
     if (!key_press(shift, keycode)) {
-      // opposite thumb_roll() thumb may have switched effective layer!
+      // release any opposing thumb_roll() layer
       if (overlayer) {
         layer_off(overlayer);
         overlayer = 0;

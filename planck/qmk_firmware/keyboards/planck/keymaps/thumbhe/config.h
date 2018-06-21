@@ -28,6 +28,9 @@
 // number layer 0 position KEYPAD_0, THUMB_0
 #define THUMB_0
 
+// enter key layer toggle (default _RSHIFT)
+#define ENTER_TOGGLE _RSYMBOL
+
 // home block shift symbol clustes defined (no overlays required for extended symbols, undefine otherwise)
 #define SHIFT_SYMBOLS
 
