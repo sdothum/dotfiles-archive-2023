@@ -441,14 +441,14 @@ void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyco
     thumb    |= side;
   } else {
     if (biton32(layer_state) == _MOUSE) { layer_off(_MOUSE); }  // both thumbs needed
-    layer_off(thumb_dn_layer);
-    // opposite thumb_roll() thumb may have switched effective layer!
-    if (overlayer) {
-      layer_off(overlayer);
-      overlayer = 0;
-    }
+    else if (thumb_dn_layer != _MOUSE) { layer_off(thumb_dn_layer); }
     if (!key_press(shift, keycode)) {
-      // opposite thumb down? see left right combination layer table aboveai
+      // opposite thumb_roll() thumb may have switched effective layer!
+      if (overlayer) {
+        layer_off(overlayer);
+        overlayer = 0;
+      }
+      // opposite thumb down? see left right combination layer table above
       if (thumb & (side == LEFT ? RIGHT : LEFT)) {
         layer_on(thumb_up_layer);
         overlayer = thumb_up_layer;
