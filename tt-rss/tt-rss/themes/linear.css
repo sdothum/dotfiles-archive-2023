@@ -36,6 +36,7 @@ img[src*='images/star.png'] {
   opacity:               1.0;
 }
 
+/* filters usually are open, hide minimize button of feed menu title */
 div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
 
 div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15; }
@@ -72,14 +73,7 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !im
 
 .cdm.expandable.Unread:not(.active) .cdmHeader:hover .title { color: #282828 !important; }
 
-.titleWrap a.title:hover,
-.cdm.expanded:not(.Unread) a.title:hover,
-.cdm.expanded.Unread.marked a.title:hover,
-.cdm.expandable:not(.Unread) a.title:hover,
-.cdm.expandable.Unread.marked a.title:hover,
-.cdm.expandable:not(.active) .cdmHeader a.title:hover { color: #039dde !important; }
-
-.hlFeed a:hover { color: #039dde; /* blue */ }
+a.title:hover { text-decoration: underline !important; }
 
 /* maximum content width setting */
 .postContent p,
