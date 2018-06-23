@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Monitor
+
+target=${1:-www.google.com}
+threshold=20
+
+trap "echo; trace '$(basename $0) ended'" INT
+trace "$(basename $0) started, threshold=${threshold}ms.."
+
+# latency exceptions
+ping $target | while read sixtyfour bytes latency ;do
+  [ "$bytes" = bytes ] || { echo $sixtyfour $bytes $latency; continue; }
+  [ $(echo "$latency" | cut -d= -f4 | cut -d. -f1 | cut -d' ' -f1) -gt $threshold ] && trace "${NOCOLOR}$sixtyfour $bytes $latency"
+done
+
+# vim: set ft=sh: #

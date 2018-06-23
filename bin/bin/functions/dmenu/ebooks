@@ -16,9 +16,11 @@ REBUILD='[ rebuild database ]'
 
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-library}}
-cache=$CACHEDIR/dmenu:ebooks
-kindle=/run/media/$USER/Kindle/documents/
+cache=$library/dmenu:ebooks
+kindle=/run/media/$USER/Kindle
 # export CLOUDCONVERT_API_KEY=$(cat $HOME/.cloudconvert_api_key)
+[ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
+kindle=$kindle/documents/
 
 # see notes above
 embed_font=Economica
@@ -80,7 +82,7 @@ fi
 
 file() {
   # convert apostrophe ' to ? for pattern matching
-  path=$(echo $book | sed -r -e "s/'/./" -e "s|^(.*)  *${SEP}  *(.*)|.*\2/\1.*$1|")
+  path=$(echo $book | sed -r -e "s/'/./" -e "s|^(.*)  *${SEP}  *(.*)|.*\2/(\1[^/]*/)*\1( - .*)*.$1|")
   find $library -regextype egrep -regex "$path"
 }
 
@@ -145,13 +147,13 @@ while : ;do
               # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
               # use calibre conversion module
               output="/tmp/${file##*/}"
-              option=$(echo -n "default\nembed font\njustify off\nall" | rmenu 'export options' -no-custom) || break
+              option=$(echo -n "default (justify)\nembed font\njustify off\nall" | rmenu 'export options' -no-custom) || break
               justify='--change-justification=justify'
               case $option in
-                default) unset option ;;
-                *font  ) option="--embed-font-family=$embed_font" ;;
-                just*  ) unset justify ;;
-                all    ) option="--embed-font-family=$embed_font"; unset justify ;;
+                default*) unset option ;;
+                *font   ) option="--embed-font-family=$embed_font" ;;
+                just*   ) unset option justify ;;
+                all     ) option="--embed-font-family=$embed_font"; unset justify ;;
               esac
               # convert even .azw3 to inject folder title and author
               ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log

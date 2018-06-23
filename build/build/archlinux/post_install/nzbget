@@ -8,6 +8,8 @@
 provider=$(passphrase usenet/provider)
 email=$(passphrase uid/$provider)
 password=$(passphrase usenet/$provider)
+
+original -f $HOME/.nzbget
 sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
     -e '/^DestDir=/s/dst/completed/' \
     -e '/^NzbDir=/s|=.*|=/net/downloads/http|' \
@@ -27,6 +29,8 @@ sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
     -e '/^KeepHistory=/s/=.*/=7/' \
     -e '/^CursesGroup=/s/no/yes/' \
     -e '/^CursesTime=/s/no/yes/' \
+    -e '/^WriteLog=/s/=.*/=rotate/' \
+    -e "/^DaemonUsername=/s/=.*/=$USER/" \
     /usr/share/nzbget/nzbget.conf >$HOME/.nzbget
 
 echo '[Unit]
