@@ -23,62 +23,83 @@
 # 0.3:  name change
 # 0.4:  leader character change with iosevka font
 # 0.5:  persistent tape position, requires reload for window width changes
+# 0.6:  dynamic tape position, using current buffer
+# 0.7   dynamic tape position *per* visible window (only, bypasses hidden buffers)
+#       a buffer in more than one window inherits the tape position of the first update
+# 0.8   optional nickname prefix column offset
+# 0.9   add timestamp to undisplayed buffers, minor code refactoring
 
 import weechat
 import time
 
-SCRIPT_NAME    = "buffertape"
-SCRIPT_AUTHOR  = "sdothum <sdothum@gmail.com>"
-SCRIPT_VERSION = "0.2"
-SCRIPT_LICENSE = "GPL3"
-SCRIPT_DESC    = "Buffer timestamp"
+SCRIPT_NAME    = 'buffertape'
+SCRIPT_AUTHOR  = 'sdothum <sdothum@gmail.com>'
+SCRIPT_VERSION = '0.9'
+SCRIPT_LICENSE = 'GPL3'
+SCRIPT_DESC    = 'Buffer timestamp'
 
 # buffertape_char = '⋅⋅'
 buffertape_char = '••'
-# reload script if layout apply alters window width
-indent = -1
 
 settings = {
-    "modulo_interval"         : '15',   # print a new timestamp every X minutes of the hour
-    "center"                  : '1',    # (0) left justify (1) center
+    'modulo_interval'         : '15',   # print a new timestamp every X minutes of the hour
+    'center'                  : '1',    # (0) left justify (1) center
+    'offset_prefix'           : '0',    # (0) include prefix (1) centre in message area only
 }
 
-def prnt_timestamp(buffer, timestamp, indent):
-    weechat.prnt(buffer, '%s%s%s %s%s%s:%s%s%s %s' %
-	(' ' * indent,
-	 weechat.color("chat_delimiters"),
-     buffertape_char,
-	 weechat.color("chat_time"),
-	 time.strftime('%H', time.localtime(timestamp)),
-	 weechat.color("chat_time_delimiters"),
-	 weechat.color("chat_time"),
-	 time.strftime('%M', time.localtime(timestamp)),
-	 weechat.color("chat_delimiters"),
-     buffertape_char))
+# ⋅⋅ HH:MM ⋅⋅
+def clock(current_time):
+    timestamp = weechat.color('chat_delimiters')
+    timestamp += buffertape_char + ' '
+    timestamp += weechat.color('chat_time')
+    timestamp += time.strftime('%H', time.localtime(current_time))
+    timestamp += weechat.color('chat_time_delimiters')
+    timestamp += ':'
+    timestamp += weechat.color('chat_time')
+    timestamp += time.strftime('%M', time.localtime(current_time))
+    timestamp += weechat.color('chat_delimiters')
+    timestamp += ' ' + buffertape_char
+    return timestamp
 
 def timer_cb(data, remaining_calls):
     global indent
     current_time = int(time.time())
     interval = int(weechat.config_get_plugin('modulo_interval')) * 60
     if (current_time % interval) == 0:
-        infolist = weechat.infolist_get("buffer", "", "")
+        timestamp = clock(current_time)
+        clocked = []
+        infolist = weechat.infolist_get('window', '', '')
         if infolist:
-            # set static width, assumes balanced window widths
-            if indent < 0:
+            prefix = int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {}))
+            if weechat.config_get_plugin('offset_prefix') == '0':
+                offset = (prefix + 3) / 2   # including prefix separator
+            else:
+                offset = 0
+            while weechat.infolist_next(infolist):
                 if weechat.config_get_plugin('center') == '0':
                     indent = 0
                 else:
-                    # centering = (window width - prefix width - (vertical separator + date)) / 2 - rounding adjustment
-                    indent = (weechat.window_get_integer(weechat.current_window (), "win_width") - int(weechat.string_eval_expression("${weechat.look.prefix_align_min}", {}, {}, {})) - 14) / 2 - 1
+                    # centering = (window width - prefix width - prefix separator - buffertape date) / 2 - offset - rounding adjustment
+                    window = weechat.infolist_pointer(infolist, 'pointer')
+                    indent = (weechat.window_get_integer(window, 'win_width') - prefix - 2 - 11) / 2 - offset - 1
+                buffer = weechat.window_get_pointer(window, 'buffer')
+                if not buffer in clocked:
+                    clocked.append(buffer)
+                    weechat.prnt(buffer, ' ' * indent + timestamp)
+        infolist = weechat.infolist_get('buffer', '', '')
+        if infolist:
             while weechat.infolist_next(infolist):
                 buffer = weechat.infolist_pointer(infolist, 'pointer')
-                prnt_timestamp(buffer, current_time, indent)
+                if not buffer in clocked:
+                    clocked.append(buffer)
+                    weechat.prnt(buffer, timestamp)
             weechat.infolist_free(infolist)
+        del clocked
     return weechat.WEECHAT_RC_OK
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE,
-                        SCRIPT_DESC, "", ""):
+                        SCRIPT_DESC, '', ''):
         # Set default settings
         for option, default_value in settings.iteritems():
             if not weechat.config_is_set_plugin(option):
