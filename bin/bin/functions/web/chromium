@@ -28,7 +28,7 @@ unlock() {
 }
 
 # close (unlock) any remote instances
-pstat chromium || unlock
+pstat /usr/bin/chromium || unlock
 
 # [ "$1" = netflix ] && focus $chrome -app=$netflix || focus $chrome $@
 [ "$1" = netflix ] && $chrome -app=$netflix || $chrome $@

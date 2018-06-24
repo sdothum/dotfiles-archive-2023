@@ -1,0 +1,18 @@
+
+// enum planck_layers {
+//   _BASE = 0
+ // ,_PLOVER
+
+ ,_TXBEDIT
+ ,_TXBFKEY
+ ,_TXBGUIFN
+ ,_TXBMOUSE
+ ,_TXBNUMBER
+ ,_TXBSYMBOL
+ ,_TXBBASE
+ ,_TXBLSHIFT
+ ,_TXBRSHIFT
+ // ,_TXBQNUMBER
+ // ,_TXBQSYMBOL
+
+// };

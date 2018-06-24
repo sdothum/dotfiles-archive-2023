@@ -44,6 +44,8 @@
 
       vmap <Enter>   <Plug>(EasyAlign)
       nmap <leader>a <Plug>(EasyAlign)
+      " format markdown table
+      vmap <Bar>     :EasyAlign! *<Bar><CR>
 
     " .............................................................. Eightheader
 
