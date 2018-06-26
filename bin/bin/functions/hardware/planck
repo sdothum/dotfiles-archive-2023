@@ -44,7 +44,7 @@ case $1 in
   beakl*  |\
   colem*  |\
   qwerty  |\
-  default ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | tr '[:lower:]' '[:upper:]')/" $CONFIG ; shift ;;
+  default ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | uppercase)/" $CONFIG ; shift ;;
 
   *      ) usage ;;
 esac

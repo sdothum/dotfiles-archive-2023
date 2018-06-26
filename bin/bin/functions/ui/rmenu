@@ -88,8 +88,8 @@ fi
 # convert prompt right to lower case
 [ $lead = left ] && prompt="${prompt}$leader   " ||
                     case $lead in
-                      RIGHT) prompt="$leader   $(echo "$prompt" | tr [:lower:] [:upper:])" ;;
-                      right) prompt="$leader   $(echo "$prompt" | tr [:upper:] [:lower:])" ;;
+                      RIGHT) prompt="$leader   $(echo "$prompt" | uppercase)" ;;
+                      right) prompt="$leader   $(echo "$prompt" | lowercase)" ;;
                       *    ) prompt="$leader   $prompt" ;;
                     esac
 

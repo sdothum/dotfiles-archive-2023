@@ -6,7 +6,7 @@
 
 # ......................................................... Housekeeping cleaner
 
-# Usage: vacuum [-f] [clean|CLEAN] [<file>, default=.vacuum]
+# Usage: vacuum g'enerate | [-f] [clean|CLEAN] [<file>, default=.vacuum]
 #
 # format: # comment
 #         = title
@@ -18,27 +18,61 @@
 #         e.g. ~/.local/share/zathura zathura
 #         where, file is relative to current directory by default
 #
-#         clean == move files to /tmp/
+#         clean == move files to /tmp/vacuum/
 #         CLEAN == remove files
 
 usage() {
-  echo "usage: $(basename $0) [-f] [clean|CLEAN] [file, default=.$(basename $0)]"
+  echo "usage: $(basename $0) g'enerate | [-f] [clean|CLEAN] [file, default=.$(basename $0)]"
   exit 1
 }
 
-case $1 in
-  clean | CLEAN) clean=$1 ; shift ;;
-  -f           ) force=$1 ; shift ;;
-esac
+# filters (based on 'generated' .vacuum file :-)
+folders=$(cat ${0%/*}/.vacuum:protect:folders)
+files=$(cat ${0%/*}/.vacuum:protect:files)
+configs=$(cat ${0%/*}/.vacuum:protect:configs)
 
-[ $1 ] && rules=$@ || rules=.$(basename $0)
+rules=.$(basename $0)
+vacuum=/tmp/$(basename $0)
+[ -e $vacuum ] || mkdir $vacuum
+
+candidates() {
+  # handle spaces in filenames with 'while read' vs 'for loop'
+  find $1 -maxdepth 1 | sort --ignore-case >$vacuum:find
+  while read path <&3 ;do
+    pkg=$(echo ${path##*/} | lowercase | sed -r 's/^\.//; s/(\.conf|rc)$//')
+    pacman -Qi "$pkg" >/dev/null 2>&1 && { echo "# $path" >>$rules; } || { ditto "$path"; echo "  $path" >>$rules; }
+  done 3< $vacuum:find
+}
+
+generate() {
+  [ -e $rules ] && { ifno "overwrite $rules" || rm $rules; }
+  candidates $HOME
+  candidates $HOME/.cache
+  candidates $HOME/.config
+  for i in $HOME/.local/* ;do candidates $i ;done
+  for i in $folders $files $configs ;do comment="$comment; s|^  $i$|# $i|" ;done
+  sed -i "s|$HOME/||; \|$HOME|d $comment" $rules
+  notify "$rules" 'Backup $HOME and review before proceeding!!'
+}
+
+while [ $1 ] ;do
+  case $1 in
+    clean | CLEAN) clean=$1 ; shift ;;
+    -f           ) force=$1 ; shift ;;
+    g*           ) generate ; usage ;;
+    h*           ) usage ;;
+    *            ) break ;;
+  esac
+done
+
+[ $1 ] && rules=$@
 [ -e $rules ] || usage
 
 clean() {
   ditto "vacuum $file"
   [ $clean ] || return
   case $clean in
-    clean) sudo mv -v $file /tmp/ ;;
+    clean) sudo mv -v $file $vacuum ;;
     CLEAN) sudo rm -rvf $file ;;
   esac
 }
@@ -64,7 +98,7 @@ while read action file package <&3 ;do
     '!') clean ; continue ;;
 
     *  ) if [ $package ] ;then
-           pm $package >/dev/null || unset package
+           pacman -Qi $package >/dev/null || unset package
          elif [ $clean ] ;then
            if [ $force ] ;then
               package=true

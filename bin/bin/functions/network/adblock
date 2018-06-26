@@ -96,7 +96,7 @@ if [ -z $1 ] ;then
       -e 's/ .*//' \
       -e '/^(0\.0\.0\.0)\t*$/d' \
       -e '/^(0\.0\.0\.0)\t(0\.0\.0\.0)$/d' adblock |
-      tr [:upper:] [:lower:] | tr '\r' '\n' |
+      lowercase | tr '\r' '\n' |
       sort | uniq \
       >adblock.uniq
 fi

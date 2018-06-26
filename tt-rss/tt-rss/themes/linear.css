@@ -39,6 +39,7 @@ img[src*='images/star.png'] {
 /* filters usually are open, hide minimize button of feed menu title */
 div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
 
+div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoClosed,
 div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15; }
 
 /* drop published and archived filters */
