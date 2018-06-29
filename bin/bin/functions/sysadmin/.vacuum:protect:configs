@@ -1,10 +1,9 @@
+#
+# configuration files (not matching package names)
+#
   .agignore
-  .asoundrc
-  .asoundrc.last
-  .asoundrc.template
-  .asunder_album_artist
-  .asunder_album_genre
-  .asunder_album_title
+  .asoundrc.*
+  .asunder.*
   autokey
   .cddb
   .cddbslave
@@ -13,19 +12,18 @@
   .gconfd
   .ghci
   .gimp-2.8
+  .gnome
   .gnome2
   .gnome2_private
   .gstreamer-0.10
   gtk-3.0
   .gtk-bookmarks
-  .gtkrc-2.0
-  .gtkrc-2.0.mine
-  .gtkrc-2.0.mine.dark
-  .gtkrc-2.0.mine.light
+  .gtkrc-2.0.*
   .gtkrc.mine
   .hgrc
   .ICEauthority
   .java
+  .kde
   .kde4
   .lastpass
   .macromedia
@@ -51,9 +49,7 @@
   .sabnzbd.ini
   .screenrc
   .Skype
-  .slrnrc
-  .slrnrc.pull
-  .slrnrc.test
+  .slrnrc.*
   .smb
   .steampath
   .steampid
@@ -88,6 +84,7 @@
   .config/subtle
   .config/termite
   .config/TortoiseHg
+  .config/Trolltech.conf
   .config/wmutils
   .local/lib/python3.6
   .local/share/autokey

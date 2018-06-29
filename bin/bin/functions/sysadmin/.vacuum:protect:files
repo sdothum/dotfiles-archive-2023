@@ -1,21 +1,19 @@
-  .bash_history
-  .bash_login
-  .bash_logout
-  .bash_profile
+#
+# system files (not matching package names)
+#
+  .bash_.*
   .cloudconvert_api_key
   .forward
+  .mailcap
   public.key
   .signature
   typescript
-  .vacuum
+  .vacuum.*
   .Xdefaults
   .xinitrc
   .xinitrc.dist
   .xkbmap
-  .Xmodmap
-  .Xmodmap.acer
-  .Xmodmap.colemak-shift-dh
-  .Xmodmap.dist
+  .Xmodmap.*
   .Xresources
   .Xresources.dist
   .xsession
@@ -27,29 +25,8 @@
   .zsh
   .zshenv
   .zshrc
-  .cache/dmenu:animation
-  .cache/dmenu:configs
-  .cache/dmenu:ebooks
-  .cache/dmenu:movies
-  .cache/dmenu:run
-  .cache/dmenu:scripts
-  .cache/fcache:d:home:shum
-  .cache/fcache:d:home:shum:bin
-  .cache/fcache:d:home:shum:build:archlinux
-  .cache/fcache:d:home:shum:.config:fish
-  .cache/fcache:d:home:shum:.config:herbstluftwm
-  .cache/fcache:d:home:shum:stow:orbit
-  .cache/fcache:d:home:shum:.vim:config
-  .cache/fcache:d:home:shum:vimwiki
-  .cache/fcache:d:home:shum:.weechat:python
-  .cache/fcache:f:home:shum:bin
-  .cache/fcache:f:home:shum:build:archlinux
-  .cache/fcache:f:home:shum:.config:fish
-  .cache/fcache:f:home:shum:.config:herbstluftwm
-  .cache/fcache:f:home:shum:stow:orbit
-  .cache/fcache:f:home:shum:.vim:config
-  .cache/fcache:f:home:shum:vimwiki
-  .cache/fcache:f:home:shum:.weechat:python
-  .cache/vmap:fkey
-  .cache/vmap:leader
-  .cache/vmap:map
+  .cache/dmenu:.*
+  .cache/fcache:.*
+  .cache/gstreamer-1.0
+  .cache/vmap:.*
+  .cache/wsync

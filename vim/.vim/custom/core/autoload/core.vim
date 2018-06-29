@@ -179,6 +179,8 @@
           let &colorcolumn = 0
         endif
         call ui#IndentTheme()
+        " flash column position, see autocmd info.vim
+        let g:column = 1
       endfunction
 
     " ............................................................. Line numbers

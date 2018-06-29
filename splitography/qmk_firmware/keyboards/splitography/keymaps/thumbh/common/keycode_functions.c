@@ -348,6 +348,13 @@ void rparen_reset(qk_tap_dance_state_t *state, void *user_data)
 
 // ............................................................ Tap Dance Insert
 
+void asterisk(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1) { tap_key(KC_DOT); }
+  shift_key(KC_8);
+  reset_tap_dance(state);
+}
+
 void comma(qk_tap_dance_state_t *state, void *user_data)
 {
   tap_key(KC_COMM);
@@ -399,7 +406,8 @@ void caps_reset(qk_tap_dance_state_t *state, void *user_data)
 // ................................................................... Tap Dance
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps, caps_reset)
+  [_ASTR] = ACTION_TAP_DANCE_FN         (asterisk)
+ ,[_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps, caps_reset)
  ,[_COLN] = ACTION_TAP_DANCE_FN         (colon)
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)

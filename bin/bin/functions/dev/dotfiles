@@ -17,23 +17,9 @@ usage() {
 # see .gitignore, to remove items from remote repository
 # git rm --cached <filespec>
 # git rm --cached -r <dir>
-dotfiles="amphetype    \
-          bash         \
-          bin          \
-          bspwm        \
-          build        \
-          compton      \
-          conky        \
-          fish         \
-          herbstluftwm \
-          planck/qmk_firmware/keyboards/planck \
-          README.md    \
-          sxhkd        \
-          splitography/qmk_firmware/keyboards/splitography \
-          tt-rss       \
-          vim          \
-          zsh          \
-"
+
+# list of folders under stow root
+dotfiles=$(cat ${0%/*}/.dotfiles:folders)
 
 cd $HOME/stow
 # syncthing housekeeping

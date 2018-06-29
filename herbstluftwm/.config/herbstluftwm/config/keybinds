@@ -146,6 +146,7 @@ hc keybind $Mod-Shift-1                 jumpto urgent
 # split frames
 # create an empty frame at the specified direction
 if [ $BEAKL ] ;then
+  hc keybind $Mod-q                     remove
   hc keybind $Mod-i                     split bottom 0.5
   hc keybind $Mod-Shift-i               split bottom 0.666666
   hc keybind $Mod-Control-i             split bottom 0.333333
@@ -153,6 +154,7 @@ if [ $BEAKL ] ;then
   hc keybind $Mod-Shift-semicolon       split right  0.666666
   hc keybind $Mod-Control-semicolon     split right  0.333333
 else
+  hc keybind $Mod-r                     remove
   hc keybind $Mod-y                     split bottom 0.5
   hc keybind $Mod-o                     split right  0.5
   hc keybind $Mod-Shift-y               split bottom 0.666666
@@ -217,10 +219,8 @@ hc keybind $Mod-BackSpace               spawn switch tag
 # set layout
 if [ $BEAKL ] ;then
   hc keybind $Mod-Control-Shift-equal   spawn toggle monocle
-  hc keybind $Mod-q                     remove
 else
   hc keybind $Mod-grave                 spawn toggle monocle
-  hc keybind $Mod-r                     remove
 fi
 hc keybind $Mod-x                       spawn restore layout
 hc keybind $Mod-Control-0               spawn restore layout default

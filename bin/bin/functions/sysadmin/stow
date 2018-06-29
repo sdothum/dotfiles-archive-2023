@@ -17,8 +17,8 @@ link() {
   for i in $STOW/* ;do
     [ -d $i ] || continue
     # on directory == application, apply link action
-    rule='which ${i##*/} >/dev/null 2>&1 '$@' ${i##*/}'
-    $rule
+    rule="which ${i##*/} >/dev/null 2>&1 $@ ${i##*/}"
+    eval $rule
   done
 }
 

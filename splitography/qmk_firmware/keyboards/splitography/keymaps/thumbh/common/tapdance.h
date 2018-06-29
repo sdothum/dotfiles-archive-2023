@@ -1,7 +1,8 @@
 
 // tap dance keys
 enum tap_dance {
-  _CAPS = 0
+  _ASTR = 0
+ ,_CAPS
  ,_COLN
  ,_COMM
  ,_DOT
@@ -25,6 +26,7 @@ enum tap_dance {
  ,_TILD
 };
 
+#define TD_ASTR TD(_ASTR)
 #define TD_CAPS TD(_CAPS)
 #define TD_COLN TD(_COLN)
 #define TD_COMM TD(_COMM)

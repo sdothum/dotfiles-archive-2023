@@ -44,7 +44,7 @@ div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15
 
 /* drop published and archived filters */
 div#dijit__TreeNode_5,
-div#dijit__TreeNode_6 { display: none; }
+div#dijit__TreeNode_6 { display: none !important; }
 
 .dijitTreeLabel { margin-left: 6px; }
 
@@ -52,6 +52,16 @@ div#dijit__TreeNode_6 { display: none; }
 
 /* fill any backgnoud gaps resulting from fullscreen display */
 .dijitContainer { background-color: #fdf6e3; }
+
+div#dijit__TreeNode_2 .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeLabel { color: #555 !important; }
+
+div#dijit__TreeNode_2 .dijitTreeRow:hover .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeRow:hover .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeRow:hover .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #b5423f !important; }
 
 /* only highlight category labels */
 .dijitTreeRowSelected span.dijitFolderOpened  + .dijitTreeLabel,

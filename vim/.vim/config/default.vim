@@ -61,11 +61,11 @@
       " ................................................................. Macros
 
       " quick q macro
-      nnoremap <C-q>      @q
+      nnoremap <C-q>     @q
       " edit q macro
-      nnoremap <leader>.. :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
+      nnoremap <leader>Q :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
       " repeat last macro played @{0-9a-z":*}
-      nnoremap Q          @@
+      " nnoremap ..      @@                 " just a command reminder, never mapped
 
 
   " Format ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

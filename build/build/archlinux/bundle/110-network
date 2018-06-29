@@ -84,7 +84,7 @@ d * cmst
   rsync
   syncthing
 # syncthing-git
-  syncthing-inotify-git
+# syncthing-inotify-git
   vsftpd
   watchman
 

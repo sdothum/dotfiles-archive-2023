@@ -89,6 +89,7 @@ splitography default :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboard
 splitography hiea :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hiea -type f) $HOME/bin/functions/hardware/splitography
 splitography hieaxs :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/hieaxs -type f) $HOME/bin/functions/hardware/splitography
 splitography thumbs :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbs -type f) $HOME/bin/functions/hardware/splitography
+splitography multi :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/multi -type f) $HOME/bin/functions/hardware/splitography
 splitography thumbh :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbh -type f) $HOME/bin/functions/hardware/splitography
 splitography thumbhe :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbhe -type f) $HOME/bin/functions/hardware/splitography
 splitography thumbsmu :: $(find  -L $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbsmu -type f) $HOME/bin/functions/hardware/splitography

@@ -292,6 +292,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TD_ENT:
     tap_layer(record, _RSHIFT);
     break;
+  case TD_SPC:
+    // trap potential repeating enter caused by tap dance definition
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+    break;
   case LT_ESC:
     if (raise_number(record, LEFT)) { return false; }
 #ifdef CENTER_TT
@@ -309,6 +313,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
     break;
   case LT_BSPC:
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
 #ifdef CENTER_TT

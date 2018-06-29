@@ -65,6 +65,7 @@ d ? conky-lua-archers
 # gtk-theme-numix-green
 # gtk-theme-numix-solarized
 # gtk-theme-numix-white
+  meson
 # numix-icon-theme-git
 # numix-themes
 # paper-gtk-theme-git
