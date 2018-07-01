@@ -89,8 +89,8 @@
   // `-----------------------------------------------------------------------------------'
 
   [_RSYMBOL] = {
-    {TD_COLN, KC_DOT,  KC_ASTR, KC_AMPR, _______, ___x___, ___x___, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
-    {SG_TILD, TD_LT,   SA_PERC, TD_GT,   KC_QUES, ___x___, ___x___, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
+    {HS_COLN, KC_DOT,  KC_ASTR, KC_AMPR, _______, ___x___, ___x___, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
+    {SG_TILD, HS_LT,   SA_PERC, HS_GT,   KC_QUES, ___x___, ___x___, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
     {_______, KC_PLUS, KC_AT,   KC_EXLM, KC_SLSH, ___x___, ___x___, _______, _______, _______, _______, _______},
     {_______, _______, _______, SL_TAB,  SL_EQL,  _______, _______, ___x___, ___fn__, _______, _______, _______},
   },

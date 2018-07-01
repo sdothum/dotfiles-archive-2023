@@ -5,6 +5,9 @@
 
 // required because lower/raise modifiers are redefined by colemak-dh
 #define PREVENT_STUCK_MODIFIERS
+// fix dual function timing
+#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT
 
 // tap dance key press termination interval
 #define TAPPING_TERM 250
@@ -37,9 +40,8 @@
 
 // home row modifiers
 #define HOME_MODS
-// fix dual function timing
-#define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
+// Haskell triple tap operator chords
+#define HASKELL
 
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND

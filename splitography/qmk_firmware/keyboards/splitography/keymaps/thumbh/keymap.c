@@ -144,6 +144,18 @@ enum splitography_keycodes {
 #endif
 #define _______ KC_NO
 
+#ifdef HASKELL
+#define HS_COLN TD_COLN
+#define HS_LT   TD_LT
+#define HS_GT   TD_GT
+#define HS_EQL  TD_EQL
+#else
+#define HS_COLN KC_COLN
+#define HS_LT   KC_LT
+#define HS_GT   KC_GT
+#define HS_EQL  KC_EQL
+#endif
+
 #define COPY    LCTL(KC_C)
 #define CUT     LCTL(KC_X)
 #define EOT     LCTL(KC_D)

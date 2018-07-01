@@ -23,7 +23,7 @@ case $1 in
        blackboard ;;
 
   off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC ; rm $V_DYNAMIC ;}
-       [ -e $V_NCURSES ] || { rm $NCURSES ; rm $V_NCURSES ;}
+       [ -e $V_NCURSES ] || rm $NCURSES
        conky clock auto
        # refresh panel title on close
        focus window

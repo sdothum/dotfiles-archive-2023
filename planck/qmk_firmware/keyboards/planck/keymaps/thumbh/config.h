@@ -8,6 +8,9 @@
 
 // tap dance key press termination interval
 #define TAPPING_TERM 250
+// fix dual function timing
+#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT
 
 // smooth mouse motion
 // #define MOUSEKEY_INTERVAL    20
@@ -37,9 +40,8 @@
 
 // home row modifiers
 #define HOME_MODS
-// fix dual function timing
-#define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
+// Haskell triple tap operator chords
+#define HASKELL
 
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
 #define BEAKL8TX

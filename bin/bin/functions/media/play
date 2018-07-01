@@ -76,6 +76,12 @@ else
   ( pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space ) &
 fi
 
+echo "$1" | grep -q http && exit
+# only purges server files (arm redirected usb files remain untouched)
+action=$(echo 'save\ndelete' | rmenu "$title" -no-custom) || break
+[ $action = save ] && exit
+mhistory play:deleted "$title"
+rm -rfv "$1"
 videomode off
 
 # vim: set ft=sh: #
