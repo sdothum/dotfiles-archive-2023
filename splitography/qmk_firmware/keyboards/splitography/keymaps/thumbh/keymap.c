@@ -92,7 +92,7 @@ enum splitography_keycodes {
  ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
- ,SL_TAB    // pseudo LT   (S(_MOUSE), KC_TAB)
+ ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))
 #ifdef CENTER_TT
  ,TT_ESC
 #endif
@@ -236,13 +236,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (record->event.pressed) {
       base_n = base_n | BASE_1;
       if (base_n == BASE_12) { base_layer(); }
-    } else { base_n = base_n & ~BASE_1; }
+    }
+    else { base_n = base_n & ~BASE_1; }
     return false;
   case BASE2:
     if (record->event.pressed) {
       base_n = base_n | BASE_2;
       if (base_n == BASE_12) { base_layer(); }
-    } else { base_n = base_n & ~BASE_2; }
+    }
+    else { base_n = base_n & ~BASE_2; }
     return false;
 #ifdef HOME_MODS
   case HOME_Q:

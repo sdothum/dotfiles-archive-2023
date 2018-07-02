@@ -81,7 +81,7 @@ hc rule class=File-roller                  pseudotile=off
 hc rule class=float                        pseudotile=on focus=on
 # hc rule class=Gnome-mpv                  pseudotile=on
 hc rule class=Gvim                         focus=on hook=max
-# hc rule windowrole=gvimdiff              focus=on fullscreen=on hook=fullscreen
+hc rule windowrole=gvimdiff                focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                      pseudotile=on
 hc rule class=mpv                          focus=on switchtag=on fullscreen=off index=1
 hc rule title=omxplay                      fullscreen=on hook=fullscreen

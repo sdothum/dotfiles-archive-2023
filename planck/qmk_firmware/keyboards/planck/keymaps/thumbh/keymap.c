@@ -110,9 +110,7 @@ enum planck_keycodes {
  ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
- ,SL_DELE   // pseudo LT   (_ADJUST, KC_DEL)
- ,SL_EQL    // pseudo LT   (_MOUSE, KC_EQL)
- ,SL_TAB    // pseudo LT   (_ADJUST, KC_TAB)
+ ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))
 #ifdef CENTER_TT
  ,TT_ESC
 #endif
@@ -176,10 +174,12 @@ enum planck_keycodes {
 #define HS_COLN TD_COLN
 #define HS_LT   TD_LT
 #define HS_GT   TD_GT
+#define HS_EQL  TD_EQL
 #else
 #define HS_COLN KC_COLN
 #define HS_LT   KC_LT
 #define HS_GT   KC_GT
+#define HS_EQL  KC_EQL
 #endif
 
 #define COPY    LCTL(KC_C)
@@ -191,6 +191,7 @@ enum planck_keycodes {
 #define TMCOPY  LALT(LCTL(KC_C))
 #define TMPASTE LALT(LCTL(KC_V))
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
+#define LT_DEL  LT  (_ADJUST, KC_DEL)
 #define LT_ESC  LT  (_LSYMBOL, KC_ESC)
 #define LT_H    LT  (_LSHIFT, KC_H)
 #define LT_INS  LT  (_NUMBER, KC_INS)
@@ -214,13 +215,6 @@ enum planck_keycodes {
 #define CNTR_HR OSM (MOD_LGUI | MOD_LSFT)
 #define CNTR_BL TD  (_CAPS)
 #define CNTR_BR OSM (MOD_LSFT | MOD_LCTL)
-#endif
-
-// LT can only reference layers 0-15
-#ifdef THUMB_0
-#define LT_EQL  LT  (_ADJUST, KC_EQL)
-#else
-#define LT_0    LT  (_ADJUST, KC_0)
 #endif
 
 // ........................................................ Default Alpha Layout
@@ -314,12 +308,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case GT_UP:
     tap_mods(record, KC_LCTL);
     break;
-  case SL_DELE:
-    lt(record, NOSHIFT, KC_DEL, 0, _ADJUST);
-    break;
-  case SL_TAB:
-    lt(record, SHIFT, KC_TAB, 0, _ADJUST);
-    break;
 #ifdef CENTER_TT
   case TT_ESC:
     tt_clear();                             // exit TT layer
@@ -345,7 +333,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_H:
     if (raise_number(record, RIGHT)) { return false; }
-    thumb_roll(record, LEFT, 0, 0, _LSHIFT, _RSYMBOL);
+    tap_layer(record, _LSHIFT);
     break;
   case TD_ENT:
     tap_layer(record, _RSHIFT);
@@ -361,18 +349,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       return false;
     }
 #endif
-    tap_layer(record, _LSYMBOL);
+    thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
-  case SL_EQL:
-    // note: TD_SPC interferes with successive '=' in rollover mode (not an in use issue)
-    thumb_roll(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _RSYMBOL);
+  case SL_TAB:
+    thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
     break;
   case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSHIFT);
+    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
     break;
   case LT_BSPC:
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
-    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSHIFT);
+    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
 #ifdef CENTER_TT
   case CNTR_TL:

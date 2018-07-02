@@ -42,6 +42,8 @@
 #define HOME_MODS
 // Haskell triple tap operator chords
 #define HASKELL
+// equal key toggle layer (differs from splitography)
+#define EQL_LT _ADJUST
 
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
 #define BEAKL8TX
