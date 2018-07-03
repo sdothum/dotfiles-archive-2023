@@ -7,14 +7,14 @@
 
     " .................................................................... Setup
 
-      let g:font_type           = -1        " current font setting (0) source (1) prose
-      let s:font_step           = 1         " in point size
-      let s:cursorline          = 0         " visible (0) off (1) on
-      let s:wikiinfo            = 1         " statusline (0) off (1) on
-      let s:initial_view        = 1         " prose (0) dfm (1) proof
-      let s:sync                = 0         " sync (0) off (1) indent guides
-      let s:info                = 0         " statusline (0) dfm (1) expanded
-      let g:padding             = '   '     " expanded statusline padding
+      let g:font_type           = -1          " current font setting (0) source (1) prose
+      let s:font_step           = 1           " in point size
+      let s:cursorline          = 0           " visible (0) off (1) on
+      let s:wikiinfo            = 1           " statusline (0) off (1) on
+      let s:initial_view        = 1           " prose (0) dfm (1) proof
+      let s:sync                = 0           " sync (0) off (1) indent guides
+      let s:info                = 0           " statusline (0) dfm (1) expanded
+      let g:padding             = '         ' " expanded statusline padding
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let s:source_font         = 'Iosevka\'
@@ -23,75 +23,75 @@
     " .............................................................. Color codes
 
       " solarized colour palette (light)
-      let s:rgb_0               = '#073642' " base02 dark highlight
-      let s:rgb_1               = '#dc322f' " red
-      let s:rgb_2               = '#719e07' " green
-      let s:rgb_3               = '#b58900' " yellow
-      let s:rgb_4               = '#268bd2' " blue
-      let s:rgb_5               = '#d33682' " magenta
-      let s:rgb_6               = '#2aa198' " cyan
-      let s:rgb_7               = '#eee8d5' " base2 light highlight
-      let s:rgb_8               = '#002b36' " base03 dark bg
-      let s:rgb_9               = '#cb4b16' " orange
-      let s:rgb_10              = '#586e75' " base01 darkest grey
-      let s:rgb_11              = '#657b83' " base00 dark grey
-      let s:rgb_12              = '#839496' " base0 light grey
-      let s:rgb_13              = '#6c71c4' " violet
-      let s:rgb_14              = '#93a1a1' " base1 lightest grey
-      let s:rgb_15              = '#fdf6e3' " base3 light bg
+      let s:rgb_0               = '#073642'   " base02 dark highlight
+      let s:rgb_1               = '#dc322f'   " red
+      let s:rgb_2               = '#719e07'   " green
+      let s:rgb_3               = '#b58900'   " yellow
+      let s:rgb_4               = '#268bd2'   " blue
+      let s:rgb_5               = '#d33682'   " magenta
+      let s:rgb_6               = '#2aa198'   " cyan
+      let s:rgb_7               = '#eee8d5'   " base2 light highlight
+      let s:rgb_8               = '#002b36'   " base03 dark bg
+      let s:rgb_9               = '#cb4b16'   " orange
+      let s:rgb_10              = '#586e75'   " base01 darkest grey
+      let s:rgb_11              = '#657b83'   " base00 dark grey
+      let s:rgb_12              = '#839496'   " base0 light grey
+      let s:rgb_13              = '#6c71c4'   " violet
+      let s:rgb_14              = '#93a1a1'   " base1 lightest grey
+      let s:rgb_15              = '#fdf6e3'   " base3 light bg
 
       " quantum colour palette (dark)
-      let s:gray1               = '#263238' " 023 (005f5f)
-      let s:gray2               = '#2c3a41' " 023 (005f5f)
-      let s:gray3               = '#425762' " 059 (5f5f5f)
-      let s:gray4               = '#658494' " 066 (5f8787)
-      let s:gray5               = '#aebbc5' " 146 (afafd7)
-      let s:blue                = '#70ace5' " 074 (5fafd7)
-      let s:cyan                = '#69c5ce' " 080 (5fd7d7)
-      let s:green               = '#87bb7c' " 108 (87af87)
-      let s:indigo              = '#7681de' " 104 (8787d7)
-      let s:orange              = '#d7956e' " 173 (d7875f)
-      let s:purple              = '#a48add' " 140 (af87d7)
-      let s:red                 = '#dd7186' " 168 (d75f87)
-      let s:yellow              = '#d5b875' " 180 (d7af87)
+      let s:gray1               = '#263238'   " 023 (005f5f)
+      let s:gray2               = '#2c3a41'   " 023 (005f5f)
+      let s:gray3               = '#425762'   " 059 (5f5f5f)
+      let s:gray4               = '#658494'   " 066 (5f8787)
+      let s:gray5               = '#aebbc5'   " 146 (afafd7)
+      let s:blue                = '#70ace5'   " 074 (5fafd7)
+      let s:cyan                = '#69c5ce'   " 080 (5fd7d7)
+      let s:green               = '#87bb7c'   " 108 (87af87)
+      let s:indigo              = '#7681de'   " 104 (8787d7)
+      let s:orange              = '#d7956e'   " 173 (d7875f)
+      let s:purple              = '#a48add'   " 140 (af87d7)
+      let s:red                 = '#dd7186'   " 168 (d75f87)
+      let s:yellow              = '#d5b875'   " 180 (d7af87)
 
     " ......................................................... DFM colour masks
 
       " foreground
-      let g:dfm_fg_light        = '#000000' " light foreground (high contrast)
-      let g:dfm_fg_dark         = '#ffffff' " dark foreground (high contrast)
-      let s:dfm_proof_light     = '#dddddd' " dark foreground
-      let s:dfm_proof_dark      = '#444444' " light foreground
+      let g:dfm_fg_light        = '#000000'   " light foreground (high contrast)
+      let g:dfm_fg_dark         = '#ffffff'   " dark foreground (high contrast)
+      let s:dfm_proof_light     = '#dddddd'   " dark foreground
+      let s:dfm_proof_dark      = '#444444'   " light foreground
       let s:dfm_ale_light       = s:rgb_1
       let s:dfm_ale_dark        = s:red
 
       " background
-      let s:dfm_bg_light        = s:rgb_15  " solarized light (paper) background
-      let s:dfm_bg_dark         = s:gray1   " quantum dark background
-      let s:dfm_vsplit_light    = s:rgb_15  " invisible split
-      let s:dfm_vsplit_dark     = s:gray1   " invisible split
-      let s:dfm_folded_light    = s:gray5   " vimdiff fold
-      let s:dfm_folded_dark     = s:gray4   " vimdiff fold
+      let s:dfm_bg_light        = s:rgb_15    " solarized light (paper) background
+      let s:dfm_bg_dark         = s:gray1     " quantum dark background
+      let s:dfm_vsplit_light    = s:rgb_15    " invisible split
+      let s:dfm_vsplit_dark     = s:gray1     " invisible split
+      let s:dfm_folded_light    = s:gray5     " vimdiff fold
+      let s:dfm_folded_dark     = s:gray4     " vimdiff fold
 
       " cursor line
-      let s:dfm_cursor_light    = '#20bbfc' " iA Writer
-      let s:dfm_cursor_dark     = '#20bbfc' " iA Writer
-      let s:dfm_bg_line_light   = s:rgb_7   " light cursorline
-      let s:dfm_bg_line_dark    = s:gray2   " dark cursorline
-      let s:dfm_bg_column_light = '#E2D7B6' " light column (darker shade of rgb_7)
-      let s:dfm_bg_column_dark  = '#0A4C5C' " dark column (lighter shade of rgb_0)
-      let s:dfm_fg_line_light   = s:rgb_14  " light line numbers
-      let s:dfm_fg_line_dark    = s:gray4   " dark line numbers
+      let s:dfm_cursor_light    = '#20bbfc'   " iA Writer
+      let s:dfm_cursor_dark     = '#20bbfc'   " iA Writer
+      let s:dfm_bg_line_light   = s:rgb_7     " light cursorline
+      let s:dfm_bg_line_dark    = s:gray2     " dark cursorline
+      let s:dfm_bg_column_light = '#E2D7B6'   " light column (darker shade of rgb_7)
+      let s:dfm_bg_column_dark  = '#0A4C5C'   " dark column (lighter shade of rgb_0)
+      let s:dfm_fg_line_light   = s:rgb_14    " light line numbers
+      let s:dfm_fg_line_dark    = s:gray4     " dark line numbers
 
       " statusline
-      let s:dfm_bg_status_light = s:rgb_15  " light statusline
-      let s:dfm_bg_status_dark  = s:gray1   " dark statusline
-      let s:dfm_fg_status_light = s:rgb_0   " light statusline
-      let s:dfm_fg_status_dark  = s:rgb_7   " dark statusline
-      let s:dfm_fg_user1_light  = s:rgb_0   " light statusline
-      let s:dfm_fg_user1_dark   = s:rgb_7   " dark statusline
-      let s:dfm_fg_user2_light  = s:rgb_4   " light statusline
-      let s:dfm_fg_user2_dark   = s:cyan    " dark statusline
+      let s:dfm_bg_status_light = s:rgb_15    " light statusline
+      let s:dfm_bg_status_dark  = s:gray1     " dark statusline
+      let s:dfm_fg_status_light = s:rgb_0     " light statusline
+      let s:dfm_fg_status_dark  = s:rgb_7     " dark statusline
+      let s:dfm_fg_user1_light  = s:rgb_0     " light statusline
+      let s:dfm_fg_user1_dark   = s:rgb_7     " dark statusline
+      let s:dfm_fg_user2_light  = s:rgb_4     " light statusline
+      let s:dfm_fg_user2_dark   = s:cyan      " dark statusline
 
     " .................................................................. Palette
 

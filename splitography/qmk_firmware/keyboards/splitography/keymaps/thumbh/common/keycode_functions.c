@@ -14,11 +14,11 @@ void tap_mods(keyrecord_t *record, uint16_t keycode)
 // (un)register modifiers
 void modifier(void (*f)(uint8_t))
 {
-  if (mods & MOD_BIT(KC_LCTL)) { (*f)(KC_LCTL); }
-  if (mods & MOD_BIT(KC_LGUI)) { (*f)(KC_LGUI); }
-  if (mods & MOD_BIT(KC_LALT)) { (*f)(KC_LALT); }
-  if (mods & MOD_BIT(KC_LSFT)) { (*f)(KC_LSFT); }
-  if (mods & MOD_BIT(KC_RSFT)) { (*f)(KC_RSFT); }  // note: qmk macros all use left modifiers
+  if (mods & MOD_BIT(KC_LCTL)) { f(KC_LCTL); }
+  if (mods & MOD_BIT(KC_LGUI)) { f(KC_LGUI); }
+  if (mods & MOD_BIT(KC_LALT)) { f(KC_LALT); }
+  if (mods & MOD_BIT(KC_LSFT)) { f(KC_LSFT); }
+  if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
 }
 
 // .......................................................... Keycode Primitives
@@ -198,12 +198,7 @@ void colon(qk_tap_dance_state_t *state, void *user_data)
   uint8_t i;
   if (state->count > 2) {
     if (state->pressed) { register_shift(KC_SCLN); }
-    else if (state->count == 3) {
-      tap_key  (KC_SPC);
-      shift_key(KC_SCLN);
-      shift_key(KC_SCLN);
-      tap_key  (KC_SPC);
-    }
+    else if (state->count == 3) { send_string(" :: "); }
     else for (i = 0; i < state->count; i++) { shift_key(KC_SCLN); }
   }
   else if (state->pressed) { register_shift(KC_SCLN); }
@@ -225,12 +220,7 @@ void equal(qk_tap_dance_state_t *state, void *user_data)
   uint8_t i;
   if (state->count > 2) {
     if (state->pressed) { register_code(KC_EQL); }
-    else if (state->count == 3) {
-      tap_key(KC_SPC);
-      tap_key(KC_SLSH);
-      tap_key(KC_EQL);
-      tap_key(KC_SPC);
-    }
+    else if (state->count == 3) { send_string(" /= "); }
     else for (i = 0; i < state->count; i++) { tap_key(KC_EQL); }
   }
   else if (state->pressed) { layer_on(EQL_LT); }  // down: edit layer
@@ -249,12 +239,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
   uint8_t i;
   if (state->count > 2) {
     if (state->pressed) { register_shift(KC_DOT); }
-    else if (state->count == 3) {
-      tap_key  (KC_SPC);
-      tap_key  (KC_MINS);
-      shift_key(KC_DOT);
-      tap_key  (KC_SPC);
-    }
+    else if (state->count == 3) { send_string(" -> "); }
     else for (i = 0; i < state->count; i++) { shift_key(KC_DOT); }
   }
   else if (state->pressed) { register_code(KC_LSFT); }  // down: shift
@@ -272,12 +257,7 @@ void lesser(qk_tap_dance_state_t *state, void *user_data)
   uint8_t i;
   if (state->count > 2) {
     if (state->pressed) { register_shift(KC_COMM); }
-    else if (state->count == 3) {
-      tap_key  (KC_SPC);
-      shift_key(KC_COMM);
-      tap_key  (KC_MINS);
-      tap_key  (KC_SPC);
-    }
+    else if (state->count == 3) { send_string(" <- "); }
     else for (i = 0; i < state->count; i++) { shift_key(KC_COMM); }
   }
   else if (state->pressed) { register_code(KC_LCTL); }  // down: ctrl
@@ -296,10 +276,7 @@ void tilde(qk_tap_dance_state_t *state, void *user_data)
   uint8_t i;
   if (state->count > 1) {
     if (state->pressed) { register_shift(KC_GRV); }
-    else if (state->count == 2) {
-      shift_key(KC_GRV);
-      tap_key  (KC_SLSH);                   // double tap: unix home directory
-    }
+    else if (state->count == 2) { send_string("~/"); }
     else for (i = 0; i < state->count; i++) { shift_key(KC_GRV); }
   }
   else if (state->pressed) { register_shift(KC_GRV); }

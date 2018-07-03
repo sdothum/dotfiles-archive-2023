@@ -56,12 +56,16 @@ if [ $sunrise -le $now ] && [ $now -le $sunset ] ;then
   if [ -e $COLORSCHEME ] ;then
     trace 'Light colorsheme'
     rm -f $COLORSCHEME
+    ln -sf $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
+    ln -sf $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
   fi
 else
   if [ ! -e $COLORSCHEME ] ;then
     trace 'Dark colorsheme'
     # see setting.vim
     touch $COLORSCHEME
+    ln -sf $HOME/.gtkrc-2.0.mine.dark $HOME/.gtkrc-2.0.mine
+    ln -sf $HOME/.config/gtk-3.0/gtk.css.dark $HOME/.config/gtk-3.0/gtk.css
   fi
 fi
 

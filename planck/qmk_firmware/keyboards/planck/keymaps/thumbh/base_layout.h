@@ -49,7 +49,7 @@
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   Q  |   I  |   E  |   A  |   ?  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   J  |   _  |   "  |   K  |   !  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
+  // |   J  |   _  |   "  |   K  |   /  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // | Ctrl |  GUI |  Alt |  Tab |   H  |  Ins | Left |  f() |  Del | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
@@ -57,7 +57,7 @@
   [_RSHIFT] = {
     {KC_COLN, S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_TL, CNTR_TR, KC_G,    KC_D,    KC_N,    KC_M,    KC_X   },
     {S(KC_Q), S(KC_I), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, KC_C,    KC_T,    KC_R,    KC_S,    KC_W   },
-    {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_EXLM, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
+    {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
     {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  S(KC_H), LT_INS,  S_LEFT,  ___fn__, KC_DEL,  S_DOWN,  S_UP,    S_RGHT },
   },
 #ifdef HOME_MODS

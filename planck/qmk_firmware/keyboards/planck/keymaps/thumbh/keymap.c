@@ -296,7 +296,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     break;
   case KC_COMM:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SLSH)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     break;
 #endif
   case AT_DOWN:
