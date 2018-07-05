@@ -59,10 +59,9 @@ focus_check
 # cancel out above focus frame
 focus frame
 # cannot use layout options with term due to classname conflict (overwrites "Scratchpad")
-export TMUX=scratchpad
 case $term in
-  byobu) tmux_new FORTUNE ;;
-  tmux ) tmux_new FORTUNE ;;
+  byobu) tmux_new $name ;;
+  tmux ) tmux_new $name ;;
   *    ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null

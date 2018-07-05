@@ -87,11 +87,11 @@ fi
 if [ -e $IRC ] ;then
   server && herbstclient focus_monitor 1 || switch tag $CHAT
   # wait for window visibility before switching monitors, for urxvt font handling
-  term 'IRC' VISIBLE weechat
+  tmux_new irc weechat
 fi
 server && herbstclient focus_monitor 0
 [ -e $CALENDAR ] && term 'Calendar' wyrd
-[ -e $MAIL ] && term 'Mail' alot
+[ -e $MAIL ] && tmux_new mail alot
 
 # .................................................................. Window apps
 

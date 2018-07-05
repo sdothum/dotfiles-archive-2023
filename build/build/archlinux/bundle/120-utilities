@@ -160,5 +160,6 @@
 # byobu
 # screen
   tmux
+# tmux-tpm
 
 # vim: set ft=conf: #

@@ -84,6 +84,8 @@ d * znc
 
 = utilities
 = ▔▔▔▔▔▔▔▔▔
+  perl-curses-ui
+  perl-extract-url
   perl-html-strip
 
 

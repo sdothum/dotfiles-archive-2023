@@ -73,9 +73,9 @@
 # vcsh-git
 # hgview
   git
-  mercurial
+# mercurial
 # myrepos
 # subversion
-  tortoisehg
+# tortoisehg
 
 # vim: set ft=conf: #

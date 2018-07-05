@@ -20,7 +20,7 @@ hc keybind $Mod-w                       chain . close_or_remove . emit_hook focu
 # hc keybind $Mod-Shift-Return          spawn focus hlwm raise
 # hc keybind $Mod-Control-Return        spawn focus hlwm close
 hc keybind $Mod-Return                  spawn toggle scratchpad
-hc keybind $Mod-Shift-Return            spawn tmux_new FORTUNE VERTICAL
+hc keybind $Mod-Shift-Return            spawn tmux_new
 hc keybind $Mod-Control-Return          spawn term 'Term'
 hc keybind $Mod-equal                   spawn toggle focus
 # number layer thumb swap

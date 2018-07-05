@@ -30,7 +30,7 @@ config() {
 [ $size = 10pt ]     && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 
 config
-exec vimb
+exec vimb "$startpage"
 
 # defunct substitution for version 2.x -c option, replaced by profiles
 delay=3

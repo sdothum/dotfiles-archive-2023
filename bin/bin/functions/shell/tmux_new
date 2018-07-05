@@ -6,9 +6,12 @@
 
 # .................................................................. New session
 
-# Usage: tmux_new [term option]*
+# Usage: tmux_new [name [command]]*
 
-[ $TMUX ] || export TMUX=tmux
-term "${TMUX}" $@ tmux 'new-session -n ""'
+export TMUX_TMPDIR=/tmp
+
+[ $1 ] && { export TMUX=$1 ; shift ;} || export TMUX=tmux
+[ "$1" ] || fortune=FORTUNE
+term "${TMUX}" $fortune VERTICAL tmux -S /tmp/tmux:$TMUX 'new-session -n ""' $@
 
 # vim: set ft=sh: #

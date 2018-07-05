@@ -111,6 +111,7 @@ d pass
 = terminal multiplexors
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   tmux
+# tmux-tpm
 
 
 = network utilities
@@ -225,6 +226,8 @@ d ? xtitle-git
 
 = utilities
 = ▔▔▔▔▔▔▔▔▔
+  perl-curses-ui
+  perl-extract-url
   perl-html-strip
 
 
