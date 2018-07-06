@@ -73,8 +73,9 @@
 # vcsh-git
 # hgview
   git
-# mercurial
+  mercurial
 # myrepos
+  patchutils
 # subversion
 # tortoisehg
 

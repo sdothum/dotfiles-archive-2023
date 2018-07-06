@@ -15,6 +15,7 @@
       set cpo&vim
 
       let g:ruler = 0                       " colorcolumn mode
+      let g:repo  = $HOME . '/stow/'
 
       augroup core
         autocmd!
@@ -43,6 +44,10 @@
     " .................................................................... Debug
 
       nnoremap <silent><S-F12>     :let g:trace = g:trace == 0 ? 1 : 0<CR>
+
+    " .............................................................. Auto backup
+
+      autocmd core BufWritePost * call core#BackupCurrentFile()
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

@@ -38,7 +38,6 @@ if cpu arm ;then
   fi
 
   geometry=$(dmenu geometry "$title") || exit
-  videomode on
 
   if [ -z $video ] ;then
     [ -d "$1" ] && path=$1 || path=${1%/*}
@@ -48,41 +47,51 @@ if cpu arm ;then
     [ -z "$video" ] && video=$path
     video=$(find "$video" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
   fi
-  notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
-  # syncthing cpu usage can exacerbate video stuttering
-  # systemd stop syncthing@$USER
-
-  # omxplayer keyboard shortcuts only available through terminal emulator
-  # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${video%.*}.srt" --align center "$video"
-  # media filenames with embedded blanks are messy to handle, use symbolic link instead!
-  ln -sf "$video" /tmp/play:link
-  eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
-  echo "$title -> $video" >>/tmp/omxplay.log
-  # accomodate arm term omxplayer lag time variance
-  sleep 1
-  pwait /tmp/play:link
-
-  # systemd start syncthing@$USER
-  # clear notification
-  xdotool key Ctrl+space
-  touch $MENU
-else
-  videomode on
-  # server && env CONKYRC=$CONKY_Q2 conky clock on
-  notify 0 blackboard "$title" "1/2  Contrast         5/6  Gamma\n3/4  Brightness       7/8  Saturation\n9/0  Volume             m  Mute\n-/+  ^Audio Delay       #  Language\nj/J  Subtitles          v  Toggle\nx/z  Subtitle Delay              .."
-  focus frame
-  mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
-  # clear notification
-  ( pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space ) &
 fi
 
-echo "$1" | grep -q http && exit
-# only purges server files (arm redirected usb files remain untouched)
-action=$(echo 'save\ndelete' | rmenu "$title" -no-custom)
-if [ $action = delete ] ;then
-  mhistory play:delete "$title $1"
-  # rm -rfv "$1"
-fi
+videomode on
+
+while : ;do
+  if cpu arm ;then
+    notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
+    # syncthing cpu usage can exacerbate video stuttering
+    # systemd stop syncthing@$USER
+
+    # omxplayer keyboard shortcuts only available through terminal emulator
+    # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${video%.*}.srt" --align center "$video"
+    # media filenames with embedded blanks are messy to handle, use symbolic link instead!
+    ln -sf "$video" /tmp/play:link
+    eval term 'omxplay' BLACKBOARD omxplayer $geometry --align center /tmp/play:link
+    echo "$title -> $video" >>/tmp/omxplay.log
+    # accomodate arm term omxplayer lag time variance
+    sleep 1
+    pwait /tmp/play:link
+
+    # systemd start syncthing@$USER
+    # clear notification
+    xdotool key Ctrl+space
+    touch $MENU
+  else
+    # server && env CONKYRC=$CONKY_Q2 conky clock on
+    notify 0 blackboard "$title" "1/2  Contrast         5/6  Gamma\n3/4  Brightness       7/8  Saturation\n9/0  Volume             m  Mute\n-/+  ^Audio Delay       #  Language\nj/J  Subtitles          v  Toggle\nx/z  Subtitle Delay              .."
+    focus frame
+    mpv --vf=eq "$1" --sub-font-size=$fontsize >/dev/null 2>&1
+    # clear notification
+    ( pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space ) &
+  fi
+
+  echo "$1" | grep -q http && break
+  # only purges server files (arm redirected usb files remain untouched)
+  action=$(echo 'save\nreplay\ndelete' | rmenu "$title" -no-custom)
+  case $action in
+    delete) mhistory play:delete "$title $1" ;;
+            # rm -rfv "$1" ;;
+
+    replay) continue ;;
+    *     ) break ;;
+  esac
+done
+
 videomode off
 
 # vim: set ft=sh: #

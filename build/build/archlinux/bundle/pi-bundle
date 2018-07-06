@@ -250,6 +250,13 @@ d ? xtitle-git
   time
 
 
+= version control
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  git
+  mercurial
+  patchutils
+
+
 = languages
 = ▔▔▔▔▔▔▔▔▔
   python

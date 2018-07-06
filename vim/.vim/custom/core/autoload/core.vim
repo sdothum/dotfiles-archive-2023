@@ -73,6 +73,19 @@
         endif
       endfunction
 
+    " .............................................................. Auto backup
+
+      function! core#BackupCurrentFile()
+        if expand('%:p') =~ g:repo
+          let l:file = substitute(expand('%:p'), g:repo, '', '')
+          let l:cmd  = 'dash -c "cd ' . g:repo . ';'
+          let l:cmd .= 'hg add ' . l:file . ';'
+          let l:cmd .= 'hg commit -m \"$(date) - ' . l:file . '\";"'
+          " call job_start(l:cmd)           " jobs spawned fail on quit
+          call system(l:cmd)
+        endif
+      endfunction
+
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh

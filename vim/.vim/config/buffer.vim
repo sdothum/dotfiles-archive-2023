@@ -84,7 +84,7 @@
       " close DiffOrig or current buffer
       command! CloseUnique if !core#CloseDiffOrig() | silent bdelete! | endif
 
-      " (sudo) save
+      " (sudo) save, see core#BackupCurrentFile()
       nmap <silent><leader>w      :silent write!<CR>
       nmap <leader>W              :silent write !sudo tee % >/dev/null<CR>
       " (write and) close buffers
@@ -93,14 +93,14 @@
       nmap <leader>D              :silent Singleton<CR>
       nmap <silent><leader>ww     :silent wqall!<CR>
       " discard quit
-      nmap <silent><leader>qq     :silent qall!<CR>
+      nmap <silent><leader>qq     :quitall!<CR>
 
       " pre-write formatting
-      autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
+      " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
       autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
-      autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
+      " autocmd buffer FocusLost * call core#StripTrailingWhitespaces()
       " save on losing focus
-      autocmd buffer FocusLost   * silent! :wall
+      " autocmd buffer FocusLost * silent! :wall
 
     " ......................................................... Buffer switching
 
