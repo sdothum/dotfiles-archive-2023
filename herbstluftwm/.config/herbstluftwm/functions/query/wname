@@ -9,7 +9,7 @@
 # Note: Use of conky refresh to trap quitting apps w/o herbstluftwm's mod-w
 
 # windows not closed with mod-w may leave focus in an empty frame and no focused instance
-name=$(herbstclient attr clients.focus.instance 2>/dev/null)
+name=$(herbstclient attr clients.focus.title 2>/dev/null)
 if [ "$name" ] ;then
   if [ $(echo $name | wc -w) -eq 1 ] ;then
     echo $name

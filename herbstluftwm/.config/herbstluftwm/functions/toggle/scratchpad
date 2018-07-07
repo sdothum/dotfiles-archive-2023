@@ -16,7 +16,7 @@ pstat + 'toggle scratchpad' && exit
 kill -TERM $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
 
 # search [<option>* [<command>]]
-search() { xdotool search --limit 1 --classname $1 $name $2 2>/dev/null ;}
+search() { xdotool search --limit 1 --name $1 $name $2 2>/dev/null ;}
 
 winid() { printf '0x%x' $(search --onlyvisible) ;}
 
@@ -47,7 +47,7 @@ search '' windowmap >/dev/null
 focus_check
 
 # check winid's just in case.. it happens!
-winid=$(query instance $name)
+winid=$(query title $name)
 if [ $winid ] ;then
   echo $winid >$SCRATCHPAD
   herbstclient bring $winid 2>/dev/null
@@ -56,13 +56,13 @@ focus_check
 
 # .......................................................... Create new instance
 
-# cancel out above focus frame
+# cancel out above focus frame, tmux rules!
 focus frame
-# cannot use layout options with term due to classname conflict (overwrites "Scratchpad")
 case $term in
-  byobu) tmux_new $name ;;
-  tmux ) tmux_new $name ;;
-  *    ) term $name FORTUNE TABBED ;;
+  byobu ) tmux_new $name ;;
+  tmux  ) tmux_new $name ;;
+  screen) tmux_new $name ;;
+  *     ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$SCRATCHPAD

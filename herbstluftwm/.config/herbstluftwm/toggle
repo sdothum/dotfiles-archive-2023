@@ -58,6 +58,7 @@ toggle_app() {
     lock
     focus=true
     winids=$(query instance $app)
+    [ "$winids" ] || winids=$(query title $app)
     if [ "$winids" ] ;then
       for i in $winids ;do
         if ! close $i ;then

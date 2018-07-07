@@ -6,8 +6,8 @@
 
 # ...................................................................... Monitor
 
-target=${1:-www.google.com}
-threshold=20
+target=www.google.com
+threshold=${1:-30}
 
 trap "echo; trace '$(basename $0) ended'" INT
 trace "$(basename $0) started, threshold=${threshold}ms.."
@@ -15,7 +15,7 @@ trace "$(basename $0) started, threshold=${threshold}ms.."
 # latency exceptions
 ping $target | while read sixtyfour bytes latency ;do
   [ "$bytes" = bytes ] || { echo $sixtyfour $bytes $latency; continue; }
-  [ $(echo "$latency" | cut -d= -f4 | cut -d. -f1 | cut -d' ' -f1) -gt $threshold ] && trace "${NOCOLOR}$sixtyfour $bytes $latency"
+  [ $(echo "$latency" | cut -d= -f4 | cut -d. -f1 | cut -d' ' -f1) -ge $threshold ] && trace "${NOCOLOR}$sixtyfour $bytes $latency"
 done
 
 # vim: set ft=sh: #
