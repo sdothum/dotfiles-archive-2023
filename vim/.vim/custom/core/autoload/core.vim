@@ -80,8 +80,9 @@
           let l:file = substitute(expand('%:p'), g:repo, '', '')
           let l:cmd  = 'dash -c "cd ' . g:repo . ';'
           let l:cmd .= 'hg add ' . l:file . ';'
-          let l:cmd .= 'hg commit -m \"$(date) - ' . l:file . '\";"'
-          " call job_start(l:cmd)           " jobs spawned fail on quit
+          " see hgl alias (hg log) for compact listing
+          let l:cmd .= 'hg commit -m \"$(date -R | cut -d- -f1) ..  ' . l:file . '\";"'
+          " call job_start(l:cmd)           " concurrent repo updates are not permitted
           call system(l:cmd)
         endif
       endfunction

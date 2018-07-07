@@ -7,6 +7,7 @@
 
 video='play kodi netflix'
 sonarr=http://$SERVER:8989/
+root=true
 
 # meta dmenu menu!
 media=$(previous media)
@@ -19,23 +20,23 @@ while : ;do
   case $media in
     animation ) dmenu movies animation ;;
     anime     ) dmenu series anime ;;
-    ebooks    ) dmenu ebooks ; break ;;
+    ebooks    ) dmenu ebooks ; unset root ; break ;;
     kodi      ) videomode on ; kodi ; videomode off ;;
     movies    ) dmenu movies ;;
     netflix   ) netflix ;;
-    nzb       ) toggle term 'NZB' nzbget --connect ; break ;;
+    nzb       ) toggle term 'NZB' nzbget --connect ; unset root ; break ;;
     patricia  ) play /net/media/patricia/Patricia/Patricia.mp4 ;;
-    references) dmenu references ; break ;;
+    references) dmenu references ; unset root ; break ;;
     series    ) dmenu series ;;
-    sonarr    ) surf $sonarr ;;
+    sonarr    ) surf $sonarr ; unset root ;;
     #thought* ) play https://youtu.be/OBk3ynRbtsw ;;
     thought*  ) play /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
-    torrent   ) toggle term 'Torrent' rtorrent ; break ;;
+    torrent   ) toggle term 'Torrent' rtorrent ; unset root ; break ;;
   esac
 done
 
 # videos turn on blackboard but wait for all video instances to end
 for i in $video ;do pstat "$i " && exit ;done
-restore root
+[ $root ] && restore root
 
 # vim: set ft=sh: #

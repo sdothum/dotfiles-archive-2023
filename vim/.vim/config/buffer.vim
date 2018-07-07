@@ -84,28 +84,34 @@
       " close DiffOrig or current buffer
       command! CloseUnique if !core#CloseDiffOrig() | silent bdelete! | endif
 
-      " (sudo) save, see core#BackupCurrentFile()
+      " save buffers, see core#BackupCurrentFile()
       nmap <silent><leader>w      :silent write!<CR>
       nmap <leader>W              :silent write !sudo tee % >/dev/null<CR>
-      " (write and) close buffers
+      nmap <silent><leader>ww     :silent wqall!<CR>
+
+      " close buffers
       nmap <silent><leader>d      :silent CloseUnique<CR>
       nmap <silent><leader>DD     :silent call core#CloseDiffOrig()<CR>:%bdelete!<CR>
       nmap <leader>D              :silent Singleton<CR>
-      nmap <silent><leader>ww     :silent wqall!<CR>
       " discard quit
       nmap <silent><leader>qq     :quitall!<CR>
 
       " pre-write formatting
-      " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
       autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
+
+      " post-write auto backup
+      autocmd buffer BufWritePost * call core#BackupCurrentFile()
+
+      " " focus oriented formatting
+      " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
       " autocmd buffer FocusLost * call core#StripTrailingWhitespaces()
-      " save on losing focus
+      " " save on losing focus (creates incremental session repo backups, see core#BackupCurrentFile())
       " autocmd buffer FocusLost * silent! :wall
 
     " ......................................................... Buffer switching
 
       " " goto buffer (just fingering convenience)
-      " nmap <leader>b            :b<Space>
+      " nmap <leader>b            :buffer<Space>
       " " query current buffer
       " nmap <leader>B            :echo expand('%:p')<CR>
 

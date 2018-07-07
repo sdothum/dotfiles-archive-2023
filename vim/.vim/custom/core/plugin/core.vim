@@ -45,10 +45,6 @@
 
       nnoremap <silent><S-F12>     :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
-    " .............................................................. Auto backup
-
-      autocmd core BufWritePost * call core#BackupCurrentFile()
-
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh
