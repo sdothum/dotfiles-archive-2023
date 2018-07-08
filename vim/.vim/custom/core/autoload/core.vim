@@ -75,16 +75,28 @@
 
     " .............................................................. Auto backup
 
-      function! core#BackupCurrentFile()
-        if expand('%:p') =~ g:repo
+      function! core#QueueFile()
+        " see v script (sets QUEUE and invokes vhg)
+        if expand('%:p') =~ g:repo && $QUEUE > ''
           let l:file = substitute(expand('%:p'), g:repo, '', '')
-          let l:cmd  = 'dash -c "cd ' . g:repo . ';'
-          let l:cmd .= 'hg add ' . l:file . ';'
-          " see hgl alias (hg log) for compact listing
-          let l:cmd .= 'hg commit -m \"$(date -R | cut -d- -f1) ..  ' . l:file . '\";"'
-          " call job_start(l:cmd)           " concurrent repo updates are not permitted
+          let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
           call system(l:cmd)
         endif
+      endfunction
+
+      " :wall on FocusLost doesn't trigger autocmd BufWrite, see buffers.vim
+      function! core#QueueBuffers()
+        set lazyredraw
+        let l:cur_buffer = bufnr('%')
+        for l:buf in getbufinfo({'buflisted':1})
+          if l:buf.changed
+            execute 'buffer' . l:buf.bufnr
+            update
+            call core#QueueFile()
+          endif
+        endfor
+        execute 'buffer' . l:cur_buffer
+        set nolazyredraw
       endfunction
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

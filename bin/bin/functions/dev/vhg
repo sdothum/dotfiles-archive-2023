@@ -1,0 +1,34 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. Auto backup
+
+# Usage: vhg [<queue>], see v(im) script and buffers.vim, core.vim
+
+REPO=$HOME/stow
+JOB=$HOME/.vim/job
+
+# import user path
+. $HOME/bin/functions/shell/user_path
+
+# concurrent db updates are not permitted
+slock $(basename $0) $$ || exit 1
+
+backup() {
+  [ -f $1 ] || exit
+  sort $1 | uniq >/tmp/vhg:add
+  while read file <&3 ;do
+    cd $REPO
+    hg add "$file"
+    # see hgl alias (hg log) for compact listing
+    hg commit -m "$(date -R | cut -d- -f1) ..  '$file'"
+  done 3< /tmp/vhg:add
+  rm -f $1
+}
+
+[ $1 ] && backup $JOB/$1 || for i in $JOB/* ;do backup $i ;done
+
+# vim: set ft=sh: #

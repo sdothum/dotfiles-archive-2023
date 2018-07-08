@@ -21,7 +21,7 @@
 
       Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
       " Plug 'tpope/vim-scriptease'         " debugger
-      " Plug 'tpope/vim-dispatch'           " launch async shell command
+      Plug 'tpope/vim-dispatch'             " launch async shell command
       Plug '~/.vim/custom/core'             " system wide primitives
 
   " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

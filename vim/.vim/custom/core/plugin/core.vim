@@ -45,6 +45,11 @@
 
       nnoremap <silent><S-F12>     :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
+    " .............................................................. Auto backup
+
+      autocmd core VimEnter * let g:queue = system('date "+%y%m%d%H%M%S"')
+      autocmd core VimLeave * call system('dash -c "vhg ' . g:queue . ' &"')
+
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh

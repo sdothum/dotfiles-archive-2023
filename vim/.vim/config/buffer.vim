@@ -84,7 +84,7 @@
       " close DiffOrig or current buffer
       command! CloseUnique if !core#CloseDiffOrig() | silent bdelete! | endif
 
-      " save buffers, see core#BackupCurrentFile()
+      " save buffers
       nmap <silent><leader>w      :silent write!<CR>
       nmap <leader>W              :silent write !sudo tee % >/dev/null<CR>
       nmap <silent><leader>ww     :silent wqall!<CR>
@@ -99,14 +99,14 @@
       " pre-write formatting
       autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
 
-      " post-write auto backup
-      autocmd buffer BufWritePost * call core#BackupCurrentFile()
+      " auto backup
+      autocmd buffer BufWrite    * call core#QueueFile()
+      " save on losing focus (:wall doesn't trigger core#QueueFile())
+      autocmd buffer FocusLost   * silent call core#QueueBuffers()
 
       " " focus oriented formatting
       " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
       " autocmd buffer FocusLost * call core#StripTrailingWhitespaces()
-      " " save on losing focus (creates incremental session repo backups, see core#BackupCurrentFile())
-      " autocmd buffer FocusLost * silent! :wall
 
     " ......................................................... Buffer switching
 
