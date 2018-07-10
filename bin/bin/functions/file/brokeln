@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................... Symbolic links
+
+usage() {
+  echo "usage: $(basename $0) [rm]"
+  exit 1
+}
+
+case $1 in
+  '') ditto 'broken symlinks..' ; find $HOME -xtype l -exec ls -l {} \; ;;
+  rm) ditto 'removing broken symlinks..' ; find $HOME -xtype l -exec rm -fv {} \; ;;
+  * ) usage ;;
+esac
+
+# vim: set ft=sh: #

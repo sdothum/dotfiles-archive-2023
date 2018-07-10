@@ -194,10 +194,11 @@ div[style="vertical-align : middle"] { width: 85px; }
 /* .cdm.expandable.active .cdmHeader, */
 .cdm.expanded .cdmHeader { padding: 36px 34px 0; }
 
+/* match expanded article heading color below, otherwise, a color transition delay occurs */
 .cdm.expanded .title,
 .cdm.expandable.active .title {
   font:                  bold 18px 'Helvetica Neue',Helvetica,Arial sans-serif;
-  color:                 #b5423f;
+  color:                 #282828 !important;
   margin-top:            -1px;
   margin-left:           -3px;
 }
@@ -205,8 +206,9 @@ div[style="vertical-align : middle"] { width: 85px; }
 .cdm.expanded:not(.Unread) .title,
 .cdm.expandable:not(.Unread) .title { color: #666 !important; }
 
+/* expanded article heading */
 .cdm.expanded.active:not(.Unread) .title,
-.cdm.expandable.active:not(.Unread) .title { color: #b5423f !important; }
+.cdm.expandable.active:not(.Unread) .title { color: #282828 !important; }
 
 .titleWrap a.title:visited,
 .cdm.expanded:not(.Unread) a.title:visited,

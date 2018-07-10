@@ -8,9 +8,9 @@
 
 # see dmenu dict
 if pstat dictd ;then
-  dict $1 >/dev/null && dict $1 | less
+  dict $1 >/dev/null && dict $1
 else
-  [ $(ssh $SERVER dict $1 | wc -l) -gt 1 ] && ssh $SERVER dict $1 | less
+  [ $(ssh $SERVER dict $1 | wc -l) -gt 1 ] && ssh $SERVER dict $1
 fi
 
 # vim: set ft=sh: #

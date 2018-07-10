@@ -78,6 +78,8 @@ done
 
 [ $1 ] && rules=$@
 [ -e $rules ] || usage
+# remove broken symlinks
+brokeln rm
 
 clean() {
   unset target

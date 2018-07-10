@@ -116,7 +116,6 @@ alias vd 'rm -f $HOME/.session/follow_the_sun ; gvimdiff --role=gvimdiff'
 
 alias calc 'speedcrunch'
 alias handbrake 'ghb'
-alias hgl "hg --color=always log ~/stow | egrep -v '^(user|date|tag)' | tac"
 alias music '!p ncmpcpp ;and ncmpcpp'
 alias mysql 'mysql -h localhost -u root -p'
 alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'

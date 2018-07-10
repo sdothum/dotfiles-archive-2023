@@ -20,12 +20,15 @@ slock $(basename $0) $$ || exit 1
 backup() {
   [ -f $1 ] || exit
   sort $1 | uniq >/tmp/vhg:add
+  unset files
+  # changesets per vim editing sessions
   while read file <&3 ;do
-    cd $REPO
-    hg add "$file"
-    # see hgl alias (hg log) for compact listing
-    hg commit -m "$(date -R | cut -d- -f1) ..  '$file'"
+    # suppress "already tracked!" message
+    hg add --quiet --cwd $REPO "$file" 2>/dev/null
+    files="$files  $file"
   done 3< /tmp/vhg:add
+  # see hgl alias (hg log) for compact listing
+  hg commit --quiet --cwd $REPO -m "$(date -R | cut -d- -f1) ..$files"
   rm -f $1
 }
 

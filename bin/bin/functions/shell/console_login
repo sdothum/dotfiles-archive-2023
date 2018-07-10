@@ -33,6 +33,7 @@ if [ $USER != root ] ;then
         fi
       fi
       # [ -e /tmp/adblock ] || adblock &
+      hg serve --cwd $HOME/stow --port 8213 >/tmp/hg:server.log &
     fi
 
     # pre-initialize arm fuzzy searches

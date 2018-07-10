@@ -19,6 +19,8 @@ usage() {
 #       less frequently than regular file creation/deletion)
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
+# zero caches from interrupted builds can cause hangs
+find $CACHEDIR -name 'fcache:*' -size 0c -exec rm -f {} \;
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in
@@ -43,13 +45,14 @@ cache=$CACHEDIR/fcache:$type$(cname $1)
 dcache=$CACHEDIR/fcache:d$(cname $1)
 
 # if unchanged files in non-directory search, return cache
-# note: always returns directory cachel
-if [ -e $cache ] && [ -z $refresh ] ;then
+# note: always returns directory cache
+if [ -e $cache ] && [ --e $dcache ] && [ -z $refresh ] ;then
   [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) ||
                     { [ $create ] && exit || exec cat $cache; }
 fi
 
 # [ $refresh ] && notify "$1" 'Refreshing fcache'
+# following links can be problematic for concurrent finds (locking issue)
 [ -L $1 ] && link='-L'
 pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$dcache &
 pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache &

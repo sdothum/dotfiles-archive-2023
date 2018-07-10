@@ -6,6 +6,7 @@ term 'IM' centerim5 # im
 tmux_new irc weechat # irc
 tmux_new mail alot # mail
 rawtherapee
+vimb http://luna:8213/ # repo
 simpletimer
 $(which thedarnedestthing) # http :: the darnedest thing
 vimwiki colophon # wiki :: colophon

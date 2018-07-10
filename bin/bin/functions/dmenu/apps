@@ -29,7 +29,7 @@ while pgm=$(apps | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit ;do
     "$EDIT") gvim -f $pgms ;;
 
     *      ) mhistory apps "$pgm"
-             exec toggle $(grep "$pgm" $pgms) ;;
+             exec toggle $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
   esac
 done
 

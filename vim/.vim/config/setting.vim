@@ -87,16 +87,6 @@
           \, 'header'  : ['fg', 'Directory']
           \}
 
-      function! FzfColors()
-        " g:fzf_colors initializes fzf only once, so override cursorline color (cannot seem to set other colors, such as hl+)
-        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . ui#Value('g:dfm_fg_' . &background)
-
-        " hide bottom fzf window identifier
-        execute 'highlight fzf1 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
-        execute 'highlight fzf2 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
-        execute 'highlight fzf3 guibg=' . g:dfm_bg . ' guifg=' . g:dfm_bg
-      endfunction
-
       " close any diff buffer before leaving buffer
       nmap <silent><leader>b :silent call core#CloseDiffOrig()<CR>:Buffers<CR>
       nmap <silent><leader>l :Lines<CR>
@@ -116,7 +106,7 @@
 
     " ............................................................ Indent guides
 
-      " subtle highlighting of even indents only, see core#ToggleColumn(), ui#IndentTheme()
+      " subtle highlighting of even indents only, see core#ToggleColumn(), theme#IndentTheme()
       let g:indent_guides_auto_colors = 0
 
     " ................................................................ Limelight
@@ -142,7 +132,7 @@
 
     " .................................................................. LiteDFM
 
-      let g:lite_dfm_left_offset = 22       " see ui#Margin()
+      let g:lite_dfm_left_offset = 22       " see theme#Margin()
 
     " ............................................................ Narrow region
 

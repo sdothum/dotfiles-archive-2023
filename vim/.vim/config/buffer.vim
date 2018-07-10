@@ -101,7 +101,7 @@
 
       " auto backup
       autocmd buffer BufWrite    * call core#QueueFile()
-      " save on losing focus (:wall doesn't trigger core#QueueFile())
+      " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
       autocmd buffer FocusLost   * silent call core#QueueBuffers()
 
       " " focus oriented formatting

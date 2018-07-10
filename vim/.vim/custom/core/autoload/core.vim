@@ -7,7 +7,7 @@
 
     " ............................................................... Redraw gui
 
-      let s:delay = '100m'                  " redraw delay, see ui#FontSize()
+      let s:delay = '100m'                  " redraw delay, see theme#FontSize()
 
       " toggle in/out to fill window
       function! core#RedrawGui()
@@ -75,6 +75,7 @@
 
     " .............................................................. Auto backup
 
+      " queue files written for vhg (may contain repeated update entries)
       function! core#QueueFile()
         " see v script (sets QUEUE and invokes vhg)
         if expand('%:p') =~ g:repo && $QUEUE > ''
@@ -84,7 +85,7 @@
         endif
       endfunction
 
-      " :wall on FocusLost doesn't trigger autocmd BufWrite, see buffers.vim
+      " :wall on FocusLost does not trigger autocmd BufWrite (?), see buffers.vim
       function! core#QueueBuffers()
         set lazyredraw
         let l:cur_buffer = bufnr('%')
@@ -161,20 +162,6 @@
         endif
       endfunction
 
-    " ................................................................. No tilde
-
-      function! core#NoTilde()
-        call core#Trace('core#NoTilde()')
-        " hide tilde marker (not applicable to console)
-        if $DISPLAY > ''
-          execute 'highlight EndOfBuffer guifg=' . g:dfm_bg
-          " reset menu highlight after loading autocompletion plugin
-          highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
-          " match command line tab menu
-          highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=#b58900 guibg=#fdf6e3
-        endif
-      endfunction
-
     " ............................................................. Toggle spell
 
       function! core#ToggleSpell()
@@ -186,7 +173,7 @@
 
     " ........................................................... Column margins
 
-      " see ui#IndentTheme()
+      " see theme#IndentTheme()
       augroup column
         autocmd!
       augroup END
@@ -204,7 +191,7 @@
           let g:ruler      = 0
           let &colorcolumn = 0
         endif
-        call ui#IndentTheme()
+        call theme#IndentTheme()
         " flash column position, see autocmd info.vim
         let g:column = 1
       endfunction
@@ -518,7 +505,7 @@
         " email has blank lines inserted externally (via sed) for replys to
         " avoid the previously messy and unpredictable editing mode vim commands
         " see dmenu compose
-        call ui#FontSize(1)
+        call theme#FontSize(1)
         " gg/.. cannot be combined into single expression (produces unpredictable results)
         execute 'normal! gg'
         " execute 'normal! ' . search('\n\n\n', 'e') . 'G'

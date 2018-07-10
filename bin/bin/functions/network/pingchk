@@ -10,7 +10,7 @@ target=www.google.com
 threshold=${1:-30}
 
 trap "echo; trace '$(basename $0) ended'" INT
-trace "$(basename $0) started, threshold=${threshold}ms.."
+trace "$(basename $0) [<ms>] started, threshold=${threshold}ms.."
 
 # latency exceptions
 ping $target | while read sixtyfour bytes latency ;do

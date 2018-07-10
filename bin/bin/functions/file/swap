@@ -11,7 +11,6 @@ usage() {
   exit 1
 }
 
-
 [ $# -eq 2 ] || usage
 
 # file and directory swapping

@@ -12,8 +12,8 @@ sources="$HOME/bin
          $HOME/build/archlinux
          $HOME/.config/fish
          $HOME/.config/herbstluftwm
-         $HOME/stow/orbit
          $HOME/.vim/config
+         $HOME/.vim/config/custom
          $HOME/.weechat/python
 "
 

@@ -451,10 +451,22 @@ void tap_layer(keyrecord_t *record, uint8_t layer)
 //   default_layer_set            (default_layer);
 // }
 
+#ifdef CENTER_TT
+static uint16_t tt_keycode = 0;             // current TT keycode
+#endif
+
 void clear_layers(void)
 {
   uint8_t layer;
   for (layer = 0; layer < _END_LAYERS; layer++) { layer_off(layer); }
+  mods       = 0;
+  key_timer  = 0;
+  dt_shift   = 0;
+  thumb      = 0;
+  overlayer  = 0;
+#ifdef CENTER_TT
+  tt_keycode = 0;
+#endif
 }
 
 static uint8_t double_key = 0;
@@ -477,13 +489,9 @@ bool raise_number(keyrecord_t *record, uint8_t side)
 }
 
 #ifdef CENTER_TT
-// current TT keycode
-static uint16_t tt_keycode = 0;
-
 void tt_clear(void)
 {
   if (tt_keycode == KC_CAPS) { tap_key(KC_CAPS); }  // clear capslock
-  tt_keycode = 0;
   clear_layers();
   set_single_persistent_default_layer(_BASE);
 }

@@ -21,7 +21,7 @@
 
       Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
       " Plug 'tpope/vim-scriptease'         " debugger
-      Plug 'tpope/vim-dispatch'             " launch async shell command
+      " Plug 'tpope/vim-dispatch'           " launch async shell command
       Plug '~/.vim/custom/core'             " system wide primitives
 
   " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -33,13 +33,14 @@
       Plug 'bilalq/lite-dfm'                " distraction free mode
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
       Plug 'lifepillar/vim-solarized8'      " solarized theme
-      Plug '~/.vim/custom/ui'               " theme
+      Plug '~/.vim/custom/theme'            " theme
+      Plug '~/.vim/custom/ui'               " ui mode
 
     " ..................................................................... Info
 
       " Plug 'metakirby5/codi.vim'          " async evaluator
       " Plug 'reedes/vim-wordy'             " word usage
-      Plug 'majutsushi/tagbar', { 'on' : 'TagbarOpenAutoClose' } " ctags
+      Plug 'majutsushi/tagbar'              " ctags
       Plug 'bimlas/vim-eightheader'         " custom foldtext
       Plug '~/.vim/custom/info'             " statusline info
 

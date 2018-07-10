@@ -7,7 +7,7 @@
 # ................................................................... Screenshot
 
 usage() {
-  echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ght | a'll | <XxY+'X+'Y>"
+  echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ght | a'll | s'elect | <XxY+'X+'Y>"
   exit 1
 }
 
@@ -20,6 +20,7 @@ if server ;then
     l* | *0) opts='--geometry=1680x1050+0+0' ;;
     r* | *1) opts='--geometry=2560x1600+1680+0' ;;
     a*     ) opts='--geometry=4240x1600+0+0' ;;
+    s*     ) opts=-s ; select=true ;;
     *      ) opts="--geometry=$@" ;;
   esac
 else
@@ -29,7 +30,9 @@ fi
 
 png=$(mktemp).png
 trap "rm -f $png" EXIT
-sleep $delay && /usr/bin/maim $opts $png
+[ $select ] || sleep $delay
+/usr/bin/maim $opts $png
 mv -v $png $target
+notify 0 'Screenshot' "$target/$png"
 
 # vim: set ft=sh: #

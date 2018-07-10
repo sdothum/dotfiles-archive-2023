@@ -3,7 +3,7 @@
 " Themes
 " ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-  " The look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " The view ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................................... Setup
 
@@ -14,14 +14,13 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
+      let g:detail  = 0                     " at cursor (0) tag (1) atom
+      let g:view    = 1                     " initial view mode (0) info (1) dfm
+      let g:padding = '          '          " expanded statusline padding
+
       augroup ui
         autocmd!
       augroup END
-
-    " ......................................................... DFM colour masks
-
-      autocmd ui InsertEnter * call ui#LineNr('i')
-      autocmd ui InsertLeave * call ui#LineNr('n')
 
   " UI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -31,6 +30,11 @@
       nmap <silent><F7>   :call ui#ToggleInfo()<CR>
       imap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
       vmap <silent><F7>   <C-o>:call ui#ToggleInfo()<CR>
+
+      " toggle tag, line details
+      nmap <silent><C-F7> :let g:detail = g:detail == 0 ? 1 : 0<CR>
+      imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
+      vmap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 
       " default dfm writing, InsertChange required for insert mode F7 toggle
       autocmd ui InsertEnter  * if core#Prose() | call ui#ToggleInfo() | endif
@@ -48,25 +52,11 @@
 
   " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................................................ Switch colour
-
-      nmap <silent><F8>   :call ui#LiteSwitch()<CR>
-      imap <silent><F8>   <C-o>:call ui#LiteSwitch()<CR>
-      vmap <silent><F8>   <C-o>:call ui#LiteSwitch()<CR>
-
-    " ......................................................... Switch font size
-
-      nmap <silent><S-F9> :call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
-      imap <silent><S-F9> <C-o>:call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
-      vmap <silent><S-F9> <C-o>:call ui#FontSize(g:font_type == 1 ? 0 : 1)<CR>
-
     " ................................................................... Redraw
 
       nmap <silent><F9>   :call ui#Retheme()<CR>
       imap <silent><F9>   <C-o>:call ui#Retheme()<CR>
       vmap <silent><F9>   <C-o>:call ui#Retheme()<CR>
-
-      autocmd ui FocusGained * silent! call ui#Margin()
 
       let &cpo = s:save_cpo
       unlet s:save_cpo
