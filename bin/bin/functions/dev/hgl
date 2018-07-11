@@ -11,7 +11,7 @@
 REPO=$HOME/stow
 
 log() {
-  hg --color=always log --cwd $REPO | egrep -v '^(user|date|tag)' | tac
+  hg --color=always log --cwd $REPO | egrep -v '^(user|date|tag|parent)' | tac
 }
 
 if [ "$1" ] ;then
