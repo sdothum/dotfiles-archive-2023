@@ -4,14 +4,15 @@
 # Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# .................................................................. New session
+# ................................................................. tmux session
 
-# Usage: tmux_new [name [command]]*
-
-export TMUX_TMPDIR=/tmp
+# Usage: tmux_session [name [command]]*
 
 [ $1 ] && { export TMUX=$1 ; shift ;} || export TMUX=tmux
 [ "$1" ] || fortune=FORTUNE
-term "${TMUX}" $fortune VERTICAL tmux -S /tmp/tmux:$TMUX 'new-session -n ""' $@
+
+tmux -S /tmp/tmux:$TMUX has-session -t $TMUX &&
+     term "${TMUX}" VERTICAL tmux -S /tmp/tmux:$TMUX attach -d -t $TMUX 2>/dev/null ||
+     term "${TMUX}" $fortune VERTICAL tmux -S /tmp/tmux:$TMUX "new-session -n '' -s $TMUX $@"
 
 # vim: set ft=sh: #

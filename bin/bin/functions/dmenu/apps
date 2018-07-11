@@ -24,12 +24,12 @@ apps() {
 }
 
 pgm=$(previous apps)
-while pgm=$(apps | sed  "1i$EDIT" | rmenu 'Toggle' $pgm -no-custom) || exit ;do
+while pgm=$(apps | sed  "1i$EDIT" | rmenu 'launch' $pgm -no-custom) || exit ;do
   case $pgm in
     "$EDIT") gvim -f $pgms ;;
 
     *      ) mhistory apps "$pgm"
-             exec toggle $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
+             exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
   esac
 done
 

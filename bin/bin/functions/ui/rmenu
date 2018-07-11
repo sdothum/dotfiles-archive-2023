@@ -24,7 +24,7 @@ usage() {
 # unset fzf query highlight to list all
 # hilite=true
 
-wbg=argb:E0000000
+wbg=argb:B0000000
 bg=argb:00000000
 fg=argb:FFFDF6E3
 abg=$bg

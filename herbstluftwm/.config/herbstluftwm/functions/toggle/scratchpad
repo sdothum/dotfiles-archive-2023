@@ -59,9 +59,9 @@ focus_check
 # cancel out above focus frame, tmux rules!
 focus frame
 case $term in
-  byobu ) tmux_new $name ;;
-  tmux  ) tmux_new $name ;;
-  screen) tmux_new $name ;;
+  byobu ) tmux_session $name ;;
+  tmux  ) tmux_session $name ;;
+  screen) tmux_session $name ;;
   *     ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null

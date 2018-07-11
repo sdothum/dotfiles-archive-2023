@@ -296,7 +296,7 @@ span.updated { color: #999; }
 .cdm.expandable .author,
 .hlTitle .contentPreview { font: 13px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif; }
 
-.cdm.expandable.active .author { color: #aaa !important; }
+.cdm.expandable.active .author { color: #999 !important; }
 
 .cdm.Unread .cdmExcerpt,
 .cdm.Unread.expandable .author,

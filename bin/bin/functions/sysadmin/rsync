@@ -7,11 +7,11 @@
 # ................................................................ Rsync wrapper
 
 usage() {
-  echo "usage: $(basename $0) [-q] arm | backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
+  echo "usage: $(basename $0) arm | backup | depot | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
   exit 1
 }
 
-[ "$1" = '-q' ] && { shift ; quiet=-q ;}
+isopt "$1" || option=-av
 
 laptop=lumen
 netbook=monad
@@ -21,6 +21,10 @@ exclude_cache="--exclude=cache --exclude=.cache --exclude='*.cache'"
 exclude_http_local="--exclude=thedarnedestthing.db --exclude=log"
 # exclude_virtualbox="--exclude='VirtualBox VMs' --filter='protect VirtualBox*'"
 exclude_virtualbox="--exclude='VirtualBox VMs'"
+
+rsync() {
+  /usr/bin/rsync -av --update --exclude='lost+found' $@
+}
 
 rsync_home() {
   rsync --delete --delete-excluded \
@@ -238,7 +242,7 @@ case $1 in
                    $HOME/
            fi ;;
 
-  *      ) /usr/bin/rsync -av --update --exclude='lost+found' $quiet $@ ;;
+  *      ) /usr/bin/rsync $option --exclude='lost+found' $@ ;;
 esac
 
 # vim: set ft=sh: #

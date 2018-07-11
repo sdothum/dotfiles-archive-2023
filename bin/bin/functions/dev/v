@@ -70,7 +70,8 @@ housekeeping() {
   rm -f $HOME/.vim/backups/*%drafts%alot.*
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -f {} \;
-  vhg &                                     # any dangling backups
+  vhg                                       # any dangling backups
+  cpu arm && rsync $HOME/stow/.hg $SERVER:$HOME/stow/ >/dev/null 2>&1
 }
 
 (pwait "vim.*$G.*$fg.*$cmd.*$file" && housekeeping) &

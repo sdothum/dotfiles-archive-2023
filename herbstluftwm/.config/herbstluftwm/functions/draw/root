@@ -198,7 +198,7 @@ if [ -e $HOME/.conkyrc ] ;then
     # load theme or generate a theme from the border colour
     if [ -e $background ] ;then
       cp $background $THEME
-      [ -e $SCONKY ] && draw conky
+      is display +1920 && draw conky
     else
       term 'Theme' STACK SHELL walpick
       pwait walpick

@@ -6,10 +6,12 @@
 
 # ....................................................................... Option
 
-# "ifopt" char list
-# ifopt && ..
-option=$1
-shift
-echo "$*" | grep -q " *\-[[:alnum:]]*$option"
+usage() {
+  echo "usage: $(basename $0) -[-]<option>"
+  exit 1
+}
+
+[ "$1" ] || usage
+echo "$1" | egrep -q "^[-][-]?[[:alnum:]]*$"
 
 # vim: set ft=sh: #
