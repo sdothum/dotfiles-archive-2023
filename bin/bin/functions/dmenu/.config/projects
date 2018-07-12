@@ -21,7 +21,6 @@ conky lumen :: $(find $HOME/stow/conky/1920x1080 -type f -name '*conky*' | filte
 conky luna :: $(find $HOME/stow/conky/3440x1440 -type f -name '*conky*' | filter)
 conky monad :: $(find $HOME/stow/conky/1024x600 -type f -name '*conky*' | filter)
 cron user :: $HOME/build/root/var/spool/cron/crontabs/$USER
-css templates :: /srv/http/thedarnedestthing.com/application/public/css/*.css
 debian install :: $(/bin/ls $HOME/build/debian/netinstall-* | egrep -v 'partial|exceptions')
 demo screencast :: $HOME/bin/demo $HOME/bin/functions/demo/*
 diary wiki :: $(locate -e -i -r 'diary.*wiki$' | egrep -v 'journal|diary.wiki')
@@ -106,7 +105,8 @@ sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
-thedarnedestthing web :: thedarnedestthing
+thedarnedestthing css :: /srv/http/thedarnedestthing.com/application/public/css/*.css
+thedarnedestthing css :: $HOME/stow/thedarnedestthing /thedarnedestthing.com/application/public/css/*.css
 ttrss linear :: $HOME/tt-rss/themes/linear*.css
 ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 uzbl :: $HOME/.config/uzbl/config

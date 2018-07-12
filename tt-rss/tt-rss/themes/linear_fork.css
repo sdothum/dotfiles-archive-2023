@@ -274,7 +274,7 @@ div[style="vertical-align : middle"] { width: 85px; }
   padding-top:           4px !important;
 }
 
-span.updated { color: #999; }
+span.updated { color: #aaa; }
 
 .cdm.expandable,
 #headlines-frame .hl { border: none; }
@@ -296,7 +296,7 @@ span.updated { color: #999; }
 .cdm.expandable .author,
 .hlTitle .contentPreview { font: 13px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif; }
 
-.cdm.expandable.active .author { color: #999 !important; }
+.cdm.expandable.active .author { color: #aaa !important; }
 
 .cdm.Unread .cdmExcerpt,
 .cdm.Unread.expandable .author,

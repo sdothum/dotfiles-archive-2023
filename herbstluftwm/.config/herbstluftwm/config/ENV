@@ -56,7 +56,7 @@ export SETROOT=$SESSION/setroot
 export MENU=$SESSION/term:menu
 export NCURSES=$SESSION/ncurses
 export PROOF=$SESSION/proof
-export SCONKY=$SESSION/conky
+export SCOMPTON=$SESSION/compton
 export WSYNC=$SESSION/wsync
 
 # panel attributes

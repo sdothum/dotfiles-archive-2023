@@ -18,7 +18,7 @@ case $1 in
   on ) [ -e $DYNAMIC ] && { rm $DYNAMIC ; touch $V_DYNAMIC ;}
        [ -e $NCURSES ] && touch $V_NCURSES
        rm $MENU
-       # touch $NCURSES
+       [ -e $SCOMPTON:toggle ] && touch $NCURSES
        conky clock stop
        blackboard ;;
 

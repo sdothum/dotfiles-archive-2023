@@ -170,17 +170,18 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:               '\00a0\00a0\00a0∙● axᴉ◯m\00a0';
+  content:               'gravity\Awell'; /* force line break */
+  white-space:           pre;
   display:               block;
-  font:                  16px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #871c1c;
   text-shadow:           0 1px 1px #fff;
   letter-spacing:        2px;
   position:              fixed;
   margin-top:            85px; /* ~ holder width x 0.5  */
-  width:                 164px;
+  width:                 168px; /* right gap == active overline left gap */
   text-align:            right;
-  text-decoration:       overline;
+  /* text-decoration:       underline; */
 }
 
 /* top of feed category selection list */
@@ -193,7 +194,7 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content:               'refresh ∙●∙ axᴉ◯m';
+  content:               'refresh ∙●∙ gravity well';
   font:                  18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #b5423f;
   text-shadow:           0 1px 1px #fff;
