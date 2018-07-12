@@ -179,7 +179,7 @@ button.expandPrompt {
   letter-spacing:        2px;
   position:              fixed;
   margin-top:            85px; /* ~ holder width x 0.5  */
-  width:                 168px; /* right gap == active overline left gap */
+  width:                 168px; /* right align with counter column */
   text-align:            right;
   /* text-decoration:       underline; */
 }
