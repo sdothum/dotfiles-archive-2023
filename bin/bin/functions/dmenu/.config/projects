@@ -106,7 +106,7 @@ sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
 thedarnedestthing css :: /srv/http/thedarnedestthing.com/application/public/css/*.css
-thedarnedestthing css :: $HOME/stow/thedarnedestthing /thedarnedestthing.com/application/public/css/*.css
+thedarnedestthing css :: $HOME/stow/thedarnedestthing/thedarnedestthing.com/application/public/css/*.css
 ttrss linear :: $HOME/tt-rss/themes/linear*.css
 ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 uzbl :: $HOME/.config/uzbl/config
