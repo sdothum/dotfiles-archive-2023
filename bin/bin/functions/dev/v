@@ -64,12 +64,12 @@ housekeeping() {
   vhg $QUEUE                                # backup files
   pstat vim && exit
   find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
-  find $HOME/.vim/backups -size 0 -exec rm -f {} \;
-  find $HOME/.vim/backups -mtime +$retention -exec rm -f {} \;
+  find $HOME/.vim/backups -size 0 -exec rm {} \;
+  find $HOME/.vim/backups -mtime +$retention -exec rm {} \;
   rm -f $HOME/.vim/backups/%tmp%*
   rm -f $HOME/.vim/backups/*%drafts%alot.*
   # avoid nfs mounted Maildir (and unnecessary processing)
-  server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm -f {} \;
+  server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
   vhg                                       # any dangling backups
   cpu arm && rsync $HOME/stow/.hg $SERVER:$HOME/stow/ >/dev/null 2>&1
 }

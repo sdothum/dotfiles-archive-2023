@@ -11,7 +11,7 @@
 # add/remove ignore packages
 conf=/etc/pacman.conf
 
-[ $1 = '-f' ] && { shift; force=$1 ;}
+[ $1 = '-f' ] && { shift ; force=$1 ;}
 
 add_pkg() {
   for i in $@ ;do

@@ -23,8 +23,8 @@ dotfiles=$(cat ${0%/*}/.dotfiles:folders)
 
 cd $HOME/stow
 # syncthing housekeeping
-find -name '*.sync-conflict-*' -exec rm -f {} \;
-find -name '*.syncthing.hsts.tmp' -exec rm -f {} \;
+find -name '*.sync-conflict-*' -exec rm {} \;
+find -name '*.syncthing.hsts.tmp' -exec rm {} \;
 
 commit() {
   echo

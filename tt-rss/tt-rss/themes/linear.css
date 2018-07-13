@@ -170,18 +170,17 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:after {
-  content:               'gravity\Awell'; /* force line break */
-  white-space:           pre;
+  content:               'gravity\Awell'; /* line break */
+  white-space:           pre; /* line break */
   display:               block;
   font:                  18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #871c1c;
   text-shadow:           0 1px 1px #fff;
-  letter-spacing:        2px;
+  letter-spacing:        4px;
   position:              fixed;
   margin-top:            85px; /* ~ holder width x 0.5  */
   width:                 168px; /* right align with counter column */
   text-align:            right;
-  /* text-decoration:       underline; */
 }
 
 /* top of feed category selection list */

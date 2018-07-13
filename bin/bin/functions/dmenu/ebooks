@@ -61,7 +61,7 @@ END
 
 # build catalogue
 ebooks() {
-  [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3 -type d) || return; }
+  [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3 -type d) || return ;}
   notify low 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
        sed -re "s|$library/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw\|kfx)|\1$SEP\3|" \
@@ -122,7 +122,7 @@ while : ;do
 
   azw3 ; [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || { azw ; [ "$azw" ] || kfx ;};};}
   file=$azw3$mobi$epub$azw
-  [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks; continue; }
+  [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks ; continue ;}
 
   [ -d $kindle ] && options='kindle\nedit\nread' || options='read\nedit\nkindle'
   while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do
@@ -153,7 +153,7 @@ while : ;do
                 default*) unset option ;;
                 *font   ) option="--embed-font-family=$embed_font" ;;
                 just*   ) unset option justify ;;
-                all     ) option="--embed-font-family=$embed_font"; unset justify ;;
+                all     ) option="--embed-font-family=$embed_font" ; unset justify ;;
               esac
               # convert even .azw3 to inject folder title and author
               ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log

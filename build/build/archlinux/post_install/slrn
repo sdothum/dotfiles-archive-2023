@@ -23,7 +23,7 @@ sed -e "/set username/s/\".*\"/\"$email\"/" \
     -e '/set display_cursor_bar/s/%//' \
     -e 's/"black"/"default"/' \
     /usr/share/doc/slrn/slrn.rc >$HOME/.slrnrc
-sudo rm $HOME/.jnewsrc 2>/dev/null
+sudo rm -f $HOME/.jnewsrc 2>/dev/null
 touch $HOME/.jnewsrc
 
 # vim: set ft=sh: #

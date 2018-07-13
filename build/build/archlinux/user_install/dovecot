@@ -7,7 +7,7 @@
 
 # re-initialize dovecot database
 systemd stop dovecot
-find $HOME/Maildir -name 'dovecot*' -exec rm -fv {} \;
+find $HOME/Maildir -name 'dovecot*' -exec rm -v {} \;
 systemd restart dovecot
 
 # vim: set ft=sh: #

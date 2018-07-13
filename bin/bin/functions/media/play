@@ -85,7 +85,8 @@ while : ;do
   action=$(echo 'skip\nreplay\ndelete' | rmenu "$title" -no-custom)
   case $action in
     delete) mhistory play:delete "$title $1"
-            rm -rf "$1" ;;
+            rm -rf "$1"
+            break ;;
 
     replay) continue ;;
     *     ) break ;;

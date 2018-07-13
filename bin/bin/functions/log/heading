@@ -31,6 +31,6 @@ leader=$(echo $leader | sed "s/[\^]/$delimeter/g")
 [ $(echo "$leader   $message   $leader" | wc -L) -lt $(tput cols) ] && pad=$delimeter || unset pad
 
 attention "$leader   $message   $leader$pad"
-[ $trace ] && { echo "$(timestamp)"; unset trace ;}
+[ $trace ] && { echo "$(timestamp)" ; unset trace ;}
 
 # vim: set ft=sh: #

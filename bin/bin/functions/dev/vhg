@@ -29,7 +29,7 @@ backup() {
     hg add --quiet --cwd $REPO "$file" 2>/dev/null
     files="$files  $file"
   done 3< /tmp/vhg:add
-  notify 'Mercurial' "$(echo ${files#  } | sed 's/  /\n/g')"
+  notify 'Mercurial' "$(echo ${files#  } | sed 's/ /\n/g')"
   # see hgl alias (hg log) for compact listing
   hg commit --quiet --cwd $REPO -m "$(date -R | cut -d- -f1) ..$files"
   rm -f $1

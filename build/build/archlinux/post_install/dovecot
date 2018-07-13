@@ -14,8 +14,8 @@ sed -e '/#C=/cC=CA' \
     -e '/emailAddress=/cemailAddress=sdothum@gmail.com' \
     /usr/share/doc/dovecot/dovecot-openssl.cnf | sudo tee /etc/ssl/dovecot-openssl.cnf
 
-sudo rm /etc/ssl/certs/dovecot.pem
-sudo rm /etc/ssl/private/dovecot.pem
+sudo rm -f /etc/ssl/certs/dovecot.pem
+sudo rm -f /etc/ssl/private/dovecot.pem
 sudo /usr/lib/dovecot/mkcert.sh
 sudo cp /etc/ssl/certs/dovecot.pem /etc/ca-certificates/trust-source/anchors/dovecot.crt
 sudo trust extract-compat

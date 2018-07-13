@@ -39,7 +39,7 @@ case $1 in
      type=d ;;
 esac
 
-cname() { echo $1 | tr '/' ':'; }
+cname() { echo $1 | tr '/' ':' ;}
 
 cache=$CACHEDIR/fcache:$type$(cname $1)
 dcache=$CACHEDIR/fcache:d$(cname $1)
@@ -48,7 +48,7 @@ dcache=$CACHEDIR/fcache:d$(cname $1)
 # note: always returns directory cache
 if [ -e $cache ] && [ -e $dcache ] && [ -z $refresh ] ;then
   [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) ||
-                    { [ $create ] && exit || exec cat $cache; }
+                    { [ $create ] && exit || exec cat $cache ;}
 fi
 
 # [ $refresh ] && notify "$1" 'Refreshing fcache'

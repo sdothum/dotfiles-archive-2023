@@ -7,15 +7,18 @@
 # ...................................................................... Monitor
 
 target=www.google.com
-threshold=${1:-30}
+threshold1=${1:-30}
+threshold2=${2:-20}
 
-trap "echo; trace '$(basename $0) ended'" INT
+trap "echo ; trace '$(basename $0) ended'" INT
 trace "$(basename $0) [<ms>] started, threshold=${threshold}ms.."
 
 # latency exceptions
 ping $target | while read sixtyfour bytes latency ;do
-  [ "$bytes" = bytes ] || { echo $sixtyfour $bytes $latency; continue; }
-  [ $(echo "$latency" | cut -d= -f4 | cut -d. -f1 | cut -d' ' -f1) -ge $threshold ] && trace "${NOCOLOR}$sixtyfour $bytes $latency"
+  [ "$bytes" = bytes ] || { echo $sixtyfour $bytes $latency ; continue ;}
+  ms=$(echo "$latency" | cut -d= -f4 | cut -d. -f1 | cut -d' ' -f1)
+  [ $ms -ge $threshold1 ] && trace "$sixtyfour $bytes $latency" ||
+                             { [ $ms -ge $threshold2 ] && trace "${NOCOLOR}$sixtyfour $bytes $latency" ;}
 done
 
 # vim: set ft=sh: #
