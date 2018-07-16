@@ -51,23 +51,28 @@ sunrise=$1
 # pm add 12 hours
 sunset=$(( $2 + 1200 ))
 
+setlink() {
+  link=$(readlink -f $2)
+  [ ${1##*/} = ${link##*/} ] || ln -sf $1 $2
+}
+
 # daylight colorsheme?
 now=$(date '+%-H%M' -d "$sign$offset minutes")
 if [ $sunrise -le $now ] && [ $now -le $sunset ] ;then
   if [ -e $COLORSCHEME ] ;then
-    trace 'Light colorsheme'
+    notify 'Follow the Sun' 'Light colorsheme'
     rm -f $COLORSCHEME
   fi
-  ln -sf $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
-  ln -sf $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
+  setlink $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
+  setlink $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
 else
   if [ ! -e $COLORSCHEME ] ;then
-    trace 'Dark colorsheme'
+    notify 'Follow the Sun' 'Dark colorsheme'
     # see setting.vim
     touch $COLORSCHEME
   fi
-  ln -sf $HOME/.gtkrc-2.0.mine.dark $HOME/.gtkrc-2.0.mine
-  ln -sf $HOME/.config/gtk-3.0/gtk.css.dark $HOME/.config/gtk-3.0/gtk.css
+  setlink $HOME/.gtkrc-2.0.mine.dark $HOME/.gtkrc-2.0.mine
+  setlink $HOME/.config/gtk-3.0/gtk.css.dark $HOME/.config/gtk-3.0/gtk.css
 fi
 
 # vim: set ft=sh: #
