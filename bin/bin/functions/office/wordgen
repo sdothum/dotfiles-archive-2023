@@ -55,12 +55,12 @@ corpus=$CACHEDIR$corpus
 words=$(mktemp):wd
 lines=$(mktemp):ln
 paragraphs=$(mktemp):pg
-trap "rm -f $words $lines $paragraphs" EXIT
+trap "rm $words $lines $paragraphs" EXIT
 
 # ................................................................... Initialize
 
 # rebuild corpus from new wordfile
-[ -e $corpus.words ] && { ifno 'rebuild corpus' || rm -f $corpus.* ;}
+[ -e $corpus.words ] && { ifno 'rebuild corpus' || rm $corpus.* ;}
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 if [ ! -e $corpus.words ] ;then

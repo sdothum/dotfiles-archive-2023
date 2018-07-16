@@ -41,7 +41,7 @@ fi
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
-[ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred ;}
+[ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred ;}
 
 rule() { echo "$@" | sed 's/\[// ; s/\]//' || echo true ;}
 

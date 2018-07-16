@@ -17,10 +17,7 @@ laptop=lumen
 netbook=monad
 
 # sync but..
-exclude_cache="--exclude=cache --exclude=.cache --exclude='*.cache'"
 exclude_http_local="--exclude=thedarnedestthing.db --exclude=log"
-# exclude_virtualbox="--exclude='VirtualBox VMs' --filter='protect VirtualBox*'"
-exclude_virtualbox="--exclude='VirtualBox VMs'"
 
 rsync() {
   /usr/bin/rsync -av --update --exclude='lost+found' $@
@@ -70,11 +67,11 @@ case $1 in
 
   backup ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/ ;} ;;
 
-  home   ) if ifyes "backup $HOME to /net/archive" ;then
+  home   ) ifyes "backup $HOME to /net/archive" && {
              mkdir -pv /net/archive/home || exit 1
-             rsync --delete $exclude_virtualbox $exclude_cache --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
+             rsync --delete --exclude='VirtualBox VMs' --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
                    $HOME /net/archive/home/
-           fi ;;
+           } ;;
 
   depot  ) if server ;then
              ifyes "backup depot to $laptop" &&
@@ -85,7 +82,7 @@ case $1 in
            fi ;;
 
   music  ) if laptop ;then
-             if ifyes "replicate mpd music database from $SERVER" ;then
+             ifyes "replicate mpd music database from $SERVER" && {
                killall mpd
                if [ ! -d /net/media ] ;then
                  sudo mkdir /net/media
@@ -94,7 +91,7 @@ case $1 in
                rsync --delete $USER@$SERVER:.mpd $HOME/
                rsync --delete $SERVER:/net/media/music /net/media/
                mpd 2>/dev/null &
-             fi
+             }
            else
              ditto "initiate update request from $laptop"
            fi ;;
@@ -145,7 +142,7 @@ case $1 in
            fi ;;
 
   server ) if server ;then
-             if ifyes 'backup media server databases to /net/archive' ;then
+             ifyes 'backup media server databases to /net/archive' && {
                mkdir -pv /net/archive/var/lib || exit 1
                sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
                [ -d /net/archive/opt/plexmediaserver/Library/Application\ Support ] ||
@@ -157,11 +154,11 @@ case $1 in
                sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
                mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
                sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
-             fi
+             }
            fi ;;
 
   SERVER ) if server ;then
-             if ! ifno 'restore media server databases from /net/archive' ;then
+             ifno 'restore media server databases from /net/archive' || {
                sudo systemctl stop sonarr
                sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
                sudo systemctl start sonarr
@@ -176,7 +173,7 @@ case $1 in
                sudo systemctl stop tt-rss
                sudo rsync -av /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
                sudo systemctl start tt-rss
-             fi
+             }
            fi ;;
 
   stow   ) if server ;then
@@ -236,11 +233,11 @@ case $1 in
                  $HOME/vimwiki \
                  thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/ ;;
 
-  wiki   ) if ! ifno 'recover thedarnedestthing.com:/vimwiki' ;then
+  wiki   ) ifno 'recover thedarnedestthing.com:/vimwiki' || {
              trace "thedarnedestthing.com:/vimwiki => $(hostname)"
              rsync --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki \
                    $HOME/
-           fi ;;
+           } ;;
 
   *      ) /usr/bin/rsync $option --exclude='lost+found' $@ ;;
 esac

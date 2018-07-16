@@ -30,11 +30,11 @@ if [ -z $1 ] ;then
   snapper --verbose cleanup number
 
   # ifno && (a) || (b) shortform cannot be used because return of (a) may be false
-  if ifno 'upgrade --devel packages' ;then
+  ifno 'upgrade --devel packages' && {
     aur=--aur
   else
     aur=--devel
-  fi
+  }
 
   # pacupg $aur doen'reate new boot snapshot, see $pacaur
   if [ $pacaur ] ;then

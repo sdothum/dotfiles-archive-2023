@@ -66,7 +66,7 @@ heading 'configure network'
 # heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
 # [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 # remove possible symlink
-rm /etc/hosts
+rm -f /etc/hosts
 config_install /etc/hosts
 
 

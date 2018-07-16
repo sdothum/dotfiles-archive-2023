@@ -8,7 +8,7 @@
 
 # Usage: hgl [<query>]
 
-REPO=$HOME/stow
+REPO=${REPO:-$HOME/stow}
 
 log() {
   hg --color=always log --cwd $REPO | egrep -v '^(user|date|tag|parent)' | tac

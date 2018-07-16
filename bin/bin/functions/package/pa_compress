@@ -13,9 +13,9 @@ sudo paccache -rk$depth
 sudo paccache -ruk0
 which pacman-optimize >/dev/null 2>&1 && sudo pacman-optimize
 
-if ! ifno 'remove ALL local archived packages' ;then
+ifno 'remove ALL local archived packages' || {
   sudo pacman -Sc --noconfirm
   rm -rf $HOME/.cache/pacaur/*
-fi
+}
 
 # vim: set ft=sh: #

@@ -36,6 +36,9 @@ img[src*='images/star.png'] {
   opacity:               1.0;
 }
 
+div#dijit__TreeNode_1 span.dijitFolderOpened  + .dijitTreeLabel,
+div#dijit__TreeNode_1 span.dijitFolderClosed  + .dijitTreeLabel { letter-spacing: 1px; }
+
 /* filters usually are open, hide minimize button of feed menu title */
 div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
 
@@ -173,10 +176,11 @@ button.expandPrompt {
   content:               'gravity\Awell'; /* line break */
   white-space:           pre; /* line break */
   display:               block;
-  font:                  18px 'Helvetica Neue',Helvetica,Arial sans-serif;
-  color:                 #871c1c;
-  text-shadow:           0 1px 1px #fff;
+  font:                  18px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font-weight:           300;
   letter-spacing:        4px;
+  color:                 #871c1c;
+  /* text-shadow:           0 1px 1px #fff; */
   position:              fixed;
   margin-top:            85px; /* ~ holder width x 0.5  */
   width:                 168px; /* right align with counter column */
@@ -193,11 +197,12 @@ button.expandPrompt {
 }
 
 #headlines-spacer:after {
-  content:               'refresh ∙●∙ gravity well';
-  font:                  18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  content:               'refresh ‧•‧ gravity well'; /* dot bullet dot */
+  font:                  18px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font-weight:           300;
+  letter-spacing:        4px;
   color:                 #b5423f;
-  text-shadow:           0 1px 1px #fff;
-  letter-spacing:        1px;
+  /* text-shadow:           0 1px 1px #fff; */
   position:              absolute;
   bottom:                0;
   right:                 -35px;

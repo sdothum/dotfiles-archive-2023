@@ -26,13 +26,13 @@ export CPATH=$KEYMAP/common
 keymap=$1
 shift
 
-if ! ifno 'sync qmk_firmware repo' ;then
+ifno 'sync qmk_firmware repo' || {
   cd $QMK
   git remote add upstream https://github.com/qmk/qmk_firmware.git
   git fetch upstream
   git checkout master
   git rebase upstream/master
-fi
+}
 
 # update keymap from stow repo
 mkdir $KEYMAP 2>/dev/null

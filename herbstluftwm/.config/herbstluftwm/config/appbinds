@@ -13,8 +13,9 @@ hc keybind Super-Return               spawn focus hlwm
 hc keybind Super-Control-Return       spawn focus hlwm raise
 hc keybind Super-$Mod-Return          spawn focus hlwm close
 hc keybind Super-space                spawn dmenu run
-hc keybind Super-Control-space        spawn dmenu manpages
-hc keybind Super-$Mod-space           spawn kill -KILL dmenu
+hc keybind Super-Control-space        spawn dmenu apps
+hc keybind Super-Shift-space          spawn dmenu manpages
+hc keybind Super-$Mod-space           spawn killall -KILL dmenu
 if [ $BEAKL ] ;then
   hc keybind Super-1                  spawn pactl set-sink-volume $(sink) -3db
   hc keybind Super-2                  spawn pactl set-sink-volume $(sink) 0db
@@ -44,7 +45,7 @@ fi
 hc keybind Super-F1                   spawn dmenu menu
 hc keybind Super-a                    spawn dmenu abook
 hc keybind Super-b                    spawn dmenu wiki
-hc keybind Super-Control-b            spawn dmenu apps
+hc keybind Super-Control-b            spawn dmenu wiki diary
 hc keybind Super-c                    spawn dmenu reminder
 hc keybind Super-Control-c            spawn dmenu clipboard
 hc keybind Super-d                    spawn dmenu thesaurus

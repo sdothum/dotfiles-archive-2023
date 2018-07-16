@@ -84,7 +84,7 @@ brokeln rm
 clean() {
   unset target
   case $clean in
-    clean) [ -d "$vacuum/$file" ] && rm -rf "$vacuum/$file"
+    clean) [ -d "$vacuum/$file" ] && rm -r "$vacuum/$file"
            target=$(dirname "$file")        # [ $(dirname) = . ] is always true!
            [ "$target" = . ] && target=$vacuum || target="$vacuum/$target"
            [ -d "$target" ] || mkdir -p "$target"

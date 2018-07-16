@@ -43,7 +43,7 @@ case $action in
   d*) nzbget -E G D $queue
       nzb ;;
 
-  I*) if ifyes 'clear history and queue' ;then
+  I*) ifyes 'clear history and queue' && {
         killall nzbget 2>/dev/null
         # delay required for server shutdown (cannot use "nzb q")
         sleep 1
@@ -52,7 +52,7 @@ case $action in
         rm -rf /net/downloads/nzbs/tmp
         # restart to create subdirectories
         nzb
-      fi ;;
+      } ;;
 
   l*) ditto "tail -f /tmp/nzbget.log | g 'error|warning'"
       tail -f /tmp/nzbget.log | g 'error|warning' ;;

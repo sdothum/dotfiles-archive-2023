@@ -173,12 +173,11 @@
 
     " ........................................................... Column margins
 
-      " see theme#IndentTheme()
       augroup column
         autocmd!
       augroup END
 
-      " toggle colorcolumn modes
+      " toggle colorcolumn modes, see theme#IndentTheme()
       function! core#ToggleColumn()
         if g:ruler == 0
           let g:ruler      = 1
@@ -212,6 +211,10 @@
 
     " .......................................... White space / soft wrap markers
 
+      augroup soft
+        autocmd!
+      augroup END
+
       " soft wrap marker
       function! core#Soft()
         " filetype dependent textwidth
@@ -222,10 +225,6 @@
         let s:soft = '\%' . (&textwidth + 1) . 'v'
         let s:soft = matchadd('SoftWrap', s:soft)
       endfunction
-
-      augroup soft
-        autocmd!
-      augroup END
 
       " toggle trailing whitespace highlight and indentation levels
       function! core#ToggleSpaces()

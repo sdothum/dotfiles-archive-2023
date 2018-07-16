@@ -53,10 +53,10 @@ if server ;then
   shift
   [ $1 ] && $@
 
-  if ifyes 'stop recording and save' ;then
+  ifyes 'stop recording and save' && {
     kill -TERM $(pidof -s $pidname)
     mv -v $webm $target
-  fi
+  }
 fi
 
 # vim: set ft=sh: #

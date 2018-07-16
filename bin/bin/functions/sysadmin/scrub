@@ -44,7 +44,7 @@ case $1 in
       scrub backup ;;
 
   c*) sudo btrfs scrub cancel $(volume $2) ;;
-  I*) sudo rm /var/lib/btrfs/*.* ;;
+  I*) sudo rm -f /var/lib/btrfs/*.* ;;
   s*) show $(volume $2) ;;
 
   * ) sudo btrfs scrub start -Bd $(volume $@) &

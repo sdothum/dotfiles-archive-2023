@@ -8,7 +8,7 @@
 
 # Usage: vhg [<queue>], see v(im) script and buffers.vim, core.vim
 
-REPO=$HOME/stow
+REPO=${REPO:-$HOME/stow}
 JOB=$HOME/.vim/job
 
 # import user path
@@ -17,18 +17,20 @@ JOB=$HOME/.vim/job
 # concurrent db updates are not permitted
 slock $(basename $0) $$ || exit 1
 # delete orphan locks
-brokeln rm $HOME/stow/.hg
+brokeln rm $REPO/.hg
 
 backup() {
   [ -f $1 ] || exit
   sort $1 | uniq >/tmp/vhg:add
   unset files
+
   # changesets per vim editing sessions
   while read file <&3 ;do
     # suppress "already tracked!" message
     hg add --quiet --cwd $REPO "$file" 2>/dev/null
     files="$files  $file"
   done 3< /tmp/vhg:add
+
   notify 'Mercurial' "$(echo ${files#  } | sed 's/ /\n/g')"
   # see hgl alias (hg log) for compact listing
   hg commit --quiet --cwd $REPO -m "$(date -R | cut -d- -f1) ..$files"

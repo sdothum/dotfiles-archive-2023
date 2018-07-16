@@ -98,11 +98,13 @@
       let g:gundo_width           = 30
       let g:gundo_preview_bottom  = 1
       let g:gundo_preview_height  = 20
-      let g:gundo_close_on_revert = 1
+      let g:gundo_close_on_revert = 1       " automatically close windows
 
       nmap <silent><leader>u :GundoToggle<CR>
 
-      autocmd plugin BufEnter __Gundo__ setlocal numberwidth=3 foldcolumn=0
+      autocmd plugin BufEnter  __Gundo__         setlocal numberwidth=3 foldcolumn=0
+      " for instance when gundo window is orphaned (trap timing conflict)
+      autocmd plugin BufHidden __Gundo_Preview__ call core#Quietly('bdelete! __Gundo_Preview__')
 
     " ............................................................ Indent guides
 
@@ -292,6 +294,11 @@
           \, 'ListBufferMarks'   : "'/"
           \, 'ListBufferMarkers' : "'?"
           \}
+
+    " .................................................................. Signify
+
+      let g:signify_vcs_list = ['hg']
+      let g:signify_realtime = 1            " async updates
 
     " .................................................................... Sneak
 

@@ -7,7 +7,6 @@
 
     " .................................................................... Setup
 
-      let s:font_step           = 1         " in point size
       let s:cursorline          = 0         " visible (0) off (1) on
       let s:sync                = 0         " sync (0) off (1) indent guides
 
@@ -98,6 +97,7 @@
         execute 'highlight ALEErrorSign        guifg=' . theme#Value('s:dfm_ale_'    . l:background)
         execute 'highlight ALEWarningSign      guifg=' . s:dfm_fg
         call theme#FzfColors()
+        call theme#SignifyColors()
         call theme#IndentTheme()
         call theme#Margin()
         call theme#NoTilde()
@@ -142,6 +142,21 @@
         execute 'highlight fzf1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
         execute 'highlight fzf2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
         execute 'highlight fzf3 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+      endfunction
+
+      function! theme#SignifyColors()
+        if &background == 'light'
+          highlight link SignifyLineAdd    Statement
+          highlight link SignifyLineChange Type
+          highlight link SignifyLineDelete Special
+        else
+          highlight link SignifyLineAdd    String
+          highlight link SignifyLineChange Type
+          highlight link SignifyLineDelete Identifier
+        endif
+        highlight link SignifySignAdd      SignifyLineAdd
+        highlight link SignifySignChange   SignifyLineChange
+        highlight link SignifySignDelete   SignifyLineDelete
       endfunction
 
   " Theme ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -194,7 +209,7 @@
           if g:font_type != a:type
             let g:font_type = a:type
             let l:size      = system('fontsize')
-            call theme#Font(a:type == 0 ? l:size : l:size + s:font_step)
+            call theme#Font(a:type == 0 ? l:size : l:size + g:font_step)
             set laststatus=2                " turn on statusline
           endif
         endif

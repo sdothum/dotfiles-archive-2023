@@ -31,8 +31,8 @@ case $1 in
         systemd start postgresql
         sudo systemctl daemon-reload
         echo "psql < dump.sql-$vsn" | su - postgres
-        ifno "remove /var/lib/postgres/dump.sql-$vsn" || sudo rm /var/lib/postgres/dump.sql-$vsn
-        ifno "remove /var/lib/postgres/data-$vsn" || sudo rm -r /var/lib/postgres/data-$vsn ;;
+        ifno "remove /var/lib/postgres/dump.sql-$vsn" || sudo rm -f /var/lib/postgres/dump.sql-$vsn
+        ifno "remove /var/lib/postgres/data-$vsn" || sudo rm -rf /var/lib/postgres/data-$vsn ;;
 
   post) systemd stop postgresql
         sudo pacman -S --needed postgresql-old-upgrade
@@ -46,7 +46,7 @@ case $1 in
 
         sudo pacman -R postgresql-old-upgrade
         systemd start postgresql
-        ifno "remove /var/lib/postgres/data-$1" || sudo rm -r /var/lib/postgres/data-$1 ;;
+        ifno "remove /var/lib/postgres/data-$1" || sudo rm -rf /var/lib/postgres/data-$1 ;;
 
   *   ) usage ;;
 esac

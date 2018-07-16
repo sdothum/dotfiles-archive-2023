@@ -197,7 +197,7 @@ stdin() {
   # set (title, time) format values, see case mail below
   [ $1 ] && $@
   print $stdin
-  [ $proof ] || rm -f $stdin
+  [ $proof ] || rm $stdin
   hardcopy eject
 }
 

@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. Add to repo
+
+usage() {
+  echo "usage: $(basename $0) <path>.., where <path> is relative to $REPO"
+  exit 1
+}
+
+REPO=${REPO:-$HOME/stow}
+IGNORE=$REPO/.hgadd:ignore
+QUEUE=$(date '+%y%m%d%H%M%S')
+JOB=$HOME/.vim/job/$QUEUE
+
+[ "$1" ] || usage
+
+xadd() {
+  ditto "$@"
+  echo "$@" >>$JOB
+}
+# bash export function for xargs
+export -f xadd
+export JOB
+
+cd $REPO
+exclude=${exclude:-$(cat $IGNORE | tr '\n' '|' | sed 's/[|]*$//')}
+
+[ $# -eq 1 ] && echo "$@" | egrep -qv "$exclude" || exit
+trace "$@"
+for i in $@ ;do
+  [ -d "$i" ] && find $i -maxdepth 1 -type f | egrep -v "$exclude" | xargs -d'\n' -I '{}' bash -c 'xadd "{}"' ||
+                 xadd "$i"
+done
+
+# reusing the vim hg update mechanism
+vhg $QUEUE
+
+# vim: set ft=sh: #

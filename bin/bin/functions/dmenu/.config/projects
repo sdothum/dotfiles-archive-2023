@@ -111,8 +111,8 @@ ttrss linear :: $HOME/tt-rss/themes/linear*.css
 ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 uzbl :: $HOME/.config/uzbl/config
 vacuum :: $HOME/bin/functions/sysadmin/vacuum $HOME/bin/functions/sysadmin/.vacuum*
-vim :: $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim') $HOME/.ctags
-vim settings :: $HOME/.vim/config/*.vim $HOME/.ctags
+vim :: $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
+vim settings :: $HOME/.vim/config/*.vim
 vim functions :: $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
 vim snippets :: $HOME/.vim/snippets/*
 vimb :: $(find -L $HOME/.config/vimb -name config) $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css $HOME/.config/vimb/bookmark $HOME/.config/vimb/history

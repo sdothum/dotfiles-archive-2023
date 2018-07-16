@@ -66,7 +66,8 @@
     " .......................................................... Version control
 
       " Plug 'tpope/vim-fugitive'           " github wrapper
-      " Plug 'ludovicchabant/vim-lawrencium' " mercurial wrapper
+      " Plug markwoodhall/vim-mercurial     " mercurial wrapper
+      Plug 'mhinz/vim-signify'              " vcs diff
 
     " ................................................................ Hypertext
 

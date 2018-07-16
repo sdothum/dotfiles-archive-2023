@@ -20,7 +20,7 @@ usage() {
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 # zero caches from interrupted builds can cause hangs
-find $CACHEDIR -name 'fcache:*' -size 0c -exec rm -f {} \;
+find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \;
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in
