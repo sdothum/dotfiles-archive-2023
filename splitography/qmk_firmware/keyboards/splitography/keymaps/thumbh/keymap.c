@@ -279,6 +279,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     return false;
 #endif
   case KC_TAB:
+    if (record->event.pressed) { alter_tap = 1; } // slick hack for tab+enter thumb convenience, see tap_lt()
+    else                       { alter_tap = 0; }
     if (raise_number(record, LEFT)) { return false; }
     break;
   case OS_ALT:

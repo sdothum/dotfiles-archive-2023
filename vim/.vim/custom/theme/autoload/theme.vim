@@ -265,12 +265,12 @@
 
       function! theme#ShowStatusline()
         " undo statusline gui=reverse
-        execute 'highlight statusline gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
+        execute 'highlight Statusline gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
         set laststatus=2
       endfunction
 
       function! theme#ShowInfo()
-        execute 'highlight statusline guibg=' . s:dfm_bg
+        execute 'highlight Statusline guibg=' . s:dfm_bg
       endfunction
 
 " theme.vim

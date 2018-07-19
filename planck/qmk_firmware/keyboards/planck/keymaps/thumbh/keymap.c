@@ -351,6 +351,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
+  case KC_TAB:
+    if (record->event.pressed) { alter_tap = 1; } // slick hack for tab+enter thumb convenience, see tap_lt()
+    else                       { alter_tap = 0; }
+    break;
   case SL_TAB:
     thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
     break;

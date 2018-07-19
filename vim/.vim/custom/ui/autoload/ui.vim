@@ -141,12 +141,12 @@
               let l:leader = '%{info#Leader(info#Path() . g:padding . info#Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{info#UnModified(1)}   %{info#PosWordsCol()}%*'
+            let l:info     = '%{info#UnModified(1)}   %{info#PosWordsCol()}'
             if s:info == 1
-              let l:name   = '%2*' . l:path . '%*' . g:padding . l:name
-              let l:info  .= g:padding . '%2*%{ui#detail()}%*'
+              let l:name   = '%2*' . l:path . '%1*' . g:padding . l:name
+              let l:info  .= g:padding . '%2*%{ui#detail()}'
             endif
-            return info#Escape(l:leader . l:name . l:info)
+            return info#Escape('%1*' . l:leader . l:name . l:info . '%1*')
           endif
         catch
         endtry

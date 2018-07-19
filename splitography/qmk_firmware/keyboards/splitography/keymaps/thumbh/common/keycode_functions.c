@@ -121,7 +121,7 @@ void double_shift(uint16_t keycode, uint8_t layer)
 }
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
-void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer)
+void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer, uint8_t altkey, uint16_t altcode)
 {
   uint8_t i;
   if (state->count > 2) {
@@ -134,6 +134,7 @@ void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8
   }
   else if (state->count > 1) { double_shift(keycode, layer); }  // tap plus down or double tap -> keycode + shift
   else if (state->pressed)   { layer_on(layer); }               // down: shift
+  else if (altkey)           { tap_key (altcode); }             // alternate key tap! see process_record_user()
   else {                                                        // tap: keycode
     modifier(register_code);
     tap_key (keycode);
@@ -157,10 +158,12 @@ void tap_reset(uint16_t keycode, uint8_t layer)
 #define ENTER_TOGGLE _RSHIFT
 #endif
 
+static uint8_t alter_tap = 0;               // see process_record_user()
+
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void enter(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_lt(state, KC_ENT, TRIPLE, ENTER_TOGGLE);  // triple tap -> double enter + shift, down -> enter...
+  tap_lt(state, KC_ENT, TRIPLE, ENTER_TOGGLE, 0, 0);  // triple tap -> double enter + shift, down -> enter...
 }
 
 void enter_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -171,7 +174,7 @@ void enter_reset(qk_tap_dance_state_t *state, void *user_data)
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_lt(state, KC_SPC, REPEATING, _RSHIFT);    // triple tap down -> space...
+  tap_lt(state, KC_SPC, REPEATING, _RSHIFT, alter_tap, KC_ENT); // triple tap down -> space...
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)
