@@ -23,6 +23,8 @@
       " background
       let s:dfm_bg_light        = g:rgb_15  " solarized light (paper) background
       let s:dfm_bg_dark         = g:gray1   " quantum dark background
+      let s:dfm_match_light     = g:rgb_1   " solarized light parens
+      let s:dfm_match_dark      = g:red     " quantum dark parens
       let s:dfm_vsplit_light    = g:rgb_15  " invisible split
       let s:dfm_vsplit_dark     = g:gray1   " invisible split
       let s:dfm_folded_light    = g:gray5   " vimdiff fold
@@ -57,6 +59,7 @@
         execute 'let s:dfm_fg          = s:dfm_fg_'                     . &background
         execute 'let s:dfm_proof       = s:dfm_proof_'                  . &background
         execute 'let s:dfm_bg          = s:dfm_bg_'                     . &background
+        execute 'let s:dfm_match       = s:dfm_match_'                  . &background
         execute 'let s:dfm_folded      = s:dfm_folded_'                 . &background
         execute 'let s:dfm_vsplit      = s:dfm_vsplit_'                 . &background
         execute 'let s:dfm_cursor      = s:dfm_cursor_'                 . &background
@@ -81,21 +84,22 @@
       function! theme#Theme()
         call core#Trace('theme#Theme()')
         let l:background = &background == 'light' ? 'dark' : 'light'
-        execute 'highlight ExtraWhitespace     guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
-        execute 'highlight VisualCursor        guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight ReplaceCursor       guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight CommandCursor       guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight Folded              guibg=' . s:dfm_folded                                . ' guifg=' . s:dfm_bg
-        execute 'highlight User1               guibg=' . s:dfm_bg                                    . ' guifg=' . s:dfm_fg_user1
-        execute 'highlight User2               guibg=' . s:dfm_bg                                    . ' guifg=' . s:dfm_fg_user2
-        execute 'highlight VertSplit           guibg=' . s:dfm_vsplit                                . ' guifg=' . s:dfm_vsplit
-        execute 'highlight ShowMarksHLl        guibg=' . s:dfm_bg
-        execute 'highlight SignColumn          guibg=' . s:dfm_bg
-        execute 'highlight InsertCursor        guibg=' . s:dfm_cursor                                . ' guifg=' . s:dfm_bg
-        execute 'highlight CursorLine gui=none guibg=' . s:dfm_cursorline
-        execute 'highlight Cursor gui=bold     guibg=' . s:dfm_cursor                                . ' guifg=' . s:dfm_bg
-        execute 'highlight ALEErrorSign        guifg=' . theme#Value('s:dfm_ale_'    . l:background)
-        execute 'highlight ALEWarningSign      guifg=' . s:dfm_fg
+        execute 'highlight ExtraWhitespace guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
+        execute 'highlight VisualCursor    guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
+        execute 'highlight ReplaceCursor   guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
+        execute 'highlight CommandCursor   guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
+        execute 'highlight Folded          guibg=' . s:dfm_folded                                   . ' guifg=' . s:dfm_bg
+        execute 'highlight User1           guibg=' . s:dfm_bg                                       . ' guifg=' . s:dfm_fg_user1
+        execute 'highlight User2           guibg=' . s:dfm_bg                                       . ' guifg=' . s:dfm_fg_user2
+        execute 'highlight VertSplit       guibg=' . s:dfm_vsplit                                   . ' guifg=' . s:dfm_vsplit
+        execute 'highlight ShowMarksHLl    guibg=' . s:dfm_bg
+        execute 'highlight SignColumn      guibg=' . s:dfm_bg
+        execute 'highlight InsertCursor    guibg=' . s:dfm_cursor                                   . ' guifg=' . s:dfm_bg
+        execute 'highlight CursorLine      guibg=' . s:dfm_cursorline                               . ' gui=none'
+        execute 'highlight Cursor          guibg=' . s:dfm_cursor                                   . ' guifg=' . s:dfm_bg
+        execute 'highlight MatchParen      guibg=' . s:dfm_match                                    . ' guifg=' . s:dfm_bg . ' gui=bold'
+        execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'    . l:background)
+        execute 'highlight ALEWarningSign  guifg=' . s:dfm_fg
         call theme#FzfColors()
         call theme#SignifyColors()
         call theme#IndentTheme()

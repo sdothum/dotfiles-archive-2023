@@ -255,7 +255,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define BASE_1  1
 #define BASE_2  2
 #define BASE_12 3
-static uint8_t base_n = 0;
+static uint8_t base_n    = 0;
+static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode+shift, see tap_lt()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -293,6 +294,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   // special shift layer mappings
   case KC_DOT:
+    if (record->event.pressed) { down_rule = 2; } // dot+space/enter+shift shortcut, see tap_lt()
+    else                       { down_rule = 0; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     break;
   case KC_COMM:
@@ -332,17 +335,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
   case LT_H:
-    if (raise_number(record, RIGHT)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
     tap_layer(record, _LSHIFT);
     break;
   case TD_ENT:
+    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     tap_layer(record, _RSHIFT);
     break;
   case TD_SPC:
+    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     // trap potential repeating enter caused by tap dance definition
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
     break;
   case LT_ESC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
 #ifdef CENTER_TT
     if (tt_keycode != 0) {
       tt_clear();                           // exit TT layer
@@ -352,8 +358,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
   case KC_TAB:
-    if (record->event.pressed) { alter_tap = 1; } // slick hack for tab+enter thumb convenience, see tap_lt()
-    else                       { alter_tap = 0; }
+    if (record->event.pressed) { down_rule = 1; } // tab+enter thumb roll, see tap_lt()
+    else                       { down_rule = 0; }
     break;
   case SL_TAB:
     thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);

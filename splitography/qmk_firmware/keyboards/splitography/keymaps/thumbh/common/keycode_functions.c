@@ -120,8 +120,10 @@ void double_shift(uint16_t keycode, uint8_t layer)
   else { layer_on(layer); }
 }
 
+static uint8_t tap_rule = 0;                // down_rule persistance, see process_record_user()
+
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
-void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer, uint8_t altkey, uint16_t altcode)
+void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer, uint8_t rule, uint16_t altcode)
 {
   uint8_t i;
   if (state->count > 2) {
@@ -132,13 +134,25 @@ void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8
     }
     else for (i = 0; i < state->count; i++) { tap_key(keycode); }
   }
-  else if (state->count > 1) { double_shift(keycode, layer); }  // tap plus down or double tap -> keycode + shift
-  else if (state->pressed)   { layer_on(layer); }               // down: shift
-  else if (altkey)           { tap_key (altcode); }             // alternate key tap! see process_record_user()
-  else {                                                        // tap: keycode
+  else if (state->count > 1) {
+    if (state->count == triple - 1) {                           // triple tap -> double keycode + shift
+      if (rule == 2) { tap_key(keycode); }                      // see down_rule, process_record_user()
+      double_shift(keycode, layer);
+    }
+    else { double_shift(keycode, layer); }                      // tap plus down or double tap -> keycode + shift
+  }
+  else if (state->pressed) { layer_on(layer); }                 // down: shift
+  else switch (rule) {                                          // see process_record_user()
+  case 0:
     modifier(register_code);
     tap_key (keycode);
     modifier(unregister_code);
+    return;
+  case 1:
+    if (altcode) { tap_key (altcode); }
+    return;
+  case 2:
+    double_shift(keycode, layer);
   }
 }
 
@@ -150,6 +164,7 @@ void tap_reset(uint16_t keycode, uint8_t layer)
     dt_shift = 0;
   }
   else { layer_off(layer); }
+  tap_rule = 0;                             // clear retained down_rule, see process_record_user()
 }
 
 #define REPEATING    0
@@ -158,12 +173,10 @@ void tap_reset(uint16_t keycode, uint8_t layer)
 #define ENTER_TOGGLE _RSHIFT
 #endif
 
-static uint8_t alter_tap = 0;               // see process_record_user()
-
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void enter(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_lt(state, KC_ENT, TRIPLE, ENTER_TOGGLE, 0, 0);  // triple tap -> double enter + shift, down -> enter...
+  tap_lt(state, KC_ENT, TRIPLE, ENTER_TOGGLE, tap_rule, 0);  // triple tap -> double enter + shift, down -> enter...
 }
 
 void enter_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -174,7 +187,7 @@ void enter_reset(qk_tap_dance_state_t *state, void *user_data)
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_lt(state, KC_SPC, REPEATING, _RSHIFT, alter_tap, KC_ENT); // triple tap down -> space...
+  tap_lt(state, KC_SPC, REPEATING, _RSHIFT, tap_rule, KC_ENT); // triple tap down -> space...
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)
