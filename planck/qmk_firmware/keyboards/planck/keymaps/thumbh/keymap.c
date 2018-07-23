@@ -298,6 +298,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     else                       { down_rule = 0; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     break;
+  case KC_QUES:
+    down_rule = 0;                          // trap layer switching timimg issue between . and ?
+    break;
   case KC_COMM:
     if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     break;
