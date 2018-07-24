@@ -314,12 +314,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case TD_ENT:
     if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
-    tap_layer(record, _RSHIFT);
     break;
   case TD_SPC:
     if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     // trap potential repeating enter caused by tap dance definition
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+    tap_layer(record, _RSHIFT);
     break;
   case LT_ESC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
@@ -330,6 +330,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       return false;
     }
 #endif
+    tap_layer(record, _LSYMBOL);
     thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
   case SL_TAB:
@@ -340,6 +341,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_BSPC:
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
+    tap_layer(record, _RSYMBOL);
     thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
 #ifdef CENTER_TT

@@ -382,8 +382,8 @@ void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyco
 {
   if (record->event.pressed) {
     layer_on(thumb_dn_layer);
-    key_timer = timer_read();
-    thumb    |= side;
+    key_timer  = timer_read();
+    thumb     |= side;
   }
   else {
     if (biton32(layer_state) == _MOUSE) { layer_off(_MOUSE); }  // both thumbs needed
@@ -401,8 +401,8 @@ void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyco
       }
     }
     clear_mods();
-    thumb    &= ~side;
-    key_timer = 0;
+    thumb     &= ~side;
+    key_timer  = 0;
   }
 }
 
@@ -451,8 +451,8 @@ void lt_shift(keyrecord_t *record, uint16_t keycode, uint8_t layer)
   lt(record, SHIFT, keycode, 0, layer);
 }
 
-// set layer asap to overcome macro latency errors, notably tap dance and LT usage
-// this routine inexplicably (?) sets layer_on() faster than can be done in thumb_roll()
+// set layer asap to overcome macro latency errors, notably tap dance, LT usage and..
+// inexplicably sets layer_on() faster than can be done in thumb_roll() !!
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   if (record->event.pressed) { layer_on(layer); }

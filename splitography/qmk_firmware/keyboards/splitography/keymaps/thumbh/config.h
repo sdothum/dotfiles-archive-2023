@@ -36,7 +36,6 @@
 
 // center column TT assignments (undefine for OSM chords)
 #define CENTER_TT
-#define TAPPING_TOGGLE 1
 
 // home row modifiers
 #define HOME_MODS
