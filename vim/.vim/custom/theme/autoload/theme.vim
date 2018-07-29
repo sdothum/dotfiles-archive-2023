@@ -240,7 +240,9 @@
 
       " prose style
       function! theme#DfmView()
-        execute 'highlight CursorLine gui=none guibg=' . s:dfm_bg . ' guifg=' . s:dfm_fg
+        if core#Prose()
+          execute 'highlight CursorLine gui=none guibg=' . s:dfm_bg . ' guifg=' . s:dfm_fg
+        endif
       endfunction
 
     " .............................................................. Switch View

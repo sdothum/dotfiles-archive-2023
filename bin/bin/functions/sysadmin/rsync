@@ -17,7 +17,8 @@ laptop=lumen
 netbook=monad
 
 # sync but..
-exclude_http_local="--exclude=thedarnedestthing.db --exclude=log"
+exclude_http_local='--exclude=thedarnedestthing.db --exclude=log'
+exclude_trash='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
 rsync() {
   /usr/bin/rsync -av --update --exclude='lost+found' $@
@@ -25,34 +26,35 @@ rsync() {
 
 rsync_home() {
   rsync --delete --delete-excluded \
-        --exclude '.adblock*' \
-        --exclude '.cabal' \
-        --exclude 'cache' \
-        --exclude '.cargo' \
-        --exclude '.cddb' \
-        --exclude '.cddbslave' \
-        --exclude 'chromium' \
-        --exclude '.dbus' \
-        --exclude '.fonts.dist' \
-        --exclude '.gem' \
-        --exclude '.ghc' \
-        --exclude '.git' \
-        --exclude 'log' \
-        --exclude 'logs' \
-        --exclude '.macromedia' \
-        --exclude 'Maildir' \
-        --exclude '.molecule' \
-        --exclude 'mpv' \
-        --exclude '.node-gyp' \
-        --exclude '.npm' \
-        --exclude '.nypy' \
-        --exclude '.offlineimap' \
-        --exclude '*pkg.tar.xz' \
-        --exclude 'scratch' \
-        --exclude '.stack' \
-        --exclude '.thumbnails' \
-        --exclude 'tmp' \
-        --exclude 'VirtualBox VMs' \
+        --exclude='.adblock*' \
+        --exclude=.cabal \
+        --exclude=cache \
+        --exclude=.cargo \
+        --exclude=.cddb \
+        --exclude=.cddbslave \
+        --exclude=chromium \
+        --exclude=.dbus \
+        --exclude=.fonts.dist \
+        --exclude=.gem \
+        --exclude=.ghc \
+        --exclude=.git \
+        --exclude=log \
+        --exclude=logs \
+        --exclude=.macromedia \
+        --exclude=Maildir \
+        --exclude=.molecule \
+        --exclude=mpv \
+        --exclude=.node-gyp \
+        --exclude=.npm \
+        --exclude=.nypy \
+        --exclude=.offlineimap \
+        --exclude=pkg.tar.xz \
+        --exclude=scratch \
+        --exclude=sync-conflict
+        --exclude=.stack \
+        --exclude=.thumbnails \
+        --exclude=tmp \
+        --exclude='VirtualBox VMs' \
         /home/$USER $@
   # syncthing index most often corrupted
   rm -rfv $@/$USER/.config/syncthing/index*
@@ -63,14 +65,13 @@ case $1 in
   ''     ) usage ;;
 
   arm    ) cpu arm || exit
-           rsync --delete --exclude=adblock $USER@$SERVER:$HOME/stow $HOME/ ;;
+           rsync --delete --exclude=adblock --exclude=sync-conflict $USER@$SERVER:$HOME/stow $HOME/ ;;
 
   backup ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/ ;} ;;
 
   home   ) ifyes "backup $HOME to /net/archive" && {
              mkdir -pv /net/archive/home || exit 1
-             rsync --delete --exclude='VirtualBox VMs' --exclude=Trash --exclude=Logs --exclude='*.corrupted' \
-                   $HOME /net/archive/home/
+             rsync --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/
            } ;;
 
   depot  ) if server ;then

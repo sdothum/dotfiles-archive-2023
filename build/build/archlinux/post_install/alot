@@ -5,13 +5,14 @@
 
 # ......................................................................... alot
 
+alot=$(find /usr/lib -name alot)
 # expand old dates to mth day/yr
-helper=$(find /usr/lib -name alot)/helper.py
+helper=$alot/helper.py
 original $helper
 sudo sed -i "/string = d.strftime('%b %Y')/s|%Y|%d/%y|" $helper
 # arrow head
-decoration=$(find /usr/lib -name urwidtrees)/decoration.py
-original $decoration
-sudo sed -i -r "s/^( *arrow_tip_char=u').*/\1\\\\u2578',/" $decoration
+buffers=$alot/buffers.py
+original $buffers
+sudo sed -i -r "s/^( *heads_char *= *u').*/\1\\\\u2578'/" $buffers
 
 # vim: set ft=sh: #

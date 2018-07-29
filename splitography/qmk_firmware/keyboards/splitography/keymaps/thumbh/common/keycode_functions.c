@@ -120,29 +120,29 @@ void double_shift(uint16_t keycode, uint8_t layer)
   else { layer_on(layer); }
 }
 
-static uint8_t tap_rule = 0;                // down_rule persistance, see process_record_user()
+static uint8_t tap_rule = 0;                        // down_rule persistance, see process_record_user()
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer, uint8_t rule, uint16_t altcode)
 {
   uint8_t i;
   if (state->count > 2) {
-    if (state->pressed) { register_code(keycode); }             // double tap plus down -> keycode...
-    else if (state->count == triple) {                          // triple tap -> double keycode + shift
+    if (state->pressed) { register_code(keycode); } // double tap plus down -> keycode...
+    else if (state->count == triple) {              // triple tap -> double keycode + shift
       tap_key     (keycode);
       double_shift(keycode, layer);
     }
     else for (i = 0; i < state->count; i++) { tap_key(keycode); }
   }
   else if (state->count > 1) {
-    if (state->count == triple - 1) {                           // triple tap -> double keycode + shift
-      if (rule == 2) { tap_key(keycode); }                      // see down_rule, process_record_user()
+    if (state->count == triple - 1) {               // triple tap -> double keycode + shift
+      if (rule == 2) { tap_key(keycode); }          // see down_rule, process_record_user()
       double_shift(keycode, layer);
     }
-    else { double_shift(keycode, layer); }                      // tap plus down or double tap -> keycode + shift
+    else { double_shift(keycode, layer); }          // tap plus down or double tap -> keycode + shift
   }
-  else if (state->pressed) { layer_on(layer); }                 // down: shift
-  else switch (rule) {                                          // see process_record_user()
+  else if (state->pressed) { layer_on(layer); }     // down: shift
+  else switch (rule) {                              // see process_record_user()
   case 0:
     modifier(register_code);
     tap_key (keycode);
@@ -164,7 +164,7 @@ void tap_reset(uint16_t keycode, uint8_t layer)
     dt_shift = 0;
   }
   else { layer_off(layer); }
-  tap_rule = 0;                             // clear retained down_rule, see process_record_user()
+  tap_rule = 0;                                     // clear retained down_rule, see process_record_user()
 }
 
 #define REPEATING    0

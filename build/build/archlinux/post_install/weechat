@@ -47,6 +47,9 @@ configure authentication else some channels will force #<channel>-unregistered\n
 /set irc.server.gitter.command '/umode +R'
 /connect gitter
 
+# block all private messages (spam)
+/trigger add block_ctcp modifier "irc_in_privmsg" "${arguments} =~ ^[^ ]+ :${\x01}.*${\x01}$ && ${arguments} !~ ^[^ ]+ :${\x01}ACTION" "/.*//"
+
 # scripts
 /script install autosort.py
 /script install beep.pl
