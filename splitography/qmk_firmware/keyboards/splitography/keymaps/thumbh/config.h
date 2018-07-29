@@ -8,6 +8,8 @@
 // fix dual function timing
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
+// enable for center column
+#define TAPPING_TOGGLE 1
 
 // tap dance key press termination interval
 #define TAPPING_TERM 250

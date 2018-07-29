@@ -11,6 +11,8 @@
 // fix dual function timing
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
+// enable for center column
+#define TAPPING_TOGGLE 1
 
 // smooth mouse motion
 // #define MOUSEKEY_INTERVAL    20
