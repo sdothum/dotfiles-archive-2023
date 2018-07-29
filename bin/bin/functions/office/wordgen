@@ -19,7 +19,8 @@ usage() {
 }
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}/Amphetype:
-DICTIONARY=$HOME/.config/Amphetype/unique.words
+DICTIONARY=${DICTIONARY:-$HOME/.config/Amphetype/unique.words}
+CORPUS=$DICTIONARY.corpus
 
 # typical sentence lengths
 # sentences='8 11 14 17'
@@ -59,30 +60,21 @@ trap "rm $words $lines $paragraphs" EXIT
 
 # ................................................................... Initialize
 
-# rebuild corpus from new wordfile
-[ -e $corpus.words ] && { ifno 'rebuild corpus' || rm $corpus.* ;}
+# build corpus from wordfile
+[ -e $CORPUS ] || {
+  # arbitrarily remove all questionable spellings
+  cat $DICTIONARY | aspell --ignore-case list >$DICTIONARY.undefined
+  diff $DICTIONARY $DICTIONARY.undefined | sed '/^[>0-9]/d ; s/< //' >$CORPUS
+}
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
-if [ ! -e $corpus.words ] ;then
-  notify low "Building $corpus.words" 'Please be patient..'
-  # strip frequency count if present
-  shuf $DICTIONARY | sed -r 's/\t.*// ; s/(.*)/\L\1/' |
-                     egrep "[$regex]" |
-                     egrep -v '^(.|..)$' |
-                     egrep -x ".{1,$wordlen}" >$corpus.words
+shuf $CORPUS | sed -r 's/\t.*// ; s/(.*)/\L\1/' | # strip frequency count if present
+                egrep "[$regex]" |
+                egrep -v '^(.|..)$' |
+                egrep -x ".{1,$wordlen}" |
+                head -$size >$corpus.words
 
-  # arbitrarily remove all questionable spellings
-  cat $corpus.words | aspell --ignore-case -a |
-                      grep -v '^\*$' |
-                      grep -v '^$' |
-                      awk '{ print $2 }' >$corpus.undefined
-
-  diff $corpus.words $corpus.undefined | grep '^< [a-z]' |
-                                         sed 's/< //' |
-                                         head -$size >$corpus.corpus
-fi
-
-typefile="$CACHEDIR$(cat $corpus.corpus | wc -l)-$output.txt"
+typefile="$CACHEDIR$(cat $corpus.words | wc -l)-$output.txt"
 
 # .................................................................... Sentences
 
@@ -123,10 +115,10 @@ wordquote() {
 # fold word groups
 wordhypen() {
   if [ $punctuation = simple ] ;then
-    shuf $corpus.corpus | tr '\n' ' '
+    shuf $corpus.words | tr '\n' ' '
   else
     # inject random hyphens
-    for i in $(shuf $corpus.corpus) ;do
+    for i in $(shuf $corpus.words) ;do
       echo $i | tr '\n' "$(random 2 '-' ' ')"
     done
   # apply ise conversion

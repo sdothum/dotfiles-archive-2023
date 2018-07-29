@@ -320,6 +320,7 @@ d ? wego-git
 m dict-moby-thesaurus
   hunspell
   hunspell-en
+# hunspell-en_CA
 
 
 = keyboard
