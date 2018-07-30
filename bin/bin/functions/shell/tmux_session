@@ -8,7 +8,7 @@
 
 # Usage: tmux_session [name [command]]*
 
-[ $1 ] && { export TMUX=$1 ; shift ;} || export TMUX=tmux
+[ $1   ] && { export TMUX=$1 ; shift ;} || export TMUX=tmux
 [ "$1" ] || fortune=FORTUNE
 
 tmux -S /tmp/tmux:$TMUX has-session -t $TMUX &&

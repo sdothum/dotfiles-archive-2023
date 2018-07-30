@@ -13,8 +13,9 @@
 
 = mail clients
 = ▔▔▔▔▔▔▔▔▔▔▔▔
-  alot     [! server]
-  alot-git [server]
+  alot
+# alot     [! server]
+# alot-git [server]
 # astroid  [server]
 # alot-git
 # astroid

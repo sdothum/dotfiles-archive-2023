@@ -22,8 +22,8 @@ fi
 
 [ $# -lt 2 ] && usage
 [ $# -gt 3 ] && usage
-[ -d $1 ] || usage
-[ -d $2 ] || usage
+[ -d $1    ] || usage
+[ -d $2    ] || usage
 
 if [ $3 ] ;then
   regex=$3

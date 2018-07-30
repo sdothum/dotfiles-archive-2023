@@ -15,7 +15,7 @@ copy_image() {
   filename=$(basename $1)
   date=$(stat -c '%y' $1 | cut -d' ' -f1)
   year=$(echo $date | cut -d- -f1)
-  [ -d $LIBRARY/$year ]       || { ditto ${__RED} $year ; mkdir $LIBRARY/$year ;}
+  [ -d $LIBRARY/$year       ] || { ditto ${__RED} $year ; mkdir $LIBRARY/$year ;}
   [ -d $LIBRARY/$year/$date ] || { ditto ${__GREEN} "$year / $date" ; mkdir $LIBRARY/$year/$date ;}
 
   if [ -e $LIBRARY/$year/$date/$filename ] ;then

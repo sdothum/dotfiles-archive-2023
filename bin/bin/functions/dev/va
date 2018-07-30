@@ -7,7 +7,7 @@
 # ....................................................................... Editor
 
 # v by content
-[ "$1" ] && files=$(al "$@") || exit
+[ "$1"     ] && files=$(al "$@") || exit
 [ "$files" ] || exit
 
 # regex passed as search command causes file name mangling

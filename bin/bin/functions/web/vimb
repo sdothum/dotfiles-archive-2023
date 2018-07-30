@@ -25,9 +25,9 @@ config() {
   for i in $common ;do ln -sf $CONFIG/$i $CONFIG/$host/ ;done
 }
 
-[ "$1" = config ] && config
+[ "$1" = config    ] && config
 [ -e $CONFIG/$host ] && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
-[ $size = 10pt ]     && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
+[ $size = 10pt     ] && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
 
 config
 exec vimb "$startpage"

@@ -42,13 +42,13 @@ while : ;do
   shift
 done
 
-[ $wordlen ]     || wordlen=99
-[ $size ]        || size=30000
-[ $regex ]       || regex='a-z'
+[ $wordlen     ] || wordlen=99
+[ $size        ] || size=30000
+[ $regex       ] || regex='a-z'
 [ $punctuation ] || punctuation=simple
-[ $corpus ]      || corpus=$regex
-[ $output ]      || output=$corpus-$punctuation
-[ $sentences ]   || sentences='5 6 7 8'
+[ $corpus      ] || corpus=$regex
+[ $output      ] || output=$corpus-$punctuation
+[ $sentences   ] || sentences='5 6 7 8'
 corpus=$CACHEDIR$corpus
 
 # rebuild corpus if corpus source updated

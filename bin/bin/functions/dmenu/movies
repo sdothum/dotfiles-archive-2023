@@ -52,7 +52,7 @@ cache() {
 
 # any new media added?
 [ ! -s $catlg ] || stest -dqr -n $catlg $library && cache
-[ $cache ] && exit
+[ $cache      ] && exit
 
 options() {
   [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$EDIT" || unset edit

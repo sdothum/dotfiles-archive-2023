@@ -44,7 +44,7 @@ if cpu arm ;then
     # attached usb drive?
     libext=$(find /run/media/$USER -maxdepth 3 -type d -name "$(basename $(dirname "$path"))" 2>/dev/null)
     [ -n "$libext" ] && video=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
-    [ -z "$video" ] && video=$path
+    [ -z "$video"  ] && video=$path
     video=$(find "$video" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
   fi
 fi

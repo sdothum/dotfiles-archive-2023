@@ -8,6 +8,6 @@
 
 # add log files to /tmp (see dlog, dtail)
 [ -L /tmp/thedarnedestthing.log ] || ln -s /srv/http/thedarnedestthing.com/application/log/thedarnedestthing.log /tmp/
-[ -L /tmp/nginx.log ] || ln -s /opt/nginx/logs/error.log /tmp/nginx.log
+[ -L /tmp/nginx.log             ] || ln -s /opt/nginx/logs/error.log /tmp/nginx.log
 
 # vim: set ft=sh: #

@@ -326,7 +326,7 @@ panel() {
     esac
 
     # empty desktop does not generate T message
-    [ "$title" ] || title
+    [ "$title"    ] || title
     [ "$desktops" ] || desktops
     printf "%s\n" "%{l}${title}%{c}${desktops} %{r}${system}"
     unset line

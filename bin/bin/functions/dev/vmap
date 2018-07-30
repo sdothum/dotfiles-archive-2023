@@ -40,9 +40,9 @@ maps() {
     sed "s/\t//" >$index:map
 }
 
-[ "$1" = help ] && usage
+[ "$1" = help   ] && usage
 [ -e $index:map ] && { stest -qr -n $index:map $vimrc || { notify 'Vim' 'Generating maps' ; maps ;};}
-[ $1 ] || title=true
+[ $1            ] || title=true
 
 list() {
   [ $title ] && title "$@"

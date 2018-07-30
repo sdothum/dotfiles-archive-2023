@@ -13,6 +13,7 @@ CALENDAR=$SESSION/calendar
 IM=$SESSION/im
 IRC=$SESSION/irc
 MAIL=$SESSION/mail
+PING=$SESSION/ping
 REMINDER=$SESSION/reminder
 TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
@@ -91,14 +92,15 @@ if [ -e $IRC ] ;then
 fi
 server && herbstclient focus_monitor 0
 [ -e $CALENDAR ] && term 'Calendar' wyrd
-[ -e $MAIL ] && tmux_session mail alot
+[ -e $MAIL     ] && tmux_session mail alot
+[ -e $PING     ] && term 'Ping' pingchk
 
 # .................................................................. Window apps
 
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing
 switch tag $WEB
-[ -e $WEB ] && $BROWSER &
-[ -e $TERM ] && toggle scratchpad
+[ -e $WEB      ] && $BROWSER &
+[ -e $TERM     ] && toggle scratchpad
 [ -e $REMINDER ] && ( sleep $delay ; dmenu reminder ) &
 
 # .............................................................. Cleanup desktop

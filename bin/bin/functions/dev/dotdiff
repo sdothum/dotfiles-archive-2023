@@ -30,10 +30,9 @@ while : ;do
 done
 
 
-[ $1 ] || usage
+[ $1               ] || usage
 [ -d $HOME/stow/$1 ] || usage
-
-[ -z $nosync ] && { ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull ) ;}
+[ -z $nosync       ] && { ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull ) ;}
 
 dirdiff $w $current/$1 $dotfiles/$1 "$2"
 

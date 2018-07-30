@@ -76,7 +76,7 @@ while [ $1 ] ;do
   esac
 done
 
-[ $1 ] && rules=$@
+[ $1        ] && rules=$@
 [ -e $rules ] || usage
 # remove broken symlinks
 brokeln rm
@@ -87,7 +87,7 @@ clean() {
     clean) [ -d "$vacuum/$file" ] && rm -r "$vacuum/$file"
            target=$(dirname "$file")        # [ $(dirname) = . ] is always true!
            [ "$target" = . ] && target=$vacuum || target="$vacuum/$target"
-           [ -d "$target" ] || mkdir -p "$target"
+           [ -d "$target"  ] || mkdir -p "$target"
            sudo mv -f "$file" $target ;;
 
     CLEAN) sudo rm -rf "$file" ;;

@@ -14,7 +14,7 @@
 
 if [ "${1% *}" != "$1" ] ;then
   # regex "or" command line patterns will not count the pstat call
-  [ "${1%|*}" = "$1"  ] || instance=$(( $instance - 1 ))
+  [ "${1%|*}" = "$1"                ] || instance=$(( $instance - 1 ))
   [ $(pgrep -cf "$1") -gt $instance ]
 else
   pgrep -x $1 >/dev/null

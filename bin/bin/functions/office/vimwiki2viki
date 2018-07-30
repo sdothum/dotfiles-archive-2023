@@ -13,7 +13,7 @@ NONWORD='[^a-zA-Z0-9*]'
 # regex \w doesn't expand well as passed parameter (messy backslash escaping required)
 W='[a-zA-Z0-9]'
 
-[ $1 ] && dir=$1 || dir=$PWD
+[ $1      ] && dir=$1 || dir=$PWD
 [ -d $dir ] || exit 1
 ifno "convert $dir" && check=true
 wikis=$(mktemp)

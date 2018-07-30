@@ -53,9 +53,8 @@ if [ $USER != root ] ;then
       else
         wsync -v
       fi
-    else
-      we &
     fi
+    we &
   fi
 
   # reset keyboard layout

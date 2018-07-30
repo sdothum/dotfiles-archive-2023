@@ -42,7 +42,7 @@ if [ $1 ] ;then
 
       # fix specific library dependency loop
       # lib32-freetype2 depends on lib32-harfbuzz but is erroneously listed as dependency of lib32-harfbuzz!
-      [ $D = N ] && [ $i = lib32-harfbuzz ] && pkgs=$(echo $pkgs | grep -v lib32-freetype2)
+      [ $D = N  ] && [ $i = lib32-harfbuzz ] && pkgs=$(echo $pkgs | grep -v lib32-freetype2)
       [ "$pkgs" ] || exit
 
       echo "$(expac -S '%r/%n' $i) ($dep)$(echo "$pkgs" | sed 's/^/^/')" | column -s^ -t

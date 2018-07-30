@@ -22,7 +22,7 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   # script lock to suppress unnecessary emit hook message processing
   # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE ; continue ;}
   [ -e $LOCK ] && continue
-  [ $TRACE ] && echo "> $hook $rule $winid" >>$TRACE
+  [ $TRACE   ] && echo "> $hook $rule $winid" >>$TRACE
 
   # lots of manual tuning here to avoid unnecessary draw refreshes in particular,
   # hence, the fullscreen test. also, see query wname whose conky usage is capitalized

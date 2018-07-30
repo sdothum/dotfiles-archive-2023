@@ -10,7 +10,7 @@
 # Usage: unlock [<command> [ . <command> ]*], multiple commands chained with dot
 
 # restore dynamic emithook focusing
-[ $1 ] && herbstclient chain . $@ . unlock || herbstclient unlock
+[ $1       ] && herbstclient chain . $@ . unlock || herbstclient unlock
 [ -e $LOCK ] && rm -f $LOCK
 
 # vim: set ft=sh: #

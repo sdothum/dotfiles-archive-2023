@@ -12,8 +12,8 @@ usage() {
 }
 
 [ $# -eq 2 ] || usage
-[ -n "$1" ] || usage
-[ -n "$2" ] || usage
+[ -n "$1"  ] || usage
+[ -n "$2"  ] || usage
 
 # batch vim edit (using vim vs vi to preserve edit history)
 for i in $(al "$1") ;do

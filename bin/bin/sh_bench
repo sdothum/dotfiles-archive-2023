@@ -24,7 +24,7 @@ sh_bench() (
   set -- $1$1$1$1$1$1$1$1$1$1
   while read m ;do
     [ $(($i*50+${n:=-$i})) -gt "$(($l-$i))" ] || eval echo -n \""$1$1$1$1$1"\"
-    [ $((n=$i+$n)) -gt "$(($l-$i))" ] && echo "$n" && exit
+    [ $((n=$i+$n)) -gt "$(($l-$i))"         ] && echo "$n" && exit
     echo -n "$n$d"
   done
 SCRIPT
