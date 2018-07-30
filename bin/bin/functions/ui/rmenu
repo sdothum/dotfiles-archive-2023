@@ -29,7 +29,7 @@ bg=argb:00000000
 fg=argb:FFFDF6E3
 abg=$bg
 hbg=$bg
-hfg=argb:FF25C0EF
+hfg=argb:FF20bbfc
 
 # leader left or right (prompt case Right, RIGHT, right)
 lead=right
@@ -145,6 +145,7 @@ if [ $display ] ;then
                       -separator-style none \
                       -theme-str "'inputbar { padding: 1.2em; }'" \
                       -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
+                      -theme-str "'* { highlight: none $Hfg; }'" \
                       -width 100 \
                       -dmenu -p "\"$prompt\"" -i $select \
                       $@ )
