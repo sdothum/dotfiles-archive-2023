@@ -39,12 +39,12 @@ while color=$( { [ "$menu" ] && { echo | mhistory root | sed "1i$menu" ;} ||
     "$LIGHT" ) conky theme light $bg ;;
 
     "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
-                 contrast=$(cat $CONTRAST)
-                 mhistory root "$bg^$SEP $contrast $hue"
-                 swatch $bg $hue
-                 ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
+               contrast=$(cat $CONTRAST)
+               mhistory root "$bg^$SEP $contrast $hue"
+               swatch $bg $hue
+               ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
 
-    *dark* |\
+    *dark*   |\
     *light*  ) bg=$(echo $color | cut -d' ' -f1)
                draw root blank $bg
                ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND

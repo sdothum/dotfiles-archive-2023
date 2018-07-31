@@ -10,8 +10,7 @@
 
 # meta dmenu menu!
 audio=$(previous audio)
-audio=$(echo "music\nradio" |
-        rmenu 'Listen to' $audio -no-custom) || exit
+audio=$(echo "music\nradio" | rmenu 'Listen to' $audio -no-custom) || exit
 
 mhistory audio $audio
 case $audio in

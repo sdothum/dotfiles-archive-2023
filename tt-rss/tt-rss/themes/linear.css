@@ -13,7 +13,7 @@
 #feeds-holder .dijitTreeRow {
   font:                  12px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
   padding:               3px 15px 1px 0;
-  margin:                -7px 0 26px; /* adjust top to position topmost label */
+  margin:                -6px 0 27px; /* adjust top to position topmost label */
 }
 
 #feeds-holder .dijitTreeLabel {

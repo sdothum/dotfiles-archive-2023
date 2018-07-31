@@ -65,7 +65,7 @@ case $1 in
   ''     ) usage ;;
 
   arm    ) cpu arm || exit
-           rsync --delete --exclude=adblock --exclude=sync-conflict $USER@$SERVER:$HOME/stow $HOME/ ;;
+           rsync --delete --exclude=sync-conflict $USER@$SERVER:$HOME/stow $HOME/ ;;
 
   backup ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/ ;} ;;
 

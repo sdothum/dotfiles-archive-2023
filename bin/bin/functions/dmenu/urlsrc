@@ -6,8 +6,7 @@
 # ...................................................................... Browser
 
 browser=$(previous urlsrc)
-browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' |
-          rmenu 'Use URLs From' $browser -no-custom) || exit
+browser=$(echo 'chromium\nluakit\nqutebrowser\nvimb' | rmenu 'Use URLs From' $browser -no-custom) || exit
 
 history urlsrc $browser
 echo $browser

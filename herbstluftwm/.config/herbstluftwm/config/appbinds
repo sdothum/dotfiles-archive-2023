@@ -68,6 +68,7 @@ hc keybind Super-Control-t            spawn env CONKYRC=$CONKY_Q2 conky clock
 hc keybind Super-$Mod-t               spawn dmenu alarm
 hc keybind Super-v                    spawn dmenu media
 hc keybind Super-Control-v            spawn dmenu audio
+hc keybind Super-$Mod-Control-v       spawn pkill omxplayer
 hc keybind Super-w                    spawn focus $BROWSER
 hc keybind Super-Control-w            spawn dmenu history
 hc keybind Super-$Mod-Control-w       spawn dmenu bookmarks

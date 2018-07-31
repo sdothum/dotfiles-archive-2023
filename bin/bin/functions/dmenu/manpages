@@ -82,8 +82,7 @@ while : ;do
 
       # print hard copy?
       set -- $page
-      hardcopy=$(echo 'no\nyes' | rmenu "Print $2 ($1)" -no-custom) || exit
-      if [ $hardcopy = yes ] ;then
+      if [ "$(echo 'no\nyes' | rmenu "Print $2 ($1)" -no-custom)" = yes ] ;then
         # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
         manpage=$(find /usr/share/man -name "$2.$1.gz")
         if [ $manpage ] ;then

@@ -133,9 +133,7 @@ while : ;do
     if [ $(albums | wc -l) -gt 1 ] ;then
       case $artist in
         "$ALBUMS") album=$(albums | rmenu 'Album' "$album" -no-custom) || break ;;
-
-        *        ) album=$(albums | sort -n | sed "1i$ALL\n$LIBRARY" |
-                           rmenu 'Album' "$album" -no-custom) || break ;;
+        *        ) album=$(albums | sort -n | sed "1i$ALL\n$LIBRARY" | rmenu 'Album' "$album" -no-custom) || break ;;
       esac
     else
       case $artist in

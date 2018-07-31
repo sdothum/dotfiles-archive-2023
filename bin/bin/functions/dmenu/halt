@@ -21,8 +21,7 @@ disconnect() {
 
 # quit!
 cmd=$default
-while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" |
-            rmenu 'Session' $cmd -no-custom) || exit ;do
+while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" | rmenu 'Session' $cmd -no-custom) || exit ;do
   case $cmd in
     lock    ) lock_screen ;;
     logout  ) sudo kill -TERM X ;;

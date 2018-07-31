@@ -6,8 +6,7 @@
 # ........................................................................ Shell
 
 shell=$(previous shistory)
-shell=$(echo "fish\nsh\nzsh" |
-        rmenu 'Shell' $shell -no-custom) || exit
+shell=$(echo "fish\nsh\nzsh" | rmenu 'Shell' $shell -no-custom) || exit
 
 mhistory shistory $shell
 case $shell in

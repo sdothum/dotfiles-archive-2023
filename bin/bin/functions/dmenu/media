@@ -12,8 +12,7 @@ root=true
 # meta dmenu menu!
 media=$(previous media)
 while : ;do
-  media=$(echo "animation\nanime\nmovies\nseries\nnetflix\nkodi\nsonarr\npatricia\nthought of you\nebooks\nreferences\nnzb\ntorrent" |
-          rmenu 'Media' $media -no-custom) || break
+  media=$(echo "ebooks\nreferences\npatricia\nthought of you\nanimation\nanime\nmovies\nseries\nnetflix\nkodi\nsonarr\nnzb\ntorrent" | rmenu 'Media' $media -no-custom) || break
 
   mhistory media $media
 

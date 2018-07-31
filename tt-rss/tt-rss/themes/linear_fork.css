@@ -42,7 +42,7 @@ div#notify.notify.notify_progress { display: none; }
   font-family:           bold 10px 'Helvetica Neue',Helvetica,Arial sans-serif;
   margin-left:           5px;
   border-style:          solid;
-  border-width:          1px 0 0;
+  border-width:          0 0 1px;
   border-color:          #eee8d5;
 }
 
@@ -56,7 +56,7 @@ div#notify.notify.notify_progress { display: none; }
 #feeds-holder .dijitTreeRowSelected {
   background:            #eee8d5;
   border-style:          solid;
-  border-width:          1px 0 0;
+  border-width:          0 0 1px;
   border-color:          #b5423f;
 }
 
@@ -108,7 +108,7 @@ div#notify.notify.notify_progress { display: none; }
 
 #feeds-holder .dijitTreeRowSelected:hover {
   border-style:          solid;
-  border-width:          1px 0 0;
+  border-width:          0 0 1px;
   border-color:          #b5423f;
 }
 

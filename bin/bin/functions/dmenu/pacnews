@@ -27,8 +27,7 @@ while : ;do
     # use updated .pacnew
     action='keep\ndelete\nuse'
     if ! sudo cmp $pacnew $copy ;then
-      update=$(echo 'no\nyes' | rmenu "Update $file" -no-custom) || continue
-      if [ "$update" = yes ] ;then
+      if [ "$(echo 'no\nyes' | rmenu "Update $file" -no-custom)" = yes ] ;then
         sudo cp $current /tmp
         sudo mv $pacnew $current
         continue
