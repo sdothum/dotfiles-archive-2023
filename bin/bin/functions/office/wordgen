@@ -16,7 +16,7 @@ usage() {
   echo "                corpus=<filename>,  default 'Amphetype:<regex>.words**'"
   echo "                output=<filename>,  default 'Amphetype:size-<corpus-punctuation>.txt**'"
   echo "                                    ** <...> == <filename> substitution"
-  echo "                <regex>,            default 'a-z'"
+  echo "                <regex>,            word match [<regex>], default 'a-z'"
   exit 1
 }
 
