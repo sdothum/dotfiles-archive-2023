@@ -95,8 +95,6 @@ div#notify.notify.notify_progress { display: none; }
   opacity:               0;
 }
 
-#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
-
 #feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: .15; }
 
 /* #feeds-holder { background: #eee; } */

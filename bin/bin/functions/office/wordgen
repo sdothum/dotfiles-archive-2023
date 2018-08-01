@@ -7,14 +7,16 @@
 # ........................................................ Random word generator
 
 usage() {
-  echo "usage: $(basename $0) [option=..]* [<sentence>*]"
-  echo "       options: wordlen=<length>   default '99'"
-  echo "                size=<count>,      default '30000'"
-  echo "                regex=<regex>,     default 'a-z"
-  echo "                punctuation=mixed, default 'simple'"
-  echo "                corpus=<filename>, default 'practice'"
-  echo "                output=<filename>, default $punctuation"
-  echo "                ise,               default no British 'ise' conversion"
+  echo "usage: $(basename $0) [option]* [<regex>*]"
+  echo "       options: wordlen=<length>,   max word length, default '30'"
+  echo "                size=<count>,       corpus selection from dictionary, default '30000'"
+  echo "                ISE,                convert 'ize' to British 'ise'"
+  echo "                mixed|simple,       punctuation, default 'simple'"
+  echo "                <words>*,           per sentence, typical '8 11 14 17', default '5 6 7 8'"
+  echo "                corpus=<filename>,  default '<regex>.words**'"
+  echo "                output=<filename>,  default 'Amphetype:size-<corpus-punctuation>.txt**'"
+  echo "                                    ** <...> == <filename>"
+  echo "                <regex>,            default 'a-z'"
   exit 1
 }
 
@@ -22,33 +24,30 @@ CACHEDIR=${CACHEDIR:-$HOME/.cache}/Amphetype:
 DICTIONARY=${DICTIONARY:-$HOME/.config/Amphetype/unique.words}
 CORPUS=$DICTIONARY.corpus
 
-# typical sentence lengths
-# sentences='8 11 14 17'
-# short practice lengths
 while : ;do
   case "$1" in
-    help         ) usage ;;
-    wordlen=*    ) eval $1 ;;
-    size=*       ) eval $1 ;;
-    regex=*      ) eval $1 ;;
-    punctuation=*) eval $1 ;;
-    corpus=*     ) eval $1 ;;
-    output=*     ) eval $1 ;;
-    ise          ) ise='s/(...[^s])iz((e[drs]*|ation)([ -]|$))/\1is\2/gI' ;;
-
-    *) sentences=$@
-       break ;;
+    help     ) usage ;;
+    wordlen=*) eval $1 ;;
+    size=*   ) eval $1 ;;
+    ISE      ) ise='s/(...[^s])iz((e[drs]*|ation)([ -]|$))/\1is\2/gI' ;;
+    mixed    ) punctuation=$1 ;;
+    simple   ) punctuation=$1 ;;
+    [0-9]*   ) sentences="$sentences $1" ;;
+    corpus=* ) eval $1 ;;
+    output=* ) eval $1 ;;
+    *        ) regex=$@ ; break ;;
   esac
   shift
 done
 
-[ $wordlen     ] || wordlen=99
+[ $wordlen     ] || wordlen=30
+[ $wordlen = 0 ] || wordlen=30
 [ $size        ] || size=30000
 [ $regex       ] || regex='a-z'
 [ $punctuation ] || punctuation=simple
 [ $corpus      ] || corpus=$regex
 [ $output      ] || output=$corpus-$punctuation
-[ $sentences   ] || sentences='5 6 7 8'
+[ "$sentences" ] || sentences='5 6 7 8'
 corpus=$CACHEDIR$corpus
 
 # rebuild corpus if corpus source updated

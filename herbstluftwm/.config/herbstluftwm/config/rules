@@ -58,7 +58,7 @@ hc rule class=Rawtherapee                  tag=5 monitor=5 focus=on switchtag=on
 hc rule class=VirtualBox                   tag=5 monitor=0 focus=on switchtag=on
 # hc rule class=Thunar                     tag=6 focus=on switchtag=on
 hc rule title=Autoconnect                  tag=6 focus=off
-hc rule title=Ping                         tag=6 focus=off
+hc rule title=Ping                         tag=6 index=1 focus=off
 hc rule class=cmst                         tag=6 focus=on switchtag=on
 hc rule class=Tixati                       tag=6 focus=on switchtag=on
 hc rule class=Transmission-gtk             tag=6
