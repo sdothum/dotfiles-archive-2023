@@ -13,9 +13,9 @@ usage() {
   echo "                ISE,                convert 'ize' to British 'ise'"
   echo "                mixed|simple,       punctuation, default 'simple'"
   echo "                <words>*,           per sentence, typical '8 11 14 17', default '5 6 7 8'"
-  echo "                corpus=<filename>,  default '<regex>.words**'"
+  echo "                corpus=<filename>,  default 'Amphetype:<regex>.words**'"
   echo "                output=<filename>,  default 'Amphetype:size-<corpus-punctuation>.txt**'"
-  echo "                                    ** <...> == <filename>"
+  echo "                                    ** <...> == <filename> substitution"
   echo "                <regex>,            default 'a-z'"
   exit 1
 }
