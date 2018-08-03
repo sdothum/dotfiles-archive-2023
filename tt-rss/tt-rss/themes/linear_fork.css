@@ -294,7 +294,11 @@ span.updated { color: #aaa; }
 .cdm.expandable .author,
 .hlTitle .contentPreview { font: 13px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif; }
 
-.cdm.expandable.active .author { color: #aaa !important; }
+.cdm.expandable.active .author {
+  font:                  11px/1.75 'Helvetica Neue',Helvetica,Arial sans-serif;
+  color:                 #aaa !important;
+  padding-top:           0 !important;
+}
 
 .cdm.Unread .cdmExcerpt,
 .cdm.Unread.expandable .author,

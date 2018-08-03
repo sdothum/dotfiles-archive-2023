@@ -63,6 +63,8 @@
       " yank from the cursor to the end of the line, to be consistent with C and D.
       " see yankring for plugin equivalent
       nnoremap Y         y$
+      nnoremap vv        V
+      nnoremap V         <C-v>$
       " reselect/reyank text just pasted
       nnoremap <leader>v gv
       nnoremap <leader>V gvy

@@ -78,8 +78,9 @@
       " queue files written for vhg (may contain repeated update entries)
       function! core#QueueFile()
         " see v script (sets QUEUE and invokes vhg)
-        if expand('%:p') =~ g:repo && $QUEUE > ''
-          let l:file = substitute(expand('%:p'), g:repo, '', '')
+        let l:path = resolve(expand('%:p'))
+        if l:path =~ g:repo && $QUEUE > ''
+          let l:file = substitute(l:path, g:repo, '', '')
           let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
           call system(l:cmd)
         endif

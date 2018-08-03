@@ -53,7 +53,7 @@
 
       " Plug 'markonm/traces.vim'           " ex pattern/range highlghting
       " Plug 'romainl/vim-cool'             " auto clear search highlighting
-      " Plug 'itchyny/vim-cursorword'       " word highlighting
+      Plug 'itchyny/vim-cursorword', prose  " word highlighting
       Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' } " colourized indent columns
       Plug 'sheerun/vim-polyglot'           " multilingual highlighting
 
