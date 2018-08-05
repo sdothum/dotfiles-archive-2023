@@ -136,7 +136,7 @@ enum planck_keycodes {
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 #define ST_A    SFT_T(KC_A)
 #ifdef HOME_MODS
-#define HOME_J  GUI_T(KC_J)
+#define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
 #define HOME_A  SFT_T(KC_A)
@@ -145,7 +145,7 @@ enum planck_keycodes {
 #define HOME_S  CTL_T(KC_S)
 #define HOME_W  GUI_T(KC_W)
 #else
-#define HOME_J  KC_J
+#define HOME_Q  KC_Q
 #define HOME_H  KC_H
 #define HOME_E  KC_E
 #define HOME_A  KC_A
@@ -274,7 +274,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     } else { base_n = base_n & ~BASE_2; }
     return false;
 #ifdef HOME_MODS
-  case HOME_J:
+  case HOME_Q:
   case HOME_W:
     tap_mods(record, KC_LGUI);
     break;

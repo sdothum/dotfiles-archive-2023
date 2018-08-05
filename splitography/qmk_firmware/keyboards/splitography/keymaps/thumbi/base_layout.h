@@ -1,38 +1,38 @@
 
 // const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// ..................................................................... BEAKL H
+// ..................................................................... BEAKL I
 
   // ,-----------------------------------------------------------------------------------.
   // |   ;  |   Y  |   O  |   U  |   Z  |  Fn  | Caps |   G  |   D  |   N  |   M  |   X  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   J  |   H  |   E  |   A  |   .  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
+  // |   Q  |   H  |   E  |   A  |   .  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   Q  |   -  |   '  |   K  |   ,  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
+  // |   J  |   -  |   '  |   K  |   ,  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |  Esc |   I  | Space| Bksp |                           |
   // `-----------------------------------------------------------------------------------'
 
   [_BASE] = {
     {KC_SCLN, KC_Y,    KC_O,    KC_U,    KC_Z,    CNTR_TL, CNTR_TR, KC_G,    KC_D,    KC_N,    KC_M,    KC_X   },
-    {HOME_J,  HOME_H,  HOME_E,  HOME_A,  KC_DOT,  CNTR_HL, CNTR_HR, KC_C,    HOME_T,  HOME_R,  HOME_S,  HOME_W },
-    {KC_Q,    KC_MINS, KC_QUOT, KC_K,    KC_COMM, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
+    {HOME_Q,  HOME_H,  HOME_E,  HOME_A,  KC_DOT,  CNTR_HL, CNTR_HR, KC_C,    HOME_T,  HOME_R,  HOME_S,  HOME_W },
+    {KC_J,    KC_MINS, KC_QUOT, KC_K,    KC_COMM, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
     {_______, _______, _______, _______, LT_ESC,  LT_I,    TD_SPC,  LT_BSPC, _______, _______, _______, _______},
   },
 
   [_SHIFT] = {
     {KC_COLN, S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_TL, CNTR_TR, S(KC_G), S(KC_D), S(KC_N), S(KC_M), S(KC_X)},
-    {S(KC_J), S(KC_H), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, S(KC_C), S(KC_T), S(KC_R), S(KC_S), S(KC_W)},
-    {S(KC_Q), KC_UNDS, KC_DQT,  S(KC_K), KC_EXLM, CNTR_BL, CNTR_BR, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
+    {S(KC_Q), S(KC_H), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, S(KC_C), S(KC_T), S(KC_R), S(KC_S), S(KC_W)},
+    {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_EXLM, CNTR_BL, CNTR_BR, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
     {_______, _______, _______, _______, KC_ESC,  S(KC_I), KC_SPC,  KC_BSPC, _______, _______, _______, _______},
   },
 
   // ,-----------------------------------------------------------------------------------.
   // |   ;  |   Y  |   O  |   U  |   Z  |  Fn  | Caps |   G  |   D  |   N  |   M  |   X  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   J  |   H  |   E  |   A  |   ~  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
+  // |   Q  |   H  |   E  |   A  |   ~  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   Q  |   -  |   '  |   K  |   `  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
+  // |   J  |   -  |   '  |   K  |   `  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |  Tab |  f() | Enter|  Del |                           |
   // `-----------------------------------------------------------------------------------'
@@ -40,17 +40,17 @@
 
   [_LSHIFT] = {
     {KC_SCLN, KC_Y,    KC_O,    KC_U,    KC_Z,    CNTR_TL, CNTR_TR, S(KC_G), S(KC_D), S(KC_N), S(KC_M), S(KC_X)},
-    {KC_J,    KC_H,    KC_E,    KC_A,    TD_TILD, CNTR_HL, CNTR_HR, S(KC_C), S(KC_T), S(KC_R), S(KC_S), S(KC_W)},
-    {KC_Q,    KC_MINS, KC_QUOT, KC_K,    KC_GRV,  CNTR_BL, CNTR_BR, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
+    {KC_Q,    KC_H,    KC_E,    KC_A,    TD_TILD, CNTR_HL, CNTR_HR, S(KC_C), S(KC_T), S(KC_R), S(KC_S), S(KC_W)},
+    {KC_J,    KC_MINS, KC_QUOT, KC_K,    KC_GRV,  CNTR_BL, CNTR_BR, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
     {_______, _______, _______, _______, KC_TAB,  ___fn__, TD_ENT,  LT_DEL,  _______, _______, _______, _______},
   },
 
   // ,-----------------------------------------------------------------------------------.
   // |   :  |   Y  |   O  |   U  |   Z  |  Fn  | Caps |   G  |   D  |   N  |   M  |   X  |
   // |------+------+------+------+------+-------------+------+------+------+------+------|
-  // |   J  |   H  |   E  |   A  |   ?  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
+  // |   Q  |   H  |   E  |   A  |   ?  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   Q  |   _  |   "  |   K  |   /  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
+  // |   J  |   _  |   "  |   K  |   /  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |  Tab |   I  |  f() |  Del |                           |
   // `-----------------------------------------------------------------------------------'
@@ -58,8 +58,8 @@
 
   [_RSHIFT] = {
     {KC_COLN, S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_TL, CNTR_TR, KC_G,    KC_D,    KC_N,    KC_M,    KC_X   },
-    {S(KC_J), S(KC_H), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, KC_C,    KC_T,    KC_R,    KC_S,    KC_W   },
-    {S(KC_Q), KC_UNDS, KC_DQT,  S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
+    {S(KC_Q), S(KC_H), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, KC_C,    KC_T,    KC_R,    KC_S,    KC_W   },
+    {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
     {_______, _______, _______, _______, KC_TAB,  S(KC_I), ___fn__, KC_DEL,  _______, _______, _______, _______},
   },
 
