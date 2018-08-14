@@ -21,7 +21,7 @@ hc rule class=tabbed                       tag=1 focus=on
 hc rule windowrole="'.* Tiny RSS'"         tag=1 focus=on
 hc rule class=Vimb                         tag=1 index=0 focus=on once
 hc rule instance='www.netflix.com__ca'     tag=1 index=1 focus=on
-# hc rule class=chromium                   tag=1
+hc rule class=Chromium                     tag=1 index=1 focus=on
 hc rule class=dwb                          tag=1
 hc rule class=luakit                       tag=1
 # hc rule class=qutebrowser                tag=1 once

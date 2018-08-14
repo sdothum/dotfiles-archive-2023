@@ -28,7 +28,8 @@ while : ;do
     critical  ) urgency="-u $1" ;;
 
     blackboard) urgency="-h string:bgcolor:#000000" ;;
-    *         ) echo $1 | grep -q '^[[:digit:]]*$' && expire="--expire-time=$(( $1 * 1000 ))" || break ;;
+    [0-9]*    ) expire=--expire-time=$(( $1 * 1000 )) ;;
+    *         ) break ;;
   esac
   shift
 done

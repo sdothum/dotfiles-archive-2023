@@ -2,7 +2,7 @@
 
 /* RESET ********************************************************************/
 
-html { font-family: 'Helvetica Neue',Helvetica,Arial sans-serif; }
+html { font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 div#notify.notify.notify_progress { display: none; }
 
@@ -39,7 +39,8 @@ div#notify.notify.notify_progress { display: none; }
 }
 
 #feeds-holder .dijitTreeRow {
-  font-family:           bold 10px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font-family:           10px/18px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font-weight:           300;
   margin-left:           5px;
   border-style:          solid;
   border-width:          0 0 1px;
@@ -60,11 +61,12 @@ div#notify.notify.notify_progress { display: none; }
   border-color:          #b5423f;
 }
 
-#feeds-holder .dijitTreeLabel.Unread { font-weight: normal; }
+#feeds-holder .dijitTreeLabel.Unread { font-weight: 300; }
 
 /* match line height to feed label font to preserve horizontal scaling alignment */
 #feeds-holder .counterNode {
-  font:                  10px/18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  10px/16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font-weight:           300;
   color:                 #b5423f;
   background:            none;
   padding:               1px 1px 1px 3px;
@@ -99,7 +101,7 @@ div#notify.notify.notify_progress { display: none; }
 
 /* #feeds-holder { background: #eee; } */
 
-#feeds-holder .dijitTreeRow:hover .dijitTreeLabel { color: #b5423f; }
+/* #feeds-holder .dijitTreeRow:hover .dijitTreeLabel { color: #b5423f; } */
 
 /* un/comment to highlight open icons where applicable */
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando { opacity: .15; }
@@ -144,7 +146,7 @@ img[src*="images/indicator_tiny.gif"] {
 /* #headlines-toolbar .r a img.noborder { margin-top: -1px; } */
 /*  */
 /* #headlines-toolbar > .r span#cancel_search { */
-/*   font-family:           'Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   font-family:           Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; */
 /*   font-size:             12px; */
 /*   text-align:            right; */
 /*   margin-left:           10px; */
@@ -152,7 +154,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 #feed_title,
 #floatingTitle .title,
-.postHeader .postTitle a { font: normal 12px 'Helvetica Neue',Helvetica,Arial sans-serif; }
+.postHeader .postTitle a { font: normal 12px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 #feed_title,
 #feed_title a { color: #999; }
@@ -195,7 +197,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 .cdm.expanded .title,
 .cdm.expandable.active .title,
 .cdm.expandable.active:not(.Unread) .title {
-  font:                  bold 18px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  bold 18px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #282828 !important;
   margin-top:            -1px;
   margin-left:           -3px;
@@ -217,7 +219,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 
 /* collapse button bar, set line height for left hand date alignment */
 .collapseBtn:hover {
-  font:                  11px/11px 'Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:                  11px/11px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif !important;
   background:            #ffd8d5 url('linear_images/noise.png') 0 repeat;
   padding-bottom:        6px;
 }
@@ -249,7 +251,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 
 /* align date to collapse button bar line height */
 .cdm.expandable.active .cdmHeader span.updated {
-  font:                  9px/11px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  9px/11px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #999;
   margin-top:            -25px;
 }
@@ -261,7 +263,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 
 /* column position */
 .cdmHeader .hlFeed {
-  font:                  11px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  11px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   margin-left:           -10px;
 }
 
@@ -285,17 +287,17 @@ span.updated { color: #aaa; }
 /* articles - common */
 .hlTitle,
 .cdm .title {
-  font:                  bold 14px 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  bold 14px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #b5423f !important;
 }
 
 /* excerpt content */
 .cdm .cdmExcerpt,
 .cdm.expandable .author,
-.hlTitle .contentPreview { font: 13px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif; }
+.hlTitle .contentPreview { font: 13px/1.5 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 .cdm.expandable.active .author {
-  font:                  11px/1.75 'Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  11px/1.75 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #aaa !important;
   padding-top:           0 !important;
 }
@@ -382,7 +384,7 @@ span.updated { color: #aaa; }
 .cdmContentInner h3,
 .cdmContentInner h4,
 .cdmContentInner h5,
-.cdmContentInner h6 { font-family: 'Helvetica Neue',Helvetica,Arial sans-serif; }
+.cdmContentInner h6 { font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 /* normal or non-cdm view with variable hlfeed and updated widths */
 
@@ -434,7 +436,7 @@ span.updated { color: #aaa; }
 .postHeader div[clear="both"] { display: none !important; }
 
 /* extras */
-.cdmFeedTitle .title { font-family: 'Helvetica Neue',Helvetica,Arial sans-serif; }
+.cdmFeedTitle .title { font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 /* PREFERENCES **************************************************************/
 /* from prefs.css */
