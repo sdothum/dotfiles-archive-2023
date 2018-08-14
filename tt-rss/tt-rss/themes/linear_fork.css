@@ -38,10 +38,13 @@ div#notify.notify.notify_progress { display: none; }
   background:            #eee8d5;
 }
 
+/* category menu width ard right hand counter position */
 #feeds-holder .dijitTreeRow {
-  font-family:           10px/18px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  vertical-align:        bottom;
+  line-height:           18px;
   font-weight:           300;
-  margin-left:           5px;
+  padding:               0 15px 0;
   border-style:          solid;
   border-width:          0 0 1px;
   border-color:          #eee8d5;
@@ -65,11 +68,13 @@ div#notify.notify.notify_progress { display: none; }
 
 /* match line height to feed label font to preserve horizontal scaling alignment */
 #feeds-holder .counterNode {
-  font:                  9px/19px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  9px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  vertical-align:        bottom;
+  line-height:           20px;
   font-weight:           300;
   color:                 #b5423f;
   background:            none;
-  padding:               1px 1px 1px 3px;
+  padding:               0 1px 0 3px;
 }
 
 #feeds-holder .counterNode.aux { background: none; }
