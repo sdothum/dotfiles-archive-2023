@@ -161,11 +161,9 @@ void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8
 void tap_reset(uint16_t keycode, uint8_t layer)
 {
   unregister_code(keycode);
-  if (DT_SHIFT && dt_shift) {
-    clear_oneshot_layer_state(ONESHOT_PRESSED);
-    dt_shift = 0;
-  }
+  if (dt_shift) { clear_oneshot_layer_state(ONESHOT_PRESSED); }
   else { layer_off(layer); }
+  dt_shift = 0;
   tap_rule = 0;                                     // clear retained down_rule, see process_record_user()
 }
 

@@ -10,7 +10,7 @@
 /* STYLING ******************************************************************/
 
 /* menu adjust top to position topmost label */
-#feeds-holder .dijitTreeRow { margin: -4px 0 25px 15px; }
+#feeds-holder .dijitTreeRow { margin: -4px 0 14px 15px; } /* vertical pad by font-size */
 
 #feeds-holder .dijitTreeRow:hover *,
 #feeds-holder .dijitTreeRowSelected .counterNode,
@@ -78,7 +78,7 @@ div#dijit__TreeNode_4 .dijitTreeRowSelected .dijitTreeLabel,
 div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !important; }
 
 /* .cdm.expandable:not(.active) .cdmHeader a.title { */
-/*   font:                  16px 'Helvetica Narrow',Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   font:                  16px 'Roboto Condensed',Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; */
 /*   font-weight:           bold; */
 /* } */
 

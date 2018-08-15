@@ -234,7 +234,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 .hl,
 .cdm.expandable .cdmHeader {
   padding-top:           0 !important;
-  padding-bottom:        5px;
+  padding-bottom:        3px;
 }
 
 .cdm.expandable.active .cdmHeader { margin-bottom: -6px; }

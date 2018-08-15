@@ -309,7 +309,7 @@ select.attachments {
 
 /* RESET ********************************************************************/
 
-html { font: 12px/1.5 'Helvetica Neue',Helvetica,Arial sans-serif; }
+html { font: 12px/1.5 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 :focus { outline: none; }
 
@@ -823,7 +823,7 @@ a:hover { text-decoration: underline; }
 #feed_title,
 #floatingTitle .title,
 .postHeader .postTitle a {
-  font:                  normal normal bold 16px/16px 'Helvetica Neue',Helvetica sans-serif;
+  font:                  normal normal bold 16px/16px Roboto,'Noto Sans','Helvetica Neue',Helvetica sans-serif;
   text-rendering:        optimizeLegibility;
   -webkit-font-smoothing:antialiased;
 }
@@ -974,7 +974,7 @@ a:hover { text-decoration: underline; }
 .cdm.expandable.active .title {
   display:               block;
   margin-bottom:         5px;
-  font:                  normal normal bold 28px/33px 'Helvetica Neue',Helvetica sans-serif;
+  font:                  normal normal bold 28px/33px Roboto,'Noto Sans','Helvetica Neue',Helvetica sans-serif;
   text-rendering:        optimizeLegibility;
   -webkit-font-smoothing:antialiased;
 }
@@ -1239,7 +1239,7 @@ div.articleNote {
 .cdmContentInner h6 {
   margin-top:            35px;
   margin-bottom:         14px;
-  font-family:           'Helvetica Neue',Helvetica sans-serif;
+  font-family:           Roboto,'Noto Sans','Helvetica Neue',Helvetica sans-serif;
   font-weight:           bold;
   text-rendering:        optimizeLegibility;
   -webkit-font-smoothing:antialiased;
@@ -1307,7 +1307,7 @@ div.articleNote {
 }
 
 .cdmFeedTitle .title {
-  font:                  normal normal bold 18px/24px 'Helvetica Neue',Helvetica sans-serif;
+  font:                  normal normal bold 18px/24px Roboto,'Noto Sans','Helvetica Neue',Helvetica sans-serif;
   padding-right:         7px;
   text-rendering:        optimizeLegibility;
   -webkit-font-smoothing:antialiased;
