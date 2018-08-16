@@ -103,9 +103,8 @@ div#notify.notify.notify_progress { display: none; }
 }
 
 /* loading gif */
-.dijitTreeContent { margin-left: -16px; }
+.dijitTreeContent { opacity: 0; } /* unnecessary visual distraction */
 
-.dijitTreeContent,
 #feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: .15; }
 
 /* #feeds-holder { background: #eee; } */
