@@ -96,7 +96,7 @@ div#notify.notify.notify_progress { display: none; }
 
 /* open/close category icon */
 #feeds-holder .dijitTreeExpando {
-  margin:                0 -16px 1px 4px;
+  margin:                0 -16px 1px -2px;  /* left margin flush to border */
   padding-left:          0;
   padding-bottom:        0;
   opacity:               0;
