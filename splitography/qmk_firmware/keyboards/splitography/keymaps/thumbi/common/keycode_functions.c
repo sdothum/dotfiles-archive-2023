@@ -85,11 +85,11 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
   }
 }
 
-// mapped non-shifted keycodes to home row shift toggle
+// remap keycodes to other keycode values via shift for base and caps layers, see process_record_user()
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   // if modifier and only shift modifier and base layer..
-  if (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE)) {
+  if (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS)) {
     if (record->event.pressed) {
       if (!shift) { unregister_code(KC_LSFT); }  // in event of unshifted keycode
       register_code(keycode);
@@ -98,9 +98,9 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
       unregister_code(keycode);
       if (!shift) { register_code(KC_LSFT); }    // restore SFT_T
     }
-    return true;                                 // see process_record_user()
+    return true;                                 // remap complete, see process_record_user()
   }
-  else { return false; }
+  return false;
 }
 
 // .................................................... Triple Dance Shift/Layer

@@ -74,12 +74,12 @@ enum splitography_layers {
  ,_MOUSE
  ,_EDIT
 #ifdef CENTER_TT
- ,_TTSHIFT
- ,_TTNUMBER
- ,_TTREGEX
  ,_TTFNCKEY
+ ,_TTCAPS
  ,_TTCURSOR
  ,_TTMOUSE
+ ,_TTNUMBER
+ ,_TTREGEX
 #endif
  ,_END_LAYERS
 };
@@ -177,7 +177,7 @@ enum splitography_keycodes {
 
 #ifdef CENTER_TT
 #define CNTR_TL TT  (_TTFNCKEY)
-#define CNTR_TR TT  (_TTSHIFT)              // pseudo capslock to avoid TT key_timer conflicts
+#define CNTR_TR TT  (_TTCAPS)               // pseudo capslock to avoid TT key_timer conflicts
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
 #define CNTR_BL TT  (_TTNUMBER)
@@ -281,7 +281,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_COMM:
     if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SLSH)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
     break;
 #endif
 #ifdef CENTER_TT
