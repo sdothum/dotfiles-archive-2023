@@ -10,7 +10,7 @@
 /* STYLING ******************************************************************/
 
 /* menu adjust top to position topmost label */
-#feeds-holder .dijitTreeRow { margin: -4px 0 14px 15px; } /* vertical pad by font-size */
+#feeds-holder .dijitTreeRow { margin: -4px 0 15px 15px; }
 
 #feeds-holder .dijitTreeRow:hover *,
 #feeds-holder .dijitTreeRowSelected .counterNode,
