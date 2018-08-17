@@ -504,7 +504,6 @@ bool raise_number(keyrecord_t *record, uint8_t side)
 #ifdef CENTER_TT
 void tt_clear(void)
 {
-  if (tt_keycode == KC_CAPS) { tap_key(KC_CAPS); }  // clear capslock
   clear_layers();
   set_single_persistent_default_layer(_BASE);
 }

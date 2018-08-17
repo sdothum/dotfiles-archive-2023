@@ -74,6 +74,7 @@ enum splitography_layers {
  ,_MOUSE
  ,_EDIT
 #ifdef CENTER_TT
+ ,_TTSHIFT
  ,_TTNUMBER
  ,_TTREGEX
  ,_TTFNCKEY
@@ -114,6 +115,7 @@ enum splitography_keycodes {
 #define CT_C    CTL_T(KC_C)
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 #define ST_A    SFT_T(KC_A)
+#define ST_SPC  SFT_T(KC_SPC)
 #ifdef HOME_MODS
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
@@ -175,7 +177,7 @@ enum splitography_keycodes {
 
 #ifdef CENTER_TT
 #define CNTR_TL TT  (_TTFNCKEY)
-#define CNTR_TR     KC_CAPS
+#define CNTR_TR TT  (_TTSHIFT)              // pseudo capslock to avoid TT key_timer conflicts
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
 #define CNTR_BL TT  (_TTNUMBER)
@@ -261,22 +263,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LALT);
     break;
   case HOME_A:
+  case ST_SPC:
     tap_mods(record, KC_LSFT);
     break;
   case HOME_T:
-    tap_mods(record, KC_RSFT);              // note: SFT_T actually uses KC_LSFT
+    tap_mods(record, KC_RSFT);
     break;
   // special shift layer mappings
   case KC_DOT:
     if (record->event.pressed) { down_rule = 2; } // dot+space/enter+shift shortcut, see tap_lt()
     else                       { down_rule = 0; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
     break;
   case KC_QUES:
     down_rule = 0;                          // trap layer switching timimg issue between . and ?
     break;
   case KC_COMM:
     if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SLSH)) { return false; }
     break;
 #endif
 #ifdef CENTER_TT
