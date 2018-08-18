@@ -1,11 +1,11 @@
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 // this is the style you want to emulate.
 //
-// To flash splitography firmware
+// To flash splitography / planck firmware
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-//   Reset keyboard or press hw reset button on base (hole)
+//   Reset keyboard or press hw reset button on base
 //
-//   cd qmk_firmware/keyboards/splitography
+//   cd qmk_firmware/keyboards/<keyboard>
 //   sudo make KEYMAP=<keymap> dfu
 //
 //   sudo make clean           (good practice before flashing)
@@ -27,7 +27,7 @@
 //   #define PRIVATE_STRING includes private_string.h, a user defined code
 //   block for the PRIV tap dance e.g. SEND_STRING("secret messape"),
 //   see function private()
-///
+//
 // Code
 // ▔▔▔▔
 //   This source is shamelessly based on the "default" planck layout
@@ -42,14 +42,23 @@
 //   See http://thedarnedestthing.com/colophon
 
 
-
 //                === N O T E ===
 //
 // sudo CPATH=<keymap.c directory>/common make ...
 
 
+#ifndef PLANCK
+#ifndef SPLITOGRAPHY
+#define SPLITOGRAPHY
+#endif
+#endif
+
 #include "config.h"
+#ifdef SPLITOGRAPHY
 #include "splitography.h"
+#else
+#include "planck.h"
+#endif
 #include "action_layer.h"
 #ifdef STENO_ENABLE
 #include "keymap_steno.h"
@@ -73,14 +82,15 @@ enum keyboard_layers {
  ,_FNCKEY
  ,_MOUSE
  ,_EDIT
-#ifdef CENTER_TT
+#ifdef PLANCK
+ ,_ADJUST
+#endif
  ,_TTFNCKEY
  ,_TTCAPS
  ,_TTCURSOR
  ,_TTMOUSE
  ,_TTNUMBER
  ,_TTREGEX
-#endif
  ,_END_LAYERS
 };
 
@@ -95,9 +105,7 @@ enum keyboard_keycodes {
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))
-#ifdef CENTER_TT
  ,TT_ESC
-#endif
 #ifdef STENO_ENABLE
  ,PS_STNA = STN_A
  ,PS_STNO = STN_O
@@ -112,12 +120,17 @@ enum keyboard_keycodes {
 };
 
 // modifier keys
+#ifdef PLANCK
+#define CT_RGHT CTL_T(KC_RGHT)
+#define AT_DOWN ALT_T(KC_DOWN)
+#define GT_UP   GUI_T(KC_UP)
+#endif
 #define AT_B    ALT_T(KC_B)
 #define CT_C    CTL_T(KC_C)
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 #define ST_A    SFT_T(KC_A)
 #define ST_SPC  SFT_T(KC_SPC)
-#ifdef HOME_MODS
+
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
@@ -126,15 +139,12 @@ enum keyboard_keycodes {
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #define HOME_W  GUI_T(KC_W)
-#else
-#define HOME_Q  KC_Q
-#define HOME_H  KC_H
-#define HOME_E  KC_E
-#define HOME_A  KC_A
-#define HOME_T  KC_T
-#define HOME_R  KC_R
-#define HOME_S  KC_S
-#define HOME_W  KC_W
+
+#ifdef PLANCK
+#define S_DOWN  S    (KC_DOWN)
+#define S_LEFT  S    (KC_LEFT)
+#define S_RGHT  S    (KC_RGHT)
+#define S_UP    S    (KC_UP)
 #endif
 
 #include "tapdance.h"
@@ -169,7 +179,13 @@ enum keyboard_keycodes {
 #define TMPASTE LALT(LCTL(KC_V))
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
 #define TT_BSPC LT  (_TTCURSOR, KC_BSPC)
+#ifdef SPLITOGRAPHY
 #define LT_DEL  LT  (_EDIT, KC_DEL)
+#else
+#define LT_DEL  LT  (_ADJUST, KC_DEL)
+#define LT_INS  LT  (_NUMBER, KC_INS)
+#define LT_LEFT LT  (_EDIT,   KC_LEFT)
+#endif
 #define LT_ESC  LT  (_LSYMBOL, KC_ESC)
 #define LT_I    LT  (_LSHIFT, KC_I)
 #define OS_ALT  OSM (MOD_LALT)
@@ -177,21 +193,12 @@ enum keyboard_keycodes {
 #define OS_GUI  OSM (MOD_LGUI)
 #define OS_SFT  OSM (MOD_LSFT)
 
-#ifdef CENTER_TT
 #define CNTR_TL TT  (_TTFNCKEY)
 #define CNTR_TR TT  (_TTCAPS)               // pseudo capslock to avoid TT key_timer conflicts
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
 #define CNTR_BL TT  (_TTNUMBER)
 #define CNTR_BR TT  (_TTREGEX)
-#else
-#define CNTR_TL OSM (MOD_LALT | MOD_LCTL)
-#define CNTR_TR OSM (MOD_LGUI | MOD_LCTL)
-#define CNTR_HL OSM (MOD_LALT | MOD_LSFT)
-#define CNTR_HR OSM (MOD_LGUI | MOD_LSFT)
-#define CNTR_BL TD  (_CAPS)
-#define CNTR_BR OSM (MOD_LSFT | MOD_LCTL)
-#endif
 
 // ........................................................ Default Alpha Layout
 
@@ -210,9 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // ............................................................... Toggle Layers
 
-#ifdef CENTER_TT
 #include "toggle_layout.h"
-#endif
 
 // ......................................................... Short Cuts / Adjust
 
@@ -251,7 +256,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     else { base_n = base_n & ~BASE_2; }
     return false;
-#ifdef HOME_MODS
   case HOME_Q:
   case HOME_W:
     tap_mods(record, KC_LGUI);
@@ -288,18 +292,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
     break;
+#ifdef PLANCK
+  case AT_DOWN:
+    tap_mods(record, KC_LALT);
+    break;
+  case CT_RGHT:
+    tap_mods(record, KC_LGUI);
+    break;
+  case GT_UP:
+    tap_mods(record, KC_LCTL);
+    break;
 #endif
-#ifdef CENTER_TT
   case TT_ESC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     tt_clear();                             // exit TT layer
     return false;
-#endif
+#ifdef SPLITOGRAPHY
   case KC_TAB:
     if (record->event.pressed) { down_rule = 1; } // tab+enter thumb roll, see tap_lt()
     else                       { down_rule = 0; }
     if (raise_number(record, LEFT)) { return false; }
     break;
+#endif
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
@@ -320,7 +334,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_I:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+#ifdef SPLITOGRAPHY
     if (raise_number(record, RIGHT)) { return false; }
+#endif
     tap_layer(record, _LSHIFT);
     break;
   case TD_ENT:
@@ -334,16 +350,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_ESC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
+#ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
-#ifdef CENTER_TT
+#endif
     if (tt_keycode != 0) {
       tt_clear();                           // exit TT layer
       return false;
     }
-#endif
     tap_layer(record, _LSYMBOL);
     thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
+#ifdef PLANCK
+  case KC_TAB:
+    if (record->event.pressed) { down_rule = 1; } // tab+enter thumb roll, see tap_lt()
+    else                       { down_rule = 0; }
+    break;
+#endif
   case SL_TAB:
     thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
     break;
@@ -358,7 +380,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer(record, _RSYMBOL);
     thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
-#ifdef CENTER_TT
   case CNTR_TL:
   case CNTR_TR:
   case CNTR_HL:
@@ -369,7 +390,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (tt_keycode != keycode && tt_keycode != 0) { tt_clear(); }
     tt_escape(record, keycode);
     break;
-#endif
 // #ifdef STENO_ENABLE
 //   case PS_STNA:
 //     stn_layer(record, STN_A, _LSYMBOL);

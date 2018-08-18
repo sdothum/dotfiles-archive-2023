@@ -78,7 +78,7 @@
 
 extern keymap_config_t keymap_config;
 
-enum planck_layers {
+enum keyboard_layers {
   _BASE = 0
  ,_SHIFT
  ,_LSHIFT
@@ -102,12 +102,13 @@ enum planck_layers {
  ,_END_LAYERS
 };
 
-enum planck_keycodes {
+enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
  ,PLOVER
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
+ ,SM_I      // pseudo MT   (MOD_LSFT, S(KC_I))            for shifted key-codes, see process_record_user()
  ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
@@ -129,11 +130,11 @@ enum planck_keycodes {
 };
 
 // modifier keys
-#define AT_B    ALT_T(KC_B)
-#define AT_DOWN ALT_T(KC_DOWN)
 #define CT_RGHT CTL_T(KC_RGHT)
-#define CT_C    CTL_T(KC_C)
+#define AT_DOWN ALT_T(KC_DOWN)
 #define GT_UP   GUI_T(KC_UP)
+#define AT_B    ALT_T(KC_B)
+#define CT_C    CTL_T(KC_C)
 #define MT_E    MT   (MOD_LCTL | MOD_LALT, KC_E)
 #define ST_A    SFT_T(KC_A)
 #define ST_SPC  SFT_T(KC_SPC)
@@ -193,11 +194,12 @@ enum planck_keycodes {
 #define TMCOPY  LALT(LCTL(KC_C))
 #define TMPASTE LALT(LCTL(KC_V))
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
+#define TT_BSPC LT  (_TTCURSOR, KC_BSPC)
 #define LT_DEL  LT  (_ADJUST, KC_DEL)
-#define LT_ESC  LT  (_LSYMBOL, KC_ESC)
-#define LT_I    LT  (_LSHIFT, KC_I)
 #define LT_INS  LT  (_NUMBER, KC_INS)
 #define LT_LEFT LT  (_EDIT,   KC_LEFT)
+#define LT_ESC  LT  (_LSYMBOL, KC_ESC)
+#define LT_I    LT  (_LSHIFT, KC_I)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
@@ -267,13 +269,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (record->event.pressed) {
       base_n = base_n | BASE_1;
       if (base_n == BASE_12) { base_layer(); }
-    } else { base_n = base_n & ~BASE_1; }
+    }
+    else { base_n = base_n & ~BASE_1; }
     return false;
   case BASE2:
     if (record->event.pressed) {
       base_n = base_n | BASE_2;
       if (base_n == BASE_12) { base_layer(); }
-    } else { base_n = base_n & ~BASE_2; }
+    }
+    else { base_n = base_n & ~BASE_2; }
     return false;
 #ifdef HOME_MODS
   case HOME_Q:
@@ -288,10 +292,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_R:
     tap_mods(record, KC_LALT);
     break;
-  case HOME_A:
   case ST_SPC:
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+  case HOME_A:
     tap_mods(record, KC_LSFT);
     break;
+  case SM_I:
+    mt_shift(record, KC_LSFT, 0, KC_I);
   case HOME_T:
     tap_mods(record, KC_RSFT);              // note: SFT_T actually uses KC_LSFT
     break;
@@ -321,6 +328,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #ifdef CENTER_TT
   case TT_ESC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     tt_clear();                             // exit TT layer
     return false;
 #endif
@@ -375,6 +383,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case SL_DEL:
     thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
+    break;
+  case TT_BSPC:
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case LT_BSPC:
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
