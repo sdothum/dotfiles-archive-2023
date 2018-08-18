@@ -297,14 +297,14 @@ span.updated { color: #aaa; }
 /* articles - common */
 .hlTitle,
 .cdm .title {
-  font:                  bold 14px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  bold 13px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #b5423f !important;
 }
 
 /* excerpt content */
 .cdm .cdmExcerpt,
 .cdm.expandable .author,
-.hlTitle .contentPreview { font: 13px/1.5 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+.hlTitle .contentPreview { font: 12px/1.5 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 .cdm.expandable.active .author {
   font:                  10px/1.75 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
@@ -344,6 +344,7 @@ span.updated { color: #aaa; }
 .cdm.expandable:not(.active) .cdmHeader > * {
   padding-top:           0;
   padding-bottom:        0;
+  margin-bottom:         -3px;
 }
 
 .cdmHeader .hlFeed a {

@@ -194,6 +194,7 @@ void space_reset(qk_tap_dance_state_t *state, void *user_data)
 
 // ......................................................... Triple Dance Insert
 
+#ifdef HASKELL
 void double_max(uint8_t count, uint8_t shift, uint16_t keycode)
 {
   if (shift) {
@@ -247,24 +248,6 @@ void equal_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off(EQL_LT);
 }
 
-void greater(qk_tap_dance_state_t *state, void *user_data)
-{
-  uint8_t i;
-  if (state->count > 2) {
-    if (state->pressed) { register_shift(KC_DOT); }
-    else if (state->count == 3) { send_string(" -> "); }
-    else for (i = 0; i < state->count; i++) { shift_key(KC_DOT); }
-  }
-  else if (state->pressed) { register_code(KC_LSFT); }  // down: shift
-  else { double_max(state->count, SHIFT, KC_DOT); }
-  reset_tap_dance(state);
-}
-
-void greater_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  unregister_shift(KC_DOT);
-}
-
 void lesser(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
@@ -283,6 +266,25 @@ void lesser_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_COMM);
   unregister_code(KC_LCTL);
 }
+
+void greater(qk_tap_dance_state_t *state, void *user_data)
+{
+  uint8_t i;
+  if (state->count > 2) {
+    if (state->pressed) { register_shift(KC_DOT); }
+    else if (state->count == 3) { send_string(" -> "); }
+    else for (i = 0; i < state->count; i++) { shift_key(KC_DOT); }
+  }
+  else if (state->pressed) { register_code(KC_LSFT); }  // down: shift
+  else { double_max(state->count, SHIFT, KC_DOT); }
+  reset_tap_dance(state);
+}
+
+void greater_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_shift(KC_DOT);
+}
+#endif
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -347,17 +349,19 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_ASTR] = ACTION_TAP_DANCE_FN         (asterisk)
- ,[_COLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, colon, colon_reset)
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)
  ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
- ,[_EQL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, equal, equal_reset)
- ,[_GT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, greater, greater_reset)
- ,[_LT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lesser, lesser_reset)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
  ,[_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
+#ifdef HASKELL
+ ,[_COLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, colon, colon_reset)
+ ,[_LT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lesser, lesser_reset)
+ ,[_GT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, greater, greater_reset)
+ ,[_EQL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, equal, equal_reset)
+#endif
 };
 
 // .............................................................. Dynamic Layers

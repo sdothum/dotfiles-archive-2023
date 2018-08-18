@@ -79,7 +79,9 @@ enum keyboard_layers {
  ,_RSYMBOL
  ,_PLOVER
  ,_NUMBER
+#ifndef STENO_ENABLE
  ,_FNCKEY
+#endif
  ,_MOUSE
  ,_EDIT
 #ifdef PLANCK
@@ -307,13 +309,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     tt_clear();                             // exit TT layer
     return false;
-#ifdef SPLITOGRAPHY
   case KC_TAB:
     if (record->event.pressed) { down_rule = 1; } // tab+enter thumb roll, see tap_lt()
     else                       { down_rule = 0; }
+#ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
-    break;
 #endif
+    break;
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
@@ -360,12 +362,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer(record, _LSYMBOL);
     thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
-#ifdef PLANCK
-  case KC_TAB:
-    if (record->event.pressed) { down_rule = 1; } // tab+enter thumb roll, see tap_lt()
-    else                       { down_rule = 0; }
-    break;
-#endif
   case SL_TAB:
     thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
     break;
@@ -390,20 +386,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (tt_keycode != keycode && tt_keycode != 0) { tt_clear(); }
     tt_escape(record, keycode);
     break;
-// #ifdef STENO_ENABLE
-//   case PS_STNA:
-//     stn_layer(record, STN_A, _LSYMBOL);
-//     break;
-//   case PS_STNO:
-//     stn_layer(record, STN_O, _NUMBER);
-//     break;
-//   case PS_STNE:
-//     stn_layer(record, STN_E, _FNCKEY);
-//     break;
-//   case PS_STNU:
-//     stn_layer(record, STN_U, _RSYMBOL);
-//     break;
-// #endif
   case PLOVER:
     steno(record);
     return false;
