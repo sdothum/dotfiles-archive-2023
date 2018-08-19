@@ -353,7 +353,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_ESC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
 #endif
