@@ -284,15 +284,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_DOT:
     if (record->event.pressed) { down_rule = 2; } // dot+space/enter+shift shortcut, see tap_lt()
     else                       { down_rule = 0; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     break;
   case KC_QUES:
     down_rule = 0;                          // trap layer switching timimg issue between . and ?
     break;
   case KC_COMM:
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     break;
 #ifdef PLANCK
   case AT_DOWN:
@@ -347,11 +347,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TD_SPC:
     if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     // trap potential repeating enter caused by tap dance definition
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
     tap_layer(record, _RSHIFT);
     break;
   case LT_ESC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
 #endif
@@ -372,6 +374,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case LT_BSPC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     tap_layer(record, _RSYMBOL);
     thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);

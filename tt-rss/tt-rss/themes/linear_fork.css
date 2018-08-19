@@ -297,7 +297,8 @@ span.updated { color: #aaa; }
 /* articles - common */
 .hlTitle,
 .cdm .title {
-  font:                  bold 13px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  13px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font-weight:           bold;
   color:                 #b5423f !important;
 }
 
