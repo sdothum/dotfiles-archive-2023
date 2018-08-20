@@ -84,9 +84,15 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !im
 
 /* highlight colour */
 .hl:hover *,
-.cdm.expandable:not(.active) .cdmHeader:hover * { color: #b5423f !important; }
+.cdm.expandable:not(.active) .cdmHeader:hover * {
+  color:                 #282828 !important;
+  font-weight:           500;
+}
 
-.cdm.expandable.Unread:not(.active) .cdmHeader:hover .title { color: #282828 !important; }
+.cdm.expandable.Unread:not(.active) .cdmHeader:hover .title {
+  color:                 #dc322f !important;
+  font-weight:           bold;
+}
 
 a.title:hover { text-decoration: underline !important; }
 
