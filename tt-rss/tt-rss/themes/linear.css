@@ -85,12 +85,12 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !im
 /* highlight colour */
 .hl:hover *,
 .cdm.expandable:not(.active) .cdmHeader:hover * {
-  color:                 #282828 !important;
+  color:                 #b5423f !important;
   font-weight:           500;
 }
 
 .cdm.expandable.Unread:not(.active) .cdmHeader:hover .title {
-  color:                 #dc322f !important;
+  color:                 #282828 !important;
   font-weight:           bold;
 }
 
