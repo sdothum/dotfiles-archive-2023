@@ -10,6 +10,8 @@ div#notify.notify.notify_progress { display: none; }
 #headlines-frame,
 #headlines-toolbar { background-color: #fdf6e3; }
 
+::-webkit-scrollbar { display: none; }
+
 /* BASE LAYOUT **************************************************************/
 
 #main { background: #eee8d5; }
@@ -36,6 +38,7 @@ div#notify.notify.notify_progress { display: none; }
 #feeds-holder #feedTree {
   padding:               0 0 0 0;
   background:            #eee8d5;
+  overflow:hidden;
 }
 
 /* category menu width ard right hand counter position */

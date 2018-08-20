@@ -161,8 +161,8 @@ while : ;do
               # usb or cloud?
               if [ -d $kindle ] ;then
                 find /tmp -maxdepth 1 -name "*$format" -exec mv -f {} $kindle \;
-                sync &
                 notify low "$title" "$kindle"
+                sync
               else
                 mobi=$(find /tmp -maxdepth 1 -name "*$format")
                 address=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
