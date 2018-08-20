@@ -33,7 +33,7 @@
 }
 
 img[src*='images/star.png'] {
-  background:            url('linear_images/Bookmark.png') no-repeat;
+  background:            url('linear_images/Pin.png') no-repeat;
   opacity:               1.0;
 }
 
@@ -127,9 +127,9 @@ img[src*='images/mark_unset.png'] {
 }
 
 img[src*='images/mark_set.png'] {
-  background:            url('linear_images/Bookmark.png') no-repeat !important;
+  background:            url('linear_images/Pin.png') no-repeat !important;
   transform:             scale(0.8.0.8);
-  opacity:               .8;
+  opacity:               .75;
   margin-left:           -23px;
   -ms-transform:         scale(0.8, 0.8); /* IE 9 */
   -webkit-transform:     scale(0.8, 0.8); /* Safari */
