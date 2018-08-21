@@ -296,7 +296,7 @@ d ? vimb
 = ▔▔▔▔▔▔▔▔▔▔▔▔
 # bitlbee
 # d " add armv7h to arch in pkgbuild
-# d ? centerim5-git
+  d ? centerim5-git
 # libotr
 # weechat
 # xmpppy
