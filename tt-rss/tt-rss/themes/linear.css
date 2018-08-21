@@ -65,7 +65,7 @@ div#dijit__TreeNode_7 .dijitTreeLabel { color: #555 !important; }
 div#dijit__TreeNode_2 .dijitTreeRow:hover .dijitTreeLabel,
 div#dijit__TreeNode_3 .dijitTreeRow:hover .dijitTreeLabel,
 div#dijit__TreeNode_4 .dijitTreeRow:hover .dijitTreeLabel,
-div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #b5423f !important; }
+div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #282828 !important; }
 
 /* only highlight category labels */
 .dijitTreeRowSelected span.dijitFolderOpened  + .dijitTreeLabel,
@@ -75,7 +75,11 @@ div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #b5423f !impo
 div#dijit__TreeNode_2 .dijitTreeRowSelected .dijitTreeLabel,
 div#dijit__TreeNode_3 .dijitTreeRowSelected .dijitTreeLabel,
 div#dijit__TreeNode_4 .dijitTreeRowSelected .dijitTreeLabel,
-div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel { color: #b5423f !important; }
+div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_2 .dijitTreeRowSelected:hover .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeRowSelected:hover .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeRowSelected:hover .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b5423f !important; }
 
 /* .cdm.expandable:not(.active) .cdmHeader a.title { */
 /*   font:                  16px 'Roboto Condensed',Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; */
