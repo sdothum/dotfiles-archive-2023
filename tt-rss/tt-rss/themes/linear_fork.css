@@ -67,6 +67,9 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 #feeds-holder .dijitTreeRow [aria-expanded="true"],
 #feeds-holder .dijitTreeRow [aria-expanded="false"] { color: #555; }
 
+#feeds-holder .dijitTreeRow:hover [aria-expanded="true"],
+#feeds-holder .dijitTreeRow:hover [aria-expanded="false"] { color: #282828; }
+
 #feeds-holder .dijitTreeRowSelected {
   background:            #eee8d5;
   border-style:          solid;
@@ -90,7 +93,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 #feeds-holder .counterNode.aux { background: none; }
 
 #feeds-holder .dijitTreeRow:hover .counterNode {
-  color:                 #b5423f;
+  color:                 #282828;
   background:            #eee8d5;
 }
 
