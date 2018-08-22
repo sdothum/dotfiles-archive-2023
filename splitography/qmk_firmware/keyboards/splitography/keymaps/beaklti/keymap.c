@@ -335,7 +335,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
   case LT_I:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, RIGHT)) { return false; }
 #endif
