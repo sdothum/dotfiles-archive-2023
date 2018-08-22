@@ -229,3 +229,5 @@ button.expandPrompt {
 #floatingTitle:not(:empty) { display: none; }
 
 #headlines-frame:before { margin-top: -25px; }
+
+div.dijitDialogPaneContent { background-color: #fdf6e3 !important; }
