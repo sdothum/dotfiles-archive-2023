@@ -143,14 +143,15 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 /* main */
-#toolbar { margin-right: -19px; }
+#toolbar { margin-right: -20px; }
 
 .dijitMenuItemLabel,
 #main-toolbar { font: 10px/16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 #main-toolbar {
-  margin-left:           35px;
-  padding-left:          10px;
+  margin-left:           135px;
+  margin-right:          30px;
+  padding-left:          0;
 }
 
 #main-toolbar .dijitButtonText:not(:hover) { color: #aaa; }
