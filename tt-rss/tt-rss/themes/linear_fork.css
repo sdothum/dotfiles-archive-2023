@@ -303,6 +303,9 @@ div[style="vertical-align : middle"] { width: 85px; }
 
 span.updated { color: #aaa; }
 
+/* add padding below author */
+.cdm.expandable.active .cdmContentInner img { padding-top: 6px; }
+
 .whiteBox + #headlines-spacer { display: none; }
 
 .cdm.expandable,
