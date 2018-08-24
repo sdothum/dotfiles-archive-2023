@@ -223,12 +223,13 @@ div[style="vertical-align : middle"] { width: 85px; }
 .cdm.expandable.active:not(.Unread) .title {
   font:                  bold 16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #282828 !important;
-  margin-top:            -1px;
+  margin-top:            -12px;
+  margin-bottom:         0;
   margin-left:           -3px;
 }
 
 .cdm.expandable:not(.Unread) .title { color: #666 !important; }
-
+/
 .titleWrap a.title:visited,
 .cdm.expanded:not(.Unread) a.title:visited,
 .cdm.expanded.Unread.marked a.title:visited,
@@ -242,11 +243,15 @@ div[style="vertical-align : middle"] { width: 85px; }
 }
 
 /* collapse button bar, set line height for left hand date alignment */
+.collapseBtn { padding-bottom: 4px; }
+
 .collapseBtn:hover {
   font:                  10px/10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif !important;
   background:            #ffd8d5 url('linear_images/noise.png') 0 repeat;
-  padding-bottom:        6px;
 }
+
+/* hide collapse message */
+.collapseBtn:before { content: ''; }
 
 .hl,
 .cdm.expandable .cdmHeader {
@@ -277,7 +282,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 .cdm.expandable.active .cdmHeader span.updated {
   font:                  9px/11px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #999;
-  margin-top:            -25px;
+  margin-top:            -29px;
 }
 
 .cdm.expandable.active div:not(.hlFeed) span.titleWrap + span.updated { top: 34px; }
@@ -380,7 +385,10 @@ span.updated { color: #aaa; }
 /* opacity of replacement close icon to match category column, see modified feeds.php */
 .collapseBtn img { opacity: 0; }
 
-.cdm.expandable.active:hover .collapseBtn img { opacity: .15; }
+.cdm.expandable.active:hover .collapseBtn img {
+  opacity:               .15;
+  margin-top:            -8px;
+}
 
 /* social media link clusters */
 .cdmFooter div,
