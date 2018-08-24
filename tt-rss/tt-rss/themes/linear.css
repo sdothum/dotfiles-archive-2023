@@ -222,13 +222,3 @@ button.expandPrompt {
   background:            #fdf6e3;
   text-align:            center;
 }
-
-.whiteBox + #headlines-spacer { display: none; }
-
-/* disable and cover the floating title white space on feed refresh! */
-#floatingTitle:not(:empty) { display: none; }
-
-#headlines-frame:before { margin-top: -25px; }
-
-/* feeds popup background */
-div.dijitDialogPaneContent { background-color: #fdf6e3 !important; }

@@ -16,8 +16,6 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 
 #ttrssPrefs .dijitContentPane { background: #ffffff; }
 
-::-webkit-scrollbar { display: none; }
-
 /* BASE LAYOUT **************************************************************/
 
 
@@ -305,6 +303,8 @@ div[style="vertical-align : middle"] { width: 85px; }
 
 span.updated { color: #aaa; }
 
+.whiteBox + #headlines-spacer { display: none; }
+
 .cdm.expandable,
 #headlines-frame .hl { border: none; }
 
@@ -408,6 +408,9 @@ span.updated { color: #aaa; }
 /*  */
 /* #floatingTitle .titleWrap span { display: none; } */
 
+/* disable and cover the floating title white space on feed refresh! */
+#floatingTitle:not(:empty) { display: none; }
+
 .postContent h1,
 .postContent h2,
 .postContent h3,
@@ -451,6 +454,8 @@ span.updated { color: #aaa; }
 /*   border-width:          0 0 1px; */
 /*   border-color:          #b5423f; */
 /* } */
+
+#headlines-frame:before { margin-top: -25px; }
 
 .postHeader .postTitle a {
   font-size:             16px;
@@ -518,6 +523,7 @@ img[src*='images/pub_unset.png'] { display: none; }
 
 /* SCROLLBARS ***************************************************************/
 
+/* applying display:none results in periodic inability to mouse scroll */
 ::-webkit-scrollbar { width: 0; }
 
 /* CHECKBOX *****************************************************************/
