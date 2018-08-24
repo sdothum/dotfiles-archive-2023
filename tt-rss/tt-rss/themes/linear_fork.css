@@ -221,7 +221,7 @@ div[style="vertical-align : middle"] { width: 85px; }
 .cdm.expanded .title,
 .cdm.expandable.active .title,
 .cdm.expandable.active:not(.Unread) .title {
-  font:                  bold 18px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                  bold 16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   color:                 #282828 !important;
   margin-top:            -1px;
   margin-left:           -3px;
@@ -371,6 +371,7 @@ span.updated { color: #aaa; }
 .cdmContentInner {
   padding:               0 34px;
   color:                 #444;
+  font-size:             13px;
 }
 
 /* spacing at bottom of expanded article */
