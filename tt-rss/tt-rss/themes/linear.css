@@ -12,10 +12,6 @@
 /* menu adjust top to position topmost label */
 #feeds-holder .dijitTreeRow { margin: -4px 0 15px 15px; }
 
-#feeds-holder .dijitTreeRow:hover *,
-#feeds-holder .dijitTreeRowSelected .counterNode,
-#feeds-holder .dijitTreeRowSelected .dijitTreeLabel { font-weight: 500; }
-
 #feeds-holder .dijitTreeLabel {
   float:                 right;
   margin-right:          6px;

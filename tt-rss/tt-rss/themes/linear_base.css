@@ -1249,7 +1249,7 @@ div.articleNote {
 .cdmContentInner p { max-width: 45em; }
 
 .postContent tr,
-.cdmContentInner tr { vertical-align: top }
+.cdmContentInner tr { vertical-align: top; }
 
 .postContent img,
 .cdmContentInner img {
@@ -1536,7 +1536,7 @@ input[type="checkbox"]:focus { outline: none; }
 
 /* input checked border color */
 input[type="radio"]:checked,
-input[type="checkbox"]:checked { border-color: rgba(0,0,0,.5) }
+input[type="checkbox"]:checked { border-color: rgba(0,0,0,.5); }
 
 /* radio checked */
 input[type="radio"]:checked:before {

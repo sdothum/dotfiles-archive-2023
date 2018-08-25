@@ -147,7 +147,7 @@ img[src*="images/indicator_tiny.gif"] {
 #main-toolbar { font: 10px/16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
 
 #main-toolbar {
-  margin-left:           135px;
+  margin-left:           35px;
   margin-right:          30px;
   padding-left:          0;
 }
@@ -227,7 +227,6 @@ div[style="vertical-align : middle"] { width: 85px; }
 }
 
 .cdm.expandable:not(.Unread) .title { color: #666 !important; }
-/
 .titleWrap a.title:visited,
 .cdm.expanded:not(.Unread) a.title:visited,
 .cdm.expanded.Unread.marked a.title:visited,
