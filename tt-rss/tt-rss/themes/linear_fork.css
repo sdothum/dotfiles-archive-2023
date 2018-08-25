@@ -306,7 +306,14 @@ span.updated { color: #aaa; }
 /* add padding below author */
 .cdm.expandable.active .cdmContentInner img { padding-top: 6px; }
 
-.whiteBox + #headlines-spacer { display: none; }
+.whiteBox + #headlines-spacer,
+#headlines-spacer .loading img { display: none; }
+
+/* line up loading message to hlfeed/update */
+#headlines-spacer {
+  margin-top: 22px;
+  margin-left: 6px;
+}
 
 .cdm.expandable,
 #headlines-frame .hl { border: none; }
