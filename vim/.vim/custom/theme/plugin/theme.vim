@@ -14,6 +14,8 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
+      let g:lightscheme = 'flatwhite'       " light colorscheme (flatwhite, solarized8_high)
+
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let g:source_font = 'Iosevka\'
       let g:prose_font  = 'Iosevka-proof\'
@@ -40,6 +42,11 @@
       let g:rgb_14      = '#93a1a1'         " base1 lightest grey
       let g:rgb_15      = '#fdf6e3'         " base3 light bg
 
+      " flatwhite colour palette (light)
+      if g:lightscheme == 'flatwhite'
+        let g:rgb_15    = '#f7f3ee'         " base3 light bg
+      endif
+
       " quantum colour palette (dark)
       let g:gray1       = '#263238'         " 023 (005f5f)
       let g:gray2       = '#2c3a41'         " 023 (005f5f)
@@ -60,6 +67,21 @@
       augroup END
 
   " Theme ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ...................................................... Default colorscheme
+
+      if has("gui_running")
+        " follow the sun, see crontab
+        if !empty(glob('~/.session/follow_the_sun'))
+          colorscheme quantum
+          set background=dark
+        else
+          call theme#LiteScheme()
+        endif
+      else
+        colorscheme quantum
+        set background=dark
+      endif
 
     " ............................................................ Switch colour
 

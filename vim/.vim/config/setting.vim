@@ -14,8 +14,8 @@
     " ...................................................................... Ale
 
       let g:ale_sign_column_always = 1
-      let g:ale_sign_error         = '━▶'
-      let g:ale_sign_warning       = '→'
+      let g:ale_sign_error         = ''
+      let g:ale_sign_warning       = ''
       let g:ale_linter_aliases     =
           \{
           \  'wiki' : 'markdown'
@@ -349,17 +349,6 @@
     " ................................................................ Solarized
 
       let g:solarized_termtrans = 1         " terminal transparency (0) off (1) on
-
-      if has("gui_running")
-        " follow the sun, see crontab
-        if !empty(glob('~/.session/follow_the_sun'))
-          colorscheme quantum
-          set background=dark
-        else
-          colorscheme solarized8_high
-          set background=light
-        endif
-      endif
       set termguicolors                     " for neovim
 
       syntax enable

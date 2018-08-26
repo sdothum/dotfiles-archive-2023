@@ -43,7 +43,7 @@ d ? conky-lua-archers
   python-pywal
 # scrot
 # shutter
-# slickpicker
+  slickpicker
 # slock
   xautolock
 # xfce4-screenshooter

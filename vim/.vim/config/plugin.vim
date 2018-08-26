@@ -29,6 +29,7 @@
     " ................................................................... Layout
 
       " Plug 'andreypopp/vim-colors-plain'  " monochrome
+      Plug 'kamwitsta/flatwhite-vim'        " flatwhite theme
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme

@@ -46,7 +46,7 @@ case $1 in
   qwerty  |\
   default ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | uppercase)/" $CONFIG ; shift ;;
 
-  *      ) usage ;;
+  *       ) usage ;;
 esac
 
 # steno (mouse may need to be mandisabled in config.h)

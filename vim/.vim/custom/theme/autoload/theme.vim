@@ -99,7 +99,8 @@
         execute 'highlight Cursor          guibg=' . s:dfm_cursor                                   . ' guifg=' . s:dfm_bg
         execute 'highlight MatchParen      guibg=' . s:dfm_match                                    . ' guifg=' . s:dfm_bg . ' gui=bold'
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'    . l:background)
-        execute 'highlight ALEWarningSign  guifg=' . s:dfm_fg
+        " execute 'highlight ALEWarningSign  guifg=' . s:dfm_fg
+        highlight link ALEWarningSign Comment
         call theme#FzfColors()
         call theme#SignifyColors()
         call theme#IndentTheme()
@@ -167,6 +168,12 @@
 
     " ............................................................ Switch colour
 
+      function! theme#LiteScheme()
+        " must set background before colorscheme for flatwhite colors
+        let &background = 'light'
+        execute 'colorscheme ' . g:lightscheme
+      endfunction
+
       " toggle colour scheme
       function! theme#LiteSwitch()
         call core#Trace('theme#LiteSwitch()')
@@ -176,8 +183,7 @@
           let &background = 'dark'
           colorscheme quantum
         else
-          let &background = 'light'
-          colorscheme solarized8_high
+          call theme#LiteScheme()
         endif
         let s:sync = 1                      " see theme#IndentTheme()
         call ui#LiteType()
