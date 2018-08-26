@@ -85,7 +85,11 @@
     " .................................................. Quote enclose selection
 
       " extend enclosing %V 1 char right to enclose last character of block
-      vnoremap '                  :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
-      vnoremap "                  :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+      vnoremap '                   :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
+      vnoremap "                   :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
+
+" ..................................................................... CSS sort
+
+      nmap     <silent><leader>css :g/{/normal! f{viB:sort<C-v><CR><CR>
 
 " edit.vim
