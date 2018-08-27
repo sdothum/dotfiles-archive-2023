@@ -101,6 +101,11 @@
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'    . l:background)
         " execute 'highlight ALEWarningSign  guifg=' . s:dfm_fg
         highlight link ALEWarningSign Comment
+        " add flatwhite contrast
+        if &background == 'light' && g:lightscheme == 'flatwhite'
+          highlight! link Search SpellBad
+          highlight  StatuslineNC guifg=#ffffff
+        endif
         call theme#FzfColors()
         call theme#SignifyColors()
         call theme#IndentTheme()
@@ -168,10 +173,15 @@
 
     " ............................................................ Switch colour
 
-      function! theme#LiteScheme()
-        " must set background before colorscheme for flatwhite colors
-        let &background = 'light'
-        execute 'colorscheme ' . g:lightscheme
+      function! theme#ColorScheme(contrast)
+        if a:contrast == 0
+          " must set background before colorscheme for flatwhite colors
+          let &background = 'light'
+          execute 'colorscheme ' . g:lightscheme
+        else
+          let &background = 'dark'
+          colorscheme quantum
+        endif
       endfunction
 
       " toggle colour scheme
@@ -180,10 +190,9 @@
         " trap and ignore initialization error
         call core#Quietly('LiteDFMClose')
         if &background == 'light'
-          let &background = 'dark'
-          colorscheme quantum
+          call theme#ColorScheme(1)
         else
-          call theme#LiteScheme()
+          call theme#ColorScheme(0)
         endif
         let s:sync = 1                      " see theme#IndentTheme()
         call ui#LiteType()

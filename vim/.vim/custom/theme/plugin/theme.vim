@@ -71,16 +71,12 @@
     " ...................................................... Default colorscheme
 
       if has("gui_running")
-        " follow the sun, see crontab
-        if !empty(glob('~/.session/follow_the_sun'))
-          colorscheme quantum
-          set background=dark
+        " follow_the_sun on sunrise/sunset, see crontab
+        if !empty(glob('~/.session/nighttime'))
+          call theme#ColorScheme(1)
         else
-          call theme#LiteScheme()
+          call theme#ColorScheme(0)
         endif
-      else
-        colorscheme quantum
-        set background=dark
       endif
 
     " ............................................................ Switch colour

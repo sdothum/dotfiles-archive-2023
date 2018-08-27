@@ -11,10 +11,24 @@ usage() {
   exit 1
 }
 
+FOLLOW=$HOME/.session/follow_the_sun
 LOCATION=$HOME/.session/location
-COLORSCHEME=$HOME/.session/follow_the_sun
+COLORSCHEME=$HOME/.session/nighttime
 # location offset from ottawa (system) time in -%H%M, +%H%M
 offset=+0000
+
+setlink() {
+  link=$(readlink -f $2)
+  [ ${1##*/} = ${link##*/} ] || ln -sf $1 $2
+}
+
+daytime() {
+  rm -f $COLORSCHEME
+  setlink $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
+  setlink $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
+}
+
+[ -e $FOLLOW ] || { daytime; exit; }
 
 # import user path
 . $HOME/bin/functions/shell/user_path
@@ -51,20 +65,13 @@ sunrise=$1
 # pm add 12 hours
 sunset=$(( $2 + 1200 ))
 
-setlink() {
-  link=$(readlink -f $2)
-  [ ${1##*/} = ${link##*/} ] || ln -sf $1 $2
-}
-
 # daylight colorsheme?
 now=$(date '+%-H%M' -d "$sign$offset minutes")
 if [ $sunrise -le $now ] && [ $now -le $sunset ] ;then
   if [ -e $COLORSCHEME ] ;then
     notify 'Follow the Sun' 'Light colorsheme'
-    rm -f $COLORSCHEME
   fi
-  setlink $HOME/.gtkrc-2.0.mine.light $HOME/.gtkrc-2.0.mine
-  setlink $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
+  daytime
 else
   if [ ! -e $COLORSCHEME ] ;then
     notify 'Follow the Sun' 'Dark colorsheme'
