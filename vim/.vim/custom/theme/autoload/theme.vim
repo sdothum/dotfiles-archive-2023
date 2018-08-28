@@ -100,10 +100,14 @@
         execute 'highlight MatchParen      guibg=' . s:dfm_match                                    . ' guifg=' . s:dfm_bg . ' gui=bold'
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'    . l:background)
         " execute 'highlight ALEWarningSign  guifg=' . s:dfm_fg
-        highlight link ALEWarningSign Comment
+        highlight link       ALEWarningSign Comment
+        highlight SpellBad   guisp=red gui=undercurl
+        highlight SpellCap   guisp=red gui=undercurl
+        highlight SpellRare  guisp=red gui=undercurl
+        highlight SpellLocal guisp=red gui=undercurl
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
-          highlight! link Search SpellBad
+          highlight! link         Search SpellBad
           highlight  StatuslineNC guifg=#ffffff
         endif
         call theme#FzfColors()

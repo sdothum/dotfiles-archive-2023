@@ -25,8 +25,8 @@ shift
 
 for i in $files ;do
   ditto "$gallery $i"
-  convert -size 1600 -quality $quality $i $GALLERY/$i
-  convert -size 320  -quality $quality $i $GALLERY/{i%.jpg}_1.jpg
+  convert $i -size 1600 -quality $quality $GALLERY/$i
+  convert $i -size 320  -quality $quality $GALLERY/{i%.jpg}_1.jpg
 done
 
 # vim: set ft=sh: #

@@ -242,7 +242,7 @@ static uint8_t base_n    = 0;
 static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode+shift, see tap_lt()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
+{ 
   switch (keycode) {
   case BASE1:
     if (record->event.pressed) {

@@ -14,7 +14,7 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:lightscheme = 'flatwhite'       " light colorscheme (flatwhite, solarized8_high)
+      let g:lightscheme = !empty(glob('~/.session/solarized')) ? 'solarized8_high' : 'flatwhite'
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let g:source_font = 'Iosevka\'

@@ -28,7 +28,7 @@ daytime() {
   setlink $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
 }
 
-[ -e $FOLLOW ] || { daytime; exit; }
+[ -e $FOLLOW ] || { daytime ; exit ;}
 
 # import user path
 . $HOME/bin/functions/shell/user_path
