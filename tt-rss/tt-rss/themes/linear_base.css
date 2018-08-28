@@ -747,11 +747,7 @@ a:hover { text-decoration: underline; }
 
 #feeds-holder .dijitTreeExpando:hover { opacity: .175; }
 
-#feeds-holder .dijitTreeExpandoClosed {
-}
-
-#feeds-holder .dijitTreeExpandoOpened B:sort
-{ background: url('linear_images/close.png') no-repeat; }
+#feeds-holder .dijitTreeExpandoOpened { background: url('linear_images/close.png') no-repeat; }
 
 #feeds-holder .dijitFolderClosed,
 #feeds-holder .dijitFolderOpened,
@@ -1240,6 +1236,51 @@ div.articleNote {
 .cdmContentInner h6 {
   -webkit-font-smoothing:    antialiased;
   font-family:               Roboto,'Noto Sans','Helvetica Neue',Helvetica sans-serif;
+  font-weight:               bold;
+  margin-bottom:             14px;
+  margin-top:                35px;
+  text-rendering:            optimizeLegibility;
+}
+
+.postContent p,
+.cdmContentInner p { max-width: 45em; }
+
+.postContent tr,
+.cdmContentInner tr { vertical-align: top; }
+
+.postContent img,
+.cdmContentInner img {
+  height:                    auto;
+  max-width:                 100%;
+  width:                     auto;
+}
+
+.postContent figure,
+.cdmContentInner figure {
+  font-size:                 12px;
+  font-style:                italic;
+  margin:                    1em 0;
+}
+
+.postContent pre,
+.cdmContentInner pre { white-space: pre-wrap; }
+
+.postContent q,
+.cdmContentInner q,
+.postContent blockquote,
+.cdmContentInner blockquote {
+  border-left:               4px solid #ccc;
+  display:                   block;
+  margin:                    1em 0;
+  padding:                   0 0 0 1em;
+}
+
+/* extras */
+#cmdline {
+  background-color:          #444;
+  border-radius:             4px;
+  bottom:                    5px;
+  color:                     #fff;
   font-weight:               bold;
   left:                      5px;
   padding:                   1px;

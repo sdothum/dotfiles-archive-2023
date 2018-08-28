@@ -14,7 +14,8 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:lightscheme = !empty(glob('~/.session/solarized')) ? 'solarized8_high' : 'flatwhite'
+      " diff mode doesn't work well with reverse (block) highlighting
+      let g:lightscheme = !empty(glob('~/.session/solarized')) || &diff == 1 ? 'solarized8_high' : 'flatwhite'
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let g:source_font = 'Iosevka\'
