@@ -43,7 +43,7 @@
     " ............................................................... Modifiable
 
       " toggle modifiable attribute
-      nmap <silent><leader>-      :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+      nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " protected help
       autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
@@ -85,28 +85,27 @@
       command! CloseUnique if !core#CloseDiffOrig() | silent bdelete! | endif
 
       " save buffers
-      nmap <silent><leader>w      :silent write!<CR>
-      nmap <leader>W              :silent write !sudo tee % >/dev/null<CR>
-      nmap <silent><leader>ww     :silent wqall!<CR>
+      nmap <silent><leader>w  :silent write!<CR>
+      nmap <leader>W          :silent write !sudo tee % >/dev/null<CR>
+      nmap <silent><leader>ww :silent wqall!<CR>
 
       " close buffers
-      nmap <silent><leader>d      :silent CloseUnique<CR>
-      nmap <silent><leader>DD     :silent call core#CloseDiffOrig()<CR>:%bdelete!<CR>
-      nmap <leader>D              :silent Singleton<CR>
+      nmap <silent><leader>d  :silent CloseUnique<CR>
+      nmap <silent><leader>DD :silent call core#CloseDiffOrig()<CR>:%bdelete!<CR>
+      nmap <leader>D          :silent Singleton<CR>
       " discard quit
-      nmap <silent><leader>qq     :quitall!<CR>
-
-      " pre-write formatting
-      autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
+      nmap <silent><leader>qq :quitall!<CR>
 
       " auto backup
-      autocmd buffer BufWrite    * call core#QueueFile()
+      autocmd buffer BufWrite      * call core#QueueFile()
       " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
-      autocmd buffer FocusLost   * silent call core#QueueBuffers()
+      autocmd buffer FocusLost     * silent call core#QueueBuffers()
 
+      " " pre-write formatting
+      " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
       " " focus oriented formatting
-      " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
-      " autocmd buffer FocusLost * call core#StripTrailingWhitespaces()
+      " autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
+      " autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
 
     " ......................................................... Buffer switching
 
@@ -125,55 +124,55 @@
 
       " splitography/planck thumb H keyboard specific buffer navigation key assignments
       if $BEAKL > ''
-        nmap <silent><Delete>     :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
-        nmap <silent><Enter>      :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+        nmap <silent><Delete> :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
+        nmap <silent><Enter>  :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
       else
-        nmap <silent>-            :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
-        nmap <silent>+            :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+        nmap <silent>-        :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
+        nmap <silent>+        :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
       endif
       " switch to previously edited/viewed buffer
-      nmap <silent><BS>           :silent call core#CloseDiffOrig()<CR>:silent edit #<CR>
+      nmap <silent><BS>       :silent call core#CloseDiffOrig()<CR>:silent edit #<CR>
 
   " Window actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .......................................................... Window handling
 
       " kill (close) current window
-      noremap <leader>q           <C-w>q
+      noremap <leader>q       <C-w>q
       " close all other windows
-      noremap <leader>Q           <C-w>o
+      noremap <leader>Q       <C-w>o
 
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      noremap <leader>z           <C-w>v<C-w>l
-      noremap <leader>Z           <C-w>s<C-w>l
+      noremap <leader>z       <C-w>v<C-w>l
+      noremap <leader>Z       <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      noremap <leader>zz          <C-w><Bar>
-      noremap <leader>ZZ          <C-w>_
+      noremap <leader>zz      <C-w><Bar>
+      noremap <leader>ZZ      <C-w>_
       " adjust all splits to the same size
-      noremap <leader>=           <C-w>=
+      noremap <leader>=       <C-w>=
 
-      nnoremap <Up>               :resize +5<CR>
-      nnoremap <Down>             :resize -5<CR>
-      nnoremap <Left>             :vertical resize -5<CR>
-      nnoremap <Right>            :vertical resize +5<CR>
+      nnoremap <Up>           :resize +5<CR>
+      nnoremap <Down>         :resize -5<CR>
+      nnoremap <Left>         :vertical resize -5<CR>
+      nnoremap <Right>        :vertical resize +5<CR>
 
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
       " switch to left / right split
-      " noremap <C-m>             <C-w>h
-      " noremap <C-e>             <C-w>l
-      noremap <C-Left>            <C-w>h
-      noremap <C-Right>           <C-w>l
+      " noremap <C-m>         <C-w>h
+      " noremap <C-e>         <C-w>l
+      noremap <C-Left>        <C-w>h
+      noremap <C-Right>       <C-w>l
       " switch to top / bottom split
-      " noremap <C-l>             <C-w>k
-      " noremap <C-n>             <C-w>j
-      noremap <C-Up>              <C-w>k
-      noremap <C-Down>            <C-w>j
+      " noremap <C-l>         <C-w>k
+      " noremap <C-n>         <C-w>j
+      noremap <C-Up>          <C-w>k
+      noremap <C-Down>        <C-w>j
       " switch windows
-      " noremap <C-w>             <C-w><C-w>
+      " noremap <C-w>         <C-w><C-w>
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

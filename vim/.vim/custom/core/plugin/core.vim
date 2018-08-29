@@ -28,14 +28,14 @@
       " open shell session in buffer directory
       command! Term silent call system('term "vimterm" STACK')
 
-      nnoremap <silent><C-t> :Term<CR>
-      inoremap <silent><C-t> <C-o>:Term<CR>
+      nnoremap <silent><C-t>   :Term<CR>
+      inoremap <silent><C-t>   <C-o>:Term<CR>
 
     " ............................................................... Dictionary
 
       " lookup word under cursor
-      nnoremap <silent><C-k> :silent call system('term "vimterm" STACK SHELL "dict <C-r><C-w> \| less"')<CR>
-      inoremap <silent><C-k> <C-o>:silent call system('term "vimterm" STACK SHELL "dict <C-r><C-w> \| less"')<CR>
+      nnoremap <silent><C-k>   :silent call system('term "vimterm" STACK SHELL "dict <C-r><C-w> \| less"')<CR>
+      inoremap <silent><C-k>   <C-o>:silent call system('term "vimterm" STACK SHELL "dict <C-r><C-w> \| less"')<CR>
 
     " ............................................................... Print file
 
@@ -43,7 +43,7 @@
 
     " .................................................................... Debug
 
-      nnoremap <silent><S-F12>     :let g:trace = g:trace == 0 ? 1 : 0<CR>
+      nnoremap <silent><S-F12> :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -80,7 +80,12 @@
 
     " ................................................................ Line wrap
 
-      nmap <silent><leader><CR> :call core#ToggleWrap()<CR>
+      nmap <silent><leader><CR>    :call core#ToggleWrap()<CR>
+
+    " ......................................................... Strip whitespace
+    
+      nmap <silent><F5>            :call core#StripTrailingWhitespaces()<CR>
+      vmap <silent><F5>            <C-o>:call core#StripTrailingWhitespaces()<CR>
 
     " ..................................................... Save cursor position
 
@@ -120,7 +125,7 @@
 
     " .......................................................... CSS block align
 
-      nnoremap <silent><F5>       :call core#CssBlockAlign()<CR>
+      nnoremap <silent><S-F5>     :call core#CssBlockAlign()<CR>
 
   " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

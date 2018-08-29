@@ -17,7 +17,7 @@ elif cpu celeron ;then
 elif gpu macbook ;then
   size=9
 elif gpu inspiron ;then
-  size=10
+  hdmi && size=8 || size=10
 elif gpu nvidia ;then
   is display +1920 && size=11 || { is display +1440 && size=8 || size=9 ;}
 elif laptop ;then

@@ -21,6 +21,7 @@ leader='<Space>'
 ignore_plug='ale_detail|AutoPairs|YRMapsExpression'
 
 maps() {
+  notify 'Vim' 'Generating maps'
   # note ! to force overwrite and suppress prompts
   vim -c "redir! >$vmap | silent! map | redir END | quit"
   cat $vmap | grep -v '^. *<Plug>' |
@@ -41,7 +42,7 @@ maps() {
 }
 
 [ "$1" = help   ] && usage
-[ -e $index:map ] && { stest -qr -n $index:map $vimrc || { notify 'Vim' 'Generating maps' ; maps ;};}
+[ -e $index:map ] && { stest -qr -n $index:map $vimrc && maps ;} || maps
 [ $1            ] || title=true
 
 list() {
