@@ -9,8 +9,8 @@
 
 /* STYLING ******************************************************************/
 
-/* menu adjust top to position topmost label */
-#feeds-holder .dijitTreeRow { margin: -4px 0 15px 15px; }
+/* top (adjust topmost label) right bottom left (gap to edge) */
+#feeds-holder .dijitTreeRow { margin: -4px 0 15px 5px; }
 
 #feeds-holder .dijitTreeLabel {
   float:                     right;
@@ -19,13 +19,13 @@
 
 #feeds-holder #feedTree {
   padding-top:               0;
-  width:                     170px;
+  width:                     150px;
 }
 
 #feeds-holder {
-  /* margin-right:       i   -15px; */
+  /* margin-right:           -15px; */
   margin-left:               -15px;
-  width:                     170px !important;
+  width:                     150px !important;
 }
 
 img[src*='images/star.png'] {
@@ -178,17 +178,17 @@ button.expandPrompt {
   color:                     #871c1c;
   content:                   'gravity\Awell'; /* line break */
   display:                   block;
-  font:                      100 19px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                      100 17px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   letter-spacing:            4px;
-  margin-top:                77px; /* ~ holder width / golden ratio - font-size x 1.5 */
+  margin-top:                67px; /* ~ holder width / golden ratio - font-size x 1.5 */
   position:                  fixed;
   text-align:                right;
   white-space:               pre; /* line break */
-  width:                     168px; /* right align with counter column */
+  width:                     153px; /* right align with counter column */
 }
 
 /* top of feed category selection list */
-#feeds-holder { margin-top: 170px; /* holder width */ }
+#feeds-holder { margin-top: 150px; /* holder width */ }
 
 /* end of feed marker */
 #headlines-spacer {
@@ -202,7 +202,7 @@ button.expandPrompt {
   bottom:                    0;
   color:                     #b5423f;
   content:                   'refresh ‧•‧ gravity well'; /* dot bullet dot */
-  font:                      100 19px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:                      100 17px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   left:                      -35px;
   letter-spacing:            4px;
   padding:                   10px;

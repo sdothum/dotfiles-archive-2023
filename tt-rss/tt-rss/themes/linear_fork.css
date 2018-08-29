@@ -46,14 +46,14 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
   padding:                   0 0 0 0;
 }
 
-/* category menu width ard right hand counter position */
+/* counter padding to right margin */
 #feeds-holder .dijitTreeRow {
   border-color:              #eee8d5;
   border-style:              solid;
   border-width:              0 0 1px;
   font:                      300 10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   line-height:               18px;
-  padding:                   0 15px 0;
+  padding:                   0 10px 0;
   vertical-align:            bottom;
 }
 
