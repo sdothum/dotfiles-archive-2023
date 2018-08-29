@@ -52,8 +52,8 @@ elif is display -2560 ;then
   hc set window_gap                   2
   hc set frame_gap                    $(( $SHADOW * 2 / 3 ))
 else
-  hc set window_gap                   10
-  hc set frame_gap                    $(( $SHADOW * 3 / 4 ))
+  hc set window_gap                   13
+  hc set frame_gap                    $(( $SHADOW * 2 / 3 ))
 fi
 
 # vim: set ft=sh: #
