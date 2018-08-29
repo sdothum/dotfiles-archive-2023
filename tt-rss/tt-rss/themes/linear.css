@@ -28,6 +28,9 @@
   width:                     150px !important;
 }
 
+/* margin around feed..headline region */
+#headlines-frame { padding: 0 30px 30px !important; }
+
 img[src*='images/star.png'] {
   background:                url('linear_images/Pin.png') no-repeat;
   opacity:                   1.0;
