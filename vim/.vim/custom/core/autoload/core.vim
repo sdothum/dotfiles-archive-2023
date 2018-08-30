@@ -444,6 +444,13 @@
         return &filetype == 'help' || mode() == 't'
       endfunction
 
+    " ........................................................... Plugin windows
+
+      " plugin splits typically are named '[<plugin>]' or '__<plugin>__'
+      function! core#PluginWindow()
+        return expand('%:r') =~ '^[[_].*'
+      endfunction
+
     " ............................................................... Modifiable
 
       " [regex name, filetype, modifiable, wordcount] rule tuple

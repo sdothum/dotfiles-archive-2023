@@ -47,8 +47,8 @@
       imap <silent><S-F7> <C-o>:call ui#SwitchView()<CR>
       vmap <silent><S-F7> <C-o>:call ui#SwitchView()<CR>
 
-      " intial view mode: source code or prose
-      autocmd ui BufEnter * call ui#LiteType()
+      " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
+      autocmd ui BufEnter * if !core#PluginWindow() | call ui#LiteType() | endif
 
   " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
