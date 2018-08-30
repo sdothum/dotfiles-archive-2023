@@ -242,7 +242,7 @@ static uint8_t base_n    = 0;
 static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode+shift, see tap_lt()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{ 
+{
   switch (keycode) {
   case BASE1:
     if (record->event.pressed) {
@@ -292,7 +292,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_COMM:
     if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SLSH)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     break;
 #ifdef PLANCK
   case AT_DOWN:
