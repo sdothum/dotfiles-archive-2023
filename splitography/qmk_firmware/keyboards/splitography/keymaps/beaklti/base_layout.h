@@ -64,7 +64,7 @@
   // |------+------+------+------+------+-------------+------+------+------+------+------|
   // |   Q  |   H  |   E  |   A  |   ?  |Cursor| Mouse|   C  |   T  |   R  |   S  |   W  |
   // |------+------+------+------+------+------|------+------+------+------+------+------|
-  // |   J  |   _  |   "  |   K  |   /  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
+  // |   J  |   _  |   "  |   K  |   !  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
   // |                           |  Tab |   I  |  f() |  Del |                           |
   // | Ctrl |  GUI |  Alt |  Tab |   I  |  Ins | Left |  f() |  Del | Down |  Up  | Right|
@@ -74,7 +74,7 @@
   [_RSHIFT] = {
     {KC_COLN, S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_TL, CNTR_TR, KC_G,    KC_D,    KC_N,    KC_M,    KC_X   },
     {S(KC_Q), S(KC_H), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, KC_C,    KC_T,    KC_R,    KC_S,    KC_W   },
-    {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
+    {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_EXLM, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
 #ifdef SPLITOGRAPHY
     {_______, _______, _______, _______, KC_TAB,  S(KC_I), ___fn__, KC_DEL,  _______, _______, _______, _______},
 #else

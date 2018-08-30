@@ -43,7 +43,7 @@
 
     " .................................................................... Debug
 
-      nnoremap <silent><S-F12> :let g:trace = g:trace == 0 ? 1 : 0<CR>
+      nnoremap <silent><F11>   :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -62,9 +62,12 @@
         autocmd core VimEnter * call core#RedrawGui()
       endif
 
-      nnoremap <silent><F12>       :call core#ToggleGui()<CR>
-      inoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR>
-      vnoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR>
+      nnoremap <silent><F12>       :call core#ToggleGui()<CR>:call core#ToggleGui()<CR>
+      inoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR><C-o>:call core#ToggleGui()<CR>
+      vnoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR><C-o>:call core#ToggleGui()<CR>
+      nnoremap <silent><S-F12>     :call core#ToggleGui()<CR>
+      inoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>
+      vnoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>
 
     " .................................................. Column and line numbers
 

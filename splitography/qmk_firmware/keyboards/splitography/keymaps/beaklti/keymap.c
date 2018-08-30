@@ -292,7 +292,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_COMM:
     if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SLSH)) { return false; }
     break;
 #ifdef PLANCK
   case AT_DOWN:
