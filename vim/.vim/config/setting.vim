@@ -364,25 +364,6 @@
       " let g:tagbar_ctags_bin    = 'ctags-exuberant'
       let g:tagbar_map_togglesort = 'r'     " preserve sneak s
 
-      " markdown via .ctags
-      let g:tagbar_type_markdown =
-          \{
-          \  'ctagstype'  : 'markdown'
-          \, 'kinds'      : ['h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3']
-          \}
-
-      " " see https://github.com/jszakmeister/markdown2ctags
-      " let g:tagbar_type_markdown =
-      "     \{
-      "     \  'ctagstype'  : 'markdown'
-      "     \, 'ctagsbin'   : '~/.vim/bin/markdown2ctags.py'
-      "     \, 'ctagsargs'  : '-f - --sort=yes'
-      "     \, 'kinds'      : ['s:sections', 'i:images']
-      "     \, 'sro'        : '|'
-      "     \, 'kind2scope' : { 's' : 'section' }
-      "     \, 'sort'       : 0
-      "     \}
-
       nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
     " ................................................................. Yankring
