@@ -109,7 +109,11 @@
       let g:gundo_preview_height  = 20
       let g:gundo_close_on_revert = 1       " automatically close windows
 
-      nmap <silent><leader>u :GundoToggle<CR>
+      " while not used for prose, gundo alters markdown filetype to conf(?)
+      command! SourceUndo if !core#Prose() | execute 'GundoToggle' | endif
+
+      " nmap <silent><leader>u :GundoToggle<CR>
+      nmap <silent><leader>u   :SourceUndo<CR>
 
       autocmd plugin BufEnter  __Gundo__         setlocal numberwidth=3 foldcolumn=0
       " for instance when gundo window is orphaned (trap timing conflict)

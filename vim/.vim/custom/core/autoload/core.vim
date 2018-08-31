@@ -446,7 +446,7 @@
 
     " ........................................................... Plugin windows
 
-      " plugin splits typically are named '[<plugin>]' or '__<plugin>__'
+      " plugin buffers typically are named '[<plugin>]' or '__<plugin>__'
       function! core#PluginWindow()
         return expand('%:r') =~ '^[[_].*'
       endfunction

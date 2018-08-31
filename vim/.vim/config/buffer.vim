@@ -61,8 +61,8 @@
 
       " toggle diff of original file
       command! DiffOrig if !core#CloseDiffOrig()
-               \| vert new | set bt=nofile | r ++edit # | 0d_
-               \| diffthis | wincmd p | diffthis | endif
+               \ | vert new | set bt=nofile | r ++edit # | 0d_
+               \ | diffthis | wincmd p | diffthis | endif
 
       " go to left window in case a diff window is already open and close it
       nmap <silent><leader>dd     :silent DiffOrig<CR>
@@ -96,16 +96,17 @@
       " discard quit
       nmap <silent><leader>qq :quitall!<CR>
 
-      " auto backup
-      autocmd buffer BufWrite      * call core#QueueFile()
-      " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
-      autocmd buffer FocusLost     * silent call core#QueueBuffers()
+      " pre-write formatting
+      autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
 
-      " " pre-write formatting
-      " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
+      " auto backup
+      autocmd buffer BufWrite    * call core#QueueFile()
+      " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
+      autocmd buffer FocusLost   * silent call core#QueueBuffers()
+
       " " focus oriented formatting
-      " autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
-      " autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
+      " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
+      " autocmd buffer FocusLost * call core#StripTrailingWhitespaces()
 
     " ......................................................... Buffer switching
 
