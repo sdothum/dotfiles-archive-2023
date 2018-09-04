@@ -11,7 +11,7 @@ threshold1=${1:-30}
 threshold2=${2:-20}
 
 trap "echo ; trace '$(basename $0) ended'" INT
-trace "$(basename $0) [<ms>] started, threshold=${threshold}ms.."
+trace "$(basename $0) [<ms> [<ms>]] started: threshold >${threshold1} ms ${NOCOLOR}>${threshold2} ms.."
 
 # latency exceptions
 ping $target | while read sixtyfour bytes latency ;do

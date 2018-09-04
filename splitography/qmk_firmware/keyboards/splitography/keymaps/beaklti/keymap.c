@@ -231,7 +231,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "sounds.h"
 
-// ........................................................... User Keycode Trap
+
+// User Keycode Trap
+// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 
 #include "keycode_functions.c"
 
@@ -239,25 +241,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define BASE_2  2
 #define BASE_12 3
 static uint8_t base_n    = 0;
+
 static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode+shift, see tap_lt()
+static uint8_t repeating = 0;               // rolling key repeat mode, see thumb_roll()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
+  // rolling key pre-process
   switch (keycode) {
-  case BASE1:
-    if (record->event.pressed) {
-      base_n = base_n | BASE_1;
-      if (base_n == BASE_12) { base_layer(); }
-    }
-    else { base_n = base_n & ~BASE_1; }
-    return false;
-  case BASE2:
-    if (record->event.pressed) {
-      base_n = base_n | BASE_2;
-      if (base_n == BASE_12) { base_layer(); }
-    }
-    else { base_n = base_n & ~BASE_2; }
-    return false;
+  case SL_TAB:
+    repeating += record->event.pressed ? 0 : 1;
+    break;
+  default:
+    repeating = 0;
+  }
+
+  switch (keycode) {
+
+  // ........................................................ Home Row Modifiers
+
   case HOME_Q:
   case HOME_W:
     tap_mods(record, KC_LGUI);
@@ -280,42 +282,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_T:
     tap_mods(record, KC_RSFT);              // note: SFT_T actually uses KC_LSFT
     break;
-  // special shift layer mappings
-  case KC_DOT:
-    if (record->event.pressed) { down_rule = 2; } // dot+space/enter+shift shortcut, see tap_lt()
-    else                       { down_rule = 0; }
-    if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
-    break;
-  case KC_QUES:
-    down_rule = 0;                          // trap layer switching timimg issue between . and ?
-    break;
-  case KC_COMM:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
-    break;
-#ifdef PLANCK
-  case AT_DOWN:
-    tap_mods(record, KC_LALT);
-    break;
-  case CT_RGHT:
-    tap_mods(record, KC_LGUI);
-    break;
-  case GT_UP:
-    tap_mods(record, KC_LCTL);
-    break;
-#endif
-  case TT_ESC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
-    tt_clear();                             // exit TT layer
-    return false;
-  case KC_TAB:
-    if (record->event.pressed) { down_rule = 1; } // tab+enter thumb roll, see tap_lt()
-    else                       { down_rule = 0; }
-#ifdef SPLITOGRAPHY
-    if (raise_number(record, LEFT)) { return false; }
-#endif
-    break;
+
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
@@ -325,31 +292,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case OS_GUI:
     tap_mods(record, KC_LGUI);
     break;
-  case SM_G:
-    mt_shift(record, KC_LALT, KC_LSFT, KC_G);
+
+  // ...................................................... Center Toggle Layers
+
+  case CNTR_TL:
+  case CNTR_TR:
+  case CNTR_HL:
+  case CNTR_HR:
+  case CNTR_BL:
+  case CNTR_BR:
+    // return to base layer first if different TT layer selected
+    if (tt_keycode != keycode && tt_keycode != 0) { tt_clear(); }
+    tt_escape(record, keycode);
     break;
-  case SA_PERC:
-    mt_shift(record, KC_LALT, 0, KC_5);
-    break;
-  case SG_TILD:
-    mt_shift(record, KC_LGUI, 0, KC_GRV);
-    break;
-  case LT_I:
-#ifdef SPLITOGRAPHY
-    if (raise_number(record, RIGHT)) { return false; }
-#endif
-    tap_layer(record, _LSHIFT);
-    break;
-  case TD_ENT:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
-    break;
-  case TD_SPC:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
-    // trap potential repeating enter caused by tap dance definition
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
-    tap_layer(record, _RSHIFT);
-    break;
+
+  case TT_ESC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
+    tt_clear();                             // exit TT layer
+    return false;
+
+  // ................................................................ Thumb Keys
+
   case LT_ESC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_TAB)) { return false; }
@@ -361,35 +324,115 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       return false;
     }
     tap_layer(record, _LSYMBOL);
-    thumb_roll(record, LEFT, 0, 0, _LSYMBOL, _RSYMBOL);
+    thumb_roll(record, LEFT, 0, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
   case SL_TAB:
-    thumb_roll(record, LEFT, SHIFT, KC_TAB, _MOUSE, _RSYMBOL);
+    down_rule = key_event(record, 1);       // tab+enter thumb roll, see tap_lt()
+    thumb_roll(record, LEFT, SHIFT, KC_TAB, repeating, _MOUSE, _RSYMBOL);
     break;
-  case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, _MOUSE, _LSYMBOL);
+  case KC_TAB:
+    down_rule = key_event(record, 1);       // dot+tab+enter thumb roll, see tap_lt()
+#ifdef SPLITOGRAPHY
+    if (raise_number(record, LEFT)) { return false; }
+#endif
     break;
+
+  case LT_I:
+#ifdef SPLITOGRAPHY
+    if (raise_number(record, RIGHT)) { return false; }
+#endif
+    tap_layer(record, _LSHIFT);
+    break;
+
+  case TD_SPC:
+    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
+    // trap potential repeating enter caused by tap dance definition
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+    tap_layer(record, _RSHIFT);
+    break;
+  case TD_ENT:
+    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
+    break;
+
   case TT_BSPC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case LT_BSPC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     tap_layer(record, _RSYMBOL);
-    thumb_roll(record, RIGHT, 0, 0, _RSYMBOL, _LSYMBOL);
+    thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL);
     break;
-  case CNTR_TL:
-  case CNTR_TR:
-  case CNTR_HL:
-  case CNTR_HR:
-  case CNTR_BL:
-  case CNTR_BR:
-    // return to base layer first if different TT layer selected
-    if (tt_keycode != keycode && tt_keycode != 0) { tt_clear(); }
-    tt_escape(record, keycode);
+  case SL_DEL:
+    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, 0, _MOUSE, _LSYMBOL);
     break;
+
+  // .............................................................. Special Keys
+
+  case KC_BSLS:
+    if (down_rule) { tap_key(KC_ENT); return false; } // down_rule persistance for tap_lt()
+    break;
+  case KC_COMM:
+    if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
+    break;
+  // special shift layer mappings
+  case KC_DOT:
+    down_rule = key_event(record, 2);       // dot+space/enter+shift shortcut, see tap_lt()
+    if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
+    break;
+  case SM_G:
+    mt_shift(record, KC_LALT, KC_LSFT, KC_G);
+    break;
+  case SA_PERC:
+    mt_shift(record, KC_LALT, 0, KC_5);
+    break;
+  case KC_QUES:
+    down_rule = 0;                          // trap layer switching timimg issue between . and ?
+    break;
+  case SG_TILD:
+    mt_shift(record, KC_LGUI, 0, KC_GRV);
+    break;
+
+  // ............................................................ Thumb Row Keys
+
+#ifdef PLANCK
+  case AT_DOWN:
+    tap_mods(record, KC_LALT);
+    break;
+  case CT_RGHT:
+    tap_mods(record, KC_LGUI);
+    break;
+  case GT_UP:
+    tap_mods(record, KC_LCTL);
+    break;
+#endif
+
+  // ................................................................ Steno Keys
+
   case PLOVER:
     steno(record);
     return false;
+  case BASE1:
+    if (record->event.pressed) {
+      base_n = base_n | BASE_1;
+      if (base_n == BASE_12) { base_layer(); }
+    }
+    else { base_n = base_n & ~BASE_1; }
+    return false;
+  case BASE2:
+    if (record->event.pressed) {
+      base_n = base_n | BASE_2;
+      if (base_n == BASE_12) { base_layer(); }
+    }
+    else { base_n = base_n & ~BASE_2; }
+    return false;
+
+  // ................................................................ Other Keys
+
   default:
     key_timer = 0;                          // regular keycode, clear timer in keycode_functions.h
   }

@@ -21,7 +21,7 @@
       " example: draw ruler
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
       function! heading#Drawline(delimiter)
-        call Underline(a:delimiter)
+        call heading#Underline(a:delimiter)
         if virtcol('.') < g:linewidth       " for mirrored left/right margin spacing
           " let l:col = g:linewidth - virtcol('.') - l:col + 1
           let l:col   = g:linewidth - virtcol('.')

@@ -113,7 +113,8 @@ d ? conky-lua-archers
 # budgie-desktop-git
 # herbstluftwm
 # openbox
-# wmutils-git
+  windowchef-git
+  wmutils-git
 
 
 = window properties
@@ -135,7 +136,7 @@ d ? conky-lua-archers
 # bspwm-git
 # lua-posix
 # sxhkd
-# sxhkd-git
+  sxhkd-git
 
 
 = gnome

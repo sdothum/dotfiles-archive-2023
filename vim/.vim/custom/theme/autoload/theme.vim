@@ -276,7 +276,7 @@
       function! theme#NoTilde()
         " hide tilde marker (not applicable to console)
         if $DISPLAY > ''
-          execute 'highlight EndOfBuffer guifg=' . s:dfm_bg
+          execute 'highlight EndOfBuffer ctermfg=black guifg=' . s:dfm_bg
           " reset menu highlight after loading autocompletion plugin
           execute 'highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
           " match command line tab menu
