@@ -302,7 +302,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case CNTR_BL:
   case CNTR_BR:
     // return to base layer first if different TT layer selected
-    if (tt_keycode != keycode && tt_keycode != 0) { tt_clear(); }
+    if (tt_keycode != keycode && tt_keycode) { tt_clear(); }
     tt_escape(record, keycode);
     break;
 
@@ -319,10 +319,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
 #endif
-    if (tt_keycode != 0) {
-      tt_clear();                           // exit TT layer
-      return false;
-    }
+    if (tt_keycode) { tt_clear(); return false; }
     tap_layer(record, _LSYMBOL);
     thumb_roll(record, LEFT, 0, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
