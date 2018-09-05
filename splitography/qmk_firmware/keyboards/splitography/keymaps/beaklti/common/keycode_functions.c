@@ -84,10 +84,7 @@ static uint16_t key_timer = 0;
 bool key_press(uint8_t shift, uint16_t keycode)
 {
   if (keycode) {
-    if (timer_elapsed(key_timer) < TAPPING_TERM) {
-      tap_mod(shift, keycode);
-      return true;
-    }
+    if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_mod(shift, keycode); return true; }
   }
   return false;
 }
@@ -485,10 +482,7 @@ bool raise_number(keyrecord_t *record, uint8_t side)
 {
   if (record->event.pressed) {
     double_key |= side;
-    if (double_key == (LEFT | RIGHT)) {
-      layer_on(_NUMBER);
-      return true;
-    }
+    if (double_key == (LEFT | RIGHT)) { layer_on(_NUMBER); return true; }
   }
   else {
     double_key &= ~side;
