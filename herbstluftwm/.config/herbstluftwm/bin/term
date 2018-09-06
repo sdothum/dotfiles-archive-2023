@@ -7,26 +7,36 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID| TABBED | BG <colour> | BLACKBOARD | TR | VISIBLE | WAIT | FORTUNE | MENU ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID| BLACKBOARD | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, STACK, MAX, VERTICAL, HORIZONTAL, GRID herbstluftwm hooks for setting layout and geometry
 #        FORTUNE, login notifier message
-#        BG <colour>, colour is #hex
 #        BLACKBOARD, cinema background mode for omxplayer
-#        TR, enable urxvt pseudo transparency
 #        VISIBLE, wait for window visibility
 #        WAIT, for process to complete before returning
 #        SHELL <command>, for simpler unquoted command passing
 # Note:  title may not contain spaces, use hyphen or underscore in place
 
 SHELL=/usr/bin/dash
-TERM=urxvt
 blackboard='#000000'
+
+which alacritty 2>/dev/null && TERM=alacritty || TERM=urxvt
+case $TERM in
+  alacritty) TITLE=--title
+             NAME=--class
+             BLACKBOARD="--config-file $HOME/.config/alacritty/blackboard.yml"
+             XY='--dimensions 120 30' ;;
+
+  urxvt    ) TITLE=-title
+             NAME=-name
+             BLACKBOARD="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'"
+             XY='-geometry 1024x600+0+0' ;;
+esac
 
 # first parameter may be title
 if [ "$1" ] ;then
-  if echo $1 | egrep -qv 'FLOAT|STACK|MAX|VERTICAL|HORIZONTAL|GRID|TABBED|BG|BLACKBOARD|TR|VISIBLE|WAIT|FORTUNE|MENU|SHELL' ;then
-    title="-title $(echo $1 | sed 's/ /_/g')"
+  if echo $1 | egrep -qv 'FLOAT|STACK|MAX|VERTICAL|HORIZONTAL|GRID|BLACKBOARD|VISIBLE|WAIT|FORTUNE|SHELL' ;then
+    title="$TITLE $(echo $1 | sed 's/ /_/g')"
     shift
   fi
 fi
@@ -36,28 +46,16 @@ border() { echo $(( $(query displayheight) * 2 / 15 )) ;}
 
 while [ "$1" ] ;do
   case $1 in
-    FLOAT     ) name='-name float'
-                geometry='-geometry 1024x600+0+0'
-                shift ;;
-
-    STACK     ) stack=true ;                                                   shift ;;
-    MAX       ) name='-name max' ;                                             shift ;;
-    VERTICAL  ) name='-name vertical'--smart-case ;                            shift ;;
-    HORIZONTAL) name='-name horizontal' ;                                      shift ;;
-    GRID      ) name='-name grid' ;                                            shift ;;
-    TABBED    ) tabbed='-pe tabbed' ;                                          shift ;;
-    BG        ) attr="-bg $2" ;                                                shift 2 ;;
-    BLACKBOARD) attr="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'" ; shift ;;
-    TR        ) tr='-tr' ;                                                     shift ;;
-    VISIBLE   ) visible=true ;                                                 shift ;;
-    WAIT      ) wait=true ;                                                    shift ;;
-    FORTUNE   ) touch $FORTUNE:term ;                                          shift ;;
-
-    MENU      ) name="-name menu"
-                stack=true
-                size=$(( $(fontsize) + 4 ))
-                attr="$attr -b $(border) -sh 80 -fn xft:$MONOFONT:size=$size -lsp $(( $size / 4 * 3 ))"
-                shift ;;
+    FLOAT     ) name="$NAME float" ; geometry=$XY ; shift ;;
+    STACK     ) stack=true ;                        shift ;;
+    MAX       ) name="$NAME max" ;                  shift ;;
+    VERTICAL  ) name="$NAME vertical" ;             shift ;;
+    HORIZONTAL) name="$NAME horizontal" ;           shift ;;
+    GRID      ) name="$NAME grid" ;                 shift ;;
+    BLACKBOARD) theme=$BLACKBOARD ;                 shift ;;
+    VISIBLE   ) visible=true ;                      shift ;;
+    WAIT      ) wait=true ;                         shift ;;
+    FORTUNE   ) touch $FORTUNE:term ;               shift ;;
 
     SHELL     ) shift
                 process=$@
@@ -70,12 +68,12 @@ while [ "$1" ] ;do
   esac
 done
 
-[ -z "$name" ] && [ "$title" ] && name="-name ${title#* }"
+[ -z "$name" ] && [ "$title" ] && name="$NAME ${title#* }"
 
 if [ $stack ] ;then
-  $TERM $title $name $geometry $tabbed $attr $tr $cmd
+  $TERM $title $name $geometry $theme $cmd
 else
-  focus $TERM $title $name $geometry $tabbed $attr $tr $cmd
+  focus $TERM $title $name $geometry $theme $cmd
 fi
 
 [ $visible ] && [ "$title" ] && xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"

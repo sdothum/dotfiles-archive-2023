@@ -1,5 +1,6 @@
 adblock :: $HOME/adblock/blacklist $HOME/adblock/whitelist
 addressbook contacts :: $HOME/Maildir/addressbook $HOME/Maildir/contacts
+alacritty :: $(find $HOME/stow/alacritty -type f)
 alot mail :: $HOME/.config/alot/config $HOME/.config/alot/themes/*
 arch bundle :: $HOME/build/archlinux/bundle/*
 arch install :: $HOME/build/archlinux/archlinux-*

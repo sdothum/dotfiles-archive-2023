@@ -9,6 +9,8 @@ if server ;then
   original /etc/conf.d/nfs-server.conf
   # sudo sed -i '/NFSD_OPTS=""/s/""/"-N 2 -N 3"/' /etc/conf.d/nfs-server.conf
   sudo sed -i '/RPCNFSDARGS=""/s/""/"-N 2 -N 3"/' /etc/sysconfig/nfs
+  echo 32767 | sudo tee >/proc/fs/nfsd/max_block_size
+  echo 'w /proc/fs/nfsd/max_block_size - - - - 32768' | sudo tee >/etc/tmpfiles.d/nfsd-block-size.conf
   # rpcbind not required for nfs4
   # systemd enable rpcbind
   systemd enable nfs-server

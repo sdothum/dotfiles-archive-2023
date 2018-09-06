@@ -84,31 +84,30 @@
       function! theme#Theme()
         call core#Trace('theme#Theme()')
         let l:background = &background == 'light' ? 'dark' : 'light'
-        execute 'highlight ExtraWhitespace guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
-        execute 'highlight VisualCursor    guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight ReplaceCursor   guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight CommandCursor   guibg=' . theme#Value('s:dfm_cursor_'    . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight Folded          guibg=' . s:dfm_folded                                   . ' guifg=' . s:dfm_bg
-        execute 'highlight User1           guibg=' . s:dfm_bg                                       . ' guifg=' . s:dfm_fg_user1
-        execute 'highlight User2           guibg=' . s:dfm_bg                                       . ' guifg=' . s:dfm_fg_user2
-        execute 'highlight VertSplit       guibg=' . s:dfm_vsplit                                   . ' guifg=' . s:dfm_vsplit
+        execute 'highlight ExtraWhitespace guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
+        execute 'highlight VisualCursor    guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . s:dfm_bg
+        execute 'highlight ReplaceCursor   guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . s:dfm_bg
+        execute 'highlight CommandCursor   guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . s:dfm_bg
+        execute 'highlight Folded          guibg=' . s:dfm_folded     . ' guifg=' . s:dfm_bg
+        execute 'highlight User1           guibg=' . s:dfm_bg         . ' guifg=' . s:dfm_fg_user1
+        execute 'highlight User2           guibg=' . s:dfm_bg         . ' guifg=' . s:dfm_fg_user2
+        execute 'highlight VertSplit       guibg=' . s:dfm_vsplit     . ' guifg=' . s:dfm_vsplit
         execute 'highlight ShowMarksHLl    guibg=' . s:dfm_bg
         execute 'highlight SignColumn      guibg=' . s:dfm_bg
-        execute 'highlight InsertCursor    guibg=' . s:dfm_cursor                                   . ' guifg=' . s:dfm_bg
-        execute 'highlight CursorLine      guibg=' . s:dfm_cursorline                               . ' gui=none'
-        execute 'highlight Cursor          guibg=' . s:dfm_cursor                                   . ' guifg=' . s:dfm_bg
-        execute 'highlight MatchParen      guibg=' . s:dfm_match                                    . ' guifg=' . s:dfm_bg . ' gui=bold'
-        execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'    . l:background)
-        " execute 'highlight ALEWarningSign  guifg=' . s:dfm_fg
-        highlight link       ALEWarningSign Comment
-        highlight SpellBad   guisp=red gui=undercurl
-        highlight SpellCap   guisp=red gui=undercurl
-        highlight SpellRare  guisp=red gui=undercurl
-        highlight SpellLocal guisp=red gui=undercurl
+        execute 'highlight InsertCursor    guibg=' . s:dfm_cursor     . ' guifg=' . s:dfm_bg
+        execute 'highlight CursorLine      guibg=' . s:dfm_cursorline . ' gui=none'
+        execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=#ffffff'
+        execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg . ' gui=bold'
+        execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
+        highlight  link ALEWarningSign     Comment
+        highlight! link SpellBad           ColorColumn
+        highlight  link SpellCap           SpellBad
+        highlight  link SpellRare          SpellBad
+        highlight  link SpellLocal         SpellBad
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
-          highlight! link         Search SpellBad
-          highlight  StatuslineNC guifg=#ffffff
+          execute 'highlight Search        guifg=#ffffff                  guibg=red guisp=red'
+          highlight  StatuslineNC          guifg=#ffffff
         endif
         call theme#FzfColors()
         call theme#SignifyColors()
