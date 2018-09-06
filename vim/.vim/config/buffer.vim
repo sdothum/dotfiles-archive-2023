@@ -96,17 +96,16 @@
       " discard quit
       nmap <silent><leader>qq :quitall!<CR>
 
-      " pre-write formatting
-      autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
-
       " auto backup
-      autocmd buffer BufWrite    * call core#QueueFile()
+      autocmd buffer BufWrite      * call core#QueueFile()
       " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
-      autocmd buffer FocusLost   * silent call core#QueueBuffers()
+      autocmd buffer FocusLost     * silent call core#QueueBuffers()
 
+      " pre-write formatting
+      " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
       " " focus oriented formatting
-      " autocmd buffer BufLeave  * call core#StripTrailingWhitespaces()
-      " autocmd buffer FocusLost * call core#StripTrailingWhitespaces()
+      " autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
+      " autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
 
     " ......................................................... Buffer switching
 

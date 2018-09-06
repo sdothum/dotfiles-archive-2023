@@ -142,11 +142,11 @@
 
 = terminals
 = ▔▔▔▔▔▔▔▔▔
-  alacritty-git
 # kitty
 # putty
 # roxterm
 # rxvt-unicode
+  rxvt-unicode-patched
 # sakura
 # terminator
 # termite-git

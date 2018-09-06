@@ -31,8 +31,10 @@
       let s:dfm_folded_dark     = g:gray4   " vimdiff fold
 
       " cursor line
-      let s:dfm_cursor_light    = '#20bbfc' " iA Writer
-      let s:dfm_cursor_dark     = '#20bbfc' " iA Writer
+      " let s:dfm_cursor_light  = '#20bbfc' " iA Writer
+      " let s:dfm_cursor_dark   = '#20bbfc' " iA Writer
+      let s:dfm_cursor_light    = '#20fccf' " iA Writer analogous color
+      let s:dfm_cursor_dark     = '#20fccf' " iA Writer analogous color
       let s:dfm_bg_line_light   = g:rgb_7   " light cursorline
       let s:dfm_bg_line_dark    = g:gray2   " dark cursorline
       let s:dfm_bg_column_light = '#E2D7B6' " light column (darker shade of rgb_7)
@@ -96,10 +98,11 @@
         execute 'highlight SignColumn      guibg=' . s:dfm_bg
         execute 'highlight InsertCursor    guibg=' . s:dfm_cursor     . ' guifg=' . s:dfm_bg
         execute 'highlight CursorLine      guibg=' . s:dfm_cursorline . ' gui=none'
-        execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=#ffffff'
+        execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=#000000'
         execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg . ' gui=bold'
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
         highlight  link ALEWarningSign     Comment
+        " toggling colorcolunm toggles spell colors (not a prose workflow issue)
         highlight! link SpellBad           ColorColumn
         highlight  link SpellCap           SpellBad
         highlight  link SpellRare          SpellBad

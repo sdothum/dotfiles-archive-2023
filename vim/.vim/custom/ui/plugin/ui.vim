@@ -16,7 +16,8 @@
 
       let g:detail  = 0                     " at cursor (0) tag (1) atom
       let g:view    = 1                     " initial view mode (0) info (1) dfm
-      let g:padding = '     '               " expanded statusline padding
+      let g:pad_in  = '     '               " statusline padding
+      let g:pad_out = '   '                 " expanded statusline padding
 
       augroup ui
         autocmd!
