@@ -132,19 +132,19 @@
           if core#Prose() && a:proof == 0
             return info#Escape(info#Leader('') . '  %{info#UnModified(0)}%*')
           else
-            let l:name     = '%{info#Name()}' . g:pad_in
+            let l:name     = '%{info#Name()}' . g:pad_inner
             " center dfm indicator / proofing statusline
             if s:info == 0
               let l:leader = '%{info#Leader(info#Name())}'
             else
               let l:path   = '%{info#Path()}'
-              let l:leader = '%{info#Leader(info#Path() . g:pad_out . info#Name())}'
+              let l:leader = '%{info#Leader(info#Path() . g:pad_outer . info#Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{info#UnModified(1)}' . g:pad_in . '%{info#PosWordsCol()}'
+            let l:info     = '%{info#UnModified(1)}' . g:pad_inner . '%{info#PosWordsCol()}'
             if s:info == 1
-              let l:name   = '%2*' . l:path . '%1*' . g:pad_out . l:name
-              let l:info  .= g:pad_out . '%2*%{ui#detail()}'
+              let l:name   = '%2*' . l:path . '%1*' . g:pad_outer . l:name
+              let l:info  .= g:pad_outer . '%2*%{ui#detail()}'
             endif
             return info#Escape('%1*' . l:leader . l:name . l:info . '%1*')
           endif

@@ -14,10 +14,10 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:detail  = 0                     " at cursor (0) tag (1) atom
-      let g:view    = 1                     " initial view mode (0) info (1) dfm
-      let g:pad_in  = '     '               " statusline padding
-      let g:pad_out = '   '                 " expanded statusline padding
+      let g:detail    = 0                   " at cursor (0) tag (1) atom
+      let g:view      = 1                   " initial view mode (0) info (1) dfm
+      let g:pad_inner = '     '             " statusline padding
+      let g:pad_outer = '   '               " expanded statusline padding
 
       augroup ui
         autocmd!
