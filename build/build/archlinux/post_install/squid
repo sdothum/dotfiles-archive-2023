@@ -9,6 +9,6 @@ config_install /etc/squid/squid.conf
 systemd stop squid
 sudo squid -zN -z
 
-systemd enable squid
+server && systemd enable squid
 
 # vim: set ft=sh: #
