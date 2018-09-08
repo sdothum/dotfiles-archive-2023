@@ -7,7 +7,7 @@
 # ...................................................................... Syncing
 
 usage() {
-  echo "usage: $(basename $0)(server) 'start/show | c'lient | I'nitialize | l'og | L'ist | q'uit | r@'te <queue>"
+  echo "usage: $(basename $0)(server) 'start/show | c'lient | I'nitialize | l'ist | q'uit | r@'te <queue>"
   echo "usage: $(basename $0)(queue) B|b'ottom | D|d'elete | P|p'ause | R|r'esume | s'earch | T|t'op <queue>"
   echo "usage: $(basename $0)(queue) C'lear"
   echo ' -> nzb d <GID,GID-GID,..>'
@@ -27,21 +27,13 @@ case $action in
       underline $(timestamp)
       nzbget -L G ;;
 
-  @ )  nzbget --rate $queue ;;
+  @ ) nzbget --rate $queue ;;
   B*) nzb b $(nzb S $queue) ;;
-
-  b*) nzbget -E G B $queue
-      nzb ;;
-
-  C*) nzb
-      ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
-
+  b*) nzbget -E G B $queue ; nzb ;;
+  C*) nzb ; ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
   c*) nzbget -o OutputMode=curses -C ;;
-
   D*) nzb d $(nzb S $queue) ;;
-
-  d*) nzbget -E G D $queue
-      nzb ;;
+  d*) nzbget -E G D $queue ; nzb ;;
 
   I*) ifyes 'clear history and queue' && {
         killall nzbget 2>/dev/null
@@ -54,25 +46,12 @@ case $action in
         nzb
       } ;;
 
-  l*) ditto "tail -f /tmp/nzbget.log | g 'error|warning'"
-      tail -f /tmp/nzbget.log | g 'error|warning' ;;
-
-  L*) while : ;do
-        nzb
-        sleep $list_delay
-      done ;;
-
+  l*) while : ;do nzb ; sleep $list_delay ; done ;;
   P*) nzb p $(nzb S $queue) ;;
-
-  p*) nzbget -E G P $queue
-      nzb ;;
-
+  p*) nzbget -E G P $queue ; nzb ;;
   q*) systemd stop nzbget@$USER ;;
   R*) nzb r $(nzb S $queue) ;;
-
-  r*) nzbget -E G U $queue
-      nzb ;;
-
+  r*) nzbget -E G U $queue ; nzb ;;
   S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
 
   s*) if [ "$queue" = queue ] ;then
@@ -82,10 +61,7 @@ case $action in
       fi ;;
 
   T*) nzb t $(nzb S $queue) ;;
-
-  t*) nzbget -E G T $queue
-      nzb ;;
-
+  t*) nzbget -E G T $queue ; nzb ;;
   * ) usage ;;
 esac
 

@@ -139,11 +139,10 @@ img[src*='images/mark_set.png'] {
   color:                     #aaa;
   display:                   inline-block;
   font:                      9px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
-  left:                      2px;
   overflow:                  hidden;
   position:                  absolute;
   text-overflow:             ellipsis;
-  top:                       20px;
+  top:                       17px;
   white-space:               nowrap;
   width:                     85px;
 }
