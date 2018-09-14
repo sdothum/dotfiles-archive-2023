@@ -40,6 +40,7 @@
 # alex
 # haddock
 # happy
+  pandoc
 # stack
 
 

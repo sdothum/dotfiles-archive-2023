@@ -36,7 +36,7 @@ ifno 'sync qmk_firmware repo' || {
 
 # update keymap from stow repo
 mkdir -p $KEYMAP 2>/dev/null
-rsync -avq -KL --delete --exclude .deprecated $HOME/stow/splitography/${SPLITOGRAPHY#$ROOT/}/* $SPLITOGRAPHY/ 2>/dev/null
+rsync -avq -KL --delete --exclude .deprecated $STOW/splitography/${SPLITOGRAPHY#$ROOT/}/* $SPLITOGRAPHY/ 2>/dev/null
 
 # steno (mouse may need to be mandisabled in config.h)
 if [ "$1" = steno ] ;then

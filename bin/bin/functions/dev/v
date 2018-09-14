@@ -18,18 +18,15 @@ LOG=/tmp/vim.log
 echo >$LOG
 [ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true ; term 'vimtrace' tail -f $LOG ;}
 
-hlwm && [ -e $DYNAMIC ] && focus=focus
-console && unset focus || G=-g
-[ -e $SESSION/vim ] && fg=-f
-
 while : ;do
   case $1 in
-    --quote) q='"' ;            shift ;;
-    --role ) role="--role $2" ; shift 2 ;;
-    -f     ) fg=-f ;            shift ;;
-    -c     ) cmd="-c '$2'" ;    shift 2 ;;
+    --quote) quote='"' ;;
+    --role ) role="--role $2" ; shift ;;
+    -f     ) fg=-f ;;
+    -c     ) cmd="-c '$2'" ;    shift ;;
      *     ) break ;;
   esac
+  shift
 done
 
 if [ -z $1 ] ;then
@@ -48,14 +45,15 @@ else
   fi
 fi
 
-if [ -z $q ] ;then
+if [ -z $quote ] ;then
   count=$(echo $file | wc -w)
   [ $count -gt 1 ] && notify low 'Gvim' "$count files to edit"
 fi
 
-[ $focus ] && focus frame
+gui && { gui=-g ; [ -e $DYNAMIC ] && focus frame ;}
+[ -e $SESSION/vim ] && fg=-f
 # --quote used for single space separated filename
-eval $sudo vim $G $role $fg $cmd ${q}$file${q} 2>>$LOG
+eval $sudo vim $gui $role $fg $cmd ${quote}$file${quote} 2>>$LOG
 # prevent premature startup termination on slower processors
 sleep 5
 
@@ -71,9 +69,9 @@ housekeeping() {
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
   vhg                                       # any dangling backups
-  cpu arm && rsync $HOME/stow/.hg $SERVER:$HOME/stow/ >/dev/null 2>&1
+  cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
 }
 
-(pwait "vim.*$G.*$fg.*$cmd.*$file" && housekeeping) &
+(pwait "vim.*$gui.*$fg.*$cmd.*$file" && housekeeping) &
 
 # vim: set ft=sh: #

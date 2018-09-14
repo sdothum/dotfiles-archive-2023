@@ -73,7 +73,7 @@ set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
 
 # tt-rss
-set -x SELF_URL_PATH 'http://luna:8000/tt-rss/#f=39&c=1'
+set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
 
 # ..................................................................... Defaults
 
@@ -98,6 +98,8 @@ set -x LUA_INIT "@$HOME/.luarc"
 set -x RI '--format ansi --no-pager'
 # for xmonad onhost
 set -x HOST (hostname)
+# commom configurations (dotfiles)
+set -x STOW $HOME/stow
 
 # ...................................................................... Session
 

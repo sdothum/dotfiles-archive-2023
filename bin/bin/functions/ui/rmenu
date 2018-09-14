@@ -41,12 +41,9 @@ indent='       '
 [ -e $MENU ] && window=MENU || window=STACK
 
 if [ -z $TERMINAL ] ;then
-  if hlwm ;then
+  if gui ;then
     display=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
     width=$(query displaywidth)
-  elif pstat startx ;then
-    display=0
-    width=$(xrandr 2>/dev/null | grep ' connected ' | cut -d' ' -f3 | cut -dx -f1)
   else
     width=$(tput cols)
   fi
@@ -122,7 +119,7 @@ if [ $display ] ;then
     stdout=$(mktemp)
     trap "rm -f $stdin $stdout" EXIT
     sed "s/^/$indent/" >$stdin
-    # escape movie title (year) parentheses
+    # escape movie title (year) parentheses and quotes for terminal wrappers (see alacritty and urxvt wrappers in ~/bin)
     term "$(escape $title)" WAIT $window SHELL "cat $stdin | fZf $print --prompt=\\\"$(escape $prompt)  \\\" --query=\\\"$query\\\" >$stdout"
     input=$(tail -1 $stdout)
     [ -n "$input" ]

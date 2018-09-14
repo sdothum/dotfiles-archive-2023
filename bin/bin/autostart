@@ -62,7 +62,7 @@ fi
 # autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 # required for alacritty
-which alacritty 2>/dev/null && xclip -r -silent &
+[ -e /usr/bin/alacritty ] && xclip -r -silent &
 
 # if server ;then
 #   dispread -v -d2 -c1 -yl "-P0.012987012987,1,4.11345646438" \

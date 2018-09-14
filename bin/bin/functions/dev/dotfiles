@@ -21,7 +21,7 @@ usage() {
 # list of folders under stow root
 dotfiles=$(cat ${0%/*}/.dotfiles:folders)
 
-cd $HOME/stow
+cd $STOW
 # syncthing housekeeping
 find -name '*.sync-conflict-*' -exec rm {} \;
 find -name '*.syncthing.hsts.tmp' -exec rm {} \;

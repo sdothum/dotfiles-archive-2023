@@ -20,7 +20,7 @@
 SHELL=/usr/bin/dash
 blackboard='#000000'
 
-which alacritty 2>/dev/null && TERM=alacritty || TERM=urxvt
+[ -e /usr/bin/alacritty ] && TERM=alacritty || TERM=urxvt
 case $TERM in
   alacritty) TITLE=--title
              NAME=--class
@@ -46,16 +46,16 @@ border() { echo $(( $(query displayheight) * 2 / 15 )) ;}
 
 while [ "$1" ] ;do
   case $1 in
-    FLOAT     ) name="$NAME float" ; geometry=$XY ; shift ;;
-    STACK     ) stack=true ;                        shift ;;
-    MAX       ) name="$NAME max" ;                  shift ;;
-    VERTICAL  ) name="$NAME vertical" ;             shift ;;
-    HORIZONTAL) name="$NAME horizontal" ;           shift ;;
-    GRID      ) name="$NAME grid" ;                 shift ;;
-    BLACKBOARD) theme=$BLACKBOARD ;                 shift ;;
-    VISIBLE   ) visible=true ;                      shift ;;
-    WAIT      ) wait=true ;                         shift ;;
-    FORTUNE   ) touch $FORTUNE:term ;               shift ;;
+    BLACKBOARD) theme=$BLACKBOARD ;;
+    FLOAT     ) name="$NAME float" ; geometry=$XY ;;
+    FORTUNE   ) touch $FORTUNE:term ;;
+    GRID      ) name="$NAME grid" ;;
+    HORIZONTAL) name="$NAME horizontal" ;;
+    MAX       ) name="$NAME max" ;;
+    STACK     ) stack=true ;;
+    VERTICAL  ) name="$NAME vertical" ;;
+    VISIBLE   ) visible=true ;;
+    WAIT      ) wait=true ;;
 
     SHELL     ) shift
                 process=$@
@@ -66,6 +66,7 @@ while [ "$1" ] ;do
                 cmd="-e $@"
                 break ;;
   esac
+  shift
 done
 
 [ -z "$name" ] && [ "$title" ] && name="$NAME ${title#* }"
@@ -77,7 +78,6 @@ else
 fi
 
 [ $visible ] && [ "$title" ] && xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
-
-[ $wait ] && pwait "$process"
+[ $wait    ] && pwait "$process"
 
 # vim: set ft=sh: #

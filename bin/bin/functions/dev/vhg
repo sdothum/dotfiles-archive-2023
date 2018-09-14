@@ -8,7 +8,7 @@
 
 # Usage: vhg [<queue>], see v(im) script and buffers.vim, core.vim
 
-REPO=${REPO:-$HOME/stow}
+REPO=${REPO:-$STOW}
 JOB=$HOME/.vim/job
 
 # import user path

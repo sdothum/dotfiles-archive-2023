@@ -74,8 +74,7 @@ history() {
   # terminal invocation?
   if [ -t 1 ] ;then
     cmd=$($shell_history | cut -d' ' -f3- | fZf -q "$@")
-    hlwm && xdotool type --delay 0 "$cmd" ||
-            echo "$cmd"
+    gui && xdotool type --delay 0 "$cmd" || echo "$cmd"
   elif [ $1 ] ;then
     # $shell_history | ack "$@" | weekof
     $shell_history | /usr/bin/rg --ignore-case --regexp "$@" | weekof

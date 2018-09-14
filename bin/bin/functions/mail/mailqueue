@@ -26,7 +26,7 @@ if [ $(ls -l $queue | wc -l) -gt 1 ] ;then
   trace 'Sending mail..'
   count=$(echo $(ls -l $queue | wc -l) / 2 | bc)
   # reset any mangled mail permissions
-  [ $(stat --format '%a' $HOME/stow/msmtp/.msmtprc) -ne 600 ] && chmod -c 600 $HOME/.msmtprc
+  [ $(stat --format '%a' $STOW/msmtp/.msmtprc) -ne 600 ] && chmod -c 600 $HOME/.msmtprc
   errmsg=$(/usr/local/bin/msmtp-runqueue.sh)
   echo "$errmsg"
   if echo "$errmsg" | grep -q FAILURE ;then

@@ -17,7 +17,7 @@ VERBOSE=$WSYNC:verbose
 LOG=/tmp/wsync.log
 
 # watchman
-ROOT=$HOME/stow
+ROOT=$STOW
 CMD=wsync
 NAME=$CMD
 SCAN=5
@@ -31,7 +31,7 @@ cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit ;}
 cpu arm && target=$SERVER: || target=$ARM:
 
 info() {
-  name=$(echo $file | filter | sed "s|$HOME/stow/||")
+  name=$(echo $file | filter | sed "s|$STOW/||")
   if [ -n "$name" ] ;then
     trace "$1 ${target}stow ${__YELLOW}$name" >>$LOG
     notify X "$1 ${target}stow" "$name"

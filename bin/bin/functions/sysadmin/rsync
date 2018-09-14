@@ -65,7 +65,7 @@ case $1 in
   ''     ) usage ;;
 
   arm    ) cpu arm || exit
-           rsync --delete --exclude='*sync-conflict*' $USER@$SERVER:$HOME/stow $HOME/ ;;
+           rsync --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
 
   backup ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/ ;} ;;
 
@@ -99,46 +99,46 @@ case $1 in
 
   pi     ) if server ;then
              # rsync --delete --exclude=.deprecated --exclude=.hg \
-             #       $HOME/stow/bash/.bash_logout \
-             #       $HOME/stow/bash/.bash_profile \
-             #       $HOME/stow/bash/.bashrc \
-             #       $HOME/stow/bin/bin \
-             #       $HOME/stow/fonts/.fonts \
-             #       $HOME/stow/images/images \
-             #       $HOME/stow/notmuch/.notmuch-config \
-             #       $HOME/stow/tmux/.tmux.conf \
-             #       $HOME/stow/weechat/.weechat \
-             #       $HOME/stow/X11/.xinitrc \
-             #       $HOME/stow/X11/.Xresources \
+             #       $STOW/bash/.bash_logout \
+             #       $STOW/bash/.bash_profile \
+             #       $STOW/bash/.bashrc \
+             #       $STOW/bin/bin \
+             #       $STOW/fonts/.fonts \
+             #       $STOW/images/images \
+             #       $STOW/notmuch/.notmuch-config \
+             #       $STOW/tmux/.tmux.conf \
+             #       $STOW/weechat/.weechat \
+             #       $STOW/X11/.xinitrc \
+             #       $STOW/X11/.Xresources \
              #       pi:$HOME/
              # rsync --delete --exclude=.deprecated --exclude=.hg \
-             #       $HOME/stow/alot/.config/alot \
-             #       $HOME/stow/amphetype/.config/Amphetype \
-             #       $HOME/stow/dunst/.config/dunst \
-             #       $HOME/stow/fish/.config/fish \
-             #       $HOME/stow/fish/.config/chips \
-             #       $HOME/stow/herbstluftwm/.config/herbstluftwm \
-             #       $HOME/stow/qutebrowser/.config/qutebrowser \
-             #       $HOME/stow/vimb/.config/vimb \
+             #       $STOW/alot/.config/alot \
+             #       $STOW/amphetype/.config/Amphetype \
+             #       $STOW/dunst/.config/dunst \
+             #       $STOW/fish/.config/fish \
+             #       $STOW/fish/.config/chips \
+             #       $STOW/herbstluftwm/.config/herbstluftwm \
+             #       $STOW/qutebrowser/.config/qutebrowser \
+             #       $STOW/vimb/.config/vimb \
              #       pi:$HOME/.config/
              # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=backups \
-             #       $HOME/stow/vim/.vim \
-             #       $HOME/stow/vim/.vimrc \
+             #       $STOW/vim/.vim \
+             #       $STOW/vim/.vimrc \
              #       pi:$HOME/
              # rsync --delete --exclude=.deprecated \
-             #       $HOME/stow/bin/.local/bin \
+             #       $STOW/bin/.local/bin \
              #       pi:$HOME/.local/
              rsync --delete \
                    /usr/share/icons/Paper \
                    pi:$HOME/.local/share/icons/
              # rsync --delete --exclude=.deprecated --exclude=.hg --exclude=makepkg \
-             #       $HOME/stow/build/build/archlinux \
+             #       $STOW/build/build/archlinux \
              #       pi:$HOME/build/
              # ssh pi 'mkdir -p build/root/etc'
              # rsync --delete --exclude=.deprecated --exclude=.hg \
-             #       $HOME/stow/build/build/root/etc/profile.d \
-             #       $HOME/stow/build/build/root/etc/hosts \
-             #       $HOME/stow/build/build/root/etc/X11 \
+             #       $STOW/build/build/root/etc/profile.d \
+             #       $STOW/build/build/root/etc/hosts \
+             #       $STOW/build/build/root/etc/X11 \
              #       pi:$HOME/build/root/etc/
            fi ;;
 
@@ -180,12 +180,12 @@ case $1 in
   stow   ) if server ;then
              sudo chown -cR shum:users /home/shum/stow/build/build/qmk_firmware
              ifyes "backup stow to $laptop" &&
-               rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$laptop:$HOME/
+               rsync --delete --exclude=.SyncArchive $STOW $USER@$laptop:$HOME/
              ifyes "backup stow to $netbook" &&
-               rsync --delete --exclude=.SyncArchive $HOME/stow $USER@$netbook:$HOME/
+               rsync --delete --exclude=.SyncArchive $STOW $USER@$netbook:$HOME/
            else
              ifno "update stow to $SERVER" ||
-               rsync --exclude=.SyncArchive $HOME/stow $USER@$SERVER:$HOME/
+               rsync --exclude=.SyncArchive $STOW $USER@$SERVER:$HOME/
            fi ;;
 
   ttrss  ) if server ;then
@@ -197,7 +197,7 @@ case $1 in
   usb    ) if [ -d /run/media/$USER/$(hostname)/home ] ;then
              rsync_home /run/media/$USER/$(hostname)/home/
              rsync --delete $HOME/bin/functions/log /run/media/$USER/$(hostname)/home/$USER/bin/functions/
-             rsync --delete $HOME/stow/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
+             rsync --delete $STOW/mail/Maildir /run/media/$USER/$(hostname)/home/$USER/stow/mail/
              mkdir -p  /run/media/$USER/$(hostname)/home/$USER.cache
              rsync $HOME/.cache/fcache:* /run/media/$USER/$(hostname)/home/$USER/.cache/
              sync

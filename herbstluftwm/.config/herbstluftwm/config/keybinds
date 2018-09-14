@@ -198,6 +198,7 @@ if [ $BEAKL ] ;then
 elif [ $COLEMAK ] ;then
   hc keybind $Mod-Control-n             resize left  +$resizestep
   hc keybind $Mod-Control-e             resize down  +$resizestep
+
   hc keybind $Mod-Control-u             resize up    +$resizestep
   hc keybind $Mod-Control-i             resize right +$resizestep
 else
@@ -218,12 +219,12 @@ hc keybind $Mod-BackSpace               spawn switch tag
 
 # set layout
 if [ $BEAKL ] ;then
-  hc keybind $Mod-Control-Shift-equal   spawn toggle monocle
+  hc keybind $Mod-Control-0             spawn toggle monocle
 else
   hc keybind $Mod-grave                 spawn toggle monocle
 fi
 hc keybind $Mod-x                       spawn restore layout
-hc keybind $Mod-Control-0               spawn restore layout default
+hc keybind $Mod-Control-minus           spawn restore layout default
 hc keybind $Mod-Control-1               spawn restore layout max
 hc keybind $Mod-Control-2               spawn restore layout halves
 hc keybind $Mod-Control-3               spawn restore layout thirds

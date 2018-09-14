@@ -112,15 +112,15 @@ else
 fi
 
 # to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-hlwm && [ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
+gui && [ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
 # assumes startx on primary display
 # is display -min && PANEL_MARGIN=true
 
 # ................................................................ Miscellaneous
 
 # conky clock secondary monitor
-# export CONKY_Q2=$HOME/stow/conky/$(query displaywidth 1)x$(query displayheight 1)/.conkyrc.qclocktwo
-export CONKY_Q2=$HOME/stow/conky/1680x1050/.conkyrc.qclocktwo
+# export CONKY_Q2=$STOW/conky/$(query displaywidth 1)x$(query displayheight 1)/.conkyrc.qclocktwo
+export CONKY_Q2=$STOW/conky/1680x1050/.conkyrc.qclocktwo
 
 # terminal font
 export MONOFONT=Iosevka

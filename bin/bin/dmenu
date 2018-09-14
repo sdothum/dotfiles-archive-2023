@@ -83,7 +83,7 @@ if [ $(basename $0) = dmenu ] ;then
     usage $0
   fi
   # restore
-  hlwm && [ $fullscreen ] && toggle fullscreen
+  gui && [ $fullscreen ] && toggle fullscreen
   # pstat gpaste-client || gpaste-client &
 fi
 

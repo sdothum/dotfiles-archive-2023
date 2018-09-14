@@ -1,18 +1,16 @@
-#!/usr/bin/bash
+#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# X11 System
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... Commit to repo
+# ..................................................................... Terminal
 
-REPO=${REPO:-$STOW}
-QUEUE=$(date '+%y%m%d%H%M%S')
-JOB=$HOME/.vim/job/$QUEUE
+export SHELL=/usr/bin/fish
 
-hg status | grep '^[MARC] ' | sed 's/^. //' >$JOB
+font="$STOW/alacritty/$(fontsize)pt"
+[ -e $font ] && config="--config-file $font/.config/alacritty/alacritty.yml"
 
-# reusing the vim hg update mechanism
-vhg $QUEUE
+eval /usr/bin/alacritty $config $@
 
 # vim: set ft=sh: #

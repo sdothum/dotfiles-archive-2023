@@ -121,7 +121,7 @@
     " ........................................................ Statusline format
 
       function! ui#detail()
-        return g:detail == 0 ? info#Tag() : info#Atom() . '  ' . info#SpecialChar()
+        return (g:detail == 0 ? info#Tag() : info#Atom()) . '  ' . info#SpecialChar()
       endfunction
 
       " (path) .. filename | pos .. (details)

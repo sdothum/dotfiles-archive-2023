@@ -56,7 +56,7 @@ case $1 in
         # sudo rm -r $HOME/.mutt/cache/*
         sudo rm -r $HOME/.offlineimap/*
         sudo rm -r $HOME/Maildir/*
-        cd $HOME/stow
+        cd $STOW
         stow mail
         imap 1 $2
         mailcot

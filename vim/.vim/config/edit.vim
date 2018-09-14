@@ -88,8 +88,11 @@
       vnoremap '                   :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
       vnoremap "                   :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
-" ..................................................................... CSS sort
+    " ......................................................... CSS sort (align)
 
+      " note <C-v><keycode> to embed command mode keycode
       nmap     <silent><leader>css :g/{/normal! f{viB:sort<C-v><CR><CR>
+      nmap     <silent><leader>cSS :g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
+      nmap     <silent><leader>CSS :g/{/normal! f{viB:sort<C-v><CR><CR>:g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
 
 " edit.vim

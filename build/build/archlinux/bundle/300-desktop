@@ -113,12 +113,15 @@ d ? conky-lua-archers
 # budgie-desktop-git
 # herbstluftwm
 # openbox
-  windowchef-git
-  wmutils-git
+# ruler-git
+# windowchef-git
+# wmutils-git
+# m xwait
 
 
 = window properties
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# m disputils
 # libwm-git
 # sprop-git
   sutils-git

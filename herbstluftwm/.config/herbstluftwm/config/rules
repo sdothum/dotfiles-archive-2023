@@ -31,7 +31,7 @@ hc rule class=VimbT                        tag=1 once
 # hc rule title=IM                         tag=2 index=0 focus=on
 # hc rule title=IRC                        tag=2 index=1 focus=on
 hc rule title=IM                           tag=2 focus=on
-hc rule title=irc                          tag=2 focus=on
+hc rule title=irc                          tag=2
 hc rule title=Messenger                    tag=2 focus=on
 hc rule class=Pidgin                       tag=2
 hc rule title=Twitter                      tag=2
@@ -88,7 +88,7 @@ hc rule class=mpv                          focus=on switchtag=on fullscreen=off 
 hc rule title=omxplay                      fullscreen=on hook=fullscreen
 hc rule class=Plover                       pseudotile=on
 hc rule class=qutebrowser                  focus=on hook=max
-hc rule class=ROX-Filer                    pseudotile=off
+hc rule class=ROX-Filer                    pseudotile=off hook=vertical
 hc rule class=Savebox                      pseudotile=off
 # hc rule title=scratchpad                 pseudotile=on
 hc rule class=Simpletimer                  pseudotile=on

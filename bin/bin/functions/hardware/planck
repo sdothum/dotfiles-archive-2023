@@ -36,7 +36,7 @@ ifno 'sync qmk_firmware repo' || {
 
 # update keymap from stow repo
 mkdir $KEYMAP 2>/dev/null
-rsync -avq -KL --delete --exclude .deprecated $HOME/stow/planck/${KEYMAP#$HOME/}/* $KEYMAP/
+rsync -avq -KL --delete --exclude .deprecated $STOW/planck/${KEYMAP#$HOME/}/* $KEYMAP/
 
 # default keymap
 case $1 in

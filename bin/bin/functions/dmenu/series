@@ -41,7 +41,7 @@ retitle $library >>$retitle
 # list latest television series additions first
 T=t
 episodes=/tmp/dmenu:episodes
-hlwm && monitor=$(herbstclient attr monitors.focus.index)
+gui && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   # clean up episodes

@@ -8,17 +8,17 @@
 
 usage() {
   echo "usage: $(basename $0) pre | post [<version.X>]"
+  echo '       Note: - pre upgrade workflow assumes "ignorepkg postgresql" has been set'
+  echo '             - post upgrade workflow assumes no postgresql <version.X> has been skipped'
   exit 1
 }
 
-# Note: - pre upgrade workflow assumes "ignorepkg postgresql" has been set
-#       - post upgrade workflow assumes no postgresql <version.X> has been skipped
 
 # upgrade postgresql database
 case $1 in
   pre ) vsn=$(psql --version | cut -d' ' -f3)
         systemd start postgresql
-        [ -e /var/lib/postgres/dump.sql-$vsn ] || echo "pg_dumpall > dump.sql-$vsn" | su - postgres
+        [ -e /var/lib/postgres/dump.sql-$vsn ] || echo "pg_dumpall >dump.sql-$vsn" | su - postgres
         systemd stop postgresql
         if [ ! -e /var/lib/postgres/data-$vsn ] ;then
           echo "mv data data-$vsn" | su - postgres
@@ -26,7 +26,7 @@ case $1 in
           echo 'chmod 700 data' | su - postgres
         fi
 
-        sudo pacman -S postgresql
+        sudo pacman -S --noconfirm postgresql postgresql-libs
         echo 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data' | su - postgres
         systemd start postgresql
         sudo systemctl daemon-reload

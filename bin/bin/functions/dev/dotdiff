@@ -13,7 +13,7 @@ usage() {
 
 # diff current sources with dotfiles git repo
 dotfiles=${dotfiles:-/net/depot/dotfiles}
-current=$HOME/stow
+current=$STOW
 [ -d $dotfiles ] || git clone git@github.com:sdothum/dotfiles.git $dotfiles
 
 while : ;do
@@ -30,9 +30,9 @@ while : ;do
 done
 
 
-[ $1               ] || usage
-[ -d $HOME/stow/$1 ] || usage
-[ -z $nosync       ] && { ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull ) ;}
+[ $1          ] || usage
+[ -d $STOW/$1 ] || usage
+[ -z $nosync  ] && { ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull ) ;}
 
 dirdiff $w $current/$1 $dotfiles/$1 "$2"
 

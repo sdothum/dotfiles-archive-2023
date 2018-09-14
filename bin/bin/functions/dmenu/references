@@ -15,7 +15,7 @@ while book=$(ls -1 $library |
              mhistory references |
              rmenu 'Document') || exit ;do
   mhistory references "$book"
-  [ $focus ] || focus frame && focus=true
+  [ $focus ] || { focus frame ; focus=true ;}
   xdg-open "$library/$book.pdf" 2>/dev/null
 done
 

@@ -6,7 +6,7 @@
 
 # .................................................................... Init repo
 
-REPO=${REPO:-$HOME/stow}
+REPO=${REPO:-$STOW}
 ADD=$REPO/.hginit:add
 
 ifno "update repo for $REPO" && exit

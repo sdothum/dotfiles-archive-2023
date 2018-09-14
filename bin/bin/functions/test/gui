@@ -1,18 +1,11 @@
-#!/usr/bin/bash
+#!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# Test
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... Commit to repo
+# ......................................................................... Xorg
 
-REPO=${REPO:-$STOW}
-QUEUE=$(date '+%y%m%d%H%M%S')
-JOB=$HOME/.vim/job/$QUEUE
-
-hg status | grep '^[MARC] ' | sed 's/^. //' >$JOB
-
-# reusing the vim hg update mechanism
-vhg $QUEUE
+pstat startx
 
 # vim: set ft=sh: #

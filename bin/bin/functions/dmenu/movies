@@ -85,7 +85,7 @@ while : ;do
                rox $library
                pwait "ROX-Filer $nzb"
                # force dmenu focus (continue within do loop doesn't guarantee focus)
-               exec dmenu movies $1 ;;
+               exec dmenu movies cache $1 ;;
 
     "$SEARCH") surf $usenet
                pwait "surf $usenet"

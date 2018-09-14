@@ -128,7 +128,7 @@ while : ;do
   while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do
     case $action in
       read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
-              [ $focus ] || focus frame && focus=true
+              [ $focus ] || { focus frame ; focus=true ;}
               FBReader "$file" ;;
 
       edit  ) if grep -q "$book" $HISTORY/ebooks ;then

@@ -19,8 +19,8 @@ usage() {
 #       less frequently than regular file creation/deletion)
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
-# zero caches from interrupted builds can cause hangs
-find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \;
+# zero caches from interrupted builds can cause hangs, ignore pacaur/pkg permission denials 
+find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \; 2>/dev/null
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in

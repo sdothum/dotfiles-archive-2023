@@ -20,7 +20,7 @@ if [ -e ${0%/focus}/functions/focus/$msg ] ;then
   . ${0%/focus}/functions/focus/$msg $@
 elif which $msg >/dev/null 2>&1 ;then
   # dynamic app window creation
-  focus frame
+  [ -e $DYNAMIC ] && focus frame
   $msg $@ &
 else
   usage $0

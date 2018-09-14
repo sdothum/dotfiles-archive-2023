@@ -22,7 +22,7 @@ sudo sed -i -e '/^include_path = ".:\/usr\/share\/pear"/s|"$|:/etc/webapps/tt-rs
          /etc/php/php.ini
 
 server && systemd restart postgresql
-if [ ! -d /srv/lib/postgresql/data/base ] ;then
+if [ ! -d /var/lib/postgresql/data/base ] ;then
   echo "echo \"create user ttrss with password 'ttrss';\" | psql" | su - postgres
   echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
   echo "echo \"create database ttrss;\" | psql" | su - postgres

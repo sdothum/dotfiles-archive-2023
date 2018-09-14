@@ -1,18 +1,15 @@
-#!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# Make
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ............................................................... Commit to repo
+# .................................................................... disputils
 
-REPO=${REPO:-$STOW}
-QUEUE=$(date '+%y%m%d%H%M%S')
-JOB=$HOME/.vim/job/$QUEUE
-
-hg status | grep '^[MARC] ' | sed 's/^. //' >$JOB
-
-# reusing the vim hg update mechanism
-vhg $QUEUE
+cd /net/depot
+[ -d disputils ] || git clone https://github.com/tudurom/disputils.git
+cd disputils
+make clean
+make
+sudo make install
 
 # vim: set ft=sh: #
