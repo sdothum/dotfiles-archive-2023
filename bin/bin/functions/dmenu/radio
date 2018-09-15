@@ -24,10 +24,8 @@ playlist() {
   fi | sed 's/,.*//'
 }
 
-stop() {
-  # url in pkill removed because "?" and "&" in some urls fail match
-  pkill -TERM -f 'mpv --no-cache --quiet' >/dev/null 2>&1
-}
+# url in pkill removed because "?" and "&" in some urls fail match
+stop() { pkill -TERM -f 'mpv --no-cache --quiet' >/dev/null 2>&1 ;}
 
 station() { [ -e $RADIO ] && cat $RADIO || echo 'Radio' ;}
 

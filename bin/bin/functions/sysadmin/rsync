@@ -20,9 +20,7 @@ netbook=monad
 exclude_http_local='--exclude=thedarnedestthing.db --exclude=log'
 exclude_trash='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
-rsync() {
-  /usr/bin/rsync -av --update --exclude='lost+found' $@
-}
+rsync() { /usr/bin/rsync -av --update --exclude='lost+found' $@ ;}
 
 rsync_home() {
   rsync --delete --delete-excluded \
