@@ -69,13 +69,12 @@ if [ $(basename $0) = dmenu ] ;then
   msg=$1
   # unhide desktop
   is multihead || conky clock off
-  if [ -f ${0%/dmenu}/functions/dmenu/$msg ] ;then
-    case $msg in
-      media   |\
-      scripts |\
-      projects) ;;
+  if [ -f ${0%/dmenu}/functions/dmenu/$msg ] ;then case $msg in
+    media   |\
+    scripts |\
+    projects) ;;
 
-      *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..' ; exit 1 ;} ;;
+    *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..' ; exit 1 ;} ;;
     esac
     shift
     . ${0%/dmenu}/functions/dmenu/$msg $@

@@ -12,10 +12,10 @@ usage() {
 }
 
 case $@ in
-  l* | *0) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '1680x1050+0+0' ;;
-  r* | *1) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '2560x1600+1680+0' ;;
-  a*     ) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '4240x1600+0+0' ;;
-  *      ) usage ;;
+l* | *0) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '1680x1050+0+0' ;;
+r* | *1) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '2560x1600+1680+0' ;;
+a*     ) xsetwacom --set 'Wacom Intuos4 WL stylus' MapToOutput '4240x1600+0+0' ;;
+*      ) usage ;;
 esac
 
 # vim: set ft=sh: #

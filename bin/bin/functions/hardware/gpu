@@ -18,23 +18,23 @@ vga() {
 }
 
 case $1 in
-  ''      ) vga 'GeForce 8600M GT'
-            vga 'GeForce GT 650M'
-            vga NVIDIA
-            vga ATI
-            vga Intel
-            # lspci fails on raspberry pi
-            echo arm ;;
+''      ) vga 'GeForce 8600M GT'
+          vga 'GeForce GT 650M'
+          vga NVIDIA
+          vga ATI
+          vga Intel
+          # lspci fails on raspberry pi
+          echo arm ;;
 
-  display ) xrandr 2>/dev/null | grep '*' | awk '{ print $1 }' ;;
+display ) xrandr 2>/dev/null | grep '*' | awk '{ print $1 }' ;;
 
-  ati     |\
-  intel   |\
-  nvidia  ) [ "$(gpu)" = $1 ] ;;
+ati     |\
+intel   |\
+nvidia  ) [ "$(gpu)" = $1 ] ;;
 
-  macbook ) [ "$(gpu)" = 'geforce 8600m gt' ] ;;
-  inspiron) [ "$(gpu)" = 'geforce gt 650m' ] ;;
-  *       ) usage ;;
+macbook ) [ "$(gpu)" = 'geforce 8600m gt' ] ;;
+inspiron) [ "$(gpu)" = 'geforce gt 650m' ] ;;
+*       ) usage ;;
 esac
 
 # vim: set ft=sh: #

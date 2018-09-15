@@ -58,18 +58,18 @@ EOF
   for i in $(find $MAILDIR -maxdepth 1 -type d -name '[a-z]*') ;do
     account=${i##*/}
     case $account in
-      sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
+    sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
 
-      patricia) tag_account $account/INBOX +phconsulting
-                tag_account "$account/[Gmail]/Sent Mail" +patricia ;;
+    patricia) tag_account $account/INBOX +phconsulting
+              tag_account "$account/[Gmail]/Sent Mail" +patricia ;;
 
-      *       ) case $account in
-                  bodyshamanics    ) tag_account $account/INBOX +bodyshamanics +thedarnedestthing ;;
-                  comments         ) tag_account $account/INBOX +comments +thedarnedestthing ;;
-                  steven           ) tag_account $account/INBOX +private +thedarnedestthing ;;
-                  thedarnedestthing) tag_account $account/INBOX +admin +thedarnedestthing ;;
-                  webmaster        ) tag_account $account/INBOX +webmaster +thedarnedestthing ;;
-                esac ;;
+    *       ) case $account in
+              bodyshamanics    ) tag_account $account/INBOX +bodyshamanics +thedarnedestthing ;;
+              comments         ) tag_account $account/INBOX +comments +thedarnedestthing ;;
+              steven           ) tag_account $account/INBOX +private +thedarnedestthing ;;
+              thedarnedestthing) tag_account $account/INBOX +admin +thedarnedestthing ;;
+              webmaster        ) tag_account $account/INBOX +webmaster +thedarnedestthing ;;
+              esac ;;
     esac
   done
 
@@ -135,15 +135,15 @@ mail_daemon() {
 }
 
 case $@ in
-  '') mail_daemon ;;
-  I*) initialize ;;
+'') mail_daemon ;;
+I*) initialize ;;
 
-  l*) ditto 'tail -f /tmp/mailsync.log'
-      tail -f /tmp/mailsync.log ;;
+l*) ditto 'tail -f /tmp/mailsync.log'
+    tail -f /tmp/mailsync.log ;;
 
-  t*) tag_messages ;;
-  1*) one_pass ;;
-  * ) usage ;;
+t*) tag_messages ;;
+1*) one_pass ;;
+* ) usage ;;
 esac
 
 # vim: set ft=sh: #

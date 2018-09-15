@@ -15,10 +15,10 @@ usage() {
 
 original $1
 case $# in
-  2) grep -q "$2" $1 || sudo sed -i "\$a$2" $1 ;;
-  3) grep -q "$2" $1 || sudo sed -i "$3" $1 ;;
-  4) grep -q "$2" $1 && sudo sed -i "$3" $1 || sudo sed -i "$4" $1 ;;
-  *) usage ;;
+2) grep -q "$2" $1 || sudo sed -i "\$a$2" $1 ;;
+3) grep -q "$2" $1 || sudo sed -i "$3" $1 ;;
+4) grep -q "$2" $1 && sudo sed -i "$3" $1 || sudo sed -i "$4" $1 ;;
+*) usage ;;
 esac
 
 # vim: set ft=sh: #

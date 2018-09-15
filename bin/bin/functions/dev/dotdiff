@@ -16,16 +16,15 @@ dotfiles=${dotfiles:-/net/depot/dotfiles}
 current=$STOW
 [ -d $dotfiles ] || git clone git@github.com:sdothum/dotfiles.git $dotfiles
 
-while : ;do
-  case $1 in
-    checkout) cd $dotfiles
-              git pull
-              git checkout $2
-              shift 2
-              nosync=true ;;
+while : ;do case $1 in
+  checkout) cd $dotfiles
+            git pull
+            git checkout $2
+            shift 2
+            nosync=true ;;
 
-    -b      ) w=$1 ; shift ;;
-    *       ) break ;;
+  -b      ) w=$1 ; shift ;;
+  *       ) break ;;
   esac
 done
 

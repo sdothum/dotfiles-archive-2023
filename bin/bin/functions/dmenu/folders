@@ -23,17 +23,16 @@ while name=$(echo | mhistory folders | rmenu 'Find Folder') || exit ;do
 
   [ -d $file ] && dir=$file || dir=$(dirname $file)
   mhistory folders "$dir"
-  while action=$(echo "term\n$(apps \"$filemanagers\")" | rmenu "$dir" -no-custom) || exit ;do
-    case $action in
-      term     ) cd $dir
-                 term "$dir" ;;
+  while action=$(echo "term\n$(apps \"$filemanagers\")" | rmenu "$dir" -no-custom) || exit ;do case $action in
+    term     ) cd $dir
+               term "$dir" ;;
 
-      ncdu     |\
-      ranger   ) term "$dir" $action "$dir" ;;
+    ncdu     |\
+    ranger   ) term "$dir" $action "$dir" ;;
 
-      rox      |\
-      thunar   |\
-      filelight) focus $action "$dir" ;;
+    rox      |\
+    thunar   |\
+    filelight) focus $action "$dir" ;;
     esac
     exit
   done

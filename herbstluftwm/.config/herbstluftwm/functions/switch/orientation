@@ -15,10 +15,10 @@
 [ $(query fcount) -eq 1 ] && restore frames
 
 case $1 in
-  +1) herbstclient rotate ;;
-  -1) herbstclient chain . lock . rotate . rotate . rotate . unlock ;;
-  +2) herbstclient chain . lock . rotate . rotate . focus_edge right . unlock ;;
-  -2) herbstclient chain . lock . rotate . rotate . focus_edge left . unlock ;;
++1) herbstclient rotate ;;
+-1) herbstclient chain . lock . rotate . rotate . rotate . unlock ;;
++2) herbstclient chain . lock . rotate . rotate . focus_edge right . unlock ;;
+-2) herbstclient chain . lock . rotate . rotate . focus_edge left . unlock ;;
 esac
 
 # vim: set ft=sh: #

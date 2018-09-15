@@ -59,10 +59,10 @@ focus_check
 # cancel out above focus frame, tmux rules!
 focus frame
 case $term in
-  byobu ) tmux_session $name ;;
-  tmux  ) tmux_session $name ;;
-  screen) tmux_session $name ;;
-  *     ) term $name FORTUNE TABBED ;;
+byobu ) tmux_session $name ;;
+tmux  ) tmux_session $name ;;
+screen) tmux_session $name ;;
+*     ) term $name FORTUNE TABBED ;;
 esac
 search '--onlyvisible --sync' >/dev/null
 herbstclient attr clients.focus.winid >$SCRATCHPAD

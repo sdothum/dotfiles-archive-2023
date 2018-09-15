@@ -14,22 +14,22 @@ usage() {
 tree=/tmp/pd:r
 
 case $1 in
-  '') usage ;;
+'') usage ;;
 
-  n ) pacman -Qet
-      exit ;;
+n ) pacman -Qet
+    exit ;;
 
-  d ) echo >$tree
-      D=D
-      shift
-      dep='depends on' ;;
+d ) echo >$tree
+    D=D
+    shift
+    dep='depends on' ;;
 
-  R ) D=N
-      shift
-      dep='required by' ;;
+R ) D=N
+    shift
+    dep='required by' ;;
 
-  * ) echo >$tree
-      exec pd R $@ ;;
+* ) echo >$tree
+    exec pd R $@ ;;
 esac
 
 # package dependency

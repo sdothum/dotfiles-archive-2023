@@ -24,23 +24,21 @@ winid=$(herbstclient attr clients.focus.winid 2>/dev/null)
 # initial desktop layouts
 layout() {
   load=true
-  if is display =3440 ;then
-    case $1 in
-      1) thirds     '1' ;;
-      2) max        '2' ;;
-      3) thirds     '3' ;;
-      4) thirds     '4' ;;
-      5) max        '5' ;;
-      6) thirds     '6' ;;
+  if is display =3440 ;then case $1 in
+    1) thirds     '1' ;;
+    2) max        '2' ;;
+    3) thirds     '3' ;;
+    4) thirds     '4' ;;
+    5) max        '5' ;;
+    6) thirds     '6' ;;
     esac
-  elif is display +1440 ;then
-    case $1 in
-      1) halves     '1' ;;
-      2) twofifths  '2' ;;
-      3) twofifths  '3' ;;
-      4) halves     '4' ;;
-      5) horizontal '5' ;;
-      6) halves     '6' ;;
+  elif is display +1440 ;then case $1 in
+    1) halves     '1' ;;
+    2) twofifths  '2' ;;
+    3) twofifths  '3' ;;
+    4) halves     '4' ;;
+    5) horizontal '5' ;;
+    6) halves     '6' ;;
     esac
   else
     herbstclient load $1 '(clients vertical:0)'
@@ -172,39 +170,39 @@ default() {
 [ $1 ] && is fullscreen && toggle fullscreen
 
 case $1 in
-  tags      ) for i in $TAGS ;do layout $i ;done
-              exit ;;
+tags      ) for i in $TAGS ;do layout $i ;done
+            exit ;;
 
-  1:1       |\
-  2:3       |\
-  1:2       |\
-  1:1:1     |\
-  grid      |\
-  halves    |\
-  max       |\
-  quarters  |\
-  thirds    |\
-  vertical  |\
-  horizontal) layout=$1
-              case $layout in
-                1:1  ) layout=halves ;;
-                1:2  ) layout=onethird ;;
-                2:3  ) layout=twofifths ;;
-                1:1:1) layout=thirds ;;
-              esac
-              # may already be in lock state, see toggle monocle
-              [ -e $LOCK ] || herbstclient lock
-              $layout $TAG
-              notify low "Layout $TAG" "$1"
-              # unlock to enable focus borders
-              herbstclient unlock ;;
+1:1       |\
+2:3       |\
+1:2       |\
+1:1:1     |\
+max       |\
+grid      |\
+halves    |\
+thirds    |\
+quarters  |\
+vertical  |\
+horizontal) layout=$1
+            case $layout in
+            1:1  ) layout=halves ;;
+            1:2  ) layout=onethird ;;
+            2:3  ) layout=twofifths ;;
+            1:1:1) layout=thirds ;;
+            esac
+            # may already be in lock state, see toggle monocle
+            [ -e $LOCK ] || herbstclient lock
+            $layout $TAG
+            notify low "Layout $TAG" "$1"
+            # unlock to enable focus borders
+            herbstclient unlock ;;
 
-  default   ) restore windowed
-              exec restore layout $(default) ;;
+default   ) restore windowed
+            exec restore layout $(default) ;;
 
-  *         ) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
-              restore windowed
-              exec restore layout $layout ;;
+*         ) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
+            restore windowed
+            exec restore layout $layout ;;
 esac
 
 if [ $windows -gt 1 ] &&  [ $layout != max ] ;then

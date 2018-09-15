@@ -15,33 +15,33 @@ usage() {
 
 # see .xinitrc
 case $1 in
-  ''  ) ;;
-  2b* ) echo 2bwm >$HOME/.windowmanager ;;
-  aw* ) echo awesome >$HOME/.windowmanager ;;
-  bs* ) echo bspwm >$HOME/.windowmanager ;;
-  bu* ) echo budgie >$HOME/.windowmanager ;;
-  dw  ) echo dwm >$HOME/.windowmanager ;;
-  gn* ) echo gnome >$HOME/.windowmanager ;;
-  go* ) echo goomwwm >$HOME/.windowmanager ;;
-  gu* ) echo guile >$HOME/.windowmanager ;;
-  he* ) echo herbstluftwm >$HOME/.windowmanager ;;
-  i3  ) echo i3 >$HOME/.windowmanager ;;
-  no* ) echo notion >$HOME/.windowmanager ;;
-  lxd*) echo lxde >$HOME/.windowmanager ;;
-  lxq*) echo lxqt >$HOME/.windowmanager ;;
-  op* ) echo openbox >$HOME/.windowmanager ;;
-  ra* ) echo ratpoison >$HOME/.windowmanager ;;
-  sp* ) echo spectrwm >$HOME/.windowmanager ;;
-  st* ) echo stumpwm >$HOME/.windowmanager ;;
-  su* ) echo subtle >$HOME/.windowmanager ;;
-  xf* ) echo xfce4 >$HOME/.windowmanager ;;
-  sh* ) echo shell >$HOME/.windowmanager ;;
-  wi* ) echo windowchef >$HOME/.windowmanager ;;
-  wmi*) echo wmii >$HOME/.windowmanager ;;
-  wm* ) echo wmutils >$HOME/.windowmanager ;;
-  wt* ) echo wtftw >$HOME/.windowmanager ;;
-  xm* ) echo xmonad >$HOME/.windowmanager ;;
-  *   ) usage ;;
+''  ) ;;
+2b* ) echo 2bwm >$HOME/.windowmanager ;;
+aw* ) echo awesome >$HOME/.windowmanager ;;
+bs* ) echo bspwm >$HOME/.windowmanager ;;
+bu* ) echo budgie >$HOME/.windowmanager ;;
+dw  ) echo dwm >$HOME/.windowmanager ;;
+gn* ) echo gnome >$HOME/.windowmanager ;;
+go* ) echo goomwwm >$HOME/.windowmanager ;;
+gu* ) echo guile >$HOME/.windowmanager ;;
+he* ) echo herbstluftwm >$HOME/.windowmanager ;;
+i3  ) echo i3 >$HOME/.windowmanager ;;
+no* ) echo notion >$HOME/.windowmanager ;;
+lxd*) echo lxde >$HOME/.windowmanager ;;
+lxq*) echo lxqt >$HOME/.windowmanager ;;
+op* ) echo openbox >$HOME/.windowmanager ;;
+ra* ) echo ratpoison >$HOME/.windowmanager ;;
+sp* ) echo spectrwm >$HOME/.windowmanager ;;
+st* ) echo stumpwm >$HOME/.windowmanager ;;
+su* ) echo subtle >$HOME/.windowmanager ;;
+xf* ) echo xfce4 >$HOME/.windowmanager ;;
+sh* ) echo shell >$HOME/.windowmanager ;;
+wi* ) echo windowchef >$HOME/.windowmanager ;;
+wmi*) echo wmii >$HOME/.windowmanager ;;
+wm* ) echo wmutils >$HOME/.windowmanager ;;
+wt* ) echo wtftw >$HOME/.windowmanager ;;
+xm* ) echo xmonad >$HOME/.windowmanager ;;
+*   ) usage ;;
 esac
 
 # start X11 from init console
@@ -78,36 +78,36 @@ if console ;then
 
   # session specific clean up
   case $wm in
-    2bwm        ) ;;
-    awesome     ) ;;
-    bspwm       ) ;;
-    budgie      ) ;;
-    cinnamon    ) ;;
-    goomwwm     ) ;;
-    dwm         ) ;;
+  2bwm        ) ;;
+  awesome     ) ;;
+  bspwm       ) ;;
+  budgie      ) ;;
+  cinnamon    ) ;;
+  goomwwm     ) ;;
+  dwm         ) ;;
 
-    herbstluftwm) pkill -KILL -f 'herbst'
-                  killall -KILL qutebrowser 2>/dev/null
-                  killall -KILL weechat 2>/dev/null ;;
+  herbstluftwm) pkill -KILL -f 'herbst'
+                killall -KILL qutebrowser 2>/dev/null
+                killall -KILL weechat 2>/dev/null ;;
 
-    gnome       ) ;;
-    i3          ) ;;
-    kde         ) ;;
-    lxde        ) ;;
-    lxqt        ) ;;
-    mate        ) ;;
-    notion      ) ;;
-    openbox     ) ;;
-    ratpoison   ) ;;
-    razor-qt    ) ;;
-    spectrwm    ) ;;
-    stumpwm     ) ;;
-    subtle      ) ;;
-    wmii        ) ;;
-    wmutils     ) ;;
-    wtftw       ) ;;
-    xfce        ) ;;
-    xmonad      ) ;;
+  gnome       ) ;;
+  i3          ) ;;
+  kde         ) ;;
+  lxde        ) ;;
+  lxqt        ) ;;
+  mate        ) ;;
+  notion      ) ;;
+  openbox     ) ;;
+  ratpoison   ) ;;
+  razor-qt    ) ;;
+  spectrwm    ) ;;
+  stumpwm     ) ;;
+  subtle      ) ;;
+  wmii        ) ;;
+  wmutils     ) ;;
+  wtftw       ) ;;
+  xfce        ) ;;
+  xmonad      ) ;;
   esac
 
   cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s ;};}

@@ -12,27 +12,27 @@ usage() {
 }
 
 case $1 in
-  # use wicd-menu to connect to public wifi
-  off) sudo systemctl disable connman
-       sudo systemctl enable dhcpcd
-       sudo systemctl enable dovecot
-       sudo systemctl enable nginx
-       sudo systemctl enable php-fpm
-       sudo systemctl enable postgresql
-       sudo systemctl enable tt-rss
-       sudo systemctl enable znc ;;
+# use wicd-menu to connect to public wifi
+off) sudo systemctl disable connman
+     sudo systemctl enable dhcpcd
+     sudo systemctl enable dovecot
+     sudo systemctl enable nginx
+     sudo systemctl enable php-fpm
+     sudo systemctl enable postgresql
+     sudo systemctl enable tt-rss
+     sudo systemctl enable znc ;;
 
-  # use local network server services
-  on ) sudo systemctl enable connman
-       sudo systemctl disable dhcpcd
-       sudo systemctl disable dovecot
-       sudo systemctl disable nginx
-       sudo systemctl disable php-fpm
-       sudo systemctl disable postgresql
-       sudo systemctl disable tt-rss
-       sudo systemctl disable znc ;;
+# use local network server services
+on ) sudo systemctl enable connman
+     sudo systemctl disable dhcpcd
+     sudo systemctl disable dovecot
+     sudo systemctl disable nginx
+     sudo systemctl disable php-fpm
+     sudo systemctl disable postgresql
+     sudo systemctl disable tt-rss
+     sudo systemctl disable znc ;;
 
-  *  ) usage ;;
+*  ) usage ;;
 esac
 
 # vim: set ft=sh: #

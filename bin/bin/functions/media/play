@@ -85,13 +85,13 @@ while : ;do
   # only purges server files (arm redirected usb files remain untouched)
   action=$(echo 'skip\nreplay\ndelete' | rmenu "$title" -no-custom)
   case $action in
-    delete) [ "$(echo 'no\nyes' | rmenu "Delete $title" -no-custom)" = yes ] || break
-            mhistory play:delete "$title $1"
-            rm -rf "$1"
-            break ;;
+  delete) [ "$(echo 'no\nyes' | rmenu "Delete $title" -no-custom)" = yes ] || break
+          mhistory play:delete "$title $1"
+          rm -rf "$1"
+          break ;;
 
-    replay) continue ;;
-    *     ) break ;;
+  replay) continue ;;
+  *     ) break ;;
   esac
 done
 

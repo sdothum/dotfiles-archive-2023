@@ -21,20 +21,19 @@ target=/net/media/videos/recordings
 pidname=recording
 framerate=25
 
-if server ;then
-  case $1 in
-    l* | *0) xy=1680x1050 ;;
+if server ;then case $1 in
+  l* | *0) xy=1680x1050 ;;
 
-    r* | *1) xy=2560x1600
-             offset=+1680,0 ;;
+  r* | *1) xy=2560x1600
+           offset=+1680,0 ;;
 
-    a*     ) xy=4240x1600 ;;
+  a*     ) xy=4240x1600 ;;
 
-    k*     ) kill -TERM $(pidof -s $pidname)
-             ls -l /tmp/*.webm
-             exit ;;
+  k*     ) kill -TERM $(pidof -s $pidname)
+           ls -l /tmp/*.webm
+           exit ;;
 
-    *      ) usage ;;
+  *      ) usage ;;
   esac
 
   webm=$(mktemp).webm

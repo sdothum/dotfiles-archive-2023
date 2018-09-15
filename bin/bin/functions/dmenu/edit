@@ -11,11 +11,11 @@ edit=$(echo "projects\nscripts\nconfigs\nfiles\nfolders" | rmenu 'Edit' $edit -n
 
 mhistory edit $edit
 case $edit in
-  projects) dmenu projects ;;
-  scripts ) dmenu scripts ;;
-  configs ) dmenu configs ;;
-  files   ) dmenu files ;;
-  folders ) dmenu folders ;;
+projects) dmenu projects ;;
+scripts ) dmenu scripts ;;
+configs ) dmenu configs ;;
+files   ) dmenu files ;;
+folders ) dmenu folders ;;
 esac
 
 # vim: set ft=sh: #

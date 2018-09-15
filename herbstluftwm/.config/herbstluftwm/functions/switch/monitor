@@ -13,17 +13,17 @@ switch_to() {
   lock set swap_monitors_to_get_tag 1
 
   case $1 in
-    0) herbstclient chain . focus_monitor 1 . use $tag0
-       restore fullscreen $tag0 secondary
-       herbstclient chain . focus_monitor 0 . use $tag1
-       restore fullscreen $tag1 primary
-       restore monocle $tag1 ;;
+  0) herbstclient chain . focus_monitor 1 . use $tag0
+     restore fullscreen $tag0 secondary
+     herbstclient chain . focus_monitor 0 . use $tag1
+     restore fullscreen $tag1 primary
+     restore monocle $tag1 ;;
 
-    1) herbstclient chain . focus_monitor 0 . use $tag1
-       restore fullscreen $tag1 primary
-       restore monocle $tag1
-       herbstclient chain . focus_monitor 1 . use $tag0
-       restore fullscreen $tag0 secondary ;;
+  1) herbstclient chain . focus_monitor 0 . use $tag1
+     restore fullscreen $tag1 primary
+     restore monocle $tag1
+     herbstclient chain . focus_monitor 1 . use $tag0
+     restore fullscreen $tag0 secondary ;;
   esac
   unlock set swap_monitors_to_get_tag $swap_monitors
 }

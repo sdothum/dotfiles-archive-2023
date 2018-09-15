@@ -24,18 +24,17 @@ CACHEDIR=${CACHEDIR:-$HOME/.cache}/Amphetype:
 DICTIONARY=${DICTIONARY:-$HOME/.config/Amphetype/unique.words}
 CORPUS=$DICTIONARY.corpus
 
-while : ;do
-  case "$1" in
-    help     ) usage ;;
-    wordlen=*) eval $1 ;;
-    size=*   ) eval $1 ;;
-    ISE      ) ise='s/(...[^s])iz((e[drs]*|ation)([ -]|$))/\1is\2/gI' ;;
-    mixed    ) punctuation=$1 ;;
-    simple   ) punctuation=$1 ;;
-    [0-9]*   ) sentences="$sentences $1" ;;
-    corpus=* ) eval $1 ;;
-    output=* ) eval $1 ;;
-    *        ) regex=$@ ; break ;;
+while : ;do case "$1" in
+  help     ) usage ;;
+  wordlen=*) eval $1 ;;
+  size=*   ) eval $1 ;;
+  ISE      ) ise='s/(...[^s])iz((e[drs]*|ation)([ -]|$))/\1is\2/gI' ;;
+  mixed    ) punctuation=$1 ;;
+  simple   ) punctuation=$1 ;;
+  [0-9]*   ) sentences="$sentences $1" ;;
+  corpus=* ) eval $1 ;;
+  output=* ) eval $1 ;;
+  *        ) regex=$@ ; break ;;
   esac
   shift
 done

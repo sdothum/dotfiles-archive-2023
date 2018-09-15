@@ -60,22 +60,22 @@ while : ;do
          rmenu 'Series' "$show" -no-custom) || break
 
   case $show in
-    "$NAME"  ) unset T ; continue ;;
-    "$DATE"  ) T=t ;     continue ;;
+  "$NAME"  ) unset T ; continue ;;
+  "$DATE"  ) T=t ;     continue ;;
 
-    "$EDIT"  ) pkill -TERM 'ROX-Filer'
-               rox $library
-               pwait "ROX-Filer $library"
-               # force dmenu focus (continue within do loop doesn't guarantee focus)
-               exec dmenu series $1 ;;
+  "$EDIT"  ) pkill -TERM 'ROX-Filer'
+             rox $library
+             pwait "ROX-Filer $library"
+             # force dmenu focus (continue within do loop doesn't guarantee focus)
+             exec dmenu series $1 ;;
 
-    "$SONARR") surf $sonarr
-               pwait "surf $sonarr"
-               continue ;;
+  "$SONARR") surf $sonarr
+             pwait "surf $sonarr"
+             continue ;;
 
-    *        ) series="$library/$(echo $show | sed 's/ /./g')"
-               playlist="$series/.playlist"
-               [ -e "$playlist" ] || echo >"$playlist" ;;
+  *        ) series="$library/$(echo $show | sed 's/ /./g')"
+             playlist="$series/.playlist"
+             [ -e "$playlist" ] || echo >"$playlist" ;;
   esac
 
   while : ;do

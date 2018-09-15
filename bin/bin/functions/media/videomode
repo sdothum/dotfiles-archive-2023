@@ -15,19 +15,19 @@ V_DYNAMIC=/tmp/$(basename $0):dynamic
 V_NCURSES=/tmp/$(basename $0):ncurses
 
 case $1 in
-  on ) [ -e $DYNAMIC ] && { rm $DYNAMIC ; touch $V_DYNAMIC ;}
-       [ -e $NCURSES ] && touch $V_NCURSES
-       rm -f $MENU
-       [ -e $SCOMPTON:toggle ] && touch $NCURSES
-       conky clock stop
-       blackboard ;;
+on ) [ -e $DYNAMIC ] && { rm $DYNAMIC ; touch $V_DYNAMIC ;}
+     [ -e $NCURSES ] && touch $V_NCURSES
+     rm -f $MENU
+     [ -e $SCOMPTON:toggle ] && touch $NCURSES
+     conky clock stop
+     blackboard ;;
 
-  off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC ; rm $V_DYNAMIC ;}
-       [ -e $V_NCURSES ] || rm -f $NCURSES
-       conky clock auto
-       # refresh panel title on close
-       focus window
-       pstat 'dmenu (media|movies|series)' || restore root ;;
+off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC ; rm $V_DYNAMIC ;}
+     [ -e $V_NCURSES ] || rm -f $NCURSES
+     conky clock auto
+     # refresh panel title on close
+     focus window
+     pstat 'dmenu (media|movies|series)' || restore root ;;
 
-  *  ) usage ;;
+*  ) usage ;;
 esac

@@ -21,7 +21,7 @@ playlist() {
     cat $stations | sed "1i$TOGGLE\n$CLEAR\n$EDIT"
   else
     cat $stations | sed '1i[ edit ]'
-  fi
+  fi | sed 's/,.*//'
 }
 
 stop() {
@@ -33,35 +33,34 @@ station() { [ -e $RADIO ] && cat $RADIO || echo 'Radio' ;}
 
 url() { grep "$@" $stations | sed 's/.*, *//' ;}
 
-while station=$(playlist | sed 's/,.*//' | rmenu "$(station)" -no-custom) || exit ;do
-  case $station in
-    "$TOGGLE") if pstat 'mpv --no-cache --quiet' ;then
-                 stop
+while station=$(playlist | rmenu "$(station)" -no-custom) || exit ;do case $station in
+  "$TOGGLE") if pstat 'mpv --no-cache --quiet' ;then
+               stop
+             else
+               mpv --no-cache --quiet $(url $(cat $RADIO)) &
+             fi
+             exit ;;
+
+  "$CLEAR" ) stop
+             rm -f $RADIO
+             exit ;;
+
+  "$EDIT"  ) gvim -f $stations ;;
+
+  *        ) pstat 'mpv --no-cache --quiet' && stop
+             # quotes required "$station"
+             url=$(url "$station")
+             if [ "$url" ] ;then
+               # mpv --no-cache $station &
+               mpv --no-cache --quiet $url &
+               sleep $delay
+               if pstat 'mpv --no-cache --quiet' ;then
+                 echo "$station" >$RADIO
+                 exit
                else
-                 mpv --no-cache --quiet $(url $(cat $RADIO)) &
+                 rm -f $RADIO
                fi
-               exit ;;
-
-    "$CLEAR" ) stop
-               rm -f $RADIO
-               exit ;;
-
-    "$EDIT"  ) gvim -f $stations ;;
-
-    *        ) pstat 'mpv --no-cache --quiet' && stop
-               # quotes required "$station"
-               url=$(url "$station")
-               if [ "$url" ] ;then
-                 # mpv --no-cache $station &
-                 mpv --no-cache --quiet $url &
-                 sleep $delay
-                 if pstat 'mpv --no-cache --quiet' ;then
-                   echo "$station" >$RADIO
-                   exit
-                 else
-                   rm -f $RADIO
-                 fi
-               fi ;;
+             fi ;;
   esac
 done
 

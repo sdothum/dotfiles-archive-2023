@@ -13,13 +13,13 @@ usage() {
 
 # butterfs :-)
 case $@ in
-  ''     ) sudo /usr/bin/btrfs filesystem show --all-devices
-           sudo /usr/bin/btrfs subvolume list -p /
-           echo
-           usage ;;
+''     ) sudo /usr/bin/btrfs filesystem show --all-devices
+         sudo /usr/bin/btrfs subvolume list -p /
+         echo
+         usage ;;
 
-  balance) sudo /usr/bin/btrfs balance start -v -dusage=55 / ;;
-  *      ) sudo /usr/bin/btrfs $@ ;;
+balance) sudo /usr/bin/btrfs balance start -v -dusage=55 / ;;
+*      ) sudo /usr/bin/btrfs $@ ;;
 esac
 
 # vim: set ft=sh: #

@@ -66,13 +66,12 @@ generate() {
   notify "$rules" 'Backup $HOME and review before proceeding!!'
 }
 
-while [ $1 ] ;do
-  case $1 in
-    clean | CLEAN) clean=$1 ; shift ;;
-    -f           ) force=$1 ; shift ;;
-    g*           ) generate ; usage ;;
-    h*           ) usage ;;
-    *            ) break ;;
+while [ $1 ] ;do case $1 in
+  clean | CLEAN) clean=$1 ; shift ;;
+  -f           ) force=$1 ; shift ;;
+  g*           ) generate ; usage ;;
+  h*           ) usage ;;
+  *            ) break ;;
   esac
 done
 
@@ -84,13 +83,13 @@ brokeln rm
 clean() {
   unset target
   case $clean in
-    clean) [ -d "$vacuum/$file" ] && rm -r "$vacuum/$file"
-           target=$(dirname "$file")        # [ $(dirname) = . ] is always true!
-           [ "$target" = . ] && target=$vacuum || target="$vacuum/$target"
-           [ -d "$target"  ] || mkdir -p "$target"
-           sudo mv -f "$file" $target ;;
+  clean) [ -d "$vacuum/$file" ] && rm -r "$vacuum/$file"
+         target=$(dirname "$file")        # [ $(dirname) = . ] is always true!
+         [ "$target" = . ] && target=$vacuum || target="$vacuum/$target"
+         [ -d "$target"  ] || mkdir -p "$target"
+         sudo mv -f "$file" $target ;;
 
-    CLEAN) sudo rm -rf "$file" ;;
+  CLEAN) sudo rm -rf "$file" ;;
   esac
   [ "$target" ] && ditto "vacuum [${vacuum#$HOME/}] $file" || ditto "vacuum $file"
 }
@@ -99,34 +98,34 @@ clean() {
 while read action file package <&3 ;do
   # echo "action=$action file=$file package=$package"
   case $action in
-    '' |\
-    '#') continue ;;
+  '' |\
+  '#') continue ;;
 
-    '=') title "$file $package" ; continue ;;
-    '!') ;;
+  '=') title "$file $package" ; continue ;;
+  '!') ;;
 
-    *  ) file=$(echo $action $file $package | sed 's/ *$//')
-         [ -e "$file" ] || [ -L "$file" ] && unset package || { package=$file ; file=$action ;} ;;
+  *  ) file=$(echo $action $file $package | sed 's/ *$//')
+       [ -e "$file" ] || [ -L "$file" ] && unset package || { package=$file ; file=$action ;} ;;
   esac
 
   [ -e "$file" ] || [ -L "$file" ] || continue
   echo "$file" | grep -q "^\($HOME\)*[./]*$" && continue
 
   case $action in
-    '!') clean ; continue ;;
+  '!') clean ; continue ;;
 
-    *  ) if [ $package ] ;then
-           pacman -Q $package >/dev/null 2>&1 && unset package
-         elif [ $clean ] ;then
-           if [ $force ] ;then
-              package=true
-           else
-             ifno "remove $file" || package=true
-           fi
+  *  ) if [ $package ] ;then
+         pacman -Q $package >/dev/null 2>&1 && unset package
+       elif [ $clean ] ;then
+         if [ $force ] ;then
+            package=true
          else
-           ditto "remove ? $file"
-           unset package
-         fi ;;
+           ifno "remove $file" || package=true
+         fi
+       else
+         ditto "remove ? $file"
+         unset package
+       fi ;;
   esac
 
   [ $package ] && clean

@@ -125,55 +125,54 @@ while : ;do
   [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks ; continue ;}
 
   [ -d $kindle ] && options='kindle\nedit\nread' || options='read\nedit\nkindle'
-  while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do
-    case $action in
-      read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
-              [ $focus ] || { focus frame ; focus=true ;}
-              FBReader "$file" ;;
+  while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do case $action in
+    read  ) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+            [ $focus ] || { focus frame ; focus=true ;}
+            FBReader "$file" ;;
 
-      edit  ) if grep -q "$book" $HISTORY/ebooks ;then
-                grep -v "$book" $HISTORY/ebooks >/tmp/ebooks
-                mv /tmp/ebooks $HISTORY/ebooks
-              fi
-              book=$(echo ${file%/*} | sed -r 's/([ ()])/\\\1/g')
-              term "$title" vifm "${book%/*}" "$book"
-              pwait vifm
-              ebooks ;;
+    edit  ) if grep -q "$book" $HISTORY/ebooks ;then
+              grep -v "$book" $HISTORY/ebooks >/tmp/ebooks
+              mv /tmp/ebooks $HISTORY/ebooks
+            fi
+            book=$(echo ${file%/*} | sed -r 's/([ ()])/\\\1/g')
+            term "$title" vifm "${book%/*}" "$book"
+            pwait vifm
+            ebooks ;;
 
-      kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
-              [ -d $kindle ] && format=azw3 || format=mobi
-              find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
-              notify low "$title" "Converting to $format.."
-              # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
-              # use calibre conversion module
-              output="/tmp/${file##*/}"
-              option=$(echo -n "default (justify)\nembed font\njustify off\nall" | rmenu 'export options' -no-custom) || break
-              justify='--change-justification=justify'
-              case $option in
-                default*) unset option ;;
-                *font   ) option="--embed-font-family=$embed_font" ;;
-                just*   ) unset option justify ;;
-                all     ) option="--embed-font-family=$embed_font" ; unset justify ;;
-              esac
-              # convert even .azw3 to inject folder title and author
-              ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log
+    kindle) mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
+            [ -d $kindle ] && format=azw3 || format=mobi
+            find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
+            notify low "$title" "Converting to $format.."
+            # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
+            # use calibre conversion module
+            output="/tmp/${file##*/}"
+            option=$(echo -n "default (justify)\nembed font\njustify off\nall" | rmenu 'export options' -no-custom) || break
+            justify='--change-justification=justify'
+            case $option in
+            default*) unset option ;;
+            *font   ) option="--embed-font-family=$embed_font" ;;
+            just*   ) unset option justify ;;
+            all     ) option="--embed-font-family=$embed_font" ; unset justify ;;
+            esac
+            # convert even .azw3 to inject folder title and author
+            ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log
 
-              # usb or cloud?
-              if [ -d $kindle ] ;then
-                find /tmp -maxdepth 1 -name "*$format" -exec mv -f {} $kindle \;
-                notify low "$title" "$kindle"
-                sync
-              else
-                mobi=$(find /tmp -maxdepth 1 -name "*$format")
-                address=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
-                address=${address%%@*}
-                mhistory kindle $address
-                address=$address@kindle.com
-                account=$(grep $USER /etc/aliases | cut -d' ' -f2)
-                boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
-                email | /usr/local/bin/msmtp-enqueue.sh -t &
-                notify low "$title" "$address"
-              fi ;;
+            # usb or cloud?
+            if [ -d $kindle ] ;then
+              find /tmp -maxdepth 1 -name "*$format" -exec mv -f {} $kindle \;
+              notify low "$title" "$kindle"
+              sync
+            else
+              mobi=$(find /tmp -maxdepth 1 -name "*$format")
+              address=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
+              address=${address%%@*}
+              mhistory kindle $address
+              address=$address@kindle.com
+              account=$(grep $USER /etc/aliases | cut -d' ' -f2)
+              boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
+              email | /usr/local/bin/msmtp-enqueue.sh -t &
+              notify low "$title" "$address"
+            fi ;;
     esac
     break
   done

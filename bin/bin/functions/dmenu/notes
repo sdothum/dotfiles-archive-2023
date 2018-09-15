@@ -7,11 +7,10 @@
 
 # Usage: dmenu notes [<extension>] [<path>]
 
-while : ;do
-  case $1 in
-    '' ) break ;;
-    */*) FOLDER=$1 ; shift ;;
-    *  ) ext=$1 ; shift ;;
+while : ;do case $1 in
+  '' ) break ;;
+  */*) FOLDER=$1 ; shift ;;
+  *  ) ext=$1 ; shift ;;
   esac
 done
 NOTES=/tmp/dmenu:notes:$ext
@@ -19,11 +18,10 @@ trap "rm -f $NOTES" EXIT
 
 # housekeeping
 [ $ext ] || ext=note
-if [ -z $FOLDER ] ;then
-  case $ext in
-    note ) FOLDER=$HOME/notes ;;
-    draft) FOLDER=$HOME/drafts ;;
-    *    ) FOLDER=$HOME/tmp ;;
+if [ -z $FOLDER ] ;then case $ext in
+  note ) FOLDER=$HOME/notes ;;
+  draft) FOLDER=$HOME/drafts ;;
+  *    ) FOLDER=$HOME/tmp ;;
   esac
 fi
 ARCHIVE=$FOLDER/archive
@@ -78,50 +76,47 @@ highlight() {
   cat $NOTES | grep -qn "$file" && echo $(( $(cat $NOTES | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
 }
 
+notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT" ;}
+
 # to present grep'd file list enter:
 #   /regex to filter
 #   //     to clear filter
 search=''
-while note=$(cat $NOTES |
-             cut -d^ -f2- |
-             column -s^ -t |
-             sed "1i$PROMPT" |
-             rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
-  case $note in
-    /*      ) search="${note#*/}" ; continue ;;
-    "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do case $note in
+  /*      ) search="${note#*/}" ; continue ;;
+  "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
 
-    "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext)
-              update=true
-              action=edit ;;
+  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext)
+            update=true
+            action=edit ;;
 
-    "$PURGE") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
-              search=''
-              cache
-              continue ;;
+  "$PURGE") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
+            search=''
+            cache
+            continue ;;
 
-    *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
-              content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-              while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom)
-              do
-                [ $action = view ] || break
-                term "$file" MAX STACK WAIT less $file
-              done ;;
+  *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
+            content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
+            while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom)
+            do
+              [ $action = view ] || break
+              term "$file" MAX STACK WAIT less $file
+            done ;;
   esac
 
   # mhistory $catlg $file
   mhistory=$file
   case $action in
-    edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file
-               update=true ;;
+  edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file
+             update=true ;;
 
-    delete   ) mv $file /tmp
-               update=true
-               sed -i "\|$file|s|$|  (DELETED)|" $NOTES ;;
+  delete   ) mv $file /tmp
+             update=true
+             sed -i "\|$file|s|$|  (DELETED)|" $NOTES ;;
 
-    clipboard) clipboard "$file"
-               notify 'Ctrl-Alt-V' "$file"
-               exit ;;
+  clipboard) clipboard "$file"
+             notify 'Ctrl-Alt-V' "$file"
+             exit ;;
   esac
 
   [ $update ] && { cache ; unset update ;}

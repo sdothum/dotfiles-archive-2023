@@ -29,37 +29,37 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   # on to reinitialze monitor layouts after windows are terminated and focus windows
 
   case $hook in
-    focus_changed) ( [ -e $FULLSCREEN ] && draw refresh || draw root ) &
-                   draw border &
-                   if herbstclient compare monitors.focus.index != $monitor ;then
-                     monitor=$(herbstclient attr monitors.focus.index)
-                     restore panel &
-                   fi ;;
+  focus_changed) ( [ -e $FULLSCREEN ] && draw refresh || draw root ) &
+                  draw border &
+                  if herbstclient compare monitors.focus.index != $monitor ;then
+                    monitor=$(herbstclient attr monitors.focus.index)
+                    restore panel &
+                  fi ;;
 
-    focus_window ) [ -e $DYNAMIC ] && focus window & ;;
-    focus_frame  ) [ -e $DYNAMIC ] && focus frame & ;;
+  focus_window ) [ -e $DYNAMIC ] && focus window & ;;
+  focus_frame  ) [ -e $DYNAMIC ] && focus frame & ;;
 
-    rule         ) case $rule in
-                     float     ) herbstclient pseudotile toggle & ;;
-                     max       ) herbstclient set_layout max & ;;
-                     vertical  ) herbstclient set_layout vertical & ;;
-                     horizontal) herbstclient set_layout horizontal & ;;
-                     grid      ) herbstclient set_layout grid & ;;
-                     menu      ) draw monitor menu & ;;
+  rule         ) case $rule in
+                 float     ) herbstclient pseudotile toggle & ;;
+                 max       ) herbstclient set_layout max & ;;
+                 vertical  ) herbstclient set_layout vertical & ;;
+                 horizontal) herbstclient set_layout horizontal & ;;
+                 grid      ) herbstclient set_layout grid & ;;
+                 menu      ) draw monitor menu & ;;
 
-                     fullscreen) if is primary ;then
-                                   ( [ -e $CONKY ] && draw monitor conky fullscreen ||
-                                                      draw monitor fullscreen ) &
-                                 else
-                                   draw monitor secondary fullscreen &
-                                 fi ;;
+                 fullscreen) if is primary ;then
+                               ( [ -e $CONKY ] && draw monitor conky fullscreen ||
+                                                 draw monitor fullscreen ) &
+                             else
+                               draw monitor secondary fullscreen &
+                             fi ;;
 
-                     # experimental only..
-                     # focus_frame) [ -e $DYNAMIC ] && ( focus frame ; bring $winid ) & ;;
-                     *         ) [ $TRACE ] && echo "> undefined rule: $hook [$rule] $winid" >>$TRACE ;;
-                   esac ;;
+                 # experimental only..
+                 # focus_frame) [ -e $DYNAMIC ] && ( focus frame ; bring $winid ) & ;;
+                 *         ) [ $TRACE ] && echo "> undefined rule: $hook [$rule] $winid" >>$TRACE ;;
+                 esac ;;
 
-    *            ) [ $TRACE ] && echo "> undefined hook: [$hook] $rule $winid" >>$TRACE ;;
+  *            ) [ $TRACE ] && echo "> undefined hook: [$hook] $rule $winid" >>$TRACE ;;
   esac
 done &
 

@@ -24,19 +24,19 @@ find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \; 2>/dev/null
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in
-  b | c | d | f | l | p | s) type=$1
-                             shift ;;
+b | c | d | f | l | p | s) type=$1
+                           shift ;;
 
-  '-') refresh=true
-       type=d
-       shift ;;
+'-') refresh=true
+     type=d
+     shift ;;
 
-  '+') create=true
-       type=d
-       shift ;;
+'+') create=true
+     type=d
+     shift ;;
 
-  *) [ $# -eq 1 ] || usage
-     type=d ;;
+*) [ $# -eq 1 ] || usage
+   type=d ;;
 esac
 
 cname() { echo $1 | tr '/' ':' ;}

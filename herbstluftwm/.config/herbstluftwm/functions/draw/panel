@@ -197,31 +197,31 @@ bar() {
   tic=${line#*|}
   tic=${tic%|*}
   case $tic in
-    00      ) tic=' ' ;;
-    0[2468] ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
-    0[13579]) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-    10      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
-    1[2468] ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-    1[13579]) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-    20      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-    2[2468] ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-    2[13579]) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-    30      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-    3[2468] ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-    3[13579]) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
-    40      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-    4[2468] ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
-    4[13579]) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
-    50      ) tic="%{F$DEFAULT_FG}│%{F-}" ;;
-    51      ) tic="%{F$DEFAULT_FG}┃%{F-}" ;;
-    52      ) tic="%{F$DEFAULT_FG}█%{F-}" ;;
-    53      ) tic="%{F$DEFAULT_FG}▇%{F-}" ;;
-    54      ) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
-    55      ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
-    56      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
-    57      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
-    58      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
-    59      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+  00      ) tic=' ' ;;
+  0[2468] ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+  0[13579]) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+  10      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
+  1[2468] ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+  1[13579]) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+  20      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+  2[2468] ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+  2[13579]) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+  30      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+  3[2468] ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+  3[13579]) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+  40      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+  4[2468] ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+  4[13579]) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
+  50      ) tic="%{F$DEFAULT_FG}│%{F-}" ;;
+  51      ) tic="%{F$DEFAULT_FG}┃%{F-}" ;;
+  52      ) tic="%{F$DEFAULT_FG}█%{F-}" ;;
+  53      ) tic="%{F$DEFAULT_FG}▇%{F-}" ;;
+  54      ) tic="%{F$DEFAULT_FG}▆%{F-}" ;;
+  55      ) tic="%{F$DEFAULT_FG}▅%{F-}" ;;
+  56      ) tic="%{F$DEFAULT_FG}▄%{F-}" ;;
+  57      ) tic="%{F$DEFAULT_FG}▃%{F-}" ;;
+  58      ) tic="%{F$DEFAULT_FG}▂%{F-}" ;;
+  59      ) tic="%{F$DEFAULT_FG}▁%{F-}" ;;
   esac
 }
 
@@ -256,77 +256,75 @@ weather() {
 
 # fifo read loop
 panel() {
-  while read -r line ;do
-    case $line in
-      S*        ) unset clock
-                  if [ $TIC ] ;then
-                    case $TIC in
-                      b* ) bar ;;
-                      c* ) circle ;;
-                      d* ) dot ;;
-                      sq*) square ;;
-                      s* ) seconds ;;
-                      t* ) tape ;;
-                    esac
-                    ticker="%{F$DEFAULT_FG}$tic%{F-}"
-                    case $TIC in
-                      se*) clock="$ticker" ;;
-                      t* ) clock="$ticker" ;;
-                      *  ) clock="  $ticker" ;;
-                    esac
+  while read -r line ;do case $line in
+    S*        ) unset clock
+                if [ $TIC ] ;then case $TIC in
+                  b* ) bar ;;
+                  c* ) circle ;;
+                  d* ) dot ;;
+                  sq*) square ;;
+                  s* ) seconds ;;
+                  t* ) tape ;;
+                  esac
+                  ticker="%{F$DEFAULT_FG}$tic%{F-}"
+                  case $TIC in
+                  se*) clock="$ticker" ;;
+                  t* ) clock="$ticker" ;;
+                  *  ) clock="  $ticker" ;;
+                  esac
+                fi
+
+                # refresh every 10 minutes
+                if [ -e $WEATHER ] ;then
+                  minute=${line#*:?}
+                  case ${minute%%\%*} in
+                  0) [ $update_weather ] && weather ;;
+                  *) update_weather=true ;;
+                  esac
+                fi
+                line="${line%%^*}$weather${line#*^}"
+
+                line="${line%%|*}$clock%{F-}${line##*|}"
+                system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
+
+    T*        ) title
+                count=$(herbstclient attr tags.focus.client_count)
+                tickcount=$(herbstclient attr "tags.by-name.'$tag.client_count" 2>/dev/null)
+                [ $tickcount ] || tickcount=0
+                if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
+                  if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
+                    title="$title${LSEP}$count${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+                  elif [ $count -gt 1 ] ;then
+                    title="$title${LSEP}$count"
+                  else
+                    title="$title${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
                   fi
-
-                  # refresh every 10 minutes
-                  if [ -e $WEATHER ] ;then
-                    minute=${line#*:?}
-                    case ${minute%%\%*} in
-                      0) [ $update_weather ] && weather ;;
-                      *) update_weather=true ;;
-                    esac
-                  fi
-                  line="${line%%^*}$weather${line#*^}"
-
-                  line="${line%%|*}$clock%{F-}${line##*|}"
-                  system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
-
-      T*        ) title
-                  count=$(herbstclient attr tags.focus.client_count)
-                  tickcount=$(herbstclient attr "tags.by-name.'$tag.client_count" 2>/dev/null)
-                  [ $tickcount ] || tickcount=0
-                  if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
-                    if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
-                      title="$title${LSEP}$count${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
-                    elif [ $count -gt 1 ] ;then
-                      title="$title${LSEP}$count"
+                fi
+                unset hiding
+                if is fullscreen ;then
+                  [ $count -gt 1 ] && hiding=true
+                elif herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
+                  is layout max && hiding=true
+                fi
+                if [ $count -gt 0 ] ;then
+                  if [ "$(query wname)" = "${line#?}" ] ;then
+                    if [ $hiding ] ;then
+                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
                     else
-                      title="$title${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
                     fi
-                  fi
-                  unset hiding
-                  if is fullscreen ;then
-                    [ $count -gt 1 ] && hiding=true
-                  elif herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
-                    is layout max && hiding=true
-                  fi
-                  if [ $count -gt 0 ] ;then
-                    if [ "$(query wname)" = "${line#?}" ] ;then
-                      if [ $hiding ] ;then
-                        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
-                      else
-                        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
-                      fi
+                  else
+                    if [ $hiding ] ;then
+                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
                     else
-                      if [ $hiding ] ;then
-                        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
-                      else
-                        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
-                      fi
-                      desc=$(asciititle ${line#?})
-                      [ "$desc" ] && title="$title${LSEP}${desc}%{B-}%{F-}"
+                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
                     fi
-                  fi ;;
+                    desc=$(asciititle ${line#?})
+                    [ "$desc" ] && title="$title${LSEP}${desc}%{B-}%{F-}"
+                  fi
+                fi ;;
 
-      *_changed*) desktops ;;
+    *_changed*) desktops ;;
     esac
 
     # empty desktop does not generate T message
@@ -344,11 +342,11 @@ panel() {
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 case $TIC in
-  se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b '%y
+se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b '%y
 " >$PANEL_FIFO:$fifo & ;;
-  t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y
+t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y
 " >$PANEL_FIFO:$fifo & ;;
-  *  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y
+*  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y
 " >$PANEL_FIFO:$fifo & ;;
 esac
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &

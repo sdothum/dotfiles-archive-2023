@@ -14,8 +14,8 @@ audio=$(echo "music\nradio" | rmenu 'Listen to' $audio -no-custom) || exit
 
 mhistory audio $audio
 case $audio in
-  music) dmenu music ;;
-  radio) dmenu radio ;;
+music) dmenu music ;;
+radio) dmenu radio ;;
 esac
 
 # vim: set ft=sh: #

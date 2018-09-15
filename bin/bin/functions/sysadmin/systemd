@@ -13,27 +13,27 @@ usage() {
 
 # configure systemd daemon
 case $1 in
-  ''     ) usage ;;
+''     ) usage ;;
 
-  disable) sudo systemctl disable $2
-           sudo systemctl stop $2 ;;
+disable) sudo systemctl disable $2
+         sudo systemctl stop $2 ;;
 
-  enable ) sudo systemctl enable $2
-           sudo systemctl start $2 ;;
+enable ) sudo systemctl enable $2
+         sudo systemctl start $2 ;;
 
-  start  ) sudo systemctl start $2 ;;
-  stop   ) sudo systemctl stop $2 ;;
-  reload ) sudo systemctl daemon-reload ; exit ;;
-  restart) sudo systemctl restart $2 ;;
+start  ) sudo systemctl start $2 ;;
+stop   ) sudo systemctl stop $2 ;;
+reload ) sudo systemctl daemon-reload ; exit ;;
+restart) sudo systemctl restart $2 ;;
 
-  toggle ) if sudo systemctl status $2 | grep -q 'Active: active' ;then
-             sudo systemctl stop $2
-           else
-             sudo systemctl start $2
-           fi ;;
+toggle ) if sudo systemctl status $2 | grep -q 'Active: active' ;then
+           sudo systemctl stop $2
+         else
+           sudo systemctl start $2
+         fi ;;
 
-  status ) ;;
-  *      ) [ $# -eq 1 ] || usage ;;
+status ) ;;
+*      ) [ $# -eq 1 ] || usage ;;
 esac
 
 sudo systemctl --no-pager status ${2:-$1} &

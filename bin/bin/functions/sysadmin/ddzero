@@ -12,8 +12,8 @@ usage() {
 }
 
 case $1 in
-  [a-z]) [ -b /dev/sd$1 ] || usage ;;
-  *    ) usage ;;
+[a-z]) [ -b /dev/sd$1 ] || usage ;;
+*    ) usage ;;
 esac
 
 ifno "zero /dev/sd$1" && exit

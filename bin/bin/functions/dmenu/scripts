@@ -20,12 +20,11 @@ sources="$HOME/bin
 files() { for i in $sources ;do fcache f $i ;done ;}
 
 # shorten path references for menu
-for i in $sources ;do
-  case $i in
-    */.vim*    |\
-    */.weechat*) trim="$trim -e 's|$i/|.${i##*/.}/|'" ;;
+for i in $sources ;do case $i in
+  */.vim*    |\
+  */.weechat*) trim="$trim -e 's|$i/|.${i##*/.}/|'" ;;
 
-    *          ) trim="$trim -e 's|$i/|${i##*/}/|'" ;;
+  *          ) trim="$trim -e 's|$i/|${i##*/}/|'" ;;
   esac
 done
 

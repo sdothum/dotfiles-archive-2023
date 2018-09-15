@@ -23,15 +23,15 @@ link() {
 }
 
 case $1 in
-  ''   ) usage ;;
-  sync ) link '&& stow' ;;
-  clean) link '|| stow D' ;;
-  check) link '&& ditto' ;;
+''   ) usage ;;
+sync ) link '&& stow' ;;
+clean) link '|| stow D' ;;
+check) link '&& ditto' ;;
 
-  D | R) [ $2 ] || usage
-         /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ;;
+D | R) [ $2 ] || usage
+       /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ;;
 
-  *    ) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
+*    ) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
 esac
 
 # vim: set ft=sh: #

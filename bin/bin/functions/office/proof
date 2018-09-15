@@ -14,14 +14,14 @@ usage() {
 PROOF=${PROOF:-$SESSION/proof}
 
 case $1 in
-  ''    ) [ -e $PROOF ] && notify low 'Hardcopy Latex' 'Display proof' ||
-                           notify low 'Hardcopy Latex' 'Print hardcopy'
-          exit ;;
+''    ) [ -e $PROOF ] && notify low 'Hardcopy Latex' 'Display proof' ||
+                         notify low 'Hardcopy Latex' 'Print hardcopy'
+        exit ;;
 
-  on    ) touch $PROOF ;;
-  off   ) rm -f $PROOF ;;
-  toggle) [ -e $PROOF ] && proof off || proof on ;;
-  *     ) usage ;;
+on    ) touch $PROOF ;;
+off   ) rm -f $PROOF ;;
+toggle) [ -e $PROOF ] && proof off || proof on ;;
+*     ) usage ;;
 esac
 
 proof

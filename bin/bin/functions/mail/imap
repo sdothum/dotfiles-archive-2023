@@ -22,78 +22,78 @@ OFFLINEIMAPFILTER=$HOME/.offlineimapfilter
 
 # offlineimap / imapfilter actions
 case $1 in
-  '') if !p 'python.*offlineimap.*offlineimaprc' ;then
-        offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
-        ditto 'offlineimap running'
-      fi
-      ifyes '.. watch offlineimap log' && imap l ;;
+'') if !p 'python.*offlineimap.*offlineimaprc' ;then
+      offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
+      ditto 'offlineimap running'
+    fi
+    ifyes '.. watch offlineimap log' && imap l ;;
 
-  1*) if [ $2 ] ;then
-        offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
+1*) if [ $2 ] ;then
+      offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
+    else
+      offlineimap -c $OFFLINEIMAPRC -o -u basic >>/tmp/offlineimap.log 2>&1 &
+    fi
+    imap l ;;
+
+C*) rm -f $IMAPFILTER/certificates
+    imap f ;;
+
+f*) if !p /usr/bin/offlineimap && !p /usr/bin/imapfilter ;then
+      if [ $2 ] ;then
+        [ $2 = allmail ] &&
+          sed "/^inbox *= account\['sdothum/cinbox   = account['sdothum/[Gmail]/All Mail']:select_all()" \
+              $IMAPFILTER/$filter >$IMAPFILTER/$2.lua
+        imapfilter -v -c $IMAPFILTER/$2.lua
       else
-        offlineimap -c $OFFLINEIMAPRC -o -u basic >>/tmp/offlineimap.log 2>&1 &
+        imapfilter -v -c $IMAPFILTER/$filter >>/tmp/imapfilter.log 2>&1 &
+        ifyes '.. watch imapfilter log' && imap L
       fi
-      imap l ;;
+    fi ;;
 
-  C*) rm -f $IMAPFILTER/certificates
-      imap f ;;
+I*) killall offlineimap 2>/dev/null
+    ifno 'delete all maildirs and reload from gmail' || {
+      sudo systemctl stop dovecot
+      # sudo rm -r $HOME/.mutt/cache/*
+      sudo rm -r $HOME/.offlineimap/*
+      sudo rm -r $HOME/Maildir/*
+      cd $STOW
+      stow mail
+      imap 1 $2
+      mailcot
+      imap f allmail
+      mailsync I
+      annotate 'crontab with "mailsync"'
+    } ;;
 
-  f*) if !p /usr/bin/offlineimap && !p /usr/bin/imapfilter ;then
-        if [ $2 ] ;then
-          [ $2 = allmail ] &&
-            sed "/^inbox *= account\['sdothum/cinbox   = account['sdothum/[Gmail]/All Mail']:select_all()" \
-                $IMAPFILTER/$filter >$IMAPFILTER/$2.lua
-          imapfilter -v -c $IMAPFILTER/$2.lua
-        else
-          imapfilter -v -c $IMAPFILTER/$filter >>/tmp/imapfilter.log 2>&1 &
-          ifyes '.. watch imapfilter log' && imap L
-        fi
-      fi ;;
+L*) ditto 'tail -f /tmp/imapfilter.log'
+    tail -f /tmp/imapfilter.log &
+    pwait "imapfilter -v -c $IMAPFILTER/$filter"
+    pkill -TERM -f 'tail -f /tmp/imapfilter.log' ;;
 
-  I*) killall offlineimap 2>/dev/null
-      ifno 'delete all maildirs and reload from gmail' || {
-        sudo systemctl stop dovecot
-        # sudo rm -r $HOME/.mutt/cache/*
-        sudo rm -r $HOME/.offlineimap/*
-        sudo rm -r $HOME/Maildir/*
-        cd $STOW
-        stow mail
-        imap 1 $2
-        mailcot
-        imap f allmail
-        mailsync I
-        annotate 'crontab with "mailsync"'
-      } ;;
+l*) ditto 'tail -f /tmp/offlineimap.log'
+    tail -f /tmp/offlineimap.log &
+    pwait "offlineimap -c $OFFLINEIMAPRC"
+    pkill -TERM -f 'tail -f /tmp/offlineimap.log' ;;
 
-  L*) ditto 'tail -f /tmp/imapfilter.log'
-      tail -f /tmp/imapfilter.log &
-      pwait "imapfilter -v -c $IMAPFILTER/$filter"
-      pkill -TERM -f 'tail -f /tmp/imapfilter.log' ;;
+Q*) if !p 'python.*offlineimap.*offlineimaprc' ;then
+      offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 &
+    fi ;;
 
-  l*) ditto 'tail -f /tmp/offlineimap.log'
-      tail -f /tmp/offlineimap.log &
-      pwait "offlineimap -c $OFFLINEIMAPRC"
-      pkill -TERM -f 'tail -f /tmp/offlineimap.log' ;;
+q*) killall imapfilter 2>/dev/null
+    kill -TERM $(p 'python.*offlineimap.*offlineimaprc' | awk '{ print $2 }') 2>/dev/null ;;
 
-  Q*) if !p 'python.*offlineimap.*offlineimaprc' ;then
-        offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 &
-      fi ;;
+r*) imap q
+    imap ;;
 
-  q*) killall imapfilter 2>/dev/null
-      kill -TERM $(p 'python.*offlineimap.*offlineimaprc' | awk '{ print $2 }') 2>/dev/null ;;
+t*) if [ -e $OFFLINEIMAPFILTER ] ;then
+      sudo rm -r $OFFLINEIMAPFILTER
+      ditto 'imapfilter processing off'
+    else
+      touch $OFFLINEIMAPFILTER
+      ditto 'imapfilter processing on'
+    fi ;;
 
-  r*) imap q
-      imap ;;
-
-  t*) if [ -e $OFFLINEIMAPFILTER ] ;then
-        sudo rm -r $OFFLINEIMAPFILTER
-        ditto 'imapfilter processing off'
-      else
-        touch $OFFLINEIMAPFILTER
-        ditto 'imapfilter processing on'
-      fi ;;
-
-  * ) usage ;;
+* ) usage ;;
 esac
 
 # vim: set ft=sh: #

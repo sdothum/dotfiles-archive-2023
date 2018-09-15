@@ -19,20 +19,19 @@ color2=${__BLUE}
 # enable cron notifications, see .xinitrc
 [ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus
 
-while : ;do
-  case $1 in
-    # long form required for handling numeric summary field
-    time=*    ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
-    console   ) console=true ;;
-    X         ) X=true ;;
+while : ;do case $1 in
+  # long form required for handling numeric summary field
+  time=*    ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
+  console   ) console=true ;;
+  X         ) X=true ;;
 
-    low       |\
-    normal    |\
-    critical  ) urgency="-u $1" ;;
+  low       |\
+  normal    |\
+  critical  ) urgency="-u $1" ;;
 
-    blackboard) urgency="-h string:bgcolor:#000000" ;;
-    [0-9]*    ) expire=--expire-time=$(( $1 * 1000 )) ;;
-    *         ) break ;;
+  blackboard) urgency="-h string:bgcolor:#000000" ;;
+  [0-9]*    ) expire=--expire-time=$(( $1 * 1000 )) ;;
+  *         ) break ;;
   esac
   shift
 done
@@ -50,17 +49,17 @@ else
   # allow cron jobs to bypass console test and display to X
   [ $X ] || { console && exit ;}
   case $# in
-    1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
-         DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &
-       else
-         # set first line as heading for a single multiline message
-         heading=$(echo "$ONE" | sed '2,$d')
-         body=$(echo "$ONE" | sed '1d')
-         DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$heading" "$body" &
-       fi ;;
+  1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
+       DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &
+     else
+       # set first line as heading for a single multiline message
+       heading=$(echo "$ONE" | sed '2,$d')
+       body=$(echo "$ONE" | sed '1d')
+       DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$heading" "$body" &
+     fi ;;
 
-    2) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
-    *) usage ;;
+  2) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
+  *) usage ;;
   esac
 fi
 

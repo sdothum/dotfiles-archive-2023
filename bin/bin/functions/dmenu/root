@@ -27,36 +27,34 @@ themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]' ;}
 
 hex() { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$' ;}
 
-while color=$( { [ "$menu" ] && { echo | mhistory root | sed "1i$menu" ;} ||
-                                { echo | mhistory root | sed "1i$VIEWER\n$UPDATE" ;} ;} |
-              column -s^ -t |
-              rmenu 'Setroot') || exit ;do
-  case $color in
-    ''       ) break ;;
-    "$VIEWER") exec draw root restore ;;
-    "$UPDATE") root ;;
-    "$DARK"  ) conky theme dark $bg ;;
-    "$LIGHT" ) conky theme light $bg ;;
+colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$VIEWER\n$UPDATE" ;}
 
-    "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
-               contrast=$(cat $CONTRAST)
-               mhistory root "$bg^$SEP $contrast $hue"
-               swatch $bg $hue
-               ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
+while color=$( colors | column -s^ -t | rmenu 'Setroot') || exit ;do case $color in
+  ''       ) break ;;
+  "$VIEWER") exec draw root restore ;;
+  "$UPDATE") root ;;
+  "$DARK"  ) conky theme dark $bg ;;
+  "$LIGHT" ) conky theme light $bg ;;
 
-    *dark*   |\
-    *light*  ) bg=$(echo $color | cut -d' ' -f1)
-               draw root blank $bg
-               ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
-               mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
-               break ;;
+  "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
+             contrast=$(cat $CONTRAST)
+             mhistory root "$bg^$SEP $contrast $hue"
+             swatch $bg $hue
+             ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
 
-    *        ) hex $color || continue
-               draw root blank $color
-               bg=$color
-               # overlay conky panel over rmenu screen!
-               draw conky
-               menu="$DARK\n$LIGHT\n$SAVE" ;;
+  *dark*   |\
+  *light*  ) bg=$(echo $color | cut -d' ' -f1)
+             draw root blank $bg
+             ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
+             mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+             break ;;
+
+  *        ) hex $color || continue
+             draw root blank $color
+             bg=$color
+             # overlay conky panel over rmenu screen!
+             draw conky
+             menu="$DARK\n$LIGHT\n$SAVE" ;;
   esac
 done
 

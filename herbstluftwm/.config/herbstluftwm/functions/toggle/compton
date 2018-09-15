@@ -10,8 +10,8 @@
 
 which compton >/dev/null 2>&1 || exit
 case $1 in
-  off) [ -e $COMPTON ] || exit ;;
-  on ) [ -e $COMPTON ] && exit ;;
+off) [ -e $COMPTON ] || exit ;;
+on ) [ -e $COMPTON ] && exit ;;
 esac
 
 if [ -e $COMPTON ] ;then

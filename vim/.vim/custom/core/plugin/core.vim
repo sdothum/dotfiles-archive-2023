@@ -58,13 +58,14 @@
 
     " .................................................... Gvim menu and toolbar
 
+      " initial refresh to fill window (correct status line position)
       if $DISPLAY > ''
         autocmd core VimEnter * call core#RedrawGui()
       endif
 
-      nnoremap <silent><F12>       :call core#ToggleGui()<CR>:call core#ToggleGui()<CR>
-      inoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR><C-o>:call core#ToggleGui()<CR>
-      vnoremap <silent><F12>       <C-o>:call core#ToggleGui()<CR><C-o>:call core#ToggleGui()<CR>
+      nnoremap <silent><F12>       :call core#RedrawGui()<CR>
+      inoremap <silent><F12>       <C-o>:call core#RedrawGui()<CR>
+      vnoremap <silent><F12>       <C-o>:call core#RedrawGui()<CR>
       nnoremap <silent><S-F12>     :call core#ToggleGui()<CR>
       inoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>
       vnoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>

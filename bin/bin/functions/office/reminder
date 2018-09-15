@@ -22,19 +22,19 @@ list() {
 }
 
 case $1 in
-  ''        ) list +4 ;;
-  0         ) list ;;
+''        ) list +4 ;;
+0         ) list ;;
 
-  [1-9]     |\
-  [0-9][0-9]) list +$1 ;;
+[1-9]     |\
+[0-9][0-9]) list +$1 ;;
 
-  *) cp $REMINDERS $HOME/tmp
-     # note: cannot substitute $@ in date --date
-     day=$@
-     date --date "$day" >/dev/null 2>&1 || day=tomorrow
-     echo $day | egrep -q ':|[ap]m' && M=%M || M=00
-     sed --follow-symlinks -i "$ aREM $(date "+%b %d %Y AT %H:$M" --date "$day") DURATION 1:00 MSG " $REMINDERS
-     v -f -c 'normal|G' $REMINDERS ;;
+*         ) cp $REMINDERS $HOME/tmp
+            # note: cannot substitute $@ in date --date
+            day=$@
+            date --date "$day" >/dev/null 2>&1 || day=tomorrow
+            echo $day | egrep -q ':|[ap]m' && M=%M || M=00
+            sed --follow-symlinks -i "$ aREM $(date "+%b %d %Y AT %H:$M" --date "$day") DURATION 1:00 MSG " $REMINDERS
+            v -f -c 'normal|G' $REMINDERS ;;
 esac
 
 

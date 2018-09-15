@@ -13,20 +13,17 @@
 EDIT='[ edit tags ]'
 
 # tag file containing project specs
-projects=$CONFIG/projects
+PROJECTS=$CONFIG/projects
 history=$HISTORY/projects
 
-while files=$(sed "s/  *::  */^$SEP /" $projects |
-              mhistory projects |
-              column -s^ -t |
-              sed "1i$EDIT" |
-              rmenu 'Edit Project' 1 -no-custom) || exit ;do
-  case $files in
-    "$EDIT") gvim -f $projects $history ;;
+projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$EDIT" ;}
 
-    *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
-             eval v ${files#*$SEP}
-             exit ;;
+while files=$(projects | rmenu 'Edit Project' 1 -no-custom) || exit ;do case $files in
+  "$EDIT") gvim -f $PROJECTS $history ;;
+
+  *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
+           eval v ${files#*$SEP}
+           exit ;;
    esac
 done
 

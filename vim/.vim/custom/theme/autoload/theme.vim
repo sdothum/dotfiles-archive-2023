@@ -110,6 +110,7 @@
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
           execute 'highlight Search        guifg=#ffffff                  guibg=red guisp=red'
+          execute 'highlight IncSearch     guifg=#000000                  guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           highlight  StatuslineNC          guifg=#ffffff
         endif
         call theme#FzfColors()

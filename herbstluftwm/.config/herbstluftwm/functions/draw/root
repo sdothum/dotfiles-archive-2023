@@ -157,31 +157,31 @@ unblur() {
 
 # remember current background state for autostart
 case $1 in
-  blank    ) blank $2 ;;
-  restore  ) select_blank ;;
-  wallpaper) wallpaper ;;
+blank    ) blank $2 ;;
+restore  ) select_blank ;;
+wallpaper) wallpaper ;;
 
-  save     ) color=$(cat $COLOR)
-             swatch $color
-             notify low 'Background Color' "$color saved" ;;
+save     ) color=$(cat $COLOR)
+           swatch $color
+           notify low 'Background Color' "$color saved" ;;
 
-  select   ) rm -f $SHUFFLE
-             select_wallpaper
-             echo wallpaper >$SETROOT ;;
+select   ) rm -f $SHUFFLE
+           select_wallpaper
+           echo wallpaper >$SETROOT ;;
 
-  shuffle  ) touch $SHUFFLE
-             shuffle
-             echo wallpaper >$SETROOT ;;
+shuffle  ) touch $SHUFFLE
+           shuffle
+           echo wallpaper >$SETROOT ;;
 
-  *        ) [ "$(setblur)" = "$(cat $SETBLUR)" ] && exit
-             # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
-             # random background selection on un-blur change of state
-             if [ -e $SHUFFLE ] ;then
-               if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
-                 # increase modulo to reduce frequency of shuffle
-                 one_in $modulo && shuffle
-               fi
-             fi ;;
+*        ) [ "$(setblur)" = "$(cat $SETBLUR)" ] && exit
+           # echo "= setblur -> $(setblur)\n= setroot -> $(cat $SETBLUR)" >>$TRACE
+           # random background selection on un-blur change of state
+           if [ -e $SHUFFLE ] ;then
+             if [ $(unblur ${primary%%:*} 1) ] || [ $(unblur ${secondary%%:*} 3) ] ;then
+               # increase modulo to reduce frequency of shuffle
+               one_in $modulo && shuffle
+             fi
+           fi ;;
 esac
 
 # .................................................................. Apply theme

@@ -113,8 +113,9 @@
 
     " .................................................................. Replace
 
-      nmap     %%         :%s,\v
-      vmap     %%         :s,\v
+      nnoremap ;s         :call core#SearchReplace(':%s,\v')<CR>
+      nnoremap %%         :call core#SearchReplace(':%s,\v')<CR>
+      vnoremap %%         :call core#SearchReplace(':s,\v')<CR>
 
     " ........................................................... Tab completion
 

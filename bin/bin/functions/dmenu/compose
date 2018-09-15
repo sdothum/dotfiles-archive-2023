@@ -61,18 +61,19 @@ compose_vim() {
   mhistory compose $editor
 }
 
+editors() { apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" ;}
+
 editor=$(previous compose)
-while editor=$(apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" | rmenu 'Compose' $editor -no-custom) || exit ;do
-  case $editor in
-    "$SEND"    ) ;;
-    "$EDIT"    ) dmenu notes draft ;                 continue ;;
-    "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp ; continue ;;
-    focuswriter) compose_with focuswriter $1 ;;
-    nano       ) compose_with pyroom $1 ;;
-    pyroom     ) compose_with pyroom $1 ;;
-    rubyroom   ) compose_with rubyroom $1 ;;
-    wordgrinder) compose_with wordgrinder $1 ;;
-    vim        ) compose_vim $1 ;;
+while editor=$(editors | rmenu 'Compose' $editor -no-custom) || exit ;do case $editor in
+  "$SEND"    ) ;;
+  "$EDIT"    ) dmenu notes draft ;                 continue ;;
+  "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp ; continue ;;
+  focuswriter) compose_with focuswriter $1 ;;
+  nano       ) compose_with pyroom $1 ;;
+  pyroom     ) compose_with pyroom $1 ;;
+  rubyroom   ) compose_with rubyroom $1 ;;
+  wordgrinder) compose_with wordgrinder $1 ;;
+  vim        ) compose_vim $1 ;;
   esac
   exit
 done

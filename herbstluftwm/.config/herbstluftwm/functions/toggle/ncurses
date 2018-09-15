@@ -15,8 +15,8 @@ if ! which rofi 2>/dev/null  ;then
 fi
 
 case $1 in
-  off) [ -e $NCURSES ] || exit ;;
-  on ) [ -e $NCURSES ] && exit ;;
+off) [ -e $NCURSES ] || exit ;;
+on ) [ -e $NCURSES ] && exit ;;
 esac
 
 if [ -e $NCURSES ] ;then

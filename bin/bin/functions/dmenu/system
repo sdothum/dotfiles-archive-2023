@@ -13,11 +13,11 @@ system=$(echo "journal ^$SEP inspect\njournal ^$SEP watch\nlog ^$SEP inspect\nlo
 
 mhistory system "$system"
 case $system in
-  journal*inspect  ) dmenu journals ;;
-  journal*watch    ) dmenu journals watch ;;
-  log*inspect      ) dmenu logs ;;
-  log*watch        ) dmenu logs watch ;;
-  system*diagnostic) dmenu diagnostic ;;
+journal*inspect  ) dmenu journals ;;
+journal*watch    ) dmenu journals watch ;;
+log*inspect      ) dmenu logs ;;
+log*watch        ) dmenu logs watch ;;
+system*diagnostic) dmenu diagnostic ;;
 esac
 
 # vim: set ft=sh: #

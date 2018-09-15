@@ -10,42 +10,42 @@ browser=$(command dmenu urlsrc)
 
 # bookmarks
 case $browser in
-  chromium   ) bookmarks=$HOME/.config/chromium/Default/Bookmarks
-               py-chrome-bookmarks.py $bookmarks $bookmarks.html
-               uri=$(grep http:// $bookmarks.html |
-                     sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" |
-                     cat - $CONFIG/bookmarks |
-                     sed -e 's/\&\#x2[01][0-9][0-9a-f];//g' \
-                         -e 's/\&\#3[0-9];//g' \
-                         -e 's/\&\#x[ab][0-f];/e/g' \
-                         -e 's/\&\#xe[0-9];/e/g' \
-                         -e 's/\&amp;/&/g' |
-                     rmenu 'Bookmark' -no-custom |
-                     sed -r 's/.*(http.*)/\1/') ;;
+chromium   ) bookmarks=$HOME/.config/chromium/Default/Bookmarks
+             py-chrome-bookmarks.py $bookmarks $bookmarks.html
+             uri=$(grep http:// $bookmarks.html |
+                   sed -r "s/.*<a href=\"([^\"]*)\">([^<]*)<.*/\2${LSPACE}${RSPACE}\1/g" |
+                   cat - $CONFIG/bookmarks |
+                   sed -e 's/\&\#x2[01][0-9][0-9a-f];//g' \
+                       -e 's/\&\#3[0-9];//g' \
+                       -e 's/\&\#x[ab][0-f];/e/g' \
+                       -e 's/\&\#xe[0-9];/e/g' \
+                       -e 's/\&amp;/&/g' |
+                   rmenu 'Bookmark' -no-custom |
+                   sed -r 's/.*(http.*)/\1/') ;;
 
-  luakit     ) sqldb=$HOME/.local/share/luakit/bookmarks.db
-               query='select title, tags, uri from bookmarks order by tags,title ASC;'
-               uri=$(echo $query |
-                     sqlite3 $sqldb |
-                     sed 's/[|]/  ::  /g' |
-                     rmenu 'Bookmark' -no-custom |
-                     sed -r 's/.*(http.*)/\1/') ;;
+luakit     ) sqldb=$HOME/.local/share/luakit/bookmarks.db
+             query='select title, tags, uri from bookmarks order by tags,title ASC;'
+             uri=$(echo $query |
+                   sqlite3 $sqldb |
+                   sed 's/[|]/  ::  /g' |
+                   rmenu 'Bookmark' -no-custom |
+                   sed -r 's/.*(http.*)/\1/') ;;
 
-  qutebrowser) bookmarks=$HOME/.config/qutebrowser/quickmarks
-               uri=$(tac $bookmarks |
-                     sed -r "s/(.*) (http.*)/\1${LSPACE}${RSPACE}\2/g" |
-                     grep "$SEP" |
-                     rmenu 'History' -no-custom |
-                     sed -r 's/.*(http.*)/\1/') ;;
+qutebrowser) bookmarks=$HOME/.config/qutebrowser/quickmarks
+             uri=$(tac $bookmarks |
+                   sed -r "s/(.*) (http.*)/\1${LSPACE}${RSPACE}\2/g" |
+                   grep "$SEP" |
+                   rmenu 'History' -no-custom |
+                   sed -r 's/.*(http.*)/\1/') ;;
 
-  vimb       ) bookmarks=$HOME/.config/vimb/bookmark
-               uri=$(tac $bookmarks |
-                     sed -re "s/(.*)\t(.*)\t(.*)/\2 ${LSPACE} \3 ${RSPACE} \1/g" \
-                         -e "s/^ ${LSPACE}/... ${LSPACE}/" |
-                     rmenu 'Bookmark' -no-custom |
-                     sed -r 's/.*(http.*)/\1/') ;;
+vimb       ) bookmarks=$HOME/.config/vimb/bookmark
+             uri=$(tac $bookmarks |
+                   sed -re "s/(.*)\t(.*)\t(.*)/\2 ${LSPACE} \3 ${RSPACE} \1/g" \
+                       -e "s/^ ${LSPACE}/... ${LSPACE}/" |
+                   rmenu 'Bookmark' -no-custom |
+                   sed -r 's/.*(http.*)/\1/') ;;
 
-  *          ) exit ;;
+*          ) exit ;;
 esac
 
 [ "$uri" ] && exec dmenu browser "$uri" $bookmarks

@@ -92,13 +92,13 @@ watch() {
 }
 
 case $1 in
-  '') cpu arm && pstat syncthing && systemd stop syncthing@$USER
-      watch & ;;
+'') cpu arm && pstat syncthing && systemd stop syncthing@$USER
+    watch & ;;
 
-  -a) archive & ;;
-  -s) archive && (watchman shutdown-server ; pstat syncthing || systemd start syncthing@$USER &) ;;
-  -v) pstat syncthing || watch & ;;
-  * ) queue $@ && [ -e $WSYNC ] && archive & ;;
+-a) archive & ;;
+-s) archive && (watchman shutdown-server ; pstat syncthing || systemd start syncthing@$USER &) ;;
+-v) pstat syncthing || watch & ;;
+* ) queue $@ && [ -e $WSYNC ] && archive & ;;
 esac
 
 # vim: set ft=sh: #

@@ -39,10 +39,10 @@ connect || exit 1
 
 # https://weather.codes/search/?q=<city> for location codes
 case $location in
-  calgary   ) location=CAXX0054 ; offset=-0200 ;;
-  coimbatore) location=INXX0479 ; offset=+1030 ;;
-  ottawa    ) location=CAXX0343 ;;
-  *         ) location=CAXX0343 ;;
+calgary   ) location=CAXX0054 ; offset=-0200 ;;
+coimbatore) location=INXX0479 ; offset=+1030 ;;
+ottawa    ) location=CAXX0343 ;;
+*         ) location=CAXX0343 ;;
 esac
 
 # convert offset to minutes

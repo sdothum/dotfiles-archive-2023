@@ -7,13 +7,14 @@
 
     " ............................................................... Redraw gui
 
-      let s:delay = '100m'                  " redraw delay, see theme#FontSize()
+      let s:delay = '1m'                    " redraw delay, see theme#FontSize()
 
       " toggle in/out to fill window
       function! core#RedrawGui()
+        call core#ToggleGui()
         execute 'sleep ' . s:delay
         call core#ToggleGui()
-        call core#ToggleGui()
+        let s:delay = '150m'
       endfunction
 
     " .............................................................. Reload vim
@@ -99,6 +100,16 @@
         endfor
         execute 'buffer' . l:cur_buffer
         set nolazyredraw
+      endfunction
+
+    " ....................................................... Search and replace
+
+      " restore search highlight after replace
+      function! core#SearchReplace(cmd)
+        let l:search = @/
+        let l:s = input('', a:cmd)
+        execute l:s
+        let @/ = l:search
       endfunction
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

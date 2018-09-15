@@ -11,9 +11,9 @@ rm -f $BLACKBOARD
 
 background=$(cat $SETROOT 2>/dev/null)
 case $background in
-  blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
-  wallpaper) draw root wallpaper ;;
-  *        ) draw root blank ;;
+blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
+wallpaper) draw root wallpaper ;;
+*        ) draw root blank ;;
 esac
 
 # vim: set ft=sh: #

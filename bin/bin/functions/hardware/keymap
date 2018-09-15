@@ -36,10 +36,10 @@ qwerty() {
 
 # toggle qwerty and colemak variants
 case $1 in
-  c*) colemak ;;
-  q*) qwerty ;;
-  t*) grep -q qwerty /etc/vconsole.conf && colemak || qwerty ;;
-  * ) usage ;;
+c*) colemak ;;
+q*) qwerty ;;
+t*) grep -q qwerty /etc/vconsole.conf && colemak || qwerty ;;
+* ) usage ;;
 esac
 
 # vim: set ft=sh: #

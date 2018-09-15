@@ -54,25 +54,25 @@ for i in $@ ;do
   while read action package condition <&3 ;do
     # echo "action=$action package=$package condition=$condition"
     case $action in
-      ''  ) continue ;;
-      '#' ) continue ;;
-      '=' ) echo $package | grep '^[[:alpha:]]' && title "$package $condition" ;    continue ;;
-      '"' ) [ $check ] || ditto "$package $condition" ;                             continue ;;
-      '!' ) [ $check ] || $package $condition ;                                     continue ;;
-      '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package" ; continue ;} ;;
-      d   ) rule=true ;;
+    ''  ) continue ;;
+    '#' ) continue ;;
+    '=' ) echo $package | grep '^[[:alpha:]]' && title "$package $condition" ;    continue ;;
+    '"' ) [ $check ] || ditto "$package $condition" ;                             continue ;;
+    '!' ) [ $check ] || $package $condition ;                                     continue ;;
+    '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package" ; continue ;} ;;
+    d   ) rule=true ;;
 
-      '-' |\
-      '?' |\
-      '*' |\
-      '@' |\
-      a   |\
-      g   |\
-      m   ) rule=$(rule "$condition") ;;
+    '-' |\
+    '?' |\
+    '*' |\
+    '@' |\
+    a   |\
+    g   |\
+    m   ) rule=$(rule "$condition") ;;
 
-      *   ) set -- $package $condition
-            package=$action
-            rule=$(rule "$@") ;;
+    *   ) set -- $package $condition
+          package=$action
+          rule=$(rule "$@") ;;
     esac
 
     eval $rule || continue
@@ -83,10 +83,10 @@ for i in $@ ;do
       # check deferred actions
       echo "$package" | grep -q '^.$' && package=$(echo $condition | cut -d' ' -f1)
       case $action in
-        '-') continue ;;
-        g  ) echo "$gems" | grep -q "^$package$" && installed=true || pkg='gem ' ;;
-        m  ) pkg='make_install possibly ' ;;
-        *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
+      '-') continue ;;
+      g  ) echo "$gems" | grep -q "^$package$" && installed=true || pkg='gem ' ;;
+      m  ) pkg='make_install possibly ' ;;
+      *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
       esac
       [ $installed ] && ditto $package || ditto "$package  ${__RED}${BLINK}[${pkg}not installed]"
       continue
@@ -94,14 +94,14 @@ for i in $@ ;do
 
     # package management
     case $action in
-      '-') heading "[ Uninstalling.. ]   $package" ; pm R $package ;;
-      '?') pm_install S $package ;;
-      '@') aur_install $package ;;
-      a  ) arm_install $package ;;
-      d  ) echo "$package $condition" >>$deferred ;;
-      g  ) gem_install $package ;;
-      m  ) make_install $package ;;
-      *  ) pm_install $package ;;
+    '-') heading "[ Uninstalling.. ]   $package" ; pm R $package ;;
+    '?') pm_install S $package ;;
+    '@') aur_install $package ;;
+    a  ) arm_install $package ;;
+    d  ) echo "$package $condition" >>$deferred ;;
+    g  ) gem_install $package ;;
+    m  ) make_install $package ;;
+    *  ) pm_install $package ;;
     esac
   done 3< $i
 done

@@ -22,12 +22,12 @@ fi
 network=$(connmanctl services | grep $wifi | awk '{ print $3 }')
 
 case $1 in
-  off) wireless | grep 'address=' && connmanctl disconnect $network ;;
-  on ) wireless | grep 'address=' || connmanctl connect $network ;;
+off) wireless | grep 'address=' && connmanctl disconnect $network ;;
+on ) wireless | grep 'address=' || connmanctl connect $network ;;
 
-  *  ) connmanctl services --properties $network
-       echo
-       usage ;;
+*  ) connmanctl services --properties $network
+     echo
+     usage ;;
 esac
 
 # vim: set ft=sh: #

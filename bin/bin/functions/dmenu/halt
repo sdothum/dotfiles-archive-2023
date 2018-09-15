@@ -19,23 +19,24 @@ disconnect() {
   quit
 }
 
+actions() { echo "lock\nlogout\nsuspend\nreboot\nshutdown" ;}
+
 # quit!
 cmd=$default
-while cmd=$(echo "lock\nlogout\nsuspend\nreboot\nshutdown" | rmenu 'Session' $cmd -no-custom) || exit ;do
-  case $cmd in
-    lock    ) lock_screen ;;
-    logout  ) sudo kill -TERM X ;;
+while cmd=$(actions | rmenu 'Session' $cmd -no-custom) || exit ;do case $cmd in
+  lock    ) lock_screen ;;
+  logout  ) sudo kill -TERM X ;;
 
-    suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend ||
-                                        sudo pm-suspend ;;
+  suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend ||
+                                      sudo pm-suspend ;;
 
-    reboot  ) disconnect
-              [ -e /sbin/systemctl ] && sudo systemctl reboot ||
-                                        sudo shutdown -r now ;;
+  reboot  ) disconnect
+            [ -e /sbin/systemctl ] && sudo systemctl reboot ||
+                                      sudo shutdown -r now ;;
 
-    shutdown) disconnect
-              [ -e /sbin/systemctl ] && sudo systemctl poweroff ||
-                                        sudo shutdown -h now ;;
+  shutdown) disconnect
+            [ -e /sbin/systemctl ] && sudo systemctl poweroff ||
+                                      sudo shutdown -h now ;;
   esac
   break
 done

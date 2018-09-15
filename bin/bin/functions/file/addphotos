@@ -30,8 +30,8 @@ copy_image() {
 camera() { for i in $1/* ;do copy_image $i ;done ;}
 
 case ${MEDIA##*/} in
-  *FUJI ) camera $MEDIA ;;
-  *SIGMA) camera $MEDIA ;;
+*FUJI ) camera $MEDIA ;;
+*SIGMA) camera $MEDIA ;;
 esac
 
 # vim: set ft=sh: #

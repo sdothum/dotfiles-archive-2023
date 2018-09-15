@@ -16,10 +16,10 @@ interval=15
 # butterfs maintenance
 volume() {
   case $@ in
-    boot | root) echo /boot ;;
-    net | share) echo /net ;;
-    backup     ) echo /backup ;;
-    *          ) echo $@ ;;
+  boot | root) echo /boot ;;
+  net | share) echo /net ;;
+  backup     ) echo /backup ;;
+  *          ) echo $@ ;;
   esac
 }
 
@@ -37,19 +37,19 @@ show() {
 }
 
 case $1 in
-  '') usage ;;
+'') usage ;;
 
-  a*) scrub boot
-      scrub share
-      scrub backup ;;
+a*) scrub boot
+    scrub share
+    scrub backup ;;
 
-  c*) sudo btrfs scrub cancel $(volume $2) ;;
-  I*) sudo rm -f /var/lib/btrfs/*.* ;;
-  s*) show $(volume $2) ;;
+c*) sudo btrfs scrub cancel $(volume $2) ;;
+I*) sudo rm -f /var/lib/btrfs/*.* ;;
+s*) show $(volume $2) ;;
 
-  * ) sudo btrfs scrub start -Bd $(volume $@) &
-      which term >/dev/null 2>&1 && ( term "$@" SHELL "scrub s $@" & ) ||
-                                    scrub s $@ ;;
+* ) sudo btrfs scrub start -Bd $(volume $@) &
+    which term >/dev/null 2>&1 && ( term "$@" SHELL "scrub s $@" & ) ||
+                                  scrub s $@ ;;
 esac
 
 # vim: set ft=sh: #
