@@ -8,6 +8,7 @@ enum tap_dance {
  ,_PRIV
  ,_SEND
  ,_SPC
+ ,_SCLN
  ,_TILD
 #ifdef HASKELL
  ,_COLN
@@ -24,6 +25,7 @@ enum tap_dance {
 #define TD_PRIV TD(_PRIV)                   // compile time macro string, provided in private_string.h
 #define TD_SEND TD(_SEND)                   // config.h defined macro string
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc
+#define TD_SCLN TD(_SCLN)
 #define TD_TILD TD(_TILD)
 #ifdef HASKELL
 #define TD_COLN TD(_COLN)

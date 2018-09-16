@@ -340,6 +340,23 @@ void dot(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 }
 
+void emoji(qk_tap_dance_state_t *state, void *user_data)
+{
+  uint8_t i;
+  if (state->count > 1) {
+    if (state->pressed) { register_code(KC_SCLN); }
+    else if (state->count == 2) { tap_shift(KC_SCLN); tap_key(KC_MINUS); }
+    else for (i = 0; i < state->count; i++) { tap_key(KC_SCLN); }
+  }
+  else { state->pressed ? register_code(KC_SCLN) : double_max(state->count, NOSHIFT, KC_SCLN); }
+  reset_tap_dance(state);
+}
+
+void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_code(KC_SCLN);
+}
+
 // compile time macro string, see functions/hardware planck script
 void private(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -368,6 +385,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
+ ,[_SCLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
  ,[_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
 #ifdef HASKELL
  ,[_COLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, colon, colon_reset)
