@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .............................................................. shell-functools
+
+pm S python-pip
+# functional programming extensions
+sudo pip install shell-functools
+
+# vim: set ft=sh: #

@@ -164,10 +164,9 @@ while : ;do
               sync
             else
               mobi=$(find /tmp -maxdepth 1 -name "*$format")
-              address=$(echo | mhistory kindle | rmenu '[ Address ]@kindle.com') || break
-              address=${address%%@*}
+              address=$(echo | mhistory kindle | rmenu 'Address <@kindle.com>') || break
+              echo "$address" | grep -q '@' || address=$address@kindle.com
               mhistory kindle $address
-              address=$address@kindle.com
               account=$(grep $USER /etc/aliases | cut -d' ' -f2)
               boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
               email | /usr/local/bin/msmtp-enqueue.sh -t &

@@ -37,8 +37,8 @@ layout() {
     2) twofifths  '2' ;;
     3) twofifths  '3' ;;
     4) halves     '4' ;;
-    5) horizontal '5' ;;
-    6) halves     '6' ;;
+    5) grid       '5' ;;
+    6) thirds     '6' ;;
     esac
   else
     herbstclient load $1 '(clients vertical:0)'

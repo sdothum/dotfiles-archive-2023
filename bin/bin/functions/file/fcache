@@ -54,8 +54,8 @@ fi
 # [ $refresh ] && notify "$1" 'Refreshing fcache'
 # following links can be problematic for concurrent finds (locking issue)
 [ -L $1 ] && link='-L'
-pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | filter >$dcache &
-pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | filter >$cache &
-[ $refresh ] || [ $create ] || find $link $1 -type $type 2>/dev/null | filter &
+pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | exclude >$dcache &
+pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | exclude >$cache &
+[ $refresh ] || [ $create ] || find $link $1 -type $type 2>/dev/null | exclude &
 
 # vim: set ft=sh: #

@@ -115,6 +115,7 @@
 # prezto-git
   pv
   ripgrep
+m shell-functools
   the_silver_searcher
 # zsh-doc
 # zsh-autosuggestions

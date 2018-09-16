@@ -53,8 +53,13 @@
 = prototyping
 = ▔▔▔▔▔▔▔▔▔▔▔
 # tcc
-  python-setuptools
   ruby
+
+
+= python
+= ▔▔▔▔▔▔
+  python-pip
+  python-setuptools
 
 
 = software tools

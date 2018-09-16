@@ -107,7 +107,7 @@ switch tag $WEB
 
 # .............................................................. Cleanup desktop
 
-pstat unclutter || toggle unclutter
+[ $HOST = lumen ] || { pstat unclutter || toggle unclutter ;}
 # autocutsel leaves a small square of black pixels in the bottom right corner
 (xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 

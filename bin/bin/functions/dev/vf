@@ -14,8 +14,8 @@ usage() {
 # v by directory depth or name
 case $1 in
 ''   ) [ -e $DYNAMIC ] && toggle focus
-       for i in $(find -L -type d  | filter) ;do
-         files=$(find -L $i -maxdepth 1 -type f | filter)
+       for i in $(find -L -type d  | exclude) ;do
+         files=$(find -L $i -maxdepth 1 -type f | exclude)
          [ "$files" ] || continue
          echo
          echo $files | sed 's|.*/||'
@@ -25,8 +25,8 @@ case $1 in
        [ -e $DYNAMIC ] && toggle focus ;;
 
 help ) usage ;;
-[1-4]) v $(find -L -maxdepth ${1:-1} -type f | filter) ;;
-*    ) v $(find -L -type f -name "$1" | filter) ;;
+[1-4]) v $(find -L -maxdepth ${1:-1} -type f | exclude) ;;
+*    ) v $(find -L -type f -name "$1" | exclude) ;;
 esac
 
 # vim: set ft=sh: #

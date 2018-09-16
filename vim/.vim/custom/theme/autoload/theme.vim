@@ -109,9 +109,10 @@
         highlight  link SpellLocal         SpellBad
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
-          execute 'highlight Search        guifg=#ffffff                  guibg=red guisp=red'
-          execute 'highlight IncSearch     guifg=#000000                  guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
-          highlight  StatuslineNC          guifg=#ffffff
+          execute 'highlight Search        guifg=#ffffff guibg=red guisp=red'
+          execute 'highlight IncSearch     guifg=#000000 guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
+          highlight StatuslineNC           guifg=#ffffff
+          highlight link SneakScope        Cursor
         endif
         call theme#FzfColors()
         call theme#SignifyColors()
@@ -123,12 +124,12 @@
       " ruler, indents
       function! theme#IndentTheme()
         call core#Trace('theme#IndentTheme()')
-        execute 'highlight IndentGuidesOdd     guibg=' . theme#Value('s:dfm_bg_'        . &background)
-        execute 'highlight IndentGuidesEven    guibg=' . theme#Value('s:dfm_bg_line_'   . &background)
+        execute 'highlight IndentGuidesOdd  guibg=' . theme#Value('s:dfm_bg_'        . &background)
+        execute 'highlight IndentGuidesEven guibg=' . theme#Value('s:dfm_bg_line_'   . &background)
         if g:ruler == 2
-          execute 'highlight ColorColumn       guibg=' . theme#Value('s:dfm_bg_column_' . &background)
+          execute 'highlight ColorColumn    guibg=' . theme#Value('s:dfm_bg_column_' . &background)
         else
-          execute 'highlight ColorColumn       guibg=' . theme#Value('s:dfm_bg_line_'   . &background)
+          execute 'highlight ColorColumn    guibg=' . theme#Value('s:dfm_bg_line_'   . &background)
         endif
         if s:sync == 1                      " refresh any indent guides, see theme#LiteSwitch()
           execute 'IndentGuidesToggle'

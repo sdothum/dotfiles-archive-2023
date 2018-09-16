@@ -6,17 +6,17 @@
 
 # .................................................................. Search rule
 
-# Usage: .. | filter [<regex>]
+# Usage: .. | exclude [<regex>]
 
 IGNORE=$HOME/.agignore
 
-# filter out home directory chaff from glob lists (note possible leading ansi escape sequences)
+# exclude home directory chaff from glob lists (note possible leading ansi escape sequences)
 ansi='\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]'
 
 # directory exclusions
 ignore=$(egrep -v '^#|^ *$' $IGNORE | sed -e 's/^\./\\./' | tr '\n' '|')
 
-# <regex> restricts filter to filename portion of input list, see a and al
+# <regex> restricts exclude to filename portion of input list, see a and al
 [ $1 ] && egrep -v "\($ansi\)?.*\($ignore\)" | egrep -v "$1" ||
           egrep -v "\($ansi\)?.*\($ignore\)"
 
