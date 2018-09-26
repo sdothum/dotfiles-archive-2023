@@ -15,8 +15,12 @@
       " foreground
       let s:dfm_fg_light        = '#000000' " light foreground (high contrast)
       let s:dfm_fg_dark         = '#ffffff' " dark foreground (high contrast)
+      let s:dfm_fg_text_light   = g:rgb_11  " light normal text
+      let s:dfm_fg_text_dark    = g:gray5   " dark normal text
       let s:dfm_proof_light     = '#dddddd' " dark foreground
       let s:dfm_proof_dark      = '#444444' " light foreground
+      let s:dfm_bg_spell_light  = g:teal_bg " light spelling
+      let s:dfm_bg_spell_dark   = g:gray3   " dark spelling
       let s:dfm_ale_light       = g:rgb_1
       let s:dfm_ale_dark        = g:red
 
@@ -86,10 +90,11 @@
       function! theme#Theme()
         call core#Trace('theme#Theme()')
         let l:background = &background == 'light' ? 'dark' : 'light'
-        execute 'highlight ExtraWhitespace guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
-        execute 'highlight VisualCursor    guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight ReplaceCursor   guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . s:dfm_bg
-        execute 'highlight CommandCursor   guibg=' . theme#Value('s:dfm_cursor_'  . l:background) . ' guifg=' . s:dfm_bg
+        let l:cursor     = theme#Value('s:dfm_cursor_'  . l:background)
+        execute 'highlight ExtraWhitespace guibg=' . l:cursor         . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
+        execute 'highlight VisualCursor    guibg=' . l:cursor         . ' guifg=' . s:dfm_bg
+        execute 'highlight ReplaceCursor   guibg=' . l:cursor         . ' guifg=' . s:dfm_bg
+        execute 'highlight CommandCursor   guibg=' . l:cursor         . ' guifg=' . s:dfm_bg
         execute 'highlight Folded          guibg=' . s:dfm_folded     . ' guifg=' . s:dfm_bg
         execute 'highlight User1           guibg=' . s:dfm_bg         . ' guifg=' . s:dfm_fg_user1
         execute 'highlight User2           guibg=' . s:dfm_bg         . ' guifg=' . s:dfm_fg_user2
@@ -103,10 +108,10 @@
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
         highlight  link ALEWarningSign     Comment
         " toggling colorcolunm toggles spell colors (not a prose workflow issue)
-        highlight! link SpellBad           ColorColumn
-        highlight  link SpellCap           SpellBad
-        highlight  link SpellRare          SpellBad
-        highlight  link SpellLocal         SpellBad
+        execute 'highlight SpellBad        guibg=' . theme#Value('s:dfm_bg_spell_' . &background) . ' guifg=' . theme#Value('s:dfm_fg_text_' . &background)
+        highlight link SpellCap            SpellBad
+        highlight link SpellRare           SpellBad
+        highlight link SpellLocal          SpellBad
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
           execute 'highlight Search        guifg=#ffffff guibg=red guisp=red'

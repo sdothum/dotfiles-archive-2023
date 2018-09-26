@@ -25,6 +25,25 @@
 
     " .............................................................. Color codes
 
+      " flatwhite colour palette (light)
+      let g:base1       = "#605a52"
+      let g:base2       = "#93836c"
+      let g:base3       = "#b9a992"
+      let g:base4       = "#dcd3c6"
+      let g:base5       = "#e4ddd2"
+      let g:base6       = "#f1ece4"
+      let g:base7       = "#f7f3ee"
+      let g:orange_text = "#5b5143"
+      let g:orange_bg   = "#f7e0c3"
+      let g:green_text  = "#525643"
+      let g:green_bg    = "#e2e9c1"
+      let g:teal_text   = "#465953"
+      let g:teal_bg     = "#d2ebe3"
+      let g:blue_text   = "#4c5361"
+      let g:blue_bg     = "#dde4f2"
+      let g:purple_text = "#614c61"
+      let g:purple_bg   = "#f1ddf1"
+
       " solarized colour palette (light)
       let g:rgb_0       = '#073642'         " base02 dark highlight
       let g:rgb_1       = '#dc322f'         " red
@@ -43,9 +62,10 @@
       let g:rgb_14      = '#93a1a1'         " base1 lightest grey
       let g:rgb_15      = '#fdf6e3'         " base3 light bg
 
-      " flatwhite colour palette (light)
       if g:lightscheme == 'flatwhite'
-        let g:rgb_15    = '#f7f3ee'         " base3 light bg
+        let g:rgb_15    = g:base7           " background
+        let g:rgb_11    = g:base1           " normal text
+        let g:rgb_7     = g:base6           " cursorline
       endif
 
       " quantum colour palette (dark)
