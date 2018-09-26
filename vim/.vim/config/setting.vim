@@ -138,7 +138,7 @@
       " correction related, but really bound to Pencil
       nmap <silent><F6> :silent call core#ToggleSpell()<CR>
       imap <silent><F6> <C-o>:silent call core#ToggleSpell()<CR>
-      vmap <silent><F6> <C-o>:silent call core#ToggleSpell()<CR>
+      vmap <silent><F6> :<C-u>silent call core#ToggleSpell()<CR>
 
       autocmd plugin Filetype draft        call litecorrect#init()
       autocmd plugin Filetype note         call litecorrect#init()

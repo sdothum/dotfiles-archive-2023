@@ -141,7 +141,7 @@
       " line numbers
       function! theme#LineNr(mode)
         call core#Trace('theme#LineNr()')
-        execute 'highlight CursorLineNr ' . (g:view == 0 ? 'gui=bold guifg=' . theme#Value('s:dfm_fg_' . &background)
+        execute 'highlight CursorLineNr ' . (g:view == 0 ? 'gui=bold guifg=' . theme#Value('s:dfm_bg_' . &background)
                 \                                        : 'gui=none guifg=' . (b:proof == 0 ? s:dfm_bg : s:dfm_fg_line))
         let s:dfm_linenr_cmd = g:view == 0  ? s:dfm_fg_line  : s:dfm_bg
         if a:mode == 'n'

@@ -178,7 +178,7 @@ button.expandPrompt {
 #ttrssPrefs * { border-radius: 0; }
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
-#ttrssMain #main:after {
+#ttrssMain #main:before {
   /* text-shadow: 0 1px 1px #fff; */
   color:          #871c1c;
   content:        'gravity\Awell'; /* line break */

@@ -65,10 +65,10 @@
 
       nnoremap <silent><F12>       :call core#RedrawGui()<CR>
       inoremap <silent><F12>       <C-o>:call core#RedrawGui()<CR>
-      vnoremap <silent><F12>       <C-o>:call core#RedrawGui()<CR>
+      vnoremap <silent><F12>       :<C-u>call core#RedrawGui()<CR>
       nnoremap <silent><S-F12>     :call core#ToggleGui()<CR>
       inoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>
-      vnoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>
+      vnoremap <silent><S-F12>     :<C-u>call core#ToggleGui()<CR>
 
     " .................................................. Column and line numbers
 
@@ -89,7 +89,7 @@
     " ......................................................... Strip whitespace
     
       nmap <silent><F5>            :call core#StripTrailingWhitespaces()<CR>
-      vmap <silent><F5>            <C-o>:call core#StripTrailingWhitespaces()<CR>
+      vmap <silent><F5>            :<C-u>call core#StripTrailingWhitespaces()<CR>
 
     " ..................................................... Save cursor position
 

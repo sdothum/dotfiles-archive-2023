@@ -9,7 +9,7 @@
 # dwb-git
 # dwb-gtk3
 # elinks
-# firefox           [server]
+  firefox
 # haskell-hbro
 # jumanji-git
 # links
@@ -18,7 +18,7 @@
   lynx
 # midorio
   qt5-webkit
-  qutebrowser
+# qutebrowser
 # qutebrowser-git
   surf
 # uzbl-browser

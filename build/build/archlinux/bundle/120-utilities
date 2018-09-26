@@ -90,6 +90,7 @@
   audex                  [server]
 # asunder                [server]
   cdrdao                 [server]
+# cdrtools               [server]
 # dvd+rw-tools           [server]
 # dvdbackup              [server]
   ffmpeg                 [server]

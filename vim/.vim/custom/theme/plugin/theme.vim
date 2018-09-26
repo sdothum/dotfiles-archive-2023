@@ -84,7 +84,7 @@
 
       nmap <silent><F8>   :call theme#LiteSwitch()<CR>
       imap <silent><F8>   <C-o>:call theme#LiteSwitch()<CR>
-      vmap <silent><F8>   <C-o>:call theme#LiteSwitch()<CR>
+      vmap <silent><F8>   :<C-u>call theme#LiteSwitch()<CR>
 
       autocmd theme InsertEnter * call theme#LineNr('i')
       autocmd theme InsertLeave * call theme#LineNr('n')
@@ -94,7 +94,7 @@
 
       nmap <silent><S-F9> :call theme#FontSize(g:font_type == 1 ? 0 : 1)<CR>
       imap <silent><S-F9> <C-o>:call theme#FontSize(g:font_type == 1 ? 0 : 1)<CR>
-      vmap <silent><S-F9> <C-o>:call theme#FontSize(g:font_type == 1 ? 0 : 1)<CR>
+      vmap <silent><S-F9> :<C-u>call theme#FontSize(g:font_type == 1 ? 0 : 1)<CR>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

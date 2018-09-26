@@ -281,8 +281,8 @@ d * alot
 = browsers
 = ▔▔▔▔▔▔▔▔
   chromium
-  qt5-webkit
-  qutebrowser
+# qt5-webkit
+# qutebrowser
   surf
 # d " tabbed compiled to custom font size
 # d m tabbed

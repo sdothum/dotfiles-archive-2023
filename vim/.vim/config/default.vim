@@ -17,11 +17,11 @@
 
       nmap <F1>           :help<Space>
       imap <F1>           <C-o>:help<Space>
-      vmap <F1>           <C-o>:help<Space>
+      vmap <F1>           :<C-u>help<Space>
       " list my function and leader key assignments
       nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>
       imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
-      vmap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
+      vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
 
     "  ............................................................ Undo history
 
@@ -113,9 +113,10 @@
 
     " .................................................................. Replace
 
-      nnoremap ;s         :call core#SearchReplace(':%s,\v')<CR>
+      " restore current search pattern
+      nnoremap ;s         :call core#SearchReplace(':s,\v')<CR>
       nnoremap %%         :call core#SearchReplace(':%s,\v')<CR>
-      vnoremap %%         :call core#SearchReplace(':s,\v')<CR>
+      vnoremap %%         :<C-u>call core#SearchReplace(":'<,'>s,\\v")<CR>
 
     " ........................................................... Tab completion
 

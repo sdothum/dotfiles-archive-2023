@@ -22,7 +22,7 @@ kindle=/run/media/$USER/Kindle
 [ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
 kindle=$kindle/documents/
 
-# see notes above
+# embed smallest fontset possible, see notes above
 embed_font=Economica
 
 # .............................................................. Kindle transfer
