@@ -61,6 +61,7 @@
       " toggle full document highlight
       function! ui#ToggleProof()
         call core#Trace('ui#ToggleProof()')
+        let l:col = virtcol('.')
         let b:proof = b:proof == 0 ? 1 : 0
         call theme#Theme()
         if core#Prose()
@@ -73,6 +74,7 @@
           call ui#ShowInfo(0)
           execute 'Limelight'
         endif
+        execute 'normal! ' . l:col . '|'
       endfunction
 
       function! ui#SetView()

@@ -26,23 +26,23 @@
     " .............................................................. Color codes
 
       " flatwhite colour palette (light)
-      let g:base1       = "#605a52"
-      let g:base2       = "#93836c"
-      let g:base3       = "#b9a992"
-      let g:base4       = "#dcd3c6"
-      let g:base5       = "#e4ddd2"
-      let g:base6       = "#f1ece4"
-      let g:base7       = "#f7f3ee"
-      let g:orange_text = "#5b5143"
-      let g:orange_bg   = "#f7e0c3"
-      let g:green_text  = "#525643"
-      let g:green_bg    = "#e2e9c1"
-      let g:teal_text   = "#465953"
-      let g:teal_bg     = "#d2ebe3"
-      let g:blue_text   = "#4c5361"
-      let g:blue_bg     = "#dde4f2"
-      let g:purple_text = "#614c61"
-      let g:purple_bg   = "#f1ddf1"
+      let g:base1       = '#605a52'
+      let g:base2       = '#93836c'
+      let g:base3       = '#b9a992'
+      let g:base4       = '#dcd3c6'
+      let g:base5       = '#e4ddd2'
+      let g:base6       = '#f1ece4'
+      let g:base7       = '#f7f3ee'
+      let g:orange_text = '#5b5143'
+      let g:orange_bg   = '#f7e0c3'
+      let g:green_text  = '#525643'
+      let g:green_bg    = '#e2e9c1'
+      let g:teal_text   = '#465953'
+      let g:teal_bg     = '#d2ebe3'
+      let g:blue_text   = '#4c5361'
+      let g:blue_bg     = '#dde4f2'
+      let g:purple_text = '#614c61'
+      let g:purple_bg   = '#f1ddf1'
 
       " solarized colour palette (light)
       let g:rgb_0       = '#073642'         " base02 dark highlight
@@ -82,6 +82,16 @@
       let g:purple      = '#a48add'         " 140 (af87d7)
       let g:red         = '#dd7186'         " 168 (d75f87)
       let g:yellow      = '#d5b875'         " 180 (d7af87)
+
+      " cursor
+      let g:cursor      = '#20fccf'         " analogous iA Writer '#20bbfc' cursor color
+      let g:black       = '#444444'         " cursor foreground
+      let g:white       = '#ffffff'         " cursor foreground
+      " hyperfocus
+      let g:light_fg    = g:rgb_11          " light cursorline (adjust to preferred highlight)
+      let g:dark_fg     = g:gray5           " dark cursorline (adjust to preferred highlight)
+      let g:light       = '#dddddd'         " light hyperfocus fade
+      let g:dark        = '#444444'         " dark hyperfocus fade
 
       augroup theme
         autocmd!

@@ -14,6 +14,7 @@ nerdfonts='--fontawesome --fontawesomeextension --octicons --powersymbols'
 
 # basename is make_install, $1 == iosevka
 shift
+
 storey=double
 leading=1250
 descender=0
@@ -32,12 +33,12 @@ do
                leading=1875 ;;
 
     code     ) storey=double
-               design=ligset-haskell ;;
+               design="'ligset-haskell'" ;;
 
     proof    ) storey=double
                family=-proof
-               # double spacing
-               leading=2500 ;;
+               # 1.8 spacing
+               leading=2250 ;;
 
     patch    ) patch=true ;;
 
@@ -51,19 +52,18 @@ done
 
 # balance leading/descender spacing
 if [ $leading -gt 1250 ] ;then
-  pad=$(( $leading - 1250 ))
-  descender=$(( $pad / 3 ))
-  leading=$(( 1250 + ($pad - $descender) ))
+  descender=$(( ($leading - 1250) / 4 ))
+  leading=$(( $leading - $descender ))
 fi
 
-shape='sans'
-# alpha='v-l-hooky v-i-hooky v-a-singlestorey v-g-singlestorey v-m-longleg'
-alpha='v-l-hooky v-i-hooky v-g-singlestorey v-m-longleg'
-math='v-zero-slashed v-tilde-low v-asterisk-high v-caret-high v-brace-curly'
-symbol='v-paragraph-high v-at-long v-eszet-sulzbacher'
-upright="$shape $alpha v-a-${storey}storey $math $symbol"
+shape="'sans'"
+# alpha="'v-l-hooky', 'v-i-hooky', 'v-a-singlestorey', 'v-g-singlestorey', 'v-m-longleg'"
+alpha="'v-l-hooky', 'v-i-hooky', 'v-g-singlestorey', 'v-m-longleg'"
+math="'v-zero-slashed', 'v-tilde-low', 'v-asterisk-high', 'v-caret-high', 'v-brace-curly'"
+symbol="'v-paragraph-high', 'v-at-long', 'v-eszet-sulzbacher'"
+upright="$shape, $alpha, 'v-a-${storey}storey', $math, $symbol"
 design=${design:-$upright}
-italic="$shape $alpha v-a-singlestorey $math $symbol"
+italic="$shape, $alpha, 'v-a-singlestorey', $math, $symbol"
 oblique=$italic
 
 # build hooky [i l] single-storey [a g] character set
@@ -75,33 +75,51 @@ if [ -d Iosevka ] ;then
   ifno 'sync iosevka repo' || git pull origin master
 else
   git clone https://github.com/be5invis/Iosevka.git
+  git clone https://github.com/ryanoasis/nerd-fonts.git
   cd Iosevka
   original parameters.toml
 fi
 
-if [ -z $patch ] ;then
-  # ensure node.js is uptodate
-  npm install
+echo "[buildPlans.iosevka$family]            
+family = 'Iosevka$family'              
+design = [$design]             
+upright = ['upright-only', $upright]   
+italic = ['italic-only', $italic]     
+oblique = ['oblique-only', $oblique]   
 
-  sed -i -re "/^family =/s/'Iosevka'/'Iosevka$family'/" \
-      -e "/^leading =/s/= ([0-9]*)/= $leading/" \
-      -e "/^descenderPad =/s/= ([0-9]*)/= $descender/" \
-      /net/depot/Iosevka/parameters.toml
+[buildPlans.iosevka$family.weights.regular]
+shape = 400                            
+css   = 400                            
 
-  make custom-config upright="$upright" italic="$italic" oblique="$oblique" design="$design"
-  make custom
+[buildPlans.iosevka$family.weights.bold]
+shape = 700
+css   = 700
 
-  rm -rf $HOME/.fonts/iosevka$family
-  cp -rv dist/iosevka-custom $HOME/.fonts/iosevka$family
-fi
+[buildPlans.iosevka$family.slants]
+upright = 'normal'
+italic = 'italic'
+oblique = 'oblique'" >/net/depot/Iosevka/private-build-plans.toml
+
+# ensure node.js is uptodate
+npm install
+
+sed -i -re "/^leading =/s/= ([0-9]*)/= $leading/" \
+    -e "/^descenderPad =/s/= ([0-9]*)/= $descender/" \
+    /net/depot/Iosevka/parameters.toml
+
+# npm run build -- ttf:Iosevka$family upright:"$upright" italic:"$italic" oblique:"$oblique" design:"$design"
+npm run build -- ttf:iosevka$family
+
+rm -rf $HOME/.fonts/iosevka$family
+cp -rv dist/iosevka$family $HOME/.fonts/iosevka$family
 
 # patch font
 if [ -e /net/depot/nerd-fonts/font-patcher ] ;then
   rm -f /tmp/Iosevka*ttf
-  /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerlineextra -out /tmp $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
-  mv /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
-  /net/depot/nerd-fonts/font-patcher $nerdfonts -out /tmp $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
-  mv /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka-custom-regular.ttf
+  /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerlineextra -out /tmp $HOME/.fonts/iosevka$family/ttf/iosevka$family-regular.ttf
+  mv -v /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka$family-regular.ttf
+  /net/depot/nerd-fonts/font-patcher $nerdfonts -out /tmp $HOME/.fonts/iosevka$family/ttf/iosevka$family-regular.ttf
+  mv -v /tmp/Iosevka*ttf $HOME/.fonts/iosevka$family/ttf/iosevka$family-regular.ttf
 fi
 
 fc-cache -fv

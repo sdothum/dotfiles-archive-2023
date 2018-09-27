@@ -36,9 +36,9 @@
   adobe-base-14-fonts
 # ephifonts
 # ephifonts-no-helvetica
-m iosevka             [server]
-m iosevka\\ amphetype [server]
-m iosevka\\ proof     [server]
+d m iosevka             [server]
+d m iosevka\\ amphetype [server]
+d m iosevka\\ proof     [server]
   noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git

@@ -13,12 +13,12 @@
     " ......................................................... DFM colour masks
 
       " foreground
-      let s:dfm_fg_light        = '#000000' " light foreground (high contrast)
-      let s:dfm_fg_dark         = '#ffffff' " dark foreground (high contrast)
+      let s:dfm_fg_light        = g:light_fg " light foreground (high contrast)
+      let s:dfm_fg_dark         = g:dark_fg " dark foreground (high contrast)
       let s:dfm_fg_text_light   = g:rgb_11  " light normal text
       let s:dfm_fg_text_dark    = g:gray5   " dark normal text
-      let s:dfm_proof_light     = '#dddddd' " dark foreground
-      let s:dfm_proof_dark      = '#444444' " light foreground
+      let s:dfm_proof_light     = g:light   " dark foreground
+      let s:dfm_proof_dark      = g:dark    " light foreground
       let s:dfm_bg_spell_light  = g:teal_bg " light spelling
       let s:dfm_bg_spell_dark   = g:gray3   " dark spelling
       let s:dfm_ale_light       = g:rgb_1
@@ -35,14 +35,12 @@
       let s:dfm_folded_dark     = g:gray4   " vimdiff fold
 
       " cursor line
-      " let s:dfm_cursor_light  = '#20bbfc' " iA Writer
-      " let s:dfm_cursor_dark   = '#20bbfc' " iA Writer
-      let s:dfm_cursor_light    = '#20fccf' " iA Writer analogous color
-      let s:dfm_cursor_dark     = '#20fccf' " iA Writer analogous color
+      let s:dfm_cursor_light    = g:cursor  " iA Writer
+      let s:dfm_cursor_dark     = g:cursor  " iA Writer
       let s:dfm_bg_line_light   = g:rgb_7   " light cursorline
       let s:dfm_bg_line_dark    = g:gray2   " dark cursorline
-      let s:dfm_bg_column_light = '#E2D7B6' " light column (darker shade of rgb_7)
-      let s:dfm_bg_column_dark  = '#0A4C5C' " dark column (lighter shade of rgb_0)
+      let s:dfm_bg_column_light = g:orange  " light column
+      let s:dfm_bg_column_dark  = g:rgb_6   " dark column
       let s:dfm_fg_line_light   = g:rgb_14  " light line numbers
       let s:dfm_fg_line_dark    = g:gray4   " dark line numbers
 
@@ -91,6 +89,7 @@
         call core#Trace('theme#Theme()')
         let l:background = &background == 'light' ? 'dark' : 'light'
         let l:cursor     = theme#Value('s:dfm_cursor_'  . l:background)
+        let l:text       = theme#Value('s:dfm_fg_text_' . &background)
         execute 'highlight ExtraWhitespace guibg=' . l:cursor         . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
         execute 'highlight VisualCursor    guibg=' . l:cursor         . ' guifg=' . s:dfm_bg
         execute 'highlight ReplaceCursor   guibg=' . l:cursor         . ' guifg=' . s:dfm_bg
@@ -103,20 +102,20 @@
         execute 'highlight SignColumn      guibg=' . s:dfm_bg
         execute 'highlight InsertCursor    guibg=' . s:dfm_cursor     . ' guifg=' . s:dfm_bg
         execute 'highlight CursorLine      guibg=' . s:dfm_cursorline . ' gui=none'
-        execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=#000000'
+        execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=' . g:black
         execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg . ' gui=bold'
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
         highlight  link ALEWarningSign     Comment
         " toggling colorcolunm toggles spell colors (not a prose workflow issue)
-        execute 'highlight SpellBad        guibg=' . theme#Value('s:dfm_bg_spell_' . &background) . ' guifg=' . theme#Value('s:dfm_fg_text_' . &background)
+        execute 'highlight SpellBad        guibg=' . theme#Value('s:dfm_bg_spell_' . &background) . ' guifg=' . l:text
         highlight link SpellCap            SpellBad
         highlight link SpellRare           SpellBad
         highlight link SpellLocal          SpellBad
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
-          execute 'highlight Search        guifg=#ffffff guibg=red guisp=red'
-          execute 'highlight IncSearch     guifg=#000000 guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
-          highlight StatuslineNC           guifg=#ffffff
+          execute 'highlight Search        guifg=' . g:white    . ' guibg=red guisp=red'
+          execute 'highlight IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
+          execute 'highlight StatuslineNC  guifg=' . g:white
           highlight link SneakScope        Cursor
         endif
         call theme#FzfColors()
@@ -124,6 +123,7 @@
         call theme#IndentTheme()
         call theme#Margin()
         call theme#NoTilde()
+        call core#ColumnWrap()
       endfunction
 
       " ruler, indents
