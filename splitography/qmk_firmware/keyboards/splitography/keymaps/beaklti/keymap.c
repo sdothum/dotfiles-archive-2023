@@ -370,14 +370,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (down_rule) { tap_key(KC_ENT); return false; } // down_rule persistance for tap_lt()
     break;
   case KC_COMM:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SLSH)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     break;
   // special shift layer mappings
   case KC_DOT:
     down_rule = key_event(record, 2);       // dot+space/enter+shift shortcut, see tap_lt()
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
