@@ -192,22 +192,6 @@ img[src*="images/indicator_tiny.gif"] {
 
 /* articles - expandable.active / expanded */
 
-/* left feed / update column width*/
-.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
-  margin-left: -95px;
-  width:       95px;
-}
-
-/* maximum fillable content area */
-.cdm.expandable:not(.active) .cdmHeader > .hlFeed a { max-width: 85px; }
-
-/* position titleWrap relative to the checkbox because hlfeed does not exist
- * when a non-category feeds-holder row is selected */
-div[style="vertical-align : middle"] { width: 85px; }
-
-/* extend the content area to the right margin */
-.cdm span.titleWrap { margin-right: -95px; }
-
 .cdm.expanded,
 .cdm.expandable.active {
   border-radius: 0;

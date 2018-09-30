@@ -136,6 +136,22 @@ img[src*='images/mark_set.png'] {
 
 .Selected img[src*='images/mark_set.png'] { margin-top: -7px !important; }
 
+/* left feed / update column width*/
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
+  margin-left: -85px;
+  width:       85px;
+}
+
+/* maximum fillable content area */
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed a { max-width: 75px; }
+
+/* position titleWrap relative to the checkbox because hlfeed does not exist
+ * when a non-category feeds-holder row is selected */
+div[style="vertical-align : middle"] { width: 75px; }
+
+/* extend the content area to the right margin */
+.cdm span.titleWrap { margin-right: -85px; }
+
 /* reposition date below feed label, must declare font to set desired size */
 :not(.Selected) span.updated {
   color:          #aaa;
@@ -147,7 +163,7 @@ img[src*='images/mark_set.png'] {
   text-rendering: geometricPrecision;
   top:            17px;
   white-space:    nowrap;
-  width:          85px;
+  width:          75px;
 }
 
 /* date position on expanded collapse button bar */

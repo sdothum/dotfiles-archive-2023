@@ -273,7 +273,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LALT);
     break;
   case ST_SPC:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SPC)) { return false; }
   case HOME_A:
     tap_mods(record, KC_LSFT);
     break;
@@ -307,14 +307,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case TT_ESC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     tt_clear();                             // exit TT layer
     return false;
 
   // ................................................................ Thumb Keys
 
   case LT_ESC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
@@ -344,8 +342,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TD_SPC:
     if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     // trap potential repeating enter caused by tap dance definition
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { unregister_code(KC_ENT); return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSHIFT);
     break;
   case TD_ENT:
@@ -356,6 +354,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case LT_BSPC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_BSPC)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     tap_layer(record, _RSYMBOL);
     thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL);
