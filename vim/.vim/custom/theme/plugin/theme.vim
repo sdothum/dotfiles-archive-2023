@@ -88,6 +88,7 @@
       let g:black       = '#444444'         " cursor foreground
       let g:white       = '#ffffff'         " cursor foreground
       let g:spell       = '#ffd1dc'         " light spelling/grammar error
+      let g:column      = '#ffe3d5'         " light column
       " hyperfocus
       let g:light_fg    = g:rgb_11          " light cursorline (adjust to preferred highlight)
       let g:dark_fg     = g:gray5           " dark cursorline (adjust to preferred highlight)

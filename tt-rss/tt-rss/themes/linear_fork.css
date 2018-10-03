@@ -264,7 +264,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 /* align date to collapse button bar line height */
 .cdm.expandable.active .cdmHeader span.updated {
-  color:      #666;
+  color:      #888;
   font:       300 9px/11px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   margin-top: -29px;
 }

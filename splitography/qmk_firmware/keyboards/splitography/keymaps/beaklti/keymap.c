@@ -307,12 +307,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case TT_ESC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     tt_clear();                             // exit TT layer
     return false;
 
   // ................................................................ Thumb Keys
 
   case LT_ESC:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }

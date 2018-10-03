@@ -37,7 +37,7 @@
       " cursor line
       let s:dfm_cursor_light    = g:cursor  " iA Writer
       let s:dfm_cursor_dark     = g:cursor  " iA Writer
-      let s:dfm_bg_line_light   = g:rgb_7   " light cursorline
+      let s:dfm_bg_line_light   = g:column  " light cursorline
       let s:dfm_bg_line_dark    = g:gray2   " dark cursorline
       let s:dfm_bg_column_light = g:orange  " light column
       let s:dfm_bg_column_dark  = g:rgb_6   " dark column

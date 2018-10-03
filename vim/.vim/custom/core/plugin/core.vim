@@ -43,7 +43,7 @@
 
     " .................................................................... Debug
 
-      nnoremap <silent><F11>   :let g:trace = g:trace == 0 ? 1 : 0<CR>
+      nnoremap <silent><F10>   :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

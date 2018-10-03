@@ -370,6 +370,12 @@
 
       nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
+    " ............................................................ Textobj-quote
+
+      nmap <silent><F11> :ToggleEducate<CR>
+
+      autocmd FileType html call textobj#quote#init({ 'educate' : 0 })
+
     " ................................................................. Yankring
 
       let g:yankring_default_menu_mode  = 1  " menu on with no shortcut

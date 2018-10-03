@@ -154,7 +154,7 @@ div[style="vertical-align : middle"] { width: 75px; }
 
 /* reposition date below feed label, must declare font to set desired size */
 :not(.Selected) span.updated {
-  color:          #666;
+  color:          #888;
   display:        inline-block;
   font:           300 9px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   overflow:       hidden;

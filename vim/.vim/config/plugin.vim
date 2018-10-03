@@ -110,6 +110,8 @@
       Plug 'Shougo/neosnippet.vim'          " snippets
       Plug 'tpope/vim-endwise', code        " add 'end' statement
       Plug 'reedes/vim-litecorrect', prose  " autocorrections
+      Plug 'kana/vim-textobj-user'          " dependency
+      Plug 'reedes/vim-textobj-quote'       " typographic characters
       Plug 'tpope/vim-surround'             " pairwise c'hange, d'elete, y'ank
 
   " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
