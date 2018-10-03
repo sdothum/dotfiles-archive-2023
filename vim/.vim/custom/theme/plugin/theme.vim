@@ -83,10 +83,11 @@
       let g:red         = '#dd7186'         " 168 (d75f87)
       let g:yellow      = '#d5b875'         " 180 (d7af87)
 
-      " cursor
+      " cursor, highlight
       let g:cursor      = '#20fccf'         " analogous iA Writer '#20bbfc' cursor color
       let g:black       = '#444444'         " cursor foreground
       let g:white       = '#ffffff'         " cursor foreground
+      let g:spell       = '#ffd1dc'         " light spelling/grammar error
       " hyperfocus
       let g:light_fg    = g:rgb_11          " light cursorline (adjust to preferred highlight)
       let g:dark_fg     = g:gray5           " dark cursorline (adjust to preferred highlight)

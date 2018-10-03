@@ -154,9 +154,9 @@ div[style="vertical-align : middle"] { width: 75px; }
 
 /* reposition date below feed label, must declare font to set desired size */
 :not(.Selected) span.updated {
-  color:          #aaa;
+  color:          #666;
   display:        inline-block;
-  font:           9px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:           300 9px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
   overflow:       hidden;
   position:       absolute;
   text-overflow:  ellipsis;
@@ -168,8 +168,9 @@ div[style="vertical-align : middle"] { width: 75px; }
 
 /* date position on expanded collapse button bar */
 .Selected span.updated {
-  left:        17px;
-  padding-top: 1px !important;
+  left:        14px;
+  padding-top: 0px !important;
+  margin-top:  -31px !important;
 }
 
 /* hlfeed does not exist when a non-category feeds-holder row is selected */

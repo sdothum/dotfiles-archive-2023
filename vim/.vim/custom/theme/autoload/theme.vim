@@ -19,8 +19,8 @@
       let s:dfm_fg_text_dark    = g:gray5   " dark normal text
       let s:dfm_proof_light     = g:light   " dark foreground
       let s:dfm_proof_dark      = g:dark    " light foreground
-      let s:dfm_bg_spell_light  = g:teal_bg " light spelling
-      let s:dfm_bg_spell_dark   = g:gray3   " dark spelling
+      let s:dfm_bg_spell_light  = g:spell   " light spelling
+      let s:dfm_bg_spell_dark   = g:rgb_1   " dark spelling
       let s:dfm_ale_light       = g:rgb_1
       let s:dfm_ale_dark        = g:red
 
@@ -108,9 +108,9 @@
         highlight  link ALEWarningSign     Comment
         " toggling colorcolunm toggles spell colors (not a prose workflow issue)
         execute 'highlight SpellBad        guibg=' . theme#Value('s:dfm_bg_spell_' . &background) . ' guifg=' . l:text
-        highlight link SpellCap            SpellBad
-        highlight link SpellRare           SpellBad
-        highlight link SpellLocal          SpellBad
+        highlight! link SpellCap           SpellBad
+        highlight! link SpellRare          SpellBad
+        highlight! link SpellLocal         SpellBad
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
           execute 'highlight Search        guifg=' . g:white    . ' guibg=red guisp=red'

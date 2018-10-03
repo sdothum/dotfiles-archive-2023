@@ -354,7 +354,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case LT_BSPC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_BSPC)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     tap_layer(record, _RSYMBOL);
     thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL);
