@@ -22,10 +22,10 @@
           \, 'mail' : 'markdown'
           \}
 
-      nmap <silent><C-k> <Plug>(ale_previous_wrap)
-      nmap <silent><C-j> <Plug>(ale_next_wrap)
-      nmap <silent><C-?> <Plug>(ale_detail)
-      nmap <silent><C-!> :ALEToggle
+      nmap <silent><leader>k <Plug>(ale_previous_wrap)
+      nmap <silent><leader>j <Plug>(ale_next_wrap)
+      nmap <silent><leader>? <Plug>(ale_detail)
+      nmap <silent><leader>! :ALEToggle
 
     " ............................................................... Auto-pairs
 
@@ -158,7 +158,7 @@
       let g:nrrw_rgn_resize_window = 'relative'
       let g:nrrw_rgn_rel_min       = 50     " relative window size
 
-      function! CloseNR()
+      function! s:closeNR()
         if expand('%t') =~ 'NrrwRgn'
           execute ':wq'
         endif
@@ -166,7 +166,7 @@
 
       " apply refresh to narrow region buffer to apply layout defaults!
       vmap <leader>n <Plug>NrrwrgnDo:call ui#Retheme()<CR>
-      nmap <leader>n :call CloseNR()<CR>
+      nmap <leader>n :call <SID>closeNR()<CR>
 
     " .............................................................. Neocomplete
 
@@ -183,10 +183,9 @@
         return !col || getline('.')[col - 1]  =~ '\s'
       endfunction
 
-      inoremap <silent><expr><TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ neocomplete#start_manual_complete()
+      inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" :
+               \ <SID>check_back_space() ? "\<TAB>" :
+               \ neocomplete#start_manual_complete()
 
     " ............................................................... Neosnippet
 
@@ -220,7 +219,7 @@
     " ........................................................... Notational-fzf
 
       " buffers load after plugins so parse command line for filename
-      function! ArgFile()
+      function! s:argFile()
         if argc() > 0
           return argv(argc() - 1)
         endif
@@ -246,7 +245,7 @@
 
       " dynamically setup notational-fzf :)
       for i in s:set_notational
-        if ArgFile() =~ i[0]
+        if <SID>argFile() =~ i[0]
           let g:nv_search_paths      = i[1]
           let g:nv_default_extension = i[2]
           break
@@ -372,9 +371,18 @@
 
     " ............................................................ Textobj-quote
 
-      nmap <silent><F11> :ToggleEducate<CR>
+      let s:educate = 0
 
-      autocmd FileType html call textobj#quote#init({ 'educate' : 0 })
+      function! s:toggleEducate()
+        execute 'ToggleEducate'
+        let s:educate = s:educate ? 0 : 1
+        echo 'Typography ' . (s:educate ? 'ON' : 'OFF')
+      endfunction
+
+      nmap <silent><F11> :call <SID>toggleEducate()<CR>
+      imap <silent><F11> <C-o>:call <SID>toggleEducate()<CR>
+
+      autocmd FileType html call textobj#quote#init({ 'educate' : s:educate })
 
     " ................................................................. Yankring
 

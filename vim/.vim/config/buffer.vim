@@ -61,8 +61,8 @@
 
       " toggle diff of original file
       command! DiffOrig if !core#CloseDiffOrig()
-               \ | vert new | set bt=nofile | r ++edit # | 0d_
-               \ | diffthis | wincmd p | diffthis | endif
+               \| vert new | set bt=nofile | r ++edit # | 0d_
+               \| diffthis | wincmd p | diffthis | endif
 
       " go to left window in case a diff window is already open and close it
       nmap <silent><leader>dd     :silent DiffOrig<CR>
