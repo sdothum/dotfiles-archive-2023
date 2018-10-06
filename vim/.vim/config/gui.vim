@@ -11,6 +11,59 @@
         autocmd!
       augroup END
 
+      let s:delay = '1m'                    " redraw delay, see theme#FontSize()
+
+    " ............................................................... Toggle gui
+
+      " toggle gui menu
+      function! s:toggleGui()
+        if &guioptions =~# 'T'
+          set guioptions-=T
+          set guioptions-=m
+        else
+          set guioptions+=T
+          set guioptions+=m
+        endif
+      endfunction
+
+      nnoremap <silent><S-F12> :call <SID>toggleGui()<CR>
+      inoremap <silent><S-F12> <C-o>:call <SID>toggleGui()<CR>
+      vnoremap <silent><S-F12> :<C-u>call <SID>toggleGui()<CR>
+
+    " ............................................................... Redraw gui
+
+      " toggle in/out to fill window
+      function! s:redrawGui()
+        call <SID>toggleGui()
+        execute 'sleep ' . s:delay
+        call <SID>toggleGui()
+        let s:delay = '150m'
+      endfunction
+      
+      command! RedrawGui call <SID>redrawGui()
+
+      " initial refresh to fill window (correct status line position)
+      if $DISPLAY > ''
+        autocmd gui VimEnter * RedrawGui
+      endif
+
+      nnoremap <silent><F12> :call <SID>redrawGui()<CR>
+      inoremap <silent><F12> <C-o>:call <SID>redrawGui()<CR>
+      vnoremap <silent><F12> :<C-u>call <SID>redrawGui()<CR>
+
+  " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ................................................................... Screen
+
+      set gcr=a:blinkon0                    " disable cursor blink
+      set mousehide                         " hide mouse when typing
+      set t_Co=256                          " 256 color support
+      set viewoptions=folds,options,cursor,unix,slash
+      set virtualedit=block                 " allow virtual editing in Visual block mode
+      " set virtualedit=onemore             " allow for cursor beyond last character
+      set winminheight=0                    " windows can be 0 line high
+      set wrap                              " wrap lines for viewing
+
     " ................................................................... Alerts
 
       set noerrorbells                      " don't beep
@@ -22,17 +75,6 @@
 
       " clear messages after awhile to keep screen clean and distraction free!
       autocmd gui CursorHold * echo
-
-    " .................................................................. Display
-
-      set gcr=a:blinkon0                    " disable cursor blink
-      set mousehide                         " hide mouse when typing
-      set t_Co=256                          " 256 color support
-      set viewoptions=folds,options,cursor,unix,slash
-      set virtualedit=block                 " allow virtual editing in Visual block mode
-      " set virtualedit=onemore             " allow for cursor beyond last character
-      set winminheight=0                    " windows can be 0 line high
-      set wrap                              " wrap lines for viewing
 
     " ................................................................ Scrolling
 
@@ -49,15 +91,11 @@
       noremap <C-S-Left>     zL
       noremap <C-S-Right>    zH
 
-      " space now commandeered as leader by spacemacs wannabe :)
-      " " manual jump scrolling
-      " if $HOST == 'monad'
-      "   nnoremap <Space>   10jzz
-      "   nnoremap <S-Space> 10kzz
-      " else
-      "   nnoremap <Space>   30jzz
-      "   nnoremap <S-Space> 30kzz
-      " endif
+    " ..................................................... Save cursor position
+
+      " only works for simple :buffer actions (not plugin pane selection)
+      autocmd gui BufWinLeave * let b:winview = winsaveview()
+      autocmd gui BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | endif
 
   " Terminal ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -102,6 +140,20 @@
       " autocmd gui InsertEnter * set norelativenumber
       " autocmd gui InsertLeave * set relativenumber
 
+      " toggle relative number, line number and no numbering
+      function! s:toggleNumber()
+        if (&relativenumber == 1 && &number == 1)
+          set norelativenumber
+        elseif (&relativenumber == 0 && &number == 1)
+          set nonumber
+        else
+          set relativenumber
+          set number
+        endif
+      endfunction
+
+      nmap <silent>#               :call <SID>toggleNumber()<CR>
+
     " ................................................... Status / command lines
 
       set laststatus=2                      " always show status line
@@ -129,5 +181,41 @@
       set listchars+=extends:>
       set listchars+=precedes:<
       " set listchars+=eol:¬
+
+    " .......................................... White space / soft wrap markers
+
+      augroup soft
+        autocmd!
+      augroup END
+
+      " soft wrap marker
+      function! s:softMark()
+        " filetype dependent textwidth
+        if exists('s:soft')
+          call matchdelete(s:soft)
+        endif
+        highlight SoftWrap cterm=underline gui=underline
+        let s:soft = '\%' . (&textwidth + 1) . 'v'
+        let s:soft = matchadd('SoftWrap', s:soft)
+      endfunction
+
+      " toggle trailing whitespace highlight and indentation levels
+      function! s:toggleSpaces()
+        set list!
+        if &list == 0
+          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :)
+          call matchdelete(s:soft)
+          unlet s:soft
+          autocmd! soft
+          " echo ''
+        else
+          match ExtraWhitespace /\s\+$/
+          call <SID>softMark()
+          autocmd soft BufEnter * call <SID>softMark()
+          " echo 'List invisibles ON'
+        endif
+      endfunction
+
+      nmap <silent><leader><Space> :call <SID>toggleSpaces()<CR>
 
 " gui.vim

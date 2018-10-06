@@ -7,6 +7,23 @@
 
     " .............................................................. Insert line
 
+      " insert line while disabling auto-commenting
+      function! s:insertWrap()
+        let l:formatoptions = &formatoptions
+        set formatoptions-=c
+        set formatoptions-=r
+        set formatoptions-=o
+        normal! ^
+        let l:pos = col('.')
+        normal! o
+        " align line indentation
+        execute 'normal! a' . repeat(' ', l:pos)
+        let &formatoptions = l:formatoptions
+      endfunction
+
+      " insert line wrap
+      inoremap <silent><C-Return> <C-o>:call <SID>insertWrap()<CR>
+
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
       " inoremap <C-CR>           <C-o>o
@@ -24,16 +41,6 @@
       nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
       nnoremap <silent><leader><Down> :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
 
-    " ...................................................... Reformat paragraghs
-
-      " select all
-      nnoremap <C-a>        ggVG
-      " retain cursor position for insert mode reformatting
-      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
-      " otherwise advance cursor to next paragraph
-      nnoremap <F4>         {jv}kJvgq}}{j
-      vnoremap <F4>         Jvgqj
-
     " .............................................................. Delete line
 
       " delete blank line above/below
@@ -44,20 +51,93 @@
 
     " .............................................................. Select text
 
+      function! s:paragraphAbove()
+        if matchstr(getline(line('.')), '\S') == ''
+          normal! {
+          if matchstr(getline(line('.')), '\S') == ''
+            normal! j
+          endif
+        endif
+        normal! }lV{
+      endfunction
+
+      function! s:paragraphBelow()
+        if matchstr(getline(line('.')), '\S') == ''
+          normal! }
+          if matchstr(getline(line('.')), '\S') == ''
+            normal! k
+          endif
+        endif
+        normal! {nV}
+      endfunction
+
       " extend paragraph selection
-      vmap     <A-PageUp>   {
-      vmap     <A-PageDown> }
+      vmap <A-PageUp>           {
+      vmap <A-PageDown>         }
+      " select paragragh
+      nmap <silent><A-PageUp>   :call <SID>paragraphAbove()<CR>
+      nmap <silent><A-PageDown> :call <SID>paragraphBelow()<CR>
 
     " .................................................................... Shift
 
-      " softwidth shifts
+      " see https://github.com/gorkunov/vimconfig.git
+      function! s:moveLineOrVisualUpOrDown(move)
+        let l:col = virtcol('.')
+        execute 'silent! ' . a:move
+        execute 'normal! ' . l:col . '|'
+      endfunction
+
+      function! s:moveLineOrVisualUp(line_getter, range)
+        let l:line = line(a:line_getter)
+        if l:line - v:count1 - 1 < 0
+          let l:move = '0'
+        else
+          let l:move = a:line_getter . ' -' . (v:count1 + 1)
+        endif
+        call <SID>moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
+      endfunction
+
+      function! s:moveLineOrVisualDown(line_getter, range)
+        let l:line = line(a:line_getter)
+        if l:line + v:count1 > line('$')
+          let l:move = '$'
+        else
+          let l:move = a:line_getter . ' +' . v:count1
+        endif
+        call <SID>moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
+      endfunction
+
+      function! s:moveLineUp()
+        call <SID>moveLineOrVisualUp('.', '')
+      endfunction
+
+      function! s:moveLineDown()
+        call <SID>moveLineOrVisualDown('.', '')
+      endfunction
+
+      function! s:moveVisualUp()
+        call <SID>moveLineOrVisualUp("'<", "'<,'>")
+        normal! gv
+      endfunction
+
+      function! s:moveVisualDown()
+        call <SID>moveLineOrVisualDown("'>", "'<,'>")
+        normal! gv
+      endfunction
+
+      " softwidth shifts, preserve selection when indenting
       nnoremap <S-Left>        <<
-      nnoremap <S-Right>       >>
       inoremap <S-Left>        <C-d>
-      inoremap <S-Right>       <C-t>
-      " preserve selection when indenting
       vnoremap <S-Left>        <gv
+      nnoremap <S-Right>       >>
+      inoremap <S-Right>       <C-t>
       vnoremap <S-Right>       >gv
+      nmap <silent><S-Up>      :call <SID>moveLineUp()<CR>
+      imap <silent><S-Up>      <ESC>:call <SID>moveLineUp()<CR>a
+      vmap <silent><S-Up>      <ESC>:call <SID>moveVisualUp()<CR>
+      nmap <silent><S-Down>    :call <SID>moveLineDown()<CR>
+      imap <silent><S-Down>    <ESC>:call <SID>moveLineDown()<CR>a
+      vmap <silent><S-Down>    <ESC>:call <SID>moveVisualDown()<CR>
 
       " byte shift left / right
       nnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>
@@ -70,6 +150,16 @@
       vnoremap N               :m '>+1<CR>gv=gv
 
   " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ...................................................... Reformat paragraghs
+
+      " select all
+      nnoremap <C-a>        ggVG
+      " retain cursor position for insert mode reformatting
+      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      " otherwise advance cursor to next paragraph
+      nnoremap <F4>         {jv}kJvgq}}{j
+      vnoremap <F4>         Jvgqj
 
     " ............................................................. Convert tabs
 

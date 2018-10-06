@@ -124,6 +124,8 @@
       " subtle highlighting of even indents only, see core#ToggleColumn(), theme#IndentTheme()
       let g:indent_guides_auto_colors = 0
 
+      nmap <silent><leader><Bar> :IndentGuidesToggle<CR>
+
     " ................................................................ Limelight
 
       " let g:limelight_default_coefficient = 0.8
@@ -135,10 +137,17 @@
       nnoremap <C-s> [s1z=<c-o>
       inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
+      function! s:toggleSpell()
+        let &spell = &spell == 0 ? 1 : 0
+        if PencilMode() != ''
+          execute &spell == 0 ? 'NoPencil' : 'Pencil'
+        endif
+      endfunction
+
       " correction related, but really bound to Pencil
-      nmap <silent><F6> :silent call core#ToggleSpell()<CR>
-      imap <silent><F6> <C-o>:silent call core#ToggleSpell()<CR>
-      vmap <silent><F6> :<C-u>silent call core#ToggleSpell()<CR>
+      nmap <silent><F6> :silent call <SID>toggleSpell()<CR>
+      imap <silent><F6> <C-o>:silent call <SID>toggleSpell()<CR>
+      vmap <silent><F6> :<C-u>silent call <SID>toggleSpell()<CR>
 
       autocmd plugin Filetype draft        call litecorrect#init()
       autocmd plugin Filetype note         call litecorrect#init()
@@ -374,8 +383,16 @@
       let s:educate = 0
 
       function! s:toggleEducate()
-        execute 'ToggleEducate'
+        ToggleEducate
         let s:educate = s:educate ? 0 : 1
+        " html shortcuts
+        if s:educate
+          abbreviate .. …
+          abbreviate -- &ndash;
+        else
+          unabbreviate ..
+          unabbreviate --
+        endif
         echo 'Typography ' . (s:educate ? 'ON' : 'OFF')
       endfunction
 

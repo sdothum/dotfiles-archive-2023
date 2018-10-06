@@ -74,6 +74,24 @@
       set textwidth=80                      " normally 78-80, see autocmd for mail
       let g:linewidth = &textwidth
 
+    " ................................................................ Line wrap
+
+      function! s:toggleWrap()
+        if &formatoptions =~ 't'
+          NoPencil
+          let &formatoptions = g:codeoptions
+          echo 'Automatic line wrap OFF'
+        elseif &formatoptions == g:codeoptions
+          Pencil
+          set formatoptions=tqwan1
+          echo 'Automatic line wrap ON'
+        else
+          set formatoptions
+        endif
+      endfunction
+
+      nmap <silent><leader><CR> :call <SID>toggleWrap()<CR>
+
     " ..................................................................... Tabs
 
       set autoindent
@@ -102,21 +120,29 @@
       set smartcase                         " ignore case if search pattern is all lowercase
 
       " tab to bracket pairs
-      nmap     <Tab>      %
-      vmap     <Tab>      %
+      nmap <Tab>      %
+      vmap <Tab>      %
       " disable magic and case sensitivity
-      cmap     %%         \v
-      cmap     ^^         \C
+      cmap %%         \v
+      cmap ^^         \C
 
       " clear search highlight
-      nmap     <silent>\  :noh<CR>
+      nmap <silent>\  :noh<CR>
 
-    " .................................................................. Replace
+    " ....................................................... Search and replace
+
+      " restore search highlight after replace
+      function! s:searchReplace(cmd)
+        let l:search = @/
+        let l:s = input('', a:cmd)
+        execute l:s
+        let @/ = l:search
+      endfunction
 
       " restore current search pattern
-      nnoremap ;s         :call core#SearchReplace(':s,\v')<CR>
-      nnoremap %%         :call core#SearchReplace(':%s,\v')<CR>
-      vnoremap %%         :<C-u>call core#SearchReplace(":'<,'>s,\\v")<CR>
+      nnoremap ;s :call <SID>searchReplace(':s,\v')<CR>
+      nnoremap %% :call <SID>searchReplace(':%s,\v')<CR>
+      vnoremap %% :<C-u>call <SID>searchReplace(":'<,'>s,\\v")<CR>
 
     " ........................................................... Tab completion
 

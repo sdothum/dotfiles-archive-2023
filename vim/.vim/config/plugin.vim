@@ -17,7 +17,7 @@
     " ................................................................... System
 
       let code  = { 'for' : ['c', 'cpp', 'haskell', 'lua', 'ruby', 'sh', 'snippets', 'vim'] }
-      let prose = { 'for' : ['draft', 'mail', 'markdown', 'note', 'wiki'] }
+      let prose = { 'for' : ['draft', 'mail', 'markdown', 'note', 'wiki', 'html'] }
 
       Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
       " Plug 'tpope/vim-scriptease'         " debugger

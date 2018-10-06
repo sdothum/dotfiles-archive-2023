@@ -137,8 +137,8 @@
           execute 'highlight ColorColumn    guibg=' . theme#Value('s:dfm_bg_line_'   . &background)
         endif
         if s:sync == 1                      " refresh any indent guides, see theme#LiteSwitch()
-          execute 'IndentGuidesToggle'
-          execute 'IndentGuidesToggle'
+          IndentGuidesToggle
+          IndentGuidesToggle
           let s:sync = 0
         endif
       endfunction
@@ -229,7 +229,8 @@
         call core#Trace('theme#Font()')
         execute 'set guifont=' . (core#Prose() ? g:prose_font : g:source_font) . ' ' . a:size
         if exists('s:size')
-          call core#RedrawGui()             " gui redrawi for font size change
+          " gui redrawi for font size change
+          RedrawGui
         endif
         let s:size = a:size
       endfunction

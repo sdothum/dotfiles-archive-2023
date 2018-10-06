@@ -14,14 +14,20 @@
       let s:save_cpo = &cpo
       set cpo&vim
 
-      let g:ruler = 0                       " colorcolumn mode
-      let g:repo  = $HOME . '/stow/'
+      let g:ruler     = 0                   " colorcolumn mode
+      let g:repo      = $HOME . '/stow/'
+      let g:wraplight = 1                   " highlight linewrap (0) off (1) on
 
       augroup core
         autocmd!
       augroup END
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " .............................................................. Config file
+
+      " when updates won't break the current vim session!
+      command! Vimrc call core#Vimrc()
 
     " ............................................................ Open terminal
 
@@ -56,70 +62,24 @@
 
   " GUI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " .................................................... Gvim menu and toolbar
-
-      " initial refresh to fill window (correct status line position)
-      if $DISPLAY > ''
-        autocmd core VimEnter * call core#RedrawGui()
-      endif
-
-      nnoremap <silent><F12>       :call core#RedrawGui()<CR>
-      inoremap <silent><F12>       <C-o>:call core#RedrawGui()<CR>
-      vnoremap <silent><F12>       :<C-u>call core#RedrawGui()<CR>
-      nnoremap <silent><S-F12>     :call core#ToggleGui()<CR>
-      inoremap <silent><S-F12>     <C-o>:call core#ToggleGui()<CR>
-      vnoremap <silent><S-F12>     :<C-u>call core#ToggleGui()<CR>
-
-    " .................................................. Column and line numbers
+    " ................................................................... Column
 
       nmap <silent><Bar>           :call core#ToggleColumn()<CR>
-      nmap <silent><leader><Bar>   :IndentGuidesToggle<CR>
-      nmap <silent>#               :call core#ToggleNumber()<CR>
+      nmap <silent><S-F8>          :call core#ToggleColumnWrap()<CR>
+      imap <silent><S-F8>          <C-o>:call core#ToggleColumnWrap()<CR>
 
-    " ...................................................... White space markers
-
-      nmap <silent><leader><Space> :call core#ToggleSpaces()<CR>
-
-  " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ................................................................ Line wrap
-
-      nmap <silent><leader><CR>    :call core#ToggleWrap()<CR>
+  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Strip whitespace
     
       nmap <silent><F5>            :call core#StripTrailingWhitespaces()<CR>
       vmap <silent><F5>            :<C-u>call core#StripTrailingWhitespaces()<CR>
 
-    " ..................................................... Save cursor position
-
-      " only works for simple :buffer actions (not plugin pane selection)
-      autocmd core BufWinLeave * let b:winview = winsaveview()
-      autocmd core BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | endif
-
-  " Edit ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .......................................................... Shift up / down
-
-      " shift text up / down
-      imap <silent><S-Up>         <ESC>:call core#MoveLineUp()<CR>a
-      imap <silent><S-Down>       <ESC>:call core#MoveLineDown()<CR>a
-      nmap <silent><S-Up>         :call core#MoveLineUp()<CR>
-      nmap <silent><S-Down>       :call core#MoveLineDown()<CR>
-      vmap <silent><S-Up>         <ESC>:call core#MoveVisualUp()<CR>
-      vmap <silent><S-Down>       <ESC>:call core#MoveVisualDown()<CR>
-
-    " ......................................................... Insert line wrap
-
-      inoremap <silent><C-Return> <C-o>:call core#InsertWrap()<CR>
-
-  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .............................................................. Select text
-
-      " select paragragh
-      nmap <silent><A-PageUp>     :call core#ParagraphAbove()<CR>
-      nmap <silent><A-PageDown>   :call core#ParagraphBelow()<CR>
+      " pre-write formatting
+      " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
+      " " focus oriented formatting
+      " autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
+      " autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
 
     " .......................................................... Code block text
 

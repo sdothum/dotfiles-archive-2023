@@ -5,20 +5,6 @@
 
   " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-      let s:wraplight = 1                   " highlight linewrap (0) off (1) on
-
-    " ............................................................... Redraw gui
-
-      let s:delay = '1m'                    " redraw delay, see theme#FontSize()
-
-      " toggle in/out to fill window
-      function! core#RedrawGui()
-        call core#ToggleGui()
-        execute 'sleep ' . s:delay
-        call core#ToggleGui()
-        let s:delay = '150m'
-      endfunction
-
     " .............................................................. Reload vim
 
       function! core#Vimrc()
@@ -104,16 +90,6 @@
         set nolazyredraw
       endfunction
 
-    " ....................................................... Search and replace
-
-      " restore search highlight after replace
-      function! core#SearchReplace(cmd)
-        let l:search = @/
-        let l:s = input('', a:cmd)
-        execute l:s
-        let @/ = l:search
-      endfunction
-
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Colemak-shift-dh
@@ -163,28 +139,6 @@
 
   " GUI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ............................... Gvim Options (make it look like terminal!)
-
-      " toggle gui menu
-      function! core#ToggleGui()
-        if &guioptions =~# 'T'
-          set guioptions-=T
-          set guioptions-=m
-        else
-          set guioptions+=T
-          set guioptions+=m
-        endif
-      endfunction
-
-    " ............................................................. Toggle spell
-
-      function! core#ToggleSpell()
-        execute 'let &spell=' . (&spell == 0 ? 1 : 0)
-        if PencilMode() != ''
-          execute &spell == 0 ? 'NoPencil' : 'Pencil'
-        endif
-      endfunction
-
     " ........................................................... Column margins
 
       augroup column
@@ -193,10 +147,17 @@
 
       " highlight wrapped line portion, see theme#Theme()
       function! core#ColumnWrap()
-        if g:ruler == 0 && s:wraplight
+        if g:ruler == 0 && g:wraplight
           let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
           let &colorcolumn = join(range(l:edge, 999), ',')
+        else
         endif
+      endfunction
+
+      function! core#ToggleColumnWrap()
+        let g:wraplight = g:wraplight ? 0 : 1
+        let g:ruler     = -1
+        call core#ToggleColumn()
       endfunction
 
       " toggle colorcolumn modes, see theme#IndentTheme()
@@ -216,54 +177,6 @@
         call theme#IndentTheme()
         " flash column position, see autocmd info.vim
         let g:column = 1
-      endfunction
-
-    " ............................................................. Line numbers
-
-      " toggle relative number, line number and no numbering
-      function! core#ToggleNumber()
-        if (&relativenumber == 1 && &number == 1)
-          set norelativenumber
-        elseif (&relativenumber == 0 && &number == 1)
-          set nonumber
-        else
-          set relativenumber
-          set number
-        endif
-      endfunction
-
-    " .......................................... White space / soft wrap markers
-
-      augroup soft
-        autocmd!
-      augroup END
-
-      " soft wrap marker
-      function! core#Soft()
-        " filetype dependent textwidth
-        if exists('s:soft')
-          call matchdelete(s:soft)
-        endif
-        highlight SoftWrap cterm=underline gui=underline
-        let s:soft = '\%' . (&textwidth + 1) . 'v'
-        let s:soft = matchadd('SoftWrap', s:soft)
-      endfunction
-
-      " toggle trailing whitespace highlight and indentation levels
-      function! core#ToggleSpaces()
-        set list!
-        if &list == 0
-          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :)
-          call matchdelete(s:soft)
-          unlet s:soft
-          autocmd! soft
-          " echo ''
-        else
-          match ExtraWhitespace /\s\+$/
-          call core#Soft()
-          autocmd soft BufEnter * call core#Soft()
-          " echo 'List invisibles ON'
-        endif
       endfunction
 
   " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -288,21 +201,7 @@
         return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
       endfunction
 
-    " ................................................................ Line wrap
-
-      function! core#ToggleWrap()
-        if &formatoptions =~ 't'
-          NoPencil
-          let &formatoptions = g:codeoptions
-          echo 'Automatic line wrap OFF'
-        elseif &formatoptions == g:codeoptions
-          Pencil
-          set formatoptions=tqwan1
-          echo 'Automatic line wrap ON'
-        else
-          set formatoptions
-        endif
-      endfunction
+  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Strip whitespace
 
@@ -321,95 +220,6 @@
           " let @/ = l:_s
           " call cursor(l:l, l:c)
         endif
-      endfunction
-
-  " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .......................................................... Shift up / down
-
-      " see https://github.com/gorkunov/vimconfig.git
-      function! core#MoveLineUp()
-        call core#MoveLineOrVisualUp('.', '')
-      endfunction
-
-      function! core#MoveLineDown()
-        call core#MoveLineOrVisualDown('.', '')
-      endfunction
-
-      function! core#MoveVisualUp()
-        call core#MoveLineOrVisualUp("'<", "'<,'>")
-        normal! gv
-      endfunction
-
-      function! core#MoveVisualDown()
-        call core#MoveLineOrVisualDown("'>", "'<,'>")
-        normal! gv
-      endfunction
-
-      function! core#MoveLineOrVisualUp(line_getter, range)
-        let l:line = line(a:line_getter)
-        if l:line - v:count1 - 1 < 0
-          let l:move = '0'
-        else
-          let l:move = a:line_getter . ' -' . (v:count1 + 1)
-        endif
-        call core#MoveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
-      endfunction
-
-      function! core#MoveLineOrVisualDown(line_getter, range)
-        let l:line = line(a:line_getter)
-        if l:line + v:count1 > line('$')
-          let l:move = '$'
-        else
-          let l:move = a:line_getter . ' +' . v:count1
-        endif
-        call core#MoveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
-      endfunction
-
-      function! core#MoveLineOrVisualUpOrDown(move)
-        let l:col = virtcol('.')
-        execute 'silent! ' . a:move
-        execute 'normal! ' . l:col . '|'
-      endfunction
-
-    " ......................................................... Insert line wrap
-
-      " insert line while disabling auto-commenting
-      function! core#InsertWrap()
-        let l:formatoptions = &formatoptions
-        set formatoptions-=c
-        set formatoptions-=r
-        set formatoptions-=o
-        normal! ^
-        let l:pos = col('.')
-        normal! o
-        " align line indentation
-        execute 'normal! a' . repeat(' ', l:pos)
-        let &formatoptions = l:formatoptions
-      endfunction
-
-  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .............................................................. Select text
-
-      function! core#ParagraphAbove()
-        if matchstr(getline(line('.')), '\S') == ''
-          normal! {
-          if matchstr(getline(line('.')), '\S') == ''
-            normal! j
-          endif
-        endif
-        normal! }lV{
-      endfunction
-
-      function! core#ParagraphBelow()
-        if matchstr(getline(line('.')), '\S') == ''
-          normal! }
-          if matchstr(getline(line('.')), '\S') == ''
-            normal! k
-          endif
-        endif
-        normal! {nV}
       endfunction
 
     " .......................................................... Code block text
@@ -447,7 +257,7 @@
 
       " distraction free filetyes
       function! core#Prose()
-        return &filetype =~ 'wiki\|mail\|markdown\|draft\|note'
+        return &filetype =~ 'wiki\|mail\|markdown\|draft\|note\|html'
       endfunction
 
       function! core#Markdown()

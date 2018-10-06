@@ -22,7 +22,7 @@
         " restore CursorLine syntax highlighting before applying themes
         " syntax enable
         if exists('g:loaded_limelight')
-          execute 'Limelight!'
+          Limelight!
         endif
         call theme#Theme()
         call theme#ShowStatusline()
@@ -69,10 +69,10 @@
         endif
         if b:proof == 1
           call ui#ShowInfo(1)
-          execute 'Limelight!'
+          Limelight!
         else
           call ui#ShowInfo(0)
-          execute 'Limelight'
+          Limelight
         endif
         execute 'normal! ' . l:col . '|'
       endfunction
