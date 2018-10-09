@@ -7,9 +7,9 @@
 
     " .................................................................... Setup
 
-      let s:wikiinfo            = 1           " statusline (0) off (1) on
-      let s:initial_view        = 1           " prose (0) dfm (1) proof
-      let s:info                = 0           " statusline (0) dfm (1) expanded
+      let s:wikiinfo     = 1                " statusline (0) off (1) on
+      let s:initial_view = 1                " prose (0) dfm (1) proof
+      let s:info         = 0                " statusline (0) dfm (1) expanded
 
   "  Distraction free modes ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

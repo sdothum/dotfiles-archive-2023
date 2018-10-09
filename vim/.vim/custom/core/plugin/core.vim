@@ -11,12 +11,12 @@
         finish
       endif
       let g:loaded_core = 1
-      let s:save_cpo = &cpo
+      let s:save_cpo    = &cpo
       set cpo&vim
 
-      let g:ruler     = 0                   " colorcolumn mode
-      let g:repo      = $HOME . '/stow/'
-      let g:wraplight = 1                   " highlight linewrap (0) off (1) on
+      let g:ruler       = 0                   " colorcolumn mode
+      let g:repo        = $HOME . '/stow/'
+      let g:wraplight   = 1                   " highlight linewrap (0) off (1) on
 
       augroup core
         autocmd!

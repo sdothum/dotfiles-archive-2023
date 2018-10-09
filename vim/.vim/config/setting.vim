@@ -385,13 +385,19 @@
       function! s:toggleEducate()
         ToggleEducate
         let s:educate = s:educate ? 0 : 1
-        " html shortcuts
+        " html <p> content shortcuts
         if s:educate
-          abbreviate .. …
-          abbreviate -- &ndash;
+          imap .. …<Space>
+          imap -- <Space>&ndash;<Space>
+          imap .<Space> .<Space><CR>
+          imap ?<Space> ?<Space><CR>
+          imap !<Space> !<Space><CR>
         else
-          unabbreviate ..
-          unabbreviate --
+          iunmap ..
+          iunmap --
+          iunmap .<Space>
+          iunmap ?<Space>
+          iunmap !<Space>
         endif
         echo 'Typography ' . (s:educate ? 'ON' : 'OFF')
       endfunction
@@ -399,7 +405,11 @@
       nmap <silent><F11> :call <SID>toggleEducate()<CR>
       imap <silent><F11> <C-o>:call <SID>toggleEducate()<CR>
 
-      autocmd FileType html call textobj#quote#init({ 'educate' : s:educate })
+      " with vim-surround: cs"q
+      map  <silent>      <leader>qc <Plug>ReplaceWithCurly
+      map  <silent>      <leader>qs <Plug>ReplaceWithStraight
+
+      autocmd plugin FileType html,markdown call textobj#quote#init({ 'educate' : s:educate }) | call <SID>toggleEducate()
 
     " ................................................................. Yankring
 

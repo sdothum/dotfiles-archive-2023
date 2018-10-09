@@ -90,9 +90,9 @@
       nmap <silent><leader>qq :quitall!<CR>
 
       " auto backup
-      autocmd buffer BufWrite      * call core#QueueFile()
+      autocmd buffer BufWrite  * call core#QueueFile()
       " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
-      autocmd buffer FocusLost     * silent call core#QueueBuffers()
+      autocmd buffer FocusLost * silent call core#QueueBuffers()
 
     " ......................................................... Buffer switching
 
@@ -125,41 +125,41 @@
     " .......................................................... Window handling
 
       " kill (close) current window
-      noremap <leader>q       <C-w>q
+      noremap <leader>q  <C-w>q
       " close all other windows
-      noremap <leader>Q       <C-w>o
+      noremap <leader>Q  <C-w>o
 
     " ............................................................ Split windows
 
       " horizontal / vertical split
-      noremap <leader>z       <C-w>v<C-w>l
-      noremap <leader>Z       <C-w>s<C-w>l
+      noremap <leader>z  <C-w>v<C-w>l
+      noremap <leader>Z  <C-w>s<C-w>l
       " maximize left:right / top:bottom
-      noremap <leader>zz      <C-w><Bar>
-      noremap <leader>ZZ      <C-w>_
+      noremap <leader>zz <C-w><Bar>
+      noremap <leader>ZZ <C-w>_
       " adjust all splits to the same size
-      noremap <leader>=       <C-w>=
+      noremap <leader>=  <C-w>=
 
-      nnoremap <Up>           :resize +5<CR>
-      nnoremap <Down>         :resize -5<CR>
-      nnoremap <Left>         :vertical resize -5<CR>
-      nnoremap <Right>        :vertical resize +5<CR>
+      nnoremap <Up>      :resize +5<CR>
+      nnoremap <Down>    :resize -5<CR>
+      nnoremap <Left>    :vertical resize -5<CR>
+      nnoremap <Right>   :vertical resize +5<CR>
 
     " ........................................................... Switch windows
 
       " colemak shift-dh lmne cluster
       " switch to left / right split
-      " noremap <C-m>         <C-w>h
-      " noremap <C-e>         <C-w>l
-      noremap <C-Left>        <C-w>h
-      noremap <C-Right>       <C-w>l
+      " noremap <C-m>    <C-w>h
+      " noremap <C-e>    <C-w>l
+      noremap <C-Left>   <C-w>h
+      noremap <C-Right>  <C-w>l
       " switch to top / bottom split
-      " noremap <C-l>         <C-w>k
-      " noremap <C-n>         <C-w>j
-      noremap <C-Up>          <C-w>k
-      noremap <C-Down>        <C-w>j
+      " noremap <C-l>    <C-w>k
+      " noremap <C-n>    <C-w>j
+      noremap <C-Up>     <C-w>k
+      noremap <C-Down>   <C-w>j
       " switch windows
-      " noremap <C-w>         <C-w><C-w>
+      " noremap <C-w>    <C-w><C-w>
 
   " Folding ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
@@ -169,7 +169,7 @@
       set foldlevelstart=10                 " open most folds by default
       " set foldlevelstart=1
       set foldnestmax=10                    " 10 nested fold max
-     " set foldmethod=indent               " fold based on indent
+     " set foldmethod=indent                " fold based on indent
       set foldmethod=syntax                 " folding based on syntax
 
       let javaScript_fold=1                 " JavaScript

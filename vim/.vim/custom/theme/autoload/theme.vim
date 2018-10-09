@@ -13,46 +13,46 @@
     " ......................................................... DFM colour masks
 
       " foreground
-      let s:dfm_fg_light        = g:light_fg " light foreground (high contrast)
-      let s:dfm_fg_dark         = g:dark_fg " dark foreground (high contrast)
-      let s:dfm_fg_text_light   = g:rgb_11  " light normal text
-      let s:dfm_fg_text_dark    = g:gray5   " dark normal text
-      let s:dfm_proof_light     = g:light   " dark foreground
-      let s:dfm_proof_dark      = g:dark    " light foreground
-      let s:dfm_bg_spell_light  = g:spell   " light spelling
-      let s:dfm_bg_spell_dark   = g:rgb_1   " dark spelling
-      let s:dfm_ale_light       = g:rgb_1
+      let s:dfm_fg_light        = g:light_fg    " light foreground (high contrast)
+      let s:dfm_fg_dark         = g:dark_fg     " dark foreground (high contrast)
+      let s:dfm_fg_text_light   = g:mono_2      " light normal text
+      let s:dfm_fg_text_dark    = g:gray5       " dark normal text
+      let s:dfm_proof_light     = g:light       " dark foreground
+      let s:dfm_proof_dark      = g:dark        " light foreground
+      let s:dfm_bg_spell_light  = g:spell       " light spelling
+      let s:dfm_bg_spell_dark   = g:hue_5       " dark spelling
+      let s:dfm_ale_light       = g:hue_5
       let s:dfm_ale_dark        = g:red
 
       " background
-      let s:dfm_bg_light        = g:rgb_15  " solarized light (paper) background
-      let s:dfm_bg_dark         = g:gray1   " quantum dark background
-      let s:dfm_match_light     = g:rgb_1   " solarized light parens
-      let s:dfm_match_dark      = g:red     " quantum dark parens
-      let s:dfm_vsplit_light    = g:rgb_15  " invisible split
-      let s:dfm_vsplit_dark     = g:gray1   " invisible split
-      let s:dfm_folded_light    = g:gray5   " vimdiff fold
-      let s:dfm_folded_dark     = g:gray4   " vimdiff fold
+      let s:dfm_bg_light        = g:base7       " flatwhite light background
+      let s:dfm_bg_dark         = g:gray1       " quantum dark background
+      let s:dfm_match_light     = g:hue_5       " flatwhite light parens
+      let s:dfm_match_dark      = g:red         " quantum dark parens
+      let s:dfm_vsplit_light    = g:base4       " invisible split
+      let s:dfm_vsplit_dark     = g:gray1       " invisible split
+      let s:dfm_folded_light    = g:gray5       " vimdiff fold
+      let s:dfm_folded_dark     = g:gray4       " vimdiff fold
 
       " cursor line
-      let s:dfm_cursor_light    = g:cursor  " iA Writer
-      let s:dfm_cursor_dark     = g:cursor  " iA Writer
-      let s:dfm_bg_line_light   = g:column  " light cursorline
-      let s:dfm_bg_line_dark    = g:gray2   " dark cursorline
-      let s:dfm_bg_column_light = g:orange  " light column
-      let s:dfm_bg_column_dark  = g:rgb_6   " dark column
-      let s:dfm_fg_line_light   = g:rgb_14  " light line numbers
-      let s:dfm_fg_line_dark    = g:gray4   " dark line numbers
+      let s:dfm_cursor_light    = g:cursor      " iA Writer
+      let s:dfm_cursor_dark     = g:cursor      " iA Writer
+      let s:dfm_bg_line_light   = g:column      " light cursorline
+      let s:dfm_bg_line_dark    = g:gray2       " dark cursorline
+      let s:dfm_bg_column_light = g:orange      " light column
+      let s:dfm_bg_column_dark  = g:hue_1       " dark column
+      let s:dfm_fg_line_light   = g:mono_3      " light line numbers
+      let s:dfm_fg_line_dark    = g:gray4       " dark line numbers
 
       " statusline
-      let s:dfm_bg_status_light = g:rgb_15  " light statusline
-      let s:dfm_bg_status_dark  = g:gray1   " dark statusline
-      let s:dfm_fg_status_light = g:rgb_0   " light statusline
-      let s:dfm_fg_status_dark  = g:rgb_7   " dark statusline
-      let s:dfm_fg_user1_light  = g:rgb_0   " light statusline
-      let s:dfm_fg_user1_dark   = g:rgb_7   " dark statusline
-      let s:dfm_fg_user2_light  = g:rgb_4   " light statusline
-      let s:dfm_fg_user2_dark   = g:cyan    " dark statusline
+      let s:dfm_bg_status_light = g:base7       " light statusline
+      let s:dfm_bg_status_dark  = g:gray1       " dark statusline
+      let s:dfm_fg_status_light = g:mono_1      " light statusline
+      let s:dfm_fg_status_dark  = g:mono_4      " dark statusline
+      let s:dfm_fg_user1_light  = g:mono_1      " light statusline
+      let s:dfm_fg_user1_dark   = g:mono_4      " dark statusline
+      let s:dfm_fg_user2_light  = g:hue_2       " light statusline
+      let s:dfm_fg_user2_dark   = g:cyan        " dark statusline
 
   " Colours ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

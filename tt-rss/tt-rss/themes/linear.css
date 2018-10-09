@@ -134,7 +134,7 @@ img[src*='images/mark_set.png'] {
   transform:         scale(0.7.0.7);
 }
 
-.Selected img[src*='images/mark_set.png'] { margin-top: -7px !important; }
+.Selected img[src*='images/mark_set.png'] { margin-top: -18px !important; }
 
 /* left feed / update column width*/
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed {
@@ -145,7 +145,7 @@ img[src*='images/mark_set.png'] {
 /* maximum fillable content area */
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed a { max-width: 75px; }
 
-/* position titleWrap relative to the checkbox because hlfeed does not exist
+/* position titleWrap relative to the rheckbox because hlfeed does not exist
  * when a non-category feeds-holder row is selected */
 div[style="vertical-align : middle"] { width: 75px; }
 

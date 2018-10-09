@@ -11,7 +11,7 @@
         finish
       endif
       let g:loaded_ui = 1
-      let s:save_cpo = &cpo
+      let s:save_cpo  = &cpo
       set cpo&vim
 
       let g:detail    = 0                   " at cursor (0) tag (1) atom
@@ -52,7 +52,7 @@
       vmap <silent><S-F7> :<C-u>call ui#SwitchView()<CR>
 
       " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-      autocmd ui BufEnter * if !core#PluginWindow() | call ui#LiteType() | endif
+      autocmd ui BufWinEnter * if !core#PluginWindow() | call ui#LiteType() | endif
 
   " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

@@ -6,7 +6,7 @@
 
 # ....................................................................... Editor
 
-# Usage: v [--quote | --role <role> | -f | -c <command>]* [<file>]*
+# Usage: v [--role <role> | -f | -c <command>]* [<file>]*
 
 # va va voom
 SHELL=/usr/bin/dash
@@ -19,7 +19,6 @@ echo >$LOG
 [ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true ; term 'vimtrace' tail -f $LOG ;}
 
 while : ;do case $1 in
-  --quote) quote='"' ;;
   --role ) role="--role $2" ; shift ;;
   -f     ) fg=-f ;;
   -c     ) cmd="-c '$2'" ;    shift ;;
@@ -28,31 +27,35 @@ while : ;do case $1 in
   shift
 done
 
-if [ -z $1 ] ;then
+if [ -z "$1" ] ;then
   [ $PWD = $HOME ] && depth=1 || depth=9
   # force ncurses mode, see fzf wrapper
   file=$(find -maxdepth $depth -type f 2>/dev/null | exclude | TERMINAL=true rmenu 'Edit' --multi) || exit
 else
-  # dmenu configs escapes spaces BUT file="$@" evals differently than.. ??
-  file=$(echo $@)
-  if [ ! -e $1 ] ;then
+  if [ ! -e "$1" ] ;then
     unset sudo
-  elif [ -w $1 ] ;then
+  elif [ -w "$1" ] ;then
     unset sudo
   else
     sudo='sudo -s'
   fi
 fi
 
-if [ -z $quote ] ;then
-  count=$(echo $file | wc -w)
-  [ $count -gt 1 ] && notify low 'Gvim' "$count files to edit"
-fi
+# quote filenames containing spaces
+count=0
+while : ;do 
+  file="$file '$1'"
+  count=$(( $count + 1 ))
+  shift
+  [ $# -gt 0 ] || break 
+done
+
+[ $count -gt 1 ] && notify low 'Gvim' "$count files to edit"
 
 gui && { gui=-g ; [ -e $DYNAMIC ] && focus frame ;}
 [ -e $SESSION/vim ] && fg=-f
 # --quote used for single space separated filename
-eval $sudo vim $gui $role $fg $cmd ${quote}$file${quote} 2>>$LOG
+eval $sudo vim $gui $role $fg $cmd $file 2>>$LOG
 # prevent premature startup termination on slower processors
 sleep 5
 

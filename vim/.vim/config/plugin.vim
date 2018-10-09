@@ -29,11 +29,11 @@
     " ................................................................... Layout
 
       " Plug 'andreypopp/vim-colors-plain'  " monochrome
-      Plug 'kamwitsta/flatwhite-vim'        " flatwhite theme
+      Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
+      Plug 'rakr/vim-one'                   " atom light syntax theme
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
-      Plug 'lifepillar/vim-solarized8'      " solarized theme
       Plug '~/.vim/custom/theme'            " theme
       Plug '~/.vim/custom/ui'               " ui mode
 
@@ -87,6 +87,7 @@
     " ............................................................... Navigation
 
       " Plug 'wellle/targets.vim'           " text objects
+      Plug 'Konfekt/FastFold'               " update folds
       Plug 'kshenoy/vim-signature'          " toggle marks
       Plug 'justinmk/vim-sneak'             " jump to location
 

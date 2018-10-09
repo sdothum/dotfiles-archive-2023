@@ -1,4 +1,4 @@
-#!/usr/bin/dash
+#!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
 # Dev
@@ -25,25 +25,27 @@ fi
 [ -d $1    ] || usage
 [ -d $2    ] || usage
 
-if [ $3 ] ;then
-  regex=$3
+if [ "$3" ] ;then
+  regex="$3"
 else
-  regex='*'
+  regex='.*'
 fi
 
-for i in $(find $1 -type f | exclude | egrep -v $ignore | egrep "$regex") ;do
-  file=$(echo $i | sed "s|.*/*$1/||")
+# to handle filenames containing spaces
+find $1 -type f | exclude | egrep -v $ignore | grep "$regex" >/tmp/dirdiff:files
+
+while read file <&3 ;do
   unset blink
   while : ;do
     echo "${GREEN}${blink}-> $file${NOCOLOR}"
-    if ! diff $w $i $2/$file ;then
+    if ! diff --color $w "$file" "$2/$file" ;then
       # see herbstluftwm gvimdiff rule
-      ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff $i $2/$file
+      ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff "$file" "$2/$file"
       blink=${BLINK}
     else
       break
     fi
   done
-done
+done 3< /tmp/dirdiff:files
 
 # vim: set ft=sh: #
