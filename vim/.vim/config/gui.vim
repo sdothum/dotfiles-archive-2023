@@ -11,7 +11,7 @@
         autocmd!
       augroup END
 
-      let s:delay = '1m'                    " redraw delay, see theme#FontSize()
+      let s:delay = '150m'                  " redraw delay, see theme#FontSize()
 
     " ............................................................... Toggle gui
 
@@ -37,7 +37,6 @@
         call <SID>toggleGui()
         execute 'sleep ' . s:delay
         call <SID>toggleGui()
-        let s:delay = '150m'
         call ui#Retheme()                   " fix line wrap highlighting
       endfunction
       

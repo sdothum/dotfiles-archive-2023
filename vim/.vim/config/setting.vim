@@ -97,7 +97,7 @@
           \}
 
       " close any diff buffer before leaving buffer
-      nmap <silent><leader>b :silent call core#CloseDiffOrig()<CR>:Buffers<CR>
+      nmap <silent><leader>b :CloseDiff<CR>:Buffers<CR>
       nmap <silent><leader>l :Lines<CR>
       nmap <silent><leader>m :Marks<CR>
       " nmap <leader>f       :FZF<CR>       " see notational-fzf for extended content search

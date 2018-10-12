@@ -32,10 +32,12 @@
     " ............................................................ Open terminal
 
       " open shell session in buffer directory
-      command! Term silent call system('term "vimterm" STACK')
+      command! Term silent !term "vimterm" STACK
 
-      nnoremap <silent><C-t> :Term<CR>
-      inoremap <silent><C-t> <C-o>:Term<CR>
+      nmap <silent><C-t>      :term fish<CR>
+      nmap <silent><C-t><C-t> :Term<CR>
+      imap <silent><C-t>      <C-o>:term fish<CR>
+      imap <silent><C-t><C-t> <C-o>:Term<CR>
 
     " ............................................................... Dictionary
 

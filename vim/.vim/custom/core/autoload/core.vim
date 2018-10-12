@@ -7,12 +7,20 @@
 
     " .............................................................. Reload vim
 
+      " this function can only be defined in autoloaded source to avoid reload conflict
       function! core#Vimrc()
-        " after editing vim configs
         execute 'wall'
         autocmd!
         source $MYVIMRC
-        call ui#Retheme()
+        call theme#LiteSwitch()
+        call theme#LiteSwitch()
+        RedrawGui                           " see gui.vim
+      endfunction
+
+    " ............................................................. Buffer count
+
+      function! core#BufCount()
+        return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
       endfunction
 
     " ............................................................. Numeric sort
@@ -177,28 +185,6 @@
         call theme#IndentTheme()
         " flash column position, see autocmd info.vim
         let g:column = 1
-      endfunction
-
-  " Buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ........................................................ Close diff buffer
-
-      " delete any new diff buffer, see buffer.vim DiffOrig
-      function! core#CloseDiffOrig()
-        wincmd h
-        if expand('%') == ''
-          bdelete!
-          " restore pre-diff settings or subsequent DiffOrig will be *off*
-          diffoff
-          return 1
-        endif
-        return 0
-      endfunction
-
-    " ............................................................. Buffer count
-
-      function! core#BufCount()
-        return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
       endfunction
 
   " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

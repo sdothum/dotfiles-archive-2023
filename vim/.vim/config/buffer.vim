@@ -15,50 +15,33 @@
         autocmd!
       augroup END
 
-  " File handling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " .................................................................... Setup
-
-      " nmap <leader>f :set filetype=
-
-      autocmd buffer Filetype conf      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype draft     setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
-      autocmd buffer Filetype fish      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype haskell   setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype lua       setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype mail      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
-      autocmd buffer Filetype markdown  setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd buffer Filetype note      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd buffer Filetype python    setlocal nospell expandtab tabstop=4 shiftwidth=4 softtabstop=4
-      autocmd buffer Filetype ruby      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype shell     setLocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype sh        setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype slim      setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd buffer Filetype snippet   setlocal nospell noexpandtab tabstop=2 shiftwidth=2
-      autocmd buffer Filetype vim       setlocal nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
-
-      autocmd buffer BufWinEnter *.vim  set filetype=vim
-      autocmd buffer BufWinEnter *.wiki set filetype=markdown
-
-    " ............................................................... Modifiable
-
-      " toggle modifiable attribute
-      nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
-
-      " protected help
-      autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
-
   " Buffer actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ........................................................ Close diff buffer
+
+      " delete any new diff buffer
+      function! s:closeDiff()
+        wincmd h
+        if expand('%') == ''
+          bdelete!
+          " restore pre-diff settings or subsequent OpenDiff will be *off*
+          diffoff
+          return 1
+        endif
+        return 0
+      endfunction
+      
+      command! CloseDiff silent! call <SID>closeDiff()
 
     " .............................................................. Buffer open
 
-      " toggle diff of original file
-      command! DiffOrig if !core#CloseDiffOrig()
-               \| vert new | set bt=nofile | r ++edit # | 0d_
-               \| diffthis | wincmd p | diffthis | endif
+      " toggle diff of current file
+      command! OpenDiff if !<SID>closeDiff()
+                          \| vert new | set bt=nofile | r ++edit # | 0d_
+                          \| diffthis | wincmd p | diffthis | endif
 
       " go to left window in case a diff window is already open and close it
-      nmap <silent><leader>dd     :silent DiffOrig<CR>
+      nmap <silent><leader>dd     :silent OpenDiff<CR>
 
       " check file sensitivity, even though may be sudoed
       " autocmd buffer BufRead   * if expand('%:p') !~ $HOME | set nomodifiable | endif
@@ -73,9 +56,9 @@
     " ...................................................... Buffer close / save
 
       " close all other buffers (and newly created no name buffer)
-      command! Singleton   call core#CloseDiffOrig() | %bdelete | edit # | bdelete #
-      " close DiffOrig or current buffer
-      command! CloseUnique if !core#CloseDiffOrig() | silent bdelete! | endif
+      command! Singleton   CloseDiff | %bdelete | edit # | bdelete #
+      " close OpenDiff or current buffer
+      command! CloseUnique if !<SID>closeDiff() | silent bdelete! | endif
 
       " save buffers
       nmap <silent><leader>w  :silent write!<CR>
@@ -84,7 +67,7 @@
 
       " close buffers
       nmap <silent><leader>d  :silent CloseUnique<CR>
-      nmap <silent><leader>DD :silent call core#CloseDiffOrig()<CR>:%bdelete!<CR>
+      nmap <silent><leader>DD :CloseDiff<CR>:%bdelete!<CR>
       nmap <leader>D          :silent Singleton<CR>
       " discard quit
       nmap <silent><leader>qq :quitall!<CR>
@@ -94,7 +77,17 @@
       " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
       autocmd buffer FocusLost * silent call core#QueueBuffers()
 
-    " ......................................................... Buffer switching
+  " Buffer handling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ............................................................... Modifiable
+
+      " toggle modifiable attribute
+      nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+
+      " protected help
+      autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
+
+    " ............................................................ Switch buffer
 
       " " goto buffer (just fingering convenience)
       " nmap <leader>b            :buffer<Space>
@@ -111,14 +104,14 @@
 
       " splitography/planck thumb H keyboard specific buffer navigation key assignments
       if $BEAKL > ''
-        nmap <silent><Delete> :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
-        nmap <silent><Enter>  :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+        nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>
+        nmap <silent><Enter>  :CloseDiff<CR>:silent bnext<CR>
       else
-        nmap <silent>-        :silent call core#CloseDiffOrig()<CR>:silent bprevious<CR>
-        nmap <silent>+        :silent call core#CloseDiffOrig()<CR>:silent bnext<CR>
+        nmap <silent>-        :CloseDiff<CR>:silent bprevious<CR>
+        nmap <silent>+        :CloseDiff<CR>:silent bnext<CR>
       endif
       " switch to previously edited/viewed buffer
-      nmap <silent><BS>       :silent call core#CloseDiffOrig()<CR>:silent edit #<CR>
+      nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>
 
   " Window actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
