@@ -230,7 +230,7 @@ img[src*="images/indicator_tiny.gif"] {
 .collapseBtn { padding-bottom: 0px; }
 
 .collapseBtn:hover {
-  background: #ffe3dr url('linear_images/noise.png') 0 repeat;
+  background: #ffe3d5 url('linear_images/noise.png') 0 repeat;
   font:       10px/10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif !important;
 }
 

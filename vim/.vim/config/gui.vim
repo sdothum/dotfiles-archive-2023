@@ -38,6 +38,7 @@
         execute 'sleep ' . s:delay
         call <SID>toggleGui()
         let s:delay = '150m'
+        call ui#Retheme()                   " fix line wrap highlighting
       endfunction
       
       command! RedrawGui call <SID>redrawGui()

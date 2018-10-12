@@ -41,7 +41,7 @@
       let s:dfm_bg_line_dark    = g:gray2       " dark cursorline
       let s:dfm_bg_column_light = g:orange      " light column
       let s:dfm_bg_column_dark  = g:hue_1       " dark column
-      let s:dfm_fg_line_light   = g:mono_3      " light line numbers
+      let s:dfm_fg_line_light   = g:gray4       " light line numbers
       let s:dfm_fg_line_dark    = g:gray4       " dark line numbers
 
       " statusline

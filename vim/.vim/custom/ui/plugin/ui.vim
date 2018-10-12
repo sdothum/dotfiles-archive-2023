@@ -53,6 +53,8 @@
 
       " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
       autocmd ui BufWinEnter * if !core#PluginWindow() | call ui#LiteType() | endif
+      " show and fix line wrap highlighting on startup
+      autocmd ui GuiEnter    * if !core#PluginWindow() | call ui#LiteType() | call ui#Retheme() | endif
 
   " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

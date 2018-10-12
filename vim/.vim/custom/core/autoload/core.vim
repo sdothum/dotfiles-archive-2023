@@ -154,8 +154,8 @@
         endif
       endfunction
 
-      function! core#ToggleColumnWrap()
-        let g:wraplight = g:wraplight ? 0 : 1
+      function! core#ToggleColumnWrap(...)
+        let g:wraplight = a:0 ? a:1 : (g:wraplight ? 0 : 1)
         let g:ruler     = -1
         call core#ToggleColumn()
       endfunction

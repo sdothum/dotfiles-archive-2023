@@ -7,7 +7,7 @@
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID| BLACKBOARD | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
+# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID | BLACKBOARD | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, STACK, MAX, VERTICAL, HORIZONTAL, GRID herbstluftwm hooks for setting layout and geometry
 #        FORTUNE, login notifier message
@@ -24,12 +24,12 @@ blackboard='#000000'
 case $TERM in
 alacritty) TITLE=--title
            NAME=--class
-           BLACKBOARD="--config-file $HOME/.config/alacritty/blackboard.yml"
+           blackboard="--config-file $HOME/.config/alacritty/blackboard.yml"
            XY='--dimensions 120 30' ;;
 
 urxvt    ) TITLE=-title
            NAME=-name
-           BLACKBOARD="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'"
+           blackboard="-bg '$blackboard' -fg '$blackboard' -cr '$blackboard'"
            XY='-geometry 1024x600+0+0' ;;
 esac
 
@@ -45,7 +45,7 @@ fi
 border() { echo $(( $(query displayheight) * 2 / 15 )) ;}
 
 while [ "$1" ] ;do case $1 in
-  BLACKBOARD) theme=$BLACKBOARD ;;
+  BLACKBOARD) theme=$blackboard ;;
   FLOAT     ) name="$NAME float" ; geometry=$XY ;;
   FORTUNE   ) touch $FORTUNE:term ;;
   GRID      ) name="$NAME grid" ;;

@@ -378,22 +378,26 @@
 
       nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
-    " ............................................................ Textobj-quote
+    " ............................................................ Textobj quote
 
       let s:educate = 0
 
       function! s:toggleEducate()
-        ToggleEducate
         let s:educate = s:educate ? 0 : 1
         " html <p> content shortcuts
         if s:educate
-          imap .. …<Space>
+          Educate
+          " disable line wrap column highlight to show spelling errors
+          call core#ToggleColumnWrap(0)
+          imap ... …<Space>
           imap -- <Space>&ndash;<Space>
           imap .<Space> .<Space><CR>
           imap ?<Space> ?<Space><CR>
           imap !<Space> !<Space><CR>
         else
-          iunmap ..
+          NoEducate
+          call core#ToggleColumnWrap(1)
+          iunmap ...
           iunmap --
           iunmap .<Space>
           iunmap ?<Space>
@@ -409,7 +413,8 @@
       map  <silent>      <leader>qc <Plug>ReplaceWithCurly
       map  <silent>      <leader>qs <Plug>ReplaceWithStraight
 
-      autocmd plugin FileType html,markdown call textobj#quote#init({ 'educate' : s:educate }) | call <SID>toggleEducate()
+      autocmd plugin FileType html     call textobj#quote#init()
+      autocmd plugin FileType markdown call textobj#quote#init()
 
     " ................................................................. Yankring
 

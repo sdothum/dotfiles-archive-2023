@@ -377,7 +377,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_DOT:
     down_rule = key_event(record, 2);       // dot+space/enter+shift shortcut, see tap_lt()
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { down_rule = key_event(record, 2); return false; } // exlm+space/enter+shift shortcut, see tap_lt()
     break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
@@ -386,7 +386,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mt_shift(record, KC_LALT, 0, KC_5);
     break;
   case KC_QUES:
-    down_rule = 0;                          // trap layer switching timimg issue between . and ?
+    // down_rule = 0;                       // trap layer switching timimg issue between . and ?
+    down_rule = key_event(record, 2);       // ques+space/enter+shift shortcut, see tap_lt()
     break;
   case SG_TILD:
     mt_shift(record, KC_LGUI, 0, KC_GRV);
