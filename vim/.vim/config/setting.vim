@@ -109,15 +109,18 @@
       let g:gundo_preview_height  = 20
       let g:gundo_close_on_revert = 1       " automatically close windows
 
-      " while not used for prose, gundo alters markdown filetype to conf(?)
-      command! SourceUndo if !core#Prose() | execute 'GundoToggle' | endif
+      function! s:toggleUndo()
+        let l:filetype = &filetype          " gundo alters markdown filetype to conf (autocmd buffer side-effect?)
+        GundoToggle
+        let &filetype = l:filetype
+      endfunction
 
       " nmap <silent><leader>u :GundoToggle<CR>
-      nmap <silent><leader>u   :SourceUndo<CR>
+      nmap <silent><leader>u :call <SID>toggleUndo()<CR>
 
       autocmd plugin BufEnter  __Gundo__         setlocal numberwidth=3 foldcolumn=0
       " for instance when gundo window is orphaned (trap timing conflict)
-      autocmd plugin BufHidden __Gundo_Preview__ call core#Quietly('bdelete! __Gundo_Preview__')
+      autocmd plugin BufHidden __Gundo_Preview__ Quiet bdelete!\ __Gundo_Preview__
 
     " ............................................................ Indent guides
 
@@ -129,8 +132,8 @@
     " ................................................................ Limelight
 
       " let g:limelight_default_coefficient = 0.8
-      let g:limelight_paragraph_span      = 0 " include preceding/following paragraphs
-      let g:limelight_priority            = 1 " -1 to hlsearch highlight all paragraphs, 1 per paragraph
+      let g:limelight_paragraph_span = 0    " include preceding/following paragraphs
+      let g:limelight_priority       = 1    " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
     " .............................................................. Litecorrect
 
@@ -332,7 +335,7 @@
       let g:sneak#label        = 1          " label mode
 
       " " remap sneak_s to preserve s
-      " function! Sneak_f()
+      " function! s:sneak_f()
       "   if !exists("g:sneak_f")
       "     let g:sneak_f = 1
       "     unmap s
@@ -344,7 +347,7 @@
       " endfunction
       "
       " " preserve s and remap to f
-      " autocmd plugin BufNewFile,BufRead * call Sneak_f()
+      " autocmd plugin BufNewFile,BufRead * call <SID>sneak_f()
 
       " sneak maps s, S == cc
       nmap <leader>s cl
@@ -382,21 +385,21 @@
 
       let s:educate = 0
 
+      " typographical mode for prose (and html content editing)
       function! s:toggleEducate()
         let s:educate = s:educate ? 0 : 1
         " html <p> content shortcuts
         if s:educate
           Educate
-          " disable line wrap column highlight to show spelling errors
-          call core#ToggleColumnWrap(0)
-          imap ... …<Space>
-          imap -- <Space>&ndash;<Space>
+          call core#ToggleColumnWrap(0)     " disable line wrap column highlight to show spelling errors
+          imap ...      …<Space>
+          imap --       <Space>&ndash;<Space>
           imap .<Space> .<Space><CR>
           imap ?<Space> ?<Space><CR>
           imap !<Space> !<Space><CR>
         else
           NoEducate
-          call core#ToggleColumnWrap(1)
+          call core#ToggleColumnWrap(1)     " restore line wrap column highlight
           iunmap ...
           iunmap --
           iunmap .<Space>

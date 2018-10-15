@@ -13,7 +13,8 @@ CALENDAR=$SESSION/calendar
 IM=$SESSION/im
 IRC=$SESSION/irc
 MAIL=$SESSION/mail
-PING=$SESSION/ping
+MAIL=$SESSION/mail
+POWERMGR=$SESSION/powermanager
 REMINDER=$SESSION/reminder
 TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
@@ -78,7 +79,9 @@ autocutsel -selection PRIMARY -fork &
 
 pstat 'autokey-gtk --verbose' || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
 pstat gpaste-client || gpaste-client start &
-pstat xfce4-power-manager || xfce4-power-manager 2>/dev/null &
+if [ -e $POWERMGR ] ;then
+  pstat xfce4-power-manager || xfce4-power-manager 2>/dev/null &
+fi
 
 # ................................................................ Terminal apps
 

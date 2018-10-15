@@ -26,16 +26,16 @@
 
       " continue inserting in new line a la textmate command-enter
       " ctrl-enter only works with gvim due to terminal limitation :-(
-      " inoremap <C-CR>           <C-o>o
+      " inoremap <C-CR> <C-o>o
       " similarly, open curly braces and continue inserting in indented body
-      inoremap <S-CR>       <CR><C-o>O<Tab>
+      inoremap <S-CR> <CR><C-o>O<Tab>
 
       " break line (in .wiki)
       nnoremap <silent><leader><S-CR> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
 
       " duplicate line
-      nnoremap <C-CR>       :t.<CR>
-      inoremap <C-CR>       <C-o>:t.<CR>
+      nnoremap <C-CR> :t.<CR>
+      inoremap <C-CR> <C-o>:t.<CR>
 
       " insert blank line above/below
       nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
@@ -71,14 +71,36 @@
         normal! {nV}
       endfunction
 
+      " select all
+      nnoremap <C-a>                ggVG
       " extend paragraph selection
-      vmap <A-PageUp>           {
-      vmap <A-PageDown>         }
+      vmap     <A-PageUp>           {
+      vmap     <A-PageDown>         }
       " select paragragh
-      nmap <silent><A-PageUp>   :call <SID>paragraphAbove()<CR>
-      nmap <silent><A-PageDown> :call <SID>paragraphBelow()<CR>
+      nmap     <silent><A-PageUp>   :call <SID>paragraphAbove()<CR>
+      nmap     <silent><A-PageDown> :call <SID>paragraphBelow()<CR>
 
-    " .................................................................... Shift
+    " ......................................................... Shift left right
+
+      " softwidth shifts, preserve selection when indenting
+      nnoremap <S-Left>  <<
+      inoremap <S-Left>  <C-d>
+      vnoremap <S-Left>  <gv
+      nnoremap <S-Right> >>
+      inoremap <S-Right> <C-t>
+      vnoremap <S-Right> >gv
+
+      " byte shift left / right
+      nnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>
+      nnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>
+      vnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>gv
+      vnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>gv
+
+      " move visual block with automatic alignment!
+      vnoremap L :m '<-2<CR>gv=gv
+      vnoremap N :m '>+1<CR>gv=gv
+
+    " ............................................................ Shift up down
 
       " see https://github.com/gorkunov/vimconfig.git
       function! s:moveLineOrVisualUpOrDown(move)
@@ -125,36 +147,17 @@
         normal! gv
       endfunction
 
-      " softwidth shifts, preserve selection when indenting
-      nnoremap <S-Left>        <<
-      inoremap <S-Left>        <C-d>
-      vnoremap <S-Left>        <gv
-      nnoremap <S-Right>       >>
-      inoremap <S-Right>       <C-t>
-      vnoremap <S-Right>       >gv
-      nmap <silent><S-Up>      :call <SID>moveLineUp()<CR>
-      imap <silent><S-Up>      <ESC>:call <SID>moveLineUp()<CR>a
-      vmap <silent><S-Up>      <ESC>:call <SID>moveVisualUp()<CR>
-      nmap <silent><S-Down>    :call <SID>moveLineDown()<CR>
-      imap <silent><S-Down>    <ESC>:call <SID>moveLineDown()<CR>a
-      vmap <silent><S-Down>    <ESC>:call <SID>moveVisualDown()<CR>
-
-      " byte shift left / right
-      nnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>
-      nnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>
-      vnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>gv
-      vnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>gv
-
-      " move visual block with automatic alignment!
-      vnoremap L               :m '<-2<CR>gv=gv
-      vnoremap N               :m '>+1<CR>gv=gv
+      nmap <silent><S-Up>   :call <SID>moveLineUp()<CR>
+      imap <silent><S-Up>   <ESC>:call <SID>moveLineUp()<CR>a
+      vmap <silent><S-Up>   <ESC>:call <SID>moveVisualUp()<CR>
+      nmap <silent><S-Down> :call <SID>moveLineDown()<CR>
+      imap <silent><S-Down> <ESC>:call <SID>moveLineDown()<CR>a
+      vmap <silent><S-Down> <ESC>:call <SID>moveVisualDown()<CR>
 
   " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ...................................................... Reformat paragraghs
 
-      " select all
-      nnoremap <C-a>        ggVG
       " retain cursor position for insert mode reformatting
       inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
       " otherwise advance cursor to next paragraph
@@ -166,11 +169,11 @@
       :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
       :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
 
-      nmap     <silent><leader><tab>        :silent retab<CR>
-      nmap     <silent><leader><Space><tab> :silent Space2Tab<CR>
-      vmap     <silent><leader><Space><tab> :silent Space2Tab<CR>
-      nmap     <silent><leader><tab><Space> :silent Tab2Space<CR>
-      vmap     <silent><leader><tab><Space> :silent Tab2Space<CR>
+      nmap <silent><leader><tab>        :silent retab<CR>
+      nmap <silent><leader><Space><tab> :silent Space2Tab<CR>
+      vmap <silent><leader><Space><tab> :silent Space2Tab<CR>
+      nmap <silent><leader><tab><Space> :silent Tab2Space<CR>
+      vmap <silent><leader><tab><Space> :silent Tab2Space<CR>
 
     " .................................................. Quote enclose selection
 
@@ -181,8 +184,8 @@
     " ......................................................... CSS sort (align)
 
       " note <C-v><keycode> to embed command mode keycode
-      nmap     <silent><leader>css :g/{/normal! f{viB:sort<C-v><CR><CR>
-      nmap     <silent><leader>cSS :g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
-      nmap     <silent><leader>CSS :g/{/normal! f{viB:sort<C-v><CR><CR>:g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
+      nmap <silent><leader>css :g/{/normal! f{viB:sort<C-v><CR><CR>
+      nmap <silent><leader>cSS :g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
+      nmap <silent><leader>CSS :g/{/normal! f{viB:sort<C-v><CR><CR>:g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
 
 " edit.vim

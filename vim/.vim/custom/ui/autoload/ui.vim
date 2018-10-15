@@ -17,7 +17,7 @@
 
       " source code style
       function! ui#CodeView()
-        call core#Trace('ui#CodeView()')
+        Trace ui#CodeView()
         let g:view = 0
         " restore CursorLine syntax highlighting before applying themes
         " syntax enable
@@ -34,7 +34,7 @@
 
       " prose style
       function! ui#DfmView()
-        call core#Trace('ui#DfmView()')
+        Trace ui#DfmView()
         let g:view = 1
         " silent !tmux set status off
         " un/comment to have monochromatic cursor line (looses vimdiff highlighting)
@@ -60,7 +60,7 @@
 
       " toggle full document highlight
       function! ui#ToggleProof()
-        call core#Trace('ui#ToggleProof()')
+        Trace ui#ToggleProof()
         let l:col = virtcol('.')
         let b:proof = b:proof == 0 ? 1 : 0
         call theme#Theme()
@@ -78,7 +78,7 @@
       endfunction
 
       function! ui#SetView()
-        call core#Trace('ui#SetView()')
+        Trace ui#SetView()
         if g:view == 0
           call ui#CodeView()
         else
@@ -88,7 +88,7 @@
 
       " toggle dfm view
       function! ui#SwitchView()
-        call core#Trace('ui#SwitchView()')
+        Trace ui#SwitchView()
         let l:col = col('.')
         let g:view = g:view == 0 ? 1 : 0
         call ui#SetView()
@@ -101,7 +101,7 @@
 
       " initial view
       function! ui#LiteType()
-        call core#Trace('ui#LiteType()')
+        Trace ui#LiteType()
         call theme#FontSize(core#Prose() ? 1 : 0)
         call theme#Palette()
         if !exists('b:proof')
@@ -112,7 +112,7 @@
 
       " redraw
       function! ui#Retheme()
-        call core#Trace('ui#Refresh()')
+        Trace ui#Refresh()
         let lstatus     = &laststatus
         call ui#SetView()
         let &laststatus = lstatus
@@ -128,7 +128,7 @@
 
       " (path) .. filename | pos .. (details)
       function! ui#WikiInfo(proof)
-        " call core#Trace('ui#WikiInfo()')
+        " Trace ui#WikiInfo()
         try                                 " trap snippet insertion interruption
           let g:prose = 1
           if core#Prose() && a:proof == 0
@@ -155,7 +155,7 @@
       endfunction
 
       function! ui#ShowInfo(proof)
-        call core#Trace('ui#ShowInfo()')
+        Trace ui#ShowInfo()
         if s:wikiinfo == 1
           " execute 'set statusline=%{ui#WikiInfo(' . a:proof . ')}'
           execute 'set statusline=' . ui#WikiInfo(a:proof)
@@ -167,14 +167,14 @@
       endfunction
 
       function! ui#RefreshInfo()
-        call core#Trace('ui#RefreshInfo()')
+        Trace ui#RefreshInfo()
         call ui#ShowInfo(b:proof)
       endfunction
 
     " ........................................................ Toggle statusline
 
       function! ui#ToggleInfo(...)
-        call core#Trace('ui#ToggleInfo()')
+        Trace ui#ToggleInfo()
         if a:0                              " exiting insert mode? see plugin/ui.vim autocmd
           if b:proof == s:initial_view      " already default view?
             return

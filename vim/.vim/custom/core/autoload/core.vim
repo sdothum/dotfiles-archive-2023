@@ -17,10 +17,15 @@
         RedrawGui                           " see gui.vim
       endfunction
 
-    " ............................................................. Buffer count
+    " ....................................................... Error message trap
 
-      function! core#BufCount()
-        return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+      " ignore 1st time error messages from plugins (uninitialized s:variables)
+      function! core#Quietly(command)
+        try
+          execute a:command
+        catch /.*/
+          " discard messages, do nothing
+        endtry
       endfunction
 
     " ............................................................. Numeric sort
@@ -38,6 +43,7 @@
 
       " latex printing
       function! core#Hardcopy()
+        echo 'Printing..'
         if core#Markdown()
           execute '!hardcopy wiki \"' . expand('%:t') . '\"'
         elseif expand('%:p') =~ 'Patricia'
@@ -45,17 +51,6 @@
         else
           execute '!hardcopy code' expand('%:t')
         endif
-      endfunction
-
-    " ....................................................... Error message trap
-
-      " ignore 1st time error messages from plugins (uninitialized s:variables)
-      function! core#Quietly(command)
-        try
-          execute a:command
-        catch /.*/
-          " discard messages, do nothing
-        endtry
       endfunction
 
     " .............................................................. Debug trace
@@ -68,34 +63,6 @@
           silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log'
           " sleep 1000m
         endif
-      endfunction
-
-    " .............................................................. Auto backup
-
-      " queue files written for vhg (may contain repeated update entries)
-      function! core#QueueFile()
-        " see v script (sets QUEUE and invokes vhg)
-        let l:path = resolve(expand('%:p'))
-        if l:path =~ g:repo && $QUEUE > ''
-          let l:file = substitute(l:path, g:repo, '', '')
-          let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
-          call system(l:cmd)
-        endif
-      endfunction
-
-      " :wall on FocusLost does not trigger autocmd BufWrite (?), see buffers.vim
-      function! core#QueueBuffers()
-        set lazyredraw
-        let l:cur_buffer = bufnr('%')
-        for l:buf in getbufinfo({'buflisted':1})
-          if l:buf.changed
-            execute 'buffer' . l:buf.bufnr
-            update
-            call core#QueueFile()
-          endif
-        endfor
-        execute 'buffer' . l:cur_buffer
-        set nolazyredraw
       endfunction
 
   " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
@@ -143,48 +110,6 @@
           nnoremap <C-t> T
           vnoremap <C-t> T
         endif
-      endfunction
-
-  " GUI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ........................................................... Column margins
-
-      augroup column
-        autocmd!
-      augroup END
-
-      " highlight wrapped line portion, see theme#Theme()
-      function! core#ColumnWrap()
-        if g:ruler == 0 && g:wraplight
-          let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
-          let &colorcolumn = join(range(l:edge, 999), ',')
-        else
-        endif
-      endfunction
-
-      function! core#ToggleColumnWrap(...)
-        let g:wraplight = a:0 ? a:1 : (g:wraplight ? 0 : 1)
-        let g:ruler     = -1
-        call core#ToggleColumn()
-      endfunction
-
-      " toggle colorcolumn modes, see theme#IndentTheme()
-      function! core#ToggleColumn()
-        if g:ruler == 0
-          let g:ruler      = 1
-          let &colorcolumn = col('.') 
-          autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
-        elseif g:ruler == 1
-          let g:ruler      = 2
-          autocmd! column
-        else
-          let g:ruler      = 0
-          let &colorcolumn = 0
-          call core#ColumnWrap()
-        endif
-        call theme#IndentTheme()
-        " flash column position, see autocmd info.vim
-        let g:column = 1
       endfunction
 
   " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁

@@ -15,7 +15,19 @@
         autocmd!
       augroup END
 
-  " Buffer actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      let s:repo = $HOME . '/stow/'         " directory to auto backup
+
+  " Diff buffer ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ................................................................ Open diff
+
+      " toggle diff of current file
+      command! OpenDiff if !<SID>closeDiff()
+                          \| vert new | set bt=nofile | r ++edit # | 0d_
+                          \| diffthis | wincmd p | diffthis | endif
+
+      " go to left window in case a diff window is already open and close it
+      nmap <silent><leader>dd :silent OpenDiff<CR>
 
     " ........................................................ Close diff buffer
 
@@ -33,25 +45,7 @@
       
       command! CloseDiff silent! call <SID>closeDiff()
 
-    " .............................................................. Buffer open
-
-      " toggle diff of current file
-      command! OpenDiff if !<SID>closeDiff()
-                          \| vert new | set bt=nofile | r ++edit # | 0d_
-                          \| diffthis | wincmd p | diffthis | endif
-
-      " go to left window in case a diff window is already open and close it
-      nmap <silent><leader>dd     :silent OpenDiff<CR>
-
-      " check file sensitivity, even though may be sudoed
-      " autocmd buffer BufRead   * if expand('%:p') !~ $HOME | set nomodifiable | endif
-      " vim8 bug doesn't allow toggling &modifiable so set modifiable on globally
-      " mode check for fzf terminal window
-      autocmd buffer BufWinEnter * if !core#Protected() | set modifiable | endif
-      " always switch to the current file directory, unless uri
-      autocmd buffer BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
-      " return to last edit position when opening files (You want this!)
-      autocmd buffer BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
+  " File actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ...................................................... Buffer close / save
 
@@ -72,12 +66,47 @@
       " discard quit
       nmap <silent><leader>qq :quitall!<CR>
 
+    " .............................................................. Auto backup
+
+      " queue files written for vhg (may contain repeated update entries)
+      function! s:queueFile()
+        " see v script (sets QUEUE and invokes vhg)
+        let l:path = resolve(expand('%:p'))
+        if l:path =~ s:repo && $QUEUE > ''
+          let l:file = substitute(l:path, s:repo, '', '')
+          let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
+          call system(l:cmd)
+        endif
+      endfunction
+
+      " :wall on FocusLost does not trigger autocmd BufWrite (?), see buffers.vim
+      function! s:queueBuffers()
+        set lazyredraw
+        let l:cur_buffer = bufnr('%')
+        for l:buf in getbufinfo({'buflisted':1})
+          if l:buf.changed
+            execute 'buffer' . l:buf.bufnr
+            update
+            call <SID>queueFile()
+          endif
+        endfor
+        execute 'buffer' . l:cur_buffer
+        set nolazyredraw
+      endfunction
+
       " auto backup
-      autocmd buffer BufWrite  * call core#QueueFile()
-      " save on losing focus, :wall on FocusLost does not trigger core#QueueFile() (?)
-      autocmd buffer FocusLost * silent call core#QueueBuffers()
+      autocmd buffer BufWrite  * call <SID>queueFile()
+      " save on losing focus, :wall on FocusLost does not trigger <SID>queueFile() (?)
+      autocmd buffer FocusLost * silent call <SID>queueBuffers()
 
   " Buffer handling ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ........................................................... Initialization
+
+      " always switch to the current file directory, unless uri
+      autocmd buffer BufEnter    * if bufname('') !~ '^[A-Za-z0-9]*://' | lcd %:p:h | echo | endif
+      " return to last edit position when opening files (You want this!)
+      autocmd buffer BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | execute 'normal! g`"' | endif
 
     " ............................................................... Modifiable
 
@@ -86,6 +115,11 @@
 
       " protected help
       autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
+      " check file sensitivity, even though may be sudoed
+      " autocmd buffer BufRead   * if expand('%:p') !~ $HOME | set nomodifiable | endif
+      " vim8 bug doesn't allow toggling &modifiable so set modifiable on globally
+      " mode check for fzf terminal window
+      autocmd buffer BufWinEnter * if !core#Protected() | set modifiable | endif
 
     " ............................................................ Switch buffer
 
@@ -181,15 +215,15 @@
 
     " ........................................................... Folding levels
 
-      nmap    <silent><leader>0   :set foldlevel=0<CR>
-      nmap    <silent><leader>1   :set foldlevel=1<CR>
-      nmap    <silent><leader>2   :set foldlevel=2<CR>
-      nmap    <silent><leader>3   :set foldlevel=3<CR>
-      nmap    <silent><leader>4   :set foldlevel=4<CR>
-      nmap    <silent><leader>5   :set foldlevel=5<CR>
-      nmap    <silent><leader>6   :set foldlevel=6<CR>
-      nmap    <silent><leader>7   :set foldlevel=7<CR>
-      nmap    <silent><leader>8   :set foldlevel=8<CR>
-      nmap    <silent><leader>9   :set foldlevel=9<CR>
+      nmap <silent><leader>0 :set foldlevel=0<CR>
+      nmap <silent><leader>1 :set foldlevel=1<CR>
+      nmap <silent><leader>2 :set foldlevel=2<CR>
+      nmap <silent><leader>3 :set foldlevel=3<CR>
+      nmap <silent><leader>4 :set foldlevel=4<CR>
+      nmap <silent><leader>5 :set foldlevel=5<CR>
+      nmap <silent><leader>6 :set foldlevel=6<CR>
+      nmap <silent><leader>7 :set foldlevel=7<CR>
+      nmap <silent><leader>8 :set foldlevel=8<CR>
+      nmap <silent><leader>9 :set foldlevel=9<CR>
 
 " buffer.vim

@@ -90,18 +90,18 @@
 
       " visual mode yank/cut clipboard actions
       " "+Y yank to clipboard
-      vnoremap <C-F2>     "+y
-      vnoremap <S-F2>     "+Y
+      vnoremap <C-F2> "+y
+      vnoremap <S-F2> "+Y
       " "+D cut to clipboard
-      vnoremap <C-F3>     "+d
-      vnoremap <S-F3>     "+D
+      vnoremap <C-F3> "+d
+      vnoremap <S-F3> "+D
 
       " " normal/insert mode paste actions
       " " "+P pads space after insert
       " " note: to enter visual block mode type v<C-v>
-      imap     <F2>       <ESC>"+pli
-      nmap     <F2>       h"+pl
+      imap     <F2>   <ESC>"+pli
+      nmap     <F2>   h"+pl
       " command mode insertion (paste) of current yank buffer
-      cmap     <F2>       <C-r>"
+      cmap     <F2>   <C-r>"
 
 " keyboard.vim

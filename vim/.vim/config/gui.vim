@@ -11,7 +11,9 @@
         autocmd!
       augroup END
 
-      let s:delay = '150m'                  " redraw delay, see theme#FontSize()
+      let g:ruler     = 0                   " colorcolumn mode, see theme.vim
+      let s:wraplight = 1                   " highlight linewrap (0) off (1) on
+      let s:delay     = '150m'              " redraw delay, see theme#FontSize()
 
     " ............................................................... Toggle gui
 
@@ -37,7 +39,8 @@
         call <SID>toggleGui()
         execute 'sleep ' . s:delay
         call <SID>toggleGui()
-        call ui#Retheme()                   " fix line wrap highlighting
+        " fix line wrap highlighting
+        Quietly Retheme
       endfunction
       
       command! RedrawGui call <SID>redrawGui()
@@ -88,8 +91,8 @@
       set sidescroll=1                      " smooth scrolling by 1 column
       set sidescrolloff=1
       " horizontal scrolling
-      noremap <C-S-Left>     zL
-      noremap <C-S-Right>    zH
+      noremap <C-S-Left>  zL
+      noremap <C-S-Right> zH
 
     " ..................................................... Save cursor position
 
@@ -128,7 +131,53 @@
 
     " ........................................................... Column margins
 
+      augroup column
+        autocmd!
+      augroup END
+
       set colorcolumn=0                     " highlight column
+
+      " toggle colorcolumn modes, see theme#IndentTheme()
+      function! s:toggleColumn()
+        if g:ruler == 0
+          let g:ruler      = 1
+          let &colorcolumn = col('.') 
+          autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
+        elseif g:ruler == 1
+          let g:ruler      = 2
+          autocmd! column
+        else
+          let g:ruler      = 0
+          let &colorcolumn = 0
+          ColumnWrap
+        endif
+        call theme#IndentTheme()
+        let g:column = 1                    " flash column position, see autocmd info.vim
+      endfunction
+
+      nmap <silent><Bar>  :call <SID>toggleColumn()<CR>
+
+    " ...................................................... Line wrap highlight
+
+      " highlight wrapped line portion, see theme#Theme()
+      function! s:columnWrap()
+        if g:ruler == 0 && s:wraplight
+          let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
+          let &colorcolumn = join(range(l:edge, 999), ',')
+        else
+        endif
+      endfunction
+
+      function! s:toggleColumnWrap(...)
+        let s:wraplight = a:0 ? a:1 : (s:wraplight ? 0 : 1)
+        let g:ruler     = -1
+        call <SID>toggleColumn()
+      endfunction
+
+      command! ColumnWrap call <SID>columnWrap()
+
+      nmap <silent><S-F8> :call <SID>toggleColumnWrap()<CR>
+      imap <silent><S-F8> <C-o>:call <SID>toggleColumnWrap()<CR>
 
     " ............................................................. Line numbers
 
@@ -152,7 +201,7 @@
         endif
       endfunction
 
-      nmap <silent>#               :call <SID>toggleNumber()<CR>
+      nmap <silent># :call <SID>toggleNumber()<CR>
 
     " ................................................... Status / command lines
 

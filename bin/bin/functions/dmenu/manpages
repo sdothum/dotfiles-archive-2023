@@ -85,8 +85,8 @@ while : ;do
       if [ "$(echo 'no\nyes' | rmenu "Print $2 ($1)" -no-custom)" = yes ] ;then
         # see http://www.cyberciti.biz/tips/how-do-i-print-out-a-linux-man-or-info-page.html
         manpage=$(find /usr/share/man -name "$2.$1.gz")
-        if [ $manpage ] ;then
-          zcat $manpage | groff -man -Tps | lpr -P $PRINTER
+        if [ "$manpage" ] ;then
+          zcat "$manpage" | groff -man -Tps | lpr -P $PRINTER
           pr eject
         else
           notify 3 critical "$page" "man $1 section not found"

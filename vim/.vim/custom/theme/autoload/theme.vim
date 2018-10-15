@@ -7,59 +7,61 @@
 
     " .................................................................... Setup
 
-      let s:cursorline          = 0         " visible (0) off (1) on
-      let s:sync                = 0         " sync (0) off (1) indent guides
+      let s:cursorline           = 0          " visible (0) off (1) on
+      let s:sync                 = 0          " sync (0) off (1) indent guides
 
     " ......................................................... DFM colour masks
 
       " foreground
-      let s:dfm_fg_light        = g:light_fg    " light foreground (high contrast)
-      let s:dfm_fg_dark         = g:dark_fg     " dark foreground (high contrast)
-      let s:dfm_fg_text_light   = g:mono_2      " light normal text
-      let s:dfm_fg_text_dark    = g:gray5       " dark normal text
-      let s:dfm_proof_light     = g:light       " dark foreground
-      let s:dfm_proof_dark      = g:dark        " light foreground
-      let s:dfm_bg_spell_light  = g:spell       " light spelling
-      let s:dfm_bg_spell_dark   = g:hue_5       " dark spelling
-      let s:dfm_ale_light       = g:hue_5
-      let s:dfm_ale_dark        = g:red
+      let s:dfm_fg_light         = g:light_fg " light foreground (high contrast)
+      let s:dfm_fg_dark          = g:dark_fg  " dark foreground (high contrast)
+      let s:dfm_fg_text_light    = g:mono_2   " light normal text
+      let s:dfm_fg_text_dark     = g:gray5    " dark normal text
+      let s:dfm_proof_light      = g:light    " light hypertext
+      let s:dfm_proof_dark       = g:dark     " dark hypertext
+      let s:dfm_bg_spell_light   = g:spell    " light spelling
+      let s:dfm_bg_spell_dark    = g:hue_5    " dark spelling
+      let s:dfm_ale_light        = g:hue_5
+      let s:dfm_ale_dark         = g:red
 
       " background
-      let s:dfm_bg_light        = g:base7       " flatwhite light background
-      let s:dfm_bg_dark         = g:gray1       " quantum dark background
-      let s:dfm_match_light     = g:hue_5       " flatwhite light parens
-      let s:dfm_match_dark      = g:red         " quantum dark parens
-      let s:dfm_vsplit_light    = g:base4       " invisible split
-      let s:dfm_vsplit_dark     = g:gray1       " invisible split
-      let s:dfm_folded_light    = g:gray5       " vimdiff fold
-      let s:dfm_folded_dark     = g:gray4       " vimdiff fold
+      let s:dfm_bg_light         = g:base7    " flatwhite light background
+      let s:dfm_bg_dark          = g:gray1    " quantum dark background
+      let s:dfm_match_light      = g:hue_5    " flatwhite light parens
+      let s:dfm_match_dark       = g:red      " quantum dark parens
+      let s:dfm_vsplit_light     = g:base4    " invisible split
+      let s:dfm_vsplit_dark      = g:gray1    " invisible split
+      let s:dfm_folded_light     = g:gray5    " vimdiff fold
+      let s:dfm_folded_dark      = g:gray4    " vimdiff fold
 
       " cursor line
-      let s:dfm_cursor_light    = g:cursor      " iA Writer
-      let s:dfm_cursor_dark     = g:cursor      " iA Writer
-      let s:dfm_bg_line_light   = g:column      " light cursorline
-      let s:dfm_bg_line_dark    = g:gray2       " dark cursorline
-      let s:dfm_bg_column_light = g:orange      " light column
-      let s:dfm_bg_column_dark  = g:hue_1       " dark column
-      let s:dfm_fg_line_light   = g:gray4       " light line numbers
-      let s:dfm_fg_line_dark    = g:gray4       " dark line numbers
+      let s:dfm_cursor_light     = g:cursor   " iA Writer
+      let s:dfm_cursor_dark      = g:cursor   " iA Writer
+      let s:dfm_cursorline_light = g:black    " light cursorline
+      let s:dfm_cursorline_dark  = g:white    " dark cursorline
+      let s:dfm_bg_line_light    = g:column   " light cursorline
+      let s:dfm_bg_line_dark     = g:gray2    " dark cursorline
+      let s:dfm_bg_column_light  = g:orange   " light column
+      let s:dfm_bg_column_dark   = g:hue_1    " dark column
+      let s:dfm_fg_line_light    = g:gray4    " light line numbers
+      let s:dfm_fg_line_dark     = g:gray4    " dark line numbers
 
       " statusline
-      let s:dfm_bg_status_light = g:base7       " light statusline
-      let s:dfm_bg_status_dark  = g:gray1       " dark statusline
-      let s:dfm_fg_status_light = g:mono_1      " light statusline
-      let s:dfm_fg_status_dark  = g:mono_4      " dark statusline
-      let s:dfm_fg_user1_light  = g:mono_1      " light statusline
-      let s:dfm_fg_user1_dark   = g:mono_4      " dark statusline
-      let s:dfm_fg_user2_light  = g:hue_2       " light statusline
-      let s:dfm_fg_user2_dark   = g:cyan        " dark statusline
+      let s:dfm_bg_status_light  = g:base7    " light statusline
+      let s:dfm_bg_status_dark   = g:gray1    " dark statusline
+      let s:dfm_fg_status_light  = g:mono_1   " light statusline
+      let s:dfm_fg_status_dark   = g:mono_4   " dark statusline
+      let s:dfm_fg_user1_light   = g:mono_1   " light statusline
+      let s:dfm_fg_user1_dark    = g:mono_4   " dark statusline
+      let s:dfm_fg_user2_light   = g:hue_2    " light statusline
+      let s:dfm_fg_user2_dark    = g:cyan     " dark statusline
 
   " Colours ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " .................................................................. Palette
 
       function! theme#Palette()
-        call core#Trace('theme#Palette()')
+        Trace theme#Palette()
         execute 'let s:dfm_fg          = s:dfm_fg_'                     . &background
         execute 'let s:dfm_proof       = s:dfm_proof_'                  . &background
         execute 'let s:dfm_bg          = s:dfm_bg_'                     . &background
@@ -67,13 +69,14 @@
         execute 'let s:dfm_folded      = s:dfm_folded_'                 . &background
         execute 'let s:dfm_vsplit      = s:dfm_vsplit_'                 . &background
         execute 'let s:dfm_cursor      = s:dfm_cursor_'                 . &background
+        execute 'let s:dfm_cursorline  = s:dfm_cursorline_'             . &background
+        execute 'let s:dfm_cursor_bg   = s:cursorline == 0 ? s:dfm_bg_' . &background . ' : s:dfm_bg_line_' . &background
         execute 'let s:dfm_bg_line     = s:dfm_bg_line_'                . &background
         execute 'let s:dfm_fg_line     = s:dfm_fg_line_'                . &background
         execute 'let s:dfm_bg_status   = s:dfm_bg_status_'              . &background
         execute 'let s:dfm_fg_status   = s:dfm_fg_status_'              . &background
         execute 'let s:dfm_fg_user1    = s:dfm_fg_user1_'               . &background
         execute 'let s:dfm_fg_user2    = s:dfm_fg_user2_'               . &background
-        execute 'let s:dfm_cursorline  = s:cursorline == 0 ? s:dfm_bg_' . &background . ' : s:dfm_bg_line_' . &background
         execute 'let s:dfm_linenr_ins  = s:dfm_bg_'                     . &background
       endfunction
 
@@ -86,7 +89,10 @@
 
       " margins, selection and cursor
       function! theme#Theme()
-        call core#Trace('theme#Theme()')
+        Trace theme#Theme()
+        if !has("gui_running")
+          return                            " theme is only gui compliant
+        endif
         let l:background = &background == 'light' ? 'dark' : 'light'
         let l:cursor     = theme#Value('s:dfm_cursor_'  . l:background)
         let l:text       = theme#Value('s:dfm_fg_text_' . &background)
@@ -101,7 +107,7 @@
         execute 'highlight ShowMarksHLl    guibg=' . s:dfm_bg
         execute 'highlight SignColumn      guibg=' . s:dfm_bg
         execute 'highlight InsertCursor    guibg=' . s:dfm_cursor     . ' guifg=' . s:dfm_bg
-        execute 'highlight CursorLine      guibg=' . s:dfm_cursorline . ' gui=none'
+        execute 'highlight CursorLine      guibg=' . s:dfm_cursor_bg  . ' guifg=' . s:dfm_cursorline
         execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=' . g:black
         execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg . ' gui=bold'
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
@@ -113,7 +119,7 @@
         highlight! link SpellLocal         SpellBad
         " add flatwhite contrast
         if &background == 'light' && g:lightscheme == 'flatwhite'
-          execute 'highlight Search        guifg=' . g:white    . ' guibg=red guisp=red'
+          execute 'highlight Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
           execute 'highlight IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'highlight StatuslineNC  guifg=' . g:white
           highlight link SneakScope        Cursor
@@ -123,12 +129,12 @@
         call theme#IndentTheme()
         call theme#Margin()
         call theme#NoTilde()
-        call core#ColumnWrap()
+        ColumnWrap
       endfunction
 
       " ruler, indents
       function! theme#IndentTheme()
-        call core#Trace('theme#IndentTheme()')
+        Trace theme#IndentTheme()
         execute 'highlight IndentGuidesOdd  guibg=' . theme#Value('s:dfm_bg_'        . &background)
         execute 'highlight IndentGuidesEven guibg=' . theme#Value('s:dfm_bg_line_'   . &background)
         if g:ruler == 2
@@ -145,7 +151,7 @@
 
       " line numbers
       function! theme#LineNr(mode)
-        call core#Trace('theme#LineNr()')
+        Trace theme#LineNr()
         execute 'highlight CursorLineNr ' . (g:view == 0 ? 'gui=bold guifg=' . theme#Value('s:dfm_bg_' . &background)
                 \                                        : 'gui=none guifg=' . (b:proof == 0 ? s:dfm_bg : s:dfm_fg_line))
         let s:dfm_linenr_cmd = g:view == 0  ? s:dfm_fg_line  : s:dfm_bg
@@ -199,9 +205,9 @@
 
       " toggle colour scheme
       function! theme#LiteSwitch()
-        call core#Trace('theme#LiteSwitch()')
+        Trace theme#LiteSwitch()
         " trap and ignore initialization error
-        call core#Quietly('LiteDFMClose')
+        Quietly LiteDFMClose
         if &background == 'light'
           call theme#ColorScheme(1)
         else
@@ -217,16 +223,16 @@
 
       " balance left right margins with font size changes (and window resizing)
       function! theme#Margin()
-        call core#Trace('theme#Margin()')
+        Trace theme#Margin()
         " account for linenr <space> text
         let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth - 4) / 2])])
-        call core#Quietly('LiteDFM')
+        Quietly LiteDFM
         call theme#LineNr(mode())
         call ui#RefreshInfo()
       endfunction
 
       function! theme#Font(size)
-        call core#Trace('theme#Font()')
+        Trace theme#Font()
         execute 'set guifont=' . (core#Prose() ? g:prose_font : g:source_font) . ' ' . a:size
         if exists('s:size')
           " gui redrawi for font size change
@@ -237,7 +243,7 @@
 
       " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
       function! theme#FontSize(type)
-        call core#Trace('theme#FontSize()')
+        Trace theme#FontSize()
         if $DISPLAY > ''
           if g:font_type != a:type
             let g:font_type = a:type
@@ -249,10 +255,10 @@
       endfunction
 
       function! theme#FontSwitch()
-        call core#Trace('theme#FontSwitch()')
+        Trace theme#FontSwitch()
         call theme#FontSize(g:font_type == 1 ? 0 : 1)
         if !core#Prose()
-          call core#Quietly('LiteDFMClose')
+          Quietly LiteDFMClose
           call ui#LiteType()
         endif
       endfunction

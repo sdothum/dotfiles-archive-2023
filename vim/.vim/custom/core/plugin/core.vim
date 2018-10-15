@@ -14,10 +14,6 @@
       let s:save_cpo    = &cpo
       set cpo&vim
 
-      let g:ruler       = 0                   " colorcolumn mode
-      let g:repo        = $HOME . '/stow/'
-      let g:wraplight   = 1                   " highlight linewrap (0) off (1) on
-
       augroup core
         autocmd!
       augroup END
@@ -28,6 +24,10 @@
 
       " when updates won't break the current vim session!
       command! Vimrc call core#Vimrc()
+
+    " ....................................................... Error message trap
+
+      command! -nargs=1 Quietly call core#Quietly(<f-args>)
 
     " ............................................................ Open terminal
 
@@ -47,9 +47,11 @@
 
     " ............................................................... Print file
 
-      command! Hardcopy silent call core#Hardcopy()<CR>:echo 'Printing..'
+      command! Hardcopy silent call core#Hardcopy()
 
     " .................................................................... Debug
+
+      command! -nargs=1 Trace call core#Trace(<f-args>)
 
       nnoremap <silent><F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
@@ -62,20 +64,12 @@
         call core#Colemak()
       endif
 
-  " GUI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ................................................................... Column
-
-      nmap <silent><Bar>           :call core#ToggleColumn()<CR>
-      nmap <silent><S-F8>          :call core#ToggleColumnWrap()<CR>
-      imap <silent><S-F8>          <C-o>:call core#ToggleColumnWrap()<CR>
-
   " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ......................................................... Strip whitespace
     
-      nmap <silent><F5>            :call core#StripTrailingWhitespaces()<CR>
-      vmap <silent><F5>            :<C-u>call core#StripTrailingWhitespaces()<CR>
+      nmap <silent><F5>   :call core#StripTrailingWhitespaces()<CR>
+      vmap <silent><F5>   :<C-u>call core#StripTrailingWhitespaces()<CR>
 
       " pre-write formatting
       " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
@@ -86,19 +80,19 @@
     " .......................................................... Code block text
 
       " markup wiki code blocks
-      nnoremap <silent><leader>`  V:call core#CodeBlock()<CR>
-      vmap     <silent><leader>`  :call core#CodeBlock()<CR>
+      nnoremap <silent><leader>` V:call core#CodeBlock()<CR>
+      vmap     <silent><leader>` :call core#CodeBlock()<CR>
 
     " .......................................................... CSS block align
 
-      nnoremap <silent><S-F5>     :call core#CssBlockAlign()<CR>
+      nnoremap <silent><S-F5>    :call core#CssBlockAlign()<CR>
 
   " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ............................................................... Modifiable
 
       " check filetype on open
-      autocmd core BufNewFile,BufRead * call core#CheckFiletype()
+      " autocmd core BufNewFile,BufRead * call core#CheckFiletype()
 
     " ................................................................... E-mail
 

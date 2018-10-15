@@ -84,8 +84,8 @@
 
       " cursor, highlight
       let g:cursor          = '#20fccf'     " analogous iA Writer '#20bbfc' cursor color
-      let g:black           = '#444444'     " cursor foreground
-      let g:white           = '#ffffff'     " cursor foreground
+      let g:black           = g:gray1       " cursor foreground
+      let g:white           = g:base7       " cursor foreground
       let g:spell           = '#ffd1dc'     " light spelling/grammar error
       let g:column          = '#ffe3d5'     " light column
       " hyperfocus
@@ -113,9 +113,9 @@
 
     " ............................................................ Switch colour
 
-      nmap <silent><F8>   :call theme#LiteSwitch()<CR>
-      imap <silent><F8>   <C-o>:call theme#LiteSwitch()<CR>
-      vmap <silent><F8>   :<C-u>call theme#LiteSwitch()<CR>
+      nmap <silent><F8> :call theme#LiteSwitch()<CR>
+      imap <silent><F8> <C-o>:call theme#LiteSwitch()<CR>
+      vmap <silent><F8> :<C-u>call theme#LiteSwitch()<CR>
 
       autocmd theme InsertEnter * call theme#LineNr('i')
       autocmd theme InsertLeave * call theme#LineNr('n')

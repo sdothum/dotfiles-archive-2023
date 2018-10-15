@@ -23,6 +23,23 @@
         autocmd!
       augroup END
 
+  " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+    " ................................................................... Redraw
+
+      command! Retheme call ui#Retheme()
+
+      nmap <silent><F9>   :Retheme<CR>
+      imap <silent><F9>   <C-o>:Retheme<CR>
+      vmap <silent><F9>   :<C-u>Retheme<CR>
+
+    " ............................................................... Initialize
+
+      " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
+      autocmd ui BufEnter,BufWinEnter * if !core#PluginWindow() | call ui#LiteType() | endif
+      " show and fix line wrap highlighting on startup
+      autocmd ui GuiEnter             * if !core#PluginWindow() | call ui#LiteType() | call ui#Retheme() | endif
+
   " UI ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
     " ........................................................ Toggle statusline
@@ -50,19 +67,6 @@
       nmap <silent><S-F7> :call ui#SwitchView()<CR>
       imap <silent><S-F7> <C-o>:call ui#SwitchView()<CR>
       vmap <silent><S-F7> :<C-u>call ui#SwitchView()<CR>
-
-      " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-      autocmd ui BufWinEnter * if !core#PluginWindow() | call ui#LiteType() | endif
-      " show and fix line wrap highlighting on startup
-      autocmd ui GuiEnter    * if !core#PluginWindow() | call ui#LiteType() | call ui#Retheme() | endif
-
-  " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ................................................................... Redraw
-
-      nmap <silent><F9>   :call ui#Retheme()<CR>
-      imap <silent><F9>   <C-o>:call ui#Retheme()<CR>
-      vmap <silent><F9>   :<C-u>call ui#Retheme()<CR>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo
