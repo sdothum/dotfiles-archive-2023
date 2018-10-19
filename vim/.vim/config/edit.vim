@@ -159,10 +159,13 @@
     " ...................................................... Reformat paragraghs
 
       " retain cursor position for insert mode reformatting
-      inoremap <silent><F4> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      inoremap <silent><F5>  <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+      inoremap <silent><C-r> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
       " otherwise advance cursor to next paragraph
-      nnoremap <F4>         {jv}kJvgq}}{j
-      vnoremap <F4>         Jvgqj
+      nnoremap <F5>          {jv}kJvgq}}{j
+      vnoremap <F5>          Jvgqj
+      nnoremap <C-r>         {jv}kJvgq}}{j
+      vnoremap <C-r>         Jvgqj
 
     " ............................................................. Convert tabs
 

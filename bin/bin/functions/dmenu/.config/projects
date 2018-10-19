@@ -112,8 +112,7 @@ sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
 tarot :: $STOW/tarot/index.html
-thedarnedestthing css :: /srv/http/thedarnedestthing.com/application/public/css/*.css
-thedarnedestthing css :: $STOW/thedarnedestthing/thedarnedestthing.com/application/public/css/*.css
+thedarnedestthing css :: $STOW/thedarnedestthing/thedarnedestthing.com/application/public/css/*.css $STOW/thedarnedestthing/thedarnedestthing.com/application/public/dist/*.css
 ttrss linear :: $HOME/tt-rss/themes/linear*.css
 ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 uzbl :: $HOME/.config/uzbl/config
@@ -125,7 +124,6 @@ vim snippets :: $HOME/.vim/snippets/*
 vimb :: $(find -L $HOME/.config/vimb -name config) $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css $HOME/.config/vimb/bookmark $HOME/.config/vimb/history
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/*tape.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
-www website :: $(find -L /srv/http/thedarnedestthing.com/application -regextype posix-extended -regex '.*(rb|slim)')
 www website :: $(find $STOW/thedarnedestthing -regextype posix-extended -regex '.*(rb|slim)')
 x11 xresources :: $HOME/.Xresources $HOME/.xinitrc $HOME/.Xmodmap* $HOME/bin/x
 xmonad :: $HOME/.xmonad/xmonad.hs $HOME/.xmonad/conkyrc.dzen $HOME/.xmobarrc $HOME/bin/autostart

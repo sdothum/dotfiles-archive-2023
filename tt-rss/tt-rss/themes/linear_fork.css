@@ -2,7 +2,7 @@
 
 /* RESET ********************************************************************/
 
-html { font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+html { font-family: Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 div#notify.notify.notify_progress { display: none; }
 
@@ -51,7 +51,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
   border-color:   #eee8d5;
   border-style:   solid;
   border-width:   0 0 1px;
-  font:           300 10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:           300 10px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   line-height:    18px;
   padding:        0 10px 0;
   vertical-align: bottom;
@@ -80,7 +80,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 #feeds-holder .counterNode {
   background:     none;
   color:          #b5423f;
-  font:           300 10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:           300 10px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   line-height:    18px;
   padding:        0 1px 0 3px;
   vertical-align: bottom;
@@ -146,7 +146,7 @@ img[src*="images/indicator_tiny.gif"] {
 #toolbar { margin-right: -20px; }
 
 .dijitMenuItemLabel,
-#main-toolbar { font: 10px/16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+#main-toolbar { font: 10px/16px Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 #main-toolbar {
   margin-left:  35px;
@@ -170,7 +170,7 @@ img[src*="images/indicator_tiny.gif"] {
 /* #headlines-toolbar .r a img.noborder { margin-top: -1px; } */
 /*  */
 /* #headlines-toolbar > .r span#cancel_search { */
-/*   font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; */
+/*   font-family: Roboto,'Noto Sans',Helvetica,Arial sans-serif; */
 /*   font-size:   12px; */
 /*   margin-left: 10px; */
 /*   text-align:             right; */
@@ -178,7 +178,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 #feed_title,
 #floatingTitle .title,
-.postHeader .postTitle a { font: normal 12px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+.postHeader .postTitle a { font: normal 12px Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 #feed_title,
 #feed_title a { color: #999; }
@@ -206,7 +206,7 @@ img[src*="images/indicator_tiny.gif"] {
 .cdm.expandable.active .title,
 .cdm.expandable.active:not(.Unread) .title {
   color:         #282828 !important;
-  font:          500 16px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:          500 16px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   margin-bottom: 0;
   margin-left:   -3px;
   margin-top:    -16px;
@@ -231,7 +231,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 .collapseBtn:hover {
   background: #ffe3d5 url('linear_images/noise.png') 0 repeat;
-  font:       10px/10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif !important;
+  font:       10px/10px Roboto,'Noto Sans',Helvetica,Arial sans-serif !important;
 }
 
 /* hide collapse message */
@@ -265,7 +265,7 @@ img[src*="images/indicator_tiny.gif"] {
 /* align date to collapse button bar line height */
 .cdm.expandable.active .cdmHeader span.updated {
   color:      #888;
-  font:       300 9px/11px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:       300 9px/11px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   margin-top: -29px;
 }
 
@@ -276,7 +276,7 @@ img[src*="images/indicator_tiny.gif"] {
 
 /* column position */
 .cdmHeader .hlFeed {
-  font:        10px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:        10px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   margin-left: -10px;
 }
 
@@ -313,17 +313,17 @@ span.updated { color: #aaa; }
 .hlTitle,
 .cdm .title {
   color: #b5423f !important;
-  font:  bold 13px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:  bold 13px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
 }
 
 /* excerpt content */
 .cdm .cdmExcerpt,
 .cdm.expandable .author,
-.hlTitle .contentPreview { font: 12px/1.5 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+.hlTitle .contentPreview { font: 12px/1.5 Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 .cdm.expandable.active .author {
   color:       #aaa !important;
-  font:        10px/1.75 Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:        10px/1.75 Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   padding-top: 0 !important;
 }
 
@@ -418,7 +418,7 @@ span.updated { color: #aaa; }
 .cdmContentInner h3,
 .cdmContentInner h4,
 .cdmContentInner h5,
-.cdmContentInner h6 { font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+.cdmContentInner h6 { font-family: Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 /* normal or non-cdm view with variable hlfeed and updated widths */
 
@@ -472,7 +472,7 @@ span.updated { color: #aaa; }
 .postHeader div[clear="both"] { display: none !important; }
 
 /* extras */
-.cdmFeedTitle .title { font-family: Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif; }
+.cdmFeedTitle .title { font-family: Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 /* PREFERENCES **************************************************************/
 /* from prefs.css */

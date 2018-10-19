@@ -14,7 +14,7 @@
     " ...................................................................... Ale
 
       let g:ale_sign_column_always = 1
-      let g:ale_sign_error         = ''
+      let g:ale_sign_error         = ''  " nerd-font utf-8 symbols
       let g:ale_sign_warning       = ''
       let g:ale_linter_aliases     =
           \{
@@ -94,6 +94,7 @@
           \{
           \  'fg+'     : ['fg', 'CursorLine']
           \, 'bg+'     : ['bg', 'CursorLine']
+          \, 'info'    : ['fg', 'Special']
           \}
 
       " close any diff buffer before leaving buffer
@@ -391,7 +392,7 @@
         " html <p> content shortcuts
         if s:educate
           Educate
-          call core#ToggleColumnWrap(0)     " disable line wrap column highlight to show spelling errors
+          " ToggleColumnWrap 0              " disable line wrap column highlight to show spelling errors
           imap ...      …<Space>
           imap --       <Space>&ndash;<Space>
           imap .<Space> .<Space><CR>
@@ -399,7 +400,7 @@
           imap !<Space> !<Space><CR>
         else
           NoEducate
-          call core#ToggleColumnWrap(1)     " restore line wrap column highlight
+          " ToggleColumnWrap 1              " restore line wrap column highlight
           iunmap ...
           iunmap --
           iunmap .<Space>

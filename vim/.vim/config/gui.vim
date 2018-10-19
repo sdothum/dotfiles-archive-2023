@@ -12,7 +12,8 @@
       augroup END
 
       let g:ruler     = 0                   " colorcolumn mode, see theme.vim
-      let s:wraplight = 1                   " highlight linewrap (0) off (1) on
+      let s:wraplight = 0                   " highlight linewrap (0) off (1) on
+      let s:breakchar = '→'
       let s:delay     = '150m'              " redraw delay, see theme#FontSize()
 
     " ............................................................... Toggle gui
@@ -162,9 +163,11 @@
       " highlight wrapped line portion, see theme#Theme()
       function! s:columnWrap()
         if g:ruler == 0 && s:wraplight
+          set showbreak=
           let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
           let &colorcolumn = join(range(l:edge, 999), ',')
         else
+          execute 'set showbreak=' . s:breakchar . '\ '
         endif
       endfunction
 
@@ -174,10 +177,11 @@
         call <SID>toggleColumn()
       endfunction
 
-      command! ColumnWrap call <SID>columnWrap()
+      command!          ColumnWrap       call <SID>columnWrap()
+      command! -nargs=? ToggleColumnWrap call <SID>toggleColumnWrap(<f-args>)
 
-      nmap <silent><S-F8> :call <SID>toggleColumnWrap()<CR>
-      imap <silent><S-F8> <C-o>:call <SID>toggleColumnWrap()<CR>
+      nmap <silent><F8> :ToggleColumnWrap<CR>
+      imap <silent><F8> <C-o>:ToggleColumnWrap<CR>
 
     " ............................................................. Line numbers
 

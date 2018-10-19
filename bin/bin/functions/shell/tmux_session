@@ -11,8 +11,13 @@
 [ $1   ] && { export TMUX=$1 ; shift ;} || export TMUX=tmux
 [ "$1" ] || fortune=FORTUNE
 
-tmux -S /tmp/tmux:$TMUX has-session -t $TMUX &&
-     term "${TMUX}" VERTICAL tmux -S /tmp/tmux:$TMUX attach -d -t $TMUX 2>/dev/null ||
-     term "${TMUX}" $fortune VERTICAL tmux -S /tmp/tmux:$TMUX "new-session -n '' -s $TMUX $@"
+if tmux -S /tmp/tmux:$TMUX has-session -t $TMUX ;then
+  term "${TMUX}" VERTICAL tmux -S /tmp/tmux:$TMUX attach -d -t $TMUX 2>/dev/null
+else
+  term "${TMUX}" $fortune VERTICAL tmux -S /tmp/tmux:$TMUX "new-session -n '' -s $TMUX $@"
+  # wait suitably for application to launch to set window name..
+  sleep 3
+  tmux -S /tmp/tmux:$TMUX rename-window "$1*"
+fi
 
 # vim: set ft=sh: #

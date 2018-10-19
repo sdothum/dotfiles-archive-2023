@@ -113,9 +113,9 @@
 
     " ............................................................ Switch colour
 
-      nmap <silent><F8> :call theme#LiteSwitch()<CR>
-      imap <silent><F8> <C-o>:call theme#LiteSwitch()<CR>
-      vmap <silent><F8> :<C-u>call theme#LiteSwitch()<CR>
+      nmap <silent><S-F8> :call theme#LiteSwitch()<CR>
+      imap <silent><S-F8> <C-o>:call theme#LiteSwitch()<CR>
+      vmap <silent><S-F8> :<C-u>call theme#LiteSwitch()<CR>
 
       autocmd theme InsertEnter * call theme#LineNr('i')
       autocmd theme InsertLeave * call theme#LineNr('n')

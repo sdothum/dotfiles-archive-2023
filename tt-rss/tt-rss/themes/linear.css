@@ -156,7 +156,7 @@ div[style="vertical-align : middle"] { width: 75px; }
 :not(.Selected) span.updated {
   color:          #888;
   display:        inline-block;
-  font:           300 9px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:           300 9px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   overflow:       hidden;
   position:       absolute;
   text-overflow:  ellipsis;
@@ -200,7 +200,7 @@ button.expandPrompt {
   color:          #871c1c;
   content:        'gravity\Awell'; /* line break */
   display:        block;
-  font:           100 17px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:           100 17px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
   margin-top:     67px; /* ~ holder width / golden ratio - font-size x 1.5 */
   position:       fixed;
@@ -224,7 +224,7 @@ button.expandPrompt {
   bottom:         0;
   color:          #b5423f;
   content:        'refresh ‧•‧ gravity well'; /* dot bullet dot */
-  font:           100 17px Roboto,'Noto Sans','Helvetica Neue',Helvetica,Arial sans-serif;
+  font:           100 17px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   left:           -35px;
   letter-spacing: 4px;
   padding:        10px;

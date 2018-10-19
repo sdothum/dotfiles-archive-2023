@@ -111,7 +111,7 @@
         execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=' . g:black
         execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg . ' gui=bold'
         execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
-        highlight  link ALEWarningSign     Comment
+        highlight  link ALEWarningSign     ALEErrorSign
         " toggling colorcolunm toggles spell colors (not a prose workflow issue)
         execute 'highlight SpellBad        guibg=' . theme#Value('s:dfm_bg_spell_' . &background) . ' guifg=' . l:text
         highlight! link SpellCap           SpellBad
@@ -152,14 +152,15 @@
       " line numbers
       function! theme#LineNr(mode)
         Trace theme#LineNr()
-        execute 'highlight CursorLineNr ' . (g:view == 0 ? 'gui=bold guifg=' . theme#Value('s:dfm_bg_' . &background)
-                \                                        : 'gui=none guifg=' . (b:proof == 0 ? s:dfm_bg : s:dfm_fg_line))
+        execute 'highlight CursorLineNr '   . (g:view == 0 ? 'gui=bold guifg=' . theme#Value('s:dfm_bg_' . &background)
+                \                                          : 'gui=none guifg=' . (b:proof == 0 ? s:dfm_bg : s:dfm_fg_line))
         let s:dfm_linenr_cmd = g:view == 0  ? s:dfm_fg_line  : s:dfm_bg
         if a:mode == 'n'
           execute 'highlight LineNr guifg=' . s:dfm_linenr_cmd
         else
           execute 'highlight LineNr guifg=' . s:dfm_linenr_ins
         endif
+        execute 'highlight NonText guifg=red'
       endfunction
 
       " g:fzf_colors initializes fzf only once, so override cursorline color
@@ -175,9 +176,9 @@
 
       function! theme#SignifyColors()
         if &background == 'light'
-          highlight link SignifyLineAdd    Statement
-          highlight link SignifyLineChange Type
-          highlight link SignifyLineDelete Special
+          execute 'highlight SignifyLineAdd    guibg=' . s:dfm_bg . ' guifg=' . g:hue_3
+          execute 'highlight SignifyLineChange guibg=' . s:dfm_bg . ' guifg=' . g:hue_2
+          execute 'highlight SignifyLineDelete guibg=' . s:dfm_bg . ' guifg=' . g:hue_5_2
         else
           highlight link SignifyLineAdd    String
           highlight link SignifyLineChange Type

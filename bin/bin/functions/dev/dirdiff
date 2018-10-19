@@ -7,7 +7,7 @@
 # ........................................................ Directory differences
 
 usage() {
-  echo "usage: $(basename $0) [-b] <directory> <directory> <regex>"
+  echo "usage: $(basename $0) [-b] [<source> [<target>]] [<regex>]"
   exit 1
 }
 
@@ -20,27 +20,26 @@ if [ "$1" = '-b' ] ;then
   shift
 fi
 
-[ $# -lt 2 ] && usage
-[ $# -gt 3 ] && usage
-[ -d $1    ] || usage
-[ -d $2    ] || usage
+while [ "$1" ] ;do
+  [ -d "$1" ] && { [ "$source" ] && target=$1 || source=$1; } || regex=$1
+  shift
+done
 
-if [ "$3" ] ;then
-  regex="$3"
-else
-  regex='.*'
-fi
+[ "$source" ] && cd "$source" || source=./
+[ "$target" ] || target=/net/archive$(pwd)
+[ "$regex"  ] || regex='.*'
+ditto "diff $regex $source" "$target"
 
 # to handle filenames containing spaces
-find $1 -type f | exclude | egrep -v $ignore | grep "$regex" >/tmp/dirdiff:files
+find $source -type f | exclude | egrep -v $ignore | grep "$regex" >/tmp/dirdiff:files
 
 while read file <&3 ;do
   unset blink
   while : ;do
     echo "${GREEN}${blink}-> $file${NOCOLOR}"
-    if ! diff --color $w "$file" "$2/$file" ;then
+    if ! diff --color $w "$file" "$target/$file" ;then
       # see herbstluftwm gvimdiff rule
-      ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff "$file" "$2/$file"
+      ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff "$file" "$target/$file"
       blink=${BLINK}
     else
       break

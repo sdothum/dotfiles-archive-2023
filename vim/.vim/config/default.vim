@@ -32,8 +32,9 @@
       set undofile
       set undolevels=1000                   " maximum number of changes that can be undone
       set undoreload=10000                  " maximum number lines to save for undo
+
       " easier redo
-      map U <C-r>
+      nnoremap U <C-r>
 
     " .............................................................. Spell check
 
