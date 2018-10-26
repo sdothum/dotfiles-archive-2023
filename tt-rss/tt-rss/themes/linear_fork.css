@@ -151,6 +151,9 @@ img[src*="images/indicator_tiny.gif"] {
   text-align: right; 
 }
 
+/* hide menu down icon */
+#content-wrap .dijitArrowButtonInner { opacity: 0 !important; }
+
 /* restore align for pop-ups on preferences page */
 #ttrssPrefs .dijitMenuItemLabel { text-align: left; }
 
