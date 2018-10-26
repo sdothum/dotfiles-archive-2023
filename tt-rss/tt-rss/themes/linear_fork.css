@@ -170,15 +170,22 @@ img[src*="images/indicator_tiny.gif"] {
   font-weight: bold;
 }
 
-/* a bit of magic to prevent pop-up width resizing on bold for narrow menu list */
-#ttrssMain .dijitMenuItemLabel:after {
-    content: "All Articles"; /* longest menu item of most commonly used pop-up menu as no attr() to reference */
-    display: block;
-    font-weight: bold;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
+/* prevent pop-up width resizing on bold for menu list using content literals in lieu of attr() */
+table#dijit_Menu_0 .dijitMenuItemLabel:after,
+table#dijit_form_Select_0_menu .dijitMenuItemLabel:after,
+table#dijit_form_Select_1_menu .dijitMenuItemLabel:after {
+  /* content: .. see below */
+  display: block;
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
+
+/* have to pad width of w with uppercase W */
+table#dijit_Menu_0 .dijitMenuItemLabel:after { content: "Toggle Widescreen mode"; }
+table#dijit_form_Select_0_menu .dijitMenuItemLabel:after { content: "All Articles"; }
+table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest first"; }
 
 #ttrssMain .dijitMenuItemHover .dijitMenuItemLabel,
 #ttrssMain .dijitMenuItemSelected .dijitMenuItemLabel { color: #282828; }
