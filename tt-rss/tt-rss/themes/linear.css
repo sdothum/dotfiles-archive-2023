@@ -70,7 +70,7 @@ div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #282828 !impo
 
 /* only highlight category labels */
 .dijitTreeRowSelected span.dijitFolderOpened  + .dijitTreeLabel,
-.dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel { color: #b5423f !important; }
+.dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel { color: #b12525 !important; }
 
 /* non-category node highlight exception for feed filters */
 div#dijit__TreeNode_2 .dijitTreeRowSelected .dijitTreeLabel,
@@ -80,13 +80,18 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel,
 div#dijit__TreeNode_2 .dijitTreeRowSelected:hover .dijitTreeLabel,
 div#dijit__TreeNode_3 .dijitTreeRowSelected:hover .dijitTreeLabel,
 div#dijit__TreeNode_4 .dijitTreeRowSelected:hover .dijitTreeLabel,
-div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b5423f !important; }
+div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b12525 !important; }
 
 /* highlight colour */
 .hl:hover *,
 .cdm.expandable:not(.active) .cdmHeader:hover * {
-  color: #b5423f !important;
-  font-weight: 500;
+  color: #b12525 !important;
+}
+
+.cdm.expandable:not(.active):not(.Unread) .cdmHeader:hover span.author,
+.cdm.expandable:not(.active):not(.Unread) .cdmHeader:hover .cdmExcerpt {
+  color: #d58885 !important;
+  font-weight: normal;
 }
 
 .cdm.expandable.Unread:not(.active) .cdmHeader:hover .title { color: #282828 !important; }
@@ -94,6 +99,8 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b542
 .cdm.expandable:not(.active) .cdmHeader:hover .title { font-weight: bold; }
 
 a.title:hover { text-decoration: underline !important; }
+
+.title { text-shadow: 0 1px 1px #fff !important; }
 
 /* maximum content width setting */
 .postContent p,
@@ -197,7 +204,7 @@ button.expandPrompt {
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:before {
   /* text-shadow: 0 1px 1px #fff; */
-  color: #871c1c;
+  color: #b12525;
   content: 'gravity\Awell'; /* line break */
   display: block;
   font: 100 17px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
@@ -222,7 +229,7 @@ button.expandPrompt {
   /* text-shadow: 0 1px 1px #fff; */
   background: #fdf6e3;
   bottom: 0;
-  color: #b5423f;
+  color: #b12525;
   content: 'refresh ‧•‧ gravity well'; /* dot bullet dot */
   font: 100 17px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   left: -35px;

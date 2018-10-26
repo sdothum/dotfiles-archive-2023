@@ -18,9 +18,11 @@ end
 
 # word$ exclusions from file extension case conversion
 $ext = /Avi|Divx|M4v|Mkv|Mp4|Wmv/
+$media = /media\/videos\/(animation|anime|movies|series)/
 $recurse = 1
 
 def retitle(recurse, directory)
+  raise unless directory =~ $media
   pwd = Dir.pwd
   Dir.chdir(directory)
   list = Dir.glob("*")
@@ -62,7 +64,8 @@ begin
     end
   end
   exit if File.file?(ARGV[0]) unless ARGV[0].nil?
-  retitle($recurse, ARGV[0].nil? ? Dir.pwd : ARGV[0])
+  directory = ARGV[0].nil? ? Dir.pwd : ARGV[0]
+  retitle($recurse, directory)
 rescue
-  print ".. invalid directory #{ARGV[0].bold}\n".red unless ARGV[0] =~ /\//
+  print "==> invalid directory #{directory.bold}\n".yellow unless ARGV[0] =~ /\//
 end

@@ -8,6 +8,7 @@
 
 usage() {
   echo "usage: $(basename $0) [vim]"
+  echo '       see vim command :Map'
   exit 1
 }
 

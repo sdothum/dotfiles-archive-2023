@@ -54,6 +54,7 @@ for i in ${0%/autostart}/config/* ;do
   hc echo done ${i##*/}
   dohc
 done
+
 # monitor dependent env must be set after detect monitors
 . ${0%/autostart}/config/ENV
 # env

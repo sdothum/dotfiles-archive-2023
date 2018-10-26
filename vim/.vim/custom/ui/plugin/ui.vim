@@ -29,9 +29,9 @@
 
       command! Retheme call ui#Retheme()
 
-      nmap <silent><F9>   :Retheme<CR>
-      imap <silent><F9>   <C-o>:Retheme<CR>
-      vmap <silent><F9>   :<C-u>Retheme<CR>
+      nmap <silent><F9> :Retheme<CR>
+      imap <silent><F9> <C-o>:Retheme<CR>
+      vmap <silent><F9> :<C-u>Retheme<CR>
 
     " ............................................................... Initialize
 

@@ -68,8 +68,8 @@ begin
       end
     end
   rescue
-    print ".. empty mime type #{message.mime_type.red.bold}\n"
+    print "==> empty mime type #{message.mime_type.yellow.bold}\n"
   end
 rescue
-  print ".. invalid mail #{ARGV[0].red.bold}\n" unless not ARGV[0]
+  print "==> invalid mail #{ARGV[0].yellow.bold}\n" unless not ARGV[0]
 end

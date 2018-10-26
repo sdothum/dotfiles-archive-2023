@@ -15,7 +15,7 @@
       set cpo&vim
 
       " diff mode doesn't work well with reverse (block) highlighting
-      let g:lightscheme     = &diff == 1 ? 'one' : 'flatwhite'
+      let g:lightscheme     = &diff ? 'one' : 'flatwhite'
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let g:source_font     = 'Iosevka\'
@@ -108,6 +108,11 @@
           call theme#ColorScheme(1)
         else
           call theme#ColorScheme(0)
+        endif
+
+        " don't know where but diff highlights the SignColumn which can only be cleared afterwards(?)
+        if &diff
+          autocmd theme CursorHold * highlight! link SignColumn NonText
         endif
       endif
 

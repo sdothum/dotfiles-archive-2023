@@ -239,22 +239,22 @@
         return ''
       endfunction
 
-      let g:nv_search_paths          = ['./'] " default search from current directory
-      let g:nv_default_extension     = ''
-      let g:nv_main_directory        = './'   " create new notes in current directory
-      let g:nv_use_short_pathnames   = 1
-      let g:nv_create_note_window    = 'edit'
-      let g:nv_preview_width         = 45
+      let g:nv_search_paths        = ['./'] " default search from current directory
+      let g:nv_default_extension   = ''
+      let g:nv_main_directory      = './'   " create new notes in current directory
+      let g:nv_use_short_pathnames = 1
+      let g:nv_create_note_window  = 'edit'
+      let g:nv_preview_width       = 45
 
       " notational path rules: [regex, rootpath, ext]
       " note: regex magic is not enabled at this stage so force with '\v'
-      let s:set_notational           = [['.wiki$',                           ['~/vimwiki', '~/drafts'],  'wiki' ]
-          \,                            ['.draft$',                          ['~/drafts'],               'draft']
-          \,                            ['.note$',                           ['~/notes'],                'note' ]
-          \,                            ['\v([~]|' . $HOME . '|/stow)/bin/', ['~/bin'],                  ''     ]
-          \,                            ['.vim/',                            ['~/.vim/config'],          'vim'  ]
-          \,                            ['herbstluftwm/',                    ['~/.config/herbstluftwm'], ''     ]
-          \,                            ['archlinux/',                       ['~/build/archlinux'],      ''     ]]
+      let s:set_notational = [['.wiki$',                           ['~/vimwiki', '~/drafts'],  'wiki' ]
+          \,                  ['.draft$',                          ['~/drafts'],               'draft']
+          \,                  ['.note$',                           ['~/notes'],                'note' ]
+          \,                  ['\v([~]|' . $HOME . '|/stow)/bin/', ['~/bin'],                  ''     ]
+          \,                  ['.vim/',                            ['~/.vim/config'],          'vim'  ]
+          \,                  ['herbstluftwm/',                    ['~/.config/herbstluftwm'], ''     ]
+          \,                  ['archlinux/',                       ['~/build/archlinux'],      ''     ]]
 
       " dynamically setup notational-fzf :)
       for i in s:set_notational
@@ -410,12 +410,12 @@
         echo 'Typography ' . (s:educate ? 'ON' : 'OFF')
       endfunction
 
-      nmap <silent><F11> :call <SID>toggleEducate()<CR>
-      imap <silent><F11> <C-o>:call <SID>toggleEducate()<CR>
+      nmap <silent><F11>      :call <SID>toggleEducate()<CR>
+      imap <silent><F11>      <C-o>:call <SID>toggleEducate()<CR>
 
       " with vim-surround: cs"q
-      map  <silent>      <leader>qc <Plug>ReplaceWithCurly
-      map  <silent>      <leader>qs <Plug>ReplaceWithStraight
+      map  <silent><leader>qc <Plug>ReplaceWithCurly
+      map  <silent><leader>qs <Plug>ReplaceWithStraight
 
       autocmd plugin FileType html     call textobj#quote#init()
       autocmd plugin FileType markdown call textobj#quote#init()

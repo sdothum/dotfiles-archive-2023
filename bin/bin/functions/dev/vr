@@ -14,12 +14,7 @@ usage() {
 # v by content
 [ "$1" ] || usage
 
-files=$(a "$@" |
-        fZf --multi |
-        nocolor |
-        cut -d: -f1 |
-        uniq)
-
+files=$(a "$@" | fZf --multi | nocolor | cut -d: -f1 | uniq | quote)
 [ "$files" ] || exit
 
 v $files

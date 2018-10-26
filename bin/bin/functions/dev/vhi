@@ -6,11 +6,26 @@
 
 # ....................................................................... Editor
 
-# v by content
-[ "$1"     ] && files=$(al "$@" | quote) || exit
-[ "$files" ] || exit
+usage() {
+  echo "usage: $(basename $0) [<colorscheme>]"
+  echo '       see vim command :Hi'
+  exit 1
+}
 
-# regex passed as search command causes file name mangling
-echo "$@" | grep -q '^[[:alnum:]]*$' && v -c "/\v$@" $files || v $files
+vhi=/tmp/vim:hi
 
+# colorscheme
+case $1 in
+''       ) ;;
+flatwhite) ;;
+one      ) ;;
+quantum  ) ;;
+*        ) usage ;;
+esac
+[ $1 ] && theme="-c 'colorscheme $1'"
+
+# capture all highlight settings
+eval vim $theme -c "'redir! >$vhi | silent! hi | redir END | quit'"
+v $vhi
+  
 # vim: set ft=sh: #

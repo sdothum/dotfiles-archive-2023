@@ -25,14 +25,18 @@
       " when updates won't break the current vim session!
       command! Vimrc call core#Vimrc()
 
+      " handy searchable lists
+      command! Hi  enew | put=execute('hi')  | normal gg
+      command! Map enew | put=execute('map') | normal gg
+
     " ....................................................... Error message trap
 
       command! -nargs=1 Quietly call core#Quietly(<f-args>)
 
     " ............................................................ Open terminal
 
-      " open shell session in buffer directory
-      command! Term silent !term "vimterm" STACK
+      " !term fails on shell error 1 (?)
+      command! Term :call system('term "vimterm" STACK')
 
       nmap <silent><C-t>      :term fish<CR>
       nmap <silent><C-t><C-t> :Term<CR>

@@ -1,16 +1,13 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Dev
+# Shell
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# ....................................................................... Editor
+# ........................................................................ Regex
 
-# v by content
-[ "$1"     ] && files=$(al "$@" | quote) || exit
-[ "$files" ] || exit
+# Usage: .. | quote
 
-# regex passed as search command causes file name mangling
-echo "$@" | grep -q '^[[:alnum:]]*$' && v -c "/\v$@" $files || v $files
+sed -r "s/.*/'&'/"
 
 # vim: set ft=sh: #

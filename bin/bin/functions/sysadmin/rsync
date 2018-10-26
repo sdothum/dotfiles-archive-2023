@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-isopt "$1" || option=-av
+isopt "$1" && { option=$1 ; shift ;} || option='-av'
 
 laptop=lumen
 netbook=monad
@@ -20,7 +20,7 @@ netbook=monad
 exclude_http_local='--exclude=thedarnedestthing.db --exclude=log'
 exclude_trash='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
-rsync() { /usr/bin/rsync -av --update --exclude='lost+found' $@ ;}
+rsync() { /usr/bin/rsync $option --exclude='lost+found' $@ ;}
 
 rsync_home() {
   rsync --delete --delete-excluded \

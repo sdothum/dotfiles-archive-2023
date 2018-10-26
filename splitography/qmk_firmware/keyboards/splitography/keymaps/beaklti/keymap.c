@@ -344,7 +344,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TD_SPC:
     if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     // trap potential repeating enter caused by tap dance definition
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSHIFT);
     break;
@@ -368,6 +368,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case KC_BSLS:
     if (down_rule) { tap_key(KC_ENT); return false; } // down_rule persistance for tap_lt()
+    break;
+  case KC_COLN:
+  case TD_COLM:
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SCLN)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SCLN)) { return false; }
     break;
   case KC_COMM:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SLSH)) { return false; }
