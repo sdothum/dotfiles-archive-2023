@@ -307,7 +307,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case TT_ESC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
     tt_clear();                             // exit TT layer
     return false;
 

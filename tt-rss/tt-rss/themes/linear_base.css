@@ -411,7 +411,7 @@ a:hover { text-decoration: underline; }
 }
 
 #content-wrap .dijitArrowButtonInner {
-  background: transparent url('linear_images/angle-down.png') 0 1px no-repeat;
+  background: transparent url('linear_images/down-arrow.png') 0 1px no-repeat;
   opacity: .3;
   transition: opacity .2s;
 }

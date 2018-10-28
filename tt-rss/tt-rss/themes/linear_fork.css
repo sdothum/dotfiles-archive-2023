@@ -151,8 +151,11 @@ img[src*="images/indicator_tiny.gif"] {
   text-align: right; 
 }
 
-/* hide menu down icon */
-#content-wrap .dijitArrowButtonInner { opacity: 0 !important; }
+/* menu down icon */
+#content-wrap .dijitOpened .dijitArrowButtonInner,
+#content-wrap .dijitSelect:hover .dijitArrowButtonInner,
+#content-wrap .dijitComboButton .dijitArrowButtonInner:hover,
+#content-wrap .dijitDropDownButton:hover .dijitArrowButtonInner { opacity: .15; }
 
 /* restore align for pop-ups on preferences page */
 #ttrssPrefs .dijitMenuItemLabel { text-align: left; }

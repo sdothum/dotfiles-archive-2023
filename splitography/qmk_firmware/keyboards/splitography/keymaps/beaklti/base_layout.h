@@ -66,8 +66,8 @@
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   J  |   _  |   "  |   K  |   /  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |                           |  Tab |   I  |  f() |  Del |                           |
-  // | Ctrl |  GUI |  Alt |  Tab |   I  |  Ins | Left |  f() |  Del | Down |  Up  | Right|
+  // |                           |  Tab |   I  |  f() | Bksp |                           |
+  // | Ctrl |  GUI |  Alt |  Tab |   I  |  Ins | Left |  f() | Bksp | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
   // thumb side lower case to ovoid triggering same hand upper case
 
@@ -76,9 +76,9 @@
     {S(KC_Q), S(KC_H), S(KC_E), S(KC_A), KC_QUES, CNTR_HL, CNTR_HR, KC_C,  KC_ENT,    KC_R,    KC_S,    KC_W   },
     {S(KC_J), KC_UNDS, KC_DQT,  S(KC_K), KC_SLSH, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
 #ifdef SPLITOGRAPHY
-    {_______, _______, _______, _______, KC_TAB,  S(KC_I), ___fn__, KC_DEL,  _______, _______, _______, _______},
+    {_______, _______, _______, _______, KC_TAB,  S(KC_I), ___fn__, KC_BSPC, _______, _______, _______, _______},
 #else
-    {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  S(KC_I), LT_INS,  S_LEFT,  ___fn__, KC_DEL,  S_DOWN,  S_UP,    S_RGHT },
+    {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  S(KC_I), LT_INS,  S_LEFT,  ___fn__, KC_BSPC, S_DOWN,  S_UP,    S_RGHT },
 #endif
   },
 
