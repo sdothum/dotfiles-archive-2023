@@ -266,6 +266,7 @@ void lesser(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 3) { send_string(" <- "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_COMM); }
   }
+  else if ((state->count == 2) && state->pressed) { register_shift(KC_COMM); }
   else { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
@@ -284,6 +285,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 3) { send_string(" -> "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_DOT); }
   }
+  else if ((state->count == 2) && state->pressed) { register_shift(KC_DOT); }
   else { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
@@ -291,6 +293,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
 void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_DOT);
+  unregister_code(KC_LSFT);
 }
 #endif
 
