@@ -408,8 +408,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // case KC_END:
   // case KC_LEFT:
   // case KC_RIGHT:
-  case KC_PGUP:
-  case KC_PGDN:
+  // case KC_PGUP:
+  // case KC_PGDN:
   case KC_UP:
   case KC_DOWN:
     down_rule = 1;                          // cursor + enter sequence, see TD_BSPC, cap_lt()

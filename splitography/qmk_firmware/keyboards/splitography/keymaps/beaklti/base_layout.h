@@ -55,7 +55,7 @@
 #ifdef SPLITOGRAPHY
     {_______, _______, _______, _______, KC_TAB,  ___fn__, TD_ENT,  KC_DEL,  _______, _______, _______, _______},
 #else
-    {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  ___fn__, LT_INS,  S_LEFT,  TD_ENT,  KC_DEL,  S_DOWN,  S_UP,    S_RGHT },
+    {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  ___fn__, LT_INS,  S_LEFT,  TD_ENT,  LT_DEL,  S_DOWN,  S_UP,    S_RGHT },
 #endif
   },
 
