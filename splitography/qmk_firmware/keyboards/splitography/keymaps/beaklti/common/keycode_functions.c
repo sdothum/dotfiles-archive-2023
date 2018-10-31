@@ -353,6 +353,19 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_SCLN);
 }
 
+void percent(qk_tap_dance_state_t *state, void *user_data)
+{
+  if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
+  else { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
+  reset_tap_dance(state);
+}
+
+void percent_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_shift(KC_5);
+  unregister_code(KC_LALT);
+}
+
 // compile time macro string, see functions/hardware planck script
 void private(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -380,6 +393,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)
  ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
+ ,[_PERC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)

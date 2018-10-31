@@ -103,7 +103,6 @@ enum keyboard_keycodes {
  ,PLOVER
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_I      // pseudo MT   (MOD_LSFT, S(KC_I))            for shifted key-codes, see process_record_user()
- ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_I      // pseudo LT   (_EDIT, S(KC_I))               for shifted key-codes, see process_record_user()
@@ -389,9 +388,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
-    break;
-  case SA_PERC:
-    mt_shift(record, KC_LALT, 0, KC_5);
     break;
   case KC_QUES:
     // down_rule = 0;                       // trap layer switching timimg issue between . and ?
