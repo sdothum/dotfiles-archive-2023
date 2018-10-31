@@ -38,10 +38,10 @@
       " !term fails on shell error 1 (?)
       command! Term :call system('term "vimterm" STACK')
 
-      nmap <silent><C-t>      :term fish<CR>
-      nmap <silent><C-t><C-t> :Term<CR>
-      imap <silent><C-t>      <C-o>:term fish<CR>
-      imap <silent><C-t><C-t> <C-o>:Term<CR>
+      nmap <silent><C-t>      :Term<CR>
+      nmap <silent><C-t><C-t> :term fish<CR>
+      imap <silent><C-t>      <C-o>:Term<CR>
+      imap <silent><C-t><C-t> <C-o>:term fish<CR>
 
     " ............................................................... Dictionary
 

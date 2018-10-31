@@ -67,10 +67,10 @@ trap "rm $words $lines $paragraphs" EXIT
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 shuf $CORPUS | sed -r 's/\t.*// ; s/(.*)/\L\1/' | # strip frequency count if present
-                egrep "[$regex]" |
-                egrep -v '^(.|..)$' |
-                egrep -x ".{1,$wordlen}" |
-                head -$size >$corpus.words
+               egrep "[$regex]" |
+               egrep -v '^(.|..)$' |
+               egrep -x ".{1,$wordlen}" |
+               head -$size >$corpus.words
 
 typefile="$CACHEDIR$(cat $corpus.words | wc -l)-$output.txt"
 

@@ -83,7 +83,6 @@ history() {
   fi
 }
 
-
 case $shell in
 dash     ) history $shell $@ ;;
 fish     ) history fish $@ ;;

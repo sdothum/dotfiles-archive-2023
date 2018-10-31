@@ -12,9 +12,6 @@
 #       script that is itself sourced, see log/parent as called from herbstluftwm
 #       scripts
 
-ps -ef | grep $PPID |
-         sort |
-         head -1 |
-         awk '{ ps=$NF ; sub( /.*\//, "", ps) ; print ps }'
+ps -ef | grep $PPID | sort | head -1 | awk '{ ps=$NF ; sub( /.*\//, "", ps) ; print ps }'
 
 # vim: set ft=sh: #

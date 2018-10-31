@@ -140,41 +140,28 @@ void double_shift(uint16_t keycode, uint8_t layer)
   else { layer_on(layer); }
 }
 
-static uint8_t tap_rule = 0;                        // down_rule persistance, see process_record_user()
+static uint8_t tap_rule = 0;                // down_rule persistance, see process_record_user()
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
-void tap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t triple, uint8_t layer, uint8_t rule, uint16_t altcode)
+void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_t paragraph, uint16_t leader)
 {
   uint8_t i;
-  if (state->count > 2) {
-    if (state->pressed) { register_code(keycode); } // double tap down -> keycode...
-    else if (state->count == triple) {              // triple tap -> double keycode + shift
-      tap_key     (keycode);
-      double_shift(keycode, layer);
-    }
-    else for (i = 0; i < state->count; i++) { tap_key(keycode); }
-  }
-  else if (state->count > 1) {
-    if (state->count == triple - 1) {
-      if (rule == 2) { tap_key(keycode); }          // (.) double tap -> keycode keycode + shift
-      double_shift(keycode, layer);
-    }
-    // just works out that existing function call can apply rule . space space -> . enter + shift
-    else if (rule == 2) { double_shift(altcode ? altcode : keycode, layer); } // (.) double tap -> altcode + shift
-    else                { double_shift(keycode, layer); }                     // tap down or double tap -> keycode + shift
-  }
-  else if (state->pressed) { layer_on(layer); }     // down -> shift
-  else switch (rule) {                              // see process_record_user()
-  case 0:
-    modifier(register_code);
-    tap_key (keycode);
-    modifier(unregister_code);
+  switch (tap_rule) {
+  case 2:                                   // sentence/paragraph capitalization
+    if (state->pressed) { return; }
+    if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
+    double_shift(leader, layer);            // throw away excess taps!
     return;
-  case 1:
-    if (altcode) { tap_key (altcode); }
+  case 1:                                   // rolling thumb enter chord
+    if (state->pressed) { return; }
+    tap_key(KC_ENT);
     return;
-  case 2:
-    double_shift(keycode, layer);
+  case 0:                                   // layer or keycode
+    if (state->pressed) {
+      if (state->count == 1) { layer_on(layer); }
+      else                   { register_code(keycode); }
+    }
+    else for (i = 0; i < state->count; i++) { tap_key(keycode); } 
   }
 }
 
@@ -183,27 +170,38 @@ void tap_reset(uint16_t keycode, uint8_t layer)
   unregister_code(keycode);
   dt_shift ? clear_oneshot_layer_state(ONESHOT_PRESSED) : layer_off(layer);
   dt_shift = 0;
-  tap_rule = 0;                                     // clear retained down_rule, see process_record_user()
+  tap_rule = 0;                             // clear retained down_rule, see process_record_user()
 }
 
-#define REPEATING    0
-#define TRIPLE       3
+#define SENTENCE  0                         // capitalization method
+#define PARAGRAPH 2
 
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
+void backspace(qk_tap_dance_state_t *state, void *user_data)
+{
+  cap_lt(state, KC_BSPC, _RSYMBOL, PARAGRAPH, KC_ENT);  // triple tap -> double enter + shift, down -> enter...
+}
+
+void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  tap_reset(KC_BSPC, _RSYMBOL);
+}
+
+// augment pseudo LT (_EDIT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void enter(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_lt(state, KC_ENT, TRIPLE, _RSHIFT, tap_rule, 0);  // triple tap -> double enter + shift, down -> enter...
+  cap_lt(state, KC_ENT, _EDIT, PARAGRAPH, KC_ENT);  // triple tap -> double enter + shift, down -> enter...
 }
 
 void enter_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_reset(KC_ENT, _RSHIFT);
+  tap_reset(KC_ENT, _EDIT);
 }
 
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_lt(state, KC_SPC, REPEATING, _RSHIFT, tap_rule, KC_ENT); // triple tap down -> space...
+  cap_lt(state, KC_SPC, _RSHIFT, SENTENCE, KC_SPC); // triple tap down -> space...
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -214,7 +212,7 @@ void space_reset(qk_tap_dance_state_t *state, void *user_data)
 // ......................................................... Triple Dance Insert
 
 #ifdef HASKELL
-void double_max(uint8_t count, uint8_t shift, uint16_t keycode)
+void double_tap(uint8_t count, uint8_t shift, uint16_t keycode)
 {
   if (shift) {
     tap_shift(keycode);
@@ -234,7 +232,7 @@ void colon(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 3) { send_string(" :: "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
   }
-  else { state->pressed ? register_shift(KC_SCLN) : double_max(state->count, SHIFT, KC_SCLN); }
+  else { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
   reset_tap_dance(state);
 }
 
@@ -242,10 +240,6 @@ void colon_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_SCLN);
 }
-
-#ifndef EQL_LT
-#define EQL_LT _EDIT
-#endif
 
 void equal(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -255,14 +249,13 @@ void equal(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 3) { send_string(" /= "); }
     else for (i = 0; i < state->count; i++) { tap_key(KC_EQL); }
   }
-  else { state->pressed ? layer_on(EQL_LT) : double_max(state->count, NOSHIFT, KC_EQL); }
+  else { state->pressed ? register_code(KC_EQL) : double_tap(state->count, NOSHIFT, KC_EQL); }
   reset_tap_dance(state);
 }
 
 void equal_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_code(KC_EQL);
-  layer_off(EQL_LT);
 }
 
 void lesser(qk_tap_dance_state_t *state, void *user_data)
@@ -273,7 +266,7 @@ void lesser(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 3) { send_string(" <- "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_COMM); }
   }
-  else { state->pressed ? register_code(KC_LCTL) : double_max(state->count, SHIFT, KC_COMM); }
+  else { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
 
@@ -291,7 +284,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 3) { send_string(" -> "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_DOT); }
   }
-  else { state->pressed ? register_code(KC_LSFT) : double_max(state->count, SHIFT, KC_DOT); }
+  else { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -348,7 +341,7 @@ void emoji(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 2) { tap_shift(KC_SCLN); tap_key(KC_MINUS); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
   }
-  else { state->pressed ? register_shift(KC_SCLN) : double_max(state->count, SHIFT, KC_SCLN); }
+  else { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
   reset_tap_dance(state);
 }
 
@@ -379,6 +372,7 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_ASTR] = ACTION_TAP_DANCE_FN         (asterisk)
+ ,[_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, backspace, backspace_reset)
  ,[_COLM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)

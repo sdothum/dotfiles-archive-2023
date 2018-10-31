@@ -32,7 +32,7 @@
       let g:AutoPairsMapBS                = 1        " auto delete symbol pairs
       let g:AutoPairsMapSpace             = 0        " disabled to make iabbrev work!
       " let g:AutoPairsFlyMode            = 1        " auto pair jumping
-      " let g:AutoPairsShortcutBackInsert = '<C-BS>' " undo auto pair jump -> close pair
+      let g:AutoPairsShortcutBackInsert = '<C-BS>' " undo auto pair jump -> close pair
 
     " ............................................................... Easy-align
 

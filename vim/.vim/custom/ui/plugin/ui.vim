@@ -59,7 +59,7 @@
       " autocmd ui InsertChange * if core#Prose() | call ui#ToggleInfo() | SignifyDisable | endif
       " autocmd ui InsertLeave  * if core#Prose() | call ui#ToggleInfo(1) | SignifyEnable | endif
       autocmd ui InsertEnter  * call ui#ToggleProof() | SignifyDisable
-      autocmd ui InsertChange * call ui#ToggleProof() | SignifyDisable
+      " autocmd ui InsertChange * call ui#ToggleProof() | SignifyDisable
       autocmd ui InsertLeave  * call ui#ToggleProof() | SignifyEnable
 
     " .............................................................. Switch mode

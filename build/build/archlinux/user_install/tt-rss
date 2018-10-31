@@ -38,6 +38,7 @@ sudo sed -i -e 's/"Special"/"Orbit"/' \
          -e 's/Published articles/published/' \
          -e 's/Archived articles/archived/' \
          -e 's/Recently read/read/' \
+         -e 's/Starred/Pinned/'
          $FEEDS
 if [ -e $HOME/tt-rss/themes/${theme}_$button ] ;then
   sudo sed -i -e "s|images/collapse.png|$button|" $FEEDS

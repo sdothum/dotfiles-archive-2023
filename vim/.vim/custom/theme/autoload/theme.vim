@@ -123,6 +123,7 @@
           execute 'highlight IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'highlight StatuslineNC  guifg=' . g:white
           highlight link SneakScope        Cursor
+          highlight link mkdLink           htmlString
         endif
         call theme#FzfColors()
         call theme#SignifyColors()

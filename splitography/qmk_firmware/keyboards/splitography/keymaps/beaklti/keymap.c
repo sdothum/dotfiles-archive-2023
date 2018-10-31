@@ -106,6 +106,7 @@ enum keyboard_keycodes {
  ,SA_PERC   // pseudo ALT_T(S(KC_5))                      for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
+ ,SL_I      // pseudo LT   (_EDIT, S(KC_I))               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))
  ,TT_ESC
 #ifdef STENO_ENABLE
@@ -181,9 +182,7 @@ enum keyboard_keycodes {
 #define TMPASTE LALT(LCTL(KC_V))
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
 #define TT_BSPC LT  (_TTCURSOR, KC_BSPC)
-#ifdef SPLITOGRAPHY
-#define LT_DEL  LT  (_EDIT, KC_DEL)
-#else
+#ifdef PLANCK
 #define LT_DEL  LT  (_ADJUST, KC_DEL)
 #define LT_INS  LT  (_NUMBER, KC_INS)
 #define LT_LEFT LT  (_EDIT,   KC_LEFT)
@@ -242,7 +241,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define BASE_12 3
 static uint8_t base_n    = 0;
 
-static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode+shift, see tap_lt()
+static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode + shift, see cap_lt()
 static uint8_t repeating = 0;               // rolling key repeat mode, see thumb_roll()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -313,8 +312,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Thumb Keys
 
   case LT_ESC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
 #endif
@@ -323,11 +322,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     thumb_roll(record, LEFT, 0, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
   case SL_TAB:
-    down_rule = key_event(record, 1);       // tab+enter thumb roll, see tap_lt()
+    down_rule = key_event(record, 1);       // tab + enter thumb roll, see cap_lt()
     thumb_roll(record, LEFT, SHIFT, KC_TAB, repeating, _MOUSE, _RSYMBOL);
     break;
   case KC_TAB:
-    down_rule = key_event(record, 1);       // dot+tab+enter thumb roll, see tap_lt()
+    down_rule = key_event(record, 1);       // dot + tab + enter thumb roll, see cap_lt()
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
 #endif
@@ -339,16 +338,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     tap_layer(record, _LSHIFT);
     break;
+  case SL_I:
+    lt_shift(record, KC_I, _EDIT);
+    break;
 
   case TD_SPC:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
+    if (record->event.pressed) { tap_rule = down_rule; down_rule = 0; } // down_rule persistance for cap_lt()
     // trap potential repeating enter caused by tap dance definition
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSHIFT);
-    break;
-  case TD_ENT:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for tap_lt()
     break;
 
   case TT_BSPC:
@@ -357,7 +355,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case LT_BSPC:
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     tap_layer(record, _RSYMBOL);
-    thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL);
+    if (down_rule) { thumb_roll(record, RIGHT, NOSHIFT, KC_ENT, 0, _RSYMBOL, _LSYMBOL); return false; }
+    else           { thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL); }
+    break;
+  case TD_BSPC:
+    if (record->event.pressed) { tap_rule = down_rule; down_rule = 0; } // down_rule persistance for cap_lt()
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
+    tap_layer(record, _RSYMBOL);
     break;
   case SL_DEL:
     thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, 0, _MOUSE, _LSYMBOL);
@@ -366,7 +370,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // .............................................................. Special Keys
 
   case KC_BSLS:
-    if (down_rule) { tap_key(KC_ENT); return false; } // down_rule persistance for tap_lt()
+    if (down_rule) { tap_key(KC_ENT); return false; } // down_rule persistance for cap_lt()
     break;
   case KC_COLN:
   case TD_COLM:
@@ -379,9 +383,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   // special shift layer mappings
   case KC_DOT:
-    down_rule = key_event(record, 2);       // dot+space/enter+shift shortcut, see tap_lt()
+    down_rule = key_event(record, 2);       // dot + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { down_rule = key_event(record, 2); return false; } // exlm+space/enter+shift shortcut, see tap_lt()
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { down_rule = key_event(record, 2); return false; } // exlm + space/enter + shift shortcut, see cap_lt()
     break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
@@ -391,11 +395,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_QUES:
     // down_rule = 0;                       // trap layer switching timimg issue between . and ?
-    down_rule = key_event(record, 2);       // ques+space/enter+shift shortcut, see tap_lt()
+    down_rule = key_event(record, 2);       // ques + space/enter + shift shortcut, see cap_lt()
     break;
   case SG_TILD:
     mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
+
+  // ............................................................... Cursor Keys
+  
+#ifdef CURSOR_ENTER
+  // case KC_HOME:
+  // case KC_END:
+  // case KC_LEFT:
+  // case KC_RIGHT:
+  case KC_PGUP:
+  case KC_PGDN:
+  case KC_UP:
+  case KC_DOWN:
+    down_rule = 1;                          // cursor + enter sequence, see TD_BSPC, cap_lt()
+    break;
+#endif
 
   // ............................................................ Thumb Row Keys
 
@@ -435,6 +454,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   default:
     key_timer = 0;                          // regular keycode, clear timer in keycode_functions.h
+    down_rule = 0;
   }
   return true;
 }
