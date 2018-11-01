@@ -96,7 +96,7 @@ div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b125
 
 .cdm.expandable.Unread:not(.active) .cdmHeader:hover .title { color: #282828 !important; }
 
-.cdm.expandable:not(.active) .cdmHeader:hover .title { font-weight: bold; }
+.cdm.expandable:not(.active) .cdmHeader:hover .title { font-weight: 500; }
 
 a.title:hover { text-decoration: underline !important; }
 

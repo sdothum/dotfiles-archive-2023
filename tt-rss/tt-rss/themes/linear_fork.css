@@ -113,7 +113,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 
 #feeds-holder .dijitTreeRow:hover *,
 #feeds-holder .dijitTreeRowSelected .counterNode,
-#feeds-holder .dijitTreeRowSelected .dijitTreeLabel { font-weight: bold; }
+#feeds-holder .dijitTreeRowSelected .dijitTreeLabel { font-weight: 500; }
 
 /* loading gif */
 #ttrssMain .dijitTreeContent { opacity: 0; } /* unnecessary visual distraction */
@@ -173,16 +173,16 @@ img[src*="images/indicator_tiny.gif"] {
 #ttrssMain .dijitMenuItemSelected .dijitMenuItemLabel,
 #ttrssMain .dijitSelectSelectedOption .dijitMenuItemLabel {
   background: #eee8d5;
-  font-weight: bold;
+  font-weight: 500;
 }
 
-/* prevent pop-up width resizing on bold for menu list using content literals in lieu of attr() */
+/* prevent pop-up width resizing on 500 for menu list using content literals in lieu of attr() */
 table#dijit_Menu_0 .dijitMenuItemLabel:after,
 table#dijit_form_Select_0_menu .dijitMenuItemLabel:after,
 table#dijit_form_Select_1_menu .dijitMenuItemLabel:after {
   /* content: .. see below */
   display: block;
-  font-weight: bold;
+  font-weight: 500;
   height: 0;
   overflow: hidden;
   visibility: hidden;
@@ -263,7 +263,7 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 .cdm.expandable.active .title,
 .cdm.expandable.active:not(.Unread) .title {
   color: #282828 !important;
-  font: bold 16px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  font: 500 16px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   margin-bottom: 0;
   margin-left: -3px;
   margin-top: -16px;
@@ -370,13 +370,13 @@ span.updated { color: #aaa; }
 .hlTitle,
 .cdm .title {
   color: #b12525 !important;
-  font: bold 13px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  font: 500 13px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
 }
 
 /* excerpt content */
 .cdm .cdmExcerpt,
 .cdm.expandable .author,
-.hlTitle .contentPreview { font: 12px/1.5 Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
+.hlTitle .contentPreview { font: 12px/1.5 'Jost*',Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 .cdm.expandable.active .author {
   color: #aaa !important;
@@ -427,6 +427,7 @@ span.updated { color: #aaa; }
 /* expanded content */
 .cdmContentInner {
   color: #444;
+  font-family: 'Jost*',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   font-size: 13px;
   /* line-height: 20px; */
   padding: 0 34px;
@@ -513,7 +514,7 @@ span.updated { color: #aaa; }
 .postHeader .postTitle a {
   color: #b12525;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .postHeader .postDate {

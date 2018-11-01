@@ -10,6 +10,8 @@
 
 [ $1   ] && { export TMUX=$1 ; shift ;} || export TMUX=tmux
 [ "$1" ] || fortune=FORTUNE
+# force rox terminal sessions to open in current rox directory
+[ $TMUX = roxterm ] && pkill -f ' -s roxterm' # <space> -s, as pattern 
 
 if tmux -S /tmp/tmux:$TMUX has-session -t $TMUX ;then
   term "${TMUX}" VERTICAL tmux -S /tmp/tmux:$TMUX attach -d -t $TMUX 2>/dev/null
