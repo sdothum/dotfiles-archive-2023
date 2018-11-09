@@ -152,6 +152,7 @@ void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_
     if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
     double_shift(leader, layer);            // throw away excess taps!
     return;
+  case 4:                                   // cursor triggered
   case 1:                                   // rolling thumb enter chord
     if (state->pressed) { return; }
     tap_key(KC_ENT);

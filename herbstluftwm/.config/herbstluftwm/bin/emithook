@@ -18,6 +18,12 @@ fi
 # touch $DYNAMIC (see toggle focus)
 monitor=$(herbstclient attr monitors.focus.index)
 
+# force panel title refresh, see draw panel
+panel_refresh() {
+  sleep 0.05                                # allow window close to complete
+  xtitle -f 'T\n' >$(cat $PANEL_FIFO)
+}
+
 herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   # script lock to suppress unnecessary emit hook message processing
   # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE ; continue ;}
@@ -36,8 +42,8 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
                     restore panel &
                   fi ;;
 
-  focus_window ) [ -e $DYNAMIC ] && focus window & ;;
-  focus_frame  ) [ -e $DYNAMIC ] && focus frame & ;;
+  focus_window ) [ -e $DYNAMIC ] && (focus window &) || panel_refresh ;;
+  focus_frame  ) [ -e $DYNAMIC ] && (focus frame  &) || panel_refresh ;;
 
   rule         ) case $rule in
                  float     ) herbstclient pseudotile toggle & ;;

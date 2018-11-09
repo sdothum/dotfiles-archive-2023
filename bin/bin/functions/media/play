@@ -6,7 +6,7 @@
 
 # ................................................................. Media player
 
-# Usage: play <url> | <path> [<title>]
+# Usage: play <url> | [-q] <path> [<title>]
 #
 # Note: <path> may be a media file or folder containing such
 
@@ -17,6 +17,7 @@ youtube=/net/downloads/http/youtube-dl
 # cleanup accidental screenshots and youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
+[ "$1" = '-q' ] && { quiet=true ; shift ;}
 # play media (see rox, dmenu movies, dmenu series, browsers..)
 [ "$2" ] && title=$2 || title=${1##*/}
 
@@ -82,6 +83,7 @@ while : ;do
   fi
 
   echo "$1" | grep -q http && break
+  [ $quiet ] && break
   # only purges server files (arm redirected usb files remain untouched)
   action=$(echo 'skip\nreplay\ndelete' | rmenu "$title" -no-custom)
   case $action in

@@ -106,7 +106,7 @@ enum keyboard_keycodes {
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_I      // pseudo LT   (_EDIT, S(KC_I))               for shifted key-codes, see process_record_user()
- ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))
+ ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))            for shifted key-codes, see process_record_user()
  ,TT_ESC
 #ifdef STENO_ENABLE
  ,PS_STNA = STN_A
@@ -177,8 +177,9 @@ enum keyboard_keycodes {
 #define NAK     LCTL(KC_U)
 #define PASTE   LCTL(KC_V)
 #define UNDO    LCTL(KC_Z)
-#define TMCOPY  LALT(LCTL(KC_C))
-#define TMPASTE LALT(LCTL(KC_V))
+#define TMCOPY  LCTL(LSFT(KC_C))
+#define TMPASTE LCTL(LSFT(KC_V))
+
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
 #define TT_BSPC LT  (_TTCURSOR, KC_BSPC)
 #ifdef PLANCK
@@ -342,7 +343,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case TD_SPC:
-    if (record->event.pressed) { tap_rule = down_rule; down_rule = 0; } // down_rule persistance for cap_lt()
+    if (record->event.pressed) { tap_rule = down_rule == 4 ? 0 : down_rule; down_rule = 0; } // down_rule persistance for cap_lt()
     // trap potential repeating enter caused by tap dance definition
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSHIFT);
@@ -408,7 +409,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // case KC_PGDN:
   case KC_UP:
   case KC_DOWN:
-    down_rule = 1;                          // cursor + enter sequence, see TD_BSPC, cap_lt()
+    down_rule = 4;                          // cursor + enter sequence, see TD_BSPC, cap_lt()
     break;
 #endif
 

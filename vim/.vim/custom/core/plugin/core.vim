@@ -103,6 +103,11 @@
       " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
       autocmd core Filetype mail call core#ComposeMail()
 
+    " ..................................................................... Wiki
+  
+     " set touch date
+     command! -nargs=1 Wiki execute ':silent !wikitouch "' . expand('%:p') . '" ' . <f-args>
+
       let &cpo = s:save_cpo
       unlet s:save_cpo
 

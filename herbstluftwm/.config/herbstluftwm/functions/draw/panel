@@ -342,16 +342,13 @@ panel() {
 mkfifo $PANEL_FIFO:$fifo
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 case $TIC in
-se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b '%y
-" >$PANEL_FIFO:$fifo & ;;
-t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y
-" >$PANEL_FIFO:$fifo & ;;
-*  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y
-" >$PANEL_FIFO:$fifo & ;;
+se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
+t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
+*  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
 esac
 herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
-xtitle -sf 'T%s
-' >$PANEL_FIFO:$fifo 2>/dev/null &
+# see emit_hook
+xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &
 
 fontsize=$(fontsize)
 

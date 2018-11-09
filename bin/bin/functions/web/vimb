@@ -32,22 +32,4 @@ config() {
 config
 exec vimb "$startpage"
 
-# defunct substitution for version 2.x -c option, replaced by profiles
-delay=3
-
-/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &
-
-completion_css=":set completion\-css=color:#d3d0c8;background\-color:#393939;font:$size $font;"
-completion_hover_css=":set completion\-hover\-css=color:#d3d0c8;background\-color:#393939;font:$size $font;"
-completion_selected_css=":set completion\-selected\-css=color:#d3d0c8;background\-color:#515151;font:$size $font;"
-input_css=":set input\-css=color:#d3d0c8;background\-color:#393939;font:$size $font;"
-input_error_css=":set input\-error\-css=color:#f2777a;background\-color:#393939;font:$size $font;"
-status_css=":set status\-css=color:#ffcc66;background\-color:#393939;font:$size $font;"
-status_ssl_css=":set status\-ssl\-css=color:#99cc99;background\-color:#393939;font:$size $font;"
-status_ssl_invalid_css=":set status\-ssl\-invalid\-css=color:#f2777a;background\-color:#393939;font:$size $font;"
-
-sleep $delay
-# xvkbd -window Vimb -text ...
-xvkbd -text "$completion_css\r$completion_hover_css\r$completion_selected_css\r$input_css\r$input_error_css\r$status_css\r$status_ssl_css\r$status_ssl_invalid_css\r"
-
 # vim: set ft=sh: #

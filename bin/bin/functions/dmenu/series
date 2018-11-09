@@ -69,8 +69,8 @@ while : ;do
              # force dmenu focus (continue within do loop doesn't guarantee focus)
              exec dmenu series $1 ;;
 
-  "$SONARR") surf $sonarr
-             pwait "surf $sonarr"
+  "$SONARR") $BROWSER $sonarr
+             pwait "$BROWSER.*$sonarr"
              continue ;;
 
   *        ) series="$library/$(echo $show | sed 's/ /./g')"

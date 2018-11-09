@@ -140,15 +140,12 @@
       if $BEAKL > ''
         nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>
         nmap <silent><Enter>  :CloseDiff<CR>:silent bnext<CR>
-        " nmap <silent><BS>     :CloseDiff<CR>:silent bprevious<CR>
-        " nmap <silent><Delete> :CloseDiff<CR>:silent bnext<CR>
       else
         nmap <silent>-        :CloseDiff<CR>:silent bprevious<CR>
         nmap <silent>+        :CloseDiff<CR>:silent bnext<CR>
       endif
       " switch to previously edited/viewed buffer
       nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>
-      " nmap <silent><Enter>    :CloseDiff<CR>:silent edit #<CR>
 
   " Window actions ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 

@@ -118,7 +118,7 @@
   [_RSYMBOL] = {
     {HS_COLN, KC_DOT,  KC_ASTR, KC_AMPR, _______, ___x___, ___x___, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
     {SG_TILD, HS_LT,   TD_PERC, HS_GT,   KC_QUES, ___x___, ___x___, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
-    {_______, KC_PLUS, KC_AT,   KC_EXLM, KC_SLSH, ___x___, ___x___, _______,  _______, _______, _______, _______},
+    {_______, KC_PLUS, KC_AT,   KC_EXLM, KC_SLSH, ___x___, ___x___, _______, _______, _______, _______, _______},
 #ifdef SPLITOGRAPHY
     {_______, _______, _______, _______, SL_TAB,  HS_EQL,  ___x___, ___fn__, _______, _______, _______, _______},
 #else

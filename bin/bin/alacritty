@@ -11,6 +11,7 @@ export SHELL=/usr/bin/fish
 font="$STOW/alacritty/$(fontsize)pt"
 [ -e $font ] && config="--config-file $font/.config/alacritty/alacritty.yml"
 
+# pgrep xclip >/dev/null || xclip -r -silent &
 eval /usr/bin/alacritty $config $@
 
 # vim: set ft=sh: #
