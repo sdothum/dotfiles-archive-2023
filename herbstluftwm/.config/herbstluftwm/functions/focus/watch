@@ -17,7 +17,7 @@ fi
 tag=0 
 count=0
 
-# for application terminations bypassing herbstluftwm window close
+# trap application closes that bypass herbstluftwm window close
 while : ;do
   if [ $tag = $(herbstclient attr monitors.focus.tag) ] ;then
     tcount=$(herbstclient attr tags.focus.client_count)
