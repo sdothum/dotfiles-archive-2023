@@ -350,14 +350,12 @@ herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 # see emit_hook
 xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &
 
-fontsize=$(fontsize)
-
 cat $PANEL_FIFO:$fifo \
   | panel \
   | lemonbar -d -n "lemonbar:$fifo" \
              -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
              -u $PANEL_UNDERLINE \
-             -f "$PANEL_FONT:size=$fontsize" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+             -f "$PANEL_FONT:size=$(fontsize)" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 wait &
 
 # vim: set ft=sh: #

@@ -272,7 +272,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LALT);
     break;
   case ST_SPC:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_BSPC)) { return false; }
   case HOME_A:
     tap_mods(record, KC_LSFT);
     break;
@@ -428,7 +428,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   default:
     key_timer = 0;                          // regular keycode, clear timer in keycode_functions.h
-    down_rule = 0;
   }
   return true;
 }

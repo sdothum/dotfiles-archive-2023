@@ -104,7 +104,7 @@ enum keyboard_keycodes {
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_I      // pseudo MT   (MOD_LSFT, S(KC_I))            for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
- ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
+ ,SL_ENT    // pseudo LT   (_MOUSE, KC_ENT)               for shifted key-codes, see process_record_user()
  ,SL_I      // pseudo LT   (_EDIT, S(KC_I))               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))            for shifted key-codes, see process_record_user()
  ,TT_ESC
@@ -183,7 +183,7 @@ enum keyboard_keycodes {
 #define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
 #define TT_BSPC LT  (_TTCURSOR, KC_BSPC)
 #ifdef PLANCK
-#define LT_DEL  LT  (_ADJUST, KC_DEL)
+#define LT_ENT  LT  (_ADJUST, KC_ENT)
 #define LT_INS  LT  (_NUMBER, KC_INS)
 #define LT_LEFT LT  (_EDIT,   KC_LEFT)
 #endif
@@ -272,7 +272,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LALT);
     break;
   case ST_SPC:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
   case HOME_A:
     tap_mods(record, KC_LSFT);
     break;
@@ -343,28 +343,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case TD_SPC:
-    if (record->event.pressed) { tap_rule = down_rule == 4 ? 0 : down_rule; down_rule = 0; } // down_rule persistance for cap_lt()
+    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     // trap potential repeating enter caused by tap dance definition
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     tap_layer(record, _RSHIFT);
     break;
 
   case TT_BSPC:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     break;
   case LT_BSPC:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSYMBOL);
     if (down_rule) { thumb_roll(record, RIGHT, NOSHIFT, KC_ENT, 0, _RSYMBOL, _LSYMBOL); return false; }
     else           { thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL); }
     break;
   case TD_BSPC:
-    if (record->event.pressed) { tap_rule = down_rule; down_rule = 0; } // down_rule persistance for cap_lt()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for cap_lt()
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSYMBOL);
     break;
-  case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, 0, _MOUSE, _LSYMBOL);
+  case SL_ENT:
+    thumb_roll(record, RIGHT, NOSHIFT, KC_ENT, 0, _MOUSE, _LSYMBOL);
     break;
 
   // .............................................................. Special Keys
@@ -397,21 +397,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case SG_TILD:
     mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
-
-  // ............................................................... Cursor Keys
-  
-#ifdef CURSOR_ENTER
-  // case KC_HOME:
-  // case KC_END:
-  // case KC_LEFT:
-  // case KC_RIGHT:
-  // case KC_PGUP:
-  // case KC_PGDN:
-  case KC_UP:
-  case KC_DOWN:
-    down_rule = 4;                          // cursor + enter sequence, see TD_BSPC, cap_lt()
-    break;
-#endif
 
   // ............................................................ Thumb Row Keys
 
@@ -451,7 +436,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   default:
     key_timer = 0;                          // regular keycode, clear timer in keycode_functions.h
-    down_rule = 0;
   }
   return true;
 }

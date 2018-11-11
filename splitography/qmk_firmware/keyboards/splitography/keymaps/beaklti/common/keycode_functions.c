@@ -123,7 +123,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
   return false;
 }
 
-// .................................................... Triple Dance Shift/Layer
+// .................................................... Double Dance Shift/Layer
 
 static uint8_t dt_shift = 0;
 
@@ -152,7 +152,6 @@ void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_
     if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
     double_shift(leader, layer);            // throw away excess taps!
     return;
-  case 4:                                   // cursor triggered
   case 1:                                   // rolling thumb enter chord
     if (state->pressed) { return; }
     tap_key(KC_ENT);
@@ -180,7 +179,7 @@ void tap_reset(uint16_t keycode, uint8_t layer)
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void backspace(qk_tap_dance_state_t *state, void *user_data)
 {
-  cap_lt(state, KC_BSPC, _RSYMBOL, PARAGRAPH, KC_ENT);  // triple tap -> double enter + shift, down -> enter...
+  cap_lt(state, KC_BSPC, _RSYMBOL, PARAGRAPH, KC_ENT);  // double tap -> double enter + shift, down -> enter...
 }
 
 void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -188,21 +187,21 @@ void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
   tap_reset(KC_BSPC, _RSYMBOL);
 }
 
-// augment pseudo LT (_EDIT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
-void enter(qk_tap_dance_state_t *state, void *user_data)
+// augment pseudo LT (_EDIT, KC_DEL) handling below for rapid <DELETE><SHIFT> sequences
+void delete(qk_tap_dance_state_t *state, void *user_data)
 {
-  cap_lt(state, KC_ENT, _EDIT, PARAGRAPH, KC_ENT);  // triple tap -> double enter + shift, down -> enter...
+  cap_lt(state, KC_DEL, _EDIT, PARAGRAPH, KC_DEL);  // double tap -> double delete + shift, down -> delete...
 }
 
-void enter_reset(qk_tap_dance_state_t *state, void *user_data)
+void delete_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_reset(KC_ENT, _EDIT);
+  tap_reset(KC_DEL, _EDIT);
 }
 
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
 void space(qk_tap_dance_state_t *state, void *user_data)
 {
-  cap_lt(state, KC_SPC, _RSHIFT, SENTENCE, KC_SPC); // triple tap down -> space...
+  cap_lt(state, KC_SPC, _RSHIFT, SENTENCE, KC_SPC); // double tap down -> space...
 }
 
 void space_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -393,7 +392,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_COLM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)
- ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
+ ,[_DEL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, delete, delete_reset)
  ,[_PERC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)

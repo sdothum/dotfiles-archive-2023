@@ -68,4 +68,7 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   esac
 done &
 
+# trap application closes that bypass herbstluftwm window close
+focus watch
+
 # vim: set ft=sh: #
