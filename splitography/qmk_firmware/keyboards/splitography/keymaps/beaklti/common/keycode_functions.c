@@ -105,7 +105,7 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
   }
   else {
     unregister_code(modifier);
-    if (modifier2) { unregister_code(modifier2); }
+    if (modifier2)                               { unregister_code(modifier2); }
     if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_shift(keycode); }
     key_timer = 0;
   }
@@ -154,7 +154,7 @@ void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_
   uint8_t i;
   switch (tap_rule) {
   case 2:                                   // sentence/paragraph capitalization
-    if (state->pressed) { return; }
+    if (state->pressed)                                    { return; }
     if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
     double_shift(leader, layer);            // throw away excess taps!
     return;
@@ -234,8 +234,8 @@ void colon(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
   if (state->count > 2) {
-    if (state->pressed) { register_shift(KC_SCLN); }
-    else if (state->count == 3) { send_string(" :: "); }
+    if (state->pressed)                     { register_shift(KC_SCLN); }
+    else if (state->count == 3)             { send_string(" :: "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
   }
   else { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
@@ -251,8 +251,8 @@ void equal(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
   if (state->count > 2) {
-    if (state->pressed) { register_code(KC_EQL); }
-    else if (state->count == 3) { send_string(" /= "); }
+    if (state->pressed)                     { register_code(KC_EQL); }
+    else if (state->count == 3)             { send_string(" /= "); }
     else for (i = 0; i < state->count; i++) { tap_key(KC_EQL); }
   }
   else { state->pressed ? register_code(KC_EQL) : double_tap(state->count, NOSHIFT, KC_EQL); }
@@ -268,12 +268,12 @@ void lesser(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
   if (state->count > 2) {
-    if (state->pressed) { register_shift(KC_COMM); }
-    else if (state->count == 3) { send_string(" <- "); }
+    if (state->pressed)                     { register_shift(KC_COMM); }
+    else if (state->count == 3)             { send_string(" <- "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_COMM); }
   }
   else if ((state->count == 2) && state->pressed) { register_shift(KC_COMM); }
-  else { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
+  else                                            { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
 
@@ -287,12 +287,12 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
   if (state->count > 2) {
-    if (state->pressed) { register_shift(KC_DOT); }
-    else if (state->count == 3) { send_string(" -> "); }
+    if (state->pressed)                     { register_shift(KC_DOT); }
+    else if (state->count == 3)             { send_string(" -> "); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_DOT); }
   }
   else if ((state->count == 2) && state->pressed) { register_shift(KC_DOT); }
-  else { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
+  else                                            { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -307,8 +307,8 @@ void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
   if (state->count > 1) {
-    if (state->pressed) { register_shift(KC_GRV); }
-    else if (state->count == 2) { send_string("~/"); }
+    if (state->pressed)                     { register_shift(KC_GRV); }
+    else if (state->count == 2)             { send_string("~/"); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_GRV); }
   }
   else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
@@ -346,8 +346,8 @@ void emoji(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
   if (state->count > 1) {
-    if (state->pressed) { register_shift(KC_SCLN); }
-    else if (state->count == 2) { tap_shift(KC_SCLN); tap_key(KC_MINUS); }
+    if (state->pressed)                     { register_shift(KC_SCLN); }
+    else if (state->count == 2)             { tap_shift(KC_SCLN); tap_key(KC_MINUS); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
   }
   else { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
@@ -362,7 +362,7 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
 void percent(qk_tap_dance_state_t *state, void *user_data)
 {
   if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
-  else { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
+  else                                      { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
   reset_tap_dance(state);
 }
 
@@ -438,7 +438,7 @@ void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyco
   }
   else {
     if (biton32(layer_state) == _MOUSE) { layer_off(_MOUSE); }  // both thumbs needed
-    else if (thumb_dn_layer != _MOUSE) { layer_off(thumb_dn_layer); }
+    else if (thumb_dn_layer != _MOUSE)  { layer_off(thumb_dn_layer); }
     if (!key_press(shift, keycode)) {
       // release any opposing thumb_roll() layer
       if (overlayer) {

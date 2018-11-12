@@ -311,7 +311,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Thumb Keys
 
   case LT_ESC:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
     if (raise_number(record, LEFT)) { return false; }
@@ -375,7 +375,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 #ifdef CURSOR_ENTER
   case KC_DEL:
-    if (!record->event.pressed && cursor_rule) { tap_key(KC_ENT); return false; }
+  case LT_DEL:
+    if (cursor_rule) { if (!record->event.pressed) { tap_key(KC_ENT); } return false; }
     break;
 #endif
   case SL_ENT:
@@ -393,14 +394,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_SCLN)) { return false; }
     break;
   case KC_COMM:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_1))   { return false; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
     break;
   // special shift layer mappings
   case KC_DOT:
     down_rule = key_event(record, 2);       // dot + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { down_rule = key_event(record, 2); return false; } // exlm + space/enter + shift shortcut, see cap_lt()
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1))    { down_rule = key_event(record, 2); return false; } // exlm + space/enter + shift shortcut, see cap_lt()
     break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
@@ -480,6 +481,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_UP:
   case KC_DOWN:
   case KC_DEL:
+  case LT_DEL:
   case TD_BSPC:
     break;
   default:
