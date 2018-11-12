@@ -37,6 +37,8 @@
 #define EQL_LT _ADJUST
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND
+// shift bspc (delete) -> rolling enter immediately after cursor movements
+#define CURSOR_ENTER
 
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
 #define BEAKLTI

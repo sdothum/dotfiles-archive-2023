@@ -21,6 +21,12 @@ void modifier(void (*f)(uint8_t))
   if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
 }
 
+// base layer modifier and only shift modifier
+bool shift_mod(uint16_t shift_key)
+{
+  return (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
+}
+
 // .................................................................. Key event
 
 int8_t key_event(keyrecord_t *record, int8_t state)
@@ -109,7 +115,7 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   // if modifier and only shift modifier and base layer..
-  if (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS)) {
+  if (shift_mod(shift_key)) {
     if (record->event.pressed) {
       if (!shift) { unregister_code(KC_LSFT); }  // in event of unshifted keycode
       register_code(keycode);
@@ -179,7 +185,7 @@ void tap_reset(uint16_t keycode, uint8_t layer)
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void backspace(qk_tap_dance_state_t *state, void *user_data)
 {
-  cap_lt(state, KC_BSPC, _RSYMBOL, PARAGRAPH, KC_ENT);  // double tap -> double enter + shift, down -> enter...
+  cap_lt(state, KC_BSPC, _RSYMBOL, PARAGRAPH, KC_ENT); // double tap -> double enter + shift, down -> enter...
 }
 
 void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
@@ -187,15 +193,15 @@ void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
   tap_reset(KC_BSPC, _RSYMBOL);
 }
 
-// augment pseudo LT (_EDIT, KC_DEL) handling below for rapid <DELETE><SHIFT> sequences
-void delete(qk_tap_dance_state_t *state, void *user_data)
+// augment pseudo LT (_EDIT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
+void enter(qk_tap_dance_state_t *state, void *user_data)
 {
-  cap_lt(state, KC_DEL, _EDIT, PARAGRAPH, KC_DEL);  // double tap -> double delete + shift, down -> delete...
+  cap_lt(state, KC_ENT, _EDIT, PARAGRAPH, KC_ENT);  // double tap -> double enter + shift, down -> enter...
 }
 
-void delete_reset(qk_tap_dance_state_t *state, void *user_data)
+void enter_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_reset(KC_DEL, _EDIT);
+  tap_reset(KC_ENT, _EDIT);
 }
 
 // augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
@@ -392,7 +398,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_COLM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)
- ,[_DEL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, delete, delete_reset)
+ ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
  ,[_PERC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)

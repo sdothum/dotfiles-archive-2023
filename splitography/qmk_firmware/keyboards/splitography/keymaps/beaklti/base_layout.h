@@ -43,8 +43,8 @@
   // |------+------+------+------+------+------|------+------+------+------+------+------|
   // |   J  |   -  |   '  |   K  |   `  |  Num | Regex|   B  |   P  |   L  |   F  |   V  |
   // |------+------+------+------+------+------+------+------+------+------+------+------|
-  // |                           |  Tab |  f() | Enter| Enter|                           |
-  // | Ctrl |  GUI |  Alt |  Tab |  f() |  Ins | Left | Enter| Enter| Down |  Up  | Right|
+  // |                           |  Tab |  f() | Enter|  Del |                           |
+  // | Ctrl |  GUI |  Alt |  Tab |  f() |  Ins | Left | Enter|  Del | Down |  Up  | Right|
   // `-----------------------------------------------------------------------------------'
   // thumb side lower case to ovoid triggering same hand upper case
 
@@ -53,9 +53,9 @@
     {KC_Q,    KC_H,    KC_E,    KC_SPC,  TD_TILD, CNTR_HL, CNTR_HR, S(KC_C), S(KC_T), S(KC_R), S(KC_S), S(KC_W)},
     {KC_J,    KC_MINS, KC_QUOT, KC_K,    KC_GRV,  CNTR_BL, CNTR_BR, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
 #ifdef SPLITOGRAPHY
-    {_______, _______, _______, _______, KC_TAB,  ___fn__, TD_DEL,  KC_ENT,  _______, _______, _______, _______},
+    {_______, _______, _______, _______, KC_TAB,  ___fn__, TD_ENT,  KC_DEL,  _______, _______, _______, _______},
 #else
-    {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  ___fn__, LT_INS,  S_LEFT,  TD_DEL,  LT_ENT,  S_DOWN,  S_UP,    S_RGHT },
+    {OS_CTL,  OS_GUI,  OS_ALT,  KC_TAB,  ___fn__, LT_INS,  S_LEFT,  TD_ENT,  LT_DEL,  S_DOWN,  S_UP,    S_RGHT },
 #endif
   },
 
@@ -118,7 +118,7 @@
   [_RSYMBOL] = {
     {HS_COLN, KC_DOT,  KC_ASTR, KC_AMPR, _______, ___x___, ___x___, _______, KC_HOME, KC_UP,   KC_END,  KC_PGUP},
     {SG_TILD, HS_LT,   TD_PERC, HS_GT,   KC_QUES, ___x___, ___x___, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN},
-    {_______, KC_PLUS, KC_AT,   KC_EXLM, KC_SLSH, ___x___, ___x___, _______, _______, _______, _______, _______},
+    {_______, KC_PLUS, KC_AT,   KC_EXLM, KC_SLSH, ___x___, ___x___, _______,  _______, _______, _______, _______},
 #ifdef SPLITOGRAPHY
     {_______, _______, _______, _______, SL_TAB,  HS_EQL,  ___x___, ___fn__, _______, _______, _______, _______},
 #else

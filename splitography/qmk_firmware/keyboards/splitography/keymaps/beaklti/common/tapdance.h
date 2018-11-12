@@ -5,8 +5,8 @@ enum tap_dance {
  ,_BSPC
  ,_COLM
  ,_COMM
- ,_DEL
  ,_DOT
+ ,_ENT
  ,_PERC
  ,_PRIV
  ,_SEND
@@ -24,8 +24,8 @@ enum tap_dance {
 #define TD_BSPC TD(_BSPC)
 #define TD_COLM TD(_COLM)
 #define TD_COMM TD(_COMM)
-#define TD_DEL  TD(_DEL)
 #define TD_DOT  TD(_DOT)
+#define TD_ENT  TD(_ENT)
 #define TD_PERC TD(_PERC)
 #define TD_PRIV TD(_PRIV)                   // compile time macro string, provided in private_string.h
 #define TD_SEND TD(_SEND)                   // config.h defined macro string

@@ -33,6 +33,8 @@
 #define THUMB_0
 // Haskell triple tap operator chords
 #define HASKELL
+// shift bspc (delete) -> rolling enter immediately after cursor movements
+#define CURSOR_ENTER
 
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND
