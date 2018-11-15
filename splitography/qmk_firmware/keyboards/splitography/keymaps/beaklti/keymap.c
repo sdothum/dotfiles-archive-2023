@@ -104,7 +104,7 @@ enum keyboard_keycodes {
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_I      // pseudo MT   (MOD_LSFT, S(KC_I))            for shifted key-codes, see process_record_user()
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
- ,SL_ENT    // pseudo LT   (_MOUSE, KC_ENT)               for shifted key-codes, see process_record_user()
+ ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_I      // pseudo LT   (_EDIT, S(KC_I))               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))            for shifted key-codes, see process_record_user()
  ,TT_ESC
@@ -314,9 +314,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
-    if (raise_number(record, LEFT)) { return false; }
+    if (raise_number(record, LEFT))                  { return false; }
 #endif
-    if (tt_keycode) { tt_clear(); return false; }
+    if (tt_keycode)                                  { tt_clear(); return false; }
     tap_layer(record, _LSYMBOL);
     thumb_roll(record, LEFT, 0, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
@@ -347,13 +347,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case ST_SPC:
-    // trap potential repeating enter caused by tap dance definition
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_mods(record, KC_LSFT);              // note: SFT_T actually uses KC_LSFT, see ST_SPC
     break;
   case TD_SPC:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for cap_lt()
-    // trap potential repeating enter caused by tap dance definition
+    if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSHIFT);
@@ -362,25 +360,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TT_BSPC:
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
-  case LT_BSPC:
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
-    tap_layer(record, _RSYMBOL);
-    if (down_rule) { thumb_roll(record, RIGHT, NOSHIFT, KC_ENT, 0, _RSYMBOL, _LSYMBOL); return false; }
-    else           { thumb_roll(record, RIGHT, 0, 0, 0, _RSYMBOL, _LSYMBOL); }
-    break;
   case TD_BSPC:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for cap_lt()
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     tap_layer(record, _RSYMBOL);
     break;
 
 #ifdef CURSOR_ENTER
-  case KC_DEL:
+#ifdef PLANCK
   case LT_DEL:
+#endif
+  case KC_DEL:
     if (cursor_rule) { if (!record->event.pressed) { tap_key(KC_ENT); } return false; }
     break;
 #endif
-  case SL_ENT:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_ENT, 0, _MOUSE, _LSYMBOL);
+  case SL_DEL:
+    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, 0, _MOUSE, _LSYMBOL);
     break;
 
   // .............................................................. Special Keys
@@ -449,18 +444,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     steno(record);
     return false;
   case BASE1:
-    if (record->event.pressed) {
-      base_n = base_n | BASE_1;
-      if (base_n == BASE_12) { base_layer(); }
-    }
-    else { base_n = base_n & ~BASE_1; }
+    if (record->event.pressed) { base_n = base_n | BASE_1; if (base_n == BASE_12) { base_layer(); } }
+    else                       { base_n = base_n & ~BASE_1; }
     return false;
   case BASE2:
-    if (record->event.pressed) {
-      base_n = base_n | BASE_2;
-      if (base_n == BASE_12) { base_layer(); }
-    }
-    else { base_n = base_n & ~BASE_2; }
+    if (record->event.pressed) { base_n = base_n | BASE_2; if (base_n == BASE_12) { base_layer(); } }
+    else                       { base_n = base_n & ~BASE_2; }
     return false;
 
   // ................................................................ Other Keys
@@ -469,9 +458,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     key_timer = 0;                          // regular keycode, clear timer in keycode_functions.h
   }
 
-#ifdef CURSOR_ENTER
   // rolling key post-process
+#ifdef CURSOR_ENTER
   switch (keycode) {
+#ifdef PLANCK
+  case LT_DEL:
+#endif
   case KC_HOME:
   case KC_END:
   case KC_LEFT:
@@ -481,7 +473,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_UP:
   case KC_DOWN:
   case KC_DEL:
-  case LT_DEL:
   case TD_BSPC:
     break;
   default:

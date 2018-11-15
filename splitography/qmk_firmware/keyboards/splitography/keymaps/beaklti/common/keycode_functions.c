@@ -21,7 +21,7 @@ void modifier(void (*f)(uint8_t))
   if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
 }
 
-// base layer modifier and only shift modifier
+// base layer modifier and only shift modifier KC_LSFT or KC_RSFT
 bool shift_mod(uint16_t shift_key)
 {
   return (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));

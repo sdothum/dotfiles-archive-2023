@@ -312,12 +312,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Thumb Keys
 
   case LT_ESC:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
 #ifdef SPLITOGRAPHY
-    if (raise_number(record, LEFT)) { return false; }
+    if (raise_number(record, LEFT))                  { return false; }
 #endif
-    if (tt_keycode) { tt_clear(); return false; }
+    if (tt_keycode)                                  { tt_clear(); return false; }
     tap_layer(record, _LSYMBOL);
     thumb_roll(record, LEFT, 0, 0, 0, _LSYMBOL, _RSYMBOL);
     break;
@@ -343,8 +343,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case TD_SPC:
-    if (record->event.pressed) { tap_rule = down_rule; } // down_rule persistance for cap_lt()
-    // trap potential repeating enter caused by tap dance definition
+    if (record->event.pressed)                        { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_BSPC)) { return false; }
     tap_layer(record, _RSHIFT);
     break;
@@ -371,13 +370,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_COMM:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))    { return false; }
     break;
   // special shift layer mappings
   case KC_DOT:
     down_rule = key_event(record, 2);       // dot + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1)) { down_rule = key_event(record, 2); return false; } // exlm + space/enter + shift shortcut, see cap_lt()
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1))    { down_rule = key_event(record, 2); return false; } // exlm + space/enter + shift shortcut, see cap_lt()
     break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
@@ -410,18 +409,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     steno(record);
     return false;
   case BASE1:
-    if (record->event.pressed) {
-      base_n = base_n | BASE_1;
-      if (base_n == BASE_12) { base_layer(); }
-    }
-    else { base_n = base_n & ~BASE_1; }
+    if (record->event.pressed) { base_n = base_n | BASE_1; if (base_n == BASE_12) { base_layer(); } }
+    else                       { base_n = base_n & ~BASE_1; }
     return false;
   case BASE2:
-    if (record->event.pressed) {
-      base_n = base_n | BASE_2;
-      if (base_n == BASE_12) { base_layer(); }
-    }
-    else { base_n = base_n & ~BASE_2; }
+    if (record->event.pressed) { base_n = base_n | BASE_2; if (base_n == BASE_12) { base_layer(); } }
+    else                       { base_n = base_n & ~BASE_2; }
     return false;
 
   // ................................................................ Other Keys
