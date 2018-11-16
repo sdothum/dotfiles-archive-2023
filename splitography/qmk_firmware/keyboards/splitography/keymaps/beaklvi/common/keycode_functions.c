@@ -440,15 +440,9 @@ void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keyco
     else if (thumb_dn_layer != _MOUSE)  { layer_off(thumb_dn_layer); }
     if (!key_press(shift, keycode)) {
       // release any opposing thumb_roll() layer
-      if (overlayer) {
-        layer_off(overlayer);
-        overlayer = 0;
-      }
+      if (overlayer)                             { layer_off(overlayer); overlayer = 0; }
       // opposite thumb down? see left right combination layer table above
-      if (thumb & (side == LEFT ? RIGHT : LEFT)) {
-        layer_on(thumb_up_layer);
-        overlayer = thumb_up_layer;
-      }
+      if (thumb & (side == LEFT ? RIGHT : LEFT)) { layer_on(thumb_up_layer); overlayer = thumb_up_layer; }
     }
     clear_mods();
     thumb     &= ~side;

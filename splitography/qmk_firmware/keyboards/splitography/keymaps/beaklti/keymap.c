@@ -242,7 +242,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 static uint8_t base_n      = 0;
 
 #ifdef CURSOR_ENTER
-static uint8_t cursor_rule = 0;             // (0) nop (2) delete -> enter
+static uint8_t cursor_rule = 0;             // (0) nop (1) delete -> enter, shift backspace -> delete
 #endif
 static uint8_t down_rule   = 0;             // (1) substitute keycode (2) keycode + shift, see cap_lt()
 static uint8_t repeating   = 0;             // rolling key repeat mode, see thumb_roll()
@@ -361,8 +361,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case TD_BSPC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
+    // as delete post cursor movement, else allow shift cursor (vim workflow)
+    if (cursor_rule && map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (record->event.pressed)                                      { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     tap_layer(record, _RSYMBOL);
     break;
 
@@ -371,7 +372,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case LT_DEL:
 #endif
   case KC_DEL:
-    if (cursor_rule) { if (!record->event.pressed) { tap_key(KC_ENT); } return false; }
+    if (cursor_rule) { trigger_key(record, KC_ENT); return false; }
     break;
 #endif
   case SL_DEL:

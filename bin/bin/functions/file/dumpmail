@@ -16,16 +16,16 @@ class String
   include Term::ANSIColor
 end
 
-def parse_mail(message)
-  if message.multipart?
+def parse_mail(mail)
+  if mail.multipart?
     text = ''
-    message.parts.each do |part|
+    mail.parts.each do |part|
       print "> #{part.mime_type}\n"
       text = text + (
         case part.mime_type
           when 'text/plain' then "#{part.body.decoded}".gsub(/\r\n/m, "\n")
           when 'text/html' then "#{part.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-          when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+          when /multipart\/.*/ then "#{mail.text_part.body.decoded}".gsub(/\r\n/m, "\n")
           else ''
         end
       ).gsub(/^ +/m, '')
@@ -33,11 +33,11 @@ def parse_mail(message)
     end
   else
     text = (
-      print "> #{message.mime_type}\n"
-      case message.mime_type
-        when 'text/plain' then "#{message.body}"
-        when 'text/html' then "#{message.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-        when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+      print "> #{mail.mime_type}\n"
+      case mail.mime_type
+        when 'text/plain' then "#{mail.body}"
+        when 'text/html' then "#{mail.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+        when /multipart\/.*/ then "#{mail.text_part.body.decoded}".gsub(/\r\n/m, "\n")
         else ''
       end
     ).gsub(/^ +/m, '')
@@ -47,28 +47,29 @@ end
 
 # view email (see rox)
 begin
-  message = Mail.read(ARGV[0])
-  to = message.to[0]
-  from = message.from[0]
-  subject = message.subject.gsub(/%20/, ' ').sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
-  date = message.date.strftime("%Y-%m-%d %H:%M:%S")
+  mail = Mail.read(ARGV[0])
+  print "mail: #{mail}"
+  to = mail.to[0]
+  from = mail.from.addresses[0]
+  subject = mail.subject.gsub(/%20/, ' ').sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
+  date = mail.date.strftime("%Y-%m-%d %H:%M:%S")
   print "Date: #{date}\n".green
   print "To: #{to}\n".green
   print "From: #{from}\n".green
   print "Subject: #{subject}\n".green
   begin
-    text = parse_mail(message)
+    text = parse_mail(mail)
     raise if text.length == 0
     raise if text.split("\n")[0] =~ /^-- *$/
     print "\nBody: ".green
     if text > ''
-      text.split("\n").each do |line|
+
         break if line =~ /^-- *$/
         print "#{line}\n"
       end
     end
   rescue
-    print "==> empty mime type #{message.mime_type.yellow.bold}\n"
+    print "==> empty mime type #{mail.mime_type.yellow.bold}\n"
   end
 rescue
   print "==> invalid mail #{ARGV[0].yellow.bold}\n" unless not ARGV[0]
