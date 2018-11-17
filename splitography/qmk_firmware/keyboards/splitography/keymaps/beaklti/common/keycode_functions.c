@@ -24,7 +24,8 @@ void modifier(void (*f)(uint8_t))
 // base layer modifier and only shift modifier KC_LSFT or KC_RSFT
 bool shift_mod(uint16_t shift_key)
 {
-  return (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
+  // return (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
+  return (mods && ((mods & MOD_BIT(shift_key)) == mods));
 }
 
 // .................................................................. Key event
@@ -117,20 +118,37 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
   }
 }
 
-// remap keycodes to other keycode values via shift for base and caps layers, see process_record_user()
+// remap tap keycode to other keycode value via shift for base and caps layers, see process_record_user()
+bool map_sftap(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
+{
+  bool pressed;
+  if (shift_mod(shift_key)) {
+    if (record->event.pressed) { key_timer = timer_read(); }
+    else if (shift)            { return key_press(SHIFT, keycode); }
+    else { 
+      unregister_code(KC_LSFT);             // in event of unshifted keycode
+      pressed = key_press(NOSHIFT, keycode);
+      register_code(KC_LSFT);               // restore SFT_T
+      return pressed;
+    }
+  }
+  return false;
+}
+
+// remap keycode to other keycode value via shift for base and caps layers, see process_record_user()
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   // if modifier and only shift modifier and base layer..
   if (shift_mod(shift_key)) {
     if (record->event.pressed) {
-      if (!shift) { unregister_code(KC_LSFT); }  // in event of unshifted keycode
+      if (!shift) { unregister_code(KC_LSFT); } // in event of unshifted keycode
       register_code(keycode);
     }
     else {
       unregister_code(keycode);
-      if (!shift) { register_code(KC_LSFT); }    // restore SFT_T
+      if (!shift) { register_code(KC_LSFT); }   // restore SFT_T
     }
-    return true;                                 // remap complete, see process_record_user()
+    return true;                                // remap complete, see process_record_user()
   }
   return false;
 }
