@@ -361,9 +361,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case TD_BSPC:
-    layer_off(_RSYMBOL);
-    if (map_sftap(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
+    if (cursor_rule && map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (record->event.pressed)                                      { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     tap_layer(record, _RSYMBOL);
     break;
 
