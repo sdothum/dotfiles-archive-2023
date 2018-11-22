@@ -26,7 +26,7 @@
 
   " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
-    " ................................................................... Layout
+    " .................................................................... Theme
 
       " Plug 'andreypopp/vim-colors-plain'  " monochrome
       Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
@@ -65,6 +65,7 @@
 
       " Plug 'duff/vim-scratch'             " scratch buffer
       Plug 'chrisbra/NrrwRgn', { 'on' : 'NrrwrgnDo' } " visual block buffer
+      Plug 'simeji/winresizer'              " resize windows
 
     " .......................................................... Version control
 

@@ -20,8 +20,8 @@ for key in $TAGS ;do
 done
 
 # hc set_monitors X1xY1+0+0 X2xY2+X1+0..
-# hc set auto_detect_monitors     1
-# hc set swap_monitors_to_get_tag 0
+hc set auto_detect_monitors     1
+hc set swap_monitors_to_get_tag 0
 hc detect_monitors
 # hc list_monitors
 # hc set focus_follows_mouse      1

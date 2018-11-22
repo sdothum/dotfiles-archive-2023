@@ -279,7 +279,7 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 
 .cdm.expandable.active {
   /* border-bottom: 1px solid #e77471 !important; */
-  border-top: 1px solid #e77471 !important;
+  border-top: 1px solid #b12525 !important;
   padding-top: 54px;
 }
 

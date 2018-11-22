@@ -17,40 +17,39 @@ class String
 end
 
 def parse_mail(mail)
+  body = ''
   if mail.multipart?
-    text = ''
     mail.parts.each do |part|
       print "> #{part.mime_type}\n"
-      text = text + (
+      body = 
         case part.mime_type
-          when 'text/plain' then "#{part.body.decoded}".gsub(/\r\n/m, "\n")
-          when 'text/html' then "#{part.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-          when /multipart\/.*/ then "#{mail.text_part.body.decoded}".gsub(/\r\n/m, "\n")
-          else ''
-        end
-      ).gsub(/^ +/m, '')
-      break if text.length > 1
+          when 'text/plain' then part.body
+          when 'text/html' then part.body
+          when /multipart.*/ then part.body
+        end if body == ''
     end
   else
-    text = (
-      print "> #{mail.mime_type}\n"
+    print "> #{mail.mime_type}\n"
+    body = 
       case mail.mime_type
-        when 'text/plain' then "#{mail.body}"
-        when 'text/html' then "#{mail.body.decoded}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
-        when /multipart\/.*/ then "#{mail.text_part.body.decoded}".gsub(/\r\n/m, "\n")
-        else ''
+        when 'text/plain' then mail.body
+        when 'text/html' then mail.body
+        when /multipart.*/ then mail.part.body
       end
-    ).gsub(/^ +/m, '')
   end
-  # text.gsub(/\n\n/, "\n")
+  body = Sanitize.clean(body).split("\n")
+  part = body[1]
+  body = body.drop(6)
+  chop = body.index(part) - 1
+  body = body[0..chop].join("\n").gsub(/=20\n/, '').gsub(/ =\n/, "\n").gsub(/\s*\n\s*\n(\s*\n)+/, "\n\n\n")
+  body.gsub(/&amp;/, '&').gsub('&nbsp;', ' ').gsub(/=E2=80=93/, '--').gsub(/=E2=80=99/, "'")
 end
 
 # view email (see rox)
 begin
   mail = Mail.read(ARGV[0])
-  print "mail: #{mail}"
   to = mail.to[0]
-  from = mail.from.addresses[0]
+  from = mail.from[0]
   subject = mail.subject.gsub(/%20/, ' ').sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
   date = mail.date.strftime("%Y-%m-%d %H:%M:%S")
   print "Date: #{date}\n".green
@@ -63,7 +62,7 @@ begin
     raise if text.split("\n")[0] =~ /^-- *$/
     print "\nBody: ".green
     if text > ''
-
+      text.split("\n").each do |line|
         break if line =~ /^-- *$/
         print "#{line}\n"
       end

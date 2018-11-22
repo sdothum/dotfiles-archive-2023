@@ -192,12 +192,12 @@ void tap_reset(uint16_t keycode, uint8_t layer)
 // augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
 void backspace(qk_tap_dance_state_t *state, void *user_data)
 {
-  cap_lt(state, KC_BSPC, _RSYMBOL, PARAGRAPH, KC_ENT); // double tap -> double enter + shift, down -> enter...
+  cap_lt(state, KC_BSPC, _GUIFN, PARAGRAPH, KC_ENT); // double tap -> double enter + shift, down -> enter...
 }
 
 void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
 {
-  tap_reset(KC_BSPC, _RSYMBOL);
+  tap_reset(KC_BSPC, _GUIFN);
 }
 
 // augment pseudo LT (_EDIT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
@@ -280,14 +280,14 @@ void lesser(qk_tap_dance_state_t *state, void *user_data)
     else for (i = 0; i < state->count; i++) { tap_shift(KC_COMM); }
   }
   else if ((state->count == 2) && state->pressed) { register_shift(KC_COMM); }
-  else                                            { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
+  else                                            { state->pressed ? register_shift(KC_COMM) : double_tap(state->count, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
 
 void lesser_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_COMM);
-  unregister_code(KC_LCTL);
+  unregister_code(KC_LSFT);
 }
 
 void greater(qk_tap_dance_state_t *state, void *user_data)
@@ -299,7 +299,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
     else for (i = 0; i < state->count; i++) { tap_shift(KC_DOT); }
   }
   else if ((state->count == 2) && state->pressed) { register_shift(KC_DOT); }
-  else                                            { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
+  else                                            { state->pressed ? register_shift(KC_DOT) : double_tap(state->count, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -366,19 +366,6 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_SCLN);
 }
 
-void percent(qk_tap_dance_state_t *state, void *user_data)
-{
-  if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
-  else                                      { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
-  reset_tap_dance(state);
-}
-
-void percent_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  unregister_shift(KC_5);
-  unregister_code(KC_LALT);
-}
-
 // compile time macro string, see functions/hardware planck script
 void private(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -406,7 +393,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)
  ,[_ENT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, enter, enter_reset)
- ,[_PERC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
  ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
  ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
@@ -427,7 +413,7 @@ static uint8_t thumb = 0;
 
 // rolling thumb combinations, see process_record_user()
 // up,   up   -> _BASE
-// up,   down -> _RSYMBOL
+// up,   down -> _GUIFN
 // down, up   -> _LSYMBOL
 // down, down -> _MOUSE                     // see layer keycodes that raise mouse layer
 
@@ -513,16 +499,16 @@ void clear_layers(void)
 
 static uint8_t double_key = 0;
 
-// dual thumb key to raise number layer
-bool raise_number(keyrecord_t *record, uint8_t side)
+// dual thumb key to raise layer
+bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side)
 {
   if (record->event.pressed) {
     double_key |= side;
-    if (double_key == (LEFT | RIGHT)) { layer_on(_NUMBER); return true; }
+    if (double_key == (LEFT | RIGHT)) { layer_on(layer); return true; }
   }
   else {
     double_key &= ~side;
-    if (!double_key) { layer_off(_NUMBER); }  // allow single key to continue on layer :-)
+    if (!double_key) { layer_off(layer); }  // allow single key to continue on layer :-)
   }
   return false;
 }

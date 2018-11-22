@@ -17,7 +17,7 @@ fifo="$(herbstclient attr monitors.focus.index)$conky$monocle"
 
 # disable panel
 xdotool search --onlyvisible --limit 1 --maxdepth 1 --name 'lemonbar' windowunmap >/dev/null
-[ -e $PANEL:$(herbstclient attr monitors.focus.index) ] || exit
+# [ -e $PANEL:$(herbstclient attr monitors.focus.index) ] || exit
 
 # restore panel
 echo "$PANEL_FIFO:$fifo" >$PANEL_FIFO

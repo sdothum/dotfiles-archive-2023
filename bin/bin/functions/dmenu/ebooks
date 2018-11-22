@@ -146,16 +146,16 @@ while : ;do
             # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
             # use calibre conversion module
             output="/tmp/${file##*/}"
-            option=$(echo -n "default (justify)\nembed font\njustify off\nall" | rmenu 'export options' -no-custom) || break
-            justify='--change-justification=justify'
+            option=$(echo -n "default (ragged-right)\nembed font\njustify\nall" | rmenu 'export options' -no-custom) || break
+            justify=left
             case $option in
             default*) unset option ;;
             *font   ) option="--embed-font-family=$embed_font" ;;
-            just*   ) unset option justify ;;
-            all     ) option="--embed-font-family=$embed_font" ; unset justify ;;
+            just*   ) justify=justify ;;
+            all     ) justify=justify ; option="--embed-font-family=$embed_font" ;;
             esac
             # convert even .azw3 to inject folder title and author
-            ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" $option $justify >/tmp/ebook-convert.log
+            ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" --change-justification="$justify" --insert-blank-line --insert-blank-line-size=0.75 --disable-delete-blank-paragraphs $option >/tmp/ebook-convert.log
 
             # usb or cloud?
             if [ -d $kindle ] ;then

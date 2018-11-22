@@ -75,13 +75,11 @@ enum keyboard_layers {
  ,_SHIFT
  ,_LSHIFT
  ,_RSHIFT
- ,_LSYMBOL
- ,_RSYMBOL
+ ,_SYMBOL
+ ,_GUIFN
  ,_PLOVER
  ,_NUMBER
-#ifndef STENO_ENABLE
  ,_FNCKEY
-#endif
  ,_MOUSE
  ,_EDIT
 #ifdef PLANCK
@@ -101,12 +99,14 @@ enum keyboard_keycodes {
  ,BASE1
  ,BASE2
  ,PLOVER
+ ,SA_DLR    // pseudo ALT_T(S(KC_4))                      for shifted key-codes, see process_record_user()
+ ,SC_RPRN   // pseudo CTL_T(S(KC_0))                      for shifted key-codes, see process_record_user()
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SM_I      // pseudo MT   (MOD_LSFT, S(KC_I))            for shifted key-codes, see process_record_user()
- ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SL_DEL    // pseudo LT   (_MOUSE, KC_DEL)               for shifted key-codes, see process_record_user()
  ,SL_I      // pseudo LT   (_EDIT, S(KC_I))               for shifted key-codes, see process_record_user()
  ,SL_TAB    // pseudo LT   (_MOUSE, S(KC_TAB))            for shifted key-codes, see process_record_user()
+ ,SS_LPRN   // pseudo SFT_T(S(KC_9))                      for shifted key-codes, see process_record_user()
  ,TT_ESC
 #ifdef STENO_ENABLE
  ,PS_STNA = STN_A
@@ -114,10 +114,10 @@ enum keyboard_keycodes {
  ,PS_STNE = STN_E
  ,PS_STNU = STN_U
 #else
- ,LT_C    = LT (_LSYMBOL, KC_C)
+ ,LT_C    = LT (_SYMBOL, KC_C)
  ,LT_V    = LT (_NUMBER,  KC_V)
  ,LT_N    = LT (_FNCKEY,  KC_N)
- ,LT_M    = LT (_RSYMBOL, KC_M)
+ ,LT_M    = LT (_GUIFN, KC_M)
 #endif
 };
 
@@ -180,14 +180,14 @@ enum keyboard_keycodes {
 #define TMCOPY  LCTL(LSFT(KC_C))
 #define TMPASTE LCTL(LSFT(KC_V))
 
-#define LT_BSPC LT  (_RSYMBOL, KC_BSPC)     // see process_record_user() for extended handling
+#define LT_BSPC LT  (_GUIFN, KC_BSPC)     // see process_record_user() for extended handling
 #define TT_BSPC LT  (_TTCURSOR, KC_BSPC)
 #ifdef PLANCK
 #define LT_DEL  LT  (_ADJUST, KC_DEL)
-#define LT_INS  LT  (_NUMBER, KC_INS)
-#define LT_LEFT LT  (_EDIT,   KC_LEFT)
+#define LT_INS  LT  (_FNCKEY, KC_INS)
+#define LT_LEFT LT  (_SYMBOL, KC_LEFT)
 #endif
-#define LT_ESC  LT  (_LSYMBOL, KC_ESC)
+#define LT_ESC  LT  (_NUMBER, KC_ESC)
 #define LT_I    LT  (_LSHIFT, KC_I)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
@@ -311,30 +311,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Thumb Keys
 
   case LT_ESC:
+#ifdef SPLITOGRAPHY
+    if (raise_layer(record, _FNCKEY, LEFT))          { return false; }
+#endif
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-#ifdef SPLITOGRAPHY
-    if (raise_number(record, LEFT))                  { return false; }
-#endif
     if (tt_keycode)                                  { tt_clear(); return false; }
-    tap_layer(record, _LSYMBOL);
-    thumb_roll(record, LEFT, 0, 0, 0, _LSYMBOL, _RSYMBOL);
+    tap_layer(record, _NUMBER);
+    thumb_roll(record, LEFT, 0, 0, 0, _NUMBER, _GUIFN);
     break;
 
   case SL_TAB:
     down_rule = key_event(record, 1);       // tab + enter thumb roll, see cap_lt()
-    thumb_roll(record, LEFT, SHIFT, KC_TAB, repeating, _MOUSE, _RSYMBOL);
+    thumb_roll(record, LEFT, SHIFT, KC_TAB, repeating, _MOUSE, _GUIFN);
     break;
   case KC_TAB:
-    down_rule = key_event(record, 1);       // dot + tab + enter thumb roll, see cap_lt()
 #ifdef SPLITOGRAPHY
-    if (raise_number(record, LEFT)) { return false; }
+    if (raise_layer(record, _FNCKEY, LEFT)) { return false; }
 #endif
+    down_rule = key_event(record, 1);       // dot + tab + enter thumb roll, see cap_lt()
     break;
 
   case LT_I:
 #ifdef SPLITOGRAPHY
-    if (raise_number(record, RIGHT)) { return false; }
+    if (raise_layer(record, _FNCKEY, RIGHT)) { return false; }
 #endif
     tap_layer(record, _LSHIFT);
     break;
@@ -351,19 +351,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LSFT);              // note: SFT_T actually uses KC_LSFT, see ST_SPC
     break;
   case TD_SPC:
+#ifdef SPLITOGRAPHY
+    if (raise_layer(record, _SYMBOL, LEFT))          { return false; }
+#endif
     if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     tap_layer(record, _RSHIFT);
     break;
 
+#ifdef SPLITOGRAPHY
+  case KC_BSPC:
+    if (raise_layer(record, _SYMBOL, RIGHT)) { return false; }
+    break;
+#endif
   case TT_BSPC:
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case TD_BSPC:
+#ifdef SPLITOGRAPHY
+    if (raise_layer(record, _SYMBOL, RIGHT))                        { return false; }
+#endif
     if (cursor_rule && map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     if (record->event.pressed)                                      { tap_rule = down_rule; } // down_rule persistance for cap_lt()
-    tap_layer(record, _RSYMBOL);
+    tap_layer(record, _GUIFN);
     break;
 
 #ifdef CURSOR_ENTER
@@ -375,7 +386,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #endif
   case SL_DEL:
-    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, 0, _MOUSE, _LSYMBOL);
+    thumb_roll(record, RIGHT, NOSHIFT, KC_DEL, 0, _MOUSE, _NUMBER);
     break;
 
   // .............................................................. Special Keys
@@ -398,15 +409,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_LSFT, SHIFT, KC_SLSH)) { return false; }
     if (map_shift(record, KC_RSFT, SHIFT, KC_1))    { down_rule = key_event(record, 2); return false; } // exlm + space/enter + shift shortcut, see cap_lt()
     break;
+  case SA_DLR:
+    mt_shift(record, KC_LALT, 0, KC_4);
+    break;
+  case SS_LPRN:
+    mt_shift(record, KC_LSFT, 0, KC_9);
+    break;
+  case SC_RPRN:
+    mt_shift(record, KC_LCTL, 0, KC_0);
+    break;
   case SM_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
     break;
   case KC_QUES:
     // down_rule = 0;                       // trap layer switching timimg issue between . and ?
     down_rule = key_event(record, 2);       // ques + space/enter + shift shortcut, see cap_lt()
-    break;
-  case SG_TILD:
-    mt_shift(record, KC_LGUI, 0, KC_GRV);
     break;
 
   // ............................................................... Cursor Keys

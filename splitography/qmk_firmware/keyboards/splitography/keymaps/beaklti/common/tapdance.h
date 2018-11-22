@@ -26,7 +26,6 @@ enum tap_dance {
 #define TD_COMM TD(_COMM)
 #define TD_DOT  TD(_DOT)
 #define TD_ENT  TD(_ENT)
-#define TD_PERC TD(_PERC)
 #define TD_PRIV TD(_PRIV)                   // compile time macro string, provided in private_string.h
 #define TD_SEND TD(_SEND)                   // config.h defined macro string
 #define TD_SPC  TD(_SPC)                    // see process_record_user() for extended handling of Spc

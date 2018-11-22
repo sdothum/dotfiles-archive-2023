@@ -72,11 +72,12 @@ restore layout tags
 
 if is display +1920 ;then
   toggle conky
-  if is multihead ;then
-    draw monitor secondary
-    # enable panel for secondary monitor by default
-    touch $PANEL:1
-  fi
+  # deprecated with primary:secondary as left:right..
+  # if is multihead ;then
+  #   draw monitor secondary
+  #   # enable panel for secondary monitor by default
+  #   touch $PANEL:1
+  # fi
 else
   draw monitor fullframe
   toggle panel

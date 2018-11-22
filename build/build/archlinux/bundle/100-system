@@ -158,6 +158,7 @@ d * pass
   pulseaudio
   pulseaudio-alsa
 # pulseaudio-ctl
+  pulseaudio-equalizer
 # pulsemixer-git
 # xfce4-mixer
 # xfce4-volumed

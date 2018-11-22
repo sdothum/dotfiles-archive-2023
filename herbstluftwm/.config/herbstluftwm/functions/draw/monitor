@@ -99,7 +99,7 @@ conky               ) rm -f $FULLSCREEN:primary
                       PRIMARY=$(printf '%dx%d%+d%+d' \
                                         $(( $normal_width - $SHADOW )) \
                                         $(( $Y0 - $margin*2 )) \
-                                        $(( $X1 + $marginX + $monocle )) \
+                                        $(( $marginX + $monocle )) \
                                         $margin ) ;;
 
 conky*fullscreen    ) touch $FULLSCREEN:primary
@@ -109,14 +109,14 @@ conky*fullscreen    ) touch $FULLSCREEN:primary
                         PRIMARY=$(printf '%dx%d%+d%+d' \
                                         $(( $fullscreen_width - $SHADOW )) \
                                         $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
-                                        $(( $X1 + $marginX + $window_frame + $monocle )) \
+                                        $(( $marginX + $window_frame + $monocle )) \
                                         $(( $margin + $window_frame )) )
                       else
                         # laptop screens fill to edge
                         PRIMARY=$(printf '%dx%d%+d%+d' \
                                         $(( $fullscreen_width + $marginX + $window_frame )) \
                                         $Y0 \
-                                        $X1 \
+                                        0 \
                                         0 )
                       fi ;;
 
@@ -125,14 +125,14 @@ fullframe           ) rm -f $FULLSCREEN:primary
                       if [ $monocle -eq 0 ] ;then
                         PRIMARY=$(printf '%dx%d%+d%+d' \
                                           $(( $X0 - $marginX*2 )) \
-                                          $(( $Y0 - $margin*2 + $window_frame - $marginY )) \
-                                          $(( $X1 + $marginX )) \
+                                          $(( $Y0 - $margin*2 )) \
+                                          $marginX \
                                           $margin )
                       else
                         PRIMARY=$(printf '%dx%d%+d%+d' \
                                           $normal_width \
-                                          $(( $Y0 - $margin*2 + $window_frame - $marginY )) \
-                                          $(( $X1 + ($X0 - $normal_width)/2 )) \
+                                          $(( $Y0 - $margin*2 )) \
+                                          $(( ($X0 - $normal_width)/2 )) \
                                           $margin )
                       fi ;;
 
@@ -142,15 +142,8 @@ fullscreen          ) touch $FULLSCREEN:primary
                         PRIMARY=$(printf '%dx%d%+d%+d' \
                                         $X0 \
                                         $Y0 \
-                                        $X1 \
+                                        0 \
                                         0 )
-                      else
-                        # golden ratio screen retain margins
-                        PRIMARY=$(printf '%dx%d%+d%+d' \
-                                        $fullscreen_width \
-                                        $(( $Y0 - $marginX*2 - $window_frame*2 - $panelY )) \
-                                        $(( $X1 + ($X0 - $fullscreen_width)/2 )) \
-                                        $(( $marginX + $window_frame)) )
                       fi ;;
 
 secondary           ) rm -f $FULLSCREEN:secondary
@@ -158,7 +151,7 @@ secondary           ) rm -f $FULLSCREEN:secondary
                       SECONDARY=$(printf '%dx%d%+d%+d' \
                                           $(( $X1 - $marginX*2 )) \
                                           $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
-                                          $marginX \
+                                          $(( X0 + $marginX )) \
                                           $margin ) ;;
 
 secondary*fullscreen) touch $FULLSCREEN:secondary
@@ -166,7 +159,7 @@ secondary*fullscreen) touch $FULLSCREEN:secondary
                       SECONDARY=$(printf '%dx%d%+d%+d' \
                                          $X1 \
                                          $Y1 \
-                                         0 \
+                                         X0 \
                                          0 ) ;;
 
 menu                ) if is primary ;then
@@ -174,14 +167,14 @@ menu                ) if is primary ;then
                       PRIMARY=$(printf '%dx%d%+d%+d' \
                                       $X0 \
                                       $Y0 \
-                                      $X1 \
+                                      0 \
                                       0 )
                     else
                       touch $FULLSCREEN:secondary
                       SECONDARY=$(printf '%dx%d%+d%+d' \
                                         $X1 \
                                         $Y1 \
-                                        0 \
+                                        $X0 \
                                         0 )
                     fi ;;
 esac

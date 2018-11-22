@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... pulseaudio
+
+ifnsed /etc/pulse/default.pa 'load-module module-equalizer-sink'
+ifnsed /etc/pulse/default.pa 'load-module module-dbus-protocol'
+
+# vim: set ft=sh: #
