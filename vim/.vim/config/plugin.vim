@@ -64,8 +64,8 @@
     " ............................................................... Management
 
       " Plug 'duff/vim-scratch'             " scratch buffer
+      " Plug 'simeji/winresizer'            " resize windows
       Plug 'chrisbra/NrrwRgn', { 'on' : 'NrrwrgnDo' } " visual block buffer
-      Plug 'simeji/winresizer'              " resize windows
 
     " .......................................................... Version control
 

@@ -396,12 +396,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_COLN:
   case TD_COLM:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SCLN)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_SCLN)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_2)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_7)) { return false; }
     break;
   case KC_COMM:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_1))   { return false; }
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV)) { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_1)) { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_5)) { return false; }
     break;
   // special shift layer mappings
   case KC_DOT:
@@ -414,6 +414,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case SS_LPRN:
     mt_shift(record, KC_LSFT, 0, KC_9);
+    break;
+  case KC_MINS:
+    if (map_shift(record, KC_RSFT, SHIFT, KC_COMM)) { return false; }
+    break;
+  case KC_QUOT:
+    if (map_shift(record, KC_RSFT, SHIFT, KC_DOT)) { return false; }
     break;
   case SC_RPRN:
     mt_shift(record, KC_LCTL, 0, KC_0);

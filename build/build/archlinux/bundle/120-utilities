@@ -41,12 +41,14 @@
 # ffmpegthumbnailer
 # filelight
   ncdu
+  nnn
   ranger
   rox
 # thunar
 # thunar-archive-plugin
 # thunar-volman
   tumbler
+  vidir
   vifm
 
 

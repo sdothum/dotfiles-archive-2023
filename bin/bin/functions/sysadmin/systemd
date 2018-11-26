@@ -7,31 +7,20 @@
 # .............................................................. Systemd wrapper
 
 usage() {
-  echo "usage: $(basename $0) status | disable | enable | reload | restart | start | stop | toggle <service>"
+  echo "usage: $(basename $0) [ status | disable | enable | reload | restart | start | stop | toggle ] <service>"
   exit 1
 }
 
 # configure systemd daemon
 case $1 in
 ''     ) usage ;;
-
-disable) sudo systemctl disable $2
-         sudo systemctl stop $2 ;;
-
-enable ) sudo systemctl enable $2
-         sudo systemctl start $2 ;;
-
+disable) sudo systemctl disable $2 ; sudo systemctl stop $2 ;;
+enable ) sudo systemctl enable $2 ; sudo systemctl start $2 ;;
 start  ) sudo systemctl start $2 ;;
 stop   ) sudo systemctl stop $2 ;;
 reload ) sudo systemctl daemon-reload ; exit ;;
 restart) sudo systemctl restart $2 ;;
-
-toggle ) if sudo systemctl status $2 | grep -q 'Active: active' ;then
-           sudo systemctl stop $2
-         else
-           sudo systemctl start $2
-         fi ;;
-
+toggle ) sudo systemctl status $2 >/dev/null 2>&1 && sudo systemctl stop $2 || sudo systemctl start $2 2>/dev/null ;;
 status ) ;;
 *      ) [ $# -eq 1 ] || usage ;;
 esac

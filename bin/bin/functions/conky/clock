@@ -25,9 +25,15 @@ stop) xset s on -dpms
       pstat xautolock && killall xautolock
       notify low 'Que Clock Two' 'Stopped' ;;
 
-on  ) clock || /usr/bin/conky -c $CONKYRC 2>/dev/null & ;;
-off ) clock && pkill -f "conky -c $CONKYRC" ;;
-''  ) clock && conky clock off || conky clock on ;;
+on  ) clock && exit
+      /usr/bin/conky -c $CONKYRC 2>/dev/null &
+      server && /usr/bin/conky -c $CONKY_Q2 2>/dev/null & ;;
+
+off ) clock || exit
+      pkill -f "conky -c $CONKYRC"
+      pkill -f "conky -c $CONKY_Q2" ;;
+
+''  ) clock && { conky clock off ; true ;} || conky clock on ;;
 *   ) usage ;;
 esac
 

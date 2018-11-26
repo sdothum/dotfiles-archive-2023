@@ -42,9 +42,11 @@ d ? preload
 = file managers
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔
   ncdu
+  nnn
   ranger
   rox
 # tumbler
+  vidir
   vifm
 
 

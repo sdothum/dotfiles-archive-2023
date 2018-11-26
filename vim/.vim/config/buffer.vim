@@ -33,12 +33,14 @@
 
       " delete any new diff buffer
       function! s:closeDiff()
-        wincmd h
-        if expand('%') == ''
-          bdelete!
-          " restore pre-diff settings or subsequent OpenDiff will be *off*
-          diffoff
-          return 1
+        if &diff                            " caution: wincmd resets active window (affects :Buffer)
+          wincmd h
+          if expand('%') == ''
+            bdelete!
+            " restore pre-diff settings or subsequent OpenDiff will be *off*
+            diffoff
+            return 1
+          endif
         endif
         return 0
       endfunction

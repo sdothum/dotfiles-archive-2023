@@ -18,7 +18,7 @@
 "   " Any valid git URL is allowed
 "   Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 "
-"   " Group dependencies, vim-snippets depends on ultisnips
+"   " Multiple Plug commands can be written in a single line using | separators
 "   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 "
 "   " On-demand loading
@@ -40,7 +40,7 @@
 "   " Unmanaged plugin (manually installed and updated)
 "   Plug '~/my-prototype-plugin'
 "
-"   " Add plugins to &runtimepath
+"   " Initialize plugin system
 "   call plug#end()
 "
 " Then reload .vimrc and :PlugInstall to install plugins.
@@ -61,7 +61,7 @@
 " More information: https://github.com/junegunn/vim-plug
 "
 "
-" Copyright (c) 2016 Junegunn Choi
+" Copyright (c) 2017 Junegunn Choi
 "
 " MIT License
 "
@@ -97,7 +97,7 @@ let s:plug_tab = get(s:, 'plug_tab', -1)
 let s:plug_buf = get(s:, 'plug_buf', -1)
 let s:mac_gui = has('gui_macvim') && has('gui_running')
 let s:is_win = has('win32') || has('win64')
-let s:nvim = has('nvim') && exists('*jobwait') && !s:is_win
+let s:nvim = has('nvim-0.2') || (has('nvim') && exists('*jobwait') && !s:is_win)
 let s:vim8 = has('patch-8.0.0039') && exists('*job_start')
 let s:me = resolve(expand('<sfile>:p'))
 let s:base_spec = { 'branch': 'master', 'frozen': 0 }
@@ -120,6 +120,9 @@ function! plug#begin(...)
     let home = s:path(split(&rtp, ',')[0]) . '/plugged'
   else
     return s:err('Unable to determine plug home. Try calling plug#begin() with a path argument.')
+  endif
+  if fnamemodify(home, ':t') ==# 'plugin' && fnamemodify(home, ':h') ==# s:first_rtp
+    return s:err('Invalid plug home. '.home.' is a standard Vim runtime path and is not allowed.')
   endif
 
   let g:plug_home = home
@@ -225,6 +228,7 @@ function! plug#end()
           endif
           call add(s:triggers[name].map, cmd)
         elseif cmd =~# '^[A-Z]'
+          let cmd = substitute(cmd, '!*$', '', '')
           if exists(':'.cmd) != 2
             call s:assoc(lod.cmd, cmd, name)
           endif
@@ -425,7 +429,10 @@ function! s:dobufread(names)
     let path = s:rtp(g:plugs[name]).'/**'
     for dir in ['ftdetect', 'ftplugin']
       if len(finddir(dir, path))
-        return s:doautocmd('BufRead')
+        if exists('#BufRead')
+          doautocmd BufRead
+        endif
+        return
       endif
     endfor
   endfor
@@ -438,16 +445,21 @@ function! plug#load(...)
   if !exists('g:plugs')
     return s:err('plug#begin was not called')
   endif
-  let unknowns = filter(copy(a:000), '!has_key(g:plugs, v:val)')
+  let names = a:0 == 1 && type(a:1) == s:TYPE.list ? a:1 : a:000
+  let unknowns = filter(copy(names), '!has_key(g:plugs, v:val)')
   if !empty(unknowns)
     let s = len(unknowns) > 1 ? 's' : ''
     return s:err(printf('Unknown plugin%s: %s', s, join(unknowns, ', ')))
   end
-  for name in a:000
-    call s:lod([name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
-  endfor
-  call s:dobufread(a:000)
-  return 1
+  let unloaded = filter(copy(names), '!get(s:loaded, v:val, 0)')
+  if !empty(unloaded)
+    for name in unloaded
+      call s:lod([name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
+    endfor
+    call s:dobufread(unloaded)
+    return 1
+  end
+  return 0
 endfunction
 
 function! s:remove_triggers(name)
@@ -571,7 +583,7 @@ function! s:infer_properties(name, repo)
       let uri = repo
     else
       if repo !~ '/'
-        let repo = 'vim-scripts/'. repo
+        throw printf('Invalid argument: %s (implicit `vim-scripts'' expansion is deprecated)', repo)
       endif
       let fmt = get(g:, 'plug_url_format', 'https://git::@github.com/%s.git')
       let uri = printf(fmt, repo)
@@ -593,7 +605,7 @@ function! plug#helptags()
     return s:err('plug#begin was not called')
   endif
   for spec in values(g:plugs)
-    let docd = join([spec.dir, 'doc'], '/')
+    let docd = join([s:rtp(spec), 'doc'], '/')
     if isdirectory(docd)
       silent! execute 'helptags' s:esc(docd)
     endif
@@ -617,10 +629,10 @@ function! s:syntax()
   syn match plugTag /(tag: [^)]\+)/
   syn match plugInstall /\(^+ \)\@<=[^:]*/
   syn match plugUpdate /\(^* \)\@<=[^:]*/
-  syn match plugCommit /^  \X*[0-9a-f]\{7} .*/ contains=plugRelDate,plugEdge,plugTag
+  syn match plugCommit /^  \X*[0-9a-f]\{7,9} .*/ contains=plugRelDate,plugEdge,plugTag
   syn match plugEdge /^  \X\+$/
   syn match plugEdge /^  \X*/ contained nextgroup=plugSha
-  syn match plugSha /[0-9a-f]\{7}/ contained
+  syn match plugSha /[0-9a-f]\{7,9}/ contained
   syn match plugRelDate /([^)]*)$/ contained
   syn match plugNotLoaded /(not loaded)$/
   syn match plugError /^x.*/
@@ -750,7 +762,7 @@ function! s:prepare(...)
   for k in ['<cr>', 'L', 'o', 'X', 'd', 'dd']
     execute 'silent! unmap <buffer>' k
   endfor
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline modifiable
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline modifiable nospell
   setf vim-plug
   if exists('g:syntax_on')
     call s:syntax()
@@ -770,8 +782,10 @@ function! s:assign_name()
 endfunction
 
 function! s:chsh(swap)
-  let prev = [&shell, &shellredir]
-  if !s:is_win && a:swap
+  let prev = [&shell, &shellcmdflag, &shellredir]
+  if s:is_win
+    set shell=cmd.exe shellcmdflag=/c shellredir=>%s\ 2>&1
+  elseif a:swap
     set shell=sh shellredir=>%s\ 2>&1
   endif
   return prev
@@ -779,15 +793,23 @@ endfunction
 
 function! s:bang(cmd, ...)
   try
-    let [sh, shrd] = s:chsh(a:0)
+    let [sh, shellcmdflag, shrd] = s:chsh(a:0)
     " FIXME: Escaping is incomplete. We could use shellescape with eval,
     "        but it won't work on Windows.
     let cmd = a:0 ? s:with_cd(a:cmd, a:1) : a:cmd
-    let g:_plug_bang = '!'.escape(cmd, '#!%')
+    if s:is_win
+      let batchfile = tempname().'.bat'
+      call writefile(['@echo off', cmd], batchfile)
+      let cmd = batchfile
+    endif
+    let g:_plug_bang = (s:is_win && has('gui_running') ? 'silent ' : '').'!'.escape(cmd, '#!%')
     execute "normal! :execute g:_plug_bang\<cr>\<cr>"
   finally
     unlet g:_plug_bang
-    let [&shell, &shellredir] = [sh, shrd]
+    let [&shell, &shellcmdflag, &shellredir] = [sh, shellcmdflag, shrd]
+    if s:is_win
+      call delete(batchfile)
+    endif
   endtry
   return v:shell_error ? 'Exit status: ' . v:shell_error : ''
 endfunction
@@ -816,6 +838,10 @@ function! s:do(pull, force, todo)
       let type = type(spec.do)
       if type == s:TYPE.string
         if spec.do[0] == ':'
+          if !get(s:loaded, name, 0)
+            let s:loaded[name] = 1
+            call s:reorg_rtp()
+          endif
           call s:load_plugin(spec)
           try
             execute spec.do[1:]
@@ -860,7 +886,7 @@ function! s:checkout(spec)
   let output = s:system('git rev-parse HEAD', a:spec.dir)
   if !v:shell_error && !s:hash_match(sha, s:lines(output)[0])
     let output = s:system(
-          \ 'git fetch --depth 999999 && git checkout '.s:esc(sha), a:spec.dir)
+          \ 'git fetch --depth 999999 && git checkout '.s:esc(sha).' --', a:spec.dir)
   endif
   return output
 endfunction
@@ -918,7 +944,8 @@ function! s:check_ruby()
 endfunction
 
 function! s:update_impl(pull, force, args) abort
-  let args = copy(a:args)
+  let sync = index(a:args, '--sync') >= 0 || has('vim_starting')
+  let args = filter(copy(a:args), 'v:val != "--sync"')
   let threads = (len(args) > 0 && args[-1] =~ '^[1-9][0-9]*$') ?
                   \ remove(args, -1) : get(g:, 'plug_threads', 16)
 
@@ -954,7 +981,7 @@ function! s:update_impl(pull, force, args) abort
 
   let use_job = s:nvim || s:vim8
   let python = (has('python') || has('python3')) && !use_job
-  let ruby = has('ruby') && !use_job && (v:version >= 703 || v:version == 702 && has('patch374')) && !(s:is_win && has('gui_running')) && s:check_ruby()
+  let ruby = has('ruby') && !use_job && (v:version >= 703 || v:version == 702 && has('patch374')) && !(s:is_win && has('gui_running')) && threads > 1 && s:check_ruby()
 
   let s:update = {
     \ 'start':   reltime(),
@@ -976,6 +1003,10 @@ function! s:update_impl(pull, force, args) abort
 
   let s:clone_opt = get(g:, 'plug_shallow', 1) ?
         \ '--depth 1' . (s:git_version_requirement(1, 7, 10) ? ' --no-single-branch' : '') : ''
+
+  if has('win32unix')
+    let s:clone_opt .= ' -c core.eol=lf -c core.autocrlf=input'
+  endif
 
   " Python version requirement (>= 2.7)
   if python && !has('python3') && !ruby && !use_job && s:update.threads > 1
@@ -1019,7 +1050,7 @@ function! s:update_impl(pull, force, args) abort
     endtry
   else
     call s:update_vim()
-    while use_job && has('vim_starting')
+    while use_job && sync
       sleep 100m
       if s:update.fin
         break
@@ -1050,7 +1081,7 @@ function! s:update_finish()
       elseif has_key(spec, 'tag')
         let tag = spec.tag
         if tag =~ '\*'
-          let tags = s:lines(s:system('git tag --list '.string(tag).' --sort -version:refname 2>&1', spec.dir))
+          let tags = s:lines(s:system('git tag --list '.s:shellesc(tag).' --sort -version:refname 2>&1', spec.dir))
           if !v:shell_error && !empty(tags)
             let tag = tags[0]
             call s:log4(name, printf('Latest tag for %s -> %s', spec.tag, tag))
@@ -1058,11 +1089,11 @@ function! s:update_finish()
           endif
         endif
         call s:log4(name, 'Checking out '.tag)
-        let out = s:system('git checkout -q '.s:esc(tag).' 2>&1', spec.dir)
+        let out = s:system('git checkout -q '.s:esc(tag).' -- 2>&1', spec.dir)
       else
         let branch = s:esc(get(spec, 'branch', 'master'))
         call s:log4(name, 'Merging origin/'.branch)
-        let out = s:system('git checkout -q '.branch.' 2>&1'
+        let out = s:system('git checkout -q '.branch.' -- 2>&1'
               \. (has_key(s:update.new, name) ? '' : ('&& git merge --ff-only origin/'.branch.' 2>&1')), spec.dir)
       endif
       if !v:shell_error && filereadable(spec.dir.'/.gitmodules') &&
@@ -1152,7 +1183,7 @@ function! s:job_cb(fn, job, ch, data)
   call call(a:fn, [a:job, a:data])
 endfunction
 
-function! s:nvim_cb(job_id, data, event) abort
+function! s:nvim_cb(job_id, data, event) dict abort
   return a:event == 'stdout' ?
     \ s:job_cb('s:job_out_cb',  self, 0, join(a:data, "\n")) :
     \ s:job_cb('s:job_exit_cb', self, 0, a:data)
@@ -1160,10 +1191,15 @@ endfunction
 
 function! s:spawn(name, cmd, opts)
   let job = { 'name': a:name, 'running': 1, 'error': 0, 'lines': [''],
+            \ 'batchfile': (s:is_win && (s:nvim || s:vim8)) ? tempname().'.bat' : '',
             \ 'new': get(a:opts, 'new', 0) }
   let s:jobs[a:name] = job
-  let argv = add(s:is_win ? ['cmd', '/c'] : ['sh', '-c'],
-               \ has_key(a:opts, 'dir') ? s:with_cd(a:cmd, a:opts.dir) : a:cmd)
+  let cmd = has_key(a:opts, 'dir') ? s:with_cd(a:cmd, a:opts.dir) : a:cmd
+  if !empty(job.batchfile)
+    call writefile(['@echo off', cmd], job.batchfile)
+    let cmd = job.batchfile
+  endif
+  let argv = add(s:is_win ? ['cmd', '/c'] : ['sh', '-c'], cmd)
 
   if s:nvim
     call extend(job, {
@@ -1180,7 +1216,7 @@ function! s:spawn(name, cmd, opts)
             \ 'Invalid arguments (or job table is full)']
     endif
   elseif s:vim8
-    let jid = job_start(argv, {
+    let jid = job_start(s:is_win ? join(argv, ' ') : argv, {
     \ 'out_cb':   function('s:job_cb', ['s:job_out_cb',  job]),
     \ 'exit_cb':  function('s:job_cb', ['s:job_exit_cb', job]),
     \ 'out_mode': 'raw'
@@ -1193,8 +1229,7 @@ function! s:spawn(name, cmd, opts)
       let job.lines   = ['Failed to start job']
     endif
   else
-    let params = has_key(a:opts, 'dir') ? [a:cmd, a:opts.dir] : [a:cmd]
-    let job.lines = s:lines(call('s:system', params))
+    let job.lines = s:lines(call('s:system', [cmd]))
     let job.error = v:shell_error != 0
     let job.running = 0
   endif
@@ -1214,6 +1249,9 @@ function! s:reap(name)
   call s:log(bullet, a:name, empty(result) ? 'OK' : result)
   call s:bar()
 
+  if has_key(job, 'batchfile') && !empty(job.batchfile)
+    call delete(job.batchfile)
+  endif
   call remove(s:jobs, a:name)
 endfunction
 
@@ -1763,6 +1801,7 @@ function! s:update_ruby()
   tries = VIM::evaluate('get(g:, "plug_retries", 2)') + 1
   nthr  = VIM::evaluate('s:update.threads').to_i
   maxy  = VIM::evaluate('winheight(".")').to_i
+  vim7  = VIM::evaluate('v:version').to_i <= 703 && RUBY_PLATFORM =~ /darwin/
   cd    = iswin ? 'cd /d' : 'cd'
   tot   = VIM::evaluate('len(s:update.todo)') || 0
   bar   = ''
@@ -1852,11 +1891,17 @@ function! s:update_ruby()
   main = Thread.current
   threads = []
   watcher = Thread.new {
-    require 'io/console' # >= Ruby 1.9
-    nil until IO.console.getch == 3.chr
+    if vim7
+      while VIM::evaluate('getchar(1)')
+        sleep 0.1
+      end
+    else
+      require 'io/console' # >= Ruby 1.9
+      nil until IO.console.getch == 3.chr
+    end
     mtx.synchronize do
       running = false
-      threads.each { |t| t.raise Interrupt }
+      threads.each { |t| t.raise Interrupt } unless vim7
     end
     threads.each { |t| t.join rescue nil }
     main.kill
@@ -1924,8 +1969,19 @@ function! s:update_ruby()
 EOF
 endfunction
 
+function! s:shellesc_cmd(arg)
+  let escaped = substitute(a:arg, '[&|<>()@^]', '^&', 'g')
+  let escaped = substitute(escaped, '%', '%%', 'g')
+  let escaped = substitute(escaped, '"', '\\^&', 'g')
+  let escaped = substitute(escaped, '\(\\\+\)\(\\^\)', '\1\1\2', 'g')
+  return '^"'.substitute(escaped, '\(\\\+\)$', '\1\1', '').'^"'
+endfunction
+
 function! s:shellesc(arg)
-  return '"'.escape(a:arg, '"').'"'
+  if &shell =~# 'cmd.exe$'
+    return s:shellesc_cmd(a:arg)
+  endif
+  return shellescape(a:arg)
 endfunction
 
 function! s:glob_dir(path)
@@ -1963,11 +2019,19 @@ endfunction
 
 function! s:system(cmd, ...)
   try
-    let [sh, shrd] = s:chsh(1)
+    let [sh, shellcmdflag, shrd] = s:chsh(1)
     let cmd = a:0 > 0 ? s:with_cd(a:cmd, a:1) : a:cmd
+    if s:is_win
+      let batchfile = tempname().'.bat'
+      call writefile(['@echo off', cmd], batchfile)
+      let cmd = batchfile
+    endif
     return system(s:is_win ? '('.cmd.')' : cmd)
   finally
-    let [&shell, &shellredir] = [sh, shrd]
+    let [&shell, &shellcmdflag, &shellredir] = [sh, shellcmdflag, shrd]
+    if s:is_win
+      call delete(batchfile)
+    endif
   endtry
 endfunction
 
@@ -2002,7 +2066,7 @@ function! s:git_validate(spec, check_branch)
       " Check tag
       if has_key(a:spec, 'tag')
         let tag = s:system_chomp('git describe --exact-match --tags HEAD 2>&1', a:spec.dir)
-        if a:spec.tag !=# tag
+        if a:spec.tag !=# tag && a:spec.tag !~ '\*'
           let err = printf('Invalid tag: %s (expected: %s). Try PlugUpdate.',
                 \ (empty(tag) ? 'N/A' : tag), a:spec.tag)
         endif
@@ -2012,10 +2076,21 @@ function! s:git_validate(spec, check_branch)
               \ branch, a:spec.branch)
       endif
       if empty(err)
-        let commits = len(s:lines(s:system(printf('git rev-list origin/%s..HEAD', a:spec.branch), a:spec.dir)))
-        if !v:shell_error && commits
-          let err = join([printf('Diverged from origin/%s by %d commit(s).', a:spec.branch, commits),
-                        \ 'Reinstall after PlugClean.'], "\n")
+        let [ahead, behind] = split(s:lastline(s:system(printf(
+              \ 'git rev-list --count --left-right HEAD...origin/%s',
+              \ a:spec.branch), a:spec.dir)), '\t')
+        if !v:shell_error && ahead
+          if behind
+            " Only mention PlugClean if diverged, otherwise it's likely to be
+            " pushable (and probably not that messed up).
+            let err = printf(
+                  \ "Diverged from origin/%s (%d commit(s) ahead and %d commit(s) behind!\n"
+                  \ .'Backup local changes and run PlugClean and PlugUpdate to reinstall it.', a:spec.branch, ahead, behind)
+          else
+            let err = printf("Ahead of origin/%s by %d commit(s).\n"
+                  \ .'Cannot update until local changes are pushed.',
+                  \ a:spec.branch, ahead)
+          endif
         endif
       endif
     endif
@@ -2171,15 +2246,16 @@ function! s:status()
   let unloaded = 0
   let [cnt, total] = [0, len(g:plugs)]
   for [name, spec] in items(g:plugs)
+    let is_dir = isdirectory(spec.dir)
     if has_key(spec, 'uri')
-      if isdirectory(spec.dir)
+      if is_dir
         let [err, _] = s:git_validate(spec, 1)
         let [valid, msg] = [empty(err), empty(err) ? 'OK' : err]
       else
         let [valid, msg] = [0, 'Not found. Try PlugInstall.']
       endif
     else
-      if isdirectory(spec.dir)
+      if is_dir
         let [valid, msg] = [1, 'OK']
       else
         let [valid, msg] = [0, 'Not found.']
@@ -2188,7 +2264,7 @@ function! s:status()
     let cnt += 1
     let ecnt += !valid
     " `s:loaded` entry can be missing if PlugUpgraded
-    if valid && get(s:loaded, name, -1) == 0
+    if is_dir && get(s:loaded, name, -1) == 0
       let unloaded = 1
       let msg .= ' (not loaded)'
     endif
@@ -2258,7 +2334,7 @@ function! s:preview_commit()
     let b:plug_preview = !s:is_preview_window_open()
   endif
 
-  let sha = matchstr(getline('.'), '^  \X*\zs[0-9a-f]\{7}')
+  let sha = matchstr(getline('.'), '^  \X*\zs[0-9a-f]\{7,9}')
   if empty(sha)
     return
   endif
@@ -2276,7 +2352,21 @@ function! s:preview_commit()
     wincmd P
   endif
   setlocal previewwindow filetype=git buftype=nofile nobuflisted modifiable
-  execute 'silent %!cd' s:shellesc(g:plugs[name].dir) '&& git show --no-color --pretty=medium' sha
+  try
+    let [sh, shellcmdflag, shrd] = s:chsh(1)
+    let cmd = 'cd '.s:shellesc(g:plugs[name].dir).' && git show --no-color --pretty=medium '.sha
+    if s:is_win
+      let batchfile = tempname().'.bat'
+      call writefile(['@echo off', cmd], batchfile)
+      let cmd = batchfile
+    endif
+    execute 'silent %!' cmd
+  finally
+    let [&shell, &shellcmdflag, &shellredir] = [sh, shellcmdflag, shrd]
+    if s:is_win
+      call delete(batchfile)
+    endif
+  endtry
   setlocal nomodifiable
   nnoremap <silent> <buffer> q :q<cr>
   wincmd p
@@ -2317,7 +2407,7 @@ function! s:diff()
     call s:append_ul(2, origin ? 'Pending updates:' : 'Last update:')
     for [k, v] in plugs
       let range = origin ? '..origin/'.v.branch : 'HEAD@{1}..'
-      let diff = s:system_chomp('git log --graph --color=never --pretty=format:"%x01%h%x01%d%x01%s%x01%cr" '.s:shellesc(range), v.dir)
+      let diff = s:system_chomp('git log --graph --color=never '.join(map(['--pretty=format:%x01%h%x01%d%x01%s%x01%cr', range], 's:shellesc(v:val)')), v.dir)
       if !empty(diff)
         let ref = has_key(v, 'tag') ? (' (tag: '.v.tag.')') : has_key(v, 'commit') ? (' '.v.commit) : ''
         call append(5, extend(['', '- '.k.':'.ref], map(s:lines(diff), 's:format_git_log(v:val)')))
@@ -2358,7 +2448,7 @@ function! s:revert()
     return
   endif
 
-  call s:system('git reset --hard HEAD@{1} && git checkout '.s:esc(g:plugs[name].branch), g:plugs[name].dir)
+  call s:system('git reset --hard HEAD@{1} && git checkout '.s:esc(g:plugs[name].branch).' --', g:plugs[name].dir)
   setlocal modifiable
   normal! "_dap
   setlocal nomodifiable

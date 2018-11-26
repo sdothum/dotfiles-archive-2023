@@ -8,7 +8,7 @@ conky.config = {
 	font = 'Noto Sans Mono:size=18',
 	-- gap_x = 0,
 	-- latest xorg requires offset from primary monitor
-	gap_x = -1680,
+	gap_x = 3440,
 	gap_y = 0,
   maximum_width = 1680,
   minimum_width = 1680, minimum_height = 1050,

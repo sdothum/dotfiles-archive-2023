@@ -90,7 +90,7 @@ mobi() { mobi=$(file mobi) ;}
 epub() { epub=$(file epub) ;}
 azw3() { azw3=$(file azw3) ;}
 azw()  { azw=$(file azw) ;}
-kfx()  { azw=$(file kfx) ;}
+kfx()  { kfx=$(file kfx) ;}
 
 # ..................................................................... E-reader
 
@@ -121,7 +121,7 @@ while : ;do
   unset mobi epub azw3 azw
 
   azw3 ; [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || { azw ; [ "$azw" ] || kfx ;};};}
-  file=$azw3$mobi$epub$azw
+  file=$azw3$mobi$epub$azw$kfx
   [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks ; continue ;}
 
   [ -d $kindle ] && options='kindle\nedit\nread' || options='read\nedit\nkindle'

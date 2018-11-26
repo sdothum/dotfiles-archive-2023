@@ -123,6 +123,21 @@ ${goto 85}${font Noto Sans:size=7:style=Bold}${color0}wlp2s0 ${alignr}${addr wlp
 ${goto 85}${color7}${downspeedgraph wlp2s0 20,0}
 ${voffset -33}${goto 85}${color8}${upspeedgraph wlp2s0 20,0}
 ${voffset -5}${goto 85}${font}${color1}Bandwidth ${alignr}${lua_parse bandwidth ${upspeed wlp2s0}}U   ${lua_parse bandwidth ${downspeed wlp2s0}}D
+
+${goto 90}${font Noto Sans:size=7:style=Bold}${color}IP${alignr}${tcp_portmon 1 65535 count}  open  DPORT
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  0}${alignr 1}${tcp_portmon 1 65535 rport  0}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  1}${alignr 1}${tcp_portmon 1 65535 rport  1}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  2}${alignr 1}${tcp_portmon 1 65535 rport  2}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  3}${alignr 1}${tcp_portmon 1 65535 rport  3}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  4}${alignr 1}${tcp_portmon 1 65535 rport  4}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  5}${alignr 1}${tcp_portmon 1 65535 rport  5}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  6}${alignr 1}${tcp_portmon 1 65535 rport  6}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  7}${alignr 1}${tcp_portmon 1 65535 rport  7}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  8}${alignr 1}${tcp_portmon 1 65535 rport  8}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip  9}${alignr 1}${tcp_portmon 1 65535 rport  9}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip 10}${alignr 1}${tcp_portmon 1 65535 rport 10}
+${goto 90}${font}${color3}${tcp_portmon 1 65535 rip 11}${alignr 1}${tcp_portmon 1 65535 rport 11}
+${if_match ${tcp_portmon 1 65535 count} > 12}${alignr}${color3}• • • ${endif}
 ]];
 
 -- vim: set ft=lua : --

@@ -10,6 +10,7 @@ export SHELL=/usr/bin/fish
 
 font="$STOW/alacritty/$(fontsize)pt"
 [ -e $font ] && config="--config-file $font/.config/alacritty/alacritty.yml"
+echo "$@" | grep -q '\--config-file' && unset config
 
 # pgrep xclip >/dev/null || xclip -r -silent &
 eval /usr/bin/alacritty $config $@

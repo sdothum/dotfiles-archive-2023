@@ -83,6 +83,7 @@ set -x EDITOR 'gvim -f'
 set -x VISUAL 'gvim -f'
 # fzf-vim theme
 set -x FZF_DEFAULT_OPTS "--cycle --reverse  --prompt='    ─────  ' --ansi --color=dark,hl:#dc322f,hl+:#dc322f,fg+:232,bg+:#fdf6e3,bg:#fdf6e3,marker:160,prompt:#268bd2,info:#268bd2"
+set -x NNN_USE_EDITOR 1
 
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
