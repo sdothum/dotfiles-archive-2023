@@ -100,6 +100,8 @@ splitography thumbsmu :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/sp
 splitography hieax :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/hieax -type f) $HOME/bin/functions/hardware/splitography
 splitography beakl8 :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beakl8 -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklmu :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklmu -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklsi :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi -type f) $HOME/bin/funcsions/hardware/splitography
+splitography beaklui :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklui -type f) $HOME/bin/funcuions/hardware/splitography
 splitography beaklti :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklti -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklvi :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklvi -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklth :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklth -type f) $HOME/bin/functhons/hardware/splitography

@@ -1,5 +1,5 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="config/keybinds $@" . $PARENT
+# [ $TRACE ] && CHILD="config/keybinds $@" . $PARENT
 
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
@@ -27,20 +27,20 @@ hc keybind $Mod-equal                   spawn toggle focus
 hc keybind $Mod-0                       spawn toggle focus
 
 # UI appearance
-hc keybind $Mod-minus                   spawn focus borders 3
-hc keybind $Mod-Shift-minus             spawn toggle borders
+hc keybind $Mod-b                       spawn focus borders 3
+hc keybind $Mod-Shift-b                 spawn toggle borders
 if [ $BEAKL ] ;then
-  hc keybind $Mod-apostrophe            spawn toggle compton
-  hc keybind $Mod-Shift-apostrophe      spawn toggle unclutter
+  hc keybind $Mod-i                     spawn toggle unclutter
+  hc keybind $Mod-Shift-i               spawn toggle compton
 else
   hc keybind $Mod-backslash             spawn toggle unclutter
   hc keybind $Mod-Shift-backslash       spawn toggle compton
 fi
 
 # wallpaper background (toggle) blur
-hc keybind $Mod-b                       spawn draw root select
-hc keybind $Mod-Shift-b                 spawn draw root shuffle
-hc keybind $Mod-Control-b               spawn draw root blur
+hc keybind $Mod-p                       spawn draw root select
+hc keybind $Mod-Shift-p                 spawn draw root shuffle
+hc keybind $Mod-Control-p               spawn draw root blur
 hc keybind $Mod-d                       spawn dmenu root
 hc keybind $Mod-Shift-d                 spawn draw root save
 hc keybind $Mod-Control-d               spawn draw root blank
@@ -147,37 +147,31 @@ hc keybind $Mod-Shift-1                 jumpto urgent
 # create an empty frame at the specified direction
 if [ $BEAKL ] ;then
   hc keybind $Mod-q                     remove
-  hc keybind $Mod-i                     split bottom 0.5
-  hc keybind $Mod-Shift-i               split bottom 0.666666
-  hc keybind $Mod-Control-i             split bottom 0.333333
-  hc keybind $Mod-semicolon             split right  0.5
-  hc keybind $Mod-Shift-semicolon       split right  0.666666
-  hc keybind $Mod-Control-semicolon     split right  0.333333
 else
   hc keybind $Mod-r                     remove
-  hc keybind $Mod-y                     split bottom 0.5
-  hc keybind $Mod-o                     split right  0.5
-  hc keybind $Mod-Shift-y               split bottom 0.666666
-  hc keybind $Mod-Shift-o               split right  0.666666
-  hc keybind $Mod-Control-y             split bottom 0.333333
-  hc keybind $Mod-Control-o             split right  0.333333
 fi
+hc keybind $Mod-y                       split bottom 0.5
+hc keybind $Mod-Shift-y                 split bottom 0.666666
+hc keybind $Mod-Control-y               split bottom 0.333333
+hc keybind $Mod-x                       split right  0.5
+hc keybind $Mod-Shift-x                 split right  0.666666
+hc keybind $Mod-Control-x               split right  0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space           spawn restore frames
 if [ $BEAKL ] ;then
-  hc keybind $Mod-Shift-g               spawn switch orientation -2
-  hc keybind $Mod-comma                 spawn switch orientation +1
-  hc keybind $Mod-Shift-comma           spawn switch orientation -1
-  hc keybind $Mod-Shift-period          spawn switch orientation +2
+  hc keybind $Mod-Shift-h               spawn switch orientation -2
+  hc keybind $Mod-h                     spawn switch orientation -1
+  hc keybind $Mod-l                     spawn switch orientation +1
+  hc keybind $Mod-Shift-l               spawn switch orientation +2
 elif [ $COLEMAK ] ;then
-  hc keybind $Mod-slash                 spawn switch orientation +1
-  hc keybind $Mod-Shift-slash           spawn switch orientation -1
-  hc keybind $Mod-Shift-period          spawn switch orientation +2
   hc keybind $Mod-Shift-comma           spawn switch orientation -2
+  hc keybind $Mod-Shift-slash           spawn switch orientation -1
+  hc keybind $Mod-slash                 spawn switch orientation +1
+  hc keybind $Mod-Shift-period          spawn switch orientation +2
 else
+  hc keybind $Mod-Shift-slash           spawn switch orientation -2
   hc keybind $Mod-Shift-comma           spawn switch orientation +1
   hc keybind $Mod-Shift-period          spawn switch orientation +2
-  hc keybind $Mod-Shift-slash           spawn switch orientation -2
 fi
 
 # resize frames
@@ -213,8 +207,13 @@ hc keybind $Mod-Control-Up              resize up    +$resizestep
 hc keybind $Mod-Control-Right           resize right +$resizestep
 
 # cycle through tags
-hc keybind $Mod-Control-period          use_index +1 --skip-visible
-hc keybind $Mod-Control-comma           use_index -1 --skip-visible
+if [ $BEAKL ] ;then
+  hc keybind $Mod-j                     use_index +1 --skip-visible
+  hc keybind $Mod-k                     use_index -1 --skip-visible
+else
+  hc keybind $Mod-Control-period        use_index +1 --skip-visible
+  hc keybind $Mod-Control-comma         use_index -1 --skip-visible
+fi
 hc keybind $Mod-BackSpace               spawn switch tag
 
 # set layout
@@ -223,7 +222,7 @@ if [ $BEAKL ] ;then
 else
   hc keybind $Mod-grave                 spawn toggle monocle
 fi
-hc keybind $Mod-x                       spawn restore layout
+hc keybind $Mod-l                       spawn restore layout
 hc keybind $Mod-Control-minus           spawn restore layout default
 hc keybind $Mod-Control-1               spawn restore layout max
 hc keybind $Mod-Control-2               spawn restore layout halves
@@ -235,7 +234,7 @@ hc keybind $Mod-space                   spawn toggle max
 hc keybind $Mod-Shift-space             spawn switch layout
 hc keybind $Mod-Shift-f                 chain . floating toggle . emit_hook focus_changed
 hc keybind $Mod-f                       spawn toggle fullscreen
-hc keybind $Mod-p                       chain . pseudotile toggle . emit_hook focus_changed
+hc keybind $Mod-Control-f               chain . pseudotile toggle . emit_hook focus_changed
 
 # hide (pseudo minimize) and restore windows
 hc keybind $Mod-m                       spawn pin ttag
