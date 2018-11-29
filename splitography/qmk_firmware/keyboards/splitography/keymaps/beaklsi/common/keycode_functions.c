@@ -343,6 +343,22 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_SCLN);
 }
 
+#define CTL_V register_code(KC_LCTL); tap_key(KC_V); unregister_code(KC_LCTL) 
+
+void paste(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1)    { CTL_V; tap_key(KC_ENT); }
+  else if (state->pressed) { register_code(KC_LCTL); register_code(KC_V); }
+  else                     { CTL_V; }
+  reset_tap_dance(state);
+}
+
+void paste_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_code(KC_V);
+  unregister_code(KC_LCTL);
+}
+
 void percent(qk_tap_dance_state_t *state, void *user_data)
 {
   if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
@@ -354,6 +370,22 @@ void percent_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_5);
   unregister_code (KC_LALT);
+}
+
+#define CTL_SFT_V register_code(KC_LCTL); tap_shift(KC_V); unregister_code(KC_LCTL) 
+
+void tmpaste(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count > 1)    { CTL_SFT_V; tap_key(KC_ENT); }
+  else if (state->pressed) { register_code(KC_LCTL); register_shift(KC_V); }
+  else                     { CTL_SFT_V; }
+  reset_tap_dance(state);
+}
+
+void tmpaste_reset(qk_tap_dance_state_t *state, void *user_data)
+{
+  unregister_shift(KC_V);
+  unregister_code (KC_LCTL);
 }
 
 // compile time macro string, see functions/hardware planck script
@@ -377,20 +409,22 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 // ................................................................... Tap Dance
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [_ASTR] = ACTION_TAP_DANCE_FN         (asterisk)
- ,[_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, backspace, backspace_reset)
- ,[_EMOJ] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
- ,[_COMM] = ACTION_TAP_DANCE_FN         (comma)
- ,[_DOT]  = ACTION_TAP_DANCE_FN         (dot)
- ,[_PERC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
- ,[_PRIV] = ACTION_TAP_DANCE_FN         (private)
- ,[_SEND] = ACTION_TAP_DANCE_FN         (send)
- ,[_SPC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
- ,[_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
+  [_ASTR]    = ACTION_TAP_DANCE_FN         (asterisk)
+ ,[_BSPC]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, backspace, backspace_reset)
+ ,[_EMOJ]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
+ ,[_COMM]    = ACTION_TAP_DANCE_FN         (comma)
+ ,[_DOT]     = ACTION_TAP_DANCE_FN         (dot)
+ ,[_PASTE]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, paste, paste_reset)
+ ,[_PERC]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
+ ,[_PRIV]    = ACTION_TAP_DANCE_FN         (private)
+ ,[_SEND]    = ACTION_TAP_DANCE_FN         (send)
+ ,[_SPC]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
+ ,[_TILD]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
+ ,[_TMPASTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tmpaste, tmpaste_reset)
 #ifdef HASKELL
- ,[_COLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, colon, colon_reset)
- ,[_LT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lesser, lesser_reset)
- ,[_GT]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, greater, greater_reset)
+ ,[_COLN]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, colon, colon_reset)
+ ,[_LT]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lesser, lesser_reset)
+ ,[_GT]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, greater, greater_reset)
 #endif
 };
 

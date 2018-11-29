@@ -162,10 +162,10 @@ enum keyboard_keycodes {
 #define CUT     LCTL(KC_X)
 #define EOT     LCTL(KC_D)
 #define NAK     LCTL(KC_U)
-#define PASTE   LCTL(KC_V)
+#define PASTE   TD_PASTE
 #define UNDO    LCTL(KC_Z)
 #define TMCOPY  LCTL(LSFT(KC_C))
-#define TMPASTE LCTL(LSFT(KC_V))
+#define TMPASTE TD_TMPASTE
 
 #define TT_SPC  LT  (_TTCURSOR, KC_SPC)
 #ifdef PLANCK
