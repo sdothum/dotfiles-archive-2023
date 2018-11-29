@@ -67,6 +67,18 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
+void double_tap(uint8_t count, uint8_t shift, uint16_t keycode)
+{
+  if (shift) {
+    tap_shift(keycode);
+    if (count > 1) { tap_shift(keycode); }
+  }
+  else {
+    tap_key(keycode);
+    if (count > 1) { tap_key(keycode); }
+  }
+}
+
 // keycode on tap
 void trigger_key(keyrecord_t *record, uint16_t keycode)
 {
@@ -76,9 +88,9 @@ void trigger_key(keyrecord_t *record, uint16_t keycode)
 #define SHIFT   1
 #define NOSHIFT 0
 
-void tap_mod(uint16_t mod, uint16_t keycode)
+void tap_mod(uint16_t modifier, uint16_t keycode)
 {
-  switch (mod) {
+  switch (modifier) {
   case NOSHIFT:
     tap_key(keycode);
     break;
@@ -86,9 +98,9 @@ void tap_mod(uint16_t mod, uint16_t keycode)
     tap_shift(keycode);
     break;
   default:
-    register_code  (mod);
+    register_code  (modifier);
     tap_key        (keycode);
-    unregister_code(mod);
+    unregister_code(modifier);
   }
 }
 
@@ -215,18 +227,6 @@ void space_reset(qk_tap_dance_state_t *state, void *user_data)
 // ......................................................... Triple Dance Insert
 
 #ifdef HASKELL
-void double_tap(uint8_t count, uint8_t shift, uint16_t keycode)
-{
-  if (shift) {
-    tap_shift(keycode);
-    if (count > 1) { tap_shift(keycode); }
-  }
-  else {
-    tap_key(keycode);
-    if (count > 1) { tap_key(keycode); }
-  }
-}
-
 void colon(qk_tap_dance_state_t *state, void *user_data)
 {
   uint8_t i;
@@ -343,13 +343,11 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_SCLN);
 }
 
-#define CTL_V register_code(KC_LCTL); tap_key(KC_V); unregister_code(KC_LCTL) 
-
 void paste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { CTL_V; tap_key(KC_ENT); }
+  if (state->count > 1)    { tap_mod(KC_LCTL, KC_V); tap_key(KC_ENT); }
   else if (state->pressed) { register_code(KC_LCTL); register_code(KC_V); }
-  else                     { CTL_V; }
+  else                     { tap_mod(KC_LCTL, KC_V); }
   reset_tap_dance(state);
 }
 
