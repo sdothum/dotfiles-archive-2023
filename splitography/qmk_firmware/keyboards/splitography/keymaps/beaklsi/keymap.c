@@ -226,7 +226,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define BASE_12 3
 static uint8_t base_n    = 0;
 
-static uint8_t down_rule = 0;               // (1) substitute keycode (2) keycode + shift, see cap_lt()
+static uint8_t down_punc = 0;               // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -292,14 +292,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case ML_EQL:
-    tap_layer(record, _MOUSE);
-    thumb_roll(record, LEFT, NOSHIFT, KC_EQL, _MOUSE);
+    tap_layer    (record, _MOUSE);
+    rolling_layer(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _GUIFN);
     break;
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT)) { return false; }
-    lt_shift(record, shift_mod(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
-    tap_layer(record, _SYMBOL);
-    thumb_roll(record, LEFT, 0, 0, _SYMBOL);
+    lt_shift     (record, shift_mod(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
+    tap_layer    (record, _SYMBOL);
+    rolling_layer(record, LEFT, 0, 0, _SYMBOL, _GUIFN);
     break;
 
   case TT_SPC:
@@ -307,10 +307,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     break;
   case TD_SPC:
-    if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
+    if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
-    tap_layer(record, _GUIFN);
+    rolling_layer(record, RIGHT, 0, 0, _GUIFN, _SYMBOL);
+    tap_layer    (record, _GUIFN);
     break;
 
   case KC_BSPC:
@@ -318,15 +319,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case TD_BSPC:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (record->event.pressed)                       { tap_rule = down_rule; } // down_rule persistance for cap_lt()
+    if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
     tap_layer(record, _EDIT);
     break;
 
   // .............................................................. Special Keys
 
   case ML_BSLS:
-    tap_layer(record, _MOUSE);
-    thumb_roll(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE);
+    tap_layer    (record, _MOUSE);
+    rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _SYMBOL);
     break;
   case KC_COLN:
   case TD_EMOJ:
@@ -336,12 +337,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (tt_keycode && map_shift(record, KC_RSFT, SHIFT, KC_1)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))           { return false; }
     break;
-  // special shift layer mappings
+  // smart capitalization chords (on down)
   case TD_TILD:
     if (shift_mod(KC_RSFT)) { unregister_code(KC_LSFT); } // un-shift before tap dance processing to register unshifted keycodes, see tilde()
   case KC_EXLM:
   case KC_QUES:
-    down_rule = (record->event.pressed) ? 1 : 0;          // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;          // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
     break;
   case KC_DOT:
     if (map_shift(record, KC_RSFT, SHIFT, KC_SLSH)) { return false; }

@@ -93,11 +93,10 @@ void tap_mod(uint16_t modifier, uint16_t keycode)
 
 static uint16_t key_timer = 0;
 
-// key press for thumb_roll() and lt_shift() macros
-bool key_press(uint8_t shift, uint16_t keycode)
+// key press for rolling_layer() and lt_shift() macros
+void key_press(uint8_t shift, uint16_t keycode)
 {
-  if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_mod(shift, keycode); return true; }
-  return false;
+  if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_mod(shift, keycode); }
 }
 
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
@@ -151,13 +150,13 @@ void double_shift(uint16_t keycode, uint8_t layer)
   else { layer_on(layer); }
 }
 
-static uint8_t tap_rule = 0;                // down_rule persistance, see process_record_user()
+static uint8_t auto_cap = 0;                // down_punc chord, see process_record_user() TD_TILD, KC_EXLM, 
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_t paragraph, uint16_t leader)
 {
   uint8_t i;
-  if (tap_rule) {                           // sentence/paragraph capitalization
+  if (auto_cap) {                           // sentence/paragraph capitalization
     if (state->pressed)                                    { return; }
     if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
     double_shift(leader, layer);            // discard excess taps!
@@ -171,7 +170,7 @@ void tap_reset(uint16_t keycode, uint8_t layer)
   unregister_code(keycode);
   dt_shift ? clear_oneshot_layer_state(ONESHOT_PRESSED) : layer_off(layer);
   dt_shift = 0;
-  tap_rule = 0;                             // clear retained down_rule, see process_record_user()
+  auto_cap = 0;                             // clear retained down_rule, see process_record_user()
 }
 
 #define SENTENCE  0                         // capitalization method
@@ -254,7 +253,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
 void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_DOT);
-  unregister_code(KC_LSFT);
+  unregister_code (KC_LSFT);
 }
 #endif
 
@@ -417,25 +416,23 @@ static uint8_t overlayer = 0;
 static uint8_t leftside  = 0;
 static uint8_t rightside = 0;
 
-#define SET_LAYER(x) if (x) { layer_on(x); }
+#define SWITCH_LAYER(x, y) layer_off(x); x = 0; if (y && (y == _MOUSE)) { layer_on(facing); y = facing; }
 
 // seamlessly switch left / right thumb layer combinations
-void thumb_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keycode, uint8_t layer)
+void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keycode, uint8_t layer, uint8_t facing)
 {
   if (record->event.pressed) {
     layer_on(layer);
-    if (side == LEFT) { leftside = _SYMBOL; }
-    else              { rightside = _GUIFN; }
+    if (side == LEFT) { leftside = layer; }
+    else              { rightside = layer; }
     key_timer  = timer_read();
   }
   else {
     layer_off(_MOUSE);
-    if (keycode) { key_press(shift, keycode); }
-    layer_off(_SYMBOL);                     // clear layers in descending order BEFORE raising, see keyboard_layers
-    layer_off(_GUIFN);
-    if (side == LEFT) { leftside = 0; SET_LAYER(rightside) } // see note above!
-    else              { rightside = 0; SET_LAYER(leftside) }
-    clear_mods();
+    if (keycode)      { key_press(shift, keycode); }
+    if (side == LEFT) { SWITCH_LAYER(leftside, rightside) }
+    else              { SWITCH_LAYER(rightside, leftside) }
+    // clear_mods();
     key_timer = 0;
   }
 }
@@ -449,15 +446,14 @@ void lt_shift(keyrecord_t *record, uint8_t shift, uint16_t keycode, uint8_t laye
   }
   else {
     layer_off(layer);
-    // for shifted keycodes, hence, LT_SHIFT
-    key_press(shift, keycode);
-    clear_mods();
+    key_press(shift, keycode);              // for shifted keycodes, hence, LT_SHIFT
+    // clear_mods();
     key_timer = 0;
   }
 }
 
 // set layer asap to overcome macro latency errors, notably tap dance, LT usage and..
-// inexplicably sets layer_on() faster than can be done in thumb_roll() !!
+// inexplicably sets layer_on() faster than can be done in rolling_layer()
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
   record->event.pressed ? layer_on(layer) : layer_off(layer);
