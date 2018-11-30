@@ -318,9 +318,11 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_SCLN);
 }
 
+#define IRC_ENTER _delay_ms(10); tap_key(KC_ENT)
+
 void paste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { tap_mod(KC_LCTL, KC_V); tap_key(KC_ENT); }
+  if (state->count > 1)    { tap_mod(KC_LCTL, KC_V); IRC_ENTER; }
   else if (state->pressed) { register_code(KC_LCTL); register_code(KC_V); }
   else                     { tap_mod(KC_LCTL, KC_V); }
   reset_tap_dance(state);
@@ -349,7 +351,7 @@ void percent_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void xpaste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { CTL_SFT_V; tap_key(KC_ENT); }
+  if (state->count > 1)    { CTL_SFT_V; IRC_ENTER; }
   else if (state->pressed) { register_code(KC_LCTL); register_shift(KC_V); }
   else                     { CTL_SFT_V; }
   reset_tap_dance(state);
