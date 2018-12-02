@@ -482,10 +482,13 @@ void clear_layers(void)
   tt_keycode = 0;
 }
 
+#define ONOFF  0
+#define TOGGLE 1
+
 static uint8_t double_key = 0;
 
 // dual thumb key to raise layer
-bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side)
+bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggle)
 {
   if (record->event.pressed) {
     double_key |= side;
@@ -493,7 +496,7 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side)
   }
   else {
     double_key &= ~side;
-    if (!double_key) { layer_off(layer); }  // allow single key to continue on layer :-)
+    if (!(double_key || toggle)) { layer_off(layer); }  // allow single key to continue on layer :-)
   }
   return false;
 }

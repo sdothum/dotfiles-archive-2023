@@ -262,7 +262,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LGUI);
     break;
 
-    // ...................................................... Center Toggle Layers
+  // ...................................................... Center Toggle Layers
 
   case CNTR_TL:
   case CNTR_TR:
@@ -281,10 +281,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tt_clear();                             // exit TT layer
     return false;
 
-    // ................................................................ Thumb Keys
+  // ................................................................ Thumb Keys
 
   case LT_ESC:
-    if (raise_layer(record, _FNCKEY, LEFT))          { return false; }
+    if (raise_layer(record, _FNCKEY, LEFT, ONOFF))   { return false; }
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
     if (tt_keycode)                                  { tt_clear(); return false; }
@@ -296,7 +296,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     rolling_layer(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _GUIFN);
     break;
   case LT_I:
-    if (raise_layer(record, _FNCKEY, RIGHT)) { return false; }
+    if (raise_layer(record, _FNCKEY, RIGHT, ONOFF)) { return false; }
     lt_shift     (record, shift_mod(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
     tap_layer    (record, _SYMBOL);
     rolling_layer(record, LEFT, 0, 0, _SYMBOL, _GUIFN);
@@ -307,6 +307,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     break;
   case TD_SPC:
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
     if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
@@ -318,6 +319,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     break;
   case TD_BSPC:
+    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE)) { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
     if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
     tap_layer(record, _EDIT);
