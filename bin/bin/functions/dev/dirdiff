@@ -25,7 +25,7 @@ while [ "$1" ] ;do
   shift
 done
 
-[ "$target" ] && { [ -d ./$target ] && target=$(pwd)/$target ;} || target=/net/archive$(pwd)
+[ "$target" ] && { [ -d "$target" ] || { [ -d ./$target ] && target=$(pwd)/$target ;};} || target=/net/archive$(pwd)
 [ "$source" ] && cd "$source" || source=./
 [ "$regex"  ] || regex='.*'
 ditto "diff $regex $source" "$target"
