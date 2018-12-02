@@ -482,7 +482,7 @@ void clear_layers(void)
   tt_keycode = 0;
 }
 
-#define ONOFF  0
+#define ONDOWN 0
 #define TOGGLE 1
 
 static uint8_t double_key = 0;
@@ -492,7 +492,7 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
 {
   if (record->event.pressed) {
     double_key |= side;
-    if (double_key == (LEFT | RIGHT)) { layer_on(layer); return true; }
+    if (double_key == (LEFT | RIGHT)) { toggle ? layer_invert(layer) : layer_on(layer); return true; }
   }
   else {
     double_key &= ~side;

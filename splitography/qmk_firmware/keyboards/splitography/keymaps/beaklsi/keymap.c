@@ -103,6 +103,8 @@ enum keyboard_keycodes {
  ,SS_A      // pseudo SFT_T(S(KC_A))                      for shifted key-codes, see process_record_user()
  ,SS_T      // pseudo SFT_T(S(KC_T))                      for shifted key-codes, see process_record_user()
  ,TT_ESC
+ ,TT_NOPL
+ ,TT_NOPR
  ,ML_BSLS
  ,ML_EQL
 #ifdef STENO_ENABLE
@@ -284,7 +286,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Thumb Keys
 
   case LT_ESC:
-    if (raise_layer(record, _FNCKEY, LEFT, ONOFF))   { return false; }
+    if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))  { return false; }
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
     if (tt_keycode)                                  { tt_clear(); return false; }
@@ -296,13 +298,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     rolling_layer(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _GUIFN);
     break;
   case LT_I:
-    if (raise_layer(record, _FNCKEY, RIGHT, ONOFF)) { return false; }
+    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
     lt_shift     (record, shift_mod(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
     tap_layer    (record, _SYMBOL);
     rolling_layer(record, LEFT, 0, 0, _SYMBOL, _GUIFN);
     break;
 
+
   case TT_SPC:
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     break;
@@ -316,8 +320,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case KC_BSPC:
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    break;
+    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
+    if (record->event.pressed)                        { key_timer = timer_read(); }
+    else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
+    return false;                           // capslock toggling trap, use shift bspc -> del for auto repeat
   case TD_BSPC:
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE)) { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
