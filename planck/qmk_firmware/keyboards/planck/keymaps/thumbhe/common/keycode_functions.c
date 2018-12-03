@@ -1,1 +1,0 @@
-../../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/thumbhe/common/keycode_functions.c
