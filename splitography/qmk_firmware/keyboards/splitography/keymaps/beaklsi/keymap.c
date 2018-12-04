@@ -179,6 +179,8 @@ enum keyboard_keycodes {
 #define OS_GUI  OSM (MOD_LGUI)
 #define OS_SFT  OSM (MOD_LSFT)
 
+#define CNTR_TL TT  (_TTFNCKEY)
+#define CNTR_TR TT  (_TTCAPS)               // pseudo capslock to avoid TT key_timer conflicts
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
 #define CNTR_BL TT  (_TTNUMBER)
@@ -257,12 +259,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ...................................................... Center Toggle Layers
 
+  case CNTR_TL:
+    if (raise_layer(record, 0, LEFT, ONDOWN)) { base_layer(); return false; }
+    if (tt_keycode != keycode && tt_keycode)  { tt_clear(); }  // if different TT layer selected
+    tt_escape(record, keycode);
+    break;
+  case CNTR_TR:
+    if (raise_layer(record, 0, RIGHT, ONDOWN)) { base_layer(); return false; }
+    if (tt_keycode != keycode && tt_keycode)   { tt_clear(); } // if different TT layer selected
+    tt_escape(record, keycode);
+    break;
   case CNTR_HL:
   case CNTR_HR:
   case CNTR_BL:
   case CNTR_BR:
-    // return to base layer first if different TT layer selected
-    if (tt_keycode != keycode && tt_keycode) { tt_clear(); }
+    if (tt_keycode != keycode && tt_keycode) { tt_clear(); }   // if different TT layer selected
     tt_escape(record, keycode);
     break;
 
