@@ -513,7 +513,8 @@ void tt_clear(void)
 // alternate escape for TT layers, see process_record_user()
 void tt_escape(keyrecord_t *record, uint16_t keycode)
 {
-  if (record->event.pressed) { key_timer = timer_read(); }
+  if (tt_keycode != keycode && tt_keycode) { tt_clear(); } // if different TT layer selected
+  if (record->event.pressed)               { key_timer = timer_read(); }
   else {
     if (timer_elapsed(key_timer) < TAPPING_TERM) { tt_keycode = keycode; }
     key_timer = 0;

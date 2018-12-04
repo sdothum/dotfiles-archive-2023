@@ -261,19 +261,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case CNTR_TL:
     if (raise_layer(record, 0, LEFT, ONDOWN)) { base_layer(); return false; }
-    if (tt_keycode != keycode && tt_keycode)  { tt_clear(); }  // if different TT layer selected
     tt_escape(record, keycode);
     break;
   case CNTR_TR:
     if (raise_layer(record, 0, RIGHT, ONDOWN)) { base_layer(); return false; }
-    if (tt_keycode != keycode && tt_keycode)   { tt_clear(); } // if different TT layer selected
     tt_escape(record, keycode);
     break;
   case CNTR_HL:
   case CNTR_HR:
   case CNTR_BL:
   case CNTR_BR:
-    if (tt_keycode != keycode && tt_keycode) { tt_clear(); }   // if different TT layer selected
     tt_escape(record, keycode);
     break;
 
