@@ -492,7 +492,10 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
 {
   if (record->event.pressed) {
     double_key |= side;
-    if (double_key == (LEFT | RIGHT)) { toggle ? layer_invert(layer) : layer_on(layer); return true; }
+    if (double_key == (LEFT | RIGHT)) { 
+      if (layer) { toggle ? layer_invert(layer) : layer_on(layer); }
+      return true;
+    }
   }
   else {
     double_key &= ~side;
@@ -537,7 +540,7 @@ void base_layer(void)
 #endif
   clear_layers();
   set_single_persistent_default_layer(_BASE);
-  toggle_plover(0);
+  if (plover) { toggle_plover(0); }
 }
 
 void steno(keyrecord_t *record)
@@ -548,18 +551,12 @@ void steno(keyrecord_t *record)
 #endif
     clear_layers();
     layer_on(_PLOVER);
+#ifndef STENO_ENABLE
     if (!eeconfig_is_enabled()) { eeconfig_init(); }
     keymap_config.raw  = eeconfig_read_keymap();
     keymap_config.nkro = 1;
     eeconfig_update_keymap(keymap_config.raw);
-    if (!plover) { toggle_plover(1); }
-  }
-}
-
-void steno_exit(keyrecord_t *record)
-{
-  if (record->event.pressed) {
-    base_layer();
-    toggle_plover(0);
+#endif
+    toggle_plover(1);
   }
 }

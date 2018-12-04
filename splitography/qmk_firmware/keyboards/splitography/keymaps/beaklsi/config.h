@@ -33,8 +33,8 @@
 #define THUMB_0
 // Haskell triple tap operator chords
 #define HASKELL
-// shift bspc (delete) -> rolling enter immediately after cursor movements
-#define CURSOR_ENTER
+// thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
+#define CAPS_ONOFF
 
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND

@@ -96,17 +96,15 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
- ,PLOVER
  ,LT_I      // pseudo LT   (_SYMBOL, KC_I)                for shifted key-codes, see process_record_user()
+ ,ML_BSLS
+ ,ML_EQL
+ ,PLOVER
  ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
  ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
  ,SS_A      // pseudo SFT_T(S(KC_A))                      for shifted key-codes, see process_record_user()
  ,SS_T      // pseudo SFT_T(S(KC_T))                      for shifted key-codes, see process_record_user()
  ,TT_ESC
- ,TT_NOPL
- ,TT_NOPR
- ,ML_BSLS
- ,ML_EQL
 #ifdef STENO_ENABLE
  ,PS_STNA = STN_A
  ,PS_STNO = STN_O
@@ -181,8 +179,6 @@ enum keyboard_keycodes {
 #define OS_GUI  OSM (MOD_LGUI)
 #define OS_SFT  OSM (MOD_LSFT)
 
-#define CNTR_TL TT  (_TTFNCKEY)
-#define CNTR_TR TT  (_TTCAPS)               // pseudo capslock to avoid TT key_timer conflicts
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
 #define CNTR_BL TT  (_TTNUMBER)
@@ -223,11 +219,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "keycode_functions.c"
 
-#define BASE_1  1
-#define BASE_2  2
-#define BASE_12 3
-static uint8_t base_n    = 0;
-
 static uint8_t down_punc = 0;               // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -266,8 +257,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ...................................................... Center Toggle Layers
 
-  case CNTR_TL:
-  case CNTR_TR:
   case CNTR_HL:
   case CNTR_HR:
   case CNTR_BL:
@@ -306,7 +295,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 
   case TT_SPC:
+#ifdef CAPS_ONOFF
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
+#endif
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     break;
@@ -320,11 +311,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case KC_BSPC:
+#ifdef CAPS_ONOFF
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
+#endif
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
+#ifdef CAPS_ONOFF
     if (record->event.pressed)                        { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
     return false;                           // capslock toggling trap, use shift bspc -> del for auto repeat
+#endif
   case TD_BSPC:
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE)) { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
@@ -388,18 +383,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ................................................................ Steno Keys
 
-#define SET_BASE if (base_n == BASE_12) { base_layer(); }
-
   case PLOVER:
     steno(record);
     return false;
   case BASE1:
-    if (record->event.pressed) { base_n = base_n | BASE_1; SET_BASE }
-    else                       { base_n = base_n & ~BASE_1; }
+    if (raise_layer(record, 0, LEFT, ONDOWN)) { base_layer(); return false; }
     return false;
   case BASE2:
-    if (record->event.pressed) { base_n = base_n | BASE_2; SET_BASE }
-    else                       { base_n = base_n & ~BASE_2; }
+    if (raise_layer(record, 0, RIGHT, ONDOWN)) { base_layer(); return false; }
     return false;
 
   // ................................................................ Other Keys

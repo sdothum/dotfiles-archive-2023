@@ -14,7 +14,7 @@
       let g:ruler     = 0                   " colorcolumn mode, see theme.vim
       let s:wraplight = 0                   " highlight linewrap (0) off (1) on
       let s:breakchar = '→'
-      let s:delay     = '150m'              " redraw delay, see theme#FontSize()
+      let s:delay     = '200m'              " redraw delay, see theme#FontSize()
 
     " ............................................................... Toggle gui
 
