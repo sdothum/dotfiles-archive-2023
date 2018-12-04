@@ -15,9 +15,9 @@
   // `-----------------------------------------------------------------------------------'
 
   [_TTCAPS] = {
-    {KC_COLN, S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), CNTR_TL, CNTR_TR, S(KC_G), S(KC_D), S(KC_N), S(KC_M), S(KC_X)},
-    {S(KC_Q), S(KC_H), S(KC_E), SS_A,    KC_DOT,  CNTR_HL, CNTR_HR, S(KC_C), SS_T,    S(KC_R), S(KC_S), S(KC_W)},
-    {S(KC_J), KC_MINS, KC_QUOT, S(KC_K), KC_COMM, CNTR_BL, CNTR_BR, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
+    {KC_COLN, S(KC_Y), S(KC_O), S(KC_U), S(KC_Z), ___x___, ___x___, S(KC_G), S(KC_D), S(KC_N), S(KC_M), S(KC_X)},
+    {S(KC_Q), S(KC_H), S(KC_E), SS_A,    KC_DOT,  ___x___, ___x___, S(KC_C), SS_T,    S(KC_R), S(KC_S), S(KC_W)},
+    {S(KC_J), KC_MINS, KC_QUOT, S(KC_K), KC_COMM, ___x___, ___x___, S(KC_B), S(KC_P), S(KC_L), S(KC_F), S(KC_V)},
 #ifdef SPLITOGRAPHY
     {_______, _______, _______, _______, TT_ESC,  S(KC_I), TT_SPC,  KC_BSPC, _______, _______, _______, _______},
 #else

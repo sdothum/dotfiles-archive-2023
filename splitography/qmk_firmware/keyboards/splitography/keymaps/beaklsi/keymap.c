@@ -222,6 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 
 static uint8_t down_punc = 0;               // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
+static uint8_t tt_reset  = 0;               // status (0) ignore (2 -> 1) reset on last up stroke, see CNTR_TL, CNTR_TR
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -260,11 +261,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ...................................................... Center Toggle Layers
 
   case CNTR_TL:
-    if (raise_layer(record, 0, LEFT, ONDOWN)) { base_layer(); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE)) { tt_reset = 2; return false; } // defer reset!
+    if (tt_reset)                             { tt_reset--; base_layer(tt_reset); return false; }
     tt_escape(record, keycode);
     break;
   case CNTR_TR:
-    if (raise_layer(record, 0, RIGHT, ONDOWN)) { base_layer(); return false; }
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { tt_reset = 2; return false; } // defer reset!
+    if (tt_reset)                              { tt_reset--; base_layer(tt_reset); return false; }
     tt_escape(record, keycode);
     break;
   case CNTR_HL:
@@ -277,7 +280,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TT_ESC:
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    tt_clear();                             // exit TT layer
+    base_layer(0);                          // exit TT layer
     return false;
 
   // ................................................................ Thumb Keys
@@ -286,7 +289,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))  { return false; }
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (tt_keycode)                                  { tt_clear(); return false; }
+    if (tt_keycode)                                  { base_layer(0); return false; }
     tap_layer(record, _NUMBER);
     break;
 
@@ -395,10 +398,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     steno(record);
     return false;
   case BASE1:
-    if (raise_layer(record, 0, LEFT, ONDOWN)) { base_layer(); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE)) { base_layer(0); return false; }
     return false;
   case BASE2:
-    if (raise_layer(record, 0, RIGHT, ONDOWN)) { base_layer(); return false; }
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }
     return false;
 
   // ................................................................ Other Keys

@@ -504,25 +504,7 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
   return false;
 }
 
-void tt_clear(void)
-{
-  clear_layers();
-  set_single_persistent_default_layer(_BASE);
-}
-
-// alternate escape for TT layers, see process_record_user()
-void tt_escape(keyrecord_t *record, uint16_t keycode)
-{
-  if (tt_keycode != keycode && tt_keycode) { tt_clear(); } // if different TT layer selected
-  if (record->event.pressed)               { key_timer = timer_read(); }
-  else {
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { tt_keycode = keycode; }
-    key_timer = 0;
-  }
-}
-
-// txbolt plover run state
-static uint8_t plover = 0;
+static uint8_t plover = 0;                  // txbolt plover run state (0) off (1) on
 
 void toggle_plover(uint8_t state)
 {
@@ -534,8 +516,9 @@ void toggle_plover(uint8_t state)
   }
 }
 
-void base_layer(void)
+void base_layer(uint8_t defer)
 {
+  if (defer) { return; }                    // see process_record_user() CNTR_TL, CNTR_TR
 #ifdef AUDIO_ENABLE
   plover ? PLAY_SONG(song_plover_gb) : PLAY_SONG(song_qwerty);
 #endif
@@ -559,5 +542,16 @@ void steno(keyrecord_t *record)
     eeconfig_update_keymap(keymap_config.raw);
 #endif
     toggle_plover(1);
+  }
+}
+
+// alternate escape for TT layers, see process_record_user()
+void tt_escape(keyrecord_t *record, uint16_t keycode)
+{
+  if (tt_keycode != keycode && tt_keycode) { base_layer(0); } // if different TT layer selected
+  if (record->event.pressed)               { key_timer = timer_read(); }
+  else {
+    if (timer_elapsed(key_timer) < TAPPING_TERM) { tt_keycode = keycode; }
+    key_timer = 0;
   }
 }
