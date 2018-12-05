@@ -30,7 +30,7 @@ void modifier(void (*f)(uint8_t))
 }
 
 // base layer modifier and only shift modifier KC_LSFT or KC_RSFT
-bool shift_mod(uint16_t shift_key)
+bool on_shift(uint16_t shift_key)
 {
   // return (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
   // return (mods && ((mods & MOD_BIT(shift_key)) == mods));
@@ -50,11 +50,6 @@ void tt_escape(keyrecord_t *record, uint16_t keycode)
     if (timer_elapsed(key_timer) < TAPPING_TERM) { tt_keycode = keycode; }
     key_timer = 0;
   }
-}
-
-int8_t key_event(keyrecord_t *record, int8_t status)
-{
-  return (record->event.pressed) ? status : 0;
 }
 
 // .......................................................... Keycode Primitives
@@ -94,9 +89,9 @@ void double_tap(uint8_t count, uint8_t shift, uint16_t keycode)
 }
 
 // key press for rolling_layer() and lt_shift() macros
-void key_press(uint8_t shift, uint16_t keycode)
+void on_tap(uint8_t shift, uint16_t keycode)
 {
-  if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_mod(shift, keycode); }
+  if (keycode && (timer_elapsed(key_timer) < TAPPING_TERM)) { tap_mod(shift, keycode); }
 }
 
 // ............................................................ Keycode Modifier
@@ -142,7 +137,7 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   // if modifier and only shift modifier and base layer..
-  if (shift_mod(shift_key)) {
+  if (on_shift(shift_key)) {
     if (record->event.pressed) {
       if (!shift) { unregister_code(KC_LSFT); } // in event of unshifted keycode
       register_code(keycode);
@@ -303,7 +298,7 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (shift_mod(KC_RSFT)) {                 // dot, shift -> tilde, see process_record_user() TD_TILD
+  if (on_shift(KC_RSFT)) {                  // dot, shift -> tilde, see process_record_user() TD_TILD
     if (state->count > 1) {
       if (state->pressed)                     { register_shift(KC_GRV); }
       else if (state->count == 2)             { send_string("~/"); } 
@@ -319,7 +314,7 @@ void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_GRV);
   unregister_code (KC_DOT);
-  if (shift_mod(KC_RSFT)) { register_code(KC_LSFT); } // restore HOME_T, see process_record_user() TD_TILD
+  if (on_shift(KC_RSFT)) { register_code(KC_LSFT); } // restore HOME_T, see process_record_user() TD_TILD
 }
 
 // ........................................................... Double Tap Insert
@@ -360,7 +355,7 @@ void emoji_reset(qk_tap_dance_state_t *state, void *user_data)
   unregister_shift(KC_SCLN);
 }
 
-#define IRC_ENTER _delay_ms(10); tap_key(KC_ENT)
+#define IRC_ENTER _delay_ms(10); tap_key(KC_ENT);
 
 void paste(qk_tap_dance_state_t *state, void *user_data)
 {
@@ -470,7 +465,7 @@ void lt_shift(keyrecord_t *record, uint8_t shift, uint16_t keycode, uint8_t laye
   }
   else {
     layer_off(layer);
-    key_press(shift, keycode);              // for shifted keycodes, hence, LT_SHIFT
+    on_tap   (shift, keycode);              // for shifted keycodes, hence, LT_SHIFT
     // clear_mods();
     key_timer = 0;
   }
@@ -526,9 +521,9 @@ void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t ke
   }
   else {
     layer_off(_MOUSE);
-    if (keycode)      { key_press(shift, keycode); }
-    if (side == LEFT) { SWITCH_LAYER(leftside, rightside) }
-    else              { SWITCH_LAYER(rightside, leftside) }
+    on_tap   (shift, keycode);
+    if (side == LEFT) { SWITCH_LAYER(leftside, rightside); }
+    else              { SWITCH_LAYER(rightside, leftside); }
     // clear_mods();
     key_timer = 0;
   }
