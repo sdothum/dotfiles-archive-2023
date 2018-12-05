@@ -83,8 +83,8 @@ enum keyboard_layers {
 #ifdef PLANCK
  ,_ADJUST
 #endif
- ,_TTFNCKEY
  ,_TTCAPS
+ ,_TTFNCKEY
  ,_TTCURSOR
  ,_TTMOUSE
  ,_TTNUMBER
@@ -96,14 +96,14 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
- ,LT_I      // pseudo LT   (_SYMBOL, KC_I)                for shifted key-codes, see process_record_user()
+ ,LT_I      // pseudo LT   (_SYMBOL, KC_I) for shifted key-codes, see process_record_user()
  ,ML_BSLS
  ,ML_EQL
  ,PLOVER
- ,SG_TILD   // pseudo GUI_T(S(KC_GRV))                    for shifted key-codes, see process_record_user()
- ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G)) for shifted key-codes, see process_record_user()
- ,SS_A      // pseudo SFT_T(S(KC_A))                      for shifted key-codes, see process_record_user()
- ,SS_T      // pseudo SFT_T(S(KC_T))                      for shifted key-codes, see process_record_user()
+ ,SG_TILD   // pseudo GUI_T(S(KC_GRV))     for shifted key-codes, see process_record_user()
+ ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
+ ,SS_A      // pseudo SFT_T(S(KC_A))
+ ,SS_T      // pseudo SFT_T(S(KC_T))
  ,TT_ESC
 #ifdef STENO_ENABLE
  ,PS_STNA = STN_A
