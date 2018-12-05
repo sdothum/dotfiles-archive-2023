@@ -222,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 
 static uint8_t down_punc = 0;               // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
-static uint8_t tt_reset  = 0;               // status (0) ignore (2 -> 1) reset on last up stroke, see CNTR_TL, CNTR_TR
+static uint8_t dual_down = 0;               // dual keys down (2 -> 1 -> 0) reset on last up stroke, see CNTR_TL, CNTR_TR
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -261,13 +261,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ...................................................... Center Toggle Layers
 
   case CNTR_TL:
-    if (raise_layer(record, 0, LEFT, TOGGLE)) { tt_reset = 2; return false; } // defer reset!
-    if (tt_reset)                             { tt_reset--; base_layer(tt_reset); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE)) { dual_down = 2; return false; } // defer reset!
+    if (dual_down)                            { dual_down--; base_layer(dual_down); return false; }
     tt_escape(record, keycode);
     break;
   case CNTR_TR:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { tt_reset = 2; return false; } // defer reset!
-    if (tt_reset)                              { tt_reset--; base_layer(tt_reset); return false; }
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { dual_down = 2; return false; } // defer reset!
+    if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
     tt_escape(record, keycode);
     break;
   case CNTR_HL:

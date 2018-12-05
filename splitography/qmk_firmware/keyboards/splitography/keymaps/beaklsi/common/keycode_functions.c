@@ -151,11 +151,11 @@ void double_shift(uint16_t keycode, uint8_t layer)
 }
 
 static uint8_t auto_cap = 0;                // down_punc chord, see process_record_user() TD_TILD, KC_EXLM, 
+static uint8_t i;                           // inline for loop counter
 
 // tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
 void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_t paragraph, uint16_t leader)
 {
-  uint8_t i;
   if (auto_cap) {                           // sentence/paragraph capitalization
     if (state->pressed)                                    { return; }
     if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
@@ -203,7 +203,6 @@ void space_reset(qk_tap_dance_state_t *state, void *user_data)
 #ifdef HASKELL
 void colon(qk_tap_dance_state_t *state, void *user_data)
 {
-  uint8_t i;
   if (state->count > 2) {
     if (state->pressed)                     { register_shift(KC_SCLN); }
     else if (state->count == 3)             { send_string(" :: "); }
@@ -220,7 +219,6 @@ void colon_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void lesser(qk_tap_dance_state_t *state, void *user_data)
 {
-  uint8_t i;
   if (state->count > 2) {
     if (state->pressed)                     { register_shift(KC_COMM); }
     else if (state->count == 3)             { send_string(" <- "); }
@@ -239,7 +237,6 @@ void lesser_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void greater(qk_tap_dance_state_t *state, void *user_data)
 {
-  uint8_t i;
   if (state->count > 2) {
     if (state->pressed)                     { register_shift(KC_DOT); }
     else if (state->count == 3)             { send_string(" -> "); }
@@ -259,7 +256,6 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  uint8_t i;
   if (shift_mod(KC_RSFT)) {                 // dot, shift -> tilde, see process_record_user() TD_TILD
     if (state->count > 1) {
       if (state->pressed)                     { register_shift(KC_GRV); }
@@ -303,7 +299,6 @@ void dot(qk_tap_dance_state_t *state, void *user_data)
 
 void emoji(qk_tap_dance_state_t *state, void *user_data)
 {
-  uint8_t i;
   if (state->count > 1) {
     if (state->pressed)                     { register_shift(KC_SCLN); }
     else if (state->count == 2)             { tap_shift(KC_SCLN); tap_key(KC_MINUS); }

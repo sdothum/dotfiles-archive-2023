@@ -96,6 +96,7 @@
         let l:background = &background == 'light' ? 'dark' : 'light'
         let l:cursor     = theme#Value('s:dfm_cursor_'  . l:background)
         let l:text       = theme#Value('s:dfm_fg_text_' . &background)
+        execute 'highlight ErrorMsg        guibg=' . s:dfm_bg         . ' guifg=red'
         execute 'highlight ExtraWhitespace guibg=' . l:cursor         . ' guifg=' . theme#Value('s:dfm_bg_' . l:background)
         execute 'highlight VisualCursor    guibg=' . l:cursor         . ' guifg=' . s:dfm_bg
         execute 'highlight ReplaceCursor   guibg=' . l:cursor         . ' guifg=' . s:dfm_bg

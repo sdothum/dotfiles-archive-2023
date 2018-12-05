@@ -169,10 +169,10 @@
       " adjust all splits to the same size
       noremap <leader>=  <C-w>=
 
-      nnoremap <Up>      :resize +5<CR>
-      nnoremap <Down>    :resize -5<CR>
-      nnoremap <Left>    :vertical resize -5<CR>
-      nnoremap <Right>   :vertical resize +5<CR>
+      nnoremap <C-Up>    :resize +5<CR>
+      nnoremap <C-Down>  :resize -5<CR>
+      nnoremap <C-Left>  :vertical resize -5<CR>
+      nnoremap <C-Right> :vertical resize +5<CR>
 
     " ........................................................... Switch windows
 
@@ -180,13 +180,13 @@
       " switch to left / right split
       " noremap <C-m>    <C-w>h
       " noremap <C-e>    <C-w>l
-      noremap <C-Left>   <C-w>h
-      noremap <C-Right>  <C-w>l
+      noremap <Left>     <C-w>h
+      noremap <Right>    <C-w>l
       " switch to top / bottom split
       " noremap <C-l>    <C-w>k
       " noremap <C-n>    <C-w>j
-      noremap <C-Up>     <C-w>k
-      noremap <C-Down>   <C-w>j
+      noremap <Up>       <C-w>k
+      noremap <Down>     <C-w>j
       " switch windows
       " noremap <C-w>    <C-w><C-w>
 
