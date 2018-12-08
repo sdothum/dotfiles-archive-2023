@@ -15,7 +15,7 @@ usage() {
 host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')
 
 case $i in
-'') pstat slrn || slrn -h $host ;;
+'') pstat slrn || exec slrn -h $host ;;
 
 f*) killall slrn 2>/dev/null
     usenet ;;

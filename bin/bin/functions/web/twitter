@@ -7,6 +7,6 @@
 # ...................................................................... Twitter
 
 # stupid git!
-pstat turses || turses
+pstat turses || turses &
 
 # vim: set ft=sh: #

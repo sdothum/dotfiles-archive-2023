@@ -6,6 +6,6 @@
 
 # ...................................................................... Browser
 
-chromium http://localhost/rutorrent/
+chromium http://localhost/rutorrent/ &
 
 # vim: set ft=sh: #

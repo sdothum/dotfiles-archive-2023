@@ -13,6 +13,6 @@ font="$STOW/alacritty/$(fontsize)pt"
 echo "$@" | grep -q '\--config-file' && unset config
 
 # pgrep xclip >/dev/null || xclip -r -silent &
-eval /usr/bin/alacritty $config $@
+eval /usr/bin/alacritty $config $@ &
 
 # vim: set ft=sh: #

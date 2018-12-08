@@ -78,8 +78,8 @@ enum keyboard_layers {
  ,_MOUSE
  ,_NUMBER
  ,_FNCKEY
- ,_PLOVER
  ,_EDIT
+ ,_PLOVER
 #ifdef PLANCK
  ,_ADJUST
 #endif
@@ -105,16 +105,11 @@ enum keyboard_keycodes {
  ,SS_A      // pseudo SFT_T(S(KC_A))
  ,SS_T      // pseudo SFT_T(S(KC_T))
  ,TT_ESC
-#ifdef STENO_ENABLE
- ,PS_STNA = STN_A
- ,PS_STNO = STN_O
- ,PS_STNE = STN_E
- ,PS_STNU = STN_U
-#else
- ,LT_C    = LT (_SYMBOL, KC_C)
- ,LT_V    = LT (_NUMBER, KC_V)
- ,LT_N    = LT (_FNCKEY, KC_N)
- ,LT_M    = LT (_GUIFN, KC_M)
+#ifndef STENO_ENABLE
+ ,LT_C    = LT(_NUMBER, KC_C)
+ ,LT_V    = LT(_SYMBOL, KC_V)
+ ,LT_N    = LT(_GUIFN, KC_N)
+ ,LT_M    = LT(_EDIT, KC_M)
 #endif
 };
 
@@ -310,13 +305,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer    (record, _MOUSE);
     rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _SYMBOL);
     break;
-  case TT_SPC:
-#ifdef CAPS_ONOFF
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
-#endif
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
-    break;
   case TD_SPC:
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
     if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
@@ -325,7 +313,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer    (record, _GUIFN);
     rolling_layer(record, RIGHT, 0, 0, _GUIFN, _SYMBOL);
     break;
+  case TT_SPC:
+#ifdef CAPS_ONOFF
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
+#endif
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
+    break;
 
+  case TD_BSPC:
+    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
+    tap_layer(record, _EDIT);
+    break;
   case KC_BSPC:
 #ifdef CAPS_ONOFF
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
@@ -335,13 +336,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (record->event.pressed)                        { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
     return false;                           // capslock toggling trap, use shift bspc -> del for auto repeat
-#endif
-  case TD_BSPC:
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE)) { return false; }
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
-    tap_layer(record, _EDIT);
+#else
     break;
+#endif
 
   // ............................................................. Modifier Keys
 
@@ -360,7 +357,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mt_shift(record, KC_LSFT, 0, KC_T);
     break;
 
-  // ............................................................... Mapped Keys
+  // ......................................................... Shift Mapped Keys
 
   case KC_COLN:
   case TD_EMOJ:

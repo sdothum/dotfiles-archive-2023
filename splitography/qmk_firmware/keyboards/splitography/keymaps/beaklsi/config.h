@@ -3,7 +3,7 @@
 
 #include "../../config.h"
 
-// required because lower/raise modifiers are redefined by colemak-dh
+// prevent holdback of 1-3 key TxBolt chords
 #define PREVENT_STUCK_MODIFIERS
 // fix dual function timing
 #define PERMISSIVE_HOLD

@@ -15,7 +15,7 @@ KEYMAPS='DEFAULT'
 
 ROOT=/net/depot
 ROOT=$HOME
-QMK=$ROOT/qmk_firmware
+QMK=$ROOT/qmk_firmware.steno
 SPLITOGRAPHY=$QMK/keyboards/splitography
 KEYMAP=$SPLITOGRAPHY/keymaps/$1
 CONFIG=$KEYMAP/config.h
