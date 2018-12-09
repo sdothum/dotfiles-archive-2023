@@ -105,12 +105,6 @@ enum keyboard_keycodes {
  ,SS_A      // pseudo SFT_T(S(KC_A))
  ,SS_T      // pseudo SFT_T(S(KC_T))
  ,TT_ESC
-#ifndef STENO_ENABLE
- ,LT_C    = LT(_NUMBER, KC_C)
- ,LT_V    = LT(_SYMBOL, KC_V)
- ,LT_N    = LT(_GUIFN, KC_N)
- ,LT_M    = LT(_EDIT, KC_M)
-#endif
 };
 
 // modifier keys
