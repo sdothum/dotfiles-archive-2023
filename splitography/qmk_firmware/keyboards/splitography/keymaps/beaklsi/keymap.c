@@ -79,16 +79,16 @@ enum keyboard_layers {
  ,_NUMBER
  ,_FNCKEY
  ,_EDIT
- ,_PLOVER
-#ifdef PLANCK
- ,_ADJUST
-#endif
  ,_TTCAPS
  ,_TTFNCKEY
  ,_TTCURSOR
  ,_TTMOUSE
  ,_TTNUMBER
  ,_TTREGEX
+ ,_PLOVER
+#ifdef PLANCK
+ ,_ADJUST
+#endif
  ,_END_LAYERS
 };
 
@@ -158,9 +158,11 @@ enum keyboard_keycodes {
 
 #define TT_SPC  LT  (_TTCURSOR, KC_SPC)
 #ifdef PLANCK
-#define LT_DEL  LT  (_ADJUST, KC_DEL)
+#define LT_0    LT  (_ADJUST, KC_0)
+#define LT_EQL  LT  (_ADJUST, KC_EQL)
 #define LT_INS  LT  (_FNCKEY, KC_INS)
 #define LT_LEFT LT  (_EDIT, KC_LEFT)
+#define MO_ADJ  MO  (_ADJUST)
 #endif
 #define LT_ESC  LT  (_NUMBER, KC_ESC)
 #define OS_ALT  OSM (MOD_LALT)

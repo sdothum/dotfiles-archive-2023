@@ -21,8 +21,8 @@
       let s:dfm_proof_dark       = g:dark     " dark hypertext
       let s:dfm_bg_spell_light   = g:spell    " light spelling
       let s:dfm_bg_spell_dark    = g:hue_5    " dark spelling
-      let s:dfm_ale_light        = g:hue_5
-      let s:dfm_ale_dark         = g:red
+      let s:dfm_ale_light        = g:hue_1
+      let s:dfm_ale_dark         = g:hue_4
 
       " background
       let s:dfm_bg_light         = g:base7    " flatwhite light background
@@ -110,9 +110,9 @@
         execute 'highlight InsertCursor    guibg=' . s:dfm_cursor     . ' guifg=' . s:dfm_bg
         execute 'highlight CursorLine      guibg=' . s:dfm_cursor_bg  . ' guifg=' . s:dfm_cursorline
         execute 'highlight Cursor          guibg=' . s:dfm_cursor     . ' guifg=' . g:black
-        execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg . ' gui=bold'
-        execute 'highlight ALEErrorSign    guifg=' . theme#Value('s:dfm_ale_'     . l:background)
-        highlight  link ALEWarningSign     ALEErrorSign
+        execute 'highlight MatchParen      guibg=' . s:dfm_match      . ' guifg=' . s:dfm_bg     . ' gui=bold'
+        execute 'highlight ALEWarningSign  guifg=' . theme#Value('s:dfm_ale_'     . &background) . ' gui=bold'
+        execute 'highlight ALEErrorSign    guifg=red gui=bold'
         " toggling colorcolunm toggles spell colors (not a prose workflow issue)
         execute 'highlight SpellBad        guibg=' . theme#Value('s:dfm_bg_spell_' . &background) . ' guifg=' . l:text
         highlight! link SpellCap           SpellBad

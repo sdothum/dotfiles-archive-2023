@@ -81,7 +81,7 @@ init   ) git init
          git push -u origin master
          git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
 
-list   ) git log --oneline | nl -v0 | sed 's/^ \+/&HEAD~/' | less ;;
+list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
 log    ) git log | less ;;
 
 undo   |\

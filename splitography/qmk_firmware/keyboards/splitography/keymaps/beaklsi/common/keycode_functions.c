@@ -144,7 +144,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
     }
     else {
       unregister_code(keycode);
-      // if (!shift) { register_code(KC_LSFT); } // omit restore and potential (pre-release) SFT_T timing lock
+      // if (!shift) { register_code(KC_LSFT); } // omit restore and potential (prior released) SFT_T lock
     }
     return true;                                 // remap complete, see process_record_user()
   }

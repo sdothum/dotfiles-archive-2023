@@ -14,8 +14,8 @@
     " ...................................................................... Ale
 
       let g:ale_sign_column_always = 1
-      let g:ale_sign_error         = ''  " nerd-font utf-8 symbols
-      let g:ale_sign_warning       = ''
+      let g:ale_sign_error         = '→'  " nerd-font utf-8 symbols
+      let g:ale_sign_warning       = '→'
       let g:ale_linter_aliases     =
           \{
           \  'wiki' : 'markdown'
