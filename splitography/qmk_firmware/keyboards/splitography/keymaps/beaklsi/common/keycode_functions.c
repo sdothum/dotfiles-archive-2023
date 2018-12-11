@@ -3,6 +3,7 @@
 
 static uint8_t  i         = 0;              // inline for loop counter
 static uint16_t key_timer = 0;              // global event timer
+static uint16_t reshifted = 0;              // SFT_T timing trap, see map_shift(), process_record_user()
 
 // Keycodes
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -26,15 +27,15 @@ void modifier(void (*f)(uint8_t))
   if (mods & MOD_BIT(KC_LGUI)) { f(KC_LGUI); }
   if (mods & MOD_BIT(KC_LALT)) { f(KC_LALT); }
   if (mods & MOD_BIT(KC_LSFT)) { f(KC_LSFT); }
-  if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
+  if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); } // note: qmk macros all use left modifiers
 }
 
-// base layer modifier and only shift modifier KC_LSFT or KC_RSFT
-bool on_shift(uint16_t shift_key)
+// base layer modifier
+bool mod_down(uint16_t key_code)
 {
-  // return (mods && ((mods & MOD_BIT(shift_key)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
-  // return (mods && ((mods & MOD_BIT(shift_key)) == mods));
-  return mods & MOD_BIT(shift_key);
+  // return (mods && ((mods & MOD_BIT(key_code)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
+  // return (mods && ((mods & MOD_BIT(key_code)) == mods));
+  return mods & MOD_BIT(key_code);          // relax timing on home row modifiers
 }
 
 // .................................................................. Key event
@@ -133,20 +134,19 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
 
 // ................................................................. Map Keycode
 
-// remap keycode via shift for base and caps layers, see process_record_user()
+// remap keycode via shift for base and caps layers
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
-  // if modifier and only shift modifier and base layer..
-  if (on_shift(shift_key)) {
+  if (mod_down(shift_key)) {
     if (record->event.pressed) {
-      if (!shift) { unregister_code(KC_LSFT); }  // in event of unshifted keycode
+      if (!shift) { unregister_code(KC_LSFT); } // in event of unshifted keycode
       register_code(keycode);
     }
     else {
       unregister_code(keycode);
-      // if (!shift) { register_code(KC_LSFT); } // omit restore and potential (prior released) SFT_T lock
+      if (!shift) { register_code(KC_LSFT); reshifted = 1; } // set SFT_T timing trap, process_record_user()
     }
-    return true;                                 // remap complete, see process_record_user()
+    return true;
   }
   return false;
 }
@@ -298,7 +298,7 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (on_shift(KC_RSFT)) {                  // dot, shift -> tilde, see process_record_user() TD_TILD
+  if (mod_down(KC_RSFT)) {                  // dot, shift -> tilde, see process_record_user() TD_TILD
     if (state->count > 1) {
       if (state->pressed)                     { register_shift(KC_GRV); }
       else if (state->count == 2)             { send_string("~/"); } 
@@ -314,7 +314,7 @@ void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_GRV);
   unregister_code (KC_DOT);
-  if (on_shift(KC_RSFT)) { register_code(KC_LSFT); } // restore HOME_T, see process_record_user() TD_TILD
+  if (mod_down(KC_RSFT)) { register_code(KC_LSFT); } // restore HOME_T, see process_record_user() TD_TILD
 }
 
 // ........................................................... Double Tap Insert

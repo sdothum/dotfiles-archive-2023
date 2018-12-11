@@ -217,6 +217,8 @@ static uint8_t dual_down = 0;               // dual keys down (2 -> 1 -> 0) rese
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
+  if (reshifted && !mod_down(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; } // see map_shift()
+
   // ........................................................ Home Row Modifiers
 
   switch (keycode) {
@@ -286,7 +288,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
-    lt_shift     (record, on_shift(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
+    lt_shift     (record, mod_down(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
     tap_layer    (record, _SYMBOL);
     rolling_layer(record, LEFT, 0, 0, _SYMBOL, _GUIFN);
     break;
@@ -371,7 +373,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ..................................................... Leader Capitalization
   
   case TD_TILD:
-    if (on_shift(KC_RSFT)) { unregister_code(KC_LSFT); } // un-shift before tap dance processing to register unshifted keycodes, see tilde()
+    if (mod_down(KC_RSFT)) { unregister_code(KC_LSFT); } // un-shift before tap dance processing to register unshifted keycodes, see tilde()
   case KC_EXLM:
   case KC_QUES:
     down_punc = (record->event.pressed) ? 1 : 0;         // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()

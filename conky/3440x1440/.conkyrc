@@ -74,8 +74,8 @@ ${goto 47}${color1}${voffset -29}${font Noto Sans:size=12}${time %A}
 ${goto 67}${color3}${voffset -4}${font Noto Sans:size=9}${time %b}${voffset -1}  ${color5}${font Noto Sans:size=16}'${time %y}
 ${voffset 17}${font}${color3}${alignr}${time %-Vw  /  %-jd}
 ${voffset -5}
-${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "1"}
-${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${offset 141}${exec query tag}${font Noto Sans:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${exec query tag inactive}
+${if_match "${exec herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1}" == "0"}
+${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${offset 141}${exec query tag}${font Noto Sans:size=16:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color}${endif}${exec query tag inactive}
 ${voffset -72}
 ${else}
 ${voffset -217}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden inactive}" == "hidden"}${color9}${else}${color3}${endif}${offset 141}${font Noto Sans:size=16:style=Normal}${exec query tag inactive}${voffset -46}${font Noto Sans:size=48:style=Normal}${if_match "${exec is hidden}" == "hidden"}${color9}${else}${color7}${endif}${exec query tag}
