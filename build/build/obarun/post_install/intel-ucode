@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. intel-ucode
+
+original /boot/grub/grub.cfg
+sudo sed -i '/initrd.*\/__current\/ROOT\/boot\/initramfs-linux-ck.img/s/initrd.*\(\/.*\)/initrd \/intel-ucode.img \1/' /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# vim: set ft=sh: #

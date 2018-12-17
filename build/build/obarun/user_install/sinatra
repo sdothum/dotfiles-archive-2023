@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... sinatra
+
+# install nginx web site dependency
+if [ ! -d /srv/http/thedarnedestthing.com ] ;then
+  sudo mkdir -pv /srv/http/thedarnedestthing.com
+  sudo chown -c $USER:users /srv/http/thedarnedestthing.com
+  if server ;then
+    # rsync -av $USER@monad:/srv/http/thedarnedestthing.com /srv/http/
+    rsync -av $USER@lumen:/srv/http/thedarnedestthing.com /srv/http/
+  else
+    rsync -av $USER@luna:/srv/http/thedarnedestthing.com /srv/http/
+  fi
+fi
+
+# vim: set ft=sh: #

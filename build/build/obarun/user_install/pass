@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... pass
+
+# initialize password tree
+[ -e $HOME/sandbox/pass.sh ] && $HOME/sandbox/pass.sh || annotate "run pass.sh"
+/usr/bin/pass init $(passphrase uid/gmail)
+
+# vim: set ft=sh: #

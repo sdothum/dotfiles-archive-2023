@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................... msmtp-mta
+
+# configure mail spooler
+if ! grep -q msmtp /usr/lib/systemd/system/cronie.service 2>/dev/null ;then
+  original /usr/lib/systemd/system/cronie.service
+  sudo sed -i '/ExecStart=\/usr\/bin\/crond -n$/s|$| -m "/usr/bin/msmtp -t"|' /usr/lib/systemd/system/cronie.service
+fi
+
+if ! grep -q mailqueue /var/spool/cron/$USER 2>/dev/null ;then
+  server || comment='# '
+  echo "$(crontab -l)
+* * * * * /home/$USER/bin/functions/mail/mailqueue >>/tmp/mailqueue.log 2>&1
+${comment}* * * * * /home/$USER/bin/functions/mail/mailsync >>/tmp/mailsync.log 2>&1"  |
+       sudo crontab -u $USER -
+fi
+
+mkdir -p $HOME/tmp
+
+if [ ! -L $HOME/.msmtprc ] ;then
+  ln -sfv $HOME/stow/msmtp/.msmtprc $HOME/.msmtprc
+  chmod -c 600 $HOME/.msmtprc
+fi
+
+# vim: set ft=sh: #

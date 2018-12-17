@@ -1,0 +1,62 @@
+
+# sdothum - 2016 (c) wtfpl
+
+# fresh arch pre-installer
+
+heading() {
+  message=">>>   $@   <<<"
+  echo
+  echo $(head -c $(echo "$message" | wc -L) </dev/zero | tr '\0' '-')
+  echo "$message"
+  echo $(head -c $(echo "$message" | wc -L) </dev/zero | tr '\0' '-')
+  echo
+}
+
+checkpoint() {
+  echo
+  while true
+  do
+    echo -n "continue? [yes]/no/shell :"
+    read REPLY
+    reply=$(echo $REPLY | sed -r 's/^(.).*/\1/')
+    case $reply in
+      '' | y) return ;;
+      n     ) exit ;;
+      s     ) bash -i ;;
+    esac
+  done
+  echo
+}
+
+original() { [ -f $@.original ] || cp -v $@ $@.original ;}
+
+connect() {
+  if [ $(cat /sys/class/net/enp1s0/openstate 2>/dev/null) = up ] ;then
+    heading 'connecting enp1s0'
+    dhcpcd eth0
+  else
+    wlan0=$(iw dev | grep Interface | sed 's/.*Interface //')
+    heading "connecting $wlan0"
+    ip link set $wlan0
+    wifi-menu $wlan0
+  fi
+}
+
+config_install() {
+  if [ -e /media/home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+  elif [ -e /home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /home/$user/build/root/$1 $1)
+  else
+    echo "-> $user/build/root/$1 not found"
+  fi
+}
+
+pm_install() {
+  echo
+  echo "$(date '+%a %-I:%M %S%P') >>>   $@   <<<"
+  echo
+  pacman -S --noconfirm $@
+}
+
+# vim: set ft=sh: #

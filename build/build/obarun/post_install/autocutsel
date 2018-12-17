@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... autocutsel
+
+ifnsed $HOME/.xinitrc 'autocutsel -fork &'
+ifnsed $HOME/.xinitrc 'autocutsel -selection PRIMARY -fork &'
+
+# vim: set ft=sh: #

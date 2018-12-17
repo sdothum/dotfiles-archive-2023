@@ -1,0 +1,27 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... connman
+
+hosts=$HOME/build/root/etc/hosts
+gateway=10.1.0.1
+
+# get network hosts table
+config_install L /etc/hosts
+
+# add host ip address
+ip=$(hostname --ip-address)
+hostname=$(hostname)
+ifnsed $hosts " $hostname *" "/ $hostname */s/^[^ ]*/$ip/" "/localhost.*ttrss/a$ip $hostname"
+
+# set static ip
+server && service=$(connmanctl services | grep Wired) ||
+          service=$(connmanctl services | grep Ravens)
+service=$(echo $service | awk '{ print $3 }')
+connmanctl config $service --ipv4 manual $ip 255.255.255.0 $gateway
+
+! server && annotate 'check /etc/hosts (luna) if wlan0 errors on boot'
+
+# vim: set ft=sh: #

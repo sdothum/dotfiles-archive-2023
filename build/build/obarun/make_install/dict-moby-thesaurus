@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................... dict-moby-thesaurus
+
+version=1.0-6.4
+trap "rm -r dict-moby-thesaurus_${version}_all.deb usr" EXIT
+
+# fetch and extract package contents
+curl -L -O http://ftp.ca.debian.org/debian/pool/main/d/dict-moby-thesaurus/dict-moby-thesaurus_${version}_all.deb
+ar p dict-moby-thesaurus_${version}_all.deb data.tar.xz | sudo tar xJ
+
+# install components
+sudo mv usr/share/dictd/* /usr/share/dictd/
+sudo mkdir /usr/share/doc/dict-moby-thesaurus
+sudo mv usr/share/doc/dict-moby-thesaurus/* /usr/share/doc/dict-moby-thesaurus/
+
+# configure dictd (note required <SPACE> after sed 'a' command before \ continuation)
+ifnsed /etc/dict/dictd.conf 'moby-thesaurus' '$a \
+database moby-thesaurus {\
+        data /usr/share/dictd/moby-thesaurus.dict.dz\
+        index /usr/share/dictd/moby-thesaurus.index\
+}'
+
+systemd restart dictd
+
+# vim: set ft=sh: #

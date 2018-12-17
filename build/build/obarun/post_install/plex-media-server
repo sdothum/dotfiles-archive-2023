@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .............................................................. plexmediaserver
+
+ifnsed /etc/conf.d/plexmediaserver '/opt/plexmediaserver/Library/Application Support/Plex Media Server' \
+                                   '/PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/s|=.*|=/opt/plexmediaserver/Library/Application\\ Support|'
+
+sudo mkdir -p /opt/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server
+sudo chown -cR plex:plex /opt/plexmediaserver/Library/Application\ Support
+systemd enable plexmediaserver
+
+# vim: set ft=sh: #

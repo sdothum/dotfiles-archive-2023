@@ -1,0 +1,88 @@
+# development packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= database management
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# adminer
+  pgadmin3
+  postgresql
+# python2-pysqlite
+  sqlite
+  sqlitebrowser
+
+
+= document formatting
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  csslint
+  csstidy
+  enscript
+
+
+= editors
+= ▔▔▔▔▔▔▔
+# atom-editor     [server]
+# atom-editor-bin [server]
+# ctags
+  emacs           [server]
+# neovim
+# neovim-git
+# sublime-text
+  universal-ctags-git
+
+
+= haskell
+= ▔▔▔▔▔▔▔
+# cabal-install
+# "ghc must be installed before other haskell packages"
+  ghc
+# alex
+# haddock
+# happy
+  pandoc
+# stack
+
+
+= java
+= ▔▔▔▔
+  icedtea-web
+  jre7-openjdk
+
+
+= prototyping
+= ▔▔▔▔▔▔▔▔▔▔▔
+# tcc
+  ruby
+
+
+= python
+= ▔▔▔▔▔▔
+  python-pip
+  python-setuptools
+
+
+= software tools
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# arduino         [! cpu atom]
+  avr-gcc
+  avr-libc
+  dfu-programmer
+  cmake
+  gdb
+  strace
+  time
+
+
+= version control
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# vcsh-git
+# hgview
+  git
+  mercurial
+# myrepos
+  patchutils
+# subversion
+# tortoisehg
+
+# vim: set ft=conf: #

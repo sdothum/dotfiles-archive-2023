@@ -1,0 +1,54 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... nzbget
+
+provider=$(passphrase usenet/provider)
+email=$(passphrase uid/$provider)
+password=$(passphrase usenet/$provider)
+
+original -f $HOME/.nzbget
+sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
+    -e '/^DestDir=/s/dst/completed/' \
+    -e '/^NzbDir=/s|=.*|=/net/downloads/http|' \
+    -e '/^LogFile=/s|=.*|=/tmp/nzbget.log|' \
+    -e "/^Server1.Host=/s/=.*/=$provider/" \
+    -e '/^Server1.Port=/s/=.*/=563/' \
+    -e "/^Server1.Username=/s/=.*/=$email/" \
+    -e "/^Server1.Password=/s/=.*/=$password/" \
+    -e '/^Server1.Encryption=/s/no/yes/' \
+    -e '/Server1.Connections=/s/=.*/=10/' \
+    -e '/Category1.DestDir=/s|=.*|=/net/media/videos/movies|' \
+    -e '/Category2.Name=Series/aCategory2.DestDir=/net/media/videos/series' \
+    -e '/^ControlIP=/s/=.*/=0.0.0.0/' \
+    -e '/^ControlPassword=/s/=.*/=nzbget/' \
+    -e '/^WriteBufferSize=/s/0/-1/' \
+    -e '/^DeleteCleanupDisk=/s/yes/no/' \
+    -e '/^KeepHistory=/s/=.*/=7/' \
+    -e '/^CursesGroup=/s/no/yes/' \
+    -e '/^CursesTime=/s/no/yes/' \
+    -e '/^WriteLog=/s/=.*/=rotate/' \
+    -e "/^DaemonUsername=/s/=.*/=$USER/" \
+    /usr/share/nzbget/nzbget.conf >$HOME/.nzbget
+
+echo '[Unit]
+Description=NZBGet Daemon for %I
+
+[Service]
+User=%i
+Type=forking
+ExecStart=/usr/bin/nzbget --daemon
+ExecStop=/usr/bin/nzbget --quit
+ExecReload=/usr/bin/nzbget --reload
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+' | sudo tee /usr/lib/systemd/system/nzbget@.service
+
+systemd enable nzbget@$USER
+
+# vim: set ft=sh: #

@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... polipo
+
+original /etc/polipo/config
+sed -e '/cacheIsShared = false/s/^# //' \
+    -e '/censoredHeaders = from.*/s/^# //' \
+    -e '/censorReferer = maybe/s/^# //' \
+    -e '/diskCacheRoot = ""/s/^# //' \
+    -e '$a\
+logSyslog = true\
+dnsnameserver = 127.0.0.1\
+' /etc/polipo/config.sample | sudo tee /etc/polipo/config
+
+systemd enable polipo
+
+# vim: set ft=sh: #

@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. nvidia-340xx
+
+# set grub boot screen resolution
+original /etc/default/grub
+sudo sed -i -e '/^GRUB_CMDLINE_LINUX_DEFAULT="quiet"/s/"quiet"/"quiet vga=0x0364"/' \
+         -e '/^GRUB_GFXMODE=auto/s/auto/1440x900,auto/' \
+         /etc/default/grub
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+if [ ! -e /etc/X11/xorg.conf ] ;then
+  annotate "if "no screens" on x11 server startup..\n
+sudo Xorg -configure\n
+sudo cp /root/xorg.conf.new /etc/X11/xorg.conf"
+fi
+
+# vim: set ft=sh: #

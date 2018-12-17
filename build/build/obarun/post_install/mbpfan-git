@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .............................................................. macbook pro fan
+
+sudo modprobe applesmc
+sudo modprobe coretemp
+echo applesmc | sudo tee /etc/modules-load.d/applesmc.conf
+echo coretemp | sudo tee /etc/modules-load.d/coretemp.conf
+systemd enable mbpfan
+
+# vim: set ft=sh: #

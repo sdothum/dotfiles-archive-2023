@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................... xfce4-power-manager
+
+# configure power manager
+xfce4-power-manager &
+xfce4-power-manager -c
+
+# vim: set ft=sh: #

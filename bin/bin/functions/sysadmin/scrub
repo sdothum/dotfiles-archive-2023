@@ -47,7 +47,7 @@ c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) show $(volume $2) ;;
 
-* ) sudo btrfs scrub start -Bd $(volume $@) &
+* ) nohup sudo btrfs scrub start -Bd $(volume $@) &
     which term >/dev/null 2>&1 && ( term "$@" SHELL "scrub s $@" & ) ||
                                   scrub s $@ ;;
 esac

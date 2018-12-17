@@ -1,0 +1,31 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... smbnetfs
+
+[ -f /etc/samba/smb.conf ] || sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf
+if [ -z $(cat /etc/samba/smb.conf | grep usershare) ] ;then
+  set --export USERSHARES_DIR /var/lib/samba/usershares
+  set --export USERSHARES_GROUP sambashare
+  sudo mkdir -p $USERSHARES_DIR
+  sudo groupadd $USERSHARES_GROUP
+  sudo chown -c root:$USERSHARES_GROUP $USERSHARES_DIR
+  sudo chmod -c 01770 $USERSHARES_DIR
+
+  ifnsed /etc/samba/smb.conf 'usershare path = /var/lib/samba/usershares' '/\[global\]/ausershare path = /var/lib/samba/usershares'
+  ifnsed /etc/samba/smb.conf 'usershare max shares = 100' '/\[global\]/ausershare max shares = 100'
+  ifnsed /etc/samba/smb.conf 'usershare allow guests = yes' '/\[global\]/ausershare allow guests = yes'
+  ifnsed /etc/samba/smb.conf 'usershare owner only = False' '/\[global\]/ausershare owner only = False'
+  sudo usermod -a -G $USERSHARES_GROUP $USER
+
+  ifnsed /etc/fuse.conf '^user_allow_other' '/^#user_allow_other/s/#//'
+  sudo modprobe fuse
+fi
+
+systemd enable smbd
+systemd enable nmbd
+systemd enable smbnetfs
+
+# vim: set ft=sh: #

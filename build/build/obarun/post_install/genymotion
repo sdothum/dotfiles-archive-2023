@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... genymotion
+
+original /etc/modules-load.d/virtualbox.conf
+sudo sed -i '$a\
+vboxnetflt\
+vboxnetadp\
+vboxpci\
+' /etc/modules-load.d/virtualbox.conf
+
+sudo modprobe vboxnetflt
+sudo modprobe vboxnetadp
+sudo modprobe vboxpci
+
+# vim: set ft=sh: #

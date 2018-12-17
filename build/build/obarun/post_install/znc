@@ -1,0 +1,45 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... znc
+
+# add server networks on znc webpage before connecting to servers
+# freenode chat.freenode.net +6697
+# oftc irc.oftc.net +6697
+# rizon irc.rizon.net +6697
+# gitter irc.gitter.im +6667 <password>
+# znc install adds freenode by default for #znc
+annotate "listen on port 7000, username/password znc/znc\n
+service identity with:\n
+/msg nickserv register <password> <email>\n
+or if already registered..\n
+/msg nickserv identify <password>\n
+enable sasl with:\n
+/msg *sasl Mechanism PLAIN\n
+/msg *sasl Set <nick> <password>\n
+freenode channels (znc):\n
+/join ##astronomy,#archlinux,#archlinux-arm,#archlinux-offtopic,#arduino,#atom\n
+/join #bash,#bspwm,#btrfs\n
+/join #compton,#conky,#css\n
+/join #darktable,#dcraw,#deskthority,#digikam\n
+/join #emacs,#geekhack,#git,#github\n
+/join #haskell,#herbstluftwm\n
+/join ##javascript,##linux,#latex,#lesswrong,#lisp\n
+/join ##math,#Mechboards\n
+/join #neovim,#nginx,#nixos,#notmuch\n
+/join #ocaml,#papyros,#passenger,##politics,#python\n
+/join #qutebrowser,##reddit-hockey,#raspberrypi,#rawtherapee,#ruby\n
+/join #sinatra,#sup\n
+/join #vim,#weechat,#znc\n
+gitter channels:\n
+/join #syl20bnr/spacemacs\n
+oftc channels:\n
+/join #bcachefs,#bitlbee,#fish,#suckless\n
+rizon channels:\n
+/join #anime-planet.com,#haruhichan,#rice"
+sudo -u znc znc --makeconf
+server && systemd enable znc || annotate "sudo systemctl start znc"
+
+# vim: set ft=sh: #

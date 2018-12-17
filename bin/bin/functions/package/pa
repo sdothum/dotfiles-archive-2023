@@ -16,14 +16,14 @@ country=Canada
 # AUR package manager
 if [ -z $1 ] ;then
   if cpu arm ;then
-    pacaur -Syuu
+    yay -Syuu
     exit
   fi
   # mirrorlist
   ifno "mirrorlist $country" || mirrorlist $country
   sudo pacman-key -u
-  # pacaur -Syu --repo
-  # pacaur -Su --aur --noconfirm
+  # yay -Syu --repo
+  # yay -Su --aur --noconfirm
 
   # see post_install grub-btrfs-git
   [ -x /etc/grub.d/41_snapshots-btrfs ] || sudo chmod -c 755 /etc/grub.d/41_snapshots-btrfs
@@ -34,7 +34,7 @@ if [ -z $1 ] ;then
 
   # pacupg $aur doen'reate new boot snapshot, see $pacaur
   if [ $pacaur ] ;then
-    pacaur -Syuu --aur
+    yay -Syuu --aur
     pacupg
   else
     pacupg $aur
@@ -49,7 +49,7 @@ if [ -z $1 ] ;then
   orphans
   ifno 'apply post arch install updates and cleanup' || $HOME/build/archlinux/archlinux-update
 else
-  pacaur $@
+  yay $@
 fi
 
 # prune snapper logs

@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ nginx
+
+[ -d /opt/nginx ] && sudo rm -r /opt/nginx
+sudo mkdir -pv /opt/nginx
+sudo chown -c root:users /opt/nginx
+sudo chmod -c 775 /opt/nginx
+
+# vim: set ft=sh: #

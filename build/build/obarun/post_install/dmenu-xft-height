@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................. dmenu-xft-height
+
+# add scratchpad/term default and exit code for bspwm preselect operations
+original /usr/bin/dmenu_run
+sed -i -re "/stest.*@\"/s/ tee /sed '1iscratchpad\\\\nterm\\\\npseudoframe' | tee /" \
+    -e '/stest.*@"/s/(stest.*)/run=\$(\1) || exit/' \
+    -e '/dmenu.*cache"/s/(dmenu.*)/run=\$(\1) || exit/' \
+    -e '/).*SHELL.*&/i\\t[[ $run ]] && $run' \
+    -e '/).*SHELL.*&/c)' \
+    /usr/bin/dmenu_run
+
+rm -f $HOME/.cache/dmenu_run
+annotate "check bspwm changes to /usr/bin/dmenu_run (see sxhkdrc)"
+
+# vim: set ft=sh: #

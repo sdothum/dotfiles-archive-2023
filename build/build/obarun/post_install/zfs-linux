@@ -1,0 +1,59 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... zfs
+
+if [ -d /net -o -d /backup ]; then
+    echo ".. /net pool probably already exists, otherwise rmdir /net"
+    exit
+fi
+
+config() {
+  sudo zpool upgrade $1
+  sudo zpool set cachefile=/etc/zfs/zpool.cache $1
+  sudo zpool set feature@empty_bpobj=enabled $1
+  sudo zpool set feature@lz4_compress=enabled $1
+  sudo zfs set compression=lz4 $1
+  sudo zfs set dedup=off $1
+  sudo zfs set atime=off $1
+  zfs get compressratio $1
+}
+
+sudo zpool create -f -m /net -o ashift=12 pool \
+                  ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV \
+                  ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
+config pool
+# export nfs share
+# sudo zfs set sharenfs='rw=@10.1.0.0/240' pool
+
+sudo zpool create -f -m /backup -o ashift=12 tank \
+                  mirror ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795 \
+                         ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 \
+                  mirror ata-WDC_WD30EFRX-68N32N0_WD-WCC7K4DADSCU \
+                         ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ
+config tank
+
+systemd enable zfs.target
+systemd enable zfs-import-cache
+systemd enable zfs-mount
+systemd enable zfs-import.target
+
+zdb -C
+zpool status
+
+# update pacman
+if ! grep -q 'archzfs' /etc/pacman.conf ;then
+  sudo sed -i '$a[archzfs]
+Server = http://archzfs.com/$repo/x86_64' /etc/pacman.conf
+  sudo pacman-key  -r 5E1ABF240EE7A126
+  sudo pacman-key  -f 5E1ABF240EE7A126
+  sudo pacman-key --lsign-key 5E1ABF240EE7A126
+  sudo pacman -Syy
+fi
+# must sync to current linux version
+ignorepkg -f linux
+ignorepkg -f linux-headers
+
+# vim: set ft=sh: #

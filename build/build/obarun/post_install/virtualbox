@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... virtualbox
+
+echo vboxdrv | sudo tee /etc/modules-load.d/virtualbox.conf
+sudo modprobe vboxdrv
+
+sudo gpasswd -a $USER vboxusers
+if [ ! -d /net/depot/virtualbox ] ;then
+  sudo mkdir -pv /net/depot/virtualbox
+  sudo chown -cR $USER:users /net/depot
+  # disable CoW for virtual machine images
+  chattr +C /net/depot/virtualbox/
+fi
+
+# vim: set ft=sh: #

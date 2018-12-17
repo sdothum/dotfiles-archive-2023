@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... virtualbox
+
+sudo modprobe -a vboxguest vboxsf vboxvideo
+echo 'vboxguest
+vboxsf
+vboxvideo' | sudo tee /etc/modules-load.d/virtualbox.conf
+
+# sudo groupadd vboxsf
+sudo gpasswd -a $USER vboxsf
+systemd enable vboxservice
+
+ls -l /media/sf_*
+VBoxClient-all
+
+# vim: set ft=sh: #

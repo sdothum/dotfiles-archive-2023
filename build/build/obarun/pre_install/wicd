@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... wicd
+
+# purge previous connection settings
+sudo rm -f $HOME/.wicd/WHEREAREMYFILES 2>/dev/null
+
+# vim: set ft=sh: #

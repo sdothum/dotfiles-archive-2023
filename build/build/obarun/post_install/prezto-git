@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... prezto
+
+# tailor dash session login / logout
+ifnsed /etc/dash/zlogin 'echo ${YELLOW}' '1iecho ${YELLOW}---'
+ifnsed /etc/dash/zlogout '#source .*zlogout' '/^source .*zlogout/s/^/#/'
+
+# vim: set ft=sh: #

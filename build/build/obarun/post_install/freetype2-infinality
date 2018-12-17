@@ -1,0 +1,10 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................. infinality fonts
+
+sudo sed -i -r '/^#export FREETYPE_PROPERTIES=/s/#(.*)=[0-9]*"$/\1=38"' /etc/profile.d/freetype2.sh
+
+# vim: set ft=sh: #

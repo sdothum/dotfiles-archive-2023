@@ -1,0 +1,47 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... nfs
+
+# network share dotfile, email and media databases
+if server ;then
+  sudo mkdir -pv /srv/nfs4/Maildir
+  sudo mkdir -pv /srv/nfs4/net
+
+  ifnsed /etc/fstab 'Maildir.*bind' "\$a\\
+$HOME/Maildir /srv/nfs4/Maildir none bind 0 0\\
+# $HOME/stow    /srv/nfs4/stow    none bind 0 0\\
+/net               /srv/nfs4/net     none bind 0 0\\
+"
+
+  ifnsed /etc/exports '/srv/nfs4.*no_wdelay' '\|/srv/nfs4|s/,sync,/,sync,no_wdelay,/'
+  ifnsed /etc/exports 'Maildir' '$a\\
+/srv/nfs4/Maildir *(rw,sync,no_wdelay,no_subtree_check,nohide)\\
+/srv/nfs4/stow    *(rw,sync,no_wdelay,no_subtree_check,nohide)\\
+/srv/nfs4/net     *(rw,sync,no_wdelay,no_subtree_check,nohide)\\
+'
+  sudo exportfs -rav
+else
+  ifnsed /etc/fstab 'net.*nfs4' "\$a\\
+luna:/net     /net               nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\\
+luna:/Maildir $HOME/Maildir nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,fsc,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\\
+"
+  # dotfile share is mirrored on arm to retain max stow IO performance, see v (housekeeping)
+  cpu arm && conf /etc/fstab 'stow' "\$a\\
+# luna:/stow    $HOME/stownfs nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\\
+"
+fi
+
+# configure nfs share automount for arm
+# if ! grep -q nfsshare /var/spool/cron/$USER 2>/dev/null ;then
+#   cpu arm || comment='# '
+#   echo "$(crontab -l)
+# ${comment}* * * * * /home/$USER/bin/functions/network/nfsshare >>/tmp/nfsshare.log 2>&1"  |
+#        sudo crontab -u $USER -
+# fi
+
+annotate 'update cliend hosts tables with nfs server address for luna'
+
+# vim: set ft=sh: #

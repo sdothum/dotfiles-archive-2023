@@ -14,7 +14,6 @@
 
 conf=$HOME/.trackpkg
 [ -e $conf ] || touch $conf
-which pacaur >/dev/null 2>&1 && pacaur=pacaur || pacaur=yaourt
 
 add_pkg() {
   for i in $@ ;do
@@ -40,7 +39,7 @@ chk_pkg() {
     j=$(grep "^$i" $conf | cut -d: -f1)
     k=$(grep "^$i" $conf | cut -d: -f2)
     # echo $j :: $k
-    l=$($pacaur -Ss $j)
+    l=$(yay -Ss $j)
     [ "$k" = "$l" ] && echo $k || echo "$k  =>  $l"
   done
 }

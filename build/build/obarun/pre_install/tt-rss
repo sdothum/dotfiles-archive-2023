@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... tt-rss
+
+# protect linked theme
+[ -L /srv/http/tt-rss/themes ] && sudo rm /srv/http/tt-rss/themes
+
+# vim: set ft=sh: #

@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................... syncthing
+
+sudo chown -c $USER:users $HOME/.config/syncthing/config.xml
+original $HOME/.config/syncthing/config.xml
+sed -i 's/127.0.0.1/0.0.0.0/' $HOME/.config/syncthing/config.xml
+echo "fs.inotify.max_user_watches=204800" | sudo tee -a /etc/sysctl.d/90-override.conf
+sudo sh -c 'echo 204800 > /proc/sys/fs/inotify/max_user_watches'
+# see syncthing-inotify
+# systemd enable syncthing@$USER
+
+# vim: set ft=sh: #

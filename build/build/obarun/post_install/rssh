@@ -1,0 +1,48 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... rssh
+
+original /etc/ssh/sshd_config
+sudo sed -i -e '/Port 22/s/^#//' \
+         -e '/Protocol 2/s/^#//' \
+         -e '/HostKey \/etc\/ssh\/ssh_host_rsa_key/s/^#//' \
+         -e '/HostKey \/etc\/ssh\/ssh_host_dsa_key/s/^#//' \
+         -e '/HostKey \/etc\/ssh\/ssh_host_ecdsa_key/s/^#//' \
+         -e '/KeyRegenerationInterval/s/^#//' \
+         -e '/ServerKeyBits/s/^#//' \
+         -e '/SyslogFacility/s/^#//' \
+         -e '/LogLevel/s/^#//' \
+         -e '/LoginGraceTime/s/^#//' \
+         -e '/PermitRootLogin/s/^#//' \
+         -e '/HostbasedAuthentication/s/^#//' \
+         -e '/StrictModes/s/^#//' \
+         -e '/RSAAuthentication/s/^#//' \
+         -e '/PubkeyAuthentication/s/^#//' \
+         -e '/IgnoreRhosts/s/^#//' \
+         -e '/PermitEmptyPasswords/s/^#//' \
+         -e '/AllowTcpForwarding/s/^#//' \
+         -e '/AllowTcpForwarding no/d' \
+         -e '/X11Forwarding/s/^#//' \
+         -e '/X11Forwarding/s/no/yes/' \
+         -e '/\tX11Forwarding yes/d' \
+         -e '/X11DisplayOffset/s/^#//' \
+         -e '/X11UseLocalhost/s/^#//' \
+         -e '/PrintMotd/s/^#//' \
+         -e '/PrintMotd/s/yes/no/' \
+         -e '/PrintLastLog/s/^#//' \
+         -e '/TCPKeepAlive/s/^#//' \
+         -e '/the setting of/s/^/#/' \
+         -e '/RhostsRSAAuthentication and HostbasedAuthentication/s/^/#/' \
+         -e '$a\
+AcceptEnv TERM\
+AcceptEnv LANG LC_*\
+' /etc/ssh/sshd_config
+
+systemd enable sshd
+sudo rm -f $HOME/.ssh/known_hosts
+annotate "ssh to computers and thedarnedestthing.com to refresh known_hosts"
+
+# vim: set ft=sh: #

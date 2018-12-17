@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... lynx
+
+original /etc/lynx.cfg
+# sudo sed -i -e '/^#ENABLE_LYNXRC:accept_all_cookies:ON/s/#//' \
+#          -e '$ahttp_proxy:http://localhost:8118/' /etc/lynx.cfg
+sudo sed -i '/^#ENABLE_LYNXRC:accept_all_cookies:ON/s/#//' /etc/lynx.cfg
+
+# vim: set ft=sh: #

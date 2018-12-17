@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................... ifenslave
+
+sed -e "s/eth0 eth2/'enp9s0' 'enp10s0'/" \
+    -e 's/static/dhcp/' \
+    -e '$aIP6=stateless' \
+    -e '/^Address.*/d' \
+    /etc/netctl/examples/bonding |
+    sudo tee /etc/netctl/bonding
+
+# vim: set ft=sh: #

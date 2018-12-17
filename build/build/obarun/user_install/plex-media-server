@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................ plex-media-server
+
+sudo mkdir -pv /net/media/videos
+sudo mkdir -pv /net/media/videos/animation
+sudo mkdir -pv /net/media/videos/anime
+sudo mkdir -pv /net/media/videos/movies
+sudo mkdir -pv /net/media/videos/series
+sudo mkdir -pv /net/media/videos/tutorials
+permissions /net/media
+
+# vim: set ft=sh: #

@@ -1,0 +1,76 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ nginx
+
+original /opt/nginx/conf/nginx.conf
+sed -e '/^#user  nobody;/cuser  http;' \
+    -e '/passenger_ruby/a\ \ \ \ passenger_log_level 1;' \
+    -e '/default_type/a\ \ \ \ client_max_body_size 2M;' \
+    -e 's/ 80;/ 8000;/' \
+    -e '/^ *location \/ {/,/}/s/^/#/' \
+    -e '/^    }/c\
+\
+        root /srv/http/;\
+        # access_log /srv/http/tt-rss/logs/access.log;\
+        # error_log /srv/http/tt-rss/logs/error.log;\
+        index index.html index.htm index.php;\
+\
+        location / {\
+            try_files $uri $uri/ /index.html;\
+        }\
+\
+        location $HOME \\\.php$ {\
+            fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;\
+            fastcgi_index  index.php;\
+            include        fastcgi.conf;\
+            fastcgi_read_timeout 300;\
+        }\
+    }\
+\
+    # "the darnedest thing" web site\
+    server {\
+        listen 8000;\
+        server_name thedarnedestthing;\
+\
+        access_log /srv/http/thedarnedestthing.com/logs/access.log;\
+        error_log  /srv/http/thedarnedestthing.com/logs/error.log;\
+\
+        root /srv/http/thedarnedestthing.com/application/public;\
+        passenger_enabled on;\
+        passenger_min_instances 1;\
+        passenger_friendly_error_pages on;\
+    }\
+\
+    passenger_pre_start http://thedarnedestthing:8000/;\
+\
+    # nginx emply gif module to adblock everything from dnsmasq! (replacement for pixelserv)\
+    server {\
+        listen 80;\
+        server_name localhost;\
+\
+        expires max;\
+        rewrite .+?(png|gif|jpe?g)$ /empty_gif last;\
+        rewrite ^(.*)$ / last;\
+\
+        location / {\
+            return 204;\
+        }\
+        location /empty_gif {\
+            empty_gif;\
+        }\
+    }\
+' /opt/nginx/conf/nginx.conf.original | sudo tee /opt/nginx/conf/nginx.conf
+
+if [ -f /usr/lib/systemd/system/nginx.service ] ;then
+  sudo sed -i 's|/usr/bin|/opt/nginx/sbin|' /usr/lib/systemd/system/nginx.service
+else
+  config_install /usr/lib/systemd/system/nginx.service
+fi
+
+server && systemd enable nginx || annotate "sudo systemctl start nginx"
+annotate "rsync /srv/http/thedarnedestthing.com"
+
+# vim: set ft=sh: #

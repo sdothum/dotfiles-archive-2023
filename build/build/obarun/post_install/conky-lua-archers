@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ conky
+
+annotate "PKGBUILD\n
+BUILD_MOC=OFF\n
+BUILD_MPD=ON\n
+BUILD_NVIDIA=OFF\n
+BUILD_OLD_CONFIG=OFF\n
+DEFAULTNETDEV=eno1\n
+makepkg -f\n
+sudo pacman -U --noconfirm conky-lua-archers*pkg.tar.xz\n"
+
+# vim: set ft=sh: #

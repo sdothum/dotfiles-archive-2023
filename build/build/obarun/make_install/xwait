@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ xwait
+
+cd /net/depot
+[ -d xwait ] || git clone https://github.com/fsmi/xwait.git
+cd xwait
+make clean
+make
+cp -fv xwait $HOME/bin/
+
+# vim: set ft=sh: #

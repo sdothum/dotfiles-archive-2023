@@ -1,0 +1,23 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. notmuch-vim
+
+if ! grep -q "nnoremap \<buffer\> " /usr/share/vim/vimfiles/plugin/notmuch.vim ;then
+  original /usr/share/vim/vimfiles/plugin/notmuch.vim
+  sudo sed -i -e 's/nnoremap <buffer> /nnoremap <buffer><silent> /' \
+           -e "/\[date, e.matched_messages, authors, subject, e.tags\]/s|b <<.*|b << \"%-12s %3s %-20.20s (%s) %s\" % [date, e.matched_messages, authors.sub(/Steven Hum/,'me'), e.tags.collect { \|s\| s =$HOME /INBOX\|SENT/ ? nil : s }.compact.join(' '), subject]|" \
+           /usr/share/vim/vimfiles/plugin/notmuch.vim
+fi
+
+if ! grep -q "match nmSearchFrom .* nextgroup=nmSearchSubject" /usr/share/vim/vimfiles/syntax/notmuch-search.vim ;then
+  original /usr/share/vim/vimfiles/syntax/notmuch-search.vim
+  sudo sed -i -e '/match nmSearchFrom/s/nmSearchSubject/nmSearchTags/' \
+           -e '/match nmSearchTags/s|nmSearchTags.*|nmSearchTags	/.([a-zA-Z ]*)/	contained nextgroup=nmSearchSubject|' \
+           -e '/match nmSearchSubject/s|nmSearchSubject.*|nmSearchSubject	/.\+$/ contained|' \
+           /usr/share/vim/vimfiles/syntax/notmuch-search.vim
+fi
+
+# vim: set ft=sh: #

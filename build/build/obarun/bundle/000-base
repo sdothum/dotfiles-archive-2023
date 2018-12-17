@@ -1,0 +1,123 @@
+# core packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+# install aur package managers FIRST !!
+= aur package manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# @ package-query
+# @ yaourt
+# ! yaourt -Sy
+#   cower
+#   pacaur
+  pkg-config
+
+
+= entropy
+= ▔▔▔▔▔▔▔
+  haveged
+
+
+= console font
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  dos2unix
+# terminus-font-ll2-td1
+
+
+= cpu power management
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cpupower                   [laptop]
+
+
+= sound
+= ▔▔▔▔▔
+  alsa-utils
+
+
+= shell
+= ▔▔▔▔▔
+  dash
+# fasd
+  fish
+# prezto-git
+# zsh
+
+
+= x11 drivers
+= ▔▔▔▔▔▔▔▔▔▔▔
+  libglvnd                   [gpu nvidia]
+  nvidia                     [gpu nvidia]
+  nvidia-340xx               [gpu macbook]
+# nvidia-340xx-libgl         [gpu macbook]
+  nvidia-340xx-utils         [gpu macbook]
+# "see infinality below"
+# nvidia-libgl               [gpu nvidia]
+  nvidia-settings            [gpu nvidia]
+  nvidia-utils               [gpu nvidia]
+  xf86-input-evdev
+  # xf86-input-synaptics     [laptop]
+  xf86-input-libinput
+  xf86-video-ati             [gpu ati]
+  xf86-video-intel           [gpu intel]
+  xf86-video-nouveau         [gpu nvidia]
+
+
+= x11 server
+= ▔▔▔▔▔▔▔▔▔▔
+  mesa
+# mesa-git
+# mesa-vdpau-git
+? nvidia-libgl               [gpu nvidia]
+  xorg-xinit
+  xorg-xrandr
+  xorg-server
+
+
+= x11 server utilities
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# xorg-apps
+  xorg-xinput
+  xorg-xmodmap
+  xorg-xrandr
+  xorg-xrdb
+  xorg-xset
+
+
+= font rendering
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cairo
+  freetype2
+  fontconfig
+# infinality-bundle
+# infinality-bundle-multilib [server]
+# infinality-bundle-fonts
+# "restore cairo conflict with mesa-libgl"
+# cairo-infinality
+# fontconfig-infinality
+# freetype2-infinality
+  libxft
+
+
+= ncurses editor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gvim
+
+
+= terminal
+= ▔▔▔▔▔▔▔▔
+  alacritty
+# alacritty-git
+
+
+= window manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  herbstluftwm
+# herbstluftwm-git
+
+
+= virtualbox guest mode
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# virtualbox-guest-utils     [ -n $(dmidecode --type 1 | grep VirtualBox) ]
+
+# vim: set ft=conf: #

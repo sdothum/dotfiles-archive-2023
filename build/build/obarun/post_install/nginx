@@ -1,0 +1,31 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ nginx
+
+original /opt/nginx/conf/nginx.conf
+sudo sed -i '/^    }/a\
+\
+    # nginx emply gif module to adblock everything from dnsmasq! (replacement for pixelserv)\
+    server {\
+        listen 80;\
+        server_name localhost;\
+\
+        expires max;\
+        rewrite .+?(png|gif|jpe?g)$ /empty_gif last;\
+        rewrite ^(.*)$ / last;\
+\
+        location / {\
+            return 204;\
+        }\
+        location /empty_gif {\
+            empty_gif;\
+        }\
+    }\
+' /etc/nginx/nginx.conf
+
+systemd enable nginx
+
+# vim: set ft=sh: #

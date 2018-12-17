@@ -1,0 +1,21 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... todo.txt
+
+mkdir -pv $HOME/.todo || exit 1
+[ -L $HOME/.todo ] || ln -sf $HOME/.todo $HOME/
+original $HOME/.todo/config
+# note: tilde '$HOME' not recognized as home directory
+sed -e '/^export TODO_DIR=/cexport TODO_DIR="'$HOME'/.todo"' \
+    -e '/^export REPORT_FILE=/aexport TMP_FILE="/tmp/todo.tmp"' \
+    -e '/^#export TODO_ACTIONS_DIR=/cexport TODO_ACTIONS_DIR="'$HOME'/.todo/actions.d"' \
+    -e '/^# export PRI_B=/aexport PRI_B=$LIGHT_GREEN' \
+    -e '/^# export PRI_C=/aexport PRI_C=$LIGHT_PURPLE' \
+    -e '$a\
+export TODOTXT_FINAL_FILTER="'$HOME'/.todo/filters/comingTasks"\
+' /usr/share/todotxt/todo.cfg >$HOME/.todo/config
+
+# vim: set ft=sh: #

@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................... nfs cache
+
+sudo mkdir /var/cache/fscache
+original /etc/fstab
+ifnsed /etc/fstab 'nfs4.*fsc' '/\(Maildir\|stow\).*nfs4/s/soft/soft,fsc/'
+systemd enable cachefilesd
+
+# vim: set ft=sh: #

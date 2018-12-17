@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ smartmontools
+
+original /etc/smartd.conf
+sudo sed -i '/^DEVICESCAN/cDEVICESCAN -d removable -n standby -m sdothum@gmail.com' /etc/smartd.conf
+systemd enable smartd
+
+# vim: set ft=sh: #

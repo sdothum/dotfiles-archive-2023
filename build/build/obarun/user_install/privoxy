@@ -1,0 +1,21 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... privoxy
+
+# allow dpreview images
+ifnsed /etc/privoxy/user.action 'a\.img-dpreview.com' '$a\\
+{ fragile }\\
+a.img-dpreview.com\\
+.disqus.com\\
+.photographyblog.com\\
+.nhl.com\\
+{ +block{Nasty ads.} }\\
+storage.canoe.ca/v1/dynamic_resize/sws_path/suns-prod-images/\\
+'
+
+systemd enable privoxy
+
+# vim: set ft=sh: #

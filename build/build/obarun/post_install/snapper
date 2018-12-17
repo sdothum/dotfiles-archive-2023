@@ -1,0 +1,30 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... snapper
+
+# .snapshots subvolume created during install, see obarun-0disk
+# but snapper creates /.snapshots btrfs subvolume when generating config
+sudo umount /.snapshots
+sudo rmdir /.snapshots
+sudo snapper -c root create-config /
+sudo btrfs subvolume delete /.snapshots
+sudo mkdir /.snapshots
+sudo chmod -c 750 /.snapshots
+sudo mount /.snapshots
+
+# manual cleanup triggered in pa function
+original /etc/snapper/configs/root
+sudo sed -i -e "/^ALLOW_USERS=/cALLOW_USERS=\"$USER\"" \
+         -e '/^NUMBER_LIMIT=/cNUMBER_LIMIT="50"' \
+         -e '/^TIMELINE_CREATE=/cTIMELINE_CREATE="no"' \
+         -e '/^TIMELINE_LIMIT_HOURLY=/cTIMELINE_LIMIT_HOURLY="10"' \
+         -e '/^TIMELINE_LIMIT_DAILY=/cTIMELINE_LIMIT_DAILY="10"' \
+         -e '/^TIMELINE_LIMIT_WEEKLY=/cTIMELINE_LIMIT_WEEKLY="0"' \
+         -e '/^TIMELINE_LIMIT_MONTHLY=/cTIMELINE_LIMIT_MONTHLY="0"' \
+         -e '/^TIMELINE_LIMIT_YEARLY=/cTIMELINE_LIMIT_YEARLY="0"' \
+         /etc/snapper/configs/root
+
+# vim: set ft=sh: #

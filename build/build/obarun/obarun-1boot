@@ -1,0 +1,122 @@
+#!/bin/sh
+# sdothum - 2016 (c) wtfpl
+
+# obarun boot configuration
+
+source ./obarun-functions
+
+# home user zsh config and install scripts will be copied to
+user=shum
+
+
+heading 'select scheduler for SSD'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+if [ ! $(hostname) = luna ] ;then
+  if [ ! -f /etc/udev/rules.d/60-schedulers.rules ] ;then
+    echo '# set deadline scheduler for non-rotating disks\
+  ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"' \
+         >/etc/udev/rules.d/60-schedulers.rules
+  fi
+fi
+
+
+heading 'check kvm compatibility'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+[ $(cat /etc/hostname) = monad ] && config_install /etc/modprobe.d/blacklist-kvm.conf
+checkpoint
+
+
+# heading 'set keyboard'
+# # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# if [ ! $(hostname) = luna ] ;then
+#   [ -f /etc/vconsole.conf ] && sed -i 's/^\(KEYMAP\)=.*/\1=colemak/' /etc/vconsole.conf || echo KEYMAP=colemak >/etc/vconsole.conf
+#   cat /etc/vconsole.conf
+# else
+#   echo 'us -> qwerty'
+# fi
+
+
+heading 'configure package manager'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /etc/pacman.conf
+sed -i -e '/^\[options\]/aILoveCandy' \
+    -e '/^#\[multilib\]/,+1s/^#//' \
+    -e '/^#Color/s/^#//' \
+    /etc/pacman.conf
+pacman -Sy
+checkpoint
+
+
+heading 'configure network'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+[ "$hostname" = luna ] && systemctl enable dhcpcd.service
+# heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
+# [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+
+
+heading 'installing wireless tools'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install dialog
+pm_install iw
+pm_install wpa_supplicant
+# cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
+# essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
+# key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
+# sed -i -e $essid -e $key /etc/netctl/my-wireless-network
+# netctl enable my-wireless-network
+echo noarp >/etc/dhcpcd.conf
+checkpoint
+
+
+heading 'set sudo'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+sed -i "/$user/s/zsh/bash/"
+# pm_install sudo
+original /etc/sudoers
+sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //; /## Defaults specification/aDefaults insults' /etc/sudoers
+EDITOR=nano visudo
+# cat /etc/sudoers
+checkpoint
+
+
+heading 'install base-devel'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install base-devel
+# pm_install expac
+pm_install git
+pm_install gnome-keyring
+# pm_install jshon
+# pm_install namcap
+# pm_install yajl
+checkpoint
+
+
+heading 'default shell'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install bc
+pm_install dash
+pm_install fish
+config_install /etc/profile.d/path.sh
+checkpoint
+
+
+heading 'enable tty autologin'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+checkpoint
+
+
+# heading 'configure btrfs in mkinitcpio.conf'
+# # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# # sed -i '/^HOOKS=/s/fsck/btrfs usr shutdown/' /etc/mkinitcpio.conf
+# original /etc/mkinitcpio.conf
+# sed -i '/^HOOKS=/s/fsck/btrfs/' /etc/mkinitcpio.conf
+# nano /etc/mkinitcpio.conf
+# mkinitcpio -p linux
+# checkpoint
+
+
+heading 'cd / and umount /media (usb), exit chroot'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# sudo mkdir -pv /net/downloads
+
+# vim: set ft=sh: #

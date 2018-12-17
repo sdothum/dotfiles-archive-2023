@@ -23,15 +23,15 @@ OFFLINEIMAPFILTER=$HOME/.offlineimapfilter
 # offlineimap / imapfilter actions
 case $1 in
 '') if !p 'python.*offlineimap.*offlineimaprc' ;then
-      offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
+      nohup offlineimap -c $OFFLINEIMAPRC -u basic >>/tmp/offlineimap.log 2>&1 &
       ditto 'offlineimap running'
     fi
     ifyes '.. watch offlineimap log' && imap l ;;
 
 1*) if [ $2 ] ;then
-      offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
+      nohup offlineimap -c $OFFLINEIMAPRC.$2 -o -u basic >>/tmp/offlineimap.log 2>&1 &
     else
-      offlineimap -c $OFFLINEIMAPRC -o -u basic >>/tmp/offlineimap.log 2>&1 &
+      nohup offlineimap -c $OFFLINEIMAPRC -o -u basic >>/tmp/offlineimap.log 2>&1 &
     fi
     imap l ;;
 
@@ -45,7 +45,7 @@ f*) if !p /usr/bin/offlineimap && !p /usr/bin/imapfilter ;then
               $IMAPFILTER/$filter >$IMAPFILTER/$2.lua
         imapfilter -v -c $IMAPFILTER/$2.lua
       else
-        imapfilter -v -c $IMAPFILTER/$filter >>/tmp/imapfilter.log 2>&1 &
+        nohup imapfilter -v -c $IMAPFILTER/$filter >>/tmp/imapfilter.log 2>&1 &
         ifyes '.. watch imapfilter log' && imap L
       fi
     fi ;;
@@ -76,7 +76,7 @@ l*) ditto 'tail -f /tmp/offlineimap.log'
     pkill -TERM -f 'tail -f /tmp/offlineimap.log' ;;
 
 Q*) if !p 'python.*offlineimap.*offlineimaprc' ;then
-      offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 &
+      nohup offlineimap -c $OFFLINEIMAPRC -u quiet >>/tmp/imapfilter.log 2>&1 &
     fi ;;
 
 q*) killall imapfilter 2>/dev/null

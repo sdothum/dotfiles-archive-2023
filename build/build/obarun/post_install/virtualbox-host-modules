@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... virtualbox
+
+sudo dkms install vboxhost/$(pm virtualbox-host | grep virtualbox-host-modules | cut -d' ' -f2 | sed 's/-.*//')
+echo 'vboxdrv
+vboxnetflt' | sudo tee /etc/modules-load.d/virtualbox.conf
+sudo modprobe vboxdrv
+sudo modprobe vboxnetflt
+
+sudo gpasswd -a $USER vboxusers
+if [ ! -d /net/depot/vms ] ;then
+  sudo mkdir -pv /net/depot/vms
+  sudo chown -cR $USER:users /net/depot
+  # disable CoW for virtual machine images
+  chattr +C /net/depot/vms/
+  sudo ln -sv /net/depot/vms /net/
+  sudo chown -c $USER:users /net/vms
+fi
+
+# vim: set ft=sh: #

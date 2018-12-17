@@ -1,0 +1,49 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... ncmpcpp
+
+sed -e '/#mpd_music_dir =/cmpd_music_dir = /net/media/music' \
+    -e '/#playlist_shorten_total_times =/cplaylist_shorten_total_times = yes' \
+    -e '/#autocenter_mode =/cautocenter_mode = yes' \
+    -e '/#centered_cursor =/ccentered_cursor = yes' \
+    -e '/#progressbar_look =/cprogressbar_look = ─╼━' \
+    -e '/#startup_screen =/cstartup_screen = media_library' \
+    -e '/#ask_before_clearing_playlists =/cask_before_clearing_playlists = no' \
+    -e '/#regular_expressions =/cregular_expressions = basic' \
+    -e '/empty_tag_color =/cempty_tag_color = black' \
+    -e '/header_window_color =/cheader_window_color = red' \
+    -e '/volume_color =/cvolume_color = yellow' \
+    -e '/state_line_color =/cstate_line_color = black' \
+    -e '/state_flags_color =/cstate_flags_color = cyan' \
+    -e '/main_window_color =/cmain_window_color = white' \
+    -e '/color1 =/ccolor1 = blue' \
+    -e '/color2 =/ccolor2 = cyan' \
+    -e '/main_window_highlight_color =/cmain_window_highlight_color = default' \
+    -e '/progressbar_color =/cprogressbar_color = black' \
+    -e '/progressbar_elapsed_color =/cprogressbar_elapsed_color = black' \
+    -e '/statusbar_color =/cstatusbar_color = yellow' \
+    -e '/visualizer_color =/cvisualizer_color = red' \
+    -e '/alternative_ui_separator_color =/calternative_ui_separator_color = blue' \
+    -e '/active_column_color =/cactive_column_color = green' \
+    -e '/window_border_color =/cwindow_border_color = green' \
+    -e '/active_window_border =/cactive_window_border = red' \
+    -e '$a\
+visualizer_fifo_path = /tmp/mpd.fifo\
+visualizer_output_name = my_fifo\
+visualizer_sync_interval = 30\
+visualizer_color = red\
+visualizer_look = ●●\
+# visualizer_in_stereo = yes\
+# visualizer_type = spectrum\
+visualizer_in_stereo = no\
+visualizer_type = wave\
+' /usr/share/doc/ncmpcpp/config >$HOME/.ncmpcpp/config
+
+mpd &
+mpc update
+annotate "rerun mpc update after reboot"
+
+# vim: set ft=sh: #

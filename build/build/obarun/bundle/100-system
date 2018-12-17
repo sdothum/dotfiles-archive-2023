@@ -1,0 +1,187 @@
+# system packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= codecs
+= ▔▔▔▔▔▔
+# gnash-common
+  gst-libav
+  gst-plugins-base
+  gst-plugins-good
+  gst-plugins-ugly
+  gstreamer0.10-base-plugins
+# lightspark-git
+
+
+= cups printing
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cups
+# cups-filters
+  cups-pdf
+# foomatic-db
+# foomatic-db-engine
+# foomatic-db-nonfree
+  ghostscript
+  gsfonts
+  gutenprint
+  hplip
+# python2-pyq5
+# splix
+# system-config-printer
+
+
+= fonts
+= ▔▔▔▔▔
+  adobe-base-14-fonts
+# ephifonts
+# ephifonts-no-helvetica
+d m iosevka             [server]
+d m iosevka\\ amphetype [server]
+d m iosevka\\ proof     [server]
+  noto-fonts
+# otf-gnutypewriter
+# powerline-fonts-git
+  ttf-courier-prime
+  ttf-dejavu
+# ttf-dejavu-sans-mono-powerline-git
+# ttf-fantasque-sans
+# ttf-font-awesome
+# ttf-google-fonts-git
+# ttf-inconsolata
+# ttf-ionicons
+# ttf-iosevka
+# ttf-iosevka-hooky
+# ttf-liberation
+# ttf-mac-fonts
+  ttf-ms-fonts
+# ttf-noto-sans-ib
+  ttf-robobo
+  ttf-symbola
+# ttf-ubuntu-font-family
+# xorg-fonts-type1
+# xorg-xlsfonts
+
+
+= font managers
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  font-manager
+  fontmatrix
+# fontmatrix-git
+
+
+= linux-ck kernel
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# linux-ck-atom             [cpu atom]
+# linux-ck-headers          [cpu atom]
+# linux-ck-haswell          [cpu i7]
+# linux-ck-headers          [cpu i7]
+# "intel microcode must be installed after ck kernel"
+
+
+= hardware
+= ▔▔▔▔▔▔▔▔
+  dmidecode
+# gpointing-device-settings [gpu macbook]
+  hwinfo
+  intel-ucode
+  lm_sensors
+  mbpfan-git                [gpu macbook]
+  nvidiabl                  [gpu macbook]
+  xf86-input-wacom          [server]
+
+
+= package management
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  aurvote
+  cower
+# cower-git
+  downgrade
+  dpkg
+# nix
+  pacaur
+  package-query
+# package-query-git
+# packer
+  pkgfile
+  pkgstats
+  pkgtools
+# powerpill
+# trizen
+# yaourt
+# yaourt-gui
+# pacgraph
+  reflector
+
+
+= package rollback (btrfs)
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  grub-btrfs
+# grub-btrfs-git
+  pacupg
+# snap-pac
+  snapper
+
+
+= power
+= ▔▔▔▔▔
+  acpi                      [laptop]
+# powertop                  [laptop]
+# "dead battery in macbook"
+  tlp                       [laptop && ! gpu macbook]
+d * xfce4-power-manager
+
+
+= security
+= ▔▔▔▔▔▔▔▔
+  gksu
+  gnome-keyring
+# keepassx
+d * pass
+  polkit-gnome
+# python-keyring
+# python-keyrings-alt
+
+
+= sound
+= ▔▔▔▔▔
+# alsa-firmware
+  alsa-plugins
+  lib32-alsa-plugins
+  lib32-libpulse
+  libflashsupport-oss
+# libflashsupport-pulse
+  libflashsupport-pulse-git
+  mpg123
+# paprefs
+# pavolume-git
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+# pulseaudio-ctl
+  pulseaudio-equalizer
+# pulsemixer-git
+# xfce4-mixer
+# xfce4-volumed
+
+
+= system utilities
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# anacron
+  cronie
+# dcron
+# incron
+# lxinput-qt-git
+  logrotate
+  ntp
+# pmount
+  preload
+  rlwrap
+# synapse
+# sysstat
+  systemd-swap
+  udiskie
+# watcher
+# zramswap
+
+# vim: set ft=conf: #

@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... fish
+
+# sudo mkdir -pv /root/.config
+# sudo mkdir -pv /root/.local/share/
+# sudo ln -sfv $HOME/.config/fish /root/.config/
+# sudo ln -sfv $HOME/.config/omf /root/.config/
+# sudo ln -sfv $HOME/.local/share/omf /root/.local/share/
+sudo cp -v $HOME/.bash_logout /root/
+sudo cp -v $HOME/.bash_profile /root/
+sudo cp -v $HOME/.bashrc /root/
+sudo ln -sfv $HOME/.config/fish /root/.config/
+
+# vim: set ft=sh: #

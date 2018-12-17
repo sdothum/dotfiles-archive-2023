@@ -66,8 +66,8 @@ d m iosevka\\ proof     [server]
 = font managers
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔
   font-manager
-# fontmatrix
-  fontmatrix-git
+  fontmatrix                [server]
+# fontmatrix-git
 
 
 = linux-ck kernel
@@ -116,7 +116,8 @@ d m iosevka\\ proof     [server]
 
 = package rollback (btrfs)
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  grub-btrfs-git
+  grub-btrfs
+# grub-btrfs-git
   pacupg
 # snap-pac
   snapper

@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... iptables
+
+annotate 'bypass youtube caching servers'
+sudo iptables -v -A INPUT -s 173.194.55.0/24 -j REJECT
+sudo iptables -v -A INPUT -s 206.111.0.0/16 -j REJECT
+iptables-save | sudo tee /etc/iptables/iptables.rules
+systemd restart iptables
+
+# vim: set ft=sh: #

@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... watcher
+
+original /etc/conf.d/watcher.ini
+sed '$a\
+[stow]\
+watch=/home/$uid/stow\
+events=create,delete,modify\
+recursive=true\
+autoadd=true\
+command=/home/$uid/bin/watcher $filename\
+' /etc/conf.d/watcher.ini.original | sudo tee /etc/conf.d/watcher.ini
+
+sudo sed -i "s/\$uid/$USER/" /etc/conf.d/watcher.ini
+# systemd enable watcher
+annotate "sudo systemctl enable watcher"
+
+# vim: set ft=sh: #

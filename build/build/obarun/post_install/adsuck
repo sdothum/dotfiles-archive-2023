@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... adsuck
+
+original /etc/resolv.conf
+sudo cp -v $HOME/build/root/etc/resolv.conf.adsuck /etc/resolv.conf
+sudo cp -v $HOME/build/root/var/adsuck/* /var/adsuck/
+systemd enable adsuck
+
+# vim: set ft=sh: #

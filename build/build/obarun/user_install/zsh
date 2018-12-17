@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... zsh
+
+sudo ln -sfv $HOME/.zsh /root/
+sudo ln -sfv $HOME/.zshenv /root/
+sudo ln -sfv $HOME/.zshrc /root/
+
+sudo chsh -s /usr/bin/zsh root
+
+# vim: set ft=sh: #

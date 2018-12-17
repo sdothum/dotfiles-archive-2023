@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... privoxy
+
+ifnsed /etc/privoxy/config '^enable-edit-actions.*1' '/^enable-edit-actions/s/0/1/'
+[ -f /usr/bin/polipo ] && ifnsed /etc/privoxy/config 'forward / localhost:8123'
+
+systemd enable privoxy
+# annotate "configure browser proxies to localhost:8118"
+
+# vim: set ft=sh: #

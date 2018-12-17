@@ -6,11 +6,11 @@
 # install aur package managers FIRST !!
 = aur package manager
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-@ package-query
-@ yaourt
-! yaourt -Sy
-  cower
-  pacaur
+  package-query
+# @ yaourt
+# ! yaourt -Sy
+#   cower
+#   pacaur
   pkg-config
 
 
@@ -106,13 +106,14 @@
 
 = terminal
 = ▔▔▔▔▔▔▔▔
-  alacritty-git
+  alacritty
+# alacritty-git
 
 
 = window manager
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# herbstluftwm
-  herbstluftwm-git
+  herbstluftwm
+# herbstluftwm-git
 
 
 = virtualbox guest mode

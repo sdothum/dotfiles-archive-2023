@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... prezto-git
+
+sudo ln -sfv $HOME/.zprezto /root/
+sudo ln -sfv $HOME/.zpreztorc /root/
+
+# vim: set ft=sh: #

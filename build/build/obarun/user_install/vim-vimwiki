@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. vim-vimwiki 
+
+# patch vimwiki
+if ! grep 'let s:vimwiki_autowriteall = g:vimwiki_autowriteall' $HOME/.vim/plugged/vimwiki/plugin/vimwiki.vim ;then
+  original $HOME/.vim/plugged/vimwiki/plugin/vimwiki.vim
+  sed -i '/call s:default('autowriteall', 1)/a\
+let s:vimwiki_autowriteall = g:vimwiki_autowriteall\
+' $HOME/.vim/plugged/vimwiki/plugin/vimwiki.vim
+fi
+
+# vim: set ft=sh: #

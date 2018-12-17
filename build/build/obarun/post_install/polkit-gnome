@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. polkit-gnome
+
+# enable (thunar) auto mounting of storage devices
+echo 'polkit.addRule(function(action, subject) {
+  if (action.id.indexOf("org.freedesktop.udisks2.") == 0) {
+      return polkit.Result.YES;
+  }
+});' | sudo tee /usr/share/polkit-1/rules.d/10-drives.rules
+echo 'polkit.addRule(function(action, subject) {
+  if (action.id == "org.freedesktop.udisks2.filesystem-mount-system" && subject.isInGroup("storage")) {
+    return polkit.Result.YES;
+  }
+});' | sudo tee /etc/polkit-1/rules.d/10-enable-mount.rules
+
+# vim: set ft=sh: #

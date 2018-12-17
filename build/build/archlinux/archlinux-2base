@@ -52,6 +52,15 @@ bundle_install $HOME/build/archlinux/bundle/[0]*
 fc-cache -fv
 
 
+title "install aur helper"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+cd $HOME/build/makepkg
+git clone https://aur.archlinux.org/yay.git
+cd yay
+sudo makepkg -si
+yay -Sy
+
+
 title "installation errors:"
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 grep '> \(ERROR\|WARNING\)' $HOME/typescript

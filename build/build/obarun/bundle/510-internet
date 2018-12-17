@@ -1,0 +1,107 @@
+# internet packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= browsers
+= ▔▔▔▔▔▔▔▔
+  chromium
+# dwb-git
+# dwb-gtk3
+# elinks
+  firefox
+# haskell-hbro
+# jumanji-git
+# links
+# lispkit-browser
+# luakit
+  lynx
+# midorio
+  qt5-webkit
+# qutebrowser
+# qutebrowser-git
+  surf
+# uzbl-browser
+# vimb
+# vimb-git
+  w3m
+
+
+= browser addons
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# chromium-pepper-flash
+  chromium-widevine
+  flashplugin
+# libunique
+# lua51-filesystem
+# luajit
+  pepper-flash
+# tabbed
+m tabbed
+# webkitgtk2        [server]
+
+
+= chat/twitter
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  bitlbee
+  d * centerim5-git
+# finch
+  libotr
+# pidgin
+# skype
+# python-twitter
+# turses
+  weechat
+# xchat
+# xmpppy
+d * znc
+
+
+= file transfer
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# couchpotato-git   [server]
+# flexget
+  gftp
+  nzbget            [server]
+# par2cmdline-tbb
+# python2-pyopenssl
+# rtorrent          [server]
+# rutorrent         [server]
+# sabnzbd           [server]
+# sickbeard-git     [server]
+  sonarr            [server]
+  tixati
+  transmission-gtk
+# unison
+# utserver
+  wget
+
+
+= usenet mail
+= ▔▔▔▔▔▔▔▔▔▔▔
+# slrn
+
+
+= utilities
+= ▔▔▔▔▔▔▔▔▔
+  perl-curses-ui
+  perl-extract-url
+  perl-html-strip
+
+
+= web aggregators
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# newsbeuter
+  php-gd
+# php-mcrypt
+  php70-mcrypt
+  tt-rss
+# ttaurter
+  surfraw
+
+
+= web server
+= ▔▔▔▔▔▔▔▔▔▔
+  pixelserv         [! server]
+
+# vim: set ft=conf: #

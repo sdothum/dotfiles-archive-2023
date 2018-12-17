@@ -1,0 +1,93 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... stow
+
+# prelink relevant dotfiles
+cd $HOME
+ln -sf stow/mutt/.abook                             .abook
+ln -sf stow/adblock/adblock                         adblock
+ln -sf stow/alsa/.asoundrc                          .asoundrc
+ln -sf stow/bash/.bash_logout                       .bash_logout
+ln -sf stow/bash/.bash_profile                      .bash_profile
+ln -sf stow/bin/bin                                 bin
+ln -sf .sup/bitsa_config.yml                        .bitsa_config.yml
+ln -sf stow/build/build                             build
+ln -sf stow/centerim/.centerim5                     .centerim5
+ln -sf stow/compton/$(gpu)/.compton.conf            .compton.conf
+ln -sf stow/conky/$(gpu display)/.conky             .conky
+ln -sf stow/conky/$(gpu display)/.conkyrc           .conkyrc
+ln -sf $HOME/images/colors/default                  default
+ln -sf stow/notes/drafts                            drafts
+ln -sf stow/elinks/.elinks                          .elinks
+ln -sf stow/fasd/.fasdrc                            .fasdrc
+ln -sf stow/fonts/.fonts                            .fonts
+ln -sf stow/vim/.fzf                                .fzf
+ln -sf stow/ghci/.ghci                              .ghci
+ln -sf stow/gtk/.gtkrc-2.0.mine                     .gtkrc-2.0.mine
+ln -sf stow/gtk/.gtkrc-2.0.mine.dark                .gtkrc-2.0.mine.dark
+ln -sf stow/gtk/.gtkrc-2.0.mine.light               .gtkrc-2.0.mine.light
+ln -sf stow/icons/.icons                            .icons
+ln -sf stow/images/images                           images
+ln -sf stow/imap/.imapfilter                        .imapfilter
+ln -sf stow/irssi/.irssi                            .irssi
+ln -sf stow/lua/.luarc                              .luarc
+ln -sf stow/mime/.mailcap                           .mailcap
+ln -sf stow/msmtp/.msmtprc                          .msmtprc
+ln -sf stow/music/music                             music
+ln -sf stow/mutt/.mutt                              .mutt
+ln -sf stow/mutt/.muttrc                            .muttrc
+ln -sf stow/nano/.nanorc                            .nanorc
+ln -sf stow/mpd/.ncmpcpp                            .ncmpcpp
+ln -sf stow/newsbeuter/.newsbeuter                  .newsbeuter
+ln -sf /nix/var/nix/profiles/default                .nix-profile
+ln -sf stow/notes/notes                             notes
+ln -sf stow/notion/.notion                          .notion
+ln -sf stow/notmuch/.notmuch-config                 .notmuch-config
+ln -sf stow/nvpy/.nvpy.cfg                          .nvpy.cfg
+ln -sf stow/imap/.offlineimaprc                     .offlineimaprc
+ln -sf stow/firefox/.pentadactylrc                  .pentadactylrc
+ln -sf stow/pyradio/.pyradio                        .pyradio
+ln -sf stow/qmk_firmware/qmk_firmware               qmk_firmware
+ln -sf stow/remind/.reminders                       .reminders
+ln -sf stow/rtorrent/.rtorrent.rc                   .rtorrent.rc
+ln -sf stow/rubyroom/.rubyroomrc                    .rubyroomrc
+ln -sf stow/sandbox/sandbox                         sandbox
+ln -sf stow/screen/.screenrc                        .screenrc
+ln -sf stow/mail/.signature                         .signature
+ln -sf stow/slrn/.slrnrc                            .slrnrc
+ln -sf $HOME/.steam/bin32/steam                     .steampath
+ln -sf $HOME/.steam/steam.pid                       .steampid
+ln -sf stow/thedarnedestthing/thedarnedestthing.com thedarnedestthing.com
+ln -sf stow/themes/.themes                          .themes
+ln -sf stow/tmux/.tmux.conf                         .tmux.conf
+ln -sf stow/todo/.todo                              .todo
+ln -sf stow/trayion/.trayion                        .trayion
+ln -sf stow/tt-rss/tt-rss                           tt-rss
+ln -sf stow/ttytter/.ttytterrc                      .ttytterrc
+ln -sf stow/urlview/.urlview                        .urlview
+ln -sf stow/vifm/.vifm                              .vifm
+ln -sf stow/vim/.vim                                .vim
+ln -sf stow/vim/.vimrc                              .vimrc
+ln -sf stow/vimwiki/vimwiki                         vimwiki
+ln -sf stow/chrome/.vromerc                         .vromerc
+ln -sf stow/wego/.wego                              .wego
+ln -sf stow/wyrd/.wyrdrc                            .wyrdrc
+ln -sf stow/X11/.Xdefaults                          .Xdefaults
+ln -sf stow/X11/.xinitrc                            .xinitrc
+ln -sf stow/xmobar/.xmobarrc                        .xmobarrc
+ln -sf stow/X11/.Xresources                         .Xresources
+ln -sf stow/X11/.xsession                           .xsession
+ln -sf stow/yaourt/.yaourtrc                        .yaourtrc
+ln -sf stow/zsh/.zlogin                             .zlogin
+ln -sf stow/zsh/.zprezto                            .zprezto
+ln -sf stow/zsh/.zpreztorc                          .zpreztorc
+ln -sf stow/zsh/.zsh                                .zsh
+ln -sf stow/zsh/.zshenv                             .zshenv
+ln -sf stow/zsh/.zshrc                              .zshrc
+ls --color -l | grep ' ->'
+annotate 'cleanup all stow links post install'
+
+# vim: set ft=sh: #

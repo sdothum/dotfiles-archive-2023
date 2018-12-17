@@ -25,6 +25,6 @@ status ) ;;
 *      ) [ $# -eq 1 ] || usage ;;
 esac
 
-sudo systemctl --no-pager status ${2:-$1} &
+nohup sudo systemctl --no-pager status ${2:-$1} &
 
 # vim: set ft=sh: #

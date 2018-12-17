@@ -10,6 +10,7 @@
 # search these project library folders..
 sources="$HOME/bin
          $HOME/build/archlinux
+         $HOME/build/obarun
          $HOME/.config/fish
          $HOME/.config/herbstluftwm
          $HOME/.vim/config

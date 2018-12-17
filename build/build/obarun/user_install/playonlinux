@@ -1,0 +1,17 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. playonlinux
+
+# link installed topaz photo software
+if [ -e '$HOME/.PlayOnLinux/shortcuts/Topaz Fusion Express2'] ;then
+  if [ ! -e  '$HOME/.PlayOnLinux/shortcuts/Topaz Fusion Express2.original' ] ;then
+    original $HOME/.PlayOnLinux/shortcuts/Topaz\ Fusion\ Express2
+    command cp -fv $HOME/.PlayOnLinux/shortcuts/Topaz\ Fusion\ Express2 $HOME/.PlayOnLinux/shortcuts/
+    chmod -c 755 $HOME/.PlayOnLinux/shortcuts/*
+  fi
+fi
+
+# vim: set ft=sh: #

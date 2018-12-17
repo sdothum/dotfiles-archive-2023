@@ -33,8 +33,10 @@ if [ $USER != root ] ;then
         fi
       fi
       # [ -e /tmp/adblock ] || adblock &
-      hg serve --cwd $STOW --port 8213 >/tmp/hg:server.log &
+      nohup hg serve --cwd $STOW --port 8213 >/tmp/hg:server.log &
     fi
+
+    nohup systemd start ntpd &
 
     # pre-initialize arm fuzzy searches
     nohup fcache + $HOME 2>/dev/null

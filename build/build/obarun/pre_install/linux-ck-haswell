@@ -1,0 +1,24 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... linux-ck
+
+if ! grep -q '\[repo-ck\]' /etc/pacman.conf ;then
+  sudo sed -i '$a\
+\
+\[repo-ck\]\
+Server = http://repo-ck.com/$arch\
+Server = http://repo-ck.com/$arch\
+Server = http://repo-ck.com/$arch\
+Server = http://repo-ck.com/$arch\
+Server = http://repo-ck.com/$arch' \
+           /etc/pacman.conf
+  sudo pacman -Syyu
+  sudo pacman-key -r 5EE46C4C
+  sudo pacman-key --lsign-key 5EE46C4C
+  annotate "install will fail if pacman -Syyu does not complete"
+fi
+
+# vim: set ft=sh: #

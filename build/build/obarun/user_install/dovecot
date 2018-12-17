@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... dovecot
+
+# re-initialize dovecot database
+systemd stop dovecot
+find $HOME/Maildir -name 'dovecot*' -exec rm -v {} \;
+systemd restart dovecot
+
+# vim: set ft=sh: #

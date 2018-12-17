@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... alot
+
+alot=$(find /usr/lib -name alot)
+# expand old dates to mth day/yr
+helper=$alot/helper.py
+original $helper
+sudo sed -i "/string = d.strftime('%b %Y')/s|%Y|%d/%y|" $helper
+# arrow head
+buffers=$alot/buffers.py
+original $buffers
+sudo sed -i -r "s/^( *heads_char *= *u').*/\1\\\\u2578'/" $buffers
+
+# vim: set ft=sh: #

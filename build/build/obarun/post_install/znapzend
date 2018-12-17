@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... znapzend
+
+# simple daily backup of pools
+znapzendzetup create --sudo --recursive \
+                     SRC '1week=>1hour,1month=>1day,1year=>1week' pool \
+                     DST '1week=>1hour,1month=>1day,1year=>1week' tank
+
+systemd enable znapzend
+
+# vim: set ft=sh: #

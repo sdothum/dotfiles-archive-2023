@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................... py-chrome-bookmarks
+
+# return git uri
+echo https://github.com/bdesham/py-chrome-bookmarks.git
+
+# vim: set ft=sh: #

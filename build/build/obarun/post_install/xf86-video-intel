@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................. xf86-video-intel
+
+# intel video tearing fix
+[ ! -e /etc/X11/xorg.conf.d/20-intel.conf ] && config_install /etc/X11/xorg.conf.d/20-intel.conf
+
+# vim: set ft=sh: #

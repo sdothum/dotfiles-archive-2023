@@ -1,0 +1,180 @@
+#!/bin/sh
+# sdothum - 2016 (c) wtfpl
+
+# obarun boot configuration
+# login as user alarm
+# execute obarun-pi as root and mount usb on /media
+
+if [ $USER != root ] ;then
+  echo 'su - root'
+  exit
+fi
+
+source ./obarun-functions
+user=shum
+
+! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1 && wifi-menu
+pacman -Syu
+checkpoint
+
+
+heading "first up: sudo"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install sudo
+original /etc/sudoers
+sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
+    -e '/## Defaults specification/aDefaults insults' \
+    /etc/sudoers
+cat /etc/sudoers
+checkpoint
+
+
+heading 'configure boot parameters'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /boot/config.txt
+# config_install /boot/config.txt
+checkpoint
+
+
+heading 'set and generate locale'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original  /etc/locale.gen
+sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
+echo LANG=en_US.UTF-8 >/etc/locale.conf
+export LANG=en_US.UTF-8
+locale-gen
+
+
+heading 'set timezone'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+timedatectl set-timezone Canada/Eastern
+
+
+heading 'configure package manager'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /etc/pacman.conf
+sed -i -e '/^\[options\]/aILoveCandy' \
+    -e '/^#Color/s/^#//' \
+    /etc/pacman.conf
+pacman -Sy
+checkpoint
+
+
+heading 'configure network'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+[ "$hostname" = luna ] && systemctl enable dhcpcd.service
+# heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
+# [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+# remove possible symlink
+rm -f /etc/hosts
+config_install /etc/hosts
+
+
+heading 'installing wireless tools'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install dialog
+pm_install iw
+pm_install wpa_supplicant
+# cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
+# essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
+# key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
+# sed -i -e $essid -e $key /etc/netctl/my-wireless-network
+# netctl enable my-wireless-network
+echo noarp >/etc/dhcpcd.conf
+checkpoint
+
+
+heading "add primary user $user"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+useradd -m -g users -G wheel,storage,power -s /bin/bash $user
+passwd $user
+
+sed -i -re '/^alarm/s/[0-9]+:[0-9]+/1001:100/' \
+    -e "/^$user/s/[0-9]+:[0-9]+/1000:100/" \
+    /etc/passwd
+sed -i -re '/^users/s/[0-9]+/100/' \
+    -e '/^alarm/s/[0-9]+/1001/' \
+    -e "/^$user/s/[0-9]+/1000/" \
+    /etc/group
+
+mv -v /home/$user /home/anonymous
+mv -v /home/alarm /home/$user
+mv -v /home/anonymous /home/alarm
+chown -R $user:users /home/$user
+chown -R alarm:users /home/alarm
+checkpoint
+
+
+heading "root setup"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ln -sfv $HOME/.config/xfce4 /root/.config/
+mkdir -pv /root/tmp
+mkdir -pv /root/log
+mv /root/.config /root/.config.original
+ln -sf /home/$user/.config /root/
+ln -sf /home/$user/.fonts /root/
+ln -sf /home/$user/.forward /root/
+original /root/.bashrc
+ln -sf /home/$user/.bashrc /root/
+
+
+heading 'install base-devel'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install base-devel
+pm_install dos2unix
+# pm_install expac
+pm_install git
+pm_install gnome-keyring
+# pm_install jshon
+# pm_install namcap
+pm_install yajl
+checkpoint
+
+
+heading 'default shell'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pm_install bc
+pm_install dash
+pm_install fish
+pm_install python
+config_install /etc/profile.d/path.sh
+checkpoint
+
+
+heading 'enable tty autologin'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mkdir -pv /etc/systemd/system/getty@tty1.service.d
+echo "[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/systemd/system/getty@tty1.service.d/autologin.conf
+
+
+heading 'sync home directory'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# mkdir -p /home/$user/Maildir
+# chown $user:users /home/$user/Maildir
+# mkdir -p /net
+chown root:users /net
+if [ ! -d /home/$user/stow ] ;then
+  pm_install rsync
+  rsync -av /media/home/$user /home/
+  chown -R $user:users /home/$user
+fi
+
+
+# import user path
+. /home/$user/bin/functions/shell/user_path
+
+title "installation errors:"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+grep '> \(ERROR\|WARNING\)' $HOME/typescript
+
+
+heading 'install bundle'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+ditto 'exit console (script)'
+ditto "login as user $user"
+ditto 'bundle_install pi_base'
+
+
+# vim: set ft=sh: #

@@ -1,0 +1,28 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... cups
+
+original /etc/cups/client.conf
+laptop && sudo sed -i '/^ServerName/cServerName luna' /etc/cups/client.conf
+server && sudo sed -i '/^ServerName/cServerName localhost:631' /etc/cups/client.conf
+
+sudo groupadd printadmin
+sudo gpasswd -a $USER printadmin
+sudo gpasswd -a $USER lp
+sudo groupadd _lp
+sudo usermod -aG _lp $USER
+
+original /etc/cups/cups-files.conf
+sudo sed -i 's/SystemGroup sys root$/SystemGroup sys root _lp/' /etc/cups/cups-files.conf
+original /etc/cups/cupsd.conf
+sudo sed -i "s/@SYSTEM/$USER/" /etc/cups/cupsd.conf
+systemd enable org.cups.cupsd
+annotate "http://localhost:631 to configure cups-pdf and network shared printers"
+
+# the usual documents directory
+mkdir -pv $HOME/documents || exit 1
+
+# vim: set ft=sh: #

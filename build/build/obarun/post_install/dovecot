@@ -1,0 +1,47 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... dovecot
+
+password=dovecot
+
+sed -e '/#C=/cC=CA' \
+    -e '/#ST=/cST=Ontario' \
+    -e '/#L=/cL=Ottawa' \
+    -e '/#O=/cO=thedarnedestthing' \
+    -e '/emailAddress=/cemailAddress=sdothum@gmail.com' \
+    /usr/share/doc/dovecot/dovecot-openssl.cnf | sudo tee /etc/ssl/dovecot-openssl.cnf
+
+sudo rm -f /etc/ssl/certs/dovecot.pem
+sudo rm -f /etc/ssl/private/dovecot.pem
+sudo /usr/lib/dovecot/mkcert.sh
+sudo cp /etc/ssl/certs/dovecot.pem /etc/ca-certificates/trust-source/anchors/dovecot.crt
+sudo trust extract-compat
+
+sudo cp -v /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot/
+sudo cp -rv /usr/share/doc/dovecot/example-config/conf.d /etc/dovecot/
+echo "$USER:{PLAIN}$password:$(id -u $USER):$(id -g $USER)::$HOME" >users
+sudo mv users /etc/dovecot/
+
+original /etc/dovecot/conf.d/10-auth.conf
+sudo sed -i -e '/^!include auth-system.conf.ext/s/^/#/' \
+         -e '/#!include auth-passwdfile.conf.ext/s/#//' \
+         /etc/dovecot/conf.d/10-auth.conf
+
+original /etc/dovecot/conf.d/10-mail.conf
+sudo sed -i "/#mail_location =/cmail_location = maildir:$HOME/Maildir:LAYOUT=fs" \
+         /etc/dovecot/conf.d/10-mail.conf
+
+[ -e /etc/dovecot/dh.pem ] || openssl dhparam 2048 | sudo tee /etc/dovecot/dh.pem
+original /etc/dovecot/conf.d/10-ssl.conf
+if grep -qv '^ssl_dh =' /etc/dovecot/conf.d/10-ssl.conf ;then
+  sudo sed -i 's/^#ssl_dh =/ssl_dh =/' /etc/dovecot/conf.d/10-ssl.conf
+fi
+
+server && systemd enable dovecot || annotate "sudo systemctl start dovecot"
+# test dovecot installation
+mailcot localhost $USER $password
+
+# vim: set ft=sh: #

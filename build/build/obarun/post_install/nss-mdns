@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... nss-mdns
+
+ifnsed /etc/nsswitch.conf 'mdns_minimal' '/^hosts:/s/ resolve/ mdns_minimal resolve/'
+
+systemd restart avahi-daemon
+annotate 'avahi-discover to list network shareable devices'
+
+# vim: set ft=sh: #

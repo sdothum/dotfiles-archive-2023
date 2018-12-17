@@ -1,0 +1,27 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................. infinality fonts
+
+original /etc/pacman.conf
+ditto "adding pacman keys, please be patient"
+if ! grep -q '\[infinality-bundle\]' /etc/pacman.conf ;then
+  sudo sed -i '$a\
+\
+[infinality-bundle]\
+Server = http://bohoomil.com/repo/$arch\
+[infinality-bundle-multilib]\
+Server = http://bohoomil.com/repo/multilib/$arch\
+[infinality-bundle-fonts]\
+Server = http://bohoomil.com/repo/fonts' \
+           /etc/pacman.conf
+  sudo pacman-key -r 962DDE58
+  sudo pacman-key --lsign-key 962DDE58
+  sudo pacman -Syyu
+  sudo pacman -Rdd fontconfig
+  sudo pacman -Rdd freetype2
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,26 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... utserver
+
+# utorrent daemon
+original /etc/utserver.conf
+sed -e '/#ut_webui_port:/cut_webui_port: 8081' \
+    -e '/#dir_autoload:/cdir_autoload: /net/downloads/http' \
+    -e '/#dir_autoload_delete:/cdir_autoload_delete: true' \
+    -e '/dir_root:/c/dir_root: /net/downloads/torrents' \
+    -e '$alocalhost_authentication: false' \
+    /etc/utserver.conf.original |
+    sudo tee /etc/utserver.conf
+
+ifnsed /usr/lib/systemd/system/utserver.service ' -logfile' 's| -daemon| -logfile /tmp/utserver.log -daemon|'
+
+# update ipfilter list
+ipfilter
+
+systemd enable utserver
+annotate "enable ipfiltering from advanced settings localhost:8081/gui/"
+
+# vim: set ft=sh: #

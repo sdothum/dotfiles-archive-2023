@@ -1,0 +1,23 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... postgresql
+
+# just install a fresh database for tt-rss
+[ -d /srv/lib/postgres ] && sudo rm -r /srv/lib/postgres
+sudo mkdir -pv /srv/lib/postgres/data
+sudo chown -cR postgres:postgres /srv/lib/postgres
+[ -d /var/lib/postgres ] && sudo rm -rv /var/lib/postgres
+if [ ! -L /var/lib/postgres ] ;then
+  sudo ln -sfv /srv/lib/postgres /var/lib/
+  # sudo systemd-tmpfiles --create postgresql.conf
+  echo "initdb --locale en_US.UTF-8 -E UTF8 -D '/srv/lib/postgres/data'" | su - postgres
+  original /srv/lib/postgres/data/pg_hba.conf
+  # sudo sed -i '/^local *all *all *trust/s/trust/md5/' /srv/lib/postgres/data/pg_hba.conf
+fi
+
+server && systemd enable postgresql || annotate "sudo systemctl start postgresql"
+
+# vim: set ft=sh: #

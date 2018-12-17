@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... tixati
+
+annotate "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz\n
+add bogon blocklist http://list.iblocklist.com/?list=bt_bogon&fileformat=p2p&archiveformat=gz"
+
+# vim: set ft=sh: #

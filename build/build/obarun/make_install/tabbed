@@ -1,0 +1,23 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... tabbed xft
+
+version=0.6
+trap "rm -rf tabbed-$version*" EXIT
+
+curl -L -O http://dl.suckless.org/tools/tabbed-$version.tar.gz
+tar xzf tabbed-$version.tar.gz
+
+cd tabbed-$version
+wget http://tools.suckless.org/tabbed/patches/tabbed-$version-xft.diff
+patch -p1 < tabbed-$version-xft.diff
+sed -i "/monospace-/s/-[0-9]*/-$(fontsize)/" config.def.h
+
+make clean
+make
+sudo make install
+
+# vim: set ft=sh: #

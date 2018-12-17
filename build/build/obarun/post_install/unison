@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... unison
+
+server && target=monad || target = luna
+echo "
+root = /home/$USER
+root = ssh://$target//home/$USER
+path = sync
+ignore = Name dwb/default/dwb-uni.fifo
+ignore = Name luakit/cookies.db*
+ignore = Name xpad/server*
+auto = true
+batch = true
+log = true
+logfile = /tmp/unison.log
+times = true" >$HOME/.unison/sync.prf
+
+# vim: set ft=sh: #

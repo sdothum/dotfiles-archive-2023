@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... dwb
+
+dwbem --no-confirm -i adblock_subscriptions
+dwbem --no-confirm -i formfiller
+dwbem --no-confirm -i simplyread
+dwbem --no-confirm -i userscripts
+
+# vim: set ft=sh: #
