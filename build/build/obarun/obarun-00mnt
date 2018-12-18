@@ -3,7 +3,7 @@
 
 # fresh obarun pre-installer
 
-[ $USER == root ] || { echo '> run as root'; exit ;}
+[ $USER == root ] || { echo '> run as root' ; exit ;}
 source ./obarun-functions
 
 echo 'assuming usb (scripts) mounted on /media..'

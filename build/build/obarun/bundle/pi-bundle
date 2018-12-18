@@ -7,6 +7,7 @@
 # then run rsync pi from main server to install scripts and proceed with
 # archlinux-pi
 
+
 = sound
 = ▔▔▔▔▔
   alsa-utils
@@ -16,8 +17,8 @@
   pulseaudio-alsa
 
 
-= system utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= system utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cronie
   logrotate
   ntp
@@ -39,8 +40,8 @@ d ? preload
   file-roller
 
 
-= file managers
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= file manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   ncdu
   nnn
   ranger
@@ -50,19 +51,19 @@ d ? preload
   vifm
 
 
-= file systems
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= file system
+= ▔▔▔▔▔▔▔▔▔▔▔
   dosfstools
   exfat-utils
 
 
-= info screens
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= info screen
+= ▔▔▔▔▔▔▔▔▔▔▔
   neofetch
 
 
-= shell tools
-= ▔▔▔▔▔▔▔▔▔▔▔
+= shell tool
+= ▔▔▔▔▔▔▔▔▔▔
   fzf
   pv
   ripgrep
@@ -77,8 +78,8 @@ d ? preload
   gutenprint
 
 
-= fonts
-= ▔▔▔▔▔
+= font
+= ▔▔▔▔
   adobe-base-14-fonts
   noto-fonts
 # terminus-font-ll2-td1
@@ -92,8 +93,8 @@ d ? preload
   ttf-symbola
 
 
-= package managers
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= package manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   downgrade
   pkgfile
 
@@ -110,14 +111,14 @@ d pass
   htop
 
 
-= terminal multiplexors
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= terminal multiplexor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   tmux
 # tmux-tpm
 
 
-= network utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= network utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   dialog
 # dnsmasq
 # dnsutils
@@ -143,8 +144,8 @@ d pass
 # python-dbus
 
 
-= proxies
-= ▔▔▔▔▔▔▔
+= proxy
+= ▔▔▔▔▔
 # squid
 
 
@@ -177,16 +178,16 @@ d " add armv7h to arch in pkgbuild
 d ? lemonbar-xft-git
 
 
-= desktop utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= desktop utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 d " add armv7h to arch in pkgbuild
 d ? alock-git
   python-pywal
   xautolock
 
 
-= gtk themes and engines
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= gtk theme/engine
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   adapta-gtk-theme
   gtk-engine-murrine
 # "direct rsync from /usr/share/icons to .local/share"
@@ -205,8 +206,8 @@ d ? alock-git
   rofi
 
 
-= window properties
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= window property
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 d " add armv7h to arch in pkgbuild
 d ? sutils-git
 d ? xtitle-git
@@ -226,15 +227,15 @@ d ? xtitle-git
   wget
 
 
-= utilities
-= ▔▔▔▔▔▔▔▔▔
+= utility
+= ▔▔▔▔▔▔▔
   perl-curses-ui
   perl-extract-url
   perl-html-strip
 
 
-= editors
-= ▔▔▔▔▔▔▔
+= editor
+= ▔▔▔▔▔▔
   ctags
   python-proselint
   texlive-core
@@ -247,8 +248,8 @@ d ? xtitle-git
   jre7-openjdk
 
 
-= software tools
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= software tool
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
   time
 
 
@@ -259,15 +260,15 @@ d ? xtitle-git
   patchutils
 
 
-= languages
-= ▔▔▔▔▔▔▔▔▔
+= programming language
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   python
   ruby
 g term-ansicolor
 
 
-= video players
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= video player
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   omxplayer
   youtube-dl
 
@@ -280,8 +281,8 @@ d * alot
   msmtp-mta
 
 
-= browsers
-= ▔▔▔▔▔▔▔▔
+= browser
+= ▔▔▔▔▔▔▔
   chromium
 # qt5-webkit
 # qutebrowser
@@ -297,7 +298,7 @@ d ? vimb
 = ▔▔▔▔▔▔▔▔▔▔▔▔
 # bitlbee
 # d " add armv7h to arch in pkgbuild
-  d ? centerim5-git
+d ? centerim5-git
 # libotr
 # weechat
 # xmpppy
@@ -314,8 +315,8 @@ d " add armv7h to arch in pkgbuild
 d ? wego-git
 
 
-= dictionaries
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= dictionary
+= ▔▔▔▔▔▔▔▔▔▔
   aiksaurus
   dictd
   dict-wn
@@ -337,8 +338,8 @@ d ? amphetype-svn
   remind
 
 
-= viewers
-= ▔▔▔▔▔▔▔
+= viewer
+= ▔▔▔▔▔▔
   feh
   zathura
   zathura-ps

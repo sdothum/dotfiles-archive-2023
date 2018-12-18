@@ -1,0 +1,78 @@
+# shell packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= file
+= ▔▔▔▔
+  ack
+# etc-update
+# gamin
+  mediainfo [server]
+  mlocate
+# multitail
+  stow
+  tree
+
+
+= file manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  ncdu
+  nnn
+  ranger
+  vidir
+  vifm
+
+
+= info screen
+= ▔▔▔▔▔▔▔▔▔▔▔
+# fetch-git
+  figlet
+  fortune-mod
+# fortune-mod-chucknorris
+  neofetch
+# pacnews-git
+# screenfetch
+# toilet
+
+
+= shell
+= ▔▔▔▔▔
+  dash
+# fasd
+  fish
+# prezto-git
+# zsh
+
+
+= shell tool
+= ▔▔▔▔▔▔▔▔▔▔
+# ansi-color
+# autojump
+# bash-completion
+# bc
+# checkbashisms
+  expect
+# fasd
+  fzf
+# prezto-git
+  pv
+  ripgrep
+m shell-functools
+  the_silver_searcher
+# zsh-doc
+# zsh-autosuggestions
+# zsh-completions
+# zsh-syntax-highlighting
+
+
+= terminal multiplexor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# byobu
+# screen
+  tmux
+# tmux-tpm
+
+
+# vim: set ft=conf: #

@@ -7,6 +7,7 @@
 # then run rsync pi from main server to install scripts and proceed with
 # archlinux-pi
 
+
 = aur package manager
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 a package-query
@@ -42,8 +43,8 @@ a package-query
   fish
 
 
-= x11 drivers
-= ▔▔▔▔▔▔▔▔▔▔▔
+= x11 driver
+= ▔▔▔▔▔▔▔▔▔▔
   xf86-input-evdev
   xf86-input-libinput
   xf86-video-fbdev
@@ -55,8 +56,8 @@ a package-query
   xorg-server
 
 
-= x11 server utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= x11 server utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # xorg-apps
   xorg-xinput
   xorg-xmodmap
@@ -74,8 +75,8 @@ a package-query
   libxft
 
 
-= ncurses editors
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ncurses editor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   gvim
 
 

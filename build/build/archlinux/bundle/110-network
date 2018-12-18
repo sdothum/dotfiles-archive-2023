@@ -3,6 +3,7 @@
 
 # see bundle_install
 
+
 = connectivity
 = ▔▔▔▔▔▔▔▔▔▔▔▔
 # bluez
@@ -64,11 +65,11 @@ d * cmst
 # wireshark-gtk [server]
 
 
-= proxies
-= ▔▔▔▔▔▔▔
+= proxy
+= ▔▔▔▔▔
 # adsuck
-# polipo  [server]
-# privoxy [server]
+# polipo        [server]
+# privoxy       [server]
   squid
 
 
@@ -76,16 +77,5 @@ d * cmst
 = ▔▔▔▔▔▔
   socat
 
-
-= sync
-= ▔▔▔▔
-# btsyncindicator
-# btsync
-  rsync
-  syncthing
-# syncthing-git
-# syncthing-inotify-git
-  vsftpd
-  watchman
 
 # vim: set ft=conf: #

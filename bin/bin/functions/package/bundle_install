@@ -6,7 +6,7 @@
 
 # ......................................................... Distribution install
 
-# Usage: bundle_install [check] <bundle>*
+# Usage: bundle_install [check | list] <bundle>*
 #
 # format: # inline comment
 #         = title
@@ -37,16 +37,19 @@ if [ $1 = check ] ;then
   check=true
   shift
   gems=$(gem list | cut -d' ' -f1)
+elif [ $1 = list ] ;then
+  list=true
+  shift
 fi
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
-[ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred ;}
+[ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred ;};}
 
 rule() { echo "$@" | sed 's/\[// ; s/\]//' || echo true ;}
 
 for i in $@ ;do
-  subject $(basename $i | cut -d- -f2-9)
+  [ $list ] || subject $(basename $i | cut -d- -f2-9)
 
   # preserve stdin fd for package manager prompts
   # note: (action package) map to (package condition) for default noconfirm install
@@ -56,10 +59,10 @@ for i in $@ ;do
     case $action in
     ''  ) continue ;;
     '#' ) continue ;;
-    '=' ) echo $package | grep '^[[:alpha:]]' && title "$package $condition" ;    continue ;;
-    '"' ) [ $check ] || ditto "$package $condition" ;                             continue ;;
-    '!' ) [ $check ] || $package $condition ;                                     continue ;;
-    '+' ) [ -z $check ] && { heading "[ Manual install required.. ]   $package" ; continue ;} ;;
+    '=' ) [ $list ] || { echo $package | grep '^[[:alpha:]]' && title "$package $condition" ;}; continue ;;
+    '"' ) [ $check ] || ditto "$package $condition" ;                                           continue ;;
+    '!' ) [ $check ] || $package $condition ;                                                   continue ;;
+    '+' ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package" ; continue ;};} ;;
     d   ) rule=true ;;
 
     '-' |\
@@ -75,6 +78,7 @@ for i in $@ ;do
           rule=$(rule "$@") ;;
     esac
 
+    [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/' ; continue ;}
     eval $rule || continue
 
     if [ $check ] ;then
@@ -106,6 +110,7 @@ for i in $@ ;do
   done 3< $i
 done
 
+[ $list ] && exit
 if [ -e $deferred ] ;then
   cat $deferred
   ifyes 'install deferred pacages' && bundle_install $deferred

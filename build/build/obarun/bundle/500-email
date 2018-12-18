@@ -11,8 +11,8 @@
   offlineimap
 
 
-= mail clients
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= mail client
+= ▔▔▔▔▔▔▔▔▔▔▔
   alot
 # alot     [! server]
 # alot-git [server]
@@ -32,8 +32,8 @@ d * notmuch
 # thunderbird
 
 
-= mail utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= mail utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔
 # archivemail
 # mb2md
 # imapdedup
@@ -50,5 +50,6 @@ d * notmuch
 # haskell-pandoc
 # lynx
 # urlscan-git
+
 
 # vim: set ft=conf: #

@@ -3,6 +3,7 @@
 
 # see bundle_install
 
+
 = appearance
 = ▔▔▔▔▔▔▔▔▔▔
 # breeze-obsidian-cursor-theme
@@ -14,7 +15,7 @@
 # nitrogen
   setroot
 # xcompmgr
-# shantz-xwinwrap-bzr  [server]
+# shantz-xwinwrap-bzr     [server]
 # unclutter
   unclutter-xfixes-git
 # xflux
@@ -50,8 +51,40 @@ d ? conky-lua-archers
 # xgrabcolor
 
 
-= gtk themes and engines
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= font
+= ▔▔▔▔
+  adobe-base-14-fonts
+# ephifonts
+# ephifonts-no-helvetica
+# d m iosevka             [server]
+# d m iosevka\\ amphetype [server]
+# d m iosevka\\ proof     [server]
+  noto-fonts
+# otf-gnutypewriter
+# powerline-fonts-git
+  ttf-courier-prime
+  ttf-dejavu
+# ttf-dejavu-sans-mono-powerline-git
+# ttf-fantasque-sans
+# ttf-font-awesome
+# ttf-google-fonts-git
+# ttf-inconsolata
+# ttf-ionicons
+# ttf-iosevka
+# ttf-iosevka-hooky
+# ttf-liberation
+# ttf-mac-fonts
+  ttf-ms-fonts
+# ttf-noto-sans-ib
+  ttf-robobo
+  ttf-symbola
+# ttf-ubuntu-font-family
+# xorg-fonts-type1
+# xorg-xlsfonts
+
+
+= gtk theme/engine
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   adapta-gtk-theme
 # adapta-gtk-theme-deb
 # flatplat-theme
@@ -84,8 +117,8 @@ d ? conky-lua-archers
 # xfce4-notifyd
 
 
-= screensavers
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= screensaver
+= ▔▔▔▔▔▔▔▔▔▔▔
   rss-glx
   xscreensaver
 
@@ -108,20 +141,8 @@ d ? conky-lua-archers
   xvkbd
 
 
-= window managers
+= window property
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# 2bwm
-# budgie-desktop-git
-# herbstluftwm
-# openbox
-# ruler-git
-# windowchef-git
-# wmutils-git
-# m xwait
-
-
-= window properties
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # m disputils
 # libwm-git
 # sprop-git
@@ -134,44 +155,5 @@ d ? conky-lua-archers
   xorg-xprop
   xorg-xwininfo
 
-
-= bspwm
-= ▔▔▔▔▔
-# bspwm
-# bspwm-git
-# lua-posix
-  sxhkd
-# sxhkd-git
-
-
-= gnome
-= ▔▔▔▔▔
-# gnome-control-center
-# gnome-shell
-# gnome-tweak-tool
-
-
-= xmonad
-= ▔▔▔▔▔▔
-# dzen2
-# haskell-xmonad
-# haskell-xmonad-contrib
-# xmobar
-
-
-= x11
-= ▔▔▔
-  arandr               [server]
-  lib32-libglvnd       [gpu nvidia]
-  lib32-mesa-libgl     [laptop]
-  lib32-nvidia-libgl   [gpu nvidia]
-  lib32-nvidia-utils   [gpu nvidia]
-  lxrandr              [server]
-  xf86-input-mouse
-  xf86-input-keyboard
-  xf86-input-synaptics [laptop]
-  xorg-xev
-  xorg-xinput
-  xorg-xmessage
 
 # vim: set ft=conf: #

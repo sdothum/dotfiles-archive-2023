@@ -3,17 +3,6 @@
 
 # see bundle_install
 
-= file
-= ▔▔▔▔
-  ack
-# etc-update
-# gamin
-  mediainfo              [server]
-  mlocate
-# multitail
-  stow
-  tree
-
 
 = file compression
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -25,105 +14,27 @@
   zip
 
 
-= disk utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= disk utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔
   convmv
   etcher
 # gnome-disk-utility
   gparted
   gptfdisk
-  samsung_magician       [server || laptop]
+# samsung_magician [server || laptop]
 # unetbootin
 
 
-= file managers
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
-# ffmpegthumbnailer
-# filelight
-  ncdu
-  nnn
-  ranger
-  rox
-# thunar
-# thunar-archive-plugin
-# thunar-volman
-  tumbler
-  vidir
-  vifm
-
-
-= file systems
-= ▔▔▔▔▔▔▔▔▔▔▔▔
-  # bcachefs-tools         [server]
-  # linux-bcachefs         [server]
-  # linux-bcachefs-docs    [server]
-  # linux-bcachefs-headers [server]
-  btrbk
-  dosfstools
-  exfat-utils
-  fuse-common
-# fuse-exfat
-  gvfs
-# hfsprogs
-  mbuffer
-# nfs-utils
-# ntfs-3g
-  ntfs-3g-fuse
+= sync
+= ▔▔▔▔
+# btsyncindicator
+# btsync
+  rsync
+  syncthing
+# syncthing-git
+# syncthing-inotify-git
+  vsftpd
 # watchman
-# zfs-linux              [server]
-# zfs-linux-headers      [server]
-# d znapzend             [server]
-
-
-= info screens
-= ▔▔▔▔▔▔▔▔▔▔▔▔
-# fetch-git
-  figlet
-  fortune-mod
-# fortune-mod-chucknorris
-  neofetch
-# pacnews-git
-# screenfetch
-# toilet
-
-
-= ripping
-= ▔▔▔▔▔▔▔
-  audex                  [server]
-# asunder                [server]
-  cdrdao                 [server]
-# cdrtools               [server]
-# dvd+rw-tools           [server]
-# dvdbackup              [server]
-  ffmpeg                 [server]
-  handbrake              [server]
-# handbrake-cli          [server]
-# k3b                    [server]
-  mkvtoolnix-cli         [server]
-# soundconverter         [server]
-  transcode              [server]
-  xfburn                 [server]
-
-
-= shell tools
-= ▔▔▔▔▔▔▔▔▔▔▔
-# ansi-color
-# autojump
-# bash-completion
-# bc
-# checkbashisms
-  expect
-# fasd
-  fzf
-# prezto-git
-  pv
-  ripgrep
-m shell-functools
-  the_silver_searcher
-# zsh-doc
-# zsh-autosuggestions
-# zsh-completions
-# zsh-syntax-highlighting
 
 
 = system monitor
@@ -141,29 +52,7 @@ m shell-functools
 = ▔▔▔▔
 # bonnie++
 # memtester
-# mprime-bin             [server]
+# mprime-bin       [server]
 
-
-= terminals
-= ▔▔▔▔▔▔▔▔▔
-# kitty
-# putty
-# roxterm
-# rxvt-unicode
-  rxvt-unicode-patched
-# sakura
-# terminator
-# termite-git
-# urxvt-font-size-git    [server]
-  urxvt-perls
-  xterm
-
-
-= terminal multiplexors
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-# byobu
-# screen
-  tmux
-# tmux-tpm
 
 # vim: set ft=conf: #

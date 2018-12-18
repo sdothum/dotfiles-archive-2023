@@ -3,8 +3,9 @@
 
 # see bundle_install
 
-= browsers
-= ▔▔▔▔▔▔▔▔
+
+= browser
+= ▔▔▔▔▔▔▔
   chromium
 # dwb-git
 # dwb-gtk3
@@ -27,8 +28,8 @@
   w3m
 
 
-= browser addons
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= browser addon
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # chromium-pepper-flash
   chromium-widevine
   flashplugin
@@ -38,13 +39,14 @@
   pepper-flash
 # tabbed
 m tabbed
-# webkitgtk2        [server]
+# webkitgtk2      [server]
+  youtube-dl
 
 
 = chat/twitter
 = ▔▔▔▔▔▔▔▔▔▔▔▔
   bitlbee
-  d * centerim5-git
+d * centerim5-git
 # finch
   libotr
 # pidgin
@@ -59,19 +61,19 @@ d * znc
 
 = file transfer
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔
-# couchpotato-git   [server]
+# couchpotato-git [server]
 # flexget
   gftp
-  nzbget            [server]
+  nzbget          [server]
 # par2cmdline-tbb
 # python2-pyopenssl
-# rtorrent          [server]
-# rutorrent         [server]
-# sabnzbd           [server]
-# sickbeard-git     [server]
-  sonarr            [server]
+# rtorrent        [server]
+# rutorrent       [server]
+# sabnzbd         [server]
+# sickbeard-git   [server]
+  sonarr          [server]
   tixati
-  transmission-gtk
+# transmission-gtk
 # unison
 # utserver
   wget
@@ -89,8 +91,8 @@ d * znc
   perl-html-strip
 
 
-= web aggregators
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= web aggregator
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # newsbeuter
   php-gd
 # php-mcrypt
@@ -102,6 +104,7 @@ d * znc
 
 = web server
 = ▔▔▔▔▔▔▔▔▔▔
-  pixelserv         [! server]
+  pixelserv       [! server]
+
 
 # vim: set ft=conf: #

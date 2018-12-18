@@ -42,8 +42,11 @@
           \, '^' : { 'pattern' : '=',        'left_margin' : 0, 'right_margin' : 0, 'align' : 'right' }
           \, '(' : { 'pattern' : '(',        'left_margin' : 0, 'right_margin' : 0 }
           \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
+          \, '[' : { 'pattern' : '[',        'left_margin' : 1, 'right_margin' : 0 }
           \, ']' : { 'pattern' : ']',        'left_margin' : 1 }
           \}
+
+      let g:easy_align_ignore_groups = []   " process comments
 
       vmap <Enter>   <Plug>(EasyAlign)
       nmap <leader>a <Plug>(EasyAlign)

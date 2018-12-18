@@ -3,6 +3,7 @@
 
 # see bundle_install
 
+
 = database management
 = ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # adminer
@@ -20,16 +21,27 @@
   enscript
 
 
-= editors
-= ▔▔▔▔▔▔▔
-# atom-editor     [server]
+= editor
+= ▔▔▔▔▔▔
 # atom-editor-bin [server]
+# atom-editor     [server]
 # ctags
-  emacs           [server]
+# emacs           [server]
+# focuswriter
+# markdown
 # neovim
 # neovim-git
+# nvpy-git
+# pyroom
+  python-proselint
+# retext
+# rubyroom
 # sublime-text
+# ted             [server]
+  texlive-core
+  texlive-latexextra
   universal-ctags-git
+# wordgrinder
 
 
 = haskell
@@ -62,8 +74,8 @@
   python-setuptools
 
 
-= software tools
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= software tool
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
 # arduino         [! cpu atom]
   avr-gcc
   avr-libc
@@ -84,5 +96,6 @@
   patchutils
 # subversion
 # tortoisehg
+
 
 # vim: set ft=conf: #

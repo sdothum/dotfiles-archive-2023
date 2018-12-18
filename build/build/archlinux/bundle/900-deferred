@@ -10,3 +10,6 @@ pass
 ? amphetype-svn
 ? wego-git
 * connman
+" connman post install disrupts internet connection, install last
+* connman
+* cmst
