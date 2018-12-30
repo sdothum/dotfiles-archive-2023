@@ -1,0 +1,81 @@
+# network packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= connectivity
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+# bluez
+# bluez-utils
+# d " connman post install disrupts internet connection, install last
+# d * connman
+d * cmst
+# gnome-bluetooth
+# ifenslave
+# networkmanager
+# network-manager-applet
+# wicd
+# wicd-gtk
+
+
+= network
+= ▔▔▔▔▔▔▔
+  bind-tools
+  dnsmasq
+  dnsutils
+
+
+= network monitor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# tcptrack
+# dstat
+  iftop
+  mtr
+  net-tools
+  nethogs
+# netstat-nat
+# tcpflow
+# traceroute
+
+
+= network security
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  openssh
+# rssh
+
+
+= network share
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  avahi
+# dropbox-experimental
+  nfs-utils
+# nmap
+# nss-mdns
+# pygtk
+# python-dbus
+# samba
+# smbnetfs
+
+
+= penetration testing
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# metasploit    [server]
+  nmap          [server]
+# wireshark-gtk [server]
+
+
+= proxy
+= ▔▔▔▔▔
+# adsuck
+# polipo        [server]
+# privoxy       [server]
+  squid
+
+
+= socket
+= ▔▔▔▔▔▔
+  socat
+
+
+# vim: set ft=conf: #

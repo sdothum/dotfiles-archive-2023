@@ -26,8 +26,7 @@ fold=80
 
 # unset for direct printing, set for proofing and latex debugging
 if [ "$1" = proof ] ;then
-  proof=true
-  shift
+  proof=true ; shift
 elif [ -e $PROOF ] ;then
   proof=true
 else
@@ -40,10 +39,9 @@ dotdot=$TMP/dotdot
 # ............................................................... Latex preamble
 
 # must escape certain latex characters for fancyhdr and cat body
-escape() { echo $@ | sed -r 's/([#$%&_])/\\\1/g' ;}
-
-# reverse word order
-reverse() { awk '{ for (i=$NF ; i>1 ; i--) printf("%s ", $i) }' ;}
+escape()  { echo $@ | sed -r 's/([#$%&_])/\\\1/g' ;}
+reverse() { awk '{ for (i=$NF ; i>1 ; i--) printf("%s ", $i) }' ;} # reverse word order
+dotdot()  { cat $dotdot ;}
 
 # title truncation footwork
 truncate() {
@@ -52,31 +50,30 @@ truncate() {
   echo "$lines" | head -1
 }
 
-dotdot() { cat $dotdot ;}
-
 format() {
   if [ "$title" ] ;then
     title="$(escape $title | truncate | sed 's/ *$//')"
     title="$title$(dotdot)"
   # set title dependent on source, ignore stdin
   elif echo $1 | grep -qv '^/tmp/tmp\.[^ ]*$' ;then
-      unset pwd
-      if echo $1 | grep -q $HOME ;then case $PWD in
-        */.config*) pwd=.config/${PWD#*/.config} ;;
-        */.vim*   ) pwd=.vim/${PWD#*/.vim} ;;
-        */bin/bin*) pwd=${PWD#*/bin/bin/} ;;
-        */bin*    ) pwd=${PWD#*/bin/} ;;
-        */build*  ) pwd=${PWD#*/build/} ;;
-        */vimwiki*) ;;
-        *         ) pwd=$PWD ;;
-        esac
-        [ $pwd ] && title=$pwd/$1 || title=${1%.wiki}
-      else
-        title=$1
-      fi
-      # truncate long pathnames
-      title="$(echo $title | sed 's|/| ^|g' | reverse | truncate)"
-      title="$(dotdot)$(escape $title | reverse | sed 's| *\^|/|g')"
+    unset pwd
+    if echo $1 | grep -q $HOME ;then
+      case $PWD in
+      */.config*) pwd=.config/${PWD#*/.config} ;;
+      */.vim*   ) pwd=.vim/${PWD#*/.vim} ;;
+      */bin/bin*) pwd=${PWD#*/bin/bin/} ;;
+      */bin*    ) pwd=${PWD#*/bin/} ;;
+      */build*  ) pwd=${PWD#*/build/} ;;
+      */vimwiki*) ;;
+      *         ) pwd=$PWD ;;
+      esac
+      [ $pwd ] && title=$pwd/$1 || title=${1%.wiki}
+    else
+      title=$1
+    fi
+    # truncate long pathnames
+    title="$(echo $title | sed 's|/| ^|g' | reverse | truncate)"
+    title="$(dotdot)$(escape $title | reverse | sed 's| *\^|/|g')"
   fi
 
   (cat <<EOF
@@ -128,9 +125,7 @@ EOF
 
 filter() {
   # reduce mail header to essential contact information
-
-  sed -nr '/^(Date|From|To|Cc|Subject): /,$p' |
-      pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' |
+  sed -nr '/^(Date|From|To|Cc|Subject): /,$p' | pcregrep -vM 'X-SG-EID: (\n|.)*?[=]' |
       egrep -vEi '^(Accept-Language|AMQ-Delivery-Message-Id.*|authentication-results|Content-.*|Importance|In-Reply-To|List-.*|Message-ID|MIME-Version|PP-Correlation-Id.*|received-spf|References|Reply-To|Return-Path|Sender|Thread-Topic|User-Agent|Thread-Index|X-.*|Tags):' |
       egrep -vE '^ *(boundary=.*|charset=.*|(dkim|spf|dmarc)=pass .*|\(UTC\)|\[[0-9]*\] (https*|mailto):.*)$' |
       sed -r '/(\n|^ )<[^<>]*>$/d'
@@ -142,11 +137,11 @@ header() {
 
   # [&%] latex special characters in title will interfere with verbatim formatting
   title=$(echo $title |
-          sed -re 's/([\&\%])/\\\1/g' \
-              -e 's/^ *([Rr][Ee]:* )+//' \
-              -e 's/^ *([Ff][Ww][Dd]*: )+//' \
-              -e 's/(\[SPAM\])//' \
-              -e 's/([^.])[.]$/\1/')
+      sed -re 's/([\&\%])/\\\1/g' \
+          -e 's/^ *([Rr][Ee]:* )+//' \
+          -e 's/^ *([Ff][Ww][Dd]*: )+//' \
+          -e 's/(\[SPAM\])//' \
+          -e 's/([^.])[.]$/\1/')
 
   time=$(grep -m 1 '^Date:' $stdin | cut -d' ' -f2-5)
   time=$(date -d "$time" +'%B %-d, %Y')
@@ -169,22 +164,11 @@ punctuation() {
 
 print() {
   case $1 in
-  *.ps ) title=$1
-         output=$1 ;;
-
-  *.pdf) pdf2ps "$1"
-         exec hardcopy "${1%.pdf}.ps" ;;
-
-  *    ) output="$TMP/$(basename $1).pdf"
-         trap "rm -f $output" EXIT
-         format "$1" ;;
+  *.ps ) title=$1 ; output=$1 ;;
+  *.pdf) pdf2ps "$1" ; exec hardcopy "${1%.pdf}.ps" ;;
+  *    ) output="$TMP/$(basename $1).pdf" ; trap "rm -f $output" EXIT ; format "$1" ;;
   esac
-  if [ $proof ] ;then
-    zathura "$output" 2>&1
-  else
-    notify low "Printing" "$title"
-    lpr -P $PRINTER "$output"
-  fi
+  [ $proof ] && zathura "$output" 2>&1 || { notify low "Printing" "$title" ; lpr -P $PRINTER "$output" ;}
 }
 
 # lines from stdin are folded
@@ -200,35 +184,22 @@ stdin() {
   hardcopy eject
 }
 
-paragraphs() {
-  punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n/smg' |
-                stdin header
-}
+paragraphs() { punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n/smg' | stdin header ;}
 
 case $1 in
 ''   ) usage ;;
-
-eject) # force last page ejection with hp (escape) reset code
-       [ $proof ] || printf '\033E' | lpr -P $PRINTER
-       exit ;;
-
+eject) [ $proof ] || printf '\033E' | lpr -P $PRINTER ; exit ;;
 stdin) stdin ;;
 
-mail ) # content is piped in from mail application, see alot
-       # font=PragmataPro
-       fontsize=9
+mail ) fontsize=9                           # content is piped in from mail application, see alot
        spacing='\onehalfspacing'
        unset linenumbers
        # hexdump log for inspecting unprintable punctuation characters
-       if [ $proof ] ;then
-         cat >$proof
-         cat $proof | hexdump -C >$proof:hexdump
-       fi
+       [ $proof ] && { cat >$proof ; cat $proof | hexdump -C >$proof:hexdump ;}
        # contract excessive blank lines
        cat $proof | filter | paragraphs ;;
 
-note ) # stdin formatting
-       fontsize=9
+note ) fontsize=9                           # stdin formatting
        spacing='\onehalfspacing'
        unset linenumbers
        cat $proof | paragraphs ;;
@@ -245,8 +216,7 @@ wiki ) fontsize=10
        title=${title%.wiki}
        cat "$@" | stdin ;;
 
-wps  ) # word document saved as text file
-       fontsize=9
+wps  ) fontsize=9                           # word document saved as text file
        spacing='\doublespacing'
        unset linenumbers
        shift
@@ -254,10 +224,8 @@ wps  ) # word document saved as text file
        # remove document [annotation] and reformat paragraphs
        # contract spaces and leading annotation punctuation (paragraph)
        perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" |
-            sed -r 's/^(\xe3\x80\x80)*/\n/' |
-            punctuation |
-            sed 's/^\.*  *//; s/  */ /g' |
-            stdin ;;
+           sed -r 's/^(\xe3\x80\x80)*/\n/' | punctuation | sed 's/^\.*  *// ; s/  */ /g' |
+           stdin ;;
 
 *    ) fontsize=8
        spacing='\onehalfspacing'
@@ -268,7 +236,6 @@ esac
 
 # filenames may have blanks, hence, usage of while vs for i in $@
 while [ $1 ] ;do
-  # set date to file modification date
   time=$(date -r "$1" +'%B %-d, %Y')
   print "$1"
   shift

@@ -43,9 +43,7 @@ while : ;do
       keep   ) ;;
       restore) sudo cp $copy $pacnew ;;
       delete ) sudo mv $pacnew /tmp ;;
-
-      use    ) sudo cp $current /tmp
-               sudo mv $pacnew $current ;;
+      use    ) sudo cp $current /tmp ; sudo mv $pacnew $current ;;
       esac
       break
     done

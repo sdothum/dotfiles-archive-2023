@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... H°M'S"
+
+usage() {
+  echo "usage: $(basename $0) <utcstart> [<utcstop>]"
+  exit 1
+}
+
+[ $1 ] || usage
+# eval $2 for fish shell prompt call: 0 "$CMD_DURATION / 1000", see fish_right_prompt.fish
+# [ "$2" ] && utc=$(echo $2 | bc) || utc=$(date +%s)
+[ "$2" ] && utc=$(( $2 )) || utc=$(date +%s)
+
+elapsed() {
+  bc <<EOF
+    secs = $2 - $1
+    mins = secs / 60
+    hrs = mins / 60
+    # print hrs, " ", mins, "'", secs, "\q", "\n"
+    mins = mins - hrs * 60
+    secs = secs - hrs * 3600 - mins * 60
+    # if (hrs) print hrs, "°", mins, "'", secs, "\q", "\n" else if (mins) print mins, "'", secs, "\q", "\n" else print secs, "\q", "\n"
+    if (hrs) print hrs, "°", mins, "'", secs, "\q", "\n" else print mins, "'", secs, "\q", "\n"
+EOF
+}
+
+# 2 digit format dependencies
+elapsed $1 $utc | sed "/°.'/s/°/°0/ ; /'.\"/s/'/'0/"
+
+# vim: set ft=sh: #

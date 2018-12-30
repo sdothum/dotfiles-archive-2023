@@ -19,7 +19,8 @@ color2=${__BLUE}
 # enable cron notifications, see .xinitrc
 [ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus
 
-while : ;do case $1 in
+while : ;do
+  case $1 in
   # long form required for handling numeric summary field
   time=*    ) expire="--expire-time=$(( ${1#time=} * 1000 ))" ;;
   console   ) console=true ;;
@@ -43,8 +44,7 @@ TWO=${2#\\}
 
 echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
 if [ $console ] ;then
-  [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" ||
-                echo "${color1}==> $ONE${NOCOLOR}"
+  [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" || echo "${color1}==> $ONE${NOCOLOR}"
 else
   # allow cron jobs to bypass console test and display to X
   [ $X ] || { console && exit ;}

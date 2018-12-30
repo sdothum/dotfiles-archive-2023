@@ -10,42 +10,33 @@ ALL='[ all  ]'
 LAST='[ last ]'
 
 title=" to $(query tname $TAG)"
-
+set -x
 count=$(query ttag $TAG)
 if [ $count -gt 0 ] ;then
   # list of hidden windows
   for i in $(query winids) ;do
     if herbstclient compare clients.$i.tag = "'$TAG" ;then
       window="$(query wtitle $i)$DLM$i"
-      [ "$hidden" ] && hidden="$hidden\n$window" ||
-                       hidden="$window"
+      [ "$hidden" ] && hidden="$hidden\n$window" || hidden="$window"
     fi
   done
 
   if [ $count -gt 1 ] ;then
-    window=$(echo $hidden |
-             sort |
-             cut -d$DLM -f1 |
-             column -s\^ -t |
-             sed "1i$ALL\n$LAST" |
-             rmenu "Raise Window$title" -no-custom) || exit
+    window=$(echo $hidden | sort | cut -d$DLM -f1 | column -s\^ -t | sed "1i$ALL\n$LAST" |
+        rmenu "Raise Window$title" -no-custom) || exit
   else
     window=$(echo $hidden | cut -d$DLM -f1 | column -s\^ -t | rmenu "Raise Window$title" -no-custom)
   fi
 
-  if [ "$window" ] ;then case $window in
+  if [ "$window" ] ;then
+    case $window in
     "$ALL" ) exec restore windows ;;
     "$LAST") exec restore window ;;
 
-    *      ) # escape special characters in window title e.g. url page titles
-             # restore ^$SEP, see query wtitle
-             winid=$(echo $hidden |
-                     grep "$(echo $window |
-                             sed -re 's/([[])/\\\1/g' \
-                                 -e 's/([]])/\\\1/g' \
-                                 -e "s/ *($SEP)/^\1/" \
-                                 -e 's/([*])/\\\1/g')" |
-                     cut -d$DLM -f2)
+    # escape special characters in window title e.g. url page titles, and restore ^$SEP, see query wtitle
+    *      ) winid=$(echo $hidden |
+                  grep "$(echo $window | sed -r "s/([[])/\\\1/g ; s/([]])/\\\1/g ; s/ *($SEP)/^\1/ ; s/([*])/\\\1/g")" |
+                  cut -d$DLM -f2)
              lock use $TAG
              focus frame
              unlock bring $winid

@@ -8,7 +8,6 @@
 
 # systemd journal
 # [ $1 ] && sudo journalctl -b | ack $@ | less -MRX ||
-[ $1 ] && sudo journalctl -b | rg --color 'always' --regexp "\"$@\"" | less -MRX ||
-          sudo journalctl -b
+[ $1 ] && sudo journalctl -b | rg --color 'always' --regexp "\"$@\"" | less -MRX || sudo journalctl -b
 
 # vim: set ft=sh: #

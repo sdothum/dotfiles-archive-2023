@@ -64,8 +64,7 @@ if server ;then
   fi
 else
   # close (unlock) any remote instances
-  pstat "ssh $SERVER -t weechat" && notify "Weechat" 'Instance already runnig' ||
-                                    { unlock ; ssh $SERVER -t weechat ;}
+  pstat "ssh $SERVER -t weechat" && notify "Weechat" 'Instance already runnig' || { unlock ; ssh $SERVER -t weechat ;}
 fi
 
 # vim: set ft=sh: #

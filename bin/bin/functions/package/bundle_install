@@ -6,7 +6,7 @@
 
 # ......................................................... Distribution install
 
-# Usage: bundle_install [check | list] <bundle>*
+# Usage: bundle_install [check | init | list ] <bundle>*
 #
 # format: # inline comment
 #         = title
@@ -32,19 +32,17 @@
 
 [ $1 ] || exit
 console && export VISUAL='vim -f'
+unset HTTP_PROXY                            # ignore local network proxy
 
-if [ $1 = check ] ;then
-  check=true
-  shift
-  gems=$(gem list | cut -d' ' -f1)
-elif [ $1 = list ] ;then
-  list=true
-  shift
-fi
+case $1 in
+check) check=true ; gems=$(gem list | cut -d' ' -f1) ; shift ;;
+list ) list=true ; shift ;;
+init ) init=--init ; shift ;;
+esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
-[ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred ;};}
+[ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred ;};}
 
 rule() { echo "$@" | sed 's/\[// ; s/\]//' || echo true ;}
 
@@ -59,7 +57,7 @@ for i in $@ ;do
     case $action in
     ''  ) continue ;;
     '#' ) continue ;;
-    '=' ) [ $list ] || { echo $package | grep '^[[:alpha:]]' && title "$package $condition" ;}; continue ;;
+    '=' ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition" ;}; continue ;;
     '"' ) [ $check ] || ditto "$package $condition" ;                                           continue ;;
     '!' ) [ $check ] || $package $condition ;                                                   continue ;;
     '+' ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package" ; continue ;};} ;;
@@ -78,7 +76,7 @@ for i in $@ ;do
           rule=$(rule "$@") ;;
     esac
 
-    [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/' ; continue ;}
+    [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d ; s/^([-?*@"adgm] )*// ; s/ *([^ ]*).*/\1/' ; continue ;}
     eval $rule || continue
 
     if [ $check ] ;then
@@ -98,14 +96,14 @@ for i in $@ ;do
 
     # package management
     case $action in
-    '-') heading "[ Uninstalling.. ]   $package" ; pm R $package ;;
-    '?') pm_install S $package ;;
+    '-') heading "--Uninstalling--  $package" ; pm R $package ;;
+    '?') pm_install --confirm $package ;;
     '@') aur_install $package ;;
     a  ) arm_install $package ;;
     d  ) echo "$package $condition" >>$deferred ;;
     g  ) gem_install $package ;;
     m  ) make_install $package ;;
-    *  ) pm_install $package ;;
+    *  ) pm_install $init $package ;;
     esac
   done 3< $i
 done
@@ -113,7 +111,7 @@ done
 [ $list ] && exit
 if [ -e $deferred ] ;then
   cat $deferred
-  ifyes 'install deferred pacages' && bundle_install $deferred
+  ifno 'install deferred pacages' || bundle_install $deferred
 fi
 
-# vim: set ft=sh: #
+# vim: set ft=sh: 

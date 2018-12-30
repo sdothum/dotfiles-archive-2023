@@ -1,0 +1,65 @@
+# wm packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= file manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+# ffmpegthumbnailer
+# filelight
+  rox
+# thunar
+# thunar-archive-plugin
+# thunar-volman
+  tumbler
+
+
+= terminal
+= ▔▔▔▔▔▔▔▔
+# kitty
+# putty
+# roxterm
+# rxvt-unicode
+# rxvt-unicode-patched
+# sakura
+# terminator
+# termite-git
+# urxvt-font-size-git [server]
+# urxvt-perls
+
+
+= window manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# 2bwm
+# budgie-desktop-git
+# herbstluftwm
+# openbox
+# ruler-git
+# windowchef-git
+# wmutils-git
+# m xwait
+
+
+= bspwm
+= ▔▔▔▔▔
+# bspwm
+# bspwm-git
+# lua-posix
+  sxhkd
+# sxhkd-git
+
+
+= gnome
+= ▔▔▔▔▔
+# gnome-control-center
+# gnome-shell
+# gnome-tweak-tool
+
+
+= xmonad
+= ▔▔▔▔▔▔
+# dzen2
+# haskell-xmonad
+# haskell-xmonad-contrib
+# xmobar

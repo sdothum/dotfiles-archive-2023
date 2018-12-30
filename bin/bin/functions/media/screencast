@@ -21,34 +21,19 @@ target=/net/media/videos/recordings
 pidname=recording
 framerate=25
 
-if server ;then case $1 in
+if server ;then
+  case $1 in
   l* | *0) xy=1680x1050 ;;
-
-  r* | *1) xy=2560x1600
-           offset=+1680,0 ;;
-
+  r* | *1) xy=2560x1600 ; offset=+1680,0 ;;
   a*     ) xy=4240x1600 ;;
-
-  k*     ) kill -TERM $(pidof -s $pidname)
-           ls -l /tmp/*.webm
-           exit ;;
-
+  k*     ) kill -TERM $(pidof -s $pidname) ; exec ls -l /tmp/*.webm ;;
   *      ) usage ;;
   esac
 
   webm=$(mktemp).webm
   trap "rm -f $webm" EXIT
-  exec -a $pidname ffmpeg -f x11grab \
-                          -s $xy -an \
-                          -r $framerate \
-                          -i :0.0$offset \
-                          -c:v libvpx \
-                          -b:v 5M \
-                          -crf 10 \
-                          -quality realtime \
-                          -y \
-                          -loglevel quiet \
-                          $webm &
+  exec -a $pidname ffmpeg -b:v 5M -crf 10 -c:v libvpx -f x11grab -i :0.0$offset -loglevel quiet \
+                          -quality realtime -r $framerate -s $xy -an -y $webm &
   shift
   [ $1 ] && $@
 

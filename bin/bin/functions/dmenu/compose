@@ -10,13 +10,14 @@
 PURGE='[ purge drafts ]'
 
 # list of potential writing tools, verified by dmenu apps
-editors="emacs
-         focuswriter
-         nano
-         pyroom
-         rubyroom
-         vim
-         wordgrinder
+editors="
+  emacs
+  focuswriter
+  nano
+  pyroom
+  rubyroom
+  vim
+  wordgrinder
 "
 
 format_message() {
@@ -64,7 +65,8 @@ compose_vim() {
 editors() { apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" ;}
 
 editor=$(previous compose)
-while editor=$(editors | rmenu 'Compose' $editor -no-custom) || exit ;do case $editor in
+while editor=$(editors | rmenu 'Compose' $editor -no-custom) || exit ;do
+  case $editor in
   "$SEND"    ) ;;
   "$EDIT"    ) dmenu notes draft ;                 continue ;;
   "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp ; continue ;;

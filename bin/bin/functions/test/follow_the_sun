@@ -55,9 +55,8 @@ offset=$(( $H * 60 + $M ))
 
 # obtain sunrise and sunset raw data from weather.com, see https://github.com/linuxconfig/Sunrise-Sunset-Shell-Script.git
 # set -- $(lynx --dump  https://weather.com/weather/today/l/$location | grep '\* Sun' | sed 's/[[:alpha:]]/ /g ; s/[*:]//g')
-set -- $(pcurl https://weather.com/weather/today/l/$location \
-       | grep 'Sun [0-9:]* am [0-9:]* pm' \
-       | sed -r 's/.*Sun ([0-9:]*) am ([0-9:]*) pm.*/\1 \2/ ; s/://g')
+set -- $(pcurl https://weather.com/weather/today/l/$location |
+    grep 'Sun [0-9:]* am [0-9:]* pm' | sed -r 's/.*Sun ([0-9:]*) am ([0-9:]*) pm.*/\1 \2/ ; s/://g')
 # something went wrong..
 [ $# -eq 2 ] || exit 1
 # am

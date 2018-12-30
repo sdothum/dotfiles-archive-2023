@@ -1,0 +1,25 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ Runit wrapper
+
+usage() {
+  echo "usage: $(basename $0) [ disable | enable | down (at boot) ] <service>"
+  exit 1
+}
+
+[ -e /etc/sv/$2 ] || usage
+
+# configure systemd daemon
+case $1 in
+''     ) usage ;;
+disable) sudo rm /var/service/$2 ;;
+enable ) sudo ln -s /etc/sv/$2 /var/service/ ; sudo rm -f /etc/sv/$2/down ;;
+down   ) sudo touch /etc/sv/$2/down ;;
+*      ) usage ;;
+esac
+
+# vim: set ft=sh: #

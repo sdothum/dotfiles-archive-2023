@@ -14,7 +14,7 @@ usage() {
 
 CACHEDIR=${CACHEDIR:-$HOME/.cache}
 vimrc="$STOW/vim/.vimrc $HOME/.vim/config/*.vim \
-       $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')"
+    $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')"
 index=$CACHEDIR/vmap
 vmap=/tmp/vim:map
 
@@ -25,21 +25,17 @@ maps() {
   notify 'Vim' 'Generating maps'
   # note ! to force overwrite and suppress prompts
   vim -c "redir! >$vmap | silent! map | redir END | quit"
-  cat $vmap | grep -v '^. *<Plug>' |
-      sed -r "s/^ /_/ ; s/^(.)  *([^ ]*)  *([ *] .*)/\1 $SEP\2 $SEP\3/ ; s/^_//" | column -s$SEP -t |
-      tee $vmap >/dev/null
+  cat $vmap | grep -v '^. *<Plug>' | sed -r "s/^ /_/ ; s/^(.)  *([^ ]*)  *([ *] .*)/\1 $SEP\2 $SEP\3/ ; s/^_//" | 
+      column -s$SEP -t | tee $vmap >/dev/null
 
   for i in $(seq 1 12) ;do
     ag --ignore-case --nonumbers "<.*F$i>" $vmap
   done >$index:fkey
 
-  ag --ignore-case --nonumbers "^.  *$leader" $vmap |
-    sed -r "s/^(.  *)($leader)([^ ]*) /\1\2\t\3 /" | sort -t"$(printf '\t')" -k2 |
-    sed "s/\t//" >$index:leader
-
+  ag --ignore-case --nonumbers "^.  *$leader" $vmap | sed -r "s/^(.  *)($leader)([^ ]*) /\1\2\t\3 /" | 
+      sort -t"$(printf '\t')" -k2 | sed "s/\t//" >$index:leader
   ag --ignore-case --nonumbers -v "^.  *($leader|<SNR>)|<[^ ]*F[0-9]*>|$ignore_plug" $vmap |
-    sed -r "s/^(.  *)([^ ]*) /\1\t\2 /" | sort -t"$(printf '\t')" -k2 |
-    sed "s/\t//" >$index:map
+      sed -r "s/^(.  *)([^ ]*) /\1\t\2 /" | sort -t"$(printf '\t')" -k2 | sed "s/\t//" >$index:map
 }
 
 [ "$1" = help   ] && usage

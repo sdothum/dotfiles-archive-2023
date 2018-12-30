@@ -7,17 +7,8 @@
 # ......................................................................... Copy
 
 # replace previously saved?
-file=$1
-
-if [ -e $file.save ] || [ -d $file.save ] ;then
-  ifyes "overwrite \"$file.save\"" || exit 1
-fi
-
-# save distribution copy
-if [ -e $file ] || [ -d $file ] ;then
-  ditto 'copying '$(sudo cp -Rv $file $file.save)
-  exit 0
-fi
+[ -e "$1.save" ] && { ifyes "overwrite \"$1.save\"" || exit 1 ;}
+[ -e "$1"      ] && { ditto 'copying '$(sudo cp -Rv "$1" "$1.save") ; exit 0 ;}
 exit 1
 
 # vim: set ft=sh: #

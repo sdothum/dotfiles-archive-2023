@@ -1,0 +1,159 @@
+# desktop packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= appearance
+= ▔▔▔▔▔▔▔▔▔▔
+# breeze-obsidian-cursor-theme
+# breeze-snow-cursor-theme
+  compton
+# compton-git
+# hsetroot
+  lxappearance
+# nitrogen
+  setroot
+# xcompmgr
+# shantz-xwinwrap-bzr     [server]
+  unclutter
+# unclutter-xfixes-git
+# xflux
+
+
+= desktop
+= ▔▔▔▔▔▔▔
+# conky-lua
+d " enable mpd and nvidia as required
+d ? conky-lua-archers
+# d ? conky-lua-nv
+# lemonbar-git
+  lemonbar-xft-git
+# trayer-srg-git
+
+
+= desktop utilities
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# colorgrab
+  colors-git
+# gpick
+# i3lock
+  alock-git
+# lxsession
+  maim
+  python-pywal
+# scrot
+# shutter
+  slickpicker
+# slock
+  xautolock
+# xfce4-screenshooter
+# xgrabcolor
+
+
+= font
+= ▔▔▔▔
+  adobe-base-14-fonts
+# ephifonts
+# ephifonts-no-helvetica
+# d m iosevka             [server]
+# d m iosevka\\ amphetype [server]
+# d m iosevka\\ proof     [server]
+  noto-fonts
+# otf-gnutypewriter
+# powerline-fonts-git
+  ttf-courier-prime
+  ttf-dejavu
+# ttf-dejavu-sans-mono-powerline-git
+# ttf-fantasque-sans
+# ttf-font-awesome
+# ttf-google-fonts-git
+# ttf-inconsolata
+# ttf-ionicons
+# ttf-iosevka
+# ttf-iosevka-hooky
+# ttf-liberation
+# ttf-mac-fonts
+  ttf-ms-fonts
+# ttf-noto-sans-ib
+  ttf-robobo
+  ttf-symbola
+# ttf-ubuntu-font-family
+# xorg-fonts-type1
+# xorg-xlsfonts
+
+
+= gtk theme/engine
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  adapta-gtk-theme
+# adapta-gtk-theme-deb
+# flatplat-theme
+# flattr-icon-theme-git
+# gtk-chtheme
+# gtk-engine-equinox
+  gtk-engine-murrine
+# gtk-theme-numix
+# gtk-theme-numix-blue
+# gtk-theme-numix-holo
+# gtk-theme-numix-green
+# gtk-theme-numix-solarized
+# gtk-theme-numix-white
+  meson
+# numix-icon-theme-git
+# numix-themes
+# paper-gtk-theme-git
+d paper-icon-theme
+# paper-icon-theme-git
+# qtcurve-kde4
+# qtcurve-style-numix
+# ultra-flat-icons
+# xfce4-theme-numix-manjaro-themes
+
+
+= notification
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  dunst
+  libnotify
+# xfce4-notifyd
+
+
+= screensaver
+= ▔▔▔▔▔▔▔▔▔▔▔
+# d rss-glx
+# xscreensaver
+
+
+= user interface
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  autocutsel
+# autokey-gtk
+  autokey-py3
+# clipit
+# "stest contained in dmenu package"
+  dmenu
+# dmenu-xft-height
+# dmenu2
+  gpaste
+  rofi
+  xclip
+  xdotool
+  xsel
+  xvkbd
+
+
+= window property
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# m disputils
+# libwm-git
+# sprop-git
+  sutils-git
+# wmname
+# xdo-git
+  xtitle
+# xtitle-git
+# xwinfo-git
+  xorg-xprop
+  xorg-xwininfo
+
+
+# vim: set ft=conf: #

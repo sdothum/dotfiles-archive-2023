@@ -1,0 +1,27 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... dnsmasq
+
+NAMESERVER=10.1.0.10
+
+config_install /etc/dnsmasq.conf
+# create initial adblock list
+adblock
+
+if server ;then
+  # switch over to dnsmasq AFTER creating adblock list!
+  original /etc/resolv.conf
+  server && nameserver=127.0.0.1 || nameserver=$NAMESERVER
+  echo "options timeout:1
+  nameserver $nameserver" | sudo tee /etc/resolv.conf
+  # prevent overwriting by other dnsproxy agents
+  sudo chattr +i /etc/resolv.conf
+
+  ifnsed /etc/dhcpcd.conf 'nohook resolv.conf'
+  systemd enable dnsmasq
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,48 @@
+# edit packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= document formatting
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  csslint
+  csstidy
+  enscript
+
+
+= editor
+= ▔▔▔▔▔▔
+# atom-editor-bin [server]
+# atom-editor     [server]
+# ctags
+# emacs           [server]
+# focuswriter
+# markdown
+# neovim
+# neovim-git
+# nvpy-git
+# pyroom
+# retext
+# rubyroom
+# sublime-text
+# ted             [server]
+d texlive-core
+  texlive-latexextra
+d universal-ctags-git
+# wordgrinder
+
+
+= version control
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# vcsh-git
+# hgview
+  git
+  mercurial
+# myrepos
+  patchutils
+# subversion
+# tortoisehg
+
+
+# vim: set ft=conf: #

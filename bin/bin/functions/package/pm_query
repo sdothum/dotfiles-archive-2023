@@ -7,9 +7,10 @@
 # ........................................................... Package management
 
 # package already installed check
-query=$(pacman -Qs $@ | grep "local/$@ .*")
+query=$(pacman -Qs $@ | grep "local/$@ .*" | sed 's|local/||')
 
-[ "$query" ] && heading ' ' $(echo $query | sed 's|local/|| ; a\ \ [ INSTALLED ]') ||
-                exit 1
+[ "$query" ] || exit 1
+installed_heading $query
+exit 0
 
 # vim: set ft=sh: #

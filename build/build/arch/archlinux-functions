@@ -1,0 +1,63 @@
+
+# sdothum - 2016 (c) wtfpl
+
+# fresh arch pre-installer
+
+partition() { fdisk -l $device | egrep "$@" | tail -1 | cut -d' ' -f1 ;}
+
+separator() { echo $(head -c $(echo "$1" | wc -L) </dev/zero | tr '\0' '-') ;}
+
+heading() {
+  message=">>>   $@   <<<"
+  echo
+  separator "$message"
+  echo "$message"
+  separator "$message"
+  echo
+}
+
+checkpoint() {
+  echo
+  while true
+  do
+    echo -n "continue? [yes]/no/shell :"
+    read REPLY
+    reply=$(echo $REPLY | sed -r 's/^(.).*/\1/')
+    case $reply in
+      '' | y) return ;;
+      n     ) exit ;;
+      s     ) bash -i ;;
+    esac
+  done
+  echo
+}
+
+original() { [ -f $@.original ] || cp -v $@ $@.original ;}
+
+connect() {
+  wlan0=$(iw dev | grep Interface | sed 's/.*Interface //')
+  heading "connecting $wlan0"
+  ip link set $wlan0
+  wifi-menu $wlan0
+  while ! ping -c1 www.google.com >/dev/null 2>&1 ;do echo -n . ; sleep 1 ; done
+  echo
+}
+
+config_install() {
+  if [ -e /media/home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+  elif [ -e /home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /home/$user/build/root/$1 $1)
+  else
+    echo "-> $user/build/root/$1 not found"
+  fi
+}
+
+pm_install() {
+  echo
+  echo "$(date '+%a %-I:%M %S%P') >>>   $@   <<<"
+  echo
+  pacman -S --noconfirm $@
+}
+
+# vim: set ft=sh: #

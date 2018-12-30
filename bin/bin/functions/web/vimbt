@@ -27,9 +27,9 @@ vimbt() {
   [ $(hostname) = luna ] && prune_history &
   rm -f /run/user/1000/vimb/socket/*
 
- # unclutter (original) causes tabbed vimb to load homepages endlessly
+  # unclutter (original) causes tabbed vimb to load homepages endlessly
   # killall -TERM unclutter 2>/dev/null
-  # ( winstance 'VimbT' && toggle unclutter ) &
+  # (winstance 'VimbT' && toggle unclutter) &
 
   # tabbed appends winid to expanded command arguments, see vimb
   # vimb embed terminates this function

@@ -152,34 +152,25 @@ theme() {
 action=$1
 shift
 case $action in
-contrast) if [ $# -eq 1 ] ;then
-            # contrast theme colors
-            luminance +$1 && exec conky theme dark $1 || exec conky theme light $1
-          fi ;;
+contrast) [ $# -eq 1 ] && { luminance +$1 && exec conky theme dark $1 || exec conky theme light $1 ;}
 
-light   ) if [ $# -eq 1 ] ;then
-            hexgen $(conky palette $1 Shade | cut -d' ' -f4)
-            paper
-            echo dark >$CONTRAST
-            theme
-          fi ;;
+light   ) [ $# -eq 1 ] || exit
+          hexgen $(conky palette $1 Shade | cut -d' ' -f4)
+          paper
+          echo dark >$CONTRAST
+          theme ;;
 
-dark    ) if [ $# -eq 1 ] ;then
-            hexgen $(conky palette $1 Tint | cut -d' ' -f4)
-            ink
-            echo light >$CONTRAST
-            theme
-          fi ;;
+dark    ) [ $# -eq 1 ] || exit
+          hexgen $(conky palette $1 Tint | cut -d' ' -f4)
+          ink
+          echo light >$CONTRAST
+          theme ;;
 
-test    ) if [ $# -eq 1 ] ;then
-            hexgen $1
-            luminance +$default_color && paper || ink
-            theme
-            ifno "change contrast" || {
-              luminance -$default_color && paper || ink
-              theme
-            }
-          fi ;;
+test    ) [ $# -eq 1 ] || exit
+          hexgen $1
+          luminance +$default_color && paper || ink
+          theme
+          ifno "change contrast" || { luminance -$default_color && paper || ink ; theme ;} ;;
 
 wal     ) wal ;;
 *       ) usage ;;

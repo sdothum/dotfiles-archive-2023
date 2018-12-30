@@ -1,0 +1,54 @@
+# admin packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= cups printing
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cups
+# cups-filters
+  cups-pdf
+# foomatic-db
+# foomatic-db-engine
+# foomatic-db-nonfree
+  ghostscript
+  gsfonts
+  gutenprint
+  hplip
+# python2-pyq5
+# splix
+# system-config-printer
+
+
+= package management
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  aurvote
+# cower
+# cower-git
+  downgrade
+# dpkg
+# nix
+# pacaur
+  package-query
+# package-query-git
+# packer
+  pkgfile
+  pkgstats
+  pkgtools
+# powerpill
+# trizen
+# yaourt
+# yaourt-gui
+# pacgraph
+  reflector
+
+
+= package rollback (btrfs)
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  grub-btrfs
+# grub-btrfs-git
+  pacupg
+# snap-pac
+  snapper
+

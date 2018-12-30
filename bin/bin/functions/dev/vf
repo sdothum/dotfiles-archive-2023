@@ -11,19 +11,22 @@ usage() {
   exit 1
 }
 
+walk() {
+  [ -e $DYNAMIC ] && toggle focus
+  for i in $(find -L -type d  | exclude) ;do
+    files=$(find -L $i -maxdepth 1 -type f | exclude | quote)
+    [ "$files" ] || continue
+    echo
+    echo -n "$files\n" | sed -r "s|.*/(.*)'|\1|"
+    ifyes "edit $i" || continue
+    v -f $files
+  done
+  [ -e $DYNAMIC ] && toggle focus
+}
+
 # v by directory depth or name
 case $1 in
-''   ) [ -e $DYNAMIC ] && toggle focus
-       for i in $(find -L -type d  | exclude) ;do
-         files=$(find -L $i -maxdepth 1 -type f | exclude | quote)
-         [ "$files" ] || continue
-         echo
-         echo -n "$files\n" | sed -r "s|.*/(.*)'|\1|"
-         ifyes "edit $i" || continue
-         v -f $files
-       done
-       [ -e $DYNAMIC ] && toggle focus ;;
-
+''   ) walk ;;
 help ) usage ;;
 [1-4]) v $(find -L -maxdepth ${1:-1} -type f | exclude | quote) ;;
 *    ) v $(find -L -type f -name "$1" | exclude | quote) ;;

@@ -64,9 +64,9 @@ case $1 in
 dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
 
 *  ) trap "rm -f $PRIVATE" EXIT
-      sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
-      echo "SEND_STRING(\"$1\");" >$PRIVATE
-      shift ;;
+     sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
+     echo "SEND_STRING(\"$1\");" >$PRIVATE
+     shift ;;
 esac
 
 cd $QMK

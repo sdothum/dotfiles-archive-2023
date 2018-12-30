@@ -79,7 +79,7 @@ while : ;do
     focus frame
     mpv --vf=eq "$video" --sub-font-size=$fontsize >/dev/null 2>&1
     # clear notification
-    ( pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space ) &
+    (pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space) &
   fi
 
   echo "$1" | grep -q http && break

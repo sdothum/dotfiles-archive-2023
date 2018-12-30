@@ -6,13 +6,14 @@
 # ............................................................ System diagnostic
 
 # list of potential system tools, verified by dmenu apps
-diagnostics="glances
-             htop
-             iftop
-             iotop
-             mtr
-             nethogs
-             xrestop
+diagnostics="
+  glances
+  htop
+  iftop
+  iotop
+  mtr
+  nethogs
+  xrestop
 "
 
 interface() { ip link show | grep '^[0-9]' | cut -d: -f2 | rmenu 'Interface' -no-custom || exit ;}

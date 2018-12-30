@@ -9,6 +9,6 @@
 # ......................................................... Distribution install
 
 # return git uri
-[ -s $HOME/build/archlinux/pre_install/$1 ] && echo $($HOME/build/archlinux/pre_install/$1)
+[ -s $HOME/build/arch/pre_install/$1 ] && echo $($HOME/build/arch/pre_install/$1)
 
 # vim: set ft=sh: #

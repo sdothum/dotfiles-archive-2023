@@ -1,0 +1,64 @@
+# internet packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= chat/twitter
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  bitlbee
+d * centerim5-git
+# finch
+  libotr
+# pidgin
+# skype
+# python-twitter
+# turses
+  weechat
+# xchat
+# xmpppy
+d * znc
+
+
+= file transfer
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# couchpotato-git [server]
+# flexget
+  gftp
+  nzbget          [server]
+# par2cmdline-tbb
+# python2-pyopenssl
+# rtorrent        [server]
+# rutorrent       [server]
+# sabnzbd         [server]
+# sickbeard-git   [server]
+  sonarr          [server]
+  tixati
+# transmission-gtk
+# unison
+# utserver
+  wget
+
+
+= usenet mail
+= ▔▔▔▔▔▔▔▔▔▔▔
+# slrn
+
+
+= web aggregator
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# newsbeuter
+  php-gd
+# php-mcrypt
+d php70-mcrypt
+d tt-rss
+# ttaurter
+  surfraw
+
+
+= web server
+= ▔▔▔▔▔▔▔▔▔▔
+  pixelserv       [! server]
+
+
+# vim: set ft=conf: #

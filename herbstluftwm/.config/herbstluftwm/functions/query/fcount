@@ -8,7 +8,6 @@
 
 # Usage: query fcount [<tag>]
 
-[ $1 ] && herbstclient attr "tags.by-name.$1.frame_count" ||
-          herbstclient attr tags.focus.frame_count
+[ $1 ] && herbstclient attr "tags.by-name.$1.frame_count" || herbstclient attr tags.focus.frame_count
 
 # vim: set ft=sh: #sdothum

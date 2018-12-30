@@ -9,9 +9,9 @@
 # ......................................................... Distribution install
 
 # complete package configuration
-if [ -s $HOME/build/archlinux/post_install/$1 ] ;then
-  arch && echo "${__GREEN}@ post_install/$1${NOCOLOR}"
-  . $HOME/build/archlinux/post_install/$1
+if [ -s $HOME/build/arch/post_install/$1 ] ;then
+  arch && echo "${__GREEN}@post_install $1${NOCOLOR}"
+  . $HOME/build/arch/post_install/$@        # manual post_install to pass optional parameters
 fi
 
 user_install $1

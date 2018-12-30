@@ -1,0 +1,44 @@
+# web framework packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= database management
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# adminer
+  pgadmin3
+  postgresql
+# python2-pysqlite
+  sqlite
+  sqlitebrowser
+
+
+= sinatra web framework
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# g exifr
+g kramdown
+g mail
+g rack
+d g sanitize
+d g sinatra
+g slim
+g term-ansicolor
+g thin
+g xapian-fu
+d g xapian-ruby
+# xapian-ruby-bindings
+# ruby-xapian-ruby
+
+
+= web server
+= ▔▔▔▔▔▔▔▔▔▔
+# nginx
+# nginx-passenger
+d g passenger
+  php
+  php-fpm
+  php-pgsql
+
+
+# vim: set ft=conf: #

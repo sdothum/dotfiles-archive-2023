@@ -12,10 +12,7 @@
 cd /usr/lib/systemd/system/
 
 service=$(previous journals)
-service=$(stest -fl . |
-          sort |
-          sed 's/.service$//' |
-          rmenu "$mode Journal" $service -no-custom) || exit
+service=$(stest -fl . | sort | sed 's/.service$//' | rmenu "$mode Journal" $service -no-custom) || exit
 
 mhistory journals $service
 case $mode in

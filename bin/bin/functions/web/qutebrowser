@@ -10,18 +10,19 @@ ping -c 1 -W 1 $SERVER >/dev/null 2>&1 && TTRSS=$SERVER || TTRSS=localhost
 startpage="http://$TTRSS:8000/tt-rss/"
 size="$(fontsize)pt monospace"
 
-font="-s fonts.completion.category '$size'
-      -s fonts.completion.entry '$size'
-      -s fonts.debug_console '$size'
-      -s fonts.downloads '$size'
-      -s fonts.hints '$size'
-      -s fonts.keyhint '$size'
-      -s fonts.messages.error '$size'
-      -s fonts.messages.info '$size'
-      -s fonts.messages.warning '$size'
-      -s fonts.prompts '$size'
-      -s fonts.statusbar '$size'
-      -s fonts.tabs '$size'
+font="
+  -s fonts.completion.category '$size'
+  -s fonts.completion.entry '$size'
+  -s fonts.debug_console '$size'
+  -s fonts.downloads '$size'
+  -s fonts.hints '$size'
+  -s fonts.keyhint '$size'
+  -s fonts.messages.error '$size'
+  -s fonts.messages.info '$size'
+  -s fonts.messages.warning '$size'
+  -s fonts.prompts '$size'
+  -s fonts.statusbar '$size'
+  -s fonts.tabs '$size'
 "
 
 if [ $1 ] ;then

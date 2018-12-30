@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... php-fpm
+
+original /etc/php/php-fpm.conf
+sudo sed -i -e '/request_terminate_timeout/s/=.*/= 300/' \
+         -e '/request_terminate_timeout/s/;//' \
+         /etc/php/php-fpm.conf
+
+if server ;then
+  systemd enable php-fpm
+  systemd restart nginx
+fi
+
+# vim: set ft=sh: #

@@ -32,7 +32,7 @@ if [ -z $1 ] ;then
   # ifno && (a) || (b) shortform cannot be used because return of (a) may be false
   ifno 'upgrade --devel packages' && aur=--aur || aur=--devel
 
-  # pacupg $aur doen'reate new boot snapshot, see $pacaur
+  # pacupg $aur doen't create new boot snapshot, see $pacaur
   if [ $pacaur ] ;then
     yay -Syuu --aur
     pacupg
@@ -47,7 +47,7 @@ if [ -z $1 ] ;then
     ifno 'merge .pacnew files' || dmenu pacnews
   fi
   orphans
-  ifno 'apply post arch install updates and cleanup' || $HOME/build/archlinux/archlinux-update
+  ifno 'apply post arch install updates and cleanup' || $HOME/build/arch/archlinux-update
 else
   yay $@
 fi

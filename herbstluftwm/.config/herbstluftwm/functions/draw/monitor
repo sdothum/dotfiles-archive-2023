@@ -30,11 +30,7 @@ esac
 X1=0
 Y1=0
 
-# split out display geometry
-xy() {
-  eval X$1=$2
-  eval Y$1=$3
-}
+xy() { eval X$1=$2 ; eval Y$1=$3 ;}
 
 # X Y display dimensions
 xy 0 $(query display)
@@ -52,8 +48,7 @@ SECONDARY=$(monitor 1)
 # margin tweaks for known display resolutions
 desktop_margin=$(margins $X0)
 # see toggle monocle
-[ -e $MONOCLE ] && monocle=$(cat $MONOCLE) ||
-                   monocle=0
+[ -e $MONOCLE ] && monocle=$(cat $MONOCLE) || monocle=0
 
 # with transparent compton window borders, calculations assume..
 # - frame_border_width=0
@@ -67,21 +62,18 @@ window_frame=$(( $window + $frame ))
 margin=$(( $desktop_margin - $window_frame ))
 [ $margin -lt 0 ] && margin=0
 # frame and window gap changes will skew the left margin along the X axis
-[ $RICE ] && marginX=$(( $margin * $RICE )) ||
-             marginX=$margin
+[ $RICE ] && marginX=$(( $margin * $RICE )) || marginX=$margin
 # conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 # latest xorg messed alignment option, now using gap X origin offset
 conkyX=$(( $CONKY_WIDTH + $CONKY_OUTER + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust monitor by panel height?
 if [ $PANEL_MARGIN ] ;then
-  [ -e $PANEL ] && panelY=$PANEL_HEIGHT ||
-                   panelY=0
+  [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
 else
   panelY=0
 fi
-[ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) ||
-                                 marginY=0
+[ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) || marginY=0
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
@@ -91,91 +83,56 @@ fullscreen_width=$(( $normal_width - $window_frame*2 - $border*2))
 
 # ..................................................................... Geometry
 
+PRI() { PRIMARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4) ;}
+SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4) ;}
+
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
 case $@ in
 conky               ) rm -f $FULLSCREEN:primary
                       rm -f $FULLSCREEN:$TAG
-                      PRIMARY=$(printf '%dx%d%+d%+d' \
-                                        $(( $normal_width - $SHADOW )) \
-                                        $(( $Y0 - $margin*2 )) \
-                                        $(( $marginX + $monocle )) \
-                                        $margin ) ;;
+                      PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margin*2 )) $(( $marginX + $monocle )) $margin ;;
 
 conky*fullscreen    ) touch $FULLSCREEN:primary
                       touch $FULLSCREEN:$TAG
                       if [ $X0 -gt $MIN_DISPLAY ] ;then
                         # desktop screens retain margins
-                        PRIMARY=$(printf '%dx%d%+d%+d' \
-                                        $(( $fullscreen_width - $SHADOW )) \
-                                        $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
-                                        $(( $marginX + $window_frame + $monocle )) \
-                                        $(( $margin + $window_frame )) )
+                        PRI $(( $fullscreen_width - $SHADOW ))         $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
+                            $(( $marginX + $window_frame + $monocle )) $(( $margin + $window_frame ))
                       else
                         # laptop screens fill to edge
-                        PRIMARY=$(printf '%dx%d%+d%+d' \
-                                        $(( $fullscreen_width + $marginX + $window_frame )) \
-                                        $Y0 \
-                                        0 \
-                                        0 )
+                        PRI $(( $fullscreen_width + $marginX + $window_frame )) $Y0 0 0
                       fi ;;
 
 fullframe           ) rm -f $FULLSCREEN:primary
                       rm -f $FULLSCREEN:$TAG
                       if [ $monocle -eq 0 ] ;then
-                        PRIMARY=$(printf '%dx%d%+d%+d' \
-                                          $(( $X0 - $marginX*2 )) \
-                                          $(( $Y0 - $margin*2 )) \
-                                          $marginX \
-                                          $margin )
+                        PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $margin*2 )) $marginX $margin
                       else
-                        PRIMARY=$(printf '%dx%d%+d%+d' \
-                                          $normal_width \
-                                          $(( $Y0 - $margin*2 )) \
-                                          $(( ($X0 - $normal_width)/2 )) \
-                                          $margin )
+                        PRI $normal_width $(( $Y0 - $margin*2 )) $(( ($X0 - $normal_width)/2 )) $margin
                       fi ;;
 
 fullscreen          ) touch $FULLSCREEN:primary
                       touch $FULLSCREEN:$TAG
                       if [ $monocle -eq 0 ] ;then
-                        PRIMARY=$(printf '%dx%d%+d%+d' \
-                                        $X0 \
-                                        $Y0 \
-                                        0 \
-                                        0 )
+                        PRI $X0 $Y0 0 0
                       fi ;;
 
 secondary           ) rm -f $FULLSCREEN:secondary
                       rm -f $FULLSCREEN:$TAG
-                      SECONDARY=$(printf '%dx%d%+d%+d' \
-                                          $(( $X1 - $marginX*2 )) \
-                                          $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
-                                          $(( X0 + $marginX )) \
-                                          $margin ) ;;
+                      SEC $(( $X1 - $marginX*2 )) $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
+                          $(( X0 + $marginX ))    $margin ;;
 
 secondary*fullscreen) touch $FULLSCREEN:secondary
                       touch $FULLSCREEN:$TAG
-                      SECONDARY=$(printf '%dx%d%+d%+d' \
-                                         $X1 \
-                                         $Y1 \
-                                         X0 \
-                                         0 ) ;;
+                      SEC $X1 $Y1 X0 0 ;;
 
 menu                ) if is primary ;then
                       touch $FULLSCREEN:primary
-                      PRIMARY=$(printf '%dx%d%+d%+d' \
-                                      $X0 \
-                                      $Y0 \
-                                      0 \
-                                      0 )
+                      PRI $X0 $Y0 0 0
                     else
                       touch $FULLSCREEN:secondary
-                      SECONDARY=$(printf '%dx%d%+d%+d' \
-                                        $X1 \
-                                        $Y1 \
-                                        $X0 \
-                                        0 )
+                      SEC $X1 $Y1 $X0 0
                     fi ;;
 esac
 

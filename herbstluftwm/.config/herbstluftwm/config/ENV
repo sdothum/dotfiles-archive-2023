@@ -51,6 +51,7 @@ export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 export CONTRAST=$SESSION/contrast
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
+export UNCLUTTER=$SESSION/unclutter
 
 # application states
 export MENU=$SESSION/term:menu

@@ -6,11 +6,12 @@
 # ........................................................................ Files
 
 # list of potential filemanagers, verified by dmenu apps
-filemanagers="filelight
-              ncdu
-              ranger
-              rox
-              thunar
+filemanagers="
+  filelight
+  ncdu
+  ranger
+  rox
+  thunar
 "
 
 # open directory
@@ -23,9 +24,9 @@ while name=$(echo | mhistory folders | rmenu 'Find Folder') || exit ;do
 
   [ -d $file ] && dir=$file || dir=$(dirname $file)
   mhistory folders "$dir"
-  while action=$(echo "term\n$(apps \"$filemanagers\")" | rmenu "$dir" -no-custom) || exit ;do case $action in
-    term     ) cd $dir
-               term "$dir" ;;
+  while action=$(echo "term\n$(apps \"$filemanagers\")" | rmenu "$dir" -no-custom) || exit ;do
+    case $action in
+    term     ) cd $dir ; term "$dir" ;;
 
     ncdu     |\
     ranger   ) term "$dir" $action "$dir" ;;

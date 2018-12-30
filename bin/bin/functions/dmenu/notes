@@ -7,7 +7,12 @@
 
 # Usage: dmenu notes [<extension>] [<path>]
 
-while : ;do case $1 in
+  NEW='[ new    ]'
+ EDIT='[ manage ]'
+PURGE='[ purge  ]'
+
+while : ;do
+  case $1 in
   '' ) break ;;
   */*) FOLDER=$1 ; shift ;;
   *  ) ext=$1 ; shift ;;
@@ -18,7 +23,8 @@ trap "rm -f $NOTES" EXIT
 
 # housekeeping
 [ $ext ] || ext=note
-if [ -z $FOLDER ] ;then case $ext in
+if [ -z $FOLDER ] ;then
+  case $ext in
   note ) FOLDER=$HOME/notes ;;
   draft) FOLDER=$HOME/drafts ;;
   *    ) FOLDER=$HOME/tmp ;;
@@ -29,16 +35,12 @@ catlg=$FOLDER/.${ext}s
 mkdir -p $FOLDER || exit 1
 
 if [ $ext = draft ] ;then
-  NEW='[ new    ]'
-  EDIT='[ manage ]'
-  PURGE='[ purge  ]'
+  purge=$PURGE
   PROMPT="$NEW\n$EDIT\n$PURGE"
   offset=2
 else
-  NEW='[ new    ]'
-  EDIT='[ manage ]'
   # must set purge to avoid case statement match, see below
-  PURGE='[ nop ]'
+  purge='[ nop ]'
   PROMPT="$NEW\n$EDIT"
   offset=1
 fi
@@ -82,18 +84,14 @@ notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT" ;}
 #   /regex to filter
 #   //     to clear filter
 search=''
-while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do case $note in
+while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
+  case $note in
   /*      ) search="${note#*/}" ; continue ;;
   "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
+  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext) ; update=true ; action=edit ;;
 
-  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext)
-            update=true
-            action=edit ;;
-
-  "$PURGE") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
-            search=''
-            cache
-            continue ;;
+  "$purge") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
+            search='' ; cache ; continue ;;
 
   *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
             content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)

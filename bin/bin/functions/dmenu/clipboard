@@ -11,10 +11,8 @@ truncate=320
 clipboard=/tmp/dmenu:clipboard
 trap "rm -f $clipboard" EXIT
 
-clipboard() {
-  # trim multiline content (corrupts list format otherwise)
-  gpaste-client --oneline | cut -c -$truncate | sed "s/://" | tac >$clipboard
-}
+# trim multiline content (corrupts list format otherwise)
+clipboard() { gpaste-client --oneline | cut -c -$truncate | sed "s/://" | tac >$clipboard ;}
 
 # delete from the bottom of the queue to preserve indexes
 clipboard
@@ -28,10 +26,7 @@ done 3< $clipboard
 
 # any deletes above will resequence the clipboard history
 clipboard
-clip=$(tac $clipboard |
-       sed "s/ /^$SEP /" |
-       column -s^ -t |
-       rmenu 'Clipboard' -no-custom)
+clip=$(tac $clipboard | sed "s/ /^$SEP /" | column -s^ -t | rmenu 'Clipboard' -no-custom)
 
 if [ "$clip" ] ;then
   clip=$(echo $clip | cut -d' ' -f1)

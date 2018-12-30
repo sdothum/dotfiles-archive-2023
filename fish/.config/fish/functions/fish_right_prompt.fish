@@ -1,7 +1,7 @@
 function fish_right_prompt --description 'Write out the right prompt'
   set -g HILIGHT 1
   set -g POSTFIX 0
-  set -g VERBOSE 0
+  # set -g VERBOSE 0
 
   if test $TERM = "linux"
     set -g _info   'red'
@@ -116,30 +116,30 @@ function fish_right_prompt --description 'Write out the right prompt'
     set_color normal
   end
 
-  function cmd_duration
-    set -l secs (math "$CMD_DURATION / 1000")
-    set -l mins (math "$secs / 60")
-    set -l hrs (math "$mins / 60")
-    if test 0$hrs -gt 0
-      if test $VERBOSE -gt 0
-        printf '%sh ' $hrs
-      else
-        printf '%s,' $hrs
-      end
-      set mins (math "$mins - $hrs * 60")
-      set secs (math "$secs - $hrs * 3600")
-    end
-    if test $VERBOSE -gt 0
-      test 0$hrs -gt 0 -o $mins -gt 0
-        and printf '%sm ' $mins
-      printf '%ss' (math "$secs - $mins * 60")
-    else
-      test 0$hrs -gt 0 -o $mins -gt 0
-        and printf '%s' $mins
-        or printf '0'
-      printf "'%s" (math "$secs - $mins * 60")
-    end
-  end
+  # function cmd_duration
+  #   set -l secs (math "$CMD_DURATION / 1000")
+  #   set -l mins (math "$secs / 60")
+  #   set -l hrs (math "$mins / 60")
+  #   if test 0$hrs -gt 0
+  #     if test $VERBOSE -gt 0
+  #       printf '%sh ' $hrs
+  #     else
+  #       printf '%s ' $hrs
+  #     end
+  #     set mins (math "$mins - $hrs * 60")
+  #     set secs (math "$secs - $hrs * 3600")
+  #   end
+  #   if test $VERBOSE -gt 0
+  #     test 0$hrs -gt 0 -o $mins -gt 0
+  #       and printf '%sm ' $mins
+  #     printf '%ss' (math "$secs - $mins * 60")
+  #   else
+  #     test 0$hrs -gt 0 -o $mins -gt 0
+  #       and printf '%s' $mins
+  #       or printf '0'
+  #     printf "'%s" (math "$secs - $mins * 60")
+  #   end
+  # end
 
   function duration
     if test $CMD_DURATION
@@ -147,15 +147,17 @@ function fish_right_prompt --description 'Write out the right prompt'
         test 0$POSTFIX -eq 1
           and set_color $_info
           and glyph '  ^' '  ^'
-        echo -n (cmd_duration $CMD_DURATION)
+        # echo -n (cmd_duration)
+        echo -n (chrono 0 "$CMD_DURATION / 1000")
         set_color normal
         test $TERM != "linux"
           and test 0$CMD_DURATION -gt (math "1000 * 10")
-            and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
+            # and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
+            and notify 3 low "$history[1]" "Returned $status, took "(chrono 0 "$CMD_DURATION / 1000")
         test 0$POSTFIX -eq 1
           or begin
             set_color $_info
-            glyph '^' '^'
+            glyph '░' '░'
           end
         return (true)
       end

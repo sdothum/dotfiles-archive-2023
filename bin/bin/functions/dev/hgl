@@ -14,7 +14,7 @@ log() { hg --color=always log --cwd $REPO | egrep -v '^(user|date|tag|parent)' |
 
 if [ "$1" ] ;then
   # sed remove trailing blank line
-  log | pcregrep -M ".*$1.*\n.*\n.*\n*" | sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba'
+  log | pcregrep -M ".*$1.*\n.*\n.*\n*" | sed ':a ; /^\n*$/{$d;N;};/\n$/ba'
 else
   # sed remove leading blank line.. yes, this is anal
   log | sed '/./,$!d'

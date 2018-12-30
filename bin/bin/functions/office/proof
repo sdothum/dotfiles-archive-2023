@@ -15,7 +15,7 @@ PROOF=${PROOF:-$SESSION/proof}
 
 case $1 in
 ''    ) [ -e $PROOF ] && notify low 'Hardcopy Latex' 'Display proof' ||
-                         notify low 'Hardcopy Latex' 'Print hardcopy'
+          notify low 'Hardcopy Latex' 'Print hardcopy'
         exit ;;
 
 on    ) touch $PROOF ;;

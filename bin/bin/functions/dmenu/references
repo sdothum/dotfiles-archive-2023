@@ -9,11 +9,7 @@
 library=${LIBRARY:-/net/media/ebooks/${1:-references}}
 
 # open file
-while book=$(ls -1 $library |
-             grep '.pdf$' |
-             sed 's/.pdf$//' |
-             mhistory references |
-             rmenu 'Document') || exit ;do
+while book=$(ls -1 $library | grep '.pdf$' | sed 's/.pdf$//' | mhistory references | rmenu 'Document') || exit ;do
   mhistory references "$book"
   [ $focus ] || { focus frame ; focus=true ;}
   xdg-open "$library/$book.pdf" 2>/dev/null

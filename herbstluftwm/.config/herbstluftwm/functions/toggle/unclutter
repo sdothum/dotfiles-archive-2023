@@ -10,13 +10,15 @@
 if pstat unclutter ;then
   killall -TERM unclutter 2>/dev/null
   herbstclient set focus_follows_mouse 1
+  rm -f $UNCLUTTER
 else
   # hc set action must precede unclutter initialization to avoid X_GetProperty error
   herbstclient set focus_follows_mouse 0
   # unclutter (original) doesn't play nice with X, so give it some initialization time
-  # ( sleep 1 && unclutter -idle 1 -jitter 2 -root ) &
+  # (sleep 1 && unclutter -idle 1 -jitter 2 -root) &
   # unclutter-xfixes
   unclutter --timeout 1 --jitter 2 --exclude-root --ignore-scrolling --fork
+  touch $UNCLUTTER
 fi
 
 # vim: set ft=sh: #

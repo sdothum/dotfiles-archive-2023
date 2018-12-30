@@ -24,19 +24,10 @@ find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \; 2>/dev/null
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in
-b | c | d | f | l | p | s) type=$1
-                           shift ;;
-
-'-') refresh=true
-     type=d
-     shift ;;
-
-'+') create=true
-     type=d
-     shift ;;
-
-*) [ $# -eq 1 ] || usage
-   type=d ;;
+[bcdflps]) type=$1 ; shift ;;
+'-'      ) type=d ; refresh=true ; shift ;;
+'+'      ) type=d ; create=true ; shift ;;
+*        ) [ $# -eq 1 ] && type=d || usage ;;
 esac
 
 cname() { echo $1 | tr '/' ':' ;}
@@ -47,8 +38,7 @@ dcache=$CACHEDIR/fcache:d$(cname $1)
 # if unchanged files in non-directory search, return cache
 # note: always returns directory cache
 if [ -e $cache ] && [ -e $dcache ] && [ -z $refresh ] ;then
-  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) ||
-                    { [ $create ] && exit || exec cat $cache ;}
+  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || { [ $create ] && exit || exec cat $cache ;}
 fi
 
 # [ $refresh ] && notify "$1" 'Refreshing fcache'

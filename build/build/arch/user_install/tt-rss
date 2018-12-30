@@ -1,0 +1,50 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... tt-rss
+
+TTRSS=/srv/http/tt-rss
+THEMES=$TTRSS/themes
+FEEDS=$TTRSS/classes/feeds.php
+button='images/close.png'
+
+# my distraction free theme
+# theme=axiom
+theme=linear
+
+# override tt-rss theme, in lieu of selectable themes
+# [ -e $THEMES/default.css.original ] && exit
+original $THEMES/compact.css
+sudo cp -Rv $HOME/tt-rss/themes/*.css $HOME/tt-rss/themes/*_images $THEMES/
+for i in $HOME/tt-rss/themes/$theme*css ;do sudo ln -sfv $i $THEMES/${i##*/} ;done
+sudo ln -sfv $THEMES/$theme.css $THEMES/compact.css
+
+# shorten special filter headings
+original $FEEDS
+# sudo sed -i -e 's/"Special"/"Orbit"/' \
+#          -e 's/All articles/○∙ all/' \
+#          -e 's/Fresh articles/○∙ fresh/' \
+#          -e 's/Starred articles/∙●∙ pinned/' \
+#          -e 's/Published articles/○∙ published/' \
+#          -e 's/Archived articles/○∙ archived/' \
+#          -e 's/Recently read/○∙ read/' \
+#          $FEEDS
+sudo sed -i -e 's/"Special"/"Orbit"/' \
+         -e 's/All articles/all/' \
+         -e 's/Fresh articles/fresh/' \
+         -e 's/Starred articles/• pinned •/' \
+         -e 's/Published articles/published/' \
+         -e 's/Archived articles/archived/' \
+         -e 's/Recently read/read/' \
+         -e 's/Starred/Pinned/' \
+         $FEEDS
+if [ -e $HOME/tt-rss/themes/${theme}_$button ] ;then
+  sudo sed -i -e "s|images/collapse.png|$button| ; s/Collapse article//" $FEEDS
+  sudo ln -s $THEMES/${theme}_$button $TTRSS/images/
+fi
+
+systemd restart tt-rss
+
+# vim: set ft=sh: #

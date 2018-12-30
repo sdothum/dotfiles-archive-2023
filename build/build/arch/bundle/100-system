@@ -1,0 +1,91 @@
+# system packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= codec
+= ▔▔▔▔▔
+# gnash-common
+  gst-libav
+  gst-plugins-base
+  gst-plugins-good
+  gst-plugins-ugly
+d gstreamer0.10-base-plugins
+# lightspark-git
+
+
+= hardware
+= ▔▔▔▔▔▔▔▔
+  dmidecode
+# gpointing-device-settings [gpu macbook]
+  hwinfo
+  intel-ucode
+  lm_sensors
+d mbpfan-git                [gpu macbook]
+  nvidiabl                  [gpu macbook]
+
+
+= power
+= ▔▔▔▔▔
+  acpi                      [laptop]
+# powertop                  [laptop]
+# "dead battery in macbook"
+  tlp                       [laptop && ! gpu macbook]
+# d * xfce4-power-manager
+
+
+= security
+= ▔▔▔▔▔▔▔▔
+d gksu
+  gnome-keyring
+# keepassx
+d * pass
+  polkit-gnome
+# python-keyring
+# python-keyrings-alt
+
+
+= sound
+= ▔▔▔▔▔
+# alsa-firmware
+  alsa-plugins
+# lib32-alsa-plugins
+# lib32-libpulse
+d libflashsupport-oss
+# libflashsupport-pulse
+d libflashsupport-pulse-git
+  mpg123
+# paprefs
+# pavolume-git
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+# pulseaudio-ctl
+  pulseaudio-equalizer
+# pulsemixer-git
+# xfce4-mixer
+# xfce4-volumed
+
+
+= system utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# anacron
+  cronie
+# dcron
+# incron
+# lxinput-qt-git
+  logrotate
+  ntp
+# pmount
+  preload
+  rlwrap
+# synapse
+# sysstat
+  systemd-swap
+  udiskie
+# watcher
+# zramswap
+
+
+# vim: set ft=conf: #

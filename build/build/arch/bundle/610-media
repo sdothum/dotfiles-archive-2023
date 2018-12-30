@@ -1,0 +1,95 @@
+# media packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= media server
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+# gcstar                     [server]
+  kodi                       [server]
+# minidlna                   [server]
+# plex-media-server-plexpass [server]
+# plex-media-server          [server]
+# xbmc
+
+
+= music
+= ▔▔▔▔▔
+  beets
+# cli-visualizer
+  deadbeef                   [server]
+  mpc
+  mpd
+  ncmpcpp
+
+
+= photography
+= ▔▔▔▔▔▔▔▔▔▔▔
+# darktable
+# dcraw                      [server]
+d digikam
+# dispcalgui                 [server]
+  displaycal                 [server]
+  gimp                       [server]
+  gimp-plugin-resynthesizer  [server]
+# kdebase-workspace          [server]
+# kipi-plugins               [server]
+# photivo-hg                 [server]
+  rawtherapee
+# lightzone
+# sxiv
+# viewnior
+
+
+= radio
+= ▔▔▔▔▔
+# "pyradio requires module pkg_resources"
+# pyradio-git
+# radiotray
+
+
+= ripping
+= ▔▔▔▔▔▔▔
+# abcde                      [server]
+  asunder                    [server]
+  audacity                   [server]
+  audex                      [server]
+# asunder                    [server]
+# byzanz                     [server]
+# byzanz-git                 [server]
+  cdrdao                     [server]
+# cdrtools                   [server]
+# dvd+rw-tools               [server]
+# dvdbackup                  [server]
+# ffcast                     [server]
+  ffmpeg                     [server]
+# gnome-subtitles            [server]
+  handbrake                  [server]
+# handbrake-cli              [server]
+# jokosher                   [server]
+# k3b                        [server]
+  mkvtoolnix-cli             [server]
+# ruby-gtk2                  [server]
+# rubyripper                 [server]
+# soundconverter             [server]
+  transcode                  [server]
+  xfburn                     [server]
+
+
+= video
+= ▔▔▔▔▔
+# coriander                  [server]
+# gnome-mpv
+# livestreamer-curses
+# minitube
+  mpv
+# smplayer
+# smplayer-themes
+# totem
+# umplayer
+# vlc
+# xvba-video                 [server]
+
+
+# vim: set ft=conf: #

@@ -1,0 +1,34 @@
+? preload
+pass
+? watchman
+? setroot
+? unclutter-xfixes-git
+? lemonbar-xft-git
+? alock-git
+? sutils-git
+? xtitle-git
+? amphetype-svn
+? wego-git
+* connman
+" connman post install disrupts internet connection, install last
+* connman
+* cmst
+gstreamer0.10-base-plugins 
+mbpfan-git [gpu macbook]
+gksu 
+* pass
+libflashsupport-oss 
+libflashsupport-pulse-git 
+* cmst
+etcher 
+pandoc 
+texlive-core 
+universal-ctags-git 
+g sanitize
+g sinatra
+g passenger
+" enable mpd and nvidia as required
+? conky-lua-archers
+paper-icon-theme 
+dovecot 
+alot 

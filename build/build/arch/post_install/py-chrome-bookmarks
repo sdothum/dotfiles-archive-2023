@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................... py-chrome-bookmarks
+
+sudo cp -v $HOME/build/arch/git/py-chrome-bookmarks/py-chrome-*py /usr/local/bin/
+sudo chmod -c 755 /usr/local/bin/py-chrome-*py
+
+# vim: set ft=sh: #

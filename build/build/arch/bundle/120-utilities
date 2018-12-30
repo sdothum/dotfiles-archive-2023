@@ -1,0 +1,58 @@
+# utilities packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= file compression
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# par2unrar
+  file-roller
+  p7zip
+  unrar
+  unzip
+  zip
+
+
+= disk utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  convmv
+d etcher
+# gnome-disk-utility
+  gparted
+  gptfdisk
+# samsung_magician [server || laptop]
+# unetbootin
+
+
+= sync
+= ▔▔▔▔
+# btsyncindicator
+# btsync
+  rsync
+  syncthing
+# syncthing-git
+# syncthing-inotify-git
+  vsftpd
+# watchman
+
+
+= system monitor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  glances
+  gsmartcontrol
+  htop
+  iotop
+  smartmontools
+# sysstat
+  xrestop
+
+
+= test
+= ▔▔▔▔
+# bonnie++
+# memtester
+# mprime-bin       [server]
+
+
+# vim: set ft=conf: #

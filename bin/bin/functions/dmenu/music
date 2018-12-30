@@ -52,33 +52,13 @@ albums() {
 # ............................................................. Playback control
 
 # playlist
-current() { mpc current ;}
-
-next() {
-  track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)")
-  [ "$track" ] && echo "  $track"
-}
-
-previous() {
-  track=$(mpc playlist | grep -B 1 "$(current)" | grep -v "$(current)")
-  [ "$track" ] && echo "  $track"
-}
-
-tracks() { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|' ;}
-
-info() {
-  stats=$(mpc status | sed -n '2p')
-  echo $stats | grep -q playing && echo "Playing $(tracks $stats)" ||
-                                   echo "Paused $(tracks $stats)"
-}
-
-# toggle state
-status() { mpc status | grep -q "$@" && echo off || echo on ;}
-
-ncmpcpp() {
-  pstat ncmpcpp || term 'Music' ncmpcpp
-  exec focus instance 'Music'
-}
+current()  { mpc current ;}
+next()     { track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)") ; [ "$track" ] && echo "  $track" ;}
+previous() { track=$(mpc playlist | grep -B 1 "$(current)" | grep -v "$(current)") ; [ "$track" ] && echo "  $track" ;}
+tracks()   { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|' ;}
+info()     { stats=$(mpc status | sed -n '2p') ; echo $stats | grep -q playing && echo "Playing $(tracks $stats)" || echo "Paused $(tracks $stats)" ;}
+status()   { mpc status | grep -q "$@" && echo off || echo on ;} # toggle status
+ncmpcpp()  { pstat ncmpcpp || term 'Music' ncmpcpp ; exec focus instance 'Music' ;}
 
 # ....................................................................... Player
 
@@ -92,34 +72,23 @@ while : ;do
   [ "$artist" = "$PLAYER" ] || artist=$(artists | rmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = "$PLAYER" ] ;then
     unset artist
-    while cmd=$(controls | rmenu "$(info)" "${cmd%% *}" -no-custom) || break ;do case $cmd in
+    while cmd=$(controls | rmenu "$(info)" "${cmd%% *}" -no-custom) || break ;do
+      case $cmd in
       toggle*on |\
-      toggle*off) mpc toggle
-                  [ $(status '\[playing\]') = off ] || exit ;;
+      toggle*off) mpc toggle ; [ $(status '\[playing\]') = off ] || exit ;;
 
-      next*     ) mpc play
-                  mpc next ;;
-
-      rewind*   ) mpc play
-                  mpc prev
-                  mpc next ;;
-
-      previous* ) mpc play
-                  mpc prev ;;
+      next*     ) mpc play ; mpc next ;;
+      rewind*   ) mpc play ; mpc prev ; mpc next ;;
+      previous* ) mpc play ; mpc prev ;;
 
       random*on |\
-      random*off) mpc play
-                  mpc random ;;
+      random*off) mpc play ; mpc random ;;
 
       repeat*on |\
-      repeat*off) mpc play
-                  mpc repeat ;;
+      repeat*off) mpc play ; mpc repeat ;;
 
       library   ) ncmpcpp ;;
-
-      clear     ) mpc clear
-                  rm -f $MUSIC
-                  exit ;;
+      clear     ) mpc clear ; rm -f $MUSIC ; exit ;;
       esac
       continue
     done
@@ -129,48 +98,35 @@ while : ;do
   # inner loop by artist
   more=true
   while [ $more ] ;do
-    if [ $(albums | wc -l) -gt 1 ] ;then case $artist in
+    if [ $(albums | wc -l) -gt 1 ] ;then
+      case $artist in
       "$ALBUMS") album=$(albums | rmenu 'Album' "$album" -no-custom) || break ;;
       *        ) album=$(albums | sort -n | sed "1i$ALL\n$LIBRARY" | rmenu 'Album' "$album" -no-custom) || break ;;
       esac
     else
       case $artist in
       "$LIBRARY") album=$artist ;;
-
-      *         ) album=$(albums | sort -n | rmenu 'Album' "$album" -no-custom) || break
-                  unset more ;;
+      *         ) album=$(albums | sort -n | rmenu 'Album' "$album" -no-custom) || break ; unset more ;;
       esac
     fi
 
     # player, library or playlist selection
     case $album in
-    "$PLAYER" ) artist="$PLAYER"
-                break ;;
-
+    "$PLAYER" ) artist="$PLAYER" ; break ;;
     "$ARTIST" ) break ;;
     "$LIBRARY") ncmpcpp ;;
-
-    "$ALL"    ) playlist=$(mpc find artist "$artist")
-                music="All songs by $artist"
-                unset more ;;
+    "$ALL"    ) playlist=$(mpc find artist "$artist") ; music="All songs by $artist" ; unset more ;;
 
     *         ) case $artist in
-                "$ALBUMS") playlist=$(mpc find album "$album")
-                            music=$album ;;
-
-                *        ) playlist=$(mpc find artist "$artist" album "$album")
-                            music="$album by $artist" ;;
+                "$ALBUMS") playlist=$(mpc find album "$album") ; music=$album ;;
+                *        ) playlist=$(mpc find artist "$artist" album "$album") ; music="$album by $artist" ;;
                 esac ;;
     esac
 
     # playlist action
-    while action=$(echo 'play\nadd\ninsert' | rmenu "$music" -no-custom) || break ;do case $action in
-      play  ) mpc clear >/dev/null
-              echo "$playlist" | mpc add >/dev/null
-              mpc play
-              echo "$playlist" >$MUSIC
-              exit ;;
-
+    while action=$(echo 'play\nadd\ninsert' | rmenu "$music" -no-custom) || break ;do
+      case $action in
+      play  ) mpc clear >/dev/null ; echo "$playlist" | mpc add >/dev/null ; mpc play ; exec echo "$playlist" >$MUSIC ;;
       add   ) echo "$playlist" | mpc add >/dev/null ;;
       insert) echo "$playlist" | mpc insert >/dev/null ;;
       esac

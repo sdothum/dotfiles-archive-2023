@@ -40,7 +40,7 @@ info() {
 
 register() {
   if [ -f "$file" ] ;then
-    ( [ -e $VERBOSE ] || [ ! -e $WSYNC ] ) && info Register
+    ([ -e $VERBOSE ] || [ ! -e $WSYNC ]) && info Register
     grep -qx "${file%/*}" $WATCH || echo ${file%/*} >>$WATCH
   fi
   unset file
@@ -48,12 +48,7 @@ register() {
 
 queue () {
   for i in $@ ;do
-    if [ -d "$ROOT/${i%/*}" ] ;then
-      register
-      file="$ROOT/$i"
-    else
-      file="$file $i"
-    fi
+    [ -d "$ROOT/${i%/*}" ] && { register ; file="$ROOT/$i" ;} || file="$file $i"
   done
   register
 }
@@ -65,7 +60,7 @@ archive() {
     echo rsync -d "$file" "$to" >>$LOG
     /usr/bin/rsync -avz --update -d --delete "$file" "$to" >>$LOG 2>&1
   done 3< $WATCH
-  > $WATCH
+  >$WATCH
 }
 
 watch() {
@@ -80,8 +75,7 @@ watch() {
     while [ $scan ] ;do
       unset scan
       for i in $(seq 1 $SCAN) ;do
-        sleep 1
-        pkill -f 'wsync .*/.*' && scan=true
+        sleep 1 ; pkill -f 'wsync .*/.*' && scan=true
       done
       # adjust for initialization latency
       [ $scan ] || { [ -s $WATCH ] || scan=true ;}
@@ -92,9 +86,7 @@ watch() {
 }
 
 case $1 in
-'') cpu arm && pstat syncthing && systemd stop syncthing@$USER
-    watch & ;;
-
+'') cpu arm && pstat syncthing && systemd stop syncthing@$USER ; watch & ;;
 -a) archive & ;;
 -s) archive && (watchman shutdown-server ; pstat syncthing || systemd start syncthing@$USER &) ;;
 -v) pstat syncthing || watch & ;;

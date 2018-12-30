@@ -18,7 +18,7 @@ ping $target | while read sixtyfour bytes latency ;do
   [ "$bytes" = bytes ] || { echo $sixtyfour $bytes $latency ; continue ;}
   ms=$(echo "$latency" | cut -d= -f4 | cut -d. -f1 | cut -d' ' -f1)
   [ $ms -ge $threshold1 ] && trace "$sixtyfour $bytes $latency" ||
-                             { [ $ms -ge $threshold2 ] && trace "${NOCOLOR}$sixtyfour $bytes $latency" ;}
+    { [ $ms -ge $threshold2 ] && trace "${NOCOLOR}$sixtyfour $bytes $latency" ;}
 done
 
 # vim: set ft=sh: #

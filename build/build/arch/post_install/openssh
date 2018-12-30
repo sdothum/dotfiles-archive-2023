@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... openssh
+
+original /etc/ssh/sshd_config
+sudo sed -i 's/^#X11Forwarding no/X11Forwarding yes/' /etc/ssh/sshd_config
+# for client side utf-8 receipt (see ~/.ssh/config)
+ifnsed /etc/ssh/sshd_config 'AcceptEnv LANG LC_' '$aAcceptEnv LANG LC_*'
+systemd enable sshd
+
+annotate "Generate public/private rsa key pair: ssh-keygen -t rsa -b 2048\n
+sshid <host> to enable passwordless login"
+# ssh-copy-id $USER@destination (?) doesn't work
+
+# vim: set ft=sh: #

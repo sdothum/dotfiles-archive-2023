@@ -15,10 +15,11 @@ done
 
 # clean up input equation
 eqn() {
-  echo $eqn | sed -re 's/([a-z])/$\1/g' \
-                  -e 's/([()])/\\\1/g' \
-                  -e 's/([<>])/../g' \
-                  -e 's/[$](.)[$]/$\1..$/g'
+  echo $eqn | 
+    sed -re 's/([a-z])/$\1/g' \
+        -e 's/([()])/\\\1/g' \
+        -e 's/([<>])/../g' \
+        -e 's/[$](.)[$]/$\1..$/g'
 }
 
 count=0
@@ -49,9 +50,6 @@ while eqn=$(echo $ribbon | column -s$UTF -t | rmenu "Solve$error") || break ;do
   [ $ans ] || echo "$eqn" | grep -q '=' || error="    f($eqn) ?"
 done
 
-if [ $ans ] ;then
-  clipboard "$ans"
-  notify 'Ctrl-Alt-V' "$ans"
-fi
+[ $ans ] && { clipboard "$ans" ; notify 'Ctrl-Alt-V' "$ans" ;}
 
 # vim: set ft=sh: #

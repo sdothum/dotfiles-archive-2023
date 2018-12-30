@@ -12,7 +12,7 @@ update() {
   sudo chown -c utserver:utserver /srv/utserver/settings/ipfilter.dat
 }
 
-if which utserver >/dev/null 2>&1 ;then
+if exists utserver ;then
   [ -e /srv/utserver/settings/ipfilter.dat ] || update
   find /srv/utserver/settings -mtime -1 -name 'ipfilter.dat' 2>/dev/null || update
 fi

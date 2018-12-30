@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... yay
+
+[ -d /net/depot ] && cd /net/depot || cd /tmp
+[ -d yay ] || git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+yay -Sy
+
+# vim: set ft=sh: #

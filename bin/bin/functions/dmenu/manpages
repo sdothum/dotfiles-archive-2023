@@ -22,25 +22,12 @@ while : ;do
   # highlighted lookup
   if [ "$selection" ] ;then
     man=$selection
-    if [ $(echo "$man" | wc -w) -ne 1 ] ;then
-      unset man
-    else
-      [ $(whatis "$man" | wc -l) -eq 0 ] && unset man
-    fi
-    if [ -z $man ] ;then
-      notify 3 critical "$selection" "No manual entry found"
-      exit
-    fi
+    [ $(echo "$man" | wc -w) -ne 1 ] && unset man || { [ $(whatis "$man" | wc -l) -eq 0 ] && unset man ;}
+    [ -z $man ] && { notify 3 critical "$selection" "No manual entry found" ; exit ;}
   else
     # initial lookup
-    man=$(apropos . |
-          cut -d' ' -f1 |
-          sort -d |
-          uniq |
-          mhistory man |
-          sed "1i$REBUILD" |
-          rmenu 'Manpage' 1 |
-          cut -d':' -f3-)
+    man=$(apropos . | cut -d' ' -f1 | sort -d | uniq | mhistory man | sed "1i$REBUILD" | 
+        rmenu 'Manpage' 1 | cut -d':' -f3-)
 
     if [ "$man" = "$REBUILD" ] ;then
       notify low 'Updating manpage index cache' 'Please be patient..'
@@ -56,10 +43,7 @@ while : ;do
   while : ;do
     # list possible man sections!
     if [ $(whatis $man | wc -l) -gt 1 ] ;then
-      page=$(whatis $man |
-             sed "s/) *-/)^$SEP/" |
-             column -s^ -t |
-             rmenu 'Section' -no-custom) || exit
+      page=$(whatis $man | sed "s/) *-/)^$SEP/" | column -s^ -t | rmenu 'Section' -no-custom) || exit
     else
       page=$(whatis $man)
       singleton=true

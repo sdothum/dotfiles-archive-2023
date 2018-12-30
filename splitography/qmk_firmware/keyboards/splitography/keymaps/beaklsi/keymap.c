@@ -156,6 +156,8 @@ enum keyboard_keycodes {
 #define XCOPY   LCTL(LSFT(KC_C))
 #define XPASTE  TD_XPASTE
 
+#define LT_BSPC LT  (_EDIT, KC_BSPC)
+#define LT_SPC  LT  (_GUIFN, KC_SPC)
 #define TT_SPC  LT  (_TTCURSOR, KC_SPC)
 #ifdef PLANCK
 #define LT_0    LT  (_ADJUST, KC_0)
@@ -303,11 +305,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer    (record, _MOUSE);
     rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _SYMBOL);
     break;
-  case TD_SPC:
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
-    if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
+  case LT_SPC:
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))    { return false; }
+    if (leader_cap(record, _GUIFN, down_punc, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))   { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
     tap_layer    (record, _GUIFN);
     rolling_layer(record, RIGHT, 0, 0, _GUIFN, _SYMBOL);
     break;
@@ -319,10 +321,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
     break;
 
-  case TD_BSPC:
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE)) { return false; }
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (record->event.pressed)                       { auto_cap = down_punc; } // down_punc persistance for cap_lt()
+  case LT_BSPC:
+    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
+    if (leader_cap(record, _EDIT, down_punc, KC_ENT)) { return false; }
     tap_layer(record, _EDIT);
     break;
   case KC_BSPC:

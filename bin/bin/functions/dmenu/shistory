@@ -13,15 +13,10 @@ case $shell in
 dash) $DASHELL ;;
 fish) ;;
 sh  ) ;;
-
-zsh ) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum
-      mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
+zsh ) egrep --text -v '^[^:]|[\]$' $HOME/.zhistory >$HOME/.zhistory.vacuum ; mv $HOME/.zhistory.vacuum $HOME/.zhistory ;;
 esac
 
-cmd=$(h shell=$shell |
-      sed -r "s/^([^ ]*)  */\1 $SEP $UTF/" |
-      column -s$UTF -t |
-      rmenu 'History' -no-custom) || exit
+cmd=$(h shell=$shell | sed -r "s/^([^ ]*)  */\1 $SEP $UTF/" | column -s$UTF -t | rmenu 'History' -no-custom) || exit
 
 cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
 notify 'Ctrl-Alt-V' "$(echo $cmd | sed 's/[&][&]/and/g ; s/[&]/ampersand/')"

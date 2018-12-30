@@ -1,0 +1,25 @@
+# startup session packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= ncurses editor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gvim
+
+
+= terminal
+= ▔▔▔▔▔▔▔▔
+  alacritty     [! cpu atom]
+# alacritty-git [! cpu atom]
+  xterm
+
+
+= window manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  herbstluftwm
+# herbstluftwm-git
+
+
+# vim: set ft=conf: #

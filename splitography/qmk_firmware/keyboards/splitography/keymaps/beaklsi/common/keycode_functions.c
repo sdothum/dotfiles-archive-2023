@@ -151,6 +151,24 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
   return false;
 }
 
+// ....................................................... Leader Capitalization
+
+// LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
+bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
+{
+  if (autocap) {                            // sentence/paragraph capitalization
+    if (!record->event.pressed) { 
+      tap_key                  (keycode);
+      layer_off                (layer);
+      layer_on                 (_SHIFT);
+      set_oneshot_layer        (_SHIFT, ONESHOT_START);
+      clear_oneshot_layer_state(ONESHOT_PRESSED);
+      return true; 
+    }
+  }
+  return false;
+}
+
 // Tap Dance
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 
@@ -158,7 +176,6 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_ASTR]   = ACTION_TAP_DANCE_FN         (asterisk)
- ,[_BSPC]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, backspace, backspace_reset)
  ,[_EMOJ]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, emoji, emoji_reset)
  ,[_COMM]   = ACTION_TAP_DANCE_FN         (comma)
  ,[_DOT]    = ACTION_TAP_DANCE_FN         (dot)
@@ -166,7 +183,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_PERC]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, percent, percent_reset)
  ,[_PRIV]   = ACTION_TAP_DANCE_FN         (private)
  ,[_SEND]   = ACTION_TAP_DANCE_FN         (send)
- ,[_SPC]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space, space_reset)
  ,[_TILD]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset)
  ,[_XPASTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, xpaste, xpaste_reset)
 #ifdef HASKELL
@@ -175,70 +191,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, greater, greater_reset)
 #endif
 };
-
-// ...................................................... Double Tap Shift/Layer
-
-static uint8_t dt_shift = 0;
-
-void double_shift(uint16_t keycode, uint8_t layer)
-{
-  tap_key (keycode);
-  if (DT_SHIFT) {
-    // set_oneshot_mods(MOD_LSFT);
-    // layer_on(layer);
-    layer_on         (_SHIFT);
-    set_oneshot_layer(_SHIFT, ONESHOT_START);
-    dt_shift = 1;
-  }
-  else { layer_on(layer); }
-}
-
-static uint8_t auto_cap = 0;                // down_punc chord, see process_record_user() TD_TILD, KC_EXLM, 
-
-// tap dance LT (LAYER, KEY) emulation with <KEY><DOWN> -> <KEY><SHIFT> and auto-repeat extensions!
-void cap_lt(qk_tap_dance_state_t *state, uint16_t keycode, uint8_t layer, uint8_t paragraph, uint16_t leader)
-{
-  if (auto_cap) {                           // sentence/paragraph capitalization
-    if (state->pressed)                                    { return; }
-    if ((state->count > 1) && (state->count == paragraph)) { tap_key(leader); }
-    double_shift(leader, layer);            // discard excess taps!
-  }
-  else if (state->pressed)                { (state->count == 1) ? layer_on(layer) : register_code(keycode); }
-  else for (i = 0; i < state->count; i++) { tap_key(keycode); }
-}
-
-void tap_reset(uint16_t keycode, uint8_t layer)
-{
-  unregister_code(keycode);
-  dt_shift ? clear_oneshot_layer_state(ONESHOT_PRESSED) : layer_off(layer);
-  dt_shift = 0;
-  auto_cap = 0;                             // clear retained down_rule, see process_record_user()
-}
-
-#define SENTENCE  0                         // capitalization method
-#define PARAGRAPH 2
-
-// augment pseudo LT (_RSHIFT, KC_ENT) handling below for rapid <ENTER><SHIFT> sequences
-void backspace(qk_tap_dance_state_t *state, void *user_data)
-{
-  cap_lt(state, KC_BSPC, _EDIT, PARAGRAPH, KC_ENT); // double tap -> double enter + shift, down -> enter...
-}
-
-void backspace_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_reset(KC_BSPC, _EDIT);
-}
-
-// augment pseudo LT (_LSHIFT, KC_SPC) handling below for rapid <SPACE><SHIFT> sequences
-void space(qk_tap_dance_state_t *state, void *user_data)
-{
-  cap_lt(state, KC_SPC, _GUIFN, SENTENCE, KC_SPC); // double tap down -> space...
-}
-
-void space_reset(qk_tap_dance_state_t *state, void *user_data)
-{
-  tap_reset(KC_SPC, _GUIFN);
-}
 
 // ........................................................... Triple Tap Insert
 
@@ -434,7 +386,6 @@ void clear_layers(void)
   for (i = 0; i < _END_LAYERS; i++) { layer_off(i); }
   mods       = 0;
   key_timer  = 0;
-  dt_shift   = 0;
   tt_keycode = 0;
 }
 

@@ -15,11 +15,7 @@ usage() {
 [ "$1" = -w ] && { w=-w ; shift ;}
 
 # see .agignore and al
-ag --follow --hidden --skip-vcs-ignores \
-   --smart-case \
-   --nobreak --noheading \
-   --color --color-path='1;32' --color-line-number='1;37' --color-match='1;33' \
-   $AG $w \
-   "$@"
+ag --color --color-path='1;32' --color-line-number='1;37' --color-match='1;33' \
+   --nobreak --noheading --smart-case --follow --hidden --skip-vcs-ignores $AG $w "$@"
 
 # vim: set ft=sh: #

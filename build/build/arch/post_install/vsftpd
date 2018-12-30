@@ -1,0 +1,18 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................................ vsftp
+
+original /etc/vsftpd.conf
+sudo sed -i -e '/^anonymous_enable=/s/YES/NO/' \
+         -e '/^#local_enable=YES/s/#//' \
+         -e '/^#write_enable=YES/s/#//' \
+         -e '/^#local_umask=022/s/#//' \
+         -e '/^connect_from_port_20=/s/YES/NO/' \
+         /etc/vsftpd.conf
+
+# systemd enable vsftpd
+
+# vim: set ft=sh: #

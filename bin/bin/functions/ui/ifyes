@@ -17,9 +17,10 @@ while : ;do
   IFS= read -rn1 CONTINUE
   echo
   case $CONTINUE in
-  y | Y | '') exit 0 ;;
-  n | N     ) exit 1 ;;
-  a | A     ) { kill $sig ${TMPPID:-$PPID} ; break ;} ;;  # see tmout
+  ''  ) exit 0 ;;
+  [yY]) exit 0 ;;
+  [nN]) exit 1 ;;
+  [aA]) { kill $sig ${TMPPID:-$PPID} ; break ;} ;;  # see tmout
   esac
 done
 

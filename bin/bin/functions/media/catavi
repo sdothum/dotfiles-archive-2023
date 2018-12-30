@@ -12,7 +12,6 @@ usage() {
   exit 1
 }
 
-
 TEMPFILE=$(mktemp)
 trap "rm -f $TEMPFILE" EXIT
 cat "$@" >$TEMPFILE

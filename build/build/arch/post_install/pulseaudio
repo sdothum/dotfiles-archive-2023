@@ -1,0 +1,39 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................... pulseaudio
+
+ifnsed /etc/pulse/default.pa 'load-module module-switch-on-connect'
+
+# pm_query python-pyqt4 >/dev/null ; and sudo sed -i '$a\
+# load-module module-equalizer-sink\
+# load-module module-dbus-protocol' /etc/pulse/default.pa
+# pactl load-module module-equalizer-sink
+# pactl load-module module-dbus-protocol
+
+# pulseaudio --start in /etc/X11/xinit/xinitrc.d/pulseaudio is display manager dependent
+# so exec in .xinitrc for xmonad
+sudo usermod -a -G audio $USER
+# amixer -D pulse set Master toggle
+
+# default 8196 inotify watches can easily be exhausted, so increase..
+echo "max_user_watches $(cat /proc/sys/fs/inotify/max_user_watches) -> $(echo 32768 | sudo tee /proc/sys/fs/inotify/max_user_watches)"
+ifnsed /etc/sysctl.d/99-sysctl.conf 'fs.inotify.max_user_watches=32768'
+
+# set up pulseaudio recorder
+recorder() {
+cat <<EOF
+.include /etc/pulse/default.pa
+
+load-module module-combine-sink sink_name=record-n-play slaves=$(pacmd list-sinks | grep -A1 "* index" | grep -oP "<\K[^ >]+") sink_properties=device.description="Record-and-Play"
+
+set-default-sink record-n-play
+EOF
+}
+recorder | tee $HOME/.config/pulse/default.pa
+
+annotate "pulseaudio -v[v[v]..] for diagnostics"
+
+# vim: set ft=sh: #

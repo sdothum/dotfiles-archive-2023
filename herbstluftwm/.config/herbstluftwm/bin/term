@@ -44,7 +44,8 @@ fi
 # menu border calculation
 border() { echo $(( $(query displayheight) * 2 / 15 )) ;}
 
-while [ "$1" ] ;do case $1 in
+while [ "$1" ] ;do
+  case $1 in
   BLACKBOARD) theme=$blackboard ;;
   FLOAT     ) name="$NAME float" ; geometry=$XY ;;
   FORTUNE   ) touch $FORTUNE:term ;;

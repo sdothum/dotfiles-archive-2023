@@ -8,6 +8,6 @@
 
 # zsearch :-)
 [ "$1" = test ] && man --pager="/usr/bin/less -p'^CONDITIONAL EXPRESSIONS$'" zshall ||
-                   man --pager="/usr/bin/less -p'^ *$1 '" zshall
+  man --pager="/usr/bin/less -p'^ *$1 '" zshall
 
 # vim: set ft=sh: #

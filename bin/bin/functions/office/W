@@ -29,8 +29,8 @@ corpus() {
   for i in $@ ;do
     [ $(grep -i $i $WORDS | wc -l) -gt $GT ] && echo $i $(grep -i $i $WORDS | wc -l) $(frequency $i)
   done | sort -nr -k3 |
-    awk '{ cnt += $2 ; freq += $3 ; printf("%s %d %'"'"'d\n", $1, $2, $3) ; gsub(/./, "-", $1) ; hdg = length($1) > length(hdg) ? $1 : hdg } END { printf("%s %d %'"'"'d\n", hdg, cnt, freq) }' |
-         column -s' ' -t
+      awk '{ cnt += $2 ; freq += $3 ; printf("%s %d %'"'"'d\n", $1, $2, $3) ; gsub(/./, "-", $1) ; hdg = length($1) > length(hdg) ? $1 : hdg } END { printf("%s %d %'"'"'d\n", hdg, cnt, freq) }' |
+      column -s' ' -t
 }
 
 list() {

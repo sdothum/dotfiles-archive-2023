@@ -13,10 +13,7 @@ cd /tmp
 ln_logs
 
 file=$(previous logs)
-file=$(ls *.log |
-       sort |
-       sed 's/.log//' |
-       rmenu "$mode Log" $file -no-custom) || exit
+file=$(ls *.log | sort | sed 's/.log//' | rmenu "$mode Log" $file -no-custom) || exit
 
 mhistory logs $file
 case $mode in

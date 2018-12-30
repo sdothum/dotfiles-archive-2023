@@ -16,7 +16,8 @@ dotfiles=${dotfiles:-/net/depot/dotfiles}
 current=$STOW
 [ -d $dotfiles ] || git clone git@github.com:sdothum/dotfiles.git $dotfiles
 
-while : ;do case $1 in
+while : ;do
+  case $1 in
   checkout) cd $dotfiles
             git pull
             git checkout $2
@@ -31,7 +32,7 @@ done
 
 [ $1          ] || usage
 [ -d $STOW/$1 ] || usage
-[ -z $nosync  ] && { ifno "sync $dotfiles repo" || ( cd $dotfiles && git pull ) ;}
+[ -z $nosync  ] && { ifno "sync $dotfiles repo" || (cd $dotfiles && git pull) ;}
 
 dirdiff $w $current/$1 $dotfiles/$1 "$2"
 

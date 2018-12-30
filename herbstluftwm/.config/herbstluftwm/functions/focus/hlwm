@@ -25,25 +25,20 @@ action $1
 
 tag() {
   # tags represented as box tag, empty box as hidden tick'tag
-  echo $TAG | grep -q "'" && echo "$INVISIBLE ${TAG#\'}" ||
-                             echo "$VISIBLE $TAG"
+  echo $TAG | grep -q "'" && echo "$INVISIBLE ${TAG#\'}" || echo "$VISIBLE $TAG"
 }
 
 for i in $(query winids) ;do
   TAG=$(herbstclient attr clients.$i.tag)
   window="$TAG$DLM$(query wtitle $i) ^$(tag)$DLM$i"
-  [ "$windows" ] && windows="$windows\n$window" ||
-                    windows="$window"
+  [ "$windows" ] && windows="$windows\n$window" || windows="$window"
 done
 echo $windows | grep $INVISIBLE && hidden="  ⇣$INVISIBLE"
 
 # ........................................................................ Dmenu
 
-if window=$(echo $windows |
-            sort |
-            cut -d$DLM -f2 |
-            column -s\^ -t |
-            rmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
+if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
+      rmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
   window=$(echo $window | sed -r "s/ *([$VISIBLE$INVISIBLE])/ ^\1/ ; s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
@@ -65,11 +60,9 @@ if window=$(echo $windows |
   *     ) swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
           lock set swap_monitors_to_get_tag 0
           if echo $window | grep " \^$VISIBLE [0-9]" ;then
-            # focus normal tag
-            herbstclient chain . use $TAG . jumpto "$(echo $window | cut -d$DLM -f3)"
+            herbstclient chain . use $TAG . jumpto "$(echo $window | cut -d$DLM -f3)" # focus normal tag
           else
-            # focus (restore) tick'tag
-            herbstclient use ${TAG#\'}
+            herbstclient use ${TAG#\'}      # focus (restore) tick'tag
             focus frame
             herbstclient bring "$(echo $window | cut -d$DLM -f3)"
           fi

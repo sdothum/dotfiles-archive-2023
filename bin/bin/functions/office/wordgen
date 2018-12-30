@@ -24,7 +24,8 @@ CACHEDIR=${CACHEDIR:-$HOME/.cache}/Amphetype:
 DICTIONARY=${DICTIONARY:-$HOME/.config/Amphetype/unique.words}
 CORPUS=$DICTIONARY.corpus
 
-while : ;do case "$1" in
+while : ;do
+  case "$1" in
   help     ) usage ;;
   wordlen=*) eval $1 ;;
   size=*   ) eval $1 ;;
@@ -67,10 +68,7 @@ trap "rm $words $lines $paragraphs" EXIT
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
 shuf $CORPUS | sed -r 's/\t.*// ; s/(.*)/\L\1/' | # strip frequency count if present
-               egrep "[$regex]" |
-               egrep -v '^(.|..)$' |
-               egrep -x ".{1,$wordlen}" |
-               head -$size >$corpus.words
+    egrep "[$regex]" | egrep -v '^(.|..)$' | egrep -x ".{1,$wordlen}" | head -$size >$corpus.words
 
 typefile="$CACHEDIR$(cat $corpus.words | wc -l)-$output.txt"
 
@@ -86,13 +84,14 @@ wordcase() {
   else
     # inject random punctuation
     while read line <&3 ;do
-      echo "$line" | sed -re 's/^(.)/\U\1/' \
-                         -e "s/\"(.)([^\"]*)\"/\"\U\1\E\2$(random 3 '?' '')\", /g" \
-                         -e 's/  */ /g' \
-                         -e "s/ *$/$(random 6 '?' '.')/" \
-                         -e 's/^\. //' \
-                         -e 's/ \././g' \
-                         -e 's/[,\-]\.$/./'
+      echo "$line" | 
+          sed -re 's/^(.)/\U\1/' \
+              -e "s/\"(.)([^\"]*)\"/\"\U\1\E\2$(random 3 '?' '')\", /g" \
+              -e 's/  */ /g' \
+              -e "s/ *$/$(random 6 '?' '.')/" \
+              -e 's/^\. //' \
+              -e 's/ \././g' \
+              -e 's/[,\-]\.$/./'
     done 3< $lines
   fi
 }

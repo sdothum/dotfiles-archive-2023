@@ -18,7 +18,8 @@ LOG=/tmp/vim.log
 echo >$LOG
 [ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true ; term 'vimtrace' tail -f $LOG ;}
 
-while : ;do case $1 in
+while : ;do
+  case $1 in
   --role ) role="--role $2" ; shift ;;
   -f     ) fg=-f ;;
   -c     ) cmd="-c '$2'" ;    shift ;;

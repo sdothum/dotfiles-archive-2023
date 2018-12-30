@@ -7,7 +7,7 @@
 # ...................................................................... Receive
 
 usage() {
-  echo "usage: $(basename $0) 'start | I'nitialize | l'og | t'ag | 1'pass"
+  echo "usage: $(basename $0) 'start | I'nit | l'og | t'ag | 1'pass"
   exit 1
 }
 
@@ -31,8 +31,8 @@ tag_account() {
   ditto "$folder $@"
   echo $folder | grep -q 'unknown$' && unset unknown || unknown=-unknown
   notmuch tag --batch <<EOF
-              $@ -inbox $unknown \'folder:"$folder"\'
-              +new \'folder:"$folder"\' -- tag:unread
+      $@ -inbox $unknown \'folder:"$folder"\'
+      +new \'folder:"$folder"\' -- tag:unread
 EOF
 }
 
@@ -45,13 +45,13 @@ tag_messages() {
   # notmuch tag +admin -inbox folder:thedarnedestthing/admin
   # notmuch tag +webmaster -inbox folder:webmaster/webmaster
   notmuch tag --batch <<EOF
-              +spam -inbox folder:bodyshamanics/[Gmail]/Spam
-              +spam -inbox folder:comments/[Gmail]/Spam
-              +spam -inbox folder:sdothum/[Gmail]/Spam
-              +spam -inbox folder:steven/[Gmail]/Spam
-              +spam -inbox folder:thedarnedestthing/[Gmail]/Spam
-              +spam -inbox folder:webmaster/[Gmail]/Spam
-              +trash -inbox folder:sdothum/[Gmail]/Trash
+      +spam -inbox folder:bodyshamanics/[Gmail]/Spam
+      +spam -inbox folder:comments/[Gmail]/Spam
+      +spam -inbox folder:sdothum/[Gmail]/Spam
+      +spam -inbox folder:steven/[Gmail]/Spam
+      +spam -inbox folder:thedarnedestthing/[Gmail]/Spam
+      +spam -inbox folder:webmaster/[Gmail]/Spam
+      +trash -inbox folder:sdothum/[Gmail]/Trash
 EOF
 
   # notmuch config set search.exclude_tags deleted spam trash
@@ -101,7 +101,7 @@ one_pass() {
 }
 
 # initialize notmuch database
-initialize() {
+init() {
   killall alot
   killall notmuch
   rm -rf $MAILDIR/.notmuch/dump-*
@@ -136,11 +136,8 @@ mail_daemon() {
 
 case $@ in
 '') mail_daemon ;;
-I*) initialize ;;
-
-l*) ditto 'tail -f /tmp/mailsync.log'
-    tail -f /tmp/mailsync.log ;;
-
+I*) init ;;
+l*) ditto 'tail -f /tmp/mailsync.log' ; tail -f /tmp/mailsync.log ;;
 t*) tag_messages ;;
 1*) one_pass ;;
 * ) usage ;;

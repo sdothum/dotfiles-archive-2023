@@ -16,7 +16,8 @@ usage() {
 target=/net/media/videos/recordings
 delay=${delay:-1}
 
-if server ;then case $@ in
+if server ;then
+  case $@ in
   l* | *0) opts='-s 1680x1050 -i :0.0' ;;
   r* | *1) opts='-s 2560x1600 -i :0.0+1680,0' ;;
   a*     ) opts='-s 4240x1600 -i :0.0' ;;
@@ -38,18 +39,8 @@ echo
 echo "${__YELLOW}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${NOCOLOR}"
 echo
 
-ffmpeg -i $mkv \
-       -deadline good \
-       -lag-in-frames 0 \
-       -g 120 \
-       -slices 8 \
-       -c:v libvpx \
-       -qmin 0 \
-       -qmax 50 \
-       -crf 0 \
-       -b:v 1M \
-       -c:a libvorbis \
-       ${mkv%.mkv}.webm
+ffmpeg -i $mkv -b:v 1M -c:a libvorbis -crf 0 -c:v libvpx -deadline good \
+       -g 120 -lag-in-frames 0 -qmax 50 -qmin 0 -slices 8 ${mkv%.mkv}.webm
 
 mv -v ${mkv%.mkv}.webm $target
 

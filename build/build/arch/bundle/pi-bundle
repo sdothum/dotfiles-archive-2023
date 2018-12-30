@@ -1,0 +1,363 @@
+# raspberry pi packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+# manual install after initial boot:
+# pacman -S rsync
+# then run rsync pi from main server to install scripts and proceed with
+# archlinux-pi
+
+
+= sound
+= ▔▔▔▔▔
+  alsa-utils
+  alsa-plugins
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+
+
+= system utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cronie
+  logrotate
+  ntp
+d " add armv7h to arch in pkgbuild
+d ? preload
+  rlwrap
+  systemd-swap
+  udiskie
+
+
+= file
+= ▔▔▔▔
+  ack
+  stow
+
+
+= file compression
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  file-roller
+
+
+= file manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  ncdu
+  nnn
+  ranger
+  rox
+# tumbler
+  vidir
+  vifm
+
+
+= file system
+= ▔▔▔▔▔▔▔▔▔▔▔
+  dosfstools
+  exfat-utils
+
+
+= info screen
+= ▔▔▔▔▔▔▔▔▔▔▔
+  neofetch
+
+
+= shell tool
+= ▔▔▔▔▔▔▔▔▔▔
+  fzf
+  pv
+  ripgrep
+  the_silver_searcher
+
+
+= cups printing
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cups
+  ghostscript
+  gsfonts
+  gutenprint
+
+
+= font
+= ▔▔▔▔
+  adobe-base-14-fonts
+  noto-fonts
+# terminus-font-ll2-td1
+  ttf-courier-prime
+  ttf-dejavu
+# ttf-dejavu-sans-mono-powerline-git
+  ttf-font-awesome
+# ttf-liberation
+  ttf-ms-fonts
+  ttf-robobo
+  ttf-symbola
+
+
+= package manager
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  downgrade
+  pkgfile
+
+
+= security
+= ▔▔▔▔▔▔▔▔
+d pass
+  sudo
+
+
+= system monitor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  glances
+  htop
+
+
+= terminal multiplexor
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  tmux
+# tmux-tpm
+
+
+= network utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  dialog
+# dnsmasq
+# dnsutils
+  bind-tools
+  iw
+# networkmanager
+
+
+= network security
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  openssh
+  wpa_supplicant
+
+
+= network share
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  avahi
+# d " add armv7h to arch in pkgbuild
+# d ? cachefilesd
+  nfs-utils
+# nss-mdns
+# pygtk
+# python-dbus
+
+
+= proxy
+= ▔▔▔▔▔
+# squid
+
+
+= socket
+= ▔▔▔▔▔▔
+  socat
+
+
+= sync
+= ▔▔▔▔
+  rsync
+  syncthing
+# syncthing-inotify-git
+d ? watchman
+
+
+= appearance
+= ▔▔▔▔▔▔▔▔▔▔
+  compton
+  lxappearance
+d " add armv7h to arch in pkgbuild
+d ? setroot
+d ? unclutter-xfixes-git
+
+
+= desktop
+= ▔▔▔▔▔▔▔
+  conky
+d " add armv7h to arch in pkgbuild
+d ? lemonbar-xft-git
+
+
+= desktop utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+d " add armv7h to arch in pkgbuild
+d ? alock-git
+  python-pywal
+  xautolock
+
+
+= gtk theme/engine
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  adapta-gtk-theme
+  gtk-engine-murrine
+# "direct rsync from /usr/share/icons to .local/share"
+  paper-icon-theme
+
+
+= user interface
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  autokey-py3
+  dbus-glib
+# "stest contained in dmenu package"
+  dmenu
+  dunst
+  gpaste
+  libnotify
+  rofi
+
+
+= window property
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+d " add armv7h to arch in pkgbuild
+d ? sutils-git
+d ? xtitle-git
+
+
+= x11
+= ▔▔▔
+  autocutsel
+  xdotool
+  xf86-input-keyboard
+  xf86-input-mouse
+  xvkbd
+
+
+= file transfer
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  wget
+
+
+= utility
+= ▔▔▔▔▔▔▔
+  perl-curses-ui
+  perl-extract-url
+  perl-html-strip
+
+
+= editor
+= ▔▔▔▔▔▔
+  ctags
+d texlive-core
+  texlive-latexextra
+
+
+= java
+= ▔▔▔▔
+  icedtea-web
+  jre7-openjdk
+
+
+= software tool
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  time
+
+
+= version control
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  git
+  mercurial
+  patchutils
+
+
+= programming language
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  python
+  ruby
+g term-ansicolor
+
+
+= video player
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  omxplayer
+  youtube-dl
+
+
+= mail
+= ▔▔▔▔
+d " add export CFLAGS="-D_FILE_OFFSET_BITS=64" to package() of pkgbuild
+d ? python2-gpg
+d * alot
+  msmtp-mta
+
+
+= browser
+= ▔▔▔▔▔▔▔
+  chromium
+# qt5-webkit
+# qutebrowser
+  surf
+# d " tabbed compiled to custom font size
+# d m tabbed
+d " add armv7h to arch in pkgbuild
+d ? vimb
+  w3m
+
+
+= chat/twitter
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+# bitlbee
+# d " add armv7h to arch in pkgbuild
+d ? centerim5-git
+# libotr
+# weechat
+# xmpppy
+
+
+= web server
+= ▔▔▔▔▔▔▔▔▔▔
+# pixelserv
+
+
+= astronomy
+= ▔▔▔▔▔▔▔▔▔
+d " add armv7h to arch in pkgbuild
+d ? wego-git
+
+
+= dictionary
+= ▔▔▔▔▔▔▔▔▔▔
+  aiksaurus
+  dictd
+  dict-wn
+m dict-moby-thesaurus
+  hunspell
+  hunspell-en
+# hunspell-en_CA
+
+
+= keyboard
+= ▔▔▔▔▔▔▔▔
+  plover
+
+
+= productivity
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+d " add armv7h to arch in pkgbuild
+d ? amphetype-svn
+  remind
+
+
+= viewer
+= ▔▔▔▔▔▔
+  feh
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
+
+
+= media server/player
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  kodi-rpi
+
+
+= productivity
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+  calc
+
+
+= network
+= ▔▔▔▔▔▔▔
+d " drops internet connection (do last!)
+d * connman
+
+# vim: set ft=conf: #

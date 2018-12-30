@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ......................................................................... pass
+
+# create public key
+annotate 'regenerate gpg key if required and refresh .pass tree'
+if [ -d $HOME/.gnupg ] ;then
+  ifno 'regenerate key pair' || { rm -rf $HOME/.gnupg ; gpg --full-gen-key ;}
+else
+  gpg --full-gen-key
+fi
+
+echo RELOADAGENT | gpg-connect-agent
+# gpg-agent --homedir /home/$USER/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log
+gpg-agent --homedir /home/$USER/.gnupg --daemon 2>/tmp/gpg-agent.log
+
+# vim: set ft=sh: #

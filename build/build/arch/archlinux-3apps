@@ -1,0 +1,38 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# my arch install!
+
+# log output to typescript
+# script-check
+
+# this install setup
+bfq() {
+  cpu atom && return 0
+  # cpu i7 && return 0
+  return 1
+}
+
+mkdir -p $HOME/tmp || exit 1
+mkdir -p $HOME/logs || exit 1
+
+
+title "bundle installs"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# 1xx - 7xx, distro install bundles
+#       8xx, custom install bundles
+#       9xx, generated deferred install bundles, see bundle_install [check]
+bundle_install init $HOME/build/arch/bundle/[1-6]*
+
+
+title "custom installs"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+title "web server (with passenger module)"
+app_install passenger-install-nginx-module $(dirname $(find $HOME -name passenger-install-nginx-module | grep gems))
+
+
+title "installation errors:"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+grep '> \(ERROR\|WARNING\)' $HOME/typescript
+
+# vim: set ft=sh: #

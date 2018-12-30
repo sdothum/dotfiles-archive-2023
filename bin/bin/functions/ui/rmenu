@@ -84,10 +84,10 @@ else
 fi
 # convert prompt right to lower case
 [ $lead = left ] && prompt="${prompt}$leader   " || case $lead in
-                    RIGHT) prompt="$leader   $(echo "$prompt" | uppercase)" ;;
-                    right) prompt="$leader   $(echo "$prompt" | lowercase)" ;;
-                    *    ) prompt="$leader   $prompt" ;;
-                    esac
+  RIGHT) prompt="$leader   $(echo "$prompt" | uppercase)" ;;
+  right) prompt="$leader   $(echo "$prompt" | lowercase)" ;;
+  *    ) prompt="$leader   $prompt" ;;
+  esac
 
 
 # ....................................................................... Select
@@ -112,6 +112,30 @@ parms=$@
 
 # ......................................................................... Read
 
+rofi_stub() {
+  eval rofi -matching ${matching:-fuzzy} \
+            -monitor $display \
+            -bw 0 \
+            -color-enabled \
+            -color-active "$bg,$fg,$abg,$hbg,$hfg" \
+            -color-normal "$bg,$fg,$abg,$hbg,$hfg" \
+            -color-urgent "$bg,$fg,$abg,$hbg,$hfg" \
+            -color-window "$wbg,$wbg" \
+            -eh 1 \
+            -font \"$MONOFONT $fontsize\" \
+            -fullscreen \
+            -hide-scrollbar \
+            -line-margin $(( $fontsize + 2 )) \
+            -padding $padding \
+            -separator-style none \
+            -theme-str "'inputbar { padding: 1.2em; }'" \
+            -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
+            -theme-str "'* { highlight: none; }'" \
+            -width 100 \
+            -dmenu -p "\"$prompt\"" -i $select \
+            $@
+}
+
 if [ $display ] ;then
   if [ -e $NCURSES ] ;then
     stdin=$(mktemp)
@@ -123,28 +147,7 @@ if [ $display ] ;then
     input=$(tail -1 $stdout)
     [ -n "$input" ]
   else
-    input=$(sed "s/^/$indent/" |
-            eval rofi -matching ${matching:-fuzzy} \
-                      -monitor $display \
-                      -bw 0 \
-                      -color-enabled \
-                      -color-active "$bg,$fg,$abg,$hbg,$hfg" \
-                      -color-normal "$bg,$fg,$abg,$hbg,$hfg" \
-                      -color-urgent "$bg,$fg,$abg,$hbg,$hfg" \
-                      -color-window "$wbg,$wbg" \
-                      -eh 1 \
-                      -font \"$MONOFONT $fontsize\" \
-                      -fullscreen \
-                      -hide-scrollbar \
-                      -line-margin $(( $fontsize + 2 )) \
-                      -padding $padding \
-                      -separator-style none \
-                      -theme-str "'inputbar { padding: 1.2em; }'" \
-                      -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
-                      -theme-str "'* { highlight: none; }'" \
-                      -width 100 \
-                      -dmenu -p "\"$prompt\"" -i $select \
-                      $@ )
+    input=$(sed "s/^/$indent/" | rofi_stub $@)
   fi
 else
   input=$(sed "s/^/$indent/" | fZf $print --prompt="\"$prompt\"" | tail -1)

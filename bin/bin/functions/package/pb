@@ -6,15 +6,15 @@
 
 # ........................................................... Package management
 
-# when pa/pacaur fails on aur packages
+# when pa/yay fails on aur packages
 sudo pacman -Sy
-pacaur -Qu
+yay -Qu
 ifyes 'upgrade system' || exit
 
-for i in $(pacaur --color never -Qu | awk '{ print $3 }') ;do
+for i in $(yay --color never -Qu | awk '{ print $3 }') ;do
   underline
   ditto $i
-  yaourt -S $i
+  yay -S $i
 done
 
 # vim: set ft=sh: #

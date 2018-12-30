@@ -23,13 +23,15 @@ alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
 
 alias K 'env sig=-KILL k'
 alias KK 'env sig=-KILL kk'
-alias disabled 'systemd disable'
-alias enabled 'systemd enable'
-alias reloadd 'systemd reload'
-alias restartd 'systemd restart'
-alias startd 'systemd start'
-alias statusd 'systemd status'
-alias stopd 'systemd stop'
+alias sv 'systemd'
+alias svd 'systemd disable'
+alias sve 'systemd enable'
+alias svl 'systemd reload'
+alias svm 'systemd mask'
+alias svq 'systemd status'
+alias svr 'systemd restart'
+alias svs 'systemd start'
+alias svu 'systemd unmask'
 
 # ....................................................................... Device
 
@@ -91,7 +93,7 @@ alias f 'find -iname'
 # alias g 'ack --ignore-case'
 # alias gl 'ack -l --ignore-case'
 alias locate 'sudo locate'
-alias mgrep 'pcregrep -M'
+alias mgrep 'pcregrep -r -M'
 alias w 'which'
 
 # ...................................................................... Desktop

@@ -22,11 +22,19 @@ action=$1
 [ $1 ] && shift
 queue=$@
 
-case $action in
-'') pstat nzbget || systemd start nzbget@$USER
-    underline $(timestamp)
-    nzbget -L G ;;
+init() {
+  killall nzbget 2>/dev/null
+  # delay required for server shutdown (cannot use "nzb q")
+  sleep 1
+  rm -rf /net/downloads/nzbs/inter
+  rm -rf /net/downloads/nzbs/queue
+  rm -rf /net/downloads/nzbs/tmp
+  # restart to create subdirectories
+  nzb
+}
 
+case $action in
+'') pstat nzbget || systemd start nzbget@$USER ; underline $(timestamp) ; nzbget -L G ;;
 @ ) nzbget --rate $queue ;;
 B*) nzb b $(nzb S $queue) ;;
 b*) nzbget -E G B $queue ; nzb ;;
@@ -34,18 +42,7 @@ C*) nzb ; ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
 c*) nzbget -o OutputMode=curses -C ;;
 D*) nzb d $(nzb S $queue) ;;
 d*) nzbget -E G D $queue ; nzb ;;
-
-I*) ifyes 'clear history and queue' && {
-      killall nzbget 2>/dev/null
-      # delay required for server shutdown (cannot use "nzb q")
-      sleep 1
-      rm -rf /net/downloads/nzbs/inter
-      rm -rf /net/downloads/nzbsqueue
-      rm -rf /net/downloads/nzbs/tmp
-      # restart to create subdirectories
-      nzb
-    } ;;
-
+I*) ifyes 'clear history and queue' && init ;;
 l*) while : ;do nzb ; sleep $list_delay ; done ;;
 P*) nzb p $(nzb S $queue) ;;
 p*) nzbget -E G P $queue ; nzb ;;
@@ -53,13 +50,7 @@ q*) systemd stop nzbget@$USER ;;
 R*) nzb r $(nzb S $queue) ;;
 r*) nzbget -E G U $queue ; nzb ;;
 S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
-
-s*) if [ "$queue" = queue ] ;then
-      nzb | egrep '^\['
-    else
-      nzb | egrep -i $queue
-    fi ;;
-
+s*) [ "$queue" = queue ] && nzb | egrep '^\[' || nzb | egrep -i $queue ;;
 T*) nzb t $(nzb S $queue) ;;
 t*) nzbget -E G T $queue ; nzb ;;
 * ) usage ;;

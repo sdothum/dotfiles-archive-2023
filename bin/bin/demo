@@ -23,24 +23,17 @@ demo() {
     set -- $(echo $line)
     case $1 in
     '#') continue ;;
-
-    '!') shift
-         $@
-         sleep $DELAY ;;
-
-    *  ) [ "$line" ] && xdotool key --delay 5 $line
-         sleep $DELAY ;;
+    '!') shift ; $@ ;;
+    *  ) [ "$line" ] && xdotool key --delay 5 $line ;;
     esac
+    sleep $DELAY
   done
 }
 
 msg=$1
 shift
 if [ -e ${0%/demo}/functions/demo/$msg ] ;then
-  if [ "$1" = record ] ;then
-    record DVI-1 &
-    sleep 1
-  fi
+  [ "$1" = capture ] && { capture DVI-1 & ; sleep 1 ;}
   . ${0%/demo}/functions/demo/$msg
   demo
 else

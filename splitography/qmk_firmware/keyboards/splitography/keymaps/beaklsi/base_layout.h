@@ -19,9 +19,9 @@
     {HOME_Q,  HOME_H,  HOME_E,  HOME_A,  TD_TILD, CNTR_HL, CNTR_HR, KC_C,    HOME_T,  HOME_R,  HOME_S,  HOME_W },
     {KC_J,    KC_MINS, KC_QUOT, KC_K,    KC_COMM, CNTR_BL, CNTR_BR, KC_B,    KC_P,    KC_L,    KC_F,    KC_V   },
 #ifdef SPLITOGRAPHY
-    {_______, _______, _______, _______, LT_ESC,  LT_I,    TD_SPC,  TD_BSPC, _______, _______, _______, _______},
+    {_______, _______, _______, _______, LT_ESC,  LT_I,    LT_SPC,  LT_BSPC, _______, _______, _______, _______},
 #else
-    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  LT_I,    LT_INS,  LT_LEFT, TD_SPC,  TD_BSPC, AT_DOWN, GT_UP,   CT_RGHT},
+    {OS_CTL,  OS_GUI,  OS_ALT,  LT_ESC,  LT_I,    LT_INS,  LT_LEFT, LT_SPC,  LT_BSPC, AT_DOWN, GT_UP,   CT_RGHT},
 #endif
   },
 

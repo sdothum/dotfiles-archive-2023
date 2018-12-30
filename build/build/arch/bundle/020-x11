@@ -1,0 +1,66 @@
+# x11 packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= x11 driver
+= ▔▔▔▔▔▔▔▔▔▔
+  libglvnd             [gpu nvidia]
+  lib32-libglvnd       [server && gpu nvidia]
+# lib32-mesa-libgl     [laptop]
+  lib32-nvidia-libgl   [server && gpu nvidia]
+  lib32-nvidia-utils   [server && gpu nvidia]
+  xf86-input-mouse
+  xf86-input-keyboard
+  xf86-input-synaptics [laptop]
+  nvidia               [gpu nvidia]
+  nvidia-340xx         [gpu macbook]
+# nvidia-340xx-libgl   [gpu macbook]
+  nvidia-340xx-utils   [gpu macbook]
+# "see infinality below"
+# nvidia-libgl         [gpu nvidia]
+  nvidia-settings      [gpu nvidia]
+  nvidia-utils         [gpu nvidia]
+  xf86-input-evdev
+# xf86-input-synaptics [laptop]
+  xf86-input-libinput
+  xf86-input-wacom     [server]
+  xf86-video-ati       [gpu ati]
+  xf86-video-intel     [gpu intel]
+  xf86-video-nouveau   [gpu nvidia]
+
+
+= x11 server
+= ▔▔▔▔▔▔▔▔▔▔
+  mesa
+# mesa-git
+# mesa-vdpau-git
+? nvidia-libgl         [gpu nvidia]
+  xorg-xinit
+  xorg-xrandr
+  xorg-server
+
+
+= x11 utility
+= ▔▔▔▔▔▔▔▔▔▔▔
+  arandr               [server]
+  lxrandr              [server]
+# xorg-apps
+  xorg-xev
+  xorg-xinput
+  xorg-xmessage
+  xorg-xmodmap
+  xorg-xrdb
+  xorg-xset
+
+
+= font rendering
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cairo
+  freetype2
+  fontconfig
+  libxft
+
+
+# vim: set ft=conf: #

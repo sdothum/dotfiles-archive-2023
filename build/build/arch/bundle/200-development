@@ -1,0 +1,57 @@
+# development packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= haskell
+= ▔▔▔▔▔▔▔
+# cabal-install
+# "ghc must be installed before other haskell packages"
+  ghc
+# alex
+# haddock
+# happy
+d pandoc
+# stack
+
+
+= java
+= ▔▔▔▔
+  icedtea-web
+  jre7-openjdk
+
+
+= perl tool
+= ▔▔▔▔▔▔▔▔▔
+  perl-curses-ui
+  perl-extract-url
+  perl-html-strip
+
+
+= prototyping
+= ▔▔▔▔▔▔▔▔▔▔▔
+# tcc
+  ruby
+  ruby-rake
+
+
+= python
+= ▔▔▔▔▔▔
+  python-pip
+  python-setuptools
+
+
+= software tool
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# arduino         [! cpu atom]
+  avr-gcc
+  avr-libc
+  dfu-programmer
+  cmake
+  gdb
+  strace
+  time
+
+
+# vim: set ft=conf: #

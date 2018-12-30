@@ -1,0 +1,57 @@
+#!/bin/sh
+# sdothum - 2016 (c) wtfpl
+
+# fresh arch pre-installer
+
+./archlinux-00mnt
+source ./archlinux-functions
+checkpoint
+
+
+heading 'choose repo mirrors'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+original /etc/pacman.d/mirrorlist
+sudo sed -i '/^Server =/s/^/#/ ; /Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
+grep '^Server' /etc/pacman.d/mirrorlist
+checkpoint
+
+
+heading 'installing archlinux base and btrfs hook!'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+pacstrap /mnt/btrfs-boot base btrfs-progs
+checkpoint
+
+
+heading 'edit fstab'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+genfstab -L -p /mnt/btrfs-boot >>/mnt/btrfs-boot/etc/fstab
+# correct genfstab output for apple macbooks
+if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
+  sed -i -e '/vfat/s/0 [12]/0 0/' \
+      -e '/\/var\/lib/d' \
+      -e '$a\
+\
+LABEL=Archlinux\t\t/run/btrfs-root\t\tbtrfs\t\trw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag\t\t0 0\
+\
+/run/btrfs-root/__current/ROOT/var/lib/pacman\t\t/var/lib/pacman\t\tnone\t\tbind\t\t0 0' \
+      /mnt/btrfs-boot/etc/fstab
+fi
+nano /mnt/btrfs-boot/etc/fstab
+checkpoint
+
+
+heading 'chroot mount /dev/sd..1 usb (scripts) and run "archlinux-1boot" to complete base installation'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+arch-chroot /mnt/btrfs-boot /usr/bin/bash -i
+
+
+heading 'umounting btrfs'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+umount -Rv /mnt/btrfs-boot
+umount -v /mnt/btrfs-root
+
+
+heading 'cd / and umount /media (usb) and reboot'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# vim: set ft=sh: #

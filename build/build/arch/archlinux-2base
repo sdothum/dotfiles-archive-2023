@@ -1,0 +1,68 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# install base packages
+
+# log output to typescript
+# script-check
+
+country=Canada
+
+
+title "setup"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# sudo loadkeys colemak
+# server && sudo dhcpcd || sudo wifi-menu
+# sleep 5s
+connected || post_install connman
+# disable CoW on systemd journal
+sudo chattr +C /var/log/journal/
+# default mail addresses
+config_install L /etc/aliases
+
+
+# title "archlinux testing"
+# # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# sudo sed -i '/^#\[.*testing\]/s/^#// ; /^#Include/s/^#//' /etc/pacman.conf
+# sudo pacman -Syu
+
+
+title "pacman key server"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+rm -rf $HOME/.gnupg/*
+sudo rm -r /root/.gnupg/*
+sudo mkdir -p /root/.gnupg
+sudo touch /root/.gnupg/dirmngr_ldapservers.conf
+sudo dirmngr </dev/null
+
+if grep -q 'keyserver hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf ;then
+  original /etc/pacman.d/gnupg/gpg.conf
+  # switch to non-ISP-blocked MIT server
+  sudo sed -i '/^keyserver hkp:/s|hkp:.*|hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf
+fi
+
+# signature checking
+if [ ! -e $HOME/.gnupg/gpg.conf ] ;then
+  echo 'keyserver hkp://keys.gnupg.net
+keyserver-options auto-key-retrieve' >$HOME/.gnupg/gpg.conf
+fi
+
+
+title "update base"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mirrorlist $country
+sudo pacman -Sy
+bundle_install init $HOME/build/arch/bundle/[0]*
+fc-cache -fv
+
+
+title "installation errors:"
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+grep '> \(ERROR\|WARNING\)' $HOME/typescript
+
+ditto 'exit console (script)'
+ditto "login as user $user"
+ditto 'startx (x)'
+ditto 'archlinux-3apps'
+
+# vim: set ft=sh: #

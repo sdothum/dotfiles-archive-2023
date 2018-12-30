@@ -7,12 +7,8 @@
 
 store=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 
-name=$(find $store -follow -name '*.gpg' |
-       sed -re 's/.*password-store\/(.*).gpg$/\1/' \
-           -e "s|(.*)/([^/]*)$|\2^${SEP} \1|" |
-       sort |
-       column -s^ -t |
-       rmenu 'Password' -no-custom) || exit
+name=$(find $store -follow -name '*.gpg' | sed -r "s/.*password-store\/(.*).gpg$/\1/ ; s|(.*)/([^/]*)$|\2^${SEP} \1|" |
+    sort | column -s^ -t | rmenu 'Password' -no-custom) || exit
 
 name=$(echo $name | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
 pass $name

@@ -8,6 +8,6 @@
 
 heading : $1
 cd /tmp
-. $HOME/build/archlinux/make_install/$1
+. $HOME/build/arch/make_install/$1
 
 # vim: set ft=sh: #

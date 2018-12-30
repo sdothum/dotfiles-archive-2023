@@ -12,23 +12,24 @@ usage() {
 }
 
 V=-v
-while : ;do case $1 in
-  -f) eval sudo rm -rf \$$#.original ; shift ; continue ;;
+while : ;do
+  case "$1" in
+  -f) eval sudo rm -rf "\$$#.original" ; shift ; continue ;;
   -q) unset V ;                        shift ; continue ;;
   '') usage ;;
   * ) break ;;
   esac
 done
 
-[ -e $1.original ] && exit 1
+[ -e "$1.original" ] && exit 1
 
 # save distribution original
-if [ -e $1 ] ;then
+if [ -e "$1" ] ;then
   if [ $V ] ;then
-    ditto "copying $(sudo cp -pR $V $1 $1.original)"
+    ditto "copying $(sudo cp -pR $V "$1" "$1.original")"
   else
     ditto "copying '$1' -> '$1.original'"
-    sudo cp -pR $1 $1.original
+    sudo cp -pR "$1" "$1.original"
   fi
   exit 0
 fi

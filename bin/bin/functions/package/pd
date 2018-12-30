@@ -15,21 +15,10 @@ tree=/tmp/pd:r
 
 case $1 in
 '') usage ;;
-
-n ) pacman -Qet
-    exit ;;
-
-d ) echo >$tree
-    D=D
-    shift
-    dep='depends on' ;;
-
-R ) D=N
-    shift
-    dep='required by' ;;
-
-* ) echo >$tree
-    exec pd R $@ ;;
+n ) pacman -Qet ; exit ;;
+d ) echo >$tree ; D=D ; shift ; dep='depends on' ;;
+R ) D=N ; shift ; dep='required by' ;;
+* ) echo >$tree ; exec pd R $@ ;;
 esac
 
 # package dependency

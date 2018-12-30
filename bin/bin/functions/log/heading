@@ -14,8 +14,7 @@ if echo "$1" | grep -q '^.$' ;then
   if echo "$1" | grep -qv '[[:alnum:]]' ;then
     # specifying default leader character adds timestamp!
     if [ "$1"q = : ] ;then
-      trace=true
-      echo
+      trace=true ; echo
     else
       delimeter=$1
     fi

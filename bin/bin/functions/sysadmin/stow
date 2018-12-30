@@ -17,7 +17,7 @@ link() {
   for i in $STOW/* ;do
     [ -d $i ] || continue
     # on directory == application, apply link action
-    rule="which ${i##*/} >/dev/null 2>&1 $@ ${i##*/}"
+    rule="exists ${i##*/} $@ ${i##*/}"
     eval $rule
   done
 }
@@ -27,10 +27,7 @@ case $1 in
 sync ) link '&& stow' ;;
 clean) link '|| stow D' ;;
 check) link '&& ditto' ;;
-
-D | R) [ $2 ] || usage
-       /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ;;
-
+D | R) [ $2 ] && { /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ; true ;} || usage ;;
 *    ) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
 esac
 

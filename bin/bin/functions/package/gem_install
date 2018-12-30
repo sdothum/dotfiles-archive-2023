@@ -8,11 +8,14 @@
 
 # be careful of partial gem list regex matches!
 if gem list $1 | grep -q "^$1 " ;then
-  heading : "$1   [ INSTALLED ]"
+  installed_heading $1
 else
   heading : $1
+  time=$(date +%s)
+  echo "${__GREEN}@gem${NOCOLOR}"
   gem install --no-rdoc --no-ri $1
+  post_install $1
+  echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
 fi
-post_install $1
 
 # vim: set ft=sh: #

@@ -12,33 +12,34 @@ EDIT='[ edit ]'
 # default=$BROWSER
 default=chromium
 
-browsers="brave
-          chromium
-          dwb
-          elinks
-          firefox
-          hbro
-          iceweasel
-          jumanji
-          lispkit
-          luakit
-          midori
-          opera
-          qutebrowser
-          vimb
-          vimbt
-          surf
-          uzbl
-          w3m
-          xombrero
+browsers="
+  brave
+  chromium
+  dwb
+  elinks
+  firefox
+  hbro
+  iceweasel
+  jumanji
+  lispkit
+  luakit
+  midori
+  opera
+  qutebrowser
+  vimb
+  vimbt
+  surf
+  uzbl
+  w3m
+  xombrero
 "
 
 [ $2 ] && edit="1i$EDIT"
 
 browser=$default
-while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit ;do case ${browser} in
-  "$EDIT"       ) gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2
-                  dmenu bookmarks ;;
+while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit ;do
+  case ${browser} in
+  "$EDIT"       ) gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2 ; dmenu bookmarks ;;
 
   brave         |\
   chromium      |\

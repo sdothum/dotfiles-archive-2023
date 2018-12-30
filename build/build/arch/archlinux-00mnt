@@ -1,0 +1,186 @@
+#!/bin/sh
+# sdothum - 2016 (c) wtfpl
+
+# fresh arch pre-installer
+
+source ./archlinux-functions
+
+echo 'assuming usb (scripts) mounted on /media..'
+echo '> mkdir /media'
+echo '> mount /dev/sd<usb>1 /media'
+
+
+heading 'connect interface'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+if ! ping -c1 www.google.com >/dev/null 2>&1 ;then
+  connect
+  checkpoint
+fi
+
+
+heading 'boot disk'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+ls -l /dev/disk/by-id | grep -v part | grep ata
+read -p "Boot disk /dev/sd? [a-z] | /dev/mmcblk? [0]: " disk
+if [ -z $disk ] ;then
+  echo 'invalid disk reference.. aborting'
+  exit
+fi
+[ $disk = 0 ] && device=/dev/mmcblk${disk} || device=/dev/sd${disk}
+echo
+read -p 'Partition and format disk as btrfs? [y|N]: ' format
+[ $format ] || format=N
+diskutil=fdisk
+if [ "$format" = y ] ;then
+  # already mounted?
+  # mount | grep -q /dev/sd${disk}1 && umount -v /dev/sd${disk}1
+  # use fdisk for mbr (bios) install, else gdisk for gpt (UEFI) install
+  echo
+  echo '> EFI 512M (grub)'
+  echo '> swap 1-4G (or =RAM for hibernation)'
+  echo '> boot 128M (syslinux)'
+  echo
+  read -p 'GPT or MBR partition? [G|m]: ' diskutil
+  [ $diskutil ] && diskutil=fdisk || diskutil=cfdisk
+  echo
+  read -p 'Stripe volume (raid0)? [y|N]: ' stripe
+  [ "$stripe" = n ] && stripe=
+  if [ "$stripe" = y ] ;then
+    echo
+    read -p "Add stripe volume /dev/sd? [a-z]: " stripe
+    if [ -z $stripe ] || [ "$stripe" = $disk ] ;then
+      echo 'invalid stripe reference.. aborting'
+      exit
+    fi
+  fi
+  echo
+  case $diskutil in
+    fdisk) echo 'Create active boot mbr partition..' ;;
+
+    gdisk) echo 'Create gpt partitions labeled..'
+           echo '  [[EFI] swap [boot]] root'
+           echo '  ..' ;;
+  esac
+  sleep 5s
+  $diskutil $device
+  fdisk -l $device
+  checkpoint
+  if [ ! -z $stripe ] ;then
+    echo
+    echo 'Partition stripe disk..'
+    sleep 5s
+    $diskutil /dev/sd${stripe}
+    fdisk -l /dev/sd${stripe}
+    checkpoint
+  fi
+
+  # reread partition tables
+  hdparm -z $device
+  cat /proc/partitions
+  checkpoint
+fi
+
+efi=$(partition EFI)
+swap=$(partition swap)
+boot=$(partition '[*]')
+root=$(partition 'Linux( filesystem)*$')
+
+if [ "$format" = y ] ;then
+  heading 'format btrfs disk partition'
+  [ $efi ] && { mkfs.fat -n EFI -F32 $efi ; echo ;}
+  [ $boot ] && { mkfs.ext2 -L Boot $boot ; echo ;}
+
+  if [ $swap ] ;then
+    mkswap -L Swap $swap
+    swapon -L Swap
+    echo
+  fi
+
+  if [ -z $stripe ] ;then
+    mkfs.btrfs -f -L Archlinux $root
+  else
+    mkfs.btrfs -f -L Archlinux -d raid0 $root /dev/sd${stripe}
+  fi
+  checkpoint
+fi
+
+heading 'mount partitions'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mkdir -pv /mnt/btrfs-root
+read -p "SSD boot drive? [y|N]: " ssd
+[ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=,ssd,discard
+mount=defaults,noatime,autodefrag,space_cache${ssd}
+echo "mount -v -o ${mount} $root /mnt/btrfs-root"
+mount -v -o ${mount} $root /mnt/btrfs-root
+checkpoint
+
+
+heading 'RESCUE'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+read -p "RESCUE (mount btrfs subvolumes) [Y|n]: " rescue
+[ $rescue ] || rescue=Y
+
+
+if [ "$rescue" = n ] ;then
+heading 'create btrfs subvolumes'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mkdir -pv /mnt/btrfs-root/__snapshot
+mkdir -pv /mnt/btrfs-root/__current
+read -p "Create separate /net filesystem? [y|N]: " net
+[ $net ] || net=N
+if [ "$format" = y ] ;then
+  btrfs subvolume create /mnt/btrfs-root/__current/ROOT
+  [ "$net" = y ] && btrfs subvolume create /mnt/btrfs-root/__current/net
+  # btrfs subvolume create /mnt/btrfs-root/__current/downloads
+  btrfs subvolume create /mnt/btrfs-root/__current/home
+  btrfs subvolume create /mnt/btrfs-root/__current/opt
+  btrfs subvolume create /mnt/btrfs-root/__current/srv
+  # btrfs subvolume create /mnt/btrfs-root/__current/nix
+  # btrfs subvolume create /mnt/btrfs-root/__current/tmp
+  # btrfs subvolume create /mnt/btrfs-root/__current/usr
+  # btrfs subvolume create /mnt/btrfs-root/__current/usr/local
+  btrfs subvolume create /mnt/btrfs-root/__current/var
+  btrfs subvolume create /mnt/btrfs-root/__snapshot/.snapshots
+else
+  # heading 'rebuild root, nix, tmp, var'
+  heading 'rebuild root, var'
+  btrfs subvolume delete /mnt/btrfs-root/__current/ROOT
+  # btrfs subvolume delete /mnt/btrfs-root/__current/nix
+  # btrfs subvolume delete /mnt/btrfs-root/__current/tmp
+  # btrfs subvolume delete /mnt/btrfs-root/__current/usr
+  btrfs subvolume delete /mnt/btrfs-root/__current/var
+  btrfs subvolume delete /mnt/btrfs-root/__snapshot/.snapshots
+  btrfs subvolume create /mnt/btrfs-root/__current/ROOT
+  # btrfs subvolume create /mnt/btrfs-root/__current/nix
+  # btrfs subvolume create /mnt/btrfs-root/__current/tmp
+  # btrfs subvolume create /mnt/btrfs-root/__current/usr
+  btrfs subvolume create /mnt/btrfs-root/__current/var
+  btrfs subvolume create /mnt/btrfs-root/__snapshot/.snapshots
+fi
+fi
+btrfs subvolume list -p /mnt/btrfs-root/
+checkpoint
+
+
+heading 'mount subvolumes'
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+mkdir -pv /mnt/btrfs-boot
+mount -v -o ${mount},nodev,subvol=__current/ROOT $root /mnt/btrfs-boot
+[ "$net" = y ] && mkdir -pv /mnt/btrfs-boot/net
+mkdir -pv /mnt/btrfs-boot/home
+mkdir -pv /mnt/btrfs-boot/opt
+mkdir -pv /mnt/btrfs-boot/srv
+mkdir -pv /mnt/btrfs-boot/var/lib/pacman
+mkdir -pv /mnt/btrfs-boot/.snapshots
+[ "$net" = y ] && mount -v -o ${mount},nodev,subvol=__current/net $root /mnt/btrfs-boot/net
+mount -v -o ${mount},nodev,subvol=__current/home $root /mnt/btrfs-boot/home
+mount -v -o ${mount},nodev,subvol=__current/opt $root /mnt/btrfs-boot/opt
+mount -v -o ${mount},nodev,subvol=__current/srv $root /mnt/btrfs-boot/srv
+mount -v -o ${mount},nodev,noexec,subvol=__current/var $root /mnt/btrfs-boot/var
+mount -v -o ${mount},nodev,noexec,subvol=__snapshot/.snapshots $root /mnt/btrfs-boot/.snapshots
+# bind /var/lib/pacman data to ROOT for system snapshots
+mkdir -pv /mnt/btrfs-boot/var/lib/pacman
+mkdir -pv /mnt/btrfs-root/__current/ROOT/var/lib/pacman
+mount -v --bind /mnt/btrfs-root/__current/ROOT/var/lib/pacman /mnt/btrfs-boot/var/lib/pacman
+
+# vim: set ft=sh: #

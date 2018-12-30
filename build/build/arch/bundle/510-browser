@@ -1,0 +1,49 @@
+# browser packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= browser
+= ▔▔▔▔▔▔▔
+  chromium
+# dwb-git
+# dwb-gtk3
+# elinks
+  firefox    [server]
+# haskell-hbro
+# jumanji-git
+# links
+# lispkit-browser
+# luakit
+  lynx
+# midorio
+# qutebrowser
+# qutebrowser-git
+  surf
+# uzbl-browser
+  vimb
+# vimb-git
+  w3m
+
+
+= browser addon
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# chromium-pepper-flash
+  chromium-widevine
+  flashplugin
+  pepper-flash
+# webkitgtk2 [server]
+  youtube-dl
+  
+
+= browser library/utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# libunique
+# lua51-filesystem
+# luajit
+# tabbed
+# m tabbed
+
+
+# vim: set ft=conf: #

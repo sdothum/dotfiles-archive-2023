@@ -25,8 +25,7 @@ focus_check() { [ "$(query wname)" = $name ] && exit ;}
 # .......................................................... Hide visible window
 
 if search --onlyvisible >/dev/null ;then
-  if herbstclient substitute TAG clients.$(cat $SCRATCHPAD).tag \
-                  compare monitors.focus.tag = TAG 2>/dev/null ;then
+  if herbstclient substitute TAG clients.$(cat $SCRATCHPAD).tag compare monitors.focus.tag = TAG 2>/dev/null ;then
     search --onlyvisible windowunmap >/dev/null
     draw refresh
     focus window

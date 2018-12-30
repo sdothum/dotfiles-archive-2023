@@ -1,0 +1,55 @@
+# email packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= imap
+= ▔▔▔▔
+d dovecot
+  imapfilter
+  offlineimap
+
+
+= mail client
+= ▔▔▔▔▔▔▔▔▔▔▔
+d alot
+# alot     [! server]
+# alot-git [server]
+# astroid  [server]
+# alot-git
+# astroid
+# geary
+# geary-git
+# * gpgme
+# * highline
+d * notmuch
+# notmuch-vim
+# re-alpine
+# ruby-gme
+# sup
+# sup-git
+# thunderbird
+
+
+= mail utility
+= ▔▔▔▔▔▔▔▔▔▔▔▔
+# archivemail
+# mb2md
+# imapdedup
+  msmtp-mta
+  pam
+  sharutils
+
+
+= mime
+= ▔▔▔▔
+# antiword
+  catdoc
+  docx2txt
+# haskell-pandoc
+# lynx
+# urlscan-git
+
+
+# vim: set ft=conf: #

@@ -8,20 +8,23 @@
 # shell scripts excluding .man (see dmenu man)
 
 # search these project library folders..
-sources="$HOME/bin
-         $HOME/build/archlinux
-         $HOME/build/obarun
-         $HOME/.config/fish
-         $HOME/.config/herbstluftwm
-         $HOME/.vim/config
-         $HOME/.vim/config/custom
-         $HOME/.weechat/python
+sources="
+  $HOME/bin
+  $HOME/build/arch
+  $HOME/build/obarun
+  $HOME/.config/fish
+  $HOME/.config/herbstluftwm
+  $HOME/.vim/config
+  $HOME/.vim/config/custom
+  $HOME/.weechat/python
 "
 
-files() { for i in $sources ;do fcache f $i ;done ;}
+files()      { for i in $sources ;do fcache f $i ;done ;}
+abbreviate() { eval sed $trim ;}
 
 # shorten path references for menu
-for i in $sources ;do case $i in
+for i in $sources ;do
+  case $i in
   */.vim*    |\
   */.weechat*) trim="$trim -e 's|$i/|.${i##*/.}/|'" ;;
 
@@ -29,39 +32,26 @@ for i in $sources ;do case $i in
   esac
 done
 
-abbreviate() { eval sed $trim ;}
-
 # recover full pathname
 expand() {
   for i in $sources ;do
     prefix=${i%/*}
-    if [ -e $prefix/$1 ] ;then
-      echo $prefix/$1
-      return 0
-    fi
+    [ -e $prefix/$1 ] && { echo $prefix/$1 ; return 0 ;}
   done
   return 1
 }
 
 # list of user scripts and functions
 while : ;do
-  file=$(files |
-         abbreviate |
-         sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" |
-         sort |
-         mhistory scripts |
-         column -s^ -t |
-         rmenu "Edit Script$error" $file) || exit
+  file=$(files | abbreviate | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" | sort | mhistory scripts | column -s^ -t | 
+      rmenu "Edit Script$error" $file) || exit
 
   if echo $file | grep -q "$SEP" ;then
     mhistory scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
     file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
   else
     # (tic) 'script for quick menu action
-    file=$(files |
-           grep "/$(unquote $file)$" |
-           head -1 |
-           sed "s|^$HOME/||")
+    file=$(files | grep "/$(unquote $file)$" | head -1 | sed "s|^$HOME/||")
     [ $file ] || exec dmenu scripts
     mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
   fi

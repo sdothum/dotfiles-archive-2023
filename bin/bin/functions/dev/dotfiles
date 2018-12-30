@@ -26,6 +26,15 @@ cd $STOW
 find -name '*.sync-conflict-*' -exec rm {} \;
 find -name '*.syncthing.hsts.tmp' -exec rm {} \;
 
+init() {
+  git init
+  git add README.md
+  git commit --message="refresh commit"
+  git remote add origin https://github.com/sdothum/dotfiles.git
+  git push -u origin master
+  git remote set-url origin git@github.com:sdothum/dotfiles.git
+}
+
 commit() {
   echo
   git commit --message="$DESC"
@@ -41,6 +50,39 @@ pending() {
   ifyes "Push: $DESC" && commit
 }
 
+add() {
+  for i in $@ ;do
+    if [ -e $i ] ;then
+      git add -fv $i
+      pending=true
+    else
+      usage
+    fi
+  done
+  [ $pending ] && pending
+}
+
+rm() {
+  if [ $1 ] ;then
+    DESC=$@
+    git rm -r --cached $DESC
+    git commit --message="Remove directory \"$DESC\""
+    git push origin master
+  fi
+}
+
+stow() {
+  for i in $@ ;do
+    if [ -e $i ] ;then
+      git add -v $i
+      pending=true
+    else
+      usage
+    fi
+  done
+  [ $pending ] && pending
+}
+
 # any updates to push?
 # changes=$(git diff --name-only)
 # [ -z "$changes" ] && [ -z $1 ] && exit
@@ -54,33 +96,16 @@ help   ) usage ;;
 ''     ) for i in $dotfiles ;do git add -v $i ;done
          pending ;;
 
-add    ) shift
-         for i in $@ ;do
-           if [ -e $i ] ;then
-             git add -fv $i
-             pending=true
-           else
-             usage
-           fi
-         done
-         [ $pending ] && pending ;;
+add    ) shift ; add ;;
 
 amend  |\
-comment) shift
-         DESC=$@
-         [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" ||
-                        git commit --amend ;;
+comment) shift ; DESC=$@
+         [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
 
 edit   |\
 ignore ) gvim .gitignore ;;
 
-init   ) git init
-         git add README.md
-         git commit --message="refresh commit"
-         git remote add origin https://github.com/sdothum/dotfiles.git
-         git push -u origin master
-         git remote set-url origin git@github.com:sdothum/dotfiles.git ;;
-
+init   ) init ;;
 list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
 log    ) git log | less ;;
 
@@ -89,23 +114,8 @@ redo   |\
 reset  ) git reset --soft HEAD~
          dotfiles ;;
 
-rm     ) shift
-         if [ $1 ] ;then
-           DESC=$@
-           git rm -r --cached $DESC
-           git commit --message="Remove directory \"$DESC\""
-           git push origin master
-         fi ;;
-
-*      ) for i in $@ ;do
-           if [ -e $i ] ;then
-             git add -v $i
-             pending=true
-           else
-             usage
-           fi
-         done
-         [ $pending ] && pending ;;
+rm     ) shift ; rm $@ ;;
+*      ) stow $@ ;;
 esac
 
 # vim: set ft=sh: #

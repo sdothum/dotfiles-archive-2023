@@ -2,12 +2,12 @@ adblock :: $HOME/adblock/blacklist $HOME/adblock/whitelist
 addressbook contacts :: $HOME/Maildir/addressbook $HOME/Maildir/contacts
 alacritty :: $(find $STOW/alacritty -type f)
 alot mail :: $HOME/.config/alot/config $HOME/.config/alot/themes/*
-arch bundle :: $HOME/build/archlinux/bundle/*
-arch install :: $HOME/build/archlinux/archlinux-*
-arch pi :: $HOME/build/archlinux/archlinux-pi $HOME/build/archlinux/bundle/pi-*
-arch post-install :: $HOME/build/archlinux/post_install/*
-arch pre-install :: $HOME/build/archlinux/pre_install/*
-arch user-install :: $HOME/build/archlinux/user_install/*
+arch bundle :: $HOME/build/arch/bundle/*
+arch install :: $HOME/build/arch/archlinux-*
+arch pi :: $HOME/build/arch/archlinux-pi $HOME/build/arch/bundle/pi-*
+arch post-install :: $HOME/build/arch/post_install/*
+arch pre-install :: $HOME/build/arch/pre_install/*
+arch user-install :: $HOME/build/arch/user_install/*
 astroid mail :: $HOME/.config/astroid/config $HOME/.config/astroid/ui/*
 autostart bin :: $HOME/bin/autostart
 bash shell :: $HOME/.bash_aliases $HOME/.profile
@@ -81,6 +81,7 @@ signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
 splitography beaklsi :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi -type f) $HOME/bin/funcsions/hardware/splitography
+splitography beaklsi-lt :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi-lt -type f) $HOME/bin/funcsi-ltons/hardware/splitography
 splitography beaklth :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklth -type f) $HOME/bin/functhons/hardware/splitography
 splitography beaklti :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklti -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklvi :: $(find  -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklvi -type f) $HOME/bin/functions/hardware/splitography
@@ -104,6 +105,8 @@ vimb :: $(find -L $HOME/.config/vimb -name config) $HOME/.config/vimb/scripts.js
 vim functions :: $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')
 vim settings :: $HOME/.vim/config/*.vim
 vim snippets :: $HOME/.vim/snippets/*
+void bundle :: $HOME/build/void/bundle/*
+void install :: $HOME/build/void/voidlinux-*
 weechat irc :: $HOME/.weechat/*.conf $HOME/.weechat/python/*tape.py
 wmutils wm :: $HOME/.config/wmutils/sxhkdrc $(find $HOME/.config/wmutils -maxdepth 1 -executable -type f | sort)
 www website :: $(find $STOW/thedarnedestthing -regextype posix-extended -regex '.*(rb|slim)')

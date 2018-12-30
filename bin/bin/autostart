@@ -34,8 +34,7 @@ rm -f /srv/http/tt-rss/lock/*
 gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient VertEdgeScroll=1 &
 # laptop && synclient TapButton1=1 &
-pstat gpg-agent ||
-      gpg-agent --homedir /home/shum/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
+pstat gpg-agent || gpg-agent --homedir $HOME/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 server && ipfilter &
 xrdb -merge $HOME/.Xresources &
 
@@ -101,11 +100,11 @@ server && herbstclient focus_monitor 0
 switch tag $WEB
 [ -e $WEB      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad
-[ -e $REMINDER ] && ( sleep $delay ; dmenu reminder ) &
+[ -e $REMINDER ] && (sleep $delay ; dmenu reminder) &
 
 # .............................................................. Cleanup desktop
 
-[ $(hostname) = lumen ] || { pstat unclutter || toggle unclutter ;}
+[ -e $UNCLUTTER ] && { pstat unclutter || toggle unclutter ;}
 # autocutsel leaves a small square of black pixels in the bottom right corner
 (xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 

@@ -18,12 +18,12 @@ history=$HISTORY/projects
 
 projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$EDIT" ;}
 
-while files=$(projects | rmenu 'Edit Project' 1 -no-custom) || exit ;do case $files in
+while files=$(projects | rmenu 'Edit Project' 1 -no-custom) || exit ;do
+  case $files in
   "$EDIT") gvim -f $PROJECTS $history ;;
 
   *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
-           eval v ${files#*$SEP}
-           exit ;;
+           eval exec v ${files#*$SEP} ;;
    esac
 done
 

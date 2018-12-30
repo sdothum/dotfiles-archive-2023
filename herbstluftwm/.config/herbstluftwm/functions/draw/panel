@@ -76,16 +76,13 @@ indent=$(( $frame + $window + $border - $PANEL_HEIGHT ))
 panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
-displayH=$(xrandr 2>/dev/null |
-           grep '\*' |
-           sed -r 's/.*x([0-9]*).*/\1/' |
-           sed "$(( $(herbstclient attr monitors.focus.index) + 1 ))q;d")
+displayH=$(xrandr 2>/dev/null | grep '\*' |
+    sed -r "s/.*x([0-9]*).*/\1/ ; $(( $(herbstclient attr monitors.focus.index) + 1 ))q ; d")
 if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
   panel_offsetY=$(( ($displayH - $monitorH - $PANEL_HEIGHT) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
 else
-  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) ||
-                       panel_offsetY=$PANEL_HEIGHT
+  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 fi
 
 # deprecated with primary:secondary as left:right..
@@ -121,8 +118,7 @@ desktops() {
           [ $hidden ]  && format="${format}%{F$ACTIVE_HIDDEN_FG}"
         else
           format="%{B$ACTIVE_BG}"
-          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" ||
-                          format="${format}%{F$FREE_FG}"
+          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" || format="${format}%{F$FREE_FG}"
           [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
         fi
       elif [ $i = "$inactive" ] ;then
@@ -132,8 +128,7 @@ desktops() {
           [ $hidden ]  && format="${format}%{F$INACTIVE_HIDDEN_FG}"
         else
           format="%{B$INACTIVE_BG}"
-          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" ||
-                          format="${format}%{F$FREE_FG}"
+          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" || format="${format}%{F$FREE_FG}"
           [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
         fi
       elif [ $CANDY ] ;then
@@ -142,8 +137,7 @@ desktops() {
         [ $hidden ]  && format="${format}%{F$OCCUPIED_HIDDEN_FG}"
       else
         format="%{B$DEFAULT_BG}"
-        [ $visible ] && format="${format}%{F$OCCUPIED_FG}" ||
-                        format="${format}%{F$FREE_FG}"
+        [ $visible ] && format="${format}%{F$OCCUPIED_FG}" || format="${format}%{F$FREE_FG}"
         [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
       fi
     else
@@ -151,14 +145,11 @@ desktops() {
       unset hidden
       [ $CANDY ] && tag=$FREE || tag=$i
       if [ $i = "$active" ] ;then
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" ||
-                      format="%{F$FREE_FG}%{B$ACTIVE_BG}"
+        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" || format="%{F$FREE_FG}%{B$ACTIVE_BG}"
       elif [ $i = "$inactive" ] ;then
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" ||
-                      format="%{F$FREE_FG}%{B$INACTIVE_BG}"
+        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" || format="%{F$FREE_FG}%{B$INACTIVE_BG}"
       else
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$FREE_FG}" ||
-                      format="%{F$FREE_FG}%{B$DEFAULT_BG}"
+        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$FREE_FG}" || format="%{F$FREE_FG}%{B$DEFAULT_BG}"
       fi
     fi
     [ $hidden ] && [ -z $CANDY ] && unset leader || leader="${TAG_PAD}"
@@ -166,13 +157,55 @@ desktops() {
   done
 }
 
-# ............................................................... Title and time
+# ............................................................... Current window
 
 # tag desktop description
 title() {
   tag=$(herbstclient attr monitors.focus.tag)
   title=$(query tname $tag)
 }
+
+# desktop details
+working_on() {
+  title
+  count=$(herbstclient attr tags.focus.client_count)
+  tickcount=$(herbstclient attr "tags.by-name.'$tag.client_count" 2>/dev/null)
+  [ $tickcount ] || tickcount=0
+  if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
+    if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
+      title="$title${LSEP}$count${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+    elif [ $count -gt 1 ] ;then
+      title="$title${LSEP}$count"
+    else
+      title="$title${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+    fi
+  fi
+  unset hiding
+  if is fullscreen ;then
+    [ $count -gt 1 ] && hiding=true
+  elif herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
+    is layout max && hiding=true
+  fi
+  if [ $count -gt 0 ] ;then
+    if [ "$(query wname)" = "${line#?}" ] ;then
+      if [ $hiding ] ;then
+        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
+      else
+        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
+      fi
+    else
+      if [ $hiding ] ;then
+        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
+      else
+        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
+      fi
+      desc=$(asciititle ${line#?})
+      [ "$desc" ] && title="$title${LSEP}${desc}%{B-}%{F-}"
+    fi
+  fi
+}
+
+# ........................................................... Current conditions
 
 # clocks
 dot() { [ "$tic" = '●' ] && tic='○' || tic='●' ;}
@@ -247,8 +280,42 @@ tape() {
 }
 
 weather() {
-  weather="$(conky weather panel)"
+  conky weather panel >$WEATHER &
   unset update_weather
+}
+
+# weather watch
+current_conditions() {
+  unset clock
+  if [ $TIC ] ;then
+    case $TIC in
+    b* ) bar ;;
+    c* ) circle ;;
+    d* ) dot ;;
+    sq*) square ;;
+    s* ) seconds ;;
+    t* ) tape ;;
+    esac
+    ticker="%{F$DEFAULT_FG}$tic%{F-}"
+    case $TIC in
+    se*) clock="$ticker" ;;
+    t* ) clock="$ticker" ;;
+    *  ) clock="  $ticker" ;;
+    esac
+  fi
+
+  # refresh every 10 minutes
+  if [ -e $WEATHER ] ;then
+    minute=${line#*:?}
+    case ${minute%%\%*} in
+    0) [ $update_weather ] && weather ;;
+    *) update_weather=true ;;
+    esac
+  fi
+  line="${line%%^*}$(cat $WEATHER)${line#*^}"
+
+  line="${line%%|*}$clock%{F-}${line##*|}"
+  system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}"
 }
 
 # initialize
@@ -256,75 +323,11 @@ weather() {
 
 # fifo read loop
 panel() {
-  while read -r line ;do case $line in
-    S*        ) unset clock
-                if [ $TIC ] ;then case $TIC in
-                  b* ) bar ;;
-                  c* ) circle ;;
-                  d* ) dot ;;
-                  sq*) square ;;
-                  s* ) seconds ;;
-                  t* ) tape ;;
-                  esac
-                  ticker="%{F$DEFAULT_FG}$tic%{F-}"
-                  case $TIC in
-                  se*) clock="$ticker" ;;
-                  t* ) clock="$ticker" ;;
-                  *  ) clock="  $ticker" ;;
-                  esac
-                fi
-
-                # refresh every 10 minutes
-                if [ -e $WEATHER ] ;then
-                  minute=${line#*:?}
-                  case ${minute%%\%*} in
-                  0) [ $update_weather ] && weather ;;
-                  *) update_weather=true ;;
-                  esac
-                fi
-                line="${line%%^*}$weather${line#*^}"
-
-                line="${line%%|*}$clock%{F-}${line##*|}"
-                system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}" ;;
-
-    T*        ) title
-                count=$(herbstclient attr tags.focus.client_count)
-                tickcount=$(herbstclient attr "tags.by-name.'$tag.client_count" 2>/dev/null)
-                [ $tickcount ] || tickcount=0
-                if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
-                  if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
-                    title="$title${LSEP}$count${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
-                  elif [ $count -gt 1 ] ;then
-                    title="$title${LSEP}$count"
-                  else
-                    title="$title${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
-                  fi
-                fi
-                unset hiding
-                if is fullscreen ;then
-                  [ $count -gt 1 ] && hiding=true
-                elif herbstclient compare tags.by-name.$tag.curframe_wcount gt 1 ;then
-                  is layout max && hiding=true
-                fi
-                if [ $count -gt 0 ] ;then
-                  if [ "$(query wname)" = "${line#?}" ] ;then
-                    if [ $hiding ] ;then
-                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
-                    else
-                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
-                    fi
-                  else
-                    if [ $hiding ] ;then
-                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
-                    else
-                      title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
-                    fi
-                    desc=$(asciititle ${line#?})
-                    [ "$desc" ] && title="$title${LSEP}${desc}%{B-}%{F-}"
-                  fi
-                fi ;;
-
-    *_changed*) desktops ;;
+  while read -r line ;do
+    case $line in
+    S*       ) current_conditions ;;
+    T*       ) working_on ;;
+    *_changed) desktops ;;
     esac
 
     # empty desktop does not generate T message
@@ -350,9 +353,9 @@ herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
 # see emit_hook
 xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &
 
-cat $PANEL_FIFO:$fifo \
-  | panel \
-  | lemonbar -d -n "lemonbar:$fifo" \
+cat $PANEL_FIFO:$fifo |
+    panel |
+    lemonbar -d -n "lemonbar:$fifo" \
              -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
              -u $PANEL_UNDERLINE \
              -f "$PANEL_FONT:size=$(fontsize)" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &

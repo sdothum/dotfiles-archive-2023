@@ -32,9 +32,9 @@ if [ "$1" = '-' ] ;then
   shift
   [ "$1" ] || usage
   case $shell in
+  bash | sh) filter "$@" $BASH ;;
   dash     ) ;;
   fish     ) filter "$@" $FISH ;;
-  bash | sh) filter "$@" $BASH ;;
   zsh      ) filter "$@" $ZSH ;;
   *        ) ;;
   esac
@@ -54,18 +54,12 @@ filter='^[^ ]*  *(([^ ]*)|((cd|h|kk*|l[alrst]*|pa*|r|x|z)( *| .*)))$'
 week=$(date '+%W')
 weekof() {
   # calculation assumes history size does not span more than one calendar year
-  awk "{ if (\$2<=$week) \$2=($week - \$2) ; else \$2=(53 - \$2 + $week) ; print \$0 }" |
-      grep '^[0-9]* ' |
-      sort -k 3 |
-      uniq -f 2 |
-      sort -n $1 |
-      sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' |
-      egrep -v "$filter"
+  awk "{ if (\$2<=$week) \$2=($week - \$2) ; else \$2=(53 - \$2 + $week) ; print \$0 }" | grep '^[0-9]* ' |
+      sort -k 3 | uniq -f 2 | sort -n $1 | sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' | egrep -v "$filter"
 }
 
 fish_history() { fish -c "history --show-time='%s %W '" ;}
-
-zsh_history() { zsh -c "export HISTFILE=$ZSH ; export HISTSIZE=10000 ; fc -R ; fc -l -t '%W' 1" ;}
+zsh_history()  { zsh -c "export HISTFILE=$ZSH ; export HISTSIZE=10000 ; fc -R ; fc -l -t '%W' 1" ;}
 
 # interactively paste into terminal session or pass filtered history list (see dmenu shistory)
 history() {
@@ -84,9 +78,9 @@ history() {
 }
 
 case $shell in
+bash | sh) echo history | sh -i | sed 's/^ *// ; s/  */ /g' | egrep -v "$filter" | tac ;;
 dash     ) history $shell $@ ;;
 fish     ) history fish $@ ;;
-bash | sh) echo history | sh -i | sed 's/^ *// ; s/  */ /g' | egrep -v "$filter" | tac ;;
 zsh      ) history zsh $@ ;;
 *        ) $shell -c history | grep "$@" ;;
 esac

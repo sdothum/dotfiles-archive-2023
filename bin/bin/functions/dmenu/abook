@@ -33,43 +33,36 @@ contacts=$maildir/contacts
 abook() {
   notify low 'Updating dmenu addressbook cache' 'Please be patient..'
   /usr/bin/vendor_perl/ack --no-filename --ignore-case --no-color '^(From|To|Cc|Bcc): .*@' $maildir |
-                           sed -re 's/(\xad|\x01)/ /g' \
-                               -e 's/[,;] */\n/g' \
-                               -e 's/["]//g' \
-                               -e "s/[']//g" \
-                               -e 's/<br>//' \
-                               -e 's/<mailto:[^>]*>//' \
-                               -e 's/\t/ /g' \
-                               -e 's/  *$//' \
-                               -e 's/^  *//' \
-                               -e 's/  */ /g' \
-                               -e 's/^To: //I' \
-                               -e 's/^From: //I' \
-                               -e 's/^Cc: //I' \
-                               -e 's/^Bcc: //I' \
-                               -e 's/< */</' \
-                               -e 's/ *>/>/' |
-                           grep '^[^<].*<.*>$' |
-                           grep -v '@.*<' |
-                           grep -Eiv '(^[^a-z[]|[#])' |
-                           grep -Piv '<comments(?!@thedarnedestthing)' |
-                           grep -Eiv '((hello|info)@)' |
-                           grep -Eiv '(announce|automated|confirm|contact|help|invitations|market|news|notification|promo|reply|review|subscribe|welcome)' |
-                           grep -Eiv '(feedspot|github|via linkedin|yahoogroups)' |
-                           sed -re 's/[^< ]*[?][^< ]* //' \
-                               -e 's/\b(\w*)\b/\L\u\1/g' \
-                               -e 's/(<.*)/\L\1/g' |
-                           sort -f |
-                           uniq -i >$cache
+      sed -re 's/(\xad|\x01)/ /g' \
+          -e 's/[,;] */\n/g' \
+          -e 's/["]//g' \
+          -e "s/[']//g" \
+          -e 's/<br>//' \
+          -e 's/<mailto:[^>]*>//' \
+          -e 's/\t/ /g' \
+          -e 's/  *$//' \
+          -e 's/^  *//' \
+          -e 's/  */ /g' \
+          -e 's/^To: //I' \
+          -e 's/^From: //I' \
+          -e 's/^Cc: //I' \
+          -e 's/^Bcc: //I' \
+          -e 's/< */</' \
+          -e 's/ *>/>/' |
+      grep '^[^<].*<.*>$' | grep -v '@.*<' | grep -Eiv '(^[^a-z[]|[#])' |
+      grep -Piv '<comments(?!@thedarnedestthing)' | grep -Eiv '((hello|info)@)' |
+      grep -Eiv '(announce|automated|confirm|contact|help|invitations|market|news|notification|promo|reply|review|subscribe|welcome)' |
+      grep -Eiv '(feedspot|github|via linkedin|yahoogroups)' |
+      sed -re 's/[^< ]*[?][^< ]* //' \
+          -e 's/\b(\w*)\b/\L\u\1/g' \
+          -e 's/(<.*)/\L\1/g' |
+      sort -f | uniq -i >$cache
   notify low 'Update of dmenu addressbook cache' '..Complete'
   sleep 1
 }
 
 # command line initialization with: dmenu abook [init]
-if [ ! -s $cache ] || [ $1 ] ;then
-  abook
-  [ $1 ] && exit
-fi
+[ ! -s $cache ] || [ $1 ] && { abook ; [ $1 ] && exit ;}
 
 # ................................................................. Send-to list
 
@@ -83,18 +76,13 @@ ribbon() {
   fi
 }
 
-contacts() {
-  sed "s/  *::  */^$SEP /" $contacts | column -s^ -t
-  cat $patricia $cache
-}
+contacts() { sed "s/  *::  */^$SEP /" $contacts | column -s^ -t ; cat $patricia $cache ;}
 
 addresslist() {
   if [ "$addresses" ] ;then
-    contacts | sed '/^ *$/d' |
-               sed "1i$PASTE\n$CLIPBOARD\n$ADD"
+    contacts | sed "/^ *$/d ; 1i$PASTE\n$CLIPBOARD\n$ADD"
   else
-    contacts | sed '/^ *$/d' |
-               sed "1i$REBUILD\n$EDIT"
+    contacts | sed "/^ *$/d ; 1i$REBUILD\n$EDIT"
   fi
 }
 
@@ -105,29 +93,21 @@ while : ;do
   address=${address#*$SEP }
 
   case $address in
-  "$REBUILD"  ) abook
-                unset addresses ;;
-
-  "$EDIT"     ) gvim -f $contacts ;;
-
   "$PASTE"    ) clipboard "$addresses"
-                # allow application to regain focus
-                cpu arm && sleep 2
+                cpu arm && sleep 2          # allow application to regain focus
                 xdotool type --delay 0 "$addresses"
                 break ;;
 
-  "$CLIPBOARD") clipboard "$addresses"
-                notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"
-                break ;;
+  "$ADD"      ) [ "$addresses" ] || continue
+                tag=$(echo | rmenu 'Tags') || continue
+                [ $tag ] || tag=Contacts
+                echo "\n$tag :: $addresses" >>$contacts
+                unset addresses
+                gvim -f $contacts ;;
 
-  "$ADD"      ) if [ "$addresses" ] ;then
-                  tag=$(echo | rmenu 'Tags') || continue
-                  [ $tag ] || tag=Contacts
-                  echo "\n$tag :: $addresses" >>$contacts
-                  unset addresses
-                  gvim -f $contacts
-                fi ;;
-
+  "$EDIT"     ) gvim -f $contacts ;;
+  "$REBUILD"  ) abook ; unset addresses ;;
+  "$CLIPBOARD") clipboard "$addresses" ; notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')" ; break ;;
   *           ) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
   esac
 done
