@@ -73,8 +73,8 @@ extern keymap_config_t keymap_config;
 enum keyboard_layers {
   _BASE = 0
  ,_SHIFT
- ,_GUIFN
- ,_SYMBOL
+ ,_SYMGUI
+ ,_REGEX
  ,_MOUSE
  ,_NUMBER
  ,_FNCKEY
@@ -96,7 +96,7 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
- ,LT_I      // pseudo LT   (_SYMBOL, KC_I) for shifted key-codes, see process_record_user()
+ ,LT_I      // pseudo LT   (_REGEX, KC_I) for shifted key-codes, see process_record_user()
  ,ML_BSLS
  ,ML_EQL
  ,PLOVER
@@ -157,7 +157,7 @@ enum keyboard_keycodes {
 #define XPASTE  TD_XPASTE
 
 #define LT_BSPC LT  (_EDIT, KC_BSPC)
-#define LT_SPC  LT  (_GUIFN, KC_SPC)
+#define LT_SPC  LT  (_SYMGUI, KC_SPC)
 #define TT_SPC  LT  (_TTCURSOR, KC_SPC)
 #ifdef PLANCK
 #define LT_0    LT  (_ADJUST, KC_0)
@@ -290,28 +290,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
-    lt_shift     (record, mod_down(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _SYMBOL); // maintain repeating tap case
-    tap_layer    (record, _SYMBOL);
-    rolling_layer(record, LEFT, 0, 0, _SYMBOL, _GUIFN);
+    lt_shift     (record, mod_down(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _REGEX); // maintain repeating tap case
+    tap_layer    (record, _REGEX);
+    rolling_layer(record, LEFT, 0, 0, _REGEX, _SYMGUI);
     break;
   case ML_EQL:
     tap_layer    (record, _MOUSE);
-    rolling_layer(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _GUIFN);
+    rolling_layer(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _SYMGUI);
     break;
 
   // .......................................................... Right Thumb Keys
 
   case ML_BSLS:
     tap_layer    (record, _MOUSE);
-    rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _SYMBOL);
+    rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _REGEX);
     break;
   case LT_SPC:
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))    { return false; }
-    if (leader_cap(record, _GUIFN, down_punc, KC_SPC)) { return false; }
+    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
-    tap_layer    (record, _GUIFN);
-    rolling_layer(record, RIGHT, 0, 0, _GUIFN, _SYMBOL);
+    tap_layer    (record, _SYMGUI);
+    rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
   case TT_SPC:
 #ifdef CAPS_ONOFF
@@ -332,6 +332,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
 #endif
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
+    if (leader_cap(record, 0, down_punc, KC_ENT))     { return false; }
 #ifdef CAPS_ONOFF
     if (record->event.pressed)                        { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }

@@ -159,12 +159,12 @@ bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t ke
   if (autocap) {                            // sentence/paragraph capitalization
     if (!record->event.pressed) { 
       tap_key                  (keycode);
-      layer_off                (layer);
+      if (layer) { layer_off   (layer); }
       layer_on                 (_SHIFT);
       set_oneshot_layer        (_SHIFT, ONESHOT_START);
       clear_oneshot_layer_state(ONESHOT_PRESSED);
-      return true; 
     }
+    return true; 
   }
   return false;
 }
@@ -452,8 +452,8 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
 
 // rolling thumb combinations, see process_record_user()
 // up,   up   -> _BASE
-// up,   down -> _GUIFN
-// down, up   -> _SYMBOL
+// up,   down -> _SYMGUI
+// down, up   -> _REGEX
 // down, down -> _MOUSE                     // see layer keycodes that raise mouse layer
 
 static uint8_t leftside  = 0;

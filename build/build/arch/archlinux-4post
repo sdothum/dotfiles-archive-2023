@@ -109,20 +109,20 @@ fi
 
 heading "systemd startup optimizations"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-systemd -f mask bluetooth
-systemd -f mask connman-vpn
-systemd -f mask display-manager
-systemd -f mask gssproxy
-systemd -f mask lvm2-Activation
-systemd -f mask lvm2-lvmetad
-systemd -f mask lvm2-lvmpolld
-systemd -f mask lvm2-monitor
-systemd -f mask NetworkManager
-systemd -f mask nfs-blkmap
-systemd -f mask plymouth-quit-wait
-systemd -f mask plymouth-start
-systemd -f mask syslog
-systemd -f mask systemd-backpight@
+# systemd -f mask bluetooth
+# systemd -f mask connman-vpn
+# systemd -f mask display-manager
+# systemd -f mask gssproxy
+# systemd -f mask lvm2-Activation
+# systemd -f mask lvm2-lvmetad
+# systemd -f mask lvm2-lvmpolld
+# systemd -f mask lvm2-monitor
+# systemd -f mask NetworkManager
+# systemd -f mask nfs-blkmap
+# systemd -f mask plymouth-quit-wait
+# systemd -f mask plymouth-start
+# systemd -f mask syslog
+# systemd -f mask systemd-backlight@
 
 
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -6,45 +6,27 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [double | single | amphetype | code | proof | patch ] [leading <height>]"
+  echo "usage: $(basename $0) iosevka [amphetype | code | proof] [double | single | patch | leading <height>]*"
   exit 1
 }
 
 nerdfonts='--fontawesome --fontawesomeextension --octicons --powersymbols'
 
-# basename is make_install, $1 == iosevka
-shift
+shift                                       # basename is make_install, $1 == iosevka
 
 storey=double
 leading=1250
 descender=0
 
-while [ $1 ]
-do
+while [ $1 ] ;do
   case $1 in
-    double   ) storey=double ;;
-
-    single   ) storey=single
-               family=-single ;;
-
-    amphetype) storey=double
-               family=-amphetype
-               # 1.5 spacing
-               leading=1875 ;;
-
-    code     ) storey=double
-               design="'ligset-haskell'" ;;
-
-    proof    ) storey=double
-               family=-proof
-               # 1.8 spacing
-               leading=2250 ;;
-
-    patch    ) patch=true ;;
-
-    leading  ) leading=$2
-               shift ;;
-
+    amphetype) storey=double ; family=-amphetype ; leading=1875 ;; # 1.5 spacing
+    code     ) storey=double ; design="'ligset-haskell'" ;;        # default family
+    double   ) storey=double ;;                                    # "a"
+    leading  ) leading=$2 ; shift ;;                               # line spacing
+    patch    ) patch=true ;;                                       # nerdfonts
+    proof    ) storey=double ; family=-proof ; leading=2250 ;;     # 1.8 spacing
+    single   ) storey=single ;;                                    # "a"
     *        ) usage ;;
   esac
   shift
@@ -57,7 +39,6 @@ if [ $leading -gt 1250 ] ;then
 fi
 
 shape="'sans'"
-# alpha="'v-l-hooky', 'v-i-hooky', 'v-a-singlestorey', 'v-g-singlestorey', 'v-m-longleg'"
 alpha="'v-l-hooky', 'v-i-hooky', 'v-g-singlestorey', 'v-m-longleg', 'v-t-cross'"
 math="'v-zero-slashed', 'v-one-serifed', 'v-tilde-low', 'v-asterisk-high', 'v-caret-high', 'v-brace-curly'"
 symbol="'v-paragraph-high', 'v-at-long', 'v-eszet-sulzbacher'"
