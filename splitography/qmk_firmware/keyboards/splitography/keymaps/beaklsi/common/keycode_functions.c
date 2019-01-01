@@ -314,7 +314,7 @@ void paste(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1)    { tap_mod(KC_LCTL, KC_V); IRC_ENTER; }
   else if (state->pressed) { register_code(KC_LCTL); register_code(KC_V); }
-  else                     { tap_mod(KC_LCTL, KC_V); }
+  else                     { tap_mod(KC_LCTL, KC_V); } 
   reset_tap_dance(state);
 }
 
