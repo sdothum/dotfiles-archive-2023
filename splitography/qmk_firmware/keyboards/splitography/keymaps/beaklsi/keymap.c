@@ -256,8 +256,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ...................................................... Center Toggle Layers
 
   case CNTR_TL:
-    if (raise_layer(record, 0, LEFT, TOGGLE)) { dual_down = 2; return false; } // defer reset!
-    if (dual_down)                            { dual_down--; base_layer(dual_down); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; return false; }  // defer reset!
+    if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
     tt_escape(record, keycode);
     break;
   case CNTR_TR:
@@ -272,13 +272,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tt_escape(record, keycode);
     break;
 
+  // ........................................................... Left Thumb Keys
+
   case TT_ESC:
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
     base_layer(0);                          // exit TT layer
     return false;
-
-  // ........................................................... Left Thumb Keys
 
   case LT_ESC:
     if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))  { return false; }
@@ -306,25 +306,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _REGEX);
     break;
   case LT_SPC:
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))    { return false; }
-    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))   { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))     { return false; }
+    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; } // see KC_SPC for multi tap extension
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))    { return false; }
     tap_layer    (record, _SYMGUI);
     rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
+  case KC_SPC:
+    if (leader_cap(record, 0, down_punc, KC_SPC))       { return false; } // KC_SPC from LT_SPC -> (space)* space shift
+    break;
   case TT_SPC:
 #ifdef CAPS_ONOFF
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))  { return false; }
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))     { return false; }
 #endif
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))    { return false; }
     break;
 
   case LT_BSPC:
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
-    if (leader_cap(record, _EDIT, down_punc, KC_ENT)) { return false; }
+    if (leader_cap(record, _EDIT, down_punc, KC_ENT)) { return false; } // see KC_BSPC for multi tap extension
     tap_layer(record, _EDIT);
     break;
   case KC_BSPC:
@@ -332,7 +335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
 #endif
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
-    if (leader_cap(record, 0, down_punc, KC_ENT))     { return false; }
+    if (leader_cap(record, 0, down_punc, KC_ENT))     { return false; } // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef CAPS_ONOFF
     if (record->event.pressed)                        { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
@@ -402,7 +405,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     steno(record);
     return false;
   case BASE1:
-    if (raise_layer(record, 0, LEFT, TOGGLE)) { base_layer(0); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); return false; }
     return false;
   case BASE2:
     if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }

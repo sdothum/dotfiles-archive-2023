@@ -1,18 +1,3 @@
-? preload
-pass
-? watchman
-? setroot
-? unclutter-xfixes-git
-? lemonbar-xft-git
-? alock-git
-? sutils-git
-? xtitle-git
-? amphetype-svn
-? wego-git
-* connman
-" connman post install disrupts internet connection, install last
-* connman
-* cmst
 gstreamer0.10-base-plugins 
 mbpfan-git [gpu macbook]
 gksu 
@@ -26,9 +11,24 @@ texlive-core
 universal-ctags-git 
 g sanitize
 g sinatra
+g xapian-ruby
 g passenger
 " enable mpd and nvidia as required
 ? conky-lua-archers
 paper-icon-theme 
 dovecot 
 alot 
+* notmuch
+* centerim5-git
+* znc
+php70-mcrypt 
+tt-rss 
+stellarium 
+dict-wn 
+m dict-moby-thesaurus
+font-manager 
+fontmatrix [server]
+plover 
+amphetype-svn 
+fbreader 
+digikam 

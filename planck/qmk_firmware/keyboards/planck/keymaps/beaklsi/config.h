@@ -7,7 +7,7 @@
 #define PREVENT_STUCK_MODIFIERS
 
 // tap dance key press termination interval
-#define TAPPING_TERM 200
+#define TAPPING_TERM 250
 // fix dual function timing
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT

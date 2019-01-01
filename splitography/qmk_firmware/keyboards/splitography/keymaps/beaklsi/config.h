@@ -12,7 +12,7 @@
 #define TAPPING_TOGGLE 1
 
 // tap dance key press termination interval
-#define TAPPING_TERM 200
+#define TAPPING_TERM 250
 
 // smooth mouse motion
 // #define MOUSEKEY_INTERVAL    20

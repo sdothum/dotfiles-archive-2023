@@ -258,7 +258,7 @@ void tilde(qk_tap_dance_state_t *state, void *user_data)
     }
     else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
   }
-  else { state->pressed ? register_code(KC_DOT) : tap_key(KC_DOT); }
+  else   { state->pressed ? register_code(KC_DOT) : tap_key(KC_DOT); }
   reset_tap_dance(state);
 }
 
