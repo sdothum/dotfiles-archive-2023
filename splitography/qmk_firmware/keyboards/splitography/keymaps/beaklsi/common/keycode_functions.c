@@ -219,7 +219,7 @@ void lesser(qk_tap_dance_state_t *state, void *user_data)
     else for (i = 0; i < state->count; i++) { tap_shift(KC_COMM); }
   }
   else if ((state->count == 2) && state->pressed) { register_shift(KC_COMM); }
-  else                                            { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
+  else { state->pressed                           ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
 
@@ -237,7 +237,7 @@ void greater(qk_tap_dance_state_t *state, void *user_data)
     else for (i = 0; i < state->count; i++) { tap_shift(KC_DOT); }
   }
   else if ((state->count == 2) && state->pressed) { register_shift(KC_DOT); }
-  else                                            { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
+  else { state->pressed                           ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -258,7 +258,8 @@ void tilde(qk_tap_dance_state_t *state, void *user_data)
     }
     else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
   }
-  else   { state->pressed ? register_code(KC_DOT) : tap_key(KC_DOT); }
+  else if (state->pressed)                { register_code(KC_DOT); }
+  else for (i = 0; i < state->count; i++) { tap_key(KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -298,7 +299,7 @@ void emoji(qk_tap_dance_state_t *state, void *user_data)
     else if (state->count == 2)             { tap_shift(KC_SCLN); tap_key(KC_MINUS); }
     else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
   }
-  else { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
+  else { state->pressed ? register_shift(KC_SCLN) : tap_shift(KC_SCLN); }
   reset_tap_dance(state);
 }
 
@@ -326,7 +327,7 @@ void paste_reset(qk_tap_dance_state_t *state, void *user_data)
 void percent(qk_tap_dance_state_t *state, void *user_data)
 {
   if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
-  else                                      { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
+  else { state->pressed                     ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
   reset_tap_dance(state);
 }
 
