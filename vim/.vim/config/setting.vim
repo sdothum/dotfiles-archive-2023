@@ -29,9 +29,9 @@
 
     " ............................................................... Auto-pairs
 
-      let g:AutoPairsMapBS                = 1        " auto delete symbol pairs
-      " let g:AutoPairsMapSpace           = 1        " disable to make iabbrev work!
-      " let g:AutoPairsFlyMode            = 1        " auto pair jumping
+      let g:AutoPairsMapBS                = 1      " auto delete symbol pairs
+      " let g:AutoPairsMapSpace           = 1      " disable to make iabbrev work!
+      " let g:AutoPairsFlyMode            = 1      " auto pair jumping
       let g:AutoPairsShortcutBackInsert = '<C-BS>' " undo auto pair jump -> close pair
 
     " ............................................................... Easy-align
@@ -44,6 +44,7 @@
           \, ')' : { 'pattern' : ')',        'left_margin' : 0 }
           \, '[' : { 'pattern' : '[',        'left_margin' : 1, 'right_margin' : 0 }
           \, ']' : { 'pattern' : ']',        'left_margin' : 1 }
+          \, '/' : { 'pattern' : '//',       'left_margin' : 1 }
           \}
 
       let g:easy_align_ignore_groups = []   " process comments

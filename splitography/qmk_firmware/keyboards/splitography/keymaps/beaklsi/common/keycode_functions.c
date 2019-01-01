@@ -1,9 +1,9 @@
 
 #include "keycode_functions.h"
 
-static uint8_t  i         = 0;              // inline for loop counter
-static uint16_t key_timer = 0;              // global event timer
-static uint16_t reshifted = 0;              // SFT_T timing trap, see map_shift(), process_record_user()
+static uint8_t  i         = 0; // inline for loop counter
+static uint16_t key_timer = 0; // global event timer
+static uint16_t reshifted = 0; // SFT_T timing trap, see map_shift(), process_record_user()
 
 // Keycodes
 // ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -35,12 +35,12 @@ bool mod_down(uint16_t key_code)
 {
   // return (mods && ((mods & MOD_BIT(key_code)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
   // return (mods && ((mods & MOD_BIT(key_code)) == mods));
-  return mods & MOD_BIT(key_code);          // relax timing on home row modifiers
+  return mods & MOD_BIT(key_code); // relax timing on home row modifiers
 }
 
 // .................................................................. Key event
 
-static uint16_t tt_keycode = 0;             // current TT keycode
+static uint16_t tt_keycode = 0;    // current TT keycode
 
 // alternate escape for TT layers, see process_record_user()
 void tt_escape(keyrecord_t *record, uint16_t keycode)
@@ -139,7 +139,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 {
   if (mod_down(shift_key)) {
     if (record->event.pressed) {
-      if (!shift) { unregister_code(KC_LSFT); } // in event of unshifted keycode
+      if (!shift) { unregister_code(KC_LSFT); }              // in event of unshifted keycode
       register_code(keycode);
     }
     else {
@@ -156,11 +156,11 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
 bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
 {
-  if (autocap) {                            // sentence/paragraph capitalization
+  if (autocap) {
     if (!record->event.pressed) { 
       tap_key                  (keycode);
       if (layer) { layer_off   (layer); }
-      layer_on                 (_SHIFT);
+      layer_on                 (_SHIFT); // sentence/paragraph capitalization
       set_oneshot_layer        (_SHIFT, ONESHOT_START);
       clear_oneshot_layer_state(ONESHOT_PRESSED);
     }
@@ -250,7 +250,7 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (mod_down(KC_RSFT)) {                  // dot, shift -> tilde, see process_record_user() TD_TILD
+  if (mod_down(KC_RSFT)) {  // shift dot -> tilde, see process_record_user() TD_TILD
     if (state->count > 1) {
       if (state->pressed)                     { register_shift(KC_GRV); }
       else if (state->count == 2)             { send_string("~/"); } 
@@ -392,7 +392,7 @@ void clear_layers(void)
 
 void base_layer(uint8_t defer)
 {
-  if (defer) { return; }                    // see process_record_user() CNTR_TL, CNTR_TR
+  if (defer) { return; } // see process_record_user() CNTR_TL, CNTR_TR
 #ifdef AUDIO_ENABLE
   plover ? PLAY_SONG(song_plover_gb) : PLAY_SONG(song_qwerty);
 #endif
@@ -417,7 +417,7 @@ void lt_shift(keyrecord_t *record, uint8_t shift, uint16_t keycode, uint8_t laye
   }
   else {
     layer_off(layer);
-    on_tap   (shift, keycode);              // for shifted keycodes, hence, LT_SHIFT
+    on_tap   (shift, keycode); // for shifted keycodes, hence, LT_SHIFT
     // clear_mods();
     key_timer = 0;
   }
@@ -444,7 +444,7 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
   }
   else {
     double_key &= ~side;
-    if (!(double_key || toggle)) { layer_off(layer); }  // allow single key to continue on layer :-)
+    if (!(double_key || toggle)) { layer_off(layer); } // allow single key to continue on layer :-)
   }
   return false;
 }
@@ -455,7 +455,7 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
 // up,   up   -> _BASE
 // up,   down -> _SYMGUI
 // down, up   -> _REGEX
-// down, down -> _MOUSE                     // see layer keycodes that raise mouse layer
+// down, down -> _MOUSE, see layer keycodes that raise mouse layer
 
 static uint8_t leftside  = 0;
 static uint8_t rightside = 0;
@@ -501,7 +501,7 @@ void steno(keyrecord_t *record)
   }
 }
 
-static uint8_t plover = 0;                  // plover application run state (0) off (1) on, see wm keybinds
+static uint8_t plover = 0; // plover application run state (0) off (1) on, see wm keybinds
 
 void toggle_plover(uint8_t state)
 {

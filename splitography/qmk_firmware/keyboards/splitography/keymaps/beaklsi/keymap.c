@@ -96,14 +96,14 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
- ,LT_I      // pseudo LT   (_REGEX, KC_I) for shifted key-codes, see process_record_user()
+ ,LT_I    // pseudo LT   (_REGEX, KC_I) for shifted key-codes, see process_record_user()
  ,ML_BSLS
  ,ML_EQL
  ,PLOVER
- ,SG_TILD   // pseudo GUI_T(S(KC_GRV))     for shifted key-codes, see process_record_user()
- ,SM_G      // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
- ,SS_A      // pseudo SFT_T(S(KC_A))
- ,SS_T      // pseudo SFT_T(S(KC_T))
+ ,SG_TILD // pseudo GUI_T(S(KC_GRV))    for shifted key-codes, see process_record_user()
+ ,SM_G    // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
+ ,SS_A    // pseudo SFT_T(S(KC_A))
+ ,SS_T    // pseudo SFT_T(S(KC_T))
  ,TT_ESC
 };
 
@@ -173,7 +173,7 @@ enum keyboard_keycodes {
 #define OS_SFT  OSM (MOD_LSFT)
 
 #define CNTR_TL TT  (_TTFNCKEY)
-#define CNTR_TR TT  (_TTCAPS)               // pseudo capslock to avoid TT key_timer conflicts
+#define CNTR_TR TT  (_TTCAPS)   // pseudo capslock to avoid TT key_timer conflicts
 #define CNTR_HL TT  (_TTCURSOR)
 #define CNTR_HR TT  (_TTMOUSE)
 #define CNTR_BL TT  (_TTNUMBER)
@@ -214,8 +214,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "keycode_functions.c"
 
-static uint8_t down_punc = 0;               // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
-static uint8_t dual_down = 0;               // dual keys down (2 -> 1 -> 0) reset on last up stroke, see CNTR_TL, CNTR_TR
+static uint8_t down_punc = 0; // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
+static uint8_t dual_down = 0; // dual keys down (2 -> 1 -> 0) reset on last up stroke, see CNTR_TL, CNTR_TR
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -240,7 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LSFT);
     break;
   case HOME_T:
-    tap_mods(record, KC_RSFT);              // note: SFT_T actually uses KC_LSFT
+    tap_mods(record, KC_RSFT); // note: SFT_T actually uses KC_LSFT
     break;
 
   case OS_ALT:
@@ -256,7 +256,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ...................................................... Center Toggle Layers
 
   case CNTR_TL:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; return false; }  // defer reset!
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; return false; } // defer reset!
     if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
     tt_escape(record, keycode);
     break;
@@ -277,7 +277,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TT_ESC:
     if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    base_layer(0);                          // exit TT layer
+    base_layer(0); // exit TT layer
     return false;
 
   case LT_ESC:
@@ -339,7 +339,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef CAPS_ONOFF
     if (record->event.pressed)                        { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
-    return false;                           // capslock toggling trap, use shift bspc -> del for auto repeat
+    return false; // capslock toggling trap, use shift bspc -> del for auto repeat
 #else
     break;
 #endif
@@ -414,7 +414,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Other Keys
 
   default:
-    key_timer = 0;                          // regular keycode, clear timer in keycode_functions.h
+    key_timer = 0; // regular keycode, clear timer in keycode_functions.h
   }
   return true;
 }
