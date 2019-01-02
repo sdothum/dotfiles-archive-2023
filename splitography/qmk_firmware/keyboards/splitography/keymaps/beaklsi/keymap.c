@@ -226,32 +226,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   switch (keycode) {
   case HOME_Q:
   case HOME_W:
+  case OS_GUI:
     tap_mods(record, KC_LGUI);
     break;
   case HOME_H:
   case HOME_S:
+  case OS_CTL:
     tap_mods(record, KC_LCTL);
     break;
   case HOME_E:
   case HOME_R:
+  case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
   case HOME_A:
   case HS_GT: // for rolling cursor to enter, del
+  case OS_SFT:
     tap_mods(record, KC_LSFT);
     break;
   case HOME_T:
     tap_mods(record, KC_RSFT); // note: SFT_T actually uses KC_LSFT
-    break;
-
-  case OS_ALT:
-    tap_mods(record, KC_LALT);
-    break;
-  case OS_CTL:
-    tap_mods(record, KC_LCTL);
-    break;
-  case OS_GUI:
-    tap_mods(record, KC_LGUI);
     break;
 
   // ...................................................... Center Toggle Layers
