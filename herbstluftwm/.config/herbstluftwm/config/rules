@@ -6,8 +6,8 @@
 
 # ........................................................................ Rules
 
-# hc rule focus=off   # normally do not focus new clients
-# hc rule focus=on    # normally focus new clients
+# hc rule focus=off # normally do not focus new clients
+# hc rule focus=on  # normally focus new clients
 # emithook inconsistent for global hook=focus_frame, apply focus frame in scripts
 hc rule focus=on
 hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)'                      focus=on

@@ -237,6 +237,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_mods(record, KC_LALT);
     break;
   case HOME_A:
+  case HS_GT: // for rolling cursor to enter, del
     tap_mods(record, KC_LSFT);
     break;
   case HOME_T:
@@ -307,8 +308,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case LT_SPC:
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))     { return false; }
-    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; } // see KC_SPC for multi tap extension
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { return false; }
+    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }                     // see KC_SPC for multi-tap
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { layer_off(_SYMGUI); return false; } // rolling cursor to enter
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))    { return false; }
     tap_layer    (record, _SYMGUI);
     rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
@@ -326,8 +327,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_BSPC:
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
-    if (leader_cap(record, _EDIT, down_punc, KC_ENT)) { return false; } // see KC_BSPC for multi tap extension
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { layer_off(_SYMGUI); return false; } // rolling cursor to del
+    if (leader_cap(record, _EDIT, down_punc, KC_ENT)) { return false; }                     // see KC_BSPC for multi-tap
     tap_layer(record, _EDIT);
     break;
   case KC_BSPC:

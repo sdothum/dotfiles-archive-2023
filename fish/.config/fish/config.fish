@@ -9,7 +9,7 @@
 set fish_greeting
 
 # only shells with vi mode accepted here!
-# fish_vi_key_bindings ^/dev/null             # suppress fish_vi_key_bindings eval error!!
+# fish_vi_key_bindings ^/dev/null # suppress fish_vi_key_bindings eval error!!
 fish_vi_key_bindings
 
 # fuzzy searches

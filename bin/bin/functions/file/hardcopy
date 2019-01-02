@@ -191,7 +191,7 @@ case $1 in
 eject) [ $proof ] || printf '\033E' | lpr -P $PRINTER ; exit ;;
 stdin) stdin ;;
 
-mail ) fontsize=9                           # content is piped in from mail application, see alot
+mail ) fontsize=9 # content is piped in from mail application, see alot
        spacing='\onehalfspacing'
        unset linenumbers
        # hexdump log for inspecting unprintable punctuation characters
@@ -199,7 +199,7 @@ mail ) fontsize=9                           # content is piped in from mail appl
        # contract excessive blank lines
        cat $proof | filter | paragraphs ;;
 
-note ) fontsize=9                           # stdin formatting
+note ) fontsize=9 # stdin formatting
        spacing='\onehalfspacing'
        unset linenumbers
        cat $proof | paragraphs ;;
@@ -216,7 +216,7 @@ wiki ) fontsize=10
        title=${title%.wiki}
        cat "$@" | stdin ;;
 
-wps  ) fontsize=9                           # word document saved as text file
+wps  ) fontsize=9 # word document saved as text file
        spacing='\doublespacing'
        unset linenumbers
        shift

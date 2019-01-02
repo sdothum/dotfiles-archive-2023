@@ -32,7 +32,7 @@
 
 [ $1 ] || exit
 console && export VISUAL='vim -f'
-unset HTTP_PROXY                            # ignore local network proxy
+unset HTTP_PROXY # ignore local network proxy
 
 case $1 in
 check) check=true ; gems=$(gem list | cut -d' ' -f1) ; shift ;;

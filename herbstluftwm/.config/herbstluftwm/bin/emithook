@@ -20,7 +20,7 @@ monitor=$(herbstclient attr monitors.focus.index)
 
 # force panel title refresh, see draw panel
 panel_refresh() {
-  sleep 0.05                                # allow window close to complete
+  sleep 0.05 # allow window close to complete
   xtitle -f 'T\n' >$(cat $PANEL_FIFO)
 }
 

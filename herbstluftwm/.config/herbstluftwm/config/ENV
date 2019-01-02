@@ -6,8 +6,8 @@ export PARENT=$HOME/bin/functions/log/parent
 # herbstluftwm
 # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
-# export Mod=Mod4  # Use super key as the main modifier
-export Mod=Mod1    # Use alt as the main modifier
+# export Mod=Mod4 # Use super key as the main modifier
+export Mod=Mod1   # Use alt as the main modifier
 
 # don't set shell else dmenu history functions may be non-functional
 export SHELL=/usr/bin/dash

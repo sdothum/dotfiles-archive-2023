@@ -94,7 +94,7 @@ while : ;do
 
   case $address in
   "$PASTE"    ) clipboard "$addresses"
-                cpu arm && sleep 2          # allow application to regain focus
+                cpu arm && sleep 2 # allow application to regain focus
                 xdotool type --delay 0 "$addresses"
                 break ;;
 

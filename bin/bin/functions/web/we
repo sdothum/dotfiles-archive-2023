@@ -12,7 +12,7 @@ connect confirm || exit
 
 # cat worldweatheronline api key
 while ! wego -backend forecast.io -location $city -days 2 $(cat $HOME/.wego) $@ 2>/dev/null ;do
-  sleep 1                                   # arm on boot delay..
+  sleep 1 # arm on boot delay..
 done
 
 # restore prompt if we &, see console_login

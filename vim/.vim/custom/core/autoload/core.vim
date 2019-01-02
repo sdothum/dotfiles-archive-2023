@@ -259,7 +259,7 @@
         " gg/.. cannot be combined into single expression (produces unpredictable results)
         execute 'normal! gg'
         " execute 'normal! ' . search('\n\n\n', 'e') . 'G'
-        execute 'normal! ' . (search('^Subject: ') + 2) . 'G'
+        execute 'normal! ' . (search('^Subject: ') + 3) . 'G'
         execute 'startinsert'
       endfunction
 
