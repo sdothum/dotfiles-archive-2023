@@ -359,7 +359,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case SS_T:
     tap_mods(record, KC_RSFT);
-    mt_shift(record, KC_LSFT, 0, KC_T);
+    mt_shift(record, KC_RSFT, 0, KC_T);
     break;
 
   // ......................................................... Shift Mapped Keys

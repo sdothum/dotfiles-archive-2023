@@ -153,12 +153,12 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 {
   if (mod_down(shift_key)) {
     if (record->event.pressed) {
-      if (!shift) { unregister_code(KC_LSFT); }              // in event of unshifted keycode
+      if (!shift) { unregister_code(shift_key); }              // in event of unshifted keycode
       register_code(keycode);
     }
     else {
       unregister_code(keycode);
-      if (!shift) { register_code(KC_LSFT); reshifted = 1; } // set SFT_T timing trap, process_record_user()
+      if (!shift) { register_code(shift_key); reshifted = 1; } // set SFT_T timing trap, process_record_user()
     }
     return true;
   }
