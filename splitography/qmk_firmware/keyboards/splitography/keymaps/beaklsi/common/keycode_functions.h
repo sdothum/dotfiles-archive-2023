@@ -16,6 +16,7 @@ void lesser_reset(qk_tap_dance_state_t *state, void *user_data);
 void lt_shift(keyrecord_t *record, uint8_t shift, uint16_t keycode, uint8_t layer);
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode);
 bool mod_down(uint16_t keycode);
+void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode);
 void modifier(void (*f)(uint8_t));
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode);
 void on_tap(uint8_t shift, uint16_t keycode);

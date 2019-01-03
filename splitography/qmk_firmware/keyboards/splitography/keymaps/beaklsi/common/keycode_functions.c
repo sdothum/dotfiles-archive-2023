@@ -116,6 +116,20 @@ void tap_mod(uint16_t modifier, uint16_t keycode)
   }
 }
 
+// down -> always shift (versus SFttt auto repeat), 
+void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
+{
+  if (record->event.pressed) {
+    key_timer = timer_read();
+    register_code(modifier);
+  }
+  else {
+    unregister_code(modifier);
+    if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(keycode); }
+    key_timer = 0;
+  }
+}
+
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 {

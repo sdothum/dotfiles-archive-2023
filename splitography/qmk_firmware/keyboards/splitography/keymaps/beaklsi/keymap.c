@@ -96,11 +96,13 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
- ,LT_I    // pseudo LT   (_REGEX, KC_I) for shifted key-codes, see process_record_user()
+ ,HOME_A  // pseudo SFT_T(KC_A) disables auto repeat for shift
+ ,HOME_T  // pseudo SFT_T(KC_T) disables auto repeat for shift
+ ,LT_I    // pseudo LT   (_REGEX, KC_I)
  ,ML_BSLS
  ,ML_EQL
  ,PLOVER
- ,SG_TILD // pseudo GUI_T(S(KC_GRV))    for shifted key-codes, see process_record_user()
+ ,SG_TILD // pseudo GUI_T(S(KC_GRV))
  ,SM_G    // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
  ,SS_A    // pseudo SFT_T(S(KC_A))
  ,SS_T    // pseudo SFT_T(S(KC_T))
@@ -121,8 +123,8 @@ enum keyboard_keycodes {
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
-#define HOME_A  SFT_T(KC_A)
-#define HOME_T  SFT_T(KC_T)
+// #define HOME_A  SFT_T(KC_A)
+// #define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #define HOME_W  GUI_T(KC_W)
@@ -239,13 +241,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
-  case HOME_A:
   case HS_GT: // for rolling cursor to enter, del
   case OS_SFT:
     tap_mods(record, KC_LSFT);
     break;
+  case HOME_A:
+    tap_mods(record, KC_LSFT);
+    mod_t   (record, KC_LSFT, KC_A);
+    break;
   case HOME_T:
     tap_mods(record, KC_RSFT); // note: SFT_T actually uses KC_LSFT
+    mod_t   (record, KC_RSFT, KC_T);
     break;
 
   // ...................................................... Center Toggle Layers
