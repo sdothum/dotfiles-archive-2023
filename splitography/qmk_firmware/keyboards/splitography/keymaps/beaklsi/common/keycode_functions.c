@@ -160,6 +160,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
       unregister_code(keycode);
       if (!shift) { register_code(shift_key); reshifted = 1; } // set SFT_T timing trap, process_record_user()
     }
+    key_timer = 0;                                             // clear home row shift, see process_record_user() and mod_t()
     return true;
   }
   return false;

@@ -114,7 +114,7 @@ kindle() {
 
   # usb or cloud?
   if [ -d $kindle ] ;then
-    find /tmp -maxdepth 1 -name "*$format" -exec mv -f {} $kindle \;
+    find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" $kindle \;
     notify low "$title" "$kindle"
     sync
   else
