@@ -241,17 +241,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
-  case HS_GT: // for rolling cursor to enter, del
+  case HS_GT:                        // for rolling cursor to enter, del
   case OS_SFT:
     tap_mods(record, KC_LSFT);
     break;
   case HOME_A:
     tap_mods(record, KC_LSFT);
-    mod_t   (record, KC_LSFT, KC_A);
+    mod_t   (record, KC_LSFT, KC_A); // SFT_T replacement to circumvent auto repeat side effect with map_shift() keycodes
     break;
   case HOME_T:
-    tap_mods(record, KC_RSFT); // note: SFT_T actually uses KC_LSFT
-    mod_t   (record, KC_RSFT, KC_T);
+    tap_mods(record, KC_RSFT);
+    mod_t   (record, KC_RSFT, KC_T); // SFT_T replacement to circumvent auto repeat latency side effect
     break;
 
   // ...................................................... Center Toggle Layers
