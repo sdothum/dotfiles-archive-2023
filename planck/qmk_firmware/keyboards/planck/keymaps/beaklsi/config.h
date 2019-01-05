@@ -5,14 +5,13 @@
 
 // required because lower/raise modifiers are redefined by colemak-dh
 #define PREVENT_STUCK_MODIFIERS
-
-// tap dance key press termination interval
-#define TAPPING_TERM 250
 // fix dual function timing
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
 // enable for center column
 #define TAPPING_TOGGLE 1
+// tap dance key press termination interval
+#define TAPPING_TERM 250
 
 // smooth mouse motion
 // #define MOUSEKEY_INTERVAL    20
@@ -39,6 +38,8 @@
 #define PLOVER_KEYBIND
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
 #define CAPS_ONOFF
+// left home shift I -> space
+#define LEFT_SPACE
 
 // layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
 #define BEAKLTI

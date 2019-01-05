@@ -247,7 +247,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case HOME_A:
     tap_mods(record, KC_LSFT);
-    mod_t   (record, KC_LSFT, KC_A); // SFT_T replacement to circumvent auto repeat side effect with map_shift() keycodes
+    mod_t   (record, KC_LSFT, KC_A); // SFT_T replacement to circumvent auto repeat latency side effect
     break;
   case HOME_T:
     tap_mods(record, KC_RSFT);
@@ -291,10 +291,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
-    lt_shift     (record, mod_down(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _REGEX); // maintain repeating tap case
+#ifdef LEFT_SPACE
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+#endif
+    lt_shift     (record, mod_down(KC_RSFT) ? SHIFT : NOSHIFT, KC_I, _REGEX);
     tap_layer    (record, _REGEX);
     rolling_layer(record, LEFT, 0, 0, _REGEX, _SYMGUI);
     break;
+#ifdef LEFT_SPACE
+  case S(KC_I):
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    break;
+#endif
   case ML_EQL:
     tap_layer    (record, _MOUSE);
     rolling_layer(record, LEFT, NOSHIFT, KC_EQL, _MOUSE, _SYMGUI);
@@ -328,6 +336,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case LT_BSPC:
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { layer_off(_SYMGUI); return false; } // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))  { return false; }
     if (leader_cap(record, _EDIT, down_punc, KC_ENT)) { return false; }                     // see KC_BSPC for multi-tap
     tap_layer(record, _EDIT);
     break;
@@ -336,6 +345,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))  { return false; }
 #endif
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))  { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))  { return false; }
     if (leader_cap(record, 0, down_punc, KC_ENT))     { return false; } // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef CAPS_ONOFF
     if (record->event.pressed)                        { key_timer = timer_read(); }
@@ -380,7 +390,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ..................................................... Leader Capitalization
   
   case TD_TILD:
-    if (mod_down(KC_RSFT)) { unregister_code(KC_LSFT); } // un-shift before tap dance processing to register unshifted keycodes, see tilde()
+    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); } // must un-shift before tap dance processing to register unshifted keycodes, see tilde()
   case KC_EXLM:
   case KC_QUES:
     down_punc = (record->event.pressed) ? 1 : 0;         // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()

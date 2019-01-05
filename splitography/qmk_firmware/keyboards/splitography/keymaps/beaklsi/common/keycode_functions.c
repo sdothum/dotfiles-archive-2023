@@ -282,7 +282,7 @@ void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   unregister_shift(KC_GRV);
   unregister_code (KC_DOT);
-  if (mod_down(KC_RSFT)) { register_code(KC_LSFT); } // restore HOME_T, see process_record_user() TD_TILD
+  if (mod_down(KC_RSFT)) { register_code(KC_RSFT); } // restore HOME_T, see process_record_user() TD_TILD
 }
 
 // ........................................................... Double Tap Insert

@@ -10,7 +10,6 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 // enable for center column
 #define TAPPING_TOGGLE 1
-
 // tap dance key press termination interval
 #define TAPPING_TERM 250
 
@@ -35,6 +34,8 @@
 #define HASKELL
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
 #define CAPS_ONOFF
+// left home shift I -> space
+#define LEFT_SPACE
 
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND
