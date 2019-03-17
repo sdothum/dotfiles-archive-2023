@@ -2,7 +2,7 @@
 # [ $TRACE ] && CHILD="query/pheight $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Panel height
 
@@ -19,7 +19,7 @@ case $monitor in
 tv       ) echo $(( $(herbstclient attr settings.window_gap) + $(herbstclient attr settings.frame_gap) )) ;;
 primary  ) echo $primary ;;
 secondary) echo $secondary ;;
-*        ) is display =3440 && echo 20 || echo 18 ;;
+*        ) is display =3440 && echo 20 || echo 16 ;;
 esac
 
 # vim: set ft=sh: #sdothum

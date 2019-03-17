@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Log
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ${COLORS} defined in env
 
@@ -10,6 +10,9 @@
 
 # common date string for consistent script logging
 # date '+%a %m.%d %I:%M %S%P'
-date "+${__YELLOW}⚡ ${GREEN}%a %-I:%M %S%P${NOCOLOR}"
+date "+${__YELLOW}  ${GREEN}%a %-I:%M %S%P${NOCOLOR}"
+
+# julia
+# run(`date $("+$(ENV["__YELLOW"])  $(ENV["GREEN"])%a %-I:%M %S%P$(ENV["NOCOLOR"])")`)
 
 # vim: set ft=sh: #

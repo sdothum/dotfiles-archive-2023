@@ -18,7 +18,7 @@
 // this is the style you want to emulate.
 //
 // To flash steno firmware
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ═══════════════════════
 //   Reset keyboard or press hw reset button on base (hole)
 //
 //   cd qmk_firmware/keyboards/steno
@@ -28,13 +28,13 @@
 //   sudo make KEYMAP=<...>   (to compile check)
 //
 // Package requirements (for arch linux)
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ═════════════════════════════════════
 //   avr-gcc-atmel
 //   avr-libc-atmel
 //   dfu-programmer
 //
 // Code
-// ▔▔▔▔
+// ════
 //   This source is shamelessly based on the "default" steno layout
 //
 //   #ifdef/#endif block structures are not indented, as syntax highlighting

@@ -1041,7 +1041,7 @@ def cb_cmd_text(data, item, window):
 
 def cb_mode_indicator(data, item, window):
     """Return the current mode (INSERT/NORMAL/REPLACE)."""
-    return mode[0][0][0]
+    return mode[0][0][0][0][0]
 
 def cb_line_numbers(data, item, window):
     """Fill the line numbers bar item."""

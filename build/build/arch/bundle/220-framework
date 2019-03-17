@@ -5,7 +5,7 @@
 
 
 = database management
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════════
 # adminer
   pgadmin3
   postgresql
@@ -15,24 +15,25 @@
 
 
 = sinatra web framework
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════════════
 # g exifr
 g kramdown
 g mail
 g rack
 d g sanitize
 d g sinatra
+# ruby-sinatra
 g slim
 g term-ansicolor
 g thin
 g xapian-fu
 d g xapian-ruby
-# xapian-ruby-bindings
 # ruby-xapian-ruby
+# xapian-ruby-bindings
 
 
 = web server
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
 # nginx
 # nginx-passenger
 d g passenger

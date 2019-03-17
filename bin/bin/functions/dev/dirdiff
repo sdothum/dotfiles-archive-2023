@@ -2,16 +2,16 @@
 # sdothum - 2016 (c) wtfpl
 
 # Dev
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................ Directory differences
 
 usage() {
-  echo "usage: $(basename $0) [-b] [<source> [<target>]] [<regex>]"
+  echo "usage: $(basename $0) [-b] [<source> [<target>]] [<regex>]", target must be full path
   exit 1
 }
 
-ignore='backups|debian|\.history|makepkg|nixos|plugged|plugged-custom|plugin|qmk_firmware|root|snippets|vps'
+ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|vps'
 
 # ignore leading and trailing whitespace
 if [ "$1" = '-b' ] ;then
@@ -25,13 +25,15 @@ while [ "$1" ] ;do
   shift
 done
 
-[ "$target" ] && { [ -d "$target" ] || { [ -d ./$target ] && target=$(pwd)/$target ;};} || target=/net/archive$(pwd)
-[ "$source" ] && cd "$source" || source=./
+[ "$target" ] && { [ -d "$target" ] || { [ -d ./$target ] && target=$(pwd)/$target; };} || target=/net/archive$(pwd)
+[ -d "$source" ] && cd "$source" || usage
+[ -d "$target" ] || usage
 [ "$regex"  ] || regex='.*'
+source=$(pwd)
 ditto "diff $regex $source" "$target"
 
 # to handle filenames containing spaces
-find ./ -type f | exclude | egrep -v $ignore | grep "$regex" >/tmp/dirdiff:files
+find -L ./ -type f | exclude | egrep -v $ignore | grep "$regex" >/tmp/dirdiff:files
 
 while read file <&3 ;do
   unset blink

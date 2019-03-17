@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................ Configurable launcher
 
@@ -9,7 +9,7 @@ EDIT='[ edit menu ]'
 
 # run list format: <command> [# <comment>]
 #             e.g. term 'title' program
-#                  program # description
+#                  program  # description
 
 pgms=$CONFIG/apps
 
@@ -27,7 +27,7 @@ pgm=$(previous apps)
 while pgm=$(apps | sed  "1i$EDIT" | rmenu 'launch' $pgm -no-custom) || exit ;do
   case $pgm in
   "$EDIT") gvim -f $pgms ;;
-  *      ) mhistory apps "$pgm" ; exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
+  *      ) mhistory apps "$pgm"; exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
   esac
 done
 

@@ -25,7 +25,7 @@ fi
 heading "x11 trackman mouse"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 # restore in event xorg is updated
-config_install /etc/X11/xorg.conf.d/10-evdev.conf
+config_install /etc/X11/xorg.conf.d/10-libinput.conf
 
 
 if [ ! -L $HOME/.config/font-manager/local.conf ] ;then
@@ -66,7 +66,7 @@ heading "restore tt-rss theme"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   cd /srv/http/tt-rss/themes
   # ln -sfv particle_clean.css default.css
-  ln -sfv particle_clean.css clean.css
+  ln -sfv linear.css clean.css
   cd -
 fi
 

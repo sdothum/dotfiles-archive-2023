@@ -1,45 +1,42 @@
 " sdothum - 2016 (c) wtfpl
 
 " Edit
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " Line ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Line _______________________________________________________________________
 
     " .............................................................. Insert line
 
-      " insert line while disabling auto-commenting
-      function! s:insertWrap()
-        let l:formatoptions = &formatoptions
-        set formatoptions-=c
-        set formatoptions-=r
-        set formatoptions-=o
-        normal! ^
-        let l:pos = col('.')
-        normal! o
-        " align line indentation
-        execute 'normal! a' . repeat(' ', l:pos)
-        let &formatoptions = l:formatoptions
+      " insert line while disabling auto-commenting OR break (prose) line
+      function! s:smartWrap()
+        if core#Prose()  " override Pencil mode (the default state for prose)
+          set paste
+          execute "normal! i\<CR>"
+          set nopaste
+          execute 'startinsert'
+        else  " append EOL wrap from any col position
+          let l:formatoptions = &formatoptions  " disable auto commenting
+          set formatoptions-=c
+          set formatoptions-=r
+          set formatoptions-=o
+          normal! ^
+          let l:pos = col('.')
+          normal! o
+          " align line indentation
+          execute 'normal! a' . repeat(' ', l:pos)
+          let &formatoptions = l:formatoptions
+        endif
       endfunction
 
-      " insert line wrap
-      inoremap <silent><C-Return> <C-o>:call <SID>insertWrap()<CR>
-
-      " continue inserting in new line a la textmate command-enter
-      " ctrl-enter only works with gvim due to terminal limitation :-(
-      " inoremap <C-CR> <C-o>o
-      " similarly, open curly braces and continue inserting in indented body
-      inoremap <S-CR> <CR><C-o>O<Tab>
-
-      " break line (in .wiki)
-      nnoremap <silent><leader><S-CR> :silent set paste<CR>i<CR><ESC>:silent set nopaste<CR>i
-
-      " duplicate line
-      nnoremap <C-CR> :t.<CR>
-      inoremap <C-CR> <C-o>:t.<CR>
+      inoremap <silent><C-CR> <C-o>:call <SID>smartWrap()<CR>
 
       " insert blank line above/below
       nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
       nnoremap <silent><leader><Down> :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
+
+      " duplicate line
+      " nnoremap <C-CR> :t.<CR>
+      " inoremap <C-CR> <C-o>:t.<CR>
 
     " .............................................................. Delete line
 
@@ -47,38 +44,38 @@
       nnoremap <silent><C-S-Up>   m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
       nnoremap <silent><C-S-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
-  " Text shift ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Text shift _________________________________________________________________
 
     " .............................................................. Select text
 
       function! s:paragraphAbove()
-        if matchstr(getline(line('.')), '\S') == ''
+        if core#NonblankLine
           normal! {
-          if matchstr(getline(line('.')), '\S') == ''
+          if core#BlankLine()
             normal! j
           endif
         endif
-        normal! }lV{
+        normal! }kV{
       endfunction
 
       function! s:paragraphBelow()
-        if matchstr(getline(line('.')), '\S') == ''
+        if core#NonblankLine
           normal! }
-          if matchstr(getline(line('.')), '\S') == ''
+          if core#BlankLine()
             normal! k
           endif
         endif
-        normal! {nV}
+        normal! {jV}
       endfunction
 
       " select all
-      nnoremap <C-a>                ggVG
+      nnoremap <C-a>    ggVG
       " extend paragraph selection
-      vmap     <A-PageUp>           {
-      vmap     <A-PageDown>         }
+      vmap <C-PageUp>   {
+      vmap <C-PageDown> }
       " select paragragh
-      nmap     <silent><A-PageUp>   :call <SID>paragraphAbove()<CR>
-      nmap     <silent><A-PageDown> :call <SID>paragraphBelow()<CR>
+      nmap <silent><C-PageUp>   :call <SID>paragraphAbove()<CR>
+      nmap <silent><C-PageDown> :call <SID>paragraphBelow()<CR>
 
     " ......................................................... Shift left right
 
@@ -111,39 +108,33 @@
 
       function! s:moveLineOrVisualUp(line_getter, range)
         let l:line = line(a:line_getter)
-        if l:line - v:count1 - 1 < 0
-          let l:move = '0'
-        else
-          let l:move = a:line_getter . ' -' . (v:count1 + 1)
-        endif
-        call <SID>moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
+        if l:line - v:count1 - 1 < 0 | let l:move = '0'
+        else                         | let l:move = a:line_getter . ' -' . (v:count1 + 1) | endif
+        call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
       endfunction
 
       function! s:moveLineOrVisualDown(line_getter, range)
         let l:line = line(a:line_getter)
-        if l:line + v:count1 > line('$')
-          let l:move = '$'
-        else
-          let l:move = a:line_getter . ' +' . v:count1
-        endif
-        call <SID>moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
+        if l:line + v:count1 > line('$') | let l:move = '$'
+        else                             | let l:move = a:line_getter . ' +' . v:count1 | endif
+        call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
       endfunction
 
       function! s:moveLineUp()
-        call <SID>moveLineOrVisualUp('.', '')
+        call s:moveLineOrVisualUp('.', '')
       endfunction
 
       function! s:moveLineDown()
-        call <SID>moveLineOrVisualDown('.', '')
+        call s:moveLineOrVisualDown('.', '')
       endfunction
 
       function! s:moveVisualUp()
-        call <SID>moveLineOrVisualUp("'<", "'<,'>")
+        call s:moveLineOrVisualUp("'<", "'<,'>")
         normal! gv
       endfunction
 
       function! s:moveVisualDown()
-        call <SID>moveLineOrVisualDown("'>", "'<,'>")
+        call s:moveLineOrVisualDown("'>", "'<,'>")
         normal! gv
       endfunction
 
@@ -154,7 +145,7 @@
       imap <silent><S-Down> <ESC>:call <SID>moveLineDown()<CR>a
       vmap <silent><S-Down> <ESC>:call <SID>moveVisualDown()<CR>
 
-  " Text manipulation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Text manipulation __________________________________________________________
 
     " ...................................................... Reformat paragraghs
 

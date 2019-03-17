@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................ Television series
 
@@ -52,15 +52,15 @@ shows() {
 # initial row is most current show vs last viewed
 show=3
 while : ;do
-  show=$(ls -1$T $library | grep -v ' ' | sed "s/\./ /g ; 1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | 
+  show=$(ls -1$T $library | grep -v ' ' | sed "s/\./ /g; 1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | 
       rmenu 'Series' "$show" -no-custom) || break
 
   # force dmenu focus (continue within do loop doesn't guarantee focus)
   case $show in
-  "$NAME"  ) unset T ; continue ;;
-  "$DATE"  ) T=t ;     continue ;;
-  "$EDIT"  ) pkill -TERM 'ROX-Filer' ; rox $library ; pwait "ROX-Filer $library" ; exec dmenu series $1 ;;
-  "$SONARR") $BROWSER $sonarr ; pwait "$BROWSER.*$sonarr" ; continue ;;
+  "$NAME"  ) unset T; continue ;;
+  "$DATE"  ) T=t;     continue ;;
+  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox $library; pwait "ROX-Filer $library"; exec dmenu series $1 ;;
+  "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
   *        ) series="$library/$(echo $show | sed 's/ /./g')"
              playlist="$series/.playlist"
@@ -71,7 +71,7 @@ while : ;do
     # focus monitor menu originally presented on
     [ $monitor ] && herbstclient focus_monitor $monitor
     # highlight last episode viewed
-    [ $episode ] || { [ -e "$playlist" ] && episode=$(head -1 "$playlist") || unset playlist ;}
+    [ $episode ] || { [ -e "$playlist" ] && episode=$(head -1 "$playlist") || unset playlist; }
     episode=$(shows | rmenu "$show" "$episode" -no-custom) || break
     [ "$episode" ] || break
 

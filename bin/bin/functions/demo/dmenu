@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Demo
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................................... Demo
 
@@ -19,7 +19,7 @@ PLAYBACK='
   alt+bracketright
   alt+4
   alt+1
-  # super+ctrl+Tab # 4 gvim Return
+  # super+ctrl+Tab  # 4 gvim Return
   ! focus hlwm bring
   alt+Shift+space
   alt+Shift+space
@@ -28,7 +28,7 @@ PLAYBACK='
   alt+Shift+4
   alt+4
   alt+BackSpace
-  # super+e # herb theme Return
+  # super+e  # herb theme Return
   ! dmenu edit
   # super+s # emit hook Return
   ! dmenu scripts

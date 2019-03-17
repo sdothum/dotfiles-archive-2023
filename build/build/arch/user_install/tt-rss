@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # User_install
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... tt-rss
 
@@ -41,7 +41,7 @@ sudo sed -i -e 's/"Special"/"Orbit"/' \
          -e 's/Starred/Pinned/' \
          $FEEDS
 if [ -e $HOME/tt-rss/themes/${theme}_$button ] ;then
-  sudo sed -i -e "s|images/collapse.png|$button| ; s/Collapse article//" $FEEDS
+  sudo sed -i -e "s|images/collapse.png|$button|; s/Collapse article//" $FEEDS
   sudo ln -s $THEMES/${theme}_$button $TTRSS/images/
 fi
 

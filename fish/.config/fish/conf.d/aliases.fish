@@ -31,6 +31,7 @@ alias svm 'systemd mask'
 alias svq 'systemd status'
 alias svr 'systemd restart'
 alias svs 'systemd start'
+alias svt 'systemd stop'
 alias svu 'systemd unmask'
 
 # ....................................................................... Device
@@ -66,7 +67,9 @@ alias gprename 'gprename $PWD'
 alias m 'less'
 alias mv 'mv -i'
 alias mvv 'mv -iv'
-alias n 'nnn'
+alias n 'env VISUAL=vim nnn'
+alias r 'vifm'
+alias R 'env VISUAL=vim ranger'
 alias rm 'rm -i'
 alias rmv 'rm -iv'
 alias t 'tail -f'
@@ -112,17 +115,26 @@ alias dp 'dmenu - projects'
 alias dr 'dmenu - run'
 alias ds 'dmenu - scripts'
 alias nv 'nvpy'
-alias sd 'sdiff -b -E -W -w(tput cols)'
 alias vd 'rm -f $HOME/.session/follow_the_sun ; gvimdiff --role=gvimdiff'
+alias sd 'sdiff -b -E -W -w(tput cols)'
 alias vdarchive 'dirdiff ./ /net/archive(pp)'
 alias vdbackup 'dirdiff ./ /net/backup(pp)'
+
+# .................................................................. Development
+ 
+# alias ghc 'ghc -dynamic'  # arch repo only
+alias ghc 'stack ghc'
+alias ghcc 'stack build'
+alias ghcx 'stack runghc'
+alias ghci 'stack exec ghci'
+alias git1 'git clone --depth 1'
+alias mysql 'mysql -h localhost -u root -p'
 
 # .................................................................. Application
 
 alias calc 'speedcrunch'
 alias handbrake 'ghb'
 alias music '!p ncmpcpp ;and ncmpcpp'
-alias mysql 'mysql -h localhost -u root -p'
 alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
 alias ss 'sc-im'
 alias todo 'rlwrap todo-screen'

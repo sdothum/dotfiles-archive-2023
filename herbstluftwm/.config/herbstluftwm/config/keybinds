@@ -2,7 +2,7 @@
 # [ $TRACE ] && CHILD="config/keybinds $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # Note: the common Qwerty "IJKL" key mappings are remapped to a WASD layout
 #       for the Colemak Mod-DH keyboard layout to "MNLE"
@@ -222,6 +222,7 @@ if [ $BEAKL ] ;then
 else
   hc keybind $Mod-grave                 spawn toggle monocle
 fi
+hc keybind $Mod-g                       spawn toggle layout grid
 hc keybind $Mod-l                       spawn restore layout
 hc keybind $Mod-Control-minus           spawn restore layout default
 hc keybind $Mod-Control-1               spawn restore layout max
@@ -230,7 +231,7 @@ hc keybind $Mod-Control-3               spawn restore layout thirds
 hc keybind $Mod-Control-4               spawn restore layout quarters
 hc keybind $Mod-Control-5               spawn restore layout 2:3
 hc keybind $Mod-Control-6               spawn restore layout 1:2
-hc keybind $Mod-space                   spawn toggle max
+hc keybind $Mod-space                   spawn toggle layout max
 hc keybind $Mod-Shift-space             spawn switch layout
 hc keybind $Mod-Shift-f                 chain . floating toggle . emit_hook focus_changed
 hc keybind $Mod-f                       spawn toggle fullscreen

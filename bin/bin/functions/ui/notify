@@ -1,8 +1,8 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# X11 Desktop
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# UI
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ${COLORS} defined in env
 
@@ -37,9 +37,9 @@ while : ;do
   shift
 done
 
-[ "$(echo $1 | nocolor)" = '' ] && { color1=$1 ; shift ;}
+[ "$(echo $1 | nocolor)" = '' ] && { color1=$1; shift; }
 ONE=${1#\\}
-[ "$2" ] && [ "$(echo $2 | nocolor)" = '' ] && { color2=$2 ; shift ;}
+[ "$2" ] && [ "$(echo $2 | nocolor)" = '' ] && { color2=$2; shift; }
 TWO=${2#\\}
 
 echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
@@ -47,7 +47,7 @@ if [ $console ] ;then
   [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" || echo "${color1}==> $ONE${NOCOLOR}"
 else
   # allow cron jobs to bypass console test and display to X
-  [ $X ] || { console && exit ;}
+  [ $X ] || { console && exit; }
   case $# in
   1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
        DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &

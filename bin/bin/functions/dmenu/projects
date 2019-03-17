@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................................... Edit
 
@@ -16,7 +16,7 @@ EDIT='[ edit tags ]'
 PROJECTS=$CONFIG/projects
 history=$HISTORY/projects
 
-projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$EDIT" ;}
+projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$EDIT"; }
 
 while files=$(projects | rmenu 'Edit Project' 1 -no-custom) || exit ;do
   case $files in

@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # File
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ Print
 
@@ -26,7 +26,7 @@ fold=80
 
 # unset for direct printing, set for proofing and latex debugging
 if [ "$1" = proof ] ;then
-  proof=true ; shift
+  proof=true; shift
 elif [ -e $PROOF ] ;then
   proof=true
 else
@@ -39,9 +39,9 @@ dotdot=$TMP/dotdot
 # ............................................................... Latex preamble
 
 # must escape certain latex characters for fancyhdr and cat body
-escape()  { echo $@ | sed -r 's/([#$%&_])/\\\1/g' ;}
-reverse() { awk '{ for (i=$NF ; i>1 ; i--) printf("%s ", $i) }' ;} # reverse word order
-dotdot()  { cat $dotdot ;}
+escape()  { echo $@ | sed -r 's/([#$%&_])/\\\1/g'; }
+reverse() { awk '{ for (i=$NF; i>1; i--) printf("%s ", $i) }'; }  # reverse word order
+dotdot()  { cat $dotdot; }
 
 # title truncation footwork
 truncate() {
@@ -164,11 +164,11 @@ punctuation() {
 
 print() {
   case $1 in
-  *.ps ) title=$1 ; output=$1 ;;
-  *.pdf) pdf2ps "$1" ; exec hardcopy "${1%.pdf}.ps" ;;
-  *    ) output="$TMP/$(basename $1).pdf" ; trap "rm -f $output" EXIT ; format "$1" ;;
+  *.ps ) title=$1; output=$1 ;;
+  *.pdf) pdf2ps "$1"; exec hardcopy "${1%.pdf}.ps" ;;
+  *    ) output="$TMP/$(basename $1).pdf"; trap "rm -f $output" EXIT; format "$1" ;;
   esac
-  [ $proof ] && zathura "$output" 2>&1 || { notify low "Printing" "$title" ; lpr -P $PRINTER "$output" ;}
+  [ $proof ] && zathura "$output" 2>&1 || { notify low "Printing" "$title"; lpr -P $PRINTER "$output"; }
 }
 
 # lines from stdin are folded
@@ -184,22 +184,22 @@ stdin() {
   hardcopy eject
 }
 
-paragraphs() { punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n/smg' | stdin header ;}
+paragraphs() { punctuation | perl -pe 'BEGIN{undef $/;}s/\n *\n *\n( *\n)*/\n\n/smg' | stdin header; }
 
 case $1 in
 ''   ) usage ;;
-eject) [ $proof ] || printf '\033E' | lpr -P $PRINTER ; exit ;;
+eject) [ $proof ] || printf '\033E' | lpr -P $PRINTER; exit ;;
 stdin) stdin ;;
 
-mail ) fontsize=9 # content is piped in from mail application, see alot
+mail ) fontsize=9  # content is piped in from mail application, see alot
        spacing='\onehalfspacing'
        unset linenumbers
        # hexdump log for inspecting unprintable punctuation characters
-       [ $proof ] && { cat >$proof ; cat $proof | hexdump -C >$proof:hexdump ;}
+       [ $proof ] && { cat >$proof; cat $proof | hexdump -C >$proof:hexdump; }
        # contract excessive blank lines
        cat $proof | filter | paragraphs ;;
 
-note ) fontsize=9 # stdin formatting
+note ) fontsize=9  # stdin formatting
        spacing='\onehalfspacing'
        unset linenumbers
        cat $proof | paragraphs ;;
@@ -216,7 +216,7 @@ wiki ) fontsize=10
        title=${title%.wiki}
        cat "$@" | stdin ;;
 
-wps  ) fontsize=9 # word document saved as text file
+wps  ) fontsize=9  # word document saved as text file
        spacing='\doublespacing'
        unset linenumbers
        shift
@@ -224,7 +224,7 @@ wps  ) fontsize=9 # word document saved as text file
        # remove document [annotation] and reformat paragraphs
        # contract spaces and leading annotation punctuation (paragraph)
        perl -pe 'BEGIN{undef $/;}s/\[[^]]*\]//smg' "$1" |
-           sed -r 's/^(\xe3\x80\x80)*/\n/' | punctuation | sed 's/^\.*  *// ; s/  */ /g' |
+           sed -r 's/^(\xe3\x80\x80)*/\n/' | punctuation | sed 's/^\.*  *//; s/  */ /g' |
            stdin ;;
 
 *    ) fontsize=8

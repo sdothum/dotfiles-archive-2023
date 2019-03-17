@@ -19,7 +19,7 @@ checkpoint
 
 
 heading "first up: sudo"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install sudo
 original /etc/sudoers
 sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
@@ -30,14 +30,14 @@ checkpoint
 
 
 heading 'configure boot parameters'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 original /boot/config.txt
 # config_install /boot/config.txt
 checkpoint
 
 
 heading 'set and generate locale'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 original  /etc/locale.gen
 sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
 echo LANG=en_US.UTF-8 >/etc/locale.conf
@@ -46,12 +46,12 @@ locale-gen
 
 
 heading 'set timezone'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 timedatectl set-timezone Canada/Eastern
 
 
 heading 'configure package manager'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 original /etc/pacman.conf
 sed -i -e '/^\[options\]/aILoveCandy' \
     -e '/^#Color/s/^#//' \
@@ -61,7 +61,7 @@ checkpoint
 
 
 heading 'configure network'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 [ "$hostname" = luna ] && systemctl enable dhcpcd.service
 # heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
 # [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
@@ -71,7 +71,7 @@ config_install /etc/hosts
 
 
 heading 'installing wireless tools'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install dialog
 pm_install iw
 pm_install wpa_supplicant
@@ -85,7 +85,7 @@ checkpoint
 
 
 heading "add primary user $user"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 
@@ -119,7 +119,7 @@ ln -sf /home/$user/.bashrc /root/
 
 
 heading 'install base-devel'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install base-devel
 pm_install dos2unix
 # pm_install expac
@@ -132,7 +132,7 @@ checkpoint
 
 
 heading 'default shell'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install bc
 pm_install dash
 pm_install fish
@@ -142,7 +142,7 @@ checkpoint
 
 
 heading 'enable tty autologin'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 mkdir -pv /etc/systemd/system/getty@tty1.service.d
 echo "[Service]
 ExecStart=
@@ -150,7 +150,7 @@ ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" >/etc/sys
 
 
 heading 'sync home directory'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 # mkdir -p /home/$user/Maildir
 # chown $user:users /home/$user/Maildir
 # mkdir -p /net
@@ -166,12 +166,12 @@ fi
 . /home/$user/bin/functions/shell/user_path
 
 title "installation errors:"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
 
 heading 'install bundle'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 ditto 'exit console (script)'
 ditto "login as user $user"
 ditto 'bundle_install pi_base'

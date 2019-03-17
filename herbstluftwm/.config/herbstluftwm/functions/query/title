@@ -2,7 +2,7 @@
 # [ $TRACE ] && CHILD="query/title $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................. Title winid
 usage() {
@@ -12,7 +12,7 @@ usage() {
 
 [ $1 ] || usage
 
-for i in $(query winids) ;do herbstclient compare clients.$i.title = $1 && { echo $i ; winid=true ;} ;done
+for i in $(query winids) ;do herbstclient compare clients.$i.title = $1 && { echo $i; winid=true; } ;done
 [ $winid ] || echo ''
 
 # vim: set ft=sh: #

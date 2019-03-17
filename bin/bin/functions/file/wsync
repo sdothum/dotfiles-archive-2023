@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # File
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................ watchman sync
 
@@ -27,7 +27,7 @@ ARM=pi
 
 [ -e $WATCH ] || touch $WATCH
 # server is always online but satellite arm device may be offline (and sync on boot)
-cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit ;}
+cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit; }
 cpu arm && target=$SERVER: || target=$ARM:
 
 info() {
@@ -48,7 +48,7 @@ register() {
 
 queue () {
   for i in $@ ;do
-    [ -d "$ROOT/${i%/*}" ] && { register ; file="$ROOT/$i" ;} || file="$file $i"
+    [ -d "$ROOT/${i%/*}" ] && { register; file="$ROOT/$i"; } || file="$file $i"
   done
   register
 }
@@ -68,17 +68,17 @@ watch() {
     cat $WATCH
   else
     # trap random watchman initialization flooding and reset watch queue
-    notify X low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d ; s/^ *//g ; s/"//g ; s/,$//')"
+    notify X low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//')"
     touch $IGNORE
     trap "rm -f $IGNORE" EXIT
     scan=true
     while [ $scan ] ;do
       unset scan
       for i in $(seq 1 $SCAN) ;do
-        sleep 1 ; pkill -f 'wsync .*/.*' && scan=true
+        sleep 1; pkill -f 'wsync .*/.*' && scan=true
       done
       # adjust for initialization latency
-      [ $scan ] || { [ -s $WATCH ] || scan=true ;}
+      [ $scan ] || { [ -s $WATCH ] || scan=true; }
     done
     notify X 3 critical 'Watchman' "Triggers cleared: $(cat $WATCH | wc -l)"
     >$WATCH
@@ -86,9 +86,9 @@ watch() {
 }
 
 case $1 in
-'') cpu arm && pstat syncthing && systemd stop syncthing@$USER ; watch & ;;
+'') cpu arm && pstat syncthing && systemd stop syncthing@$USER; watch & ;;
 -a) archive & ;;
--s) archive && (watchman shutdown-server ; pstat syncthing || systemd start syncthing@$USER &) ;;
+-s) archive && (watchman shutdown-server; pstat syncthing || systemd start syncthing@$USER &) ;;
 -v) pstat syncthing || watch & ;;
 * ) queue $@ && [ -e $WSYNC ] && archive & ;;
 esac

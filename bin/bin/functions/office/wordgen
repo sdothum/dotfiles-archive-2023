@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Office
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................ Random word generator
 
@@ -35,7 +35,7 @@ while : ;do
   [0-9]*   ) sentences="$sentences $1" ;;
   corpus=* ) eval $1 ;;
   output=* ) eval $1 ;;
-  *        ) regex=$@ ; break ;;
+  *        ) regex=$@; break ;;
   esac
   shift
 done
@@ -63,11 +63,11 @@ trap "rm $words $lines $paragraphs" EXIT
 [ -e $CORPUS ] || {
   # arbitrarily remove all questionable spellings
   cat $DICTIONARY | aspell --ignore-case list >$DICTIONARY.undefined
-  diff $DICTIONARY $DICTIONARY.undefined | sed '/^[>0-9]/d ; s/< //' >$CORPUS
+  diff $DICTIONARY $DICTIONARY.undefined | sed '/^[>0-9]/d; s/< //' >$CORPUS
 }
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)
-shuf $CORPUS | sed -r 's/\t.*// ; s/(.*)/\L\1/' | # strip frequency count if present
+shuf $CORPUS | sed -r 's/\t.*//; s/(.*)/\L\1/' |  # strip frequency count if present
     egrep "[$regex]" | egrep -v '^(.|..)$' | egrep -x ".{1,$wordlen}" | head -$size >$corpus.words
 
 typefile="$CACHEDIR$(cat $corpus.words | wc -l)-$output.txt"
@@ -75,12 +75,12 @@ typefile="$CACHEDIR$(cat $corpus.words | wc -l)-$output.txt"
 # .................................................................... Sentences
 
 # usage: random <modulo> <match> <unmatch>
-random() { od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3" ;}
+random() { od -An -N1 -i /dev/random | grep -q "$1" && echo "$2" || echo "$3"; }
 
 # proper case sentences
 wordcase() {
   if [ $punctuation = simple ] ;then
-    cat $lines | sed -r 's/^(.)/\U\1/ ; s/ $/./'
+    cat $lines | sed -r 's/^(.)/\U\1/; s/ $/./'
   else
     # inject random punctuation
     while read line <&3 ;do

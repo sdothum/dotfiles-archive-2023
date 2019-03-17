@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Mail
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Receive
 
@@ -120,8 +120,8 @@ mail_daemon() {
   while : ;do
     # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
     mv /tmp/mailsync:new /tmp/mailsync:old
-    # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
-    curl -u sdothum:$(cat $MAILDIR/.mailsync) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/ ; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
+    # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
+    curl -u sdothum:$(cat $MAILDIR/.mailsync) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
     cmp -s /tmp/mailsync:old /tmp/mailsync:new
     if [ $? -eq 1 ] ;then
       one_pass
@@ -137,7 +137,7 @@ mail_daemon() {
 case $@ in
 '') mail_daemon ;;
 I*) init ;;
-l*) ditto 'tail -f /tmp/mailsync.log' ; tail -f /tmp/mailsync.log ;;
+l*) ditto 'tail -f /tmp/mailsync.log'; tail -f /tmp/mailsync.log ;;
 t*) tag_messages ;;
 1*) one_pass ;;
 * ) usage ;;

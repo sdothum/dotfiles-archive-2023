@@ -5,7 +5,7 @@
 
 
 = file manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
 # ffmpegthumbnailer
 # filelight
   rox
@@ -16,7 +16,7 @@
 
 
 = terminal
-= ▔▔▔▔▔▔▔▔
+= ════════
 # kitty
 # putty
 # roxterm
@@ -30,19 +30,19 @@
 
 
 = window manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
 # 2bwm
 # budgie-desktop-git
 # herbstluftwm
 # openbox
 # ruler-git
 # windowchef-git
-# wmutils-git
+  wmutils-git
 # m xwait
 
 
 = bspwm
-= ▔▔▔▔▔
+= ═════
 # bspwm
 # bspwm-git
 # lua-posix
@@ -51,14 +51,14 @@
 
 
 = gnome
-= ▔▔▔▔▔
+= ═════
 # gnome-control-center
 # gnome-shell
 # gnome-tweak-tool
 
 
 = xmonad
-= ▔▔▔▔▔▔
+= ══════
 # dzen2
 # haskell-xmonad
 # haskell-xmonad-contrib

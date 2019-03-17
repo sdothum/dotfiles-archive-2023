@@ -3,11 +3,11 @@
 [ $TRACE ] && CHILD="bin/term $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ..................................................................... Terminal
 
-# Usage: term [<title>] [ FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID | BLACKBOARD | VISIBLE | WAIT | FORTUNE ] [[SHELL] <command>]
+# Usage: term [<title>] [FLOAT | STACK | MAX | VERTICAL | HORIZONTAL | GRID | BLACKBOARD | VISIBLE | WAIT | FORTUNE] [[SHELL] <command>]
 #        title (and default name string)
 #        FLOAT, STACK, MAX, VERTICAL, HORIZONTAL, GRID herbstluftwm hooks for setting layout and geometry
 #        FORTUNE, login notifier message
@@ -42,12 +42,12 @@ if [ "$1" ] ;then
 fi
 
 # menu border calculation
-border() { echo $(( $(query displayheight) * 2 / 15 )) ;}
+border() { echo $(( $(query displayheight) * 2 / 15 )); }
 
 while [ "$1" ] ;do
   case $1 in
   BLACKBOARD) theme=$blackboard ;;
-  FLOAT     ) name="$NAME float" ; geometry=$XY ;;
+  FLOAT     ) name="$NAME float"; geometry=$XY ;;
   FORTUNE   ) touch $FORTUNE:term ;;
   GRID      ) name="$NAME grid" ;;
   HORIZONTAL) name="$NAME horizontal" ;;

@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="draw/panel $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................... Draw panel
 
@@ -19,11 +19,12 @@ pstat "^lemonbar -d -n lemonbar:$fifo " && exit
 [ $PANEL_BOTTOM ] && PANEL_BOTTOM=-b
 
 # panel font
-PANEL_FONT='Iosevka'
+# PANEL_FONT='Iosevka\-single'  # lemonbar requires the dash be escaped
+PANEL_FONT=$MONOFONT
 PANEL_UNDERLINE=2
 
 # tic indicator: none (unset), dot, circle, square, bar, tape, seconds
-[ -e $TICKER ] && { TIC=$(cat $TICKER) ; TIC=${TIC:-tape} ;}
+[ -e $TICKER ] && { TIC=$(cat $TICKER); TIC=${TIC:-tape}; }
 
 # panel symbols, unset candy for numeric desktop tags
 CANDY=true
@@ -67,6 +68,8 @@ for i in $(herbstclient monitor_rect $monitor) ;do
   geometry=${geometry#*:}
 done
 
+mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # fudge column width calculation for title trim below
+
 frame=$(herbstclient attr settings.frame_gap)
 window=$(herbstclient attr settings.window_gap)
 border=$(herbstclient attr theme.border_width)
@@ -77,7 +80,7 @@ panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 displayH=$(xrandr 2>/dev/null | grep '\*' |
-    sed -r "s/.*x([0-9]*).*/\1/ ; $(( $(herbstclient attr monitors.focus.index) + 1 ))q ; d")
+    sed -r "s/.*x([0-9]*).*/\1/; $(( $(herbstclient attr monitors.focus.index) + 1 ))q; d")
 if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
   panel_offsetY=$(( ($displayH - $monitorH - $PANEL_HEIGHT) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
@@ -98,7 +101,7 @@ panel_offsetX=$(( $monitorX + $frame + $indent - 1 ))
 # ................................................................... Tag status
 
 # eye candy tag icons
-tag_symbol() { [ $visible ] && tag=$OCCUPIED || tag=$FREE ;}
+tag_symbol() { [ $visible ] && tag=$OCCUPIED || tag=$FREE; }
 
 desktops() {
   active=$(query tag)
@@ -208,12 +211,12 @@ working_on() {
 # ........................................................... Current conditions
 
 # clocks
-dot() { [ "$tic" = '●' ] && tic='○' || tic='●' ;}
+dot() { [ "$tic" = '●' ] && tic='○' || tic='●'; }
 
 circle() {
   [ "$tic" = '◓' ] && tic='◑' ||
   { [ "$tic" = '◑' ] && tic='◒' ||
-    { [ "$tic" = '◒' ] && tic='◐' || tic='◓' ;};}
+    { [ "$tic" = '◒' ] && tic='◐' || tic='◓'; };}
 }
 
 square() {
@@ -223,7 +226,7 @@ square() {
       { [ "$tic" = '◪' ] && tic='⬓' ||
         { [ "$tic" = '⬓' ] && tic='⬕' ||
           { [ "$tic" = '⬕' ] && tic='◧' ||
-            { [ "$tic" = '◧' ] && tic='◩' || tic='⬒' ;};};};};};}
+            { [ "$tic" = '◧' ] && tic='◩' || tic='⬒'; };};};};};}
 }
 
 bar() {
@@ -258,7 +261,7 @@ bar() {
   esac
 }
 
-seconds() { tic=${line#*| } ; tic=${tic%|*} ;}
+seconds() { tic=${line#*| }; tic=${tic%|*}; }
 
 tape() {
   tic=${line#*|}
@@ -267,7 +270,7 @@ tape() {
     # hours 0 - 9, cycle aligns on ten second intervals
     len=11
     pos=${tic##*:}
-    # pos=$(( ${pos%??} % 10 )) # crashes in dash (memory leak on arm?)
+    # pos=$(( ${pos%??} % 10 ))  # crashes in dash (memory leak on arm?)
     pos=$(echo "${pos%??} % 10" | bc)
     [ $pos = 0 ] && pos=10
   else
@@ -281,6 +284,7 @@ tape() {
 
 weather() {
   conky weather panel >$WEATHER &
+  touch $WEATHER  # have to access file for test -s to return expected result, see current_conditions()
   unset update_weather
 }
 
@@ -304,15 +308,16 @@ current_conditions() {
     esac
   fi
 
-  # refresh every 10 minutes
+  # refresh weather every 10 minutes
   if [ -e $WEATHER ] ;then
-    minute=${line#*:?}
-    case ${minute%%\%*} in
+    minute=${line#*:?}    # hh:mm:ss.* -> m:ss.*
+    case ${minute%:*} in  #            -> m
     0) [ $update_weather ] && weather ;;
     *) update_weather=true ;;
     esac
   fi
-  line="${line%%^*}$(cat $WEATHER)${line#*^}"
+  [ -s $WEATHER ] && current_weather=$(cat $WEATHER)  # prevent blanking during update, see weather()
+  line="${line%%^*}$current_weather${line#*^}"
 
   line="${line%%|*}$clock%{F-}${line##*|}"
   system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}"
@@ -326,19 +331,27 @@ panel() {
   while read -r line ;do
     case $line in
     S*       ) current_conditions ;;
-    T*       ) working_on ;;
+    T*       ) working_on; desktops ;;
     *_changed) desktops ;;
     esac
+    
+    [ $MUSL ] && { line=$(xtitle -f 'T%s'); working_on; desktops; }  # see below
 
     # empty desktop does not generate T message
     [ "$title"    ] || title
     [ "$desktops" ] || desktops
+    # restrict title to left hand side of panel
+    chop=$(( $mid_point + $(echo $title | wc -c) - $(echo $title | sed 's/%[{][^}]*[}]//g' | wc -c) ))
+    title=$(echo $title | cut -b -$chop)
     printf "%s\n" "%{l}${title}%{c}${desktops} %{r}${system}"
     unset line
   done
 }
 
 # .............................................................. FIFO processing
+
+# void musl currently has a mkfifo bug that limits the buffer to the last feed, see panel() for adjustment
+musl && MUSL=true || GLIBC=true
 
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
@@ -349,9 +362,11 @@ se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b 
 t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
 *  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
 esac
-herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
-# see emit_hook
-xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &
+# event driven panel update
+if [ $GLIBC ] ;then
+  herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
+  xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
+fi
 
 cat $PANEL_FIFO:$fifo |
     panel |

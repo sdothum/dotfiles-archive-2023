@@ -3,7 +3,7 @@
 [ $TRACE ] && CHILD="bin/walpick $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................... Set wallpaper color theme
 
@@ -11,7 +11,7 @@
 
 confirm() {
   if [ $? = 0 ] ;then
-    ifno 'keep conky theme' && return 1 || { cp $THEME $(query theme) ; unset loop ; return 0 ;}
+    ifno 'keep conky theme' && return 1 || { cp $THEME $(query theme); unset loop; return 0; }
   else
     return 1
   fi

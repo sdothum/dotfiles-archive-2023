@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Sysadmin
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ..................................................................... Password
 
@@ -48,7 +48,7 @@ xport() {
   rm -fv ${image%.sh}.zip
   echo "#!/usr/bin/dash
 pass I || exit" >$image
-  names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g ; s/.gpg$//")
+  names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
   for i in $names ;do
     ditto "exporting $i"
     key=$($PASS $i | sed "s/'/'\"'\"'/")
@@ -61,15 +61,15 @@ pass I || exit" >$image
 
 # password manager
 case $1 in
-a ) [ $# -eq 3 ] && { echo "$3\n$3" >/tmp/pass ; $PASS insert --force $2 </tmp/pass ; exec pass $2 ;} ;;
-G ) [ $# -eq 2 ] && { $PASS generate --no-symbols --force --clip $2 12 ; exec pass $2 ;} ;;
-g ) [ $# -eq 2 ] && { $PASS generate --force --clip $2 12 ; exec pass $2 ;} ;;
-I ) init ; exit ;;
-i ) [ $# -eq 3 ] && { ditto "importing $2" ; echo "$3\n$3" >/tmp/pass ; exec $PASS insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1 ;} ;;
+a ) [ $# -eq 3 ] && { echo "$3\n$3" >/tmp/pass; $PASS insert --force $2 </tmp/pass; exec pass $2; } ;;
+G ) [ $# -eq 2 ] && { $PASS generate --no-symbols --force --clip $2 12; exec pass $2; } ;;
+g ) [ $# -eq 2 ] && { $PASS generate --force --clip $2 12; exec pass $2; } ;;
+I ) init; exit ;;
+i ) [ $# -eq 3 ] && { ditto "importing $2"; echo "$3\n$3" >/tmp/pass; exec $PASS insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1; } ;;
 l )  shift && exec $PASS $@ ;;
-m ) [ $# -eq 3 ] && { $PASS mv --force $2 $3 ; exec pass $3 ;} ;;
-R ) [ $# -eq 2 ] && { exec $PASS rm --recursive --force $2 ;} ;;
-X ) xport ; exit ;;
+m ) [ $# -eq 3 ] && { $PASS mv --force $2 $3; exec pass $3; } ;;
+R ) [ $# -eq 2 ] && { exec $PASS rm --recursive --force $2; } ;;
+X ) xport; exit ;;
 * ) password $@ ;;
 esac
 

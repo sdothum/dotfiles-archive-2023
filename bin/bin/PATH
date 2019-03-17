@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 System
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................ PATH + ($USER) directory tree
+
+usage() {
+  echo "usage: . \$HOME/bin/PATH [<directory>], default \$USER/bin"
+  exit 1
+}
+
+[ $USER = root ] && exit
+ROOT=${1:-$HOME/bin}
+[ -d "$ROOT" ] || usage
+
+# set PATH so it includes user's private bin if it exists
+for i in $(find -L $ROOT -type d | grep -v '/\.' | sort -r)
+do
+  PATH="${i}:$PATH"
+done
+
+# vim: set ft=sh: #

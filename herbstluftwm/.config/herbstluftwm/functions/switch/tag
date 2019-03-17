@@ -2,14 +2,14 @@
 [ $TRACE ] && CHILD="switch/tag $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................ Switch to tag
 
 # Usage: switch tag [<tag>]
 
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
-[ $(query tag) = $1 ] && exit
+[ "$(query tag)" = $1 ] && exit
 if [ "$(query tag unfocused)" = $1 ] ;then
   is primary && switch monitor 0 || switch monitor 1
   exit

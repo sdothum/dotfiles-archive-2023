@@ -1,8 +1,8 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# File
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................... Distribution install
 
@@ -14,7 +14,7 @@ usage() {
 [ $1 ] || usage
 
 # link vs copy
-[ $1 = L ] && { shift ; link=true ;}
+[ $1 = L ] && { shift; link=true; }
 
 # restore customizations (not typically config files)
 root=$HOME/build/root

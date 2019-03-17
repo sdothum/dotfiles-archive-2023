@@ -94,16 +94,10 @@ fi
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-if ! grep -q 'backgrounds/clock' /etc/default/grub ;then
+if ! grep -q '/images/' /etc/default/grub ;then
 heading "grub splash"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  original /etc/default/grub
-  sudo sed -i '/^GRUB_TIMEOUT=/s/[0-9]/3/' /etc/default/grub
-  [ $(query displaywidth) = 1366 ] ||
-    sudo sed -i -e '/^GRUB_GFXMODE=auto/s/auto/1680x1050x32,1024x768x32,auto/' \
-             -e 's,#*GRUB_BACKGROUND=.*,GRUB_BACKGROUND='$HOME'/images/backgrounds/clock.png,' \
-             /etc/default/grub
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  grub_splash
 fi
 
 
@@ -129,6 +123,6 @@ heading "systemd startup optimizations"
 #                                                                 title "finish"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-$HOME/build/arch/archlinux-update
+# $HOME/build/arch/archlinux-update
 
 # vim: set ft=sh: #

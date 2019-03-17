@@ -1,12 +1,12 @@
 # sdothum - 2016 (c) wtfpl
 
 # Make
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................... disputils
 
 cd /net/depot
-[ -d disputils ] || git clone https://github.com/tudurom/disputils.git
+[ -d disputils ] || git clone --depth 1 https://github.com/tudurom/disputils.git
 cd disputils
 make clean
 make

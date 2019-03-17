@@ -9,7 +9,7 @@
 set fish_greeting
 
 # only shells with vi mode accepted here!
-# fish_vi_key_bindings ^/dev/null # suppress fish_vi_key_bindings eval error!!
+# fish_vi_key_bindings ^/dev/null  # suppress fish_vi_key_bindings eval error!!
 fish_vi_key_bindings
 
 # fuzzy searches
@@ -44,6 +44,7 @@ set -x PASSWORD_STORE_CLIP_TIME 60
 # unset to use qwerty keyboard wasd mappings
 set -x BEAKL true
 # set -x COLEMAK true
+set -x TERM xterm-256color
 
 # .......................................................... Network environment
 
@@ -79,11 +80,13 @@ set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
 
 # default editor
 # set -x EDITOR 'vi -e'
-set -x EDITOR 'gvim -f'
+set -x EDITOR 'vim'
 set -x VISUAL 'gvim -f'
 # fzf-vim theme
 set -x FZF_DEFAULT_OPTS "--cycle --reverse  --prompt='    ─────  ' --ansi --color=dark,hl:#dc322f,hl+:#dc322f,fg+:232,bg+:#fdf6e3,bg:#fdf6e3,marker:160,prompt:#268bd2,info:#268bd2"
 set -x NNN_USE_EDITOR 1
+set -x NNN_SHOW_HIDDEN 1
+set -x NNN_RESTRICT_0B 1
 
 set -x XIVIEWER 'feh'
 set -x PLAYER 'mpv'
@@ -105,6 +108,19 @@ set -x STOW $HOME/stow
 # ...................................................................... Session
 
 set -x SESSION $HOME/.session
+# proxy override
+test -e $SESSION/http_proxy ;and set -x HTTP_PROXY (cat $SESSION/http_proxy)
+
+set -x XDG_DOWNLOAD_DIR /net/downloads/http
+set -x NNTPSERVER news.sunnyusenet.com
+
+# tt-rss
+set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
+
+# ..................................................................... Defaults
+
+set -x http_proxy $HTTP_PROXY
+
 console_login
 user_login
 # clear 'fish' tmux window name

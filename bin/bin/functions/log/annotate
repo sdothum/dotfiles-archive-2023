@@ -2,16 +2,26 @@
 # sdothum - 2016 (c) wtfpl
 
 # Log
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ${COLORS} defined in env
 
 # ...................................................................... Comment
 
+usage() {
+  echo "usage: $(basename $0) [J | R] <string>"
+  exit 1
+}
+
+
 # initial leader
 [ $leader ] || leader=.
+case $1 in
+  J | R) justify=true; shift ;;
+esac
+[ "$1" ] || usage
 
-annotate() {
+annotate_right() {
   while read line ;do
     # indent=$(echo "$(tput cols) - $(echo $line | wc -L) - 3" | bc)
     indent=$(( $(tput cols) - $(echo $line | wc -L) - 3 ))
@@ -21,7 +31,14 @@ annotate() {
   done
 }
 
-echo $@ | annotate
+annotate() {
+  drawline $leader
+  while read line ;do
+    log "${__GREEN}${BLINK}@note${NOBLINK} ${__CYAN}$line${NOCOLOR}"
+  done
+}
+
+echo $@ | { [ $justify ] && annotate_right || annotate; }
 unset leader
 
 # vim: set ft=sh: #

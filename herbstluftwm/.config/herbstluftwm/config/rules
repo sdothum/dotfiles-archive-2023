@@ -2,12 +2,12 @@
 [ $TRACE ] && CHILD="config/rules $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ Rules
 
-# hc rule focus=off # normally do not focus new clients
-# hc rule focus=on  # normally focus new clients
+# hc rule focus=off  # normally do not focus new clients
+# hc rule focus=on   # normally focus new clients
 # emithook inconsistent for global hook=focus_frame, apply focus frame in scripts
 hc rule focus=on
 hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)'                      focus=on
@@ -19,7 +19,7 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 # desktop application groups
 hc rule class=tabbed                       tag=1 focus=on
 hc rule windowrole="'.* Tiny RSS'"         tag=1 focus=on
-hc rule class=Vimb                         tag=1 index=0 focus=on once
+hc rule class=Vimb                         tag=1 once index=0 focus=on hook=max
 hc rule instance='www.netflix.com__ca'     tag=1 index=1 focus=on
 hc rule class=Chromium                     tag=1 index=1 focus=on
 hc rule class=dwb                          tag=1
@@ -32,6 +32,7 @@ hc rule class=VimbT                        tag=1 once
 # hc rule title=IRC                        tag=2 index=1 focus=on
 hc rule title=IM                           tag=2 focus=on
 hc rule title=irc                          tag=2
+hc rule title=jabber                       tag=2
 hc rule title=Messenger                    tag=2 focus=on
 hc rule class=Pidgin                       tag=2
 hc rule title=Twitter                      tag=2
@@ -44,7 +45,7 @@ hc rule title=Usenet                       tag=3
 # hc rule class=Surf                       tag=4
 hc rule windowrole="'the darnedest thing'" tag=4 index=1 focus=on
 # chromium title (class) doesn't appear to be trapped
-hc rule title=thedarnedestthing            tag=4 index=1 focus=on
+hc rule title=thedarnedestthing            tag=4 index=1
 hc rule class=mplayer2                     tag=5
 hc rule title=Music                        tag=5 focus=on pseudotile=on
 hc rule title=Radio                        tag=5 focus=off

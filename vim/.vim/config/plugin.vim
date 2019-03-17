@@ -1,13 +1,13 @@
 " sdothum - 2016 (c) wtfpl
 
 " Plugins
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " Plugin manager ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Plugin manager _____________________________________________________________
 
     " .................................................................... Setup
 
-      filetype off                          " safe startup (vundle requirement)
+      filetype off  " safe startup (vundle requirement)
 
       " see https://github.com/junegunn/vim-plug
       " :PlugInstall/PlugUpdate/PlugClean
@@ -24,11 +24,12 @@
       " Plug 'tpope/vim-dispatch'           " launch async shell command
       Plug '~/.vim/custom/core'             " system wide primitives
 
-  " Interface ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Interface __________________________________________________________________
 
     " .................................................................... Theme
 
       " Plug 'andreypopp/vim-colors-plain'  " monochrome
+      Plug 'reedes/vim-colors-pencil'       " iaWriter theme (for console transparency)
       Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
@@ -36,6 +37,7 @@
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
       Plug '~/.vim/custom/theme'            " theme
       Plug '~/.vim/custom/ui'               " ui mode
+      Plug 'TaDaa/vimade'                   " hyperfocus highlghting for buffers
 
     " ..................................................................... Info
 
@@ -55,17 +57,18 @@
 
       " Plug 'markonm/traces.vim'           " ex pattern/range highlghting
       " Plug 'romainl/vim-cool'             " auto clear search highlighting
+      Plug 'JuliaEditorSupport/julia-vim'   " julia programming language
       Plug 'itchyny/vim-cursorword', prose  " word highlighting
-      Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' } " colourized indent columns
+      Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' }  " colourized indent columns
       Plug 'sheerun/vim-polyglot'           " multilingual highlighting
 
-  " Buffers ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Buffers ____________________________________________________________________
 
     " ............................................................... Management
 
-      " Plug 'duff/vim-scratch'             " scratch buffer
-      " Plug 'simeji/winresizer'            " resize windows
-      Plug 'chrisbra/NrrwRgn', { 'on' : 'NrrwrgnDo' } " visual block buffer
+      " Plug 'duff/vim-scratch'                        " scratch buffer
+      " Plug 'simeji/winresizer'                       " resize windows
+      Plug 'chrisbra/NrrwRgn', { 'on' : 'NrrwrgnDo' }  " visual block buffer
 
     " .......................................................... Version control
 
@@ -76,14 +79,14 @@
     " ................................................................ Hypertext
 
       " Plug 'lervag/wiki'                  " vimwiki clone
-      Plug 'junegunn/fzf.vim'               " fuzzy finder
+      Plug 'junegunn/fzf.vim', { 'dir': '~/.fzf', 'do': './install --all' }  " fuzzy finder
       Plug 'Alok/notational-fzf-vim'        " fzf note search
 
     " ................................................................... Linter
 
       Plug 'w0rp/ale'                       " asynchronous lint engine
 
-  " Editing ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Editing ____________________________________________________________________
 
     " ............................................................... Navigation
 
@@ -94,8 +97,8 @@
 
     " .................................................................. History
 
-      Plug 'sjl/gundo.vim', { 'on' : 'GundoToggle' } " undo
-      Plug 'vim-scripts/YankRing.vim'       " paste (yank)
+      Plug 'sjl/gundo.vim', { 'on' : 'GundoToggle' }  " undo
+      Plug 'vim-scripts/YankRing.vim'                 " paste (yank)
 
     " ............................................................... Formatting
 
@@ -116,7 +119,7 @@
       Plug 'reedes/vim-textobj-quote'       " typographic characters
       Plug 'tpope/vim-surround'             " pairwise c'hange, d'elete, y'ank
 
-  " Plugins ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Plugin completion __________________________________________________________
 
     " ................................................................ Configure
 
@@ -124,7 +127,7 @@
       unlet code prose
 
       filetype plugin on
-      filetype indent on                    " required
+      filetype indent on  " required
       filetype on
 
 " plugin.vim

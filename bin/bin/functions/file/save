@@ -2,13 +2,13 @@
 # sdothum - 2016 (c) wtfpl
 
 # File
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................................... Copy
 
 # replace previously saved?
-[ -e "$1.save" ] && { ifyes "overwrite \"$1.save\"" || exit 1 ;}
-[ -e "$1"      ] && { ditto 'copying '$(sudo cp -Rv "$1" "$1.save") ; exit 0 ;}
+[ -e "$1.save" ] && { ifyes "overwrite \"$1.save\"" || exit 1; }
+[ -e "$1"      ] && { ditto 'copying '$(sudo cp -Rv "$1" "$1.save"); exit 0; }
 exit 1
 
 # vim: set ft=sh: #

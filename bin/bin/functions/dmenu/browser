@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Browser
 
@@ -39,7 +39,7 @@ browsers="
 browser=$default
 while browser=$(apps "$browsers" | sed "$edit" | rmenu 'Browser' $browser -no-custom) || exit ;do
   case ${browser} in
-  "$EDIT"       ) gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2 ; dmenu bookmarks ;;
+  "$EDIT"       ) gvim -f -c "/$(echo $1 | sed 's|/|.|g').*" $2; dmenu bookmarks ;;
 
   brave         |\
   chromium      |\

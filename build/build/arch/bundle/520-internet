@@ -5,26 +5,27 @@
 
 
 = chat/twitter
-= ▔▔▔▔▔▔▔▔▔▔▔▔
-  bitlbee
-d * centerim5-git
+= ════════════
+  bitlbee         [server]
+# d * centerim5-git
 # finch
-  libotr
+# libotr
+  mcabber
 # pidgin
 # skype
 # python-twitter
 # turses
-  weechat
+  weechat         [server]
 # xchat
 # xmpppy
-d * znc
+d * znc           [server]
 
 
 = file transfer
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════
 # couchpotato-git [server]
 # flexget
-  gftp
+# gftp
   nzbget          [server]
 # par2cmdline-tbb
 # python2-pyopenssl
@@ -37,27 +38,26 @@ d * znc
 # transmission-gtk
 # unison
 # utserver
-  wget
 
 
 = usenet mail
-= ▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════
 # slrn
 
 
 = web aggregator
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
 # newsbeuter
   php-gd
 # php-mcrypt
-d php70-mcrypt
+# d php70-mcrypt
 d tt-rss
 # ttaurter
-  surfraw
+# surfraw
 
 
 = web server
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   pixelserv       [! server]
 
 

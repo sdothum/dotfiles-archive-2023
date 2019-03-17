@@ -1,29 +1,26 @@
 " sdothum - 2016 (c) wtfpl
 
 " User Interface
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " Layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Layout _____________________________________________________________________
 
     " .................................................................... Setup
 
-      let s:wikiinfo     = 1                " statusline (0) off (1) on
-      let s:initial_view = 1                " prose (0) dfm (1) proof
-      let s:info         = 0                " statusline (0) dfm (1) expanded
+      let s:show         = 1  " statusline (0) off (1) on
+      let s:initial_view = 1  " startup in (0) dfm (1) proof view
+      let s:expanded     = 0  " statusline state (0) dfm (1) expanded
 
-  "  Distraction free modes ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  "  Distraction free modes ____________________________________________________
 
     " ................................................................ Code view
 
       " source code style
-      function! ui#CodeView()
-        Trace ui#CodeView()
+      function! s:codeView()
+        Trace ui:codeView()
         let g:view = 0
-        " restore CursorLine syntax highlighting before applying themes
-        " syntax enable
-        if exists('g:loaded_limelight')
-          Limelight!
-        endif
+        " syntax enable  " restore CursorLine syntax highlighting before applying themes
+        if exists('g:loaded_limelight') | Limelight! | endif
         call theme#Theme()
         call theme#ShowStatusline()
         call theme#CodeView()
@@ -33,57 +30,51 @@
     " .................................................... Distraction free view
 
       " prose style
-      function! ui#DfmView()
-        Trace ui#DfmView()
+      function! s:dfmView()
+        Trace ui:dfmView()
         let g:view = 1
         " silent !tmux set status off
-        " un/comment to have monochromatic cursor line (looses vimdiff highlighting)
-        call theme#DfmView()
-        if core#Prose() || g:ruler == 0
-          set colorcolumn=0
-        endif
+        call theme#DfmView()  " un/comment to have monochromatic cursor line (looses vimdiff highlighting)
+        if core#Prose() || g:ruler == 0 | set colorcolumn=0 | endif
         set foldcolumn=0
         set laststatus=0
         set noshowmode
         set scrolloff=8
-        if core#Prose()
-          set spell
-        else
-          set nospell
-        endif
-        " initialize view mode (negate toggle)
-        let b:proof = b:proof == 0 ? 1 : 0
-        call ui#ToggleProof()
+        if core#Prose() | set spell
+        else            | set nospell | endif
+        call s:view()
       endfunction
 
     " .............................................................. Switch View
 
       " toggle full document highlight
-      function! ui#ToggleProof()
-        Trace ui#ToggleProof()
+      function! s:view()
+        Trace ui:view()
         let l:col = virtcol('.')
-        let b:proof = b:proof == 0 ? 1 : 0
         call theme#Theme()
-        if core#Prose()
-          call theme#ToggleProof()
-        endif
-        if b:proof == 1
-          call ui#ShowInfo(1)
+        if core#Prose() | call theme#ToggleProof() | endif
+        if b:view == 1
+          call s:showInfo(1)
           Limelight!
+          call theme#Contrast(0)
         else
-          call ui#ShowInfo(0)
+          call s:showInfo(0)
           Limelight
+          call theme#Contrast(1)
         endif
         execute 'normal! ' . l:col . '|'
       endfunction
 
-      function! ui#SetView()
-        Trace ui#SetView()
-        if g:view == 0
-          call ui#CodeView()
-        else
-          call ui#DfmView()
-        endif
+      function! ui#ToggleProof()
+        Trace ui#ToggleProof()
+        let b:view = b:view == 0 ? 1 : 0
+        call s:view()
+      endfunction
+
+      function! s:setView()
+        Trace ui:setView()
+        if g:view == 0 | call s:codeView()
+        else           | call s:dfmView() | endif
       endfunction
 
       " toggle dfm view
@@ -91,11 +82,11 @@
         Trace ui#SwitchView()
         let l:col = col('.')
         let g:view = g:view == 0 ? 1 : 0
-        call ui#SetView()
+        call s:setView()
         execute 'normal! ' . l:col . '|'
       endfunction
 
-  " Screen focus ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Screen focus _______________________________________________________________
 
     " ........................................................... Screen display
 
@@ -104,89 +95,80 @@
         Trace ui#LiteType()
         call theme#FontSize(core#Prose() ? 1 : 0)
         call theme#Palette()
-        if !exists('b:proof')
-          let b:proof = s:initial_view
-        endif
-        call ui#SetView()
+        if ! exists('b:view') | let b:view = s:initial_view | endif
+        call s:setView()
       endfunction
 
       " redraw
       function! ui#Retheme()
         Trace ui#Refresh()
         let lstatus     = &laststatus
-        call ui#SetView()
+        call s:setView()
         let &laststatus = lstatus
       endfunction
 
-  " Context statusline ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Context statusline _________________________________________________________
 
     " ........................................................ Statusline format
 
-      function! ui#detail()
-        return (g:detail == 0 ? info#Tag() : info#Atom()) . '  ' . info#SpecialChar()
+      function! ui#Detail()
+        let l:prefix = g:detail == 0 ? info#Tag() : info#Atom()
+        return l:prefix > '' ? l:prefix . '  ' . info#SpecialChar() : info#SpecialChar()
       endfunction
 
-      " (path) .. filename | pos .. (details)
-      function! ui#WikiInfo(proof)
-        " Trace ui#WikiInfo()
-        try                                 " trap snippet insertion interruption
+      " [path] .. filename | pos .. [details]
+      function! s:statusline(proof)
+        " Trace ui:statusline()  " tmi :-)
+        try  " trap snippet insertion interruption
           let g:prose = 1
           if core#Prose() && a:proof == 0
             return info#Escape(info#Leader('') . '  %{info#UnModified(0)}%*')
           else
             let l:name     = '%{info#Name()}' . g:pad_inner
-            " center dfm indicator / proofing statusline
-            if s:info == 0
+            if s:expanded == 0  " center dfm indicator / proofing statusline
               let l:leader = '%{info#Leader(info#Name())}'
             else
               let l:path   = '%{info#Path()}'
               let l:leader = '%{info#Leader(info#Path() . g:pad_outer . info#Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{info#UnModified(1)}' . g:pad_inner . '%{info#PosWordsCol()}'
-            if s:info == 1
+            let l:info     = '%{info#UnModified(1)}' . g:pad_inner . ' ' . '%{info#PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+            if s:expanded == 1
               let l:name   = '%2*' . l:path . '%1*' . g:pad_outer . l:name
-              let l:info  .= g:pad_outer . '%2*%{ui#detail()}'
+              let l:info  .= g:pad_outer . '%2*%{ui#Detail()}'
             endif
             return info#Escape('%1*' . l:leader . l:name . l:info . '%1*')
           endif
-        catch
+        catch /.*/  " discard messages
         endtry
       endfunction
 
-      function! ui#ShowInfo(proof)
-        Trace ui#ShowInfo()
-        if s:wikiinfo == 1
-          " execute 'set statusline=%{ui#WikiInfo(' . a:proof . ')}'
-          execute 'set statusline=' . ui#WikiInfo(a:proof)
+    " .......................................................... Show statusline
+
+      function! s:showInfo(proof)
+        Trace ui:showInfo()
+        if s:show == 1
+          " execute 'set statusline=%{s:statusline(' . a:proof . ')}'
+          execute 'set statusline=' . s:statusline(a:proof)
           call theme#ShowStatusline()
         else
-          " simply hide statusline content
-          call theme#ShowInfo()
+          call theme#ShowInfo()  " simply hide statusline content
         endif
       endfunction
 
       function! ui#RefreshInfo()
         Trace ui#RefreshInfo()
-        call ui#ShowInfo(b:proof)
+        call s:showInfo(b:view)
       endfunction
-
-    " ........................................................ Toggle statusline
 
       function! ui#ToggleInfo(...)
         Trace ui#ToggleInfo()
-        if a:0                              " exiting insert mode? see plugin/ui.vim autocmd
-          if b:proof == s:initial_view      " already default view?
-            return
-          endif
-        endif
+        if a:0 && a:1 | return | endif  " prose insert mode is always dfm
         let l:col = col('.')
-        let s:info = (s:info == 0 ? 1 : 0)
-        if core#Prose()                     " toggle between writing and proofing modes
-          call ui#ToggleProof()
-        else
-          call ui#ShowInfo(b:proof)
-        endif
+        let s:expanded = (s:expanded == 0 ? 1 : 0)
+        " if core#Prose() | call ui#ToggleProof()  " toggle between writing and proofing modes
+        " else            | call s:showInfo(b:view) | endif
+        call s:showInfo(b:view)
         execute 'normal! ' . l:col . '|'
       endfunction
 

@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Pre_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... dict-moby-thesaurus
+
+annotate "install pauses indefinitely after dictd server is restarted\n
+hit enter to resume bundle install"
+
+# vim: set ft=sh: #

@@ -1,13 +1,13 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................................... Pass
 
 store=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 
-name=$(find $store -follow -name '*.gpg' | sed -r "s/.*password-store\/(.*).gpg$/\1/ ; s|(.*)/([^/]*)$|\2^${SEP} \1|" |
+name=$(find $store -follow -name '*.gpg' | sed -r "s/.*password-store\/(.*).gpg$/\1/; s|(.*)/([^/]*)$|\2^${SEP} \1|" |
     sort | column -s^ -t | rmenu 'Password' -no-custom) || exit
 
 name=$(echo $name | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")

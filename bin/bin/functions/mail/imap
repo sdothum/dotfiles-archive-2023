@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Mail
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... Server
 
@@ -41,6 +41,8 @@ init() {
     # sudo rm -r $HOME/.mutt/cache/*
     sudo rm -r $HOME/.offlineimap/*
     sudo rm -r $HOME/Maildir/*
+    mkdir -p $HOME/.offlineimap
+    mkdir -p $HOME/Maildir
     cd $STOW
     stow mail
     imap 1 $2
@@ -73,7 +75,7 @@ case $1 in
     fi
     imap l ;;
 
-C*) rm -f $IMAPFILTER/certificates ; imap f ;;
+C*) rm -f $IMAPFILTER/certificates; imap f ;;
 f*) filter ;;
 I*) init ;;
 L*) log imapfilter $IMAPFILTER/$filter ;;
@@ -85,12 +87,12 @@ Q*) !p 'python.*offlineimap.*offlineimaprc' || exit
 q*) killall imapfilter 2>/dev/null
     kill -TERM $(p 'python.*offlineimap.*offlineimaprc' | awk '{ print $2 }') 2>/dev/null ;;
 
-r*) imap q ; imap ;;
+r*) imap q; imap ;;
 
 t*) if [ -e $OFFLINEIMAPFILTER ] ;then
-      sudo rm -r $OFFLINEIMAPFILTER ; ditto 'imapfilter processing off'
+      sudo rm -r $OFFLINEIMAPFILTER; ditto 'imapfilter processing off'
     else
-      touch $OFFLINEIMAPFILTER ; ditto 'imapfilter processing on'
+      touch $OFFLINEIMAPFILTER; ditto 'imapfilter processing on'
     fi ;;
 
 * ) usage ;;

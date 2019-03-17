@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="config/appbinds $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................ Applications keybinds
 
@@ -29,6 +29,9 @@ else
   hc keybind Super-Control-0          spawn pactl set-sink-mute $(sink) toggle
   hc keybind Super-$Mod-0             spawn toggle pavucontrol
 fi
+hc keybind Super-4                    spawn sudo xbacklight -5
+hc keybind Super-5                    spawn sudo xbacklight =100
+hc keybind Super-6                    spawn sudo xbacklight +5
 hc keybind Super-equal                spawn dmenu calc
 hc keybind Super-Control-equal        spawn toggle plover
 hc keybind Super-BackSpace            spawn toggle ncurses
@@ -56,13 +59,13 @@ hc keybind Super-h                    spawn dmenu shistory
 hc keybind Super-Control-k            spawn clack toggle
 hc keybind Super-$Mod-k               spawn clack swap
 hc keybind Super-l                    spawn lock_screen
-hc keybind Super-n                    spawn dmenu notes draft
-hc keybind Super-Control-n            spawn dmenu notes
+hc keybind Super-n                    spawn dmenu notes
+hc keybind Super-Control-n            spawn dmenu notes draft
 hc keybind Super-p                    spawn dmenu pass
 hc keybind Super-Control-p            spawn proof toggle
 hc keybind Super-$Mod-p               spawn hardcopy eject
-hc keybind Super-s                    spawn dmenu systemd
-hc keybind Super-Control-s            spawn dmenu system
+hc keybind Super-s                    spawn dmenu system
+hc keybind Super-Control-s            spawn dmenu systemd
 hc keybind Super-t                    spawn conky clock
 hc keybind Super-Control-t            spawn env CONKYRC=$CONKY_Q2 conky clock
 hc keybind Super-$Mod-t               spawn dmenu alarm

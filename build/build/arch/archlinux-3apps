@@ -18,7 +18,7 @@ mkdir -p $HOME/logs || exit 1
 
 
 title "bundle installs"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 # 1xx - 7xx, distro install bundles
 #       8xx, custom install bundles
 #       9xx, generated deferred install bundles, see bundle_install [check]
@@ -26,13 +26,13 @@ bundle_install init $HOME/build/arch/bundle/[1-6]*
 
 
 title "custom installs"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 title "web server (with passenger module)"
 app_install passenger-install-nginx-module $(dirname $(find $HOME -name passenger-install-nginx-module | grep gems))
 
 
 title "installation errors:"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
 # vim: set ft=sh: #

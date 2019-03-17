@@ -5,10 +5,11 @@
 
 
 = cups printing
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════
   cups
 # cups-filters
   cups-pdf
+  enscript
 # foomatic-db
 # foomatic-db-engine
 # foomatic-db-nonfree
@@ -22,7 +23,7 @@
 
 
 = package management
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════════
   aurvote
 # cower
 # cower-git
@@ -45,10 +46,13 @@
 
 
 = package rollback (btrfs)
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════════════
   grub-btrfs
 # grub-btrfs-git
   pacupg
 # snap-pac
   snapper
+
+
+# vim: set ft=conf: #
 

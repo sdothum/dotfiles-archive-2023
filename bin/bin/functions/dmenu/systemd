@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ..................................................................... Sysadmin
 
@@ -11,8 +11,8 @@ SERVICES='[ list services   ]'
 
 lib=/usr/lib/systemd/system/
 
-actions() { echo "$defaults\nstatus\nenable\ndisable\nedit" ;}
-sv()      { eval sudo systemctl $@ ;}
+actions() { echo "$defaults\nstatus\nenable\ndisable\nedit"; }
+sv()      { eval sudo systemctl $@; }
 
 # restart systemd process
 status() {
@@ -30,24 +30,23 @@ while : ;do
 
   service=${service%% *$SEP*}
   case $service in
-  "$DAEMON"  ) sv daemon-reload ; notify low 'Systemd daemon-reload' ; break ;;
+  "$DAEMON"  ) sv daemon-reload; notify low 'Systemd daemon-reload' ;;
   "$SERVICES") term 'services' WAIT systemctl --type service --all ;;
   "$FILES"   ) term 'unit-files' WAIT systemctl list-unit-files ;;
 
   *          ) sv status $service && defaults='stop\nrestart' || defaults=start
                while action=$(actions | rmenu "${service%.service}" -no-custom) || break ;do
                  case $action in
-                 start  ) sv start $service ; status ; break ;;
-                 stop   ) sv stop $service ; status ; break ;;
-                 restart) sv restart $service ; status ; break ;;
-                 status ) status ; break ;;
-                 enable ) sv enable $service ; sv start $service ; status ; break ;;
-                 disable) sv stop $service ; sv disable $service ; status ; break ;;
-                 edit   ) v -f $lib/$service ;;
+                 start  ) sv start $service; status ;;
+                 stop   ) sv stop $service; status ;;
+                 restart) sv restart $service; status ;;
+                 status ) status; continue ;;
+                 enable ) sv enable $service; sv start $service; status ;;
+                 disable) sv stop $service; sv disable $service; status ;;
+                 edit   ) v -f $lib/$service; continue ;;
                  esac
                  break
-               done
-               break ;;
+               done ;;
   esac
 done
 

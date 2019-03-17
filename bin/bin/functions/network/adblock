@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Network
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .......................................................................... DNS
 
@@ -48,7 +48,7 @@ if [ -z $1 ] ;then
   # wget -qO- http://hosts-file.net/download/hosts.txt 2>>$LOG |
   #      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock HPHosts
 
-  blacklist() { awk '{sub(/^127.0.0.1/, "0.0.0.0")} /^0.0.0.0/' | addblock $1 ;}
+  blacklist() { awk '{sub(/^127.0.0.1/, "0.0.0.0")} /^0.0.0.0/' | addblock $1; }
 
   ditto 'downloading file from MalwareDomainList.com'
   wget -qO- "http://www.malwaredomainlist.com/hostslist/hosts.txt" 2>>$LOG | blacklist MalwareDomainList.com

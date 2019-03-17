@@ -1,12 +1,12 @@
 # sdothum - 2016 (c) wtfpl
 
 # Make
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ xwait
 
 cd /net/depot
-[ -d xwait ] || git clone https://github.com/fsmi/xwait.git
+[ -d xwait ] || git clone --depth 1 https://github.com/fsmi/xwait.git
 cd xwait
 make clean
 make

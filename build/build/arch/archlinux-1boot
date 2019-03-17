@@ -10,7 +10,7 @@ user=shum
 
 
 heading 'set and generate locale'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 original /etc/locale.gen
 sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
 echo LANG=en_US.UTF-8 >/etc/locale.conf
@@ -19,7 +19,7 @@ locale-gen
 
 
 heading 'set timezone and clock'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 # ls /usr/share/zoneinfo
 # ls /usr/share/zoneinfo/America
 # ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
@@ -28,7 +28,7 @@ timedatectl set-timezone Canada/Eastern
 
 
 heading 'set hostname'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 read -p "Hostname [archlinux]: " hostname
 [ $hostname ] || hostname=archlinux
 # hostnamectl set-hostname $hostname
@@ -38,7 +38,7 @@ checkpoint
 
 
 heading 'select scheduler for SSD'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 if [ ! $hostname = luna ] ;then
   if [ ! -f /etc/udev/rules.d/60-schedulers.rules ] ;then
     echo '# set deadline scheduler for non-rotating disks\
@@ -49,13 +49,13 @@ fi
 
 
 heading 'check kvm compatibility'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 [ $hostname != luna ] && config_install /etc/modprobe.d/blacklist-kvm.conf
 checkpoint
 
 
 # heading 'set keyboard'
-# # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# # ══════════════════════════════════════════════════════════════════════════════
 # if [ $hostname != luna ] ;then
 #   [ -f /etc/vconsole.conf ] && sed -i 's/^\(KEYMAP\)=.*/\1=colemak/' /etc/vconsole.conf || echo KEYMAP=colemak >/etc/vconsole.conf
 #   cat /etc/vconsole.conf
@@ -65,7 +65,7 @@ checkpoint
 
 
 heading 'configure package manager'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 original /etc/pacman.conf
 sed -i -e '/^\[options\]/aILoveCandy' \
     -e '/^#\[multilib\]/,+1s/^#//' \
@@ -76,14 +76,14 @@ checkpoint
 
 
 heading 'configure network'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 [ $hostname = luna ] && systemctl enable dhcpcd.service
 # heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
 # [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 
 
 heading 'installing wireless tools'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install connman
 pm_install dialog
 pm_install iw
@@ -99,21 +99,21 @@ checkpoint
 
 
 heading 'set root password'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 passwd
 heading "create \"$user\" user account"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 pm_install sudo
 original /etc/sudoers
-sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# // ; /## Defaults specification/aDefaults insults' /etc/sudoers
+sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //; /## Defaults specification/aDefaults insults' /etc/sudoers
 EDITOR=nano visudo
 # cat /etc/sudoers
 checkpoint
 
 
 heading 'install base-devel'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install base-devel
 # pm_install expac
 pm_install git
@@ -125,7 +125,7 @@ checkpoint
 
 
 heading 'default shell'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 pm_install bc
 pm_install dash
 pm_install fish
@@ -134,7 +134,7 @@ checkpoint
 
 
 heading 'enable tty autologin'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 mkdir -pv /etc/systemd/system/getty@tty1.service.d
 echo "[Service]
 ExecStart=
@@ -147,7 +147,7 @@ checkpoint
 
 
 heading 'configure btrfs in mkinitcpio.conf'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 # sed -i '/^HOOKS=/s/fsck/btrfs usr shutdown/' /etc/mkinitcpio.conf
 original /etc/mkinitcpio.conf
 sed -i '/^HOOKS=/s/fsck/btrfs/' /etc/mkinitcpio.conf
@@ -157,7 +157,7 @@ checkpoint
 
 
 heading 'installing bootloader'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 read -p "Boot disk /dev/sd? [a-z] | /dev/mmcblk? [0]: " disk
 if [ -z $disk ] ;then
   echo 'invalid disk reference.. aborting'
@@ -186,7 +186,7 @@ checkpoint
 
 
 heading 'sync home directory'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 if [ ! -d /home/$user/stow ] ;then
   pm_install rsync
   mkdir /net
@@ -194,7 +194,7 @@ if [ ! -d /home/$user/stow ] ;then
   [ -d /net/archive/home/$user ] && rsync -av /net/archive/home/$user /home/
   # assume usb image is contains most upto date scripts
   rsync -av /media/home/$user /home/
-  rm -f /home/$user/.conky*               # discard other configuration settings
+  rm -f /home/$user/.conky*  # discard other configuration settings
   rm -f /home/$user/.session/*
   touch /home/$user/.session/panel:ticker
   touch /home/$user/.session/panel:weather
@@ -205,7 +205,7 @@ fi
 
 
 heading 'cd / and umount /media (usb), exit chroot'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 # sudo mkdir -pv /net/downloads
 
 # vim: set ft=sh: #

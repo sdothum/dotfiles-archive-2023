@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Desktop
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ Conky
 
@@ -14,7 +14,7 @@ usage() {
 CONKYRC=${CONKYRC:-$HOME/.conkyrc.qclocktwo}
 [ -e $CONKYRC ] || exit
 
-clock() { pstat "conky -c $CONKYRC" ;}
+clock() { pstat "conky -c $CONKYRC"; }
 
 case $1 in
 auto) xset s off -dpms
@@ -33,7 +33,7 @@ off ) clock || exit
       pkill -f "conky -c $CONKYRC"
       pkill -f "conky -c $CONKY_Q2" ;;
 
-''  ) clock && { conky clock off ; true ;} || conky clock on ;;
+''  ) clock && { conky clock off; true; } || conky clock on ;;
 *   ) usage ;;
 esac
 

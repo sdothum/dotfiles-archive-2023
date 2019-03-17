@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................... Clipboard
 
@@ -12,7 +12,7 @@ clipboard=/tmp/dmenu:clipboard
 trap "rm -f $clipboard" EXIT
 
 # trim multiline content (corrupts list format otherwise)
-clipboard() { gpaste-client --oneline | cut -c -$truncate | sed "s/://" | tac >$clipboard ;}
+clipboard() { gpaste-client --oneline | cut -c -$truncate | sed "s/://" | tac >$clipboard; }
 
 # delete from the bottom of the queue to preserve indexes
 clipboard

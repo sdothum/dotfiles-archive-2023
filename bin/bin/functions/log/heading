@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Log
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Heading
 
@@ -14,7 +14,7 @@ if echo "$1" | grep -q '^.$' ;then
   if echo "$1" | grep -qv '[[:alnum:]]' ;then
     # specifying default leader character adds timestamp!
     if [ "$1"q = : ] ;then
-      trace=true ; echo
+      trace=true; echo
     else
       delimeter=$1
     fi
@@ -30,6 +30,6 @@ leader=$(echo $leader | sed "s/[\^]/$delimeter/g")
 [ $(echo "$leader   $message   $leader" | wc -L) -lt $(tput cols) ] && pad=$delimeter || unset pad
 
 attention "$leader   $message   $leader$pad"
-[ $trace ] && { echo "$(timestamp)" ; unset trace ;}
+[ $trace ] && { echo "$(timestamp)"; unset trace; }
 
 # vim: set ft=sh: #

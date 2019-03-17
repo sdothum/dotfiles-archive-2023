@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Package
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................... Distribution install
 
@@ -13,7 +13,7 @@ else
   heading : $1
   time=$(date +%s)
   echo "${__GREEN}@gem${NOCOLOR}"
-  gem install --no-rdoc --no-ri $1
+  gem install $1
   post_install $1
   echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
 fi

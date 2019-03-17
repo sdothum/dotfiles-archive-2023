@@ -2,11 +2,11 @@
 [ $TRACE ] && CHILD="restore/layout $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................... Restore layout
 
-# Usage: restore layout [ tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | default ]
+# Usage: restore layout [tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | default]
 
 # default master pane left or right
 MASTER=${MASTER:-left}
@@ -161,7 +161,7 @@ quarters() {
 
 # ....................................................................... Select
 
-default() { is display +1920 && echo '1:1:1' || is display +1440 && echo '1:1' || echo 'max' ;}
+default() { is display +1920 && echo '1:1:1' || is display +1440 && echo '1:1' || echo 'max'; }
 
 # restore default monitor margins
 [ $1 ] && [ -e $MONOCLE ] && toggle monocle

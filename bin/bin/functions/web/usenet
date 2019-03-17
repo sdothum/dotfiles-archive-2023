@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Web
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................... Newsgroups
 
@@ -16,8 +16,8 @@ host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')
 
 case $i in
 '') pstat slrn || exec slrn -h $host ;;
-f*) killall slrn 2>/dev/null ; usenet ;;
-I*) slrn -h $host --create ; slrn -h $host -d ; usenet ;;
+f*) killall slrn 2>/dev/null; usenet ;;
+I*) slrn -h $host --create; slrn -h $host -d; usenet ;;
 * ) usage ;;
 esac
 

@@ -2,25 +2,27 @@
 # sdothum - 2016 (c) wtfpl
 
 # Package
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................... Distribution install
 
-# Usage: bundle_install [check | init | list ] <bundle>*
+# Usage: bundle_install [check | init | list] <bundle>*
 #
 # format: # inline comment
 #         = title
 #         " quote
 #         + package                    (to manually install afterwards)
 #         - package        [condition] (to remove)
-#         ? package        [condition] (confirm, see pm_install)
+#         ? package        [condition] (confirm)
 #           package        [condition] (noconfirm)
-#         * package        [condition] (noconfirm)
+#         * package        [condition] (noconfirm) same as above, but with placeholder
 #         @ aur            [condition] (aur makepkg)
 #         a arm            [condition] (aur makepkg for raspberry pi)
 #         d action package [condition] (deferred install)
-#         g gem            [condition]
-#         m make           [condition] (make_install script)
+#         g gem            [condition] (gem_install)
+#         m make           [condition] (make_install)
+#         p make           [condition] (pkg_install)
+#         s source         [condition] (xbps-src)
 #         ! command        [options]   (execute)
 #
 #         where, condition = [command] or [[[expression]]] as short form for test
@@ -32,19 +34,28 @@
 
 [ $1 ] || exit
 console && export VISUAL='vim -f'
-unset HTTP_PROXY # ignore local network proxy
+unset HTTP_PROXY      # ignore local network proxy
+
+# distro package manager
+if exists pacman ;then
+  INSTALL=pm_install  # arch
+  QUERY='pacman -Q'
+else
+  INSTALL=xb_install  # void
+  QUERY=xbps-query
+fi
 
 case $1 in
-check) check=true ; gems=$(gem list | cut -d' ' -f1) ; shift ;;
-list ) list=true ; shift ;;
-init ) init=--init ; shift ;;
+check) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
+list ) list=true; shift ;;
+init ) init=--init; shift ;;
 esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
-[ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred ;};}
+[ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred; };}
 
-rule() { echo "$@" | sed 's/\[// ; s/\]//' || echo true ;}
+rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
 
 for i in $@ ;do
   [ $list ] || subject $(basename $i | cut -d- -f2-9)
@@ -57,10 +68,10 @@ for i in $@ ;do
     case $action in
     ''  ) continue ;;
     '#' ) continue ;;
-    '=' ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition" ;}; continue ;;
-    '"' ) [ $check ] || ditto "$package $condition" ;                                           continue ;;
-    '!' ) [ $check ] || $package $condition ;                                                   continue ;;
-    '+' ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package" ; continue ;};} ;;
+    '=' ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; continue ;;
+    '"' ) [ $check ] || ditto "$package $condition";                                               continue ;;
+    '!' ) [ $check ] || $package $condition;                                                       continue ;;
+    '+' ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     continue; };} ;;
     d   ) rule=true ;;
 
     '-' |\
@@ -69,14 +80,15 @@ for i in $@ ;do
     '@' |\
     a   |\
     g   |\
-    m   ) rule=$(rule "$condition") ;;
+    m   |\
+    p   ) rule=$(rule "$condition") ;;
 
     *   ) set -- $package $condition
           package=$action
           rule=$(rule "$@") ;;
     esac
 
-    [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d ; s/^([-?*@"adgm] )*// ; s/ *([^ ]*).*/\1/' ; continue ;}
+    [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/'; continue; }
     eval $rule || continue
 
     if [ $check ] ;then
@@ -88,7 +100,7 @@ for i in $@ ;do
       '-') continue ;;
       g  ) echo "$gems" | grep -q "^$package$" && installed=true || pkg='gem ' ;;
       m  ) pkg='make_install possibly ' ;;
-      *  ) pacman -Q $package >/dev/null 2>&1 && installed=true ;;
+      *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
       esac
       [ $installed ] && ditto $package || ditto "$package  ${__RED}${BLINK}[${pkg}not installed]"
       continue
@@ -96,14 +108,16 @@ for i in $@ ;do
 
     # package management
     case $action in
-    '-') heading "--Uninstalling--  $package" ; pm R $package ;;
-    '?') pm_install --confirm $package ;;
+    '-') heading "--Uninstalling--  $package"; pm R $package ;;
+    '?') $INSTALL --confirm $package ;;
     '@') aur_install $package ;;
     a  ) arm_install $package ;;
     d  ) echo "$package $condition" >>$deferred ;;
     g  ) gem_install $package ;;
     m  ) make_install $package ;;
-    *  ) pm_install $init $package ;;
+    p  ) pkg_install $package ;;
+    s  ) src_install $package ;;
+    *  ) $INSTALL $init $package ;;
     esac
   done 3< $i
 done

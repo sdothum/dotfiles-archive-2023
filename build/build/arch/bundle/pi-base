@@ -9,7 +9,7 @@
 
 
 = aur package manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════════
 a package-query
 @ yaourt
 ! yaourt -Sy
@@ -18,7 +18,7 @@ a package-query
 
 
 = core
-= ▔▔▔▔
+= ════
   base-devel
   btrfs-progs
   expac
@@ -30,34 +30,34 @@ a package-query
 
 
 = entropy
-= ▔▔▔▔▔▔▔
+= ═══════
 # haveged_
 
 
 = shell
-= ▔▔▔▔▔
+= ═════
 # autojump
   bc
   dash
-  figlet
   fish
+  toilet
 
 
 = x11 driver
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   xf86-input-evdev
   xf86-input-libinput
   xf86-video-fbdev
 
 
 = x11 server
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   xorg-xinit
   xorg-server
 
 
 = x11 server utility
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════════
 # xorg-apps
   xorg-xinput
   xorg-xmodmap
@@ -68,7 +68,7 @@ a package-query
 
 
 = font rendering
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   cairo
   freetype2
   fontconfig
@@ -76,12 +76,12 @@ a package-query
 
 
 = ncurses editor
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   gvim
 
 
 = terminal
-= ▔▔▔▔▔▔▔▔
+= ════════
 " add armv7h to arch in pkgbuild
 ? rxvt-unicode-patched
   urxvt-perls
@@ -89,11 +89,12 @@ a package-query
 
 
 = window manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   herbstluftwm
 
 ! ditto 'exit console (script)'
 ! ditto 'startx (x)'
 ! ditto 'bundle_install pi_bundle'
+
 
 # vim: set ft=conf: #

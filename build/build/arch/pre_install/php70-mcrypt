@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. php70-mcrypt
+
+annotate "edit PKGBUILD check() and negate sendmail test\n
+change grep -q -> grep -vq to ignore msmtp-mta usage"
+
+# vim: set ft=sh: #

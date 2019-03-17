@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Sysadmin
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Stow wrapper
 
@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-echo $PWD | grep -q /stow && STOW=$PWD # || STOW=$HOME/stow
+echo $PWD | grep -q /stow && STOW=$PWD  # || STOW=$HOME/stow
 
 link() {
   for i in $STOW/* ;do
@@ -27,7 +27,7 @@ case $1 in
 sync ) link '&& stow' ;;
 clean) link '|| stow D' ;;
 check) link '&& ditto' ;;
-D | R) [ $2 ] && { /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 ; true ;} || usage ;;
+D | R) [ $2 ] && { /usr/bin/stow -v -t $HOME -d $STOW -$1 $2; true; } || usage ;;
 *    ) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
 esac
 

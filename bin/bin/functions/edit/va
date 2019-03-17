@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Editor
+
+# v by content
+[ "$1"     ] && files=$(al "$@" | quote) || exit
+[ "$files" ] || exit
+
+# regex passed as search command causes file name mangling
+echo "$@" | grep -q '^[[:alnum:]]*$' && v -c "/\v$@" $files || v $files
+
+# vim: set ft=sh: #

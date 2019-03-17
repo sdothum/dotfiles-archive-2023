@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="toggle/monocle $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .......................................................... Toggle monocle view
 
@@ -27,7 +27,7 @@ if is primary ;then
     touch $MONOCLE
     set -- $(query display)
     # really only useful for large displays..
-    [ $1 -gt 2560 ] && D=3 || { [ $1 -gt 1440 ] && D=2 || D=16 ;}
+    [ $1 -gt 2560 ] && D=3 || { [ $1 -gt 1440 ] && D=2 || D=16; }
     echo "$(( ($1 - $2) / $D * 10 / 11 ))" >$MONOCLE
     cp $MONOCLE $MONOCLE:$tag
   fi

@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Process
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Stat process
 
@@ -10,7 +10,7 @@
 #        pstat <+> <pattern>, where + tests for multiple instances
 
 # pstat test will include itself for simple command line patterns
-[ "$1" = '+' ] && { instance=2 ; shift ;} || instance=1
+[ "$1" = '+' ] && { instance=2; shift; } || instance=1
 
 if [ "${1% *}" != "$1" ] ;then
   # regex "or" command line patterns will not count the pstat call

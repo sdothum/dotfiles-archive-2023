@@ -5,7 +5,7 @@
 
 
 = x11 driver
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   libglvnd             [gpu nvidia]
   lib32-libglvnd       [server && gpu nvidia]
 # lib32-mesa-libgl     [laptop]
@@ -32,7 +32,7 @@
 
 
 = x11 server
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   mesa
 # mesa-git
 # mesa-vdpau-git
@@ -43,10 +43,11 @@
 
 
 = x11 utility
-= ▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════
   arandr               [server]
   lxrandr              [server]
 # xorg-apps
+  xorg-xbacklight
   xorg-xev
   xorg-xinput
   xorg-xmessage
@@ -56,7 +57,7 @@
 
 
 = font rendering
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   cairo
   freetype2
   fontconfig

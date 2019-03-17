@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................................... Edit
 
@@ -19,8 +19,8 @@ sources="
   $HOME/.weechat/python
 "
 
-files()      { for i in $sources ;do fcache f $i ;done ;}
-abbreviate() { eval sed $trim ;}
+files()      { for i in $sources ;do fcache f $i ;done; }
+abbreviate() { eval sed $trim; }
 
 # shorten path references for menu
 for i in $sources ;do
@@ -36,7 +36,7 @@ done
 expand() {
   for i in $sources ;do
     prefix=${i%/*}
-    [ -e $prefix/$1 ] && { echo $prefix/$1 ; return 0 ;}
+    [ -e $prefix/$1 ] && { echo $prefix/$1; return 0; }
   done
   return 1
 }
@@ -59,7 +59,7 @@ while : ;do
   if expand $file >/dev/null ;then
     v $(expand $file)
     # history file cleanup usually precedes impending edit
-    expand $file | grep -q dmenu/.history && { pwait "v $(expand $file)" ; dmenu edit ;}
+    expand $file | grep -q dmenu/.history && { pwait "v $(expand $file)"; dmenu edit; }
   else
     error=": ${file##*/} ∉ ${file%/*}"
     sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/scripts

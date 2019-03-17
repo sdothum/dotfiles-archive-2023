@@ -2,7 +2,7 @@
 // this is the style you want to emulate.
 //
 // To flash planck firmware
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ════════════════════════
 //   Reset keyboard or press hw reset button on base (hole)
 //
 //   cd qmk_firmware/keyboards/planck
@@ -12,13 +12,13 @@
 //   sudo make KEYMAP=sdothum (to compile check)
 //
 // Package requirements (for arch linux)
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ═════════════════════════════════════
 //   avr-gcc-atmel
 //   avr-libc-atmel
 //   dfu-programmer
 //
 // Notes
-// ▔▔▔▔▔
+// ═════
 //   ** E R G O   W I D E   S P L I T ** Layout
 //
 //   Autocompletion tap dance key pairs (),[],{} are available from the
@@ -32,7 +32,7 @@
 //   see function private()
 //
 // Modifier clusters
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ═════════════════
 //   The num and sym keys together access the navigation pad layer
 //
 //   ,-----------------------------------------------------------------------------------.
@@ -40,13 +40,13 @@
 //   `-----------------------------------------------------------------------------------'
 //
 // Hint
-// ▔▔▔▔
+// ════
 //   For sculpted keycaps such as Cherry or OEM profile, reverse the Alt, Num,
 //   Shift, Shift, Nav, Sym keycaps for more ergonomic thumb orientation and
 //   actuation
 //
 // Code
-// ▔▔▔▔
+// ════
 //   This source is shamelessly based on the "default" planck layout
 //
 //   #ifdef/#endif block structures are not indented, as syntax highlighting
@@ -55,7 +55,7 @@
 //   c++ commenting style is used throughout
 //
 // Change history
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ══════════════
 //   See http://thedarnedestthing.com/colophon
 
 

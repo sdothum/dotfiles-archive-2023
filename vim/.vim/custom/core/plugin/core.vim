@@ -1,24 +1,20 @@
 " sdothum - 2016 (c) wtfpl
 
 " Core
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " Primitive ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Primitive __________________________________________________________________
 
     " .................................................................... Setup
 
-      if exists("g:loaded_core")
-        finish
-      endif
+      if exists("g:loaded_core") | finish | endif
       let g:loaded_core = 1
       let s:save_cpo    = &cpo
       set cpo&vim
 
-      augroup core
-        autocmd!
-      augroup END
+      augroup core | autocmd! | augroup END
 
-  " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " System _____________________________________________________________________
 
     " .............................................................. Config file
 
@@ -59,23 +55,14 @@
 
       nnoremap <silent><F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
-  " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-
-    " ......................................................... Colemak-shift-dh
-
-      " environment variable
-      if $COLEMAK > ''
-        call core#Colemak()
-      endif
-
-  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Text _______________________________________________________________________
 
     " ......................................................... Strip whitespace
     
-      nmap <silent><F4>   :call core#StripTrailingWhitespaces()<CR>
-      vmap <silent><F4>   :<C-u>call core#StripTrailingWhitespaces()<CR>
+      nmap <silent><F4> :call core#StripTrailingWhitespaces()<CR>
+      vmap <silent><F4> :<C-u>call core#StripTrailingWhitespaces()<CR>
 
-      " pre-write formatting
+      " " pre-write formatting
       " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
       " " focus oriented formatting
       " autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
@@ -89,14 +76,14 @@
 
     " .......................................................... CSS block align
 
-      nnoremap <silent><S-F4>    :call core#CssBlockAlign()<CR>
+      nnoremap <silent><S-F4> :call core#CssBlockAlign()<CR>
 
-  " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Filetype ___________________________________________________________________
 
-    " ............................................................... Modifiable
+    " ................................................................. Settings
 
-      " check filetype on open
-      " autocmd core BufNewFile,BufRead * call core#CheckFiletype()
+      " check on open
+      autocmd core BufNewFile,BufRead * call core#BufferSettings()
 
     " ................................................................... E-mail
 
@@ -105,8 +92,8 @@
 
     " ..................................................................... Wiki
   
-     " set touch date
-     command! -nargs=1 Wiki execute ':silent !wikitouch "' . expand('%:p') . '" ' . <f-args>
+      " set touch date
+      command! -nargs=1 Wiki execute ':silent !wikitouch "' . expand('%:p') . '" ' . <f-args>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

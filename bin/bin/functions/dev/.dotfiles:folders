@@ -3,14 +3,16 @@
   bin
   bspwm
   build
+  chimera/qmk_firmware/keyboards/chimera_ergo_42
   compton
   conky
   fish
   herbstluftwm
   planck/qmk_firmware/keyboards/planck
   README.md
-  sxhkd
   splitography/qmk_firmware/keyboards/splitography
+  sxhkd
   tt-rss
   vim
+  weechat
   zsh

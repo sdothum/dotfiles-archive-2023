@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... E-mail
 
@@ -62,7 +62,7 @@ abook() {
 }
 
 # command line initialization with: dmenu abook [init]
-[ ! -s $cache ] || [ $1 ] && { abook ; [ $1 ] && exit ;}
+[ ! -s $cache ] || [ $1 ] && { abook; [ $1 ] && exit; }
 
 # ................................................................. Send-to list
 
@@ -76,13 +76,13 @@ ribbon() {
   fi
 }
 
-contacts() { sed "s/  *::  */^$SEP /" $contacts | column -s^ -t ; cat $patricia $cache ;}
+contacts() { sed "s/  *::  */^$SEP /" $contacts | column -s^ -t; cat $patricia $cache; }
 
 addresslist() {
   if [ "$addresses" ] ;then
-    contacts | sed "/^ *$/d ; 1i$PASTE\n$CLIPBOARD\n$ADD"
+    contacts | sed "/^ *$/d; 1i$PASTE\n$CLIPBOARD\n$ADD"
   else
-    contacts | sed "/^ *$/d ; 1i$REBUILD\n$EDIT"
+    contacts | sed "/^ *$/d; 1i$REBUILD\n$EDIT"
   fi
 }
 
@@ -94,7 +94,7 @@ while : ;do
 
   case $address in
   "$PASTE"    ) clipboard "$addresses"
-                cpu arm && sleep 2 # allow application to regain focus
+                cpu arm && sleep 2  # allow application to regain focus
                 xdotool type --delay 0 "$addresses"
                 break ;;
 
@@ -106,8 +106,8 @@ while : ;do
                 gvim -f $contacts ;;
 
   "$EDIT"     ) gvim -f $contacts ;;
-  "$REBUILD"  ) abook ; unset addresses ;;
-  "$CLIPBOARD") clipboard "$addresses" ; notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')" ; break ;;
+  "$REBUILD"  ) abook; unset addresses ;;
+  "$CLIPBOARD") clipboard "$addresses"; notify 'Ctrl-Alt-V' "$(echo $addresses | sed 's/ <\S*>//g')"; break ;;
   *           ) [ "$addresses" ] && addresses=$addresses,$address || addresses=$address ;;
   esac
 done

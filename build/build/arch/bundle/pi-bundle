@@ -9,7 +9,7 @@
 
 
 = sound
-= ▔▔▔▔▔
+= ═════
   alsa-utils
   alsa-plugins
   pavucontrol
@@ -18,7 +18,7 @@
 
 
 = system utility
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   cronie
   logrotate
   ntp
@@ -30,18 +30,18 @@ d ? preload
 
 
 = file
-= ▔▔▔▔
+= ════
   ack
   stow
 
 
 = file compression
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════
   file-roller
 
 
 = file manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
   ncdu
   nnn
   ranger
@@ -52,18 +52,18 @@ d ? preload
 
 
 = file system
-= ▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════
   dosfstools
   exfat-utils
 
 
 = info screen
-= ▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════
   neofetch
 
 
 = shell tool
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   fzf
   pv
   ripgrep
@@ -71,7 +71,7 @@ d ? preload
 
 
 = cups printing
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════
   cups
   ghostscript
   gsfonts
@@ -79,7 +79,7 @@ d ? preload
 
 
 = font
-= ▔▔▔▔
+= ════
   adobe-base-14-fonts
   noto-fonts
 # terminus-font-ll2-td1
@@ -94,31 +94,31 @@ d ? preload
 
 
 = package manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
   downgrade
   pkgfile
 
 
 = security
-= ▔▔▔▔▔▔▔▔
+= ════════
 d pass
   sudo
 
 
 = system monitor
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   glances
   htop
 
 
 = terminal multiplexor
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════════
   tmux
 # tmux-tpm
 
 
 = network utility
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
   dialog
 # dnsmasq
 # dnsutils
@@ -128,13 +128,13 @@ d pass
 
 
 = network security
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════
   openssh
   wpa_supplicant
 
 
 = network share
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════
   avahi
 # d " add armv7h to arch in pkgbuild
 # d ? cachefilesd
@@ -145,17 +145,17 @@ d pass
 
 
 = proxy
-= ▔▔▔▔▔
+= ═════
 # squid
 
 
 = socket
-= ▔▔▔▔▔▔
+= ══════
   socat
 
 
 = sync
-= ▔▔▔▔
+= ════
   rsync
   syncthing
 # syncthing-inotify-git
@@ -163,7 +163,7 @@ d ? watchman
 
 
 = appearance
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   compton
   lxappearance
 d " add armv7h to arch in pkgbuild
@@ -172,14 +172,14 @@ d ? unclutter-xfixes-git
 
 
 = desktop
-= ▔▔▔▔▔▔▔
+= ═══════
   conky
 d " add armv7h to arch in pkgbuild
 d ? lemonbar-xft-git
 
 
 = desktop utility
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
 d " add armv7h to arch in pkgbuild
 d ? alock-git
   python-pywal
@@ -187,7 +187,7 @@ d ? alock-git
 
 
 = gtk theme/engine
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════
   adapta-gtk-theme
   gtk-engine-murrine
 # "direct rsync from /usr/share/icons to .local/share"
@@ -195,7 +195,7 @@ d ? alock-git
 
 
 = user interface
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   autokey-py3
   dbus-glib
 # "stest contained in dmenu package"
@@ -207,14 +207,14 @@ d ? alock-git
 
 
 = window property
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
 d " add armv7h to arch in pkgbuild
 d ? sutils-git
 d ? xtitle-git
 
 
 = x11
-= ▔▔▔
+= ═══
   autocutsel
   xdotool
   xf86-input-keyboard
@@ -223,57 +223,57 @@ d ? xtitle-git
 
 
 = file transfer
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════
   wget
 
 
 = utility
-= ▔▔▔▔▔▔▔
+= ═══════
   perl-curses-ui
   perl-extract-url
   perl-html-strip
 
 
 = editor
-= ▔▔▔▔▔▔
+= ══════
   ctags
 d texlive-core
   texlive-latexextra
 
 
 = java
-= ▔▔▔▔
+= ════
   icedtea-web
   jre7-openjdk
 
 
 = software tool
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════
   time
 
 
 = version control
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
   git
   mercurial
   patchutils
 
 
 = programming language
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════════
   python
   ruby
 g term-ansicolor
 
 
 = video player
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
   omxplayer
   youtube-dl
 
 
 = mail
-= ▔▔▔▔
+= ════
 d " add export CFLAGS="-D_FILE_OFFSET_BITS=64" to package() of pkgbuild
 d ? python2-gpg
 d * alot
@@ -281,7 +281,7 @@ d * alot
 
 
 = browser
-= ▔▔▔▔▔▔▔
+= ═══════
   chromium
 # qt5-webkit
 # qutebrowser
@@ -294,28 +294,28 @@ d ? vimb
 
 
 = chat/twitter
-= ▔▔▔▔▔▔▔▔▔▔▔▔
-# bitlbee
+= ════════════
+  bitlbee
 # d " add armv7h to arch in pkgbuild
-d ? centerim5-git
+# d ? centerim5-git
 # libotr
-# weechat
+  weechat
 # xmpppy
 
 
 = web server
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
 # pixelserv
 
 
 = astronomy
-= ▔▔▔▔▔▔▔▔▔
+= ═════════
 d " add armv7h to arch in pkgbuild
 d ? wego-git
 
 
 = dictionary
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   aiksaurus
   dictd
   dict-wn
@@ -326,19 +326,19 @@ m dict-moby-thesaurus
 
 
 = keyboard
-= ▔▔▔▔▔▔▔▔
+= ════════
   plover
 
 
 = productivity
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
 d " add armv7h to arch in pkgbuild
 d ? amphetype-svn
   remind
 
 
 = viewer
-= ▔▔▔▔▔▔
+= ══════
   feh
   zathura
   zathura-ps
@@ -346,18 +346,19 @@ d ? amphetype-svn
 
 
 = media server/player
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════════
   kodi-rpi
 
 
 = productivity
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
   calc
 
 
 = network
-= ▔▔▔▔▔▔▔
+= ═══════
 d " drops internet connection (do last!)
 d * connman
+
 
 # vim: set ft=conf: #

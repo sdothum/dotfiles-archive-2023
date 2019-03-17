@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# rank mirrorlist for country
+[ $1 ] && country=$@ || country='United States'
+
+sudo reflector --verbose --country "$country" -l 200 -p http --sort rate --save /etc/pacman.d/mirrorlist
+cat /etc/pacman.d/mirrorlist
+
+# vim: set ft=sh: #

@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Dev
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................... Revision differences
 
@@ -24,7 +24,7 @@ while : ;do
             shift 2
             nosync=true ;;
 
-  -b      ) w=$1 ; shift ;;
+  -b      ) w=$1; shift ;;
   *       ) break ;;
   esac
 done
@@ -32,7 +32,7 @@ done
 
 [ $1          ] || usage
 [ -d $STOW/$1 ] || usage
-[ -z $nosync  ] && { ifno "sync $dotfiles repo" || (cd $dotfiles && git pull) ;}
+[ -z $nosync  ] && { ifno "sync $dotfiles repo" || (cd $dotfiles && git pull); }
 
 dirdiff $w $current/$1 $dotfiles/$1 "$2"
 

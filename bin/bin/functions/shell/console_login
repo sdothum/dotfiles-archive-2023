@@ -6,6 +6,7 @@
 
 # ................................................................ Console login
 
+PIXELSERV=$SESSION/pixelserv
 RSYNC=$SESSION/rsync
 
 # bootstrap SSD scheduler
@@ -36,6 +37,7 @@ if [ $USER != root ] ;then
       nohup hg serve --cwd $STOW --port 8213 >/tmp/hg:server.log &
     fi
 
+    [ -e $PIXELSERV ] && post_install pixelserv >/dev/null &
     systemd start ntpd >/dev/null 2>&1 &
 
     # pre-initialize arm fuzzy searches

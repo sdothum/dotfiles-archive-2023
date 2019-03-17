@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Sysadmin
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .......................................................... Btrfs scrub wrapper
 
@@ -38,7 +38,7 @@ show() {
 
 case $1 in
 '') usage ;;
-a*) scrub boot ; scrub share ; scrub backup ;;
+a*) scrub boot; scrub share; scrub backup ;;
 c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) show $(volume $2) ;;

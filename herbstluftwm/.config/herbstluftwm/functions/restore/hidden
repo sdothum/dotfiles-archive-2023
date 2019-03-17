@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="restore/hidden $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................ Unhide hidden windows
 
@@ -10,7 +10,7 @@ ALL='[ all  ]'
 LAST='[ last ]'
 
 title=" to $(query tname $TAG)"
-set -x
+
 count=$(query ttag $TAG)
 if [ $count -gt 0 ] ;then
   # list of hidden windows
@@ -35,8 +35,8 @@ if [ $count -gt 0 ] ;then
 
     # escape special characters in window title e.g. url page titles, and restore ^$SEP, see query wtitle
     *      ) winid=$(echo $hidden |
-                  grep "$(echo $window | sed -r "s/([[])/\\\1/g ; s/([]])/\\\1/g ; s/ *($SEP)/^\1/ ; s/([*])/\\\1/g")" |
-                  cut -d$DLM -f2)
+                   grep "$(echo $window | sed -r "s/([[])/\\\1/g; s/([]])/\\\1/g; s/ *($SEP)/^\1/; s/([*])/\\\1/g")" |
+                   cut -d$DLM -f2)
              lock use $TAG
              focus frame
              unlock bring $winid

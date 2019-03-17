@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ tty autologin
+
+usage() {
+  echo "usage: $(basename $0) [off] [tty<#>]"
+  exit 1
+}
+
+while : ;do
+  case $1 in
+  off) disable=true ;;
+  *  ) [ $tty ] && usage || tty=$1 ;;
+  esac
+  shift
+done
+[ $tty ] || tty=tty1
+
+[ -e /dev/$tty ] || usage
+console || ditto 'run autologin from console tty'
+[ $(tty) = /dev/$tty ] && ditto "cannot alter active $tty, login to alternate tty"
+
+if [ $disable ] ;then
+  service disable agetty-autologin-$tty
+  service enable agetty-$tty
+else
+  service disable agetty-$tty
+  service enable agetty-autologin-$tty
+fi
+
+# vim: set ft=sh: #

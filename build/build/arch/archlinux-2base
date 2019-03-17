@@ -6,11 +6,13 @@
 # log output to typescript
 # script-check
 
-country=Canada
+country=${1:-Canada}
+ditto "$country" 'press enter to continue'
+read reply
 
 
 title "setup"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 # sudo loadkeys colemak
 # server && sudo dhcpcd || sudo wifi-menu
 # sleep 5s
@@ -22,15 +24,15 @@ config_install L /etc/aliases
 
 
 # title "archlinux testing"
-# # ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-# sudo sed -i '/^#\[.*testing\]/s/^#// ; /^#Include/s/^#//' /etc/pacman.conf
+# # ══════════════════════════════════════════════════════════════════════════════
+# sudo sed -i '/^#\[.*testing\]/s/^#//; /^#Include/s/^#//' /etc/pacman.conf
 # sudo pacman -Syu
 
 
 title "pacman key server"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 rm -rf $HOME/.gnupg/*
-sudo rm -r /root/.gnupg/*
+sudo rm -rf /root/.gnupg/*
 sudo mkdir -p /root/.gnupg
 sudo touch /root/.gnupg/dirmngr_ldapservers.conf
 sudo dirmngr </dev/null
@@ -49,15 +51,14 @@ fi
 
 
 title "update base"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 mirrorlist $country
 sudo pacman -Sy
 bundle_install init $HOME/build/arch/bundle/[0]*
-fc-cache -fv
 
 
 title "installation errors:"
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
 ditto 'exit console (script)'

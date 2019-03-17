@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... sed conf
+
+usage() {
+  echo "usage: $(basename $0) <file> <content>, add <content>"
+  echo "       $(basename $0) <file> <content> <regex nomatch>, sed <regex>"
+  echo "       $(basename $0) <file> <content> <regex match> <regex nomatch>, sed <regex>"
+  exit 1
+}
+
+original $1
+case $# in
+2) grep -q "$2" $1 || sudo sed -i "\$a$2" $1 ;;
+3) grep -q "$2" $1 || sudo sed -i "$3" $1 ;;
+4) grep -q "$2" $1 && sudo sed -i "$3" $1 || sudo sed -i "$4" $1 ;;
+*) usage ;;
+esac
+
+# vim: set ft=sh: #

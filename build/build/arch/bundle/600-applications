@@ -5,7 +5,7 @@
 
 
 = astronomy
-= ▔▔▔▔▔▔▔▔▔
+= ═════════
 # celestia      [server]
 # google-earth  [server]
 # kdeedu-kstars [server]
@@ -19,7 +19,7 @@ d stellarium
 
 
 = dictionary
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
   aiksaurus
 # artha
   aspell
@@ -36,55 +36,54 @@ d m dict-moby-thesaurus
 
 
 = ebook
-= ▔▔▔▔▔
+= ═════
   calibre       [server]
 # kindlegen
   qt5-webkit    [server]
 
 
-= font editor
-= ▔▔▔▔▔▔▔▔▔▔▔
+= font-patcher
+= ════════════
   fontforge     [server]
   nodejs        [server]
   npm           [server]
   otfcc         [server]
-# ttf-wps-fonts [server]
   ttfautohint   [server]
 
 
 = font manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
 d font-manager
 d fontmatrix    [server]
 # fontmatrix-git
 
 
 = game
-= ▔▔▔▔
+= ════
   lsb-release   [server]
   steam         [server]
 
 
 = keyboard
-= ▔▔▔▔▔▔▔▔
+= ════════
 d plover
 # d + qwertickle
 
 
 = productivity
-= ▔▔▔▔▔▔▔▔▔▔▔▔
-  abiword
+= ════════════
+# abiword
 d amphetype-svn
   calc
 # calcurse
 # galculator
-  gnumeric
+# gnumeric
 # gsimplecal
 # kdeedu-ktouch [server]
 # klavaro
   remind
-  sc-im
-  simpletimer-git
+# sc-im
+# simpletimer-git
   speedcrunch
 # todotxt
 # wps-office    [server]
@@ -93,7 +92,7 @@ d amphetype-svn
 
 
 = viewer
-= ▔▔▔▔▔▔
+= ══════
 # acroread      [server]
 # coolreader
   epdfview      [server]

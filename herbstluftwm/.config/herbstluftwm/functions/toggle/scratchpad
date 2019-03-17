@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="toggle/scratchpad $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................ Toggle scratchpad
 
@@ -16,11 +16,11 @@ pstat + 'toggle scratchpad' && exit
 kill -TERM $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
 
 # search [<option>* [<command>]]
-search() { xdotool search --limit 1 --name $1 $name $2 2>/dev/null ;}
+search() { xdotool search --limit 1 --name $1 $name $2 2>/dev/null; }
 
-winid() { printf '0x%x' $(search --onlyvisible) ;}
+winid() { printf '0x%x' $(search --onlyvisible); }
 
-focus_check() { [ "$(query wname)" = $name ] && exit ;}
+focus_check() { [ "$(query wname)" = $name ] && exit; }
 
 # .......................................................... Hide visible window
 

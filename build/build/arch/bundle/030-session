@@ -4,20 +4,25 @@
 # see bundle_install
 
 
-= ncurses editor
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= editor
+= ══════
   gvim
 
 
 = terminal
-= ▔▔▔▔▔▔▔▔
+= ════════
   alacritty     [! cpu atom]
 # alacritty-git [! cpu atom]
   xterm
 
 
+= ncurses
+= ═══════
+  urlview-git
+
+
 = window manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   herbstluftwm
 # herbstluftwm-git
 

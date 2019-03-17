@@ -3,7 +3,7 @@
 # [ $TRACE ] && CHILD="toggle $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................ Toggle operations
 
@@ -11,7 +11,7 @@
 #        toggle term <msg>, start/stop visible terminal app or goto terminal desktop (tag)
 
 # refresh in panel title to update frame status, see draw panel
-touch_panel() { xtitle -f 'T%s' >$(cat $PANEL_FIFO) ;}
+touch_panel() { xtitle -f 'T%s' >$(cat $PANEL_FIFO); }
 
 # ......................................................... Context applications
 
@@ -63,7 +63,7 @@ toggle_app() {
       for i in $winids ;do
         if ! close $i ;then
           # stack windows
-          [ $focus ] && { focus frame ; unset focus ;}
+          [ $focus ] && { focus frame; unset focus; }
           herbstclient bring $i
         fi
       done

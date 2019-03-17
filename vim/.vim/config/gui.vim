@@ -1,32 +1,25 @@
 " sdothum - 2016 (c) wtfpppl
 
 " GUI
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " Behaviour ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Behaviour __________________________________________________________________
 
     " .................................................................... Setup
 
-      augroup gui
-        autocmd!
-      augroup END
+      augroup gui | autocmd! | augroup END
 
-      let g:ruler     = 0                   " colorcolumn mode, see theme.vim
-      let s:wraplight = 0                   " highlight linewrap (0) off (1) on
+      let g:ruler     = 0       " colorcolumn mode, see theme.vim
+      let s:wraplight = 0       " highlight linewrap (0) off (1) on
       let s:breakchar = '→'
-      let s:delay     = '200m'              " redraw delay, see theme#FontSize()
+      let s:delay     = '200m'  " redraw delay, see theme#FontSize()
 
     " ............................................................... Toggle gui
 
       " toggle gui menu
       function! s:toggleGui()
-        if &guioptions =~# 'T'
-          set guioptions-=T
-          set guioptions-=m
-        else
-          set guioptions+=T
-          set guioptions+=m
-        endif
+        if &guioptions =~# 'T' | set guioptions-=T | set guioptions-=m
+        else                   | set guioptions+=T | set guioptions+=m | endif
       endfunction
 
       nnoremap <silent><S-F12> :call <SID>toggleGui()<CR>
@@ -37,17 +30,15 @@
 
       " toggle in/out to fill window
       function! s:redrawGui()
-        call <SID>toggleGui()
+        call s:toggleGui()
         execute 'sleep ' . s:delay
-        call <SID>toggleGui()
-        " fix line wrap highlighting
-        Quietly Retheme
+        call s:toggleGui()
+        Quietly Retheme  " fix line wrap highlighting
       endfunction
       
       command! RedrawGui call <SID>redrawGui()
 
-      " initial refresh to fill window (correct status line position)
-      if $DISPLAY > ''
+      if $DISPLAY > ''  " initial refresh to fill window (correct status line position)
         autocmd gui VimEnter * RedrawGui
       endif
 
@@ -55,24 +46,24 @@
       inoremap <silent><F12> <C-o>:call <SID>redrawGui()<CR>
       vnoremap <silent><F12> :<C-u>call <SID>redrawGui()<CR>
 
-  " Display ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Display ____________________________________________________________________
 
     " ................................................................... Screen
 
-      set gcr=a:blinkon0                    " disable cursor blink
-      set mousehide                         " hide mouse when typing
-      set t_Co=256                          " 256 color support
+      set gcr=a:blinkon0          " disable cursor blink
+      set mousehide               " hide mouse when typing
+      set t_Co=256                " 256 color support
       set viewoptions=folds,options,cursor,unix,slash
-      set virtualedit=block                 " allow virtual editing in Visual block mode
-      " set virtualedit=onemore             " allow for cursor beyond last character
-      set winminheight=0                    " windows can be 0 line high
-      set wrap                              " wrap lines for viewing
+      set virtualedit=block       " allow virtual editing in Visual block mode
+      " set virtualedit=onemore   " allow for cursor beyond last character
+      set winminheight=0          " windows can be 0 line high
+      set wrap                    " wrap lines for viewing
 
     " ................................................................... Alerts
 
-      set noerrorbells                      " don't beep
-      set shortmess+=filmnrxoOtT            " abbrev. of messages (avoids "hit enter")
-      set visualbell                        " no sounds
+      set noerrorbells            " don't beep
+      set shortmess+=filmnrxoOtT  " abbrev. of messages (avoids "hit enter")
+      set visualbell              " no sounds
 
       " recover last error message
       nmap <leader>e :echo errmsg<CR>
@@ -82,15 +73,12 @@
 
     " ................................................................ Scrolling
 
-      " set scrolljump=8                    " lines to scroll when cursor leaves screen
-      if $HOST == 'monad'
-        set scrolloff=3
-      else
-        set scrolloff=5
-      endif
+      if $HOST == 'monad' | set scrolloff=3
+      else                | set scrolloff=5 | endif
       let g:scrolloff = &scrolloff
-      set sidescroll=1                      " smooth scrolling by 1 column
+      set sidescroll=1  " smooth scrolling by 1 column
       set sidescrolloff=1
+
       " horizontal scrolling
       noremap <C-S-Left>  zL
       noremap <C-S-Right> zH
@@ -101,18 +89,18 @@
       autocmd gui BufWinLeave * let b:winview = winsaveview()
       autocmd gui BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | endif
 
-  " Terminal ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Terminal ___________________________________________________________________
 
     " ..................................................................... Font
 
       scriptencoding utf-8
-      set encoding=utf-8                    " necessary to show unicode glyphs
+      set encoding=utf-8     " necessary to show unicode glyphs
 
     " ................................................................... Cursor
 
-      set cursorline                        " highlight current line
+      set cursorline         " highlight current line
 
-      set guicursor=a:block                 " mode aware cursors
+      set guicursor=a:block  " mode aware cursors
       set guicursor+=o:hor50-Cursor
       set guicursor+=n:Cursor
       set guicursor+=i-ci-sm:ver25-InsertCursor
@@ -123,22 +111,20 @@
 
     " ............................... Gvim Options (make it look like terminal!)
 
-      set guioptions+=LlRrb                 " hide scrollbars
+      set guioptions+=LlRrb  " hide scrollbars
       set guioptions-=LlRrb
-      set guioptions-=m                     " no menubar
-      set guioptions-=T                     " no toolbar
+      set guioptions-=m      " no menubar
+      set guioptions-=T      " no toolbar
 
-  " Look ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Look _______________________________________________________________________
 
     " ........................................................... Column margins
 
-      augroup column
-        autocmd!
-      augroup END
+      augroup column | autocmd! | augroup END
 
-      set colorcolumn=0                     " highlight column
+      set colorcolumn=0  " highlight column
 
-      " toggle colorcolumn modes, see theme#IndentTheme()
+      " toggle colorcolumn modes, see theme#Indent()
       function! s:toggleColumn()
         if g:ruler == 0
           let g:ruler      = 1
@@ -152,11 +138,11 @@
           let &colorcolumn = 0
           ColumnWrap
         endif
-        call theme#IndentTheme()
-        let g:column = 1                    " flash column position, see autocmd info.vim
+        call theme#Indent()
+        let g:column = 1  " flash column position, see autocmd info.vim
       endfunction
 
-      nmap <silent><Bar>  :call <SID>toggleColumn()<CR>
+      nmap <silent><Bar> :call <SID>toggleColumn()<CR>
 
     " ...................................................... Line wrap highlight
 
@@ -174,10 +160,10 @@
       function! s:toggleColumnWrap(...)
         let s:wraplight = a:0 ? a:1 : (s:wraplight ? 0 : 1)
         let g:ruler     = -1
-        call <SID>toggleColumn()
+        call s:toggleColumn()
       endfunction
 
-      command!          ColumnWrap       call <SID>columnWrap()
+      command! ColumnWrap                call <SID>columnWrap()
       command! -nargs=? ToggleColumnWrap call <SID>toggleColumnWrap(<f-args>)
 
       nmap <silent><F8> :ToggleColumnWrap<CR>
@@ -189,43 +175,39 @@
       set numberwidth=10
       set relativenumber
 
-      " toggle relative line numbers
-      " autocmd gui InsertEnter * set norelativenumber
-      " autocmd gui InsertLeave * set relativenumber
-
       " toggle relative number, line number and no numbering
       function! s:toggleNumber()
-        if (&relativenumber == 1 && &number == 1)
-          set norelativenumber
-        elseif (&relativenumber == 0 && &number == 1)
-          set nonumber
-        else
-          set relativenumber
-          set number
-        endif
+        if (&relativenumber == 1 && &number == 1)     | set norelativenumber
+        elseif (&relativenumber == 0 && &number == 1) | set nonumber
+        else                                          | set relativenumber | set number | endif
       endfunction
 
       nmap <silent># :call <SID>toggleNumber()<CR>
 
+      " toggle relative line numbers
+      " autocmd gui InsertEnter * set norelativenumber
+      " autocmd gui InsertLeave * set relativenumber
+
     " ................................................... Status / command lines
 
-      set laststatus=2                      " always show status line
-      set ruler                             " show cursor position in status line
-      set noshowcmd                         " show incomplete cmds in command line
-      set noshowmode                        " show current mode in command line
+      set laststatus=2  " always show status line
+      set ruler         " show cursor position in status line
+      set noshowcmd     " show incomplete cmds in command line
+      set noshowmode    " show current mode in command line
 
-  " Highlighting ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Highlighting _______________________________________________________________
 
     " ...................................................... Syntax highlighting
 
       set omnifunc=syntaxcomplete#Complete
-      syntax on                             " turn on syntax highlighting
+      syntax on  " turn on syntax highlighting
+
       " refresh highlighting on arm
-      autocmd gui CursorHold * if !core#Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
+      autocmd gui CursorHold * if ! core#Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
 
     " ...................................................... White space markers
 
-      set nolist                            " display tabs and trailing spaces visually
+      set nolist  " display tabs and trailing spaces visually
       set listchars="tab:▸\<Space>"
 
       " set listchars+=trail:_
@@ -235,40 +217,24 @@
       set listchars+=precedes:<
       " set listchars+=eol:¬
 
-    " .......................................... White space / soft wrap markers
+    " ..................................................... Trailing white space
 
-      augroup soft
-        autocmd!
-      augroup END
+      augroup invisible | autocmd! | augroup END
 
-      " soft wrap marker
-      function! s:softMark()
-        " filetype dependent textwidth
-        if exists('s:soft')
-          call matchdelete(s:soft)
-        endif
-        highlight SoftWrap cterm=underline gui=underline
-        let s:soft = '\%' . (&textwidth + 1) . 'v'
-        let s:soft = matchadd('SoftWrap', s:soft)
-      endfunction
-
-      " toggle trailing whitespace highlight and indentation levels
-      function! s:toggleSpaces()
+      " toggle trailing whitespace highlight
+      function! s:toggleWhiteSpace()
         set list!
         if &list == 0
-          match ExtraWhitespace /\%x00$/    " nolist by failing match with null character :)
-          call matchdelete(s:soft)
-          unlet s:soft
-          autocmd! soft
-          " echo ''
+          match ExtraWhitespace /\%x00$/  " nolist by failing match with null character :)
+          autocmd! invisible
         else
           match ExtraWhitespace /\s\+$/
-          call <SID>softMark()
-          autocmd soft BufEnter * call <SID>softMark()
-          " echo 'List invisibles ON'
+          " list state propagates forward (on) but not backwards (off)? so auto reset buffer state!
+          autocmd invisible BufLeave,WinLeave * call <SID>toggleWhiteSpace()
         endif
+        call core#Status('List invisibles', &list != ' ')
       endfunction
 
-      nmap <silent><leader><Space> :call <SID>toggleSpaces()<CR>
+      nmap <silent><leader><Space> :call <SID>toggleWhiteSpace()<CR>
 
 " gui.vim

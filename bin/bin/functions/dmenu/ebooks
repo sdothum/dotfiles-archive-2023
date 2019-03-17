@@ -1,71 +1,27 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... E-books
 
 # Usage: dmenu ebooks [cache]
-#
-# Note: Kindle font selection can be added by embedding a font (when not natively available)
-#       Install a unique font and remove all but the regular font face to minimize embedded font space
-#       (don't forget to update font cache with fc-cache -f -v after removing font files)
-#       This font does not need to reside on the kindle, the default kindle settings will be used :-)
 
 REBUILD='[ rebuild database ]'
 
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-library}}
 cache=$library/dmenu:ebooks
-kindle=/run/media/$USER/Kindle
-# export CLOUDCONVERT_API_KEY=$(cat $HOME/.cloudconvert_api_key)
-[ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
-kindle=$kindle/documents/
-
-# embed smallest fontset possible, see notes above
-embed_font=Economica
-
-# .............................................................. Kindle transfer
-
-# kindle update via email
-email() {
-  cat - <<END
-Content-Type: multipart/mixed; boundary="$boundary"
-MIME-Version: 1.0
-Subject: $title
-From: $account
-To: $address
-
---$boundary
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-
-$title attached.
-
---$boundary
-Content-Type: application/octet-stream
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="${mobi##*/}"
-
-END
-                base64 "$mobi"
-                cat - <<END
-
---$boundary--
-END
-}
 
 # ....................................................................... Libary
 
 # build catalogue
 ebooks() {
-  [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3) || return ;}
+  [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3) || return; }
   notify low 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
       sed -re "s|$library/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw\|kfx)|\1$SEP\3|" \
-          -e 's/(.*) - .*/\1/ ; s/ \(.*\)//' \
+          -e 's/(.*) - .*/\1/; s/ \(.*\)//' \
           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
       sort -u >$cache
   notify low 'Update of library cache' '..Complete'
@@ -86,48 +42,11 @@ file() {
   find $library -regextype egrep -regex "$path"
 }
 
-mobi() { mobi=$(file mobi) ;}
-epub() { epub=$(file epub) ;}
-azw3() { azw3=$(file azw3) ;}
-azw()  { azw=$(file azw) ;}
-kfx()  { kfx=$(file kfx) ;}
-
-# ..................................................................... E-reader
-
-kindle() {
-  [ -d $kindle ] && format=azw3 || format=mobi
-  find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
-  notify low "$title" "Converting to $format.."
-  # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
-  # use calibre conversion module
-  output="/tmp/${file##*/}"
-  option=$(echo -n "default (ragged-right)\nembed font\njustify\nall" | rmenu 'export options' -no-custom) || break
-  justify=left
-  case $option in
-  default*) unset option ;;
-  *font   ) option="--embed-font-family=$embed_font" ;;
-  just*   ) justify=justify ;;
-  all     ) justify=justify ; option="--embed-font-family=$embed_font" ;;
-  esac
-  # convert even .azw3 to inject folder title and author
-  ebook-convert "$file" "${output%.*}.$format" --title="$title" --authors="$author" --change-justification="$justify" --insert-blank-line --insert-blank-line-size=0.75 --disable-delete-blank-paragraphs $option >/tmp/ebook-convert.log
-
-  # usb or cloud?
-  if [ -d $kindle ] ;then
-    find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" $kindle \;
-    notify low "$title" "$kindle"
-    sync
-  else
-    mobi=$(find /tmp -maxdepth 1 -name "*$format")
-    address=$(echo | mhistory kindle | rmenu 'Address <@kindle.com>') || break
-    echo "$address" | grep -q '@' || address=$address@kindle.com
-    mhistory kindle $address
-    account=$(grep $USER /etc/aliases | cut -d' ' -f2)
-    boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
-    email | /usr/local/bin/msmtp-enqueue.sh -t &
-    notify low "$title" "$address"
-  fi
-}
+mobi() { mobi=$(file mobi); }
+epub() { epub=$(file epub); }
+azw3() { azw3=$(file azw3); }
+azw()  { azw=$(file azw); }
+kfx()  { kfx=$(file kfx); }
 
 catlg() {
   if grep -q "$book" $HISTORY/ebooks ;then
@@ -139,14 +58,16 @@ catlg() {
   pwait vifm
 }
 
+# .................................................................. Select book
+
 while : ;do
   book=$(cat $cache | mhistory ebooks | column -s^ -t | sed "1i$REBUILD" | rmenu "E-book" 1 -filter \"$author\" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then
-    [ "$author" ] && { unset author ; unset matching ; continue ;} || exit
+    [ "$author" ] && { unset author; unset matching; continue; } || exit
   elif [ "$book" = "$REBUILD" ] ;then
-    ebooks init ; continue
+    ebooks init; continue
   fi
 
   author="${book#*$SEP } "
@@ -154,18 +75,18 @@ while : ;do
   title=$(echo $title | sed 's/ *$//g')
   unset mobi epub azw3 azw
 
-  azw3 ; [ "$azw3" ] || { mobi ; [ "$mobi" ] || { epub ; [ "$epub" ] || { azw ; [ "$azw" ] || kfx ;};};}
+  azw3; [ "$azw3" ] || { mobi; [ "$mobi" ] || { epub; [ "$epub" ] || { azw; [ "$azw" ] || kfx; };};}
   file=$azw3$mobi$epub$azw$kfx
-  [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks ; continue ;}
+  [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks; continue; }
 
   # [ -d $kindle ] && options='kindle\nedit\nread' || options='read\nedit\nkindle'
   options='kindle\nedit\nread'
   while action=$(echo "$options" | rmenu "$title" $action -no-custom) || break ;do
     mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
     case $action in
-    read  ) [ $focus ] || { focus frame ; focus=true ;} ; FBReader "$file" ;;
-    edit  ) catlg ; ebooks ;;
-    kindle) kindle ;;
+    read  ) [ $focus ] || { focus frame; focus=true; }; FBReader "$file" ;;
+    edit  ) catlg; ebooks ;;
+    kindle) dmenu kindle $file ;;
     esac
     break
   done

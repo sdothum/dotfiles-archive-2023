@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Network
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................... Network daemon control
 
@@ -31,7 +31,7 @@ daemons='
   znc
 '
 
-service() { for i in $daemons ;do ditto $i ; systemd $1 $i ;done ;}
+service() { for i in $daemons ;do ditto $i; systemd $1 $i ;done; }
 
 case $1 in
 stop ) service stop

@@ -1,8 +1,8 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Cron
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# Test
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................... Follow the sun
 
@@ -28,19 +28,19 @@ daytime() {
   setlink $HOME/.config/gtk-3.0/gtk.css.light $HOME/.config/gtk-3.0/gtk.css
 }
 
-[ -e $FOLLOW ] || { daytime ; exit ;}
+[ -e $FOLLOW ] || { daytime; exit; }
 
 # import user path
 . $HOME/bin/functions/shell/user_path
 
 slock $(basename $0) $$ || exit 1
 connect || exit 1
-[ $1 ] && location=$1 || { [ -e $LOCATION ] && location=$(cat $LOCATION) ;}
+[ $1 ] && location=$1 || { [ -e $LOCATION ] && location=$(cat $LOCATION); }
 
 # https://weather.codes/search/?q=<city> for location codes
 case $location in
-calgary   ) location=CAXX0054 ; offset=-0200 ;;
-coimbatore) location=INXX0479 ; offset=+1030 ;;
+calgary   ) location=CAXX0054; offset=-0200 ;;
+coimbatore) location=INXX0479; offset=+1030 ;;
 ottawa    ) location=CAXX0343 ;;
 *         ) location=CAXX0343 ;;
 esac
@@ -54,9 +54,9 @@ M=$(( $offset - $H * 100 ))
 offset=$(( $H * 60 + $M ))
 
 # obtain sunrise and sunset raw data from weather.com, see https://github.com/linuxconfig/Sunrise-Sunset-Shell-Script.git
-# set -- $(lynx --dump  https://weather.com/weather/today/l/$location | grep '\* Sun' | sed 's/[[:alpha:]]/ /g ; s/[*:]//g')
+# set -- $(lynx --dump  https://weather.com/weather/today/l/$location | grep '\* Sun' | sed 's/[[:alpha:]]/ /g; s/[*:]//g')
 set -- $(pcurl https://weather.com/weather/today/l/$location |
-    grep 'Sun [0-9:]* am [0-9:]* pm' | sed -r 's/.*Sun ([0-9:]*) am ([0-9:]*) pm.*/\1 \2/ ; s/://g')
+    grep 'Sun [0-9:]* am [0-9:]* pm' | sed -r 's/.*Sun ([0-9:]*) am ([0-9:]*) pm.*/\1 \2/; s/://g')
 # something went wrong..
 [ $# -eq 2 ] || exit 1
 # am

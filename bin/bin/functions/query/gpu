@@ -1,0 +1,40 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Query
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... GPU
+
+usage() {
+  echo "usage: $(basename $0) [display | nvidia | ati | intel | macbook]"
+  exit 1
+}
+
+vga() {
+  lspci 2>/dev/null | grep VGA | grep -q "$1" || return
+  echo $1 | lowercase
+  exit
+}
+
+case $1 in
+''      ) vga 'GeForce 8600M GT'
+          vga 'GeForce GT 650M'
+          vga NVIDIA
+          vga ATI
+          vga Intel
+          # lspci fails on raspberry pi
+          echo arm ;;
+
+display ) xrandr 2>/dev/null | grep '*' | awk '{ print $1 }' ;;
+
+ati     |\
+intel   |\
+nvidia  ) [ "$(gpu)" = $1 ] ;;
+
+macbook ) [ "$(gpu)" = 'geforce 8600m gt' ] ;;
+inspiron) [ "$(gpu)" = 'geforce gt 650m' ] ;;
+*       ) usage ;;
+esac
+
+# vim: set ft=sh: #

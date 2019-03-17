@@ -2,14 +2,14 @@
 # sdothum - 2016 (c) wtfpl
 
 # Shell
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................... Fuzzy jump
 
 # Usage: j [-] [<dir>] [<pattern>]
 
 # refresh directory cache, see fcache
-[ "$1" = '-' ] && { refresh=$1 ; shift ;}
+[ "$1" = '-' ] && { refresh=$1; shift; }
 
 # fish shell ignores non-fish cd's, see j.fish
 case $# in

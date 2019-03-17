@@ -1,59 +1,57 @@
 " sdothum - 2016 (c) wtfpl
 
 " Keyboard
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " Keyboard (re)mappings ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Keyboard (re)mappings ______________________________________________________
 
     " .................................................................... Setup
 
-      let mapleader   = "\<Space>"          " remap <leader> a la spacemacs
+      let mapleader   = "\<Space>"    " remap <leader> a la spacemacs
       let g:mapleader = "\<Space>"
 
-      augroup kbd
-        autocmd!
-      augroup END
+      augroup kbd | autocmd! | augroup END
 
-  " Cursor ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Cursor _____________________________________________________________________
 
     " ....................................................... Backspace settings
 
-      set backspace=indent,eol,start        " allow backspace in insert mode
-      set whichwrap=b,s,h,l,<,>,[,]         " backspace and cursor keys wrap
+      set backspace=indent,eol,start  " allow backspace in insert mode
+      set whichwrap=b,s,h,l,<,>,[,]   " backspace and cursor keys wrap
 
     " ......................................................... Cursor movements
 
       " up/down by screen lines, not file lines
-      nnoremap k         gk
-      vnoremap k         gk
-      nnoremap j         gj
-      vnoremap j         gj
+      nnoremap k     gk
+      vnoremap k     gk
+      nnoremap j     gj
+      vnoremap j     gj
 
       " up/down by paragraph sentence
-      nmap     <leader>( {{)
-      nmap     <leader>) })
+      nmap <leader>( {{)
+      nmap <leader>) })
 
       " insert mode local region cursor movements
       " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap   <C-h>     <Left>
-      " imap   <C-j>     <Down>
-      " imap   <C-k>     <Up>
-      " imap   <C-l>     <Right>
+      " imap <C-h>   <Left>
+      " imap <C-j>   <Down>
+      " imap <C-k>   <Up>
+      " imap <C-l>   <Right>
 
     " ............................................................. Disable keys
 
       " affirm vim modal usage but these keys are remapped below anyway :)
       " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
-      " imap   <down>    <nop>
-      " imap   <left>    <nop>
-      " imap   <right>   <nop>
-      " imap   <up>      <nop>
-      " nmap   <down>    <nop>
-      " nmap   <left>    <nop>
-      " nmap   <right>   <nop>
-      " nmap   <up>      <nop>
+      " imap <down>  <nop>
+      " imap <left>  <nop>
+      " imap <right> <nop>
+      " imap <up>    <nop>
+      " nmap <down>  <nop>
+      " nmap <left>  <nop>
+      " nmap <right> <nop>
+      " nmap <up>    <nop>
 
-  " Keyboard shortcuts ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Keyboard shortcuts _________________________________________________________
 
     " ............................................................. Copy / paste
 
@@ -62,9 +60,10 @@
 
       " yank from the cursor to the end of the line, to be consistent with C and D.
       " see yankring for plugin equivalent
-      nnoremap Y         y$
-      nnoremap vv        V
-      nnoremap V         <C-v>$
+      nnoremap Y  y$
+      nnoremap vv V
+      nnoremap V  <C-v>$
+
       " reselect/reyank text just pasted
       nnoremap <leader>v gv
       nnoremap <leader>V gvy
@@ -99,9 +98,23 @@
       " " normal/insert mode paste actions
       " " "+P pads space after insert
       " " note: to enter visual block mode type v<C-v>
-      imap     <F2>   <ESC>"+pli
-      nmap     <F2>   h"+pl
+      imap <F2> <ESC>"+pli
+      nmap <F2> h"+pl
       " command mode insertion (paste) of current yank buffer
-      cmap     <F2>   <C-r>"
+      cmap <F2> <C-r>"
+
+  " Abbreviations ______________________________________________________________
+  
+    " ................................................................. Personal
+
+      command! I call iabbrev I i
+
+      nmap <C-F6> :unabbrev I<CR>
+      imap <C-F6> <C-o>:unabbrev I<CR>
+    
+      autocmd kbd Filetype draft    iabbrev I i
+      autocmd kbd Filetype mail     iabbrev I i
+      autocmd kbd Filetype markdown iabbrev I i
+      autocmd kbd Filetype note     iabbrev I i
 
 " keyboard.vim

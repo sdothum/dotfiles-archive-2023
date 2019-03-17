@@ -2,32 +2,35 @@
 # sdothum - 2016 (c) wtfpl
 
 # Web
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Browser
 
 # Usage: vimb [<url>] | config [<zoom>]
 
-[ $1 ] && startpage="$@" || startpage='http://luna:8000/tt-rss/#f=39&c=1'
-
 CONFIG=$HOME/.config/vimb
-common='bookmark cookies history style.css'
+STARTPAGE=$SESSION/startpage
 
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/#f=39&c=1'; }
+
+common='bookmark cookies history style.css'
 font=Iosevka
 size=$(fontsize)pt
 host=$(hostname)
 zoom=$2
+HOSTCONF=$CONFIG/$host/config
 
 config() {
   mkdir $CONFIG/$host
-  sed "s/;font:10pt [^;]*;/;font:$size $font;/" $CONFIG/config >$CONFIG/$host/config
-  [ $zoom ] && sed -i "s/default-zoom=.*/default-zoom=$zoom/" $CONFIG/$host/config
+  sed "/^set .*;font:/s/font:.*/font:$size $font;/" $CONFIG/config >$HOSTCONF
+  [ $zoom ] && sed -i "s/default-zoom=.*/default-zoom=$zoom/" $HOSTCONF || zoom=$(grep '^set default-zoom=' $HOSTCONF | cut -d= -f2)
   for i in $common ;do ln -sf $CONFIG/$i $CONFIG/$host/ ;done
+  notify 'vimb config' "font: $size $font\nzoom: $zoom" 
 }
 
-[ "$1" = config    ] && config
-[ -e $CONFIG/$host ] && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
-[ $size = 10pt     ] && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &) ; exit ;}
+[ "$1" = config ] && { config; exit; }
+[ -e $HOSTCONF  ] && grep -q "^set .*;font:$size $font;" $HOSTCONF && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &); exit; }
+[ $size = 10pt  ] && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &); exit; }
 
 config
 exec vimb "$startpage"

@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Web
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Syncing
 
@@ -34,25 +34,25 @@ init() {
 }
 
 case $action in
-'') pstat nzbget || systemd start nzbget@$USER ; underline $(timestamp) ; nzbget -L G ;;
+'') pstat nzbget || systemd start nzbget@$USER; underline $(timestamp); nzbget -L G ;;
 @ ) nzbget --rate $queue ;;
 B*) nzb b $(nzb S $queue) ;;
-b*) nzbget -E G B $queue ; nzb ;;
-C*) nzb ; ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
+b*) nzbget -E G B $queue; nzb ;;
+C*) nzb; ifyes 'clear entire download queue' && nzbget -E G D 1-999999 ;;
 c*) nzbget -o OutputMode=curses -C ;;
 D*) nzb d $(nzb S $queue) ;;
-d*) nzbget -E G D $queue ; nzb ;;
+d*) nzbget -E G D $queue; nzb ;;
 I*) ifyes 'clear history and queue' && init ;;
-l*) while : ;do nzb ; sleep $list_delay ; done ;;
+l*) while : ;do nzb; sleep $list_delay; done ;;
 P*) nzb p $(nzb S $queue) ;;
-p*) nzbget -E G P $queue ; nzb ;;
+p*) nzbget -E G P $queue; nzb ;;
 q*) systemd stop nzbget@$USER ;;
 R*) nzb r $(nzb S $queue) ;;
-r*) nzbget -E G U $queue ; nzb ;;
+r*) nzbget -E G U $queue; nzb ;;
 S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;
 s*) [ "$queue" = queue ] && nzb | egrep '^\[' || nzb | egrep -i $queue ;;
 T*) nzb t $(nzb S $queue) ;;
-t*) nzbget -E G T $queue ; nzb ;;
+t*) nzbget -E G T $queue; nzb ;;
 * ) usage ;;
 esac
 

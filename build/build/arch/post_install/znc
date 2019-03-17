@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Post_install
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .......................................................................... znc
 
@@ -19,26 +19,36 @@ or if already registered..\n
 enable sasl with:\n
 /msg *sasl Mechanism PLAIN\n
 /msg *sasl Set <nick> <password>\n
-freenode channels (znc):\n
-/join ##astronomy,#archlinux,#archlinux-arm,#archlinux-offtopic,#arduino,#atom\n
-/join #bash,#bspwm,#btrfs\n
-/join #compton,#conky,#css\n
-/join #darktable,#dcraw,#deskthority,#digikam\n
-/join #emacs,#geekhack,#git,#github\n
-/join #haskell,#herbstluftwm\n
-/join ##javascript,##linux,#latex,#lesswrong,#lisp\n
-/join ##math,#Mechboards\n
-/join #neovim,#nginx,#nixos,#notmuch\n
-/join #ocaml,#papyros,#passenger,##politics,#python\n
-/join #qutebrowser,##reddit-hockey,#raspberrypi,#rawtherapee,#ruby\n
-/join #sinatra,#sup\n
-/join #vim,#weechat,#znc\n
-gitter channels:\n
-/join #syl20bnr/spacemacs\n
-oftc channels:\n
-/join #bcachefs,#bitlbee,#fish,#suckless\n
-rizon channels:\n
-/join #anime-planet.com,#haruhichan,#rice"
+add irc servers below"
+
+  cat <<EOF
+
+freenode channels (znc):
+/join ##astronomy,#archlinux,#archlinux-arm,#archlinux-offtopic,#arduino,#atom
+/join #bash,#bspwm,#btrfs
+/join #compton,#conky,#css
+/join #darktable,#dcraw,#deskthority,#digikam
+/join #emacs,#geekhack,#git,#github
+/join #haskell,#herbstluftwm
+/join ##javascript,##linux,#latex,#lesswrong,#lisp
+/join ##math,#Mechboards
+/join #neovim,#nginx,#nixos,#notmuch
+/join #ocaml,#papyros,#passenger,##politics,#python
+/join #qutebrowser,##reddit-hockey,#raspberrypi,#rawtherapee,#ruby
+/join #sinatra,#sup
+/join #vim,#weechat,#znc
+
+gitter channels:
+/join #syl20bnr/spacemacs
+
+oftc channels:
+/join #bcachefs,#bitlbee,#fish,#suckless
+
+rizon channels:
+/join #anime-planet.com,#haruhichan,#rice
+
+EOF
+
 sudo -u znc znc --makeconf
 server && systemd enable znc || annotate "sudo systemctl start znc"
 

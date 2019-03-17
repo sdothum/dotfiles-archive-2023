@@ -3,7 +3,7 @@
 [ $TRACE ] && CHILD="bin/emithook $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................... Emit hook trap
 
@@ -20,13 +20,13 @@ monitor=$(herbstclient attr monitors.focus.index)
 
 # force panel title refresh, see draw panel
 panel_refresh() {
-  sleep 0.05 # allow window close to complete
+  sleep 0.05  # allow window close to complete
   xtitle -f 'T\n' >$(cat $PANEL_FIFO)
 }
 
 herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   # script lock to suppress unnecessary emit hook message processing
-  # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE ; continue ;}
+  # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE; continue; }
   [ -e $LOCK ] && continue
   [ $TRACE   ] && echo "> $hook $rule $winid" >>$TRACE
 
@@ -60,7 +60,7 @@ herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
                              fi ;;
 
                  # experimental only..
-                 # focus_frame) [ -e $DYNAMIC ] && (focus frame ; bring $winid) & ;;
+                 # focus_frame) [ -e $DYNAMIC ] && (focus frame; bring $winid) & ;;
                  *         ) [ $TRACE ] && echo "> undefined rule: $hook [$rule] $winid" >>$TRACE ;;
                  esac ;;
 

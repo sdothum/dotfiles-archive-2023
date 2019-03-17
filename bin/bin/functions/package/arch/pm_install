@@ -1,0 +1,39 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ......................................................... Distribution install
+
+# Usage: pm_install [--confirm | --init] <package>
+
+wrappaur=pacaur
+options='--noconfirm --noedit'
+
+case $1 in
+  --confirm) unset options; shift ;;
+  --init   ) init=true;     shift ;;
+esac
+
+if ! pm_query $@ ;then
+  heading : $@
+  time=$(date +%s)
+  pre_install $@
+  if pacman -Ss $@ | grep -q --regex="/$@ " ;then
+    sudo pacman -S $options $@
+  else
+    echo "${__GREEN}@aur${NOCOLOR}"
+    $wrappaur -S $options $@
+  fi
+  post_install $@
+  echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
+elif [ $init ] ;then
+  [ -s $HOME/build/arch/post_install/$1 ] || [ -s $HOME/build/arch/user_install/$1 ] && post_install $@
+fi
+
+unset confirm
+
+# vim: set ft=sh: #

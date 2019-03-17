@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 # sdothum - 2016 (c) wtfpl
 
-# Office
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................... Screencast
 
@@ -24,9 +24,9 @@ framerate=25
 if server ;then
   case $1 in
   l* | *0) xy=1680x1050 ;;
-  r* | *1) xy=2560x1600 ; offset=+1680,0 ;;
+  r* | *1) xy=2560x1600; offset=+1680,0 ;;
   a*     ) xy=4240x1600 ;;
-  k*     ) kill -TERM $(pidof -s $pidname) ; exec ls -l /tmp/*.webm ;;
+  k*     ) kill -TERM $(pidof -s $pidname); exec ls -l /tmp/*.webm ;;
   *      ) usage ;;
   esac
 

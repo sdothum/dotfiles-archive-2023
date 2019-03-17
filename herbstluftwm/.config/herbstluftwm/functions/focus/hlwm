@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="focus/hlwm $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Focus window
 
@@ -40,7 +40,7 @@ echo $windows | grep $INVISIBLE && hidden="  ⇣$INVISIBLE"
 if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
       rmenu "${mode}Window$title$hidden" -no-custom) || exit ;then
   # restore ^$SEP, see query wtitle
-  window=$(echo $window | sed -r "s/ *([$VISIBLE$INVISIBLE])/ ^\1/ ; s/ *($SEP)/^\1/")
+  window=$(echo $window | sed -r "s/ *([$VISIBLE$INVISIBLE])/ ^\1/; s/ *($SEP)/^\1/")
   window=$(echo $windows | grep "$window")
   TAG=$(echo $window | cut -d$DLM -f1)
   if [ -z $mode ] ;then
@@ -60,9 +60,9 @@ if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
   *     ) swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
           lock set swap_monitors_to_get_tag 0
           if echo $window | grep " \^$VISIBLE [0-9]" ;then
-            herbstclient chain . use $TAG . jumpto "$(echo $window | cut -d$DLM -f3)" # focus normal tag
+            herbstclient chain . use $TAG . jumpto "$(echo $window | cut -d$DLM -f3)"  # focus normal tag
           else
-            herbstclient use ${TAG#\'}      # focus (restore) tick'tag
+            herbstclient use ${TAG#\'}  # focus (restore) tick'tag
             focus frame
             herbstclient bring "$(echo $window | cut -d$DLM -f3)"
           fi

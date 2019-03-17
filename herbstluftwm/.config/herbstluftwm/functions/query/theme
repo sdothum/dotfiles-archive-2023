@@ -2,12 +2,12 @@
 # [ $TRACE ] && CHILD="query/theme $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................... Wallpaper
 
 [ $WALLPAPER ] || . ${0%/query}/config/ENV
 
-ls -l $WALLPAPER | awk '{ gsub(".(png|jpg)", ".theme", $NF) ; print $NF }'
+ls -l $WALLPAPER | awk '{ gsub(".(png|jpg)", ".theme", $NF); print $NF }'
 
 # vim: set ft=sh: #

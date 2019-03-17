@@ -5,7 +5,7 @@
 
 
 = file
-= ▔▔▔▔
+= ════
   ack
 # etc-update
 # gamin
@@ -17,28 +17,28 @@
 
 
 = file manager
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
   ncdu
-  nnn
+# nnn
+  nnn-git
   ranger
-  vidir
   vifm
 
 
 = info screen
-= ▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════
 # fetch-git
-  figlet
+# figlet
   fortune-mod
 # fortune-mod-chucknorris
   neofetch
 # pacnews-git
 # screenfetch
-# toilet
+  toilet
 
 
 = shell
-= ▔▔▔▔▔
+= ═════
   dash
 # fasd
   fish
@@ -47,7 +47,7 @@
 
 
 = shell tool
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
 # ansi-color
 # autojump
 # bash-completion
@@ -56,6 +56,7 @@
   expect
 # fasd
   fzf
+  moreutils
 # prezto-git
   pv
   ripgrep
@@ -68,7 +69,7 @@ m shell-functools
 
 
 = terminal multiplexor
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════════
 # byobu
 # screen
   tmux

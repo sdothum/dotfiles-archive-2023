@@ -1,0 +1,35 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Editor
+
+usage() {
+  echo "usage: $(basename $0) <maxdepth> | <name>"
+  exit 1
+}
+
+walk() {
+  [ -e $DYNAMIC ] && toggle focus
+  for i in $(find -L -type d  | exclude) ;do
+    files=$(find -L $i -maxdepth 1 -type f | exclude | quote)
+    [ "$files" ] || continue
+    echo
+    echo -n "$files\n" | sed -r "s|.*/(.*)'|\1|"
+    ifyes "edit $i" || continue
+    v -f $files
+  done
+  [ -e $DYNAMIC ] && toggle focus
+}
+
+# v by directory depth or name
+case $1 in
+''   ) walk ;;
+help ) usage ;;
+[1-4]) v $(find -L -maxdepth ${1:-1} -type f | exclude | quote) ;;
+*    ) v $(find -L -type f -name "$1" | exclude | quote) ;;
+esac
+
+# vim: set ft=sh: #

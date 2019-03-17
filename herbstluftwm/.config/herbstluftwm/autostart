@@ -3,16 +3,16 @@
 [ $TRACE ] && CHILD="autostart $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
-HLWMTRACE=$SESSION/hlwmtrace
+HLWMTRACE=$SESSION/trace
 
 # chain herbstclient commands (note: keybind chains use ".")
 hc() {
   # cannot chain parameters "'containing spaces'"
   chain=true
-  for i ;do [ "${i% *}" != "$i" ] && { unset chain ; break ;} ;done
-  [ $chain ] && cmds="$cmds , $@" || { [ $TRACE ] && echo herbstclient $@ >>$TRACE ; eval herbstclient $@ ;}
+  for i ;do [ "${i% *}" != "$i" ] && { unset chain; break; } ;done
+  [ $chain ] && cmds="$cmds , $@" || { [ $TRACE ] && echo herbstclient $@ >>$TRACE; eval herbstclient $@; }
 }
 
 dohc() {
@@ -80,7 +80,7 @@ if is display +1920 ;then
   # fi
 else
   draw monitor fullframe
-  toggle panel
+  # toggle panel
 fi
 
 # ................................................................ Startup suite

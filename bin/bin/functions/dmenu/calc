@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................ Ribbon calculator
 
@@ -50,6 +50,6 @@ while eqn=$(echo $ribbon | column -s$UTF -t | rmenu "Solve$error") || break ;do
   [ $ans ] || echo "$eqn" | grep -q '=' || error="    f($eqn) ?"
 done
 
-[ $ans ] && { clipboard "$ans" ; notify 'Ctrl-Alt-V' "$ans" ;}
+[ $ans ] && { clipboard "$ans"; notify 'Ctrl-Alt-V' "$ans"; }
 
 # vim: set ft=sh: #

@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Media
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Media player
 
@@ -17,7 +17,7 @@ youtube=/net/downloads/http/youtube-dl
 # cleanup accidental screenshots and youtube-dl
 trap "rm -f $HOME/mpv-shot*.jpg" EXIT
 
-[ "$1" = '-q' ] && { quiet=true ; shift ;}
+[ "$1" = '-q' ] && { quiet=true; shift; }
 # play media (see rox, dmenu movies, dmenu series, browsers..)
 [ "$2" ] && title=$2 || title=${1##*/}
 
@@ -79,7 +79,7 @@ while : ;do
     focus frame
     mpv --vf=eq "$video" --sub-font-size=$fontsize >/dev/null 2>&1
     # clear notification
-    (pwait "mpv --vf=eq $1" ; xdotool key Ctrl+space) &
+    (pwait "mpv --vf=eq $1"; xdotool key Ctrl+space) &
   fi
 
   echo "$1" | grep -q http && break

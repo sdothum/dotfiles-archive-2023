@@ -2,7 +2,7 @@
 // this is the style you want to emulate.
 //
 // To flash splitography firmware
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ══════════════════════════════
 //   Reset keyboard or press hw reset button on base (hole)
 //
 //   cd qmk_firmware/keyboards/splitography
@@ -12,13 +12,13 @@
 //   sudo make KEYMAP=<keymap> (to compile check)
 //
 // Package requirements (for arch linux)
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ═════════════════════════════════════
 //   avr-gcc-atmel
 //   avr-libc-atmel
 //   dfu-programmer
 //
 // Notes
-// ▔▔▔▔▔
+// ═════
 //   ** E R G O   W I D E   S P L I T ** Layout
 //
 //   Autocompletion tap dance key pairs (),[],{} are available from the
@@ -29,7 +29,7 @@
 //   see function private()
 ///
 // Code
-// ▔▔▔▔
+// ════
 //   This source is shamelessly based on the "default" planck layout
 //
 //   #ifdef/#endif block structures are not indented, as syntax highlighting
@@ -38,7 +38,7 @@
 //   c++ commenting style is used throughout
 //
 // Change history
-// ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+// ══════════════
 //   See http://thedarnedestthing.com/colophon
 
 

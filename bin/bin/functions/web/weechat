@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Web
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ..................................................................... IRC chat
 
@@ -62,9 +62,11 @@ if server ;then
   else
     ditto 'znc server not running'
   fi
-else
+elif connected $SERVER ;then
   # close (unlock) any remote instances
-  pstat "ssh $SERVER -t weechat" && notify "Weechat" 'Instance already runnig' || { unlock ; ssh $SERVER -t weechat ;}
+  pstat "ssh $SERVER -t weechat" && notify "Weechat" 'Instance already runnig' || { unlock; ssh $SERVER -t weechat; }
+else
+  /usr/bin/weechat
 fi
 
 # vim: set ft=sh: #

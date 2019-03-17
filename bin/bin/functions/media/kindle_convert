@@ -1,0 +1,19 @@
+#!/usr/bin/fish
+# sdothum - 2016 (c) wtfpl
+
+# Media
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... E-books
+
+# Usage: kindle_convert, see dmenu kindle
+ 
+for i in (ls *azw3 | sed -r 's/.* - ([^-]*).azw3/\1/' | sort -u)
+  ifyes *$i*azw3 && for j in *$i*azw3
+    ditto $j
+    dmenu kindle default $j
+  end
+end
+sync
+
+# vim: set ft=fish: #

@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Query
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Files
+
+# if single link..
+if [ $# -eq 1 ] ;then
+  if [ -L $1 ] ;then
+    echo "$(ls -l $1 | sed -r 's/.*[0-9]* (.* ->)/\1/')"
+    echo '---'
+    ls --color -AFhL $1
+    exit
+  fi
+fi
+ls --color -AFh $@
+
+# vim: set ft=sh: #

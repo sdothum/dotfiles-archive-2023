@@ -2,21 +2,24 @@
 # sdothum - 2016 (c) wtfpl
 
 # Sysadmin
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................... Postgresql
 
 usage() {
-  echo "usage: $(basename $0) pre | post [<version.X>]"
+  echo "usage: $(basename $0) dump | pre | post [<version.X>]"
   echo '       Note: - pre upgrade workflow assumes "ignorepkg postgresql" has been set'
   echo '             - post upgrade workflow assumes no postgresql <version.X> has been skipped'
   exit 1
 }
 
+vsn=$(psql --version | cut -d' ' -f3)
+
+dump() { [ -e /var/lib/postgres/dump.sql-$vsn ] || echo "pg_dumpall >dump.sql-$vsn" | su - postgres; }
+
 pre() {
-  vsn=$(psql --version | cut -d' ' -f3)
   systemd start postgresql
-  [ -e /var/lib/postgres/dump.sql-$vsn ] || echo "pg_dumpall >dump.sql-$vsn" | su - postgres
+  dump
   systemd stop postgresql
   if [ ! -e /var/lib/postgres/data-$vsn ] ;then
     echo "mv data data-$vsn" | su - postgres
@@ -51,6 +54,7 @@ post() {
 
 # upgrade postgresql database
 case $1 in
+dump) dump ;;
 pre ) pre ;;
 post) post ;;
 *   ) usage ;;

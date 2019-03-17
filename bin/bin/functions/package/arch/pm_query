@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# package already installed check
+query=$(pacman -Qs $@ | grep "local/$@ .*" | sed 's|local/||')
+
+[ "$query" ] || exit 1
+installed_heading $query
+exit 0
+
+# vim: set ft=sh: #

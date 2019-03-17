@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... E-mail
 
@@ -20,18 +20,21 @@ editors="
   wordgrinder
 "
 
+# unordered message headings
+heading='^((Subject|From|To|Cc):.*\n(Subject|From|To|Cc):.*\n(Subject|From|To|Cc):.*\n)\n'
+
 format_message() {
   # insert 2 line feed characters into reply for vim cursor positioning and spacing
-  # note required search order
-  if pcregrep -Mq '^Subject: .*\n\n^Forwarded message from ' $1 ;then
+  # note required search order(?)
+  if pcregrep -Mq "${heading}Forwarded message from " $1 ;then
     sed -i '/^Forwarded message from /i\
 \
 ' $1
-  elif pcregrep -Mq '^Subject: .*\n\n^Excerpts from .* message of ' $1 ;then
+  elif pcregrep -Mq "${heading}Excerpts from .* message of " $1 ;then
     sed -i '/^Excerpts from .* message of /i\
 \
 ' $1
-  elif pcregrep -Mq '^Subject: .*\n\n^Quoting .* (.*)' $1 ;then
+  elif pcregrep -Mq "${heading}Quoting .* (.*)" $1 ;then
     sed -i '/^Quoting .* (.*)/i\
 \
 ' $1
@@ -62,14 +65,14 @@ compose_vim() {
   mhistory compose $editor
 }
 
-editors() { apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE" ;}
+editors() { apps "$editors" | sed "1i$SEND\n$EDIT\n$PURGE"; }
 
 editor=$(previous compose)
 while editor=$(editors | rmenu 'Compose' $editor -no-custom) || exit ;do
   case $editor in
   "$SEND"    ) ;;
-  "$EDIT"    ) dmenu notes draft ;                 continue ;;
-  "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp ; continue ;;
+  "$EDIT"    ) dmenu notes draft;                 continue ;;
+  "$PURGE"   ) mv $HOME/drafts/alot.*.draft /tmp; continue ;;
   focuswriter) compose_with focuswriter $1 ;;
   nano       ) compose_with pyroom $1 ;;
   pyroom     ) compose_with pyroom $1 ;;

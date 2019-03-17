@@ -2,7 +2,7 @@
 [ $TRACE ] && CHILD="draw/monitor $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................... Draw monitor (regions)
 
@@ -30,14 +30,14 @@ esac
 X1=0
 Y1=0
 
-xy() { eval X$1=$2 ; eval Y$1=$3 ;}
+xy() { eval X$1=$2; eval Y$1=$3; }
 
 # X Y display dimensions
 xy 0 $(query display)
 is multihead && xy 1 $(query display secondary)
 
 # XxY+X'+Y' monitor configuration
-monitor() { herbstclient list_monitors | grep "^$1:" | cut -d' ' -f2 ;}
+monitor() { herbstclient list_monitors | grep "^$1:" | cut -d' ' -f2; }
 
 # currently defined monitors
 PRIMARY=$(monitor 0)
@@ -83,8 +83,8 @@ fullscreen_width=$(( $normal_width - $window_frame*2 - $border*2))
 
 # ..................................................................... Geometry
 
-PRI() { PRIMARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4) ;}
-SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4) ;}
+PRI() { PRIMARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4); }
+SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4); }
 
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area

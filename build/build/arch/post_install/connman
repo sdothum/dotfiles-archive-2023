@@ -1,18 +1,21 @@
 # sdothum - 2016 (c) wtfpl
 
 # Post_install
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... connman
+
+scan="connmanctl> agent on > enable wifi > scan wifi > services"
 
 sudo mkdir /etc/connman
 [ -f /etc/connman/main.conf ] || echo '[General]
 PreferredTechnologies=ethernet,wifi' | sudo tee /etc/connman/main.conf
 systemd restart connman
 
-annotate "connmanctl> agent on > enable wifi > scan wifi > services"
-server && annotate "connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" ||
-          annotate "connmanctl> connect [wireless]\n
+server && annotate "$scan\n
+connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" ||
+          annotate "$scan\n
+connmanctl> connect [wireless]\n
 connmanctl> config [wireless] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway> --autoconnect True"
 # note: wireless must be connected before configuring service
 connmanctl

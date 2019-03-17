@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................... Dmenu DSL
 
@@ -35,7 +35,7 @@ apps() {
 
 # ........................................................ Media player playlist
 
-# usage:  playlist library played, see dmenu series/movies
+# usage: playlist library played, see dmenu series/movies
 playlist() {
   cat $2 | while read line ;do
     [ "$line" ] && grep -q "$line" $1 && sed -i "/^$line/s/^$line/$SEP $line/" $1
@@ -46,16 +46,16 @@ playlist() {
 # ......................................................................... Main
 
 # global dmenu functions
-sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date' ;} # playlist order
-previous() { echo | mhistory $1 | head -1 ;} # most recent (app) history
-unquote()  { echo $@ | sed "s/'//g" ;} # remove single quotes for subword match
+sortlist() { [ $1 ] && echo 'sort by name' || echo 'sort by date'; }  # playlist order
+previous() { echo | mhistory $1 | head -1; }  # most recent (app) history
+unquote()  { echo $@ | sed "s/'//g"; }        # remove single quotes for subword match
 
 # if not sourced, execute dmenu message
 trap 'unset TERMINAL' EXIT
 if [ $(basename $0) = dmenu ] ;then
   # see toggle ncurses for persistent ncurses mode
   [ -t 1 ] && export TERMINAL=true
-  [ "$1" = '-' ] && { unset TERMINAL ; shift ;}
+  [ "$1" = '-' ] && { unset TERMINAL; shift; }
   msg=$1
   # unhide desktop
   is multihead || conky clock off
@@ -65,7 +65,7 @@ if [ $(basename $0) = dmenu ] ;then
     scripts |\
     projects) ;;
 
-    *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..' ; exit 1 ;} ;;
+    *       ) pstat + "dmenu $msg" && { notify 3 critical "> dmenu $msg" 'Already running..'; exit 1; } ;;
     esac
     shift
     . ${0%/dmenu}/functions/dmenu/$msg $@

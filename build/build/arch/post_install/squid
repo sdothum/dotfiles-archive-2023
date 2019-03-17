@@ -1,13 +1,15 @@
 # sdothum - 2016 (c) wtfpl
 
 # Post_install
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ squid
 
 config_install /etc/squid/squid.conf
 systemd stop squid
-sudo squid -zN -z
+# allocate working directories
+sudo squid -k check
+sudo squid -z
 
 server && systemd enable squid
 

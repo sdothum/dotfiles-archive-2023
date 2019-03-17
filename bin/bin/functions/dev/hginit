@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Dev
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................... Init repo
 
@@ -21,7 +21,7 @@ cd $REPO
 # list of paths relative to $REPO, may include * expansion
 while read add <&3 ;do
   # add by directory chunks
-  [ -d "$add" ] && { find $add -type d | sort | xargs -d'\n' -I '{}' hgadd "{}" ;} || hgadd $add
+  [ -d "$add" ] && { find $add -type d | sort | xargs -d'\n' -I '{}' hgadd "{}"; } || hgadd $add
 done 3< $ADD
 
 # vim: set ft=sh: #

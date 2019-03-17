@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Query
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Audio
+
+# audio sink (destination)
+pactl list short sinks | grep USB_Audio_DAC | cut -s -f1
+
+# vim: set ft=sh: #

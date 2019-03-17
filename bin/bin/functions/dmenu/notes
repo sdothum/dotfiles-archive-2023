@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ Notes
 
@@ -14,8 +14,8 @@ PURGE='[ purge  ]'
 while : ;do
   case $1 in
   '' ) break ;;
-  */*) FOLDER=$1 ; shift ;;
-  *  ) ext=$1 ; shift ;;
+  */*) FOLDER=$1; shift ;;
+  *  ) ext=$1; shift ;;
   esac
 done
 NOTES=/tmp/dmenu:notes:$ext
@@ -60,7 +60,7 @@ cache() {
   notify low "Updating ${ext}s cache" 'Please be patient..'
   if [ "$files" ] ;then
     for i in $files ;do
-      [ "$search" ] && { egrep -iq "$search" $i || continue ;}
+      [ "$search" ] && { egrep -iq "$search" $i || continue; }
       echo "$i^$(stat -c '%y' $i | cut -d. -f1) ^$SEP $(hint $i)"
     done | sort -k2 -t^ -r >>$NOTES
   else
@@ -73,12 +73,12 @@ cache
 
 # item row
 highlight() {
-  # file=$(previous $catlg)
-  file=$mhistory
+  file=$(previous $catlg)
+  # file=$mhistory
   cat $NOTES | grep -qn "$file" && echo $(( $(cat $NOTES | grep -n "$file" | cut -d: -f1) + $offset )) || echo 0
 }
 
-notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT" ;}
+notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT"; }
 
 # to present grep'd file list enter:
 #   /regex to filter
@@ -86,24 +86,23 @@ notes() { cat $NOTES | cut -d^ -f2- | column -s^ -t | sed "1i$PROMPT" ;}
 search=''
 while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highlight)) || exit ;do
   case $note in
-  /*      ) search="${note#*/}" ; continue ;;
+  /*      ) search="${note#*/}"; continue ;;
   "$EDIT" ) term $FOLDER MAX STACK WAIT ranger $FOLDER ;;
-  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext) ; update=true ; action=edit ;;
+  "$NEW"  ) file=$(mktemp -p $FOLDER --suffix=.$ext); update=true; action=edit ;;
 
   "$purge") [ -f $NOTES ] && find -L $FOLDER -maxdepth 1 -name "*.$ext" -exec notify low "Archiving $ext" {} \; -exec mv -f {} $ARCHIVE \;
-            search='' ; cache ; continue ;;
+            search=''; cache; continue ;;
 
   *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
             content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-            while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom)
-            do
+            while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom) ;do
               [ $action = view ] || break
               term "$file" MAX STACK WAIT less $file
             done ;;
   esac
 
-  # mhistory $catlg $file
-  mhistory=$file
+  mhistory $catlg $file
+  # mhistory=$file
   case $action in
   edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file
              update=true ;;
@@ -117,7 +116,7 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
              exit ;;
   esac
 
-  [ $update ] && { cache ; unset update ;}
+  [ $update ] && { cache; unset update; }
 done
 
 # vim: set ft=sh: #

@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Desktop
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ........................................................................ Conky
 
@@ -100,7 +100,7 @@ scheme() {
   [ $1 = paper ] && paper || ink
 }
 
-chromatic() { echo "$hex" | cut -d' ' -f$1 ;}
+chromatic() { echo "$hex" | cut -d' ' -f$1; }
 
 # see conky palette
 hexgen() {
@@ -152,7 +152,7 @@ theme() {
 action=$1
 shift
 case $action in
-contrast) [ $# -eq 1 ] && { luminance +$1 && exec conky theme dark $1 || exec conky theme light $1 ;}
+contrast) [ $# -eq 1 ] && { luminance +$1 && exec conky theme dark $1 || exec conky theme light $1; }
 
 light   ) [ $# -eq 1 ] || exit
           hexgen $(conky palette $1 Shade | cut -d' ' -f4)
@@ -170,7 +170,7 @@ test    ) [ $# -eq 1 ] || exit
           hexgen $1
           luminance +$default_color && paper || ink
           theme
-          ifno "change contrast" || { luminance -$default_color && paper || ink ; theme ;} ;;
+          ifno "change contrast" || { luminance -$default_color && paper || ink; theme; } ;;
 
 wal     ) wal ;;
 *       ) usage ;;

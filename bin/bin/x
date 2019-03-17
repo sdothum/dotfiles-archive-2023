@@ -2,14 +2,14 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Server
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ${COLORS} defined in env
 
 # ............................................................... Window manager
 
 usage() {
-  echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | dwm | goomwwm | guile | herbstluftwm | i3 | lxde | lxqt | notion | openbox | ratpoison | spectrwm | stumpwm | subtle | xfce4 | shell | windowchef | wmii | wmutils | xmonad"
+  echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"
   exit 1
 }
 
@@ -20,26 +20,30 @@ case $1 in
 aw* ) echo awesome >$HOME/.windowmanager ;;
 bs* ) echo bspwm >$HOME/.windowmanager ;;
 bu* ) echo budgie >$HOME/.windowmanager ;;
-dw  ) echo dwm >$HOME/.windowmanager ;;
+ci* ) echo cinnamon >$HOME/.windowmanager ;;
+dw* ) echo dwm >$HOME/.windowmanager ;;
 gn* ) echo gnome >$HOME/.windowmanager ;;
 go* ) echo goomwwm >$HOME/.windowmanager ;;
 gu* ) echo guile >$HOME/.windowmanager ;;
 he* ) echo herbstluftwm >$HOME/.windowmanager ;;
 i3  ) echo i3 >$HOME/.windowmanager ;;
-no* ) echo notion >$HOME/.windowmanager ;;
+kde ) echo kde >$HOME/.windowmanager ;;
 lxd*) echo lxde >$HOME/.windowmanager ;;
 lxq*) echo lxqt >$HOME/.windowmanager ;;
+ma* ) echo mate >$HOME/.windowmanager ;;
+no* ) echo notion >$HOME/.windowmanager ;;
 op* ) echo openbox >$HOME/.windowmanager ;;
-ra* ) echo ratpoison >$HOME/.windowmanager ;;
+rat*) echo ratpoison >$HOME/.windowmanager ;;
+raz*) echo razor-qt >$HOME/.windowmanager ;;
 sp* ) echo spectrwm >$HOME/.windowmanager ;;
 st* ) echo stumpwm >$HOME/.windowmanager ;;
 su* ) echo subtle >$HOME/.windowmanager ;;
-xf* ) echo xfce4 >$HOME/.windowmanager ;;
 sh* ) echo shell >$HOME/.windowmanager ;;
 wi* ) echo windowchef >$HOME/.windowmanager ;;
 wmi*) echo wmii >$HOME/.windowmanager ;;
-wm* ) echo wmutils >$HOME/.windowmanager ;;
+wmu*) echo wmutils >$HOME/.windowmanager ;;
 wt* ) echo wtftw >$HOME/.windowmanager ;;
+xf* ) echo xfce4 >$HOME/.windowmanager ;;
 xm* ) echo xmonad >$HOME/.windowmanager ;;
 *   ) usage ;;
 esac
@@ -50,8 +54,10 @@ if console ;then
   # echo "${__GREEN}$(figlet -t -f lean $wm)${NOCOLOR}"
   echo ${__GREEN}
   # avoid dash shell echo "$(figlet)" escape character issues
-  figlet -t -d $HOME/.fonts/figlet -f s-relief $wm
-  echo ${NOCOLOR}
+  # figlet -t -d $HOME/.fonts/figlet -f s-relief $wm
+  # figlet -t -f lean $wm
+  toilet -F rainbow -f smbraille $wm
+  # echo ${NOCOLOR}
   # escape to shell prompt
   [ $wm = shell ] && exit
 
@@ -64,7 +70,7 @@ if console ;then
   fi
 
   pstat startx && exit
-  cpu arm && { tmout ifyes 'sync with watchman' && wsync || wsync -s ;}
+  cpu arm && { tmout ifyes 'sync with watchman' && wsync || wsync -s; }
   # mount any dangling nfs shares
   sudo mount -a
   startx --
@@ -78,42 +84,44 @@ if console ;then
 
   # session specific clean up
   case $wm in
-  2bwm        ) ;;
-  awesome     ) ;;
-  bspwm       ) ;;
-  budgie      ) ;;
-  cinnamon    ) ;;
-  goomwwm     ) ;;
-  dwm         ) ;;
+  2b* ) ;;
+  aw* ) ;;
+  bs* ) ;;
+  bu* ) ;;
+  ci* ) ;;
+  dw* ) ;;
+  gn* ) ;;
+  go* ) ;;
 
-  herbstluftwm) pkill -KILL -f 'herbst'
-                killall -KILL qutebrowser 2>/dev/null
-                killall -KILL weechat 2>/dev/null ;;
+  he* ) pkill -KILL -f 'herbst'
+        killall -KILL qutebrowser 2>/dev/null
+        killall -KILL weechat 2>/dev/null ;;
 
-  gnome       ) ;;
-  i3          ) ;;
-  kde         ) ;;
-  lxde        ) ;;
-  lxqt        ) ;;
-  mate        ) ;;
-  notion      ) ;;
-  openbox     ) ;;
-  ratpoison   ) ;;
-  razor-qt    ) ;;
-  spectrwm    ) ;;
-  stumpwm     ) ;;
-  subtle      ) ;;
-  wmii        ) ;;
-  wmutils     ) ;;
-  wtftw       ) ;;
-  xfce        ) ;;
-  xmonad      ) ;;
+  i3  ) ;;
+  kde ) ;;
+  lxd*) ;;
+  lxq*) ;;
+  ma* ) ;;
+  no* ) ;;
+  op* ) ;;
+  rat*) ;;
+  raz*) ;;
+  sp* ) ;;
+  st* ) ;;
+  su* ) ;;
+  sh* ) ;;
+  wi* ) ;;
+  wmi*) ;;
+  wmu*) ;;
+  wt* ) ;;
+  xf* ) ;;
+  xm* ) ;;
   esac
 
-  cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s ;};}
+  cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s; };}
 else
   # already in X11 session
-  ditto 'window manager set to' $(cat $HOME/.windowmanager) 'for next xsession'
+  ditto 'window manager' "$(cat $HOME/.windowmanager) (next X session)"
 fi
 
 # vim: set ft=sh: #

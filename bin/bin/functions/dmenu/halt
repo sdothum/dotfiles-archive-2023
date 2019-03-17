@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... Session
 
@@ -19,7 +19,7 @@ disconnect() {
   quit
 }
 
-actions() { echo "lock\nlogout\nsuspend\nreboot\nshutdown" ;}
+actions() { echo "lock\nlogout\nsuspend\nreboot\nshutdown"; }
 
 # quit!
 cmd=$default
@@ -28,8 +28,8 @@ while cmd=$(actions | rmenu 'Session' $cmd -no-custom) || exit ;do
   lock    ) lock_screen ;;
   logout  ) sudo kill -TERM X ;;
   suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend || sudo pm-suspend ;;
-  reboot  ) disconnect ; [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo shutdown -r now ;;
-  shutdown) disconnect ; [ -e /sbin/systemctl ] && sudo systemctl poweroff || sudo shutdown -h now ;;
+  reboot  ) disconnect; [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo shutdown -r now ;;
+  shutdown) disconnect; [ -e /sbin/systemctl ] && sudo systemctl poweroff || sudo shutdown -h now ;;
   esac
   break
 done

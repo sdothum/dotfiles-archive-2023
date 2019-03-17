@@ -2,12 +2,12 @@
 # sdothum - 2016 (c) wtfpl
 
 # Hardware
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty | default ]  [steno [nomouse]]  [<string>] [dfu]"
+  echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty | default] [steno [nomouse]] [<string> [<string>]] [dfu]"
   exit 1
 }
 
@@ -45,7 +45,7 @@ adnw*   |\
 beakl*  |\
 colem*  |\
 qwerty  |\
-default ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | uppercase)/" $CONFIG ; shift ;;
+default ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | uppercase)/" $CONFIG; shift ;;
 
 *       ) usage ;;
 esac
@@ -54,19 +54,21 @@ esac
 if [ "$1" = steno ] ;then
   sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
   shift
-  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE ; shift ;}
+  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
 fi
 
 # compile time macro sting
-grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING' $CONFIG
-case $1 in
-'' |\
-dfu) sed -i 's|.*PRIVATE_STRING|// #define PRIVATE_STRING|' $CONFIG ;;
+grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING ""' $CONFIG
+grep -q PUBLIC_STRING $CONFIG || sed -i '$a#define PUBLIC_STRING ""' $CONFIG
+# sed -i '/#define PRIVATE_STRING/c#define PRIVATE_STRING ""; /#define PUBLIC_STRING/c#define PUBLIC_STRING ""' $CONFIG
 
-*  ) trap "rm -f $PRIVATE" EXIT
-     sed -i 's/.*PRIVATE_STRING/#define PRIVATE_STRING/' $CONFIG
-     echo "SEND_STRING(\"$1\");" >$PRIVATE
-     shift ;;
+case $1 in
+'' | dfu) ;;
+*       ) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"$1\"" $CONFIG; shift; ;;
+esac
+case $1 in
+'' | dfu) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$(cat $HOME/.forward)\"" $CONFIG ;;
+*       ) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$1\"" $CONFIG ;;
 esac
 
 cd $QMK

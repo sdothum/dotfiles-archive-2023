@@ -11,15 +11,16 @@ echo '> mount /dev/sd<usb>1 /media'
 
 
 heading 'connect interface'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 if ! ping -c1 www.google.com >/dev/null 2>&1 ;then
   connect
+  ping -c1 www.google.ca
   checkpoint
 fi
 
 
 heading 'boot disk'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 ls -l /dev/disk/by-id | grep -v part | grep ata
 read -p "Boot disk /dev/sd? [a-z] | /dev/mmcblk? [0]: " disk
 if [ -z $disk ] ;then
@@ -87,8 +88,8 @@ root=$(partition 'Linux( filesystem)*$')
 
 if [ "$format" = y ] ;then
   heading 'format btrfs disk partition'
-  [ $efi ] && { mkfs.fat -n EFI -F32 $efi ; echo ;}
-  [ $boot ] && { mkfs.ext2 -L Boot $boot ; echo ;}
+  [ $efi ] && { mkfs.fat -n EFI -F32 $efi; echo; }
+  [ $boot ] && { mkfs.ext2 -L Boot $boot; echo; }
 
   if [ $swap ] ;then
     mkswap -L Swap $swap
@@ -105,7 +106,7 @@ if [ "$format" = y ] ;then
 fi
 
 heading 'mount partitions'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 mkdir -pv /mnt/btrfs-root
 read -p "SSD boot drive? [y|N]: " ssd
 [ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=,ssd,discard
@@ -116,14 +117,14 @@ checkpoint
 
 
 heading 'RESCUE'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 read -p "RESCUE (mount btrfs subvolumes) [Y|n]: " rescue
 [ $rescue ] || rescue=Y
 
 
 if [ "$rescue" = n ] ;then
 heading 'create btrfs subvolumes'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 mkdir -pv /mnt/btrfs-root/__snapshot
 mkdir -pv /mnt/btrfs-root/__current
 read -p "Create separate /net filesystem? [y|N]: " net
@@ -163,7 +164,7 @@ checkpoint
 
 
 heading 'mount subvolumes'
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 mkdir -pv /mnt/btrfs-boot
 mount -v -o ${mount},nodev,subvol=__current/ROOT $root /mnt/btrfs-boot
 [ "$net" = y ] && mkdir -pv /mnt/btrfs-boot/net

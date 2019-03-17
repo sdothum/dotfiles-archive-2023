@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Startup
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................... Window manager restart
 
@@ -10,14 +10,14 @@
 AUTOCONNECT=$SESSION/autoconnect
 CMST=$SESSION/cmst
 CALENDAR=$SESSION/calendar
-IM=$SESSION/im
 IRC=$SESSION/irc
+JABBER=$SESSION/jabber
 MAIL=$SESSION/mail
 PING=$SESSION/ping
 REMINDER=$SESSION/reminder
 TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
-WEB=$SESSION/browser
+WWW=$SESSION/browser
 
 # reminder delay (allow desktop to initialize)
 delay=2
@@ -73,38 +73,38 @@ autocutsel -selection PRIMARY -fork &
 
 # ................................................................. Systray apps
 
-pstat 'autokey-gtk --verbose' || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
+# pstat 'autokey-gtk --verbose' || autokey-gtk --verbose >/tmp/autokey.log 2>/dev/null &
 pstat gpaste-client || gpaste-client start &
-pstat xfce4-power-manager || xfce4-power-manager 2>/dev/null &
+# pstat xfce4-power-manager || xfce4-power-manager 2>/dev/null &
 
 # ................................................................ Terminal apps
 
-if [ -e $IM ] ;then
-  server && herbstclient focus_monitor 1 || switch tag $CHAT
+if [ -e $JABBER ] ;then
+  # server && herbstclient focus_monitor 1 || switch tag $CHAT, see rules
   # wait for window visibility before switching monitors, for urxvt font handling
-  term 'IM' VISIBLE centerim5
+  tmux_session jabber mcabber &
 fi
 if [ -e $IRC ] ;then
-  server && herbstclient focus_monitor 1 || switch tag $CHAT
+  # server && herbstclient focus_monitor 1 || switch tag $CHAT, see rules
   # wait for window visibility before switching monitors, for urxvt font handling
-  tmux_session irc weechat
+  tmux_session irc weechat &
 fi
 server && herbstclient focus_monitor 0
-[ -e $CALENDAR ] && term 'Calendar' wyrd
-[ -e $MAIL     ] && tmux_session mail alot
-[ -e $PING     ] && term 'Ping' pingchk
+[ -e $CALENDAR ] && term 'Calendar' wyrd &
+[ -e $MAIL     ] && tmux_session mail alot &
+[ -e $PING     ] && term 'Ping' pingchk &
 
 # .................................................................. Window apps
 
-[ -e $THEDARNEDESTTHING ] && thedarnedestthing
+[ -e $THEDARNEDESTTHING ] && thedarnedestthing &
 switch tag $WEB
-[ -e $WEB      ] && $BROWSER &
+[ -e $WWW      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad
-[ -e $REMINDER ] && (sleep $delay ; dmenu reminder) &
+[ -e $REMINDER ] && (sleep $delay; dmenu reminder) &
 
 # .............................................................. Cleanup desktop
 
-[ -e $UNCLUTTER ] && { pstat unclutter || toggle unclutter ;}
+[ -e $UNCLUTTER ] && { pstat unclutter || toggle unclutter; }
 # autocutsel leaves a small square of black pixels in the bottom right corner
 (xdotool search --sync --onlyvisible --name autocutsel windowunmap) &
 

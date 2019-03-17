@@ -5,21 +5,20 @@
 
 
 = document formatting
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════════
   csslint
   csstidy
-  enscript
 
 
 = editor
-= ▔▔▔▔▔▔
+= ══════
 # atom-editor-bin [server]
 # atom-editor     [server]
 # ctags
 # emacs           [server]
 # focuswriter
 # markdown
-# neovim
+  neovim
 # neovim-git
 # nvpy-git
 # pyroom
@@ -28,13 +27,13 @@
 # sublime-text
 # ted             [server]
 d texlive-core
-  texlive-latexextra
+d texlive-latexextra
 d universal-ctags-git
 # wordgrinder
 
 
 = version control
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
 # vcsh-git
 # hgview
   git

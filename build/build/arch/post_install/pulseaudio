@@ -1,13 +1,13 @@
 # sdothum - 2016 (c) wtfpl
 
 # Post_install
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................... pulseaudio
 
 ifnsed /etc/pulse/default.pa 'load-module module-switch-on-connect'
 
-# pm_query python-pyqt4 >/dev/null ; and sudo sed -i '$a\
+# pm_query python-pyqt4 >/dev/null; and sudo sed -i '$a\
 # load-module module-equalizer-sink\
 # load-module module-dbus-protocol' /etc/pulse/default.pa
 # pactl load-module module-equalizer-sink

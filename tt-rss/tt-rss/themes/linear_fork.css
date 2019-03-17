@@ -6,6 +6,7 @@ html { font-family: Roboto,'Noto Sans',Helvetica,Arial sans-serif; }
 
 div#notify.notify.notify_progress { display: none; }
 
+.dijitReset,
 div#toolbar,
 #headlines-frame,
 #ttrssPrefs #footer,
@@ -279,17 +280,28 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 
 .cdm.expandable.active {
   /* border-bottom: 1px solid #e77471 !important; */
-  border-top: 1px solid #b12525 !important;
+  /* border-top: 1px solid #b12525 !important; */
   padding-top: 54px;
 }
 
 /* collapse button bar, set line height for left hand date alignment */
-.collapseBtn { padding-bottom: 0px; }
+.collapseBtn { 
+  -webkit-transition: all 0s;
+  border-top: 1px solid #b12525;
+  /* margin-top: -1px;  */
+  padding-bottom: 0; 
+  transition: all 0s;
+}
 
 .collapseBtn:hover {
-  background: #ffe3d5 url('linear_images/noise.png') 0 repeat;
-  font: 10px/10px Roboto,'Noto Sans',Helvetica,Arial sans-serif !important;
+  /* background: #ffe3d5 url('linear_images/noise.png') 0 repeat; */
+  background: #fbeecb url('linear_images/noise.png') 0 repeat;
+  /* background: #fdf6e3 url('linear_images/noise.png') 0 repeat; */
+  border-top: none;
+  /* font: 10px/10px Roboto,'Noto Sans',Helvetica,Arial sans-serif !important; */
 }
+
+.collapseBtn:hover img { opacity: 0 !important; }
 
 /* hide collapse message */
 .collapseBtn:before { content: ''; }

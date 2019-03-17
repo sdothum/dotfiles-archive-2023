@@ -5,7 +5,7 @@
 
 
 = appearance
-= ▔▔▔▔▔▔▔▔▔▔
+= ══════════
 # breeze-obsidian-cursor-theme
 # breeze-snow-cursor-theme
   compton
@@ -22,7 +22,7 @@
 
 
 = desktop
-= ▔▔▔▔▔▔▔
+= ═══════
 # conky-lua
 d " enable mpd and nvidia as required
 d ? conky-lua-archers
@@ -33,7 +33,7 @@ d ? conky-lua-archers
 
 
 = desktop utilities
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═════════════════
 # colorgrab
   colors-git
 # gpick
@@ -52,7 +52,7 @@ d ? conky-lua-archers
 
 
 = font
-= ▔▔▔▔
+= ════
   adobe-base-14-fonts
 # ephifonts
 # ephifonts-no-helvetica
@@ -74,17 +74,18 @@ d ? conky-lua-archers
 # ttf-iosevka-hooky
 # ttf-liberation
 # ttf-mac-fonts
-  ttf-ms-fonts
+# ttf-ms-fonts
 # ttf-noto-sans-ib
   ttf-robobo
   ttf-symbola
 # ttf-ubuntu-font-family
+# ttf-wps-fonts
 # xorg-fonts-type1
 # xorg-xlsfonts
 
 
 = gtk theme/engine
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════════
   adapta-gtk-theme
 # adapta-gtk-theme-deb
 # flatplat-theme
@@ -111,23 +112,23 @@ d paper-icon-theme
 
 
 = notification
-= ▔▔▔▔▔▔▔▔▔▔▔▔
+= ════════════
   dunst
   libnotify
 # xfce4-notifyd
 
 
 = screensaver
-= ▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════
 # d rss-glx
 # xscreensaver
 
 
 = user interface
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
   autocutsel
 # autokey-gtk
-  autokey-py3
+# autokey-py3
 # clipit
 # "stest contained in dmenu package"
   dmenu
@@ -142,7 +143,7 @@ d paper-icon-theme
 
 
 = window property
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ═══════════════
 # m disputils
 # libwm-git
 # sprop-git

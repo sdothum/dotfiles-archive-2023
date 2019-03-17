@@ -2,7 +2,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # Web
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................. Syndication
 
@@ -20,9 +20,9 @@ rss() {
 }
 
 case $1 in
-'') pstat newsbeuter && p newsbeuter || { rss ; newsbeuter -C $HOME/.newsbeuter/config ;}
-I*) rm -f $HOME/.newsbeuter/cache.db ; rss ;;
-i*) pstat newsbeuter || { rss ; newsbeuter -C $HOME/.newsbeuter/config -i $2 ;}
+'') pstat newsbeuter && p newsbeuter || { rss; newsbeuter -C $HOME/.newsbeuter/config; }
+I*) rm -f $HOME/.newsbeuter/cache.db; rss ;;
+i*) pstat newsbeuter || { rss; newsbeuter -C $HOME/.newsbeuter/config -i $2; }
 * ) usage ;;
 esac
 

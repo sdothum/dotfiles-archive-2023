@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Test
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... HDMI connected
+
+# active hdmi monitor
+xrandr 2>/dev/null | grep -q '^HDMI[^ ]* connected'
+
+# vim: set ft=sh: #

@@ -2,12 +2,12 @@
 # sdothum - 2016 (c) wtfpl
 
 # Process
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................ Defunct processes
 
 # list defunct processes and their parents
-defunct() { ps -ef --sort '-%cpu' | grep $1 '<defunct>' | grep -v grep ;}
+defunct() { ps -ef --sort '-%cpu' | grep $1 '<defunct>' | grep -v grep; }
 
 pids=$(defunct | /usr/bin/awk '{ print $3 }' | sort -u)
 pids=$(echo $pids | sed 's/ /|/g')

@@ -1,12 +1,12 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# File
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ............................................................. Playback history
 
-# Usage: mhistory <name | path> <string>  (update history with string)
+# Usage: mhistory <name | path> <string> (update history with string)
 #        ** OR **
 #          .. | mhistory <file> | ..  (append history content)
 # Note:  echo | mhistory <file> | ..  (must use echo if not prepending content)
@@ -16,7 +16,7 @@
 #        command history tracking cannot without full pathname reference
 
 usage() {
-  echo "usage: $(basename $0) < name | path > [<string>]"
+  echo "usage: $(basename $0) <name> | <path> [<string>]"
   exit 1
 }
 

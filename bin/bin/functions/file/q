@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... View
+
+# Usage: q <filename>, find and list filenames from current directory
+
+# simple source listing tool
+file=$(find . -name "$1" -type f | egrep -v '.deprecated|.hg')
+if [ "$file" ] ;then
+  if [ $(echo "$file" | wc -l) -gt 1 ] ;then
+    for i in $file ;do ifyes $i && cat $i ;done
+  else
+    cat $file
+  fi
+else
+  ditto "\"$1\" not found"
+fi
+
+# vim: set ft=sh: #

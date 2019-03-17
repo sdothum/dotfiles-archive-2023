@@ -5,7 +5,7 @@
 
 
 = codec
-= ▔▔▔▔▔
+= ═════
 # gnash-common
   gst-libav
   gst-plugins-base
@@ -16,7 +16,7 @@ d gstreamer0.10-base-plugins
 
 
 = hardware
-= ▔▔▔▔▔▔▔▔
+= ════════
   dmidecode
 # gpointing-device-settings [gpu macbook]
   hwinfo
@@ -27,7 +27,7 @@ d mbpfan-git                [gpu macbook]
 
 
 = power
-= ▔▔▔▔▔
+= ═════
   acpi                      [laptop]
 # powertop                  [laptop]
 # "dead battery in macbook"
@@ -36,8 +36,8 @@ d mbpfan-git                [gpu macbook]
 
 
 = security
-= ▔▔▔▔▔▔▔▔
-d gksu
+= ════════
+# d gksu
   gnome-keyring
 # keepassx
 d * pass
@@ -47,7 +47,7 @@ d * pass
 
 
 = sound
-= ▔▔▔▔▔
+= ═════
 # alsa-firmware
   alsa-plugins
 # lib32-alsa-plugins
@@ -69,7 +69,7 @@ d libflashsupport-pulse-git
 
 
 = system utility
-= ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+= ══════════════
 # anacron
   cronie
 # dcron

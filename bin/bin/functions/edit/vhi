@@ -1,0 +1,31 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Editor
+
+usage() {
+  echo "usage: $(basename $0) [<colorscheme>]"
+  echo '       see vim command :Hi'
+  exit 1
+}
+
+vhi=/tmp/vim:hi
+
+# colorscheme
+case $1 in
+''       ) ;;
+flatwhite) ;;
+one      ) ;;
+quantum  ) ;;
+*        ) usage ;;
+esac
+[ $1 ] && theme="-c 'colorscheme $1'"
+
+# capture all highlight settings
+eval vim $theme -c "'redir! >$vhi | silent! hi | redir END | quit'"
+v $vhi
+  
+# vim: set ft=sh: #

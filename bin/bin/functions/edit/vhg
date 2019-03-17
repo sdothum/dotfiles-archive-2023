@@ -1,0 +1,42 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Auto backup
+
+# Usage: vhg [<queue>], see v(im) script and buffers.vim, core.vim
+
+REPO=${REPO:-$STOW}
+JOB=$HOME/.vim/job
+
+# import user path
+. $HOME/bin/functions/shell/user_path
+
+# concurrent db updates are not permitted
+slock $(basename $0) $$ || exit 1
+# delete orphan locks
+brokeln rm $REPO/.hg
+
+backup() {
+  [ -f $1 ] || exit
+  sort $1 | uniq >/tmp/vhg:add
+  unset files
+
+  # changesets per vim editing sessions
+  while read file <&3 ;do
+    # suppress "already tracked!" message
+    hg add --quiet --cwd $REPO "$file" 2>/dev/null
+    files="$files  $file"
+  done 3< /tmp/vhg:add
+
+  notify 'Mercurial' "$(echo ${files#  } | sed 's/ /\n/g')"
+  # see hgl alias (hg log) for compact listing
+  hg commit --quiet --cwd $REPO -m "$(date -R | cut -d- -f1) ..$files"
+  rm -f $1
+}
+
+[ $1 ] && backup $JOB/$1 || for i in $JOB/* ;do backup $i ;done
+
+# vim: set ft=sh: #

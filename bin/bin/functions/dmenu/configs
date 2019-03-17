@@ -1,7 +1,7 @@
 # sdothum - 2016 (c) wtfpl
 
 # X11 Dynamic Menu
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ......................................................................... Edit
 
@@ -27,7 +27,7 @@ configs() {
       $(sudo find /opt -type f -regextype posix-extended -regex "$include" | egrep -v '\.git' | sed 's/ /:/g') \
       $(sudo find $HOME ! -path "$HOME/Maildir/*" -type f -regextype posix-extended -regex "$include" 2>/dev/null | egrep -v "$exclude" | sed 's/ /:/g') |
     tr ' ' '\n' |
-    sed -r "s/:/ /g ; s|(.*)/([^/]*)$|\2^$SEP \1|" |
+    sed -r "s/:/ /g; s|(.*)/([^/]*)$|\2^$SEP \1|" |
     sort -u |
     sed '1i
 ' >$cache
@@ -37,17 +37,17 @@ configs() {
 }
 
 # command line initialization with: dmenu configs [init]
-[ ! -s $cache ] || [ $1 ] && { configs ; [ $1 ] && exit ;}
+[ ! -s $cache ] || [ $1 ] && { configs; [ $1 ] && exit; }
 
 # .................................................................. Edit config
 
 while : ;do
   file=$(cat $cache | mhistory configs | sed "1i$REBUILD" | column -s^ -t | rmenu 'Edit Config' 1 -no-custom) || exit
 
-  [ "${file%]*}]" = "$REBUILD" ] && { configs ; continue ;}
+  [ "${file%]*}]" = "$REBUILD" ] && { configs; continue; }
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
-  file=$(echo $file | sed -r "s|^(.*)  *${SEP}  *(.*)|\2/\1| ; s/ /\\\\\\\\ /")
+  file=$(echo $file | sed -r "s|^(.*)  *${SEP}  *(.*)|\2/\1|; s/ /\\\\\\\\ /")
   v $file
   exit
 done

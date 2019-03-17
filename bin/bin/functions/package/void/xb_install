@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ......................................................... Distribution install
+
+# Usage: xb_install [--confirm | S] <package>
+
+case $1 in
+  --confirm) confirm=true; shift ;;
+  --init   ) init=true;    shift ;;
+esac
+
+if ! xb_query $@ ;then
+  heading : $@
+  time=$(date +%s)
+  pre_install $@
+  if ! xbps-query -S $@ >/dev/null ;then
+    [ $confirm ] && sudo xbps-install $@ || sudo xbps-install -y $@
+  fi
+  post_install $@
+  echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
+elif [ $init ] ;then
+  [ -s $HOME/build/void/post_install/$1 ] || [ -s $HOME/build/void/user_install/$1 ] && post_install $@
+fi
+
+unset confirm
+
+# vim: set ft=sh: #

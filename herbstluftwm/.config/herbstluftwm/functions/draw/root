@@ -2,12 +2,12 @@
 [ $TRACE ] && CHILD="draw/root $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # .............................................................. Draw background
 
-# Usage: draw root [ blank [<color>] | restore | save ]
-#        draw root [ select | shuffle | blur | wallpaper ]
+# Usage: draw root [blank [<color>] | restore | save]
+#        draw root [select | shuffle | blur | wallpaper]
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
 #        draw root restore, restore background color
@@ -44,7 +44,7 @@ exists() {
 
 # ............................................................. Per monitor blur
 
-[ "$1" = blur ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR ;}
+[ "$1" = blur ] && { [ -e $NOBLUR ] && rm -f $NOBLUR || touch $NOBLUR; }
 # occupied or empty desktop, setroot record structure:
 # 1: occupied (blurred image)
 # 0: empty (raw image)
@@ -68,7 +68,6 @@ setblur() {
 
 # create pulsar border color gradient
 set_border() {
-  # echo $1 >$BORDER
   conky palette $1 'Monochromatic' >$PULSAR
   # set border to midtone
   cut -d' ' -f1 $PULSAR >$BORDER

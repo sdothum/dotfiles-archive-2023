@@ -2,12 +2,13 @@
 # [ $TRACE ] && CHILD="is/layout $@" . $PARENT
 
 # herbstluftwm
-# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+# ══════════════════════════════════════════════════════════════════════════════
 
 # ....................................................................... Layout
 
 # Usage: is layout <layout>
 
-[ $(herbstclient layout | grep '\[FOCUS\]' | awk '{ print $2 }') = $1: ]
+# [ $(herbstclient layout | grep '\[FOCUS\]' | awk '{ print $2 }') = $1: ]
+[ $(herbstclient layout | grep '\[FOCUS\]' | cut -d' ' -f2) = $1: ]
 
 # vim: set ft=sh: #

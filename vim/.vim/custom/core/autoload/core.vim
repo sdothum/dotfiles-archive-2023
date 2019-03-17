@@ -1,9 +1,9 @@
 " sdothum - 2016 (c) wtfpl
 
 " Primitive
-" ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+" ══════════════════════════════════════════════════════════════════════════════
 
-  " System ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " System _____________________________________________________________________
 
     " .............................................................. Reload vim
 
@@ -14,7 +14,7 @@
         source $MYVIMRC
         call theme#LiteSwitch()
         call theme#LiteSwitch()
-        RedrawGui                           " see gui.vim
+        RedrawGui
       endfunction
 
     " ....................................................... Error message trap
@@ -23,9 +23,14 @@
       function! core#Quietly(command)
         try
           execute a:command
-        catch /.*/
-          " discard messages, do nothing
+        catch /.*/  " discard messages
         endtry
+      endfunction
+
+    " .................................................... Current state message
+    
+      function! core#Status(message, state)
+        echo a:message . (a:state ? ' ON' : ' OFF')
       endfunction
 
     " ............................................................. Numeric sort
@@ -44,89 +49,43 @@
       " latex printing
       function! core#Hardcopy()
         echo 'Printing..'
-        if core#Markdown()
-          execute '!hardcopy wiki \"' . expand('%:t') . '\"'
-        elseif expand('%:p') =~ 'Patricia'
-          execute '!hardcopy wps' expand('%:t')
-        else
-          execute '!hardcopy code' expand('%:t')
-        endif
+        if s:markdown()                    | execute '!hardcopy wiki \"' . expand('%:t') . '\"'
+        elseif expand('%:p') =~ 'Patricia' | execute '!hardcopy wps' expand('%:t')
+        else                               | execute '!hardcopy code' expand('%:t') | endif
       endfunction
 
     " .............................................................. Debug trace
 
       let g:trace = $VIMTRACE > '' ? 1 : 0
 
+      " escape problematic shell commandline characters
       function! core#Trace(msg)
-        if g:trace == 1
-          " escape problematic shell commandline characters
-          silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log'
-          " sleep 1000m
-        endif
+        if g:trace == 1 | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log' | endif
       endfunction
 
-  " Keyboard layout ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Text _______________________________________________________________________
 
-    " ......................................................... Colemak-shift-dh
+    " ........................................................... Non-blank line
 
-      " Note: scripts are affected by the mappings below!
-      "       e.g. "h" becomes "m", "f" becomes "t" etc.
-      "       see thedarnedestthing.com
-
-      " hjkl mapping (0) hjkl (1) mnle
-      let s:mnle = "$MNLE" > '' ? $MNLE : 0
-
-      function! core#Colemak()
-        if s:mnle != 0
-          " map home row (cluster) cursor movement
-          nnoremap u     gk
-          vnoremap u     gk
-          nnoremap n     h
-          vnoremap n     h
-          nnoremap e     gj
-          vnoremap e     gj
-          nnoremap i     l
-          vnoremap i     l
-
-          " recover vi keys (including caps for consistency)
-          nnoremap f     e
-          vnoremap f     e
-          nnoremap F     E
-          vnoremap F     E
-          nnoremap h     m
-          vnoremap h     m
-          nnoremap k     n
-          vnoremap k     n
-          nnoremap K     N
-          vnoremap K     N
-
-          " combine find and till commands
-          nnoremap t     f
-          vnoremap t     f
-          nnoremap T     F
-          vnoremap T     F
-          nnoremap <A-t> t
-          vnoremap <A-t> t
-          nnoremap <C-t> T
-          vnoremap <C-t> T
-        endif
+      function! core#NonblankLine()
+        return matchstr(getline(line('.')), '\S') > ''
       endfunction
 
-  " Text ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      function! core#BlankLine()
+        return ! core#NonblankLine()
+      endfunction
 
     " ......................................................... Strip whitespace
 
-      " see https://dougblack.io/words/a-good-vimrc.html
-      " strips trailing whitespace from all lines
+      " strips trailing whitespace from all lines, see https://dougblack.io/words/a-good-vimrc.html
       function! core#StripTrailingWhitespaces()
-        if &modifiable == 1 && ! core#Markdown()
-          " save last search & cursor position
-          " let l:_s = @/
+        if &modifiable == 1 && ! s:markdown()
+          " let l:_s = @/ " save last search & cursor position
           " let l:l  = line(".")
           " let l:c  = col(".")
           let s:view = winsaveview()
-          %s/\s\+$//e                       " EOL
-          %s/\(\n\r\?\)\+\%$//e             " EOF
+          %s/\s\+$//e           " EOL
+          %s/\(\n\r\?\)\+\%$//e " EOF
           call winrestview(s:view)
           " let @/ = l:_s
           " call cursor(l:l, l:c)
@@ -150,19 +109,16 @@
 
       " just position cursor on a line with an opening '{'
       function! core#CssBlockAlign()
-        " calculate indent width to '.* { '
-        let l:indent = repeat(' ', len(substitute(getline(line('.')), '[{].*', '  ', '')))
+        let l:indent = repeat(' ', len(substitute(getline(line('.')), '[{].*', '  ', ''))) " calculate indent width to '.* { '
         let l:start = line('.') + 1
-        " end of block
         normal! }
         let l:end   = line('.') - 1
         execute ':' . l:start . ',' . l:end . 's/^ */' . l:indent . '/'
-        " next block candidate
-        let @/='{.*[^}] *$'
+        let @/ = '{.*[^}] *$' " next block candidate
         normal! n
       endfunction
 
-  " Filetype ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+  " Filetype ___________________________________________________________________
 
     " ......................................................... Prose filestypes
 
@@ -171,20 +127,14 @@
         return &filetype =~ 'wiki\|mail\|markdown\|draft\|note\|html'
       endfunction
 
-      function! core#Markdown()
+      function! s:markdown()
         return &filetype =~ 'wiki\|markdown'
-      endfunction
-
-    " ................................................................... Tagbar
-
-      function! core#Tagbar()
-        return &filetype == 'tagbar'
       endfunction
 
     " ................................................................ Protected
 
       function! core#Protected()
-        return &filetype == 'help' || mode() == 't'
+        return &filetype == 'help' || mode() == 't' || g:fzf#vim#buffers != {} " fzf trap
       endfunction
 
     " ........................................................... Plugin windows
@@ -196,10 +146,9 @@
 
     " ............................................................... Modifiable
 
-      " [regex name, filetype, modifiable, wordcount] rule tuple
+      " [regex name, filetype, modifiable, wordcount], "/name" to represent "^name"
       " modifiable (0) nomodifiable (1) modifiable
       " wordcount (0) no word count (1) statusline with wordcount
-      " note "/name" to represent "^name"
       let s:nametypes =
           \[
           \  ['conf$',          'conf',     1, 0]
@@ -215,18 +164,18 @@
           \, ['\(^\|/\)readme', 'text',     0, 1]
           \]
 
-      " [regex fileinfo, filetype, modifiable, readonly] rule tuple
+      " [regex fileinfo, filetype, modifiable, readonly]
       " modifiable (0) nomodifiable (1) modifiable
       " readonly (0) not set (1) set
       let s:contenttypes =
           \[
           \  ['binary',             'binary', 0, 1]
           \, ['no read permission', 'binary', 0, 1]
-          \, ['text',               'text',   1, 0]
+          \, ['text',               'conf',   1, 0]
           \]
 
       " set buffer attributes by known filetypes
-      function! core#CheckFiletype()
+      function! core#BufferSettings()
         for [name, filetype, modifiable, wordcount] in s:nametypes
           if expand('%') =~ name
             let &filetype   = (&filetype == '' ? filetype : &filetype)
@@ -234,7 +183,7 @@
             break
           endif
         endfor
-        if &filetype == ''                  " by file content if not autodetected
+        if &filetype == '' " by file content if not autodetected
           for [content, filetype, modifiable, readonly] in s:contenttypes
             if system('file -i ' . expand('%') . '|cut -d: -f2') =~ content
               let &filetype   = filetype
@@ -243,23 +192,15 @@
             endif
           endfor
         endif
-        " see Snipmate plugins.vim
-        if &filetype == ''
-          let &filetype = 'new'
-        endif
+        if &filetype == '' | let &filetype = 'new' | endif " see Snipmate plugins.vim
       endfunction
 
     " ................................................................... E-mail
 
+      " email has blank lines inserted externally (via sed) for replys, see dmenu compose
       function! core#ComposeMail()
-        " email has blank lines inserted externally (via sed) for replys to
-        " avoid the previously messy and unpredictable editing mode vim commands
-        " see dmenu compose
-        call theme#FontSize(1)
-        " gg/.. cannot be combined into single expression (produces unpredictable results)
         execute 'normal! gg'
-        " execute 'normal! ' . search('\n\n\n', 'e') . 'G'
-        execute 'normal! ' . (search('^Subject: ') + 3) . 'G'
+        execute 'normal! ' . (search('^\(\(Subject\|From\|To\|Cc\):.*\n\(Subject\|From\|To\|Cc\):.*\n\(Subject\|From\|To\|Cc\):.*\n\)') + 4) . 'G'
         execute 'startinsert'
       endfunction
 
