@@ -29,3 +29,7 @@ font-manager
 # amphetype-svn
 fbreader 
 # digikam
+g sanitize
+g sinatra
+g xapian-ruby
+g passenger

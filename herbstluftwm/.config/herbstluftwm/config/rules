@@ -20,7 +20,7 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 hc rule class=tabbed                       tag=1 focus=on
 hc rule windowrole="'.* Tiny RSS'"         tag=1 focus=on
 hc rule class=Vimb                         tag=1 once index=0 focus=on hook=max
-hc rule instance='www.netflix.com__ca'     tag=1 index=1 focus=on
+# hc rule instance='www.netflix.com__ca'   tag=1 index=1 focus=on
 hc rule class=Chromium                     tag=1 index=1 focus=on
 hc rule class=dwb                          tag=1
 hc rule class=luakit                       tag=1
@@ -86,6 +86,7 @@ hc rule class=Gvim                         focus=on hook=max
 hc rule windowrole=gvimdiff                focus=on fullscreen=on hook=fullscreen
 hc rule class=Klavaro                      pseudotile=on
 hc rule class=mpv                          focus=on switchtag=on fullscreen=off index=1
+hc rule instance='www.netflix.com__ca'     focus=on
 hc rule title=omxplay                      fullscreen=on hook=fullscreen
 hc rule class=Plover                       pseudotile=on
 hc rule class=qutebrowser                  focus=on hook=max

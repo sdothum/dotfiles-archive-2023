@@ -27,7 +27,6 @@
 
       nmap <silent><F9> :Retheme<CR>
       imap <silent><F9> <C-o>:Retheme<CR>
-      vmap <silent><F9> :<C-u>Retheme<CR>
 
     " ............................................................... Initialize
 
@@ -43,12 +42,15 @@
       " toggle statusline details
       nmap <silent><F7>   :call ui#ToggleInfo()<CR>
       imap <silent><F7>   <C-o>:call ui#ToggleInfo(core#Prose())<CR>
-      vmap <silent><F7>   :<C-u>call ui#ToggleInfo(core#Prose())<CR>
 
       " toggle tag, line details
       nmap <silent><C-F7> :let g:detail = g:detail == 0 ? 1 : 0<CR>
       imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
-      vmap <silent><C-F7> :<C-u>let g:detail = g:detail == 0 ? 1 : 0<CR>
+
+    " ................................................................ View mode
+
+      nmap <silent><C-S-F7> :call ui#ToggleProof()<CR>
+      imap <silent><C-S-F7> <C-o>:call ui#ToggleProof()<CR>
 
       if g:gui
         autocmd ui InsertEnter * call ui#ToggleProof() | SignifyDisable
@@ -59,7 +61,6 @@
 
       nmap <silent><S-F7> :call ui#SwitchView()<CR>
       imap <silent><S-F7> <C-o>:call ui#SwitchView()<CR>
-      vmap <silent><S-F7> :<C-u>call ui#SwitchView()<CR>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

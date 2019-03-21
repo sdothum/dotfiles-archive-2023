@@ -7,9 +7,8 @@
 
     " .................................................................... Setup
 
-      let s:show         = 1  " statusline (0) off (1) on
-      let s:initial_view = 1  " startup in (0) dfm (1) proof view
-      let s:expanded     = 0  " statusline state (0) dfm (1) expanded
+      let s:show     = 1  " statusline (0) off (1) on
+      let s:expanded = 0  " statusline state (0) dfm (1) expanded
 
   "  Distraction free modes ____________________________________________________
 
@@ -53,11 +52,11 @@
         let l:col = virtcol('.')
         call theme#Theme()
         if core#Prose() | call theme#ToggleProof() | endif
-        if b:view == 1
+        if b:view == 1  " proof view
           call s:showInfo(1)
           Limelight!
           call theme#Contrast(0)
-        else
+        else            " dfm view
           call s:showInfo(0)
           Limelight
           call theme#Contrast(1)
@@ -95,7 +94,7 @@
         Trace ui#LiteType()
         call theme#FontSize(core#Prose() ? 1 : 0)
         call theme#Palette()
-        if ! exists('b:view') | let b:view = s:initial_view | endif
+        if ! exists('b:view') | let b:view = 1 | endif  " initial view (proof)
         call s:setView()
       endfunction
 

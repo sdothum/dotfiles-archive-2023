@@ -46,6 +46,7 @@
 = ═══════════
 # tcc
   ruby
+  ruby-irb
   ruby-rake
 
 

@@ -152,7 +152,6 @@
       " correction related, but really bound to Pencil
       nmap <silent><S-F6> :silent call <SID>toggleSpell()<CR>
       imap <silent><S-F6> <C-o>:silent call <SID>toggleSpell()<CR>
-      vmap <silent><S-F6> :<C-u>silent call <SID>toggleSpell()<CR>
 
       autocmd plugin Filetype draft        call litecorrect#init()
       autocmd plugin Filetype note         call litecorrect#init()
@@ -417,6 +416,10 @@
 
       autocmd plugin FileType html     call textobj#quote#init()
       autocmd plugin FileType markdown call textobj#quote#init()
+
+    " ................................................................... Vimade
+
+      autocmd plugin BufWinEnter __Gundo_* VimadeBufDisable   
 
     " ................................................................. Yankring
 
