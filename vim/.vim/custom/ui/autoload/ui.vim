@@ -102,7 +102,7 @@
       function! ui#Retheme()
         Trace ui#Refresh()
         let lstatus     = &laststatus
-        call s:setView()
+        call ui#LiteType()   
         let &laststatus = lstatus
       endfunction
 

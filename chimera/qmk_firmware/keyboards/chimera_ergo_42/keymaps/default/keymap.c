@@ -19,13 +19,7 @@ enum chimera_ergo_42_layers
 
 #define KC_NMPD TG(_NUMPAD)
 #define KC_SYMB TG(_SYMBOLS)
-#define KC_SPFN LT(_NAV,KC_4)
-#define KC_SCTL MT(MOD_LCTL, KC_2)
-#define KC_SCTR MT(MOD_LCTL, KC_9)
-#define KC_SPLT MT(MOD_LALT, KC_3)
-#define KC_SPRT MT(MOD_LALT, KC_8)
-#define KC_GBRC MT(MOD_RGUI, KC_7)
-#define KC_GQOT MT(MOD_LGUI, KC_QUOT)
+#define KC_NTAB LT(_NAV,KC_TAB)
 #define KC_MESC LT(_MACROS, KC_ESC)
 #define KC_INCL M(0)
 #define KC_PULL M(1)
@@ -49,11 +43,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.     ,----+----+----+----+----+----.
      MESC, Q  , W  , E  , R  , T  ,       Y  , U  , I  , O  , P  ,QUOT,
   //|----+----+----+----+----+----|     |----+----+----+----+----+----|
-     TAB , A  , S  , D  , F  , G  ,       H  , J  , K  , L  ,SCLN,ENT ,
+     NTAB, A  , S  , D  , F  , G  ,       H  , J  , K  , L  ,SCLN,ENT ,
   //|----+----+----+----+----+----|     |----+----+----+----+----+----|
      LSPO, Z  , X  , C  , V  , B  ,       N  , M  ,COMM,DOT ,SLSH,RSPC,
   //|----+----+----+----+----+----|     |----+----+----+----+----+----|
-                    LSFT,NMPD,BSPC,      SPC ,SYMB,RSFT
+                    NMPD,BSPC,LALT,      LCTL,SPC ,SYMB
   // \------------------+----+----/      \---+----+----+--------------/
   ),
 
@@ -99,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|     |----+----+----+----+----+----|
          ,    ,    ,CAD ,    ,    ,          ,    ,    ,    ,    ,    ,
   //|----+----+----+----+----+----|     |----+----+----+----+----+----|
-     SCAP,    ,    ,    ,    ,    ,          ,    ,PULL,PUSH,    ,    ,
+     SCAP,    ,    ,    ,    ,    ,          ,    ,PULL,PUSH,    ,SCAP,
   //|----+----+----+----+----+----|     |----+----+----+----+----+----|
                         ,    ,    ,          ,    ,
   // \------------------+----+----/      \---+----+----+--------------/

@@ -14,10 +14,9 @@ KEYMAPS='DEFAULT'
 
 ROOT=$HOME
 ROOT=/net/depot
-QMK=$ROOT/qmk_firmware.steno
 QMK=$ROOT/qmk_firmware
-QMK=$ROOT/qmk_firmware-1
-QMK=/run/media/$USER/Repo/depot/qmk_firmware-1
+# QMK=$ROOT/qmk_firmware-1
+# QMK=/run/media/$USER/Repo/depot/qmk_firmware-1
 KEYBOARD=$QMK/keyboards/chimera_ergo_42
 KEYMAP=$KEYBOARD/keymaps/$1
 CONFIG=$KEYMAP/config.h

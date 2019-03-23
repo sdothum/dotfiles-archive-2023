@@ -225,7 +225,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................ Home Row Modifiers
 
   switch (keycode) {
-
   case HOME_Q:
   case HOME_W:
   case OS_GUI:
@@ -254,7 +253,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_t   (record, KC_RSFT, KC_T);  // SFT_T replacement to circumvent auto repeat latency side effect
     break;
 
-  // ...................................................... Center Toggle Layers
+  // ............................................................. Toggle Layers
 
   case TGL_TL:
     if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; return false; }  // defer reset!
@@ -448,6 +447,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Other Keys
 
   default:
+    if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }
     key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
   return true;

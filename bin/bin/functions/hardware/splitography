@@ -12,9 +12,8 @@ usage() {
 }
 KEYMAPS='DEFAULT'
 
-ROOT=/net/depot
 ROOT=$HOME
-QMK=$ROOT/qmk_firmware.steno
+ROOT=/net/depot
 QMK=$ROOT/qmk_firmware
 KEYBOARD=$QMK/keyboards/splitography
 KEYMAP=$KEYBOARD/keymaps/$1

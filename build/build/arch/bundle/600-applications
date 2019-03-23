@@ -73,6 +73,7 @@ d plover
 = productivity
 = ════════════
 # abiword
+  python2-sip-pyqt4
 d amphetype-svn
   calc
 # calcurse
