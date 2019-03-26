@@ -17,7 +17,7 @@ theme=enterprise  # default images/grub/<theme>
 [ -e "$HOME/images/grub/$1" ] && splash=$HOME/images/grub/$1
 
 original /etc/default/grub
-if [ ! "$splash" ] ;then
+if [ -d "$splash" ] ;then
   [ "$1" ] && splash=$1 || splash=$theme
 
   # my current monitor resolutions

@@ -4,11 +4,6 @@
 # see bundle_install
 
 
-= editor
-= ══════
-  gvim
-
-
 = terminal
 = ════════
   alacritty     [! cpu atom]

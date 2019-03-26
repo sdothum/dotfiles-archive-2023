@@ -88,8 +88,8 @@ root=$(partition 'Linux( filesystem)*$')
 
 if [ "$format" = y ] ;then
   heading 'format btrfs disk partition'
-  [ $efi ] && { mkfs.fat -n EFI -F32 $efi; echo; }
-  [ $boot ] && { mkfs.ext2 -L Boot $boot; echo; }
+  [ $efi ] && { mkfs.fat -n EFI -F32 $efi; echo EFI; } || { mkfs.ext2 -L Boot $boot; echo BOOT; }
+  checkpoint
 
   if [ $swap ] ;then
     mkswap -L Swap $swap
@@ -108,8 +108,8 @@ fi
 heading 'mount partitions'
 # ══════════════════════════════════════════════════════════════════════════════
 mkdir -pv /mnt/btrfs-root
-read -p "SSD boot drive? [y|N]: " ssd
-[ -z $ssd ] || [ "$ssd" = N ] && ssd= || ssd=,ssd,discard
+read -p "SSD boot drive? [Y|n]: " ssd
+[ -z $ssd ] || [ "$ssd" = Y ] && ssd=,ssd,discard || unset ssd
 mount=defaults,noatime,autodefrag,space_cache${ssd}
 echo "mount -v -o ${mount} $root /mnt/btrfs-root"
 mount -v -o ${mount} $root /mnt/btrfs-root

@@ -7,11 +7,16 @@
 # install aur package managers FIRST !!
 = aur package manager
 = ═══════════════════
-p auracle-git
-p pacaur
-  package-query
-  pikaur
-  pkg-config
+! sudo pacman -S --noconfirm git
+! sudo pacman -S --noconfirm pyalpm
+p pikaur
+! pikaur -S --noconfirm auracle-git
+! pikaur -S --noconfirm pacaur
+
+
+= editor
+= ══════
+  gvim
 
 
 = console font

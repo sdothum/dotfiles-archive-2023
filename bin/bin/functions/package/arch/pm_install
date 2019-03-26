@@ -23,7 +23,7 @@ if ! pm_query $@ ;then
   time=$(date +%s)
   pre_install $@
   if pacman -Ss $@ | grep -q --regex="/$@ " ;then
-    sudo pacman -S $options $@
+    sudo pacman -S ${options% --noedit} $@
   else
     echo "${__GREEN}@aur${NOCOLOR}"
     $wrappaur -S $options $@

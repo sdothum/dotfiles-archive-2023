@@ -16,11 +16,11 @@
 # haskell-turtle
 # d pandoc
 # stack
-  stack-bin
-! stack setup
-! stack install turtle
-! stack install shelly
-! stack install X11
+#   stack-bin
+# ! stack setup
+# ! stack install turtle
+# ! stack install shelly
+# ! stack install X11
 
 
 = java

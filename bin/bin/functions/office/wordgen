@@ -63,7 +63,7 @@ trap "rm $words $lines $paragraphs" EXIT
 [ -e $CORPUS ] || {
   # arbitrarily remove all questionable spellings
   cat $DICTIONARY | aspell --ignore-case list >$DICTIONARY.undefined
-  diff $DICTIONARY $DICTIONARY.undefined | sed '/^[>0-9]/d; s/< //' >$CORPUS
+  diff $DICTIONARY $DICTIONARY.undefined | sed '/^[>0-9]/d; s/< //' | grep -v '^#!' >$CORPUS
 }
 
 # build common word dictionary (ignore majority of 1-2 character word acronyms)

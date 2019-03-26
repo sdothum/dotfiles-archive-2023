@@ -447,7 +447,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Other Keys
 
   default:
-    if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }
+    if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
   return true;

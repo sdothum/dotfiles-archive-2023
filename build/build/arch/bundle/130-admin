@@ -42,6 +42,8 @@
 # yaourt
 # yaourt-gui
 # pacgraph
+  package-query
+  pkg-config
   reflector
 
 

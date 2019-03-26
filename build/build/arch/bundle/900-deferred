@@ -1,35 +1,18 @@
-paper-icon-theme 
 gstreamer0.10-base-plugins 
 mbpfan-git [gpu macbook]
-# gksu
-# * pass
-# libflashsupport-oss
-# libflashsupport-pulse-git
+* pass
+libflashsupport-oss 
+libflashsupport-pulse-git 
 * cmst
-# etcher
-pandoc 
-# texlive-core
-# texlive-latexextra
+etcher 
+texlive-core 
+texlive-latexextra 
 universal-ctags-git 
 g sanitize
 g sinatra
 g xapian-ruby
-# g passenger
-# dovecot
-# * notmuch
-# * znc           [server]
-php70-mcrypt 
-tt-rss 
-# stellarium
-dict-wn 
-m dict-moby-thesaurus
-font-manager 
-# fontmatrix [server]
-# plover
-# amphetype-svn
-fbreader 
-# digikam
-g sanitize
-g sinatra
-g xapian-ruby
 g passenger
+" enable mpd and nvidia as required
+? conky-lua-archers
+paper-icon-theme 
+dovecot 

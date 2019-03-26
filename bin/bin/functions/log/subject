@@ -8,8 +8,8 @@
 
 # mark content division
 echo
-drawline '─'
-heading '━' $@
-drawline '─'
+drawline '═'
+heading ' ' $@
+drawline '═'
 
 # vim: set ft=sh: #

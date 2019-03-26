@@ -9,8 +9,6 @@
 # ...................................................................... Heading
 
 # mark content division
-drawline '▁' ${GREEN}
-heading ' ' $@
-drawline '▔' ${GREEN}
+heading '━' $@
 
 # vim: set ft=sh: #
