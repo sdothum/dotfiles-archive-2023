@@ -282,8 +282,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_SPC:
     if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }  // KC_SPC -> space shift
+  #ifdef SFT_SPC
+    if (map_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
+  #endif
     break;
   case TT_SPC:
+  #ifdef SFT_SPC
+    if (map_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
+  #endif
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:

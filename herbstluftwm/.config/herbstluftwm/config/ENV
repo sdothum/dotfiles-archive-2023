@@ -15,6 +15,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export ROOT=${ROOT:-/tmp}
 export HLWM=$ROOT/herbstluftwm
 export SESSION=$HOME/.session
+xinput list --name-only | egrep -q 'Chimera|Planck|Splitography' 2>/dev/null && export BEAKL=true
 
 # .................................................................... WM states
 

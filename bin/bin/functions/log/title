@@ -9,6 +9,8 @@
 # ...................................................................... Heading
 
 # mark content division
+echo
 heading '━' $@
+echo
 
 # vim: set ft=sh: #

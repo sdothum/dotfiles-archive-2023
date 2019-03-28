@@ -184,4 +184,16 @@ mkdir -pv /mnt/btrfs-boot/var/lib/pacman
 mkdir -pv /mnt/btrfs-root/__current/ROOT/var/lib/pacman
 mount -v --bind /mnt/btrfs-root/__current/ROOT/var/lib/pacman /mnt/btrfs-boot/var/lib/pacman
 
+
+heading 'mount efi/boot partitions'
+# ══════════════════════════════════════════════════════════════════════════════
+if [ $efi ] ;then
+  mkdir -pv /mnt/btrfs-boot/boot/efi
+  mount -v $efi /mnt/btrfs-boot/boot/efi
+elif [ $boot ] ;then
+  mkdir -pv /mnt/btrfs-boot/boot
+  mount -v $boot /mnt/btrfs-boot/boot
+fi
+
+
 # vim: set ft=sh: #

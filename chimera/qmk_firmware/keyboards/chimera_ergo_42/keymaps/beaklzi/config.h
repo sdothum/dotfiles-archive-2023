@@ -29,6 +29,9 @@
 // haskell tap dance operators
 #define HASKELL
 
+// shift-space -> enter
+#define SFT_SPC
+
 // test all keyswitches
 // #define TEST
 
