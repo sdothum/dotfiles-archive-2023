@@ -221,6 +221,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_A:
     tap_mods(record, KC_LSFT);
     mod_t   (record, KC_LSFT, KC_A);  // SFT_T replacement to circumvent auto repeat latency side effect
+    down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     break;
   case HOME_T:
     tap_mods(record, KC_RSFT);
@@ -263,7 +264,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case S(KC_I):
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
-    if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
+    if (!record->event.pressed)                      { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     break;
 
   case LT_TAB:
@@ -282,14 +283,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_SPC:
     if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }  // KC_SPC -> space shift
-  #ifdef SFT_SPC
-    if (map_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-  #endif
     break;
   case TT_SPC:
-  #ifdef SFT_SPC
-    if (map_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-  #endif
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
@@ -330,13 +325,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ......................................................... Shift Mapped Keys
 
   case KC_COLN:
+    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN)) { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                            { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     break;
   case KC_COMM:
-    down_punc = (record->event.pressed) ? 1 : 0;  // exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;  // comm + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))  { return false; }
     break;
   case KC_DOT:
@@ -350,7 +347,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
   case KC_EXLM:
   case KC_QUES:
-    down_punc = (record->event.pressed) ? 1 : 0;          // ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;          // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
     break;
 
   // ................................................................ Other Keys

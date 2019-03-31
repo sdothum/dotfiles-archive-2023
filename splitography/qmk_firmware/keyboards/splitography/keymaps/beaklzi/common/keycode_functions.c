@@ -174,9 +174,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   if (mod_down(shift_key)) {
-    if (record->event.pressed) {
-      key_timer = timer_read();
-    }
+    if (record->event.pressed) { key_timer = timer_read(); }
     else {
       if (timer_elapsed(key_timer) < TAPPING_TERM) {
         if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode
@@ -197,14 +195,17 @@ bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t
 bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
 {
   if (autocap) {
-    if (!record->event.pressed) { 
+    if (record->event.pressed) { key_timer = timer_read(); return false; }
+    else if (timer_elapsed(key_timer) < TAPPING_TERM) {
       tap_key(keycode);
       if (layer) { layer_off(layer); }
       layer_on                 (_SHIFT);  // sentence/paragraph capitalization
       set_oneshot_layer        (_SHIFT, ONESHOT_START);
       // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
+      key_timer = 0;
+      return true; 
     }
-    return true; 
+    key_timer = 0;
   }
   return false;
 }
