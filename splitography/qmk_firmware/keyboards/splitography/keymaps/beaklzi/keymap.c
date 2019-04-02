@@ -414,6 +414,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   // ..................................................... Leader Capitalization
+    
+  case KC_QUOT:
+    if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
+    break;
   
   case TD_TILD:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes

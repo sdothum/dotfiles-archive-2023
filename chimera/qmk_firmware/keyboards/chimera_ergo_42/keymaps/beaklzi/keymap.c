@@ -344,6 +344,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ..................................................... Leader Capitalization
   
+  case KC_QUOT:
+    if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
+    break;
+
   case TD_TILD:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
   case KC_EXLM:
@@ -373,7 +377,7 @@ void matrix_scan_user(void) {
     break;
   case _SHIFT:
   case _TTCAPS:
-    set_led_white;
+    set_led_cyan;
     break;
   case _NUMBER:
   case _TTNUMBER:
@@ -391,7 +395,8 @@ void matrix_scan_user(void) {
     break;
   case _FNCKEY:
   case _TTFNCKEY:
-    set_led_cyan;
+    // set_led_white;
+    set_led_green;
     break;
   case _EDIT:
   default:
