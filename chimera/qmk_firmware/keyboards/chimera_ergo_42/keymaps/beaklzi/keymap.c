@@ -288,11 +288,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
-    if (leader_cap(record, 0, down_punc, KC_SPC))       { return false; }  // KC_SPC from LT_SPC -> space space* shift
+    if (!record->event.pressed)                         { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     break;
 
   case LT_BSPC:
   case KC_BSPC:
+    if (!record->event.pressed)                         { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))    { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))    { return false; }
     break;

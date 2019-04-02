@@ -326,9 +326,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     lt             (record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
     rolling_layer  (record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
-  case KC_SPC:
-    if (leader_cap (record, 0, down_punc, KC_SPC))       { return false; }  // KC_SPC from LT_SPC -> (space)* space shift
-    break;
   case TT_SPC:
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
@@ -338,10 +335,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer      (record, _SYMGUI);
     lt             (record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
     break;
+  case KC_SPC:
+    if (!record->event.pressed)                          { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
+    break;
 
   // ..................................................... Outer Right Thumb Key
 
   case LT_BSPC:
+    if (!record->event.pressed)                        { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))   { return false; }
 #endif
@@ -351,6 +352,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tap_layer      (record, _EDIT);
     break;
   case KC_BSPC:
+    if (!record->event.pressed)                        { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))   { return false; }
 #endif
