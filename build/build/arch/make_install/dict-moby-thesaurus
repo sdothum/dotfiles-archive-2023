@@ -6,7 +6,7 @@
 # .......................................................... dict-moby-thesaurus
 
 version=1.0-6.4
-trap "rm -r dict-moby-thesaurus_${version}_all.deb usr" EXIT
+trap "sudo rm dict-moby-thesaurus_${version}_all.deb" EXIT
 
 # fetch and extract package contents
 curl -L -O http://ftp.ca.debian.org/debian/pool/main/d/dict-moby-thesaurus/dict-moby-thesaurus_${version}_all.deb

@@ -7,7 +7,7 @@
 = database management
 = ═══════════════════
 # adminer
-  pgadmin3
+d pgadmin3
   postgresql
 # python2-pysqlite
   sqlite

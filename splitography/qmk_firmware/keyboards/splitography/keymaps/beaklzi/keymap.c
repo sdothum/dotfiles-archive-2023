@@ -173,11 +173,11 @@ enum keyboard_keycodes {
 #define OS_SFT  OSM (MOD_LSFT)
 
 #define TGL_TL  TT  (_TTFNCKEY)
-#define TGL_TR  TT  (_TTCAPS)  // pseudo capslock to avoid TT key_timer conflicts
-#define TGL_HL  TT  (_TTCURSOR)
-#define TGL_HR  TT  (_TTMOUSE)
-#define TGL_BL  TT  (_TTNUMBER)
-#define TGL_BR  TT  (_TTREGEX)
+#define TGL_HL  TT  (_TTCAPS)  // pseudo capslock to avoid TT key_timer conflicts
+#define TGL_BL  TT  (_TTMOUSE)
+#define TGL_TR  TT  (_TTREGEX)
+#define TGL_HR  TT  (_TTNUMBER)
+#define TGL_BR  TT  (_TTCURSOR)
 #define TT_ESC  MO  (_NUMBER)
 
 // ........................................................ Default Alpha Layout

@@ -13,10 +13,12 @@ usage() {
 
 while : ;do
   case $1 in
-  off) disable=true ;;
-  *  ) [ $tty ] && usage || tty=$1 ;;
+  off ) disable=true ;;
+  tty*) tty=$1 ;;
+  *   ) usage ;;
   esac
   shift
+  [ $# -eq 0 ] && break
 done
 [ $tty ] || tty=tty1
 
@@ -28,6 +30,8 @@ if [ $disable ] ;then
   service disable agetty-autologin-$tty
   service enable agetty-$tty
 else
+  sudo cp -R /etc/sv/agetty-$tty /etc/sv/agetty-autologin-$tty
+  echo "GETTY_ARGS=\"--autologin $USER --noclear\"" | sudo tee -a /etc/sv/agetty-autologin-$tty/conf
   service disable agetty-$tty
   service enable agetty-autologin-$tty
 fi

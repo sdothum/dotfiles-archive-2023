@@ -13,7 +13,8 @@
 # laptops are arbitrary ratios of
 margins() {
   case $1 in
-  3440) echo $(( $SHADOW + $(herbstclient get window_gap) * 2 )) ;;
+  # 3440) echo $(( $SHADOW + $(herbstclient get window_gap) * 2 )) ;;
+  3440) echo $(( $SHADOW + $(herbstclient get window_gap) )) ;;
   2560) echo 86 ;;
   1920) echo 0 ;;
   1680) is multihead && margins 3440 || echo 42 ;;

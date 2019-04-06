@@ -8,17 +8,16 @@ partition() { fdisk -l $device | egrep "$@" | tail -1 | cut -d' ' -f1; }
 separator() { echo $(head -c $(echo "$1" | wc -L) </dev/zero | tr '\0' '-'); }
 
 drawline() {
-  linechar='.'
+  [ $1 ] && linechar=$1 || linechar='.'
   width=$(tput cols)
-  line=$(head -c $width </dev/zero | tr '\0' 'X')
-  line=$(echo $line | sed "s/X/$linechar/g" | cut -b -$width)
-  echo "$line"
+  head -c $width </dev/zero | tr '\0' "$linechar" | cut -b -$width
 }
 
 heading() {
   echo
+  echo
   echo "$@" | tr '[:lower:]' '[:upper:]'
-  drawline
+  drawline '-'
   echo
 }
 
@@ -61,7 +60,8 @@ config_install() {
 
 pm_install() {
   echo
-  echo "$(date '+%a %-I:%M %S%P') >>>   $@   <<<"
+  width=$(tput cols)
+  echo "$(date '+%a %-I:%M %S%P') :: $@ $(drawline)" | cut -b -$width
   echo
   pacman -S --noconfirm $@
 }

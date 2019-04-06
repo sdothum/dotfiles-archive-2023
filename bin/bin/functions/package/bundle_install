@@ -53,7 +53,9 @@ esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
-[ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred; };}
+echo $@ | grep -q 900-deferred && unset deferred || {
+  [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred; };}
+}
 
 rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
 
@@ -123,7 +125,7 @@ for i in $@ ;do
 done
 
 [ $list ] && exit
-if [ -e $deferred ] ;then
+if [ $deferred ] && [ -e $deferred ] ;then
   cat $deferred
   ifno 'install deferred pacages' || bundle_install $deferred
 fi

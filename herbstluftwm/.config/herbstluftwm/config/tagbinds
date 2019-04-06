@@ -16,6 +16,7 @@ for key in $TAGS ;do
   hc keybind $Mod-$key spawn switch tag $key
   # hc keybind $Mod-Shift-$key move_index $key
   hc keybind $Mod-Shift-$key spawn pin tag $key
+  hc keybind $Mod-Shift-Control-$key spawn pin tag $key move
 done
 
 # hc set_monitors X1xY1+0+0 X2xY2+X1+0..

@@ -6,6 +6,8 @@
 
 # ............................................................... Smart move tag
 
+# Usage: pin tag <tag> [move]
+
 # move window to non-empty tag subframe and focus next window
 tag=$(query tag)
 winid=$(herbstclient attr clients.focus.winid)
@@ -13,9 +15,13 @@ winid=$(herbstclient attr clients.focus.winid)
 cpu arm && is fullscreen && toggle fullscreen
 lock use $1
 focus frame
-# use_previous restores unexpected tag if movement is to already visible tag
-herbstclient chain . bring $winid . use $tag
-focus window
+if [ $2 ] ;then
+  # use_previous restores unexpected tag if movement is to already visible tag
+  herbstclient chain . bring $winid . use $tag
+  focus window
+else
+  herbstclient bring $winid
+fi
 unlock
 
 # vim: set ft=sh: #

@@ -17,7 +17,7 @@ color1=${__YELLOW}
 color2=${__BLUE}
 
 # enable cron notifications, see .xinitrc
-[ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus
+[ -r $HOME/.dbus/Xdbus ] && . $HOME/.dbus/Xdbus >/dev/null
 
 while : ;do
   case $1 in
@@ -31,7 +31,7 @@ while : ;do
   critical  ) urgency="-u $1" ;;
 
   blackboard) urgency="-h string:bgcolor:#000000" ;;
-  [0-9]*    ) expire=--expire-time=$(( $1 * 1000 )) ;;
+  [0-9]*    ) echo "$1" | grep -q '[^0-9]' && break || expire=--expire-time=$(( $1 * 1000 )) ;;
   *         ) break ;;
   esac
   shift
