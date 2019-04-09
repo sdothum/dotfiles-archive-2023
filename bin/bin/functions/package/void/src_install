@@ -6,17 +6,9 @@
 
 # ................................................................ Void src repo
 
-cd /net/depot
-[ -e void-packages ] || {
-  git clone --depth 1 https://github.com/void-linux/void-packages.git
-  cd void-packages
-  ./xbps-src binary-bootstrap
-  cd /usr/bin
-  echo XBPS_CHROOT_CMD=uchroot | sudo tee -a etc/conf
-  chown root:xbuilder xbps-uchroot
-  chmod 4750 xbps-uchroot
-  usermod -a -G xbuilder brook
-}
+heading : $1
+void_src
+cd /net/depot/void-packages
 
 xnew $1
 xgensum -f srcpkgs/$1/template

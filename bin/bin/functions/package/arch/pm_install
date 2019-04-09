@@ -29,7 +29,7 @@ if ! pm_query $@ ;then
     $wrappaur -S $options $@
   fi
   post_install $@
-  echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
+  chrono $time
 elif [ $init ] ;then
   [ -s $HOME/build/arch/post_install/$1 ] || [ -s $HOME/build/arch/user_install/$1 ] && post_install $@
 fi

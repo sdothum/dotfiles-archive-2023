@@ -98,6 +98,7 @@ one_pass() {
   trace 'Starting notmuch..'
   notmuch new >>/tmp/notmuch.log 2>&1
   tag_messages
+  # notify Gmail 'New messages received'
 }
 
 # initialize notmuch database

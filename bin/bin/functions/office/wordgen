@@ -20,7 +20,6 @@ usage() {
   exit 1
 }
 
-CACHEDIR=${CACHEDIR:-$HOME/.cache}/Amphetype:
 DICTIONARY=${DICTIONARY:-$HOME/.config/Amphetype/unique.words}
 CORPUS=$DICTIONARY.corpus
 

@@ -15,7 +15,7 @@ else
   echo "${__GREEN}@gem${NOCOLOR}"
   gem install $1
   post_install $1
-  echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
+  chrono $time
 fi
 
 # vim: set ft=sh: #

@@ -99,7 +99,7 @@ sudoers :: $HOME/build/root/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1
-tarot :: $STOW/tarot/index.html
+tarot :: $(find $STOW/tarot -name index.html)
 thedarnedestthing css :: $STOW/thedarnedestthing/thedarnedestthing.com/application/public/css/*.css $STOW/thedarnedestthing/thedarnedestthing.com/application/public/dist/*.css
 ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 ttrss linear :: $HOME/tt-rss/themes/linear*.css

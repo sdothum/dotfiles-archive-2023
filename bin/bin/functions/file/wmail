@@ -1,0 +1,50 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ watchman mail
+
+# Usage: wmail [-s]
+
+# watchman
+ROOT=$HOME/Maildir
+NAME=wmail
+CMD=wmail
+
+WATCH=$CACHEDIR/$NAME
+LOG=/tmp/$NAME.log
+HISTORY=/tmp/$NAME:history
+
+activity() {
+  timestamp >>$HISTORY  # separate watchman blocks for imap analysis
+  time=$(date +%s)
+  while read file <&3 ;do
+    acct=$(echo $file | sed "s|$ROOT/||")
+    acct=${acct%%/*}
+    imap=${file##*/}
+    echo "$ROOT/$acct:${imap%:2,*}"
+  done 3< $WATCH | sort -u
+  cat $WATCH >>$HISTORY; >$WATCH
+  chrono $time >>$HISTORY
+}
+
+mail() {
+  for i in $(activity) ;do
+    acct=$(echo $i | cut -d: -f1)
+    name=$(echo $i | cut -d: -f2-)
+    email=$(find $acct -name "${name}*")
+    [ -n "$email" ] || continue
+    hdr=$(mailheader "$email")
+    notify X critical "${acct##*/}" "$(echo "$hdr" | grep Subject:)\n$(echo "$hdr" | grep From:)"
+  done
+}
+
+case $1 in
+'') pgrep -f "watchman watch-project $ROOT" >/dev/null && watchman get-config $ROOT || watchd $ROOT $NAME $CMD & ;;
+-s) watchman watch-del $ROOT; watchman shutdown-server; pkill -f "watchd $ROOT $NAME $CMD" ;;
+* ) watchq f $ROOT $NAME $@; [ $(pgrep -cf "watchq f $ROOT $NAME") -eq 1 ] && mail & ;;  # delay for imap processing latencies
+esac
+
+# vim: set ft=sh: #

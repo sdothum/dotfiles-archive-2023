@@ -10,7 +10,8 @@
 
 # common date string for consistent script logging
 # date '+%a %m.%d %I:%M %S%P'
-date "+${__YELLOW}  ${GREEN}%a %-I:%M %S%P${NOCOLOR}"
+# date "+${__YELLOW}  ${GREEN}%a %-I:%M %S%P${NOCOLOR}"
+echo "${__GREEN}@$(date '+%a %-I:%M %S%P')${NOCOLOR}"
 
 # julia
 # run(`date $("+$(ENV["__YELLOW"])  $(ENV["GREEN"])%a %-I:%M %S%P$(ENV["NOCOLOR"])")`)

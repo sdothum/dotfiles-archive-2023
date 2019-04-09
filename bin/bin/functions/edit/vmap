@@ -12,9 +12,7 @@ usage() {
   exit 1
 }
 
-CACHEDIR=${CACHEDIR:-$HOME/.cache}
-vimrc="$STOW/vim/.vimrc $HOME/.vim/config/*.vim \
-    $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')"
+vimrc="$STOW/vim/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')"
 index=$CACHEDIR/vmap
 vmap=/tmp/vim:map
 

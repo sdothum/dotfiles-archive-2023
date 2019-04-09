@@ -34,7 +34,7 @@ d etcher
 # syncthing-git
 # syncthing-inotify-git
 # vsftpd
-# watchman
+  watchman
 
 
 = system monitor

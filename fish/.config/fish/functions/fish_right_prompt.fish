@@ -148,12 +148,12 @@ function fish_right_prompt --description 'Write out the right prompt'
           and set_color $_info
           and glyph '  ^' '  ^'
         # echo -n (cmd_duration)
-        echo -n (chrono 0 "$CMD_DURATION / 1000")
+        echo -n (chrono -time 0 "$CMD_DURATION / 1000")
         set_color normal
         test $TERM != "linux"
           and test 0$CMD_DURATION -gt (math "1000 * 10")
             # and notify 3 low "$history[1]" "Returned $status, took "(cmd_duration)
-            and notify 3 low "$history[1]" "Returned $status, took "(chrono 0 "$CMD_DURATION / 1000")
+            and notify 3 low "$history[1]" "Returned $status, took "(chrono -time 0 "$CMD_DURATION / 1000")
         test 0$POSTFIX -eq 1
           or begin
             set_color $_info

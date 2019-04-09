@@ -45,7 +45,7 @@ init() {
     mkdir -p $HOME/Maildir
     cd $STOW
     stow mail
-    imap 1 $2
+    imap 1 $1
     mailcot
     imap f allmail
     mailsync I
@@ -77,7 +77,7 @@ case $1 in
 
 C*) rm -f $IMAPFILTER/certificates; imap f ;;
 f*) filter ;;
-I*) init ;;
+I*) init $2 ;;
 L*) log imapfilter $IMAPFILTER/$filter ;;
 l*) log offlineimap $OFFLINEIMAPRC ;;
 

@@ -6,19 +6,16 @@
 
 # ................................................................ Void src repo
 
-git clone --depth 1 https://github.com/void-linux/void-packages.git
-cd void-packages
-./xbps-src binary-bootstrap
-
-# cd /usr/bin/
-$ echo XBPS_CHROOT_CMD=uchroot >> etc/conf
-# chown root:xbuilder xbps-uchroot
-# chmod 4750 xbps-uchroot
-# usermod -a -G xbuilder brook
-
-xnew opera-developer
-xgensum -f srcpkgs/opera-developer/template
-./xbps-src pkg opera-developer
-sudo xbps-install --repository=./hostdir/binpkgs opera-developer-54.0.2920.0_1
+[ -d /net/depot/void-packages ] || {
+  cd /net/depot
+  git clone --depth 1 https://github.com/void-linux/void-packages.git
+  cd void-packages
+  ./xbps-src binary-bootstrap
+  cd /usr/bin
+  echo XBPS_CHROOT_CMD=uchroot | sudo tee -a etc/conf
+  chown root:xbuilder xbps-uchroot
+  chmod 4750 xbps-uchroot
+  usermod -a -G xbuilder $USER
+}
 
 # vim: set ft=sh: #

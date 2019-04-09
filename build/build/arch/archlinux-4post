@@ -123,6 +123,6 @@ heading "systemd startup optimizations"
 #                                                                 title "finish"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# $HOME/build/arch/archlinux-update
+$HOME/build/arch/archlinux-update
 
 # vim: set ft=sh: #

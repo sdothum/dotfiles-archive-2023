@@ -10,10 +10,10 @@
 maildir=$HOME/Maildir/thedarnedestthing
 
 if ! server ;then
-  if [ ! -d $maildir ] ;then
+  grep -q "^$SERVER:/Maildir" /etc/fstab && mount -t nfs4 | grep -vq Maildir && {
     ssh $SERVER sudo systemctl restart nfs-server
     sudo mount $HOME/Maildir
-  fi
+  }
 fi
 
 /usr/bin/alot

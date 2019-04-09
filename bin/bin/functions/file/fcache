@@ -7,9 +7,11 @@
 # ................................................................... Find cache
 
 usage() {
-  echo "usage: $(basename $0) [type] <dir>"
+  echo "usage: $(basename $0) I'nitialize"
+  echo "usage: $(basename $0) [type] <dir>, type -> find -type <type>"
   echo "usage: $(basename $0) - <dir>, force directory cache update"
   echo "usage: $(basename $0) + <dir>, directory cache creation only"
+  ls -l $CACHEDIR/fcache:*
   exit 1
 }
 
@@ -18,12 +20,12 @@ usage() {
 #       to avoid triggering unnecessary file scans (directory trees being restructured far
 #       less frequently than regular file creation/deletion)
 
-CACHEDIR=${CACHEDIR:-$HOME/.cache}
 # zero caches from interrupted builds can cause hangs, ignore pacaur/pkg permission denials 
 find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \; 2>/dev/null
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
 case $1 in
+I*       ) rm -fv $CACHEDIR/fcache:*; exit ;;
 [bcdflps]) type=$1; shift ;;
 '-'      ) type=d; refresh=true; shift ;;
 '+'      ) type=d; create=true; shift ;;

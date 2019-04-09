@@ -24,8 +24,9 @@ dotfiles=$(cat ${0%/*}/.dotfiles:folders)
 [ -d "$1" ] && { STOW="$1"; shift; }
 cd $STOW
 # syncthing housekeeping
-find -name '*.sync-conflict-*' -exec rm {} \;
-find -name '*.syncthing.hsts.tmp' -exec rm {} \;
+find . -name '*.sync-conflict-*' -exec rm {} \;
+find . -name '*.syncthing.hsts.tmp' -exec rm {} \;
+find . -name '.uuid' -exec rm {} \;
 
 init() {
   git init

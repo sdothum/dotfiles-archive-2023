@@ -23,7 +23,7 @@ if ! xb_query $@ ;then
     [ $confirm ] && sudo xbps-install $@ || sudo xbps-install -y $@
   fi
   post_install $@
-  echo "${__GREEN}@elapsed $(chrono $time)${NOCOLOR}"
+  chrono $time
 elif [ $init ] ;then
   [ -s $HOME/build/void/post_install/$1 ] || [ -s $HOME/build/void/user_install/$1 ] && post_install $@
 fi

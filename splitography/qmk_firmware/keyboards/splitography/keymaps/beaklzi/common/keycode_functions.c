@@ -33,9 +33,7 @@ void modifier(void (*f)(uint8_t))
 // base layer modifier
 bool mod_down(uint16_t key_code)
 {
-  // return (mods && ((mods & MOD_BIT(key_code)) == mods) && (biton32(layer_state) == _BASE || biton32(layer_state) == _TTCAPS));
-  // return (mods && ((mods & MOD_BIT(key_code)) == mods));
-  return mods & MOD_BIT(key_code);  // relax timing on home row modifiers
+  return mods == MOD_BIT(key_code);  // relax timing on home row modifiers
 }
 
 // .................................................................. Key event
