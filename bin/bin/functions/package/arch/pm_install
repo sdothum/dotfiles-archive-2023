@@ -20,7 +20,7 @@ esac
 
 if ! pm_query $@ ;then
   heading : $@
-  time=$(date +%s)
+  time=$(chrono)
   pre_install $@
   if pacman -Ss $@ | grep -q --regex="/$@ " ;then
     sudo pacman -S ${options% --noedit} $@

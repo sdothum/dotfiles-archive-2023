@@ -18,8 +18,8 @@ LOG=/tmp/$NAME.log
 HISTORY=/tmp/$NAME:history
 
 activity() {
+  [ -s $WATCH ] || return
   timestamp >>$HISTORY  # separate watchman blocks for imap analysis
-  time=$(date +%s)
   while read file <&3 ;do
     acct=$(echo $file | sed "s|$ROOT/||")
     acct=${acct%%/*}
@@ -27,7 +27,6 @@ activity() {
     echo "$ROOT/$acct:${imap%:2,*}"
   done 3< $WATCH | sort -u
   cat $WATCH >>$HISTORY; >$WATCH
-  chrono $time >>$HISTORY
 }
 
 mail() {
@@ -35,9 +34,9 @@ mail() {
     acct=$(echo $i | cut -d: -f1)
     name=$(echo $i | cut -d: -f2-)
     email=$(find $acct -name "${name}*")
-    [ -n "$email" ] || continue
+    [ -n "$email" ] || { ditto "wmail -> not found: $acct/$name" >>$LOG; continue; }
     hdr=$(mailheader "$email")
-    notify X critical "${acct##*/}" "$(echo "$hdr" | grep Subject:)\n$(echo "$hdr" | grep From:)"
+    notify X critical "$(echo "$hdr" | grep Subject: | sed 's/ re://g')" "$(echo "$hdr" | grep From:)"
   done
 }
 

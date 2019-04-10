@@ -7,12 +7,13 @@
 # ....................................................................... H°M'S"
 
 usage() {
-  echo "usage: $(basename $0) [-time] <utcstart> [<utcstop>]"
+  echo "usage: $(basename $0) [-time] [<utcstart> [<utcstop>]]"
   exit 1
 }
 
+[ "$1" = '-help' ] && usage
 [ "$1" = '-time' ] && { time=true; shift; }
-[ $1 ] || usage
+[ $1 ] || { date +%s; exit; }
 # eval $2 for fish shell prompt call: 0 "$CMD_DURATION / 1000", see fish_right_prompt.fish
 # [ "$2" ] && utc=$(echo $2 | bc) || utc=$(date +%s)
 [ "$2" ] && utc=$(( $2 )) || utc=$(date +%s)

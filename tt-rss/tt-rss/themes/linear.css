@@ -44,12 +44,8 @@ div#dijit__TreeNode_1 span.dijitFolderClosed  + .dijitTreeLabel { letter-spacing
 /* filters usually are open, hide minimize button of feed menu title */
 div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
 
-div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoClosed,
+/* div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoClosed, */
 div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15; }
-
-/* drop published and archived filters */
-div#dijit__TreeNode_5,
-div#dijit__TreeNode_6 { display: none !important; }
 
 .dijitTreeLabel { margin-left: 6px; }
 
@@ -81,6 +77,10 @@ div#dijit__TreeNode_2 .dijitTreeRowSelected:hover .dijitTreeLabel,
 div#dijit__TreeNode_3 .dijitTreeRowSelected:hover .dijitTreeLabel,
 div#dijit__TreeNode_4 .dijitTreeRowSelected:hover .dijitTreeLabel,
 div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b12525 !important; }
+
+/* drop published and archived filters */
+div#dijit__TreeNode_5,
+div#dijit__TreeNode_6 { display: none !important; }
 
 /* highlight colour */
 .hl:hover *,

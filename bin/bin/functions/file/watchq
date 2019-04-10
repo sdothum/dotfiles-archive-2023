@@ -34,7 +34,7 @@ info() {
 for i in $@ ;do
   [ -n "$i" ] || continue
   name=$(echo $i | exclude)
-  [ -n "$name" ] && [ -e "$ROOT/$i" ] || continue
+  [ -n "$name" ] && [ -e "$ROOT/$i" ] || { ditto "watchq -> not found: $ROOT/$i" | exclude >>$LOG; continue; }
   [ $dir ] && file="$ROOT/${i%/*}" || { file="$ROOT/$i"; [ -d "$file" ] && continue; }
   info Register
   grep -qx "$file" $WATCH || echo "$file" >>$WATCH

@@ -17,7 +17,7 @@ esac
 
 if ! xb_query $@ ;then
   heading : $@
-  time=$(date +%s)
+  time=$(chrono)
   pre_install $@
   if ! xbps-query -S $@ >/dev/null ;then
     [ $confirm ] && sudo xbps-install $@ || sudo xbps-install -y $@

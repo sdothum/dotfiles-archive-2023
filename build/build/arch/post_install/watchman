@@ -5,13 +5,10 @@
 
 # ..................................................................... watchman
 
-ROOT=$HOME/stow
+server && watches=65536 || watches=32768
 
 # increase iwatches
-sudo sysctl fs.inotify.max_user_watches=32768
-echo fs.inotify.max_user_watches=32768 | sudo tee /usr/lib/sysctl.d/90-override.conf
-
-# see wsync
-watchman watch-project $ROOT
+sudo sysctl fs.inotify.max_user_watches=$watches
+echo fs.inotify.max_user_watches=$watches | sudo tee /usr/lib/sysctl.d/90-override.conf
 
 # vim: set ft=sh: #

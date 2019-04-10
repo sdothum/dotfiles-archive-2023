@@ -33,7 +33,11 @@ void modifier(void (*f)(uint8_t))
 // base layer modifier
 bool mod_down(uint16_t key_code)
 {
-  return mods == MOD_BIT(key_code);  // relax timing on home row modifiers
+#ifdef SPLITOGRAPHY
+  return mods & MOD_BIT(key_code);   // regardless of other home row modifiers
+#else
+  return mods == MOD_BIT(key_code);  // on home row modifier only
+#endif
 }
 
 // .................................................................. Key event
