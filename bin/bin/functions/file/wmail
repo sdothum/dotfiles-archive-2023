@@ -14,8 +14,8 @@ NAME=wmail
 CMD=wmail
 
 WATCH=$CACHEDIR/$NAME
-LOG=/tmp/$NAME.log
 HISTORY=/tmp/$NAME:history
+WIDTH=67  # 72 - "(..) ", dunst duplicate message counter
 
 activity() {
   [ -s $WATCH ] || return
@@ -34,15 +34,17 @@ mail() {
     acct=$(echo $i | cut -d: -f1)
     name=$(echo $i | cut -d: -f2-)
     email=$(find $acct -name "${name}*")
-    [ -n "$email" ] || { ditto "wmail -> not found: $acct/$name" >>$LOG; continue; }
+    [ -n "$email" ] || continue
     hdr=$(mailheader "$email")
-    notify X critical "$(echo "$hdr" | grep Subject: | sed 's/ re://g')" "$(echo "$hdr" | grep From:)"
+    notify X critical "$(echo "$hdr" | grep Subject: | sed 's/ re://g' | trim $WIDTH)" "$(echo "$hdr" | grep From:)"
   done
 }
 
+pretty() { sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//;' | sed ':a;N;$!ba;s/\[\n//g' | sed ':a;N;$!ba;s/\n\]//g'; }
+
 case $1 in
-'') pgrep -f "watchman watch-project $ROOT" >/dev/null && watchman get-config $ROOT || watchd $ROOT $NAME $CMD & ;;
--s) watchman watch-del $ROOT; watchman shutdown-server; pkill -f "watchd $ROOT $NAME $CMD" ;;
+'') pgrep -f "watchman watch-project $ROOT" >/dev/null && watchman watch-list $ROOT | pretty || watchd $ROOT $NAME $CMD & ;;
+-s) watchman watch-del $ROOT | pretty; watchman shutdown-server | pretty; pkill -f "watchd $ROOT $NAME $CMD" ;;
 * ) watchq f $ROOT $NAME $@; [ $(pgrep -cf "watchq f $ROOT $NAME") -eq 1 ] && mail & ;;  # delay for imap processing latencies
 esac
 

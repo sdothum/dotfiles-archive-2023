@@ -8,40 +8,22 @@
 
 # .......................................................................... Log
 
-# debug trace
-# set or touch $HOME/.tracelevel to create session persistant tracelevel
-# "trace [0-9]" set global tracelevel, defaults to $HOME/.tracelevel, else 0
-# "trace [1-9] message"
-# "trace message" == "trace 0 message" which always echos
-# "trace" show current tracelevel
-if [ -z $tracelevel ] ;then
-  [ -s $HOME/.tracelevel ] && export tracelevel=$(cat $HOME/.tracelevel) || export tracelevel=0
-fi
+usage() {
+  echo "usage: $(basename $0) [<level>] <message> [<detail>]"
+  exit 1
+}
 
-if [ -z "$1" ] ;then
-  echo "tracelevel := $tracelevel"
-  exit
-elif echo $1 | grep -q '^[0-9]$' ;then
-  if [ $# -eq 1 ] ;then
-    export tracelevel=$@
-    [ -e $HOME/.tracelevel ] && echo $@ >$HOME/.tracelevel
-    trace
-    exit
-  fi
-  level=$1
-  shift
-  message=$@
-else
-  level=0
-  message=${__WHITE}$@
-fi
+[ "$1" ] || usage
+echo $1 | grep -q '^[0-9]$' && { level=$1; shift; }
+[ $# -eq 2 ] && { msg=$1; detail=$2; } || msg=$@ 
 
-if [ $level -le $tracelevel ] ;then
-  log -n "$(timestamp)"
-  # [ $level -gt 0 ] && log -n " ${__RED}$level>"
-  [ $level -gt 0 ] && log -n " ${__RED}$level>"
-  # message passed may contain set_color commands, so reset at end
-  log " ${NOCOLOR}$message${NOCOLOR}"
-fi
+message() {
+  [ $# -eq 2 ] && [ -n "$2" ] && { echo -n "${__YELLOW}$1 ${WHITE}"; shift; } || color=${__WHITE}
+  echo "$color$@"
+}
+
+log -n "$(timestamp)"
+[ $level ] && log -n " ${__RED}$level>"
+log " ${NOCOLOR}$(message "$msg" "$detail")${NOCOLOR}"  # message passed may contain colors
 
 # vim: set ft=sh: #

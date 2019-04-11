@@ -5,10 +5,13 @@
 
 # ..................................................................... watchman
 
-server && watches=65536 || watches=32768
+# server && watches=65536 || watches=32768
+watches=32768
 
 # increase iwatches
 sudo sysctl fs.inotify.max_user_watches=$watches
 echo fs.inotify.max_user_watches=$watches | sudo tee /usr/lib/sysctl.d/90-override.conf
+
+echo '{ "root_files": [".watchmanconfig"] }' | sudo tee /etc/watchman.json
 
 # vim: set ft=sh: #

@@ -26,11 +26,11 @@ volume() {
 show() {
   V=$(volume $@)
   [ $V ] || usage
-  p scrub | grep -q "btrfs scrub start -Bd $V" || in_progress=$@
+  pgrep -f "btrfs scrub start -Bd $V" >/dev/null || in_progress=$@
   while : ;do
     trace "$@"
     sudo btrfs scrub status $V
-    p scrub | grep -q "btrfs scrub start -Bd $V" || break
+    pgrep -f "btrfs scrub start -Bd $V" >/dev/null || break
     sleep $interval
   done
   [ $in_progress ] || press_enter
@@ -43,7 +43,7 @@ c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) show $(volume $2) ;;
 
-* ) nohup sudo btrfs scrub start -Bd $(volume $@) &
+* ) nohup sudo btrfs scrub start -Bd $(volume $@) >/dev/null 2>&1 &
     exists term && (term "$@" SHELL "scrub s $@" &) || scrub s $@ ;;
 esac
 

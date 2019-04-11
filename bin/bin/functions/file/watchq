@@ -27,14 +27,14 @@ VERBOSE=$SESSION/$NAME:verbose
 LOG=/tmp/$NAME.log
 
 info() {
-  trace "$1 ${ROOT##*/} ${__YELLOW}$name" >>$LOG
+  trace "$1 ${ROOT##*/}" "$name" >>$LOG
   [ -e $VERBOSE ] && notify X "$1 ${ROOT##*/}" "$name"
 }
 
 for i in $@ ;do
   [ -n "$i" ] || continue
   name=$(echo $i | exclude)
-  [ -n "$name" ] && [ -e "$ROOT/$i" ] || { ditto "watchq -> not found: $ROOT/$i" | exclude >>$LOG; continue; }
+  [ -n "$name" ] && [ -e "$ROOT/$i" ] || continue
   [ $dir ] && file="$ROOT/${i%/*}" || { file="$ROOT/$i"; [ -d "$file" ] && continue; }
   info Register
   grep -qx "$file" $WATCH || echo "$file" >>$WATCH

@@ -20,7 +20,9 @@ CMD=$@
 WATCH=$CACHEDIR/$NAME
 >$WATCH
 
-watchman watch-project $ROOT
-notify X low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//')"
+pretty() { sed '/[{}]/d; s/^ *//g; s/"//g; s/,$//'; }
+
+watchman watch-project $ROOT | pretty
+notify X low 'Watchman' "$(watchman -- trigger $ROOT $NAME -- $CMD | pretty)"
 
 # vim: set ft=sh: #

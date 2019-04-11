@@ -6,7 +6,6 @@
 
 # .................................................................. Mail client
 
-
 maildir=$HOME/Maildir/thedarnedestthing
 
 if ! server ;then
