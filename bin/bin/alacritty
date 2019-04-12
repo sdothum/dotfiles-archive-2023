@@ -9,7 +9,8 @@
 export SHELL=/usr/bin/fish
 
 # match alacritty font size to gvim
-font="$STOW/alacritty/$(( $(fontsize) - 1 ))pt"
+# font="$STOW/alacritty/$(( $(fontsize) - 1 ))pt"
+font="$STOW/alacritty/$(fontsize)pt"
 [ -e $font ] && config="--config-file $font/.config/alacritty/alacritty.yml"
 echo "$@" | grep -q '\--config-file' && unset config
 

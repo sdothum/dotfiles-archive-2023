@@ -49,10 +49,10 @@ if is display -min ;then
   hc set window_gap                   1
   hc set frame_gap                    0
 elif is display -1920 ;then
-  hc set window_gap                   6
+  hc set window_gap                   3
   hc set frame_gap                    $(( $SHADOW * 4 / 5 ))
 elif is display -2560 ;then
-  hc set window_gap                   9
+  hc set window_gap                   6
   hc set frame_gap                    $(( $SHADOW * 2 / 3 ))
 else
   hc set window_gap                   12

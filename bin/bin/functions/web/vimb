@@ -11,7 +11,7 @@
 CONFIG=$HOME/.config/vimb
 STARTPAGE=$SESSION/startpage
 
-[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/#f=39&c=1'; }
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/#f=54&c=1'; }
 
 common='bookmark cookies history style.css'
 font=Iosevka
