@@ -1,9 +1,17 @@
 
 #include "keycode_functions.h"
 
-static uint8_t  i         = 0;  // inline for loop counter
-static uint16_t key_timer = 0;  // global event timer
-static uint8_t reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
+// ................................................................ Global Scope
+
+static uint16_t lsft_timer  = 0;  // left shift event timer
+static uint16_t rsft_timer  = 0;  // right shift event timer
+static uint8_t  reshifted   = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
+static uint16_t tt_keycode  = 0;  // current TT keycode
+
+// ................................................................. Local Scope
+
+static uint8_t  i           = 0;  // inline for loop counter
+static uint16_t key_timer   = 0;  // global event timer
 
 // Keycodes
 // ═════════════════════════════════════════════════════════════════════════════
@@ -41,8 +49,6 @@ bool mod_down(uint16_t key_code)
 }
 
 // .................................................................. Key event
-
-static uint16_t tt_keycode = 0;     // current TT keycode
 
 // alternate escape for TT layers, see process_record_user()
 void tt_escape(keyrecord_t *record, uint16_t keycode)
@@ -121,17 +127,18 @@ void mod_key(uint16_t modifier, uint16_t keycode)
   }
 }
 
-// down -> always shift (versus SFT auto repeat), 
-void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
+// home row shift down -> always shift (versus SFT auto repeat) 
+void sft_home(keyrecord_t *record, uint16_t shift, uint16_t keycode, uint16_t* key_timer, uint16_t keycode2, uint16_t* key_timer2)
 {
   if (record->event.pressed) {
-    key_timer = timer_read();
-    register_code(modifier);
+    *key_timer = timer_read();
+    register_code(shift);
   }
   else {
-    unregister_code(modifier);
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(keycode); }
-    key_timer = 0;
+    unregister_code(shift);
+    if (timer_elapsed(*key_timer) < TAPPING_TERM) { (*key_timer < *key_timer2) ? tap_key(keycode2) : tap_key(keycode); }  // register opposite shift key!
+    *key_timer  = 0;
+    *key_timer2 = 0;
   }
 }
 
@@ -165,7 +172,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
       unregister_code(keycode);
       if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
     }
-    key_timer = 0;  // clear home row shift, see process_record_user() and mod_t()
+    key_timer = 0;  // clear home row shift, see process_record_user() and sft_home()
     return true;
   }
   return false;
@@ -183,15 +190,13 @@ bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t
         tap_key(keycode);
         if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       }
-      key_timer = 0;  // clear home row shift, see process_record_user() and mod_t()
+      key_timer = 0;  // clear home row shift, see process_record_user() and sft_home()
       return true;
     }
   }
   return false;
 }
 #endif
-
-// ....................................................... Leader Capitalization
 
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
 bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
@@ -201,8 +206,8 @@ bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t ke
     else if (timer_elapsed(key_timer) < TAPPING_TERM) {
       tap_key(keycode);
       if (layer) { layer_off(layer); }
-      layer_on                 (_SHIFT);  // sentence/paragraph capitalization
-      set_oneshot_layer        (_SHIFT, ONESHOT_START);
+      layer_on         (_SHIFT);  // sentence/paragraph capitalization
+      set_oneshot_layer(_SHIFT, ONESHOT_START);
       // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
       key_timer = 0;
       return true; 
