@@ -96,8 +96,16 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
- ,HOME_A  // pseudo SFT_T(KC_A) disables auto repeat for shift
- ,HOME_T  // pseudo SFT_T(KC_T) disables auto repeat for shift
+#ifdef NIMBLE_T
+ ,HOME_Q  // pseudo GUI_T(KC_A)
+ ,HOME_H  // pseudo CTL_T(KC_H)
+ ,HOME_E  // pseudo ALT_T(KC_E)
+ ,HOME_R  // pseudo ALT_T(KC_R)
+ ,HOME_S  // pseudo CTL_T(KC_S)
+ ,HOME_W  // pseudo GUI_T(KC_W)
+#endif
+ ,HOME_A  // pseudo SFT_T(KC_A)
+ ,HOME_T  // pseudo SFT_T(KC_T)
 #ifndef HASKELL
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
@@ -123,12 +131,14 @@ enum keyboard_keycodes {
 #define CT_C    CTL_T(KC_C)
 #define ST_A    SFT_T(KC_A)
 
+#ifndef NIMBLE_T
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #define HOME_W  GUI_T(KC_W)
+#endif
 
 #include "tapdance.h"
 
@@ -226,31 +236,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   switch (keycode) {
   case HOME_Q:
-  case HOME_W:
-  case OS_GUI:
-    tap_mods(record, KC_LGUI);
+    mod_bits(record, KC_LGUI);
+#ifdef NIMBLE_T
+    mod_home(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, &lgui_timer);
+#endif
     break;
   case HOME_H:
-  case HOME_S:
-  case OS_CTL:
-    tap_mods(record, KC_LCTL);
+    mod_bits(record, KC_LCTL);
+#ifdef NIMBLE_T
+    mod_home(record, LEFT, NOSHIFT, KC_LCTL, KC_H, &lctl_timer);
+#endif
     break;
   case HOME_E:
-  case HOME_R:
-  case OS_ALT:
-    tap_mods(record, KC_LALT);
-    break;
-  case HS_GT:                                        // for rolling cursor to enter, del
-  case OS_SFT:
-    tap_mods(record, KC_LSFT);
+    mod_bits(record, KC_LALT);
+#ifdef NIMBLE_T
+    mod_home(record, LEFT, NOSHIFT, KC_LALT, KC_E, &lalt_timer);
+#endif
     break;
   case HOME_A:
-    tap_mods(record, KC_LSFT);
-    sft_home(record, KC_LSFT, KC_A, &lsft_timer, KC_T, &rsft_timer);  // SFT_T replacement (sacrifice auto-repeat for shift next)
+    mod_bits(record, KC_LSFT);
+    mod_home(record, LEFT, SHIFT, KC_LSFT, KC_A, &lsft_timer);
+    down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     break;
   case HOME_T:
-    tap_mods(record, KC_RSFT);
-    sft_home(record, KC_RSFT, KC_T, &rsft_timer, KC_A, &lsft_timer);  // SFT_T replacement (sacrifice auto-repeat for shift next)
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, SHIFT, KC_RSFT, KC_T, &rsft_timer);
+    break;
+  case HOME_R:
+    mod_bits(record, KC_RALT);
+#ifdef NIMBLE_T
+    mod_home(record, RIGHT, NOSHIFT, KC_RALT, KC_R, &ralt_timer);
+#endif
+    break;
+  case HOME_S:
+    mod_bits(record, KC_RCTL);
+#ifdef NIMBLE_T
+    mod_home(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, &rctl_timer);
+#endif
+    break;
+  case HOME_W:
+    mod_bits(record, KC_RGUI);
+#ifdef NIMBLE_T
+    mod_home(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, &rgui_timer);
+#endif
+    break;
+    
+  case OS_GUI:
+    mod_bits(record, KC_LGUI);
+    break;
+  case OS_CTL:
+    mod_bits(record, KC_LCTL);
+    break;
+  case OS_ALT:
+    mod_bits(record, KC_LALT);
+    break;
+  case HS_GT:  // for rolling cursor to enter, del
+  case OS_SFT:
+    mod_bits(record, KC_LSFT);
     break;
 
   // ............................................................. Toggle Layers
@@ -370,24 +412,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ............................................................. Modifier Keys
 
   case AST_G:
-    tap_mods(record, KC_LALT);
+    mod_bits(record, KC_LALT);
     mt_shift(record, KC_LALT, KC_LSFT, KC_G);
     break;
   case SST_A:
-    tap_mods(record, KC_LSFT);
+    mod_bits(record, KC_LSFT);
     mt_shift(record, KC_LSFT, 0, KC_A);
     break;
   case SST_T:
-    tap_mods(record, KC_RSFT);
+    mod_bits(record, KC_RSFT);
     mt_shift(record, KC_RSFT, 0, KC_T);
     break;
 #ifndef HASKELL
   case HS_LT:
-    tap_mods(record, KC_LCTL);
+    mod_bits(record, KC_LCTL);
     mt_shift(record, KC_LCTL, 0, KC_COMM);
     break;
   case HS_GT:
-    tap_mods(record, KC_LSFT);
+    mod_bits(record, KC_LSFT);
     mt_shift(record, KC_LSFT, 0, KC_DOT);
     break;
 #endif
@@ -430,13 +472,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 #ifdef PLANCK
   case AT_DOWN:
-    tap_mods(record, KC_LALT);
+    mod_bits(record, KC_LALT);
     break;
   case CT_RGHT:
-    tap_mods(record, KC_LGUI);
+    mod_bits(record, KC_LGUI);
     break;
   case GT_UP:
-    tap_mods(record, KC_LCTL);
+    mod_bits(record, KC_LCTL);
     break;
 #endif
 
@@ -456,7 +498,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   default:
     if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
-    key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
+    key_timer  = 0;  // regular keycode, clear timer in keycode_functions.h
+    lsft_timer = 0;  // regular keycode, clear timer in keycode_functions.h
+    rsft_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
   return true;
 }
