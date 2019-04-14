@@ -73,9 +73,9 @@ obarun install :: $HOME/build/obarun/obarun-*
 openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
 planck beaklsi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklsi -type f) $HOME/bin/funcsions/hardware/planck
-planck beaklzi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklzi -type f) $HOME/bin/funczions/hardware/planck
 planck beaklti :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklti -type f) $HOME/bin/functions/hardware/planck
 planck beaklvi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklvi -type f) $HOME/bin/funcvions/hardware/planck
+planck beaklzi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklzi -type f) $HOME/bin/funczions/hardware/planck
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*
@@ -86,10 +86,11 @@ signature :: $HOME/.signature
 slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
 splitography beaklsi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi -type f) $HOME/bin/functions/hardware/splitography
-splitography beaklzi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklzi -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklth :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklth -type f) $HOME/bin/functhons/hardware/splitography
 splitography beaklti :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklti -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklvi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklvi -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklzi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklzi -type f) $HOME/bin/functions/hardware/splitography
+splitography beaklzi-at :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklzi-at -type f) $HOME/bin/functions/hardware/splitography
 splitography default :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f) $HOME/bin/functions/hardware/splitography
 splitography dvorak :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f) $HOME/bin/functions/hardware/splitography
 splitography dvorakmu :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f) $HOME/bin/functions/hardware/splitography

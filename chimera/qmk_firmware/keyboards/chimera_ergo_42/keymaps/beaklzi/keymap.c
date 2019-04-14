@@ -83,12 +83,12 @@ enum keyboard_keycodes {
  ,HOME_Q  // pseudo GUI_T(KC_A)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
+ ,HOME_A  // pseudo SFT_T(KC_A)
+ ,HOME_T  // pseudo SFT_T(KC_T)
  ,HOME_R  // pseudo ALT_T(KC_R)
  ,HOME_S  // pseudo CTL_T(KC_S)
  ,HOME_W  // pseudo GUI_T(KC_W)
 #endif
- ,HOME_A  // pseudo SFT_T(KC_A)
- ,HOME_T  // pseudo SFT_T(KC_T)
 #ifndef HASKELL
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
@@ -111,6 +111,8 @@ enum keyboard_keycodes {
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
+#define HOME_A  SFT_T(KC_A)
+#define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #define HOME_W  GUI_T(KC_W)
@@ -229,12 +231,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case HOME_A:
     mod_bits(record, KC_LSFT);
+#ifdef NIMBLE_T
     mod_home(record, LEFT, SHIFT, KC_LSFT, KC_A, &lsft_timer);
+#endif
     down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     break;
   case HOME_T:
     mod_bits(record, KC_RSFT);
+#ifdef NIMBLE_T
     mod_home(record, RIGHT, SHIFT, KC_RSFT, KC_T, &rsft_timer);
+#endif
     break;
   case HOME_R:
     mod_bits(record, KC_RALT);
@@ -402,8 +408,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   default:
     if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     key_timer  = 0;  // regular keycode, clear timer in keycode_functions.h
-    lsft_timer = 0;  // regular keycode, clear timer in keycode_functions.h
-    rsft_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
   return true;
 }

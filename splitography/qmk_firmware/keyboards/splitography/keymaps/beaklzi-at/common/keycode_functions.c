@@ -3,24 +3,15 @@
 
 // ................................................................ Global Scope
 
-static uint8_t  reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
-static uint16_t tt_keycode = 0;  // current TT keycode
-
-#ifdef NIMBLE_T
-static uint16_t lgui_timer = 0;  // gui event timer
-static uint16_t lctl_timer = 0;  // ctl event timer
-static uint16_t lalt_timer = 0;  // alt event timer
-static uint16_t lsft_timer = 0;  // left shift event timer
-static uint16_t rsft_timer = 0;  // right shift event timer
-static uint16_t ralt_timer = 0;  // alt event timer
-static uint16_t rctl_timer = 0;  // ctl event timer
-static uint16_t rgui_timer = 0;  // gui event timer
-#endif
+static uint16_t lsft_timer  = 0;  // left shift event timer
+static uint16_t rsft_timer  = 0;  // right shift event timer
+static uint8_t  reshifted   = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
+static uint16_t tt_keycode  = 0;  // current TT keycode
 
 // ................................................................. Local Scope
 
-static uint8_t  i          = 0;  // inline for loop counter
-static uint16_t key_timer  = 0;  // global event timer
+static uint8_t  i           = 0;  // inline for loop counter
+static uint16_t key_timer   = 0;  // global event timer
 
 // Keycodes
 // ═════════════════════════════════════════════════════════════════════════════
@@ -31,18 +22,9 @@ static uint16_t key_timer  = 0;  // global event timer
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-// two active modifier keys (down) only, see mod_home()
-bool dual_modifiers()
+void tap_mods(keyrecord_t *record, uint16_t keycode)
 {
-  uint8_t bits = 0;
-  uint8_t i = mods;
-  while(i) { bits += i % 2; i >>= 1; }
-  return bits == 2;
-}
-
-void mod_bits(keyrecord_t *record, uint16_t keycode)
-{
-  if (record->event.pressed) { mods |=   MOD_BIT(keycode); }
+  if (record->event.pressed) { mods |= MOD_BIT  (keycode); }
   else                       { mods &= ~(MOD_BIT(keycode)); }
 }
 
@@ -145,44 +127,18 @@ void mod_key(uint16_t modifier, uint16_t keycode)
   }
 }
 
-#define LEFT  1
-#define RIGHT 2
-
-static uint16_t home_keycode  = 0;  // home key
-static uint16_t home_modifier = 0;  // home modifier
-static uint8_t  home_side     = 0;  // home side
-static uint16_t *home_timer   = 0;  // home key event timer
-
-// handle rolling home row modifiers as shift keycode or unmodified keycodes
-void mod_home(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint16_t* key_timer)
+// home row shift down -> always shift (versus SFT auto repeat) 
+void sft_home(keyrecord_t *record, uint16_t shift, uint16_t keycode, uint16_t* key_timer, uint16_t keycode2, uint16_t* key_timer2)
 {
   if (record->event.pressed) {
     *key_timer = timer_read();
-    if (dual_modifiers()) {
-      home_timer    = key_timer;
-      home_modifier = modifier;
-      home_keycode  = keycode;
-      home_side     = side;
-    }
-    register_code(modifier);
+    register_code(shift);
   }
   else {
-    unregister_code(modifier);
-    if (timer_elapsed(*key_timer) < TAPPING_TERM) {
-      if (*key_timer < *home_timer) {                                          // register preceding home row key
-        unregister_code(home_modifier);
-        if (shift && (side != home_side)) { tap_shift(home_keycode); }         // shift -> shift opposite home row
-        else {
-          side == LEFT ? unregister_code(KC_LSFT) : unregister_code(KC_RSFT);  // disable rolling trigram ending shift
-          tap_key(keycode);                                                    // rolling home row bigram
-          tap_key(home_keycode);
-        }
-        // register_code(home_modifier);
-      }
-      else { tap_key(keycode); }
-    }
+    unregister_code(shift);
+    if (timer_elapsed(*key_timer) < TAPPING_TERM) { (*key_timer < *key_timer2) ? tap_key(keycode2) : tap_key(keycode); }  // register opposite shift key!
     *key_timer  = 0;
-    *home_timer = 0;
+    *key_timer2 = 0;
   }
 }
 
@@ -536,6 +492,8 @@ void lt(keyrecord_t *record, uint8_t layer, uint8_t shift, uint16_t keycode)
 
 // ............................................................ Double Key Layer
 
+#define LEFT   1
+#define RIGHT  2
 #define ONDOWN 0
 #define TOGGLE 1
 
