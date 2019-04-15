@@ -32,10 +32,10 @@ static uint16_t key_timer  = 0;  // global event timer
 static uint8_t mods = 0;
 
 // two active modifier keys (down) only, see mod_home()
-bool dual_modifiers()
+bool is_chained_modifier()
 {
   uint8_t bits = 0;
-  uint8_t i = mods;
+  uint8_t i    = mods;
   while(i) { bits += i % 2; i >>= 1; }
   return bits == 2;
 }
@@ -148,41 +148,41 @@ void mod_key(uint16_t modifier, uint16_t keycode)
 #define LEFT  1
 #define RIGHT 2
 
-static uint16_t home_keycode  = 0;  // home key
-static uint16_t home_modifier = 0;  // home modifier
-static uint8_t  home_side     = 0;  // home side
-static uint16_t *home_timer   = 0;  // home key event timer
+static uint16_t chained_keycode  = 0;  // home key
+static uint16_t chained_modifier = 0;  // home modifier
+static uint8_t  chained_side     = 0;  // home side
+static uint16_t *chained_timer   = 0;  // home key event timer
 
 // handle rolling home row modifiers as shift keycode or unmodified keycodes
 void mod_home(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint16_t* key_timer)
 {
   if (record->event.pressed) {
     *key_timer = timer_read();
-    if (dual_modifiers()) {
-      home_timer    = key_timer;
-      home_modifier = modifier;
-      home_keycode  = keycode;
-      home_side     = side;
+    if (is_chained_modifier()) {
+      chained_timer    = key_timer;
+      chained_modifier = modifier;
+      chained_keycode  = keycode;
+      chained_side     = side;
     }
-    register_code(modifier);
+    if (modifier) { register_code(modifier); }
   }
   else {
-    unregister_code(modifier);
+    if (modifier) { unregister_code(modifier); }
     if (timer_elapsed(*key_timer) < TAPPING_TERM) {
-      if (*key_timer < *home_timer) {                                          // register preceding home row key
-        unregister_code(home_modifier);
-        if (shift && (side != home_side)) { tap_shift(home_keycode); }         // shift -> shift opposite home row
+      if (*key_timer < *chained_timer) {                                         // register preceding home row key
+        unregister_code(chained_modifier);
+        if (shift && (side != chained_side)) { tap_shift(chained_keycode); }       // shift opposite home row key
         else {
           side == LEFT ? unregister_code(KC_LSFT) : unregister_code(KC_RSFT);  // disable rolling trigram ending shift
           tap_key(keycode);                                                    // rolling home row bigram
-          tap_key(home_keycode);
+          tap_key(chained_keycode);
         }
-        // register_code(home_modifier);
+        // register_code(chained_modifier);
       }
       else { tap_key(keycode); }
     }
-    *key_timer  = 0;
-    *home_timer = 0;
+    *key_timer     = 0;
+    *chained_timer = 0;
   }
 }
 
@@ -434,7 +434,7 @@ void paste_reset(qk_tap_dance_state_t *state, void *user_data)
 void percent(qk_tap_dance_state_t *state, void *user_data)
 {
   if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
-  else { state->pressed                     ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
+  else { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
   reset_tap_dance(state);
 }
 

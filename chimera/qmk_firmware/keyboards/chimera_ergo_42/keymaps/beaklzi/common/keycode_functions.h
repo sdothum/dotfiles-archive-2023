@@ -1,12 +1,12 @@
 void asterisk(qk_tap_dance_state_t *state, void *user_data);
 void base_layer(uint8_t defer);
+bool is_chained_modifier(void);
 void clear_layers(void);
 void colon(qk_tap_dance_state_t *state, void *user_data);
 void colon_reset(qk_tap_dance_state_t *state, void *user_data);
 void comma(qk_tap_dance_state_t *state, void *user_data);
 void dot(qk_tap_dance_state_t *state, void *user_data);
 void double_tap(uint8_t count, uint8_t shift, uint16_t keycode);
-bool dual_modifiers(void);
 void equal(qk_tap_dance_state_t *state, void *user_data);
 void equal_reset(qk_tap_dance_state_t *state, void *user_data);
 void greater(qk_tap_dance_state_t *state, void *user_data);

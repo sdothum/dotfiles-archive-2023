@@ -1,8 +1,8 @@
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 // this is the style you want to emulate.
 //
-// To flash splitography / planck firmware
-// ═══════════════════════════════════════
+// To flash chimera firmware
+// ═════════════════════════
 //   Reset keyboard or press hw reset button on base
 //
 //   cd qmk_firmware/keyboards/<keyboard>
@@ -47,28 +47,14 @@
 // sudo CPATH=<keymap.c directory>/common make ...
 
 
-#ifndef PLANCK
-#ifndef SPLITOGRAPHY
-#define SPLITOGRAPHY
-#endif
-#endif
+#define CHIMERA
 
-#include "config.h"
-#ifdef SPLITOGRAPHY
-#include "splitography.h"
-#else
-#include "planck.h"
-#endif
-#include "action_layer.h"
-#ifdef STENO_ENABLE
-#include "keymap_steno.h"
-#endif
-#ifdef AUDIO_ENABLE
-#include "audio.h"
-#endif
-#include "eeconfig.h"
+// #include "config.h"
+#include "chimera_ergo_42.h"
+// #include "action_layer.h"
+// #include "eeconfig.h"
 
-extern keymap_config_t keymap_config;
+// extern keymap_config_t keymap_config;
 
 enum keyboard_layers {
   _BASE = 0
@@ -85,39 +71,29 @@ enum keyboard_layers {
  ,_TTMOUSE
  ,_TTNUMBER
  ,_TTREGEX
- ,_PLOVER
-#ifdef PLANCK
- ,_ADJUST
+#ifdef TEST
+ ,_TEST
 #endif
  ,_END_LAYERS
 };
 
 enum keyboard_keycodes {
   BASE = SAFE_RANGE
- ,BASE1
- ,BASE2
  ,HOME_A  // pseudo SFT_T(KC_A) disables auto repeat for shift
  ,HOME_T  // pseudo SFT_T(KC_T) disables auto repeat for shift
 #ifndef HASKELL
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
 #endif
- ,LT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
- ,ML_BSLS
- ,PLOVER
  ,AST_G   // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
  ,SST_A   // pseudo SFT_T(S(KC_A))
  ,SST_T   // pseudo SFT_T(S(KC_T))
+ ,TT_ESC
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
 };
 
 // modifier keys
-#ifdef PLANCK
-#define AT_DOWN ALT_T(KC_DOWN)
-#define CT_RGHT CTL_T(KC_RGHT)
-#define GT_UP   GUI_T(KC_UP)
-#endif
 #define ACT_E   MT   (MOD_LALT | MOD_LCTL, KC_E)
 #define AT_B    ALT_T(KC_B)
 #define CT_C    CTL_T(KC_C)
@@ -157,57 +133,55 @@ enum keyboard_keycodes {
 #define XCOPY   LCTL(LSFT(KC_C))
 #define XPASTE  TD_XPASTE
 
-#define LT_BSPC LT  (_EDIT, KC_BSPC)
+#define LT_BSPC LT  (_MOUSE, KC_BSPC)
+#define LT_ENT  LT  (_EDIT, KC_ENT)
+#define LT_ESC  LT  (_FNCKEY, KC_ESC)
 #define LT_I    LT  (_REGEX, KC_I)
-#ifdef PLANCK
-#define LT_0    LT  (_ADJUST, KC_0)
-#define LT_EQL  LT  (_ADJUST, KC_EQL)
-#define LT_INS  LT  (_FNCKEY, KC_INS)
-#define LT_LEFT LT  (_EDIT, KC_LEFT)
-#define MO_ADJ  MO  (_ADJUST)
-#endif
-#define LT_ESC  LT  (_NUMBER, KC_ESC)
+#define LT_SPC  LT  (_SYMGUI, KC_SPC)
+#define LT_TAB  LT  (_NUMBER, KC_TAB)
+#define TT_TAB  LT  (_NUMBER, KC_TAB)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
 #define OS_SFT  OSM (MOD_LSFT)
 
 #define TGL_TL  TT  (_TTFNCKEY)
-#define TGL_HL  TT  (_TTCAPS)  // pseudo capslock to avoid TT key_timer conflicts
+#define TGL_HL  TT  (_TTCAPS)
 #define TGL_BL  TT  (_TTMOUSE)
 #define TGL_TR  TT  (_TTREGEX)
 #define TGL_HR  TT  (_TTNUMBER)
 #define TGL_BR  TT  (_TTCURSOR)
-#define TT_ESC  MO  (_NUMBER)
+
+#ifdef TEST
+#define DEBUG   TG  (_TEST)
+#else
+#define DEBUG   KC_NO
+#endif
+
 
 // ........................................................ Default Alpha Layout
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "base_layout.h"
-#include "steno_layout.h"
 
-  // ...................................................... Number / Function Keys
+// ...................................................... Number / Function Keys
 
 #include "number_fkey_layout.h"
 
-  // ......................................................... Symbol / Navigation
+// ......................................................... Symbol / Navigation
 
 #include "symbol_guifn_layout.h"
 
-  // ............................................................... Toggle Layers
+// ............................................................... Toggle Layers
 
 #include "toggle_layout.h"
 
-  // ......................................................... Short Cuts / Adjust
+// .............................................................. Mouse / Chords
 
-#include "chord_layout.h"
+#include "mouse_chord_layout.h"
 
 };
-
-// ...................................................................... Sounds
-
-#include "sounds.h"
 
 
 // User Keycode Trap
@@ -240,13 +214,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case OS_ALT:
     tap_mods(record, KC_LALT);
     break;
-  case HS_GT:                                        // for rolling cursor to enter, del
+  case HS_GT:                                                         // for rolling cursor to enter, del
   case OS_SFT:
     tap_mods(record, KC_LSFT);
     break;
   case HOME_A:
     tap_mods(record, KC_LSFT);
     sft_home(record, KC_LSFT, KC_A, &lsft_timer, KC_T, &rsft_timer);  // SFT_T replacement (sacrifice auto-repeat for shift next)
+    down_punc = (record->event.pressed) ? 1 : 0;                      // space/enter + shift shortcut, see cap_lt()
     break;
   case HOME_T:
     tap_mods(record, KC_RSFT);
@@ -272,100 +247,56 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tt_escape(record, keycode);
     break;
 
-  // ...................................................... Outer Left Thumb Key
+  // ........................................................... Left Thumb Keys
 
   case TT_ESC:
-    if (map_shift  (record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (key_press  (record))                           { base_layer(0); return false; }  // exit TT layer
-    break;
+    base_layer(0);  // exit TT layer
+    return false;
   case LT_ESC:
-    if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))    { return false; }
-    if (map_shift  (record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (tt_keycode)                                    { base_layer(0); return false; }
-    tap_layer(record, _NUMBER);
+    if (tt_keycode)                                  { base_layer(0); return false; }
     break;
-
-  // ...................................................... Inner Left Thumb Key
 
   case LT_I:
-    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN))   { return false; }
-#ifdef LEFT_SPACE
-    if (map_shift  (record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
-#endif
-    tap_layer      (record, _REGEX);
-    rolling_layer  (record, LEFT, 0, 0, _REGEX, _SYMGUI);
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
     break;
   case TT_I:
-    tap_layer      (record, _REGEX);
-    lt             (record, _REGEX, SHIFT, KC_I);
+    lt(record, _REGEX, SHIFT, KC_I);
+    break;
+  case S(KC_I):
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (!record->event.pressed)                      { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     break;
 
-  case TD_EQL:
-    if (tt_keycode) { break; }  // no thumb mouse layer on toggle layer
-    tap_layer      (record, _MOUSE);
-    rolling_layer  (record, LEFT, 0, 0, _MOUSE, _SYMGUI);
+  case LT_TAB:
+    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_ENT))   { return false; }
     break;
 
-  // ..................................................... Inner Right Thumb Key
+  // .......................................................... Right Thumb Keys
 
-  case ML_BSLS:
-    tap_layer      (record, _MOUSE);
-    rolling_layer  (record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _REGEX);
+  case LT_ENT:
+    if (leader_cap(record, _EDIT, down_punc, KC_ENT))   { return false; }  // KC_ENT -> enter shift
+    break;
+  case KC_ENT:
+    if (leader_cap(record, 0, down_punc, KC_ENT))       { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
-#endif
-    if (leader_cap (record, _SYMGUI, down_punc, KC_SPC)) { return false; }                      // see KC_SPC for multi-tap
-    if (mapc_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
-    tap_layer      (record, _SYMGUI);
-    lt             (record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
-    rolling_layer  (record, RIGHT, 0, 0, _SYMGUI, _REGEX);
+    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }  // KC_SPC -> space shift
     break;
   case TT_SPC:
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
-#endif
-    if (mapc_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
-    tap_layer      (record, _SYMGUI);
-    lt             (record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
+    lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
-    if (!record->event.pressed)                          { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
+    if (!record->event.pressed)                         { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     break;
-
-  // ..................................................... Outer Right Thumb Key
 
   case LT_BSPC:
-    if (!record->event.pressed)                        { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))   { return false; }
-#endif
-    if (map_shift  (record, KC_LSFT, NOSHIFT, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (leader_cap (record, _EDIT, down_punc, KC_ENT)) { return false; }                      // see KC_BSPC for multi-tap
-    tap_layer      (record, _EDIT);
-    break;
   case KC_BSPC:
-    if (!record->event.pressed)                        { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))   { return false; }
-#endif
-    if (map_shift  (record, KC_LSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
-    if (leader_cap (record, 0, down_punc, KC_ENT))     { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
-#ifdef THUMB_CAPS
-    if (record->event.pressed)                         { key_timer = timer_read(); }
-    else if (timer_elapsed(key_timer) < TAPPING_TERM)  { tap_key(KC_BSPC); }
-    return false;  // capslock toggling trap, use shift bspc -> del for auto repeat
-#else
+    if (!record->event.pressed)                         { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))    { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))    { return false; }
     break;
-#endif
 
   // ............................................................. Modifier Keys
 
@@ -392,65 +323,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #endif
 
-
   // ......................................................... Shift Mapped Keys
 
   case KC_COLN:
-    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt(
+    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN)) { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                            { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt(
+    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     break;
 
   case KC_COMM:
-    down_punc = (record->event.pressed) ? 1 : 0;  // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;  // comm + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))  { return false; }
     break;
   case KC_DOT:
-    down_punc = (record->event.pressed) ? 1 : 0;  // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;  // dot + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))    { return false; }
     break;
 
   // ..................................................... Leader Capitalization
-    
+  
   case KC_QUOT:
     if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
     break;
-  
+
   case TD_TILD:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
   case KC_EXLM:
   case KC_QUES:
     down_punc = (record->event.pressed) ? 1 : 0;          // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
     break;
-
-  // ..................................................... Thumb Row Cursor Keys
-
-#ifdef PLANCK
-  case AT_DOWN:
-    tap_mods(record, KC_LALT);
-    break;
-  case CT_RGHT:
-    tap_mods(record, KC_LGUI);
-    break;
-  case GT_UP:
-    tap_mods(record, KC_LCTL);
-    break;
-#endif
-
-  // ................................................................ Steno Keys
-
-  case PLOVER:
-    steno(record);
-    return false;
-  case BASE1:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); return false; }
-    return false;
-  case BASE2:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }
-    return false;
 
   // ................................................................ Other Keys
 
@@ -461,4 +365,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   return true;
 }
 
-#include "init.c"
+
+// Layer States
+// ═════════════════════════════════════════════════════════════════════════════
+
+void matrix_scan_user(void) {
+  uint8_t layer = biton32(layer_state);
+  
+  switch (layer) {
+  case _BASE:
+    set_led_blue;
+    break;
+  case _SHIFT:
+  case _TTCAPS:
+    set_led_cyan;
+    break;
+  case _NUMBER:
+  case _TTNUMBER:
+    set_led_green;
+    break;
+  case _REGEX:
+  case _SYMGUI:
+  case _TTREGEX:
+    set_led_red;
+    break;
+  case _MOUSE:
+  case _TTCURSOR:
+  case _TTMOUSE:
+    set_led_magenta;
+    break;
+  case _FNCKEY:
+  case _TTFNCKEY:
+    // set_led_white;
+    set_led_green;
+    break;
+  case _EDIT:
+  default:
+    set_led_yellow;
+    break;
+  }
+}
+

@@ -236,6 +236,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     break;
+
   case HOME_T:
     mod_bits(record, KC_RSFT);
 #ifdef NIMBLE_T
@@ -392,9 +393,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ..................................................... Leader Capitalization
   
-  case KC_QUOT:
-    if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
-    break;
+  // case KC_QUOT:
+  //   if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
+  //   break;
 
   case TD_TILD:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
@@ -402,6 +403,64 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_QUES:
     down_punc = (record->event.pressed) ? 1 : 0;          // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
     break;
+
+  // .............................................................. Top Row Keys
+
+#ifdef NIMBLE_T
+  case KC_Y:
+    mod_bits(record, KC_LCTL);
+    mod_home(record, LEFT, NOSHIFT, 0, KC_Y, &lctl_timer);
+    return false;
+  case KC_O:
+    mod_bits(record, KC_LALT);
+    mod_home(record, LEFT, NOSHIFT, 0, KC_O, &lalt_timer);
+    return false;
+  case KC_U:
+    mod_bits(record, KC_LSFT);
+    mod_home(record, LEFT, NOSHIFT, 0, KC_U, &lsft_timer);
+    return false;
+
+  case KC_D:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_D, &rsft_timer);
+    return false;
+  case KC_N:
+    mod_bits(record, KC_RALT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_N, &ralt_timer);
+    return false;
+  case KC_M:
+    mod_bits(record, KC_RCTL);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_M, &rctl_timer);
+    return false;
+
+  // ........................................................... Bottom Row Keys
+
+  case KC_MINS:
+    mod_bits(record, KC_LCTL);
+    mod_home(record, LEFT, NOSHIFT, 0, KC_MINS, &lctl_timer);
+    return false;
+  case KC_QUOT:
+    mod_bits(record, KC_LALT);
+    mod_home(record, LEFT, NOSHIFT, 0, KC_QUOT, &lalt_timer);
+    return false;
+  case KC_K:
+    mod_bits(record, KC_LSFT);
+    mod_home(record, LEFT, NOSHIFT, 0, KC_K, &lsft_timer);
+    return false;
+
+  case KC_P:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_P, &rsft_timer);
+    return false;
+  case KC_L:
+    mod_bits(record, KC_RALT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_L, &ralt_timer);
+    return false;
+  case KC_F:
+    mod_bits(record, KC_RCTL);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_F, &rctl_timer);
+    return false;
+#endif
 
   // ................................................................ Other Keys
 
