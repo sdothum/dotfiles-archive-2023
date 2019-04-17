@@ -72,10 +72,10 @@ obarun bundle :: $HOME/build/obarun/bundle/*
 obarun install :: $HOME/build/obarun/obarun-*
 openbox :: $HOME/.config/openbox/autostart
 pacman log :: /var/log/pacman.log
-planck beaklsi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklsi -type f) $HOME/bin/funcsions/hardware/planck
+planck beaklsi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklsi -type f) $HOME/bin/functions/hardware/planck
 planck beaklti :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklti -type f) $HOME/bin/functions/hardware/planck
-planck beaklvi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklvi -type f) $HOME/bin/funcvions/hardware/planck
-planck beaklzi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklzi -type f) $HOME/bin/funczions/hardware/planck
+planck beaklvi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklvi -type f) $HOME/bin/functions/hardware/planck
+planck beaklzi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklzi -type f) $HOME/bin/functions/hardware/planck
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
 privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*

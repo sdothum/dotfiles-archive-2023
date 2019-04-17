@@ -7,7 +7,7 @@
 # ....................................................................... Planck
 
 usage() {
-  echo "usage: $(basename $0) <keymap> [adnw* | beakl* | colem* | qwerty | default] [steno [nomouse]] [<string> [<string>]] [dfu]"
+  echo "usage: $(basename $0) <keymap> [steno [nomouse]] [<string> [<string>]] [dfu]"
   exit 1
 }
 
@@ -38,17 +38,6 @@ ifno 'sync qmk_firmware repo' || {
 # update keymap from stow repo
 mkdir $KEYMAP 2>/dev/null
 rsync -avq -KL --delete --exclude .deprecated $STOW/planck/${KEYMAP#$HOME/}/* $KEYMAP/
-
-# default keymap
-case $1 in
-adnw*   |\
-beakl*  |\
-colem*  |\
-qwerty  |\
-default ) sed -i -r "s/#define.*$KEYMAPS/#define $(echo $1 | uppercase)/" $CONFIG; shift ;;
-
-*       ) usage ;;
-esac
 
 # steno (mouse may need to be mandisabled in config.h)
 if [ "$1" = steno ] ;then

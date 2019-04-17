@@ -1,1 +1,1 @@
-../../../../../../splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi/readme.md
+# The default keymap for splitography and planck keyboards, see config.h

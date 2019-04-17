@@ -392,10 +392,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   // ..................................................... Leader Capitalization
-  
-  // case KC_QUOT:
-  //   if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
-  //   break;
 
   case TD_TILD:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
@@ -420,6 +416,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_home(record, LEFT, NOSHIFT, 0, KC_U, &lsft_timer);
     return false;
 
+  case KC_G:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_G, &key_timer);
+    return false;
   case KC_D:
     mod_bits(record, KC_RSFT);
     mod_home(record, RIGHT, NOSHIFT, 0, KC_D, &rsft_timer);
@@ -431,6 +431,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_M:
     mod_bits(record, KC_RCTL);
     mod_home(record, RIGHT, NOSHIFT, 0, KC_M, &rctl_timer);
+    return false;
+
+  // ........................................................... Middle Row Keys 
+
+  case KC_C:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_C, &key_timer);
     return false;
 
   // ........................................................... Bottom Row Keys
@@ -448,6 +455,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_home(record, LEFT, NOSHIFT, 0, KC_K, &lsft_timer);
     return false;
 
+  case KC_B:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_B, &key_timer);
+    return false;
   case KC_P:
     mod_bits(record, KC_RSFT);
     mod_home(record, RIGHT, NOSHIFT, 0, KC_P, &rsft_timer);

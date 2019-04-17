@@ -89,51 +89,51 @@ SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4); }
 # monitor regions are adjusted per conky layout.. in this particular instance,
 # margin is added to 0x0+X'+0 to tuck right window margin under conky panel area
 case $@ in
-conky               ) rm -f $FULLSCREEN:primary
-                      rm -f $FULLSCREEN:$TAG
-                      PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margin*2 )) $(( $marginX + $monocle )) $margin ;;
+conky     ) rm -f $FULLSCREEN:primary
+            rm -f $FULLSCREEN:$TAG
+            PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margin*2 )) $(( $marginX + $monocle )) $margin ;;
 
-conky*fullscreen    ) touch $FULLSCREEN:primary
-                      touch $FULLSCREEN:$TAG
-                      if [ $X0 -gt $MIN_DISPLAY ] ;then
-                        # desktop screens retain margins
-                        PRI $(( $fullscreen_width - $SHADOW ))         $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
-                            $(( $marginX + $window_frame + $monocle )) $(( $margin + $window_frame ))
-                      else
-                        # laptop screens fill to edge
-                        PRI $(( $fullscreen_width + $marginX + $window_frame )) $Y0 0 0
-                      fi ;;
+conky*f*  ) touch $FULLSCREEN:primary
+            touch $FULLSCREEN:$TAG
+            if [ $X0 -gt $MIN_DISPLAY ] ;then
+              # desktop screens retain margins
+              PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
+                  $(( $marginX + $window_frame + $monocle )) $(( $margin + $window_frame ))
+            else
+              # laptop screens fill to edge
+              PRI $(( $fullscreen_width + $marginX + $window_frame )) $Y0 0 0
+            fi ;;
 
-fullframe           ) rm -f $FULLSCREEN:primary
-                      rm -f $FULLSCREEN:$TAG
-                      if [ $monocle -eq 0 ] ;then
-                        PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $margin*2 )) $marginX $margin
-                      else
-                        PRI $normal_width $(( $Y0 - $margin*2 )) $(( ($X0 - $normal_width)/2 )) $margin
-                      fi ;;
+fullframe ) rm -f $FULLSCREEN:primary
+            rm -f $FULLSCREEN:$TAG
+            if [ $monocle -eq 0 ] ;then
+              PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $margin*2 )) $marginX $margin
+            else
+              PRI $normal_width $(( $Y0 - $margin*2 )) $(( ($X0 - $normal_width)/2 )) $margin
+            fi ;;
 
-fullscreen          ) touch $FULLSCREEN:primary
-                      touch $FULLSCREEN:$TAG
-                      if [ $monocle -eq 0 ] ;then
-                        PRI $X0 $Y0 0 0
-                      fi ;;
+fullscreen) touch $FULLSCREEN:primary
+            touch $FULLSCREEN:$TAG
+            if [ $monocle -eq 0 ] ;then
+              PRI $X0 $Y0 0 0
+            fi ;;
 
-secondary           ) rm -f $FULLSCREEN:secondary
-                      rm -f $FULLSCREEN:$TAG
-                      SEC $(( $X1 - $marginX*2 )) $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
-                          $(( X0 + $marginX ))    $margin ;;
+secondary ) rm -f $FULLSCREEN:secondary
+            rm -f $FULLSCREEN:$TAG
+            SEC $(( $X1 - $marginX*2 )) $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
+                $(( X0 + $marginX )) $margin ;;
 
-secondary*fullscreen) touch $FULLSCREEN:secondary
-                      touch $FULLSCREEN:$TAG
-                      SEC $X1 $Y1 X0 0 ;;
+second*f* ) touch $FULLSCREEN:secondary
+            touch $FULLSCREEN:$TAG
+            SEC $X1 $Y1 X0 0 ;;
 
-menu                ) if is primary ;then
-                      touch $FULLSCREEN:primary
-                      PRI $X0 $Y0 0 0
-                    else
-                      touch $FULLSCREEN:secondary
-                      SEC $X1 $Y1 $X0 0
-                    fi ;;
+menu      ) if is primary ;then
+              touch $FULLSCREEN:primary
+              PRI $X0 $Y0 0 0
+            else
+              touch $FULLSCREEN:secondary
+              SEC $X1 $Y1 $X0 0
+            fi ;;
 esac
 
 # configure multihead..

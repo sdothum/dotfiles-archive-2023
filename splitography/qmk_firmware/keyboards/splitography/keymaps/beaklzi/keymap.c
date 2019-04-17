@@ -100,12 +100,12 @@ enum keyboard_keycodes {
  ,HOME_Q  // pseudo GUI_T(KC_A)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
+ ,HOME_A  // pseudo SFT_T(KC_A)
+ ,HOME_T  // pseudo SFT_T(KC_T)
  ,HOME_R  // pseudo ALT_T(KC_R)
  ,HOME_S  // pseudo CTL_T(KC_S)
  ,HOME_W  // pseudo GUI_T(KC_W)
 #endif
- ,HOME_A  // pseudo SFT_T(KC_A)
- ,HOME_T  // pseudo SFT_T(KC_T)
 #ifndef HASKELL
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
@@ -199,19 +199,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "base_layout.h"
 #include "steno_layout.h"
 
-  // ...................................................... Number / Function Keys
+// ...................................................... Number / Function Keys
 
 #include "number_fkey_layout.h"
 
-  // ......................................................... Symbol / Navigation
+// ......................................................... Symbol / Navigation
 
 #include "symbol_guifn_layout.h"
 
-  // ............................................................... Toggle Layers
+// ............................................................... Toggle Layers
 
 #include "toggle_layout.h"
 
-  // ......................................................... Short Cuts / Adjust
+// ......................................................... Short Cuts / Adjust
 
 #include "chord_layout.h"
 
@@ -261,6 +261,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_home(record, LEFT, SHIFT, KC_LSFT, KC_A, &lsft_timer);
 #endif
     break;
+
   case HOME_T:
     mod_bits(record, KC_RSFT);
 #ifdef NIMBLE_T
@@ -285,7 +286,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_home(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, &rgui_timer);
 #endif
     break;
-    
+
   case OS_GUI:
     mod_bits(record, KC_LGUI);
     break;
@@ -319,7 +320,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     tt_escape(record, keycode);
     break;
 
-  // ...................................................... Outer Left Thumb Key
+  // ........................................................... Left Thumb Keys
 
   case TT_ESC:
     if (map_shift  (record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
@@ -333,8 +334,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (tt_keycode)                                    { base_layer(0); return false; }
     tap_layer(record, _NUMBER);
     break;
-
-  // ...................................................... Inner Left Thumb Key
 
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN))   { return false; }
@@ -355,7 +354,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     rolling_layer  (record, LEFT, 0, 0, _MOUSE, _SYMGUI);
     break;
 
-  // ..................................................... Inner Right Thumb Key
+  // .......................................................... Right Thumb Keys
 
   case ML_BSLS:
     tap_layer      (record, _MOUSE);
@@ -385,8 +384,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_SPC:
     if (!record->event.pressed)                          { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
     break;
-
-  // ..................................................... Outer Right Thumb Key
 
   case LT_BSPC:
     if (!record->event.pressed)                        { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
@@ -439,33 +436,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #endif
 
-
   // ......................................................... Shift Mapped Keys
 
   case KC_COLN:
-    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt(
+    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN)) { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                            { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt(
+    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     break;
 
   case KC_COMM:
-    down_punc = (record->event.pressed) ? 1 : 0;  // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;  // comm + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))  { return false; }
     break;
   case KC_DOT:
-    down_punc = (record->event.pressed) ? 1 : 0;  // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (record->event.pressed) ? 1 : 0;  // dot + space/enter + shift shortcut, see cap_lt()
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))    { return false; }
     break;
 
   // ..................................................... Leader Capitalization
-    
-  // case KC_QUOT:
-  //   if (mod_down(KC_RSFT)) { down_punc = (record->event.pressed) ? 1 : 0; }  // shift-quot + space/enter + shift shortcut, see cap_lt()
-  //   break;
-  
+
   case TD_TILD:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
   case KC_EXLM:
@@ -489,6 +481,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_home(record, LEFT, NOSHIFT, 0, KC_U, &lsft_timer);
     return false;
 
+  case KC_G:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_G, &key_timer);
+    return false;
   case KC_D:
     mod_bits(record, KC_RSFT);
     mod_home(record, RIGHT, NOSHIFT, 0, KC_D, &rsft_timer);
@@ -501,7 +497,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_bits(record, KC_RCTL);
     mod_home(record, RIGHT, NOSHIFT, 0, KC_M, &rctl_timer);
     return false;
-    
+
+  // ........................................................... Middle Row Keys 
+
+  case KC_C:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_C, &key_timer);
+    return false;
+
   // ........................................................... Bottom Row Keys
 
   case KC_MINS:
@@ -517,6 +520,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_home(record, LEFT, NOSHIFT, 0, KC_K, &lsft_timer);
     return false;
 
+  case KC_B:
+    mod_bits(record, KC_RSFT);
+    mod_home(record, RIGHT, NOSHIFT, 0, KC_B, &key_timer);
+    return false;
   case KC_P:
     mod_bits(record, KC_RSFT);
     mod_home(record, RIGHT, NOSHIFT, 0, KC_P, &rsft_timer);

@@ -116,7 +116,7 @@ void tap_mod(uint16_t modifier, uint16_t keycode)
   }
 }
 
-// down -> always shift (versus SFttt auto repeat), 
+// down -> always shift (versus SFT_t auto repeat), 
 void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
 {
   if (record->event.pressed) {

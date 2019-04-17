@@ -27,26 +27,8 @@
 // compile time macro string, must be in quotes
 #define PUBLIC_STRING ":%s/arch=(.*)/arch=('any')\n"
 
-// thumb key tap-shift() double tap: one shot shift (0) off (1) on
-#define DT_SHIFT 1
-// number layer 0 position KEYPAD_0, THUMB_0
-#define THUMB_0
-// Haskell tap dance operator chords
+// Haskell tap dance operators
 #define HASKELL
-// equal key toggle layer (differs from splitography)
-#define EQL_LT _ADJUST
-// sync app with window manager keybind hook defined in plover_keybind.h
-#define PLOVER_KEYBIND
-// thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
-#define THUMB_CAPS
-// left home shift I -> space
-#define LEFT_SPACE
-
-// layout ADNW*, BEAKL*, COLEKA*, QWERTY (default)
-#define BEAKLTI
-
-// keyboard hardware
-#define PLANCK
 
 // nimble home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
 #define NIMBLE_T
