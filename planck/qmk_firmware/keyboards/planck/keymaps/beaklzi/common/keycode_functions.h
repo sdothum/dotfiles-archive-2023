@@ -1,7 +1,7 @@
 void asterisk(qk_tap_dance_state_t *state, void *user_data);
 void base_layer(uint8_t defer);
 bool chained_modifier(void);
-void clear_e(uint8_t col);
+void clear_events(void);
 void clear_layers(void);
 void colon(qk_tap_dance_state_t *state, void *user_data);
 void colon_reset(qk_tap_dance_state_t *state, void *user_data);

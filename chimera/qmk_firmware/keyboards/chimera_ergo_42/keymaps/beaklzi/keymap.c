@@ -412,12 +412,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════
 
-#ifdef NIMBLE_T
 void matrix_init_user(void)
 {
-  for (i = 0; i < 10; i++) { clear_e(i); }
+  clear_events();
 }
-#endif
 
 
 // Layer States

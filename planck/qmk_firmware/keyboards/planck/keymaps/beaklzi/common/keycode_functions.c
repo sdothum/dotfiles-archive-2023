@@ -137,56 +137,51 @@ void mod_key(uint16_t modifier, uint16_t keycode)
   }
 }
 
-#define LEFT  1  // also see raise_layer(), rolling_layer()
+#define LEFT  1               // also see raise_layer(), rolling_layer()
 #define RIGHT 2
 
-static struct key_event {
+static struct column_event {
+  uint16_t key_timer;         // event priority
   uint16_t keycode;
-  uint16_t modifier;
   uint8_t  shift;
   uint8_t  side;
-  uint16_t timer;
-} e[10];  // mapped as key col 0 1 2 3 4 <- left, right -> 5 6 7 8 9
+} e[10];                      // mapped as columns 0 1 2 3 4 <- left, right -> 5 6 7 8 9, see process_record_user()
 
-static uint8_t rolling_col = 0;
+static uint8_t next_key = 0;  // by column reference
+static uint8_t prev_key = 0;
 
-void clear_e(uint8_t col)
+void clear_events(void)
 {
-  e[col].keycode  = 0;
-  e[col].modifier = 0;
-  e[col].shift    = 0;
-  e[col].side     = 0;
-  e[col].timer    = 0;
+  for (i = 0; i < 10; i++) { e[i].key_timer = 0; }
 }
 
-// handle rolling home row modifiers as shift keycode or unmodified keycodes
-void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t col)
+// handle rolling keys as shift keycode or a sequence of unmodified keycodes
+void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
   mod_bits(record, modifier);
   if (record->event.pressed) {
-    key_timer = timer_read();
-    e[col].keycode  = keycode;
-    e[col].modifier = modifier;
-    e[col].shift    = shift;
-    e[col].side     = side;
-    e[col].timer    = key_timer;
-    rolling_col     = col;
+    e[column].key_timer = timer_read();
+    e[column].keycode   = keycode;
+    e[column].shift     = shift;
+    e[column].side      = side;
+    prev_key            = next_key;
+    next_key            = column;                            // as not released yet
     if (modifier) { register_code(modifier); }
   }
   else {
     if (modifier) { unregister_code(modifier); }
-    if (timer_elapsed(e[col].timer) < TAPPING_TERM) {
-      if (e[col].timer < e[rolling_col].timer) {  // rolling sequence in progress
-        mod_all(unregister_code);                 // disable modifier chords during finger roll
-        if (e[col].shift && (e[col].side != e[rolling_col].side)) { 
-          tap_shift(e[rolling_col].keycode);      // shift opposite home row key
-          e[rolling_col].timer = 0;               // don't echo lower case character
+    if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
+      if (e[column].key_timer < e[next_key].key_timer) {     // rolling sequence in progress
+        mod_all(unregister_code);                            // disable modifier chords during finger roll
+        if (e[column].shift && (e[column].side != e[next_key].side)) { 
+          tap_shift(e[next_key].keycode);                    // shift opposite home row key
+          e[next_key].key_timer = 0;                         // don't echo lower case character
         }
         else { tap_key(keycode); }
       }
-      else { tap_key(keycode); }
+      else { tap_key(keycode); e[prev_key].key_timer = 0; }  // don't echo any previous modifier key value
     }
-    clear_e(col);
+    e[column].key_timer = 0;
   }
 }
 
@@ -517,9 +512,7 @@ void clear_layers(void)
   mods       = 0;
   key_timer  = 0;
   tt_keycode = 0;
-#ifdef NIMBLE_T
-  matrix_init_user();
-#endif
+  clear_events();
 }
 
 void base_layer(uint8_t defer)

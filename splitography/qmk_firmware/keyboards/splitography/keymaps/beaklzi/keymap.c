@@ -466,9 +466,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 void matrix_init_user(void)
 {
-#ifdef NIMBLE_T
-  for (i = 0; i < 10; i++) { clear_e(i); }
-#endif
+  clear_events();
 #ifdef STENO_ENABLE
   steno_set_mode(STENO_MODE_BOLT);  // or STENO_MODE_GEMINI
 #endif
