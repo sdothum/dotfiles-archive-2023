@@ -216,28 +216,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................ Home Row Modifiers
 
   switch (keycode) {
+#ifdef NIMBLE_T
   case HOME_Q:
-    mod_bits(record, KC_LGUI);
-#ifdef NIMBLE_T
-    mod_home(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, &lgui_timer);
-#endif
-    break;
+    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0); break;
   case HOME_H:
-    mod_bits(record, KC_LCTL);
-#ifdef NIMBLE_T
-    mod_home(record, LEFT, NOSHIFT, KC_LCTL, KC_H, &lctl_timer);
-#endif
-    break;
+    mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1); break;
   case HOME_E:
-    mod_bits(record, KC_LALT);
-#ifdef NIMBLE_T
-    mod_home(record, LEFT, NOSHIFT, KC_LALT, KC_E, &lalt_timer);
+    mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2); break;
 #endif
-    break;
   case HOME_A:
     mod_bits(record, KC_LSFT);
 #ifdef NIMBLE_T
-    mod_home(record, LEFT, SHIFT, KC_LSFT, KC_A, &lsft_timer);
+    mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);
 #endif
     down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     break;
@@ -245,41 +235,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_T:
     mod_bits(record, KC_RSFT);
 #ifdef NIMBLE_T
-    mod_home(record, RIGHT, SHIFT, KC_RSFT, KC_T, &rsft_timer);
+    mod_roll(record, RIGHT, SHIFT, KC_RSFT, KC_T, 6);
 #endif
     break;
+#ifdef NIMBLE_T
   case HOME_R:
-    mod_bits(record, KC_RALT);
-#ifdef NIMBLE_T
-    mod_home(record, RIGHT, NOSHIFT, KC_RALT, KC_R, &ralt_timer);
-#endif
-    break;
+    mod_roll(record, RIGHT, NOSHIFT, KC_RALT, KC_R, 7); break;
   case HOME_S:
-    mod_bits(record, KC_RCTL);
-#ifdef NIMBLE_T
-    mod_home(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, &rctl_timer);
-#endif
-    break;
+    mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
   case HOME_W:
-    mod_bits(record, KC_RGUI);
-#ifdef NIMBLE_T
-    mod_home(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, &rgui_timer);
+    mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 9); break;
 #endif
-    break;
-
-  case OS_GUI:
-    mod_bits(record, KC_LGUI);
-    break;
-  case OS_CTL:
-    mod_bits(record, KC_LCTL);
-    break;
-  case OS_ALT:
-    mod_bits(record, KC_LALT);
-    break;
-  case HS_GT:  // for rolling cursor to enter, del
-  case OS_SFT:
-    mod_bits(record, KC_LSFT);
-    break;
 
   // ............................................................. Toggle Layers
 
@@ -354,26 +320,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ............................................................. Modifier Keys
 
   case AST_G:
-    mod_bits(record, KC_LALT);
-    mt_shift(record, KC_LALT, KC_LSFT, KC_G);
-    break;
+    mt_shift(record, KC_LALT, KC_LSFT, KC_G); break;
   case SST_A:
-    mod_bits(record, KC_LSFT);
-    mt_shift(record, KC_LSFT, 0, KC_A);
-    break;
+    mt_shift(record, KC_LSFT, 0, KC_A);       break;
   case SST_T:
-    mod_bits(record, KC_RSFT);
-    mt_shift(record, KC_RSFT, 0, KC_T);
-    break;
+    mt_shift(record, KC_RSFT, 0, KC_T);       break;
 #ifndef HASKELL
   case HS_LT:
-    mod_bits(record, KC_LCTL);
-    mt_shift(record, KC_LCTL, 0, KC_COMM);
-    break;
+    mt_shift(record, KC_LCTL, 0, KC_COMM);    break;
   case HS_GT:
-    mod_bits(record, KC_LSFT);
-    mt_shift(record, KC_LSFT, 0, KC_DOT);
-    break;
+    mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
 #endif
 
   // ......................................................... Shift Mapped Keys
@@ -409,73 +365,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 #ifdef NIMBLE_T
   case KC_Y:
-    mod_bits(record, KC_LCTL);
-    mod_home(record, LEFT, NOSHIFT, 0, KC_Y, &lctl_timer);
-    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    return false;
   case KC_O:
-    mod_bits(record, KC_LALT);
-    mod_home(record, LEFT, NOSHIFT, 0, KC_O, &lalt_timer);
-    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_O, 2);    return false;
   case KC_U:
-    mod_bits(record, KC_LSFT);
-    mod_home(record, LEFT, NOSHIFT, 0, KC_U, &lsft_timer);
-    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_U, 3);    return false;
 
   case KC_G:
-    mod_bits(record, KC_RSFT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_G, &key_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_G, 5);   return false;
   case KC_D:
-    mod_bits(record, KC_RSFT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_D, &rsft_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_D, 6);   return false;
   case KC_N:
-    mod_bits(record, KC_RALT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_N, &ralt_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_N, 7);   return false;
   case KC_M:
-    mod_bits(record, KC_RCTL);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_M, &rctl_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_M, 8);   return false;
 
   // ........................................................... Middle Row Keys 
 
   case KC_C:
-    mod_bits(record, KC_RSFT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_C, &key_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_C, 5);   return false;
 
   // ........................................................... Bottom Row Keys
 
   case KC_MINS:
-    mod_bits(record, KC_LCTL);
-    mod_home(record, LEFT, NOSHIFT, 0, KC_MINS, &lctl_timer);
-    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_MINS, 1); return false;
   case KC_QUOT:
-    mod_bits(record, KC_LALT);
-    mod_home(record, LEFT, NOSHIFT, 0, KC_QUOT, &lalt_timer);
-    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_QUOT, 2); return false;
   case KC_K:
-    mod_bits(record, KC_LSFT);
-    mod_home(record, LEFT, NOSHIFT, 0, KC_K, &lsft_timer);
-    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_K, 3);    return false;
 
   case KC_B:
-    mod_bits(record, KC_RSFT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_B, &key_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_B, 5);   return false;
   case KC_P:
-    mod_bits(record, KC_RSFT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_P, &rsft_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_P, 6);   return false;
   case KC_L:
-    mod_bits(record, KC_RALT);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_L, &ralt_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_L, 7);   return false;
   case KC_F:
-    mod_bits(record, KC_RCTL);
-    mod_home(record, RIGHT, NOSHIFT, 0, KC_F, &rctl_timer);
-    return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_F, 8);   return false;
 #endif
 
   // ................................................................ Steno Keys
@@ -499,4 +425,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   return true;
 }
 
-#include "init.c"
+
+// Initialization
+// ═════════════════════════════════════════════════════════════════════════════
+
+void matrix_init_user(void)
+{
+#ifdef NIMBLE_T
+  for (i = 0; i < 10; i++) { clear_e(i); }
+#endif
+#ifdef STENO_ENABLE
+  steno_set_mode(STENO_MODE_BOLT);  // or STENO_MODE_GEMINI
+#endif
+#ifdef AUDIO_ENABLE
+  startup_user();
+#endif
+}
+
+#include "audio.h"

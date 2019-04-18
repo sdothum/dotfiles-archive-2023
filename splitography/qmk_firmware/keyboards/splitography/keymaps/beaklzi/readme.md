@@ -1,1 +1,1 @@
-# The default keymap for splitography and planck keyboards, see config.h
+# The default keymap for splitography keyboards, see config.h
