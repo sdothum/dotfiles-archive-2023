@@ -3,13 +3,15 @@
 
 // ................................................................ Global Scope
 
-static uint8_t  reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
-static uint16_t tt_keycode = 0;  // current TT keycode
+static uint16_t lsft_timer  = 0;  // left shift event timer
+static uint16_t rsft_timer  = 0;  // right shift event timer
+static uint8_t  reshifted   = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
+static uint16_t tt_keycode  = 0;  // current TT keycode
 
 // ................................................................. Local Scope
 
-static uint8_t  i          = 0;  // inline for loop counter
-static uint16_t key_timer  = 0;  // global event timer
+static uint8_t  i           = 0;  // inline for loop counter
+static uint16_t key_timer   = 0;  // global event timer
 
 // Keycodes
 // ═════════════════════════════════════════════════════════════════════════════
@@ -20,33 +22,20 @@ static uint16_t key_timer  = 0;  // global event timer
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-// two or more active modifier keys (down) only, see mod_roll()
-bool chained_modifier()
+void tap_mods(keyrecord_t *record, uint16_t keycode)
 {
-  uint8_t bits = 0;
-  uint8_t i    = mods;
-  while(i) { bits += i % 2; i >>= 1; }
-  return bits > 1;
-}
-
-void mod_bits(keyrecord_t *record, uint16_t keycode)
-{
-  if (record->event.pressed) { mods |=   MOD_BIT(keycode); }
+  if (record->event.pressed) { mods |= MOD_BIT  (keycode); }
   else                       { mods &= ~(MOD_BIT(keycode)); }
 }
 
 // (un)register modifiers
-void mod_all(void (*f)(uint8_t), uint8_t mask)
+void modifier(void (*f)(uint8_t))
 {
-  if (mods & MOD_BIT(KC_LGUI)) { f(KC_LGUI); }
   if (mods & MOD_BIT(KC_LCTL)) { f(KC_LCTL); }
+  if (mods & MOD_BIT(KC_LGUI)) { f(KC_LGUI); }
   if (mods & MOD_BIT(KC_LALT)) { f(KC_LALT); }
   if (mods & MOD_BIT(KC_LSFT)) { f(KC_LSFT); }
   if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
-  if (mods & MOD_BIT(KC_RALT)) { f(KC_RALT); }
-  if (mods & MOD_BIT(KC_RCTL)) { f(KC_RCTL); }
-  if (mods & MOD_BIT(KC_RGUI)) { f(KC_RGUI); }
-  mods &= (mask ? 0xFF : 0);                    // 0 -> discard, otherwise -> retain state
 }
 
 // base layer modifier
@@ -138,73 +127,24 @@ void mod_key(uint16_t modifier, uint16_t keycode)
   }
 }
 
-#define LEFT  1               // also see raise_layer(), rolling_layer()
-#define RIGHT 2
-
-static struct column_event {
-  uint16_t key_timer;         // event priority
-  uint16_t keycode;
-  uint8_t  shift;
-  uint8_t  side;
-} e[10];                      // mapped as columns 0 1 2 3 4 <- left, right -> 5 6 7 8 9, see process_record_user()
-
-static uint8_t next_key = 0;  // by column reference
-static uint8_t prev_key = 0;
-
-void clear_events(void)
-{
-  for (i = 0; i < 10; i++) { e[i].key_timer = 0; }
-}
-
-// handle rolling keys as shift keycode or a sequence of unmodified keycodes
-void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
-{
-  if (modifier) { mod_bits(record, modifier); }
-  if (record->event.pressed) {
-    e[column].key_timer = timer_read();
-    e[column].keycode   = keycode;
-    e[column].shift     = shift;
-    e[column].side      = side;
-    prev_key            = next_key;
-    next_key            = column;                            // as not released yet
-    if (modifier) { register_code(modifier); }
-  }
-  else {
-    if (modifier) { unregister_code(modifier); }
-    if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
-      if (e[column].key_timer < e[next_key].key_timer) {     // rolling sequence in progress
-        mod_all(unregister_code, 0);                         // disable modifier chords during finger roll
-        if (e[column].shift && (e[column].side != e[next_key].side)) { 
-          tap_shift(e[next_key].keycode);                    // shift opposite home row key
-          e[next_key].key_timer = 0;                         // don't echo lower case character
-        }
-        else { tap_key(keycode); }
-      }
-      else { tap_key(keycode); e[prev_key].key_timer = 0; }  // don't echo any previous modifier key value
-    }
-    e[column].key_timer = 0;
-  }
-}
-
-// down -> always shift (versus SFT_t auto repeat), 
-void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
+// home row shift down -> always shift (versus SFT auto repeat) 
+void sft_home(keyrecord_t *record, uint16_t shift, uint16_t keycode, uint16_t* key_timer, uint16_t keycode2, uint16_t* key_timer2)
 {
   if (record->event.pressed) {
-    key_timer = timer_read();
-    register_code(modifier);
+    *key_timer = timer_read();
+    register_code(shift);
   }
   else {
-    unregister_code(modifier);
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(keycode); }
-    key_timer = 0;
+    unregister_code(shift);
+    if (timer_elapsed(*key_timer) < TAPPING_TERM) { (*key_timer < *key_timer2) ? tap_key(keycode2) : tap_key(keycode); }  // register opposite shift key!
+    *key_timer  = 0;
+    *key_timer2 = 0;
   }
 }
-
 
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 {
-  mod_bits(record, modifier);
   if (record->event.pressed) {
     key_timer = timer_read();
     if (modifier2) { register_code(modifier2); }
@@ -513,7 +453,6 @@ void clear_layers(void)
   mods       = 0;
   key_timer  = 0;
   tt_keycode = 0;
-  clear_events();
 }
 
 void base_layer(uint8_t defer)
@@ -553,6 +492,8 @@ void lt(keyrecord_t *record, uint8_t layer, uint8_t shift, uint16_t keycode)
 
 // ............................................................ Double Key Layer
 
+#define LEFT   1
+#define RIGHT  2
 #define ONDOWN 0
 #define TOGGLE 1
 

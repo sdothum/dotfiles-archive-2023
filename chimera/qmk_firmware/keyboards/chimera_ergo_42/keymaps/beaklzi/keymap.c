@@ -213,33 +213,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   switch (keycode) {
 #ifdef NIMBLE_T
   case HOME_Q:
-    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0); break;
+    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0);  break;
   case HOME_H:
-    mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1); break;
+    mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
   case HOME_E:
-    mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2); break;
-#endif
+    mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2);  break;
   case HOME_A:
-    mod_bits(record, KC_LSFT);
-#ifdef NIMBLE_T
-    mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);
-#endif
     down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
-    break;
+    mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);    break;
 
   case HOME_T:
-    mod_bits(record, KC_RSFT);
-#ifdef NIMBLE_T
-    mod_roll(record, RIGHT, SHIFT, KC_RSFT, KC_T, 6);
-#endif
-    break;
-#ifdef NIMBLE_T
+    mod_roll(record, RIGHT, SHIFT, KC_RSFT, KC_T, 6);   break;
   case HOME_R:
     mod_roll(record, RIGHT, NOSHIFT, KC_RALT, KC_R, 7); break;
   case HOME_S:
     mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
   case HOME_W:
     mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 9); break;
+#else
+  case HOME_A:
+    down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
+    mod_bits(record, KC_LSFT);                          break;
+  case HOME_T:
+    mod_bits(record, KC_RSFT);                          break;
 #endif
 
   // ............................................................. Toggle Layers
@@ -414,7 +410,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 void matrix_init_user(void)
 {
-  clear_events();
+  base_layer(0);
 }
 
 

@@ -36,7 +36,7 @@ void mod_bits(keyrecord_t *record, uint16_t keycode)
 }
 
 // (un)register modifiers
-void mod_all(void (*f)(uint8_t))
+void mod_all(void (*f)(uint8_t), uint8_t mask)
 {
   if (mods & MOD_BIT(KC_LGUI)) { f(KC_LGUI); }
   if (mods & MOD_BIT(KC_LCTL)) { f(KC_LCTL); }
@@ -46,6 +46,7 @@ void mod_all(void (*f)(uint8_t))
   if (mods & MOD_BIT(KC_RALT)) { f(KC_RALT); }
   if (mods & MOD_BIT(KC_RCTL)) { f(KC_RCTL); }
   if (mods & MOD_BIT(KC_RGUI)) { f(KC_RGUI); }
+  mods &= (mask ? 0xFF : 0);                    // 0 -> discard, otherwise -> retain state
 }
 
 // base layer modifier
@@ -158,7 +159,7 @@ void clear_events(void)
 // handle rolling keys as shift keycode or a sequence of unmodified keycodes
 void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
-  mod_bits(record, modifier);
+  if (modifier) { mod_bits(record, modifier); }
   if (record->event.pressed) {
     e[column].key_timer = timer_read();
     e[column].keycode   = keycode;
@@ -172,7 +173,7 @@ void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifie
     if (modifier) { unregister_code(modifier); }
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
       if (e[column].key_timer < e[next_key].key_timer) {     // rolling sequence in progress
-        mod_all(unregister_code);                            // disable modifier chords during finger roll
+        mod_all(unregister_code, 0);                         // disable modifier chords during finger roll
         if (e[column].shift && (e[column].side != e[next_key].side)) { 
           tap_shift(e[next_key].keycode);                    // shift opposite home row key
           e[next_key].key_timer = 0;                         // don't echo lower case character

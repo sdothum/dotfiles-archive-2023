@@ -27,6 +27,8 @@
 // compile time macro string
 #define PUBLIC_STRING ""
 
+// number layer 0 position KEYPAD_0, THUMB_0
+#define THUMB_0
 // Haskell tap dance operator chords
 #define HASKELL
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
@@ -36,8 +38,5 @@
 
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND
-
-// nimble home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
-#define NIMBLE_T
 
 #endif

@@ -138,7 +138,7 @@
         Trace theme#Indent()
         execute                   'highlight IndentGuidesOdd  guibg=' . s:hexValue('s:dfm_bg_'        . &background)
         execute                   'highlight IndentGuidesEven guibg=' . s:hexValue('s:dfm_bg_line_'   . &background)
-        if g:ruler == 2 | execute 'highlight ColorColumn      guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
+        if g:ruler == 1 | execute 'highlight ColorColumn      guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
         else            | execute 'highlight ColorColumn      guibg=' . s:hexValue('s:dfm_bg_line_'   . &background) | endif
 
         if s:sync == 1  " refresh any indent guides, see theme#LiteSwitch()
