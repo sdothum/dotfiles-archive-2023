@@ -86,7 +86,7 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
-#ifdef NIMBLE_T
+#ifdef ROLLOVER
  ,HOME_Q  // pseudo GUI_T(KC_A)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
@@ -115,7 +115,7 @@ enum keyboard_keycodes {
 #define CT_C    CTL_T(KC_C)
 #define ST_A    SFT_T(KC_A)
 
-#ifndef NIMBLE_T
+#ifndef ROLLOVER
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
@@ -218,7 +218,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................ Home Row Modifiers
 
   switch (keycode) {
-#ifdef NIMBLE_T
+#ifdef ROLLOVER
   case HOME_Q:
     mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0);  break;
   case HOME_H:
@@ -361,7 +361,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // .............................................................. Top Row Keys
 
-#ifdef NIMBLE_T
+#ifdef ROLLOVER
   case KC_Y:
     mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    return false;
   case KC_O:

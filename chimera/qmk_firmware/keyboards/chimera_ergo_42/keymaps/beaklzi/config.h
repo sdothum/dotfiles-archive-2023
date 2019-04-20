@@ -32,7 +32,7 @@
 // test all keyswitches
 // #define TEST
 
-// nimble home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
-#define NIMBLE_T
+// rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
+#define ROLLOVER
 
 #endif

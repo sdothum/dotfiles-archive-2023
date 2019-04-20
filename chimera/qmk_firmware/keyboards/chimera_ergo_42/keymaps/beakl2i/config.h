@@ -21,22 +21,18 @@
 // #define MOUSEKEY_MAX_SPEED   7
 // #define MOUSEKEY_WHEEL_DELAY 0
 
-// compile time macro string, see functions/hardware splitography script
+// compile time macro string, see functions/hardware chimera script
 #define PRIVATE_STRING ""
-
-// compile time macro string
+// compile time macro string, must be in quotes
 #define PUBLIC_STRING ""
 
-// number layer 0 position KEYPAD_0, THUMB_0
-#define THUMB_0
-// Haskell tap dance operator chords
+// haskell tap dance operators
 #define HASKELL
-// thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
-#define THUMB_CAPS
-// left home shift I -> space
-#define LEFT_SPACE
 
-// sync app with window manager keybind hook defined in plover_keybind.h
-#define PLOVER_KEYBIND
+// test all keyswitches
+// #define TEST
+
+// rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
+#define ROLLOVER
 
 #endif
