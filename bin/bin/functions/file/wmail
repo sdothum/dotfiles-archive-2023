@@ -15,6 +15,7 @@ CMD=wmail
 
 WATCH=$CACHEDIR/$NAME
 HISTORY=/tmp/$NAME:history
+QUIET=$SESSION/wmail:quiet
 WIDTH=67  # 72 - "(..) ", dunst duplicate message counter
 
 activity() {
@@ -36,7 +37,7 @@ mail() {
     email=$(find $acct -name "${name}*")
     [ -n "$email" ] || continue
     hdr=$(mailheader "$email")
-    notify X critical "$(echo "$hdr" | grep Subject: | sed 's/ re://g' | trim $WIDTH)" "$(echo "$hdr" | grep From:)"
+    [ -e $QUIET ] || notify X critical "$(echo "$hdr" | grep Subject: | sed 's/ re://g' | trim $WIDTH)" "$(echo "$hdr" | grep From:)"
   done
 }
 
