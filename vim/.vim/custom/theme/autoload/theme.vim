@@ -32,7 +32,7 @@
       let s:dfm_match_dark       = g:red        " quantum dark parens
       let s:dfm_match_light      = g:hue_5      " flatwhite light parens
       let s:dfm_vsplit_dark      = g:gray1      " invisible split
-      let s:dfm_vsplit_light     = g:base4      " invisible split
+      let s:dfm_vsplit_light     = g:orange     " invisible split
 
       " cursor line
       let s:dfm_cursor_light     = g:cursor     " iA Writer
@@ -47,7 +47,7 @@
       let s:dfm_fg_line_light    = g:hue_2      " light line numbers
 
       " statusline
-      let s:dfm_bg_status_light  = g:base7      " light statusline
+      let s:dfm_bg_status_light  = g:orange_bg  " light statusline
       let s:dfm_bg_status_dark   = g:gray1      " dark statusline
       let s:dfm_fg_status_light  = g:mono_1     " light statusline
       let s:dfm_fg_status_dark   = g:mono_4     " dark statusline
@@ -116,7 +116,7 @@
         if &background == 'light' && g:lightscheme == 'flatwhite'  " add flatwhite contrast
           execute 'highlight IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'highlight Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
-          execute 'highlight StatuslineNC  guifg=' . g:white
+          execute 'highlight StatusLineNC  guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
 
           highlight link mkdLink    htmlString
           highlight link SneakScope Cursor
@@ -335,13 +335,26 @@
     " ............................................................... Statusline
 
       " undo statusline gui=reverse
-      function! theme#ShowStatusline()
-        execute 'highlight Statusline gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
+      function! theme#ShowStatusLine()
+        execute 'highlight StatusLine gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
         set laststatus=2
       endfunction
 
-      function! theme#ShowInfo()
-        execute 'highlight Statusline guibg=' . s:dfm_bg
+      function! theme#HideInfo()
+        execute 'highlight User1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'highlight User2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
       endfunction
 
-" theme.vim
+    " split window statusline background
+      function! theme#SplitColors()
+        if winnr('$') == 1
+          let l:bg = s:dfm_bg
+        else
+          let l:bg = s:hexValue('s:dfm_bg_column_' . &background)
+        endif
+        execute 'highlight User1 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user1
+        execute 'highlight User2 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user2
+        return ''  " otherwise embeds '0' in statusline
+      endfunction
+
+    " theme.vim

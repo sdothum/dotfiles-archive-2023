@@ -162,9 +162,6 @@
       " tab to bracket pairs
       nmap <Tab> %
       vmap <Tab> %
-      " disable magic and case sensitivity
-      cmap %%    \v
-      cmap ^^    \C
 
       " clear search highlight
       nmap <silent>\  :noh<CR>
@@ -192,11 +189,15 @@
         let @/ = l:search
       endfunction
 
-      " restore current search pattern, \m to append magic tokens
-      nnoremap ** :call <SID>searchReplace(':%s,\C\<<C-r><C-w>\>,')<CR>
-      nnoremap ;s :call <SID>searchReplace(':s,\v')<CR>
-      nnoremap %% :call <SID>searchReplace(':%s,\v')<CR>
-      vnoremap %% :<C-u>call <SID>searchReplace(":'<,'>s,\\v")<CR>
+      " toggle magic and case sensitivity, \m to append magic tokens
+      cmap %%    \v
+      cmap ^^    \C
+
+      " replace current word!
+      nnoremap \\ :call <SID>searchReplace(':%s/\C\<<C-r><C-w>\>/')<CR>
+      " see magic settings
+      nnoremap // :call <SID>searchReplace(':%s/')<CR>
+      vnoremap // :<C-u>call <SID>searchReplace(":'<,'>s/")<CR>
 
     " ........................................................... Tab completion
 

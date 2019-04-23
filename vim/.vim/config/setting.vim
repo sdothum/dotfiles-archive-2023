@@ -96,9 +96,10 @@
 
       let g:fzf_colors =
           \{
-          \  'fg+'  : ['fg', 'CursorLine']
-          \, 'bg+'  : ['bg', 'CursorLine']
-          \, 'info' : ['fg', 'Special']
+          \  'fg+'    : ['fg', 'CursorLine']
+          \, 'bg+'    : ['bg', 'CursorLine']
+          \, 'gutter' : ['bg', 'CursorLine']
+          \, 'info'   : ['fg', 'Special']
           \}
 
       " close any diff buffer before leaving buffer

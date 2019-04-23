@@ -16,6 +16,8 @@
       let g:view      = 1       " initial view mode (0) info (1) dfm
       let g:pad_inner = '    '  " statusline padding
       let g:pad_outer = '   '   " expanded statusline padding
+      let g:active    = 0       " active window tag
+      let g:active_tag = ''
 
       augroup ui | autocmd! | augroup END
 
@@ -46,6 +48,9 @@
       " toggle tag, line details
       nmap <silent><C-F7> :let g:detail = g:detail == 0 ? 1 : 0<CR>
       imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
+
+      " for active window highlighting
+      autocmd ui WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
 
     " ................................................................ View mode
 

@@ -21,7 +21,7 @@
         " syntax enable  " restore CursorLine syntax highlighting before applying themes
         if exists('g:loaded_limelight') | Limelight! | endif
         call theme#Theme()
-        call theme#ShowStatusline()
+        call theme#ShowStatusLine()
         call theme#CodeView()
         set showmode
       endfunction
@@ -115,6 +115,10 @@
         return l:prefix > '' ? l:prefix . '  ' . info#SpecialChar() : info#SpecialChar()
       endfunction
 
+      function! ui#Active()
+        return (w:tagged == g:active && winnr('$') > 1) ? g:active_tag : '  '  " glyph width is 2 spaces
+      endfunction
+
       " [path] .. filename | pos .. [details]
       function! s:statusline(proof)
         " Trace ui:statusline()  " tmi :-)
@@ -146,12 +150,12 @@
 
       function! s:showInfo(proof)
         Trace ui:showInfo()
-        if s:show == 1
+        if a:proof == 1
           " execute 'set statusline=%{s:statusline(' . a:proof . ')}'
-          execute 'set statusline=' . s:statusline(a:proof)
-          call theme#ShowStatusline()
+          execute 'set statusline=%{theme#SplitColors()}%{ui#Active()}' . s:statusline(a:proof)
+          call theme#ShowStatusLine()
         else
-          call theme#ShowInfo()  " simply hide statusline content
+          call theme#HideInfo()  " hide statusline content
         endif
       endfunction
 

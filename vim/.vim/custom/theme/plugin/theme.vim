@@ -104,6 +104,10 @@
         if ! empty(glob('~/.session/nighttime')) | call theme#ColorScheme(1)  " follow_the_sun on sunrise/sunset, see crontab
         else                                     | call theme#ColorScheme(0) | endif
 
+        " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
+        autocmd theme WinEnter,TerminalOpen * call theme#SplitColors()
+        autocmd theme WinLeave              * call theme#SplitColors()
+
         if &diff  " don't know where but diff highlights the SignColumn which can only be cleared afterwards(?)
           autocmd theme CursorHold * highlight! link SignColumn NonText
         endif
