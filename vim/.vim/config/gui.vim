@@ -9,10 +9,11 @@
 
       augroup gui | autocmd! | augroup END
 
-      let g:ruler     = 0       " colorcolumn mode, see theme.vim
-      let s:wraplight = 0       " highlight linewrap (0) off (1) on
-      let s:breakchar = '→'
-      let s:delay     = '200m'  " redraw delay, see theme#FontSize()
+      let g:ruler             = 0       " colorcolumn mode, see theme.vim
+      let g:wrap_highlighting = 0       " wrap highlighting (0) off (1) on
+      let s:wraplight         = 0       " highlight linewrap (0) off (1) on
+      let s:breakchar         = '→'
+      let s:delay             = '200m'  " redraw delay, see theme#FontSize()
 
     " ............................................................... Toggle gui
 
@@ -33,7 +34,9 @@
         call s:toggleGui()
         execute 'sleep ' . s:delay
         call s:toggleGui()
-        Quietly Retheme  " fix line wrap highlighting
+        if g:wrap_highlighting
+          Quietly Retheme  " fix line wrap highlighting
+        endif
       endfunction
       
       command! RedrawGui call <SID>redrawGui()

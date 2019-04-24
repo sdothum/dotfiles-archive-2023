@@ -12,12 +12,12 @@
       let s:save_cpo  = &cpo
       set cpo&vim
 
-      let g:detail    = 0       " at cursor (0) tag (1) atom
-      let g:view      = 1       " initial view mode (0) info (1) dfm
-      let g:pad_inner = '    '  " statusline padding
-      let g:pad_outer = '   '   " expanded statusline padding
-      let g:active    = 0       " active window tag
-      let g:active_tag = ''
+      let g:detail     = 0       " at cursor (0) tag (1) atom
+      let g:view       = 1       " initial view mode (0) info (1) dfm
+      let g:pad_inner  = '    '  " statusline padding
+      let g:pad_outer  = '   '   " expanded statusline padding
+      let g:active     = 0       " active window tag
+      let g:active_tag = ''     " active window icon (pencil)
 
       augroup ui | autocmd! | augroup END
 
@@ -33,9 +33,9 @@
     " ............................................................... Initialize
 
       " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-      autocmd ui BufEnter,BufWinEnter * if ! core#PluginWindow() | call ui#LiteType() | endif
+      autocmd ui BufWinEnter * if ! core#PluginWindow() | call ui#LiteType() | endif
       " show and fix line wrap highlighting on startup
-      autocmd ui GuiEnter             * if ! core#PluginWindow() | call ui#LiteType() | call ui#Retheme() | endif
+      autocmd ui GuiEnter    * if g:wrap_highlighting && ! core#PluginWindow() | call ui#Retheme() | endif
 
   " UI _________________________________________________________________________
 

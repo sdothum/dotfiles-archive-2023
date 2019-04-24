@@ -298,6 +298,7 @@
 
       " toggle full document highlight
       function! theme#ToggleProof()
+        Trace theme#ToggleProof()
         execute 'let g:limelight_conceal_guifg="' . s:dfm_proof . '"'
       endfunction
 
@@ -336,11 +337,13 @@
 
       " undo statusline gui=reverse
       function! theme#ShowStatusLine()
+        Trace theme#ShowStatusLine()
         execute 'highlight StatusLine gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
         set laststatus=2
       endfunction
 
       function! theme#HideInfo()
+        Trace theme#HideInfo()
         execute 'highlight User1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
         execute 'highlight User2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
       endfunction

@@ -53,11 +53,11 @@
         call theme#Theme()
         if core#Prose() | call theme#ToggleProof() | endif
         if b:view == 1  " proof view
-          call s:showInfo(1)
+          " call s:showInfo(1)
           Limelight!
           call theme#Contrast(0)
         else            " dfm view
-          call s:showInfo(0)
+          " call s:showInfo(0)
           Limelight
           call theme#Contrast(1)
         endif
@@ -160,7 +160,7 @@
       endfunction
 
       function! ui#RefreshInfo()
-        Trace ui#RefreshInfo()
+        Trace ui#refreshInfo()
         call s:showInfo(b:view)
       endfunction
 
