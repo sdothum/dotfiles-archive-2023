@@ -84,7 +84,6 @@
       let g:cursor          = '#20fccf'  " analogous iA Writer '#20bbfc' cursor color
       let g:black           = '#000000'  " cursor foreground
       let g:blue            = '#0000e6'  " cursor foreground
-      let g:column          = '#ffe3d5'  " light column
       let g:spell           = '#ffd1dc'  " light spelling/grammar error
       let g:white           = g:base7    " cursor foreground
 
@@ -100,7 +99,7 @@
 
     " ...................................................... Default colorscheme
 
-      if g:gui
+      if has('gui_running')
         if ! empty(glob('~/.session/nighttime')) | call theme#ColorScheme(1)  " follow_the_sun on sunrise/sunset, see crontab
         else                                     | call theme#ColorScheme(0) | endif
 
@@ -124,8 +123,8 @@
 
     " ......................................................... Switch font size
 
-      nmap <silent><S-F9> :call theme#FontSize(g:font_type == 1 ? 0 : 1)<CR>
-      imap <silent><S-F9> <C-o>:call theme#FontSize(g:font_type == 1 ? 0 : 1)<CR>
+      nmap <silent><S-F9> :call theme#Font(g:font_type == 1 ? 0 : 1)<CR>
+      imap <silent><S-F9> <C-o>:call theme#Font(g:font_type == 1 ? 0 : 1)<CR>
 
       let &cpo = s:save_cpo
       unlet s:save_cpo

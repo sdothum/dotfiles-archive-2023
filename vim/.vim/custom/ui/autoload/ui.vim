@@ -7,8 +7,11 @@
 
     " .................................................................... Setup
 
-      let s:show     = 1  " statusline (0) off (1) on
-      let s:expanded = 0  " statusline state (0) dfm (1) expanded
+      let s:show       = 1       " statusline (0) off (1) on
+      let s:expanded   = 0       " statusline state (0) dfm (1) expanded
+      let s:pad_inner  = '    '  " statusline padding
+      let s:pad_outer  = '   '   " expanded statusline padding
+      let s:active_win = ''     " active window icon (glyph width is 2 spaces)
 
   "  Distraction free modes ____________________________________________________
 
@@ -29,8 +32,8 @@
     " .................................................... Distraction free view
 
       " prose style
-      function! s:dfmView()
-        Trace ui:dfmView()
+      function! s:proseView()
+        Trace ui:proseView()
         let g:view = 1
         " silent !tmux set status off
         call theme#DfmView()  " un/comment to have monochromatic cursor line (looses vimdiff highlighting)
@@ -73,7 +76,7 @@
       function! s:setView()
         Trace ui:setView()
         if g:view == 0 | call s:codeView()
-        else           | call s:dfmView() | endif
+        else           | call s:proseView() | endif
       endfunction
 
       " toggle dfm view
@@ -92,7 +95,7 @@
       " initial view
       function! ui#LiteType()
         Trace ui#LiteType()
-        call theme#FontSize(core#Prose() ? 1 : 0)
+        call theme#Font(core#Prose() ? 1 : 0)
         call theme#Palette()
         if ! exists('b:view') | let b:view = 1 | endif  " initial view (proof)
         call s:setView()
@@ -116,7 +119,7 @@
       endfunction
 
       function! ui#Active()
-        return (w:tagged == g:active && winnr('$') > 1) ? g:active_tag : '  '  " glyph width is 2 spaces
+        return (w:tagged == g:active && winnr('$') > 1) ? '  ' . s:active_win : '   '  " glyph requires leading double pad for single space
       endfunction
 
       " [path] .. filename | pos .. [details]
@@ -127,18 +130,18 @@
           if core#Prose() && a:proof == 0
             return info#Escape(info#Leader('') . '  %{info#UnModified(0)}%*')
           else
-            let l:name     = '%{info#Name()}' . g:pad_inner
+            let l:name     = '%{info#Name()}' . s:pad_inner
             if s:expanded == 0  " center dfm indicator / proofing statusline
               let l:leader = '%{info#Leader(info#Name())}'
             else
               let l:path   = '%{info#Path()}'
-              let l:leader = '%{info#Leader(info#Path() . g:pad_outer . info#Name())}'
+              let l:leader = '%{info#Leader(info#Path() . s:pad_outer . info#Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{info#UnModified(1)}' . g:pad_inner . ' ' . '%{info#PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+            let l:info     = '%{info#UnModified(1)}' . s:pad_inner . ' ' . '%{info#PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
             if s:expanded == 1
-              let l:name   = '%2*' . l:path . '%1*' . g:pad_outer . l:name
-              let l:info  .= g:pad_outer . '%2*%{ui#Detail()}'
+              let l:name   = '%2*' . l:path . '%1*' . s:pad_outer . l:name
+              let l:info  .= s:pad_outer . '%2*%{ui#Detail()}'
             endif
             return info#Escape('%1*' . l:leader . l:name . l:info . '%1*')
           endif
@@ -152,7 +155,7 @@
         Trace ui:showInfo()
         if a:proof == 1
           " execute 'set statusline=%{s:statusline(' . a:proof . ')}'
-          execute 'set statusline=%{theme#SplitColors()}%{ui#Active()}' . s:statusline(a:proof)
+          execute 'set statusline=%{theme#SplitColors()}%1*%{ui#Active()}' . s:statusline(a:proof)
           call theme#ShowStatusLine()
         else
           call theme#HideInfo()  " hide statusline content

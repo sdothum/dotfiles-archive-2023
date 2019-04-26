@@ -228,17 +228,21 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
 
 // ................................................................. Map Keycode
 
+static uint8_t  map = 0;  // map state
+
 // remap keycode via shift for base and caps layers
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
-  if (mod_down(shift_key)) {
+  if (map || mod_down(shift_key)) {
     if (record->event.pressed) {
-      if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode
+      if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
+      map = 1;                                     // in case shift key is released first
     }
     else {
       unregister_code(keycode);
       if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
+      map = 0;
     }
     key_timer = 0;  // clear home row shift, see process_record_user() and sft_home()
     return true;

@@ -12,12 +12,9 @@
       let s:save_cpo  = &cpo
       set cpo&vim
 
-      let g:detail     = 0       " at cursor (0) tag (1) atom
-      let g:view       = 1       " initial view mode (0) info (1) dfm
-      let g:pad_inner  = '    '  " statusline padding
-      let g:pad_outer  = '   '   " expanded statusline padding
-      let g:active     = 0       " active window tag
-      let g:active_tag = ''     " active window icon (pencil)
+      let g:detail = 0  " at cursor (0) tag (1) atom
+      let g:view   = 1  " initial view mode (0) info (1) dfm
+      let g:active = 0  " active window tag
 
       augroup ui | autocmd! | augroup END
 
@@ -57,7 +54,7 @@
       nmap <silent><C-S-F7> :call ui#ToggleProof()<CR>
       imap <silent><C-S-F7> <C-o>:call ui#ToggleProof()<CR>
 
-      if g:gui
+      if has('gui_running')
         autocmd ui InsertEnter * call ui#ToggleProof() | SignifyDisable
         autocmd ui InsertLeave * call ui#ToggleProof() | SignifyEnable
       endif

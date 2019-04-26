@@ -9,6 +9,7 @@
 
       let s:cursorline           = 0  " visible (0) off (1) on
       let s:sync                 = 0  " sync (0) off (1) indent guides
+      let s:font_changed         = 0  " redraw flag
 
     " ......................................................... DFM colour masks
 
@@ -92,54 +93,54 @@
         let l:background = &background == 'light' ? 'dark' : 'light'
         let l:cursor     = s:hexValue('s:dfm_cursor_'   . l:background)
         let l:spell      = s:hexValue('s:dfm_bg_spell_' . &background)
-        execute 'highlight CommandCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
-        execute 'highlight Cursor          guibg=' . s:dfm_cursor    . ' guifg=' . g:black
-        execute 'highlight CursorLine      guibg=' . s:dfm_cursor_bg . ' guifg=' . s:dfm_cursorline
-        execute 'highlight ErrorMsg        guibg=' . s:dfm_bg        . ' guifg=red'
-        execute 'highlight ExtraWhitespace guibg=' . l:cursor        . ' guifg=' . s:hexValue('s:dfm_bg_' . l:background)
-        execute 'highlight Folded          guibg=' . s:dfm_folded    . ' guifg=' . s:dfm_bg
-        execute 'highlight InsertCursor    guibg=' . s:dfm_cursor    . ' guifg=' . s:dfm_bg
-        execute 'highlight MatchParen      guibg=' . s:dfm_match     . ' guifg=' . s:dfm_bg . ' gui=bold'
-        execute 'highlight ReplaceCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
-        execute 'highlight ShowMarksHLl    guibg=' . s:dfm_bg
-        execute 'highlight SignColumn      guibg=' . s:dfm_bg
-        execute 'highlight SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background)
-        execute 'highlight User1           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user1
-        execute 'highlight User2           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user2
-        execute 'highlight VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
-        execute 'highlight VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
+        execute 'hi CommandCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
+        execute 'hi Cursor          guibg=' . s:dfm_cursor    . ' guifg=' . g:black
+        execute 'hi CursorLine      guibg=' . s:dfm_cursor_bg . ' guifg=' . s:dfm_cursorline
+        execute 'hi ErrorMsg        guibg=' . s:dfm_bg        . ' guifg=red'
+        execute 'hi ExtraWhitespace guibg=' . l:cursor        . ' guifg=' . s:hexValue('s:dfm_bg_' . l:background)
+        execute 'hi Folded          guibg=' . s:dfm_folded    . ' guifg=' . s:dfm_bg
+        execute 'hi InsertCursor    guibg=' . s:dfm_cursor    . ' guifg=' . s:dfm_bg
+        execute 'hi MatchParen      guibg=' . s:dfm_match     . ' guifg=' . s:dfm_bg . ' gui=bold'
+        execute 'hi ReplaceCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
+        execute 'hi ShowMarksHLl    guibg=' . s:dfm_bg
+        execute 'hi SignColumn      guibg=' . s:dfm_bg
+        execute 'hi SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background)
+        execute 'hi User1           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user1
+        execute 'hi User2           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user2
+        execute 'hi VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
+        execute 'hi VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
 
-        highlight! link SpellCap   SpellBad
-        highlight! link SpellLocal SpellBad
-        highlight! link SpellRare  SpellBad
+        hi! link SpellCap   SpellBad
+        hi! link SpellLocal SpellBad
+        hi! link SpellRare  SpellBad
 
         if &background == 'light' && g:lightscheme == 'flatwhite'  " add flatwhite contrast
-          execute 'highlight IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
-          execute 'highlight Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
-          execute 'highlight StatusLineNC  guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
+          execute 'hi IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
+          execute 'hi Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
+          execute 'hi StatusLineNC  guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
 
-          highlight link mkdLink    htmlString
-          highlight link SneakScope Cursor
+          hi link mkdLink    htmlString
+          hi link SneakScope Cursor
         endif
       endfunction
 
       " line numbers
       function! theme#LineNr()
         Trace theme#LineNr()
-        execute                    'highlight CursorLineNr '  . (g:view == 0 ? 'gui=bold guifg=' . s:hexValue('s:dfm_bg_' . &background)
-                                   \                                         : 'gui=none guifg=' . (b:view == 0 ? s:dfm_bg : s:dfm_fg_line))
-        if mode() == 'n' | execute 'highlight LineNr  guifg=' . (g:view == 0 ? s:dfm_fg_line : s:dfm_bg)
-        else             | execute 'highlight LineNr  guifg=' . s:dfm_linenr_ins | endif
-        execute                    'highlight NonText guifg=red'
+        execute 'hi CursorLineNr '  . (g:view == 0 ? 'gui=bold guifg=' . s:hexValue('s:dfm_bg_' . &background)
+                \                                  : 'gui=none guifg=' . (b:view == 0 ? s:dfm_bg : s:dfm_fg_line))
+        if mode() == 'n' | execute 'hi LineNr  guifg=' . (g:view == 0 ? s:dfm_fg_line : s:dfm_bg)
+        else             | execute 'hi LineNr  guifg=' . s:dfm_linenr_ins | endif
+        execute 'hi NonText guifg=red'
       endfunction
 
       " ruler, indents
       function! theme#Indent()
         Trace theme#Indent()
-        execute                   'highlight IndentGuidesOdd  guibg=' . s:hexValue('s:dfm_bg_'        . &background)
-        execute                   'highlight IndentGuidesEven guibg=' . s:hexValue('s:dfm_bg_line_'   . &background)
-        if g:ruler == 1 | execute 'highlight ColorColumn      guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
-        else            | execute 'highlight ColorColumn      guibg=' . s:hexValue('s:dfm_bg_line_'   . &background) | endif
+        execute 'hi IndentGuidesOdd  guibg=' . s:hexValue('s:dfm_bg_'        . &background)
+        execute 'hi IndentGuidesEven guibg=' . s:hexValue('s:dfm_bg_line_'   . &background)
+        if g:ruler == 1 | execute 'hi ColorColumn guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
+        else            | execute 'hi ColorColumn guibg=' . s:hexValue('s:dfm_bg_line_'   . &background) | endif
 
         if s:sync == 1  " refresh any indent guides, see theme#LiteSwitch()
           IndentGuidesToggle
@@ -150,28 +151,28 @@
 
       function! s:plugins()
         Trace theme:plugins()
-        execute 'highlight ALEErrorSign   guifg=red gui=bold'
-        execute 'highlight ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background) . ' gui=bold'
+        execute 'hi ALEErrorSign   guifg=red gui=bold'
+        execute 'hi ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background) . ' gui=bold'
 
         " g:fzf_colors initializes fzf only once, so override cursorline color
         let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . s:hexValue('s:dfm_fg_' . &background)  " cannot appear to set other colors, such as hl+ (?)
         " hide bottom fzf window identifier
-        execute 'highlight fzf1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
-        execute 'highlight fzf2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
-        execute 'highlight fzf3 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'hi fzf1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'hi fzf2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'hi fzf3 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
 
         if &background == 'light'
-          execute 'highlight SignifyLineAdd    guibg=' . s:dfm_bg . ' guifg=' . g:hue_3
-          execute 'highlight SignifyLineChange guibg=' . s:dfm_bg . ' guifg=' . g:hue_2
-          execute 'highlight SignifyLineDelete guibg=' . s:dfm_bg . ' guifg=' . g:hue_5_2
+          execute 'hi SignifyLineAdd    guibg=' . s:dfm_bg . ' guifg=' . g:hue_3
+          execute 'hi SignifyLineChange guibg=' . s:dfm_bg . ' guifg=' . g:hue_2
+          execute 'hi SignifyLineDelete guibg=' . s:dfm_bg . ' guifg=' . g:hue_5_2
         else
-          highlight link SignifyLineAdd    String
-          highlight link SignifyLineChange Type
-          highlight link SignifyLineDelete Identifier
+          hi link SignifyLineAdd    String
+          hi link SignifyLineChange Type
+          hi link SignifyLineDelete Identifier
         endif
-        highlight   link SignifySignAdd    SignifyLineAdd
-        highlight   link SignifySignChange SignifyLineChange
-        highlight   link SignifySignDelete SignifyLineDelete
+        hi link SignifySignAdd    SignifyLineAdd
+        hi link SignifySignChange SignifyLineChange
+        hi link SignifySignDelete SignifyLineDelete
       endfunction
 
       " simple console theme tweaks to maximize transparency
@@ -180,15 +181,15 @@
         colorscheme pencil  " a theme that can be minimally tweaked for transparency
         set background=dark
         let $FZF_DEFAULT_OPTS = '--color=bg+:-1'  " fzf term transparency
-        execute 'highlight fzf1         guibg=NONE guifg=#303030'
-        execute 'highlight fzf2         guifg=NONE guifg=#303030'
-        execute 'highlight fzf3         guibg=NONE guifg=#303030'
-        execute 'highlight CursorLine   guibg=NONE ctermbg=NONE guifg=yellow gui=bold cterm=bold'
-        execute 'highlight CursorLineNR guibg=NONE ctermbg=NONE'
-        execute 'highlight FoldColumn   guibg=NONE'
-        execute 'highlight LineNr       guibg=NONE'
-        execute 'highlight Normal       guibg=NONE'
-        execute 'highlight SignColumn   guibg=NONE'
+        execute 'hi fzf1         guibg=NONE guifg=#303030'
+        execute 'hi fzf2         guifg=NONE guifg=#303030'
+        execute 'hi fzf3         guibg=NONE guifg=#303030'
+        execute 'hi CursorLine   guibg=NONE ctermbg=NONE guifg=yellow gui=bold cterm=bold'
+        execute 'hi CursorLineNR guibg=NONE ctermbg=NONE'
+        execute 'hi FoldColumn   guibg=NONE'
+        execute 'hi LineNr       guibg=NONE'
+        execute 'hi Normal       guibg=NONE'
+        execute 'hi SignColumn   guibg=NONE'
         call theme#Margin()
         call s:noTilde()
       endfunction
@@ -198,7 +199,7 @@
     " ........................................................... Initialization
      
       function! theme#Theme()
-        if ! g:gui | call s:console() | return | endif
+        if ! has('gui_running') | call s:console() | return | endif
         Trace theme#Theme()
         call s:highlights()
         call s:plugins()
@@ -246,34 +247,21 @@
 
     " ................................................................. Set font
 
-      function! theme#Font(size)
-        Trace theme#Font()
-        execute 'set guifont=' . (core#Prose() ? g:prose_font : g:source_font) . ' ' . a:size
-        if exists('s:size')  " font size change redraw
-          RedrawGui
-        endif
-        let s:size = a:size
-      endfunction
-
       " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
-      function! theme#FontSize(type)
-        Trace theme#FontSize()
+      function! theme#Font(type)
+        Trace theme#Font()
         if $DISPLAY > ''
           if g:font_type != a:type
             let g:font_type = a:type
             let l:size      = system('fontsize')
-            call theme#Font(a:type == 0 ? l:size : l:size + g:font_step)
-            set laststatus=2  " turn on statusline
+            let l:size      = a:type == 0 ? l:size : l:size + g:font_step
+            execute 'set guifont=' . (core#Prose() ? g:prose_font : g:source_font) . ' ' . l:size
+            if s:font_changed
+              RedrawGui
+            endif
+            let s:font_changed = 1  " next font size change requires redraw
+            set laststatus=2        " turn on statusline
           endif
-        endif
-      endfunction
-
-      function! s:fontSwitch()
-        Trace theme:fontSwitch()
-        call theme#FontSize(g:font_type == 1 ? 0 : 1)
-        if ! core#Prose()
-          Quietly LiteDFMClose
-          call ui#LiteType()
         endif
       endfunction
 
@@ -283,7 +271,7 @@
 
       function! theme#CodeView()
         Trace theme#CodeView()
-        execute 'highlight LineNr guifg=' . s:dfm_fg_line
+        execute 'hi LineNr guifg=' . s:dfm_fg_line
       endfunction
 
     " .................................................... Distraction free view
@@ -291,7 +279,7 @@
       " prose style
       function! theme#DfmView()
         Trace theme#DfmView()
-        if core#Prose() | execute 'highlight CursorLine gui=none guibg=' . s:dfm_bg . ' guifg=' . s:dfm_fg | endif
+        if core#Prose() | execute 'hi CursorLine gui=none guibg=' . s:dfm_bg . ' guifg=' . s:dfm_fg | endif
       endfunction
 
     " .............................................................. Switch View
@@ -307,11 +295,11 @@
       " hide tilde marker (not applicable to console)
       function! s:noTilde()
         if $DISPLAY > ''
-          execute 'highlight EndOfBuffer ctermfg=black guifg=' . s:dfm_bg
+          execute 'hi EndOfBuffer ctermfg=black guifg=' . s:dfm_bg
           " reset menu highlight after loading autocompletion plugin
-          execute 'highlight PmenuSel term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
+          execute 'hi PmenuSel    term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
           " match command line tab menu
-          execute 'highlight WildMenu term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
+          execute 'hi WildMenu    term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
         endif
       endfunction
 
@@ -324,11 +312,11 @@
         Trace theme#Contrast()
         if core#Prose() && &background == 'light'
           if a:level
-            execute 'highlight! Normal     guifg=' . g:mono_3
-            execute 'highlight! CursorLine guifg=' . g:black
+            execute 'hi! Normal     guifg=' . g:mono_3
+            execute 'hi! CursorLine guifg=' . g:black
           else
-            execute 'highlight! Normal     guifg=' . g:mono_2
-            execute 'highlight! CursorLine guifg=' . g:mono_2
+            execute 'hi! Normal     guifg=' . g:mono_2
+            execute 'hi! CursorLine guifg=' . g:mono_2
           endif
         endif
       endfunction
@@ -338,14 +326,14 @@
       " undo statusline gui=reverse
       function! theme#ShowStatusLine()
         Trace theme#ShowStatusLine()
-        execute 'highlight StatusLine gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
+        execute 'hi StatusLine gui=none guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
         set laststatus=2
       endfunction
 
       function! theme#HideInfo()
         Trace theme#HideInfo()
-        execute 'highlight User1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
-        execute 'highlight User2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'hi User1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'hi User2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
       endfunction
 
     " split window statusline background
@@ -355,8 +343,8 @@
         else
           let l:bg = s:hexValue('s:dfm_bg_column_' . &background)
         endif
-        execute 'highlight User1 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user1
-        execute 'highlight User2 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user2
+        execute 'hi User1 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user1
+        execute 'hi User2 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user2
         return ''  " otherwise embeds '0' in statusline
       endfunction
 

@@ -238,6 +238,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
       if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
       map = 1;                                     // in case shift key is released first
+      e[6].key_timer = 0;                          // don't bounce the punctuation modifier, see mod_roll()
     }
     else {
       unregister_code(keycode);
@@ -346,7 +347,7 @@ void equal(qk_tap_dance_state_t *state, void *user_data)
 {
   if (state->count > 1) {
     if (state->pressed)                     { register_code(KC_EQL); }
-    else if (state->count == 2)             { send_string("=~"); } 
+    else if (state->count == 2)             { send_string("!="); } 
     else for (i = 0; i < state->count; i++) { tap_key(KC_EQL); }
   }
 #ifdef CHIMERA
@@ -401,16 +402,12 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (mod_down(KC_RSFT)) {  // dot, shift -> tilde
-    if (state->count > 1) {
-      if (state->pressed)                     { register_shift(KC_GRV); }
-      else if (state->count == 2)             { send_string("~/"); } 
-      else for (i = 0; i < state->count; i++) { tap_shift(KC_GRV); }
-    }
-    else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
+  if (state->count > 1) {
+    if (state->pressed)                     { register_shift(KC_GRV); }
+    else if (state->count == 2)             { send_string("~/"); } 
+    else for (i = 0; i < state->count; i++) { tap_shift(KC_GRV); }
   }
-  else if (state->pressed)                { register_code(KC_DOT); }
-  else for (i = 0; i < state->count; i++) { tap_key(KC_DOT); }
+  else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
   reset_tap_dance(state);
 }
 
