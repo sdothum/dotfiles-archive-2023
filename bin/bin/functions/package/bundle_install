@@ -53,8 +53,10 @@ esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
+missing=$BDIR/910-missing
+rm $missing
 echo $@ | grep -q 900-deferred && unset deferred || {
-  [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm -f $deferred; };}
+  [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; };}
 }
 
 rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
@@ -104,7 +106,7 @@ for i in $@ ;do
       m  ) pkg='make_install possibly ' ;;
       *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
       esac
-      [ $installed ] && ditto $package || ditto "$package  ${__RED}${BLINK}[${pkg}not installed]"
+      [ $installed ] && ditto $package || { echo $package >>$missing ; ditto "$package  ${__RED}${BLINK}[${pkg}not installed]"; }
       continue
     fi
 
@@ -125,7 +127,9 @@ for i in $@ ;do
 done
 
 [ $list ] && exit
+[ -e $missing ] && { sort -u -o $missing $missing; annotate 'missing packages..'; cat $missing; exit; }
 if [ $deferred ] && [ -e $deferred ] ;then
+  sort -u -o $deferred $deferred
   cat $deferred
   ifno 'install deferred pacages' || bundle_install $deferred
 fi

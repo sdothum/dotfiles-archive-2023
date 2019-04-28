@@ -5,6 +5,8 @@
 
 # ........................................................................ Media
 
+CLEAR='[ clear ]'
+
 video='play kodi netflix'
 sonarr=http://$SERVER:8989/
 root=true
@@ -12,11 +14,12 @@ root=true
 # meta dmenu menu!
 media=$(previous media)
 while : ;do
-  media=$(echo "ebooks\nreferences\npatricia\nthought of you\nanimation\nanime\nmovies\nseries\nnetflix\nkodi\nsonarr\nnzb\ntorrent" | rmenu 'Media' $media -no-custom) || break
+  media=$(echo "$CLEAR\nebooks\nreferences\npatricia\nthought of you\nanimation\nanime\nmovies\nseries\nnetflix\nkodi\nsonarr\nnzb\ntorrent" | rmenu 'Media' $media -no-custom) || break
 
-  mhistory media $media
+  [ "$media" = "$CLEAR" ] || mhistory media $media
 
   case $media in
+  "$CLEAR"  ) pkill mpv; media=$(previous media); ;;
   animation ) dmenu movies animation ;;
   anime     ) dmenu series anime ;;
   ebooks    ) dmenu ebooks; unset root; break ;;

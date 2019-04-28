@@ -7,11 +7,11 @@
 
     " .................................................................... Setup
 
-      let s:show       = 1       " statusline (0) off (1) on
-      let s:expanded   = 0       " statusline state (0) dfm (1) expanded
-      let s:pad_inner  = '    '  " statusline padding
-      let s:pad_outer  = '   '   " expanded statusline padding
-      let s:active_win = ''     " active window icon (glyph width is 2 spaces)
+      let s:show       = 1        " statusline (0) off (1) on
+      let s:expanded   = 0        " statusline state (0) dfm (1) expanded
+      let s:pad_inner  = '    '   " statusline padding
+      let g:pad_outer  = '     '  " expanded statusline padding
+      let s:active_win = ''      " active window icon (glyph width is 2 spaces)
 
   "  Distraction free modes ____________________________________________________
 
@@ -135,13 +135,13 @@
               let l:leader = '%{info#Leader(info#Name())}'
             else
               let l:path   = '%{info#Path()}'
-              let l:leader = '%{info#Leader(info#Path() . s:pad_outer . info#Name())}'
+              let l:leader = '%{info#Leader(info#Path() . g:pad_outer . info#Name())}'
             endif
             let l:name     = '%1*' . l:name
             let l:info     = '%{info#UnModified(1)}' . s:pad_inner . ' ' . '%{info#PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
             if s:expanded == 1
-              let l:name   = '%2*' . l:path . '%1*' . s:pad_outer . l:name
-              let l:info  .= s:pad_outer . '%2*%{ui#Detail()}'
+              let l:name   = '%2*' . l:path . '%1*' . g:pad_outer . l:name
+              let l:info  .= g:pad_outer . '%2*%{ui#Detail()}'
             endif
             return info#Escape('%1*' . l:leader . l:name . l:info . '%1*')
           endif

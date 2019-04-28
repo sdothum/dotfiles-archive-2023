@@ -9,7 +9,6 @@
 # ...................................................................... Heading
 
 # mark content division
-echo
 heading '━' $@
 echo
 

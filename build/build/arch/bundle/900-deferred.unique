@@ -1,0 +1,32 @@
+alot 
+amphetype-svn 
+* cmst
+? conky-lua-archers
+dict-wn 
+dovecot 
+" enable mpd and nvidia as required
+etcher 
+fbreader 
+font-manager 
+fontmatrix [server]
+g passenger
+g sanitize
+g sinatra
+gstreamer0.10-base-plugins 
+g xapian-ruby
+libflashsupport-oss 
+libflashsupport-pulse-git 
+mbpfan-git [gpu macbook]
+m dict-moby-thesaurus
+* notmuch
+paper-icon-theme 
+* pass
+pgadmin3 
+plover 
+stellarium 
+texlive-core 
+texlive-latexextra 
+tt-rss 
+universal-ctags-git 
+watchman 
+* znc           [server]

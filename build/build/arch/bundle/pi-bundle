@@ -120,7 +120,7 @@ d pass
 = network utility
 = ═══════════════
   dialog
-# dnsmasq
+  dnsmasq
 # dnsutils
   bind-tools
   iw

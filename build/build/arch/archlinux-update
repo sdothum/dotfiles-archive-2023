@@ -39,7 +39,7 @@ heading "restore default fonts"
   original $HOME/.config/font-manager/local.conf
   cd $HOME/.config/font-manager
   ln -sfv ../../.config/font-manager/local.conf .
-  cd -
+  cd - >/dev/null
 fi
 
 
@@ -48,7 +48,7 @@ heading "update xorg user fonts"
 cd $HOME/.fonts
 mkfontdir
 mkfontscale
-cd -
+cd - >/dev/null
 
 
 heading "build man pages"
@@ -72,7 +72,7 @@ heading "restore tt-rss theme"
   cd /srv/http/tt-rss/themes
   # ln -sfv particle_clean.css default.css
   ln -sfv linear.css clean.css
-  cd -
+  cd - >/dev/null
 fi
 
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -22,7 +22,7 @@ d * cmst
 = network
 = ═══════
   bind-tools
-  dnsmasq       [server]
+  dnsmasq
   dnsutils
 
 
