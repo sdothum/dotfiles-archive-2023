@@ -12,6 +12,7 @@ sources="
   $HOME/bin
   $HOME/build/arch
   $HOME/build/obarun
+  $HOME/build/void
   $HOME/.config/fish
   $HOME/.config/herbstluftwm
   $HOME/.vim/config

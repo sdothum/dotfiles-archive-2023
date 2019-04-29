@@ -7,11 +7,11 @@
 
     " .................................................................... Setup
 
-      let s:show       = 1        " statusline (0) off (1) on
-      let s:expanded   = 0        " statusline state (0) dfm (1) expanded
-      let s:pad_inner  = '    '   " statusline padding
-      let g:pad_outer  = '     '  " expanded statusline padding
-      let s:active_win = ''      " active window icon (glyph width is 2 spaces)
+      let s:show       = 1       " statusline (0) off (1) on
+      let s:expanded   = 0       " statusline state (0) dfm (1) expanded
+      let s:pad_inner  = '    '  " statusline padding
+      let g:pad_outer  = '  '    " expanded statusline padding
+      let s:active_win = ''     " active window icon (glyph width is 2 spaces)
 
   "  Distraction free modes ____________________________________________________
 
