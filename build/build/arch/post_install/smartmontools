@@ -7,6 +7,6 @@
 
 original /etc/smartd.conf
 sudo sed -i '/^DEVICESCAN/cDEVICESCAN -d removable -n standby -m sdothum@gmail.com' /etc/smartd.conf
-systemd enable smartd
+service enable smartd
 
 # vim: set ft=sh: #

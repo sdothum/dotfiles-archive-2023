@@ -34,7 +34,7 @@ init() {
 }
 
 case $action in
-'') pstat nzbget || systemd start nzbget@$USER; underline $(timestamp); nzbget -L G ;;
+'') pstat nzbget || service start nzbget@$USER; underline $(timestamp); nzbget -L G ;;
 @ ) nzbget --rate $queue ;;
 B*) nzb b $(nzb S $queue) ;;
 b*) nzbget -E G B $queue; nzb ;;
@@ -46,7 +46,7 @@ I*) ifyes 'clear history and queue' && init ;;
 l*) while : ;do nzb; sleep $list_delay; done ;;
 P*) nzb p $(nzb S $queue) ;;
 p*) nzbget -E G P $queue; nzb ;;
-q*) systemd stop nzbget@$USER ;;
+q*) service stop nzbget@$USER ;;
 R*) nzb r $(nzb S $queue) ;;
 r*) nzbget -E G U $queue; nzb ;;
 S*) nzb s $queue | cut -d']' -f1 | cut -d'[' -f2 ;;

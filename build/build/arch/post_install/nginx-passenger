@@ -45,6 +45,6 @@ sed -e '/^#user  nobody;/cuser  http;' \
     passenger_pre_start http://thedarnedestthing/;\
 ' /etc/nginx/nginx.conf.original | sudo tee /etc/nginx/nginx.conf
 
-systemd enable nginx
+service enable nginx
 
 # vim: set ft=sh: #

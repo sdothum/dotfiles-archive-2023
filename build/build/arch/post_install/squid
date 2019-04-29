@@ -6,11 +6,11 @@
 # ........................................................................ squid
 
 config_install /etc/squid/squid.conf
-systemd stop squid
+service stop squid
 # allocate working directories
 sudo squid -k check
 sudo squid -z
 
-server && systemd enable squid
+server && service enable squid
 
 # vim: set ft=sh: #

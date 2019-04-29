@@ -22,7 +22,7 @@ expect "b\ OK"
 send "c logout\n"
 ' >/tmp/mailcot
 
-systemd restart dovecot
+service restart dovecot
 # expect cmdfile host user password
 # expect /tmp/mailcot ${1:-$(hostname)} ${2:-$USER} ${3:-dovecot}
 

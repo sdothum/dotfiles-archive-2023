@@ -7,8 +7,8 @@
 
 ifnsed /etc/NetworkManager/NetworkManager.conf 'dhcp=dhcpcd'
 
-systemd enable dhcpcd
-systemd enable NetworkManager
+service enable dhcpcd
+service enable NetworkManager
 
 nmtui
 

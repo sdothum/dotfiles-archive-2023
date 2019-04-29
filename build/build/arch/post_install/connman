@@ -10,7 +10,7 @@ scan="connmanctl> agent on > enable wifi > scan wifi > services"
 sudo mkdir /etc/connman
 [ -f /etc/connman/main.conf ] || echo '[General]
 PreferredTechnologies=ethernet,wifi' | sudo tee /etc/connman/main.conf
-systemd restart connman
+service restart connman
 
 server && annotate "$scan\n
 connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" ||
@@ -24,9 +24,9 @@ original /lib/systemd/system/connman.service
 # disable connman dnsproxy port 53 usage (conflicts with dnsmasq)
 sudo sed -i '/^\(ExecStart=\/usr\/bin\/connmand -n\)$/s/$/ --nodnsproxy/' /lib/systemd/system/connman.service
 
-systemd disable dhcpcd
-systemd disable netctl
-systemd enable connman
+service disable dhcpcd
+service disable netctl
+service enable connman
 
 # temporary dns, see dnsmasq
 echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf

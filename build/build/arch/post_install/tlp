@@ -5,6 +5,6 @@
 
 # .......................................................................... tlp
 
-systemd enable tlp
+service enable tlp
 
 # vim: set ft=sh: #

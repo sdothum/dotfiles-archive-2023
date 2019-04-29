@@ -31,10 +31,10 @@ daemons='
   znc
 '
 
-service() { for i in $daemons ;do ditto $i; systemd $1 $i ;done; }
+sv() { for i in $daemons ;do ditto $i; service $1 $i ;done; }
 
 case $1 in
-stop ) service stop
+stop ) sv stop
        killall conky
        killall lemonbar
        killall offlineimap
@@ -43,7 +43,7 @@ stop ) service stop
 
 start) sudo cp /etc/resolv.dnsmasq.conf /etc/resolv.conf
        sudo chattr +i /etc/resolv.conf
-       service start
+       sv start
        conky
        draw panel ;;
 

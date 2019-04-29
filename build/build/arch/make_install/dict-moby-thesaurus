@@ -24,6 +24,6 @@ database moby-thesaurus {\
         index /usr/share/dictd/moby-thesaurus.index\
 }'
 
-systemd restart dictd
+service restart dictd
 
 # vim: set ft=sh: #

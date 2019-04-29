@@ -5,6 +5,6 @@
 
 # ....................................................................... cronie
 
-systemd enable cronie
+service enable cronie
 
 # vim: set ft=sh: #

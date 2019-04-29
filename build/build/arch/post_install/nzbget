@@ -49,6 +49,6 @@ Restart=on-failure
 WantedBy=multi-user.target
 ' | sudo tee /usr/lib/systemd/system/nzbget@.service
 
-systemd enable nzbget@$USER
+service enable nzbget@$USER
 
 # vim: set ft=sh: #

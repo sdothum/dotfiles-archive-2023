@@ -45,6 +45,6 @@ if [ -e $HOME/tt-rss/themes/${theme}_$button ] ;then
   sudo ln -s $THEMES/${theme}_$button $TTRSS/images/
 fi
 
-systemd restart tt-rss
+service restart tt-rss
 
 # vim: set ft=sh: #

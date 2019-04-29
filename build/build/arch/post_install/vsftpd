@@ -13,6 +13,6 @@ sudo sed -i -e '/^anonymous_enable=/s/YES/NO/' \
          -e '/^connect_from_port_20=/s/YES/NO/' \
          /etc/vsftpd.conf
 
-# systemd enable vsftpd
+# service enable vsftpd
 
 # vim: set ft=sh: #

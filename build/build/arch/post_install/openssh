@@ -9,7 +9,7 @@ original /etc/ssh/sshd_config
 sudo sed -i 's/^#X11Forwarding no/X11Forwarding yes/' /etc/ssh/sshd_config
 # for client side utf-8 receipt (see ~/.ssh/config)
 ifnsed /etc/ssh/sshd_config 'AcceptEnv LANG LC_' '$aAcceptEnv LANG LC_*'
-systemd enable sshd
+service enable sshd
 
 annotate "Generate public/private rsa key pair:\n
 ssh-keygen -t rsa -b 2048\n

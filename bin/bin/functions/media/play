@@ -57,7 +57,7 @@ while : ;do
   if cpu arm ;then
     notify 0 blackboard "$title" '1/2  Speed\n+/-  Volume\nj/k  Language\nm/n  Subtitles\ns    Toggle'
     # syncthing cpu usage can exacerbate video stuttering
-    # systemd stop syncthing@$USER
+    # service stop syncthing@$USER
 
     # omxplayer keyboard shortcuts only available through terminal emulator
     # eval term 'omxplay' BLACKBOARD omxplayer $geometry --subtitles "${video%.*}.srt" --align center "$video"
@@ -69,7 +69,7 @@ while : ;do
     sleep 1
     pwait /tmp/play:link
 
-    # systemd start syncthing@$USER
+    # service start syncthing@$USER
     # clear notification
     xdotool key Ctrl+space
     touch $MENU

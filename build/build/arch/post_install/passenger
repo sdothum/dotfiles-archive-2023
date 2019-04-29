@@ -21,6 +21,6 @@ else
   config_install /usr/lib/systemd/system/nginx.service
 fi
 
-server && systemd enable nginx || annotate "sudo systemctl start nginx"
+server && service enable nginx || annotate "sudo systemctl start nginx"
 
 # vim: set ft=sh: #

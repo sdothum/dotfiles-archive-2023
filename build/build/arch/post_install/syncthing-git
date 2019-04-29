@@ -12,6 +12,6 @@ original /usr/lib/systemd/system/syncthing@.service
 sudo sed -i -r 's|(/usr/bin/syncthing)$|\1 >>/tmp/syncthing.log 2>\&1|' \
          /usr/lib/systemd/system/syncthing@.service
 
-systemd enable syncthing@$USER
+service enable syncthing@$USER
 
 # vim: set ft=sh: #

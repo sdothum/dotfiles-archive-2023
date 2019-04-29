@@ -39,7 +39,7 @@ if [ $USER != root ] ;then
     fi
 
     [ -e $PIXELSERV ] && post_install pixelserv >/dev/null &
-    systemd start ntpd >/dev/null 2>&1 &
+    service start ntpd >/dev/null 2>&1 &
 
     # pre-initialize arm fuzzy searches
     nohup fcache + $HOME >/dev/null 2>&1

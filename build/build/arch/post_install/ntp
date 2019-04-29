@@ -7,6 +7,6 @@
 
 sudo timedatectl set-ntp true
 sudo timedatectl set-timezone Canada/Eastern
-systemd start ntpd
+service start ntpd
 
 # vim: set ft=sh: #

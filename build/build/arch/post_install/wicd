@@ -5,6 +5,6 @@
 
 # ......................................................................... wicd
 
-systemd enable wicd
+service enable wicd
 
 # vim: set ft=sh: #

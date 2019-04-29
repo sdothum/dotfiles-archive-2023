@@ -5,7 +5,7 @@
 
 # .................................................................. couchpotato
 
-# systemd enable couchpotato
+# service enable couchpotato
 annotate "configure couchpotato http://localhost:5050/"
 
 # vim: set ft=sh: #

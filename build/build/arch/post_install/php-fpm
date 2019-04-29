@@ -11,8 +11,8 @@ sudo sed -i -e '/request_terminate_timeout/s/=.*/= 300/' \
          /etc/php/php-fpm.conf
 
 if server ;then
-  systemd enable php-fpm
-  systemd restart nginx
+  service enable php-fpm
+  service restart nginx
 fi
 
 # vim: set ft=sh: #

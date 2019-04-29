@@ -5,6 +5,6 @@
 
 # ...................................................................... preload
 
-systemd enable preload
+service enable preload
 
 # vim: set ft=sh: #

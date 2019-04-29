@@ -5,7 +5,7 @@
 
 # ...................................................................... sabnzbd
 
-systemd enable sabnzbd
-annotate "run sabnzbd manually to configure. Note: sabnzbd is systemd enabled"
+service enable sabnzbd
+annotate "run sabnzbd manually to configure. Note: sabnzbd is service enabled"
 
 # vim: set ft=sh: #

@@ -23,7 +23,9 @@ sudo chattr +i /etc/resolv.conf
 
 ifnsed /etc/dhcpcd.conf 'nohook resolv.conf'
 
-systemd enable dnsmasq
+service disable connman  # release port 53
+service enable dnsmasq
+service enable connman
 annotate "add listen-address=<gateway>\n
 and interface=<if> to /etc/dnsmasq.conf"
 

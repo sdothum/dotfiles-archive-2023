@@ -5,7 +5,7 @@
 
 # ........................................................................ avahi
 
-systemd enable avahi-daemon
-systemd enable avahi-dnsconfd
+service enable avahi-daemon
+service enable avahi-dnsconfd
 
 # vim: set ft=sh: #

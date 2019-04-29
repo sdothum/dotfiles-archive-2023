@@ -24,8 +24,8 @@ if [ -z $(cat /etc/samba/smb.conf | grep usershare) ] ;then
   sudo modprobe fuse
 fi
 
-systemd enable smbd
-systemd enable nmbd
-systemd enable smbnetfs
+service enable smbd
+service enable nmbd
+service enable smbnetfs
 
 # vim: set ft=sh: #

@@ -114,7 +114,7 @@ echo "# Generated adblock on $(timestamp)" >adblock.hosts
 cat adblock.uniq adblock.blacklist | grep -vP '^0.0.0.0\t$'>>adblock.hosts
 ditto "blacklisting $(wc -l adblock.hosts | cut -d' ' -f1) hosts"
 ditto 'reloading DNS server'
-systemd restart dnsmasq
+service restart dnsmasq
 touch $ADBLOCK
 
 # vim: set ft=sh: #

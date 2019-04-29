@@ -15,6 +15,6 @@ logSyslog = true\
 dnsnameserver = 127.0.0.1\
 ' /etc/polipo/config.sample | sudo tee /etc/polipo/config
 
-systemd enable polipo
+service enable polipo
 
 # vim: set ft=sh: #

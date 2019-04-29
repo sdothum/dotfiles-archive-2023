@@ -20,7 +20,7 @@ sudo sed -i -e '/^;include_path = ".:\/php\/includes"/s|"$|:/etc/webapps/tt-rss"
          -e '/;extension=pgsql/s/;//' \
          /etc/php/php.ini
 
-server && systemd restart postgresql
+server && service restart postgresql
 ifno 'create tt-rss database' || {
   echo "echo \"create user ttrss with password 'ttrss';\" | psql" | su - postgres
   echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
@@ -31,7 +31,7 @@ ifno 'create tt-rss database' || {
 ifnsed /usr/lib/systemd/system/tt-rss.service 'SELF_URL_PATH=http://localhost:8000/tt-rss/' \
                                               '/Service/aEnvironment="SELF_URL_PATH=http://localhost:8000/tt-rss/"'
 
-server && systemd enable tt-rss || annotate "sudo systemctl start tt-rss"
+server && service enable tt-rss || annotate "sudo systemctl start tt-rss"
 
 annotate "check /etc/php/php.ini
 install and start php-fpm\n

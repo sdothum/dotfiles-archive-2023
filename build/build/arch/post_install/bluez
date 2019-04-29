@@ -5,6 +5,6 @@
 
 # ........................................................................ bluez
 
-systemd enable bluetooth
+service enable bluetooth
 
 # vim: set ft=sh: #

@@ -50,6 +50,6 @@ rizon channels:
 EOF
 
 sudo -u znc znc --makeconf
-server && systemd enable znc || annotate "sudo systemctl start znc"
+server && service enable znc || annotate "sudo systemctl start znc"
 
 # vim: set ft=sh: #

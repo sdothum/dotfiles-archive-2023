@@ -35,10 +35,10 @@ sudo zpool create -f -m /backup -o ashift=12 tank \
                          ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ
 config tank
 
-systemd enable zfs.target
-systemd enable zfs-import-cache
-systemd enable zfs-mount
-systemd enable zfs-import.target
+service enable zfs.target
+service enable zfs-import-cache
+service enable zfs-mount
+service enable zfs-import.target
 
 zdb -C
 zpool status

@@ -7,6 +7,6 @@
 
 ifnsed /etc/cups/cups-pdf.conf '^Out \${HOME}/documents' '/#Out/aOut ${HOME}/documents'
 
-systemd restart org.cups.cupsd
+service restart org.cups.cupsd
 
 # vim: set ft=sh: #

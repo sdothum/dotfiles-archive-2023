@@ -23,16 +23,16 @@ alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
 
 alias K 'env sig=-KILL k'
 alias KK 'env sig=-KILL kk'
-alias sv 'systemd'
-alias svd 'systemd disable'
-alias sve 'systemd enable'
-alias svl 'systemd reload'
-alias svm 'systemd mask'
-alias svq 'systemd status'
-alias svr 'systemd restart'
-alias svs 'systemd start'
-alias svt 'systemd stop'
-alias svu 'systemd unmask'
+alias sv 'service'
+alias svd 'service disable'
+alias sve 'service enable'
+alias svl 'service reload'
+alias svm 'service mask'
+alias svq 'service status'
+alias svr 'service restart'
+alias svs 'service start'
+alias svt 'service stop'
+alias svu 'service unmask'
 
 # ....................................................................... Device
 

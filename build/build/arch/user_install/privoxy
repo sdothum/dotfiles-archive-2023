@@ -16,6 +16,6 @@ a.img-dpreview.com\\
 storage.canoe.ca/v1/dynamic_resize/sws_path/suns-prod-images/\\
 '
 
-systemd enable privoxy
+service enable privoxy
 
 # vim: set ft=sh: #
