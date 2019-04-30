@@ -435,8 +435,9 @@ void comma(qk_tap_dance_state_t *state, void *user_data)
 }
 
 void dot(qk_tap_dance_state_t *state, void *user_data)
-{
-  state->count > 1 ? tap_shift(KC_COLN) : tap_key(KC_DOT);
+                                        {
+  if (biton32(layer_state) == _NUMBER) { state->count > 1 ? tap_shift(KC_COLN) : tap_key(KC_DOT); }
+  else                                 { state->count > 1 ? send_string("./") : tap_key(KC_DOT); }  // see symbol layer
   reset_tap_dance(state);
 }
 

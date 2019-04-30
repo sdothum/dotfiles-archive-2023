@@ -13,9 +13,12 @@ fi
                                                                    title "setup"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-heading "/opt/bin link"
+heading "/opt/bin /tmp"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 config_install L /opt/bin
+sudo chmod 777 /tmp
+sudo chmod +t /tmp
+
 
 if server && [ ! -d /net/downloads/http ] ;then
 heading "/net/* directories"
