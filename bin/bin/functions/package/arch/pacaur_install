@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-wrappaur=pacaur
+wrappaur=$(aurwrapper)
 
 [ $1 ] || usage
 package=$1

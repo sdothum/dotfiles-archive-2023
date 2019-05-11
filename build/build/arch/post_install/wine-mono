@@ -5,7 +5,7 @@
 
 # ......................................................................... wine
 
-annotate "create 32 bit Topaz bottle with Topaz Fusion Express2 shortcut\n
+ditto "create 32 bit Topaz bottle with Topaz Fusion Express2 shortcut
 update existing application volume with remaining Topaz applications"
 
 # vim: set ft=sh: #

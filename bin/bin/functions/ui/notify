@@ -13,6 +13,7 @@ usage() {
   exit 1
 }
 
+LOG=/tmp/notify.log
 color1=${__YELLOW}
 color2=${__BLUE}
 
@@ -42,7 +43,8 @@ ONE=${1#\\}
 [ "$2" ] && [ "$(echo $2 | nocolor)" = '' ] && { color2=$2; shift; }
 TWO=${2#\\}
 
-echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>/tmp/notify.log
+[ "$TWO" ] && echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>$LOG || echo "$(timestamp) $USER:${urgency#-u} \"$ONE\"" >>$LOG
+
 if [ $console ] ;then
   [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" || echo "${color1}==> $ONE${NOCOLOR}"
 else

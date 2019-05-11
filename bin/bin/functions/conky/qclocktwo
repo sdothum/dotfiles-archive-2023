@@ -1,0 +1,281 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .... .................................................Dynamcic conky qclocktwo
+
+usage() {
+  echo "usage: $(basename $0) qclocktwo {voffset} [{offset}] | -- <hour> <minute> [I]"
+  exit 1
+}
+
+# reduces qclocktwo conkyrc configuration to 1 line statement using ${execp conky qclocktwo '{voffset}' ..}
+# adding extended randomization of clock display for hours positions and highlight information
+
+QCLOCK=/tmp/qclocktwo       # interval lock
+QHOUR=$QCLOCK:hour          # current hour (highlight)
+[ "$1" ] || usage
+
+if [ "$1" = -- ] ;then      # console debug mode
+  shift
+  H=$1; M=$2
+  [ $3 ] && rm -f $QCLOCK*  # new time sequence
+else
+  voffset=$1                # conkyrc alignment
+  [ "$2" ] && offset=$2 || offset='{alignc}'
+  H=$(date +%-I); M=$(date +%-M)
+fi
+
+touch $QCLOCK
+touch $QHOUR
+HOUR=$(cat $QHOUR)          # current highlighted hour
+
+M5=$(( $M / 5 ))                  # 5 minute interval
+[ $M5 -gt 6 ] && H=$(( $H + 1 ))  # 'to' hour
+[ $H -gt 12 ] && H=1
+
+chars()     { cat /dev/urandom | tr -dc 'AFGHIKLMNRTVWXYZ' | head -c $1 | sed 's/./& /g'; }  # see major mono display font
+x()         { echo "{color1}$(chars 1)"; }      # single fill char plus space
+nx()        { echo "\n$(x)"; }                  # fill newline (char)
+shuffle()   { echo "$@" | shuf | tr -d '\n'; }  # word salad
+draw()      { echo $1 | sed 's/:/ /g; s/ $//; s/[{]/$&/g' >$QCLOCK:$2; }  # escape conky expression
+
+past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
+
+refresh_hour() { 
+    # [ "$HOUR" = $H ] && return 1 || return 0
+    [ "$HOUR" != $H ] && return 0                       # 'to' hour change in progress
+    for i in $@ ;do [ "$HOUR" = $i ] && return 1 ;done  # freeze current hour display
+    return 0                                            # eye candy refresh
+  }
+
+ITIS()   { echo "{color}I T $(x){color}I S {color1}$(chars 6)"; }
+_ITIS_() { shuffle "{color}I T $(x){color}I S $(nx)$(nx)$(nx)$(nx)$(nx)$(nx)"; }
+
+qclock0() {
+  case $M5 in
+  0) qclock=$(ITIS) ;;    # top corner on the hour
+  *) qclock=$(_ITIS_) ;;  # randomly position 'it is' phrase
+  esac
+  draw "$qclock" 0
+}
+
+AQUARTER() { shuffle "{color}A $(x){color}Q U A R T E R $(nx)$(nx)"; }
+quarter()  { shuffle "{color1}Q U A R T E R $(nx)$(nx)$(nx)$(nx)"; }
+
+qclock1() {
+  case $M5 in
+  3) qclock=$(AQUARTER) ;;
+  9) qclock=$(AQUARTER) ;;
+  *) qclock=$(quarter) ;;
+  esac
+  draw "$qclock" 1
+}
+
+twentyFIVE() { shuffle "{color1}T W E N T Y \n{color}F I V E $(nx)"; }
+TWENTYfive() { shuffle "{color}T W E N T Y \n{color1}F I V E $(nx)"; }
+TWENTYFIVE() { shuffle "{color}T W E N T Y F I V E $(nx)"; }
+twentyfive() { shuffle "{color1}T W E N T Y \n{color1}F I V E $(nx)"; }
+
+qclock2() {
+  case $M5 in
+  1 ) qclock=$(twentyFIVE) ;;
+  11) qclock=$(twentyFIVE) ;;
+  4 ) qclock=$(TWENTYfive) ;;
+  8 ) qclock=$(TWENTYfive) ;;
+  5 ) qclock=$(TWENTYFIVE) ;;
+  7 ) qclock=$(TWENTYFIVE) ;;
+  * ) qclock=$(twentyfive) ;;
+  esac
+  draw "$qclock" 2
+}
+
+HALFtento() { shuffle "{color}H A L F \n{color1}T E N \n{color1}T O $(nx)$(nx)"; }
+halfTENto() { shuffle "{color1}H A L F \n{color}T E N \n{color1}T O $(nx)$(nx)"; }
+halfTENTO() { shuffle "{color1}H A L F \n{color}T E N $(x){color}T O $(nx)"; }
+halftenTO() { shuffle "{color1}H A L F \n{color1}T E N \n{color}T O $(nx)$(nx)"; }
+halftento() { shuffle "{color1}H A L F \n{color1}T E N \n{color1}T O $(nx)$(nx)"; }
+
+qclock3() {
+  case $M5 in
+  2 ) qclock=$(halfTENto) ;;
+  6 ) qclock=$(HALFtento) ;;
+  10) qclock=$(halfTENTO) ;;
+  * ) [ $M -ge 35 ] && qclock=$(halftenTO) || qclock=$(halftento) ;;
+  esac
+  draw "$qclock" 3
+}
+
+pastW4() { shuffle "{color1}P A S T $(x){color}$W43$(nx)$(nx)"; }
+PASTW4() { shuffle "{color}P A S T $(x){color}$W43$(nx)$(nx)"; }
+PastW4() { sed "s/[$]//g; s/{color1}P A S T {color1}. /{color}P A S T $(x)/" $QCLOCK:4; }
+PAST_4() { shuffle "{color}P A S T \n{color1}$W43$(nx)$(nx)$(nx)"; }
+past_4() { shuffle "{color1}P A S T \n{color1}$W43$(nx)$(nx)$(nx)"; }
+
+qclock4() {
+  if [ $H = $I43 ] ;then
+    if [ "$HOUR" != $I43 ] ;then
+      if past_hour ;then qclock=$(PASTW4)                      # on startup past the hour
+      else               qclock=$(pastW4)
+      fi
+      draw "$qclock" 4
+    elif past_hour ;then 
+      [ -e $QCLOCK:4 ] && qclock=$(PastW4) || qclock=$(PASTW4)  # don't shift hour position
+      draw "$qclock" 4
+    fi
+  else
+    if past_hour ;then qclock=$(PAST_4)
+    else               qclock=$(past_4)
+    fi
+    draw "$qclock" 4
+  fi
+}
+
+W3_5_3() { shuffle "{color}$W31\n{color1}$W51\n{color1}$W33"; }
+_3W5_3() { shuffle "{color1}$W31\n{color}$W51\n{color1}$W33"; }
+_3_5W3() { shuffle "{color1}$W31\n{color1}$W51\n{color}$W33"; }
+_3_5_3() { shuffle "{color1}$W31\n{color1}$W51\n{color1}$W33"; }
+
+qclock5() {
+  if refresh_hour $I31 $I51 $I33 ;then
+    case $H in
+    $I31) qclock=$(W3_5_3) ;;
+    $I51) qclock=$(_3W5_3) ;;
+    $I33) qclock=$(_3_5W3) ;;
+    *   ) qclock=$(_3_5_3) ;;
+    esac
+    draw "$qclock" 5
+  fi
+}
+
+W3_4_4() { shuffle "{color}$W32\n{color1}$W41\n{color1}$W42"; }
+_3W4_4() { shuffle "{color1}$W32\n{color}$W41\n{color1}$W42"; }
+_3_4W4() { shuffle "{color1}$W32\n{color1}$W41\n{color}$W42"; }
+_3_4_4() { shuffle "{color1}$W32\n{color1}$W41\n{color1}$W42"; }
+
+qclock6() {
+  if refresh_hour $I32 $I41 $I42 ;then
+    case $H in
+    $I32) qclock=$(W3_4_4) ;;
+    $I41) qclock=$(_3W4_4) ;;
+    $I42) qclock=$(_3_4W4) ;;
+    *   ) qclock=$(_3_4_4) ;;
+    esac
+    draw "$qclock" 6
+  fi
+}
+
+W5_6() { shuffle "{color}$W53\n{color1}$W61"; }
+_5W6() { shuffle "{color1}$W53\n{color}$W61"; }
+_5_6() { shuffle "{color1}$W53\n{color1}$W61"; }
+
+qclock7() {
+  if refresh_hour $I53 $I61 ;then
+    case $H in
+    $I53) qclock=$(W5_6) ;;
+    $I61) qclock=$(_5W6) ;;
+    *   ) qclock=$(_5_6) ;;
+    esac
+    draw "$qclock" 7
+  fi
+}
+
+W6_5() { shuffle "{color}$W62\n{color1}$W52"; }
+_6W5() { shuffle "{color1}$W62\n{color}$W52"; }
+_6_5() { shuffle "{color1}$W62\n{color1}$W52"; }
+
+qclock8() {
+  if refresh_hour $I52 $I62 ;then
+    case $H in
+    $I52) qclock=$(_6W5) ;;
+    $I62) qclock=$(W6_5) ;;
+    *   ) qclock=$(_6_5) ;;
+    esac
+    draw "$qclock" 8
+  fi
+}
+
+W3OCLOCK() { echo "{color}$W34$(x){color}O ' C L O C K "; }
+W3clock()  { echo "{color}$W34$(shuffle "{color1}C L O C K $(nx)$(nx)$(nx)")"; }
+_3OCLOCK() { echo "$(shuffle "{color1}$W34$(nx)"){color}O ' C L O C K "; }
+_3clock()  { shuffle "{color1}$W34\n{color1}C L O C K $(nx)$(nx)$(nx)"; }
+
+qclock9() {
+  if [ $H = $I34 ] ;then
+    case $M5 in
+    0) qclock=$(W3OCLOCK) ;;  # ten o'clock always touches corner
+    *) qclock=$(W3clock) ;;
+    esac
+    draw "$qclock" 9
+  else 
+    case $M5 in
+    0) qclock=$(_3OCLOCK) ;;  # o'clock touches corner, just because
+    *) qclock=$(_3clock) ;;
+    esac
+    draw "$qclock" 9
+  fi
+}
+
+c3() { shuffle "1 ONE \n2 TWO \n6 SIX \n10 TEN "; }
+c4() { shuffle "4 FOUR \n5 FIVE \n9 NINE "; }
+c5() { shuffle "3 THREE \n7 SEVEN \n8 EIGHT "; }
+c6() { shuffle "11 ELEVEN \n12 TWELVE "; }
+
+define() {
+  i=$1; j=$2
+  eval set -- $(c$i)
+  for k in $(seq 1 $j) ;do
+    var="I$i$k=$1"; shift; echo $var >>$QCLOCK:vars &                           # I<wordlen><idx> -> hour
+    eval $var
+    var="W$i$k=$(echo $1 | sed 's/./&:/g')"; shift; echo $var >>$QCLOCK:vars &  # W<wordlen><idx> -> label
+    eval $var
+  done
+}
+
+map() { cat $QCLOCK:$1 | cut -d' ' -f$(( $3 - $2 )); }
+
+hours() {
+  if [ "$HOUR" != $H ] ;then               # shuffle hour positions
+    define 3 4
+    define 4 3
+    define 5 3
+    define 6 2
+    minutes=$(shuffle "1 \n 2 ")           # map minute lines
+    echo $minutes >$QCLOCK:minutes &
+    hours=$(shuffle "5 \n 6 \n7 \n8 ")     # map hour lines
+    echo $hours >$QCLOCK:hours &
+  else
+    while read var <&3 ;do                 # restore variables
+      eval $var
+    done 3< $QCLOCK:vars
+  fi
+}
+
+qclock() {
+  if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
+    echo $H:$M5 >$QCLOCK &
+    hours
+    for i in 0 1 2 3 4 5 6 7 8 9 ;do
+      eval qclock$i &
+    done
+    echo $H >$QHOUR &
+  fi
+}
+
+line() {
+  case $1 in
+  0     ) qclock; wait; cat $QCLOCK:0 ;;   # trigger refresh at topmost conkyrc line
+  [12]  ) cat $QCLOCK:$(map minutes 0 $i) ;;
+  [34]  ) cat $QCLOCK:$i ;;
+  [5678]) cat $QCLOCK:$(map hours 4 $i) ;;
+  [9]   ) cat $QCLOCK:$i ;;
+esac
+}
+
+for i in 0 1 2 3 4 5 6 7 8 9 ;do
+  display="$display\$$voffset\$$offset$(line $i)\n"
+done
+echo "$display"                            # avoid conky latency with single result
+
+# vim: set ft=sh: #

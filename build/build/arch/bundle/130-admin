@@ -33,18 +33,17 @@
 # pacaur
   package-query
 # package-query-git
+# pacgraph
 # packer
+  pkg-config
   pkgfile
   pkgstats
   pkgtools
 # powerpill
 # trizen
+  reflector
 # yaourt
 # yaourt-gui
-# pacgraph
-  package-query
-  pkg-config
-  reflector
 
 
 = package rollback (btrfs)

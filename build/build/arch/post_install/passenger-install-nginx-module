@@ -70,7 +70,7 @@ else
   config_install /usr/lib/systemd/system/nginx.service
 fi
 
-server && service enable nginx || annotate "sudo systemctl start nginx"
-annotate "rsync /srv/http/thedarnedestthing.com"
+server && service enable nginx || ditto run "sudo systemctl start nginx"
+ditto run "rsync /srv/http/thedarnedestthing.com"
 
 # vim: set ft=sh: #

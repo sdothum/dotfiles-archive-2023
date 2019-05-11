@@ -4,7 +4,7 @@
 # post install/upgrade configuration
 
 if [ ! -d $HOME/stow ] ;then
-  ditto 'stow directory not present'
+  ditto error 'stow directory not present'
   exit
 fi
 
@@ -13,11 +13,9 @@ fi
                                                                    title "setup"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-heading "/opt/bin /tmp"
+heading "/opt/bin"
 # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 config_install L /opt/bin
-sudo chmod 777 /tmp
-sudo chmod +t /tmp
 
 
 if server && [ ! -d /net/downloads/http ] ;then

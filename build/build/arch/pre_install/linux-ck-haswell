@@ -18,7 +18,7 @@ Server = http://repo-ck.com/$arch' \
   sudo pacman -Syyu
   sudo pacman-key -r 5EE46C4C
   sudo pacman-key --lsign-key 5EE46C4C
-  annotate "install will fail if pacman -Syyu does not complete"
+  ditto "install will fail if pacman -Syyu does not complete"
 fi
 
 # vim: set ft=sh: #

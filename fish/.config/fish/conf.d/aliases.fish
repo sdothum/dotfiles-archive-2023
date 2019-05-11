@@ -51,6 +51,7 @@ alias iotop 'sudo iotop'
 alias lpr 'lpr -P hp-LaserJet-1320-series'
 alias screenfetch 'fetch'
 alias services "systemctl list-units -t service --no-pager --no-legend | grep active | egrep -v 'systemd|exited' | cut -d' ' -f1"
+alias time '/usr/bin/time -p'
 alias traceroute 'mtr --report -c 1'
 alias who 'command w'
 
@@ -129,6 +130,7 @@ alias ghcx 'stack runghc'
 alias ghci 'stack exec ghci'
 alias git1 'git clone --depth 1'
 alias mysql 'mysql -h localhost -u root -p'
+alias perli 'perl -de 1'
 
 # .................................................................. Application
 

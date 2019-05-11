@@ -174,7 +174,7 @@ heading 'install bundle'
 # ══════════════════════════════════════════════════════════════════════════════
 ditto 'exit console (script)'
 ditto "login as user $user"
-ditto 'bundle_install pi_base'
+ditto run 'bundle_install pi_base'
 
 
 # vim: set ft=sh: #

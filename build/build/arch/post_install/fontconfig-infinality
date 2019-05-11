@@ -5,6 +5,6 @@
 
 # ............................................................. infinality fonts
 
-annotate "configure infinality with sudo fc-presets set (4) reset (1) combi"
+ditto "configure infinality with sudo fc-presets set (4) reset (1) combi"
 
 # vim: set ft=sh: #

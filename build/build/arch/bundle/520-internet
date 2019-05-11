@@ -6,8 +6,8 @@
 
 = chat/twitter
 = ════════════
-  bitlbee         [server]
-# d * centerim5-git
+# bitlbee         [server]
+# d centerim5-git
 # finch
 # libotr
   mcabber
@@ -18,7 +18,7 @@
   weechat         [server]
 # xchat
 # xmpppy
-d * znc           [server]
+d znc             [server]
 
 
 = file transfer

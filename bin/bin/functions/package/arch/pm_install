@@ -10,7 +10,7 @@
 
 # Usage: pm_install [--confirm | --init] <package>
 
-wrappaur=pacaur
+wrappaur=$(aurwrapper)
 options='--noconfirm --noedit'
 
 case $1 in
@@ -25,7 +25,7 @@ if ! pm_query $@ ;then
   if pacman -Ss $@ | grep -q --regex="/$@ " ;then
     sudo pacman -S ${options% --noedit} $@
   else
-    echo "${__GREEN}@aur${NOCOLOR}"
+    ditto @ aur
     $wrappaur -S $options $@
   fi
   post_install $@

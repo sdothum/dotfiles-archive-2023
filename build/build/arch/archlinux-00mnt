@@ -38,8 +38,8 @@ if [ "$format" = y ] ;then
   # use fdisk for mbr (bios) install, else gdisk for gpt (UEFI) install
   echo
   echo '> EFI 512M (grub)'
-  echo '> swap 1-4G (or =RAM for hibernation)'
   echo '> boot 128M (syslinux)'
+  echo '> swap 1-4G (or =RAM for hibernation)'
   echo
   read -p 'GPT or MBR partition? [G|m]: ' diskutil
   [ $diskutil ] && diskutil=fdisk || diskutil=cfdisk
@@ -56,20 +56,24 @@ if [ "$format" = y ] ;then
   fi
   echo
   case $diskutil in
-    fdisk) echo 'Create active boot mbr partition..' ;;
-
-    gdisk) echo 'Create gpt partitions labeled..'
-           echo '  [ EFI boot swap ]  root'
-           echo '  ..' ;;
+    fdisk ) echo 'Create active boot mbr partition..' ;;
+    cfdisk) echo 'Create gpt partitions -> [ EFI boot ] swap root' ;;
   esac
-  sleep 5s
+  checkpoint
   $diskutil $device
+  echo
+  case $diskutil in
+    fdisk ) echo 'Name mbr partitions..' ;;
+    cfdisk) echo 'Name gpt partitions -> [ EFI boot ] swap root' ;;
+  esac
+  checkpoint
+  cgdisk $device
   fdisk -l $device
   checkpoint
   if [ ! -z $stripe ] ;then
     echo
     echo 'Partition stripe disk..'
-    sleep 5s
+    checkpoint
     $diskutil /dev/sd${stripe}
     fdisk -l /dev/sd${stripe}
     checkpoint
@@ -82,9 +86,9 @@ if [ "$format" = y ] ;then
 fi
 
 efi=$(partition EFI)
+boot=$(partition boot)
 swap=$(partition swap)
-boot=$(partition '[*]')
-root=$(partition 'Linux( filesystem)*$')
+root=$(partition root)
 
 if [ "$format" = y ] ;then
   heading 'format btrfs disk partition'
@@ -104,6 +108,7 @@ if [ "$format" = y ] ;then
   fi
   checkpoint
 fi
+
 
 heading 'mount partitions'
 # ══════════════════════════════════════════════════════════════════════════════
@@ -190,10 +195,11 @@ heading 'mount efi/boot partitions'
 if [ $efi ] ;then
   mkdir -pv /mnt/btrfs-boot/boot/efi
   mount -v $efi /mnt/btrfs-boot/boot/efi
+  echo EFI partition
 elif [ $boot ] ;then
   mkdir -pv /mnt/btrfs-boot/boot
   mount -v $boot /mnt/btrfs-boot/boot
+  echo BOOT partition
 fi
-
 
 # vim: set ft=sh: #

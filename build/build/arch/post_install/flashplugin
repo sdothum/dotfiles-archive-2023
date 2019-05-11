@@ -5,6 +5,6 @@
 
 # .................................................................. flashplugin
 
-annotate "disable gpu acceleration in fullscreen mode to eliminate color inversion"
+ditto "disable gpu acceleration in fullscreen mode to eliminate color inversion"
 
 # vim: set ft=sh: #

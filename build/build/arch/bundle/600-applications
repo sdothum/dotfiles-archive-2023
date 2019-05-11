@@ -12,7 +12,7 @@
 # gpredict-git  [server]
 # nightshade    [server]
 # xephem        [server]
-  siril
+  siril         [server]
 d stellarium
   wego
 # wego-git
@@ -31,8 +31,10 @@ d stellarium
 d dict-wn
 d m dict-moby-thesaurus
   hunspell
-  hunspell-en
-# hunspell-en_CA
+  hunspell-en_AU
+  hunspell-en_CA
+  hunspell-en_GB
+  hunspell-en_US
 
 
 = ebook

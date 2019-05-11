@@ -65,6 +65,6 @@ sed -e '/^#user  nobody;/cuser  http;' \
 ' /opt/nginx/conf/nginx.conf.original | sudo tee /opt/nginx/conf/nginx.conf
 
 [ -L /srv/http/thedarnedestthing.com ] || { sudo rm -rf /srv/http/thedarnedestthing.com; sudo ln -sf $HOME/thedarnedestthing.com /srv/http/; }
-annotate "rsync thedarnedestthing.com:/srv/http/thedarnedestthing.com"
+ditto run "rsync thedarnedestthing.com:/srv/http/thedarnedestthing.com"
 
 # vim: set ft=sh: #

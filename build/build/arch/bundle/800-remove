@@ -6,7 +6,6 @@
 
 = filesystem
 = ══════════
-# - dmraid
 - jfsutils
 - lvm2
 - mdadm
@@ -14,8 +13,45 @@
 - xfsprogs
 
 
+= file
+= ════
+- mediainfo
+
+
+= shell tool
+= ══════════
+- pv
+
+
+= sound
+= ═════
+- pulseaudio-equalizer
+
+
 = network
 = ═══════
-# - gssproxy
+- gssproxy
+
+
+= julia
+= ═════
+- julia-docs
+
+
+= software tool
+= ═════════════
+- gdb
+
+
+= font
+= ════
+- noto-fonts
+- ttf-symbola
+
+
+= chat/twitter
+= ════════════
+- bitlbee
+
 
 # vim: set ft=conf: #

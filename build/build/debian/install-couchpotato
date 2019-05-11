@@ -10,6 +10,6 @@ headline+ "building couchpotato"
   sudo mv -v CouchPotatoServer /opt/couchpotato
 end
 
-annotate "configure couchpotato http://localhost:5050/"
+ditto "configure couchpotato http://localhost:5050/"
 
 # vim: set ft=fish: #

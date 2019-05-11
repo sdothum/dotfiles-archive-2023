@@ -34,6 +34,6 @@ EOF
 }
 recorder | tee $HOME/.config/pulse/default.pa
 
-annotate "pulseaudio -v[v[v]..] for diagnostics"
+ditto "pulseaudio -v[v[v]..] for diagnostics"
 
 # vim: set ft=sh: #

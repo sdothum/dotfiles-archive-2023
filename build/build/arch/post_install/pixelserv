@@ -8,6 +8,6 @@
 sudo sed -i "/LocalHost/s/'.*'/'$(host_ip)'/" $(which pixelserv.pl)
 
 service enable pixelserv
-annotate "disable pixelserv if nginx server is installed (has own pixel server)"
+ditto "disable pixelserv if nginx server is installed (has own pixel server)"
 
 # vim: set ft=sh: #

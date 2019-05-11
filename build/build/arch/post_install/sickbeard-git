@@ -6,6 +6,6 @@
 # .................................................................... sickbeard
 
 service enable sickbeard
-annotate "configure sickbeard http://localhost:8081/"
+ditto "configure sickbeard http://localhost:8081/"
 
 # vim: set ft=sh: #

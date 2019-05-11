@@ -32,64 +32,64 @@ addblock() {
 }
 
 if [ -z $1 ] ;then
-  ditto 'downloading file from YoYo.org'
+  ditto downloading 'from YoYo.org'
   wget -qO- http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts 2>>$LOG |
       grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock YoYo.org
 
-  ditto 'downloading file from SomeoneWhoCares.org'
+  ditto downloading 'from SomeoneWhoCares.org'
   wget -qO- http://someonewhocares.org/hosts/zero/ 2>>$LOG |
       grep '0\.0\.0\.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' | addblock SomeoneWhoCares.org
 
-  ditto 'downloading file from MVPS.org'
+  ditto downloading 'from MVPS.org'
   wget -qO- http://winhelp2002.mvps.org/hosts.txt 2>>$LOG |
       grep 0\.0\.0\.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' | addblock MVPS.org
 
-  # ditto 'downloading file from HPHosts'
+  # ditto downloading 'from HPHosts'
   # wget -qO- http://hosts-file.net/download/hosts.txt 2>>$LOG |
   #      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock HPHosts
 
   blacklist() { awk '{sub(/^127.0.0.1/, "0.0.0.0")} /^0.0.0.0/' | addblock $1; }
 
-  ditto 'downloading file from MalwareDomainList.com'
+  ditto downloading 'from MalwareDomainList.com'
   wget -qO- "http://www.malwaredomainlist.com/hostslist/hosts.txt" 2>>$LOG | blacklist MalwareDomainList.com
 
-  ditto 'downloading adtracking file from Hosts-File.net'
+  ditto downloading 'adtracking from Hosts-File.net'
   wget -qO- "http://hosts-file.net/ad_servers.txt" 2>>$LOG | blacklist Hosts-File.net:ad_servers
 
-  ditto 'downloading malware file from Hosts-File.net'
+  ditto downloading 'malware from Hosts-File.net'
   wget -qO- "http://hosts-file.net/emd.txt" 2>>$LOG | blacklist Hosts-File.net:emd
 
-  ditto 'downloading exploit file from Hosts-File.net'
+  ditto downloading 'exploit from Hosts-File.net'
   wget -qO- "http://hosts-file.net/exp.txt" 2>>$LOG | blacklist Hosts-File.net:exp
 
-  ditto 'downloading fraud file from Hosts-File.net'
+  ditto downloading 'fraud from Hosts-File.net'
   wget -qO- "http://hosts-file.net/fsa.txt" 2>>$LOG | blacklist Hosts-File.net:fsa
 
-  # ditto 'downloading spamming file from Hosts-File.net'
+  # ditto downloading 'spamming from Hosts-File.net'
   # wget -qO- "http://hosts-file.net/grm.txt" 2>>$LOG | blacklist Hosts-File.net:grm
   #
-  # ditto 'downloading site spamming file from Hosts-File.net'
+  # ditto downloading 'site spamming from Hosts-File.net'
   # wget -qO- "http://hosts-file.net/hfs.txt" 2>>$LOG | blacklist Hosts-File.net:hfs
 
-  ditto 'downloading hijack file from Hosts-File.net'
+  ditto downloading 'hijack from Hosts-File.net'
   wget -qO- "http://hosts-file.net/hjk.txt" 2>>$LOG | blacklist Hosts-File.net:hjk
 
-  ditto 'downloading marketing file from Hosts-File.net'
+  ditto downloading 'marketing from Hosts-File.net'
   wget -qO- "http://hosts-file.net/mmt.txt" 2>>$LOG | blacklist Hosts-File.net:mmt
 
-  ditto 'downloading pharmacy file from Hosts-File.net'
+  ditto downloading 'pharmacy from Hosts-File.net'
   wget -qO- "http://hosts-file.net/pha.txt" 2>>$LOG | blacklist Hosts-File.net:pha
 
-  # ditto 'downloading piracy file from Hosts-File.net'
+  # ditto downloading 'piracy from Hosts-File.net'
   # wget -qO- "http://hosts-file.net/psh.txt" 2>>$LOG | blacklist Hosts-File.net:psh
 
-  ditto 'downloading adtracking file from Hosts-File.net'
+  ditto downloading 'adtracking from Hosts-File.net'
   wget -qO- "http://hosts-file.net/wrz.txt" 2>>$LOG | blacklist Hosts-File.net:wrz
 
-  ditto 'downloading file from ADaway.org'
+  ditto downloading 'from ADaway.org'
   wget -qO- "http://adaway.org/hosts.txt" 2>>$LOG | blacklist ADaway.org
 
-  ditto 'writing changes to zone file'
+  ditto writing 'changes to zone file'
   sed -re 's/^(0\.0\.0\.0)  */\1\t/' \
       -e 's/ .*//' \
       -e '/^(0\.0\.0\.0)\t*$/d' \
@@ -98,12 +98,12 @@ if [ -z $1 ] ;then
 fi
 
 if [ -e blacklist ] ;then
-  ditto 'including my blacklist'
+  ditto including 'my blacklist'
   cat blacklist | awk '{ print "0.0.0.0\t"$1 }' >>adblock.blacklist
 fi
 
 if [ -e whitelist ] ;then
-  ditto 'applying my whitelist'
+  ditto applying 'my whitelist'
   while read domain <&3
   do
     sed -i "/[./\t]$domain$/d" adblock.uniq
@@ -112,8 +112,7 @@ fi
 
 echo "# Generated adblock on $(timestamp)" >adblock.hosts
 cat adblock.uniq adblock.blacklist | grep -vP '^0.0.0.0\t$'>>adblock.hosts
-ditto "blacklisting $(wc -l adblock.hosts | cut -d' ' -f1) hosts"
-ditto 'reloading DNS server'
+ditto blacklisting "$(wc -l adblock.hosts | cut -d' ' -f1) hosts"
 service restart dnsmasq
 touch $ADBLOCK
 

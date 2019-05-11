@@ -49,7 +49,7 @@ init() {
     mailcot
     imap f allmail
     mailsync I
-    annotate 'crontab with "mailsync"'
+    ditto -- 'crontab with "mailsync"'
   }
 }
 

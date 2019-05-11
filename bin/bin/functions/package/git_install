@@ -11,7 +11,7 @@ heading : $1
 
 uri=$(source_install $1)
 if [ -z $uri ] ;then
-  annotate "missing pre_install/$1 \"echo git://uri\""
+  ditto -- "missing pre_install/$1 \"echo git://uri\""
   exit
 fi
 

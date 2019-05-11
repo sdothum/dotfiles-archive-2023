@@ -5,6 +5,6 @@
 
 # ........................................................... ttf-fantasque-sans
 
-annotate 'add font name to "$HOME/.config/fontconfig/conf.d/28-undefined-fonts.conf"'
+ditto 'add font name to "$HOME/.config/fontconfig/conf.d/28-undefined-fonts.conf"'
 
 # vim: set ft=sh: #

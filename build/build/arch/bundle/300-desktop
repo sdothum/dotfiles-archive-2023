@@ -59,7 +59,7 @@ d ? conky-lua-archers
 # d m iosevka             [server]
 # d m iosevka\\ amphetype [server]
 # d m iosevka\\ proof     [server]
-  noto-fonts
+# noto-fonts
 # otf-gnutypewriter
 # powerline-fonts-git
   ttf-courier-prime
@@ -76,8 +76,8 @@ d ? conky-lua-archers
 # ttf-mac-fonts
 # ttf-ms-fonts
 # ttf-noto-sans-ib
-  ttf-robobo
-  ttf-symbola
+  ttf-roboto
+# ttf-symbola
 # ttf-ubuntu-font-family
 # ttf-wps-fonts
 # xorg-fonts-type1

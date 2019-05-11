@@ -10,7 +10,7 @@
 
 # apply user specific configuration, see post_install
 if [ -s $HOME/build/$(dist)/user_install/$1 ] ;then
-  echo "${__GREEN}@user_install $1${NOCOLOR}"
+  ditto user_install "$1"
   . $HOME/build/$(dist)/user_install/$1
 fi
 

@@ -17,6 +17,6 @@ ifnsed $hosts " $hostname *" "/ $hostname */s/^[^ ]*/$ip/" "/localhost.*ttrss/a$
 
 sudo wifi-menu
 
-! server && annotate 'check /etc/hosts (luna) if wlan0 errors on boot'
+! server && ditto 'check /etc/hosts (luna) if wlan0 errors on boot'
 
 # vim: set ft=sh: #

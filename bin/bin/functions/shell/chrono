@@ -34,6 +34,6 @@ EOF
 # 2 digit format dependencies
 time() { elapsed $1 $utc | sed "/°.'/s/°/°0/; /'.\"/s/'/'0/"; }
 
-[ $time ] && time $1 || echo "${__GREEN}@elapsed $(time $1)${NOCOLOR}"
+[ $time ] && time $1 || ditto elapsed "$(time $1)"
 
 # vim: set ft=sh: #

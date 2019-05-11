@@ -11,14 +11,14 @@
 # rizon irc.rizon.net +6697
 # gitter irc.gitter.im +6667 <password>
 # znc install adds freenode by default for #znc
-annotate "listen on port 7000, username/password znc/znc\n
-service identity with:\n
-/msg nickserv register <password> <email>\n
-or if already registered..\n
-/msg nickserv identify <password>\n
-enable sasl with:\n
-/msg *sasl Mechanism PLAIN\n
-/msg *sasl Set <nick> <password>\n
+ditto "listen on port 7000, username/password znc/znc
+service identity with:
+/msg nickserv register <password> <email>
+or if already registered..
+/msg nickserv identify <password>
+enable sasl with:
+/msg *sasl Mechanism PLAIN
+/msg *sasl Set <nick> <password>
 add irc servers below"
 
   cat <<EOF
@@ -50,6 +50,6 @@ rizon channels:
 EOF
 
 sudo -u znc znc --makeconf
-server && service enable znc || annotate "sudo systemctl start znc"
+server && service enable znc || ditto run "sudo systemctl start znc"
 
 # vim: set ft=sh: #

@@ -14,6 +14,6 @@ install python-cheetah
   # sed -i 's,\(self.config\[\'base_url\'\]\) = .*,\1 = "http://thexem.de/proxy/tvdb/scene",' /opt/sickbeard/lib/tvdb_api/tvdb_api.py
 end
 
-annotate "configure sickbeard http://localhost:8081/"
+ditto "configure sickbeard http://localhost:8081/"
 
 # vim: set ft=fish: #

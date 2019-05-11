@@ -5,7 +5,7 @@
 
 # ................................................................. transmission
 
-annotate "set transmission-gtk blocklist url\n
+ditto "set transmission-gtk blocklist url
 http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
 
 # vim: set ft=sh: #

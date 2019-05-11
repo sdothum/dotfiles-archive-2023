@@ -6,10 +6,11 @@
 # ....................................................................... Sonarr
 
 service enable sonarr
-annotate "configure sonarr http://localhost:8989/\n
+ditto "configure sonarr http://localhost:8989/
 set advanced create folders off"
 ifnsed /etc/group '^users:.*sonarr' 's/^\(users:.*\)/\1,sonarr/; s/:,/:/'
 
-annotate allow sonarr users group access with sudo chmod -c 775 /net/media/videos/{series,anime}
+ditto "allow sonarr users group access with.."
+ditto run "sudo chmod -c 775 /net/media/videos/{series,anime}"
 
 # vim: set ft=sh: #

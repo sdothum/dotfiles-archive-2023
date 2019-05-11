@@ -5,6 +5,6 @@
 
 # .................................................................... lightzone
 
-annotate "do windowed (non-fullscreen) close from gnome-shell for fullscreen issues in bspwm"
+ditto "do windowed (non-fullscreen) close from gnome-shell for fullscreen issues in bspwm"
 
 # vim: set ft=sh: #

@@ -88,6 +88,6 @@ ln -sf stow/zsh/.zsh                                .zsh
 ln -sf stow/zsh/.zshenv                             .zshenv
 ln -sf stow/zsh/.zshrc                              .zshrc
 ls --color -l | grep ' ->'
-annotate 'cleanup all stow links post install'
+ditto 'cleanup all stow links post install'
 
 # vim: set ft=sh: #

@@ -34,12 +34,8 @@ set numdisks (ll /dev/sd*1 | wc -l)
 set --export distro (head -1 /etc/apt/apt.conf | sed 's/^.*"\(.*\)".*/\1/')
 
 [ $aptmode = s ]; or begin
-  attn ""
-  attn ""
-  attn "Starting netinstall-4apps ... "(date '+%Y.%m.%d %H:%S:%M')
-  annotate "using debian $distro"
-  annotate+ '"tail log" to track install list'
-  attn ""
+  ditto "using debian $distro"
+  ditto '"tail log" to track install list'
   # default log of log.fish
   touch $HOME/tmp/session.log
   sleep 3s
@@ -83,7 +79,7 @@ add-package install-tabbed
 
 sudo update-alternatives --set gnome-www-browser /usr/bin/luakit
 sudo update-alternatives --set x-www-browser /usr/bin/luakit
-annotate "compare customizations in $HOME/.luakit/* with /data/depot/www/luakit/luakit-master/config/* sources"
+ditto "compare customizations in $HOME/.luakit/* with /data/depot/www/luakit/luakit-master/config/* sources"
 
 sudo update-alternatives --set www-browser /usr/bin/w3m
 
@@ -125,7 +121,7 @@ install printer-driver-hpijs
 
 # sudo lppasswd -a $USER
 sudo grep -q "^lpadmin.*$USER" /etc/group; or sudo sed -i 's/\(^lpadmin:.*$\)/\1,'$USER'/' /etc/group
-[ $laptop ]; and annotate "https://localhost:631 to configure printer and network sharing"
+[ $laptop ]; and ditto "https://localhost:631 to configure printer and network sharing"
 
 
 #-----------------------------------------------------------------------------
@@ -192,13 +188,13 @@ title "file transfer"
 # install+ rtorrent
 # [ $desktop ]; and install+ sabnzbdplus
 # install+ transmission
-# annotate "update transmission-gtk blocklist url http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+# ditto "update transmission-gtk blocklist url http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
 install+ par2
 install unrar
 
 sudo dpkg -i /data/depot/torrent/tixati/tixati_*_amd64.deb
-annotate "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
-annotate+ "add bogon blocklist http://list.iblocklist.com/?list=bt_bogon&fileformat=p2p&archiveformat=gz"
+ditto "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+ditto "add bogon blocklist http://list.iblocklist.com/?list=bt_bogon&fileformat=p2p&archiveformat=gz"
 
 [ $desktop ]; and add-package install-couchpotato
 add-package install-nzbget
@@ -307,7 +303,7 @@ title "mail client"
 # mkdir -pv $HOME/.mail/.notmuch
 # mkdir -pv $HOME/.cache/mutt_results
 # ln -svf $HOME/.cache/mutt_results $HOME/.mail/.notmuch/=Search
-# annotate "initialize notmuch by running: notmuch setup; and notmuch new"
+# ditto "initialize notmuch by running: notmuch setup; and notmuch new"
 
 # add-package install-mutt-notmuch
 add-package install-sup
@@ -370,7 +366,7 @@ if [ -L $HOME/.mpdconf ]
 else
   sudo cp -v /etc/mpd.conf $HOME/.mpdconf
   ln -sfv $HOME/.mpdconf $HOME/.mpdconf
-  # annotate "configure $HOME/.mpdconf for non-root access to local mpd files"
+  # ditto "configure $HOME/.mpdconf for non-root access to local mpd files"
 end
 sed -i -e 's,/var/lib/mpd/music,/data/media/music,' \
        -e 's,/var/log/mpd/mpd.log,'$HOME'/tmp/mpd.log,' \
@@ -525,7 +521,7 @@ a.img-dpreview.com \
 .nhl.com \
 { +block{Nasty ads.} } \
 storage.canoe.ca/v1/dynamic_resize/sws_path/suns-prod-images/' /etc/privoxy/user.action
-annotate "configure browser proxies to localhost:8118"
+ditto "configure browser proxies to localhost:8118"
 # restart privoxy
 # sudo systemctl enable privoxy.service
 # sudo systemctl start privoxy.service
@@ -594,14 +590,14 @@ install+ alsa-base
 [ $desktop ]; and install+ pulseaudio
 install+ xfce4-mixer
 install xfce4-volumed
-annotate "enable sound (unmute) xfce4-mixer"
-annotate+ "set full volume alsamixer"
+ditto "enable sound (unmute) xfce4-mixer"
+ditto "set full volume alsamixer"
 
 # [ $desktop ]; and add-package install-pavolume
 
 if [ $laptop ]
   [ -f $HOME/.asoundrc ]; and sudo mv -v $HOME/.asoundrc.save
-  annotate+ "restore $HOME/.asoundrc(.pulse) for pulseaudio playback"
+  ditto "restore $HOME/.asoundrc(.pulse) for pulseaudio playback"
 end
 
 
@@ -747,11 +743,11 @@ title "virtualbox"
   [ -d /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack ]
     or sudo VBoxManage extpack install /data/depot/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-*.vbox-extpack
   # install virtualbox-4.2
-  # annotate "adding \"vboxdrv\" to /etc/modules"
+  # ditto "adding \"vboxdrv\" to /etc/modules"
   # # sudo echo >>/etc/modules; sudo echo vboxdrv >>/etc/modules
   # sudo sed -i '$avboxdrv' /etc/modules
   # cat /etc/modules
-  # annotate "switching udev reference from /usr/share/virtualbox to /lib/udev (/usr not mounted)"
+  # ditto "switching udev reference from /usr/share/virtualbox to /lib/udev (/usr not mounted)"
   # sudo cp -v /usr/share/virtualbox/VBoxCreateUSBNode.sh /lib/udev/
   # original /etc/udev/rules.d/10-vboxdrv.rules
   # sudo sed -i 's,/usr/share/virtualbox,/lib/udev,' /etc/udev/rules.d/10-vboxdrv.rules
@@ -891,11 +887,8 @@ sudo rm -f $HOME/.netinstall
 #-----------------------------------------------------------------------------
 title "install exceptions"
 #-----------------------------------------------------------------------------
-annotate "logged install exceptions"
+ditto "logged install exceptions"
 cat $bin/netinstall-4exceptions
-attn ""
-attn "Ending netinstall-4apps ... "(date '+%Y.%m.%d %H:%S:%M')
-attn ""
 
 
 # #-----------------------------------------------------------------------------
@@ -908,7 +901,7 @@ attn ""
 # sudo update-rc.d nfs-common remove
 # #sudo update-rc.d openvpn remove
 # sudo update-rc.d saned remove
-# annotate "services can be re-enabled with sysv-rc-conf or update-rc.d"
+# ditto "services can be re-enabled with sysv-rc-conf or update-rc.d"
 
 
 #-----------------------------------------------------------------------------

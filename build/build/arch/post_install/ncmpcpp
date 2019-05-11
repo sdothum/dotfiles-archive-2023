@@ -44,6 +44,7 @@ visualizer_type = wave\
 
 mpd &
 mpc update
-annotate "rerun mpc update after reboot"
+ditto "after reboot.."
+ditto run "mpc update"
 
 # vim: set ft=sh: #

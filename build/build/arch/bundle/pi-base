@@ -93,8 +93,8 @@ a package-query
   herbstluftwm
 
 ! ditto 'exit console (script)'
-! ditto 'startx (x)'
-! ditto 'bundle_install pi_bundle'
+! ditto run 'startx (x)'
+! ditto run 'bundle_install pi_bundle'
 
 
 # vim: set ft=conf: #

@@ -63,7 +63,7 @@ pkgcheck nodejs
 pkgcheck npm
 pkgcheck otfcc
 pkgcheck ttfautohint
-[ "$missing" ] && { ditto "install $missing"; exit 1; }
+[ "$missing" ] && { ditto run "pm_install $missing"; exit 1; }
 
 # balance leading/descender spacing
 if [ $leading -gt 1250 ] ;then

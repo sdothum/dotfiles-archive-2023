@@ -12,10 +12,10 @@ sudo mkdir /etc/connman
 PreferredTechnologies=ethernet,wifi' | sudo tee /etc/connman/main.conf
 service restart connman
 
-server && annotate "$scan\n
+server && ditto "$scan
 connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" ||
-          annotate "$scan\n
-connmanctl> connect [wireless]\n
+          ditto "$scan
+connmanctl> connect [wireless]
 connmanctl> config [wireless] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway> --autoconnect True"
 # note: wireless must be connected before configuring service
 connmanctl

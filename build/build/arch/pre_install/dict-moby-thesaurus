@@ -5,7 +5,7 @@
 
 # .......................................................... dict-moby-thesaurus
 
-annotate "install pauses indefinitely after dictd server is restarted\n
+ditto "install pauses indefinitely after dictd server is restarted
 hit enter to resume bundle install"
 
 # vim: set ft=sh: #

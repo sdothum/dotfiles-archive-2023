@@ -7,15 +7,14 @@
 # ........................................................... Package management
 
 # when pa/pacaur fails on aur packages
-wrappaur=pacaur
+wrappaur=$(aurwrapper)
 
 sudo pacman -Sy
 $wrappaur -Qu
 ifyes 'upgrade system' || exit
 
 for i in $($wrappaur -Qu | nocolor | awk '{ print $3 }') ;do
-  underline
-  ditto $i
+  heading $i
   $wrappaur -S $i
 done
 

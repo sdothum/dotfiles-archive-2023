@@ -25,7 +25,7 @@ cmp -s $HOME/sync/dist/usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xo
 # complete wireless configuration
 [ -f /etc/NetworkManager/system-connections/Ravens ]; or begin;
   [ (hostname) = monad ]; and sudo sed -i '/^auto wlan0/,$d' /etc/network/interfaces
-  annotate "setup local wifi connection"
+  ditto "setup local wifi connection"
   sudo nm-connection-editor
 end
 

@@ -10,6 +10,7 @@
 ! sudo pacman -S --noconfirm git
 ! sudo pacman -S --noconfirm pyalpm
 p pikaur
+" systemd dependency (not installable for obarun)
 ! pikaur -S --noconfirm auracle-git
 ! pikaur -S --noconfirm pacaur
 

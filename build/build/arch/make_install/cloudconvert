@@ -6,6 +6,6 @@
 # ............................................................. cloudconvert-cli
 
 sudo npm install -g cloudconvert-cli
-annotate 'requires CLOUDCONVERT_API_KEY'
+ditto 'requires CLOUDCONVERT_API_KEY'
 
 # vim: set ft=sh: #

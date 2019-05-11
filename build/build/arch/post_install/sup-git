@@ -6,6 +6,6 @@
 # .......................................................................... sup
 
 [ -L $HOME/tmp/sup.log ] || ln -sfv /tmp/sup.log $HOME/tmp/
-annotate "gem_install of curses and highline may no longer be needed"
+ditto "gem_install of curses and highline may no longer be needed"
 
 # vim: set ft=sh: #

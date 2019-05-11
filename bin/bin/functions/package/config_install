@@ -12,12 +12,9 @@ usage() {
 }
 
 [ $1 ] || usage
+[ $1 = L ] && { shift; link=true; }  # link vs copy
 
-# link vs copy
-[ $1 = L ] && { shift; link=true; }
-
-# restore customizations (not typically config files)
-root=$HOME/build/root
+root=$HOME/build/root                # restore customizations (not typically config files)
 
 if [ $1 ] ;then
   original $1
@@ -25,11 +22,11 @@ if [ $1 ] ;then
   mkdir -pv ${1%/*} || exit 1
   [ -e $1 ] && original $1
   if [ $link ] ;then
-    ditto "linking $(sudo ln -sfv $root/.${1}$host $1)"
+    ditto linking "$(sudo ln -sfv $root/.${1}$host $1)"
   else
-    ditto "copying $(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)"
+    ditto copying "$(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)"
   fi
-  annotate "check customization $1"
+  ditto -- "check customization $1"
 fi
 
 # vim: set ft=sh: #

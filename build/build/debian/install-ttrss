@@ -79,10 +79,10 @@ sudo sed -i '1aextension=pcntl.so' /etc/php5/cgi/php.ini
   sudo chown -Rv $USER:$USER /srv/http/ttrss/themes/my*
 end
 
-annotate "initialize and create config.php at http://localhost/ttrss/install username ttrss password tinytinyrss"
-annotate+ 'login to ttrss with "admin" "password"'
-annotate+ "sudo sed -i \"s=\(define('SELF_URL_PATH'\), 'http://ttrss/');=\1, 'http://luna/ttrss/');=\" /srv/http/ttrss/config.php"
-annotate+ "sudo sed -i 's/\(define(\'SINGLE_USER_MODE\'\), false);/\1, true);/' /srv/http/ttrss/config.php"
+ditto "initialize and create config.php at http://localhost/ttrss/install username ttrss password tinytinyrss"
+ditto 'login to ttrss with "admin" "password"'
+ditto run "sudo sed -i \"s=\(define('SELF_URL_PATH'\), 'http://ttrss/');=\1, 'http://luna/ttrss/');=\" /srv/http/ttrss/config.php"
+ditto run "sudo sed -i 's/\(define(\'SINGLE_USER_MODE\'\), false);/\1, true);/' /srv/http/ttrss/config.php"
 
 sudo systemctl restart nginx.service
 

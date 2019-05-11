@@ -1,13 +1,12 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# UI
+# Package
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ..................................................................... Notifier
+# .................................................................. aur wrapper
 
-# Usage: ditto [<color>] <message> [[<color>] <detail>]
-
-notify console "$1" "$2" "$3" "$4"
+sudo chmod a+wx,+t /tmp                      # convenient fix for unknown package change
+exists pacaur && echo pacaur || echo pikaur  # pacaur has systemd dependency
 
 # vim: set ft=sh: #

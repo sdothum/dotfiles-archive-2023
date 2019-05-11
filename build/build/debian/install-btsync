@@ -11,6 +11,7 @@ dist-config /etc/init.d/btsync
 sudo update-rc.d btsync defaults
 sudo /etc/init.d/btsync start
 
-annotate "rmdir .sync and reinitialize (emptied) sync directories"
+ditto run "rmdir .sync"
+ditto "..and reinitialize (emptied) sync directories"
 
 # vim: set ft=fish: #

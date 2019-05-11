@@ -12,7 +12,7 @@
 # $wrappaur=true
 
 country=Canada
-wrappaur=pacaur
+wrappaur=$(aurwrapper)
 
 # AUR package manager
 if [ -z $1 ] ;then

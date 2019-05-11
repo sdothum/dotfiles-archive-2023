@@ -12,7 +12,7 @@ if gem list $1 | grep -q "^$1 " ;then
 else
   heading : $1
   time=$(chrono)
-  echo "${__GREEN}@gem${NOCOLOR}"
+  ditto @ gem
   gem install $1
   post_install $1
   chrono $time

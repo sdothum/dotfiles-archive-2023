@@ -32,7 +32,7 @@
 = julia
 = ═════
   julia
-  julia-docs
+# julia-docs
 
 
 = perl tool
@@ -64,7 +64,7 @@
   avrdude
   dfu-programmer
   cmake
-  gdb
+# gdb
   strace
   time
 

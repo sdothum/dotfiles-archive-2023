@@ -24,7 +24,7 @@ trap "rm -f $wikis" EXIT
 gs() {
   action=$(egrep "$(echo "$1" | sed -r 's|.*s/([^/]*)/.*|\1|')" "$wiki" | sed -r "$1")
   [ "$action" ] || return
-  annotate "$1"
+  ditto -- "$1"
   echo "$action"
   [ $check ] || sed -i -r "$1" "$wiki"
 }

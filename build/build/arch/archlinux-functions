@@ -3,7 +3,13 @@
 
 # fresh arch pre-installer
 
-partition() { fdisk -l $device | egrep "$@" | tail -1 | cut -d' ' -f1; }
+partition() { 
+  if fdisk -l -o Name $device | grep -q $1 ;then
+    fdisk -l $device | tail -$(fdisk -l -o Name $device | tac | grep -n $1 | cut -d: -f1) | head -1 | cut -d' ' -f1 
+  else
+    echo ''
+  fi
+}
 
 separator() { echo $(head -c $(echo "$1" | wc -L) </dev/zero | tr '\0' '-'); }
 

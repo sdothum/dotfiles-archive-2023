@@ -7,7 +7,7 @@
 # ........................................................... pacman maintenance
 
 # maximum number of package versions
-wrappaur=pacaur
+wrappaur=$(aurwrapper)
 depth=4
 
 sudo paccache -rk$depth

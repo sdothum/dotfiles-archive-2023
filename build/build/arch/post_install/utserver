@@ -21,6 +21,6 @@ ifnsed /usr/lib/systemd/system/utserver.service ' -logfile' 's| -daemon| -logfil
 ipfilter
 
 service enable utserver
-annotate "enable ipfiltering from advanced settings localhost:8081/gui/"
+ditto "enable ipfiltering from advanced settings localhost:8081/gui/"
 
 # vim: set ft=sh: #

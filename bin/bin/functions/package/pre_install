@@ -10,7 +10,7 @@
 
 # clean up environment for possible re-install of package
 if [ -s $HOME/build/$(dist)/pre_install/$1 ] ;then
-  echo "${__GREEN}@pre_install $1${NOCOLOR}"
+  ditto pre_install "$1"
   . $HOME/build/$(dist)/pre_install/$1
 fi
 

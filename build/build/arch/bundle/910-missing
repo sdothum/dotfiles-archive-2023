@@ -1,19 +1,9 @@
-adobe-base-14-fonts
+amphetype-svn
 csslint
-dict-moby-thesaurus
-enable
-fontmatrix
-hunspell-en
-libflashsupport-oss
-libflashsupport-pulse-git
-mbpfan-git
-passenger
-pgadmin3
-sanitize
-shell-functools
-sinatra
-ttf-robobo
+fontmatrix [server]
+g xapian-ruby
+mbpfan-git [gpu macbook]
+m dict-moby-thesaurus
+m shell-functools
 universal-ctags-git
-watchman
-xapian-ruby
-znc
+znc [server]

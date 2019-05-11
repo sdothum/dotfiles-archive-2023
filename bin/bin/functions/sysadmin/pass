@@ -20,7 +20,7 @@ init() {
   ifno 'initialize password store' && exit 1
   [ -d $STORE ] && mv -v $STORE $STORE.save
   $PASS init sdothum@gmail.com
-  annotate 'import (rebuild) your password store'
+  ditto -- 'import (rebuild) your password store'
 }
 
 password() {

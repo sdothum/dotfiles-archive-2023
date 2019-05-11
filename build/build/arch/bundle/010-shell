@@ -7,9 +7,10 @@
 = file
 = ════
   ack
+  convmv
 # etc-update
 # gamin
-  mediainfo [server]
+# mediainfo [server]
   mlocate
 # multitail
   stow
@@ -58,7 +59,7 @@
   fzf
   moreutils
 # prezto-git
-  pv
+# pv
   ripgrep
 m shell-functools
   the_silver_searcher

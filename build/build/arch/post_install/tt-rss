@@ -31,14 +31,14 @@ ifno 'create tt-rss database' || {
 ifnsed /usr/lib/systemd/system/tt-rss.service 'SELF_URL_PATH=http://localhost:8000/tt-rss/' \
                                               '/Service/aEnvironment="SELF_URL_PATH=http://localhost:8000/tt-rss/"'
 
-server && service enable tt-rss || annotate "sudo systemctl start tt-rss"
+server && service enable tt-rss || ditto run "sudo systemctl start tt-rss"
 
-annotate "check /etc/php/php.ini
-install and start php-fpm\n
-install and start nginx server\n
-initialize database and config.php\n
-login http://localhost/tt-rss/install with ttrss/ttrss\n
-login http://localhost/tt-rss/ with admin/password\n
+ditto "check /etc/php/php.ini
+install and start php-fpm
+install and start nginx server
+initialize database and config.php
+login http://localhost/tt-rss/install with ttrss/ttrss
+login http://localhost/tt-rss/ with admin/password
 set config.php to SINGLE_USER_MODE true"
 
 # vim: set ft=sh: #

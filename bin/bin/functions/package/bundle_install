@@ -15,7 +15,6 @@
 #         - package        [condition] (to remove)
 #         ? package        [condition] (confirm)
 #           package        [condition] (noconfirm)
-#         * package        [condition] (noconfirm) same as above, but with placeholder
 #         @ aur            [condition] (aur makepkg)
 #         a arm            [condition] (aur makepkg for raspberry pi)
 #         d action package [condition] (deferred install)
@@ -38,28 +37,71 @@ unset HTTP_PROXY      # ignore local network proxy
 
 # distro package manager
 if exists pacman ;then
-  INSTALL=pm_install  # arch
+  INSTALL=pm_install    # arch
   QUERY='pacman -Q'
 else
-  INSTALL=xb_install  # void
-  QUERY=xbps-query
+  INSTALL='xb_install'  # void
+  QUERY='xbps-query -S'
 fi
 
 case $1 in
 check) check=true; gems=$(gem list | cut -d' ' -f1); shift ;;
-list ) list=true; shift ;;
-init ) init=--init; shift ;;
+list ) list=true;                                    shift ;;
+init ) init=--init;                                  shift ;;
 esac
 
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
 missing=$BDIR/910-missing
-rm $missing
+[ $check ] && >$missing
 echo $@ | grep -q 900-deferred && unset deferred || {
   [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; };}
 }
 
 rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
+
+# bundle file -> [<action>] <package> [<condition>]
+parse() {
+  case $action in
+  ''       ) return 1 ;;
+  '#'      ) return 1 ;;
+  '='      ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
+  '"'      ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
+  '!'      ) [ $check ] || $package $condition;                                                       return 1 ;;
+  '+'      ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; };} ;;
+  d        ) rule=true ;;
+  [-?@agmp]) rule=$(rule "$condition") ;;
+
+  *        ) set -- $package $condition
+             package=$action
+             condition=$@
+             rule=$(rule "$condition") ;;
+  esac
+  return 0
+}
+
+check() {
+  unset installed
+  # check deferred actions
+  [ $action = d ] && unset action 
+  set -- $action $package $condition
+  action=$1;              shift
+  package=$1; [ "$1" ] && shift
+  condition=$@
+  parse || return
+  [ "$package" = "$action" ] && unset action
+  [ "$package" = "$condition" ] && unset condition
+
+  case $action in
+  '-') return ;;
+  '"') return ;;
+  g  ) echo "$gems" | grep -q "^$package$" && installed=true ;;
+  m  ) ;;  # cannot verify a make_install
+  *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
+  esac
+
+  [ $installed ] && echo $package || { echo $action $package $condition >>$missing ; ditto missing "$package"; }
+}
 
 for i in $@ ;do
   [ $list ] || subject $(basename $i | cut -d- -f2-9)
@@ -69,46 +111,11 @@ for i in $@ ;do
   #       (package condition) map to (command options) for ! execute
   while read action package condition <&3 ;do
     # echo "action=$action package=$package condition=$condition"
-    case $action in
-    ''  ) continue ;;
-    '#' ) continue ;;
-    '=' ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; continue ;;
-    '"' ) [ $check ] || ditto "$package $condition";                                               continue ;;
-    '!' ) [ $check ] || $package $condition;                                                       continue ;;
-    '+' ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     continue; };} ;;
-    d   ) rule=true ;;
-
-    '-' |\
-    '?' |\
-    '*' |\
-    '@' |\
-    a   |\
-    g   |\
-    m   |\
-    p   ) rule=$(rule "$condition") ;;
-
-    *   ) set -- $package $condition
-          package=$action
-          rule=$(rule "$@") ;;
-    esac
+    parse || continue
 
     [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/'; continue; }
     eval $rule || continue
-
-    if [ $check ] ;then
-      unset installed
-      unset pkg
-      # check deferred actions
-      echo "$package" | grep -q '^.$' && package=$(echo $condition | cut -d' ' -f1)
-      case $action in
-      '-') continue ;;
-      g  ) echo "$gems" | grep -q "^$package$" && installed=true || pkg='gem ' ;;
-      m  ) pkg='make_install possibly ' ;;
-      *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
-      esac
-      [ $installed ] && ditto $package || { echo $package >>$missing ; ditto "$package  ${__RED}${BLINK}[${pkg}not installed]"; }
-      continue
-    fi
+    [ $check ] && { check; continue; }
 
     # package management
     case $action in
@@ -127,7 +134,13 @@ for i in $@ ;do
 done
 
 [ $list ] && exit
-[ -e $missing ] && { sort -u -o $missing $missing; annotate 'missing packages..'; cat $missing; exit; }
+if [ $check ] ;then
+  sort -u -o $missing $missing
+  ditto missing "$(wc -l $missing | cut -d' ' -f1) packages"
+  cat $missing
+  ditto "m make_install packages cannot be verified"
+  exit
+fi
 if [ $deferred ] && [ -e $deferred ] ;then
   sort -u -o $deferred $deferred
   cat $deferred

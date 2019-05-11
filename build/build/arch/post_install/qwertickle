@@ -7,6 +7,6 @@
 
 config_install /usr/share/qwertickle/typewriter-return.mp3
 sudo cp -v /usr/share/qwertickle/typewriter-return.mp3.original /usr/share/qwertickle/typewriter-return.mp3.swap
-annotate "super + shift + q to select long/short enter key sounds"
+ditto "super + shift + q to select long/short enter key sounds"
 
 # vim: set ft=sh: #

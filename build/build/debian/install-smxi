@@ -10,10 +10,8 @@ cd /usr/local/bin
   # sudo smxi
 end
 
-annotate 'exit X11 and run "(sudo) smxi"'
-#annotate+ "install miscellaneous tweaks"
-#annotate+ "install google earth"
-#annotate+ "install skype"
-[ (hostname) = luna ]; and annotate+ "install xorg radeon as fglrx tends not to be supported in latest kernels"
+ditto 'exit X11..'
+ditto run 'sudo smxi'
+[ (hostname) = luna ]; and ditto "install xorg radeon as fglrx tends not to be supported in latest kernels"
 
 # vim: set ft=fish: #

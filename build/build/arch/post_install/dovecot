@@ -40,7 +40,7 @@ if grep -qv '^ssl_dh =' /etc/dovecot/conf.d/10-ssl.conf ;then
   sudo sed -i 's/^#ssl_dh =/ssl_dh =/' /etc/dovecot/conf.d/10-ssl.conf
 fi
 
-server && service enable dovecot || annotate "sudo systemctl start dovecot"
+server && service enable dovecot || ditto run "sudo systemctl start dovecot"
 # test dovecot installation
 mailcot localhost $USER $password
 

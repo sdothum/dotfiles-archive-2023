@@ -43,6 +43,6 @@ AcceptEnv LANG LC_*\
 
 service enable sshd
 sudo rm -f $HOME/.ssh/known_hosts
-annotate "ssh to computers and thedarnedestthing.com to refresh known_hosts"
+ditto "ssh to computers and thedarnedestthing.com to refresh known_hosts"
 
 # vim: set ft=sh: #

@@ -1,0 +1,53 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ..................................................................... Annotate
+
+usage() {
+  echo "usage: $(basename $0) @ <desc> | [-- | .. | <desc>] <message>"
+  echo '       where, default <desc> -> "note"'
+  echo '                          -- -> line separator'
+  echo '                          .. -> justify leader'
+  exit 1
+}
+
+[ $leader ] || leader=.  # initial leader
+
+while [ "$1" ] ;do
+  case $1 in
+  '@' ) [ "$2" ] || usage; desc=$2; shift ;;
+  '..') [ "$2" ] || usage; justify=true; message=$2; shift ;;
+  '--') separator=true ;;
+  *   ) [ "$message" ] && desc=$message; message=$1 ;;
+  esac
+  shift
+done
+[ "$desc" = "$message" ] && usage
+[ "$desc" ] || desc=note
+
+justify() {
+  while read line ;do
+    # indent=$(echo "$(tput cols) - $(echo $line | wc -L) - 3" | bc)
+    indent=$(( $(tput cols) - $(echo $line | wc -L) - 3 ))
+    [ $indent -gt 0 ] && leader=$(head -c $indent </dev/zero | tr '\0' "$leader")
+    log "${GREEN}@ $leader ${__YELLOW}$line${NOCOLOR}"
+    leader=' '
+  done
+}
+
+annotate() {
+  [ $separator ] && drawline $leader
+  while read line ;do
+    log "${GREEN}@${desc} ${__YELLOW}$line${NOCOLOR}"
+  done
+}
+
+echo "$message" | sed '/^$/d' | { [ $justify ] && justify || annotate; }  # omit blank lines
+unset leader
+
+# vim: set ft=sh: #

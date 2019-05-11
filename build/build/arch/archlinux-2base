@@ -7,8 +7,8 @@
 # script-check
 
 country=${1:-Canada}
-ditto "$country" 'press enter to continue'
-read reply
+ditto repo "$country"
+ifyes || exit
 
 
 title "setup"
@@ -63,7 +63,7 @@ grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
 ditto 'exit console (script)'
 ditto "login as user $user"
-ditto 'startx (x)'
-ditto 'archlinux-3apps'
+ditto run 'startx (x)'
+ditto run 'archlinux-3apps'
 
 # vim: set ft=sh: #

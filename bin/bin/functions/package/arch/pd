@@ -47,7 +47,7 @@ if [ $1 ] ;then
       #   done
       # fi
     else
-      ditto "\"$i\" not found"
+      ditto package "\"$i\" not found"
     fi
   done
 fi

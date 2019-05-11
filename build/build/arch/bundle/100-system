@@ -32,7 +32,7 @@ d mbpfan-git                [gpu macbook]
 # powertop                  [laptop]
 # "dead battery in macbook"
   tlp                       [laptop && ! gpu macbook]
-# d * xfce4-power-manager
+# d xfce4-power-manager
 
 
 = security
@@ -40,7 +40,7 @@ d mbpfan-git                [gpu macbook]
 # d gksu
   gnome-keyring
 # keepassx
-d * pass
+d pass
   polkit-gnome
 # python-keyring
 # python-keyrings-alt
@@ -52,9 +52,9 @@ d * pass
   alsa-plugins
 # lib32-alsa-plugins
 # lib32-libpulse
-d libflashsupport-oss
+# d libflashsupport-oss
 # libflashsupport-pulse
-d libflashsupport-pulse-git
+# d libflashsupport-pulse-git
   mpg123
 # paprefs
 # pavolume-git
@@ -62,7 +62,7 @@ d libflashsupport-pulse-git
   pulseaudio
   pulseaudio-alsa
 # pulseaudio-ctl
-  pulseaudio-equalizer
+# pulseaudio-equalizer
 # pulsemixer-git
 # xfce4-mixer
 # xfce4-volumed

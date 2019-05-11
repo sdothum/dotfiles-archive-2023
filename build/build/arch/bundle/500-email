@@ -21,9 +21,9 @@ d alot
 # astroid
 # geary
 # geary-git
-# * gpgme
-# * highline
-d * notmuch
+# gpgme
+# highline
+d notmuch
 # notmuch-vim
 # re-alpine
 # ruby-gme

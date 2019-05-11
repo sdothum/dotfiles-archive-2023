@@ -5,6 +5,6 @@
 
 # ....................................................................... luakit
 
-annotate "sync customizations in $HOME/.luakit/* with /etc/xdg/luakit/* sources"
+ditto "sync customizations in $HOME/.luakit/* with /etc/xdg/luakit/* sources"
 
 # vim: set ft=sh: #

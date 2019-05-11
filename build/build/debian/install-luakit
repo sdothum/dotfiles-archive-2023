@@ -37,6 +37,6 @@ sudo update-alternatives --verbose --install /usr/bin/x-www-browser x-www-browse
 #sudo update-alternatives --set gnome-www-browser /usr/local/bin/luakit
 #sudo update-alternatives --set x-www-browser /usr/local/bin/luakit
 
-annotate "compare customizations in $HOME/.luakit/* with /data/depot/www/luakit/luakit-master/config/* sources"
+ditto "compare customizations in $HOME/.luakit/* with /data/depot/www/luakit/luakit-master/config/* sources"
 
 # vim: set ft=fish: #

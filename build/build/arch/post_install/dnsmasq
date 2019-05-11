@@ -26,7 +26,5 @@ ifnsed /etc/dhcpcd.conf 'nohook resolv.conf'
 service disable connman  # release port 53
 service enable dnsmasq
 service enable connman
-annotate "add listen-address=<gateway>\n
-and interface=<if> to /etc/dnsmasq.conf"
 
 # vim: set ft=sh: #

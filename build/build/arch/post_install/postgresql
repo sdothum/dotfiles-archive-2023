@@ -18,6 +18,6 @@ if [ ! -L /var/lib/postgres ] ;then
   # sudo sed -i '/^local *all *all *trust/s/trust/md5/' /srv/lib/postgres/data/pg_hba.conf
 fi
 
-server && service enable postgresql || annotate "sudo systemctl start postgresql"
+server && service enable postgresql || ditto run "sudo systemctl start postgresql"
 
 # vim: set ft=sh: #

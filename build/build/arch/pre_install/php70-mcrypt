@@ -5,7 +5,7 @@
 
 # ................................................................. php70-mcrypt
 
-annotate "edit PKGBUILD check() and negate sendmail test\n
+ditto "edit PKGBUILD check() and negate sendmail test
 change grep -q -> grep -vq to ignore msmtp-mta usage"
 
 # vim: set ft=sh: #

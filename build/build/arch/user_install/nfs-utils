@@ -44,6 +44,6 @@ fi
 #        sudo crontab -u $USER -
 # fi
 
-annotate 'update cliend hosts tables with nfs server address for luna'
+ditto 'update cliend hosts tables with nfs server address for luna'
 
 # vim: set ft=sh: #

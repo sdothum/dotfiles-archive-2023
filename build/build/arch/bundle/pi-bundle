@@ -89,7 +89,7 @@ d ? preload
   ttf-font-awesome
 # ttf-liberation
   ttf-ms-fonts
-  ttf-robobo
+  ttf-roboto
   ttf-symbola
 
 
@@ -276,7 +276,7 @@ g term-ansicolor
 = ════
 d " add export CFLAGS="-D_FILE_OFFSET_BITS=64" to package() of pkgbuild
 d ? python2-gpg
-d * alot
+d alot
   msmtp-mta
 
 
@@ -358,7 +358,7 @@ d ? amphetype-svn
 = network
 = ═══════
 d " drops internet connection (do last!)
-d * connman
+d connman
 
 
 # vim: set ft=conf: #

@@ -6,6 +6,6 @@
 # ...................................................................... sabnzbd
 
 service enable sabnzbd
-annotate "run sabnzbd manually to configure. Note: sabnzbd is service enabled"
+ditto "run sabnzbd manually to configure. Note: sabnzbd is service enabled"
 
 # vim: set ft=sh: #

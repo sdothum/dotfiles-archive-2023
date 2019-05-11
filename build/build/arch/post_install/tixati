@@ -5,7 +5,7 @@
 
 # ....................................................................... tixati
 
-annotate "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz\n
+ditto "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz
 add bogon blocklist http://list.iblocklist.com/?list=bt_bogon&fileformat=p2p&archiveformat=gz"
 
 # vim: set ft=sh: #
