@@ -165,7 +165,7 @@ function fish_right_prompt --description 'Write out the right prompt'
     false
   end
 
-  function time
+  function timequery
     set_color $_info
     date '+  %-I:%M %S'
     set_color normal
@@ -174,7 +174,7 @@ function fish_right_prompt --description 'Write out the right prompt'
   function timer
     duration
       or if test $TERM = "linux"
-        time
+        timequery
       end
   end
 

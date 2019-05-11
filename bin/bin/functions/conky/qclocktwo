@@ -6,30 +6,30 @@
 # .... .................................................Dynamcic conky qclocktwo
 
 usage() {
-  echo "usage: $(basename $0) qclocktwo {voffset} [{offset}] | -- <hour> <minute> [I]"
+  echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}] | -- <hour> <minute> (debug)"
   exit 1
 }
 
 # reduces qclocktwo conkyrc configuration to 1 line statement using ${execp conky qclocktwo '{voffset}' ..}
 # adding extended randomization of clock display for hours positions and highlight information
 
-QCLOCK=/tmp/qclocktwo       # interval lock
-QHOUR=$QCLOCK:hour          # current hour (highlight)
 [ "$1" ] || usage
 
-if [ "$1" = -- ] ;then      # console debug mode
+if [ "$1" = -- ] ;then            # console debug mode
   shift
+  [ "$2" ] || usage
   H=$1; M=$2
-  [ $3 ] && rm -f $QCLOCK*  # new time sequence
 else
-  voffset=$1                # conkyrc alignment
+  voffset=$1                      # conkyrc alignment
   [ "$2" ] && offset=$2 || offset='{alignc}'
   H=$(date +%-I); M=$(date +%-M)
 fi
 
+QCLOCK=/tmp/qclocktwo             # interval lock
+QHOUR=$QCLOCK:hour                # current hour (highlight)
 touch $QCLOCK
 touch $QHOUR
-HOUR=$(cat $QHOUR)          # current highlighted hour
+HOUR=$(cat $QHOUR)                # current highlighted hour
 
 M5=$(( $M / 5 ))                  # 5 minute interval
 [ $M5 -gt 6 ] && H=$(( $H + 1 ))  # 'to' hour
@@ -225,15 +225,13 @@ c6() { shuffle "11 ELEVEN \n12 TWELVE "; }
 define() {
   i=$1; j=$2
   eval set -- $(c$i)
-  for k in $(seq 1 $j) ;do
-    var="I$i$k=$1"; shift; echo $var >>$QCLOCK:vars &                           # I<wordlen><idx> -> hour
-    eval $var
-    var="W$i$k=$(echo $1 | sed 's/./&:/g')"; shift; echo $var >>$QCLOCK:vars &  # W<wordlen><idx> -> label
-    eval $var
+  for k in $(seq 1 $j) ;do  # generate hour array vars
+    var="I$i$k=$1"; shift; echo $var >>$QCLOCK:vars &
+    eval $var               # I<wordlen><idx> -> hour
+    var="W$i$k=$(echo $1 | sed 's/./&:/g')"; shift; echo $var >>$QCLOCK:vars &
+    eval $var               # W<wordlen><idx> -> label
   done
 }
-
-map() { cat $QCLOCK:$1 | cut -d' ' -f$(( $3 - $2 )); }
 
 hours() {
   if [ "$HOUR" != $H ] ;then               # shuffle hour positions
@@ -263,6 +261,8 @@ qclock() {
   fi
 }
 
+map() { cat $QCLOCK:$1 | cut -d' ' -f$(( $3 - $2 )); }
+
 line() {
   case $1 in
   0     ) qclock; wait; cat $QCLOCK:0 ;;   # trigger refresh at topmost conkyrc line
@@ -270,12 +270,12 @@ line() {
   [34]  ) cat $QCLOCK:$i ;;
   [5678]) cat $QCLOCK:$(map hours 4 $i) ;;
   [9]   ) cat $QCLOCK:$i ;;
-esac
+  esac
 }
 
 for i in 0 1 2 3 4 5 6 7 8 9 ;do
   display="$display\$$voffset\$$offset$(line $i)\n"
 done
-echo "$display"                            # avoid conky latency with single result
+echo "$display"                            # concatenated result avoids conky latency
 
 # vim: set ft=sh: #
