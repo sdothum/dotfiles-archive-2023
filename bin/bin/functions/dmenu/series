@@ -26,11 +26,11 @@ rm -f $retitle
 
 # exclude directory kludge of .anime links in main series folder
 if server ;then
-  sudo find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec chmod -R 755 {} \;
-  sudo find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec chown -R shum:users {} \;
+  find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \;
+  find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \;
 else
-  ssh $SERVER "sudo find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec chmod -R 755 {} \\;"
-  ssh $SERVER "sudo find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec chown -R shum:users {} \\;"
+  ssh $SERVER "find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \\;"
+  ssh $SERVER "find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \\;"
 fi
 find $library -name '*sample*' -exec rm {} \; &
 # clean up titles

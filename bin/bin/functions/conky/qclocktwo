@@ -42,10 +42,10 @@ Q='{color}'                       # conky color bright
 _='{color1}'                      # conky color dim
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
-xs()      { echo "${_}$(ch 1)${Q}"; }                                                    # word pair fill char
-nx()      { for i in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }                       # random fill char column
-shuffle() { echo "$@" | shuf | tr -d '\n'; }                                             # word salad
-draw()    { echo "$voffset$offset$1" | sed 's/:/ /g; s/ $//; s/[{]/$&/g' >$QCLOCK:$2; }  # escape conky expression
+xs()      { echo "${_}$(ch 1)${Q}"; }                                     # word pair fill char
+nx()      { for i in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }        # random fill char column
+shuffle() { echo "$@" | shuf | tr -d '\n'; }                              # word salad
+draw()    { echo "$1" | sed 's/:/ /g; s/ $//; s/[{]/$&/g' >$QCLOCK:$2; }  # escape conky expression
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
 _ITIS_()  { shuffle "${Q}I T $(xs)I S $(nx 6)"; }
@@ -106,7 +106,7 @@ qclock3() {
 
 pastQ4()    { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
 PASTQ4()    { shuffle "${Q}P A S T $(xs)$W43$(nx 2)"; }
-PastQ4()    { sed "s/[$]//g; s/${_}P A S T ${_}. /${Q}P A S T $(xs)/" $QCLOCK:4; }
+PastQ4()    { sed "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/" $QCLOCK:4; }
 PAST_4()    { shuffle "${Q}P A S T \n${_}$W43$(nx 3)"; }
 past_4()    { shuffle "${_}P A S T \n${_}$W43$(nx 3)"; }
 
@@ -274,6 +274,9 @@ if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
   echo $H >$QHOUR &
   wait
 fi
-for i in $(seq 0 9) ;do line $i ;done
+for i in $(seq 0 9) ;do 
+  display="$display\$$voffset\$$offset$(line $i)\n"
+done
+echo $display
 
 # vim: set ft=sh: #
