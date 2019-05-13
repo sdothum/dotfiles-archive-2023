@@ -46,7 +46,7 @@ ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
 xs()      { echo "${_}$(ch 1)${Q}"; }                               # word pair fill char
 nx()      { for i in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }  # random fill char column
 shuffle() { echo "$@" | shuf | tr -d '\n'; }                        # word salad
-draw()    { echo "$voffset$offset$1" | sed "s/:/ /g; s/ $//; $esc" >$QCLOCK:$2; }
+draw()    { echo "$voffset$offset$1" | sed "s/ $//; $esc" >$QCLOCK:$2; }
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
 _ITIS_()  { shuffle "${Q}I T $(xs)I S $(nx 6)"; }
@@ -105,23 +105,23 @@ qclock3() {
   draw "$qclock" 3
 }
 
-pastQ4()      { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
-PASTQ4()      { shuffle "${Q}P A S T $(xs)$W43$(nx 2)"; }
-PAST_4()      { shuffle "${Q}P A S T \n${_}$W43$(nx 3)"; }
-past_4()      { shuffle "${_}P A S T \n${_}$W43$(nx 3)"; }
-PASTQ4_edit() { sed -i "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/; $esc" $QCLOCK:4; }
+pastQ4()    { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
+PASTQ4()    { shuffle "${Q}P A S T $(xs)$W43$(nx 2)"; }
+PAST_4()    { shuffle "${Q}P A S T \n${_}$W43$(nx 3)"; }
+past_4()    { shuffle "${_}P A S T \n${_}$W43$(nx 3)"; }
+PASTQ4_ed() { sed -i "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/; $esc" $QCLOCK:4; }
 
-past_hour()   { [ $M -ge 5 ] && [ $M -lt 35 ]; }
+past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
 
 qclock4() {
   if [ $H = $I43 ] ;then
     if [ "$HOUR" != $I43 ] ;then
-      if past_hour ;then qclock=$(PASTQ4)       # on conky startup past the hour
+      if past_hour ;then qclock=$(PASTQ4)          # on conky startup past the hour
       else               qclock=$(pastQ4)
       fi
       draw "$qclock" 4
     elif past_hour ;then 
-      if [ -e $QCLOCK:4 ] ;then PASTQ4_edit; return  # highlight hour -> highlight past hour
+      if [ -e $QCLOCK:4 ] ;then PASTQ4_ed; return  # highlight hour -> highlight past hour
       else                      qclock=$(PASTQ4)
       fi
       draw "$qclock" 4
@@ -233,26 +233,27 @@ C6() { shuffle "11 ELEVEN \n12 TWELVE "; }
 define() {
   i=$1; j=$2
   eval set -- $(C$i)
-  for k in $(seq 1 $j) ;do               # generate hour array vars
-    var="I$i$k=$1"; shift; echo $var >>$QCLOCK:vars &
-    eval $var                            # I<wordlen><idx> -> hour
-    var="W$i$k=$(echo $1 | sed 's/./&:/g')"; shift; echo $var >>$QCLOCK:vars &
-    eval $var                            # W<wordlen><idx> -> label
+  for k in $(seq 1 $j) ;do
+    var="I$i$k=$1"; echo $var >>$QCLOCK:vars &
+    eval $var  # I<wordlen><idx> -> hour
+    var="W$i$k='$(echo $2 | sed "s/./& /g")'"; echo $var >>$QCLOCK:vars &
+    eval $var  # W<wordlen><idx> -> label
+    shift 2
   done
 }
 
 hours() {
-  if [ "$HOUR" != $H ] ;then             # shuffle hour positions
+  if [ "$HOUR" != $H ] ;then            # shuffle hour positions
     define 3 4
     define 4 3
     define 5 3
     define 6 2
-    minutes=$(shuffle "1 \n 2 ")         # map minute lines
+    minutes=$(shuffle "1 \n 2 ")        # map minute lines
     echo $minutes >$QCLOCK:minutes &
-    hours=$(shuffle "5 \n 6 \n7 \n8 ")   # map hour lines
+    hours=$(shuffle "5 \n 6 \n7 \n8 ")  # map hour lines
     echo $hours >$QCLOCK:hours &
   else
-    while read var <&3 ;do               # restore variables
+    while read var <&3 ;do              # restore variables
       eval $var
     done 3< $QCLOCK:vars
   fi
