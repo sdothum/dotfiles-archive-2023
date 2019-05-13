@@ -119,19 +119,18 @@ qclock4() {
       if past_hour ;then qclock=$(PASTQ4)          # on conky startup past the hour
       else               qclock=$(pastQ4)
       fi
-      draw "$qclock" 4
     elif past_hour ;then 
       if [ -e $QCLOCK:4 ] ;then PASTQ4_ed; return  # highlight hour -> highlight past hour
       else                      qclock=$(PASTQ4)
       fi
-      draw "$qclock" 4
+    else return                                    # current hour unchanged
     fi
   else
     if past_hour ;then qclock=$(PAST_4)
     else               qclock=$(past_4)
     fi
-    draw "$qclock" 4
   fi
+  draw "$qclock" 4
 }
 
 Q3_5_3() { shuffle "${Q}$W31\n${_}$W51\n${_}$W33"; }
@@ -215,14 +214,13 @@ qclock9() {
     0) qclock=$(Q3OCLOCK) ;;  # ten o'clock always touches corner
     *) qclock=$(Q3clock) ;;
     esac
-    draw "$qclock" 9
   else 
     case $M5 in
     0) qclock=$(_3OCLOCK) ;;  # o'clock touches corner, just because
     *) qclock=$(_3clock) ;;
     esac
-    draw "$qclock" 9
   fi
+  draw "$qclock" 9
 }
 
 C3() { shuffle "1 ONE \n2 TWO \n6 SIX \n10 TEN "; }
