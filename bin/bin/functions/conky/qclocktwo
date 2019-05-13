@@ -44,7 +44,7 @@ esc='s/[{]/$&/g'                  # escape conky expression
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
 xs()      { echo "${_}$(ch 1)${Q}"; }                               # word pair fill char
-nx()      { for i in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }  # random fill char column
+nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }  # random fill char column
 shuffle() { echo "$@" | shuf | tr -d '\n'; }                        # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" >$QCLOCK:$1; }
 
@@ -136,7 +136,7 @@ _3_5_3() { shuffle "${_}$W31\n${_}$W51\n${_}$W33"; }
 
 refresh_hour() { 
     [ "$HOUR" != $H ] && return 0                       # 'to' hour change in progress
-    for i in $@ ;do [ "$HOUR" = $i ] && return 1 ;done  # freeze current hour display
+    for j in $@ ;do [ "$HOUR" = $j ] && return 1 ;done  # freeze current hour display
     return 0                                            # eye candy refresh
   }
 
