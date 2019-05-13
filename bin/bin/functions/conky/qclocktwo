@@ -46,7 +46,7 @@ ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
 xs()      { echo "${_}$(ch 1)${Q}"; }                               # word pair fill char
 nx()      { for i in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }  # random fill char column
 shuffle() { echo "$@" | shuf | tr -d '\n'; }                        # word salad
-draw()    { echo "$voffset$offset$1" | sed "s/ $//; $esc" >$QCLOCK:$2; }
+draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" >$QCLOCK:$1; }
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
 _ITIS_()  { shuffle "${Q}I T $(xs)I S $(nx 6)"; }
@@ -56,7 +56,6 @@ qclock0() {
   0) qclock=$(ITIS) ;;    # top corner on the hour
   *) qclock=$(_ITIS_) ;;  # randomly position 'it is' phrase
   esac
-  draw "$qclock" 0
 }
 
 AQUARTER() { shuffle "${Q}A $(xs)Q U A R T E R $(nx 2)"; }
@@ -68,7 +67,6 @@ qclock1() {
   9) qclock=$(AQUARTER) ;;
   *) qclock=$(quarter) ;;
   esac
-  draw "$qclock" 1
 }
 
 twentyFIVE() { shuffle "${_}T W E N T Y \n${Q}F I V E $(nx)"; }
@@ -86,7 +84,6 @@ qclock2() {
   7 ) qclock=$(TWENTYFIVE) ;;
   * ) qclock=$(twentyfive) ;;
   esac
-  draw "$qclock" 2
 }
 
 HALFtento() { shuffle "${Q}H A L F \n${_}T E N \n${_}T O $(nx 2)"; }
@@ -100,9 +97,10 @@ qclock3() {
   2 ) qclock=$(halfTENto) ;;
   6 ) qclock=$(HALFtento) ;;
   10) qclock=$(halfTENTO) ;;
-  * ) [ $M -ge 35 ] && qclock=$(halftenTO) || qclock=$(halftento) ;;
+  * ) if [ $M -ge 35 ] ;then qclock=$(halftenTO)
+      else                   qclock=$(halftento)
+      fi ;;
   esac
-  draw "$qclock" 3
 }
 
 pastQ4()    { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
@@ -116,21 +114,19 @@ past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
 qclock4() {
   if [ $H = $I43 ] ;then
     if [ "$HOUR" != $I43 ] ;then
-      if past_hour ;then qclock=$(PASTQ4)          # on conky startup past the hour
+      if past_hour ;then qclock=$(PASTQ4)  # on conky startup past the hour
       else               qclock=$(pastQ4)
       fi
     elif past_hour ;then 
-      if [ -e $QCLOCK:4 ] ;then PASTQ4_ed; return  # highlight hour -> highlight past hour
+      if [ -e $QCLOCK:4 ] ;then PASTQ4_ed  # highlight hour -> highlight past hour
       else                      qclock=$(PASTQ4)
       fi
-    else return                                    # current hour unchanged
     fi
   else
     if past_hour ;then qclock=$(PAST_4)
     else               qclock=$(past_4)
     fi
   fi
-  draw "$qclock" 4
 }
 
 Q3_5_3() { shuffle "${Q}$W31\n${_}$W51\n${_}$W33"; }
@@ -152,7 +148,6 @@ qclock5() {
     $I33) qclock=$(_3_5Q3) ;;
     *   ) qclock=$(_3_5_3) ;;
     esac
-    draw "$qclock" 5
   fi
 }
 
@@ -169,7 +164,6 @@ qclock6() {
     $I42) qclock=$(_3_4Q4) ;;
     *   ) qclock=$(_3_4_4) ;;
     esac
-    draw "$qclock" 6
   fi
 }
 
@@ -184,7 +178,6 @@ qclock7() {
     $I61) qclock=$(_5Q6) ;;
     *   ) qclock=$(_5_6) ;;
     esac
-    draw "$qclock" 7
   fi
 }
 
@@ -199,7 +192,6 @@ qclock8() {
     $I62) qclock=$(Q6_5) ;;
     *   ) qclock=$(_6_5) ;;
     esac
-    draw "$qclock" 8
   fi
 }
 
@@ -220,7 +212,6 @@ qclock9() {
     *) qclock=$(_3clock) ;;
     esac
   fi
-  draw "$qclock" 9
 }
 
 C3() { shuffle "1 ONE \n2 TWO \n6 SIX \n10 TEN "; }
@@ -271,7 +262,9 @@ if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
   echo $H:$M5 >$QCLOCK &
   hours
   for i in $(seq 0 9) ;do
-    eval qclock$i &
+    unset qclock  # clear buffer
+    eval qclock$i
+    draw $i &
   done
   echo $H >$QHOUR &
   wait
