@@ -25,7 +25,8 @@ if [ "$1" = -- ] ;then            # console debug mode
   [ $3 ] && rm -f $QCLOCK*        # clear history
 else
   voffset=$1                      # conkyrc alignment
-  [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
+  # [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
+  [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:${2#* }; QCLOCK=${QCLOCK%?}; } || offset='{alignc}'
   H=$(date +%-I); M=$(date +%-M)
 fi
 
@@ -220,7 +221,7 @@ W5() { echo "3 THREE \n7 SEVEN \n8 EIGHT "; }
 W6() { echo "11 ELEVEN \n12 TWELVE "; }
 
 defvars() {
-  eval set -- $(shuffle $(W$i))  # see layout()
+  eval set -- $(shuffle "$(W$i)")  # see layout()
   for j in $(seq 1 $(W$i | wc -l)) ;do
     var="I$i$j=$1"
     echo $var >>$QCLOCK:vars &
