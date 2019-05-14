@@ -127,6 +127,7 @@
       " line numbers
       function! theme#LineNr()
         Trace theme#LineNr()
+        if core#CommandWindow() | return | endif
         execute 'hi CursorLineNr '  . (g:view == 0 ? 'gui=bold guifg=' . s:hexValue('s:dfm_bg_' . &background)
                 \                                  : 'gui=none guifg=' . (b:view == 0 ? s:dfm_bg : s:dfm_fg_line))
         if mode() == 'n' | execute 'hi LineNr  guifg=' . (g:view == 0 ? s:dfm_fg_line : s:dfm_bg)

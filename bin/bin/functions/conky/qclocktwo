@@ -225,10 +225,10 @@ defvars() {
   for j in $(seq 1 $(W$i | wc -l)) ;do
     var="I$i$j=$1"
     echo $var >>$QCLOCK:vars &
-    eval $var                    # I<wordlen><idx> -> hour
+    eval $var                      # I<wordlen><idx> -> hour
     var="W$i$j='$(echo $2 | sed "s/./& /g")'"
     echo $var >>$QCLOCK:vars &
-    eval $var                    # W<wordlen><idx> -> label
+    eval $var                      # W<wordlen><idx> -> label
     shift 2
   done
 }

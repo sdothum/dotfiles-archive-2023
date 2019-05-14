@@ -69,6 +69,7 @@
 
       function! ui#ToggleProof()
         Trace ui#ToggleProof()
+        if core#CommandWindow() | return | endif
         let b:view = b:view == 0 ? 1 : 0
         call s:view()
       endfunction
@@ -119,6 +120,7 @@
       endfunction
 
       function! ui#Active()
+        if core#CommandWindow() | return '   ' | endif
         return (w:tagged == g:active && winnr('$') > 1) ? '  ' . s:active_win : '   '  " glyph requires leading double pad for single space
       endfunction
 

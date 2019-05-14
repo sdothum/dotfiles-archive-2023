@@ -144,6 +144,10 @@
         return expand('%:r') =~ '^[[_].*'
       endfunction
 
+      function! core#CommandWindow()
+        return expand('%p') == '[Command Line]'
+      endfunction
+
     " ............................................................... Modifiable
 
       " [regex name, filetype, modifiable, wordcount], "/name" to represent "^name"

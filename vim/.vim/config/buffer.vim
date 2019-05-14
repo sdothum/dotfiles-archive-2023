@@ -78,6 +78,7 @@
 
       " :wall on FocusLost does not trigger autocmd BufWrite (?)
       function! s:queueBuffers()
+        if core#CommandWindow() | return | endif
         set lazyredraw
         let l:cur_buffer = bufnr('%')
         for l:buf in getbufinfo({'buflisted':1})
@@ -125,17 +126,28 @@
       " nmap <leader>b :buffer<Space>
       nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
 
+      " nmap <silent><Enter> :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
+      function! s:enter()
+        if core#CommandWindow()  " on q: to enter command-line window
+          execute "normal! \<CR>"
+        else
+          CloseDiff
+          silent bnext
+          call theme#SplitColors()
+        endif
+      endfunction
+
       " beakl si layout specific buffer navigation key assignments, note silent -> silent
       if $BEAKL > ''
         " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
-        nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
-        nmap <silent><Enter>  :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
+        nmap <silent><Delete>   :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
+        noremap <silent><Enter> :call <SID>enter()<CR>
       else
-        nmap <silent>-        :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
-        nmap <silent>+        :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
+        nmap <silent>-          :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
+        nmap <silent>+          :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
       endif
       " switch to previously edited/viewed buffer
-      nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>:call theme#SplitColors()<CR>
+      nmap <silent><BS>         :CloseDiff<CR>:silent edit #<CR>:call theme#SplitColors()<CR>
 
   " Window actions _____________________________________________________________
 

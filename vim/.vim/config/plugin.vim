@@ -55,9 +55,9 @@
 
     " ............................................................. Highlighting
 
+      " Plug 'JuliaEditorSupport/julia-vim'   " julia programming language
       " Plug 'markonm/traces.vim'           " ex pattern/range highlghting
       " Plug 'romainl/vim-cool'             " auto clear search highlighting
-      Plug 'JuliaEditorSupport/julia-vim'   " julia programming language
       Plug 'itchyny/vim-cursorword', prose  " word highlighting
       Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' }  " colourized indent columns
       Plug 'sheerun/vim-polyglot'           " multilingual highlighting
