@@ -86,7 +86,7 @@ while : ;do
     case $action in
     read  ) [ $focus ] || { focus frame; focus=true; }; FBReader "$file" ;;
     edit  ) catlg; ebooks ;;
-    kindle) dmenu kindle $file ;;
+    kindle) dmenu kindle "$file" ;;
     esac
     break
   done

@@ -78,6 +78,7 @@
 
     " ................................................................ Hypertext
 
+      " Plug 'dyng/ctrlsf.vim'              " ctrl-shift-f clone
       " Plug 'lervag/wiki'                  " vimwiki clone
       Plug 'junegunn/fzf.vim', { 'dir': '~/.fzf', 'do': './install --all' }  " fuzzy finder
       Plug 'Alok/notational-fzf-vim'        " fzf note search
