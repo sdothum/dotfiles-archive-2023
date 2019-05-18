@@ -1,0 +1,55 @@
+# shell packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= file
+= ════
+  ack
+# mediainfo [server]
+  mlocate
+  stow
+  tree
+
+
+= file manager
+= ════════════
+  ncdu
+  nnn
+  ranger
+  vifm
+
+
+= info screen
+= ═══════════
+  fortune-mod
+  neofetch
+  toilet
+
+
+= shell
+= ═════
+  dash
+  fish-shell
+
+
+= shell tool
+= ══════════
+  expect
+  fzf
+# pv
+  ripgrep
+# shellcheck
+  the_silver_searcher
+
+
+= terminal multiplexor
+= ════════════════════
+  tmux
+  
+
+# vim: set ft=conf: #
+
+
+

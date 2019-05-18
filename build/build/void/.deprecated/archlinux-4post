@@ -1,0 +1,439 @@
+#!/bin/zsh
+# post install/upgrade configuration
+
+if [[ ! -d ~/stow ]]; then
+  echo '..stow directory not present'
+  exit
+fi
+cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //' | uniq | cut -d' ' -f2-4 | sed -e 's/(.*)/ /' -e 's/ CPU//' | grep -v 'Atom' && laptop=1 || desktop=1
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                   title "setup"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if heading_if "/net/* directories"         "is_laptop"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  [[ -d /net/archive ]] || sudo mkdir -v /net/archive
+
+  if [[ ! -d /net/downloads/http ]]; then
+    # sudo mkdir -pv /net/downloads/depot
+    sudo mkdir -pv /net/downloads/http
+    sudo mkdir -pv /net/downloads/nzbs
+    sudo mkdir -pv /net/downloads/torrents
+    permissions /net/downloads
+  fi
+
+  if [[ ! -d /net/media ]]; then
+    sudo mkdir -pv /net/media
+    permissions /net/media
+  fi
+
+  if [[ ! -d /net/photos ]]; then
+    sudo mkdir -pv /net/photos
+    permissions /net/photos
+  fi
+fi
+
+
+if heading_if "/net raid"                  "is_server && ! grep -q '/net' /etc/fstab"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  # don't use v.fish to spawn a vim session
+  # vim ~/build/root/etc/fstab.luna.raid
+  original /etc/fstab
+  cat /etc/fstab.original ~/build/root/etc/fstab.luna.raid > ~/build/root/etc/fstab.luna
+  config_install /etc/fstab luna
+fi
+
+
+if heading_if "root setup"                  "sudo test ! -f /root/.forward"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  # ..weird inversion of test required ??
+  # sudo mkdir -pv /root/.config/fish
+  # sudo ln -sfv ~/.config/fish/config.fish /root/.config/fish/
+  # sudo ln -sfv ~/.config/fish/functions /root/.config/fish/
+  # sudo ln -sfv ~/.config/fish/user.fish /root/.config/fish/
+  sudo ln -sfv ~/.zprezto /root/
+  sudo ln -sfv ~/.zpreztorc /root/
+  sudo ln -sfv ~/.zsh /root/
+  sudo ln -sfv ~/.zshenv /root/
+  sudo ln -sfv ~/.zshrc /root/
+  # sudo ln -sfv ~/.config/xfce4 /root/.config/
+  sudo ln -sfv ~/.fonts /root/
+  sudo ln -sfv ~/.vim /root/
+  sudo ln -sfv ~/.vimrc /root/
+  sudo mkdir -v /root/tmp
+  sudo mkdir -v /root/log
+  echo "sdothum@gmail.com" | sudo tee /root/.forward
+  sudo chsh -s /usr/bin/zsh root
+  sudo lxappearance
+fi
+
+
+if heading_if "user setup"                  "[[ ! -e ~/.post-install ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  xfce4-notifyd-config
+  xfce4-power-manager &
+  xfce4-power-manager -c
+fi
+
+
+if heading_if "gpg key"                     "[[ ! -S ~/.gnupg/S.gpg-agent ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gpg --gen-key
+  pass init sdothum@gmail.com
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                    title "boot"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if heading_if "grub splash"                 "! (( $(grep 'deserted_2560x1600.jpg' /etc/default/grub | wc -l) ))"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /etc/default/grub
+  # sudo sed -i -e '/^GRUB_TIMEOUT/s/[0-9]/3/' /etc/default/grub
+  sudo sed -i -e '/^GRUB_TIMEOUT/s/[0-9]/3/' \
+              -e 's,#*GRUB_BACKGROUND=.*,GRUB_BACKGROUND='$HOME'/images/wallpapers/deserted_2560x1600.jpg,' /etc/default/grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
+
+if heading_if "intel-ucode"                 "pm intel-ucode >/dev/null && (( $(sudo grep 'initramfs-linux-ck.img' /boot/grub/grub.cfg | wc -l) ))"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  ~/build/archlinux/post_install/intel-ucode
+fi
+
+
+if heading_if "tmpfs"                       "grep -q '^LABEL=.*/tmp' /etc/fstab"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  sudo sed -i '/^LABEL=.*\/tmp/s/^LABEL=/# LABEL=/' /etc/fstab
+fi
+
+
+if heading_if "hosts table"                 "[[ ! -f /etc/hosts.original ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  # config_install /etc/hosts
+  original /etc/hosts
+  post_install hosts
+fi
+
+
+# if heading_if "systemd"                     "[[ ! -d mkdir /run/user/1000/dbus ]]"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   mkdir -v mkdir /run/user/1000/dbus
+# fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                 title "network"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if heading_if "disable network daemons"     "sudo systemctl status dhcpcd | grep -q enabled"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  # [[ -f /etc/NetworkManager/system-connections/Ravens ]] || sudo nm-connection-editor
+  sudo systemctl disable dhcpcd
+  sudo systemctl disable netctl
+fi
+
+
+# if heading_if "setup wireless"              "[[ ! -e ~/.wicd/WHEREAREMYFILES ]]"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   wicd-client &
+#   echo "\n.. configure wireless, then press [enter] to continue ..\n"
+#   read
+# fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                title "hardware"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if is_laptop; then
+  # if heading_if "acer sdhc card reader"     "[[ ! -f /etc/modules-load.d/pciehp.conf ]]"; then
+  # # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  #   config_install /etc/modules-load.d/pciehp.conf
+  # fi
+
+
+  if heading_if "intel video tearing fix"   "[[ ! -f /etc/X11/xorg.conf.d/20-intel.conf ]]"; then
+  # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+    config_install /etc/X11/xorg.conf.d/20-intel.conf
+  fi
+fi
+
+
+if is_server; then
+  # heading "enable network daemons"
+  # systemd_enable dhcpcd
+  if heading_if "x11 trackman mouse"        "[[ -d /usr/share/X11/xorg.conf.d ]]"; then
+  # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+    config_install /usr/share/X11/xorg.conf.d/10-evdev.conf
+  fi
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                  title "system"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+# if heading_if "adsuck"                      "[[ ! -f /var/adsuck/resolv.conf ]]"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   original /etc/resolv.conf
+#   sudo cp -v ~/build/root/etc/resolv.conf.adsuck /etc/resolv.conf
+#   sudo cp -v ~/build/root/var/adsuck/* /var/adsuck/
+#   sudo systemctl restart adsuck
+# fi
+
+
+# if heading_if "# cups printing"             "[[ ! -f /etc/cups/ppd/Virtual_PDF_Printer.ppd ]]"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   # hpsetup -u
+#   # cups problem with non-sudo configuration
+#   annotate "configure usb and virtual pdf printers"
+#   annotate+ "select gutenprint driver and configure printer defaults"
+#   cups
+# fi
+
+
+# if heading_if "default_applications"        "grep -q xfce4 /etc/xdg/xfce4/helpers.rc"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   original /etc/xdg/xfce4/helpers.rc
+#   config_install /etc/xdg/xfce4/helpers.rc
+# fi
+
+
+if heading_if "locale"                      "! grep -q '^en_US.UTF-8 UTF-8' /etc/locale.gen"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  sudo sed -i 's/.*en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+  echo 'en_US.UTF-8 UTF-8'
+fi
+
+
+if heading_if "mail cron"                   "[[ ! -f /var/spool/cron/$USER ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /usr/lib/systemd/system/cronie.service
+  sudo sed -i '/ExecStart=\/usr\/bin\/crond -n$/s|$| -m "/usr/bin/msmtp -t"|' /usr/lib/systemd/system/cronie.service
+  [[ -d ~/tmp ]] || mkdir ~/tmp
+  echo '0 * * * * /usr/sbin/logrotate -s ~/tmp/logrotate.status ~/.config/logrotate//usr/bin/msmtp -t"|' /usr/lib/systemd/system/cronie.service
+  [[ -d ~/tmp ]] || mkdir ~/tmp
+  echo '0 * * * * /usr/sbin/logrotate -s ~/tmp/logrotate.status ~/.config/logrotate/logrotate.conf'  | sudo crontab -u $USER -
+
+  if [[ ! -L ~/.msmtprc ]]; then
+    ln -sfv ~/.msmtprc ~/.msmtprc
+    chmod -v 600 ~/.msmtprc
+  fi
+fi
+
+
+if heading_if "mime applications"        "grep -q 'inode/directory=Thunar' /usr/share/applications/mimeinfo.cache"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /usr/share/applications/mimeinfo.cache
+  sudo sed -i '/inode\/directory=/s/Thunar/rox.desktop;Thunar/' /usr/share/applications/mimeinfo.cache
+fi
+
+
+if heading_if "restore default fonts"       "[[ ! -L ~/.config/font-manager/local.conf ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original ~/.config/font-manager/local.conf
+  cd ~/.config/font-manager
+  ln -sfv ../../.config/font-manager/local.conf .
+  cd -
+fi
+
+
+heading "youtube optimization"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+sudo iptables -v -A INPUT -s 173.194.55.0/24 -j REJECT >/dev/null
+sudo iptables -v -A INPUT -s 206.111.0.0/16 -j REJECT >/dev/null
+
+
+heading "build man pages"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+sudo mandb 2>/dev/null
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                            title "applications"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if heading_if "byobu user config"           "grep -q '\$HOME' /usr/share/byobu/profiles/tmuxrc"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /usr/share/byobu/profiles/tmuxrc
+  sudo sed -i 's,\$HOME/.byobu,\$BYOBU_CONFIG_DIR,' /usr/share/byobu/profiles/tmuxrc
+fi
+
+
+heading "dmenu cache"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+is_server && dabook init
+dconfigs init
+
+
+if heading_if "playonlinux topaz script"    "[[ -e '~/.PlayOnLinux/shortcuts/Topaz Fusion Express2' -a ! -e  '~/.PlayOnLinux/shortcuts/Topaz Fusion Express2.original' ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original ~/.PlayOnLinux/shortcuts/Topaz\ Fusion\ Express2
+  command cp -fv ~/.PlayOnLinux/shortcuts/Topaz\ Fusion\ Express2 ~/.PlayOnLinux/shortcuts/
+  chmod 755 ~/.PlayOnLinux/shortcuts/*
+fi
+
+
+# if heading_if "sup mail patch"              "grep -q 'user_emails, :num => 10)' $(find /usr/lib/ruby/gems -path '*gems*/sup-*/lib/sup/buffer.rb')"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   # ez yang patch for more comprehensive contacts lookup
+#   original -f $(find /usr/lib/ruby/gems -path '*gems*/sup-*/lib/sup/buffer.rb')
+#   sudo sed -i '/user_emails, :num =>/s/10/200/' $(find /usr/lib/ruby/gems -path '*gems*/sup-*/lib/sup/buffer.rb')
+# fi
+
+
+if heading_if "thedarnedestthing.com"       "[[ ! -d /srv/http/thedarnedestthing.com ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  sudo mkdir -v /srv/http/thedarnedestthing.com
+  sudo chown shum:users /srv/http/thedarnedestthing.com
+  if is_server; then
+    rsync -av shum@monad:/srv/http/thedarnedestthing.com /srv/http/
+  else
+    rsync -av shum@luna:/srv/http/thedarnedestthing.com /srv/http/
+  fi
+fi
+
+
+if heading_if "tt-rss"                      "[[ ! -L /srv/http/tt-rss/themes ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  command cp -fv /srv/http/tt-rss/themes/default.css ~/build/root/srv/http/tt-rss/themes/
+  sudo mv -v /srv/http/tt-rss/themes /srv/http/tt-rss/themes.original
+  sudo ln -sv ~/build/root/srv/http/tt-rss/themes /srv/http/tt-rss/
+fi
+logrotate.conf'  | sudo crontab -u $USER -
+
+  if [[ ! -L ~/.msmtprc ]]; then
+    ln -sfv ~/.msmtprc ~/.msmtprc
+    chmod -v 600 ~/.msmtprc
+  fi
+fi
+
+
+if heading_if "mime applications"        "grep -q 'inode/directory=Thunar' /usr/share/applications/mimeinfo.cache"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /usr/share/applications/mimeinfo.cache
+  sudo sed -i '/inode\/directory=/s/Thunar/rox.desktop;Thunar/' /usr/share/applications/mimeinfo.cache
+fi
+
+
+if heading_if "restore default fonts"       "[[ ! -L ~/.config/font-manager/local.conf ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original ~/.config/font-manager/local.conf
+  cd ~/.config/font-manager
+  ln -sfv ../../.config/font-manager/local.conf .
+  cd -
+fi
+
+
+heading "youtube optimization"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+sudo iptables -v -A INPUT -s 173.194.55.0/24 -j REJECT >/dev/null
+sudo iptables -v -A INPUT -s 206.111.0.0/16 -j REJECT >/dev/null
+
+
+heading "build man pages"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+sudo mandb 2>/dev/null
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                            title "applications"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if heading_if "byobu user config"           "grep -q '\$HOME' /usr/share/byobu/profiles/tmuxrc"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /usr/share/byobu/profiles/tmuxrc
+  sudo sed -i 's,\$HOME/.byobu,\$BYOBU_CONFIG_DIR,' /usr/share/byobu/profiles/tmuxrc
+fi
+
+
+heading "dmenu cache"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+is_server && dabook init
+dconfigs init
+
+
+if heading_if "playonlinux topaz script"    "[[ -e '~/.PlayOnLinux/shortcuts/Topaz Fusion Express2' -a ! -e  '~/.PlayOnLinux/shortcuts/Topaz Fusion Express2.original' ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original ~/.PlayOnLinux/shortcuts/Topaz\ Fusion\ Express2
+  command cp -fv ~/.PlayOnLinux/shortcuts/Topaz\ Fusion\ Express2 ~/.PlayOnLinux/shortcuts/
+  chmod 755 ~/.PlayOnLinux/shortcuts/*
+fi
+
+
+# if heading_if "sup mail patch"              "grep -q 'user_emails, :num => 10)' $(find /usr/lib/ruby/gems -path '*gems*/sup-*/lib/sup/buffer.rb')"; then
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#   # ez yang patch for more comprehensive contacts lookup
+#   original -f $(find /usr/lib/ruby/gems -path '*gems*/sup-*/lib/sup/buffer.rb')
+#   sudo sed -i '/user_emails, :num =>/s/10/200/' $(find /usr/lib/ruby/gems -path '*gems*/sup-*/lib/sup/buffer.rb')
+# fi
+
+
+if heading_if "thedarnedestthing.com"       "[[ ! -d /srv/http/thedarnedestthing.com ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  sudo mkdir -v /srv/http/thedarnedestthing.com
+  sudo chown shum:users /srv/http/thedarnedestthing.com
+  if is_server; then
+    rsync -av shum@monad:/srv/http/thedarnedestthing.com /srv/http/
+  else
+    rsync -av shum@luna:/srv/http/thedarnedestthing.com /srv/http/
+  fi
+fi
+
+
+if heading_if "tt-rss"                      "[[ ! -L /srv/http/tt-rss/themes ]]"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  command cp -fv /srv/http/tt-rss/themes/default.css ~/build/root/srv/http/tt-rss/themes/
+  sudo mv -v /srv/http/tt-rss/themes /srv/http/tt-rss/themes.original
+  sudo ln -sv ~/build/root/srv/http/tt-rss/themes /srv/http/tt-rss/
+fi
+
+
+if heading_if "vimwiki patch"               "! (( $(grep 'let s:vimwiki_autowriteall = g:vimwiki_autowriteall' ~/.vim/plugged/vimwiki/plugin/vimwiki.vim | wc -l) ))"; then
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original ~/.vim/plugged/vimwiki/plugin/vimwiki.vim
+  sed -i "/call s:default('autowriteall', 1)/a\
+let s:vimwiki_autowriteall = g:vimwiki_autowriteall" ~/.vim/plugged/vimwiki/plugin/vimwiki.vim
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                  title "pacman"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+heading "update /etc config files"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+dpacnews
+
+
+heading "clean pacman database"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# command pacman required to avoid error caused by function pacman
+orphans=$(pacman -Qdtq)
+if [[ $orphans ]]; then
+  echo $orphans
+  if ! if-no "remove orphan packages"; then
+    for i in $orphans
+    do
+      sudo pacman -Rs --noconfirm $i
+    done
+  fi
+fi
+
+
+heading "optimize database"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# sudo pacman -Sc --noconfirm
+if-no "remove older package versions" || sudo pacman-optimize

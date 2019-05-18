@@ -1,0 +1,23 @@
+#!/bin/sh
+[ -r ./conf ] && . ./conf
+: ${WPA_CTRLGROUP:=wheel}
+: ${WPA_INTERFACE:=wlan0}
+exec 2>&1
+[ -r /etc/wpa_supplicant ] || mkdir -p /etc/wpa_supplicant
+if [ ! -r /etc/wpa_supplicant/wpa_supplicant.conf ]; then
+	echo "Creating skeleton wpa_supplicant.conf"
+	cat << HERE > /etc/wpa_supplicant/wpa_supplicant.conf
+# Default configuration file for wpa_supplicant.conf(5).
+
+ctrl_interface=/run/wpa_supplicant
+ctrl_interface_group=${WPA_CTRLGROUP}
+update_config=1
+eapol_version=1
+ap_scan=1
+fast_reauth=1
+
+# Add here any of your networks.
+HERE
+
+fi
+exec wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i ${WPA_INTERFACE}

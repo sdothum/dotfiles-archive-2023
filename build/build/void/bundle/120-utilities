@@ -1,0 +1,44 @@
+# utilities packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= file compression
+= ════════════════
+  file-roller
+  p7zip
+  unrar
+  unzip
+  zip
+
+
+= disk utility
+= ════════════
+# convmv
+  gparted
+  gptfdisk
+
+
+= sync
+= ════
+  rsync
+  syncthing
+# vsftpd
+  watchman
+
+
+= system monitor
+= ══════════════
+  glances
+# gsmartcontrol
+  htop
+  iotop
+# smartmontools
+
+
+= test
+= ════
+
+
+# vim: set ft=conf: #

@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+# package already installed check
+query=$(exists xbps-query && 
+  { xbps-query -S $@ | grep -q ': installed' && xbps-query -S $@ | grep 'pkgver' | cut -d' ' -f2; true; } ||
+    pacman -Qs $@ | grep "local/$@ .*" | sed 's|local/||')
+
+[ "$query" ] || exit 1
+heading ' ' "$query  --- Installed ---"
+exit 0
+
+# vim: set ft=sh: #

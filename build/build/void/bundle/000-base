@@ -1,0 +1,51 @@
+# base packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= package manager
+= ═══════════════
+  pkg-config
+
+
+= console font
+= ════════════
+  dos2unix
+
+
+= cpu power management
+= ════════════════════
+# cpupower [laptop]
+
+
+= entropy
+= ═══════
+  haveged
+
+
+= file system
+= ═══════════
+  btrbk
+  dosfstools
+  exfat-utils
+# fuse
+# gvfs
+# mbuffer
+# ntfs-3g
+
+
+= file transfer
+= ═════════════
+  curl
+  git
+  wget
+
+
+
+= sound
+= ═════
+  alsa-utils
+
+
+# vim: set ft=conf: #

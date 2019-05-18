@@ -1,0 +1,185 @@
+#!/bin/sh
+# archlinux boot configuration
+
+# home user zsh config and install scripts will be copied to
+user=shum
+
+function heading() {
+  message=">>>   $@   <<<"
+  echo
+  echo $(head -c $(echo "$message" | wc -L) < /dev/zero | tr '\0' '-')
+  echo "$message"
+  echo $(head -c $(echo "$message" | wc -L) < /dev/zero | tr '\0' '-')
+  echo
+}
+
+function checkpoint() {
+  echo
+  while true
+  do
+    read -p "continue? [yes]/no/shell :"
+    reply=${REPLY,,}
+    case $reply in
+      ''|y)   return ;;
+      n)      exit ;;
+      s)      bash -i ;;
+    esac
+  done
+  echo
+}
+
+function pm_install() {
+  echo
+  echo "$(date '+%a %-I:%M %S%P') >>>   $@   <<<"
+  echo
+  pacman -S --noconfirm $@
+}
+
+
+heading 'select scheduler for SSD'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+if [[ ! $(hostname) = luna ]]; then
+  if [[ ! -f /etc/udev/rules.d/60-schedulers.rules ]]; then
+    echo '# set deadline scheduler for non-rotating disks
+  ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"' \
+    | sudo tee /etc/udev/rules.d/60-schedulers.rules
+  fi
+fi
+
+
+# heading 'set keyboard'
+# # ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+# if [[ ! $(hostname) = luna ]]; then
+#   [[ -f /etc/vconsole.conf ]] && sed -i 's/^\(KEYMAP\)=.*/\1=colemak/' /etc/vconsole.conf || echo KEYMAP=colemak > /etc/vconsole.conf
+#   cat /etc/vconsole.conf
+# else
+#   echo "us -> qwerty"
+# fi
+
+
+heading 'set and generate locale'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+export LANG=en_US.UTF-8
+locale-gen
+
+
+heading 'set timezone and clock'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+# ls /usr/share/zoneinfo
+# ls /usr/share/zoneinfo/America
+ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
+hwclock --systohc --utc
+
+
+heading 'set hostname'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+read -p "Hostname [archlinux]: " hostname
+[[ -z $hostname ]] && hostname=archlinux
+# hostnamectl set-hostname $hostname
+echo $hostname > /etc/hostname
+cat /etc/hosts
+checkpoint
+
+
+heading 'configure package manager'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+sed -i -e '/^\[options\]/aILoveCandy' \
+       -e '/^#\[multilib\]/,+1s/^#//' \
+       -e '/^#Color/s/^#//' \
+       /etc/pacman.conf
+pacman -Sy
+checkpoint
+
+
+heading 'configure network'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+[[ $hostname = luna ]] && systemctl enable dhcpcd.service
+# heading 'disable systemd generated interface names in preference of kernel names e.g. wlan0'
+# [[ -f /etc/udev/rules.d/80-net-name-slot.rules ]] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+
+
+heading 'installing wireless tools'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+pm_install dialog
+pm_install iw
+pm_install wpa_supplicant
+# cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
+# essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
+# key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
+# sed -i -e $essid -e $key /etc/netctl/my-wireless-network
+# netctl enable my-wireless-network
+echo noarp > /etc/dhcpcd.conf
+checkpoint
+
+
+heading 'set root password'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+passwd
+heading "create \"$user\" user account"
+useradd -m -g users -G wheel,storage,power -s /bin/bash $user
+passwd $user
+pm_install sudo
+sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
+       -e '/## Defaults specification/aDefaults insults' \
+       /etc/sudoers
+EDITOR=nano visudo
+# cat /etc/sudoers
+checkpoint
+
+
+heading 'default shell'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+pm_install bc
+pm_install zsh
+chsh -s /usr/bin/zsh $user
+checkpoint
+
+
+heading 'enable tty autologin'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+mkdir -v /etc/systemd/system/getty@tty1.service.d
+echo "[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin $user --noclear %I 38400 linux" > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+
+# heading 'set systemd readahead, disable if performance is impaired..'
+# systemctl enable systemd-readahead-collect
+# systemctl enable systemd-readahead-replay
+checkpoint
+
+
+heading 'configure btrfs in mkinitcpio.conf'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+# sed -i '/^HOOKS=/s/fsck/btrfs usr shutdown/' /etc/mkinitcpio.conf
+sed -i '/^HOOKS=/s/fsck/btrfs/' /etc/mkinitcpio.conf
+nano /etc/mkinitcpio.conf
+mkinitcpio -p linux
+checkpoint
+
+
+heading 'installing bootloader'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+pm_install grub-bios
+[[ -z $disk ]] && read -p "Boot disk /dev/sd? [a-z]: " disk
+[[ -z $disk ]] && echo "invalid disk reference.. aborting" && exit
+grub-install --target=i386-pc --recheck /dev/sd${disk}
+cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+grub-mkconfig -o /boot/grub/grub.cfg
+checkpoint
+
+
+heading 'sync home directory'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+if [[ ! -d /home/shum/stow ]]; then
+  pm_install rsync
+  mkdir /net
+  mount -L Data -t btrfs /net
+  [[ -d /net/archive/home/shum ]] && rsync -av /net/archive/home/shum /home/ || rsync -av /media/home/shum /home/
+fi
+
+
+heading 'cd / and umount /media (usb), exit chroot'
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+# sudo mkdir -pv /net/downloads

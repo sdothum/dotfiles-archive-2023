@@ -1,0 +1,45 @@
+#!/bin/bash
+# sdothum - 2016 (c) wtfpl
+
+# fresh void pre-installer
+
+source ./voidlinux-functions
+
+heading 'wireless'
+# ══════════════════════════════════════════════════════════════════════════════
+interface() {
+  device=$(ip link show | grep '^[^ ]' | awk '{ print $2 }' | sed 's/://' | tail -1)
+  sudo ip link show
+  read -p "Wireless Interface [$device]: " interface
+  [ $interface ] || interface=$device
+  sudo ip link set up $interface
+}
+
+wpa_psk() {
+  [ -f /etc/wpa_supplicant/wpa_supplicant-$interface.conf ] && return
+  read -p "SSID [Ravens-5G]: " ssid
+  [ $ssid ] || ssid=Ravens-5G
+  while [ -z "$password" ] ;do
+    read -p "Password: " password
+  done
+  sudo cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-$interface.conf
+  sudo wpa_passphrase "$ssid" "$password" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant-$interface.conf
+}
+
+connected() { ping -c 1 -W 1 www.google.com >/dev/null 2>&1; }
+
+connected && exit
+interface
+wpa_psk
+sudo ln -sf /usr/share/dhcpcd/hooks/10-wpa_supplicant /usr/libexec/dhcpcd-hooks
+sudo wpa_supplicant -B -D wext -i $interface -c /etc/wpa_supplicant/wpa_supplicant.conf 2>/dev/null
+sudo iw $interface link
+sudo sv restart dhcpcd
+
+while ! connected ;do
+  echo waiting for connection..
+  sleep 1
+done
+
+# vim: set ft=sh: #
+

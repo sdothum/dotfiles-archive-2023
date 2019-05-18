@@ -1,0 +1,305 @@
+# raspberry pi packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+# manual install after initial boot:
+# then run rsync pi from main server to install scripts and proceed with
+# voidlinux-pi
+
+
+= sound
+= ═════
+  alsa-utils
+  alsa-plugins
+  pavucontrol
+  pulseaudio
+  alsa-plugins-pulseaudio
+
+
+= system utility
+= ══════════════
+  cronie
+  logrotate
+  ntp
+d ? preload
+  rlwrap
+  udiskie
+
+
+= file
+= ════
+  ack
+  stow
+
+
+= file compression
+= ════════════════
+  file-roller
+
+
+= file manager
+= ════════════
+  ncdu
+  nnn
+  ranger
+  rox
+  vifm
+
+
+= file system
+= ═══════════
+  dosfstools
+  exfat-utils
+
+
+= info screen
+= ═══════════
+  neofetch
+
+
+= shell tool
+= ══════════
+  fzf
+  pv
+  ripgrep
+  the_silver_searcher
+
+
+= cups printing
+= ═════════════
+  cups
+  ghostscript
+  gsfonts
+  gutenprint
+
+
+= font
+= ════
+  font-adobe-100dpi
+  font-adobe-75dpi
+  noto-fonts-ttf
+  courier-unicode
+  dejavu-fonts-ttf
+  ttf-font-awesome
+  fonts-roboto-ttf
+  font-symbola
+
+
+= package manager
+= ═══════════════
+
+
+= security
+= ════════
+d pass
+  sudo
+
+
+= system monitor
+= ══════════════
+  glances
+  htop
+
+
+= terminal multiplexor
+= ════════════════════
+  tmux
+
+
+= network utility
+= ═══════════════
+  dialog
+  iw
+
+
+= network security
+= ════════════════
+  openssh
+  wpa_supplicant
+
+
+= network share
+= ═════════════
+  avahi
+  nfs-utils
+
+
+= proxy
+= ═════
+
+
+= socket
+= ══════
+  socat
+
+
+= sync
+= ════
+  rsync
+  syncthing
+d ? watchman
+
+
+= appearance
+= ══════════
+  compton
+  lxappearance
+d ? setroot
+d ? unclutter
+
+
+= desktop
+= ═══════
+  conky
+d ? lemonbar-xft
+
+
+= desktop utility
+= ═══════════════
+  pywal
+  xautolock
+
+
+= gtk theme/engine
+= ════════════════
+  Adapta
+  gtk-engine-murrine
+  paper-icon-theme
+
+
+= user interface
+= ══════════════
+  dbus-glib
+  dmenu
+  dunst
+  GPaste
+  libnotify
+  rofi
+
+
+= window property
+= ═══════════════
+d ? sutils
+d ? xtitle-git
+
+
+= x11
+= ═══
+  autocutsel
+  xdotool
+  xvkbd
+
+
+= file transfer
+= ═════════════
+  wget
+
+
+= utility
+= ═══════
+  perl-Curses
+
+
+= editor
+= ══════
+  ctags
+  python-proselint
+d texlive-bin
+
+
+= java
+= ════
+
+
+= software tool
+= ═════════════
+  time
+
+
+= version control
+= ═══════════════
+  git
+  mercurial
+  patchutils
+
+
+= programming language
+= ════════════════════
+  python
+  ruby
+g python-ansicolor
+
+
+= video player
+= ════════════
+  omxplayer
+  youtube-dl
+
+
+= ════
+d ? python2-gpg
+d * alot
+  msmtp
+
+
+= browser
+= ═══════
+  chromium
+  surf
+  vimb
+  w3m
+
+
+= chat/twitter
+= ════════════
+
+
+= web server
+= ══════════
+
+
+= astronomy
+= ═════════
+d ? wego-git
+
+
+= dictionary
+= ══════════
+  dictd
+  hunspell
+
+
+= keyboard
+= ════════
+
+
+= productivity
+= ════════════
+  remind
+
+
+= viewer
+= ══════
+  feh
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
+
+
+= media server/player
+= ═══════════════════
+  kodi-rpi
+
+
+= productivity
+= ════════════
+  calc
+
+
+= network
+= ═══════
+d * connman
+
+
+# vim: set ft=conf: #
+

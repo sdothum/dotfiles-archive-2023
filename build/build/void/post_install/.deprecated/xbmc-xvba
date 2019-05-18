@@ -1,0 +1,52 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... xbmc
+
+original /etc/default/grub
+sudo sed -i '/GRUB_CMDLINE_LINUX=/s/""/"radeon.dpm=1 radeon.audio=1 clocksource=hpet hpet=enable"/' \
+         /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+original /etc/bash.bashrc
+if ! grep -q 'vdpau' /etc/bash.bashrc ;then
+  sudo sed -i '$a\
+export LIBVA_DRIVER_NAME=vdpau\
+export VDPAU_DRIVER=r600' /etc/bash.bashrc
+fi
+
+config_install /etc/X11/xorg.conf
+
+original /var/lib/xbmc/.bashrc
+if ! sudo grep -q 'vdpau' /var/lib/xbmc/.bashrc ;then
+  sudo sed -i '$a\
+export LIBVA_DRIVER_NAME=vdpau\
+export VDPAU_DRIVER=r600' /var/lib/xbmc/.bashrc
+fi
+
+[[ -d /var/lib/xbmc/.xbmc/userdata ]] || sudo mkdir -pv /var/lib/xbmc/.xbmc/userdata
+if [[ ! -f /var/lib/xbmc/.xbmc/userdata/advancedsettings.xml ]] ;then
+  echo '<advancedsettings>
+<loglevel hide="false">0</loglevel>
+<gui>
+  <algorithmdirtyregions>3</algorithmdirtyregions>
+  <nofliptimeout>0</nofliptimeout>
+</gui>
+<video>
+<latency>
+  <delay>0</delay>
+  <refresh>
+    <min>23</min>
+    <max>24</max>
+    <delay>175</delay> <!-- set to zero or adjust if audio seems out of sync with 24p movies -->
+    </refresh>
+</latency>
+</video>
+</advancedsettings>' | sudo tee /var/lib/xbmc/.xbmc/userdata/advancedsettings.xml
+fi
+
+sudo chown -R xbmc:xbmc /var/lib/xbmc
+
+# vim: set ft=sh: #

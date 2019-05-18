@@ -1,0 +1,37 @@
+# internet packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= chat/twitter
+= ════════════
+# bitlbee
+# libotr
+  mcabber
+# weechat
+# znc
+
+
+= file transfer
+= ═════════════
+# gftp
+  nzbget
+  sabnzbd [server]
+  transmission-gtk
+
+
+= ═══════════
+
+
+= web aggregator
+= ══════════════
+# php-gd
+# surfraw
+
+
+= web server
+= ══════════
+
+
+# vim: set ft=conf: #

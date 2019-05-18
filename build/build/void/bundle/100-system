@@ -1,0 +1,59 @@
+# system packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= codec
+= ═════
+  gst-libav
+  gst-plugins-base1
+  gst-plugins-good1
+  gst-plugins-ugly1
+  gstreamer1
+
+
+= hardware
+= ════════
+# dmidecode
+  intel-ucode
+# lm_sensors
+
+
+= power
+= ═════
+# acpi   [laptop]
+# tlp    [laptop]
+# xfce4-power-manager
+
+
+= security
+= ════════
+# gksu
+# gnome-keyring
+  gnupg
+d pass
+# polkit-gnome
+
+
+= sound
+= ═════
+  alsa-plugins
+# mpg123
+  pavucontrol
+  pulseaudio
+  alsa-plugins-pulseaudio
+
+
+= system utility
+= ══════════════
+  cronie
+  logrotate
+  ntp
+  preload
+  rlwrap
+  runit-swap
+  udiskie
+
+
+# vim: set ft=conf: #

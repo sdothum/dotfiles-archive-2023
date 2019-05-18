@@ -1,0 +1,29 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... nfs
+
+if server ;then
+  original /etc/conf.d/nfs-server.conf
+  # sudo sed -i '/NFSD_OPTS=""/s/""/"-N 2 -N 3"/' /etc/conf.d/nfs-server.conf
+  sudo sed -i '/RPCNFSDARGS=""/s/""/"-N 2 -N 3"/' /etc/sysconfig/nfs
+  echo 32767 | sudo tee >/proc/fs/nfsd/max_block_size
+  echo 'w /proc/fs/nfsd/max_block_size - - - - 32768' | sudo tee >/etc/tmpfiles.d/nfsd-block-size.conf
+  # rpcbind not required for nfs4
+  # service enable rpcbind
+  service enable nfs-server
+
+  sudo mkdir -pv /srv/nfs4
+  ifnsed /etc/exports '/srv/nfs4/        *(rw,fsid=root,sync,no_subtree_check)'
+  sudo exportfs -rav
+else
+  sudo systemctl mask nfs-blkmap.service
+  # rpcbind not required for nfs4
+  # service enable rpcbind
+  service enable nfs-client.target
+  service enable remote-fs.target
+fi
+
+# vim: set ft=sh: #

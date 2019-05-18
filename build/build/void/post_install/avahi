@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ avahi
+
+service enable avahi-daemon
+service enable avahi-dnsconfd
+
+# vim: set ft=sh: #

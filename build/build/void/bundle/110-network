@@ -1,0 +1,55 @@
+# network packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= connectivity
+= ════════════
+  connman
+# cmst
+# gnome-bluetooth
+
+
+= network
+= ═══════
+  bind-utils
+  dnsmasq
+
+
+= network monitor
+= ═══════════════
+  iftop
+  mtr
+  net-tools
+  nethogs
+  traceroute
+
+
+= network security
+= ════════════════
+  openssh
+
+
+= network share
+= ═════════════
+# avahi
+  nfs-utils
+
+
+= penetration testing
+= ═══════════════════
+# nmap  [server]
+
+
+= proxy
+= ═════
+# squid [server]
+
+
+= socket
+= ══════
+# socat
+
+
+# vim: set ft=conf: #

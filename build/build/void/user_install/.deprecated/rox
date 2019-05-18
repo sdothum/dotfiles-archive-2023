@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................................... rox
+
+# add rox mime application
+if grep -q 'inode/directory=Thunar' /usr/share/applications/mimeinfo.cache ;then
+  original /usr/share/applications/mimeinfo.cache
+  sudo sed -i '/inode\/directory=/s/Thunar/rox.desktop;Thunar/' /usr/share/applications/mimeinfo.cache
+fi
+
+# vim: set ft=sh: #

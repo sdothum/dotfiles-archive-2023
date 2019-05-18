@@ -1,0 +1,43 @@
+# Maintainer: speps <speps at aur dot archlinux dot org>
+
+pkgname=autokey-gtk
+pkgver=0.90.4
+pkgrel=5
+pkgdesc="A text expansion/replacement and hotkey utility for Linux and X11. Gtk3 GUI."
+arch=('any')
+url="http://code.google.com/p/autokey/"
+license=('GPL3')
+depends=("autokey-data>=$pkgver" 'python2-gobject' 'gtksourceview3' 'libnotify')
+optdepends=('libappindicator3: appindicator integration')
+provides=('autokey-frontend')
+install="autokey-gtk.install"
+source=("http://autokey.googlecode.com/files/autokey-$pkgver.tar.gz")
+md5sums=('c2a74ddc2cb06c9798b7fa57fd65019a')
+
+_python2_fix() {
+  sed -i "s_env python_&2_" \
+    `grep -rl "env python" "$pkgdir"`
+}
+
+package() {
+  cd "$srcdir/autokey-$pkgver"
+
+  # bin
+  install -Dm755 $pkgname \
+    "$pkgdir/usr/bin/$pkgname"
+
+  # man
+  install -Dm644 doc/man/$pkgname.1 \
+     "$pkgdir/usr/share/man/man1/$pkgname.1"
+
+  # libs
+  install -d "$pkgdir/usr/lib/python2.7/site-packages/autokey"
+  cp -a src/lib/gtk{ui,app.py} \
+    "$pkgdir/usr/lib/python2.7/site-packages/autokey"
+
+  # desktop file
+  install -Dm644 config/$pkgname.desktop \
+    "$pkgdir/usr/share/applications/$pkgname.desktop"
+
+  _python2_fix
+}

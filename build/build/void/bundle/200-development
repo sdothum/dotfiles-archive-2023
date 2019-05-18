@@ -1,0 +1,56 @@
+# development packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= haskell
+= ═══════
+# ghc
+# pandoc
+
+
+= java
+= ════
+# openjdk-jre
+
+
+= julia
+= ════
+  julia
+# julia-doc
+
+
+= perl tool
+= ═════════
+  perl
+  perl-Curses
+
+
+= prototyping
+= ═══════════
+  ruby
+
+
+= python
+= ══════
+  python-pip
+  python-setuptools
+
+
+= software tool
+= ═════════════
+  avr-gcc
+  avr-libc
+  avrdude
+  dfu-programmer
+  cmake
+# gdb
+  strace
+  time
+  
+
+# vim: set ft=conf: #
+
+
+

@@ -1,0 +1,23 @@
+# browser packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= browser
+= ═══════
+  chromium
+  firefox
+  lynx
+  surf
+  vimb
+  w3m
+
+
+= browser addon
+= ═════════════
+  chromium-widevine
+  youtube-dl
+
+
+# vim: set ft=conf: #

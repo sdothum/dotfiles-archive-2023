@@ -1,0 +1,71 @@
+# application packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= astronomy
+= ═════════
+# stellarium
+  wego
+
+
+= dictionary
+= ══════════
+  aspell
+  aspell-en
+  dictd
+  hunspell
+  hunspell-en_GB-ize
+  hunspell-en_US
+
+
+= ebook
+= ═════
+  calibre
+
+
+= font editor
+= ═══════════
+  fontforge   [server]
+  nodejs      [server]
+  otfcc       [server]
+  ttfautohint [server]
+
+
+= font manager
+= ════════════
+  fontmanager
+d s fontmatrix
+
+
+= game
+= ════
+# steam       [server]
+
+
+= keyboard
+= ════════
+
+
+= productivity
+= ════════════
+# abiword
+  calc
+# gnumeric
+  remind
+# sc-im
+  speedcrunch
+
+
+= viewer
+= ══════
+  epdfview    [server]
+  fbreader
+  feh
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
+
+
+# vim: set ft=conf: #

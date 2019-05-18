@@ -1,0 +1,55 @@
+# x11 packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= x11 driver
+= ══════════
+  xf86-input-synaptics [laptop]
+  nvidia               [gpu nvidia]
+  nvidia-340           [gpu macbook]
+  xf86-input-evdev
+  xf86-input-libinput
+  xf86-input-wacom     [server]
+  xf86-video-ati       [gpu ati]
+  xf86-video-intel     [gpu intel]
+  xf86-video-nouveau   [gpu nvidia]
+
+
+= x11 server
+= ══════════
+  mesa-ati-dri         [gpu ati]
+  mesa-intel-dri       [gpu intel]
+  mesa-nouveau-dri     [gpu nvidia]
+  nvidia-libs          [gpu nvidia]
+  xorg-server
+  xinit
+  xrandr
+
+
+= x11 utility
+= ═══════════
+  arandr               [server]
+  lxrandr              [server]
+  setxkbmap
+# xorg
+  xorg-minimal
+  xev
+  xinput
+  xmessage
+  xmodmap
+  xrdb
+  xset
+
+
+= font rendering
+= ══════════════
+  cairo
+  freetype
+  fontconfig
+  libXft
+  xorg-fonts
+
+
+# vim: set ft=conf: #

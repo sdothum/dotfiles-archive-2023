@@ -1,0 +1,541 @@
+#!/usr/bin/fish
+# my arch install!
+
+[ (hostname) = luna ]; and set desktop true
+[ (hostname) = monad ]; and set laptop true
+[ -d $HOME/tmp ]; or mkdir $HOME/tmp
+
+function pm_install
+  headline $argv
+  sudo pacman -S --noconfirm $argv
+end
+
+function aur_install
+  headline $argv[1]
+  if [ (count $argv) -gt 1 ]
+    annotate+ "$argv[2]"
+    yaourt -S $argv[1]
+  else
+    packer -S --noconfirm $argv[1]
+  end
+end
+
+function original
+  [ -f $argv.original ]; or sudo cp -v $argv $argv.original
+end
+
+
+##############################################################################
+headline+ "astronomy"
+#[ $desktop ]; and pm_install celestia
+#[ $desktop ]; and pm_install kdeedu-kstars
+pm_install stellarium
+
+
+##############################################################################
+headline+ "browsers"
+#pm_install elinks
+#pm_install firefox
+#aur_install jumanji-git "yes: to replace girara-common(-git)"
+#pm_install jumanji-git
+#pm_install midori
+#pm_install uzbl-browser
+pm_install chromium
+pm_install flashplugin
+aur_install haskell-hbro
+pm_install luakit
+pm_install surf
+pm_install w3m
+
+
+##############################################################################
+headline+ "chat"
+pm_install pidgin
+pm_install skype
+pm_install xchat
+
+
+##############################################################################
+headline+ "codecs"
+pm_install gstreamer0.10-plugins
+
+
+##############################################################################
+headline+ "cups printing"
+pm_install cups
+original /etc/cups/client.conf
+[ $laptop ]; or sudo sed -i -e 's/^ServerName/#ServerName/' -e '$aServerName monad' /etc/cups/client.conf
+pm_install cups-pdf
+pm_install system-config-printer
+aur_install hplip-plugin
+
+
+##############################################################################
+headline+ "database management software"
+pm_install pgadmin3
+pm_install sqlite
+pm_install sqlitebrowser
+
+
+##############################################################################
+headline+ "desktop"
+#pm_install scrot
+#aur_install shutter
+pm_install clipit
+pm_install compton-git
+pm_install hsetroot
+pm_install lxappearance
+pm_install nitrogen
+pm_install rss-glx
+pm_install xfce4-notifyd
+pm_install xfce4-screenshooter
+pm_install xscreensaver
+# xscreensaver initialization
+rss-glx_install.pl
+aur_install shantz-xwinwrap-bzr
+
+
+##############################################################################
+headline+ "document formatting"
+aur_install csstidy
+pm_install enscript
+
+
+##############################################################################
+headline+ "editors"
+#[ $desktop ]; and aur_install focuswriter
+#pm_install markdown
+aur_install nvpy-git
+aur-install retext
+
+
+##############################################################################
+headline+ "file transfer"
+[ $desktop ]; and aur_install couchpotato-git
+pm_install nzbget
+pm_install rtorrent
+[ -f $HOME/.session ]; or mkdir -v $HOME/.session
+#aur_install par2unrar
+[ $desktop ]; and aur_install sickbeard-git
+aur_install tixati
+#[ $desktop ]; and pm_install transmission
+pm_install unrar
+
+
+##############################################################################
+headline+ "file managers"
+pm_install file-roller
+pm_install kdeutils-filelight
+pm_install ncdu
+pm_install ranger
+pm_install rox
+pm_install thunar
+pm_install tumbler
+pm_install vifm
+
+
+##############################################################################
+headline+ "fonts and font managers"
+#pm_install ttf-droid
+#aur-install ttf-droid-monovar
+#aur_install ttf-google-fonts-git
+#sudo pacman -R --noconfirm ttf-inconsolata
+#pm_install ttf-linux-libertine
+#pm_install ttf-ubuntu-font-family
+aur_install font-manager
+aur_install fontmatrix
+pm_install ttf-inconsolata
+aur_install ttf-mac-fonts
+aur_install ttf-ms-fonts
+pm_install xorg-fonts-type1
+pm_install xorg-xlsfonts
+# rebuild font caches
+rm -rf /home/shum/.fontconfig/*
+sudo fc-cache -fv
+
+
+##############################################################################
+headline+ "java"
+pm_install icedtea-web-java7
+pm_install jre7-openjdk
+
+
+##############################################################################
+headline+ "mail client"
+aur_install geary-git
+aur_install sup
+
+
+##############################################################################
+headline+ "mail services"
+aur_install archivemail
+aur_install imapfilter
+[ -f $HOME/.mail/gmail ]; or mkdir -pv $HOME/.mail/gmail
+pm_install msmtp-mta
+sudo cp -fv /usr/share/doc/msmtp/msmtpqueue/msmtp*.sh /usr/local/bin/
+sudo chmod -v 755 /usr/local/bin/msmtp*.sh
+sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/local/bin/sendmail
+sudo ln -svf /usr/local/bin/sendmail /usr/sbin/sendmail
+if [ (hostname) != manjaro ]
+  ln -sfv $HOME/.config/mail/msmtprc $HOME/.msmtprc
+  [ -L $HOME/.msmtprc ]; and chmod -v 600 $HOME/.config/mail/msmtprc; or chmod -v 600 $HOME/.msmtprc
+  #sudo cp -fv $HOME/.config/crontab/crontab /var/spool/cron/$USER
+  #sudo chmod -v 600 /var/spool/cron/$USER
+  #sudo chown -v $USER:root /var/spool/cron/$USER
+  cat $HOME/build/root/var/spool/cron/crontabs/$USER | sudo crontab -u $USER -
+end
+pm_install offlineimap
+pm_install python2-pysqlite
+aur_install sup
+
+
+##############################################################################
+headline+ "mime"
+pm_install antiword
+pm_install lynx
+original /etc/lynx.cfg
+sudo sed -i -e 's/^#\(ENABLE_LYNXRC:accept_all_cookies:ON\)/\1/' \
+            -e '$ahttp_proxy:http://localhost:8118/' /etc/lynx.cfg
+aur_install urlscan-git
+
+
+##############################################################################
+headline+ "music"
+#aur-install pyradio-git
+pm_install mpc
+pm_install mpd
+[ -d $HOME/.mpd ]; or mkdir -v $HOME/.mpd
+[ -f $HOME/.mpd/playlists]; or mkdir -v $HOME/.mpd/playlists
+touch -v $HOME/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
+touch -v $HOME/tmp/mpd.log
+sed -e 's,^#*\(music_directory\).*,\1 "/net/media/music",' \
+    -e 's,^#*\(log_file\).*,\1 "$HOME/tmp/mpd.log",' \
+    -e 's,/run/mpd/mpd.pid,$HOME/.mpd/mpd.pid,' \
+    -e 's,/var/lib/mpd,$HOME/.mpd,' \
+    -e 's/^user/#user/' \
+    -e 's/^#\(follow_outside_symlinks\)/\1/' \
+    -e 's/^#\(follow_inside_symlinks\)/\1/' /etc/mpd.conf >$HOME/.mpdconf
+[ $desktop ]; and sed -i \
+    -e '$aaudio_output { \
+        type            "pulse" \
+        name            "My MPD PulseAudio Output" \
+}' $HOME/.mpdconf
+[ $laptop ]; and sed -i \
+    -e '$aaudio_output { \
+        type            "alsa" \
+        name            "My MPD Alsa Output" \
+}' $HOME/.mpdconf
+grep -q '^mpd.*shum' /etc/group; or sudo sed -i 's/^\(mpd.*\)/\1shum/' /etc/group
+pm_install ncmpcpp
+mpd &
+mpc update
+aur_install radiotray
+
+
+##############################################################################
+headline+ "network and security"
+#aur_install dropbox-experimental
+#pm_install gnome-bluetooth
+pm_install dnsutils
+pm_install openssh
+original /etc/ssh/sshd_config
+sudo sed -i -e 's/^#\(Port 22\)/\1/' \
+            -e 's/^#\(Protocol 2\)/\1/' \
+            -e 's,^#\(HostKey /etc/ssh/ssh_host_rsa_key\),\1,' \
+            -e 's,^#\(HostKey /etc/ssh/ssh_host_dsa_key\),\1,' \
+            -e 's,^#\(HostKey /etc/ssh/ssh_host_ecdsa_key\),\1,' \
+            -e 's/^#\(RSAAuthentication\).*/\1 yes/' \
+            -e 's/^#\(PubkeyAuthentication\).*/\1 yes/' \
+            -e 's/^\(AuthorizedKeysFile\)/#\1/' /etc/ssh/sshd_config
+sudo systemctl enable sshd.service
+sudo systemctl start sshd.service
+pm_install vsftpd
+original /etc/vsftpd.conf
+sudo sed -i -e 's/^anonymous_enable=YES/anonymous_enable=NO/' \
+            -e 's/^#\(local_enable=YES\)/\1/' \
+            -e 's/^#\(write_enable=YES\)/\1/' \
+            -e 's/^#\(local_umask=022\)/\1/' \
+            -e 's/^connect_from_port_20=YES/connect_from_port_20=NO/' /etc/vsftpd.conf
+sudo systemctl enable vsftpd.service
+sudo systemctl start vsftpd.service
+
+
+##############################################################################
+headline+ "photography"
+#[ $desktop ]; and pm_install gimp
+[ $laptop ]; and pm_install darktable
+pm_install viewnior
+
+
+##############################################################################
+headline+ "productivity"
+#aur_install artha
+aur_install autokey
+pm_install calc
+pm_install dictd
+aur_install dictd-gcide
+aur_install dictd-jargon
+aur_install dictd-moby-thesaurus
+pm_install galculator
+pm_install gnumeric
+pm_install gsimplecal
+pm_install kdeedu-ktouch
+pm_install xpad
+
+
+##############################################################################
+headline+ "proxies"
+pm_install polipo
+sudo systemctl enable polipo.service
+sudo systemctl start polipo.service
+pm_install privoxy
+original /etc/privoxy/config
+original /etc/privoxy/user.action
+sudo sed -i 's/^\(enable-edit-actions\).*/\1 1/' /etc/privoxy/config
+sudo sed -i '$a{ fragile } \
+a.img-dpreview.com' /etc/privoxy/user.action
+sudo systemctl enable privoxy.service
+sudo systemctl start privoxy.service
+pm_install squid
+original /etc/squid/squid.conf
+sudo systemctl enable squid.service
+sudo systemctl start squid.service
+
+
+##############################################################################
+headline+ "ripping"
+#[ $desktop ]; and pm_install abcde
+#[ $desktop ]; and pm_install asunder
+#pm_install dvdbackup
+#[ $desktop ]; and pm_install ffmpeg
+#pm_install genisoimage
+#pm_install gnome-subtitles
+#pm_install growisofs
+#[ $desktop ]; and pm_install handbrake-cli
+#[ $desktop ]; and pm_install soundconverter
+[ $desktop ]; and pm_install handbrake
+[ $desktop ]; and pm_install k3b
+[ $desktop ]; and pm_install rubyripper
+
+
+##############################################################################
+headline+ "software development and tools"
+#[ $desktop ]; and aur_install arduino
+pm_install cmake
+pm_install strace
+
+
+##############################################################################
+headline+ "sound"
+#aur_install pavolume-git
+[ $desktop ]; and pm_install paprefs
+[ $desktop ]; and pm_install pavucontrol
+[ $desktop ]; and pm_install pulseaudio-alsa
+pm_install xfce4-mixer
+pm_install xfce4-volumed
+
+
+##############################################################################
+headline+ "system"
+#aur_install anacron
+#pm_install synapse
+[ $laptop ]; and pm_install acpi
+aur_install ansi-color
+pm_install autocutsel
+grep -q 'autocutsel' $HOME/.xinitrc; or sed -i '2iautocutsel -fork & \
+autocutsel -selection PRIMARY -fork &' $HOME/.xinitrc
+pm_install keepassx
+pm_install lm_sensors
+#aur_install lxinput-qt-git
+pm_install preload
+sudo systemctl enable preload.service
+sudo systemctl start preload.service
+pm_install rlwrap
+pm_install xfce4-power-manager
+pm_install xorg-xinput
+pm_install xsel
+
+
+##############################################################################
+headline+ "system monitor and test"
+pm_install bonnie++
+pm_install gsmartcontrol
+pm_install smartmontools
+original /etc/smartd.conf
+sudo sed -i 's/^DEVICESCAN/DEVICESCAN -d removable -n standby -m sdothum@gmail.com/' /etc/smartd.conf
+sudo systemctl enable smartd.service
+sudo systemctl start smartd.service
+pm_install htop
+pm_install iftop
+pm_install iotop
+aur_install memtester
+pm_install tcpflow
+#aur_install tcptrack
+pm_install traceroute
+
+
+##############################################################################
+headline+ "themes and gtk engines"
+pm_install gtk-chtheme
+aur_install gtk-engine-equinox
+pm_install gtk-engine-murrine
+
+
+##############################################################################
+headline+ "usenet"
+pm_install slrn
+sed -e 's/^%\(set spool_in\)/\1/' \
+    -e 's/^%\(set spool_root\)/\1/' \
+    -e 's/^%\(set spool_nov\)/\1/' \
+    -e 's/^%\(set read_active\).*/\1 1/' \
+    -e 's/^%\(set use_slrnpull\).*/\1 1/' \
+    -e 's/^%\(set server_object\).*/\1 "spool"/' \
+    -e 's/^\(%nnrpaccess\).*/\1 news.eternal-september.org sdothum wclplwwgj/' \
+    -e 's/^\(%set hostname\).*/\1 "news.eternal-september.org"/' \
+    -e 's/^\(%set username\).*/\1 "sdothum"/' \
+    -e 's/^\(%set realname\).*/\1 "Steven Hum"/' \
+    -e 's/^\(%set replauro\).*/\1 "Steven Hum <sdothum@gmail.com>"/' \
+    -e 's/^%\(set display_cursor_bar\).*/\1 1/' /usr/share/doc/slrn/slrn.rc >$HOME/.slrnrc
+[ -d /var/spool/slrnpull ]; or sudo mkdir /var/spool/slrnpull
+sudo cp -v /usr/share/doc/slrn/slrnpull/slrnpull.conf /var/spool/slrnpull/slrnpull.conf
+sudo sed -i -e '/^default/,$d' /var/spool/slrnpull/slrnpull.conf
+sudo sed -i -e '$adefault 100 14 0' /var/spool/slrnpull/slrnpull.conf
+sudo touch /var/spool/slrnpull/authinfo
+if [ (hostname) != manjaro ]
+  sudo cp -v $HOME/.config/var/spool/slrnpull/authinfo /var/spool/slrnpull/authinfo
+  sudo chmod -v 600 /var/spool/slrnpull/authinfo
+  sudo cp -v $HOME/.config/etc/cron.hourly/slrnpull /etc/cron.hourly/slrnpull
+end
+touch $HOME/.jnewsrc
+
+
+##############################################################################
+headline+ "utilities"
+pm_install ack
+pm_install convmv
+pm_install dos2unix
+pm_install gftp
+pm_install gparted
+pm_install mlocate
+original /etc/updatedb.conf
+sudo sed -i -e 's/# \(PRUNENAMES=".*\)"/\1 .cache Trash backups"/' \
+            -e 's,\(PRUNEPATHS=".*\)",\1 /net /bkup",' /etc/updatedb.conf
+sudo updatedb &
+pm_install putty
+pm_install tree
+
+
+##############################################################################
+headline+ "version control"
+pm_install mercurial
+
+
+##############################################################################
+headline+ "video"
+#[ $desktop ]; and aur_install coriander
+#pm_install smplayer
+#pm_install smplayer-themes
+#aur_install umplayer
+pm_install minitube
+pm_install vlc
+pm_install xbmc
+[ $desktop ]; and pm_install xvba-video
+
+
+##############################################################################
+headline+ "viewers"
+[ $desktop ]; and pm_install calibre
+aur_install comix "edit pkgbuild: python-imaging2 should be python2-imaging"
+pm_install evince
+pm_install fbreader
+pm_install mupdf
+#pm_install zathura
+
+
+##############################################################################
+headline+ "virtualbox"
+[ $desktop ]; and pm_install dkms
+[ $desktop ]; and pm_install virtualbox
+[ $desktop ]; and pm_install virtualbox-guest-iso
+
+
+##############################################################################
+headline+ "web"
+#pm_install ttaurter
+pm_install newsbeuter
+pm_install surfraw
+pm_install tt-rss
+aur_install turses
+
+
+##############################################################################
+headline+ "window managers"
+aur_install dmenu-xft-height "yes: to replace dmenu"
+pm_install notion
+[ -f $HOME/.x11/notion/default-session--0 ]; or mkdir -pv $HOME/.x11/notion/default-session--0
+chown -Rv $USER $HOME/.x11
+pm_install trayion
+
+
+##############################################################################
+headline+ "x11"
+[ $desktop ]; and pm_install arandr
+[ $desktop ]; and pm_install lxrandr
+pm_install xorg-xmessage
+pm_install xrestop
+
+
+##############################################################################
+headline+ "passenger / sinatra"
+#aur_install nginx-passenger
+#aur_install ruby-kramdown
+#aur_install ruby-mail
+#aur_install ruby-sanitize
+#aur_install ruby-sinatra
+#aur_install ruby-term-ansicolor
+#aur_install ruby-thin
+gem install term-ansicolor --no-rdoc --no-ri
+gem install kramdown --no-rdoc --no-ri
+gem install mail --no-rdoc --no-ri
+gem install sanitize --no-rdoc --no-ri
+gem install sinatra --no-rdoc --no-ri
+gem install slim --no-rdoc --no-ri
+gem install thin --no-rdoc --no-ri
+gem install xapian-fu --no-rdoc --no-ri
+aur_install xapian-ruby-bindngs
+
+gem install passenger --no-rdoc --no-ri
+pm_install nginx
+original /etc/nginx/nginx.conf
+sudo sed -i -e '/^http/a \
+    passenger_root /home/shum/.gem/ruby/2.0.0/gems/passenger-4.0.5; \
+    passenger_ruby /usr/bin/ruby; \
+    passenger_log_level 1;' \
+       -e '$i \
+    server { \
+        listen 80; \
+        server_name thedarnedestthing; \
+        access_log /srv/www/thedarnedestthing.com/logs/access.log; \
+        error_log /srv/www/thedarnedestthing.com/logs/error.log; \
+        root /srv/www/thedarnedestthing.com/application/public; \
+        passenger_enabled on; \
+        passenger_min_instances 1; \
+    } \
+    passenger_pre_start http://thedarnedestthing/;' /etc/nginx/nginx.conf
+sudo systemctl enable nginx.service
+sudo systemctl start nginx.service
+
+
+##############################################################################
+headline+ "cloud storage/syncing"
+aur_install btsync
+
+
+##############################################################################
+headline+ "plexmediaserver"
+if [ $desktop ]
+  aur_install plexmediaserver
+  original /etc/default/plexmediaserver
+  sudo sed -i 's,^\(PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR\).*,\1=/srv/plexmediaserver/Library/Application Support,' /etc/default/plexmediaserver
+  [ -d /srv/plexmediaserver/Library/Application\ Support ]; or sudo mkdir -pv /srv/plexmediaserver/Library
+end

@@ -1,0 +1,24 @@
+# wm packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= file manager
+= ════════════
+  rox
+  tumbler
+
+
+= terminal
+= ════════
+
+
+= window manager
+= ══════════════
+  herbstluftwm
+# wmutils
+# sxhkd
+
+
+# vim: set ft=conf: #

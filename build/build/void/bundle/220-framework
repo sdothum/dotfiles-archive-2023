@@ -1,0 +1,37 @@
+# web framework packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= database management
+= ═══════════════════
+  pgadmin3
+  postgresql
+  sqlite
+  sqlitebrowser
+
+
+= sinatra web framework
+= ═════════════════════
+# g kramdown
+# g mail
+# g rack
+# g sanitize
+# g sinatra
+# g slim
+# g term-ansicolor
+# g thin
+# g xapian-fu
+# g xapian-ruby
+
+
+= web server
+= ══════════
+# g passenger
+  php
+  php-fpm
+  php-pgsql
+
+
+# vim: set ft=conf: #

@@ -1,0 +1,24 @@
+# startup session packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= ncurses editor
+= ══════════════
+  gvim-huge
+
+
+= terminal
+= ════════
+  alacritty    [! cpu atom]
+  rxvt-unicode [cpu atom]
+  xterm
+
+
+= window manager
+= ══════════════
+  herbstluftwm
+
+
+# vim: set ft=conf: #

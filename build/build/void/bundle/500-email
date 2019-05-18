@@ -1,0 +1,33 @@
+# email packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= imap
+= ════
+  dovecot
+  imapfilter
+  offlineimap
+
+
+= mail client
+= ═══════════
+  alot
+d notmuch
+
+
+= mail utility
+= ════════════
+  msmtp
+  pam
+  sharutils
+
+
+= mime
+= ════
+  catdoc
+  docx2txt
+
+
+# vim: set ft=conf: #

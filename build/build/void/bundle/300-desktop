@@ -1,0 +1,83 @@
+# desktop packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= appearance
+= ══════════
+  compton
+  lxappearance
+  setroot
+  unclutter
+
+
+= desktop
+= ═══════
+  conky
+  lemonbar-xft
+
+
+= desktop utilities
+= ═════════════════
+  maim
+  pywal
+  xautolock
+
+
+= font
+= ════
+# xorg-fonts
+  font-adobe-100dpi
+# font-adobe-75dpi
+# noto-fonts-ttf
+# courier-unicode
+  dejavu-fonts-ttf
+  fonts-roboto-ttf
+# font-symbola
+# msttcorefonts
+
+
+= gtk theme/engine
+= ════════════════
+  Adapta
+  gtk-engine-murrine
+  meson
+  paper-icon-theme
+
+
+= notification
+= ════════════
+  dunst
+  libnotify
+
+
+= screensaver
+= ═══════════
+# xscreensaver
+
+
+= user interface
+= ══════════════
+  autocutsel
+  dmenu
+  GPaste
+  rofi
+  xclip
+  xdotool
+  xsel
+  xvkbd
+
+
+= window property
+= ═══════════════
+  sutils
+  xtitle
+  xprop
+  xwininfo
+  
+
+# vim: set ft=conf: #
+
+
+

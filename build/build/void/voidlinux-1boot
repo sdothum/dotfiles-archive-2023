@@ -1,0 +1,301 @@
+#!/bin/bash
+# sdothum - 2016 (c) wtfpl
+
+# voidlinux boot configuration
+
+source ./voidlinux-functions
+
+
+# home user config and install scripts will be copied to
+user=${1:-shum}
+echo "--> USER: $user"
+
+cd /
+ls -la
+
+xbps-query -S musl && { musl=-musl; echo '--> void musl'; }
+checkpoint
+
+
+heading 'set root password'
+# ══════════════════════════════════════════════════════════════════════════════
+passwd root
+chown root:root /
+chmod 755 /
+heading "create \"$user\" user account"
+useradd -m -g users -G audio,input,lp,storage,users,video,wheel -s /bin/bash $user
+passwd $user
+original /etc/sudoers
+sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //; /## Defaults specification/aDefaults insults' /etc/sudoers
+cat /etc/sudoers
+checkpoint
+
+
+heading 'set hostname'
+# ══════════════════════════════════════════════════════════════════════════════
+read -p "Hostname [voidlinux]: " hostname
+[ $hostname ] || hostname=voidlinux
+echo $hostname | tee /etc/hostname
+
+
+heading 'set timezone and clock'
+# ══════════════════════════════════════════════════════════════════════════════
+# ls /usr/share/zoneinfo
+# ls /usr/share/zoneinfo/America
+# ln -sv /usr/share/zoneinfo/America/Toronto /etc/localtime
+hwclock --systohc --utc
+
+
+heading 'check kvm compatibility'
+# ══════════════════════════════════════════════════════════════════════════════
+[ $hostname = luna ] || config_install /etc/modprobe.d/blacklist-kvm.conf
+checkpoint
+
+
+heading 'update repo'
+# ══════════════════════════════════════════════════════════════════════════════
+mkdir -p /etc/xbps.d
+cp -v /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d
+# sed -i 's|https://alpha.de.repo.voidlinux.org|https://void.webconverger.org|g' /etc/xbps.d/*-repository-*.conf
+sed -i 's|https://alpha.de.repo.voidlinux.org|https://mirror.clarkson.edu/voidlinux|g' /etc/xbps.d/*-repository-*.conf
+xbps-install -Suv
+xbps-install -Suv
+heading 'repeat xbps-install -Suv until no more updates'
+checkpoint
+
+xbps-query -L
+xbps-install -y linux-firmware
+xbps-install -y linux-firmware-network
+xbps-install -y linux-headers
+
+
+heading 'default shell'
+# ══════════════════════════════════════════════════════════════════════════════
+xbps-install -y bc
+xbps-install -y dos2unix
+xbps-install -y fish-shell
+xbps-install -y perl
+config_install /etc/profile.d/path.sh
+checkpoint
+
+
+heading 'xorg keymap prep'
+# ══════════════════════════════════════════════════════════════════════════════
+original /etc/X11/xorg.conf.d/10-keyboard.conf
+xkbdconf() {
+  cat <<EOF
+Section "InputClass"
+	Identifier "Fix Alt-Shift chords"
+	MatchIsKeyboard "on"	# Limit these settings to keyboards
+ 	Driver "libinput"
+	# Keyboard layout - comma-separated list for multiple layouts
+	Option "XkbLayout" "us"
+EndSection
+EOF
+}
+mkdir -p /etc/X11/xorg.conf.d
+xkbdconf | tee /etc/X11/xorg.conf.d/10-keyboard.conf
+vi /etc/X11/xorg.conf.d/10-keyboard.conf
+checkpoint
+
+
+heading 'wireless network'
+# ══════════════════════════════════════════════════════════════════════════════
+xbps-install -y dbus
+xbps-install -y connman
+xbps-install -y wifi-firmware
+# echo 'nameserver 10.1.0.10' | tee /etc/resolv.conf
+# chattr +i /etc/resolv.conf
+echo noarp | tee -a /etc/dhcpcd.conf
+vi /etc/dhcpcd.conf
+checkpoint
+
+
+heading 'rc.conf'
+# ══════════════════════════════════════════════════════════════════════════════
+original /etc/rc.conf
+rcconf() {
+  cat <<EOF
+HOSTNAME=$hostname
+
+# Set RTC to UTC or localtime.
+HARDWARECLOCK="UTC"
+
+# Set timezone, availables timezones at /usr/share/zoneinfo.
+TIMEZONE="Canada/Eastern"
+
+# Keymap to load, see loadkeys(8).
+KEYMAP="us"
+
+# Console font to load, see setfont(8).
+#FONT="lat9w-16"
+
+# Console map to load, see setfont(8).
+#FONT_MAP=
+
+# Font unimap to load, see setfont(8).
+#FONT_UNIMAP=
+
+# Kernel modules to load, delimited by blanks.
+#MODULES=""
+EOF
+}
+rcconf | tee /etc/rc.conf
+vi /etc/rc.conf
+checkpoint
+
+
+heading 'edit fstab'
+# ══════════════════════════════════════════════════════════════════════════════
+original /etc/fstab
+fstab() {
+  cat <<EOF
+#
+# /etc/fstab: static file system information
+#
+# <file system>  <dir>        <type>  <options>           <dump> <pass>
+LABEL=Voidlinux  /            btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=257,subvol=/__current/ROOT,subvol=__current/ROOT  0 0
+                                      
+LABEL=Voidlinux  /home        btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=258,subvol=/__current/home,subvol=__current/home  0 0
+                                      
+LABEL=Voidlinux  /opt         btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=259,subvol=/__current/opt,subvol=__current/opt  0 0
+                                      
+LABEL=Voidlinux  /srv         btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=260,subvol=/__current/srv,subvol=__current/srv  0 0
+                                      
+LABEL=Voidlinux  /var         btrfs   rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=261,subvol=/__current/var,subvol=__current/var  0 0
+                                      
+LABEL=Voidlinux  /.snapshots  btrfs   rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=262,subvol=/__snapshot/.snapshots,subvol=__snapshot/.snapshots  0 0
+                                      
+LABEL=Swap       none         swap    defaults  0 0
+EOF
+}
+fstab | tee /etc/fstab
+vi /etc/fstab
+checkpoint
+
+
+# heading 'set and generate locale'
+# # ══════════════════════════════════════════════════════════════════════════════
+original /etc/default/libc-locales
+sed -i '/#en_US.UTF-8 UTF-8/s/#//' /etc/default/libc-locales
+echo LANG=en_US.UTF-8 | tee /etc/locale.conf
+echo LC_COLLATE=C | tee -a /etc/locale.conf
+export LANG=en_US.UTF-8
+[ $musl ] || xbps-reconfigure -f glibc-locales
+checkpoint
+
+
+heading 'set dracut init'
+# ══════════════════════════════════════════════════════════════════════════════
+dracutconf() {
+  cat <<EOF
+# PUT YOUR CONFIG HERE OR IN separate files named *.conf
+# in /etc/dracut.conf.d
+# SEE man dracut.conf(5)
+
+# Sample dracut config file
+
+#logfile=/var/log/dracut.log
+#fileloglvl=6
+
+# Exact list of dracut modules to use.  Modules not listed here are not going
+# to be included.  If you only want to add some optional modules use
+# add_dracutmodules option instead.
+#dracutmodules+=""
+
+# dracut modules to omit
+#omit_dracutmodules+=""
+
+# dracut modules to add to the default
+#add_dracutmodules+=""
+
+# additional kernel modules to the default
+#add_drivers+=""
+
+# list of kernel filesystem modules to be included in the generic initramfs
+#filesystems+=""
+
+# build initrd only to boot current hardware
+hostonly="yes"
+
+# install local /etc/mdadm.conf
+#mdadmconf="no"
+
+# install local /etc/lvm/lvm.conf
+#lvmconf="no"
+
+# A list of fsck tools to install. If it's not specified, module's hardcoded
+# default is used, currently: "umount mount /sbin/fsck* xfs_db xfs_check
+# xfs_repair e2fsck jfs_fsck reiserfsck btrfsck". The installation is
+# opportunistic, so non-existing tools are just ignored.
+#fscks=""
+
+# inhibit installation of any fsck tools
+#nofscks="yes"
+
+# mount / and /usr read-only by default
+#ro_mnt="no"
+
+# set the directory for temporary files
+# default: /var/tmp
+tmpdir=/tmp
+EOF
+}
+dracutconf | tee /etc/dracut.conf
+vi /etc/dracut.conf
+checkpoint
+
+cd /lib/modules
+ls -la
+kver=$(ls -la | awk '{ print $9 }' | grep '^[0-9]')
+dracut --force --hostonly --kver $kver
+
+
+heading 'installing bootloader'
+# ══════════════════════════════════════════════════════════════════════════════
+while [ -z $disk ] ;do
+  read -p "Boot disk /dev/sd? [a-z] | /dev/mmcblk? [0]: " disk
+done
+[ $disk = 0 ] && device=/dev/mmcblk${disk} || device=/dev/sd${disk}
+efi=$(partition EFI)
+if [ $efi ] ;then
+  grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=void_grub --boot-directory=/boot --recheck --debug
+else
+  grub-install --target=i386-pc --recheck $device
+fi
+xbps-reconfigure -f linux${kver%.*}
+# cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+# grub-mkconfig -o /boot/grub/grub.cfg
+checkpoint
+
+
+heading 'sync home directory'
+# ══════════════════════════════════════════════════════════════════════════════
+if [ ! -d /home/$user/stow ] ;then
+  mkdir /net
+  # mount -L Share -t btrfs /net
+  # [ -d /net/archive/home/$user ] && rsync -av /net/archive/home/$user /home/
+  # assume usb image is contains most upto date scripts
+  xbps-install -y rsync
+  rsync -av /media/home/$user /home/
+  rm -f /home/$user/.conky*               # discard other configuration settings
+  rm -f /home/$user/.session/*
+  touch /home/$user/.session/panel:ticker
+  touch /home/$user/.session/panel:weather
+  touch /home/$user/.session/setroot
+  touch /home/$user/.session/noblur
+  rm -rf /home/$user/.config/syncthing
+  sudo chown -R $user:users /home/$user
+fi
+
+
+heading 'base install finished: exit chroot'
+# ══════════════════════════════════════════════════════════════════════════════
+echo '$cd /'
+echo '$umount /media'
+echo '$ exit'
+echo '# exit'
+echo '# umount -R /mnt/btrfs-boot'
+echo '# reboot'
+
+# vim: set ft=sh: #

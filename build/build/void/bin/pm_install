@@ -1,0 +1,36 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# ......................................................... Distribution install
+
+# Usage: pm_install [--confirm | S] <package>
+
+[ "$1" = S ] && { shift; confirm=true; }
+
+heading : $@
+
+if ! pm_query $@ ;then
+  time=$(date +%s)
+  pre_install $@
+  if exists xbps-install ;then
+    sudo xbps-install -y $@
+  elif pacman -Ss $@ | grep -q --regex="/$@ " ;then
+    [ $confirm ] && sudo pacman -S $@ || sudo pacman -S --noconfirm $@
+  else
+    echo "${__GREEN}@aur${NOCOLOR}"
+    [ $confirm ] && options='--noanswerclean --noanswerdiff --noansweredit --noanswerupgrade' || 
+                    options='--answerclean=N --answerdiff=N --answeredit=N --answerupgrade=N --noconfirm'
+    yay -S --noprovides $options $@
+  fi
+  post_install $@
+  echo "${__GREEN}@elapsed $(( $(date +%s) - $time ))s${NOCOLOR}"
+fi
+
+unset confirm
+
+# vim: set ft=sh: #

@@ -1,0 +1,28 @@
+# admin packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= cups printing
+= ═════════════
+  cups
+# cups-filters
+  ghostscript
+  gsfonts
+  gutenprint
+  hplip
+
+
+= package management
+= ══════════════════
+  xtools
+
+
+= package rollback (btrfs)
+= ════════════════════════
+# grub-utils
+  snapper
+
+
+# vim: set ft=conf: #

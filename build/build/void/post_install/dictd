@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+
+# Post_install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ dictd
+
+service enable dictd
+ditto "dictd will complain if no dictionaries are installed yet"
+
+# vim: set ft=sh: #

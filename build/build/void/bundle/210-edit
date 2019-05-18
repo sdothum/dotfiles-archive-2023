@@ -1,0 +1,28 @@
+# edit packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+
+= document formatting
+= ═══════════════════
+# enscript
+
+
+= editor
+= ══════
+# neovim
+d texlive-bin
+  ctags
+
+
+= version control
+= ═══════════════
+  git
+  mercurial
+  patchutils
+
+
+# vim: set ft=conf: #
+
+

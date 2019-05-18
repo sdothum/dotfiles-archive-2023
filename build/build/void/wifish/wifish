@@ -1,0 +1,392 @@
+#!/bin/sh
+if [ -t 0 ];then # {{{ # Test to see if we are interactive or not
+	interactive=yes
+else
+	interactive=""
+fi # }}}
+: ${AWK_LOCATIONS:="/usr/local/share/wifish /usr/share/wifish ./awk"}
+: ${SCAN_SECONDS:=2}
+: ${wpa_cli:=wpa_cli}
+which dialog >/dev/null 2>&1 # {{{ # Default to menu if we have dialog (assuming WIFISH_DEFAULT isn't manually set)
+if [ $? -eq 0 ];then
+	have_dialog=yes
+	: ${WIFISH_DEFAULT:=menu} # }}}
+else # {{{ # Otherwise default to list
+	have_dialog=""
+	: ${WIFISH_DEFAULT:=list}
+fi # }}}
+
+which ${wpa_cli} >/dev/null 2>&1 # {{{ # Make sure we have wpa_cli for those people who skipped "Requirements"
+if [ $? -ne 0 ]; then
+	echo "FAIL & BAIL: '${wpa_cli}' not available" >&1
+	exit 127
+fi # }}}
+
+if ! ${wpa_cli} status >/dev/null 2>&1;then # {{{ # Check that we can use wpa_cli
+	res=$?
+	echo "FATAL: Cannot get wifi status (see '$wpa_cli' status)" >&2
+	exit $res
+fi # }}}
+
+for loc in ${AWK_LOCATIONS}; do # {{{ # Make sure the awk libs are found
+	if [ -r "${loc}"/wscanparse.awk ];then
+		AWK_LOCATION="${loc}"
+		break
+	fi
+done
+
+if [ ! "${AWK_LOCATION}" ]; then
+	echo "FATAL: Unable to find awk libraries! Please set AWK_LOCATION." >&2
+	exit 1
+fi
+# }}}
+
+# {{{ Parser Constants
+PARSER="${AWK_LOCATION}"/wscanparse.awk
+LISTPARSER="${AWK_LOCATION}"/wlistparse.awk
+MENUMAKER="${AWK_LOCATION}"/wscan2menu.awk
+# }}}
+
+cli() { # {{{ # Wrapper for wpa_cli
+	if [ ! -z "$_IN_TEST" ];then # {{{ # Test Mode, Mocking wpa_cli
+		echo "Using interface 'Wifi'"
+		if [ "$1" = "scan_results" ];then
+			cat data/wscan.txt
+		else
+			echo "OK"
+		fi
+		return
+	fi # }}}
+	if [ ! -z "$WPA_CLI_INTERFACE" ]; then
+		${wpa_cli} -i $WPA_CLI_INTERFACE "$@"
+	else
+		${wpa_cli} "$@"
+	fi
+
+
+} # }}}
+
+scan_results() { # {{{ # Scans for APs or shows scanned results. Writes to $stemp, a tempfile
+	scansecs=${1:-$SCAN_SECONDS} # How long to wait for a scan
+	if [ -n "$stemp" ] && [ -r "$stemp" ]; then # {{{ # Just print if we already have the data.
+		cat $stemp
+		return
+	fi # }}}
+
+	echo " * Scanning For APs ..." >&2
+        # Get the data
+	stemp=$(mktemp /tmp/$$.menu.XXXXXX)
+	trap 'rm -f $stemp' INT TERM EXIT
+	if [ -n "$_IN_TEST" ];then # {{{ # Test/Mock mode
+                cat data/wscan.txt > $stemp # }}}
+	else # {{{ # The Real Deal, Scan for APs
+		if [ $scansecs -ne 0 ];then
+			cli scan > /dev/null
+			sleep $scansecs
+		fi
+		cli scan_results|sort -r -g -k 3 > $stemp
+	fi # }}}
+	cat $stemp
+} # }}}
+
+get_userpass() { # {{{ # Get a username and password interactively
+	if [ -n "$interactive" ];then # {{{ # Stdin is a tty, ask for infos
+		_pret=1
+		_msg="Username for '$_ss'"
+		if [ ! -n "$have_dialog" ];then # {{{ # No dialog, text only
+			printf "$_msg:" 1>&2
+			read _psk
+			_pret=$?
+			printf "\n" 1>&2 # }}}
+		else # {{{ # Dialog username prompt
+			_identity=$(dialog --ok-label "Next" --cancel-button "Bail" --stdout --title "Username" --clear --inputbox "$_msg" 0 0)
+			_pret=$?
+		fi # }}}
+		if [ $_pret -ne 0 ];then
+			return $_pret # Fail now
+		fi
+		_psk=$(get_password)	
+		_pret=$?
+		if [ $_pret -ne 0 ];then
+			return $_pret # Fail now
+		fi
+		echo "${_identity}:${_psk}" # }}}
+	else # {{{ # no tty, read username:passphrase from stdin
+		echo 'Reading username:passphrase from stdin' 1>&2
+		read _userpsk
+		_psk=${_userpsk#*:}
+		if [ ! -n "$_psk" ];then
+			echo "For EAP, you must supply 'username:password' to stdin for authentication" 1>&2
+			return 77
+		else
+			echo "${_identity}:${_psk}"
+		fi
+	fi # }}}
+} # }}}
+
+get_password() { # {{{ # Get a password interactively
+	if [ -n "$interactive" ];then # {{{ # Stdin is a tty, ask for passphrase
+		_pret=0
+		_msg="Passphrase for '$_ss'"
+		if [ ! -n "$have_dialog" ];then # {{{ # No dialog, text only
+			stty -echo
+			printf "$_msg:" >&2
+			read _psk
+			stty echo
+			printf "\n" >&2 # }}}
+		else # {{{ # Dialog passphrase prompt
+			_psk=$(dialog --insecure --ok-label "Try It" --cancel-button "Bail" --stdout --title "Secret Stuff" --clear --passwordbox "$_msg" 0 0)
+			_pret=$?
+		fi # }}}
+		echo $_psk
+		return $_pret # }}}
+	else # {{{ # no tty, read passphrase from stdin
+		echo 'Reading passphrase from stdin' 1>&2
+		read _psk
+		echo $_psk
+	fi # }}}
+} # }}}
+
+save_config() { # {{{ # Runs wpa_cli save_config
+	if [ -n "$interactive" ];then # {{{ # Only prompt if we're interactive
+		_yesno=""
+		printf "Do you want to save this connection? (y/N): "
+		read _yesno
+		echo
+		echo $_yesno|egrep -q '^[Yy]'
+		if [ $? -eq 0 ];then
+			printf "Saving wpa_supplicant config.. "
+			cli save_config|tail -1
+		fi
+		unset _yesno
+        fi # }}}
+} # }}}
+
+scan_hidden() { # {{{ # Ask if we want to try to connect to a hidden SSID
+	if [ -n "$interactive" ];then # {{{ # Only prompt if we're interactive
+		_tfile=$1
+		_ssid=$2
+		_yesno=""
+		cat $_tfile
+		printf "WARNING: Cannot find '$_ssid' in scan results, if it's hidden we can continue. Continue? (y/N): "
+		read _yesno
+		echo $_yesno|egrep -q '^[Yy]'
+		if [ $? -eq 0 ];then
+			echo "Ok, your call"
+		else
+			echo "Ok, Bailing now"
+			exit 1
+		fi
+		unset _tfile _ssid _yesno
+	fi # }}}
+} # }}}
+ 
+wpa_encrypt() { # {{{ # Handle Encryption
+	__us="$1"
+	__net="$2"
+	_res=1
+	echo $__us|grep -q 'TKIP'
+	if [ $? -eq 0 ];then # {{{ # Check for TKIP
+		cli set_network $__net pairwise TKIP > /dev/null
+		cli set_network $__net group TKIP > /dev/null
+	fi # }}}
+
+	echo $__us|egrep -q 'WPA2?-PSK'
+	_res=$?
+	if [ $_res -eq 0 ];then # {{{ # PSK, ask for passphrase
+	        cli set_network $_net key_mgmt WPA-PSK > /dev/null
+		__psk=$(get_password)
+		if [ $? -ne 0 ];then # {{{ User cancelled during get_password. Bail.
+			clear
+			echo "Bailing at your request. What a waste of time that was ..."
+			exit 69
+		fi # }}}
+	        echo $__us|egrep -q 'WPA2-PSK'
+		if [ $? -ne 0 ]; then
+			cli set_network $__net proto WPA > /dev/null
+		else
+			cli set_network $__net proto WPA2 > /dev/null
+		fi
+		cli set_network $__net psk "\"$__psk\"" > /dev/null 
+	# }}}
+	else # {{{ # Must be some enterprise username/password
+		echo $__us|egrep -q 'EAP'
+		if [ $? -eq 0 ];then
+			__userpass=$(get_userpass)
+			if [ $? -ne 0 ];then # {{{ User cancelled during get_userpass Bail.
+				echo "Bailing at your request. What a waste of time that was ..."
+				exit 69
+			fi # }}}
+			__identity=$(__userpass%%:*)
+		        __psk=${_userpass#*:}
+			cli set_network $_net key_mgmt WPA-EAP > /dev/null
+			cli set_network $_net eap PEAP > /dev/null
+			cli set_network $_net identity "\"$__identity\"" > /dev/null
+			cli set_network $_net password "\"$__psk\"" > /dev/null
+			cli set_network $_net phase2 "\"auth=MSCHAPV2\"" > /dev/null
+		fi
+	fi # }}}
+
+	unset __us __net __psk __res
+} # }}}
+
+wpa_connect() { # {{{ # Configure wpa_supplicant and enable connection
+	_ss="$1"
+	_newnet=0
+	_psk=""
+
+        echo "Connecting to '$_ss'"
+	_net=$(cli list_networks|gawk -f $LISTPARSER|egrep ":\"$_ss\""|gawk -F: '{print $1}')
+	if [ -n "$_net"  ];then # {{{ # Connect to AP We already Know
+		echo "Found existing wpa_cli config for '$_ss', enabling network ${net}"
+		# }}}
+	else # {{{ # Set up a new SSID
+		echo "No existing config for '$_ss', creating"
+		if [ ! -n "$stemp" ];then # {{{ # Initiate Scan if there are no existing results
+			scan_results 3 >/dev/null
+		fi # }}}
+		# {{{ If the SSID is not found in the scan results, ask to try as hidden
+		_us=$(egrep "\b$_ss$" $stemp)
+		if [ $? -ne 0 ]; then scan_hidden $stemp "$_ss"; fi
+		# }}}
+
+		# {{{ Create a net
+		_net=$(cli add_network|tail -1)
+		# }}}
+
+		echo $_us|egrep -q 'WPA2?'
+		if [ $? -eq 0 ];then # {{{  # Handle Encryptions
+			wpa_encrypt "$_us" "$_net"
+			# }}}
+		else # {{{ # Open Network
+			cli set_network $_net key_mgmt NONE > /dev/null
+		fi # }}}
+
+		# {{{ Set the SSID
+		printf "Setting SSID to '$_ss' .. ["
+		outs=$(cli set_network $_net ssid "\"$_ss\""|tail -1)
+		echo "$outs]"
+		# }}}
+		_newnet=1
+	fi # }}}
+
+        rm -f $stemp
+	echo "Enabling '$_ss'"
+	cli select_network $_net > /dev/null
+
+	if [ $_newnet -eq 1 ]; then save_config; fi
+
+	sleep 2
+	cli status
+	unset _net _ss _psk _newnet
+} # }}}
+
+list() { # {{{ # Simple AP list
+		scan_results|gawk -f "$PARSER"
+} # }}}
+
+connect() { # {{{ # Connect to an SSID
+	ssid=$1
+	if [ -n "$ssid" ];then
+		wpa_connect "$ssid"
+	else
+		echo "Connecting to the best damn thing we can find"
+		lst=$(list|tail -n+3|grep -v 'HIDDEN'|head -1)
+		echo "$lst"
+		for s in $lst;do
+			ssid=$(echo $s|tr -d '"')
+			break
+		done
+		echo "Trying '$ssid'"
+	        wpa_connect "$ssid"
+	fi
+} # }}}
+
+menu() { # {{{ # Menu of scan results to choose an AP from
+	if [ ! -n "$have_dialog" ];then
+		list
+		echo
+		echo "* Dude, you can't have a menu without the 'dialog' utility (yet), use $0 connect <SSID> *" >&2
+		exit 1
+	fi
+	scan_results >/dev/null # Will make $stemp.
+	longest=$(awk -f $PARSER $stemp|awk -F'"' 'BEGIN{longest=0}{if(length($2)>longest) longest=length($2)}END{printf longest}')
+	headers=$(printf "    %-${longest}s%s   %s" Network Signal Cababilities)
+	size=$(cat $stemp|wc -l)
+	choice=$(awk -f $MENUMAKER $stemp|xargs dialog --title Choose --no-collapse --cancel-label Bail --ok-label Connect --column-separator '|' --stdout --menu "${headers}" 0 0 $((size-2)))
+	if [ $? -ne 0 ];then
+		clear
+		echo "Bailed. All that for nuthin'..."
+		exit
+	fi
+	clear
+	wpa_connect "$choice"
+} # }}}
+
+usage() { # {{{ # Usage (redundant comment)
+	cat	<<-HERE
+$0 [options] COMMAND [arguments]
+  Options:
+        -i INTERFACE    The wifi interface to use
+        -h		This Help
+
+
+  Commands:
+        list		List Available APs
+        connect	<SSID>	Connect to an AP
+        menu            List APs in a menu for choice of connectivity
+
+        * Commands may be shortened to uniqueness
+
+  Examples:
+        $0 connect SomeSSID
+        $0 menu
+        $0 m
+
+  Default Command (run when called with no arguments): $WIFISH_DEFAULT
+
+  ENVIRONMENT:
+	WPA_CLI_INTERFACE may be set to use a specific interface to avoid using -i <interface>
+	HERE
+
+} # }}}
+
+while getopts ":h:i:" opt; do # {{{ # Option Parsing
+	case $opt in
+		i)  WPA_CLI_INTERFACE=$OPTARG
+            shift $((OPTIND-1))
+	            ;;
+		\?) echo "Invalid Option: -$OPTARG" >&2
+		    usage
+		    exit 1
+		    ;;
+		:)  echo "Option -$OPTARG requires an argument" >&2
+		    usage
+		    exit 1
+		    ;;
+	    h) usage
+		   exit
+		   ;;
+	esac
+done
+# }}}
+
+COMMAND=$1
+
+case $COMMAND in # {{{ # Run a Command
+	"") $WIFISH_DEFAULT
+	    ;;
+	l|li|lis|list|"") list
+	                  ;;
+	c|co|con|conn|conne|connec|connect) shift
+		 connect "$@"
+		 ;;
+	m|me|men|menu) menu
+		       ;;
+        *) echo Unsupported operation: $COMMAND >&2
+	   usage
+	   exit 88
+	   ;;
+esac
+# }}}
+# vim: foldmethod=marker noet sts=8 ts=8 sw=8 syntax=sh

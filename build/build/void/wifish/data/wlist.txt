@@ -1,0 +1,3 @@
+Selected interface 'Wifi'
+network id / ssid / bssid / flags
+0	Bella	any	

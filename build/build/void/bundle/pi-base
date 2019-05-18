@@ -1,0 +1,82 @@
+# raspberry pi packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+# manual install after initial boot:
+# then run rsync pi from main server to install scripts and proceed with
+# voidlinux-pi
+
+
+= aur package manager
+= ═══════════════════
+
+
+= core
+= ════
+  base-devel
+  btrfs-progs
+  expac
+  git
+  gnome-keyring
+  net-tools
+  yajl
+
+
+= entropy
+= ═══════
+
+
+= shell
+= ═════
+  bc
+  dash
+  figlet
+  fish-shell
+
+
+= x11 driver
+= ══════════
+  xf86-input-evdev
+  xf86-input-libinput
+  xf86-video-fbdev
+
+
+= x11 server
+= ══════════
+  xorg-server
+
+
+= x11 server utility
+= ══════════════════
+  xorg-xrefresh
+
+
+= font rendering
+= ══════════════
+  cairo
+  freetype
+  fontconfig
+  libXft
+
+
+= ncurses editor
+= ══════════════
+  gvim
+
+
+= terminal
+= ════════
+  urxvt-perls
+  xterm
+
+
+= window manager
+= ══════════════
+  herbstluftwm
+
+! ditto 'exit console (script)'
+! ditto run 'startx (x)'
+! ditto run 'bundle_install pi_bundle'
+
+
+# vim: set ft=conf: #

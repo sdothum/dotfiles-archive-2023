@@ -1,0 +1,53 @@
+mesa libOSMesa mesa-ati-dri mesa-demos mesa-intel-dri MesaLib-devel mesa-nouveau-dri mesa-opencl mesa-tegra-dri mesa-vc4-dri mesa-vmwgfx-dri
+pulseaudio-equalizer pulseaudio-equalizer-ladspa
+bind-tools -> bind :: bind bind-devel bindfs bind-libs bind-utils cbindgen go-bindata lesstif-xmbind libindicator libindicator-devel libkeybinder2 libkeybinder2-devel libkeybinder3 libkeybinder3-devel nsgenbind python-keybinder2 r2-bindings rpcbind valabind vbindiff xbindkeys 
+cups-pdf -> cups :: bluez-cups brother-dcp197c-cupswrapper cups cups-devel cups-filters cups-pk-helper libcups libcups-filters libcups-filters-devel python3-cups python3-cupshelpers python-cups samba-cups 
+fuse-common -> fuse :: cloudfuse confuse confuse-devel enblend-enfuse fuse fuse3 fuse3-devel fuse-archivemount fuse-devel fuse-emulator fuse-exfat fuse-sshfs fuse-usmb fuse-zip ifuse perl-Fuse python3-defusedxml python3-fuse python3-llfuse python-defusedxml python-fuse python-llfuse s3fs-fuse 
+gimp-plugin-resynthesizer -> gimp :: gimp gimp-devel gimp-lqr-plugin gimp-python gmic-gimp libgimp ufraw-gimp xsane-gimp 
+gimp-plugin-resynthesizer -> resynthesizer :: resynthesizer 
+grub-btrfs -> grub :: grub grub-arm64-efi grub-customizer grub-i386-efi grub-utils grub-x86_64-efi 
+gst-plugins-base -> gst :: clutter-gst clutter-gst3 clutter-gst3-devel clutter-gst-devel gst123 gst1-editing-services gst1-editing-services-devel gst1-python gst1-python3 gst-libav gst-omx gst-plugins-bad1 gst-plugins-bad1-devel gst-plugins-base1 gst-plugins-base1-devel gst-plugins-good1 gst-plugins-ugly1 gstreamer1 gstreamer1-devel gstreamer1-pipewire gstreamermm gstreamermm-devel gstreamer-vaapi libgstreamerd libgstreamerd-devel logstalgia nagstamon phonon-backend-gstreamer phonon-qt5-backend-gstreamer synfigstudio synfigstudio-devel 
+gst-plugins-good -> gst :: clutter-gst clutter-gst3 clutter-gst3-devel clutter-gst-devel gst123 gst1-editing-services gst1-editing-services-devel gst1-python gst1-python3 gst-libav gst-omx gst-plugins-bad1 gst-plugins-bad1-devel gst-plugins-base1 gst-plugins-base1-devel gst-plugins-good1 gst-plugins-ugly1 gstreamer1 gstreamer1-devel gstreamer1-pipewire gstreamermm gstreamermm-devel gstreamer-vaapi libgstreamerd libgstreamerd-devel logstalgia nagstamon phonon-backend-gstreamer phonon-qt5-backend-gstreamer synfigstudio synfigstudio-devel 
+gst-plugins-ugly -> gst :: clutter-gst clutter-gst3 clutter-gst3-devel clutter-gst-devel gst123 gst1-editing-services gst1-editing-services-devel gst1-python gst1-python3 gst-libav gst-omx gst-plugins-bad1 gst-plugins-bad1-devel gst-plugins-base1 gst-plugins-base1-devel gst-plugins-good1 gst-plugins-ugly1 gstreamer1 gstreamer1-devel gstreamer1-pipewire gstreamermm gstreamermm-devel gstreamer-vaapi libgstreamerd libgstreamerd-devel logstalgia nagstamon phonon-backend-gstreamer phonon-qt5-backend-gstreamer synfigstudio synfigstudio-devel 
+gstreamer0.10-base-plugins -> gstreamer :: gstreamer1 gstreamer1-devel gstreamer1-pipewire gstreamermm gstreamermm-devel gstreamer-vaapi libgstreamerd libgstreamerd-devel phonon-backend-gstreamer phonon-qt5-backend-gstreamer 
+hunspell-en -> hunspell :: hunspell hunspell-da_DK hunspell-de_DE hunspell-devel hunspell-en_GB-ize hunspell-en_US hunspell-eo hunspell-es_ES hunspell-fr_FR hunspell-fr_FR-moderne hunspell-fr_FR-reforme1990 hunspell-fr_FR-toutesvariantes hunspell-hr_HR hunspell-it_IT hunspell-pl_PL hunspell-pt_BR hunspell-ru_RU hunspell-ru_RU-ieyo libhunspell1.7 
+jre7-openjdk -> jre :: jreen jreen-devel jreen-qt5 jreen-qt5-devel openjdk-jre oracle-jre 
+libflashsupport-oss -> oss :: albatross-themes alsa-oss autossh cmus-oss cross-aarch64-linux-gnu cross-aarch64-linux-gnu-libc cross-aarch64-linux-musl cross-aarch64-linux-musl-libc cross-arm-linux-gnueabi cross-arm-linux-gnueabihf cross-arm-linux-gnueabihf-libc cross-arm-linux-gnueabi-libc cross-arm-linux-musleabi cross-arm-linux-musleabihf cross-arm-linux-musleabihf-libc cross-arm-linux-musleabi-libc cross-arm-none-eabi cross-armv7l-linux-gnueabihf cross-armv7l-linux-gnueabihf-libc cross-armv7l-linux-musleabihf cross-armv7l-linux-musleabihf-libc crossguid cross-i686-linux-musl cross-i686-linux-musl-libc cross-i686-pc-linux-gnu cross-i686-pc-linux-gnu-libc cross-mipsel-linux-musl cross-mipsel-linux-muslhf cross-mipsel-linux-muslhf-libc cross-mipsel-linux-musl-libc cross-mips-linux-musl cross-mips-linux-muslhf cross-mips-linux-muslhf-libc cross-mips-linux-musl-libc cross-powerpc64le-linux-gnu cross-powerpc64le-linux-gnu-libc cross-powerpc64le-linux-musl cross-powerpc64le-linux-musl-libc cross-powerpc64-linux-musl cross-powerpc64-linux-musl-libc cross-vpkg-dummy cross-x86_64-linux-musl cross-x86_64-linux-musl-libc fossil kross kross-devel qca-ossl qca-qt5-ossl skype_oss_wrapper 
+mbpfan-git -> mbpfan :: mbpfan 
+mkvtoolnix-cli -> mkvtoolnix :: mkvtoolnix 
+msmtp-mta -> msmtp :: msmtp 
+noto-fonts -> noto :: noto-fonts-cjk noto-fonts-emoji noto-fonts-ttf noto-fonts-ttf-extra python-monotonic 
+ntfs-3g-fuse -> ntfs :: ntfs-3g ntfs-3g-devel 
+ntfs-3g-fuse -> fuse :: cloudfuse confuse confuse-devel enblend-enfuse fuse fuse3 fuse3-devel fuse-archivemount fuse-devel fuse-emulator fuse-exfat fuse-sshfs fuse-usmb fuse-zip ifuse perl-Fuse python3-defusedxml python3-fuse python3-llfuse python-defusedxml python-fuse python-llfuse s3fs-fuse 
+nvidia-340xx -> nvidia :: linux-firmware-nvidia nvidia nvidia340 nvidia340-dkms nvidia340-libs nvidia340-opencl nvidia390 nvidia390-dkms nvidia390-gtklibs nvidia390-libs nvidia390-opencl nvidia-dkms nvidia-gtklibs nvidia-libs nvidia-opencl 
+nvidia-340xx-utils -> nvidia :: linux-firmware-nvidia nvidia nvidia340 nvidia340-dkms nvidia340-libs nvidia340-opencl nvidia390 nvidia390-dkms nvidia390-gtklibs nvidia390-libs nvidia390-opencl nvidia-dkms nvidia-gtklibs nvidia-libs nvidia-opencl 
+nvidia-libgl -> nvidia :: linux-firmware-nvidia nvidia nvidia340 nvidia340-dkms nvidia340-libs nvidia340-opencl nvidia390 nvidia390-dkms nvidia390-gtklibs nvidia390-libs nvidia390-opencl nvidia-dkms nvidia-gtklibs nvidia-libs nvidia-opencl 
+pepper-flash -> flash :: adobe-flash-plugin flashrom get-flash-videos-git gnome-flashback 
+perl-curses-ui -> curses :: canto-curses connman-ncurses ncurses ncurses-base ncurses-devel ncurses-libs ncurses-term perl-Curses XorCurses 
+perl-extract-url -> extract :: cabextract ccextractor extractpdfmark innoextract libextractor libextractor-devel perl-Archive-Extract pgn-extract rpmextract 
+php70-mcrypt -> mcrypt :: libmcrypt libmcrypt-devel libtomcrypt libtomcrypt-devel 
+pulseaudio-alsa -> pulseaudio :: alsa-plugins-pulseaudio cmus-pulseaudio libpulseaudio mpg123-pulseaudio pulseaudio pulseaudio-devel pulseaudio-equalizer-ladspa pulseaudio-module-sndio xfce4-pulseaudio-plugin 
+pulseaudio-equalizer -> equalizer :: pulseaudio-equalizer-ladspa 
+rss-glx -> glx :: glxinfo libva-glx libva-glx-devel 
+rxvt-unicode-patched -> rxvt :: mrxvt rxvt-unicode rxvt-unicode-terminfo urxvt-bidi urxvtconfig urxvt-perls 
+systemd-swap -> swap :: runit-swap 
+term-ansicolor -> ansicolor :: python3-ansicolor python-ansicolor 
+texlive-core -> texlive :: texlive2013-bin texlive2014-bin texlive2015-bin texlive2016-bin texlive2017-bin texlive2018-bin texlive-bin 
+texlive-latexextra -> texlive :: texlive2013-bin texlive2014-bin texlive2015-bin texlive2016-bin texlive2017-bin texlive2018-bin texlive-bin 
+ttf-courier-prime -> courier :: courier-unicode courier-unicode-devel 
+ttf-dejavu -> dejavu :: dejavu-fonts-ttf 
+ttf-ms-fonts -> ms :: acpi_call-dkms ADMS-qucs amsynth argyllcms broadcom-wl-dkms catalyst-dkms checkbashisms cmst cppcms crimson dkms exfat-dkms ffms2 firefox-esr-i18n-ms firefox-i18n-ms font-tamsyn gammu-smsd hamster-applet icecat-i18n-ms kmscon lcms lcms2 lcms2-devel lcms2-tools lcms-devel libboost_iostreams1.69 libffms2 libffms2-devel libmms libmms-devel libmspack libmspack-devel libmspub libmspub-devel libmspub-tools librpmsign lmms lttng-modules-dkms mimms msbuild-bin mscgen msg2 msgpack msgpack-devel msmtp msp430-toolchain mspdebug msrc_base msrc_base-devel msr-tools ms-sys msttcorefonts nanomsg nanomsg-devel nvidia340-dkms nvidia390-dkms nvidia-dkms openmsx openrazer-driver-dkms perl-Params-Classify perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Socket-MsgHdr pipenightdreams python3-msgpack python3-stormssh python3-WTForms python-msgpack python-msp430-tools python-stormssh python-WTForms radamsa rtl8812au-dkms samsung-unified-driver speed-dreams speed-dreams-data systemsettings teamspeak3 termsyn-font tesseract-ocr-msa tp_smapi-dkms vapoursynth-ffms2-source vhba-module-dkms virtualbox-ose-dkms virtualbox-ose-guest-dkms wmsystemtray wvstreams wvstreams-devel xcb-util-keysyms xcb-util-keysyms-devel xcmsdb xforms xforms-devel xlsatoms 
+ttf-symbola -> symbola :: font-symbola 
+universal-ctags-git -> ctags :: ctags 
+xapian-fu -> xapian :: libxapian perl-Search-Xapian xapian-core xapian-core-devel xapian-core-doc xapian-omega 
+xf86-input-keyboard -> keyboard :: qt5-virtualkeyboard qt5-virtualkeyboard-devel xkeyboard-config 
+xf86-input-mouse -> mouse :: gnome-shell-mousewheel-zoom mousepad mousetweaks xf86-input-vmmouse 
+xorg-xev -> xev :: libXevie libXevie-devel xev 
+xorg-xinit -> xinit :: xinit 
+xorg-xmessage -> xmessage :: gxmessage xmessage 
+xorg-xmodmap -> xmodmap :: xmodmap 
+xorg-xprop -> xprop :: xprop 
+xorg-xrandr -> xrandr :: libXrandr libXrandr-devel lxrandr xrandr 
+xorg-xrdb -> xrdb :: xrdb 
+xorg-xset -> xset :: xset xsetmode xsetpointer xsetroot xsettingsd 
+xorg-xwininfo -> xwininfo :: xwininfo 

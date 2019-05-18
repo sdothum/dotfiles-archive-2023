@@ -1,0 +1,33 @@
+adapta-gtk-theme Adapta
+adobe-base-14-fonts font-adobe-100dpi font-adobe-75dpi
+conky-lua-archers conky
+displaycal dispcalGUI
+fish fish-shell
+font-manager fontmanager fontmatrix
+freetype2 freetype
+fuse-common fuse
+gpaste Gpaste
+hunspell-en hunspell
+lemonbar-xft-git lemonbar-xft
+libxft libXft
+mkvtoolnix-cli mkvtoolnix
+msmtp-mta msmtp
+noto-fonts noto-fonts-ttf
+ntfs-3g-fuse ntfs-3g
+nvidia-340xx nvidia-340
+nvidia-libgl nvidia-libs
+perl-curses-ui perl-Curses
+pulseaudio-alsa alsa-plugins-pulseaudio
+python-pywal pywal
+shell-functools shellcheck
+sonarr sabnzbd
+sutils-git sutils
+term-ansicolor python-ansicolor
+texlive-core texlive-bin
+ttf-courier-prime courier-unicode
+ttf-dejavu dejavu-fonts-ttf
+ttf-roboto fonts-roboto-ttf
+ttf-symbola font-symbola
+unclutter-xfixes-git unclutter
+universal-ctags-git ctags
+xorg-xev xorg

@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... fbreader
+
+sudo mkdir -pv /net/media/ebooks
+permissions /net/media
+
+# vim: set ft=sh: #
