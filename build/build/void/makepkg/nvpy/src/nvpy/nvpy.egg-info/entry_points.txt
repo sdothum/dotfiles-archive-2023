@@ -1,3 +1,0 @@
-[gui_scripts]
-nvpy = nvpy.nvpy:main
-
