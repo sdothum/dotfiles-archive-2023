@@ -8,7 +8,7 @@
 
 # preselect default fortune database
 # fortune=chucknorris 
-fortune=all 
+arch && fortune=all 
 
 # strip off utf-8 characters
 /usr/bin/fortune $fortune | ascii

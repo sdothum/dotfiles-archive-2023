@@ -48,7 +48,7 @@ d znc             [server]
 = web aggregator
 = ══════════════
 # newsbeuter
-  php-gd
+# php-gd
 # php-mcrypt
 # d php70-mcrypt
 d tt-rss

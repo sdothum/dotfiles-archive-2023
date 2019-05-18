@@ -6,8 +6,9 @@
 
 = document formatting
 = ═══════════════════
-  csslint
-  csstidy
+# csslint
+# csstidy
+# enscript
 
 
 = editor
@@ -18,7 +19,7 @@
 # emacs           [server]
 # focuswriter
 # markdown
-  neovim
+# neovim
 # neovim-git
 # nvpy-git
 # pyroom

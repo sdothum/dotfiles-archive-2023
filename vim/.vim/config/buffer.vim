@@ -140,14 +140,14 @@
       " beakl si layout specific buffer navigation key assignments, note silent -> silent
       if $BEAKL > ''
         " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
-        nmap <silent><Delete>   :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
-        noremap <silent><Enter> :call <SID>enter()<CR>
+        nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
+        nmap <silent><Enter>  :call <SID>enter()<CR>
       else
-        nmap <silent>-          :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
-        nmap <silent>+          :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
+        nmap <silent>-        :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
+        nmap <silent>+        :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
       endif
       " switch to previously edited/viewed buffer
-      nmap <silent><BS>         :CloseDiff<CR>:silent edit #<CR>:call theme#SplitColors()<CR>
+      nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>:call theme#SplitColors()<CR>
 
   " Window actions _____________________________________________________________
 

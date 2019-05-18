@@ -10,7 +10,7 @@
 # bluez-utils
 # d " connman post install disrupts internet connection, install last
 # d connman
-d cmst
+# cmst
 # gnome-bluetooth
 # ifenslave
 # networkmanager
@@ -23,7 +23,7 @@ d cmst
 = ═══════
   bind-tools
   dnsmasq
-  dnsutils
+# dnsutils
 
 
 = network monitor
@@ -36,7 +36,7 @@ d cmst
   nethogs
 # netstat-nat
 # tcpflow
-# traceroute
+  traceroute
 
 
 = network security

@@ -5,11 +5,12 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu ebooks [cache]
+# Usage: dmenu ebooks [I [cache]]
 
 REBUILD='[ rebuild database ]'
 
 # ebook library
+[ $1 = I ] && { init=true; shift; }
 library=${LIBRARY:-/net/media/ebooks/${1:-library}}
 cache=$library/dmenu:ebooks
 
@@ -17,7 +18,7 @@ cache=$library/dmenu:ebooks
 
 # build catalogue
 ebooks() {
-  [ $1 ] || { stest -qr -n $cache $(find $library -maxdepth 3) || return; }
+  [ $init ] || { stest -qr -n $cache $(find $library -maxdepth 3) || return; }
   notify low 'Updating library cache' 'Please be patient..'
   find $library -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
       sed -re "s|$library/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi\|epub\|azw3\|azw\|kfx)|\1$SEP\3|" \
@@ -29,9 +30,9 @@ ebooks() {
 }
 
 # command line initialization with: dmenu ebooks [init]
-if [ ! -s $cache ] || [ $1 ] ;then
-  ebooks init
-  [ $1 ] && exit
+if [ ! -s $cache ] || [ $init ] ;then
+  ebooks $1
+  [ $init ] && exit
 else
   ebooks
 fi

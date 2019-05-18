@@ -197,7 +197,7 @@ if [ ! -d /home/$user/stow ] ;then
   touch /home/$user/.session/panel:weather
   touch /home/$user/.session/setroot
   touch /home/$user/.session/noblur
-  chown -R shum:users /home/$user/.session
+  chown -R $user:users /home/$user/.session
 fi
 
 

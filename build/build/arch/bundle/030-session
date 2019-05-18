@@ -4,10 +4,15 @@
 # see bundle_install
 
 
+= editor
+= ══════
+  gvim
+
+
 = terminal
 = ════════
-  alacritty     [! cpu atom]
-# alacritty-git [! cpu atom]
+  alacritty            [! cpu atom]
+  rxvt-unicode-patched [cpu atom]
   xterm
 
 

@@ -25,10 +25,10 @@ title "bundle installs"
 bundle_install init $HOME/build/arch/bundle/[1-6]*
 
 
-title "custom installs"
-# ══════════════════════════════════════════════════════════════════════════════
-title "web server (with passenger module)"
-app_install passenger-install-nginx-module $(dirname $(find $HOME -name passenger-install-nginx-module | grep gems))
+# title "custom installs"
+# # ══════════════════════════════════════════════════════════════════════════════
+# title "web server (with passenger module)"
+# app_install passenger-install-nginx-module $(dirname $(find $HOME -name passenger-install-nginx-module | grep gems))
 
 
 title "installation errors:"

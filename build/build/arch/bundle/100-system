@@ -17,7 +17,7 @@ d gstreamer0.10-base-plugins
 
 = hardware
 = ════════
-  dmidecode
+# dmidecode
 # gpointing-device-settings [gpu macbook]
   hwinfo
   intel-ucode

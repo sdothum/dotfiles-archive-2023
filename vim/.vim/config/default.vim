@@ -20,9 +20,9 @@
 
       autocmd default BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 
-      nmap <F1> :help<Space>
-      imap <F1> <C-o>:help<Space>
-      vmap <F1> :<C-u>help<Space>
+      " nmap <F1> :help<Space>
+      " imap <F1> <C-o>:help<Space>
+      " vmap <F1> :<C-u>help<Space>
 
       " list my function and leader key assignments
       nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>

@@ -6,8 +6,10 @@
 
 = filesystem
 = ══════════
+- gvfs
 - jfsutils
 - lvm2
+- mbuffer
 - mdadm
 - reiserfsprogs
 - xfsprogs
@@ -23,14 +25,36 @@
 - pv
 
 
+= hardware
+= ════════
+- dmidecode
+
+
+= security
+= ════════
+- gnome-keyring
+- polkit-gnome
+
+
 = sound
 = ═════
 - pulseaudio-equalizer
 
 
+= connectivity
+= ════════════
+- cmst
+
+
 = network
 = ═══════
 - gssproxy
+- dnsutils
+
+
+= disk utility
+= ════════════
+- etcher
 
 
 = julia
@@ -38,9 +62,26 @@
 - julia-docs
 
 
+= prototyping
+= ═══════════
+- ruby-rake
+
+
 = software tool
 = ═════════════
 - gdb
+
+
+= document formatting
+= ═══════════════════
+- csslint
+- csstidy
+- enscript
+
+
+= editor
+= ══════
+- neovim
 
 
 = font
@@ -52,6 +93,16 @@
 = chat/twitter
 = ════════════
 - bitlbee
+
+
+= web aggregator
+= ══════════════
+- php-gd
+
+
+= dictionary
+= ══════════
+- aiksaurus
 
 
 # vim: set ft=conf: #

@@ -16,7 +16,7 @@
 
 = disk utility
 = ════════════
-d etcher
+# etcher
 # gnome-disk-utility
   gparted
   gptfdisk

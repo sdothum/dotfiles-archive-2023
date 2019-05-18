@@ -15,11 +15,6 @@ p pikaur
 ! pikaur -S --noconfirm pacaur
 
 
-= editor
-= ══════
-  gvim
-
-
 = console font
 = ════════════
   dos2unix
@@ -47,11 +42,11 @@ p pikaur
   exfat-utils
 # fuse-common
 # fuse-exfat
-  gvfs
+# gvfs
 # hfsprogs
 # ntfs-3g
 # ntfs-3g-fuse
-  mbuffer
+# mbuffer
 # zfs-linux              [server]
 # zfs-linux-headers      [server]
 # d znapzend             [server]

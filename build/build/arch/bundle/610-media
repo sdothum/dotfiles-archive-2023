@@ -28,7 +28,7 @@
 = ═══════════
 # darktable
 # dcraw                      [server]
-# d digikam
+  digikam
 # dispcalgui                 [server]
   displaycal                 [server]
   gimp                       [server]

@@ -14,5 +14,6 @@
 # ditto @ "$(date '+%a %-I:%M %S%P')"
 # ditto $(date "+%a %H°%M'%S\"")
 ditto $(date "+%u") "$(date "+%-H°%M'%S\"")"
+# ditto $(date "+%a" | tr '[:upper:]' '[:lower:]') "$(date "+%-H°%M'%S\"")"
 
 # vim: set ft=sh: #

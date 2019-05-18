@@ -107,7 +107,6 @@
         execute 'hi SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background)
         execute 'hi User1           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user1
         execute 'hi User2           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user2
-        execute 'hi User3           guibg=' . s:dfm_bg        . ' guifg=' . g:red
         execute 'hi VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
         execute 'hi VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
 
