@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................... networkmanager
+
+ifnsed /etc/NetworkManager/NetworkManager.conf 'dhcp=dhcpcd'
+
+s6opts enable dhcpcd
+s6opts enable NetworkManager
+
+nmtui
+
+# vim: set ft=sh: #

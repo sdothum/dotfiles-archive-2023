@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... sabnzbd
+
+s6opts enable sabnzbd
+ditto "run sabnzbd manually to configure. Note: sabnzbd is s6opts enabled"
+
+# vim: set ft=sh: #

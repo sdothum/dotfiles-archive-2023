@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Sonarr
+
+s6opts enable sonarr
+ditto "configure sonarr http://localhost:8989/
+set advanced create folders off"
+ifnsed /etc/group '^users:.*sonarr' 's/^\(users:.*\)/\1,sonarr/; s/:,/:/'
+
+ditto "allow sonarr users group access with.."
+ditto run "sudo chmod -c 775 /net/media/videos/{series,anime}"
+
+# vim: set ft=sh: #

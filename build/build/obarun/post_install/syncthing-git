@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... syncthing
+
+sudo chown -c $USER:users $HOME/.config/syncthing/config.xml
+original $HOME/.config/syncthing/config.xml
+sed -i 's/127.0.0.1/0.0.0.0/' $HOME/.config/syncthing/config.xml
+
+s6opts enable syncthing@$USER
+
+# vim: set ft=sh: #

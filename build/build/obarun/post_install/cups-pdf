@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... cups-pdf
+
+ifnsed /etc/cups/cups-pdf.conf '^Out \${HOME}/documents' '/#Out/aOut ${HOME}/documents'
+
+s6opts down org.cups.cupsd
+s6opts up org.cups.cupsd
+
+# vim: set ft=sh: #

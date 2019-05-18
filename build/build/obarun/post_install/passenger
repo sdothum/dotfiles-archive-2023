@@ -1,0 +1,20 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ nginx
+
+# Usage: post_install passenger [<rubyver>]
+
+# manual ruby version install
+[ $2 ] && vsn=$2 || vsn=$(ls -1 $HOME/.gem/ruby | sort | tail -1)
+
+# build passenger agent
+$HOME/.gem/ruby/$vsn/gems/passenger-*/bin/passenger-config compile-agent
+# build web server
+sudo -E /usr/bin/ruby $HOME/.gem/ruby/$vsn/gems/passenger-*/bin/passenger-install-nginx-module
+
+server && s6opts enable nginx || ditto run "sudo s6opts up nginx"
+
+# vim: set ft=sh: #

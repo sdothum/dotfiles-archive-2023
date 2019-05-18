@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................ syncthing-inotify
+
+s6opts enable syncthing-inotify@$USER
+ditto "set syncthing rescan interval to 0 (seconds)"
+
+# vim: set ft=sh: #

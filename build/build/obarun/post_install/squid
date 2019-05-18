@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ squid
+
+config_install /etc/squid/squid.conf
+s6opts down squid
+# allocate working directories
+sudo squid -k check
+sudo squid -z
+
+server && s6opts enable squid
+
+# vim: set ft=sh: #
