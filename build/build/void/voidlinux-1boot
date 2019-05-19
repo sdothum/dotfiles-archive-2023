@@ -103,6 +103,8 @@ heading 'wireless network'
 # ══════════════════════════════════════════════════════════════════════════════
 xbps-install -y dbus
 xbps-install -y connman
+xbps-install -y inetutils-hostname
+ln -sf /usr/bin/inetutils-hostname /usr/bin/hostname
 xbps-install -y wifi-firmware
 # echo 'nameserver 10.1.0.10' | tee /etc/resolv.conf
 # chattr +i /etc/resolv.conf

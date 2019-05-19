@@ -31,8 +31,9 @@
 = ════════
 # gksu
 # gnome-keyring
-  gnupg
-d pass
+  gnupg2
+  pass
+  pinentry-gtk
 # polkit-gnome
 
 

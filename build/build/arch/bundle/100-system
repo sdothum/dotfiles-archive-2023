@@ -40,7 +40,7 @@ d mbpfan-git                [gpu macbook]
 # d gksu
   gnome-keyring
 # keepassx
-d pass
+  pass
   polkit-gnome
 # python-keyring
 # python-keyrings-alt

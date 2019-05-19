@@ -6,9 +6,10 @@
 
 # ................................................................... Fuzzy jump
 
-# Usage: j [-] [<dir>] [<pattern>]
+# Usage: j -- | [-] [<dir>] [<pattern>]
 
 # refresh directory cache, see fcache
+[ "$1" = '--' ] && { fcache I; exit; }
 [ "$1" = '-' ] && { refresh=$1; shift; }
 
 # fish shell ignores non-fish cd's, see j.fish

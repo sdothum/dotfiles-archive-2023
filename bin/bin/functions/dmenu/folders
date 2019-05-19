@@ -28,11 +28,11 @@ while name=$(echo | mhistory folders | rmenu 'Find Folder') || exit ;do
     case $action in
     term     ) cd $dir; term "$dir" ;;
 
-    ncdu     |\
+    ncdu       |\
     ranger   ) term "$dir" $action "$dir" ;;
 
-    rox      |\
-    thunar   |\
+    rox        |\
+    thunar     |\
     filelight) focus $action "$dir" ;;
     esac
     exit

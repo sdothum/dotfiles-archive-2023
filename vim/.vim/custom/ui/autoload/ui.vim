@@ -70,6 +70,7 @@
       function! ui#ToggleProof()
         Trace ui#ToggleProof()
         if core#CommandWindow() | return | endif
+        " if core#Prose() | let b:view = b:view == 0 ? 1 : 0 | endif
         let b:view = b:view == 0 ? 1 : 0
         call s:view()
       endfunction
@@ -155,7 +156,7 @@
 
       function! s:showInfo(proof)
         Trace ui:showInfo()
-        if a:proof == 1
+        if a:proof == 1 || !core#Prose()
           " execute 'set statusline=%{s:statusline(' . a:proof . ')}'
           execute 'set statusline=%{theme#SplitColors()}%1*%{ui#Active()}' . s:statusline(a:proof)
           call theme#ShowStatusLine()

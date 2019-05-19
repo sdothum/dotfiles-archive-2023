@@ -1,13 +1,1 @@
-# sdothum - 2016 (c) wtfpl
-
-# User_install
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ...................................................................... dovecot
-
-# re-initialize dovecot database
-sudo sv down dovecot
-find $HOME/Maildir -name 'dovecot*' -exec rm -v {} \;
-sudo sv restart dovecot
-
-# vim: set ft=sh: #
+../../arch/user_install/dovecot

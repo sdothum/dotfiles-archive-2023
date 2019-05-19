@@ -35,6 +35,7 @@
 = ═════════════
 # avahi
   nfs-utils
+  sv-netmount
 
 
 = penetration testing

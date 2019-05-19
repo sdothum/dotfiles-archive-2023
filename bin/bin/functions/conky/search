@@ -10,10 +10,9 @@
 
 while : ;do
   case $1 in
-  --onlyvisible |\
-  --sync        ) options="$options $1" ;;
-
-  *             ) break ;;
+  --onlyvisible  |\
+  --sync       ) options="$options $1" ;;
+  *            ) break ;;
   esac
   shift
 done

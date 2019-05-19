@@ -1,12 +1,1 @@
-# sdothum - 2016 (c) wtfpl
-
-# User_install
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ....................................................................... nzbget
-
-sudo mkdir -pv /net/downloads/http
-sudo mkdir -pv /net/downloads/nzbs
-permissions /net/downloads
-
-# vim: set ft=sh: #
+../../arch/user_install/nzbget

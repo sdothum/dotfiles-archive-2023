@@ -6,7 +6,8 @@
 source ./obarun-functions
 
 # home user zsh config and install scripts will be copied to
-user=shum
+user=${1:-shum}
+echo "--> USER: $user"
 
 
 heading 'select scheduler for SSD'

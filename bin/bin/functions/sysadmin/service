@@ -20,6 +20,7 @@ systemd() {
   ''     ) usage ;;
   disable) sv disable $2; sv stop $2 ;;
   enable ) sv enable $2; sv start $2 ;;
+  info   ) ;;
   mask   ) [ $force ] || { ifno "mask $2" && exit || true; } && sv mask $2; exit ;;
   reload ) sv daemon-reload; exit ;;
   restart) sv restart $2 ;;
@@ -35,26 +36,6 @@ systemd() {
   exit
 }
 
-runit() {
-  usage() {
-    echo "usage: $(basename $0) [disable | enable | restart | down (at boot)] <service>"
-    exit 1
-  }
-
-  [ -e /etc/sv/$2 ] || usage
-
-  # configure systemd daemon
-  case $1 in
-  ''     ) usage ;;
-  disable) sudo rm -fv /var/service/$2 ;;
-  enable ) sudo ln -sfv /etc/sv/$2 /var/service/; sudo rm -f /etc/sv/$2/down ;;
-  restart) sudo sv restart $2 ;;
-  down   ) sudo touch /etc/sv/$2/down ;;
-  *      ) usage ;;
-  esac
-  exit
-}
-
 s6() {
   usage() {
     echo "usage: $(basename $0) [info | disable | enable | restart | start | stop | toggle] <service>"
@@ -67,9 +48,9 @@ s6() {
   ''     ) usage ;;
   disable) sv disable -S $2 ;;
   enable ) sv enable -S $2 ;;
+  info   ) ;;
   restart) sv stop $2; sv start $2 ;;
   start  ) sv start $2 ;;
-  info   ) ;;
   status ) ;;
   stop   ) sv stop $2 ;;
   toggle ) sv info -S $2 | grep -v 'Enabled, up' && sv stop $2 || sv start $2 ;;
@@ -80,6 +61,27 @@ s6() {
   exit
 }
 
-exists systemctl && systemd $@ || exists runit && runit $@ || s6 $@
+runit() {
+  usage() {
+    echo "usage: $(basename $0) [info] | [disable | enable | restart | down (at boot)] <service>"
+    exit 1
+  }
+
+  [ -e /etc/sv/$2 ] || usage
+
+  # configure systemd daemon
+  case $1 in
+  ''     ) ls /etc/sv ;;
+  disable) sudo rm -fv /var/service/$2 ;;
+  down   ) sudo touch /etc/sv/$2/down ;;
+  enable ) sudo ln -sfv /etc/sv/$2 /var/service/; sudo rm -f /etc/sv/$2/down ;;
+  info   ) ls /var/service; sudo find /etc/sv -name down ;;
+  restart) sudo sv restart $2 ;;
+  *      ) usage ;;
+  esac
+  exit
+}
+
+exists runit && runit $@ || exists systemctl && systemd $@ || s6 $@
 
 # vim: set ft=sh: #

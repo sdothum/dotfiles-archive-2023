@@ -1,11 +1,1 @@
-# sdothum - 2016 (c) wtfpl
-
-# User_install
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ...................................................................... notmuch
-
-# re-initialize notmuch database
-mailsync I
-
-# vim: set ft=sh: #
+../../arch/user_install/notmuch

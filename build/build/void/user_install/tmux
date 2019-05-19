@@ -1,14 +1,1 @@
-# sdothum - 2016 (c) wtfpl
-
-# User_install
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ......................................................................... tmux
-
-# byobu
-if grep -q '\$HOME' /usr/share/byobu/profiles/tmuxrc 2>/dev/null ;then
-  original /usr/share/byobu/profiles/tmuxrc
-  sudo sed -i 's,\$HOME/.byobu,\$BYOBU_CONFIG_DIR,' /usr/share/byobu/profiles/tmuxrc
-fi
-
-# vim: set ft=sh: #
+../../arch/user_install/tmux

@@ -7,10 +7,11 @@
 
 # create public key
 ditto 'regenerate gpg key if required and refresh .pass tree'
+server || exit
 if [ -d $HOME/.gnupg ] ;then
-  ifno 'regenerate key pair' || gpg --full-gen-key
+  ifno 'regenerate key pair' || gpg2 --full-gen-key
 else
-  gpg --full-gen-key
+  gpg2 --full-gen-key
 fi
 
 echo RELOADAGENT | gpg-connect-agent

@@ -27,8 +27,8 @@ while : ;do
   cons* ) console=true ;;
   X     ) X=true ;;
 
-  low   |\
-  norm* |\
+  low     |\
+  norm*   |\
   crit* ) urgency="-u $1" ;;
 
   blac* ) urgency="-h string:bgcolor:#000000" ;;

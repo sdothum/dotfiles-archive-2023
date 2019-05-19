@@ -24,9 +24,9 @@ case $1 in
          processor Atom    '2' '('
          processor ARM     '1' 'v' ;;
 
-i7     |\
-arm    |\
-atom   |\
+i7       |\
+arm      |\
+atom     |\
 celeron) [ $(cpu) = $1 ] ;;
 
 *      ) usage ;;

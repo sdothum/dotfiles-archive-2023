@@ -90,3 +90,9 @@ keyswitch
 SFT
 CopsLock
 camelCase
+Runit
+systemd
+Obarun
+glibc
+musl
+dotfiles

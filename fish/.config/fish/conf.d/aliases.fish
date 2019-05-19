@@ -24,15 +24,22 @@ alias tse "grep '> \(ERROR\|WARNING\)' ~/typescript"
 alias K 'env sig=-KILL k'
 alias KK 'env sig=-KILL kk'
 alias sv 'service'
-alias svd 'service disable'
-alias sve 'service enable'
-alias svl 'service reload'
-alias svm 'service mask'
-alias svq 'service status'
-alias svr 'service restart'
-alias svs 'service start'
-alias svt 'service stop'
-alias svu 'service unmask'
+if void
+  alias svd 'service disable'
+  alias sve 'service enable'
+  alias svi 'service info'
+  alias svr 'service restart'
+else
+  alias svd 'service disable'
+  alias sve 'service enable'
+  alias svi 'service info'
+  alias svl 'service reload'
+  alias svm 'service mask'
+  alias svr 'service restart'
+  alias svs 'service start'
+  alias svt 'service stop'
+  alias svu 'service unmask'
+end
 
 # ....................................................................... Device
 

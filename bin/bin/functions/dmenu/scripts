@@ -26,9 +26,8 @@ abbreviate() { eval sed $trim; }
 # shorten path references for menu
 for i in $sources ;do
   case $i in
-  */.vim*    |\
+  */.vim*      |\
   */.weechat*) trim="$trim -e 's|$i/|.${i##*/.}/|'" ;;
-
   *          ) trim="$trim -e 's|$i/|${i##*/}/|'" ;;
   esac
 done

@@ -17,10 +17,10 @@ hostname=$(hostname)
 ifnsed $hosts " $hostname *" "/ $hostname */s/^[^ ]*/$ip/" "/localhost.*ttrss/a$ip $hostname"
 
 # set static ip
-server && service=$(connmanctl services | grep Wired) ||
-          service=$(connmanctl services | grep Ravens)
+server && service=$(sudo connmanctl services | grep Wired) ||
+          service=$(sudo connmanctl services | grep Ravens-5G)
 service=$(echo $service | awk '{ print $3 }')
-connmanctl config $service --ipv4 manual $ip 255.255.255.0 $gateway
+sudo connmanctl config $service --ipv4 manual $ip 255.255.255.0 $gateway
 
 ! server && ditto 'check /etc/hosts (luna) if wlan0 errors on boot'
 

@@ -28,7 +28,7 @@ $HOME/Maildir /srv/nfs4/Maildir none bind 0 0\\
 elif $(host_ip | grep -vq $LOCALNET_MASK) ;then
   ifnsed /etc/fstab 'net.*nfs4' "\$a\\
 luna:/net     /net               nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\\
-luna:/Maildir $HOME/Maildir nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,fsc,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\\
+luna:/Maildir $HOME/Maildir nfs4 rw,noauto,noatime,rsize=32768,wsize=32768,nolock,soft,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min 0 0\\
 "
   # dotfile share is mirrored on arm to retain max stow IO performance, see v (housekeeping)
   cpu arm && conf /etc/fstab 'stow' "\$a\\

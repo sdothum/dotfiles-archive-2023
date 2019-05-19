@@ -100,18 +100,18 @@ help   ) usage ;;
 
 add    ) shift; add $STOW/$@ ;;
 
-amend  |\
+amend    |\
 comment) shift; DESC=$@
          [ "$DESC" ] && git commit --amend --no-edit --message="$DESC" || git commit --amend ;;
 
-edit   |\
+edit     |\
 ignore ) gvim .gitignore ;;
 
 init   ) init ;;
 list   ) git log --pretty=format:"%h - %an, %ar : %s" ;;
 log    ) git log | less ;;
 
-redo   |\
+redo     |\
 undo   ) git reset --soft HEAD~
          dotfiles ;;
 

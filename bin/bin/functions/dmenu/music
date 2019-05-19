@@ -55,7 +55,7 @@ albums() {
 current()  { mpc current; }
 next()     { track=$(mpc playlist | grep -A 1 "$(current)" | grep -v "$(current)"); [ "$track" ] && echo "  $track"; }
 previous() { track=$(mpc playlist | grep -B 1 "$(current)" | grep -v "$(current)"); [ "$track" ] && echo "  $track"; }
-tracks()   { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*|\1 of \2|'; }
+tracks()   { echo $@ | sed -r 's|.*#([0-9]*)/([0-9]*) .*  |\1 of \2|'; }
 info()     { stats=$(mpc status | sed -n '2p'); echo $stats | grep -q playing && echo "Playing $(tracks $stats)" || echo "Paused $(tracks $stats)"; }
 status()   { mpc status | grep -q "$@" && echo off || echo on; }  # toggle status
 ncmpcpp()  { pstat ncmpcpp || term 'Music' ncmpcpp; exec focus instance 'Music'; }
@@ -74,17 +74,17 @@ while : ;do
     unset artist
     while cmd=$(controls | rmenu "$(info)" "${cmd%% *}" -no-custom) || break ;do
       case $cmd in
-      toggle*on |\
+      toggle*on   |\
       toggle*off) mpc toggle; [ $(status '\[playing\]') = off ] || exit ;;
 
       next*     ) mpc play; mpc next ;;
       rewind*   ) mpc play; mpc prev; mpc next ;;
       previous* ) mpc play; mpc prev ;;
 
-      random*on |\
+      random*on   |\
       random*off) mpc play; mpc random ;;
 
-      repeat*on |\
+      repeat*on   |\
       repeat*off) mpc play; mpc repeat ;;
 
       library   ) ncmpcpp ;;
