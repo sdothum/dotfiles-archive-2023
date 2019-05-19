@@ -47,7 +47,8 @@
       imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 
       " for active window highlighting
-      autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
+      autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active | call theme#SplitColors()
+      autocmd ui WinLeave                                   * call theme#SplitColors()
 
     " ................................................................ View mode
 

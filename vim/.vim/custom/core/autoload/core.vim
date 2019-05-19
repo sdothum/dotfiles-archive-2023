@@ -133,8 +133,16 @@
 
     " ................................................................ Protected
 
+      function! s:fzfBuffer()
+        if exists("g:fzf#vim#buffers")
+          return g:fzf#vim#buffers != {} " fzf trap
+        else
+          return 0
+        endif
+      endfunction
+
       function! core#Protected()
-        return &filetype == 'help' || mode() == 't' || g:fzf#vim#buffers != {} " fzf trap
+        return &filetype == 'help' || mode() == 't' || <SID>fzfBuffer()
       endfunction
 
     " ........................................................... Plugin windows
