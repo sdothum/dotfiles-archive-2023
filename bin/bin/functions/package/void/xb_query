@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 # package already installed check
-xbps-query -S $@ | grep -q ": installed" || exit 1
+xbps-query -S $@ >/dev/null || exit 1
 
 query=$(xbps-query -S $@ | grep "pkgver")
 installed_heading ${query#* }

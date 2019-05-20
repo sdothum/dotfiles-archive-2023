@@ -13,6 +13,7 @@
       set cpo&vim
 
       let g:lightscheme = &diff ? 'one' : 'flatwhite'  " diff mode doesn't work well with reverse (block) highlighting
+      let g:lightscheme = &diff ? 'one' : 'plain'      " a minimalist noise free monochromatic theme
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let g:source_font = 'Iosevka\'
@@ -23,6 +24,29 @@
 
     " .............................................................. Color codes
 
+      " plain monochromatic palette
+      let g:black           = '#222222'
+      let g:medium_gray     = '#767676'
+      let g:white           = '#f7f3ee'
+      let g:light_black     = '#424242'
+      let g:lighter_black   = '#545454'
+      let g:subtle_black    = '#303030'
+      let g:light_gray      = '#999999'
+      let g:lighter_gray    = '#CCCCCC'
+      let g:lightest_gray   = '#E5E5E5'
+      let g:dark_red        = '#C30771'
+      let g:light_red       = '#E32791'
+      let g:dark_blue       = '#008EC4'
+      let g:light_blue      = '#B6D6FD'
+      let g:dark_cyan       = '#20A5BA'
+      let g:light_cyan      = '#4FB8CC'
+      let g:dark_green      = '#10A778'
+      let g:light_green     = '#5FD7A7'
+      let g:dark_purple     = '#523C79'
+      let g:light_purple    = '#6855DE'
+      let g:light_yellow    = '#F3E430'
+      let g:dark_yellow     = '#A89C14'
+ 
       " flatwhite colour palette (light)
       let g:base1           = '#605a52'
       let g:base2           = '#93836c'

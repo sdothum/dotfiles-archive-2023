@@ -32,8 +32,8 @@
       let s:dfm_folded_light     = g:gray5      " vimdiff fold
       let s:dfm_match_dark       = g:red        " quantum dark parens
       let s:dfm_match_light      = g:hue_5      " flatwhite light parens
-      let s:dfm_vsplit_dark      = g:gray1      " invisible split
-      let s:dfm_vsplit_light     = g:orange     " invisible split
+      let s:dfm_vsplit_dark      = g:gray2      " invisible split (minimal contrast)
+      let s:dfm_vsplit_light     = g:base6      " invisible split (minimal contrast)
 
       " cursor line
       let s:dfm_cursor_light     = g:cursor     " iA Writer
@@ -45,7 +45,7 @@
       let s:dfm_bg_line_dark     = g:gray2      " dark cursorline
       let s:dfm_bg_line_light    = g:blue_bg    " light cursorline
       let s:dfm_fg_line_dark     = g:gray4      " dark line numbers
-      let s:dfm_fg_line_light    = g:hue_2      " light line numbers
+      let s:dfm_fg_line_light    = g:dark_blue  " light line numbers
 
       " statusline
       let s:dfm_bg_status_light  = g:orange_bg  " light statusline
@@ -54,7 +54,7 @@
       let s:dfm_fg_status_dark   = g:mono_4     " dark statusline
       let s:dfm_fg_user1_light   = g:mono_1     " light statusline
       let s:dfm_fg_user1_dark    = g:mono_4     " dark statusline
-      let s:dfm_fg_user2_light   = g:hue_2      " light statusline
+      let s:dfm_fg_user2_light   = g:dark_blue  " light statusline
       let s:dfm_fg_user2_dark    = g:cyan       " dark statusline
 
   " Colours ____________________________________________________________________
@@ -95,7 +95,7 @@
         let l:spell      = s:hexValue('s:dfm_bg_spell_' . &background)
         execute 'hi CommandCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
         execute 'hi Cursor          guibg=' . s:dfm_cursor    . ' guifg=' . g:black
-        execute 'hi CursorLine      guibg=' . s:dfm_cursor_bg . ' guifg=' . s:dfm_cursorline
+        execute 'hi CursorLine      guibg=' . s:dfm_cursor_bg . (g:lightscheme == 'flatwhite' ? ' guifg=' . s:dfm_cursorline : '')
         execute 'hi ErrorMsg        guibg=' . s:dfm_bg        . ' guifg=red'
         execute 'hi ExtraWhitespace guibg=' . l:cursor        . ' guifg=' . s:hexValue('s:dfm_bg_' . l:background)
         execute 'hi Folded          guibg=' . s:dfm_folded    . ' guifg=' . s:dfm_bg
@@ -119,8 +119,10 @@
           execute 'hi Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
           execute 'hi StatusLineNC  guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
 
-          hi link mkdLink    htmlString
-          hi link SneakScope Cursor
+          hi! link mkdLink    htmlString
+          hi! link SneakScope Cursor
+        else
+          execute 'hi StatusLineNC gui=nocombine guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
         endif
       endfunction
 
@@ -167,13 +169,13 @@
           execute 'hi SignifyLineChange guibg=' . s:dfm_bg . ' guifg=' . g:hue_2
           execute 'hi SignifyLineDelete guibg=' . s:dfm_bg . ' guifg=' . g:hue_5_2
         else
-          hi link SignifyLineAdd    String
-          hi link SignifyLineChange Type
-          hi link SignifyLineDelete Identifier
+          hi! link SignifyLineAdd    String
+          hi! link SignifyLineChange Type
+          hi! link SignifyLineDelete Identifier
         endif
-        hi link SignifySignAdd    SignifyLineAdd
-        hi link SignifySignChange SignifyLineChange
-        hi link SignifySignDelete SignifyLineDelete
+        hi! link SignifySignAdd    SignifyLineAdd
+        hi! link SignifySignChange SignifyLineChange
+        hi! link SignifySignDelete SignifyLineDelete
       endfunction
 
       " simple console theme tweaks to maximize transparency

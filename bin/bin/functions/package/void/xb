@@ -7,29 +7,27 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) S | R | -<options> [--<option>]*] <package>"
+  echo "usage: $(basename $0) S | R | - | -<options> [--<option>]*] <package>"
   exit 1
 }
 
 [ $1 ] || usage
 
-wrappaur=$(aurwrapper)
-options='--noconfirm --noedit'
+options='-y'
 
 # default (no options) to package query
 
-if [ $# -eq 1 ] ;then
-  pacman -Qs $@ || $wrappaur -Ss $@
+if [ $# -eq 1 ] || [ $1 = '-' ] ;then
+  [ $1 = '-' ] && { shift; xbps-query -Rs "$@"; } || xbps-query -Rs "*$@*"
 else
   action=$1
   shift
   if [ "$action" = R ] ;then
-    # see pacman -R --help, eg. -Rccssnd
-    sudo pacman -Rns --noconfirm $@
+    sudo xbps-remove $@
   else
     # no dash option shorthand for noconfirm :-)
     echo $action | grep -q '^-' && { action="$action"; unset options; } || action="-$action"
-    $wrappaur $action $options $@
+    sudo xbps-install $action $options $@
   fi
 fi
 

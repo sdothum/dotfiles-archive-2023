@@ -56,7 +56,7 @@ if console ;then
   # avoid dash shell echo "$(figlet)" escape character issues
   # figlet -t -d $HOME/.fonts/figlet -f s-relief $wm
   # figlet -t -f lean $wm
-  toilet -F rainbow -f smbraille $wm
+  void && toilet -F gay -f smbraille $wm || toilet -F rainbow -f smbraille $wm
   # echo ${NOCOLOR}
   # escape to shell prompt
   [ $wm = shell ] && exit
@@ -72,7 +72,7 @@ if console ;then
   pstat startx && exit
   cpu arm && { tmout ifyes 'sync with watchman' && wsync || wsync -s; }
   # mount any dangling nfs shares
-  sudo mount -a
+  # sudo mount -a
   startx --
 
   # suppress nfs messages to console when server is offline
