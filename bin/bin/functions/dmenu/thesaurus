@@ -18,10 +18,8 @@ if [ "$selection" ] ;then
   echo "$selection" | grep -q '^[[:alpha:]]*$' || unset selection
 fi
 
-if [ "$selection" ] ;then
-  word=$selection
-else
-  word=$(echo | mhistory dictionary | sed '1i[ dictionary ]' | rmenu 'Thesaurus') || exit
+if [ "$selection" ] ;then word=$selection
+else                      word=$(echo | mhistory dictionary | sed '1i[ dictionary ]' | rmenu 'Thesaurus') || exit
 fi
 [ "$word" = '[ dictionary ]' ] && exec dmenu dict
 word=$(unquote $word)

@@ -7,10 +7,8 @@
 # .................................................................. Split frame
 
 # restore layout if in fullscreen, as split is just one keystroke away
-if is fullscreen ;then
-  toggle fullscreen
-else
-  herbstclient split explode
+if is fullscreen ;then toggle fullscreen
+else                   herbstclient split explode
 fi
 
 # vim: set ft=sh: #

@@ -12,11 +12,8 @@ usage() {
 }
 
 # wireless interface
-if [ $1 ] ;then
-  wifi=$1
-  shift
-else
-  wifi=Ravens
+if [ $1 ] ;then wifi=$1; shift
+else            wifi=Ravens
 fi
 
 network=$(connmanctl services | grep $wifi | awk '{ print $3 }')

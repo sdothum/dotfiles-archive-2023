@@ -15,10 +15,8 @@ conf=/etc/pacman.conf
 
 add_pkg() {
   for i in $@ ;do
-    if grep -m 1 -q '^ *IgnorePkg' $conf ;then
-      sudo sed -i "s/^ *IgnorePkg.*/& $i/" $conf
-    else
-      sudo sed -i "/^# *IgnorePkg/aIgnorePkg = $i" $conf
+    if grep -m 1 -q '^ *IgnorePkg' $conf ;then sudo sed -i "s/^ *IgnorePkg.*/& $i/" $conf
+    else                                       sudo sed -i "/^# *IgnorePkg/aIgnorePkg = $i" $conf
     fi
   done
 }

@@ -95,7 +95,7 @@
         let l:spell      = s:hexValue('s:dfm_bg_spell_' . &background)
         execute 'hi CommandCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
         execute 'hi Cursor          guibg=' . s:dfm_cursor    . ' guifg=' . g:black
-        execute 'hi CursorLine      guibg=' . s:dfm_cursor_bg . (g:lightscheme == 'flatwhite' ? ' guifg=' . s:dfm_cursorline : '')
+        execute 'hi CursorLine      guibg=' . s:dfm_cursor_bg . (g:colorscheme == 'flatwhite' ? ' guifg=' . s:dfm_cursorline : '')
         execute 'hi ErrorMsg        guibg=' . s:dfm_bg        . ' guifg=red'
         execute 'hi ExtraWhitespace guibg=' . l:cursor        . ' guifg=' . s:hexValue('s:dfm_bg_' . l:background)
         execute 'hi Folded          guibg=' . s:dfm_folded    . ' guifg=' . s:dfm_bg
@@ -114,7 +114,7 @@
         hi! link SpellLocal SpellBad
         hi! link SpellRare  SpellBad
 
-        if &background == 'light' && g:lightscheme == 'flatwhite'  " add flatwhite contrast
+        if &background == 'light' && g:colorscheme == 'flatwhite'  " add flatwhite contrast
           execute 'hi IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'hi Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
           execute 'hi StatusLineNC  guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
@@ -214,24 +214,27 @@
 
     " ............................................................ Switch colour
 
-      function! theme#ColorScheme(contrast)
-        Trace theme#ColorScheme()
-        if a:contrast == 0
-          let &background = 'light'  " must set background before colorscheme for flatwhite colors
-          execute 'colorscheme ' . g:lightscheme
+      function! theme#NextColorScheme()
+        Trace theme#NextColorScheme()
+        if g:colorscheme     == 'plain'
+          let &background     = 'light'  " must set background before colorscheme for flatwhite colors
+          let g:colorscheme   = 'flatwhite'
+        elseif g:colorscheme == 'flatwhite'
+          let &background     = 'dark'
+          let g:colorscheme   = 'quantum'
         else
-          let &background = 'dark'
-          colorscheme quantum
+          let &background     = 'light'
+          let g:colorscheme   = 'plain'
         endif
+        execute 'colorscheme ' . g:colorscheme
       endfunction
 
       " toggle colour scheme
       function! theme#LiteSwitch()
         Trace theme#LiteSwitch()
         Quietly LiteDFMClose  " trap and ignore initialization error
-        if &background == 'light' | call theme#ColorScheme(1)
-        else                      | call theme#ColorScheme(0) | endif
-        let s:sync = 1  " see theme#Indent()
+        call theme#NextColorScheme()
+        let s:sync = 1        " see theme#Indent()
         call ui#LiteType()
       endfunction
 

@@ -12,15 +12,14 @@
       let s:save_cpo     = &cpo
       set cpo&vim
 
-      let g:lightscheme = &diff ? 'one' : 'flatwhite'  " diff mode doesn't work well with reverse (block) highlighting
-      let g:lightscheme = &diff ? 'one' : 'plain'      " a minimalist noise free monochromatic theme
+      let g:colorscheme  = 'quantum'  " plain -> flatwhite -> quantum ->, see theme#NextScheme()
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-      let g:source_font = 'Iosevka\'
-      let g:prose_font  = 'Iosevka-proof\'
-      let g:font_type   = -1  " current font setting (0) source (1) prose
-      " let g:font_step = 1  " font size increase (point size) for prose
-      let g:font_step   = empty(glob('~/.session/font++')) ? 1 : 2  " increase (point size) for prose
+      let g:source_font  = 'Iosevka\'
+      let g:prose_font   = 'Iosevka-proof\'
+      let g:font_type    = -1  " current font setting (0) source (1) prose
+      " let g:font_step  = 1  " font size increase (point size) for prose
+      let g:font_step    = empty(glob('~/.session/font++')) ? 1 : 2  " increase (point size) for prose
 
     " .............................................................. Color codes
 
@@ -124,10 +123,14 @@
     " ...................................................... Default colorscheme
 
       if has('gui_running')
-        if ! empty(glob('~/.session/nighttime')) | call theme#ColorScheme(1)  " follow_the_sun on sunrise/sunset, see crontab
-        else                                     | call theme#ColorScheme(0) | endif
-        if &diff  " don't know where but diff highlights the SignColumn which can only be cleared afterwards(?)
+        if ! empty(glob('~/.session/nighttime')) 
+          let g:colorscheme = 'flatwhite'  " startup -> quantum
+        endif
+        if &diff  " diff highlights the SignColumn which can only be cleared afterwards..
+          colorscheme one  " diff mode doesn't work well with reverse (block) highlighting
           autocmd theme CursorHold * hi! link SignColumn NonText
+        else 
+          call theme#NextColorScheme()  " startup quantum -> plain
         endif
       endif
 

@@ -71,10 +71,8 @@ done
 
 [ -z "$name" ] && [ "$title" ] && name="$NAME ${title#* }"
 
-if [ $stack ] ;then
-  $TERM $title $name $geometry $theme $cmd &
-else
-  focus $TERM $title $name $geometry $theme $cmd
+if [ $stack ] ;then $TERM $title $name $geometry $theme $cmd &
+else                focus $TERM $title $name $geometry $theme $cmd
 fi
 
 [ $visible ] && [ "$title" ] && xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"

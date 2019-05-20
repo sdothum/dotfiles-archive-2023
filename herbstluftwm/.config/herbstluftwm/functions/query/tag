@@ -11,10 +11,8 @@
 #        query tag inactive, returns unfocused monitor tag
 
 # return tag of unfocused or focused monitor
-if [ $1 ] ;then
-  herbstclient list_monitors | grep -v '\[FOCUS\]' | cut -d'"' -f2
-else
-  herbstclient attr monitors.focus.tag
+if [ $1 ] ;then herbstclient list_monitors | grep -v '\[FOCUS\]' | cut -d'"' -f2
+else            herbstclient attr monitors.focus.tag
 fi
 
 # vim: set ft=sh: #

@@ -19,10 +19,8 @@ if [ "$selection" ] ;then
   echo "$selection" | grep -q '^[[:alpha:]]*$' || unset selection
 fi
 
-if [ "$selection" ] ;then
-  word=$selection
-else
-  word=$(echo | mhistory dictionary | sed '1i[ thesaurus ]' | rmenu 'Dictionary') || exit
+if [ "$selection" ] ;then word=$selection
+else                      word=$(echo | mhistory dictionary | sed '1i[ thesaurus ]' | rmenu 'Dictionary') || exit
 fi
 [ "$word" = '[ thesaurus ]' ] && exec dmenu thesaurus
 word=$(unquote $word)
@@ -32,10 +30,8 @@ while hints=$(dict "$word" 2>&1 >/dev/null | cut -d: -f2 | xargs -n1 | sort -uf)
   [ "$hints" ] || break
   # "No definitions found for $word" sorted above, hence, ordered match..
   echo "$hints" | tr '\n' ' ' | egrep -q 'definitions.*for.*found.*No'
-  if [ $? -eq 0 ] ;then
-    word=$(echo | rmenu "No definitions found for \"$word\"") || exit
-  else
-    word=$(echo "$hints" | rmenu 'Spelling Hints') || exit
+  if [ $? -eq 0 ] ;then word=$(echo | rmenu "No definitions found for \"$word\"") || exit
+  else                  word=$(echo "$hints" | rmenu 'Spelling Hints') || exit
   fi
   word=$(unquote $word)
 done

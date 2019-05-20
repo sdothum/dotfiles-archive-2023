@@ -34,10 +34,8 @@ focus=$(herbstclient attr monitors.focus.index)
 tag0=$(herbstclient attr monitors.0.tag)
 tag1=$(herbstclient attr monitors.1.tag)
 
-if [ $focus -eq $direction ] ;then
-  [ $focus -eq 0 ] && switch_to 0 || switch_to 1
-else
-  [ $focus -eq 0 ] && switch_to 1 || switch_to 0
+if [ $focus -eq $direction ] ;then [ $focus -eq 0 ] && switch_to 0 || switch_to 1
+else                               [ $focus -eq 0 ] && switch_to 1 || switch_to 0
 fi
 
 # vim: set ft=sh: #

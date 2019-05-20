@@ -35,10 +35,8 @@ modulo=3
 
 # linked file reference
 exists() {
-  if lname $1 >/dev/null ;then
-    [ -e $(lname $1) ]
-  else
-    return 1
+  if lname $1 >/dev/null ;then [ -e $(lname $1) ]
+  else                         return 1
   fi
 }
 
@@ -91,12 +89,9 @@ blank() {
   if [ $color != 000000 ] ;then
     echo $color >$COLOR
     contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
-    if [ "$contrast" = dark ] ;then
-      set_border "$(conky theme light $color)"
-    elif [ "$contrast" = light ] ;then
-      set_border "$(conky theme dark $color)"
-    else
-      set_border "$(conky theme contrast $color)"
+    if [ "$contrast" = dark ]    ;then set_border "$(conky theme light $color)"
+    elif [ "$contrast" = light ] ;then set_border "$(conky theme dark $color)"
+    else                               set_border "$(conky theme contrast $color)"
     fi
   fi
   echo $color >$BLANK

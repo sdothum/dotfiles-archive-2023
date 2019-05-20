@@ -46,14 +46,10 @@ chk_pkg() {
   done
 }
 
-if [ -z $1 ] ;then
-  chk_pkg
-elif [ ! -s $conf ] ;then
-  add_pkg $@
-elif cut -d: -f1 $conf | grep -q "^$@$"  ;then
-  del_pkg $@
-else
-  add_pkg $@
+if [ -z $1 ]                             ;then chk_pkg
+elif [ ! -s $conf ]                      ;then add_pkg $@
+elif cut -d: -f1 $conf | grep -q "^$@$"  ;then del_pkg $@
+else                                           add_pkg $@
 fi
 
 # vim: set ft=sh: #

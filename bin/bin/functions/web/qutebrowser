@@ -25,10 +25,8 @@ font="
   -s fonts.tabs '$size'
 "
 
-if [ $1 ] ;then
-  eval /usr/bin/qutebrowser --target tab --override-restore $font "$@"
-else
-  eval /usr/bin/qutebrowser --target tab --override-restore $font "$startpage"
+if [ $1 ] ;then eval /usr/bin/qutebrowser --target tab --override-restore $font "$@"
+else            eval /usr/bin/qutebrowser --target tab --override-restore $font "$startpage"
 fi
 
 # vim: set ft=sh: #

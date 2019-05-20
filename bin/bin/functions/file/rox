@@ -6,13 +6,12 @@
 
 # ................................................................. File manager
 
+NZBS=/net/downloads/nzbs/completed
+
 # wrapper to default opening to /net/downloads if no location given
-if [ $1 ] ;then
-  start=$1
-elif [ $(ls -1 /net/downloads/nzbs/completed | wc -l) -gt 0 ] ;then
-  start=/net/downloads/nzbs/completed
-else
-  start=/net/downloads/http
+if [ $1 ]          ;then start=$1
+elif ! empty $NZBS ;then start=$NZBS
+else                     start=/net/downloads/http
 fi
 
 # see appbinds, toggle rox focuses frame

@@ -68,10 +68,8 @@ margin=$(( $desktop_margin - $window_frame ))
 conkyX=$(( $CONKY_WIDTH + $CONKY_OUTER + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust monitor by panel height?
-if [ $PANEL_MARGIN ] ;then
-  [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
-else
-  panelY=0
+if [ $PANEL_MARGIN ] ;then [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
+else                       panelY=0
 fi
 [ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) || marginY=0
 
@@ -106,16 +104,13 @@ conky*f*  ) touch $FULLSCREEN:primary
 
 fullframe ) rm -f $FULLSCREEN:primary
             rm -f $FULLSCREEN:$TAG
-            if [ $monocle -eq 0 ] ;then
-              PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $margin*2 )) $marginX $margin
-            else
-              PRI $normal_width $(( $Y0 - $margin*2 )) $(( ($X0 - $normal_width)/2 )) $margin
+            if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $margin*2 )) $marginX $margin
+            else                        PRI $normal_width $(( $Y0 - $margin*2 )) $(( ($X0 - $normal_width)/2 )) $margin
             fi ;;
 
 fullscreen) touch $FULLSCREEN:primary
             touch $FULLSCREEN:$TAG
-            if [ $monocle -eq 0 ] ;then
-              PRI $X0 $Y0 0 0
+            if [ $monocle -eq 0 ] ;then PRI $X0 $Y0 0 0
             fi ;;
 
 secondary ) rm -f $FULLSCREEN:secondary
@@ -127,12 +122,8 @@ second*f* ) touch $FULLSCREEN:secondary
             touch $FULLSCREEN:$TAG
             SEC $X1 $Y1 X0 0 ;;
 
-menu      ) if is primary ;then
-              touch $FULLSCREEN:primary
-              PRI $X0 $Y0 0 0
-            else
-              touch $FULLSCREEN:secondary
-              SEC $X1 $Y1 $X0 0
+menu      ) if is primary ;then touch $FULLSCREEN:primary; PRI $X0 $Y0 0 0
+            else                touch $FULLSCREEN:secondary; SEC $X1 $Y1 $X0 0
             fi ;;
 esac
 
