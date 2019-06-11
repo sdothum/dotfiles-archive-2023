@@ -143,6 +143,7 @@ d ? watchman
 = appearance
 = ══════════
   compton
+  compton-conf
   lxappearance
 d ? setroot
 d ? unclutter

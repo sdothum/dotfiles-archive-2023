@@ -23,8 +23,6 @@ d alot
 # geary-git
 # gpgme
 # highline
-d notmuch
-# notmuch-vim
 # re-alpine
 # ruby-gme
 # sup
@@ -35,9 +33,12 @@ d notmuch
 = mail utility
 = ════════════
 # archivemail
+  afew
 # mb2md
 # imapdedup
   msmtp-mta
+d notmuch
+# notmuch-vim
   pam
   sharutils
 

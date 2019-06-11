@@ -31,7 +31,7 @@ rm -f $HOME/.msmtpqueue/.lock
 rm -f /tmp/setroot
 rm -f /srv/http/tt-rss/lock/*
 
-gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
+exists gnome-keyring-daemon && gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg &
 # laptop && synclient VertEdgeScroll=1 &
 # laptop && synclient TapButton1=1 &
 pstat gpg-agent || gpg-agent --homedir $HOME/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &

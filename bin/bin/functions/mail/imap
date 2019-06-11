@@ -22,11 +22,11 @@ OFFLINEIMAPFILTER=$HOME/.offlineimapfilter
 
 filter() {
   if !p /usr/bin/offlineimap && !p /usr/bin/imapfilter ;then
-    if [ $2 ] ;then
-      [ $2 = allmail ] &&
+    if [ $1 ] ;then
+      [ $1 = allmail ] &&
         sed "/^inbox *= account\['sdothum/cinbox   = account['sdothum/[Gmail]/All Mail']:select_all()" \
-            $IMAPFILTER/$filter >$IMAPFILTER/$2.lua
-      imapfilter -v -c $IMAPFILTER/$2.lua
+            $IMAPFILTER/$filter >$IMAPFILTER/$1.lua
+      imapfilter -v -c $IMAPFILTER/$1.lua
     else
       nohup imapfilter -v -c $IMAPFILTER/$filter >>/tmp/imapfilter.log 2>&1 &
       ifyes '.. watch imapfilter log' && imap L
@@ -76,7 +76,7 @@ case $1 in
     imap l ;;
 
 C*) rm -f $IMAPFILTER/certificates; imap f ;;
-f*) filter ;;
+f*) filter $2 ;;
 I*) init $2 ;;
 L*) log imapfilter $IMAPFILTER/$filter ;;
 l*) log offlineimap $OFFLINEIMAPRC ;;

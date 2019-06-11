@@ -4,6 +4,12 @@
 # see bundle_install
 
 
+= c
+= ═
+  cmake
+  gcc
+
+
 = haskell
 = ═══════
 # ghc
@@ -30,6 +36,8 @@
 = prototyping
 = ═══════════
   ruby
+" passenger requirement
+  ruby-devel
 
 
 = python
@@ -38,13 +46,22 @@
   python-setuptools
 
 
-= software tool
-= ═════════════
+= mpu programmer
+= ══════════════
   avr-gcc
   avr-libc
   avrdude
   dfu-programmer
-  cmake
+
+
+= library
+= ═══════
+" passenger requirement
+  libcurl-devel
+  
+
+= debug
+= ═════
 # gdb
   strace
   time

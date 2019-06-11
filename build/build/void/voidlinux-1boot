@@ -25,6 +25,8 @@ chmod 755 /
 heading "create \"$user\" user account"
 useradd -m -g users -G audio,input,lp,storage,users,video,wheel -s /bin/bash $user
 passwd $user
+checkpoint
+
 original /etc/sudoers
 sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //; /## Defaults specification/aDefaults insults' /etc/sudoers
 cat /etc/sudoers

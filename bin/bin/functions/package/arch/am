@@ -1,13 +1,19 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# File
+# Package
 # ══════════════════════════════════════════════════════════════════════════════
 
-# .................................................................... Attribute
+# ........................................................... Package management
 
-# give USER access
-sudo chown -cR $USER:users $1
-sudo chmod -cR 775 $1
+usage() {
+  echo "usage: $(basename $0) <package>"
+  exit 1
+}
+
+[ $1 ] || usage
+
+wrappaur=$(aurwrapper)
+$wrappaur -Ss $@
 
 # vim: set ft=sh: #

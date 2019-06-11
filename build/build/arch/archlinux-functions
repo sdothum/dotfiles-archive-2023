@@ -7,7 +7,11 @@ partition() {
   if fdisk -l -o Name $device | grep -q $1 ;then
     fdisk -l $device | tail -$(fdisk -l -o Name $device | tac | grep -n $1 | cut -d: -f1) | head -1 | cut -d' ' -f1 
   else
-    echo ''
+    case $1 in
+    boot) fdisk -l $device | grep '[*].*Linux$' | cut -d' ' -f1 ;;
+    swap) fdisk -l $device | grep 'swap' | cut -d' ' -f1 ;;
+    root) fdisk -l $device | grep 'Linux$' | grep -v '[*]' | cut -d' ' -f1 ;;
+    esac
   fi
 }
 
@@ -35,7 +39,7 @@ checkpoint() {
     read REPLY
     reply=$(echo $REPLY | sed -r 's/^(.).*/\1/')
     case $reply in
-      '' | y) return ;;
+      y | '') return ;;
       n     ) exit ;;
       s     ) bash -i ;;
     esac

@@ -47,7 +47,7 @@
 # tcc
   ruby
   ruby-irb
-# ruby-rake
+  ruby-rake
 
 
 = python

@@ -14,9 +14,9 @@
   dos2unix
 
 
-= cpu power management
-= ════════════════════
-# cpupower [laptop]
+= development
+= ═══════════
+  base-devel
 
 
 = entropy

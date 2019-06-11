@@ -28,7 +28,7 @@ interval=${interval:-15}
 tag_account() {
   folder=$1
   shift
-  ditto "$folder $@"
+  ditto tag "$folder $@"
   echo $folder | grep -q 'unknown$' && unset unknown || unknown=-unknown
   notmuch tag --batch <<EOF
       $@ -inbox $unknown \'folder:"$folder"\'
@@ -79,10 +79,10 @@ EOF
     tag_account $maildir +$folder
     notmuch tag +sent folder:$maildir -- from:sdothum@gmail.com
     # not all folders qualify +new tag
-    if echo $folder | egrep -qv 'admin|alerts|bodyshamanics|browsers|clients|comments|community|dailies|eagles|family|mail|notices|phconsulting|personal|powerpath|private|providers|ravens|services|software|store|webmaster|x11' ;then
-      notmuch tag -new folder:$maildir -- tag:unread
+    if echo $folder | egrep -qv 'admin|alerts|bodyshamanics|browsers|clients|comments|community|dailies|eagles|family|mail|notices|phconsulting|personal|powerpath|private|providers|ravens|rescue|services|software|store|webmaster|x11' ;then
+      notmuch tag --remove-all -new folder:$maildir -- tag:unread
     fi
-    if echo $folder | egrep -q 'alerts|clients|community|eagles|family|notices|phconsulting|personal|powerpath|providers|ravens|services|store' ;then
+    if echo $folder | egrep -q 'alerts|clients|community|eagles|family|notices|phconsulting|personal|powerpath|providers|ravens|rescue|services|store' ;then
       notmuch tag +attn folder:$maildir -- tag:new
     fi
   done
@@ -90,7 +90,7 @@ EOF
 
 one_pass() {
   trace 'Starting offlineimap..'
-  rm $MAILDIR/*.lock
+  rm -f $MAILDIR/*.lock
   # purge empty messages
   find $MAILDIR/sdothum -type f -size 0 -exec rm -v {} \;
   offlineimap -c $HOME/.offlineimaprc -o -u Basic >>/tmp/offlineimap.log

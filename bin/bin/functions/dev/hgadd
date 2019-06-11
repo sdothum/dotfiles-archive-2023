@@ -19,7 +19,7 @@ JOB=$HOME/.vim/job/$QUEUE
 [ "$1" ] || usage
 
 xadd() {
-  ditto "$@"
+  ditto hgadd "$@"
   echo "$@" >>$JOB
 }
 # bash export function for xargs

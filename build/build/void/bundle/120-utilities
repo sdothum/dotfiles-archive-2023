@@ -35,6 +35,7 @@
   htop
   iotop
 # smartmontools
+  socklog-void  
 
 
 = test

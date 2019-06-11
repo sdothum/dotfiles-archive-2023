@@ -14,6 +14,7 @@ usage() {
   exit 1
 }
 
+[ -e $HOME/.git/stow ] && ln -s $HOME/.git/stow $HOME/stow/.git
 # update github dotfiles
 # see .gitignore, to remove items from remote repository
 # git rm --cached <filespec>

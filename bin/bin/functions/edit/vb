@@ -17,7 +17,7 @@ usage() {
 
 # batch vim edit (using vim vs vi to preserve edit history)
 for i in $(al "$1") ;do
-  ditto "$i"
+  ditto vim "$i"
   vim -c "$2" -c 'wq' "$i"
 done
 

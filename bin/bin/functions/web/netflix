@@ -7,9 +7,8 @@
 # ...................................................................... Browser
 
 videomode on
-killall chromium
-chromium netflix
-pwait 'chromium.*netflix'
+firefox http://www.netflix.com/ca
+pwait 'firefox.*netflix'
 videomode off
 
 # vim: set ft=sh: #

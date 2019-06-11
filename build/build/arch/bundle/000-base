@@ -8,11 +8,11 @@
 = aur package manager
 = ═══════════════════
 ! sudo pacman -S --noconfirm git
-! sudo pacman -S --noconfirm pyalpm
-p pikaur
-" systemd dependency (not installable for obarun)
-! pikaur -S --noconfirm auracle-git
-! pikaur -S --noconfirm pacaur
+! sudo pacman -S --noconfirm go
+p yay
+# " systemd dependency (not installable for obarun)
+# ! yay -S --noconfirm auracle-git
+# ! yay -S --noconfirm pacaur
 
 
 = console font

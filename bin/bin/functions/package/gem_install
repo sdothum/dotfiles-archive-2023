@@ -13,7 +13,7 @@ else
   heading : $1
   time=$(chrono)
   ditto @ gem
-  gem install $1
+  void && sudo gem install $1 || gem install $1
   post_install $1
   chrono $time
 fi

@@ -93,6 +93,6 @@ fi
 #                                                                 title "finish"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# $HOME/build/obarun/obarun-update
+$HOME/build/obarun/obarun-update
 
 # vim: set ft=sh: #

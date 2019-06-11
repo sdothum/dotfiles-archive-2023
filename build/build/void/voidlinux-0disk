@@ -5,7 +5,7 @@
 
 
 source ./voidlinux-functions
-heading 'wireless'
+# heading 'wireless'
 # ══════════════════════════════════════════════════════════════════════════════
 ping -c1 www.google.com >/dev/null 2>&1 || ./voidlinux-wireless
 checkpoint

@@ -5,14 +5,6 @@
 
 # ...................................................................... Package
 
-if which pacaur >/dev/null ^&1
-  alias am 'pacaur -Ss'
-  alias AM 'pacaur -Ss | less'
-else
-  alias am 'yaourt -Ss'
-  alias AM 'yaourt -Ss --pager'
-end
-
 alias pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
 alias pn 'env D=N pd'
 alias pq 'pacman -Qii'

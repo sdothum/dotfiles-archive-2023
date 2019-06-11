@@ -104,26 +104,28 @@
         execute 'hi ReplaceCursor   guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
         execute 'hi ShowMarksHLl    guibg=' . s:dfm_bg
         execute 'hi SignColumn      guibg=' . s:dfm_bg
-        execute 'hi SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background)
+        execute 'hi SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background) . ' gui=NONE'
         execute 'hi User1           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user1
         execute 'hi User2           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user2
         execute 'hi VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
         execute 'hi VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
 
+        hi! link htmlH1     Statement  " markdown heading content
+        hi! link htmlH2     Statement
+        hi! link htmlH3     Statement
+        hi! link htmlH4     Statement
+        hi! link mkdHeading Statement
+        hi! link mkdLink    htmlString
+        hi! link SneakScope Cursor
         hi! link SpellCap   SpellBad
         hi! link SpellLocal SpellBad
         hi! link SpellRare  SpellBad
 
-        if &background == 'light' && g:colorscheme == 'flatwhite'  " add flatwhite contrast
+        if &background == 'light'  " add flatwhite contrast
           execute 'hi IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'hi Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
-          execute 'hi StatusLineNC  guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
-
-          hi! link mkdLink    htmlString
-          hi! link SneakScope Cursor
-        else
-          execute 'hi StatusLineNC gui=nocombine guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
         endif
+        execute 'hi StatusLineNC gui=nocombine guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
       endfunction
 
       " line numbers
@@ -302,10 +304,9 @@
       function! s:noTilde()
         if $DISPLAY > ''
           execute 'hi EndOfBuffer ctermfg=black guifg=' . s:dfm_bg
-          " reset menu highlight after loading autocompletion plugin
-          execute 'hi PmenuSel    term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
-          " match command line tab menu
-          execute 'hi WildMenu    term=reverse ctermfg=0 ctermbg=7 gui=reverse guifg=' . s:dfm_bg_line . ' guibg=' . s:dfm_bg
+          hi! link Pmenu    Statusline  " reset menu highlight after loading autocompletion plugin
+          hi! link PmenuSel Cursor
+          hi! link WildMenu Cursor      " match command line tab menu
         endif
       endfunction
 

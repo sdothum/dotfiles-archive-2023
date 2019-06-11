@@ -29,6 +29,12 @@
       imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
       vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
 
+    " .......................................................... Command history
+
+      nmap <F1> q:
+      imap <F1> <C-o>q:
+      vmap <F1> <C-u>q:
+
     "  ............................................................ Undo history
 
       " keep persistent undo history across sessions, by storing in file

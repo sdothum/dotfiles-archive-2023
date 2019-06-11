@@ -99,13 +99,14 @@
     " ..................................................................... Font
 
       scriptencoding utf-8
-      set encoding=utf-8     " necessary to show unicode glyphs
+      set encoding=utf-8      " necessary to show unicode glyphs
+      set ambiwidth="double"  " for double width glyph handling
 
     " ................................................................... Cursor
 
-      set cursorline         " highlight current line
+      set cursorline          " highlight current line
 
-      set guicursor=a:block  " mode aware cursors
+      set guicursor=a:block   " mode aware cursors
       set guicursor+=o:hor50-Cursor
       set guicursor+=n:Cursor
       set guicursor+=i-ci-sm:ver25-InsertCursor

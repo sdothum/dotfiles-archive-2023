@@ -6,6 +6,6 @@
 
 # .................................................................... Archlinux
 
-uname -r | grep -q 'ARCH\|ck'
+[ -e /usr/bin/pacman ]
 
 # vim: set ft=sh: #

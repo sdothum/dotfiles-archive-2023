@@ -82,6 +82,6 @@ runit() {
   exit
 }
 
-exists runit && runit $@ || exists systemctl && systemd $@ || s6 $@
+exists systemctl && systemd $@ || exists runit && runit $@ || s6 $@
 
 # vim: set ft=sh: #

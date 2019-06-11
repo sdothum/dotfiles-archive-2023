@@ -19,6 +19,7 @@ if [ -z $disk ] ;then
 fi
 [ $disk = 0 ] && device=/dev/mmcblk${disk} || device=/dev/sd${disk}
 echo
+
 read -p 'Partition and format disk as btrfs? [y|N]: ' format
 [ $format ] || format=N
 diskutil=fdisk
@@ -27,17 +28,20 @@ if [ "$format" = y ] ;then
   # mount | grep -q /dev/sd${disk}1 && umount -v /dev/sd${disk}1
   # use fdisk for mbr (bios) install, else gdisk for gpt (UEFI) install
   echo
-  echo '> EFI 512M (grub)'
+  echo '> EFI  512M (grub)'
   echo '> boot 128M (syslinux)'
   echo '> swap 1-4G (or =RAM for hibernation)'
   echo
+
   read -p 'GPT or MBR partition? [G|m]: ' diskutil
   [ $diskutil ] && diskutil=fdisk || diskutil=cfdisk
   echo
+
   read -p 'Stripe volume (raid0)? [y|N]: ' stripe
   [ "$stripe" = n ] && stripe=
   if [ "$stripe" = y ] ;then
     echo
+
     read -p "Add stripe volume /dev/sd? [a-z]: " stripe
     if [ -z $stripe ] || [ "$stripe" = $disk ] ;then
       echo 'invalid stripe reference.. aborting'
@@ -45,21 +49,23 @@ if [ "$format" = y ] ;then
     fi
   fi
   echo
+
   case $diskutil in
     fdisk ) echo 'Create active boot mbr partition..' ;;
     cfdisk) echo 'Create gpt partitions -> [ EFI boot ] swap root' ;;
   esac
   checkpoint
+
   $diskutil $device
-  echo
-  case $diskutil in
-    fdisk ) echo 'Name mbr partitions..' ;;
-    cfdisk) echo 'Name gpt partitions -> [ EFI boot ] swap root' ;;
-  esac
-  checkpoint
-  cgdisk $device
+  if [ $diskutil = cfdisk ] ;then
+    echo
+    echo 'Name gpt partitions -> [ EFI boot ] swap root'
+    checkpoint
+    cgdisk $device
+  fi
   fdisk -l $device
   checkpoint
+
   if [ ! -z $stripe ] ;then
     echo
     echo 'Partition stripe disk..'
@@ -80,6 +86,10 @@ efi=$(partition EFI)
 boot=$(partition boot)
 swap=$(partition swap)
 root=$(partition root)
+[ $efi ] && echo "> efi  $efi" || echo "> boot $boot"
+echo "> swap $swap"
+echo "> root $root"
+checkpoint
 
 if [ "$format" = y ] ;then
   heading 'format btrfs disk partition'

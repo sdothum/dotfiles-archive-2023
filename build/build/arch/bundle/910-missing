@@ -1,8 +1,6 @@
 adobe-base-14-fonts
-fontmatrix [server]
 g xapian-ruby
 mbpfan-git [gpu macbook]
 m dict-moby-thesaurus
 m shell-functools
-pass
 znc [server]

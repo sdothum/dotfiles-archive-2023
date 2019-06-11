@@ -30,12 +30,6 @@
 - dmidecode
 
 
-= security
-= ════════
-- gnome-keyring
-- polkit-gnome
-
-
 = sound
 = ═════
 - pulseaudio-equalizer
@@ -60,11 +54,6 @@
 = julia
 = ═════
 - julia-docs
-
-
-= prototyping
-= ═══════════
-- ruby-rake
 
 
 = software tool

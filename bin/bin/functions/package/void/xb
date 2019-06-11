@@ -7,28 +7,48 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) S | R | - | -<options> [--<option>]*] <package>"
+  echo "usage: $(basename $0) [-]*[S | U | R] [-<options>] [--<option>]* [<package>]"
+  echo "        S .. noconfirm"
+  echo "       -S .. confirm"
+  echo "       -S update repos"
+  echo "        U .. noconfirm"
+  echo "        U upgrade system"
+  echo "       -U .. confirm"
+  echo "        R .. recursive"
+  echo "       -R .. non-recursive"
+  echo "          .. query"
+  echo "       -  search"
+  echo "       -- installed"
   exit 1
 }
 
 [ $1 ] || usage
 
-options='-y'
-
 # default (no options) to package query
+case $1 in
+ S) action=sync; yes='-y' ;;
+-S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
+ U) [ $2 ] && { action=update; yes='-y'; } || sudo xbps-install -Su; exit ;;
+-U) [ $2 ] && action=update ;;
+ R) action=remove; recursive='-R' ;;
+-R) action=remove ;;
+- ) action=search ;;
+--) action=installed ;;
+* ) action=query; set -- 0 $@ ;;  # preserve argv stack
+esac
 
-if [ $# -eq 1 ] || [ $1 = '-' ] ;then
-  [ $1 = '-' ] && { shift; xbps-query -Rs "$@"; } || xbps-query -Rs "*$@*"
-else
-  action=$1
-  shift
-  if [ "$action" = R ] ;then
-    sudo xbps-remove $@
-  else
-    # no dash option shorthand for noconfirm :-)
-    echo $action | grep -q '^-' && { action="$action"; unset options; } || action="-$action"
-    sudo xbps-install $action $options $@
-  fi
-fi
+shift; [ $1 ] || usage
+options=" $@"
+package=${options##* }
+options=${options% *}
+
+case $action in
+installed) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
+search   ) xbps-query -Rs $options $package | a $package ;;
+query    ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
+remove   ) sudo xbps-remove $recursive $options $package ;;
+sync     ) sudo xbps-install $yes $options $package ;;
+update   ) sudo xbps-install $yes $options -u $package ;;
+esac
 
 # vim: set ft=sh: #

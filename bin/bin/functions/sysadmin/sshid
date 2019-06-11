@@ -11,9 +11,9 @@ usage() {
   exit 1
 }
 
-[ $1 ] && cat $HOME/.ssh/id_rsa.pub | ssh $USER@$1 'cat >> $HOME/.ssh/authorized_keys' || usage
+[ $1 ] || usage && cat $HOME/.ssh/id_rsa.pub | ssh $USER@$1 'cat >> $HOME/.ssh/authorized_keys'
 
-ditto 'testing ssh login to $1'
+ditto "testing ssh login to $1"
 ssh $1
 
 # vim: set ft=sh: #

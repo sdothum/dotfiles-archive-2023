@@ -22,8 +22,9 @@
 
 = power
 = ═════
-# acpi   [laptop]
-# tlp    [laptop]
+# acpi     [laptop]
+# cpupower [laptop]
+# tlp      [laptop]
 # xfce4-power-manager
 
 

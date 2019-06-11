@@ -53,7 +53,7 @@
 
       command! -nargs=1 Trace call core#Trace(<f-args>)
 
-      nnoremap <silent><F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
+      nnoremap <silent><S-F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
   " Text _______________________________________________________________________
 

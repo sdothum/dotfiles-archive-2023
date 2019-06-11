@@ -93,13 +93,9 @@ conky     ) rm -f $FULLSCREEN:primary
 
 conky*f*  ) touch $FULLSCREEN:primary
             touch $FULLSCREEN:$TAG
-            if [ $X0 -gt $MIN_DISPLAY ] ;then
-              # desktop screens retain margins
-              PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
-                  $(( $marginX + $window_frame + $monocle )) $(( $margin + $window_frame ))
-            else
-              # laptop screens fill to edge
-              PRI $(( $fullscreen_width + $marginX + $window_frame )) $Y0 0 0
+            if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
+                                                  $(( $marginX + $window_frame + $monocle )) $(( $margin + $window_frame ))  # desktop screens retain margins
+            else                              PRI $(( $fullscreen_width + $marginX + $window_frame )) $Y0 0 0                # laptop screens fill to edge
             fi ;;
 
 fullframe ) rm -f $FULLSCREEN:primary
@@ -136,10 +132,8 @@ herbstclient set_monitors $PRIMARY $SECONDARY &
 
 # ................................................................... Fullscreen
 
-if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then
-  touch $FULLSCREEN
-else
-  rm -f $FULLSCREEN
+if [ -e $FULLSCREEN:primary ] || [ -e $FULLSCREEN:secondary ] ;then touch $FULLSCREEN
+else                                                                rm -f $FULLSCREEN
 fi
 
 # vim: set ft=sh: #

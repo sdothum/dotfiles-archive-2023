@@ -41,7 +41,7 @@ candidates() {
     pkg=$(echo ${path##*/} | lowercase | sed -r 's/^\.//; s/(\.?conf|rc)$//')
     pacman -Q "$pkg" >/dev/null 2>&1 && exclude=true ||
       { unset pkg; echo "$path" | egrep -q "^$HOME/*($filter)$" && exclude=true; }
-    [ $exclude ] && echo "# $path $pkg" >>$rules || { ditto "$path"; echo "  $path" >>$rules; }
+    [ $exclude ] && echo "# $path $pkg" >>$rules || { ditto check "$path"; echo "  $path" >>$rules; }
   done 3< $vacuum:find
 }
 
@@ -95,7 +95,7 @@ vacuum() {
   clean) clean ;;
   CLEAN) sudo rm -rf "$file" ;;
   esac
-  [ "$target" ] && ditto "vacuum [${vacuum#$HOME/}] $file" || ditto "vacuum $file"
+  [ "$target" ] && ditto vacuum "[${vacuum#$HOME/}] $file" || ditto vacuum "$file"
 }
 
 sync() {

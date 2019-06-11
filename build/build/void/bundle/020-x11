@@ -4,14 +4,20 @@
 # see bundle_install
 
 
-= x11 driver
-= ══════════
-  xf86-input-synaptics [laptop]
+= video driver
+= ════════════
+  libva-intel-driver   [gpu intel]
+  libvdpau-va-gl       [gpu intel]
   nvidia               [gpu nvidia]
   nvidia-340           [gpu macbook]
+
+
+= x11 driver
+= ══════════
   xf86-input-evdev
   xf86-input-libinput
   xf86-input-wacom     [server]
+  xf86-input-synaptics [laptop]
   xf86-video-ati       [gpu ati]
   xf86-video-intel     [gpu intel]
   xf86-video-nouveau   [gpu nvidia]
@@ -31,8 +37,10 @@
 = x11 utility
 = ═══════════
   arandr               [server]
+  libva-utils
   lxrandr              [server]
   setxkbmap
+  vdpauinfo
 # xorg
   xorg-minimal
   xev

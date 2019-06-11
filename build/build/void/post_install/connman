@@ -10,14 +10,14 @@ scan="connmanctl> agent on > enable wifi > scan wifi > services"
 service disable dhcpcd
 service disable wpa_supplicant
 service enable dbus
+sleep 2
 
 if [ ! -d /etc/sv/connmand-nodnsproxy ] ;then
   sudo cp -avr /etc/sv/connmand /etc/sv/connmand-nodnsproxy
   sudo sed -i '/^exec connmand/cexec connmand -n -r' /etc/sv/connmand-nodnsproxy/run
 fi
 service enable connmand-nodnsproxy
-sudo sed -i '/^nameserver/s/^/#/' /etc/resolv.conf
-echo 'nameserver 10.1.0.10' | sudo tee -a /etc/resolv.conf
+sleep 2
 
 server && ditto "$scan
 connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" ||
@@ -26,5 +26,14 @@ connmanctl> connect [wireless]
 connmanctl> config [wireless] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway> --autoconnect True"
 # note: wireless must be connected before configuring service
 sudo connmanctl
+sleep 2
+
+# restore resolv.conf *after* connmanctl
+sudo sed -i '/^nameserver/s/^/#/' /etc/resolv.conf
+echo 'nameserver 10.1.0.10' | sudo tee -a /etc/resolv.conf
+sleep 2
+
+service restart dbus  # tickle connect
+sleep 2
 
 # vim: set ft=sh: #

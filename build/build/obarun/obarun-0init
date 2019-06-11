@@ -3,9 +3,9 @@
 
 # fresh obarun pre-installer
 
-# ./obarun-00mnt
 source ./obarun-functions
-# checkpoint
+./obarun-00mnt
+checkpoint
 
 
 heading 'edit fstab'
@@ -17,17 +17,18 @@ vi /mnt/btrfs-boot/etc/fstab
 checkpoint
 
 
-heading 'edit syslinux.cfg'
+heading 'sudo obarun-install (2x) then obarun-1boot to install boot loader'
 # ══════════════════════════════════════════════════════════════════════════════
-original /mnt/btrfs-boot/boot/syslinux/syslinux.cfg
-sed -i '/^TIMEOUT/s/ [0-9]*/ 30/ ; /APPEND/s/sda[23].*/sda3 ro rootflags=subvol=__current\/ROOT/' /mnt/btrfs-boot/boot/syslinux/syslinux.cfg
-vi /mnt/btrfs-boot/boot/syslinux/syslinux.cfg
+su - oblive
 
 
-heading 'edit s6.conf'
+heading 'umounting btrfs'
 # ══════════════════════════════════════════════════════════════════════════════
-original /mnt/btrfs-boot/etc/s6/s6.conf
-sed -i '/^USEBTRFS/s/=no/=yes/ ; /^USESWAP/s/=no/=yes/' /mnt/btrfs-boot/etc/s6/s6.conf
-vi /mnt/btrfs-boot/etc/s6/s6.conf
+umount -Rv /mnt/btrfs-boot
+umount -v /mnt/btrfs-root
+
+
+heading 'cd / and umount /media (usb) and reboot'
+# ══════════════════════════════════════════════════════════════════════════════
 
 # vim: set ft=sh: #

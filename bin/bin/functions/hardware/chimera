@@ -55,7 +55,7 @@ make ${KEYBOARD##*/}:$keymap
 sudo chown -R $USER:users $QMK
 # if dfu cannot detect keyboard receiver, verify hex size to not brick bootloader..
 [ "$1" = dfu ] && {
-  ditto "$(ls -l ${KEYBOARD##*/}_$keymap.hex)"
+  ditto flash "$(ls -l ${KEYBOARD##*/}_$keymap.hex)"
   [ -e /dev/ttyACM0 ] && dev=/dev/ttyACM1 || dev=/dev/ttyACM0
   ifyes 'press ENTER\n..followed by receiver RESET' && sleep 3 || exit
   sudo avrdude -p atmega32u4 -P $dev -c avr109 -U flash:w:${KEYBOARD##*/}_$keymap.hex

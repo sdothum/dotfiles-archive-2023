@@ -19,6 +19,7 @@
 
 SHELL=/usr/bin/dash
 blackboard='#000000'
+options='FLOAT|STACK|MAX|VERTICAL|HORIZONTAL|GRID|BLACKBOARD|VISIBLE|WAIT|FORTUNE|SHELL'
 
 [ -e /usr/bin/alacritty ] && TERM=alacritty || TERM=urxvt
 case $TERM in
@@ -35,7 +36,7 @@ esac
 
 # first parameter may be title
 if [ "$1" ] ;then
-  if echo $1 | egrep -qv 'FLOAT|STACK|MAX|VERTICAL|HORIZONTAL|GRID|BLACKBOARD|VISIBLE|WAIT|FORTUNE|SHELL' ;then
+  if echo $1 | egrep -qv "$options" ;then
     title="$TITLE $(echo $1 | sed 's/ /_/g')"
     shift
   fi

@@ -6,7 +6,6 @@
 
 # .................................................................... Voidlinux
 
-# uname -r | grep -q 'VOID'
-! arch
+[ -e /usr/bin/xbps-install ]
 
 # vim: set ft=sh: #

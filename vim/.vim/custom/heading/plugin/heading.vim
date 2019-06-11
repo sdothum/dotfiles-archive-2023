@@ -13,7 +13,7 @@
       set cpo&vim
 
       let g:over       = ','  " leaders
-      let g:under      = '`'  " shift comma on beakl si layout
+      let g:under      = '!'  " shift comma on beakl zi layout
 
       let g:bullet     = '·'  " U+00b7
       let g:dot        = '.'

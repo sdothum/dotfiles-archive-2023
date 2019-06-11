@@ -66,6 +66,8 @@ heading "root setup"
   sudo ln -sf $HOME/.fonts /root/
   original /root/.bashrc
   sudo ln -sf $HOME/.bashrc /root/
+  sudo ln -sf $HOME/.vim /root/
+  sudo ln -sf $HOME/.vimrc /root/
 fi
 
 

@@ -25,4 +25,6 @@ else
   service enable remote-fs.target
 fi
 
+service -f mask gssproxy
+
 # vim: set ft=sh: #

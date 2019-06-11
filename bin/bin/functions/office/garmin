@@ -1,13 +1,11 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# File
+# Office
 # ══════════════════════════════════════════════════════════════════════════════
 
-# .................................................................... Attribute
+# ............................................................... Garmin Express
 
-# give USER access
-sudo chown -cR $USER:users $1
-sudo chmod -cR 775 $1
+WINEPREFIX=$HOME/GarminExpress wine explorer /desktop=garmin,1366x768 "$HOME/GarminExpress/drive_c/Program Files/Garmin/Express/express.exe"
 
 # vim: set ft=sh: #

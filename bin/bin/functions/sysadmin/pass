@@ -50,7 +50,7 @@ xport() {
 pass I || exit" >$image
   names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
   for i in $names ;do
-    ditto "exporting $i"
+    ditto exporting "$i"
     key=$($PASS $i | sed "s/'/'\"'\"'/")
     echo "pass i $i '$key'" >>$image
   done
@@ -65,7 +65,7 @@ a ) [ $# -eq 3 ] && { echo "$3\n$3" >/tmp/pass; $PASS insert --force $2 </tmp/pa
 G ) [ $# -eq 2 ] && { $PASS generate --no-symbols --force --clip $2 12; exec pass $2; } ;;
 g ) [ $# -eq 2 ] && { $PASS generate --force --clip $2 12; exec pass $2; } ;;
 I ) init; exit ;;
-i ) [ $# -eq 3 ] && { ditto "importing $2"; echo "$3\n$3" >/tmp/pass; exec $PASS insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1; } ;;
+i ) [ $# -eq 3 ] && { ditto importing "$2"; echo "$3\n$3" >/tmp/pass; exec $PASS insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1; } ;;
 l )  shift && exec $PASS $@ ;;
 m ) [ $# -eq 3 ] && { $PASS mv --force $2 $3; exec pass $3; } ;;
 R ) [ $# -eq 2 ] && { exec $PASS rm --recursive --force $2; } ;;

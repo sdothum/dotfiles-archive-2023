@@ -128,7 +128,7 @@ enum keyboard_keycodes {
 #endif
 #define _______ KC_NO
 
- #ifdef HASKELL
+#ifdef HASKELL
 #define HS_LT   TD_LT
 #define HS_GT   TD_GT
 #else

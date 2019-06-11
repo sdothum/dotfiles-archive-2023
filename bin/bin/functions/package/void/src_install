@@ -6,16 +6,17 @@
 
 # ................................................................ Void src repo
 
+REPO=$HOME/void-packages
 REPO=/net/depot/void-packages
 
 heading : $1
-void_src
-cd $REPO
-empty hostdir/binpkgs && ./xbps-src binary-bootstrap
-
-# xnew $1
-# xgensum -f srcpkgs/$1/template
-./xbps-src pkg $1
+if [ ! -e $REPO/hostdir/binpkgs/$1-* ] ;then
+  cd $REPO
+  empty hostdir/binpkgs && ./xbps-src binary-bootstrap
+  # xnew $1
+  # xgensum -f srcpkgs/$1/template
+  ./xbps-src pkg $1
+fi
 sudo xbps-install --repository=$REPO/hostdir/binpkgs --force $1
 
 # vim: set ft=sh: #

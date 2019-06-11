@@ -88,6 +88,7 @@ heading 'installing wireless tools'
 pm_install connman
 pm_install dialog
 pm_install iw
+pm_install linux-headers
 pm_install reflector
 pm_install wpa_supplicant
 # cp /etc/netctl/examples/wireless-wpa /etc/netctl/my-wireless-network
@@ -105,6 +106,8 @@ passwd
 heading "create \"$user\" user account"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
+checkpoint
+
 pm_install sudo
 original /etc/sudoers
 sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //; /## Defaults specification/aDefaults insults' /etc/sudoers
@@ -121,6 +124,7 @@ pm_install git
 pm_install gnome-keyring
 # pm_install jshon
 # pm_install namcap
+# pm_install openssh
 # pm_install yajl
 checkpoint
 

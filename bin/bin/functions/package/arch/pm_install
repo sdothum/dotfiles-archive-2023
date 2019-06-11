@@ -11,7 +11,7 @@
 # Usage: pm_install [--confirm | --init] <package>
 
 wrappaur=$(aurwrapper)
-options='--noconfirm --noedit'
+options=$(aurwrapper options)
 
 case $1 in
   --confirm) unset options; shift ;;

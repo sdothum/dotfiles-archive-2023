@@ -1,0 +1,28 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. Resize jpeg
+
+usage() {
+  echo "usage: $(basename $0) [<size>] [<jpeg>]*"
+  exit 1
+}
+
+# quality=92
+quality=75
+size=800
+
+[ $1 ] && echo $1 | grep -q '^[0-9]*$' && { size="$1"; shift; }
+[ $1 ] && files=$@ || files=*.jpg
+[ "$files" ] || usage
+
+for i in $files ;do
+  output=${i%.jpg}x$size.jpg
+  ditto convert "$output"
+  convert $i -size $size -quality $quality $output
+done
+
+# vim: set ft=sh: #

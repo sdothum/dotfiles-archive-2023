@@ -126,11 +126,11 @@
         if ! empty(glob('~/.session/nighttime')) 
           let g:colorscheme = 'flatwhite'  " startup -> quantum
         endif
-        if &diff  " diff highlights the SignColumn which can only be cleared afterwards..
-          colorscheme one  " diff mode doesn't work well with reverse (block) highlighting
+        if &diff                           " diff highlights the SignColumn which can only be cleared afterwards..
+          colorscheme one                  " diff mode doesn't work well with reverse (block) highlighting
           autocmd theme CursorHold * hi! link SignColumn NonText
         else 
-          call theme#NextColorScheme()  " startup quantum -> plain
+          call theme#NextColorScheme()     " startup (quantum) -> plain
         endif
       endif
 
