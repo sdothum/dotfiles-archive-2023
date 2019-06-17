@@ -121,9 +121,12 @@
         hi! link SpellLocal SpellBad
         hi! link SpellRare  SpellBad
 
+        if g:colorscheme == 'plain'
+          execute 'hi Comment    guifg=' . g:comment
+        endif
         if &background == 'light'  " add flatwhite contrast
-          execute 'hi IncSearch     guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
-          execute 'hi Search        guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
+          execute 'hi IncSearch  guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
+          execute 'hi Search     guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
         endif
         execute 'hi StatusLineNC gui=nocombine guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
       endfunction
@@ -160,7 +163,7 @@
         execute 'hi ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background) . ' gui=bold'
 
         " g:fzf_colors initializes fzf only once, so override cursorline color
-        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . s:hexValue('s:dfm_fg_' . &background)  " cannot appear to set other colors, such as hl+ (?)
+        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . (g:colorscheme == 'plain' ? g:comment : s:hexValue('s:dfm_fg_' . &background))  " cannot appear to set other colors, such as hl+ (?)
         " hide bottom fzf window identifier
         execute 'hi fzf1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
         execute 'hi fzf2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg

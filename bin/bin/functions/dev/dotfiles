@@ -14,7 +14,8 @@ usage() {
   exit 1
 }
 
-[ -e $HOME/.git/stow ] && ln -s $HOME/.git/stow $HOME/stow/.git
+[ -d "$1" ] && { STOW="$1"; shift; }  # see config.fish
+[ -e $HOME/.git/stow ] && ln -sf $HOME/.git/stow $HOME/stow/.git
 # update github dotfiles
 # see .gitignore, to remove items from remote repository
 # git rm --cached <filespec>
@@ -22,7 +23,6 @@ usage() {
 
 # list of folders under stow root
 dotfiles=$(cat ${0%/*}/.dotfiles:folders)
-[ -d "$1" ] && { STOW="$1"; shift; }
 cd $STOW
 # syncthing housekeeping
 find . -name '*.sync-conflict-*' -exec rm {} \;

@@ -77,29 +77,22 @@
 
     " ...................................................................... Fzf
 
-      " let g:fzf_colors =
-      "     \{
-      "     \  'fg'      : ['fg', 'Normal']
-      "     \, 'bg'      : ['bg', 'Normal']
-      "     \, 'hl'      : ['fg', 'Special']
-      "     \, 'fg+'     : ['fg', 'CursorLine']
-      "     \, 'bg+'     : ['bg', 'CursorLine']
-      "     \, 'hl+'     : ['fg', 'Special']
-      "     \, 'info'    : ['fg', 'Special']
-      "     \, 'border'  : ['fg', 'Ignore']
-      "     \, 'prompt'  : ['fg', 'Directory']
-      "     \, 'pointer' : ['fg', 'Special']
-      "     \, 'marker'  : ['fg', 'Special']
-      "     \, 'spinner' : ['fg', 'Special']
-      "     \, 'header'  : ['fg', 'Directory']
-      "     \}
-
       let g:fzf_colors =
           \{
-          \  'fg+'    : ['fg', 'CursorLine']
-          \, 'bg+'    : ['bg', 'CursorLine']
-          \, 'gutter' : ['bg', 'CursorLine']
-          \, 'info'   : ['fg', 'Special']
+          \  'fg'      : ['fg', 'Normal']
+          \, 'bg'      : ['bg', 'Normal']
+          \, 'hl'      : ['fg', 'Directory']
+          \, 'fg+'     : ['fg', 'CursorLine']
+          \, 'bg+'     : ['bg', 'CursorLine']
+          \, 'hl+'     : ['fg', 'Directory']
+          \, 'border'  : ['fg', 'Ignore']
+          \, 'gutter'  : ['bg', 'CursorLine']
+          \, 'header'  : ['fg', 'Normal']
+          \, 'info'    : ['fg', 'Special']
+          \, 'marker'  : ['fg', 'Special']
+          \, 'pointer' : ['fg', 'Special']
+          \, 'prompt'  : ['fg', 'Directory']
+          \, 'spinner' : ['fg', 'Special']
           \}
 
       " close any diff buffer before leaving buffer

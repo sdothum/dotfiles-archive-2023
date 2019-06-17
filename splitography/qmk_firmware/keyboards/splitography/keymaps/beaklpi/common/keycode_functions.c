@@ -32,19 +32,21 @@ void unregister_modifier(uint16_t keycode)
   mods &= ~(MOD_BIT(keycode));
 }
 
+#define MOD_KEY(x) mods & MOD_BIT(x)
+
 // (un)register modifiers
 void mod_all(void (*f)(uint8_t), uint8_t mask)
 {
-  if (!mods)                   { return; }
-  if (mods & MOD_BIT(KC_LGUI)) { f(KC_LGUI); }
-  if (mods & MOD_BIT(KC_LCTL)) { f(KC_LCTL); }
-  if (mods & MOD_BIT(KC_LALT)) { f(KC_LALT); }
-  if (mods & MOD_BIT(KC_LSFT)) { f(KC_LSFT); }
-  if (mods & MOD_BIT(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
-  if (mods & MOD_BIT(KC_RALT)) { f(KC_RALT); }
-  if (mods & MOD_BIT(KC_RCTL)) { f(KC_RCTL); }
-  if (mods & MOD_BIT(KC_RGUI)) { f(KC_RGUI); }
-  mods &= (mask ? 0xFF : 0);                    // 0 -> discard, otherwise -> retain state
+  if (!mods)            { return; }
+  if (MOD_KEY(KC_LGUI)) { f(KC_LGUI); }
+  if (MOD_KEY(KC_LCTL)) { f(KC_LCTL); }
+  if (MOD_KEY(KC_LALT)) { f(KC_LALT); }
+  if (MOD_KEY(KC_LSFT)) { f(KC_LSFT); }
+  if (MOD_KEY(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
+  if (MOD_KEY(KC_RALT)) { f(KC_RALT); }
+  if (MOD_KEY(KC_RCTL)) { f(KC_RCTL); }
+  if (MOD_KEY(KC_RGUI)) { f(KC_RGUI); }
+  mods &= (mask ? 0xFF : 0);             // 0 -> discard, otherwise -> retain state
 }
 
 // two or more active modifier keys (down) only, see mod_roll()
@@ -58,8 +60,8 @@ bool chained_modifier()
 
 void mod_bits(keyrecord_t *record, uint16_t keycode)
 {
-  if (record->event.pressed) { mods |=   MOD_BIT(keycode); }
-  else                       { mods &= ~(MOD_BIT(keycode)); }
+  if (KEY_DOWN) { mods |=   MOD_BIT(keycode); }
+  else          { mods &= ~(MOD_BIT(keycode)); }
 }
 
 // base layer modifier
@@ -78,7 +80,7 @@ bool mod_down(uint16_t key_code)
 void tt_escape(keyrecord_t *record, uint16_t keycode)
 {
   if (tt_keycode != keycode && tt_keycode) { base_layer(0); }  // if different TT layer selected
-  if (record->event.pressed)               { key_timer = timer_read(); }
+  if (KEY_DOWN)                            { key_timer = timer_read(); }
   else {
     if (timer_elapsed(key_timer) < TAPPING_TERM) { tt_keycode = keycode; }
     key_timer = 0;
@@ -88,7 +90,7 @@ void tt_escape(keyrecord_t *record, uint16_t keycode)
 // tapped or not?
 bool key_press(keyrecord_t *record)
 {
-  if (record->event.pressed)                        { key_timer = timer_read(); }
+  if (KEY_DOWN)                                     { key_timer = timer_read(); }
   else if (timer_elapsed(key_timer) < TAPPING_TERM) { key_timer = 0; return true; }
   else                                              { key_timer = 0; }
   return false;
@@ -169,7 +171,7 @@ void clear_events(void)
 // handle rolling keys as shift keycode or a sequence of unmodified keycodes
 void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
     e[column].key_timer = timer_read();
     e[column].keycode   = keycode;
     e[column].shift     = shift;
@@ -198,7 +200,7 @@ void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifie
 // down -> always shift (versus SFT_t auto repeat), 
 void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
     key_timer = timer_read();
     register_modifier(modifier);
   }
@@ -213,7 +215,7 @@ void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
     key_timer = timer_read();
     if (modifier2) { register_modifier(modifier2); }
     register_modifier(modifier);
@@ -234,7 +236,7 @@ static uint8_t  map = 0;  // map state
 bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   if (map || mod_down(shift_key)) {
-    if (record->event.pressed) {
+    if (KEY_DOWN) {
       if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
       map = 1;                                     // in case shift key is released first
@@ -256,7 +258,7 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   if (mod_down(shift_key)) {
-    if (record->event.pressed) { key_timer = timer_read(); }
+    if (KEY_DOWN) { key_timer = timer_read(); }
     else {
       if (timer_elapsed(key_timer) < TAPPING_TERM) {
         if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode
@@ -275,7 +277,7 @@ bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t
 bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
 {
   if (autocap) {
-    if (record->event.pressed) { key_timer = timer_read(); return false; }
+    if (KEY_DOWN) { key_timer = timer_read(); return false; }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) {
       tap_key(keycode);
       if (layer) { layer_off(layer); }
@@ -543,13 +545,13 @@ void base_layer(uint8_t defer)
 // inexplicably sets layer_on() faster than can be done in rolling_layer()
 void tap_layer(keyrecord_t *record, uint8_t layer)
 {
-  record->event.pressed ? layer_on(layer) : layer_off(layer);
+  KEY_DOWN ? layer_on(layer) : layer_off(layer);
 }
 
 // LT macro for mapc_shift(), see process_record_user()
 void lt(keyrecord_t *record, uint8_t layer, uint8_t shift, uint16_t keycode)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
     key_timer = timer_read();
     layer_on(layer);
   }
@@ -571,7 +573,7 @@ static uint8_t double_key = 0;
 // dual key to raise layer (layer 0 to trap dual key state :-)
 bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggle)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
     double_key |= side;
     if (double_key == (LEFT | RIGHT)) { 
       if (layer) { toggle ? layer_invert(layer) : layer_on(layer); }
@@ -602,7 +604,7 @@ static uint8_t rightside = 0;
 // seamlessly switch left / right thumb layer combinations
 void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t keycode, uint8_t layer, uint8_t facing)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
     layer_on(layer);
     if (side == LEFT) { leftside = layer; }
     else              { rightside = layer; }
@@ -622,7 +624,7 @@ void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t ke
 
 void steno(keyrecord_t *record)
 {
-  if (record->event.pressed) {
+  if (KEY_DOWN) {
 #ifdef AUDIO_ENABLE
     PLAY_SONG(song_plover);
 #endif
