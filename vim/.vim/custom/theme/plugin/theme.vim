@@ -115,6 +115,7 @@
       let g:light           = '#dddddd'      " light hyperfocus fade
       let g:dark            = '#444444'      " dark hyperfocus fade
       let g:light_fg        = g:light_black  " light cursorline (adjust to preferred highlight)
+      let g:insert_fg       = g:light_gray   " insert mode prose text (cursorline contrast)
       let g:dark_fg         = g:gray5        " dark cursorline (adjust to preferred highlight)
 
       augroup theme | autocmd! | augroup END
