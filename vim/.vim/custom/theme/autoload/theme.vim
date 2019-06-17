@@ -322,11 +322,11 @@
         Trace theme#Contrast()
         if core#Prose() && &background == 'light'
           if a:level
-            execute 'hi! Normal     guifg=' . g:mono_3
+            execute 'hi! Normal     guifg=' . g:medium_gray
             execute 'hi! CursorLine guifg=' . g:black
           else
-            execute 'hi! Normal     guifg=' . g:mono_2
-            execute 'hi! CursorLine guifg=' . g:mono_2
+            execute 'hi! Normal     guifg=' . g:light_fg
+            execute 'hi! CursorLine guifg=' . g:light_fg
           endif
         endif
       endfunction
