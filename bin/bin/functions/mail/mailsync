@@ -30,10 +30,8 @@ tag_account() {
   shift
   ditto tag "$folder $@"
   echo $folder | grep -q 'unknown$' && unset unknown || unknown=-unknown
-  notmuch tag --batch <<EOF
-      $@ -inbox $unknown \'folder:"$folder"\'
-      +new \'folder:"$folder"\' -- tag:unread
-EOF
+  notmuch tag $@ -inbox $unknown folder:"$folder"
+  notmuch tag +new folder:"$folder" -- tag:unread
 }
 
 # tag new messages
@@ -58,7 +56,8 @@ EOF
   for i in $(find $MAILDIR -maxdepth 1 -type d -name '[a-z]*') ;do
     account=${i##*/}
     case $account in
-    sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread ;;
+    sdothum ) tag_account 'sdothum/[Gmail]/Sent Mail' +sent +unread
+              tag_account 'sdothum/Sent' +sent +unread ;;
 
     patricia) tag_account $account/INBOX +phconsulting
               tag_account "$account/[Gmail]/Sent Mail" +patricia ;;
@@ -104,8 +103,8 @@ one_pass() {
 
 # initialize notmuch database
 init() {
-  killall alot
-  killall notmuch
+  killall alot 2>/dev/null
+  killall notmuch 2>/dev/null
   rm -rf $MAILDIR/.notmuch/dump-*
   rm -rf $MAILDIR/.notmuch/xapian
   notmuch setup
