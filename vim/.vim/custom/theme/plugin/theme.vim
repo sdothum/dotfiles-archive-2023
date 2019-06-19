@@ -104,7 +104,6 @@
       let g:yellow          = '#d5b875'      " 180 (d7af87)
 
       " cursor, highlight
-      let g:comment         = g:hue_6_2      " plain comment and fzf highlight
       let g:cursor          = '#20fccf'      " analogous iA Writer '#20bbfc' cursor color
       let g:black           = '#000000'      " cursor foreground
       let g:blue            = '#0000e6'      " cursor foreground

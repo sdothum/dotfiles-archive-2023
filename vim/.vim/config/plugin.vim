@@ -29,7 +29,7 @@
     " .................................................................... Theme
 
       " Plug 'atelierbram/Base2Tone-vim'    " duotone themes
-      Plug 'andreypopp/vim-colors-plain'    " monochrome
+      Plug 'sdothum/vim-colors-plain'       " monochrome fork
       Plug 'reedes/vim-colors-pencil'       " iaWriter theme (for console transparency)
       Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting

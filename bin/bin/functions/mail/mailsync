@@ -24,7 +24,7 @@ interval=${interval:-15}
 
 # ................................................................... Initialize
 
-# handle spaces in folder name for xapian with \'folder:"foo bar"\'
+# handle spaces in folder name for xapian with folder:"foo bar"
 tag_account() {
   folder=$1
   shift
