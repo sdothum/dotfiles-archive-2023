@@ -29,16 +29,16 @@
     " .................................................................... Theme
 
       " Plug 'atelierbram/Base2Tone-vim'    " duotone themes
-      Plug 'sdothum/vim-colors-plain'       " monochrome fork
-      Plug 'reedes/vim-colors-pencil'       " iaWriter theme (for console transparency)
       Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
       Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
       Plug 'bilalq/lite-dfm'                " distraction free mode
+      Plug 'reedes/vim-colors-pencil'       " iaWriter theme (for console transparency)
+      Plug 'sdothum/vim-colors-duochrome'   " vim-colors-plain fork
       Plug 'rakr/vim-one'                   " atom light syntax theme
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
+      Plug 'TaDaa/vimade'                   " hyperfocus highlghting for buffers
       Plug '~/.vim/custom/theme'            " theme
       Plug '~/.vim/custom/ui'               " ui mode
-      Plug 'TaDaa/vimade'                   " hyperfocus highlghting for buffers
 
     " ..................................................................... Info
 

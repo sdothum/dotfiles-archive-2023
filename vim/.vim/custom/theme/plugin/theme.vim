@@ -12,7 +12,7 @@
       let s:save_cpo     = &cpo
       set cpo&vim
 
-      let g:colorscheme  = 'quantum'  " plain -> flatwhite -> quantum ->, see theme#NextScheme()
+      let g:colorscheme  = 'quantum'  " duochrome -> flatwhite -> quantum ->, see theme#NextScheme()
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
       let g:source_font  = 'Iosevka\'
@@ -23,7 +23,7 @@
 
     " .............................................................. Color codes
 
-      " plain monochromatic palette
+      " duochrome monochromatic palette
       let g:black           = '#222222'
       let g:medium_gray     = '#767676'
       let g:white           = '#f7f3ee'
@@ -131,7 +131,7 @@
           colorscheme one                  " diff mode doesn't work well with reverse (block) highlighting
           autocmd theme CursorHold * hi! link SignColumn NonText
         else 
-          call theme#NextColorScheme()     " startup (quantum) -> plain
+          call theme#NextColorScheme()     " startup (quantum) -> duochrome
         endif
       endif
 

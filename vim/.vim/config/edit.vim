@@ -44,106 +44,18 @@
       nnoremap <silent><C-S-Up>   m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
       nnoremap <silent><C-S-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
-  " Text shift _________________________________________________________________
+    " ......................................................... Strip whitespace
+    
+      nmap <silent><F4> :call core#StripTrailingWhitespaces()<CR>
+      vmap <silent><F4> :<C-u>call core#StripTrailingWhitespaces()<CR>
 
-    " .............................................................. Select text
+      augroup edit | autocmd! | augroup END
 
-      function! s:paragraphAbove()
-        if core#NonblankLine
-          normal! {
-          if core#BlankLine()
-            normal! j
-          endif
-        endif
-        normal! }kV{
-      endfunction
-
-      function! s:paragraphBelow()
-        if core#NonblankLine
-          normal! }
-          if core#BlankLine()
-            normal! k
-          endif
-        endif
-        normal! {jV}
-      endfunction
-
-      " select all
-      nnoremap <C-a>    ggVG
-      " extend paragraph selection
-      vmap <C-PageUp>   {
-      vmap <C-PageDown> }
-      " select paragragh
-      nmap <silent><C-PageUp>   :call <SID>paragraphAbove()<CR>
-      nmap <silent><C-PageDown> :call <SID>paragraphBelow()<CR>
-
-    " ......................................................... Shift left right
-
-      " softwidth shifts, preserve selection when indenting
-      nnoremap <S-Left>  <<
-      inoremap <S-Left>  <C-d>
-      vnoremap <S-Left>  <gv
-      nnoremap <S-Right> >>
-      inoremap <S-Right> <C-t>
-      vnoremap <S-Right> >gv
-
-      " byte shift left / right
-      nnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>
-      nnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>
-      vnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>gv
-      vnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>gv
-
-      " move visual block with automatic alignment!
-      vnoremap L :m '<-2<CR>gv=gv
-      vnoremap N :m '>+1<CR>gv=gv
-
-    " ............................................................ Shift up down
-
-      " see https://github.com/gorkunov/vimconfig.git
-      function! s:moveLineOrVisualUpOrDown(move)
-        let l:col = virtcol('.')
-        execute 'silent! ' . a:move
-        execute 'normal! ' . l:col . '|'
-      endfunction
-
-      function! s:moveLineOrVisualUp(line_getter, range)
-        let l:line = line(a:line_getter)
-        if l:line - v:count1 - 1 < 0 | let l:move = '0'
-        else                         | let l:move = a:line_getter . ' -' . (v:count1 + 1) | endif
-        call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
-      endfunction
-
-      function! s:moveLineOrVisualDown(line_getter, range)
-        let l:line = line(a:line_getter)
-        if l:line + v:count1 > line('$') | let l:move = '$'
-        else                             | let l:move = a:line_getter . ' +' . v:count1 | endif
-        call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
-      endfunction
-
-      function! s:moveLineUp()
-        call s:moveLineOrVisualUp('.', '')
-      endfunction
-
-      function! s:moveLineDown()
-        call s:moveLineOrVisualDown('.', '')
-      endfunction
-
-      function! s:moveVisualUp()
-        call s:moveLineOrVisualUp("'<", "'<,'>")
-        normal! gv
-      endfunction
-
-      function! s:moveVisualDown()
-        call s:moveLineOrVisualDown("'>", "'<,'>")
-        normal! gv
-      endfunction
-
-      nmap <silent><S-Up>   :call <SID>moveLineUp()<CR>
-      imap <silent><S-Up>   <ESC>:call <SID>moveLineUp()<CR>a
-      vmap <silent><S-Up>   <ESC>:call <SID>moveVisualUp()<CR>
-      nmap <silent><S-Down> :call <SID>moveLineDown()<CR>
-      imap <silent><S-Down> <ESC>:call <SID>moveLineDown()<CR>a
-      vmap <silent><S-Down> <ESC>:call <SID>moveVisualDown()<CR>
+      " " pre-write formatting
+      " autocmd edit BufWritePre * call core#StripTrailingWhitespaces()
+      " " focus oriented formatting
+      " autocmd edit BufLeave    * call core#StripTrailingWhitespaces()
+      " autocmd edit FocusLost   * call core#StripTrailingWhitespaces()
 
   " Text manipulation __________________________________________________________
 
@@ -176,11 +88,10 @@
       vnoremap ' :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
       vnoremap " :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
-    " ......................................................... CSS sort (align)
+    " .......................................................... Code block text
 
-      " note <C-v><keycode> to embed command mode keycode
-      nmap <silent><leader>css :g/{/normal! f{viB:sort<C-v><CR><CR>
-      nmap <silent><leader>cSS :g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
-      nmap <silent><leader>CSS :g/{/normal! f{viB:sort<C-v><CR><CR>:g/{/normal! f{viB:EasyAlign<C-v><CR><C-v><Space><CR>
+      " markup wiki code blocks
+      nnoremap <silent><leader>` V:call core#CodeBlock()<CR>
+      vmap     <silent><leader>` :call core#CodeBlock()<CR>
 
 " edit.vim

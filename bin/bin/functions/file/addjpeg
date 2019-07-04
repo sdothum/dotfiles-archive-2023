@@ -12,7 +12,8 @@ usage() {
 }
 
 # quality=92
-quality=75
+# quality=75
+quality=60
 size=800
 
 [ $1 ] && echo $1 | grep -q '^[0-9]*$' && { size="$1"; shift; }

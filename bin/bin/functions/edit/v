@@ -45,7 +45,7 @@ fi
 # quote filenames containing spaces
 count=0
 [ "$file" ] || while : ;do 
-  file="$file '$1'"
+  file="$file \"$1\""
   count=$(( $count + 1 ))
   shift
   [ $# -gt 0 ] || break 

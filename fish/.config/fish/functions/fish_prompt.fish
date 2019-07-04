@@ -58,7 +58,7 @@ function fish_prompt --description 'Write out the prompt'
 
   function rcode
     if test 0$RCODE -eq 0
-     space
+      space
     else
       set_color $_error
       glyph '✖' 'x'

@@ -55,46 +55,6 @@
 
       nnoremap <silent><S-F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
-  " Text _______________________________________________________________________
-
-    " ......................................................... Strip whitespace
-    
-      nmap <silent><F4> :call core#StripTrailingWhitespaces()<CR>
-      vmap <silent><F4> :<C-u>call core#StripTrailingWhitespaces()<CR>
-
-      " " pre-write formatting
-      " autocmd buffer BufWritePre * call core#StripTrailingWhitespaces()
-      " " focus oriented formatting
-      " autocmd buffer BufLeave    * call core#StripTrailingWhitespaces()
-      " autocmd buffer FocusLost   * call core#StripTrailingWhitespaces()
-
-    " .......................................................... Code block text
-
-      " markup wiki code blocks
-      nnoremap <silent><leader>` V:call core#CodeBlock()<CR>
-      vmap     <silent><leader>` :call core#CodeBlock()<CR>
-
-    " .......................................................... CSS block align
-
-      nnoremap <silent><S-F4> :call core#CssBlockAlign()<CR>
-
-  " Filetype ___________________________________________________________________
-
-    " ................................................................. Settings
-
-      " check on open
-      autocmd core BufNewFile,BufRead * call core#BufferSettings()
-
-    " ................................................................... E-mail
-
-      " position cursor for email reply or new message, see .sup/config.yaml and bin/dcompose
-      autocmd core Filetype mail call core#ComposeMail()
-
-    " ..................................................................... Wiki
-  
-      " set touch date
-      command! -nargs=1 Wiki execute ':silent !wikitouch "' . expand('%:p') . '" ' . <f-args>
-
       let &cpo = s:save_cpo
       unlet s:save_cpo
 

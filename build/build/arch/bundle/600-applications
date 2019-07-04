@@ -55,10 +55,10 @@ d m dict-moby-thesaurus
 
 = font manager
 = ════════════
-d font-manager
+# d font-manager
 " required by fontmatrix
   qtwebkit-bin
-d fontmatrix    [server]
+d fontmatrix
 # fontmatrix-git
 
 

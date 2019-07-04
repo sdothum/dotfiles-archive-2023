@@ -93,19 +93,16 @@ enum keyboard_keycodes {
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
 #endif
+ ,ACT_E   // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_E))
  ,AST_G   // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
- ,SST_A   // pseudo SFT_T(S(KC_A))
- ,SST_T   // pseudo SFT_T(S(KC_T))
+ ,AT_B    // pseudo ALT_T(S(KC_B))
+ ,CT_C    // pseudo CTL_T(S(KC_C))
+ ,ST_A    // pseudo SFT_T(S(KC_A))
+ ,ST_T    // pseudo SFT_T(S(KC_T))
  ,TT_ESC
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
 };
-
-// modifier keys
-#define ACT_E   MT   (MOD_LALT | MOD_LCTL, KC_E)
-#define AT_B    ALT_T(KC_B)
-#define CT_C    CTL_T(KC_C)
-#define ST_A    SFT_T(KC_A)
 
 #ifndef ROLLOVER
 #define HOME_Q  GUI_T(KC_Q)
@@ -313,11 +310,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ............................................................. Modifier Keys
 
+  case ACT_E:
+    mt_shift(record, KC_LALT, KC_LCTL, KC_E); break;
   case AST_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G); break;
-  case SST_A:
+  case AT_B:
+    mt_shift(record, KC_LALT, 0, KC_B);       break;
+  case CT_C:
+    mt_shift(record, KC_LCTL, 0, KC_C);       break;
+  case ST_A:
     mt_shift(record, KC_LSFT, 0, KC_A);       break;
-  case SST_T:
+  case ST_T:
     mt_shift(record, KC_RSFT, 0, KC_T);       break;
 #ifndef HASKELL
   case HS_LT:

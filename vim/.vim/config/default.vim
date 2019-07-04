@@ -130,30 +130,6 @@
       cabbrev spaces set expandtab
       cabbrev tabs   set noexpandtab
 
-    " ................................................................ Filetypes
-
-      " nmap <leader>f :set filetype=
-
-      autocmd default Filetype conf      setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype fish      setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype haskell   setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype julia     setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype lua       setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype python    setlocal nospell expandtab   tabstop=4 shiftwidth=4 softtabstop=4
-      autocmd default Filetype ruby      setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype shell     setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype sh        setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype slim      setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-      autocmd default Filetype snippet   setlocal nospell noexpandtab tabstop=2 shiftwidth=2
-      autocmd default Filetype vim       setlocal nospell expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-
-      autocmd default Filetype draft     setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
-      autocmd default Filetype mail      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
-      autocmd default Filetype markdown  setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-      autocmd default Filetype note      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
-
-      autocmd default BufWinEnter *.wiki set filetype=markdown
-
   " Search / completion ________________________________________________________
 
     " ................................................................... Search

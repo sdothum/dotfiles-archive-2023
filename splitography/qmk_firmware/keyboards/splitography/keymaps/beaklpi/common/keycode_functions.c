@@ -1,4 +1,5 @@
 
+#include "config.h"  // for ale linter
 #include "keycode_functions.h"
 
 // ................................................................ Global Scope
@@ -10,6 +11,10 @@ static uint16_t tt_keycode = 0;  // current TT keycode
 
 static uint8_t  i          = 0;  // inline for loop counter
 static uint16_t key_timer  = 0;  // global event timer
+
+#define KEY_DOWN  record->event.pressed
+#define KEY_TIMER key_timer = timer_read()
+#define KEY_TAP   timer_elapsed(key_timer) < TAPPING_TERM
 
 // Keycodes
 // ═════════════════════════════════════════════════════════════════════════════
@@ -80,9 +85,9 @@ bool mod_down(uint16_t key_code)
 void tt_escape(keyrecord_t *record, uint16_t keycode)
 {
   if (tt_keycode != keycode && tt_keycode) { base_layer(0); }  // if different TT layer selected
-  if (KEY_DOWN)                            { key_timer = timer_read(); }
+  if (KEY_DOWN)                            { KEY_TIMER; }
   else {
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { tt_keycode = keycode; }
+    if (KEY_TAP) { tt_keycode = keycode; }
     key_timer = 0;
   }
 }
@@ -90,9 +95,9 @@ void tt_escape(keyrecord_t *record, uint16_t keycode)
 // tapped or not?
 bool key_press(keyrecord_t *record)
 {
-  if (KEY_DOWN)                                     { key_timer = timer_read(); }
-  else if (timer_elapsed(key_timer) < TAPPING_TERM) { key_timer = 0; return true; }
-  else                                              { key_timer = 0; }
+  if (KEY_DOWN)     { KEY_TIMER; }
+  else if (KEY_TAP) { key_timer = 0; return true; }
+  else              { key_timer = 0; }
   return false;
 }
 
@@ -168,6 +173,8 @@ void clear_events(void)
   for (i = 0; i < 10; i++) { e[i].key_timer = 0; }
 }
 
+#define ROLL(s, k) ((s == LEFT) && e[6].shift) || ((s == RIGHT) && e[3].shift) ? tap_shift(k) : tap_key(k)
+
 // handle rolling keys as shift keycode or a sequence of unmodified keycodes
 void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
@@ -177,23 +184,24 @@ void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifie
     e[column].shift     = shift;
     e[column].side      = side;
     prev_key            = next_key;
-    next_key            = column;                            // as not released yet
+    next_key            = column;                               // as not released yet
     if (modifier) { register_modifier(modifier); }
   }
   else {
     if (modifier) { unregister_modifier(modifier); }
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
-      if (e[column].key_timer < e[next_key].key_timer) {     // rolling sequence in progress
-        mod_all(unregister_code, 0);                         // disable modifier chord finger rolls
+      if (e[column].key_timer < e[next_key].key_timer) {        // rolling sequence in progress
+        mod_all(unregister_code, 0);                            // disable modifier chord finger rolls
         if (e[column].shift && (e[column].side != e[next_key].side)) { 
-          tap_shift(e[next_key].keycode);                    // shift opposite home row key
-          e[next_key].key_timer = 0;                         // don't re-echo this key
+          tap_shift(e[next_key].keycode);                       // shift opposite home row key
+          e[next_key].key_timer = 0;                            // don't re-echo this key
         }
-        else { tap_key(keycode); }
+        else { ROLL(side, keycode); }                           // tap (shifted?) key
       }
-      else { tap_key(keycode); e[prev_key].key_timer = 0; }  // don't echo preceeding modifier key
+      else { ROLL(side, keycode); e[prev_key].key_timer = 0; }  // don't echo preceeding modifier key
     }
     e[column].key_timer = 0;
+    e[column].shift     = 0;                                    // clear shift state, see ROLL()
   }
 }
 
@@ -201,12 +209,12 @@ void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifie
 void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
 {
   if (KEY_DOWN) {
-    key_timer = timer_read();
+    KEY_TIMER;
     register_modifier(modifier);
   }
   else {
     unregister_modifier(modifier);
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(keycode); }
+    if (KEY_TAP) { tap_key(keycode); }
     key_timer = 0;
   }
 }
@@ -216,14 +224,14 @@ void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 {
   if (KEY_DOWN) {
-    key_timer = timer_read();
+    KEY_TIMER;
     if (modifier2) { register_modifier(modifier2); }
     register_modifier(modifier);
   }
   else {
     unregister_modifier(modifier);
-    if (modifier2)                               { unregister_modifier(modifier2); }
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_shift(keycode); }
+    if (modifier2) { unregister_modifier(modifier2); }
+    if (KEY_TAP)   { tap_shift(keycode); }
     key_timer = 0;
   }
 }
@@ -258,9 +266,9 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
 bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   if (mod_down(shift_key)) {
-    if (KEY_DOWN) { key_timer = timer_read(); }
+    if (KEY_DOWN) { KEY_TIMER; }
     else {
-      if (timer_elapsed(key_timer) < TAPPING_TERM) {
+      if (KEY_TAP) {
         if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode
         tap_key(keycode);
         if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
@@ -277,13 +285,12 @@ bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t
 bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
 {
   if (autocap) {
-    if (KEY_DOWN) { key_timer = timer_read(); return false; }
-    else if (timer_elapsed(key_timer) < TAPPING_TERM) {
+    if (KEY_DOWN) { KEY_TIMER; return false; }
+    else if (KEY_TAP) {
       tap_key(keycode);
       if (layer) { layer_off(layer); }
-      layer_on         (_SHIFT);  // sentence/paragraph capitalization
-      set_oneshot_layer(_SHIFT, ONESHOT_START);
-      // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
+      layer_on         (_SHIFT);                 // sentence/paragraph capitalization
+      set_oneshot_layer(_SHIFT, ONESHOT_START);  // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
       key_timer = 0;
       return true; 
     }
@@ -552,12 +559,12 @@ void tap_layer(keyrecord_t *record, uint8_t layer)
 void lt(keyrecord_t *record, uint8_t layer, uint8_t shift, uint16_t keycode)
 {
   if (KEY_DOWN) {
-    key_timer = timer_read();
+    KEY_TIMER;
     layer_on(layer);
   }
   else {
     layer_off(layer);
-    if (timer_elapsed(key_timer) < TAPPING_TERM) { mod_key(shift, keycode); }
+    if (KEY_TAP) { mod_key(shift, keycode); }
     // clear_mods();
     key_timer = 0;
   }
@@ -608,13 +615,13 @@ void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t ke
     layer_on(layer);
     if (side == LEFT) { leftside = layer; }
     else              { rightside = layer; }
-    key_timer  = timer_read();
+    KEY_TIMER;
   }
   else {
     layer_off(_MOUSE);
-    if (keycode && (timer_elapsed(key_timer) < TAPPING_TERM)) { mod_key(shift, keycode); }
-    if (side == LEFT)                                         { SWITCH_LAYER(leftside, rightside); }
-    else                                                      { SWITCH_LAYER(rightside, leftside); }
+    if (keycode && (KEY_TAP)) { mod_key(shift, keycode); }
+    if (side == LEFT)         { SWITCH_LAYER(leftside, rightside); }
+    else                      { SWITCH_LAYER(rightside, leftside); }
     // clear_mods();
     key_timer = 0;
   }

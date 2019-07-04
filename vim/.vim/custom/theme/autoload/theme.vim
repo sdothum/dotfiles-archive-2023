@@ -160,7 +160,7 @@
         execute 'hi ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background) . ' gui=bold'
 
         " g:fzf_colors initializes fzf only once, so override cursorline color
-        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . (g:colorscheme == 'plain' ? g:hue_6_2 : s:hexValue('s:dfm_fg_' . &background))  " cannot appear to set other colors, such as hl+ (?)
+        let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . (g:colorscheme == 'duochrome' ? g:hue_6_2 : s:hexValue('s:dfm_fg_' . &background))  " cannot appear to set other colors, such as hl+ (?)
         " hide bottom fzf window identifier
         execute 'hi fzf1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
         execute 'hi fzf2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
@@ -218,7 +218,7 @@
 
       function! theme#NextColorScheme()
         Trace theme#NextColorScheme()
-        if g:colorscheme     == 'plain'
+        if g:colorscheme     == 'duochrome'
           let &background     = 'light'  " must set background before colorscheme for flatwhite colors
           let g:colorscheme   = 'flatwhite'
         elseif g:colorscheme == 'flatwhite'
@@ -226,7 +226,7 @@
           let g:colorscheme   = 'quantum'
         else
           let &background     = 'light'
-          let g:colorscheme   = 'plain'
+          let g:colorscheme   = 'duochrome'
         endif
         execute 'colorscheme ' . g:colorscheme
       endfunction
