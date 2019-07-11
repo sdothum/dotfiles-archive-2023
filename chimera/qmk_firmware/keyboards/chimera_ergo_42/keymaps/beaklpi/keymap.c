@@ -145,7 +145,7 @@ enum keyboard_keycodes {
 #define LT_BSPC LT  (_MOUSE, KC_BSPC)
 #define LT_ENT  LT  (_EDIT, KC_ENT)
 #define LT_ESC  LT  (_FNCKEY, KC_ESC)
-#define LT_I    LT  (_REGEX, KC_I)
+#define LT_I    MO  (_REGEX)  // plus mod_roll() -> LT(_REGEX, KC_I)
 #define LT_SPC  LT  (_SYMGUI, KC_SPC)
 #define LT_TAB  LT  (_NUMBER, KC_TAB)
 #define TT_TAB  LT  (_NUMBER, KC_TAB)
@@ -201,7 +201,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "keycode_functions.c"
 
-static uint8_t down_punc = 0;  // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -219,7 +218,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_E:
     mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2);  break;
   case HOME_A:
-    down_punc = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
+    leadercap = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);    break;
 
   case HOME_T:
@@ -232,7 +231,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 9); break;
 #else
   case HOME_A:
-    down_punc = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
+    leadercap = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
     mod_bits(record, KC_LSFT);                          break;
   case HOME_T:
     mod_bits(record, KC_RSFT);                          break;
@@ -268,10 +267,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_I:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
-    break;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4);     break;          // MO(_REGEX) -> LT(_REGEX, KC_I)
   case TT_I:
-    lt(record, _REGEX, SHIFT, KC_I);
-    break;
+    lt(record, _REGEX, SHIFT, KC_I);                 break;
   case S(KC_I):
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
     if (!KEY_DOWN)                                   { CLR_1SHOT; }  // see leader_cap()
@@ -283,29 +281,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   // .......................................................... Right Thumb Keys
-
+#ifdef ROLLOVER
   case LT_ENT:
-    if (leader_cap(record, _EDIT, down_punc, KC_ENT))   { return false; }  // KC_ENT -> enter shift
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (leader_cap(record, 0, down_punc, KC_ENT))       { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }  // KC_SPC -> space shift
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
     break;
+#else
+  case LT_ENT:
+    if (leader_cap(record, leadercap, KC_ENT))           { return false; }  // KC_ENT -> enter shift
+    break;
+  case KC_ENT:
+    if (leader_cap(record, leadercap, KC_ENT))           { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    break;
+
+  case LT_SPC:
+    if (leader_cap(record, leadercap, KC_SPC))           { return false; }  // KC_SPC -> space shift
+    break;
+#endif
   case TT_SPC:
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
-    if (!KEY_DOWN)                                      { CLR_1SHOT; }  // see leader_cap()
+    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
     break;
 
   case LT_BSPC:
   case KC_BSPC:
-    if (!KEY_DOWN)                                      { CLR_1SHOT; }  // see leader_cap()
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))    { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))    { return false; }
+    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
     break;
 
   // ............................................................. Modifier Keys
@@ -330,31 +340,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 
   // ......................................................... Shift Mapped Keys
-
+#ifdef ROLLOVER
   case KC_COLN:
-    down_punc = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN)) { return false; }
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    if (map_roll(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                            { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    down_punc = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    if (map_roll(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
 
   case KC_COMM:
-    down_punc = KEY_DOWN ? 1 : 0;  // comm + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1))      { return false; }
+    leadercap = KEY_DOWN ? 1 : 0;  // comma/exclamation + space/enter + shift shortcut, see cap_lt()
+    if (map_roll(record, LEFT, KC_RSFT, SHIFT, KC_1, 4))      { return false; }
     break;
   case KC_DOT:
-    down_punc = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, SHIFT, KC_SLSH))   { return false; }
+    leadercap = KEY_DOWN ? 1 : 0;  // dot/question + space/enter + shift shortcut, see cap_lt()
+    if (map_roll(record, LEFT, KC_RSFT, SHIFT, KC_SLSH, 4))   { return false; }
+    break;
+#else
+  case KC_COLN:
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))         { return false; }
+    break;
+  case TD_COLN:
+    if (mod_down(KC_RSFT))                                    { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     break;
 
-  // ..................................................... Leader Capitalization
-
-  case KC_EXLM:
-  case KC_QUES:
-    down_punc = KEY_DOWN ? 1 : 0;  // ques/exlm + space/enter + shift shortcut, see cap_lt()
+  case KC_COMM:
+    leadercap = KEY_DOWN ? 1 : 0;  // comma/exclamation + space/enter + shift shortcut, see cap_lt()
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1))              { return false; }
     break;
+  case KC_DOT:
+    leadercap = KEY_DOWN ? 1 : 0;  // dot/question + space/enter + shift shortcut, see cap_lt()
+    if (map_shift(record, KC_RSFT, SHIFT, KC_SLSH))           { return false; }
+    break;
+#endif
 
   // .............................................................. Top Row Keys
 

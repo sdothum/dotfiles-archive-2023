@@ -11,11 +11,13 @@ usage() {
   exit 1
 }
 
-KEYMAPS='(ADNW|BEAKL|COLEM|QWERTY).*'
+KBD=planck
 
-QMK=$HOME/qmk_firmware
-PLANCK=$QMK/keyboards/planck
-KEYMAP=$PLANCK/keymaps/$1
+ROOT=$HOME
+# ROOT=/net/depot
+QMK=$ROOT/qmk_firmware
+KEYBOARD=$QMK/keyboards/$KBD
+KEYMAP=$KEYBOARD/keymaps/$1
 CONFIG=$KEYMAP/config.h
 MAKEFILE=$KEYMAP/Makefile
 PRIVATE=$KEYMAP/private_string.h
@@ -27,23 +29,19 @@ keymap=$1
 shift
 
 ditto "$QMK" "$keymap"
-ifno 'sync qmk_firmware repo' || {
-  cd $QMK
-  git remote add upstream https://github.com/qmk/qmk_firmware.git
-  git fetch upstream
-  git checkout master
-  git rebase upstream/master
-}
+ifno 'sync qmk_firmware repo' || { cd $QMK; rm -rf $KEYBOARD; git pull origin master; }
 
 # update keymap from stow repo
-mkdir $KEYMAP 2>/dev/null
-rsync -avq -KL --delete --exclude .deprecated $STOW/planck/${KEYMAP#$HOME/}/* $KEYMAP/
+mkdir -p $KEYMAP 2>/dev/null
+rsync -avq -KL --delete --exclude .deprecated $STOW/$KBD/${KEYBOARD#$ROOT/}/* $KEYBOARD/ 2>/dev/null
 
 # steno (mouse may need to be mandisabled in config.h)
 if [ "$1" = steno ] ;then
   sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
   shift
   [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+else
+  sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
 fi
 
 # compile time macro sting
@@ -61,8 +59,8 @@ case $1 in
 esac
 
 cd $QMK
-sudo make planck:$keymap:clean
-[ "$1" = dfu ] && sudo CPATH=$CPATH make planck:$keymap:dfu || make planck:$keymap
+sudo make $KBD:$keymap:clean
+[ "$1" = dfu ] && sudo CPATH=$CPATH make $KBD:$keymap:dfu || make $KBD:$keymap
 sudo chown -R $USER:users $QMK
 
 # vim: set ft=sh: #
