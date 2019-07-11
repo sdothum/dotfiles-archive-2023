@@ -13,7 +13,7 @@ void equal_reset(qk_tap_dance_state_t *state, void *user_data);
 void greater(qk_tap_dance_state_t *state, void *user_data);
 void greater_reset(qk_tap_dance_state_t *state, void *user_data);
 bool key_press(keyrecord_t *record);
-bool leader_cap(keyrecord_t *record, uint8_t autocap, uint16_t keycode);
+bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t leadercap, uint16_t keycode);
 void lesser(qk_tap_dance_state_t *state, void *user_data);
 void lesser_reset(qk_tap_dance_state_t *state, void *user_data);
 void lt(keyrecord_t *record, uint8_t layer, uint8_t shift, uint16_t keycode);

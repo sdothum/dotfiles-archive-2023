@@ -289,6 +289,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // .......................................................... Right Thumb Keys
 #ifdef ROLLOVER
   case LT_ENT:
+    togglelayer = _EDIT;                                                    // see mod_roll()
     if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
@@ -296,18 +297,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case LT_SPC:
+    togglelayer = _SYMGUI;                                                  // see mod_roll()
     if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
     break;
 #else
   case LT_ENT:
-    if (leader_cap(record, leadercap, KC_ENT))           { return false; }  // KC_ENT -> enter shift
+    if (leader_cap(record, _EDIT, leadercap, KC_ENT))    { return false; }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (leader_cap(record, leadercap, KC_ENT))           { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (leader_cap(record, 0, leadercap, KC_ENT))        { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-    if (leader_cap(record, leadercap, KC_SPC))           { return false; }  // KC_SPC -> space shift
+    if (leader_cap(record, _SYMGUI, leadercap, KC_SPC))  { return false; }  // KC_SPC -> space shift
     break;
 #endif
   case TT_SPC:

@@ -170,18 +170,19 @@ void clear_events(void)
   for (i = 0; i < 12; i++) { e[i].key_timer = 0; e[i].leadercap = 0; }
 }
 
-#define LEADER 10              // ,11 leader columns
-#define LSHIFT 3               // left shift column
-#define RSHIFT 6               // right shift column
+#define LEADER 10                // ,11 leader columns
+#define LSHIFT 3                 // left shift column
+#define RSHIFT 6                 // right shift column
 
-#define LEFT   1               // also see raise_layer(), rolling_layer()
-#define RIGHT  2               // for binary (LEFT | RIGHT) test
+#define LEFT   1                 // also see raise_layer(), rolling_layer()
+#define RIGHT  2                 // for binary (LEFT | RIGHT) test
 
 #define ROLL(s, k) ((s == LEFT) && e[RSHIFT].shift) || ((s == RIGHT) && e[LSHIFT].shift) ? tap_shift(k) : tap_key(k)
 
-static uint8_t leadercap = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see cap_lt()
-static uint8_t next_key  = 0;  // by column reference
-static uint8_t prev_key  = 0;
+static uint8_t leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see cap_lt()
+static uint8_t togglelayer = 0;  // key's toggle layer, see process_record_user()
+static uint8_t next_key    = 0;  // by column reference
+static uint8_t prev_key    = 0;
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
@@ -192,17 +193,18 @@ bool mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifie
   } else {
     if (modifier) { unregister_modifier(modifier); }
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
-      if (e[column].key_timer < e[next_key].key_timer) {  // rolling sequence in progress
-        mod_all(unregister_code, 0);                      // disable modifier chord finger rolls
+      if (e[column].key_timer < e[next_key].key_timer) {                // rolling sequence in progress
+        mod_all(unregister_code, 0);                                    // disable modifier chord finger rolls
         if (e[column].shift && (e[column].side != e[next_key].side)) {  // shift only opposite side of rolling sequence
-          tap_shift(e[next_key].keycode);                 // shift opposite home row key
-          e[next_key].key_timer = 0;                      // don't re-echo this key
-        } else { ROLL(side, keycode); }                   // tap (shifted?) key
+          tap_shift(e[next_key].keycode);                               // shift opposite home row key
+          e[next_key].key_timer = 0;                                    // don't re-echo this key
+        } else { ROLL(side, keycode); }                                 // tap (shifted?) key
       } else   { ROLL(side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
     }
-    if (e[prev_key].leadercap && (column >= LEADER)) {    // trigger leader capitalization only on leader key
-      layer_on         (_SHIFT);                          // sentence/paragraph capitalization
-      set_oneshot_layer(_SHIFT, ONESHOT_START);           // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
+    if (e[prev_key].leadercap && (column >= LEADER)) {                  // trigger leader capitalization only on leader key
+      if (togglelayer) { layer_off(togglelayer); togglelayer = 0; }     // disable key's toggle layer, see process_record_user()
+      layer_on         (_SHIFT);                                        // sentence/paragraph capitalization
+      set_oneshot_layer(_SHIFT, ONESHOT_START);                         // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
       e[prev_key].leadercap = 0;
       return true; 
     }
@@ -293,12 +295,13 @@ bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t
 #endif
 
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
-bool leader_cap(keyrecord_t *record, uint8_t leadercap, uint16_t keycode)
+bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t leadercap, uint16_t keycode)
 {
   if (leadercap) {
     if (KEY_DOWN) { KEY_TIMER; return false; }
     else if (KEY_TAP) {
       tap_key(keycode);
+      if (layer) { layer_off(layer); }           // disable key's toggle layer
       layer_on         (_SHIFT);                 // sentence/paragraph capitalization
       set_oneshot_layer(_SHIFT, ONESHOT_START);  // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
       key_timer = 0;
