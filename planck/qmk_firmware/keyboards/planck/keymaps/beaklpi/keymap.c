@@ -153,7 +153,11 @@ enum keyboard_keycodes {
 #define LT_BSPC LT  (_MOUSE, KC_BSPC)
 #define LT_ENT  LT  (_EDIT, KC_ENT)
 #define LT_ESC  LT  (_FNCKEY, KC_ESC)
-#define LT_I    MO  (_REGEX)  // in conjunction with mod_roll()
+#ifdef ROLLOVER
+#define LT_I    MO  (_REGEX)  // plus mod_roll() -> LT(_REGEX, KC_I)
+#else
+#define LT_I    LT  (_REGEX, KC_I)
+#endif
 #define LT_SPC  LT  (_SYMGUI, KC_SPC)
 #define LT_TAB  LT  (_NUMBER, KC_TAB)
 #define TT_TAB  LT  (_NUMBER, KC_TAB)
@@ -266,15 +270,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................... Left Thumb Keys
 
   case TT_ESC:
-    base_layer(0);  // exit TT layer
-    return false;
+    base_layer(0);                                   return false;   // exit TT layer
   case LT_ESC:
     if (tt_keycode)                                  { base_layer(0); return false; }
     break;
 
   case LT_I:
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4);     break;          // MO(_REGEX) -> LT(_REGEX, KC_I)
+#ifdef ROLLOVER
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4);                     // MO(_REGEX) -> LT(_REGEX, KC_I)
+#endif
+    break;
   case TT_I:
     lt(record, _REGEX, SHIFT, KC_I);                 break;
   case S(KC_I):
