@@ -155,11 +155,7 @@ void mod_key(uint16_t modifier, uint16_t keycode)
   }
 }
 
-#define LEFT   1               // also see raise_layer(), rolling_layer()
-#define RIGHT  2
-#define LEADER 10              // ,11 leader columns
-#define LSHIFT 3               // left shift column
-#define RSHIFT 6               // right shift column
+#define SET_EVENT(c) e[c].key_timer = timer_read(); e[c].keycode = keycode; e[c].shift = shift; e[c].side = side; e[c].leadercap = leadercap; prev_key = next_key; next_key = c
 
 static struct column_event {
   uint16_t key_timer;          // event priority
@@ -169,17 +165,23 @@ static struct column_event {
   uint8_t  leadercap;
 } e[12];                       // mapped as columns 0 1 2 3 4 <- left, right -> 5 6 7 8 9, 4 <- thumb, leader -> 10 11, see process_record_user(), mod_roll()
 
-static uint8_t leadercap = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see cap_lt()
-static uint8_t next_key  = 0;  // by column reference
-static uint8_t prev_key  = 0;
-
 void clear_events(void)
 {
   for (i = 0; i < 12; i++) { e[i].key_timer = 0; e[i].leadercap = 0; }
 }
 
-#define SET_EVENT(c) e[c].key_timer = timer_read(); e[c].keycode = keycode; e[c].shift = shift; e[c].side = side; e[c].leadercap = leadercap; prev_key = next_key; next_key = c
+#define LEADER 10              // ,11 leader columns
+#define LSHIFT 3               // left shift column
+#define RSHIFT 6               // right shift column
+
+#define LEFT   1               // also see raise_layer(), rolling_layer()
+#define RIGHT  2               // for binary (LEFT | RIGHT) test
+
 #define ROLL(s, k) ((s == LEFT) && e[RSHIFT].shift) || ((s == RIGHT) && e[LSHIFT].shift) ? tap_shift(k) : tap_key(k)
+
+static uint8_t leadercap = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see cap_lt()
+static uint8_t next_key  = 0;  // by column reference
+static uint8_t prev_key  = 0;
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
