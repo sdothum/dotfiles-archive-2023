@@ -342,7 +342,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 void colon(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (mod_down(KC_RSFT)) {  // shift -> semicolon
+  if (mod_down(KC_RSFT) || mod_down(KC_LSFT)) {  // map_roll() necessitates LSFT usage for double tap
     if (state->count > 1) {
       DOUBLE_TAP(KC_SCLN, ":-");
     } else                                  { state->pressed ? register_code(KC_SCLN) : double_tap(state->count, NOSHIFT, KC_SCLN); }

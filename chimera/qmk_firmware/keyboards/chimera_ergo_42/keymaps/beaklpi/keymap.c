@@ -354,6 +354,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_roll(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
+    if (mod_down(KC_LSFT))                                    { unregister_code(KC_LSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     if (map_roll(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
