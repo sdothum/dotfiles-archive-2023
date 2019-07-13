@@ -157,13 +157,14 @@ void mod_key(uint16_t modifier, uint16_t keycode)
 
 #define SET_EVENT(c) e[c].key_timer = timer_read(); e[c].keycode = keycode; e[c].shift = shift; e[c].side = side; e[c].leadercap = leadercap; prev_key = next_key; next_key = c
 
+// column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
 static struct column_event {
-  uint16_t key_timer;          // event priority
+  uint16_t key_timer;            // event priority
   uint16_t keycode;
   uint8_t  shift;
   uint8_t  side;
   uint8_t  leadercap;
-} e[12];                       // mapped as columns 0 1 2 3 4 <- left, right -> 5 6 7 8 9, 4 <- thumb, leader -> 10 11, see process_record_user(), mod_roll()
+} e[12];                         // leader -> 10 11, see process_record_user(), mod_roll()
 
 void clear_events(void)
 {
@@ -209,7 +210,7 @@ bool mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifie
       return true; 
     }
     e[column].key_timer = 0;
-    e[column].shift     = 0;                              // clear shift state, see ROLL()
+    e[column].shift     = 0;  // clear shift state, see ROLL()
   }
   return false;
 }
