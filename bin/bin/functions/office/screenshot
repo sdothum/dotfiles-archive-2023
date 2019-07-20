@@ -12,27 +12,28 @@ usage() {
 }
 
 target=/net/photos/batchqueue
-delay=${delay:-5}
+target=$HOME/thedarnedestthing.com/application/public/images
+quality=92
 
 if server ;then
   case $@ in
-  [0-9][0-9x+]*[0-9]) opts="--geometry=$@" ;;
-  l* | *0           ) opts='--geometry=1680x1050+0+0' ;;
-  r* | *1           ) opts='--geometry=3440x1440+1680+0' ;;
-  a*                ) opts='--geometry=5120x1440+0+0' ;;
-  s*                ) opts=-s; select=true ;;
-  *                 ) usage ;;
+  [0-9]* ) opts="--geometry=$@" ;;
+  l* | *0) opts='--geometry=1680x1050+0+0' ;;
+  r* | *1) opts='--geometry=3440x1440+1680+0' ;;
+  a*     ) opts='--geometry=5120x1440+0+0' ;;
+  s*     ) opts=-s ;;
+  *      ) usage ;;
   esac
 else
-  set -- $(query display)
-  opts="--geometry=$1x$2+0+0"
+  case $@ in
+  a*     ) set -- $(query display); opts="--geometry=$1x$2+0+0" ;;
+  s*     ) opts=-s ;;
+  *      ) usage ;;
+  esac
 fi
 
-png=$(mktemp).png
-trap "rm -f $png" EXIT
-[ $select ] || sleep $delay
-/usr/bin/maim $opts $png
-mv -v $png $target
-notify 0 'Screenshot' "$target/$png"
+jpg=$(date '+%y%m%d%H%M%S').jpg
+/usr/bin/maim $opts | convert - -size 1600 -quality $quality $target/$jpg
+notify 0 'Screenshot' "$target/$jpg"
 
 # vim: set ft=sh: #

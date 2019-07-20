@@ -206,10 +206,13 @@ button.expandPrompt {
   /* text-shadow: 0 1px 1px #fff; */
   color: #b12525;
   content: 'gravity\Awell'; /* line break */
+  content: 'GRAVITY\AWELL'; /* line break */
   display: block;
   font: 200 24px 'Advent Pro ExtraLight',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
   margin-top: 57px; /* ~ holder width / golden ratio - font-size x 1.5 */
+  margin-top: 69px; /* ~ 150 / 1.618 - font-size x 1.5 */
   position: fixed;
   text-align: right;
   white-space: pre; /* line break */
@@ -231,7 +234,9 @@ button.expandPrompt {
   bottom: 0;
   color: #b12525;
   content: 'refresh ‧•‧ gravity well'; /* dot bullet dot */
+  content: 'REFRESH ‧•‧ GRAVITY WELL'; /* dot bullet dot */
   font: 200 20px 'Advent Pro ExtraLight',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  font: 14px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   left: -35px;
   letter-spacing: 4px;
   padding: 10px;

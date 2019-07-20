@@ -9,6 +9,7 @@ tmux_session jabber 'mcabber 2>/dev/null'   # jabber
 tmux_session mail alot                      # mail
 rawtherapee
 vimb http://luna:8213/                      # repo
+screenshot s                                # screenshot
 simpletimer
 $(which thedarnedestthing)                  # http :: the darnedest thing
 vimwiki colophon                            # wiki :: colophon
