@@ -26,6 +26,7 @@ if server ;then
   esac
 else
   case $@ in
+  [0-9]* ) opts="--geometry=$@" ;;
   a*     ) set -- $(query display); opts="--geometry=$1x$2+0+0" ;;
   s*     ) opts=-s ;;
   *      ) usage ;;

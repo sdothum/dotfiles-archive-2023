@@ -9,7 +9,8 @@
 
 # Usage: blackboard [<hexcolor>]
 
-[ -e $BLACKBOARD ] && exit
+[ -e $BLACKBOARD ] && { rm -f $BLACKBOARD; restore root; exit; }
+
 draw root blank ${1:-000000}
 [ -e $SCOMPTON:toggle ] && toggle compton off
 
