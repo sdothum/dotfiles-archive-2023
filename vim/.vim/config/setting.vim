@@ -43,6 +43,7 @@
           \, '[' : { 'pattern' : '[',        'left_margin' : 1, 'right_margin' : 0 }
           \, ']' : { 'pattern' : ']',        'left_margin' : 1 }
           \, '/' : { 'pattern' : '//',       'left_margin' : 2 }
+          \, '\' : { 'pattern' : '\\',       'left_margin' : 1 }
           \, '-' : { 'pattern' : '--',       'left_margin' : 2 }
           \, '#' : { 'pattern' : ' #',       'left_margin' : 1 }
           \, '"' : { 'pattern' : ' "',       'left_margin' : 1 }
