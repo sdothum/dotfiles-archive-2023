@@ -351,39 +351,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef ROLLOVER
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
-    if (map_roll(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
+    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_LSFT))                                    { unregister_code(KC_LSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
-    if (map_roll(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
+    set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
 
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma/exclamation + space/enter + shift shortcut, see cap_lt()
-    if (map_roll(record, LEFT, KC_RSFT, SHIFT, KC_1, 4))      { return false; }
+    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_1, 4))      { return false; }
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot/question + space/enter + shift shortcut, see cap_lt()
-    if (map_roll(record, LEFT, KC_RSFT, SHIFT, KC_SLSH, 4))   { return false; }
+    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_SLSH, 4))   { return false; }
     break;
 #else
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))         { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                                    { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
     break;
 
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma/exclamation + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, SHIFT, KC_1))              { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_1))                { return false; }
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot/question + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, SHIFT, KC_SLSH))           { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_SLSH))             { return false; }
     break;
 #endif
 

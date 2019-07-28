@@ -246,10 +246,15 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
 // ................................................................. Map Keycode
 
 // handle map_shift() rolling keys (and dot chords)
-bool map_roll(keyrecord_t *record, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
+void set_leader(keyrecord_t *record, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
+}
+
+bool map_leader(keyrecord_t *record, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
+{
+  set_leader(record, side, shift_key, shift, keycode, column);
   return map_shift(record, shift_key, shift, keycode);
 }
 
@@ -339,21 +344,24 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // ........................................................... Context Multi Tap
 
-#define DOUBLE_TAP(k, s) if (state->pressed) { register_code(k); } else if (state->count == 2) { send_string(s); } else for (i = 0; i < state->count; i++) { tap_key(k); }
+#define TAPS      state->count
+#define MULTI_TAP TAPS > 1
+#define TAP_DOWN  state->pressed
+
+#define DOUBLE_TAP(k, s) if (TAP_DOWN) { register_code(k); } else if (TAPS == 2) { send_string(s); } else for (i = 0; i < TAPS; i++) { tap_key(k); }
 
 void colon(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (mod_down(KC_RSFT) || mod_down(KC_LSFT)) {  // map_roll() necessitates LSFT usage for double tap
-    if (state->count > 1) {
-      DOUBLE_TAP(KC_SCLN, ":-");
-    } else                                  { state->pressed ? register_code(KC_SCLN) : double_tap(state->count, NOSHIFT, KC_SCLN); }
-  } else if (state->count > 1) {
-    if (state->pressed)                     { register_shift(KC_SCLN); }
+  if (mod_down(KC_RSFT)) {
+    if (MULTI_TAP)                  { DOUBLE_TAP(KC_SCLN, ":-"); }
+    else                            { TAP_DOWN ? register_code(KC_SCLN) : double_tap(TAPS, NOSHIFT, KC_SCLN); }
+  } else if (MULTI_TAP) {
+    if (TAP_DOWN)                   { register_shift(KC_SCLN); }
 #ifdef HASKELL
-    else if (state->count == 2)             { send_string(" :: "); }
+    else if (TAPS == 2)             { send_string(" :: "); }
 #endif
-    else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
-  } else                                    { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
+    else for (i = 0; i < TAPS; i++) { tap_shift(KC_SCLN); }
+  } else                            { TAP_DOWN ? register_shift(KC_SCLN) : double_tap(TAPS, SHIFT, KC_SCLN); }
   reset_tap_dance(state);
 }
 
@@ -365,12 +373,11 @@ void colon_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void equal(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    DOUBLE_TAP(KC_EQL, "!=");
+  if (MULTI_TAP) { DOUBLE_TAP(KC_EQL, "!="); }
 #ifdef CHIMERA
-  } else { state->pressed ? register_code(KC_EQL) : double_tap(state->count, NOSHIFT, KC_EQL); }
+  else           { TAP_DOWN ? register_code(KC_EQL) : double_tap(TAPS, NOSHIFT, KC_EQL); }
 #else
-  } else { state->pressed ? layer_on(_MOUSE) : double_tap(state->count, NOSHIFT, KC_EQL); }
+  else           { TAP_DOWN ? layer_on(_MOUSE) : double_tap(TAPS, NOSHIFT, KC_EQL); }
 #endif
   reset_tap_dance(state);
 }
@@ -381,14 +388,13 @@ void equal_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off      (_MOUSE);
 }
 
-#define DOUBLE_SHIFT(k, s) if (state->pressed) { register_shift(k); } else if (state->count == 2) { send_string(s); } else for (i = 0; i < state->count; i++) { tap_shift(k); }
+#define DOUBLE_SHIFT(k, s) if (TAP_DOWN) { register_shift(k); } else if (TAPS == 2) { send_string(s); } else for (i = 0; i < TAPS; i++) { tap_shift(k); }
 
 #ifdef HASKELL
 void lesser(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    DOUBLE_SHIFT(KC_COMM, " <- ");
-  } else { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
+  if (MULTI_TAP) { DOUBLE_SHIFT(KC_COMM, " <- "); }
+  else           { TAP_DOWN ? register_code(KC_LCTL) : double_tap(TAPS, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
 
@@ -400,9 +406,8 @@ void lesser_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void greater(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    DOUBLE_SHIFT(KC_DOT, " -> ");
-  } else { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
+  if (MULTI_TAP) { DOUBLE_SHIFT(KC_DOT, " -> "); }
+  else           { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAPS, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -415,9 +420,8 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    DOUBLE_SHIFT(KC_GRV, "~/");
-  } else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
+  if (MULTI_TAP) { DOUBLE_SHIFT(KC_GRV, "~/"); }
+  else           { TAP_DOWN ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
   reset_tap_dance(state);
 }
 
@@ -432,7 +436,7 @@ void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void asterisk(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) { tap_key(KC_DOT); }
+  if (MULTI_TAP) { tap_key(KC_DOT); }
   tap_shift(KC_8);
   reset_tap_dance(state);
 }
@@ -440,14 +444,14 @@ void asterisk(qk_tap_dance_state_t *state, void *user_data)
 void comma(qk_tap_dance_state_t *state, void *user_data)
 {
   tap_key(KC_COMM);
-  if (state->count > 1) { tap_key(KC_SPC); }
+  if (MULTI_TAP) { tap_key(KC_SPC); }
   reset_tap_dance(state);
 }
 
 void dot(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (biton32(layer_state) == _NUMBER) { state->count > 1 ? tap_shift(KC_COLN) : tap_key(KC_DOT); }
-  else                                 { state->count > 1 ? send_string("./") : tap_key(KC_DOT); }  // see symbol layer
+  if (biton32(layer_state) == _NUMBER) { MULTI_TAP ? tap_shift(KC_COLN) : tap_key(KC_DOT); }
+  else                                 { MULTI_TAP ? send_string("./") : tap_key(KC_DOT); }  // see symbol layer
   reset_tap_dance(state);
 }
 
@@ -455,9 +459,9 @@ void dot(qk_tap_dance_state_t *state, void *user_data)
 
 void paste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { mod_key(KC_LCTL, KC_V); IRC_ENTER; }
-  else if (state->pressed) { register_code(KC_LCTL); register_code(KC_V); }
-  else                     { mod_key(KC_LCTL, KC_V); } 
+  if (MULTI_TAP)     { mod_key(KC_LCTL, KC_V); IRC_ENTER; }
+  else if (TAP_DOWN) { register_code(KC_LCTL); register_code(KC_V); }
+  else               { mod_key(KC_LCTL, KC_V); }
   reset_tap_dance(state);
 }
 
@@ -469,8 +473,8 @@ void paste_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void percent(qk_tap_dance_state_t *state, void *user_data)
 {
-  if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
-  else { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
+  if (MULTI_TAP && TAP_DOWN) { register_shift(KC_5); }
+  else                       { TAP_DOWN ? register_code(KC_LALT) : double_tap(TAPS, SHIFT, KC_5); }
   reset_tap_dance(state);
 }
 
@@ -482,21 +486,21 @@ void percent_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void pound(qk_tap_dance_state_t *state, void *user_data)
 {
-  state->count > 1 ? tap_shift(KC_3) : tap_key(KC_X);
+  MULTI_TAP ? tap_shift(KC_3) : tap_key(KC_X);
   reset_tap_dance(state);
 }
 
 // compile time macro string, see functions/hardware <keyboard> script
 void private(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) { SEND_STRING(PRIVATE_STRING); }
+  if (MULTI_TAP) { SEND_STRING(PRIVATE_STRING); }
   reset_tap_dance(state);
 }
 
 // config.h defined string
 void send(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) { SEND_STRING(PUBLIC_STRING); }
+  if (MULTI_TAP) { SEND_STRING(PUBLIC_STRING); }
   reset_tap_dance(state);
 }
 
@@ -504,9 +508,9 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 
 void xpaste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { CTL_SFT_V; IRC_ENTER; }
-  else if (state->pressed) { register_code(KC_LCTL); register_shift(KC_V); }
-  else                     { CTL_SFT_V; }
+  if (MULTI_TAP)     { CTL_SFT_V; IRC_ENTER; }
+  else if (TAP_DOWN) { register_code(KC_LCTL); register_shift(KC_V); }
+  else               { CTL_SFT_V; }
   reset_tap_dance(state);
 }
 

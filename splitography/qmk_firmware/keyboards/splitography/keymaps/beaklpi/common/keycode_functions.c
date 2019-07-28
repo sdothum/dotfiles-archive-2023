@@ -155,54 +155,64 @@ void mod_key(uint16_t modifier, uint16_t keycode)
   }
 }
 
-#define LEFT  1               // also see raise_layer(), rolling_layer()
-#define RIGHT 2
+#define SET_EVENT(c) e[c].key_timer = timer_read(); e[c].keycode = keycode; e[c].shift = shift; e[c].side = side; e[c].leadercap = leadercap; prev_key = next_key; next_key = c
 
+// column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
 static struct column_event {
-  uint16_t key_timer;         // event priority
+  uint16_t key_timer;            // event priority
   uint16_t keycode;
   uint8_t  shift;
   uint8_t  side;
-} e[10];                      // mapped as columns 0 1 2 3 4 <- left, right -> 5 6 7 8 9, see process_record_user()
-
-static uint8_t next_key = 0;  // by column reference
-static uint8_t prev_key = 0;
+  uint8_t  leadercap;
+} e[12];                         // leader -> 10 11, see process_record_user(), mod_roll()
 
 void clear_events(void)
 {
-  for (i = 0; i < 10; i++) { e[i].key_timer = 0; }
+  for (i = 0; i < 12; i++) { e[i].key_timer = 0; e[i].leadercap = 0; }
 }
 
-#define ROLL(s, k) ((s == LEFT) && e[6].shift) || ((s == RIGHT) && e[3].shift) ? tap_shift(k) : tap_key(k)
+#define LEADER 10                // ,11 leader columns
+#define LSHIFT 3                 // left shift column
+#define RSHIFT 6                 // right shift column
 
-// handle rolling keys as shift keycode or a sequence of unmodified keycodes
-void mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
+#define LEFT   1                 // also see raise_layer(), rolling_layer()
+#define RIGHT  2                 // for binary (LEFT | RIGHT) test
+
+#define ROLL(s, k) ((s == LEFT) && e[RSHIFT].shift) || ((s == RIGHT) && e[LSHIFT].shift) ? tap_shift(k) : tap_key(k)
+
+static uint8_t leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see cap_lt()
+static uint8_t togglelayer = 0;  // key's toggle layer, see process_record_user()
+static uint8_t next_key    = 0;  // by column reference
+static uint8_t prev_key    = 0;
+
+// handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
+bool mod_roll(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) {
-    e[column].key_timer = timer_read();
-    e[column].keycode   = keycode;
-    e[column].shift     = shift;
-    e[column].side      = side;
-    prev_key            = next_key;
-    next_key            = column;                               // as not released yet
+    SET_EVENT(column);
     if (modifier) { register_modifier(modifier); }
-  }
-  else {
+  } else {
     if (modifier) { unregister_modifier(modifier); }
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
-      if (e[column].key_timer < e[next_key].key_timer) {        // rolling sequence in progress
-        mod_all(unregister_code, 0);                            // disable modifier chord finger rolls
-        if (e[column].shift && (e[column].side != e[next_key].side)) { 
-          tap_shift(e[next_key].keycode);                       // shift opposite home row key
-          e[next_key].key_timer = 0;                            // don't re-echo this key
-        }
-        else { ROLL(side, keycode); }                           // tap (shifted?) key
-      }
-      else { ROLL(side, keycode); e[prev_key].key_timer = 0; }  // don't echo preceeding modifier key
+      if (e[column].key_timer < e[next_key].key_timer) {                // rolling sequence in progress
+        mod_all(unregister_code, 0);                                    // disable modifier chord finger rolls
+        if (e[column].shift && (e[column].side != e[next_key].side)) {  // shift only opposite side of rolling sequence
+          tap_shift(e[next_key].keycode);                               // shift opposite home row key
+          e[next_key].key_timer = 0;                                    // don't re-echo this key
+        } else { ROLL(side, keycode); }                                 // tap (shifted?) key
+      } else   { ROLL(side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
+    }
+    if (e[prev_key].leadercap && (column >= LEADER)) {                  // trigger leader capitalization only on leader key
+      if (togglelayer) { layer_off(togglelayer); togglelayer = 0; }     // disable key's toggle layer, see process_record_user()
+      layer_on         (_SHIFT);                                        // sentence/paragraph capitalization
+      set_oneshot_layer(_SHIFT, ONESHOT_START);                         // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
+      e[prev_key].leadercap = 0;
+      return true; 
     }
     e[column].key_timer = 0;
-    e[column].shift     = 0;                                    // clear shift state, see ROLL()
+    e[column].shift     = 0;  // clear shift state, see ROLL()
   }
+  return false;
 }
 
 // down -> always shift (versus SFT_t auto repeat), 
@@ -211,14 +221,12 @@ void mod_t(keyrecord_t *record, uint16_t modifier, uint16_t keycode)
   if (KEY_DOWN) {
     KEY_TIMER;
     register_modifier(modifier);
-  }
-  else {
+  } else {
     unregister_modifier(modifier);
     if (KEY_TAP) { tap_key(keycode); }
     key_timer = 0;
   }
 }
-
 
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
 void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
@@ -227,8 +235,7 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
     KEY_TIMER;
     if (modifier2) { register_modifier(modifier2); }
     register_modifier(modifier);
-  }
-  else {
+  } else {
     unregister_modifier(modifier);
     if (modifier2) { unregister_modifier(modifier2); }
     if (KEY_TAP)   { tap_shift(keycode); }
@@ -237,6 +244,19 @@ void mt_shift(keyrecord_t *record, uint16_t modifier, uint16_t modifier2, uint16
 }
 
 // ................................................................. Map Keycode
+
+// handle map_shift() rolling keys (and dot chords)
+void set_leader(keyrecord_t *record, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
+{
+  if (KEY_DOWN) { SET_EVENT(column); }
+  else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
+}
+
+bool map_leader(keyrecord_t *record, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
+{
+  set_leader(record, side, shift_key, shift, keycode, column);
+  return map_shift(record, shift_key, shift, keycode);
+}
 
 static uint8_t  map = 0;  // map state
 
@@ -248,14 +268,13 @@ bool map_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t 
       if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
       map = 1;                                     // in case shift key is released first
-      e[6].key_timer = 0;                          // don't bounce the punctuation modifier, see mod_roll()
-    }
-    else {
+      e[RSHIFT].key_timer = 0;                     // don't bounce the punctuation modifier, see mod_roll()
+    } else {
       unregister_code(keycode);
       if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       map = 0;
     }
-    key_timer = 0;  // clear home row shift, see process_record_user() and sft_home()
+    key_timer = 0;  // clear home row shift, see process_record_user()
     return true;
   }
   return false;
@@ -282,13 +301,13 @@ bool mapc_shift(keyrecord_t *record, uint16_t shift_key, uint8_t shift, uint16_t
 #endif
 
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
-bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t autocap, uint16_t keycode)
+bool leader_cap(keyrecord_t *record, uint8_t layer, uint8_t leadercap, uint16_t keycode)
 {
-  if (autocap) {
+  if (leadercap) {
     if (KEY_DOWN) { KEY_TIMER; return false; }
     else if (KEY_TAP) {
       tap_key(keycode);
-      if (layer) { layer_off(layer); }
+      if (layer) { layer_off(layer); }           // disable key's toggle layer
       layer_on         (_SHIFT);                 // sentence/paragraph capitalization
       set_oneshot_layer(_SHIFT, ONESHOT_START);  // see process_record_user() -> clear_oneshot_layer_state(ONESHOT_PRESSED)
       key_timer = 0;
@@ -325,24 +344,24 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // ........................................................... Context Multi Tap
 
+#define TAPS      state->count
+#define MULTI_TAP TAPS > 1
+#define TAP_DOWN  state->pressed
+
+#define DOUBLE_TAP(k, s) if (TAP_DOWN) { register_code(k); } else if (TAPS == 2) { send_string(s); } else for (i = 0; i < TAPS; i++) { tap_key(k); }
+
 void colon(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (mod_down(KC_RSFT)) {  // shift -> semicolon
-    if (state->count > 1) {
-      if (state->pressed)                     { register_code(KC_SCLN); }
-      else if (state->count == 2)             { send_string(":-"); }
-      else for (i = 0; i < state->count; i++) { tap_key(KC_SCLN); }
-    }
-    else { state->pressed ? register_code(KC_SCLN) : double_tap(state->count, NOSHIFT, KC_SCLN); }
-  }
-  else if (state->count > 1) {
-    if (state->pressed)                     { register_shift(KC_SCLN); }
+  if (mod_down(KC_RSFT)) {
+    if (MULTI_TAP)                  { DOUBLE_TAP(KC_SCLN, ":-"); }
+    else                            { TAP_DOWN ? register_code(KC_SCLN) : double_tap(TAPS, NOSHIFT, KC_SCLN); }
+  } else if (MULTI_TAP) {
+    if (TAP_DOWN)                   { register_shift(KC_SCLN); }
 #ifdef HASKELL
-    else if (state->count == 2)             { send_string(" :: "); }
+    else if (TAPS == 2)             { send_string(" :: "); }
 #endif
-    else for (i = 0; i < state->count; i++) { tap_shift(KC_SCLN); }
-  }
-  else { state->pressed ? register_shift(KC_SCLN) : double_tap(state->count, SHIFT, KC_SCLN); }
+    else for (i = 0; i < TAPS; i++) { tap_shift(KC_SCLN); }
+  } else                            { TAP_DOWN ? register_shift(KC_SCLN) : double_tap(TAPS, SHIFT, KC_SCLN); }
   reset_tap_dance(state);
 }
 
@@ -354,15 +373,11 @@ void colon_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void equal(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    if (state->pressed)                     { register_code(KC_EQL); }
-    else if (state->count == 2)             { send_string("!="); } 
-    else for (i = 0; i < state->count; i++) { tap_key(KC_EQL); }
-  }
+  if (MULTI_TAP) { DOUBLE_TAP(KC_EQL, "!="); }
 #ifdef CHIMERA
-  else { state->pressed ? register_code(KC_EQL) : double_tap(state->count, NOSHIFT, KC_EQL); }
+  else           { TAP_DOWN ? register_code(KC_EQL) : double_tap(TAPS, NOSHIFT, KC_EQL); }
 #else
-  else { state->pressed ? layer_on(_MOUSE) : double_tap(state->count, NOSHIFT, KC_EQL); }
+  else           { TAP_DOWN ? layer_on(_MOUSE) : double_tap(TAPS, NOSHIFT, KC_EQL); }
 #endif
   reset_tap_dance(state);
 }
@@ -373,15 +388,13 @@ void equal_reset(qk_tap_dance_state_t *state, void *user_data)
   layer_off      (_MOUSE);
 }
 
+#define DOUBLE_SHIFT(k, s) if (TAP_DOWN) { register_shift(k); } else if (TAPS == 2) { send_string(s); } else for (i = 0; i < TAPS; i++) { tap_shift(k); }
+
 #ifdef HASKELL
 void lesser(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    if (state->pressed)                     { register_shift(KC_COMM); }
-    else if (state->count == 2)             { send_string(" <- "); }
-    else for (i = 0; i < state->count; i++) { tap_shift(KC_COMM); }
-  }
-  else { state->pressed ? register_code(KC_LCTL) : double_tap(state->count, SHIFT, KC_COMM); }
+  if (MULTI_TAP) { DOUBLE_SHIFT(KC_COMM, " <- "); }
+  else           { TAP_DOWN ? register_code(KC_LCTL) : double_tap(TAPS, SHIFT, KC_COMM); }
   reset_tap_dance(state);
 }
 
@@ -393,12 +406,8 @@ void lesser_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void greater(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    if (state->pressed)                     { register_shift(KC_DOT); }
-    else if (state->count == 2)             { send_string(" -> "); }
-    else for (i = 0; i < state->count; i++) { tap_shift(KC_DOT); }
-  }
-  else { state->pressed ? register_code(KC_LSFT) : double_tap(state->count, SHIFT, KC_DOT); }
+  if (MULTI_TAP) { DOUBLE_SHIFT(KC_DOT, " -> "); }
+  else           { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAPS, SHIFT, KC_DOT); }
   reset_tap_dance(state);
 }
 
@@ -411,12 +420,8 @@ void greater_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void tilde(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) {
-    if (state->pressed)                     { register_shift(KC_GRV); }
-    else if (state->count == 2)             { send_string("~/"); } 
-    else for (i = 0; i < state->count; i++) { tap_shift(KC_GRV); }
-  }
-  else { state->pressed ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
+  if (MULTI_TAP) { DOUBLE_SHIFT(KC_GRV, "~/"); }
+  else           { TAP_DOWN ? register_shift(KC_GRV) : tap_shift(KC_GRV); }
   reset_tap_dance(state);
 }
 
@@ -431,7 +436,7 @@ void tilde_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void asterisk(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) { tap_key(KC_DOT); }
+  if (MULTI_TAP) { tap_key(KC_DOT); }
   tap_shift(KC_8);
   reset_tap_dance(state);
 }
@@ -439,14 +444,14 @@ void asterisk(qk_tap_dance_state_t *state, void *user_data)
 void comma(qk_tap_dance_state_t *state, void *user_data)
 {
   tap_key(KC_COMM);
-  if (state->count > 1) { tap_key(KC_SPC); }
+  if (MULTI_TAP) { tap_key(KC_SPC); }
   reset_tap_dance(state);
 }
 
 void dot(qk_tap_dance_state_t *state, void *user_data)
-                                        {
-  if (biton32(layer_state) == _NUMBER) { state->count > 1 ? tap_shift(KC_COLN) : tap_key(KC_DOT); }
-  else                                 { state->count > 1 ? send_string("./") : tap_key(KC_DOT); }  // see symbol layer
+{
+  if (biton32(layer_state) == _NUMBER) { MULTI_TAP ? tap_shift(KC_COLN) : tap_key(KC_DOT); }
+  else                                 { MULTI_TAP ? send_string("./") : tap_key(KC_DOT); }  // see symbol layer
   reset_tap_dance(state);
 }
 
@@ -454,9 +459,9 @@ void dot(qk_tap_dance_state_t *state, void *user_data)
 
 void paste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { mod_key(KC_LCTL, KC_V); IRC_ENTER; }
-  else if (state->pressed) { register_code(KC_LCTL); register_code(KC_V); }
-  else                     { mod_key(KC_LCTL, KC_V); } 
+  if (MULTI_TAP)     { mod_key(KC_LCTL, KC_V); IRC_ENTER; }
+  else if (TAP_DOWN) { register_code(KC_LCTL); register_code(KC_V); }
+  else               { mod_key(KC_LCTL, KC_V); }
   reset_tap_dance(state);
 }
 
@@ -468,8 +473,8 @@ void paste_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void percent(qk_tap_dance_state_t *state, void *user_data)
 {
-  if ((state->count > 1) && state->pressed) { register_shift(KC_5); }
-  else { state->pressed ? register_code(KC_LALT) : double_tap(state->count, SHIFT, KC_5); }
+  if (MULTI_TAP && TAP_DOWN) { register_shift(KC_5); }
+  else                       { TAP_DOWN ? register_code(KC_LALT) : double_tap(TAPS, SHIFT, KC_5); }
   reset_tap_dance(state);
 }
 
@@ -481,21 +486,21 @@ void percent_reset(qk_tap_dance_state_t *state, void *user_data)
 
 void pound(qk_tap_dance_state_t *state, void *user_data)
 {
-  state->count > 1 ? tap_shift(KC_3) : tap_key(KC_X);
+  MULTI_TAP ? tap_shift(KC_3) : tap_key(KC_X);
   reset_tap_dance(state);
 }
 
 // compile time macro string, see functions/hardware <keyboard> script
 void private(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) { SEND_STRING(PRIVATE_STRING); }
+  if (MULTI_TAP) { SEND_STRING(PRIVATE_STRING); }
   reset_tap_dance(state);
 }
 
 // config.h defined string
 void send(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1) { SEND_STRING(PUBLIC_STRING); }
+  if (MULTI_TAP) { SEND_STRING(PUBLIC_STRING); }
   reset_tap_dance(state);
 }
 
@@ -503,9 +508,9 @@ void send(qk_tap_dance_state_t *state, void *user_data)
 
 void xpaste(qk_tap_dance_state_t *state, void *user_data)
 {
-  if (state->count > 1)    { CTL_SFT_V; IRC_ENTER; }
-  else if (state->pressed) { register_code(KC_LCTL); register_shift(KC_V); }
-  else                     { CTL_SFT_V; }
+  if (MULTI_TAP)     { CTL_SFT_V; IRC_ENTER; }
+  else if (TAP_DOWN) { register_code(KC_LCTL); register_shift(KC_V); }
+  else               { CTL_SFT_V; }
   reset_tap_dance(state);
 }
 
@@ -561,8 +566,7 @@ void lt(keyrecord_t *record, uint8_t layer, uint8_t shift, uint16_t keycode)
   if (KEY_DOWN) {
     KEY_TIMER;
     layer_on(layer);
-  }
-  else {
+  } else {
     layer_off(layer);
     if (KEY_TAP) { mod_key(shift, keycode); }
     // clear_mods();
@@ -586,8 +590,7 @@ bool raise_layer(keyrecord_t *record, uint8_t layer, uint8_t side, uint8_t toggl
       if (layer) { toggle ? layer_invert(layer) : layer_on(layer); }
       return true;
     }
-  }
-  else {
+  } else {
     double_key &= ~side;
     if (!(double_key || toggle)) { layer_off(layer); }  // allow single key to continue on layer :-)
   }
@@ -616,8 +619,7 @@ void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t ke
     if (side == LEFT) { leftside = layer; }
     else              { rightside = layer; }
     KEY_TIMER;
-  }
-  else {
+  } else {
     layer_off(_MOUSE);
     if (keycode && (KEY_TAP)) { mod_key(shift, keycode); }
     if (side == LEFT)         { SWITCH_LAYER(leftside, rightside); }
