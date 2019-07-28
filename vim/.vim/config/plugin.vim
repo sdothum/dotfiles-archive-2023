@@ -52,6 +52,7 @@
     " ................................................................... Keymap
 
       " Plug 'kana/vim-arpeggio'            " key chords
+      Plug 'tpope/vim-repeat'               " dot plugin
       Plug 'tpope/vim-rsi'                  " readline keybindings
 
     " ............................................................. Highlighting
@@ -62,7 +63,7 @@
       Plug 'itchyny/vim-cursorword', prose  " word highlighting
       Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' }  " colourized indent columns
       Plug 'sheerun/vim-polyglot'           " multilingual highlighting
-
+    
   " Buffers ____________________________________________________________________
 
     " ............................................................... Management
@@ -84,6 +85,11 @@
       Plug 'junegunn/fzf.vim', { 'dir': '~/.fzf', 'do': './install --all' }  " fuzzy finder
       Plug 'Alok/notational-fzf-vim'        " fzf note search
 
+    " .................................................................. History
+
+      Plug 'sjl/gundo.vim', { 'on' : 'GundoToggle' }  " undo
+      Plug 'vim-scripts/YankRing.vim'                 " paste (yank)
+
     " ................................................................... Linter
 
       Plug 'w0rp/ale'                       " asynchronous lint engine
@@ -97,10 +103,17 @@
       Plug 'kshenoy/vim-signature'          " toggle marks
       Plug 'justinmk/vim-sneak'             " jump to location
 
-    " .................................................................. History
-
-      Plug 'sjl/gundo.vim', { 'on' : 'GundoToggle' }  " undo
-      Plug 'vim-scripts/YankRing.vim'                 " paste (yank)
+    " ............................................................. Text objects
+    
+      Plug 'tpope/vim-surround'             " pairwise c'hange, d'elete, y'ank
+      Plug 'kana/vim-textobj-entire'        " document
+      Plug 'kana/vim-textobj-fold'          " block
+      Plug 'kana/vim-textobj-function'      " language
+      Plug 'kana/vim-textobj-indent'        " with same indent level
+      Plug 'kana/vim-textobj-lastpat'       " last search pattern
+      Plug 'kana/vim-textobj-line'          " current line
+      Plug 'reedes/vim-textobj-quote'       " typographic characters
+      Plug 'kana/vim-textobj-user'          " dependency for vim-textobj-quote
 
     " ............................................................... Formatting
 
@@ -117,9 +130,6 @@
       Plug 'Shougo/neosnippet.vim'          " snippets
       Plug 'tpope/vim-endwise', code        " add 'end' statement
       Plug 'reedes/vim-litecorrect', prose  " autocorrections
-      Plug 'kana/vim-textobj-user'          " dependency
-      Plug 'reedes/vim-textobj-quote'       " typographic characters
-      Plug 'tpope/vim-surround'             " pairwise c'hange, d'elete, y'ank
 
   " Plugin completion __________________________________________________________
 

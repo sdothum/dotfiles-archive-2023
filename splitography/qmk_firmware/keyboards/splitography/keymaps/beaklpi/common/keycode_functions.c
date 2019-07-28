@@ -626,14 +626,14 @@ void rolling_layer(keyrecord_t *record, uint8_t side, uint8_t shift, uint16_t ke
 {
   if (KEY_DOWN) {
     layer_on(layer);
-    if (side == LEFT)         { leftside = layer; }
-    else                      { rightside = layer; }
+    if (side == LEFT)       { leftside = layer; }
+    else                    { rightside = layer; }
     KEY_TIMER;
   } else {
     layer_off(_MOUSE);
-    if (keycode && (KEY_TAP)) { mod_key(shift, keycode); }
-    if (side == LEFT)         { SWITCH_LAYER(leftside, rightside); }
-    else                      { SWITCH_LAYER(rightside, leftside); }
+    if (keycode && KEY_TAP) { mod_key(shift, keycode); }
+    if (side == LEFT)       { SWITCH_LAYER(leftside, rightside); }
+    else                    { SWITCH_LAYER(rightside, leftside); }
     // clear_mods();
     key_timer = 0;
   }
