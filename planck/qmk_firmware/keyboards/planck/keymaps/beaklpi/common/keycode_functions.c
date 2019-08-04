@@ -197,6 +197,11 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
   } else   { ROLL(side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
 }
 
+#define CLEAR_EVENT e[column].key_timer   = 0; \
+                    e[column].shift       = 0; \
+                    e[prev_key].leadercap = 0; \
+                    togglelayer           = 0
+
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
@@ -205,15 +210,15 @@ bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t k
     if (modifier) { register_modifier(modifier); }
   } else {
     if (modifier) { unregister_modifier(modifier); }
-    if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) { roll_key(side, keycode, column); }
-    if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
-      oneshot_shift(togglelayer);
-      e[prev_key].leadercap = 0;
-      togglelayer           = 0;
-      return true;
+    if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
+      roll_key(side, keycode, column);
+      if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
+        oneshot_shift(togglelayer);
+        CLEAR_EVENT;
+        return true;
+      }
     }
-    e[column].key_timer = 0;
-    e[column].shift     = 0;  // clear shift state, see ROLL()
+    CLEAR_EVENT;
   }
   return false;
 }

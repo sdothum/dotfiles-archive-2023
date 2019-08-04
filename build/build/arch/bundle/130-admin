@@ -28,6 +28,7 @@
 # cower-git
   downgrade
 # dpkg
+  expac
 # nix
 # pacaur
   package-query

@@ -76,11 +76,11 @@
       :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
       :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
 
-      nmap <silent><leader><tab>        :silent retab<CR>
-      nmap <silent><leader><Space><tab> :silent Space2Tab<CR>
-      vmap <silent><leader><Space><tab> :silent Space2Tab<CR>
-      nmap <silent><leader><tab><Space> :silent Tab2Space<CR>
-      vmap <silent><leader><tab><Space> :silent Tab2Space<CR>
+      nmap <silent><leader><tab>        :retab<CR>
+      nmap <silent><leader><Space><tab> :Space2Tab<CR>
+      vmap <silent><leader><Space><tab> :Space2Tab<CR>
+      nmap <silent><leader><tab><Space> :Tab2Space<CR>
+      vmap <silent><leader><tab><Space> :Tab2Space<CR>
 
     " .................................................. Quote enclose selection
 
