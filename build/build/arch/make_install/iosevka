@@ -6,7 +6,7 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [amphetype | code | proof] [double | single | futura | hooky | patch | leading <height> | family <name>]*"
+  echo "usage: $(basename $0) iosevka [amphetype | code | proof] [double | single | futura | hooky | mono | patch | leading <height> | family <name>]*"
   exit 1
 }
 
@@ -37,16 +37,17 @@ line() {
 
 while [ $1 ] ;do
   case $1 in
-  amphetype) hook; storey=double; family=-amphetype; leading=1875 ;;  # 1.5 spacing
-  code     ) line; design="'ligset-haskell'" ;;                       # default family
-  double   ) storey=double; family=-double ;;                         # "a"
-  family   ) family=$2;  shift ;;                                     # font family
-  futura   ) line ;;                                                  # futura as can be!
-  hooky    ) hook ;;                                                  # top hook
-  leading  ) leading=$2; shift ;;                                     # line spacing
-  patch    ) patch=true ;;                                            # nerdfonts
-  proof    ) line; family=-proof; leading=1875 ;;                     # 1.5 spacing
-  single   ) storey=single; family=-single ;;                         # default "a"
+  amphetype) hook; storey=double; family=${family}-amphetype; leading=1875 ;;  # 1.5 spacing
+  code     ) line; design="'ligset-haskell'" ;;                                # default family
+  double   ) storey=double; family=${family}-double ;;                         # "a"
+  family   ) family=${family}$2;  shift ;;                                     # font family
+  futura   ) line ;;                                                           # futura as can be!
+  hooky    ) hook ;;                                                           # top hook
+  leading  ) leading=$2; shift ;;                                              # line spacing
+  mono     ) mono=--mono; family=${family}-mono ;;                             # single width glyphs
+  patch    ) patch=true ;;                                                     # nerdfonts
+  proof    ) line; family=${family}-proof; leading=1875 ;;                     # 1.5 spacing
+  single   ) storey=single; family=${family}-single ;;                         # default "a"
   *        ) usage ;;
   esac
   shift
@@ -130,7 +131,7 @@ if [ $patch ] && [ -e /net/depot/nerd-fonts/font-patcher ] ;then
   rm -f /tmp/Iosevka*ttf
   /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerlineextra -out /tmp $REGULAR
   mv -v /tmp/Iosevka*ttf $REGULAR
-  /net/depot/nerd-fonts/font-patcher $nerdfonts -out /tmp $REGULAR
+  /net/depot/nerd-fonts/font-patcher $mono $nerdfonts -out /tmp $REGULAR
   mv -v /tmp/Iosevka*ttf $REGULAR
 fi
 

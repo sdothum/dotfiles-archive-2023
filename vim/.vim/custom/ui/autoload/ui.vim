@@ -9,9 +9,8 @@
 
       let s:show       = 1       " statusline (0) off (1) on
       let s:expanded   = 0       " statusline state (0) dfm (1) expanded
-      let s:pad_inner  = '    '  " statusline padding
+      let g:pad_inner  = '    '  " statusline padding
       let g:pad_outer  = '   '   " expanded statusline padding
-      let s:active_win = ''     " active window icon (glyph width is 2 spaces)
 
   "  Distraction free modes ____________________________________________________
 
@@ -120,11 +119,6 @@
         return l:prefix > '' ? l:prefix . '  ' . info#SpecialChar() : info#SpecialChar()
       endfunction
 
-      function! ui#Active()
-        if core#CommandWindow() | return '   ' | endif
-        return (w:tagged == g:active && winnr('$') > 1) ? '  ' . s:active_win : '   '  " glyph requires leading double pad for single space
-      endfunction
-
       " [path] .. filename | pos .. [details]
       function! s:statusline(proof)
         " Trace ui:statusline()  " tmi :-)
@@ -133,7 +127,7 @@
           if core#Prose() && a:proof == 0
             return info#Escape(info#Leader('') . '  %{info#UnModified(0)}%*')
           else
-            let l:name     = '%{info#Name()}' . s:pad_inner
+            let l:name     = '%{info#Name()}' . g:pad_inner
             if s:expanded == 0  " center dfm indicator / proofing statusline
               let l:leader = '%{info#Leader(info#Name())}'
             else
@@ -141,7 +135,7 @@
               let l:leader = '%{info#Leader(info#Path() . g:pad_outer . info#Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{info#UnModified(1)}' . s:pad_inner . ' ' . '%{info#PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+            let l:info     = '%{info#UnModified(1)}' . g:pad_inner . ' ' . '%{info#PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
             if s:expanded == 1
               let l:name   = '%2*' . l:path . '%1*' . g:pad_outer . l:name
               let l:info  .= g:pad_outer . '%2*%{ui#Detail()}'
@@ -157,8 +151,7 @@
       function! s:showInfo(proof)
         Trace ui:showInfo()
         if a:proof == 1 || !core#Prose()
-          " execute 'set statusline=%{s:statusline(' . a:proof . ')}'
-          execute 'set statusline=%{theme#SplitColors()}%1*%{ui#Active()}' . s:statusline(a:proof)
+          execute 'set statusline=' . s:statusline(a:proof)
           call theme#ShowStatusLine()
         else
           call theme#HideInfo()  " hide statusline content

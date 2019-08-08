@@ -26,7 +26,7 @@ while : ;do
   kodi      ) videomode on; kodi; videomode off ;;
   movies    ) dmenu movies ;;
   netflix   ) netflix ;;
-  nzb       ) toggle term 'NZB' nzbget --connect; unset root; break ;;
+  nzb       ) exists nzbget && { toggle term 'NZB' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   patricia  ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
   references) dmenu references; unset root; break ;;
   series    ) dmenu series ;;

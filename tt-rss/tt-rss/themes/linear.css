@@ -230,13 +230,14 @@ button.expandPrompt {
   /* text-shadow: 0 1px 1px #fff; */
   background: #fdf6e3;
   bottom: 0;
-  color: #b12525;
-  content: 'REFRESH ‧•‧ GRAVITY WELL'; /* dot bullet dot */
+  color: white;
+  content: 'refresh ‧‧ gravity well'; /* dot bullet dot */
   font: 14px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   left: -35px;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   padding: 10px;
   position: absolute;
   right: -35px;
   text-align: center;
+  text-shadow: 2px 2px 4px #8A3636;
 }
