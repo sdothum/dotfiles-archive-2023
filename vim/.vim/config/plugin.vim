@@ -22,11 +22,10 @@
       Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
       " Plug 'tpope/vim-scriptease'         " debugger
       " Plug 'tpope/vim-dispatch'           " launch async shell command
-      Plug '~/.vim/custom/core'             " system wide primitives
 
-  " Interface __________________________________________________________________
+      " Interface __________________________________________________________________
 
-    " .................................................................... Theme
+      " .................................................................... Theme
 
       " Plug 'atelierbram/Base2Tone-vim'    " duotone themes
       Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
@@ -38,16 +37,14 @@
       Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
       Plug 'TaDaa/vimade'                   " hyperfocus highlghting for buffers
       Plug '~/.vim/custom/theme'            " theme
-      Plug '~/.vim/custom/ui'               " ui mode
 
-    " ..................................................................... Info
+      " ..................................................................... Info
 
       " Plug 'metakirby5/codi.vim'          " async evaluator
-      " Plug 'reedes/vim-wordy'             " word usage
+       "   Plug 'reedes/vim-wordy'             " word usage
       Plug 'majutsushi/tagbar'              " ctags
       Plug 'lvht/tagbar-markdown', prose    " markdown for tagbar
       Plug 'bimlas/vim-eightheader'         " custom foldtext
-      Plug '~/.vim/custom/info'             " statusline info
 
     " ................................................................... Keymap
 
@@ -68,9 +65,9 @@
 
     " ............................................................... Management
 
-      " Plug 'duff/vim-scratch'                        " scratch buffer
-      " Plug 'simeji/winresizer'                       " resize windows
-      Plug 'chrisbra/NrrwRgn', { 'on' : 'NrrwrgnDo' }  " visual block buffer
+      " Plug 'duff/vim-scratch'             " scratch buffer
+      " Plug 'simeji/winresizer'            " resize windows
+      Plug 'chrisbra/NrrwRgn'               " visual block buffer
 
     " .......................................................... Version control
 
@@ -120,7 +117,6 @@
       Plug 'scrooloose/nerdcommenter'       " toggle comment
       Plug 'junegunn/vim-easy-align'        " align text objects
       Plug 'reedes/vim-pencil'              " dynamic paragraph formatting
-      Plug '~/.vim/custom/heading'          " heading formatter
 
     " ............................................................... Completion
 

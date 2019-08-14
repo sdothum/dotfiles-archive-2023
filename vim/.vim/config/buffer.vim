@@ -19,42 +19,16 @@
 
     " ................................................................ Open diff
 
-      " toggle diff of current file   
-      command! OpenDiff if ! <SID>closeDiff() | vert new | set bt=nofile | r ++edit # | 0d_
-                          \| diffthis | wincmd p | diffthis | endif
-
       " go to left window in case a diff window is already open and close it
       nmap <silent><leader>dd :silent OpenDiff<CR>
-
-    " ........................................................ Close diff buffer
-
-      " delete any new diff buffer
-      function! s:closeDiff()
-        if &diff  " caution: wincmd resets active window (affects :Buffer)
-          wincmd h
-          if expand('%') == ''
-            bdelete!
-            diffoff  " restore pre-diff settings or subsequent OpenDiff will be *off*
-            return 1
-          endif
-        endif
-        return 0
-      endfunction
-      
-      command! CloseDiff silent! call <SID>closeDiff()
 
   " File actions _______________________________________________________________
 
     " ...................................................... Buffer close / save
 
-      " close all other buffers (and newly created no name buffer)
-      command! Singleton   CloseDiff | %bdelete | edit # | bdelete #
-      " close OpenDiff or current buffer
-      command! CloseUnique if ! <SID>closeDiff() | silent bdelete! | endif
-
       " save buffers
       nmap <silent><leader>w  :silent write!<CR>
-      nmap <leader>W          :silent write core#Prose()!sudo tee % >/dev/null<CR>
+      nmap <leader>W          :silent write !sudo tee % >/dev/null<CR>
       nmap <silent><leader>ww :silent wqall!<CR>
 
       " close buffers
@@ -66,36 +40,10 @@
 
     " .............................................................. Auto backup
 
-      " queue files written for vhg (may contain repeated update entries)
-      function! s:queueFile()
-        let l:path = resolve(expand('%:p'))  " see v script (sets QUEUE and invokes vhg)
-        if l:path =~ s:repo && $QUEUE > ''
-          let l:file = substitute(l:path, s:repo, '', '')
-          let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
-          call system(l:cmd)
-        endif
-      endfunction
-
-      " :wall on FocusLost does not trigger autocmd BufWrite (?)
-      function! s:queueBuffers()
-        if core#CommandWindow() | return | endif
-        set lazyredraw
-        let l:cur_buffer = bufnr('%')
-        for l:buf in getbufinfo({'buflisted':1})
-          if l:buf.changed
-            execute 'buffer' . l:buf.bufnr
-            update
-            call s:queueFile()
-          endif
-        endfor
-        execute 'buffer' . l:cur_buffer
-        set nolazyredraw
-      endfunction
-
       " auto backup
-      autocmd buffer BufWrite  * call <SID>queueFile()
+      autocmd buffer BufWrite  * QueueFile
       " save on losing focus, :wall on FocusLost does not trigger s:queueFile() (?)
-      autocmd buffer FocusLost * silent call <SID>queueBuffers()
+      autocmd buffer FocusLost * QueueBuffers
 
   " Buffer handling ____________________________________________________________
 
@@ -109,7 +57,6 @@
     " ............................................................... Modifiable
 
       " toggle modifiable attribute
-      " nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>:call core#Status('Modifiable', &modifiable)<CR>
       nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
 
       " protected help
@@ -118,7 +65,7 @@
       " autocmd buffer BufRead   * if expand('%:p') !~ $HOME | set nomodifiable | endif
       " vim8 bug doesn't allow toggling &modifiable so set modifiable on globally
       " mode check for fzf terminal window
-      autocmd buffer BufWinEnter * if ! core#Protected() | set modifiable | endif
+      autocmd buffer BufWinEnter * if ! Protected() | set modifiable | endif
 
     " ............................................................ Switch buffer
 
@@ -126,28 +73,17 @@
       " nmap <leader>b :buffer<Space>
       nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
 
-      " nmap <silent><Enter> :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
-      function! s:enter()
-        if core#CommandWindow()  " on q: to enter command-line window
-          execute "normal! \<CR>"
-        else
-          CloseDiff
-          silent bnext
-          call theme#SplitColors()
-        endif
-      endfunction
-
       " beakl si layout specific buffer navigation key assignments, note silent -> silent
       if $BEAKL > ''
         " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
-        nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
-        nmap <silent><Enter>  :call <SID>enter()<CR>
+        nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:SplitColors<CR>
+        nmap <silent><Enter>  :Enter<CR>
       else
-        nmap <silent>-        :CloseDiff<CR>:silent bprevious<CR>:call theme#SplitColors()<CR>
-        nmap <silent>+        :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
+        nmap <silent>-        :CloseDiff<CR>:silent bprevious<CR>:SplitColors<CR>
+        nmap <silent>+        :CloseDiff<CR>:silent bnext<CR>:SplitColors<CR>
       endif
       " switch to previously edited/viewed buffer
-      nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>:call theme#SplitColors()<CR>
+      nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>:SplitColors<CR>
 
   " Window actions _____________________________________________________________
 

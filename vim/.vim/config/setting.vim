@@ -170,8 +170,8 @@
         if expand('%t') =~ 'NrrwRgn' | execute ':wq' | endif
       endfunction
 
-      " apply refresh to narrow region buffer to apply layout defaults!
-      vmap <leader>n <Plug>NrrwrgnDo:call ui#Retheme()<CR>
+      
+      vmap <leader>n <Plug>NrrwrgnDo
       nmap <leader>n :call <SID>closeNR()<CR>
 
     " .............................................................. Neocomplete
@@ -198,7 +198,6 @@
       let g:neosnippet#snippets_directory            = '~/.vim/snippets'
       let g:neosnippet#enable_snipmate_compatibility = 1
       let g:neosnippet#disable_runtime_snippets      = { '_' : 1 }  " disable all runtime snippets
-      " see core#CheckFiletype()
       let g:neosnippet#scope_aliases =
           \{
           \  'new'  : 'conf,fish,hs,ruby,sh,zsh'
@@ -287,7 +286,6 @@
 
     " ................................................................ Signature
 
-      " vim convention m'ark key conflicts with my colemak-shift-dh layout
       let g:SignatureMap =
           \{
           \  'Leader'            : "'"
@@ -334,7 +332,6 @@
       "     let g:sneak_f = 1
       "     unmap s
       "     unmap S
-      "     call core#Colemak()
       "     nmap f <Plug>Sneak_s
       "     nmap F <Plug>Sneak_S
       "   endif
@@ -399,7 +396,7 @@
           iunmap ?<Space>
           iunmap !<Space>
         endif
-        call core#Status('Typography', s:educate)
+        call Status('Typography', s:educate)
       endfunction
 
       nmap <silent><F11> :call <SID>toggleEducate()<CR>

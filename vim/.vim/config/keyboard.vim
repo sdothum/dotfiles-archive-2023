@@ -41,7 +41,6 @@
     " ............................................................. Disable keys
 
       " affirm vim modal usage but these keys are remapped below anyway :)
-      " (re-enabled for colemak keyboard as qwerty key cluster no longer valid)
       " imap <down>  <nop>
       " imap <left>  <nop>
       " imap <right> <nop>

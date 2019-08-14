@@ -7,28 +7,7 @@
 
     " .............................................................. Insert line
 
-      " insert line while disabling auto-commenting OR break (prose) line
-      function! s:smartWrap()
-        if core#Prose()  " override Pencil mode (the default state for prose)
-          set paste
-          execute "normal! i\<CR>"
-          set nopaste
-          execute 'startinsert'
-        else  " append EOL wrap from any col position
-          let l:formatoptions = &formatoptions  " disable auto commenting
-          set formatoptions-=c
-          set formatoptions-=r
-          set formatoptions-=o
-          normal! ^
-          let l:pos = col('.')
-          normal! o
-          " align line indentation
-          execute 'normal! a' . repeat(' ', l:pos)
-          let &formatoptions = l:formatoptions
-        endif
-      endfunction
-
-      inoremap <silent><C-CR> <C-o>:call <SID>smartWrap()<CR>
+      inoremap <silent><C-CR> <C-o>:SmartWrap<CR>
 
       " insert blank line above/below
       nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
@@ -46,16 +25,16 @@
 
     " ......................................................... Strip whitespace
     
-      nmap <silent><F4> :call core#StripTrailingWhitespaces()<CR>
-      vmap <silent><F4> :<C-u>call core#StripTrailingWhitespaces()<CR>
+      nmap <silent><F4> :StripTrailingWhitespaces<CR>
+      vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 
-      augroup edit | autocmd! | augroup END
+      " augroup edit | autocmd! | augroup END
 
       " " pre-write formatting
-      " autocmd edit BufWritePre * call core#StripTrailingWhitespaces()
+      " autocmd edit BufWritePre * StripTrailingWhitespaces
       " " focus oriented formatting
-      " autocmd edit BufLeave    * call core#StripTrailingWhitespaces()
-      " autocmd edit FocusLost   * call core#StripTrailingWhitespaces()
+      " autocmd edit BufLeave    * StripTrailingWhitespaces
+      " autocmd edit FocusLost   * StripTrailingWhitespaces
 
   " Text manipulation __________________________________________________________
 
@@ -73,9 +52,6 @@
 
     " ............................................................. Convert tabs
 
-      :command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
-      :command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
-
       nmap <silent><leader><tab>        :retab<CR>
       nmap <silent><leader><Space><tab> :Space2Tab<CR>
       vmap <silent><leader><Space><tab> :Space2Tab<CR>
@@ -91,7 +67,7 @@
     " .......................................................... Code block text
 
       " markup wiki code blocks
-      nnoremap <silent><leader>` V:call core#CodeBlock()<CR>
-      vmap     <silent><leader>` :call core#CodeBlock()<CR>
+      nnoremap <silent><leader>` V:CodeBlock<CR>
+      vmap     <silent><leader>` :CodeBlock<CR>
 
 " edit.vim

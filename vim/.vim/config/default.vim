@@ -69,16 +69,7 @@
 
     " ................................................................... Macros
 
-      " see https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
-      function! s:replayLastMacro()
-        try
-          normal @@
-        catch /E748/
-          normal @q
-        endtry
-      endfunction
-
-      nnoremap <silent><leader>@ :call <SID>replayLastMacro()<cr>
+      nnoremap <silent><leader>@ :ReplayLastMacro<CR>
 
       " quick q macro
       nnoremap <C-q>     @q
@@ -100,20 +91,7 @@
 
     " ................................................................ Line wrap
 
-      function! s:toggleWrap()
-        if &formatoptions =~ 't'
-          NoPencil
-          let &formatoptions = g:codeoptions
-        elseif &formatoptions == g:codeoptions
-          Pencil
-          set formatoptions=tqwan1
-        else
-          set formatoptions
-        endif
-        call core#Status('Automatic line wrap', &formatoptions =~ 't')
-      endfunction
-
-      nmap <silent><leader><CR> :call <SID>toggleWrap()<CR>
+      nmap <silent><leader><CR> :ToggleWrap<CR>
 
     " ..................................................................... Tabs
 
@@ -153,33 +131,19 @@
       set incsearch          " find the next match as we type the search
       let g:separator = ' '  " line wrap enabled incsearch (including irregular spacing)
 
-      function! s:toggleWrapSearch()
-        let g:separator = g:separator == ' ' ? '\_s*' : ' '
-        cnoremap <expr><space>  '/?' =~ getcmdtype() ? g:separator : ' '
-        call core#Status('Wrap search', g:separator != ' ')
-      endfunction
-
-      nmap <silent><F6> :call <SID>toggleWrapSearch()<CR>
+      nmap <silent><F6> :ToggleWrapSearch<CR>
 
     " ....................................................... Search and replace
-
-      " restore search highlight after replace
-      function! s:searchReplace(cmd)
-        let l:search = @/
-        let l:s = input('', a:cmd)
-        execute l:s
-        let @/ = l:search
-      endfunction
 
       " toggle magic and case sensitivity, \m to append magic tokens
       cmap %%    \v
       cmap ^^    \C
 
       " replace current word!
-      nnoremap \\ :call <SID>searchReplace(':%s/\C\<<C-r><C-w>\>/')<CR>
+      nnoremap \\ :SearchReplace :%s/\C\<<C-r><C-w>\>/<CR>
       " see magic settings
-      nnoremap // :call <SID>searchReplace(':%s/')<CR>
-      vnoremap // :<C-u>call <SID>searchReplace(":'<,'>s/")<CR>
+      nnoremap // :SearchReplace :%s/<CR>
+      vnoremap // :<C-u>SearchReplace :'<,'>s/<CR>
 
     " ........................................................... Tab completion
 

@@ -9,17 +9,19 @@
 
       " example: draw underline
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-      function! heading#Underline(delimiter)
-        if core#NonblankLine() | execute 'normal! yypwv$r' . a:delimiter | endif
+      function! s:underline(delimiter)
+        if NonBlankLine() | execute 'normal! yypwv$r' . a:delimiter | endif
         normal! $
       endfunction
+
+      command! -nargs=1 Underline silent! call <SID>underline(<f-args>)
 
     " .................................................................... Ruler
 
       " example: draw ruler
       " ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-      function! heading#Drawline(delimiter)
-        call heading#Underline(a:delimiter)
+      function! s:drawline(delimiter)
+        call s:underline(a:delimiter)
         if virtcol('.') < g:linewidth  " for mirrored left/right margin spacing
           let l:col   = g:linewidth - virtcol('.')
           execute 'normal! ' . l:col . 'a' . a:delimiter
@@ -27,12 +29,14 @@
         normal! $
       endfunction
 
+      command! -nargs=1 Drawline silent! call <SID>drawline(<f-args>)
+
     " .................................................................. Trailer
 
       " example: append trailer ________________________________________________
 
-      function! heading#AppendTrailer(delimiter)
-        if core#NonblankLine()
+      function! s:appendTrailer(delimiter)
+        if NonBlankLine()
           if matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$') > ''  " remove existing trailer
             normal! $bhD
           endif
@@ -48,44 +52,54 @@
         endif
       endfunction
 
+      command! -nargs=1 AppendTrailer silent! call <SID>appendTrailer(<f-args>)
+
       " prompted trailer
-      function! heading#InputTrailer()
+      function! s:InputTrailer()
         let l:delimiter = input('Line character: ')
-        if l:delimiter > '' | call heading#AppendTrailer(l:delimiter[0]) | endif
+        if l:delimiter > '' | call s:appendTrailer(l:delimiter[0]) | endif
       endfunction
+      
+      command! InputTrailer silent! call <SID>inputTrailer()
 
     " ................................................................... Leader
 
       " ................................................. example: insert leader
 
-      function! heading#InsertLeader(delimiter)
-        if core#NonblankLine()
+      function! s:insertLeader(delimiter)
+        if NonBlankLine()
           if matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s') > '' | execute 'normal! ^wdf ' | endif  " remove existing leader
-          call heading#AppendTrailer(a:delimiter)
+          call s:appendTrailer(a:delimiter)
           " cut trailer and insert as leader!
           normal! $bhD^whP
           normal! $
         endif
       endfunction
+      
+      command! -nargs=1 InsertLeader silent! call <SID>insertLeader(<f-args>)
 
       " prompted leader
-      function! heading#InputLeader()
+      function! s:inputLeader()
         let l:delimiter = input('Line character: ')
         if l:delimiter > ''
-          if l:delimiter == ' ' | call heading#Justify()
-          else                  | call heading#InsertLeader(l:delimiter[0]) | endif
+          if l:delimiter == ' ' | call s:justify()
+          else                  | call s:insertLeader(l:delimiter[0]) | endif
         endif
       endfunction
+      
+      command! InputLeader silent! call <SID>inputLeader()
 
     " .................................................................. Justify
 
       "                                                         example: justify
       
-      function! heading#Justify()
+      function! s:justify()
         execute 's/\v^([ \t]*[^ \t]*)[ \t]*/\1 /'
-        call heading#InsertLeader('▔')
+        call s:insertLeader('▔')
         execute ':s/▔/ /'
         normal! $
       endfunction
+      
+      command! Justify silent! call <SID>justify()
 
 " heading.vim
