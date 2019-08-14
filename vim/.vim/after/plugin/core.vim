@@ -105,7 +105,7 @@
 
       " distraction free filetyes
       function! Prose()
-        return &filetype =~ 'wiki\|mail\|markdown\|draft\|note\|html' || expand('%:e') == 'wiki'
+        return &filetype =~ 'wiki\|mail\|markdown\|draft\|note\|html'
       endfunction
 
       function! Markdown()

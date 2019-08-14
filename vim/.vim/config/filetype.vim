@@ -32,7 +32,8 @@
       autocmd ft Filetype markdown  setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
       autocmd ft Filetype note      setlocal spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72
 
-      autocmd ft BufWinEnter *.wiki set filetype=markdown
+      " call to LiteType() to correct startup timimg Prose() state
+      autocmd ft BufWinEnter *.wiki set filetype=markdown | call LiteType()
 
     " ...................................................................... CSS
 
