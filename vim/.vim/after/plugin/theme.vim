@@ -320,6 +320,8 @@
         endif
       endfunction
 
+      command! NoTilde silent! call <SID>noTilde()
+
   " Context highlight __________________________________________________________
 
     " ............................................................... Prose mode

@@ -7,35 +7,35 @@
 
     " .................................................................. Startup
 
-      source ~/.vim/config/startup.vim
-      source ~/.vim/config/keyboard.vim
-      source ~/.vim/config/core.vim
+      runtime config/startup.vim
+      runtime config/keyboard.vim
+      runtime config/core.vim
 
     " .................................................................. Plugins
 
-      source ~/.vim/config/plugin.vim
-      source ~/.vim/config/setting.vim
+      runtime config/plugin.vim
+      runtime config/setting.vim
 
     " ....................................................................... UI
 
-      source ~/.vim/config/default.vim
-      source ~/.vim/config/gui.vim
+      runtime config/default.vim
+      runtime config/gui.vim
 
     " .................................................................... Theme
     
-      source ~/.vim/config/theme.vim
-      source ~/.vim/config/ui.vim
-      source ~/.vim/config/info.vim
+      runtime config/theme.vim
+      runtime config/ui.vim
+      runtime config/info.vim
 
     " .................................................................... Files
 
-      source ~/.vim/config/buffer.vim
-      source ~/.vim/config/filetype.vim
+      runtime config/buffer.vim
+      runtime config/filetype.vim
 
     " ................................................................. Editting
 
-      source ~/.vim/config/edit.vim
-      source ~/.vim/config/shift.vim
-      source ~/.vim/config/heading.vim
+      runtime config/edit.vim
+      runtime config/shift.vim
+      runtime config/heading.vim
 
 " .vimrc

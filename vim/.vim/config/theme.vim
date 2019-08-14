@@ -130,6 +130,8 @@
         endif
       endif
 
+      autocmd theme VimEnter * NoTilde              " startup timing fix
+
     " ............................................................ Switch colour
 
       nmap <silent><S-F8> :LiteSwitch<CR>
