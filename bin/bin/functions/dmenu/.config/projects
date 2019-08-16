@@ -22,11 +22,11 @@ chimera beaklsi :: $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_4
 chimera beaklzi :: $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/beaklzi -type f) $HOME/bin/functions/hardware/chimera
 compton :: $STOW/compton/*/.compton.conf
 conky :: $HOME/.conkyrc $HOME/.conky/conky*
-conky all :: $(find $STOW/conky/3440x1440 -type f -name '*conky*' | exclude) $(find $STOW/conky/3440x1440 -type f -name '*conky*' | exclude) $(find $STOW/conky/1920x1080 -type f -name '*conky*' | exclude) $(find $STOW/conky/1024x600 -type f -name '*conky*' | exclude)
-conky clock :: $(find $STOW/conky -type f -name '*clock*' | exclude)
-conky lumen :: $(find $STOW/conky/1920x1080 -type f -name '*conky*' | exclude)
-conky luna :: $(find $STOW/conky/3440x1440 -type f -name '*conky*' | exclude)
-conky monad :: $(find $STOW/conky/1024x600 -type f -name '*conky*' | exclude)
+conky all :: $(find $STOW/conky/3440x1440 -type f -name '*conky*') $(find $STOW/conky/3440x1440 -type f -name '*conky*') $(find $STOW/conky/1920x1080 -type f -name '*conky*') $(find $STOW/conky/1024x600 -type f -name '*conky*')
+conky clock :: $(find $STOW/conky -type f -name '*clock*')
+conky lumen :: $(find $STOW/conky/1920x1080 -type f -name '*conky*')
+conky luna :: $(find $STOW/conky/3440x1440 -type f -name '*conky*')
+conky monad :: $(find $STOW/conky/1024x600 -type f -name '*conky*')
 cron user :: $HOME/build/root/var/spool/cron/crontabs/$USER
 debian install :: $(/bin/ls $HOME/build/debian/netinstall-* | egrep -v 'partial|exceptions')
 demo screencast :: $HOME/bin/demo $HOME/bin/functions/demo/*

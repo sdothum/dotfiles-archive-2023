@@ -11,15 +11,17 @@ usage() {
   exit 1
 }
 
+v0() { exclude | sort | tr '\n' '\0x00' | xargs -r0 v; }
+
 walk() {
   [ -e $DYNAMIC ] && toggle focus
   for i in $(find -L -type d  | exclude) ;do
-    files=$(find -L $i -maxdepth 1 -type f | exclude | quote)
+    files=$(find -L $i -maxdepth 1 -type f | sort)
     [ "$files" ] || continue
     echo
-    echo -n "$files\n" | sed -r "s|.*/(.*)'|\1|"
+    echo -n "$files\n"
     ifyes "edit $i" || continue
-    v -f $files
+    find -L $i -maxdepth 1 -type f | v0
   done
   [ -e $DYNAMIC ] && toggle focus
 }
@@ -28,8 +30,8 @@ walk() {
 case $1 in
 ''   ) walk ;;
 help ) usage ;;
-[1-4]) v $(find -L -maxdepth ${1:-1} -type f | exclude | quote) ;;
-*    ) v $(find -L -type f -name "$1" | exclude | quote) ;;
+[1-4]) find -L -maxdepth ${1:-1} -type f | v0 ;;
+*    ) find -L -type f -name "$1" | v0 ;;
 esac
 
 # vim: set ft=sh: #

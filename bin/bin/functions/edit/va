@@ -6,11 +6,17 @@
 
 # ....................................................................... Editor
 
+usage() {
+  echo "usage: $(basename $0) <regex>"
+  exit 1
+}
+
 # v by content
-[ "$1"     ] && files=$(al "$@") || exit
+[ "$1"     ] && files=$(al "$@") || usage
 [ "$files" ] || exit
 
 # regex passed as search command causes file name mangling
-echo "$@" | grep -q '^[[:alnum:]]*$' && v -c "/\v$@" $files || v $files
+echo "$@" | grep -q '^[[:alnum:]]*$' && search="-c \"/\v$@\""
+al "$@" | exclude | sort | tr '\n' '\0x00' | xargs -r0 v $search
 
 # vim: set ft=sh: #

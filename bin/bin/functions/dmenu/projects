@@ -5,10 +5,10 @@
 
 # ......................................................................... Edit
 
-# Format: <tag> :: [ <filename> | $<(eval>) ]*
+# Format: <tag> :: [ <filename> | $(<eval>) ]*
 #               where, tag      - dmenu search tag
 #                      filename - posix filename expression
-#                      eval     - posix shell expression that evaluates to a list of filenames
+#                      eval     - posix shell expression that evaluates to a list of *non-blank* filenames
 
 EDIT='[ edit tags ]'
 
@@ -23,7 +23,8 @@ while files=$(projects | rmenu 'Edit Project' 1 -no-custom) || exit ;do
   "$EDIT") gvim -f $PROJECTS $history ;;
 
   *      ) mhistory projects "$(echo $files | sed "s/ *$SEP/^$SEP/")"
-           eval exec v ${files#*$SEP} ;;
+           eval echo ${files#*$SEP} | tr ' ' '\n' | exclude | sort | xargs -r v
+           break ;;  # required to prevent duplicate eval execution
    esac
 done
 

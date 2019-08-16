@@ -7,7 +7,7 @@
 
     " .................................................................... Setup
 
-      let g:detail      = 0   " at cursor (0) tag (1) atom
+      let g:detail      = 0   " default expanded detail (0) tag (1) atom, see F7 map
       let g:active      = 0   " active window tag
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
