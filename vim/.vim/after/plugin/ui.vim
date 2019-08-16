@@ -132,7 +132,7 @@
 
       " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
       function! Font(type)
-        Trace theme:Font()
+        Trace ui:Font()
         if $DISPLAY > ''
           if g:font_type != a:type
             let g:font_type = a:type
