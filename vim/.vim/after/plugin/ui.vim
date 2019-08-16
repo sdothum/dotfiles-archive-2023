@@ -7,11 +7,12 @@
 
     " .................................................................... Setup
 
-      let s:show      = 1       " statusline (0) off (1) on
-      let s:expanded  = 0       " statusline state (0) dfm (1) expanded
-      let g:pad_inner = '    '  " statusline padding
-      let g:pad_outer = '   '   " expanded statusline padding
-      let g:view      = 1       " initial view mode (0) info (1) df
+      let g:pad_inner    = '    '  " statusline padding
+      let g:pad_outer    = '   '   " expanded statusline padding
+      let g:view         = 1       " initial view mode (0) info (1) df
+      let s:expanded     = 0       " statusline state (0) dfm (1) expanded
+      let s:font_changed = 0       " redraw flag
+      let s:show         = 1       " statusline (0) off (1) on
 
   "  Distraction free modes ____________________________________________________
 
@@ -111,6 +112,42 @@
         call LiteType()   
         let &laststatus = lstatus
       endfunction
+
+    " .......................................................... Balance margins
+
+      function! Offset()
+        return max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
+      endfunction
+
+      " balance left right margins with font size changes (and window resizing)
+      function! Margins()
+        Trace ui:Margin
+        let g:lite_dfm_left_offset = Offset()
+        Quietly LiteDFM
+        LineNr
+        RefreshInfo
+      endfunction
+
+    " ................................................................. Set font
+
+      " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
+      function! Font(type)
+        Trace theme:Font()
+        if $DISPLAY > ''
+          if g:font_type != a:type
+            let g:font_type = a:type
+            let l:size      = system('fontsize')
+            let l:size      = a:type == 0 ? l:size : l:size + g:font_step
+            execute 'set guifont=' . (Prose() ? g:prose_font : g:source_font) . ' ' . l:size
+            if s:font_changed
+              RedrawGui
+            endif
+            let s:font_changed = 1  " next font size change requires redraw
+            set laststatus=2        " turn on statusline
+          endif
+        endif
+      endfunction
+
 
   " Context statusline _________________________________________________________
 

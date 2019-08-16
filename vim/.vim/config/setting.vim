@@ -181,8 +181,7 @@
       let g:neocomplete#sources#syntax#min_keyword_length = 3
 
       " inoremap <expr><Tab>  neocomplete#start_manual_complete()
-      " inoremap <expr><TAB>  pumvisible() ?  "\<Down>" :
-      "   \ neocomplete#start_manual_complete()
+      " inoremap <expr><TAB>  pumvisible() ?  "\<Down>" : neocomplete#start_manual_complete()
 
       function! s:check_back_space() abort
         let col = col('.') - 1

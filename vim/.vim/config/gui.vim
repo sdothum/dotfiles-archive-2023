@@ -32,29 +32,6 @@
 
   " Display ____________________________________________________________________
 
-    " ................................................................... Screen
-
-      set gcr=a:blinkon0          " disable cursor blink
-      set mousehide               " hide mouse when typing
-      set t_Co=256                " 256 color support
-      set viewoptions=folds,options,cursor,unix,slash
-      set virtualedit=block       " allow virtual editing in Visual block mode
-      " set virtualedit=onemore   " allow for cursor beyond last character
-      set winminheight=0          " windows can be 0 line high
-      set wrap                    " wrap lines for viewing
-
-    " ................................................................... Alerts
-
-      set noerrorbells            " don't beep
-      set shortmess+=filmnrxoOtT  " abbrev. of messages (avoids "hit enter")
-      set visualbell              " no sounds
-
-      " recover last error message
-      nmap <leader>e :echo errmsg<CR>
-
-      " clear messages after awhile to keep screen clean and distraction free!
-      autocmd gui CursorHold * echo
-
     " ................................................................ Scrolling
 
       if $HOST == 'monad' | set scrolloff=3
@@ -105,8 +82,6 @@
 
     " ........................................................... Column margins
 
-      augroup column | autocmd! | augroup END
-
       set colorcolumn=0  " highlight column
 
       nmap <silent><Bar> :ToggleColumn<CR>
@@ -125,7 +100,7 @@
       " toggle relative number, line number and no numbering
       nmap <silent># :ToggleNumber<CR>
 
-      " toggle relative line numbers
+      " " toggle relative line numbers
       " autocmd gui InsertEnter * set norelativenumber
       " autocmd gui InsertLeave * set relativenumber
 
@@ -136,30 +111,40 @@
       set noshowcmd     " show incomplete cmds in command line
       set noshowmode    " show current mode in command line
 
-  " Highlighting _______________________________________________________________
+  " Window actions _____________________________________________________________
 
-    " ...................................................... Syntax highlighting
+    " .......................................................... Window handling
 
-      set omnifunc=syntaxcomplete#Complete
-      syntax on  " turn on syntax highlighting
+      " kill (close) current window
+      noremap <leader>q  <C-w>q
+      " close all other windows
+      noremap <leader>Q  <C-w>o
 
-      " refresh highlighting on arm
-      autocmd gui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
+    " ............................................................ Split windows
 
-    " ...................................................... White space markers
+      " horizontal / vertical split
+      noremap <leader>Z  <C-w>v<C-w>l
+      noremap <leader>z  <C-w>s<C-w>l
+      " maximize left:right / top:bottom
+      noremap <leader>ZZ <C-w><Bar>
+      noremap <leader>zz <C-w>_
+      " adjust all splits to the same size
+      noremap <leader>=  <C-w>=
 
-      set nolist  " display tabs and trailing spaces visually
-      set listchars="tab:▸\<Space>"
+      nnoremap <C-Up>    :resize +5<CR>
+      nnoremap <C-Down>  :resize -5<CR>
+      nnoremap <C-Left>  :vertical resize -5<CR>
+      nnoremap <C-Right> :vertical resize +5<CR>
 
-      " set listchars+=trail:_
-      set listchars+=trail:·
-      set listchars+=nbsp:.
-      set listchars+=extends:>
-      set listchars+=precedes:<
-      " set listchars+=eol:¬
+    " ........................................................... Switch windows
 
-    " ..................................................... Trailing white space
-
-      nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
+      " switch to left / right split
+      noremap <Left>     <C-w>h
+      noremap <Right>    <C-w>l
+      " switch to top / bottom split
+      noremap <Up>       <C-w>k
+      noremap <Down>     <C-w>j
+      " " switch windows
+      " noremap <C-w>    <C-w><C-w>
 
 " gui.vim

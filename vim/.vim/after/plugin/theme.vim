@@ -7,9 +7,8 @@
 
     " .................................................................... Setup
 
-      let s:cursorline           = 0  " visible (0) off (1) on
-      let s:sync                 = 0  " sync (0) off (1) indent guides
-      let s:font_changed         = 0  " redraw flag
+      let s:cursorline = 0  " visible (0) off (1) on
+      let s:sync       = 0  " sync (0) off (1) indent guides
 
     " ......................................................... DFM colour masks
 
@@ -144,8 +143,8 @@
       command! LineNr silent! call <SID>lineNr()
 
       " ruler, indents
-      function! s:indent()
-        Trace theme:Indent
+      function! s:indents()
+        Trace theme:Indents
         execute 'hi IndentGuidesOdd  guibg=' . s:hexValue('s:dfm_bg_'        . &background)
         execute 'hi IndentGuidesEven guibg=' . s:hexValue('s:dfm_bg_line_'   . &background)
         if g:ruler == 1 | execute 'hi ColorColumn guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
@@ -158,7 +157,7 @@
         endif
       endfunction
 
-      command! Indent silent! call <SID>indent()
+      command! Indents silent! call <SID>indents()
 
       function! s:plugins()
         Trace theme:plugins()
@@ -201,7 +200,7 @@
         execute 'hi LineNr       guibg=NONE'
         execute 'hi Normal       guibg=NONE'
         execute 'hi SignColumn   guibg=NONE'
-        call s:margin()
+        call Margins()
         call s:noTilde()
       endfunction
 
@@ -214,8 +213,8 @@
         Trace theme:Theme
         call s:highlights()
         call s:plugins()
-        call s:indent()
-        call s:margin()
+        call s:indents()
+        call Margins()
         call s:noTilde()
         ColumnWrap
       endfunction
@@ -246,46 +245,11 @@
         Trace theme:LiteSwitch
         Quietly LiteDFMClose  " trap and ignore initialization error
         call s:nextColorScheme()
-        let s:sync = 1        " see theme:Indent()
+        let s:sync = 1        " see theme:Indents()
         call LiteType()
       endfunction
 
       command! LiteSwitch silent! call <SID>liteSwitch()
-
-  " Font _______________________________________________________________________
-
-    " .......................................................... Balance margins
-
-      " balance left right margins with font size changes (and window resizing)
-      function! s:margin()
-        Trace theme:Margin
-        let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
-        Quietly LiteDFM
-        call s:lineNr()
-        RefreshInfo
-      endfunction
-
-      command! Margin silent! call <SID>margin()
-
-    " ................................................................. Set font
-
-      " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
-      function! Font(type)
-        Trace theme:Font()
-        if $DISPLAY > ''
-          if g:font_type != a:type
-            let g:font_type = a:type
-            let l:size      = system('fontsize')
-            let l:size      = a:type == 0 ? l:size : l:size + g:font_step
-            execute 'set guifont=' . (Prose() ? g:prose_font : g:source_font) . ' ' . l:size
-            if s:font_changed
-              RedrawGui
-            endif
-            let s:font_changed = 1  " next font size change requires redraw
-            set laststatus=2        " turn on statusline
-          endif
-        endif
-      endfunction
 
   "  Distraction free highlight ________________________________________________
 
@@ -326,7 +290,7 @@
 
     " ............................................................... Prose mode
      
-      " enhanced limelight contrast, see ui#ToggleProof()
+      " enhanced limelight contrast, see ui:ToggleProof()
       function! s:contrast(level)
         Trace theme:Contrast
         if Prose() && &background == 'light'

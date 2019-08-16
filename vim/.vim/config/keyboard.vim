@@ -31,8 +31,8 @@
       nmap <leader>( {{)
       nmap <leader>) })
 
-      " insert mode local region cursor movements
-      " <C-h> is overridden by auto-pairs delete <BS> when enabled
+      " " insert mode local region cursor movements
+      " " <C-h> is overridden by auto-pairs delete <BS> when enabled
       " imap <C-h>   <Left>
       " imap <C-j>   <Down>
       " imap <C-k>   <Up>
@@ -40,7 +40,7 @@
 
     " ............................................................. Disable keys
 
-      " affirm vim modal usage but these keys are remapped below anyway :)
+      " " affirm vim modal usage but these keys are remapped below anyway :)
       " imap <down>  <nop>
       " imap <left>  <nop>
       " imap <right> <nop>

@@ -41,7 +41,7 @@
       " ..................................................................... Info
 
       " Plug 'metakirby5/codi.vim'          " async evaluator
-       "   Plug 'reedes/vim-wordy'             " word usage
+      " Plug 'reedes/vim-wordy'             " word usage
       Plug 'majutsushi/tagbar'              " ctags
       Plug 'lvht/tagbar-markdown', prose    " markdown for tagbar
       Plug 'bimlas/vim-eightheader'         " custom foldtext

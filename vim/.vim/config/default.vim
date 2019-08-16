@@ -14,48 +14,17 @@
       autocmd default InsertLeave * let &updatetime  = s:updatetime
       autocmd default CursorHoldI * stopinsert
 
-  " Databases __________________________________________________________________
+    " .................................................................... Debug
 
-    " ..................................................................... Help
+      nnoremap <silent><S-F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
 
-      autocmd default BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
+    " ................................................................. Terminal
 
-      " nmap <F1> :help<Space>
-      " imap <F1> <C-o>:help<Space>
-      " vmap <F1> :<C-u>help<Space>
+      nmap <silent><C-t>      :Term<CR>
+      imap <silent><C-t>      <C-o>:Term<CR>
 
-      " list my function and leader key assignments
-      nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>
-      imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
-      vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
-
-    " .......................................................... Command history
-
-      nmap <F1> q:
-      imap <F1> <C-o>q:
-      vmap <F1> <C-u>q:
-
-    "  ............................................................ Undo history
-
-      " keep persistent undo history across sessions, by storing in file
-      silent !mkdir ~/.vim/backups 2>/dev/null
-      set history=1000      " store lots of :cmdline history
-      set undodir=~/.vim/backups
-      set undofile
-      set undolevels=1000   " maximum number of changes that can be undone
-      set undoreload=10000  " maximum number lines to save for undo
-
-      " easier redo
-      nnoremap U <C-r>
-
-    " .............................................................. Spell check
-
-      set dictionary=/usr/share/dict/words
-      set complete+=k    " <C-p> to complete list word
-      set keywordprg=dict
-      set nospell        " spell checking off by default for code
-      " set thesaurus=/usr/share/dict/thesaurus
-      " set complete+=s  " disabled, selection list too long
+      nmap <silent><C-t><C-t> :term fish<CR>
+      imap <silent><C-t><C-t> <C-o>:term fish<CR>
 
   " Registers __________________________________________________________________
 
@@ -64,7 +33,7 @@
       set viminfo='100,f1  " save up to 100 marks, enable capital marks
       set viminfo^=%       " remember info about open buffers on close
 
-      " delete all marks in current buffer, see signature plugin
+      " " delete all marks in current buffer, see signature plugin
       " nmap <silent><leader>'' :delmarks!<CR>
 
     " ................................................................... Macros
@@ -75,7 +44,7 @@
       nnoremap <C-q>     @q
       " edit q macro
       nnoremap <leader>Q :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
-      " repeat last macro played @{0-9a-z":*}
+      " " repeat last macro played @{0-9a-z":*}
       " nnoremap ..      @@ " just a command reminder, never mapped
 
   " Format _____________________________________________________________________

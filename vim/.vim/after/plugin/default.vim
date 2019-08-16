@@ -3,6 +3,26 @@
 " Defaults
 " ══════════════════════════════════════════════════════════════════════════════
 
+  " Mode _______________________________________________________________________
+
+    " .............................................................. Debug trace
+
+      let g:trace = $VIMTRACE > '' ? 1 : 0
+
+      " escape problematic shell commandline characters
+      function! s:trace(msg)
+        if g:trace == 1 | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log' | endif
+      endfunction
+
+      command! -nargs=1 Trace call <SID>trace(<f-args>)
+
+    " ............................................................ Open terminal
+
+      " !term fails on shell error 1 (?)
+      command! Term :call system('term "vimterm" STACK')
+
+  " Registers __________________________________________________________________
+
     " ................................................................... Macros
 
       " see https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/

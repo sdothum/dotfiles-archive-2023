@@ -7,8 +7,14 @@
 
     " .................................................................... Setup
 
-      let g:detail = 0  " at cursor (0) tag (1) atom
-      let g:active = 0  " active window tag
+      let g:detail      = 0   " at cursor (0) tag (1) atom
+      let g:active      = 0   " active window tag
+
+      " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
+      let g:source_font = 'Iosevka\'
+      let g:prose_font  = 'Iosevka-proof\'
+      let g:font_type   = -1  " current font setting (0) source (1) prose
+      let g:font_step   = empty(glob('~/.session/font++')) ? 1 : 2  " increase (point size) for prose
 
       augroup ui | autocmd! | augroup END
 
@@ -19,12 +25,50 @@
       nmap <silent><F9> :call Retheme()<CR>
       imap <silent><F9> <C-o>:call Retheme()<CR>
 
+      autocmd ui VimResized,FocusGained * call Margins()
+      " when VimResized doesn't trigger Margins()
+      autocmd ui CursorHold             * if g:lite_dfm_left_offset != Offset() | call Margins() | endif
+
     " ............................................................... Initialize
 
       " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
       autocmd ui BufWinEnter * if ! PluginWindow() | call LiteType() | endif
       " show and fix line wrap highlighting on startup
       autocmd ui GuiEnter    * if g:wrap_highlighting && ! PluginWindow() | call Retheme() | endif
+
+    " ................................................................. Messages
+
+      " recover last error message
+      nmap <leader>e :echo errmsg<CR>
+
+      " clear messages after awhile to keep screen clean and distraction free!
+      autocmd ui CursorHold * echo
+
+  " Highlighting _______________________________________________________________
+
+    " ...................................................... Syntax highlighting
+
+      set omnifunc=syntaxcomplete#Complete
+      syntax on  " turn on syntax highlighting
+
+      " refresh highlighting on arm
+      autocmd ui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
+
+    " ...................................................... White space markers
+
+      set nolist  " display tabs and trailing spaces visually
+      set listchars="tab:▸\<Space>"
+
+      " set listchars+=trail:_
+      set listchars+=trail:·
+      set listchars+=nbsp:.
+      set listchars+=extends:>
+      set listchars+=precedes:<
+      " set listchars+=eol:¬
+
+    " ..................................................... Trailing white space
+
+      nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
 
   " UI _________________________________________________________________________
 
@@ -56,5 +100,10 @@
 
       nmap <silent><S-F7> :SwitchView<CR>
       imap <silent><S-F7> <C-o>:SwitchView<CR>
+
+    " ......................................................... Switch font size
+
+      nmap <silent><S-F9> :call Font(g:font_type == 1 ? 0 : 1)<CR>
+      imap <silent><S-F9> <C-o>:call Font(g:font_type == 1 ? 0 : 1)<CR>
 
 " ui.vim

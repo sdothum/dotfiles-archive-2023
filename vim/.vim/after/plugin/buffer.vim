@@ -73,7 +73,7 @@
 
     " ............................................................ Switch buffer
 
-      " nmap <silent><Enter> :CloseDiff<CR>:silent bnext<CR>:call theme#SplitColors()<CR>
+      " nmap <silent><Enter> :CloseDiff<CR>:silent bnext<CR>:call theme:SplitColors()<CR>
       function! s:enter()
         if CommandWindow()  " on q: to enter command-line window
           execute "normal! \<CR>"

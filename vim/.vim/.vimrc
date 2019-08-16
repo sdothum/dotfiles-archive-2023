@@ -9,7 +9,6 @@
 
       runtime config/startup.vim
       runtime config/keyboard.vim
-      runtime config/core.vim
 
     " .................................................................. Plugins
 
@@ -27,15 +26,10 @@
       runtime config/ui.vim
       runtime config/info.vim
 
-    " .................................................................... Files
-
-      runtime config/buffer.vim
-      runtime config/filetype.vim
-
     " ................................................................. Editting
 
+      runtime config/buffer.vim
       runtime config/edit.vim
-      runtime config/shift.vim
       runtime config/heading.vim
 
-" .vimrc
+" vim: set ft=vim: .vimrc

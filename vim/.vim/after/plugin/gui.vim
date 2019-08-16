@@ -17,7 +17,7 @@
 
     " ............................................................... Redraw gui
 
-      let s:delay = '200m'  " redraw delay, see theme#Font()
+      let s:delay = '200m'  " redraw delay, see ui:Font()
 
       " toggle in/out to fill window
       function! s:redrawGui()
@@ -39,7 +39,7 @@
 
       set colorcolumn=0  " highlight column
 
-      " toggle colorcolumn modes, see theme#Indent()
+      " toggle colorcolumn modes, see theme:Indents()
       function! s:toggleColumn()
         if g:ruler == 0
           let g:ruler      = 1
@@ -53,7 +53,7 @@
           let &colorcolumn = 0
           ColumnWrap
         endif
-        Indent
+        Indents
         let g:column = 1  " flash column position, see autocmd info.vim
       endfunction
 
@@ -63,7 +63,7 @@
 
       let s:breakchar = '→'
 
-      " highlight wrapped line portion, see theme#Theme()
+      " highlight wrapped line portion, see theme:Theme()
       function! s:columnWrap()
         if g:ruler == 0 && s:wraplight
           set showbreak=

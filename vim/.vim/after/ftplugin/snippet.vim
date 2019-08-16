@@ -3,9 +3,8 @@
 " Filetypes
 " ══════════════════════════════════════════════════════════════════════════════
 
-    " ..................................................................... Wiki
+    " .................................................................. Snippet
   
-      " set touch date
-      command! -nargs=1 Wiki execute ':silent !wikitouch "' . expand('%:p') . '" ' . <f-args>
+      set nospell noexpandtab tabstop=2 shiftwidth=2
 
-" filetype.vim
+" snippet.vim

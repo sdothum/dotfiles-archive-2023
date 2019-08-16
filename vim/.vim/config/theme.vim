@@ -9,13 +9,6 @@
 
       let g:colorscheme  = 'quantum'  " duochrome -> flatwhite -> quantum ->, see theme#NextScheme()
 
-      " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-      let g:source_font  = 'Iosevka\'
-      let g:prose_font   = 'Iosevka-proof\'
-      let g:font_type    = -1  " current font setting (0) source (1) prose
-      " let g:font_step  = 1  " font size increase (point size) for prose
-      let g:font_step    = empty(glob('~/.session/font++')) ? 1 : 2  " increase (point size) for prose
-
     " .............................................................. Color codes
 
       " duochrome monochromatic palette
@@ -139,11 +132,5 @@
 
       autocmd theme InsertEnter * LineNr
       autocmd theme InsertLeave * LineNr
-      autocmd theme FocusGained * silent! Margin
-
-    " ......................................................... Switch font size
-
-      nmap <silent><S-F9> :call Font(g:font_type == 1 ? 0 : 1)<CR>
-      imap <silent><S-F9> <C-o>:call Font(g:font_type == 1 ? 0 : 1)<CR>
 
 " theme.vim
