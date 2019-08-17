@@ -36,7 +36,7 @@
 
     " ......................................................... Strip whitespace
     
-      nmap <silent><F4> :StripTrailingWhitespaces<CR>
+      nmap <silent><F4>      :StripTrailingWhitespaces<CR>
       vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 
       " augroup edit | autocmd! | augroup END
@@ -79,7 +79,7 @@
 
       " markup wiki code blocks
       nnoremap <silent><leader>` V:CodeBlock<CR>
-      vmap     <silent><leader>` :CodeBlock<CR>
+      vmap     <silent><leader>`  :CodeBlock<CR>
 
   " Text shift _________________________________________________________________
 
@@ -117,11 +117,11 @@
 
     " ............................................................ Shift up down
 
-      nmap <silent><S-Up>   :MoveLineUp<CR>
+      nmap <silent><S-Up>        :MoveLineUp<CR>
       imap <silent><S-Up>   <ESC>:MoveLineUp<CR>a
       vmap <silent><S-Up>   <ESC>:MoveVisualUp<CR>
 
-      nmap <silent><S-Down> :MoveLineDown<CR>
+      nmap <silent><S-Down>      :MoveLineDown<CR>
       imap <silent><S-Down> <ESC>:MoveLineDown<CR>a
       vmap <silent><S-Down> <ESC>:MoveVisualDown<CR>
 

@@ -20,7 +20,7 @@
       autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
 
       " list my function and leader key assignments
-      nmap <silent><S-F1> :silent !term 'vmap' vmap<CR>
+      nmap <silent><S-F1>      :silent !term 'vmap' vmap<CR>
       imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
       vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
 

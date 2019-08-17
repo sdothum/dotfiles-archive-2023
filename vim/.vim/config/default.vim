@@ -20,10 +20,10 @@
 
     " ................................................................. Terminal
 
-      nmap <silent><C-t>      :Term<CR>
+      nmap <silent><C-t>           :Term<CR>
       imap <silent><C-t>      <C-o>:Term<CR>
 
-      nmap <silent><C-t><C-t> :term fish<CR>
+      nmap <silent><C-t><C-t>      :term fish<CR>
       imap <silent><C-t><C-t> <C-o>:term fish<CR>
 
   " Registers __________________________________________________________________
@@ -89,11 +89,11 @@
       set smartcase   " ignore case if search pattern is all lowercase
 
       " tab to bracket pairs
-      nmap <Tab> %
-      vmap <Tab> %
+      nmap <Tab>     %
+      vmap <Tab>     %
 
       " clear search highlight
-      nmap <silent>\  :noh<CR>
+      nmap <silent>\ :noh<CR>
 
     " ....................................................... Incremental search
 
@@ -105,13 +105,13 @@
     " ....................................................... Search and replace
 
       " toggle magic and case sensitivity, \m to append magic tokens
-      cmap %%    \v
-      cmap ^^    \C
+      cmap %%     \v
+      cmap ^^     \C
 
       " replace current word!
-      nnoremap \\ :SearchReplace :%s/\C\<<C-r><C-w>\>/<CR>
+      nnoremap \\      :SearchReplace :%s/\C\<<C-r><C-w>\>/<CR>
       " see magic settings
-      nnoremap // :SearchReplace :%s/<CR>
+      nnoremap //      :SearchReplace :%s/<CR>
       vnoremap // :<C-u>SearchReplace :'<,'>s/<CR>
 
     " ........................................................... Tab completion

@@ -20,49 +20,49 @@
 
       " example: draw underline
       " ═══════════════════════
-      execute 'imap <silent>' . g:under . g:under . '-'  " <C-o>:silent Underline " . g:dash . "<CR><C-o>$"
-      execute 'nmap <silent>' . g:under . g:under . '-'  " :silent Underline " . g:dash . "<CR>"
-      execute 'imap <silent>' . g:under . g:under . '='  " <C-o>:silent Underline " . g:equal . "<CR><C-o>$"
-      execute 'nmap <silent>' . g:under . g:under . '='  " :silent Underline " . g:equal . "<CR>"
+      execute 'imap <silent>' . g:under . g:under . '-' '<C-o>:silent Underline ' . g:dash  . '<CR><C-o>$'
+      execute 'nmap <silent>' . g:under . g:under . '-'      ':silent Underline ' . g:dash  . '<CR>'
+      execute 'imap <silent>' . g:under . g:under . '=' '<C-o>:silent Underline ' . g:equal . '<CR><C-o>$'
+      execute 'nmap <silent>' . g:under . g:under . '='      ':silent Underline ' . g:equal . '<CR>'
 
     " .................................................................... Ruler
 
       " example: draw ruler
       " ════════════════════════════════════════════════════════════════════════
-      execute 'imap <silent>' . g:under . g:under . '--'  " <C-o>:silent Drawline " . g:dash . "<CR>"
-      execute 'nmap <silent>' . g:under . g:under . '--'  " :silent Drawline " . g:dash . "<CR>"
-      execute 'imap <silent>' . g:under . g:under . '=='  " <C-o>:silent Drawline " . g:equal . "<CR>"
-      execute 'nmap <silent>' . g:under . g:under . '=='  " :silent Drawline " . g:equal . "<CR>"
+      execute 'imap <silent>' . g:under . g:under . '--' '<C-o>:silent Drawline ' . g:dash  . '<CR>'
+      execute 'nmap <silent>' . g:under . g:under . '--'      ':silent Drawline ' . g:dash  . '<CR>'
+      execute 'imap <silent>' . g:under . g:under . '==' '<C-o>:silent Drawline ' . g:equal . '<CR>'
+      execute 'nmap <silent>' . g:under . g:under . '=='      ':silent Drawline ' . g:equal . '<CR>'
 
     " .................................................................. Trailer
 
       " example: append trailer ................................................
 
-      execute 'imap <silent>' . g:over . '..'  " <C-o>:silent AppendTrailer " . g:dot . "<CR>"
-      execute 'nmap <silent>' . g:over . '..'  " :silent AppendTrailer " . g:dot . "<CR>"
-      execute 'imap <silent>' . g:over . '__'  " <C-o>:silent AppendTrailer " . g:underscore . "<CR>"
-      execute 'nmap <silent>' . g:over . '__'  " :silent AppendTrailer " . g:underscore . "<CR>"
+      execute 'imap <silent>' . g:over . '..' '<C-o>:silent AppendTrailer ' . g:dot        . '<CR>'
+      execute 'nmap <silent>' . g:over . '..'      ':silent AppendTrailer ' . g:dot        . '<CR>'
+      execute 'imap <silent>' . g:over . '__' '<C-o>:silent AppendTrailer ' . g:underscore . '<CR>'
+      execute 'nmap <silent>' . g:over . '__'      ':silent AppendTrailer ' . g:underscore . '<CR>'
 
-      execute 'imap <silent>' . g:over . '??'  " <C-o>:InputTrailer<CR>"
-      execute 'nmap <silent>' . g:over . '??'  " :InputTrailer<CR>"
+      execute 'imap <silent>' . g:over . '??' '<C-o>:InputTrailer<CR>'
+      execute 'nmap <silent>' . g:over . '??'      ':InputTrailer<CR>'
 
     " ................................................................... Leader
 
       " ................................................. example: insert leader
  
-      execute 'imap <silent>' . g:over . '.'  " <C-o>:silent InsertLeader " . g:dot . "<CR><C-o>$"
-      execute 'nmap <silent>' . g:over . '.'  " :silent InsertLeader " . g:dot . "<CR>"
-      execute 'imap <silent>' . g:over . '_'  " <C-o>:silent InsertLeader " . g:underscore . "<CR><C-o>$"
-      execute 'nmap <silent>' . g:over . '_'  " :silent InsertLeader " . g:underscore . "<CR>"
+      execute 'imap <silent>' . g:over . '.' '<C-o>:silent InsertLeader ' . g:dot        . '<CR><C-o>$'
+      execute 'nmap <silent>' . g:over . '.'      ':silent InsertLeader ' . g:dot        . '<CR>'
+      execute 'imap <silent>' . g:over . '_' '<C-o>:silent InsertLeader ' . g:underscore . '<CR><C-o>$'
+      execute 'nmap <silent>' . g:over . '_'      ':silent InsertLeader ' . g:underscore . '<CR>'
 
-      execute 'imap <silent>' . g:over . '?'  " <C-o>:InputLeader<CR>"
-      execute 'nmap <silent>' . g:over . '?'  " :InputLeader<CR>"
+      execute 'imap <silent>' . g:over . '?' '<C-o>:InputLeader<CR>'
+      execute 'nmap <silent>' . g:over . '?'      ':InputLeader<CR>'
 
     " .................................................................. Justify
 
       "                                                   example: right justify
 
-      execute 'imap <silent>' . g:over . "<Right>"  " <C-o>:silent Justify<CR>"
-      execute 'nmap <silent>' . g:over . "<Right>"  " :silent Justify<CR>"
+      execute 'imap <silent>' . g:over . '<Right>' '<C-o>:silent Justify<CR>'
+      execute 'nmap <silent>' . g:over . '<Right>'      ':silent Justify<CR>'
 
 " heading.vim

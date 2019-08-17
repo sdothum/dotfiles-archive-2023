@@ -22,7 +22,7 @@
 
     " ................................................................... Redraw
 
-      nmap <silent><F9> :call Retheme()<CR>
+      nmap <silent><F9>      :call Retheme()<CR>
       imap <silent><F9> <C-o>:call Retheme()<CR>
 
       autocmd ui VimResized,FocusGained * call Margins()
@@ -75,11 +75,11 @@
     " ........................................................ Toggle statusline
 
       " toggle statusline details
-      nmap <silent><F7>   :ToggleInfo<CR>
+      nmap <silent><F7>        :ToggleInfo<CR>
       imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
       " toggle tag, line details
-      nmap <silent><C-F7> :let g:detail = g:detail == 0 ? 1 : 0<CR>
+      nmap <silent><C-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
       imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 
       " for active window highlighting
@@ -88,7 +88,7 @@
 
     " ................................................................ View mode
 
-      nmap <silent><C-S-F7> :call ToggleProof()<CR>
+      nmap <silent><C-S-F7>      :call ToggleProof()<CR>
       imap <silent><C-S-F7> <C-o>:call ToggleProof()<CR>
 
       if has('gui_running')
@@ -98,12 +98,12 @@
 
     " .............................................................. Switch mode
 
-      nmap <silent><S-F7> :SwitchView<CR>
+      nmap <silent><S-F7>      :SwitchView<CR>
       imap <silent><S-F7> <C-o>:SwitchView<CR>
 
     " ......................................................... Switch font size
 
-      nmap <silent><S-F9> :call Font(g:font_type == 1 ? 0 : 1)<CR>
+      nmap <silent><S-F9>      :call Font(g:font_type == 1 ? 0 : 1)<CR>
       imap <silent><S-F9> <C-o>:call Font(g:font_type == 1 ? 0 : 1)<CR>
 
 " ui.vim

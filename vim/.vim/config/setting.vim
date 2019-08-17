@@ -47,6 +47,8 @@
           \, '-' : { 'pattern' : '--',       'left_margin' : 2 }
           \, '#' : { 'pattern' : ' #',       'left_margin' : 1 }
           \, '"' : { 'pattern' : ' "',       'left_margin' : 1 }
+          \, ':' : { 'pattern' : ':',        'left_margin' : 0, 'right_margin' : 0 }
+          \, '.' : { 'pattern' : '\.',       'left_margin' : 1, 'right_margin' : 1 }
           \}
 
       let g:easy_align_ignore_groups = []  " process comments
@@ -145,7 +147,7 @@
       endfunction
 
       " correction related, but really bound to Pencil
-      nmap <silent><S-F6> :silent call <SID>toggleSpell()<CR>
+      nmap <silent><S-F6>      :silent call <SID>toggleSpell()<CR>
       imap <silent><S-F6> <C-o>:silent call <SID>toggleSpell()<CR>
 
       autocmd plugin Filetype draft        call litecorrect#init()
@@ -398,7 +400,7 @@
         call Status('Typography', s:educate)
       endfunction
 
-      nmap <silent><F11> :call <SID>toggleEducate()<CR>
+      nmap <silent><F11>      :call <SID>toggleEducate()<CR>
       imap <silent><F11> <C-o>:call <SID>toggleEducate()<CR>
 
       " with vim-surround: cs"q

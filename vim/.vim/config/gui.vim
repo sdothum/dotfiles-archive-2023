@@ -16,7 +16,7 @@
 
     " ............................................................... Toggle gui
 
-      nnoremap <silent><S-F12> :ToggleGui<CR>
+      nnoremap <silent><S-F12>      :ToggleGui<CR>
       inoremap <silent><S-F12> <C-o>:ToggleGui<CR>
       vnoremap <silent><S-F12> :<C-u>ToggleGui<CR>
 
@@ -26,7 +26,7 @@
         autocmd gui VimEnter * RedrawGui
       endif
 
-      nnoremap <silent><F12> :RedrawGui<CR>
+      nnoremap <silent><F12>      :RedrawGui<CR>
       inoremap <silent><F12> <C-o>:RedrawGui<CR>
       vnoremap <silent><F12> :<C-u>RedrawGui<CR>
 
@@ -88,7 +88,7 @@
 
     " ...................................................... Line wrap highlight
 
-      nmap <silent><F8> :ToggleColumnWrap<CR>
+      nmap <silent><F8>      :ToggleColumnWrap<CR>
       imap <silent><F8> <C-o>:ToggleColumnWrap<CR>
 
     " ............................................................. Line numbers

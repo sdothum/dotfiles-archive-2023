@@ -127,7 +127,7 @@
 
     " ............................................................ Switch colour
 
-      nmap <silent><S-F8> :LiteSwitch<CR>
+      nmap <silent><S-F8>      :LiteSwitch<CR>
       imap <silent><S-F8> <C-o>:LiteSwitch<CR>
 
       autocmd theme InsertEnter * LineNr
