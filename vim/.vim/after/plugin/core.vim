@@ -1,11 +1,11 @@
 " sdothum - 2016 (c) wtfpl
 
-" Primitive
+" Core
 " ══════════════════════════════════════════════════════════════════════════════
 
-  " System _____________________________________________________________________
+  " Vim ________________________________________________________________________
 
-    " .............................................................. Reload vim
+    " ............................................................... Reload vim
 
       " this function can only be defined in autoloaded source to avoid reload conflict
       function! s:vimrc()
@@ -26,6 +26,8 @@
       command! Hi  enew | put=execute('hi')  | normal gg
       command! Map enew | put=execute('map') | normal gg
 
+  " System _____________________________________________________________________
+
     " ....................................................... Error message trap
 
       " ignore 1st time error messages from plugins (uninitialized s:variables)
@@ -44,6 +46,18 @@
         echo a:message . (a:state ? ' ON' : ' OFF')
       endfunction
 
+  " Text _______________________________________________________________________
+
+    " ......................................................... (Non-)blank line
+
+      function! NonBlankLine()
+        return matchstr(getline(line('.')), '\S') > ''
+      endfunction
+
+      function! BlankLine()
+        return ! NonBlankLine()
+      endfunction
+
     " ............................................................... Print file
 
       " latex printing
@@ -55,18 +69,6 @@
       endfunction
 
       command! Hardcopy silent call <SID>hardcopy()
-
-  " Text _______________________________________________________________________
-
-    " ........................................................... Non-blank line
-
-      function! NonBlankLine()
-        return matchstr(getline(line('.')), '\S') > ''
-      endfunction
-
-      function! BlankLine()
-        return ! NonBlankLine()
-      endfunction
 
   " Filetype ___________________________________________________________________
 

@@ -11,8 +11,8 @@
 
       " let g:gui = has('gui_running') ? 1 : 0  " gvim or console
 
-      let g:ruler             = 0       " colorcolumn mode, see theme.vim
-      let g:wrap_highlighting = 0       " wrap highlighting (0) off (1) on
+      let g:ruler             = 0  " colorcolumn mode, see theme.vim
+      let g:wrap_highlighting = 0  " wrap highlighting (0) off (1) on
 
     " ............................................................... Toggle gui
 

@@ -7,8 +7,9 @@
 
     " .................................................................... Setup
 
-      let mapleader   = "\<Space>"    " remap <leader> a la spacemacs
-      let g:mapleader = "\<Space>"
+      let mapleader      = "\<Space>"  " remap <leader> a la spacemacs
+      let g:mapleader    = "\<Space>"
+      let s:modal_strict = 0           " modal vim cursor keys (0) allow (1) disable
 
       augroup kbd | autocmd! | augroup END
 
@@ -31,24 +32,28 @@
       nmap <leader>( {{)
       nmap <leader>) })
 
-      " " insert mode local region cursor movements
-      " " <C-h> is overridden by auto-pairs delete <BS> when enabled
-      " imap <C-h>   <Left>
-      " imap <C-j>   <Down>
-      " imap <C-k>   <Up>
-      " imap <C-l>   <Right>
+      " insert mode local region cursor movements
+      if s:modal_strict
+        " <C-h> is overridden by auto-pairs delete <BS> when enabled
+        imap <C-h>   <Left>
+        imap <C-j>   <Down>
+        imap <C-k>   <Up>
+        imap <C-l>   <Right>
+      endif
 
     " ............................................................. Disable keys
 
-      " " affirm vim modal usage but these keys are remapped below anyway :)
-      " imap <down>  <nop>
-      " imap <left>  <nop>
-      " imap <right> <nop>
-      " imap <up>    <nop>
-      " nmap <down>  <nop>
-      " nmap <left>  <nop>
-      " nmap <right> <nop>
-      " nmap <up>    <nop>
+      " affirm vim modal usage but these keys are remapped below anyway :)
+      if s:modal_strict
+        imap <down>  <nop>
+        imap <left>  <nop>
+        imap <right> <nop>
+        imap <up>    <nop>
+        nmap <down>  <nop>
+        nmap <left>  <nop>
+        nmap <right> <nop>
+        nmap <up>    <nop>
+      endif
 
   " Keyboard shortcuts _________________________________________________________
 
@@ -106,14 +111,10 @@
   
     " ................................................................. Personal
 
-      command! I call iabbrev I i
-
-      nmap <C-F6> :unabbrev I<CR>
-      imap <C-F6> <C-o>:unabbrev I<CR>
+      " restore I capitalization convention
+      command! I unabbrev I | iabbrev i I
     
-      autocmd kbd Filetype draft    iabbrev I i
-      autocmd kbd Filetype mail     iabbrev I i
-      autocmd kbd Filetype markdown iabbrev I i
-      autocmd kbd Filetype note     iabbrev I i
+      " i am
+      autocmd kbd Filetype markdown,mail,draft,note iabbrev I i
 
 " keyboard.vim

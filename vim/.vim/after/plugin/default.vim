@@ -7,7 +7,7 @@
 
     " .............................................................. Debug trace
 
-      let g:trace = $VIMTRACE > '' ? 1 : 0
+      let g:trace = $VIMTRACE > '' ? 1 : 0  " touch ~/.session/vimtrace
 
       " escape problematic shell commandline characters
       function! s:trace(msg)
@@ -16,7 +16,7 @@
 
       command! -nargs=1 Trace call <SID>trace(<f-args>)
 
-    " ............................................................ Open terminal
+    " ................................................................. Terminal
 
       " !term fails on shell error 1 (?)
       command! Term :call system('term "vimterm" STACK')
@@ -25,7 +25,7 @@
 
     " ................................................................... Macros
 
-      " see https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
+      " https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
       function! s:replayLastMacro()
         try
           normal @@
@@ -55,6 +55,8 @@
 
       command! ToggleWrap call <SID>toggleWrap()
 
+  " Search and replace _________________________________________________________
+
     " ....................................................... Incremental search
 
       function! s:toggleWrapSearch()
@@ -65,7 +67,7 @@
 
       command! ToggleWrapSearch call <SID>toggleWrapSearch()
 
-    " ....................................................... Search and replace
+    " .................................................................. Replace
 
       " restore search highlight after replace
       function! s:searchReplace(cmd)

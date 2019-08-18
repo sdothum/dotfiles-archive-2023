@@ -33,13 +33,24 @@
 
   " Look _______________________________________________________________________
 
+    " ............................................................. Line numbers
+
+      " toggle relative number, line number and no numbering
+      function! s:toggleNumber()
+        if (&relativenumber == 1 && &number == 1)     | set norelativenumber
+        elseif (&relativenumber == 0 && &number == 1) | set nonumber
+        else                                          | set relativenumber | set number | endif
+      endfunction
+
+      command! ToggleNumber silent! call <SID>toggleNumber()
+
     " ........................................................... Column margins
 
       augroup column | autocmd! | augroup END
 
       set colorcolumn=0  " highlight column
 
-      " toggle colorcolumn modes, see theme:Indents()
+      " toggle colorcolumn modes, see theme:Guides()
       function! s:toggleColumn()
         if g:ruler == 0
           let g:ruler      = 1
@@ -53,11 +64,13 @@
           let &colorcolumn = 0
           ColumnWrap
         endif
-        Indents
+        Guides
         let g:column = 1  " flash column position, see autocmd info.vim
       endfunction
 
       command! ToggleColumn silent! call <SID>toggleColumn()
+
+  " Highlights _________________________________________________________________
 
     " ...................................................... Line wrap highlight
 
@@ -85,17 +98,6 @@
       endfunction
 
       command! -nargs=? ToggleColumnWrap silent! call <SID>toggleColumnWrap(<f-args>)
-
-    " ............................................................. Line numbers
-
-      " toggle relative number, line number and no numbering
-      function! s:toggleNumber()
-        if (&relativenumber == 1 && &number == 1)     | set norelativenumber
-        elseif (&relativenumber == 0 && &number == 1) | set nonumber
-        else                                          | set relativenumber | set number | endif
-      endfunction
-
-      command! ToggleNumber silent! call <SID>toggleNumber()
 
     " ..................................................... Trailing white space
 

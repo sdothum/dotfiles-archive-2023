@@ -67,14 +67,6 @@
         execute 'normal! ' . l:col . '|'
       endfunction
 
-      function! ToggleProof()
-        Trace ui:ToggleProof()
-        if CommandWindow() | return | endif
-        " if Prose() | let b:view = b:view == 0 ? 1 : 0 | endif
-        let b:view = b:view == 0 ? 1 : 0
-        call s:view()
-      endfunction
-
       function! s:setView()
         Trace ui:setView()
         if g:view == 0 | call s:codeView()
@@ -91,6 +83,16 @@
       endfunction
       
       command! SwitchView silent! call <SID>switchView()
+
+    " .............................................................. Insert mode
+
+      function! ToggleProof()
+        Trace ui:ToggleProof()
+        if CommandWindow() | return | endif
+        " if Prose() | let b:view = b:view == 0 ? 1 : 0 | endif
+        let b:view = b:view == 0 ? 1 : 0
+        call s:view()
+      endfunction
 
   " Screen focus _______________________________________________________________
 

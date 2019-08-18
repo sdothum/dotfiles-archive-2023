@@ -87,7 +87,9 @@
         execute 'return ' . a:varname
       endfunction
 
-    " ............................................................... Highlights
+  " Highlights _________________________________________________________________
+
+    " .................................................................. General
 
       function! s:highlights()
         Trace theme:highlights()
@@ -111,17 +113,6 @@
         execute 'hi VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
         execute 'hi VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
 
-        hi! link htmlH1     Statement  " markdown heading content
-        hi! link htmlH2     Statement
-        hi! link htmlH3     Statement
-        hi! link htmlH4     Statement
-        hi! link mkdHeading Statement
-        hi! link mkdLink    htmlString
-        hi! link SneakScope Cursor
-        hi! link SpellCap   SpellBad
-        hi! link SpellLocal SpellBad
-        hi! link SpellRare  SpellBad
-
         if &background == 'light'  " add flatwhite contrast
           execute 'hi IncSearch  guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'hi Search     guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
@@ -129,7 +120,8 @@
         execute 'hi StatusLineNC gui=nocombine guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
       endfunction
 
-      " line numbers
+    " ............................................................. Line numbers
+
       function! s:lineNr()
         Trace theme:LineNr
         if CommandWindow() | return | endif
@@ -142,9 +134,10 @@
 
       command! LineNr silent! call <SID>lineNr()
 
-      " ruler, indents
-      function! s:indents()
-        Trace theme:Indents
+    " ............................................................ Indent guides
+
+      function! s:guides()
+        Trace theme:Guides
         execute 'hi IndentGuidesOdd  guibg=' . s:hexValue('s:dfm_bg_'        . &background)
         execute 'hi IndentGuidesEven guibg=' . s:hexValue('s:dfm_bg_line_'   . &background)
         if g:ruler == 1 | execute 'hi ColorColumn guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
@@ -157,7 +150,9 @@
         endif
       endfunction
 
-      command! Indents silent! call <SID>indents()
+      command! Guides silent! call <SID>guides()
+
+    " ............................................................ Plugin tweaks
 
       function! s:plugins()
         Trace theme:plugins()
@@ -185,7 +180,8 @@
         hi! link SignifySignDelete SignifyLineDelete
       endfunction
 
-      " simple console theme tweaks to maximize transparency
+    " .................................................................. Console
+
       function! s:console()
         Trace theme:console()
         colorscheme pencil  " a theme that can be minimally tweaked for transparency
@@ -204,6 +200,21 @@
         call s:noTilde()
       endfunction
 
+    " ............................................................ Syntax tweaks
+
+      function! s:syntax()
+        hi! link htmlH1     Statement  " markdown heading content
+        hi! link htmlH2     Statement
+        hi! link htmlH3     Statement
+        hi! link htmlH4     Statement
+        hi! link mkdHeading Statement
+        hi! link mkdLink    htmlString
+        hi! link SneakScope Cursor
+        hi! link SpellCap   SpellBad
+        hi! link SpellLocal SpellBad
+        hi! link SpellRare  SpellBad
+      endfunction
+
   " Theme ______________________________________________________________________
 
     " ........................................................... Initialization
@@ -213,7 +224,8 @@
         Trace theme:Theme
         call s:highlights()
         call s:plugins()
-        call s:indents()
+        call s:guides()
+        call s:syntax()
         call Margins()
         call s:noTilde()
         ColumnWrap
@@ -245,13 +257,13 @@
         Trace theme:LiteSwitch
         Quietly LiteDFMClose  " trap and ignore initialization error
         call s:nextColorScheme()
-        let s:sync = 1        " see theme:Indents()
+        let s:sync = 1        " see theme:Guides()
         call LiteType()
       endfunction
 
       command! LiteSwitch silent! call <SID>liteSwitch()
 
-  "  Distraction free highlight ________________________________________________
+  "  Distraction free mode _____________________________________________________
 
     " ................................................................ Code view
 
@@ -306,7 +318,9 @@
 
       command! -nargs=1 Contrast silent! call <SID>contrast(<f-args>)
 
-    " ............................................................... Statusline
+  " Statusline _________________________________________________________________
+
+    " ............................................................ Single window
 
       " undo statusline gui=reverse
       function! s:showStatusLine()
@@ -324,6 +338,8 @@
       endfunction
 
       command! HideInfo silent! call <SID>hideInfo()
+
+  " .............................................................. Split windows
 
     " split window statusline background, see ui.vim autocmd
       function! s:splitColors()

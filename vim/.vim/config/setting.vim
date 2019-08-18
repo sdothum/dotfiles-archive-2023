@@ -126,7 +126,7 @@
 
     " ............................................................ Indent guides
 
-      let g:indent_guides_auto_colors = 0  " highlight even indents, see core#ToggleColumn(), theme#Indent()
+      let g:indent_guides_auto_colors = 0  " highlight even indents, see gui:ToggleColumn, theme:Guides()
 
       nmap <silent><leader><Bar> :IndentGuidesToggle<CR>
 
@@ -154,10 +154,6 @@
       autocmd plugin Filetype note         call litecorrect#init()
       autocmd plugin Filetype mail         call litecorrect#init()
       autocmd plugin FileType markdown,mkd call litecorrect#init()
-
-    " .................................................................. LiteDFM
-
-      let g:lite_dfm_left_offset = 22    " see theme#Margin()
 
     " ............................................................ Narrow region
 

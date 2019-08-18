@@ -31,21 +31,21 @@
 
       " keep persistent undo history across sessions, by storing in file
       silent !mkdir ~/.vim/backups 2>/dev/null
-      set history=1000      " store lots of :cmdline history
+      set history=1000            " store lots of :cmdline history
       set undodir=~/.vim/backups
       set undofile
-      set undolevels=1000   " maximum number of changes that can be undone
-      set undoreload=10000  " maximum number lines to save for undo
+      set undolevels=1000         " maximum number of changes that can be undone
+      set undoreload=10000        " maximum number lines to save for undo
       set nowritebackup
 
     " .............................................................. Spell check
 
       set dictionary=/usr/share/dict/words
-      set complete+=k    " <C-p> to complete list word
+      set complete+=k             " <C-p> to complete list word
       set keywordprg=dict
-      set nospell        " spell checking off by default for code
+      set nospell                 " spell checking off by default for code
       " " set thesaurus=/usr/share/dict/thesaurus
-      " set complete+=s  " disabled, selection list too long
+      " set complete+=s           " disabled, selection list too long
 
     " ................................................................... Screen
 

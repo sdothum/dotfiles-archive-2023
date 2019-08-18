@@ -25,9 +25,9 @@
       nmap <silent><F9>      :call Retheme()<CR>
       imap <silent><F9> <C-o>:call Retheme()<CR>
 
-      autocmd ui VimResized,FocusGained * call Margins()
-      " when VimResized doesn't trigger Margins()
-      autocmd ui CursorHold             * if g:lite_dfm_left_offset != Offset() | call Margins() | endif
+      " window manager timing requires FocusLost trap with VimResized to consistently set margins
+      autocmd ui VimEnter,VimResized,FocusLost * call Margins()
+      autocmd ui CursorHold,FocusGained        * if g:lite_dfm_left_offset != Offset() | call Margins() | endif
 
     " ............................................................... Initialize
 

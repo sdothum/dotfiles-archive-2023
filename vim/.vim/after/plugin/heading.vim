@@ -31,10 +31,11 @@
 
       command! -nargs=1 Drawline silent! call <SID>drawline(<f-args>)
 
+  " Sub-heading styles _________________________________________________________
+
     " .................................................................. Trailer
 
       " example: append trailer ________________________________________________
-
       function! s:appendTrailer(delimiter)
         if NonBlankLine()
           if matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$') > ''  " remove existing trailer
@@ -65,7 +66,6 @@
     " ................................................................... Leader
 
       " ................................................. example: insert leader
-
       function! s:insertLeader(delimiter)
         if NonBlankLine()
           if matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s') > '' | execute 'normal! ^wdf ' | endif  " remove existing leader
@@ -92,7 +92,6 @@
     " .................................................................. Justify
 
       "                                                         example: justify
-      
       function! s:justify()
         execute 's/\v^([ \t]*[^ \t]*)[ \t]*/\1 /'
         call s:insertLeader('▔')
