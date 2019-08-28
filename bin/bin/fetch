@@ -7,15 +7,17 @@
 # ........................................................................ Fetch
 
 fetch=/usr/bin/neofetch
+BG='263238'  # quantum background hexcolor
 
 # fetch wrapper
 [ $1 ] && exec $fetch --help
 
 focus frame
 # hide cursor (make it dark!)
-xterm -cr '#010101' \
+SHELL=/usr/bin/dash                      \
+  xterm -bg "#$BG" -cr "#$(( $BG + 1 ))" \
       -e "$fetch --config off --block_range 0 15 --gap 5 --size 340 --xoffset 55 --yoffset 30 \
-                 --backend w3m --w3m $(lname $HOME/images/backgrounds/default) \
-          && echo && read CLOSE"
+                 --backend w3m --w3m $(lname $HOME/images/backgrounds/default)                \
+          && read CLOSE"
 
 # vim: set ft=sh: #

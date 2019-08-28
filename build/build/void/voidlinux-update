@@ -51,14 +51,6 @@ dmenu configs init &
                                                             title "applications"
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-if [ ! -L /srv/http/tt-rss/themes/default.css ] && [ -d /srv/http/tt-rss/themes ] ;then
-heading "restore tt-rss theme"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-  cd /srv/http/tt-rss/themes
-  # ln -sfv particle_clean.css default.css
-  ln -sfv particle_clean.css clean.css
-fi
-
 fetch
 
 # vim: set ft=sh: #
