@@ -11,7 +11,7 @@
 
 title "setup"
 # ══════════════════════════════════════════════════════════════════════════════
-connected || post_install connman
+pong || post_install connman
 # default mail addresses
 config_install L /etc/aliases
 

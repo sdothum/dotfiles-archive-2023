@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [-]*[S | U | R] [-<options>] [--<option>]* [<package>]"
+  echo "usage: $(basename $0) [[-][S | U | R] | [- | +]] [-<options>] [--<option>]* [<package>]"
   echo "        S .. noconfirm"
   echo "       -S .. confirm"
   echo "       -S update repos"
@@ -18,7 +18,7 @@ usage() {
   echo "       -R .. non-recursive"
   echo "          .. query"
   echo "       -  search"
-  echo "       -- installed"
+  echo "       +  installed"
   exit 1
 }
 
@@ -33,7 +33,7 @@ case $1 in
  R) action=remove; recursive='-R' ;;
 -R) action=remove ;;
 - ) action=search ;;
---) action=installed ;;
++ ) action=installed ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 
@@ -44,9 +44,9 @@ options=${options% *}
 
 case $action in
 installed) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
-search   ) xbps-query -Rs $options $package | a $package ;;
 query    ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove   ) sudo xbps-remove $recursive $options $package ;;
+search   ) xbps-query -Rs $options $package | a $package ;;
 sync     ) sudo xbps-install $yes $options $package ;;
 update   ) sudo xbps-install $yes $options -u $package ;;
 esac

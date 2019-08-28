@@ -139,6 +139,7 @@ if [ $check ] ;then
   ditto missing "$(wc -l $missing | cut -d' ' -f1) packages"
   cat $missing
   ditto "m make_install packages cannot be verified"
+  ditto run "bundle_install $missing"
   exit
 fi
 if [ $deferred ] && [ -e $deferred ] ;then

@@ -5,10 +5,9 @@
 
 # ........................................................................ msmtp
 
-sudo cp -v /usr/share/doc/msmtp/msmtpqueue/msmtp*.sh /usr/local/bin/
-sudo chmod -c 755 /usr/local/bin/msmtp*.sh
+config_install /usr/local/bin/msmtp-enqueue.sh
+config_install /usr/local/bin/msmtp-listqueue.sh
+config_install /usr/local/bin/msmtp-runqueue.sh
 sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/local/bin/sendmail
-original /usr/sbin/sendmail
-sudo ln -svf /usr/local/bin/sendmail /usr/sbin/sendmail
 
 # vim: set ft=sh: #

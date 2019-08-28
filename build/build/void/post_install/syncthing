@@ -11,7 +11,7 @@
 echo "fs.inotify.max_user_watches=204800" | sudo tee -a /etc/sysctl.conf >/dev/null
 sudo sysctl -w fs.inotify.max_user_watches=204800
 
-sudo cp -R $HOME/build/root/etc/sv/syncthing /etc/sv/
+config_install /etc/sv/syncthing
 # service enable syncthing
 
 # vim: set ft=sh: #

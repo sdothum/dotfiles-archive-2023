@@ -11,9 +11,12 @@ sudo sed -i 's/^#X11Forwarding no/X11Forwarding yes/' /etc/ssh/sshd_config
 ifnsed /etc/ssh/sshd_config 'AcceptEnv LANG LC_' '$aAcceptEnv LANG LC_*'
 service enable sshd
 
-ditto "Generate public/private rsa key pair:
-ssh-keygen -t rsa -b 2048
-sshid <host> to enable passwordless login"
-# ssh-copy-id $USER@destination (?) doesn't work
+ditto 'configure local network autologin'
+rm -f $HOME/.ssh/known_hosts
+ssh-keygen -t rsa -b 2048  # generate public/private rsa key pair
+subnet=$(ip addr show | grep 'inet ' | grep -v 127.0.0.1 | cut -d/ -f1 | sed -r 's/.* (.*\.)[0-9]*$/\1/')
+for i in $(grep $subnet /etc/hosts | grep -v '#' | grep -v $(hostname) | awk '{ print $2 }') ;do
+  pong $i && sshid $i  # ssh-copy-id $USER@destination (?) doesn't work
+done
 
 # vim: set ft=sh: #

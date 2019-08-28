@@ -7,7 +7,7 @@
 
 ifnsed /etc/nsswitch.conf 'mdns_minimal' '/^hosts:/s/ resolve/ mdns_minimal resolve/'
 
-sudo sv restart avahi-daemon
+service restart avahi-daemon
 ditto 'avahi-discover to list network shareable devices'
 
 # vim: set ft=sh: #

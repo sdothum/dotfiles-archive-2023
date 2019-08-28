@@ -17,7 +17,7 @@
 ADBLOCK=/tmp/adblock
 LOG=$ADBLOCK.log
 
-connect || exit
+connect || exit 1
 
 [ -d $HOME/adblock ] || mkdir -v $HOME/adblock
 cd $HOME/adblock
@@ -25,10 +25,17 @@ rm -f adblock
 
 trace "Generating adblock.." >>$LOG
 
+count() { wc -l $ADBLOCK:$1; }
+
 addblock() {
   cat >$ADBLOCK:$1
   cat $ADBLOCK:$1 >>adblock
   wc -l $ADBLOCK:$1
+  if [ $(count $1 | cut -d' ' -f1) -eq 0 ] ;then
+    ditto error "$(count $1)"
+    exit 1
+  fi
+  count $1
 }
 
 if [ -z $1 ] ;then

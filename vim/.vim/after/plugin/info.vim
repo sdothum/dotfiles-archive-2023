@@ -30,7 +30,7 @@
               if l:char !~ s:ascii && l:char != "'"  " show hex value, not interested in ascii keyboard characters
                 let l:statusmsg = v:statusmsg
                 normal! ga
-                let l:hex       = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
+                let l:hex       = 'U+' . matchstr(split(v:statusmsg)[2], '[^,]*')
                 let v:statusmsg = l:statusmsg
                 " clear ga information!
                 echo ''
@@ -111,8 +111,8 @@
     " ............................................................... File state
 
       function! UnModified(show)
-        " return &modifiable ? (&modified ? g:modified_ind : a:show == 1 ? g:unmodified_ind : '') : g:unmodifiable_ind
-        return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:modified_ind : a:show == 1 ? g:unmodified_ind : '') : g:unmodifiable_ind) : g:inactive_ind
+        " return &modifiable ? (&modified ? g:state[2] : a:show == 1 ? g:state[0] : '') : g:state[1]
+        return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:state[2] : a:show == 1 ? g:state[0] : '') : g:state[1]) : g:state[3]
       endfunction
 
     " ................................................................ Left path
@@ -139,7 +139,7 @@
     " ........................................................... Escaped leader
 
       function! Leader(text)
-        return repeat(' ', (winwidth(0) / 2) - strlen(a:text) - strlen(g:pad_inner))
+        return repeat(' ', (winwidth(0) / 2) - strlen(a:text) - strlen(g:pad[0]))
       endfunction
 
       function! Escape(text)

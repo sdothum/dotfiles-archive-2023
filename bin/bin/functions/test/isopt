@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-[ "$1" ] || usage
+[ $# -gt 0 ] || usage
 echo "$1" | egrep -q "^[-][-]?[[:alnum:]|-]*$"
 
 # vim: set ft=sh: #

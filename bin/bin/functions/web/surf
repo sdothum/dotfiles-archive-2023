@@ -9,7 +9,7 @@
 if [ "$1" ] ;then
   /usr/bin/surf "$@"
 else
-  ping -c 1 -W 1 $SERVER >/dev/null 2>&1 && TTRSS=$SERVER || TTRSS=localhost
+  pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
   /usr/bin/surf http://$TTRSS:8000/tt-rss/ &
 fi
 

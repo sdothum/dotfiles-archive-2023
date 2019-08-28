@@ -1,1 +1,13 @@
-../../arch/post_install/alsa-utils
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... alsa
+
+# see post-install pulseaudio
+# amixer sset Master unmute
+sudo usermod -a -G audio $USER
+service enable alsa
+
+# vim: set ft=sh: #

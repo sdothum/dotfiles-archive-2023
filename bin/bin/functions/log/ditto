@@ -9,7 +9,7 @@
 # ..................................................................... Annotate
 
 usage() {
-  echo "usage: $(basename $0) @ <desc> | [-- | .. | <desc>] <message>"
+  echo "usage: $(basename $0) @ <desc> | [<desc> | -- | ..] <message>"
   echo '       where, default <desc> -> "note"'
   echo '                          -- -> line separator'
   echo '                          .. -> justify leader'

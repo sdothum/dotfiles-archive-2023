@@ -12,8 +12,7 @@ root=$HOME/build/root
 if [ $1 ] ;then
   [ $# -eq 2 ] && host=.$2
   mkdir -pv $root/.${1%/*} || exit 1
-  ditto copying "$(sudo cp -v $1 $root/.${1}$host)"
-  sudo chown -c shum:users $root/.${1}$host
+  [ -d $1 ] && ditto copying "$(sudo cp -rv --preserve=mode --no-preserve=ownership $1 $root/.${1%/*}$host)" || ditto copying "$(sudo cp -rv --preserve=mode --no-preserve=ownership $1 $root/.${1}$host)"
 fi
 
 # vim: set ft=sh: #

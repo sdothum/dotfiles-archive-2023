@@ -66,13 +66,10 @@ set -x BROWSER vimb
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
 # [ -z (pidof squid) ] ;or set -x HTTP_PROXY http://localhost:3128/
-connected luna ;and set -x HTTP_PROXY http://luna:3128/
+pong luna ;and set -x HTTP_PROXY http://luna:3128/
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
-
-# tt-rss
-set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
 
 # ..................................................................... Defaults
 
@@ -113,7 +110,7 @@ set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
 
 # tt-rss
-set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
+set -x SELF_URL_PATH 'http://localhost:8000/tt-rss/'
 
 # ..................................................................... Defaults
 

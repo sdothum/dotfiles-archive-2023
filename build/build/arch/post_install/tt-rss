@@ -33,12 +33,11 @@ ifnsed /usr/lib/systemd/system/tt-rss.service 'SELF_URL_PATH=http://localhost:80
 
 server && service enable tt-rss || ditto run "sudo systemctl start tt-rss"
 
-ditto "check /etc/php/php.ini
-install and start php-fpm
-install and start nginx server
-initialize database and config.php
-login http://localhost/tt-rss/install with ttrss/ttrss
-login http://localhost/tt-rss/ with admin/password
-set config.php to SINGLE_USER_MODE true"
+ditto check '/etc/php/php.ini'
+ditto install 'service enable php-fpm'
+ditto install 'service enable nginx'
+ditto http://localhost/tt-rss/install '[ttrss, ttrss]'
+ditto http://localhost/tt-rss/ '[admin, password]'
+ditto config.php 'SINGLE_USER_MODE true'
 
 # vim: set ft=sh: #

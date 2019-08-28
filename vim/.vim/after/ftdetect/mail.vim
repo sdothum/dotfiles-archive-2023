@@ -5,6 +5,6 @@
 
     " ..................................................................... Mail
   
-      autocmd BufRead *.eml set filetype=mail
+      autocmd BufNewFile,BufRead *.eml set filetype=mail
 
 " mail.vim

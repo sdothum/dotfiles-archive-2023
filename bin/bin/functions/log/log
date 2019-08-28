@@ -11,7 +11,6 @@
 # use -n option to suppress line break
 [ $logfile ] || export logfile=/tmp/session.log
 
-echo "$@" >>$logfile
-echo "$@"
+echo "$@" | tee -a $logfile 2>/dev/null  # suppress sudo log "permission denied" error 
 
 # vim: set ft=sh: #

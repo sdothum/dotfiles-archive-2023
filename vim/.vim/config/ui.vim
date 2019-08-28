@@ -7,14 +7,13 @@
 
     " .................................................................... Setup
 
-      let g:detail      = 0   " default expanded detail (0) tag (1) atom, see F7 map
-      let g:active      = 0   " active window tag
+      let g:detail    = 0   " default expanded detail (0) tag (1) atom, see F7 map
+      let g:active    = 0   " active window tag
 
       " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-      let g:source_font = 'Iosevka\'
-      let g:prose_font  = 'Iosevka-proof\'
-      let g:font_type   = -1  " current font setting (0) source (1) prose
-      let g:font_step   = empty(glob('~/.session/font++')) ? 1 : 2  " increase (point size) for prose
+      let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [source, prose]
+      let g:font_type = -1                                                        " current font setting (0) source (1) prose
+      let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " increase (point size) for prose
 
       augroup ui | autocmd! | augroup END
 

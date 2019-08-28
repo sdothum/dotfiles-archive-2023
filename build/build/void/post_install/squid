@@ -6,9 +6,8 @@
 # ........................................................................ squid
 
 config_install /etc/squid/squid.conf
-sudo sv down squid
 sudo squid -zN -z
 
-server && service enable squid
+server && { service enable squid; service down squid; }
 
 # vim: set ft=sh: #

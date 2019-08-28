@@ -11,6 +11,7 @@
 = ═════
   alsa-utils
   alsa-plugins
+  ConsoleKit2
   pavucontrol
   pulseaudio
   alsa-plugins-pulseaudio

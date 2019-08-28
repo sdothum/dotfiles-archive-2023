@@ -16,7 +16,7 @@ BLANK='ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff fff
 
 [ $1 ] || usage
 
-connected || { echo "$BLANK"; exit; } 
+pong || { echo "$BLANK"; exit; } 
 
 # flatten content into single lines
 palette() {

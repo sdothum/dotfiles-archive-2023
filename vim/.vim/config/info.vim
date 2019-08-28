@@ -7,16 +7,15 @@
 
     " .................................................................... Setup
 
+      " window g:state [0] unmodified [1] unmodifiable [2] modified [3] inactive
       if $DISPLAY > ''
-        let g:modified_ind     = ''  " nerd-font utf-8 symbols, see ui.vim
-        let g:unmodified_ind   = ''  " nerd-font utf-8 symbols, see ui.vim
-        let g:unmodifiable_ind = ''  " nerd-font utf-8 symbols, see ui.vim
-        let g:inactive_ind     = ''  " nerd-font utf-8 symbols, see ui.vim
+        if $MONO > ''
+          let g:state = ['', '', '', '']  " nerd-font utf-8 mono symbols, see ui.vim
+        else
+          let g:state = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim
+        endif
       else
-        let g:modified_ind     = '+'
-        let g:unmodified_ind   = ' '
-        let g:unmodifiable_ind = '-'
-        let g:inactive_ind     = ' '
+        let g:state   = ['^', '-', '+', 'x']  " console
       endif
 
       let g:prose              = 0    " generic filetype, see theme.vim

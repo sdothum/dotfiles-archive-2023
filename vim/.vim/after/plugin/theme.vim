@@ -108,16 +108,15 @@
         execute 'hi ShowMarksHLl    guibg=' . s:dfm_bg
         execute 'hi SignColumn      guibg=' . s:dfm_bg
         execute 'hi SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background) . ' gui=NONE'
+        execute 'hi StatusLineNC    guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status . ' gui=nocombine'
         execute 'hi User1           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user1
         execute 'hi User2           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user2
         execute 'hi VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
         execute 'hi VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
-
         if &background == 'light'  " add flatwhite contrast
           execute 'hi IncSearch  guifg=' . g:light_fg . ' guibg=' . s:dfm_cursor . ' term=none cterm=none gui=none'
           execute 'hi Search     guifg=' . g:white    . ' guibg=red guisp=red gui=bold'
         endif
-        execute 'hi StatusLineNC gui=nocombine guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status
       endfunction
 
     " ............................................................. Line numbers
@@ -142,7 +141,6 @@
         execute 'hi IndentGuidesEven guibg=' . s:hexValue('s:dfm_bg_line_'   . &background)
         if g:ruler == 1 | execute 'hi ColorColumn guibg=' . s:hexValue('s:dfm_bg_column_' . &background)
         else            | execute 'hi ColorColumn guibg=' . s:hexValue('s:dfm_bg_line_'   . &background) | endif
-
         if s:sync == 1  " refresh any indent guides, see theme:LiteSwitch()
           IndentGuidesToggle
           IndentGuidesToggle

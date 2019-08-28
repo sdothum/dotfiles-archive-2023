@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-ping -c 1 -W 1 $SERVER >/dev/null 2>&1 && TTRSS=$SERVER || TTRSS=localhost
+pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
 startpage="http://$TTRSS:8000/tt-rss/"
 size="$(fontsize)pt monospace"
 

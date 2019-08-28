@@ -13,7 +13,7 @@ timeout=300
 # kill remote weechat instances
 unlock() {
   for i in $(remotehosts) ;do
-    if ping -c 1 -W 1 $i >/dev/null 2>&1 ;then
+    if pong $i ;then
       if /usr/bin/ssh $i -- pkill -TERM -f 'weechat' 2>/dev/null ;then
         host=$i
         break
@@ -62,7 +62,7 @@ if server ;then
   else
     ditto 'znc server not running'
   fi
-elif connected $SERVER ;then
+elif pong $SERVER ;then
   # close (unlock) any remote instances
   pstat "ssh $SERVER -t weechat" && notify "Weechat" 'Instance already runnig' || { unlock; ssh $SERVER -t weechat; }
 else

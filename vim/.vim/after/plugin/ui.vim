@@ -7,12 +7,11 @@
 
     " .................................................................... Setup
 
-      let g:pad_inner    = '    '  " statusline padding
-      let g:pad_outer    = '   '   " expanded statusline padding
-      let g:view         = 1       " initial view mode (0) info (1) df
-      let s:expanded     = 0       " statusline state (0) dfm (1) expanded
-      let s:font_changed = 0       " redraw flag
-      let s:show         = 1       " statusline (0) off (1) on
+      let g:pad          = ['      ', '   ']  " statusline padding [inner, outer]
+      let g:view         = 1                  " initial view mode (0) info (1) df
+      let s:expanded     = 0                  " statusline state (0) dfm (1) expanded
+      let s:font_changed = 0                  " redraw flag
+      let s:show         = 1                  " statusline (0) off (1) on
 
   "  Distraction free modes ____________________________________________________
 
@@ -140,7 +139,7 @@
             let g:font_type = a:type
             let l:size      = system('fontsize')
             let l:size      = a:type == 0 ? l:size : l:size + g:font_step
-            execute 'set guifont=' . (Prose() ? g:prose_font : g:source_font) . ' ' . l:size
+            execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
             if s:font_changed
               RedrawGui
             endif
@@ -168,18 +167,18 @@
           if Prose() && a:proof == 0
             return Escape(Leader('') . '  %{UnModified(0)}%*')
           else
-            let l:name     = '%{Name()}' . g:pad_inner
+            let l:name     = '%{Name()}' . g:pad[0]
             if s:expanded == 0  " center dfm indicator / proofing statusline
               let l:leader = '%{Leader(Name())}'
             else
               let l:path   = '%{Path()}'
-              let l:leader = '%{Leader(Path() . g:pad_outer . Name())}'
+              let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{UnModified(1)}' . g:pad_inner . ' ' . '%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+            let l:info     = '%{UnModified(1)}' . g:pad[0] . '%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
             if s:expanded == 1
-              let l:name   = '%2*' . l:path . '%1*' . g:pad_outer . l:name
-              let l:info  .= g:pad_outer . '%2*%{Detail()}'
+              let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
+              let l:info  .= g:pad[1] . '%2*%{Detail()}'
             endif
             return Escape('%1*' . l:leader . l:name . l:info . '%1*')
           endif

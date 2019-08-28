@@ -8,7 +8,7 @@
 
 systemd() {
   usage() {
-    echo "usage: $(basename $0) [status | disable | enable | [-f] mask | unmask | reload | restart | start | stop | toggle] <service>"
+    echo "usage: $(basename $0) [status | disable | enable | start | stop | restart | toggle | [-f] mask | unmask | reload] <service>"
     exit 1
   }
 
@@ -38,12 +38,13 @@ systemd() {
 
 s6() {
   usage() {
-    echo "usage: $(basename $0) [info | disable | enable | restart | start | stop | toggle] <service>"
+    echo "usage: $(basename $0) [info | disable | enable | start | stop | restart | toggle] <service>"
     exit 1
   }
 
   sv() { eval sudo 66-$1 $2 $3; }
 
+  # configure s6 daemon
   case $1 in
   ''     ) usage ;;
   disable) sv disable -S $2 ;;
@@ -63,25 +64,32 @@ s6() {
 
 runit() {
   usage() {
-    echo "usage: $(basename $0) [info] | [disable | enable | restart | down (at boot)] <service>"
+    echo "usage: $(basename $0) [@] | [status | disable | enable | up | down | restart | mask] <service>"
     exit 1
   }
 
   [ -e /etc/sv/$2 ] || usage
 
-  # configure systemd daemon
+  enabled() { [ -L /var/service/$service ]; }
+  status()  { sleep 1; enabled && sudo sv status $service || ditto service "$service unavailable"; }
+
+  # configure runit daemon
+  service=$2
   case $1 in
   ''     ) ls /etc/sv ;;
+  @      ) ls /var/service; sudo find /etc/sv -name down ;;  # active services
   disable) sudo rm -fv /var/service/$2 ;;
-  down   ) sudo touch /etc/sv/$2/down ;;
-  enable ) sudo ln -sfv /etc/sv/$2 /var/service/; sudo rm -f /etc/sv/$2/down ;;
-  info   ) ls /var/service; sudo find /etc/sv -name down ;;
-  restart) sudo sv restart $2 ;;
-  *      ) usage ;;
+  down   ) enabled && sudo sv down $2; status ;;
+  enable ) sudo ln -sfv /etc/sv/$2 /var/service/; sudo rm -f /etc/sv/$2/down; status ;;
+  mask   ) enabled && sudo touch /etc/sv/$2/down; status ;;  # down at boot
+  restart) enabled && sudo sv restart $2 || service enable $2; status ;;
+  status ) status ;;
+  up     ) enabled && sudo sv up $2; status ;;
+  *      ) service=$1; enabled && status || usage ;;
   esac
   exit
 }
 
-exists systemctl && systemd $@ || exists runit && runit $@ || s6 $@
+exists runit && runit $@ || exists systemctl && systemd $@ || s6 $@
 
 # vim: set ft=sh: #

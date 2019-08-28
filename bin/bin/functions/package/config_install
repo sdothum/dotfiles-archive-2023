@@ -24,7 +24,7 @@ if [ $1 ] ;then
   if [ $link ] ;then
     ditto linking "$(sudo ln -sfv $root/.${1}$host $1)"
   else
-    ditto copying "$(sudo cp -v --no-preserve=mode,ownership $root/.${1}$host $1)"
+    ditto copying "$(sudo cp -rv --preserve=mode --no-preserve=ownership $root/.${1}$host $1)"
   fi
   ditto -- "check customization $1"
 fi

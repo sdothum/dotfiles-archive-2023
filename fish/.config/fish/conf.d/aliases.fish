@@ -19,8 +19,12 @@ alias sv 'service'
 if void
   alias svd 'service disable'
   alias sve 'service enable'
-  alias svi 'service info'
+  alias svl 'service list'
+  alias svm 'service mask'  # at boot
   alias svr 'service restart'
+  alias svs 'service status'
+  alias svt 'service down'
+  alias svu 'service up'
 else
   alias svd 'service disable'
   alias sve 'service enable'
@@ -29,7 +33,7 @@ else
   alias svm 'service mask'
   alias svr 'service restart'
   alias svs 'service start'
-  alias svt 'service stop'
+  alias svt 'service stop'  # terminate
   alias svu 'service unmask'
 end
 
@@ -115,7 +119,7 @@ alias dp 'dmenu - projects'
 alias dr 'dmenu - run'
 alias ds 'dmenu - scripts'
 alias nv 'nvpy'
-alias vd 'rm -f $HOME/.session/follow_the_sun ; gvimdiff --role=gvimdiff'
+alias vd 'rm -f $HOME/.session/follow_the_sun ; gvim -d --role=gvimdiff'
 alias sd 'sdiff -b -E -W -w(tput cols)'
 alias vdarchive 'dirdiff ./ /net/archive(pp)'
 alias vdbackup 'dirdiff ./ /net/backup(pp)'

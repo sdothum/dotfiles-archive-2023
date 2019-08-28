@@ -41,7 +41,7 @@ while read file <&3 ;do
     echo "${GREEN}${blink}-> $file${NOCOLOR}"
     if ! diff --color $w "$file" "$target/$file" ;then
       # see herbstluftwm gvimdiff rule
-      ifno "edit $file" && break || gvimdiff -c "$diffopt" -f --role=gvimdiff "$file" "$target/$file"
+      ifno "edit $file" && break || gvim -d -c "$diffopt" -f --role=gvimdiff "$file" "$target/$file"
       blink=${BLINK}
     else
       break

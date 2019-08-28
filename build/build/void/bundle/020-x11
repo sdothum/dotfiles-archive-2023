@@ -4,6 +4,10 @@
 # see bundle_install
 
 
+= bus
+= ═══
+  dbus
+
 = video driver
 = ════════════
   libva-intel-driver   [gpu intel]

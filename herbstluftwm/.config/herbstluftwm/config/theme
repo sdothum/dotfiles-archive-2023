@@ -48,10 +48,11 @@ hc attr theme.urgent.color            orange
 if is display -min ;then
   hc set window_gap                   1
   hc set frame_gap                    0
-elif is display -1920 ;then
+elif is display -=1920 ;then
   hc set window_gap                   3
   # hc set frame_gap                  $(( $SHADOW * 4 / 5 ))
-  hc set frame_gap                    $(( $SHADOW * 7 / 8 ))
+  # hc set frame_gap                  $(( $SHADOW * 7 / 8 ))
+  hc set frame_gap                    $SHADOW
 elif is display -2560 ;then
   hc set window_gap                   6
   hc set frame_gap                    $(( $SHADOW * 2 / 3 ))

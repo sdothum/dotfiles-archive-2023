@@ -46,9 +46,12 @@ if [ -z $video ] ;then
   [ -d "$1" ] && path=$1 || path=${1%/*}
   # attached usb drive?
   libext=$(find /run/media/$USER -maxdepth 3 -type d -name "$(basename $(dirname "$path"))" 2>/dev/null)
-  [ -n "$libext" ] && video=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
-  [ -z "$video"  ] && video=$path
-  video=$(find "$video" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
+  if [ -n "$libext" ] ;then
+    video=$(find "$libext" -maxdepth 1 -type d -name "${path##*/}")
+    video=$(find "$video" -regextype posix-extended -regex ".*($ext)" | grep -v sample)
+  else
+    video=$1
+  fi
 fi
 
 videomode on

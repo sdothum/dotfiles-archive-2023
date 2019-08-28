@@ -20,7 +20,7 @@ LOG=/tmp/$NAME.log
 ARM=pi
 
 # server is always online but satellite arm device may be offline (and sync on boot)
-# cpu arm || { ping -c 1 -W 1 pi >/dev/null 2>&1 || exit; }
+# cpu arm || { pong pi || exit; }
 cpu arm && target=$SERVER: || target=$ARM:
 
 info() {

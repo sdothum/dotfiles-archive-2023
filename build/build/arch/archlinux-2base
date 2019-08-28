@@ -16,7 +16,7 @@ title "setup"
 # sudo loadkeys colemak
 # server && sudo dhcpcd || sudo wifi-menu
 # sleep 5s
-connected || post_install connman
+pong || post_install connman
 # disable CoW on systemd journal
 sudo chattr +C /var/log/journal/
 # default mail addresses

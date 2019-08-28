@@ -5,6 +5,6 @@
 
     " ..................................................................... Text
   
-      autocmd BufRead *.txt set filetype=text
+      autocmd BufNewFile,BufRead *.txt set filetype=text
 
 " text.vim

@@ -6,7 +6,7 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [amphetype | code | proof] [double | single | futura | hooky | mono | patch | leading <height> | family <name>]*"
+  echo "usage: $(basename $0) iosevka [amphetype | code | proof | default] [double | single | futura | hooky | mono | patch | leading <height> | family <name>]*"
   exit 1
 }
 
@@ -14,8 +14,11 @@ REPO=/net/depot/Iosevka
 FONT=$HOME/.fonts/iosevka
 futura="'v-i-line', 'v-j-line', 'v-l-line', 'v-q-straight', 'v-t-cross'"
 hooky="'v-i-hooky', 'v-l-hooky'"
+leading=1250
 shape="'sans'"
-nerdfonts='--fontawesome --fontawesomeextension --material --octicons --powersymbols'
+storey=double
+# nerdfonts='--fontawesome --fontawesomeextension --material --octicons --powerline --weather'
+nerdfonts='--fontawesome --fontawesomeextension --octicons --powerline'
 
 shift  # basename is make_install, $1 == iosevka
 
@@ -23,7 +26,8 @@ hook() {
   storey=single
   style=$hooky
   leading=1250  # default
-  descender=0
+  # descender=0
+  descender=65  # default
   cap=735       # default
 }
 
@@ -31,7 +35,8 @@ line() {
   storey=single
   style=$futura
   leading=1250  # default
-  descender=0
+  # descender=0
+  descender=65  # default
   cap=830       # lengthen ascenders (also stretches caps, numbers and quotes)
 }
 
@@ -39,8 +44,9 @@ while [ $1 ] ;do
   case $1 in
   amphetype) hook; storey=double; family=${family}-amphetype; leading=1875 ;;  # 1.5 spacing
   code     ) line; design="'ligset-haskell'" ;;                                # default family
+  default  ) family=${family}-default; upright=$shape; italic="'italic'"; oblique="'italic'"; default=true ;;
   double   ) storey=double; family=${family}-double ;;                         # "a"
-  family   ) family=${family}$2;  shift ;;                                     # font family
+  family   ) family=${family}-$2;  shift ;;                                    # font family
   futura   ) line ;;                                                           # futura as can be!
   hooky    ) hook ;;                                                           # top hook
   leading  ) leading=$2; shift ;;                                              # line spacing
@@ -72,13 +78,15 @@ if [ $leading -gt 1250 ] ;then
   leading=$(( $leading - $descender ))
 fi
 
-alpha="$style, 'v-f-straight', 'v-g-singlestorey', 'v-m-longleg', 'v-y-straight'"
-math="'v-zero-slashed', 'v-one-hooky', 'v-tilde-low', 'v-asterisk-high', 'v-caret-high', 'v-brace-curly'"
-symbol="'v-paragraph-low', 'v-at-long', 'v-eszet-sulzbacher'"
-upright="$shape, $alpha, 'v-a-${storey}storey', $math, $symbol"
-design=${design:-$upright}
-italic="$shape, $alpha, 'v-a-singlestorey', $math, $symbol"
-oblique=$italic
+if [ ! $default ] ;then
+  alpha="$style, 'v-f-straight', 'v-g-singlestorey', 'v-m-longleg', 'v-y-straight'"
+  math="'v-zero-slashed', 'v-one-hooky', 'v-tilde-low', 'v-asterisk-high', 'v-caret-high', 'v-brace-curly'"
+  symbol="'v-paragraph-low', 'v-at-long', 'v-eszet-sulzbacher'"
+  upright="$shape, $alpha, 'v-a-${storey}storey', $math, $symbol"
+  design=${design:-$upright}
+  italic="$shape, $alpha, 'v-a-singlestorey', $math, $symbol"
+  oblique=$italic
+fi
 
 # build hooky [i l] single-storey [a g] character set
 cd /net/depot
@@ -96,37 +104,40 @@ else
 fi
 
 echo "[buildPlans.iosevka$family]            
-family = 'Iosevka$family'              
-design = [$design]             
-upright = ['upright-only', $upright]   
-italic = ['italic-only', $italic]     
-oblique = ['oblique-only', $oblique]   
+family  = 'Iosevka$family'
+design  = [$design]
+upright = ['upright-only', $upright]
+italic  = ['italic-only', $italic]
+oblique = ['oblique-only', $oblique]
 
 [buildPlans.iosevka$family.weights.regular]
 shape = 400                            
+menu  = 400                            
 css   = 400                            
 
 [buildPlans.iosevka$family.weights.bold]
 shape = 700
+menu  = 700                            
 css   = 700
 
 [buildPlans.iosevka$family.slants]
 upright = 'normal'
-italic = 'italic'
+italic  = 'italic'
 oblique = 'oblique'" >$REPO/private-build-plans.toml
 
 # ensure node.js is uptodate
 npm install
 
-sed -i -r "/^cap =/s/= ([0-9]*)/= $cap/; /^leading =/s/= ([0-9]*)/= $leading/; /^descenderPad =/s/= ([0-9]*)/= $descender/" $REPO/parameters.toml
+[ $default ] || sed -i -r "/^cap =/s/= ([0-9]*)/= $cap/; /^leading =/s/= ([0-9]*)/= $leading/; /^descenderPad =/s/= ([0-9]*)/= $descender/" $REPO/parameters.toml
 
-# npm run build -- ttf:Iosevka$family upright:"$upright" italic:"$italic" oblique:"$oblique" design:"$design"
-npm run build -- ttf:iosevka$family
+# npm run build -- ttf:iosevka$family  # pre Verda commits
+npm run build -- ttf::iosevka$family   # post Verda commits
 
 rm -rf $FONT
 cp -rv dist/iosevka$family $FONT
 
 # patch font
+# note: nerd-fonts v2.x currently breaks ligatures
 if [ $patch ] && [ -e /net/depot/nerd-fonts/font-patcher ] ;then
   rm -f /tmp/Iosevka*ttf
   /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerlineextra -out /tmp $REGULAR

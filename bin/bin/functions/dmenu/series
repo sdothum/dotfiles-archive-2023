@@ -77,6 +77,7 @@ while : ;do
 
     episode=$(echo "$episode" | sed "s/^$SEP //")
     video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
+    [ -z $video ] && video=$(find "$series" -maxdepth 1 -type f -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify 3 critical "$show" "Duplicate episodes found"
       sleep 3

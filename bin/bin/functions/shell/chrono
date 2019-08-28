@@ -4,7 +4,7 @@
 # Shell
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ....................................................................... H°M'S"
+# ....................................................................... H${H}M'S"
 
 usage() {
   echo "usage: $(basename $0) [-time] [<utcstart> [<utcstop>]]"
@@ -18,6 +18,8 @@ usage() {
 # [ "$2" ] && utc=$(echo $2 | bc) || utc=$(date +%s)
 [ "$2" ] && utc=$(( $2 )) || utc=$(date +%s)
 
+H=' '  # hours symbol
+
 elapsed() {
   bc <<EOF
     secs = $2 - $1
@@ -26,13 +28,13 @@ elapsed() {
     # print hrs, " ", mins, "'", secs, "\q", "\n"
     mins = mins - hrs * 60
     secs = secs - hrs * 3600 - mins * 60
-    # if (hrs) print hrs, "°", mins, "'", secs, "\q", "\n" else if (mins) print mins, "'", secs, "\q", "\n" else print secs, "\q", "\n"
-    if (hrs) print hrs, "°", mins, "'", secs, "\q", "\n" else print mins, "'", secs, "\q", "\n"
+    # if (hrs) print hrs, "${H}", mins, "'", secs, "\q", "\n" else if (mins) print mins, "'", secs, "\q", "\n" else print secs, "\q", "\n"
+    if (hrs) print hrs, "${H}", mins, "'", secs, "\q", "\n" else print mins, "'", secs, "\q", "\n"
 EOF
 }
 
 # 2 digit format dependencies
-time() { elapsed $1 $utc | sed "/°.'/s/°/°0/; /'.\"/s/'/'0/"; }
+time() { elapsed $1 $utc | sed "/${H}.'/s/${H}/${H}0/; /'.\"/s/'/'0/"; }
 
 [ $time ] && time $1 || ditto elapsed "$(time $1)"
 

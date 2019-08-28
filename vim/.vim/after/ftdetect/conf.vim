@@ -5,6 +5,6 @@
 
     " ..................................................................... Conf
   
-      autocmd BufRead *.conf,*.config set filetype=conf
+      autocmd BufNewFile,BufRead *.conf,*.config set filetype=conf
 
 " conf.vim

@@ -40,6 +40,6 @@ oftc channels:
 rizon channels:
 /join #anime-planet.com,#haruhichan,#rice"
 sudo -u znc znc --makeconf
-server && service enable znc || ditto run "sudo sv up znc"
+server && service enable znc || ditto run "service up znc"
 
 # vim: set ft=sh: #

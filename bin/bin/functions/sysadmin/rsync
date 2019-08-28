@@ -11,61 +11,29 @@ usage() {
   exit 1
 }
 
-isopt "$1" && { option=$1; shift; } || option='-a'
+EXCLUDE=$(dirname $0)/.rsync_exclude
+PLEX=/opt/plexmediaserver/Library/Application\ Support
 
 laptop=lumen
 netbook=monad
 server && target=$laptop || target=$SERVER
 
-PLEX=/opt/plexmediaserver/Library/Application\ Support
-
+isopt "$1" && { option=$1; shift; } || option='-a'
 dotfiles=$(cat $(dirname $(which dotfiles))/.dotfiles:folders)
 
-exclude="
-  --delete --delete-excluded 
-  --exclude='.adblock*' 
-  --exclude=.cabal 
-  --exclude=cache 
-  --exclude=.cache 
-  --exclude=.cargo 
-  --exclude=.cddb 
-  --exclude=.cddbslave 
-  --exclude=chromium 
-  --exclude=.dbus 
-  --exclude=dosdevices 
-  --exclude=drive_c 
-  --exclude=.fonts.dist 
-  --exclude=.gem 
-  --exclude=.ghc 
-  --exclude=.git 
-  --exclude=.kodi 
-  --exclude=.local/share 
-  --exclude=.macromedia 
-  --exclude=.molecule 
-  --exclude=mpv 
-  --exclude=.node-gyp 
-  --exclude=.npm 
-  --exclude=.nypy 
-  --exclude=.offlineimap 
-  --exclude=pkg.tar.xz 
-  --exclude=scratch 
-  --exclude='.steam*' 
-  --exclude=sync-conflict 
-  --exclude=.stack 
-  --exclude=.thumbnails 
-  --exclude=tmp 
-  --exclude=.VirtualBox 
-"
-
 # sync but..
+exclude="-r --delete --delete-excluded --exclude='lost+found' $(for i in $(cat $EXCLUDE) ;do [ -n $i ] && echo -n " --exclude='$i'" ;done)"
 exclude_http_local='--exclude=thedarnedestthing.db --exclude=log'
 exclude_trash='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
-rsync() { /usr/bin/rsync --info=progress2 $option --exclude='lost+found' $@; }
+rsync()      { eval ditto rsync \"$@\"; /usr/bin/rsync --info=progress2 $option --exclude='lost+found' $@; }
+sudo_rsync() { eval ditto rsync \"$@\"; sudo /usr/bin/rsync --info=progress2 $option --exclude='lost+found' $@; }
 
 rsync_home() {
   # passport source directory precludes using default rsync(), see usb()
-  /usr/bin/rsync $option --exclude='lost+found' $exclude /home/$USER "$1"
+  ditto exclude "$(cat $EXCLUDE | tr '\n' ' ')"
+  eval ditto rsync \"/home/$USER $1\" 
+  /usr/bin/rsync --info=progress2 $option $exclude /home/$USER "$1"
   # syncthing index most often corrupted
   rm -rfv "$1/$USER/.config/syncthing/index*"
 }
@@ -74,13 +42,13 @@ archive() {
   if server ;then
     ifyes 'backup media server databases to /net/archive' && {
       mkdir -pv /net/archive/var/lib || exit 1
-      sudo rsync -av --delete /var/lib/sonarr /net/archive/var/lib/
-      [ -d /net/archive/${PLEX#/} ] || mkdir -pv /net/archive/${PLEX#/} || exit 1
-      sudo rsync -av --delete $PLEX/Plex\ Media\ Server /net/archive/${PLEX#/}/
+      sudo_rsync -r --delete /var/lib/sonarr /net/archive/var/lib/
+      # [ -d /net/archive/${PLEX#/} ] || mkdir -pv /net/archive/${PLEX#/} || exit 1
+      # sudo_rsync -r --delete $PLEX/Plex\ Media\ Server /net/archive/${PLEX#/}/
       mkdir -p /net/archive/srv/lib || exit 1
-      sudo rsync -av --delete /srv/lib/postgres /net/archive/srv/lib/
+      sudo_rsync -r --delete /srv/lib/postgres /net/archive/srv/lib/
       mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
-      sudo rsync -av /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
+      sudo_rsync /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
     }
   fi
 }
@@ -88,7 +56,7 @@ archive() {
 dotfiles() {
   [ -d /run/media/$USER/Repo/depot/dotfiles ] || return
   cd $HOME/stow
-  rsync --delete $dotfiles /run/media/$USER/Repo/depot/dotfiles/
+  rsync -r --delete $dotfiles /run/media/$USER/Repo/depot/dotfiles/
 }
 
 music() {
@@ -99,8 +67,8 @@ music() {
         sudo mkdir /net/media
         sudo chown -c $USER:users /net/media
       fi
-      rsync --delete $USER@$SERVER:.mpd $HOME/
-      rsync --delete $SERVER:/net/media/music /net/media/
+      rsync -r --delete $USER@$SERVER:.mpd $HOME/
+      rsync -r --delete $SERVER:/net/media/music /net/media/
       nohup mpd >/dev/null 2>&1 &
     }
   else
@@ -112,16 +80,16 @@ restore() {
   if server ;then
     ifno 'restore media server databases from /net/archive' || {
       sudo systemctl stop sonarr
-      sudo rsync -av --delete /net/archive/var/lib/sonarr /var/lib/
+      sudo_rsync -r --delete /net/archive/var/lib/sonarr /var/lib/
       sudo systemctl start sonarr
-      sudo systemctl stop plexmediaserver
-      sudo rsync -av --delete /net/archive/${PLEX#/}/Plex\ Media\ Server $PLEX/
-      sudo systemctl start plexmediaserver
+      # sudo systemctl stop plexmediaserver
+      # sudo_rsync -r --delete /net/archive/${PLEX#/}/Plex\ Media\ Server $PLEX/
+      # sudo systemctl start plexmediaserver
       sudo systemctl stop postgres
-      sudo rsync -av --delete /net/archive/srv/lib/postgres /srv/lib/
+      sudo_rsync -r --delete /net/archive/srv/lib/postgres /srv/lib/
       sudo systemctl start postgres
       sudo systemctl stop tt-rss
-      sudo rsync -av /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
+      sudo_rsync /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
       sudo systemctl start tt-rss
     }
   fi
@@ -131,9 +99,9 @@ stow() {
   if server ;then
     sudo chown -cR $USER:users $HOME/stow/build/build/qmk_firmware
     ifyes "backup stow to $laptop" &&
-      rsync --delete --exclude=.SyncArchive $STOW $USER@$laptop:$HOME/
+      rsync -r --delete --exclude=.SyncArchive $STOW $USER@$laptop:$HOME/
     ifyes "backup stow to $netbook" &&
-      rsync --delete --exclude=.SyncArchive $STOW $USER@$netbook:$HOME/
+      rsync -r --delete --exclude=.SyncArchive $STOW $USER@$netbook:$HOME/
   else
     ifno "update stow to $SERVER" || rsync --exclude=.SyncArchive $STOW $USER@$SERVER:$HOME/
   fi
@@ -145,8 +113,8 @@ usb() {
   [ -d /run/media/$USER/My\ Passport/home ] && USB=/run/media/$USER/My\ Passport/home
   if [ -d "$USB" ] ;then
     rsync_home "$USB/"
-    # rsync --delete $HOME/bin/functions/log "$USB/$USER/bin/functions/"
-    # rsync --delete $STOW/mail/Maildir "$USB/$USER/stow/mail/"
+    # rsync -r --delete $HOME/bin/functions/log "$USB/$USER/bin/functions/"
+    # rsync -r --delete $STOW/mail/Maildir "$USB/$USER/stow/mail/"
     # mkdir -p "$USB/$USER/.cache"
     # rsync $HOME/.cache/fcache:* "$USB/$USER/.cache/"
   elif [ -d /media/home ] ;then
@@ -155,8 +123,8 @@ usb() {
   elif [ -d /run/media/$USER/My\ Passport ] ;then
     PASSPORT=/run/media/$USER/My\ Passport
     mkdir -pv $PASSPORT/media || exit 1
-    rsync --delete /net/media/videos/series $PASSPORT/media/videos/
-    rsync --delete /net/photos $PASSPORT/
+    rsync -r --delete /net/media/videos/series $PASSPORT/media/videos/
+    rsync -r --delete /net/photos $PASSPORT/
   elif [ -d /run/media/$USER/$2/home ] ;then
     rsync_home /run/media/$USER/$2/home/
   else
@@ -170,8 +138,8 @@ vps() {
   sudo touch $APPLICATION/log/restart.txt
   trace 'updating => thedarnedestthing.com:/application'
   rsync -L --delete --exclude=vimwiki $exclude_http_local $APPLICATION thedarnedestthing.com:$TDT/
-  rsync --delete $APPLICATION/thedarnedestthing.db thedarnedestthing.com:$APPLICATION/
-  rsync --delete $APPLICATION/log/restart.txt thedarnedestthing.com:$APPLICATION/log/
+  rsync -r --delete $APPLICATION/thedarnedestthing.db thedarnedestthing.com:$APPLICATION/
+  rsync -r --delete $APPLICATION/log/restart.txt thedarnedestthing.com:$APPLICATION/log/
   trace 'updating => thedarnedestthing.com:/vimwiki'
   rsync -L --delete $HOME/vimwiki thedarnedestthing.com:$APPLICATION/public/
 }
@@ -179,34 +147,34 @@ vps() {
 
 case $1 in
 ''      ) usage ;;
-arm     ) cpu arm && rsync --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
-backup  ) server && { ifyes 'backup /net to /backup' && rsync --delete /net/* /backup/; } ;;
+arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
+backup  ) server && { ifyes 'backup /net to /backup' && rsync -r --delete /net/* /backup/; } ;;
 
 home    ) ifyes "backup $HOME to /net/archive" || exit
           mkdir -pv /net/archive/home || exit 1
-          rsync --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/ ;;
+          rsync -r --delete --exclude='VirtualBox VMs' $exclude_trash $HOME /net/archive/home/ ;;
 
 depot   ) if server ;then
-            ifyes "backup depot to $laptop" && rsync --delete /net/depot $laptop:/net/
+            ifyes "backup depot to $laptop" && rsync -r --delete /net/depot $laptop:/net/
           else
             ifno "restore depot to $SERVER" || rsync /net/depot $SERVER:/net/
           fi ;;
 
 dotfiles) dotfiles ;;
 music   ) music ;;
-pi      ) server && rsync --delete /usr/share/icons/Paper pi:$HOME/.local/share/icons/ ;;
+pi      ) server && rsync -r --delete /usr/share/icons/Paper pi:$HOME/.local/share/icons/ ;;
 server  ) archive ;;
 SERVER  ) restore ;;
 stow    ) stow ;;
-ttrss   ) rsync --delete /srv/http/tt-rss/themes/my*.css $target:/srv/http/tt-rss/themes/ ;;
+ttrss   ) rsync -r --delete /srv/http/tt-rss/themes/my*.css $target:/srv/http/tt-rss/themes/ ;;
 usb     ) usb; sync ;;
 vps     ) vps ;;
 
 wiki    ) ifno 'recover thedarnedestthing.com:/vimwiki' && exit
           trace "thedarnedestthing.com:/vimwiki => $(hostname)"
-          rsync --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/ ;;
+          rsync -r --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/ ;;
 
-*       ) /usr/bin/rsync --info=progress2 $option --exclude='lost+found' $@ ;;
+*       ) rsync $@ ;;
 esac
 
 # vim: set ft=sh: #

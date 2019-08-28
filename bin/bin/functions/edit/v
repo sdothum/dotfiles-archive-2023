@@ -13,6 +13,7 @@ SHELL=/usr/bin/dash
 export QUEUE=$(date '+%y%m%d%H%M%S')
 retention=90  # undo history file retention days
 vimtrace=$HOME/.session/vimtrace
+[ -e $HOME/.session/mono ] && export MONO=-mono
 
 LOG=/tmp/vim.log
 echo >$LOG

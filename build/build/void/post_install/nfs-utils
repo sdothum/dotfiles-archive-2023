@@ -18,8 +18,7 @@ if server ;then
   ifnsed /etc/exports '/srv/nfs4/        *(rw,fsid=root,sync,no_subtree_check)'
   sudo exportfs -rav
 else
-  service enable rpcbind
+  service enable statd
 fi
-
 
 # vim: set ft=sh: #

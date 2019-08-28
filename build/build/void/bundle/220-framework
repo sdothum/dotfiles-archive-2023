@@ -8,27 +8,28 @@
 = ═══════════════════
   pgadmin3
   postgresql
+  postgresql-client
   sqlite
   sqlitebrowser
 
 
 = sinatra web framework
 = ═════════════════════
-# g kramdown
-# g mail
-# g rack
-# g sanitize
-# g sinatra
-# g slim
-# g term-ansicolor
-# g thin
-# g xapian-fu
-# g xapian-ruby
+  g kramdown
+  g mail
+  g rack
+  g sanitize
+  g sinatra
+  g slim
+  g term-ansicolor
+  g thin
+  g xapian-fu
+  g xapian-ruby
 
 
 = web server
 = ══════════
-# g passenger
+  g passenger
   php
   php-fpm
   php-pgsql

@@ -31,7 +31,7 @@
 = security
 = ════════
 # gksu
-# gnome-keyring
+  gnome-keyring
   gnupg2
   pass
   pinentry-gtk
@@ -39,8 +39,10 @@
 
 
 = sound
-= ═════
+= ════
+  alsa-utils
   alsa-plugins
+  ConsoleKit2
 # mpg123
   pavucontrol
   pulseaudio

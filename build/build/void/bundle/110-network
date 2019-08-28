@@ -15,6 +15,7 @@
 = ═══════
   bind-utils
   dnsmasq
+  inetutils-telnet
 
 
 = network monitor
@@ -35,6 +36,7 @@
 = ═════════════
 # avahi
   nfs-utils
+  rpcbind
   sv-netmount
 
 

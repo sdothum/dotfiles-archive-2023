@@ -16,7 +16,7 @@ site=www.google.com
 timeout=5
 
 count=0
-while ! ping -c 1 -W 1 $site >/dev/null 2>&1 ;do
+while ! pong $site ;do
   sleep 1
   count=$(( $count + 1 ))
   if [ $count -gt $timeout ] ;then

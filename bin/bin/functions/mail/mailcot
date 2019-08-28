@@ -24,15 +24,6 @@ send "c logout\n"
 
 service restart dovecot
 # expect cmdfile host user password
-# expect /tmp/mailcot ${1:-$(hostname)} ${2:-$USER} ${3:-dovecot}
-
-host=${1:-$(hostname)}
-user=${2:-$USER}
-password=${3:-dovecot}
-telnet $host 143 <<EOF
-a login "$user" "$password"
-b list "" *
-c logout
-EOF
+expect /tmp/mailcot ${1:-$(hostname)} ${2:-$USER} ${3:-dovecot}
 
 # vim: set ft=sh: #

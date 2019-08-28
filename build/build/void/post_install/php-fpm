@@ -7,10 +7,18 @@
 
 original /etc/php/php-fpm.conf
 sudo sed -i -e '/request_terminate_timeout/s/=.*/= 300/' \
-         -e '/request_terminate_timeout/s/;//' \
+         -e '/request_terminate_timeout/s/;//'           \
          /etc/php/php-fpm.conf
 
+original /etc/php/php-fpm.d/www.conf
+sudo sed -i -re '/;listen\.(owner|group|mode)/s/;//'                       \
+         -e '/listen = 127.0.0.1:9000/clisten = /run/php-fpm/php-fpm.sock' \
+         /etc/php/php-fpm.d/www.conf
+
+sudo useradd -r -d /srv/http -c http -s /sbin/nologin http
+config_install /etc/sv/php-fpm
+
 service enable php-fpm
-sudo sv restart nginx
+service restart nginx
 
 # vim: set ft=sh: #

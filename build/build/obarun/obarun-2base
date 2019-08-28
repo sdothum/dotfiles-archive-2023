@@ -16,7 +16,7 @@ title "setup"
 # sudo loadkeys colemak
 # server && sudo dhcpcd || sudo wifi-menu
 # sleep 5s
-connected || post_install connman
+pong || post_install connman
 # default mail addresses
 config_install L /etc/aliases
 
