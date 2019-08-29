@@ -18,6 +18,7 @@ sources="
   $HOME/.vim/config
   $HOME/.vim/config/custom
   $HOME/.weechat/python
+  /etc/sv
 "
 
 files()      { for i in $sources ;do fcache f $i ;done; }

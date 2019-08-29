@@ -84,6 +84,7 @@
       " for active window highlighting
       autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active | SplitColors
       autocmd ui WinLeave                                   * SplitColors
+      autocmd ui BufWinEnter,WinEnter                       * RefreshInfo
 
     " ................................................................ View mode
 

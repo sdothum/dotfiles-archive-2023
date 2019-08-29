@@ -36,7 +36,7 @@ fi
 
 file() {
   # convert apostrophe ' to ? for pattern matching
-  path=$(echo $book | sed -r -e "s/'/./" -e "s|^(.*)  *${SEP}  *(.*)|.*\2/(\1[^/]*/)*\1( - .*)*.$1|")
+  path=$(echo $book | sed -r "s/'/./" -e "s|^(.*)  *${SEP}  *(.*)|.*\2/(\1[^/]*/)*\1( - .*)*.$1|")
   find $library -regextype egrep -regex "$path"
 }
 

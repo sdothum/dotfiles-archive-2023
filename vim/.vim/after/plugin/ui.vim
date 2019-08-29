@@ -159,13 +159,17 @@
         return l:prefix > '' ? l:prefix . '  ' . SpecialChar() : SpecialChar()
       endfunction
 
+      function! s:attn()
+        return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : ''
+      endfunction
+
       " [path] .. filename | pos .. [details]
       function! s:statusline(proof)
         " Trace ui:statusline()  " tmi :-)
         try  " trap snippet insertion interruption
           let g:prose = 1
           if Prose() && a:proof == 0
-            return Escape(Leader('') . '  %{UnModified(0)}%*')
+            return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%*')
           else
             let l:name     = '%{Name()}' . g:pad[0]
             if s:expanded == 0  " center dfm indicator / proofing statusline
@@ -175,7 +179,7 @@
               let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
             endif
             let l:name     = '%1*' . l:name
-            let l:info     = '%{UnModified(1)}' . g:pad[0] . '%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+            let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
             if s:expanded == 1
               let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
               let l:info  .= g:pad[1] . '%2*%{Detail()}'

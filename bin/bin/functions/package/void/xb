@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [[-][S | U | R] | [- | +]] [-<options>] [--<option>]* [<package>]"
+  echo "usage: $(basename $0) [[-][S | U | R | H] | [- | +]] [-<options>] [--<option>]* [<package>]"
   echo "        S .. noconfirm"
   echo "       -S .. confirm"
   echo "       -S update repos"
@@ -16,6 +16,8 @@ usage() {
   echo "       -U .. confirm"
   echo "        R .. recursive"
   echo "       -R .. non-recursive"
+  echo "        H .. hold"
+  echo "       -H .. unhold"
   echo "          .. query"
   echo "       -  search"
   echo "       +  installed"
@@ -32,23 +34,29 @@ case $1 in
 -U) [ $2 ] && action=update ;;
  R) action=remove; recursive='-R' ;;
 -R) action=remove ;;
+ P) action=pin ;;
+-P) action=unpin ;;
 - ) action=search ;;
 + ) action=installed ;;
+= ) action=held ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 
-shift; [ $1 ] || usage
+shift; [ $1 ] || [ $action = held ] || usage
 options=" $@"
 package=${options##* }
 options=${options% *}
 
 case $action in
+held     ) xbps-query --list-hold-pkgs ;;
+hold     ) sudo xbps-pkgdb -m hold $options $package ;;
 installed) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
 query    ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove   ) sudo xbps-remove $recursive $options $package ;;
 search   ) xbps-query -Rs $options $package | a $package ;;
 sync     ) sudo xbps-install $yes $options $package ;;
 update   ) sudo xbps-install $yes $options -u $package ;;
+unhold   ) sudo xbps-pkgdb -m unhold $options $package ;;
 esac
 
 # vim: set ft=sh: #

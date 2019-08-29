@@ -13,48 +13,50 @@
     " ......................................................... DFM colour masks
 
       " foreground
-      let s:dfm_fg_light         = g:light_fg   " light foreground (high contrast)
-      let s:dfm_fg_dark          = g:dark_fg    " dark foreground (high contrast)
-      let s:dfm_ale_dark         = g:hue_4
+      let s:dfm_fg_light         = g:light_fg   " foreground (high contrast)
+      let s:dfm_fg_dark          = g:dark_fg
+      let s:dfm_ale_dark         = g:hue_4      " margin indicators
       let s:dfm_ale_light        = g:hue_1
-      let s:dfm_bg_spell_dark    = g:hue_5      " dark spelling
-      let s:dfm_bg_spell_light   = g:spell      " light spelling
-      let s:dfm_fg_spell_dark    = g:base6      " dark spelling
-      let s:dfm_fg_spell_light   = g:mono_2     " light spelling
-      let s:dfm_proof_dark       = g:dark       " dark hypertext
-      let s:dfm_proof_light      = g:light      " light hypertext
+      let s:dfm_bg_spell_dark    = g:hue_5      " spelling
+      let s:dfm_bg_spell_light   = g:spell
+      let s:dfm_fg_spell_dark    = g:base6      " spelling
+      let s:dfm_fg_spell_light   = g:mono_2
+      let s:dfm_proof_dark       = g:dark       " hypertext
+      let s:dfm_proof_light      = g:light
 
       " background
       let s:dfm_bg_light         = g:base7      " flatwhite light background
       let s:dfm_bg_dark          = g:gray1      " quantum dark background
       let s:dfm_folded_dark      = g:gray4      " vimdiff fold
-      let s:dfm_folded_light     = g:gray5      " vimdiff fold
+      let s:dfm_folded_light     = g:gray5
       let s:dfm_match_dark       = g:red        " quantum dark parens
       let s:dfm_match_light      = g:hue_5      " flatwhite light parens
       let s:dfm_vsplit_dark      = g:gray2      " invisible split (minimal contrast)
-      let s:dfm_vsplit_light     = g:base6      " invisible split (minimal contrast)
+      let s:dfm_vsplit_light     = g:base6
 
       " cursor line
       let s:dfm_cursor_light     = g:cursor     " iA Writer
-      let s:dfm_cursor_dark      = g:cursor     " iA Writer
-      let s:dfm_cursorline_light = g:blue       " light cursorline
-      let s:dfm_cursorline_dark  = g:white      " dark cursorline
-      let s:dfm_bg_column_dark   = g:hue_1      " dark column
-      let s:dfm_bg_column_light  = g:orange_bg  " light column
-      let s:dfm_bg_line_dark     = g:gray2      " dark cursorline
-      let s:dfm_bg_line_light    = g:blue_bg    " light cursorline
-      let s:dfm_fg_line_dark     = g:gray4      " dark line numbers
-      let s:dfm_fg_line_light    = g:dark_blue  " light line numbers
+      let s:dfm_cursor_dark      = g:cursor
+      let s:dfm_cursorline_light = g:blue       " cursorline
+      let s:dfm_cursorline_dark  = g:white
+      let s:dfm_bg_column_light  = g:orange_bg  " column
+      let s:dfm_bg_column_dark   = g:gray2
+      let s:dfm_bg_line_light    = g:blue_bg    " cursorline
+      let s:dfm_bg_line_dark     = g:gray3
+      let s:dfm_fg_line_light    = g:dark_blue  " line numbers
+      let s:dfm_fg_line_dark     = g:gray4
 
       " statusline
-      let s:dfm_bg_status_light  = g:orange_bg  " light statusline
-      let s:dfm_bg_status_dark   = g:gray1      " dark statusline
-      let s:dfm_fg_status_light  = g:mono_4     " light statusline
-      let s:dfm_fg_status_dark   = g:mono_1     " dark statusline
-      let s:dfm_fg_user1_light   = g:mono_1     " light statusline
-      let s:dfm_fg_user1_dark    = g:mono_4     " dark statusline
-      let s:dfm_fg_user2_light   = g:dark_blue  " light statusline
-      let s:dfm_fg_user2_dark    = g:cyan       " dark statusline
+      let s:dfm_bg_status_light  = g:orange_bg  " statusline
+      let s:dfm_bg_status_dark   = g:gray2
+      let s:dfm_fg_status_light  = g:mono_4     " statusline
+      let s:dfm_fg_status_dark   = g:mono_1
+      let s:dfm_fg_user1_light   = g:mono_1     " default info
+      let s:dfm_fg_user1_dark    = g:mono_4
+      let s:dfm_fg_user2_light   = g:dark_blue  " extended info
+      let s:dfm_fg_user2_dark    = g:cyan
+      let s:dfm_fg_user3_light   = "red"        " root user
+      let s:dfm_fg_user3_dark    = "orange"
 
   " Colours ____________________________________________________________________
 
@@ -73,6 +75,7 @@
         execute 'let s:dfm_fg_status   = s:dfm_fg_status_'              . &background
         execute 'let s:dfm_fg_user1    = s:dfm_fg_user1_'               . &background
         execute 'let s:dfm_fg_user2    = s:dfm_fg_user2_'               . &background
+        execute 'let s:dfm_fg_user3    = s:dfm_fg_user3_'               . &background
         execute 'let s:dfm_folded      = s:dfm_folded_'                 . &background
         execute 'let s:dfm_linenr_ins  = s:dfm_bg_'                     . &background
         execute 'let s:dfm_match       = s:dfm_match_'                  . &background
@@ -108,9 +111,9 @@
         execute 'hi ShowMarksHLl    guibg=' . s:dfm_bg
         execute 'hi SignColumn      guibg=' . s:dfm_bg
         execute 'hi SpellBad        guibg=' . l:spell         . ' guifg=' . s:hexValue('s:dfm_fg_spell_' . &background) . ' gui=NONE'
-        execute 'hi StatusLineNC    guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status . ' gui=nocombine'
         execute 'hi User1           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user1
         execute 'hi User2           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user2
+        execute 'hi User3           guibg=' . s:dfm_bg        . ' guifg=' . s:dfm_fg_user3
         execute 'hi VertSplit       guibg=' . s:dfm_vsplit    . ' guifg=' . s:dfm_vsplit
         execute 'hi VisualCursor    guibg=' . l:cursor        . ' guifg=' . s:dfm_bg
         if &background == 'light'  " add flatwhite contrast
@@ -333,6 +336,7 @@
         Trace theme:HideInfo
         execute 'hi User1 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
         execute 'hi User2 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
+        execute 'hi User3 guibg=' . s:dfm_bg . ' guifg=' . s:dfm_bg
       endfunction
 
       command! HideInfo silent! call <SID>hideInfo()
@@ -345,10 +349,12 @@
         if winnr('$') == 1
           let l:bg = s:dfm_bg
         else
-          let l:bg = s:hexValue('s:dfm_bg_column_' . &background)
+          let l:bg = s:hexValue('s:dfm_bg_status_' . &background)
         endif
-        execute 'hi User1 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user1
-        execute 'hi User2 guibg=' . l:bg . ' guifg=' . s:dfm_fg_user2
+        execute 'hi User1        guibg=' . l:bg            . ' guifg=' . s:dfm_fg_user1
+        execute 'hi User2        guibg=' . l:bg            . ' guifg=' . s:dfm_fg_user2
+        execute 'hi User3        guibg=' . l:bg            . ' guifg=' . s:dfm_fg_user3
+        execute 'hi StatusLineNC guibg=' . s:dfm_bg_status . ' guifg=' . s:dfm_fg_status . ' gui=nocombine'
         return ''  " otherwise embeds '0' in statusline
       endfunction
 

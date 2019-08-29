@@ -37,11 +37,11 @@ rsync -avq -KL --delete --exclude .deprecated $STOW/$KBD/${KEYBOARD#$ROOT/}/* $K
 
 # steno (mouse may need to be mandisabled in config.h)
 if [ "$1" = steno ] ;then
-  sed -i -e '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
+  sed -i '/STENO_ENABLE/s/= no /= yes/' $MAKEFILE
   shift
-  [ "$1" = nomouse ] && { sed -i -e '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
+  [ "$1" = nomouse ] && { sed -i '/MOUSEKEY_ENABLE/s/= yes/= no /' $MAKEFILE; shift; }
 else
-  sed -i -e '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
+  sed -i '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
 fi
 
 # compile time macro sting
