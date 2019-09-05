@@ -6,6 +6,8 @@
 
 # ..................................................... Draw active border color
 
+# Usage: draw border [<width> | pulsar]
+
 # below 0.045 can cause (hw dependent) resource hogging
 # frequency=0.066
 frequency=0.15
@@ -34,6 +36,8 @@ if [ "$1" = pulsar ] ;then
   pulsar
   exit
 fi
+
+# left edge border (to be implemented)
 
 # kill any previous instance of border highlighting
 pkill -TERM -f 'draw border pulsar'

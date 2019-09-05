@@ -14,13 +14,13 @@ fi
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 heading "/opt/bin"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
 config_install L /opt/bin
 
 
 if server && [ ! -d /net/downloads/http ] ;then
 heading "/net/* directories"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
   sudo mkdir -pv /net/archive
   sudo mkdir -pv /net/depot/virtualbox
   sudo mkdir -pv /net/depot/vms
@@ -42,7 +42,7 @@ fi
 
 if laptop && [ ! -d /net/downloads/http ] ;then
 heading "/net/* directories"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
   sudo mkdir -pv /net/archive
   sudo mkdir -pv /net/downloads/depot
   sudo mkdir -pv /net/downloads/http
@@ -54,7 +54,7 @@ fi
 
 if sudo test ! -f /root/.forward ;then
 heading "root setup"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
   # sudo ln -sfv $HOME/.config/xfce4 /root/.config/
   sudo mkdir -pv /root/tmp
   sudo mkdir -pv /root/log
@@ -75,7 +75,7 @@ fi
 
 # if laptop && [ ! -f /etc/modules-load.d/pciehp.conf ] ;then
 # heading "acer sdhc card reader"
-# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# # ══════════════════════════════════════════════════════════════════════════════
 #     config_install /etc/modules-load.d/pciehp.conf
 #   fi
 # fi
@@ -83,7 +83,7 @@ fi
 
 if server && ! grep -q '/net' /etc/fstab ;then
 heading "/net raid"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
   original /etc/fstab
   cat /etc/fstab.original $HOME/build/root/etc/fstab.$(hostname).raid >$HOME/build/root/etc/fstab.$(hostname)
   config_install /etc/fstab $(hostname)
@@ -97,13 +97,13 @@ fi
 
 if ! grep -q '/images/' /etc/default/grub ;then
 heading "grub splash"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
   grub_splash
 fi
 
 
 heading "systemd startup optimizations"
-# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ══════════════════════════════════════════════════════════════════════════════
 # service -f mask bluetooth
 # service -f mask connman-vpn
 # service -f mask display-manager

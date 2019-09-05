@@ -10,6 +10,7 @@
 
 = video driver
 = ════════════
+  bbswitch             [gpu inspiron]
   libva-intel-driver   [gpu intel]
   libvdpau-va-gl       [gpu intel]
   nvidia               [gpu nvidia]

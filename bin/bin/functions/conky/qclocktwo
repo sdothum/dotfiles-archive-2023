@@ -49,7 +49,7 @@ esc='s/[{]/$&/g'                  # escape conky expression
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
 xs()      { echo "${_}$(ch 1)${Q}"; }                               # word pair fill char
-nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)"; done; }  # random fill char column
+nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }  # random fill char column
 shuffle() { echo "$@" | shuf | tr -d '\n'; }                        # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" | $glyph >$QCLOCK:$1; }
 

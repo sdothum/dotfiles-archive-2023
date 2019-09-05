@@ -129,4 +129,6 @@ focus window
 conky clock auto
 rm -f $NCURSES
 
+# herbstclient attr theme.active.padding_left 2
+
 # vim: set ft=sh: #

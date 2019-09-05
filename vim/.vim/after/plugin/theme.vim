@@ -275,15 +275,14 @@
 
       command! CodeView silent! call <SID>codeView()
 
-    " .................................................... Distraction free view
+    " ............................................................... Prose view
 
-      " prose style
-      function! s:dfmView()
-        Trace theme:DfmView
+      function! s:proseView()
+        Trace theme:ProseView
         if Prose() | execute 'hi CursorLine gui=none guibg=' . s:dfm_bg . ' guifg=' . s:dfm_fg | endif
       endfunction
 
-      command! DfmView silent! call <SID>dfmView()
+      command! ProseView silent! call <SID>proseView()
 
     " .............................................................. EOF markers
 

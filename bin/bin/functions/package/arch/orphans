@@ -11,7 +11,7 @@ orphans=$(pacman -Qdtq)
 
 if [ "$orphans" ] ;then
   echo $orphans
-  ifno 'remove orphan packages' || { for i in $orphans ;do sudo pacman -Rsn $i ;done; }
+  ifno 'remove orphan packages' || { for i in $orphans ;do sudo pacman -Rsn $i ;done }
 fi
 
 # vim: set ft=sh: #

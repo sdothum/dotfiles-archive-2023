@@ -53,7 +53,7 @@ esac
 echo $1 | grep -q '/' && BDIR=${1%/*} || BDIR=.
 deferred=$BDIR/900-deferred
 missing=$BDIR/910-missing
-[ $check ] && >$missing
+[ $check ] && rm -f $missing
 echo $@ | grep -q 900-deferred && unset deferred || {
   [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; };}
 }
@@ -63,19 +63,19 @@ rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
 # bundle file -> [<action>] <package> [<condition>]
 parse() {
   case $action in
-  ''       ) return 1 ;;
-  '#'      ) return 1 ;;
-  '='      ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
-  '"'      ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
-  '!'      ) [ $check ] || $package $condition;                                                       return 1 ;;
-  '+'      ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; };} ;;
-  d        ) rule=true ;;
-  [-?@agmp]) rule=$(rule "$condition") ;;
+  ''        ) return 1 ;;
+  '#'       ) return 1 ;;
+  '='       ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
+  '"'       ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
+  '!'       ) [ $check ] || $package $condition;                                                       return 1 ;;
+  '+'       ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; };} ;;
+  d         ) rule=true ;;
+  [-?@agmps]) rule=$(rule "$condition") ;;
 
-  *        ) set -- $package $condition
-             package=$action
-             condition=$@
-             rule=$(rule "$condition") ;;
+  *         ) set -- $package $condition
+              package=$action
+              condition=$@
+              rule=$(rule "$condition") ;;
   esac
   return 0
 }
@@ -100,7 +100,7 @@ check() {
   *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
   esac
 
-  [ $installed ] && echo $package || { echo $action $package $condition >>$missing ; ditto missing "$package"; }
+  [ $installed ] && echo $package || { echo $line >>$missing ; ditto missing "$package"; }
 }
 
 for i in $@ ;do
@@ -111,6 +111,7 @@ for i in $@ ;do
   #       (package condition) map to (command options) for ! execute
   while read action package condition <&3 ;do
     # echo "action=$action package=$package condition=$condition"
+    line="$action $package $condition"
     parse || continue
 
     [ $list ] && { echo "$action $package $condition" | sed -r '/^d "/d; s/^([-?*@"adgm] )*//; s/ *([^ ]*).*/\1/'; continue; }

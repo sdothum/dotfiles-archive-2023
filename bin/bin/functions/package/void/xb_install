@@ -8,7 +8,7 @@
 
 # ......................................................... Distribution install
 
-# Usage: xb_install [--confirm | S] <package>
+# Usage: xb_install [--confirm | --init] <package>
 
 case $1 in
   --confirm) confirm=true; shift ;;

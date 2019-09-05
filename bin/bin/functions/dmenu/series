@@ -18,24 +18,25 @@ SONARR='[ sonarr       ]'
 
 # video library
 category=${1:-series}
-library=${LIBRARY:-/net/media/videos/$category}
+PASSPORT="/run/media/$USER/My Passport/$category"
+[ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
 sonarr=http://$SERVER:8989/
 preprocess=${0%/dmenu}/functions/dmenu/.d/$category
-retitle=$library/.retitle
+retitle="$library"/.retitle
 rm -f $retitle
 
 # exclude directory kludge of .anime links in main series folder
-if server ;then
-  find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \;
-  find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \;
+if server || $usb ;then
+  find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
+  find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
 else
-  ssh $SERVER "find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \\;"
-  ssh $SERVER "find $library -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \\;"
+  ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \\;"
+  ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \\;"
 fi
-find $library -name '*sample*' -exec rm {} \; &
+find "$library" -name '*sample*' -exec rm {} \; &
 # clean up titles
 [ -e $preprocess ] && . $preprocess
-retitle $library >>$retitle
+retitle "$library" >>$retitle
 
 # list latest television series additions first
 T=t
@@ -52,17 +53,17 @@ shows() {
 # initial row is most current show vs last viewed
 show=3
 while : ;do
-  show=$(ls -1$T $library | grep -v ' ' | sed "s/\./ /g; 1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | 
+  show=$(ls -1$T "$library" | grep -v ' ' | sed "s/\./ /g; 1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | 
       rmenu 'Series' "$show" -no-custom) || break
 
   # force dmenu focus (continue within do loop doesn't guarantee focus)
   case $show in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
-  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox $library; pwait "ROX-Filer $library"; exec dmenu series $1 ;;
+  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox "$library"; pwait "ROX-Filer "$library""; exec dmenu series $1 ;;
   "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
-  *        ) series="$library/$(echo $show | sed 's/ /./g')"
+  *        ) series=""$library"/$(echo $show | sed 's/ /./g')"
              playlist="$series/.playlist"
              [ -e "$playlist" ] || echo >"$playlist" ;;
   esac
@@ -77,14 +78,14 @@ while : ;do
 
     episode=$(echo "$episode" | sed "s/^$SEP //")
     video=$(find "$series" -maxdepth 1 -type d -regex ".*$episode.*")
-    [ -z $video ] && video=$(find "$series" -maxdepth 1 -type f -regex ".*$episode.*")
+    [ -z "$video" ] && video=$(find "$series" -maxdepth 1 -type f -regex ".*$episode.*")
     if [ $(echo "$video" | wc -l) -gt 1 ] ;then
       notify 3 critical "$show" "Duplicate episodes found"
       sleep 3
       break
     fi
 
-    mhistory $playlist "$episode"
+    mhistory "$playlist" "$episode"
     play "$video" "$show $episode"
   done
 done

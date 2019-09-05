@@ -205,7 +205,7 @@ esac
 
 if [ $windows -gt 1 ] &&  [ $layout != max ] ;then
   herbstclient jumpto $winid
-  focus borders
+  focus border
 fi
 
 # vim: set ft=sh: #

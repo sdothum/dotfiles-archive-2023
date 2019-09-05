@@ -17,8 +17,7 @@ hooky="'v-i-hooky', 'v-l-hooky'"
 leading=1250
 shape="'sans'"
 storey=double
-# nerdfonts='--fontawesome --fontawesomeextension --material --octicons --powerline --weather'
-nerdfonts='--fontawesome --fontawesomeextension --octicons --powerline'
+nerdfonts='--fontawesome --fontawesomeextension --material --octicons'
 
 shift  # basename is make_install, $1 == iosevka
 
@@ -70,7 +69,7 @@ pkgcheck nodejs
 pkgcheck npm
 pkgcheck otfcc
 pkgcheck ttfautohint
-[ "$missing" ] && { ditto run "pm_install $missing"; exit 1; }
+[ "$missing" ] && { ifno "install $missing" && exit 1; for i in $missing ;do pm S $i ;done }
 
 # balance leading/descender spacing
 if [ $leading -gt 1250 ] ;then
@@ -140,7 +139,7 @@ cp -rv dist/iosevka$family $FONT
 # note: nerd-fonts v2.x currently breaks ligatures
 if [ $patch ] && [ -e /net/depot/nerd-fonts/font-patcher ] ;then
   rm -f /tmp/Iosevka*ttf
-  /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerlineextra -out /tmp $REGULAR
+  /net/depot/nerd-fonts/font-patcher --adjust-line-height --mono --powerline -out /tmp $REGULAR
   mv -v /tmp/Iosevka*ttf $REGULAR
   /net/depot/nerd-fonts/font-patcher $mono $nerdfonts -out /tmp $REGULAR
   mv -v /tmp/Iosevka*ttf $REGULAR

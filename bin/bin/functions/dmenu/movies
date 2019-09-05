@@ -21,68 +21,75 @@ SEARCH='[ search       ]'
 # preload cache option
 [ "$1" = cache ] && { shift; cache=true; }
 
-nzb=/net/downloads/nzbs/completed
-library=${LIBRARY:-/net/media/videos/${1:-movies}}
-playlist=$library/.playlist
+category=${1:-movies}
+PASSPORT="/run/media/$USER/My Passport/$category"
 catlg=$CACHEDIR/dmenu:${1:-movies}
+[ -d "$PASSPORT" ] && { library=$PASSPORT; rm -rf $catlg; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
+nzb=/net/downloads/nzbs/completed
+playlist="$library/.playlist"
 usenet=https://nzbgeek.info/geekseek.php?c=2040
-retitle=$library/.retitle
-rm -f $retitle
+retitle="$library/.retitle"
+rm -f "$retitle"
 
 movies="/run/media/$USER/My Passport"  # create symlinks to avoid space parsing errors
 passport=/tmp/movies:passport
-[ -d "$movies/movies" ] && ln -sf "$movies/movies" $passport || { [ -d "$movies/Movies" ] && ln -sf "$movies/Movies" $passport; }
-[ -L "$passport" ] && copy='copy\n'
+# pathname containing spaces cannot override link, hence rm+ln vesus ln -sf
+[ -d "$movies/movies" ] && { rm -f $passport; ln -s "$movies/movies" $passport; } || { [ -d "$movies/Movies" ] && { rm -f $passport; ln -s "$movies/Movies" $passport; };}
+[ -L $passport ] && copy='copy\n'
 
 # unset debug to remove exit from menu items
 debug='\nexit'
-find $library -name '*sample*' -exec rm {} \; &
+find "$library" -name '*sample*' -exec rm {} \; &
 
 # list latest movie additions first
 T=t
 catlg() {
   cat /dev/null >$catlg
-  ls -1$T $library | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
-  playlist /tmp/dmenu:movies $playlist >$catlg &
+  ls -1$T "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
+  playlist /tmp/dmenu:movies "$playlist" >$catlg &
 }
 
 cache() {
-  stest -qr -n $catlg $(find $library -maxdepth 1 -type d) || return
+  [ $1 ] || stest -qr -n $catlg $(find "$library" -maxdepth 1 -type d) || return
   notify low 'Movies' 'Caching library..'
   # clean up titles
-  retitle $library >>$retitle
-  [ -e $playlist ] || echo >$playlist
+  retitle "$library" >>$retitle
+  [ -e "$playlist" ] || echo >"$playlist"
   catlg
 }
 
 # any new media added?
-[ ! -s $catlg ] || stest -dqr -n $catlg $library && cache
-[ $cache      ] && exit
+if [ -s $catlg ] ;then
+  stest -dqr -n $catlg "$library" && cache
+else
+  cache force
+fi
+[ $cache ] && exit
 
 options() {
   [ $(find $nzb -maxdepth 1 -type d | wc -l) -gt 1 ] && edit="\\\\\\n$EDIT" || unset edit
-  grep -q '[^ ]' $playlist && echo "$LAST\\\n$SEARCH\\\n[ $(sortlist $T) ]$edit" || echo "[ $(sortlist $T) ]$edit"
+  grep -q '[^ ]' "$playlist" && echo "$LAST\\\n$SEARCH\\\n[ $(sortlist $T) ]$edit" || echo "[ $(sortlist $T) ]$edit"
 }
 
 playback() {
   while : ;do
     action=$(echo "${copy}play\nmrqe\nimdb\nmanage\ndelete\nmark$debug" | rmenu "$movie" -no-custom) || break
     title=$(echo "$movie" | sed 's/  (\([12][0-9][0-9][0-9]\))$/ \1/; s/ /./g')
-    video=$(find $library -maxdepth 1 -type d -regex ".*/${title}.*")
+    video=$(find "$library" -maxdepth 1 -type d -regex ".*/${title}.*")
 
     case $action in
     play  ) if [ $(echo "$video" | wc -l) -gt 1 ] ;then
               notify 3 critical "$movie" "Duplicate movie files found"
-              term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library
+              term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
             fi
-            mhistory $playlist "$movie"; catlg; play "$video" "$movie"; break ;;
+            mhistory "$playlist" "$movie"; catlg; play "$video" "$movie"; break ;;
 
     copy  ) cp -rf "$video" $passport; break ;;
     mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
     imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"; pwait "surf http://www.imdb.com/find?s=all&q=$movie" ;;
-    manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger $library; catlg; break ;;
+    manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"; catlg; break ;;
     delete) rm -rf "$video"; catlg; break ;;
-    mark  ) mhistory $playlist "$movie"; catlg; break ;;
+    mark  ) mhistory "$playlist" "$movie"; catlg; break ;;
     exit  ) exit ;;
     esac
   done
@@ -94,14 +101,14 @@ while : ;do
   # focus monitor menu originally presented on
   [ $monitor ] && herbstclient focus_monitor $monitor
 
-  movie=$(cat $catlg | sed "1i$(options)" | rmenu 'Movie' "$movie" -no-custom) || break
+  movie=$(cat "$catlg" | sed "1i$(options)" | rmenu 'Movie' "$movie" -no-custom) || break
 
   [ "$movie" = "$LAST" ] && movie=$(grep '[^ ]' $playlist | head -1)
   case $movie in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
   "$SEARCH") surf $usenet; pwait "surf $usenet"; continue ;;
-  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox $nzb; rox $library; pwait "ROX-Filer $nzb"; exec dmenu movies cache $1 ;;
+  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer $nzb"; exec dmenu movies cache $1 ;;
   *        ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done

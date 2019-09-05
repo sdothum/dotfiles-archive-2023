@@ -30,7 +30,7 @@
               if l:char !~ s:ascii && l:char != "'"  " show hex value, not interested in ascii keyboard characters
                 let l:statusmsg = v:statusmsg
                 normal! ga
-                let l:hex       = 'U+' . matchstr(split(v:statusmsg)[2], '[^,]*')
+                let l:hex       = 'U+' . matchstr(split(v:statusmsg)[3], '[^,]*')
                 let v:statusmsg = l:statusmsg
                 " clear ga information!
                 echo ''

@@ -31,7 +31,7 @@ daemons='
   znc
 '
 
-sv() { for i in $daemons ;do ditto $i; service $1 $i ;done; }
+sv() { for i in $daemons ;do ditto $i; service $1 $i ;done }
 
 case $1 in
 stop ) sv stop

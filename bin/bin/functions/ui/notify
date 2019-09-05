@@ -13,6 +13,7 @@ usage() {
   exit 1
 }
 
+SESSION=${SESSION:-$HOME/.session}
 LOG=/tmp/notify.log
 color1=${__YELLOW}
 color2=${__BLUE}
@@ -45,22 +46,24 @@ TWO=${2#\\}
 
 [ "$TWO" ] && echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>$LOG || echo "$(timestamp) $USER:${urgency#-u} \"$ONE\"" >>$LOG
 
+  # allow cron jobs to bypass console test and display to X
+display() { [ $console ] || { [ -e $SESSION/display ] && DISPLAY=$(cat $SESSION/display); };}
+
 if [ $console ] ;then
   [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" || echo "${color1}==> $ONE${NOCOLOR}"
 else
-  # allow cron jobs to bypass console test and display to X
   [ $X ] || { console && exit; }
   case $# in
   1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
-       DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" &
+       DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" &
      else
        # set first line as heading for a single multiline message
        heading=$(echo "$ONE" | sed '2,$d')
        body=$(echo "$ONE" | sed '1d')
-       DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$heading" "$body" &
+       DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$heading" "$body" &
      fi ;;
 
-  2) DISPLAY=:0 notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
+  2) DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" "$TWO" & ;;
   *) usage ;;
   esac
 fi

@@ -8,6 +8,7 @@
     " .................................................................... Setup
 
       let g:pad          = ['      ', '   ']  " statusline padding [inner, outer]
+      "                      123456    123
       let g:view         = 1                  " initial view mode (0) info (1) df
       let s:expanded     = 0                  " statusline state (0) dfm (1) expanded
       let s:font_changed = 0                  " redraw flag
@@ -29,14 +30,14 @@
         set showmode
       endfunction
 
-    " .................................................... Distraction free view
+    " ............................................................... prose view
 
-      " prose style
+      " distraction free style
       function! s:proseView()
         Trace ui:proseView()
         let g:view = 1
         " silent !tmux set status off
-        DfmView
+        ProseView
         if Prose() || g:ruler == 0 | set colorcolumn=0 | endif
         set foldcolumn=0
         set laststatus=0

@@ -27,7 +27,7 @@ copy_image() {
   fi
 }
 
-camera() { for i in $@ ;do for j in $i/* ;do copy_image $j ;done ;done; }
+camera() { for i in $@ ;do for j in $i/* ;do copy_image $j ;done ;done }
 
 case ${MEDIA##*/} in
 *FUJI ) camera $MEDIA ;;

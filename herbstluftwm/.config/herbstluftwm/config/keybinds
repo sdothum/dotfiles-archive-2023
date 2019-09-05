@@ -27,8 +27,8 @@ hc keybind $Mod-equal                   spawn toggle focus
 hc keybind $Mod-0                       spawn toggle focus
 
 # UI appearance
-hc keybind $Mod-b                       spawn focus borders 3
-hc keybind $Mod-Shift-b                 spawn toggle borders
+hc keybind $Mod-b                       spawn focus border 3
+hc keybind $Mod-Shift-b                 spawn toggle border
 if [ $BEAKL ] ;then
   hc keybind $Mod-i                     spawn toggle unclutter
   hc keybind $Mod-Shift-i               spawn toggle compton

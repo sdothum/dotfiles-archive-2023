@@ -206,13 +206,15 @@ button.expandPrompt {
   /* text-shadow: 0 1px 1px #fff; */
   color: #b12525;
   content: 'GRAVITY\AWELL'; /* line break */
+  /* content: 'GRAVITY\A     WELL'; [> line break <] */
   display: block;
   font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
-  margin-top: 57px; /* ~ holder width / golden ratio - font-size x 1.5 */
   margin-top: 69px; /* ~ 150 / 1.618 - font-size x 1.5 */
   position: fixed;
   text-align: right;
+  /* text-align: left; [> on rotation <] */
+  /* transform:rotate(45deg); */
   white-space: pre; /* line break */
   width: 153px; /* right align with counter column */
 }

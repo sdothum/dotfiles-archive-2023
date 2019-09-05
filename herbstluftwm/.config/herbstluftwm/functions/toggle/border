@@ -1,5 +1,5 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="toggle/borders $@" . $PARENT
+[ $TRACE ] && CHILD="toggle/border $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
@@ -9,7 +9,7 @@
 NORMAL=$HLWM:normal
 
 # no borders focusing aid
-pstat + 'focus borders' && exit
+pstat + 'focus border' && exit
 [ -e $NORMAL ] || herbstclient attr theme.normal.color >$NORMAL
 
 # no borders

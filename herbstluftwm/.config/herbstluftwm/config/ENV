@@ -19,6 +19,8 @@ export COMPTONCONF=$HOME/.compton.conf
 export CONKYRC=$HOME/.conkyrc
 xinput list --name-only | egrep -q 'Chimera|Planck|Splitography' 2>/dev/null && export BEAKL=true
 
+echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
+
 # .................................................................... WM states
 
 export PALETTE=$HOME/images/colors
@@ -83,13 +85,13 @@ export INVISIBLE='□'
 
 # focus aid, see focus border
 export FOCUS_WIDTH=5
-  export BORDER_WIDTH=2
-  export NORMAL='#808080'
+export BORDER_WIDTH=2
+export NORMAL='#808080'
 
-  # ........................................................... Margin adjustments
+# ........................................................... Margin adjustments
 
-  # minimun display width for conky/panel monitor rules
-  export MIN_DISPLAY=1360
+# minimun display width for conky/panel monitor rules
+export MIN_DISPLAY=1360
 
 # left shift right monitor margin by shadow-radius*shadow_factor so conky doesn't cover shadow area
 export SHADOW_FACTOR=3

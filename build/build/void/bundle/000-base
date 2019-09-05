@@ -30,6 +30,7 @@
   dosfstools
   exfat-utils
 # fuse
+  fuse-exfat
 # gvfs
 # mbuffer
 # ntfs-3g

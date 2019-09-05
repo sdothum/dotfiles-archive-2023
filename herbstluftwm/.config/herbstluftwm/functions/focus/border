@@ -1,5 +1,5 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="focus/borders $@" . $PARENT
+[ $TRACE ] && CHILD="focus/border $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
@@ -7,7 +7,7 @@
 # .................................................. Flash active window borders
 
 # no borders focusing aid
-pstat + 'focus borders' && exit
+pstat + 'focus border' && exit
 # [ "$(herbstclient attr clients.focus.instance 2>/dev/null)" = '' ] && exit
 herbstclient compare clients.focus.instance = '' 2>/dev/null && exit
 

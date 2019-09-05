@@ -21,7 +21,7 @@ sources="
   /etc/sv
 "
 
-files()      { for i in $sources ;do fcache f $i ;done; }
+files()      { for i in $sources ;do fcache f $i ;done }
 abbreviate() { eval sed $trim; }
 
 # shorten path references for menu

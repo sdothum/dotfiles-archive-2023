@@ -18,11 +18,11 @@ vga() {
 }
 
 case $1 in
-''      ) vga 'GeForce 8600M GT'
-          vga 'GeForce GT 650M'
+''      ) vga Intel
           vga NVIDIA
           vga ATI
-          vga Intel
+          vga 'GeForce 8600M GT'
+          vga 'GeForce GT 650M'
           # lspci fails on raspberry pi
           echo arm ;;
 

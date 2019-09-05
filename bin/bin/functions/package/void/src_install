@@ -19,4 +19,6 @@ if [ ! -e $REPO/hostdir/binpkgs/$1-* ] ;then
 fi
 sudo xbps-install --repository=$REPO/hostdir/binpkgs --force $1
 
+post_install $1
+
 # vim: set ft=sh: #

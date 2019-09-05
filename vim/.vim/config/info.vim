@@ -12,7 +12,7 @@
         if $MONO > ''
           let g:state = ['', '', '', '']  " nerd-font utf-8 mono symbols, see ui.vim
         else
-          let g:state = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim
+          let g:state = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim
         endif
       else
         let g:state   = ['^', '-', '+', 'x']  " console

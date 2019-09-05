@@ -43,6 +43,8 @@ hc attr theme.inner_width             0
 hc attr theme.normal.color            '#808080'
 hc attr theme.outer_color             black
 hc attr theme.outer_width             0
+# hc attr theme.padding_left          2  # inconsistent application
+# hc attr theme.active.padding_left   2  # inconsistent application
 hc attr theme.urgent.color            orange
 
 if is display -min ;then
