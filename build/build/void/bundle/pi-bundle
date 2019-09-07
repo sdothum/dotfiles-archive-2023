@@ -11,7 +11,7 @@
 = ═════
   alsa-utils
   alsa-plugins
-  ConsoleKit2
+# ConsoleKit2
   pavucontrol
   pulseaudio
   alsa-plugins-pulseaudio
@@ -29,7 +29,6 @@ d ? preload
 
 = file
 = ════
-  ack
   stow
 
 
@@ -60,7 +59,9 @@ d ? preload
 
 = shell tool
 = ══════════
+  ack
   fzf
+  pcre
   pv
   ripgrep
   the_silver_searcher

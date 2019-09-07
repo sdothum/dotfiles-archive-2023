@@ -1,0 +1,19 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Audio
+
+# import user path
+. $HOME/bin/functions/shell/user_path
+
+pacmd list-sinks | grep -q hdmi && exit
+trace 'HDMI connection lost..'
+pkill -f '(youtube|vimeo|netflix|mpv|omxplayer|pavucontrol|pulse)'
+
+service restart alsa
+notify X critical 'Check pulseaudio..' 'pavucontrol'
+
+# vim: set ft=sh: #

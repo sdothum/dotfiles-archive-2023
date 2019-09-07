@@ -6,7 +6,6 @@
 
 = file
 = ════
-  ack
 # mediainfo [server]
   mlocate
   stow
@@ -36,8 +35,10 @@
 
 = shell tool
 = ══════════
+  ack
   expect
   fzf
+  pcre
 # pv
   ripgrep
 # shellcheck

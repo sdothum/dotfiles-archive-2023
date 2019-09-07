@@ -8,13 +8,13 @@
 
 maildir=$HOME/Maildir/thedarnedestthing
 
-if ! server ;then
-  grep -q "^$SERVER:/Maildir" /etc/fstab && mount -t nfs4 | grep -vq Maildir && {
-    ssh $SERVER sudo systemctl restart nfs-server
-    sudo mount $HOME/Maildir
-  }
-fi
+# if ! server ;then
+#   grep -q "^$SERVER:/Maildir" /etc/fstab && mount -t nfs4 | grep -vq Maildir && {
+#     ssh $SERVER sudo systemctl restart nfs-server
+#     sudo mount $HOME/Maildir
+#   }
+# fi
 
-/usr/bin/alot
+/usr/bin/alot -l /tmp/alot.log -d debug
 
 # vim: set ft=sh: #

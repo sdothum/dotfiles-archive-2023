@@ -49,7 +49,7 @@ options=${options% *}
 pkgver=$(xbps-query -S "$package" | grep pkgver | cut -d' ' -f2)
 
 case $action in
-held     ) xbps-query --list-hold-pkgs ;;
+held     ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
 hold     ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
 query    ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;

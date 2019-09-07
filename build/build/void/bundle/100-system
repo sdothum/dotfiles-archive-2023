@@ -43,7 +43,7 @@
 = ════
   alsa-utils
   alsa-plugins
-  ConsoleKit2
+# ConsoleKit2
 # mpg123
   pavucontrol
   pulseaudio

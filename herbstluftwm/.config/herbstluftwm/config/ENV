@@ -45,15 +45,14 @@ export PANEL=$HLWM:panel
 export PULSAR=$HLWM:pulsar
 export THEME=$HLWM:theme
 
-# select wallpaper subdirectory
-export WALL=${WALL:-.}
-
+export WALL=${WALL:-.}  # select wallpaper subdirectory
 export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 
 # ............................................................... Session states
 
 # wm states
 export CONTRAST=$SESSION/contrast
+export SPINE=$SESSION/spine  # frame left decoration -> window_gap = 0
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
 export UNCLUTTER=$SESSION/unclutter

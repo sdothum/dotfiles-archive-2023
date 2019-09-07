@@ -4,21 +4,13 @@
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
-# Note: the common Qwerty "IJKL" key mappings are remapped to a WASD layout
-#       for the Colemak Mod-DH keyboard layout to "MNLE"
-#       see https://colemakmods.github.io/mod-dh/
-#           http://thedarnedestthing.com/colemak%20shift-dh#ergo-layout
-
-# .................................................................. Keybindings
+# ......................................................... BEAKL Pi Keybindings
 
 # window manager
 hc keybind $Mod-Shift-q                 spawn quit
 hc keybind $Mod-Control-Shift-q         spawn pkill -KILL -f startx
 hc keybind $Mod-Control-Shift-r         reload
 hc keybind $Mod-w                       chain . close_or_remove . emit_hook focus_window
-# hc keybind $Mod-Return                spawn focus hlwm
-# hc keybind $Mod-Shift-Return          spawn focus hlwm raise
-# hc keybind $Mod-Control-Return        spawn focus hlwm close
 hc keybind $Mod-Return                  spawn toggle scratchpad
 hc keybind $Mod-Shift-Return            spawn tmux_session
 hc keybind $Mod-Control-Return          spawn term 'Term'
@@ -29,13 +21,8 @@ hc keybind $Mod-0                       spawn toggle focus
 # UI appearance
 hc keybind $Mod-b                       spawn focus border 3
 hc keybind $Mod-Shift-b                 spawn toggle border
-if [ $BEAKL ] ;then
-  hc keybind $Mod-i                     spawn toggle unclutter
-  hc keybind $Mod-Shift-i               spawn toggle compton
-else
-  hc keybind $Mod-backslash             spawn toggle unclutter
-  hc keybind $Mod-Shift-backslash       spawn toggle compton
-fi
+hc keybind $Mod-i                       spawn toggle unclutter
+hc keybind $Mod-Shift-i                 spawn toggle compton
 
 # wallpaper background (toggle) blur
 hc keybind $Mod-p                       spawn draw root select
@@ -46,93 +33,33 @@ hc keybind $Mod-Shift-d                 spawn draw root save
 hc keybind $Mod-Control-d               spawn draw root blank
 
 # focus monitor
-# hc keybind $Mod-apostrophe            cycle_monitor
-if [ $BEAKL ] ;then
-  # hc keybind $Mod-semicolon           focus_monitor 1
-  # hc keybind $Mod-backslash           focus_monitor 0
-  hc keybind $Mod-Page_Down             focus_monitor 1
-  hc keybind $Mod-Page_Up               focus_monitor 0
-else
-  # hc keybind $Mod-bracketleft         chain . focus_monitor 1 . emit_hook focus_window
-  # hc keybind $Mod-bracketright        chain . focus_monitor 0 . emit_hook focus_window
-  hc keybind $Mod-bracketleft           focus_monitor 1
-  hc keybind $Mod-bracketright          focus_monitor 0
-fi
+hc keybind $Mod-apostrophe              cycle_monitor
+hc keybind $Mod-Page_Down               focus_monitor 1
+hc keybind $Mod-Page_Up                 focus_monitor 0
 
 # focus client
 hc keybind $Mod-Left                    focus_edge left
 hc keybind $Mod-Down                    focus_edge down
 hc keybind $Mod-Up                      focus_edge up
 hc keybind $Mod-Right                   focus_edge right
-if [ $BEAKL ] ;then
-  # hc keybind $Mod-t                   focus left
-  # hc keybind $Mod-s                   focus down
-  # hc keybind $Mod-r                   focus up
-  # hc keybind $Mod-n                   focus right
-  hc keybind $Mod-t                     focus left
-  hc keybind $Mod-r                     focus down
-  hc keybind $Mod-n                     focus up
-  hc keybind $Mod-s                     focus right
-  # hc keybind $Mod-s                   focus left
-  # hc keybind $Mod-r                   focus down
-  # hc keybind $Mod-n                   focus up
-  # hc keybind $Mod-t                   focus right
-elif [ $COLEMAK ] ;then
-  hc keybind $Mod-n                     focus left
-  hc keybind $Mod-e                     focus down
-  hc keybind $Mod-u                     focus up
-  hc keybind $Mod-i                     focus right
-else
-  hc keybind $Mod-h                     focus left
-  hc keybind $Mod-j                     focus down
-  hc keybind $Mod-k                     focus up
-  hc keybind $Mod-l                     focus right
-fi
+hc keybind $Mod-t                       focus left
+hc keybind $Mod-r                       focus down
+hc keybind $Mod-n                       focus up
+hc keybind $Mod-s                       focus right
 
 # move client
 hc keybind $Mod-Shift-Left              shift_edge left
 hc keybind $Mod-Shift-Down              shift_edge down
 hc keybind $Mod-Shift-Up                shift_edge up
 hc keybind $Mod-Shift-Right             shift_edge right
-if [ $BEAKL ] ;then
-  # hc keybind $Mod-Shift-t             chain . shift left  . emit_hook focus_changed
-  # hc keybind $Mod-Shift-s             chain . shift down  . emit_hook focus_changed
-  # hc keybind $Mod-Shift-r             chain . shift up    . emit_hook focus_changed
-  # hc keybind $Mod-Shift-n             chain . shift right . emit_hook focus_changed
-  hc keybind $Mod-Shift-t               chain . shift left  . emit_hook focus_changed
-  hc keybind $Mod-Shift-r               chain . shift down  . emit_hook focus_changed
-  hc keybind $Mod-Shift-n               chain . shift up    . emit_hook focus_changed
-  hc keybind $Mod-Shift-s               chain . shift right . emit_hook focus_changed
-  # hc keybind $Mod-Shift-s             chain . shift left  . emit_hook focus_changed
-  # hc keybind $Mod-Shift-r             chain . shift down  . emit_hook focus_changed
-  # hc keybind $Mod-Shift-n             chain . shift up    . emit_hook focus_changed
-  # hc keybind $Mod-Shift-t             chain . shift right . emit_hook focus_changed
-elif [ $COLEMAK ] ;then
-  hc keybind $Mod-Shift-n               chain . shift left  . emit_hook focus_changed
-  hc keybind $Mod-Shift-e               chain . shift down  . emit_hook focus_changed
-  hc keybind $Mod-Shift-u               chain . shift up    . emit_hook focus_changed
-  hc keybind $Mod-Shift-i               chain . shift right . emit_hook focus_changed
-else
-  hc keybind $Mod-Shift-h               chain . shift left  . emit_hook focus_changed
-  hc keybind $Mod-Shift-j               chain . shift down  . emit_hook focus_changed
-  hc keybind $Mod-Shift-k               chain . shift up    . emit_hook focus_changed
-  hc keybind $Mod-Shift-l               chain . shift right . emit_hook focus_changed
-fi
-if [ $BEAKL ] ;then
-  # hc keybind $Mod-Shift-semicolon     spawn pin monitor 1
-  # hc keybind $Mod-Shift-backslash     spawn pin monitor 0
-  # hc keybind $Mod-Control-semicolon   spawn switch monitor 1
-  # hc keybind $Mod-Control-backslash   spawn switch monitor 0
-  hc keybind $Mod-Shift-Page_Down       spawn pin monitor 1
-  hc keybind $Mod-Shift-Page_Up         spawn pin monitor 0
-  hc keybind $Mod-Control-Page_Down     spawn switch monitor 1
-  hc keybind $Mod-Control-Page_Up       spawn switch monitor 0
-else
-  hc keybind $Mod-Shift-bracketleft     spawn pin monitor 1
-  hc keybind $Mod-Shift-bracketright    spawn pin monitor 0
-  hc keybind $Mod-Control-bracketleft   spawn switch monitor 1
-  hc keybind $Mod-Control-bracketright  spawn switch monitor 0
-fi
+hc keybind $Mod-Shift-t                 chain . shift left  . emit_hook focus_changed
+hc keybind $Mod-Shift-r                 chain . shift down  . emit_hook focus_changed
+hc keybind $Mod-Shift-n                 chain . shift up    . emit_hook focus_changed
+hc keybind $Mod-Shift-s                 chain . shift right . emit_hook focus_changed
+hc keybind $Mod-Shift-Page_Down         spawn pin monitor 1
+hc keybind $Mod-Shift-Page_Up           spawn pin monitor 0
+hc keybind $Mod-Control-Page_Down       spawn switch monitor 1
+hc keybind $Mod-Control-Page_Up         spawn switch monitor 0
 
 # cycle frames
 hc keybind $Mod-Tab                     spawn switch frames cycle_all +1
@@ -145,11 +72,7 @@ hc keybind $Mod-Shift-1                 jumpto urgent
 
 # split frames
 # create an empty frame at the specified direction
-if [ $BEAKL ] ;then
-  hc keybind $Mod-q                     remove
-else
-  hc keybind $Mod-r                     remove
-fi
+hc keybind $Mod-q                       remove
 hc keybind $Mod-y                       split bottom 0.5
 hc keybind $Mod-Shift-y                 split bottom 0.666666
 hc keybind $Mod-Control-y               split bottom 0.333333
@@ -158,70 +81,29 @@ hc keybind $Mod-Shift-x                 split right  0.666666
 hc keybind $Mod-Control-x               split right  0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space           spawn restore frames
-if [ $BEAKL ] ;then
-  hc keybind $Mod-Shift-h               spawn switch orientation -2
-  hc keybind $Mod-h                     spawn switch orientation -1
-  hc keybind $Mod-l                     spawn switch orientation +1
-  hc keybind $Mod-Shift-l               spawn switch orientation +2
-elif [ $COLEMAK ] ;then
-  hc keybind $Mod-Shift-comma           spawn switch orientation -2
-  hc keybind $Mod-Shift-slash           spawn switch orientation -1
-  hc keybind $Mod-slash                 spawn switch orientation +1
-  hc keybind $Mod-Shift-period          spawn switch orientation +2
-else
-  hc keybind $Mod-Shift-slash           spawn switch orientation -2
-  hc keybind $Mod-Shift-comma           spawn switch orientation +1
-  hc keybind $Mod-Shift-period          spawn switch orientation +2
-fi
+hc keybind $Mod-Shift-h                 spawn switch orientation -2
+hc keybind $Mod-h                       spawn switch orientation -1
+hc keybind $Mod-l                       spawn switch orientation +1
+hc keybind $Mod-Shift-l                 spawn switch orientation +2
 
 # resize frames
 resizestep=0.025
-if [ $BEAKL ] ;then
-  # hc keybind $Mod-Control-t           resize left  +$resizestep
-  # hc keybind $Mod-Control-s           resize down  +$resizestep
-  # hc keybind $Mod-Control-r           resize up    +$resizestep
-  # hc keybind $Mod-Control-n           resize right +$resizestep
-  hc keybind $Mod-Control-t             resize left  +$resizestep
-  hc keybind $Mod-Control-r             resize down  +$resizestep
-  hc keybind $Mod-Control-n             resize up    +$resizestep
-  hc keybind $Mod-Control-s             resize right +$resizestep
-  # hc keybind $Mod-Control-s           resize left  +$resizestep
-  # hc keybind $Mod-Control-r           resize down  +$resizestep
-  # hc keybind $Mod-Control-n           resize up    +$resizestep
-  # hc keybind $Mod-Control-t           resize right +$resizestep
-elif [ $COLEMAK ] ;then
-  hc keybind $Mod-Control-n             resize left  +$resizestep
-  hc keybind $Mod-Control-e             resize down  +$resizestep
-
-  hc keybind $Mod-Control-u             resize up    +$resizestep
-  hc keybind $Mod-Control-i             resize right +$resizestep
-else
-  hc keybind $Mod-Control-h             resize left  +$resizestep
-  hc keybind $Mod-Control-j             resize down  +$resizestep
-  hc keybind $Mod-Control-k             resize up    +$resizestep
-  hc keybind $Mod-Control-l             resize right +$resizestep
-fi
+hc keybind $Mod-Control-t               resize left  +$resizestep
+hc keybind $Mod-Control-r               resize down  +$resizestep
+hc keybind $Mod-Control-n               resize up    +$resizestep
+hc keybind $Mod-Control-s               resize right +$resizestep
 hc keybind $Mod-Control-Left            resize left  +$resizestep
 hc keybind $Mod-Control-Down            resize down  +$resizestep
 hc keybind $Mod-Control-Up              resize up    +$resizestep
 hc keybind $Mod-Control-Right           resize right +$resizestep
 
 # cycle through tags
-if [ $BEAKL ] ;then
-  hc keybind $Mod-j                     use_index +1 --skip-visible
-  hc keybind $Mod-k                     use_index -1 --skip-visible
-else
-  hc keybind $Mod-Control-period        use_index +1 --skip-visible
-  hc keybind $Mod-Control-comma         use_index -1 --skip-visible
-fi
+hc keybind $Mod-j                       use_index +1 --skip-visible
+hc keybind $Mod-k                       use_index -1 --skip-visible
 hc keybind $Mod-BackSpace               spawn switch tag
 
 # set layout
-if [ $BEAKL ] ;then
-  hc keybind $Mod-Control-0             spawn toggle monocle
-else
-  hc keybind $Mod-grave                 spawn toggle monocle
-fi
+hc keybind $Mod-Control-0               spawn toggle monocle
 hc keybind $Mod-g                       spawn toggle layout grid
 hc keybind $Mod-l                       spawn restore layout
 hc keybind $Mod-Control-minus           spawn restore layout default

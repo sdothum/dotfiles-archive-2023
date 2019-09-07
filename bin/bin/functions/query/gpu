@@ -12,9 +12,10 @@ usage() {
 }
 
 vga() {
-  lspci 2>/dev/null | grep VGA | grep -q "$1" || return
-  echo $1 | lowercase
-  exit
+  lspci 2>/dev/null | grep VGA | grep -qi "$1" || return 1
+  echo $1
+  card=true
+  return 0
 }
 
 case $1 in
@@ -23,17 +24,18 @@ case $1 in
           vga ATI
           vga 'GeForce 8600M GT'
           vga 'GeForce GT 650M'
+          
           # lspci fails on raspberry pi
-          echo arm ;;
+          [ $card ] || echo arm ;;
 
 display ) xrandr 2>/dev/null | grep '*' | awk '{ print $1 }' ;;
 
 ati       |\
 intel     |\
-nvidia  ) [ "$(gpu)" = $1 ] ;;
+nvidia  ) vga $1 >/dev/null ;;
 
-macbook ) [ "$(gpu)" = 'geforce 8600m gt' ] ;;
-inspiron) [ "$(gpu)" = 'geforce gt 650m' ] ;;
+macbook ) vga 'GeForce 8600M GT' >/dev/null ;;
+inspiron) vga 'GeForce GT 650M'  >/dev/null ;;
 *       ) usage ;;
 esac
 

@@ -7,6 +7,8 @@
 
 # ............................................................... Emit hook trap
 
+close=0.05  # close completion delay window
+
 exec 3>"/tmp/flock:$(basename $0)"
 if flock -n 3 2>/dev/null ;then
   echo $$ 1>&3
@@ -20,15 +22,26 @@ monitor=$(herbstclient attr monitors.focus.index)
 
 # force panel title refresh, see draw panel
 panel_refresh() {
-  sleep 0.05  # allow window close to complete
+  sleep $close
   xtitle -f 'T\n' >$(cat $PANEL_FIFO)
+}
+
+# dynamic frame spine decoration on multiple populated frames
+spine() {
+  sleep $close
+  if herbstclient compare tags.focus.curframe_wcount = $(herbstclient attr tags.focus.client_count) ;then
+    herbstclient set frame_bg_transparent 1  # one or no frames in use
+  else
+    herbstclient set frame_bg_transparent 0  # two or more frames in use
+  fi
 }
 
 herbstclient --idle '(focus_.*|rule)' | while read hook rule winid ;do
   # script lock to suppress unnecessary emit hook message processing
   # [ -e $LOCK ] && { echo "> (LOCK) $hook $rule $winid" >>$TRACE; continue; }
-  [ -e $LOCK ] && continue
-  [ $TRACE   ] && echo "> $hook $rule $winid" >>$TRACE
+  [ -e $LOCK  ] && continue
+  [ $TRACE    ] && echo "> $hook $rule $winid" >>$TRACE
+  [ -e $SPINE ] && spine &
 
   # lots of manual tuning here to avoid unnecessary draw refreshes in particular,
   # hence, the fullscreen test. also, see query wname whose conky usage is capitalized
