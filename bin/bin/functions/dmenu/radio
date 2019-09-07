@@ -11,10 +11,8 @@ TOGGLE='[ toggle ]'
  CLEAR='[ clear  ]'
   EDIT='[ edit   ]'
 
-# access list csv format: <station>, <url>
-stations=$CONFIG/radio
-# connection lag time
-delay=0.5
+stations=$CONFIG/radio  # access list csv format: <station>, <url>
+connect=0.5             # connection lag time
 
 playlist() {
   if [ -e $RADIO ] ;then
@@ -39,7 +37,7 @@ while station=$(playlist | rmenu "$(station)" -no-custom) || exit ;do
              url=$(url "$station")
              [ "$url" ] || continue
              mpv --no-cache --quiet $url &
-             sleep $delay; pstat 'mpv --no-cache --quiet' && exec echo "$station" >$RADIO || rm -f $RADIO ;;
+             sleep $connect; pstat 'mpv --no-cache --quiet' && exec echo "$station" >$RADIO || rm -f $RADIO ;;
   esac
 done
 

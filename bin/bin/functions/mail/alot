@@ -15,6 +15,7 @@ maildir=$HOME/Maildir/thedarnedestthing
 #   }
 # fi
 
-/usr/bin/alot -l /tmp/alot.log -d debug
+# /usr/bin/alot -l /tmp/alot.log -d debug
+/usr/bin/alot -l /tmp/alot.log
 
 # vim: set ft=sh: #

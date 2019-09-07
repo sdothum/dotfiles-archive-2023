@@ -14,7 +14,7 @@ usage() {
 target=/net/photos/batchqueue
 target=$HOME/thedarnedestthing.com/application/public/images
 quality=92
-delay=1  # allow desktup refresh (from dmenu)
+refresh=1  # allow desktup refresh (from dmenu)
 
 if server ;then
   case $@ in
@@ -28,7 +28,7 @@ if server ;then
 else
   case $@ in
   [0-9]* ) opts="--geometry=$@" ;;
-  d*     ) sleep $delay; set -- $(query display); opts="--geometry=$1x$2+0+0" ;;
+  d*     ) sleep $refresh; set -- $(query display); opts="--geometry=$1x$2+0+0" ;;
   s*     ) opts=-s ;;
   *      ) usage ;;
   esac

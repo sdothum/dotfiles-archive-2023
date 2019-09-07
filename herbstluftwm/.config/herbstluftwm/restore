@@ -14,16 +14,17 @@
 
 TAG=$(herbstclient attr monitors.focus.tag)
 
+hook=0.001  # emit_hook processing window
+
 # wait for hook completion (necessary for non-interactive window manipulation sequences)
-delay=0.001
 emit_hook() {
   process=$(echo $@ | tr '_' ' ')
   herbstclient emit_hook $@
   # trap hook..
   if [ -e $DYNAMIC ] ;then
-    until pstat "$process" ;do sleep $delay ;done
+    until pstat "$process" ;do sleep $hook ;done
     # ..then wait for completion
-    while pstat "$process" ;do sleep $delay ;done
+    while pstat "$process" ;do sleep $hook ;done
   fi
 }
 

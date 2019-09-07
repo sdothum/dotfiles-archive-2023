@@ -1,0 +1,22 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="draw/spine $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................. Frame decoration
+
+[ -e $SPINE ] || return
+
+close=0.10  # close completion delay window
+
+# dynamic spine decoration for multiple populated frames
+sleep $close
+if herbstclient compare tags.focus.curframe_wcount = $(herbstclient attr tags.focus.client_count) ;then
+  herbstclient set frame_bg_transparent 1  # one or no frames in use
+else
+  herbstclient set frame_bg_transparent 0  # two or more frames in use
+fi
+
+
+# vim: set ft=sh: #

@@ -19,8 +19,7 @@ TERM=$SESSION/term
 THEDARNEDESTTHING=$SESSION/thedarnedestthing
 WWW=$SESSION/browser
 
-# reminder delay (allow desktop to initialize)
-delay=2
+instantiate=2  # instantiation window
 
 killall -TERM imapfilter 2>/dev/null
 killall -TERM offlineimap 2>/dev/null
@@ -42,7 +41,7 @@ xrdb -merge $HOME/.Xresources &
 
 # pstat dunst || dunst 2>/dev/null &
 if server && ! pstat mpd ;then
-  sleep 2
+  sleep $instantiate
   mpd &
 fi
 # pstat urxvtd || urxvtd -q -o -f &
@@ -100,7 +99,7 @@ server && herbstclient focus_monitor 0
 switch tag $WEB
 [ -e $WWW      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad
-[ -e $REMINDER ] && (sleep $delay; dmenu reminder) &
+[ -e $REMINDER ] && (sleep $instantiate; dmenu reminder) &
 
 # .............................................................. Cleanup desktop
 

@@ -6,6 +6,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 HLWMTRACE=$SESSION/trace
+hook=1  # emit_hook initialization window
 
 # chain herbstclient commands (note: keybind chains use ".")
 hc() {
@@ -101,8 +102,8 @@ if [ ! -e $HLWM:autostart ] ;then
 fi
 touch $HLWM:autostart
 
-# wait for slowest emit_hook process
-sleep 1
+sleep $hook  # wait for slowest process launch before selecting monitor / tag
+
 if [ $(herbstclient list_monitors | wc -l) -gt 1 ] ;then
   herbstclient chain . focus_monitor 1 . use 2
   # xdotool search --sync --onlyvisible --limit 1 --classname IRC >/dev/null

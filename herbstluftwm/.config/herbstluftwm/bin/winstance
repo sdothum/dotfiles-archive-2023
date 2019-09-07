@@ -12,13 +12,13 @@
 start=$(date '+%s')
 [ $2 ] && cutoff=$2 || cutoff=10
 
-delay=0.01
+instantiate=0.01  # instantiation window
 
 while : ;do
   for i in $(herbstclient attr clients | egrep '0x|focus') ;do
     herbstclient compare clients.${i%.}.instance = $1 && exit 0
   done
-  sleep $delay
+  sleep $instantiate
   [ $(( $(date '+%s') - $start )) -gt $cutoff ] && exit 1
 done
 

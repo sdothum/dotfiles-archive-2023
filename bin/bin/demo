@@ -33,7 +33,7 @@ demo() {
 msg=$1
 shift
 if [ -e ${0%/demo}/functions/demo/$msg ] ;then
-  [ "$1" = capture ] && { capture DVI-1 &; sleep 1; }
+  [ "$1" = capture ] && { capture DVI-1 &; sleep $DELAY; }
   . ${0%/demo}/functions/demo/$msg
   demo
 else

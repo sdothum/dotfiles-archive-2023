@@ -366,6 +366,7 @@ esac
 if [ $GLIBC ] ;then
   herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
   xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
+  draw spine &  # non-panel related redundancy check for latent frame handling, see emit_hook
 fi
 
 cat $PANEL_FIFO:$fifo |
