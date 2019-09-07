@@ -23,7 +23,7 @@ while : ;do
   if [ "$selection" ] ;then
     man=$selection
     [ $(echo "$man" | wc -w) -ne 1 ] && unset man || { [ $(whatis "$man" | wc -l) -eq 0 ] && unset man; }
-    [ -z $man ] && { notify 3 critical "$selection" "No manual entry found"; exit; }
+    [ -z $man ] && exec notify 3 critical "$selection" "No manual entry found"
   else
     # initial lookup
     man=$(apropos . | cut -d' ' -f1 | sort -d | uniq | mhistory man | sed "1i$REBUILD" | 

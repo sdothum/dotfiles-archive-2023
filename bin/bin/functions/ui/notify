@@ -46,13 +46,12 @@ TWO=${2#\\}
 
 [ "$TWO" ] && echo "$(timestamp) $USER:${urgency#-u} \"$ONE\" \"$TWO\"" >>$LOG || echo "$(timestamp) $USER:${urgency#-u} \"$ONE\"" >>$LOG
 
-  # allow cron jobs to bypass console test and display to X
-display() { [ $console ] || { [ -e $SESSION/display ] && DISPLAY=$(cat $SESSION/display); };}
-
 if [ $console ] ;then
   [ "$TWO" ] && echo "${color1}==> $ONE\n${color2}  -> $TWO${NOCOLOR}" || echo "${color1}==> $ONE${NOCOLOR}"
 else
   [ $X ] || { console && exit; }
+  [ -e $SESSION/display ] && DISPLAY=$(cat $SESSION/display)  # allow cron jobs to  display to X
+
   case $# in
   1) if [ $(echo "$ONE" | wc -l) -eq 1 ] ;then
        DISPLAY=${DISPLAY:-:0} notify-send $expire $urgency --icon=help-info "$ONE" &

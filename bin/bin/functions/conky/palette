@@ -16,7 +16,7 @@ BLANK='ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff fff
 
 [ $1 ] || usage
 
-pong || { echo "$BLANK"; exit; } 
+pong || exec echo "$BLANK"
 
 # flatten content into single lines
 palette() {
@@ -45,7 +45,7 @@ palette() {
 }
 
 colors=$(palette $1)
-[ $2 ] && { colors=$(echo "$colors" | grep -i "^$2"); true; } || { echo "$colors"; exit; }
+[ $2 ] && { colors=$(echo "$colors" | grep -i "^$2"); true; } || exec echo "$colors"
 [ "$colors" ] && echo "$colors" | cut -d' ' -f2- || echo $BLANK | sed "s/ffffff/$1/g"
 
 # vim: set ft=sh: #

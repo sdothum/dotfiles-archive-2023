@@ -12,7 +12,7 @@ SESSION=${SESSION:-$HOME/.session}  # for root invocation
 FONTSIZE=$SESSION/fontsize
 
 [ -e $FONTSIZE ] && size=$(cat $FONTSIZE)
-[ $size ] && { echo $size; exit; }
+[ $size ] && exec echo $size
 
 # fugly adjust font for various displays and video cards on this local network
 

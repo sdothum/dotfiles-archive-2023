@@ -9,13 +9,16 @@
 
 # Usage: blackboard [<hexcolor>]
 
-[ -e $BLACKBOARD ] && { rm -f $BLACKBOARD; restore root; exit; }
+[ -e $BLACKBOARD ] && { herbstclient set frame_bg_normal_color "$(cat $BLACKBOARD)"; exec restore root; }  # see restore root (rm $BLACKBOARD)
 
 draw root blank ${1:-000000}
+
+herbstclient get frame_bg_normal_color >$BLACKBOARD  # must follow (see) draw root
+herbstclient set frame_bg_normal_color '#000000'
+
 [ -e $SCOMPTON:toggle ] && toggle compton off
 
 # present conky clock on secondary monitor (draw root refresh clears clock)
 server && CONKYRC=$CONKY_Q2 conky clock on
-touch $BLACKBOARD
 
 # vim: set ft=sh: #
