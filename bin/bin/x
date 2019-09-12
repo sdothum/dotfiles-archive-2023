@@ -8,10 +8,7 @@
 
 # ............................................................... Window manager
 
-usage() {
-  echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) 'start | 2bwm | awesome | bspwm | budgie | cinnamon | dwm | gnome | goomwwm | guile | herbstluftwm | i3 | kde | lxde | lxqt | notion | openbox | ratpoison | razor-qt | spectrwm | stumpwm | subtle | shell | windowchef | wmii | wmutils | wtftw | xfce4 | xmonad"; exit 1; }
 
 # see .xinitrc
 case $1 in

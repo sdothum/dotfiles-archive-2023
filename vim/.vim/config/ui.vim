@@ -3,107 +3,96 @@
 " Themes
 " ══════════════════════════════════════════════════════════════════════════════
 
-  " The view ___________________________________________________________________
+" The view _____________________________________________________________________
 
-    " .................................................................... Setup
+" ........................................................................ Setup
+let g:detail    = 0   " default expanded detail (0) tag (1) atom, see F7 map
+let g:active    = 0   " active window tag
 
-      let g:detail    = 0   " default expanded detail (0) tag (1) atom, see F7 map
-      let g:active    = 0   " active window tag
+" Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
+let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [source, prose]
+let g:font_type = -1                                                        " current font setting (0) source (1) prose
+let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " increase (point size) for prose
 
-      " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-      let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [source, prose]
-      let g:font_type = -1                                                        " current font setting (0) source (1) prose
-      let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " increase (point size) for prose
+augroup ui | autocmd! | augroup END
 
-      augroup ui | autocmd! | augroup END
+" Display ______________________________________________________________________
 
-  " Display ____________________________________________________________________
+" ....................................................................... Redraw
+nmap <silent><F9>      :call Retheme()<CR>
+imap <silent><F9> <C-o>:call Retheme()<CR>
 
-    " ................................................................... Redraw
+" window manager timing requires FocusLost trap with VimResized to consistently set margins
+autocmd ui VimEnter,VimResized,FocusLost * call Margins()
+autocmd ui CursorHold,FocusGained        * if g:lite_dfm_left_offset != Offset() | call Margins() | endif
 
-      nmap <silent><F9>      :call Retheme()<CR>
-      imap <silent><F9> <C-o>:call Retheme()<CR>
+" ................................................................... Initialize
+" intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
+autocmd ui BufWinEnter * if ! PluginWindow() | call LiteType() | endif
+" show and fix line wrap highlighting on startup
+autocmd ui GuiEnter    * if g:wrap_highlighting && ! PluginWindow() | call Retheme() | endif
 
-      " window manager timing requires FocusLost trap with VimResized to consistently set margins
-      autocmd ui VimEnter,VimResized,FocusLost * call Margins()
-      autocmd ui CursorHold,FocusGained        * if g:lite_dfm_left_offset != Offset() | call Margins() | endif
+" ..................................................................... Messages
+" recover last error message
+nmap <leader>e :echo errmsg<CR>
 
-    " ............................................................... Initialize
+" clear messages after awhile to keep screen clean and distraction free!
+autocmd ui CursorHold * echo
 
-      " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-      autocmd ui BufWinEnter * if ! PluginWindow() | call LiteType() | endif
-      " show and fix line wrap highlighting on startup
-      autocmd ui GuiEnter    * if g:wrap_highlighting && ! PluginWindow() | call Retheme() | endif
+" Highlighting _________________________________________________________________
 
-    " ................................................................. Messages
+" .......................................................... Syntax highlighting
+set omnifunc=syntaxcomplete#Complete
+syntax on  " turn on syntax highlighting
 
-      " recover last error message
-      nmap <leader>e :echo errmsg<CR>
+" refresh highlighting on arm
+autocmd ui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
 
-      " clear messages after awhile to keep screen clean and distraction free!
-      autocmd ui CursorHold * echo
+" .......................................................... White space markers
+set nolist  " display tabs and trailing spaces visually
+set listchars="tab:▸\<Space>"
 
-  " Highlighting _______________________________________________________________
+" set listchars+=trail:_
+set listchars+=trail:·
+set listchars+=nbsp:.
+set listchars+=extends:>
+set listchars+=precedes:<
+" set listchars+=eol:¬
 
-    " ...................................................... Syntax highlighting
+" ......................................................... Trailing white space
+nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
 
-      set omnifunc=syntaxcomplete#Complete
-      syntax on  " turn on syntax highlighting
+" UI ___________________________________________________________________________
 
-      " refresh highlighting on arm
-      autocmd ui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
+" ............................................................ Toggle statusline
+" toggle statusline details
+nmap <silent><F7>        :ToggleInfo<CR>
+imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
-    " ...................................................... White space markers
+" toggle tag, line details
+nmap <silent><C-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
+imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 
-      set nolist  " display tabs and trailing spaces visually
-      set listchars="tab:▸\<Space>"
+" for active window highlighting
+autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active | SplitColors
+autocmd ui WinLeave                                   * SplitColors
+autocmd ui BufWinEnter,WinEnter                       * RefreshInfo
 
-      " set listchars+=trail:_
-      set listchars+=trail:·
-      set listchars+=nbsp:.
-      set listchars+=extends:>
-      set listchars+=precedes:<
-      " set listchars+=eol:¬
+" .................................................................... View mode
+nmap <silent><C-S-F7>      :call ToggleProof()<CR>
+imap <silent><C-S-F7> <C-o>:call ToggleProof()<CR>
 
-    " ..................................................... Trailing white space
+if has('gui_running')
+  autocmd ui InsertEnter * call ToggleProof() | SignifyDisable
+  autocmd ui InsertLeave * call ToggleProof() | SignifyEnable
+endif
 
-      nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
+" .................................................................. Switch mode
+nmap <silent><S-F7>      :SwitchView<CR>
+imap <silent><S-F7> <C-o>:SwitchView<CR>
 
-  " UI _________________________________________________________________________
-
-    " ........................................................ Toggle statusline
-
-      " toggle statusline details
-      nmap <silent><F7>        :ToggleInfo<CR>
-      imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
-
-      " toggle tag, line details
-      nmap <silent><C-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
-      imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
-
-      " for active window highlighting
-      autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active | SplitColors
-      autocmd ui WinLeave                                   * SplitColors
-      autocmd ui BufWinEnter,WinEnter                       * RefreshInfo
-
-    " ................................................................ View mode
-
-      nmap <silent><C-S-F7>      :call ToggleProof()<CR>
-      imap <silent><C-S-F7> <C-o>:call ToggleProof()<CR>
-
-      if has('gui_running')
-        autocmd ui InsertEnter * call ToggleProof() | SignifyDisable
-        autocmd ui InsertLeave * call ToggleProof() | SignifyEnable
-      endif
-
-    " .............................................................. Switch mode
-
-      nmap <silent><S-F7>      :SwitchView<CR>
-      imap <silent><S-F7> <C-o>:SwitchView<CR>
-
-    " ......................................................... Switch font size
-
-      nmap <silent><S-F9>      :call Font(g:font_type == 1 ? 0 : 1)<CR>
-      imap <silent><S-F9> <C-o>:call Font(g:font_type == 1 ? 0 : 1)<CR>
+" ............................................................. Switch font size
+nmap <silent><S-F9>      :call Font(g:font_type == 1 ? 0 : 1)<CR>
+imap <silent><S-F9> <C-o>:call Font(g:font_type == 1 ? 0 : 1)<CR>
 
 " ui.vim

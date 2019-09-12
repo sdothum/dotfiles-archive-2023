@@ -6,10 +6,7 @@
 
 # .................................................................. Syndication
 
-usage() {
-  echo "usage: $(basename $0) 'start | I'nitialize | i'mport <opml>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) 'start | I'nitialize | i'mport <opml>"; exit 1; }
 
 rss() {
   if pong $SERVER ;then

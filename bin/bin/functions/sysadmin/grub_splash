@@ -6,10 +6,7 @@
 
 # .................................................................. Boot splash
 
-usage() {
-  echo "usage: $(basename $0) [<theme> | <file.png>]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [<theme> | <file.png>]"; exit 1; }
 
 theme=enterprise  # default images/grub/<theme>
 

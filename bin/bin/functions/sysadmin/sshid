@@ -6,10 +6,7 @@
 
 # ...................................................... Ssh-copy-id alternative
 
-usage() {
-  echo "usage: $(basename $0) <host>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <host>"; exit 1; }
 
 [ $1 ] || usage && cat $HOME/.ssh/id_rsa.pub | ssh $USER@$1 'cat >> $HOME/.ssh/authorized_keys'
 

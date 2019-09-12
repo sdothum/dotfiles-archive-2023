@@ -6,10 +6,7 @@
 
 # ....................................................................... H${H}M'S"
 
-usage() {
-  echo "usage: $(basename $0) [-time] [<utcstart> [<utcstop>]]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [-time] [<utcstart> [<utcstop>]]"; exit 1; }
 
 [ "$1" = '-help' ] && usage
 [ "$1" = '-time' ] && { time=true; shift; }

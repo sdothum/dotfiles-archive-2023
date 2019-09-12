@@ -6,10 +6,7 @@
 
 # ......................................................... Distribution install
 
-usage() {
-  echo "usage: $(basename $0) [L] <path/file>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [L] <path/file>"; exit 1; }
 
 [ $1 ] || usage
 [ $1 = L ] && { shift; link=true; }  # link vs copy

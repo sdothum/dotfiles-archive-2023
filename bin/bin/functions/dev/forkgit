@@ -8,10 +8,7 @@
 
 # .......................................................................... Git
 
-usage() {
-  echo "usage: $(basename $0) <repo>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <repo>"; exit 1; }
 
 [ $1 ] || usage
 GIT=${1%.git}.git

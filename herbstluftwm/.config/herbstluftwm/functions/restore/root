@@ -7,9 +7,10 @@
 # .............................................................. Root background
 
 # see play
-rm -f $BLACKBOARD
+[ -e $BLACKBOARD ] && exec blackboard  # reset spine before restore, see blackboard
 
 background=$(cat $SETROOT 2>/dev/null)
+
 case $background in
 blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
 wallpaper) draw root wallpaper ;;

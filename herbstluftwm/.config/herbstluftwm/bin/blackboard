@@ -9,7 +9,11 @@
 
 # Usage: blackboard [<hexcolor>]
 
-[ -e $BLACKBOARD ] && { herbstclient set frame_bg_normal_color "$(cat $BLACKBOARD)"; exec restore root; }  # see restore root (rm $BLACKBOARD)
+if [ -e $BLACKBOARD ] ;then
+  herbstclient set frame_bg_normal_color "$(cat $BLACKBOARD)"
+  rm -f $BLACKBOARD
+  exec restore root  # complete (see) restore root
+fi
 
 draw root blank ${1:-000000}
 

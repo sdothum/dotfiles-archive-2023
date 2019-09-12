@@ -6,10 +6,7 @@
 
 # ....................................................................... Editor
 
-usage() {
-  echo "usage: $(basename $0) '<match>' '[:]<command>'"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) '<match>' '[:]<command>'"; exit 1; }
 
 [ $# -eq 2 ] || usage
 [ -n "$1"  ] || usage

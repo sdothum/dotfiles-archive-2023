@@ -5,12 +5,9 @@
 
 # ......................................................... Scrape colorhexa.com
 
-usage() {
-  echo "usage: $(basename $0) palette <hexcolor> [Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Similar | Shade | Tint | Tone]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) palette <hexcolor> [Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Similar | Shade | Tint | Tone]"; exit 1; }
 
-# adjust script to website page layout, test with "conky palette ff0000"
+# adjust script to website page layout, test with "rice palette ff0000"
 COLORS='Complementary|Analogous|Split|Triadic|Tetradic|Monochromatic|Similar|Shade|Tint|Tone'
 BLANK='ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff'
 

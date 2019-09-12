@@ -6,10 +6,7 @@
 
 # ......................................................... Distribution install
 
-usage() {
-  echo "usage: $(basename $0) [-f | -q]* <file>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [-f | -q]* <file>"; exit 1; }
 
 V=-v
 while : ;do

@@ -22,4 +22,4 @@ secondary) echo $secondary ;;
 *        ) is display =3440 && echo 20 || echo 16 ;;
 esac
 
-# vim: set ft=sh: #sdothum
+# vim: set ft=sh: #

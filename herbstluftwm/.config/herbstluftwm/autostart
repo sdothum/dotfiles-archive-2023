@@ -124,12 +124,11 @@ toggle focus
 # emit hook stalled otherwise until a new window action..
 focus frame
 focus window
+draw panel  # normally the responsibilty of draw root but requires draw monitor to complete
 
 # pseudo screen saver
 # cpu arm || conky clock auto
 conky clock auto
 rm -f $NCURSES
-
-# herbstclient attr theme.active.padding_left 2
 
 # vim: set ft=sh: #

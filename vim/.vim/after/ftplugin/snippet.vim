@@ -3,8 +3,7 @@
 " ftplugin
 " ══════════════════════════════════════════════════════════════════════════════
 
-    " .................................................................. Snippet
-  
-      set nospell noexpandtab tabstop=2 shiftwidth=2
+" ...................................................................... Snippet
+set nospell noexpandtab tabstop=2 shiftwidth=2
 
 " snippet.vim

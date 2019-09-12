@@ -1,4 +1,5 @@
 # sdothum - 2016 (c) wtfpl
+set -x
 [ $TRACE ] && CHILD="draw/panel $@" . $PARENT
 
 # herbstluftwm
@@ -19,42 +20,27 @@ pstat "^lemonbar -d -n lemonbar:$fifo " && exit
 [ $PANEL_BOTTOM ] && PANEL_BOTTOM=-b
 
 # panel font
-# PANEL_FONT='Iosevka\-single'  # lemonbar requires the dash be escaped
+# PANEL_FONT='Iosevka\-mono'  # lemonbar requires the dash be escaped
 PANEL_FONT=$MONOFONT
 PANEL_UNDERLINE=2
 
 # tic indicator: none (unset), dot, circle, square, bar, tape, seconds
 [ -e $TICKER ] && { TIC=$(cat $TICKER); TIC=${TIC:-tape}; }
 
-# panel symbols, unset candy for numeric desktop tags
-CANDY=true
+# panel symbols (tag numbers option dropped to simplify colour assignments)
 OCCUPIED='■'
 FREE='□'
-# tag bar separator (visual spacing)
-TAG_PAD=' '
+TAG_PAD=' '  # tag bar separator (visual spacing)
 
 # panel theme
-# alpha channel for panel transparency with compton
-DEFAULT_BG='#00000000'
-ACTIVE_BG='#762508'
-INACTIVE_BG='#074B5F'
-DEFAULT_FG="#$(conky color color2)"
-ACTIVE_FG="#$(conky color PANEL)"
-ACTIVE_HIDDEN_FG="#$(conky color colorA)"
-INACTIVE_FG="#$(conky color color9)"
-INACTIVE_HIDDEN_FG="#$(conky color colorI)"
-if [ $CANDY ] ;then
-  FREE_FG='#4A4B4E'
-  FREE_HIDDEN_FG='#7B7E83'
-  OCCUPIED_FG=$FREE_FG
-  OCCUPIED_HIDDEN_FG=$FREE_HIDDEN_FG
-else
-  FREE_FG='#7B7E83'
-  HIDDEN_FG='#25C0EF'
-  OCCUPIED_FG='#E4E5E6'
-fi
+DEFAULT_BG='#00000000'  # alpha channel for panel transparency with compton
+DEFAULT_FG="#$(conky color PANEL)"
+ACTIVE_FG="#$(conky color LUARINGS)"
+INACTIVE_FG="#$(conky color colorA)"
+FREE_FG="#$(conky color default_color)"
+OCCUPIED_FG=$FREE_FG
 
-PANEL_HEIGHT=$(query pheight)
+[ -s $PANEL_HEIGHT ] && PANEL_HEIGHT=$(cat $PANEL_HEIGHT) || PANEL_HEIGHT=$(query pheight)
 
 # ..................................................................... Geometry
 
@@ -69,28 +55,31 @@ for i in $(herbstclient monitor_rect $monitor) ;do
 done
 
 mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # fudge column width calculation for title trim below
-
-frame=$(herbstclient attr settings.frame_gap)
-window=$(herbstclient attr settings.window_gap)
-border=$(herbstclient attr theme.border_width)
-# dynamically indent the panel by margin minus panel height
-indent=$(( $frame + $window + $border - $PANEL_HEIGHT ))
-[ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
-panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
+#
+# frame=$(herbstclient attr settings.frame_gap)
+# window=$(herbstclient attr settings.window_gap)
+# border=$(herbstclient attr theme.border_width)
+# # dynamically indent the panel by margin minus panel height
+# indent=$(( $frame + $window + $border - $PANEL_HEIGHT ))
+# [ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
+# panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 displayH=$(xrandr 2>/dev/null | grep '\*' |
     sed -r "s/.*x([0-9]*).*/\1/; $(( $(herbstclient attr monitors.focus.index) + 1 ))q; d")
 if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
-  panel_offsetY=$(( ($displayH - $monitorH - $PANEL_HEIGHT) / 2 ))
+  panel_offsetY=$(( ($displayH - $monitorH) / 2 ))
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
+  [ $(( $PANEL_HEIGHT + $panel_offsetY )) -gt $displayH ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT ))
 else
   [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 fi
 
 # deprecated with primary:secondary as left:right..
 # multihead geometry for secondary primary (left right) orientation
-panel_offsetX=$(( $monitorX + $frame + $indent - 1 ))
+[ -e $PMARGIN ] && margin=$(cat $PMARGIN) || return  # wait for draw monitor to complete, initialize in autostart
+panel_width=$(( $monitorW - $margin * 4 ))
+panel_offsetX=$(( $monitorX + $margin * 2 - 1 ))
 # if is multihead ;then
 #   if is primary ;then
 #     secondaryX=$(query display secondary | awk '{ print $1 }')
@@ -100,9 +89,6 @@ panel_offsetX=$(( $monitorX + $frame + $indent - 1 ))
 
 # ................................................................... Tag status
 
-# eye candy tag icons
-tag_symbol() { [ $visible ] && tag=$OCCUPIED || tag=$FREE; }
-
 desktops() {
   active=$(query tag)
   inactive=$(query tag inactive)
@@ -110,53 +96,35 @@ desktops() {
   for i in $(query winids) ;do tags="$tags $(herbstclient attr clients.$i.tag)" ;done
   unset desktops
   for i in $TAGS ;do
+    format="%{B$DEFAULT_BG}"
     if echo $tags | grep -q $i ;then
       echo $tags | egrep -q "^$i| $i" && visible=true || unset visible
       echo $tags | grep -q "'$i" && hidden=true || unset hidden
-      [ $CANDY ] && tag_symbol || tag=$i
+      [ $visible ] && tag=$OCCUPIED || tag=$FREE
       if [ $i = "$active" ] ;then
-        if [ $CANDY ] ;then
-          format="%{B$DEFAULT_BG}"
-          [ $visible ] && format="${format}%{F$ACTIVE_FG}"
-          [ $hidden ]  && format="${format}%{F$ACTIVE_HIDDEN_FG}"
-        else
-          format="%{B$ACTIVE_BG}"
-          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" || format="${format}%{F$FREE_FG}"
-          [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
-        fi
+        [ $visible ] && format="${format}%{F$ACTIVE_FG}"
+        [ $hidden  ] && format="${format}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}"
       elif [ $i = "$inactive" ] ;then
-        if [ $CANDY ] ;then
-          format="%{B$DEFAULT_BG}"
-          [ $visible ] && format="${format}%{F$INACTIVE_FG}"
-          [ $hidden ]  && format="${format}%{F$INACTIVE_HIDDEN_FG}"
-        else
-          format="%{B$INACTIVE_BG}"
-          [ $visible ] && format="${format}%{F$OCCUPIED_FG}" || format="${format}%{F$FREE_FG}"
-          [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
-        fi
-      elif [ $CANDY ] ;then
-        format="%{B$DEFAULT_BG}"
-        [ $visible ] && format="${format}%{F$OCCUPIED_FG}"
-        [ $hidden ]  && format="${format}%{F$OCCUPIED_HIDDEN_FG}"
+        [ $visible ] && format="${format}%{F$INACTIVE_FG}"
+        [ $hidden  ] && format="${format}%{F$INACTIVE_FG}%{U$INACTIVE_FG}%{+u}"
       else
-        format="%{B$DEFAULT_BG}"
-        [ $visible ] && format="${format}%{F$OCCUPIED_FG}" || format="${format}%{F$FREE_FG}"
-        [ $hidden ]  && format="${format}${TAG_PAD}%{U$HIDDEN_FG}%{+u}"
+        [ $visible ] && format="${format}%{F$OCCUPIED_FG}"
+        [ $hidden  ] && format="${format}%{F$OCCUPIED_FG}%{U$OCCUPIED_FG}%{+u}"
       fi
     else
       unset visible
       unset hidden
-      [ $CANDY ] && tag=$FREE || tag=$i
+      tag=$FREE
       if [ $i = "$active" ] ;then
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$ACTIVE_FG}" || format="%{F$FREE_FG}%{B$ACTIVE_BG}"
+        format="${format}%{F$ACTIVE_FG}"
       elif [ $i = "$inactive" ] ;then
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$INACTIVE_FG}" || format="%{F$FREE_FG}%{B$INACTIVE_BG}"
+        format="${format}%{F$INACTIVE_FG}"
       else
-        [ $CANDY ] && format="%{B$DEFAULT_BG}%{F$FREE_FG}" || format="%{F$FREE_FG}%{B$DEFAULT_BG}"
+        format="${format}%{F$FREE_FG}"
       fi
     fi
-    [ $hidden ] && [ -z $CANDY ] && unset leader || leader="${TAG_PAD}"
-    desktops="${desktops} ${format}${leader}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
+    [ $hidden ] && leader="${TAG_PAD}"
+    desktops="${desktops} ${leader}${format}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
   done
 }
 
@@ -369,12 +337,10 @@ if [ $GLIBC ] ;then
   draw spine &  # non-panel related redundancy check for latent frame handling, see emit_hook
 fi
 
-cat $PANEL_FIFO:$fifo |
-    panel |
-    lemonbar -d -n "lemonbar:$fifo" \
-             -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
-             -u $PANEL_UNDERLINE \
-             -f "$PANEL_FONT:size=$(fontsize)" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
-wait &
+# 2 pixel Y offset adjustment for underline
+cat $PANEL_FIFO:$fifo | panel | lemonbar -d -n "lemonbar:$fifo" \
+                                         -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
+                                         -u $PANEL_UNDERLINE \
+                                         -f "$PANEL_FONT:size=$(fontsize)" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 
 # vim: set ft=sh: #

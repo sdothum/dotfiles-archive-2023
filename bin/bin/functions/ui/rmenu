@@ -16,10 +16,7 @@
 #   - Temporary ncurses mode set with variable TERMINAL, see bin/dmenu
 #   - rofi matching method can be set with env variable "matching"
 
-usage() {
-  echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"; exit 1; }
 
 # unset fzf query highlight to list all
 # hilite=true

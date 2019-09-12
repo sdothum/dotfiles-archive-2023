@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................. Generate conky / panel theme
+
+# Usage: rice cooker [<hexcolor>]
+
+confirm() {
+  if [ $? = 0 ] ;then
+    ifno 'keep rice conky' && return 1 || { cp $THEME $(query theme); unset loop; return 0; }
+  else
+    return 1
+  fi
+}
+
+if [ $1 ] ;then
+  rice conky test $1
+  confirm
+else
+  term 'Theme' FLOAT SHELL "wal -e -i $WALLPAPER; echo; echo \"Pick colour..\"; read PROMPT"
+  while : ;do
+    color=$(grabc | head -1)  # pick color from wal or wallpaper
+    ditto color "$color"
+    rice conky test ${color#?}
+    confirm && break
+  done
+  pkill -f 'read PROMPT'
+fi
+
+# vim: set ft=sh: #

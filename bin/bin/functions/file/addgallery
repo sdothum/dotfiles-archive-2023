@@ -6,10 +6,7 @@
 
 # ........................................................... Update web gallery
 
-usage() {
-  echo "usage: $(basename $0) <gallery> [<jpeg>]*"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <gallery> [<jpeg>]*"; exit 1; }
 
 ROOT=/srv/http/thedarnedestthing.com/application/public/images
 FOLIO=${FOLIO:-0.folio}

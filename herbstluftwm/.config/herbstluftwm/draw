@@ -11,9 +11,9 @@
 
 # match (visual) margins of secondary monitors to primary cinema/4K display
 # laptops are arbitrary ratios of
+# see draw monitor for manual .session/<settings>
 margins() {
   case $1 in
-  # 3440) echo $(( $SHADOW + $(herbstclient get window_gap) * 2 )) ;;
   3440) echo $(( $SHADOW + $(herbstclient get window_gap) )) ;;
   2560) echo 86 ;;
   1920) echo 0 ;;

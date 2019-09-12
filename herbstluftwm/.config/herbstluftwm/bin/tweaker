@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="bin/tweaker $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. Tweak layout
+
+SESSION=${SESSION:-$HOME/.session}
+# set one of these parameters
+layout="$SESSION/frame_gap $SESSION/margin $SESSION/panel_height $SESSION/spine $SESSION/window_gap"
+
+# for dynamic rice tweaking
+notify 0 low tweaker "$(echo $layout | tr ' ' '\n' | sed "s|$HOME/||")"
+while : ;do
+  sleep 1
+  stest -n $PMARGIN $layout >/dev/null || continue
+  herbstclient detect_monitors  # reset monitor margins
+  killall -q lemonbar
+  draw monitor fullframe
+  draw panel
+  toggle compton on
+done
+
+# vim: set ft=sh: #

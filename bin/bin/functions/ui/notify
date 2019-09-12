@@ -8,10 +8,7 @@
 
 # ..................................................................... Notifier
 
-usage() {
-  echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | X | low | normal | critical | blackboard]* [<color>] \"<summary>\" [[<color>] \"<body>\"]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [time=<seconds> | <seconds> | console | X | low | normal | critical | blackboard]* [<color>] \"<summary>\" [[<color>] \"<body>\"]"; exit 1; }
 
 SESSION=${SESSION:-$HOME/.session}
 LOG=/tmp/notify.log

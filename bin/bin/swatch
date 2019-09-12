@@ -7,7 +7,7 @@
 # ................................................................. Color swatch
 
 # Usage: swatch <hex> [<hue>]
-#        hue assumes conky theme luminance previously initialized, see dmenu root
+#        hue assumes rice conky luminance previously initialized, see dmenu root
 
 # color swatch size to create
 size=180x180

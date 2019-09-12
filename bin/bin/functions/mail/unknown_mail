@@ -6,10 +6,7 @@
 
 # ........................................................................ Query
 
-usage() {
-  echo "usage: $(basename $0) c'c | f'rom | s'ubject | t'o"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) c'c | f'rom | s'ubject | t'o"; exit 1; }
 
 # scan unknown mail
 unknown=$HOME/Maildir/$(cat $HOME/.forward | cut -d@ -f1)/unknown

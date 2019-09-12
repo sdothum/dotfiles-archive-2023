@@ -1,4 +1,5 @@
 # sdothum - 2016 (c) wtfpl
+
 [ $TRACE ] && CHILD="draw/root $@" . $PARENT
 
 # herbstluftwm
@@ -66,7 +67,7 @@ setblur() {
 
 # create pulsar border color gradient
 set_border() {
-  conky palette $1 'Monochromatic' >$PULSAR
+  rice palette $1 'Monochromatic' >$PULSAR
   # set border to midtone
   cut -d' ' -f1 $PULSAR >$BORDER
   # refresh border of active window
@@ -81,7 +82,7 @@ blank() {
     # blackboard reserved for media playback background to allow desktop restoration
     [ $color = 000000 ] || echo blank >$SETROOT
   else
-    color=$(randcolor)
+    color=$(rice randomc -#)
     rm -f $SETROOT
   fi
   setroot --blank-color "#$color" 2>/dev/null
@@ -89,9 +90,9 @@ blank() {
   if [ $color != 000000 ] ;then
     echo $color >$COLOR
     contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
-    if [ "$contrast" = dark ]    ;then set_border "$(conky theme light $color)"
-    elif [ "$contrast" = light ] ;then set_border "$(conky theme dark $color)"
-    else                               set_border "$(conky theme contrast $color)"
+    if   [ "$contrast" = dark  ] ;then set_border "$(rice conky light $color)"
+    elif [ "$contrast" = light ] ;then set_border "$(rice conky dark $color)"
+    else                               set_border "$(rice conky contrast $color)"
     fi
   fi
   echo $color >$BLANK
@@ -131,7 +132,7 @@ select_wallpaper() {
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked.. see ENV
   /usr/bin/feh -B black --scale-down -r --start-at $(lname $WALLPAPER) \
                -A "ln -sf %f $WALLPAPER && xdotool type 'q'" \
-               ${WALLPAPER%/default}/${WALL#.}
+               ${WALLPAPER%/default}/${WALL#.} 2>/dev/null  # ignore .theme file warnings
 }
 
 shuffle() {
@@ -181,7 +182,7 @@ esac
 setblur >$SETBLUR
 [ -e $BLANK ] || setroot ${primary#?:} ${secondary#?:} &
 
-# apply conky theme to .conkyrc, $THEME unset above if new background
+# apply rice conky to .conkyrc, $THEME unset above if new background
 if [ -e $HOME/.conkyrc ] ;then
   if [ ! -e $BLANK ] ;then
     [ -e $THEME ] && exit
@@ -191,10 +192,10 @@ if [ -e $HOME/.conkyrc ] ;then
       cp $background $THEME
       is display +1920 && draw conky
     else
-      term 'Theme' STACK SHELL walpick
-      pwait walpick
+      term 'Theme' STACK SHELL 'rice cooker'
+      pwait 'rice cooker'
     fi
-    set_border $(conky palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
+    set_border $(rice palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
   fi
 fi
 

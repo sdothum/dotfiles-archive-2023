@@ -21,10 +21,7 @@
 #         clean == move files to ~/tmp/vacuum/
 #         CLEAN == remove files
 
-usage() {
-  echo "usage: $(basename $0) g'enerate | [-f] [clean|CLEAN] [file, default=.$(basename $0)]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) g'enerate | [-f] [clean|CLEAN] [file, default=.$(basename $0)]"; exit 1; }
 
 # .vacuum:protect:<type> regex post scan filters (based on 'generated' .vacuum file :-)
 protect='folders files configs'

@@ -6,10 +6,7 @@
 
 # ....................................................................... Search
 
-usage() {
-  echo "usage: $(basename $0) [-w] <regex>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [-w] <regex>"; exit 1; }
 
 [ "$1"      ] || usage
 [ "$1" = -w ] && { w=-w; shift; }

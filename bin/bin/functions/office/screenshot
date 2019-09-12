@@ -6,10 +6,7 @@
 
 # ................................................................... Screenshot
 
-usage() {
-  echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ght | a'll | d'esktop | s'elect | <XxY+'X+'Y>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) DVI-'0 | DVI-'1 | l'eft | r'ght | a'll | d'esktop | s'elect | <XxY+'X+'Y>"; exit 1; }
 
 target=/net/photos/batchqueue
 target=$HOME/thedarnedestthing.com/application/public/images

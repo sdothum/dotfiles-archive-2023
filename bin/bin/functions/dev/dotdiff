@@ -6,10 +6,7 @@
 
 # ......................................................... Revision differences
 
-usage() {
-  echo "usage: $(basename $0) [checkout <commit>] [-b] <package> [folders]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [checkout <commit>] [-b] <package> [folders]"; exit 1; }
 
 # diff current sources with dotfiles git repo
 dotfiles=${dotfiles:-/net/depot/dotfiles}

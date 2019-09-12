@@ -17,12 +17,9 @@ SHADOW=${SHADOW:-1}
 # load theme
 # . ${0%/draw}/config/ENV
 case $@ in
-secondary*) PANEL_HEIGHT=$(query pheight secondary) ;;
-*         ) PANEL_HEIGHT=$(query pheight primary) ;;
+secondary*) PHEIGHT=$(query pheight secondary) ;;
+*         ) PHEIGHT=$(query pheight primary) ;;
 esac
-
-# ricing pad left/right margins, 17/12 ~ pythagora's constant, 21/13 ~ golden mean, etc
-# RICE=21/13
 
 # ..................................................................... Displays
 
@@ -37,6 +34,7 @@ xy 0 $(query display)
 is multihead && xy 1 $(query display secondary)
 
 # XxY+X'+Y' monitor configuration
+herbstclient list_monitors
 monitor() { herbstclient list_monitors | grep "^$1:" | cut -d' ' -f2; }
 
 # currently defined monitors
@@ -54,24 +52,40 @@ desktop_margin=$(margins $X0)
 # - frame_border_width=0
 # - smart_frame_surroundings=0
 # - smart_window_surroundings=0
-# border=$(herbstclient attr theme.border_width)
 frame=$(herbstclient attr settings.frame_gap)
 window=$(herbstclient attr settings.window_gap)
 border=$(herbstclient attr theme.border_width)
 window_frame=$(( $window + $frame ))
 margin=$(( $desktop_margin - $window_frame ))
 [ $margin -lt 0 ] && margin=0
-# frame and window gap changes will skew the left margin along the X axis
-[ $RICE ] && marginX=$(( $margin * $RICE )) || marginX=$margin
-# conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
+
+# manual gap tweaks (override default calculations based solely on attr settings)
+[ -s $MARGIN       ] && margin=$(cat $MARGIN)
+[ -s $FRAME_GAP    ] && { frame=$(cat $FRAME_GAP); herbstclient set frame_gap $frame; }
+[ -e $SPINE        ] || { [ -s $WINDOW_GAP ] && { window=$(cat $WINDOW_GAP); herbstclient set window_gap $window; };}
+[ -s $PANEL_HEIGHT ] && panel=$(cat $PANEL_HEIGHT)
+
 # latest xorg messed alignment option, now using gap X origin offset
+# conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 conkyX=$(( $CONKY_WIDTH + $CONKY_OUTER + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust monitor by panel height?
-if [ $PANEL_MARGIN ] ;then [ -e $PANEL ] && panelY=$PANEL_HEIGHT || panelY=0
-else                       panelY=0
+if   [ $panel        ] ;then                  panelY=$(( $panel - $frame ))
+else
+  if [ $PANEL_MARGIN ] ;then [ -e $PANEL ] && panelY=$PHEIGHT || panelY=0
+  else                                        panelY=0
+  fi
+  [ $margin -lt $PHEIGHT ] && marginY=$(( $PHEIGHT - $margin )) || marginY=0
 fi
-[ $margin -lt $PANEL_HEIGHT ] && marginY=$(( $PANEL_HEIGHT - $margin )) || marginY=0
+[ $panelY -lt 0 ] && panelY=0 
+# adjust margin value by frame_gap (frames touch margin)
+margin=$(( $margin - $frame ))
+[ $margin -lt 0 ] && margin=0                # minimum (visual) margin is frame gap 
+marginX=$margin
+echo $(( $margin + $frame )) >$PMARGIN       # indent panel content, see draw panel
+marginY=$(( $margin + $frame - $panel ))     # adjust monitor height to retain panel line height
+[ $marginY -lt 0 ] && marginY=0
+marginY=$(( $margin + $panelY + $marginY ))  # total margin Y
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $marginX - $conkyX - $monocle*2 ))
@@ -89,19 +103,19 @@ SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4); }
 case $@ in
 conky     ) rm -f $FULLSCREEN:primary
             rm -f $FULLSCREEN:$TAG
-            PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margin*2 )) $(( $marginX + $monocle )) $margin ;;
+            PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $marginY )) $(( $marginX + $monocle )) $margin ;;
 
 conky*f*  ) touch $FULLSCREEN:primary
             touch $FULLSCREEN:$TAG
-            if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margin*2 - $window_frame*2 - $panelY )) \
+            if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $marginY - $window_frame*2 )) \
                                                   $(( $marginX + $window_frame + $monocle )) $(( $margin + $window_frame ))  # desktop screens retain margins
             else                              PRI $(( $fullscreen_width + $marginX + $window_frame )) $Y0 0 0                # laptop screens fill to edge
             fi ;;
 
 fullframe ) rm -f $FULLSCREEN:primary
             rm -f $FULLSCREEN:$TAG
-            if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $margin*2 )) $marginX $margin
-            else                        PRI $normal_width $(( $Y0 - $margin*2 )) $(( ($X0 - $normal_width)/2 )) $margin
+            if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $marginX*2 )) $(( $Y0 - $marginY )) $marginX $margin
+            else                        PRI $normal_width $(( $Y0 - $marginY )) $(( ($X0 - $normal_width)/2 )) $margin
             fi ;;
 
 fullscreen) touch $FULLSCREEN:primary
@@ -111,12 +125,12 @@ fullscreen) touch $FULLSCREEN:primary
 
 secondary ) rm -f $FULLSCREEN:secondary
             rm -f $FULLSCREEN:$TAG
-            SEC $(( $X1 - $marginX*2 )) $(( $Y1 - $margin*2 + $window_frame - $marginY )) \
+            SEC $(( $X1 - $marginX*2 )) $(( $Y1 - $marginY )) \
                 $(( X0 + $marginX )) $margin ;;
 
 second*f* ) touch $FULLSCREEN:secondary
             touch $FULLSCREEN:$TAG
-            SEC $X1 $Y1 X0 0 ;;
+            SEC $X1 $Y1 $X0 0 ;;
 
 menu      ) if is primary ;then touch $FULLSCREEN:primary; PRI $X0 $Y0 0 0
             else                touch $FULLSCREEN:secondary; SEC $X1 $Y1 $X0 0

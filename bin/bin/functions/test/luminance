@@ -6,10 +6,7 @@
 
 # ........................................................... Relative luminance
 
-usage() {
-  echo "usage: $(basename $0) +|-<rrggbb>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) +|-<rrggbb>"; exit 1; }
 
 # perceived luminance, see http://hobbithouseinc.com/vb/color%20contrast.htm
 luminance() {

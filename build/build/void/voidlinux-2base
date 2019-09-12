@@ -35,6 +35,7 @@ xbps-query -Rs void-repo
 sudo xbps-install void-repo-nonfree
 sudo xbps-install -Syu
 bundle_install $HOME/build/void/bundle/[0]*
+session_defaults
 
 
 title "installation errors:"

@@ -6,10 +6,7 @@
 
 # ........................................................... Package management
 
-usage() {
-  echo "usage: $(basename $0) n'o dependencies | d'epends on <package> | 'required by <package>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) n'o dependencies | d'epends on <package> | 'required by <package>"; exit 1; }
 
 tree=/tmp/pd:r
 

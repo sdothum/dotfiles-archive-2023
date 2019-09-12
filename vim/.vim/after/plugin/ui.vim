@@ -3,224 +3,213 @@
 " User Interface
 " ══════════════════════════════════════════════════════════════════════════════
 
-  " Layout _____________________________________________________________________
+" Layout _______________________________________________________________________
 
-    " .................................................................... Setup
+" ........................................................................ Setup
+let g:pad          = ['      ', '   ']  " statusline padding [inner, outer]
+"                      123456    123
+let g:view         = 1                  " initial view mode (0) info (1) df
+let s:expanded     = 0                  " statusline state (0) dfm (1) expanded
+let s:font_changed = 0                  " redraw flag
+let s:show         = 1                  " statusline (0) off (1) on
 
-      let g:pad          = ['      ', '   ']  " statusline padding [inner, outer]
-      "                      123456    123
-      let g:view         = 1                  " initial view mode (0) info (1) df
-      let s:expanded     = 0                  " statusline state (0) dfm (1) expanded
-      let s:font_changed = 0                  " redraw flag
-      let s:show         = 1                  " statusline (0) off (1) on
+"  Distraction free modes ______________________________________________________
 
-  "  Distraction free modes ____________________________________________________
+" .................................................................... Code view
+" source code style
+function! s:codeView()
+  Trace ui:codeView()
+  let g:view = 0
+  " syntax enable  " restore CursorLine syntax highlighting before applying themes
+  if exists('g:loaded_limelight') | Limelight! | endif
+  Theme
+  ShowStatusLine
+  CodeView
+  set showmode
+endfunction
 
-    " ................................................................ Code view
+" ................................................................... Prose view
+" distraction free style
+function! s:proseView()
+  Trace ui:proseView()
+  let g:view = 1
+  " silent !tmux set status off
+  ProseView
+  if Prose() || g:ruler == 0 | set colorcolumn=0 | endif
+  set foldcolumn=0
+  set laststatus=0
+  set noshowmode
+  set scrolloff=8
+  if Prose() | set spell
+  else       | set nospell | endif
+  call s:view()
+endfunction
 
-      " source code style
-      function! s:codeView()
-        Trace ui:codeView()
-        let g:view = 0
-        " syntax enable  " restore CursorLine syntax highlighting before applying themes
-        if exists('g:loaded_limelight') | Limelight! | endif
-        Theme
-        ShowStatusLine
-        CodeView
-        set showmode
-      endfunction
+" .................................................................. Switch view
+" toggle full document highlight
+function! s:view()
+  Trace ui:view()
+  let l:col = virtcol('.')
+  Theme
+  if b:view == 1  " proof view
+    " call s:showInfo(1)
+    Limelight!
+    Contrast 0
+  else            " dfm view
+    " call s:showInfo(0)
+    Limelight
+    Contrast 1
+  endif
+  execute 'normal! ' . l:col . '|'
+endfunction
 
-    " ............................................................... prose view
+function! s:setView()
+  Trace ui:setView()
+  if g:view == 0 | call s:codeView()
+  else           | call s:proseView() | endif
+endfunction
 
-      " distraction free style
-      function! s:proseView()
-        Trace ui:proseView()
-        let g:view = 1
-        " silent !tmux set status off
-        ProseView
-        if Prose() || g:ruler == 0 | set colorcolumn=0 | endif
-        set foldcolumn=0
-        set laststatus=0
-        set noshowmode
-        set scrolloff=8
-        if Prose() | set spell
-        else       | set nospell | endif
-        call s:view()
-      endfunction
+" toggle dfm view
+function! s:switchView()
+  Trace ui:SwitchView
+  let l:col = col('.')
+  let g:view = g:view == 0 ? 1 : 0
+  call s:setView()
+  execute 'normal! ' . l:col . '|'
+endfunction
 
-    " .............................................................. Switch View
+command! SwitchView silent! call <SID>switchView()
 
-      " toggle full document highlight
-      function! s:view()
-        Trace ui:view()
-        let l:col = virtcol('.')
-        Theme
-        if b:view == 1  " proof view
-          " call s:showInfo(1)
-          Limelight!
-          Contrast 0
-        else            " dfm view
-          " call s:showInfo(0)
-          Limelight
-          Contrast 1
-        endif
-        execute 'normal! ' . l:col . '|'
-      endfunction
+" .................................................................. Insert mode
+function! ToggleProof()
+  Trace ui:ToggleProof()
+  if CommandWindow() | return | endif
+  " if Prose() | let b:view = b:view == 0 ? 1 : 0 | endif
+  let b:view = b:view == 0 ? 1 : 0
+  call s:view()
+endfunction
 
-      function! s:setView()
-        Trace ui:setView()
-        if g:view == 0 | call s:codeView()
-        else           | call s:proseView() | endif
-      endfunction
+" Screen focus _________________________________________________________________
 
-      " toggle dfm view
-      function! s:switchView()
-        Trace ui:SwitchView
-        let l:col = col('.')
-        let g:view = g:view == 0 ? 1 : 0
-        call s:setView()
-        execute 'normal! ' . l:col . '|'
-      endfunction
-      
-      command! SwitchView silent! call <SID>switchView()
+" ............................................................... Screen display
+" initial view
+function! LiteType()
+  Trace ui:LiteType()
+  call Font(Prose())
+  Palette
+  if ! exists('b:view') | let b:view = 1 | endif  " initial view (proof)
+  call s:setView()
+endfunction
 
-    " .............................................................. Insert mode
+" redraw
+function! Retheme()
+  Trace ui:Retheme()
+  let lstatus     = &laststatus
+  call LiteType()   
+  let &laststatus = lstatus
+endfunction
 
-      function! ToggleProof()
-        Trace ui:ToggleProof()
-        if CommandWindow() | return | endif
-        " if Prose() | let b:view = b:view == 0 ? 1 : 0 | endif
-        let b:view = b:view == 0 ? 1 : 0
-        call s:view()
-      endfunction
+" .............................................................. Balance margins
+function! Offset()
+  return max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
+endfunction
 
-  " Screen focus _______________________________________________________________
+" balance left right margins with font size changes (and window resizing)
+function! Margins()
+  Trace ui:Margin
+  let g:lite_dfm_left_offset = Offset()
+  Quietly LiteDFM
+  LineNr
+  RefreshInfo
+endfunction
 
-    " ........................................................... Screen display
+" ..................................................................... Set font
+" adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
+function! Font(type)
+  Trace ui:Font()
+  if $DISPLAY > ''
+    if g:font_type != a:type
+      let g:font_type = a:type
+      let l:size      = system('fontsize')
+      let l:size      = a:type == 0 ? l:size : l:size + g:font_step
+      execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
+      if s:font_changed
+        RedrawGui
+      endif
+      let s:font_changed = 1  " next font size change requires redraw
+      set laststatus=2        " turn on statusline
+    endif
+  endif
+endfunction
 
-      " initial view
-      function! LiteType()
-        Trace ui:LiteType()
-        call Font(Prose())
-        Palette
-        if ! exists('b:view') | let b:view = 1 | endif  " initial view (proof)
-        call s:setView()
-      endfunction
+" Context statusline ___________________________________________________________
 
-      " redraw
-      function! Retheme()
-        Trace ui:Retheme()
-        let lstatus     = &laststatus
-        call LiteType()   
-        let &laststatus = lstatus
-      endfunction
+" ............................................................ Statusline format
+function! Detail()
+  let l:prefix = g:detail == 0 ? Tag() : Atom()
+  return l:prefix > '' ? l:prefix . '  ' . SpecialChar() : SpecialChar()
+endfunction
 
-    " .......................................................... Balance margins
+function! s:attn()
+  return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : ''
+endfunction
 
-      function! Offset()
-        return max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
-      endfunction
+" [path] .. filename | pos .. [details]
+function! s:statusline(proof)
+  " Trace ui:statusline()  " tmi :-)
+  try  " trap snippet insertion interruption
+    let g:prose = 1
+    if Prose() && a:proof == 0
+      return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%*')
+    else
+      let l:name     = '%{Name()}' . g:pad[0]
+      if s:expanded == 0  " center dfm indicator / proofing statusline
+        let l:leader = '%{Leader(Name())}'
+      else
+        let l:path   = '%{Path()}'
+        let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
+      endif
+      let l:name     = '%1*' . l:name
+      let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+      if s:expanded == 1
+        let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
+        let l:info  .= g:pad[1] . '%2*%{Detail()}'
+      endif
+      return Escape('%1*' . l:leader . l:name . l:info . '%1*')
+    endif
+  catch /.*/  " discard messages
+  endtry
+endfunction
 
-      " balance left right margins with font size changes (and window resizing)
-      function! Margins()
-        Trace ui:Margin
-        let g:lite_dfm_left_offset = Offset()
-        Quietly LiteDFM
-        LineNr
-        RefreshInfo
-      endfunction
+" .............................................................. Show statusline
+function! s:showInfo(proof)
+  Trace ui:showInfo()
+  if a:proof == 1 || !Prose()
+    execute 'set statusline=' . s:statusline(a:proof)
+    ShowStatusLine
+  else
+    HideInfo
+  endif
+endfunction
 
-    " ................................................................. Set font
+function! s:refreshInfo()
+  Trace ui:RefreshInfo
+  call s:showInfo(b:view)
+endfunction
 
-      " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
-      function! Font(type)
-        Trace ui:Font()
-        if $DISPLAY > ''
-          if g:font_type != a:type
-            let g:font_type = a:type
-            let l:size      = system('fontsize')
-            let l:size      = a:type == 0 ? l:size : l:size + g:font_step
-            execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
-            if s:font_changed
-              RedrawGui
-            endif
-            let s:font_changed = 1  " next font size change requires redraw
-            set laststatus=2        " turn on statusline
-          endif
-        endif
-      endfunction
+command! RefreshInfo silent! call <SID>refreshInfo()
 
+function! s:toggleInfo(...)
+  Trace ui:ToggleInfo
+  if a:0 && a:1 | return | endif  " prose insert mode is always dfm
+  let l:col = col('.')
+  let s:expanded = (s:expanded == 0 ? 1 : 0)
+  " if Prose() | call ToggleProof()  " toggle between writing and proofing modes
+  " else       | call s:showInfo(b:view) | endif
+  call s:showInfo(b:view)
+  execute 'normal! ' . l:col . '|'
+endfunction
 
-  " Context statusline _________________________________________________________
-
-    " ........................................................ Statusline format
-
-      function! Detail()
-        let l:prefix = g:detail == 0 ? Tag() : Atom()
-        return l:prefix > '' ? l:prefix . '  ' . SpecialChar() : SpecialChar()
-      endfunction
-
-      function! s:attn()
-        return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : ''
-      endfunction
-
-      " [path] .. filename | pos .. [details]
-      function! s:statusline(proof)
-        " Trace ui:statusline()  " tmi :-)
-        try  " trap snippet insertion interruption
-          let g:prose = 1
-          if Prose() && a:proof == 0
-            return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%*')
-          else
-            let l:name     = '%{Name()}' . g:pad[0]
-            if s:expanded == 0  " center dfm indicator / proofing statusline
-              let l:leader = '%{Leader(Name())}'
-            else
-              let l:path   = '%{Path()}'
-              let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
-            endif
-            let l:name     = '%1*' . l:name
-            let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
-            if s:expanded == 1
-              let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
-              let l:info  .= g:pad[1] . '%2*%{Detail()}'
-            endif
-            return Escape('%1*' . l:leader . l:name . l:info . '%1*')
-          endif
-        catch /.*/  " discard messages
-        endtry
-      endfunction
-
-    " .......................................................... Show statusline
-
-      function! s:showInfo(proof)
-        Trace ui:showInfo()
-        if a:proof == 1 || !Prose()
-          execute 'set statusline=' . s:statusline(a:proof)
-          ShowStatusLine
-        else
-          HideInfo
-        endif
-      endfunction
-
-      function! s:refreshInfo()
-        Trace ui:RefreshInfo
-        call s:showInfo(b:view)
-      endfunction
-
-      command! RefreshInfo silent! call <SID>refreshInfo()
-
-      function! s:toggleInfo(...)
-        Trace ui:ToggleInfo
-        if a:0 && a:1 | return | endif  " prose insert mode is always dfm
-        let l:col = col('.')
-        let s:expanded = (s:expanded == 0 ? 1 : 0)
-        " if Prose() | call ToggleProof()  " toggle between writing and proofing modes
-        " else       | call s:showInfo(b:view) | endif
-        call s:showInfo(b:view)
-        execute 'normal! ' . l:col . '|'
-      endfunction
-
-      command! -nargs=? ToggleInfo silent! call <SID>toggleInfo(<f-args>)
+command! -nargs=? ToggleInfo silent! call <SID>toggleInfo(<f-args>)
 
 " ui.vim

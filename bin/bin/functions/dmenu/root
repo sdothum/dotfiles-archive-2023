@@ -28,8 +28,8 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   ''       ) break ;;
   "$VIEWER") exec draw root restore ;;
   "$UPDATE") root ;;
-  "$DARK"  ) conky theme dark $bg ;;
-  "$LIGHT" ) conky theme light $bg ;;
+  "$DARK"  ) rice conky dark $bg ;;
+  "$LIGHT" ) rice conky light $bg ;;
 
   "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
              contrast=$(cat $CONTRAST)

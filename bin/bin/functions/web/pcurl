@@ -6,11 +6,9 @@
 
 # .............................................................. Perl strip curl
 
-usage() {
-  echo "usage: $(basename $0) <url>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <url>"; exit 1; }
 
-[ $1 ] && curl --silent -L $@ | perl -0777 -MHTML::Strip -nlE 'say HTML::Strip->new->parse($_)' 2>/dev/null || usage
+# [ $1 ] && curl --silent -L $@ | perl -0777 -MHTML::Strip -nlE 'say HTML::Strip->new->parse($_)' 2>/dev/null || usage
+[ $1 ] && curl --silent -L $@ | sed 's/<[^>]*>//g' || usage  # in lieu of HTML::Strip, will not catch broken tags (linefeeds within <tag>)
 
 # vim: set ft=sh: #

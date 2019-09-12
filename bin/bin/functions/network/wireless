@@ -6,10 +6,7 @@
 
 # ...................................................................... Connect
 
-usage() {
-  echo "usage: $(basename $0) off | on | [--properties]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) off | on | [--properties]"; exit 1; }
 
 # wireless interface
 if [ $1 ] ;then wifi=$1; shift

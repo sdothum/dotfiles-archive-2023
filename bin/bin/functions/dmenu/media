@@ -14,7 +14,7 @@ root=true
 # meta dmenu menu!
 media=$(previous media)
 while : ;do
-  media=$(echo "$CLEAR\nebooks\nreferences\npatricia\nthought of you\nanimation\nanime\nmovies\nseries\nnetflix\nkodi\nsonarr\nnzb\ntorrent" | rmenu 'Media' $media -no-custom) || break
+  media=$(echo "$CLEAR\nebooks\nreferences\npatricia\nthought of you\nanimation\nanime\nmovies\nseries\nnetflix\nkodi\npulse\nsonarr\nnzb\ntorrent" | rmenu 'Media' $media -no-custom) || break
 
   [ "$media" = "$CLEAR" ] || mhistory media $media
 
@@ -28,6 +28,7 @@ while : ;do
   netflix   ) netflix ;;
   nzb       ) exists nzbget && { toggle term 'NZB' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   patricia  ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
+  pulse     ) pulse ;;
   references) dmenu references; unset root; break ;;
   series    ) dmenu series ;;
   sonarr    ) $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; unset root ;;

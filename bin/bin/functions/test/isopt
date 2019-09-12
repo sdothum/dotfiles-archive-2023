@@ -6,10 +6,7 @@
 
 # ....................................................................... Option
 
-usage() {
-  echo "usage: $(basename $0) -[-]<option>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) -[-]<option>"; exit 1; }
 
 [ $# -gt 0 ] || usage
 echo "$1" | egrep -q "^[-][-]?[[:alnum:]|-]*$"

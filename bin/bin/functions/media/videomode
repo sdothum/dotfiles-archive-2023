@@ -6,10 +6,7 @@
 
 # ................................................................ Media session
 
-usage() {
-  echo "usage: $(basename $0) on | off"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) on | off"; exit 1; }
 
 V_DYNAMIC=/tmp/$(basename $0):dynamic
 V_NCURSES=/tmp/$(basename $0):ncurses

@@ -6,10 +6,7 @@
 
 # ....................................................... Network daemon control
 
-usage() {
-  echo "usage: $(basename $0) stop | start"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) stop | start"; exit 1; }
 
 daemons='
   avahi-daemon

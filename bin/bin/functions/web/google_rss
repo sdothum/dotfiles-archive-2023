@@ -6,10 +6,7 @@
 
 # ............................................................. Google group rss
 
-usage() {
-  echo "usage: $(basename $0) <group>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <group>"; exit 1; }
 
 [ $1 ] || usage
 

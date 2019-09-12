@@ -6,10 +6,7 @@
 
 # ...................................................................... Receive
 
-usage() {
-  echo "usage: $(basename $0) 'start | I'nit | l'og | t'ag | 1'pass"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) 'start | I'nit | l'og | t'ag | 1'pass"; exit 1; }
 
 MAILDIR=$HOME/Maildir
 

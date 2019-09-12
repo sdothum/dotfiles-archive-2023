@@ -1,16 +1,19 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Shell
+# X11 Desktop
 # ══════════════════════════════════════════════════════════════════════════════
 
-# .................................................................... Trim line
+# ............................................................... Rice utilities
 
-usage() { echo "usage: $(basename $0) <width>"; exit 1; }
+# Usage: rice [<message>], see functions/rice
 
-[ $1 ] || usage
-
-sed -r "s/^(.{$(( $1 - 3 ))}).*/\1 ../"
-
+msg=$1
+[ $msg ] && shift || usage $0
+if [ -e ${0%/rice}/functions/rice/$msg ] ;then
+  . ${0%/rice}/functions/rice/$msg $@
+else
+  usage $0
+fi
 
 # vim: set ft=sh: #

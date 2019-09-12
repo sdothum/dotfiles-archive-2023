@@ -11,6 +11,7 @@
   lxappearance
   setroot
   unclutter
+  xbacklight
 
 
 = desktop
@@ -21,6 +22,7 @@
 
 = desktop utilities
 = ═════════════════
+  grabc
   maim
   pywal
   xautolock

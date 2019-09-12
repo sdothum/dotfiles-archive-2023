@@ -3,80 +3,74 @@
 " Defaults
 " ══════════════════════════════════════════════════════════════════════════════
 
-  " Mode _______________________________________________________________________
+" Mode _________________________________________________________________________
 
-    " .............................................................. Debug trace
+" .................................................................. Debug trace
+let g:trace = $VIMTRACE > '' ? 1 : 0  " touch ~/.session/vimtrace
 
-      let g:trace = $VIMTRACE > '' ? 1 : 0  " touch ~/.session/vimtrace
+" escape problematic shell commandline characters
+function! s:trace(msg)
+  if g:trace == 1 | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log' | endif
+endfunction
 
-      " escape problematic shell commandline characters
-      function! s:trace(msg)
-        if g:trace == 1 | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim.log' | endif
-      endfunction
+command! -nargs=1 Trace call <SID>trace(<f-args>)
 
-      command! -nargs=1 Trace call <SID>trace(<f-args>)
+" ..................................................................... Terminal
+" !term fails on shell error 1 (?)
+command! Term :call system('term "vimterm" STACK')
 
-    " ................................................................. Terminal
+" Registers ____________________________________________________________________
 
-      " !term fails on shell error 1 (?)
-      command! Term :call system('term "vimterm" STACK')
+" ....................................................................... Macros
+" https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
+function! s:replayLastMacro()
+  try
+    normal @@
+  catch /E748/
+    normal @q
+  endtry
+endfunction
 
-  " Registers __________________________________________________________________
+command! ReplayLastMacro silent! call <SID>replayLastMacro()
 
-    " ................................................................... Macros
+" Format _______________________________________________________________________
 
-      " https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
-      function! s:replayLastMacro()
-        try
-          normal @@
-        catch /E748/
-          normal @q
-        endtry
-      endfunction
+" .................................................................... Line wrap
+function! s:toggleWrap()
+  if &formatoptions =~ 't'
+    NoPencil
+    let &formatoptions = g:codeoptions
+  elseif &formatoptions == g:codeoptions
+    Pencil
+    set formatoptions=tqwan1
+  else
+    set formatoptions
+  endif
+  call Status('Automatic line wrap', &formatoptions =~ 't')
+endfunction
 
-      command! ReplayLastMacro silent! call <SID>replayLastMacro()
+command! ToggleWrap call <SID>toggleWrap()
 
-  " Format _____________________________________________________________________
+" Search and replace ___________________________________________________________
 
-    " ................................................................ Line wrap
+" ........................................................... Incremental search
+function! s:toggleWrapSearch()
+  let g:separator = g:separator == ' ' ? '\_s*' : ' '
+  cnoremap <expr><space>  '/?' =~ getcmdtype() ? g:separator : ' '
+  call Status('Wrap search', g:separator != ' ')
+endfunction
 
-      function! s:toggleWrap()
-        if &formatoptions =~ 't'
-          NoPencil
-          let &formatoptions = g:codeoptions
-        elseif &formatoptions == g:codeoptions
-          Pencil
-          set formatoptions=tqwan1
-        else
-          set formatoptions
-        endif
-        call Status('Automatic line wrap', &formatoptions =~ 't')
-      endfunction
+command! ToggleWrapSearch call <SID>toggleWrapSearch()
 
-      command! ToggleWrap call <SID>toggleWrap()
+" ...................................................................... Replace
+" restore search highlight after replace
+function! s:searchReplace(cmd)
+  let l:search = @/
+  let l:s = input('', a:cmd)
+  execute l:s
+  let @/ = l:search
+endfunction
 
-  " Search and replace _________________________________________________________
-
-    " ....................................................... Incremental search
-
-      function! s:toggleWrapSearch()
-        let g:separator = g:separator == ' ' ? '\_s*' : ' '
-        cnoremap <expr><space>  '/?' =~ getcmdtype() ? g:separator : ' '
-        call Status('Wrap search', g:separator != ' ')
-      endfunction
-
-      command! ToggleWrapSearch call <SID>toggleWrapSearch()
-
-    " .................................................................. Replace
-
-      " restore search highlight after replace
-      function! s:searchReplace(cmd)
-        let l:search = @/
-        let l:s = input('', a:cmd)
-        execute l:s
-        let @/ = l:search
-      endfunction
-
-      command! -nargs=1 SearchReplace silent! call <SID>searchReplace(<f-args>)
+command! -nargs=1 SearchReplace silent! call <SID>searchReplace(<f-args>)
 
 " default.vim

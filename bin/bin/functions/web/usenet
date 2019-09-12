@@ -6,10 +6,7 @@
 
 # ................................................................... Newsgroups
 
-usage() {
-  echo "usage: $(basename $0) 'start | f'orce | I'nitialize"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) 'start | f'orce | I'nitialize"; exit 1; }
 
 # reader
 host=$(grep '^nnrpaccess' $HOME/.slrnrc | awk '{ print $2 }' | sed 's/"//g')

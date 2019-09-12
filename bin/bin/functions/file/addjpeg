@@ -6,10 +6,7 @@
 
 # .................................................................. Resize jpeg
 
-usage() {
-  echo "usage: $(basename $0) [<size>] [<jpeg>]*"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [<size>] [<jpeg>]*"; exit 1; }
 
 # quality=92
 # quality=75

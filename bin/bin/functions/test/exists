@@ -6,10 +6,7 @@
 
 # ........................................................................ which
 
-usage() {
-  echo "usage: $(basename $0) <executable>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <executable>"; exit 1; }
 
 [ "$1" ] || usage
 which "$1" >/dev/null 2>&1

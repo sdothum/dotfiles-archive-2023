@@ -6,10 +6,7 @@
 
 # ........................................................................ Print
 
-usage() {
-  echo "usage: $(basename $0) [proof] eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps [<filelist>]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [proof] eject | stdin | <file>.pdf|ps | code | mail | note | text | wiki | wps [<filelist>]"; exit 1; }
 
 PROOF=${PROOF:-$SESSION/proof}
 

@@ -42,6 +42,7 @@ export LAYOUT=$HLWM:layout
 export LOCK=$HLWM:lock
 export MONOCLE=$HLWM:monocle
 export PANEL=$HLWM:panel
+export PMARGIN=$HLWM:margin
 export PULSAR=$HLWM:pulsar
 export THEME=$HLWM:theme
 
@@ -52,10 +53,13 @@ export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 
 # wm states
 export CONTRAST=$SESSION/contrast
-export SPINE=$SESSION/spine  # frame left decoration -> window_gap = 0
+export FRAME_GAP=$SESSION/frame_gap
+export MARGIN=$SESSION/margin
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
+export SPINE=$SESSION/spine  # frame left decoration -> window_gap = 0
 export UNCLUTTER=$SESSION/unclutter
+export WINDOW_GAP=$SESSION/window_gap
 
 # application states
 export MENU=$SESSION/term:menu
@@ -65,9 +69,10 @@ export SCOMPTON=$SESSION/compton
 export WSYNC=$SESSION/wsync
 
 # panel attributes
+export PANEL_HEIGHT=$SESSION/panel_height
 export SPANEL=$SESSION/panel
-export TICKER=$SPANEL:ticker
 export PCONKY=$SPANEL:conky
+export TICKER=$SPANEL:ticker
 export WEATHER=$SPANEL:weather
 
 # ..................................................................... Desktops

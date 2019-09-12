@@ -3,148 +3,133 @@
 " GUI
 " ══════════════════════════════════════════════════════════════════════════════
 
-  " Behaviour __________________________________________________________________
+" Behaviour ____________________________________________________________________
 
-    " .................................................................... Setup
+" ........................................................................ Setup
+augroup gui | autocmd! | augroup END
 
-      augroup gui | autocmd! | augroup END
+" let g:gui = has('gui_running') ? 1 : 0  " gvim or console
 
-      " let g:gui = has('gui_running') ? 1 : 0  " gvim or console
+let g:ruler             = 0  " colorcolumn mode, see theme.vim
+let g:wrap_highlighting = 0  " wrap highlighting (0) off (1) on
 
-      let g:ruler             = 0  " colorcolumn mode, see theme.vim
-      let g:wrap_highlighting = 0  " wrap highlighting (0) off (1) on
+" ................................................................... Toggle gui
+nnoremap <silent><S-F12>      :ToggleGui<CR>
+inoremap <silent><S-F12> <C-o>:ToggleGui<CR>
+vnoremap <silent><S-F12> :<C-u>ToggleGui<CR>
 
-    " ............................................................... Toggle gui
+" ................................................................... Redraw gui
+if $DISPLAY > ''  " initial refresh to fill window (correct status line position)
+  autocmd gui VimEnter * RedrawGui
+endif
 
-      nnoremap <silent><S-F12>      :ToggleGui<CR>
-      inoremap <silent><S-F12> <C-o>:ToggleGui<CR>
-      vnoremap <silent><S-F12> :<C-u>ToggleGui<CR>
+nnoremap <silent><F12>      :RedrawGui<CR>
+inoremap <silent><F12> <C-o>:RedrawGui<CR>
+vnoremap <silent><F12> :<C-u>RedrawGui<CR>
 
-    " ............................................................... Redraw gui
-      
-      if $DISPLAY > ''  " initial refresh to fill window (correct status line position)
-        autocmd gui VimEnter * RedrawGui
-      endif
+" Display ______________________________________________________________________
 
-      nnoremap <silent><F12>      :RedrawGui<CR>
-      inoremap <silent><F12> <C-o>:RedrawGui<CR>
-      vnoremap <silent><F12> :<C-u>RedrawGui<CR>
+" .................................................................... Scrolling
+if $HOST == 'monad' | set scrolloff=3
+else                | set scrolloff=5 | endif
+let g:scrolloff = &scrolloff
+set sidescroll=1  " smooth scrolling by 1 column
+set sidescrolloff=1
 
-  " Display ____________________________________________________________________
+" horizontal scrolling
+noremap <C-S-Left>  zL
+noremap <C-S-Right> zH
 
-    " ................................................................ Scrolling
+" ......................................................... Save cursor position
+" only works for simple :buffer actions (not plugin pane selection)
+autocmd gui BufWinLeave * let b:winview = winsaveview()
+autocmd gui BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | endif
 
-      if $HOST == 'monad' | set scrolloff=3
-      else                | set scrolloff=5 | endif
-      let g:scrolloff = &scrolloff
-      set sidescroll=1  " smooth scrolling by 1 column
-      set sidescrolloff=1
+" Terminal _____________________________________________________________________
 
-      " horizontal scrolling
-      noremap <C-S-Left>  zL
-      noremap <C-S-Right> zH
+" ......................................................................... Font
+scriptencoding utf-8
+set encoding=utf-8      " necessary to show unicode glyphs
+set ambiwidth="double"  " for double width glyph handling
 
-    " ..................................................... Save cursor position
+" ....................................................................... Cursor
+set cursorline          " highlight current line
 
-      " only works for simple :buffer actions (not plugin pane selection)
-      autocmd gui BufWinLeave * let b:winview = winsaveview()
-      autocmd gui BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | endif
+set guicursor=a:block   " mode aware cursors
+set guicursor+=o:hor50-Cursor
+set guicursor+=n:Cursor
+set guicursor+=i-ci-sm:ver25-InsertCursor
+set guicursor+=r-cr:hor15-ReplaceCursor
+set guicursor+=c:CommandCursor
+set guicursor+=v-ve:VisualCursor
+set guicursor+=a:blinkon0
 
-  " Terminal ___________________________________________________________________
+" ................................... Gvim Options (make it look like terminal!)
+set guioptions+=LlRrb  " hide scrollbars
+set guioptions-=LlRrb
+set guioptions-=m      " no menubar
+set guioptions-=T      " no toolbar
 
-    " ..................................................................... Font
+" Look _________________________________________________________________________
 
-      scriptencoding utf-8
-      set encoding=utf-8      " necessary to show unicode glyphs
-      set ambiwidth="double"  " for double width glyph handling
+" ............................................................... Column margins
+set colorcolumn=0  " highlight column
 
-    " ................................................................... Cursor
+nmap <silent><Bar> :ToggleColumn<CR>
 
-      set cursorline          " highlight current line
+" .......................................................... Line wrap highlight
+nmap <silent><F8>      :ToggleColumnWrap<CR>
+imap <silent><F8> <C-o>:ToggleColumnWrap<CR>
 
-      set guicursor=a:block   " mode aware cursors
-      set guicursor+=o:hor50-Cursor
-      set guicursor+=n:Cursor
-      set guicursor+=i-ci-sm:ver25-InsertCursor
-      set guicursor+=r-cr:hor15-ReplaceCursor
-      set guicursor+=c:CommandCursor
-      set guicursor+=v-ve:VisualCursor
-      set guicursor+=a:blinkon0
+" ................................................................. Line numbers
+set number
+set numberwidth=10
+set relativenumber
 
-    " ............................... Gvim Options (make it look like terminal!)
+" toggle relative number, line number and no numbering
+nmap <silent># :ToggleNumber<CR>
 
-      set guioptions+=LlRrb  " hide scrollbars
-      set guioptions-=LlRrb
-      set guioptions-=m      " no menubar
-      set guioptions-=T      " no toolbar
+" " toggle relative line numbers
+" autocmd gui InsertEnter * set norelativenumber
+" autocmd gui InsertLeave * set relativenumber
 
-  " Look _______________________________________________________________________
+" ....................................................... Status / command lines
+set laststatus=2  " always show status line
+set ruler         " show cursor position in status line
+set noshowcmd     " show incomplete cmds in command line
+set noshowmode    " show current mode in command line
 
-    " ........................................................... Column margins
+" Window actions _______________________________________________________________
 
-      set colorcolumn=0  " highlight column
+" .............................................................. Window handling
+" kill (close) current window
+noremap <leader>q  <C-w>q
+" close all other windows
+noremap <leader>Q  <C-w>o
 
-      nmap <silent><Bar> :ToggleColumn<CR>
+" ................................................................ Split windows
+" horizontal / vertical split
+noremap <leader>Z  <C-w>v<C-w>l
+noremap <leader>z  <C-w>s<C-w>l
+" maximize left:right / top:bottom
+noremap <leader>ZZ <C-w><Bar>
+noremap <leader>zz <C-w>_
+" adjust all splits to the same size
+noremap <leader>=  <C-w>=
 
-    " ...................................................... Line wrap highlight
+nnoremap <C-Up>    :resize +5<CR>
+nnoremap <C-Down>  :resize -5<CR>
+nnoremap <C-Left>  :vertical resize -5<CR>
+nnoremap <C-Right> :vertical resize +5<CR>
 
-      nmap <silent><F8>      :ToggleColumnWrap<CR>
-      imap <silent><F8> <C-o>:ToggleColumnWrap<CR>
-
-    " ............................................................. Line numbers
-
-      set number
-      set numberwidth=10
-      set relativenumber
-
-      " toggle relative number, line number and no numbering
-      nmap <silent># :ToggleNumber<CR>
-
-      " " toggle relative line numbers
-      " autocmd gui InsertEnter * set norelativenumber
-      " autocmd gui InsertLeave * set relativenumber
-
-    " ................................................... Status / command lines
-
-      set laststatus=2  " always show status line
-      set ruler         " show cursor position in status line
-      set noshowcmd     " show incomplete cmds in command line
-      set noshowmode    " show current mode in command line
-
-  " Window actions _____________________________________________________________
-
-    " .......................................................... Window handling
-
-      " kill (close) current window
-      noremap <leader>q  <C-w>q
-      " close all other windows
-      noremap <leader>Q  <C-w>o
-
-    " ............................................................ Split windows
-
-      " horizontal / vertical split
-      noremap <leader>Z  <C-w>v<C-w>l
-      noremap <leader>z  <C-w>s<C-w>l
-      " maximize left:right / top:bottom
-      noremap <leader>ZZ <C-w><Bar>
-      noremap <leader>zz <C-w>_
-      " adjust all splits to the same size
-      noremap <leader>=  <C-w>=
-
-      nnoremap <C-Up>    :resize +5<CR>
-      nnoremap <C-Down>  :resize -5<CR>
-      nnoremap <C-Left>  :vertical resize -5<CR>
-      nnoremap <C-Right> :vertical resize +5<CR>
-
-    " ........................................................... Switch windows
-
-      " switch to left / right split
-      noremap <Left>     <C-w>h
-      noremap <Right>    <C-w>l
-      " switch to top / bottom split
-      noremap <Up>       <C-w>k
-      noremap <Down>     <C-w>j
-      " " switch windows
-      " noremap <C-w>    <C-w><C-w>
+" ............................................................... Switch windows
+" switch to left / right split
+noremap <Left>     <C-w>h
+noremap <Right>    <C-w>l
+" switch to top / bottom split
+noremap <Up>       <C-w>k
+noremap <Down>     <C-w>j
+" " switch windows
+" noremap <C-w>    <C-w><C-w>
 
 " gui.vim

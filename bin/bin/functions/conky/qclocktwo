@@ -5,10 +5,7 @@
 
 # .... .................................................Dynamcic conky qclocktwo
 
-usage() {
-  echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}] | -- <hour> <minute> [*] (debug)"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}] | -- <hour> <minute> [*] (debug)"; exit 1; }
 
 [ "$1" ] || usage
 

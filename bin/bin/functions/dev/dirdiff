@@ -6,10 +6,7 @@
 
 # ........................................................ Directory differences
 
-usage() {
-  echo "usage: $(basename $0) [-b] [<source> [<target>]] [<regex>]", target must be full path
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [-b] [<source> [<target>]] [<regex>]", target must be full path; exit 1; }
 
 ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|vps'
 

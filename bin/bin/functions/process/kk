@@ -6,10 +6,7 @@
 
 # ......................................................................... Kill
 
-usage() {
-  echo "usage: $(basename $0) [sig=<signal>] <name>.."
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [sig=<signal>] <name>.."; exit 1; }
 
 case $1 in
 sig=*) eval $1; shift ;;

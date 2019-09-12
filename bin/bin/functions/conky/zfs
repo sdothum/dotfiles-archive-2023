@@ -6,10 +6,7 @@
 # ........................................................................ Conky
 
 # zfs filesystem disk usage stat
-usage() {
-  echo "usage: zfs $(basename $0) pool"
-  exit 1
-}
+usage() { echo "usage: zfs $(basename $0) pool"; exit 1; }
 
 [ $1 ] || usage
 

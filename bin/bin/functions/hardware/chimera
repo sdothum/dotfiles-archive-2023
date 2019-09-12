@@ -6,10 +6,7 @@
 
 # .............................................................. Chimera Ergo 42
 
-usage() {
-  echo "usage: $(basename $0) <keymap> [nomouse] [<string> [<string>]] [dfu]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <keymap> [nomouse] [<string> [<string>]] [dfu]"; exit 1; }
 
 KBD=chimera_ergo_42
 

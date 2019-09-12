@@ -6,10 +6,7 @@
 
 # ................................................................ Rsync wrapper
 
-usage() {
-  echo "usage: $(basename $0) [--list-only] [<option>] arm | backup | depot | dotfiles | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [--list-only] [<option>] arm | backup | depot | dotfiles | home | pi | server | stow | ttrss | usb [hostname] | vps | wiki | [--delete] <command>"; exit 1; }
 
 EXCLUDE=$(dirname $0)/.rsync_exclude
 PLEX=/opt/plexmediaserver/Library/Application\ Support

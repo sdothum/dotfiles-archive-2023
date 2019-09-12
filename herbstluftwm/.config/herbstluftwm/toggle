@@ -49,11 +49,10 @@ toggle_app() {
   # handle rox filer binary name
   [ $msg = rox ] && app=ROX-Filer
   if pgrep -lf ${app:-$msg} | grep -qv toggle ;then
-    # xpad multiple windows shortcut
-    if [ $msg = xpad ] ;then
-      xpad --quit
-      exit
-    fi
+    case $msg in
+    xpad   ) xpad --quit;     exit ;;  # xpad multiple windows shortcut
+    tweaker) killall tweaker; exit ;;
+    esac
     app=${app:-$msg}
     lock
     focus=true

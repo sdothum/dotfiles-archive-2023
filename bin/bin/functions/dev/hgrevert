@@ -6,10 +6,7 @@
 
 # ............................................................... Commit to repo
 
-usage() {
-  echo "usage: $(basename $0) <rev>"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <rev>"; exit 1; }
 
 REPO=${REPO:-$STOW}
 QUEUE=$(date '+%y%m%d%H%M%S')

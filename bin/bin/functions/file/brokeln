@@ -6,10 +6,7 @@
 
 # ............................................................... Symbolic links
 
-usage() {
-  echo "usage: $(basename $0) [rm] [<path>]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) [rm] [<path>]"; exit 1; }
 
 case $1 in
 rm) [ -d ${2:-$HOME} ] && find ${2:-$HOME} -xtype l -exec rm -v {} \; || usage ;;

@@ -1,9 +1,6 @@
 snippet usage
 options head
-	usage() {
-		echo "usage: $(basename $${1:0}) ${2:text}"
-		exit 1
-	}
+	usage() { echo "usage: $(basename $${1:0}) ${2:text}"; exit 1; }
 	${0}
 
 snippet flock

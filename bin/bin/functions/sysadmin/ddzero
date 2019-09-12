@@ -6,10 +6,7 @@
 
 # ................................................................... Zero drive
 
-usage() {
-  echo "usage: $(basename $0) <drive>, $(ls /dev/sd? | sed 's|/dev/sd||' | tr '\n' ' ')"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <drive>, $(ls /dev/sd? | sed 's|/dev/sd||' | tr '\n' ' ')"; exit 1; }
 
 case $1 in
 [a-z]) [ -b /dev/sd$1 ] || usage ;;

@@ -6,7 +6,7 @@
 
 # ..................................................................... Settings
 
-BG='#707070'
+BG='#707070'                    # inactive spine colour
 [ -e $SPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=2; } || spine=0
 hc set tree_style "'╾│ ├└╼─┐'"  # tree_style string must be quote enclosed "'string'" for hc parsing
 
@@ -23,7 +23,7 @@ gaps() {
 hc attr theme.floating.reset          1
 hc attr theme.tiling.reset            1
 hc set always_show_frame              0
-hc set frame_bg_transparent           1  # see emit_hook
+hc set frame_bg_transparent           1  # transparency on for autostart (avoid opaque frames), see emit_hook and draw spine
 hc set gapless_grid                   1
 hc set mouse_recenter_gap             0
 hc set smart_frame_surroundings       0

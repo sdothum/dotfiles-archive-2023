@@ -6,10 +6,7 @@
 
 # ....................................................................... Planck
 
-usage() {
-  echo "usage: $(basename $0) <keymap> [steno [nomouse]] [<string> [<string>]] [dfu]"
-  exit 1
-}
+usage() { echo "usage: $(basename $0) <keymap> [steno [nomouse]] [<string> [<string>]] [dfu]"; exit 1; }
 
 KBD=planck
 

@@ -3,8 +3,7 @@
 " ftdetect
 " ══════════════════════════════════════════════════════════════════════════════
 
-    " ..................................................................... Conf
-  
-      autocmd BufNewFile,BufRead *.conf,*.config set filetype=conf
+" ......................................................................... Conf
+autocmd BufNewFile,BufRead *.conf,*.config set filetype=conf
 
 " conf.vim

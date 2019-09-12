@@ -3,8 +3,7 @@
 " ftdetect
 " ══════════════════════════════════════════════════════════════════════════════
 
-    " ...................................................................... Log
-  
-      autocmd BufNewFile,BufRead *.log,*.error set filetype=log
+" .......................................................................... Log
+autocmd BufNewFile,BufRead *.log,*.error set filetype=log
 
 " log.vim
