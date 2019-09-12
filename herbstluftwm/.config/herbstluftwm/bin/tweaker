@@ -9,23 +9,43 @@
 
 # Usage: tweaker [&]
 
-SESSION=${SESSION:-$HOME/.session}
-# set one of these parameters
-layout="$SESSION/frame_gap $SESSION/margin $SESSION/panel_height $SESSION/panel_indent $SESSION/window_gap"
+# ricing parameters
+layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
 
-settings() { for i in $layout ;do [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s|$SESSION/||") "$(cat $i)" ;done }
+[ -e $SPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=2; } || spine=0
+window=$(herbstclient attr settings.window_gap)
+
+settings() {
+  [ -e $SPINE ] && border=on || border=off
+  for i in $layout ;do 
+    [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s|$SESSION/||") "$([ -s $i ] && cat $i || echo on)"
+  done
+}
+
+spine() {
+  [ -e $SPINE ] && { [ $border = off ] && return 0 || return 1; } ||
+                     [ $border = on ]
+}
+
+edge() { [ -e $SPINE ] && echo $1 || echo $2; }
 
 # for dynamic rice tweaking
 ditto tweaker "cd $SESSION"
 settings
 while : ;do
   sleep 1
-  stest -n $PMARGIN $layout >/dev/null || continue
+  stest -n $PMARGIN $layout >/dev/null || spine || continue
+
   herbstclient detect_monitors  # reset monitor margins
   killall -q lemonbar
   draw monitor fullframe
   draw panel
   toggle compton on
+
+  [ -s $WINDOW_GAP ] && window_gap=$(cat $WINDOW_GAP) || window_gap=$window
+  herbstclient attr theme.active.padding_left $(edge $spine 0)
+  herbstclient attr theme.padding_left        $(edge $spine 0)
+  herbstclient set  window_gap                $(edge 0 $window_gap)
   settings
 done
 
