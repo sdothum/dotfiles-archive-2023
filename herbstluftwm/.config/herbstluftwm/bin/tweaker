@@ -7,12 +7,17 @@
 
 # ................................................................. Tweak layout
 
+# Usage: tweaker [&]
+
 SESSION=${SESSION:-$HOME/.session}
 # set one of these parameters
-layout="$SESSION/frame_gap $SESSION/margin $SESSION/panel_height $SESSION/spine $SESSION/window_gap"
+layout="$SESSION/frame_gap $SESSION/margin $SESSION/panel_height $SESSION/panel_indent $SESSION/window_gap"
+
+settings() { for i in $layout ;do [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s|$SESSION/||") "$(cat $i)" ;done }
 
 # for dynamic rice tweaking
-notify 0 low tweaker "$(echo $layout | tr ' ' '\n' | sed "s|$HOME/||")"
+ditto tweaker "cd $SESSION"
+settings
 while : ;do
   sleep 1
   stest -n $PMARGIN $layout >/dev/null || continue
@@ -21,6 +26,7 @@ while : ;do
   draw monitor fullframe
   draw panel
   toggle compton on
+  settings
 done
 
 # vim: set ft=sh: #

@@ -1,5 +1,4 @@
 # sdothum - 2016 (c) wtfpl
-set -x
 [ $TRACE ] && CHILD="draw/panel $@" . $PARENT
 
 # herbstluftwm
@@ -40,6 +39,7 @@ INACTIVE_FG="#$(conky color colorA)"
 FREE_FG="#$(conky color default_color)"
 OCCUPIED_FG=$FREE_FG
 
+[ -e $PMARGIN ] && margin=$(cat $PMARGIN) || return  # wait for draw monitor to complete, initialize in autostart
 [ -s $PANEL_HEIGHT ] && PANEL_HEIGHT=$(cat $PANEL_HEIGHT) || PANEL_HEIGHT=$(query pheight)
 
 # ..................................................................... Geometry
@@ -55,31 +55,23 @@ for i in $(herbstclient monitor_rect $monitor) ;do
 done
 
 mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # fudge column width calculation for title trim below
-#
+
 # frame=$(herbstclient attr settings.frame_gap)
 # window=$(herbstclient attr settings.window_gap)
 # border=$(herbstclient attr theme.border_width)
-# # dynamically indent the panel by margin minus panel height
-# indent=$(( $frame + $window + $border - $PANEL_HEIGHT ))
-# [ $indent -lt $PANEL_HEIGHT ] && indent=$(( $PANEL_HEIGHT * 3 / 2 ))
-# panel_width=$(( $monitorW - $frame * 2 - $indent * 2 ))
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
 displayH=$(xrandr 2>/dev/null | grep '\*' |
     sed -r "s/.*x([0-9]*).*/\1/; $(( $(herbstclient attr monitors.focus.index) + 1 ))q; d")
-if [ $(( $displayH - $monitorH )) -gt $PANEL_HEIGHT ] ;then
-  panel_offsetY=$(( ($displayH - $monitorH) / 2 ))
-  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $monitorH + $panel_offsetY ))
-  [ $(( $PANEL_HEIGHT + $panel_offsetY )) -gt $displayH ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT ))
-else
-  [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
-fi
+[ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 
-# deprecated with primary:secondary as left:right..
-# multihead geometry for secondary primary (left right) orientation
-[ -e $PMARGIN ] && margin=$(cat $PMARGIN) || return  # wait for draw monitor to complete, initialize in autostart
-panel_width=$(( $monitorW - $margin * 4 ))
-panel_offsetX=$(( $monitorX + $margin * 2 - 1 ))
+[ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=$(( $margin * 5 / 3 ))
+[ $indent -lt $margin ] && indent=$margin
+panel_width=$(( $monitorW - $indent * 2 ))
+panel_offsetX=$(( $monitorX + $indent ))
+
+# # deprecated with primary:secondary as left:right..
+# # multihead geometry for secondary primary (left right) orientation
 # if is multihead ;then
 #   if is primary ;then
 #     secondaryX=$(query display secondary | awk '{ print $1 }')

@@ -9,8 +9,8 @@
 # Usage: query pheight [primary | secondary]
 
 # heights
-primary=20
-secondary=18
+primary=18
+secondary=16
 monitor=$1
 
 cpu arm && monitor=primary
@@ -19,7 +19,7 @@ case $monitor in
 tv       ) echo $(( $(herbstclient attr settings.window_gap) + $(herbstclient attr settings.frame_gap) )) ;;
 primary  ) echo $primary ;;
 secondary) echo $secondary ;;
-*        ) is display =3440 && echo 20 || echo 16 ;;
+*        ) is display =3440 && echo 24 || echo 18 ;;
 esac
 
 # vim: set ft=sh: #

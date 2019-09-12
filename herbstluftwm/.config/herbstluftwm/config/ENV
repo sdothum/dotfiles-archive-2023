@@ -70,6 +70,7 @@ export WSYNC=$SESSION/wsync
 
 # panel attributes
 export PANEL_HEIGHT=$SESSION/panel_height
+export PANEL_INDENT=$SESSION/panel_indent
 export SPANEL=$SESSION/panel
 export PCONKY=$SPANEL:conky
 export TICKER=$SPANEL:ticker
@@ -118,11 +119,6 @@ else
   # assumes shadow-offset = -(shadow-radius)
   export SHADOW=$(( $(grep '^shadow-radius =' $COMPTONCONF | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR ))
 fi
-
-# to maintain constant monitor margins around (above or below) the panel, export in .xinitrc
-gui && [ $(query displaywidth 0) -lt $MIN_DISPLAY ] && PANEL_MARGIN=true
-# assumes startx on primary display
-# is display -min && PANEL_MARGIN=true
 
 # ................................................................ Miscellaneous
 
