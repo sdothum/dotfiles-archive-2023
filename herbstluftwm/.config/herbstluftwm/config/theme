@@ -48,8 +48,8 @@ hc set frame_transparent_width        0
 
 # see draw for monitor margin calculations
 if   is display -min   ;then          gaps 0                      $(window 1)
-elif is display -=1920 ;then          gaps $SHADOW                $(window 3)
-elif is display -2560  ;then          gaps $(( $SHADOW * 2 / 3 )) $(window 6)
+elif is display -=1920 ;then          gaps $SHADOW                $(window 4)
+elif is display -2560  ;then          gaps $(( $SHADOW * 2 / 3 )) $(window 8)
 else                                  gaps $(( $SHADOW * 1 / 2 )) $(window 12)
 fi
 

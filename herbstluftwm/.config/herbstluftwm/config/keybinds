@@ -23,7 +23,7 @@ hc keybind $Mod-b                       spawn focus border 3
 hc keybind $Mod-Shift-b                 spawn toggle border
 hc keybind $Mod-i                       spawn toggle unclutter
 hc keybind $Mod-Shift-i                 spawn toggle compton
-hc keybind $Mod-z                       spawn toggle tweaker
+hc keybind $Mod-z                       spawn killall decorate
 
 # wallpaper background (toggle) blur
 hc keybind $Mod-p                       spawn draw root select

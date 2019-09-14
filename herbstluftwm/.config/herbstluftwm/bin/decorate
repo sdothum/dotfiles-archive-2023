@@ -1,13 +1,11 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="bin/tweaker $@" . $PARENT
+[ $TRACE ] && CHILD="bin/decorate $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Tweak layout
-
-# Usage: tweaker [&]
 
 # ricing parameters
 layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
@@ -16,27 +14,27 @@ layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
 window=$(herbstclient attr settings.window_gap)
 
 settings() {
+  echo
   [ -e $SPINE ] && border=on || border=off
   for i in $layout ;do 
     [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s|$SESSION/||") "$([ -s $i ] && cat $i || echo on)"
   done
+  [ -e $SPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
+  echo
 }
 
 spine() {
   [ -e $SPINE ] && { [ $border = off ] && return 0 || return 1; } ||
-                     [ $border = on ]
+                     [ $border = on  ]
 }
 
 edge() { [ -e $SPINE ] && echo $1 || echo $2; }
 
-# for dynamic rice tweaking
-ditto tweaker "cd $SESSION"
-settings
-while : ;do
-  sleep 1
+# dynamic rice tweaking
+config() {
   stest -n $PMARGIN $layout >/dev/null || spine || continue
 
-  herbstclient detect_monitors  # reset monitor margins
+  herbstclient detect_monitors  # reset monitor margins (dimensions)
   killall -q lemonbar
   draw monitor fullframe
   draw panel
@@ -46,7 +44,29 @@ while : ;do
   herbstclient attr theme.active.padding_left $(edge $spine 0)
   herbstclient attr theme.padding_left        $(edge $spine 0)
   herbstclient set  window_gap                $(edge 0 $window_gap)
+  herbstclient set  frame_bg_transparent      $(edge 0 1)
+}
+
+while : ;do
   settings
+
+  read -p '> ' config
+  attr=${config%% *}
+  value=${config##* }
+  [ "$attr" ] || break
+  [ "$attr" = "$value" ] && continue
+  echo $value | grep -q '[^0-9]' && continue
+
+  case $attr in
+  f*g*) echo $value >$FRAME_GAP ;;
+  m*  ) echo $value >$MARGIN ;;
+  p*h*) echo $value >$PANEL_HEIGHT ;;
+  p*i*) echo $value >$PANEL_INDENT ;;
+  s*  ) [ $value -gt 0 ] && echo $value >$SPINE || rm -f $SPINE ;;
+  w*g*) echo $value >$WINDOW_GAP ;;
+  esac
+
+  config
 done
 
 # vim: set ft=sh: #

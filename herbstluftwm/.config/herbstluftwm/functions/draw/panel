@@ -329,7 +329,6 @@ if [ $GLIBC ] ;then
   draw spine &  # non-panel related redundancy check for latent frame handling, see emit_hook
 fi
 
-# 2 pixel Y offset adjustment for underline
 cat $PANEL_FIFO:$fifo | panel | lemonbar -d -n "lemonbar:$fifo" \
                                          -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
                                          -u $PANEL_UNDERLINE \

@@ -36,6 +36,8 @@
 = ═════════
   perl
   perl-Curses
+  cpanminus
+s perl-HTML-Strip
 
 
 = prototyping

@@ -50,8 +50,8 @@ toggle_app() {
   [ $msg = rox ] && app=ROX-Filer
   if pgrep -lf ${app:-$msg} | grep -qv toggle ;then
     case $msg in
-    xpad   ) xpad --quit;     exit ;;  # xpad multiple windows shortcut
-    tweaker) killall tweaker; exit ;;
+    xpad    ) xpad --quit;      exit ;;  # xpad multiple windows shortcut
+    decorate) killall decorate; exit ;;
     esac
     app=${app:-$msg}
     lock
