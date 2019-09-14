@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+usage() { echo "usage: $(basename $0) <path/file> [<hostname>]"; exit 1; }
+
+ROOT=$HOME/build/config   # update master
+
+[ $1 ] || usage
+[ $# -eq 2 ] && host=.$2  # host dependent config
+
+if [ -d $1 ] ;then
+  mkdir -pv $ROOT$1$host || exit 1
+  ditto copying "$(cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
+else
+  mkdir -pv $ROOT${1%/*} || exit 1
+  ditto copying "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$1$host)"
+fi
+
+# vim: set ft=sh: #

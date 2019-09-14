@@ -6,7 +6,7 @@
 
 # .................................................................. Ssh wrapper
 
-# Usage: ssh <host> [<X11 application>]
+# Usage: ssh <hostname> [<X11 application>]
 # Note:  trap rsync to avoid spawning X11 sessions
 
 ps -ef | grep $PPID | grep rsync | grep -qv grep || notrsync=true

@@ -15,8 +15,8 @@ fi
 
 heading "/opt/bin, /etc/hosts link"
 # ══════════════════════════════════════════════════════════════════════════════
-config_install L /opt/bin
-config_install L /etc/hosts
+config_install -link /opt/bin
+config_install -link /etc/hosts
 
 
 if server && [ ! -d /net/downloads/http ] ;then

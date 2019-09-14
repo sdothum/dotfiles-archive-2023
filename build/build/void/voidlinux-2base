@@ -13,7 +13,7 @@ title "setup"
 # ══════════════════════════════════════════════════════════════════════════════
 pong || post_install connman
 # default mail addresses
-config_install L /etc/aliases
+config_install -link /etc/aliases
 
 
 heading 'enable tty autologin'

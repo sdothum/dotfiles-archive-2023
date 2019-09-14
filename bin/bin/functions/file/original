@@ -23,9 +23,9 @@ done
 # save distribution original
 if [ -e "$1" ] ;then
   if [ $V ] ;then
-    ditto copying "$(sudo cp -pR $V "$1" "$1.original")"
+    ditto copy "$(sudo cp -pR $V "$1" "$1.original")"
   else
-    ditto copying "'$1' -> '$1.original'"
+    ditto copy "'$1' -> '$1.original'"
     sudo cp -pR "$1" "$1.original"
   fi
   exit 0

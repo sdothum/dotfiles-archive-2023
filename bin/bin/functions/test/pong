@@ -6,7 +6,7 @@
 
 # ...................................................................... Network
 
-# Usage: pong [<host>]
+# Usage: pong [<url>]
 
 ping -c 1 -W 1 ${1:-www.google.com} >/dev/null 2>&1  # ping -> pong verification :-)
 

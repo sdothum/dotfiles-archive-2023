@@ -20,7 +20,7 @@ pong || post_install connman
 # disable CoW on systemd journal
 sudo chattr +C /var/log/journal/
 # default mail addresses
-config_install L /etc/aliases
+config_install -link /etc/aliases
 
 
 # title "archlinux testing"

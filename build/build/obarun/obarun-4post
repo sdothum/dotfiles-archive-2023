@@ -15,7 +15,7 @@ fi
 
 heading "/opt/bin link"
 # ══════════════════════════════════════════════════════════════════════════════
-config_install L /opt/bin
+config_install -link /opt/bin
 
 if server && [ ! -d /net/downloads/http ] ;then
 heading "/net/* directories"
