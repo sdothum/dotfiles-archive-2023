@@ -54,6 +54,7 @@ set ambiwidth="double"  " for double width glyph handling
 
 " ....................................................................... Cursor
 set cursorline          " highlight current line
+" set cursorlineopt=screenline  " waiting on v8.1 patch
 
 set guicursor=a:block   " mode aware cursors
 set guicursor+=o:hor50-Cursor

@@ -1,17 +1,20 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="bin/decorate $@" . $PARENT
+[ $TRACE ] && CHILD="bin/gaps $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................. Tweak layout
 
+usage() { echo "tuples: f'rame_gap | m'argin | panel_h'eight | panel_i'ndent | s'pine | w'indow_gap <value>, 0 -> off (spine)"; }
+
 # ricing parameters
 layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
 
+usage
 [ -e $SPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=2; } || spine=0
-window=$(herbstclient attr settings.window_gap)
+window=$(herbstclient attr settings.window_gap)  # current window gap
 
 settings() {
   echo
@@ -51,19 +54,20 @@ while : ;do
   settings
 
   read -p '> ' config
+  [ "$config" ] || break
   attr=${config%% *}
   value=${config##* }
-  [ "$attr" ] || break
   [ "$attr" = "$value" ] && continue
-  echo $value | grep -q '[^0-9]' && continue
+  echo $value | grep -q '[^0-9]' && { usage; continue; }
 
   case $attr in
-  f*g*) echo $value >$FRAME_GAP ;;
-  m*  ) echo $value >$MARGIN ;;
-  p*h*) echo $value >$PANEL_HEIGHT ;;
-  p*i*) echo $value >$PANEL_INDENT ;;
-  s*  ) [ $value -gt 0 ] && echo $value >$SPINE || rm -f $SPINE ;;
-  w*g*) echo $value >$WINDOW_GAP ;;
+  f) echo $value >$FRAME_GAP ;;
+  m) echo $value >$MARGIN ;;
+  h) echo $value >$PANEL_HEIGHT ;;
+  i) echo $value >$PANEL_INDENT ;;
+  s) [ $value -gt 0 ] && echo $value >$SPINE || rm -f $SPINE ;;
+  w) echo $value >$WINDOW_GAP ;;
+  *) usage; continue ;;
   esac
 
   config
