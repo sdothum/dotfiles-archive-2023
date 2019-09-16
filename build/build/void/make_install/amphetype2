@@ -1,0 +1,21 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... amphetype2
+
+cd /net/depot
+[ -d amphetype2 ] || git clone https://github.com/coryo/amphetype2.git
+
+cd amphetype2
+if [ ! -e src/amphetype2 ] ;then
+  cmake . -DQTROOT=/usr/lib/qt5
+  make
+fi
+
+sudo cp -v src/amphetype2 /usr/bin/amphetype2
+ditto link "$(sudo ln -sfv /usr/bin/amphetype2 /usr/bin/amphetype)"
+ditto config 'view -> library -> import texts'
+
+# vim: set ft=sh: #

@@ -15,10 +15,10 @@ ROOT=$HOME/build/config   # update master
 
 if [ -d $1 ] ;then
   mkdir -pv $ROOT$1$host || exit 1
-  ditto copying "$(cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
+  ditto copy "$(cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
 else
   mkdir -pv $ROOT${1%/*} || exit 1
-  ditto copying "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$1$host)"
+  ditto copy "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$1$host)"
 fi
 
 # vim: set ft=sh: #

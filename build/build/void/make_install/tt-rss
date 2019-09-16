@@ -1,0 +1,36 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... tt-rss
+
+COMMIT=467bc4fe0  # version 17.4 (theme dependency)
+TTRSS=/srv/http/tt-rss
+
+cd /net/depot
+if [ ! -d tt-rss ] ;then
+  git clone https://git.tt-rss.org/fox/tt-rss.git
+  cd tt-rss
+  git checkout $COMMIT
+fi
+
+if [ ! -d $TTRSS ] ;then
+  sudo mkdir -pv $TTRSS
+  sudo chown $USER:users $TTRSS
+  rsync --exclude='.git*' /net/depot/tt-rss ${TTRSS%/*}/
+fi
+
+chmod -R 777 $TTRSS/cache/images
+chmod -R 777 $TTRSS/cache/upload
+chmod -R 777 $TTRSS/cache/export
+chmod -R 777 $TTRSS/cache/js
+chmod -R 777 $TTRSS/feed-icons
+chmod -R 777 $TTRSS/lock
+
+original $TTRSS/install/index.php
+sed -i '/if (!function_exists("iconv"))/s/!//' $TTRSS/install/index.php  # iconv check fails with latest php (?)
+
+runit_install tt-rss
+
+# vim: set ft=sh: #

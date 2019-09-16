@@ -63,8 +63,12 @@ s perl-HTML-Strip
 
 = library
 = ═══════
-" passenger requirement
+" passenger dependency
   libcurl-devel
+" amphetype2 dependency
+  qt5-devel
+  qt5-xmlpatterns-devel
+  qt5-multimedia-devel
   
 
 = debug

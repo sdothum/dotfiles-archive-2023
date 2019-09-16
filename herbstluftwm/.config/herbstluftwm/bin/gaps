@@ -7,7 +7,7 @@
 
 # ................................................................. Tweak layout
 
-usage() { echo "tuples: f'rame_gap | m'argin | panel_h'eight | panel_i'ndent | s'pine | w'indow_gap <value>, 0 -> off (spine)"; }
+usage() { echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap <value>, 0 -> off (spine)"; }
 
 # ricing parameters
 layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
