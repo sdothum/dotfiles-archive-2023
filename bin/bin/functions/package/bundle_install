@@ -55,7 +55,7 @@ deferred=$BDIR/900-deferred
 missing=$BDIR/910-missing
 [ $check ] && rm -f $missing
 echo $@ | grep -q 900-deferred && unset deferred || {
-  [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; };}
+  [ $list ] || { [ -e $deferred ] && { ifno 'clear last defer bundle' || rm $deferred; } }
 }
 
 rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
@@ -68,7 +68,7 @@ parse() {
   '='       ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
   '"'       ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
   '!'       ) [ $check ] || $package $condition;                                                       return 1 ;;
-  '+'       ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; };} ;;
+  '+'       ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; } } ;;
   d         ) rule=true ;;
   [-?@agmps]) rule=$(rule "$condition") ;;
 

@@ -51,6 +51,9 @@ s perl-HTML-Strip
 = ══════
   python-pip
   python-setuptools
+" amphetype dependency
+s python-PyQt4
+  python-sip
 
 
 = mpu programmer
@@ -65,10 +68,10 @@ s perl-HTML-Strip
 = ═══════
 " passenger dependency
   libcurl-devel
-" amphetype2 dependency
-  qt5-devel
-  qt5-xmlpatterns-devel
-  qt5-multimedia-devel
+# " amphetype2 dependency
+# qt5-devel
+# qt5-xmlpatterns-devel
+# qt5-multimedia-devel
   
 
 = debug

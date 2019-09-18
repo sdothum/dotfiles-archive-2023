@@ -34,7 +34,7 @@ rm -f "$retitle"
 movies="/run/media/$USER/My Passport"  # create symlinks to avoid space parsing errors
 passport=/tmp/movies:passport
 # pathname containing spaces cannot override link, hence rm+ln vesus ln -sf
-[ -d "$movies/movies" ] && { rm -f $passport; ln -s "$movies/movies" $passport; } || { [ -d "$movies/Movies" ] && { rm -f $passport; ln -s "$movies/Movies" $passport; };}
+[ -d "$movies/movies" ] && { rm -f $passport; ln -s "$movies/movies" $passport; } || { [ -d "$movies/Movies" ] && { rm -f $passport; ln -s "$movies/Movies" $passport; } }
 [ -L $passport ] && copy='copy\n'
 
 # unset debug to remove exit from menu items

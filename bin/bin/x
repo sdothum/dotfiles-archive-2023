@@ -115,7 +115,7 @@ if console ;then
   xm* ) ;;
   esac
 
-  cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s; };}
+  cpu arm && { pstat syncthing || { tmout ifno 'sync with syncthing' || wsync -s; } }
 else
   # already in X11 session
   ditto 'window manager' "$(cat $HOME/.windowmanager) (next X session)"

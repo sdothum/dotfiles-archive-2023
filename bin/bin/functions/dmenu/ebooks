@@ -73,7 +73,7 @@ while : ;do
   title=$(echo $title | sed 's/ *$//g')
   unset mobi epub azw3 azw
 
-  azw3; [ "$azw3" ] || { mobi; [ "$mobi" ] || { epub; [ "$epub" ] || { azw; [ "$azw" ] || kfx; };};}
+  azw3; [ "$azw3" ] || { mobi; [ "$mobi" ] || { epub; [ "$epub" ] || { azw; [ "$azw" ] || kfx; } } }
   file=$azw3$mobi$epub$azw$kfx
   [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks; continue; }
 
