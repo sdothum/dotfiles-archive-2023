@@ -117,6 +117,6 @@ vmap <silent><S-Down> <ESC>:MoveVisualDown<CR>
 " Text shortcuts _______________________________________________________________
 
 " ..................................................................... Filename
-inoremap <Leader>fn <C-r>=expand("%:t:r")<CR>
+inoremap <C-w> <C-r>=expand("%:t:r")<CR>
 
 " edit.vim

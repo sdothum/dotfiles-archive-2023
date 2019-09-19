@@ -6,15 +6,18 @@
 
 # ................................................................... Fuzzy jump
 
-# Usage: j -- | [-] [<dir>] [<pattern>]
+usage() { echo "usage: $(basename $0) -- | [-] [dir] [<pattern>]"; }
 
 # refresh directory cache, see fcache
-[ "$1" = '--' ] && exec fcache I
-[ "$1" = '-' ] && { refresh=$1; shift; }
+case $1 in
+'') usage; sleep 1 ;;
+--) exec fcache I ;;
+- ) refresh=$1; shift ;;
+esac
 
 # fish shell ignores non-fish cd's, see j.fish
 case $# in
-0) pwd | grep -q $HOME && dir=$(fcache $refresh $HOME | fZf) || dir=$(fcache $refresh $PWD | fZf) ;;
+0) pwd | grep -q $HOME && { dir=$(fcache $refresh $HOME | fZf); exit; } || dir=$(fcache $refresh $PWD | fZf) ;;
 1) [ -d $1 ] && dir=$(fcache $refresh $1 | fZf) || dir=$(fcache $refresh $HOME | fZf -q $1) ;;
 2) [ -d $1 ] && dir=$(fcache $refresh $1 | fZf -q $2) || dir=$(fcache $refresh $HOME | egrep "$1" | fZf -q $2) ;;
 esac

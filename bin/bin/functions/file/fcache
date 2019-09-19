@@ -43,11 +43,13 @@ if [ -e $cache ] && [ -e $dcache ] && [ -z $refresh ] ;then
   [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || { [ $create ] && exit || exec cat $cache; }
 fi
 
-# [ $refresh ] && notify "$1" 'Refreshing fcache'
+[ $refresh ] && notify "$1" 'Refreshing fcache'
 # following links can be problematic for concurrent finds (locking issue)
 [ -L $1 ] && link='-L'
-pgrep -f "find .*$1 -type d" >/dev/null || nohup find $link $1 -type d 2>/dev/null | exclude >$dcache &
-pgrep -f "find .*$1 -type $type" >/dev/null || nohup find $link $1 -type $type 2>/dev/null | exclude >$cache &
+nohup find $link $1 -type d 2>/dev/null | exclude >$dcache &
+nohup find $link $1 -type $type 2>/dev/null | exclude >$cache &
 [ $refresh ] || [ $create ] || nohup find $link $1 -type $type 2>/dev/null | exclude &
+wait
+cat $cache
 
 # vim: set ft=sh: #
