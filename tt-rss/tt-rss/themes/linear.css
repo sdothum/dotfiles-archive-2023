@@ -210,6 +210,7 @@ button.expandPrompt {
   display: block;
   font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
+  line-height: 1.4em;
   margin-top: 69px; /* ~ 150 / 1.618 - font-size x 1.5 */
   position: fixed;
   text-align: right;
