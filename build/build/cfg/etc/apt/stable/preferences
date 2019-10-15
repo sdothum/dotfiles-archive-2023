@@ -1,0 +1,19 @@
+Package: *
+Pin: release a=statler
+Pin-Priority: 1001
+
+Package: *
+Pin: release a=squeeze
+Pin-Priority: 500
+
+Package: *
+Pin: release a=testing
+Pin-Priority: 100
+
+Package: *
+Pin: release a=unstable
+Pin-Priority: 10
+
+Package: *
+Pin: release o=Debian
+Pin-Priority: -10

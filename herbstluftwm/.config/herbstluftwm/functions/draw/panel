@@ -54,7 +54,7 @@ for i in $(herbstclient monitor_rect $monitor) ;do
   geometry=${geometry#*:}
 done
 
-mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # fudge column width calculation for title trim below
+mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # kludgey column width calculation for title trim below
 
 # frame=$(herbstclient attr settings.frame_gap)
 # window=$(herbstclient attr settings.window_gap)
@@ -65,7 +65,7 @@ displayH=$(xrandr 2>/dev/null | grep '\*' |
     sed -r "s/.*x([0-9]*).*/\1/; $(( $(herbstclient attr monitors.focus.index) + 1 ))q; d")
 [ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 
-[ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=$(( $margin * 5 / 3 ))
+[ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=$(( $margin * 7 / 3 ))
 [ $indent -lt $margin ] && indent=$margin
 panel_width=$(( $monitorW - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $indent ))
@@ -301,8 +301,8 @@ panel() {
     [ "$title"    ] || title
     [ "$desktops" ] || desktops
     # restrict title to left hand side of panel
-    chop=$(( $mid_point + $(echo $title | wc -c) - $(echo $title | sed 's/%[{][^}]*[}]//g' | wc -c) ))
-    title=$(echo $title | cut -b -$chop)
+    chop=$(( $mid_point + $(echo "$title"| wc -c) - $(echo "$title" | sed 's/%[{][^}]*[}]//g' | wc -c) ))
+    title=$(echo "$title" | cut -b -$chop)
     printf "%s\n" "%{l}${title}%{c}${desktops} %{r}${system}"
     unset line
   done

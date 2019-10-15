@@ -5,8 +5,8 @@
 
 # .......................................................... xf86-input-libinput
 
-config_install /etc/X11/xorg.conf.d/10-libinput.conf
-# config_install /etc/X11/xorg.conf.d/40-libinput.conf
+cfg_install /etc/X11/xorg.conf.d/10-libinput.conf
+# cfg_install /etc/X11/xorg.conf.d/40-libinput.conf
 sudo ln -sf /usr/share/X11/xorg.conf.d/40-libinput.conf /etc/X11/xorg.conf.d/
 
 # vim: set ft=sh: #

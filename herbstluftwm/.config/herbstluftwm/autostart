@@ -124,7 +124,7 @@ toggle focus
 # emit hook stalled otherwise until a new window action..
 focus frame
 focus window
-draw panel  # normally the responsibilty of draw root but requires draw monitor to complete
+server || draw panel  # normally the responsibilty of draw root but requires draw monitor to complete
 
 # pseudo screen saver
 # cpu arm || conky clock auto

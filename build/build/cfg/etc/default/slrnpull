@@ -1,0 +1,6 @@
+# Defaults for slrnpull.
+
+# How slrnpull is run. It can be 'manually' (by some mechanism you come up
+# with), 'cron job' (by a daily cron job), or 'ip-up' (on ppp connection to
+# the net).
+RUNFROM='cron job'

@@ -27,7 +27,7 @@ conky clock :: $(find $STOW/conky -type f -name '*clock*')
 conky lumen :: $(find $STOW/conky/1920x1080 -type f -name '*conky*')
 conky luna :: $(find $STOW/conky/3440x1440 -type f -name '*conky*')
 conky monad :: $(find $STOW/conky/1024x600 -type f -name '*conky*')
-cron user :: $HOME/build/root/var/spool/cron/crontabs/$USER
+cron user :: $HOME/build/cfg/var/spool/cron/crontabs/$USER
 debian install :: $(/bin/ls $HOME/build/debian/netinstall-* | egrep -v 'partial|exceptions')
 demo screencast :: $HOME/bin/demo $HOME/bin/functions/demo/*
 diary wiki :: $(locate -e -i -r 'diary.*wiki$' | egrep -v 'journal|diary.wiki')
@@ -67,7 +67,7 @@ mpd music :: $HOME/.mpdconf
 msmtp sendmail :: $HOME/.msmtprc
 mutt mail :: $HOME/.muttrc $HOME/.mutt/cogronrc $HOME/.mutt/extensionsrc $HOME/.mutt/aliases
 ncmpcpp music :: $HOME/.ncmpcpp/config
-nginx web :: $HOME/build/root/etc/nginx/sites-available/default
+nginx web :: $HOME/build/cfg/etc/nginx/sites-available/default
 nixos :: $HOME/build/nixos/nixos-*
 notion :: $HOME/.notion/*.lua $HOME/bin/autostart
 nzb :: $HOME/.nzbget
@@ -81,13 +81,13 @@ planck beaklti :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/b
 planck beaklvi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklvi -type f) $HOME/bin/functions/hardware/planck
 planck beaklzi :: $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklzi -type f) $HOME/bin/functions/hardware/planck
 prezto zsh :: $HOME/.zpreztorc $(find $HOME/.zprezto -type f)
-privoxy proxy :: $HOME/build/root/etc/privoxy/default.action
+privoxy proxy :: $HOME/build/cfg/etc/privoxy/default.action
 prompt :: $HOME/.zprezto/modules/prompt/functions/*
 qutebrowser :: $HOME/.config/qutebrowser/*conf* $HOME/.config/qutebrowser/quickmarks $HOME/.config/qutebrowser/bookmarks/*
 rox actions :: $(find $HOME/.config/rox.sourceforge.net/SendTo -type f)
 rss feeds :: $HOME/.config/newsbeuter/config
 signature :: $HOME/.signature
-slrn news :: $HOME/.slrnrc $HOME/build/root/etc/news/slrnpull.conf $HOME/.jnewsrc.*
+slrn news :: $HOME/.slrnrc $HOME/build/cfg/etc/news/slrnpull.conf $HOME/.jnewsrc.*
 spacemacs :: $HOME/.spacemacs
 splitography beaklpi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklpi -type f) $HOME/bin/functions/hardware/splitography
 splitography beaklsi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi -type f) $HOME/bin/functions/hardware/splitography
@@ -101,7 +101,7 @@ splitography dvorak :: $(find -L $STOW/splitography/qmk_firmware/keyboards/split
 splitography dvorakmu :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f) $HOME/bin/functions/hardware/splitography
 splitography multi :: $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/multi -type f) $HOME/bin/functions/hardware/splitography
 subtle :: $HOME/.config/subtle/subtle.rb
-sudoers :: $HOME/build/root/etc/sudoers.d/README
+sudoers :: $HOME/build/cfg/etc/sudoers.d/README
 sup mail :: $HOME/.sup/sources.yaml.* $HOME/.sup/*.yaml $HOME/.sup/hooks/*.rb
 sxhkd bspwm :: $HOME/.config/sxhkd/sxhkdrc
 syslog :: /var/log/syslog /var/log/syslog.1

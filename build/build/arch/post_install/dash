@@ -5,7 +5,7 @@
 
 # ......................................................................... dash
 
-config_install /etc/profile.d/path.sh
+cfg_install /etc/profile.d/path.sh
 sudo chmod -c 755 /etc/profile.d/path.sh
 
 # vim: set ft=sh: #

@@ -19,7 +19,8 @@ original /etc/cups/cups-files.conf
 sudo sed -i 's/SystemGroup sys root$/SystemGroup sys root _lp/' /etc/cups/cups-files.conf
 original /etc/cups/cupsd.conf
 sudo sed -i "s/@SYSTEM/$USER/" /etc/cups/cupsd.conf
-service enable org.cups.cupsd
+service enable cupsd
+# service enable cups-browsed
 ditto http://localhost:631 'configure cups-pdf and network shared printers'
 
 # the usual documents directory

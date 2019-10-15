@@ -50,7 +50,7 @@ hwclock --systohc --utc
 
 heading 'check kvm compatibility'
 # ══════════════════════════════════════════════════════════════════════════════
-[ $hostname = luna ] || config_install /etc/modprobe.d/blacklist-kvm.conf
+[ $hostname = luna ] || cfg_install /etc/modprobe.d/blacklist-kvm.conf
 checkpoint
 
 
@@ -77,7 +77,7 @@ xbps-install -y bc
 xbps-install -y dos2unix
 xbps-install -y fish-shell
 xbps-install -y perl
-config_install /etc/profile.d/path.sh
+cfg_install /etc/profile.d/path.sh
 checkpoint
 
 

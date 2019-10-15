@@ -7,7 +7,8 @@
 
 version=2
 DEPOT=/net/depot/sonarr
-SONARR=/usr/lib/sonarr
+LIB=/usr/lib/sonarr
+SONARR=/srv/http/sonarr
 
 if [ ! -d $DEPOT ] ;then
   mkdir -p $DEPOT
@@ -15,8 +16,15 @@ if [ ! -d $DEPOT ] ;then
   wget http://update.sonarr.tv/v$version/master/mono/NzbDrone.master.tar.gz
 fi
 
-sudo tar xvfz $DEPOT/NzbDrone.master.tar.gz --directory $SONARR
+sudo mkdir -p $LIB
+sudo tar xvfz $DEPOT/NzbDrone.master.tar.gz --directory $LIB
 
 runit_install sonarr
+
+[ -e $SONARR ] && exit
+sudo mkdir -p $SONARR
+[ -e /net/archive$SONARR ] && sudo rsync /net/archive$SONARR/ $SONARR
+sudo chown -R sonarr:sonarr $SONARR
+sudo rm $SONARR/*pid
 
 # vim: set ft=sh: #

@@ -1,0 +1,7 @@
+
+# mkfs.btrfs -f -L Photos -d raid1 /dev/disk/by-id/ata-ST1000DM005_HD103SJ_S246J9EC314043 /dev/disk/by-id/ata-ST1000DM005_HD103SJ_S246J9FC320076
+# LABEL=Photos        /media      btrfs       rw,noauto,nodev,noexec,noatime,autodefrag,space_cache  0 0
+
+# mkfs.btrfs -f -L Share -m raid10 -d raid10 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857955 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795
+# LABEL=Share         /net        btrfs       rw,nodev,noexec,noatime,autodefrag,space_cache  0 0
+LABEL=Share           /net        btrfs       rw,nodev,noatime,autodefrag,space_cache  0 0

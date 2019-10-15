@@ -14,7 +14,7 @@ readability and code consolidation.
 
 To enable the automatic construction of paths necessary to use the tree 
 of bin scripts, "path.sh" which can be found in the 
-build/root/etc/profile.d folder can be placed in /etc/profile.d or 
+build/cfg/etc/profile.d folder can be placed in /etc/profile.d or 
 sourced manually in your shell profile.
 
 ## license

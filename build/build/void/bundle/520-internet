@@ -16,7 +16,7 @@
 = file transfer
 = ═════════════
 # gftp
-  nzbget
+d nzbget
 # sabnzbd [server]
 m sonarr  [server]
   transmission-gtk
@@ -29,11 +29,12 @@ m sonarr  [server]
 = ══════════════
 # php-gd
 # surfraw
-m tt-rss
+d m tt-rss [server]
 
 
 = web server
 = ══════════
+# see passenger
 
 
 # vim: set ft=conf: #

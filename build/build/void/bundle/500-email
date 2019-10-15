@@ -6,9 +6,9 @@
 
 = imap
 = ════
-  dovecot
+d dovecot
   imapfilter
-  offlineimap
+d offlineimap
 
 
 = mail client

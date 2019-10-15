@@ -1,0 +1,6 @@
+#!/bin/sh
+export USERNAME=$USER
+export NZBGET="/usr/bin/nzbget"
+exec 2>&1
+exec chpst -u "$USERNAME" "$NZBGET" --daemon >/dev/null
+

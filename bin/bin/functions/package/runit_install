@@ -10,8 +10,11 @@ usage() { echo "usage: $(basename $0) <service>"; exit 1; }
 
 [ $1 ] || usage
 
+SERVICE=/etc/sv/$1
+
 sudo mkdir -v /run/runit/supervise.$1
-config_install /etc/sv/$1
-sudo ln -sfv /run/runit/supervise.$1 /etc/sv/$1/supervise
+cfg_install $SERVICE
+sudo sed -i "s/[$]USER *$/$USER/" $SERVICE/run  # username daemon
+sudo ln -sfv /run/runit/supervise.$1 $SERVICE/supervise
 
 # vim: set ft=sh: #

@@ -4,6 +4,16 @@
 # see bundle_install
 
 
+= library
+= ═══════
+  libcurl-devel          # passenger dependency
+  qt                     # amphetype dependency
+  qt-webkit              # fontmatrix dependency
+# qt5-devel              # amphetype2 dependency
+# qt5-xmlpatterns-devel  # amphetype2 dependency
+# qt5-multimedia-devel   # amphetype2 dependency
+
+
 = c
 = ═
   cmake
@@ -35,25 +45,24 @@
 = perl tool
 = ═════════
   perl
+  colordiff
+  cpanminus  # perl-HTML dependency
   perl-Curses
-  cpanminus
 s perl-HTML-Strip
 
 
 = prototyping
 = ═══════════
   ruby
-" passenger requirement
-  ruby-devel
+  ruby-devel  # passenger dependency
 
 
 = python
 = ══════
   python-pip
   python-setuptools
-" amphetype dependency
-s python-PyQt4
-  python-sip
+  python-sip    # amphetype dependency
+s python-PyQt4  # amphetype dependency
 
 
 = mpu programmer
@@ -62,16 +71,6 @@ s python-PyQt4
   avr-libc
   avrdude
   dfu-programmer
-
-
-= library
-= ═══════
-" passenger dependency
-  libcurl-devel
-# " amphetype2 dependency
-# qt5-devel
-# qt5-xmlpatterns-devel
-# qt5-multimedia-devel
   
 
 = debug

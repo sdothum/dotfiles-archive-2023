@@ -54,6 +54,7 @@ Plug 'tpope/vim-rsi'                  " readline keybindings
 Plug 'itchyny/vim-cursorword', prose  " word highlighting
 Plug 'nathanaelkane/vim-indent-guides', { 'on' : 'IndentGuidesToggle' }  " colourized indent columns
 Plug 'sheerun/vim-polyglot'           " multilingual highlighting
+Plug 'machakann/vim-highlightedyank'  " yank highlghting
 
 " Buffers ______________________________________________________________________
 

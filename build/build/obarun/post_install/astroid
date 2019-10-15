@@ -1,1 +1,10 @@
-../../arch/post_install/astroid
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... astroid
+
+cfg_install /usr/share/astroid/ui/thread-view.css
+
+# vim: set ft=sh: #

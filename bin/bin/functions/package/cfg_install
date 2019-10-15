@@ -1,0 +1,38 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+usage() { echo "usage: $(basename $0) [-link | -test] <path/file> [<hostname>]"; exit 1; }
+
+ROOT=$HOME/build/cfg        # restore customizations
+
+case $1 in
+-test) test=true; shift ;;  # check only
+-link) link=true; shift ;;  # link vs copy
+esac
+
+[ $1 ] || usage
+[ $# -eq 2 ] && host=.$2
+
+[ $test ] && { [ -e $ROOT$1$host ] || return 1; }
+[ -e $1 ] && original $1
+mkdir -pv ${1%/*} || exit 1
+
+if [ $link ] ;then
+  ditto link "$(sudo ln -sfv $ROOT$1$host $1)"
+elif [ -d $ROOT$1$host ] ;then
+  sudo mkdir -pv $1
+  ditto copy "$(sudo cp -rv --preserve=mode --no-preserve=ownership $ROOT$1$host/* $1)"
+else
+  ditto copy "$(sudo cp -v --preserve=mode --no-preserve=ownership $ROOT$1$host $1)"
+fi
+
+[ "${1##$HOME/}" = $1 ] || sudo chown -R $USER:users $1  # user config
+ditto -- "check customization $1"
+return 0
+
+# vim: set ft=sh: #

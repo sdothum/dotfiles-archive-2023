@@ -73,6 +73,6 @@ while : ;do
   config
 done
 
-ifno 'save .session' || config_cache $SESSION $(hostname)
+ifno 'save .session' || cfg_cache $SESSION $(hostname)
 
 # vim: set ft=sh: #

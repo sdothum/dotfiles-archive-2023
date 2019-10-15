@@ -5,7 +5,7 @@
 
 # ........................................................................ squid
 
-config_install /etc/squid/squid.conf
+cfg_install /etc/squid/squid.conf
 service stop squid
 # allocate working directories
 sudo squid -k check

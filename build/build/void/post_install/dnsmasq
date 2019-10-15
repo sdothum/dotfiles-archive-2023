@@ -8,7 +8,7 @@
 NAMESERVER=$SESSION/nameserver
 [ -e $NAMESERVER ] && NAMESERVER=$(cat $NAMESERVER) || NAMESERVER=127.0.0.1
 
-config_install /etc/dnsmasq.conf
+cfg_install /etc/dnsmasq.conf
 # create initial adblock list
 adblock || { ditto error 'post_install dnsmasq'; exit 1; }
 

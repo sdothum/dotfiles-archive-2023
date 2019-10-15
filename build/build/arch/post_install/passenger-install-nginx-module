@@ -67,7 +67,7 @@ sed -e '/^#user  nobody;/cuser  http;' \
 if [ -f /usr/lib/systemd/system/nginx.service ] ;then
   sudo sed -i 's|/usr/bin|/opt/nginx/sbin|' /usr/lib/systemd/system/nginx.service
 else
-  config_install /usr/lib/systemd/system/nginx.service
+  cfg_install /usr/lib/systemd/system/nginx.service
 fi
 
 server && service enable nginx || ditto run "sudo systemctl start nginx"

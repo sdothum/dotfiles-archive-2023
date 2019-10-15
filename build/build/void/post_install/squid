@@ -5,7 +5,7 @@
 
 # ........................................................................ squid
 
-config_install /etc/squid/squid.conf
+cfg_install /etc/squid/squid.conf
 sudo squid -zN -z
 
 server && { service enable squid; service down squid; }

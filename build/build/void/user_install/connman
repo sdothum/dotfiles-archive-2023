@@ -5,11 +5,11 @@
 
 # ...................................................................... connman
 
-hosts=$HOME/build/root/etc/hosts
+hosts=$HOME/build/cfg/etc/hosts
 gateway=10.1.0.1
 
 # get network hosts table
-config_install -link /etc/hosts
+cfg_install -link /etc/hosts
 
 # add host ip address
 ip=$(hostname --ip-address)

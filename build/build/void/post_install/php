@@ -16,6 +16,6 @@ sudo sed -i -e '/open_basedir/s/=.*/=/' \
          -e '/;extension=pgsql/s/;//' \
          /etc/php/php.ini
 
-service restart nginx
+ditto service 'enable nginx'
 
 # vim: set ft=sh: #

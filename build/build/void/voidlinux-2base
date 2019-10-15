@@ -13,7 +13,7 @@ title "setup"
 # ══════════════════════════════════════════════════════════════════════════════
 pong || post_install connman
 # default mail addresses
-config_install -link /etc/aliases
+cfg_install -link /etc/aliases
 
 
 heading 'enable tty autologin'
@@ -42,10 +42,7 @@ title "installation errors:"
 # ══════════════════════════════════════════════════════════════════════════════
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
-ditto 'exit console (script)'
-ditto 'login to tty2'
-ditto run 'autologin tty1'
-ditto 'switch back to tty1'
+ditto boot 'exit console (script)'
 ditto run 'startx (x)'
 ditto run 'voidlinux-3apps'
 

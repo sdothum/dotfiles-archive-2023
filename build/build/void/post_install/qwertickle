@@ -1,1 +1,12 @@
-../../arch/post_install/qwertickle
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... qwertickle
+
+cfg_install /usr/share/qwertickle/typewriter-return.mp3
+sudo cp -v /usr/share/qwertickle/typewriter-return.mp3.original /usr/share/qwertickle/typewriter-return.mp3.swap
+ditto "super + shift + q to select long/short enter key sounds"
+
+# vim: set ft=sh: #

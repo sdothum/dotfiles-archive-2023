@@ -33,8 +33,7 @@ sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
     -e "/^DaemonUsername=/s/=.*/=$USER/" \
     /usr/share/nzbget/nzbget.conf >$HOME/.nzbget
 
-sudo cp -rv /etc/sv/nzbget /etc/sv/nzbget@$USER
-
-service enable nzbget@$USER
+runit_install nzbget
+server && service enable nzbget
 
 # vim: set ft=sh: #

@@ -1,0 +1,4 @@
+## Debian Multimedia Mirror
+# deb ftp://ftp.deb-multimedia.org stable main non-free
+# deb ftp://ftp.deb-multimedia.org testing main non-free
+deb ftp://ftp.deb-multimedia.org sid main non-free

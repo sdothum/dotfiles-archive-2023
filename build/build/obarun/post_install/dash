@@ -1,1 +1,11 @@
-../../arch/post_install/dash
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... dash
+
+cfg_install /etc/profile.d/path.sh
+sudo chmod -c 755 /etc/profile.d/path.sh
+
+# vim: set ft=sh: #

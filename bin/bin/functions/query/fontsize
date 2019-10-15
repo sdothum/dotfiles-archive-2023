@@ -17,7 +17,7 @@ FONTSIZE=$SESSION/fontsize
 # fugly adjust font for various displays and video cards on this local network
 
 # test arm first to avoid spurious lspci messages
-if cpu arm        ;then size=8
+if   cpu arm      ;then size=8
 elif gpu intel    ;then size=9
 elif cpu celeron  ;then size=10
 elif gpu macbook  ;then size=9

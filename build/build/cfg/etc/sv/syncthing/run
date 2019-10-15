@@ -1,0 +1,7 @@
+#!/bin/sh
+export USERNAME=$USER
+export HOME="/home/$USERNAME"
+export SYNCTHING="/usr/bin/syncthing"
+exec 2>&1
+exec chpst -u "$USERNAME" "$SYNCTHING" -no-browser -no-restart -logflags=0 >/dev/null
+

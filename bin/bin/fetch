@@ -12,7 +12,7 @@ BG='263238'  # quantum background hexcolor
 # fetch wrapper
 [ $1 ] && exec $fetch --help
 
-focus frame
+focus frame 2>/dev/null  # suppress error messages for incomplete desktop during new install
 # hide cursor (make it dark!)
 SHELL=/usr/bin/dash                      \
   xterm -bg "#$BG" -cr "#$(( $BG + 1 ))" \

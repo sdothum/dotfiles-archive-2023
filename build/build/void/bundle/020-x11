@@ -13,7 +13,7 @@
   bbswitch             [gpu inspiron]
   libva-intel-driver   [gpu intel]
   libvdpau-va-gl       [gpu intel]
-  nvidia               [gpu nvidia]
+  nvidia               [gpu nvidia && ! gpu intel]  # dual gpu card check
   nvidia-340           [gpu macbook]
 
 
@@ -23,17 +23,17 @@
   xf86-input-libinput
   xf86-input-wacom     [server]
   xf86-input-synaptics [laptop]
-  xf86-video-ati       [gpu ati]
+  xf86-video-ati       [gpu ati && ! gpu nvidia]    # dual gpu card check
   xf86-video-intel     [gpu intel]
-  xf86-video-nouveau   [gpu nvidia]
+  xf86-video-nouveau   [gpu nvidia && ! gpu intel]  # dual gpu card check
 
 
 = x11 server
 = ══════════
-  mesa-ati-dri         [gpu ati]
+  mesa-ati-dri         [gpu ati && ! gpu nvidia]    # dual gpu card check
   mesa-intel-dri       [gpu intel]
-  mesa-nouveau-dri     [gpu nvidia]
-  nvidia-libs          [gpu nvidia]
+  mesa-nouveau-dri     [gpu nvidia && ! gpu intel]  # dual gpu card check
+  nvidia-libs          [gpu nvidia && ! gpu intel]  # dual gpu card check
   xorg-server
   xinit
   xrandr

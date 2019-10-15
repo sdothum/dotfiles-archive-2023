@@ -16,7 +16,7 @@ sudo grpck
 heading "x11 trackman mouse"
 # ══════════════════════════════════════════════════════════════════════════════
 # restore in event xorg is updated
-config_install /etc/X11/xorg.conf.d/10-evdev.conf
+cfg_install /etc/X11/xorg.conf.d/10-evdev.conf
 
 
 if [ ! -L $HOME/.config/font-manager/local.conf ] ;then

@@ -10,7 +10,7 @@ NZBS=/net/downloads/nzbs/completed
 DOWNLOADS=/net/downloads/http
 
 # wrapper to default opening to /net/downloads if no location given
-if [ $1 ]               ;then start=$1
+if   [ $1 ]             ;then start=$1
 elif ! empty $NZBS      ;then start=$NZBS
 elif ! empty $DOWNLOADS ;then start=$DOWNLOADS
 else                          start=$HOME

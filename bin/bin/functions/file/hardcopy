@@ -22,9 +22,9 @@ spacing='\singlespacing'
 fold=80
 
 # unset for direct printing, set for proofing and latex debugging
-if [ "$1" = proof ] ;then proof=true; shift
-elif [ -e $PROOF ]  ;then proof=true
-else                      lpstat -p $PRINTER >/dev/null 2>&1 || proof=true
+if   [ "$1" = proof ] ;then proof=true; shift
+elif [ -e $PROOF    ] ;then proof=true
+else                        lpstat -p $PRINTER >/dev/null 2>&1 || proof=true
 fi
 # proof reverts to outputting proof debug file
 [ $proof ] && proof=$TMP/hardcopy:proof

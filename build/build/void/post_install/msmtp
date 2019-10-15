@@ -5,9 +5,9 @@
 
 # ........................................................................ msmtp
 
-config_install /usr/local/bin/msmtp-enqueue.sh
-config_install /usr/local/bin/msmtp-listqueue.sh
-config_install /usr/local/bin/msmtp-runqueue.sh
+cfg_install /usr/local/bin/msmtp-enqueue.sh
+cfg_install /usr/local/bin/msmtp-listqueue.sh
+cfg_install /usr/local/bin/msmtp-runqueue.sh
 sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/local/bin/sendmail
 
 # vim: set ft=sh: #

@@ -19,6 +19,6 @@ sudo useradd -r -d /srv/http -c http -s /sbin/nologin http
 runit_install php-fpm
 
 service enable php-fpm
-service restart nginx
+ditto service 'enable nginx'
 
 # vim: set ft=sh: #

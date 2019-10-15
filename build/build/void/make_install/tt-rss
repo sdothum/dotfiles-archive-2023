@@ -7,6 +7,7 @@
 
 COMMIT=467bc4fe0  # version 17.4 (theme dependency)
 TTRSS=/srv/http/tt-rss
+POSTGRES=/srv/http/postgres
 
 cd /net/depot
 if [ ! -d tt-rss ] ;then

@@ -117,6 +117,9 @@ autocmd plugin BufEnter  __Gundo__         setlocal numberwidth=3 foldcolumn=0
 " for instance when gundo window is orphaned (trap timing conflict)
 autocmd plugin BufHidden __Gundo_Preview__ Quiet bdelete!\ __Gundo_Preview__
 
+" ............................................................. Highlighted yank
+let g:highlightedyank_highlight_duration = 250
+
 " ................................................................ Indent guides
 let g:indent_guides_auto_colors = 0  " highlight even indents, see gui:ToggleColumn, theme:Guides()
 

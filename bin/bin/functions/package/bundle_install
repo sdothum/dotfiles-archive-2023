@@ -8,7 +8,8 @@
 
 # Usage: bundle_install [check | init | list] <bundle>*
 #
-# format: # inline comment
+# format: [<action>] <package> [<condition>] [#<comment>] 
+#         # comment
 #         = title
 #         " quote
 #         + package                    (to manually install afterwards)
@@ -103,6 +104,8 @@ check() {
   [ $installed ] && echo $package || { echo $line >>$missing ; ditto missing "$package"; }
 }
 
+decomment() { echo "$@" | sed 's/#.*//'; }
+
 for i in $@ ;do
   [ $list ] || subject $(basename $i | cut -d- -f2-9)
 
@@ -111,6 +114,7 @@ for i in $@ ;do
   #       (package condition) map to (command options) for ! execute
   while read action package condition <&3 ;do
     # echo "action=$action package=$package condition=$condition"
+    [ "$package" = '#' ] && unset package condition || condition=$(decomment $condition)
     line="$action $package $condition"
     parse || continue
 
@@ -135,18 +139,17 @@ for i in $@ ;do
 done
 
 [ $list ] && exit
-if [ $check ] ;then
-  sort -u -o $missing $missing
+if [ $check ] && [ -e $missing ] ;then
+  # sort -u -o $missing $missing
+  sed -i 's/^d //' $missing
   ditto missing "$(wc -l $missing | cut -d' ' -f1) packages"
   cat $missing
   ditto "m make_install packages cannot be verified"
-  ditto run "bundle_install $missing"
-  exit
-fi
-if [ $deferred ] && [ -e $deferred ] ;then
-  sort -u -o $deferred $deferred
+  ifno "bundle_install $missing" || exec bundle_install $missing
+elif [ $deferred ] && [ -e $deferred ] ;then
+  # sort -u -o $deferred $deferred
   cat $deferred
-  ifno 'install deferred pacages' || bundle_install $deferred
+  ifno "bundle_install $deferred" || exec bundle_install $deferred
 fi
 
 # vim: set ft=sh: 

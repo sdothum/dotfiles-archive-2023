@@ -6,8 +6,8 @@
 # ....................................................................... adsuck
 
 original /etc/resolv.conf
-sudo cp -v $HOME/build/root/etc/resolv.conf.adsuck /etc/resolv.conf
-sudo cp -v $HOME/build/root/var/adsuck/* /var/adsuck/
+sudo cp -v $HOME/build/cfg/etc/resolv.conf.adsuck /etc/resolv.conf
+sudo cp -v $HOME/build/cfg/var/adsuck/* /var/adsuck/
 service enable adsuck
 
 # vim: set ft=sh: #

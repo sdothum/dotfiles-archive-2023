@@ -18,7 +18,7 @@ interface() {
 wpa_psk() {
   [ -f /etc/wpa_supplicant/wpa_supplicant-$interface.conf ] && return
   read -p "SSID [Ravens-5G]: " ssid
-  [ $ssid ] || ssid=Ravens-5G
+  [ "$ssid" ] || ssid=Ravens-5G
   while [ -z "$password" ] ;do
     read -p "Password: " password
   done

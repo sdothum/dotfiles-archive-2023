@@ -7,6 +7,6 @@
 
 sudo mkdir -pv /net/downloads/http
 sudo mkdir -pv /net/downloads/nzbs
-permissions /net/downloads
+server && permissions /net/downloads 2>/dev/null
 
 # vim: set ft=sh: #

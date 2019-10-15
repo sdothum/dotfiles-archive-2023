@@ -6,12 +6,16 @@
 
 = cups printing
 = ═════════════
-  cups
-# cups-filters
-  ghostscript
-  gsfonts
-  gutenprint
-  hplip
+  cups                    [server]
+  cups-filters            [server]
+  # foomatic-db           [server]
+  # foomatic-db-nonfree   [server]
+  ghostscript             [server]
+  gsfonts                 [server]
+  gutenprint              [server]
+  hplip                   [server]
+  libcups                 [! server]
+  # system-config-printer [server]
 
 
 = package management

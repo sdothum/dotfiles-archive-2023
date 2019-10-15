@@ -6,6 +6,6 @@
 # ............................................................. xf86-input-mouse
 
 # trackman mouse
-config_install /etc/X11/xorg.conf.d/10-evdev.conf
+cfg_install /etc/X11/xorg.conf.d/10-evdev.conf
 
 # vim: set ft=sh: #

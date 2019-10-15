@@ -18,18 +18,18 @@
   g kramdown
   g mail
   g rack
-  g sanitize
-  g sinatra
+  d g sanitize
+  d g sinatra
   g slim
   g term-ansicolor
   g thin
   g xapian-fu
-  g xapian-ruby
+  d g xapian-ruby
 
 
 = web server
 = ══════════
-  g passenger
+  d g passenger
   php
   php-fpm
   php-pgsql

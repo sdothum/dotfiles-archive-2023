@@ -1,1 +1,11 @@
-../../arch/post_install/xf86-input-wacom
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+#  ............................................................ xf86-input-wacom
+
+cfg_install /etc/X11/xorg.conf.d/10-evdev.conf
+# cfg_install /etc/X11/xorg.conf.d/10-libinput.conf
+
+# vim: set ft=sh: #

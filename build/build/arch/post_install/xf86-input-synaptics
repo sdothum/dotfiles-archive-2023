@@ -5,6 +5,6 @@
 
 # ......................................................... xf86-input-synaptics
 
-gpu nvidia && config_install /etc/X11/xorg.conf.d/60-synaptics.conf
+gpu nvidia && cfg_install /etc/X11/xorg.conf.d/60-synaptics.conf
 
 # vim: set ft=sh: #

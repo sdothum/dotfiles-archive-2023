@@ -25,7 +25,6 @@ set directory=~/tmp,/tmp    " keep swap files in one location
 set noswapfile              " turn off swap files
 
 "  ................................................................ Undo history
-
 " keep persistent undo history across sessions, by storing in file
 silent !mkdir ~/.vim/backups 2>/dev/null
 set history=1000            " store lots of :cmdline history

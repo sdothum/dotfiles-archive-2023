@@ -1,0 +1,11 @@
+[Unit]
+Description=Set mtu on device
+Before=network.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/conf.d/setmtu
+ExecStart=/usr/bin/ip link set dev %i up mtu ${%i}
+
+[Install]
+WantedBy=multi-user.target

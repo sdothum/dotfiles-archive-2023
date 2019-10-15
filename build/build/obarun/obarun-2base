@@ -18,7 +18,7 @@ title "setup"
 # sleep 5s
 pong || post_install connman
 # default mail addresses
-config_install -link /etc/aliases
+cfg_install -link /etc/aliases
 
 
 # title "obarun testing"

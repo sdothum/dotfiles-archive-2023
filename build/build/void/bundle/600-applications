@@ -35,8 +35,8 @@
 
 = font manager
 = ════════════
-  fontmanager
-d s fontmatrix
+# fontmanager
+  s fontmatrix
 
 
 = game

@@ -6,7 +6,7 @@
 
 # ................................................................ Void src repo
 
-REPO=$HOME/void-packages
+# REPO=$HOME/void-packages
 REPO=/net/depot/void-packages
 
 heading : $1
@@ -16,12 +16,13 @@ if [ ! -e $REPO/hostdir/binpkgs ] ;then
   empty hostdir/binpkgs && ./xbps-src binary-bootstrap
 fi
 
-if [ ! -e $REPO/hostdir/binpkgs/$1-* ] || ! ifno '(re)build package' ;then
+# if [ ! -e $REPO/hostdir/binpkgs/$1-* ] || ! ifno '(re)build package' ;then
+if [ ! -e $REPO/hostdir/binpkgs/$1-* ] ;then
   # xnew $1
   # xgensum -f srcpkgs/$1/template
   ./xbps-src pkg $1
 fi
-sudo xbps-install -i --repository=$REPO/hostdir/binpkgs --force $1
+sudo xbps-install --ignore-conf-repos --repository=$REPO/hostdir/binpkgs --force --yes $1
 
 post_install $1
 

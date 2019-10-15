@@ -21,7 +21,7 @@ configs() {
 
   # convert spaces in filenames to tilde and convert back after joining!
   # avoid nfs mounts
-  echo $HOME/build/root/var/spool/cron/$USER \
+  echo $HOME/build/cfg/var/spool/cron/$USER \
       $([ -d /var/adsuck ] && sudo find /var/adsuck -type f | sed 's/ /:/g') \
       $(sudo find /etc -type f | egrep -v 'certs|examples|fonts|ppd|_key$|\.(0|1|aspx|browser|colors|crt|css|dat|db|desktop|ext|gpg|ja|js|key|map|menu|original|pacnew|pem|properties|pub|png|service|socket|tex|xml|xsl)$') \
       $(sudo find /opt -type f -regextype posix-extended -regex "$include" | egrep -v '\.git' | sed 's/ /:/g') \

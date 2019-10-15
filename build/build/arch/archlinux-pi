@@ -32,7 +32,7 @@ checkpoint
 heading 'configure boot parameters'
 # ══════════════════════════════════════════════════════════════════════════════
 original /boot/config.txt
-# config_install /boot/config.txt
+# cfg_install /boot/config.txt
 checkpoint
 
 
@@ -67,7 +67,7 @@ heading 'configure network'
 # [ -f /etc/udev/rules.d/80-net-name-slot.rules ] || ln -sv /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 # remove possible symlink
 rm -f /etc/hosts
-config_install /etc/hosts
+cfg_install /etc/hosts
 
 
 heading 'installing wireless tools'
@@ -137,7 +137,7 @@ pm_install bc
 pm_install dash
 pm_install fish
 pm_install python
-config_install /etc/profile.d/path.sh
+cfg_install /etc/profile.d/path.sh
 checkpoint
 
 

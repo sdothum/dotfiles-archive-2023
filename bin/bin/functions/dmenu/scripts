@@ -11,6 +11,7 @@
 sources="
   $HOME/bin
   $HOME/build/arch
+  $HOME/build/cfg
   $HOME/build/obarun
   $HOME/build/void
   $HOME/.config/fish

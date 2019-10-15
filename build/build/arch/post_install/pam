@@ -5,6 +5,6 @@
 
 # .......................................................................... pam
 
-config_install /etc/pam.d/dovecot
+cfg_install /etc/pam.d/dovecot
 
 # vim: set ft=sh: #

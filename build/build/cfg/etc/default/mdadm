@@ -1,0 +1,40 @@
+# mdadm Debian configuration
+#
+# You can run 'dpkg-reconfigure mdadm' to modify the values in this file, if
+# you want. You can also change the values here and changes will be preserved.
+# Do note that only the values are preserved; the rest of the file is
+# rewritten.
+#
+
+# INITRDSTART:
+#   list of arrays (or 'all') to start automatically when the initial ramdisk
+#   loads. This list *must* include the array holding your root filesystem. Use
+#   'none' to prevent any array from being started from the initial ramdisk.
+INITRDSTART='none'
+
+# AUTOSTART:
+#   should mdadm start arrays listed in /etc/mdadm/mdadm.conf automatically
+#   during boot?
+AUTOSTART=true
+
+# AUTOCHECK:
+#   should mdadm run periodic redundancy checks over your arrays? See
+#   /etc/cron.d/mdadm.
+AUTOCHECK=true
+
+# START_DAEMON:
+#   should mdadm start the MD monitoring daemon during boot?
+START_DAEMON=true
+
+# DAEMON_OPTIONS:
+#   additional options to pass to the daemon.
+DAEMON_OPTIONS="--syslog --test"
+
+# VERBOSE:
+#   if this variable is set to true, mdadm will be a little more verbose e.g.
+#   when creating the initramfs.
+VERBOSE=false
+
+# MAIL_TO:
+#   this variable is now managed in /etc/mdadm/mdadm.conf (MAILADDR).
+#   Please see mdadm.conf(5).

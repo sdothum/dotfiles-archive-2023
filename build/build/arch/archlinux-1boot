@@ -51,7 +51,7 @@ fi
 
 heading 'check kvm compatibility'
 # ══════════════════════════════════════════════════════════════════════════════
-[ $hostname != luna ] && config_install /etc/modprobe.d/blacklist-kvm.conf
+[ $hostname != luna ] && cfg_install /etc/modprobe.d/blacklist-kvm.conf
 checkpoint
 
 
@@ -135,7 +135,7 @@ pm_install bc
 pm_install dash
 pm_install fish
 pm_install gvim
-config_install /etc/profile.d/path.sh
+cfg_install /etc/profile.d/path.sh
 checkpoint
 
 
