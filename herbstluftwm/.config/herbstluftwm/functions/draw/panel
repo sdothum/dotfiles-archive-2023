@@ -29,7 +29,7 @@ PANEL_UNDERLINE=2
 # panel symbols (tag numbers option dropped to simplify colour assignments)
 OCCUPIED='■'
 FREE='□'
-TAG_PAD=' '  # tag bar separator (visual spacing)
+TAG_PAD='    '          # tag bar separator (visual spacing)
 
 # panel theme
 DEFAULT_BG='#00000000'  # alpha channel for panel transparency with compton
@@ -115,9 +115,9 @@ desktops() {
         format="${format}%{F$FREE_FG}"
       fi
     fi
-    [ $hidden ] && leader="${TAG_PAD}"
-    desktops="${desktops} ${leader}${format}${tag}%{-u}${TAG_PAD}%{U-}%{B-}%{F-}"
+    desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
   done
+  desktops="$desktops$TAG_PAD"  # center tags
 }
 
 # ............................................................... Current window
@@ -303,7 +303,7 @@ panel() {
     # restrict title to left hand side of panel
     chop=$(( $mid_point + $(echo "$title"| wc -c) - $(echo "$title" | sed 's/%[{][^}]*[}]//g' | wc -c) ))
     title=$(echo "$title" | cut -b -$chop)
-    printf "%s\n" "%{l}${title}%{c}${desktops} %{r}${system}"
+    printf "%s\n" "%{l}${title}%{c}${desktops}%{r}${system}"
     unset line
   done
 }
