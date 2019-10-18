@@ -244,3 +244,5 @@ button.expandPrompt {
   text-align: center;
   text-shadow: 2px 2px 4px #8A3636;
 }
+
+.cdmHeader .hlFeed a { display: block; /* for hlFeed titleWrap alignment */ }

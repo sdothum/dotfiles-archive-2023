@@ -56,12 +56,9 @@ set -x SERVER luna
 # ..................................................................... Internet
 
 # default browser changes require login (Ctrl-d) for X11 autostart
-# set -x BROWSER chromium
-# set -x BROWSER luakit
-# set -x BROWSER qutebrowser
+set -x BROWSER qutebrowser
 # set -x BROWSER surf
-set -x BROWSER vimb
-# set -x BROWSER vimbt
+# set -x BROWSER vimb
 
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118

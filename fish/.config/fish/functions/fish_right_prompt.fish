@@ -1,5 +1,4 @@
 function fish_right_prompt --description 'Write out the right prompt'
-  set -g HILIGHT 1
   set -g POSTFIX 0
   # set -g VERBOSE 0
 
@@ -95,24 +94,14 @@ function fish_right_prompt --description 'Write out the right prompt'
     end
   end
 
+  set -g TILDE 's|^/~/.*~|~|; s:^/(~|\.\.):~:; s|^~([^/])|~/\1|'
+
   function folder
-    if test 0$HILIGHT -eq 1
-      set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
-      set -l base (echo $folders | cut -f1 | rev)
-      set -l parent (echo $folders | cut -f2 | rev)
-      set -l tree (echo $folders | cut -f3- | rev | sed -re 's|([^\t.])[^\t]*\t*|\1/|g' -e 's|\t||g')
-      set_color yellow
-      set -l path (echo "/$tree/$parent/"(set_color $_loc)"$base" | sed -e 's|///*|/|' -e 's|^/~/.*~|~|' -e 's|^/~/|~/|')
-      test "$path" = '~'
-        and set -l path (set_color $_loc)~
-      echo -n $path
-    else
-      set -l folders (pwd | sed -e "s|^$HOME|~|" -e 's|/|\t|g' | rev)
-      set -l base (echo $folders | cut -f1,2 | rev)
-      set -l parent (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
-      set_color yellow
-      echo -n "/$parent$base" | sed -e 's|\t|/|g' -e 's|//|/|' -e 's|^/~/~|~|' -e 's|^/~/|~/|'
-    end
+    set -l folders (pwd | sed "s|^$HOME|~|; s|/|\t|g" | rev)
+    set -l base (echo $folders | cut -f1,2 | rev)
+    set -l parent (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
+    set_color yellow
+    echo -n "/$parent$base" | sed -r "s|\t|/|g; s|//|/|; $TILDE"
     set_color normal
   end
 

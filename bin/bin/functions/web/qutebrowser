@@ -6,9 +6,14 @@
 
 # ...................................................................... Browser
 
+QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
+
+STARTPAGE=$SESSION/startpage
 pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
-startpage="http://$TTRSS:8000/tt-rss/"
 size="$(fontsize)pt monospace"
+
+# must \escape '&' in url
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/#f=54\&c=1'; }
 
 font="
   -s fonts.completion.category '$size'
@@ -25,8 +30,10 @@ font="
   -s fonts.tabs '$size'
 "
 
-if [ $1 ] ;then eval /usr/bin/qutebrowser --target tab --override-restore $font "$@"
-else            eval /usr/bin/qutebrowser --target tab --override-restore $font "$startpage"
+if pgrep -f "$QUTEBROWSER" >/dev/null ;then
+  eval $QUTEBROWSER $font :open\\ -w\\ $startpage & 
+else
+  eval $QUTEBROWSER $font $startpage & 
 fi
 
 # vim: set ft=sh: #
