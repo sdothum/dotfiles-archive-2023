@@ -5,8 +5,13 @@
 
 # ........................................................................ Shell
 
-shell=$(previous shistory)
-shell=$(echo "fish\nsh\nzsh" | rmenu 'Shell' $shell -no-custom) || exit
+if [ "$1" ] ;then
+  shell=$1
+else
+  # shell=$(previous shistory)
+  # shell=$(echo "fish\nsh\nzsh" | rmenu 'Shell' $shell -no-custom) || exit
+  shell=fish  # other shells no longer supported
+fi
 
 mhistory shistory $shell
 case $shell in
@@ -19,8 +24,12 @@ esac
 cmd=$(h shell=$shell | sed -r "s/^([^ ]*)  */\1 $SEP $UTF/" | column -s$UTF -t | rmenu 'History' -no-custom) || exit
 
 cmd=$(echo $cmd | sed "s/^[^ ]*  *$SEP  *//")
-notify 'Ctrl-Alt-V' "$(echo $cmd | sed 's/[&][&]/and/g; s/[&]/ampersand/')"
-clipboard "$cmd"
-xdotool type --delay 0 "$cmd"
+if console ;then
+  echo "$cmd" | cut -d' ' -f2-
+else
+  notify 'Ctrl-Alt-V' "$(echo $cmd | sed 's/[&][&]/and/g; s/[&]/ampersand/')"
+  clipboard "$cmd"
+  xdotool type --delay 0 "$cmd"
+fi
 
 #* vim: set ft=sh: #

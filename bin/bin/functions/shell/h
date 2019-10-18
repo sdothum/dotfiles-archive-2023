@@ -60,13 +60,16 @@ zsh_history()  { zsh -c "export HISTFILE=$ZSH; export HISTSIZE=10000; fc -R; fc 
 
 # interactively paste into terminal session or pass filtered history list (see dmenu shistory)
 history() {
-  shell_history=$1_history
-  shift
   # terminal invocation?
   if [ -t 1 ] ;then
-    cmd=$($shell_history | cut -d' ' -f3- | fZf -q "$@")
-    gui && xdotool type --delay 0 "$cmd" || echo "$cmd"
-  elif [ $1 ] ;then
+    # cmd=$($shell_history | cut -d' ' -f3- | fZf $(test -n "$1" && echo "-q '$@'"))
+    # gui && xdotool type --delay 0 "$cmd" || echo "$cmd"
+    exec dmenu shistory $@
+  fi
+
+  shell_history=$1_history
+  shift
+  if [ $1 ] ;then
     # $shell_history | ack "$@" | weekof
     $shell_history | /usr/bin/rg --ignore-case --regexp "$@" | weekof
   else
