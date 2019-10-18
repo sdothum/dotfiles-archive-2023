@@ -6,7 +6,7 @@
 # ........................................................................ Media
 
 CLEAR='[ clear ]'
-MENU="$CLEAR\nebooks\nreferences\npatricia\nthought of you\nanimation\nanime\nmovies\nseries\nnetflix\nkodi\npulse\nsonarr\nnzb\ntorrent"
+MENU="$CLEAR\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nnetflix\nkodi\nnzb\ntorrent\npatricia\nthought of you"
 
 video='play kodi netflix'
 sonarr=http://$SERVER:8989/

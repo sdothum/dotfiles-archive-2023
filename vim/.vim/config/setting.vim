@@ -99,23 +99,26 @@ nmap <silent><leader>m :Marks<CR>
 " nmap <leader>f       :FZF<CR>  " see notational-fzf for extended content search
 
 " ............................................................... Graphical undo
-let g:gundo_width           = 30
-let g:gundo_preview_bottom  = 1
-let g:gundo_preview_height  = 20
-let g:gundo_close_on_revert = 1  " automatically close windows
+let g:mundo_width           = 40
+let g:mundo_preview_bottom  = 1
+let g:mundo_preview_height  = 20
+let g:mundo_close_on_revert = 1  " automatically close windows
+let g:mundo_right           = 1  " side
+let g:mundo_verbose_graph   = 0  " condensed tree
+let g:mundo_mirror_graph    = 0  " left align tree
 
 function! s:toggleUndo()
-  let l:filetype = &filetype  " gundo alters markdown filetype to conf (autocmd buffer side-effect?)
-  GundoToggle
+  let l:filetype = &filetype  " mundo alters markdown filetype to conf (autocmd buffer side-effect?)
+  MundoToggle
   let &filetype = l:filetype
 endfunction
 
-" nmap <silent><leader>u :GundoToggle<CR>
+" nmap <silent><leader>u :MundoToggle<CR>
 nmap <silent><leader>u :call <SID>toggleUndo()<CR>
 
-autocmd plugin BufEnter  __Gundo__         setlocal numberwidth=3 foldcolumn=0
-" for instance when gundo window is orphaned (trap timing conflict)
-autocmd plugin BufHidden __Gundo_Preview__ Quiet bdelete!\ __Gundo_Preview__
+autocmd plugin BufEnter  __Mundo__         setlocal numberwidth=3 foldcolumn=0
+" for instance when mundo window is orphaned (trap timing conflict)
+autocmd plugin BufHidden __Mundo_Preview__ Quiet bdelete!\ __Mundo_Preview__
 
 " ............................................................. Highlighted yank
 let g:highlightedyank_highlight_duration = 250
@@ -346,6 +349,7 @@ syntax enable
 " ....................................................................... Tagbar
 " let g:tagbar_ctags_bin    = 'ctags-exuberant'
 let g:tagbar_map_togglesort = 'r'  " preserve sneak s
+let g:tagbar_width          = 40
 
 nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
@@ -386,7 +390,7 @@ autocmd plugin FileType html     call textobj#quote#init()
 autocmd plugin FileType markdown call textobj#quote#init()
 
 " ....................................................................... Vimade
-autocmd plugin BufWinEnter __Gundo_* VimadeBufDisable   
+autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable   
 
 " ..................................................................... Yankring
 let g:yankring_default_menu_mode  = 1   " menu on with no shortcut

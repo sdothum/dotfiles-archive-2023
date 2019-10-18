@@ -5,12 +5,10 @@
 
 # ........................................................................ Shell
 
-if [ "$1" ] ;then
-  shell=$1
-else
-  # shell=$(previous shistory)
-  # shell=$(echo "fish\nsh\nzsh" | rmenu 'Shell' $shell -no-custom) || exit
-  shell=fish  # other shells no longer supported
+# shell=$(previous shistory)
+# shell=$(echo "fish\nsh\nzsh" | rmenu 'Shell' $shell -no-custom) || exit
+if [ "$1" ] ;then shell=$1
+else              shell=fish  # other shells no longer actively supported
 fi
 
 mhistory shistory $shell
