@@ -54,7 +54,7 @@ done
 
 [ $count -gt 1 ] && notify low 'Gvim' "$count files to edit"
 
-gui && { gui=-g; [ -e $DYNAMIC ] && focus frame; }
+gui && { gui=-g; console && [ -e $DYNAMIC ] && focus frame; }
 [ -e $SESSION/vim ] && fg=-f
 # --quote used for single space separated filename
 eval $sudo vim $gui $role $fg $cmd $file 2>>$LOG

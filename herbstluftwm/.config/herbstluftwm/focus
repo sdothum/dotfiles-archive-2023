@@ -9,7 +9,6 @@
 
 # Usage: focus <msg> [<options>*], see functions/focus
 
-console && exit
 # dmenu functions
 . $HOME/bin/dmenu
 
