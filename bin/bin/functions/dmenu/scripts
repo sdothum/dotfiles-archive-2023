@@ -61,7 +61,7 @@ while : ;do
   if expand $file >/dev/null ;then
     v $(expand $file)
     # history file cleanup usually precedes impending edit
-    expand $file | grep -q dmenu/.history && { pwait "v $(expand $file)"; dmenu edit; }
+    expand $file | grep -q 'dmenu/\.history' && { pwait "vim.*$(expand $file)"; dmenu edit; }
   else
     error=": ${file##*/} ∉ ${file%/*}"
     sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/scripts
