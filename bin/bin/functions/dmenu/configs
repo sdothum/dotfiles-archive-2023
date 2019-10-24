@@ -12,7 +12,7 @@ REBUILD='[ rebuild database ]'
 # system conf files
 cache=$CACHEDIR/dmenu:configs
 include='.*(cfg|conf(ig)*|ini|rc)'
-exclude='backups|cairo|chromium|depot|geany|google|libreoffice|sandbox|(s|u)mplayer|tint2|Trash|vundle|xfce4|\.(azureus|bundler|cache|deprecated|dropbox|gem|ghc|gimp|hg|kde|mozilla|opera|original|PlayOnLinux|save|stversions|vim|xbmc|xmonad)'
+exclude='backups|cairo|chromium|depot|geany|google|libreoffice|sandbox|(s|u)mplayer|tint2|Trash|undo|vundle|xfce4|\.(azureus|bundler|cache|deprecated|dropbox|gem|ghc|gimp|hg|kde|mozilla|opera|original|PlayOnLinux|save|stversions|vim|xbmc|xmonad)'
 
 # .................................................................. Build cache
 

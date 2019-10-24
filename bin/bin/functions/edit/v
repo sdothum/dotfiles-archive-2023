@@ -54,25 +54,25 @@ done
 
 [ $count -gt 1 ] && notify low 'Gvim' "$count files to edit"
 
-gui && { gui=-g; console && [ -e $DYNAMIC ] && focus frame; }
+console || { gui=-g; [ -e $DYNAMIC ] && focus frame; }
 [ -e $SESSION/vim ] && fg=-f
 # --quote used for single space separated filename
 eval $sudo vim $gui $role $fg $cmd $file 2>>$LOG
 # prevent premature startup termination on slower processors
-sleep 5
+cpu arm && sleep 5
 
 # postpone cleanup till done with all vim sessions
 housekeeping() {
-  vhg $QUEUE  # backup files
+  vhg $QUEUE  # undo files
   pstat vim && exit
-  find $HOME/.vim/backups -user root -exec sudo chown -c $USER:users {} \;
-  find $HOME/.vim/backups -size 0 -exec rm {} \;
-  find $HOME/.vim/backups -mtime +$retention -exec rm {} \;
-  rm -f $HOME/.vim/backups/%tmp%*
-  rm -f $HOME/.vim/backups/*%drafts%alot.*
+  find $HOME/.vim/undo -user root -exec sudo chown -c $USER:users {} \;
+  find $HOME/.vim/undo -size 0 -exec rm {} \;
+  find $HOME/.vim/undo -mtime +$retention -exec rm {} \;
+  rm -f $HOME/.vim/undo/%tmp%*
+  rm -f $HOME/.vim/undo/*%drafts%alot.*
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
-  vhg  # any dangling backups
+  vhg  # any dangling undo files
   cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
 }
 

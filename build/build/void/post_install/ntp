@@ -5,6 +5,6 @@
 
 # .......................................................................... ntp
 
-sevice enable ntpd
+service enable ntpd
 
 # vim: set ft=sh: #

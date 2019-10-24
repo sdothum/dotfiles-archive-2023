@@ -9,15 +9,33 @@
 
 # view systemd journal logs
 [ $1 ] && mode=Watch || mode=View
-cd /usr/lib/systemd/system/
 
 service=$(previous journals)
-service=$(stest -fl . | sort | sed 's/.service$//' | rmenu "$mode Journal" $service -no-custom) || exit
 
-mhistory journals $service
-case $mode in
-View ) [ $service ] && term "$service" journalctl -u $service.service ;;
-Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;
-esac
+socklog() {
+  cd /var/log/socklog
+
+  service=$(stest -dl . | sort | rmenu "$mode Socklog" $service -no-custom) || exit
+
+  mhistory journals $service
+  case $mode in
+  View ) [ $service ] && term "$service" less -MRX /var/log/socklog/$service/current ;;
+  Watch) [ $service ] && term "$service" tail -f /var/log/socklog/$service/current ;;
+  esac
+}
+
+journal() {
+  cd /usr/lib/systemd/system
+
+  service=$(stest -fl . | sort | sed 's/.service$//' | rmenu "$mode Journal" $service -no-custom) || exit
+
+  mhistory journals $service
+  case $mode in
+  View ) [ $service ] && term "$service" journalctl -u $service.service ;;
+  Watch) [ $service ] && term "$service" journalctl -fu $service.service ;;
+  esac
+}
+
+void && socklog || journal
 
 # vim: set ft=sh: #

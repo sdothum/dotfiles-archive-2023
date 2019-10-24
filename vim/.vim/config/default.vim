@@ -115,6 +115,6 @@ set wildignore+=*.o,*.obj,*~
 set wildignore+=tmp/**
 set wildmenu                       " enable ctrl-n and ctrl-p to scroll thru matches
 set wildmode=list:longest,full     " command <Tab> completion order
-set wildignore+=*vim/backups*
+set wildignore+=*vim/undo*
 
 " default.vim

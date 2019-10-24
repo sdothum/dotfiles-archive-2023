@@ -26,9 +26,9 @@ set noswapfile              " turn off swap files
 
 "  ................................................................ Undo history
 " keep persistent undo history across sessions, by storing in file
-silent !mkdir ~/.vim/backups 2>/dev/null
+silent !mkdir ~/.vim/undo 2>/dev/null
 set history=1000            " store lots of :cmdline history
-set undodir=~/.vim/backups
+set undodir=~/.vim/undo
 set undofile
 set undolevels=1000         " maximum number of changes that can be undone
 set undoreload=10000        " maximum number lines to save for undo

@@ -9,7 +9,8 @@ CLEAR='[ clear ]'
 MENU="$CLEAR\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nnetflix\nkodi\nnzb\ntorrent\npatricia\nthought of you"
 
 video='play kodi netflix'
-sonarr=http://$SERVER:8989/
+SONARR=http://$SERVER:8989/
+BROWSER=surf
 root=true
 
 # meta dmenu menu!
@@ -31,7 +32,7 @@ while : ;do
   pulse     ) pulse; pavucontrol ;;
   references) dmenu references; unset root; break ;;
   series    ) dmenu series ;;
-  sonarr    ) $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; unset root ;;
+  sonarr    ) $BROWSER $SONARR; pwait "$BROWSER.*$SONARR"; unset root ;;
   #thought* ) play https://youtu.be/OBk3ynRbtsw ;;
   thought*  ) play -q /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
   torrent   ) toggle term 'Torrent' rtorrent; unset root; break ;;

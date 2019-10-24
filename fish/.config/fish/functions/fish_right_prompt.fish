@@ -146,7 +146,8 @@ function fish_right_prompt --description 'Write out the right prompt'
         test 0$POSTFIX -eq 1
           or begin
             set_color $_info
-            glyph '░' '░'
+            # glyph '░' '░'
+            glyph '_' '_'
           end
         return (true)
       end

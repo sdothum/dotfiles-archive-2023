@@ -19,8 +19,7 @@ sudo usermod -a -G audio $USER
 # amixer -D pulse set Master toggle
 
 # default 8196 inotify watches can easily be exhausted, so increase..
-echo "max_user_watches $(cat /proc/sys/fs/inotify/max_user_watches) -> $(echo 32768 | sudo tee /proc/sys/fs/inotify/max_user_watches)"
-ifnsed /etc/sysctl.d/99-sysctl.conf 'fs.inotify.max_user_watches=32768'
+# echo "max_user_watches $(cat /proc/sys/fs/inotify/max_user_watches) -> $(echo 32768 | sudo tee /proc/sys/fs/inotify/max_user_watches)"
 
 # service enable alsa  # don't require enabling pulseaudio to use pavucontrol
 ditto "pulseaudio -v[v[v]..] for diagnostics

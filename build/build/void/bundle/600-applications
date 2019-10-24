@@ -14,7 +14,8 @@
 = ══════════
   aspell
   aspell-en
-  dictd
+  dict
+# dictd
   hunspell
   hunspell-en_GB-ize
   hunspell-en_US
@@ -36,7 +37,7 @@
 = font manager
 = ════════════
 # fontmanager
-  s fontmatrix
+d s fontmatrix
 
 
 = game
@@ -46,7 +47,7 @@
 
 = keyboard
 = ════════
-m amphetype
+d m amphetype
 # m amphetype2
 
 

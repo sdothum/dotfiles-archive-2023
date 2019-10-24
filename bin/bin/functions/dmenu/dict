@@ -3,7 +3,7 @@
 # X11 Dynamic Menu
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................... Dictionary
+# ................................................................... 
 
 # Note: any hilighted word (clipboard entry) upon launch will be automatically looked up
 #       hilighting a word in the dictionary display (terminal) will automatically

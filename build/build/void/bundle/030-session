@@ -13,7 +13,8 @@
 = ════════
   alacritty    [! cpu atom]
   rxvt-unicode [cpu atom]
-  xterm
+  urxvt-perls  [cpu atom]
+# xterm
 
 
 = window manager

@@ -60,7 +60,7 @@ compose_vim() {
   gvim -f -c 'set filetype=mail' $DRAFT
   cp $DRAFT $1
   # cleanup sup mail draft histories
-  # find $HOME/.vim/backups -name '*tmp*sup.*' -exec sudo rm {} \;
+  # find $HOME/.vim/undo -name '*tmp*sup.*' -exec sudo rm {} \;
   clean_drafts &
   mhistory compose $editor
 }

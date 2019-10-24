@@ -1,0 +1,44 @@
+#
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+LABEL=Archlinux     	/         	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=257,subvol=/__current/ROOT,subvol=__current/ROOT	0 0
+
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+LABEL=Archlinux     	/home     	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=258,subvol=/__current/home,subvol=__current/home	0 0
+
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+LABEL=Archlinux     	/opt      	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=259,subvol=/__current/opt,subvol=__current/opt	0 0
+
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+LABEL=Archlinux     	/srv      	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=260,subvol=/__current/srv,subvol=__current/srv	0 0
+
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+LABEL=Archlinux     	/var      	btrfs     	rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=261,subvol=/__current/var,subvol=__current/var	0 0
+
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+
+# /dev/sda2 UUID=ab288984-de94-44d1-a907-00bbb51a508e
+LABEL=Archlinux     	/.snapshots	btrfs     	rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=262,subvol=/__snapshot/.snapshots,subvol=__snapshot/.snapshots	0 0
+
+# /dev/sda1 UUID=0020623a-e628-4d38-b6d5-c115bc047ab1
+LABEL=Swap          	none      	swap      	defaults  	0 0
+
+
+LABEL=Archlinux		/run/btrfs-root		btrfs		rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag		0 0
+
+# mkfs.btrfs -f -L Backup -m raid10 -d raid10 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 /dev/disk/by-id/ata-WDC_WD30EFRX-68N32N0_WD-WCC7K4DADSCU /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795
+LABEL=Share 		/net		btrfs		rw,nodev,noatime,autodefrag,space_cache		0 0
+
+# mkfs.btrfs -f -L Share -m raid0 -d raid0 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
+LABEL=Backup	/backup		btrfs		rw,nodev,noatime,autodefrag,space_cache		0 0
+
+# bcachefs format -L Share --replicas=2 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N4ZZY6FV /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N2KR3EV9
+# LABEL=Share		/backup		bcachefs		rw,nodev,noatime		0 0
+
+/run/btrfs-root/__current/ROOT/var/lib/pacman		/var/lib/pacman		none		bind		0 0
+
+/home/shum/Maildir		/srv/nfs4/Maildir		none		bind 0 0
+
+/net		/srv/nfs4/net		none		bind 0 0

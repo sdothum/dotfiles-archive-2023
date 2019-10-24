@@ -61,9 +61,7 @@ mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # kludgey column width calcu
 # border=$(herbstclient attr theme.border_width)
 
 # compositing shadow tweaking probably only works for flat looks, consider a panel height factor otherwise
-displayH=$(xrandr 2>/dev/null | grep '\*' |
-    sed -r "s/.*x([0-9]*).*/\1/; $(( $(herbstclient attr monitors.focus.index) + 1 ))q; d")
-[ $PANEL_BOTTOM ] && panel_offsetY=$(( $displayH - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
+[ $PANEL_BOTTOM ] && panel_offsetY=$(( $(query displayheight) - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 
 [ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=$(( $margin * 7 / 3 ))
 [ $indent -lt $margin ] && indent=$margin

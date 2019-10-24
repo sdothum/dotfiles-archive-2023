@@ -6,9 +6,11 @@
 
 # ...................................................................... Browser
 
+BROWSER=firefox
+
 videomode on
-firefox http://www.netflix.com/ca
-pwait 'firefox.*netflix'
+$BROWSER http://www.netflix.com/ca
+pwait "$BROWSER.*netflix"
 videomode off
 
 # vim: set ft=sh: #

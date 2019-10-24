@@ -21,7 +21,7 @@ sudo tar xvfz $DEPOT/NzbDrone.master.tar.gz --directory $LIB
 
 runit_install sonarr
 
-[ -e $SONARR ] && exit
+[ -e $SONARR/nzbdrone.db ] && exit
 sudo mkdir -p $SONARR
 [ -e /net/archive$SONARR ] && sudo rsync /net/archive$SONARR/ $SONARR
 sudo chown -R sonarr:sonarr $SONARR

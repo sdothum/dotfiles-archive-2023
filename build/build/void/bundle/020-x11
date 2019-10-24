@@ -13,8 +13,7 @@
   bbswitch             [gpu inspiron]
   libva-intel-driver   [gpu intel]
   libvdpau-va-gl       [gpu intel]
-  nvidia               [gpu nvidia && ! gpu intel]  # dual gpu card check
-  nvidia-340           [gpu macbook]
+# nvidia               [gpu nvidia && ! gpu intel]  # dual gpu card check
 
 
 = x11 driver
@@ -33,7 +32,6 @@
   mesa-ati-dri         [gpu ati && ! gpu nvidia]    # dual gpu card check
   mesa-intel-dri       [gpu intel]
   mesa-nouveau-dri     [gpu nvidia && ! gpu intel]  # dual gpu card check
-  nvidia-libs          [gpu nvidia && ! gpu intel]  # dual gpu card check
   xorg-server
   xinit
   xrandr
@@ -54,6 +52,7 @@
   xmodmap
   xrdb
   xset
+  xsetroot
 
 
 = font rendering

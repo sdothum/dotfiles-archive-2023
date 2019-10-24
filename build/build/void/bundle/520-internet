@@ -17,8 +17,8 @@
 = ═════════════
 # gftp
 d nzbget
-# sabnzbd [server]
-m sonarr  [server]
+# sabnzbd   [server]
+d m sonarr  [server]
   transmission-gtk
 
 

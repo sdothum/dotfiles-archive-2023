@@ -5,13 +5,10 @@
 
 # ........................................................................ conky
 
-ditto "PKGBUILD
-BUILD_MOC=OFF
+ditto "BUILD_MOC=OFF
 BUILD_MPD=ON
 BUILD_NVIDIA=OFF
 BUILD_OLD_CONFIG=OFF
-DEFAULTNETDEV=eno1
-makepkg -f
-sudo pacman -U --noconfirm conky-lua-archers*pkg.tar.xz"
+DEFAULTNETDEV=eno1"
 
 # vim: set ft=sh: #

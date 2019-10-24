@@ -14,7 +14,8 @@
 = network
 = ═══════
   bind-utils
-  dnsmasq
+  dnsmasq  [!server]
+d dnsmasq  [server]
   inetutils-telnet
 
 

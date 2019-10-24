@@ -63,7 +63,7 @@ set -x BROWSER qutebrowser
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
 # [ -z (pidof squid) ] ;or set -x HTTP_PROXY http://localhost:3128/
-pong luna ;and set -x HTTP_PROXY http://luna:3128/
+# pong luna ;and set -x HTTP_PROXY http://luna:3128/
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
@@ -111,8 +111,7 @@ set -x SELF_URL_PATH 'http://localhost:8000/tt-rss/'
 
 # ..................................................................... Defaults
 
-set -x http_proxy $HTTP_PROXY
-
+# set -x http_proxy $HTTP_PROXY
 console_login
 user_login
 # clear 'fish' tmux window name

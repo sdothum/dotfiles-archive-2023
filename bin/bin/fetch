@@ -8,16 +8,15 @@
 
 fetch=/usr/bin/neofetch
 BG='263238'  # quantum background hexcolor
+exists alacritty && term=alacritty || term=urxvt
 
 # fetch wrapper
 [ $1 ] && exec $fetch --help
 
 focus frame 2>/dev/null  # suppress error messages for incomplete desktop during new install
-# hide cursor (make it dark!)
-SHELL=/usr/bin/dash                      \
-  xterm -bg "#$BG" -cr "#$(( $BG + 1 ))" \
-      -e "$fetch --config off --block_range 0 15 --gap 5 --size 340 --xoffset 55 --yoffset 30 \
-                 --backend w3m --w3m $(lname $HOME/images/backgrounds/default)                \
-          && read CLOSE"
+# --loop to make fetch term *and* image persistent
+$term -e "$fetch --block_range 0 15 --gap 5 --size 340 --xoffset 55 --yoffset 30 \
+                 --backend w3m --w3m $(lname $HOME/images/backgrounds/default)   \
+                 --loop"
 
 # vim: set ft=sh: #

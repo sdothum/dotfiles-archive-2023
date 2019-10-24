@@ -8,7 +8,7 @@
 
 usage() { echo "usage: $(basename $0) [-b] [-d <date>] [<source> [<target>]] [<regex>]", target must be full path; exit 1; }
 
-ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|vps'
+ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|undo|vps'
 
 while [ "$1" ] ;do
   case $1 in

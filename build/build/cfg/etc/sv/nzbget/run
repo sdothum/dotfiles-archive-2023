@@ -1,6 +1,5 @@
 #!/bin/sh
-export USERNAME=$USER
-export NZBGET="/usr/bin/nzbget"
+export USERNAME=shum
 exec 2>&1
-exec chpst -u "$USERNAME" "$NZBGET" --daemon >/dev/null
-
+# runit does not detect bg (--daemon) process, use --server --option to spawn single fg process
+exec chpst -u "$USERNAME" /usr/bin/nzbget --server --option OutputMode=loggable -c /home/$USERNAME/.nzbget

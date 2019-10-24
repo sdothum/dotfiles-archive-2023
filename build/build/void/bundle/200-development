@@ -39,7 +39,7 @@
 
 = mono
 = ════
-  mono
+  mono [server]  # sonarr dependency
 
 
 = perl tool
@@ -48,7 +48,7 @@
   colordiff
   cpanminus  # perl-HTML dependency
   perl-Curses
-s perl-HTML-Strip
+d s perl-HTML-Strip
 
 
 = prototyping
@@ -61,8 +61,8 @@ s perl-HTML-Strip
 = ══════
   python-pip
   python-setuptools
-  python-sip    # amphetype dependency
-s python-PyQt4  # amphetype dependency
+  python-sip      # amphetype dependency
+d s python-PyQt4  # amphetype dependency
 
 
 = mpu programmer
