@@ -21,4 +21,7 @@ else
   ditto copy "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$1$host)"
 fi
 
+# avoid unnecessary dotfile updates
+ditto rm "$(find $ROOT$1$host -type l -name 'supervise' -exec rm -v {} \;)"  # ln supervise on cfg_install 
+
 # vim: set ft=sh: #

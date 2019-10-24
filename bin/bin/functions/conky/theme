@@ -1,0 +1,180 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ Conky
+
+# Conky desktop themer for clock and ring meters
+#
+# .conkyrc format:
+#   default_color [hex colour] (ring)
+#   color0 [hex colour]        (ring)
+#   color1 [hex colour]        (text)
+#   color2 [hex colour]        (text)
+#   color3 [hex colour]        (text)
+#   color4 [hex colour]        (text)
+#   color5 [hex colour]        (text)
+#   color6 [hex colour]        (ring)
+#   color7 [hex colour]        (graph)
+#   color8 [hex colour]        (graph)
+#   color9 [hex colour]        (hidden)
+#   #colorA [hex colour]       (hidden)
+#   #colorI [hex colour]       (hidden)
+#
+# conky-rings.lua format:
+#   default_color=0x[hex colour]
+#   color0=0x[hex colour]
+#   color6=0x[hex colour]
+#
+# deprecated due to colorcodehex unreachable
+# theming formula uses ColorCodeHex tables..
+# base = https://www.colorcodehex.com/[hex colour]/
+#   default_color [base]
+#   color0 [base mono-1]
+#   color1 to color5 uses solarized paper mono-1 gradients
+#   color6 [color0 mono-3]
+#   color7 [color0 mono-1]
+#   color8 [color0]
+#   color9 [base complementary]
+#   colorA [base mono-2]
+#   colorI [color9 mono-2]
+
+usage() {
+  echo "usage: $(basename $0) theme wal | test | contrast | light | dark <hex colour>"
+  exit 1
+}
+
+# ................................................................. Conky colorN
+
+rings() {
+  color=$1
+  default_color=$1
+  shift
+  color0=$1
+  shift
+  color6=$1
+}
+
+text() {
+  color1=$1
+  shift
+  color2=$1
+  shift
+  color3=$1
+  shift
+  color4=$1
+  shift
+  color5=$1
+}
+
+graphs() {
+  color7=$1
+  shift
+  # color8=$1
+  # color8=$(complimentary $1)
+  color8=$color
+}
+
+hidden() {
+  color9=$1
+  shift
+  colorA=$1
+  shift
+  colorI=$1
+}
+
+# ............................................. Auto-scrape colour relationships
+
+colours() {
+  rings $@
+  shift 3
+  graphs $@
+  shift 2
+  hidden $@
+}
+
+scheme() {
+  colours $@
+  shift 8
+  [ $1 = paper ] && paper || ink
+}
+
+chromatic() { echo "$hex" | cut -d' ' -f$1; }
+
+# see conky palette
+hexgen() {
+  default_color=$1
+  hex=$(conky palette $default_color Monochromatic)
+  color0=$(chromatic 5)
+  colorA=$(chromatic 4)
+  color9=$(conky palette $default_color Triadic | cut -d' ' -f3)
+  # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  hex=$(conky palette $color0 Monochromatic)
+  color6=$(chromatic 2)
+  color7=$(chromatic 7)
+  color8=$color0
+  # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  hex=$(conky palette $color9 Monochromatic)
+  colorI=$(chromatic 5)
+  # echo $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+  colours $default_color $color0 $color6 $color7 $color8 $color9 $colorA $colorI
+}
+
+# ................................................................... Conky text
+
+paper() {
+  text f0f0f0 c0c0c0 909090 707070 505050
+  LUARINGS=FFFFFF
+  PANEL=f0f0f0
+}
+
+ink() {
+  text 000000 080808 101010 202020 303030
+  LUARINGS=000000
+  PANEL=000000
+}
+
+# ....................................................................... Themes
+
+wal() {
+  command wal -ceq -i $WALLPAPER
+  default_color=$(sed '2!d' $HOME/.cache/wal/colors)
+  hexgen ${default_color#?}
+  luminance +$default_color && ink || paper
+}
+
+theme() {
+  echo "default_color=$default_color\ncolor0=$color0\ncolor1=$color1\ncolor2=$color2\ncolor3=$color3\ncolor4=$color4\ncolor5=$color5\ncolor6=$color6\ncolor7=$color7\ncolor8=$color8\ncolor9=$color9\ncolorA=$colorA\ncolorI=$colorI\nLUARINGS=$LUARINGS\nPANEL=$PANEL\n" >$THEME
+  draw conky
+  echo $color1  # see draw root
+}
+
+action=$1
+shift
+case $action in
+contrast) [ $# -eq 1 ] && { luminance +$1 && exec conky theme dark $1 || exec conky theme light $1; } ;;
+
+light   ) [ $# -eq 1 ] || exit
+          hexgen $(conky palette $1 Shade | cut -d' ' -f4)
+          paper
+          echo dark >$CONTRAST
+          theme ;;
+
+dark    ) [ $# -eq 1 ] || exit
+          hexgen $(conky palette $1 Tint | cut -d' ' -f4)
+          ink
+          echo light >$CONTRAST
+          theme ;;
+
+test    ) [ $# -eq 1 ] || exit
+          hexgen $1
+          luminance +$default_color && paper || ink
+          theme
+          ifno "change contrast" || { luminance -$default_color && paper || ink; theme; } ;;
+
+wal     ) wal ;;
+*       ) usage ;;
+esac
+
+# vim: set ft=sh: #

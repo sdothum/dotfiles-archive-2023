@@ -205,7 +205,7 @@ button.expandPrompt {
 #ttrssMain #main:before {
   /* text-shadow: 0 1px 1px #fff; */
   color: #b12525;
-  content: 'tHinK\atHRiCe'; /* line break */
+  content: 'subject\aMAtteR'; /* line break */
   display: block;
   font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
@@ -233,7 +233,7 @@ button.expandPrompt {
   background: #fdf6e3;
   bottom: 0;
   color: white;
-  content: 'refresh ‧‧ tHinK tHRiCe'; /* dot bullet dot */
+  content: 'refresh ‧‧ subject MAtteR'; /* dot bullet dot */
   font: 14px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   left: -35px;
   letter-spacing: 3px;

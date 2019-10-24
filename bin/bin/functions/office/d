@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... Dictionary
+
+d() { ssh $SERVER dict $1; }
+
+# see dmenu dict
+if   pstat dictd               ;then dict $1 >/dev/null && dict $1
+elif [ $(d $1 | wc -l) -gt 1 ] ;then d $1
+fi
+
+# vim: set ft=sh: #

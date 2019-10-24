@@ -1,0 +1,52 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Desktop
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Scrape colorhexa.com
+
+usage() {
+  echo "usage: $(basename $0) palette <hexcolor> [Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Similar | Shade | Tint | Tone]"
+  exit 1
+}
+
+# adjust script to website page layout, test with "conky palette ff0000"
+COLORS='Complementary|Analogous|Split|Triadic|Tetradic|Monochromatic|Similar|Shade|Tint|Tone'
+BLANK='ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff ffffff'
+
+[ $1 ] || usage
+
+pong || { echo "$BLANK"; exit; } 
+
+# flatten content into single lines
+palette() {
+  pcurl https://www.colorhexa.com/$1 |
+        sed -re "s/^[\t ]*//g; /^$/d; s/ rgb(.*)//; s/[\t ]*$//" \
+            -e "s/^Color (Scheme)s with /\1\n\n/" \
+            -e "s/^(Complementary) Color/\1\n/" \
+            -e "s/^(Analogous) Color/\1\n/" \
+            -e "s/^(Split) Complementary Color/\1\n/" \
+            -e "s/^(Triadic) Color/\1\n/" \
+            -e "s/^(Tetradic) Color/\1\n/" \
+            -e "s/^(Monochromatic) Color/\1\n/" \
+            -e "s/^(Similar) Colors/\1\n/" \
+            -e "s/^.*related colors.*a(lternative).*color choice./A\1\n/" \
+            -e "s/^.*adding black.*mixing white.*darkest color.*lightest one./Mixed\n/" \
+            -e "s/^(Shade) Color Variation/\1\n/" \
+            -e "s/^(Tint) Color Variation/\1\n/" \
+            -e "s/^.*adding gray.*less saturated color.*most s(aturated one)./S\1\n/" \
+            -e "s/^(Tone) Color Variation/\1\n/" |
+        sed -e ":a;/^#/{N;s/\n#/ #/;ba}" |                  # join hexcode color sets
+        sed -e "s/^ //" |
+        sed -re ":a;/^#/{N;s/(.*)\n($COLORS)/\2 \1/;ba}" |  # prepend labels to color sets
+        sed -e "s/#//g" |
+        egrep "^($COLORS) " | egrep -vi '^Shade .* (Information|Preview)' |               # select and drop strays
+        awk '{ while(++i<=NF) printf (!a[$i]++) ? $i FS : ""; i=split("",a); print "" }'  # remove duplicate values (css labels)
+}
+
+colors=$(palette $1)
+[ $2 ] && { colors=$(echo "$colors" | grep -i "^$2"); true; } || { echo "$colors"; exit; }
+[ "$colors" ] && echo "$colors" | cut -d' ' -f2- || echo $BLANK | sed "s/ffffff/$1/g"
+
+# vim: set ft=sh: #
+
