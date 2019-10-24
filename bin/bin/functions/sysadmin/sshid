@@ -10,7 +10,7 @@ usage() { echo "usage: $(basename $0) <hostname>"; exit 1; }
 
 [ $1 ] || usage && cat $HOME/.ssh/id_rsa.pub | ssh $USER@$1 'cat >> $HOME/.ssh/authorized_keys'
 
-ditto "testing ssh login to $1"
+ditto verify "ssh login to $1"
 ssh $1
 
 # vim: set ft=sh: #
