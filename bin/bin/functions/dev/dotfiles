@@ -33,9 +33,9 @@ init() {
   git init
   git add README.md
   git commit --message="refresh commit"
-  git remote add origin https://github.com/sdothum/dotfiles.git
+  git remote add origin git+ssh://git@github.com/sdothum/dotfiles.git
   git push -u origin master
-  git remote set-url origin git@github.com:sdothum/dotfiles.git
+  git remote set-url origin git+ssh://git@github.com:sdothum/dotfiles.git
 }
 
 commit() {
