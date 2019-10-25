@@ -1,1 +1,10 @@
-../../arch/post_install/rtorrent
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... rorrent
+
+ditto "check port forwarding on router $(grep port_range $HOME/.rtorrent.rc)"
+
+# vim: set ft=sh: #

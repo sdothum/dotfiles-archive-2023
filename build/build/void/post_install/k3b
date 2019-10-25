@@ -1,1 +1,10 @@
-../../arch/post_install/k3b
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... k3b
+
+ditto "configure k3b program defaults to /usr/bin applications"
+
+# vim: set ft=sh: #

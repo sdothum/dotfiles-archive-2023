@@ -1,10 +1,1 @@
-# sdothum - 2016 (c) wtfpl
-
-# Post_install
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ...................................................................... adminer
-
-ifnsed /etc/httpd/conf/httpd.conf 'Include conf/extra/httpd-adminer.conf'
-
-# vim: set ft=sh: #
+../../void/post_install/adminer

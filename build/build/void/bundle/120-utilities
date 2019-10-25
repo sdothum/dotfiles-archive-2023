@@ -7,7 +7,9 @@
 = file compression
 = ════════════════
   file-roller
+  par2cmdline
   p7zip
+  unrar
   unzip
   zip
 

@@ -19,7 +19,7 @@ sed -e '/^MainDir=/s|=.*|=/net/downloads/nzbs|' \
     -e "/^Server1.Username=/s/=.*/=$email/" \
     -e "/^Server1.Password=/s/=.*/=$password/" \
     -e '/^Server1.Encryption=/s/no/yes/' \
-    -e '/Server1.Connections=/s/=.*/=10/' \
+    -e '/Server1.Connections=/s/=.*/=35/' \
     -e '/Category1.DestDir=/s|=.*|=/net/media/videos/movies|' \
     -e '/Category2.Name=Series/aCategory2.DestDir=/net/media/videos/series' \
     -e '/^ControlIP=/s/=.*/=0.0.0.0/' \

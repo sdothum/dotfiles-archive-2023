@@ -1,1 +1,10 @@
-../../arch/post_install/transmission-gtk
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. transmission
+
+ditto blocklist "url http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+
+# vim: set ft=sh: #

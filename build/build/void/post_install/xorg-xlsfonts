@@ -1,1 +1,12 @@
-../../arch/post_install/xorg-xlsfonts
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ xorg-xlsfonts
+
+# rebuild font caches
+sudo rm -r $HOME/.fontconfig/*
+fc-cache -fv
+
+# vim: set ft=sh: #

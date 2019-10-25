@@ -1,1 +1,10 @@
-../../arch/post_install/wireshark-gtk
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... wireshark
+
+sudo gpasswd -a $USER wireshark
+
+# vim: set ft=sh: #

@@ -1,1 +1,11 @@
-../../arch/post_install/rox
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... rox
+
+# set rox mime application
+xdg-mime default rox.desktop inode/directory
+
+# vim: set ft=sh: #

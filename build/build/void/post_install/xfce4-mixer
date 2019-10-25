@@ -1,1 +1,11 @@
-../../arch/post_install/xfce4-mixer
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. xfce4-mixer
+
+ditto "enable sound (unmute) xfce4-mixer
+set full volume alsamixer"
+
+# vim: set ft=sh: #

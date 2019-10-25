@@ -1,1 +1,16 @@
-../../arch/post_install/tmux
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... tmux
+
+mkdir -p $HOME/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tmux-logging $HOME/.tmux/plugins/tmux-logging
+git clone https://github.com/tmux-plugins/tmux-open $HOME/.tmux/plugins/tmux-open
+git clone https://github.com/tmux-plugins/tmux-pain-control $HOME/.tmux/plugins/tmux-pain-control
+git clone https://github.com/tmux-plugins/tmux-sensible $HOME/.tmux/plugins/tmux-sensible
+# git clone https://github.com/tmux-plugins/tmux-urlview $HOME/.tmux/plugins/tmux-urlview
+
+# vim: set ft=sh: #

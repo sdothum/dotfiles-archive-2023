@@ -1,1 +1,14 @@
-../../arch/post_install/offlineimap
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................. offlineimap
+
+# initialize keyring
+ditto "if new public key generated.."
+ditto run "pass.sh"
+ditto run "imap_pass"
+[ -d $HOME/.password-store/mail ] && imap_pass
+
+# vim: set ft=sh: #

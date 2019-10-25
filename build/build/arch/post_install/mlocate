@@ -1,13 +1,1 @@
-# sdothum - 2016 (c) wtfpl
-
-# Post_install
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ...................................................................... mlocate
-
-ifnsed /etc/updatedb.conf ' .cache Trash backups' '/^PRUNENAMES/s/"$/ .cache Trash backups"/'
-ifnsed /etc/updatedb.conf ' /net /bkup' '/^PRUNEPATHS/s|"$| /net /bkup"|'
-
-sudo updatedb &
-
-# vim: set ft=sh: #
+../../void/post_install/mlocate

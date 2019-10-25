@@ -1,1 +1,10 @@
-../../arch/post_install/lightzone
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... lightzone
+
+ditto "do windowed (non-fullscreen) close from gnome-shell for fullscreen issues in bspwm"
+
+# vim: set ft=sh: #

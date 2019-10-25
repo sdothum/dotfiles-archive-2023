@@ -1,1 +1,13 @@
-../../arch/post_install/emacs
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... spacemacs
+
+rm -rf $HOME/.emacs.d
+rm -rf $HOME/.emacs
+git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+ditto 'launch emacs to complete spacemacs installation and prompts'
+
+# vim: set ft=sh: #
