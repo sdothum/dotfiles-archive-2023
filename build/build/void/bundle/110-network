@@ -46,11 +46,6 @@ d dnsmasq  [server]
 # nmap  [server]
 
 
-= proxy
-= ═════
-# squid [server]
-
-
 = socket
 = ══════
 # socat

@@ -33,7 +33,7 @@
 // #define TEST
 
 // rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
-#define ROLLOVER
+// #define ROLLOVER
 
 // left handed space/enter
 // #define LEFT_SPC_ENT

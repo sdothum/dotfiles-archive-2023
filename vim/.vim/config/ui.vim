@@ -44,7 +44,7 @@ autocmd ui CursorHold * echo
 " .......................................................... Syntax highlighting
 set omnifunc=syntaxcomplete#Complete
 syntax on  " turn on syntax highlighting
-
+ 
 " refresh highlighting on arm
 autocmd ui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
 

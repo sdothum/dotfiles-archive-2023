@@ -12,8 +12,8 @@ STARTPAGE=$SESSION/startpage
 pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
 size="$(fontsize)pt monospace"
 
-# must \escape '&' in url
-[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/#f=54\&c=1'; }
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/'; }
+startpage=$(escape $startpage)  # must \escape '&' in url
 
 font="
   -s fonts.completion.category '$size'

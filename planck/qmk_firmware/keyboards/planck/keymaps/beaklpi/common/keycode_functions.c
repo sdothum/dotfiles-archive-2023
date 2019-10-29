@@ -179,8 +179,8 @@ void clear_events(void)
 #define LEFT   1                 // also see raise_layer(), rolling_layer()
 #define RIGHT  2                 // for binary (LEFT | RIGHT) test
 
-static uint8_t leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see cap_lt()
-static uint8_t togglelayer = 0;  // key's toggle layer, see process_record_user()
+static uint8_t leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
+static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record_user()
 static uint8_t next_key    = 0;  // by column reference
 static uint8_t prev_key    = 0;
 
@@ -200,7 +200,7 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 #define CLEAR_EVENT e[column].key_timer   = 0; \
                     e[column].shift       = 0; \
                     e[prev_key].leadercap = 0; \
-                    togglelayer           = 0
+                    leaderlayer           = 0
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
@@ -213,7 +213,7 @@ bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t k
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
       roll_key(side, keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
-        oneshot_shift(togglelayer);
+        oneshot_shift(leaderlayer);
         CLEAR_EVENT;
         return true;
       }

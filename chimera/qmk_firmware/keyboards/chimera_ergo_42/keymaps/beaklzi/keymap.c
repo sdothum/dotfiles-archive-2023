@@ -93,19 +93,16 @@ enum keyboard_keycodes {
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
 #endif
+ ,ACT_E   // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_E))
  ,AST_G   // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
- ,SST_A   // pseudo SFT_T(S(KC_A))
- ,SST_T   // pseudo SFT_T(S(KC_T))
+ ,AT_B    // pseudo ALT_T(S(KC_B))
+ ,CT_C    // pseudo CTL_T(S(KC_C))
+ ,ST_A    // pseudo SFT_T(S(KC_A))
+ ,ST_T    // pseudo SFT_T(S(KC_T))
  ,TT_ESC
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
 };
-
-// modifier keys
-#define ACT_E   MT   (MOD_LALT | MOD_LCTL, KC_E)
-#define AT_B    ALT_T(KC_B)
-#define CT_C    CTL_T(KC_C)
-#define ST_A    SFT_T(KC_A)
 
 #ifndef ROLLOVER
 #define HOME_Q  GUI_T(KC_Q)
@@ -146,10 +143,16 @@ enum keyboard_keycodes {
 #define XPASTE  TD_XPASTE
 
 #define LT_BSPC LT  (_MOUSE, KC_BSPC)
-#define LT_ENT  LT  (_EDIT, KC_ENT)
 #define LT_ESC  LT  (_FNCKEY, KC_ESC)
+#ifdef ROLLOVER
+#define LT_ENT  MO  (_EDIT)    // plus mod_roll() -> LT(_EDIT, KC_ENT)
+#define LT_I    MO  (_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
+#define LT_SPC  MO  (_SYMGUI)  // plus mod_roll() -> LT(_SYMGUI, KC_SPC)
+#else
+#define LT_ENT  LT  (_EDIT, KC_ENT)
 #define LT_I    LT  (_REGEX, KC_I)
 #define LT_SPC  LT  (_SYMGUI, KC_SPC)
+#endif
 #define LT_TAB  LT  (_NUMBER, KC_TAB)
 #define TT_TAB  LT  (_NUMBER, KC_TAB)
 #define OS_ALT  OSM (MOD_LALT)
@@ -199,9 +202,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
 
+#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
+#define KEY_DOWN  record->event.pressed
+
 #include "keycode_functions.c"
 
-static uint8_t down_punc = 0;  // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -219,7 +224,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_E:
     mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2);  break;
   case HOME_A:
-    down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
+    leadercap = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see leader_cap()
     mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);    break;
 
   case HOME_T:
@@ -232,7 +237,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 9); break;
 #else
   case HOME_A:
-    down_punc = (record->event.pressed) ? 1 : 0;  // space/enter + shift shortcut, see cap_lt()
+    leadercap = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see leader_cap()
     mod_bits(record, KC_LSFT);                          break;
   case HOME_T:
     mod_bits(record, KC_RSFT);                          break;
@@ -260,61 +265,88 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................... Left Thumb Keys
 
   case TT_ESC:
-    base_layer(0);  // exit TT layer
-    return false;
+    base_layer(0);                                   return false;      // exit TT layer
   case LT_ESC:
     if (tt_keycode)                                  { base_layer(0); return false; }
     break;
 
   case LT_I:
+#ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+#endif
+#ifdef ROLLOVER
+    if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
+#endif
     break;
   case TT_I:
-    lt(record, _REGEX, SHIFT, KC_I);
-    break;
+    lt(record, _REGEX, SHIFT, KC_I);                 break;
   case S(KC_I):
+#ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
-    if (!record->event.pressed)                      { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
+#endif
+    if (!KEY_DOWN)                                   { CLR_1SHOT; }     // see leader_cap()
     break;
 
   case LT_TAB:
     if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { return false; }
+#ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, SHIFT, KC_ENT))   { return false; }
+#endif
     break;
 
   // .......................................................... Right Thumb Keys
-
+#ifdef ROLLOVER
   case LT_ENT:
-    if (leader_cap(record, _EDIT, down_punc, KC_ENT))   { return false; }  // KC_ENT -> enter shift
+    leaderlayer = _EDIT;                                                    // see mod_roll()
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (leader_cap(record, 0, down_punc, KC_ENT))       { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-    if (leader_cap(record, _SYMGUI, down_punc, KC_SPC)) { return false; }  // KC_SPC -> space shift
+    leaderlayer = _SYMGUI;                                                  // see mod_roll()
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
     break;
+#else
+  case LT_ENT:
+    if (leader_cap(record, _EDIT, leadercap, KC_ENT))    { return false; }  // KC_ENT -> enter shift
+    break;
+  case KC_ENT:
+    if (leader_cap(record, 0, leadercap, KC_ENT))        { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    break;
+
+  case LT_SPC:
+    if (leader_cap(record, _SYMGUI, leadercap, KC_SPC))  { return false; }  // KC_SPC -> space shift
+    break;
+#endif
   case TT_SPC:
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
-    if (!record->event.pressed)                         { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
+    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
     break;
 
   case LT_BSPC:
   case KC_BSPC:
-    if (!record->event.pressed)                         { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))    { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))    { return false; }
+    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
     break;
 
   // ............................................................. Modifier Keys
 
+  case ACT_E:
+    mt_shift(record, KC_LALT, KC_LCTL, KC_E); break;
   case AST_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G); break;
-  case SST_A:
+  case AT_B:
+    mt_shift(record, KC_LALT, 0, KC_B);       break;
+  case CT_C:
+    mt_shift(record, KC_LCTL, 0, KC_C);       break;
+  case ST_A:
     mt_shift(record, KC_LSFT, 0, KC_A);       break;
-  case SST_T:
+  case ST_T:
     mt_shift(record, KC_RSFT, 0, KC_T);       break;
 #ifndef HASKELL
   case HS_LT:
@@ -324,37 +356,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 
   // ......................................................... Shift Mapped Keys
-
+#ifdef ROLLOVER
   case KC_COLN:
-    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN)) { return false; }
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                            { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    down_punc = (record->event.pressed) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
 
   case KC_COMM:
-    down_punc = (record->event.pressed) ? 1 : 0;  // comm + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))  { return false; }
+    leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
+    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
     break;
   case KC_DOT:
-    down_punc = (record->event.pressed) ? 1 : 0;  // dot + space/enter + shift shortcut, see cap_lt()
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))    { return false; }
+    leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
+    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
+    break;
+#else
+  case KC_COLN:
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
+    break;
+  case TD_COLN:
+    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
     break;
 
+  case KC_COMM:
+    leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))            { return false; }
+    break;
+  case KC_DOT:
+    leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
+    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { return false; }
+    break;
+#endif
+    
   // ..................................................... Leader Capitalization
 
-  case TD_TILD:
-    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
   case KC_EXLM:
   case KC_QUES:
-    down_punc = (record->event.pressed) ? 1 : 0;          // dot/ques/exlm + space/enter + shift shortcut, see cap_lt()
+    leadercap = KEY_DOWN ? 1 : 0;  // exclamation/question + space/enter + shift shortcut, see leader_cap()
+#ifdef ROLLOVER
+    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4))  { return false; }
+#endif
     break;
 
   // .............................................................. Top Row Keys
 
 #ifdef ROLLOVER
+  case KC_Z:
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_Z, 0);    return false;
   case KC_Y:
     mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    return false;
   case KC_O:
@@ -370,6 +425,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, 0, KC_N, 7);   return false;
   case KC_M:
     mod_roll(record, RIGHT, NOSHIFT, 0, KC_M, 8);   return false;
+  case KC_X:
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_X, 9);   return false;
 
   // ........................................................... Middle Row Keys 
 
@@ -378,6 +435,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ........................................................... Bottom Row Keys
 
+  case KC_J:
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_J, 0);    return false;
   case KC_MINS:
     mod_roll(record, LEFT, NOSHIFT, 0, KC_MINS, 1); return false;
   case KC_QUOT:
@@ -393,13 +452,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, 0, KC_L, 7);   return false;
   case KC_F:
     mod_roll(record, RIGHT, NOSHIFT, 0, KC_F, 8);   return false;
+  case KC_V:
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_V, 9);   return false;
 #endif
 
   // ................................................................ Other Keys
 
   default:
-    if (!record->event.pressed) { clear_oneshot_layer_state(ONESHOT_PRESSED); }  // see leader_cap()
-    key_timer  = 0;  // regular keycode, clear timer in keycode_functions.h
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
+    key_timer = 0;                 // regular keycode, clear timer in keycode_functions.h
   }
   return true;
 }

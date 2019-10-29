@@ -41,7 +41,7 @@ function! s:toggleWrap()
     NoPencil
     let &formatoptions = g:codeoptions
   elseif &formatoptions == g:codeoptions
-    Pencil
+    HardPencil
     set formatoptions=tqwan1
   else
     set formatoptions

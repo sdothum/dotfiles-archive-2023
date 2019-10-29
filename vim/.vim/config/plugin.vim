@@ -48,7 +48,7 @@ Plug 'tpope/vim-repeat'               " dot plugin
 Plug 'tpope/vim-rsi'                  " readline keybindings
 
 " ................................................................. Highlighting
-" Plug 'JuliaEditorSupport/julia-vim'   " julia programming language
+" Plug 'JuliaEditorSupport/julia-vim' " julia programming language
 " Plug 'markonm/traces.vim'           " ex pattern/range highlghting
 " Plug 'romainl/vim-cool'             " auto clear search highlighting
 Plug 'itchyny/vim-cursorword', prose  " word highlighting

@@ -149,6 +149,8 @@ enum keyboard_keycodes {
 #define LT_I    MO  (_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
 #define LT_SPC  MO  (_SYMGUI)  // plus mod_roll() -> LT(_SYMGUI, KC_SPC)
 #else
+#define LT_A    LT  (_SHIFT, KC_A)
+#define LT_T    LT  (_SHIFT, KC_T)
 #define LT_ENT  LT  (_EDIT, KC_ENT)
 #define LT_I    LT  (_REGEX, KC_I)
 #define LT_SPC  LT  (_SYMGUI, KC_SPC)

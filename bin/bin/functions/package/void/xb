@@ -7,38 +7,47 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [[-][S | U | R | H] | [- | +]] [-<options>] [--<option>]* [<package>]"
+  echo "usage: $(basename $0) [[-][S | U | R | H] | [+ | - | / | f** | x |X]] [-<options>] [--<option>]* [<package> | <file>**]"
   echo "        S .. noconfirm"
   echo "       -S .. confirm"
-  echo "       -S update repos"
+  echo "       -S    update repos"
   echo "        U .. noconfirm"
-  echo "        U upgrade system"
+  echo "        U    upgrade system"
   echo "       -U .. confirm"
   echo "        R .. recursive"
   echo "       -R .. non-recursive"
   echo "        H .. hold"
   echo "       -H .. unhold"
+  echo "        -    held (list)"
+  echo "        + .. installed"
+  echo "        / .. search (package and description)"
+  echo "        f .. file (in package)"
+  echo "        x .. dependencies"
+  echo "        X .. required by"
   echo "          .. query"
-  echo "       -  search"
-  echo "       +  installed"
   exit 1
 }
 
 [ $1 ] || usage
 
+reboot() { xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; }
+
 # default (no options) to package query
 case $1 in
  S) action=sync; yes='-y' ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
- U) [ $2 ] && { action=update; yes='-y'; } || sudo xbps-install -Su; exit ;;
--U) [ $2 ] && action=update ;;
+ U) [ $2 ] && { action=update; yes='-y'; reboot; } || sudo xbps-install -Su; exit ;;
+-U) [ $2 ] && action=update; reboot ;;
  R) action=remove; recursive='-R' ;;
 -R) action=remove ;;
  H) action=hold ;;
 -H) action=unhold ;;
-- ) action=search ;;
 + ) action=installed ;;
-= ) action=held ;;
+- ) action=held ;;
+/ ) action=search ;;
+f ) action=file ;;
+x ) action=dependency ;;
+X ) action=requiredby ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 
@@ -46,18 +55,21 @@ shift; [ $1 ] || [ $action = held ] || usage
 options=" $@"
 package=${options##* }
 options=${options% *}
-pkgver=$(xbps-query -S "$package" | grep pkgver | cut -d' ' -f2)
+[ $action = file ] || pkgver=$(xbps-query -S "$package" | grep pkgver | cut -d' ' -f2)
 
 case $action in
-held     ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
-hold     ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
-installed) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
-query    ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
-remove   ) sudo xbps-remove $recursive $options $package ;;
-search   ) xbps-query -Rs $options $package | a $package ;;
-sync     ) sudo xbps-install $yes $options $package ;;
-update   ) sudo xbps-install $yes $options -u $package ;;
-unhold   ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
+dependency) xbps-query -x $package ;;
+file      ) xlocate $package ;;
+held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
+hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
+installed ) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
+query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
+remove    ) sudo xbps-remove $recursive $options $package ;;
+requiredby) xbps-query -X $package ;;
+search    ) xbps-query -Rs $options $package | a $package ;;
+sync      ) sudo xbps-install $yes $options $package ;;
+update    ) sudo xbps-install $yes $options -u $package; [ $kernel ] && ifno 'reboot new kernel' || sudo reboot ;;
+unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 
 # vim: set ft=sh: #

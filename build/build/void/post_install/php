@@ -13,8 +13,6 @@ sudo sed -i -e '/open_basedir/s/=.*/=/' \
          -e '/date.timezone/s/;//' \
          -e '/display_errors=/s/off/on/' \
          -e '/;extension=openssl/s/;//' \
-         -e '/;extension=pdo_pgsql/s/;//' \
-         -e '/;extension=pgsql/s/;//' \
          /etc/php/php.ini
 
 ditto service 'enable nginx'

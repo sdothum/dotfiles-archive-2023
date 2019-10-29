@@ -29,7 +29,7 @@ while : ;do
   netflix   ) netflix ;;
   nzb       ) exists nzbget && { toggle term 'NZB' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   patricia  ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
-  pulse     ) pulse; pavucontrol ;;
+  pulse     ) pulse; exec pavucontrol ;;
   references) dmenu references; unset root; break ;;
   series    ) dmenu series ;;
   sonarr    ) $BROWSER $SONARR; pwait "$BROWSER.*$SONARR"; unset root ;;

@@ -6,9 +6,9 @@
 
 = database management
 = ═══════════════════
-  pgadmin3
-  postgresql
-  postgresql-client
+  # pgadmin3        [server || test -d /srv/http/tt-rss ]
+  postgresql        [server || test -d /srv/http/tt-rss ]
+  postgresql-client [server || test -d /srv/http/tt-rss ]
   sqlite
   sqlitebrowser
 
@@ -32,7 +32,9 @@
   d g passenger
   php
   php-fpm
-  php-pgsql
+  # php-gd   [server || test -d /srv/http/tt-rss ]
+  # php-intl [server || test -d /srv/http/tt-rss ]
+  php-pgsql  [server || test -d /srv/http/tt-rss ]
 
 
 # vim: set ft=conf: #

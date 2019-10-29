@@ -111,7 +111,8 @@ set -x SELF_URL_PATH 'http://localhost:8000/tt-rss/'
 
 # ..................................................................... Defaults
 
-# set -x http_proxy $HTTP_PROXY
+test -n $HTTP_PROXY ;and set -x http_proxy $HTTP_PROXY
+
 console_login
 user_login
 # clear 'fish' tmux window name

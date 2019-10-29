@@ -22,7 +22,9 @@ d m sonarr  [server]
   transmission-gtk
 
 
-= ═══════════
+= proxy
+= ═════
+# squid [server]
 
 
 = web aggregator

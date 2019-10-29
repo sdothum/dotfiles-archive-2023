@@ -69,7 +69,7 @@ command! ToggleColumn silent! call <SID>toggleColumn()
 " Highlights ___________________________________________________________________
 
 " .......................................................... Line wrap highlight
-let s:breakchar = '→'
+let s:breakchar = '\ →\ '  " \escape spaces
 
 " highlight wrapped line portion, see theme:Theme()
 function! s:columnWrap()
@@ -78,7 +78,7 @@ function! s:columnWrap()
     let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
     let &colorcolumn = join(range(l:edge, 999), ',')
   else
-    execute 'set showbreak=' . s:breakchar . '\ '
+    execute 'set showbreak=' . s:breakchar
   endif
 endfunction
 

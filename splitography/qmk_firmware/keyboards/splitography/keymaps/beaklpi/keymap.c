@@ -204,7 +204,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "keycode_functions.c"
 
-static uint8_t down_punc = 0;  // substitute (0) keycode (1) leader + one shot shift, see cap_lt()
+static uint8_t down_punc = 0;  // substitute (0) keycode (1) leader + one shot shift, see leader_cap()
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -373,20 +373,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ......................................................... Shift Mapped Keys
 
   case KC_COLN:
-    down_punc = (KEY_DOWN) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    down_punc = (KEY_DOWN) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN)) { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                            { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    down_punc = (KEY_DOWN) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see cap_lt()
+    down_punc = (KEY_DOWN) ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
     break;
 
   case KC_COMM:
-    down_punc = (KEY_DOWN) ? 1 : 0;  // comm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (KEY_DOWN) ? 1 : 0;  // comm + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, SHIFT, KC_1))      { return false; }
     break;
   case KC_DOT:
-    down_punc = (KEY_DOWN) ? 1 : 0;  // dot + space/enter + shift shortcut, see cap_lt()
+    down_punc = (KEY_DOWN) ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, SHIFT, KC_SLSH))   { return false; }
     break;
 
@@ -394,7 +394,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case KC_EXLM:
   case KC_QUES:
-    down_punc = (KEY_DOWN) ? 1 : 0;  // ques/exlm + space/enter + shift shortcut, see cap_lt()
+    down_punc = (KEY_DOWN) ? 1 : 0;  // ques/exlm + space/enter + shift shortcut, see leader_cap()
     break;
 
   // .............................................................. Top Row Keys
@@ -456,7 +456,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   default:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
-    key_timer  = 0;                // regular keycode, clear timer in keycode_functions.h
+    key_timer = 0;                 // regular keycode, clear timer in keycode_functions.h
   }
   return true;
 }

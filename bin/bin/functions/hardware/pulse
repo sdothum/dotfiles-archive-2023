@@ -21,6 +21,6 @@ pulse() {
 # restore audio device
 pulse '(youtube|vimeo|netflix|mpv|omxplayer|pavucontrol|(libexec|bin)/pulse)'
 pulse '(chromium|firefox|qutebrowser|surf|vimb|pavucontrol|(libexec|bin)/pulse)'
-hdmi || notify X critical 'Pulseaudio restored..' 'Check pavucontrol'
+hdmi || notify X 'Pulseaudio restored..' 'Check pavucontrol'
 
 # vim: set ft=sh: #

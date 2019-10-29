@@ -201,10 +201,16 @@ function! s:syntax()
   hi! link htmlH4     Statement
   hi! link mkdHeading Statement
   hi! link mkdLink    htmlString
+  " hi! link htmlItalic htmlBoldItalic
   hi! link SneakScope Cursor
   hi! link SpellCap   SpellBad
   hi! link SpellLocal SpellBad
   hi! link SpellRare  SpellBad
+  if &filetype == 'markdown'
+    set syntax=markdown  " to see bold and italics (?)
+    ToggleWrap
+    ToggleWrap           " to enable Pencil autowrap (?)
+  endif
 endfunction
 
 " Theme ________________________________________________________________________

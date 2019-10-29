@@ -39,7 +39,7 @@
 
 = mono
 = ════
-  mono [server]  # sonarr dependency
+  mono [server || xb_query sonarr]  # sonarr dependency
 
 
 = perl tool

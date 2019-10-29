@@ -253,18 +253,6 @@ let g:pencil#textwidth       = 72      " 74 (def)
 let g:pencil#joinspaces      = 0       " 0=one_space (def), 1=two_spaces
 let g:pencil#cursorwrap      = 1       " 0=disable, 1=enable (def)
 let g:pencil#autoformat      = 1       " 0=manual, 1=auto (def)
-let g:pencil#mode_indicators =
-  \{
-  \  'hard' : 'Hard Pencil'
-  \, 'auto' : 'Auto Pencil'
-  \, 'soft' : 'Soft Pencil'
-  \, 'off'  : 'No Pencil'
-  \}
-
-autocmd plugin Filetype draft        call pencil#init()
-autocmd plugin Filetype note         call pencil#init()
-autocmd plugin Filetype mail         call pencil#init()
-autocmd plugin FileType markdown,mkd call pencil#init()
 
 " ...................................................................... Quantum
 let g:quantum_italics=1  " italicize comments
