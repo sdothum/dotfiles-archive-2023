@@ -31,7 +31,7 @@ UNICODE_ENABLE   = no  # Unicode
 BLUETOOTH_ENABLE = no  # Enable Bluetooth with the Adafruit EZ-Key HID
 RGBLIGHT_ENABLE  = no  # Enable WS2812 RGB underlight.  Do not enable this with audio at the same time.
 SLEEP_LED_ENABLE = no  # Breathing sleep LED during USB suspend
-STENO_ENABLE     = no  # enable TX Bolt protocol, requires VIRTSER and may not work with mouse keys
+STENO_ENABLE     = yes # enable TX Bolt protocol, requires VIRTSER and may not work with mouse keys
 TAP_DANCE_ENABLE = yes # enable double tap
 # VIRTSER_ENABLE = yes # required for TX Bolt
 

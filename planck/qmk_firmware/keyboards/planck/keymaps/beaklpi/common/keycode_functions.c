@@ -12,6 +12,7 @@ static uint16_t tt_keycode = 0;  // current TT keycode
 static uint8_t  i          = 0;  // inline for loop counter
 static uint16_t key_timer  = 0;  // global event timer
 
+#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
 #define KEY_DOWN  record->event.pressed
 #define KEY_TIMER key_timer = timer_read()
 #define KEY_TAP   timer_elapsed(key_timer) < TAPPING_TERM
@@ -379,7 +380,7 @@ void colon_reset(STATE, void *user_data)
 
 void equal(STATE, void *user_data)
 {
-  if (TAPS) { DOUBLE_TAP(KC_EQL, "!="); }
+  if (TAPS) { DOUBLE_TAP(KC_EQL, EQLEQL); }
 #ifdef CHIMERA
   else      { TAP_DOWN ? register_code(KC_EQL) : double_tap(TAP, NOSHIFT, KC_EQL); }
 #else

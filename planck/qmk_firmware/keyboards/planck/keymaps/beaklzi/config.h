@@ -27,10 +27,16 @@
 // compile time macro string, must be in quotes
 #define PUBLIC_STRING ":%s/arch=(.*)/arch=('any')\n"
 
-// Haskell tap dance operators
+// haskell tap dance operators
 #define HASKELL
 
 // rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
 #define ROLLOVER
+
+// left handed space/enter
+// #define LEFT_SPC_ENT
+
+// double tap "=="
+#define EQLEQL "=~"
 
 #endif

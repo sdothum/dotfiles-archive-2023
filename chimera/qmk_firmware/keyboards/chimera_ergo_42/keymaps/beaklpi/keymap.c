@@ -202,9 +202,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
 
-#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
-#define KEY_DOWN  record->event.pressed
-
 #include "keycode_functions.c"
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
@@ -358,12 +355,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ......................................................... Shift Mapped Keys
 #ifdef ROLLOVER
   case KC_COLN:
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
 
@@ -377,12 +374,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #else
   case KC_COLN:
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     break;
 
   case KC_COMM:

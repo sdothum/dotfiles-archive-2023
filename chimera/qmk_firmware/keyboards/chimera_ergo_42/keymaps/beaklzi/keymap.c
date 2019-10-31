@@ -202,12 +202,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
 
-#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
-#define KEY_DOWN  record->event.pressed
-
 #include "keycode_functions.c"
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
+static uint16_t td_timer = 0;  // pseudo tapdance timer
+
+#define TAPDANCE if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -356,14 +356,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 
   // ......................................................... Shift Mapped Keys
+
 #ifdef ROLLOVER
   case KC_COLN:
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
 
@@ -373,16 +374,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
+    TAPDANCE; if (map_leader(record, LEFT, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
     break;
 #else
   case KC_COLN:
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
     break;
   case TD_COLN:
     if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    leadercap = KEY_DOWN ? 1 : 0;  // semi/coln + space/enter + shift shortcut, see leader_cap()
+    leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     break;
 
   case KC_COMM:
@@ -391,7 +392,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { return false; }
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
     break;
 #endif
     

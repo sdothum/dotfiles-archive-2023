@@ -65,7 +65,7 @@ function! s:codeBlock()
   execute "silent! normal! gv:s/ \\]\\] / []] /e\<CR>"
 endfunction
 
-command! CodeBlock silent! call <SID>codeBlock()
+command! -range=% -nargs=0 CodeBlock silent! execute '<line1>,<line2>call <SID>codeBlock()'
 
 " Text shift ___________________________________________________________________
 

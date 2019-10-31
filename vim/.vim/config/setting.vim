@@ -10,8 +10,9 @@ augroup plugin | autocmd! | augroup END
 
 " .......................................................................... Ale
 let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '→'
-let g:ale_sign_warning       = '→'
+let g:ale_sign_error         = '⚡'
+let g:ale_sign_info          = ''
+let g:ale_sign_warning       = '⚠'
 let g:ale_linter_aliases     =
   \{
   \  'wiki' : 'markdown'
@@ -228,13 +229,13 @@ let g:nv_wrap_preview_text   = 1
 
 " notational path rules: [regex, rootpath, ext]
 " note: regex magic is not enabled at this stage so force with '\v'
-let s:set_notational = [['.wiki$',                           ['~/vimwiki', '~/drafts'],  'wiki' ]
-  \,                  ['.draft$',                          ['~/drafts'],               'draft']
-  \,                  ['.note$',                           ['~/notes'],                'note' ]
-  \,                  ['\v([~]|' . $HOME . '|/stow)/bin/', ['~/bin'],                  ''     ]
-  \,                  ['.vim/',                            ['~/.vim/config'],          'vim'  ]
-  \,                  ['herbstluftwm/',                    ['~/.config/herbstluftwm'], ''     ]
-  \,                  ['archlinux/',                       ['~/build/archlinux'],      ''     ]]
+let s:set_notational = [['.wiki$',                          ['~/vimwiki', '~/drafts'],  'wiki' ]
+  \,                   ['.draft$',                          ['~/drafts'],               'draft']
+  \,                   ['.note$',                           ['~/notes'],                'note' ]
+  \,                   ['\v([~]|' . $HOME . '|/stow)/bin/', ['~/bin'],                  ''     ]
+  \,                   ['.vim/',                            ['~/.vim/config'],          'vim'  ]
+  \,                   ['herbstluftwm/',                    ['~/.config/herbstluftwm'], ''     ]
+  \,                   ['archlinux/',                       ['~/build/archlinux'],      ''     ]]
 
 " dynamically setup notational-fzf :)
 for i in s:set_notational
