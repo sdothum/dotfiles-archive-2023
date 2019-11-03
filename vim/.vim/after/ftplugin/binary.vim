@@ -4,6 +4,7 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ....................................................................... Binary
-set nomodifiable readonly
+setlocal nomodifiable
+setlocal readonly
 
 " binary.vim

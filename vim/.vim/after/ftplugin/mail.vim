@@ -4,7 +4,12 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ......................................................................... Mail
-set spell wrap enc=utf-8 formatoptions=tqwan1 textwidth=72 syntax=mail
+setlocal spell
+setlocal wrap
+setlocal enc=utf-8
+setlocal formatoptions=tqwan1
+setlocal textwidth=72
+setlocal syntax=mail
 
 " ...................................................................... Compose
 " email has blank lines inserted externally (via sed) for replys, see dmenu compose

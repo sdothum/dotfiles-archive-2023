@@ -7,13 +7,14 @@
 static uint8_t  reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
 static uint16_t tt_keycode = 0;  // current TT keycode
 
+#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
+#define KEY_DOWN  record->event.pressed
+
 // ................................................................. Local Scope
 
 static uint8_t  i          = 0;  // inline for loop counter
 static uint16_t key_timer  = 0;  // global event timer
 
-#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
-#define KEY_DOWN  record->event.pressed
 #define KEY_TIMER key_timer = timer_read()
 #define KEY_TAP   timer_elapsed(key_timer) < TAPPING_TERM
 
@@ -126,10 +127,12 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
+#define SHIFTED_OR(k) shift ? tap_shift(k) : tap_key(k)
+
 void double_tap(uint8_t count, uint8_t shift, uint16_t keycode)
 {
-  shift ? tap_shift(keycode) : tap_key(keycode);
-  if (count > 1) { shift ? tap_shift(keycode) : tap_key(keycode); }
+  SHIFTED_OR(keycode);
+  if (count > 1) { SHIFTED_OR(keycode); }
 }
 
 // ............................................................ Keycode Modifier
@@ -330,9 +333,14 @@ bool leader_cap(RECORD, uint8_t layer, uint8_t leadercap, uint16_t keycode)
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_ASTR]   = ACTION_TAP_DANCE_FN              (asterisk)
+ ,[_COLN]   = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, colon, colon_reset, HASKELL_TERM)
  ,[_COMM]   = ACTION_TAP_DANCE_FN              (comma)
  ,[_DOT]    = ACTION_TAP_DANCE_FN              (dot)
  ,[_EQL]    = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, equal, equal_reset, HASKELL_TERM)
+ ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
+#ifdef HASKELL
+ ,[_LT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lesser, lesser_reset, HASKELL_TERM)
+#endif
  ,[_PASTE]  = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, paste, paste_reset)
  ,[_PERC]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, percent, percent_reset)
  ,[_PRIV]   = ACTION_TAP_DANCE_FN              (private)
@@ -340,11 +348,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_TILD]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, tilde, tilde_reset)
  ,[_X]      = ACTION_TAP_DANCE_FN              (pound)
  ,[_XPASTE] = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, xpaste, xpaste_reset)
-#ifdef HASKELL
- ,[_COLN]   = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, colon, colon_reset, HASKELL_TERM)
- ,[_LT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lesser, lesser_reset, HASKELL_TERM)
- ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
-#endif
 };
 
 // ........................................................... Context Multi Tap
@@ -399,6 +402,32 @@ void equal_reset(STATE, void *user_data)
                            else if (TAP == 2)             { send_string(s); }    \
                            else for (i = 0; i < TAP; i++) { tap_shift(k); }
 
+#define TRIPLE_SHIFT(k, s, t) if (TAP_DOWN)                  { register_shift(k); } \
+                              else if (TAP == 2)             { send_string(s); }    \
+                              else if (TAP == 3)             { send_string(t); }    \
+                              else for (i = 0; i < TAP; i++) { tap_shift(k); }
+
+void greater(STATE, void *user_data)
+{
+#if defined HASKELL && defined UNIX
+  if (TAPS) { TRIPLE_SHIFT(KC_DOT, " -> ", " >/dev/null"); }
+#elif defined HASKELL
+  if (TAPS) { DOUBLE_SHIFT(KC_DOT, " -> "); }
+#elif defined UNIX
+  if (TAPS) { DOUBLE_SHIFT(KC_DOT, " >/dev/null"); }
+#endif
+#if defined HASKELL || defined UNIX
+  else      { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAP, SHIFT, KC_DOT); }
+#endif
+  reset_tap_dance(state);
+}
+
+void greater_reset(STATE, void *user_data)
+{
+  unregister_shift(KC_DOT);
+  unregister_code (KC_LSFT);
+}
+
 #ifdef HASKELL
 void lesser(STATE, void *user_data)
 {
@@ -411,19 +440,6 @@ void lesser_reset(STATE, void *user_data)
 {
   unregister_shift(KC_COMM);
   unregister_code (KC_LCTL);
-}
-
-void greater(STATE, void *user_data)
-{
-  if (TAPS) { DOUBLE_SHIFT(KC_DOT, " -> "); }
-  else      { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAP, SHIFT, KC_DOT); }
-  reset_tap_dance(state);
-}
-
-void greater_reset(STATE, void *user_data)
-{
-  unregister_shift(KC_DOT);
-  unregister_code (KC_LSFT);
 }
 #endif
 
@@ -500,17 +516,17 @@ void pound(STATE, void *user_data)
   reset_tap_dance(state);
 }
 
-// compile time macro string, see functions/hardware <keyboard> script
+// compile time macro strings, see functions/hardware qmk script
 void private(STATE, void *user_data)
 {
   if (TAPS) { SEND_STRING(PRIVATE_STRING); }
   reset_tap_dance(state);
 }
 
-// config.h defined string
 void send(STATE, void *user_data)
 {
-  if (TAPS) { SEND_STRING(PUBLIC_STRING); }
+  if (TAPS) { SEND_STRING(PUBLIC2_STRING); }
+  else      { SEND_STRING(PUBLIC1_STRING); }
   reset_tap_dance(state);
 }
 
@@ -563,13 +579,6 @@ void base_layer(uint8_t defer)
 #ifndef CHIMERA
   toggle_plover(0);
 #endif
-}
-
-// set layer asap to overcome macro latency errors, notably tap dance, LT usage and..
-// inexplicably sets layer_on() faster than can be done in rolling_layer()
-void tap_layer(RECORD, uint8_t layer)
-{
-  KEY_DOWN ? layer_on(layer) : layer_off(layer);
 }
 
 // LT macro for mapc_shift(), see process_record_user()

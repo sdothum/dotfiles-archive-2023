@@ -21,14 +21,14 @@
 // #define MOUSEKEY_MAX_SPEED   7
 // #define MOUSEKEY_WHEEL_DELAY 0
 
-// compile time macro string, see functions/hardware planck script (undefine otherwise)
-#define PRIVATE_STRING
+// compile time macro strings, see functions/hardware qmk script
+#define PRIVATE_STRING ""
+#define PUBLIC1_STRING ""
+#define PUBLIC2_STRING ""
 
-// compile time macro string, must be in quotes
-#define PUBLIC_STRING ":%s/arch=(.*)/arch=('any')\n"
-
-// Haskell tap dance operators
+// language tap dance operators
 #define HASKELL
+#define UNIX
 
 // rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
 #define ROLLOVER

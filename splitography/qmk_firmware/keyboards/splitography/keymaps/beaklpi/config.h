@@ -21,14 +21,15 @@
 // #define MOUSEKEY_MAX_SPEED   7
 // #define MOUSEKEY_WHEEL_DELAY 0
 
-// compile time macro string, see functions/hardware splitography script
+// compile time macro strings, see functions/hardware qmk script
 #define PRIVATE_STRING ""
+#define PUBLIC1_STRING ""
+#define PUBLIC2_STRING ""
 
-// compile time macro string
-#define PUBLIC_STRING ""
-
-// Haskell tap dance operator chords
+// language tap dance operators
 #define HASKELL
+#define UNIX
+
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
 #define THUMB_CAPS
 // left home shift I -> space

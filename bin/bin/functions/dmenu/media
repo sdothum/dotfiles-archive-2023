@@ -10,7 +10,7 @@ MENU="$CLEAR\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonar
 
 video='play kodi netflix'
 SONARR=http://$SERVER:8989/
-BROWSER=surf
+BROWSER=vimb
 root=true
 
 # meta dmenu menu!

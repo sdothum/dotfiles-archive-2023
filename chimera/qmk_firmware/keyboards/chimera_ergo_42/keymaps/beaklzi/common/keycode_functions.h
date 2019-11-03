@@ -48,7 +48,6 @@ void space(STATE, void *user_data);
 void space_reset(STATE, void *user_data);
 void steno(RECORD);
 void tap_key(uint16_t keycode);
-void tap_layer(RECORD, uint8_t layer);
 void tap_shift(uint16_t keycode);
 void tilde(STATE, void *user_data);
 void tilde_reset(STATE, void *user_data);

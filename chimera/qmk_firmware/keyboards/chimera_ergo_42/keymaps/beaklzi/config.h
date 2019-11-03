@@ -21,13 +21,14 @@
 // #define MOUSEKEY_MAX_SPEED   7
 // #define MOUSEKEY_WHEEL_DELAY 0
 
-// compile time macro string, see functions/hardware chimera script
+// compile time macro strings, see functions/hardware qmk script
 #define PRIVATE_STRING ""
-// compile time macro string, must be in quotes
-#define PUBLIC_STRING ""
+#define PUBLIC1_STRING ""
+#define PUBLIC2_STRING ""
 
-// haskell tap dance operators
+// language tap dance operators
 #define HASKELL
+#define UNIX
 
 // test all keyswitches
 // #define TEST

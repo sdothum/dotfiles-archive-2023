@@ -4,6 +4,10 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ........................................................................ Shell
-set nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+setlocal nospell
+setlocal expandtab
+setlocal tabstop=2
+setlocal shiftwidth=2
+setlocal softtabstop=2
 
 " sh.vim

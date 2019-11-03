@@ -4,7 +4,11 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " .......................................................................... CSS
-set nospell expandtab tabstop=2 shiftwidth=2 softtabstop=2
+setlocal nospell
+setlocal expandtab
+setlocal tabstop=2
+setlocal shiftwidth=2
+setlocal softtabstop=2
 
 " sort align, note <C-v><keycode> to embed command mode keycode
 nmap <silent><leader>css :g/{/normal! f{viB:sort<C-v><CR><CR>

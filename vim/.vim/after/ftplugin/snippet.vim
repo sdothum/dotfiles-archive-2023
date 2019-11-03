@@ -4,6 +4,9 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ...................................................................... Snippet
-set nospell noexpandtab tabstop=2 shiftwidth=2
+setlocal nospell
+setlocal noexpandtab
+setlocal tabstop=2
+setlocal shiftwidth=2
 
 " snippet.vim
