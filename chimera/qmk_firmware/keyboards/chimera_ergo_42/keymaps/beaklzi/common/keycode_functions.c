@@ -356,22 +356,24 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TAPS     TAP > 1
 #define TAP_DOWN state->pressed
 
-#define DOUBLE_TAP(k, s) if (TAP_DOWN)                  { register_code(k); } \
-                         else if (TAP == 2)             { send_string(s); }   \
-                         else for (i = 0; i < TAP; i++) { tap_key(k); }
+#define REPEAT(f, k) for (i = 0; i < TAP; i++) { f(k); }
+
+#define DOUBLE_TAP(k, s) if (TAP_DOWN)      { register_code(k); } \
+                         else if (TAP == 2) { send_string(s); }   \
+                         else REPEAT(tap_key, k);
 
 void colon(STATE, void *user_data)
 {
   if (mod_down(KC_RSFT)) {  // handle like map_shift()
-    if (TAPS)                      { DOUBLE_TAP(KC_SCLN, " :-"); }
-    else                           { TAP_DOWN ? register_code(KC_SCLN) : double_tap(TAP, NOSHIFT, KC_SCLN); }
-  } else if (TAPS) {
-    if (TAP_DOWN)                  { register_shift(KC_SCLN); }
+    if (TAPS)          { DOUBLE_TAP(KC_SCLN, " :-"); }
+    else               { TAP_DOWN ? register_code(KC_SCLN) : double_tap(TAP, NOSHIFT, KC_SCLN); }
+  } else if (TAPS)     {
+    if (TAP_DOWN)      { register_shift(KC_SCLN); }
 #ifdef HASKELL
-    else if (TAP == 2)             { send_string(" :: "); }
+    else if (TAP == 2) { send_string(" :: "); }
 #endif
-    else for (i = 0; i < TAP; i++) { tap_shift(KC_SCLN); }
-  } else                           { TAP_DOWN ? register_shift(KC_SCLN) : double_tap(TAP, SHIFT, KC_SCLN); }
+    else REPEAT(tap_shift, KC_SCLN);
+  } else               { TAP_DOWN ? register_shift(KC_SCLN) : double_tap(TAP, SHIFT, KC_SCLN); }
   reset_tap_dance(state);
 }
 
@@ -398,23 +400,29 @@ void equal_reset(STATE, void *user_data)
   layer_off      (_MOUSE);
 }
 
-#define DOUBLE_SHIFT(k, s) if (TAP_DOWN)                  { register_shift(k); } \
-                           else if (TAP == 2)             { send_string(s); }    \
-                           else for (i = 0; i < TAP; i++) { tap_shift(k); }
+#define DOUBLE_SHIFT(k, s) if (TAP_DOWN)          { register_shift(k); } \
+                           else if (TAP == 2)     { send_string(s); }    \
+                           else REPEAT(tap_shift, k);
 
-#define TRIPLE_SHIFT(k, s, t) if (TAP_DOWN)                  { register_shift(k); } \
-                              else if (TAP == 2)             { send_string(s); }    \
-                              else if (TAP == 3)             { send_string(t); }    \
-                              else for (i = 0; i < TAP; i++) { tap_shift(k); }
+#define TRIPLE_SHIFT(k, s, t) if (TAP_DOWN)       { register_shift(k); } \
+                              else if (TAP == 2)  { send_string(s); }    \
+                              else if (TAP == 3)  { send_string(t); }    \
+                              else REPEAT(tap_shift, k);
+
+#define QUAD_SHIFT(k, s, t, u) if (TAP_DOWN)      { register_shift(k); } \
+                               else if (TAP == 2) { send_string(s); }    \
+                               else if (TAP == 3) { send_string(t); }    \
+                               else if (TAP == 4) { send_string(u); }    \
+                               else REPEAT(tap_shift, k);
 
 void greater(STATE, void *user_data)
 {
 #if defined HASKELL && defined UNIX
-  if (TAPS) { TRIPLE_SHIFT(KC_DOT, " -> ", " >/dev/null"); }
+  if (TAPS) { QUAD_SHIFT(KC_DOT, " -> ", " >/dev/null", " >/dev/null 2>&1"); }
 #elif defined HASKELL
   if (TAPS) { DOUBLE_SHIFT(KC_DOT, " -> "); }
 #elif defined UNIX
-  if (TAPS) { DOUBLE_SHIFT(KC_DOT, " >/dev/null"); }
+  if (TAPS) { TRIPLE_SHIFT(KC_DOT, " >/dev/null", " >/dev/null 2>&1"); }
 #endif
 #if defined HASKELL || defined UNIX
   else      { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAP, SHIFT, KC_DOT); }
