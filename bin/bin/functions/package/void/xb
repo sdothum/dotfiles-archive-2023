@@ -44,7 +44,7 @@ case $1 in
 -H) action=unhold ;;
 + ) action=installed ;;
 - ) action=held ;;
-/ ) action=search ;;
+/*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;
 x ) action=dependency ;;
 X ) action=requiredby ;;
