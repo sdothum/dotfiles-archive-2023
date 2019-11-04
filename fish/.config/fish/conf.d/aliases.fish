@@ -140,6 +140,7 @@ alias perli 'perl -de 1'
 
 alias calc 'speedcrunch'
 alias d 'dict'
+alias dotfiles 'rlwrap dotfiles'
 alias handbrake 'ghb'
 alias music '!p ncmpcpp ;and ncmpcpp'
 alias scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
