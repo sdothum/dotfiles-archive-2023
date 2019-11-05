@@ -365,9 +365,13 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 void colon(STATE, void *user_data)
 {
   if (mod_down(KC_RSFT)) {  // handle like map_shift()
+#ifdef EMOJI
     if (TAPS)          { DOUBLE_TAP(KC_SCLN, " :-"); }
+#else
+    if (TAPS)          { REPEAT(tap_key, KC_SCLN); }
+#endif
     else               { TAP_DOWN ? register_code(KC_SCLN) : double_tap(TAP, NOSHIFT, KC_SCLN); }
-  } else if (TAPS)     {
+  } else if (TAPS) {
     if (TAP_DOWN)      { register_shift(KC_SCLN); }
 #ifdef HASKELL
     else if (TAP == 2) { send_string(" :: "); }

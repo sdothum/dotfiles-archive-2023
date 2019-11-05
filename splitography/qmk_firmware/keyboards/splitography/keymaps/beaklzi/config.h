@@ -29,6 +29,7 @@
 // language tap dance operators
 #define HASKELL
 #define UNIX
+#define EMOJI
 
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
 #define THUMB_CAPS
