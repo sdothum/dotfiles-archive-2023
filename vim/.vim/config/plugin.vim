@@ -75,7 +75,6 @@ Plug 'junegunn/fzf.vim', { 'dir': '~/.fzf', 'do': './install --all' }  " fuzzy f
 Plug 'Alok/notational-fzf-vim'        " fzf note search
 
 " ...................................................................... History
-" Plug 'sjl/gundo.vim', { 'on' : 'GundoToggle' }  " undo
 Plug 'simnalamburt/vim-mundo', { 'on' : 'MundoToggle' }  " undo
 Plug 'vim-scripts/YankRing.vim'       " paste (yank)
 

@@ -71,7 +71,7 @@ vnoremap " :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 " .............................................................. Code block text
 " markup wiki code blocks
 nnoremap <silent><leader>` V:CodeBlock<CR>
-vmap     <silent><leader>`  :CodeBlock<CR>
+vmap     <silent><leader>`  :'<,'>CodeBlock<CR>
 
 " Text shift ___________________________________________________________________
 

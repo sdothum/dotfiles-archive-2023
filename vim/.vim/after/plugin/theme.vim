@@ -171,9 +171,9 @@ function! s:plugins()
     hi! link SignifyLineChange Type
     hi! link SignifyLineDelete Identifier
   endif
-  hi! link SignifySignAdd    SignifyLineAdd
-  hi! link SignifySignChange SignifyLineChange
-  hi! link SignifySignDelete SignifyLineDelete
+  hi! link SignifySignAdd      SignifyLineAdd
+  hi! link SignifySignChange   SignifyLineChange
+  hi! link SignifySignDelete   SignifyLineDelete
 endfunction
 
 " ...................................................................... Console
