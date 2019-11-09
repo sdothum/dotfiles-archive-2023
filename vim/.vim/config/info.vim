@@ -39,7 +39,7 @@ set foldenable            " fold by default
 set foldlevelstart=10     " open most folds by default
 " set foldlevelstart=1
 set foldnestmax=10        " 10 nested fold max
-" set foldmethod=indent   " fold based on indent
+" set foldmethod=indent   " fold based on indent (faster than syntax)
 set foldmethod=syntax     " folding based on syntax
 
 let javaScript_fold=1     " JavaScript

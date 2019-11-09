@@ -10,9 +10,9 @@ augroup plugin | autocmd! | augroup END
 
 " .......................................................................... Ale
 let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '⚡'
-let g:ale_sign_info          = ''
-let g:ale_sign_warning       = '⚠'
+let g:ale_sign_error         = ''
+let g:ale_sign_info          = ''
+let g:ale_sign_warning       = ''
 let g:ale_linter_aliases     =
   \{
   \  'wiki' : 'markdown'
@@ -109,12 +109,15 @@ let g:mundo_verbose_graph   = 0  " condensed tree
 let g:mundo_mirror_graph    = 0  " left align tree
 
 function! s:toggleUndo()
-  let l:filetype = &filetype  " mundo alters markdown filetype to conf (autocmd buffer side-effect?)
+  let l:filetype = &filetype     " mundo alters markdown filetype to conf (?)
   MundoToggle
   let &filetype = l:filetype
+  if bufname('') == '__Mundo__'  " position cursor at current state (row) mundo bug
+    normal ggf@jk:noh<CR>
+  endif
 endfunction
 
-" nmap <silent><leader>u :MundoToggle<CR>
+" nmap <silent><leader>u :GundoToggle<CR>
 nmap <silent><leader>u :call <SID>toggleUndo()<CR>
 
 autocmd plugin BufEnter  __Mundo__         setlocal numberwidth=3 foldcolumn=0
@@ -379,7 +382,8 @@ autocmd plugin FileType html     call textobj#quote#init()
 autocmd plugin FileType markdown call textobj#quote#init()
 
 " ....................................................................... Vimade
-autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable   
+" autocmd plugin BufWinEnter __Gundo_* VimadeBufDisable
+autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
 
 " ..................................................................... Yankring
 let g:yankring_default_menu_mode  = 1   " menu on with no shortcut

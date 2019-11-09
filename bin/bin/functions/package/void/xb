@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [[-][S | U | R | H] | [+ | - | / | f** | x |X]] [-<options>] [--<option>]* [<package> | <file>**]"
+  echo "usage: $(basename $0) [[-][S | U | R | H] | [+ | - | / | f** | d |D]] [-<options>] [--<option>]* [<package> | <file>**]"
   echo "        S .. noconfirm"
   echo "       -S .. confirm"
   echo "       -S    update repos"
@@ -22,8 +22,8 @@ usage() {
   echo "        + .. installed"
   echo "        / .. search (package and description)"
   echo "        f .. file (in package)"
-  echo "        x .. dependencies"
-  echo "        X .. required by"
+  echo "        d .. dependencies"
+  echo "        D .. required by"
   echo "          .. query"
   exit 1
 }
@@ -46,8 +46,8 @@ case $1 in
 - ) action=held ;;
 /*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;
-x ) action=dependency ;;
-X ) action=requiredby ;;
+d ) action=dependency ;;
+D ) action=requiredby ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 

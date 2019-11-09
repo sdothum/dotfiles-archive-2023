@@ -29,6 +29,7 @@ checkpoint
 
 original /etc/sudoers
 sed -i '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //; /## Defaults specification/aDefaults insults' /etc/sudoers
+echo -e "\n# see https://www.reddit.com/r/voidlinux/comments/dsdn5a/did_sudo_behaviour_change_recently/\nDefaults umask = 022" | sudo tee -a /etc/sudoers
 cat /etc/sudoers
 checkpoint
 

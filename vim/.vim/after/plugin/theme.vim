@@ -150,8 +150,10 @@ command! Guides silent! call <SID>guides()
 " ................................................................ Plugin tweaks
 function! s:plugins()
   Trace theme:plugins()
-  execute 'hi ALEErrorSign   guifg=red gui=bold'
-  execute 'hi ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background) . ' gui=bold'
+  " execute 'hi ALEErrorSign   guifg=red gui=bold'
+  " execute 'hi ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background) . ' gui=bold'
+  execute 'hi ALEErrorSign   guifg=red'
+  execute 'hi ALEWarningSign guifg=' . s:hexValue('s:dfm_ale_' . &background)
 
   " g:fzf_colors initializes fzf only once, so override cursorline color
   let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . (g:colorscheme == 'duochrome' ? g:hue_6_2 : s:hexValue('s:dfm_fg_' . &background))  " cannot appear to set other colors, such as hl+ (?)

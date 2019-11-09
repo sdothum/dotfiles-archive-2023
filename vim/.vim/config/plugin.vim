@@ -77,7 +77,7 @@ Plug 'Alok/notational-fzf-vim'        " fzf note search
 " ...................................................................... History
 " Plug 'sjl/gundo.vim', { 'on' : 'GundoToggle' }  " undo
 Plug 'simnalamburt/vim-mundo', { 'on' : 'MundoToggle' }  " undo
-Plug 'vim-scripts/YankRing.vim'                 " paste (yank)
+Plug 'vim-scripts/YankRing.vim'       " paste (yank)
 
 " ....................................................................... Linter
 Plug 'w0rp/ale'                       " asynchronous lint engine
