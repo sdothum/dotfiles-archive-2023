@@ -17,8 +17,8 @@ else
   let g:state   = ['^', '-', '+', 'x']  " console
 endif
 
-let g:prose              = 0    " generic filetype, see theme.vim
-let g:column             = 0    " statusline column indicator, see theme.vim
+let g:prose     = 0    " generic filetype, see theme.vim
+let g:column    = 0    " statusline column indicator, see theme.vim
 
 augroup info | autocmd! | augroup END
 

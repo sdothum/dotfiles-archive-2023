@@ -57,9 +57,13 @@ endfunction
 " latex printing
 function! s:hardcopy()
   echo 'Printing..'
-  if s:markdown()                    | execute '!hardcopy wiki \"' . expand('%:t') . '\"'
-  elseif expand('%:p') =~ 'Patricia' | execute '!hardcopy wps' expand('%:t')
-  else                               | execute '!hardcopy code' expand('%:t') | endif
+  if s:markdown()
+    execute '!hardcopy wiki \"' . expand('%:t') . '\"'
+  elseif expand('%:p') =~ 'Patricia'
+    execute '!hardcopy wps' expand('%:t')
+  else
+    execute '!hardcopy code' expand('%:t')
+  endif
 endfunction
 
 command! Hardcopy silent call <SID>hardcopy()

@@ -25,13 +25,13 @@ Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
 " ........................................................................ Theme
 " Plug 'atelierbram/Base2Tone-vim'    " duotone themes
-Plug 'kamwitsta/flatwhite-vim'        " atom light background theme
+" Plug 'kamwitsta/flatwhite-vim'      " atom light background theme
+" Plug 'tyrannicaltoucan/vim-quantum'  " material design theme
+" Plug 'sdothum/vim-colors-duochrome'  " vim-colors-plain fork
+" Plug 'reedes/vim-colors-pencil'     " iaWriter theme (for console transparency)
 Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
 Plug 'bilalq/lite-dfm'                " distraction free mode
-Plug 'reedes/vim-colors-pencil'       " iaWriter theme (for console transparency)
-Plug 'sdothum/vim-colors-duochrome'   " vim-colors-plain fork
 Plug 'rakr/vim-one'                   " atom light syntax theme
-Plug 'tyrannicaltoucan/vim-quantum'   " material design theme
 Plug 'TaDaa/vimade'                   " hyperfocus highlghting for buffers
 Plug '~/.vim/custom/theme'            " theme
 

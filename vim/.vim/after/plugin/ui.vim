@@ -6,12 +6,11 @@
 " Layout _______________________________________________________________________
 
 " ........................................................................ Setup
-let g:pad          = ['      ', '   ']  " statusline padding [inner, outer]
-"                      123456    123
-let g:view         = 1                  " initial view mode (0) info (1) df
-let s:expanded     = 0                  " statusline state (0) dfm (1) expanded
-let s:font_changed = 0                  " redraw flag
-let s:show         = 1                  " statusline (0) off (1) on
+let g:pad           = ['      ', '   ']  " statusline padding [inner, outer]
+"                       123456    123
+let s:expanded      = 0                  " statusline state (0) dfm (1) expanded
+let s:font_changed  = 0                  " redraw flag
+let s:show          = 1                  " statusline (0) off (1) on
 
 "  Distraction free modes ______________________________________________________
 
@@ -19,12 +18,14 @@ let s:show         = 1                  " statusline (0) off (1) on
 " source code style
 function! s:codeView()
   Trace ui:codeView()
-  let g:view = 0
+  let g:duochrome_dfm      = 0
+  let g:duochrome_markdown = 0
   " syntax enable  " restore CursorLine syntax highlighting before applying themes
-  if exists('g:loaded_limelight') | Limelight! | endif
+  if exists('g:loaded_limelight')
+    Limelight!
+  endif
   Theme
   ShowStatusLine
-  CodeView
   set showmode
 endfunction
 
@@ -32,10 +33,9 @@ endfunction
 " distraction free style
 function! s:proseView()
   Trace ui:proseView()
-  let g:view = 1
-  " silent !tmux set status off
-  ProseView
-  if Prose() || g:ruler == 0 | set colorcolumn=0 | endif
+  let g:duochrome_dfm  = 1
+  if Prose() | let g:duochrome_markdown = 1 | endif
+  if Prose() || g:duochrome_ruler == 0 | set colorcolumn=0 | endif
   set foldcolumn=0
   set laststatus=0
   set noshowmode
@@ -50,32 +50,30 @@ endfunction
 function! s:view()
   Trace ui:view()
   let l:col = virtcol('.')
-  Theme
-  if b:view == 1  " proof view
-    " call s:showInfo(1)
-    Limelight!
-    Contrast 0
-  else            " dfm view
-    " call s:showInfo(0)
-    Limelight
+  if g:duochrome_insert  " dfm view
     Contrast 1
+    Limelight
+  else                   " proof view
+    Contrast 0
+    Limelight!
   endif
   execute 'normal! ' . l:col . '|'
 endfunction
 
 function! s:setView()
   Trace ui:setView()
-  if g:view == 0 | call s:codeView()
-  else           | call s:proseView() | endif
+  if g:duochrome_dfm | call s:proseView()
+  else               | call s:codeView() | endif
 endfunction
 
 " toggle dfm view
 function! s:switchView()
   Trace ui:SwitchView
   let l:col = col('.')
-  let g:view = g:view == 0 ? 1 : 0
+  let g:duochrome_dfm = g:duochrome_dfm == 0 ? 1 : 0
   call s:setView()
   execute 'normal! ' . l:col . '|'
+  Background
 endfunction
 
 command! SwitchView silent! call <SID>switchView()
@@ -84,9 +82,10 @@ command! SwitchView silent! call <SID>switchView()
 function! ToggleProof()
   Trace ui:ToggleProof()
   if CommandWindow() | return | endif
-  " if Prose() | let b:view = b:view == 0 ? 1 : 0 | endif
-  let b:view = b:view == 0 ? 1 : 0
+  " if Prose() | let g:duochrome_insert = g:duochrome_insert == 0 ? 1 : 0 | endif
+  let g:duochrome_insert = g:duochrome_insert == 0 ? 1 : 0
   call s:view()
+  ShowInfo
 endfunction
 
 " Screen focus _________________________________________________________________
@@ -94,15 +93,15 @@ endfunction
 " ............................................................... Screen display
 " initial view
 function! LiteType()
+  if PluginWindow() || ! has("gui_running") | return | endif 
   Trace ui:LiteType()
   call Font(Prose())
-  Palette
-  if ! exists('b:view') | let b:view = 1 | endif  " initial view (proof)
   call s:setView()
 endfunction
 
 " redraw
 function! Retheme()
+  if PluginWindow() | return | endif 
   Trace ui:Retheme()
   let lstatus     = &laststatus
   call LiteType()   
@@ -116,11 +115,11 @@ endfunction
 
 " balance left right margins with font size changes (and window resizing)
 function! Margins()
+  if PluginWindow() | return | endif 
   Trace ui:Margin
   let g:lite_dfm_left_offset = Offset()
   Quietly LiteDFM
-  LineNr
-  RefreshInfo
+  ShowInfo
 endfunction
 
 " ..................................................................... Set font
@@ -151,16 +150,16 @@ function! Detail()
 endfunction
 
 function! s:attn()
-  return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : ''
+  return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : '%1*'
 endfunction
 
 " [path] .. filename | pos .. [details]
-function! s:statusline(proof)
+function! s:statusline()
   " Trace ui:statusline()  " tmi :-)
   try  " trap snippet insertion interruption
     let g:prose = 1
-    if Prose() && a:proof == 0
-      return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%*')
+    if Prose() && g:duochrome_insert
+      return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
     else
       let l:name     = '%{Name()}' . g:pad[0]
       if s:expanded == 0  " center dfm indicator / proofing statusline
@@ -182,31 +181,20 @@ function! s:statusline(proof)
 endfunction
 
 " .............................................................. Show statusline
-function! s:showInfo(proof)
+function! s:showInfo()
   Trace ui:showInfo()
-  if a:proof == 1 || !Prose()
-    execute 'set statusline=' . s:statusline(a:proof)
-    ShowStatusLine
-  else
-    HideInfo
-  endif
+  execute 'set statusline=' . s:statusline()
+  ShowStatusLine
 endfunction
 
-function! s:refreshInfo()
-  Trace ui:RefreshInfo
-  call s:showInfo(b:view)
-endfunction
-
-command! RefreshInfo silent! call <SID>refreshInfo()
+command! ShowInfo silent! call <SID>showInfo()
 
 function! s:toggleInfo(...)
   Trace ui:ToggleInfo
   if a:0 && a:1 | return | endif  " prose insert mode is always dfm
   let l:col = col('.')
   let s:expanded = (s:expanded == 0 ? 1 : 0)
-  " if Prose() | call ToggleProof()  " toggle between writing and proofing modes
-  " else       | call s:showInfo(b:view) | endif
-  call s:showInfo(b:view)
+  ShowInfo
   execute 'normal! ' . l:col . '|'
 endfunction
 

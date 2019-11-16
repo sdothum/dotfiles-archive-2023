@@ -10,7 +10,7 @@ augroup plugin | autocmd! | augroup END
 
 " .......................................................................... Ale
 let g:ale_sign_column_always = 1
-let g:ale_sign_error         = ''
+let g:ale_sign_error         = '→'
 let g:ale_sign_info          = g:ale_sign_error
 let g:ale_sign_warning       = g:ale_sign_error
 let g:ale_linter_aliases     =
@@ -119,7 +119,7 @@ endfunction
 
 nmap <silent><leader>u :call <SID>toggleUndo()<CR>
 
-autocmd plugin BufEnter  __Mundo__         setlocal numberwidth=3 foldcolumn=0
+autocmd plugin BufEnter  __Mundo__         setlocal nonumber foldcolumn=0
 " for instance when mundo window is orphaned (trap timing conflict)
 autocmd plugin BufHidden __Mundo_Preview__ Quiet bdelete!\ __Mundo_Preview__
 
@@ -132,7 +132,7 @@ let g:indent_guides_auto_colors = 0  " highlight even indents, see gui:ToggleCol
 nmap <silent><leader><Bar> :IndentGuidesToggle<CR>
 
 " .................................................................... Limelight
-" let g:limelight_default_coefficient = 0.8
+let g:limelight_default_coefficient = 0.8
 let g:limelight_paragraph_span = 0  " include preceding/following paragraphs
 let g:limelight_priority       = 1  " -1 to hlsearch highlight all paragraphs, 1 per paragraph
 
@@ -343,6 +343,8 @@ let g:tagbar_map_togglesort = 'r'  " preserve sneak s
 let g:tagbar_width          = 40
 
 nmap <silent><leader>t :TagbarOpenAutoClose<CR>
+
+autocmd plugin BufEnter __Tagbar__.1 setlocal nonumber foldcolumn=0
 
 " ................................................................ Textobj quote
 let s:educate = 0

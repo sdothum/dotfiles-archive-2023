@@ -135,7 +135,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 }
 
 /* uncomment to highlight open icons */
-/* #feeds-holder .dijitTreeRowSelected:hover .dijitTreeExpando { opacity: .15; } */
+/* #feeds-holder .dijitTreeRowSelected:hover .dijitTreeExpando { opacity: .15; } */https://github.com/noahfrederick/vim-hemisu/
 
 /* set category refresh progress bar height and center over open icon position */
 img[src*="images/indicator_tiny.gif"] {

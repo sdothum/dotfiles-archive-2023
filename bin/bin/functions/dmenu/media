@@ -9,7 +9,7 @@ CLEAR='[ clear ]'
 MENU="$CLEAR\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nnetflix\nkodi\nnzb\ntorrent\npatricia\nthought of you"
 
 video='play kodi netflix'
-SONARR=http://$SERVER:8989/
+SONARR=http://$SERVER:8989/calendar
 BROWSER=vimb
 root=true
 
@@ -29,7 +29,7 @@ while : ;do
   netflix   ) netflix ;;
   nzb       ) exists nzbget && { toggle term 'NZB' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   patricia  ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
-  pulse     ) pulse ;;
+  pulse     ) exec pulse ;;
   references) dmenu references; unset root; break ;;
   series    ) dmenu series ;;
   sonarr    ) $BROWSER $SONARR; pwait "$BROWSER.*$SONARR"; unset root ;;

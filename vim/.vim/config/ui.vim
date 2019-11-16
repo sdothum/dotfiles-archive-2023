@@ -1,6 +1,6 @@
 " sdothum - 2016 (c) wtfpl
 
-" Themes
+" User Interface
 " ══════════════════════════════════════════════════════════════════════════════
 
 " The view _____________________________________________________________________
@@ -23,14 +23,13 @@ nmap <silent><F9>      :call Retheme()<CR>
 imap <silent><F9> <C-o>:call Retheme()<CR>
 
 " window manager timing requires FocusLost trap with VimResized to consistently set margins
-autocmd ui VimEnter,VimResized,FocusLost * call Margins()
-autocmd ui CursorHold,FocusGained        * if g:lite_dfm_left_offset != Offset() | call Margins() | endif
+autocmd ui VimResized,FocusLost * call Margins() | Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-autocmd ui BufWinEnter * if ! PluginWindow() | call LiteType() | endif
+autocmd ui BufWinEnter * call LiteType()
 " show and fix line wrap highlighting on startup
-autocmd ui GuiEnter    * if g:wrap_highlighting && ! PluginWindow() | call Retheme() | endif
+autocmd ui GuiEnter    * if g:wrap_highlighting | call Retheme() | endif
 
 " ..................................................................... Messages
 " recover last error message
@@ -76,7 +75,7 @@ imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 " for active window highlighting
 autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active | SplitColors
 autocmd ui WinLeave                                   * SplitColors
-autocmd ui BufWinEnter,WinEnter                       * RefreshInfo
+autocmd ui BufWinEnter,WinEnter                       * ShowInfo
 
 " .................................................................... View mode
 nmap <silent><C-S-F7>      :call ToggleProof()<CR>

@@ -48,19 +48,20 @@ set colorcolumn=0  " highlight column
 
 " toggle colorcolumn modes, see theme:Guides()
 function! s:toggleColumn()
-  if g:ruler == 0
-    let g:ruler      = 1
+  if g:duochrome_ruler == 0
+    let g:duochrome_ruler = 1
     let &colorcolumn = col('.') 
     autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
-  elseif g:ruler == 1
-    let g:ruler      = 2
+  elseif g:duochrome_ruler == 1
+    let g:duochrome_ruler = 2
     autocmd! column
   else
-    let g:ruler      = 0
+    let g:duochrome_ruler = 0
     let &colorcolumn = 0
     ColumnWrap
   endif
-  Guides
+  Background
+  " Guides
   let g:column = 1  " flash column position, see autocmd info.vim
 endfunction
 
@@ -73,7 +74,7 @@ let s:breakchar = '\ →\ '  " \escape spaces
 
 " highlight wrapped line portion, see theme:Theme()
 function! s:columnWrap()
-  if g:ruler == 0 && s:wraplight
+  if g:duochrome_ruler == 0 && s:wraplight
     set showbreak=
     let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
     let &colorcolumn = join(range(l:edge, 999), ',')
@@ -87,8 +88,8 @@ command! ColumnWrap silent! call <SID>columnWrap()
 let s:wraplight = 0  " highlight linewrap (0) off (1) on
 
 function! s:toggleColumnWrap(...)
-  let s:wraplight = a:0 ? a:1 : (s:wraplight ? 0 : 1)
-  let g:ruler     = -1
+  let s:wraplight       = a:0 ? a:1 : (s:wraplight ? 0 : 1)
+  let g:duochrome_ruler = -1
   call s:toggleColumn()
 endfunction
 

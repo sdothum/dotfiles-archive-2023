@@ -12,12 +12,12 @@
 SHELL=/usr/bin/dash
 export QUEUE=$(date '+%y%m%d%H%M%S')
 retention=90  # undo history file retention days
-vimtrace=$HOME/.session/vimtrace
+vimtrace=$HOME/.session/vim:trace
 [ -e $HOME/.session/mono ] && export MONO=-mono
 
 LOG=/tmp/vim.log
 echo >$LOG
-[ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true; term 'vimtrace' tail -f $LOG; }
+[ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true; term 'vim:trace' tail -f $LOG; }
 
 while : ;do
   case $1 in

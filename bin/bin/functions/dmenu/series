@@ -20,7 +20,7 @@ SONARR='[ sonarr       ]'
 category=${1:-series}
 PASSPORT="/run/media/$USER/My Passport/$category"
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
-sonarr=http://$SERVER:8989/
+sonarr=http://$SERVER:8989/calendar
 preprocess=${0%/dmenu}/functions/dmenu/.d/$category
 retitle="$library"/.retitle
 rm -f $retitle
