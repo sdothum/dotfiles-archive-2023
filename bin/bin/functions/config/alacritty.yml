@@ -1,0 +1,40 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Configure
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... alacritty
+
+usage() { echo "usage: $(basename $0) <pt size> <pad x> <pad y> <offset y>"; exit 1; }
+
+alacritty.yml() {
+  YML=/usr/share/doc/alacritty/example/alacritty.yml
+  CONF=$STOW/alacritty/$1pt/.config/alacritty/alacritty.yml
+  BLACK=$STOW/alacritty/.config/alacritty/blackboard.yml
+
+  mkdir -p ${CONF%/alacritty.yml}
+  cp -fv $YML $CONF
+  cp -v $YML $BLACK
+
+  sed -i -r "s/^(  size:).*/\1 $1/" $CONF 
+  sed -i -r "s/^(    background:).*/\1 '0x263238'/" $CONF  # match quantum background, see vim config
+  perl -i -0p "s/^(  padding:).*\s.*\s.*/\1\n    x: $2\n    y: $3/m" $CONF
+  perl -i -0p "s/^(  offset:).*\s(.*)\s.*/\1\n\2\n    y: $4/m" $CONF
+  sed -i "/args: \[\]/a\ \ \ \ launcher: vimb" $CONF
+
+  sed -i -r "s/^(    foreground:).*/\1 '0x000000'/" $BLACK 
+}
+ 
+case $# in
+0) alacritty.yml 8 8 8 4
+   alacritty.yml 9 9 9 2
+   alacritty.yml 10 12 12 0
+   alacritty.yml 11 12 12 3 ;;
+
+4) alacritty.yml $@ ;;
+*) usage ;;
+esac
+ 
+
+# vim: set ft=sh: #

@@ -1,0 +1,27 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Configure
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................. User session
+
+SESSION=${SESSION:-$HOME/.session}
+
+cfg_install -test $SESSION $(hostname) && exit
+
+# simple workflow and rice setup for 1080p herbstluftwm startup, tweak as necessary
+touch $SESSION/browser
+[ -e $SESSION/fontsize ] || echo 9 >$SESSION/fontsize
+[ -e $FRAME_GAP ] || echo 12 >$FRAME_GAP
+touch $SESSION/jabber
+[ -e $MARGIN ] || echo 18 >$MARGIN
+touch $NOBLUR
+touch $TICKER
+touch $WEATHER
+[ -e $PANEL_HEIGHT ] || echo 24 >$PANEL_HEIGHT
+[ -e $SETROOT ] || echo wallpaper >$SETROOT
+[ -e $SPINE ] || echo 2 >$SPINE
+[ -e $WINDOW_GAP ] || echo 4 >$WINDOW_GAP
+
+# vim: set ft=sh: #
