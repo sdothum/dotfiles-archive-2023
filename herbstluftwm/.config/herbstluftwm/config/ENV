@@ -58,7 +58,6 @@ export MARGIN=$SESSION/margin
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
 export SPINE=$SESSION/spine  # frame left decoration -> window_gap = 0
-export UNCLUTTER=$SESSION/unclutter
 export WINDOW_GAP=$SESSION/window_gap
 
 # application states
@@ -66,6 +65,7 @@ export MENU=$SESSION/term:menu
 export NCURSES=$SESSION/ncurses
 export PROOF=$SESSION/proof
 export SCOMPTON=$SESSION/compton
+export UNCLUTTER=$SESSION/unclutter
 export WSYNC=$SESSION/wsync
 
 # panel attributes

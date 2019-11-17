@@ -6,9 +6,12 @@
 " Duochrome ____________________________________________________________________
 
 " ................................................................... Initialize
-" hi! clear  " causes flickering on 'set background' refreshes
-if exists('syntax on') | syntax reset | endif
-let g:colors_name = 'duochrome'
+if ! exists('g:colors_name') | let g:colors_name = '' | endif
+if g:colors_name != 'duochrome'
+  hi! clear  " causes flickering on 'set background' refreshes
+  if exists('syntax on') | syntax reset | endif
+  let g:colors_name = 'duochrome'
+endif
 
 " ui colorscheme controls providing dynamic 'set background' changes
 if ! exists('g:duochrome_dfm')        | let g:duochrome_dfm        = 1 | endif  " view (0) proof (1) dfm
@@ -26,34 +29,36 @@ if ! exists('s:duochrome')
   let s:duochrome       = 1
   " gray tones
   let s:BLACK           = { "gui": "black",   "cterm": "0"   }
-  let s:black           = { "gui": "#263238", "cterm": "0"   }  " quantum
-  let s:subtle_black    = { "gui": "#37474F", "cterm": "236" }  " ..
-  let s:light_black     = { "gui": "#455A64", "cterm": "8"   }  " ..
-  let s:lighter_black   = { "gui": "#546E7A", "cterm": "240" }  " ..
+  let s:black           = { "gui": "#263238", "cterm": "235" }  " quantum
+  let s:subtle_black    = { "gui": "#37474F", "cterm": "237" }  " ..
+  let s:light_black     = { "gui": "#455A64", "cterm": "239" }  " ..
+  let s:lighter_black   = { "gui": "#546E7A", "cterm": "241" }  " ..
   let s:medium_gray     = { "gui": "#607D8B", "cterm": "243" }  " ..
-  let s:light_gray      = { "gui": "#78909C", "cterm": "249" }  " ..
-  let s:lighter_gray    = { "gui": "#90A4AE", "cterm": "251" }  " .. tone
-  let s:darker_white    = { "gui": "#d1bb9e", "cterm": "251" }  " flatwhite
-  let s:dark_white      = { "gui": "#decdb9", "cterm": "251" }  " ..
-  let s:subtle_white    = { "gui": "#eae0d3", "cterm": "251" }  " ..
-  let s:white           = { "gui": "#f7f3ee", "cterm": "15"  }  " .. tint
+  let s:light_gray      = { "gui": "#78909C", "cterm": "245" }  " ..
+  let s:lighter_gray    = { "gui": "#90A4AE", "cterm": "247" }  " .. tone
+  let s:darker_white    = { "gui": "#b0b0b0", "cterm": "249" }
+  let s:dark_white      = { "gui": "#d0d0d0", "cterm": "251" }
+  " let s:darker_white  = { "gui": "#d1bb9e", "cterm": "249" }  " flatwhite
+  " let s:dark_white    = { "gui": "#decdb9", "cterm": "251" }  " ..
+  let s:subtle_white    = { "gui": "#eae0d3", "cterm": "253" }  " ..
+  let s:white           = { "gui": "#f7f3ee", "cterm": "255" }  " .. tint
   let s:WHITE           = { "gui": "white",   "cterm": "15"  }
   " text colours
   let s:dark_red        = { "gui": "#e45649", "cterm": "1"   }  " one
-  let s:light_red       = { "gui": "#dd7186", "cterm": "1"   }  " quantum
-  let s:dark_blue       = { "gui": "#4078f2", "cterm": "4"   }  " one
-  let s:light_blue      = { "gui": "#70ace5", "cterm": "153" }  " quantum
-  let s:dark_green      = { "gui": "#50a14f", "cterm": "2"   }  " one
-  let s:light_green     = { "gui": "#87bb7c", "cterm": "10"  }  " quantum
-  let s:dark_cyan       = { "gui": "#0184bc", "cterm": "6"   }  " one
+  let s:light_red       = { "gui": "#dd7186", "cterm": "211" }  " quantum
+  let s:dark_blue       = { "gui": "#4078f2", "cterm": "12"  }  " one
+  let s:light_blue      = { "gui": "#70ace5", "cterm": "4"   }  " quantum
+  let s:dark_green      = { "gui": "#50a14f", "cterm": "34"  }  " one
+  let s:light_green     = { "gui": "#87bb7c", "cterm": "71"  }  " quantum
+  let s:dark_cyan       = { "gui": "#0184bc", "cterm": "31"  }  " one
   let s:light_cyan      = { "gui": "#69c5ce", "cterm": "14"  }  " quantum
-  let s:dark_purple     = { "gui": "#a626a4", "cterm": "5"   }  " one
-  let s:light_purple    = { "gui": "#a48add", "cterm": "13"  }  " quantum
-  let s:dark_yellow     = { "gui": "#c18401", "cterm": "3"   }  " one
+  let s:dark_purple     = { "gui": "#a626a4", "cterm": "92"  }  " one
+  let s:light_purple    = { "gui": "#a48add", "cterm": "105" }  " quantum
+  let s:dark_yellow     = { "gui": "#c18401", "cterm": "136" }  " one
   let s:light_yellow    = { "gui": "#d5b875", "cterm": "11"  }  " quantum
   " bg colours
   let s:blue_bg         = { "gui": "#dde4f2", "cterm": "153" }  " flatwhite
-  let s:orange_bg       = { "gui": "#f7e0c3", "cterm": "224" }  " flatwhite
+  let s:orange_bg       = { "gui": "#f7e0c3", "cterm": "223" }  " flatwhite
   let s:iawriter        = { "gui": "#20fccf", "cterm": "51"  }  " ia writer cursor
 endif
 
@@ -72,7 +77,7 @@ if s:background != &background
   let s:bg_very_subtle   = s:b(s:light_gray,    s:subtle_black)
   let s:norm             = s:b(s:light_black,   s:dark_white)
   let s:norm_subtle      = s:b(s:lighter_black, s:darker_white)
-  let s:norm_very_subtle = s:b(s:medium_gray,   s:medium_gray)
+  let s:norm_very_subtle = s:b(s:lighter_gray,  s:medium_gray)
   let s:red              = s:b(s:dark_red,      s:light_red)
   let s:blue             = s:b(s:dark_blue,     s:light_blue)
   let s:green            = s:b(s:dark_green,    s:light_green)
@@ -227,7 +232,7 @@ hi! link helpHyperTextJump        String
 " statusline
 call s:h("StatusLine",            { "bg": s:statusline, "fg": s:norm_subtle })
 call s:h("User1",                 { "fg": s:norm_subtle, "bg": g:duochrome_split ? s:statusline : s:bg })
-call s:h("User2",                 { "fg": s:blue, "bg": g:duochrome_split ? s:statusline : s:bg })
+call s:h("User2",                 { "fg": s:norm_very_subtle, "bg": g:duochrome_split ? s:statusline : s:bg })
 call s:h("User3",                 { "fg": s:red, "bg": g:duochrome_split ? s:statusline : s:bg })
 " statuslinenc
 call s:h("StatusLineNC",          { "bg": g:duochrome_split ? s:statusline : s:bg })

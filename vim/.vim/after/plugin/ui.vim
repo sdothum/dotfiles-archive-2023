@@ -115,11 +115,15 @@ endfunction
 
 " balance left right margins with font size changes (and window resizing)
 function! Margins()
-  if PluginWindow() | return | endif 
   Trace ui:Margin
-  let g:lite_dfm_left_offset = Offset()
-  Quietly LiteDFM
-  ShowInfo
+  if PluginWindow()  " flush left for plugin windows
+    setlocal nonumber
+    setlocal foldcolumn=0
+  else
+    let g:lite_dfm_left_offset = Offset()
+    Quietly LiteDFM
+    ShowInfo
+  endif 
 endfunction
 
 " ..................................................................... Set font

@@ -110,6 +110,13 @@ let g:mundo_mirror_graph    = 0  " left align tree
 
 function! s:toggleUndo()
   let l:filetype = &filetype     " mundo alters markdown filetype to conf (?)
+  if ! exists('b:mundo')         " do quick 'syntax off' history preload to avoid 'syntax on' load lag
+    let b:mundo = 1
+    syntax off
+    Quietly MundoToggle
+    Quietly MundoToggle
+    syntax on
+  endif
   Quietly MundoToggle
   let &filetype = l:filetype
   if bufname('') == '__Mundo__'  " position cursor at current state (row) mundo bug
@@ -119,7 +126,6 @@ endfunction
 
 nmap <silent><leader>u :call <SID>toggleUndo()<CR>
 
-autocmd plugin BufEnter  __Mundo__         setlocal nonumber foldcolumn=0
 " for instance when mundo window is orphaned (trap timing conflict)
 autocmd plugin BufHidden __Mundo_Preview__ Quiet bdelete!\ __Mundo_Preview__
 
@@ -343,8 +349,6 @@ let g:tagbar_map_togglesort = 'r'  " preserve sneak s
 let g:tagbar_width          = 40
 
 nmap <silent><leader>t :TagbarOpenAutoClose<CR>
-
-autocmd plugin BufEnter __Tagbar__.1 setlocal nonumber foldcolumn=0
 
 " ................................................................ Textobj quote
 let s:educate = 0

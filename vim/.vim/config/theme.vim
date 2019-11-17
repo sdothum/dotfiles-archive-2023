@@ -6,7 +6,6 @@
 " The look _____________________________________________________________________
 
 " .................................................................. Colorscheme
-hi! clear  " causes refresh flickering in colorscheme
 if has('gui_running')
   if &diff           " diff highlights the SignColumn which can only be cleared afterwards..
     colorscheme one  " diff mode doesn't work well with reverse (block) highlighting
