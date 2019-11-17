@@ -8,6 +8,8 @@
 
 usage() { echo "usage: $(basename $0) <city>"; exit 1; }
 
+# crontab: * * * * * <path>/vlux >>/tmp/vlux.log 2>&1
+
 VLUX=$HOME/.session/vlux
 LOCATION=$HOME/.session/location
 COLORSCHEME=$HOME/.session/vim:dark

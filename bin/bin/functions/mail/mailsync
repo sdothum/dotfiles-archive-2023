@@ -8,6 +8,8 @@
 
 usage() { echo "usage: $(basename $0) 'start | I'nit | l'og | t'ag | 1'pass"; exit 1; }
 
+# crontab: * * * * * <path>/mailsync >>/tmp/mailsync.log 2>&1
+
 MAILDIR=$HOME/Maildir
 
 # import user path

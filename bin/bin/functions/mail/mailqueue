@@ -8,6 +8,8 @@
 
 # Usage: mailqueue [purge]
 
+# crontab: * * * * * <path>/mailqueue >>/tmp/mailqueue.log 2>&1
+
 [ $STOW ] || STOW=$HOME/stow
 
 # send mail poller with error notifier
