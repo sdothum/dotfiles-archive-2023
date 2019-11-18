@@ -422,11 +422,11 @@ void equal_reset(STATE, void *user_data)
 void greater(STATE, void *user_data)
 {
 #if defined HASKELL && defined UNIX
-  if (TAPS) { QUAD_SHIFT(KC_DOT, " -> ", " >/dev/null", " >/dev/null 2>&1"); }
+  if (TAPS) { QUAD_SHIFT(KC_DOT, " -> ", ">/dev/null", " >/dev/null 2>&1"); }
 #elif defined HASKELL
   if (TAPS) { DOUBLE_SHIFT(KC_DOT, " -> "); }
 #elif defined UNIX
-  if (TAPS) { TRIPLE_SHIFT(KC_DOT, " >/dev/null", " >/dev/null 2>&1"); }
+  if (TAPS) { TRIPLE_SHIFT(KC_DOT, ">/dev/null", " >/dev/null 2>&1"); }
 #endif
 #if defined HASKELL || defined UNIX
   else      { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAP, SHIFT, KC_DOT); }

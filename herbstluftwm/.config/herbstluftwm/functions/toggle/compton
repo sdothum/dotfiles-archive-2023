@@ -1,5 +1,4 @@
 # sdothum - 2016 (c) wtfpl
-set -x
 [ $TRACE ] && CHILD="toggle/compton $@" . $PARENT
 
 # herbstluftwm
