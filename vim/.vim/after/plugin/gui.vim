@@ -8,8 +8,8 @@
 " ................................................................... Toggle gui
 " toggle gui menu
 function! s:toggleGui()
-  if &guioptions =~# 'T' | set guioptions-=T | set guioptions-=m
-  else                   | set guioptions+=T | set guioptions+=m | endif
+  if &guioptions =~# 'm' | set guioptions-=m
+  else                   | set guioptions+=m | endif
 endfunction
 
 command! ToggleGui silent! call <SID>toggleGui()

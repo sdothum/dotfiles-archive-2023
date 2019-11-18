@@ -130,7 +130,7 @@ endfunction
 " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
 function! Font(type)
   Trace ui:Font()
-  if $DISPLAY > ''
+  if has('gui_running')
     if g:font_type != a:type
       let g:font_type = a:type
       let l:size      = system('fontsize')

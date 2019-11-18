@@ -29,7 +29,11 @@ if ! exists('s:duochrome')
   let s:duochrome       = 1
   " gray tones
   let s:BLACK           = { "gui": "black",   "cterm": "0"   }
-  let s:black           = { "gui": "#263238", "cterm": "235" }  " quantum
+  if empty($DISPLAY)
+    let s:black         = s:BLACK  " hide numbers and fold column in console
+  else
+    let s:black         = { "gui": "#263238", "cterm": "235" }  " quantum
+  endif
   let s:subtle_black    = { "gui": "#37474F", "cterm": "237" }  " ..
   let s:light_black     = { "gui": "#455A64", "cterm": "239" }  " ..
   let s:lighter_black   = { "gui": "#546E7A", "cterm": "241" }  " ..
@@ -116,10 +120,14 @@ endfunction
 " .................................................................. Cursor/line
 " cursor
 call s:h("Cursor",                { "fg": s:black, "bg": s:iawriter })  " ia writer cursor
-if g:duochrome_litedfm && g:duochrome_markdown
-  call s:h("CursorLine",          { "fg": s:bg_reverse, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+if empty($DISPLAY)
+  call s:h("CursorLine",          { "cterm": "underline" })             " console
 else
-  call s:h("CursorLine",          { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+  if g:duochrome_litedfm && g:duochrome_markdown
+    call s:h("CursorLine",        { "fg": s:bg_reverse, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+  else
+    call s:h("CursorLine",        { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+  endif
 endif
 hi! link CommandCursor            Cursor
 hi! link InsertCursor             Cursor

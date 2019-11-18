@@ -7,14 +7,14 @@
 
 " ........................................................................ Setup
 " window g:state [0] unmodified [1] unmodifiable [2] modified [3] inactive
-if $DISPLAY > ''
+if empty($DISPLAY)
+  let g:state   = ['^', '-', '+', 'x']  " console
+else
   if $MONO > ''
     let g:state = ['', '', '', '']  " nerd-font utf-8 mono symbols, see ui.vim
   else
     let g:state = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim
   endif
-else
-  let g:state   = ['^', '-', '+', 'x']  " console
 endif
 
 let g:prose     = 0    " generic filetype, see theme.vim

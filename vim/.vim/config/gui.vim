@@ -8,8 +8,6 @@
 " ........................................................................ Setup
 augroup gui | autocmd! | augroup END
 
-" let g:gui = has('gui_running') ? 1 : 0  " gvim or console
-
 let g:ruler             = 0  " colorcolumn mode, see theme.vim
 let g:wrap_highlighting = 0  " wrap highlighting (0) off (1) on
 
@@ -19,7 +17,7 @@ inoremap <silent><S-F12> <C-o>:ToggleGui<CR>
 vnoremap <silent><S-F12> :<C-u>ToggleGui<CR>
 
 " ................................................................... Redraw gui
-if $DISPLAY > ''  " initial refresh to fill window (correct status line position)
+if has('gui_running')  " initial refresh to fill window (correct status line position)
   autocmd gui VimEnter * RedrawGui
 endif
 
