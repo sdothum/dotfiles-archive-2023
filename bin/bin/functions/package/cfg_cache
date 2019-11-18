@@ -14,14 +14,19 @@ ROOT=$HOME/build/cfg      # update master
 [ $# -eq 2 ] && host=.$2  # host dependent config
 
 if [ -d $1 ] ;then
-  mkdir -pv $ROOT$1$host || exit 1
+  mkdir -p $ROOT$1$host || exit 1
+  rm -rf $ROOT$1$host/* 2>/dev/null
   ditto copy "$(cp -rvf --preserve=mode --no-preserve=ownership $1/* $ROOT$1$host)"
 else
-  mkdir -pv $ROOT${1%/*} || exit 1
+  mkdir -p $ROOT${1%/*} || exit 1
   ditto copy "$(cp -vf --preserve=mode --no-preserve=ownership $1 $ROOT$1$host)"
 fi
 
 # avoid unnecessary dotfile updates
-ditto rm "$(find $ROOT$1$host -type l -name 'supervise' -exec rm -v {} \;)"  # ln supervise on cfg_install 
+void || exit
+if [ $(find $ROOT$1$host -type l -name 'supervise' | wc -l) -gt 0 ] ;then
+  ditto rm 'runit supervise links..'
+  find $ROOT$1$host -type l -name 'supervise' -exec rm -v {} \;
+fi
 
 # vim: set ft=sh: #

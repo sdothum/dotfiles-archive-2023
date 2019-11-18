@@ -97,6 +97,7 @@ if s:background != &background
   let s:statusline       = s:b(s:subtle_white,  s:subtle_black)
   let s:spell            = s:b(s:orange_bg,     s:subtle_black)
   let s:warning          = s:b(s:light_yellow,  s:light_yellow)
+  let s:fzf              = s:b(s:black["gui"],  s:white["gui"])
 endif
 
 " ................................................................ Set highlight
@@ -343,7 +344,7 @@ hi! link GitGutterChangeDelete    SignifyLineAdd
 hi! link SneakScope               Cursor
 
 " fzf
-let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . s:dark_yellow["gui"]  " cannot appear to set other colors, such as hl+ (?)
+let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . s:fzf  " cannot appear to set other colors, such as hl+ (?)
 " hide bottom fzf window identifier
 call s:h("fzf1",                  { "fg": s:bg })
 call s:h("fzf2",                  { "fg": s:bg })

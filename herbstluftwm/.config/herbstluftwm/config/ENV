@@ -13,7 +13,7 @@ export Mod=Mod1    # Use alt as the main modifier
 export SHELL=/usr/bin/dash
 export XDG_CONFIG_HOME=$HOME/.config
 export ROOT=${ROOT:-/tmp}
-export HLWM=$ROOT/herbstluftwm
+export HLWM=$ROOT/hlwm
 export SESSION=$HOME/.session
 export COMPTONCONF=$HOME/.compton.conf
 export CONKYRC=$HOME/.conkyrc
@@ -51,14 +51,22 @@ export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 
 # ............................................................... Session states
 
-# wm states
+# wm states, see gaps
 export CONTRAST=$SESSION/contrast
-export FRAME_GAP=$SESSION/frame_gap
-export MARGIN=$SESSION/margin
+export FRAME_GAP=$SESSION/hlwm:frame_gap
+export MARGIN=$SESSION/hlwm:margin
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
-export SPINE=$SESSION/spine  # frame left decoration -> window_gap = 0
-export WINDOW_GAP=$SESSION/window_gap
+export SPINE=$SESSION/hlwm:spine  # frame left decoration -> window_gap = 0
+export WINDOW_GAP=$SESSION/hlwm:window_gap
+
+# panel attributes
+export PANEL_HEIGHT=$SESSION/hlwm:panel_height
+export PANEL_INDENT=$SESSION/hlwm:panel_indent
+export SPANEL=$SESSION/panel
+export PCONKY=$SPANEL:conky
+export TICKER=$SPANEL:ticker
+export WEATHER=$SPANEL:weather
 
 # application states
 export MENU=$SESSION/term:menu
@@ -67,14 +75,6 @@ export PROOF=$SESSION/proof
 export SCOMPTON=$SESSION/compton
 export UNCLUTTER=$SESSION/unclutter
 export WSYNC=$SESSION/wsync
-
-# panel attributes
-export PANEL_HEIGHT=$SESSION/panel_height
-export PANEL_INDENT=$SESSION/panel_indent
-export SPANEL=$SESSION/panel
-export PCONKY=$SPANEL:conky
-export TICKER=$SPANEL:ticker
-export WEATHER=$SPANEL:weather
 
 # ..................................................................... Desktops
 
