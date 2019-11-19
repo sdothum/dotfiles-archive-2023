@@ -13,8 +13,9 @@ export Mod=Mod1    # Use alt as the main modifier
 export SHELL=/usr/bin/dash
 export XDG_CONFIG_HOME=$HOME/.config
 export ROOT=${ROOT:-/tmp}
-export HLWM=$ROOT/hlwm
+export HLWM=$ROOT/herbstluftwm
 export SESSION=$HOME/.session
+export UI=$HOME/.session/herbstluftwm
 export COMPTONCONF=$HOME/.compton.conf
 export CONKYRC=$HOME/.conkyrc
 xinput list --name-only | egrep -q 'Chimera|Planck|Splitography' 2>/dev/null && export BEAKL=true
@@ -53,16 +54,16 @@ export PANEL_FIFO=${PANEL_FIFO:-${PANEL}-fifo}
 
 # wm states, see gaps
 export CONTRAST=$SESSION/contrast
-export FRAME_GAP=$SESSION/hlwm:frame_gap
-export MARGIN=$SESSION/hlwm:margin
+export FRAME_GAP=$UI:frame_gap
+export MARGIN=$UI:margin
 export NOBLUR=$SESSION/noblur
 export SETROOT=$SESSION/setroot
-export SPINE=$SESSION/hlwm:spine  # frame left decoration -> window_gap = 0
-export WINDOW_GAP=$SESSION/hlwm:window_gap
+export SPINE=$UI:spine  # frame left decoration -> window_gap = 0
+export WINDOW_GAP=$UI:window_gap
 
 # panel attributes
-export PANEL_HEIGHT=$SESSION/hlwm:panel_height
-export PANEL_INDENT=$SESSION/hlwm:panel_indent
+export PANEL_HEIGHT=$UI:panel_height
+export PANEL_INDENT=$UI:panel_indent
 export SPANEL=$SESSION/panel
 export PCONKY=$SPANEL:conky
 export TICKER=$SPANEL:ticker

@@ -11,17 +11,18 @@ usage() { echo "usage: $(basename $0) <city>"; exit 1; }
 # crontab: * * * * * <path>/vlux >>/tmp/vlux.log 2>&1
 
 VLUX=$HOME/.session/vlux
+OFFSET=$VLUX:offset
 LOCATION=$HOME/.session/location
 COLORSCHEME=$HOME/.session/vim:dark
 # location offset from ottawa (system) time in -%H%M, +%H%M
-offset=+0000
+[ -e $OFFSET ] && offset=$(cat $OFFSET) || offset=+0000
 
 setlink() {
   link=$(readlink -f $2)
   [ ${1##*/} = ${link##*/} ] || ln -sf $1 $2
 }
 
-[ -e $VLUX ] || { vset light; exit; }
+[ -e $VLUX ] || exit
 
 # import user path
 . $HOME/bin/functions/shell/user_path
@@ -50,8 +51,9 @@ offset=$(( $H * 60 + $M ))
 if [ -s $VLUX ] ;then
   set -- $(cat $VLUX)  # only scrape sol times once a day :-)
 else
-  set -- $(pcurl https://weather.com/weather/today/l/$location | grep '"sunrise":' | sed -r 's/.*"sunrise":"....-..-..T(..:..):..-....","sunset":"....-..-..T(..:..):..-....".*/\1 \2/; s/://g')
-  [ $# -eq 2 ] && echo $1 $2 >$VLUX || exit 1  # something went wrong..
+  today=$(date '+%Y-%m-%d')
+  set -- $(pcurl https://weather.com/weather/today/l/$location | grep '"sunrise":' | sed -r "s/.*\"sunrise\":\"${today}T(..:..):..-....\",\"sunset\":\"${today}T(..:..):..-....\".*/\1 \2/; s/://g")
+  [ $# -eq 2 ] && echo $1 $2 >$VLUX || exit 1  # scrap failed..
 fi
 sunrise=$1  # am
 sunset=$2   # pm sunset=$(( $2 + 1200 )) old site date was previously 12 hour clock
@@ -62,8 +64,7 @@ if [ $sunrise -le $now ] && [ $now -le $sunset ] ;then
   [ -e $COLORSCHEME ] && { notify 'Gvim vlux' 'Going light..'; vset light; }
 else
   [ -e $COLORSCHEME ] || { notify 'Gvim vlux' 'Going dark..'; vset dark; }
-  # give site an hour to update data (may not be necessary)
-  [ $(date -r $VLUX '+%d') -ne $(date '+%d') ] && [ $(date '+%H%M') -gt 0100 ] && echo -n >$VLUX  # get sunrise and sunset for next day
+  [ $(date -r $VLUX '+%d') -ne $(date '+%d') ] && [ $(date '+%H%M') -gt $(( $sunrise - 0100 )) ] && echo -n >$VLUX  # get sunrise and sunset for next day
 fi
 
 # vim: set ft=sh: #

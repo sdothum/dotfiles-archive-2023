@@ -8,7 +8,7 @@
 " ................................................................... Initialize
 if ! exists('g:colors_name') | let g:colors_name = '' | endif
 if g:colors_name != 'duochrome'
-  hi! clear  " causes flickering on 'set background' refreshes
+  hi! clear  " will cause flickering on subsequent 'set background' refreshes if not suppressed
   if exists('syntax on') | syntax reset | endif
   let g:colors_name = 'duochrome'
 endif
