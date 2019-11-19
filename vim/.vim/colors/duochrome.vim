@@ -39,13 +39,11 @@ if ! exists('s:duochrome')
   let s:lighter_black   = { "gui": "#546E7A", "cterm": "241" }  " ..
   let s:medium_gray     = { "gui": "#607D8B", "cterm": "243" }  " ..
   let s:light_gray      = { "gui": "#78909C", "cterm": "245" }  " ..
-  let s:lighter_gray    = { "gui": "#90A4AE", "cterm": "247" }  " .. tone
-  let s:darker_white    = { "gui": "#b0b0b0", "cterm": "249" }
-  let s:dark_white      = { "gui": "#d0d0d0", "cterm": "251" }
-  " let s:darker_white  = { "gui": "#d1bb9e", "cterm": "249" }  " flatwhite
-  " let s:dark_white    = { "gui": "#decdb9", "cterm": "251" }  " ..
-  let s:subtle_white    = { "gui": "#eae0d3", "cterm": "253" }  " ..
-  let s:white           = { "gui": "#f7f3ee", "cterm": "255" }  " .. tint
+  let s:lighter_gray    = { "gui": "#90A4AE", "cterm": "247" }  " ..
+  let s:darker_white    = { "gui": "#B0BEC5", "cterm": "249" }  " ..
+  let s:dark_white      = { "gui": "#CFD8DC", "cterm": "251" }  " .. tint
+  let s:subtle_white    = { "gui": "#e9e0d7", "cterm": "253" }  " .. tone
+  let s:white           = { "gui": "#f7f3ee", "cterm": "255" }  " flatwhite
   let s:WHITE           = { "gui": "white",   "cterm": "15"  }
   " text colours
   let s:dark_red        = { "gui": "#e45649", "cterm": "1"   }  " one
