@@ -55,6 +55,7 @@ else
   set -- $(pcurl https://weather.com/weather/today/l/$location | grep '"sunrise":' | sed -r "s/.*\"sunrise\":\"${today}T(..:..):..-....\",\"sunset\":\"${today}T(..:..):..-....\".*/\1 \2/; s/://g")
   [ $# -eq 2 ] && echo $1 $2 >$VLUX || exit 1  # scrap failed..
 fi
+# must strip leading zeroes for $(( calculation )) below
 sunrise=${1##*0}  # am
 sunset=${2##*0}   # pm sunset=$(( $2 + 1200 )) old site date was previously 12 hour clock
 
