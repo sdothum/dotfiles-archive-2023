@@ -22,14 +22,11 @@ augroup ui | autocmd! | augroup END
 nmap <silent><F9>      :call Retheme()<CR>
 imap <silent><F9> <C-o>:call Retheme()<CR>
 
-" window manager timing requires FocusLost trap with VimResized to consistently set margins
-autocmd ui VimResized,FocusLost * call Margins() | Background
+autocmd ui VimEnter,VimResized,FocusGained * Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
 autocmd ui BufWinEnter * call LiteType()
-" show and fix line wrap highlighting on startup
-autocmd ui GuiEnter    * if g:wrap_highlighting | call Retheme() | endif
 
 " ..................................................................... Messages
 " recover last error message
@@ -73,9 +70,8 @@ nmap <silent><C-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
 imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 
 " for active window highlighting
-autocmd ui BufWinEnter,WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active | SplitColors
-autocmd ui WinLeave                                   * SplitColors
-autocmd ui BufWinEnter,WinEnter                       * ShowInfo
+autocmd ui WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
+autocmd ui WinEnter,TerminalOpen          * SplitColors
 
 " .................................................................... View mode
 nmap <silent><C-S-F7>      :call ToggleProof()<CR>
@@ -85,10 +81,6 @@ if has('gui_running')
   autocmd ui InsertEnter * call ToggleProof() | SignifyDisable
   autocmd ui InsertLeave * call ToggleProof() | SignifyEnable
 endif
-
-" .................................................................. Switch mode
-nmap <silent><S-F7>      :SwitchView<CR>
-imap <silent><S-F7> <C-o>:SwitchView<CR>
 
 " ............................................................. Switch font size
 nmap <silent><S-F9>      :call Font(g:font_type == 1 ? 0 : 1)<CR>

@@ -14,7 +14,7 @@ if g:colors_name != 'duochrome'
 endif
 
 " ui colorscheme controls providing dynamic 'set background' changes
-if ! exists('g:duochrome_dfm')        | let g:duochrome_dfm        = 1 | endif  " view (0) proof (1) dfm
+if ! exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
 if ! exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
 if ! exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight
 if ! exists('g:duochrome_ruler')      | let g:duochrome_ruler      = 0 | endif  " column (0) off (1) cursor (2) fixed
@@ -24,7 +24,7 @@ if ! exists('g:duochrome_split')      | let g:duochrome_split      = 0 | endif  
 if ! has('gui_running')               | let g:duochrome_cursorline = 1 | endif
 
 " ...................................................................... Palette
-" colours borrowed from vim-quantum, vim-one and flatwhite-vim colorschemes
+" colours borrowed from vim-quantum/material design, vim-one and flatwhite-vim colorschemes
 if ! exists('s:duochrome')
   let s:duochrome       = 1
   " gray tones
@@ -32,16 +32,16 @@ if ! exists('s:duochrome')
   if empty($DISPLAY)
     let s:black         = s:BLACK  " hide numbers and fold column in console
   else
-    let s:black         = { "gui": "#263238", "cterm": "235" }  " quantum
+    let s:black         = { "gui": "#263238", "cterm": "235" }  " material design
   endif
-  let s:subtle_black    = { "gui": "#37474F", "cterm": "237" }  " ..
-  let s:light_black     = { "gui": "#455A64", "cterm": "239" }  " ..
-  let s:lighter_black   = { "gui": "#546E7A", "cterm": "241" }  " ..
-  let s:medium_gray     = { "gui": "#607D8B", "cterm": "243" }  " ..
-  let s:light_gray      = { "gui": "#78909C", "cterm": "245" }  " ..
-  let s:lighter_gray    = { "gui": "#90A4AE", "cterm": "247" }  " ..
-  let s:darker_white    = { "gui": "#B0BEC5", "cterm": "249" }  " ..
-  let s:dark_white      = { "gui": "#CFD8DC", "cterm": "251" }  " .. tint
+  let s:subtle_black    = { "gui": "#37474f", "cterm": "237" }  " ..
+  let s:light_black     = { "gui": "#455a64", "cterm": "239" }  " ..
+  let s:lighter_black   = { "gui": "#546e7a", "cterm": "241" }  " ..
+  let s:medium_gray     = { "gui": "#607d8b", "cterm": "243" }  " ..
+  let s:light_gray      = { "gui": "#78909c", "cterm": "245" }  " ..
+  let s:lighter_gray    = { "gui": "#90a4ae", "cterm": "247" }  " ..
+  let s:darker_white    = { "gui": "#b0bec5", "cterm": "249" }  " ..
+  let s:dark_white      = { "gui": "#cfd8dc", "cterm": "251" }  " .. tint
   let s:subtle_white    = { "gui": "#e9e0d7", "cterm": "253" }  " .. tone
   let s:white           = { "gui": "#f7f3ee", "cterm": "255" }  " flatwhite
   let s:WHITE           = { "gui": "white",   "cterm": "15"  }
@@ -127,20 +127,21 @@ else
     call s:h("CursorLine",        { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
   endif
 endif
+call s:h("Ignore",                { "fg": s:bg })
 hi! link CommandCursor            Cursor
 hi! link InsertCursor             Cursor
 hi! link ReplaceCursor            Cursor
 hi! link VisualCursor             Cursor
 
 " linenr
-if g:duochrome_dfm
-  call s:h("CursorLineNr",        { "fg": g:duochrome_insert ? s:bg : s:blue })
-  call s:h("LineNr",              { "fg": s:bg })
-else
+if g:duochrome_relative
   call s:h("CursorLineNr",        { "fg": s:bg })
   call s:h("LineNr",              { "fg": s:blue })
+else
+  call s:h("CursorLineNr",        { "fg": g:duochrome_insert ? s:bg : s:blue })
+  call s:h("LineNr",              { "fg": s:bg })
 endif
-hi! link FoldColumn               LineNr
+hi! link FoldColumn               Ignore
 hi! link SignColumn               LineNr
 
 " ...................................................................... Special
@@ -259,7 +260,6 @@ call s:h("IndentGuidesEven",      { "bg": s:guide })
 call s:h("ColorColumn",           { "bg": g:duochrome_ruler == 1 ? s:column : s:guide })
 
 " nontext
-call s:h("Ignore",                { "fg": s:bg })
 call s:h("NonText",               { "fg": s:red })
 call s:h("ShowMarksHLl",          { "bg": s:bg })
 hi! link SignColumn               ShowMarksHLl

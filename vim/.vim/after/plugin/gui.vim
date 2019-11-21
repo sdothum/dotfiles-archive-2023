@@ -29,17 +29,14 @@ endfunction
 
 command! RedrawGui silent! call <SID>redrawGui()
 
-" Look _________________________________________________________________________
+" .................................................................... Scrolling
 
-" ................................................................. Line numbers
-" toggle relative number, line number and no numbering
-function! s:toggleNumber()
-  if (&relativenumber == 1 && &number == 1)     | set norelativenumber
-  elseif (&relativenumber == 0 && &number == 1) | set nonumber
-  else                                          | set relativenumber | set number | endif
+" dynamic scroll offset
+function! ScrollOffset()
+  let &scrolloff = Prose() ? 999 : 0
 endfunction
 
-command! ToggleNumber silent! call <SID>toggleNumber()
+" Look _________________________________________________________________________
 
 " ............................................................... Column margins
 augroup column | autocmd! | augroup END
@@ -70,7 +67,7 @@ command! ToggleColumn silent! call <SID>toggleColumn()
 " Highlights ___________________________________________________________________
 
 " .......................................................... Line wrap highlight
-let s:breakchar = '\ →\ '  " \escape spaces
+let s:breakchar = '\ ↪\ '  " \escape spaces
 
 " highlight wrapped line portion, see theme:Theme()
 function! s:columnWrap()
@@ -85,7 +82,7 @@ endfunction
 
 command! ColumnWrap silent! call <SID>columnWrap()
 
-let s:wraplight = 0  " highlight linewrap (0) off (1) on
+let s:wraplight = 0  " show linewrap with (0) breakchar (1) highlight
 
 function! s:toggleColumnWrap(...)
   let s:wraplight       = a:0 ? a:1 : (s:wraplight ? 0 : 1)

@@ -43,4 +43,7 @@
 // double tap "=="
 #define EQLEQL "=~"
 
+// upper case hex (idefault lower case abcdef)
+// #define UPPER_HEX
+
 #endif

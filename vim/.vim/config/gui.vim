@@ -17,7 +17,7 @@ inoremap <silent><S-F12> <C-o>:ToggleGui<CR>
 vnoremap <silent><S-F12> :<C-u>ToggleGui<CR>
 
 " ................................................................... Redraw gui
-if has('gui_running')  " initial refresh to fill window (correct status line position)
+if has('gui_running')  " initial refresh to fill window
   autocmd gui VimEnter * RedrawGui
 endif
 
@@ -28,9 +28,6 @@ vnoremap <silent><F12> :<C-u>RedrawGui<CR>
 " Display ______________________________________________________________________
 
 " .................................................................... Scrolling
-if $HOST == 'monad' | set scrolloff=3
-else                | set scrolloff=5 | endif
-let g:scrolloff = &scrolloff
 set sidescroll=1  " smooth scrolling by 1 column
 set sidescrolloff=1
 
@@ -85,12 +82,8 @@ set number
 set numberwidth=10
 set relativenumber
 
-" toggle relative number, line number and no numbering
+" toggle relative/line number
 nmap <silent># :ToggleNumber<CR>
-
-" " toggle relative line numbers
-" autocmd gui InsertEnter * set norelativenumber
-" autocmd gui InsertLeave * set relativenumber
 
 " ....................................................... Status / command lines
 set laststatus=2  " always show status line

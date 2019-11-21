@@ -8,7 +8,7 @@
 " ............................................................... Initialization
 function! s:background(...)
   Trace theme:Background
-  call Margins()  " must be called before colorscheme ta refresh cursorlinenr (cleared by LiteDFM)
+  call Margins()  " must be called before colorscheme ta refresh cursorlinenr cleared by LiteDFM
   if a:0
     let &background = a:1
   else

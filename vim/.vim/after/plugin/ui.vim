@@ -14,37 +14,6 @@ let s:show          = 1                  " statusline (0) off (1) on
 
 "  Distraction free modes ______________________________________________________
 
-" .................................................................... Code view
-" source code style
-function! s:codeView()
-  Trace ui:codeView()
-  let g:duochrome_dfm      = 0
-  let g:duochrome_markdown = 0
-  " syntax enable  " restore CursorLine syntax highlighting before applying themes
-  if exists('g:loaded_limelight')
-    Limelight!
-  endif
-  Theme
-  ShowStatusLine
-  set showmode
-endfunction
-
-" ................................................................... Prose view
-" distraction free style
-function! s:proseView()
-  Trace ui:proseView()
-  let g:duochrome_dfm  = 1
-  if Prose() | let g:duochrome_markdown = 1 | endif
-  if Prose() || g:duochrome_ruler == 0 | set colorcolumn=0 | endif
-  set foldcolumn=0
-  set laststatus=0
-  set noshowmode
-  set scrolloff=8
-  if Prose() | set spell
-  else       | set nospell | endif
-  call s:view()
-endfunction
-
 " .................................................................. Switch view
 " toggle full document highlight
 function! s:view()
@@ -60,23 +29,17 @@ function! s:view()
   execute 'normal! ' . l:col . '|'
 endfunction
 
-function! s:setView()
-  Trace ui:setView()
-  if g:duochrome_dfm | call s:proseView()
-  else               | call s:codeView() | endif
-endfunction
-
-" toggle dfm view
-function! s:switchView()
-  Trace ui:SwitchView
+" ................................................................. Line numbers
+" toggle line numbers
+function! s:toggleNumber()
+  Trace ui:ToggleNumber
   let l:col = col('.')
-  let g:duochrome_dfm = g:duochrome_dfm == 0 ? 1 : 0
-  call s:setView()
+  let g:duochrome_relative = g:duochrome_relative == 0 ? 1 : 0
   execute 'normal! ' . l:col . '|'
   Background
 endfunction
 
-command! SwitchView silent! call <SID>switchView()
+command! ToggleNumber silent! call <SID>toggleNumber()
 
 " .................................................................. Insert mode
 function! ToggleProof()
@@ -95,8 +58,10 @@ endfunction
 function! LiteType()
   if PluginWindow() || ! has("gui_running") | return | endif 
   Trace ui:LiteType()
+  let g:duochrome_markdown = Prose()
   call Font(Prose())
-  call s:setView()
+  call ScrollOffset()
+  ColumnWrap
 endfunction
 
 " redraw

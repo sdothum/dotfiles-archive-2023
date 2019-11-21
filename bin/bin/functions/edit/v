@@ -15,7 +15,7 @@ retention=90  # undo history file retention days
 vimtrace=$HOME/.session/vim:trace
 [ -e $HOME/.session/mono ] && export MONO=-mono
 
-LOG=/tmp/vim.log
+LOG=/tmp/vim:trace
 echo >$LOG
 [ $DISPLAY ] && [ -e $vimtrace ] && { export VIMTRACE=true; term 'vim:trace' tail -f $LOG; }
 

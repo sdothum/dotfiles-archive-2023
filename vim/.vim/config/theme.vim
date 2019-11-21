@@ -25,9 +25,8 @@ endif
 
 augroup theme | autocmd! | augroup END
 
-autocmd theme FocusGained,BufEnter * Background
-autocmd theme InsertEnter          * Background
-autocmd theme InsertLeave          * Background
+autocmd theme InsertEnter * Background
+autocmd theme InsertLeave * Background
 
 " ................................................................ Switch colour
 nmap <silent><S-F8>      :LiteSwitch<CR>
