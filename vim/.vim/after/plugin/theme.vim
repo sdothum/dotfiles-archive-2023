@@ -49,18 +49,6 @@ function! s:syntax()
   ToggleWrap           " to enable Pencil autowrap (?)
 endfunction
 
-" Context highlight ____________________________________________________________
-
-" ................................................................... Prose mode
-" enhanced limelight contrast, see ui:ToggleProof()
-function! s:contrast(level)
-  Trace theme:Contrast
-  let g:duochrome_litedfm = a:level
-  Background
-endfunction
-
-command! -nargs=1 Contrast silent! call <SID>contrast(<f-args>)
-
 " Statusline ___________________________________________________________________
 
 " ................................................................ Single window

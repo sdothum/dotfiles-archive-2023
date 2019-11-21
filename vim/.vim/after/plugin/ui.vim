@@ -19,11 +19,10 @@ let s:show          = 1                  " statusline (0) off (1) on
 function! s:view()
   Trace ui:view()
   let l:col = virtcol('.')
-  if g:duochrome_insert  " dfm view
-    Contrast 1
+  Background
+  if g:duochrome_insert  " insert dfm view
     Limelight
-  else                   " proof view
-    Contrast 0
+  else                   " normal proof view
     Limelight!
   endif
   execute 'normal! ' . l:col . '|'
@@ -33,9 +32,7 @@ endfunction
 " toggle line numbers
 function! s:toggleNumber()
   Trace ui:ToggleNumber
-  let l:col = col('.')
   let g:duochrome_relative = g:duochrome_relative == 0 ? 1 : 0
-  execute 'normal! ' . l:col . '|'
   Background
 endfunction
 

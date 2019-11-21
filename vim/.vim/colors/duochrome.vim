@@ -14,12 +14,11 @@ if g:colors_name != 'duochrome'
 endif
 
 " ui colorscheme controls providing dynamic 'set background' changes
-if ! exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
-if ! exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
 if ! exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight
-if ! exists('g:duochrome_ruler')      | let g:duochrome_ruler      = 0 | endif  " column (0) off (1) cursor (2) fixed
-if ! exists('g:duochrome_litedfm')    | let g:duochrome_litedfm    = 0 | endif  " litedfm (0) off (1) on
+if ! exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
 if ! exists('g:duochrome_markdown')   | let g:duochrome_markdown   = 0 | endif  " source (0) code (1) markdown
+if ! exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
+if ! exists('g:duochrome_ruler')      | let g:duochrome_ruler      = 0 | endif  " column (0) off (1) cursor (2) fixed
 if ! exists('g:duochrome_split')      | let g:duochrome_split      = 0 | endif  " windows (0) single (1) split
 if ! has('gui_running')               | let g:duochrome_cursorline = 1 | endif
 
@@ -121,7 +120,7 @@ call s:h("Cursor",                { "fg": s:black, "bg": s:iawriter })  " ia wri
 if empty($DISPLAY)
   call s:h("CursorLine",          { "cterm": "underline" })             " console
 else
-  if g:duochrome_litedfm && g:duochrome_markdown
+  if g:duochrome_insert && g:duochrome_markdown
     call s:h("CursorLine",        { "fg": s:bg_reverse, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
   else
     call s:h("CursorLine",        { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
