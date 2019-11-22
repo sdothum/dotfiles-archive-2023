@@ -43,9 +43,9 @@ command! LiteSwitch silent! call <SID>liteSwitch()
 function! s:syntax()
   if &filetype != 'markdown' | return | endif
   Trace theme:syntax()
-  set syntax=markdown  " to see bold and italics (?)
+  set syntax=markdown  " to see bold and italics (..?)
   ToggleWrap
-  ToggleWrap           " to enable Pencil autowrap (?)
+  ToggleWrap           " to enable Pencil autowrap (..?)
 endfunction
 
 " Statusline ___________________________________________________________________

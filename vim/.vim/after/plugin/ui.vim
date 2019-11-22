@@ -45,7 +45,6 @@ function! ToggleProof()
   " if Prose() | let g:duochrome_insert = ! g:duochrome_insert | endif
   let g:duochrome_insert = ! g:duochrome_insert
   call s:view()
-  ShowInfo
 endfunction
 
 " Screen focus _________________________________________________________________
