@@ -124,7 +124,7 @@ endfunction
 " normal mode code: col -> file%, prose: col -> wordcount
 " insert mode code: col 
 function! PosWordsCol()
-  return mode() == 'n' ? (g:column == 0 ? (Prose() ? s:wordCount() : (line('.') * 100 / line('$')) . '%') : col('.')) : col('.')
+  return mode() == 'n' ? (g:show_column == 0 ? (Prose() ? s:wordCount() : (line('.') * 100 / line('$')) . '%') : col('.')) : col('.')
 endfunction
 
 " ............................................................... Escaped leader

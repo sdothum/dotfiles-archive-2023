@@ -43,7 +43,7 @@ set omnifunc=syntaxcomplete#Complete
 syntax on  " turn on syntax highlighting
  
 " refresh highlighting on arm
-autocmd ui CursorHold * if ! Prose() && &filetype != '' | execute 'set filetype=' . &filetype | endif
+" autocmd ui CursorHold * if ! Prose() && ! &diff && &filetype != '' | execute 'set filetype=' . &filetype | endif
 
 " .......................................................... White space markers
 set nolist  " display tabs and trailing spaces visually
@@ -67,16 +67,16 @@ nmap <silent><F7>        :ToggleInfo<CR>
 imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
 " toggle tag, line details
-nmap <silent><C-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
-imap <silent><C-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
+nmap <silent><S-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
+imap <silent><S-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
 
 " for active window highlighting
-autocmd ui WinEnter,TerminalOpen,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
-autocmd ui WinEnter,TerminalOpen          * SplitColors
+autocmd ui WinEnter,TerminalOpen,BufWinEnter,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
+autocmd ui WinEnter,TerminalOpen                      * SplitColors
 
 " .................................................................... View mode
-nmap <silent><C-S-F7>      :call ToggleProof()<CR>
-imap <silent><C-S-F7> <C-o>:call ToggleProof()<CR>
+nmap <silent><C-F7>      :call ToggleProof()<CR>
+imap <silent><C-F7> <C-o>:call ToggleProof()<CR>
 
 if has('gui_running')
   autocmd ui InsertEnter * call ToggleProof() | SignifyDisable

@@ -6,11 +6,11 @@
 " Layout _______________________________________________________________________
 
 " ........................................................................ Setup
-let g:pad           = ['      ', '   ']  " statusline padding [inner, outer]
-"                       123456    123
-let s:expanded      = 0                  " statusline state (0) dfm (1) expanded
-let s:font_changed  = 0                  " redraw flag
-let s:show          = 1                  " statusline (0) off (1) on
+let g:pad           = ['      ', '     ']  " statusline padding [inner, outer]
+"                       123456    12345
+let s:expanded      = 0                    " statusline state (0) dfm (1) expanded
+let s:font_changed  = 0                    " redraw flag
+let s:show          = 1                    " statusline (0) off (1) on
 
 "  Distraction free modes ______________________________________________________
 
@@ -19,13 +19,13 @@ let s:show          = 1                  " statusline (0) off (1) on
 function! s:view()
   Trace ui:view()
   let l:col = virtcol('.')
-  Background
   if g:duochrome_insert  " insert dfm view
     Limelight
   else                   " normal proof view
     Limelight!
   endif
   execute 'normal! ' . l:col . '|'
+  Background
 endfunction
 
 " ................................................................. Line numbers

@@ -35,7 +35,6 @@ function! s:liteSwitch()
   else
     Background light
   endif
-  call LiteType()
 endfunction
 
 command! LiteSwitch silent! call <SID>liteSwitch()

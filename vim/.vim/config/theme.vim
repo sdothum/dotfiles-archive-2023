@@ -6,20 +6,14 @@
 " The look _____________________________________________________________________
 
 " .................................................................. Colorscheme
+colorscheme duochrome
 if has('gui_running')
-  if &diff           " diff highlights the SignColumn which can only be cleared afterwards..
-    colorscheme one  " diff mode doesn't work well with reverse (block) highlighting
-    autocmd theme CursorHold * hi! link SignColumn NonText
-  else 
-    colorscheme duochrome
-    if empty(glob('~/.session/vim:dark'))
-      set background=light
-    else
-      set background=dark
-    endif
+  if empty(glob('~/.session/vim:dark')) || &diff
+    set background=light
+  else
+    set background=dark
   endif
 else
-  colorscheme duochrome
   set background=dark
 endif
 

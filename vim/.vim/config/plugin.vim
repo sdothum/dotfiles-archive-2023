@@ -21,16 +21,12 @@ Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 " Plug 'tpope/vim-scriptease'         " debugger
 " Plug 'tpope/vim-dispatch'           " launch async shell command
 
-" Interface ____________________________________________________________________
+" User Interface _______________________________________________________________
 
-" ........................................................................ Theme
-" Plug 'kamwitsta/flatwhite-vim'      " atom light background theme
-" Plug 'tyrannicaltoucan/vim-quantum'  " material design theme
+" ....................................................................... Layout
 Plug 'junegunn/limelight.vim'         " hyperfocus highlighting
 Plug 'bilalq/lite-dfm'                " distraction free mode
-Plug 'rakr/vim-one'                   " atom light syntax theme
 Plug 'TaDaa/vimade'                   " hyperfocus highlghting for buffers
-Plug '~/.vim/custom/theme'            " theme
 
 " ......................................................................... Info
 " Plug 'metakirby5/codi.vim'          " async evaluator

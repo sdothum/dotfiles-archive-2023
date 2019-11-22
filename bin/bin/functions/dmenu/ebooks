@@ -36,7 +36,7 @@ fi
 
 file() {
   # convert apostrophe ' to ? for pattern matching
-  path=$(echo $book | sed -r "s/'/./" -e "s|^(.*)  *${SEP}  *(.*)|.*\2/(\1[^/]*/)*\1( - .*)*.$1|")
+  path=$(echo "$book" | sed -r "s/'/./g; s|^(.*)  *${SEP}  *(.*)|.*\2/(\1[^/]*/)*\1( - .*)*.$1|")
   find $library -regextype egrep -regex "$path"
 }
 
@@ -57,7 +57,7 @@ catlg() {
 }
 
 # .................................................................. Select book
-
+set -x
 while : ;do
   book=$(cat $cache | mhistory ebooks | column -s^ -t | sed "1i$REBUILD" | rmenu "E-book" 1 -filter \"$author\" -no-custom)
 

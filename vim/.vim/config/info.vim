@@ -17,8 +17,8 @@ else
   endif
 endif
 
-let g:prose     = 0    " generic filetype, see theme.vim
-let g:column    = 0    " statusline column indicator, see theme.vim
+let g:prose       = 0  " generic filetype, see theme.vim
+let g:show_column = 0  " statusline current column, see theme.vim
 
 augroup info | autocmd! | augroup END
 
@@ -26,8 +26,8 @@ augroup info | autocmd! | augroup END
 " trigger autocmd to flash column position (does not work for BOF)
 nnoremap <silent><C-c> hl
 
-autocmd info CursorHold  * let g:column = 0
-autocmd info CursorMoved * let g:column = 1
+autocmd info CursorHold  * let g:show_column = 0
+autocmd info CursorMoved * let g:show_column = 1
 
 " ................................................................. Syntax group
 nnoremap <silent><F10> :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<CR>

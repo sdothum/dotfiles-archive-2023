@@ -120,10 +120,14 @@ call s:h("Cursor",                { "fg": s:black, "bg": s:iawriter })  " ia wri
 if empty($DISPLAY)
   call s:h("CursorLine",          { "cterm": "underline" })             " console
 else
-  if g:duochrome_insert && g:duochrome_markdown
-    call s:h("CursorLine",        { "fg": s:bg_reverse, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+  if &diff
+    call s:h("CursorLine",        { "gui": "underline" })
   else
-    call s:h("CursorLine",        { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+    if g:duochrome_insert && g:duochrome_markdown
+      call s:h("CursorLine",      { "fg": s:bg_reverse, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+    else
+      call s:h("CursorLine",      { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+    endif
   endif
 endif
 call s:h("Ignore",                { "fg": s:bg })
@@ -140,8 +144,11 @@ else
   call s:h("CursorLineNr",        { "fg": g:duochrome_insert ? s:bg : s:blue })
   call s:h("LineNr",              { "fg": s:bg })
 endif
+
+" marks
 hi! link FoldColumn               Ignore
-hi! link SignColumn               LineNr
+call s:h("SignColumn",            { "bg": s:bg })
+hi! link ShowMarksHLl             SignColumn
 
 " ...................................................................... Special
 " normal
@@ -215,13 +222,13 @@ call s:h("Visual",                { "bg": s:visual })
 call s:h("VisualNOS",             { "bg": s:bg_subtle })
 
 " diffadd
-call s:h("DiffAdd",               { "fg": s:green })
+call s:h("DiffAdd",               { "bg": s:subtle_white, "fg": s:green })
 " diffdelete
-call s:h("DiffDelete",            { "fg": s:red })
+call s:h("DiffDelete",            { "bg": s:subtle_white, "fg": s:red })
 " diffchange
-call s:h("DiffChange",            { "fg": s:yellow })
+call s:h("DiffChange",            { "bg": s:subtle_white, "fg": s:yellow })
 " difftext
-call s:h("DiffText",              { "fg": s:constant })
+call s:h("DiffText",              { "bg": s:subtle_white, "fg": s:constant })
 hi! link diffRemoved              DiffDelete
 hi! link diffAdded                DiffAdd
 
@@ -260,8 +267,6 @@ call s:h("ColorColumn",           { "bg": g:duochrome_ruler == 1 ? s:column : s:
 
 " nontext
 call s:h("NonText",               { "fg": s:red })
-call s:h("ShowMarksHLl",          { "bg": s:bg })
-hi! link SignColumn               ShowMarksHLl
 
 " ......................................................................... Menu
 " pmenu

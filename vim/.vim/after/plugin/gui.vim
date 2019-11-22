@@ -57,9 +57,8 @@ function! s:toggleColumn()
     let &colorcolumn = 0
     ColumnWrap
   endif
+  let g:show_column = 1  " flash column position, see autocmd info.vim
   Background
-  " Guides
-  let g:column = 1  " flash column position, see autocmd info.vim
 endfunction
 
 command! ToggleColumn silent! call <SID>toggleColumn()
