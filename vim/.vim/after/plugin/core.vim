@@ -11,8 +11,6 @@ function! s:vimrc()
   execute 'wall'
   autocmd!
   source $MYVIMRC
-  LiteSwitch
-  LiteSwitch
   RedrawGui
 endfunction
 
@@ -46,7 +44,7 @@ endfunction
 
 " ............................................................. (Non-)blank line
 function! NonBlankLine()
-  return matchstr(getline(line('.')), '\S') > ''
+  return ! empty(matchstr(getline(line('.')), '\S'))
 endfunction
 
 function! BlankLine()
@@ -59,7 +57,7 @@ function! s:hardcopy()
   echo 'Printing..'
   if s:markdown()
     execute '!hardcopy wiki \"' . expand('%:t') . '\"'
-  elseif expand('%:p') =~ 'Patricia'
+  elseif expand('%:e') =~ 'wps'
     execute '!hardcopy wps' expand('%:t')
   else
     execute '!hardcopy code' expand('%:t')

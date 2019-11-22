@@ -238,9 +238,9 @@ hi! link diffAdded                DiffAdd
 
 " spelling
 call s:h("SpellBad",              { "bg": s:spell })
-hi! link SpellCap                 SpellBad
-hi! link SpellLocal               SpellBad
-hi! link SpellRare                SpellBad
+call s:h("SpellCap",              { "gui": "NONE" })
+hi! link SpellLocal               SpellCap
+hi! link SpellRare                SpellCap
 
 " hypertext
 hi! link helpHyperTextEntry       Title

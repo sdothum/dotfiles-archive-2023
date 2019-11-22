@@ -10,7 +10,7 @@
 function! s:closeDiff()
   if &diff  " caution: wincmd resets active window (affects :Buffer)
     wincmd h
-    if expand('%') == ''
+    if empty(expand('%'))
       bdelete!
       diffoff  " restore pre-diff settings or subsequent OpenDiff will be *off*
       return 1
@@ -38,7 +38,7 @@ command! CloseUnique if ! <SID>closeDiff() | silent bdelete! | endif
 " queue files written for vhg (may contain repeated update entries)
 function! s:queueFile()
   let l:path = resolve(expand('%:p'))  " see v script (sets QUEUE and invokes vhg)
-  if l:path =~ s:repo && $QUEUE > ''
+  if l:path =~ s:repo && ! empty($QUEUE)
     let l:file = substitute(l:path, s:repo, '', '')
     let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
     call system(l:cmd)

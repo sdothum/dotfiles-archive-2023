@@ -63,7 +63,7 @@ command! ShowStatusLine silent! call <SID>showStatusLine()
 " split window statusline background, see ui.vim autocmd
 function! s:splitColors()
   Trace theme:SplitColors
-  let g:duochrome_split = winnr('$') == 1 ? 0 : 1
+  let g:duochrome_split = winnr('$') > 1
   Background
 endfunction
 

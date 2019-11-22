@@ -47,7 +47,7 @@ endfunction
 function! s:rootPrefix()
   if expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
     let l:root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
-    if l:root == ''
+    if empty(l:root)
       return l:root
     elseif l:root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
       return l:root

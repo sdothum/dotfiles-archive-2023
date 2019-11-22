@@ -20,11 +20,11 @@
 
 = photography
 = ═══════════
-  digikam
+  digikam       [server]
   dispcalGUI    [server]
   gimp          [server]
   resynthesizer [server]
-  rawtherapee
+  rawtherapee   [server]
 
 
 = radio

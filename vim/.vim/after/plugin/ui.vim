@@ -111,7 +111,7 @@ endfunction
 " ............................................................ Statusline format
 function! Detail()
   let l:prefix = g:detail == 0 ? Tag() : Atom()
-  return l:prefix > '' ? l:prefix . '  ' . SpecialChar() : SpecialChar()
+  return empty(l:prefix) ? SpecialChar() : l:prefix . '  ' . SpecialChar()
 endfunction
 
 function! s:attn()

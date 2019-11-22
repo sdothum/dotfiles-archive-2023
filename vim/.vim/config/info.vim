@@ -10,7 +10,7 @@
 if empty($DISPLAY)
   let g:state   = ['^', '-', '+', 'x']  " console
 else
-  if $MONO > ''
+  if ! empty($MONO)
     let g:state = ['', '', '', '']  " nerd-font utf-8 mono symbols, see ui.vim
   else
     let g:state = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim

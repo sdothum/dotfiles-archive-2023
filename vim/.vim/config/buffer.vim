@@ -28,7 +28,7 @@ nmap <leader>F :set filetype=
 
 " default new files to last filetype
 autocmd buffer BufWinEnter * let g:filetype = &filetype
-autocmd buffer BufNewFile  * if &filetype == '' | execute 'setfiletype ' . g:filetype | endif
+autocmd buffer BufNewFile  * if empty(&filetype) | execute 'setfiletype ' . g:filetype | endif
 
 " Diff buffer __________________________________________________________________
 
@@ -78,7 +78,7 @@ autocmd buffer BufWinEnter * if ! Protected() | set modifiable | endif
 nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
 
 " beakl si layout specific buffer navigation key assignments, note silent -> silent
-if $BEAKL > ''
+if ! empty($BEAKL)
   " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
   nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:SplitColors<CR>
   nmap <silent><Enter>  :Enter<CR>

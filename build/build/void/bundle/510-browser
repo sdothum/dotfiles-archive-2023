@@ -7,10 +7,10 @@
 = browser
 = ═══════
   chromium
-  firefox
+# firefox
   lynx
   qutebrowser
-  surf
+# surf
   vimb
   w3m-img
 

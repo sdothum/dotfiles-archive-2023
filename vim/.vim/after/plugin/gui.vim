@@ -54,10 +54,10 @@ function! s:toggleColumn()
     autocmd! column
   else
     let g:duochrome_ruler = 0
-    let &colorcolumn = 0
+    let &colorcolumn      = 0
     ColumnWrap
   endif
-  let g:show_column = 1  " flash column position, see autocmd info.vim
+  let g:show_column       = 1  " flash column position, see autocmd info.vim
   Background
 endfunction
 
