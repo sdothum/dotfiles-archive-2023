@@ -75,7 +75,7 @@ if s:background != &background
   let s:bg               = s:b(s:white,         s:black)
   let s:bg_reverse       = s:b(s:BLACK,         s:white)
   let s:bg_subtle        = s:b(s:lighter_gray,  s:light_black)
-  let s:bg_contrast      = s:b(s:light_gray,    s:darker_white)
+  let s:bg_contrast      = s:b(s:light_black,   s:subtle_white)
   let s:norm             = s:b(s:light_black,   s:dark_white)
   let s:norm_subtle      = s:b(s:lighter_black, s:darker_white)
   let s:norm_very_subtle = s:b(s:lighter_gray,  s:medium_gray)
@@ -223,15 +223,15 @@ call s:h("VisualNOS",             { "bg": s:bg_subtle })
 
 " diff
 if &diff
-  call s:h("DiffAdd",               { "bg": s:statusline, "fg": s:green })
-  call s:h("DiffDelete",            { "bg": s:statusline, "fg": s:red })
-  call s:h("DiffChange",            { "bg": s:statusline, "fg": s:yellow })
-  call s:h("DiffText",              { "bg": s:statusline, "fg": s:constant })
+  call s:h("DiffAdd",             { "bg": s:statusline, "fg": s:green })
+  call s:h("DiffDelete",          { "bg": s:statusline, "fg": s:red })
+  call s:h("DiffChange",          { "bg": s:statusline, "fg": s:yellow })
+  call s:h("DiffText",            { "bg": s:statusline, "fg": s:constant })
 else
-  call s:h("DiffAdd",               { "fg": s:green })
-  call s:h("DiffDelete",            { "fg": s:red })
-  call s:h("DiffChange",            { "fg": s:yellow })
-  call s:h("DiffText",              { "fg": s:constant })
+  call s:h("DiffAdd",             { "fg": s:green })
+  call s:h("DiffDelete",          { "fg": s:red })
+  call s:h("DiffChange",          { "fg": s:yellow })
+  call s:h("DiffText",            { "fg": s:constant })
 endif
 hi! link diffRemoved              DiffDelete
 hi! link diffAdded                DiffAdd

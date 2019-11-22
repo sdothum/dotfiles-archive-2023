@@ -22,7 +22,7 @@ augroup ui | autocmd! | augroup END
 nmap <silent><F9>      :call Retheme()<CR>
 imap <silent><F9> <C-o>:call Retheme()<CR>
 
-" wm timing requires FocusGained plus sleep with VimResized to consistently set margins
+" wm timing requires FocusGained+sleep with VimResized to consistently set margins
 autocmd ui VimEnter,VimResized,FocusGained * sleep 10m | Background
 
 " ................................................................... Initialize
