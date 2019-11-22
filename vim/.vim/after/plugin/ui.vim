@@ -32,7 +32,7 @@ endfunction
 " toggle line numbers
 function! s:toggleNumber()
   Trace ui:ToggleNumber
-  let g:duochrome_relative = g:duochrome_relative == 0 ? 1 : 0
+  let g:duochrome_relative = ! g:duochrome_relative
   Background
 endfunction
 
@@ -42,8 +42,8 @@ command! ToggleNumber silent! call <SID>toggleNumber()
 function! ToggleProof()
   Trace ui:ToggleProof()
   if CommandWindow() | return | endif
-  " if Prose() | let g:duochrome_insert = g:duochrome_insert == 0 ? 1 : 0 | endif
-  let g:duochrome_insert = g:duochrome_insert == 0 ? 1 : 0
+  " if Prose() | let g:duochrome_insert = ! g:duochrome_insert | endif
+  let g:duochrome_insert = ! g:duochrome_insert
   call s:view()
   ShowInfo
 endfunction
@@ -159,7 +159,7 @@ function! s:toggleInfo(...)
   Trace ui:ToggleInfo
   if a:0 && a:1 | return | endif  " prose insert mode is always dfm
   let l:col = col('.')
-  let s:expanded = (s:expanded == 0 ? 1 : 0)
+  let s:expanded = ! s:expanded
   ShowInfo
   execute 'normal! ' . l:col . '|'
 endfunction

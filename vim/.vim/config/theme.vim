@@ -8,7 +8,7 @@
 " .................................................................. Colorscheme
 colorscheme duochrome
 if has('gui_running')
-  if empty(glob('~/.session/vim:dark')) || &diff
+  if empty(glob('~/.session/vim:dark'))
     set background=light
   else
     set background=dark

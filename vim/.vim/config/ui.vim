@@ -67,8 +67,8 @@ nmap <silent><F7>        :ToggleInfo<CR>
 imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
 " toggle tag, line details
-nmap <silent><S-F7>      :let g:detail = g:detail == 0 ? 1 : 0<CR>
-imap <silent><S-F7> <C-o>:let g:detail = g:detail == 0 ? 1 : 0<CR>
+nmap <silent><S-F7>      :let g:detail = ! g:detail<CR>
+imap <silent><S-F7> <C-o>:let g:detail = ! g:detail<CR>
 
 " for active window highlighting
 autocmd ui WinEnter,TerminalOpen,BufWinEnter,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
@@ -84,7 +84,7 @@ if has('gui_running')
 endif
 
 " ............................................................. Switch font size
-nmap <silent><S-F9>      :call Font(g:font_type == 1 ? 0 : 1)<CR>
-imap <silent><S-F9> <C-o>:call Font(g:font_type == 1 ? 0 : 1)<CR>
+nmap <silent><S-F9>      :call Font(! g:font_type)<CR>
+imap <silent><S-F9> <C-o>:call Font(! g:font_type)<CR>
 
 " ui.vim

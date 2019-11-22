@@ -35,8 +35,8 @@ if [ ! -s $cache ] || [ $init ] || stest -qr -n $cache $(find $library -maxdepth
 fi
 
 file() {
-  # convert apostrophe ' to ? for pattern matching
-  path=$(echo "$book" | sed -r "s/'/./g; s|^(.*)  *${SEP}  *(.*)|.*\2/(\1[^/]*/)*\1( - .*)*.$1|")
+  # convert apostrophe ' to . for pattern matching
+  path=$(echo ".*$author/($title[^/]*/)*$title( - .*)*.$1" | tr "'" '.')
   find $library -regextype egrep -regex "$path"
 }
 
@@ -57,7 +57,7 @@ catlg() {
 }
 
 # .................................................................. Select book
-set -x
+
 while : ;do
   book=$(cat $cache | mhistory ebooks | column -s^ -t | sed "1i$REBUILD" | rmenu "E-book" 1 -filter \"$author\" -no-custom)
 
@@ -68,14 +68,14 @@ while : ;do
     ebooks init; continue
   fi
 
-  author="${book#*$SEP } "
+  author="${book#*$SEP }"
   title=${book%$SEP*}
   title=$(echo $title | sed 's/ *$//g')
   unset mobi epub azw3 azw
 
   azw3; [ "$azw3" ] || { mobi; [ "$mobi" ] || { epub; [ "$epub" ] || { azw; [ "$azw" ] || kfx; } } }
   file=$azw3$mobi$epub$azw$kfx
-  [ "$file" ] || { sed -i "/$title.$SEP ${author% }/d" $HISTORY/ebooks; continue; }
+  [ "$file" ] || { sed -i "/$title.$SEP $author/d" $HISTORY/ebooks; continue; }
 
   # [ -d $kindle ] && options='kindle\nedit\nread' || options='read\nedit\nkindle'
   options='kindle\nedit\nread'

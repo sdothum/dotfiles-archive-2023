@@ -67,7 +67,7 @@ autocmd buffer BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | ex
 
 " ................................................................... Modifiable
 " toggle modifiable attribute
-nmap <silent><leader>- :let &modifiable = (&modifiable == 0 ? 1 : 0)<CR>
+nmap <silent><leader>- :let &modifiable = ! &modifiable<CR>
 
 " protected help
 autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif

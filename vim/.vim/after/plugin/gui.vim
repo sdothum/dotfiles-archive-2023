@@ -84,7 +84,7 @@ command! ColumnWrap silent! call <SID>columnWrap()
 let s:wraplight = 0  " show linewrap with (0) s:breakchar (1) highlight
 
 function! s:toggleColumnWrap(...)
-  let s:wraplight       = a:0 ? a:1 : (s:wraplight ? 0 : 1)
+  let s:wraplight       = a:0 ? a:1 : ! s:wraplight
   let g:duochrome_ruler = -1
   call s:toggleColumn()
 endfunction

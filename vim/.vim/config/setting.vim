@@ -147,7 +147,7 @@ nnoremap <C-s> [s1z=<c-o>
 inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
 function! s:toggleSpell()
-  let &spell = &spell == 0 ? 1 : 0
+  let &spell = ! &spell
   if PencilMode() != '' | execute &spell == 0 ? 'NoPencil' : 'Pencil' | endif
 endfunction
 
@@ -355,7 +355,7 @@ let s:educate = 0
 
 " typographical mode for prose (and html content editing)
 function! s:toggleEducate()
-  let s:educate = s:educate ? 0 : 1
+  let s:educate = ! s:educate
   if s:educate  " html <p> content shortcuts
     Educate
     " ToggleColumnWrap 0  " disable line wrap column highlight to show spelling errors

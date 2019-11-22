@@ -14,7 +14,7 @@ autocmd default InsertLeave * let &updatetime  = s:updatetime
 autocmd default CursorHoldI * stopinsert
 
 " ........................................................................ Debug
-nnoremap <silent><S-F10> :let g:trace = g:trace == 0 ? 1 : 0<CR>
+nnoremap <silent><S-F10> :let g:trace = ! g:trace<CR>
 
 " ..................................................................... Terminal
 nmap <silent><C-t>           :Term<CR>
