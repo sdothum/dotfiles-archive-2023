@@ -110,7 +110,7 @@ let g:mundo_mirror_graph    = 0  " left align tree
 
 function! s:toggleUndo()
   let l:filetype = &filetype     " mundo alters markdown filetype to conf (?)
-  if ! exists('b:mundo')         " do quick 'syntax off' history preload to avoid 'syntax on' load lag
+  if !exists('b:mundo')          " do quick 'syntax off' history preload to avoid 'syntax on' load lag
     let b:mundo = 1
     syntax off
     Quietly MundoToggle
@@ -147,8 +147,8 @@ nnoremap <C-s> [s1z=<c-o>
 inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
 function! s:toggleSpell()
-  let &spell = ! &spell
-  if PencilMode() != '' | execute &spell == 0 ? 'NoPencil' : 'Pencil' | endif
+  let &spell = !&spell
+  if !empty(PencilMode()) | execute &spell == 0 ? 'NoPencil' : 'Pencil' | endif
 endfunction
 
 " correction related, but really bound to Pencil
@@ -185,7 +185,7 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return ! col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
 inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" :
@@ -307,7 +307,7 @@ let g:sneak#label        = 1    " label mode
 
 " " remap sneak_s to preserve s
 " function! s:sneak_f()
-"   if ! exists("g:sneak_f")
+"   if !exists("g:sneak_f")
 "     let g:sneak_f = 1
 "     unmap s
 "     unmap S
@@ -355,7 +355,7 @@ let s:educate = 0
 
 " typographical mode for prose (and html content editing)
 function! s:toggleEducate()
-  let s:educate = ! s:educate
+  let s:educate = !s:educate
   if s:educate  " html <p> content shortcuts
     Educate
     " ToggleColumnWrap 0  " disable line wrap column highlight to show spelling errors

@@ -32,7 +32,7 @@ command! SmartWrap silent! call <SID>smartWrap()
 " ............................................................. Strip whitespace
 " strips trailing whitespace from all lines, see https://dougblack.io/words/a-good-vimrc.html
 function! s:stripTrailingWhitespaces()
-  if &modifiable == 1 && ! s:markdown()
+  if &modifiable == 1 && !s:markdown()
     " let l:_s = @/ " save last search & cursor position
     " let l:l  = line(".")
     " let l:c  = col(".")

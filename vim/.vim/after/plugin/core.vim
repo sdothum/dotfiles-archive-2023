@@ -44,11 +44,11 @@ endfunction
 
 " ............................................................. (Non-)blank line
 function! NonBlankLine()
-  return ! empty(matchstr(getline(line('.')), '\S'))
+  return !empty(matchstr(getline(line('.')), '\S'))
 endfunction
 
 function! BlankLine()
-  return ! NonBlankLine()
+  return !NonBlankLine()
 endfunction
 
 " ................................................................... Print file

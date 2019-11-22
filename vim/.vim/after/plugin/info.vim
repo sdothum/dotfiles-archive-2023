@@ -22,7 +22,7 @@ let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 function! SpecialChar()
   if mode() == 'n'  " getline() test fails on switch into insert mode
     try
-      if getline(line('.')) != ''  " ignore newline (is NUL)
+      if !empty(getline(line('.')))            " ignore newline (is NUL)
         let l:char        = getline('.')[col('.')-1]
         if l:char !~ s:ascii && l:char != "'"  " show hex value, not interested in ascii keyboard characters
           let l:statusmsg = v:statusmsg
@@ -93,7 +93,7 @@ function! s:wordCount()
     let l:position  = getpos('.')
     execute "silent normal! g\<C-g>"
     if v:statusmsg != '--No lines in buffer--' | let b:wordcount = str2nr(split(v:statusmsg)[11]) | endif
-    let v:statusmsg   = l:statusmsg
+    let v:statusmsg = l:statusmsg
     call setpos('.', l:position)  " go back (to EOL if need be)
     return b:wordcount
   catch /.*/  " discard messages

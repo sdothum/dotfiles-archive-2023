@@ -35,7 +35,7 @@ command! -nargs=1 Drawline silent! call <SID>drawline(<f-args>)
 " example: append trailer ______________________________________________________
 function! s:appendTrailer(delimiter)
   if NonBlankLine()
-    if ! empty(matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$'))  " remove existing trailer
+    if !empty(matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$'))  " remove existing trailer
       normal! $bhD
     endif
     normal! $
@@ -55,7 +55,7 @@ command! -nargs=1 AppendTrailer silent! call <SID>appendTrailer(<f-args>)
 " prompted trailer
 function! s:InputTrailer()
   let l:delimiter = input('Line character: ')
-  if ! empty(l:delimiter) | call s:appendTrailer(l:delimiter[0]) | endif
+  if !empty(l:delimiter) | call s:appendTrailer(l:delimiter[0]) | endif
 endfunction
 
 command! InputTrailer silent! call <SID>inputTrailer()
@@ -64,7 +64,7 @@ command! InputTrailer silent! call <SID>inputTrailer()
 " ....................................................... example: insert leader
 function! s:insertLeader(delimiter)
   if NonBlankLine()
-    if ! empty(matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s')) | execute 'normal! ^wdf ' | endif  " remove existing leader
+    if !empty(matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s')) | execute 'normal! ^wdf ' | endif  " remove existing leader
     call s:appendTrailer(a:delimiter)
     " cut trailer and insert as leader!
     normal! $bhD^whP
@@ -77,7 +77,7 @@ command! -nargs=1 InsertLeader silent! call <SID>insertLeader(<f-args>)
 " prompted leader
 function! s:inputLeader()
   let l:delimiter = input('Line character: ')
-  if ! empty(l:delimiter)
+  if !empty(l:delimiter)
     if l:delimiter == ' ' | call s:justify()
     else                  | call s:insertLeader(l:delimiter[0]) | endif
   endif

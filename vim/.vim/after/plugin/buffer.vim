@@ -23,7 +23,7 @@ command! CloseDiff silent! call <SID>closeDiff()
 
 " .................................................................... Open diff
 " toggle diff of current file   
-command! OpenDiff if ! <SID>closeDiff() | vert new | set bt=nofile | r ++edit # | 0d_
+command! OpenDiff if !<SID>closeDiff() | vert new | set bt=nofile | r ++edit # | 0d_
                     \| diffthis | wincmd p | diffthis | endif
 
 " File actions _________________________________________________________________
@@ -32,13 +32,13 @@ command! OpenDiff if ! <SID>closeDiff() | vert new | set bt=nofile | r ++edit # 
 " close all other buffers (and newly created no name buffer)
 command! Singleton   CloseDiff | %bdelete | edit # | bdelete #
 " close OpenDiff or current buffer
-command! CloseUnique if ! <SID>closeDiff() | silent bdelete! | endif
+command! CloseUnique if !<SID>closeDiff() | silent bdelete! | endif
 
 " .................................................................. Auto backup
 " queue files written for vhg (may contain repeated update entries)
 function! s:queueFile()
   let l:path = resolve(expand('%:p'))  " see v script (sets QUEUE and invokes vhg)
-  if l:path =~ s:repo && ! empty($QUEUE)
+  if l:path =~ s:repo && !empty($QUEUE)
     let l:file = substitute(l:path, s:repo, '', '')
     let l:cmd  = 'echo ' . l:file . ' >>' . $HOME . '/.vim/job/' . $QUEUE
     call system(l:cmd)

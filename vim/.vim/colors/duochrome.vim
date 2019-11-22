@@ -6,7 +6,7 @@
 " Duochrome ____________________________________________________________________
 
 " ................................................................... Initialize
-if ! exists('g:colors_name') | let g:colors_name = '' | endif
+if !exists('g:colors_name') | let g:colors_name = '' | endif
 if g:colors_name != 'duochrome'
   hi! clear  " will cause flickering on subsequent 'set background' refreshes if not suppressed
   if exists('syntax on') | syntax reset | endif
@@ -14,17 +14,17 @@ if g:colors_name != 'duochrome'
 endif
 
 " ui colorscheme controls providing dynamic 'set background' changes
-if ! exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight
-if ! exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
-if ! exists('g:duochrome_markdown')   | let g:duochrome_markdown   = 0 | endif  " source (0) code (1) markdown
-if ! exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
-if ! exists('g:duochrome_ruler')      | let g:duochrome_ruler      = 0 | endif  " column (0) off (1) cursor (2) fixed
-if ! exists('g:duochrome_split')      | let g:duochrome_split      = 0 | endif  " windows (0) single (1) split
-if ! has('gui_running')               | let g:duochrome_cursorline = 1 | endif
+if !exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight
+if !exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
+if !exists('g:duochrome_markdown')   | let g:duochrome_markdown   = 0 | endif  " source (0) code (1) markdown
+if !exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
+if !exists('g:duochrome_ruler')      | let g:duochrome_ruler      = 0 | endif  " column (0) off (1) cursor (2) fixed
+if !exists('g:duochrome_split')      | let g:duochrome_split      = 0 | endif  " windows (0) single (1) split
+if !has('gui_running')               | let g:duochrome_cursorline = 1 | endif
 
 " ...................................................................... Palette
 " colours borrowed from vim-quantum/material design, vim-one and flatwhite-vim colorschemes
-if ! exists('s:duochrome')
+if !exists('s:duochrome')
   let s:duochrome       = 1
   " gray tones
   let s:BLACK           = { "gui": "black",   "cterm": "0"   }
@@ -64,7 +64,7 @@ if ! exists('s:duochrome')
 endif
 
 " ................................................................... Background
-if ! exists('s:background') | let s:background = '' | endif
+if !exists('s:background') | let s:background = '' | endif
 
 function! s:b(light, dark)
   return &background == "light" ? a:light : a:dark

@@ -67,18 +67,18 @@ autocmd buffer BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | ex
 
 " ................................................................... Modifiable
 " toggle modifiable attribute
-nmap <silent><leader>- :let &modifiable = ! &modifiable<CR>
+nmap <silent><leader>- :let &modifiable = !&modifiable<CR>
 
 " protected help
 autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifiable | endif
 " mode check for fzf terminal window
-autocmd buffer BufWinEnter * if ! Protected() | set modifiable | endif
+autocmd buffer BufWinEnter * if !Protected() | set modifiable | endif
 
 " ................................................................ Switch buffer
 nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
 
 " beakl si layout specific buffer navigation key assignments, note silent -> silent
-if ! empty($BEAKL)
+if !empty($BEAKL)
   " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
   nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:SplitColors<CR>
   nmap <silent><Enter>  :Enter<CR>
