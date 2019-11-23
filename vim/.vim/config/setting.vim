@@ -148,7 +148,7 @@ inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
 function! s:toggleSpell()
   let &spell = !&spell
-  if !empty(PencilMode()) | execute &spell == 0 ? 'NoPencil' : 'Pencil' | endif
+  if !empty(PencilMode()) | execute &spell ? 'Pencil' : 'NoPencil' | endif
 endfunction
 
 " correction related, but really bound to Pencil

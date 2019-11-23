@@ -95,7 +95,7 @@ function! Font(type)
     if g:font_type != a:type
       let g:font_type = a:type
       let l:size      = system('fontsize')
-      let l:size      = a:type == 0 ? l:size : l:size + g:font_step
+      let l:size      = a:type ? l:size + g:font_step : l:size
       execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
       if s:font_changed
         RedrawGui
@@ -110,7 +110,7 @@ endfunction
 
 " ............................................................ Statusline format
 function! Detail()
-  let l:prefix = g:detail == 0 ? Tag() : Atom()
+  let l:prefix = g:detail ? Atom() : Tag()
   return empty(l:prefix) ? SpecialChar() : l:prefix . '  ' . SpecialChar()
 endfunction
 
@@ -127,7 +127,7 @@ function! s:statusline()
       return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
     else
       let l:name     = '%{Name()}' . g:pad[0]
-      if s:expanded == 0  " center dfm indicator / proofing statusline
+      if !s:expanded  " center dfm indicator / proofing statusline
         let l:leader = '%{Leader(Name())}'
       else
         let l:path   = '%{Path()}'
@@ -135,7 +135,7 @@ function! s:statusline()
       endif
       let l:name     = '%1*' . l:name
       let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
-      if s:expanded == 1
+      if s:expanded
         let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
         let l:info  .= g:pad[1] . '%2*%{Detail()}'
       endif

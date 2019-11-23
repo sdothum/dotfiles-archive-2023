@@ -10,7 +10,7 @@ let g:trace = !empty($VIMTRACE)  " touch ~/.session/vim:trace
 
 " escape problematic shell commandline characters
 function! s:trace(msg)
-  if g:trace == 1 | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim:trace' | endif
+  if g:trace | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim:trace' | endif
 endfunction
 
 command! -nargs=1 Trace call <SID>trace(<f-args>)

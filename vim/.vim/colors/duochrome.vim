@@ -153,7 +153,7 @@ hi! link ShowMarksHLl             SignColumn
 " ...................................................................... Special
 " normal
 call s:h("Normal",                { "fg": s:norm, "bg": s:bg })
-call s:h("ExtraWhitespace",       { "fg": s:bg_reverse, "bg": s:iawriter })
+call s:h("ExtraWhitespace",       { "fg": s:bg, "bg": s:red })
 
 " keywords
 hi! link Identifier               Normal

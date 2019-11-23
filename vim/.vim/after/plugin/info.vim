@@ -104,8 +104,8 @@ endfunction
 
 " ................................................................... File state
 function! UnModified(show)
-  " return &modifiable ? (&modified ? g:state[2] : a:show == 1 ? g:state[0] : '') : g:state[1]
-  return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:state[2] : a:show == 1 ? g:state[0] : '') : g:state[1]) : g:state[3]
+  " return &modifiable ? (&modified ? g:state[2] : a:show ? g:state[0] : '') : g:state[1]
+  return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:state[2] : a:show ? g:state[0] : '') : g:state[1]) : g:state[3]
 endfunction
 
 " .................................................................... Left path
@@ -124,7 +124,7 @@ endfunction
 " normal mode code: col -> file%, prose: col -> wordcount
 " insert mode code: col 
 function! PosWordsCol()
-  return mode() == 'n' ? (g:show_column == 0 ? (Prose() ? s:wordCount() : (line('.') * 100 / line('$')) . '%') : col('.')) : col('.')
+  return mode() == 'n' ? (g:show_column ? col('.') : (Prose() ? s:wordCount() : (line('.') * 100 / line('$')) . '%')) : col('.')
 endfunction
 
 " ............................................................... Escaped leader
