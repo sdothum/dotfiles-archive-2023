@@ -66,7 +66,8 @@ nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
 nmap <silent><F7>        :ToggleInfo<CR>
 imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
-autocmd ui VimEnter * if &diff | ToggleInfo | endif
+" show info in balanced diff windows
+autocmd ui VimEnter * if &diff | execute "normal! \<C-w>=" | ToggleInfo | endif
 
 " toggle tag, line details
 nmap <silent><S-F7>      :let g:detail = !g:detail<CR>
