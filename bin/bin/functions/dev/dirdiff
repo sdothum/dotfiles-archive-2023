@@ -10,10 +10,14 @@ usage() { echo "usage: $(basename $0) [-b] [-d <date>] [<source> [<target>]] [<r
 
 ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|undo|vps'
 
+DIRDIFF=/tmp/dirdiff
+FILES=$DIRDIFF:files
+LOG=$DIRDIFF.log
+
 while [ "$1" ] ;do
   case $1 in
   -b) w=-w; diffopt='set diffopt+=iwhite' ;;                       # ignore whitespace
-  -d) filter=/tmp/dirdiff:filter; touch -d "$2" $filter; shift ;;  # timestamp filter
+  -d) FILTER=$DIRDIFF:filter; touch -d "$2" $FILTER; shift ;;  # timestamp filter
   * ) break ;;
   esac
   shift
@@ -31,17 +35,17 @@ done
 source=$(pwd)
 
 # to handle filenames containing spaces
-find -L ./ -type f | exclude | egrep -v $ignore | grep "$regex" >/tmp/dirdiff:files
+find -L ./ -type f | exclude | egrep -v $ignore | grep "$regex" >$FILES
 src=${source#$HOME/stow/*/}
 src=\~/${src#$HOME/}
 
 while read file <&3 ;do
   unset blink
   while : ;do
-    [ $filter ] && [ "$file" -ot $filter ] && break
+    [ $FILTER ] && [ "$file" -ot $FILTER ] && break
     clear
-    [ $title ] || { ditto diff "[ $src/ ] $regex  <<-- -->>  $target"; title=true; }
-    [ -e "${target%/}/${file#./}" ] || { ditto missing "${target%/}/${file#./}"; break; }
+    [ $title ] || { ditto diff "$src/$regex && $target" >>$LOG; title=true; }
+    [ -e "${target%/}/${file#./}" ] || { ditto missing "${target%/}/${file#./}" >>$LOG; break; }
     ditto diff "${file#./}"
     if ! diff --brief $w "${file#./}" "${target%/}/${file#./}" >/dev/null 2>&1 ;then
       diff $w "${file#./}" "${target%/}/${file#./}" | colordiff  # reverse diff --color highlighting
@@ -52,6 +56,6 @@ while read file <&3 ;do
       break
     fi
   done
-done 3< /tmp/dirdiff:files
+done 3< $FILES
 
 # vim: set ft=sh: #
