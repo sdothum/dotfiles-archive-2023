@@ -43,10 +43,8 @@ function! s:toggleWrap()
   elseif &formatoptions == g:codeoptions
     HardPencil
     set formatoptions=tqwan1
-  else
-    set formatoptions
   endif
-  call Status('Automatic line wrap', &formatoptions =~ 't')
+  Status Automatic line wrap: &formatoptions =~ 't'
 endfunction
 
 command! ToggleWrap call <SID>toggleWrap()
@@ -57,7 +55,7 @@ command! ToggleWrap call <SID>toggleWrap()
 function! s:toggleWrapSearch()
   let g:separator = g:separator == ' ' ? '\_s*' : ' '
   cnoremap <expr><space>  '/?' =~ getcmdtype() ? g:separator : ' '
-  call Status('Wrap search', g:separator != ' ')
+  Status Wrap search: g:separator != ' '
 endfunction
 
 command! ToggleWrapSearch call <SID>toggleWrapSearch()

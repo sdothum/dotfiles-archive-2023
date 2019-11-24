@@ -35,10 +35,15 @@ endfunction
 
 command! -nargs=1 Quietly call <SID>quietly(<f-args>)
 
-" ........................................................ Current state message
-function! Status(message, state)
-  echo a:message . (a:state ? ' ON' : ' OFF')
+" ................................................................ Message state
+" format:  <message>: <bool>
+function! s:status(s)
+  let l:msg = split(a:s, ' *: ')  " accept g:varname in bool expression
+  execute 'let l:state = ' . msg[1] . ' ? "ON" : "OFF"'
+  echo l:msg[0] l:state
 endfunction
+
+command! -nargs=1 Status call <SID>status(<f-args>)
 
 " Text _________________________________________________________________________
 

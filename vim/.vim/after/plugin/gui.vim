@@ -32,9 +32,11 @@ command! RedrawGui silent! call <SID>redrawGui()
 " .................................................................... Scrolling
 
 " dynamic scroll offset
-function! ScrollOffset()
+function! s:scrollOffset()
   let &scrolloff = Prose() ? 999 : 0
 endfunction
+
+command! ScrollOffset silent! call <SID>scrollOffset()
 
 " Look _________________________________________________________________________
 
@@ -105,7 +107,7 @@ function! s:toggleWhiteSpace()
     " list state propagates forward (on) but not backwards (off)? so auto reset buffer state!
     autocmd invisible BufLeave,WinLeave * call <SID>toggleWhiteSpace()
   endif
-  call Status('List invisibles', &list != ' ')
+  Status List invisibles: &list != ' '
 endfunction
 
 command! ToggleWhiteSpace call <SID>toggleWhiteSpace()

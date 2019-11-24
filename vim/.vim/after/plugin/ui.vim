@@ -39,7 +39,7 @@ endfunction
 command! ToggleNumber silent! call <SID>toggleNumber()
 
 " .................................................................. Insert mode
-function! ToggleProof()
+function! s:toggleProof()
   Trace ui:ToggleProof()
   if CommandWindow() | return | endif
   " if Prose() | let g:duochrome_insert = !g:duochrome_insert | endif
@@ -47,27 +47,33 @@ function! ToggleProof()
   call s:view()
 endfunction
 
+command! -bar ToggleProof silent! call <SID>toggleProof()
+
 " Screen focus _________________________________________________________________
 
 " ............................................................... Screen display
 " initial view
-function! LiteType()
+function! s:layout()
   if PluginWindow() || !has("gui_running") | return | endif 
-  Trace ui:LiteType()
+  Trace ui:Layout()
   let g:duochrome_markdown = Prose()
-  call Font(Prose())
-  call ScrollOffset()
+  Font Prose()
+  ScrollOffset
   ColumnWrap
 endfunction
 
-" redraw
-function! Retheme()
+command! Layout silent! call <SID>layout()
+
+" refresh layout
+function! s:refresh()
   if PluginWindow() | return | endif 
-  Trace ui:Retheme()
+  Trace ui:Refresh()
   let lstatus     = &laststatus
-  call LiteType()   
+  Layout   
   let &laststatus = lstatus
 endfunction
+
+command! Refresh silent! call <SID>refresh()
 
 " .............................................................. Balance margins
 function! Offset()
@@ -75,7 +81,7 @@ function! Offset()
 endfunction
 
 " balance left right margins with font size changes (and window resizing)
-function! Margins()
+function! s:margins()
   Trace ui:Margin
   if PluginWindow()  " flush left for plugin windows
     setlocal nonumber
@@ -87,15 +93,18 @@ function! Margins()
   endif 
 endfunction
 
+command! Margins silent! call <SID>margins()
+
 " ..................................................................... Set font
 " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
-function! Font(type)
+function! s:font(type)
   Trace ui:Font()
   if has('gui_running')
-    if g:font_type != a:type
-      let g:font_type = a:type
+    execute 'let l:type = ' . a:type
+    if g:font_type != l:type
+      let g:font_type = l:type
       let l:size      = system('fontsize')
-      let l:size      = a:type ? l:size + g:font_step : l:size
+      let l:size      = l:type ? l:size + g:font_step : l:size
       execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
       if s:font_changed
         RedrawGui
@@ -105,6 +114,8 @@ function! Font(type)
     endif
   endif
 endfunction
+
+command! -nargs=1 Font silent! call <SID>font(<f-args>)
 
 " Context statusline ___________________________________________________________
 
@@ -127,11 +138,11 @@ function! s:statusline()
       return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
     else
       let l:name     = '%{Name()}' . g:pad[0]
-      if !s:expanded  " center dfm indicator / proofing statusline
-        let l:leader = '%{Leader(Name())}'
-      else
+      if s:expanded  " center dfm indicator / proofing statusline
         let l:path   = '%{Path()}'
         let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
+      else
+        let l:leader = '%{Leader(Name())}'
       endif
       let l:name     = '%1*' . l:name
       let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)

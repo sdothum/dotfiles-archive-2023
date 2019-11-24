@@ -19,15 +19,15 @@ augroup ui | autocmd! | augroup END
 " Display ______________________________________________________________________
 
 " ....................................................................... Redraw
-nmap <silent><F9>      :call Retheme()<CR>
-imap <silent><F9> <C-o>:call Retheme()<CR>
+nmap <silent><F9>      :Refresh<CR>
+imap <silent><F9> <C-o>:Refresh<CR>
 
 " wm timing requires FocusGained+sleep with VimResized to consistently set margins
 autocmd ui VimEnter,VimResized,FocusGained * sleep 10m | Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-autocmd ui BufWinEnter * call LiteType()
+autocmd ui BufWinEnter * Layout
 
 " ..................................................................... Messages
 " recover last error message
@@ -75,16 +75,16 @@ autocmd ui WinEnter,TerminalOpen,BufWinEnter,VimEnter * let g:active = g:active 
 autocmd ui WinEnter,TerminalOpen                      * SplitColors
 
 " .................................................................... View mode
-nmap <silent><C-F7>      :call ToggleProof()<CR>
-imap <silent><C-F7> <C-o>:call ToggleProof()<CR>
+nmap <silent><C-F7>      :ToggleProof<CR>
+imap <silent><C-F7> <C-o>:ToggleProof<CR>
 
 if has('gui_running')
-  autocmd ui InsertEnter * call ToggleProof() | SignifyDisable
-  autocmd ui InsertLeave * call ToggleProof() | SignifyEnable
+  autocmd ui InsertEnter * ToggleProof | SignifyDisable
+  autocmd ui InsertLeave * ToggleProof | SignifyEnable
 endif
 
 " ............................................................. Switch font size
-nmap <silent><S-F9>      :call Font(!g:font_type)<CR>
-imap <silent><S-F9> <C-o>:call Font(!g:font_type)<CR>
+nmap <silent><S-F9>      :Font !g:font_type<CR>
+imap <silent><S-F9> <C-o>:Font !g:font_type<CR>
 
 " ui.vim

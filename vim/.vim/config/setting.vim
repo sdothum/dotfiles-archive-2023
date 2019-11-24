@@ -351,12 +351,12 @@ let g:tagbar_width          = 40
 nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
 " ................................................................ Textobj quote
-let s:educate = 0
+let g:educate = 0
 
 " typographical mode for prose (and html content editing)
 function! s:toggleEducate()
-  let s:educate = !s:educate
-  if s:educate  " html <p> content shortcuts
+  let g:educate = !g:educate
+  if g:educate  " html <p> content shortcuts
     Educate
     " ToggleColumnWrap 0  " disable line wrap column highlight to show spelling errors
     imap ...      …<Space>
@@ -373,7 +373,7 @@ function! s:toggleEducate()
     iunmap ?<Space>
     iunmap !<Space>
   endif
-  call Status('Typography', s:educate)
+  Status Typography: g:educate
 endfunction
 
 nmap <silent><F11>      :call <SID>toggleEducate()<CR>

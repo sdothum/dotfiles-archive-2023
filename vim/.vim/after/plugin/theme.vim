@@ -8,7 +8,7 @@
 " ............................................................... Initialization
 function! s:background(...)
   Trace theme:Background
-  call Margins()  " must be called before colorscheme ta refresh cursorlinenr cleared by LiteDFM
+  Margins  " must be called before colorscheme ta refresh cursorlinenr cleared by LiteDFM
   if a:0
     let &background = a:1
   else
@@ -63,7 +63,7 @@ command! ShowStatusLine silent! call <SID>showStatusLine()
 " split window statusline background, see ui.vim autocmd
 function! s:splitColors()
   Trace theme:SplitColors
-  let g:duochrome_split = winnr('$') > 1
+  let g:duochrome_split = &diff ? 0 : winnr('$') > 1
   Background
 endfunction
 

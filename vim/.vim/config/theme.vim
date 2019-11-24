@@ -7,15 +7,8 @@
 
 " .................................................................. Colorscheme
 colorscheme duochrome
-if has('gui_running')
-  if empty(glob('~/.session/vim:dark'))
-    set background=light
-  else
-    set background=dark
-  endif
-else
-  set background=dark
-endif
+if has('gui_running') && empty(glob('~/.session/vim:dark')) | set background=light
+else                                                        | set background=dark | endif
 
 augroup theme | autocmd! | augroup END
 
