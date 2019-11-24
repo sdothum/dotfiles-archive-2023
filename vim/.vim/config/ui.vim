@@ -66,6 +66,8 @@ nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
 nmap <silent><F7>        :ToggleInfo<CR>
 imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
+autocmd ui VimEnter * if &diff | ToggleInfo | endif
+
 " toggle tag, line details
 nmap <silent><S-F7>      :let g:detail = !g:detail<CR>
 imap <silent><S-F7> <C-o>:let g:detail = !g:detail<CR>
