@@ -16,7 +16,7 @@ LOG=$DIRDIFF.log
 
 while [ "$1" ] ;do
   case $1 in
-  -b) w=-w; diffopt='set diffopt+=iwhite' ;;                       # ignore whitespace
+  -b) w=-w; diffopt='set diffopt+=iwhite' ;;                   # ignore whitespace
   -d) FILTER=$DIRDIFF:filter; touch -d "$2" $FILTER; shift ;;  # timestamp filter
   * ) break ;;
   esac
@@ -44,7 +44,7 @@ while read file <&3 ;do
   while : ;do
     [ $FILTER ] && [ "$file" -ot $FILTER ] && break
     clear
-    [ $title ] || { ditto diff "$src/$regex && $target" >>$LOG; title=true; }
+    [ $title ] || { ditto -t diff "$src/$regex && $target" >>$LOG; title=true; }
     [ -e "${target%/}/${file#./}" ] || { ditto missing "${target%/}/${file#./}" >>$LOG; break; }
     ditto diff "${file#./}"
     if ! diff --brief $w "${file#./}" "${target%/}/${file#./}" >/dev/null 2>&1 ;then

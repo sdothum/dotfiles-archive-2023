@@ -9,7 +9,7 @@
 # ..................................................................... Annotate
 
 usage() {
-  echo "usage: $(basename $0) @ <desc> | [<desc> | -- | ..] <message>"
+  echo "usage: $(basename $0) @ <desc> | [-t | <desc> | -- | ..]* <message>"
   echo '       where, default <desc> -> "note"'
   echo '                          -- -> line separator'
   echo '                          .. -> justify leader'
@@ -20,15 +20,17 @@ usage() {
 
 while [ "$1" ] ;do
   case $1 in
-  '@' ) [ "$2" ] || usage; desc=$2; shift ;;
-  '..') [ "$2" ] || usage; justify=true; message=$2; shift ;;
-  '--') separator=true ;;
-  *   ) [ "$message" ] && desc=$message; message=$1 ;;
+  @ ) [ "$2" ] || usage; desc=$2; shift ;;
+  -t) timestamp="$(date "+%-H %M'%S\" ")" ;;
+  ..) [ "$2" ] || usage; justify=true; message=$2; shift ;;
+  --) separator=true ;;
+  * ) [ "$message" ] && desc=$message; message=$1 ;;
   esac
   shift
 done
 [ "$desc" = "$message" ] && usage
 [ "$desc" ] || desc=note
+desc="$timestamp$desc"
 
 justify() {
   while read line ;do
