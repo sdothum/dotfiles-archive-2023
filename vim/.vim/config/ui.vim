@@ -23,7 +23,7 @@ nmap <silent><F9>      :Refresh<CR>
 imap <silent><F9> <C-o>:Refresh<CR>
 
 " wm timing requires FocusGained+sleep with VimResized to consistently set margins
-autocmd ui VimEnter,VimResized,FocusGained * sleep 10m | ScrollOffset | Background
+autocmd ui VimEnter,VimResized,FocusGained * sleep 10m | Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)

@@ -16,7 +16,7 @@ function! s:background(...)
   endif
 endfunction
 
-command! -nargs=? Background silent! call <SID>background(<f-args>)
+command! -nargs=? -bar Background silent! call <SID>background(<f-args>)
 
 function! s:theme()
   Trace theme:Theme
@@ -30,11 +30,8 @@ command! Theme silent! call <SID>theme()
 function! s:liteSwitch()
   Trace theme:LiteSwitch
   Quietly LiteDFMClose  " trap and ignore initialization error
-  if &background == 'light'
-    Background dark
-  else
-    Background light
-  endif
+  if &background == 'light' | Background dark
+  else                      | Background light | endif
 endfunction
 
 command! LiteSwitch silent! call <SID>liteSwitch()

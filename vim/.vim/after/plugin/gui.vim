@@ -30,15 +30,12 @@ endfunction
 command! RedrawGui silent! call <SID>redrawGui()
 
 " .................................................................... Scrolling
-
-let s:scroll_ratio = 12  " arbitrary scroll depth factor
-
 " dynamic scroll offset
 function! s:scrollOffset()
-  let &scrolloff = Prose() ? 999 : (line("w$") - line("w0") + 1) / s:scroll_ratio
+  let &scrolloff = Prose() ? 999 : 3
 endfunction
 
-command! -bar ScrollOffset silent! call <SID>scrollOffset()
+command! ScrollOffset silent! call <SID>scrollOffset()
 
 " Look _________________________________________________________________________
 
