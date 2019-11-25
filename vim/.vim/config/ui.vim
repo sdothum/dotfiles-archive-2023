@@ -23,7 +23,7 @@ nmap <silent><F9>      :Refresh<CR>
 imap <silent><F9> <C-o>:Refresh<CR>
 
 " wm timing requires FocusGained+sleep with VimResized to consistently set margins
-autocmd ui VimEnter,VimResized,FocusGained * sleep 10m | Background
+autocmd ui VimEnter,VimResized,FocusGained * sleep 10m | ScrollOffset | Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
@@ -67,7 +67,7 @@ nmap <silent><F7>        :ToggleInfo<CR>
 imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
 " show info in balanced diff windows
-autocmd ui VimEnter * if &diff | execute "normal! \<C-w>=" | ToggleInfo | endif
+autocmd ui VimEnter * if &diff | ToggleInfo | execute "normal! \<C-w>=" | endif
 
 " toggle tag, line details
 nmap <silent><S-F7>      :let g:detail = !g:detail<CR>

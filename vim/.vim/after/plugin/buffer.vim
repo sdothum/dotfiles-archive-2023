@@ -19,7 +19,7 @@ function! s:closeDiff()
   return 0
 endfunction
 
-command! CloseDiff silent! call <SID>closeDiff()
+command! -bar CloseDiff silent! call <SID>closeDiff()
 
 " .................................................................... Open diff
 " toggle diff of current file

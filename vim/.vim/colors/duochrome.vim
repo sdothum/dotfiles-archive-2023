@@ -148,7 +148,6 @@ endif
 " marks
 hi! link FoldColumn               Ignore
 call s:h("SignColumn",            { "bg": s:bg })
-hi! link ShowMarksHLl             SignColumn
 
 " ...................................................................... Special
 " normal
@@ -337,6 +336,10 @@ hi! link yamlBlockMappingKey      Statement
 " ale
 call s:h("ALEErrorSign",          { "fg": s:red })
 call s:h("ALEWarningSign",        { "fg": s:warning })
+
+" signature
+hi! link SignatureMarkText        ALEErrorSign
+hi! link SignatureMarkerText      SignatureMarkText
 
 " signify
 call s:h("SignifyLineAdd",        { "fg": s:gutter })

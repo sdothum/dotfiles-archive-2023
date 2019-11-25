@@ -19,9 +19,9 @@ let s:delay = '200m'  " redraw delay, see ui:Font()
 
 " toggle in/out to fill window
 function! s:redrawGui()
-  call s:toggleGui()
+  ToggleGui
   execute 'sleep ' . s:delay
-  call s:toggleGui()
+  ToggleGui
   if g:wrap_highlighting
     Quietly Retheme  " fix line wrap highlighting
   endif
@@ -31,12 +31,14 @@ command! RedrawGui silent! call <SID>redrawGui()
 
 " .................................................................... Scrolling
 
+let s:scroll_ratio = 12  " arbitrary scroll depth factor
+
 " dynamic scroll offset
 function! s:scrollOffset()
-  let &scrolloff = Prose() ? 999 : 0
+  let &scrolloff = Prose() ? 999 : (line("w$") - line("w0") + 1) / s:scroll_ratio
 endfunction
 
-command! ScrollOffset silent! call <SID>scrollOffset()
+command! -bar ScrollOffset silent! call <SID>scrollOffset()
 
 " Look _________________________________________________________________________
 
@@ -88,7 +90,7 @@ let s:wraplight = 0  " show linewrap with (0) s:breakchar (1) highlight
 function! s:toggleColumnWrap(...)
   let s:wraplight       = a:0 ? a:1 : !s:wraplight
   let g:duochrome_ruler = -1
-  call s:toggleColumn()
+  ToggleColumn
 endfunction
 
 command! -nargs=? ToggleColumnWrap silent! call <SID>toggleColumnWrap(<f-args>)

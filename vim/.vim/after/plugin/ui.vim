@@ -14,7 +14,7 @@ let s:show          = 1                    " statusline (0) off (1) on
 
 "  Distraction free modes ______________________________________________________
 
-" .................................................................. Switch view
+" .................................................................. Insert mode
 " toggle full document highlight
 function! s:view()
   Trace ui:view()
@@ -28,17 +28,6 @@ function! s:view()
   Background
 endfunction
 
-" ................................................................. Line numbers
-" toggle line numbers
-function! s:toggleNumber()
-  Trace ui:ToggleNumber
-  let g:duochrome_relative = !g:duochrome_relative
-  Background
-endfunction
-
-command! ToggleNumber silent! call <SID>toggleNumber()
-
-" .................................................................. Insert mode
 function! s:toggleProof()
   Trace ui:ToggleProof()
   if CommandWindow() | return | endif
@@ -48,6 +37,16 @@ function! s:toggleProof()
 endfunction
 
 command! -bar ToggleProof silent! call <SID>toggleProof()
+
+" ................................................................. Line numbers
+" toggle line numbers
+function! s:toggleNumber()
+  Trace ui:ToggleNumber
+  let g:duochrome_relative = !g:duochrome_relative
+  Background
+endfunction
+
+command! ToggleNumber silent! call <SID>toggleNumber()
 
 " Screen focus _________________________________________________________________
 
@@ -174,6 +173,6 @@ function! s:toggleInfo(...)
   execute 'normal! ' . l:col . '|'
 endfunction
 
-command! -nargs=? ToggleInfo silent! call <SID>toggleInfo(<f-args>)
+command! -nargs=? -bar ToggleInfo silent! call <SID>toggleInfo(<f-args>)
 
 " ui.vim
