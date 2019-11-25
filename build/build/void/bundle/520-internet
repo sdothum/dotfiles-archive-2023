@@ -17,14 +17,14 @@
 = ═════════════
 # gftp
 d nzbget
-# sabnzbd   [server]
-d m sonarr  [server]
+# sabnzbd  [server]
+d m sonarr [server]
   transmission-gtk
 
 
 = proxy
 = ═════
-# squid [server]
+# squid    [server]
 
 
 = web aggregator

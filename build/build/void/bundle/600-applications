@@ -23,7 +23,7 @@
 
 = ebook
 = ═════
-  calibre [server]
+  calibre     [server]
 
 
 = font editor
@@ -63,8 +63,8 @@ d m amphetype
 
 = viewer
 = ══════
-  epdfview [server]
-  fbreader [server]
+  epdfview    [server]
+  fbreader    [server]
   feh
   zathura
   zathura-ps

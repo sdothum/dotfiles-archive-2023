@@ -9,11 +9,6 @@
   pkg-config
 
 
-= console font
-= ════════════
-  dos2unix
-
-
 = development
 = ═══════════
   base-devel

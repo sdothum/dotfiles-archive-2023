@@ -4,6 +4,11 @@
 # see bundle_install
 
 
+= file conversion
+= ═══════════════
+  dos2unix
+
+
 = file compression
 = ════════════════
   file-roller
@@ -31,7 +36,7 @@
 
 = system monitor
 = ══════════════
-  glances
+# glances
 # gsmartcontrol
   htop
   iotop
