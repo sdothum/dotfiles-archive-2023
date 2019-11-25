@@ -57,7 +57,6 @@ function! s:layout()
   Trace ui:Layout()
   let g:duochrome_markdown = Prose()
   Font Prose()
-  ScrollOffset
   ColumnWrap
 endfunction
 

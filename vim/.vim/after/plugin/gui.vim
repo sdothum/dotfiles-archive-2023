@@ -30,9 +30,11 @@ endfunction
 command! RedrawGui silent! call <SID>redrawGui()
 
 " .................................................................... Scrolling
+let s:scroll_ratio = 12  " arbitrary integer division (vs .percent real number multiplication and conversion)
+
 " dynamic scroll offset
 function! s:scrollOffset()
-  let &scrolloff = Prose() ? 999 : 3
+  let &scrolloff = Prose() ? 999 : winheight(win_getid()) / s:scroll_ratio
 endfunction
 
 command! ScrollOffset silent! call <SID>scrollOffset()
