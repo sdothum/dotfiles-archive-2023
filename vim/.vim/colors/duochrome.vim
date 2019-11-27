@@ -361,9 +361,7 @@ hi! link GitGutterChangeDelete    SignifyLineAdd
 hi! link SneakScope               Cursor
 
 " fzf
-let $FZF_DEFAULT_OPTS = '--reverse --color=fg+:' . s:fzf  " cannot appear to set other colors, such as hl+ (?)
-" hide bottom fzf window identifier
-call s:h("fzf1",                  { "fg": s:bg })
+call s:h("fzf1",                  { "fg": s:bg })  " hide bottom fzf window identifier
 call s:h("fzf2",                  { "fg": s:bg })
 call s:h("fzf3",                  { "fg": s:bg })
 

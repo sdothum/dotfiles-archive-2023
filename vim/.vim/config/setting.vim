@@ -75,22 +75,23 @@ autocmd plugin FileType fish
     \| let b:endwise_syngroups = 'shFunctionKey'
 
 " .......................................................................... Fzf
+" see duochrome.vim
 let g:fzf_colors =
   \{
-  \  'fg'      : ['fg', 'Normal']
-  \, 'bg'      : ['bg', 'Normal']
-  \, 'hl'      : ['fg', 'Directory']
-  \, 'fg+'     : ['fg', 'CursorLine']
-  \, 'bg+'     : ['bg', 'CursorLine']
-  \, 'hl+'     : ['fg', 'Directory']
-  \, 'border'  : ['fg', 'Ignore']
+  \  'fg'      : ['fg', 'Normal'    ]
+  \, 'bg'      : ['bg', 'Normal'    ]
+  \, 'hl'      : ['fg', 'Comment'   ]
+  \, 'fg+'     : ['fg', 'Statement' ]
+  \, 'bg+'     : ['bg', 'Normal'    ]
+  \, 'hl+'     : ['fg', 'Error'     ]
+  \, 'border'  : ['fg', 'Ignore'    ]
   \, 'gutter'  : ['bg', 'CursorLine']
-  \, 'header'  : ['fg', 'Normal']
-  \, 'info'    : ['fg', 'Special']
-  \, 'marker'  : ['fg', 'Special']
-  \, 'pointer' : ['fg', 'Special']
-  \, 'prompt'  : ['fg', 'Directory']
-  \, 'spinner' : ['fg', 'Special']
+  \, 'header'  : ['fg', 'Normal'    ]
+  \, 'info'    : ['fg', 'Special'   ]
+  \, 'marker'  : ['fg', 'Special'   ]
+  \, 'pointer' : ['fg', 'Special'   ]
+  \, 'prompt'  : ['fg', 'Directory' ]
+  \, 'spinner' : ['fg', 'Special'   ]
   \}
 
 " close any diff buffer before leaving buffer
@@ -218,41 +219,32 @@ map  <leader>c <Plug>NERDCommenterToggle
 imap ,c        <C-o>:execute "normal \<Plug>NERDCommenterToggle"<CR>
 
 " ............................................................... Notational-fzf
-" buffers load after plugins so parse command line for filename
-function! s:argFile()
-  if argc() > 0 | return argv(0) | endif
-  return ''
-endfunction
-
-let g:nv_create_note_window  = 'edit'
-let g:nv_default_extension   = ''
-let g:nv_expect_keys         = []
-let g:nv_main_directory      = './'    " create new notes in current directory
-let g:nv_preview_direction   = 'right'
-let g:nv_preview_width       = 55
-let g:nv_search_paths        = ['./']  " default search from current directory
-let g:nv_show_preview        = 1       " alt-p to toggle preview
-let g:nv_use_short_pathnames = 1
-let g:nv_wrap_preview_text   = 1
-
-" notational path rules: [regex, rootpath, ext]
-" note: regex magic is not enabled at this stage so force with '\v'
-let s:set_notational = [['.wiki$',                          ['~/vimwiki', '~/drafts'],  'wiki' ]
-  \,                   ['.draft$',                          ['~/drafts'],               'draft']
-  \,                   ['.note$',                           ['~/notes'],                'note' ]
-  \,                   ['\v([~]|' . $HOME . '|/stow)/bin/', ['~/bin'],                  ''     ]
-  \,                   ['.vim/',                            ['~/.vim/config'],          'vim'  ]
-  \,                   ['herbstluftwm/',                    ['~/.config/herbstluftwm'], ''     ]
-  \,                   ['archlinux/',                       ['~/build/archlinux'],      ''     ]]
+let g:nv_create_note_window     = 'edit'
+let g:nv_expect_keys            = []
+let g:nv_main_directory         = './'    " create new notes in current directory
+let g:nv_preview_direction      = 'right'
+let g:nv_preview_width          = 55
+let g:nv_show_preview           = 1       " alt-p to toggle preview
+let g:nv_use_short_pathnames    = 1
+let g:nv_wrap_preview_text      = 1
 
 " dynamically setup notational-fzf :)
-for i in s:set_notational
-  if s:argFile() =~ i[0]
-    let g:nv_search_paths      = i[1]
-    let g:nv_default_extension = i[2]
+runtime config/.notational-fzf.vim        " source $USER g:user_nv_paths: [regex, [path*], ext]
+let g:nv_search_paths           = ['./']  " default search from current directory
+let g:nv_default_extension      = ''
+
+function! s:argFile()
+  return argc() > 0 ? argv(0) : $PWD      " buffers load after plugins so parse command line for filename
+endfunction
+
+for i in g:user_nv_paths
+  if s:argFile() =~ i[0]                  " use single path spec for file set
+    let g:nv_search_paths       = i[1]
+    let g:nv_default_extension  = i[2]
     break
   endif
 endfor
+unlet g:user_nv_paths
 
 nnoremap <silent><leader>f :NV<CR>
 
@@ -383,8 +375,8 @@ imap <silent><F11> <C-o>:call <SID>toggleEducate()<CR>
 map  <silent><leader>qc <Plug>ReplaceWithCurly
 map  <silent><leader>qs <Plug>ReplaceWithStraight
 
-autocmd plugin FileType html     call textobj#quote#init()
-autocmd plugin FileType markdown call textobj#quote#init()
+" autocmd plugin FileType html     call textobj#quote#init()
+" autocmd plugin FileType markdown call textobj#quote#init()
 
 " ....................................................................... Vimade
 autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable

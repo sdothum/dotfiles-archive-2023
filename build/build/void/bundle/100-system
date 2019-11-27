@@ -36,7 +36,7 @@
   gnome-keyring
   gnupg2
   pass
-  pinentry-gtk
+# pinentry-gtk
 # polkit-gnome
 
 

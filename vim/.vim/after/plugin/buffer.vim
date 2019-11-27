@@ -24,7 +24,7 @@ command! -bar CloseDiff silent! call <SID>closeDiff()
 " .................................................................... Open diff
 " toggle diff of current file
 command! OpenDiff if !<SID>closeDiff() | vert new | set bt=nofile | r ++edit # | 0d_
-                                      \| diffthis | wincmd p | diffthis | endif
+                                      \| diffthis | wincmd p      | diffthis   | endif
 
 " File actions _________________________________________________________________
 

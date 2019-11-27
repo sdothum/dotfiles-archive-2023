@@ -60,7 +60,6 @@ if [ $USER != root ] ;then
         wsync -v
       fi
     fi
-    we &
   fi
 
   # reset keyboard layout
