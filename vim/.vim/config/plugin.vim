@@ -65,9 +65,9 @@ Plug 'mhinz/vim-signify'               " vcs diff
 " .................................................................... Hypertext
 " Plug 'dyng/ctrlsf.vim'               " ctrl-shift-f clone
 " Plug 'lervag/wiki'                   " vimwiki clone
-Plug 'junegunn/fzf'                    " fuzzy finder (separate plug install to avuid update errors)
+Plug 'junegunn/fzf'                    " fuzzy finder (separate plug install to avoid update errors)
 Plug 'junegunn/fzf.vim'                " fuzzy finder
-Plug 'alok/notational-fzf-vim'         " fzf note search
+Plug 'alok/notational-fzf-vim'         " notational-velocity note search
 
 " ...................................................................... History
 Plug 'simnalamburt/vim-mundo', { 'on' : 'MundoToggle' }  " undo

@@ -45,6 +45,14 @@ endfunction
 
 command! -nargs=1 Status call <SID>status(<f-args>)
 
+" ............................................................. GUI delay window
+" for when a sliver of time is required for a prior gui action to properly complete
+function! s:waitFor(...)
+  execute 'sleep ' . (a:0 ? a:1 : '10m')
+endfunction
+
+command! -nargs=? -bar WaitFor call <SID>waitFor(<f-args>)
+
 " Text _________________________________________________________________________
 
 " ............................................................. (Non-)blank line

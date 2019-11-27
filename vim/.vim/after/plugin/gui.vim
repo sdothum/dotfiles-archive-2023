@@ -15,12 +15,10 @@ endfunction
 command! ToggleGui silent! call <SID>toggleGui()
 
 " ................................................................... Redraw gui
-let s:delay = '200m'  " redraw delay, see ui:Font()
-
 " toggle in/out to fill window
 function! s:redrawGui()
   ToggleGui
-  execute 'sleep ' . s:delay
+  WaitFor 50m        " redraw delay, see ui:Font()
   ToggleGui
   if g:wrap_highlighting
     Quietly Retheme  " fix line wrap highlighting

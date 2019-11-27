@@ -13,7 +13,6 @@ let g:active    = 0   " active window tag
 let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [source, prose]
 let g:font_type = -1                                                        " current font setting (0) source (1) prose
 let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " increase (point size) for prose
-let s:sys_delay = '10m'
 
 augroup ui | autocmd! | augroup END
 
@@ -24,7 +23,7 @@ nmap <silent><F9>      :Refresh<CR>
 imap <silent><F9> <C-o>:Refresh<CR>
 
 " wm timing requires FocusGained+sleep with VimResized to consistently set margins, see Background
-autocmd ui VimEnter,VimResized,FocusGained * execute 'sleep ' . s:sys_delay | Background
+autocmd ui VimEnter,VimResized,FocusGained * WaitFor | Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
@@ -68,7 +67,7 @@ nmap <silent><F7>        :ToggleInfo<CR>
 imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
 " show info+sleep in balanced diff windows
-autocmd ui VimEnter * if &diff | ToggleInfo | execute 'sleep ' . s:sys_delay | execute "normal! \<C-w>=" | endif
+autocmd ui VimEnter * if &diff | ToggleInfo | WaitFor | execute "normal! \<C-w>=" | endif
 
 " toggle tag, line details
 nmap <silent><S-F7>      :let g:detail = !g:detail<CR>
