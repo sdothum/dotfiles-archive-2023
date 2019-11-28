@@ -5,7 +5,7 @@
 
 # ...................................................................... Session
 
-default=shutdown
+default=reboot
 
 # disconnect nfs to prevent shutdown wait..
 disconnect() {
