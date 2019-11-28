@@ -6,7 +6,7 @@
 " Vim __________________________________________________________________________
 
 " ........................................................................ Setup
-set nocompatible                        " disable vi-compatibility
+set nocompatible            " disable vi-compatibility
 
 " ....................................................................... System
 set lazyredraw              " don't redraw while executing macros

@@ -21,7 +21,7 @@ command! -nargs=? -bar Background silent! call <SID>background(<f-args>)
 function! s:theme()
   Trace theme:Theme
   call s:syntax()
-  ColumnWrap
+  ShowBreak
 endfunction
 
 command! Theme silent! call <SID>theme()
@@ -49,12 +49,12 @@ endfunction
 
 " ................................................................ Single window
 " undo statusline gui=reverse
-function! s:showStatusLine()
-  Trace theme:ShowStatusLine
+function! s:statusLine()
+  Trace theme:StatusLine
   set laststatus=2
 endfunction
 
-command! ShowStatusLine silent! call <SID>showStatusLine()
+command! StatusLine silent! call <SID>statusLine()
 
 " ................................................................ Split windows
 " split window statusline background, see ui.vim autocmd
@@ -64,6 +64,6 @@ function! s:splitColors()
   Background
 endfunction
 
-command! SplitColors silent! call <SID>splitColors()
+command! -bar SplitColors silent! call <SID>splitColors()
 
 " theme.vim

@@ -6,11 +6,8 @@
 " Layout _______________________________________________________________________
 
 " ........................................................................ Setup
-let g:pad           = ['      ', '     ']  " statusline padding [inner, outer]
-"                       123456    12345
 let s:expanded      = 0                    " statusline state (0) dfm (1) expanded
 let s:font_changed  = 0                    " redraw flag
-let s:show          = 1                    " statusline (0) off (1) on
 
 "  Distraction free modes ______________________________________________________
 
@@ -57,7 +54,7 @@ function! s:layout()
   Trace ui:Layout()
   let g:duochrome_markdown = Prose()
   Font Prose()
-  ColumnWrap
+  ShowBreak
 endfunction
 
 command! Layout silent! call <SID>layout()
@@ -104,9 +101,7 @@ function! s:font(type)
       let l:size      = system('fontsize')
       let l:size      = l:type ? l:size + g:font_step : l:size
       execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
-      if s:font_changed
-        RedrawGui
-      endif
+      if s:font_changed | RedrawGui | endif
       let s:font_changed = 1  " next font size change requires redraw
       set laststatus=2        " turn on statusline
     endif
@@ -131,7 +126,6 @@ endfunction
 function! s:statusline()
   " Trace ui:statusline()  " tmi :-)
   try  " trap snippet insertion interruption
-    let g:prose = 1
     if Prose() && g:duochrome_insert
       return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
     else
@@ -158,7 +152,7 @@ endfunction
 function! s:showInfo()
   Trace ui:showInfo()
   execute 'set statusline=' . s:statusline()
-  ShowStatusLine
+  StatusLine
 endfunction
 
 command! ShowInfo silent! call <SID>showInfo()

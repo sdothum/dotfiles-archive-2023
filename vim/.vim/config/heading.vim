@@ -14,6 +14,10 @@ let s:equal      = '═'  " U+2550
 let s:dash       = '─'  " U+2500
 let s:underscore = '_'
 
+augroup heading | autocmd! | augroup END
+
+autocmd heading BufEnter * let g:textwidth = &textwidth
+
 " .................................................................... Underline
 " example: draw underline
 " ───────────────────────

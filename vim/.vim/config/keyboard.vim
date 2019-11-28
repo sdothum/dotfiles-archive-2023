@@ -7,7 +7,6 @@
 
 " ........................................................................ Setup
 let mapleader      = "\<Space>"  " remap <leader> a la spacemacs
-let g:mapleader    = "\<Space>"
 let s:modal_strict = 0           " modal vim cursor keys (0) allow (1) disable
 
 augroup kbd | autocmd! | augroup END

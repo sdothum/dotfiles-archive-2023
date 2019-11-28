@@ -5,11 +5,7 @@
 
 " Behaviour ____________________________________________________________________
 
-" ........................................................................ Setup
 augroup gui | autocmd! | augroup END
-
-let g:ruler             = 0  " colorcolumn mode, see theme.vim
-let g:wrap_highlighting = 0  " wrap highlighting (0) off (1) on
 
 " ................................................................... Toggle gui
 nnoremap <silent><S-F12>      :ToggleGui<CR>
@@ -76,8 +72,8 @@ set colorcolumn=0  " highlight column
 nmap <silent><Bar> :ToggleColumn<CR>
 
 " .......................................................... Line wrap highlight
-nmap <silent><F8>      :ToggleColumnWrap<CR>
-imap <silent><F8> <C-o>:ToggleColumnWrap<CR>
+nmap <silent><F8>      :ToggleBreak<CR>
+imap <silent><F8> <C-o>:ToggleBreak<CR>
 
 " ................................................................. Line numbers
 set number

@@ -46,11 +46,11 @@ nnoremap <leader>Q :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Le
 
 " ......................................................................... Line
 set formatoptions=qrn1j  " coding options
-let g:codeoptions = &formatoptions
 " double spaces at the end of a wrapped line, becomes <br> by markdown
 set nojoinspaces         " force single spacing after sentence punctuation!
 set textwidth=80         " normally 78-80, see autocmd for mail
-let g:linewidth = &textwidth
+
+autocmd default BufEnter * let g:formatoptions = &formatoptions
 
 " .................................................................... Line wrap
 nmap <silent><leader><CR> :ToggleWrap<CR>
@@ -87,8 +87,7 @@ vmap <Tab>     %
 nmap <silent>\ :noh<CR>
 
 " ........................................................... Incremental search
-set incsearch          " find the next match as we type the search
-let g:separator = ' '  " line wrap enabled incsearch (including irregular spacing)
+set incsearch  " find the next match as we type the search
 
 nmap <silent><F6> :ToggleWrapSearch<CR>
 

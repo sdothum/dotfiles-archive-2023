@@ -20,8 +20,8 @@ command! -nargs=1 Underline silent! call <SID>underline(<f-args>)
 " ──────────────────────────────────────────────────────────────────────────────
 function! s:drawline(delimiter)
   call s:underline(a:delimiter)
-  if virtcol('.') < g:linewidth  " for mirrored left/right margin spacing
-    let l:col = g:linewidth - virtcol('.')
+  if virtcol('.') < g:textwidth  " for mirrored left/right margin spacing
+    let l:col = g:textwidth - virtcol('.')
     execute 'normal! ' . l:col . 'a' . a:delimiter
   endif
   normal! $
@@ -39,7 +39,7 @@ function! s:appendTrailer(delimiter)
       normal! $bhD
     endif
     normal! $
-    let l:col = g:linewidth - virtcol('.') - 1
+    let l:col = g:textwidth - virtcol('.') - 1
     if l:col > 0
       set formatoptions-=c  " suppress potential comment line wrapping
       execute 'normal! a '

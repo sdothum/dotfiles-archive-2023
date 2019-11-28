@@ -35,18 +35,18 @@ endfunction
 
 command! -nargs=1 Quietly call <SID>quietly(<f-args>)
 
-" ................................................................ Message state
-" format:  <message>: <bool>
-function! s:status(s)
+" ........................................................ State change notifier
+" args:  <message>: <bool>
+function! s:notify(s)
   let l:msg = split(a:s, ' *: ')  " accept g:varname in bool expression
   execute 'let l:state = ' . msg[1] . ' ? "ON" : "OFF"'
   echo l:msg[0] l:state
 endfunction
 
-command! -nargs=1 Status call <SID>status(<f-args>)
+command! -nargs=1 Notify call <SID>notify(<f-args>)
 
 " ............................................................. GUI delay window
-" for when a sliver of time is required for a prior gui action to properly complete
+" wait for prior gui action to properly complete
 function! s:waitFor(...)
   execute 'sleep ' . (a:0 ? a:1 : '10m')
 endfunction

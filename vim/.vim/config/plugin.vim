@@ -67,7 +67,7 @@ Plug 'mhinz/vim-signify'               " vcs diff
 " Plug 'lervag/wiki'                   " vimwiki clone
 Plug 'junegunn/fzf'                    " fuzzy finder (separate plug install to avoid update errors)
 Plug 'junegunn/fzf.vim'                " fuzzy finder
-Plug 'alok/notational-fzf-vim'         " notational-velocity note search
+Plug 'alok/notational-fzf-vim'         " fzf content search
 
 " ...................................................................... History
 Plug 'simnalamburt/vim-mundo', { 'on' : 'MundoToggle' }  " undo
@@ -86,10 +86,8 @@ Plug 'kshenoy/vim-signature'           " toggle marks
 Plug 'justinmk/vim-sneak'              " jump to location
 
 " ................................................................. Text objects
-" Plug 'kana/vim-textobj-entire'       " 'e' select document
-" Plug 'kana/vim-textobj-line'         " 'l' select current line
-" Plug 'reedes/vim-textobj-quote'      " typographic characters
 Plug 'tpope/vim-surround'              " pairwise c'hange, d'elete, y'ank
+Plug 'glts/vim-textobj-comment', code  " 'c' select comment
 Plug 'kana/vim-textobj-fold'           " 'z' select fold
 Plug 'kana/vim-textobj-function', code " 'f' select function
 Plug 'kana/vim-textobj-indent', code   " 'i' select with same indent level

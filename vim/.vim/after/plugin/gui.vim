@@ -12,23 +12,11 @@ function! s:toggleGui()
   else                   | set guioptions+=m | endif
 endfunction
 
-command! ToggleGui silent! call <SID>toggleGui()
-
-" ................................................................... Redraw gui
-" toggle in/out to fill window
-function! s:redrawGui()
-  ToggleGui
-  WaitFor 50m        " redraw delay, see ui:Font()
-  ToggleGui
-  if g:wrap_highlighting
-    Quietly Retheme  " fix line wrap highlighting
-  endif
-endfunction
-
-command! RedrawGui silent! call <SID>redrawGui()
+command! -bar ToggleGui silent! call <SID>toggleGui()
+command! -bar RedrawGui silent! ToggleGui | WaitFor 50m \| ToggleGui
 
 " .................................................................... Scrolling
-let s:scroll_ratio = 12  " arbitrary integer division (vs .percent real number multiplication and conversion)
+let s:scroll_ratio = 12  " arbitrary integer division (vs 0.percent calculation and conversion)
 
 " dynamic scroll offset
 function! s:scrollOffset()
@@ -48,17 +36,19 @@ set colorcolumn=0  " highlight column
 function! s:toggleColumn()
   if g:duochrome_ruler == 0
     let g:duochrome_ruler = 1
-    let &colorcolumn = col('.') 
+    let &colorcolumn      = col('.')
+    let s:wraplight       = 0
     autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
   elseif g:duochrome_ruler == 1
     let g:duochrome_ruler = 2
+    let s:wraplight       = 0
     autocmd! column
   else
     let g:duochrome_ruler = 0
     let &colorcolumn      = 0
-    ColumnWrap
   endif
-  let g:show_column       = 1  " flash column position, see autocmd info.vim
+  ShowBreak
+  let g:show_column = 1  " flash column position, see autocmd info.vim
   Background
 endfunction
 
@@ -68,9 +58,10 @@ command! ToggleColumn silent! call <SID>toggleColumn()
 
 " .......................................................... Line wrap highlight
 let s:breakchar = '\ ↪\ '  " \escape spaces
+let s:wraplight = 0        " show linewrap with (0) s:breakchar (1) highlight
 
 " highlight wrapped line portion, see theme:Theme()
-function! s:columnWrap()
+function! s:showBreak()
   if g:duochrome_ruler == 0 && s:wraplight
     set showbreak=
     let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
@@ -80,17 +71,15 @@ function! s:columnWrap()
   endif
 endfunction
 
-command! ColumnWrap silent! call <SID>columnWrap()
+command! ShowBreak silent! call <SID>showBreak()
 
-let s:wraplight = 0  " show linewrap with (0) s:breakchar (1) highlight
-
-function! s:toggleColumnWrap(...)
+function! s:toggleBreak(...)
   let s:wraplight       = a:0 ? a:1 : !s:wraplight
   let g:duochrome_ruler = -1
   ToggleColumn
 endfunction
 
-command! -nargs=? ToggleColumnWrap silent! call <SID>toggleColumnWrap(<f-args>)
+command! -nargs=? ToggleBreak silent! call <SID>toggleBreak(<f-args>)
 
 " ......................................................... Trailing white space
 augroup invisible | autocmd! | augroup END
@@ -106,7 +95,7 @@ function! s:toggleWhiteSpace()
     " list state propagates forward (on) but not backwards (off)? so auto reset buffer state!
     autocmd invisible BufLeave,WinLeave * call <SID>toggleWhiteSpace()
   endif
-  Status List invisibles: &list != ' '
+  Notify List invisibles: &list != ' '
 endfunction
 
 command! ToggleWhiteSpace call <SID>toggleWhiteSpace()

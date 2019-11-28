@@ -6,6 +6,8 @@
 " The view _____________________________________________________________________
 
 " ........................................................................ Setup
+let g:pad       = ['      ', '     ']  " statusline padding [inner, outer]
+"                   123456    12345
 let g:detail    = 0   " default expanded detail (0) tag (1) atom, see F7 map
 let g:active    = 0   " active window tag
 

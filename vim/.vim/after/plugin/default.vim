@@ -39,12 +39,12 @@ command! ReplayLastMacro silent! call <SID>replayLastMacro()
 function! s:toggleWrap()
   if &formatoptions =~ 't'
     NoPencil
-    let &formatoptions = g:codeoptions
-  elseif &formatoptions == g:codeoptions
+    let &formatoptions = g:formatoptions
+  elseif &formatoptions == g:formatoptions
     HardPencil
     set formatoptions=tqwan1
   endif
-  Status Automatic line wrap: &formatoptions =~ 't'
+  Notify Automatic line wrap: &formatoptions =~ 't'
 endfunction
 
 command! ToggleWrap call <SID>toggleWrap()
@@ -52,10 +52,12 @@ command! ToggleWrap call <SID>toggleWrap()
 " Search and replace ___________________________________________________________
 
 " ........................................................... Incremental search
+let s:separator = ' '  " line wrap enabled incsearch (including irregular spacing)
+
 function! s:toggleWrapSearch()
-  let g:separator = g:separator == ' ' ? '\_s*' : ' '
-  cnoremap <expr><space>  '/?' =~ getcmdtype() ? g:separator : ' '
-  Status Wrap search: g:separator != ' '
+  let s:separator = s:separator == ' ' ? '\_s*' : ' '
+  cnoremap <expr><space>  '/?' =~ getcmdtype() ? s:separator : ' '
+  Notify Wrap search: s:separator != ' '
 endfunction
 
 command! ToggleWrapSearch call <SID>toggleWrapSearch()

@@ -6,23 +6,22 @@
 " StatusLine ___________________________________________________________________
 
 " ........................................................................ Setup
-" window g:state [0] unmodified [1] unmodifiable [2] modified [3] inactive
+" buffer g:icon [0] unmodified [1] unmodifiable [2] modified [3] inactive
 if empty($DISPLAY)
-  let g:state   = ['^', '-', '+', 'x']  " console
+  let g:icon   = ['^', '-', '+', 'x']  " console
 else
   if !empty($MONO)
-    let g:state = ['', '', '', '']  " nerd-font utf-8 mono symbols, see ui.vim
+    let g:icon = ['', '', '', '']  " nerd-font utf-8 mono symbols, see ui.vim
   else
-    let g:state = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim
+    let g:icon = ['', '', '', '']  " nerd-font utf-8 symbols, see ui.vim
   endif
 endif
-
-let g:prose       = 0  " generic filetype, see theme.vim
-let g:show_column = 0  " statusline current column, see theme.vim
 
 augroup info | autocmd! | augroup END
 
 " ......................................................... Statusline indicator
+let g:show_column = 0  " statusline current column, see theme.vim
+
 " trigger autocmd to flash column position (does not work for BOF)
 nnoremap <silent><C-c> hl
 

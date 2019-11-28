@@ -104,8 +104,8 @@ endfunction
 
 " ................................................................... File state
 function! UnModified(show)
-  " return &modifiable ? (&modified ? g:state[2] : a:show ? g:state[0] : '') : g:state[1]
-  return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:state[2] : a:show ? g:state[0] : '') : g:state[1]) : g:state[3]
+  " return &modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]
+  return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]) : g:icon[3]
 endfunction
 
 " .................................................................... Left path

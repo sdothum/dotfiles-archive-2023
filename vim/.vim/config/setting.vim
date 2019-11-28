@@ -5,7 +5,6 @@
 
 " Plugin settings ______________________________________________________________
 
-" ........................................................................ Setup
 augroup plugin | autocmd! | augroup END
 
 " .......................................................................... Ale
@@ -169,11 +168,12 @@ let g:nrrw_rgn_nomap_Nr      = 1
 let g:nrrw_rgn_resize_window = 'relative'
 let g:nrrw_rgn_rel_min       = 50  " relative window size
 
+" NrrwRgn buffer actions are not trapped by SplitColors autocmd (..?)
 function! s:closeNR()
-  if expand('%t') =~ 'NrrwRgn' | execute ':wq' | endif
+  if expand('%t') =~ 'NrrwRgn' | execute ':wq' | SplitColors | endif
 endfunction
 
-vmap <leader>n <Plug>NrrwrgnDo
+vmap <leader>n :NR<CR>:SplitColors<CR>
 nmap <leader>n :call <SID>closeNR()<CR>
 
 " .................................................................. Neocomplete
@@ -348,9 +348,9 @@ let g:educate = 0
 " typographical mode for prose (and html content editing)
 function! s:toggleEducate()
   let g:educate = !g:educate
-  if g:educate  " html <p> content shortcuts
+  if g:educate       " html <p> content shortcuts
     Educate
-    " ToggleColumnWrap 0  " disable line wrap column highlight to show spelling errors
+    " ToggleBreak 0  " disable line wrap column highlight to show spelling errors
     imap ...      …<Space>
     imap --       <Space>&ndash;<Space>
     imap .<Space> .<Space><CR>
@@ -358,7 +358,7 @@ function! s:toggleEducate()
     imap !<Space> !<Space><CR>
   else
     NoEducate
-    " ToggleColumnWrap 1  " restore line wrap column highlight
+    " ToggleBreak 1  " restore line wrap column highlight
     iunmap ...
     iunmap --
     iunmap .<Space>
