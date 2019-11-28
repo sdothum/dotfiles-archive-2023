@@ -33,7 +33,7 @@ set viminfo^=%       " remember info about open buffers on close
 " nmap <silent><leader>'' :delmarks!<CR>
 
 " ....................................................................... Macros
-nnoremap <silent><leader>@ :ReplayLastMacro<CR>
+nnoremap <silent><leader>@ :ReplayMacro<CR>
 
 " quick q macro
 nnoremap <C-q>     @q
@@ -49,8 +49,6 @@ set formatoptions=qrn1j  " coding options
 " double spaces at the end of a wrapped line, becomes <br> by markdown
 set nojoinspaces         " force single spacing after sentence punctuation!
 set textwidth=80         " normally 78-80, see autocmd for mail
-
-autocmd default BufEnter * let g:formatoptions = &formatoptions
 
 " .................................................................... Line wrap
 nmap <silent><leader><CR> :ToggleWrap<CR>

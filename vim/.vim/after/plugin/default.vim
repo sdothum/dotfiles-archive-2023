@@ -23,7 +23,7 @@ command! Term :call system('term "vimterm" STACK')
 
 " ....................................................................... Macros
 " https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
-function! s:replayLastMacro()
+function! s:replayMacro()
   try
     normal @@
   catch /E748/
@@ -31,18 +31,19 @@ function! s:replayLastMacro()
   endtry
 endfunction
 
-command! ReplayLastMacro silent! call <SID>replayLastMacro()
+command! ReplayMacro silent! call <SID>replayMacro()
 
 " Format _______________________________________________________________________
 
 " .................................................................... Line wrap
 function! s:toggleWrap()
+  if !Prose() | return | endif
   if &formatoptions =~ 't'
     NoPencil
-    let &formatoptions = g:formatoptions
-  elseif &formatoptions == g:formatoptions
+    set formatoptions-=t
+  else
     HardPencil
-    set formatoptions=tqwan1
+    set formatoptions+=t
   endif
   Notify Automatic line wrap: &formatoptions =~ 't'
 endfunction

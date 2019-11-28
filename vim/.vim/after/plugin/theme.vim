@@ -18,14 +18,6 @@ endfunction
 
 command! -nargs=? -bar Background silent! call <SID>background(<f-args>)
 
-function! s:theme()
-  Trace theme:Theme
-  call s:syntax()
-  ShowBreak
-endfunction
-
-command! Theme silent! call <SID>theme()
-
 " .......................................................... Toggle colourscheme
 function! s:liteSwitch()
   Trace theme:LiteSwitch
@@ -35,15 +27,6 @@ function! s:liteSwitch()
 endfunction
 
 command! LiteSwitch silent! call <SID>liteSwitch()
-
-" ................................................................ Syntax tweaks
-function! s:syntax()
-  if &filetype != 'markdown' | return | endif
-  Trace theme:syntax()
-  set syntax=markdown  " to see bold and italics (..?)
-  ToggleWrap
-  ToggleWrap           " to enable Pencil autowrap (..?)
-endfunction
 
 " Statusline ___________________________________________________________________
 

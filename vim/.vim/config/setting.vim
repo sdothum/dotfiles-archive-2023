@@ -255,6 +255,15 @@ let g:pencil#joinspaces      = 0       " 0=one_space (def), 1=two_spaces
 let g:pencil#cursorwrap      = 1       " 0=disable, 1=enable (def)
 let g:pencil#autoformat      = 1       " 0=manual, 1=auto (def)
 
+function! s:markdown()
+  if &filetype != 'markdown' | return | endif
+  set syntax=markdown  " to see bold and italics (..?)
+  ToggleWrap
+  ToggleWrap           " to enable Pencil autowrap (..?)
+endfunction
+
+autocmd plugin VimEnter * call <SID>markdown()
+
 " ...................................................................... Quantum
 let g:quantum_italics=1  " italicize comments
 
