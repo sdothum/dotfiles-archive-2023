@@ -155,10 +155,7 @@ endfunction
 nmap <silent><S-F6>      :silent call <SID>toggleSpell()<CR>
 imap <silent><S-F6> <C-o>:silent call <SID>toggleSpell()<CR>
 
-autocmd plugin Filetype draft        call litecorrect#init()
-autocmd plugin Filetype note         call litecorrect#init()
-autocmd plugin Filetype mail         call litecorrect#init()
-autocmd plugin FileType markdown,mkd call litecorrect#init()
+autocmd plugin FileType mail,markdown call litecorrect#init()
 
 " ................................................................ Narrow region
 let g:nrrw_rgn_vert          = 0   " open in horizontal split buffer
@@ -255,7 +252,7 @@ let g:pencil#joinspaces      = 0       " 0=one_space (def), 1=two_spaces
 let g:pencil#cursorwrap      = 1       " 0=disable, 1=enable (def)
 let g:pencil#autoformat      = 1       " 0=manual, 1=auto (def)
 
-autocmd plugin FileType markdown,mkd call pencil#init() 
+autocmd plugin FileType markdown call pencil#init() 
 
 " .................................................................... Signature
 let g:SignatureMap =
