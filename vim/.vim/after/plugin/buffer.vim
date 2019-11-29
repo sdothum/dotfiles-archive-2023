@@ -30,9 +30,9 @@ command! OpenDiff silent! if !<SID>closeDiff() | vert new | set bt=nofile | r ++
 
 " .......................................................... Buffer close / save
 " close all other buffers (and newly created no name buffer)
-command! Singleton   silent! CloseDiff | %bdelete | edit # | bdelete # | SplitColors
+command! Singleton   CloseDiff | %bdelete | edit # | bdelete # | SplitColors
 " close OpenDiff or current buffer
-command! CloseUnique silent! if !<SID>closeDiff() | silent bdelete | SplitColors | endif
+command! CloseUnique if !<SID>closeDiff() | silent bdelete | SplitColors | endif
 
 " .................................................................. Auto backup
 " queue files written for vhg (may contain repeated update entries)

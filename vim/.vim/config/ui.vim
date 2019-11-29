@@ -29,7 +29,7 @@ autocmd ui VimEnter,VimResized,FocusGained * WaitFor | Background
 
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
-autocmd ui BufWinEnter * Layout
+autocmd ui VimEnter,BufWinEnter * Layout
 
 " ..................................................................... Messages
 " recover last error message

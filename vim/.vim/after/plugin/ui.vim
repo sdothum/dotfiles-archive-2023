@@ -3,13 +3,7 @@
 " User Interface
 " ══════════════════════════════════════════════════════════════════════════════
 
-" Layout _______________________________________________________________________
-
-" ........................................................................ Setup
-let s:expanded      = 0                    " statusline state (0) dfm (1) expanded
-let s:font_changed  = 0                    " redraw flag
-
-"  Distraction free modes ______________________________________________________
+" Distraction free mode ________________________________________________________
 
 " .................................................................. Insert mode
 " toggle full document highlight
@@ -55,6 +49,8 @@ function! s:layout()
   let g:duochrome_markdown = Prose()
   Font Prose()
   ShowBreak
+  " ftplugin does not set syntax (..?)
+  if !&diff | execute 'set syntax=' . &filetype | endif
 endfunction
 
 command! Layout silent! call <SID>layout()
@@ -91,6 +87,8 @@ endfunction
 command! Margins silent! call <SID>margins()
 
 " ..................................................................... Set font
+let s:font_changed = 0  " redraw flag
+
 " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
 function! s:font(type)
   Trace ui:Font()
@@ -149,6 +147,8 @@ function! s:statusline()
 endfunction
 
 " .............................................................. Show statusline
+let s:expanded = 0  " statusline state (0) dfm (1) expanded
+
 function! s:showInfo()
   Trace ui:showInfo()
   execute 'set statusline=' . s:statusline()

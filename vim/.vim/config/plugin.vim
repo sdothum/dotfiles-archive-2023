@@ -86,6 +86,7 @@ Plug 'kshenoy/vim-signature'           " toggle marks
 Plug 'justinmk/vim-sneak'              " jump to location
 
 " ................................................................. Text objects
+" Plug 'reedes/vim-textobj-quote'      " typographic characters
 Plug 'tpope/vim-surround'              " pairwise c'hange, d'elete, y'ank
 Plug 'glts/vim-textobj-comment', code  " 'c' select comment
 Plug 'kana/vim-textobj-fold'           " 'z' select fold

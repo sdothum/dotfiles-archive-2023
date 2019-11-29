@@ -84,7 +84,7 @@ command! Hardcopy silent call <SID>hardcopy()
 " ............................................................. Prose filestypes
 " distraction free filetyes
 function! Prose()
-  return &filetype =~ 'wiki\|mail\|markdown\|draft\|note\|html'
+  return &filetype =~ 'draft\|html\|mail\|markdown\|note\|wiki'
 endfunction
 
 function! Markdown()

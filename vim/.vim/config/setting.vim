@@ -257,9 +257,6 @@ let g:pencil#autoformat      = 1       " 0=manual, 1=auto (def)
 
 autocmd plugin FileType markdown,mkd call pencil#init() 
 
-" ...................................................................... Quantum
-let g:quantum_italics=1  " italicize comments
-
 " .................................................................... Signature
 let g:SignatureMap =
   \{
@@ -330,12 +327,6 @@ xmap t <Plug>Sneak_t
 xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
-
-" .................................................................... Solarized
-let g:solarized_termtrans = 1  " terminal transparency (0) off (1) on
-set termguicolors              " for neovim
-
-syntax enable
 
 " ....................................................................... Tagbar
 " let g:tagbar_ctags_bin    = 'ctags-exuberant'
