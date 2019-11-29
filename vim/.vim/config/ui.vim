@@ -44,6 +44,8 @@ autocmd ui CursorHold * echo
 set omnifunc=syntaxcomplete#Complete
 syntax on  " turn on syntax highlighting
  
+" ftplugin set syntax is overridden by vim runtime Syntax autocmd
+autocmd Syntax <buffer> execute 'set syntax=' . &filetype
 " refresh highlighting on arm
 " autocmd ui CursorHold * if !Prose() && !&diff && !empty(&filetype) | execute 'set filetype=' . &filetype | endif
 

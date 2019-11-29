@@ -8,7 +8,7 @@
 " ..................................................................... Filetype
 function! s:filetype(ft)
   execute 'setfiletype ' . a:ft
-  Layout
+  Layout  " respect ui
 endfunction
 
 command! -nargs=1 Filetype silent! call <SID>filetype(<f-args>)

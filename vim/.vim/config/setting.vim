@@ -97,7 +97,7 @@ let g:fzf_colors =
 nmap <silent><leader>b :CloseDiff<CR>:Buffers<CR>
 nmap <silent><leader>l :Lines<CR>
 nmap <silent><leader>m :Marks<CR>
-" nmap <leader>f       :FZF<CR>  " see notational-fzf for extended content search
+nmap <silent><leader>f :FZF<CR>
 
 " ............................................................... Graphical undo
 let g:mundo_width           = 34
@@ -243,7 +243,7 @@ for i in g:user_nv_paths
 endfor
 unlet g:user_nv_paths
 
-nnoremap <silent><leader>f :NV<CR>
+nnoremap <silent><leader>/ :NV<CR>
 
 " ....................................................................... Pencil
 let g:pencil#wrapModeDefault = 'hard'  " 'hard' (def), 'soft'
@@ -333,13 +333,13 @@ let g:tagbar_width          = 40
 nmap <silent><leader>t :TagbarOpenAutoClose<CR>
 
 " ................................................................ Textobj quote
-let g:educate = 0
+let g:typo = 0  " typography mode (0) off (1) on
 
-" typographical mode for prose (and html content editing)
-function! s:toggleEducate()
-  let g:educate = !g:educate
-  if g:educate       " html <p> content shortcuts
-    Educate
+" typography mode for prose (and html content editing)
+function! s:toggleTypo()
+  let g:typo = !g:typo
+  if g:typo          " html <p> content shortcuts
+    Typo
     " ToggleBreak 0  " disable line wrap column highlight to show spelling errors
     imap ...      …<Space>
     imap --       <Space>&ndash;<Space>
@@ -347,7 +347,7 @@ function! s:toggleEducate()
     imap ?<Space> ?<Space><CR>
     imap !<Space> !<Space><CR>
   else
-    NoEducate
+    NoTypo
     " ToggleBreak 1  " restore line wrap column highlight
     iunmap ...
     iunmap --
@@ -355,16 +355,16 @@ function! s:toggleEducate()
     iunmap ?<Space>
     iunmap !<Space>
   endif
-  Status Typography: g:educate
+  Status Typography: g:typo
 endfunction
 
-nmap <silent><F11>      :call <SID>toggleEducate()<CR>
-imap <silent><F11> <C-o>:call <SID>toggleEducate()<CR>
+nmap <silent><F11>      :call <SID>toggleTypo()<CR>
+imap <silent><F11> <C-o>:call <SID>toggleTypo()<CR>
 
-" with vim-surround: cs"q
-map  <silent><leader>qc <Plug>ReplaceWithCurly
-map  <silent><leader>qs <Plug>ReplaceWithStraight
-
+" " with vim-surround: cs"q
+" map  <silent><leader>qc <Plug>ReplaceWithCurly
+" map  <silent><leader>qs <Plug>ReplaceWithStraight
+"
 " autocmd plugin FileType html     call textobj#quote#init()
 " autocmd plugin FileType markdown call textobj#quote#init()
 

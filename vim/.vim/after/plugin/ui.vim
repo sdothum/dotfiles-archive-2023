@@ -49,8 +49,6 @@ function! s:layout()
   let g:duochrome_markdown = Prose()
   Font Prose()
   ShowBreak
-  " ftplugin does not set syntax (..?)
-  if !&diff | execute 'set syntax=' . &filetype | endif
 endfunction
 
 command! Layout silent! call <SID>layout()

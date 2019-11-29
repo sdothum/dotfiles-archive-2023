@@ -57,8 +57,8 @@ command! ToggleColumn silent! call <SID>toggleColumn()
 " Highlights ___________________________________________________________________
 
 " .......................................................... Line wrap highlight
-let s:breakchar = '\ ↪\ '  " \escape spaces
 let s:wraplight = 0        " show linewrap with (0) s:breakchar (1) highlight
+let s:breakchar = '\ ↪\ '  " \escape spaces
 
 " highlight wrapped line portion, see theme:Theme()
 function! s:showBreak()

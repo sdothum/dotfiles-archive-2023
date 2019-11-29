@@ -73,9 +73,9 @@ endfunction
 if s:background != &background
   let s:background       = &background
   let s:bg               = s:b(s:white,         s:black)
-  let s:bg_reverse       = s:b(s:BLACK,         s:white)
   let s:bg_subtle        = s:b(s:lighter_gray,  s:light_black)
   let s:bg_contrast      = s:b(s:light_black,   s:subtle_white)
+  let s:high_contrast    = s:b(s:BLACK,         s:white)
   let s:norm             = s:b(s:light_black,   s:dark_white)
   let s:norm_subtle      = s:b(s:lighter_black, s:darker_white)
   let s:norm_very_subtle = s:b(s:lighter_gray,  s:medium_gray)
@@ -124,7 +124,7 @@ else
     call s:h("CursorLine",        { "gui": "underline" })
   else
     if g:duochrome_insert && g:duochrome_markdown
-      call s:h("CursorLine",      { "fg": s:bg_reverse, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
+      call s:h("CursorLine",      { "fg": s:high_contrast, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
     else
       call s:h("CursorLine",      { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
     endif
@@ -291,6 +291,8 @@ call s:h("MatchParen",            { "bg": s:red, "fg": s:white })
 
 " ..................................................................... Filetype
 " html
+call s:h("htmlBold",              { "gui": "bold", "fg": s:constant })
+call s:h("htmlItalic",            { "gui": "italic", "fg": s:constant })
 hi! link htmlH1                   statement  " markdown heading content
 hi! link htmlH2                   Statement
 hi! link htmlH3                   Statement
@@ -300,7 +302,7 @@ hi! link htmlH6                   Statement
 
 " markdown
 hi! link mkdHeading               Statement
-hi! link mkdLink                  htmlString
+call s:h("mkdLink",               { "fg": s:comment })
 hi! link markdownH1               Statement
 hi! link markdownH2               Statement
 hi! link markdownH3               Statement

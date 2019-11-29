@@ -9,8 +9,6 @@ setlocal wrap
 setlocal enc=utf-8
 setlocal formatoptions=tqwan1
 setlocal textwidth=72
-setlocal filetype=markdown
-setlocal syntax=markdown
 
 " set touch date
 command! -nargs=1 Wiki execute ':silent !wikitouch "' . expand('%:p') . '" ' . <f-args>
