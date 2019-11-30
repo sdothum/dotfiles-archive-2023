@@ -22,7 +22,7 @@ command! Term :call system('term "vimterm" STACK')
 " Registers ____________________________________________________________________
 
 " ....................................................................... Macros
-" https://www.reddit.com/r/vim/comments/aqmnaf/handy_shortcut_to_repeat_the_last_recorded_macro/
+" replay last macro
 function! s:replayMacro()
   try
     normal @@

@@ -5,13 +5,13 @@
 
 " Mode _________________________________________________________________________
 
-" ....................................................................... Insert
-augroup default | autocmd! | augroup END
+augroup defaults | autocmd! | augroup END
 
+" ....................................................................... Insert
 " don't linger in insert mode indefinitely (updatetime=ms)
-autocmd default InsertEnter * let s:updatetime = &updatetime | set updatetime=60000
-autocmd default InsertLeave * let &updatetime  = s:updatetime
-autocmd default CursorHoldI * stopinsert
+autocmd defaults InsertEnter * let s:updatetime = &updatetime | set updatetime=60000
+autocmd defaults InsertLeave * let &updatetime  = s:updatetime
+autocmd defaults CursorHoldI * stopinsert
 
 " ........................................................................ Debug
 nnoremap <silent><S-F10> :let g:trace = !g:trace<CR>
@@ -34,13 +34,46 @@ set viminfo^=%       " remember info about open buffers on close
 
 " ....................................................................... Macros
 nnoremap <silent><leader>@ :ReplayMacro<CR>
-
 " quick q macro
-nnoremap <C-q>     @q
+nnoremap <C-q>             @q
 " edit q macro
-nnoremap <leader>Q :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
-" " repeat last macro played @{0-9a-z":*}
-" nnoremap ..      @@ " just a command reminder, never mapped
+nnoremap <leader>Q         :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>
+
+" Folding ______________________________________________________________________
+
+" ................................................................. Fold methods
+set foldenable            " fold by default
+set foldlevelstart=10     " open most folds by default
+" set foldlevelstart=1
+set foldnestmax=10        " 10 nested fold max
+set foldmethod=indent     " fold based on indent (faster than syntax)
+" set foldmethod=syntax   " folding based on syntax
+
+let javaScript_fold=1     " JavaScript
+let perl_fold=1           " Perl
+let php_folding=1         " PHP
+let r_syntax_folding=1    " R
+let ruby_fold=1           " Ruby
+let sh_fold_enabled=1     " sh
+let vimsyn_folding='af'   " Vim script
+let xml_syntax_folding=1  " XML
+
+" " toggle fold tag / open all
+" noremap <leader>z         za
+" noremap <leader>Z         zA
+" noremap <leader><leader>z zR
+
+" ............................................................... Folding levels
+nmap <silent><leader>0 :set foldlevel=0<CR>
+nmap <silent><leader>1 :set foldlevel=1<CR>
+nmap <silent><leader>2 :set foldlevel=2<CR>
+nmap <silent><leader>3 :set foldlevel=3<CR>
+nmap <silent><leader>4 :set foldlevel=4<CR>
+nmap <silent><leader>5 :set foldlevel=5<CR>
+nmap <silent><leader>6 :set foldlevel=6<CR>
+nmap <silent><leader>7 :set foldlevel=7<CR>
+nmap <silent><leader>8 :set foldlevel=8<CR>
+nmap <silent><leader>9 :set foldlevel=9<CR>
 
 " Format _______________________________________________________________________
 

@@ -10,8 +10,7 @@
 
 # 127.0.0.1     localhost
 127.0.0.1       localhost thedarnedestthing ttrss
-10.1.0.10 10.1.0.10  10.1.0.10  10.1.0.10   10.1.0.10     luna thedarnedestthing ttrss
-10.1.0.10 10.1.0.10  10.1.0.10  10.1.0.10         luna
+10.1.0.10       luna
 10.1.0.20       monad
 10.1.0.21       lumen
 10.1.0.22       motu

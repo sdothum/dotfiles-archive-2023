@@ -6,6 +6,7 @@
 " Buffer _______________________________________________________________________
 
 " ..................................................................... Filetype
+" set corresponding ui for filetye
 function! s:filetype(ft)
   execute 'setfiletype ' . a:ft
   Layout  " respect ui
@@ -40,7 +41,7 @@ endfunction
 command! SmartWrap silent! call <SID>smartWrap()
 
 " ............................................................. Strip whitespace
-" strips trailing whitespace from all lines, see https://dougblack.io/words/a-good-vimrc.html
+" strips trailing whitespace from all lines
 function! s:stripTrailingWhitespaces()
   if &modifiable && !s:markdown()
     " let l:_s = @/ " save last search & cursor position
@@ -105,24 +106,24 @@ endfunction
 command! ParagraphBelow silent! call <SID>paragraphBelow()
 
 " ................................................................ Shift up down
-" see https://github.com/gorkunov/vimconfig.git
+" move by lines
 function! s:moveLineOrVisualUpOrDown(move)
   let l:col = virtcol('.')
   execute 'silent! ' . a:move
   execute 'normal! ' . l:col . '|'
 endfunction
 
-function! s:moveLineOrVisualUp(line_getter, range)
-  let l:line = line(a:line_getter)
+function! s:moveLineOrVisualUp(from, range)
+  let l:line = line(a:from)
   if l:line - v:count1 - 1 < 0 | let l:move = '0'
-  else                         | let l:move = a:line_getter . ' -' . (v:count1 + 1) | endif
+  else                         | let l:move = a:from . ' -' . (v:count1 + 1) | endif
   call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
 endfunction
 
-function! s:moveLineOrVisualDown(line_getter, range)
-  let l:line = line(a:line_getter)
+function! s:moveLineOrVisualDown(from, range)
+  let l:line = line(a:from)
   if l:line + v:count1 > line('$') | let l:move = '$'
-  else                             | let l:move = a:line_getter . ' +' . v:count1 | endif
+  else                             | let l:move = a:from . ' +' . v:count1 | endif
   call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
 endfunction
 

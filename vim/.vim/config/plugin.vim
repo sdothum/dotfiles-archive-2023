@@ -5,7 +5,7 @@
 
 " Plugin manager _______________________________________________________________
 
-" ........................................................................ Setup
+" ................................................................... Initialize
 filetype off  " safe startup (vundle requirement)
 
 " see https://github.com/junegunn/vim-plug
@@ -24,9 +24,9 @@ Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 " User Interface _______________________________________________________________
 
 " ....................................................................... Layout
+" Plug 'TaDaa/vimade'                  " hyperfocus highlghting for buffers
 Plug 'junegunn/limelight.vim'          " hyperfocus highlighting
 Plug 'bilalq/lite-dfm'                 " distraction free mode
-Plug 'TaDaa/vimade'                    " hyperfocus highlghting for buffers
 
 " ......................................................................... Info
 " Plug 'metakirby5/codi.vim'           " async evaluator

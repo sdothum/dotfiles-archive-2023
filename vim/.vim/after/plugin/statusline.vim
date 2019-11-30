@@ -1,25 +1,26 @@
 " sdothum - 2016 (c) wtfpl
 
-" Info
+" Statusline
 " ══════════════════════════════════════════════════════════════════════════════
 
-" Cursor position ______________________________________________________________
+" At cursor position ___________________________________________________________
 
-" ......................................................................... Atom
+" ................................................................... Atom / tag
 " attribute at cursor position
-function! Atom()
+function! s:atom()
   return synIDattr(synID(line('.'), col('.'), 1), 'name')
 endfunction
 
-" .......................................................................... Tag
-function! Tag()
+command! Atom echo <SID>atom()
+
+function! s:tag()
   return tagbar#currenttag('%s', '')
 endfunction
 
 " ............................................................ Special Character
 let s:ascii = '\(\d\|\a\|\s\|[`~!@#$%^&*()_\-+={}\[\]\\|;:\",\.<>/?]\)'
 
-function! SpecialChar()
+function! s:specialChar()
   if mode() == 'n'  " getline() test fails on switch into insert mode
     try
       if !empty(getline(line('.')))            " ignore newline (is NUL)
@@ -38,6 +39,12 @@ function! SpecialChar()
     endtry
   endif
   return ''
+endfunction
+
+" .................................................................. Cursor info
+function! Detail()
+  let l:prefix = g:detail ? s:atom() : s:tag()
+  return empty(l:prefix) ? s:specialChar() : l:prefix . '  ' . s:specialChar()
 endfunction
 
 " Buffer file __________________________________________________________________
@@ -78,15 +85,10 @@ endfunction
 
 " Buffer statistics ____________________________________________________________
 
-" ................................................................. Buffer count
-function! BufCount()
-  return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-endfunction
-
 " ................................................................... Word count
-" null return for non-prose or empty new buffer, see http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
+" null return for non-prose or empty new buffer
 function! s:wordCount()
-  if expand('%:t') == 'ControlP' || mode() =~ '[vV]' | return '' | endif  " trap buffer window, visual mode (gives incorrect word count)
+  if mode() =~ '[vV]' | return '' | endif  " visual mode (gives incorrect word count)
   try  " trap error caused by snippet expansion involving substition placeholders
     let b:wordcount = ''
     let l:statusmsg = v:statusmsg
@@ -100,15 +102,18 @@ function! s:wordCount()
   endtry
 endfunction
 
-" DFM statusline _______________________________________________________________
+" Statusline sections ______________________________________________________
 
-" ................................................................... File state
-function! UnModified(show)
-  " return &modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]
-  return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]) : g:icon[3]
+" ....................................................................... Leader
+function! s:escape(text)
+  return substitute('%*' . a:text, ' ', '\\ ', 'g')
 endfunction
 
-" .................................................................... Left path
+function! Leader(text)
+  return repeat(' ', (winwidth(0) / 2) - strlen(a:text) - strlen(g:pad[0]))
+endfunction
+
+" .................................................................... Left side
 function! Name()
   return expand('%:t' . (Prose() ? ':r' : ''))
 endfunction
@@ -120,20 +125,50 @@ function! Path()
   return l:path
 endfunction
 
-" ................................................................... Right edit
+" ................................................................. Buffer state
+function! s:attn()
+  return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : '%1*'
+endfunction
+
+function! UnModified(show)
+  " return &modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]
+  return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]) : g:icon[3]
+endfunction
+
+" ................................................................... Right side
 " normal mode code: col -> file%, prose: col -> wordcount
 " insert mode code: col 
 function! PosWordsCol()
   return mode() == 'n' ? (g:show_column ? col('.') : (Prose() ? s:wordCount() : (line('.') * 100 / line('$')) . '%')) : col('.')
 endfunction
 
-" ............................................................... Escaped leader
-function! Leader(text)
-  return repeat(' ', (winwidth(0) / 2) - strlen(a:text) - strlen(g:pad[0]))
+" DFM statusline _______________________________________________________________
+
+" ............................................................ Statusline format
+" [path] .. filename | pos .. [details]
+function! Statusline(expanded)
+  " Trace ui:statusline()  " tmi :-)
+  try  " trap snippet insertion interruption
+    if Prose() && g:duochrome_insert
+      return s:escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
+    else
+      let l:name     = '%{Name()}' . g:pad[0]
+      if a:expanded  " center dfm indicator / proofing statusline
+        let l:path   = '%{Path()}'
+        let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
+      else
+        let l:leader = '%{Leader(Name())}'
+      endif
+      let l:name     = '%1*' . l:name
+      let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
+      if a:expanded
+        let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
+        let l:info  .= g:pad[1] . '%2*%{Detail()}'
+      endif
+      return s:escape('%1*' . l:leader . l:name . l:info . '%1*')
+    endif
+  catch /.*/  " discard messages
+  endtry
 endfunction
 
-function! Escape(text)
-  return substitute('%*' . a:text, ' ', '\\ ', 'g')
-endfunction
-
-" info.vim
+" statusline.vim

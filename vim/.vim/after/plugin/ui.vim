@@ -39,7 +39,7 @@ endfunction
 
 command! ToggleNumber silent! call <SID>toggleNumber()
 
-" Screen focus _________________________________________________________________
+" Screen _______________________________________________________________________
 
 " ............................................................... Screen display
 " initial view
@@ -57,9 +57,9 @@ command! Layout silent! call <SID>layout()
 function! s:refresh()
   if PluginWindow() | return | endif 
   Trace ui:Refresh()
-  let lstatus     = &laststatus
+  let l:status     = &laststatus
   Layout   
-  let &laststatus = lstatus
+  let &laststatus = l:status
 endfunction
 
 command! Refresh silent! call <SID>refresh()
@@ -91,11 +91,10 @@ let s:font_changed = 0  " redraw flag
 function! s:font(type)
   Trace ui:Font()
   if has('gui_running')
-    execute 'let l:type = ' . a:type
-    if g:font_type != l:type
-      let g:font_type = l:type
+    if g:font_type != a:type
+      let g:font_type = a:type
       let l:size      = system('fontsize')
-      let l:size      = l:type ? l:size + g:font_step : l:size
+      let l:size      = a:type ? l:size + g:font_step : l:size
       execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
       if s:font_changed | RedrawGui | endif
       let s:font_changed = 1  " next font size change requires redraw
@@ -106,55 +105,20 @@ endfunction
 
 command! -nargs=1 Font silent! call <SID>font(<f-args>)
 
-" Context statusline ___________________________________________________________
-
-" ............................................................ Statusline format
-function! Detail()
-  let l:prefix = g:detail ? Atom() : Tag()
-  return empty(l:prefix) ? SpecialChar() : l:prefix . '  ' . SpecialChar()
-endfunction
-
-function! s:attn()
-  return system('stat --printf %U ' . expand('%:p')) == 'root' ? '%3*' : '%1*'
-endfunction
-
-" [path] .. filename | pos .. [details]
-function! s:statusline()
-  " Trace ui:statusline()  " tmi :-)
-  try  " trap snippet insertion interruption
-    if Prose() && g:duochrome_insert
-      return Escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
-    else
-      let l:name     = '%{Name()}' . g:pad[0]
-      if s:expanded  " center dfm indicator / proofing statusline
-        let l:path   = '%{Path()}'
-        let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
-      else
-        let l:leader = '%{Leader(Name())}'
-      endif
-      let l:name     = '%1*' . l:name
-      let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
-      if s:expanded
-        let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
-        let l:info  .= g:pad[1] . '%2*%{Detail()}'
-      endif
-      return Escape('%1*' . l:leader . l:name . l:info . '%1*')
-    endif
-  catch /.*/  " discard messages
-  endtry
-endfunction
+" Statusline ___________________________________________________________________
 
 " .............................................................. Show statusline
 let s:expanded = 0  " statusline state (0) dfm (1) expanded
 
 function! s:showInfo()
   Trace ui:showInfo()
-  execute 'set statusline=' . s:statusline()
+  execute 'set statusline=' . Statusline(s:expanded)
   StatusLine
 endfunction
 
 command! ShowInfo silent! call <SID>showInfo()
 
+" ............................................................ Toggle statusline
 function! s:toggleInfo(...)
   Trace ui:ToggleInfo
   if a:0 && a:1 | return | endif  " prose insert mode is always dfm

@@ -4,6 +4,6 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " .......................................................................... Log
-autocmd BufNewFile,BufRead *.error set filetype=log
+autocmd BufNewFile,BufRead *.log,*.error set filetype=log
 
 " log.vim

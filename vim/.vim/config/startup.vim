@@ -5,10 +5,9 @@
 
 " Vim __________________________________________________________________________
 
-" ........................................................................ Setup
+" ....................................................................... System
 set nocompatible            " disable vi-compatibility
 
-" ....................................................................... System
 set lazyredraw              " don't redraw while executing macros
 " set modelines=0           " prevent modeline secrurity hole
 set modelines=1

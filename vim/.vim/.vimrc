@@ -18,7 +18,7 @@ runtime config/gui.vim
 " ........................................................................ Theme
 runtime config/theme.vim
 runtime config/ui.vim
-runtime config/info.vim
+runtime config/statusline.vim
 
 " ..................................................................... Editting
 runtime config/buffer.vim

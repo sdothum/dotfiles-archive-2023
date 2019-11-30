@@ -5,11 +5,11 @@
 
 " Keyboard (re)mappings ________________________________________________________
 
-" ........................................................................ Setup
+augroup kbd | autocmd! | augroup END
+
+" ....................................................................... Leader
 let mapleader      = "\<Space>"  " remap <leader> a la spacemacs
 let s:modal_strict = 0           " modal vim cursor keys (0) allow (1) disable
-
-augroup kbd | autocmd! | augroup END
 
 " Cursor _______________________________________________________________________
 

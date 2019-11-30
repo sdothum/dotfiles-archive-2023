@@ -3,20 +3,15 @@
 " User Interface
 " ══════════════════════════════════════════════════════════════════════════════
 
-" The view _____________________________________________________________________
-
-" ........................................................................ Setup
-let g:pad       = ['      ', '     ']  " statusline padding [inner, outer]
-"                   123456    12345
-let g:detail    = 0   " default expanded detail (0) tag (1) atom, see F7 map
-let g:active    = 0   " active window tag
-
-" Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [source, prose]
-let g:font_type = -1                                                        " current font setting (0) source (1) prose
-let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " increase (point size) for prose
+" Fonts ________________________________________________________________________
 
 augroup ui | autocmd! | augroup END
+
+" ................................................................. Code / Prose
+" Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
+let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [code, prose]
+let g:font_type = -1                                                        " current font setting (0) source (1) prose
+let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " increase (point size) for prose
 
 " Display ______________________________________________________________________
 
@@ -45,7 +40,7 @@ set omnifunc=syntaxcomplete#Complete
 syntax on  " turn on syntax highlighting
  
 " ftplugin set syntax is overridden by vim runtime Syntax autocmd
-autocmd Syntax <buffer> execute 'set syntax=' . &filetype
+autocmd ui Syntax <buffer> execute 'set syntax=' . &filetype
 " refresh highlighting on arm
 " autocmd ui CursorHold * if !Prose() && !&diff && !empty(&filetype) | execute 'set filetype=' . &filetype | endif
 
@@ -72,14 +67,6 @@ imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 
 " show info+sleep in balanced diff windows
 autocmd ui VimEnter * if &diff | ToggleInfo | WaitFor | execute "normal! \<C-w>=" | endif
-
-" toggle tag, line details
-nmap <silent><S-F7>      :let g:detail = !g:detail<CR>
-imap <silent><S-F7> <C-o>:let g:detail = !g:detail<CR>
-
-" for active window highlighting
-autocmd ui WinEnter,TerminalOpen,BufWinEnter,VimEnter * let g:active = g:active + 1 | let w:tagged = g:active
-autocmd ui WinEnter,TerminalOpen                      * SplitColors
 
 " .................................................................... View mode
 nmap <silent><C-F7>      :ToggleProof<CR>

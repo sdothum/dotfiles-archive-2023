@@ -110,13 +110,6 @@ let g:mundo_mirror_graph    = 0  " left align tree
 
 function! s:toggleUndo()
   let l:filetype = &filetype     " mundo alters markdown filetype to conf (?)
-  if !exists('b:mundo')          " do quick 'syntax off' history preload to avoid 'syntax on' load lag
-    let b:mundo = 1
-    syntax off
-    Quietly MundoToggle
-    Quietly MundoToggle
-    syntax on
-  endif
   Quietly MundoToggle
   let &filetype = l:filetype
   if bufname('') == '__Mundo__'  " position cursor at current state (row) mundo bug
@@ -369,7 +362,7 @@ imap <silent><F11> <C-o>:call <SID>toggleTypo()<CR>
 " autocmd plugin FileType markdown call textobj#quote#init()
 
 " ....................................................................... Vimade
-autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
+" autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
 
 " ..................................................................... Yankring
 let g:yankring_default_menu_mode  = 1   " menu on with no shortcut

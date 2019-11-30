@@ -36,7 +36,7 @@ endfunction
 command! -nargs=1 Quietly call <SID>quietly(<f-args>)
 
 " ........................................................ State change notifier
-" args:  <message>: <bool>
+" nargs -> <message>: <bool>, note ':' terminating message
 function! s:notify(s)
   let l:msg = split(a:s, ' *: ')  " accept g:varname in bool expression
   execute 'let l:state = ' . msg[1] . ' ? "ON" : "OFF"'

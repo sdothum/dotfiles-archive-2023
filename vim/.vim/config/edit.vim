@@ -5,6 +5,8 @@
 
 " Buffer _______________________________________________________________________
 
+augroup edit | autocmd! | augroup END
+
 " .............................................................. Command history
 nmap <F1> q:
 imap <F1> <C-o>q:
@@ -37,8 +39,6 @@ nnoremap <silent><C-S-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 " ............................................................. Strip whitespace
 nmap <silent><F4>      :StripTrailingWhitespaces<CR>
 vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
-
-" augroup edit | autocmd! | augroup END
 
 " " pre-write formatting
 " autocmd edit BufWritePre * StripTrailingWhitespaces

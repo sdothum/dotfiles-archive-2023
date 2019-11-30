@@ -4,6 +4,6 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ......................................................................... Wiki
-autocmd BufNewFile,BufRead *.wiki,*.note set filetype=markdown
+autocmd BufNewFile,BufRead *.wiki,*.draft,*.note set filetype=markdown
 
 " markdown.vim

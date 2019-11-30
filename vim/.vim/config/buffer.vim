@@ -5,13 +5,13 @@
 
 " File buffers _________________________________________________________________
 
-" ........................................................................ Setup
+augroup buffer | autocmd! | augroup END
+
+" ..................................................................... Settings
 set autoread     " reload files changed outside vim
 " set autowrite  " automatically write a modified buffer on leaving
 set hidden       " allow hidden background buffers
 let s:repo = $HOME . '/stow/'  " directory to auto backup
-
-augroup buffer | autocmd! | augroup END
 
 " ......................................................................... Help
 autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | wincmd _ | endif
