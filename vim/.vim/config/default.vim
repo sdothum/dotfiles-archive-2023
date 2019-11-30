@@ -15,6 +15,8 @@ autocmd defaults CursorHoldI * stopinsert
 
 " ........................................................................ Debug
 nnoremap <silent><S-F10> :let g:trace = !g:trace<CR>
+" recover last error message
+nmap <leader>e           :echo errmsg<CR>
 
 " ..................................................................... Terminal
 nmap <silent><C-t>           :Term<CR>

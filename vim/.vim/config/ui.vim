@@ -15,21 +15,15 @@ let g:font_step = empty(glob('~/.session/font++')) ? 1 : 2                  " in
 
 " Display ______________________________________________________________________
 
-" ....................................................................... Redraw
-nmap <silent><F9>      :Refresh<CR>
-imap <silent><F9> <C-o>:Refresh<CR>
-
-" wm timing requires FocusGained+sleep with VimResized to consistently set margins, see Background
-autocmd ui VimEnter,VimResized,FocusGained * WaitFor | Background
-
 " ................................................................... Initialize
 " intial view mode: source code or prose, plugin windows inherit current theme (avoids thrashing)
 autocmd ui VimEnter,BufWinEnter * Layout
 
-" ..................................................................... Messages
-" recover last error message
-nmap <leader>e :echo errmsg<CR>
+" ....................................................................... Redraw
+nmap <silent><F9>      :Refresh<CR>
+imap <silent><F9> <C-o>:Refresh<CR>
 
+" ..................................................................... Messages
 " clear messages after awhile to keep screen clean and distraction free!
 autocmd ui CursorHold * echo
 
