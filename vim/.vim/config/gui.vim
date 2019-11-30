@@ -83,11 +83,18 @@ set relativenumber
 " toggle relative/line number
 nmap <silent># :ToggleNumber<CR>
 
-" ....................................................... Status / command lines
-set laststatus=2  " always show status line
-set ruler         " show cursor position in status line
-set noshowcmd     " show incomplete cmds in command line
-set noshowmode    " show current mode in command line
+" .......................................................... White space markers
+set nolist  " display tabs and trailing spaces visually
+set listchars="tab:▸\<Space>"
+
+" set listchars+=trail:_
+set listchars+=trail:·
+set listchars+=nbsp:.
+set listchars+=extends:>
+set listchars+=precedes:<
+" set listchars+=eol:¬
+
+nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
 
 " Window actions _______________________________________________________________
 

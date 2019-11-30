@@ -44,20 +44,6 @@ autocmd ui Syntax <buffer> execute 'set syntax=' . &filetype
 " refresh highlighting on arm
 " autocmd ui CursorHold * if !Prose() && !&diff && !empty(&filetype) | execute 'set filetype=' . &filetype | endif
 
-" .......................................................... White space markers
-set nolist  " display tabs and trailing spaces visually
-set listchars="tab:▸\<Space>"
-
-" set listchars+=trail:_
-set listchars+=trail:·
-set listchars+=nbsp:.
-set listchars+=extends:>
-set listchars+=precedes:<
-" set listchars+=eol:¬
-
-" ......................................................... Trailing white space
-nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
-
 " UI ___________________________________________________________________________
 
 " ............................................................ Toggle statusline

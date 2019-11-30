@@ -51,6 +51,10 @@ set virtualedit=block       " allow virtual editing in Visual block mode
 set winminheight=0          " windows can be 0 line high
 set wrap                    " wrap lines for viewing
 
+" ................................................................. Command line
+set noshowcmd               " show incomplete cmds in command line
+set noshowmode              " show current mode in command line
+
 " ....................................................................... Alerts
 set noerrorbells            " don't beep
 set shortmess+=filmnrxoOtT  " abbrev. of messages (avoids "hit enter")
