@@ -362,7 +362,7 @@ imap <silent><F11> <C-o>:call <SID>toggleTypo()<CR>
 " autocmd plugin FileType markdown call textobj#quote#init()
 
 " ....................................................................... Vimade
-" autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
+autocmd plugin BufWinEnter __Mundo_* VimadeBufDisable
 
 " ..................................................................... Yankring
 let g:yankring_default_menu_mode  = 1   " menu on with no shortcut
