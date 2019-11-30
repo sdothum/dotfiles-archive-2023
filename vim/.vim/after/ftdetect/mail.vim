@@ -4,6 +4,6 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ......................................................................... Mail
-autocmd BufNewFile,BufRead *.eml set filetype=mail
+autocmd BufNewFile,BufRead *.eml,*.draft set filetype=mail
 
 " mail.vim

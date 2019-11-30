@@ -91,10 +91,12 @@ let s:font_changed = 0  " redraw flag
 function! s:font(type)
   Trace ui:Font()
   if has('gui_running')
-    if g:font_type != a:type
-      let g:font_type = a:type
+    " a:type may be function expression Prose()
+    execute 'let l:type = ' . a:type
+    if g:font_type != l:type
+      let g:font_type = l:type
       let l:size      = system('fontsize')
-      let l:size      = a:type ? l:size + g:font_step : l:size
+      let l:size      = l:type ? l:size + g:font_step : l:size
       execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
       if s:font_changed | RedrawGui | endif
       let s:font_changed = 1  " next font size change requires redraw
