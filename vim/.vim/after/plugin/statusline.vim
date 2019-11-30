@@ -102,7 +102,7 @@ function! s:wordCount()
   endtry
 endfunction
 
-" Statusline sections ______________________________________________________
+" Statusline content ___________________________________________________________
 
 " ....................................................................... Leader
 function! s:escape(text)
@@ -142,12 +142,11 @@ function! PosWordsCol()
   return mode() == 'n' ? (g:show_column ? col('.') : (Prose() ? s:wordCount() : (line('.') * 100 / line('$')) . '%')) : col('.')
 endfunction
 
-" DFM statusline _______________________________________________________________
+" DFM / expanded _______________________________________________________________
 
-" ............................................................ Statusline format
-" [path] .. filename | pos .. [details]
+" .............................................................. set statusline=
+" [path] .. filename state position .. [details]
 function! Statusline(expanded)
-  " Trace ui:statusline()  " tmi :-)
   try  " trap snippet insertion interruption
     if Prose() && g:duochrome_insert
       return s:escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')

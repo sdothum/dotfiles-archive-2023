@@ -91,7 +91,7 @@ let s:font_changed = 0  " redraw flag
 function! s:font(type)
   Trace ui:Font()
   if has('gui_running')
-    " a:type may be function expression Prose()
+    " a:type may be function expression (nargs are literal strings only)
     execute 'let l:type = ' . a:type
     if g:font_type != l:type
       let g:font_type = l:type
