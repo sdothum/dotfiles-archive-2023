@@ -36,9 +36,9 @@ nmap <leader>W          :silent write !sudo tee % >/dev/null<CR>
 nmap <silent><leader>ww :silent wqall!<CR>
 
 " close buffers
-nmap <silent><leader>d  :silent CloseUnique<CR>
-nmap <silent><leader>DD :silent CloseDiff<CR>:%bdelete!<CR>
-nmap <leader>D          :silent Singleton<CR>
+nmap <silent><leader>d  :CloseUnique<CR>
+nmap <silent><leader>DD :CloseDiff<CR>:%bdelete!<CR>
+nmap <leader>D          :Singleton<CR>
 " discard quit
 nmap <silent><leader>qq :quitall!<CR>
 
