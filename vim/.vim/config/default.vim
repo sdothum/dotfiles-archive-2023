@@ -35,8 +35,7 @@ set viminfo^=%       " remember info about open buffers on close
 " nmap <silent><leader>'' :delmarks!<CR>
 
 " ....................................................................... Macros
-nnoremap <silent><leader>@ :ReplayMacro<CR>
-" quick q macro
+" replay q macro
 nnoremap <C-q>             @q
 " edit q macro
 nnoremap <leader>Q         :<C-u><C-r><C-r>='let @q = '. string(getreg('q'))<CR><C-f><Left>

@@ -19,20 +19,6 @@ command! -nargs=1 Trace call <SID>trace(<f-args>)
 " !term fails on shell error 1 (?)
 command! Term :call system('term "vimterm" STACK')
 
-" Registers ____________________________________________________________________
-
-" ....................................................................... Macros
-" replay last macro
-function! s:replayMacro()
-  try
-    normal @@
-  catch /E748/
-    normal @q
-  endtry
-endfunction
-
-command! ReplayMacro silent! call <SID>replayMacro()
-
 " Format _______________________________________________________________________
 
 " .................................................................... Line wrap
