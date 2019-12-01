@@ -5,7 +5,7 @@
 
 " File buffers _________________________________________________________________
 
-" ............................................................ Close diff buffer
+" ................................................................ Close buffers
 " delete any new diff buffer
 function! s:closeDiff()
   if &diff  " caution: wincmd resets active window (affects :Buffer)
@@ -20,14 +20,12 @@ function! s:closeDiff()
 endfunction
 
 command! -bar CloseDiff silent! call <SID>closeDiff()
-
-" File actions _________________________________________________________________
-
-" .......................................................... Buffer close / save
-" close all other buffers (and newly created no name buffer)
-command! Singleton   CloseDiff | %bdelete | edit # | bdelete # | SplitColors
 " close open diff or current buffer
 command! CloseUnique silent! if !<SID>closeDiff() | silent bdelete | SplitColors | endif
+" close all other buffers (and newly created no name buffer)
+command! Singleton CloseDiff | %bdelete | edit # | bdelete # | SplitColors
+
+" File actions _________________________________________________________________
 
 " .................................................................. Auto backup
 " queue files written for vhg (may contain repeated update entries)

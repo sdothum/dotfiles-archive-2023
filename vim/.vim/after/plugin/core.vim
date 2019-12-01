@@ -36,7 +36,7 @@ endfunction
 command! -nargs=1 Quietly call <SID>quietly(<f-args>)
 
 " ........................................................ State change notifier
-" nargs -> <message>: <bool>, note ':' terminating message
+" nargs -> <message>: <bool>, note ':' separator terminating message
 function! s:notify(s)
   let l:msg = split(a:s, ' *: ')  " accept g:varname in bool expression
   execute 'let l:state = ' . msg[1] . ' ? "ON" : "OFF"'
@@ -84,7 +84,7 @@ function! Prose()
 endfunction
 
 function! Markdown()
-  return &filetype =~ 'wiki\|markdown'
+  return &filetype =~ 'markdown\|wiki'
 endfunction
 
 " .................................................................... Protected

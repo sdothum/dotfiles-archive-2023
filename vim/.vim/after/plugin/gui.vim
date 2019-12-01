@@ -16,7 +16,7 @@ command! -bar ToggleGui silent! call <SID>toggleGui()
 command! -bar RedrawGui silent! ToggleGui | WaitFor 50m \| ToggleGui
 
 " .................................................................... Scrolling
-let s:scroll_ratio = 12  " arbitrary integer division (vs 0.percent calculation and conversion)
+let s:scroll_ratio = 12  " integer division (vs 0.percent calculation and integer conversion)
 
 " dynamic scroll offset
 function! s:scrollOffset()

@@ -56,10 +56,6 @@ endfunction
 command! Refresh silent! call <SID>refresh()
 
 " .............................................................. Balance margins
-function! Offset()
-  return max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
-endfunction
-
 " balance left right margins with font size changes (and window resizing)
 function! s:margins()
   Trace ui:Margin
@@ -67,7 +63,7 @@ function! s:margins()
     setlocal nonumber
     setlocal foldcolumn=0
   else
-    let g:lite_dfm_left_offset = Offset()
+    let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
     Quietly LiteDFM
     ShowInfo
   endif 
