@@ -8,7 +8,6 @@
 " .................................................................. Insert mode
 " toggle full document highlight
 function! s:view()
-  Trace ui:view()
   let l:col = virtcol('.')
   if g:duochrome_insert  " insert dfm view
     Limelight
@@ -113,7 +112,7 @@ command! -nargs=1 Font silent! call <SID>font(<f-args>)
 let s:expanded = 0  " statusline state (0) dfm (1) expanded
 
 function! s:showInfo()
-  Trace ui:showInfo()
+  Trace ui:ShowInfo()
   execute 'set statusline=' . Statusline(s:expanded)
   StatusLine
 endfunction

@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-BROWSER=firefox
+BROWSER=chromium
 
 videomode on
 $BROWSER http://www.netflix.com/ca

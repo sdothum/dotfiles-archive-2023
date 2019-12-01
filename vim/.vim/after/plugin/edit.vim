@@ -43,7 +43,7 @@ command! SmartWrap silent! call <SID>smartWrap()
 " ............................................................. Strip whitespace
 " strips trailing whitespace from all lines
 function! s:stripTrailingWhitespaces()
-  if &modifiable && !s:markdown()
+  if &modifiable && !Markdown()
     " let l:_s = @/ " save last search & cursor position
     " let l:l  = line(".")
     " let l:c  = col(".")
