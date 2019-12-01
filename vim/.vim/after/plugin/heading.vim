@@ -34,20 +34,19 @@ command! -nargs=1 Drawline silent! call <SID>drawline(<f-args>)
 " ...................................................................... Trailer
 " example: append trailer ______________________________________________________
 function! s:appendTrailer(delimiter)
-  if NonBlankLine()
-    if !empty(matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$'))  " remove existing trailer
-      normal! $bhD
-    endif
-    normal! $
-    let l:col = &textwidth - virtcol('.') - 1
-    if l:col > 0
-      set formatoptions-=c  " suppress potential comment line wrapping
-      execute 'normal! a '
-      execute 'normal! ' . l:col . 'a' . a:delimiter
-      set formatoptions+=c
-    endif
-    normal! $
+  if !NonBlankLine() | return | endif
+  if !empty(matchstr(getline(line('.')), '\s[' . a:delimiter . ']\+$'))  " remove existing trailer
+    normal! $bhD
   endif
+  normal! $
+  let l:col = &textwidth - virtcol('.') - 1
+  if l:col > 0
+    set formatoptions-=c  " suppress potential comment line wrapping
+    execute 'normal! a '
+    execute 'normal! ' . l:col . 'a' . a:delimiter
+    set formatoptions+=c
+  endif
+  normal! $
 endfunction
 
 command! -nargs=1 AppendTrailer silent! call <SID>appendTrailer(<f-args>)
@@ -63,13 +62,12 @@ command! InputTrailer silent! call <SID>inputTrailer()
 " ....................................................................... Leader
 " ....................................................... example: insert leader
 function! s:insertLeader(delimiter)
-  if NonBlankLine()
-    if !empty(matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s')) | execute 'normal! ^wdf ' | endif  " remove existing leader
-    call s:appendTrailer(a:delimiter)
-    " cut trailer and insert as leader!
-    normal! $bhD^whP
-    normal! $
-  endif
+  if !NonBlankLine() | return | endif
+  if !empty(matchstr(getline(line('.')), '\S\s\+[' . a:delimiter . ']\+\s')) | execute 'normal! ^wdf ' | endif  " remove existing leader
+  call s:appendTrailer(a:delimiter)
+  " cut trailer and insert as leader!
+  normal! $bhD^whP
+  normal! $
 endfunction
 
 command! -nargs=1 InsertLeader silent! call <SID>insertLeader(<f-args>)
