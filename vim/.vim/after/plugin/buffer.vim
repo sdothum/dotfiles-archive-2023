@@ -12,7 +12,7 @@ function! s:closeDiff()
     wincmd h
     if empty(expand('%'))
       bdelete!
-      diffoff  " restore pre-diff settings or subsequent OpenDiff will be *off*
+      diffoff  " restore pre-diff settings
       return 1
     endif
   endif
@@ -21,17 +21,12 @@ endfunction
 
 command! -bar CloseDiff silent! call <SID>closeDiff()
 
-" .................................................................... Open diff
-" toggle diff of current file
-command! OpenDiff silent! if !<SID>closeDiff() | vert new | set bt=nofile | r ++edit # | 0d_
-                                              \| diffthis | wincmd p      | diffthis   | endif
-
 " File actions _________________________________________________________________
 
 " .......................................................... Buffer close / save
 " close all other buffers (and newly created no name buffer)
 command! Singleton   CloseDiff | %bdelete | edit # | bdelete # | SplitColors
-" close OpenDiff or current buffer
+" close open diff or current buffer
 command! CloseUnique silent! if !<SID>closeDiff() | silent bdelete | SplitColors | endif
 
 " .................................................................. Auto backup

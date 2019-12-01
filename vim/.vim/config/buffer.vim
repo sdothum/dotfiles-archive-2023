@@ -21,12 +21,6 @@ nmap <silent><S-F1>      :silent !term 'vmap' vmap<CR>
 imap <silent><S-F1> <C-o>:silent !term 'vmap' vmap<CR>
 vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
 
-" Diff buffer __________________________________________________________________
-
-" .................................................................... Open diff
-" go to left window in case a diff window is already open and close it
-nmap <silent><leader>dd :silent OpenDiff<CR>
-
 " File actions _________________________________________________________________
 
 " .......................................................... Buffer close / save
