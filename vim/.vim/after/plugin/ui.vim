@@ -7,23 +7,15 @@
 
 " .................................................................. Insert mode
 " toggle full document highlight
-function! s:view()
-  let l:col = virtcol('.')
-  if g:duochrome_insert  " insert dfm view
-    Limelight
-  else                   " normal proof view
-    Limelight!
-  endif
-  execute 'normal! ' . l:col . '|'
-  Background
-endfunction
-
 function! s:toggleProof()
   Trace ui:ToggleProof()
   if CommandWindow() | return | endif
-  " if Prose() | let g:duochrome_insert = !g:duochrome_insert | endif
+  let l:col              = virtcol('.')
   let g:duochrome_insert = !g:duochrome_insert
-  call s:view()
+  if g:duochrome_insert | Limelight           " insert mode dfm view
+  else                  | Limelight! | endif  " normal mode proof view
+  execute 'normal! ' . l:col . '|'
+  Background
 endfunction
 
 command! -bar ToggleProof silent! call <SID>toggleProof()

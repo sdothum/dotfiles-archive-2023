@@ -7,7 +7,7 @@
 
 # create public key
 ditto 'regenerate gpg key if required and refresh .pass tree'
-server || exit
+# server || exit
 if [ -d $HOME/.gnupg ] ;then
   ifno 'regenerate key pair' || gpg2 --full-gen-key
 else

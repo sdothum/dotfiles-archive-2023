@@ -29,7 +29,7 @@ password() {
           username=$($PASS username/default)
         echo "$username\n$password"
         notify $1 "$username\n$password"
-        $PASS --clip $1
+        $PASS show --clip $1
       else
         echo $password
       fi

@@ -35,8 +35,8 @@
 # gksu
   gnome-keyring
   gnupg2
-  pass
-# pinentry-gtk
+d pass
+  pinentry-gtk  # pass dependency
 # polkit-gnome
 
 

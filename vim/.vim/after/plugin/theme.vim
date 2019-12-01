@@ -9,11 +9,8 @@
 function! s:background(...)
   Trace theme:Background
   Margins  " must be called before colorscheme ta refresh cursorlinenr cleared by LiteDFM
-  if a:0
-    let &background = a:1
-  else
-    execute 'set background=' . &background 
-  endif
+  if a:0 | let &background = a:1
+  else   | execute 'set background=' . &background | endif
 endfunction
 
 command! -nargs=? -bar Background silent! call <SID>background(<f-args>)
@@ -31,7 +28,6 @@ command! LiteSwitch silent! call <SID>liteSwitch()
 " Statusline ___________________________________________________________________
 
 " ................................................................ Single window
-" undo statusline gui=reverse
 function! s:statusLine()
   Trace theme:StatusLine
   set laststatus=2
