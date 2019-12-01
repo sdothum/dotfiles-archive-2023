@@ -43,8 +43,8 @@ command! ToggleNumber silent! call <SID>toggleNumber()
 " ............................................................... Screen display
 " initial view
 function! s:layout()
-  if PluginWindow() || !has("gui_running") | return | endif 
   Trace ui:Layout()
+  if PluginWindow() || !has("gui_running") | return | endif 
   let g:duochrome_markdown = Prose()
   Font Prose()
   ShowBreak
@@ -54,8 +54,8 @@ command! Layout silent! call <SID>layout()
 
 " refresh layout
 function! s:refresh()
-  if PluginWindow() | return | endif 
   Trace ui:Refresh()
+  if PluginWindow() | return | endif 
   let l:status     = &laststatus
   Layout   
   let &laststatus = l:status
