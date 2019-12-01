@@ -8,7 +8,7 @@
 " ................................................................ Close buffers
 " delete any new diff buffer
 function! s:closeDiff()
-  if &diff  " caution: wincmd resets active window (affects :Buffer)
+  if &diff     " caution: wincmd resets active window (affects :Buffer)
     wincmd h
     if empty(expand('%'))
       bdelete!

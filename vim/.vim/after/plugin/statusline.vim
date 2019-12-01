@@ -98,7 +98,7 @@ function! s:wordCount()
     let v:statusmsg = l:statusmsg
     call setpos('.', l:position)  " go back (to EOL if need be)
     return b:wordcount
-  catch /.*/  " discard messages
+  catch /.*/                      " discard messages
   endtry
 endfunction
 
@@ -131,7 +131,6 @@ function! s:attn()
 endfunction
 
 function! UnModified(show)
-  " return &modifiable ? (&modified ? g:icon[2] : a:show ? g:icon[0] : '') : g:icon[1]
   return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:icon[2] : a:show ? (g:duochrome_insert ? g:icon[4] : g:icon[0]) : '') : g:icon[1]) : g:icon[3]
 endfunction
 

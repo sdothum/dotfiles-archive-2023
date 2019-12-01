@@ -21,10 +21,10 @@ command! -nargs=1 Filetype silent! call <SID>filetype(<f-args>)
 function! s:smartWrap()
   if Prose()  " override Pencil mode (the default state for prose)
     set paste
-    execute "normal! i\<CR>"
+    execute   " normal! i\<CR>"
     set nopaste
     execute 'startinsert'
-  else  " append EOL wrap from any col position
+  else        " append EOL wrap from any col position
     let l:formatoptions = &formatoptions  " disable auto commenting
     set formatoptions-=c
     set formatoptions-=r
@@ -44,7 +44,7 @@ command! SmartWrap silent! call <SID>smartWrap()
 " strips trailing whitespace from all lines
 function! s:stripTrailingWhitespaces()
   if !&modifiable || Markdown() | return | endif
-  " let l:_s = @/ " save last search & cursor position
+  " let l:_s = @/       " save last search & cursor position
   " let l:l  = line(".")
   " let l:c  = col(".")
   let s:view = winsaveview()
