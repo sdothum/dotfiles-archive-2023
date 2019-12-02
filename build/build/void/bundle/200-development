@@ -59,8 +59,9 @@ d s perl-HTML-Strip
 
 = python
 = ══════
-  python-pip
-  python-setuptools
+# python-pip
+# python-setuptools
+  python3-pip
   python-sip      # amphetype dependency
 d s python-PyQt4  # amphetype dependency
 

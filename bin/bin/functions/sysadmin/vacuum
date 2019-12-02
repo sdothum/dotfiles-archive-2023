@@ -36,7 +36,7 @@ candidates() {
     unset exclude
     # strip '.' prefix and 'conf|rc' postfix for package name
     pkg=$(echo ${path##*/} | lowercase | sed -r 's/^\.//; s/(\.?conf|rc)$//')
-    pacman -Q "$pkg" >/dev/null 2>&1 && exclude=true ||
+    pacman -Q "$pkg" 2>&1 >/dev/null && exclude=true ||
       { unset pkg; echo "$path" | egrep -q "^$HOME/*($filter)$" && exclude=true; }
     [ $exclude ] && echo "# $path $pkg" >>$rules || { ditto check "$path"; echo "  $path" >>$rules; }
   done 3< $vacuum:find
@@ -97,7 +97,7 @@ vacuum() {
 
 sync() {
   if [ $package ] ;then
-    pacman -Q $package >/dev/null 2>&1 && unset package
+    pacman -Q $package 2>&1 >/dev/null && unset package
   elif [ $clean ] ;then
     if [ $force ] ;then
       package=true

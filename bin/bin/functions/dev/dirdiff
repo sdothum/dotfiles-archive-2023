@@ -47,7 +47,7 @@ while read file <&3 ;do
     [ $title ] || { ditto -t diff "$src/$regex && $target" >>$LOG; title=true; }
     [ -e "${target%/}/${file#./}" ] || { ditto missing "${target%/}/${file#./}" >>$LOG; break; }
     ditto diff "${file#./}"
-    if ! diff --brief $w "${file#./}" "${target%/}/${file#./}" >/dev/null 2>&1 ;then
+    if ! diff --brief $w "${file#./}" "${target%/}/${file#./}" 2>&1 >/dev/null ;then
       diff $w "${file#./}" "${target%/}/${file#./}" | colordiff  # reverse diff --color highlighting
       # see herbstluftwm gvimdiff rule
       ifno "edit ${file#./}" && break || gvim -d -c "$diffopt" -f --role=gvimdiff "${file#./}" "${target%/}/${file#./}"

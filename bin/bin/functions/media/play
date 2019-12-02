@@ -80,7 +80,7 @@ while : ;do
     # server && env CONKYRC=$CONKY_Q2 conky clock on
     notify 0 blackboard "$title" "1/2  Contrast         5/6  Gamma\n3/4  Brightness       7/8  Saturation\n9/0  Volume             m  Mute\n-/+  ^ Audio Delay      #  Language\nj/J  Subtitles          v  Toggle\nx/z  Subtitle Delay              .."
     focus frame
-    mpv --vf=eq "$video" --sub-font-size=$fontsize >/dev/null 2>&1
+    mpv --vf=eq "$video" --sub-font-size=$fontsize 2>&1 >/dev/null
     # clear notification
     (pwait "mpv --vf=eq $1"; xdotool key Ctrl+space) &
   fi

@@ -27,7 +27,7 @@ systemd() {
   start  ) sv start $2 ;;
   status ) ;;
   stop   ) sv stop $2 ;;
-  toggle ) sv status $2 >/dev/null 2>&1 && sv stop $2 || sv start $2 2>/dev/null ;;
+  toggle ) sv status $2 2>&1 >/dev/null && sv stop $2 || sv start $2 2>/dev/null ;;
   unmask ) sv unmask $2; exit ;;
   *      ) [ $# -eq 1 ] || usage ;;
   esac

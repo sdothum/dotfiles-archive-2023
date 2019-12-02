@@ -28,7 +28,7 @@ UTF='□'
 # return list of existing applications
 apps() {
   unset apps
-  for i in $@ ;do apps="$apps$(which $i >/dev/null 2>&1 && echo "$i ")" ;done
+  for i in $@ ;do apps="$apps$(which $i 2>&1 >/dev/null && echo "$i ")" ;done
   echo $apps | sed 's/ /\n/g'
 }
 
