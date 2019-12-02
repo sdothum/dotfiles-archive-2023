@@ -63,9 +63,9 @@ let s:breakchar = '\ ↪\ '  " \escape spaces
 " highlight wrapped line portion, see theme:Theme()
 function! s:showBreak()
   if g:duochrome_ruler == 0 && s:wraplight
-    set showbreak=
+    set showbreak=  " disable breakchar
     let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
-    let &colorcolumn = join(range(l:edge, 999), ',')
+    let &colorcolumn = join(range(l:edge, 999), ',')  " highlight break line
   else
     execute 'set showbreak=' . s:breakchar
   endif
