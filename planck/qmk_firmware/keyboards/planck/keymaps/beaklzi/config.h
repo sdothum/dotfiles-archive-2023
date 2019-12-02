@@ -28,7 +28,6 @@
 
 // language tap dance operators
 #define HASKELL
-#define UNIX
 #define EMOJI
 
 // rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)

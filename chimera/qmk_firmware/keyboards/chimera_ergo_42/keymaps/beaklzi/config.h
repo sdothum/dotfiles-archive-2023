@@ -23,12 +23,10 @@
 
 // compile time macro strings, see functions/hardware qmk script
 #define PRIVATE_STRING ""
-#define PUBLIC1_STRING ""
-#define PUBLIC2_STRING ""
+#define PUBLIC_STRING ""
 
 // language tap dance operators
 #define HASKELL
-#define UNIX
 #define EMOJI
 
 // test all keyswitches

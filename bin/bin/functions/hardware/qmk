@@ -44,22 +44,18 @@ else
   sed -i '/STENO_ENABLE/s/= yes/= no /' $MAKEFILE
 fi
 
-# compile time macro stings
+# compile time macro sting
 grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING ""' $CONFIG
 grep -q PUBLIC_STRING $CONFIG || sed -i '$a#define PUBLIC_STRING ""' $CONFIG
 # sed -i '/#define PRIVATE_STRING/c#define PRIVATE_STRING ""; /#define PUBLIC_STRING/c#define PUBLIC_STRING ""' $CONFIG
 
 case $1 in
 '' | dfu) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"\"" $CONFIG ;;
-*       ) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"$1\"" $CONFIG; shift ;;
+*       ) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"$1\"" $CONFIG; shift; ;;
 esac
 case $1 in
-'' | dfu) [ -e $HOME/.zipcode ] && sed -i "/#define PUBLIC1_STRING/c#define PUBLIC1_STRING \"$(cat $HOME/.zipcode)\"" $CONFIG ;;
-*       ) sed -i "/#define PUBLIC1_STRING/c#define PUBLIC1_STRING \"$1\"" $CONFIG; shift ;;
-esac
-case $1 in
-'' | dfu) [ -e $HOME/.forward ] && sed -i "/#define PUBLIC2_STRING/c#define PUBLIC2_STRING \"$(cat $HOME/.forward)\"" $CONFIG ;;
-*       ) sed -i "/#define PUBLIC2_STRING/c#define PUBLIC2_STRING \"$1\"" $CONFIG; shift ;;
+'' | dfu) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$(cat $HOME/.forward)\"" $CONFIG ;;
+*       ) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$1\"" $CONFIG ;;
 esac
 
 cd $QMK

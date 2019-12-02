@@ -96,9 +96,8 @@ enum keyboard_keycodes {
  ,HOME_S  // pseudo CTL_T(KC_S)
  ,HOME_W  // pseudo GUI_T(KC_W)
 #endif
-#if !defined HASKELL && !defined UNIX
+#ifdef HASKELL
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
-#elif !defined HASKELL
  ,HS_LT   // pseudo CTL_T(S(KC_COMM))
 #endif
  ,AST_G   // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
@@ -142,14 +141,11 @@ enum keyboard_keycodes {
 #endif
 #define _______ KC_NO
 
-#if defined HASKELL || defined UNIX
-#define HS_GT   TD_GT
-#else
-#define HS_GT   KC_GT
-#endif
 #ifdef HASKELL
+#define HS_GT   TD_GT
 #define HS_LT   TD_LT
 #else
+#define HS_GT   KC_GT
 #define HS_LT   KC_LT
 #endif
 
@@ -224,11 +220,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
-#ifdef UNIX
-static uint16_t td_timer = 0;  // pseudo tapdance timer
-
-#define TAPDANCE if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
-#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -371,10 +362,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
   case ST_T:
     mt_shift(record, KC_RSFT, 0, KC_T);       break;
-#if !defined HASKELL && !defined UNIX
+#ifdef HASKELL
   case HS_GT:
     mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
-#elif !defined HASKELL
   case HS_LT:
     mt_shift(record, KC_LCTL, 0, KC_COMM);    break;
 #endif
@@ -398,11 +388,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
-#ifdef UNIX
-    TAPDANCE; if (map_leader(record, LEFT, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
-#else
     if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
-#endif
     break;
 #else
   case KC_COLN:
@@ -420,11 +406,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
-#ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
-#else
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { return false; }
-#endif
     break;
 #endif
     

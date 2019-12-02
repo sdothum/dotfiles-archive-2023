@@ -337,8 +337,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_COMM]   = ACTION_TAP_DANCE_FN              (comma)
  ,[_DOT]    = ACTION_TAP_DANCE_FN              (dot)
  ,[_EQL]    = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, equal, equal_reset, HASKELL_TERM)
- ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
 #ifdef HASKELL
+ ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
  ,[_LT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lesser, lesser_reset, HASKELL_TERM)
 #endif
  ,[_PASTE]  = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, paste, paste_reset)
@@ -408,29 +408,11 @@ void equal_reset(STATE, void *user_data)
                            else if (TAP == 2)     { send_string(s); }    \
                            else REPEAT(tap_shift, k);
 
-#define TRIPLE_SHIFT(k, s, t) if (TAP_DOWN)       { register_shift(k); } \
-                              else if (TAP == 2)  { send_string(s); }    \
-                              else if (TAP == 3)  { send_string(t); }    \
-                              else REPEAT(tap_shift, k);
-
-#define QUAD_SHIFT(k, s, t, u) if (TAP_DOWN)      { register_shift(k); } \
-                               else if (TAP == 2) { send_string(s); }    \
-                               else if (TAP == 3) { send_string(t); }    \
-                               else if (TAP == 4) { send_string(u); }    \
-                               else REPEAT(tap_shift, k);
-
+#ifdef HASKELL
 void greater(STATE, void *user_data)
 {
-#if defined HASKELL && defined UNIX
-  if (TAPS) { QUAD_SHIFT(KC_DOT, " -> ", ">/dev/null", " >/dev/null 2>&1"); }
-#elif defined HASKELL
   if (TAPS) { DOUBLE_SHIFT(KC_DOT, " -> "); }
-#elif defined UNIX
-  if (TAPS) { TRIPLE_SHIFT(KC_DOT, ">/dev/null", " >/dev/null 2>&1"); }
-#endif
-#if defined HASKELL || defined UNIX
   else      { TAP_DOWN ? register_code(KC_LSFT) : double_tap(TAP, SHIFT, KC_DOT); }
-#endif
   reset_tap_dance(state);
 }
 
@@ -440,7 +422,6 @@ void greater_reset(STATE, void *user_data)
   unregister_code (KC_LSFT);
 }
 
-#ifdef HASKELL
 void lesser(STATE, void *user_data)
 {
   if (TAPS) { DOUBLE_SHIFT(KC_COMM, " <- "); }
@@ -537,8 +518,7 @@ void private(STATE, void *user_data)
 
 void send(STATE, void *user_data)
 {
-  if (TAPS) { SEND_STRING(PUBLIC2_STRING); }
-  else      { SEND_STRING(PUBLIC1_STRING); }
+  if (TAPS) { SEND_STRING(PUBLIC_STRING); }
   reset_tap_dance(state);
 }
 
