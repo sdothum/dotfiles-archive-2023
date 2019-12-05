@@ -70,7 +70,8 @@ function! s:hardcopy()
   echo 'Printing..'
   if Markdown()                 | execute '!hardcopy wiki \"' . expand('%:t') . '\"'
   elseif expand('%:e') =~ 'wps' | execute '!hardcopy wps' expand('%:t')
-  else                          | execute '!hardcopy code' expand('%:t') | endif
+  else                          | execute '!hardcopy code' expand('%:t')
+  endif
 endfunction
 
 command! Hardcopy silent call <SID>hardcopy()
@@ -90,7 +91,8 @@ endfunction
 " .................................................................... Protected
 function! s:fzfBuffer()
   if exists("g:fzf#vim#buffers") | return g:fzf#vim#buffers != {} " fzf trap
-  else                           | return 0 | endif
+  else                           | return 0
+  endif
 endfunction
 
 function! Protected()

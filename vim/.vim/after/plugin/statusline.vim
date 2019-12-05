@@ -80,7 +80,8 @@ endfunction
 " current directory
 function! s:baseName()
   if expand('%:p') =~ '.*[/][^/]*[/][^/]*' | return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*', '\1', '')
-  else                                     | return '' | endif
+  else                                     | return ''
+  endif
 endfunction
 
 " Buffer statistics ____________________________________________________________

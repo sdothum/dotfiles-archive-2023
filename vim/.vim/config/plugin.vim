@@ -14,7 +14,7 @@ filetype off  " safe startup (vundle requirement)
 call plug#begin('~/.vim/plugged')
 
 " ....................................................................... System
-let code  = { 'for' : ['c', 'cpp', 'haskell', 'lua', 'ruby', 'sh', 'snippets', 'vim'] }
+let code  = { 'for' : ['c*', 'haskell', 'julia', 'lua', 'ruby', '*sh', 'snippets', 'vim'] }
 let prose = { 'for' : ['draft', 'mail', 'markdown', 'note', 'wiki', 'html'] }
 
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }

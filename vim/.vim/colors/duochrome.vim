@@ -98,7 +98,6 @@ if s:background != &background
   let s:statusline       = s:b(s:subtle_white,  s:subtle_black)
   let s:spell            = s:b(s:orange_bg,     s:subtle_black)
   let s:warning          = s:b(s:light_yellow,  s:light_yellow)
-  let s:fzf              = s:b(s:black["gui"],  s:white["gui"])
 endif
 
 " ................................................................ Set highlight
@@ -302,7 +301,7 @@ hi! link htmlH6                   Statement
 
 " markdown
 hi! link mkdHeading               Statement
-call s:h("mkdLink",               { "fg": s:comment })
+call s:h("mkdLink",               { "gui": "underline", "fg": s:red })
 hi! link markdownH1               Statement
 hi! link markdownH2               Statement
 hi! link markdownH3               Statement
@@ -363,6 +362,7 @@ hi! link GitGutterChangeDelete    SignifyLineAdd
 hi! link SneakScope               Cursor
 
 " fzf
+" let $FZF_DEFAULT_OPTS = '--reverse'
 call s:h("fzf1",                  { "fg": s:bg })  " hide bottom fzf window identifier
 call s:h("fzf2",                  { "fg": s:bg })
 call s:h("fzf3",                  { "fg": s:bg })

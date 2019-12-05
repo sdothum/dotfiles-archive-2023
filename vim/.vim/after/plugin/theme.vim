@@ -10,7 +10,8 @@ function! s:background(...)
   Trace theme:Background
   Margins  " must be called before colorscheme ta refresh cursorlinenr cleared by LiteDFM
   if a:0 | let &background = a:1
-  else   | execute 'set background=' . &background | endif
+  else   | execute 'set background=' . &background
+  endif
 endfunction
 
 command! -nargs=? -bar Background silent! call <SID>background(<f-args>)
@@ -20,7 +21,8 @@ function! s:liteSwitch()
   Trace theme:LiteSwitch
   Quietly LiteDFMClose  " trap and ignore initialization error
   if &background == 'light' | Background dark
-  else                      | Background light | endif
+  else                      | Background light
+  endif
 endfunction
 
 command! LiteSwitch silent! call <SID>liteSwitch()

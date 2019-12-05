@@ -115,14 +115,16 @@ endfunction
 function! s:moveLineOrVisualUp(from, range)
   let l:line = line(a:from)
   if l:line - v:count1 - 1 < 0 | let l:move = '0'
-  else                         | let l:move = a:from . ' -' . (v:count1 + 1) | endif
+  else                         | let l:move = a:from . ' -' . (v:count1 + 1)
+  endif
   call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
 endfunction
 
 function! s:moveLineOrVisualDown(from, range)
   let l:line = line(a:from)
   if l:line + v:count1 > line('$') | let l:move = '$'
-  else                             | let l:move = a:from . ' +' . v:count1 | endif
+  else                             | let l:move = a:from . ' +' . v:count1
+  endif
   call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
 endfunction
 

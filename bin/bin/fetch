@@ -15,7 +15,7 @@ exists alacritty && term=alacritty || term=urxvt
 
 focus frame 2>/dev/null  # suppress error messages for incomplete desktop during new install
 # --loop to make fetch term *and* image persistent
-$term -e "$fetch --block_range 0 15 --gap 5 --size 340 --xoffset 55 --yoffset 30 \
+$term -e "env SHELL=$SHELL $fetch --block_range 0 15 --gap 5 --size 340 --xoffset 55 --yoffset 30 \
                  --backend w3m --w3m $(lname $HOME/images/backgrounds/default)   \
                  --loop"
 

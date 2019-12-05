@@ -74,27 +74,30 @@ autocmd plugin FileType fish
     \| let b:endwise_syngroups = 'shFunctionKey'
 
 " .......................................................................... Fzf
-" see duochrome.vim
+" 'border' defines border around notational-fzf preview window
+" { 'fg' : ['fg', 'Normal'], 'bg' : ['bg', 'Normal'] } cause a bg tint (..?)
 let g:fzf_colors =
   \{
   \  'fg'      : ['fg', 'Normal'    ]
   \, 'bg'      : ['bg', 'Normal'    ]
-  \, 'hl'      : ['fg', 'Comment'   ]
+  \, 'hl'      : ['fg', 'Error'     ]
   \, 'fg+'     : ['fg', 'Statement' ]
   \, 'bg+'     : ['bg', 'Normal'    ]
   \, 'hl+'     : ['fg', 'Error'     ]
   \, 'border'  : ['fg', 'Ignore'    ]
   \, 'gutter'  : ['bg', 'CursorLine']
   \, 'header'  : ['fg', 'Normal'    ]
-  \, 'info'    : ['fg', 'Special'   ]
-  \, 'marker'  : ['fg', 'Special'   ]
-  \, 'pointer' : ['fg', 'Special'   ]
+  \, 'info'    : ['fg', 'Error'     ]
+  \, 'marker'  : ['fg', 'Error'     ]
+  \, 'pointer' : ['fg', 'Error'     ]
   \, 'prompt'  : ['fg', 'Directory' ]
-  \, 'spinner' : ['fg', 'Special'   ]
+  \, 'spinner' : ['fg', 'Error'     ]
   \}
+
 
 " close any diff buffer before leaving buffer
 nmap <silent><leader>b :CloseDiff<CR>:Buffers<CR>
+" see notational-fzf
 nmap <silent><leader>l :Lines<CR>
 nmap <silent><leader>m :Marks<CR>
 nmap <silent><leader>f :FZF<CR>
@@ -236,7 +239,7 @@ for i in g:user_nv_paths
 endfor
 unlet g:user_nv_paths
 
-nnoremap <silent><leader>/ :NV<CR>
+nnoremap <silent><leader>L :NV<CR>
 
 " ....................................................................... Pencil
 let g:pencil#wrapModeDefault = 'hard'  " 'hard' (def), 'soft'

@@ -12,8 +12,9 @@ function! s:toggleProof()
   if CommandWindow() | return | endif
   let l:col              = virtcol('.')
   let g:duochrome_insert = !g:duochrome_insert
-  if g:duochrome_insert | Limelight           " insert mode dfm view
-  else                  | Limelight! | endif  " normal mode proof view
+  if g:duochrome_insert | Limelight   " insert mode dfm view
+  else                  | Limelight!  " normal mode proof view
+  endif
   execute 'normal! ' . l:col . '|'
   Background
 endfunction

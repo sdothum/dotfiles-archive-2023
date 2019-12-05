@@ -77,7 +77,8 @@ function! s:inputLeader()
   let l:delimiter = input('Line character: ')
   if !empty(l:delimiter)
     if l:delimiter == ' ' | call s:justify()
-    else                  | call s:insertLeader(l:delimiter[0]) | endif
+    else                  | call s:insertLeader(l:delimiter[0])
+    endif
   endif
 endfunction
 
