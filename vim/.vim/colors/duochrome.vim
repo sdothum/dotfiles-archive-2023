@@ -252,6 +252,8 @@ call s:h("User2",                 { "fg": s:norm_very_subtle, "bg": g:duochrome_
 call s:h("User3",                 { "fg": s:red, "bg": g:duochrome_split ? s:statusline : s:bg })
 " statuslinenc
 call s:h("StatusLineNC",          { "bg": g:duochrome_split ? s:statusline : s:bg })
+hi! link StatusLineTerm           StatusLineNC
+hi! link StatusLineTermNC         StatusLineNC
 " statusline status
 call s:h("StatusLineOk",          { "gui": "underline", "bg": s:bg, "fg": s:green })
 call s:h("StatusLineError",       { "gui": "underline", "bg": s:bg, "fg": s:red })

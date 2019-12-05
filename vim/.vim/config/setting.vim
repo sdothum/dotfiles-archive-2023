@@ -78,22 +78,21 @@ autocmd plugin FileType fish
 " { 'fg' : ['fg', 'Normal'], 'bg' : ['bg', 'Normal'] } cause a bg tint (..?)
 let g:fzf_colors =
   \{
-  \  'fg'      : ['fg', 'Normal'    ]
-  \, 'bg'      : ['bg', 'Normal'    ]
+  \  'fg'      : ['bg', 'Ignore'    ]
+  \, 'bg'      : ['bg', 'Ignore'    ]
   \, 'hl'      : ['fg', 'Error'     ]
   \, 'fg+'     : ['fg', 'Statement' ]
   \, 'bg+'     : ['bg', 'Normal'    ]
   \, 'hl+'     : ['fg', 'Error'     ]
   \, 'border'  : ['fg', 'Ignore'    ]
-  \, 'gutter'  : ['bg', 'CursorLine']
+  \, 'gutter'  : ['bg', 'Normal'    ]
   \, 'header'  : ['fg', 'Normal'    ]
   \, 'info'    : ['fg', 'Error'     ]
   \, 'marker'  : ['fg', 'Error'     ]
   \, 'pointer' : ['fg', 'Error'     ]
-  \, 'prompt'  : ['fg', 'Directory' ]
+  \, 'prompt'  : ['fg', 'Constant'  ]
   \, 'spinner' : ['fg', 'Error'     ]
   \}
-
 
 " close any diff buffer before leaving buffer
 nmap <silent><leader>b :CloseDiff<CR>:Buffers<CR>
