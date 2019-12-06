@@ -47,43 +47,6 @@ function! Detail()
   return empty(l:prefix) ? s:specialChar() : l:prefix . '  ' . s:specialChar()
 endfunction
 
-" Buffer file __________________________________________________________________
-
-" ..................................................................... Pathname
-" statusline rootpath, rootname, basename, (filename)
-function! s:rootPrefix()
-  if expand('%:p') =~ '.*[/][^/]*[/][^/]*[/][^/]*'
-    let l:root = substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*[/][^/]*', '\1', '')
-    if empty(l:root)
-      return l:root
-    elseif l:root == substitute(expand('%:p'), '^[/]\([^/]*\)[/].*', '\1', '')
-      return l:root
-    else
-      let l:root = substitute(expand('%:p'), '[/][^/]*[/][^/]*$', '', '')
-      return substitute(l:root, $HOME, '~', '')
-    endif
-  else
-    return ''
-  endif
-endfunction
-
-function! s:rootPath()
-  let l:root = substitute(s:rootPrefix(), '[^/]*$', '', '')
-  let l:root = substitute(l:root, '\([/][.]*[^/]\)[^/]*', '\1', 'g')
-  return substitute(l:root, '[/]', '', 'g')  " abbreviate path prefix and drop slash
-endfunction
-
-function! s:rootName()
-  return substitute(s:rootPrefix(), '.*[/]\([^/]*\)$', '\1', '')
-endfunction
-
-" current directory
-function! s:baseName()
-  if expand('%:p') =~ '.*[/][^/]*[/][^/]*' | return substitute(expand('%:p'), '.*[/]\([^/]*\)[/][^/]*', '\1', '')
-  else                                     | return ''
-  endif
-endfunction
-
 " Buffer statistics ____________________________________________________________
 
 " ................................................................... Word count
@@ -114,16 +77,22 @@ function! Leader(text)
   return repeat(' ', (winwidth(0) / 2) - strlen(a:text) - strlen(g:pad[0]))
 endfunction
 
-" .................................................................... Left side
+" ......................................................................... Path
 function! Name()
   return expand('%:t' . (Prose() ? ':r' : ''))
 endfunction
 
 function! Path()
-  let l:path = s:rootPath() . '/' . s:rootName() . '/' . s:baseName()
-  let l:path = substitute(l:path, $HOME, '~/', '')
-  let l:path = substitute(l:path, '//', '/', '')
-  return l:path
+  let l:path  = split(substitute(expand('%:p'), $HOME, '~', ''), '/')[:-2]
+  let l:count = len(l:path)
+  if l:count < 3
+    let l:path = join(l:path, '/')
+  else
+    let l:suffix = join(l:path[l:count - 2:], '/')
+    let l:prefix = substitute(substitute(join(l:path[:-3], '/'), '\([/]*[.]*[^/]\)[^/]*', '\1', 'g'), '[/]', '', 'g')  " abbreviate path prefix and drop slashes
+    let l:path = l:prefix . '/' . l:suffix
+  endif
+  return (l:path[0] == '~' ? '' : '/') . l:path
 endfunction
 
 " ................................................................. Buffer state
@@ -135,7 +104,7 @@ function! UnModified(show)
   return (expand('%t') =~ 'NrrwRgn' || w:tagged == g:active) ? (&modifiable ? (&modified ? g:icon[2] : a:show ? (g:duochrome_insert ? g:icon[4] : g:icon[0]) : '') : g:icon[1]) : g:icon[3]
 endfunction
 
-" ................................................................... Right side
+" ......................................................................... Info
 " normal mode code: col -> file%, prose: col -> wordcount
 " insert mode code: col 
 function! PosWordsCol()

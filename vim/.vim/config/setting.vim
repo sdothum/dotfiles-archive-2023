@@ -215,9 +215,10 @@ let g:nv_create_note_window     = 'edit'
 let g:nv_expect_keys            = []
 let g:nv_main_directory         = './'    " create new notes in current directory
 let g:nv_preview_direction      = 'right'
-let g:nv_preview_width          = 55
+" let g:nv_preview_width        = 50      " does not calculate as expected, use default
 let g:nv_show_preview           = 1       " alt-p to toggle preview
 let g:nv_use_short_pathnames    = 1
+" let g:nv_window_width         = '50%'   " window height
 let g:nv_wrap_preview_text      = 1
 
 " dynamically setup notational-fzf :)
