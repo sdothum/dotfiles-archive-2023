@@ -71,11 +71,11 @@ function! s:b(light, dark)
 endfunction
 
 function! s:ansi(hex)
-  let l:hex = split(a:hex, '#')[0]    " strip any # identifier
-  let l:r   = '0x' . matchstr(l:hex, '..', 0) + 0
+  let l:hex = split(a:hex, '#')[0]                 " strip any # identifier
+  let l:r   = '0x' . matchstr(l:hex, '..', 0) + 0  " decimal conversion
   let l:g   = '0x' . matchstr(l:hex, '..', 2) + 0
   let l:b   = '0x' . matchstr(l:hex, '..', 4) + 0
-  return l:r . ';' . l:g . ';' . l:b  " decimal portion of ansi true color sequence
+  return l:r . ';' . l:g . ';' . l:b               " decimal portion of ansi true color escape sequence
 endfunction
 
 if s:background != &background
