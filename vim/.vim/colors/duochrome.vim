@@ -108,7 +108,7 @@ if s:background != &background
   let s:spell            = s:b(s:orange_bg,     s:subtle_black)
   let s:warning          = s:b(s:light_yellow,  s:light_yellow)
   " export notational-fzf path colors, see modified shorten_path_for_notational_fzf.py
-  call s:x(s:norm_very_subtle, 'path')
+  call s:x(s:green, 'path')
   call s:x(s:cyan, 'file')
 endif
 
