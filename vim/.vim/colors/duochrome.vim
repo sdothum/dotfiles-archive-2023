@@ -50,7 +50,7 @@ if !exists('s:duochrome')
   let s:dark_blue       = { "gui": "#4078f2", "cterm": "12"  }  " one
   let s:light_blue      = { "gui": "#70ace5", "cterm": "4"   }  " quantum
   let s:dark_green      = { "gui": "#50a14f", "cterm": "34"  }  " one
-  let s:light_green     = { "gui": "#87bb7c", "cterm": "71"  }  " quantum
+  let s:light_green     = { "gui": "#87bb7c", "cterm": "71"  }  " quantum 
   let s:dark_cyan       = { "gui": "#0184bc", "cterm": "31"  }  " one
   let s:light_cyan      = { "gui": "#69c5ce", "cterm": "14"  }  " quantum
   let s:dark_purple     = { "gui": "#a626a4", "cterm": "92"  }  " one
@@ -68,6 +68,14 @@ if !exists('s:background') | let s:background = '' | endif
 
 function! s:b(light, dark)
   return &background == "light" ? a:light : a:dark
+endfunction
+
+function! s:ansi(hex)
+  let l:hex = split(a:hex, '#')[0]    " strip any # identifier
+  let l:r   = '0x' . matchstr(l:hex, '..', 0) + 0
+  let l:g   = '0x' . matchstr(l:hex, '..', 2) + 0
+  let l:b   = '0x' . matchstr(l:hex, '..', 4) + 0
+  return l:r . ';' . l:g . ';' . l:b  " decimal portion of ansi true color sequence
 endfunction
 
 if s:background != &background
@@ -98,6 +106,8 @@ if s:background != &background
   let s:statusline       = s:b(s:subtle_white,  s:subtle_black)
   let s:spell            = s:b(s:orange_bg,     s:subtle_black)
   let s:warning          = s:b(s:light_yellow,  s:light_yellow)
+  " export notational-fzf path color, see shorten_path_for_notational_fzf.py
+  silent execute '!echo "' . s:ansi(s:constant["gui"]) . '" >/tmp/vim:fzf:color'
 endif
 
 " ................................................................ Set highlight
