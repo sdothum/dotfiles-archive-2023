@@ -1,6 +1,6 @@
 " sdothum - 2016 (c) wtfpl
 
-" Core
+" Library
 " ══════════════════════════════════════════════════════════════════════════════
 
 " Vim __________________________________________________________________________
@@ -109,4 +109,4 @@ function! CommandWindow()
   return expand('%p') == '[Command Line]'
 endfunction
 
-" core.vim
+" lib.vim

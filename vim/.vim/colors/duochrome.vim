@@ -70,12 +70,13 @@ function! s:b(light, dark)
   return &background == "light" ? a:light : a:dark
 endfunction
 
-function! s:ansi(hex)
-  let l:hex = split(a:hex, '#')[0]                 " strip any # identifier
-  let l:r   = '0x' . matchstr(l:hex, '..', 0) + 0  " decimal conversion
-  let l:g   = '0x' . matchstr(l:hex, '..', 2) + 0
-  let l:b   = '0x' . matchstr(l:hex, '..', 4) + 0
-  return l:r . ';' . l:g . ';' . l:b               " decimal portion of ansi true color escape sequence
+" convert #rrggbb to ansi true color escape sequence
+function! s:ansi(color)
+  let l:hex = a:color["gui"]
+  let l:r   = '0x' . matchstr(l:hex, '..', 1) + 0          " decimal conversion
+  let l:g   = '0x' . matchstr(l:hex, '..', 3) + 0
+  let l:b   = '0x' . matchstr(l:hex, '..', 5) + 0
+  return '\x1b[38;2;' . l:r . ';' . l:g . ';' . l:b . 'm'  " printf this
 endfunction
 
 if s:background != &background
@@ -106,8 +107,8 @@ if s:background != &background
   let s:statusline       = s:b(s:subtle_white,  s:subtle_black)
   let s:spell            = s:b(s:orange_bg,     s:subtle_black)
   let s:warning          = s:b(s:light_yellow,  s:light_yellow)
-  " export notational-fzf path color, see shorten_path_for_notational_fzf.py
-  silent execute '!echo "' . s:ansi(s:constant["gui"]) . '" >/tmp/vim:fzf:color'
+  " export notational-fzf path color, see modified shorten_path_for_notational_fzf.py
+  silent execute '!/usr/bin/printf "' . s:ansi(s:constant) . '" >/tmp/vim:fzf:color'
 endif
 
 " ................................................................ Set highlight
