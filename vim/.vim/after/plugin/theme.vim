@@ -19,7 +19,8 @@ command! -nargs=? -bar Background silent! call <SID>background(<f-args>)
 " .......................................................... Toggle colourscheme
 function! s:liteSwitch()
   Trace theme:LiteSwitch
-  Quietly LiteDFMClose  " trap and ignore initialization error
+  if empty($DISPLAY) | return | endif  " console
+  Quietly LiteDFMClose                 " trap and ignore initialization error
   if &background == 'light' | Background dark
   else                      | Background light
   endif

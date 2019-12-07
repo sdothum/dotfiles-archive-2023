@@ -109,7 +109,7 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
 
   delete   ) mv $file /tmp
              update=true
-             sed -i "\|$file|s,$,  (DELETED)," $NOTES ;;
+             sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # $file contains /'s
 
   clipboard) clipboard "$file"
              notify 'Ctrl-Alt-V' "$file"

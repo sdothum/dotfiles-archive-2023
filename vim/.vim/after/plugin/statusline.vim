@@ -83,14 +83,14 @@ function! Name()
 endfunction
 
 function! Path()
-  let l:path  = split(substitute(expand('%:p'), $HOME, '~', ''), '/')[:-2]
-  let l:count = len(l:path)
+  let l:path   = split(substitute(expand('%:p:h'), $HOME, '~', ''), '/')[:-1]
+  let l:count  = len(l:path)
   if l:count < 3
     let l:path = join(l:path, '/')
   else
-    let l:suffix = join(l:path[l:count - 2:], '/')
-    let l:prefix = substitute(substitute(join(l:path[:-3], '/'), '\([/]*[.]*[^/]\)[^/]*', '\1', 'g'), '[/]', '', 'g')  " abbreviate path prefix and drop slashes
-    let l:path = l:prefix . '/' . l:suffix
+    let l:dirs = join(l:path[l:count - 2:], '/')
+    let l:abbr = substitute(substitute(join(l:path[:-3], '/'), '\([/]*[.]*[^/]\)[^/]*', '\1', 'g'), '[/]', '', 'g')  " abbreviate path abbr and drop slashes
+    let l:path = l:abbr . '/' . l:dirs
   endif
   return (l:path[0] == '~' ? '' : '/') . l:path
 endfunction

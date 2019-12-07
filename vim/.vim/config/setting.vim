@@ -219,7 +219,7 @@ let g:nv_preview_direction      = 'right'
 let g:nv_show_preview           = 1       " alt-p to toggle preview
 let g:nv_use_short_pathnames    = 1
 " let g:nv_window_width         = '50%'   " window height
-let g:nv_wrap_preview_text      = 1
+let g:nv_wrap_preview_text      = 0
 
 " dynamically setup notational-fzf :)
 runtime config/.notational-fzf.vim        " source $USER g:user_nv_paths: [regex, [path*], ext]

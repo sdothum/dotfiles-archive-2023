@@ -9,8 +9,9 @@ augroup theme | autocmd! | augroup END
 
 " .................................................................. Colorscheme
 colorscheme duochrome
-if has('gui_running') && empty(glob('~/.session/vim:dark')) | set background=light
-else                                                        | set background=dark
+if !empty(glob('~/.session/vim:dark')) | set background=dark
+elseif empty($DISPLAY)                 | set background=dark  " console
+else                                   | set background=light
 endif
 
 autocmd theme InsertEnter * Background
