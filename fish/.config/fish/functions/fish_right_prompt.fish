@@ -94,14 +94,12 @@ function fish_right_prompt --description 'Write out the right prompt'
     end
   end
 
-  set -g TILDE 's|^/~/.*~|~|; s:^/(~|\.\.):~:'
-
   function folder
-    set -l folders (pwd | sed "s|^$HOME|~|; s|/|\t|g" | rev)
+    set -l folders (pwd | sed "s,^$HOME,~,; s,/,\t,g" | rev)
     set -l base (echo $folders | cut -f1,2 | rev)
-    set -l parent (echo $folders | cut -f3- | rev | sed -r 's|([^\t.])[^\t]*\t*|\1/|g')
+    set -l parent (echo $folders | cut -f3- | rev | sed -r 's,([^\t.])[^\t]*\t*,\1/,g')
     set_color yellow
-    echo -n "/$parent$base" | sed -r "s|\t|/|g; s|//|/|; $TILDE"
+    echo -n "/$parent$base" | sed -r "s,\t,/,g; s,//,/,; s,^/(.*~|\.\.),~,"
     set_color normal
   end
 

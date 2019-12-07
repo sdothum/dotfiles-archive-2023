@@ -45,7 +45,7 @@ xport() {
   rm -fv ${image%.sh}.zip
   echo "#!/usr/bin/dash
 pass I || exit" >$image
-  names=$(find $STORE -name '*.gpg' | sed "s|$STORE/||g; s/.gpg$//")
+  names=$(find $STORE -name '*.gpg' | sed "s,$STORE/,,g; s/.gpg$//")
   for i in $names ;do
     ditto exporting "$i"
     key=$($PASS $i | sed "s/'/'\"'\"'/")

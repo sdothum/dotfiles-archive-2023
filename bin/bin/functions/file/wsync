@@ -24,7 +24,7 @@ ARM=pi
 cpu arm && target=$SERVER: || target=$ARM:
 
 info() {
-  name=$(echo $file | exclude | sed "s|$ROOT/||")
+  name=$(echo $file | exclude | sed "s,$ROOT/,,")
   if [ -n "$name" ] ;then
     trace "$1 ${target}${ROOT##*/}" "$name" >>$LOG
     notify X "$1 ${target}${ROOT##*/}" "$name"

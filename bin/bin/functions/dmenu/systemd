@@ -25,7 +25,7 @@ status() {
 
 cd $lib
 while : ;do
-  service=$(systemctl list-unit-files -t service --no-legend | sed -r "s|  *|^$SEP |" | column -s^ -t | 
+  service=$(systemctl list-unit-files -t service --no-legend | sed -r "s/  */^$SEP /" | column -s^ -t | 
       sed "1i$DAEMON\n$SERVICES\n$FILES" | rmenu 'Systemd' -no-custom) || exit
 
   service=${service%% *$SEP*}

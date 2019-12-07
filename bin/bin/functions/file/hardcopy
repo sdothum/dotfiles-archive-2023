@@ -66,8 +66,8 @@ format() {
       title=$1
     fi
     # truncate long pathnames
-    title="$(echo $title | sed 's|/| ^|g' | reverse | truncate)"
-    title="$(dotdot)$(escape $title | reverse | sed 's| *\^|/|g')"
+    title="$(echo $title | sed 's,/, ^,g' , reverse , truncate)"
+    title="$(dotdot)$(escape $title | reverse | sed 's, *\^,/,g')"
   fi
 
   (cat <<EOF

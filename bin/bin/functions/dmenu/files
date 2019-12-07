@@ -11,9 +11,9 @@ while name=$(echo | mhistory files | rmenu 'Find File') || exit ;do
   list=$(sudo locate -Aei $name)
   [ "$list" ] || continue
 
-  file=$(echo "$list" | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" | sort | column -s^ -t | rmenu 'Open File' -no-custom) || exit
+  file=$(echo "$list" | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | column -s^ -t | rmenu 'Open File' -no-custom) || exit
 
-  file=$(echo $file | sed -r "s|([^ ]*) *$SEP *([^ ]*)|\2/\1|")
+  file=$(echo $file | sed -r "s,([^ ]*) *$SEP *([^ ]*),\2/\1,")
   mhistory files "$file"
   clipboard "$file"
   focus xdg-open "$file"

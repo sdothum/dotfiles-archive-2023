@@ -22,7 +22,7 @@ trap "rm -f $wikis" EXIT
   find -L $dir -name '*wiki' | grep -v '\.deprecated' >$wikis
 
 gs() {
-  action=$(egrep "$(echo "$1" | sed -r 's|.*s/([^/]*)/.*|\1|')" "$wiki" | sed -r "$1")
+  action=$(egrep "$(echo "$1" | sed -r 's,.*s/([^/]*)/.*,\1,')" "$wiki" | sed -r "$1")
   [ "$action" ] || return
   ditto -- "$1"
   echo "$action"

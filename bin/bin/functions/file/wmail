@@ -22,7 +22,7 @@ activity() {
   [ -s $WATCH ] || return
   timestamp >>$HISTORY  # separate watchman blocks for imap analysis
   while read file <&3 ;do
-    acct=$(echo $file | sed "s|$ROOT/||")
+    acct=$(echo $file | sed "s,$ROOT/,,")
     acct=${acct%%/*}
     imap=${file##*/}
     echo "$ROOT/$acct:${imap%:2,*}"

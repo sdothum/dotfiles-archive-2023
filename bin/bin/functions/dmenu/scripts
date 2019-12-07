@@ -29,8 +29,8 @@ abbreviate() { eval sed $trim; }
 for i in $sources ;do
   case $i in
   */.vim*      |\
-  */.weechat*) trim="$trim -e 's|$i/|.${i##*/.}/|'" ;;
-  *          ) trim="$trim -e 's|$i/|${i##*/}/|'" ;;
+  */.weechat*) trim="$trim -e 's,$i/,.${i##*/.}/,'" ;;
+  *          ) trim="$trim -e 's,$i/,${i##*/}/,'" ;;
   esac
 done
 
@@ -45,17 +45,17 @@ expand() {
 
 # list of user scripts and functions
 while : ;do
-  file=$(files | abbreviate | sed -r "s|(.*)/([^/]*)$|\2^$SEP \1|" | sort | mhistory scripts | column -s^ -t | 
+  file=$(files | abbreviate | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | column -s^ -t | 
       rmenu "Edit Script$error" $file) || exit
 
   if echo $file | grep -q "$SEP" ;then
     mhistory scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
-    file=$(echo $file | sed -r "s|([^ ]*)  *$SEP  *([^ ]*)|\2/\1|")
+    file=$(echo $file | sed -r "s,([^ ]*)  *$SEP  *([^ ]*),\2/\1,")
   else
     # (tic) 'script for quick menu action
-    file=$(files | grep "/$(unquote $file)$" | head -1 | sed "s|^$HOME/||")
+    file=$(files | grep "/$(unquote $file)$" | head -1 | sed "s,^$HOME/,,")
     [ $file ] || exec dmenu scripts
-    mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s|^stow/[^/]*/||")"
+    mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"
   fi
 
   if expand $file >/dev/null ;then

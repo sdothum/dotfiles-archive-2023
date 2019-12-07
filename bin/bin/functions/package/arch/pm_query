@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 # package already installed check
-query=$(pacman -Qs $@ | grep "local/$@ .*" | sed 's|local/||')
+query=$(pacman -Qs $@ | grep "local/$@ .*" | sed 's,local/,,')
 
 [ "$query" ] || exit 1
 installed_heading $query

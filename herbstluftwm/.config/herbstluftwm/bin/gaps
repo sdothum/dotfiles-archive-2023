@@ -20,7 +20,7 @@ settings() {
   echo
   [ -e $SPINE ] && border=on || border=off
   for i in $layout ;do 
-    [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s|$SESSION/||") "$([ -s $i ] && cat $i || echo on)"
+    [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s,$SESSION/,,") "$([ -s $i ] && cat $i || echo on)"
   done
   [ -e $SPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
   echo
