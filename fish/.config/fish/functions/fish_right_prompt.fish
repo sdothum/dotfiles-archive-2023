@@ -94,7 +94,7 @@ function fish_right_prompt --description 'Write out the right prompt'
     end
   end
 
-  set -g TILDE 's|^/~/.*~|~|; s:^/(~|\.\.):~:; s|^~([^/])|~/\1|'
+  set -g TILDE 's|^/~/.*~|~|; s:^/(~|\.\.):~:'
 
   function folder
     set -l folders (pwd | sed "s|^$HOME|~|; s|/|\t|g" | rev)
