@@ -6,33 +6,41 @@
 
 # ......................................................... Init service wrapper
 
-systemd() {
+runit() {
   usage() {
-    echo "usage: $(basename $0) [status | disable | enable | start | stop | restart | toggle | [-f] mask | unmask | reload] <service>"
+    echo "usage: $(basename $0) [@] | [status | disable | enable | up | down | restart | mask] <service>"
     exit 1
   }
 
-  sv() { eval sudo systemctl $@; }
+  check()   { [ $service ] && [ -e /etc/sv/$service ] || usage; }
+  enabled() { [ -L /var/service/$service ]; }
+  status()  { sleep 1; enabled && sudo sv status $service || ditto service "$service unavailable"; }
 
-  # configure systemd daemon
-  [ "$1" = '-f' ] && { force=true; shift; }
+  service=$2
   case $1 in
-  ''     ) usage ;;
-  disable) sv disable $2; sv stop $2 ;;
-  enable ) sv enable $2; sv start $2 ;;
-  info   ) ;;
-  mask   ) [ $force ] || { ifno "mask $2" && exit || true; } && sv mask $2; exit ;;
-  reload ) sv daemon-reload; exit ;;
-  restart) sv restart $2 ;;
-  start  ) sv start $2 ;;
-  status ) ;;
-  stop   ) sv stop $2 ;;
-  toggle ) sv status $2 2>&1 >/dev/null && sv stop $2 || sv start $2 2>/dev/null ;;
-  unmask ) sv unmask $2; exit ;;
-  *      ) [ $# -eq 1 ] || usage ;;
+  ''     ) ls /etc/sv; exit ;;
+  @      ) ls /var/service; sudo find /etc/sv -name down; exit ;;  # active services
+  disable) check ;;
+  down   ) check ;;
+  enable ) check ;;
+  mask   ) check ;;
+  restart) check ;;
+  status ) check ;;
+  up     ) check ;;
+  *      ) service=$1; check ;;
   esac
 
-  sv --no-pager status ${2:-$1}
+  # configure runit daemon
+  case $1 in
+  disable) sudo rm -fv /var/service/$service ;;
+  down   ) enabled && sudo sv down $service; status ;;
+  enable ) sudo ln -sfv /etc/sv/$service /var/service/; sudo rm -f /etc/sv/$service/down; status ;;
+  mask   ) enabled && sudo touch /etc/sv/$service/down; status ;;  # down at boot
+  restart) enabled && sudo sv restart $service || service enable $service; status ;;
+  status ) status ;;
+  up     ) enabled && sudo sv up $service; status ;;
+  *      ) enabled && status || usage ;;
+  esac
   exit
 }
 
@@ -62,31 +70,33 @@ s6() {
   exit
 }
 
-runit() {
+systemd() {
   usage() {
-    echo "usage: $(basename $0) [@] | [status | disable | enable | up | down | restart | mask] <service>"
+    echo "usage: $(basename $0) [status | disable | enable | start | stop | restart | toggle | [-f] mask | unmask | reload] <service>"
     exit 1
   }
 
-  [ -e /etc/sv/$2 ] || usage
+  sv() { eval sudo systemctl $@; }
 
-  enabled() { [ -L /var/service/$service ]; }
-  status()  { sleep 1; enabled && sudo sv status $service || ditto service "$service unavailable"; }
-
-  # configure runit daemon
-  service=$2
+  # configure systemd daemon
+  [ "$1" = '-f' ] && { force=true; shift; }
   case $1 in
-  ''     ) ls /etc/sv ;;
-  @      ) ls /var/service; sudo find /etc/sv -name down ;;  # active services
-  disable) sudo rm -fv /var/service/$2 ;;
-  down   ) enabled && sudo sv down $2; status ;;
-  enable ) sudo ln -sfv /etc/sv/$2 /var/service/; sudo rm -f /etc/sv/$2/down; status ;;
-  mask   ) enabled && sudo touch /etc/sv/$2/down; status ;;  # down at boot
-  restart) enabled && sudo sv restart $2 || service enable $2; status ;;
-  status ) status ;;
-  up     ) enabled && sudo sv up $2; status ;;
-  *      ) service=$1; enabled && status || usage ;;
+  ''     ) usage ;;
+  disable) sv disable $2; sv stop $2 ;;
+  enable ) sv enable $2; sv start $2 ;;
+  info   ) ;;
+  mask   ) [ $force ] || { ifno "mask $2" && exit || true; } && sv mask $2; exit ;;
+  reload ) sv daemon-reload; exit ;;
+  restart) sv restart $2 ;;
+  start  ) sv start $2 ;;
+  status ) ;;
+  stop   ) sv stop $2 ;;
+  toggle ) sv status $2 2>&1 >/dev/null && sv stop $2 || sv start $2 2>/dev/null ;;
+  unmask ) sv unmask $2; exit ;;
+  *      ) [ $# -eq 1 ] || usage ;;
   esac
+
+  sv --no-pager status ${2:-$1}
   exit
 }
 

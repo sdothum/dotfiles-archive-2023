@@ -220,6 +220,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
+#ifdef UNIX
+static uint16_t td_timer = 0;  // pseudo tapdance timer
+
+#define TAPDANCE if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -388,7 +393,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
+#ifdef UNIX
+    TAPDANCE; if (map_leader(record, LEFT, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
+#else
     if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
+#endif
     break;
 #else
   case KC_COLN:
@@ -406,7 +415,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
+#ifdef UNIX
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+#else
     if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { return false; }
+#endif
     break;
 #endif
     

@@ -59,7 +59,7 @@ generate() {
   candidates $HOME/.config
   for i in $HOME/.local/* ;do candidates $i ;done
 
-  sed -i "s,$HOME/,,; \|$HOME|d" $rules
+  sed -i "s,$HOME/,,; \,$HOME,d" $rules
   notify "$rules" 'Backup $HOME and review before proceeding!!'
 }
 

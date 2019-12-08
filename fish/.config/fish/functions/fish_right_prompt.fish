@@ -75,7 +75,6 @@ function fish_right_prompt --description 'Write out the right prompt'
       set -g __fish_git_prompt_color_cleanstate green --bold
     end
 
-
     set -l git (__fish_git_prompt)
     test -z "$git"
       and return
@@ -102,31 +101,6 @@ function fish_right_prompt --description 'Write out the right prompt'
     echo -n "/$parent$base" | sed -r "s,\t,/,g; s,//,/,; s,^/(.*~|\.\.),~,"
     set_color normal
   end
-
-  # function cmd_duration
-  #   set -l secs (math "$CMD_DURATION / 1000")
-  #   set -l mins (math "$secs / 60")
-  #   set -l hrs (math "$mins / 60")
-  #   if test 0$hrs -gt 0
-  #     if test $VERBOSE -gt 0
-  #       printf '%sh ' $hrs
-  #     else
-  #       printf '%s ' $hrs
-  #     end
-  #     set mins (math "$mins - $hrs * 60")
-  #     set secs (math "$secs - $hrs * 3600")
-  #   end
-  #   if test $VERBOSE -gt 0
-  #     test 0$hrs -gt 0 -o $mins -gt 0
-  #       and printf '%sm ' $mins
-  #     printf '%ss' (math "$secs - $mins * 60")
-  #   else
-  #     test 0$hrs -gt 0 -o $mins -gt 0
-  #       and printf '%s' $mins
-  #       or printf '0'
-  #     printf "'%s" (math "$secs - $mins * 60")
-  #   end
-  # end
 
   function duration
     if test $CMD_DURATION

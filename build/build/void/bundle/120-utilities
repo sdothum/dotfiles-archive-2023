@@ -22,7 +22,7 @@
 = disk utility
 = ════════════
 # convmv
-  gparted
+# gparted
   gptfdisk
 
 
