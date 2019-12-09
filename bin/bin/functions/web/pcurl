@@ -11,7 +11,7 @@ usage() { echo "usage: $(basename $0) <url>"; exit 1; }
 [ "$1" ] || usage
 
 curl --silent -L $@ | { 
-  perldoc -l HTML::Strip 2>&1 >/dev/null && perl -0777 -MHTML::Strip -nlE 'say HTML::Strip->new->parse($_)' 2>/dev/null || 
+  perldoc -l HTML::Strip >/dev/null 2>&1 && perl -0777 -MHTML::Strip -nlE 'say HTML::Strip->new->parse($_)' 2>/dev/null || 
                                             sed 's/<[^>]*>//g'  # sed will not filter broken (linefeeds within) tags and javascript
 }
 

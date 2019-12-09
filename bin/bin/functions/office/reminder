@@ -21,7 +21,7 @@ reminders() {
   cp $REMINDERS $HOME/tmp
   # note: cannot substitute $@ in date --date
   day=$@
-  date --date "$day" 2>&1 >/dev/null || day=tomorrow
+  date --date "$day" >/dev/null 2>&1 || day=tomorrow
   echo $day | egrep -q ':|[ap]m' && M=%M || M=00
   sed --follow-symlinks -i "$ aREM $(date "+%b %d %Y AT %H:$M" --date "$day") DURATION 1:00 MSG " $REMINDERS
   v -f -c 'normal|G' $REMINDERS

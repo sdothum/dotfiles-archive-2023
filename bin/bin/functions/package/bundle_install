@@ -98,7 +98,7 @@ check() {
   '"') return ;;
   g  ) echo "$gems" | grep -q "^$package$" && installed=true ;;
   m  ) ;;  # cannot verify a make_install
-  *  ) $QUERY $package 2>&1 >/dev/null && installed=true ;;
+  *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
   esac
 
   [ $installed ] && echo $package || { echo $line >>$missing ; ditto missing "$package"; }

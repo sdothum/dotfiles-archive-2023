@@ -39,21 +39,21 @@ if [ $USER != root ] ;then
     fi
 
     [ -e $PIXELSERV ] && post_install pixelserv >/dev/null &
-    service start ntpd 2>&1 >/dev/null &
+    service start ntpd >/dev/null 2>&1 &
 
     # pre-initialize arm fuzzy searches
-    nohup fcache + $HOME 2>&1 >/dev/null
-    [ -e $WMAIL ] && nohup wmail 2>&1 >/dev/null
+    nohup fcache + $HOME >/dev/null 2>&1
+    [ -e $WMAIL ] && nohup wmail >/dev/null 2>&1
 
     # gtd calendar
     echo
     exists remind && reminder
 
     if cpu arm ;then
-      nohup arm_clock 2>&1 >/dev/null &
+      nohup arm_clock >/dev/null 2>&1 &
       # in case pi is offline during development on main server
       if [ -e $RSYNC ] ;then
-        nohup rsync -q arm 2>&1 >/dev/null &
+        nohup rsync -q arm >/dev/null 2>&1 &
         sleep 1
         pstat 'rsync arm' || notify critical 'Failed to update stow' "Check nfs share & rerun 'rsync arm'"
       else

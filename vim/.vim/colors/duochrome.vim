@@ -15,6 +15,7 @@ endif
 
 " ui colorscheme controls providing dynamic 'set background' changes
 if !exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight
+if !exists('g:duochrome_diff')       | let g:duochrome_diff       = 0 | endif  " diff (0) underline (1) cursorline
 if !exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
 if !exists('g:duochrome_markdown')   | let g:duochrome_markdown   = 0 | endif  " source (0) code (1) markdown
 if !exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
@@ -131,7 +132,7 @@ call s:h("Cursor",                { "fg": s:black, "bg": s:iawriter })  " ia wri
 if empty($DISPLAY)
   call s:h("CursorLine",          { "cterm": "underline" })             " console
 else
-  if &diff
+  if &diff && !g:duochrome_diff
     call s:h("CursorLine",        { "gui": "underline" })
   else
     if g:duochrome_insert && g:duochrome_markdown

@@ -40,7 +40,7 @@ c*) sudo btrfs scrub cancel $(volume $2) ;;
 I*) sudo rm -f /var/lib/btrfs/*.* ;;
 s*) show $(volume $2) ;;
 
-* ) nohup sudo btrfs scrub start -Bd $(volume $@) 2>&1 >/dev/null &
+* ) nohup sudo btrfs scrub start -Bd $(volume $@) >/dev/null 2>&1 &
     exists term && (term "$@" SHELL "scrub s $@" &) || scrub s $@ ;;
 esac
 

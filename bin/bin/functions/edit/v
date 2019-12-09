@@ -73,7 +73,7 @@ housekeeping() {
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
   vhg  # any dangling undo files
-  cpu arm && rsync $STOW/.hg $SERVER:$STOW/ 2>&1 >/dev/null
+  cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
 }
 
 (pwait "vim.*$gui.*$fg.*$cmd.*$file" && housekeeping) &

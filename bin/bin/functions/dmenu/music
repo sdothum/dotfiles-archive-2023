@@ -65,7 +65,7 @@ ncmpcpp()  { pstat ncmpcpp || term 'Music' ncmpcpp; exec focus instance 'Music';
 controls () { echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(current)\nprevious^$(previous)\nrandom $(status 'random: on')\nrepeat $(status 'repeat: on')\nlibrary\nclear" | column -s^ -t; }
 
 # outer loop by library listing
-mpc list artist 2>&1 >/dev/null || exit
+mpc list artist >/dev/null 2>&1 || exit
 # player controls on entry, note: cannot compare to null string
 [ "$(current)" != '' ] && artist="$PLAYER"
 while : ;do
