@@ -114,8 +114,8 @@ Plug 'reedes/vim-litecorrect', prose   " autocorrections
 call plug#end()
 unlet code prose
 
-filetype plugin on
-filetype indent on  " required
 filetype on
+filetype indent on  " required
+filetype plugin on
 
 " plugin.vim

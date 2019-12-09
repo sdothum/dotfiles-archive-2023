@@ -242,13 +242,14 @@ unlet g:user_nv_paths
 nnoremap <silent><leader>L :NV<CR>
 
 " ....................................................................... Pencil
-let g:pencil#wrapModeDefault = 'hard'  " 'hard' (def), 'soft'
-let g:pencil#textwidth       = 72      " 74 (def)
-let g:pencil#joinspaces      = 0       " 0=one_space (def), 1=two_spaces
-let g:pencil#cursorwrap      = 1       " 0=disable, 1=enable (def)
-let g:pencil#autoformat      = 1       " 0=manual, 1=auto (def)
+let g:pencil#wrapModeDefaultault = 'hard'  " 'hard' (default), 'soft'
+let g:pencil#textwidth       = 72      " 74 (default)
+let g:pencil#joinspaces      = 0       " 0=one_space (default), 1=two_spaces
+let g:pencil#cursorwrap      = 1       " 0=disable, 1=enable (default)
+let g:pencil#autoformat      = 1       " 0=manual, 1=auto (default)
 
-autocmd plugin FileType markdown call pencil#init() 
+" g:pencil#textwidth doesn't set (..?)
+autocmd plugin FileType markdown call pencil#init() | setlocal textwidth=72
 
 " .................................................................... Signature
 let g:SignatureMap =

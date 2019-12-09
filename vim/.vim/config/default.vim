@@ -82,7 +82,7 @@ nmap <silent><leader>9 :set foldlevel=9<CR>
 set formatoptions=qrn1j  " coding options
 " double spaces at the end of a wrapped line, becomes <br> by markdown
 set nojoinspaces         " force single spacing after sentence punctuation!
-set textwidth=80         " normally 78-80, see autocmd for mail
+set textwidth=80
 
 " .................................................................... Line wrap
 nmap <silent><leader><CR> :ToggleWrap<CR>

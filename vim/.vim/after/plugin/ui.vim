@@ -64,7 +64,7 @@ function! s:margins()
     setlocal nonumber
     setlocal foldcolumn=0
   else
-    let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth - 4) / 2])])  " account for linenr <space> text
+    let g:lite_dfm_left_offset = max([1, min([22, (&columns - &textwidth - (Prose() ? 0 : 4)) / 2])])  " account for code linenr <space> text
     Quietly LiteDFM
     ShowInfo
   endif 
