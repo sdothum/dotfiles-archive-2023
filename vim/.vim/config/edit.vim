@@ -50,14 +50,13 @@ vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 
 " .......................................................... Reformat paragraghs
 " retain cursor position for insert mode reformatting
-inoremap <silent><C-f> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
-inoremap <silent><F5>  <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
-vnoremap <C-f>         lmZJvgq`Z:delmarks Z<CR>i
+inoremap <silent><C-f> <Esc>lmZV:Inject {jv}kJvgq`Z:delmarks Z<CR>i
+vnoremap <silent><C-f> lmZ:'<,'>Inject Jvgq`Z:delmarks Z<CR>i
 " reformat at cursor position
-nnoremap <C-f>         lmZ{jv}kJvgq`Z:delmarks Z<CR>
+nnoremap <silent><C-f> mZV:Inject {jv}kJvgq`Z:delmarks Z<CR>
 " otherwise advance cursor to next paragraph
-nnoremap <F5>          {jv}kJvgq}}{j
-vnoremap <F5>          Jvgqj
+nnoremap <silent><F5>  V:Inject {jv}kJvgq}}{j<CR>
+vnoremap <silent><F5>  :'<,'>Inject Jvgqj<CR>
 
 " ................................................................. Convert tabs
 nmap <silent><leader><tab>        :retab<CR>
@@ -74,7 +73,7 @@ vnoremap " :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 " .............................................................. Code block text
 " markup wiki code blocks
 nnoremap <silent><leader>` V:CodeBlock<CR>
-vmap     <silent><leader>`  :'<,'>CodeBlock<CR>
+vmap     <silent><leader>` :'<,'>CodeBlock<CR>
 
 " Text shift ___________________________________________________________________
 
