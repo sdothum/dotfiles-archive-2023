@@ -34,6 +34,7 @@ Plug 'TaDaa/vimade'                    " hyperfocus highlghting for buffers
 Plug 'majutsushi/tagbar'               " ctags
 Plug 'lvht/tagbar-markdown', prose     " markdown for tagbar
 Plug 'bimlas/vim-eightheader'          " custom foldtext
+Plug 'junegunn/vim-peekaboo'           " registers
 
 " ....................................................................... Keymap
 " Plug 'kana/vim-arpeggio'             " key chords

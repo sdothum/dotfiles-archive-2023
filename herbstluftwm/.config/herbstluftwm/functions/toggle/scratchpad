@@ -16,7 +16,7 @@ pstat + 'toggle scratchpad' && exit
 kill -TERM $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
 
 # search [<option>* [<command>]]
-search() { xdotool search --limit 1 --name $1 $name $2 2>/dev/null; }
+search() { xdotool search $1 --limit 1 --name $name $2 2>/dev/null; }
 
 winid() { printf '0x%x' $(search --onlyvisible); }
 
@@ -63,7 +63,7 @@ tmux  ) tmux_session $name ;;
 screen) tmux_session $name ;;
 *     ) term $name FORTUNE TABBED ;;
 esac
-search '--onlyvisible --sync' >/dev/null
+search '--sync --onlyvisible' >/dev/null
 herbstclient attr clients.focus.winid >$SCRATCHPAD
 
 # vim: set ft=sh: #

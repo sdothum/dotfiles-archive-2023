@@ -241,15 +241,19 @@ unlet g:user_nv_paths
 
 nnoremap <silent><leader>L :NV<CR>
 
+" ..................................................................... Peakaboo
+" peakaboo buffer bypass autocmd Layout plugin settings
+let g:peekaboo_window = 'vert bo 40new | setlocal foldcolumn=2'  " flush left
+
 " ....................................................................... Pencil
 let g:pencil#wrapModeDefaultault = 'hard'  " 'hard' (default), 'soft'
-let g:pencil#textwidth       = 72      " 74 (default)
-let g:pencil#joinspaces      = 0       " 0=one_space (default), 1=two_spaces
-let g:pencil#cursorwrap      = 1       " 0=disable, 1=enable (default)
-let g:pencil#autoformat      = 1       " 0=manual, 1=auto (default)
+let g:pencil#textwidth       = 72          " 74 (default)
+let g:pencil#joinspaces      = 0           " 0=one_space (default), 1=two_spaces
+let g:pencil#cursorwrap      = 1           " 0=disable, 1=enable (default)
+let g:pencil#autoformat      = 1           " 0=manual, 1=auto (default)
 
 " g:pencil#textwidth doesn't set (..?)
-autocmd plugin FileType markdown call pencil#init() | setlocal textwidth=72
+autocmd plugin FileType mail,markdown call pencil#init() | setlocal textwidth=72
 
 " .................................................................... Signature
 let g:SignatureMap =

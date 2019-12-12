@@ -72,12 +72,12 @@ function! s:b(light, dark)
 endfunction
 
 " transform #rrggbb -> ansi true color escape sequence (export result)
-function! s:x(color, id)
+function! s:x(color, object)
   let l:hex = a:color["gui"]
   let l:r   = '0x' . matchstr(l:hex, '..', 1) + 0  " decimal conversion
   let l:g   = '0x' . matchstr(l:hex, '..', 3) + 0
   let l:b   = '0x' . matchstr(l:hex, '..', 5) + 0
-  silent execute '!/usr/bin/printf "\x1b[38;2;' . l:r . ';' . l:g . ';' . l:b . 'm" >/tmp/vim:color:' . a:id
+  silent execute '!/usr/bin/printf "\x1b[38;2;' . l:r . ';' . l:g . ';' . l:b . 'm" >/tmp/vim:color:' . a:object
 endfunction
 
 if s:background != &background
@@ -107,7 +107,7 @@ if s:background != &background
   let s:gutter           = s:b(s:light_blue,    s:dark_blue)
   let s:statusline       = s:b(s:subtle_white,  s:subtle_black)
   let s:spell            = s:b(s:orange_bg,     s:subtle_black)
-  let s:warning          = s:b(s:light_yellow,  s:light_yellow)
+  let s:warning          = s:b(s:light_yellow,  s:dark_yellow)
   " export notational-fzf path colors, see modified shorten_path_for_notational_fzf.py
   call s:x(s:green, 'path')
   call s:x(s:cyan, 'file')

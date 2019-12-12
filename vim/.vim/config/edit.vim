@@ -50,11 +50,11 @@ vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 
 " .......................................................... Reformat paragraghs
 " retain cursor position for insert mode reformatting
-inoremap <silent><C-r> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
+inoremap <silent><C-f> <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
 inoremap <silent><F5>  <Esc>lmZ{jv}kJvgq`Z:delmarks Z<CR>i
-vnoremap <C-r>         lmZJvgq`Z:delmarks Z<CR>i
+vnoremap <C-f>         lmZJvgq`Z:delmarks Z<CR>i
 " reformat at cursor position
-nnoremap <C-r>         lmZ{jv}kJvgq`Z:delmarks Z<CR>
+nnoremap <C-f>         lmZ{jv}kJvgq`Z:delmarks Z<CR>
 " otherwise advance cursor to next paragraph
 nnoremap <F5>          {jv}kJvgq}}{j
 vnoremap <F5>          Jvgqj

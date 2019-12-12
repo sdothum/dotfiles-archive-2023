@@ -7,9 +7,13 @@
 # ...................................................................... Browser
 
 BROWSER=chromium
+NAME='Netflix.*Chromium'
 
 videomode on
-$BROWSER http://www.netflix.com/ca
+$BROWSER http://www.netflix.com/ca &
+xdotool search --sync --onlyvisible --name "$NAME" >/dev/null  # remove tabs and address/bookmark bars
+xdotool key --clearmodifiers F11
+restore layout 2:3
 pwait "$BROWSER.*netflix"
 videomode off
 

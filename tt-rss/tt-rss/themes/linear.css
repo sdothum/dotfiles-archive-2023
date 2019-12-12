@@ -209,7 +209,7 @@ button.expandPrompt {
   display: block;
   font: 14.5px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
-  line-height: 1.15em;
+  line-height: 1.2em;
   margin-top: 69px; /* ~ 150 / 1.618 - font-size x 1.5 */
   position: fixed;
   text-align: right;
