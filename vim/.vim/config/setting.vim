@@ -29,6 +29,11 @@ let g:AutoPairsMapBS                = 1       " auto delete symbol pairs
 " let g:AutoPairsFlyMode            = 1       " auto pair jumping
 let g:AutoPairsShortcutBackInsert = '<C-BS>'  " undo auto pair jump -> close pair
 
+" ................................................................... Cursorword
+let g:cursorword = 0
+
+autocmd plugin VimEnter * let g:cursorword = Prose() ? 1 : g:cursorword
+
 " ................................................................... Easy-align
 let g:easy_align_delimiters =
   \{
@@ -359,8 +364,8 @@ function! s:toggleTypo()
   Status Typography: g:typo
 endfunction
 
-nmap <silent><F11>      :call <SID>toggleTypo()<CR>
-imap <silent><F11> <C-o>:call <SID>toggleTypo()<CR>
+nmap <silent><S-F11>      :call <SID>toggleTypo()<CR>
+imap <silent><S-F11> <C-o>:call <SID>toggleTypo()<CR>
 
 " " with vim-surround: cs"q
 " map  <silent><leader>qc <Plug>ReplaceWithCurly

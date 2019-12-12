@@ -323,6 +323,8 @@ hi! link markdownH3               Statement
 hi! link markdownH4               Statement
 hi! link markdownH5               Statement
 hi! link markdownH6               Statement
+hi! link markdownLinkText         mkdLink
+hi! link markdownURL              mkdLink
 hi! link markdownListMarker       Constant
 hi! link markdownCode             Constant
 hi! link markdownCodeBlock        Constant
