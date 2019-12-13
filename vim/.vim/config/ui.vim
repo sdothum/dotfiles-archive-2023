@@ -50,8 +50,8 @@ imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 autocmd ui VimEnter * if &diff | ToggleInfo | WaitFor | execute "normal! \<C-w>=" | endif
 
 " .................................................................... View mode
-nmap <silent><C-F7>      :ToggleProof<CR>
-imap <silent><C-F7> <C-o>:ToggleProof<CR>
+nmap <silent><F11>      :ToggleProof<CR>
+imap <silent><F11> <C-o>:ToggleProof<CR>
 
 if has('gui_running')
   autocmd ui InsertEnter * ToggleProof | SignifyDisable

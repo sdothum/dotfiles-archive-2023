@@ -51,12 +51,8 @@ vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 " .......................................................... Reformat paragraghs
 " retain cursor position for insert mode reformatting
 inoremap <silent><C-f> <Esc>lmZV:Inject {jv}kJvgq`Z:delmarks Z<CR>i
-vnoremap <silent><C-f> lmZ:'<,'>Inject Jvgq`Z:delmarks Z<CR>i
 " reformat at cursor position
 nnoremap <silent><C-f> mZV:Inject {jv}kJvgq`Z:delmarks Z<CR>
-" otherwise advance cursor to next paragraph
-nnoremap <silent><F5>  V:Inject {jv}kJvgq}}{j<CR>
-vnoremap <silent><F5>  :'<,'>Inject Jvgqj<CR>
 
 " ................................................................. Convert tabs
 nmap <silent><leader><tab>        :retab<CR>

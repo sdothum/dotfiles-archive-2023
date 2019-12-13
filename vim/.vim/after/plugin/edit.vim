@@ -59,8 +59,7 @@ command! StripTrailingWhitespaces silent! call <SID>stripTrailingWhitespaces()
 
 " Convert text _________________________________________________________________
 
-" ............................................................. Prose formatting
-" format paragraph 
+" ......................................................... Paragraph formatting
 function! s:inject(commands)
   if Prose()
     execute 'normal! ' . a:commands 
