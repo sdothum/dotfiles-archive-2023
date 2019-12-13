@@ -16,9 +16,9 @@ let g:pad = ['      ', '     ']  " statusline padding [inner, outer]
 
 " ....................................................................... Glyphs
 " buffer g:icon [0] unmodified [1] unmodifiable [2] modified [3] inactive [4] insert mode
-if empty($DISPLAY)  | let g:icon = ['•', '-', '+', 'x', '^']  " console font
-elseif empty($MONO) | let g:icon = ['', '', '', '', '']  " nerd-font utf-8 double width symbols
-else                | let g:icon = ['', '', '', '', '']  " nerd-font utf-8 mono symbols
+if empty($DISPLAY) | let g:icon = ['•', '-', '+', 'x', '^']  " console font
+elseif g:mono      | let g:icon = ['', '', '', '', '']  " nerd-font utf-8 mono symbols
+else               | let g:icon = ['', '', '', '', '']  " nerd-font utf-8 double width symbols
 endif
 
 " ............................................................. Expanded details

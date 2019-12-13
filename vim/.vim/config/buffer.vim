@@ -63,7 +63,7 @@ autocmd buffer BufWinEnter * if !Protected() | set modifiable | endif
 nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
 
 " beakl si layout specific buffer navigation key assignments, note silent -> silent
-if !empty($BEAKL)
+if !empty($BEAKL)  " see config.fish
   " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
   nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:SplitColors<CR>
   nmap <silent><Enter>  :Enter<CR>

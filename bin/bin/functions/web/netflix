@@ -6,15 +6,15 @@
 
 # ...................................................................... Browser
 
-BROWSER=chromium
-NAME='Netflix.*Chromium'
+BROWSER=qutebrowser
+NAME='Netflix.*qutebrowser'
+cycle=0.5  # time
 
 videomode on
-$BROWSER http://www.netflix.com/ca &
-xdotool search --sync --onlyvisible --name "$NAME" >/dev/null  # remove tabs and address/bookmark bars
-xdotool key --clearmodifiers F11
 restore layout 2:3
-pwait "$BROWSER.*netflix"
+$BROWSER http://www.netflix.com/ca
+pid=$(xdotool search --sync --onlyvisible --name "$NAME" getwindowpid)  # use pid to avoid intermittent xdotool BadWindow error
+while pgrep -P $pid >/dev/null ;do sleep $cycle ;done                   # separate instances of qutebrowser attach to this pid, delaying break
 videomode off
 
 # vim: set ft=sh: #

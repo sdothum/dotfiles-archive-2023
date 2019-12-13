@@ -9,7 +9,7 @@
 # Usage: pwait "<pattern>"
 # Note:  includes special handling for "term WAIT <command>", see term
 
-cycle=0.01  # loop window
+cycle=0.05  # loop window
 
 # wait for uniquely named window to process to startup
 until pgrep -avf "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done

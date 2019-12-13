@@ -6,7 +6,7 @@
 " Mode _________________________________________________________________________
 
 " .................................................................. Debug trace
-let g:trace = !empty($VIMTRACE)  " touch ~/.session/vim:trace
+let g:trace = !empty(glob('~/.session/vim:trace'))
 
 " escape problematic shell commandline characters
 function! s:trace(msg)

@@ -3,6 +3,14 @@
 " Config
 " ══════════════════════════════════════════════════════════════════════════════
 
+" ...................................................................... Session
+" if file exists -> attribute on
+" ~/.session/vim:cursorword : highlighting
+" ~/.session/vim:dark       : background
+" ~/.session/vim:fontsize   : bigger
+" ~/.session/vim:mono       : single width utf-8
+" ~/.session/vim:trace      : debug
+
 " ...................................................................... Startup
 runtime config/startup.vim
 runtime config/keyboard.vim
