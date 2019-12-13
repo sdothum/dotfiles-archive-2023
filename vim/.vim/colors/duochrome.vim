@@ -307,7 +307,7 @@ call s:h("MatchParen",            { "bg": s:red, "fg": s:white })
 " html
 call s:h("htmlBold",              { "gui": "bold", "fg": s:constant })
 call s:h("htmlItalic",            { "gui": "italic", "fg": s:constant })
-hi! link htmlH1                   statement  " markdown heading content
+hi! link htmlH1                   Statement  " markdown heading content
 hi! link htmlH2                   Statement
 hi! link htmlH3                   Statement
 hi! link htmlH4                   Statement
@@ -316,13 +316,13 @@ hi! link htmlH6                   Statement
 
 " markdown
 hi! link mkdHeading               Statement
-call s:h("mkdLink",               { "gui": "underline", "fg": s:red })
 hi! link markdownH1               Statement
 hi! link markdownH2               Statement
 hi! link markdownH3               Statement
 hi! link markdownH4               Statement
 hi! link markdownH5               Statement
 hi! link markdownH6               Statement
+call s:h("mkdLink",               { "gui": "underline", "fg": s:red })
 hi! link markdownLinkText         mkdLink
 hi! link markdownURL              mkdLink
 hi! link markdownListMarker       Constant
