@@ -6,6 +6,7 @@
 " ...................................................................... Session
 " dynamic settings, see after/plugin/*
 let g:duochrome_cursorline = !empty(glob('~/.session/vim:cursorline'))   " highlight
+let g:duochrome_diff       = !empty(glob('~/.session/vim:diff'))         " cursorline
 let g:cursorword           = !empty(glob('~/.session/vim:cursorword'))   " highlighting
 let g:dark                 = !empty(glob('~/.session/vim:dark'))         " background
 let g:mono                 = !empty(glob('~/.session/vim:mono'))         " single width utf-8

@@ -133,8 +133,12 @@ call s:h("Cursor",                { "fg": s:black, "bg": s:iawriter })  " ia wri
 if empty($DISPLAY)
   call s:h("CursorLine",          { "cterm": "underline" })             " console
 else
-  if &diff && !g:duochrome_diff
-    call s:h("CursorLine",        { "gui": "underline" })
+  if &diff
+    if g:duochrome_diff
+      call s:h("CursorLine",      { "bg": s:cursor_line })
+    else
+      call s:h("CursorLine",      { "gui": "underline" })
+    endif
   else
     if g:duochrome_insert && g:duochrome_markdown
       call s:h("CursorLine",      { "fg": s:high_contrast, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })

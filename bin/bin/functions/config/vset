@@ -6,11 +6,12 @@
 
 # ......................................................... Gvim launch settings
 
-usage() { echo "usage: $(basename $0) [-][C'ursorline | c'ursorword | d'ark | l'ight | r'eadability | v'lux | t'race]"; exit 1; }
+usage() { echo "usage: $(basename $0) [-][C'ursorline | c'ursorword | D'iff | d'ark | l'ight | r'eadability | v'lux | t'race]"; exit 1; }
 
 COLORSCHEME=$HOME/.session/vim:dark
 CURSORLINE=$HOME/.session/vim:cursorline
 CURSORWORD=$HOME/.session/vim:cursorword
+DIFF=$HOME/.session/vim:diff
 READABILITY=$HOME/.session/vim:readability
 TRACE=$HOME/.session/vim:trace
 VLUX=$HOME/.session/vlux
@@ -30,6 +31,8 @@ case $1 in
 -C*) rm -f $CURSORLINE ;;
  c*) touch $CURSORWORD ;;
 -c*) rm -f $CURSORWORD ;;
+ D*) touch $DIFF ;;
+-D*) rm -f $DIFF ;;
  d*) touch $COLORSCHEME; gtk dark ;;
 -d*) touch $COLORSCHEME; gtk dark; rm -f $VLUX  ;;
  l*) rm -f $COLORSCHEME; gtk light ;;
