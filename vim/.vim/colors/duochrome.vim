@@ -60,7 +60,7 @@ if !exists('s:duochrome')
   let s:light_yellow    = { "gui": "#d5b875", "cterm": "11"  }  " quantum
   " bg colours
   let s:blue_bg         = { "gui": "#dde4f2", "cterm": "153" }  " flatwhite
-  let s:brown_bg        = { "gui": "#605a52", "cterm": "058" }  " flatwhite
+  let s:green_bg        = { "gui": "#525643", "cterm": "058" }  " flatwhite
   let s:orange_bg       = { "gui": "#f7e0c3", "cterm": "223" }  " flatwhite
   let s:iawriter        = { "gui": "#20fccf", "cterm": "51"  }  " ia writer cursor
 endif
@@ -96,7 +96,7 @@ if s:background != &background
   let s:cyan             = s:b(s:dark_cyan,     s:light_cyan)
   let s:purple           = s:b(s:dark_purple,   s:light_purple)
   let s:yellow           = s:b(s:dark_yellow,   s:light_yellow)
-  let s:cursor_line      = s:b(s:orange_bg,     s:brown_bg)
+  let s:cursor_line      = s:b(s:orange_bg,     s:green_bg)
   let s:statement        = s:b(s:subtle_black,  s:subtle_white)
   let s:constant         = s:b(s:dark_cyan,     s:light_cyan)
   let s:comment          = s:b(s:dark_yellow,   s:dark_green)
