@@ -82,8 +82,8 @@ function! s:font(type)
   " a:type may be function or expression (nargs are literal strings only)
   execute 'let l:type = ' . a:type
   if g:fontsize != l:type
-    let l:size     = system('fontsize')
-    let l:size     = l:type ? l:size + 1 : l:size + g:readability
+    let l:size = system('fontsize')
+    let l:size = l:type ? l:size + 1 : l:size + g:readability
     execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
     if g:fontsize > 0 | RedrawGui | endif  " redraw to fill window on font size reduction
     set laststatus=2                       " turn on statusline
