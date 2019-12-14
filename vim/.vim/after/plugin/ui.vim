@@ -85,7 +85,7 @@ function! s:font(type)
     let l:size = system('fontsize')
     let l:size = l:type ? l:size + 1 : l:size + g:readability
     execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
-    if g:fontsize > 0 | RedrawGui | endif  " redraw to fill window on font size reduction
+    if g:fontsize > 0 | RedrawGui | endif  " fill window refresh for small fontsize
     set laststatus=2                       " turn on statusline
     let g:fontsize = l:type
   endif

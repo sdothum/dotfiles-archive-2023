@@ -30,7 +30,6 @@ command! ScrollOffset silent! call <SID>scrollOffset()
 " Look _________________________________________________________________________
 
 " ................................................................... Cursorline
-
 function! s:toggleCursorline()
   let g:duochrome_cursorline = !g:duochrome_cursorline
   Background
