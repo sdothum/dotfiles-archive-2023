@@ -8,6 +8,7 @@
 " ................................................................... Toggle gui
 " toggle gui menu
 function! s:toggleGui()
+  Trace gui:ToggleGui()
   if &guioptions =~# 'm' | set guioptions-=m
   else                   | set guioptions+=m
   endif

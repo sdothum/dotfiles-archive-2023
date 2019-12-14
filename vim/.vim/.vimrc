@@ -4,12 +4,12 @@
 " ══════════════════════════════════════════════════════════════════════════════
 
 " ...................................................................... Session
-" if file exists -> attribute on
-" ~/.session/vim:cursorword : highlighting
-" ~/.session/vim:dark       : background
-" ~/.session/vim:fontsize   : bigger
-" ~/.session/vim:mono       : single width utf-8
-" ~/.session/vim:trace      : debug
+" dynamic settings, see after/plugin/*
+let g:cursorword  = !empty(glob('~/.session/vim:cursorword'))   " highlighting
+let g:dark        = !empty(glob('~/.session/vim:dark'))         " background
+let g:mono        = !empty(glob('~/.session/vim:mono'))         " single width utf-8
+let g:readability = !empty(glob('~/.session/vim:readability'))  " fontsize
+let g:trace       = !empty(glob('~/.session/vim:trace'))        " debug
 
 " ...................................................................... Startup
 runtime config/startup.vim

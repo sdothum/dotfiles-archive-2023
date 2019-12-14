@@ -6,8 +6,6 @@
 " Mode _________________________________________________________________________
 
 " .................................................................. Debug trace
-let g:trace = !empty(glob('~/.session/vim:trace'))
-
 " escape problematic shell commandline characters
 function! s:trace(msg)
   if g:trace | silent execute '!echo "' . substitute(a:msg, '[-<>#$]', '\\&', 'g') . '" >>/tmp/vim:trace' | endif

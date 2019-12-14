@@ -30,8 +30,6 @@ let g:AutoPairsMapBS                = 1       " auto delete symbol pairs
 let g:AutoPairsShortcutBackInsert = '<C-BS>'  " undo auto pair jump -> close pair
 
 " ................................................................... Cursorword
-let g:cursorword = !empty(glob('~/.session/vim:cursorword'))
-
 autocmd plugin BufRead * let b:cursorword = Prose() ? 1 : g:cursorword
 
 " ................................................................... Easy-align

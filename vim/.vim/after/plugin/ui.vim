@@ -73,7 +73,7 @@ endfunction
 command! Margins silent! call <SID>margins()
 
 " ..................................................................... Set font
-let s:font_changed = 0  " redraw flag
+let g:fontsize = -1  " current font setting (0) source (1) prose
 
 " adjust font sizes for various gpu's/displays, liteDFM offsets to fit screens
 function! s:font(type)
@@ -81,14 +81,13 @@ function! s:font(type)
   if !has('gui_running') | return | endif 
   " a:type may be function expression (nargs are literal strings only)
   execute 'let l:type = ' . a:type
-  if g:font_type != l:type
-    let g:font_type = l:type
-    let l:size      = system('fontsize')
-    let l:size      = l:type ? l:size + g:font_step : l:size
+  if g:fontsize != l:type
+    let l:size     = system('fontsize')
+    let l:size     = l:type ? l:size + 1 : l:size + g:readability
     execute 'set guifont=' . (Prose() ? g:font[1] : g:font[0]) . ' ' . l:size
-    if s:font_changed | RedrawGui | endif
-    let s:font_changed = 1  " next font size change requires redraw
-    set laststatus=2        " turn on statusline
+    if g:fontsize > 0 | RedrawGui | endif  " redraw to fill window on font size reduction
+    set laststatus=2                       " turn on statusline
+    let g:fontsize = l:type
   endif
 endfunction
 

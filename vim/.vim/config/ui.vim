@@ -9,10 +9,8 @@ augroup ui | autocmd! | augroup END
 
 " ................................................................. Code / Prose
 " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-let g:mono      = empty(glob('~/.session/vim:mono')) ? '' : '-mono'         " see statusline.vim
-let g:font      = ['Iosevka' . $MONO . '\', 'Iosevka-proof' . $MONO . '\']  " family [code, prose]
-let g:font_type = -1                                                        " current font setting (0) source (1) prose
-let g:font_step = empty(glob('~/.session/vim:fontsize')) ? 1 : 2            " increase (point size) for prose
+let g:mono = g:mono ? '-mono' : ''  " font name extension
+let g:font = ['Iosevka' . g:mono . '\', 'Iosevka-proof' . g:mono . '\']  " family [code, prose]
 
 " Display ______________________________________________________________________
 
@@ -59,7 +57,7 @@ if has('gui_running')
 endif
 
 " ............................................................. Switch font size
-nmap <silent><S-F9>      :Font !g:font_type<CR>
-imap <silent><S-F9> <C-o>:Font !g:font_type<CR>
+nmap <silent><S-F9>      :Font !g:fontsize<CR>
+imap <silent><S-F9> <C-o>:Font !g:fontsize<CR>
 
 " ui.vim
