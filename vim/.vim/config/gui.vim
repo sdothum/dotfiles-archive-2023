@@ -66,14 +66,18 @@ set guioptions-=T      " no toolbar
 
 " Look _________________________________________________________________________
 
+" ................................................................... Cursorline
+nmap <silent><F8>      :ToggleCursorline<CR>
+imap <silent><F8> <C-o>:ToggleCursorline<CR>
+
 " ............................................................... Column margins
 set colorcolumn=0  " highlight column
 
 nmap <silent><Bar> :ToggleColumn<CR>
 
 " .......................................................... Line wrap highlight
-nmap <silent><F8>      :ToggleBreak<CR>
-imap <silent><F8> <C-o>:ToggleBreak<CR>
+nmap <silent><S-F8>      :ToggleBreak<CR>
+imap <silent><S-F8> <C-o>:ToggleBreak<CR>
 
 " ................................................................. Line numbers
 set number

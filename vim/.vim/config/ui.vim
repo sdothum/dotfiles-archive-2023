@@ -19,8 +19,8 @@ let g:font = ['Iosevka' . g:mono . '\', 'Iosevka-proof' . g:mono . '\']  " famil
 autocmd ui VimEnter,BufWinEnter * Layout
 
 " ....................................................................... Redraw
-nmap <silent><F9>      :Refresh<CR>
-imap <silent><F9> <C-o>:Refresh<CR>
+nmap <silent><F11>      :Refresh<CR>
+imap <silent><F11> <C-o>:Refresh<CR>
 
 " ..................................................................... Messages
 " clear messages after awhile to keep screen clean and distraction free!
@@ -48,8 +48,8 @@ imap <silent><F7>   <C-o>:ToggleInfo Prose()<CR>
 autocmd ui VimEnter * if &diff | ToggleInfo | WaitFor | execute "normal! \<C-w>=" | endif
 
 " .................................................................... View mode
-nmap <silent><F11>      :ToggleProof<CR>
-imap <silent><F11> <C-o>:ToggleProof<CR>
+nmap <silent><S-F11>      :ToggleProof<CR>
+imap <silent><S-F11> <C-o>:ToggleProof<CR>
 
 if has('gui_running')
   autocmd ui InsertEnter * ToggleProof | SignifyDisable

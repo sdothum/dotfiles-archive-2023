@@ -79,7 +79,7 @@ let g:fontsize = -1  " current font setting (0) source (1) prose
 function! s:font(type)
   Trace ui:Font()
   if !has('gui_running') | return | endif 
-  " a:type may be function expression (nargs are literal strings only)
+  " a:type may be function or expression (nargs are literal strings only)
   execute 'let l:type = ' . a:type
   if g:fontsize != l:type
     let l:size     = system('fontsize')

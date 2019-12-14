@@ -190,7 +190,7 @@ hi! link Operator                 Noise
 
 " ................................................................. Text objects
 " comment
-call s:h("comment",               { "fg": s:comment, "gui": "italic" })
+call s:h("Comment",               { "fg": s:comment, "gui": "italic" })
 
 " constant
 call s:h("Constant",              { "fg": s:constant })
@@ -203,7 +203,7 @@ hi! link Directory                Constant
 hi! link Title                    Constant
 
 " statement
-call s:h("statement",             { "fg": s:statement, "gui": "bold" })
+call s:h("Statement",             { "fg": s:statement, "gui": "bold" })
 hi! link Include                  Statement
 hi! link Conditonal               Statement
 hi! link Repeat                   Statement
@@ -219,13 +219,13 @@ hi! link Question                 ErrorMsg
 " warningmsg
 call s:h("WarningMsg",            { "fg": s:yellow })
 " moremsg
-call s:h("moremsg",               { "fg": s:norm_subtle, "cterm": "bold", "gui": "bold" })
+call s:h("MoreMsg",               { "fg": s:norm_subtle, "cterm": "bold", "gui": "bold" })
 hi! link ModeMsg                  MoreMsg
 
 " .................................................................... Highlight
 " search
 call s:h("Search",                { "bg": s:red, "fg": s:selection_fg })
-call s:h("incsearch",             { "bg": s:iawriter, "fg": s:BLACK })
+call s:h("IncSearch",             { "bg": s:iawriter, "fg": s:BLACK })
 
 " visual
 call s:h("Visual",                { "bg": s:visual })
@@ -291,7 +291,7 @@ call s:h("Pmenu",                 { "fg": s:norm, "bg": s:cursor_line })
 hi! link PmenuSbar                Pmenu
 hi! link PmenuThumb               Pmenu
 " pmenusel
-call s:h("pmenusel",              { "fg": s:norm, "bg": s:cursor_line, "gui": "bold" })
+call s:h("PmenuSel",              { "fg": s:norm, "bg": s:cursor_line, "gui": "bold" })
 " wildmenu
 call s:h("WildMenu",              { "gui": "underline,bold", "bg": s:bg, "fg": s:norm })
 

@@ -21,8 +21,8 @@ autocmd theme InsertLeave * Background
 autocmd theme VimEnter,VimResized,FocusGained * WaitFor | Background
 
 " ................................................................ Switch colour
-nmap <silent><S-F8>      :LiteSwitch<CR>
-imap <silent><S-F8> <C-o>:LiteSwitch<CR>
+nmap <silent><F9>      :LiteSwitch<CR>
+imap <silent><F9> <C-o>:LiteSwitch<CR>
 
 " ................................................................ Split windows
 let g:active = 0   " active window tag
