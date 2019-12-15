@@ -13,7 +13,7 @@ let g:mono                 = !empty(glob('~/.session/vim:mono'))         " singl
 let g:readability          = !empty(glob('~/.session/vim:readability'))  " fontsize
 let g:trace                = !empty(glob('~/.session/vim:trace'))        " debug
 
-if &diff | let g:duochrome_cursorline = g:duochrome_cursorline ? g:duochrome_cursorline : 2 | endif
+if &diff | let g:duochrome_cursorline = g:duochrome_cursorline ? g:duochrome_cursorline : 2 | endif  " underline default
 
 " ...................................................................... Startup
 runtime config/startup.vim
