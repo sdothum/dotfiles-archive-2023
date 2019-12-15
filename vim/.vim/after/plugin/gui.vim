@@ -31,7 +31,8 @@ command! ScrollOffset silent! call <SID>scrollOffset()
 
 " ................................................................... Cursorline
 function! s:toggleCursorline()
-  let g:duochrome_cursorline = !g:duochrome_cursorline
+  let g:duochrome_cursorline = g:duochrome_cursorline + 1
+  if g:duochrome_cursorline > 2 | let g:duochrome_cursorline = 0 + &diff | endif  " always highlight diff
   Background
 endfunction
 

@@ -14,8 +14,7 @@ if g:colors_name != 'duochrome'
 endif
 
 " ui colorscheme controls providing dynamic 'set background' changes
-if !exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight
-if !exists('g:duochrome_diff')       | let g:duochrome_diff       = 0 | endif  " diff (0) underline (1) cursorline
+if !exists('g:duochrome_cursorline') | let g:duochrome_cursorline = 0 | endif  " cursorline (0) dfm (1) highlight (2) underline
 if !exists('g:duochrome_insert')     | let g:duochrome_insert     = 0 | endif  " mode (0) normal (1) insert
 if !exists('g:duochrome_markdown')   | let g:duochrome_markdown   = 0 | endif  " source (0) code (1) markdown
 if !exists('g:duochrome_relative')   | let g:duochrome_relative   = 0 | endif  " linenr (0) norelative (1) relative
@@ -133,18 +132,16 @@ call s:h("Cursor",                { "fg": s:black, "bg": s:iawriter })  " ia wri
 if empty($DISPLAY)
   call s:h("CursorLine",          { "cterm": "underline" })             " console
 else
-  if &diff
-    if g:duochrome_diff
-      call s:h("CursorLine",      { "bg": s:cursor_line })
+  if g:duochrome_insert && g:duochrome_markdown
+    if g:duochrome_cursorline == 2
+      call s:h("CursorLine",      { "fg": s:high_contrast, "gui": "underline" })
     else
-      call s:h("CursorLine",      { "gui": "underline" })
-    endif
-  else
-    if g:duochrome_insert && g:duochrome_markdown
       call s:h("CursorLine",      { "fg": s:high_contrast, "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
-    else
-      call s:h("CursorLine",      { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
     endif
+  elseif g:duochrome_cursorline == 2
+    call s:h("CursorLine",        { "gui": "underline" })
+  else
+    call s:h("CursorLine",        { "bg": g:duochrome_cursorline ? s:cursor_line : s:bg })
   endif
 endif
 call s:h("Ignore",                { "fg": s:bg })
@@ -229,8 +226,8 @@ hi! link ModeMsg                  MoreMsg
 
 " .................................................................... Highlight
 " search
-call s:h("Search",                { "bg": s:red, "fg": s:selection_fg })
-call s:h("IncSearch",             { "bg": s:iawriter, "fg": s:BLACK })
+call s:h("Search",                { "fg": s:selection_fg, "bg": s:red })
+call s:h("IncSearch",             { "fg": s:BLACK, "bg": s:iawriter })
 
 " visual
 call s:h("Visual",                { "bg": s:visual })
@@ -265,9 +262,9 @@ hi! link helpHyperTextJump        String
 " ................................................................... Statusline
 " statusline
 call s:h("StatusLine",            { "bg": s:statusline, "fg": s:norm_subtle })
-call s:h("User1",                 { "fg": s:norm_subtle, "bg": g:duochrome_split ? s:statusline : s:bg })
-call s:h("User2",                 { "fg": s:norm_very_subtle, "bg": g:duochrome_split ? s:statusline : s:bg })
-call s:h("User3",                 { "fg": s:red, "bg": g:duochrome_split ? s:statusline : s:bg })
+call s:h("User1",                 { "bg": g:duochrome_split ? s:statusline : s:bg, "fg": s:norm_subtle })
+call s:h("User2",                 { "bg": g:duochrome_split ? s:statusline : s:bg, "fg": s:norm_very_subtle })
+call s:h("User3",                 { "bg": g:duochrome_split ? s:statusline : s:bg, "fg": s:red })
 " statuslinenc
 call s:h("StatusLineNC",          { "bg": g:duochrome_split ? s:statusline : s:bg })
 hi! link StatusLineTerm           StatusLineNC
@@ -298,7 +295,7 @@ hi! link PmenuThumb               Pmenu
 " pmenusel
 call s:h("PmenuSel",              { "fg": s:norm, "bg": s:cursor_line, "gui": "bold" })
 " wildmenu
-call s:h("WildMenu",              { "gui": "underline,bold", "bg": s:bg, "fg": s:norm })
+call s:h("WildMenu",              { "fg": s:norm, "bg": s:bg, "gui": "underline,bold" })
 
 " tabline
 hi! link TabLine                  Normal
@@ -306,12 +303,12 @@ hi! link TabLineSel               Keyword
 hi! link TabLineFill              Normal
 
 " matchparen
-call s:h("MatchParen",            { "bg": s:red, "fg": s:white })
+call s:h("MatchParen",            { "fg": s:white, "bg": s:red })
 
 " ..................................................................... Filetype
 " html
-call s:h("htmlBold",              { "gui": "bold", "fg": s:constant })
-call s:h("htmlItalic",            { "gui": "italic", "fg": s:constant })
+call s:h("htmlBold",              { "fg": s:constant, "gui": "bold" })
+call s:h("htmlItalic",            { "fg": s:constant, "gui": "italic" })
 hi! link htmlH1                   Statement  " markdown heading content
 hi! link htmlH2                   Statement
 hi! link htmlH3                   Statement
@@ -327,7 +324,7 @@ hi! link markdownH3               Statement
 hi! link markdownH4               Statement
 hi! link markdownH5               Statement
 hi! link markdownH6               Statement
-call s:h("mkdLink",               { "gui": "underline", "fg": s:red })
+call s:h("mkdLink",               { "fg": s:red, "gui": "underline" })
 hi! link markdownLinkText         mkdLink
 hi! link markdownURL              mkdLink
 hi! link markdownListMarker       Constant
