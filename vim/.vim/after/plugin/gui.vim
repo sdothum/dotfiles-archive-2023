@@ -50,7 +50,7 @@ function! s:toggleColumn()
   elseif g:duochrome_ruler == 2 | autocmd! column
   endif
   ShowBreak
-  let g:show_column = 1  " flash column position, see autocmd statusline.vim
+  let g:show_column = 1  " flash column position, see statusline.vim
   Background
 endfunction
 

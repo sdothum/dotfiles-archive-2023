@@ -39,7 +39,7 @@ case $1 in
  -t*) rm -f $TRACE ;;
   u*) touch $UNDERLINE ;;
  -u*) rm -f $UNDERLINE; rm -f $CURSORLINE ;;
-  v*) touch $VLUX; vlux ;;
+  v*) touch $VLUX; vlux ;;  # follow the sun, see crontab
  -v*) rm -f $VLUX ;;
 -*w*) rm -f $CURSORWORD ;;
  *w*) touch $CURSORWORD ;;
