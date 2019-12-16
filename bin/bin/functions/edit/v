@@ -56,7 +56,8 @@ done
 console || { gui=-g; [ -e $DYNAMIC ] && focus frame; }
 [ -e $SESSION/vim ] && fg=-f
 # --quote used for single space separated filename
-eval $sudo vim $gui $role $fg $cmd $file 2>>$LOG
+session="vim $gui $role $fg $cmd $file"
+eval $sudo $session 2>>$LOG
 # prevent premature startup termination on slower processors
 cpu arm && sleep 5
 
@@ -72,9 +73,10 @@ housekeeping() {
   # avoid nfs mounted Maildir (and unnecessary processing)
   server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
   vhg  # any dangling undo files
-  cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
+  # cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
 }
 
-(pwait "vim.*$gui.*$fg.*$cmd.*$file" && housekeeping) &
+file=$(echo $file | sed 's/"//g')
+(pwait "vim.*$file" && housekeeping) &
 
 # vim: set ft=sh: #
