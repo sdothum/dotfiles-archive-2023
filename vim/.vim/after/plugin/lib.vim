@@ -54,8 +54,8 @@ endfunction
 command! -nargs=? -bar WaitFor call <SID>waitFor(<f-args>)
 
 " ................................................................ Cycle counter
-function! TriToggle(counter, reset)
-  if a:counter == 2 | return a:reset | endif
+function! TriToggle(counter, ...)
+  if a:counter == 2 | return a:0 ? a:1 : 0 | endif
   return a:counter + 1
 endfunction
 

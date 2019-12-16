@@ -44,7 +44,7 @@ set colorcolumn=0  " highlight column
 
 " toggle colorcolumn modes
 function! s:toggleColumn()
-  let g:duochrome_ruler = TriToggle(g:duochrome_ruler, 0)
+  let g:duochrome_ruler = TriToggle(g:duochrome_ruler)
   if     g:duochrome_ruler == 0 | let &colorcolumn = 0
   elseif g:duochrome_ruler == 1 | let &colorcolumn = col('.') | autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
   elseif g:duochrome_ruler == 2 | autocmd! column
