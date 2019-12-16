@@ -120,18 +120,14 @@ function! Statusline(expanded)
     if Prose() && g:duochrome_insert
       return s:escape(s:attn() . Leader('') . '  %{UnModified(0)}%1*')
     else
-      let l:name     = '%{Name()}' . g:pad[0]
+      let l:name     = '%1*%{Name()}' . g:pad[0]
+      let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
       if a:expanded  " center dfm indicator / proofing statusline
-        let l:path   = '%{Path()}'
         let l:leader = '%{Leader(Path() . g:pad[1] . Name())}'
+        let l:name   = '%2*%{Path()}%1*' . g:pad[1] . l:name
+        let l:info  .= g:pad[1] . '%2*%{Detail()}'
       else
         let l:leader = '%{Leader(Name())}'
-      endif
-      let l:name     = '%1*' . l:name
-      let l:info     = s:attn() . '%{UnModified(1)}' . g:pad[0] . '%1*%{PosWordsCol()}'  " utf-8 symbol occupies 2 chars (pad right 1 space)
-      if a:expanded
-        let l:name   = '%2*' . l:path . '%1*' . g:pad[1] . l:name
-        let l:info  .= g:pad[1] . '%2*%{Detail()}'
       endif
       return s:escape('%1*' . l:leader . l:name . l:info . '%1*')
     endif
