@@ -70,6 +70,11 @@ function! BlankLine()
   return !NonBlankLine()
 endfunction
 
+" ......................................................................... Path
+function! Home(dir)
+  return $HOME . '/' . a:dir
+endfunction
+
 " ................................................................... Print file
 " latex printing
 function! s:hardcopy()

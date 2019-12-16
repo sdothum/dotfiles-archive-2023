@@ -9,8 +9,8 @@ augroup ui | autocmd! | augroup END
 
 " ................................................................. Code / Prose
 " Iosevka custom compiled, with nerd-fonts awesome patches, see make_install/iosevka
-let g:mono = g:mono ? '-mono' : ''  " font name extension
-let g:font = ['Iosevka' . g:mono . '\', 'Iosevka-proof' . g:mono . '\']  " family [code, prose]
+let s:mono = g:mono ? '-mono' : ''  " font name extension
+let g:font = ['Iosevka' . s:mono . '\', 'Iosevka-proof' . s:mono . '\']  " family [code, prose]
 
 " Display ______________________________________________________________________
 

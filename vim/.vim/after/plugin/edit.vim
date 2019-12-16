@@ -61,9 +61,7 @@ command! StripTrailingWhitespaces silent! call <SID>stripTrailingWhitespaces()
 
 " ......................................................... Paragraph formatting
 function! s:inject(commands)
-  if Prose()
-    execute 'normal! ' . a:commands 
-  endif
+  if Prose() | execute 'normal! ' . a:commands | endif
 endfunction
 
 command! -range=% -nargs=1 Inject silent! execute '<line1>,<line2>call <SID>inject(<f-args>)'
