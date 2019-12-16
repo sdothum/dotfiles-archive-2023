@@ -11,6 +11,7 @@ NAME='Netflix.*qutebrowser'
 cycle=0.5  # time
 
 videomode on
+killall $BROWSER 2>/dev/null
 restore layout 2:3
 $BROWSER http://www.netflix.com/ca
 pid=$(xdotool search --sync --onlyvisible --name "$NAME" getwindowpid)  # use pid to avoid intermittent xdotool BadWindow error

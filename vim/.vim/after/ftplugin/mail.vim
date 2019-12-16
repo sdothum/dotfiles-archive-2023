@@ -21,6 +21,8 @@ function! s:composeMail()
   execute 'startinsert'
 endfunction
 
-autocmd Filetype mail silent! call <SID>composeMail()
+command! ComposeMail call <SID>composeMail()
+
+autocmd Filetype mail silent! ComposeMail
 
 " mail.vim

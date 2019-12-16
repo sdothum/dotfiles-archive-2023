@@ -299,8 +299,7 @@ let g:sneak#label        = 1    " label mode
 
 " " remap sneak_s to preserve s
 " function! s:sneak_f()
-"   if !exists("g:sneak_f")
-"     let g:sneak_f = 1
+"   if !exists("g:sneak_f") | let g:sneak_f = 1
 "     unmap s
 "     unmap S
 "     nmap f <Plug>Sneak_s

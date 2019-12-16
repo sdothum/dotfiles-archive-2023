@@ -31,8 +31,7 @@ command! ScrollOffset silent! call <SID>scrollOffset()
 
 " ................................................................... Cursorline
 function! s:toggleCursorline()
-  let g:duochrome_cursorline = g:duochrome_cursorline + 1
-  if g:duochrome_cursorline > 2 | let g:duochrome_cursorline = 0 + &diff | endif  " always highlight diff
+  let g:duochrome_cursorline = TriToggle(g:duochrome_cursorline, &diff)  " always highlight diff
   Background
 endfunction
 
@@ -43,23 +42,15 @@ augroup column | autocmd! | augroup END
 
 set colorcolumn=0  " highlight column
 
-" toggle colorcolumn modes, see theme:Guides()
+" toggle colorcolumn modes
 function! s:toggleColumn()
-  if g:duochrome_ruler == 0
-    let g:duochrome_ruler = 1
-    let &colorcolumn      = col('.')
-    let s:wraplight       = 0
-    autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
-  elseif g:duochrome_ruler == 1
-    let g:duochrome_ruler = 2
-    let s:wraplight       = 0
-    autocmd! column
-  else
-    let g:duochrome_ruler = 0
-    let &colorcolumn      = 0
+  let g:duochrome_ruler = TriToggle(g:duochrome_ruler, 0)
+  if     g:duochrome_ruler == 0 | let &colorcolumn = 0
+  elseif g:duochrome_ruler == 1 | let &colorcolumn = col('.') | autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
+  elseif g:duochrome_ruler == 2 | autocmd! column
   endif
   ShowBreak
-  let g:show_column = 1  " flash column position, see autocmd info.vim
+  let g:show_column = 1  " flash column position, see autocmd statusline.vim
   Background
 endfunction
 
@@ -104,7 +95,7 @@ function! s:toggleWhiteSpace()
   else
     match ExtraWhitespace /\s\+$/
     " list state propagates forward (on) but not backwards (off)? so auto reset buffer state!
-    autocmd invisible BufLeave,WinLeave * call <SID>toggleWhiteSpace()
+    autocmd invisible BufLeave,WinLeave * ToggleWhiteSpace
   endif
   Notify List invisibles: &list != ' '
 endfunction
