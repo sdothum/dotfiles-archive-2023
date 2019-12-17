@@ -33,7 +33,7 @@ PLAYBACK='
   # super+s # emit hook Return
   ! dmenu scripts
   # alt+Shift+Return
-  ! term 'Terminal'
+  ! term 'terminal'
   c d space slash d a t a slash d e p o t slash d o t f i l e s slash h e r b s t l u f t w m slash period c o n f i g slash h e r b s t l u f t w m Return
   g v i m d i f f space e m i t underscore h o o k space Shift+grave slash period c o n f i g slash h e r b s t l u f t w m slash e m i t underscore h o o k Return
   ! sleep 1.5

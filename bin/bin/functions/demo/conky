@@ -20,10 +20,10 @@ PLAYBACK='
   alt+1
   alt+backslash
   alt+backslash
-  ! term 'Terminal'
+  ! term 'terminal'
   alt+m
   # alt+Shift+Return
-  ! term 'Terminal'
+  ! term 'terminal'
   a n s i c o l o r s Return
   alt+backslash
   alt+backslash

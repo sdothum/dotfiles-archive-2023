@@ -58,7 +58,7 @@ previous() { track=$(mpc playlist | grep -B 1 "$(current)" | grep -v "$(current)
 tracks()   { echo $@ | sed -r 's,.*#([0-9]*)/([0-9]*) .*  ,\1 of \2,'; }
 info()     { stats=$(mpc status | sed -n '2p'); echo $stats | grep -q playing && echo "Playing $(tracks $stats)" || echo "Paused $(tracks $stats)"; }
 status()   { mpc status | grep -q "$@" && echo off || echo on; }  # toggle status
-ncmpcpp()  { pstat ncmpcpp || term 'Music' ncmpcpp; exec focus instance 'Music'; }
+ncmpcpp()  { pstat ncmpcpp || term 'music' ncmpcpp; exec focus instance 'Music'; }
 
 # ....................................................................... Player
 

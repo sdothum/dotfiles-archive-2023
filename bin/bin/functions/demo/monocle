@@ -18,7 +18,7 @@ DELAY=1.5
 PLAYBACK='
   alt+bracketright
   alt+1
-  ! term 'Terminal'
+  ! term 'terminal'
   f e t c h Return
   alt+grave
   alt+backslash

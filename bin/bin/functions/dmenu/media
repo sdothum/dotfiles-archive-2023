@@ -27,7 +27,7 @@ while : ;do
   kodi      ) videomode on; kodi; videomode off ;;
   movies    ) dmenu movies ;;
   netflix   ) netflix ;;
-  nzb       ) exists nzbget && { toggle term 'NZB' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
+  nzb       ) exists nzbget && { toggle term 'nzb' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   patricia  ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
   pulse     ) exec pulse ;;
   references) dmenu references; unset root; break ;;
@@ -35,7 +35,7 @@ while : ;do
   sonarr    ) $BROWSER $SONARR; pwait "$BROWSER.*$SONARR"; unset root ;;
   #thought* ) play https://youtu.be/OBk3ynRbtsw ;;
   thought*  ) play -q /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
-  torrent   ) toggle term 'Torrent' rtorrent; unset root; break ;;
+  torrent   ) toggle term 'torrent' rtorrent; unset root; break ;;
   esac
 done
 

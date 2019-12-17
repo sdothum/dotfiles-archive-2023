@@ -20,7 +20,7 @@ if [ $1 ] ;then
   rice conky test $1
   confirm
 else
-  term 'Theme' FLOAT SHELL "wal -e -i $WALLPAPER; echo; echo \"Pick colour..\"; read PROMPT"
+  term 'theme' FLOAT SHELL "wal -e -i $WALLPAPER; echo; echo \"Pick colour..\"; read PROMPT"
   while : ;do
     color=$(grabc | head -1)  # pick color from wal or wallpaper
     ditto color "$color"
