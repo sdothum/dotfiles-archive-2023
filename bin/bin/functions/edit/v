@@ -11,7 +11,6 @@
 # va va voom
 SHELL=/usr/bin/dash
 export QUEUE=$(date '+%y%m%d%H%M%S')
-retention=90  # undo history file retention days
 VIMTRACE=$HOME/.session/vim:trace
 
 LOG=/tmp/vim:trace
@@ -42,10 +41,10 @@ else
   fi
 fi
 
-# quote filenames containing spaces
+# escape filenames containing spaces
 count=0
 [ "$file" ] || while : ;do 
-  file="$file \"$1\""
+file="$file $(escape $1)"
   count=$(( $count + 1 ))
   shift
   [ $# -gt 0 ] || break 
@@ -58,25 +57,8 @@ console || { gui=-g; [ -e $DYNAMIC ] && focus frame; }
 # --quote used for single space separated filename
 session="vim $gui $role $fg $cmd $file"
 eval $sudo $session 2>>$LOG
-# prevent premature startup termination on slower processors
-cpu arm && sleep 5
 
-# postpone cleanup till done with all vim sessions
-housekeeping() {
-  vhg $QUEUE  # undo files
-  pstat vim && exit
-  find $HOME/.vim/undo -user root -exec sudo chown -c $USER:users {} \;
-  find $HOME/.vim/undo -size 0 -exec rm {} \;
-  find $HOME/.vim/undo -mtime +$retention -exec rm {} \;
-  rm -f $HOME/.vim/undo/%tmp%*
-  rm -f $HOME/.vim/undo/*%drafts%alot.*
-  # avoid nfs mounted Maildir (and unnecessary processing)
-  server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
-  vhg  # any dangling undo files
-  # cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
-}
-
-file=$(echo $file | sed 's/"//g')
-(pwait "vim.*$file" && housekeeping) &
+cpu arm && sleep 5  # prevent premature startup termination on slower processors
+(pwait "vim.*$file" && vhg $QUEUE) &
 
 # vim: set ft=sh: #

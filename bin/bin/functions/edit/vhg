@@ -6,10 +6,11 @@
 
 # .................................................................. Auto backup
 
-# Usage: vhg [<queue>], see v(im) script and buffers.vim, core.vim
+# Usage: vhg [<queue>], see v(im) script and buffers.vim
 
 REPO=${REPO:-$STOW}
 JOB=$HOME/.vim/job
+retention=90  # undo history file retention days
 
 # import user path
 . $HOME/bin/functions/shell/user_path
@@ -31,12 +32,25 @@ backup() {
     files="$files  $file"
   done 3< /tmp/vhg:add
 
-  notify 'Mercurial' "$(echo ${files#  } | sed 's/ /\n/g')"
+  notify 'Mercurial' "$(echo ${files#  } | sed 's, /,\n/,g')"  # newline on /path
   # see hgl alias (hg log) for compact listing
   hg commit --quiet --cwd $REPO -m "$(date -R | cut -d- -f1) ..$files"
   rm -f $1
 }
 
-[ $1 ] && backup $JOB/$1 || for i in $JOB/* ;do backup $i ;done
+[ $1 ] && { backup $JOB/$1; pstat vim && exit || exec vhg; }   # clear queue
+
+# clear any dangling backups
+for i in $JOB/* ;do backup $i ;done
+  
+# cleanup and prune undo history
+find $HOME/.vim/undo -user root -exec sudo chown -c $USER:users {} \;
+find $HOME/.vim/undo -size 0 -exec rm {} \;
+find $HOME/.vim/undo -mtime +$retention -exec rm {} \;
+rm -f $HOME/.vim/undo/%tmp%*
+rm -f $HOME/.vim/undo/*%drafts%alot.*
+# avoid nfs mounted Maildir (and unnecessary processing)
+server && find $HOME/Maildir -name '.viminf*.tmp' -exec rm {} \;
+# cpu arm && rsync $STOW/.hg $SERVER:$STOW/ >/dev/null 2>&1
 
 # vim: set ft=sh: #

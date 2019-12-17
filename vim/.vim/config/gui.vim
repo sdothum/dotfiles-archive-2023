@@ -44,6 +44,7 @@ autocmd gui BufWinEnter * if exists('b:winview') | call winrestview(b:winview) |
 scriptencoding utf-8
 set encoding=utf-8      " necessary to show unicode glyphs
 set ambiwidth="double"  " for double width glyph handling
+set guifont=monospace
 
 " ....................................................................... Cursor
 set cursorline          " highlight current line
