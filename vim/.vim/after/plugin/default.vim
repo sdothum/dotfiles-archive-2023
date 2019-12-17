@@ -23,8 +23,10 @@ command! Term :call system('term "vimterm" STACK')
 function! s:toggleWrap()
   if !Prose() | return | endif
   if &formatoptions =~ 't'
-    NoPencil
+    let l:textwidth = &textwidth  " formatoptions -t sets textwidth to 0
+    SoftPencil
     set formatoptions-=t
+    let &textwidth = l:textwidth  " restore for correct Margins calculation
   else
     HardPencil
     set formatoptions+=t

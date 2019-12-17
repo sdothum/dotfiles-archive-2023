@@ -13,7 +13,7 @@ hc keybind $Mod-Control-Shift-r         reload
 hc keybind $Mod-w                       chain . close_or_remove . emit_hook focus_window
 hc keybind $Mod-Return                  spawn toggle scratchpad
 hc keybind $Mod-Shift-Return            spawn tmux_session
-hc keybind $Mod-Control-Return          spawn term 'Term'
+hc keybind $Mod-Control-Return          spawn term 'term'
 hc keybind $Mod-equal                   spawn toggle focus
 # number layer thumb swap
 hc keybind $Mod-0                       spawn toggle focus

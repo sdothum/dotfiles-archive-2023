@@ -39,7 +39,7 @@ if [ $BEAKL ] ;then
   hc keybind Super-x                  spawn toggle rox
   hc keybind Super-apostrophe         spawn toggle conky
   hc keybind Super-Control-apostrophe spawn toggle panel
-else
+elsedict
   hc keybind Super-grave              spawn toggle rox
   hc keybind Super-backslash          spawn toggle conky
   hc keybind Super-Control-backslash  spawn toggle panel
@@ -50,9 +50,9 @@ hc keybind Super-a                    spawn dmenu abook
 hc keybind Super-b                    spawn dmenu wiki
 hc keybind Super-Control-b            spawn dmenu wiki diary
 hc keybind Super-c                    spawn dmenu reminder
-hc keybind Super-Control-c            spawn dmenu clipboard
-hc keybind Super-d                    spawn dmenu thesaurus
-hc keybind Super-Control-d            spawn dmenu dict
+hc keybind Super-Control-c            spawn term 'todo' td -i
+hc keybind Super-d                    spawn dmenu dict
+hc keybind Super-Control-d            spawn dmenu thesaurus
 hc keybind Super-e                    spawn dmenu scripts
 hc keybind Super-Control-e            spawn dmenu edit
 hc keybind Super-h                    spawn dmenu shistory
@@ -64,6 +64,7 @@ hc keybind Super-Control-n            spawn dmenu notes draft
 hc keybind Super-p                    spawn dmenu pass
 hc keybind Super-Control-p            spawn proof toggle
 hc keybind Super-$Mod-p               spawn hardcopy eject
+hc keybind Super-r                    spawn dmenu clipboard
 hc keybind Super-s                    spawn dmenu system
 hc keybind Super-Control-s            spawn dmenu systemd
 hc keybind Super-t                    spawn conky clock

@@ -57,7 +57,7 @@ if has('gui_running')
 endif
 
 " ............................................................. Switch font size
-" prose font is by (writing preference) default set 1 point larger than code font
+" prose font is by (writing preference) default set 1px larger than code font
 nmap <silent><S-F9>      :Font !g:fonttype<CR>
 imap <silent><S-F9> <C-o>:Font !g:fonttype<CR>
 
