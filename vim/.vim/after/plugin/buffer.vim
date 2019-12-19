@@ -27,14 +27,18 @@ command! Singleton CloseDiff | %bdelete | edit # | bdelete # | SplitColors
 
 " File actions _________________________________________________________________
 
+function! s:home(dir)
+  return $HOME . '/' . a:dir
+endfunction
+
 " .................................................................. Auto backup
 " queue files written for vhg (may contain repeated update entries)
-let s:repo = empty($STOW) ? Home('.vim') : $STOW  " directory to auto backup
+let s:repo = empty($STOW) ? s:home('.vim') : $STOW  " directory to auto backup
 
 function! s:queueFile()
   if empty($QUEUE) | return | endif  " see v script (sets QUEUE and invokes vhg)
   let l:path = resolve(expand('%:p'))
-  if l:path =~ s:repo | call system('echo ' . substitute(l:path, s:repo, '', '') . ' >>' . Home('.vim/job/') . $QUEUE) | endif
+  if l:path =~ s:repo | call system('echo ' . substitute(l:path, s:repo, '', '') . ' >>' . s:home('.vim/job/') . $QUEUE) | endif
 endfunction
 
 command! QueueFile silent! call <SID>queueFile()

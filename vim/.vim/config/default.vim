@@ -14,9 +14,8 @@ autocmd defaults InsertLeave * let &updatetime  = s:updatetime
 autocmd defaults CursorHoldI * stopinsert
 
 " ........................................................................ Debug
-nnoremap <silent><S-F10> :let g:trace = !g:trace<CR>
 " recover last error message
-nmap <leader>e           :echo errmsg<CR>
+nmap <leader>e               :echo errmsg<CR>
 
 " ..................................................................... Terminal
 nmap <silent><C-t>           :Term<CR>
@@ -83,9 +82,6 @@ set formatoptions=qrn1j  " coding options
 " double spaces at the end of a wrapped line, becomes <br> by markdown
 set nojoinspaces         " force single spacing after sentence punctuation!
 set textwidth=80
-
-" .................................................................... Line wrap
-nmap <silent><leader><CR> :ToggleWrap<CR>
 
 " ......................................................................... Tabs
 set autoindent

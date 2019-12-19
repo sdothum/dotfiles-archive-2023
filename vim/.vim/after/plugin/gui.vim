@@ -3,85 +3,7 @@
 " GUI
 " ══════════════════════════════════════════════════════════════════════════════
 
-" Behaviour ____________________________________________________________________
-
-" ................................................................... Toggle gui
-" toggle gui menu
-function! s:toggleGui()
-  Trace gui:ToggleGui()
-  if &guioptions =~# 'm' | set guioptions-=m
-  else                   | set guioptions+=m
-  endif
-endfunction
-
-command! -bar ToggleGui silent! call <SID>toggleGui()
-command! -bar RedrawGui silent! ToggleGui | WaitFor 50m \| ToggleGui
-
-" .................................................................... Scrolling
-let s:scroll_ratio = 12  " integer division (vs 0.percent calculation and integer conversion)
-
-" dynamic scroll offset
-function! s:scrollOffset()
-  let &scrolloff = Prose() ? 999 : winheight(win_getid()) / s:scroll_ratio
-endfunction
-
-command! ScrollOffset silent! call <SID>scrollOffset()
-
-" Look _________________________________________________________________________
-
-" ................................................................... Cursorline
-function! s:toggleCursorline()
-  let g:duochrome_cursorline = TriCycle(g:duochrome_cursorline, &diff)  " always highlight diff
-  Background
-endfunction
-
-command! ToggleCursorline silent! call <SID>toggleCursorline()
-
-" ............................................................... Column margins
-augroup column | autocmd! | augroup END
-
-set colorcolumn=0  " highlight column
-
-" toggle colorcolumn modes
-function! s:toggleColumn()
-  let g:duochrome_ruler = TriCycle(g:duochrome_ruler)
-  if     g:duochrome_ruler == 0 | let &colorcolumn = 0
-  elseif g:duochrome_ruler == 1 | let &colorcolumn = col('.') | autocmd column CursorMoved,CursorMovedI * let &colorcolumn = col('.')
-  elseif g:duochrome_ruler == 2 | autocmd! column
-  endif
-  ShowBreak
-  let g:show_column = 1  " flash column position, see statusline.vim
-  Background
-endfunction
-
-command! ToggleColumn silent! call <SID>toggleColumn()
-
 " Highlights ___________________________________________________________________
-
-" .......................................................... Line wrap highlight
-let s:wraplight = 0        " show linewrap with (0) s:breakchar (1) highlight
-let s:breakchar = '\ ↪\ '  " \escape spaces
-
-" highlight wrapped line portion, see theme:Theme()
-function! s:showBreak()
-  if g:duochrome_ruler == 0 && s:wraplight
-    set showbreak=  " disable breakchar
-    let l:edge       = winwidth(0) - &numberwidth - &foldcolumn - 1
-    let &colorcolumn = join(range(l:edge, 999), ',')  " highlight break line
-  else
-    execute 'set showbreak=' . s:breakchar
-  endif
-endfunction
-
-command! ShowBreak silent! call <SID>showBreak()
-
-function! s:toggleBreak(...)
-  let s:wraplight       = a:0 ? a:1 : !s:wraplight
-  let g:duochrome_ruler = -1
-  ToggleColumn
-endfunction
-
-command! -nargs=? ToggleBreak silent! call <SID>toggleBreak(<f-args>)
 
 " ......................................................... Trailing white space
 augroup invisible | autocmd! | augroup END
@@ -101,5 +23,29 @@ function! s:toggleWhiteSpace()
 endfunction
 
 command! ToggleWhiteSpace call <SID>toggleWhiteSpace()
+
+" Search and replace ___________________________________________________________
+
+" ........................................................... Incremental search
+let s:separator = ' '  " line wrap enabled incsearch (including irregular spacing)
+
+function! s:toggleWrapSearch()
+  let s:separator = s:separator == ' ' ? '\_s*' : ' '
+  cnoremap <expr><space>  '/?' =~ getcmdtype() ? s:separator : ' '
+  Notify Wrap search: s:separator != ' '
+endfunction
+
+command! ToggleWrapSearch call <SID>toggleWrapSearch()
+
+" ...................................................................... Replace
+" restore search highlight after replace
+function! s:searchReplace(cmd)
+  let l:search = @/
+  let l:s = input('', a:cmd)
+  execute l:s
+  let @/ = l:search
+endfunction
+
+command! -nargs=1 SearchReplace silent! call <SID>searchReplace(<f-args>)
 
 " gui.vim

@@ -24,6 +24,7 @@ Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 Plug 'junegunn/limelight.vim'          " hyperfocus highlighting
 Plug 'bilalq/lite-dfm'                 " distraction free mode
 Plug 'TaDaa/vimade'                    " hyperfocus highlghting for buffers
+Plug 'sdothum/duochrome'               " distraction free monochromatic content driven layout
 
 " ......................................................................... Info
 " Plug 'metakirby5/codi.vim'           " async evaluator
@@ -98,6 +99,7 @@ Plug 'kana/vim-textobj-user'           " dependency for vim-textobj's
 Plug 'scrooloose/nerdcommenter'        " toggle comment
 Plug 'junegunn/vim-easy-align'         " align text objects
 Plug 'reedes/vim-pencil'               " dynamic paragraph formatting
+Plug 'sdothum/heading'                 " comment heading formatter
 
 " ................................................................... Completion
 " Plug 'mattn/emmet-vim'               " html

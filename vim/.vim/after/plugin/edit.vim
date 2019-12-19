@@ -3,17 +3,6 @@
 " Edit
 " ══════════════════════════════════════════════════════════════════════════════
 
-" Buffer _______________________________________________________________________
-
-" ..................................................................... Filetype
-" set corresponding ui for filetye
-function! s:filetype(ft)
-  execute 'setfiletype ' . a:ft
-  Layout  " respect ui
-endfunction
-
-command! -nargs=1 Filetype silent! call <SID>filetype(<f-args>)
-
 " Line _________________________________________________________________________
 
 " .................................................................. Insert line
@@ -21,7 +10,7 @@ command! -nargs=1 Filetype silent! call <SID>filetype(<f-args>)
 function! s:smartWrap()
   if Prose()  " override Pencil mode (the default state for prose)
     set paste
-    execute   " normal! i\<CR>"
+    execute " normal! i\<CR>"
     set nopaste
     execute 'startinsert'
   else        " append EOL wrap from any col position
@@ -88,7 +77,7 @@ command! -range=% -nargs=0 CodeBlock silent! execute '<line1>,<line2>call <SID>c
 
 " .................................................................. Select text
 function! s:paragraphAbove()
-  if NonBlankLine
+  if NonBlankLine()
     normal! {
     if BlankLine()
       normal! j
@@ -100,7 +89,7 @@ endfunction
 command! ParagraphAbove silent! call <SID>paragraphAbove()
 
 function! s:paragraphBelow()
-  if NonBlankLine
+  if NonBlankLine()
     normal! }
     if BlankLine()
       normal! k

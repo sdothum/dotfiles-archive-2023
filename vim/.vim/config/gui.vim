@@ -3,25 +3,9 @@
 " GUI
 " ══════════════════════════════════════════════════════════════════════════════
 
-" Behaviour ____________________________________________________________________
+" Display ______________________________________________________________________
 
 augroup gui | autocmd! | augroup END
-
-" ................................................................... Toggle gui
-nnoremap <silent><S-F12>      :ToggleGui<CR>
-inoremap <silent><S-F12> <C-o>:ToggleGui<CR>
-vnoremap <silent><S-F12> :<C-u>ToggleGui<CR>
-
-" ................................................................... Redraw gui
-if has('gui_running')  " initial refresh to fill window
-  autocmd gui VimEnter * RedrawGui
-endif
-
-nnoremap <silent><F12>      :RedrawGui<CR>
-inoremap <silent><F12> <C-o>:RedrawGui<CR>
-vnoremap <silent><F12> :<C-u>RedrawGui<CR>
-
-" Display ______________________________________________________________________
 
 " .................................................................... Scrolling
 set sidescroll=1  " smooth scrolling by 1 column
@@ -64,29 +48,6 @@ set guioptions+=LlRrb  " hide scrollbars
 set guioptions-=LlRrb
 set guioptions-=m      " no menubar
 set guioptions-=T      " no toolbar
-
-" Look _________________________________________________________________________
-
-" ................................................................... Cursorline
-nmap <silent><F8>      :ToggleCursorline<CR>
-imap <silent><F8> <C-o>:ToggleCursorline<CR>
-
-" ............................................................... Column margins
-set colorcolumn=0  " highlight column
-
-nmap <silent><Bar> :ToggleColumn<CR>
-
-" .......................................................... Line wrap highlight
-nmap <silent><S-F8>      :ToggleBreak<CR>
-imap <silent><S-F8> <C-o>:ToggleBreak<CR>
-
-" ................................................................. Line numbers
-set number
-set numberwidth=10
-set relativenumber
-
-" toggle relative/line number
-nmap <silent># :ToggleNumber<CR>
 
 " .......................................................... White space markers
 set nolist  " display tabs and trailing spaces visually
