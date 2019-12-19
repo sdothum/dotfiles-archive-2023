@@ -34,8 +34,8 @@ command! SmartWrap silent! call <SID>smartWrap()
 function! s:stripTrailingWhitespaces()
   if !&modifiable || Markdown() | return | endif
   " let l:_s = @/       " save last search & cursor position
-  " let l:l  = line(".")
-  " let l:c  = col(".")
+  " let l:l  = line('.')
+  " let l:c  = col('.')
   let s:view = winsaveview()
   %s/\s\+$//e           " EOL
   %s/\(\n\r\?\)\+\%$//e " EOF
