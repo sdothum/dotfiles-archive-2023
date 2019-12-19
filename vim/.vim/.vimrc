@@ -19,4 +19,4 @@ runtime config/gui.vim
 runtime config/buffer.vim
 runtime config/edit.vim
 
-" vim: set ft=vim: .vimrc
+" vim: set ft=vim: "

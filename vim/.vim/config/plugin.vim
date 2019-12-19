@@ -24,7 +24,7 @@ Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 Plug 'junegunn/limelight.vim'          " hyperfocus highlighting
 Plug 'bilalq/lite-dfm'                 " distraction free mode
 Plug 'TaDaa/vimade'                    " hyperfocus highlghting for buffers
-Plug 'sdothum/duochrome'               " distraction free monochromatic content driven layout
+Plug 'sdothum/vim-duochrome'           " distraction free monochromatic content driven layout
 
 " ......................................................................... Info
 " Plug 'metakirby5/codi.vim'           " async evaluator
@@ -67,7 +67,7 @@ Plug 'mhinz/vim-signify'               " vcs diff
 " Plug 'lervag/wiki'                   " vimwiki clone
 Plug 'junegunn/fzf'                    " fuzzy finder (separate plug install to avoid update errors)
 Plug 'junegunn/fzf.vim'                " fuzzy finder
-Plug 'alok/notational-fzf-vim'         " fzf content search
+Plug 'sdothum/notational-fzf-vim-duochrome'  " fzf content search (patched)
 
 " ...................................................................... History
 Plug 'simnalamburt/vim-mundo'          " undo
@@ -99,7 +99,7 @@ Plug 'kana/vim-textobj-user'           " dependency for vim-textobj's
 Plug 'scrooloose/nerdcommenter'        " toggle comment
 Plug 'junegunn/vim-easy-align'         " align text objects
 Plug 'reedes/vim-pencil'               " dynamic paragraph formatting
-Plug 'sdothum/heading'                 " comment heading formatter
+Plug 'sdothum/vim-heading'             " comment heading formatter
 
 " ................................................................... Completion
 " Plug 'mattn/emmet-vim'               " html

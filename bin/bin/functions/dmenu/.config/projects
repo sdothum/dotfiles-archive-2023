@@ -111,7 +111,7 @@ ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 ttrss linear :: $HOME/tt-rss/themes/linear*.css
 uzbl :: $HOME/.config/uzbl/config
 vacuum :: $HOME/bin/functions/sysadmin/vacuum $HOME/bin/functions/sysadmin/.vacuum*
-vim :: $HOME/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/after/plugin -type f) $(find $HOME/.vim/plugged/duochrome -type f) $(find $HOME/.vim/plugged/heading -type f)
+vim :: $HOME/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/after/plugin -type f) $(find $HOME/.vim/plugged/vim-duochrome -type f) $(find $HOME/.vim/plugged/vim-heading -type f)
 vimb :: $(find -L $HOME/.config/vimb -name config) $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css $HOME/.config/vimb/bookmark $HOME/.config/vimb/history
 vim plain :: $HOME/.vim/plugged/vim-colors-plain/colors/plain.vim /net/depot/vim-colors-plain/colors/plain.vim
 vim rules :: $(find $HOME/.vim/after -regextype posix-extended -regex '.*/ft.*vim' -type f)
