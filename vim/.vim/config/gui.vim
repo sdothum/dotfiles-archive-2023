@@ -15,8 +15,6 @@ set sidescrolloff=1
 noremap <C-S-Left>  zL
 noremap <C-S-Right> zH
 
-autocmd gui BufEnter,WinEnter,WinNew,VimResized * ScrollOffset
-
 " ......................................................... Save cursor position
 " only works for simple :buffer actions (not plugin pane selection)
 autocmd gui BufWinLeave * let b:winview = winsaveview()

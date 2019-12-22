@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [[-][S | U | R | H] | [+ | - | / | f** | d |D]] [-<options>] [--<option>]* [<package> | <file>**]"
+  echo "usage: $(basename $0) [[-][S | U | R | H] | [+ | = | / | f** | d |D]] [-<options>] [--<option>]* [<package> | <file>**]"
   echo "        S .. noconfirm"
   echo "       -S .. confirm"
   echo "       -S    update repos"
@@ -18,7 +18,7 @@ usage() {
   echo "       -R .. non-recursive"
   echo "        H .. hold"
   echo "       -H .. unhold"
-  echo "        -    held (list)"
+  echo "        =    held (list)"
   echo "        + .. installed"
   echo "        / .. search (package and description)"
   echo "        f .. file (in package)"
@@ -43,7 +43,7 @@ case $1 in
  H) action=hold ;;
 -H) action=unhold ;;
 + ) action=installed ;;
-- ) action=held ;;
+= ) action=held ;;
 /*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;
 d ) action=dependency ;;
