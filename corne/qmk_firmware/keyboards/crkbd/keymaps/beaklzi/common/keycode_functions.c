@@ -1,4 +1,4 @@
-#define STENO !defined(CHIMERA) && !defined(CORNE)
+#define STENO    !defined(CHIMERA) && !defined(CORNE)
 #define NONSTENO defined(CHIMERA) || defined(CORNE)
 
 #include "config.h"  // for ale linter

@@ -4,6 +4,7 @@
   bspwm
   build
   chimera/qmk_firmware/keyboards/chimera_ergo_42
+  corne/qmk_firmware/keyboards/crkbd
   compton
   conky
   fish
