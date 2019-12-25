@@ -43,4 +43,6 @@
 // upper case hex (idefault lower case abcdef)
 // #define UPPER_HEX
 
+#define PLANCK
+
 #endif

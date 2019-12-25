@@ -1,8 +1,8 @@
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 // this is the style you want to emulate.
 //
-// To flash planck firmware
-// ════════════════════════
+// To flash corne / chimera / planck firmware
+// ═════════════════════════
 //   Reset keyboard or press hw reset button on base
 //
 //   cd qmk_firmware/keyboards/<keyboard>
@@ -46,9 +46,28 @@
 //
 // sudo CPATH=<keymap.c directory>/common make ...
 
+// Hardware
+// ═════════════════════════════════════════════════════════════════════════════
 
-#define PLANCK
+#ifdef CORNE
+#define KEYMAP LAYOUT
+#include QMK_KEYBOARD_H
+#ifdef RGBLIGHT_ENABLE
+//Following line allows macro to read current RGB settings
+extern rgblight_config_t rgblight_config;
+#endif
+extern uint8_t is_master;
+#endif
 
+#ifdef CHIMERA
+// #include "config.h"
+#include "chimera_ergo_42.h"
+// #include "action_layer.h"
+// #include "eeconfig.h"
+// extern keymap_config_t keymap_config;
+#endif
+
+#ifdef PLANCK
 #include "config.h"
 #include "planck.h"
 #include "action_layer.h"
@@ -59,6 +78,10 @@
 #include "audio.h"
 #endif
 #include "eeconfig.h"
+#endif
+
+// Keymaps
+// ═════════════════════════════════════════════════════════════════════════════
 
 extern keymap_config_t keymap_config;
 
@@ -77,15 +100,23 @@ enum keyboard_layers {
  ,_TTMOUSE
  ,_TTNUMBER
  ,_TTREGEX
+#ifdef PLANCK
  ,_PLOVER
  ,_ADJUST
+#endif
+#ifdef TEST
+ ,_TEST
+#endif
  ,_END_LAYERS
 };
 
 enum keyboard_keycodes {
   BASE = SAFE_RANGE
+#ifdef PLANCK
  ,BASE1
  ,BASE2
+ ,PLOVER
+#endif
 #ifdef ROLLOVER
  ,HOME_Q  // pseudo GUI_T(KC_A)
  ,HOME_H  // pseudo CTL_T(KC_H)
@@ -111,7 +142,6 @@ enum keyboard_keycodes {
  ,TT_ESC
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
- ,PLOVER
 };
 
 #ifndef ROLLOVER
@@ -171,7 +201,6 @@ enum keyboard_keycodes {
 #endif
 #define LT_TAB  LT  (_NUMBER, KC_TAB)
 #define TT_TAB  LT  (_NUMBER, KC_TAB)
-#define MO_ADJ  MO  (_ADJUST)
 #define OS_ALT  OSM (MOD_LALT)
 #define OS_CTL  OSM (MOD_LCTL)
 #define OS_GUI  OSM (MOD_LGUI)
@@ -183,13 +212,27 @@ enum keyboard_keycodes {
 #define TGL_TR  TT  (_TTREGEX)
 #define TGL_HR  TT  (_TTNUMBER)
 #define TGL_BR  TT  (_TTCURSOR)
+#ifdef PLANCK
+#define MO_ADJ  MO  (_ADJUST)
+#endif
+
+#ifdef TEST
+#define DEBUG   TG  (_TEST)
+#else
+#define DEBUG   KC_NO
+#endif
+
+// Layers
+// ═════════════════════════════════════════════════════════════════════════════
 
 // ........................................................ Default Alpha Layout
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "base_layout.h"
+#ifdef PLANCK
 #include "steno_layout.h"
+#endif
 
 // ...................................................... Number / Function Keys
 
@@ -209,10 +252,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+#ifdef PLANCK
 // ...................................................................... Sounds
 
 #include "sounds.h"
-
+#endif
 
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
@@ -229,6 +273,15 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
+#ifdef CORNE
+  if (record->event.pressed) {
+#ifdef SSD1306OLED
+    set_keylog(keycode, record);
+#endif
+    // set_timelog();
+  }
+#endif
+
   if (reshifted && !mod_down(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; }  // see map_shift()
 
   // ........................................................ Home Row Modifiers
@@ -368,7 +421,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
   case ST_T:
     mt_shift(record, KC_RSFT, 0, KC_T);       break;
-#ifdef HASKELL
+#ifndef HASKELL
   case HS_GT:
     mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
   case HS_LT:
@@ -485,6 +538,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, 0, KC_V, 9);   return false;
 #endif
 
+#ifdef PLANCK
   // ................................................................ Steno Keys
 
   case PLOVER:
@@ -496,6 +550,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case BASE2:
     if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }
     return false;
+#endif
 
   // ................................................................ Other Keys
 
@@ -506,10 +561,74 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   return true;
 }
 
-
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════
 
+#ifdef CORNE
+void persistent_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
+}
+
+void matrix_init_user(void) {
+#ifdef RGBLIGHT_ENABLE
+  RGB_current_mode = rgblight_config.mode;
+#endif
+// SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
+#ifdef SSD1306OLED
+  iota_gfx_init(!has_usb());  // turns on the display
+#endif
+  base_layer(0);
+}
+
+// SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
+#ifdef SSD1306OLED
+// When add source files to SRC in rules.mk, you can use functions.
+const char *read_layer_state(void);
+const char *read_logo(void);
+void set_keylog(uint16_t keycode, keyrecord_t *record);
+const char *read_keylog(void);
+const char *read_keylogs(void);
+// const char *read_mode_icon(bool swap);
+// const char *read_host_led_state(void);
+// void set_timelog(void);
+// const char *read_timelog(void);
+
+void matrix_scan_user(void) {
+  iota_gfx_task();
+}
+
+void matrix_render_user(struct CharacterMatrix *matrix) {
+  if (is_master) {
+    // If you want to change the display of OLED, you need to change here
+    matrix_write_ln(matrix, read_layer_state());
+    matrix_write_ln(matrix, read_keylog());
+    // matrix_write_ln(matrix, read_keylogs());
+    // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
+    // matrix_write_ln(matrix, read_host_led_state());
+    // matrix_write_ln(matrix, read_timelog());
+  } else {
+    matrix_write(matrix, read_logo());
+  }
+}
+
+void matrix_update(struct CharacterMatrix *dest, const struct CharacterMatrix *source) {
+  if (memcmp(dest->display, source->display, sizeof(dest->display))) {
+    memcpy(dest->display, source->display, sizeof(dest->display));
+    dest->dirty = true;
+  }
+}
+
+void iota_gfx_task_user(void) {
+  struct CharacterMatrix matrix;
+  matrix_clear(&matrix);
+  matrix_render_user(&matrix);
+  matrix_update(&display, &matrix);
+}
+#endif
+#endif
+
+#ifdef PLANCK
 void matrix_init_user(void)
 {
   clear_events();
@@ -522,3 +641,43 @@ void matrix_init_user(void)
 }
 
 #include "audio.h"
+#endif
+
+#ifdef CHIMERA
+void matrix_init_user(void)
+{
+  base_layer(0);
+}
+
+// Layer States
+// ═════════════════════════════════════════════════════════════════════════════
+
+void matrix_scan_user(void) {
+  uint8_t layer = biton32(layer_state);
+  
+  switch (layer) {
+  case _BASE:
+    set_led_blue;    break;
+  case _SHIFT:
+  case _TTCAPS:
+    set_led_cyan;    break;
+  case _NUMBER:
+  case _TTNUMBER:
+    set_led_green;   break;
+  case _REGEX:
+  case _SYMGUI:
+  case _TTREGEX:
+    set_led_red;     break;
+  case _MOUSE:
+  case _TTCURSOR:
+  case _TTMOUSE:
+    set_led_magenta; break;
+  case _FNCKEY:
+  case _TTFNCKEY:
+    set_led_green;   break;
+  case _EDIT:
+  default:
+    set_led_yellow;  break;
+  }
+}
+#endif
