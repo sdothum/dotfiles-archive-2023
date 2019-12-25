@@ -25,7 +25,7 @@ QMK=$ROOT/qmk_firmware
 KEYBOARD=$QMK/keyboards/$KBD
 KEYMAP=$KEYBOARD/keymaps/$keymap
 CONFIG=$KEYMAP/config.h
-MAKEFILE=$KEYMAP/Makefile
+MAKEFILE=$KEYMAP/rules.mk
 SOURCE=$STOW/$model/${KEYMAP#$ROOT/}
 
 [ -d $SOURCE ] || usage

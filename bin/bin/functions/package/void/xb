@@ -7,27 +7,31 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [[-][S | U | R | H] | [+ | = | / | f** | d |D]] [-<options>] [--<option>]* [<package> | <file>**]"
-  echo "        S .. noconfirm"
-  echo "       -S .. confirm"
+  echo "usage: $(basename $0) [-][S | D | U | R | H] [-<options>] [--<option>]* <package>"
+  echo "        S .. sync noconfirm"
+  echo "       -S .. sync confirm"
   echo "       -S    update repos"
-  echo "        U .. noconfirm"
+  echo "        D .. downgrade"
+  echo "        U .. update noconfirm"
   echo "        U    upgrade system"
-  echo "       -U .. confirm"
-  echo "        R .. recursive"
-  echo "       -R .. non-recursive"
+  echo "       -U .. update confirm"
+  echo "        R .. remove recursive"
+  echo "       -R .. remove non-recursive"
   echo "        H .. hold"
   echo "       -H .. unhold"
-  echo "        =    held (list)"
+  echo "    .. $(basename $0) [+ | = | / | f** | d | r | l] [<package> | <file>**]"
   echo "        + .. installed"
+  echo "        =    held (list)"
   echo "        / .. search (package and description)"
-  echo "        f .. file (in package)"
+  echo "        f .. find (file)"
   echo "        d .. dependencies"
-  echo "        D .. required by"
+  echo "        r .. required by"
+  echo "        l .. log"
   echo "          .. query"
   exit 1
 }
 
+CACHE=/var/cache/xbps
 [ $1 ] || usage
 
 reboot() { xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; }
@@ -36,6 +40,7 @@ reboot() { xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; }
 case $1 in
  S) action=sync; yes='-y' ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
+ D) action=downgrade ;;
  U) [ $2 ] && { action=update; yes='-y'; reboot; } || sudo xbps-install -Su; exit ;;
 -U) [ $2 ] && action=update; reboot ;;
  R) action=remove; recursive='-R' ;;
@@ -47,11 +52,12 @@ case $1 in
 /*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;
 d ) action=dependency ;;
-D ) action=requiredby ;;
+r ) action=requiredby ;;
+l ) action=log ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 
-shift; [ $1 ] || [ $action = held ] || usage
+shift; [ $1 ] || [ $action = held ] || [ $action = log ] || usage
 options=" $@"
 package=${options##* }
 options=${options% *}
@@ -59,10 +65,12 @@ options=${options% *}
 
 case $action in
 dependency) xbps-query -x $package ;;
+downgrade ) sudo xdowngrade $CACHE/$package ;;
 file      ) xlocate $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) xbps-query -Rs $options "*$package*" | grep '\[\*\]' | a $package ;;
+log       ) [ $package ] && ls -lt $CACHE/$package* || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove    ) sudo xbps-remove $recursive $options $package ;;
 requiredby) xbps-query -X $package ;;
