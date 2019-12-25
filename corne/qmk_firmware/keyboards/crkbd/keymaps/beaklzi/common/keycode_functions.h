@@ -35,7 +35,6 @@ void paste(STATE, void *user_data);
 void paste_reset(STATE, void *user_data);
 void percent(STATE, void *user_data);
 void percent_reset(STATE, void *user_data);
-void pound(STATE, void *user_data);
 void private(STATE, void *user_data);
 bool raise_layer(RECORD, uint8_t layer, uint8_t side, uint8_t toggle);
 void register_modifier(uint16_t keycode);

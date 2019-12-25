@@ -361,8 +361,8 @@ function! s:toggleTypo()
   Status Typography: g:typo
 endfunction
 
-nmap <silent><F5>      :call <SID>toggleTypo()<CR>
-imap <silent><F5> <C-o>:call <SID>toggleTypo()<CR>
+nmap <silent><S-F5>      :call <SID>toggleTypo()<CR>
+imap <silent><S-F5> <C-o>:call <SID>toggleTypo()<CR>
 
 " " with vim-surround: cs"q
 " map  <silent><leader>qc <Plug>ReplaceWithCurly

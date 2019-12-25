@@ -28,6 +28,7 @@ Plug 'sdothum/vim-duochrome'           " distraction free monochromatic content 
 
 " ......................................................................... Info
 " Plug 'metakirby5/codi.vim'           " async evaluator
+" Plug 'tpope/vim-scriptease'          " meta plugin
 " Plug 'reedes/vim-wordy'              " word usage
 Plug 'majutsushi/tagbar'               " ctags
 Plug 'lvht/tagbar-markdown'            " markdown for tagbar

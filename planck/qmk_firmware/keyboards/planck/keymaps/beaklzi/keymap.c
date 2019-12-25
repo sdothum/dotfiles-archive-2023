@@ -218,6 +218,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ═════════════════════════════════════════════════════════════════════════════
 
 #include "keycode_functions.c"
+#include "tapdance.c"
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
 #ifdef UNIX
@@ -305,10 +306,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   case LT_TAB:
-    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { return false; }
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, SHIFT, KC_ENT))   { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
 #endif
+    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { return false; }
     break;
 
   // .......................................................... Right Thumb Keys

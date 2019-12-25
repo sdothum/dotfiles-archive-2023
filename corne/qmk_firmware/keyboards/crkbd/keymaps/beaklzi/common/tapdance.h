@@ -15,7 +15,6 @@ enum tap_dance {
  ,_PRIV
  ,_SEND
  ,_TILD
- ,_X
  ,_XPASTE
 };
 
@@ -33,5 +32,4 @@ enum tap_dance {
 #define TD_PRIV   TD(_PRIV)  // compile time macro string, provided in private_string.h
 #define TD_SEND   TD(_SEND)  // config.h defined macro string
 #define TD_TILD   TD(_TILD)
-#define TD_X      TD(_X)
 #define TD_XPASTE TD(_XPASTE)
