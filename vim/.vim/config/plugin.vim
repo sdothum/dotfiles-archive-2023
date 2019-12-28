@@ -38,8 +38,8 @@ Plug 'junegunn/vim-peekaboo'           " registers
 " ....................................................................... Keymap
 " Plug 'kana/vim-arpeggio'             " key chords
 " Plug 'Jorengarenar/pseudoClip'       " clipboard registers
-" Plug 'tpope/vim-rsi'                 " readline keybindings
 Plug 'tpope/vim-repeat'                " dot plugin
+Plug 'tpope/vim-rsi'                   " readline keybindings
 
 " ................................................................. Highlighting
 " Plug 'JuliaEditorSupport/julia-vim'  " julia programming language

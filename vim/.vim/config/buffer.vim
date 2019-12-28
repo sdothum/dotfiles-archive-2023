@@ -23,11 +23,11 @@ vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
 " File actions _________________________________________________________________
 
 " .......................................................... Buffer close / save
-command! -bar CloseDiff silent! call buffer#CloseDiff()
+command! -bar CloseDiff   silent! call buffer#CloseDiff()
 " close open diff or current buffer
-command! CloseUnique silent! if !buffer#CloseDiff() | silent bdelete | SplitColors | endif
+command!      CloseUnique silent! if !buffer#CloseDiff() | silent bdelete | SplitColors | endif
 " close all other buffers (and newly created no name buffer)
-command! Singleton CloseDiff | %bdelete | edit # | bdelete # | SplitColors
+command!      Singleton   CloseDiff | %bdelete | edit # | bdelete # | SplitColors
 
 " save buffers
 nmap <silent><leader>w  :silent write!<CR>
