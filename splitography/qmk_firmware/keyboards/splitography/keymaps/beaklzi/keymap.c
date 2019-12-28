@@ -40,14 +40,13 @@
 // Change history
 // ══════════════
 //   See http://thedarnedestthing.com/colophon
-
-
+//
 //                === N O T E ===
 //
 // sudo CPATH=<keymap.c directory>/common make ...
-
-
-#define SPLITOGRAPHY
+ 
+// Hardware
+// ═════════════════════════════════════════════════════════════════════════════
 
 #include "config.h"
 #include "splitography.h"
@@ -59,6 +58,9 @@
 #include "audio.h"
 #endif
 #include "eeconfig.h"
+
+// Keymaps
+// ═════════════════════════════════════════════════════════════════════════════
 
 extern keymap_config_t keymap_config;
 
@@ -85,6 +87,7 @@ enum keyboard_keycodes {
   BASE = SAFE_RANGE
  ,BASE1
  ,BASE2
+ ,PLOVER
 #ifdef ROLLOVER
  ,HOME_Q  // pseudo GUI_T(KC_A)
  ,HOME_H  // pseudo CTL_T(KC_H)
@@ -111,7 +114,6 @@ enum keyboard_keycodes {
  ,ST_T    // pseudo SFT_T(S(KC_T))
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
- ,PLOVER
 };
 
 #ifndef ROLLOVER
@@ -174,6 +176,9 @@ enum keyboard_keycodes {
 #define TGL_BR  TT  (_TTCURSOR)
 #define TT_ESC  MO  (_NUMBER)
 
+// Layers
+// ═════════════════════════════════════════════════════════════════════════════
+
 // ........................................................ Default Alpha Layout
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -203,11 +208,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "sounds.h"
 
-
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
 
 #include "keycode_functions.c"
+#include "tapdance.c"
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
 #ifdef UNIX
@@ -518,7 +523,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
   return true;
 }
-
 
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════

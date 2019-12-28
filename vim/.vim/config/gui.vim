@@ -58,7 +58,31 @@ set listchars+=extends:>
 set listchars+=precedes:<
 " set listchars+=eol:¬
 
+command! ToggleWhiteSpace call gui#ToggleWhiteSpace()
+
 nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
+
+" Search _______________________________________________________________________
+
+" ........................................................... Incremental search
+set incsearch  " find the next match as we type the search
+
+command! ToggleWrapSearch call gui#ToggleWrapSearch()
+
+nmap <silent><F6> :ToggleWrapSearch<CR>
+
+" ........................................................... Search and replace
+" toggle magic and case sensitivity, \m to append magic tokens
+cmap %%     \v
+cmap ^^     \C
+
+command! -nargs=1 SearchReplace silent! call gui#SearchReplace(<f-args>)
+
+" replace current word!
+nnoremap \\      :SearchReplace :%s/\C\<<C-r><C-w>\>/<CR>
+" see magic settings
+nnoremap //      :SearchReplace :%s/<CR>
+vnoremap // :<C-u>SearchReplace :'<,'>s/<CR>
 
 " Window actions _______________________________________________________________
 

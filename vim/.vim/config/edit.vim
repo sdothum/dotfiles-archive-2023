@@ -18,6 +18,8 @@ nnoremap U <C-r>
 " Line _________________________________________________________________________
 
 " .................................................................. Insert line
+command! SmartWrap silent! call edit#SmartWrap()
+
 inoremap <silent><C-CR> <C-o>:SmartWrap<CR>
 
 " insert blank line above/below
@@ -34,6 +36,8 @@ nnoremap <silent><C-S-Up>   m`:silent -g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 nnoremap <silent><C-S-Down> m`:silent +g/\m^\s*$/d<CR>``:silent nohlsearch<CR>
 
 " ............................................................. Strip whitespace
+command! StripTrailingWhitespaces silent! call edit#StripTrailingWhitespaces()
+
 nmap <silent><F4>      :StripTrailingWhitespaces<CR>
 vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 
@@ -46,12 +50,17 @@ vmap <silent><F4> :<C-u>StripTrailingWhitespaces<CR>
 " Text manipulation ____________________________________________________________
 
 " .......................................................... Reformat paragraghs
+command! -range=% -nargs=1 Inject silent! execute '<line1>,<line2>call edit#Inject(<f-args>)'
+
 " retain cursor position for insert mode reformatting
 inoremap <silent><C-f> <Esc>lmZV:Inject {jv}kJvgq`Z:delmarks Z<CR>i
 " reformat at cursor position
 nnoremap <silent><C-f> mZV:Inject {jv}kJvgq`Z:delmarks Z<CR>
 
 " ................................................................. Convert tabs
+command! -range=% Space2Tab silent! execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
+command! -range=% Tab2Space silent! execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
+
 nmap <silent><leader><tab>        :retab<CR>
 nmap <silent><leader><Space><tab> :Space2Tab<CR>
 vmap <silent><leader><Space><tab> :Space2Tab<CR>
@@ -64,6 +73,8 @@ vnoremap ' :s/\%V\(.*\%V.\)/'\1'/<CR>:noh<CR>`>l
 vnoremap " :s/\%V\(.*\%V.\)/"\1"/<CR>:noh<CR>`>l
 
 " .............................................................. Code block text
+command! -range=% -nargs=0 CodeBlock silent! execute '<line1>,<line2>call edit#CodeBlock()'
+
 " markup wiki code blocks
 nnoremap <silent><leader>` V:CodeBlock<CR>
 vmap     <silent><leader>`  :'<,'>CodeBlock<CR>
@@ -78,6 +89,9 @@ vmap <C-PageUp>   {
 vmap <C-PageDown> }
 
 " select paragragh
+command! ParagraphAbove silent! call edit#ParagraphAbove()
+command! ParagraphBelow silent! call edit#ParagraphBelow()
+  
 nmap <silent><C-PageUp>   :ParagraphAbove<CR>
 nmap <silent><C-PageDown> :ParagraphBelow<CR>
 
@@ -101,6 +115,11 @@ vnoremap L :m '<-2<CR>gv=gv
 vnoremap N :m '>+1<CR>gv=gv
 
 " ................................................................ Shift up down
+command! MoveLineUp     silent! call edit#MoveLineUp()
+command! MoveLineDown   silent! call edit#MoveLineDown()
+command! MoveVisualUp   silent! call edit#MoveVisualUp()
+command! MoveVisualDown silent! call edit#MoveVisualDown()
+  
 nmap <silent><S-Up>        :MoveLineUp<CR>
 imap <silent><S-Up>   <ESC>:MoveLineUp<CR>a
 vmap <silent><S-Up>   <ESC>:MoveVisualUp<CR>

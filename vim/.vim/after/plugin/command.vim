@@ -10,8 +10,9 @@
 function! s:vimrc()
   execute 'wall'
   autocmd!
+  unlet g:loaded_duochrome  " re-initialize font settings
   source $MYVIMRC
-  RedrawGui
+  Layout
 endfunction
 
 " when updates won't break the current vim session!
@@ -38,15 +39,4 @@ endfunction
 
 command! Hardcopy silent call <SID>hardcopy()
 
-" Text _________________________________________________________________________
-
-" ............................................................. (Non-)blank line
-function! NonBlankLine()
-  return !empty(matchstr(getline(line('.')), '\S'))
-endfunction
-
-function! BlankLine()
-  return !NonBlankLine()
-endfunction
-
-" lib.vim
+" command.vim

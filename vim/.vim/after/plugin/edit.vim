@@ -7,7 +7,7 @@
 
 " .................................................................. Insert line
 " insert line while disabling auto-commenting OR break (prose) line
-function! s:smartWrap()
+function! edit#SmartWrap()
   if Prose()  " override Pencil mode (the default state for prose)
     set paste
     execute " normal! i\<CR>"
@@ -27,11 +27,9 @@ function! s:smartWrap()
   endif
 endfunction
 
-command! SmartWrap silent! call <SID>smartWrap()
-
 " ............................................................. Strip whitespace
 " strips trailing whitespace from all lines
-function! s:stripTrailingWhitespaces()
+function! edit#StripTrailingWhitespaces()
   if !&modifiable || Markdown() | return | endif
   " let l:_s = @/       " save last search & cursor position
   " let l:l  = line('.')
@@ -44,24 +42,16 @@ function! s:stripTrailingWhitespaces()
   " call cursor(l:l, l:c)
 endfunction
 
-command! StripTrailingWhitespaces silent! call <SID>stripTrailingWhitespaces()
-
 " Convert text _________________________________________________________________
 
 " ......................................................... Paragraph formatting
-function! s:inject(commands)
+function! edit#Inject(commands)
   if Prose() | execute 'normal! ' . a:commands | endif
 endfunction
 
-command! -range=% -nargs=1 Inject silent! execute '<line1>,<line2>call <SID>inject(<f-args>)'
-
-" ................................................................. Convert tabs
-command! -range=% Tab2Space silent! execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
-command! -range=% Space2Tab silent! execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
-
 " .............................................................. Code block text
 " convert wiki text lines into code block lines
-function! s:codeBlock()
+function! edit#CodeBlock()
   execute "silent! normal  :s/\\(.*\\)/`\\1`/\<CR>"
   " preserve leading spaces with wiki markdown
   execute "silent! normal! gv:s/^` /`^ /\<CR>"
@@ -71,34 +61,36 @@ function! s:codeBlock()
   execute "silent! normal! gv:s/ \\]\\] / []] /e\<CR>"
 endfunction
 
-command! -range=% -nargs=0 CodeBlock silent! execute '<line1>,<line2>call <SID>codeBlock()'
-
 " Text shift ___________________________________________________________________
 
 " .................................................................. Select text
-function! s:paragraphAbove()
-  if NonBlankLine()
+function! s:nonBlankLine()
+  return !empty(matchstr(getline(line('.')), '\S'))
+endfunction
+
+function! s:blankLine()
+  return !s:nonBlankLine()
+endfunction
+
+function! edit#ParagraphAbove()
+  if s:nonBlankLine()
     normal! {
-    if BlankLine()
+    if s:blankLine()
       normal! j
     endif
   endif
   normal! }kV{
 endfunction
-  
-command! ParagraphAbove silent! call <SID>paragraphAbove()
 
-function! s:paragraphBelow()
-  if NonBlankLine()
+function! edit#ParagraphBelow()
+  if s:nonBlankLine()
     normal! }
-    if BlankLine()
+    if s:blankLine()
       normal! k
     endif
   endif
   normal! {jV}
 endfunction
-  
-command! ParagraphBelow silent! call <SID>paragraphBelow()
 
 " ................................................................ Shift up down
 " move by lines
@@ -124,30 +116,22 @@ function! s:moveLineOrVisualDown(from, range)
   call s:moveLineOrVisualUpOrDown(a:range . 'move ' . l:move)
 endfunction
 
-function! s:moveLineUp()
+function! edit#MoveLineUp()
   call s:moveLineOrVisualUp('.', '')
 endfunction
-  
-command! MoveLineUp silent! call <SID>moveLineUp()
 
-function! s:moveLineDown()
+function! edit#MoveLineDown()
   call s:moveLineOrVisualDown('.', '')
 endfunction
-  
-command! MoveLineDown silent! call <SID>moveLineDown()
 
-function! s:moveVisualUp()
+function! edit#MoveVisualUp()
   call s:moveLineOrVisualUp("'<", "'<,'>")
   normal! gv
 endfunction
-  
-command! MoveVisualUp silent! call <SID>moveVisualUp()
 
-function! s:moveVisualDown()
+function! edit#MoveVisualDown()
   call s:moveLineOrVisualDown("'>", "'<,'>")
   normal! gv
 endfunction
-  
-command! MoveVisualDown silent! call <SID>moveVisualDown()
 
 " edit.vim

@@ -7,7 +7,7 @@
 
 " ................................................................ Close buffers
 " delete any new diff buffer
-function! s:closeDiff()
+function! buffer#CloseDiff()
   if &diff     " caution: wincmd resets active window (affects :Buffer)
     wincmd h
     if empty(expand('%'))
@@ -19,12 +19,6 @@ function! s:closeDiff()
   return 0
 endfunction
 
-command! -bar CloseDiff silent! call <SID>closeDiff()
-" close open diff or current buffer
-command! CloseUnique silent! if !<SID>closeDiff() | silent bdelete | SplitColors | endif
-" close all other buffers (and newly created no name buffer)
-command! Singleton CloseDiff | %bdelete | edit # | bdelete # | SplitColors
-
 " File actions _________________________________________________________________
 
 function! s:home(dir)
@@ -35,16 +29,14 @@ endfunction
 " queue files written for vhg (may contain repeated update entries)
 let s:repo = empty($STOW) ? s:home('.vim') : $STOW  " directory to auto backup
 
-function! s:queueFile()
+function! buffer#QueueFile()
   if empty($QUEUE) | return | endif  " see v script (sets QUEUE and invokes vhg)
   let l:path = resolve(expand('%:p'))
   if l:path =~ s:repo | call system('echo ' . substitute(l:path, s:repo, '', '') . ' >>' . s:home('.vim/job/') . $QUEUE) | endif
 endfunction
 
-command! QueueFile silent! call <SID>queueFile()
-
 " :wall on FocusLost does not trigger autocmd BufWrite (?)
-function! s:queueBuffers()
+function! buffer#QueueBuffers()
   if CommandWindow() | return | endif
   set lazyredraw
   let l:cur_buffer = bufnr('%')
@@ -59,13 +51,11 @@ function! s:queueBuffers()
   set nolazyredraw
 endfunction
 
-command! QueueBuffers silent! call <SID>queueBuffers()
-
 " Buffer handling ______________________________________________________________
 
 " ................................................................ Switch buffer
 " nmap <silent><Enter> :CloseDiff<CR>:silent bnext<CR>:call theme:SplitColors()<CR>
-function! s:enter()
+function! buffer#Enter()
   if CommandWindow()  " on q: to enter command-line window
     execute "normal! \<CR>"
   else
@@ -74,7 +64,5 @@ function! s:enter()
     SplitColors
   endif
 endfunction
-
-command! Enter silent! call <SID>enter()
 
 " buffer.vim

@@ -114,22 +114,6 @@ vmap <Tab>     %
 " clear search highlight
 nmap <silent>\ :noh<CR>
 
-" ........................................................... Incremental search
-set incsearch  " find the next match as we type the search
-
-nmap <silent><F6> :ToggleWrapSearch<CR>
-
-" ........................................................... Search and replace
-" toggle magic and case sensitivity, \m to append magic tokens
-cmap %%     \v
-cmap ^^     \C
-
-" replace current word!
-nnoremap \\      :SearchReplace :%s/\C\<<C-r><C-w>\>/<CR>
-" see magic settings
-nnoremap //      :SearchReplace :%s/<CR>
-vnoremap // :<C-u>SearchReplace :'<,'>s/<CR>
-
 " ............................................................... Tab completion
 set wildignore=.cache/**,cache/**  " stuff to ignore when tab completing
 set wildignore+=*.class,*.bak,*.pyc,*.swp

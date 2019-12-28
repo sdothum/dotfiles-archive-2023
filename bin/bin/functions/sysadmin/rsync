@@ -133,12 +133,14 @@ vps() {
   TDT=/srv/http/thedarnedestthing.com
   APPLICATION=$TDT/application
   sudo touch $APPLICATION/log/restart.txt
-  trace 'updating => thedarnedestthing.com:/application'
+  trace 'update => thedarnedestthing.com:/application'
   rsync -L --delete --exclude=vimwiki $exclude_http_local $APPLICATION thedarnedestthing.com:$TDT/
   rsync -r --delete $APPLICATION/thedarnedestthing.db thedarnedestthing.com:$APPLICATION/
   rsync -r --delete $APPLICATION/log/restart.txt thedarnedestthing.com:$APPLICATION/log/
-  trace 'updating => thedarnedestthing.com:/vimwiki'
+  trace 'update => thedarnedestthing.com:/vimwiki'
   rsync -L --delete $HOME/vimwiki thedarnedestthing.com:$APPLICATION/public/
+  trace 'restart => nginx'
+  ssh thedarnedestthing.com sudo /etc/init.d/nginx restart
 }
 
 

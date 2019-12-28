@@ -23,6 +23,12 @@ vmap <silent><S-F1> :<C-u>silent !term 'vmap' vmap<CR>
 " File actions _________________________________________________________________
 
 " .......................................................... Buffer close / save
+command! -bar CloseDiff silent! call buffer#CloseDiff()
+" close open diff or current buffer
+command! CloseUnique silent! if !buffer#CloseDiff() | silent bdelete | SplitColors | endif
+" close all other buffers (and newly created no name buffer)
+command! Singleton CloseDiff | %bdelete | edit # | bdelete # | SplitColors
+
 " save buffers
 nmap <silent><leader>w  :silent write!<CR>
 nmap <leader>W          :silent write !sudo tee % >/dev/null<CR>
@@ -36,6 +42,9 @@ nmap <leader>D          :Singleton<CR>
 nmap <silent><leader>qq :quitall!<CR>
 
 " .................................................................. Auto backup
+command! QueueFile    silent! call buffer#QueueFile()
+command! QueueBuffers silent! call buffer#QueueBuffers()
+
 " auto backup
 autocmd buffer BufWrite  * QueueFile
 " save on losing focus, :wall on FocusLost does not trigger s:queueFile() (?)
@@ -59,7 +68,7 @@ autocmd buffer BufWinEnter *.txt,*.txt.gz if &filetype == 'help' | set nomodifia
 autocmd buffer BufWinEnter * if !Protected() | set modifiable | endif
 
 " ................................................................ Switch buffer
-nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
+command! Enter silent! call buffer#Enter()
 
 " beakl si layout specific buffer navigation key assignments, note silent -> silent
 if !empty($BEAKL)  " see config.fish
@@ -72,5 +81,7 @@ else
 endif
 " switch to previously edited/viewed buffer
 nmap <silent><BS>       :CloseDiff<CR>:silent edit #<CR>:SplitColors<CR>
+
+nmap <leader>B   :echo '[' . bufnr('%') . '] ' . expand('%:p')<CR>
 
 " buffer.vim

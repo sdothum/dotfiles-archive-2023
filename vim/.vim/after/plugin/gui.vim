@@ -9,7 +9,7 @@
 augroup invisible | autocmd! | augroup END
 
 " toggle trailing whitespace highlight
-function! s:toggleWhiteSpace()
+function! gui#ToggleWhiteSpace()
   set list!
   if &list == 0
     match ExtraWhitespace /\%x00$/  " nolist by failing match with null character :)
@@ -22,30 +22,24 @@ function! s:toggleWhiteSpace()
   Notify List invisibles: &list != ' '
 endfunction
 
-command! ToggleWhiteSpace call <SID>toggleWhiteSpace()
-
 " Search and replace ___________________________________________________________
 
 " ........................................................... Incremental search
-let s:separator = ' '  " line wrap enabled incsearch (including irregular spacing)
+let g:incseparator = ' '  " line wrap enabled incsearch (including irregular spacing)
 
-function! s:toggleWrapSearch()
-  let s:separator = s:separator == ' ' ? '\_s*' : ' '
-  cnoremap <expr><space>  '/?' =~ getcmdtype() ? s:separator : ' '
-  Notify Wrap search: s:separator != ' '
+function! gui#ToggleWrapSearch()
+  let g:incseparator = g:incseparator == ' ' ? '\_s*' : ' '
+  cnoremap <expr><space>  '/?' =~ getcmdtype() ? g:incseparator : ' '
+  Notify Wrap search: g:incseparator != ' '
 endfunction
-
-command! ToggleWrapSearch call <SID>toggleWrapSearch()
 
 " ...................................................................... Replace
 " restore search highlight after replace
-function! s:searchReplace(cmd)
+function! gui#SearchReplace(cmd)
   let l:search = @/
   let l:s = input('', a:cmd)
   execute l:s
   let @/ = l:search
 endfunction
-
-command! -nargs=1 SearchReplace silent! call <SID>searchReplace(<f-args>)
 
 " gui.vim

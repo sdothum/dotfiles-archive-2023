@@ -40,8 +40,7 @@
 // Change history
 // ══════════════
 //   See http://thedarnedestthing.com/colophon
-
-
+//
 //                === N O T E ===
 //
 // sudo CPATH=<keymap.c directory>/common make ...
