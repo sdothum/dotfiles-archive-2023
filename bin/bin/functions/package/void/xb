@@ -22,7 +22,7 @@ usage() {
   echo "        H    held (list)"
   echo "        S .. installed (count)"
   echo "        U    upgrade system"
-  echo "    .. $(basename $0) / | f** | d | r | l [<package> | <file>**]"
+  echo "    .. $(basename $0) [/ | f** | d | r | l] [<package> | <file>**]"
   echo "        / .. search (package and description)"
   echo "        f .. find (file)"
   echo "        d .. dependencies"

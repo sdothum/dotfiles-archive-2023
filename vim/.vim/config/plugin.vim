@@ -40,6 +40,7 @@ Plug 'junegunn/vim-peekaboo'           " registers
 " Plug 'Jorengarenar/pseudoClip'       " clipboard registers
 Plug 'tpope/vim-repeat'                " dot plugin
 Plug 'tpope/vim-rsi'                   " readline keybindings
+Plug 'tpope/vim-unimpaired'            " complementary mappings
 
 " ................................................................. Highlighting
 " Plug 'JuliaEditorSupport/julia-vim'  " julia programming language

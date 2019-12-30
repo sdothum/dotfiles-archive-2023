@@ -1,4 +1,4 @@
-@import url('linear_fork.css');
+@import url('shadows_light_fork.css');
 
 /* clean condensed distraction free layout -- formatted for gtkwebkit and qtwebkit
  *
@@ -12,7 +12,7 @@
 /* STYLING ******************************************************************/
 
 /* top (adjust topmost label) right bottom left (gap to edge) */
-#feeds-holder .dijitTreeRow { margin: -4px 0 15px 5px; }
+#feeds-holder .dijitTreeRow { margin: -4px 0 14px 5px; }
 
 #feeds-holder .dijitTreeLabel {
   float: right;
@@ -35,7 +35,7 @@
 #headlines-frame { padding: 0 30px 30px !important; }
 
 img[src*='images/star.png'] {
-  background: url('linear_images/Pin.png') no-repeat;
+  background: url('shadows_light_images/Pin.png') no-repeat;
   opacity: 1.0;
 }
 
@@ -136,7 +136,7 @@ img[src*='images/mark_unset.png'] {
 img[src*='images/mark_set.png'] {
   -ms-transform: scale(0.7, 0.7); /* IE 9 */
   -webkit-transform: scale(0.7, 0.7); /* Safari */
-  background: url('linear_images/Pin.png') no-repeat !important;
+  background: url('shadows_light_images/Pin.png') no-repeat !important;
   margin-left: -23px;
   opacity: .85;
   transform: scale(0.7.0.7);
@@ -204,10 +204,10 @@ button.expandPrompt {
 
 /* 'logo' hack adjusts width for #feed-holder right alignment */
 #ttrssMain #main:before {
-  color: #b12525;
+  color: white;
   content: 'sHAdoWs\A&liGHt'; /* line break */
   display: block;
-  font: 14.5px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 4px;
   line-height: 1.2em;
   margin-top: 69px; /* ~ 150 / 1.618 - font-size x 1.5 */

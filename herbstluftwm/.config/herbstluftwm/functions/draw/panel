@@ -115,7 +115,7 @@ desktops() {
     fi
     desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
   done
-  desktops="$desktops$TAG_PAD"  # center tags
+  desktops="$TAG_PAD$TAG_PAD$desktops$TAG_PAD$TAG_PAD$TAG_PAD"  # center tags with triple padding
 }
 
 # ............................................................... Current window

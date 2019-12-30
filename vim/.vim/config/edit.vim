@@ -22,9 +22,9 @@ command! SmartWrap silent! call edit#SmartWrap()
 
 inoremap <silent><C-CR> <C-o>:SmartWrap<CR>
 
-" insert blank line above/below
-nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
-nnoremap <silent><leader><Down> :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
+" " insert blank line above/below
+" nnoremap <silent><leader><Up>   :silent set paste<CR>m`O<Esc>``:silent set nopaste<CR>
+" nnoremap <silent><leader><Down> :silent set paste<CR>m`o<Esc>``:silent set nopaste<CR>
 
 " " duplicate line
 " nnoremap <C-CR> :t.<CR>
