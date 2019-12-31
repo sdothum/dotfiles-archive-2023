@@ -1,0 +1,246 @@
+@import url('sal_fork.css');
+
+/* clean condensed distraction free layout -- formatted for gtkwebkit and qtwebkit
+ *
+ * optimized for "combined feed display" with "enable feed categories", see preferences
+ *
+ * see user_install tt-rss for functions.php feed categories customization
+ *
+ * THEME FOR TT-RSS VERSION 1:17.4
+ */
+
+/* STYLING ******************************************************************/
+
+/* top (adjust topmost label) right bottom left (gap to edge) */
+#feeds-holder .dijitTreeRow { margin: -4px 0 13px 5px; }
+
+#feeds-holder .dijitTreeLabel {
+  float: right;
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+#feeds-holder #feedTree {
+  padding-top: 0;
+  width: 135px;
+}
+
+#feeds-holder {
+  /* margin-right: -15px; */
+  margin-left: -15px;
+  width: 135px !important;
+}
+
+/* margin around feed..headline region */
+#headlines-frame { padding: 0 30px 30px !important; }
+
+img[src*='images/star.png'] {
+  background: url('sal_images/Pin.png') no-repeat;
+  opacity: 1.0;
+}
+
+div#dijit__TreeNode_1 span.dijitFolderOpened  + .dijitTreeLabel,
+div#dijit__TreeNode_1 span.dijitFolderClosed  + .dijitTreeLabel { letter-spacing: 1px; }
+
+/* filters usually are open, hide minimize button of feed menu title */
+div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
+
+/* div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoClosed, */
+div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15; }
+
+.dijitTreeLabel { margin-left: 6px; }
+
+.cdm.expandable .dijitCheckBox { display: none; }
+
+/* fill any backgnoud gaps resulting from fullscreen display */
+.dijitContainer { background-color: #fdf6e3; }
+
+div#dijit__TreeNode_2 .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeLabel { color: #555 !important; }
+
+div#dijit__TreeNode_2 .dijitTreeRow:hover .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeRow:hover .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeRow:hover .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #282828 !important; }
+
+/* only highlight category labels */
+.dijitTreeRowSelected span.dijitFolderOpened  + .dijitTreeLabel,
+.dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel { color: #b12525 !important; }
+
+/* non-category node highlight exception for feed filters */
+div#dijit__TreeNode_2 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeRowSelected .dijitTreeLabel,
+div#dijit__TreeNode_2 .dijitTreeRowSelected:hover .dijitTreeLabel,
+div#dijit__TreeNode_3 .dijitTreeRowSelected:hover .dijitTreeLabel,
+div#dijit__TreeNode_4 .dijitTreeRowSelected:hover .dijitTreeLabel,
+div#dijit__TreeNode_7 .dijitTreeRowSelected:hover .dijitTreeLabel { color: #b12525 !important; }
+
+/* drop published and archived filters */
+div#dijit__TreeNode_5,
+div#dijit__TreeNode_6 { display: none !important; }
+
+/* highlight colour */
+.hl:hover *,
+.cdm.expandable:not(.active) .cdmHeader:hover * {
+  color: #b12525 !important;
+}
+
+.cdm.expandable:not(.active):not(.Unread) .cdmHeader:hover span.author,
+.cdm.expandable:not(.active):not(.Unread) .cdmHeader:hover .cdmExcerpt {
+  color: #d58885 !important;
+  font-weight: normal;
+}
+
+.cdm.expandable.Unread:not(.active) .cdmHeader:hover .title { color: #282828 !important; }
+
+.cdm.expandable:not(.active) .cdmHeader:hover .title { font-weight: 500; }
+
+a.title:hover { text-decoration: underline !important; }
+
+.title { text-shadow: 0 1px 1px #fff !important; }
+
+/* maximum content width setting */
+.postContent p,
+.cdmContentInner p,
+.cdm.expandable.active {
+  max-width: 100%;  /* fullscreen width */
+  max-width: 70em;
+}
+
+#toolbar { max-width: 77em; }
+
+.cdmHeader span { max-width: 62.5em; }
+
+span.titleWrap { max-width: 60em; }
+
+/* fit button bar width to above active border */
+.cdm .collapseBtn { max-width: 100%; }
+
+/* uncomment for fullscreen width */
+/* #toolbar, */
+/* .cdm.expandable.active, */
+/* .cdmHeader span, */
+/* .cdm .collapseBtn, */
+/* .cdmContentInner p, */
+/* .postContent p { max-width: 100%; } */
+
+img[src*='images/mark_unset.png'] {
+  margin-left: -23px;
+  opacity: 0 !important;
+}
+
+img[src*='images/mark_set.png'] {
+  -ms-transform: scale(0.7, 0.7);      /* IE 9 */
+  -webkit-transform: scale(0.7, 0.7);  /* Safari */
+  background: url('sal_images/Pin.png') no-repeat !important;
+  margin-left: -23px;
+  opacity: .85;
+  transform: scale(0.7.0.7);
+}
+
+.Selected img[src*='images/mark_set.png'] { margin-top: -18px !important; }
+
+/* left feed / update column width*/
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed {
+  margin-left: -85px;
+  width: 85px;
+}
+
+/* maximum fillable content area */
+.cdm.expandable:not(.active) .cdmHeader > .hlFeed a { max-width: 75px; }
+
+/* position titleWrap relative to the rheckbox because hlfeed does not exist
+ * when a non-category feeds-holder row is selected */
+div[style="vertical-align : middle"] { width: 75px; }
+
+/* extend the content area to the right margin */
+.cdm span.titleWrap { margin-right: -85px; }
+
+/* reposition date below feed label, must declare font to set desired size */
+:not(.Selected) span.updated {
+  color: #888;
+  display: inline-block;
+  font: 300 9px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  text-rendering: geometricPrecision;
+  top: 17px;
+  white-space: nowrap;
+  width: 75px;
+}
+
+/* date position on expanded collapse button bar */
+.Selected span.updated {
+  left: 14px;
+  padding-top: 0px !important;
+  margin-top: -31px !important;
+}
+
+/* hlfeed does not exist when a non-category feeds-holder row is selected */
+.cdm.expandable div:not(.hlFeed) span.titleWrap + span.updated { top: 6px; }
+
+.scoreWrap,
+div#notify.notify { display: none; }
+
+select.attachments {
+  color: #999;
+  font-size: 12px;
+}
+
+button.expandPrompt {
+  background: #2A363B;
+  border-radius: 0 12px 12px 0;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+}
+
+#ttrssPrefs * { border-radius: 0; }
+
+/* 'logo' hack adjusts width for #feed-holder right alignment */
+#ttrssMain #main:before {
+  color: white;
+  content: 'sHAdoWs\A&liGHt';  /* line break */
+  display: block;
+  font: 15.5px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  letter-spacing: 4px;
+  line-height: 1.2em;
+  margin-top: 23px;            /* font-size x 1.5 */
+  position: fixed;
+  text-align: right;
+  text-shadow: 2px 2px 4px #532020;
+  white-space: pre;            /* line break */
+  width: 148px;                /* right align with counter column */
+}
+
+/* top of feed category selection list */
+#feeds-holder { margin-top: 85px;  /* font-size x 5.5 */ }
+
+/* end of feed marker */
+#headlines-spacer {
+  height: 100%;
+  position: relative;
+}
+
+#headlines-spacer:after {
+  /* text-shadow: 0 1px 1px #fff; */
+  background: #fdf6e3;
+  bottom: 0;
+  color: white;
+  content: 'refresh ‧‧ sHAdoWs &liGHt';  /* dot bullet dot */
+  font: 14px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  left: -35px;
+  letter-spacing: 3px;
+  padding: 10px;
+  position: absolute;
+  right: -35px;
+  text-align: center;
+  text-shadow: 2px 2px 4px #532020;
+}
+
+.cdmHeader .hlFeed a { display: block;  /* for hlFeed titleWrap alignment */ }
