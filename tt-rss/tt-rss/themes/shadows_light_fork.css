@@ -54,7 +54,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
   border-width: 0 0 1px;
   font: 300 10px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   line-height: 18px;
-  padding: 0 10px 0;
+  padding: 0 0px 0;  /* underline to right of counter padding */ 
   vertical-align: bottom;
 }
 
@@ -106,7 +106,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 
 /* open/close category icon */
 #feeds-holder .dijitTreeExpando {
-  margin: 0 0 1px -2px; /* img flush to left border */
+  margin: 0 0 1px -2px;  /* img flush to left border */
   opacity: 0;
   padding-bottom: 0;
   padding-left: 0;

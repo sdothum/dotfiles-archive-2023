@@ -35,7 +35,7 @@ usage() {
 CACHE=/var/cache/xbps
 [ $1 ] || usage
 
-bootcheck() { sudo xbps-install -S; xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; }
+bootcheck() { sudo xbps-install -S; xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; xlocate -S >/dev/null & }
 
 # default (no options) to package query
 case $1 in
@@ -76,7 +76,7 @@ file      ) xlocate $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
-log       ) [ $package ] && ls -lt $CACHE/$package* || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
+log       ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove    ) sudo xbps-remove $recursive $options $package ;;
 requiredby) xbps-query -X $package ;;

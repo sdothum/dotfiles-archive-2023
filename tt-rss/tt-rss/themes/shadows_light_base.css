@@ -574,7 +574,7 @@ a:hover { text-decoration: underline; }
 #overlay_inner .dijitProgressBarFull { border: 0; }
 
 #overlay_inner .dijitProgressBarTile {
-  background: #d6ff77; /* Old browsers */
+  background: #d6ff77;  /* Old browsers */
   background: -moz-linear-gradient(top,  #d6ff77 0%, #d1f45f 38%, #afdb00 100%);
   background: -ms-linear-gradient(top,  #d6ff77 0%, #d1f45f 38%, #afdb00 100%);
   background: -o-linear-gradient(top,  #d6ff77 0%, #d1f45f 38%, #afdb00 100%);
