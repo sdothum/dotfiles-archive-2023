@@ -1,0 +1,19 @@
+#!/bin/bash
+# beta fish build
+
+echo "... script installing fish"
+sudo apt-get install doxygen libncurses5-dev autoconf gettext libxt-dev git
+
+# cd /data/depot/system/fish
+cd ~/bin/install
+command rm -rf fish-shell 2>/dev/null
+git clone https://github.com/fish-shell/fish-shell.git
+
+cd fish-shell
+autoconf
+./configure
+make
+sudo make install
+
+cd ~/bin/install
+command rm -rf fish-shell

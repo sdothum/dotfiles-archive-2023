@@ -1,0 +1,806 @@
+#!/usr/bin/env fish
+# assumes that fish is already installed along with user functions
+# so a virgin install will require some user installation preparation
+# notably the above, bin/install and software depot of non-deb packages
+# see install-zfs to include /data/depot installs from this script
+
+#----------------------------------
+headline "initialize fresh install"
+#----------------------------------
+
+!p dropbox; and begin; if-no "enable dropbox daemon during install"; or ~/.dropbox-dist/dropboxd &; end
+if [ (pidof script | wc -l) -eq 0 ]
+  echo '... run "script" to log stdout messages'
+  exit
+end
+
+if [ -f ~/.new-install ]
+  [ (cat ~/.windowmanager) = xmonad ]; and command cp -f ~/.config/terminator/config.xmonad ~/.config/terminator/config
+  if-yes "fresh install with cb-welcome"; and cb-welcome
+  set --export aptopt y
+else
+  if-yes "verify installed packages only"; and set --export aptopt s
+  or if-no "re-install all packages"; and set --export aptopt i; or exit
+end
+
+# for future install decisions based on available ram and disks instead of hostname
+set gbram (cat /proc/meminfo | head -1 | awk '{printf ("%i", $2/1024/1024)}')
+set numdisks (ll /dev/sd*1 | wc -l)
+
+set --export distro (head -1 /etc/apt/apt.conf | sed 's/^.*"\(.*\)".*/\1/')
+log ""
+log ""
+log "Starting crunchbang-3install ... "(date '+%Y.%m.%d %H:%S:%M')
+annotate "using debian $distro"
+log ""
+
+function new-install
+  [ -d /data/depot -a -f ~/.new-install ]; and true; or false
+end
+
+killall xscreensaver
+xset s off -dpms
+# default log of log.fish.. note: nohup .. 2>/dev/null to suppress fish keybinding error message
+touch ~/tmp/session.log
+nohup terminator -x tail -f ~/tmp/session.log 2>/dev/null &
+
+# capture log (script) of install exceptions (see install)
+echo "#!/usr/bin/env fish
+# crunchbang-3install exceptions
+# edit this failed install list as required
+# run as: ./crunchbang-3exceptions [options ..]
+# example: ./crunchbang-3exceptions -t sid
+
+" >~/bin/install/crunchbang-3exceptions
+chmod -v 755 ~/bin/install/crunchbang-3exceptions
+nohup terminator -x tail -f ~/bin/install/crunchbang-3exceptions 2>/dev/null &
+
+
+#----------------------------------------
+headline "software development and tools"
+#----------------------------------------
+
+install build-essential
+#install cdbs
+#install debhelper
+#install devscripts
+#install dh-make
+#install diffutils
+#install dpatch dput
+#install fakeroot
+#install gnupg
+#install lintian
+#install patch
+#install pbuilder
+#install quilt
+
+install ghc ghc-doc ghc-haddock ghc-prof
+#install haskell-platform haskell-platform-doc haskell-platform-prof
+#install libghc-reactive-banana-dev
+#install cabal-install cabal-debian
+#cabal update
+#cabal install hoogle
+
+#install arduino
+install autoconf
+install cmake
+#install darcs
+#install gettext
+#install help2man
+install pkg-config
+install strace
+
+
+#-------------------
+headline "astronomy"
+#-------------------
+
+if [ (hostname) = luna ]
+  install celestia
+  install kstars
+end
+install stellarium
+
+
+#------------------
+headline "browsers"
+#------------------
+
+install elinks
+#new-install; and ~/bin/install/install-elinks
+#original /usr/bin/elinks
+#sudo ln -sfv /usr/local/bin/elinks /usr/bin/elinks
+sudo update-alternatives --set www-browser /usr/bin/elinks
+new-install; and ~/bin/install/install-jumanji
+
+#install luakit
+#annotate "compare customizations in ~/.luakit/* with /etc/xdg/luakit/* sources"
+new-install; and ~/bin/install/install-luakit
+#sudo update-alternatives --verbose --force --install /usr/bin/gnome-www-browser \gnome-www-browser /usr/bin/luakit 100
+#sudo update-alternatives --verbose --force --install /usr/bin/x-www-browser \x-www-browser /usr/bin/luakit 100
+
+install uzbl
+install w3m
+#sudo update-alternatives --set www-browser /usr/bin/w3m
+
+
+#-----------------------
+headline "cds and music"
+#-----------------------
+
+if [ (hostname) = luna ]
+  install abcde
+  install asunder
+end
+
+#install lastfm
+#etc-config /etc/lastfmproxy/config.py
+
+install mpd
+install mpc
+install ncmpcpp
+#mpc update
+# local user instance required for pavucontrol visibility
+sudo update-rc.d -f mpd remove
+mkdir -pv ~/.mpd/playlists 2>/dev/null
+touch ~/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
+touch ~/tmp/mpd.log
+if [ ! -L ~/.mpdconf ]
+  cp /etc/mpd.conf ~/.config/mpdconf
+  ln -sfv ~/.config/mpdconf ~/.mpdconf
+  #annotate "configure ~/.mpdconf for non-root access to local mpd files"
+else
+  command cp -fv ~/.config/mpdconf ~/.mpdconf.save
+  command cp -fv /etc/mpd.conf ~/.config/mpdconf
+end
+sed -i -e 's,/var/lib/mpd/music,/data/media/music,' \
+       -e 's,/var/log/mpd/mpd.log,~/tmp/mpd.log,' \
+       -e 's,/run/mpd/pid,~/.mpd/pid,' \
+       -e 's,/var/lib/mpd,~/.mpd,' \
+       -e 's/^user/#user/' \
+       -e 's/^#\(follow_outside_symlinks\)/\1/' \
+       -e 's/^#\(follow_inside_symlinks\)/\1/' \
+       -e '/^audio_output/,/^}/s/^\([^#]\)/#\1/' \
+       -e '$aaudio_output { \
+        type            "pulse" \
+        name            "My MPD PulseAudio Output" \
+}' ~/.config/mpdconf
+
+[ -d /data/depot -a -f ~/.new-install ]; and ~/bin/install/install-pavolume
+
+if [ (hostname) = luna ]
+  install rubyripper
+  #install sonata
+  #install soundconverter gstreamer0.10-plugins-ugly gstreamer0.10-ffmpeg
+end
+
+
+#--------------
+headline "chat"
+#--------------
+
+#install bitlbee
+#install irssi irssi-scripts
+#install libtime-duration-perl
+
+#install pidgin finch pidgin-hotkeys pidgin-libnotify
+install pidgin finch pidgin-hotkeys
+
+#if [ (hostname) = luna ]
+#  install ia32-libs ia32-libs-gtk
+#  sudo dpkg -i ~/depot/chat/skype/skype-debian_4.0.0.8-1_amd64.deb
+#end
+
+
+#--------------------------------------
+headline "database management software"
+#--------------------------------------
+
+install sqlite3
+install sqlitebrowser
+#new-install; and ~/bin/install/install-sqliteman
+
+
+#-----------------
+headline "desktop"
+#-----------------
+
+install gpick
+#install launchy launchy-plugins launchy-skins
+install rss-glx
+install screenruler
+install synapse gnome-activity-journal
+
+
+#-----------------
+headline "editors"
+#-----------------
+
+#install bluefish
+install dict-moby-thesaurus
+install focuswriter
+#install leksah
+install markdown
+new-install; and ~/bin/install/install-nvpy
+install retext retext-wpgen
+
+install vim-nox vim-gtk exuberant-ctags
+#git clone http://github.com/gmarik/vundle.git ~/.vim/vundle.git
+#etc-config /etc/vim/vimrc
+
+
+#-----------------------
+headline "file transfer"
+#-----------------------
+
+#install nzbget
+new-install; and ~/bin/install/install-nzbget
+#install par2 pypar2
+mkdir -v ~/nzbs 2>/dev/null
+
+install rtorrent
+mkdir -v ~/.session 2>/dev/null
+mkdir -v ~/torrents 2>/dev/null
+#install transmission
+#annotate "update transmission-gtk blocklist url http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+sudo dpkg -i /data/depot/torrent/tixati/tixati_*_amd64.deb
+annotate "add level1 blocklist http://list.iblocklist.com/?list=bt_level1&fileformat=p2p&archiveformat=gz"
+annotate+ "add bogon blocklist http://list.iblocklist.com/?list=bt_bogon&fileformat=p2p&archiveformat=gz"
+
+#install sabnzbdplus
+#etc-config /etc/default/sabnzbdplus
+[ (hostname) = luna ]; and new-install; and ~/bin/install/install-couchpotato
+[ (hostname) = luna ]; and new-install; and ~/bin/install/install-sickbeard
+
+
+#------------------------------
+headline "filesystems and raid"
+#------------------------------
+
+install gdisk
+install hfsplus hfsprogs hfsutils hfsutils-tcltk
+
+#[ $numdisks -gt 2 -a ! -f /sbin/mdadm ]; and ~/bin/install/crunchbang-3mdadm
+if [ ! -f /sbin/zfs -a (hostname) = luna ]
+  ~/bin/install/install-zfs
+end
+
+
+#---------------------------------
+headline "formatting and printing"
+#---------------------------------
+
+install csstidy
+install enscript
+
+#install cups cups-pdf cups-bsd
+install cups cups-pdf system-config-printer printer-driver-hpijs
+sudo grep "^lpadmin.*$USER" /etc/group; or sudo sed -i 's/\(^lpadmin:.*$\)/\1,'$USER'/' /etc/group
+#sudo chown root:root /etc/group
+#sudo chmod 0440 /etc/group
+[ (hostname) = monad ]; and annotate "http://localhost:631 to configure printer and network sharing"
+
+# lpr doesn't work with cups, use lp instead which uses cups default printer
+#install lpr
+
+
+#--------------
+headline "java"
+#--------------
+
+install openjdk-6-jre icedtea6-plugin
+
+
+#---------------------
+headline "mail client"
+#---------------------
+
+install antiword
+install archivemail
+
+##install mutt mutt-patched mutt-vc-query muttprint muttprint-manual
+#install mutt mutt-patched muttprint muttprint-manual abook
+#mkdir -v ~/attachments 2>/dev/null
+#chown -v $USER ~/attachments
+#
+#install notmuch
+#mkdir -pv ~/.mail/.notmuch
+#mkdir -pv ~/.cache/mutt_results
+#ln -svf ~/.cache/mutt_results ~/.mail/.notmuch/=Search
+#annotate "initialize notmuch by running: notmuch setup; and notmuch new"
+#new-install; and ~/bin/install/install-mutt-notmuch
+## not part of the #! backports distribution?
+#install libmail-box-perl
+
+#install sup-mail
+new-install; and ~/bin/install/install-sup
+
+install lynx
+original /etc/lynx-cur/lynx.cfg
+sudo sed -i -e 's/^#\(ENABLE_LYNXRC:ACCEPT_ALL_COOKIES:ON\)/\1/' \
+            -e '$ahttp_proxy:http://localhost:8118/' /etc/lynx-cur/lynx.cfg
+install urlscan
+install urlview
+
+
+#-----------------------
+headline "mail services"
+#-----------------------
+
+install imapfilter
+mkdir -pv ~/.mail/gmail
+
+install msmtp-mta
+sudo cp -v /usr/share/doc/msmtp/examples/msmtpqueue/msmtp*.sh /usr/local/bin/
+sudo chmod -v 755 /usr/local/bin/msmtp*.sh
+sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/local/bin/sendmail
+original /usr/sbin/sendmail
+#sudo ln -svf /usr/local/bin/msmtp-enqueue.sh /usr/sbin/sendmail
+sudo ln -svf /usr/local/bin/sendmail /usr/sbin/sendmail
+ln -sfv ~/.config/mail/msmtprc ~/.msmtprc
+if [ -L ~/.msmtprc ]
+  chmod -v 600 ~/.config/mail/msmtprc
+else
+  chmod -v 600 ~/.msmtprc
+end
+# initialize crontab for sendmail (and all other user cron processes)
+sudo cp -v ~/.config/crontab/crontab /var/spool/cron/crontabs/$USER
+sudo chmod -v 600 /var/spool/cron/crontabs/$USER
+sudo chown -v $USER:crontab /var/spool/cron/crontabs/$USER
+
+#install offlineimap/wheezy
+install offlineimap python-sqlite
+
+
+#-----------------------------
+headline "monitor and testing"
+#-----------------------------
+
+if [ (hostname) = monad ]
+  install acpi
+end
+
+install bmon
+install bonnie++
+install htop
+install iftop
+install iotop
+install memtester
+
+install smartmontools gsmartcontrol
+#etc-config /etc/smartd.conf
+#etc-config /etc/default/smartmontools
+original /etc/smartd.conf
+sudo sed -i 's,^DEVICESCAN.*,DEVICESCAN -d removable -n standby -m sdothum@gmail.com -M exec /usr/share/smartmontools/smartd-runner,' /etc/smartd.conf
+original /etc/default/smartmontools
+sudo sed -i 's/^#\(start_smartd=yes\)/\1/' /etc/default/smartmontools
+etc-config /etc/smartmontools/run.d/10mail
+sudo chmod -v 600 /etc/smartmontools/run.d/10mail.original
+
+install tcptrack
+install traceroute
+
+
+#------------------------------
+headline "network and security"
+#------------------------------
+
+if [ (hostname) = luna ]
+  install airport-utils
+end
+
+#install dnsmasq
+#etc-config /etc/dnsmasq.conf
+#sudo /etc/init.d/dnsmasq restart
+
+install dnsutils
+#install gupnp-tools
+
+install openssh-server openssh-client
+#etc-config /etc/ssh/sshd_config
+original /etc/ssh/sshd_config
+sudo sed -i -e 's/^\(AcceptEnv LANG LC_\*\)/#\1/' -e '$aAcceptEnv TERM LANG LC_*' /etc/ssh/sshd_config
+
+install vsftpd
+#etc-config /etc/vsftpd.conf
+original /etc/vsftpd.conf
+sudo sed -i -e 's/^\(anonymous_enable\)=YES/\1=NO/' \
+            -e 's/^#\(local_enable=YES\)/\1/' \
+            -e 's/^#\(write_enable=YES\)/\1/' \
+            -e 's/^#\(local_umask=022\)/\1/' \
+            -e 's/^\(connect_from_port_20\)=YES/\1=NO/' \
+            -e 's/^#\(ls_recurse_enable=YES\)/\1/' /etc/vsftpd.conf
+
+#install wvdial
+
+
+#----------------------------
+headline "package management"
+#----------------------------
+
+#install aptitude-gtk
+install apt-file apt-show-versions
+install deborphan
+
+
+#---------------------
+headline "photography"
+#---------------------
+
+install darktable
+
+#if [ (hostname) = luna ]
+#  install dcraw
+#  install digikam showfoto
+#  #install dispcalgu
+#  #install qtpfsgui
+#  install rawstudio
+#  install rawtherapee
+#  #install ufraw gimp-ufraw
+#  [ -d /data/depot -a -f ~/.new-install ]; and ~/bin/install/install-macrofusion
+#end
+
+
+#----------------------
+headline "productivity"
+#----------------------
+
+install alarm-clock
+install artha
+#install autokey-gtk gir1.2-notify-0.7 gir1.2-gtksource-3.0
+install autokey-gtk
+#install gcal gcalcli
+#install ktouch phonon-backend-vlc phonon-backend-gstreamer
+install ktouch
+install qalc
+install xpad
+
+
+#---------------
+headline "proxy"
+#---------------
+
+#install dante-server
+#etc-config /etc/danted.conf (hostname)
+#sudo /etc/init.d/danted stop
+#sudo /etc/init.d/danted start
+
+install polipo
+#etc-config /etc/polipo/config
+original /etc/polipo/config
+sudo sed -i -e 's/^# *\(cacheIsShared = false\)/\1/' -e '$adnsNameServer = 127.0.0.1' /etc/polipo/config
+/etc/init.d/polipo stop
+/etc/init.d/polipo force-reload
+
+#install privoxy/wheezy
+install privoxy
+#etc-config /etc/privoxy/config
+#etc-config /etc/privoxy/default.action
+#etc-config /etc/privoxy/match-all.action
+#etc-config /etc/privoxy/user.action
+original /etc/privoxy/config
+sudo sed -i 's/^\(enable-edit-actions\) 0/\1 1/' /etc/privoxy/config
+original /etc/privoxy/user.action
+sudo sed -i '$a{ fragile } \
+a.img-dpreview.com' /etc/privoxy/user.action
+annotate "configure browser proxies to localhost:8118"
+
+install squid3
+#etc-config /etc/squid3/squid.conf
+original /etc/squid3/squid.conf
+sudo sed -i '$aacl localnet src 10.0.0.0/8 \
+acl Safe_ports port 631     # cups \
+acl Safe_ports port 6789    # nzbget \
+acl Safe_ports port 32400   # plexmediaserver \
+http_access allow localnet \
+cache_peer 127.0.0.1 parent 8118 7 no-digest no-query \
+hierarchy_stoplist cgi-bin ? \
+cache_dir ufs /var/spool/squid3 100 16 256 \
+via off \
+request_header_access From deny all \
+request_header_access Referer deny all \
+request_header_access Server deny all \
+request_header_access WWW-Authenticate deny all \
+request_header_access Link deny all \
+request_header_access Cache-Control deny all \
+reply_header_access From deny all \
+reply_header_access Referer deny all \
+reply_header_access Server deny all \
+reply_header_access User-Agent deny all \
+reply_header_access WWW-Authenticate deny all \
+reply_header_access Link deny all \
+shutdown_lifetime 0 seconds \
+forwarded_for delete' /etc/squid3/squid.conf
+
+
+#----------------
+headline "system"
+#----------------
+
+install arandr
+install autocutsel
+#install cpufrequtils
+
+install fortunes fortunes-off
+install keepassx
+#install libdate-manip-perl libtime-modules-perl
+
+install paprefs
+install preload
+#install qshutdown
+install rlwrap
+#install screen
+#install startupmanager
+install sysv-rc-conf
+#install tmux
+
+
+#-------------------
+headline "utilities"
+#-------------------
+
+install ack-grep
+sudo ln -sfv /usr/bin/ack-grep /usr/bin/ack 2>/dev/null
+#install avfs
+#mkdir ~/.avfs-mount
+
+install filelight
+install font-manager
+install fontmatrix
+#install gprename
+#install guake
+install locate
+install lsof
+#install nautilus
+install ncdu
+install putty
+install ranger
+install rox-filer
+
+install rsync
+#install telnet
+install tree
+#install unetbootin
+install vifm
+#install xfce4-terminal
+#sudo update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
+install xrestop
+install xterm
+
+
+#-------------------------
+headline "version control"
+#-------------------------
+
+#install bzr bzrtools
+#install cvs
+#install git git-gui git-cvs git-svn git-email
+install mercurial
+#install subversion subversion-tools
+#install thunar-vcs-plugin
+
+
+#---------------
+headline "video"
+#---------------
+
+if [ (hostname) = luna ]
+  install coriander
+  install dvdbackup
+  #install vloopback-source
+  install ffmpeg
+  #install gnome-subtitles gstreamer0.10-ffmpeg
+  install genisoimage growisofs
+  install handbrake-cli handbrake-gtk
+  install k3b
+end
+
+install minitube
+#install mplayer
+#etc-config /etc/mplayer/mplayer.conf
+install smplayer mplayerthumbs
+sudo dpkg -i /data/depot/media/umplayer/umplayer_0.97-1+r181~webupd8~oneiric2_amd64.deb
+
+install xbmc xbmc-skin-confluence
+
+
+#-----------------
+headline "viewers"
+#-----------------
+
+install calibre
+install comix
+install fbreader
+install mupdf
+install zathura
+
+
+#if [ (hostname) = luna ]
+if [ $gbram -gt 4 ]
+#--------------------
+headline "virtualbox"
+#--------------------
+
+  #wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+  install linux-headers-(uname -r)
+  install dkms
+  install virtualbox virtualbox-guest-additions-iso
+  #install virtualbox-4.2
+  #annotate "adding \"vboxdrv\" to /etc/modules"
+  ##sudo echo >>/etc/modules; sudo echo vboxdrv >>/etc/modules
+  #sudo sed -i '$avboxdrv' /etc/modules
+  #cat /etc/modules
+  #annotate "switching udev reference from /usr/share/virtualbox to /lib/udev (/usr not mounted)"
+  #sudo cp -v /usr/share/virtualbox/VBoxCreateUSBNode.sh /lib/udev/
+  #original /etc/udev/rules.d/10-vboxdrv.rules
+  #sudo sed -i 's,/usr/share/virtualbox,/lib/udev,' /etc/udev/rules.d/10-vboxdrv.rules
+end
+
+
+#-------------
+headline "x11"
+#-------------
+
+#new-install; and ~/bin/install/install-compton
+install gtk2-engines-pixbuf
+install faenza-crunchbang-icon-theme
+# gtk engines for ffuu theme
+new-install; and ~/bin/install/install-equinox
+#new-install; and ~/bin/install/install-murrine
+install fonts-inconsolata fonts-linuxlibertine
+install ttf-anonymous-pro ttf-bitstream-vera ttf-xfree86-nonfree
+
+#install awesome awesome-extra
+#install dwm
+#install herbstluftwm
+#install i3
+#install ratpoison
+#install spectrwm
+#install stumpwm
+#install subtle
+#install wmii
+#install xfce4
+
+install xmonad libghc-xmonad-dev libghc-xmonad-doc xfonts-base xmobar trayer
+sudo update-alternatives --set x-window-manager /usr/bin/xmonad
+sudo cp -fv ~/.config/terminator/config.xmonad ~/.config/terminator/config
+#cabal install taffybar
+#cabal install yeganesh
+#cabal install tagsoup
+
+# disable display manager and enable auto login
+#sudo update-rc.d -f gdm remove
+#etc-config /etc/inittab
+
+install notion
+new-install; and ~/bin/install/install-trayion
+mkdir -pv ~/.x11/notion/default-session--0
+chown -Rv $USER ~/.x11
+
+
+#-------------
+headline "web"
+#-------------
+
+#install blogilo
+#install canto
+install curl
+install cronolog
+install dict
+install flashplugin-nonfree
+install newsbeuter
+install surfraw
+install ttytter
+new-install; and ~/bin/install/install-turses
+
+
+#------------------------------
+headline "web servers and wiki"
+#------------------------------
+
+# installed for nanoki and google reader css
+#install nginx
+#etc-config /etc/nginx/nginx.conf
+#etc-config /etc/nginx/sites-available/default
+#if [ -d /opt/nginx ]
+#  sudo cp /srv/www/init-deb.sh /etc/init.d/nginx
+#  sudo update-rc.d nginx defaults
+#end
+
+#sudo gem install instiki
+#sudo gem install gollum
+
+#new-install; and ~/bin/install/install-nanoki
+#original /etc/hosts
+#grep thedarnedestthing /etc/hosts; or begin;
+#  sudo echo >>/etc/hosts
+#  sudo echo "127.0.0.1       thedarnedestthing" >>/etc/hosts
+#end
+#etc-config /etc/hosts
+
+# kludge for testing downgrade requirements i.e. enable prompt
+install ruby1.9.1-dev rake rubygems
+new-install; and ~/bin/install/install-gems
+
+#install sputnik
+#install xavante xavante-doc
+
+
+#----------------
+headline "usenet"
+#----------------
+
+install slrn slrnpull
+#etc-config /etc/default/slrnpull
+#etc-config /etc/news/slrnpull.conf
+original /etc/default/slrnpull
+sudo sed -i "s/^RUNFROM=.*/RUNFROM='cron job'/" /etc/default/slrnpull
+original /etc/news/slrnpull.conf
+# can't append directly after delete to eof
+sudo sed -i '/^default/,$d' /etc/news/slrnpull.conf
+sudo sed -i '$adefault 100 14 0' /etc/news/slrnpull.conf
+[ -f /etc/cron.daily/slrnpull ]; and sudo mv -v /etc/cron.daily/slrnpull /etc/cron.hourly/
+sudo ln -sfv /var/spool/slrnpull/news /var/spool/news
+sudo cp -v ~/.config/var/spool/slrnpull/authinfo /var/spool/slrnpull/authinfo
+sudo chmod -v 600 /var/spool/slrnpull/authinfo
+sudo chown -Rv news:news /var/spool/slrnpull
+#sudo chmod -v ugo+rwxt /var/spool/slrnpull/out.going
+sudo touch /var/log/news/slrnpull.log
+#sudo cp -v ~/.config/slrn/jnewsrc.initialize ~/.config/slrn/jnewsrc
+touch ~/.config/slrn/jnewsrc
+
+
+#----------------------------
+headline "untrusted packages"
+#----------------------------
+
+if [ (hostname) = luna -a ! -f /usr/sbin/start_pms ]
+  install plexmediaserver
+  #etc-config /etc/default/plexmediaserver
+  original /etc/default/plexmediaserver
+  sudo sed -i 's,^\(PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR\).*,\1=/srv/plexmediaserver/Library/Application Support,' /etc/default/plexmediaserver
+  sudo mkdir -pv /srv/plexmediaserver/Library/Application\ Support 2>/dev/null
+  sudo chown -v plex /srv/plexmediaserver/
+  sudo chown -R plex /srv/plexmediaserver/
+  sudo /etc/init.d/plexmediaserver restart
+end
+
+# the following gackages conflict with the wheezy installs if preceding
+#if [ (hostname) = luna ]
+#   sudo dpkg -i ~/depot/system/powerpanel_1.2_amd64.deb
+#end
+
+#if [ (hostname) = luna ]
+#   sudo dpkg -i ~/depot/astronomy/google-earth-stable_current_am = checkonlyd64.deb
+#end
+
+#if [ (hostname) = luna ]
+#   install ia32-libs-gtk
+#   sudo dpkg -i ~/depot/www/google-talkplugin_current_amd64.deb
+#end
+
+
+##-------------------------
+#headline "liquorix kernel"
+##-------------------------
+#
+#if [ $distro = unstable ]
+#  sudo apt-get install --yes --force-yes '^liquorix-([^-]+-)?keyring.?'
+#  sudo apt-get install --yes --force-yes linux-image-liquorix-amd64
+#fi
+
+# finished with package installs !!
+[ ! -f ~/.new-install ]; and exit
+sudo rm -f ~/.new-install
+
+#----------------------------
+headline "install exceptions"
+#----------------------------
+
+annotate "logged install exceptions"
+cat ~/bin/install/crunchbang-3exceptions
+log ""
+log "Ending crunchbang-3install ... "(date '+%Y.%m.%d %H:%S:%M')
+log ""
+
+exec ~/bin/install/crunchbang-3finish

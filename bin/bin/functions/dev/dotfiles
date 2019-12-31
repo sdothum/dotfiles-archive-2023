@@ -22,7 +22,7 @@ usage() {
 # git rm --cached -r <dir>
 
 # list of folders under stow root
-dotfiles=$(cat ${0%/*}/.dotfiles:folders)
+DOTFILES=$(cat ${0%/*}/.dotfiles:folders)
 cd $STOW
 # syncthing housekeeping
 find . -name '*.sync-conflict-*' -exec rm {} \;
@@ -45,7 +45,7 @@ commit() {
 }
 
 pending() {
-  underline
+  ditto $pending  # $pending -> add 'path' :-)
   printf "commit? [Abort]/comment.. : ${__WHITE}"
   read DESC
   printf "${NOCOLOR}"
@@ -56,13 +56,12 @@ pending() {
 add() {
   for i in $@ ;do
     if [ -e $i ] ;then
-      git add -fv $i
-      pending=true
+      pending=$(git add -fv $i)
     else
       usage
     fi
   done
-  [ $pending ] && pending
+  [ "$pending" ] && pending
 }
 
 rm() {
@@ -77,13 +76,12 @@ rm() {
 stow() {
   for i in $@ ;do
     if [ -e $i ] ;then
-      git add -v $i
-      pending=true
+      pending=$(git add -v $i)
     else
       usage
     fi
   done
-  [ $pending ] && pending
+  [ "$pending" ] && pending
 }
 
 # any updates to push?
@@ -95,10 +93,7 @@ stow() {
 unset pending
 case $1 in
 help   ) usage ;;
-
-''     ) for i in $dotfiles ;do git add -v $i ;done
-         pending ;;
-
+''     ) for i in $DOTFILES ;do add $STOW/$i ;done ;;
 add    ) shift; add $STOW/$@ ;;
 
 amend    |\

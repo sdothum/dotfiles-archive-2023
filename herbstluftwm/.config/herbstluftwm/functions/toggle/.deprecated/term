@@ -1,0 +1,19 @@
+
+[ $TRACE ] && CHILD="toggle/term $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Toggle terminal
+
+title=$1
+shift
+if pgrep -f "/usr/bin/urxvt -title $title -name $title" >/dev/null ;then
+  pkill -USR1 -f "/usr/bin/urxvt -title $title -name $title"
+  focus window
+else
+  focus frame
+  /usr/bin/urxvt -title "$title" -name "$title" -e $@ 2>>/tmp/urxvt.log &
+fi
+
+# vim: set ft=sh: #

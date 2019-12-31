@@ -1,0 +1,6 @@
+DEVICE partitions
+MAILADDR sdothum@gmail.com
+#ARRAY /dev/md0 level=raid5 num-devices=7 metadata=1.2 spares=1 name=luna:0 UUID=6315e7fd:32de8776:c04f52ac:375fd0b0
+#   devices=/dev/sdb1,/dev/sdc1,/dev/sdd1,/dev/sde1,/dev/sdh1,/dev/sdi1,/dev/sdg1,/dev/sdf1
+ARRAY /dev/md0 level=raid6 num-devices=8 metadata=1.2 spares=1 name=luna:0 UUID=6315e7fd:32de8776:c04f52ac:375fd0b0
+   devices=/dev/sdb1,/dev/sdc1,/dev/sdd1,/dev/sde1,/dev/sdh1,/dev/sdi1,/dev/sdg1,/dev/sdf1

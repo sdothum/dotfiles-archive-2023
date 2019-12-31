@@ -1,0 +1,169 @@
+# application packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= astronomy
+# ▔▔▔▔▔▔▔▔▔
+# celestia      [server]
+# google-earth  [server]
+# kdeedu-kstars [server]
+# gpredict-git  [server]
+# nightshade    [server]
+# xephem        [server]
+  stellarium
+  wego-git
+
+
+= dictionaries
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  aiksaurus
+# artha
+  aspell
+  aspell-en
+  dictd
+# dictd-foldoc
+# dictd-gcide
+# dictd-moby-thesaurus
+  hunspell
+  hunspell-en
+# hunspell-en-ca
+
+
+= editors
+# ▔▔▔▔▔▔▔
+# focuswriter
+# markdown
+# pyroom
+# retext
+# rubyroom
+# ted          [server]
+  texlive-core
+  texlive-latexextra
+# wordgrinder
+
+
+= fonts
+# ▔▔▔▔▔
+  fontforge     [server]
+  ttf-wps-fonts [server]
+
+
+= games
+# ▔▔▔▔▔
+  lsb-release [server]
+  steam       [server]
+
+
+= keyboard
+# ▔▔▔▔▔▔▔▔
+  plover
+
+
+= music
+# ▔▔▔▔▔
+  beets
+  cli-visualizer
+  mpc
+  mpd
+  ncmpcpp
+
+
+= photography
+# ▔▔▔▔▔▔▔▔▔▔▔
+  darktable
+# dcraw                         [server]
+  digikam                       [server]
+  dispcalgui                    [server]
+  feh
+  gimp                          [server]
+  gimp-plugin-resynthesizer-git [server]
+# kdebase-workspace             [server]
+# kipi-plugins                  [server]
+# photivo-hg                    [server]
+# rawtherapee                   [server]
+# lightzone
+# sxiv
+# viewnior
+  webkitgtk2                    [server]
+
+
+= ripping
+# ▔▔▔▔▔▔▔
+# abcde           [server]
+  asunder         [server]
+  audacity        [server]
+# byzanz          [server]
+# byzanz-git      [server]
+# ffcast          [server]
+# gnome-subtitles [server]
+# jokosher        [server]
+# ruby-gtk2       [server]
+# rubyripper      [server]
+
+
+= media server/player
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# kodi                       [server]
+# plex-media-server-plexpass [server]
+# plex-media-server          [server]
+# xbmc
+
+
+= productivity
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  abiword
+  amphetype-svn
+  calc
+# calcurse
+# galculator
+  gnumeric
+# gsimplecal
+# kdeedu-ktouch [server]
+# klavaro
+# sc-im
+  simpletimer-git
+  speedcrunch
+# todotxt
+  wps-office    [server]
+  wyrd
+# xpad
+
+
+= radio
+# ▔▔▔▔▔
+# "pyradio requires module pkg_resources"
+# pyradio-git
+# radiotray
+
+
+= video players
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# coriander  [server]
+  gnome-mpv
+# livestreamer-curses
+# minitube
+  mpv
+# smplayer
+# smplayer-themes
+# umplayer
+# vlc
+# xvba-video [server]
+  youtube-dl
+
+
+= viewers
+# ▔▔▔▔▔▔▔
+# calibre    [server]
+# coolreader
+# evince
+  fbreader
+# foxitreader
+# mcomix
+# mupdf
+  zathura
+  zathura-ps
+  zathura-pdf-mupdf
+
+
+# vim: set ft=conf: #

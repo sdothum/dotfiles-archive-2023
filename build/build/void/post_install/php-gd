@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... php-gd
+
+original /etc/php/php.ini
+sudo sed -i '/=gd2/s/^;//' /etc/php/php.ini
+
+ditto service 'enable nginx'
+
+# vim: set ft=sh: #

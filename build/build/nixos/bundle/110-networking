@@ -1,0 +1,64 @@
+# network packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= network
+# ▔▔▔▔▔▔▔
+# bluez
+# bluez-utils
+# "connman interrupts connection so complete manually afterwards"
++ connman
++ dnsmasq
+  dnsutils
+# dropbox-experimental
+# gnome-bluetooth
+# ifenslave
+# networkmanager
+# network-manager-applet
+# wicd
+# wicd-gtk
+
+
+= network monitor
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# tcptrack
+# dstat
+  iftop
+  mtr
+  nethogs
+# netstat-nat
+# tcpflow
+# traceroute
+# wireshark-gtk
+
+
+= network security
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  openssh
+# rssh
+  vsftpd
+
+
+= network share
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  avahi
+  nfs-utils
+# nss-mdns
+# samba
+# smbnetfs
+
+
+= proxies
+# ▔▔▔▔▔▔▔
+# adsuck
+# polipo
+# privoxy
+# squid
+
+
+= socket
+# ▔▔▔▔▔▔
+  socat
+
+# vim: set ft=conf: #

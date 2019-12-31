@@ -1,0 +1,4 @@
+#!/bin/sh
+# manually manage xscreensaver
+
+fish -c "video umplayer $@"

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................. Toggle conky desktop padding
+
+# dynamic desktop width with conky panel
+conky_monitor() {
+  if [[ $(herbstclient attr clients.focus.fullscreen) = true ]]; then
+    set_monitors conky fullscreen
+  else
+    set_monitors conky
+  fi
+}
+
+if [[ $(xrandr | grep '*' | cut -dx -f1 | sort | tail -1) -gt 1024 ]]; then
+  if xdotool search --onlyvisible --classname 'Conky' windowunmap; then
+    [[ $(herbstclient attr clients.focus.fullscreen) = true ]] \
+      && set_monitors fullscreen \
+    || set_monitors fullframe
+  else
+    if ! xdotool search --classname 'Conky' windowmap; then
+      conky -q -c ~/.conkyrc &
+      xdotool search --sync --onlyvisible --classname 'Conky'
+    fi
+    if herbstclient list_monitors | grep '^0:.*\[FOCUS\]'; then
+      conky_monitor
+    else
+      herbstclient chain lock . focus_monitor 0
+      conky_monitor
+      herbstclient chain . focus_monitor 1 . unlock
+    fi
+  fi
+else
+  xdotool search --onlyvisible --classname 'Conky' windowunmap \
+  || xdotool search --classname 'Conky' windowmap \
+  || ( conky -q -c ~/.conkyrc & )
+fi

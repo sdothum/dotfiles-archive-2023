@@ -1,0 +1,32 @@
+#!/usr/bin/env fish
+
+headline+ "building sup"
+
+#install libncurses5-dev
+#install zlib1g-dev
+install+ libncursesw5-dev
+install+ libxapian-ruby1.9.1
+install+ ruby-chronic
+install+ ruby-eventmachine
+install+ ruby-highline
+install+ ruby-locale
+install+ ruby-lockfile
+install+ ruby-mime-types
+install+ ruby-ncurses
+install+ ruby-rubymail
+install+ ruby-trollop
+install+ ruby-yajl
+install uuid-dev
+
+install-gem unicode
+#sudo gem1.9.1 install sup
+
+cd /data/depot/mail/sup
+git clone https://github.com/sup-heliotrope/sup.git
+
+cd sup
+patch -p1 < ../buffer.contacts.patch
+
+cd /data/depot/mail/sup
+[ -d /opt/sup ]; and sudo mv -fv /opt/sup /opt/sup.save
+sudo mv -v sup /opt/sup

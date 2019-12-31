@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... Sysadmin
+
+# restart systemd process
+cd /usr/lib/systemd/system/
+while true
+do
+  service=$(stest -fl . \
+    | sort  \
+    | sed '1i[ daemon-reload ]\n[ list services ]\n[ list-unit-files ]' \
+    | $(dmenu) -p 'Restart Service') || break
+
+  # do not fork urxvt (with ~/bin/urxvt)
+  case $service in
+    '[ daemon-reload ]')    sudo systemctl daemon-reload
+                            notify "Systemd daemon-reload"
+                            break
+                            ;;
+    '[ list services ]')    /usr/bin/urxvt -title 'list services' -e systemctl --type service --all ;;
+    '[ list-unit-files ]')  /usr/bin/urxvt -title 'list-unit-files' -e systemctl list-unit-files
+                            ;;
+    *)                      sudo systemctl restart $service
+                            notify "Systemd restart" "$(sudo systemctl status $service)"
+                            break
+                            ;;
+  esac
+done

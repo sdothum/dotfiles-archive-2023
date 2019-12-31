@@ -1,0 +1,74 @@
+#!/usr/bin/zsh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Set monitors
+
+# dynamic desktop width with conky panel for single/dual monitor setup
+
+# display coordinates XxY+Z+0 ( primary secondary )
+# with monitor displaying conky as primary
+display=( 0x0+0+0 0x0+0+0 )
+X=( 0 0 )
+Y=( 0 0 )
+Z=( 0 0 )
+
+# X, Y, offset coordinates (zsh specific arrays used)
+xyz() {
+  monitor=$1
+  shift
+  display[$monitor]=$(echo $@ | sed 's/.* \([0-9]*x[0-9]*[+][0-9]*[+][0-9]*\) .*/\1/')
+  X[$monitor]=$(echo $display[$monitor] | cut -dx -f1)
+  Y[$monitor]=$(echo $display[$monitor] | cut -dx -f2 | cut -d+ -f1)
+  Z[$monitor]=$(echo $display[$monitor] | cut -d+ -f2 | cut -d+ -f1)
+  echo "display=$display  X=$X  Y=$Y  Z=$Z"
+}
+
+displays=$(xrandr | grep ' connected ')
+echo $displays
+# "primary" designation implies multihead setup
+if echo $displays | grep -q primary; then
+  xyz 1 "$(echo $displays | grep primary)"
+  xyz 2 "$(echo $displays | grep -v primary)"
+else
+  xyz 1 "$(echo $displays)"
+fi
+
+# margin tweaks for known display resolutions
+case $X[1] in
+  2560)   desktop_margin=76 ;;
+  1440)   desktop_margin=43 ;;
+  *)      desktop_margin=0  ;;
+esac
+
+# current default monitor setup
+primary=$(herbstclient list_monitors | grep '^0:' | cut -d' ' -f2)
+secondary=$(herbstclient list_monitors | grep '^1:' | cut -d' ' -f2)
+
+# with transparent compton window borders, calculations assume..
+# - frame_border_width=0
+# - smart_frame_surroundings=0
+# - smart_window_surroundings=0
+conky_width=$(( $(grep 'maximum_width' ~/.conkyrc | awk '{ print $2 }') + $(grep 'border_outer_margin' ~/.conkyrc | awk '{ print $2 }') * 2 ))
+frame_gap=$(grep '^hc set frame_gap' ~/.config/herbstluftwm/conf/theme | awk '{ print $4 }')
+window_gap=$(grep '^hc set window_gap' ~/.config/herbstluftwm/conf/theme | awk '{ print $4 }')
+window_frame=$(( $window_gap + $frame_gap ))
+margin=$(( $desktop_margin - $window_frame ))
+window_margin=$(( $window_frame + $margin ))
+
+# adjust virtual monitor dimensions to set fixed visual window margins
+case "$@" in
+  conky)                  primary=$(( $X[1] - $conky_width + $frame_gap - $margin ))x$(( $Y[1] - $margin*2 ))+$(( $Z[1] + $margin ))+$margin ;;
+  conky*fullscreen)       primary=$(( $X[1] - $conky_width - $window_gap - $window_margin ))x$(( $Y[1] - $window_margin*2 ))+$(( $Z[1] + $window_margin ))+$window_margin ;;
+  fullframe)              primary=$(( $X[1] - $margin*2 ))x$(( $Y[1] - $margin*2 ))+$(( $Z[1] + $margin ))+$margin ;;
+  fullscreen)             primary=$display[1] ;;
+                          # create identical secondary monitor margins using dot pitch adjustment
+  secondary)              margin=$(echo $margin | awk '{ print int($1 * 0.25 / 0.282 + 0.5) }')
+                          # adjust secondary monitor visual margin to primary using dot pitch ratio!
+                          secondary=$(( $X[2] - $margin*2 ))x$(( $Y[2] - $margin*2 ))+$margin+$margin
+                          ;;
+  secondary*fullscreen)   secondary=$display[2] ;;
+esac
+
+herbstclient set_monitors $primary $secondary

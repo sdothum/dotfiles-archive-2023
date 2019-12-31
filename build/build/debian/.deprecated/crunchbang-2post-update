@@ -1,0 +1,40 @@
+#!/bin/bash
+# prerequisites for build scripts and functions
+
+# sudo aptitude install fish
+~/bin/install/install-fishfish
+[ ! -f /etc/shells.original ] && sudo cp -v /etc/shells /etc/shells.original
+sudo cp -v /home/shum/Dropbox/debian/.config/etc/shells /etc/shells
+[ -f /usr/local/bin/fish ] && sudo chsh --shell /usr/local/bin/fish shum || sudo chsh --shell /usr/bin/fish shum
+
+sudo aptitude install vim-nox vim-gtk
+# sudo aptitude install xfce4-terminal
+# sudo aptitude install notion stalonetray
+
+sudo aptitude install xmonad libghc-xmonad-dev libghc-xmonad-doc xfonts-base trayer
+sudo aptitude install lm-sensors
+~/bin/install/install-dzen2
+echo xmonad > /home/shum/.windowmanager
+# sudo aptitude install xmonad
+# echo xmonad > /home/shum/.windowmanager
+~/bin/install/install-infinality
+
+# disable display manager and enable auto login
+[ -f /usr/sbin/gdm ] && sudo update-rc.d -f gdm remove
+[ -f /usr/bin/slim ] && sudo update-rc.d -f slim remove
+sudo cp -v /etc/inittab /etc/inittab.original
+sudo cp -v /home/shum/Dropbox/debian/.config/etc/inittab /etc/inittab
+
+[ ! -f /etc/group.original ] && sudo cp -v /etc/group /etc/group.original
+sudo cp -v /home/shum/Dropbox/debian/.config/etc/group /etc/group
+#fish -c "annotate 'add $USER to ntp group in /etc/group'" -- for ntpdate only?
+[ ! -f /etc/sudoers.d/README.original ] && sudo cp -v /etc/sudoers.d/README /etc/sudoers.d/README.original
+sudo cp -v /home/shum/Dropbox/debian/.config/etc/sudoers.d/README /etc/sudoers.d/README
+
+# new install flag (see crunchbang-4install)
+touch /home/shum/.new-install
+
+[ $(ls -l /dev/sd*1 | wc -l) -gt 2 ] && ~/bin/install/install-zfs
+
+echo '.. complete build with "script && crunchbang-3install"'
+

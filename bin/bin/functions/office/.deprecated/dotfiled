@@ -1,0 +1,30 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ${_colors_} defined in env
+
+# ..................................................................... Git diff
+
+# Usage: cd /net/depot/dotfiles/<source directory> ; dotfiled
+
+
+# diff all source files with local image
+src=${PWD#*dotfiles/}
+src=$HOME/${src#*/}
+
+for i in $(find . -type f | egrep -v '.deprecated|.hg')
+do
+  echo "${_YELLOW_}$i${_nocolor_}"
+  # git diff from prezto $(which diff), run in git repository directory
+  git --no-pager diff --color=auto --no-ext-diff --no-index $i $src/$i ||
+      if [ -e $i ] && [ -e $src/$i ] ;then
+        if-no "vdiff $i" || vimdiff -gf --role='gvimdiff' $i $src/$i
+      else
+        if-yes 'unmatched source file' || break
+      fi
+done
+
+# vim: set ft=sh: #

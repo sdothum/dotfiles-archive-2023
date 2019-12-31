@@ -1,0 +1,14 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Package manager
+
+# package history
+__ph() {
+  egrep '\[ALPM\] (installed|reinstalled|upgraded)' /var/log/pacman.log
+}
+
+[[ $* ]] && __ph | grep "$@" || __ph
+
+# vim: set ft=zsh: #

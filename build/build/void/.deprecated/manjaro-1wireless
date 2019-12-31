@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ $(hostname) = monad ]; then
+  sudo systemctl stop NetworkManager
+  sudo systemctl stop NetworkManager-wait-online
+  sudo systemctl disable NetworkManager
+  sudo systemctl disable NetworkManager-wait-online
+  sudo cp /etc/netctl/examples/wireless-wpa /etc/netctl/wireless-wpa
+  essid=s/ESSID=.*/ESSID=$(wpa_passphrase "Ravens" "the keys of enoch" | grep ssid | sed 's/.*\(".*"\)/\1/')/
+  key=s/Key=.*/Key=\\\\\"$(wpa_passphrase "Ravens" "the keys of enoch" | grep "[^#]psk" | sed 's/.*=\(.*\)/\1/')/
+  sudo sed -i -e $essid -e $key /etc/netctl/wireless-wpa
+  echo ":: set up wireless for remaining steps"
+  # sudo pacman -S wicd
+  # sudo wicd &
+  # sudo wicd-curses
+  # sudo wifi-menu -o
+  # sudo systemctl start wireless-wpa
+  # sudo systemctl enable wireless-wpa
+  sudo netctl wireless-wpa
+  # sudo pacman -Rns networkmanager networkmanager-dispatcher-ntpd
+fi

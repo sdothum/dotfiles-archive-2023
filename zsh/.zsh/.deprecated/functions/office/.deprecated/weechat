@@ -1,0 +1,20 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ..................................................................... IRC chat
+
+# prevent triggering irc connection spamming
+if [[ -e ~/.weechat/.start ]] ;then
+  since=$(( $(date +%s) - $(< ~/.weechat/.start) ))
+  if [[ $since -lt 600 ]] ;then
+    echo ".. patience!"
+    sleep $(( 600 - $since ))
+  fi
+fi
+date +%s > ~/.weechat/.start
+
+channels=$(grep '^freenode=' ~/build/archlinux/post_install/weechat | sed -e 's/freenode=//' -e 's/"//g')
+command weechat -r "/set irc.server.freenode.autojoin '$channels'"
+
+# vim: set ft=zsh: #

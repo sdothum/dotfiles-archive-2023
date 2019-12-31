@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................... Sound volume +/- 5%
+
+case "$@" in
+  +1)   if [[ -f /usr/bin/pulseaudio-ctl ]]; then
+          pulseaudio-ctl up;
+        else
+          V=$(( $(amixer -c 0 sget Master | grep '  Mono' | cut -d' ' -f5) + 3 ));
+          [[ $V -le 100 ]] && amixer -c 0 sset Master $V;
+        fi
+        ;;
+  -1)   if [[ -f /usr/bin/pulseaudio-ctl ]]; then
+          pulseaudio-ctl down;
+        else
+          V=$(( $(amixer -c 0 sget Master | grep '  Mono' | cut -d' ' -f5) - 3 ));
+          [[ $V -ge 0 ]] && amixer -c 0 sset Master $V;
+        fi
+        ;;
+  0|*)  if [[ -f /usr/bin/pulseaudio-ctl ]]; then
+          pulseaudio-ctl mute;
+        else
+          amixer -c 0 sset Master toggle;
+        fi
+        ;;
+esac

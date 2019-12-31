@@ -1,0 +1,19 @@
+#!/usr/bin/env fish
+
+log "... script installing pavolume"
+
+install python3-gi
+
+cd /data/depot/media/pavolume
+[ -d pavolume ]; and sudo rm -rf pavolume
+[ -d docopt ]; and sudo rm -rf docopt
+git clone https://github.com/sseemayer/pavolume.git
+git clone https://github.com/docopt/docopt.git
+
+cd pavolume
+sudo cp -v pavolume pulseaudio.py /usr/local/bin
+ln -sfv ~/Dropbox/debian/.config/pavolume ~/.config/
+
+cd ../docopt
+sudo cp -v docopt.py /usr/local/bin
+

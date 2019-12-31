@@ -1,0 +1,78 @@
+
+# sdothum - 2016 (c) wtfpl
+
+# fresh arch pre-installer
+
+partition() { 
+  if fdisk -l -o Name $device | grep -q $1 ;then
+    fdisk -l $device | tail -$(fdisk -l -o Name $device | tac | grep -n $1 | cut -d: -f1) | head -1 | cut -d' ' -f1 
+  else
+    echo ''
+  fi
+}
+
+separator() { echo $(head -c $(echo "$1" | wc -L) </dev/zero | tr '\0' '-'); }
+
+drawline() {
+  [ $1 ] && linechar=$1 || linechar='.'
+  width=$(tput cols)
+  head -c $width </dev/zero | tr '\0' "$linechar" | cut -b -$width
+}
+
+heading() {
+  echo; echo
+  echo "$@" | tr '[:lower:]' '[:upper:]'
+  drawline '-'
+  echo
+}
+
+checkpoint() {
+  echo
+  while : ;do
+    echo -n "continue? [yes]/no/shell :"
+    read REPLY
+    reply=$(echo $REPLY | sed -r 's/^(.).*/\1/')
+    case $reply in
+      y | '') return ;;
+      n     ) exit ;;
+      s     ) bash -i ;;
+    esac
+  done
+  echo
+}
+
+original() { [ -f $@.original ] || cp -v $@ $@.original; }
+
+connect() {
+  if [ $(cat /sys/class/net/enp1s0/openstate 2>/dev/null) = up ] ;then
+    heading 'connecting enp1s0'
+    dhcpcd eth0
+  else
+    wlan0=$(iw dev | grep Interface | sed 's/.*Interface //')
+    heading "connecting $wlan0"
+    ip link set $wlan0
+    wifi-menu $wlan0
+    while ! ping -c1 www.google.com >/dev/null 2>&1 ;do echo -n .; sleep 1; done
+    echo
+  fi
+}
+
+config_install() {
+  if [ -e /media/home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /media/home/$user/build/root/$1 $1)
+  elif [ -e /home/$user/build/root/$1 ] ;then
+    echo '-> copying '$(cp -v --no-preserve=mode,ownership /home/$user/build/root/$1 $1)
+  else
+    echo "-> $user/build/root/$1 not found"
+  fi
+}
+
+pm_install() {
+  echo
+  width=$(tput cols)
+  echo "$(date '+%a %-I:%M %S%P') :: $@ $(drawline)" | cut -b -$width
+  echo
+  pacman -S --noconfirm $@
+}
+
+# vim: set ft=sh: #

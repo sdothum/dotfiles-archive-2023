@@ -1,0 +1,14 @@
+
+# Logging
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ${_colors_} defined in .zshenv
+
+# .................................................................. Sub-heading
+
+# with time stamp
+echo
+heading $@
+is_arch && echo "$(timestamp)" || echo
+
+# vim: set ft=zsh: #

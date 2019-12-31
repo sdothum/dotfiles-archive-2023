@@ -1,0 +1,38 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="toggle/max $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ............................................................ Toggle max layout
+
+# flat ui panel refresh (border width 0 suppresses pulsing borders)
+set_layout() {
+  herbstclient set_layout $1
+  touch_panel
+}
+
+restore tiled
+# restore layout if in fullscreen, as max is just one keystroke away
+if is fullscreen ;then
+  # don't flip out of monocle mode, see toggle fullscreen (also monocle aware)
+  if [ -e $MONOCLE ] ;then
+    herbstclient chain . lock . fullscreen toggle . set_layout max . unlock
+  else
+    toggle fullscreen
+  fi
+else
+  layout=$(herbstclient dump '' '@' | sed -r 's/[^ ]* ([^:]*).*/\1/')
+  tag=$HLWM:tag:$(herbstclient attr monitors.focus.tag)
+  if [ $layout != max ] ;then
+    echo $layout >$tag
+    set_layout max
+  elif [ -e $tag ] ;then
+    set_layout $(cat $tag)
+    rm -f $tag
+  else
+    herbstclient cycle_layout 1 vertical
+  fi
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,34 @@
+# Maintainer: speps <speps at aur dot archlinux dot org>
+
+_name=autokey
+pkgname=$_name-data
+pkgver=0.90.4
+pkgrel=5
+pkgdesc="A text expansion/replacement and hotkey utility for Linux and X11."
+arch=('any')
+url="http://code.google.com/p/autokey/"
+license=('GPL3')
+depends=('wmctrl' 'hicolor-icon-theme' 'python2-dbus'
+         'python2-xlib' 'python2-pyinotify' 'zenity')
+optdepends=('pyatspi: at-spi support')
+conflicts=("$_name")
+install="$pkgname.install"
+source=("http://autokey.googlecode.com/files/autokey-$pkgver.tar.gz")
+md5sums=('c2a74ddc2cb06c9798b7fa57fd65019a')
+
+_python2_fix() {
+  sed -i "s_env python_&2_" \
+    `grep -rl "env python" "$pkgdir"`
+}
+
+package() {
+  cd "$srcdir/$_name-$pkgver"
+  python2 setup.py install --prefix=/usr --root="$pkgdir/"
+
+  # remove GUI stuff
+  rm -rf "$pkgdir/usr/lib/python2.7/site-packages/$_name/"{gtk,qt}*
+  rm -rf "$pkgdir/usr/share/"{kde4,applications}
+  rm -f "$pkgdir/usr/"{bin,share/man/man1}/$_name-{gtk,qt}*
+
+  _python2_fix
+}

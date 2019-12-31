@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo " -> update pacman mirrorlist"
+echo " .. press return to continue"
+read
+# sudo pacman-mirrors -g -b testing
+sudo pacman-mirrors -g
+sudo pacman -Syy

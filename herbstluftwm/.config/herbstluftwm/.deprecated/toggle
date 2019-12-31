@@ -1,0 +1,307 @@
+#!/bin/sh
+
+# X11 System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Toggle cinema mode
+
+toggle_cinema() {
+  # toggle / black out (secondary) screen
+  if [[ $(herbstclient list_monitors | wc -l) -gt 1 ]]; then
+    if xdotool search --onlyvisible --classname 'blackscreen'; then
+      kill -9 $(pgrep -f blackscreen)
+      dscreensaver on
+    else
+      # cleanup any black screens on other desktops
+      pgrep -f blackscreen && kill -9 $(pgrep -f blackscreen)
+      # for toggling, spawn own urxvt instance (not client)
+      SHELL=/bin/sh /usr/bin/urxvt -sh 10 -fg black -bg black -cr black -title 'blackscreen' -name 'blackscreen' &
+      draw monitor secondary fullscreen
+      dscreensaver off
+    fi
+  else
+    dscreensaver
+  fi
+}
+
+# ............................................................... Toggle compton
+
+toggle_compton() {
+  if pidof compton; then
+    # rm -f ~/.compton
+    killall compton
+    killall xscreensaver
+  else
+    # touch ~/.compton
+    compton &
+    xscreensaver -no-splash &
+  fi
+}
+
+# ................................................. Toggle conky desktop padding
+
+# dynamic desktop width with conky panel
+conky_monitor() {
+  if [[ $(herbstclient attr clients.focus.fullscreen) = true ]]; then
+    draw monitor conky fullscreen
+  else
+    draw monitor conky
+  fi
+}
+
+toggle_conky() {
+  if [[ $(xrandr | grep '*' | cut -dx -f1 | sort | tail -1) -gt 1024 ]]; then
+    if xdotool search --onlyvisible --classname 'Conky' windowunmap; then
+      [[ $(herbstclient attr clients.focus.fullscreen) = true ]] \
+        && draw monitor fullscreen \
+      || draw monitor fullframe
+    else
+      if ! xdotool search --classname 'Conky' windowmap; then
+        conky -q -c ~/.conkyrc &
+        xdotool search --sync --onlyvisible --classname 'Conky'
+      fi
+      if herbstclient list_monitors | grep '^0:.*\[FOCUS\]'; then
+        conky_monitor
+      else
+        herbstclient chain lock . focus_monitor 0
+        conky_monitor
+        herbstclient chain . focus_monitor 1 . unlock
+      fi
+    fi
+  else
+    xdotool search --onlyvisible --classname 'Conky' windowunmap \
+    || xdotool search --classname 'Conky' windowmap \
+    || ( conky -q -c ~/.conkyrc & )
+  fi
+}
+
+# ........................................................... Toggle smart focus
+
+toggle_focus() {
+  if [[ -e ~/.dynamic ]]; then
+    rm -f ~/.dynamic
+    notify "Smart Focus" Off
+  else
+    touch ~/.dynamic
+    notify "Smart Focus" On
+    focus window
+  fi
+}
+
+# ...................................................... Toggle conky fullscreen
+
+toggle_fullscreen() {
+  # fullscreen with conky panel
+  herbstclient lock
+  if [[ $(xrandr | grep '*' | cut -dx -f1 | sort | tail -1) -gt 1024 ]]; then
+    if herbstclient list_monitors | grep '^0:.*\[FOCUS\]'; then
+      if xdotool search --onlyvisible --classname 'Conky'; then
+        [[ $(herbstclient attr clients.focus.fullscreen) = true ]] \
+          && draw monitor conky \
+        || draw monitor conky fullscreen
+      else
+        # handle frame no conky
+        [[ $(herbstclient attr clients.focus.fullscreen) = true ]] \
+          && draw monitor fullframe \
+        || draw monitor fullscreen
+      fi
+    else
+      [[ $(herbstclient attr clients.focus.fullscreen) = true ]] \
+        && draw monitor secondary \
+      || draw monitor secondary fullscreen
+    fi
+  fi
+  herbstclient chain . fullscreen toggle . unlock
+}
+
+# ............................................................ Toggle max layout
+
+toggle_max() {
+  if [[ $(herbstclient attr clients.focus.fullscreen) = true ]]; then
+    toggle_fullscreen
+  else
+    layout=$(herbstclient dump '' '@' | sed 's/[^ ]* \([^:]*\).*/\1/')
+    tag=/tmp/herbstluftwm:tag:$(herbstclient attr monitors.focus.tag)
+    if [[ $layout != max ]]; then
+      echo $layout > $tag
+      herbstclient set_layout max
+    elif [[ -e $tag ]]; then
+      herbstclient set_layout $(< $tag)
+      rm -f $tag
+    else
+      herbstclient cycle_layout 1
+    fi
+  fi
+}
+
+# ................................................................. Toggle panel
+
+panel_fifo=/tmp/herbstluftwm:monitor-fifo
+panel_font="Arial:size=8"
+panel_height=16
+tag_pad="  "
+
+default_fg='#BCBEC2'
+default_bg='#242C2E'
+active_fg=$default_fg
+active_bg='#762508'
+inactive_fg=$default_fg
+inactive_bg='#053847'
+hidden_fg='#11BCED'
+hidden_bg=$default_bg
+occupied_fg='#AFAE9C'
+occupied_bg=$default_bg
+free_fg='#6F7277'
+free_bg=$default_bg
+title_fg=$default_fg
+title_bg=$default_bg
+status_fg=$default_fg
+status_bg=$default_bg
+
+panel() {
+  # fifo read loop
+  while read -r line
+  do
+    case $line in
+      *_changed*) active=$(query desktop focus)
+                  inactive=$(query desktop)
+                  unset tags
+                  for i in $(herbstclient attr clients | grep '0x')
+                  do
+                    tags="$tags $(herbstclient attr clients.$i.tag)"
+                  done
+                  unset desktops
+                  for i in $(seq 1 9) 0
+                  do
+                    if echo "$tags" | grep -q "$i"; then
+                      echo "$tags" | grep -q " $i" && visible=true || unset visible
+                      echo "$tags" | grep -q "'$i" && hidden=true || unset hidden
+                      if [[ $i -eq $active ]]; then
+                        format="%{B$active_bg}"
+                        [[ $visible ]] && format="${format}%{F$occupied_fg}" || format="${format}%{F$free_fg}"
+                        [[ $hidden ]] && format="${format}${tag_pad}%{U$hidden_fg}%{+u}"
+                      elif [[ $i -eq $inactive ]]; then
+                        format="%{B$inactive_bg}"
+                        [[ $visible ]] && format="${format}%{F$occupied_fg}" || format="${format}%{F$free_fg}"
+                        [[ $hidden ]] && format="${format}${tag_pad}%{U$hidden_fg}%{+u}"
+                      else
+                        format="%{B$default_bg}"
+                        [[ $visible ]] && format="${format}%{F$occupied_fg}" || format="${format}%{F$free_fg}"
+                        [[ $hidden ]] && format="${format}${tag_pad}%{U$hidden_fg}%{+u}"
+                      fi
+                    else
+                      unset visible
+                      unset hidden
+                      if [[ $i -eq $active ]]; then
+                        format="%{F$free_fg}%{B$active_bg}"
+                      elif [[ $i -eq $inactive ]]; then
+                        format="%{F$free_fg}%{B$inactive_bg}"
+                      else
+                        format="%{F$free_fg}%{B$default_bg}"
+                      fi
+                    fi
+                    [[ $hidden ]] && unset leader || leader="${tag_pad}"
+                    desktops="${desktops}${format}${leader}${i}%{-u}${tag_pad}%{U-}%{B-}%{F-}"
+                  done
+                  ;;
+      S*)         system="%{F$free_fg}%{B$status_bg} ${line#?} %{B-}%{F-}" ;;
+      T*)         title="%{F$free_fg}%{B$title_bg} $(query window) %{B-}%{F-}" ;;
+    esac
+    # printf "%s\n" "%{l}${desktops}%{c}${title}%{r}${system}"
+    printf "%s\n" "%{l}${title}%{c}${desktops}%{r}${system}"
+  done
+}
+
+toggle_panel() {
+  # use secondary monitor of this multihead
+  monitor=$(( $(herbstclient list_monitors | wc -l) - 1 ))
+
+  herbstclient pad $monitor 0 0 0 0
+  if (( $(pgrep -f "cat $panel_fifo") )); then
+    pkill xtitle
+    pkill clock
+    kill -9 $(pgrep -f 'herbstclient --idle \.\*_changed')
+    kill -9 $(pgrep -f "cat $panel_fifo")
+    kill -9 $(pgrep -f 'toggle panel')
+    exit
+  fi
+
+  herbstclient pad $monitor 0 0 $panel_height 0
+  # set panel monitor and width (don't span monitors)
+  width=$(xrandr | grep '*' | cut -dx -f1 | sort | head -1)
+
+  # startup event message to initialize desktop info
+  (sleep 0.2s && herbstclient emit_hook _changed) &
+
+  [ -e $panel_fifo ] && rm $panel_fifo
+  mkfifo $panel_fifo
+  clock -sf "S%A  %-d %b '%y    %-I:%M %p" > $panel_fifo &
+  herbstclient --idle '.*_changed' > $panel_fifo &
+  xtitle -sf 'T%s' > $panel_fifo &
+
+  # refresh!
+  cat $panel_fifo | panel | lemonbar -b -g ${width}x$panel_height -f "$panel_font" -F "$default_fg" -B "$default_bg" &
+  wait
+}
+
+# ............................................................ Toggle scratchpad
+
+# toggle scratchpad, hence, manual window placement control versus use of emit_hook
+scratchpad=/tmp/herbstluftwm:scratchpad
+
+toggle_scratchpad() {
+  if xdotool search --onlyvisible --classname 'scratchpad'; then
+    if [[ $(herbstclient attr monitors.focus.tag) = $(herbstclient attr clients.$(< $scratchpad).tag) ]]; then
+      xdotool search --onlyvisible --classname 'scratchpad' windowunmap
+      focus_window
+      exit
+    fi
+  fi
+
+  focus frame
+
+  if [[ -f $scratchpad ]]; then
+    if ! herbstclient bring $(< $scratchpad); then
+      xdotool search --classname 'scratchpad' windowmap && exit
+      # otherwise, old instance probably killed or closed..
+    fi
+  fi
+
+  # case new instance
+  if ! xdotool search --classname 'scratchpad' windowmap; then
+    which byobu 2>/dev/null && screen='-e byobu' || screen='-pe tabbed &'
+    urxvt -title 'scratchpad' -name 'scratchpad' $screen
+    xdotool search --sync --onlyvisible --classname 'scratchpad'
+    herbstclient attr clients.focus.winid > $scratchpad
+  fi
+}
+
+# ............................................................. Toggle unclutter
+
+toggle_unclutter() {
+  if pidof unclutter; then
+    killall unclutter
+    herbstclient set focus_follows_mouse 1
+  else
+    # add delay for tabbed vim
+    [[ -e ~/.unclutter ]] && sleep $(< ~/.unclutter)
+    unclutter -idle 1 -jitter 2 -root &
+    herbstclient set focus_follows_mouse 0
+  fi
+}
+
+# toggle
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+
+case $@ in
+  cinema)       toggle_cinema ;;
+  compton)      toggle_compton ;;
+  conky)        toggle_conky ;;
+  focus)        toggle_focus ;;
+  fullscreen)   toggle_fullscreen ;;
+  max)          toggle_max ;;
+  panel)        toggle_panel ;;
+  scratchpad)   toggle_scratchpad ;;
+  unclutter)    toggle_unclutter ;;
+  *)            echo ".. toggle  cinema | compton | conky | focus | fullscreen | max | panel | scratchpad | unclutter" ;;
+esac

@@ -1,0 +1,72 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="focus/hlwm $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................. Focus window
+
+# focus active or (raise) hidden window
+# Usage: hlwm focus (switch to window)
+#        hlwm bring (bring window to current tag)
+
+DLM='$'
+
+if [ "$*" ] ;then
+  mode='Raise'
+  tag=$(herbstclient attr monitors.focus.tag)
+  title=" to $(query tname $tag)"
+else
+  mode='Focus'
+fi
+
+tag() {
+  # tags represented as box tag, empty box as hidden tick'tag
+  echo $TAG | grep -q "'" &&
+    echo "$INVISIBLE ${TAG#\'}" ||
+    echo "$VISIBLE $TAG"
+}
+
+for i in $(query winids)
+do
+  TAG=$(herbstclient attr clients.$i.tag)
+  window="$TAG$DLM$(query wtitle $i) ^$(tag)$DLM$i"
+  [ "$windows" ] &&
+    windows="$windows\n$window" ||
+    windows="$window"
+done
+
+# ........................................................................ Dmenu
+
+if window=$(echo $windows |
+            sort |
+            cut -d$DLM -f2 |
+            column -s\^ -t |
+            dmenu "$mode Window$title" -no-custom) || exit ;then
+  # restore ^$SEP, see query wtitle
+  window=$(echo $window | sed -re "s/ *([$VISIBLE$INVISIBLE])/ ^\1/" -e "s/ *($SEP)/^\1/")
+  window=$(echo $windows | grep "$window")
+  TAG=$(echo $window | cut -d$DLM -f1)
+  focus frame
+  # bring window
+  if [ "$*" ] ;then
+    herbstclient bring "$(echo $window | cut -d$DLM -f3)"
+  else
+    touch $LOCK
+    swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
+    herbstclient chain . lock . set swap_monitors_to_get_tag 0
+    if echo $window | grep " $VISIBLE [0-9]" ;then
+      # focus normal tag
+      herbstclient chain . use "$TAG" . jumpto "$(echo $window | cut -d$DLM -f3)"
+    else
+      # focus (restore) tick'tag
+      herbstclient chain . use "$TAG" . bring "$(echo $window | cut -d$DLM -f3)"
+    fi
+    herbstclient chain . set swap_monitors_to_get_tag $swap_monitors . unlock
+    rm -f $LOCK
+    restore panel
+  fi
+  echo $window | grep " $INVISIBLE [0-9]${DLM}0x" && query ttag $TAG
+fi
+
+# vim: set ft=sh: #

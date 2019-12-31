@@ -1,0 +1,12 @@
+
+# [ $TRACE ] && CHILD="query/monitor $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Monitor
+
+# return focused monitor
+herbstclient attr monitors.focus.index
+
+# vim: set ft=sh: #

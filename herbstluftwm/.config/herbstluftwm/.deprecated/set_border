@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................... Set active border color
+
+# highlight stacked windows 
+tag=$(herbstclient attr monitors.focus.tag)
+# kill any previous instance of border highlighting, see autostart
+pkill pulsar_border
+
+# visually highlight border for stacked windows
+if [[ $(herbstclient attr tags.$tag.curframe_wcount) -gt 1 ]]; then
+  herbstclient layout | grep '\[FOCUS\]'  | grep -q 'max:' && pulsar_border
+else
+  herbstclient attr theme.active.color '#93E0F7'
+fi

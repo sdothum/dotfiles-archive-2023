@@ -1,0 +1,21 @@
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Prompts
+
+# if no || ..
+underline $@
+
+while true
+do
+  read "CONTINUE?continue? [no]/yes : "
+  echo
+  if [[ $CONTINUE = [yY] ]] ;then
+    return 1
+  elif [[ -z $CONTINUE || $CONTINUE = [nN] ]] ;then
+    return 0
+  fi
+done
+
+# vim: set ft=zsh: #

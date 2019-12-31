@@ -1,0 +1,30 @@
+
+# Shell
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Tests
+
+# meter process
+# Usage: progressbar_on 'process identifier' [comment]
+
+[[ $interval ]] || interval=1.5s
+
+if [[ $* ]] ;then
+  # disable job control (messages)
+  set +m
+  setterm -cursor off
+  printf "${_YELLOW_}"
+  [[ $2 ]] && echo "->> $2"
+  while p "$1" | grep -v progressbar_on >/dev/null
+  do
+    printf "${_YELLOW_}$gauge╼${_red_}"
+    sleep $interval
+    gauge='\b─'
+  done
+  setterm -cursor on
+  echo "${_nocolor_}"
+  # restore job control (default)
+  set -m
+fi
+
+# vim: set ft=zsh: #

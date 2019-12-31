@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Toggle status bar
+
+export PANEL_FIFO=/tmp/herbstluftwm:monitor-fifo
+export PANEL_FONT_FAMILY="Arial:size=8"
+export PANEL_HEIGHT=16
+# use secondary monitor of this multihead
+monitor=$(( $(herbstclient list_monitors | wc -l) - 1 ))
+
+herbstclient pad $monitor 0 0 0 0
+if (( $(pgrep -cx panel) )); then
+  pkill panel_bar
+  pkill panel
+  exit
+fi
+
+herbstclient pad $monitor 0 0 $PANEL_HEIGHT 0
+# event message to initialize desktop info
+(sleep 0.2s && herbstclient emit_hook _changed) &
+exec panel

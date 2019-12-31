@@ -1,0 +1,114 @@
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Toggle panel
+
+# panel config
+monitor=${@:-0}
+panel_fifo=/tmp/herbstluftwm:monitor-$monitor-fifo
+panel_font="Arial:size=8"
+utf8_font="DejaVu Sans Mono for Powerline:size=8"
+panel_height=18
+tag_pad="  "
+
+# panel colors
+default_bg='#242C2E'
+active_bg='#762508'
+inactive_bg='#053847'
+default_fg='#6F7277'
+free_fg='#56585C'
+hidden_fg='#11BCED'
+occupied_fg='#C6C5B8'
+
+panel() {
+  last_count=-1
+  # fifo read loop
+  while read -r line
+  do
+    case $line in
+      *_changed*)
+        active=$(query desktop focus)
+        inactive=$(query desktop)
+        unset tags
+        for i in $(herbstclient attr clients | grep '0x')
+        do
+          tags="$tags $(herbstclient attr clients.$i.tag)"
+        done
+        unset desktops
+        for i in $(seq 1 9) 0
+        do
+          if echo "$tags" | grep -q "$i" ;then
+            echo "$tags" | grep -q " $i" && visible=true || unset visible
+            echo "$tags" | grep -q "'$i" && hidden=true || unset hidden
+            if [[ $i. = $active. ]] ;then
+              format="%{B$active_bg}"
+              [[ $visible ]] && format="${format}%{F$occupied_fg}" || format="${format}%{F$free_fg}"
+              [[ $hidden ]] && format="${format}${tag_pad}%{U$hidden_fg}%{+u}"
+            elif [[ $i. = $inactive. ]] ;then
+              format="%{B$inactive_bg}"
+              [[ $visible ]] && format="${format}%{F$occupied_fg}" || format="${format}%{F$free_fg}"
+              [[ $hidden ]] && format="${format}${tag_pad}%{U$hidden_fg}%{+u}"
+            else
+              format="%{B$default_bg}"
+              [[ $visible ]] && format="${format}%{F$occupied_fg}" || format="${format}%{F$free_fg}"
+              [[ $hidden ]] && format="${format}${tag_pad}%{U$hidden_fg}%{+u}"
+            fi
+          else
+            unset visible
+            unset hidden
+            if [[ $i. = $active. ]] ;then
+              format="%{F$free_fg}%{B$active_bg}"
+            elif [[ $i. = $inactive. ]] ;then
+              format="%{F$free_fg}%{B$inactive_bg}"
+            else
+              format="%{F$free_fg}%{B$default_bg}"
+            fi
+          fi
+          [[ $hidden ]] && unset leader || leader="${tag_pad}"
+          desktops="${desktops} ${format}${leader}${i}%{-u}${tag_pad}%{U-}%{B-}%{F-}"
+        done
+        ;;
+
+      S*)
+        system="%{F$default_fg}%{B$default_bg}${line#?}   %{B-}%{F-}" ;;
+
+      T*)
+        if [[ $(herbstclient attr monitors.focus.index) = $monitor ]] ;then
+          if [[ $(query window) = ${line#?} ]] ;then
+            title="%{F$default_fg}%{B$default_bg}   ${line#?}%{B-}%{F-}"
+          else
+            title="%{F$default_fg}%{B$default_bg}   $(query window)   ⮁   ${line#?}%{B-}%{F-}"
+          fi
+        else
+          unset title
+        fi
+        ;;
+    esac
+    # printf "%s\n" "%{l}${desktops}%{c}${title}%{r}${system}"
+    printf "%s\n" "%{l}${title}%{c}${desktops} %{r}${system}"
+  done
+}
+
+# set panel monitor and width (don't span monitors)
+herbstclient pad $monitor 0 0 $panel_height 0
+# geometry has the format: X Y W H
+geometry=( $(herbstclient monitor_rect $monitor) )
+gap=$(( $(herbstclient attr settings.frame_gap) + $(herbstclient attr settings.window_gap) ))
+width=$(( geometry[3] - $gap * 2 ))
+offset=$(( geometry[1] + $gap ))
+
+# refresh!
+[ -e $panel_fifo ] && rm $panel_fifo
+mkfifo $panel_fifo
+clock -sf "S%A   %-d %b '%y   ⮃   %-I:%M %p" > $panel_fifo &
+herbstclient --idle '.*_changed' > $panel_fifo &
+xtitle -sf 'T%s' > $panel_fifo &
+
+cat $panel_fifo \
+| panel \
+| lemonbar -b -d -g ${width}x$panel_height+$offset -u 2 \
+           -f "$panel_font" -f "$utf8_font" -F "$default_fg" -B "$default_bg" &
+wait
+
+# vim: set ft=sh: #

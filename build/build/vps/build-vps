@@ -1,0 +1,103 @@
+#!/bin/sh
+alias ai='aptitude install'
+alias as='aptitude search'
+alias gi='gem install --no-rdoc --no-ri'
+aptitude update
+ai rsync
+ai ruby1.9.1
+ai ruby1.9.1-dev
+ai rubygems
+ai libcurl4-openssl-dev
+ai libssl-dev
+ai libxapian-ruby1.9.1
+ai libxslt1-dev
+gi term-ansicolor
+gi kramdown
+gi mail
+gi rack
+gi sanitize
+gi sinatra
+gi slim
+gi thin
+gi xapian-fu
+gi passenger
+ai php5-common
+ai php5-cgi
+ai php5
+ai php5-fpm
+passenger-install-nginx-module
+
+cp /opt/nginx/conf/nginx.conf /opt/nginx/conf/nginx.conf.original
+sed -e '/^#user  nobody;/cuser  http;' \
+    -e '/passenger_ruby/a\ \ \ \ passenger_log_level 1;' \
+    -e '/default_type/a\ \ \ \ client_max_body_size 2M;' \
+    -e '/^ *location \/ {/,/}/s/^/#/' \
+    -e '/^    }/c\
+\
+        root /srv/http/;\
+        # access_log /srv/http/tt-rss/logs/access.log;\
+        # error_log /srv/http/tt-rss/logs/error.log;\
+        index index.html index.htm index.php;\
+\
+        location / {\
+            try_files $uri $uri/ /index.html;\
+        }\
+\
+        location ~ \\\.php$ {\
+            fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;\
+            fastcgi_index  index.php;\
+            include        fastcgi.conf;\
+            fastcgi_read_timeout 300;\
+        }\
+    }\
+\
+    # "the darnedest thing" web site\
+    server {\
+        listen 80;\
+        server_name thedarnedestthing.com;\
+\
+        access_log /srv/http/thedarnedestthing.com/logs/access.log;\
+        error_log  /srv/http/thedarnedestthing.com/logs/error.log;\
+\
+        root /srv/http/thedarnedestthing.com/application/public;\
+        passenger_enabled on;\
+        passenger_min_instances 1;\
+        passenger_friendly_error_pages on;\
+    }\
+\
+    passenger_pre_start http://thedarnedestthing.com/;' \
+    /opt/nginx/conf/nginx.conf.original | tee /opt/nginx/conf/nginx.conf
+
+sed -e '/^PATH=/s,PATH=,PATH=/opt/nginx/sbin:,' \
+    -e 's/daemonexecutablename/nginx/' \
+    -e '/^DAEMON=/s,/usr/sbin,/opt/nginx/sbin,' \
+    -e 's/^DAEMON_ARGS/#DAEMON_ARGS/' \
+    /etc/init.d/skeleton | tee /etc/init.d/nginx
+chmod 755 /etc/init.d/nginx
+update-rc.d nginx defaults
+
+mkdir -p /srv/http/thedarnedestthing.com/{application,logs,public}
+adduser http
+chown http:http /srv/http
+chown -R shum:shum /srv/http/thedarnedestthing.com
+
+mkdir -p /home/shum/.config/logrotate
+echo '/srv/http/thedarnedestthing.com/logs/*.log {
+daily
+missingok
+rotate 4
+compress
+notifempty
+}
+
+/srv/http/thedarnedestthing.com/application/log/*.log {
+daily
+missingok
+rotate 4
+compress
+notifempty
+}' | tee /home/shum/.config/logrotate/logrotate.conf
+
+echo '0 * * * * /usr/sbin/logrotate -s /tmp/logrotate.status ~/.config/logrotate/logrotate.conf'  | crontab -u shum -
+echo "ssh-copy-id shum@162.250.190.112 from remotes"
+

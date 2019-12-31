@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... yaourt
+
+# speed up install by skipping file compression step
+echo 'PKGEXT=.pkg.tar' >$HOME/.yaourtrc
+
+# vim: set ft=sh: #

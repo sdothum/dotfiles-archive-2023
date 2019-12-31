@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# X11 Desktop
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Composite manager
+
+# /usr/bin/compton
+#   --shadow
+#   --shadow-radius=pixels
+#   --shadow-offset-x=pixels
+#   --shadow-offset-y=pixels
+#   --shadow-opacity=0..1.00
+#   --clear-shadow
+#   --no-dock-shadow
+#   --no-dnd-shadow
+#   --xinerama-shadow-crop
+#   --daemon
+# [[ -f ~/.compton ]] && /usr/bin/compton -c -r 7 -l 0 -t 0 -o 0.75 -z -C -G --xinerama-shadow-crop -b
+# [[ -f ~/.compton ]] && /usr/bin/compton -c -r 6 -l -5 -t -5 -o 0.40 -z -C -G --xinerama-shadow-crop -b
+
+# see ~/.compton.conf
+# [[ -f ~/.compton ]] && /usr/bin/compton --shadow-exclude='name = "pseudoframe"'
+[[ -f ~/.compton ]] && /usr/bin/compton

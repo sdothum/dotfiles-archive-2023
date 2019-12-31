@@ -1,0 +1,13 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................................... mpv
+
+if gpu intel ;then
+  mkdir -p $HOME/.config/mpv
+  sed '/hwdec/chwdec=vaapi' /usr/share/examples/mpv/mpv.conf >$HOME/.config/mpv/mpv.conf
+fi
+
+# vim: set ft=sh: #

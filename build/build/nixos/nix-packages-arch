@@ -1,0 +1,10 @@
+#!/bin/fish
+# check arch package install to nix availability
+
+set list (mktemp)
+# for i in (cat ../archlinux/archlinux-* | grep install | sed -e 's/# //' -e 's/-git//' | awk '{print $2}' | grep '^[a-zA-Z]')
+for i in (cat ../archlinux/archlinux-* | grep install | grep -v '^[ ]*#' | sed -e 's/-git//' -e 's/-gtk.*//' | awk '{print $2}' | grep '^[a-zA-Z]')
+  echo --- $i (grep -q "$i" nix-packages; and echo √; or echo .. MISSING) >> $list
+end
+sort $list
+command rm $list

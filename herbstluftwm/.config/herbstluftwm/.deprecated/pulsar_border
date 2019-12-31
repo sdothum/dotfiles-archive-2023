@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .......................................................... Active border color
+
+frequency=0.035
+
+# pulsing blue sequence
+colors="03252F 053847 074B5F 095D75 0A708E 0C83A6 0E97BE 10A8D4 11BCED 29C3EF 41CAF1 57D0F3 70D7F4 88DEF6 93E0F7 A0E4F8 B6EBFA CFF1FB E7F8FD CFF1FB B6EBFA A0E4F8 93E0F7 88DEF6 70D7F4 57D0F3 41CAF1 29C3EF 11BCED 10A8D4 0E97BE 0C83A6 0A708E 095D75 074B5F 053847 03252F 021216"
+
+pulsar() {
+  while true
+  do
+    for i in $colors
+    do
+      herbstclient attr theme.active.color "#$i"
+      sleep ${frequency}s
+    done
+  done
+}
+
+pulsar &

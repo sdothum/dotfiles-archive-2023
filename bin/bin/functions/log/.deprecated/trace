@@ -1,0 +1,47 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Log
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ${COLORS} defined in env
+
+# .......................................................................... Log
+
+# debug trace
+# set or touch $HOME/.tracelevel to create session persistant tracelevel
+# "trace [0-9]" set global tracelevel, defaults to $HOME/.tracelevel, else 0
+# "trace [1-9] message"
+# "trace message" == "trace 0 message" which always echos
+# "trace" show current tracelevel
+if [ -z $tracelevel ] ;then
+  [ -s $HOME/.tracelevel ] && export tracelevel=$(cat $HOME/.tracelevel) || export tracelevel=0
+fi
+
+if [ -z "$1" ] ;then
+  echo "tracelevel := $tracelevel"
+  exit
+elif echo $1 | grep -q '^[0-9]$' ;then
+  if [ $# -eq 1 ] ;then
+    export tracelevel=$@
+    [ -e $HOME/.tracelevel ] && echo $@ >$HOME/.tracelevel
+    trace
+    exit
+  fi
+  level=$1
+  shift
+  message=$@
+else
+  level=0
+  message=${__WHITE}$@
+fi
+
+if [ $level -le $tracelevel ] ;then
+  log -n "$(timestamp)"
+  # [ $level -gt 0 ] && log -n " ${__RED}$level>"
+  [ $level -gt 0 ] && log -n " ${__RED}$level>"
+  # message passed may contain set_color commands, so reset at end
+  log " ${NOCOLOR}$message${NOCOLOR}"
+fi
+
+# vim: set ft=sh: #

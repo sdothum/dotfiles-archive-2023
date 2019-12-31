@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .................................................................... logrotate
+
+# configure logfile management
+crontab_install logrotate "0 * * * * /usr/sbin/logrotate -s $HOME/tmp/logrotate.status $HOME/.config/logrotate/logrotate.conf"
+
+# vim: set ft=sh: #

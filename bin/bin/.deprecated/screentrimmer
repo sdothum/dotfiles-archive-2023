@@ -1,0 +1,16 @@
+#!/bin/sh
+# kill screensaver instance if more than "n instances" found (see crontab)
+# "screentrimmer 0" to kill any dangling instances
+# echo -n screensaver_name > ~/.screensaver
+
+monitors=$1
+if [[ -z $monitors ]]; then
+  # dual monitors on luna
+  [[ $(hostname) = luna ]] && monitors=2 || monitors=1
+fi
+[[ -f ~/.screensaver ]] && screensaver=$(< ~/.screensaver) || screensaver=euphoria
+
+while [[ $(pidof $screensaver | /usr/bin/wc -l) -gt $monitors ]]; do
+  echo "$screensaver pids .. $(pidof $screensaver)"
+  /bin/kill -9 $(pidof $screensaver | tail -1)
+done

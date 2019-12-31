@@ -1,0 +1,29 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Screenshot
+
+target=/net/photos/batchqueue
+[[ $delay ]] || delay=5s
+
+if is_server ;then
+  case $@ in
+    DVI-0 | left)
+      opts='--geometry=1680x1050+0+0' ;;
+
+    DVI-1 | right)
+      opts='--geometry=2560x1600+1680+0' ;;
+
+    *)
+      opts=( $@ ) ;;
+  esac
+else
+  opts=( $@ )
+fi
+
+png=$(mktemp).png
+sleep $delay && command maim $opts $png
+mv -v $png $target
+
+# vim: set ft=zsh: #

@@ -1,0 +1,60 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ══════════════════════════════════════════════════════════════════════════════
+
+#  ................................................................ Clean drafts
+
+# see alot/config and dmenu compose
+FOLDER=$HOME/drafts
+ARCHIVE=$FOLDER/archive
+DRAFTS=/tmp/clean:drafts
+DIFF=$DRAFTS:diff
+ext=draft
+trap "rm -f $DRAFTS $DIFF" EXIT
+
+mkdir -p $ARCHIVE || exit 1
+
+# first descriptive line of file, mail subject line special case
+hint() {
+  hint=$(grep '^Subject:' $1)
+  [ "$hint" ] || hint=$(grep '[[:alpha:]]' $1 | head -1)
+  echo "$hint"
+}
+
+# archive drafts
+find -L $FOLDER -maxdepth 1 -type f -size 0c -exec rm {} \;
+find -L $FOLDER -maxdepth 1 -type f -mtime +180 -exec notify low 'Archiving draft' {} \; -exec mv {} $ARCHIVE \;
+# list of files
+files=$(find -L $FOLDER -maxdepth 1 -name "*.$ext")
+[ "$files" ] || exit
+
+rm -f $DRAFTS
+for i in $files ;do
+  echo "$(hint $i)^$(stat -c '%y' $i | cut -d- -f1-3)^$i"
+done | sort -k1,2 -t^ >>$DRAFTS
+
+filename() { echo $@ | cut -d^ -f3; }                 # from subject^timestamp^filename
+zero()     { [ $(grep "$@" $DIFF | wc -l) -eq 0 ]; }  # diff stats
+
+# remove partial drafts
+while read draft <&3 ;do
+  # echo $draft
+  [ $last ] || { last=$(filename $draft); continue; }
+  unset remove
+  next=$(filename $draft)
+  diff $last $next | grep '^[<>]' >$DIFF
+  # empty body, matching or partial matches
+  pcregrep -q -M '^Subject:.*\n*Quoting ' $last && remove=true ||
+    zero '^[<>] ' && remove=true ||
+    zero '^[<] '  && remove=true ||
+    zero '^[>] '  && remove=true
+  if [ $remove ] ;then
+    notify low 'Purging partial draft' "[$last]\n$next"
+    mv $last /tmp
+  fi
+  last=$next
+done 3< $DRAFTS
+
+# vim: set ft=sh: #

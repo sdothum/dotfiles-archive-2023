@@ -1,0 +1,101 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Hide window
+
+# hide/unhide window in tick'tag
+visible='□'
+
+hidden_windows() {
+  for i in $(herbstclient attr clients | grep '0x')
+  do
+    if [[ $(herbstclient attr clients.$i.tag) = "'$tag" ]]; then
+      # window=$(herbstclient attr clients.$i | grep 'instance' | cut -d'=' -f2)
+      window=$(herbstclient attr clients.$i.instance)
+      [[ $hidden ]] && hidden="$hidden\n$window" || hidden="$window"
+    fi
+  done
+  [[ $hidden ]] && return 0 || return 1
+}
+
+unhide() {
+  for i in $(herbstclient attr clients | grep '0x')
+  do
+    if [[ $(herbstclient attr clients.$i.instance) = "$@" ]]; then
+      if [[ $(herbstclient attr clients.$i.tag) = "'$tag" ]]; then
+        winid=${i%.}
+        break
+      fi
+    fi
+  done
+  [[ $winid ]] && herbstclient chain . use $tag . emit_hook focus_frame .  bring $winid
+}
+
+
+emit_hook() {
+  process=$(echo $@ | tr '_' ' ')
+  herbstclient emit_hook $@
+
+  # trap hook then wait for completion
+  if [[ -e ~/.dynamic ]]; then
+    while ! pgrep -f "$process"
+    do
+      sleep 0.001s
+    done
+
+    while pgrep -f "$process"
+    do
+      sleep 0.001s
+    done
+  fi
+}
+
+unhide_last() {
+  if herbstclient dump "'$tag"; then
+    # avoid async emit_hook timing (sequence) issues with multi-tag operations
+    emit_hook focus_frame
+    herbstclient chain . lock . use "'$tag"
+    # moving window sometimes isn't visible, so bring window instead !!
+    winid=$(herbstclient attr clients.focus.winid)
+    herbstclient chain . use $tag . bring $winid . unlock
+  fi
+}
+
+tag=$(herbstclient attr monitors.focus.tag)
+case "$@" in
+  +1)   herbstclient dump "'$tag" || herbstclient add "'$tag"
+        herbstclient chain . move "'$tag" . emit_hook focus_window
+        exit
+        ;;
+  -1)   unhide_last ;;
+  0)    # herbstclient dump "'$tag" && herbstclient merge_tag "'$tag" ;;
+        if hidden_windows; then
+          herbstclient lock
+          for i in $(seq 1 $(echo -e $hidden | wc -l))
+          do
+            unhide_last
+          done
+          herbstclient unlock
+        fi
+        ;;
+  *)    if hidden_windows; then
+          if [[ $(echo -e $hidden | wc -l) -gt 1 ]]; then
+            window=$(echo -e $hidden | sort | sed "1i[ all ]\n[ last ]" | $(dwrapper) -p "Raise Window $visible $tag")
+          else
+            window=$(echo -e $hidden | sort | $(dwrapper) -p "Raise Window $visible $tag")
+          fi
+          if [[ $window ]]; then
+            case $window in
+              '[ all ]')    exec hide_window 0 ;;
+              '[ last ]')   exec hide_window -1 ;;
+              *)            unhide "$window" ;;
+            esac
+          fi
+        fi
+        ;;
+esac
+
+# release tick'tag if empty workspace
+query "'tag" $tag

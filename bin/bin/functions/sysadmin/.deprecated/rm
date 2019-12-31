@@ -1,0 +1,18 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# if --force
+if if-opt f "$@" ;then
+  echo $@ | sed -e 's/^\-[[:alnum:]]*//' \
+                -e 's/ \-[[:alnum:]]*//g' \
+                -e 's/^ *//'
+  if-yes "purge these files, no questions asked" || return
+else
+  interactive=-i
+fi
+command rm $interactive $@
+
+# vim: set ft=zsh: #

@@ -1,0 +1,15 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... td-cli
+
+pip3 install --user td-cli
+
+if [ ! -L $HOME/.todo.db ] ;then
+  cd stow >/dev/null
+  stow td-cli
+fi
+
+# vim: set ft=sh: #

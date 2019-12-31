@@ -1,0 +1,71 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# offlineimap / imapfilter actions
+case $@ in
+  '') if !p "python.*offlineimap.*offlineimaprc" ;then
+        offlineimap -c ~/.offlineimaprc -u basic >> /tmp/offlineimap.log 2>&1 &
+        echo ".. offlineimap running"
+      fi
+      if-yes ".. watch offlineimap log" && imap l
+      ;;
+  1)  offlineimap -c ~/.offlineimaprc -o -u basic >> /tmp/offlineimap.log 2>&1 &
+      imap l
+      ;;
+  C)  rm -f ~/.imapfilter/certificates
+      imap f
+      ;;
+  F)  if [[ -e ~/.offlineimapfilter ]] ;then
+        sudo rm -rf ~/.offlineimapfilter
+        echo ".. imapfilter processing off"
+      else
+        touch ~/.offlineimapfilter
+        echo ".. imapfilter processing on"
+      fi
+      ;;
+  f)  if !p /usr/bin/offlineimap && !p /usr/bin/imapfilter ;then
+        if [[ $# -eq 1 ]] ;then
+          imapfilter -v -c ~/.imapfilter/dovecot.lua >> /tmp/imapfilter.log 2>&1 &
+          if-yes ".. watch imapfilter log" && imap L
+        else
+          imapfilter -v -c ~/.imapfilter/$2.lua
+        fi
+      fi
+      ;;
+  I)  killall offlineimap 2>/dev/null
+      if ! if-no "delete all maildirs and reload from gmail" ;then
+        stop dovecot
+        sudo rm -rf ~/.offlineimap/*
+        sudo rm -rf ~/Maildir/*
+        # sudo rm -rf ~/.mutt/cache/*
+        imap 1
+      fi
+      ;;
+  L)  echo ".. tail -f /tmp/imapfilter.log"
+      tail -f /tmp/imapfilter.log
+      ;;
+  l)  echo ".. tail -f /tmp/offlineimap.log"
+      tail -f /tmp/offlineimap.log
+      ;;
+  m)  echo ".. tail -f /tmp/mailsync.log"
+      tail -f /tmp/mailsync.log
+      ;;
+  Q)  if !p "python.*offlineimap.*offlineimaprc" ;then
+        offlineimap -c ~/.offlineimaprc -u quiet >> /tmp/imapfilter.log 2>&1 &
+      fi
+      ;;
+  q)  killall imapfilter 2>/dev/null
+      kill -9 $(p "python.*offlineimap.*offlineimaprc" | awk '{ print $2; }') 2>/dev/null
+      ;;
+  r)  imap q
+      imap
+      ;;
+  *)  echo ".. imap  'start  1'pass  renewC'ertificate  imapF|f'ilter{ config}  reI'nitialize  L|l'og  Q'uiet  q'uit  r'estart"
+      echo ".. renewCertificate to correct periodic fingerprint mismatch"
+      ;;
+esac
+
+# vim: set ft=zsh: #

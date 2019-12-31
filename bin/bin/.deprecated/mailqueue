@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# System
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# send mail poller with error notifier
+interval=30s
+queue=~/.msmtpqueue
+
+# mailqueue status (mailqueue > 2.. ?)
+if [[ $(pgrep mailqueue | wc -l) > 2 ]]; then
+  ls -l $queue
+  exit
+fi
+
+# mailqueue daemon
+while true
+do
+  if [[ $(ls -l $queue | wc -l) > 1 ]]; then
+    trace "Sending mail.."
+    count=$(echo $(ls -l $queue | wc -l) / 2 | bc)
+    # reset any mangled mail permissions
+    [[ $(stat --format '%a' /home/shum/stow/msmtp/.msmtprc) -ne 600 ]] && chmod 600 ~/.msmtprc
+    errmsg=$(/usr/local/bin/msmtp-runqueue.sh)
+    echo $errmsg
+    if echo $errmsg | grep -q FAILURE; then
+      zsh -c "notify 'Check Mail Queue..' '$(echo $errmsg | sed -n 2p)'"
+    else
+      [[ $count -eq 1 ]] && zsh -c "notify 'Mail Queue' '1 message sent'" \
+                         || zsh -c "notify 'Mail Queue' '$count messages sent'"
+    fi
+  else
+    trace "No mail"
+  fi
+  sleep $interval
+done

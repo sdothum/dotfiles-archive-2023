@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# X11 Window Manager
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ bspwm
+
+# Arbitrary gap width (optimized for notmuch mail window background colour)
+X=66
+
+# Linear window gap
+function linear() {
+  echo "($X + 10) - ($@ - 1) * 10" | bc
+}
+
+# Binary window gap
+function binary() {
+  echo "($X * 2) / (2 ^ ($@ -1))" | bc
+}
+
+bspc control --subscribe | while read line; do
+  W=$(bspc query --desktop focused --windows | wc -l)
+  # G=$(linear $W)
+  G=$(binary $W)
+  [[ $G -lt 1 ]] && G=1
+  bspc config --desktop focused window_gap $G
+  bspwm-padding
+done

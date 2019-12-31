@@ -1,0 +1,36 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Sysadmin
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Systemd wrapper
+
+usage() {
+  echo "usage: $(basename $0) [status | disable | enable | [-f] mask | unmask | reload | restart | start | stop | toggle] <service>"
+  exit 1
+}
+
+[ $1 = '-f' ] && { force=true; shift; }
+
+sv() { eval sudo systemctl $@; }
+
+# configure systemd daemon
+case $1 in
+''     ) usage ;;
+disable) sv disable $2; sv stop $2 ;;
+enable ) sv enable $2; sv start $2 ;;
+mask   ) [ $force ] || { ifno "mask $2" && exit || true; } && sv mask $2; exit ;;
+reload ) sv daemon-reload; exit ;;
+restart) sv restart $2 ;;
+start  ) sv start $2 ;;
+status ) ;;
+stop   ) sv stop $2 ;;
+toggle ) sv status $2 >/dev/null 2>&1 && sv stop $2 || sv start $2 2>/dev/null ;;
+unmask ) sv unmask $2; exit ;;
+*      ) [ $# -eq 1 ] || usage ;;
+esac
+
+sv --no-pager status ${2:-$1} &
+
+# vim: set ft=sh: #

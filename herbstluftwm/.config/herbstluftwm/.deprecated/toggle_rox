@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. File manager
+
+# toggle rox
+if xdotool search --onlyvisible --classname 'ROX-Filer'; then
+  xdotool search --onlyvisible --classname 'ROX-Filer' windowunmap
+  exit
+fi
+xdotool search --classname 'ROX-Filer' windowmap || rox &

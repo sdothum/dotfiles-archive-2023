@@ -1,0 +1,167 @@
+# system packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= codecs
+# ▔▔▔▔▔▔
+# gnash-common
+  gst-libav
+  gst-plugins-base
+  gst-plugins-good
+  gst-plugins-ugly
+  gstreamer0.10-plugins
+# lightspark-git
+
+
+= cups printing
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  cups
+# cups-filters
+  cups-pdf
+# foomatic-db
+# foomatic-db-engine
+# foomatic-db-nonfree
+  ghostscript
+  gsfonts
+  gutenprint
+# hplip
+# python2-pyq5
+# splix
+# system-config-printer
+
+
+= fonts and font managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# cairo
+  font-manager
+  fontforge
+# fontconfig
+# fontmatrix
+  ibfonts-meta-base
+# infinality-bundle-fonts
+  libxft
+# otf-gnutypewriter
+  powerline-fonts-git
+  terminus-font-ll2-td1
+# ttf-fantasque-sans
+  ttf-font-awesome
+# ttf-google-fonts-git
+# ttf-inconsolata
+  ttf-ionicons
+# ttf-mac-fonts
+  ttf-ms-fonts
+# ttf-noto-sans-ib
+# ttf-ubuntu-font-family
+# xorg-fonts-type1
+# xorg-xlsfonts
+
+
+= linux-ck kernel
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# linux-ck-atom    [atom]
+# linux-ck-headers [atom]
+# linux-ck-haswell [icore]
+# linux-ck-headers [icore]
+# "intel microcode must be installed after ck kernel"
+
+
+= hardware
+# ▔▔▔▔▔▔▔▔
+  dmidecode
+# gpointing-device-settings [macbook]
+  hwinfo
+  intel-ucode
+  lm_sensors
+  mbpfan-git                [macbook]
+  xf86-input-wacom          [server]
+
+
+= package managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  aurvote
+  cower
+# cower-git
+  downgrade
+# nix
+  pacaur
+# package-query-git
+# packer
+  pkgstats
+  pkgtools
+# powerpill
+# trizen
+# yaourt
+# yaourt-gui
+# pacgraph
+  reflector
+
+
+= package rollback (btrfs)
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  grub-btrfs-git
+  pacupg
+  snapper
+
+
+= permissions and passwords
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gksu
+  gnome-keyring
+# keepassx
+  pass
+  polkit-gnome
+  python-keyring
+  python-keyrings-alt
+
+
+= power
+# ▔▔▔▔▔
+  acpi     [laptop]
+# powertop [laptop]
+# dead battery in macbook!
+  tlp      [laptop && ! macbook]
+  xfce4-power-manager
+
+
+= sound
+# ▔▔▔▔▔
+# alsa-firmware
+  alsa-plugins
+  lib32-alsa-plugins
+  lib32-libpulse
+  libflashsupport-oss
+  libflashsupport-pulse
+  mpg123
+# paprefs
+# pavolume-git
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+# pulseaudio-ctl
+# pulsemixer-git
+# xfce4-mixer
+# xfce4-volumed
+
+
+= system utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# anacron
+  cronie
+# dcron
+  figlet
+# incron
+# lxinput-qt-git
+  ntp
+# pmount
+  preload
++ qwertickle
+  rlwrap
+# synapse
+# sysstat
+# toilet
+  udiskie
+# watcher
+  zramswap
+
+# vim: set ft=conf: #

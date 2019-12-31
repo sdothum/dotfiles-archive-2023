@@ -1,0 +1,260 @@
+
+#user nobody;
+worker_processes 1;
+
+#error_log logs/error.log;
+#error_log logs/error.log notice;
+#error_log logs/error.log info;
+
+#pid logs/nginx.pid;
+
+
+events {
+    worker_connections 1024;
+}
+
+
+http {
+    # passenger_root /home/shum/.rvm/gems/ruby-1.9.3-p286/gems/passenger-3.0.17;
+    # passenger_ruby /home/shum/.rvm/wrappers/ruby-1.9.3-p286/ruby;
+    passenger_root /var/lib/gems/1.9.1/gems/passenger-3.0.19;
+    passenger_ruby /usr/bin/ruby1.9.1;
+    passenger_log_level 1;
+
+    include mime.types;
+    default_type application/octet-stream;
+
+    #log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+    # '$status $body_bytes_sent "$http_referer" '
+    # '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log logs/access.log main;
+
+    sendfile on;
+    #tcp_nopush on;
+
+    #keepalive_timeout 0;
+    keepalive_timeout 65;
+
+    #gzip on;
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        #charset koi8-r;
+
+        #access_log logs/host.access.log main;
+
+        #location / {
+        # root html;
+        # index index.html index.htm;
+        #}
+
+        #error_page 404 /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        # proxy_pass http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        # root html;
+        # fastcgi_pass 127.0.0.1:9000;
+        # fastcgi_index index.php;
+        # fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name;
+        # include fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        # deny all;
+        #}
+
+        root /srv/http/;
+        access_log /srv/http/ttrss/logs/access.log;
+        error_log /srv/http/ttrss/logs/error.log;
+        index index.html index.htm index.php;
+
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        location ~ \.php$ {
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+            include fastcgi_params;
+            fastcgi_read_timeout 300;
+        }
+    }
+
+    server {
+        listen 80;
+        server_name thedarnedestthing;
+
+        access_log /srv/http/thedarnedestthing.com/logs/access.log;
+        error_log /srv/http/thedarnedestthing.com/logs/error.log;
+
+        root /srv/http/thedarnedestthing.com/application/public; # <--- be sure to point to 'public'!
+        passenger_enabled on;
+        passenger_min_instances 1;
+    }
+
+    passenger_pre_start http://thedarnedestthing/;
+
+    server {
+        listen 80;
+        server_name luna;
+
+        root /srv/http;
+        access_log /srv/http/ttrss/logs/access.log;
+        error_log /srv/http/ttrss/logs/error.log;
+        index index.html index.htm index.php;
+
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        location ~ \.php$ {
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+            include fastcgi_params;
+            fastcgi_read_timeout 300;
+        }
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    # listen 8000;
+    # listen somename:8080;
+    # server_name somename alias another.alias;
+
+    # location / {
+    # root html;
+    # index index.html index.htm;
+    # }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    # listen 443;
+    # server_name localhost;
+
+    # ssl on;
+    # ssl_certificate cert.pem;
+    # ssl_certificate_key cert.key;
+
+    # ssl_session_timeout 5m;
+
+    # ssl_protocols SSLv2 SSLv3 TLSv1;
+    # ssl_ciphers HIGH:!aNULL:!MD5;
+    # ssl_prefer_server_ciphers on;
+
+    # location / {
+    # root html;
+    # index index.html index.htm;
+    # }
+    #}
+
+    # # redirect http to https.
+    # server {
+    #     listen 80;
+    #     server_name owncloud;
+    #     return 301 https://$server_name$request_uri; # enforce https
+    # }
+
+    # # owncloud (ssl/tls)
+    # server {
+    #     listen 443 ssl;
+    #     server_name owncloud;
+
+    #     ssl_certificate /opt/nginx/conf/server.crt;
+    #     ssl_certificate_key /opt/nginx/conf/server.key;
+
+    #     # Path to the root of your installation
+    #     root /srv/http/owncloud;
+
+    #     client_max_body_size 10G; # set max upload size
+    #     fastcgi_buffers 64 4K;
+
+    #     rewrite ^/caldav(.*)$ /remote.php/caldav$1 redirect;
+    #     rewrite ^/carddav(.*)$ /remote.php/carddav$1 redirect;
+    #     rewrite ^/webdav(.*)$ /remote.php/webdav$1 redirect;
+
+    #     index index.php;
+    #     error_page 403 = /core/templates/403.php;
+    #     error_page 404 = /core/templates/404.php;
+
+    #     location = /robots.txt {
+    #         allow all;
+    #         log_not_found off;
+    #         access_log off;
+    #     }
+
+    #     location ~ ^/(data|config|\.ht|db_structure\.xml|README) {
+    #         deny all;
+    #     }
+
+    #     location / {
+    #         # The following 2 rules are only needed with webfinger
+    #         rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+    #         rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
+
+    #         rewrite ^/.well-known/carddav /remote.php/carddav/ redirect;
+    #         rewrite ^/.well-known/caldav /remote.php/caldav/ redirect;
+
+    #         rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;
+
+    #         try_files $uri $uri/ index.php;
+    #     }
+
+    #     location ~ ^(.+?\.php)(/.*)?$ {
+    #         try_files $1 = 404;
+
+    #         include fastcgi_params;
+    #         fastcgi_param SCRIPT_FILENAME $document_root$1;
+    #         fastcgi_param PATH_INFO $2;
+    #         fastcgi_param HTTPS on;
+    #         fastcgi_param MOD_X_ACCEL_REDIRECT_ENABLED on;
+    #         # fastcgi_pass 127.0.0.1:9000;
+    #         # Or use unix-socket with 'fastcgi_pass unix:/var/run/php5-fpm.sock;'
+    #         fastcgi_pass unix:/var/run/php5-fpm.sock;
+    #     }
+
+    #     # static file performance (see fastcgi_param MOD_X_ACCEL_REDIRECT_ENABLED)
+    #     location ~ ^/home/valerio/(owncloud/)?data {
+    #         internal;
+    #         root /;
+    #     }
+
+    #     location ~ ^/tmp/oc-noclean/.+$ {
+    #         internal;
+    #         root /;
+    #     }
+
+    #     # Optional: set long EXPIRES header on static assets
+    #     location ~* ^.+\.(jpg|jpeg|gif|bmp|ico|png|css|js|swf)$ {
+    #             expires 30d;
+    #             # Optional: Don't log access to assets
+    #             access_log off;
+    #     }
+    # }
+}

@@ -1,0 +1,25 @@
+# See /boot/overlays/README for all available options
+
+arm_freq=1400
+core_freq=500
+over_voltage=4
+sdram_freq=600
+sdram_schmoo=0x02000020
+over_voltage_sdram_p=6
+over_voltage_sdram_i=4
+over_voltage_sdram_c=4
+gpu_freq=500
+
+disable_splash=1
+dtparam=audio=on
+hdmi_drive=2
+
+# 1080p
+hdmi_group=2
+hdmi_mode=82
+# sdtv_aspect=3
+
+gpu_mem=64
+initramfs initramfs-linux.img followkernel
+
+# vim: set ft=conf: #

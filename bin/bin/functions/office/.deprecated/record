@@ -1,0 +1,58 @@
+#!/usr/bin/dash
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Screencast
+
+# create .webm screencast
+
+target=/net/media/videos/recordings
+delay=${delay:-1}
+
+if is_server ;then
+  case $@ in
+    # must pass an "array" of command line parameters
+    DVI-0 | left | l)
+      opts="--width=1680 --height=1050 --x=0 --y=0" ;;
+
+    DVI-1 | right | r)
+      opts="--width=2560 --height=1600 --x=1680 --y=0" ;;
+
+    # combined multihead
+    all | a)
+      opts="--width=4240 --height=1600 --x=0 --y=0" ;;
+
+    *)
+      echo ".. byzanz  l'eft | r'ight | a'll"
+      exit ;;
+  esac
+else
+  opts="$@"
+fi
+
+after() {
+  delay=0.01
+  # let the process we're trapping have a chance to start up..
+  while [ $(pgrep -cf "$@") -lt 2 ]
+  do
+    sleep $delay
+  done
+  # ..until process is no more
+  while [ $(pgrep -cf "$@") -gt 1 ]
+  do
+    sleep $delay
+  done
+}
+
+webm=$(mktemp).webm
+# byzanz .gif generation is fast, .webm not so much so fork it..
+byzanz-record --delay=$delay $opts --exec="/usr/bin/urxvt -title 'byzanz-dialogue' -e dash -c 'press-enter to stop recording'" $webm &
+# trap the term dialogue (above)..
+after 'byzanz-dialogue'
+# then display a progress bar while byzanz performs webm conversion step
+progressbar byzanz-record 'converting to .webm'
+mv -v $webm $target
+rm -f /tmp/byzanzcache* >/dev/null
+
+# vim: set ft=sh: #

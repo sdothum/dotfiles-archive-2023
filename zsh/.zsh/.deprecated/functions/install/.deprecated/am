@@ -1,0 +1,23 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. AUR install
+
+# default (no options) to package query
+if-opt S $@ || notS=true
+
+if [[ $# -eq 1 && $notS = true ]] ;then
+  action=-Ss
+  package=$@
+else
+  # no dash option shorthand for noconfirm :-)
+  echo $1 | grep -q '-' && action=$1 || action="-$1 --noconfirm"
+  shift
+  package=$@
+fi
+
+# AUR install
+eval yaourt $action $package
+
+# vim: set ft=zsh: #

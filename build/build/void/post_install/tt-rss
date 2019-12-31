@@ -1,0 +1,25 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... tt-rss
+
+service restart postgresql
+ifno 'create tt-rss database' || {
+  echo "echo \"create user ttrss with password 'ttrss';\" | psql" | su - postgres
+  echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
+  echo "echo \"create database ttrss;\" | psql" | su - postgres
+  echo "echo \"grant all privileges on database ttrss to ttrss;\" | psql" | su - postgres
+  original /var/lib/postgresql/data/pg_hba.conf
+  sudo sed -i '/^local *all *all *peer/s/peer/md5/' /var/lib/postgresql/data/pg_hba.conf
+}
+
+ditto check '/etc/php/php.ini'
+ditto install 'service enable php-fpm nginx -> reboot'
+ditto http://localhost:8000/tt-rss/[install] '[ttrss, ttrss] [admin, password]'
+ditto config.php 'SINGLE_USER_MODE true'
+
+ditto service 'enable tt-rss'
+
+# vim: set ft=sh: #

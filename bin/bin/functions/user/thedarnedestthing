@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# User
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .......................................................... the darnedest thing
+
+[ $BROWSER = vimbt ] && BROWSER=vimb
+
+switch tag $WIKI
+focus $BROWSER http://thedarnedestthing:8000/
+# wait for window to attach to tag
+xdotool search --sync --screen 0 --name 'the darnedest thing' >/dev/null
+
+# vim: set ft=sh: #

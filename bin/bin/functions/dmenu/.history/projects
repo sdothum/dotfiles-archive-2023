@@ -1,0 +1,55 @@
+ttrss shadows^∙ $HOME/tt-rss/themes/shadows*.css
+vim^∙ $HOME/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/after/plugin -type f) $(find $HOME/.vim/plugged/vim-duochrome -type f) $(find $HOME/.vim/plugged/vim-heading -type f)
+thedarnedestthing css^∙ $STOW/thedarnedestthing/thedarnedestthing.com/application/public/css/*.css $STOW/thedarnedestthing/thedarnedestthing.com/application/public/dist/*.css
+ttrss linear^∙ $HOME/tt-rss/themes/linear*.css
+qutebrowser^∙ $HOME/.config/qutebrowser/*conf* $HOME/.config/qutebrowser/quickmarks $HOME/.config/qutebrowser/bookmarks/*
+corne beaklzi^∙ $(find -L $STOW/corne/qmk_firmware/keyboards/crkbd/keymaps/beaklzi -type f)
+vim rules^∙ $(find $HOME/.vim/after -regextype posix-extended -regex '.*/ft.*vim' -type f)
+splitography beaklzi^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklzi -type f)
+planck beaklzi^∙ $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklzi -type f)
+chimera beaklzi^∙ $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/beaklzi -type f)
+imap mail^∙ $HOME/.imapfilter/dovecot.lua $HOME/.offlineimaprc
+void bundle^∙ $HOME/build/void/bundle/*
+chimera beaklsi^∙ $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/beaklsi -type f)
+chimera beaklpi^∙ $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/beaklpi -type f)
+alacritty^∙ $(find $STOW/alacritty -type f)
+x11 xresources^∙ $HOME/.Xresources $HOME/.xinitrc $HOME/.Xmodmap* $HOME/bin/x
+www website^∙ $(find $STOW/thedarnedestthing -regextype posix-extended -regex '.*(rb|slim)')
+void install^∙ $HOME/build/void/voidlinux-*
+planck beaklpi^∙ $(find -L $STOW/planck/qmk_firmware/keyboards/planck/keymaps/beaklpi -type f)
+splitography beaklpi^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklpi -type f)
+vimb^∙ $(find -L $HOME/.config/vimb -name config) $HOME/.config/vimb/scripts.js $HOME/.config/vimb/*.css $HOME/.config/vimb/bookmark $HOME/.config/vimb/history
+chimera test^∙ $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/test -type f)
+arch bundle^∙ $HOME/build/arch/bundle/*
+conky all^∙ $(find $STOW/conky/3440x1440 -type f -name '*conky*') $(find $STOW/conky/3440x1440 -type f -name '*conky*') $(find $STOW/conky/1920x1080 -type f -name '*conky*') $(find $STOW/conky/1024x600 -type f -name '*conky*')
+alot mail^∙ $HOME/.config/alot/config $HOME/.config/alot/themes/*
+obarun install^∙ $HOME/build/obarun/obarun-*
+arch install^∙ $HOME/build/arch/archlinux-*
+dunst^∙ $(find $STOW/dunst -type f)
+conky clock^∙ $(find $STOW/conky -type f -name '*clock*')
+chimera beaklri^∙ $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/beaklri -type f)
+tarot^∙ $(find $STOW/tarot -name index.html)
+vim plain^∙ $HOME/.vim/plugged/vim-colors-plain/colors/plain.vim /net/depot/vim-colors-plain/colors/plain.vim
+obarun bundle^∙ $HOME/build/obarun/bundle/*
+chimera beakl2i^∙ $(find -L $STOW/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps/beakl2i -type f)
+splitography beaklzi-at^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklzi-at -type f)
+arch obarun bundle^∙ $HOME/build/arch/bundle/* $HOME/build/obarun/bundle/*
+compton^∙ $STOW/compton/*/.compton.conf
+splitography beaklsi^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklsi -type f)
+conky^∙ $HOME/.conkyrc $HOME/.conky/conky*
+splitography beaklvi^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklvi -type f)
+splitography beaklui^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklui -type f)
+splitography beaklti^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklti -type f)
+splitography multi^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/multi -type f)
+splitography default^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/default -type f)
+splitography dvorak^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorak -type f)
+splitography dvorakmu^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/dvorakmu -type f)
+splitography beaklth^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/beaklth -type f)
+mime^∙ $HOME/.mailcap $HOME/.local/share/applications/mimeapps.list
+ttrss axiom^∙ $HOME/tt-rss/themes/axiom*.css
+nzb^∙ $HOME/.nzbget
+splitography thumbi^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbi -type f)
+splitography thumbh^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbh -type f)
+splitography hiea^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/hiea -type f)
+vacuum^∙ $HOME/bin/functions/sysadmin/vacuum $HOME/bin/functions/sysadmin/.vacuum*
+splitography thumbhe^∙ $(find -L $STOW/splitography/qmk_firmware/keyboards/splitography/keymaps/thumbhe -type f)

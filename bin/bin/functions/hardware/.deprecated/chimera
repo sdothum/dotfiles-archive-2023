@@ -1,0 +1,60 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Chimera Ergo 42
+
+usage() { echo "usage: $(basename $0) <keymap> [nomouse] [<string> [<string>]] [dfu]"; exit 1; }
+
+KBD=chimera_ergo_42
+
+ROOT=$HOME
+# ROOT=/net/depot
+QMK=$ROOT/qmk_firmware
+KEYBOARD=$QMK/keyboards/$KBD
+KEYMAP=$KEYBOARD/keymaps/$1
+CONFIG=$KEYMAP/config.h
+MAKEFILE=$KEYMAP/Makefile
+
+export CPATH=$KEYMAP/common
+
+[ $1 ] || usage
+keymap=$1
+shift
+
+ditto "$QMK" "$keymap"
+ifno 'sync qmk_firmware repo' || { cd $QMK; rm -rf $KEYBOARD; git pull origin master; }
+
+# update keymap from stow repo
+mkdir -p $KEYMAP 2>/dev/null
+rsync -avq -KL --exclude .deprecated $STOW/chimera/qmk_firmware/keyboards/$KBD/* $KEYBOARD/
+
+# compile time macro sting
+grep -q PRIVATE_STRING $CONFIG || sed -i '$a#define PRIVATE_STRING ""' $CONFIG
+grep -q PUBLIC_STRING $CONFIG || sed -i '$a#define PUBLIC_STRING ""' $CONFIG
+# sed -i '/#define PRIVATE_STRING/c#define PRIVATE_STRING ""; /#define PUBLIC_STRING/c#define PUBLIC_STRING ""' $CONFIG
+
+case $1 in
+'' | dfu) ;;
+*       ) sed -i "/#define PRIVATE_STRING/c#define PRIVATE_STRING \"$1\"" $CONFIG; shift; ;;
+esac
+case $1 in
+'' | dfu) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$(cat $HOME/.forward)\"" $CONFIG ;;
+*       ) sed -i "/#define PUBLIC_STRING/c#define PUBLIC_STRING \"$1\"" $CONFIG ;;
+esac
+
+cd $QMK
+sudo make $KBD:$keymap:clean
+make $KBD:$keymap
+sudo chown -R $USER:users $QMK
+# if dfu cannot detect keyboard receiver, verify hex size to not brick bootloader..
+[ "$1" = dfu ] && {
+  ditto flash "$(ls -l ${KBD}_$keymap.hex)"
+  [ -e /dev/ttyACM0 ] && dev=/dev/ttyACM1 || dev=/dev/ttyACM0
+  ifyes 'press ENTER\n..followed by receiver RESET' && sleep 3 || exit
+  sudo avrdude -p atmega32u4 -P $dev -c avr109 -U flash:w:${KBD}_$keymap.hex
+}
+
+# vim: set ft=sh: #

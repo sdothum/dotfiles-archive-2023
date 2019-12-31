@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# User
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................. the wild unknown
+
+html2ebook tarot 'The Unofficial Wild Unknown Tarot' 'Carrie Mallon' $1
+
+# vim: set ft=sh: #

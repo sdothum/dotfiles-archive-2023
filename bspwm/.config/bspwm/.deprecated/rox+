@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. File manager
+
+# wrapper for autostart rox functions
+# usage: rox+ desktop dir [dir]..
+pidof bspwm || exit
+# avoid duplicate windows
+bspc query --tree --desktop $1 | grep -q 'ROX-Filer' && exit
+bspc rule --add ROX-Filer desktop=$1
+shift
+for i in $@
+do
+  rox $i 2>/dev/null &
+done
+# hold rule long enough for app to spawn on designated desktop
+sleep 1s
+bspc rule --remove ROX-Filer

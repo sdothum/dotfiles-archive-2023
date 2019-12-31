@@ -1,0 +1,19 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Sonarr
+
+SONARR=/srv/http/sonarr
+
+sudo useradd -r sonarr
+ifnsed /etc/group "^sonarr:.*$USER" "s/^sonarr:.*/&,$USER/; s/:,/:/"
+
+sudo mkdir -p $SONARR
+sudo chown -R sonarr:sonarr $SONARR
+sudo chmod 755 $SONARR
+
+service enable sonarr
+
+# vim: set ft=sh: #

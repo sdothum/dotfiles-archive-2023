@@ -1,0 +1,74 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="config/appbinds $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ........................................................ Applications keybinds
+
+hc keybind $Mod-Return               spawn toggle scratchpad
+hc keybind $Mod-Shift-Return         spawn term 'Terminal' FORTUNE
+hc keybind $Mod-Control-Return       spawn term 'Terminal' FORTUNE STACK
+hc keybind Super-Return              spawn dmenu manpages
+hc keybind Super-space               spawn dmenu run
+hc keybind Super-Shift-space         spawn dmenu systemd
+hc keybind Super-grave               spawn toggle rox
+if [ $PLANCK ] ;then
+  hc keybind Super-semicolon         spawn pactl set-sink-volume $(sink) -3db
+  hc keybind Super-backslash         spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-y                 spawn pactl set-sink-volume $(sink) 0db
+  hc keybind Super-Shift-y           spawn pactl set-sink-mute $(sink) toggle
+  hc keybind Super-Control-y         spawn toggle pavucontrol
+else
+  hc keybind Super-bracketleft       spawn pactl set-sink-volume $(sink) -3db
+  hc keybind Super-bracketright      spawn pactl set-sink-volume $(sink) +3db
+  hc keybind Super-0                 spawn pactl set-sink-volume $(sink) 0db
+  hc keybind Super-Shift-0           spawn pactl set-sink-mute $(sink) toggle
+  hc keybind Super-Control-0         spawn toggle pavucontrol
+fi
+hc keybind Super-equal               spawn dmenu calc
+if [ $PLANCK ] ;then
+  hc keybind Super-Shift-equal       spawn toggle plover
+  hc keybind Super-slash             spawn toggle conky
+  hc keybind Super-Shift-slash       spawn toggle panel
+else
+  hc keybind Super-minus             spawn toggle plover
+  hc keybind Super-backslash         spawn toggle conky
+  hc keybind Super-Shift-backslash   spawn toggle panel
+fi
+hc keybind Super-F1                  spawn dmenu menu
+hc keybind Super-Shift-F1            spawn keymap toggle
+hc keybind Super-a                   spawn dmenu abook
+hc keybind Super-Shift-a             spawn toggle term 'Mail' alot
+hc keybind Super-b                   spawn dmenu history
+hc keybind Super-Shift-b             spawn dmenu bookmarks
+hc keybind Super-c                   spawn dmenu clipboard
+hc keybind Super-d                   spawn dmenu thesaurus
+hc keybind Super-Shift-d             spawn dmenu dict
+hc keybind Super-e                   spawn dmenu scripts
+hc keybind Super-Shift-e             spawn dmenu projects
+hc keybind Super-Control-e           spawn dmenu configs
+hc keybind Super-f                   spawn dmenu files
+hc keybind Super-Shift-f             spawn dmenu folders
+hc keybind Super-Shift-g             spawn toggle term 'Calendar' wyrd
+hc keybind Super-h                   spawn dmenu shistory
+hc keybind Super-Shift-i             spawn toggle term 'IRC' weechat
+hc keybind Super-m                   spawn dmenu music
+hc keybind Super-n                   spawn toggle xpad
+hc keybind Super-p                   spawn dmenu pass
+hc keybind Super-Shift-p             spawn proof
+hc keybind Super-Control-p           spawn pr eject
+hc keybind Super-q                   spawn toggle amphetype
+hc keybind Super-Shift-q             spawn clack
+hc keybind Super-Control-q           spawn clack swap
+hc keybind Super-r                   spawn dmenu radio
+hc keybind Super-s                   spawn dmenu monitor
+hc keybind Super-t                   spawn dmenu media
+hc keybind Super-w                   spawn focus vimbt
+hc keybind Super-Shift-w             spawn dmenu vimbk
+hc keybind Super-x                   spawn dmenu halt
+hc keybind Super-Shift-x             spawn dmenu screensaver
+hc keybind Super-z                   spawn dmenu alarm
+hc keybind Super-Shift-z             spawn toggle simpletimer
+
+# vim: set ft=sh: #

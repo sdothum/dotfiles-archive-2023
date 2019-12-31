@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Utility
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................... Archiving
+
+# repair and unpack rar
+cd $(dirname $@)
+ls -l | grep -q '\.par2$' && par2repair "$@" *
+if [[ -f *.r01 ]]; then
+  basename=$(basename *.r01 .r01)
+  if [[ -f $basename.rar ]]; then
+    unrar $basename.rar
+  elif [[ -f $basename.r00 ]]; then
+    unrar $basename.r00
+  elif [[ -f $basename.r01 ]]; then
+    unrar $basename.r01
+  fi
+elif [[ -f *.part1.rar ]]; then
+  basename=$(basename *.part1.rar .part1.rar)
+  if [[ -f $basename.part0.rar ]]; then
+    unrar $basename.part0.rar
+  elif [[ -f $basename.part1.rar ]]; then
+    unrar $basename.part1.rar
+  fi
+elif [[ -f *.part01.rar ]]; then
+  basename=$(basename *.part01.rar .part01.rar)
+  if [[ -f $basename.part00.rar ]]; then
+    unrar $basename.part00.rar
+  elif [[ -f $basename.part01.rar ]]; then
+    unrar $basename.part01.rar
+  fi
+elif [[ -f *.part001.rar ]]; then
+  basename=$(basename *.part001.rar .part001.rar)
+  if [[ -f $basename.part00.rar ]]; then
+    unrar $basename.part00.rar
+  elif [[ -f $basename.part001.rar ]]; then
+    unrar $basename.part001.rar
+  fi
+elif [[ -f *.001 ]]; then
+  unrar *.001
+else
+  echo "..rar not extracted"
+  zsh -c press-enter
+fi
+cd -

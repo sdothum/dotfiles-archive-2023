@@ -1,0 +1,34 @@
+
+# Logging
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Sub-heading
+
+# heading eye candy specifically for install logs
+delimeter=':'
+
+if [[ ${#1} -eq 1 ]] ;then
+  if [[ ! $1 =~ [[:alnum:]] ]] ;then
+    # specifying default leader character adds timestamp!
+    if [[ $1 = ':' ]] ;then
+      trace=true
+      echo
+    else
+      delimeter=$1
+    fi
+    shift
+  fi
+fi
+
+message=$@
+
+# leader=$(head -c $(echo "($(tput cols) - $(echo "   $message   " | wc -L)) / 2" | bc) </dev/zero | tr '\0' "X")
+leader=$(head -c $(( ($(tput cols) - $(echo "   $message   " | wc -L)) / 2 )) </dev/zero | tr '\0' "^")
+leader=$(echo $leader | sed "s/[\^]/$delimeter/g")
+[[ $(echo "$leader   $message   $leader" | wc -L) -lt $(tput cols) ]] && pad=$delimeter || unset pad
+
+attention "$leader   $message   $leader$pad"
+[[ $trace ]] && echo "$(timestamp)"
+unset trace
+
+# vim: set ft=zsh: #

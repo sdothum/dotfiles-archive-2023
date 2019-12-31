@@ -1,0 +1,282 @@
+#!/bin/sh
+# sdothum - 2016 (c) wtfpl
+
+# fresh nixos pre-installer
+
+source ./nixos-functions
+
+echo 'assuming usb (scripts) mounted on /media..'
+echo '> loadkeys colemak.map'
+echo '> mkdir /media'
+echo '> mount /dev/sd<usb>1 /media'
+
+
+heading 'connect interface'
+# ══════════════════════════════════════════════════════════════════════════════
+if ! ping -c1 www.nixos.org 2>&1 >/dev/null ;then
+  connect
+  ping -c1 www.nixos.org
+  checkpoint
+fi
+
+
+heading 'boot disk'
+# ══════════════════════════════════════════════════════════════════════════════
+ls -l /dev/disk/by-id | grep -v part | grep ata
+read -p "Boot disk /dev/sd? [a-z]: " disk
+if [ -z $disk ] ;then
+  echo "invalid disk reference.. aborting"
+  exit
+fi
+echo
+read -p 'Partition and format disk as btrfs? [y|N]: ' format
+[ $format ] || format=N
+if [ "$format" = y ] ;then
+  # already mounted?
+  # mount | grep -q /dev/sd${disk}1 && umount -v /dev/sd${disk}1
+  # use fdisk for mbr (bios) install, else gdisk for gpt (UEFI) install
+  echo
+  read -p 'MBR or GPT partition? [M|g]: ' diskutil
+  [ $diskutil ] && diskutil=gdisk || diskutil=fdisk
+  echo
+  read -p 'Stripe volume (raid0)? [y|N]: ' stripe
+  [ "$stripe" = n ] && stripe=
+  if [ "$stripe" = y ] ;then
+    echo
+    read -p "Add stripe volume /dev/sd? [a-z]: " stripe
+    if [ -z $stripe ] || [ "$stripe" = "$disk" ] ;then
+      echo "invalid stripe reference.. aborting"
+      exit
+    fi
+  fi
+  echo
+  case $diskutil in
+    fdisk) echo "Create active boot mbr partition.." ;;
+
+    gdisk) echo "Create gpt partitions labeled.."
+           echo "  [ EFI boot  swap ]  root"
+           echo "  .." ;;
+  esac
+  sleep 3s
+  c$diskutil /dev/sd${disk}
+  $diskutil -l /dev/sd${disk}
+  checkpoint
+  if ! [ -z $stripe ] ;then
+    echo
+    echo "Partition stripe disk.."
+    c$diskutil /dev/sd${stripe}
+    $diskutil -l /dev/sd${stripe}
+    checkpoint
+  fi
+
+  # reread partition tables
+  hdparm -z /dev/sd${disk}
+  cat /proc/partitions
+  checkpoint
+
+  heading 'format btrfs disk partition'
+  partition() {
+    case $diskutil in
+      fdisk) $diskutil -l /dev/sd${disk} | grep "$@" | cut -d' ' -f1 | cut -c9 ;;
+
+      gdisk) $diskutil -l /dev/sd${disk} | grep "$@" | awk '{ print $1; }' ;;
+    esac
+  }
+
+  efi=$(partition EFI)
+  boot=$(partition boot)
+  swap=$(partition swap)
+  root=$(partition root)
+  # mbr disk is not labeled
+  [ $root ] || root=$(partition 'Linux$')
+
+  [ $efi ] && mkfs.fat -n EFI -F32 /dev/sd${disk}${efi}
+  [ $boot ] && mkfs.ext2 -L boot /dev/sd${disk}${boot}
+
+  if [ $swap ] ;then
+    mkswap -L Swap /dev/sd${disk}${swap}
+    swapon -L Swap
+  fi
+
+  if [ -z $stripe ] ;then
+    mkfs.btrfs -f -L nixos /dev/sd${disk}${root}
+  else
+    mkfs.btrfs -f -L nixos -d raid0 /dev/sd${disk}${root} /dev/sd${stripe}
+  fi
+  checkpoint
+fi
+
+heading 'mount partitions'
+# ══════════════════════════════════════════════════════════════════════════════
+mkdir -pv /mnt/btrfs-root
+read -p "SSD boot drive? [y|N]: " ssd
+( [ -z $ssd ] || [ "$ssd" = N ] ) && ssd= || ssd=",ssd,discard"
+mount=defaults,noatime,autodefrag,space_cache${ssd}
+echo "mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root"
+mount -v -o ${mount} /dev/sd${disk}${root} /mnt/btrfs-root
+checkpoint
+
+
+heading 'RESCUE'
+# ══════════════════════════════════════════════════════════════════════════════
+read -p "RESCUE (mount btrfs subvolumes) [Y|n]: " rescue
+[ $rescue ] || rescue=Y
+
+
+if [ "$rescue" = n ] ;then
+heading 'create btrfs subvolumes'
+# ══════════════════════════════════════════════════════════════════════════════
+mkdir -pv /mnt/btrfs-root/__snapshot
+mkdir -pv /mnt/btrfs-root/__current
+read -p "Create separate /net filesystem? [y|N]: " net
+[ $net ] || net=N
+if [ "$format" = y ] ;then
+  btrfs subvolume create /mnt/btrfs-root/__current/ROOT
+  [ "$net" = y ] && btrfs subvolume create /mnt/btrfs-root/__current/net
+  # btrfs subvolume create /mnt/btrfs-root/__current/downloads
+  btrfs subvolume create /mnt/btrfs-root/__current/home
+  btrfs subvolume create /mnt/btrfs-root/__current/opt
+  btrfs subvolume create /mnt/btrfs-root/__current/srv
+  # btrfs subvolume create /mnt/btrfs-root/__current/nix
+  # btrfs subvolume create /mnt/btrfs-root/__current/tmp
+  # btrfs subvolume create /mnt/btrfs-root/__current/usr
+  # btrfs subvolume create /mnt/btrfs-root/__current/usr/local
+  btrfs subvolume create /mnt/btrfs-root/__current/var
+  btrfs subvolume create /mnt/btrfs-root/__snapshot/.snapshots
+else
+  # heading 'rebuild root, nix, tmp, var'
+  heading 'rebuild root, var'
+  btrfs subvolume delete /mnt/btrfs-root/__current/ROOT
+  # btrfs subvolume delete /mnt/btrfs-root/__current/nix
+  # btrfs subvolume delete /mnt/btrfs-root/__current/tmp
+  # btrfs subvolume delete /mnt/btrfs-root/__current/usr
+  btrfs subvolume delete /mnt/btrfs-root/__current/var
+  btrfs subvolume delete /mnt/btrfs-root/__snapshot/.snapshots
+  btrfs subvolume create /mnt/btrfs-root/__current/ROOT
+  # btrfs subvolume create /mnt/btrfs-root/__current/nix
+  # btrfs subvolume create /mnt/btrfs-root/__current/tmp
+  # btrfs subvolume create /mnt/btrfs-root/__current/usr
+  btrfs subvolume create /mnt/btrfs-root/__current/var
+  btrfs subvolume create /mnt/btrfs-root/__snapshot/.snapshots
+fi
+fi
+btrfs subvolume list -p /mnt/btrfs-root/
+checkpoint
+
+
+heading 'mount subvolumes'
+# ══════════════════════════════════════════════════════════════════════════════
+mkdir -pv /mnt/btrfs-boot
+mount -v -o ${mount},nodev,subvol=__current/ROOT /dev/sd${disk}${root} /mnt/btrfs-boot
+[ "$net" = y ] && mkdir -pv /mnt/btrfs-boot/net
+# mkdir -pv /mnt/btrfs-boot/net/downloads
+mkdir -pv /mnt/btrfs-boot/home
+mkdir -pv /mnt/btrfs-boot/opt
+mkdir -pv /mnt/btrfs-boot/srv
+# mkdir -pv /mnt/btrfs-boot/nix
+# mkdir -pv /mnt/btrfs-boot/tmp
+# mkdir -pv /mnt/btrfs-boot/usr/local
+mkdir -pv /mnt/btrfs-boot/var/lib
+mkdir -pv /mnt/btrfs-boot/.snapshots
+[ "$net" = y ] && mount -v -o ${mount},nodev,subvol=__current/net /dev/sd${disk}${root} /mnt/btrfs-boot/net
+# mount -v -o ${mount},nodev,subvol=__current/downloads /dev/sd${disk}${root} /mnt/btrfs-boot/net/downloads
+mount -v -o ${mount},nodev,subvol=__current/home /dev/sd${disk}${root} /mnt/btrfs-boot/home
+mount -v -o ${mount},nodev,subvol=__current/opt /dev/sd${disk}${root} /mnt/btrfs-boot/opt
+mount -v -o ${mount},nodev,subvol=__current/srv /dev/sd${disk}${root} /mnt/btrfs-boot/srv
+# mount -v -o ${mount},nodev,subvol=__current/nix /dev/sd${disk}${root} /mnt/btrfs-boot/nix
+# mount -v -o ${mount},nodev,subvol=__current/tmp /dev/sd${disk}${root} /mnt/btrfs-boot/tmp
+# mount -v -o ${mount},nodev,subvol=__current/usr /dev/sd${disk}${root} /mnt/btrfs-boot/usr
+# mount -v -o ${mount},nodev,subvol=__current/usr/local /dev/sd${disk}${root} /mnt/btrfs-boot/usr/local
+mount -v -o ${mount},nodev,noexec,subvol=__current/var /dev/sd${disk}${root} /mnt/btrfs-boot/var
+mount -v -o ${mount},nodev,noexec,subvol=__snapshot/.snapshots /dev/sd${disk}${root} /mnt/btrfs-boot/.snapshots
+# bind pacman /var/lib data to ROOT for system snapshots
+mkdir -pv /mnt/btrfs-boot/var/lib
+# mkdir -pv /mnt/btrfs-root/__current/ROOT/var/lib
+# echo mount --bind /mnt/btrfs-root/__current/ROOT/var/lib /mnt/btrfs-boot/var/lib
+mount -v --bind /mnt/btrfs-root/__current/ROOT/var/lib /mnt/btrfs-boot/var/lib
+
+
+heading 'mount efi/boot partitions'
+# ══════════════════════════════════════════════════════════════════════════════
+if [ $boot ] ;then
+  mkdir -pv /mnt/btrfs-boot/boot
+  mount -v /dev/sd${disk}${boot} /mnt/btrfs-boot/boot
+fi
+if [ $efi ] ;then
+  mkdir -pv /mnt/btrfs-boot/boot/efi
+  mount -v /dev/sd${disk}${efi} /mnt/btrfs-boot/boot/efi
+fi
+checkpoint
+
+
+if [ "$rescue" = n ] ;then
+heading 'choose repo mirrors'
+# ══════════════════════════════════════════════════════════════════════════════
+original /etc/pacman.d/mirrorlist
+sudo sed -i -e '/^Server =/s/^/#/' -e '/Canada/,+1s/^#S/S/' /etc/pacman.d/mirrorlist
+grep '^Server' /etc/pacman.d/mirrorlist
+checkpoint
+
+
+heading 'installing nixos base and btrfs hook!'
+# ══════════════════════════════════════════════════════════════════════════════
+pacstrap /mnt/btrfs-boot base btrfs-progs
+checkpoint
+
+
+heading 'edit fstab'
+# ══════════════════════════════════════════════════════════════════════════════
+# genfstab -L -p /mnt/btrfs-boot | \
+#   sed -e "/\/var\/lib/s/,subvol=[^ \t]*//" \
+#       -e '/\/var\/lib/s/rw,/rw,nodev,nosuid,noexec,/' \
+#       -e 's,/var/lib,/run/btrfs-root,' >>/mnt/btrfs-boot/etc/fstab
+# sed -i "\$a/run/btrfs-root/__current/ROOT/var/lib\t\t/var/lib\t\tnone\t\tbind\t\t0 0" /mnt/btrfs-boot/etc/fstab
+genfstab -L -p /mnt/btrfs-boot >>/mnt/btrfs-boot/etc/fstab
+# correct genfstab output from apple macbooks
+if ! grep -q bind /mnt/btrfs-boot/etc/fstab ;then
+  sed -i -e '/vfat/s/0 [12]/0 0/' \
+         -e '/\/var\/lib/d' \
+         -e '$a\
+\
+LABEL=nixos   /run/btrfs-root   btrfs   rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag   0 0\
+\
+/run/btrfs-root/__current/ROOT/var/lib    /var/lib    none    bind    0 0' \
+      /mnt/btrfs-boot/etc/fstab
+fi
+nano /mnt/btrfs-boot/etc/fstab
+checkpoint
+fi
+
+
+heading 'chroot mount /dev/sd..1 usb (scripts) and run "nixos-1boot" to complete base installation'
+# ══════════════════════════════════════════════════════════════════════════════
+# arch-chroot /mnt/btrfs-boot
+# pass the newly partitioned disk device letter to grub!
+arch-chroot /mnt/btrfs-boot /usr/bin/env disk=$disk hostname=$hostname /usr/bin/bash -i
+
+
+heading 'umounting btrfs'
+# ══════════════════════════════════════════════════════════════════════════════
+# umount -v /mnt/btrfs-boot/.snapshots
+# umount -v /mnt/btrfs-boot/var/lib
+# umount -v /mnt/btrfs-boot/var
+# # umount -v /mnt/btrfs-boot/usr/local
+# # umount -v /mnt/btrfs-boot/usr
+# # umount -v /mnt/btrfs-boot/tmp
+# # umount -v /mnt/btrfs-boot/nix
+# umount -v /mnt/btrfs-boot/srv
+# umount -v /mnt/btrfs-boot/opt
+# umount -v /mnt/btrfs-boot/home
+# # umount -v /mnt/btrfs-boot/downloads
+# [ "$net" = y ] && umount -v /mnt/btrfs-boot/net
+# [ $efi ] && umount -v /mnt/btrfs-boot/boot/efi
+# [ $boot ] && umount -v /mnt/btrfs-boot/boot
+# umount -v /mnt/btrfs-boot
+umount -Rv /mnt/btrfs-boot
+umount -v /mnt/btrfs-root
+
+
+heading 'cd / and umount /media (usb) and reboot'
+# ══════════════════════════════════════════════════════════════════════════════
+
+# vim: set ft=sh: #

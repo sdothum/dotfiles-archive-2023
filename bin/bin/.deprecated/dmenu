@@ -1,0 +1,94 @@
+#!/usr/bin/dash
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ Dmenu wrapper
+
+# Usage: $(dmenu) -p 'multiword phrase' [parameters.. ]
+#        $(dlist) -p 'multiword phrase' [parameters.. ]
+#        to handle multiword prompts from a script 
+# Note:  non-dmenu messages within $0/functions/dmenu
+#        source $HOME/bin/dmenu
+#        POSIX standard for use with dash shell
+
+theme=green
+
+# dmenu prompt bar (pixel) height, for dlist or simple prompt
+H=24
+lines=10
+# dmenu app format strings
+SEP='●'
+SPACE="    $SEP    "
+LSPACE="       $SEP"
+RSPACE="$SEP       "
+# trigger offset placement for monitors of or wider than.. (set to 9999 to force center)
+offset=2560
+
+# adjust font for macbook nvidia display
+nvidia && font='Arial-8' || font='Arial-10'
+pgrep -x compton >/dev/null && dim='-dim 0.66'
+
+position() {
+  # using herbstluftwm query scripts
+  if query multihead; then
+    query primary && set -- $(query display) || set -- $(query display secondary)
+  else
+    set -- $(query display)
+  fi
+  x=$1
+  y=$2
+  W=$(( $y * $y / $x ))
+  W=$(( $W * 2560 / $x ))
+  X=$(( ($x - $W) / 2 ))
+  Y=$(( ($y - $menu) / 2 ))
+  if [ $x -ge $offset ] ;then
+    Y=$(( $X * $X / $y ))
+    X=$Y
+  fi
+}
+
+# $(dlist) wrapper from calling apps
+menu=$H
+dlist() {
+  menu=$(( $H * ($lines + 1) ))
+  position
+  dmenu -l $lines $@
+}
+
+# wrapper changes dmenu usage to $(dmenu) in calling apps
+dmenu() {
+  case $theme in
+    red)        color="-sb #d00 -sf #fff" ;;
+    darkred)    color="-sb #b5423f" ;;
+    yellow)     color="-sb #ffde1e -sf #333" ;;
+    darkyellow) color="-sb #fd0 -sf #555" ;;
+    green)      color="-sb #4E9258 -sf #fff" ;;
+    darkgreen)  color="-sb #080 -sf #fff" ;;
+    blue)       color="-sb #099" ;;
+    darkblue|*) ;;
+  esac
+
+  position
+  echo /usr/bin/dmenu -i $dim -x $X -y $Y -h $H -w $W -fn "$font" -nb "#333" $color $@
+}
+
+# if not sourced, execute dmenu message
+if [ $(basename $0) = dmenu ] ;then
+  # fullscreen mode windows hide dmenu
+  if query fullscreen ;then
+    toggle fullscreen
+    fullscreen=true
+  fi
+  msg=$1
+  shift
+  if [ -e ${0%/dmenu}/functions/dmenu/$msg ] ;then
+    . ${0%/dmenu}/functions/dmenu/$msg $@
+  else
+    usage $0
+  fi
+  # restore
+  [ $fullscreen ] && toggle fullscreen
+fi
+
+# vim: set ft=sh: #

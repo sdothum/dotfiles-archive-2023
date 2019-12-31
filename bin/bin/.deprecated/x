@@ -1,0 +1,39 @@
+#!/bin/sh
+# see fish config equivalent
+# this process evolved to correct hung sessions after exiting the wm
+# which can occur due to the state of non-stable Xorg, hence the startx loop
+# which will restart ~/.startxloop seconds unless it does not exist.
+
+ps() { /bin/ps -ef | /bin/egrep "$1" | /bin/egrep -v "egrep|$0" ; }
+notps() { return $(ps "$1" | wc -l) ; }
+
+case "$1" in
+    '')     echo ".. starting $(< ~/.windowmanager) window manager"
+            ;;
+    i3)     echo i3 >~/.windowmanager
+            ;;
+    *ion*)  echo notion >~/.windowmanager
+            ;;
+    xfce*)  echo xfce4 >~/.windowmanager
+            ;;
+    o*b*)   echo openbox >~/.windowmanager
+            ;;
+    *)      echo ".. x [wm]  {nil}  i3  ion3|notion  xfce|xfce4  ob|openbox"
+            return
+            ;;
+esac
+
+# X11 auto login, see inittab
+if [ -z "$DISPLAY" ] && [ $(tty) = /dev/tty1 ]; then
+    while true
+    do
+        # set default terminal shell
+        SHELL=/usr/bin/fish
+        TERM=xterm-256color
+        notps startx && ([ $(hostname) = "luna" ] && startx -- -layout Multihead || startx --)
+        [ -s ~/.startxloop ] && delay=$(< ~/.startxloop) || delay=10s
+        [ -f ~/.startxloop ] && sleep $delay || break
+    done
+else
+    echo ".. window manager set to \"$(< ~/.windowmanager)\" for next xsession"
+fi

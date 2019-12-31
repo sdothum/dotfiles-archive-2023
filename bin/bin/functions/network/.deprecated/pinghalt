@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Monitor
+
+target=${1:-www.google.com}
+
+set -- $(pidof -x pingcheck)
+[ $2 ] && kill -s INT $(ps --ppid $2 | grep 'ping$' | cut -d' ' -f1)
+
+# vim: set ft=sh: #

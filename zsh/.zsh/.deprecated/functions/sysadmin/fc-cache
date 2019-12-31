@@ -1,0 +1,11 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Fonts
+
+# fc-cache wrapper to eliminate deprecated warning
+/usr/bin/fc-cache
+/bin/rm -f ~/.fonts.conf
+
+# vim: set ft=zsh: #

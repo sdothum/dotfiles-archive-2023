@@ -1,0 +1,52 @@
+## CRUNCHBANG
+## Compatible with Debian Squeeze, but use at your own risk.
+deb http://packages.crunchbang.org/statler statler main
+#deb-src http://packages.crunchbang.org/statler statler main
+
+## CRUNCHBANG MULTIMEDIA
+## Debian Multimedia Mirror
+deb ftp://ftp.deb-multimedia.org squeeze main non-free
+deb ftp://ftp.deb-multimedia.org wheezy main non-free
+deb ftp://ftp.deb-multimedia.org sid main non-free
+#deb http://packages.crunchbang.org/statler-mm squeeze main non-free
+#deb-src http://packages.crunchbang.org/statler-mm squeeze main non-free
+
+## CRUNCHBANG MOZILLA
+## Debian Mozilla Mirror
+deb http://packages.crunchbang.org/statler-mozilla squeeze-backports iceweasel-release
+#deb-src http://packages.crunchbang.org/statler-mozilla squeeze-backports iceweasel-release
+
+## DEBIAN
+deb http://debian.lcs.mit.edu/debian/ squeeze main contrib non-free
+deb http://mirror.csclub.uwaterloo.ca/debian/ squeeze main contrib non-free
+#deb http://ftp.ca.debian.org/debian/ squeeze main contrib non-free
+#deb http://ftp.us.debian.org/debian/ squeeze main contrib non-free
+#deb http://ftp.debian.org/debian/ squeeze main contrib non-free
+#deb-src http://ftp.debian.org/debian/ squeeze main contrib non-free
+
+deb http://debian.lcs.mit.edu/debian/ wheezy main contrib non-free
+deb http://mirror.csclub.uwaterloo.ca/debian/ wheezy main contrib non-free
+#deb http://ftp.ca.debian.org/debian/ wheezy main contrib non-free
+#deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free
+#deb http://ftp.debian.org/debian/ wheezy main contrib non-free
+
+deb http://debian.lcs.mit.edu/debian/ sid main contrib non-free
+deb http://mirror.csclub.uwaterloo.ca/debian/ sid main contrib non-free
+#deb http://ftp.ca.debian.org/debian/ sid main contrib non-free
+#deb http://ftp.us.debian.org/debian/ sid main contrib non-free
+#deb http://ftp.debian.org/debian/ sid main contrib non-free
+
+## DEBIAN SECURITY
+deb http://security.debian.org/ squeeze/updates main
+#deb-src http://security.debian.org/ squeeze/updates main
+
+## DEBIAN BACKPORTS
+deb http://backports.debian.org/debian-backports squeeze-backports main contrib non-free
+#deb-src http://backports.debian.org/debian-backports squeeze-backports main contrib non-free
+
+## Liquorix kernel
+## /etc/apt/sources.list.d/liquorix.list
+deb http://liquorix.net/debian/ sid main
+
+## custom applications
+deb http://plex.originet.eu/ stable main

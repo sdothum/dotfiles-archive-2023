@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# WWW
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Adblock
+
+# return transparent pixel
+# restart on crash
+while $(true)
+do
+  pidof pixelserv.pl || sudo pixelserv.pl >>/tmp/pixelserv.log 2>&1
+done

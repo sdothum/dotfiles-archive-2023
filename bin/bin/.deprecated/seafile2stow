@@ -1,0 +1,28 @@
+#!/bin/sh
+# replace old "seafile" symlinks with "stow"
+
+action=$@
+[ -z $action ] && action=show
+if [ $action != show -a $action != apply ]; then
+  echo "seafile2stow show | apply"
+  exit
+fi
+
+if [ $action = apply ]; then
+  [ -L ~/stow ] || ln -s ~/seafile ~/stow
+fi
+
+symlinks=$(ls -la | grep '[-][>]' | grep 'seafile' | sed 's/  */ /g' | cut -d' ' -f9- | cut -d'>' -f2- | sed 's/^ *//' | sed 's/ /?/g')
+for i in $symlinks; do
+  if [ "$i" != seafile ]; then 
+    newlink=$(echo $i | sed 's/seafile/stow/')
+    target=$(basename $newlink)
+    [ -L .$target ] && target=.$target || target=.
+    case $action in
+      show)   echo ln -sfv "$newlink" $target
+              ;;
+      apply)  ln -sfv "$newlink" $target
+              ;;
+    esac
+  fi
+done

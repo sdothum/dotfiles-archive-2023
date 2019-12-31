@@ -1,0 +1,146 @@
+# raspberry pi packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= aur package manager
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+a package-query
+a yaourt
+! yaourt -Sy
+
+
+= core
+# ▔▔▔▔
+  autoconf
+  automake
+  bc
+  bison
+  expac
+  flex
+  grep
+  iputils
+  licenses
+  linux-raspberrypi
+  logrotate
+  make
+  man-db
+  man-pages
+  nano
+  net-tools
+  netctl
+  patch
+  pkg-config
+  procps-ng
+  raspberrypi-firmware
+  usbutils
+  vi
+  which
+  wireless_tools
+
+
+= entropy
+# ▔▔▔▔▔▔▔
+  haveged
+
+
+= shell
+# ▔▔▔▔▔
+  dash
+  fasd
+  prezto-git
+  zsh
+
+
+zsh= x11 drivers
+# ▔▔▔▔▔▔▔▔▔▔▔
+  xf86-video-fbdev
+
+
+= x11 server
+# ▔▔▔▔▔▔▔▔▔▔
+  xorg-xinit
+  xorg-server
+  xorg-server-utils
+  xorg-server-xephyr
+
+
+= terminal
+# ▔▔▔▔▔▔▔▔
+  rxvt-unicode
+
+
+= window manager
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  herbstluftwm
+
+
+= sound
+# ▔▔▔▔▔
+  alsa-utils
+  alsa-plugins
+  pavucontrol
+  pulseaudio
+  pulseaudio-alsa
+
+
+= system utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  figlet
+  screenfetch
+  sudo
+
+
+= package managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  downgrade
+
+
+= network
+# ▔▔▔▔▔▔▔
+  connman
+
+
+= network security
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  openssh
+
+
+= network share
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  avahi
+  nfs-utils
+
+
+= desktop utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  dunst
+  libnotify
+  rofi
+
+
+= gtk themes and engines
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  gtk-engine-murrine
+
+
+= x11
+# ▔▔▔
+  autocutsel
+  unclutter
+  xdotool
+  xf86-input-keyboard
+  xf86-input-mouse
+
+
+= file transfer
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  rsync
+  wget
+
+
+= video players
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+  omxplayer-git
+
+# vim: set ft=conf: #

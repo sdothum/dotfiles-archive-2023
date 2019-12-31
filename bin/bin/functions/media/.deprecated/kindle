@@ -1,0 +1,51 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... E-books
+
+# Usage: kindle <file>, see dmenu kindle
+
+kindle=/run/media/$USER/Kindle
+[ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
+kindle=$kindle/documents/
+
+# em spacing
+em_indent=1.75          # paragraph
+em_linespace=0.50,0.75  # indent,noindent
+em_indent=1.66          # paragraph
+em_linespace=0.33,0.75  # indent,noindent
+
+file=$1
+name=$(basename "${file%.*}")
+author=${name##* - }
+title=${name% - *}
+
+# ...................................................................... Convert
+
+[ -d $kindle ] && format=azw3 || exit
+find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
+ditto "$title"
+notify low "$title" "Converting to $format.."
+# use calibre conversion module
+output="/tmp/${file##*/}"
+justify=left
+indent="--remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent"
+linespace=${em_linespace%,*}
+
+# convert even .azw3 to inject folder title and author
+ebook-convert "$file" "${output%.*}.$format" \
+              --title="$title" --authors="$author" \
+              --change-justification="$justify" $indent \
+              --insert-blank-line --insert-blank-line-size=$linespace \
+              >/tmp/ebook-convert.log
+
+# ........................................................................ Write
+
+find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" $kindle \;
+notify low "$title" "$kindle"
+sync
+
+# vim: set ft=sh: #

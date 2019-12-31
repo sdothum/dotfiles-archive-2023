@@ -1,0 +1,25 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. AUR install
+
+# Usage: aur_install package ["instructions"]
+
+__aur_install() {
+  pre_install $@[$#]
+  eval $@
+}
+
+heading : $1
+if [[ $# -eq 1 ]] ;then
+  pm_query $@ || __aur_install yaourt -S --noconfirm $@
+elif ! pm_query $1 ;then
+  annotate $2
+  __aur_install yaourt -S $1
+fi
+
+# do post install for previously installed package dependencies
+post_install $1
+
+# vim: set ft=zsh: #

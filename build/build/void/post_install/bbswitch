@@ -1,0 +1,16 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ..................................................................... Hardware
+
+# disable nvidia gpu to save power and cool
+sudo modprobe bbswitch load_state=0
+echo OFF | sudo tee /proc/acpi/bbswitch
+# disable on boot
+sudo mkdir -p /etc/modules-load.d
+echo 'bbswitch' | sudo tee /etc/modules-load.d/bbswitch.conf
+echo 'options bbswitch load_state=0' | sudo tee /etc/modprobe.d/bbswitch.conf
+
+# vim: set ft=sh: #

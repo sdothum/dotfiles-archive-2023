@@ -1,0 +1,10 @@
+#!/bin/sh
+# enable wireless for less cumbersome netbook configuration
+
+sudo nm-connection-editor
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
+
+ping -c5 10.1.0.1
+ping -c5 10.1.0.24
+ping -c5 www.google.ca

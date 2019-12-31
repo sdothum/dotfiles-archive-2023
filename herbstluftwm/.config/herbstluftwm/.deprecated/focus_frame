@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... On open window
+
+# find empty subframe to open (spawn) window in
+tag=$(herbstclient attr monitors.focus.tag)
+
+herbstclient cycle_frame -1
+for i in $(seq 1 $(herbstclient attr tags.by-name.$tag.frame_count))
+do
+  herbstclient cycle_frame 1
+  (( $(herbstclient attr tags.by-name.$tag.curframe_wcount) )) || break
+done
+
+# action now triggered by emit_hook (script)
+# eval $@

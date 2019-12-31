@@ -1,0 +1,23 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Distribution install
+
+# my package installer
+heading : $1
+pre_install $1
+cd $HOME/build/arch/makepkg/$1
+sudo makepkg -f --asroot
+
+# do post install for previously installed package dependencies
+post_install $1
+
+# cleanup package directory for subsequent arch rebuilds
+sudo find $HOME/build/arch/makepkg -user root -exec sudo chown -c $USER:users {} \;
+sudo rm -frv $HOME/build/arch/makepkg/$1/pkg
+sudo rm -frv $HOME/build/arch/makepkg/$1/src
+
+# vim: set ft=sh: #

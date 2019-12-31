@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+# gtk engine for ffuu theme
+
+log "... script installing murrine gtk engine (for ffuu theme)"
+
+cd /data/depot/gtk/murrine
+sudo rm -rf murrine-0.98.2 2>/dev/null
+tar xJvf murrine-0.98.2.tar.xz
+
+cd murrine-0.98.2
+./configure
+make
+sudo make install

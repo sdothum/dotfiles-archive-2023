@@ -1,0 +1,117 @@
+#!/bin/sh
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm abcde
+sudo pacman -S --noconfirm ack
+[ $(hostname) = monad ] && sudo pacman -S --noconfirm acpi
+sudo pacman -S --noconfirm antiword
+sudo pacman -S --noconfirm archivemail
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm asunder
+sudo pacman -S --noconfirm autocutsel
+sudo pacman -S --noconfirm bonnie++
+sudo pacman -S --noconfirm calibre
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm celestia
+sudo pacman -S --noconfirm cmake
+sudo pacman -S --noconfirm csstidy
+sudo pacman -S --noconfirm cups
+sudo pacman -S --noconfirm cups-pdf
+sudo pacman -S --noconfirm darktable
+sudo pacman -S --noconfirm dictd
+sudo pacman -S --noconfirm dict-moby-thesaurus
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm dkms
+sudo pacman -S --noconfirm dnsutils
+  # sudo pacman -S --noconfirm dvdbackup
+sudo pacman -S --noconfirm enscript
+sudo pacman -S --noconfirm fbreader
+sudo pacman -S --noconfirm focuswriter
+  # sudo pacman -S --noconfirm genisoimage
+sudo pacman -S --noconfirm ghc
+sudo pacman -S --noconfirm git
+sudo pacman -S --noconfirm git-svn
+  # sudo pacman -S --noconfirm gnome-subtitles
+sudo pacman -S --noconfirm gpick
+  # sudo pacman -S --noconfirm growisofs
+sudo pacman -S --noconfirm gsmartcontrol
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm handbrake
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm handbrake-cli
+sudo pacman -S --noconfirm iftop
+sudo pacman -S --noconfirm iotop
+sudo pacman -S --noconfirm jre7-openjdk
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm k3b
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm kdeedu-kstars
+sudo pacman -S --noconfirm kdeedu-ktouch
+sudo pacman -S --noconfirm kdeutils-filelight
+sudo pacman -S --noconfirm keepassx
+sudo pacman -S --noconfirm lm_sensors
+sudo pacman -S --noconfirm luakit
+sudo pacman -S --noconfirm lynx
+sudo pacman -S --noconfirm markdown
+sudo pacman -S --noconfirm mercurial
+sudo pacman -S --noconfirm minitube
+sudo pacman -S --noconfirm mpc
+sudo pacman -S --noconfirm mpd
+sudo pacman -S --noconfirm mupdf
+sudo pacman -S --noconfirm ncdu
+sudo pacman -S --noconfirm ncmpcpp
+sudo pacman -S --noconfirm newsbeuter
+sudo pacman -S --noconfirm notion
+sudo pacman -S --noconfirm nzbget
+sudo pacman -S --noconfirm offlineimap
+sudo pacman -S --noconfirm paprefs
+sudo pacman -S --noconfirm pidgin
+sudo pacman -S --noconfirm polipo
+sudo pacman -S --noconfirm privoxy
+sudo pacman -S --noconfirm putty
+sudo pacman -S --noconfirm pypar2
+sudo pacman -S --noconfirm ranger
+sudo pacman -S --noconfirm rlwrap
+sudo pacman -S --noconfirm rox
+sudo pacman -S --noconfirm rss-glx
+sudo pacman -S --noconfirm rtorrent
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm rubyripper
+sudo pacman -S --noconfirm slrn
+sudo pacman -S --noconfirm smartmontools
+sudo pacman -S --noconfirm smplayer
+sudo pacman -S --noconfirm smplayer-themes
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm soundconverter
+sudo pacman -S --noconfirm sqlitebrowser
+sudo pacman -S --noconfirm squid
+sudo pacman -S --noconfirm stellarium
+sudo pacman -S --noconfirm strace
+sudo pacman -S --noconfirm surfraw
+sudo pacman -S --noconfirm system-config-printer
+sudo pacman -S --noconfirm traceroute
+sudo pacman -S --noconfirm trayion
+sudo pacman -S --noconfirm tree
+sudo pacman -S --noconfirm ttytter
+sudo pacman -S --noconfirm uzbl-browser
+sudo pacman -S --noconfirm vifm
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm virtualbox
+[ $(hostname) = luna ] && sudo pacman -S --noconfirm virtualbox-guest-iso
+sudo pacman -S --noconfirm vsftpd
+sudo pacman -S --noconfirm w3m
+sudo pacman -S --noconfirm xbmc
+sudo pacman -S --noconfirm xpad
+sudo pacman -S --noconfirm xrestop
+sudo pacman -S --noconfirm zathura
+yaourt -S --noconfirm arduino
+yaourt -S --noconfirm artha
+yaourt -S --noconfirm autokey-gtk
+yaourt -S --noconfirm comix
+[ $(hostname) = luna ] && yaourt -S --noconfirm coriander
+yaourt -S --noconfirm couchpotato-git
+yaourt -S --noconfirm cronolog
+yaourt -S --noconfirm font-manager
+yaourt -S --noconfirm fontmatrix
+yaourt -S --noconfirm gtk-engine-equinox
+yaourt -S --noconfirm hplip-plugin
+yaourt -S --noconfirm imapfilter
+yaourt -S --noconfirm jumanji-git
+yaourt -S --noconfirm ntpdate
+yaourt -S --noconfirm nvpy-git
+yaourt -S --noconfirm pavolume-git
+[ $(hostname) = luna ] && yaourt -S --noconfirm plexmediaserver
+yaourt -S --noconfirm retext
+yaourt -S --noconfirm sickbeard-git
+yaourt -S --noconfirm tcptrack
+yaourt -S --noconfirm turses
+yaourt -S --noconfirm umplayer
+yaourt -S --noconfirm urlscan-git

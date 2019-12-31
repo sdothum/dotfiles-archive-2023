@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# open directory
+while name=$(xsel -o | $(dmenu) -p 'Find Folder') || exit
+do
+  [[ $name ]] || exit
+  list=$(sudo locate -A -e -i $name)
+  [[ $list ]] || continue
+  file=$(echo -e "$list" | $(dlist) -p 'Select Folder') || exit
+  [[ -d $file ]] && dir=$file || dir="$(dirname $file)"
+  while action=$(echo -e "term\nfilelight\nncdu\nranger\nrox\nthunar" | $(dmenu) -p "$dir") || exit
+  do
+    case $action in
+      filelight)  filelight "$dir" & ;;
+      ncdu)       urxvt -title "ncdu $dir" -e ncdu "$dir" ;;
+      ranger)     urxvt -title "ranger $dir" -e ranger "$dir" ;;
+      rox)        rox "$dir" ;;
+      term)       urxvt -title "$dir" -cd "$dir" -e zsh ;;
+      thunar)     thunar "$dir" ;;
+      *)          echo ".. unknown action: $action"
+                  continue
+                  ;;
+    esac
+    exit
+  done
+done

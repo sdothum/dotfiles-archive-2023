@@ -1,0 +1,21 @@
+
+[ $TRACE ] && CHILD="toggle/compton $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Toggle compton
+
+compton='/tmp/herbstluftwm:compton'
+
+if pidof compton >/dev/null ;then
+  killall compton
+  killall xscreensaver
+  rm -f $compton
+else
+  touch $compton
+  compton >/tmp/compton.log 2>&1 &
+  xscreensaver -no-splash &
+fi
+
+# vim: set ft=sh: #

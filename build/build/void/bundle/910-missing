@@ -1,0 +1,26 @@
+fuse-exfat
+pcre
+xf86-video-ati [gpu ati && ! gpu nvidia]
+mesa-ati-dri [gpu ati && ! gpu nvidia]
+urxvt-perls [cpu atom]
+gstreamer-vaapi
+libmediainfo
+mtr
+net-tools
+file-roller
+qt
+qt-webkit
+mono [server]
+colordiff
+cpanminus
+s perl-HTML-Strip
+python-sip
+s python-PyQt4
+postgresql-client
+xbacklight
+grabc
+qutebrowser
+m sonarr [server]
+m tt-rss [server]
+s fontmatrix
+m amphetype

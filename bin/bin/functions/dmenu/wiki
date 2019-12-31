@@ -1,0 +1,63 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... Wiki
+
+# Usage: dmenu wiki [diary]
+
+ EDIT='[ new   ]'
+DIARY='[ diary ]'
+
+wikis="$HOME/vimwiki"
+[ $1 ] && prompt=Diary || { option=-v; prompt=Wiki; menu="\n$DIARY"; row=2; }
+
+files() { fcache f $wikis | grep $option '/diary/' | grep '\.wiki$' | sed 's/\.wiki$//' | egrep -v '/(diary|index)$'; }
+dirs()  { find -L $wikis -maxdepth 2 -type d | exclude 'mail|templates|xref' | grep $option '/diary' | sed "s,$wikis/,,; 1d"; }
+
+# recover full pathname
+expand() {
+  [ -e "$wikis/$1.wiki" ] || return 1
+  echo "$wikis/$1.wiki"
+  return 0
+}
+
+add() {
+  wiki=$(dirs | rmenu "$prompt" -no-custom) || exit
+  [ $1 ] || { [ $prompt = Diary ] && title=$(date '+%Y-%m-%d'); } || title=$(echo | rmenu 'Title') || exit
+  mhistory wiki$1 "$title^$SEP $wiki"
+  file=$wikis/$wiki/$title.wiki
+  # prepend h1 title
+  echo "# $title\n\n" >$file
+  v -c ':normal! G' "$file"
+}
+
+wiki() {
+  mhistory wiki$1 "$(echo $file | sed "s/ *$SEP/^$SEP/")"
+  file=$(echo $file | sed -r "s,(.*)  *$SEP  *(.*),\2/\1,")
+  if expand "$file" >/dev/null ;then
+    v "$(expand "$file")"
+    # history file cleanup usually precedes impending edit
+    expand "$file" | grep -q dmenu/.history && { pwait "vim.*"$(expand "$file")""; dmenu edit; }
+  else
+    error=": ${file##*/} ∉ ${file%/*}"
+    sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/wiki
+    file=${file##*/}
+    continue
+  fi
+}
+
+while : ;do
+  file=$(files | sed "s,$wikis/,," | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory wiki$1 | column -s^ -t |
+      sed  "1i$EDIT$menu" | rmenu "Edit $prompt$error" ${row:-1} -no-custom) || exit
+
+  case $file in
+  "$DIARY") exec dmenu wiki diary ;;
+  "$EDIT" ) add ;;
+  *       ) wiki ;;
+  esac
+  break
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,65 @@
+#!/bin/sh
+# create a fresh zfs pool
+
+if [ -d /net -o -d /pool ]; then
+    echo ".. /net pool possibly already exists, otherwise rmdir /net"
+    exit
+fi
+
+# scsi-SATA_SAMSUNG_HD103UJS13PJDWS612178 \
+# scsi-SATA_SAMSUNG_HD103UJS13PJDWS612179 \
+# scsi-SATA_ST1000DM005_HD1S246J9EC314043 \
+# scsi-SATA_SAMSUNG_HD103SJS246JDWZ105419 \ ** ??
+# scsi-SATA_ST1000DM005_HD1S246J9FC320076 \ **
+# scsi-SATA_SAMSUNG_HD103SJS246JDWZ105420 \ **
+# scsi-SATA_ST1000DM005_HD1S246J90C332795 \ **
+# scsi-SATA_SAMSUNG_HD103SJS246J1KSA14245 \ **
+zpool create -f -o ashift=12 tank \
+mirror \
+ata-ST1000DM005_HD103SJ_S246J9EC314043 \
+ata-SAMSUNG_HD103SJ_S246JDWZ105419 \
+mirror \
+ata-ST1000DM005_HD103SJ_S246J9FC320076 \
+ata-SAMSUNG_HD103SJ_S246JDWZ105420 \
+mirror \
+ata-ST1000DM005_HD103SJ_S246J90C332795 \
+ata-SAMSUNG_HD103SJ_S246J1KSA14245 \
+mirror \
+ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857955 \
+ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 \
+-m /net
+
+zfs set compression=on tank
+zfs set dedup=off tank
+zfs get compressratio tank
+zpool status
+zdb -C
+
+mkdir -pv /net/backup/Dropbox 2>/dev/null
+mkdir -pv /net/backup/vps 2>/dev/null
+mkdir -pv /net/depot/ 2>/dev/null
+mkdir -pv /net/distros/archlinux 2>/dev/null
+mkdir -pv /net/distros/crunchbang 2>/dev/null
+mkdir -pv /net/downloads/nzbs/completed 2>/dev/null
+mkdir -pv /net/downloads/nzbs/queue 2>/dev/null
+mkdir -pv /net/downloads/nzbs/tmp 2>/dev/null
+mkdir -pv /net/downloads/torrents 2>/dev/null
+mkdir -pv /net/media/ebooks/Calibre 2>/dev/null
+mkdir -pv /net/media/music 2>/dev/null
+mkdir -pv /net/media/images/fuji\ x100 2>/dev/null
+mkdir -pv /net/media/images/Lightroom 2>/dev/null
+mkdir -pv /net/media/images/sigma\ dp1 2>/dev/null
+mkdir -pv /net/media/video/anime 2>/dev/null
+mkdir -pv /net/media/video/anime\ serial 2>/dev/null
+mkdir -pv /net/media/video/movies 2>/dev/null
+mkdir -pv /net/media/video/tv\ shows 2>/dev/null
+chown -R shum:users /net
+
+zpool create -o ashift=12 pond \
+scsi-SATA_WD_My_BookWU2Q10098319 \
+scsi-SATA_WDC_WD10EARX-00_WD-WCC0T0755003 \
+-m /copy
+
+zfs set compression=on pond
+zfs set dedup=off pond
+

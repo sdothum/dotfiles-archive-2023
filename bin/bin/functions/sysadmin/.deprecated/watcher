@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Syncing
+
+# watcher hook (see /etc/conf.d/watcher.ini)
+echo "$@" | egrep -i '(^\s*$|.vim/backups|vimwiki/xref)' && exit
+trace "[$@]" >>/tmp/watcher.log
+touch /tmp/.watcher
+
+# prevent dangling bash instances
+exec /home/shum/bin/wsync
+
+# vim: set ft=sh: #

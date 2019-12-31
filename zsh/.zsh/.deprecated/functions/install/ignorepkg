@@ -1,0 +1,38 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Package management
+
+# add/remove ignore packages
+conf=/etc/pacman.conf
+
+add_pkg() {
+  for i in $@
+  do
+    if grep -m 1 -q '^ *IgnorePkg' $conf ;then
+      sudo sed -i "s/^ *IgnorePkg.*/& $i/" $conf
+    else
+      sudo sed -i "/^# *IgnorePkg/aIgnorePkg = $i" $conf
+    fi
+  done
+}
+
+del_pkg() {
+  for i in $@
+  do
+    if grep -q "^ *IgnorePkg.*$i" $conf ;then
+      sudo sed -i "/^ *IgnorePkg.*$i/s/ $i//" $conf
+    fi
+  done
+}
+
+if [[ -z $* ]] ;then
+  grep "^ *IgnorePkg.*" $conf
+elif grep -q "^ *IgnorePkg.*$@" $conf ;then
+  if-yes "reinstate $@" && del_pkg $@
+else
+  if-yes "ignore $@" && add_pkg $@
+fi
+
+# vim: set ft=zsh: #

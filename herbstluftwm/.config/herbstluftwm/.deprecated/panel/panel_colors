@@ -1,0 +1,24 @@
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Panel colors
+
+export COLOR_FOREGROUND='#BCBEC2'
+export COLOR_BACKGROUND='#242C2E'
+export COLOR_ACTIVE_FG=$COLOR_FOREGROUND
+export COLOR_ACTIVE_BG='#762508'
+export COLOR_INACTIVE_FG=$COLOR_FOREGROUND
+export COLOR_INACTIVE_BG='#053847'
+export COLOR_HIDDEN_FG='#11BCED'
+export COLOR_HIDDEN_BG=$COLOR_BACKGROUND
+export COLOR_OCCUPIED_FG='#AFAE9C'
+export COLOR_OCCUPIED_BG=$COLOR_BACKGROUND
+export COLOR_FREE_FG='#6F7277'
+export COLOR_FREE_BG=$COLOR_BACKGROUND
+export COLOR_TITLE_FG=$COLOR_FOREGROUND
+export COLOR_TITLE_BG=$COLOR_BACKGROUND
+export COLOR_STATUS_FG=$COLOR_FOREGROUND
+export COLOR_STATUS_BG=$COLOR_BACKGROUND
+
+# vim: set ft=sh: #

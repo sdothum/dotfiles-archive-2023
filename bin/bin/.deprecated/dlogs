@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# view log files
+[[ $* ]] && mode='Tail' || mode='View'
+
+cd /tmp
+ln_logs
+file=$(ls *.log | sort | sed 's/.log//' | $(dmenu) -p "$mode Log")
+
+case $mode in
+  View)   [[ $file ]] && urxvt -title "$file" -name 'max' -e less $file.log ;;
+  Tail)   [[ $file ]] && urxvt -title "$file" -name 'max' -e tail $file.log ;;
+esac
+

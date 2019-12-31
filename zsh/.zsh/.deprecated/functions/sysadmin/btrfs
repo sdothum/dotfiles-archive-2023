@@ -1,0 +1,18 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Filesystem
+
+# butterfs :-)
+case $@ in
+  '')       sudo btrfs filesystem show --all-devices
+            sudo btrfs subvolume list -p /
+            echo
+            echo ".. btrfs  balance | [command]"
+            ;;
+  balance)  sudo btrfs balance start -v -dusage=55 / ;;
+  *)        sudo btrfs $@ ;;
+esac
+
+# vim: set ft=zsh: #

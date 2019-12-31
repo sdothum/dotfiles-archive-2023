@@ -1,0 +1,4 @@
+#!/bin/sh
+
+install -d -m 0755 -o root -g root /var/run/php-fpm
+exec php-fpm --nodaemonize

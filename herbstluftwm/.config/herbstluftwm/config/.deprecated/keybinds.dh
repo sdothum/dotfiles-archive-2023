@@ -1,0 +1,190 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="config/keybinds $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# Note: the common Qwerty "IJKL" key mappings are remapped to a WASD layout
+#       for the Colemak Mod-DH keyboard layout to "MNLE"
+#       see https://colemakmods.github.io/mod-dh/
+#           http://thedarnedestthing.com/colemak%20shift-dh#ergo-layout
+
+# .................................................................. Keybindings
+
+# window manager
+hc keybind $Mod-Shift-q                spawn quit
+hc keybind $Mod-Control-Shift-r        reload
+hc keybind $Mod-w                      chain . close_or_remove . emit_hook focus_window
+hc keybind Super-Tab                   spawn focus hlwm
+hc keybind Super-Shift-Tab             spawn focus hlwm focus
+hc keybind Super-Control-Tab           spawn focus hlwm raise
+hc keybind $Mod-Escape                 spawn toggle focus
+
+# UI appearance
+hc keybind $Mod-minus                  spawn focus borders 3
+hc keybind $Mod-Shift-minus            spawn toggle borders
+if [ $PLANCK ] ;then
+  hc keybind $Mod-slash                spawn toggle unclutter
+  hc keybind $Mod-Shift-slash          spawn toggle compton
+else
+  hc keybind $Mod-backslash            spawn toggle unclutter
+  hc keybind $Mod-Shift-backslash      spawn toggle compton
+fi
+
+# wallpaper background
+hc keybind $Mod-b                      spawn draw root select
+hc keybind $Mod-Shift-b                spawn draw root shuffle
+hc keybind $Mod-Control-b              spawn draw root toggle
+hc keybind $Mod-d                      spawn dmenu root
+hc keybind $Mod-Shift-d                spawn draw root save
+hc keybind $Mod-Control-d              spawn draw root blank
+
+# focus monitor
+# hc keybind $Mod-apostrophe           cycle_monitor
+if [ $PLANCK ] ;then
+  hc keybind $Mod-semicolon            focus_monitor 1
+  hc keybind $Mod-backslash            focus_monitor 0
+else
+  # hc keybind $Mod-bracketleft        chain . focus_monitor 1 . emit_hook focus_window
+  # hc keybind $Mod-bracketright       chain . focus_monitor 0 . emit_hook focus_window
+  hc keybind $Mod-bracketleft          focus_monitor 1
+  hc keybind $Mod-bracketright         focus_monitor 0
+fi
+
+# focus client
+hc keybind $Mod-Left                   focus_edge left
+hc keybind $Mod-Down                   focus_edge down
+hc keybind $Mod-Up                     focus_edge up
+hc keybind $Mod-Right                  focus_edge right
+if [ $COLEMAK_DH ] ;then
+  hc keybind $Mod-m                    focus left
+  hc keybind $Mod-n                    focus down
+  hc keybind $Mod-l                    focus up
+  hc keybind $Mod-e                    focus right
+else
+  hc keybind $Mod-h                    focus left
+  hc keybind $Mod-j                    focus down
+  hc keybind $Mod-k                    focus up
+  hc keybind $Mod-l                    focus right
+fi
+
+# move client
+hc keybind $Mod-Shift-Left             shift_edge left
+hc keybind $Mod-Shift-Down             shift_edge down
+hc keybind $Mod-Shift-Up               shift_edge up
+hc keybind $Mod-Shift-Right            shift_edge right
+if [ $COLEMAK_DH ] ;then
+  hc keybind $Mod-Shift-m              chain . shift left  . emit_hook focus_changed
+  hc keybind $Mod-Shift-n              chain . shift down  . emit_hook focus_changed
+  hc keybind $Mod-Shift-l              chain . shift up    . emit_hook focus_changed
+  hc keybind $Mod-Shift-e              chain . shift right . emit_hook focus_changed
+else
+  hc keybind $Mod-Shift-h              chain . shift left  . emit_hook focus_changed
+  hc keybind $Mod-Shift-j              chain . shift down  . emit_hook focus_changed
+  hc keybind $Mod-Shift-k              chain . shift up    . emit_hook focus_changed
+  hc keybind $Mod-Shift-l              chain . shift right . emit_hook focus_changed
+fi
+if [ $PLANCK ] ;then
+  hc keybind $Mod-Shift-semicolon      spawn pin monitor 1
+  hc keybind $Mod-Shift-backslash      spawn pin monitor 0
+  hc keybind $Mod-Control-semicolon    spawn switch monitor 1
+  hc keybind $Mod-Control-backslash    spawn switch monitor 0
+else
+  hc keybind $Mod-Shift-bracketleft    spawn pin monitor 1
+  hc keybind $Mod-Shift-bracketright   spawn pin monitor 0
+  hc keybind $Mod-Control-bracketleft  spawn switch monitor 1
+  hc keybind $Mod-Control-bracketright spawn switch monitor 0
+fi
+
+# cycle frames
+hc keybind $Mod-Tab                    spawn switch frames cycle_all +1
+hc keybind $Mod-Shift-Tab              spawn switch frames cycle_all -1
+hc keybind $Mod-c                      spawn switch frames cycle +1
+hc keybind $Mod-Shift-c                spawn switch frames cycle -1
+hc keybind $Mod-period                 spawn switch frames cycle_frame +1
+hc keybind $Mod-comma                  spawn switch frames cycle_frame -1
+hc keybind $Mod-i                      jumpto urgent
+
+# split frames
+# create an empty frame at the specified direction
+hc keybind $Mod-u                      split bottom 0.5
+hc keybind $Mod-o                      split right  0.5
+hc keybind $Mod-Shift-u                split bottom 0.666666
+cfcc
+hc keybind $Mod-Control-u              split bottom 0.333333
+hc keybind $Mod-Control-o              split right  0.333333
+# let the current frame explode into subframes
+hc keybind $Mod-Control-space          spawn restore frames
+if [ $PLANCK ] ;then
+  hc keybind $Mod-apostrophe           spawn switch orientation +1
+  hc keybind $Mod-Shift-apostrophe     spawn switch orientation -1
+  hc keybind $Mod-Shift-period         spawn switch orientation +2
+  hc keybind $Mod-Shift-comma          spawn switch orientation -2
+elif [ $COLEMAK_DH ] ;then
+  hc keybind $Mod-slash                spawn switch orientation +1
+  hc keybind $Mod-Shift-slash          spawn switch orientation -1
+  hc keybind $Mod-Shift-period         spawn switch orientation +2
+  hc keybind $Mod-Shift-comma          spawn switch orientation -2
+else
+  hc keybind $Mod-Shift-comma          spawn switch orientation +1
+  hc keybind $Mod-Shift-period         spawn switch orientation +2
+  hc keybind $Mod-Shift-slash          spawn switch orientation -2
+fi
+
+# resize frames
+resizestep=0.025
+if [ $COLEMAK_DH ] ;then
+  hc keybind $Mod-Control-m            resize left  +$resizestep
+  hc keybind $Mod-Control-n            resize down  +$resizestep
+  hc keybind $Mod-Control-l            resize up    +$resizestep
+  hc keybind $Mod-Control-e            resize right +$resizestep
+else
+  hc keybind $Mod-Control-h            resize left  +$resizestep
+  hc keybind $Mod-Control-j            resize down  +$resizestep
+  hc keybind $Mod-Control-k            resize up    +$resizestep
+  hc keybind $Mod-Control-l            resize right +$resizestep
+fi
+hc keybind $Mod-Control-Left           resize left  +$resizestep
+hc keybind $Mod-Control-Down           resize down  +$resizestep
+hc keybind $Mod-Control-Up             resize up    +$resizestep
+hc keybind $Mod-Control-Right          resize right +$resizestep
+
+# cycle through tags
+hc keybind $Mod-Control-period         use_index +1 --skip-visible
+hc keybind $Mod-Control-comma          use_index -1 --skip-visible
+hc keybind $Mod-BackSpace              spawn switch tag
+
+# set layout
+hc keybind $Mod-grave                  spawn toggle monocle
+hc keybind $Mod-r                      remove
+hc keybind $Mod-x                      spawn restore layout
+hc keybind $Mod-Control-0              spawn restore layout max
+hc keybind $Mod-Control-1              spawn restore layout 1:1
+hc keybind $Mod-Control-2              spawn restore layout 1:2
+hc keybind $Mod-Control-3              spawn restore layout 1:1:1
+hc keybind $Mod-space                  spawn toggle max
+hc keybind $Mod-Shift-space            spawn switch layout
+hc keybind $Mod-s                      chain . floating toggle . emit_hook focus_changed
+hc keybind $Mod-f                      spawn toggle fullscreen
+hc keybind $Mod-p                      chain . pseudotile toggle . emit_hook focus_changed
+
+# hide and restore windows
+if [ $COLEMAK_DH ] ;then
+  hc keybind $Mod-h                    spawn pin ttag
+  hc keybind $Mod-Control-h            spawn restore window
+  hc keybind $Mod-Control-Shift-h      spawn restore windows
+  hc keybind $Mod-Shift-h              spawn restore hidden
+else
+  hc keybind $Mod-m                    spawn pin ttag
+  hc keybind $Mod-Control-m            spawn restore window
+  hc keybind $Mod-Control-Shift-m      spawn restore windows
+  hc keybind $Mod-Shift-m              spawn restore hidden
+fi
+
+# mouse
+hc mouseunbind --all
+hc mousebind $Mod-Button1              move
+hc mousebind $Mod-Button2              zoom
+hc mousebind $Mod-Button3              resize
+
+# vim: set ft=sh: #

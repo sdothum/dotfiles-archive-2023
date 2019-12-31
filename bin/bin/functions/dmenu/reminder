@@ -1,0 +1,28 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................... Appointment calendar
+
+REMINDERS=${REMINDERS:-$HOME/.reminders}
+
+ ADD='[ add  ]'
+EDIT='[ edit ]'
+
+while appmt=$(reminder 52 | sed  "1i$ADD\n$EDIT" | rmenu 'Appointment' -no-custom) || exit ;do
+  unset error
+  case "$appmt" in
+  "$ADD" ) while date=$(echo | rmenu "On date$error") || break ;do
+             [ -z "$date" ] && break
+             date --date "$date" >/dev/null 2>&1 || { error=": $date ?"; continue; }
+             reminder "$date"
+             break
+           done ;;
+
+  "$EDIT") v -f -c 'normal|G' $REMINDERS ;;
+  *      ) v -f -c "/${appmt#*$SEP }$" $REMINDERS ;;
+  esac
+done
+
+# vim: set ft=sh: #

@@ -1,0 +1,605 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+require 'term/ansicolor'
+class String
+    include Term::ANSIColor
+end
+
+require 'trollop'
+opts = Trollop::options {
+  opt :trace, 'set trace level', :default => 1
+  opt :server, "start #{$HOMEPAGE} web server"
+  opt :mail, "process #{$HOMEPAGE} email comments"
+}
+
+class Trace
+  attr_accessor   :threshold # :trace => -1 to suppress all messages
+
+  def initialize(level=0)
+    @threshold = level
+    debug(":trace level => #{level}") unless level == 0
+  end
+
+  def trace(*argv)
+    case argv.size
+    when 1 then level = 0; message = argv[0].bold
+    when 2 then level = argv[0]; message = argv[1]
+    end
+    if level <= @threshold
+      print Time.now.strftime('%-I:%M:%S%P ').green.bold
+      print "/#{level}/ ".red.bold if level > 0
+      print "#{message}\n"
+    end
+  end
+
+  def info(message)
+    trace(message.cyan)
+  end
+
+  def debug(message)
+    trace(message.reset)
+  end
+
+  def warning(message)
+    trace("<WARNING> #{message}".yellow)
+  end
+
+  def error(message)
+    trace("<ERROR> #{message}".red)
+  end
+end
+
+$LOG = Trace.new(opts[:trace])
+
+require 'rubygems'
+require 'kramdown'
+require 'sanitize'
+require 'mail'
+require 'socket'
+
+$HOMEPAGE = 'the darnedest thing'
+$VERSION = "#{$HOMEPAGE} v2.06"
+
+$SERVER = Socket.gethostname == 'thedarnedestthing.com' ? 'thedarnedestthing.com' : 'thedarnedestthing'
+$WIKI = ENV['HOME'] + '/vimwiki'
+$MAIL = ENV['HOME'] + '/.mail/comments/thedarnedestthing'
+$RSS_CUTOFF = 50
+$RSS_WORDS = 30
+$PREVIEW_WORDS = 45
+$VIMWIKI_EXT = 'wiki'
+
+$THREADS = {
+    'notebook/diary' => "#{$HOMEPAGE} blog",
+    'thestory' => 'the story',
+    'truthordie' => 'truth or die',
+    'shadowsandlight' => 'shadows and light',
+    'colophon' => 'colophon',
+    'thedarnedestthing' => $HOMEPAGE,
+}
+
+$IGNORE = %w[
+  a b c d e f g h i j k l m n o p q r s t u v w x y z
+  colophon
+  comments
+  date
+  diary
+  guide
+  index
+  lorem\ ipsum
+  recent
+  rss
+  tag
+  shadows\ and\ light
+  todo
+  the\ darnedest\ thing
+  the\ story
+  truth\ or\ die
+]
+
+class WikiList
+  attr_reader     :directory
+  attr_reader     :index
+
+  def initialize(thread='**', all=nil)
+    $LOG.info("WikiList => #{thread}")
+    @thread = thread
+    @directory = Dir.glob("#{$WIKI}/#{thread}/*.#{$VIMWIKI_EXT}")
+    ignore unless all
+    reverse_chronological
+    @index = @directory.map { |filename| title(filename) }
+  end
+
+  def ignore
+    @directory.delete_if { |filename| $IGNORE.find_index("#{title(filename)}") }
+  end
+
+  def chronological
+    @directory.sort_by! { |filename| File.mtime(filename) }
+  end
+
+  def reverse_chronological
+    chronological
+    @directory.reverse!
+  end
+
+  def title(filename)
+    File.basename(filename, ".#{$VIMWIKI_EXT}")
+  end
+
+  def find_next_title(title)
+    if @index.find_index(title)
+      next_title = @index[@index.find_index(title) + 1]
+      unless next_title.nil?
+        if File.zero?("#{$WIKI}/#{@thread}/#{next_title}.#{$VIMWIKI_EXT}")
+          find_next_title(next_title)
+        else
+          next_title
+        end
+      end
+    end
+  end
+
+  def thread_name(title)
+    thread = ''
+    $THREADS.each do |wiki, homepage|
+      thread = homepage
+      break if File.exist?("#{$WIKI}/#{wiki}/#{title}.#{$VIMWIKI_EXT}")
+    end
+    thread
+  end
+end
+
+class Wiki
+  attr_reader     :content
+
+  def initialize(title, link=nil)
+    $LOG.info("Wiki => #{title}")
+    @title = title.gsub(/:comments$/, '')
+    @show_comments = /:comments$/ =~ title
+    @content = '<div class="content">'
+    if thread_exist?
+      @content << read_vimwiki(@filename)
+    else
+      @content << not_found
+    end
+    @content << '</div>'
+    add_link(link)
+    if @show_comments
+      add_comments
+      add_link(link)
+    end
+  end
+
+  def read_vimwiki(filename)
+    File.zero?(filename) ? not_found : expand_keywords(Kramdown::Document.new(convert_vimwiki(IO.read(filename))).to_html)
+  end
+
+  def not_found
+    @is_empty = true
+    '<p>this topic has not yet been updated. Please check back later..</p>'
+  end
+
+  def empty?
+    @is_empty
+  end
+
+  def add_link(link)
+    case link
+    when :about
+      @content << "<p class=\"nextwiki\"><a href=\"about #{@title}\">→ about</a></p>"
+    when :start_here
+      @content << "<p class=\"nextwiki\"><a href=\"welcome\">→ start here</a></p>"
+      @content << "<p class=\"nextwiki\"><a href=\"recent comments\">recent comments</a></p>"
+    when :next
+      next_title = WikiList.new(@thread).find_next_title(@title)
+      @content << "<p class=\"nextwiki\"><a href=\"#{next_title}\">→ #{next_title}</a></p>" if next_title
+      add_link(:comment)
+    when :comment
+      @content << "<p class=\"showcomments\">#{has_comments? && !@show_comments ? "<a href=\"#{@title}:comments\">show comments</a>&nbsp&nbsp&nbsp<span class=\"separator\">●</span>&nbsp&nbsp&nbsp" : ''}<a href=\"mailto:comments@thedarnedestthing.com?subject=/// #{@title} ///\">comment</a></p>"
+    end
+  end
+
+  def has_comments?
+    Dir.glob("#{$WIKI}/mail/comments/#{@title}/*").count > 0
+  end
+
+  def add_comments
+    $LOG.info('Building "comment" article references')
+    @content << "<hr>"
+    Dir.glob("#{$WIKI}/mail/comments/#{@title}/*").each { |comment| @content << IO.read(comment) }
+  end
+
+  def convert_vimwiki(document)
+    document.gsub(/\[\[([^|\[\]]*)\]\]/, '[\1](http://#{$SERVER}/\1)') \
+      .gsub(/\[\[(http:\/\/[^\]]*)[|]([^\[]*)\]\]/, '[\2](\1)') \
+      .gsub(/\[\[([^\]]*)[|]([^\[]*)\]\]/, '[\2](http://#{$SERVER}/\1)') \
+      .gsub(/#\{[$]SERVER\}/, "#{$SERVER}") \
+      .gsub(/^(=+ .*) =+/, '\1') \
+      .gsub(/^===/, '###') \
+      .gsub(/^==/, '##') \
+      .gsub(/^=/, '#') \
+      .gsub(/{{{.*/, '') \
+      .gsub(/}}}/, '') \
+      .gsub(/^%template .*/, '')
+  end
+
+  def expand_keywords(document)
+    document.gsub(/\^ \^/, '&nbsp') \
+      .gsub(/\^dollar\^/, '$') \
+      .gsub(/\^center\^(.*)/, '<p class="center">\1</p>')
+  end
+
+  def plain_text(word_count=9000)
+      Sanitize.clean(@content).split(/ +/)[0..word_count].join(' ')
+  end
+
+  def title_uri
+    @title.gsub(/ /, '%20')
+  end
+
+  def thread_exist?
+    @filename = nil
+    @thread = nil
+    $THREADS.each do |thread, homepage|
+      if File.exist?("#{$WIKI}/#{thread}/#{@title}.#{$VIMWIKI_EXT}")
+        @filename = "#{$WIKI}/#{thread}/#{@title}.#{$VIMWIKI_EXT}"
+        @thread = thread
+        break
+      end
+    end
+    @filename
+  end
+end
+
+class Comment < Wiki
+  attr_reader     :title
+
+  def initialize(filename)
+    $LOG.info("Comment => #{filename.sub(/.*\/comments\//, '')}")
+    @content = IO.read(filename).sub(/<p class="date">.*<\/p>\n/, '')
+    @title = filename.sub(/\/#{File.basename(filename)}$/, '').sub(/.*\//, '')
+  end
+end
+
+class Diary < Wiki
+  attr_reader     :thread
+
+  def initialize(title)
+    $LOG.info("Diary => #{title}")
+    @title = title
+    @content = '<div class="content">'
+    @thread = $THREADS.key(title)
+    @content << last_diary_entry
+    @content << '</div>'
+    add_link(title == $HOMEPAGE ? :start_here : :about)
+  end
+
+  def last_diary_entry
+    content = nil
+    @is_empty = true
+    Dir.glob("#{$WIKI}/#{@thread}/diary/2*.#{$VIMWIKI_EXT}").each do |filename|
+      unless File.zero?(filename)
+        content = read_vimwiki(filename)
+        @is_empty = nil
+        break
+      end
+    end
+    @is_empty ? not_found : content
+  end
+end
+
+class History
+  attr_reader     :links
+
+  def initialize
+    @links = ''
+    @separator = ''
+  end
+
+  def add(title)
+      @links += "#{@separator}<a href=\"#{title}\">#{title}</a>"
+      @separator = ' <span class="separator">●</span> '
+  end
+end
+
+class File
+  def self.date(filename)
+    stat(filename).mtime.strftime('%Y-%m-%d')
+  end
+
+  def self.calendar_date(filename)
+    stat(filename).mtime.strftime('%B %-d, %Y').downcase
+  end
+end
+
+def clear_inbox
+  $LOG.info('Processing "email" comments')
+  wikis = WikiList.new
+  emails = Dir.glob("#{$MAIL}/{cur,new}/*")
+  spammers = IO.read("#{$WIKI}/mail/rules/spammers").split("\n").join('|').downcase
+  titles = wikis.index.join('|').downcase
+  emails.each do |mail|
+    post = File.basename(mail)
+    if Dir.glob("#{$WIKI}/mail/{comments,junk,pending,rejected,empty}/**/#{post}").empty?
+      message = Mail.read(mail)
+      if message.from[0].downcase =~ /(#{spammers})/
+        $LOG.error("junk post => #{post} subject => #{message.subject} spammers => #{message.from[0]}")
+        system("touch \"#{$WIKI}/mail/junk/#{post}\"")
+        next
+      end
+      subject = message.subject.sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
+      unless subject =~ /(#{titles})/
+        $LOG.error("rejected post => #{post} subject => #{message.subject} from => #{message.from[0]}")
+        system("touch \"#{$WIKI}/mail/rejected/#{post}\"")
+        next
+      end
+      if message.body.empty?
+        $LOG.warning("empty post => #{post} subject => #{subject}")
+        system("mkdir \"#{$WIKI}/mail/empty/#{subject}\"") unless Dir.exist?("#{$WIKI}/mail/empty/#{subject}")
+        system("touch \"#{$WIKI}/mail/empty/#{subject}/#{post}\"")
+        next
+      end
+      begin
+        $LOG.info("comments post => #{post} subject => #{subject}")
+        date = message.date.strftime("%Y-%m-%d").split('-')
+        text = (case message.mime_type
+          when 'text/plain' then "#{message.body}"
+          when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+          when 'text/html' then "#{message.body}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+          else raise
+          end).gsub(/^ +/m, '')
+        system("mkdir \"#{$WIKI}/mail/comments/#{subject}\"") unless Dir.exist?("#{$WIKI}/mail/comments/#{subject}")
+        comment = File.new("#{$WIKI}/mail/comments/#{subject}/#{post}", 'w')
+        comment.write("<p class=\"date\">#{Time.gm(date[0], date[1], date[2]).strftime('%B %-d, %Y').downcase}</p>\n")
+        from = "<span class=\"sender\">#{message.from[0].sub(/(.*)@.*/, '\1').gsub(/\./, ' ')}</span> said: "
+        text.split("\n\n").each do |line|
+          comment.write("<p class=\"comment\">#{from}#{line}</p>\n")
+          from = ''
+        end
+        comment.close
+        system("touch -d \"#{message.date}\" -m \"#{$WIKI}/mail/comments/#{subject}/#{post}\"")
+      rescue
+        $LOG.warning("pending post: #{post} -> subject: #{subject} -> mime_type: #{message.mime_type}}")
+        system("mkdir \"#{$WIKI}/mail/pending/#{subject}\"") unless Dir.exist?("#{$WIKI}/mail/pending/#{subject}")
+        system("touch \"#{$WIKI}/mail/pending/#{subject}/#{post}\"")
+      end
+    end
+  end
+end
+
+def homepage(title, thread=nil)
+  $LOG.info("Building \"thread\" page => #{title}")
+  diary = Diary.new(title)
+  content = diary.content
+  wikis = WikiList.new(thread ? thread : diary.thread)
+  content << '<div class="insert">'
+  history = History.new
+  date = nil
+  wikis.directory.each do |filename|
+    title = wikis.title(filename)
+    if date.nil? or File.date(filename) == date
+      wiki = Wiki.new(title)
+      unless wiki.empty?
+        content << "<h1 id=\"title\"><a href=\"#{title}\">#{title}</a></h1>"
+        wiki.add_link(:comment)
+        content << wiki.content
+        date ||= File.date(filename)
+      end
+    else
+      history.add(title)
+    end
+  end
+  content << "<p class=\"history\">#{history.links}</p>"
+  content << '</div>'
+end
+
+def recent_comments
+  $LOG.info('Building "recent comments" page')
+  emails = (Dir.glob("#{$WIKI}/mail/comments/*/*").sort_by { |filename| File.mtime(filename) }).reverse
+  history = History.new
+  feed_count = 0
+  date = '0000-00-00'
+  content = '<div class="catalogue">'
+  emails.each do |filename|
+    comment = Comment.new(filename)
+    unless File.date(filename) == date
+      if feed_count <= $RSS_CUTOFF
+        date = File.date(filename)
+        content << "<h2>#{File.calendar_date(filename)}</h2>"
+      else
+        history.add(comment.title)
+        next
+      end
+    end
+    content << "<p><span class=\"article\"><a href=\"#{comment.title}\">#{comment.title}</a></span>&nbsp&nbsp"
+    content << "<span class=\"opening\">#{comment.plain_text($PREVIEW_WORDS)}</span> ...</p>"
+    feed_count += 1
+  end
+  content << history.links
+  content << '</div>'
+end
+
+def recent
+  $LOG.info('Building "recent" page')
+  wikis = WikiList.new
+  content = "<div class=\"catalogue\">"
+  history = History. new
+  feed_count = 0
+  date = '0000-00-00'
+  wikis.directory.each do |filename|
+    title = wikis.title(filename)
+    wiki = Wiki.new(title)
+    unless wiki.empty?
+      unless File.date(filename) == date
+        if feed_count <= $RSS_CUTOFF
+          date = File.date(filename)
+          content << "<h2>#{File.calendar_date(filename)}</h2>"
+        else
+          history.add(title)
+          next
+        end
+      end
+      content << "<p><span class=\"article\"><a href=\"#{title}\">#{title}</a></span>&nbsp&nbsp"
+      content << "<span class=\"opening\">#{wiki.plain_text($PREVIEW_WORDS)}</span> ...</p>"
+    end
+    feed_count += 1
+  end
+  content << "<p class=\"history\">#{history.links}</p>"
+  content << "</div>"
+end
+
+def date
+  $LOG.info('Building "date" page')
+  wikis = WikiList.new
+  content = "<div class=\"catalogue\">"
+  date = '0000-00-00'
+  wikis.directory.each do |filename|
+    title = wikis.title(filename)
+    wiki = Wiki.new(title)
+    unless wiki.empty?
+      unless File.date(filename) == date
+        content << "<h2>#{File.calendar_date(filename)}</h2>"
+        date = File.date(filename)
+      end
+      content << "<span class=\"right\">#{wikis.thread_name(title)}</span><a href=\"#{title}\">#{title}</a>"
+    end
+  end
+  content << "</div>"
+end
+
+def index
+  $LOG.info('Building "index" page')
+  wikis = WikiList.new('*', :all)
+  content = '<div class="content">'
+  letter = nil
+  wikis.index.sort.uniq.each do |title|
+    if title[0] != letter
+      letter = title[0]
+      content << "<h2>#{letter}</h2>"
+    end
+    content << "<span class=\"right\">#{wikis.thread_name(title)}</span><a href=\"#{title}\">#{title}</a>"
+  end
+  content << '</div>'
+end
+
+def rss
+  $LOG.info('Building "rss" xml page')
+  # assemble date insert
+  wikis = WikiList.new
+  feed_count = 0
+  date = '0000-00-00'
+  rss = "<?xml version=\"1.0\" encoding=\"utf-8\"?> 
+    <rss version=\"2.0\">
+    <channel>
+    <title>#{$HOMEPAGE}</title>
+    <description>Awakening to Self and the journey of the ending of suffering. Body Shamanics and healing. The thoughts and images of Steven Hum.</description>
+    <lastBuildDate>#{Time.now.strftime('%a, %d %b %Y %H:%M:%S %Z')}</lastBuildDate>
+    <language>en-us</language>
+    <link>http://thedarnedestthing.com</link>
+  "
+  wikis.directory.each do |filename|
+    title = wikis.title(filename)
+    wiki = Wiki.new(title)
+    unless wiki.empty?
+      unless File.date(filename) == date
+        break if feed_count >= $RSS_CUTOFF
+        date = File.date(filename)
+      end
+      rss << "<item>"
+      rss << "<title>#{title}</title>"
+      rss << "<description>#{wiki.plain_text($RSS_WORDS)} ...</description>"
+      rss << "<link>http://thedarnedestthing/#{wiki.title_uri}</link>"
+      rss << "<guid>http://thedarnedestthing/#{wiki.title_uri}</guid>"
+      rss << "<pubDate>#{File.stat(filename).mtime.strftime('%a, %d %b %Y %H:%M:%S %Z')}</pubDate>"
+      rss << "</item>"
+      feed_count += 1
+    end
+  end
+  rss << '
+    </channel>
+    </rss>
+  '
+end
+
+def document_header(title, css)
+  title = title.gsub(/:comments$/, '')
+  "
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <link rel=\"Stylesheet\" type=\"text/css\" href=\"/#{css}.css\" />
+      <!--[if IE]>
+        <link rel=\"stylesheet\" type=\"text/css\" href=\"/ie.css\" />
+      <![endif]-->
+      <title>#{title}</title>
+      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+    </head>
+    <body>
+      <div id=\"ie\">
+        <div id=\"header\">
+          <a href=\"#{$HOMEPAGE}\" id=\"home\">#{$HOMEPAGE}</a>
+          <div id=\"index\">
+            <a href=\"the story\">the story</a>
+            <a href=\"truth or die\">truth or die</a>
+            <a href=\"shadows and light\">shadows and light</a>
+            <a href=\"recent\">recent</a>
+            <a href=\"date\">date</a>
+            <a href=\"index\">index</a>
+            <a href=\"services\">services</a>
+            <a href=\"colophon\">colophon</a>
+            <a href=\"contact\">contact</a>
+          </div>
+        </div>
+        #{(css == 'home') ? '' : "<h1 id=\"title\"><a href=\"#{title}\">#{title}</a></h1>" }
+  "
+end
+
+def document_footer
+  '
+      </div>
+    </body>
+  </html>
+  '
+end
+
+def server
+  after '/' do
+    redirect to("/#{$HOMEPAGE}")
+  end
+
+  get '/:name' do
+    $LOG.info("params => #{params}")
+    title = params[:name]
+    if title == ':do_mail'
+      clear_inbox
+      title = 'recent comments'
+    end
+    unless title == 'rss.xml'
+      if $THREADS.has_value?(title)
+        content = document_header(title, (title == $HOMEPAGE) ? 'home' : 'thread')
+        content << homepage(title, (title == $HOMEPAGE) ? 'notebook/diary' : nil)
+      elsif title =~ /recent|date|index|recent comments/
+        content = document_header(title, title.gsub(/ comments$/, ''))
+        content << eval(title.gsub(/ /, '_'))
+      else
+        content = document_header(title, 'default')
+        content << Wiki.new(title, :next).content
+      end
+      content << document_footer
+    else
+      rss
+    end
+  end
+end
+
+$LOG.info("#{$VERSION} running on #{$SERVER}")
+if opts[:server]
+  require 'sinatra'
+  server
+elsif opts[:mail]
+  clear_inbox
+else
+  $LOG.debug('Usage: myweb --mail | --server')
+end
+

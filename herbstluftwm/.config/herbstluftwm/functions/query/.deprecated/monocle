@@ -1,0 +1,12 @@
+
+# [ $TRACE ] && CHILD="query/monocle $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Monocle view
+
+# is primary monitor in monocle?
+[ $(cat $MONOCLE) -gt 0 ]
+
+# vim: set ft=sh: #

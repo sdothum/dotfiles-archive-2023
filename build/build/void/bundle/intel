@@ -1,0 +1,4 @@
+libva-intel-driver
+libvdpau-va-gl
+xf86-video-intel
+mesa-intel-dri

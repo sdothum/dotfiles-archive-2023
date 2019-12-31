@@ -1,0 +1,36 @@
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+
+# am i (cron) actually running?
+* * * * * touch /tmp/cron.touch
+
+# kill excess screensaver instances
+# * * * * * ~/bin/screentrimmer >> /tmp/screentrimmer.log 2>&1
+
+# rotate user logs
+0 * * * * /usr/sbin/logrotate -s /tmp/logrotate.status ~/.config/logrotate/logrotate.conf
+
+# send mail queue
+# * * * * * /usr/local/bin/msmtp-runqueue.sh >> /tmp/mail.log 2>&1
+# * * * * * ~/bin/mailqueue
+
+# clear dropbox conflicts
+# 0 * * * * /usr/bin/find ~/Dropbox -name '*conflicted copy*' -exec rm -fv {} \;
+
+# deprecated mail indexing (supplanted by notmuch)
+# */5 * * * * /usr/local/bin/mu index --maildir ~/.mail >> /tmp/mu.log 2>/dev/null
+
+# uncomment for daemon imap handling
+# */5 * * * * exec ~/bin/start-daemon -n19 -c2 -p7 python /usr/bin/offlineimap -u basic >> /tmp/offlineimap.log 2>/dev/null
+

@@ -1,0 +1,3 @@
+#!/bin/sh
+export SHELL=/bin/bash
+/usr/bin/playonlinux "$@"

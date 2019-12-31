@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+[ $TRACE ] && CHILD="draw/conky $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .......................................................... Reload conky config
+
+killall -TERM conky
+[ -e $CONKY ] && conky &
+
+# vim: set ft=sh: #

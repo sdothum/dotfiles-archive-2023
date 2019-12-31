@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Desktop tag
+
+# see .conkyrc
+[[ $@ = focus ]] || focus=-v
+herbstclient list_monitors | grep $focus '\[FOCUS\]' | cut -d'"' -f2

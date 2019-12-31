@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# format and compose message
+m() {
+  which $@ >/dev/null 2>&1 && echo -n "$@\\n"
+}
+
+format_message() {
+  # insert 2 line feed characters into reply for vim cursor positioning and spacing
+  # note required search order
+  if grep -q '^--- Begin forwarded message from ' $@; then
+    sed -i '/^--- Begin forwarded message from /i\
+\
+' $@
+  elif grep -q '^Excerpts from .* message of ' $@; then
+    sed -i '/^Excerpts from .* message of /i\
+\
+' $@
+  fi
+  # composing new email message needs no blank lines added
+}
+
+compose_with() {
+  format_message $2
+  folded=$(mktemp)
+  $1 $2
+  fold -s -w 72 $2 > $folded
+  cp -f $folded $2
+  mv $folded $folded.draft
+}
+
+while editor=$(echo -e \
+                       $(m vim) \
+                       $(m focuswriter) \
+                       $(m nano) \
+                       $(m pyroom) \
+                       $(m rubyroom) \
+             | $(dmenu) -p 'Editor')
+do
+  case ${editor# } in
+    vim)          SHELL=/bin/sh
+                  format_message $@
+                  gvim -f -c 'set filetype=mail' $@
+                  cp $@ $@.draft
+                  # cleanup sup mail draft histories
+                  find ~/.vim/backups -name '*tmp*sup.*' -exec sudo rm -f {} \;
+                  ;;
+    focuswriter)  compose_with focuswriter $@ ;;
+    nano)         compose_with pyroom $@ ;;
+    pyroom)       compose_with pyroom $@ ;;
+    rubyroom)     compose_with rubyroom $@ ;;
+    *)            echo ".. unknown editor: $editor"
+                  continue
+                  ;;
+  esac
+  exit
+done

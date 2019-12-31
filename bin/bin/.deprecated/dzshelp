@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Help
+
+# dmenu zsh help pages
+page=$(zsh -c "run-help" \
+     | sed -e '1,2d' -e 's/ /\n/g' \
+     | grep -v '^$' \
+     | sort -d \
+     | $(dwrapper) -p 'Zsh Help')
+
+[[ $page ]] && urxvt -title "help $page" -e zsh -c "run-help $page | less"

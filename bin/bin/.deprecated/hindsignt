@@ -1,0 +1,6 @@
+#!/bin/sh
+# hindsight forensics to convert google-chrome history bookmarks to sqlite
+# hindsight -i chrome_Default_dir -o output
+
+PATH=/opt/hindsight:$PATH
+/opt/hindsight/hindsight.pl $@

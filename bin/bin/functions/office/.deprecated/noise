@@ -1,0 +1,32 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# .................................................................. Noise color
+
+# see http://brunogirin.blogspot.ca/2009/09/making-noise-with-imagemagick.html
+
+# Retrieve parameters and assign defaults if not found
+size=${1:-180x180}
+col1=${2:-#000000}
+col2=${3:-#111111}
+ofile=${4:-noise.png}
+
+# Set the name of the temporary mask file
+mask=$(mktemp).png
+
+# Create temporary mask
+convert -size $size xc: +noise Random -virtual-pixel tile \
+        -blur 0x1 -fx intensity -normalize $mask
+
+# Create both colours and compose with mask
+convert -size $size xc:white -fill $col1 -opaque white \
+        -size $size xc:white -fill $col2 -opaque white \
+        $mask -composite $ofile
+ 
+# Delete temporary file
+rm $mask
+
+# vim: set ft=sh: #

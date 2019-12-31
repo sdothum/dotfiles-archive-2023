@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Scratchpad
+
+# toggle scratchpad, hence, manual window placement control versus use of emit_hook
+scratchpad=/tmp/herbstluftwm:scratchpad
+
+if xdotool search --onlyvisible --classname 'scratchpad'; then
+  if [[ $(herbstclient attr monitors.focus.tag) = $(herbstclient attr clients.$(< $scratchpad).tag) ]]; then
+    xdotool search --onlyvisible --classname 'scratchpad' windowunmap
+    focus_window
+    exit
+  fi
+fi
+
+focus frame
+
+if [[ -f $scratchpad ]]; then
+  if ! herbstclient bring $(< $scratchpad); then
+    xdotool search --classname 'scratchpad' windowmap && exit
+    # otherwise, old instance probably killed or closed..
+  fi
+fi
+
+# case new instance
+if ! xdotool search --classname 'scratchpad' windowmap; then
+  which byobu 2>/dev/null && screen='-e byobu' || screen='-pe tabbed &'
+  urxvt -title 'scratchpad' -name 'scratchpad' $screen
+  xdotool search --sync --onlyvisible --classname 'scratchpad'
+  herbstclient attr clients.focus.winid > $scratchpad
+fi

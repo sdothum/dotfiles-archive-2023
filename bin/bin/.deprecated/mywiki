@@ -1,0 +1,671 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+require 'term/ansicolor'
+class String
+  include Term::ANSIColor
+end
+
+require 'trollop'
+opts = Trollop::options {
+  opt :trace, 'set trace level', :default => 1
+  opt :save, 'save timestamp snapshot'
+  opt :restore, 'restore timestamp snapshot'
+  opt :debug, 'debug a function', :default => ''
+  opt :clean, 'purge html files for clean rebuild'
+}
+
+require 'mail'
+
+$WIKI = ENV['HOME'] + '/vimwiki/'
+$MAIL = ENV['HOME'] + '/.mail/comments/thedarnedestthing/'
+$RSS_CUTOFF = 50
+$PREVIEW_WORDS = 44
+
+$NEXTS = %w[
+  thestory
+  truthordie
+  shadowsandlight
+  colophon
+  thedarnedestthing
+  notebook/html/diary
+]
+
+$THREADS = {
+    'thestory' => 'the story',
+    'truthordie' => 'truth or die',
+    'shadowsandlight' => 'shadows and light',
+    'colophon' => 'colophon',
+    'thedarnedestthing' => ['the darnedest thing', 'notebook/html/diary']
+}
+
+$IGNORE = %w[
+  a b c d e f g h i j k l m n o p q r s t u v w x y z
+  colophon
+  comments
+  date
+  diary
+  index
+  lorem\ ipsum
+  recent
+  rss
+  tag
+  shadows\ and\ light
+  todo
+  the\ darnedest\ thing
+  the\ story
+  truth\ or\ die
+]
+
+class Trace
+  attr_accessor   :threshold # :trace => -1 to suppress all messages
+
+  def initialize(level=0)
+    @threshold = level
+    debug(":trace level => #{level}") unless level == 0
+  end
+
+  def trace(*argv)
+    case argv.size
+    when 1 then level = 0; message = argv[0].bold
+    when 2 then level = argv[0]; message = argv[1]
+    end
+    if level <= @threshold
+      print Time.now.strftime('%-I:%M:%S%P ').green.bold
+      print "/#{level}/ ".red.bold if level > 0
+      print "#{message}\n"
+    end
+  end
+
+  def info(message)
+    trace(message.cyan)
+  end
+
+  def debug(message)
+    trace(message.reset)
+  end
+
+  def warning(message)
+    trace("<WARNING> #{message}".yellow)
+  end
+
+  def error(message)
+    trace("<ERROR> #{message}".red)
+  end
+end
+
+$LOG = Trace.new(opts[:trace])
+
+class File
+  def self.date(filename)
+    stat(filename).mtime.strftime('%Y-%m-%d')
+  end
+
+  def self.calendar_date(filename)
+    stat(filename).mtime.strftime('%B %-d, %Y').downcase
+  end
+
+  def self.copy(from, to)
+    $LOG.trace(4, "copying #{from} => #{to}")
+    system("touch -r \"#{from}\" \"#{from}.touch\"")
+    copy_stream(from, to)
+    chmod(0644, to)
+    system("touch -r \"#{from}.touch\" \"#{to}\"")
+    system("rm \"#{from}.touch\"")
+  end
+
+  def self.save_timestamp(filename)
+    $LOG.trace(4, "#{filename} => #{mtime(filename)}")
+    system("touch -r \"#{filename}\" \"#{filename}.touch\"")
+  end
+
+  def self.restore_timestamp(filename)
+    system("touch -r \"#{filename}.touch\" \"#{filename}\"") if exist?("#{filename}.touch")
+    $LOG.trace(4, "#{filename} => #{mtime(filename)}")
+  end
+end
+
+class WikiPage
+  attr_accessor   :body
+  attr_reader     :document
+  attr_reader     :title
+
+  def initialize(page)
+    @page = page
+    @document = vimwiki_extensions(IO.read(@page))
+    @title = page.sub(/.html$/, '')
+    $LOG.trace(4, "@document => #{@document}")
+  rescue
+    $LOG.error("..file [ #{@page} ] not found")
+    print "..file [ #{@page} ] not found"
+  end
+
+  def vimwiki_extensions(document)
+    document.gsub(/:space:/, '&nbsp').gsub(/:blank-line:/, '&nbsp').gsub(/:dollar-sign:/, '$')
+  end
+
+  def set_header_to(to_match)
+    @header = @document.partition(/.*#{to_match}.*\n/)
+    @header = @header[0] + @header[1]
+    $LOG.trace(4, "@header => #{@header}")
+  end
+
+  def set_body_to(from_match, to_match)
+    @body = @document.partition(/.*#{from_match}.*\n/)
+    @body = (@body[1] + @body[2]).partition(/.*#{to_match}.*\n/)
+    @body = @body[0] + @body[1]
+    $LOG.trace(4, "@body => #{@body}")
+  end
+
+  def set_body_within(from_match, to_match)
+    @body = @document.partition(/.*#{from_match}.*\n/)
+    @body = @body[2].partition(/.*#{to_match}.*\n/)
+    @body = @body[0]
+    $LOG.trace(4, "@body => #{@body}")
+  end
+
+  def set_footer_from(from_match)
+    @footer = @document.partition(/.*#{from_match}.*\n/)
+    @footer = @footer[1] + @footer[2]
+    $LOG.trace(4, "@footer => #{@footer}")
+  end
+
+  def set_header_to_and_footer_from(to_match, from_match)
+    set_header_to(to_match)
+    set_footer_from(from_match)
+  end
+
+  def empty?(linecount = 9)
+    unless @body.nil? then @body.lines.count <= linecount end
+  end
+
+  def gsub_document(pattern, replacement)
+    @document.gsub!(pattern, replacement)
+  end
+
+  def assemble
+    @document = @header + @body + @footer
+  end
+
+  def patch
+    assemble
+    write
+  end
+
+  def write
+    $LOG.trace(4, "document => #{document}")
+    system("touch -r \"#{@page}\" \"#{@page}.touch\"")
+    file = File.open(@page, 'w')
+    file.write(@document)
+    file.close
+    system("touch -r \"#{@page}.touch\" \"#{@page}\"")
+    system("rm \"#{@page}.touch\"")
+  end
+end
+
+class CommentPage < WikiPage
+  def initialize(comment)
+    super(comment)
+    @body = @document.partition(/<p class="date">.*\n/)
+    @body = @body[2].gsub(/<p class="comment">|<\/p>\n/m, ' ').squeeze(' ').strip
+    @title = comment.sub(/\/.*$/, '')
+    $LOG.trace(4, "title => #{@title} @body => #{@body}")
+  end
+end
+
+class WikiList
+  attr_accessor   :list
+  attr_reader     :index
+
+  def initialize(dir, all=nil)
+    Dir.chdir(dir)
+    @list = Dir.glob("*.html")
+    ignore unless all
+    reverse_chronological
+    @index = @list.sort.map { |filename| title(filename) }
+    $LOG.trace(2, "@list => #{@list}\n@index => #{@index}")
+  end
+
+  def ignore
+    @list.delete_if { |filename| $IGNORE.find_index("#{title(filename)}") }
+  end
+
+  def chronological
+    @list.sort_by! { |filename| File.mtime(filename) }
+  end
+
+  def reverse_chronological
+    chronological
+    @list.reverse!
+  end
+
+  def title(filename)
+    filename.sub(/.html$/, '')
+  end
+end
+
+class History
+  attr_reader     :links
+
+  def initialize
+    @links = ''
+    @separator = ''
+  end
+
+  def add(filename)
+      @links += "#{@separator}<a href=\"#{filename}\">#{filename.gsub(/^.*\/|.html$/, '')}</a>\n"
+      @separator = ' <span class="separator">●</span> '
+  end
+end
+
+class HistoryComments < History
+  def add(title)
+    unless @links.match("#{title}")
+      super("comments/#{title}.html")
+    end
+  end
+end
+
+def wiki_next(wiki)
+  $LOG.info("Inserting \"next #{wiki}\" article references")
+  pages = (wiki =~ /\//) ? WikiList.new("#{$WIKI}#{wiki}") : WikiList.new("#{$WIKI}#{wiki}/html")
+  pages.chronological
+  link_to_next = nil
+  pages.list.each do |filename|
+    page = WikiPage.new(filename)
+    page.set_body_to('<!--start of wiki article-->', '<!--end of wiki article-->')
+    unless page.empty?
+      unless link_to_next
+        $LOG.trace(1, "end of thread => #{filename}")
+        page.set_header_to_and_footer_from('<!--end of wiki article-->', '<!--next wiki article link-->')
+        page.body = "<p class=\"nextwiki\">&nbsp</p>\n"
+        page.patch
+      else
+        unless page.document =~ /nextwiki.*#{link_to_next}/
+          $LOG.trace(1, "#{filename} => #{link_to_next}")
+          page.set_header_to_and_footer_from('<!--end of wiki article-->', '<!--next wiki article link-->')
+          page.body = "<p class=\"nextwiki\"><a href=\"#{link_to_next}\">→ #{pages.title(link_to_next)}</a></p>\n"
+          page.patch
+        end
+      end
+      link_to_next = filename
+    end
+    File.copy("#{filename}", "#{$WIKI}html/#{filename}")
+  end
+end
+
+def thread_preface(wiki)
+  Dir.glob("#{wiki}/*.html").each do |filename|
+    preface = WikiPage.new(filename)
+    preface.set_body_within("<!--start of wiki content-->","<!--end of wiki content-->")
+    return preface.body unless preface.empty?(4)
+  end
+  return ''
+end
+
+def wiki_thread(wiki, homepage, thread=nil)
+  $LOG.info("Building \"#{homepage}\" homepage")
+  # insert preface into home page
+  page = WikiPage.new("#{$WIKI}#{wiki}/html/#{homepage}.html")
+  page.set_header_to_and_footer_from('<!--start of wiki content-->', '<!--end of wiki content-->')
+  page.body = thread_preface("#{$WIKI}notebook/html/#{wiki}/diary")
+  page.patch
+
+  # assemble thread insert
+  pages = thread ? WikiList.new("#{$WIKI}#{thread}") : WikiList.new("#{$WIKI}#{wiki}/html")
+  date = nil; body_insert = ''; diary = History.new
+  pages.list.each do |filename|
+    if date.nil? or File.date(filename) == date
+      page = WikiPage.new(filename)
+      page.gsub_document(/<p class="nextwiki">.*\n/, '')
+      page.set_body_to('<!--start of wiki article-->', '<p class="showcomments">')
+      unless page.empty?(13)
+        body_insert += page.body
+        date ||= File.date(filename)
+        $LOG.trace(1, "date => #{date} filename => #{filename}")
+      end
+    else
+      diary.add(filename)
+    end
+  end
+  body_insert += "<div><p class=\"index\">\n"
+  body_insert += diary.links
+  body_insert += "</p></div>\n"
+
+  # pull the parts together :-)
+  page = WikiPage.new("#{$WIKI}#{wiki}/html/#{homepage}.html")
+  page.set_header_to_and_footer_from('<!--start of auto generated list-->', '<!--end of auto generated list-->')
+  page.body = body_insert
+  page.patch
+  File.copy("#{$WIKI}#{wiki}/html/#{homepage}.html", "#{$WIKI}html/#{homepage}.html")
+end
+
+def thread_name(title)
+  thread = ''
+  $THREADS.each do |wiki, homepage|
+    thread = homepage.instance_of?(String) ? homepage : homepage[0]
+    break if File.exist?("#{$WIKI}#{wiki}/html/#{title}.html")
+  end
+  thread
+end
+
+def wiki_date
+  $LOG.info('Building "date" page')
+  pages = WikiList.new("#{$WIKI}html")
+  date = '0000-00-00'; body_insert = "<div class=\"catalogue\">\n"
+  pages.list.each do |filename|
+    page = WikiPage.new(filename)
+    page.set_body_to('<!--start of wiki article-->', '<!--end of wiki article-->')
+    unless page.empty?
+      unless File.date(filename) == date
+        date = File.date(filename)
+        $LOG.trace(1, "date => #{date} filename => #{filename}")
+        body_insert += "<h2>#{File.calendar_date(filename)}</h2>\n"
+      end
+      body_insert += "<span class=\"right\">#{thread_name(page.title)}</span><a href=\"#{filename}\">#{page.title}</a>\n"
+    end
+  end
+  body_insert += "</div>\n"
+
+  # pull the parts together :-)
+  page = WikiPage.new("#{$WIKI}thedarnedestthing/html/date.html")
+  page.set_header_to_and_footer_from('<!--start of auto generated list-->', '<!--end of auto generated list-->')
+  page.body = body_insert
+  page.patch
+  File.copy("#{$WIKI}thedarnedestthing/html/date.html", "#{$WIKI}html/date.html")
+end
+
+def wiki_recent
+  $LOG.info('Building "recent" page')
+  pages = WikiList.new("#{$WIKI}html")
+  feed_count = 0; date = '0000-00-00'; body_insert = "<div class=\"catalogue\">\n"; diary = History.new
+  pages.list.each do |filename|
+    page = WikiPage.new(filename)
+    page.set_body_to('<!--start of wiki article-->', '<!--end of wiki article-->')
+    unless page.empty?
+      unless File.date(filename) == date
+        if feed_count <= $RSS_CUTOFF
+          date = File.date(filename)
+          $LOG.trace(1, "date => #{date}")
+          body_insert += "<h2>#{File.calendar_date(filename)}</h2>\n"
+        else
+          diary.add(filename)
+          next
+        end
+      end
+      $LOG.trace(2, "date => #{date} filename => #{filename}")
+
+      # context precedence is 1) paragraph content, 2) verse, 3) headers
+      page.set_body_within('<p>', '<\/p>')
+      page.set_body_within('<pre class="verse">', '<\/pre>') if page.body == ''
+      page.body = (page.document.scan(/<h[2-6] .*>/).map { |line| line.sub(/<.*>(.*)<.*>/, '\1') }).join(' ') if page.body == ''
+
+      body_insert += "<p><span class=\"article\"><a href=\"#{filename}\">#{page.title}</a></span>&nbsp&nbsp"
+      body_insert += "<span class=\"opening\">#{page.body.split(/ +/)[0..$PREVIEW_WORDS].join(' ')}</span> ...</p>\n"
+    end
+    feed_count += 1
+  end
+  body_insert += diary.links
+  body_insert += "</div>\n"
+
+  # pull the parts together :-)
+  page = WikiPage.new("#{$WIKI}thedarnedestthing/html/recent.html")
+  page.set_header_to_and_footer_from('<!--start of auto generated list-->', '<!--end of auto generated list-->')
+  page.body = body_insert
+  page.patch
+  File.copy("#{$WIKI}thedarnedestthing/html/recent.html", "#{$WIKI}html/recent.html")
+end
+
+def wiki_index
+  $LOG.info('Building "index" page')
+  pages = WikiList.new("#{$WIKI}html", :all)
+  letter = nil; body_insert = "<div class=\"catalogue\">\n"
+  pages.index.each do |title|
+    if title[0] != letter
+      letter = title[0]
+      body_insert += "<h2>#{letter}</h2>\n"
+    end
+    # <span right> at end of the line, displays offset by a line so the right
+    # hand side is down shifted one line. Defined first, all is proper!
+    #body_insert += "<a href=\"#{title}.html\">#{title}</a><span class=\"right\">#{thread_name(title)}</span>\n"
+    body_insert += "<span class=\"right\">#{thread_name(title)}</span><a href=\"#{title}.html\">#{title}</a>\n"
+  end
+
+  # pull the parts together :-)
+  page = WikiPage.new("#{$WIKI}thedarnedestthing/html/index.html")
+  page.set_header_to_and_footer_from('<div class="content">', '<!--end of auto generated list-->')
+  page.body = body_insert
+  page.patch
+  File.copy("#{$WIKI}thedarnedestthing/html/index.html", "#{$WIKI}html/index.html")
+end
+
+def wiki_mail
+  $LOG.info('Processing "email" comments')
+  pages = WikiList.new("#{$WIKI}html")
+  emails = Dir.glob("#{$MAIL}{cur,new}/*")
+  $LOG.trace(2, "emails => #{emails.map { |email| File.basename(email)} }")
+  # regex rules
+  spammers = IO.read("#{$WIKI}mail/rules/spammers").split("\n").join('|').downcase
+  $LOG.trace(2, "spammers => #{spammers.split('|')}")
+  titles = pages.index.join('|').downcase
+  $LOG.trace(2, "titles => #{titles.split('|')}")
+
+  emails.each do |mail|
+    post = File.basename(mail)
+    $LOG.trace(4, "post => #{post}")
+    if Dir.glob("#{$WIKI}mail/{comments,junk,pending,rejected,empty}/**/#{post}").empty?
+      message = Mail.read(mail)
+      if message.from[0].downcase =~ /(#{spammers})/
+        $LOG.error("junk post => #{post} subject => #{message.subject} spammers => #{message.from[0]}")
+        system("touch \"#{$WIKI}mail/junk/#{post}\"")
+        next
+      end
+      subject = message.subject.sub(/.*\/\/\/([^\/]*)\/\/\/.*/, '\1').downcase.strip.squeeze(' ')
+      unless subject =~ /(#{titles})/
+        $LOG.error("rejected post => #{post} subject => #{message.subject} from => #{message.from[0]}")
+        system("touch \"#{$WIKI}mail/rejected/#{post}\"")
+        next
+      end
+      if message.body.empty?
+        $LOG.warning("empty post => #{post} subject => #{subject}")
+        system("mkdir \"#{$WIKI}mail/empty/#{subject}\"") unless Dir.exist?("#{$WIKI}mail/empty/#{subject}")
+        system("touch \"#{$WIKI}mail/empty/#{subject}/#{post}\"")
+        next
+      end
+
+      begin
+        $LOG.info("comments post => #{post} subject => #{subject}")
+        date = message.date.strftime("%Y-%m-%d").split('-')
+        text = (case message.mime_type
+          when 'text/plain' then "#{message.body}"
+          when /multipart\/.*/ then "#{message.text_part.body.decoded}".gsub(/\r\n/m, "\n")
+          when 'text/html' then "#{message.body}".gsub(/<.*>/m, '').gsub(/.*>/m, '').gsub(/<.*/m, '').squeeze(' ').gsub(/\n /m, "\n")
+          else raise
+          end).squeeze("\n").gsub(/^ +/m, '')
+        $LOG.trace(4, "message => #{text}")
+        system("mkdir \"#{$WIKI}mail/comments/#{subject}\"") unless Dir.exist?("#{$WIKI}mail/comments/#{subject}")
+        comment = File.new("#{$WIKI}mail/comments/#{subject}/#{post}", 'w')
+        comment.write("<p class=\"date\">#{Time.gm(date[0], date[1], date[2]).strftime('%B %-d, %Y').downcase}</p>\n")
+        text.split("\n").each { |line| comment.write("<p class=\"comment\">#{line}</p>\n") }
+        comment.close
+        system("touch -d \"#{message.date}\" -m \"#{$WIKI}mail/comments/#{subject}/#{post}\"")
+      rescue
+        $LOG.warning("pending post: #{post} -> subject: #{subject} -> mime_type: #{message.mime_type}}")
+        system("mkdir \"#{$WIKI}mail/pending/#{subject}\"") unless Dir.exist?("#{$WIKI}mail/pending/#{subject}")
+        system("touch \"#{$WIKI}mail/pending/#{subject}/#{post}\"")
+      end
+    end
+  end
+end
+
+def wiki_comment
+  $LOG.info('Building "comment" article references')
+  articles = Dir.glob("#{$WIKI}mail/comments/*")
+  articles.each do |dirname|
+    title = File.basename(dirname)
+    webpage = "#{title}.html"
+    $LOG.trace(1, "article => #{webpage}")
+    page = WikiPage.new("#{$WIKI}html/#{webpage}")
+    page.set_body_to('<!--start of wiki article-->', '<!--end of wiki article-->')
+    unless page.empty?
+      body_insert = "<hr>\n"
+      Dir.glob("#{$WIKI}mail/comments/#{title}/*").each { |comment| body_insert += IO.read(comment) }
+      page.gsub_document(/<p class="showcomments">.*●.*&nbsp&nbsp&nbsp/, '<p class="showcomments">')
+      page.gsub_document(/(<a href=")/, '\1../')
+      page.gsub_document(/(<a href=")..\/(mailto:)/, '\1\2')
+      page.gsub_document(/(<a href=")..\/(http:)/, '\1\2/')
+      page.set_header_to_and_footer_from('<!--start of comments-->', '<!--end of comments-->')
+      page.body = body_insert
+      page.assemble
+      file = File.open("#{$WIKI}html/comments/#{webpage}", 'w')
+      file.write(page.document)
+      file.close
+      page = WikiPage.new("#{$WIKI}html/#{webpage}")
+      page.gsub_document(/<p class="showcomments">.*●.*&nbsp&nbsp&nbsp/, '<p class="showcomments">')
+      page.gsub_document(/<p class="showcomments">/,
+                         "<p class=\"showcomments\"><a href=\"comments/#{webpage}\">show comments</a>&nbsp&nbsp&nbsp<span class=\"separator\">●</span>&nbsp&nbsp&nbsp")
+      page.write
+    end
+  end
+end
+
+def wiki_recent_comments
+  $LOG.info('Building "recent comments" page')
+  Dir.chdir("#{$WIKI}mail/comments")
+  pages = (Dir.glob('*/*').sort_by { |filename| File.mtime(filename) }).reverse
+  feed_count = 0; date = '0000-00-00'; body_insert = "<div class=\"catalogue\">\n"; diary = HistoryComments.new
+  pages.each do |filename|
+    page = CommentPage.new(filename)
+    unless File.date(filename) == date
+      if feed_count <= $RSS_CUTOFF
+        date = File.date(filename)
+        $LOG.trace(1, "date => #{date}")
+        body_insert += "<h2>#{File.calendar_date(filename)}</h2>\n"
+      else
+        diary.add(page.title)
+        next
+      end
+    end
+    $LOG.trace(2, "date => #{date} filename => #{filename}")
+    body_insert += "<p><span class=\"article\"><a href=\"comments/#{page.title}.html\">#{page.title}</a></span>&nbsp&nbsp"
+    body_insert += "<span class=\"opening\">#{page.body.split(/ +/)[0..$PREVIEW_WORDS].join(' ')}</span> ...</p>\n"
+    feed_count += 1
+  end
+  body_insert += diary.links
+  body_insert += "</div>\n"
+
+  # pull the parts together :-)
+  page = WikiPage.new("#{$WIKI}thedarnedestthing/html/recent comments.html")
+  page.set_header_to_and_footer_from('<!--start of auto generated list-->', '<!--end of auto generated list-->')
+  page.body = body_insert
+  page.patch
+  File.copy("#{$WIKI}thedarnedestthing/html/recent comments.html", "#{$WIKI}html/recent comments.html")
+end
+
+def wiki_rss
+  $LOG.info('Building "rss" xml page')
+  # assemble date insert
+  pages = WikiList.new("#{$WIKI}html")
+  feed_count = 0; date = '0000-00-00'; rss_body = ''
+  pages.list.each do |filename|
+    page = WikiPage.new(filename)
+    page.set_body_to('<!--start of wiki article-->', '<!--end of wiki article-->')
+    unless page.empty?
+      unless File.date(filename) == date
+        break if feed_count >= $RSS_CUTOFF
+        date = File.date(filename)
+        $LOG.trace(1, "date => #{date}")
+      end
+      $LOG.trace(2, "date => #{date} filename => #{filename}")
+
+      # context precedence is 1) paragraph content, 2) verse, 3) headers
+      page.set_body_within('<p>', '<\/p>')
+      page.set_body_within('<pre class="verse">', '<\/pre>') if page.body == ''
+      page.body = (page.document.scan(/<h[2-6] .*>/).map { |line| line.sub(/<.*>(.*)<.*>/, '\1') }).join(' ') if page.body == ''
+
+      rss_body += "<item>\n"
+      rss_body += "<title>#{page.title}</title>\n"
+      rss_body += "<description>#{page.body.sub(/ *$/, '')}</description>\n"
+      rss_body += "<link>http://thedarnedestthing.com/#{page.title.gsub(/ /, '%20')}</link>\n"
+      rss_body += "<guid>http://thedarnedestthing.com/#{page.title.gsub(/ /, '%20')}</guid>\n"
+      rss_body += "<pubDate>#{File.stat(filename).mtime.strftime('%a, %d %b %Y %H:%M:%S %Z')}</pubDate>\n"
+      rss_body += "</item>\n"
+      feed_count += 1
+    end
+  end
+
+  # pull the parts together :-)
+  page = WikiPage.new("#{$WIKI}thedarnedestthing/html/rss.html")
+  page.gsub_document(/<lastBuildDate>.*<\/lastBuildDate>/,
+                     "<lastBuildDate>#{Time.now.strftime('%a, %d %b %Y %H:%M:%S %Z')}</lastBuildDate>")
+  page.set_header_to_and_footer_from('<!--start of rss items-->', '<!--end of rss items-->')
+  page.body = rss_body
+  page.patch
+  File.copy("#{$WIKI}thedarnedestthing/html/rss.html", "#{$WIKI}html/rss.html")
+  File.copy("#{$WIKI}html/rss.html", "#{$WIKI}html/rss.xml")
+end
+
+def wiki_save_timestamps(wiki)
+  $LOG.info("Saving \"#{wiki}\" timestamps")
+  Dir.glob("#{$WIKI}#{wiki}/html/*.html").each { |filename| File.save_timestamp(filename) }
+end
+
+def wiki_restore_timestamps(wiki)
+  $LOG.info("Restoring \"#{wiki}\" timestamps")
+  Dir.glob("#{$WIKI}#{wiki}/html/*.html").each { |filename| File.restore_timestamp(filename) }
+end
+
+def wiki_nexts
+  $NEXTS.each { |wiki| wiki_next(wiki) }
+end
+
+def wiki_threads
+  $THREADS.each do |wiki, homepage|
+    if homepage.instance_of?(String)
+      wiki_thread(wiki, homepage)
+    else
+      wiki_thread(wiki, homepage[0], homepage[1])
+    end
+  end
+end
+
+if opts[:save]
+  $NEXTS.each { |wiki| wiki_save_timestamps(wiki) unless wiki =~ /\// }
+elsif opts[:restore]
+  $NEXTS.each { |wiki| wiki_restore_timestamps(wiki) unless wiki =~ /\// }
+elsif opts[:clean]
+  system("rm #{$WIKI}html/*html")
+elsif not opts[:debug].empty?
+  $LOG.debug("options => #{opts}")
+  case opts[:debug]
+  when /thread/
+    wiki_nexts
+    wiki_threads
+  when /date/
+    wiki_date
+  when /recent/
+    wiki_recent
+  when /index/
+    wiki_index
+  when /mail/
+    wiki_mail
+    wiki_comment
+  when /comments/
+    wiki_recent_comments
+  when /rss/
+    wiki_rss
+  end
+else
+  Dir.glob("#{$WIKI}thedarnedestthing/html/*.html").each do |filename|
+    File.copy(filename, "#{$WIKI}html/#{File.basename(filename)}")
+  end
+  wiki_nexts
+  wiki_threads
+  wiki_date
+  wiki_recent
+  wiki_index
+  wiki_mail
+  wiki_comment
+  wiki_recent_comments
+  wiki_rss
+end

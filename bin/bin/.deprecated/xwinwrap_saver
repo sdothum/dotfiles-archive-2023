@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+
+# X11 Desktop
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Screensaver
+
+# default desktop background screensaver (see autostart)
+# this script cannot be named xwinwrap.. pathing conflict
+if [ -e $HOME/.xwinwrap ] ;then
+  killall euphoria xwinwrap 2>/dev/null
+  # xwinwrap -ov -fs -o 0.3 -- /usr/lib/xscreensaver/euphoria -r -i 1 -b 0 -t 2 -d 100 -v 33 -s 3 -c 8 -window-id WID &
+  /usr/bin/xwinwrap -ov -fs -o 0.3 -- /usr/lib/xscreensaver/euphoria --root --wisps 1 --bgwisps 0 --texture 2 --density 100 --visibility 33 --speed 3 --feedbacksize 8 -window-id WID &
+fi
+
+# vim: set ft=sh: #

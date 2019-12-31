@@ -1,0 +1,23 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Package manager
+
+# pacman install
+if [[ $1 = '-S' ]] ;then
+  optS=true
+  shift
+fi
+
+heading : $@
+if ! pm_query $@ ;then
+  pre_install $@
+  [[ $optS ]] && sudo pacman -S $@ || sudo pacman -S --noconfirm $@
+fi
+
+# do post install for previously installed package dependencies
+post_install $@
+unset optS
+
+# vim: set ft=zsh: #

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Smart cycle layout
+
+# skip grid if only 2 windows in subframe (layout is effectively same as horizontal)
+if [[ $(herbstclient layout | grep '\[FOCUS\]' | cut -d: -f2 | cut -d'[' -f1 | wc -w) -eq 2 ]]; then
+  herbstclient cycle_layout 1 vertical horizontal
+else
+  herbstclient cycle_layout 1 vertical grid horizontal
+fi

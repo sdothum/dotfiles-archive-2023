@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/winid $@" . $PARENT
+
+# herbstluftwm
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ................................................................ Focused winid
+
+herbstclient attr clients.focus.winid 2>/dev/null
+
+# vim: set ft=sh: #

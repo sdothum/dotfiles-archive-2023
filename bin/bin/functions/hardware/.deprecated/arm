@@ -1,0 +1,16 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Machine
+
+# core iN cpu
+cat /proc/cpuinfo | grep 'model name' |
+                    sed -e 's/model name.*: //' |
+                    uniq |
+                    cut -d' ' -f1 |
+                    grep -q 'ARMv.*'
+
+# vim: set ft=sh: #

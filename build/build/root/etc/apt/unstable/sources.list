@@ -1,0 +1,34 @@
+## CRUNCHBANG
+## Compatible with Debian wheezy, but use at your own risk.
+deb http://packages.crunchbang.org/waldorf waldorf main
+#deb-src http://packages.crunchbang.org/waldorf waldorf main
+
+## CRUNCHBANG MULTIMEDIA
+## Debian Multimedia Mirror
+# deb ftp://ftp.deb-multimedia.org stable main non-free
+# deb ftp://ftp.deb-multimedia.org testing main non-free
+deb ftp://ftp.deb-multimedia.org unstable main non-free
+
+## DEBIAN
+# deb http://mirror.its.dal.ca/debian/debian/ stable main contrib non-free
+deb http://debian.lcs.mit.edu/debian/ stable main contrib non-free
+#deb-src http://ftp.debian.org/debian/ stable main contrib non-free
+# deb http://mirror.its.dal.ca/debian/ testing main contrib non-free
+deb http://debian.lcs.mit.edu/debian/ testing main contrib non-free
+# deb http://mirror.its.dal.ca/debian/ unstable main contrib non-free
+deb http://debian.lcs.mit.edu/debian/ unstable main contrib non-free
+# deb-src http://mirrors.kernel.org/debian/ unstable main contrib non-free
+
+## DEBIAN SECURITY
+deb http://security.debian.org/ stable/updates main
+#deb-src http://security.debian.org/ stable/updates main
+
+## Liquorix kernel
+## /etc/apt/sources.list.d/liquorix.list
+# deb http://liquorix.net/debian/ sid main
+
+## custom applications
+# deb http://plex.originet.eu/ stable main
+deb http://shell.ninthgate.se/packages/debian squeeze main
+# deb http://download.virtualbox.org/virtualbox/debian wheezy contrib
+

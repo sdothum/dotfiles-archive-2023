@@ -1,0 +1,39 @@
+#
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/         	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/ROOT	0 0
+
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/home     	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/home	0 0
+
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/opt      	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/opt	0 0
+
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/srv      	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/srv	0 0
+
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/var      	btrfs     	rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/var	0 0
+
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/run/btrfs-root        	btrfs     	rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag	0 0
+
+# /dev/sda1 UUID=f2873ef2-550e-4ec8-88fa-2d3b0b5bf2a5
+LABEL=Swap            none        swap        defaults    0 0
+
+/run/btrfs-root/__current/ROOT/var/lib	    	/var/lib		none		bind		0 0
+
+# mkfs.btrfs -f -L Photos -d raid1 /dev/disk/by-id/ata-ST1000DM005_HD103SJ_S246J9EC314043 /dev/disk/by-id/ata-ST1000DM005_HD103SJ_S246J9FC320076
+# LABEL=Photos        /media      btrfs       rw,noauto,nodev,noexec,noatime,autodefrag,space_cache  0 0
+
+# mkfs.btrfs -f -L Share -m raid10 -d raid10 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857792 /dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T2857955 /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WCC4N3RS5LAZ /dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0820795
+# LABEL=Share         /net        btrfs       rw,nodev,noexec,noatime,autodefrag,space_cache  0 0
+LABEL=Share           /net        btrfs       rw,nodev,noatime,autodefrag,space_cache  0 0
+
+# /dev/sda2 UUID=e5ee12ac-7fb3-4e73-b9b2-a5cfb35145ae
+LABEL=Archlinux     	/.snapshots btrfs         	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__snapshot/.snapshots	0 0
+
+#/home/shum/Maildir    /srv/nfs4/Maildir       none        bind    0 0
+#/net                  /srv/nfs4/net           none        bind    0 0

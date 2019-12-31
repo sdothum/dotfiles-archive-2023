@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................... Toggle compton
+
+if pidof compton; then
+  # rm -f ~/.compton
+  killall compton
+  killall xscreensaver
+else
+  # touch ~/.compton
+  compton &
+  xscreensaver -no-splash &
+fi
+

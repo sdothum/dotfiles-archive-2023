@@ -1,0 +1,96 @@
+#!/bin/sh
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# mail poller (see offlineimap and imapfilter)
+# lifted from http://cpbl.wordpress.com/2009/11/07/alpine-offlineimap-and-gmail-under-ubuntu/
+[[ $interval ]] || interval=(30s 15s)
+[[ -e /tmp/mailsync.new ]] || touch /tmp/mailsync.new
+
+# tag new messages
+function tag_messages() {
+  trace "Tagging mail messages.."
+  # notmuch tag +bodyshamanics -inbox folder:bodyshamanics/bodyshamanics
+  # notmuch tag +comments -inbox folder:comments/thedarnedestthing
+  # notmuch tag +private -inbox folder:steven/private
+  # notmuch tag +admin -inbox folder:thedarnedestthing/admin
+  # notmuch tag +webmaster -inbox folder:webmaster/webmaster
+  notmuch tag --batch <<EOF
+    +bodyshamanics -inbox folder:bodyshamanics/bodyshamanics
+    +comments -inbox folder:comments/thedarnedestthing
+    +private -inbox folder:steven/private
+    +admin -inbox folder:thedarnedestthing/admin
+    +webmaster -inbox folder:webmaster/webmaster
+    +sent -inbox folder:sdothum/SENT
+    +spam -inbox folder:bodyshamanics/[Gmail]/Spam
+    +spam -inbox folder:comments/[Gmail]/Spam
+    +spam -inbox folder:sdothum/[Gmail]/Spam
+    +spam -inbox folder:steven/[Gmail]/Spam
+    +spam -inbox folder:thedarnedestthing/[Gmail]/Spam
+    +spam -inbox folder:webmaster/[Gmail]/Spam
+    +trash -inbox folder:sdothum/[Gmail]/Trash
+EOF
+  for i in ~/Maildir/sdothum/[a-z]*
+  do 
+    folder=${i##*/}
+    maildir=${i##*Maildir/}
+    notmuch tag +$folder -inbox folder:$maildir
+    if echo $folder | egrep 'admin|alerts|bodyshamanics|browsers|clients|comments|community|dailies|eagles|family|mail|notices|personal|powerpath|private|providers|ravens|receipts|services|software|store|webmaster|x11'; then
+      notmuch tag +new folder:$maildir -- tag:unread
+    fi
+    if echo $folder | egrep 'admin|alerts|bodyshamanics|clients|comments|community|eagles|family|notices|personal|powerpath|private|providers|ravens|services|webmaster'; then
+      notmuch tag +attn folder:$maildir -- tag:new
+    fi
+    if echo $folder | egrep 'browsers|dailies|mail|receipts|software|store|x11'; then
+      notmuch tag +bbs folder:$maildir -- tag:new
+    fi
+  done
+  # notmuch config set search.exclude_tags deleted spam trash
+}
+
+# initialize notmuch database
+function initialize() {
+  killall alot
+  killall notmuch
+  rm -rf ~/Maildir/.notmuch/{dum,xap}*
+  notmuch setup
+  notmuch new
+  tag_messages
+  alot
+}
+
+# mail daemon
+function mail_daemon() {
+  while true
+  do
+    # updating old message after offlineimap fails cmp everytime (..puzzler!) ??
+    mv -f /tmp/mailsync.new /tmp/mailsync.old
+    curl -u sdothum:maaike00 --silent "https://mail.google.com/mail/feed/atom" | perl -ne 'print "\t" if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;' > /tmp/mailsync.new
+    cmp -s /tmp/mailsync.old /tmp/mailsync.new
+    if [[ $? -eq 1 ]]; then
+      trace "Starting offlineimap.."
+      # purge empty messages
+      find ~/Maildir/sdothum -type f -size 0 -exec rm -v {} \;
+      offlineimap -c ~/.offlineimaprc -o -u Basic >> /tmp/offlineimap.log
+      trace "Starting imapfilter.."
+      imapfilter -v -c ~/.imapfilter/dovecot.lua >> /tmp/imapfilter.log
+      trace "Starting notmuch.."
+      notmuch new >> /tmp/notmuch.log 2>&1
+      tag_messages
+      [[ $interval ]] && sleep ${interval[1]} || continue
+    else
+      trace "No new email"
+      [[ $interval ]] && sleep ${interval[0]} || continue
+    fi
+  done
+}
+
+case $@ in
+  --daemon)  mail_daemon ;;
+  I)         initialize ;;
+  t)         tag_messages ;;
+  *)  echo ".. mailsync  --daemon  I'nitialize  t'ag"
+esac

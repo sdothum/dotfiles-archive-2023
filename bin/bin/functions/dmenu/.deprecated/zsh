@@ -1,0 +1,15 @@
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Edit
+
+# zsh functions
+lib=$HOME/.zsh/functions
+
+file=$(find $lib -maxdepth 2 -type 'f' -exec basename {} \;)
+file=$(echo $file | sed 's/ /\n/g'| sort | dmenu 'Edit Function' -no-custom) || exit
+script=$(find $lib -maxdepth 2 -name $file)
+[ $script ] && eval v $script || eval v $lib/$file
+
+# vim: set ft=sh: #

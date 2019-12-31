@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... consolekit
+
+service enable consolekit
+service enable cgmanager
+
+# vim: set ft=sh: #

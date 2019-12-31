@@ -1,0 +1,23 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ${_colors_} defined in .zshenv
+
+# .......................................................... Install preparation
+
+# Usage: apply [ pre | post | user ] package
+#   pre  - clean up environment for possible re-install of package
+#   post - complete package configuration
+#   user - complete user specific package configuration
+
+if echo $1 | egrep -q 'pre|post|user' ;then
+  if [[ -s ~/build/archlinux/$1_install/$2 ]] ;then
+    is_arch && echo "${_GREEN_}@ $1_install/$2${_nocolor_}"
+    ~/build/archlinux/$1_install/$2
+  fi
+else
+  echo "${_RED_}@ error: (apply $@)${_nocolor_} apply [ pre | post | user ] package"
+fi
+
+# vim: set ft=zsh: #

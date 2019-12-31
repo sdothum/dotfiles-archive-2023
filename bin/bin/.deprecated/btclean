@@ -1,0 +1,10 @@
+#!/usr/bin/env fish
+# prepare for reinstall of btsync for ~/btsync
+
+p /usr/local/bin/btsync; and btsync stop
+command rm -rf ~/.sync
+command rm -rf ~/sync/.Sync*
+btsync start
+annotate 'add "sync" folder in http://localhost:8888'
+
+# vim: set ft=fish: #

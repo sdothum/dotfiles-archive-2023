@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Edit
+
+# shell scripts
+lib=~/build/archlinux
+
+file=$(egrep -l '^#!/' ~/bin/* ~/.config/bspwm/* ~/.config/herbstluftwm/* $lib/{.,*}/* \
+     | sed -e 's,.*/bin/,,' -e 's,.*/.config/bspwm/,,' -e 's,.*/.config/herbstluftwm/,,' -e 's,.*/archlinux\(/\.\)*/,,' \
+     | sort \
+     | $(dmenu) -p 'Edit Script')
+[[ $file ]] || exit
+if [[ -e ~/bin/$file ]]; then
+  eval v ~/bin/$file
+elif [[ -e ~/.config/bspwm/$file ]]; then
+  eval v ~/.config/bspwm/$file
+elif [[ -e ~/.config/herbstluftwm/$file ]]; then
+  eval v ~/.config/herbstluftwm/$file
+elif [[ -e $lib/$file ]]; then
+  eval v $lib/$file
+fi

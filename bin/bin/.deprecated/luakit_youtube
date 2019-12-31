@@ -1,0 +1,6 @@
+#!/bin/sh
+# for some reason, cannot spawn "zsh -c video minitube uri" from luakit
+
+zsh -c "video off"
+minitube.original "$@"
+zsh -c video

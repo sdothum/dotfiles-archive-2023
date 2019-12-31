@@ -1,0 +1,90 @@
+# internet packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= browsers
+# ▔▔▔▔▔▔▔▔
+  chromium
+  chromium-pepper-flash
+  chromium-widevine
+# dwb-git
+# dwb-gtk3
+# elinks
+# firefox     [server]
+  flashplugin
+# haskell-hbro
+# jumanji-git
+# libunique
+# links
+# lispkit-browser
+# lua51-filesystem
+# luajit
+# luakit
+# lynx
+# midorio
+# qutebrowser
+  qutebrowser-git
+# surf
+  tabbed
+# uzbl-browser
+  vimb
+# vimb-git
+  w3m
+# webkitgtk2
+
+
+= chat/twitter
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+# centerim5-git
+# finch
+# pidgin
+# skype
+  python-twitter
+# turses
+  weechat
+# xchat
+  xmpppy
+  znc
+
+
+= file transfer
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# btsyncindicator
+# btsync
+# couchpotato-git [server]
+# flexget
+  gftp
+  nzbget          [server]
+# par2cmdline-tbb
+# python2-pyopenssl
+  rsync
+# rtorrent
+# sabnzbd         [server]
+# sickbeard-git   [server]
+  sonarr          [server]
+  syncthing
+# syncthing-git
+  syncthing-inotify
+  tixati
+# transmission-gtk
+# unison
+# utserver
+  wget
+
+
+= usenet mail
+# ▔▔▔▔▔▔▔▔▔▔▔
+# slrn
+
+
+= web aggregators
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# newsbeuter
+  php-gd
+  php-mcrypt
+  tt-rss
+# ttaurter
+  surfraw
+
+# vim: set ft=conf: #

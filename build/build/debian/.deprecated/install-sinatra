@@ -1,0 +1,68 @@
+#!/usr/bin/env fish
+
+function install_gem
+  # see netinstall-3apps.fish
+  log q "... installing gem $argv"
+
+  drawline ":"
+  echo
+  trace (set_color -o red)"::: installing gem :::" (set_color -o cyan)"$argv"
+  echo
+  sudo gem install $argv --no-rdoc --no-ri
+end
+
+headline+ "building testing and profiling gems"
+
+#install graphviz
+#install_gem chronic
+#install_gem churn
+#install_gem flay
+#install_gem fheadline+
+#install_gem gettext
+#install_gem simplecov
+#install_gem reek
+#install_gem ripper_ruby_parser
+#install_gem roodi
+#install_gem ruby2ruby
+#install_gem ruby_parser
+#install_gem saikuro
+#install_gem sexp_processor
+#install_gem shoes
+#install_gem simple-tracer
+install_gem term-ansicolor
+
+headline+ "building web frameworks gems"
+
+install libxapian-ruby1.9.1
+install libxslt1-dev
+#install_gem albino
+#install_gem builder
+#install_gem curl
+#install_gem fastthread
+install_gem kramdown
+install_gem mail
+#install_gem nokogiri
+#install_gem padrino
+#install_gem rack
+#install_gem rack-perftools_profiler
+#install_gem redcarpet
+install_gem sanitize
+#install_gem shotgun
+install_gem sinatra
+install_gem slim
+install_gem thin
+#install_gem tilt
+install_gem xapian-fu
+
+headline+ "building phusion passenger"
+
+install libcurl4-openssl-dev
+install libssl-dev
+install_gem passenger --version 3.0.19
+
+sudo passenger-install-nginx-module
+original /opt/nginx/conf/nginx.conf
+sudo cp -v /home/shum/.config/opt/nginx/conf/nginx.conf /opt/nginx/conf/
+sudo cp -v /srv/www/init-deb.sh /etc/init.d/nginx
+
+sudo update-rc.d nginx defaults

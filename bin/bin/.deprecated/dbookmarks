@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# bookmarks
+case $BROWSER in
+  vimb)   bookmark=~/.config/vimb/bookmark
+          uri=$(cat $bookmark \
+              | sed "s/\t/  ::  /g" \
+              | $(dlist) -p 'Bookmark' \
+              | sed -r 's/(.*) :: .* :: .*/\1/')
+          ;;
+  *)      sqldb=~/.local/share/luakit/bookmarks.db
+          query='select title, tags, uri from bookmarks order by tags,title ASC;'
+          uri=$(echo "$query" \
+              | sqlite3 $sqldb \
+              | sed 's/[|]/  ::  /g' \
+              | $(dlist) -p 'Bookmark' \
+              | sed -r 's/.* :: .* :: (.*)/\1/')
+          ;;
+esac
+
+[[ $uri ]] && dbrowser "$uri"

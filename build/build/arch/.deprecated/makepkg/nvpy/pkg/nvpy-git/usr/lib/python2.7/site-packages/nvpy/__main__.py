@@ -1,0 +1,2 @@
+import nvpy
+nvpy.main()

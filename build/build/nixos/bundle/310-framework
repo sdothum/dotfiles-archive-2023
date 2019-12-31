@@ -1,0 +1,31 @@
+# web framework packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= sinatra web framework
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# g exifr
+g kramdown
+g mail
+g passenger
+g rack
+g sanitize
+g sinatra
+g slim
+g term-ansicolor
+g thin
+g xapian-fu
+# xapian-ruby-bindings
+  ruby-xapian-ruby
+
+
+= web server (modules)
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# nginx
+# nginx-passenger
+  php
+  php-fpm
+  php-pgsql
+
+# vim: set ft=conf: #

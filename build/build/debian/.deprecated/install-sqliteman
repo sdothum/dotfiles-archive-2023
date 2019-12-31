@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+# sqliteman build
+
+log "... script installing sqliteman"
+
+install cmake qt-sdk libqscintilla2-dev
+
+cd /data/depot/system/sqliteman
+sudo rm -rf sqliteman-1.2.2 2>/dev/null
+tar xjvf sqliteman-1.2.2.tar.bz2
+
+cd sqliteman-1.2.2/
+cmake .
+make
+sudo make install
+

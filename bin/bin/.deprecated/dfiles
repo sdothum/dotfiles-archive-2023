@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Files
+
+# open file
+while name=$(xsel -o | $(dmenu) -p 'Find File') || exit
+do
+  [[ $name ]] || exit
+  list=$(sudo locate -A -e -i $name)
+  [[ $list ]] || continue
+  file=$(echo -e "$list" | $(dlist) -p 'Open') || exit
+  echo -n "$file" | xsel -b -i
+  xdg-open "$file"
+done

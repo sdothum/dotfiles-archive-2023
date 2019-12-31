@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Calculator
+
+# simple solver
+while eqn=$(echo -e "$ribbon" | dmenu -p 'Solve:')
+do
+  [[ -z $eqn ]] && exit
+  if ans=$(calc -pd "$eqn"); then
+    echo -n "$ans" | xsel -i
+    ribbon="$ans\n$ribbon"
+  fi
+done

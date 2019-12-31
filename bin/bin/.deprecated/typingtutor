@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Typing tutor
+
+#  Usage: typingtutor [ amphetype | klavaro ]
+
+PID=$(ps -ef | grep "$@" | egrep -v 'grep|typingtutor' | awk '{ print $2 }')
+
+[[ $PID ]] && kill -USR1 $PID || $@

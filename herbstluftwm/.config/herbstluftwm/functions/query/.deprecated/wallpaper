@@ -1,0 +1,11 @@
+# see .conkyrc
+# [ $TRACE ] && CHILD="query/desktop $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................ Conky wallpaper theme
+
+ls -l $BACKGROUND | awk '{ gsub(".png", ".theme", $NF); print $NF }'
+
+# vim: set ft=sh: #

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# open chromium using luakit history!
+history=~/.config/chromium/Default/History
+sqldb=$history.db
+# filter='ERROR:|localhost|luakit:|Page not found|[Ss]earch'
+filter='ERROR:|localhost|luakit:|Page not found'
+query="select datetime(last_visit_time/1000000-11644473600,'unixepoch','localtime'), title, url from urls order by last_visit_time DESC;"
+
+command cp -fv $history $history.db
+uri=$(echo "$query" | sqlite3 $sqldb | egrep -v "$filter" | sed 's/[|]/  ::  /g' | $(dlist) -p 'Chrome History:' | sed 's/.* :: .* :: \(.*\)/\1/')
+# [[ $uri ]] && chromium --proxy-server=localhost:3128 "$uri" &
+[[ $uri ]] && chromium "$uri" &

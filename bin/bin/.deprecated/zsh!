@@ -1,0 +1,14 @@
+#!/usr/bin/zsh
+
+# zsh
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Wrapper
+
+# Autoload functions
+fpath=(~/.config/zsh/functions $fpath)
+for i in ~/.config/zsh/functions/*; do
+  autoload -Uz ${i##*/}
+done
+
+eval $@

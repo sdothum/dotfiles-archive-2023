@@ -1,0 +1,24 @@
+#!/usr/bin/dash
+
+# X11 Window Manager
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................ After process
+
+# Usage: after_process "command string"
+
+delay=0.001
+
+# allow process to instantiate..
+# until [ $(pgrep -cf "$@") -gt 0 ]
+# do
+#   sleep $delay
+# done
+
+# ..then wait for process to terminate before proceeding
+while [ $(pgrep -cf "$@") -gt 1 ]
+do
+  sleep $delay
+done
+
+# vim: set ft=sh: #

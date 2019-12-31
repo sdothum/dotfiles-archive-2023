@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................................ Video
+
+# manually manage xscreensaver
+zsh -c "video xbmc $@"
+cat ~/xbmc_crashlog-* >> /tmp/xbmc_crashlog.log 2>/dev/null
+rm -f ~/xbmc_crashlog-* 2>/dev/null

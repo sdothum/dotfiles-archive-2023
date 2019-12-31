@@ -1,0 +1,14 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# User
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... my Beloved
+
+# switch tag $MEDIA
+focus frame
+gnome-mpv "/net/media/patricia/Michael Reading for Patricia.MP3"
+focus window
+
+# vim: set ft=sh: #

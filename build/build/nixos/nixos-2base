@@ -1,0 +1,73 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# install base packages
+
+# log output to typescript
+. $HOME/build/cfg/etc/profile.d/bin.sh
+script-check
+
+
+title "setup"
+# ══════════════════════════════════════════════════════════════════════════════
+# sudo loadkeys colemak
+server && sudo dhcpcd || sudo wifi-menu
+sleep 5s
+grep '^nameserver' /etc/resolv.conf || sudo sed -i '$anameserver 10.1.0.1' /etc/resolv.conf
+# disable CoW on systemd journal
+sudo chattr +C /var/log/journal/
+# default mail addresses
+cfg_install -link /etc/aliases
+
+
+title "archlinux testing"
+# ══════════════════════════════════════════════════════════════════════════════
+sudo sed -i -e '/^#\[.*testing\]/s/^#//' \
+            -e '/^#Include/s/^#//' \
+         /etc/pacman.conf
+
+
+title "pacman key server"
+# ══════════════════════════════════════════════════════════════════════════════
+rm -rf $HOME/.gnupg/*
+sudo rm -rf /root/.gnupg/*
+sudo mkdir /root/.gnupg 2>/dev/null
+sudo touch /root/.gnupg/dirmngr_ldapservers.conf
+sudo dirmngr </dev/null
+
+if grep -q 'keyserver hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf ;then
+  original /etc/pacman.d/gnupg/gpg.conf
+  # switch to non-ISP-blocked MIT server
+  sudo sed -i '/^keyserver hkp:/ckeyserver hkp://pgp.mit.edu:11371' /etc/pacman.d/gnupg/gpg.conf
+fi
+
+# signature checking
+if ! [ -e $HOME/.gnupg/gpg.conf ] ;then
+  echo 'keyserver hkp://keys.gnupg.net
+keyserver-options auto-key-retrieve' >$HOME/.gnupg/gpg.conf
+fi
+
+
+# title "install aur package manager"
+# ══════════════════════════════════════════════════════════════════════════════
+# aur_install package-query
+# aur_install yaourt
+# aur_install cower
+# aur_install pacaur
+
+
+title "update base"
+# ══════════════════════════════════════════════════════════════════════════════
+for i in $HOME/build/archlinux/bundle/[0]*
+do
+  bundle_install $i
+done
+
+
+title "installation errors:"
+# ══════════════════════════════════════════════════════════════════════════════
+grep '> \(ERROR\|WARNING\)' $HOME/typescript
+echo
+echo "source /etc/profile.d/bin.sh, then startx.."
+
+# vim: set ft=sh: #

@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+
+log "... script installing skype"
+[ -d /data/depot/chat/skype ]; or mkdir /data/depot/chat/skype
+sudo dpkg --add-architecture i386
+sudo apt-get update
+#install libqtwebkit4:i386 libpulse0:i386
+
+cd /data/depot/system/skype
+wget -O skype-install.deb http://www.skype.com/go/getskype-linux-deb
+sudo dpkg -i skype-install.deb
+sudo apt-get -f install
+

@@ -1,0 +1,22 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Mail
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................ Mail password
+
+MAILSYNC=$HOME/Maildir/.mailsync
+
+if [ "$1" ] ;then
+  ifno "change password $(cat $MAILSYNC) to $1" && exit
+  mv -v $MAILSYNC /tmp/
+  echo $1 >$MAILSYNC
+  # first occurence of..
+  sed "0,/^password /{s/password .*/password $1/}" $HOME/.msmtprc
+  sed "0,/^remotepass = /{s/remotepass = .*/remotepass = $1/}" $HOME/.offlineimaprc
+else
+  cat $MAILSYNC
+fi
+
+# vim: set ft=sh: #

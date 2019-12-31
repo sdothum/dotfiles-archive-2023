@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Toggle smart focus
+
+if [[ -e ~/.dynamic ]]; then
+  rm -f ~/.dynamic
+  notify "Smart Focus" Off
+else
+  touch ~/.dynamic
+  notify "Smart Focus" On
+  focus_window
+fi

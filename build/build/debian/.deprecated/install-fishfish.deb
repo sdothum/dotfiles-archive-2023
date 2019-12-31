@@ -1,0 +1,9 @@
+#!/bin/bash
+# beta fish build
+
+echo "... script installing fish"
+sudo apt-get install doxygen libncurses5-dev autoconf gettext libxt-dev git
+
+# cd /data/depot/system/fish
+cd ~/bin/install
+sudo dpkg -i fish*deb

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Session
+
+# quit!
+while cmd=$(echo -e "shutdown\nreboot\nlogout\nsuspend" | $(dmenu) -p 'Session')
+do
+  case $cmd in
+    shutdown)   [[ -e /sbin/systemctl ]] && sudo systemctl poweroff || sudo shutdown -h now ;;
+    reboot)     [[ -e /sbin/systemctl ]] && sudo systemctl reboot || sudo shutdown -r now ;;
+    logout)     sudo kill X ;;
+    suspend)    [[ -e /sbin/systemctl ]] && sudo systemctl suspend || sudo pm-suspend ;;
+    *)          echo ".. unknown action: $cmd"
+                continue
+                ;;
+  esac
+  break
+done

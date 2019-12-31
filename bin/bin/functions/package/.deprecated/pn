@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+
+# Package
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ........................................................... Package management
+
+# package required by
+if [ "$*" ] ;then
+  for i in $@
+  do
+    if expac '%r/%n:' $i ;then
+      expac '%N' $i | sed 's/  */\n/g' | sort | sed 's/^/  /'
+    else
+      echo ".. \"$i\" not found"
+    fi
+  done
+fi
+
+# vim: set ft=sh: #

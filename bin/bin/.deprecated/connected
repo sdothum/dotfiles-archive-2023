@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Network
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Connectivity
+
+# connection test
+count=0
+while ! ping -c 1 -W 1 www.google.ca >/dev/null 2>&1
+do
+  sleep 1s
+  count=$(( $count + 1 ))
+  [[ $count > 5 ]] && exit 1
+done
+exit 0

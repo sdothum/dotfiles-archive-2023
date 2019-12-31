@@ -1,0 +1,37 @@
+#!/usr/bin/fish
+# sdothum - 2016 (c) wtfpl
+
+# Shell
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... History
+
+# filter session history
+# filter out single word commands
+#            history commands (h)
+#            process commands (k, kk, p)
+#            list commands (l, la, ll, lr, ls, lt)
+#            shell repeat command (r)
+#            startx command (x)
+set filter '^[^ ]*  *(([^ ]*)|((cd|h|kk*|l[alrst]*|pa*|r|x|z)( *| .*)))$'
+
+# discard command duplicates
+set week (date '+%W')
+function weekof
+  # calculation assumes history size does not span more than one calendar year
+  awk "{ if (\$2<=$week) \$2=($week - \$2); else \$2=(53 - \$2 + $week); print \$0 }" |\
+      grep '^[0-9]* ' |\
+      sort -k 3 |\
+      uniq -f 2 |\
+      sort -n $argv |\
+      sed -r 's/^[0-9]* ([0-9]*) /\1w   /g' |\
+      egrep -v "$filter"
+end
+
+if [ "$argv" ]
+  history --show-time='%s %W ' | ack "$argv" | weekof
+else
+  history --show-time='%s %W ' | weekof -r
+end
+
+# vim: set ft=sh: #

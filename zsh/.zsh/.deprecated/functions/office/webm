@@ -1,0 +1,40 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Screencast
+
+# poor resolution, see byzanz in functions/office
+
+target=/net/photos/batchqueue
+[[ $delay ]] || delay=1s
+
+if is_server ;then
+  case $@ in
+    # must pass an "array" of command line parameters
+    DVI-0 | left)
+      opts=( -s 1680x1050 -i :0.0 ) ;;
+
+    DVI-1 | right)
+      opts=( -s 2560x1600 -i :0.0+1680,0 ) ;;
+
+    *)
+      opts=( $@ ) ;;
+  esac
+else
+  opts=( $@ )
+fi
+
+mkv=$(mktemp).mkv
+sleep $delay
+echo
+echo "${_YELLOW_}━━━━━━━━━  Press <Ctrl-C> to stop recording  ━━━━━━━━━${_nocolor_}"
+echo
+ffmpeg -f x11grab -r 25 $opts -vcodec libx264 -preset ultrafast -crf 0 $mkv
+echo
+echo "${_YELLOW_}━━━━━━━━━  Converting to .webm  ━━━━━━━━━${_nocolor_}"
+echo
+ffmpeg -i $mkv -deadline good -lag-in-frames 0 -g 120 -slices 8 -c:v libvpx -qmin 0 -qmax 50 -crf 0 -b:v 1M -c:a libvorbis ${mkv%.mkv}.webm
+mv -v ${mkv%.mkv}.webm $target
+
+# vim: set ft=zsh: #

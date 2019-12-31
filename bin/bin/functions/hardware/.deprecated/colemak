@@ -1,0 +1,21 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Hardware
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ..................................................................... Keyboard
+
+# the finger friendly layout
+if [ -e $HOME/.Xmodmap ] ;then
+  xmodmap $HOME/.Xmodmap
+  layout=Shift-DH
+else
+  setxkbmap us -variant colemak
+  left_shift_key
+fi
+sudo sed -i '/^KEYMAP/cKEYMAP=colemak' /etc/vconsole.conf
+
+notify low 'Keyboard Layout' "Colemak $layout"
+
+# vim: set ft=sh: #

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................ Wait for emit hook completion
+
+herbstclient emit_hook $@ 
+
+# trap hook then wait for completion
+if [[ -e ~/.dynamic ]]; then
+  while ! pgrep -x $@
+  do
+    sleep 0.001s
+  done
+
+  while pgrep -x $@
+  do
+    sleep 0.001s
+  done
+fi

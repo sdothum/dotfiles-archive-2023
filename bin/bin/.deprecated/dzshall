@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Help
+
+# zshall man pages
+page=$($(dwrapper) -p 'Zshall Search:')
+[[ $page ]] && urxvtc -title "help $page" -e zsh -c "zman $page"

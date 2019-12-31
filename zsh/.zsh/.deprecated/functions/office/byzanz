@@ -1,0 +1,35 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................... Screencast
+
+# create .webm screencast
+
+target=/net/photos/batchqueue
+[[ $delay ]] || delay=1
+
+if is_server ;then
+  case $@ in
+    # must pass an "array" of command line parameters
+    DVI-0 | left)
+      opts=( --width=1680 --height=1050 --x=0 --y=0 ) ;;
+
+    DVI-1 | right)
+      opts=( --width=2560 --height=1600 --x=1680 --y=0 ) ;;
+
+    *)
+      opts=( $@ ) ;;
+  esac
+else
+  opts=( $@ )
+fi
+
+webm=$(mktemp).webm
+# byzanz .gif generation is fast, .webm is slow so fork for visual eye candy
+byzanz-record --delay=$delay $opts --exec="/usr/bin/urxvt -title 'byzanz-dialogue' -name 'float' -geometry 80x20 -e zsh -c \"press-enter 'to stop recording'\"" $webm &
+wait_on 'byzanz-dialogue'
+progressbar_on byzanz-record 'converting to .webm'
+mv -v $webm $target
+
+# vim: set ft=zsh: #

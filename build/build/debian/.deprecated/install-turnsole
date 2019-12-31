@@ -1,0 +1,11 @@
+#!/usr/local/bin/fish
+# su-mail experimental requires rvm environment for non-debian installable gems
+
+log "... script installing turnsole"
+rvm 1.9
+
+gem install trollop console locale rmail rest-client mime-types curb lrucache json ncursesw
+cd /data/depot/mail
+rm -Rf turnsole
+git clone https://github.com/wmorgan/turnsole.git
+sudo mv turnsole/ /opt/

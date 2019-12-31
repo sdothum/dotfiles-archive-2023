@@ -1,0 +1,37 @@
+#
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+LABEL=Archlinux     	/         	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/ROOT	0 0
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+# LABEL=Archlinux     	/net     	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/net	0 0
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+LABEL=Archlinux     	/home     	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/home	0 0
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+LABEL=Archlinux     	/opt      	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/opt	0 0
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+LABEL=Archlinux     	/srv      	btrfs     	rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/srv	0 0
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+LABEL=Archlinux     	/var      	btrfs     	rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvol=__current/var	0 0
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+
+# /dev/sda2 UUID=d93b6749-6a26-48a0-ba60-0f6df0848bd9
+LABEL=Archlinux     	/.snapshots	btrfs     	rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvol=__snapshot/.snapshots	0 0
+
+# /dev/sda1 UUID=80db7467-0af9-4d3a-a92a-604cc727fda4
+LABEL=Swap          	none      	swap      	defaults  	0 0
+
+LABEL=Archlinux     	/run/btrfs-root        	btrfs     	rw,nodev,nosuid,noexec,noatime,ssd,discard,space_cache,autodefrag	0 0
+
+/run/btrfs-root/__current/ROOT/var/lib	    	/var/lib		none		bind		0 0
+
+luna:/Maildir                     /home/shum/Maildir      nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev  0 0
+luna:/net                         /net                    nfs4    rw,noatime,rsize=32768,wsize=32768,nolock,_netdev  0 0
+

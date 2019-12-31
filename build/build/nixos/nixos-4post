@@ -1,0 +1,90 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# post install/upgrade configuration
+
+if ! [ -d $HOME/stow ] ;then
+  echo '..stow directory not present'
+  exit
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                   title "setup"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+heading "/opt/bin link"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+cfg_install -link /opt/bin
+
+if laptop ;then
+heading "/net/* directories"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  if ! [ -d /net/archive ] ;then
+    sudo mkdir -pv /net/archive
+    permissions /net/archive
+  fi
+
+  if ! [ -d /net/downloads/depot ] ;then
+    sudo mkdir -pv /net/downloads/depot
+    permissions /net/downloads
+  fi
+fi
+
+
+if sudo test ! -f /root/.forward ;then
+heading "root setup"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  # sudo ln -sfv $HOME/.config/xfce4 /root/.config/
+  sudo mkdir -v /root/tmp
+  sudo mkdir -v /root/log
+  passphrase uid/gmail | sudo tee /root/.forward
+  sudo lxappearance
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                title "hardware"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+# if laptop && ! [ -f /etc/modules-load.d/pciehp.conf ] ;then
+# heading "acer sdhc card reader"
+# # ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+#     cfg_install /etc/modules-load.d/pciehp.conf
+#   fi
+# fi
+
+
+if server && ! grep -q '/net' /etc/fstab ;then
+heading "/net raid"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /etc/fstab
+  cat /etc/fstab.original $HOME/build/cfg/etc/fstab.$(hostname).raid >$HOME/build/cfg/etc/fstab.$(hostname)
+  cfg_install /etc/fstab $(hostname)
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                                                                    title "boot"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+if ! grep -q 'backgrounds/clock' /etc/default/grub ;then
+heading "grub splash"
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  original /etc/default/grub
+  sudo sed -i -e '/^GRUB_TIMEOUT/s/[0-9]/3/' \
+              -e 's,#*GRUB_BACKGROUND=.*,GRUB_BACKGROUND='$HOME'/images/backgrounds/clock.png,' \
+           /etc/default/grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
+
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+#                                                                 title "finish"
+# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+$HOME/build/archlinux/archlinux-update
+
+# vim: set ft=sh: #

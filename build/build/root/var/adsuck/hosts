@@ -1,0 +1,16 @@
+#
+# /etc/hosts: static lookup table for host names
+#
+
+#<ip-address>   <hostname.domain.org>   <hostname>
+127.0.0.1       localhost.localdomain   localhost
+# ::1             localhost.localdomain   localhost
+
+127.0.0.1       localhost thedarnedestthing ttrss
+10.1.0.26       luna
+10.1.0.254      monad
+# 192.168.0.109   luna
+# 192.168.0.106   monad
+204.93.54.47    thedarnedestthing.com
+
+# End of file

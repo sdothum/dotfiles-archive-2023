@@ -1,0 +1,32 @@
+#!/bin/sh
+# conkywonky
+# ----------
+# Many moons ago, Conky did not automatically restart when changes were
+# made to its config files. This script was used to restart it. It does not
+# really serve any purpose now, but I like the name and some people may still
+# be using/referencing it.
+
+myconky() {
+    if [ "$(pidof notion)" ]; then
+        conky -q
+        if [ $(hostname) = luna ]; then
+            conky -q -c ~/.config/conky/conkyrc.image
+        fi
+    else
+        if [ $(hostname) = monad ]; then
+            conky -q -c ~/.config/conky/conkyrc.left
+            conky -q -c ~/.config/conky/conkyrc.right
+        else
+            conky -q -c ~/.config/conky/conkyrc.openbox
+        fi
+    fi
+}
+
+if [ "$(pidof conky)" ]; then
+    killall conky
+    myconky
+    exit
+else
+    myconky
+    exit
+fi

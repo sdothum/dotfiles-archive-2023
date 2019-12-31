@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ......................................................................... Pass
+
+# names=$(find ~/.password-store -follow -name '*.gpg' | sort | sed 's/.*password-store\/\(.*\).gpg$/\1/')
+# name=$(echo -e "$names" | $(dlist) -p "Pass")
+# name=$(echo -e "$names" | $(dmenu) -p "Pass")
+
+# lifted from https://github.com/cdown/passmenu/blob/master/passmenu
+store=${PASSWORD_STORE_DIR-~/.password-store}
+# names=( "$store"/**/*.gpg )
+names=( $(find $store -name '*.gpg') )
+names=( "${names[@]#"$store"/}" )
+names=( "${names[@]%.gpg}" )
+
+# name=$(printf '%s\n' "${names[@]}" | $(dlist) -p "Pass")
+name=$(printf '%s\n' "${names[@]}" | $(dmenu) -p 'Pass')
+[[ $name ]] && zsh -c "pass $name"

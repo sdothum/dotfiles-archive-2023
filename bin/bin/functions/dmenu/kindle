@@ -1,0 +1,114 @@
+# sdothum - 2016 (c) wtfpl
+
+# X11 Dynamic Menu
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... E-books
+
+# Usage: dmenu kindle [default | noindent | justify | all] <file>, see dmenu ebooks
+#
+# Note: Embed font to override possible ebook embedded font
+#       Use a unique font (remove all but regular font face for minimal file size) e.g. barcodes are small
+#       (don't forget to update font cache with fc-cache -f -v)
+#       This font should not reside on the kindle, to force default kindle settings
+
+kindle=/run/media/$USER/Kindle
+[ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
+kindle=$kindle/documents/
+
+case $1 in
+default ) option=default;  shift ;;
+noindent) option=noindent; shift ;;
+just*   ) option=justify;  shift ;;
+all     ) option=all;      shift ;;
+esac
+
+# embed smallest fontset possible, see notes above
+embed_font='Libre Barcode 39'  # a google font
+# em spacing
+em_indent=1.66          # paragraph
+em_linespace=0.33,0.75  # indent,noindent
+
+file=$1
+name=$(basename "${file%.*}")
+author=${name##* - }
+title=${name% - *}
+
+# .............................................................. Amazon transfer
+
+# kindle update via email
+email() {
+  cat - <<END
+Content-Type: multipart/mixed; boundary="$boundary"
+MIME-Version: 1.0
+Subject: $title
+From: $account
+To: $address
+
+--$boundary
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+$title attached.
+
+--$boundary
+Content-Type: application/octet-stream
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="${mobi##*/}"
+
+END
+                base64 "$mobi"
+                cat - <<END
+
+--$boundary--
+END
+}
+
+# ...................................................................... Convert
+
+[ -d $kindle ] && format=azw3 || format=mobi
+find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
+notify low "$title" "Converting to $format.."
+# cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
+# use calibre conversion module
+output="/tmp/${file##*/}"
+[ $option ] || option=$(echo -n "default (ragged-right)\nnoindent\njustify\nall" | rmenu 'export options' -no-custom) || break
+justify=left
+indent="--remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent"
+linespace=${em_linespace%,*}
+case $option in
+default*) ;;
+noindent) unset indent; linespace=${em_linespace#*,} ;;
+just*   ) justify=justify ;;
+all     ) unset indent; linespace=${em_linespace#*,}; justify=justify ;;
+esac
+# convert even .azw3 to inject folder title and author
+ebook-convert "$file" "${output%.*}.$format" \
+              --title="$title" --authors="$author" \
+              --change-justification="$justify" $indent \
+              --insert-blank-line --insert-blank-line-size=$linespace \
+              --embed-font-family="$embed_font" \
+              >/tmp/ebook-convert.log || exit
+
+# ........................................................................ Write
+
+# usb or cloud?
+if [ -d $kindle ] ;then
+  find $kindle -maxdepth 1 -wholename "${file% - *}*.sdr" -exec rm -rf "{}" \;  # cleanup dangling sdr files
+  find /tmp -maxdepth 1 -name "*$format" -exec rm -rf "$kindle${file% - *}*.sdr" \; -exec mv -f "{}" $kindle \;
+  notify low "$title" "$kindle"
+  sync
+else
+  mobi=$(find /tmp -maxdepth 1 -name "*$format")
+  address=$(echo | mhistory kindle | rmenu 'Address <@kindle.com>') || break
+  echo "$address" | grep -q '@' || address=$address@kindle.com
+  mhistory kindle $address
+  account=$(grep $USER /etc/aliases | cut -d' ' -f2)
+  boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
+  email | /usr/local/bin/msmtp-enqueue.sh -t &
+  notify low "$title" "$address"
+fi
+
+# vim: set ft=sh: #

@@ -1,0 +1,268 @@
+file /home/shum/stow/build/build/archlinux/makepkg/astroid/src/astroid/SConstruct,line 200:
+	Configure(confdir = .sconf_temp)
+scons: Configure: Checking for pkg-config... 
+scons: Configure: ".sconf_temp/conftest_0" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --atleast-pkgconfig-version=0.15.0
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for gtkmm-3.0 >= 3.10... 
+scons: Configure: ".sconf_temp/conftest_1" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --exists 'gtkmm-3.0 >= 3.10'
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for glibmm-2.4... 
+scons: Configure: ".sconf_temp/conftest_2" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --exists 'glibmm-2.4'
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for gmime-2.6 >= 2.6.18... 
+scons: Configure: ".sconf_temp/conftest_3" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --exists 'gmime-2.6 >= 2.6.18'
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for webkitgtk-3.0... 
+scons: Configure: ".sconf_temp/conftest_4" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --exists 'webkitgtk-3.0'
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C library libsass... 
+scons: Configure: ".sconf_temp/conftest_5.c" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_5.c <-
+  |  |
+  |  |
+  |  |#include "sass_context.h"
+  |  |
+  |  |int
+  |  |main() {
+  |  |  
+  |  |return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: Building ".sconf_temp/conftest_5.o" failed in a previous run and all its sources are up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_5.c[0m
+  |
+scons: Configure: (cached) no
+
+scons: Configure: Checking for C library libsass... 
+scons: Configure: ".sconf_temp/conftest_6.c" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_6.c <-
+  |  |
+  |  |
+  |  |#include "sass/context.h"
+  |  |
+  |  |int
+  |  |main() {
+  |  |  
+  |  |return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_6.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_6.c[0m
+  |
+scons: Configure: ".sconf_temp/conftest_6" is up to date.
+scons: Configure: The original builder output was:
+  |[91mlinking Program [95m==> [93m.sconf_temp/conftest_6[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for gobject-introspection-1.0... 
+scons: Configure: ".sconf_temp/conftest_7" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --exists 'gobject-introspection-1.0'
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for libpeas-1.0... 
+scons: Configure: ".sconf_temp/conftest_8" is up to date.
+scons: Configure: The original builder output was:
+  |pkg-config --exists 'libpeas-1.0'
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C library notmuch... 
+scons: Configure: ".sconf_temp/conftest_9.c" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_9.c <-
+  |  |
+  |  |
+  |  |#include "notmuch.h"
+  |  |
+  |  |int
+  |  |main() {
+  |  |  
+  |  |return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_9.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_9.c[0m
+  |
+scons: Configure: ".sconf_temp/conftest_9" is up to date.
+scons: Configure: The original builder output was:
+  |[91mlinking Program [95m==> [93m.sconf_temp/conftest_9[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C function notmuch_database_get_revision..
+scons: Configure: ".sconf_temp/conftest_10.cpp" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_10.cpp <-
+  |  |
+  |  |# include <notmuch.h>
+  |  |
+  |  |int main (int argc, char ** argv)
+  |  |{
+  |  |  notmuch_database_t * nm_db;
+  |  |  const char * uuid;
+  |  |  notmuch_database_get_revision (nm_db, &uuid);
+  |  |
+  |  |  return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_10.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_10.cpp[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C function notmuch_query_search_threads_st..
+scons: Configure: ".sconf_temp/conftest_11.cpp" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_11.cpp <-
+  |  |
+  |  |# include <notmuch.h>
+  |  |
+  |  |int main (int argc, char ** argv)
+  |  |{
+  |  |  notmuch_query_t * q;
+  |  |  notmuch_threads_t * t;
+  |  |  notmuch_status_t st;
+  |  |
+  |  |  st = notmuch_query_search_threads_st (q, &t);
+  |  |
+  |  |  return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_11.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_11.cpp[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C function notmuch_query_count_threads_st..
+scons: Configure: ".sconf_temp/conftest_12.cpp" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_12.cpp <-
+  |  |
+  |  |# include <notmuch.h>
+  |  |
+  |  |int main (int argc, char ** argv)
+  |  |{
+  |  |  notmuch_query_t * q;
+  |  |  unsigned int c;
+  |  |  notmuch_status_t st;
+  |  |
+  |  |  st = notmuch_query_count_threads_st (q, &c);
+  |  |
+  |  |  return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_12.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_12.cpp[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C++ library boost_filesystem... 
+scons: Configure: ".sconf_temp/conftest_13.cpp" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_13.cpp <-
+  |  |
+  |  |
+  |  |
+  |  |int
+  |  |main() {
+  |  |  
+  |  |return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_13.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_13.cpp[0m
+  |
+scons: Configure: ".sconf_temp/conftest_13" is up to date.
+scons: Configure: The original builder output was:
+  |[91mlinking Program [95m==> [93m.sconf_temp/conftest_13[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C++ library boost_system... 
+scons: Configure: ".sconf_temp/conftest_14.cpp" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_14.cpp <-
+  |  |
+  |  |
+  |  |
+  |  |int
+  |  |main() {
+  |  |  
+  |  |return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_14.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_14.cpp[0m
+  |
+scons: Configure: ".sconf_temp/conftest_14" is up to date.
+scons: Configure: The original builder output was:
+  |[91mlinking Program [95m==> [93m.sconf_temp/conftest_14[0m
+  |
+scons: Configure: (cached) yes
+
+scons: Configure: Checking for C++ library boost_program_options... 
+scons: Configure: ".sconf_temp/conftest_15.cpp" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_15.cpp <-
+  |  |
+  |  |
+  |  |
+  |  |int
+  |  |main() {
+  |  |  
+  |  |return 0;
+  |  |}
+  |  |
+  |
+scons: Configure: ".sconf_temp/conftest_15.o" is up to date.
+scons: Configure: The original builder output was:
+  |[94mcompiling [95m==> [93m.sconf_temp/conftest_15.cpp[0m
+  |
+scons: Configure: ".sconf_temp/conftest_15" is up to date.
+scons: Configure: The original builder output was:
+  |[91mlinking Program [95m==> [93m.sconf_temp/conftest_15[0m
+  |
+scons: Configure: (cached) yes
+
+

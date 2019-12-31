@@ -1,0 +1,16 @@
+
+[ $TRACE ] && CHILD="draw/refresh $@" . $PARENT
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................... Set desktop background
+
+# select background image
+notify "Desktop Wallpaper" "<Space>  Show next\n<Enter>  Select image"
+feh -B black -d --scale-down --start-at $(ls -l $HOME/images/backgrounds/default | cut -d'>' -f2) -A "ln -sf $HOME/images/backgrounds/%n $HOME/images/backgrounds/default && xdotool type 'q'" $HOME/images/backgrounds/*.png
+
+# refresh background
+draw root default
+  
+# vim: set ft=sh: #

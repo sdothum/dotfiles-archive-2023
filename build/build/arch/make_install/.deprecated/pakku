@@ -1,0 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+
+# Make
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................................ pakku
+
+[ -d /net/depot ] && cd /net/depot || cd /tmp
+[ -d pakku ] || git clone --depth 1 https://aur.archlinux.org/pakku.git
+cd pakku
+makepkg -si
+pakku -Sy
+
+# vim: set ft=sh: #

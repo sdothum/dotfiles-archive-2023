@@ -1,0 +1,6 @@
+! disable international baskslash key to rebuild left shift key (acer d255e)
+keycode 94 = Shift_L
+add shift = Shift_L
+! to use the colemak caps lock as a backspace, the backspace must be remapped
+! to something else.. so, assign the caps lock function to it!
+!keycode 22 = Caps_Lock

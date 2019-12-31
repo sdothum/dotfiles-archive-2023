@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .................................................................. Screensaver
+
+# toggle monitor display settings
+if [[ $* ]]; then
+  toggle="$@"
+else
+  xset q | grep -q 'DPMS is Enabled' && toggle='off' || toggle='on'
+  toggle=$(echo "$toggle" | $(dmenu) -p 'Toggle Screensaver') || exit
+fi
+
+case $toggle in
+  off|0)  pidof xscreensaver && killall xscreensaver
+          xset s off -dpms
+          ;;
+  on|1)   xset s on +dpms
+          pidof xscreensaver || ( xscreensaver -no-splash & )
+          ;;
+esac
+

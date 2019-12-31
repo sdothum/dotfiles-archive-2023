@@ -1,0 +1,11 @@
+ERROR: cannot check h: No such file or directory
+ERROR: 'h' is not a mounted btrfs device
+scrub device /dev/sda2 (id 1) done
+	scrub started at Wed Apr 10 10:48:02 2019 and finished after 00:04:29
+	total bytes scrubbed: 112.96GiB with 0 errors
+scrub device /dev/sdf (id 1) done
+	scrub started at Wed Apr 10 10:52:44 2019 and finished after 05:13:32
+	total bytes scrubbed: 2.03TiB with 0 errors
+scrub device /dev/sdg (id 2) done
+	scrub started at Wed Apr 10 10:52:44 2019 and finished after 05:13:26
+	total bytes scrubbed: 2.03TiB with 0 errors

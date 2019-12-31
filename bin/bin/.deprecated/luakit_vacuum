@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# vacuum luakit databases first
+for db in ~/.local/share/luakit/*.db
+do
+  sqlite3 "$db" "VACUUM;" && sqlite3 "$db" "REINDEX;"
+done
+luakit "$@"

@@ -1,0 +1,67 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ....................................................................... Editor
+
+usage() {
+  echo "usage: $(basename $0) [vim]"
+  exit 1
+}
+
+CACHEDIR=${CACHEDIR:-$HOME/.cache}
+vimrc="$HOME/stow/vim/.vimrc $HOME/.vim/config/*.vim \
+       $(find $HOME/.vim/custom -regextype posix-extended -regex '.*vim')"
+index=$CACHEDIR/vmap
+
+keymaps() {
+  # utf-8 char as separator (as caret i commonly use may be defined in a map)
+  # note: execute imap expressions are translated, see heading.vim
+  egrep -v '" .*map |^ *let ' | sed -re 's/^[^ ]*\/([^ ]*)\.vim:/\1:/' \
+                                    -e '/^[^ ]*: *execute /s/g:heading_leader/,/g' \
+                                    -e "/^[^ ]*: *execute /s/'([^ ]*)'/\1/" \
+                                    -e '/^[^ ]*: *execute /s/ \. //g' \
+                                    -e '/^[^ ]*: *execute /s/"//g' \
+                                    -e "s/^([^ ]*: *)execute *'(.*map .*silent[>])'/\1\2/" \
+                                    -e "s/:  */$SEP/" \
+                                    -e "s/([^ ]*map|set)  *([^ ]*)  */\1$SEP\2$SEP/"
+}
+
+maps() {
+  # fkey assignments
+  for i in $(seq 1 12) ;do ag --ignore-case "<.*F$i>" $vimrc | grep -v 'vim:[0-9]*: *"' | keymaps ;done
+
+  # leader key assignments
+  ag --ignore-case "<leader>" $vimrc | keymaps
+
+  # map key assignments
+  ag --ignore-case "map " $vimrc | egrep -v '<leader>|<[^ ]*F[0-9]*>' | keymaps
+}
+
+[ "$1" = help ] && usage
+[ -e $index   ] && ! stest -qr -n $index $vimrc || maps | column -s$SEP -t >$index
+[ $1          ] || title=true
+
+# list current key assignments
+list() {
+  [ $title ] && title "$@"
+  cat
+}
+
+vmap() {
+  # fkey assignments
+  for i in $(seq 1 12) ;do grep -i "<.*F$i>" $index | list F$i ;done
+
+  # leader key assignments
+  grep -i "<leader>" $index | list LEADER
+
+  # map key assignments
+  grep -i "map " $index | egrep -v '<leader>|<[^ ]*F[0-9]*>' | list MAP
+}
+
+# vim <S-F1> call uses more
+[ $title ] && vmap | less -RX || vmap | more
+
+# vim: set ft=sh: #

@@ -1,0 +1,42 @@
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ................................................................. Git dotfiles
+
+# update github dotfiles
+# see .gitignore, to remove items from remote repository
+# git rm --cached <filespec>
+# git rm --cached -r <dir>
+apps=( alot amphetype bash bin bspwm build compton conky dunst fish herbstluftwm infinality luakit mpv music notion qutebrowser tt-rss vim vimb X11 xmonad wyrd zsh )
+
+cd ~/stow
+# syncthing housekeeping
+files=( **/*.sync-conflict-*(.N) )
+[[ $files ]] && rm -f **/*.sync-conflict-*
+files=( **/.syncthing.hsts.tmp(.N) )
+[[ $files ]] && rm -f **/.syncthing.hsts.tmp
+
+for i in $apps
+do
+  git add -v $i
+done
+
+commit() {
+  echo
+  git commit -m "$desc"
+  git push --force --set-upstream origin master
+}
+
+if [[ $* ]] ;then
+  # $@ used in if-yes produces weird expanded prompt ??
+  desc="$@"
+  if-yes "commit \"$desc\"" && commit
+else
+  read "desc?commit? [abort]/comment.. : ${_YELLOW_}"
+  printf "${_nocolor_}"
+  [[ $desc ]] && commit
+fi
+cd - >/dev/null
+
+# vim: set ft=zsh: #

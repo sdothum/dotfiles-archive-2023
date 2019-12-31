@@ -1,0 +1,30 @@
+#!/bin/sh
+# rename current file/folder with parent (directory) name
+
+if [ "$1." = "." ]; then
+    echo $0 filename [ directory ]
+    exit
+fi
+
+#echo "[1] $1 ... [2] $2"
+if [ $# -eq 1 ]; then
+    parent=$PWD
+else
+    # thunar custom action can pass file and directory names
+    parent=$2
+fi
+
+# strip parent path
+parent=${parent##*/}
+# if renaming file, preserve extension
+if [ -f "$1" ]; then
+    ext=.${1##*.}
+fi
+
+echo "$1 :: $parent$ext"
+mv "$1" "$parent$ext"
+
+echo
+echo
+#read -p "... Press [Enter] to continue ... "
+

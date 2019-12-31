@@ -1,0 +1,23 @@
+
+# Office
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... E-mail
+
+# notmuch mail client
+case $@ in
+  '') command alot ;;
+  I)  if if-yes "initialize xapian database" ;then
+        killall notmuch
+        rm -rf ~/Maildir/.notmuch/{dum,xap}*
+        notmuch setup
+        notmuch new
+        mailsync tag
+        alot
+      fi
+      ;;
+  *)  echo ".. alot  'start  I'initialize" ;;
+esac
+
+# vim: set ft=zsh: #
+

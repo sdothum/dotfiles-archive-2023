@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl 
+
+# Edit
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Editor
+
+# nanu nanu!
+if   [ ! -e $1 ] ;then /usr/bin/nano $@
+elif [ -w $1   ] ;then /usr/bin/nano $@
+else                   sudo /usr/bin/nano $@
+fi
+
+# vim: set ft=sh: #

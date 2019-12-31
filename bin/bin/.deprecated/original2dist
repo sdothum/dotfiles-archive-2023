@@ -1,0 +1,5 @@
+#!/bin/sh
+# convert old ".original" filename to ".dist" convention
+
+echo "$@" | grep -q "\.original" || exit 
+sudo mv -v $@ $(dirname $@)/$(basename -s .original $@).dist

@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/oneframe $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................... Single frame container
+
+herbstclient compare tags.focus.curframe_wcount = $(herbstclient attr tags.focus.client_count)
+
+# vim: set ft=sh: #

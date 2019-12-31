@@ -1,0 +1,11 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... firefox
+
+ditto 'current void release may refuse to use existing profile..'
+ditto run 'firefox --allow-downgrade'
+
+# vim: set ft=sh: #

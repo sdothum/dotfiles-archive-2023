@@ -1,0 +1,22 @@
+#!/bin/bash
+# run from recovery mode for initial setup
+set -x
+[ -n $1 ] && release=$1 || release=unstable
+# debian distribution level on the edge!
+cd /etc/apt
+[ ! -f apt.conf.original ] && sudo cp -v apt.conf apt.conf.original
+[ ! -f preferences.original ] && sudo cp -v preferences preferences.original
+[ ! -f sources.list.original ] && sudo cp -v sources.list sources.list.original
+if [ $(echo $release | egrep 'backports|media|stable|testing|unstable|waldorf'). != . ]; then 
+    sudo cp -v /home/shum/.config/etc/apt/$release/apt.conf .
+    sudo cp -v /home/shum/.config/etc/apt/$release/preferences .
+    sudo cp -v /home/shum/.config/etc/apt/$release/sources.list .
+    sudo cat apt.conf
+    sudo cat preferences
+    sudo cat sources.list
+    # sid tint2 tint2conf package conflict: set trigger file to remove tint2conf
+    rm -f /home/shum/.tint2conf.remove 2>/dev/null
+    # egrep "squeeze|waldorf" /etc/apt/apt.conf || touch /home/shum/.tint2conf.remove
+else
+    echo ".. $0 backports|media|stable|testing|unstable|waldorf"
+fi

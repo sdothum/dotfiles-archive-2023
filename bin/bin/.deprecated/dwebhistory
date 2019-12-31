@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# history
+sqldb=~/.local/share/luakit/history.db
+filter='ERROR:|localhost|luakit:|Page not found|[Ss]earch'
+query="select datetime(last_visit,'unixepoch'), title, uri from history order by last_visit DESC;"
+
+uri=$(echo "$query" \
+    | sqlite3 $sqldb \
+    | egrep -v "$filter" \
+    | sed 's/[|]/  ::  /g' \
+    | $(dlist) -p 'Web History:' \
+    | sed 's/.* :: .* :: \(.*\)/\1/')
+[[ $uri ]] && dbrowser "$uri"

@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# User_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................................... pulseaudio
+
+gpu inspiron || exit
+
+crontab_install pulse "* * * * * /home/$USER/bin/functions/hardware/pulse >>/tmp/pulse.log 2>&1"
+
+# vim: set ft=sh: #

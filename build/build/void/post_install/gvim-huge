@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+
+# Post_install
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ......................................................................... gvim
+
+ifnsed $HOME/.bashrc 'EDITOR=vim'
+cd /usr/bin
+sudo ln -sf gvim-huge gvim
+
+# vim: set ft=sh: #

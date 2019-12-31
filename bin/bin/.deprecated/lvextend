@@ -1,0 +1,35 @@
+#!/bin/sh
+# lvextend vg1-mount size (in Mbytes or Gbytes)
+# best done in recovery mode
+
+df -h
+if [ $USER != root -o $# -ne 2 ]; then
+  echo ".. lvextend vg1-mount size (in Mbytes or Gbytes)"
+  exit
+fi
+
+if [ $1 = swap ]; then
+  lvs
+  if [ ${2%%[MGT]} -gt 0 ]; then
+    swapoff -v /dev/mapper/vg1-swap
+    /sbin/lvextend -v -L $2 /dev/mapper/vg1-swap
+    /sbin/mkswap -v1 -f /dev/mapper/vg1-swap
+    swapon -v /dev/mapper/vg1-swap
+    lvs
+  fi
+  exit
+fi
+
+mount=/$1
+[ $mount = /root ] && mount=/
+[ $mount = /local ] && mount=/usr/local
+if [ ${2%%[MGT]} -gt 0 ]; then
+  umount $mount
+  /sbin/lvextend -v -L $2 /dev/mapper/vg1-$1
+  /sbin/fsck.ext4 -v -f /dev/mapper/vg1-$1
+  /sbin/resize2fs /dev/mapper/vg1-$1
+  /sbin/fsck.ext4 -v -f /dev/mapper/vg1-$1
+  mount $mount
+  df -h
+fi
+

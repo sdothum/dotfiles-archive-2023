@@ -1,0 +1,5 @@
+#!/usr/bin/fish
+# adium emoticons
+
+log "... script installing theblacy"
+sudo cp -Rv /data/depot/themes/emesene/bigblacy_2_9699_3715/bigblacy.AdiumEmoticonSet /usr/share/emesene/emesene/themes/emotes/bigblacy.AdiumEmoticonset

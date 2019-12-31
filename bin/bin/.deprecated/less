@@ -1,0 +1,4 @@
+#!/bin/sh
+# handle ansi color control codes in file
+
+/usr/bin/less --RAW-CONTROL-CHARS $@

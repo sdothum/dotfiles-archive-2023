@@ -1,0 +1,88 @@
+#!/bin/bash
+# run from recovery mode for initial setup
+
+echo ":: update hosts table"
+cd /etc
+sudo cp -v hosts hosts.original
+sudo cp -v /home/shum/.config/etc/hosts .
+cat hosts
+
+echo ":: set colemak keyboard layout"
+cd /etc/default
+sudo cp -v keyboard keyboard.original
+sudo cp -v /home/shum/.config/etc/default/keyboard .
+ls -Rl /etc/default/k*
+
+echo ":: set local startup processes"
+cd /etc
+sudo cp -v rc.local rc.local.original
+sudo cp -v /home/shum/.config/etc/rc.local .
+
+if [ "$(hostname)" = "monad" ]; then
+    echo ":: remap acer international key to left shift"
+    cd /etc/X11
+    sudo cp -v /home/shum/.config/etc/X11/Xmodmap .
+    cd /etc/X11/xinit
+    sudo cp -v xinitrc xinitrc.original
+    sudo cp -v /home/shum/.config/etc/X11/xinit/xinitrc .
+    ls -R /etc/X11/Xm* /etc/X11/xi*
+    # echo ":: install acer fan control"
+    # sudo modprobe -a -d /lib/modules/*/kernel/drivers/platform/x86 acerhdf fanon=55000 fanoff=50000
+
+    echo ":: reduce kernel swapping to lower disk IO"
+    sudo cp /etc/sysctl.conf /etc/sysctl.conf.original
+    sudo sed -i '$avm.swappiness=20' /etc/sysctl.conf
+    cat /etc/sysctl.conf
+fi
+
+echo ":: free up block device caches"
+[ ! -f /etc/sysctl.conf.original ] && sudo cp /etc/sysctl.conf /etc/sysctl.conf.original
+sudo sed -i '$avm.vfs_cache_pressure=50' /etc/sysctl.conf
+cat /etc/sysctl.conf
+
+if [ "$(hostname)" = "luna" ]; then
+    echo ":: enable logitech marble mouse features"
+    cd /usr/share/X11/xorg.conf.d
+    sudo cp -v 10-evdev.conf 10-evdev.conf.original
+    sudo cp -v /home/shum/.config/etc/X11/xorg.conf.d/10-evdev.conf .
+
+    echo ":: enable the USB dac which is inhibited by the hdmi of the video card (see ArchWiki sound config)"
+    cd /etc/modprobe.d
+    sudo cp -v alsa-base.conf alsa-base.conf.original
+    sudo cp -v /home/shum/.config/etc/modprobe.d/alsa-base.conf .
+    ls -l /etc/modprobe.d
+
+    if [ -f /etc/gdm/Init/Default ]; then
+        echo ":: configure dual monitor displays"
+        cd /etc/gdm/Init
+        sudo cp -v Default Default.original
+        sudo cp -v /home/shum/.config/etc/gdm/Init/Default .
+    fi
+
+    # echo ":: reduce SSD disk activity"
+    # cd /etc
+    # sudo cp -v sysctl.conf sysctl.conf.original
+    # sudo cp -v /home/sum/.config/etc/sysctl.conf .
+fi
+
+echo ":: insert noatime into /etc/fstab"
+sudo cp /etc/fstab /etc/fstab.original
+grep -q noatime /etc/fstab || sudo sed -i -e 's/ defaults/ defaults,noatime/' -e 's/ errors=remount-ro/ defaults,noatime,errors=remount-ro/' /etc/fstab
+cat /etc/fstab
+
+echo ":: allow shell concurrency"
+sudo cp /etc/default/rcS /etc/default/rcS.original
+sudo sed -i '$aCONCURRENCY=shell' /etc/default/rcS
+cat /etc/default/rcS
+
+# reset default window manager
+echo ":: reset x11 window manager startup"
+echo openbox > /home/shum/.windowmanager
+rm /home/shum/.startx 2>/dev/null
+# rm /home/shum/.config/terminator/config 2>/dev/null
+cp -Rfv /etc/skel/.config/openbox/. /home/shum/.config/openbox/
+sudo chown -R shum:users /home/shum/.config/openbox/
+
+# set root mail forwarding
+echo ":: set root mail forwarding"
+sudo echo sdothum@gmail.com >/root/.forward

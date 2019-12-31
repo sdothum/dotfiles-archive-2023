@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................................ Smart swap window
+
+# swap window and focus to monitor (0,1)
+direction=$@
+focus=$(herbstclient list_monitors | grep '\[FOCUS\]' | cut -d: -f1)
+winid=$(herbstclient attr clients.focus.winid)
+
+# move window to non-empty tag subframe (and focus next window)
+swap() {
+  herbstclient chain . lock . focus_monitor $1
+  focus frame
+  herbstclient chain . bring $winid . focus_monitor $2 . unlock
+  focus window
+}
+
+if [[ $focus -eq $direction ]]; then
+  [[ $focus -eq 0 ]] && swap 1 0 || swap 0 1
+else
+  [[ $focus -eq 0 ]] && swap 1 1 || swap 0 0
+fi

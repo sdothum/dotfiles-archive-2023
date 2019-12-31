@@ -1,0 +1,192 @@
+" Status Line {
+  " Set statusline template {
+    function! SetStatusline()
+      " call StatuslineColor()              " see ThemeRefresh
+      " file name
+      set statusline =%#identifier#
+      set statusline+=\ %t\                 " tail of the filename
+      set statusline+=%*
+
+      " display a warning if fileformat isn't unix
+      set statusline+=%#warningmsg#
+      set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+      set statusline+=%*
+
+      " display a warning if file encoding isnt utf-8
+      set statusline+=%#warningmsg#
+      set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+      set statusline+=%*
+
+      set statusline+=%h                    " help file flag
+      set statusline+=%y                    " filetype
+
+      " read only flag
+      set statusline+=%#identifier#
+      set statusline+=%r
+      set statusline+=%*
+
+      " modified flag
+      set statusline+=%#identifier#
+      set statusline+=%m
+      set statusline+=%*
+
+      " set statusline+=%{fugitive#statusline()}
+
+      " display a warning if &et is wrong, or we have mixed-indenting
+      set statusline+=%#error#
+      set statusline+=%{StatuslineTabWarning()}
+      set statusline+=%*
+
+      set statusline+=%{StatuslineTrailingSpaceWarning()}
+
+      set statusline+=%{StatuslineLongLineWarning()}
+
+      set statusline+=%#warningmsg#
+      set statusline+=%{SyntasticStatuslineFlag()}
+      set statusline+=%*
+
+      " display a warning if &paste is set
+      set statusline+=%#error#
+      set statusline+=%{&paste?'[paste]':''}
+      set statusline+=%*
+
+      set statusline+=%=                    " left/right separator
+      set statusline+=%{StatuslineCurrentHighlight()}
+
+      " set statusline+=%#identifier#
+      set statusline+=\ \ %c\               " cursor column
+      set statusline+=%l/                   " cursor line
+      set statusline+=%L                    " total lines
+      set statusline+=\ %P\                 " percent through file
+    endfunction
+  " }
+
+  " Set statusline color {
+    function! StatuslineColor()
+      highlight statusline   guibg=#fdf6e3 ctermfg=1 guifg=#b5423f ctermbg=0
+      highlight statuslinenc guibg=#fdf6e3 ctermfg=1 guifg=#a8907f ctermbg=0
+      highlight vertsplit    guibg=#fdf6e3 guifg=#fdf6e3
+    endfunction
+  " }
+
+  " Return trailing space warning {
+    function! StatuslineTrailingSpaceWarning()
+      " return '[\s]' if trailing white space is detected
+      " return '' otherwise
+      if !exists("b:statusline_trailing_space_warning")
+        if !&modifiable
+          let b:statusline_trailing_space_warning=''
+          return b:statusline_trailing_space_warning
+        endif
+
+        if search('\s\+$', 'nw') != 0
+          let b:statusline_trailing_space_warning='[\s]'
+        else
+          let b:statusline_trailing_space_warning=''
+        endif
+      endif
+      return b:statusline_trailing_space_warning
+    endfunction
+  " }
+
+  " Return the syntax highlight group under the cursor {
+    function! StatuslineCurrentHighlight()
+      let name=synIDattr(synID(line('.'),col('.'),1),'name')
+      if name == ''
+        return ''
+      else
+        return '[' . name . ']'
+      endif
+    endfunction
+  " }
+
+  " Return inconsistent tab warning {
+    function! StatuslineTabWarning()
+      " return '[&et]' if &et is set wrong
+      " return '[mixed-indenting]' if spaces and tabs are used to indent
+      " return an empty string if everything is fine
+      if !exists("b:statusline_tab_warning")
+        let b:statusline_tab_warning=''
+
+        if !&modifiable
+          return b:statusline_tab_warning
+        endif
+
+        let tabs=search('^\t', 'nw') != 0
+
+        "find spaces that arent used as alignment in the first indent column
+        let spaces=search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+
+        if tabs && spaces
+          let b:statusline_tab_warning= '[mixed-indenting]'
+        elseif (spaces && !&et) || (tabs && &et)
+          let b:statusline_tab_warning='[&et]'
+        endif
+      endif
+      return b:statusline_tab_warning
+    endfunction
+  " }
+
+  " Return a warning for long lines (using 80 if no &textwidth is set) {
+    function! StatuslineLongLineWarning()
+      " return '' if no long lines
+      " return '[x,y,z] if long lines are found, where
+      "   x is the number of long lines
+      "   y is the median length of the long lines
+      "   z is the length of the longest line
+      if !exists("b:statusline_long_line_warning")
+        if !&modifiable
+          let b:statusline_long_line_warning=''
+          return b:statusline_long_line_warning
+        endif
+
+        let long_line_lens=s:LongLines()
+
+        if len(long_line_lens) > 0
+          let b:statusline_long_line_warning=" [" .
+                \ ''  . len(long_line_lens) .
+                \ '>' . b:threshold . " " .
+                \ '=' . s:Median(long_line_lens) . " " .
+                \ ':' . max(long_line_lens) . "]"
+        else
+          let b:statusline_long_line_warning=""
+        endif
+      endif
+      return b:statusline_long_line_warning
+    endfunction
+  " }
+
+  " Return a list containing the lengths of the long lines in this buffer {
+    function! s:LongLines()
+      let b:threshold=(&tw ? &tw : 80)
+      let spaces=repeat(" ", &ts)
+      let line_lens=map(getline(1,'$'), 'len(substitute(v:val, "\\t", spaces, "g"))')
+      return filter(line_lens, 'v:val > b:threshold')
+    endfunction
+  " }
+
+  " Find the median of the given array of numbers {
+    function! s:Median(nums)
+      let nums=sort(a:nums)
+      let l=len(nums)
+
+      if l % 2 == 1
+        let i=(l-1) / 2
+        return nums[i]
+      else
+        return (nums[l/2] + nums[(l/2)-1]) / 2
+      endif
+    endfunction
+  " }
+
+  " Initialize statusline {
+    " recalculate the trailing whitespace warning when idle, and after saving
+    autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+    " recalculate the tab warning flag when idle and after writing
+    autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+    " recalculate the long line warning when idle and after saving
+    autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+
+    call SetStatusline()
+  " }
+" }

@@ -1,0 +1,26 @@
+#!/bin/sh
+# replace old "debian" symlinks with "dist"
+
+action=$@
+[ -z $action ] && action=show
+if [ $action != show -a $action != apply ]; then
+  echo "debian2dist show | apply"
+  exit
+fi
+
+if [ $action = apply ]; then
+  [ -d ~/Dropbox/dist ] || cp -R ~/Dropbox/debian ~/Dropbox/dist
+fi
+
+symlinks=$(ls -la | grep '[-][>]' | grep 'debian' | sed 's/  */ /g' | cut -d' ' -f9- | cut -d'>' -f2- | sed 's/^ *//' | sed 's/ /?/g')
+for i in $symlinks; do
+  newlink=$(echo $i | sed 's/debian/dist/')
+  target=$(basename $newlink)
+  [ -f .$target ] && target=.$target || target=.
+  case $action in
+    show)   echo ln -sfv "$newlink" $target
+            ;;
+    apply)  ln -sfv "$newlink" $target
+            ;;
+  esac
+done

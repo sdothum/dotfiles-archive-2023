@@ -1,0 +1,145 @@
+# desktop packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= appearance
+# ▔▔▔▔▔▔▔▔▔▔
+# breeze-obsidian-cursor-theme
+  breeze-snow-cursor-theme
+  compton
+# compton-git
+# hsetroot
+  lxappearance
+# nitrogen
+  setroot
+# xcompmgr
+# shantz-xwinwrap-bzr [server]
+# xflux
+
+
+= desktop utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  autokey-gtk
+# autokey-py3
+# clipit
+# colorgrab
+  colors-git
+  conky-lua
+# conky-lua-nv
+# stest contained in dmenu package  
+  dmenu
+# dmenu-xft-height
+# dmenu2
+  dunst
+  gpaste
+# gpick
+  libnotify
+# lxsession
+  maim
+  rofi
+# scrot
+# shutter
+  slickpicker
+# xfce4-notifyd
+# xfce4-screenshooter
+# xgrabcolor
+
+
+= gtk themes and engines
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  adapta-gtk-theme-deb
+# flattr-icon-theme-git
+# gtk-chtheme
+# gtk-engine-equinox
+  gtk-engine-murrine
+# gtk-theme-numix
+# gtk-theme-numix-blue
+# gtk-theme-numix-holo
+# gtk-theme-numix-green
+# gtk-theme-numix-solarized
+# gtk-theme-numix-white
+# numix-icon-theme-git
+# numix-themes
+# paper-gtk-theme-git
+  paper-icon-theme-git
+# qtcurve-kde4
+# qtcurve-style-numix
+# ultra-flat-icons
+# xfce4-theme-numix-manjaro-themes
+
+
+= screensavers
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  rss-glx
+  xscreensaver
+
+
+= window managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# 2bwm
+# budgie-desktop-git
+# herbstluftwm
+# lemonbar-git
+  lemonbar-xft-git
+# libwm-git
+# openbox
+# sprop-git
+  sutils-git
+# sxhkd
+# sxhkd-git
+# wmname
+# wmutils-git
+# xdo-git
+  xtitle-git
+# xwinfo-git
+
+
+= bspwm
+# ▔▔▔▔▔
+# bspwm
+# bspwm-git
+# lua-posix
+
+
+= gnome
+# ▔▔▔▔▔
+# gnome-control-center
+# gnome-shell
+# gnome-tweak-tool
+
+
+= xmonad
+# ▔▔▔▔▔▔
+# dzen2
+# haskell-xmonad
+# haskell-xmonad-contrib
+# xmobar
+
+
+= x11
+# ▔▔▔
+  arandr               [server]
+  autocutsel
+  lib32-libglvnd       [nvidia]
+  lib32-mesa-libgl     [laptop]
+  lib32-nvidia-libgl   [nvidia]
+  lib32-nvidia-utils   [nvidia]
+  lxrandr              [server]
+# slock
+# trayer-srg-git
+  unclutter
+# xclip
+  xdotool
+  xf86-input-mouse
+  xf86-input-keyboard
+  xf86-input-synaptics [laptop]
+  xorg-server-xephyr
+  xorg-xev
+  xorg-xinput
+  xorg-xmessage
+  xorg-xprop
+  xorg-xwininfo
+  xsel
+
+# vim: set ft=conf: #

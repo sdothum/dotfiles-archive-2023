@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# X11 Dynamic Menu
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Browser
+
+# bookmarks (chromium)
+bookmarks=~/.config/chromium/Default/Bookmarks
+py-chrome-bookmarks.py $bookmarks $bookmarks.html
+
+uri=$(tac $bookmarks.html \
+    | grep 'http://' \
+    | sed 's/.*<a href="\([^"]*\)">\([^<]*\)<.*/\1  ::  \2/g'\
+    | $(dlist) -p 'Google Bookmark:' \
+    | cut -d' ' -f1)
+[[ $uri ]] && dbrowser "$uri"

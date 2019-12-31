@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+  # crunchbang-3install exceptions
+  # edit this failed install list as required
+  # run as: ./crunchbang-3exceptions [options ..]
+  # example: ./crunchbang-3exceptions -t sid
+
+  

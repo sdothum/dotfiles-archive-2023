@@ -1,0 +1,29 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+
+# ...................................................................... Connect
+
+usage() {
+  echo "usage: $(basename $0) [confirm]"
+  exit 1
+}
+
+# see wego and console_login
+site=weather.gc.ca
+timeout=5
+
+count=0
+while ! ping -c 1 -W 1 $site >/dev/null 2>&1 ;do
+  sleep 1
+  count=$(( $count + 1 ))
+  if [ $count -gt $timeout ] ;then
+    [ $1 ] && notify critical 'Internet Access' 'Connection failed'
+    return 1
+  fi
+done
+return 0
+
+# vim: set ft=sh: #

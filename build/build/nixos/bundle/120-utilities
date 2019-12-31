@@ -1,0 +1,135 @@
+# utilities packages
+# sdothum - 2016 (c) wtfpl
+
+# see bundle_install
+
+= admin
+# ▔▔▔▔▔
+  ack
+# etc-update
+  expect
+  fetch-git
+  mediainfo [server]
+  mlocate
+# pacnews-git
+# screenfetch
+  stow
+  tree
+
+
+= file compression tools
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# par2unrar
+  file-roller
+  p7zip
+  unrar
+  unzip
+  zip
+
+
+= disk utilities
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  convmv
+  dos2unix
+# gnome-disk-utility
+  gparted
+  gptfdisk
+  samsung_magician [server || laptop]
+# unetbootin
+
+
+= file managers
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔
+# ffmpegthumbnailer
+# filelight
+  ncdu
+  ranger
+  rox
+# thunar
+# thunar-archive-plugin
+# thunar-volman
+  tumbler
+  vifm
+
+
+= file systems
+# ▔▔▔▔▔▔▔▔▔▔▔▔
+  dosfstools
+# exfat-utils
+  fuse
+# fuse-exfat
+  gvfs
+# hfsprogs
+# nfs-utils
+  ntfs-3g
+
+
+= ripping
+# ▔▔▔▔▔▔▔
+  audex          [server]
+# asunder        [server]
+  cdrdao         [server]
+# dvd+rw-tools   [server]
+# dvdbackup      [server]
+  ffmpeg         [server]
+  handbrake      [server]
+# handbrake-cli  [server]
+# k3b            [server]
+  mencoder       [server]
+# soundconverter [server]
+  transcode      [server]
+  xfburn         [server]
+
+
+= shell
+# ▔▔▔▔▔
+# ansi-color
+  autojump
+# bash-completion
+# bc
+# checkbashisms
+# fasd
+  fortune-mod
+  fortune-mod-chucknorris
+# prezto-git
+# zsh-doc
+# zsh-autosuggestions
+# zsh-completions
+# zsh-syntax-highlighting
+
+
+= system monitor and test
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# bonnie++
+# gamin
+  glances
+  gsmartcontrol
+  htop
+  iotop
+# memtester
+# mprime-bin [server]
+# multitail
+  smartmontools
+# sysstat
+  xrestop
+
+
+= terminals
+# ▔▔▔▔▔▔▔▔▔
+# putty
+# roxterm
+# rxvt-unicode
+# sakura
+# terminator
+# termite-git
+  urxvt-perls 
+  xterm
+
+
+= terminal multiplexors
+# ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+# byobu
+# screen
+  tmux
+
+# vim: set ft=conf: #

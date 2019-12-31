@@ -1,0 +1,33 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ...................................................................... Syncing
+
+# uni-directional sync for when syncthing not available
+media=/run/media/$USER
+
+if ! pidof rsync ;then
+  rm -f /tmp/.watcher 2>/dev/null
+  # [ $(hostname) = monad ] && target=luna: || target=monad:
+  # ! ping -c 1 -W 1 ${target%:} >/dev/null && [ -d /media/usb/$HOME ]
+  [ -d $media/luna  ] && target=$media/luna
+  [ -d $media/monad ] && target=$media/monad
+  [ -d $media/lumen ] && target=$media/lumen
+  if [ $target ] ;then
+    echo >>/tmp/wsync.log
+    echo '--------------------------------------------------------------' >>/tmp/wsync.log
+    trace "Syncing $target.." >>/tmp/wsync.log
+    rsync -avu --delete $HOME/stow $target/$HOME/ >>/tmp/wsync.log
+    # watcher instance triggered during sync? prevent dangling bash instances
+    [ -e /tmp/.watcher ] && exec $HOME/bin/wsync
+  else
+    echo "..target not available, update not committed"
+    notify "Wsync not committed" "Target not available"
+  fi
+  # rsync -avu --delete /srv/http/thedarnedestthing.com/application $HOME/thedarnedestthing.com/ >>/tmp/wsync.log
+fi
+exit
+
+# vim: set ft=sh: #

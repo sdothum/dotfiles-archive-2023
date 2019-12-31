@@ -1,0 +1,11 @@
+#!/usr/bin/dash
+
+# Sysadmin
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ....................................................................... Search
+
+# a perl grep
+sudo /usr/bin/vendor_perl/ack --smart-case --color --color-match='bold yellow' --color-filename='bold red' $@
+
+# vim: set ft=sh: #

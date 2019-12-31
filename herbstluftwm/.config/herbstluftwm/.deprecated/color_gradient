@@ -1,0 +1,60 @@
+#!/usr/bin/ruby
+# encoding: UTF-8
+
+# herbstluftwm
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# ............................................... Generate border color gradient
+
+# Usage: echo "hex rgb" | color_gradient
+
+# number of rgb gradients to generate
+depth = 32
+
+# lifted from https://gist.github.com/juliarose/946a832e7b2adaa3e46d
+module Color
+  def self.to_hex(c) # convert decimal to hex
+    n = c.to_i.to_s(16)
+    n = '0' + n unless n.length > 1 # 2 characters
+    n
+  end
+  
+  def self.to_dec(c) # convert hex to decimal
+    c.to_i(16)
+  end
+  
+  def self.blend(color1, color2, ratio = 0.5)
+    colors = 3.times.map do |i| # R, G, B
+      (to_dec(color2[i*2,2]) * ratio) + (to_dec(color1[i*2,2]) * (1-ratio))
+    end
+    
+    colors.map { |a| to_hex(a) }.join
+  end
+  
+  def self.lighten(color, ratio = 0.5)
+    colors = 3.times.map do |i| # R, G, B
+      [(to_dec(color[i*2,2]) + 255) * ratio,255].min
+    end
+    
+    colors.map { |a| to_hex(a) }.join
+  end
+  
+  def self.darken(color, ratio = 0.5)
+    ratio = 1.0 - ratio # inverse
+    
+    colors = 3.times.map do |i| # R, G, B
+      to_dec(color[i*2,2]) * ratio
+    end
+    
+    colors.map { |a| to_hex(a) }.join
+  end
+end
+
+hex = ARGF.read
+
+depth.times.map do |i|
+  print "#{Color.lighten(hex, (i.to_f / depth))}\n"
+end
+# depth.times.map do |i|
+#   print "#{Color.darken(hex, (i.to_f / depth))}\n"
+# end

@@ -1,0 +1,27 @@
+
+# Distribution Install
+# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+# .............................................................. Package manager
+
+# default (no options) to package query
+if-opt S $@ || notS=true
+
+if [[ $# -eq 1 && $notS = true ]] ;then
+  action=-Qs
+  package=$@
+else
+  # no dash option shorthand for noconfirm :-)
+  action=$1
+  shift
+  # see pacman -R --help
+  # [[ $action == R ]] && action=Rccssnd
+  [[ $action == R ]] && action=Rns
+  echo $action | grep -q '-' || action="-$action --noconfirm"
+  package=$@
+fi
+
+# pacman install
+eval sudo pacman $action $package
+
+# vim: set ft=zsh: #
