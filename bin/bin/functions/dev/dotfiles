@@ -56,7 +56,7 @@ pending() {
 add() {
   for i in $@ ;do
     if [ -e $i ] ;then
-      pending=$(git add -fv $i)
+      pending=$(git add -v $i)
     else
       usage
     fi
@@ -71,17 +71,6 @@ rm() {
     git commit --message="Remove directory \"$DESC\""
     git push origin master
   fi
-}
-
-stow() {
-  for i in $@ ;do
-    if [ -e $i ] ;then
-      pending=$(git add -v $i)
-    else
-      usage
-    fi
-  done
-  [ "$pending" ] && pending
 }
 
 # any updates to push?
@@ -113,7 +102,7 @@ undo   ) git reset --soft HEAD~
 
 reset  ) git reset ;;
 rm     ) shift; rm $@ ;;
-*      ) stow $@ ;;
+*      ) add $@ ;;
 esac
 
 # vim: set ft=sh: #
