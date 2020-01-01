@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# herbstluftwm
-# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-# .................................................................... Rotate -1
-
-# opposite direction of rotate
-herbstclient chain , lock , rotate , rotate , rotate , unlock

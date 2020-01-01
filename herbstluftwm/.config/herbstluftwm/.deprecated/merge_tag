@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# herbstluftwm
-# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-# ............................................................. Release tick'tag
-
-# for conky hidden desktop windows highlighting
-[[ $(herbstclient dump "'$@" | wc -w) -le 2 ]] && herbstclient merge_tag "'$@"

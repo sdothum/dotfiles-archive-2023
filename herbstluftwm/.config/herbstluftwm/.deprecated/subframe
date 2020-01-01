@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# herbstluftwm
-# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-# .............................................. Open application in split frame
-
-pidof herbstluftwm && herbstclient chain . split horizontal 0.5 . cycle_frame 1
-$@
