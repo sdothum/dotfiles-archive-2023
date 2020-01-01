@@ -22,13 +22,13 @@
 
 #feeds-holder #feedTree {
   padding-top: 0;
-  width: 135px;
+  width: 135px;  /* adjust #ttrssMain:width */
 }
 
 #feeds-holder {
   /* margin-right: -15px; */
   margin-left: -15px;
-  width: 135px !important;
+  width: 135px !important;  /* adjust #ttrssMain:width */
 }
 
 /* margin around feed..headline region */
@@ -176,7 +176,7 @@ div[style="vertical-align : middle"] { width: 75px; }
 
 /* date position on expanded collapse button bar */
 .Selected span.updated {
-  left: 14px;
+  left: 7px;
   padding-top: 0px !important;
   margin-top: -31px !important;
 }
@@ -215,7 +215,7 @@ button.expandPrompt {
   text-align: right;
   text-shadow: 2px 2px 4px #532020;
   white-space: pre;            /* line break */
-  width: 148px;                /* right align with counter column */
+  width: 148px;                /* right align with counter column, see #feeds-holder:width */
 }
 
 /* top of feed category selection list */

@@ -294,9 +294,8 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 }
 
 .collapseBtn:hover {
-  /* background: #ffe3d5 url('sal_images/noise.png') 0 repeat; */
-  background: #fbeecb url('sal_images/noise.png') 0 repeat;
   /* background: #fdf6e3 url('sal_images/noise.png') 0 repeat; */
+  background: #f8dddd;
   border-top: none;
   /* font: 10px/10px Roboto,'Noto Sans',Helvetica,Arial sans-serif !important; */
 }
@@ -450,6 +449,7 @@ span.updated { color: #aaa; }
 .collapseBtn img { opacity: 0; }
 
 .cdm.expandable.active:hover .collapseBtn img {
+  margin-right: -2px;
   margin-top: -12px;
   opacity: .15;
 }
