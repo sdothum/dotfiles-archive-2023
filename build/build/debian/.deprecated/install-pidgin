@@ -1,5 +1,0 @@
-#!/usr/bin/fish
-# pidgin emoticons
-
-log "... script installing theblacy"
-sudo cp -Rv /data/depot/themes/pidgin/TheBlacy /usr/share/pixmaps/pidgin/emotes/
