@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# rox must be opened in background first for autostart terminal invocation of nzbget
-rox+ 8 /net/downloads/nzbs/completed /net/media/videos/movies
-# shell shenanigans: zsh function nzb takes precedent over bin/nzb!
-zsh -c "nzb"

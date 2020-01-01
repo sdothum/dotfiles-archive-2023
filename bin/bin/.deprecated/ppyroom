@@ -1,7 +1,0 @@
-#!/bin/sh
-# pyroom wrapper for sup mail
-
-folded=$(mktemp)
-pyroom $@
-fold -s -w 72 $@ >$folded
-mv $folded $@

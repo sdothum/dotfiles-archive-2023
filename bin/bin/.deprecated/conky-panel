@@ -1,6 +1,0 @@
-#!/bin/sh
-# toggle conky panel (replaces need for dzen2 menu!)
-
-xdotool search --onlyvisible --classname conky windowunmap \
-|| xdotool search --classname conky windowmap \
-|| conky -q -c ~/.config/conky/conkyrc.$(hostname) &

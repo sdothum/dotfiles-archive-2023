@@ -1,6 +1,0 @@
-#!/bin/sh
-# generic sup editor wrapper (saves quitting sup to alter)
-
-ffocuswriter $@
-
-# vim: set ft=fish: #

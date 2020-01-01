@@ -1,5 +1,0 @@
-#!/bin/sh
-# bypass my dmenu wrapper
-
-PATH=/usr/bin
-sudo /usr/bin/connman_dmenu

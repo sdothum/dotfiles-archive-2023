@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# Sysadmin
-# ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-# ................................................................. File manager
-
-# tail file in terminal window (see rox)
-urxvtc -title "Watch %n" -e sudo tail -f "$@"

@@ -1,4 +1,0 @@
-#!/bin/sh
-# display mail body contents of imap mail
-
-urxvtc -title "Mail %n" -e zsh -c "mailbody '$@'"

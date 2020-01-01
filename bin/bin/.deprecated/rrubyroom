@@ -1,7 +1,0 @@
-#!/bin/sh
-# rubyroom wrapper for sup mail
-
-folded=$(mktemp)
-rubyroom $@
-fold -s -w 72 $@ >$folded
-mv $folded $@

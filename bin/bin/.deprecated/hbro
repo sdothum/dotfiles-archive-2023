@@ -1,7 +1,0 @@
-#!/usr/bin/env fish
-# disable http_proxy, else hbro will 404 for some reason
-
-set -x HTTP_PROXY
-[ -z $argv ]; and /usr/bin/hbro http://thedarnedestthing; or /usr/bin/hbro $argv
-
-# vim: set ft=fish: #
