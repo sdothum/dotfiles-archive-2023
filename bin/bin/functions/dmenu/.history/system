@@ -1,7 +1,0 @@
-journal   ∙ inspect
-log       ∙ inspect
-log       ∙ watch
-system    ∙ diagnostic
-journal   ∙ watch
-resource   ∙ monitor
-system    ∙ monitor
