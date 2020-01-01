@@ -1,3 +1,0 @@
-function vf
-  vifm;
-end

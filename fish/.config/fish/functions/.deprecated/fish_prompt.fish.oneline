@@ -1,5 +1,0 @@
-function fish_prompt --description 'Write out the prompt'
-    and set -g _returncode green; or set -g _returncode red
-    printf '%s%s %s%s %s%s@%s%s%s%s%s%s %s ' (set_color $_returncode) (date '+%A') (set_color cyan) (date '+-%-I:%M.%S%P-') (set_color blue) (whoami) (hostname|cut -d . -f 1) (set_color green) ':' (set_color yellow) (prompt_pwd) (set_color normal) ':.'
-    set -e _returncode
-end

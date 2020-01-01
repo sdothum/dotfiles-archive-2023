@@ -1,3 +1,0 @@
-function nv
-  nvpy
-end
