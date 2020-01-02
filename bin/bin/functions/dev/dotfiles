@@ -45,7 +45,10 @@ commit() {
 }
 
 pending() {
-  ditto $pending  # $pending -> add 'path' :-)
+  echo $pending | sed "s/' add '/\n/g; s/^add '//; s/'$//" >/tmp/dotfiles:pending  # $pending -> add 'path'..
+  while read pending <&3 ;do
+    ditto add "$pending"
+  done 3< /tmp/dotfiles:pending
   printf "commit? [Abort]/comment.. : ${__WHITE}"
   read DESC
   printf "${NOCOLOR}"
