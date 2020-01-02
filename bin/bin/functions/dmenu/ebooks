@@ -5,22 +5,28 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu ebooks [I [cache]]
+# Usage: dmenu ebooks [<author> | I [<cache>]]
 
 REBUILD='[ rebuild database ]'
 
 # ebook library
-[ "$1" = I ] && { init=true; shift; }
-library=${LIBRARY:-/net/media/ebooks/${1:-library}}
-cache=$library/dmenu:ebooks
+while [ "$1" ] ;do
+  case $1 in
+  I) init=true ;;
+  *) [ -e "/net/media/ebooks/$1" ] && LIBRARY=/net/media/ebooks/$1 || { author=$1; export matching=normal; init=true; } ;;
+  esac
+  shift
+done
+LIBRARY=${LIBRARY:-/net/media/ebooks/library}
+cache=$LIBRARY/dmenu:ebooks
 
 # ....................................................................... Libary
 
 # build catalogue
 ebooks() {
   notify low 'Updating library cache' 'Please be patient..'
-  find $library -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
-      sed -re "s,$library/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
+  find $LIBRARY -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
+      sed -re "s,$LIBRARY/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
           -e 's/(.*) - .*/\1/; s/ \(.*\)//' \
           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
       sort -u >$cache
@@ -29,7 +35,7 @@ ebooks() {
 }
 
 # command line initialization with: dmenu ebooks [init]
-if [ ! -s $cache ] || [ $init ] || stest -qr -n $cache $(find $library -maxdepth 3) ;then
+if [ ! -s $cache ] || [ $init ] || stest -qr -n $cache $(find $LIBRARY -maxdepth 3) ;then
   ebooks $1
   [ $init ] && exit
 fi
@@ -37,7 +43,7 @@ fi
 file() {
   # convert apostrophe ' to . for pattern matching
   path=$(echo ".*$author/($title[^/]*/)*$title( - .*)*.$1" | tr "'" '.')
-  find $library -regextype egrep -regex "$path"
+  find $LIBRARY -regextype egrep -regex "$path"
 }
 
 mobi() { mobi=$(file mobi); }
@@ -89,7 +95,7 @@ while : ;do
     break
   done
   # show list of author's books next
-  export matching=normal
+  export matching=normal  # rofi option
 done
 
 # vim: set ft=sh: #
