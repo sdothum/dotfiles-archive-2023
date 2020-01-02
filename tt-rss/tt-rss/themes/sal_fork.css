@@ -295,7 +295,7 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 }
 
 .collapseBtn:hover {
-  background: #fdf6e3;
+  background: rgba(177,37,37,0.1);
   border-top: none;
   /* box-shadow: 2px 2px 4px #edd2d2; */
   box-shadow: 3px 3px 9px rgba(177,37,37,0.3);
