@@ -9,10 +9,9 @@
 # see alot/config and dmenu compose
 FOLDER=$HOME/drafts
 ARCHIVE=$FOLDER/archive
-DRAFTS=/tmp/clean:drafts
-DIFF=$DRAFTS:diff
+DIFF=/tmp/clean:drafts:diff
 ext=draft
-trap "rm -f $DRAFTS $DIFF" EXIT
+trap "rm -f $DIFF" EXIT
 
 mkdir -p $ARCHIVE || exit 1
 
@@ -30,17 +29,12 @@ find -L $FOLDER -maxdepth 1 -type f -mtime +180 -exec notify low 'Archiving draf
 files=$(find -L $FOLDER -maxdepth 1 -name "*.$ext")
 [ "$files" ] || exit
 
-rm -f $DRAFTS
-for i in $files ;do
-  echo "$(hint $i)^$(stat -c '%y' $i | cut -d- -f1-3)^$i"
-done | sort -k1,2 -t^ >>$DRAFTS
-
 filename() { echo $@ | cut -d^ -f3; }                 # from subject^timestamp^filename
 zero()     { [ $(grep "$@" $DIFF | wc -l) -eq 0 ]; }  # diff stats
 
-# remove partial drafts
-while read draft <&3 ;do
-  # echo $draft
+for i in $files ;do
+  echo "$(hint $i)^$(stat -c '%y' $i | cut -d- -f1-3)^$i"
+done | sort -k1,2 -t^ | while read draft ;do  # remove partial drafts
   [ $last ] || { last=$(filename $draft); continue; }
   unset remove
   next=$(filename $draft)
@@ -55,6 +49,6 @@ while read draft <&3 ;do
     mv $last /tmp
   fi
   last=$next
-done 3< $DRAFTS
+done
 
 # vim: set ft=sh: #
