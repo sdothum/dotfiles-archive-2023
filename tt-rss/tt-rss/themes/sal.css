@@ -213,7 +213,7 @@ button.expandPrompt {
   margin-top: 23px;            /* font-size x 1.5 */
   position: fixed;
   text-align: right;
-  text-shadow: 2px 2px 4px #532020;
+  text-shadow: 2px 2px 4px rgba(114,24,24,1.0);
   white-space: pre;            /* line break */
   width: 148px;                /* right align with counter column, see #feeds-holder:width */
 }
@@ -240,7 +240,7 @@ button.expandPrompt {
   position: absolute;
   right: -35px;
   text-align: center;
-  text-shadow: 2px 2px 4px #532020;
+  text-shadow: 2px 2px 4px rgba(114,24,24,1.0);
 }
 
 .cdmHeader .hlFeed a { display: block;  /* for hlFeed titleWrap alignment */ }

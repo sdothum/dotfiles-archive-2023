@@ -168,6 +168,7 @@ img[src*="images/indicator_tiny.gif"] {
 #ttrssMain .dijitPopup {
   border-radius: 0;
   border: none;
+  box-shadow: 3px 3px 9px rgba(0,0,0,0.3);
 }
 
 #ttrssMain .dijitMenuItemHover .dijitMenuItemLabel,
@@ -294,9 +295,10 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 }
 
 .collapseBtn:hover {
-  /* background: #fdf6e3 url('sal_images/noise.png') 0 repeat; */
-  background: #f8dddd;
+  background: #fdf6e3;
   border-top: none;
+  /* box-shadow: 2px 2px 4px #edd2d2; */
+  box-shadow: 3px 3px 9px rgba(177,37,37,0.3);
   /* font: 10px/10px Roboto,'Noto Sans',Helvetica,Arial sans-serif !important; */
 }
 
