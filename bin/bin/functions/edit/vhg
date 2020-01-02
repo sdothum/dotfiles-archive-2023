@@ -22,13 +22,15 @@ brokeln rm $REPO/.hg
 
 backup() {
   [ -f $1 ] || exit
+  sort $1 | uniq >/tmp/vhg:add
   unset files
+
   # changesets per vim editing sessions
-  sort $1 | uniq | while read file ;do
+  while read file <&3 ;do
     # suppress "already tracked!" message
     hg add --quiet --cwd $REPO "$file" 2>/dev/null
     files="$files  $file"
-  done
+  done 3< /tmp/vhg:add
 
   notify 'Mercurial' "$(echo ${files#  } | sed 's, /,\n/,g')"  # newline on /path
   # see hgl alias (hg log) for compact listing
