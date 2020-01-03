@@ -144,7 +144,7 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 /* main */
-#toolbar { margin-right: -20px; }
+#toolbar { margin-right: -2em;  /* -px does not retain margin relationship */ }
 
 #main-toolbar,
 .dijitMenuItemLabel { 
