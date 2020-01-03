@@ -119,7 +119,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 /* loading gif */
 #ttrssMain .dijitTreeContent { opacity: 0; } /* unnecessary visual distraction */
 
-#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: .15; }
+#feeds-holder .dijitTreeRow .dijitTreeExpandoOpened { opacity: 1.0; }  /* high contrast */
 
 /* #feeds-holder { background: #eee; } */
 
@@ -144,7 +144,7 @@ img[src*="images/indicator_tiny.gif"] {
 }
 
 /* main */
-#toolbar { margin-right: -2em;  /* -px does not retain margin relationship */ }
+#toolbar { margin-right: -2em; }  /* -px does not retain margin relationship */
 
 #main-toolbar,
 .dijitMenuItemLabel { 

@@ -219,7 +219,7 @@ button.expandPrompt {
 }
 
 /* top of feed category selection list */
-#feeds-holder { margin-top: 85px;  /* font-size x 5.5 */ }
+#feeds-holder { margin-top: 85px; }  /* font-size x 5.5 */
 
 /* end of feed marker */
 #headlines-spacer {
@@ -243,4 +243,4 @@ button.expandPrompt {
   text-shadow: 2px 2px 4px rgba(114,24,24,1.0);
 }
 
-.cdmHeader .hlFeed a { display: block;  /* for hlFeed titleWrap alignment */ }
+.cdmHeader .hlFeed a { display: block; }  /* for hlFeed titleWrap alignment */
