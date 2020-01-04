@@ -24,6 +24,7 @@ usage() {
 # list of folders under stow root
 DOTFILES=$(cat ${0%/*}/.dotfiles:folders)
 cd $STOW
+git reset
 # syncthing housekeeping
 find . -name '*.sync-conflict-*' -exec rm {} \;
 find . -name '*.syncthing.hsts.tmp' -exec rm {} \;
@@ -58,7 +59,7 @@ pending() {
 add() {
   for i in $@ ;do
     if [ -e $i ] ;then
-      pending=$(git add -v $i)
+      pending=$(git add -v $force $i)
     else
       usage
     fi
@@ -85,7 +86,7 @@ unset pending
 case $1 in
 help   ) usage ;;
 ''     ) for i in $DOTFILES ;do add $STOW/$i ;done ;;
-add    ) shift; add $STOW/$@ ;;
+add    ) shift; force=-f; add $STOW/$@ ;;
 
 amend    |\
 comment) shift; DESC=$@
