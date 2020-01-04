@@ -218,7 +218,7 @@ enum keyboard_keycodes {
 #ifdef TEST
 #define DEBUG   TG  (_TEST)
 #else
-#define DEBUG   KC_NO
+#define DEBUG   RESET
 #endif
 
 // Layers
