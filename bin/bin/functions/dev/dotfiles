@@ -24,7 +24,7 @@ usage() {
 # list of folders under stow root
 DOTFILES=$(cat ${0%/*}/.dotfiles:folders)
 cd $STOW
-git reset >/dev/null
+git reset >/dev/null  # undo any previous aborted dotfiles
 # syncthing housekeeping
 find . -name '*.sync-conflict-*' -exec rm {} \;
 find . -name '*.syncthing.hsts.tmp' -exec rm {} \;
