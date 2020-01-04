@@ -268,7 +268,7 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
   font: 500 16px Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   margin-bottom: 0;
   margin-left: -3px;
-  margin-top: -16px;
+  margin-top: -31px;
 }
 
 .cdm.expandable:not(.Unread) .title { color: #666 !important; }
@@ -286,23 +286,25 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 }
 
 /* collapse button bar, set line height for left hand date alignment */
-.collapseBtn { 
+.collapseBtn {
   -webkit-transition: all 0s;
-  border-top: 1px solid #b12525;
-  /* margin-top: -1px;  */
-  padding-bottom: 0; 
+  background: rgba(177,37,37,0.1);
+  border-top: none;
+  box-shadow: 3px 3px 9px rgba(177,37,37,0.3);
+  line-height: 12px;
+  padding: 0 0 2px;
+  top: 3px;
   transition: all 0s;
 }
 
-.collapseBtn:hover {
+.collapseBtn:hover { 
   background: rgba(177,37,37,0.1);
-  border-top: none;
-  /* box-shadow: 2px 2px 4px #edd2d2; */
-  box-shadow: 3px 3px 9px rgba(177,37,37,0.3);
-  /* font: 10px/10px Roboto,'Noto Sans',Helvetica,Arial sans-serif !important; */
+  /* border-bottom: 1px solid #b12525; */
+  box-shadow: none;
 }
 
-.collapseBtn:hover img { opacity: 0 !important; }
+/* .collapseBtn:hover img { opacity: 0 !important; } */
+.collapseBtn img { opacity: 0 !important; }
 
 /* hide collapse message */
 .collapseBtn:before { content: ''; }
@@ -352,8 +354,8 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 
 /* expanded position */
 .cdm.expandable.active .hlFeed {
-  margin-left: -47px;
-  margin-top: -20px;
+  margin-left: -74px;
+  margin-top: -33px;
   padding-top: 4px !important;
 }
 
@@ -450,10 +452,10 @@ span.updated { color: #aaa; }
 /* opacity of replacement close icon to match category column, see modified feeds.php */
 .collapseBtn img { opacity: 0; }
 
-.cdm.expandable.active:hover .collapseBtn img {
+.cdm.expandable.active .collapseBtn img {
   margin-right: -2px;
-  margin-top: -12px;
-  opacity: .15;
+  margin-top: -15px;
+  margin-bottom: -1px;
 }
 
 /* social media link clusters */

@@ -138,11 +138,15 @@ img[src*='images/mark_set.png'] {
   -webkit-transform: scale(0.7, 0.7);  /* Safari */
   background: url('sal_images/Pin.png') no-repeat !important;
   margin-left: -23px;
+  margin-bottom: -2px; 
   opacity: .85;
   transform: scale(0.7.0.7);
 }
 
-.Selected img[src*='images/mark_set.png'] { margin-top: -18px !important; }
+.Selected img[src*='images/mark_set.png'] { 
+  margin-left: -51px;
+  margin-top: -30px !important; 
+}
 
 /* left feed / update column width*/
 .cdm.expandable:not(.active) .cdmHeader > .hlFeed {
@@ -176,9 +180,10 @@ div[style="vertical-align : middle"] { width: 75px; }
 
 /* date position on expanded collapse button bar */
 .Selected span.updated {
-  left: 7px;
+  text-align: right;
   padding-top: 0px !important;
-  margin-top: -31px !important;
+  margin-right: -74px !important;
+  margin-top: -28px !important;
 }
 
 /* hlfeed does not exist when a non-category feeds-holder row is selected */
