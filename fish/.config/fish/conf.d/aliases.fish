@@ -17,24 +17,24 @@ alias K 'env sig=-KILL k'
 alias KK 'env sig=-KILL kk'
 alias sv 'service'
 if void
-  alias svd 'service disable'
-  alias sve 'service enable'
-  alias svl 'service list'
-  alias svm 'service mask'  # at boot
-  alias svr 'service restart'
-  alias svs 'service status'
-  alias svt 'service down'
-  alias svu 'service up'
+  alias svd  'service disable'
+  alias svdn 'service down'
+  alias sve  'service enable'
+  alias svm  'service mask'  # at boot
+  alias svr  'service restart'
+  alias svs  'service status'
+  alias svu  'service up'
+  alias svv  'service active'
 else
-  alias svd 'service disable'
-  alias sve 'service enable'
-  alias svi 'service info'
-  alias svl 'service reload'
-  alias svm 'service mask'
-  alias svr 'service restart'
-  alias svs 'service start'
-  alias svt 'service stop'  # terminate
-  alias svu 'service unmask'
+  alias svd  'service disable'
+  alias sve  'service enable'
+  alias svi  'service info'
+  alias svl  'service reload'
+  alias svm  'service mask'
+  alias svr  'service restart'
+  alias svs  'service start'
+  alias svt  'service stop'  # terminate
+  alias svu  'service unmask'
 end
 
 # ....................................................................... Device
