@@ -29,6 +29,9 @@ let g:AutoPairsMapBS                = 1       " auto delete symbol pairs
 " let g:AutoPairsFlyMode            = 1       " auto pair jumping
 let g:AutoPairsShortcutBackInsert = '<C-BS>'  " undo auto pair jump -> close pair
 
+" ......................................................................... Cool
+let g:CoolTotalMatches = 1  " command-line match statistics
+
 " ................................................................... Cursorword
 autocmd plugin BufRead * let b:cursorword = Prose() ? 1 : g:cursorword
 

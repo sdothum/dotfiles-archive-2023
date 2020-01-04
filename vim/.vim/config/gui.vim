@@ -69,7 +69,9 @@ set incsearch  " find the next match as we type the search
 
 command! ToggleWrapSearch call gui#ToggleWrapSearch()
 
-nmap <silent><F6> :ToggleWrapSearch<CR>
+nmap     <silent><F6>  :ToggleWrapSearch<CR>
+" fuzzy search
+cnoremap <expr><space> '/?' =~ getcmdtype() ? '.*' : '<Space>'
 
 " ........................................................... Search and replace
 " toggle magic and case sensitivity, \m to append magic tokens
