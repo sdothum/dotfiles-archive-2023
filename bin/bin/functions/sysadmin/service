@@ -19,7 +19,7 @@ runit() {
   service=$2
   case $1 in
   ''     ) ls /etc/sv; exit ;;
-  @      ) ls /var/service; sudo find /etc/sv -name down; exit ;;  # active services
+  active ) ls /var/service; sudo find /etc/sv -name down; exit ;;  # active services
   disable) check ;;
   down   ) check ;;
   enable ) check ;;
@@ -27,7 +27,7 @@ runit() {
   restart) check ;;
   status ) check ;;
   up     ) check ;;
-  *      ) service=$1; check ;;
+  *      ) service=$1; check; cat /etc/sv/$service/run; underline ;;
   esac
 
   # configure runit daemon
