@@ -299,7 +299,11 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 
 .collapseBtn:hover { 
   background: rgba(177,37,37,0.1);
-  /* border-bottom: 1px solid #b12525; */
+  box-shadow: none;
+}
+
+.collapseBtn:active { 
+  background: #fdf6e3;  /* blink */
   box-shadow: none;
 }
 
