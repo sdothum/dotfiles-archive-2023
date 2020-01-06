@@ -37,7 +37,7 @@
 #define ROLLOVER
 
 // left handed space/enter
-#define LEFT_SPC_ENT
+// #define LEFT_SPC_ENT
 
 // double tap "=="
 #define EQLEQL "=~"
