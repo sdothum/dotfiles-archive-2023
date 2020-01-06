@@ -129,7 +129,7 @@ span.titleWrap { max-width: 60em; }
 /* .postContent p { max-width: 100%; } */
 
 img[src*='images/mark_unset.png'] {
-  margin-left: -23px;
+  margin-left: -25px;
   opacity: 0 !important;
 }
 
@@ -146,6 +146,11 @@ img[src*='images/mark_set.png'] {
 .Selected img[src*='images/mark_set.png'] { 
   margin-left: -51px;
   margin-top: -30px !important; 
+}
+
+.Selected img[src*='images/mark_unset.png'] {
+  margin-left: -27px;
+  margin-top: -7px;
 }
 
 /* left feed / update column width*/
