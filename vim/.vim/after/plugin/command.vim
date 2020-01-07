@@ -31,10 +31,8 @@ command! Term :call system('term "vimterm" STACK')
 " latex printing
 function! s:hardcopy()
   echo 'Printing..'
-  if Markdown()                 | execute '!hardcopy wiki \"' . expand('%:t') . '\"'
-  elseif expand('%:e') =~ 'wps' | execute '!hardcopy wps' expand('%:t')
-  else                          | execute '!hardcopy code' expand('%:t')
-  endif
+  let l:type = Markdown() ? 'wiki' : (expand('%:e') =~ 'wps' ? 'wps' : 'code')
+  call system('hardcopy ' . l:type . ' "' . expand('%:t') . '"')
 endfunction
 
 command! Hardcopy silent call <SID>hardcopy()
