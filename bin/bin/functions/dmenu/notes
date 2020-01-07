@@ -95,7 +95,7 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
 
   *       ) file=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f1)
             content=$(cat $NOTES | grep "$(echo $note | sed "s/ *$SEP */.*$SEP /")" | cut -d^ -f3)
-            while action=$(echo 'view\nedit\nclipboard\ndelete' | rmenu "${content#* }" -no-custom) ;do
+            while action=$(echo 'view\nedit\nprint\nclipboard\ndelete' | rmenu "${content#* }" -no-custom) ;do
               [ $action = view ] || break
               term "$file" MAX STACK WAIT less $file
             done ;;
@@ -107,9 +107,11 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
   edit     ) gvim -f -c "set filetype=$ext" -c "set modifiable" $file
              update=true ;;
 
+  print    ) hardcopy wiki $file ;;
+
   delete   ) mv $file /tmp
              update=true
-             sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # $file contains /'s
+             sed -i "\,$file,s,$,  (DELETED)," $NOTES ;;  # file contains /'s
 
   clipboard) clipboard "$file"
              notify 'Ctrl-Alt-V' "$file"
