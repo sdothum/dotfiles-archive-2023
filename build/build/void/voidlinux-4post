@@ -19,7 +19,7 @@ cfg_install -link /opt/bin
 cfg_install -link /etc/hosts
 
 
-if server && [ ! -d /net/downloads/http ] ;then
+if [ ! -d /net/downloads/http ] ;then
 heading "/net/* directories"
 # ══════════════════════════════════════════════════════════════════════════════
   sudo mkdir -pv /net/archive

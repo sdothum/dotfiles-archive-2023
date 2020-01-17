@@ -3,9 +3,10 @@
 
 # voidlinux boot configuration
 
+[ $1 ] && asia=true
+
+
 source ./voidlinux-functions
-
-
 # home user config and install scripts will be copied to
 user=${1:-shum}
 echo "--> USER: $user"
@@ -59,8 +60,8 @@ heading 'update repo'
 # ══════════════════════════════════════════════════════════════════════════════
 mkdir -p /etc/xbps.d
 cp -v /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d
-# sed -i 's|https://alpha.de.repo.voidlinux.org|https://void.webconverger.org|g' /etc/xbps.d/*-repository-*.conf
-sed -i 's|https://alpha.de.repo.voidlinux.org|https://mirror.clarkson.edu/voidlinux|g' /etc/xbps.d/*-repository-*.conf
+[ $asia ] && sed -i 's|https://alpha.de.repo.voidlinux.org|https://void.webconverger.org|g' /etc/xbps.d/*-repository-*.conf ||
+             sed -i 's|https://alpha.de.repo.voidlinux.org|https://mirror.clarkson.edu/voidlinux|g' /etc/xbps.d/*-repository-*.conf
 xbps-install -Suv
 xbps-install -Suv
 heading 'repeat xbps-install -Suv until no more updates'

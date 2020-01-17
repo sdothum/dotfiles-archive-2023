@@ -1,8 +1,9 @@
 #!/bin/bash
 # sdothum - 2016 (c) wtfpl
 
-# fresh arch pre-installer
+# fresh void pre-installer
 
+[ $1 ] && asia=true
 
 source ./voidlinux-functions
 # heading 'wireless'
@@ -14,7 +15,7 @@ checkpoint
 heading 'partition disk'
 # ══════════════════════════════════════════════════════════════════════════════
 xbps-install -Su 2>/dev/null                # suppress live-install disk space error
-xbps-install gptfdisk
+xbps-install -S gptfdisk
 ./voidlinux-00mnt
 checkpoint
 
@@ -24,8 +25,8 @@ heading 'installing voidlinux base'
 xbps-query -S musl && { musl_export=-musl; musl_http=/musl; ditto 'void musl'; }
 export XBPS_ARCH=x86_64$musl_export
 # xbps-install -S -R https://repo.voidlinux.eu/current$musl_http -r /mnt/btrfs-boot base-system grub-x86_64-efi
-# xbps-install -S -R https://void.webconverger.org/current$musl_http -r /mnt/btrfs-boot base-system grub-x86_64-efi
-xbps-install -S -R https://mirror.clarkson.edu/voidlinux/current$musl_http -r /mnt/btrfs-boot base-system grub-x86_64-efi
+[ $asia ] && xbps-install -S -R https://void.webconverger.org/current$musl_http -r /mnt/btrfs-boot base-system grub-x86_64-efi ||
+             xbps-install -S -R https://mirror.clarkson.edu/voidlinux/current$musl_http -r /mnt/btrfs-boot base-system grub-x86_64-efi
 # xbps-install -S -R https://alpha.de.repo.voidlinux.org/current$musl_http -r /mnt/btrfs-boot base-system grub-x86_64-efi
 checkpoint
 
