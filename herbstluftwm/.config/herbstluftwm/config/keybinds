@@ -4,131 +4,131 @@
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ......................................................... BEAKL Pi Keybindings
+# ......................................................... BEAKL Zi Keybindings
 
 # window manager
-hc keybind $Mod-Shift-q                 spawn quit
-hc keybind $Mod-Control-Shift-q         spawn pkill -KILL -f startx
-hc keybind $Mod-Control-Shift-r         reload
-hc keybind $Mod-w                       chain . close_or_remove . emit_hook focus_window
-hc keybind $Mod-Return                  spawn toggle scratchpad
-hc keybind $Mod-Shift-Return            spawn tmux_session
-hc keybind $Mod-Control-Return          spawn term 'term'
-hc keybind $Mod-equal                   spawn toggle focus
+hc keybind $Mod-Shift-q             spawn quit
+hc keybind $Mod-Control-Shift-q     spawn pkill -KILL -f startx
+hc keybind $Mod-Control-Shift-r     reload
+hc keybind $Mod-w                   chain . close_or_remove . emit_hook focus_window
+hc keybind $Mod-Return              spawn toggle scratchpad
+hc keybind $Mod-Shift-Return        spawn tmux_session
+hc keybind $Mod-Control-Return      spawn term 'term'
+hc keybind $Mod-equal               spawn toggle focus
 # number layer thumb swap
-hc keybind $Mod-0                       spawn toggle focus
+hc keybind $Mod-0                   spawn toggle focus
 
 # UI appearance
-hc keybind $Mod-b                       spawn focus border 3
-hc keybind $Mod-Shift-b                 spawn toggle border
-hc keybind $Mod-i                       spawn toggle unclutter
-hc keybind $Mod-Shift-i                 spawn toggle compton
+hc keybind $Mod-b                   spawn focus border 3
+hc keybind $Mod-Shift-b             spawn toggle border
+hc keybind $Mod-i                   spawn toggle unclutter
+hc keybind $Mod-Shift-i             spawn toggle compton
 
 # wallpaper background (toggle) blur
-hc keybind $Mod-p                       spawn draw root select
-hc keybind $Mod-Shift-p                 spawn draw root shuffle
-hc keybind $Mod-Control-p               spawn draw root blur
-hc keybind $Mod-d                       spawn dmenu root
-hc keybind $Mod-Shift-d                 spawn draw root save
-hc keybind $Mod-Control-d               spawn draw root blank
+hc keybind $Mod-p                   spawn draw root select
+hc keybind $Mod-Shift-p             spawn draw root shuffle
+hc keybind $Mod-Control-p           spawn draw root blur
+hc keybind $Mod-d                   spawn dmenu root
+hc keybind $Mod-Shift-d             spawn draw root save
+hc keybind $Mod-Control-d           spawn draw root blank
 
 # focus monitor
-hc keybind $Mod-apostrophe              cycle_monitor
-hc keybind $Mod-Page_Down               focus_monitor 1
-hc keybind $Mod-Page_Up                 focus_monitor 0
+hc keybind $Mod-apostrophe          cycle_monitor
+hc keybind $Mod-Page_Down           focus_monitor 1
+hc keybind $Mod-Page_Up             focus_monitor 0
 
 # focus client
-hc keybind $Mod-Left                    focus_edge left
-hc keybind $Mod-Down                    focus_edge down
-hc keybind $Mod-Up                      focus_edge up
-hc keybind $Mod-Right                   focus_edge right
-hc keybind $Mod-t                       focus left
-hc keybind $Mod-r                       focus down
-hc keybind $Mod-n                       focus up
-hc keybind $Mod-s                       focus right
+hc keybind $Mod-Left                focus_edge left
+hc keybind $Mod-Down                focus_edge down
+hc keybind $Mod-Up                  focus_edge up
+hc keybind $Mod-Right               focus_edge right
+hc keybind $Mod-t                   focus left
+hc keybind $Mod-r                   focus down
+hc keybind $Mod-n                   focus up
+hc keybind $Mod-s                   focus right
 
 # move client
-hc keybind $Mod-Shift-Left              shift_edge left
-hc keybind $Mod-Shift-Down              shift_edge down
-hc keybind $Mod-Shift-Up                shift_edge up
-hc keybind $Mod-Shift-Right             shift_edge right
-hc keybind $Mod-Shift-t                 chain . shift left  . emit_hook focus_changed
-hc keybind $Mod-Shift-r                 chain . shift down  . emit_hook focus_changed
-hc keybind $Mod-Shift-n                 chain . shift up    . emit_hook focus_changed
-hc keybind $Mod-Shift-s                 chain . shift right . emit_hook focus_changed
-hc keybind $Mod-Shift-Page_Down         spawn pin monitor 1
-hc keybind $Mod-Shift-Page_Up           spawn pin monitor 0
-hc keybind $Mod-Control-Page_Down       spawn switch monitor 1
-hc keybind $Mod-Control-Page_Up         spawn switch monitor 0
+hc keybind $Mod-Shift-Left          shift_edge left
+hc keybind $Mod-Shift-Down          shift_edge down
+hc keybind $Mod-Shift-Up            shift_edge up
+hc keybind $Mod-Shift-Right         shift_edge right
+hc keybind $Mod-Shift-t             chain . shift left  . emit_hook focus_changed
+hc keybind $Mod-Shift-r             chain . shift down  . emit_hook focus_changed
+hc keybind $Mod-Shift-n             chain . shift up    . emit_hook focus_changed
+hc keybind $Mod-Shift-s             chain . shift right . emit_hook focus_changed
+hc keybind $Mod-Shift-Page_Down     spawn pin monitor 1
+hc keybind $Mod-Shift-Page_Up       spawn pin monitor 0
+hc keybind $Mod-Control-Page_Down   spawn switch monitor 1
+hc keybind $Mod-Control-Page_Up     spawn switch monitor 0
 
 # cycle frames
-hc keybind $Mod-Tab                     spawn switch frames cycle_all +1
-hc keybind $Mod-Shift-Tab               spawn switch frames cycle_all -1
-hc keybind $Mod-c                       spawn switch frames cycle +1
-hc keybind $Mod-Shift-c                 spawn switch frames cycle -1
-hc keybind $Mod-period                  spawn switch frames cycle_frame +1
-hc keybind $Mod-comma                   spawn switch frames cycle_frame -1
-hc keybind $Mod-Shift-1                 jumpto urgent
+hc keybind $Mod-Tab                 spawn switch frames cycle_all +1
+hc keybind $Mod-Shift-Tab           spawn switch frames cycle_all -1
+hc keybind $Mod-c                   spawn switch frames cycle +1
+hc keybind $Mod-Shift-c             spawn switch frames cycle -1
+hc keybind $Mod-period              spawn switch frames cycle_frame +1
+hc keybind $Mod-comma               spawn switch frames cycle_frame -1
+hc keybind $Mod-Shift-1             jumpto urgent
 
 # split frames
 # create an empty frame at the specified direction
-hc keybind $Mod-q                       remove
-hc keybind $Mod-y                       split bottom 0.5
-hc keybind $Mod-Shift-y                 split bottom 0.666666
-hc keybind $Mod-Control-y               split bottom 0.333333
-hc keybind $Mod-x                       split right  0.5
-hc keybind $Mod-Shift-x                 split right  0.666666
-hc keybind $Mod-Control-x               split right  0.333333
+hc keybind $Mod-q                   remove
+hc keybind $Mod-y                   split bottom 0.5
+hc keybind $Mod-Shift-y             split bottom 0.666666
+hc keybind $Mod-Control-y           split bottom 0.333333
+hc keybind $Mod-x                   split right  0.5
+hc keybind $Mod-Shift-x             split right  0.666666
+hc keybind $Mod-Control-x           split right  0.333333
 # let the current frame explode into subframes
-hc keybind $Mod-Control-space           spawn restore frames
-hc keybind $Mod-Shift-h                 spawn switch orientation -2
-hc keybind $Mod-h                       spawn switch orientation -1
-hc keybind $Mod-l                       spawn switch orientation +1
-hc keybind $Mod-Shift-l                 spawn switch orientation +2
+hc keybind $Mod-Control-space       spawn restore frames
+hc keybind $Mod-Shift-h             spawn switch orientation -2
+hc keybind $Mod-h                   spawn switch orientation -1
+hc keybind $Mod-l                   spawn switch orientation +1
+hc keybind $Mod-Shift-l             spawn switch orientation +2
 
 # resize frames
 resizestep=0.025
-hc keybind $Mod-Control-t               resize left  +$resizestep
-hc keybind $Mod-Control-r               resize down  +$resizestep
-hc keybind $Mod-Control-n               resize up    +$resizestep
-hc keybind $Mod-Control-s               resize right +$resizestep
-hc keybind $Mod-Control-Left            resize left  +$resizestep
-hc keybind $Mod-Control-Down            resize down  +$resizestep
-hc keybind $Mod-Control-Up              resize up    +$resizestep
-hc keybind $Mod-Control-Right           resize right +$resizestep
+hc keybind $Mod-Control-t           resize left  +$resizestep
+hc keybind $Mod-Control-r           resize down  +$resizestep
+hc keybind $Mod-Control-n           resize up    +$resizestep
+hc keybind $Mod-Control-s           resize right +$resizestep
+hc keybind $Mod-Control-Left        resize left  +$resizestep
+hc keybind $Mod-Control-Down        resize down  +$resizestep
+hc keybind $Mod-Control-Up          resize up    +$resizestep
+hc keybind $Mod-Control-Right       resize right +$resizestep
 
 # cycle through tags
-hc keybind $Mod-j                       use_index +1 --skip-visible
-hc keybind $Mod-k                       use_index -1 --skip-visible
-hc keybind $Mod-BackSpace               spawn switch tag
+hc keybind $Mod-j                   use_index +1 --skip-visible
+hc keybind $Mod-k                   use_index -1 --skip-visible
+hc keybind $Mod-BackSpace           spawn switch tag
 
 # set layout
-hc keybind $Mod-Control-0               spawn toggle monocle
-hc keybind $Mod-g                       spawn toggle layout grid
-hc keybind $Mod-l                       spawn restore layout
-hc keybind $Mod-Control-minus           spawn restore layout default
-hc keybind $Mod-Control-1               spawn restore layout max
-hc keybind $Mod-Control-2               spawn restore layout halves
-hc keybind $Mod-Control-3               spawn restore layout thirds
-hc keybind $Mod-Control-4               spawn restore layout quarters
-hc keybind $Mod-Control-5               spawn restore layout 2:3
-hc keybind $Mod-Control-6               spawn restore layout 1:2
-hc keybind $Mod-space                   spawn toggle layout max
-hc keybind $Mod-Shift-space             spawn switch layout
-hc keybind $Mod-Shift-f                 chain . floating toggle . emit_hook focus_changed
-hc keybind $Mod-f                       spawn toggle fullscreen
-hc keybind $Mod-Control-f               chain . pseudotile toggle . emit_hook focus_changed
+hc keybind $Mod-Control-0           spawn toggle monocle
+hc keybind $Mod-g                   spawn toggle layout grid
+hc keybind $Mod-l                   spawn restore layout
+hc keybind $Mod-Control-minus       spawn restore layout default
+hc keybind $Mod-Control-1           spawn restore layout max
+hc keybind $Mod-Control-2           spawn restore layout halves
+hc keybind $Mod-Control-3           spawn restore layout thirds
+hc keybind $Mod-Control-4           spawn restore layout quarters
+hc keybind $Mod-Control-5           spawn restore layout 2:3
+hc keybind $Mod-Control-6           spawn restore layout 1:2
+hc keybind $Mod-space               spawn toggle layout max
+hc keybind $Mod-Shift-space         spawn switch layout
+hc keybind $Mod-Shift-f             chain . floating toggle . emit_hook focus_changed
+hc keybind $Mod-f                   spawn toggle fullscreen
+hc keybind $Mod-Control-f           chain . pseudotile toggle . emit_hook focus_changed
 
 # hide (pseudo minimize) and restore windows
-hc keybind $Mod-m                       spawn pin ttag
-hc keybind $Mod-Control-m               spawn restore window
-hc keybind $Mod-Control-Shift-m         spawn restore windows
-hc keybind $Mod-Shift-m                 spawn restore hidden
+hc keybind $Mod-m                   spawn pin ttag
+hc keybind $Mod-Control-m           spawn restore window
+hc keybind $Mod-Control-Shift-m     spawn restore windows
+hc keybind $Mod-Shift-m             spawn restore hidden
 
 # mouse
 hc mouseunbind --all
-hc mousebind $Mod-Button1               move
-hc mousebind $Mod-Button2               zoom
-hc mousebind $Mod-Button3               resize
+hc mousebind $Mod-Button1           move
+hc mousebind $Mod-Button2           zoom
+hc mousebind $Mod-Button3           resize
 
 # vim: set ft=sh: #

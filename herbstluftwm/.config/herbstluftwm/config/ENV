@@ -18,7 +18,6 @@ export SESSION=$HOME/.session
 export UI=$HOME/.session/herbstluftwm
 export COMPTONCONF=$HOME/.compton.conf
 export CONKYRC=$HOME/.conkyrc
-beakl && export BEAKL=true
 
 echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
 
