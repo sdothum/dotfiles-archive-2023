@@ -70,8 +70,9 @@ autocmd buffer BufWinEnter * if !Protected() | set modifiable | endif
 " ................................................................ Switch buffer
 command! Enter silent! call buffer#Enter()
 
-" beakl si layout specific buffer navigation key assignments, note silent -> silent
-if !empty($BEAKL)  " see config.fish
+" beakl zi layout specific buffer navigation key assignments, note silent -> silent
+call system('beakl')
+if !v:shell_error
   " don't wait for statusline refresh to set split colors, see ui.vim s:showInfo()
   nmap <silent><Delete> :CloseDiff<CR>:silent bprevious<CR>:SplitColors<CR>
   nmap <silent><Enter>  :Enter<CR>
