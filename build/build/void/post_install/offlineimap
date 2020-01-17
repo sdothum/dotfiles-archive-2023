@@ -8,7 +8,7 @@
 # initialize keyring
 ditto "if new public key generated.."
 ditto run "pass.sh"
-ditto run "imap_pass"
-[ -d $HOME/.password-store/mail ] && imap_pass
+ditto run "imap_setring"
+[ -d $HOME/.password-store/mail ] && imap_setring
 
 # vim: set ft=sh: #
