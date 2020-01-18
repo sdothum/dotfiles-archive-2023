@@ -37,7 +37,7 @@ filter() {
 init() {
   killall offlineimap 2>/dev/null
   ifno 'delete all maildirs and reload from gmail' || {
-    sudo systemctl stop dovecot
+    service stop dovecot
     # sudo rm -r $HOME/.mutt/cache/*
     sudo rm -r $HOME/.offlineimap/*
     sudo rm -r $HOME/Maildir/*
