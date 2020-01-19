@@ -46,7 +46,7 @@ commit() {
 }
 
 pending() {
-  echo $pending | sed -r "s/' (add|remove) '/\n\1 /g; s/^(add|remove) '/\1 /; s/'$//" | while read pending ;do
+  echo $pending | sed -r "s/' (add|rm) '/\n\1 /g; s/^(add|rm) '/\1 /; s/'$//" | while read pending ;do
     ditto $(echo $pending | cut -d' ' -f1) "$(echo $pending | cut -d' ' -f2-)"
   done
   printf "commit? [Abort]/comment.. : ${__WHITE}"
