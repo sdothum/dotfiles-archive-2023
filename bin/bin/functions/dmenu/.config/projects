@@ -110,7 +110,7 @@ tarot :: $(find $STOW/tarot -name index.html)
 thedarnedestthing css :: $STOW/thedarnedestthing/thedarnedestthing.com/application/public/css/*.css $STOW/thedarnedestthing/thedarnedestthing.com/application/public/dist/*.css
 ttrss axiom :: $HOME/tt-rss/themes/axiom*.css
 ttrss linear :: $HOME/tt-rss/themes/linear*.css
-ttrss sal :: $HOME/tt-rss/themes/sal*.css
+ttrss sal :: $HOME/tt-rss/themes/sal.css $HOME/tt-rss/themes/sal_*.css
 uzbl :: $HOME/.config/uzbl/config
 vacuum :: $HOME/bin/functions/sysadmin/vacuum $HOME/bin/functions/sysadmin/.vacuum*
 vim :: $HOME/.vimrc $HOME/.vim/config/*.vim $(find $HOME/.vim/after/plugin -type f) $(find $HOME/.vim/plugged/vim-duochrome -type f) $(find $HOME/.vim/plugged/vim-heading -type f)
