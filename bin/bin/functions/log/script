@@ -6,25 +6,24 @@
 
 # .......................................................................... Log
 
-typescript=$HOME/typescript
+SESSION=$HOME/session.log
 
 # new session log
 script() {
-  ditto "saving previous to $HOME/log/typescript.log"
+  ditto "saving previous to $HOME/log/${SESSION##*/}"
   mkdir -pv $HOME/log || exit 1
-  cat $typescript >>$HOME/log/typescript.log
-  cat /dev/null >$typescript
+  mv $SESSION $HOME/log
 }
 
 # capture automated install script output
-[ -e $typescript ] && { ifno 'create fresh typescript log' || script; }
+[ -e $SESSION ] && { ifno 'create fresh session log' || script; }
 
-/usr/bin/script -a $typescript
+/usr/bin/script -a $SESSION
 
 # strip carriage returns at eol
-dos2unix -f $typescript
+dos2unix -f $SESSION
 # strip embedded carriage returns from pacman progress bar (could turn it off instead but..)
-# sed -i '/\x0d/d; /\[[^-#cC]*\] *[0-9]*%/d' $typescript
-sed -i '/\[[^-#cC]*\] *[0-9]*%/d' $typescript
+# sed -i '/\x0d/d; /\[[^-#cC]*\] *[0-9]*%/d' $SESSION
+sed -i '/\[[^-#cC]*\] *[0-9]*%/d' $SESSION
 
 # vim: set ft=sh: #

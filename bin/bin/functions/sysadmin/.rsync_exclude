@@ -19,6 +19,7 @@ IMG*
 .julia
 .kodi
 .local/share
+lost+found
 .macromedia
 .molecule
 mpv
@@ -29,10 +30,10 @@ mpv
 pkg.tar.xz
 Rawtherapee
 scratch
+session.log
 .steam*
 sync-conflict
 .stack
 .thumbnails
 tmp
-typescript
 .VirtualBox

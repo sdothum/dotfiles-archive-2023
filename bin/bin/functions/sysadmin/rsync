@@ -19,7 +19,7 @@ isopt "$1" && { option=$1; shift; } || option='-a'
 dotfiles=$(cat $(dirname $(which dotfiles))/.dotfiles:folders)
 
 # sync but..
-exclude="-r --delete --delete-excluded --exclude='lost+found' $(for i in $(cat $EXCLUDE) ;do [ -n $i ] && echo -n " --exclude='$i'" ;done)"
+# exclude="-r --delete --delete-excluded --exclude='lost+found' $(for i in $(cat $EXCLUDE) ;do [ -n $i ] && echo -n " --exclude='$i'" ;done)"
 exclude_http_local='--exclude=thedarnedestthing.db --exclude=log'
 exclude_trash='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
@@ -29,8 +29,8 @@ sudo_rsync() { eval ditto rsync \"$@\"; sudo /usr/bin/rsync --info=progress2 $op
 rsync_home() {
   # passport source directory precludes using default rsync(), see usb()
   ditto exclude "$(cat $EXCLUDE | tr '\n' ' ')"
-  eval ditto rsync \"/home/$USER $1\" 
-  /usr/bin/rsync --info=progress2 $option $exclude /home/$USER "$1"
+  eval ditto rsync \"$HOME $1\" 
+  eval /usr/bin/rsync --info=progress2 $option -r --delete --delete-excluded --exclude-from=$EXCLUDE $HOME "$1"
   # syncthing index most often corrupted
   rm -rfv "$1/$USER/.config/syncthing/index*"
 }
@@ -122,8 +122,6 @@ usb() {
     mkdir -pv $PASSPORT/media || exit 1
     rsync -r --delete /net/media/videos/series $PASSPORT/media/videos/
     rsync -r --delete /net/photos $PASSPORT/
-  elif [ -d /run/media/$USER/$2/home ] ;then
-    rsync_home /run/media/$USER/$2/home/
   else
     ditto "insert ($(hostname)/passport) usb drive"
   fi
