@@ -32,7 +32,7 @@
 }
 
 /* margin around feed..headline region */
-#headlines-frame { padding: 0 30px 30px !important; }
+#headlines-frame { padding: 0 30px 30px !important;  /* left/right font-size x 2, adjust #main-toolbar */ }
 
 img[src*='images/star.png'] {
   background: url('sal_images/Pin.png') no-repeat;

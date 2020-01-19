@@ -208,8 +208,8 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 #ttrssMain .dijitMenuItemDisabled .dijitMenuItemLabel:before { border-top: 1px solid #d58885; }
 
 #main-toolbar {
-  margin-left: 35px;
-  margin-right: 30px;
+  margin-left: 35px;   /* font-size x 2 + 5 */
+  margin-right: 30px;  /* font-size x 2 */
   padding-left: 0;
 }
 
