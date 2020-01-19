@@ -26,11 +26,6 @@
 # pandoc
 
 
-= java
-= ════
-# openjdk-jre
-
-
 = julia
 = ════
   julia
@@ -51,12 +46,6 @@
 d s perl-HTML-Strip
 
 
-= prototyping
-= ═══════════
-  ruby
-  ruby-devel  # passenger dependency
-
-
 = python
 = ══════
 # python-pip
@@ -64,6 +53,18 @@ d s perl-HTML-Strip
   python3-pip
   python-sip      # amphetype dependency
 d s python-PyQt4  # amphetype dependency
+
+
+= prototyping
+= ═══════════
+  ruby
+  ruby-devel  # passenger dependency
+
+
+= web
+= ═══
+# openjdk-jre
+  php
 
 
 = mpu programmer
