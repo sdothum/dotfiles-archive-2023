@@ -39,8 +39,18 @@ img[src*='images/star.png'] {
   opacity: 1.0;
 }
 
+/* only highlight category labels */
+span.dijitFolderOpened  + .dijitTreeLabel,
+.dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel { color: #b12525 !important; }
+
+span.dijitFolderOpened  + .dijitTreeLabel { font-weight: 500 !important; }
+
 div#dijit__TreeNode_1 span.dijitFolderOpened  + .dijitTreeLabel,
-div#dijit__TreeNode_1 span.dijitFolderClosed  + .dijitTreeLabel { letter-spacing: 1px; }
+div#dijit__TreeNode_1 span.dijitFolderClosed  + .dijitTreeLabel { 
+  color: #555 !important;
+  font-weight: 300 !important;
+  letter-spacing: 1px; 
+}
 
 /* filters usually are open, hide minimize button of feed menu title */
 div#dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0; }
@@ -64,12 +74,6 @@ div#dijit__TreeNode_2 .dijitTreeRow:hover .dijitTreeLabel,
 div#dijit__TreeNode_3 .dijitTreeRow:hover .dijitTreeLabel,
 div#dijit__TreeNode_4 .dijitTreeRow:hover .dijitTreeLabel,
 div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #282828 !important; }
-
-/* only highlight category labels */
-span.dijitFolderOpened  + .dijitTreeLabel,
-.dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel { color: #b12525 !important; }
-
-span.dijitFolderOpened  + .dijitTreeLabel { font-weight: 500 !important; }
 
 /* non-category node highlight exception for feed filters */
 div#dijit__TreeNode_2 .dijitTreeRowSelected .dijitTreeLabel,

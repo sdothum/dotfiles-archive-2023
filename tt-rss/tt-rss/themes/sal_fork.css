@@ -128,7 +128,7 @@ div#footer_splitter.dijitGutter { background-color: #fdf6e3; }
 /* un/comment to highlight open icons where applicable */
 #feeds-holder .dijitTreeRow:hover .dijitTreeExpando { opacity: .15; }
 
-#feeds-holder .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: 1.0; }  /* high contrast */
+#feeds-holder .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .65; }  /* high contrast */
 
 #feeds-holder .dijitTreeRowSelected:hover {
   border-color: #b12525;
