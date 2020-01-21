@@ -66,8 +66,10 @@ div#dijit__TreeNode_4 .dijitTreeRow:hover .dijitTreeLabel,
 div#dijit__TreeNode_7 .dijitTreeRow:hover .dijitTreeLabel { color: #282828 !important; }
 
 /* only highlight category labels */
-.dijitTreeRowSelected span.dijitFolderOpened  + .dijitTreeLabel,
+span.dijitFolderOpened  + .dijitTreeLabel,
 .dijitTreeRowSelected span.dijitFolderClosed  + .dijitTreeLabel { color: #b12525 !important; }
+
+span.dijitFolderOpened  + .dijitTreeLabel { font-weight: 500 !important; }
 
 /* non-category node highlight exception for feed filters */
 div#dijit__TreeNode_2 .dijitTreeRowSelected .dijitTreeLabel,
@@ -103,19 +105,29 @@ a.title:hover { text-decoration: underline !important; }
 
 .title { text-shadow: 0 1px 1px #fff !important; }
 
-/* maximum content width setting */
+/* content frame width */
+
+/* [> maximum content width setting <] */
+/* .postContent p, */
+/* .cdmContentInner p, */
+/* .cdm.expandable.active { max-width: 70em; } */
+/*  */
+/* #toolbar { max-width: 77em; } */
+/*  */
+/* .cdmHeader span { max-width: 62.5em; } */
+/*  */
+/* span.titleWrap { max-width: 60em; } */
+
+/* maximum content width setting, original tweak above adjusted by 5em */
 .postContent p,
 .cdmContentInner p,
-.cdm.expandable.active {
-  max-width: 100%;  /* fullscreen width */
-  max-width: 70em;
-}
+.cdm.expandable.active { max-width: 65em; }
 
-#toolbar { max-width: 77em; }
+#toolbar { max-width: 72em; }
 
-.cdmHeader span { max-width: 62.5em; }
+.cdmHeader span { max-width: 57.5em; }
 
-span.titleWrap { max-width: 60em; }
+span.titleWrap { max-width: 55em; }
 
 /* fit button bar width to above active border */
 .cdm .collapseBtn { max-width: 100%; }
