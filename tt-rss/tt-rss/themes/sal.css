@@ -111,7 +111,7 @@ a.title:hover { text-decoration: underline !important; }
 
 /* content frame width */
 
-/* [> maximum content width setting <] */
+/* maximum content width setting */
 /* .postContent p, */
 /* .cdmContentInner p, */
 /* .cdm.expandable.active { max-width: 70em; } */
@@ -122,16 +122,16 @@ a.title:hover { text-decoration: underline !important; }
 /*  */
 /* span.titleWrap { max-width: 60em; } */
 
-/* maximum content width setting, original tweak above adjusted by 5em */
+/* maximum content width setting, original tweak above adjusted by 3em */
 .postContent p,
 .cdmContentInner p,
-.cdm.expandable.active { max-width: 65em; }
+.cdm.expandable.active { max-width: 67em; }
 
-#toolbar { max-width: 72em; }
+#toolbar { max-width: 74em; }
 
-.cdmHeader span { max-width: 57.5em; }
+.cdmHeader span { max-width: 59.5em; }
 
-span.titleWrap { max-width: 55em; }
+span.titleWrap { max-width: 57em; }
 
 /* fit button bar width to above active border */
 .cdm .collapseBtn { max-width: 100%; }
