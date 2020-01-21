@@ -81,6 +81,8 @@ hc keybind $Mod-Shift-x             split right  0.666666
 hc keybind $Mod-Control-x           split right  0.333333
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space       spawn restore frames
+
+# rotate frames
 hc keybind $Mod-Shift-h             spawn switch orientation -2
 hc keybind $Mod-h                   spawn switch orientation -1
 hc keybind $Mod-l                   spawn switch orientation +1
