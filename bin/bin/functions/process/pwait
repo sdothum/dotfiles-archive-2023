@@ -12,7 +12,7 @@
 cycle=0.05  # loop window
 
 # wait for uniquely named window to process to startup
-until pgrep -avf "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done
+until pgrep -af "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done
 # wait for uniquely named window to close before proceeding
 while pgrep -af "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done
 

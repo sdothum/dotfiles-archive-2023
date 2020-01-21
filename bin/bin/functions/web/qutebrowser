@@ -6,6 +6,8 @@
 
 # ...................................................................... Browser
 
+# Usage: [RUNOPT='-s <option> <value> ..'] qutebrowser <url>
+
 QUTEBROWSER='/usr/bin/qutebrowser --target tab --override-restore'
 
 STARTPAGE=$SESSION/startpage
@@ -31,9 +33,9 @@ font="
 "
 
 if pgrep -f "$QUTEBROWSER" >/dev/null ;then
-  eval $QUTEBROWSER $font :open\\ -w\\ $startpage & 
+  eval $QUTEBROWSER $RUNOPT $font :open\\ -w\\ $startpage & 
 else
-  eval $QUTEBROWSER $font $startpage & 
+  eval $QUTEBROWSER $RUNOPT $font $startpage & 
 fi
 
 # vim: set ft=sh: #

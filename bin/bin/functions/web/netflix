@@ -7,15 +7,17 @@
 # ...................................................................... Browser
 
 BROWSER=qutebrowser
+options='-s statusbar.hide true'  # see web/qutebrowser
 NAME='Netflix.*qutebrowser'
 cycle=0.5  # time
 
 videomode on
-killall $BROWSER 2>/dev/null
+pkill -f $BROWSER 2>/dev/null
 restore layout 2:3
-$BROWSER http://www.netflix.com/ca
-pid=$(xdotool search --sync --onlyvisible --name "$NAME" getwindowpid)  # use pid to avoid intermittent xdotool BadWindow error
-while pgrep -P $pid >/dev/null ;do sleep $cycle ;done                   # separate instances of qutebrowser attach to this pid, delaying break
+RUNOPT=$options $BROWSER http://www.netflix.com/ca &
+# pid=$(xdotool search --sync --onlyvisible --name "$NAME" getwindowpid)  # use pid to avoid intermittent xdotool BadWindow error
+# while pgrep -P $pid >/dev/null ;do sleep $cycle ;done                   # separate instances of qutebrowser attach to this pid, delaying break
+pwait "$NAME"
 videomode off
 
 # vim: set ft=sh: #
