@@ -41,6 +41,7 @@
   pcre
 # pv
   ripgrep
+m shell-functools
 # shellcheck
   the_silver_searcher
 
