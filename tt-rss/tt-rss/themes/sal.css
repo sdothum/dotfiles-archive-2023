@@ -111,24 +111,20 @@ a.title:hover { text-decoration: underline !important; }
 
 /* maximum content frame width */
 
+#toolbar { max-width: 75em; }
+
 .postContent p,
 .cdmContentInner p,
 .cdm.expandable.active { max-width: 68em; }
 
-#toolbar { max-width: 75em; }
-
 .cdm.expandable:not(.active) .cdmHeader span { max-width: 60em !important; }
 
-/* fit button bar width to above active border */
-/* .cdm .collapseBtn, .cdm .collapseBtn img { max-width: 74em !important; } */
-
-/* uncomment for fullscreen width */
+/* uncomment for fullscreen width (bad form) */
 /* #toolbar, */
-/* .cdm.expandable.active, */
-/* .cdmHeader span, */
-/* .cdm .collapseBtn, */
+/* .postContent p, */
 /* .cdmContentInner p, */
-/* .postContent p { max-width: 100%; } */
+/* .cdm.expandable.active, */
+/* .cdm.expandable:not(.active) .cdmHeader span { max-width: 100% !important; } */
 
 img[src*='images/mark_unset.png'] {
   margin-left: -25px;
