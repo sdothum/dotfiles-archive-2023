@@ -20,6 +20,11 @@
   gcc
 
 
+= elixir
+= ══════
+  elixir
+
+
 = haskell
 = ═══════
 # ghc
@@ -28,7 +33,7 @@
 
 = julia
 = ════
-  julia
+# julia
 # julia-doc
 
 
