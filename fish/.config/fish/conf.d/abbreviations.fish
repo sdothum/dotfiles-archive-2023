@@ -5,11 +5,11 @@
 
 # ...................................................................... Package
 
-abbr pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
-abbr pn 'env D=N pd'
-abbr pq 'pacman -Qii'
-abbr ts "egrep -vi '%|--:--|<=>|\'.*\' -> \'.*\'|\[[ -co]*\]|/usr/|^(\+\+* |../../|/bin/| * (or)*c[cp](ld)* * | * gen * |automake: |cd | *check(ing)* |config.status: |configure.ac|configure: |copying |done |for | *from|g*cc |g-ir-scanner: |gpg: |in |installing |libtool(ize)*: |make |make\[.\] |making |mv |patching |recieving objects: |remote: |resolving deltas: |rm |tests/check|touch )' ~/typescript | less"
-abbr tse "grep '> \(ERROR\|WARNING\)' ~/session.log"
+if arch
+  abbr pkgs 'comm -23 <(pacman -Qeq | sort) <(pacman -Qgq base base-devel | sort)'
+  abbr pn 'env D=N pd'
+  abbr pq 'pacman -Qii'
+end
 
 # ...................................................................... Process
 
@@ -24,7 +24,7 @@ if void
   abbr svr  'service restart'
   abbr svs  'service status'
   abbr svu  'service up'
-  abbr svv  'service active'
+  abbr svv  'service UP'
 else
   abbr svd  'service disable'
   abbr sve  'service enable'
