@@ -8,7 +8,7 @@
 
 runit() {
   usage() {
-    echo "usage: $(basename $0) [@] | [status | disable | enable | up | down | restart | mask] <service>"
+    echo "usage: $(basename $0) [UP | [status | disable | enable | up | down | restart | mask] <service>]"
     exit 1
   }
 
@@ -19,7 +19,7 @@ runit() {
   service=$2
   case $1 in
   ''     ) ls /etc/sv; exit ;;
-  active ) ls /var/service; sudo find /etc/sv -name down; exit ;;  # active services
+  UP     ) ls /var/service; sudo find /etc/sv -name down; exit ;;  # running services
   disable) check ;;
   down   ) check ;;
   stop   ) check ;;  # alias
