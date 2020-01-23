@@ -15,7 +15,7 @@
 #feeds-holder .dijitTreeRow { margin: -4px 0 13px 5px; }
 
 #feeds-holder .dijitTreeLabel {
-  float: right;
+  float: right;  /* must disable #enable-layout-ng in google chrome for float to render properly */
   margin-left: 0;
   margin-right: 6px;
 }
@@ -63,7 +63,7 @@ div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15
 .cdm.expandable .dijitCheckBox { display: none; }
 
 /* fill any backgnoud gaps resulting from fullscreen display */
-.dijitContainer { background-color: #fdf6e3; }
+.dijitContainer { background-color: #f7f3ee; }
 
 div#dijit__TreeNode_2 .dijitTreeLabel,
 div#dijit__TreeNode_3 .dijitTreeLabel,
@@ -215,10 +215,10 @@ button.expandPrompt {
   color: white;
   content: 'sHAdoWs\A&liGHt';  /* line break */
   display: block;
-  font: 15px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
-  letter-spacing: 4px;
+  font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  letter-spacing: 3px;
   line-height: 1.2em;
-  margin-top: 30px;            /* font-size x 2 */
+  margin-top: 32px;            /* font-size x 2 */
   position: fixed;
   text-align: right;
   text-shadow: 2px 2px 4px rgba(114,24,24,1.0);
@@ -227,7 +227,7 @@ button.expandPrompt {
 }
 
 /* top of feed category selection list */
-#feeds-holder { margin-top: 90px; }  /* font-size x 6 */
+#feeds-holder { margin-top: 96px; }  /* font-size x 6 */
 
 /* end of feed marker */
 #headlines-spacer {
@@ -237,7 +237,7 @@ button.expandPrompt {
 
 #headlines-spacer:after {
   /* text-shadow: 0 1px 1px #fff; */
-  background: #fdf6e3;
+  background: #f7f3ee;
   bottom: 0;
   color: white;
   content: 'refresh ‧‧ sHAdoWs &liGHt';  /* dot bullet dot */
