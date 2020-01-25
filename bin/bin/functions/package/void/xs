@@ -6,7 +6,7 @@
 
 # ........................................................... Package management
 
-# requires xtools (written by /u/jjzmajic)
+# xbps fuzzy search with preview window
 xpkg -a | fZf -m --preview \'xq {1}\'  --preview-window=right:66%:wrap | xargs -ro xi
 
 # vim: set ft=sh: #
