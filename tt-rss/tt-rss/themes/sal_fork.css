@@ -290,7 +290,8 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 /* collapse button bar, set line height for left hand date alignment */
 .collapseBtn {
   -webkit-transition: all 0s;
-  background: rgba(177,37,37,0.1);
+  /* background: rgba(177,37,37,0.1); */
+  background: white;
   border-top: none;
   box-shadow: 3px 3px 9px rgba(177,37,37,0.3);
   line-height: 12px;
@@ -300,11 +301,14 @@ table#dijit_form_Select_1_menu .dijitMenuItemLabel:after { content: "Newest firs
 }
 
 .collapseBtn:hover { 
-  background: rgba(177,37,37,0.1);
-  box-shadow: none;
+  /* background: rgba(177,37,37,0.1); */
+  background: white;
+  /* box-shadow: none; */
+  box-shadow: -3px -3px 9px rgba(177,37,37,0.3);
 }
 
 .collapseBtn:active { 
+  /* background: white; */
   background: #f7f3ee;  /* blink */
   box-shadow: none;
 }
