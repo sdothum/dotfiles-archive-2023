@@ -105,7 +105,11 @@ div#dijit__TreeNode_6 { display: none !important; }
 
 .cdm.expandable:not(.active) .cdmHeader:hover .title { font-weight: 500; }
 
-a.title:hover { text-decoration: underline !important; }
+a.title,
+a.title:hover { 
+  min-width: 5em;  /* relaxed mouse area */
+  text-decoration: underline !important;
+}
 
 .title { text-shadow: 0 1px 1px #fff !important; }
 
