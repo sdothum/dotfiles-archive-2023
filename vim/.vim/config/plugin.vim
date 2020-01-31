@@ -34,6 +34,7 @@ Plug 'majutsushi/tagbar'               " ctags
 Plug 'lvht/tagbar-markdown'            " markdown for tagbar
 Plug 'bimlas/vim-eightheader'          " custom foldtext
 Plug 'junegunn/vim-peekaboo'           " registers
+Plug 'dstein64/vim-startuptime'        " startup stats
 
 " ....................................................................... Keymap
 " Plug 'kana/vim-arpeggio'             " key chords
