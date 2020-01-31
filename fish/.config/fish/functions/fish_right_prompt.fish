@@ -119,7 +119,7 @@ function fish_right_prompt --description 'Write out the right prompt'
           or begin
             set_color $_info
             # glyph '░' '░'
-            glyph '_' '_'
+            glyph '⇣' '_'
           end
         return (true)
       end
