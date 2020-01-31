@@ -160,17 +160,17 @@ fstab() {
 # /etc/fstab: static file system information
 #
 # <file system>  <dir>        <type>  <options>           <dump> <pass>
-LABEL=Voidlinux  /            btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=257,subvol=/__current/ROOT,subvol=__current/ROOT  0 0
+LABEL=Voidlinux  /            btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=257,subvol=/__current/ROOT  0 0
                                       
-LABEL=Voidlinux  /home        btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=258,subvol=/__current/home,subvol=__current/home  0 0
+LABEL=Voidlinux  /home        btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=258,subvol=/__current/home  0 0
                                       
-LABEL=Voidlinux  /opt         btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=259,subvol=/__current/opt,subvol=__current/opt  0 0
+LABEL=Voidlinux  /opt         btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=259,subvol=/__current/opt  0 0
                                       
-LABEL=Voidlinux  /srv         btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=260,subvol=/__current/srv,subvol=__current/srv  0 0
+LABEL=Voidlinux  /srv         btrfs   rw,nodev,noatime,ssd,discard,space_cache,autodefrag,subvolid=260,subvol=/__current/srv  0 0
                                       
-LABEL=Voidlinux  /var         btrfs   rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=261,subvol=/__current/var,subvol=__current/var  0 0
+LABEL=Voidlinux  /var         btrfs   rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=261,subvol=/__current/var  0 0
                                       
-LABEL=Voidlinux  /.snapshots  btrfs   rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=262,subvol=/__snapshot/.snapshots,subvol=__snapshot/.snapshots  0 0
+LABEL=Voidlinux  /.snapshots  btrfs   rw,nodev,noexec,noatime,ssd,discard,space_cache,autodefrag,subvolid=262,subvol=/__snapshot/.snapshots  0 0
                                       
 LABEL=Swap       none         swap    defaults  0 0
 EOF
