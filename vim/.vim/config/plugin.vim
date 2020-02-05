@@ -14,9 +14,9 @@ filetype off  " safe startup (vundle requirement)
 call plug#begin('~/.vim/plugged')
 
 " ....................................................................... System
-Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 " Plug 'tpope/vim-scriptease'          " debugger
 " Plug 'tpope/vim-dispatch'            " launch async shell command
+Plug 'dstein64/vim-startuptime'        " startup stats
 
 " User Interface _______________________________________________________________
 
@@ -34,7 +34,6 @@ Plug 'majutsushi/tagbar'               " ctags
 Plug 'lvht/tagbar-markdown'            " markdown for tagbar
 Plug 'bimlas/vim-eightheader'          " custom foldtext
 Plug 'junegunn/vim-peekaboo'           " registers
-Plug 'dstein64/vim-startuptime'        " startup stats
 
 " ....................................................................... Keymap
 " Plug 'kana/vim-arpeggio'             " key chords
@@ -107,6 +106,7 @@ Plug 'sdothum/vim-heading'             " comment heading formatter
 " ................................................................... Completion
 " Plug 'mattn/emmet-vim'               " html
 Plug 'jiangmiao/auto-pairs'            " insert/delete pairs
+Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 Plug 'Shougo/neocomplete.vim'          " required by snippets
 Plug 'Shougo/neosnippet.vim'           " snippets
 Plug 'tpope/vim-endwise'               " add 'end' statement
