@@ -35,7 +35,7 @@ usage() {
 CACHE=/var/cache/xbps
 [ $1 ] || usage
 
-bootcheck() { sudo xbps-install -S; xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; xlocate -S >/dev/null & }
+bootcheck() { sudo xbps-install -S; xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; xlocate -S >/dev/null 2>&1 & }
 
 # default (no options) to package query
 case $1 in
