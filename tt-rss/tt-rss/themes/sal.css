@@ -107,7 +107,7 @@ div#dijit__TreeNode_6 { display: none !important; }
 
 a.title,
 a.title:hover { 
-  min-width: 5em;  /* relaxed mouse area */
+  min-width: 10em;  /* relaxed mouse area */
   text-decoration: underline !important;
 }
 
@@ -131,8 +131,13 @@ a.title:hover {
 /* .cdm.expandable:not(.active) .cdmHeader span { max-width: 100% !important; } */
 
 img[src*='images/mark_unset.png'] {
-  margin-left: -25px;
-  opacity: 0 !important;
+  -ms-transform: scale(0.7, 0.7);      /* IE 9 */
+  -webkit-transform: scale(0.7, 0.7);  /* Safari */
+  background: url('sal_images/Pin.png') no-repeat !important;
+  margin-left: -23px;
+  margin-bottom: -2px; 
+  opacity: .15 !important;
+  transform: scale(0.7.0.7);
 }
 
 img[src*='images/mark_set.png'] {
@@ -151,8 +156,8 @@ img[src*='images/mark_set.png'] {
 }
 
 .Selected img[src*='images/mark_unset.png'] {
-  margin-left: -27px;
-  margin-top: -7px;
+  margin-left: -26px;
+  margin-top: -6px;
 }
 
 /* left feed / update column width*/
