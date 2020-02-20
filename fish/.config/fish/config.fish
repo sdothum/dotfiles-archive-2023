@@ -55,13 +55,6 @@ set -x SERVER luna
 
 # ..................................................................... Internet
 
-# default browser changes require login (Ctrl-d) for X11 autostart
-test (cpu) = celeron
-  and set -x BROWSER vimb
-  or  set -x BROWSER qutebrowser
-# set -x BROWSER surf
-# set -x BROWSER vimb
-
 # proxies
 # [ -z (pidof privoxy) ] ;or set -x HTTP_PROXY localhost:8118
 # [ -z (pidof squid) ] ;or set -x HTTP_PROXY http://localhost:3128/
@@ -102,7 +95,8 @@ set -x STOW $HOME/stow
 
 set -x SESSION $HOME/.session
 # proxy override
-test -e $SESSION/http_proxy ;and set -x HTTP_PROXY (cat $SESSION/http_proxy)
+test -e $SESSION/http_proxy 
+  and set -x HTTP_PROXY (cat $SESSION/http_proxy)
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
 set -x NNTPSERVER news.sunnyusenet.com
@@ -112,9 +106,25 @@ set -x SELF_URL_PATH 'http://localhost:8000/tt-rss/'
 
 # ..................................................................... Defaults
 
-test -n $HTTP_PROXY ;and set -x http_proxy $HTTP_PROXY
+test -n $HTTP_PROXY 
+  and set -x http_proxy $HTTP_PROXY
+
+# default browser changes require login (Ctrl-d) for X11 autostart
+# test (cpu) = celeron
+#   and set -x BROWSER vimb
+#   or  set -x BROWSER qutebrowser
+# set -x BROWSER surf
+# set -x BROWSER vimb
+test -n $SESSION/browser
+  and set -x BROWSER (cat $SESSION/browser) 
+test -z $BROWSER
+  and set -x BROWSER qutebrowser
 
 console_login
 user_login
 # clear 'fish' tmux window name
-pidof tmux >/dev/null ;and begin console ;or tmux rename-window '' ;end
+pidof tmux >/dev/null 
+  and begin 
+    console 
+      or tmux rename-window '' 
+  end
