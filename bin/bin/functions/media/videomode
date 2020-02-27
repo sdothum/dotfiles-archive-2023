@@ -17,7 +17,8 @@ on ) [ -e $DYNAMIC ] && { rm $DYNAMIC; touch $V_DYNAMIC; }
      rm -f $MENU
      [ -e $SCOMPTON:toggle ] && touch $NCURSES
      conky clock stop
-     [ -e $BLACKBOARD ] || blackboard ;;  # bypass blackboard toggling if already on
+     [ -e $BLACKBOARD ] || blackboard  # bypass blackboard toggling if already on
+     pulse ;;                          # check hdmi audio
 
 off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC; rm $V_DYNAMIC; }
      [ -e $V_NCURSES ] || rm -f $NCURSES

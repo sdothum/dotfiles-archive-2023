@@ -10,6 +10,7 @@
 # Note:  includes special handling for "term WAIT <command>", see term
 
 cycle=0.05  # loop window
+[ $(pgrep -af "pwait.*$@" | wc -l) -gt 2 ] && exit
 
 # wait for uniquely named window to process to startup
 until pgrep -af "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done
