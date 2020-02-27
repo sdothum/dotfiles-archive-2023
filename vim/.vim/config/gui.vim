@@ -65,13 +65,17 @@ nmap <silent><leader><Space> :ToggleWhiteSpace<CR>
 " Search _______________________________________________________________________
 
 " ........................................................... Incremental search
-set incsearch  " find the next match as we type the search
+set incsearch            " find the next match as we type the search
 
 command! ToggleWrapSearch call gui#ToggleWrapSearch()
 
-nmap     <silent><F6>  :ToggleWrapSearch<CR>
+nmap     <silent><F6>   :ToggleWrapSearch<CR>
+
 " fuzzy search
-cnoremap <expr><space> '/?' =~ getcmdtype() ? '.*' : '<Space>'
+let g:search_expand = 1  " /space (0) <Space> (1) .*
+nmap     <silent><C-F6> :let g:search_expand = !g:search_expand<CR>
+
+cnoremap <expr><space>  '/?' =~ getcmdtype() && g:search_expand ? '.*' : '<Space>'
 
 " ........................................................... Search and replace
 " toggle magic and case sensitivity, \m to append magic tokens

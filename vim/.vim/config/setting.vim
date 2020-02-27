@@ -81,17 +81,17 @@ autocmd plugin FileType fish
 
 " .......................................................................... Fzf
 " 'border' defines border around notational-fzf preview window
-" { 'fg' : ['fg', 'Normal'], 'bg' : ['bg', 'Normal'] } cause a bg tint (..?)
+" fzf opens term window using ctermbg color, hence, slight tint mismatch with vim vindows
 let g:fzf_colors =
   \{
-  \  'fg'      : ['bg', 'Ignore'    ]
-  \, 'bg'      : ['bg', 'Ignore'    ]
+  \  'fg'      : ['fg', 'Normal'    ]
+  \, 'bg'      : ['bg', 'fzf_bg'    ]
   \, 'hl'      : ['fg', 'Error'     ]
   \, 'fg+'     : ['fg', 'Statement' ]
-  \, 'bg+'     : ['bg', 'Normal'    ]
+  \, 'bg+'     : ['bg', 'fzf_bg'    ]
   \, 'hl+'     : ['fg', 'Error'     ]
-  \, 'border'  : ['fg', 'Ignore'    ]
-  \, 'gutter'  : ['bg', 'Normal'    ]
+  \, 'border'  : ['fg', 'fzf_bg'    ]
+  \, 'gutter'  : ['bg', 'fzf_bg'    ]
   \, 'header'  : ['fg', 'Normal'    ]
   \, 'info'    : ['fg', 'Error'     ]
   \, 'marker'  : ['fg', 'Error'     ]
