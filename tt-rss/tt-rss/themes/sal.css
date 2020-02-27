@@ -226,7 +226,7 @@ button.expandPrompt {
   display: block;
   font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
   letter-spacing: 3px;
-  line-height: 1.2em;
+  line-height: 1.35em;
   margin-top: 32px;            /* font-size x 2 */
   position: fixed;
   text-align: right;
