@@ -7,7 +7,7 @@
 # ................................................................ Media session
 
 usage() { echo "usage: $(basename $0) on | off"; exit 1; }
-
+set -x
 V_DYNAMIC=/tmp/$(basename $0):dynamic
 V_NCURSES=/tmp/$(basename $0):ncurses
 
@@ -23,9 +23,9 @@ on ) [ -e $DYNAMIC ] && { rm $DYNAMIC; touch $V_DYNAMIC; }
 off) [ -e $V_DYNAMIC ] && { touch $DYNAMIC; rm $V_DYNAMIC; }
      [ -e $V_NCURSES ] || rm -f $NCURSES
      conky clock auto
-     # refresh panel title on close
-     focus window
-     pstat 'dmenu (media|movies|series)' || restore root ;;
+     focus window                      # refresh panel title on close
+     pstat 'dmenu (media|movies|series)' || restore root
+     xdotool key Ctrl+space ;;         # clear potential pulse message
 
 *  ) usage ;;
 esac

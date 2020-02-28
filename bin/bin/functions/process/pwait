@@ -8,13 +8,15 @@
 
 # Usage: pwait "<pattern>"
 # Note:  includes special handling for "term WAIT <command>", see term
+#        (editting this script does not trigger v'im mercurial update)
 
 cycle=0.05  # loop window
-[ $(pgrep -af "pwait.*$@" | wc -l) -gt 2 ] && exit
+[ $(pgrep -af "pwait.*$@" | wc -l) -gt 2 ] && exit  # don't instantiate duplicate applications
 
+# Note: must filter complete script path
 # wait for uniquely named window to process to startup
-until pgrep -af "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done
+until pgrep -af "$@" | egrep -qv "$0|/term " ;do sleep $cycle ;done
 # wait for uniquely named window to close before proceeding
-while pgrep -af "$@" | egrep -qv 'pwait|/term ' ;do sleep $cycle ;done
+while pgrep -af "$@" | egrep -qv "$0|/term " ;do sleep $cycle ;done
 
 # vim: set ft=sh: #

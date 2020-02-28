@@ -110,7 +110,7 @@ for i in $@ ;do
   [ $list ] || subject $(basename $i | cut -d- -f2-9)
 
   # preserve stdin fd for package manager prompts
-  # note: (action package) map to (package condition) for default noconfirm install
+  # Note: (action package) map to (package condition) for default noconfirm install
   #       (package condition) map to (command options) for ! execute
   while read action package condition <&3 ;do
     # echo "action=$action package=$package condition=$condition"

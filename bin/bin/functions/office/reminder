@@ -19,7 +19,7 @@ list() {
 
 reminders() {
   cp $REMINDERS $HOME/tmp
-  # note: cannot substitute $@ in date --date
+  # Note: cannot substitute $@ in date --date
   day=$@
   date --date "$day" >/dev/null 2>&1 || day=tomorrow
   echo $day | egrep -q ':|[ap]m' && M=%M || M=00

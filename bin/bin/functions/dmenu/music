@@ -66,8 +66,8 @@ controls () { echo "toggle $(status '\[playing\]')\nnext^$(next)\nrewind^▷ $(c
 
 # outer loop by library listing
 mpc list artist >/dev/null 2>&1 || exit
-# player controls on entry, note: cannot compare to null string
-[ "$(current)" != '' ] && artist="$PLAYER"
+# player controls on entry
+[ "$(current)" != '' ] && artist="$PLAYER"  # cannot compare to null string
 while : ;do
   [ "$artist" = "$PLAYER" ] || artist=$(artists | rmenu 'Artist' "$artist" -no-custom) || exit
   if [ "$artist" = "$PLAYER" ] ;then
