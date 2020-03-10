@@ -23,7 +23,7 @@ dotfiles=$(cat $(dirname $(which dotfiles))/.dotfiles:folders)
 exclude_http_local='--exclude=thedarnedestthing.db --exclude=log'
 exclude_trash='--exclude=Trash --exclude=Logs --exclude="*.corrupted" --exclude=sync-conflict'
 
-rsync()      { eval ditto rsync \"$@\"; /usr/bin/rsync --info=progress2 $option --exclude='lost+found' $@; }
+rsync()      { eval ditto rsync \"$@\"; /usr/bin/rsync --info=progress2 $option --exclude='lost+found' "$@"; }
 sudo_rsync() { eval ditto rsync \"$@\"; sudo /usr/bin/rsync --info=progress2 $option --exclude='lost+found' $@; }
 
 rsync_home() {
@@ -103,11 +103,11 @@ stow() {
     ifno "update stow to $SERVER" || rsync --exclude=.SyncArchive $STOW $USER@$SERVER:$HOME/
   fi
 }
-
+set -x
 usb() {
   [ -d /run/media/$USER/Repo/home ] && USB=/run/media/$USER/Repo/home
   [ -d /run/media/$USER/$(hostname)/home ] && USB=/run/media/$USER/$(hostname)/home
-  [ -d /run/media/$USER/My\ Passport/home ] && USB=/run/media/$USER/My\ Passport/home
+  # [ -d /run/media/$USER/My\ Passport/home ] && USB=/run/media/$USER/My\ Passport/home
   if [ -d "$USB" ] ;then
     rsync_home "$USB/"
     # rsync -r --delete $HOME/bin/functions/log "$USB/$USER/bin/functions/"
@@ -119,9 +119,9 @@ usb() {
     rsync $HOME/.password-store /media/home/$USER/
   elif [ -d /run/media/$USER/My\ Passport ] ;then
     PASSPORT=/run/media/$USER/My\ Passport
-    mkdir -pv $PASSPORT/media || exit 1
-    rsync -r --delete /net/media/videos/series $PASSPORT/media/videos/
-    rsync -r --delete /net/photos $PASSPORT/
+    mkdir -pv "$PASSPORT/media" || exit 1
+    # rsync -r --delete /net/media/videos/series "$PASSPORT/media/videos/"
+    rsync -r --delete /net/photos "$PASSPORT/"
   else
     ditto "insert ($(hostname)/passport) usb drive"
   fi

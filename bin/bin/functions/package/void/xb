@@ -83,7 +83,7 @@ requiredby) xbps-query -X $package ;;
 search    ) xbps-query -Rs $options $package | a $package ;;
 sync      ) sudo xbps-install $yes $options $package ;;
 update    ) sudo xbps-install $yes $options -u $package ;;
-upgrade   ) sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || sudo reboot; } ;;
+upgrade   ) sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || sudo reboot; } ;;
 unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 

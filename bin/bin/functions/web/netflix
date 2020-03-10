@@ -6,19 +6,28 @@
 
 # ...................................................................... Browser
 
-BROWSER=qutebrowser
+BROWSER=chromium
 options='-s statusbar.hide true'  # see web/qutebrowser
-NAME='http://www.netflix.com/ca'
-cycle=0.5  # time
+NETFLIX='http://www.netflix.com/ca'
+delay=0.1  # time
 
-videomode on
 pkill -f $BROWSER 2>/dev/null
+videomode on
 restore layout 2:3
 
-RUNOPT=$options $BROWSER http://www.netflix.com/ca &
-# pid=$(xdotool search --sync --onlyvisible --name "$NAME" getwindowpid)  # use pid to avoid intermittent xdotool BadWindow error
-# while pgrep -P $pid >/dev/null ;do sleep $cycle ;done                   # separate instances of qutebrowser attach to this pid, delaying break
-pwait "$NAME"
+RUNOPT=$options $BROWSER $NETFLIX &
+if [ $BROWSER = chromium ] ;then
+  xdotool search --sync --onlyvisible --name 'Chromium'
+  # set right full "window"
+  xdotool key Alt+Shift+s
+  sleep $delay
+  xdotool key F11
+  sleep $delay
+  # xdotool key Alt+f
+  # sleep $delay
+  xdotool key Alt+space
+fi
+pwait "$NETFLIX"
 
 videomode off
 
