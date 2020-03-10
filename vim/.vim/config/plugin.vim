@@ -49,6 +49,7 @@ Plug 'romainl/vim-cool'                " dynamic search highlighting
 Plug 'itchyny/vim-cursorword'          " word highlighting
 Plug 'nathanaelkane/vim-indent-guides' " colourized indent columns
 Plug 'plasticboy/vim-markdown'         " concealed markdown
+Plug 'andymass/vim-matchup'            " match navigation
 Plug 'sheerun/vim-polyglot'            " multilingual highlighting
 Plug 'machakann/vim-highlightedyank'   " yank highlghting
 

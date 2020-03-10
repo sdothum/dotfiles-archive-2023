@@ -158,6 +158,11 @@ imap <silent><S-F6> <C-o>:silent call <SID>toggleSpell()<CR>
 
 autocmd plugin FileType mail,markdown call litecorrect#init()
 
+" ...................................................................... Matchup
+
+let g:matchup_matchparen_deferred           = 1
+let g:matchup_matchparen_hi_surround_always = 1
+
 " ................................................................ Narrow region
 let g:nrrw_rgn_vert          = 0   " open in horizontal split buffer
 let g:nrrw_topbot_leftright  = 'botright'
