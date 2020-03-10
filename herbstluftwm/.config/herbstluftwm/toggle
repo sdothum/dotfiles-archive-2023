@@ -48,7 +48,7 @@ toggle_term() {
 toggle_app() {
   # handle rox filer binary name
   [ $msg = rox ] && app=ROX-Filer
-  if pgrep -lf ${app:-$msg} | grep -qv toggle ;then
+  if pgrep -lf ${app:-$msg} | grep -qv $0 ;then
     case $msg in
     xpad    ) xpad --quit;      exit ;;  # xpad multiple windows shortcut
     decorate) killall decorate; exit ;;
