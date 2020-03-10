@@ -28,7 +28,7 @@
 // language tap dance operators
 #define HASKELL
 #define UNIX
-#define EMOJI
+// #define EMOJI
 
 // test all keyswitches
 // #define TEST
