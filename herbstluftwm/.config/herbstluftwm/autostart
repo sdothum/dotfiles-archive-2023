@@ -64,6 +64,7 @@ done
 
 # appropriately wild herbstluftwm background color! see .xinitrc
 restore root
+toggle compton on
 
 # initialize tag layouts
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
