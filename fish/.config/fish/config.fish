@@ -9,7 +9,7 @@
 set fish_greeting
 
 # only shells with vi mode accepted here!
-# fish_vi_key_bindings ^/dev/null  # suppress fish_vi_key_bindings eval error!!
+# fish_vi_key_bindings >/dev/null  # suppress fish_vi_key_bindings eval error!!
 fish_vi_key_bindings
 
 # fuzzy searches
@@ -25,9 +25,9 @@ set -x KEYTIMEOUT 1
 
 # paths
 set -x CACHEDIR $HOME/.cache
-set -x CDPATH . .. ../.. ~ ~/.config ~/build ~/stow /usr / ^/dev/null
+set -x CDPATH . .. ../.. ~ ~/.config ~/build ~/stow /usr / >/dev/null
 echo $PATH | grep -q "$HOME/.gem/ruby/(rubyver)/bin"
-  or set -x PATH $PATH ~/.gem/ruby/(rubyver)/bin ~/.cabal/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games ^/dev/null
+  or set -x PATH $PATH ~/.gem/ruby/(rubyver)/bin ~/.cabal/bin /bin /sbin /usr/sbin /usr/bin/core_perl /usr/local/games >/dev/null
 
 # ........................................................... System environment
 
@@ -116,7 +116,7 @@ test -n $HTTP_PROXY
 # set -x BROWSER surf
 # set -x BROWSER vimb
 test -n $SESSION/browser
-  and set -x BROWSER (cat $SESSION/browser) 
+  and set -x BROWSER (cat $SESSION/browser 2>/dev/null)
 test -z $BROWSER
   and set -x BROWSER qutebrowser
 
