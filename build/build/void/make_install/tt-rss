@@ -11,9 +11,13 @@ POSTGRES=/srv/http/postgres
 
 cd /net/depot
 if [ ! -d tt-rss ] ;then
-  git clone https://git.tt-rss.org/fox/tt-rss.git
-  cd tt-rss
-  git checkout $COMMIT
+  if [ $COMMIT ] ;then
+    git clone https://git.tt-rss.org/fox/tt-rss.git
+    cd tt-rss
+    git checkout $COMMIT
+  else
+    git clone --depth 1 https://git.tt-rss.org/fox/tt-rss.git
+  fi
 fi
 
 if [ ! -d $TTRSS ] ;then
