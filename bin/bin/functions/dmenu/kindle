@@ -5,7 +5,7 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu kindle [default | noindent | justify | all] <file>, see dmenu ebooks
+# Usage: dmenu kindle [default | epub | noindent | justify | all] <file>, see dmenu ebooks
 #
 # Note: Embed font to override possible ebook embedded font
 #       Use a unique font (remove all but regular font face for minimal file size) e.g. barcodes are small
@@ -17,10 +17,11 @@ kindle=/run/media/$USER/Kindle
 kindle=$kindle/documents/
 
 case $1 in
-default ) option=default;  shift ;;
-noindent) option=noindent; shift ;;
-just*   ) option=justify;  shift ;;
-all     ) option=all;      shift ;;
+default ) option=default;              shift ;;
+epub    ) option=default; format=epub; shift ;;  # epub output hack
+noindent) option=noindent;             shift ;;
+just*   ) option=justify;              shift ;;
+all     ) option=all;                  shift ;;
 esac
 
 # embed smallest fontset possible, see notes above
@@ -68,7 +69,7 @@ END
 
 # ...................................................................... Convert
 
-[ -d $kindle ] && format=azw3 || format=mobi
+[ -d $kindle ] && format=azw3 || format=${format:-mobi}
 find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
 notify low "$title" "Converting to $format.."
 # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
@@ -100,15 +101,17 @@ if [ -d $kindle ] ;then
   find /tmp -maxdepth 1 -name "*$format" -exec rm -rf "$kindle${file% - *}*.sdr" \; -exec mv -f "{}" $kindle \;
   notify low "$title" "$kindle"
   sync
-else
+elif [ $format = mobi ] ;then
   mobi=$(find /tmp -maxdepth 1 -name "*$format")
   address=$(echo | mhistory kindle | rmenu 'Address <@kindle.com>') || break
-  echo "$address" | grep -q '@' || address=$address@kindle.com
+  echo "$address" | grep -q '@' || address=${address}@kindle.com
   mhistory kindle $address
   account=$(grep $USER /etc/aliases | cut -d' ' -f2)
   boundary="=-=-=-=-=-=-=-=-=-=$(od -An -N9 -i /dev/random | sed 's/ //g' | cut -b1-19)=-="
   email | /usr/local/bin/msmtp-enqueue.sh -t &
   notify low "$title" "$address"
+else
+  ditto epub "$(find /tmp -maxdepth 1 -name "*$format")"
 fi
 
 # vim: set ft=sh: #

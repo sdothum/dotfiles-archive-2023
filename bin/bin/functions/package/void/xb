@@ -22,20 +22,21 @@ usage() {
   echo "        H    held (list)"
   echo "        S .. installed (count)"
   echo "        U    upgrade system"
-  echo "    .. $(basename $0) [/ | f** | d | r | l] [<package> | <file>**]"
+  echo "    .. $(basename $0) [/ | f** | d | r | h] [<package> | <file>**]"
   echo "        / .. search (package and description)"
   echo "        f .. find (file)"
   echo "        d .. dependencies"
   echo "        r .. required by"
-  echo "        l .. log"
+  echo "        h .. history"
   echo "          .. query"
   exit 1
 }
 
 CACHE=/var/cache/xbps
 [ $1 ] || usage
+delay=5  # reboot delay window
 
-bootcheck() { sudo xbps-install -S; xbps-install -un | grep -q '^linux-[0-9]' && kernel=true; xlocate -S >/dev/null 2>&1 & }
+bootcheck() { sudo xbps-install -S; xbps-install -un | grep -q '^linux[0-9]' && kernel=true; xlocate -S >/dev/null 2>&1 & }
 
 # default (no options) to package query
 case $1 in
@@ -52,14 +53,14 @@ case $1 in
 f ) action=file ;;
 d ) action=dependency ;;
 r ) action=requiredby ;;
-l ) action=log ;;
+h ) action=history ;;
 * ) action=query; set -- 0 $@ ;;  # preserve argv stack
 esac
 
 shift; [ $1 ] || case $action in
 held     ) ;;
+history  ) ;;
 installed) ;;
-log      ) ;;
 upgrade  ) ;;
 *        ) usage ;;
 esac
@@ -69,21 +70,24 @@ package=${options##* }
 options=${options% *}
 [ $action = file ] || { [ $package ] && pkgver=$(xbps-query -S $package | grep pkgver | cut -d' ' -f2); }
 
+delay_boot() { ditto reboot "in $delay seconds.."; (sleep $delay; sudo reboot) & }
+
 case $action in
 dependency) xbps-query -x $package ;;
-downgrade ) sudo xdowngrade $CACHE/$package ;;
+downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
+history   ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
-log       ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove    ) sudo xbps-remove $recursive $options $package ;;
 requiredby) xbps-query -X $package ;;
 search    ) xbps-query -Rs $options $package | a $package ;;
 sync      ) sudo xbps-install $yes $options $package ;;
 update    ) sudo xbps-install $yes $options -u $package ;;
-upgrade   ) sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || sudo reboot; } ;;
+upgrade   ) echo "kernel=$kernel"; sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || delay_boot; } ;;
+# upgrade   ) sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || delay_boot; } ;;
 unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 

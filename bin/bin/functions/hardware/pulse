@@ -6,22 +6,8 @@
 
 # ........................................................................ Audio
 
-# import user path
-. $HOME/bin/functions/shell/user_path
-
-hdmi() { pacmd list-sinks | grep -q hdmi; }
-
-pulse() {
-  hdmi && exit
-  trace "HDMI connection lost: killing $@"
-  pkill -f "$@"
-  service restart alsa
-  pulseaudio -k
-}
-
 # restore audio device
-pulse '(youtube|vimeo|netflix|mpv|omxplayer|pavucontrol|(libexec|bin)/pulse)'
-pulse '(chromium|firefox|QtWebEngineProcess|qutebrowser|surf|vimb'
-hdmi || notify X 'Pulseaudio restored..' 'Check pavucontrol'
+killall pulseaudio 2>/dev/null
+pulseaudio --start --log-target=syslog
 
 # vim: set ft=sh: #

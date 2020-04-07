@@ -103,7 +103,7 @@ stow() {
     ifno "update stow to $SERVER" || rsync --exclude=.SyncArchive $STOW $USER@$SERVER:$HOME/
   fi
 }
-set -x
+
 usb() {
   [ -d /run/media/$USER/Repo/home ] && USB=/run/media/$USER/Repo/home
   [ -d /run/media/$USER/$(hostname)/home ] && USB=/run/media/$USER/$(hostname)/home

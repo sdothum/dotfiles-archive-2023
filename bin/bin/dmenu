@@ -57,7 +57,7 @@ if [ $(basename $0) = dmenu ] ;then
   [ "$1" = '-' ] && { unset TERMINAL; shift; }
   msg=$1
   # unhide desktop
-  is multihead || conky clock off
+  console || { is multihead || conky clock off; }
   if [ -f ${0%/dmenu}/functions/dmenu/$msg ] ;then
     case $msg in
     media     |\

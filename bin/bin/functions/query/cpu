@@ -11,7 +11,7 @@ usage() { echo "usage: $(basename $0) [i7 | celeron | atom | arm]"; exit 1; }
 # usage: processor <name> <field> <delimeter>
 processor() {
   [ "$(cat /proc/cpuinfo | grep 'model name' | sed 's/model name.*: //' | uniq | cut -d' ' -f$2 | cut -d$3 -f1)" = $1 ] || return
-  echo $1 | lowercase
+  echo "$1" | lowercase
   exit
 }
 
@@ -24,7 +24,7 @@ case $1 in
 i7       |\
 arm      |\
 atom     |\
-celeron) [ $(cpu) = $1 ] ;;
+celeron) [ "$(cpu)" = $1 ] ;;
 
 *      ) usage ;;
 esac

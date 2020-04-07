@@ -12,6 +12,7 @@ NETFLIX='http://www.netflix.com/ca'
 delay=0.1  # time
 
 pkill -f $BROWSER 2>/dev/null
+void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
 videomode on
 restore layout 2:3
 
