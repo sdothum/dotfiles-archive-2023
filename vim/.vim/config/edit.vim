@@ -110,9 +110,13 @@ nnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>
 vnoremap <leader><Left>  :s/^ //<CR>:silent nohlsearch<CR>gv
 vnoremap <leader><Right> :s/^/ /<CR>:silent nohlsearch<CR>gv
 
-" move visual block with automatic alignment!
-vnoremap L :m '<-2<CR>gv=gv
-vnoremap N :m '>+1<CR>gv=gv
+" move visual block down/up with automatic alignment!
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " ................................................................ Shift up down
 command! MoveLineUp     silent! call edit#MoveLineUp()
