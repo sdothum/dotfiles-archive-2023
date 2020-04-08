@@ -11,7 +11,7 @@
 CONFIG=$HOME/.config/vimb
 STARTPAGE=$SESSION/startpage
 
-[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/#f=54&c=1'; }
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/'; }
 
 common='bookmark cookies history style.css'
 font=Iosevka
@@ -29,6 +29,7 @@ config() {
 }
 
 [ "$1" = config ] && { config; exit; }
+void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
 [ -e $HOSTCONF  ] && grep -q "^set .*;font:$size $font;" $HOSTCONF && { (/usr/bin/vimb -p $host "$startpage" 2>>/tmp/vimb.log &); exit; }
 [ $size = 10pt  ] && { (/usr/bin/vimb "$startpage" 2>>/tmp/vimb.log &); exit; }
 
