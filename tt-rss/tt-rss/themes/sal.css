@@ -11,6 +11,14 @@
 
 /* STYLING ******************************************************************/
 
+img.loadingNode { display: none; }
+
+#feeds-holder {
+  /* margin-right: -15px; */
+  margin-left: -15px;
+  width: 145px !important;  /* adjust #ttrssMain:width */
+}
+
 /* top (adjust topmost label) right bottom left (gap to edge) */
 #feeds-holder .dijitTreeRow { margin: -4px 0 13px 5px; }
 
@@ -23,12 +31,6 @@
 #feeds-holder #feedTree {
   padding-top: 0;
   width: 145px;  /* adjust #ttrssMain:width */
-}
-
-#feeds-holder {
-  /* margin-right: -15px; */
-  margin-left: -15px;
-  width: 145px !important;  /* adjust #ttrssMain:width */
 }
 
 /* margin around feed..headline region */
