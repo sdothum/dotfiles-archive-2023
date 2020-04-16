@@ -5,6 +5,8 @@
 
 # ....................................................................... tt-rss
 
+exit  # testing new tt-rss
+
 TTRSS=/srv/http/tt-rss
 THEMES=$TTRSS/themes
 FUNCTIONS=$TTRSS/include/functions.php

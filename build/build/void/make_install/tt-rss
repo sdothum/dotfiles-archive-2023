@@ -5,7 +5,7 @@
 
 # ....................................................................... tt-rss
 
-COMMIT=467bc4fe0  # version 17.4 (theme dependency)
+# COMMIT=467bc4fe0  # version 17.4 (theme dependency)
 TTRSS=/srv/http/tt-rss
 POSTGRES=/srv/http/postgres
 
@@ -23,7 +23,7 @@ fi
 if [ ! -d $TTRSS ] ;then
   sudo mkdir -pv $TTRSS
   sudo chown $USER:users $TTRSS
-  rsync --exclude='.git*' /net/depot/tt-rss ${TTRSS%/*}/
+  rsync --exclude='.git*' /net/depot/tt-rss/ $TTRSS
 fi
 
 chmod -R 777 $TTRSS/cache/images

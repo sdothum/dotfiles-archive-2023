@@ -33,14 +33,14 @@ d m sonarr [server]
 # surfraw
 
 
-= tt-rss
+ tt-rss
 = ══════
 # pgadmin3          [server || test -d /srv/http/tt-rss]
   postgresql        [server || test -d /srv/http/tt-rss]
   postgresql-client [server || test -d /srv/http/tt-rss]
   php-fpm           [server || test -d /srv/http/tt-rss]
 # php-gd            [server || test -d /srv/http/tt-rss]
-# php-intl          [server || test -d /srv/http/tt-rss]
+  php-intl          [server || test -d /srv/http/tt-rss]
   php-pgsql         [server || test -d /srv/http/tt-rss]
 d m tt-rss          [server || test -d /srv/http/tt-rss]
 
