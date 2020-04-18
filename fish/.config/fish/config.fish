@@ -118,7 +118,7 @@ test -n $HTTP_PROXY
 test -n $SESSION/browser
   and set -x BROWSER (cat $SESSION/browser 2>/dev/null)
 test -z $BROWSER
-  and set -x BROWSER vimb
+  and set -x BROWSER qutebrowser
 
 console_login
 user_login
