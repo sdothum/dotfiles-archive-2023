@@ -39,7 +39,7 @@ div#dijit__TreeNode_6 { display: none !important; }
 
 .dijitTreeRow:hover span.dijitTreeLabel { color: #000000 !important; }
 
-span.counterNode { color: #b12525 !important; font-size: 12px !important; padding-left: 12px; margin-right: 5px !important; }
+span.counterNode { color: #b12525 !important; font-size: 12px !important; padding-left: 8px; margin-right: 5px !important; min-width: 5px !important; }
 
 .dijitTreeRowSelected span.dijitTreeLabel { font-weight: 500 !important; color: #b12525; }
 
