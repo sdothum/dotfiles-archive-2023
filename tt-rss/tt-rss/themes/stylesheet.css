@@ -2,9 +2,11 @@
 
 shadows and light skin for tt-rss feedly theme
 
-paste this stylesheet into tt-rss preferences / theme "customize"
-select "feedly-sepia.css" theme
-set "combined mode"
+paste this stylesheet into tt-rss preferences "theme:" "customize"
+select "theme:" "feedly-sepia.css"
+set "combined mode:"
+
+optimized for "Jost*" and "Roboto" fonts
 
 */
 
@@ -13,7 +15,7 @@ set "combined mode"
 
 .dijitSplitter { background-color: #fdf7e7 !important; }
 
-.ttrss_main { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
+.ttrss_index { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
 
 .dijitTreeContainer { background-color: #fdf7e7 !important; }
 
@@ -46,11 +48,11 @@ div#dijit__TreeNode_6 { display: none !important; }
 
 .ttrss_index span.dijitTreeLabel { float: right; font-weight: 400 !important; margin: 0 6px 0 0 !important; }
 
-span.counterNode { color: rgba(177,37,37,0.85) !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
+span.counterNode { color: rgba(177,37,37,0.6) !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
 
-.dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525; }
+.dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525 !important; }
 
-.dijitTreeRowSelected { border-color: #b12525 !important; background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-style: solid !important; border-width: 0 0 1px !important; box-shadow: none !important; }
+.dijitTreeRowSelected { background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 0 0 1px !important; box-shadow: none !important; }
 
 .dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,0.04) !important; }
 
@@ -86,6 +88,8 @@ img.icon { display: none !important; }
 
 i.icon-no-feed.material-icons { display: none !important; }
 
+#headlines-spacer { display: none; }
+
 /* feed source / time */
 .feed { max-width: 90px !important; margin-left: 20px !important; }
 
@@ -93,10 +97,10 @@ i.icon-no-feed.material-icons { display: none !important; }
 
 span.updated { font-size: 10px !important; margin-right: 6px !important; }
 
-/* double line content display for overflow segments */
+/* separate titlewrap segments into individual (2) overflow lines */
 .titleWrap { white-space: normal !important; }
 
-/* feed headline */
+/* headline summary */
 a.title { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; font-weight: 500 !important; }
 
 .Unread a.title { color: rgba(0,0,0,0.85) !important; }
@@ -107,10 +111,12 @@ span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetic
 
 .Unread span.excerpt { color: rgba(0,0,0,0.75) !important; }
 
-/* expanded feed item */
-.collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; }
+/* expanded content */
+.collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 1px 0 0 !important; }
 
-.collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; }
+.collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; border-color: transparent !important; }
+
+.collapse:hover:active .material-icons { background-color: transparent !important; }
 
 .active .title { font-size: 20px !important; }
 
@@ -122,14 +128,12 @@ span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetic
 
 .content-inner td { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border-color: transparent !important; }
 
-/* feed item footer */
+/* expanded footer */
 .ttrss_index span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; padding: 0 !important; background-color: transparent !important; border-color: transparent !important; color: rgba(0,0,0,0.45) !important; }
 
 .footer .left { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-#headlines-spacer { display: none; }
-
-/* dynamic filter icons */
+/* popup filter icons */
 .material-icons.icon-score { display: none !important; }
 
 .pub-pic.material-icons { display: none !important; }
@@ -159,4 +163,3 @@ span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetic
 .dijitMenuItemDisabled .dijitMenuItemLabel { background-color: transparent !important; }
 
 .dijitMenuItemDisabled .dijitMenuItemLabel:hover { background-color: #fdf7e7 !important; color: rgb(46,153,209) !important; }
-
