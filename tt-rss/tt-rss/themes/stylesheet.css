@@ -2,8 +2,9 @@
 
 shadows and light skin for tt-rss feedly theme
 
-copy into tt-rss preferences "customize" theme
+paste this stylesheet into tt-rss preferences / theme "customize"
 select "feedly-sepia.css" theme
+set "combined mode"
 
 */
 
@@ -36,6 +37,8 @@ div#dijit__TreeNode_6 { display: none !important; }
 
 /* feed category */
 .dijitTreeRow { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; border-style: solid !important; border-width: 0 0 1px !important; }
+
+.dijitTreeRowHover { background-color: rgba(177,37,37,0.04) !important; }
 
 .dijitTreeExpando { margin-left: -2px !important; opacity: 0 !important; }
 
@@ -71,6 +74,8 @@ span#feed_title { color: #b12525 !important; font-size: 16px !important; font-we
 .action-button { margin-right: -7px !important; }
 
 /* feed list */
+.header:hover { background-color: rgba(177,37,37,0.04) !important; }
+
 #headlines-frame { padding-top: 0 !important; padding-left: 6px !important; padding-right: 28px !important; }
 
 .cdm { border: none !important; }
@@ -79,10 +84,15 @@ img.icon { display: none !important; }
 
 i.icon-no-feed.material-icons { display: none !important; }
 
-/* feed source */
+/* feed source / time */
 .feed { max-width: 90px !important; margin-left: 20px !important; }
 
 .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 11px !important; border-color: transparent !important; }
+
+span.updated { font-size: 10px !important; margin-right: 6px !important; }
+
+/* double line content display for overflow segments */
+.titleWrap { white-space: normal !important; }
 
 /* feed headline */
 a.title { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; font-weight: 500 !important; }
@@ -95,10 +105,8 @@ span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetic
 
 .Unread span.excerpt { color: rgba(0,0,0,0.75) !important; }
 
-span.updated { font-size: 10px !important; margin-right: 6px !important; }
-
 /* expanded feed item */
-.collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; }
+.collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; }
 
 .active .title { font-size: 20px !important; }
 
@@ -115,12 +123,14 @@ span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetic
 
 .footer .left { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
+#headlines-spacer { display: none; }
+
 /* dynamic filter icons */
 .material-icons.icon-score { display: none !important; }
 
 .pub-pic.material-icons { display: none !important; }
 
-.dijitCheckBox { display: none !important; }
+.ttrss_index .dijitCheckBox { display: none !important; }
 
 .header .left * { transform: scale(0.7,0.7); -ms-transform: scale(0.7,0.7); -webkit-transform: scale(0.7,0.7); }
 
@@ -132,3 +142,17 @@ span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetic
 .cdm.marked { background-color: transparent !important; }
 
 .cdm.marked .marked-pic { color: rgba(177,37,37,0.85) !important; }
+
+/* toolbar menus */
+.dijitMenu { background-color: #fdf7e7 !important; border: none !important; }
+
+.dijitMenu .dijitMenuArrowCell { display: none !important; }
+
+.dijitPopup { border-radius: 0; border: none; box-shadow: 3px 3px 9px rgba(0,0,0,0.3); }
+
+.dijitMenuItemLabel { font: 400 12px Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; text-align: right; }
+
+.dijitMenuItemDisabled .dijitMenuItemLabel { background-color: transparent !important; }
+
+.dijitMenuItemDisabled .dijitMenuItemLabel:hover { background-color: #fdf7e7 !important; color: rgb(46,153,209) !important; }
+

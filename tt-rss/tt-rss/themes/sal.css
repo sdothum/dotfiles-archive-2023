@@ -64,7 +64,7 @@ div#dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpandoOpened { opacity: .15
 
 .cdm.expandable .dijitCheckBox { display: none; }
 
-/* fill any backgnoud gaps resulting from fullscreen display */
+/* fill any backgroud gaps resulting from fullscreen display */
 .dijitContainer { background-color: #f7f3ee; }
 
 div#dijit__TreeNode_2 .dijitTreeLabel,
