@@ -109,12 +109,12 @@ a.title { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-
 
 span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-.Unread span.excerpt { color: rgba(0,0,0,0.75) !important; }
+.cdm.Unread span.excerpt { color: rgba(0,0,0,0.7) !important; }
 
 /* expanded content */
 .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 1px 0 0 !important; }
 
-.collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; border-color: transparent !important; }
+.collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; border-color: transparent !important; color: rgba(0,0,0,0.7) !important; }
 
 .collapse:hover:active .material-icons { background-color: transparent !important; }
 
