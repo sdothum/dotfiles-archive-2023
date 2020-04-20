@@ -46,13 +46,13 @@ div#dijit__TreeNode_6 { display: none !important; }
 
 .ttrss_index span.dijitTreeLabel { float: right; font-weight: 400 !important; margin: 0 6px 0 0 !important; }
 
-span.counterNode { color: #b12525 !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
+span.counterNode { color: rgba(177,37,37,0.85) !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
 
 .dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525; }
 
-.dijitTreeRowSelected { border-color: #b12525 !important; background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-style: solid !important; border-width: 0 0 1px !important; }
+.dijitTreeRowSelected { border-color: #b12525 !important; background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-style: solid !important; border-width: 0 0 1px !important; box-shadow: none !important; }
 
-.dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(0,0,0,.04) !important; }
+.dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,0.04) !important; }
 
 .dijitTreeRowSelected span.dijitTreeLabel { font-weight: 500 !important; color: #b12525; }
 
@@ -75,6 +75,8 @@ span#feed_title { color: #b12525 !important; font-size: 16px !important; font-we
 
 /* feed list */
 .header:hover { background-color: rgba(177,37,37,0.04) !important; }
+
+.cdm.active .header:hover { background-color: transparent !important; }
 
 #headlines-frame { padding-top: 0 !important; padding-left: 6px !important; padding-right: 28px !important; }
 
@@ -108,6 +110,8 @@ span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetic
 /* expanded feed item */
 .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; }
 
+.collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; }
+
 .active .title { font-size: 20px !important; }
 
 .content-inner { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
@@ -119,7 +123,7 @@ span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetic
 .content-inner td { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border-color: transparent !important; }
 
 /* feed item footer */
-span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; padding: 0 !important; background-color: transparent !important; border-color: transparent !important; color: rgba(0,0,0,0.45) !important; }
+.ttrss_index span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; padding: 0 !important; background-color: transparent !important; border-color: transparent !important; color: rgba(0,0,0,0.45) !important; }
 
 .footer .left { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
