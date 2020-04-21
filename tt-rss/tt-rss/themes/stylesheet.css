@@ -63,6 +63,8 @@ optimized for "Jost*" and "Roboto" fonts
 /* toolbar */
 .ttrss_index .dijitToolbar { border: none !important; }
 
+.ttrss_index .dijitToolbar span.left { padding-top: 1px !important; }
+
 .ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; color: rgba(177,37,37,0.85) !important; }
 
 .ttrss_index span#feed_title { color: #b12525 !important; font-size: 16px !important; font-weight: 500 !important; }
@@ -71,9 +73,9 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitReset.dijitStretch.dijitButtonNode { padding-right: 0 !important; }
 
-.ttrss_index .dijitReset.dijitStretch.dijitButtonNode * { padding-right: 0 !important; }
+.ttrss_index .dijitReset.dijitStretch.dijitButtonNode * { padding: 0 0 1px 4px !important; }
 
-.ttrss_index .action-button { margin-right: -7px !important; }
+.ttrss_index .action-button { margin-right: -7px !important; margin-top: -3px !important; }
 
 /* feed list */
 .ttrss_index .header:hover { background-color: rgba(177,37,37,0.04) !important; }
@@ -112,7 +114,7 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,0.7) !important; }
 
 /* expanded content */
-.ttrss_index .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 1px 0 0 !important; }
+.ttrss_index .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 1px 0 0 !important; padding-right: 6px !important; }
 
 .ttrss_index .collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; border-color: transparent !important; color: rgba(0,0,0,0.7) !important; }
 
