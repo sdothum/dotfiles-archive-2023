@@ -40,21 +40,27 @@ optimized for "Jost*" and "Roboto" fonts
 /* feed category */
 .ttrss_index .dijitTreeRow { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; border-style: solid !important; border-width: 0 0 1px !important; }
 
-.ttrss_index .dijitTreeRowHover { background-color: rgba(177,37,37,0.04) !important; }
+.ttrss_index .dijitTreeRowHover { background-color: rgba(177,37,37,.04) !important; }
 
-.ttrss_index .dijitTreeExpando { margin-left: -2px !important; opacity: 0 !important; }
+.ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; }
 
 .ttrss_index .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
 
+.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { opacity: .95 !important; }
+
+.ttrss_index #dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; }
+
+.ttrss_index #dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
+
 .ttrss_index span.dijitTreeLabel { float: right; font-weight: 400 !important; margin: 0 6px 0 0 !important; }
 
-.ttrss_index span.counterNode { color: rgba(177,37,37,0.6) !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
+.ttrss_index span.counterNode { color: rgba(177,37,37,.6) !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
 
 .ttrss_index .dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525 !important; }
 
-.ttrss_index .dijitTreeRowSelected { background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 0 0 1px !important; box-shadow: none !important; }
+.ttrss_index .dijitTreeRowSelected { background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-color: rgba(177,37,37,.45) !important; border-style: solid !important; border-width: 0 0 1px !important; box-shadow: none !important; }
 
-.ttrss_index .dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,0.04) !important; }
+.ttrss_index .dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,.04) !important; }
 
 .ttrss_index .dijitTreeRowSelected span.dijitTreeLabel { font-weight: 500 !important; color: #b12525; }
 
@@ -65,9 +71,11 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitToolbar span.left { padding-top: 1px !important; }
 
-.ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; color: rgba(177,37,37,0.85) !important; }
+.ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; color: rgba(177,37,37,.85) !important; }
 
 .ttrss_index span#feed_title { color: #b12525 !important; font-size: 16px !important; font-weight: 500 !important; }
+
+.ttrss_index span.right #selected_prompt { padding-bottom: 1px; }
 
 .ttrss_index .dijitDownArrowButton { text-align: right !important; }
 
@@ -78,7 +86,7 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index .action-button { margin-right: -7px !important; margin-top: -3px !important; }
 
 /* feed list */
-.ttrss_index .header:hover { background-color: rgba(177,37,37,0.04) !important; }
+.ttrss_index .header:hover { background-color: rgba(177,37,37,.04) !important; }
 
 .ttrss_index .cdm.active .header:hover { background-color: transparent !important; }
 
@@ -105,18 +113,18 @@ optimized for "Jost*" and "Roboto" fonts
 /* headline summary */
 .ttrss_index a.title { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; font-weight: 500 !important; }
 
-.ttrss_index .Unread a.title { color: rgba(0,0,0,0.85) !important; }
+.ttrss_index .Unread a.title { color: rgba(0,0,0,.85) !important; }
 
 .ttrss_index .cdm.expandable:not(.active) span.author { display: none !important; }
 
 .ttrss_index span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-.ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,0.7) !important; }
+.ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,.7) !important; }
 
 /* expanded content */
-.ttrss_index .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,0.6) !important; border-style: solid !important; border-width: 1px 0 0 !important; padding-right: 6px !important; }
+.ttrss_index .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,.45) !important; border-style: solid !important; border-width: 1px 0 0 !important; padding-right: 6px !important; }
 
-.ttrss_index .collapse:hover .material-icons { background-color: rgba(177,37,37,0.04) !important; border-color: transparent !important; color: rgba(0,0,0,0.7) !important; }
+.ttrss_index .collapse:hover .material-icons { background-color: rgba(177,37,37,.04) !important; border-color: transparent !important; color: rgba(0,0,0,.7) !important; }
 
 .ttrss_index .collapse:hover:active .material-icons { background-color: transparent !important; }
 
@@ -126,12 +134,12 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-.ttrss_index .content-inner p { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; color: rgba(0,0,0,0.80) !important; }
+.ttrss_index .content-inner p { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; color: rgba(0,0,0,.80) !important; }
 
 .ttrss_index .content-inner td { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border-color: transparent !important; }
 
 /* expanded footer */
-.ttrss_index span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; padding: 0 !important; background-color: transparent !important; border-color: transparent !important; color: rgba(0,0,0,0.45) !important; }
+.ttrss_index span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; padding: 0 !important; background-color: transparent !important; border-color: transparent !important; color: rgba(0,0,0,.45) !important; }
 
 .ttrss_index .footer .left { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
@@ -142,7 +150,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitCheckBox { display: none !important; }
 
-.ttrss_index .header .left * { transform: scale(0.7,0.7); -ms-transform: scale(0.7,0.7); -webkit-transform: scale(0.7,0.7); }
+.ttrss_index .header .left * { transform: scale(.7,.7); -ms-transform: scale(.7,.7); -webkit-transform: scale(.7,.7); }
 
 /* starred icon */
 .ttrss_index .header .left { padding-left: 0 !important; padding-right: 0 !important; position: absolute !important; left: -2px; }
@@ -151,14 +159,14 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .cdm.marked { background-color: transparent !important; }
 
-.ttrss_index .cdm.marked .marked-pic { color: rgba(177,37,37,0.85) !important; }
+.ttrss_index .cdm.marked .marked-pic { color: rgba(177,37,37,.85) !important; }
 
 /* toolbar menus */
 .ttrss_index .dijitMenu { background-color: #fdf7e7 !important; border: none !important; }
 
 .ttrss_index .dijitMenu .dijitMenuArrowCell { display: none !important; }
 
-.ttrss_index .dijitPopup { border-radius: 0; border: none; box-shadow: 3px 3px 9px rgba(0,0,0,0.3); }
+.ttrss_index .dijitPopup { border-radius: 0; border: none; box-shadow: 3px 3px 9px rgba(0,0,0,.3); }
 
 .ttrss_index .dijitMenuItemLabel { font: 400 12px Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; text-align: right; }
 
