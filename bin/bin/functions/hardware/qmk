@@ -60,7 +60,8 @@ case $1 in
 esac
 
 cd $QMK
-export CPATH=$KEYMAP/common
+[ -e $KEYMAP/common ] && export CPATH=$KEYMAP/common || export CPATH=$KEYMAP
+sudo make $KBD:$keymap:clean
 case $model in
 chimera) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:avrdude || make $KBD:$keymap ;;
 corne  ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:avrdude || make $KBD:$keymap ;;

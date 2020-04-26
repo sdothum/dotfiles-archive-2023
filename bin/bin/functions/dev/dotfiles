@@ -10,7 +10,7 @@
 
 usage() {
   echo "usage: $(basename $0) [<stowdir>] add <package>[/<filespec>]* | comment [<comment>] | edit | ignore | init | list | log | undo | rm <dir>"
-  echo "files: $(dirname $0)/.dotfiles:folders"
+  ditto rules "$(dirname $0)/.dotfiles:folders"
   exit 1
 }
 
@@ -58,9 +58,11 @@ pending() {
 
 add() {
   for i in $@ ;do
-    if [ -e $i ] ;then
-      pending=$(git add -v $force $i)
+    file=$STOW/$i
+    if [ -e "$file" ] ;then
+      pending=$(git add -v $force "$file" )
     else
+      ditto file "$file"
       usage
     fi
   done
@@ -85,8 +87,8 @@ rm() {
 unset pending
 case $1 in
 help   ) usage ;;
-''     ) for i in $DOTFILES ;do add $STOW/$i ;done ;;
-add    ) shift; force=-f; add $STOW/$@ ;;
+''     ) for i in $DOTFILES ;do add $i ;done ;;
+add    ) shift; force=-f; add $@ ;;
 
 amend    |\
 comment) shift; DESC=$@
