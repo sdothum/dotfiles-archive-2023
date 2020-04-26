@@ -10,6 +10,7 @@ ifno 'create tt-rss database' || {
   echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
   echo "echo \"create database ttrss;\" | psql" | su - postgres
   echo "echo \"grant all privileges on database ttrss to ttrss;\" | psql" | su - postgres
+  echo "echo \"create extension pg_trgm;\" | psql --dbname=ttrss" | su - postgres
   original /var/lib/postgresql/data/pg_hba.conf
   sudo sed -i '/^local *all *all *peer/s/peer/md5/' /var/lib/postgresql/data/pg_hba.conf
   service restart postgresql
