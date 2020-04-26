@@ -54,7 +54,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index span.dijitTreeLabel { float: right; font-weight: 400 !important; margin: 0 6px 0 0 !important; }
 
-.ttrss_index span.counterNode { color: rgba(177,37,37,.6) !important; font-size: 12px !important; padding-left: 10px; margin-right: 5px !important; min-width: 5px !important; }
+.ttrss_index span.counterNode { color: rgba(177,37,37,.6) !important; font-size: 11px !important; padding-left: 10px; margin-right: 5px !important; margin-top: 4px !important; min-width: 5px !important; border: none !important; vertical-align: bottom !important; }
 
 .ttrss_index .dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525 !important; }
 
@@ -62,18 +62,22 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,.04) !important; }
 
-.ttrss_index .dijitTreeRowSelected span.dijitTreeLabel { font-weight: 500 !important; color: #b12525; }
+.ttrss_index .dijitTreeRowSelected span.dijitTreeLabel { font-weight: 600 !important; color: rgba(177,37,37,.85); }
 
-.ttrss_index .dijitTreeRowSelected:hover span.dijitTreeLabel { font-weight: 500 !important; color: #b12525 !important; }
+.ttrss_index .dijitTreeRowSelected:hover span.dijitTreeLabel { font-weight: 600 !important; color: rgba(177,37,37,.85) !important; }
 
 /* toolbar */
 .ttrss_index .dijitToolbar { border: none !important; }
 
 .ttrss_index .dijitToolbar span.left { padding-top: 1px !important; }
 
-.ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; color: rgba(177,37,37,.85) !important; }
+.ttrss_index .dijitToolbar span.left a { font-size: 16px !important; }
+
+.ttrss_index i.icon-syndicate.material-icons { padding-left: 3px !important; padding-bottom: 2px !important; margin-right: 4px !important; font-size: 17px !important; color: rgba(177,37,37,.85) !important; line-height: 94% !important; vertical-align: bottom !important; }
 
 .ttrss_index span#feed_title { color: #b12525 !important; font-size: 16px !important; font-weight: 500 !important; }
+
+.ttrss_index span#feed_current_unread { color: rgba(177,37,37,.65) !important; font-size: 12px !important; font-weight: 500 !important; background-color: transparent !important; border-color: transparent !important; padding-top: 2px; margin-left: 16px !important;  }
 
 .ttrss_index span.right #selected_prompt { padding-bottom: 1px; }
 
@@ -105,7 +109,9 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 11px !important; border-color: transparent !important; }
 
-.ttrss_index span.updated { font-size: 10px !important; margin-right: 6px !important; }
+.ttrss_index span.updated { font-size: 10px !important; margin-right: 6px !important; color: rgba(0,0,0,.35) !important; }
+
+.ttrss_index .active span.updated { color: rgba(0,0,0,.7) !important; }
 
 /* separate titlewrap segments into individual (2) overflow lines */
 .ttrss_index .titleWrap { white-space: normal !important; }
@@ -119,9 +125,11 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index span.excerpt { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-.ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,.7) !important; }
+.ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,.65) !important; }
 
 /* expanded content */
+.ttrss_index .active { margin-bottom: 0 !important; }
+
 .ttrss_index .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,.45) !important; border-style: solid !important; border-width: 1px 0 0 !important; padding-right: 6px !important; }
 
 .ttrss_index .collapse:hover .material-icons { background-color: rgba(177,37,37,.04) !important; border-color: transparent !important; color: rgba(0,0,0,.7) !important; }
@@ -134,7 +142,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-.ttrss_index .content-inner p { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; color: rgba(0,0,0,.80) !important; }
+.ttrss_index .content-inner p { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; color: rgba(0,0,0,.8) !important; }
 
 .ttrss_index .content-inner td { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border-color: transparent !important; }
 
