@@ -160,7 +160,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .header .left * { transform: scale(.7,.7); -ms-transform: scale(.7,.7); -webkit-transform: scale(.7,.7); }
 
-/* starred icon */
+/* starred articles */
 .ttrss_index .header .left { padding-left: 0 !important; padding-right: 0 !important; position: absolute !important; left: -2px; }
 
 .ttrss_index .active .left { top: 25px; left: 24px; }
@@ -168,6 +168,8 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index .cdm.marked { background-color: transparent !important; }
 
 .ttrss_index .cdm.marked .marked-pic { color: rgba(177,37,37,.85) !important; }
+
+.ttrss_index .cdm.marked:not(.Unread):not(.active) a.title { color: rgba(177,37,37,.9) !important; }
 
 /* toolbar menus */
 .ttrss_index .dijitMenu { background-color: #fdf7e7 !important; border: none !important; }
