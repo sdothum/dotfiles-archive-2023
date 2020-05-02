@@ -77,6 +77,8 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index span#feed_title { color: #b12525 !important; font-size: 16px !important; font-weight: 500 !important; }
 
+.ttrss_index span#feed_title a { vertical-align: initial !important; }
+
 .ttrss_index span#feed_title #cancel_search a { font-size: 12px !important; }
 
 .ttrss_index span#feed_current_unread { color: rgba(177,37,37,.65) !important; font-size: 12px !important; font-weight: 500 !important; background-color: transparent !important; border-color: transparent !important; padding-top: 2px; margin-left: 16px !important;  }
