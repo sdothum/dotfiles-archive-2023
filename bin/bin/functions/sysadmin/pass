@@ -8,14 +8,14 @@
 
 usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | l'ist | m'v <name> <'name> | R'm <name>"; exit 1; }
 
+PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$PASSWORD_STORE_DIR}
 PASS=/usr/bin/pass
-STORE=${PASSWORD_STORE_DIR-$HOME/.password-store}
 XDIR=$HOME/sandbox
 image=$(basename $0).sh
 
 init() {
   ifno 'initialize password store' && exit 1
-  [ -d $STORE ] && mv -v $STORE $STORE.save
+  [ -d $PASSWORD_STORE_DIR ] && mv -v $PASSWORD_STORE_DIR $PASSWORD_STORE_DIR.save
   $PASS init sdothum@gmail.com
   ditto -- 'import (rebuild) your password store'
 }
@@ -25,8 +25,7 @@ password() {
     if password=$($PASS $1 2>/dev/null) ;then
       # interactive mode?
       if ps -ef | grep $PPID | grep -q $SHELL ;then
-        [ -e $HOME/.password-store/username/${1#*/}.gpg ] && username=$($PASS username/${1#*/}) ||
-          username=$($PASS username/default)
+        [ -e $PASSWORD_STORE_DIR/username/${1#*/}.gpg ] && username=$($PASS username/${1#*/}) || username=$($PASS username/default)
         echo "$username\n$password"
         notify $1 "$username\n$password"
         $PASS show --clip $1
@@ -45,7 +44,7 @@ xport() {
   rm -fv ${image%.sh}.zip
   echo "#!/usr/bin/dash
 pass I || exit" >$image
-  names=$(find $STORE -name '*.gpg' | sed "s,$STORE/,,g; s/.gpg$//")
+  names=$(find $PASSWORD_STORE_DIR -name '*.gpg' | sed "s,$PASSWORD_STORE_DIR/,,g; s/.gpg$//")
   for i in $names ;do
     ditto exporting "$i"
     key=$($PASS $i | sed "s/'/'\"'\"'/")

@@ -31,7 +31,7 @@ while : ;do
   nzb       ) exists nzbget && { toggle term 'nzb' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   nzbget    ) $BROWSER $NZBGET; pwait "$BROWSER.*$NZBGET"; unset root ;;
   patricia  ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
-  pulse     ) pulse ;;
+  pulse     ) pulse; pavucontrol ;;
   references) dmenu references; unset root; break ;;
   series    ) dmenu series ;;
   sonarr    ) $BROWSER $SONARR; pwait "$BROWSER.*$SONARR"; unset root ;;
