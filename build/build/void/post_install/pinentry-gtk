@@ -7,5 +7,6 @@
 
 # enable x11 gpg dialogues
 sudo ln -sf /usr/bin/pinentry-gtk-2 /usr/bin/pinentry
+pkill gpg-agent
 
 # vim: set ft=sh: #
