@@ -38,11 +38,11 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index div#dijit__TreeNode_6 { display: none !important; }
 
 /* feed category */
-.ttrss_index .dijitTreeRow { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; border-style: solid !important; border-width: 0 0 1px !important; }
+.ttrss_index .dijitTreeRow { margin: 0 0 2px 15px; padding: 6px 0 5px 0 !important; border-color: transparent !important; border-style: solid !important; border-width: 0 0 1px !important; }
 
 .ttrss_index .dijitTreeRowHover { background-color: rgba(177,37,37,.04) !important; }
 
-.ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; }
+.ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; margin-bottom: -1px !important; }
 
 .ttrss_index .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
 
@@ -60,7 +60,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitTreeRowSelected { background-color: transparent !important; margin: 0 0 7px 15px; padding: 6px 0 0 !important; border-color: rgba(177,37,37,.45) !important; border-style: solid !important; border-width: 0 0 1px !important; box-shadow: none !important; }
 
-.ttrss_index .dijitTreeRowSelected:hover { margin: 0 0 1px 15px; padding: 6px 0 6px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,.04) !important; }
+.ttrss_index .dijitTreeRowSelected:hover { margin: 0 0 2px 15px; padding: 6px 0 5px 0 !important; border-color: transparent !important; background-color: rgba(177,37,37,.04) !important; }
 
 .ttrss_index .dijitTreeRowSelected span.dijitTreeLabel { font-weight: 600 !important; color: rgba(177,37,37,.85); }
 
@@ -109,7 +109,7 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index #headlines-spacer { display: none; }
 
 /* feed source / time */
-.ttrss_index .feed { max-width: 90px !important; margin-left: 20px !important; }
+.ttrss_index .feed { max-width: 90px !important; margin-left: 20px !important; padding-bottom: 2px !important; }
 
 .ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 11px !important; border-color: transparent !important; }
 
