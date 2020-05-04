@@ -11,7 +11,8 @@
 # emithook inconsistent for global hook=focus_frame, apply focus frame in scripts
 hc rule focus=on
 hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)'                      focus=on
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)'     pseudotile=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)'     pseudotile=off
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)'     floating=off
 # hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)'   pseudotile=on hook=max
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG'                      focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
