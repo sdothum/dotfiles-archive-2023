@@ -44,11 +44,13 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; margin-bottom: -1px !important; }
 
-.ttrss_index .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
+.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { animation: blink 1.66s infinite;  }
 
-.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { opacity: .95 !important; }
+@keyframes blink {  0% { opacity: 1.0; } 50% { opacity: 0.0; } 100% { opacity: 1.0; } }
 
-.ttrss_index #dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; }
+.ttrss_index .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; animation: none; }
+
+.ttrss_index #dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; animation: none; }
 
 .ttrss_index #dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
 
