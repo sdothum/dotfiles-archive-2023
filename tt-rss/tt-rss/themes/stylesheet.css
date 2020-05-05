@@ -142,7 +142,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .collapse:hover:active .material-icons { background-color: transparent !important; }
 
-.ttrss_index #floatingTitle {  border-color: rgba(177,37,37,.45) !important; }
+.ttrss_index #floatingTitle { border-color: rgba(177,37,37,.45) !important; border-width: 1px 0 0 !important; }
 
 .ttrss_index #floatingTitle .material-icons { display: none !important; }
 
