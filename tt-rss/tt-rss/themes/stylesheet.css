@@ -85,7 +85,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index span#feed_current_unread { color: rgba(177,37,37,.65) !important; font-size: 12px !important; font-weight: 500 !important; background-color: transparent !important; border-color: transparent !important; padding-top: 2px; margin-left: 16px !important;  }
 
-.ttrss_index span.right #selected_prompt { padding-bottom: 1px; }
+.ttrss_index span.right #selected_prompt { display: none; }
 
 .ttrss_index .dijitDownArrowButton { text-align: right !important; }
 
@@ -141,6 +141,14 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index .collapse:hover .material-icons { background-color: rgba(177,37,37,.04) !important; border-color: transparent !important; color: rgba(0,0,0,.7) !important; }
 
 .ttrss_index .collapse:hover:active .material-icons { background-color: transparent !important; }
+
+.ttrss_index #floatingTitle {  border-color: rgba(177,37,37,.45) !important; }
+
+.ttrss_index #floatingTitle .material-icons { display: none !important; }
+
+.ttrss_index #floatingTitle .titleWrap { padding-left: 0 !important; }
+
+.ttrss_index #floatingTitle span.updated { display: none !important; }
 
 .ttrss_index .active .title { font-size: 20px !important; }
 
