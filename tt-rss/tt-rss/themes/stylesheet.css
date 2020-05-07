@@ -44,15 +44,17 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; margin-bottom: -1px !important; }
 
-.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { animation: blink 1.66s infinite;  }
+.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { animation: blink 1.66s infinite; color: rgba(177,37,37,.6) !important; }
 
 @keyframes blink {  0% { opacity: 1.0; } 50% { opacity: 0.0; } 100% { opacity: 1.0; } }
 
-.ttrss_index .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; animation: none; }
+.ttrss_index .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; animation: none; color: rgba(177,37,37,.22) !important; }
 
 .ttrss_index #dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; animation: none; }
 
 .ttrss_index #dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
+
+.ttrss_index .dijitTreeRow .dijitTreeExpando:hover { color: rgba(177,37,37,.6) !important; }
 
 .ttrss_index span.dijitTreeLabel { float: right; font-weight: 400 !important; margin: 0 6px 0 0 !important; }
 
