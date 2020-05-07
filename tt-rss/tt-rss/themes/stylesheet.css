@@ -156,7 +156,7 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index .content-inner { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
-.ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
+.ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border: none !important; }
 
 .ttrss_index .content-inner p { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14.5px !important; color: rgba(0,0,0,.8) !important; }
 
@@ -164,6 +164,8 @@ optimized for "Jost*" and "Roboto" fonts
 
 /* expanded footer */
 .ttrss_index span.dijitButtonNode { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; padding: 0 !important; background-color: transparent !important; border-color: transparent !important; color: rgba(0,0,0,.45) !important; }
+
+.ttrss_index .active .expand-prompt span.dijitButtonText { border-top-width: 1px !important; border-top-style: solid !important; border-color: rgba(177,37,37,.45) !important; padding: 3px 12px 0 !important; }
 
 .ttrss_index .footer .left { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
 
