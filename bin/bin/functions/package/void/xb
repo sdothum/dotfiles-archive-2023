@@ -36,7 +36,22 @@ CACHE=/var/cache/xbps
 [ $1 ] || usage
 delay=5  # reboot delay window
 
-bootcheck() { sudo xbps-install -S; kernel=$(xbps-install -un | grep '^linux[0-9]' | head -1 | cut -d' ' -f1) || unset kernel; xlocate -S >/dev/null 2>&1 & }
+post_action_for_apps='
+  check_utf8   alot
+  restart      php-fpm
+  update_ttrss postgresql
+'
+
+flag() { package=$(echo "$update" | grep "^$2" | head -1); [ "$package" ] && ditto $1 "$package"; }
+
+bootcheck() {
+  sudo xbps-install -S
+  update=$(xbps-install -un |  cut -d' ' -f1)
+  flag kernel 'linux[0-9]' && kernel=true
+  set -- $post_action_for_apps
+  while [ $2 ] ;do flag $1 "$2"; shift 2 ;done
+  xlocate -S >/dev/null 2>&1 &
+}
 
 # default (no options) to package query
 case $1 in
@@ -86,7 +101,7 @@ requiredby) xbps-query -X $package ;;
 search    ) xbps-query -Rs $options $package | a $package ;;
 sync      ) sudo xbps-install $yes $options $package ;;
 update    ) sudo xbps-install $yes $options -u $package ;;
-upgrade   ) [ $kernel ] && ditto 'kernel' "$kernel"; sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || delay_boot; } ;;
+upgrade   ) sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || delay_boot; } ;;
 unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 
