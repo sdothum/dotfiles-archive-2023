@@ -1,0 +1,3 @@
+delay_boot() { ditto reboot "in $delay seconds.."; (sleep $delay; sudo reboot) & }
+
+ifno 'reboot new kernel' || delay_boot

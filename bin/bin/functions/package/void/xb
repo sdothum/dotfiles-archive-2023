@@ -33,23 +33,26 @@ usage() {
 }
 
 CACHE=/var/cache/xbps
+ACTIONS=${0%/*}/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
 [ $1 ] || usage
 delay=5  # reboot delay window
 
-post_action_for_apps='
-  check_utf8   alot
-  restart      php-fpm
-  update_ttrss postgresql
-'
+# kernel must be last of ordered action tuples, see file .xb_kernel
+[ -e $ACTIONS ] && upgrade_actions=$(cat $ACTIONS)
+upgrade_actions="$upgrade_actions
+  kernel  linux[0-9]
+"
 
-flag() { package=$(echo "$update" | grep "^$2" | head -1); [ "$package" ] && ditto $1 "$package"; }
+flag() { package=$(echo "$update" | grep "^$2" | head -1); [ "$package" ] && { ditto $1 "$package"; eval $1=true; } }
 
-bootcheck() {
+upgrade_check() {
   sudo xbps-install -S
   update=$(xbps-install -un |  cut -d' ' -f1)
-  flag kernel 'linux[0-9]' && kernel=true
-  set -- $post_action_for_apps
-  while [ $2 ] ;do flag $1 "$2"; shift 2 ;done
+  set -- $upgrade_actions
+  while [ $2 ] ;do
+    flag $1 "$2"
+    shift 2
+  done
   xlocate -S >/dev/null 2>&1 &
 }
 
@@ -58,7 +61,7 @@ case $1 in
  S) [ $2 ] && { action=sync; yes='-y'; } || action=installed ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
  D) action=downgrade ;;
- U) [ $2 ] && { action=update; yes='-y'; } || { action=upgrade; bootcheck; } ;;
+ U) [ $2 ] && { action=update; yes='-y'; } || { action=upgrade; upgrade_check; } ;;
 -U) [ $2 ] && action=update ;;
  R) action=remove; recursive='-R' ;;
 -R) action=remove ;;
@@ -85,7 +88,13 @@ package=${options##* }
 options=${options% *}
 [ $action = file ] || { [ $package ] && pkgver=$(xbps-query -S $package | grep pkgver | cut -d' ' -f2); }
 
-delay_boot() { ditto reboot "in $delay seconds.."; (sleep $delay; sudo reboot) & }
+upgrade_actions() {
+  set -- $upgrade_actions
+  while [ $2 ] ;do 
+    eval [ \$$1 ] && [ -e ${0%/*}/.xb_$1 ] && . ${0%/*}/.xb_$1
+    shift 2
+  done
+}
 
 case $action in
 dependency) xbps-query -x $package ;;
@@ -101,7 +110,7 @@ requiredby) xbps-query -X $package ;;
 search    ) xbps-query -Rs $options $package | a $package ;;
 sync      ) sudo xbps-install $yes $options $package ;;
 update    ) sudo xbps-install $yes $options -u $package ;;
-upgrade   ) sudo xbps-install -y -u xbps; sudo xbps-install $options -u; [ $kernel ] && { ifno 'reboot new kernel' || delay_boot; } ;;
+upgrade   ) sudo xbps-install -y -u xbps; sudo xbps-install $options -u; upgrade_actions ;;
 unhold    ) [ $pkgver ] && { sudo xbps-pkgdb -m unhold $options $package; ditto unhold "$pkgver"; } ;;
 esac
 
