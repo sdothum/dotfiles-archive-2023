@@ -6,15 +6,19 @@
 
 # ......................................................... Distribution install
 
+# Usage: gem_install <gem> [<version>]
+
 # be careful of partial gem list regex matches!
-if gem list $1 | grep -q "^$1 " ;then
-  installed_heading $1
+gem=$1
+[ $2 ] && version="-v $2"
+if gem list $gem | grep -q "^$gem " ;then
+  installed_heading $gem
 else
-  heading : $1
+  heading : $gem
   time=$(chrono)
   ditto @ gem
-  void && sudo gem install $1 || gem install $1
-  post_install $1
+  void && sudo gem install $gem $version || gem install $gem $version
+  post_install $gem
   chrono $time
 fi
 

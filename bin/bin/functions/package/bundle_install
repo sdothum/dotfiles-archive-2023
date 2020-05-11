@@ -19,7 +19,7 @@
 #         @ aur            [condition] (aur makepkg)
 #         a arm            [condition] (aur makepkg for raspberry pi)
 #         d action package [condition] (deferred install)
-#         g gem            [condition] (gem_install)
+#         g gem            [<version>] (gem_install)
 #         m make           [condition] (make_install)
 #         p make           [condition] (pkg_install)
 #         s source         [condition] (xbps-src)
@@ -64,19 +64,20 @@ rule() { echo "$@" | sed 's/\[//; s/\]//' || echo true; }
 # bundle file -> [<action>] <package> [<condition>]
 parse() {
   case $action in
-  ''        ) return 1 ;;
-  '#'       ) return 1 ;;
-  '='       ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
-  '"'       ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
-  '!'       ) [ $check ] || $package $condition;                                                       return 1 ;;
-  '+'       ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; } } ;;
-  d         ) rule=true ;;
-  [-?@agmps]) rule=$(rule "$condition") ;;
+  ''       ) return 1 ;;
+  '#'      ) return 1 ;;
+  '='      ) [ $list ] || { echo $package | grep -q '^[[:alpha:]]' && title "$package $condition"; }; return 1 ;;
+  '"'      ) [ $check ] || ditto "$package $condition";                                               return 1 ;;
+  '!'      ) [ $check ] || $package $condition;                                                       return 1 ;;
+  '+'      ) [ $list ] || { [ -z $check ] && { heading "[ Manual install required.. ]  $package";     return 1; } } ;;
+  d        ) rule=true ;;
+  g        ) version=$condition ;;
+  [-?@amps]) rule=$(rule "$condition") ;;
 
-  *         ) set -- $package $condition
-              package=$action
-              condition=$@
-              rule=$(rule "$condition") ;;
+  *        ) set -- $package $condition
+             package=$action
+             condition=$@
+             rule=$(rule "$condition") ;;
   esac
   return 0
 }
@@ -129,7 +130,7 @@ for i in $@ ;do
     '@') aur_install $package ;;
     a  ) arm_install $package ;;
     d  ) echo "$package $condition" >>$deferred ;;
-    g  ) gem_install $package ;;
+    g  ) gem_install $package $version ;;
     m  ) make_install $package ;;
     p  ) pkg_install $package ;;
     s  ) src_install $package ;;
