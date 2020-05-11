@@ -12,6 +12,12 @@ Keyboard Maintainer: [foostan](https://github.com/foostan/) [@foostan](https://t
 Hardware Supported: Crkbd PCB, Pro Micro  
 Hardware Availability: [PCB & Case Data](https://github.com/foostan/crkbd)
 
+From the shell..
+
+`export CPATH=<keymap>/common`
+
+where <keymap> is the full QMK directory path of the keymap to be compiled.
+
 Make example for this keyboard (after setting up your build environment):
 
 ```sh
