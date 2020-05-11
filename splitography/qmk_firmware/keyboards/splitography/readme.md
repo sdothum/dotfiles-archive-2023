@@ -11,6 +11,12 @@ Download or clone the whole firmware and navigate to the keyboards/splitography 
 
 Depending on which keymap you would like to use, you will have to compile slightly differently.
 
+From the shell..
+
+`export CPATH=<keymap>/common`
+
+where <keymap> is the full QMK directory path of the keymap to be compiled.
+
 ### Default
 
 To build with the default keymap, simply run `make default`.
