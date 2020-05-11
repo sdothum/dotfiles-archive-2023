@@ -20,8 +20,9 @@
   g slim
   g term-ansicolor
   g thin
-  g xapian-fu
-  d g xapian-ruby
+  g xapian-fu 1.6.0
+  libuuid-devel  # xapian-ruby dependency
+  d g xapian-ruby 1.2.22
 
 
 = web server
