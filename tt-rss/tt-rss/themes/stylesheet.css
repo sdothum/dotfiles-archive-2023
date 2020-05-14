@@ -17,10 +17,10 @@ optimized for "Jost*" and "Roboto" fonts
 
 .ttrss_index { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
 
-.ttrss_index .dijitTreeContainer { background-color: #fdf7e7 !important; }
+.ttrss_index .dijitTreeContainer { background-color: #fdf7e7 !important; padding-top: 0 !important; margin-top: -10px; }
 
 /* feed tree */
-.ttrss_index #feeds-holder { width: 150px !important; }
+.ttrss_index #feeds-holder { width: 150px !important; top: 55px !important; padding-bottom: 55px !important; }
 
 .ttrss_index #feedTree { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12px !important; }
 
@@ -203,3 +203,28 @@ optimized for "Jost*" and "Roboto" fonts
 .ttrss_index .dijitMenuItemDisabled .dijitMenuItemLabel { background-color: transparent !important; }
 
 .ttrss_index .dijitMenuItemDisabled .dijitMenuItemLabel:hover { background-color: #fdf7e7 !important; color: rgb(46,153,209) !important; }
+
+.ttrss_main #main:before { color: #fdf7e7; background-color: #fdf7e7; content: '\0x00a0'; display: block; line-height: 86px; position: fixed; width: 180px; }
+
+/*
+.ttrss_main #main:before {
+  color: #ffffff;
+  background-color: #fdf7e7;
+  content: 'ReddeR';
+  display: block;
+  font: 16px 'Major Mono Display',Roboto,'Noto Sans',Helvetica,Arial sans-serif;
+  letter-spacing: 3px;
+  line-height: 71px;
+  margin-top: -15px;
+  position: fixed;
+  text-shadow: 2px 2px 4px rgba(114,24,24,1.0);
+  white-space: pre;
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
+  -o-transform:rotateY(180deg);
+  -ms-transform:rotateY(180deg);
+   width: 180px;
+   margin-left: -5px;
+   padding-left: 5px;
+}
+*/
