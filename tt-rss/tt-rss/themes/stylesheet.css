@@ -13,11 +13,13 @@ optimized for "Jost*" and "Roboto" fonts
 /* default background and fonts */
 .ttrss_index ::-webkit-scrollbar { width: 0; }
 
-.ttrss_index .dijitSplitter { background-color: #fdf7e7 !important; }
+body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
 
-.ttrss_index .dijitTreeContainer { background-color: #fdf7e7 !important; padding-top: 0 !important; margin-top: -10px; }
+.ttrss_index .dijitTreeContainer { padding-top: 0 !important; margin-top: -10px; }
+
+.ttrss_index .dijitContainer[style*="left: 30px"] { left: 20px !important; right: 0 !important;  margin-right: -10px !important; }
 
 /* feed tree */
 .ttrss_index #feeds-holder { width: 150px !important; top: 55px !important; padding-bottom: 55px !important; }
