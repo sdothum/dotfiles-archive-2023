@@ -6,7 +6,7 @@
 # ........................................................................ Media
 
 CLEAR='[ clear ]'
-MENU="$CLEAR\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nnetflix\nkodi\nnzbget\ntorrent\npatricia\nthought of you"
+MENU="$CLEAR\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nnetflix\nkodi\nnzbget\ntorrent\npatricia\nthought of you"
 
 video='play kodi netflix'
 NZBGET=http:///$SERVER:6789/nzbget:nzbget/
@@ -24,6 +24,7 @@ while : ;do
   "$CLEAR"  ) pkill mpv; pkill -f 'dmenu series'; media=$(previous media); ;;
   animation ) dmenu movies animation ;;
   anime     ) dmenu series anime ;;
+  blackboard) exec blackboard ;;
   ebooks    ) dmenu ebooks; unset root; break ;;
   kodi      ) videomode on; kodi; videomode off ;;
   movies    ) dmenu movies ;;

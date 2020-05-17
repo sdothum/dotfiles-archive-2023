@@ -27,6 +27,7 @@ abbreviate() { eval sed $trim; }
 
 # shorten path references for menu
 for i in $sources ;do
+  echo $i | grep -q "^$HOME" || continue
   case $i in
   */.vim*      |\
   */.weechat*) trim="$trim -e 's,$i/,.${i##*/.}/,'" ;;
@@ -37,7 +38,7 @@ done
 # recover full pathname
 expand() {
   for i in $sources ;do
-    prefix=${i%/*}
+    echo $i | grep -q "^$HOME" && prefix=${i%/*} || unset prefix
     [ -e $prefix/$1 ] && { echo $prefix/$1; return 0; }
   done
   return 1
