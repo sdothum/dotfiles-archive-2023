@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export USERNAME=shum
+export HOME="/home/$USERNAME"
+export PATH="$HOME/.local/bin:$PATH"
+export QUIKEY="qk"
+exec 2>&1
+exec chpst -u "$USERNAME" "$QUIKEY" start 2>/dev/null
+

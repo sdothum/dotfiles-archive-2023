@@ -15,7 +15,7 @@ sudo sed -i -re '/;listen\.(owner|group|mode)/s/;//'                       \
          -e '/listen = 127.0.0.1:9000/clisten = /run/php-fpm/php-fpm.sock' \
          /etc/php/php-fpm.d/www.conf
 
-sudo useradd -r -d /srv/http -c http -s /sbin/nologin http
+sudo useradd -r -d /srv/http -c http -s /sbin/nologin http 2>/dev/null
 runit_install php-fpm
 
 service enable php-fpm

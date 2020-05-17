@@ -11,6 +11,7 @@ if [ ! -L $HOME/.local/share/quikey ] ;then
   cd stow >/dev/null
   stow quikey
 fi
+
 qk start
 
 # vim: set ft=sh: #
