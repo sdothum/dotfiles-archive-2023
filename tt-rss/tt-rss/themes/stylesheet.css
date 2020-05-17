@@ -33,17 +33,8 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index img.loadingNode { display: none; }
 
-/* drop published and archived filters */
-.ttrss_index div#dijit__TreeNode_5 { display: none !important; }
-
-.ttrss_index div#dijit__TreeNode_6 { display: none !important; }
-
 /* feed expand icon */
 .ttrss_index .dijitTreeExpandoLeaf { display: none !important; }
-
-.ttrss_index #dijit__TreeNode_1 .dijitTreeRow .dijitTreeExpandoOpened { opacity: 0 !important; animation: none; }
-
-.ttrss_index #dijit__TreeNode_1 .dijitTreeRow:hover .dijitTreeExpando { opacity: 1 !important; }
 
 .ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; margin-bottom: -1px !important; }
 
@@ -74,6 +65,23 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index span.counterNode { color: rgba(177,37,37,.6) !important; font-size: 11px !important; padding-left: 10px; margin-right: 6px !important; margin-top: 1px !important; min-width: 5px !important; border: none !important; vertical-align: bottom !important; line-height: 19px !important; height: 20px !important; }
 
 .ttrss_index .dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525 !important; }
+
+/* disable special */
+.ttrss_index #dijit__TreeNode_1 .AlwaysVisible { pointer-events: none !important; }
+
+.ttrss_index #dijit__TreeNode_1 .AlwaysVisible .dijitTreeExpando { display: none !important; }
+
+.ttrss_index #dijit__TreeNode_1 .AlwaysVisible.dijitTreeRowSelected { border: none !important; }
+
+/* drop published and archived filters */
+.ttrss_index div#dijit__TreeNode_5 { display: none !important; }
+
+.ttrss_index div#dijit__TreeNode_6 { display: none !important; }
+
+/* fix recently read vertical */
+.ttrss_index #dijit__TreeNode_1 { margin-bottom: 0 !important; padding-bottom: 28px !important; }
+
+.ttrss_index #dijit__TreeNode_7 .dijitTreeRowSelected:hover { margin: 0 0 0 15px; padding: 6px 0 7px 0 !important; }
 
 /* toolbar */
 .ttrss_index .dijitToolbar { border: none !important; }
