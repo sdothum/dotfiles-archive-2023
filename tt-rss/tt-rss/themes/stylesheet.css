@@ -114,6 +114,8 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .action-button { margin-right: -7px !important; margin-top: -3px !important; }
 
 /* feed list */
+.ttrss_index .header { vertical-align: middle !important; }
+
 .ttrss_index .header:hover { background-color: rgba(177,37,37,.04) !important; }
 
 .ttrss_index .cdm.active .header:hover { background-color: transparent !important; }
@@ -131,7 +133,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 /* feed source */
 .ttrss_index .feed { max-width: 90px !important; margin-left: 20px !important; padding-bottom: 2px !important; }
 
-.ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 11px !important; border-color: transparent !important; }
+.ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 11px !important; border-color: transparent !important; height: 20px !important; line-height: 24px !important; }
 
 /* separate titlewrap segments into individual (2) overflow lines */
 .ttrss_index .titleWrap { white-space: normal !important; }
@@ -149,7 +151,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,.65) !important; }
 
 /* feed time */
-.ttrss_index span.updated { font-size: 10px !important; margin-right: 6px !important; color: rgba(0,0,0,.35) !important; }
+.ttrss_index span.updated { font-size: 10px !important; margin-right: 6px !important; color: rgba(0,0,0,.35) !important; height: 20px !important; line-height: 22px !important; }
 
 .ttrss_index .active span.updated { color: rgba(0,0,0,.7) !important; }
 
@@ -202,6 +204,8 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 /* starred articles */
 .ttrss_index .header .left { padding-left: 0 !important; padding-right: 0 !important; position: absolute !important; left: -2px; }
+
+.ttrss_index .header .marked-pic { font-size: 20px !important; height: 20px !important; line-height: 24px !important; }
 
 .ttrss_index .active .left { top: 25px; left: 24px; }
 
