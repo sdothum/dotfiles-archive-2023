@@ -62,7 +62,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .dijitTreeRowSelected:hover span.dijitTreeLabel { font-weight: 600 !important; color: rgba(177,37,37,.85) !important; }
 
 /* feed count */
-.ttrss_index span.counterNode { color: rgba(177,37,37,.6) !important; font-size: 11px !important; padding-left: 10px; margin-right: 6px !important; margin-top: 1px !important; min-width: 5px !important; border: none !important; vertical-align: bottom !important; line-height: 19px !important; height: 20px !important; }
+.ttrss_index span.counterNode { color: rgba(177,37,37,.6) !important; font-size: 10px !important; padding-left: 10px; margin-right: 6px !important; margin-top: 0 !important; min-width: 5px !important; border: none !important; line-height: 22px !important; height: 20px !important; }
 
 .ttrss_index .dijitTreeRowSelected span.counterNode { font-weight: 500 !important; color: #b12525 !important; }
 
