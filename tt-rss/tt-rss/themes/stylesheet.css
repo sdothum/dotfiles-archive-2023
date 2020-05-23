@@ -131,9 +131,9 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index #headlines-spacer { display: none; }
 
 /* feed source */
-.ttrss_index .feed { max-width: 90px !important; margin-left: 20px !important; padding-bottom: 2px !important; }
+.ttrss_index .feed { max-width: 90px !important; margin-left: 20px !important; padding-bottom: 3px !important; }
 
-.ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 11px !important; border-color: transparent !important; height: 20px !important; line-height: 24px !important; }
+.ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 10px !important; border-color: transparent !important; height: 20px !important; line-height: 24px !important; }
 
 /* separate titlewrap segments into individual (2) overflow lines */
 .ttrss_index .titleWrap { white-space: normal !important; }
@@ -205,7 +205,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 /* starred articles */
 .ttrss_index .header .left { padding-left: 0 !important; padding-right: 0 !important; position: absolute !important; left: -2px; }
 
-.ttrss_index .header .marked-pic { font-size: 20px !important; height: 20px !important; line-height: 24px !important; }
+.ttrss_index .header .marked-pic { font-size: 20px !important; height: 20px !important; line-height: 24px !important; padding: 0 0 0 1px !important; }
 
 .ttrss_index .active .left { top: 25px; left: 24px; }
 
