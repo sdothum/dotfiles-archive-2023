@@ -8,8 +8,11 @@
 
 # qutebrowser config.py: config.bind('<sequence>', 'spawn qutebrowser_pass <string>')
 
+# <passthrough>[:<type>]
+set -- $(echo $@ | cut -d':' -f1,2 --output-delimiter=' ')
 xdotool key Control+v     # passthrough
-xdotool type $@
+xdotool type $1
 xdotool key Shift+Escape  # normal mode
+[ "$2" ] && xdotool type $2 || true
 
 # vim: set ft=sh: #

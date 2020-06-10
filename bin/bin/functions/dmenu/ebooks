@@ -9,6 +9,10 @@
 
 REBUILD='[ rebuild database ]'
 
+CATLG=${CATLG:-kindle}
+LIBRARY=${LIBRARY:-/net/media/ebooks/library/$CATLG}
+CACHE=$LIBRARY/dmenu:ebooks
+
 # ebook library
 while [ "$1" ] ;do
   case $1 in
@@ -17,8 +21,6 @@ while [ "$1" ] ;do
   esac
   shift
 done
-LIBRARY=${LIBRARY:-/net/media/ebooks/library}
-cache=$LIBRARY/dmenu:ebooks
 
 # ....................................................................... Libary
 
@@ -26,16 +28,16 @@ cache=$LIBRARY/dmenu:ebooks
 ebooks() {
   notify low 'Updating library cache' 'Please be patient..'
   find $LIBRARY -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
-      sed -re "s,$LIBRARY/[^/]*/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
+      sed -re "s,$LIBRARY/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
           -e 's/(.*) - .*/\1/; s/ \(.*\)//' \
           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
-      sort -u >$cache
+      sort -u >$CACHE
   notify low 'Update of library cache' '..Complete'
   sleep 1
 }
 
 # command line initialization with: dmenu ebooks [init]
-if [ ! -s $cache ] || [ $init ] || stest -qr -n $cache $(find $LIBRARY -maxdepth 3) ;then
+if [ ! -s $CACHE ] || [ $init ] || stest -qr -n $CACHE $(find $LIBRARY -maxdepth 3) ;then
   ebooks $1
   [ $init ] && exit
 fi
@@ -65,7 +67,7 @@ catlg() {
 # .................................................................. Select book
 
 while : ;do
-  book=$(cat $cache | mhistory ebooks | column -s^ -t | sed "1i$REBUILD" | rmenu "E-book" 1 -filter \"$author\" -no-custom)
+  book=$(cat $CACHE | mhistory ebooks | column -s^ -t | sed "1i$REBUILD" | rmenu "E-book" 1 -filter \"$author\" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then

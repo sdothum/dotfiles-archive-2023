@@ -35,7 +35,6 @@ usage() {
 CACHE=/var/cache/xbps
 ACTIONS=${0%/*}/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
 [ $1 ] || usage
-delay=5  # reboot delay window
 
 # kernel must be last of ordered action tuples, see file .xb_kernel
 [ -e $ACTIONS ] && upgrade_actions=$(cat $ACTIONS)

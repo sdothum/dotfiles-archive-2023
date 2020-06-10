@@ -1,3 +1,5 @@
+delay=3                                                                          # reboot delay window
+
 delay_boot() { ditto reboot "in $delay seconds.."; (sleep $delay; sudo reboot) & }
 
-ifno 'reboot new kernel' || delay_boot
+ifno 'reboot new kernel' || { delay_boot; pkill -f "sshd: $USER" 2>/dev/null; }  # close remote ssh session
