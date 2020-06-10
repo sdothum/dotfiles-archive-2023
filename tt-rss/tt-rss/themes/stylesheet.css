@@ -215,13 +215,15 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .header .marked-pic { font-size: 20px !important; height: 20px !important; line-height: 24px !important; padding: 0 0 0 1px !important; }
 
-.ttrss_index .active .left { top: 25px; left: 24px; }
+.ttrss_index .active .left { top: 25.5px; left: 24px; }
 
 .ttrss_index .cdm.marked { background-color: transparent !important; }
 
 .ttrss_index .cdm.marked .marked-pic { color: rgba(177,37,37,.85) !important; }
 
 .ttrss_index .cdm.marked:not(.Unread):not(.active) a.title { color: rgba(177,37,37,.9) !important; }
+
+.ttrss_index .cdm.marked:not(.Unread):not(.active) span.excerpt { color: rgba(177,37,37,.6) !important; }
 
 /* toolbar menus */
 .ttrss_index .dijitMenu { background-color: #fdf7e7 !important; border: none !important; }
