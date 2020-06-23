@@ -103,7 +103,7 @@ let g:fzf_colors =
 " close any diff buffer before leaving buffer
 nmap <silent><leader>b :CloseDiff<CR>:Buffers<CR>
 " see notational-fzf
-nmap <silent><leader>l :Lines<CR>
+nmap <silent><leader>l :NV<CR>
 nmap <silent><leader>m :Marks<CR>
 nmap <silent><leader>f :FZF<CR>
 
