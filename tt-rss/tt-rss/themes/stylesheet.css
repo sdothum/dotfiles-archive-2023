@@ -211,7 +211,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .header .left * { transform: scale(.7,.7); -ms-transform: scale(.7,.7); -webkit-transform: scale(.7,.7); }
 
 /* starred articles */
-.ttrss_index .header .left { padding-left: 0 !important; padding-right: 0 !important; position: absolute !important; left: -2px; }
+.ttrss_index .header .left { padding-left: 0 !important; padding-right: 0 !important; position: absolute !important; left: -1px; }
 
 .ttrss_index .header .marked-pic { font-size: 20px !important; height: 20px !important; line-height: 20px !important; padding: 2px 0 2px 1px !important; }
 
