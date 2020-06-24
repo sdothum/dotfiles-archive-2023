@@ -7,7 +7,7 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [-] S | D | U | R | H [-<options>] [--<option>]* <package>"
+  echo "usage: $(basename $0) [-] S | D | U | R | H | Q [-<options>] [--<option>]* <package>"
   echo "        S .. sync noconfirm"
   echo "       -S .. sync confirm"
   echo "       -S    update repos"
@@ -18,6 +18,7 @@ usage() {
   echo "       -R .. remove non-recursive"
   echo "        H .. hold"
   echo "       -H .. unhold"
+  echo "        Q .. installed"
   echo "    .. $(basename $0) H | S | U"
   echo "        H    held (list)"
   echo "        S .. installed (count)"
@@ -57,7 +58,7 @@ upgrade_check() {
 
 # default (no options) to package query
 case $1 in
- S) [ $2 ] && { action=sync; yes='-y'; } || action=installed ;;
+ S) [ $2 ] && { action=sync; yes='-y'; } || action=count ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
  D) action=downgrade ;;
  U) [ $2 ] && { action=update; yes='-y'; } || { action=upgrade; upgrade_check; } ;;
@@ -66,6 +67,7 @@ case $1 in
 -R) action=remove ;;
  H) [ $2 ] && action=hold || action=held ;;
 -H) action=unhold ;;
+ Q) action=installed ;;
 /*) action=search; [ $1 = '/' ] || { package=${1#/}; shift; set -- 0 $package $@; } ;;  # allow /<pattern> short form (no action separator)
 f ) action=file ;;
 d ) action=dependency ;;
@@ -75,11 +77,11 @@ h ) action=history ;;
 esac
 
 shift; [ $1 ] || case $action in
-held     ) ;;
-history  ) ;;
-installed) ;;
-upgrade  ) ;;
-*        ) usage ;;
+held   ) ;;
+history) ;;
+count  ) ;;
+upgrade) ;;
+*      ) usage ;;
 esac
 
 options=" $@"
@@ -96,13 +98,14 @@ upgrade_actions() {
 }
 
 case $action in
+count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) xbps-query -x $package ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
 history   ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
-installed ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
+installed ) xbps-query -l $options | grep -q "^ii $@-[0-9]" && ditto "@" installed ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove    ) sudo xbps-remove $recursive $options $package ;;
 requiredby) xbps-query -X $package ;;

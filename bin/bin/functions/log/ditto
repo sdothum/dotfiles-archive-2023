@@ -20,7 +20,7 @@ usage() {
 
 while [ "$1" ] ;do
   case $1 in
-  @ ) [ "$2" ] || usage; desc=$2; shift ;;
+  @ ) [ "$2" ] || usage; desc=$2; message=' '; shift ;;
   -t) timestamp="$(date "+%-H %M'%S\" ")" ;;
   ..) [ "$2" ] || usage; justify=true; message=$2; shift ;;
   --) separator=true ;;
