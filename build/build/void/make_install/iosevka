@@ -6,7 +6,7 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [amphetype | code | proof | default] [double | single | futura | jost | hooky | mono | patch | leading <height> | family <name>]*"
+  echo "usage: $(basename $0) iosevka [amphetype | code | proof | default] [double | single | futura | haskell | hooky | mono | patch | leading <height> | family <name>]*"
   exit 1
 }
 
@@ -41,19 +41,19 @@ line() {
 
 while [ $1 ] ;do
   case $1 in
-  amphetype) hook; storey=double; family=-amphetype; leading=1875 ;;  # 1.5 spacing
-  code     ) line; design="'ligset-haskell'" ;;                       # default family
+  amphetype) hook; family=-amphetype; leading=1875 ;;  # 1.5 spacing
+  code     ) line ;;                                   # default family
   default  ) family=-default; upright=$shape; italic="'italic'"; oblique="'italic'"; default=true ;;
-  double   ) storey=double; ;;                                        # default "a"
-  family   ) family=-$2; shift ;;                                     # font family
-  futura   ) line; storey=single ;;                                   # futura as can be!
-  jost     ) line; storey=double ;;                                   # jost as can be!
-  hooky    ) hook ;;                                                  # top hook
-  leading  ) leading=$2; shift ;;                                     # line spacing
-  mono     ) mono=--mono; family=${family}-mono ;;                    # single width glyphs
-  patch    ) patch=true ;;                                            # nerdfonts
-  proof    ) line; family=-proof; leading=1875 ;;                     # 1.5 spacing
-  single   ) storey=single; ;;                                        # "a"
+  double   ) storey=double; ;;                         # default "a"
+  family   ) family=-$2; shift ;;                      # font family
+  futura   ) line; storey=single ;;                    # futura as can be!
+  haskell  ) design="'ligset-haskell'" ;;
+  hooky    ) hook ;;                                   # top hook
+  leading  ) leading=$2; shift ;;                      # line spacing
+  mono     ) mono=--mono; family=${family}-mono ;;     # single width glyphs
+  patch    ) patch=true ;;                             # nerdfonts
+  proof    ) line; family=-proof; leading=1875 ;;      # 1.5 spacing
+  single   ) storey=single; ;;                         # "a"
   *        ) usage ;;
   esac
   shift
@@ -81,7 +81,7 @@ fi
 if [ ! $default ] ;then
   alpha="$style, 'v-f-straight', 'v-g-singlestorey', 'v-m-longleg', 'v-y-straight', 'v-capital-b-more-asymmetric', 'v-capital-g-toothless'"
   math="'v-zero-slashed', 'v-one-hooky', 'v-tilde-low', 'v-asterisk-high', 'v-caret-high', 'v-brace-curly'"
-  symbol="'v-paragraph-low', 'v-at-long', 'v-eszet-sulzbacher'"
+  symbol="'v-paragraph-low', 'v-at-long', 'v-eszet-sulzbacher', 'v-zero-dotted', 'v-percent-dots', 'v-ampersand-upper-open'"
   upright="$shape, $alpha, 'v-a-${storey}storey', $math, $symbol"
   design=${design:-$upright}
   italic="$shape, $alpha, 'v-a-singlestorey', $math, $symbol"
