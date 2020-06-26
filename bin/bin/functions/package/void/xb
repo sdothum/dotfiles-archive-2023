@@ -105,7 +105,7 @@ file      ) xlocate $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
 history   ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
-installed ) xbps-query -l $options | grep -q "^ii $@-[0-9]" && ditto "@" installed ;;
+installed ) xbps-query -l $options | grep -q "^ii $@-[0-9]" && ditto @ installed ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "*$package*" | a $package ;;
 remove    ) sudo xbps-remove $recursive $options $package ;;
 requiredby) xbps-query -X $package ;;

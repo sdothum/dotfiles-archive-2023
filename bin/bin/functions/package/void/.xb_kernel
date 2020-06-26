@@ -1,5 +1,22 @@
-delay=3                                                                          # reboot delay window
+# prune old kernel versions
+keep=30  # last kernels
 
-delay_boot() { ditto reboot "in $delay seconds.."; (sleep $delay; sudo reboot) & }
+prune() {
+  cpu atom && sudo vkpurge rm '5.*' # has 4.x and 5.x versions updates but runs 4.x only
+  kernels=$(vkpurge list | sort -V | head -n -$keep)
+  [ "$kernels" ] || return && { echo ${__YELLOW}$kernels; ifno 'prune kernels' && return; }
+  for i in $kernels ;do sudo vkpurge rm $i ;done
+}
 
-ifno 'reboot new kernel' || { delay_boot; pkill -f "sshd: $USER" 2>/dev/null; }  # close remote ssh session
+[ $keep ] && prune
+
+# reboot post update
+delay=3  # reboot delay window
+
+ifno 'reboot new kernel' || {
+  ditto reboot "in $delay seconds.."
+  (sleep $delay; sudo reboot) &
+  pkill -f "sshd: $USER" 2>/dev/null  # close remote ssh session connect
+}
+
+# vim: set ft=sh: #

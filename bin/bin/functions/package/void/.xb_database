@@ -1,1 +1,3 @@
 notify tt-rss 'database migration possibly required'
+
+# vim: set ft=sh: #

@@ -1,3 +1,5 @@
 mail     alot
 ttrss    php-fpm
 database postgresql
+
+# vim: set ft=sh: #
