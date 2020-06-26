@@ -14,7 +14,7 @@ REPO=/net/depot/Iosevka
 TOML=$REPO/params/parameters.toml
 FONT=$HOME/.fonts/iosevka
 
-futura="'v-i-line', 'v-j-line', 'v-l-line', 'v-q-straight', 'v-t-cross'"
+geometric="'v-i-line', 'v-j-line', 'v-l-line', 'v-q-straight', 'v-t-cross'"
 hooky="'v-i-hooky', 'v-l-hooky'"
 leading=1250
 shape="'sans'"
@@ -32,7 +32,7 @@ hook() {
 }
 
 line() {
-  style=$futura
+  style=$geometric
   leading=1250  # default
   # descender=0
   descender=65  # default
