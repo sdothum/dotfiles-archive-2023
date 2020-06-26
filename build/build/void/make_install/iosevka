@@ -19,7 +19,7 @@ hooky="'v-i-hooky', 'v-l-hooky'"
 leading=1250
 shape="'sans'"
 storey=double
-nerdfonts='--fontawesome --fontawesomeextension --material --octicons'  # powerline added below
+nerdfonts='--fontawesome --fontawesomeextension --octicons --material'  # powerline added below
 
 shift  # basename is make_install, $1 == iosevka
 
@@ -100,7 +100,7 @@ cd Iosevka
 # build hooky [i l] single-storey [g] character set
 echo "[buildPlans.iosevka$family]            
 family  = 'Iosevka$family'
-design  = [$design]
+design  = ['sp-term', $design]
 upright = ['upright-only', $upright]
 italic  = ['italic-only', $italic]
 oblique = ['oblique-only', $oblique]
