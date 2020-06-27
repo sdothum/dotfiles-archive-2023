@@ -17,6 +17,8 @@ FONT=$HOME/.fonts/iosevka
 geometric="'v-i-line', 'v-j-line', 'v-l-line', 'v-q-straight', 'v-t-cross'"
 hooky="'v-i-hooky', 'v-l-hooky'"
 leading=1250
+descenderPad=65  # default
+cap=735          # default
 shape="'sans'"
 storey=double
 nerdfonts='--fontawesome --fontawesomeextension --octicons --material'  # powerline added below
@@ -25,18 +27,12 @@ shift  # basename is make_install, $1 == iosevka
 
 hook() {
   style=$hooky
-  leading=1250  # default
-  # descender=0
-  descender=65  # default
-  cap=735       # default
 }
 
 line() {
+  leading=1350
   style=$geometric
-  leading=1250  # default
-  # descender=0
-  descender=65  # default
-  cap=830       # lengthen ascenders (also stretches caps, numbers and quotes)
+  cap=835          # lengthen ascenders a la jost (also stretches caps, numbers and quotes)
 }
 
 while [ $1 ] ;do
@@ -73,8 +69,8 @@ pkgcheck ttfautohint
 
 # balance leading/descender spacing
 if [ $leading -gt 1250 ] ;then
-  descender=$(( ($leading - 1250) / 4 ))
-  leading=$(( $leading - $descender ))
+  descenderPad=$(( ($leading - 1250) / 4 ))
+  leading=$(( $leading - $descenderPad ))
 fi
 
 # font settings
@@ -127,10 +123,10 @@ leading = $leading
 # custom settings not available in private-build-plans.toml
 original $TOML
 cp $TOML.original $TOML
-[ $default ] || sed -i -r "/^cap =/s/= ([0-9]*)/= $cap/; /^descenderPad =/s/= ([0-9]*)/= $descender/" $TOML
+[ $default ] || sed -i -r "/^cap =/s/= ([0-9]*)/= $cap/; /^descenderPad =/s/= ([0-9]*)/= $descenderPad/" $TOML
 
 # ensure node.js is uptodate
-npm install
+npm install  # ignore npm funding and audit messages
 # npm update
 
 npm run build -- ttf::iosevka$family   # post Verda commits
