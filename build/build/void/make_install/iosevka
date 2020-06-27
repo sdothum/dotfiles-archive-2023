@@ -149,5 +149,7 @@ if [ $patch ] && [ -e /net/depot/nerd-fonts/font-patcher ] ;then
 fi
 
 fc-cache -fv
+# update local network
+for i in $(remotehosts) ;do /usr/bin/ssh $USER:$i "touch $HOME/.session/.fc-cache" 2>/dev/null & ;done
 
 # vim: set ft=sh: #
