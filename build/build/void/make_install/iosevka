@@ -7,6 +7,7 @@
 
 usage() {
   echo "usage: $(basename $0) iosevka [amphetype | code | proof | default] [double | single | futura | haskell | hooky | mono | patch | leading <height> | family <name>]*"
+  echo "           where, height >= 1250"
   exit 1
 }
 
@@ -16,9 +17,10 @@ FONT=$HOME/.fonts/iosevka
 
 geometric="'v-i-line', 'v-j-line', 'v-l-line', 'v-q-straight', 'v-t-cross'"
 hooky="'v-i-hooky', 'v-l-hooky'"
-leading=1250
+leading=1250     # default (minimum value)
 descenderPad=65  # default
 cap=735          # default
+cap_pad=100      # more futura like ascenders (also stretches caps, numbers and quotes
 shape="'sans'"
 storey=double
 nerdfonts='--fontawesome --fontawesomeextension --octicons --material'  # powerline added below
@@ -30,9 +32,9 @@ hook() {
 }
 
 line() {
-  leading=1350
+  leading=$(( $leading + $cap_pad ))  # decrease descenderPad if cap_pad > 100 ?
   style=$geometric
-  cap=835          # lengthen ascenders a la jost (also stretches caps, numbers and quotes)
+  cap=$(( $cap + $cap_pad ))
 }
 
 while [ $1 ] ;do
@@ -54,6 +56,8 @@ while [ $1 ] ;do
   esac
   shift
 done
+
+[ $leading -lt 1250 ] && usage
 
 ifyes "build Iosevka$family" || usage
 FONT=$FONT$family
