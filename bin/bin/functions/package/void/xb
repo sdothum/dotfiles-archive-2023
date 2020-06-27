@@ -38,7 +38,7 @@ ACTIONS=${0%/*}/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, 
 [ $1 ] || usage
 
 # kernel must be last of ordered action tuples, see file .xb_kernel
-[ -e $ACTIONS ] && upgrade_actions=$(cat $ACTIONS)
+[ -e $ACTIONS ] && upgrade_actions=$(cat $ACTIONS | sed 's/#.*//')  # prune comments
 upgrade_actions="$upgrade_actions
   kernel  linux[0-9]
 "
@@ -92,7 +92,7 @@ options=${options% *}
 upgrade_actions() {
   set -- $upgrade_actions
   while [ $2 ] ;do 
-    eval [ \$$1 ] && [ -e ${0%/*}/.xb_$1 ] && . ${0%/*}/.xb_$1
+    eval [ \$$1 ] && [ -e ${0%/*}/.xb_$1 ] && . ${0%/*}/.xb_$1 || post_install $2
     shift 2
   done
 }

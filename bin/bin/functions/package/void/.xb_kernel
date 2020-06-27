@@ -1,11 +1,14 @@
+# sdothum - 2016 (c) wtfpl
+# see xb, .xb_actions
+
 # prune old kernel versions
-keep=30  # last kernels
+keep=10  # last kernels
 
 prune() {
   cpu atom && sudo vkpurge rm '5.*' # has 4.x and 5.x versions updates but runs 4.x only
   kernels=$(vkpurge list | sort -V | head -n -$keep)
   [ "$kernels" ] || return && { echo ${__YELLOW}$kernels; ifno 'prune kernels' && return; }
-  for i in $kernels ;do sudo vkpurge rm $i ;done
+  sudo vkpurge rm $kernels
 }
 
 [ $keep ] && prune
@@ -13,10 +16,9 @@ prune() {
 # reboot post update
 delay=3  # reboot delay window
 
-ifno 'reboot new kernel' || {
-  ditto reboot "in $delay seconds.."
-  (sleep $delay; sudo reboot) &
-  pkill -f "sshd: $USER" 2>/dev/null  # close remote ssh session connect
-}
+ifno 'reboot new kernel' && exit
+ditto reboot "in $delay seconds.."
+(sleep $delay; sudo reboot) &
+pkill -f "sshd: $USER" 2>/dev/null  # close remote ssh session connect
 
 # vim: set ft=sh: #

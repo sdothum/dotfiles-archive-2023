@@ -1,5 +1,8 @@
+# sdothum - 2016 (c) wtfpl
+# tuple: <action> <package> -> file: .xb_<action>, see xb
+
 mail     alot
 ttrss    php-fpm
 database postgresql
 
-# vim: set ft=sh: #
+# vim: set ft=conf: #

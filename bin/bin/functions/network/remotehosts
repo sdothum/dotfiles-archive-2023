@@ -6,6 +6,6 @@
 
 # ............................................................. Remote hostnames
 
-grep '^10.1.0' /etc/hosts | awk '{ print $2 }' | sed "s/$(hostname)//"
+grep '^10.1.0' /etc/hosts | awk '{ print $2 }' | sed "/$(hostname)/d"
 
 # vim: set ft=sh: #

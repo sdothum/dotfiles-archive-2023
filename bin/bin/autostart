@@ -10,6 +10,7 @@
 AUTOCONNECT=$SESSION/autoconnect
 CMST=$SESSION/cmst
 CALENDAR=$SESSION/calendar
+FCCACHE=$SESSION/.fc-cache
 IRC=$SESSION/irc
 JABBER=$SESSION/jabber
 MAIL=$SESSION/mail
@@ -54,6 +55,8 @@ if [ -e $AUTOCONNECT ] ;then
 else
   [ -e $CMST ] && cmst &
 fi
+
+[ $FCCACHE ] && { fc-cache -f &; rm -f $FCCACHE; }  # see iosevka
 
 # ....................................................... Desktop initialization
 
