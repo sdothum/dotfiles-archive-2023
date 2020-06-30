@@ -8,19 +8,7 @@
 # shell scripts excluding .man (see dmenu man)
 
 # search these project library folders..
-sources="
-  $HOME/bin
-  $HOME/build/arch
-  $HOME/build/cfg
-  $HOME/build/obarun
-  $HOME/build/void
-  $HOME/.config/fish
-  $HOME/.config/herbstluftwm
-  $HOME/.vim/config
-  $HOME/.vim/config/custom
-  $HOME/.weechat/python
-  /etc/sv
-"
+sources=$(cat $CONFIG/scripts | sed "s|\$HOME|$HOME|g")  # manual eval of $HOME
 
 files()      { for i in $sources ;do fcache f $i ;done }
 abbreviate() { eval sed $trim; }
@@ -45,6 +33,8 @@ expand() {
 }
 
 # list of user scripts and functions
+script_history() { mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"; }
+
 while : ;do
   file=$(files | abbreviate | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | column -s^ -t | 
       rmenu "Edit Script$error" $file) || exit
@@ -54,9 +44,20 @@ while : ;do
     file=$(echo $file | sed -r "s,([^ ]*)  *$SEP  *([^ ]*),\2/\1,")
   else
     # (tic) 'script for quick menu action
-    file=$(files | grep "/$(unquote $file)$" | head -1 | sed "s,^$HOME/,,")
-    [ $file ] || exec dmenu scripts
-    mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"
+    tick=$(files | grep "/$(unquote $file)$" | head -1 | sed "s,^$HOME/,,")
+    if [ $tick ] ;then
+      file=$tick
+      script_history
+    # explicit /ROOT file spec
+    elif [ ${file%${file#?}} = / ] && [ -e "$file" ] ;then
+      script_history
+    # relative $HOME file spec
+    elif [ -e "$HOME/$file" ] ;then
+      file=$HOME/$file
+      script_history
+    else
+      exec dmenu scripts  # not found
+    fi 
   fi
 
   if expand $file >/dev/null ;then

@@ -37,7 +37,8 @@ exists gnome-keyring-daemon && gnome-keyring-daemon -s --components=pkcs11,secre
 pstat gpg-agent || gpg-agent --homedir $HOME/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 server && ipfilter &
 xrdb -merge $HOME/.Xresources &
-pavucontrol &
+# pavucontrol &
+# pulseaudio-equalizer enable
 
 # ........................................................... Daemons and caches
 
@@ -56,7 +57,7 @@ else
   [ -e $CMST ] && cmst &
 fi
 
-[ $FCCACHE ] && { fc-cache -f &; rm -f $FCCACHE; }  # see iosevka
+[ $FCCACHE ] && { (fc-cache -f; rm -f $FCCACHE) & }  # see iosevka
 
 # ....................................................... Desktop initialization
 

@@ -18,7 +18,7 @@ FONTSIZE=$SESSION/fontsize
 
 # test arm first to avoid spurious lspci messages
 if   cpu arm      ;then size=8
-elif gpu inspiron ;then hdmi && size=9 || size=10
+elif gpu inspiron ;then hdmi && size=10 || size=10
 elif gpu intel    ;then size=9
 elif cpu celeron  ;then size=10
 elif gpu macbook  ;then size=9

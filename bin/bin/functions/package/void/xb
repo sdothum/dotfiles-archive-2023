@@ -7,9 +7,10 @@
 # ........................................................... Package management
 
 usage() {
-  echo "usage: $(basename $0) [-] S | D | U | R | H | Q [-<options>] [--<option>]* <package>"
+  echo "usage: $(basename $0) [-] S[S] | D | U | R | H | Q [-<options>] [--<option>]* <package>"
   echo "        S .. sync noconfirm"
   echo "       -S .. sync confirm"
+  echo "       SS .. sync force noconfirm"
   echo "       -S    update repos"
   echo "        D .. downgrade"
   echo "        U .. update noconfirm"
@@ -34,7 +35,8 @@ usage() {
 }
 
 CACHE=/var/cache/xbps
-ACTIONS=${0%/*}/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
+XBDIR=${0%/*}
+ACTIONS=$XBDIR/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
 [ $1 ] || usage
 
 # kernel must be last of ordered action tuples, see file .xb_kernel
@@ -59,6 +61,7 @@ upgrade_check() {
 # default (no options) to package query
 case $1 in
  S) [ $2 ] && { action=sync; yes='-y'; } || action=count ;;
+SS) [ $2 ] && { action=force; yes='-y'; } ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
  D) action=downgrade ;;
  U) [ $2 ] && { action=update; yes='-y'; } || { action=upgrade; upgrade_check; } ;;
@@ -92,7 +95,7 @@ options=${options% *}
 upgrade_actions() {
   set -- $upgrade_actions
   while [ $2 ] ;do 
-    eval [ \$$1 ] && [ -e ${0%/*}/.xb_$1 ] && . ${0%/*}/.xb_$1 || post_install $2
+    eval [ \$$1 ] && { [ -e $XBDIR/.xb_$1 ] && . $XBDIR/.xb_$1 || post_install $2; }
     shift 2
   done
 }
@@ -102,6 +105,7 @@ count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) xbps-query -x $package ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
+force     ) sudo xbps-install -f $yes $options $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
 history   ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;

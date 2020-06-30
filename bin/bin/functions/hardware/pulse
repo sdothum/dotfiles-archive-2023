@@ -20,6 +20,8 @@ pulse() {
   # manually restore audio device
   killall pulseaudio 2>/dev/null
   pulseaudio --start --log-target=syslog
+  pavucontrol &
+  pulseaudio-equalizer enable
 }
 
 

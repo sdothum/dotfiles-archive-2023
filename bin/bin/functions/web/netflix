@@ -12,9 +12,10 @@ NETFLIX='http://www.netflix.com/ca'
 delay=0.1  # time
 
 pkill -f $BROWSER 2>/dev/null
-void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
+# void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
+void && pulse
 videomode on
-restore layout 2:3
+is display -1920 && restore layout max || { is display -=2560 && restore layout 2:3; }
 
 RUNOPT=$options $BROWSER $NETFLIX &
 if [ $BROWSER = chromium ] ;then
