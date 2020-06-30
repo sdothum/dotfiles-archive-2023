@@ -49,6 +49,7 @@ d pass
   pavucontrol
   pulseaudio
   alsa-plugins-pulseaudio
+  pulseaudio-equalizer-ladspa
 
 
 = system utility

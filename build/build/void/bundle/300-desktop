@@ -44,9 +44,11 @@
 = gtk theme/engine
 = ════════════════
   Adapta
+  breeze-hacked-cursor-theme
   gtk-engine-murrine
   meson
-  paper-icon-theme
+# paper-icon-theme  # missing down arrow menu button
+  papirus-icon-theme
 
 
 = notification
