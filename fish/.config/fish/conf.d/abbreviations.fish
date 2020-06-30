@@ -111,6 +111,7 @@ abbr w 'which'
 
 abbr c 'clear ; setterm -cursor on'
 abbr cursor 'setterm -cursor on'
+abbr gaps 'rlwrap gaps'
 abbr h: 'ls -l /tmp/herbstluftwm:*'
 abbr hc 'herbstclient'
 abbr herbstluftwm ". $HOME/.config/herbstluftwm/config/ENV"
