@@ -56,7 +56,6 @@ focus_check
 # .......................................................... Create new instance
 
 # cancel out above focus frame, tmux rules!
-focus frame
 case $term in
 byobu ) tmux_session $name ;;
 tmux  ) tmux_session $name ;;

@@ -28,17 +28,17 @@ layout() {
   if is display =3440 ;then
     case $1 in
     1) thirds     '1' ;;
-    2) max        '2' ;;
+    2) thirds     '2' ;;
     3) thirds     '3' ;;
     4) thirds     '4' ;;
-    5) max        '5' ;;
-    6) thirds     '6' ;;
+    5) one2two    '5' ;;
+    6) quarters   '6' ;;
     esac
   elif is display +1440 ;then
     case $1 in
     1) halves     '1' ;;
-    2) twofifths  '2' ;;
-    3) twofifths  '3' ;;
+    2) two2three  '2' ;;
+    3) two2three  '3' ;;
     4) halves     '4' ;;
     5) grid       '5' ;;
     6) thirds     '6' ;;
@@ -97,7 +97,7 @@ halves() {
   fi
 }
 
-onethird() {
+one2two() {
   echo 1:2 >$LAYOUT:$1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.333300:0 (clients vertical:0) (clients vertical:0))'
@@ -107,7 +107,7 @@ onethird() {
   fi
 }
 
-twofifths() {
+two2three() {
   echo 2:3 >$LAYOUT:$1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
     herbstclient load $1 '(split horizontal:0.400000:0 (clients vertical:0) (clients vertical:0))'
@@ -184,8 +184,8 @@ vertical  |\
 horizontal) layout=$1
             case $layout in
             1:1  ) layout=halves ;;
-            1:2  ) layout=onethird ;;
-            2:3  ) layout=twofifths ;;
+            1:2  ) layout=one2two ;;
+            2:3  ) layout=two2three ;;
             1:1:1) layout=thirds ;;
             esac
             # may already be in lock state, see toggle monocle

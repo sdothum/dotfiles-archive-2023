@@ -6,6 +6,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 HLWMTRACE=$SESSION/trace
+CONKY=$SESSION/conky
 hook=1  # emit_hook initialization window
 
 # chain herbstclient commands (note: keybind chains use ".")
@@ -72,7 +73,7 @@ restore layout tags
 
 # ..................................................................... Monitors
 
-if is display +1920 ;then
+if [ -e $CONKY ] ;then
   toggle conky
   # deprecated with primary:secondary as left:right..
   # if is multihead ;then
