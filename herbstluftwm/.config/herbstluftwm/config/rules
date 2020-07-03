@@ -25,7 +25,7 @@ hc rule windowrole="'.* Tiny RSS'"         tag=1 focus=on
 # hc rule class=Chromium                   tag=1 index=1 focus=on
 hc rule class=dwb                          tag=1
 hc rule class=luakit                       tag=1
-# hc rule class=qutebrowser                tag=1 once
+hc rule class=qutebrowser                  tag=1 once index=0 focus=on hook=max
 hc rule title=RSS                          tag=1 index=1 focus=off
 hc rule class=Minitube                     tag=1
 # hc rule class=VimbT                      tag=1 once
@@ -62,6 +62,7 @@ hc rule class=VirtualBox                   tag=5 monitor=0 focus=on switchtag=on
 # hc rule class=Thunar                     tag=6 focus=on switchtag=on
 hc rule title=Autoconnect                  tag=6 focus=off
 hc rule class=Pavucontrol                  tag=6 focus=off
+hc rule class=Pulseaudio-equalizer-gtk     tag=6 focus=off
 hc rule title=Ping                         tag=6 index=1 focus=off
 hc rule class=cmst                         tag=6 focus=on switchtag=on
 hc rule class=Tixati                       tag=6 focus=on switchtag=on

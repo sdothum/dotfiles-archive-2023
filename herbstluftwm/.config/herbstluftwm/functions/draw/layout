@@ -1,12 +1,12 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="restore/layout $@" . $PARENT
+[ $TRACE ] && CHILD="draw/layout $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ............................................................... Restore layout
+# .................................................................. Draw layout
 
-# Usage: restore layout [tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | default]
+# Usage: draw layout [tags | grid | horizontal | max | vertical | 1:1 | 2:3 | 1:2 | 1:1:1 | spread | default]
 
 # default master pane left or right
 MASTER=${MASTER:-left}
@@ -14,8 +14,8 @@ MASTER=${MASTER:-left}
 ORDER=0
 
 [ $ORDER -eq 0 ] && 
-  layouts="grid\nhorizontal\nmax\nvertical\n1:1\n2:3\n1:2\n1:1:1" ||
-  layouts="1:1:1\n1:2\n2:3\n1:1\ngrid\nhorizontal\nmax\nvertical"
+  layouts="grid\nhorizontal\nmax\nvertical\n1:1\n2:3\n1:2\n1:1:1\nspread" ||
+  layouts="1:1:1\n1:2\n2:3\n1:1\nspread\ngrid\nhorizontal\nmax\nvertical"
 
 windows=$(herbstclient attr tags.focus.client_count)
 wcount=$(herbstclient attr tags.focus.curframe_wcount)
@@ -28,7 +28,7 @@ layout() {
   if is display =3440 ;then
     case $1 in
     1) thirds     '1' ;;
-    2) thirds     '2' ;;
+    2) spread     '2' ;;
     3) thirds     '3' ;;
     4) thirds     '4' ;;
     5) one2two    '5' ;;
@@ -117,6 +117,17 @@ two2three() {
   fi
 }
 
+spread() {
+  echo spread >$LAYOUT:$1
+  if [ "$load" ] || [ $windows -lt 4 ] ;then
+    herbstclient load $1 '(split horizontal:0.525000:0 (split horizontal:0.420000:0 (clients vertical:0) (clients vertical:0)) (clients vertical:0))'
+  else
+    restore mono
+    [ $MASTER = left ] && split 0.5250 || split 0.4200
+    herbstclient chain . focus_edge left . split right 0.475
+  fi
+}
+
 thirds() {
   echo 1:1:1 >$LAYOUT:$1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
@@ -175,6 +186,7 @@ tags      ) for i in $TAGS ;do layout $i ;done
 2:3       |\
 1:2       |\
 1:1:1     |\
+spread    |\
 max       |\
 grid      |\
 halves    |\
@@ -183,10 +195,10 @@ quarters  |\
 vertical  |\
 horizontal) layout=$1
             case $layout in
-            1:1  ) layout=halves ;;
-            1:2  ) layout=one2two ;;
-            2:3  ) layout=two2three ;;
-            1:1:1) layout=thirds ;;
+            1:1   ) layout=halves ;;
+            1:2   ) layout=one2two ;;
+            2:3   ) layout=two2three ;;
+            1:1:1 ) layout=thirds ;;
             esac
             # may already be in lock state, see toggle monocle
             [ -e $LOCK ] || herbstclient lock
@@ -196,11 +208,11 @@ horizontal) layout=$1
             herbstclient unlock ;;
 
 default   ) restore windowed
-            exec restore layout $(default) ;;
+            exec draw layout $(default) ;;
 
 *         ) layout=$(echo "$layouts" | rmenu 'Explode to Layout' $(default) -no-custom) || exit
             restore windowed
-            exec restore layout $layout ;;
+            exec draw layout $layout ;;
 esac
 
 if [ $windows -gt 1 ] &&  [ $layout != max ] ;then

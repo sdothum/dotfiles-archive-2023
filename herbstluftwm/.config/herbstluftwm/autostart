@@ -69,7 +69,7 @@ toggle compton on
 
 # initialize tag layouts
 # load cannot be chained due to shell expansion limitation with quoted '(layout spec)'
-restore layout tags
+draw layout tags
 
 # ..................................................................... Monitors
 

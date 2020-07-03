@@ -137,7 +137,7 @@ export SEP='∙'
 # panel info separators
 # export LSEP='    '
 # export RSEP='    '
-export LSEP='   '  # even more distraction free!
-export RSEP='   '
+export LSEP='    '  # even more distraction free!
+export RSEP='    '
 
 # vim: set ft=sh: #
