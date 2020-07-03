@@ -11,7 +11,7 @@ EDIT='[ edit menu ]'
 #             e.g. term 'title' program
 #                  program  # description
 
-pgms=$CONFIG/apps
+pgms=$CONFIG/.appsrc
 
 apps() {
   while read app <&3 ;do

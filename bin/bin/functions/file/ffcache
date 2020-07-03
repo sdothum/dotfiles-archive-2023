@@ -1,0 +1,52 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# File
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Concatenate caches
+
+usage() {
+  echo "usage: $(basename $0) [-] <catlg> <cache> [<cache>]*"
+  echo '       where, <cache> -> <path> [<options>]*, see fcache'
+  exit 1
+}
+
+[ $1 ] || usage
+
+while [ $1 ] ;do
+  case $1 in
+  '-'       ) refresh=- ;;
+  *         ) CATLG=$CACHEDIR/fcache:$1; [ $refresh ] && rm -f $CATLG 2>/dev/null; shift; break ;;
+  esac
+  shift
+done
+
+catlg() { files=$(fcache $refresh f $path $options); echo "$files" >>$CATLG; }
+
+if ! [ -e $CATLG ] && [ -d "$1" ] ;then
+  path=$1
+  shift
+  while [ "$1" ] ;do
+    if [ -d "$1" ] ;then
+      catlg
+      path=$1
+      unset options
+    else
+      case $1 in
+      -maxdepth |\
+      -perm     |\
+      -regex    |\
+      -regextype) options="$options $1 $2"; shift ;;
+      *         ) options="$options $1" ;;
+      esac
+    fi
+    shift
+  done
+  catlg  # last spec
+fi
+
+[ -e $CATLG ] && cat $CATLG || usage
+
+# vim: set ft=sh: #
+

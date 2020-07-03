@@ -36,7 +36,7 @@ while : ;do
   usenet-crawler) $BROWSER $USENET_CRAWLER; pwait "$BROWSER.*$USENET_CRAWLER"; unset root ;;
   nzbget        ) $BROWSER $NZBGET; pwait "$BROWSER.*$NZBGET"; unset root ;;
   patricia      ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
-  pulse         ) pulse; pavucontrol & ;;
+  pulse         ) pulse; (pavucontrol &); pulseaudio-equalizer-gtk & ;;
   references    ) dmenu references; unset root; break ;;
   series        ) dmenu series ;;
   sonarr        ) $BROWSER $SONARR; pwait "$BROWSER.*$SONARR"; unset root ;;

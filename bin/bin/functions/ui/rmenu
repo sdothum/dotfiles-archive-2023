@@ -35,7 +35,7 @@ indent='       '
 
 # .......................................................................... GUI
 
-[ -e $MENU ] && window=MENU || window=STACK
+[ -e "$MENU" ] && window=MENU || window=STACK
 
 if [ -z $TERMINAL ] ;then
   if gui ;then

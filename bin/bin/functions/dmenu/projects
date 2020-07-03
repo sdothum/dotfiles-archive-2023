@@ -13,7 +13,7 @@
 EDIT='[ edit tags ]'
 
 # tag file containing project specs
-PROJECTS=$CONFIG/projects
+PROJECTS=$CONFIG/.projectsrc
 history=$HISTORY/projects
 
 projects() { sed "s/  *::  */^$SEP /" $PROJECTS | mhistory projects | column -s^ -t | sed "1i$EDIT"; }

@@ -8,12 +8,13 @@
 
 usage() {
   echo "usage: $(basename $0) I'nitialize"
-  echo "usage: $(basename $0) [type] <dir>, type -> find -type <type>"
-  echo "usage: $(basename $0) - <dir>, force directory cache update"
-  echo "usage: $(basename $0) + <dir>, directory cache creation only"
-  ls -l $CACHEDIR/fcache:*
+  echo "usage: $(basename $0) [type] <dir> [<options>*], type -> find -type <type>"
+  echo "usage: $(basename $0) - <dir> [<options>*], force directory cache update"
+  ls -l $FCACHE:*
   exit 1
 }
+
+FCACHE=$CACHEDIR/fcache
 
 # Note: non-directory caches automatically update their associated directory caches via stest
 #       but directory caches (used in fuzzy jumping) require manual updating, as required,
@@ -24,32 +25,42 @@ usage() {
 find $CACHEDIR -name 'fcache:*' -size 0c -exec rm {} \; 2>/dev/null
 
 # speed up fuzzy searches (especially arm), see shell/j j.fish
-case $1 in
-I*       ) rm -fv $CACHEDIR/fcache:*; exit ;;
-[bcdflps]) type=$1; shift ;;
-'-'      ) type=d; refresh=true; shift ;;
-'+'      ) type=d; create=true; shift ;;
-*        ) [ $# -eq 1 ] && type=d || usage ;;
-esac
 
-cname() { echo $1 | tr '/' ':'; }
+while [ $1 ] ;do
+  case $1 in
+  I*        ) rm -fv $FCACHE*; exit ;;
+  !         ) not=! ;;
+  [bcdflps] ) type=$1 ;;
+  '-'       ) refresh=true ;;
+  -maxdepth ) maxdepth="-maxdepth $2"; shift ;;
+  -perm     ) perm="$not -perm $2"; unset not; shift ;;
+  -regex    ) regex="$regex $not -regex '$2'"; type=f; filter=cat; unset not; shift ;;
+  -regextype) regextype="-regextype $2"; shift ;;
+  *         ) [ -d $1 ] && node=$1 || usage; [ $type ] || type=d ;;
+  esac
+  shift
+done
 
-cache=$CACHEDIR/fcache:$type$(cname $1)
-dcache=$CACHEDIR/fcache:d$(cname $1)
+cname() { echo $node | tr '/' ':'; }
+
+cache=$FCACHE:$type$(cname $node)
+dcache=$FCACHE:d$(cname $node)
 
 # if unchanged files in non-directory search, return cache
 # Note: always returns directory cache
 if [ -e $cache ] && [ -e $dcache ] && [ -z $refresh ] ;then
-  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || { [ $create ] && exit || exec cat $cache; }
+  [ $type != d ] && stest -dqr -n $dcache $(cat $dcache) || exec cat $cache
 fi
 
-[ $refresh ] && notify "$1" 'Refreshing fcache'
+notify "$node" 'Updating fcache'
 # following links can be problematic for concurrent finds (locking issue)
-[ -L $1 ] && link='-L'
-nohup find $link $1 -type d 2>/dev/null | exclude >$dcache &
-nohup find $link $1 -type $type 2>/dev/null | exclude >$cache &
-[ $refresh ] || [ $create ] || nohup find $link $1 -type $type 2>/dev/null | exclude &
+[ -L $node ] && link='-L'
+
+eval find $link $node $maxdepth -type d 2>/dev/null | ${filter:-exclude} >$dcache &
+[ $type = d ] || eval find $link $node $maxdepth $perm $regextype $regex -type $type 2>/dev/null | ${filter:-exclude} >$cache &
+
 wait
-cat $cache
+grep -q "$node" $FCACHE || echo $type $node $maxdepth $perm $regextype $regex >>$FCACHE  # see fcached (tbd)
+[ $nocat ] || cat $cache                                                                 # see fcached (tbd)
 
 # vim: set ft=sh: #

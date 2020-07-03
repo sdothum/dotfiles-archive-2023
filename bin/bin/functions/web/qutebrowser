@@ -32,7 +32,7 @@ font="
   -s fonts.tabs '$size'
 "
 
-void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
+void && pulse  # browser doesn't autostart pulseaudio
 if pgrep -f "$QUTEBROWSER" >/dev/null ;then
   eval $QUTEBROWSER $RUNOPT $font :open\\ -w\\ $startpage & 
 else

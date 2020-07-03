@@ -11,8 +11,8 @@ TOGGLE='[ toggle ]'
  CLEAR='[ clear  ]'
   EDIT='[ edit   ]'
 
-stations=$CONFIG/radio  # access list csv format: <station>, <url>
-connect=0.5             # connection lag time
+stations=$CONFIG/.radiorc  # access list csv format: <station>, <url>
+connect=0.5                # connection lag time
 
 playlist() {
   if [ -e $RADIO ] ;then

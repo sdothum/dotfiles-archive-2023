@@ -7,21 +7,15 @@
 
 # shell scripts excluding .man (see dmenu man)
 
-# search these project library folders..
-sources=$(cat $CONFIG/scripts | sed "s|\$HOME|$HOME|g")  # manual eval of $HOME
+REFRESH='[ refresh ]'  # catalogue, see ffcache
 
-files()      { for i in $sources ;do fcache f $i ;done }
-abbreviate() { eval sed $trim; }
+# search these project library folders..
+sources=$(cat $CONFIG/.scriptsrc | sed "s|\$HOME|$HOME|g")  # manual eval of $HOME
 
 # shorten path references for menu
-for i in $sources ;do
-  echo $i | grep -q "^$HOME" || continue
-  case $i in
-  */.vim*      |\
-  */.weechat*) trim="$trim -e 's,$i/,.${i##*/.}/,'" ;;
-  *          ) trim="$trim -e 's,$i/,${i##*/}/,'" ;;
-  esac
-done
+for i in $sources ;do echo $i | grep -q "^$HOME" && trim="$trim s,$i/,${i##*/}/,;" ;done
+
+files() { ffcache $refresh scripts $sources | sed "$trim"; unset refresh; }
 
 # recover full pathname
 expand() {
@@ -36,10 +30,13 @@ expand() {
 script_history() { mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s,^stow/[^/]*/,,")"; }
 
 while : ;do
-  file=$(files | abbreviate | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | column -s^ -t | 
-      rmenu "Edit Script$error" $file) || exit
-
-  if echo $file | grep -q "$SEP" ;then
+  file=$(files | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | sed "1i$REFRESH" | column -s^ -t | 
+      rmenu "Edit Script$error" 1 $file) || exit
+  if [ "${file%]*}]" = "$REFRESH" ] ;then  # $file may contain column spacing
+    refresh=-
+    unset file
+    continue
+  elif echo $file | grep -q "$SEP" ;then
     mhistory scripts "$(echo $file | sed "s/ *$SEP/^$SEP/")"
     file=$(echo $file | sed -r "s,([^ ]*)  *$SEP  *([^ ]*),\2/\1,")
   else

@@ -1,0 +1,23 @@
+hardcopy eject
+amphetype
+blackboard
+calibre
+digikam
+gthumb
+term 'Trace' tail -f /tmp/herbstluftwm.log  # herbstluftwm :: log
+tmux_session irc weechat                    # irc
+tmux_session jabber 'mcabber 2>/dev/null'   # jabber
+tmux_session mail alot                      # mail
+rawtherapee
+vimb http://luna:8213/                      # repo
+screenshot d                                # screenshot :: desktop
+screenshot s                                # screenshot :: select
+simpletimer
+$(which thedarnedestthing)                  # http :: the darnedest thing
+vimwiki colophon                            # wiki :: colophon
+vimwiki healing                             # wiki :: healing
+vimwiki notes                               # wiki :: notes
+vimwiki shadowsandlight                     # wiki :: shadows and light
+vimwiki thedarnedestthing                   # wiki :: the darnedest thing
+vimwiki thestory                            # wiki :: the story
+vimwiki truthordie                          # wiki :: truth or die

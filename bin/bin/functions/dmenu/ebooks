@@ -5,47 +5,32 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu ebooks [<author> | I [<cache>]]
+# Usage: dmenu ebooks [<author> | [<catlg>]]
 
-REBUILD='[ rebuild database ]'
-
-CATLG=${CATLG:-kindle}
-LIBRARY=${LIBRARY:-/net/media/ebooks/library/$CATLG}
-CACHE=$LIBRARY/dmenu:ebooks
+LIBRARY=${LIBRARY:-/net/media/ebooks/library}
+CATLG=$LIBRARY/${CATLG:-kindle}
 
 # ebook library
 while [ "$1" ] ;do
-  case $1 in
-  I) init=true ;;
-  *) [ -e "/net/media/ebooks/$1" ] && LIBRARY=/net/media/ebooks/$1 || { author=$1; export matching=normal; init=true; } ;;
-  esac
+  [ -d "$LIBRARY/$1" ] && CATLG=$LIBRARY/$1 || { author=$1; export matching=normal; }
   shift
 done
 
 # ....................................................................... Libary
 
 # build catalogue
-ebooks() {
-  notify low 'Updating library cache' 'Please be patient..'
-  find $LIBRARY -maxdepth 4 -regex ".*\(mobi\|epub\|azw3\|azw\|kfx\)" |
-      sed -re "s,$LIBRARY/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
+catlg() {
+  fcache $CATLG -maxdepth 4 -regex '.*\(mobi\|epub\|azw3\|azw\|kfx\)' |
+      sed -re "s,$CATLG/([^/]*)/(.*/)*([^/]*)\.(mobi|epub|azw3|azw|kfx),\1$SEP\3," \
           -e 's/(.*) - .*/\1/; s/ \(.*\)//' \
           -e "s/(.*)$SEP(.*)/\2^$SEP \1/" |
-      sort -u >$CACHE
-  notify low 'Update of library cache' '..Complete'
-  sleep 1
+      sort -u
 }
-
-# command line initialization with: dmenu ebooks [init]
-if [ ! -s $CACHE ] || [ $init ] || stest -qr -n $CACHE $(find $LIBRARY -maxdepth 3) ;then
-  ebooks $1
-  [ $init ] && exit
-fi
 
 file() {
   # convert apostrophe ' to . for pattern matching
   path=$(echo ".*$author/($title[^/]*/)*$title( - .*)*.$1" | tr "'" '.')
-  find $LIBRARY -regextype egrep -regex "$path"
+  find $CATLG -regextype egrep -regex "$path"
 }
 
 mobi() { mobi=$(file mobi); }
@@ -54,7 +39,7 @@ azw3() { azw3=$(file azw3); }
 azw()  { azw=$(file azw); }
 kfx()  { kfx=$(file kfx); }
 
-catlg() {
+edit() {
   if grep -q "$book" $HISTORY/ebooks ;then
     grep -v "$book" $HISTORY/ebooks >/tmp/ebooks
     mv /tmp/ebooks $HISTORY/ebooks
@@ -67,13 +52,11 @@ catlg() {
 # .................................................................. Select book
 
 while : ;do
-  book=$(cat $CACHE | mhistory ebooks | column -s^ -t | sed "1i$REBUILD" | rmenu "E-book" 1 -filter \"$author\" -no-custom)
+  book=$(catlg | mhistory ebooks | column -s^ -t | rmenu "E-book" -filter \"$author\" -no-custom)
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then
     [ "$author" ] && { unset author; unset matching; continue; } || exit
-  elif [ "$book" = "$REBUILD" ] ;then
-    ebooks init; continue
   fi
 
   author="${book#*$SEP }"
@@ -91,7 +74,7 @@ while : ;do
     mhistory ebooks "$(echo $book | sed "s/ *$SEP/^$SEP/")"
     case $action in
     read  ) [ $focus ] || { focus frame; focus=true; }; FBReader "$file" ;;
-    edit  ) catlg; ebooks ;;
+    edit  ) edit; ebooks ;;
     kindle) dmenu kindle "$file" ;;
     esac
     break

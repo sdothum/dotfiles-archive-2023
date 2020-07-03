@@ -12,7 +12,7 @@
 #        source $HOME/bin/dmenu
 #        POSIX standard for use with dash shell
 
-CONFIG=${0%/dmenu}/functions/dmenu/.config
+CONFIG=${0%/dmenu}/functions/dmenu
 export HISTORY=$HOME/bin/functions/dmenu/.history
 # currently playing, see music, radia
 MUSIC=/tmp/audio:music

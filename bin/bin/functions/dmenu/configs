@@ -7,49 +7,26 @@
 
 # Usage: dmenu configs [cache]
 
-REBUILD='[ rebuild database ]'
+REFRESH='[ refresh ]'  # catalogue, see ffcache
 
 # system conf files
-cache=$CACHEDIR/dmenu:configs
-include='.*(cfg|conf(ig)*|ini|rc)'
-exclude='backups|cairo|chromium|depot|geany|google|libreoffice|sandbox|(s|u)mplayer|tint2|Trash|undo|vundle|xfce4|\.(azureus|bundler|cache|deprecated|dropbox|gem|ghc|gimp|hg|kde|mozilla|opera|original|PlayOnLinux|save|stversions|vim|xbmc|xmonad)'
+INCLUDE='.*(cfg|conf(ig)*|ini|[^.][^s]rc)$'
 
-# .................................................................. Build cache
+# search these project library folders..
+sources=$(cat $CONFIG/.configsrc | sed "s|\$HOME|$HOME|g; s/\$INCLUDE/$INCLUDE/")  # manual eval of $HOME
 
-configs() {
-  notify low 'Updating dmenu config cache' 'Please be patient..'
-
-  # convert spaces in filenames to tilde and convert back after joining!
-  # avoid nfs mounts
-  echo $HOME/build/cfg/var/spool/cron/$USER \
-      $([ -d /var/adsuck ] && sudo find /var/adsuck -type f | sed 's/ /:/g') \
-      $(sudo find /etc -type f | egrep -v 'certs|examples|fonts|ppd|_key$|\.(0|1|aspx|browser|colors|crt|css|dat|db|desktop|ext|gpg|ja|js|key|map|menu|original|pacnew|pem|properties|pub|png|service|socket|tex|xml|xsl)$') \
-      $(sudo find /opt -type f -regextype posix-extended -regex "$include" | egrep -v '\.git' | sed 's/ /:/g') \
-      $(sudo find $HOME ! -path "$HOME/Maildir/*" -type f -regextype posix-extended -regex "$include" 2>/dev/null | egrep -v "$exclude" | sed 's/ /:/g') |
-    tr ' ' '\n' |
-    sed -r "s/:/ /g; s,(.*)/([^/]*)$,\2^$SEP \1," |
-    sort -u |
-    sed '1i
-' >$cache
-
-  notify low 'Update of dmenu config cache' '..Complete'
-  sleep 1
-}
-
-# command line initialization with: dmenu configs [init]
-[ ! -s $cache ] || [ $1 ] && { configs; [ $1 ] && exit; }
+files() { ffcache $refresh configs $sources | sed -r "s,^$HOME,~,; s,(.*)/([^/]*)$,\2^$SEP \1,"; unset refresh; }
 
 # .................................................................. Edit config
 
 while : ;do
-  file=$(cat $cache | mhistory configs | sed "1i$REBUILD" | column -s^ -t | rmenu 'Edit Config' 1 -no-custom) || exit
+  file=$(files | mhistory configs | sed "1i$REFRESH" | column -s^ -t | rmenu 'Edit Config' 1 -no-custom) || exit
 
-  [ "${file%]*}]" = "$REBUILD" ] && { configs; continue; }
+  [ "${file%]*}]" = "$REFRESH" ] && { refresh=-; unset file; continue; }
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   # why do people put spaces in filenames, especially config files!
-  file=$(echo $file | sed -r "s,^(.*)  *${SEP}  *(.*),\2/\1,; s/ /\\\\\\\\ /")
-  v $file
-  exit
+  file=$(echo $file | sed -r "s,^(.*)  *${SEP}  *(.*),\2/\1,; s/ /\\\\\\\\ /; s,^~,$HOME,")
+  exec v $file
 done
 
 # vim: set ft=sh: #
