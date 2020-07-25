@@ -23,6 +23,6 @@ herbstclient set frame_bg_normal_color '#000000'
 [ -e $SCOMPTON:toggle ] && toggle compton off
 
 # present conky clock on secondary monitor (draw root refresh clears clock)
-server && CONKYRC=$CONKY_Q2 conky clock on
+is multihead && CONKYRC=$CONKY_Q2 conky clock on
 
 # vim: set ft=sh: #
