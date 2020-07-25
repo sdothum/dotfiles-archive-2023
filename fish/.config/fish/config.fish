@@ -67,7 +67,7 @@ set -x NNTPSERVER news.sunnyusenet.com
 
 # default editor
 # set -x EDITOR 'vi -e'
-set -x EDITOR 'vim'
+set -x EDITOR 'vim'XDG_RUNTIME_DIR
 set -x VISUAL 'gvim -f'
 set -x FZF_DEFAULT_OPTS "--cycle --reverse  --prompt='    ─────  ' --ansi --color=dark,hl:#dc322f,hl+:#dc322f,fg+:232,bg+:#fdf6e3,bg:#fdf6e3,marker:160,prompt:#268bd2,info:#268bd2"
 set -x NNN_USE_EDITOR 1
@@ -99,6 +99,7 @@ test -e $SESSION/http_proxy
   and set -x HTTP_PROXY (cat $SESSION/http_proxy)
 
 set -x XDG_DOWNLOAD_DIR /net/downloads/http
+set -x XDG_RUNTIME_DIR /tmp/runtime-$USER
 set -x NNTPSERVER news.sunnyusenet.com
 
 # tt-rss
