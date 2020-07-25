@@ -34,7 +34,7 @@ if [ $USER != root ] ;then
           echo "/dev/$ssd [deadline]" >/tmp/ssd:scheduler
         fi
       fi
-      # [ -e /tmp/adblock ] || adblock &
+      [ -e /tmp/adblock ] || adblock &
       nohup hg serve --cwd $STOW --port 8213 >/tmp/hg:server.log 2>&1 &
     fi
 

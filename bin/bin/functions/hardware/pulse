@@ -11,19 +11,28 @@
 
 hdmi() { pacmd list-sinks | grep -q hdmi; }
 
-pulse() {
-  hdmi && exit
-  trace "HDMI connection lost: killing $@"
-  pkill -f "$@"
+restart() {
   service restart alsa
   # pulseaudio -k
   # manually restore audio device
   killall pulseaudio 2>/dev/null
+  killall pavucontrol 2>/dev/null
+  killall pulseaudio-equalizer 2>/dev/null
+  killall pulseaudio-equalizer-gtk 2>/dev/null
   pulseaudio --start --log-target=syslog
   pavucontrol &
-  pulseaudio-equalizer enable
+  pulseaudio-equalizer enable >/dev/null
+  pulseaudio-equalizer-gtk >/dev/null &
 }
 
+pulse() {
+  hdmi && exit
+  trace "HDMI connection lost: killing $@"
+  pkill -f "$@"
+  restart
+}
+
+[ $1 ] && { restart; notify X 'Pulseaudio restarted..' 'Check pavucontrol'; exit; }  # force pulse restart
 
 pulse '(youtube|vimeo|netflix|mpv|omxplayer|pavucontrol|(libexec|bin)/pulse)'
 pulse '(chromium|firefox|QtWebEngineProcess|qutebrowser|surf|vimb'

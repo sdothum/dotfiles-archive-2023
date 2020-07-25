@@ -84,12 +84,12 @@ pstat gpaste-client || gpaste-client start &
 # ................................................................ Terminal apps
 
 if [ -e $JABBER ] ;then
-  # server && herbstclient focus_monitor 1 || switch tag $CHAT, see rules
+  # is multihead && herbstclient focus_monitor 1 || switch tag $CHAT
   # wait for window visibility before switching monitors, for urxvt font handling
   tmux_session jabber mcabber &
 fi
 if [ -e $IRC ] ;then
-  # server && herbstclient focus_monitor 1 || switch tag $CHAT, see rules
+  # is multihead && herbstclient focus_monitor 1 || switch tag $CHAT
   # wait for window visibility before switching monitors, for urxvt font handling
   tmux_session irc weechat &
 fi
@@ -99,6 +99,9 @@ server && herbstclient focus_monitor 0
 [ -e $PING     ] && term 'ping' pingchk &
 
 # .................................................................. Window apps
+
+# pkill --signal SIGABRT -f "qutebrowser"  # remove dangling instance on server
+# rm -rf $XDG_RUNTIME_DIR/qutebrowser 2>/dev/null
 
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing &
 switch tag $WEB

@@ -15,7 +15,7 @@ pkill -f $BROWSER 2>/dev/null
 # void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
 void && pulse
 videomode on
-is display -1920 && draw layout max || { is display -=2560 && draw layout 2:3 || draw layout spread; }
+# is display -1920 && draw layout max || { is display -=2560 && draw layout 2:3 || draw layout spread; }
 
 RUNOPT=$options $BROWSER $NETFLIX &
 if [ $BROWSER = chromium ] ;then
@@ -29,6 +29,7 @@ if [ $BROWSER = chromium ] ;then
   # sleep $delay
   xdotool key Alt+space
 fi
+herbstclient shift_edge right
 pwait "$NETFLIX"
 
 videomode off

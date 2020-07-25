@@ -20,7 +20,7 @@ files() { ffcache $refresh configs $sources | sed -r "s,^$HOME,~,; s,(.*)/([^/]*
 # .................................................................. Edit config
 
 while : ;do
-  file=$(files | mhistory configs | sed "1i$REFRESH" | column -s^ -t | rmenu 'Edit Config' 1 -no-custom) || exit
+  file=$(files | mhistory configs | sed "1i$REFRESH" | column -s^ -t | rmenu 'Edit Config' -no-custom) || exit
 
   [ "${file%]*}]" = "$REFRESH" ] && { refresh=-; unset file; continue; }
   mhistory configs "$(echo $file | sed "s/ *$SEP/^$SEP/")"

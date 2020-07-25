@@ -1,6 +1,6 @@
 # sdothum - 2016 (c) wtfpl
 # see xb, .xb_actions
 
-notify tt-rss 'database migration possibly required'
+ditto tt-rss 'database migration possibly required'
 
 # vim: set ft=sh: #

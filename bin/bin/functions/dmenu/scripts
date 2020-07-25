@@ -31,7 +31,7 @@ script_history() { mhistory scripts "${file##*/}^$SEP $(echo ${file%/*} | sed "s
 
 while : ;do
   file=$(files | sed -r "s,(.*)/([^/]*)$,\2^$SEP \1," | sort | mhistory scripts | sed "1i$REFRESH" | column -s^ -t | 
-      rmenu "Edit Script$error" 1 $file) || exit
+      rmenu "Edit Script$error" $file) || exit
   if [ "${file%]*}]" = "$REFRESH" ] ;then  # $file may contain column spacing
     refresh=-
     unset file

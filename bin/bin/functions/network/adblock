@@ -6,16 +6,64 @@
 
 # .......................................................................... DNS
 
-# Usage: adblock [blacklist]
+TMP=/tmp/adblock
+LOG=$TMP.log
 
-# create adblock list for dnsmasq
-# source lists lifted from..
-#   http://www.sheenaustin.com/2014/07/23/block-ads-using-dnsmasq/
-#   https://github.com/SilentBob999/adblock.git
-#   http://www.linksysinfo.org/index.php?threads/addon-add-blocking.25663/
+# from https://github.com/SilentBob999/adblock 
+ADBLOCK="
+http://pgl.yoyo.org/as/serverlist.php?hostformat=nohtml
+http://mirror1.malwaredomains.com/files/justdomains
+http://www.malwaredomainlist.com/hostslist/hosts.txt
+http://winhelp2002.mvps.org/hosts.txt
+http://hosts-file.net/download/hosts.txt
+http://hosts-file.net/hphosts-partial.asp
+http://someonewhocares.org/hosts/hosts
+http://adblock.mahakala.is/hosts
+"
+  
+# from https://firebog.net/
+SUSPICIOUS="
+https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts_without_controversies.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+https://v.firebog.net/hosts/static/w3kbl.txt"
 
-ADBLOCK=/tmp/adblock
-LOG=$ADBLOCK.log
+ADVERTISING="
+https://adaway.org/hosts.txt
+https://v.firebog.net/hosts/AdguardDNS.txt
+https://v.firebog.net/hosts/Admiral.txt
+https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+https://v.firebog.net/hosts/Easylist.txt
+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
+https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts"
+
+TRACKING="
+https://v.firebog.net/hosts/Easyprivacy.txt
+https://v.firebog.net/hosts/Prigent-Ads.txt
+https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt"
+
+MALICIOUS="
+https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
+https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt
+https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
+https://mirror1.malwaredomains.com/files/justdomains
+https://v.firebog.net/hosts/Prigent-Crypto.txt
+https://mirror.cedia.org.ec/malwaredomains/immortal_domains.txt
+https://www.malwaredomainlist.com/hostslist/hosts.txt
+https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
+https://phishing.army/download/phishing_army_blocklist_extended.txt
+https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
+https://v.firebog.net/hosts/Shalla-mal.txt
+https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+https://urlhaus.abuse.ch/downloads/hostfile/"
+
+OTHER="
+https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser"
 
 connect || exit 1
 
@@ -25,102 +73,55 @@ rm -f adblock
 
 trace "Generating adblock.." >>$LOG
 
-count() { wc -l $ADBLOCK:$1; }
+count() { wc -l $TMP:$1; }
 
 addblock() {
-  cat >$ADBLOCK:$1
-  cat $ADBLOCK:$1 >>adblock
-  wc -l $ADBLOCK:$1
-  if [ $(count $1 | cut -d' ' -f1) -eq 0 ] ;then
-    ditto error "$(count $1)"
-    exit 1
-  fi
+  cat >$TMP:$1
+  cat $TMP:$1 >>adblock
+  [ $(count $1 | cut -d' ' -f1) -eq 0 ] && { ditto empty "$TMP:$1"; exit 1; }
+  wc -l $TMP:$1
   count $1
 }
 
-if [ -z $1 ] ;then
-  ditto downloading 'from YoYo.org'
-  wget -qO- http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts 2>>$LOG |
-      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock YoYo.org
+# filter -> transform [ip] host -> host -> 0.0.0.0 host
+blacklist() { 
+  ditto blacklist "$1"
+  eval list=\${$1}
+  for i in $list ;do
+    url=${i#*://}
+    ping -c1 ${url%%/*} >/dev/null 2>&1 || { ditto ping "${url%%/*} not found"; continue; }
+    wget -qO- "$i" 2>>$LOG | sed -r "s/\t/ /g; s/ *#.*//g; s/^[0-9]+.0.0.[01] *//; s/ *$//; / /d; /^$/d" | egrep -E '^[a-z0-9-]+(\.[a-z0-9-]+)+$' | sed 's/^/0.0.0.0 /' | addblock $1:$(echo $url | tr '/' ':')
+  done
+}
 
-  ditto downloading 'from SomeoneWhoCares.org'
-  wget -qO- http://someonewhocares.org/hosts/zero/ 2>>$LOG |
-      grep '0\.0\.0\.0' | awk '{ print "0.0.0.0\t"$2 }' | grep -v '#' | addblock SomeoneWhoCares.org
+blacklist ADBLOCK
+blacklist SUSPICIOUS
+blacklist ADVERTISING
+blacklist TRACKING
+blacklist MALICIOUS
+blacklist OTHER
 
-  ditto downloading 'from MVPS.org'
-  wget -qO- http://winhelp2002.mvps.org/hosts.txt 2>>$LOG |
-      grep 0\.0\.0\.0 | grep -v '# 0.0.0.0' | awk '{ print "0.0.0.0\t"$2 }' | addblock MVPS.org
-
-  # ditto downloading 'from HPHosts'
-  # wget -qO- http://hosts-file.net/download/hosts.txt 2>>$LOG |
-  #      grep '127\.0\.0\.1' | awk '{ print "0.0.0.0\t"$2 }' | addblock HPHosts
-
-  blacklist() { awk '{sub(/^127.0.0.1/, "0.0.0.0")} /^0.0.0.0/' | addblock $1; }
-
-  ditto downloading 'from MalwareDomainList.com'
-  wget -qO- "http://www.malwaredomainlist.com/hostslist/hosts.txt" 2>>$LOG | blacklist MalwareDomainList.com
-
-  ditto downloading 'adtracking from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/ad_servers.txt" 2>>$LOG | blacklist Hosts-File.net:ad_servers
-
-  ditto downloading 'malware from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/emd.txt" 2>>$LOG | blacklist Hosts-File.net:emd
-
-  ditto downloading 'exploit from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/exp.txt" 2>>$LOG | blacklist Hosts-File.net:exp
-
-  ditto downloading 'fraud from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/fsa.txt" 2>>$LOG | blacklist Hosts-File.net:fsa
-
-  # ditto downloading 'spamming from Hosts-File.net'
-  # wget -qO- "http://hosts-file.net/grm.txt" 2>>$LOG | blacklist Hosts-File.net:grm
-  #
-  # ditto downloading 'site spamming from Hosts-File.net'
-  # wget -qO- "http://hosts-file.net/hfs.txt" 2>>$LOG | blacklist Hosts-File.net:hfs
-
-  ditto downloading 'hijack from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/hjk.txt" 2>>$LOG | blacklist Hosts-File.net:hjk
-
-  ditto downloading 'marketing from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/mmt.txt" 2>>$LOG | blacklist Hosts-File.net:mmt
-
-  ditto downloading 'pharmacy from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/pha.txt" 2>>$LOG | blacklist Hosts-File.net:pha
-
-  # ditto downloading 'piracy from Hosts-File.net'
-  # wget -qO- "http://hosts-file.net/psh.txt" 2>>$LOG | blacklist Hosts-File.net:psh
-
-  ditto downloading 'adtracking from Hosts-File.net'
-  wget -qO- "http://hosts-file.net/wrz.txt" 2>>$LOG | blacklist Hosts-File.net:wrz
-
-  ditto downloading 'from ADaway.org'
-  wget -qO- "http://adaway.org/hosts.txt" 2>>$LOG | blacklist ADaway.org
-
-  ditto writing 'changes to zone file'
-  sed -re 's/^(0\.0\.0\.0)  */\1\t/' \
-      -e 's/ .*//' \
-      -e '/^(0\.0\.0\.0)\t*$/d' \
-      -e '/^(0\.0\.0\.0)\t(0\.0\.0\.0)$/d' adblock |
-      lowercase | tr '\r' '\n' | sort | uniq >adblock.uniq
-fi
+ditto collating 'sourced blacklists'
+sed '/^(0\.0\.0\.0) *$/d; /^(0\.0\.0\.0) (0\.0\.0\.0)$/d' adblock | lowercase | tr '\r' '\n' | sort | uniq >adblock.uniq
 
 if [ -e blacklist ] ;then
   ditto including 'my blacklist'
-  cat blacklist | awk '{ print "0.0.0.0\t"$1 }' >>adblock.blacklist
+  sed 's/^/0.0.0.0 /' blacklist | >>adblock.blacklist
 fi
 
 if [ -e whitelist ] ;then
   ditto applying 'my whitelist'
   while read domain <&3
   do
-    sed -i "/[./\t]$domain$/d" adblock.uniq
+    sed -i "/[./ ]$domain$/d" adblock.uniq
+    sed -i "/[./ ]$domain$/d" adblock.blacklist
   done 3< whitelist
 fi
 
 echo "# Generated adblock on $(timestamp)" >adblock.hosts
-cat adblock.uniq adblock.blacklist | grep -vP '^0.0.0.0\t$'>>adblock.hosts
+cat adblock.uniq adblock.blacklist >>adblock.hosts
 ditto blacklisting "$(wc -l adblock.hosts | cut -d' ' -f1) hosts"
 service restart dnsmasq
-touch $ADBLOCK
+touch $TMP  # see console_login
 
 # vim: set ft=sh: #

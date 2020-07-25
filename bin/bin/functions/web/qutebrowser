@@ -14,7 +14,7 @@ STARTPAGE=$SESSION/startpage
 pong $SERVER && TTRSS=$SERVER || TTRSS=localhost
 size="$(fontsize)pt monospace"
 
-[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage='http://luna:8000/tt-rss/'; }
+[ $1 ] && startpage="$@" || { [ -e $STARTPAGE ] && startpage=$(cat $STARTPAGE) || startpage="http://$TTRSS:8000/tt-rss/"; }
 startpage=$(escape $startpage)  # must \escape '&' in url
 
 font="
@@ -29,10 +29,11 @@ font="
   -s fonts.messages.warning '$size'
   -s fonts.prompts '$size'
   -s fonts.statusbar '$size'
-  -s fonts.tabs '$size'
+  -s fonts.tabs.selected '$size'
+  -s fonts.tabs.unselected '$size'
 "
 
-void && pulse  # browser doesn't autostart pulseaudio
+# void && pulse  # browser doesn't autostart pulseaudio
 if pgrep -f "$QUTEBROWSER" >/dev/null ;then
   eval $QUTEBROWSER $RUNOPT $font :open\\ -w\\ $startpage & 
 else

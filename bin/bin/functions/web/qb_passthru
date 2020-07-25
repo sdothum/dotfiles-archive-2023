@@ -6,7 +6,7 @@
 
 # ..................................................... qutebrowser pass through
 
-# qutebrowser config.py: config.bind('<sequence>', 'spawn qutebrowser_pass <string>')
+# qutebrowser config.py: config.bind('<sequence>', 'spawn qb_passthru <string>')
 
 # <passthrough>[:<type>]
 set -- $(echo $@ | cut -d':' -f1,2 --output-delimiter=' ')

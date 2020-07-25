@@ -17,13 +17,13 @@ alacritty.yml() {
   cp -fv $YML $CONF
   cp -v $YML $BLACK
 
-  sed -i -r "s/^(  size:).*/\1 $1/" $CONF 
-  sed -i -r "s/^(    background:).*/\1 '0x263238'/" $CONF  # match quantum background, see vim config
+  sed -ri "s/^(  size:).*/\1 $1/" $CONF 
+  sed -ri "s/^(    background:).*/\1 '0x263238'/" $CONF  # match quantum background, see vim config
   perl -i -0p "s/^(  padding:).*\s.*\s.*/\1\n    x: $2\n    y: $3/m" $CONF
   perl -i -0p "s/^(  offset:).*\s(.*)\s.*/\1\n\2\n    y: $4/m" $CONF
   sed -i "/args: \[\]/a\ \ \ \ launcher: vimb" $CONF
 
-  sed -i -r "s/^(    foreground:).*/\1 '0x000000'/" $BLACK 
+  sed -ri "s/^(    foreground:).*/\1 '0x000000'/" $BLACK 
 }
  
 case $# in

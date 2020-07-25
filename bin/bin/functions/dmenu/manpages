@@ -27,7 +27,7 @@ while : ;do
   else
     # initial lookup
     man=$(apropos . | cut -d' ' -f1 | sort -d | uniq | mhistory man | sed "1i$REBUILD" | 
-        rmenu 'Manpage' 1 | cut -d':' -f3-)
+        rmenu 'Manpage' | cut -d':' -f3-)
 
     if [ "$man" = "$REBUILD" ] ;then
       notify low 'Updating manpage index cache' 'Please be patient..'

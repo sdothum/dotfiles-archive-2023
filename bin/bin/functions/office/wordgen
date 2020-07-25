@@ -132,7 +132,7 @@ for i in $sentences ;do
 done
 
 # add paragraph markers (reduced by subsequent shuf)
-sed -i -r 's/(.*)/\1\n/' $paragraphs
+sed -ri 's/(.*)/\1\n/' $paragraphs
 
 shuf $paragraphs >$typefile
 
