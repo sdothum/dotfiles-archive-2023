@@ -117,7 +117,7 @@ enum keyboard_keycodes {
  ,PLOVER
 #endif
 #ifdef ROLLOVER
- ,HOME_Q  // pseudo GUI_T(KC_A)
+ ,HOME_Q  // pseudo GUI_T(KC_Q)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
  ,HOME_A  // pseudo SFT_T(KC_A)
