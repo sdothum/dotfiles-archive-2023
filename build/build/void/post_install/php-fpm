@@ -11,7 +11,7 @@ sudo sed -i -e '/request_terminate_timeout/s/=.*/= 300/' \
          /etc/php/php-fpm.conf
 
 original /etc/php/php-fpm.d/www.conf
-sudo sed -i -re '/;listen\.(owner|group|mode)/s/;//'                       \
+sudo sed -ri '/;listen\.(owner|group|mode)/s/;//'                       \
          -e '/listen = 127.0.0.1:9000/clisten = /run/php-fpm/php-fpm.sock' \
          /etc/php/php-fpm.d/www.conf
 

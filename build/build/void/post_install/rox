@@ -8,4 +8,7 @@
 # set rox mime application
 xdg-mime default rox.desktop inode/directory
 
+# less obtrusive network drive icon
+cfg_install /usr/share/ROX-Filer/images/rox-xattr.png
+
 # vim: set ft=sh: #

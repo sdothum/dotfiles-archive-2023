@@ -5,9 +5,10 @@
 
 # ....................................................................... tt-rss
 
-# COMMIT=467bc4fe0  # version 17.4 (theme dependency)
+# COMMIT=467bc4fe0  # version 17.4 for sal theme (deprecated)
+COMMIT=c8243b03c    # more recent releases plagued with spurious warnings
+
 TTRSS=/srv/http/tt-rss
-POSTGRES=/srv/http/postgres
 
 cd /net/depot
 if [ ! -d tt-rss ] ;then
@@ -20,18 +21,15 @@ if [ ! -d tt-rss ] ;then
   fi
 fi
 
-if [ ! -d $TTRSS ] ;then
-  sudo mkdir -pv $TTRSS
-  sudo chown $USER:users $TTRSS
-  rsync --exclude='.git*' /net/depot/tt-rss/ $TTRSS
-fi
+[ -d $TTRSS ] && rm -rf $TTRSS/* || { sudo mkdir -pv $TTRSS; sudo chown $USER:users $TTRSS; }
+rsync --exclude='.git*' /net/depot/tt-rss/ $TTRSS
 
-chmod -R 777 $TTRSS/cache/images
-chmod -R 777 $TTRSS/cache/upload
-chmod -R 777 $TTRSS/cache/export
-chmod -R 777 $TTRSS/cache/js
-chmod -R 777 $TTRSS/feed-icons
-chmod -R 777 $TTRSS/lock
+chmod -R 777 $TTRSS/cache/images 2>/dev/null
+chmod -R 777 $TTRSS/cache/upload 2>/dev/null
+chmod -R 777 $TTRSS/cache/export 2>/dev/null
+chmod -R 777 $TTRSS/cache/js 2>/dev/null
+chmod -R 777 $TTRSS/feed-icons 2>/dev/null
+chmod -R 777 $TTRSS/lock 2>/dev/null
 
 original $TTRSS/install/index.php
 sed -i '/if (!function_exists("iconv"))/s/!//' $TTRSS/install/index.php  # iconv check fails with latest php (?)

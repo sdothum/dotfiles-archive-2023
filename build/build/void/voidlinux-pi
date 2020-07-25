@@ -87,10 +87,10 @@ heading "add primary user $user"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 
-sed -i -re '/^alarm/s/[0-9]+:[0-9]+/1001:100/' \
+sed -ri '/^alarm/s/[0-9]+:[0-9]+/1001:100/' \
     -e "/^$user/s/[0-9]+:[0-9]+/1000:100/" \
     /etc/passwd
-sed -i -re '/^users/s/[0-9]+/100/' \
+sed -ri '/^users/s/[0-9]+/100/' \
     -e '/^alarm/s/[0-9]+/1001/' \
     -e "/^$user/s/[0-9]+/1000/" \
     /etc/group

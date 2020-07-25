@@ -13,6 +13,6 @@ sudo sed -i "/string = d.strftime('%b %Y')/s|%Y|%d/%y|" $helper
 # arrow head
 buffers=$alot/buffers/thread.py
 original $buffers
-sudo sed -i -r "s/^( *heads_char = ').*/\1\\\\u25b0'/" $buffers
+sudo sed -ri "s/^( *heads_char = ').*/\1\\\\u25b0'/" $buffers
 
 # vim: set ft=sh: #

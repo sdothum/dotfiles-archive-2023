@@ -10,7 +10,8 @@
   compton-conf
   lxappearance
   setroot
-  unclutter
+# unclutter
+  unclutter-xfixes
   xbacklight
 
 

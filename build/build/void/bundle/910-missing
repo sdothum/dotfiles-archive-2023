@@ -1,26 +1,9 @@
-fuse-exfat
-pcre
-xf86-video-ati [gpu ati && ! gpu nvidia]
-mesa-ati-dri [gpu ati && ! gpu nvidia]
-urxvt-perls [cpu atom]
-gstreamer-vaapi
-libmediainfo
-mtr
-net-tools
-file-roller
-qt
-qt-webkit
-mono [server]
-colordiff
-cpanminus
-s perl-HTML-Strip
-python-sip
-s python-PyQt4
-postgresql-client
-xbacklight
-grabc
-qutebrowser
+ranger
+m shell-functools
+mesa-nouveau-dri [gpu nvidia && ! gpu intel]
+elixir
+chromium-widevine
 m sonarr [server]
-m tt-rss [server]
-s fontmatrix
+tt-rss
+m tt-rss [server || test -d /srv/http/tt-rss]
 m amphetype

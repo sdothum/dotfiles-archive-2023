@@ -13,7 +13,7 @@
 = ════════════════
   file-roller
   par2cmdline
-  p7zip
+  p7zip-unrar
   squashfs-tools
   unrar
   unzip
@@ -41,6 +41,7 @@
 # gsmartcontrol
   htop
   iotop
+  psensor [sarver]
 # smartmontools
   socklog-void  
 

@@ -16,6 +16,10 @@ ifno 'create tt-rss database' || {
   service restart postgresql
 }
 
+# required php extensions
+original /etc/php/php.ini
+sudo sed -ri '/=(curl|intl|openssl|(pdo_)*pgsql)/s/^;//' /etc/php/php.ini
+
 ditto check '/etc/php/php.ini'
 ditto install 'service enable php-fpm nginx -> reboot'
 ditto http://localhost:8000/tt-rss/[install] '[ttrss, ttrss] [admin, password]'
