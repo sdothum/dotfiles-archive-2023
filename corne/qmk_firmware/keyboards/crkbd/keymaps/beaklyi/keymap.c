@@ -117,7 +117,7 @@ enum keyboard_keycodes {
  ,PLOVER
 #endif
 #ifdef ROLLOVER
- ,HOME_Q  // pseudo GUI_T(KC_Q)
+ ,HOME_Y  // pseudo GUI_T(KC_Y)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
  ,HOME_A  // pseudo SFT_T(KC_A)
@@ -144,7 +144,7 @@ enum keyboard_keycodes {
 };
 
 #ifndef ROLLOVER
-#define HOME_Q  GUI_T(KC_Q)
+#define HOME_Y  GUI_T(KC_Y)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
 #define HOME_A  SFT_T(KC_A)
@@ -287,8 +287,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   switch (keycode) {
 #ifdef ROLLOVER
-  case HOME_Q:
-    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0);  break;
+  case HOME_Y:
+    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Y, 0);  break;
   case HOME_H:
     mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
   case HOME_E:
@@ -491,12 +491,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef ROLLOVER
   case KC_Z:
     mod_roll(record, LEFT, NOSHIFT, 0, KC_Z, 0);    return false;
-  case KC_Y:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    return false;
-  case KC_O:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_O, 2);    return false;
+  case KC_Q:
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_Q, 1);    return false;
   case KC_U:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_U, 3);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_U, 2);    return false;
+  case KC_O:
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_O, 3);    return false;
 
   case KC_G:
     mod_roll(record, RIGHT, NOSHIFT, 0, KC_G, 5);   return false;
