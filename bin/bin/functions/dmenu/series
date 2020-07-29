@@ -5,6 +5,8 @@
 
 # ............................................................ Television series
 
+# Usage: dmenu series [cache | <series>]
+
 # Library structure:
 # ../videos
 #        ../series
@@ -16,27 +18,34 @@
   EDIT='[ manage       ]'
 SONARR='[ sonarr       ]'
 
+# preload cache option
+[ "$1" = cache ] && { shift; cache=true; }
+
 # video library
 category=${1:-series}
 PASSPORT="/run/media/$USER/My Passport/$category"
+catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
 sonarr=http://$SERVER:8989/calendar
 preprocess=${0%/dmenu}/functions/dmenu/.d/$category
 retitle="$library"/.retitle
-rm -f $retitle
 
 # exclude directory kludge of .anime links in main series folder
-if server || $usb ;then
-  find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
-  find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
-else
-  ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \\;"
-  ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \\;"
-fi
-find "$library" -name '*sample*' -exec rm {} \; &
-# clean up titles
+ownership() {
+  if server || $usb ;then
+    find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
+    find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
+  else
+    ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \\;"
+    ssh $SERVER "find '$library' -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \\;"
+  fi
+  find "$library" -name '*sample*' -exec rm {} \;
+}
+
+# ownership &
+
+# special title format clean up
 [ -e $preprocess ] && . $preprocess
-retitle "$library" >>$retitle
 
 # list latest television series additions first
 T=t
@@ -45,22 +54,42 @@ gui && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   # clean up episodes
-  retitle "$series" >>$retitle
   ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\1/' | sort >$episodes
   playlist $episodes "$playlist"
 }
 
+# list latest movie additions first
+catlg() {
+  cat /dev/null >$catlg
+  ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >/tmp/dmenu:$category
+  cp /tmp/dmenu:$category $catlg
+  touch $catlg
+}
+
+cache() {
+  stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
+  notify low 'Series' 'Caching library..'
+  retitle "$library" >>$retitle
+  catlg
+}
+
+# any new media added?
+cache
+[ $cache ] && exit
+
 # initial row is most current show vs last viewed
 show=3
 while : ;do
-  show=$(ls -1$T "$library" | grep -v ' ' | sed "s/\./ /g; 1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | 
-      rmenu 'Series' "$show" -no-custom) || break
+  # rebuilding catalogue?
+  [ ! -s $catlg ] && { sleep 0.1; continue; }
+
+  show=$(cat "$catlg" | sed "1i$SONARR\n$EDIT" | sed "1i[ $(sortlist $T) ]" | rmenu 'Series' "$show" -no-custom) || break
 
   # force dmenu focus (continue within do loop doesn't guarantee focus)
   case $show in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
-  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; exec dmenu series $1 ;;
+  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; catlg ;;
   "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
   *        ) series=""$library"/$(echo $show | sed 's/ /./g')"

@@ -52,7 +52,9 @@ if server && ! pstat mpd ;then
 fi
 # pstat urxvtd || urxvtd -q -o -f &
 # pstat xflux || xflux -l 45.4 -g -75.7
-server && dmenu movies cache
+dmenu movies cache &
+dmenu series cache &
+
 if [ -e $AUTOCONNECT ] ;then
   killall autoconnect
   term 'autoconnect' autoconnect
