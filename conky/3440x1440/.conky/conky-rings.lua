@@ -314,8 +314,8 @@ gauge = {
     caption_fg_colour=LUARINGS,    caption_fg_alpha=0.3,
 },
 {
-    name='wireless_link_qual_perc', arg='wlp4s0',                   max_value=100,
-    x=84,                          y=1156,
+    name='wireless_link_qual_perc', arg='wlp5s0',                   max_value=100,
+    x=84,                          y=1112,
     graph_radius=29,
     graph_thickness=1,
     graph_start_angle=180,
