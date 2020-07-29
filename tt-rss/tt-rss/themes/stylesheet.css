@@ -163,6 +163,8 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .active span.updated { color: rgba(0,0,0,.7) !important; }
 
+.ttrss_index :not(.active):hover span.updated { display: block !important; }
+
 /* expanded toggle */
 .ttrss_index .collapse .material-icons { transition: : all 0s !important; -webkit-transition: all 0s !important; font-size: 16px !important; border-color: rgba(177,37,37,.45) !important; border-style: solid !important; border-width: 1px 0 0 !important; padding-right: 6px !important; }
 
