@@ -23,7 +23,7 @@ SEARCH='[ search       ]'
 
 category=${1:-movies}
 PASSPORT="/run/media/$USER/My Passport/$category"
-catlg=$CACHEDIR/dmenu:${1:-movies}
+catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; rm -rf $catlg; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
 nzb=/net/downloads/nzbs/completed
 playlist="$library/.playlist"
@@ -45,8 +45,8 @@ find "$library" -name '*sample*' -exec rm {} \; &
 T=t
 catlg() {
   cat /dev/null >$catlg
-  ls -1$T "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:movies
-  playlist /tmp/dmenu:movies "$playlist" >$catlg &
+  ls -1$T "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:$category
+  playlist /tmp/dmenu:$category "$playlist" >$catlg &
 }
 
 cache() {
@@ -108,7 +108,7 @@ while : ;do
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
   "$SEARCH") surf $usenet; pwait "surf $usenet"; continue ;;
-  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; catlg ;;
+  "$EDIT"  ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; catlg ;;
   *        ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done

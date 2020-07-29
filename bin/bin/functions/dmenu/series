@@ -60,7 +60,7 @@ while : ;do
   case $show in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
-  "$EDIT"  ) pkill -TERM 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; exec dmenu series $1 ;;
+  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; exec dmenu series $1 ;;
   "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
   *        ) series=""$library"/$(echo $show | sed 's/ /./g')"

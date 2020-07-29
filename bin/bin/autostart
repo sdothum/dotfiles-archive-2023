@@ -37,8 +37,11 @@ exists gnome-keyring-daemon && gnome-keyring-daemon -s --components=pkcs11,secre
 pstat gpg-agent || gpg-agent --homedir $HOME/.gnupg --use-standard-socket --daemon 2>/tmp/gpg-agent.log &
 server && ipfilter &
 xrdb -merge $HOME/.Xresources &
-# pavucontrol &
-# pulseaudio-equalizer enable
+
+# force hdmi audio functionality
+pavucontrol &
+pulseaudio-equalizer enable
+pulseaudio-equalizer-gtk &
 
 # ........................................................... Daemons and caches
 
@@ -100,8 +103,8 @@ server && herbstclient focus_monitor 0
 
 # .................................................................. Window apps
 
-# pkill --signal SIGABRT -f "qutebrowser"  # remove dangling instance on server
-# rm -rf $XDG_RUNTIME_DIR/qutebrowser 2>/dev/null
+kill -KILL $BROWSER 2>/dev/null  # remove dangling instance on server
+# rm -rf $XDG_RUNTIME_DIR/$BROWSER 2>/dev/null
 
 [ -e $THEDARNEDESTTHING ] && thedarnedestthing &
 switch tag $WEB
