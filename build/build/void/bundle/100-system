@@ -58,6 +58,7 @@ d pass
   logrotate
   ntp
   preload
+  psmisc
   rlwrap
   runit-swap
   udiskie
