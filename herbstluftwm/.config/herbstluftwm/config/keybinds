@@ -7,7 +7,7 @@
 # ......................................................... BEAKL Zi Keybindings
 
 # window manager
-hc keybind $Mod-Shift-q             chain . spawn kill -KILL $BROWSER . spawn quit  # qutebrowser cannot display otherwise
+hc keybind $Mod-Shift-q             chain . spawn kill -KILL $BROWSER . spawn quit  # qutebrowser (re)startx issue (qt5 ??)
 hc keybind $Mod-Control-Shift-q     chain . spawn kill -KILL $BROWSER . spawn pkill -KILL -f startx
 hc keybind $Mod-Control-Shift-r     reload
 hc keybind $Mod-w                   chain . close_or_remove . emit_hook focus_window
