@@ -106,7 +106,7 @@ sed '/^(0\.0\.0\.0) *$/d; /^(0\.0\.0\.0) (0\.0\.0\.0)$/d' adblock | lowercase | 
 
 if [ -e blacklist ] ;then
   ditto including 'my blacklist'
-  sed 's/^/0.0.0.0 /' blacklist | >>adblock.blacklist
+  sed 's/^/0.0.0.0 /' blacklist >>adblock.blacklist
 fi
 
 if [ -e whitelist ] ;then

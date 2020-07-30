@@ -43,19 +43,14 @@ find "$library" -name '*sample*' -exec rm {} \; &
 
 # list latest movie additions first
 T=t
-catlg() {
-  cat /dev/null >$catlg
-  ls -1$T "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:$category
-  playlist /tmp/dmenu:$category "$playlist" >$catlg &
-}
-
 cache() {
   [ $1 ] || stest -qr -n $catlg $(find "$library" -maxdepth 1 -type d) || return
   notify low 'Movies' 'Caching library..'
-  # clean up titles
   retitle "$library" >>$retitle
   [ -e "$playlist" ] || echo >"$playlist"
-  catlg
+  cat /dev/null >$catlg
+  ls -1$T "$library" | sed -r 's/\./ /g; s/(.*) ([12][0-9][0-9][0-9])( .*)*/\1  (\2)/' >/tmp/dmenu:$category
+  playlist /tmp/dmenu:$category "$playlist" >$catlg &
 }
 
 # any new media added?
@@ -82,14 +77,14 @@ playback() {
               notify 3 critical "$movie" "Duplicate movie files found"
               term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
             fi
-            mhistory "$playlist" "$movie"; catlg; play "$video" "$movie"; break ;;
+            mhistory "$playlist" "$movie"; cache; play "$video" "$movie"; break ;;
 
     copy  ) cp -rf "$video" $passport; break ;;
     mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
     imdb  ) surf "http://www.imdb.com/find?s=all&q=$movie"; pwait "surf http://www.imdb.com/find?s=all&q=$movie" ;;
-    manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"; catlg; break ;;
-    delete) rm -rf "$video"; catlg; break ;;
-    mark  ) mhistory "$playlist" "$movie"; catlg; break ;;
+    manage) term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"; cache; break ;;
+    delete) rm -rf "$video"; cache; break ;;
+    mark  ) mhistory "$playlist" "$movie"; cache; break ;;
     exit  ) exit ;;
     esac
   done
@@ -108,7 +103,7 @@ while : ;do
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
   "$SEARCH") surf $usenet; pwait "surf $usenet"; continue ;;
-  "$EDIT"  ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; catlg ;;
+  "$EDIT"  ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
   *        ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done

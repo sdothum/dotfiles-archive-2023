@@ -31,7 +31,7 @@ preprocess=${0%/dmenu}/functions/dmenu/.d/$category
 retitle="$library"/.retitle
 
 # exclude directory kludge of .anime links in main series folder
-ownership() {
+permissions() {
   if server || $usb ;then
     find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chmod -R 755 {} \; 2>/dev/null
     find "$library" -maxdepth 2 -type d -name '[^.]*' -user sonarr -exec sudo chown -R shum:users {} \; 2>/dev/null
@@ -42,7 +42,7 @@ ownership() {
   find "$library" -name '*sample*' -exec rm {} \;
 }
 
-# ownership &
+permissions &
 
 # special title format clean up
 [ -e $preprocess ] && . $preprocess
@@ -59,18 +59,11 @@ shows() {
 }
 
 # list latest movie additions first
-catlg() {
-  cat /dev/null >$catlg
-  ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >/tmp/dmenu:$category
-  cp /tmp/dmenu:$category $catlg
-  touch $catlg
-}
-
 cache() {
   stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
   notify low 'Series' 'Caching library..'
   retitle "$library" >>$retitle
-  catlg
+  ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >$catlg
 }
 
 # any new media added?
@@ -89,7 +82,7 @@ while : ;do
   case $show in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
-  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; catlg ;;
+  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache ;;
   "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
   *        ) series=""$library"/$(echo $show | sed 's/ /./g')"
