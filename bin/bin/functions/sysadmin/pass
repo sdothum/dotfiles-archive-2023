@@ -8,7 +8,7 @@
 
 usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | l'ist | m'v <name> <'name> | R'm <name>"; exit 1; }
 
-PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$PASSWORD_STORE_DIR}
+PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 PASS=/usr/bin/pass
 XDIR=$HOME/sandbox
 image=$(basename $0).sh

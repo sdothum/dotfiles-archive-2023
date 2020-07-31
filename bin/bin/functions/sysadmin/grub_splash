@@ -23,7 +23,7 @@ if [ -d "$splash" ] ;then
   *1366) rez=-1366x768 ;;
   *1680) rez=-1680x1050 ;;
   *1920) rez=-1920x1080 ;;
-  *3440) rez=-3440x1440 ;;
+  *3440) rez=-1920x1080 ;;
   esac
 
   [ -e "$HOME/images/grub/$splash$rez.png" ] && splash="$HOME/images/grub/$splash$rez.png" || splash="$HOME/images/grub/$splash.png"
@@ -32,7 +32,7 @@ if [ -d "$splash" ] ;then
 fi
 
 sudo sed -i -e '/^GRUB_TIMEOUT=/s/[0-9]/3/' \
-         -e '/^GRUB_GFXMODE=auto/s/auto/1024x768x32,1366x768x32,1680x1050x32,1920x1080x32,3440x1440x32,auto/' \
+         -e '/^GRUB_GFXMODE=auto/s/auto/1024x768x32,1366x768x32,1680x1050x32,1920x1080x32,auto/' \
          -e "s,#*GRUB_BACKGROUND=.*,GRUB_BACKGROUND=$splash," \
          /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg

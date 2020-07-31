@@ -15,7 +15,7 @@ import sys
 
 # see offlineimap_keyring for python2 wrapper call
 def imap_password(service, user):
-    return keyring.get_password(service, user)[:-1]
+    return keyring.get_password(service, user)
  
 if __name__ == '__main__':
     print(imap_password('offlineimap', sys.argv[1]))

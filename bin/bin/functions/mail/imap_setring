@@ -16,6 +16,7 @@ setring() {
 }
 
 setring 'gmail.com' 'sdothum'
+setring 'gmail.com' 'phdotconsulting'
 setring 'thedarnedestthing.com' 'bodyshamanics'
 setring 'thedarnedestthing.com' 'comments'
 setring 'thedarnedestthing.com' 'steven'
