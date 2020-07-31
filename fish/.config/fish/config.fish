@@ -47,7 +47,7 @@ set -x TERM xterm-256color
 # .......................................................... Network environment
 
 # default printer
-set -x PRINTER HP_LaserJet_1320_series
+set -x PRINTER LaserJet
 set -x PROOF $HOME/.proof
 
 # main server
