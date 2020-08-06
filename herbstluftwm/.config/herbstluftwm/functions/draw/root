@@ -198,7 +198,7 @@ if [ ! -e $BLANK ] ;then
 fi
 
 # restart panels with new theme
-pkill -TERM -f 'draw panel'
+pkill -KILL -f 'draw panel'
 restore panel
 
 # vim: set ft=sh: #

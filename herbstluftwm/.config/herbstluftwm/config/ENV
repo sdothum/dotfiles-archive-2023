@@ -65,6 +65,7 @@ export PANEL_HEIGHT=$UI:panel_height
 export PANEL_INDENT=$UI:panel_indent
 export SPANEL=$SESSION/panel
 export PCONKY=$SPANEL:conky
+export STAT=$SPANEL:stat
 export TICKER=$SPANEL:ticker
 export WEATHER=$SPANEL:weather
 

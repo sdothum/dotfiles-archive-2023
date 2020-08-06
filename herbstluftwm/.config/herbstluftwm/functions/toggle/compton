@@ -28,8 +28,8 @@ if [ -e $COMPTON ] ;then
     # xscreensaver -no-splash &
   fi
 elif pstat compton ;then
-  killall -TERM compton
-  # killall -TERM xscreensaver
+  killall -KILL compton
+  # killall -KILL xscreensaver
 fi
 
 # vim: set ft=sh: #

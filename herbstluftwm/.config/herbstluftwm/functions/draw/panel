@@ -30,6 +30,7 @@ PANEL_UNDERLINE=2
 OCCUPIED='■'
 FREE='□'
 TAG_PAD='    '          # tag bar separator (visual spacing)
+DESKPAD="$TAG_PAD$TAG_PAD$TAG_PAD"
 
 # panel theme
 DEFAULT_BG='#00000000'  # alpha channel for panel transparency with compton
@@ -115,7 +116,7 @@ desktops() {
     fi
     desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
   done
-  desktops="$TAG_PAD$TAG_PAD$desktops$TAG_PAD$TAG_PAD$TAG_PAD"  # center tags with triple padding
+  [ -e $STAT ] && desktops="$DESKPAD${desktops}" || desktops="${desktops}$DESKPAD${desktops}"  # center tags with triple padding, see $stat
 }
 
 # ............................................................... Current window
@@ -134,11 +135,11 @@ working_on() {
   [ $tickcount ] || tickcount=0
   if [ $count -gt 1 ] || [ $tickcount -gt 0 ] ;then
     if [ $count -gt 1 ] && [ $tickcount -gt 0 ] ;then
-      title="$title${LSEP}$count${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
-    elif [ $count -gt 1 ] ;then
-      title="$title${LSEP}$count"
+      title="${title}${LSEP}${count}${LSEP}%{U$DEFAULT_FG}%{+u}${tickcount}%{-u}%{U-}"
+    elif [ ${count} -gt 1 ] ;then
+      title="${title}${LSEP}${count}"
     else
-      title="$title${LSEP}%{U$DEFAULT_FG}%{+u}$tickcount%{-u}%{U-}"
+      title="${title}${LSEP}%{U$DEFAULT_FG}%{+u}${tickcount}%{-u}%{U-}"
     fi
   fi
   unset hiding
@@ -150,18 +151,18 @@ working_on() {
   if [ $count -gt 0 ] ;then
     if [ "$(query wname)" = "${line#?}" ] ;then
       if [ $hiding ] ;then
-        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}${line#?}%{-u}%{U-}%{F-}%{B-}%{F$DEFAULT_FG}"
       else
-        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}${line#?}%{F-}%{B-}%{F$DEFAULT_FG}"
       fi
     else
       if [ $hiding ] ;then
-        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}%{U$ACTIVE_FG}%{+u}$(query wname)%{-u}%{U-}%{F$DEFAULT_FG}"
       else
-        title="$title${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
+        title="${title}${LSEP}%{B$DEFAULT_BG}%{F$ACTIVE_FG}$(query wname)%{F$DEFAULT_FG}"
       fi
       desc=$(asciititle ${line#?})
-      [ "$desc" ] && title="$title${LSEP}${desc}%{B-}%{F-}"
+      [ "$desc" ] && title="${title}${LSEP}${desc}%{B-}%{F-}"
     fi
   fi
 }
@@ -240,14 +241,34 @@ tape() {
   tic="$(echo "$tic" | tail -c $(( $len - $pos )))$(echo "$tic" | head -c $pos)"
 }
 
+# weather watch
 weather() {
   conky weather panel >$WEATHER &
   touch $WEATHER  # have to access file for test -s to return expected result, see current_conditions()
   unset update_weather
 }
 
-# weather watch
+# background refresh is required to avoid update latency, see draw panel
+[ -e $STAT ] && touch $STAT:cpu $STAT:temp $STAT:mem
+
+cpu_usage() {
+  printf '%9d' $(cat $STAT:cpu)
+  sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }' >$STAT:cpu &
+}
+
+cpu_temperature() {
+  cat $STAT:temp
+  cpu_temp >$STAT:temp &
+}
+
+mem_usage() {
+  cat $STAT:mem
+  free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*).*/\1⠙/' >$STAT:mem &
+}
+
 current_conditions() {
+  [ -e $STAT ] && stat="$(cpu_usage)%   $(cpu_temperature)°   $(mem_usage)$DESKPAD$TAG_PAD"
+
   unset clock
   if [ $TIC ] ;then
     case $TIC in
@@ -275,9 +296,9 @@ current_conditions() {
     esac
   fi
   [ -s $WEATHER ] && current_weather=$(cat $WEATHER)  # prevent blanking during update, see weather()
-  line="${line%%^*}$current_weather${line#*^}"
+  line="${line%%^*}${current_weather}${line#*^}"
 
-  line="${line%%|*}$clock%{F-}${line##*|}"
+  line="${line%%|*}${clock}%{F-}${line##*|}"
   system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}"
 }
 
@@ -288,7 +309,7 @@ current_conditions() {
 panel() {
   while read -r line ;do
     case $line in
-    S*       ) current_conditions ;;
+    S*       ) current_conditions ;;  # clock based info
     T*       ) working_on; desktops ;;
     *_changed) desktops ;;
     esac
@@ -301,7 +322,7 @@ panel() {
     # restrict title to left hand side of panel
     chop=$(( $mid_point + $(echo "$title"| wc -c) - $(echo "$title" | sed 's/%[{][^}]*[}]//g' | wc -c) ))
     title=$(echo "$title" | cut -b -$chop)
-    printf "%s\n" "%{l}${title}%{c}${desktops}%{r}${system}"
+    printf "%s\n" "%{l}${title}%{c}${desktops}${stat}%{r}${system}"
     unset line
   done
 }

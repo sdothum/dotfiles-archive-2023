@@ -20,7 +20,7 @@ pulsar() {
   while : ;do
     for i in $colors ;do
       # don't let processes queue up on a slower system..
-      pkill -TERM -f 'herbstclient attr theme.active.color'
+      pkill -KILL -f 'herbstclient attr theme.active.color'
       # disable spawning as bg process if desktop resource issues occur
       herbstclient attr theme.active.color "#$i" &
       sleep $frequency
@@ -40,7 +40,7 @@ fi
 # left edge border (to be implemented)
 
 # kill any previous instance of border highlighting
-pkill -TERM -f 'draw border pulsar'
+pkill -KILL -f 'draw border pulsar'
 herbstclient compare theme.border_width = 0 && exit
 # fullscreen does not alter layout so :max test below is ineffective
 is fullscreen && exit

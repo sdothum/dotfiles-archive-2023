@@ -8,7 +8,7 @@
 
 # reload .conkyrc (herbstluftwm spawn to avoid interactive shell hanging, see draw root)
 cpu arm && exit
-pkill -TERM -f '/usr/bin/conky' >/dev/null 2>&1
+pkill -KILL -f '/usr/bin/conky' >/dev/null 2>&1
 [ -e $CONKY ] && herbstclient spawn conky
 
 # vim: set ft=sh: #

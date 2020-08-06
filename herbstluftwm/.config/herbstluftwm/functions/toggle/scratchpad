@@ -13,7 +13,7 @@ term=tmux
 
 pstat + 'toggle scratchpad' && exit
 # kill any extra tmux sessions spawned (default 2 processes)..
-kill -TERM $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
+kill -KILL $(pgrep -f 'tmux -2 -f' | sed '1,2d') 2>/dev/null
 
 # search [<option>* [<command>]]
 search() { xdotool search $1 --limit 1 --name $name $2 2>/dev/null; }
