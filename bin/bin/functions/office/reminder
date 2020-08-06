@@ -8,6 +8,7 @@
 
 # Usage: reminder [<date string>], see date --date
 #        reminder [<weeks>], (default) 4 weeks (0) current month
+#        reminder alarms
 
 REMINDERS=${REMINDERS:-$HOME/.reminders}
 
@@ -15,6 +16,12 @@ list() {
   # ignore daily reminders
   remind -s$1 $REMINDERS | grep '[ap]m' | nocolor | cut -d' ' -f1,6- |
       sed "s/ /^/; s/ /  ^$SEP /; s,/,.,g" | column -R2 -s^ -t
+}
+
+alarms() {
+  remind -s+1 $REMINDERS | grep '[ap]m' | nocolor | grep "$1" | cut -d' ' -f6- | while read time todo ;do
+    notify critical "Reminder $time" "$todo"
+  done
 }
 
 reminders() {
@@ -34,6 +41,7 @@ case $1 in
 [1-9]     |\
 [0-9][0-9]) list +$1 ;;
 
+alarm*    ) alarms ${2:-$(date "+%Y/%m/%d")} ;;
 *         ) reminders $@ ;;
 esac
 

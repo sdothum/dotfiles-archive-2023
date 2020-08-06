@@ -48,7 +48,7 @@ pulseaudio-equalizer-gtk &
 # pstat dunst || dunst 2>/dev/null &
 if server && ! pstat mpd ;then
   sleep $instantiate
-  mpd &
+  exists mpd && mpd &
 fi
 # pstat urxvtd || urxvtd -q -o -f &
 # pstat xflux || xflux -l 45.4 -g -75.7
@@ -112,7 +112,12 @@ kill -KILL $BROWSER 2>/dev/null  # remove dangling instance on server
 switch tag $WEB
 [ -e $WWW      ] && $BROWSER &
 [ -e $TERM     ] && toggle scratchpad
-[ -e $REMINDER ] && (sleep $instantiate; dmenu reminder) &
+if [ -e $REMINDER ] ;then
+  sleep $instantiate
+  dmenu reminder &
+else
+  reminder alarms
+fi
 
 # .............................................................. Cleanup desktop
 
