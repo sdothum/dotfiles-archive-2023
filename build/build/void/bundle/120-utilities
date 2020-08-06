@@ -44,6 +44,7 @@
   psensor [sarver]
 # smartmontools
   socklog-void  
+  sysstat
 
 
 = test
