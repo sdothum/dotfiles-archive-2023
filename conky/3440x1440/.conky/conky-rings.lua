@@ -78,7 +78,7 @@ clock_s = {
 --                                                                    gauge DATA
 temp = {
 {
-    name='exec',                   arg="sensors | grep 'Core .:' | sed -e 's/^.*  [+]//' -e 's/...C  *[(].*$//' | sort | tail -1", max_value=100,
+    name='exec',                   arg="cpu_temp",                  max_value=100,
     x=84,                          y=551,
     graph_radius=25,
     graph_thickness=3,
