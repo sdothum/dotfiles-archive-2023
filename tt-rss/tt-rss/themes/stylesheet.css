@@ -128,7 +128,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .cdm.active .header:hover { background-color: transparent !important; }
 
-.ttrss_index #headlines-frame { padding-top: 0 !important; padding-left: 6px !important; padding-right: 28px !important; }
+.ttrss_index #headlines-frame { padding-top: 0 !important; padding-left: 22px !important; padding-right: 28px !important; }
 
 .ttrss_index .cdm { border: none !important; }
 
@@ -139,9 +139,13 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index #headlines-spacer { display: none; }
 
 /* feed source */
-.ttrss_index .feed { max-width: 90px !important; margin-left: 20px !important; padding-bottom: 3px !important; }
+.ttrss_index .feed { padding-bottom: 3px !important; display: inline-block !important; text-align: right !important; max-width: 105px !important; }
 
-.ttrss_index .feed a { background-color: transparent !important; padding-left: 2px !important; font-size: 10px !important; border-color: transparent !important; height: 20px !important; line-height: 24px !important; }
+.ttrss_index .active .feed { text-align: left !important; }
+
+.ttrss_index .feed a { background-color: transparent !important; font-size: 10px !important; border-color: transparent !important; height: 20px !important; line-height: 24px !important; max-width: 90px !important; }  /* max-width necessary to adjust text-overflow ellipsis alignment */
+
+.ttrss_index .active .feed a { text-overflow: inherit !important; overflow: visible !important; margin-left: 16px; }
 
 /* separate titlewrap segments into individual (2) overflow lines */
 .ttrss_index .titleWrap { white-space: normal !important; }
@@ -217,7 +221,9 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .header .marked-pic { font-size: 20px !important; height: 20px !important; line-height: 20px !important; padding: 2px 0 2px 1px !important; }
 
-.ttrss_index .active .left { top: 26px; left: 24px; }
+.ttrss_index :not(.active) .header .left { display: none !important; }
+
+.ttrss_index .active .header .left { display: inline !important; top: 26px; left: 24px; }
 
 .ttrss_index .cdm.marked { background-color: transparent !important; }
 
