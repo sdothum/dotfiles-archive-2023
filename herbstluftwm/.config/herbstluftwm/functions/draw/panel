@@ -263,11 +263,11 @@ cpu_temperature() {
 
 mem_usage() {
   cat $STAT:mem
-  free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*).*/\1⠙/' >$STAT:mem &
+  free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*).*/\1/' >$STAT:mem &
 }
 
 current_conditions() {
-  [ -e $STAT ] && stat="$(cpu_usage)%   $(cpu_temperature)°   $(mem_usage)$DESKPAD$TAG_PAD"
+  [ -e $STAT ] && stat="$(cpu_usage)%   $(cpu_temperature)°   $(mem_usage)⠙$DESKPAD$TAG_PAD"
 
   unset clock
   if [ $TIC ] ;then
