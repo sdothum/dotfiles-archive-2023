@@ -98,7 +98,6 @@ one_pass() {
   notmuch new >>/tmp/notmuch.log 2>&1
   tag_messages
   # notify Gmail 'New messages received'
-  >/tmp/mailsync:new
 }
 
 # initialize notmuch database
@@ -124,13 +123,13 @@ mail_daemon() {
     # curl -u sdothum:$(imap_keyring sdothum@gmail.com) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
     curl -u sdothum:$(cat $MAILDIR/.mailsync) --silent 'https://mail.google.com/mail/feed/atom' | perl -ne 'print '\t' if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/ ;' >/tmp/mailsync:new
     cmp -s /tmp/mailsync:old /tmp/mailsync:new
-    if [ $? -eq 1 ] ;then
+    if [ $? -eq 0 ] ;then
+      trace 'No new email'
+      break
+    else
       one_pass
       trace 'Cycling..'
       sleep $interval
-    else
-      trace 'No new email'
-      break
     fi
   done
 }
