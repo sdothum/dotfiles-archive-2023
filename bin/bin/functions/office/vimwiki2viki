@@ -26,7 +26,7 @@ gs() {
   [ "$action" ] || return
   ditto -- "$1"
   echo "$action"
-  [ $check ] || sed -ri "$1" "$wiki"
+  [ $check ] || sed -i -r "$1" "$wiki"
 }
 
 while read wiki <&3 ;do
