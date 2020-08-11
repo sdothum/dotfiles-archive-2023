@@ -22,7 +22,7 @@ heading "first up: sudo"
 # ══════════════════════════════════════════════════════════════════════════════
 pm_install sudo
 original /etc/sudoers
-sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //' \
+sed -i -e '/# %wheel ALL=(ALL) NOPASSWD: ALL/s/# //'  \
     -e '/## Defaults specification/aDefaults insults' \
     /etc/sudoers
 cat /etc/sudoers
@@ -54,7 +54,7 @@ heading 'configure package manager'
 # ══════════════════════════════════════════════════════════════════════════════
 original /etc/pacman.conf
 sed -i -e '/^\[options\]/aILoveCandy' \
-    -e '/^#Color/s/^#//' \
+    -e '/^#Color/s/^#//'              \
     /etc/pacman.conf
 pacman -Sy
 checkpoint
@@ -87,12 +87,12 @@ heading "add primary user $user"
 useradd -m -g users -G wheel,storage,power -s /bin/bash $user
 passwd $user
 
-sed -ri '/^alarm/s/[0-9]+:[0-9]+/1001:100/' \
-    -e "/^$user/s/[0-9]+:[0-9]+/1000:100/" \
+sed -i -r '/^alarm/s/[0-9]+:[0-9]+/1001:100/' \
+    -e "/^$user/s/[0-9]+:[0-9]+/1000:100/"    \
     /etc/passwd
-sed -ri '/^users/s/[0-9]+/100/' \
-    -e '/^alarm/s/[0-9]+/1001/' \
-    -e "/^$user/s/[0-9]+/1000/" \
+sed -i -r '/^users/s/[0-9]+/100/' \
+    -e '/^alarm/s/[0-9]+/1001/'   \
+    -e "/^$user/s/[0-9]+/1000/"   \
     /etc/group
 
 mv -v /home/$user /home/anonymous

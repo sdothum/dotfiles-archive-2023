@@ -6,7 +6,7 @@
 # ..................................................................... php-intl
 
 original /etc/php/php.ini
-sudo sed -ri '/=(curl|intl)/s/^;//' /etc/php/php.ini
+sudo sed -i -r '/=(curl|intl)/s/^;//' /etc/php/php.ini
 
 ditto service 'enable nginx'
 

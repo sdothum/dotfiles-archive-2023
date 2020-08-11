@@ -18,7 +18,7 @@ ifno 'create tt-rss database' || {
 
 # required php extensions
 original /etc/php/php.ini
-sudo sed -ri '/=(curl|intl|openssl|(pdo_)*pgsql)/s/^;//' /etc/php/php.ini
+sudo sed -i -r '/=(curl|intl|openssl|(pdo_)*pgsql)/s/^;//' /etc/php/php.ini
 
 ditto check '/etc/php/php.ini'
 ditto install 'service enable php-fpm nginx -> reboot'

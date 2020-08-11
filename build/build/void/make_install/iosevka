@@ -127,7 +127,7 @@ leading = $leading
 # custom settings not available in private-build-plans.toml
 original $TOML
 cp $TOML.original $TOML
-[ $default ] || sed -ri "/^cap =/s/= ([0-9]*)/= $cap/; /^descenderPad =/s/= ([0-9]*)/= $descenderPad/" $TOML
+[ $default ] || sed -i -r "/^cap =/s/= ([0-9]*)/= $cap/; /^descenderPad =/s/= ([0-9]*)/= $descenderPad/" $TOML
 
 # ensure node.js is uptodate
 npm install  # ignore npm funding and audit messages

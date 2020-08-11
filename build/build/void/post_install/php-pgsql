@@ -6,7 +6,7 @@
 # .................................................................... php-pgsql
 
 original /etc/php/php.ini
-sudo sed -ri '/=(pdo_)*pgsql/s/^;//' /etc/php/php.ini
+sudo sed -i -r '/=(pdo_)*pgsql/s/^;//' /etc/php/php.ini
 
 ditto service 'enable nginx'
 
