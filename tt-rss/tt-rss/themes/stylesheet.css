@@ -139,11 +139,11 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index #headlines-spacer { display: none; }
 
 /* feed source */
-.ttrss_index .feed { padding-bottom: 3px !important; display: inline-block !important; text-align: right !important; max-width: 105px !important; }
+.ttrss_index .feed { display: inline-block !important; text-align: right !important; max-width: 105px !important; }
 
 .ttrss_index .active .feed { text-align: left !important; }
 
-.ttrss_index .feed a { background-color: transparent !important; font-size: 10px !important; border-color: transparent !important; height: 20px !important; line-height: 24px !important; max-width: 90px !important; }  /* max-width necessary to adjust text-overflow ellipsis alignment */
+.ttrss_index .feed a { background-color: transparent !important; font-size: 10px !important; border-color: transparent !important; height: 20px !important; line-height: 26px !important; max-width: 90px !important; }  /* max-width necessary to adjust text-overflow ellipsis alignment */
 
 .ttrss_index .active .feed a { text-overflow: inherit !important; overflow: visible !important; margin-left: 16px; }
 
@@ -163,7 +163,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,.65) !important; }
 
 /* feed time */
-.ttrss_index span.updated { font-size: 10px !important; margin-right: 6px !important; color: rgba(0,0,0,.35) !important; height: 20px !important; line-height: 22px !important; }
+.ttrss_index span.updated { font-size: 10px !important; margin-right: 6px !important; color: rgba(0,0,0,.35) !important; height: 20px !important; line-height: 22px !important; padding: 0 0 1px !important; }
 
 .ttrss_index .active span.updated { color: rgba(0,0,0,.7) !important; }
 
@@ -223,7 +223,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index :not(.active) .header .left { display: none !important; }
 
-.ttrss_index .active .header .left { display: inline !important; top: 26px; left: 24px; }
+.ttrss_index .active .header .left { display: inline !important; top: 27px; left: 24px; }
 
 .ttrss_index .cdm.marked { background-color: transparent !important; }
 
