@@ -44,9 +44,6 @@ permissions() {
 
 permissions &
 
-# special title format clean up
-[ -e $preprocess ] && . $preprocess
-
 # list latest television series additions first
 T=t
 episodes=/tmp/dmenu:episodes
@@ -62,6 +59,7 @@ shows() {
 cache() {
   stest -qr -n $catlg $(find "$library" -maxdepth 2 -type d) || return
   notify low 'Series' 'Caching library..'
+  [ -e $preprocess ] && . $preprocess  # special title format clean up
   retitle "$library" >>$retitle
   ls -1$T "$library" | grep -v ' ' | sed 's/\./ /g' >$catlg
 }
