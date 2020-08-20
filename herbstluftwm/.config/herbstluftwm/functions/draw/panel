@@ -31,6 +31,7 @@ OCCUPIED='■'
 FREE='□'
 TAG_PAD='    '          # tag bar separator (visual spacing)
 DESKPAD="$TAG_PAD$TAG_PAD$TAG_PAD"
+STATPAD=${TAG_PAD% }
 
 # panel theme
 DEFAULT_BG='#00000000'  # alpha channel for panel transparency with compton
@@ -252,7 +253,7 @@ weather() {
 [ -e $STAT ] && touch $STAT:cpu $STAT:temp $STAT:mem
 
 cpu_usage() {
-  printf '%9d' $(cat $STAT:cpu)
+  printf '%3d' $(cat $STAT:cpu)
   sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }' >$STAT:cpu &
 }
 
@@ -267,7 +268,7 @@ mem_usage() {
 }
 
 current_conditions() {
-  [ -e $STAT ] && stat="$(cpu_usage)%   $(cpu_temperature)°   $(mem_usage)⠙$DESKPAD$TAG_PAD"
+  [ -e $STAT ] && stat="${STATPAD}${STATPAD}$(cpu_usage)%${STATPAD}$(cpu_temperature)°${STATPAD}$(mem_usage)⠙${DESKPAD}${TAG_PAD}"
 
   unset clock
   if [ $TIC ] ;then
