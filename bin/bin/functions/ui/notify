@@ -30,7 +30,7 @@ while : ;do
   crit* ) urgency="-u $1" ;;
 
   blac* ) urgency="-h string:bgcolor:#000000" ;;
-  [0-9]*) echo "$1" | grep -q '[^0-9]' && break || expire=--expire-time=$(( $1 * 1000 )) ;;
+  [0-9]*) echo "$1" | grep -q '[^0-9]' && break || expire="--expire-time=$(( $1 * 1000 ))" ;;
   *     ) break ;;
   esac
   shift

@@ -162,7 +162,7 @@ print() {
   *.pdf) pdf2ps "$1"; exec hardcopy "${1%.pdf}.ps" ;;
   *    ) output="$TMP/$(basename $1).pdf"; trap "rm -f $output" EXIT; format "$1" ;;
   esac
-  [ $proof ] && zathura "$output" 2>&1 || { notify low "Printing" "$title"; lpr -P $PRINTER "$output"; }
+  [ $proof ] && zathura "$output" 2>&1 || { notify low "Printing" "$title"; lpr -P $PRINTER -H localhost:631 "$output"; }
 }
 
 # lines from stdin are folded

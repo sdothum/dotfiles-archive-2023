@@ -27,7 +27,7 @@ PASSPORT="/run/media/$USER/My Passport/$category"
 catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
 sonarr=http://$SERVER:8989/calendar
-preprocess=${0%/dmenu}/functions/dmenu/.d/$category
+preprocess=${0%/dmenu}/functions/dmenu/.preproc/$category
 retitle="$library"/.retitle
 
 # exclude directory kludge of .anime links in main series folder
@@ -107,6 +107,7 @@ while : ;do
 
     mhistory "$playlist" "$episode"
     play "$video" "$show $episode"
+    cache  # update deletes
   done
 done
 

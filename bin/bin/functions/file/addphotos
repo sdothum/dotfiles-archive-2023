@@ -19,8 +19,10 @@ copy_image() {
   [ -d $LIBRARY/$year/$date ] || { ditto on "${__GREEN}$date"; mkdir $LIBRARY/$year/$date; }
 
   if [ -e $LIBRARY/$year/$date/$filename ] ;then
-    echo $filename
+    echo -n "$filename "
+    linefeed=true
   else
+    [ $linefeed ] && { echo; unset linefeed; }
     ditto took "$date / $filename"
     cp $1 $LIBRARY/$year/$date/$filename
     chmod 0644 $LIBRARY/$year/$date/$filename

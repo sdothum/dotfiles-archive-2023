@@ -77,7 +77,10 @@ playback() {
               notify 3 critical "$movie" "Duplicate movie files found"
               term 'movies' WAIT ranger "$video" || term 'movies' WAIT ranger "$library"
             fi
-            mhistory "$playlist" "$movie"; cache; play "$video" "$movie"; break ;;
+            mhistory "$playlist" "$movie"
+            play "$video" "$movie"
+            cache  # update deletes
+            break ;;
 
     copy  ) cp -rf "$video" $passport; break ;;
     mrqe  ) surf "http://www.mrqe.com/search?q=$movie"; pwait "surf http://www.mrqe.com/search?q=$movie" ;;
