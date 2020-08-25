@@ -8,8 +8,8 @@
 
 usage() {
   echo "usage: $(basename $0) 'start | 1'pass [<name>] | C'ertificate | f'ilter <name>|allmail | I'nitialize [<name>] | L'|l'og | Q'uiet | q'uit | r'estart | t'oggle"
-  ditto 'renew Certificate to correct periodic fingerprint mismatch'
-  ditto '"imap f allmail" is reserved for rebuilding full gmail download'
+  ditto INFO 'renew Certificate to correct periodic fingerprint mismatch'
+  ditto INFO '"imap f allmail" is reserved for rebuilding full gmail download'
   exit 1
 }
 

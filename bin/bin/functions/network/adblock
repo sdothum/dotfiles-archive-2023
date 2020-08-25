@@ -15,8 +15,8 @@ http://pgl.yoyo.org/as/serverlist.php?hostformat=nohtml
 http://mirror1.malwaredomains.com/files/justdomains
 http://www.malwaredomainlist.com/hostslist/hosts.txt
 http://winhelp2002.mvps.org/hosts.txt
-http://hosts-file.net/download/hosts.txt
-http://hosts-file.net/hphosts-partial.asp
+#http://hosts-file.net/download/hosts.txt
+#http://hosts-file.net/hphosts-partial.asp
 http://someonewhocares.org/hosts/hosts
 http://adblock.mahakala.is/hosts
 "
@@ -54,7 +54,7 @@ https://mirror1.malwaredomains.com/files/justdomains
 https://v.firebog.net/hosts/Prigent-Crypto.txt
 https://mirror.cedia.org.ec/malwaredomains/immortal_domains.txt
 https://www.malwaredomainlist.com/hostslist/hosts.txt
-https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
+#https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
 https://phishing.army/download/phishing_army_blocklist_extended.txt
 https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
 https://v.firebog.net/hosts/Shalla-mal.txt
@@ -78,7 +78,7 @@ count() { wc -l $TMP:$1; }
 addblock() {
   cat >$TMP:$1
   cat $TMP:$1 >>adblock
-  [ $(count $1 | cut -d' ' -f1) -eq 0 ] && { ditto empty "$TMP:$1"; exit 1; }
+  [ $(count $1 | cut -d' ' -f1) -eq 0 ] && { ditto WARNING empty "$TMP:$1"; exit 1; }
   wc -l $TMP:$1
   count $1
 }
@@ -88,8 +88,9 @@ blacklist() {
   ditto blacklist "$1"
   eval list=\${$1}
   for i in $list ;do
+    [ "${i%%#*}" = '' ] && continue  # deprecated hosts
     url=${i#*://}
-    ping -c1 ${url%%/*} >/dev/null 2>&1 || { ditto ping "${url%%/*} not found"; continue; }
+    ping -c1 ${url%%/*} >/dev/null 2>&1 || { ditto ERROR ping "${url%%/*} not found"; continue; }
     wget -qO- "$i" 2>>$LOG | sed -r "s/\t/ /g; s/ *#.*//g; s/^[0-9]+.0.0.[01] *//; s/ *$//; / /d; /^$/d" | egrep -E '^[a-z0-9-]+(\.[a-z0-9-]+)+$' | sed 's/^/0.0.0.0 /' | addblock $1:$(echo $url | tr '/' ':')
   done
 }

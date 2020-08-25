@@ -10,20 +10,21 @@ LIBRARY=/net/photos
 # udiskie automount point
 MEDIA=$(find /run/media/$USER/*/DCIM/* -maxdepth 0 -type d)
 
+lf() { [ $linefeed ] && echo; unset linefeed; }
+
 # transfer copy of new sdhc images
 copy_image() {
   filename=$(basename $1)
   date=$(stat -c '%y' $1 | cut -d' ' -f1)
   year=$(echo $date | cut -d- -f1)
   [ -d $LIBRARY/$year       ] || mkdir $LIBRARY/$year
-  [ -d $LIBRARY/$year/$date ] || { ditto on "${__GREEN}$date"; mkdir $LIBRARY/$year/$date; }
+  [ -d $LIBRARY/$year/$date ] || { lf; ditto on "$date"; mkdir $LIBRARY/$year/$date; }
 
   if [ -e $LIBRARY/$year/$date/$filename ] ;then
     echo -n "$filename "
     linefeed=true
   else
-    [ $linefeed ] && { echo; unset linefeed; }
-    ditto took "$date / $filename"
+    lf; ditto INFO took "$date / $filename"
     cp $1 $LIBRARY/$year/$date/$filename
     chmod 0644 $LIBRARY/$year/$date/$filename
   fi

@@ -20,8 +20,8 @@ done
 [ $tty ] || tty=tty1
 
 [ -e /dev/$tty ] || usage
-console || ditto 'run autologin from console tty'
-[ $(tty) = /dev/$tty ] && ditto "cannot alter active $tty, login to alternate tty"
+console || ditto WARNING 'run autologin from console tty'
+[ $(tty) = /dev/$tty ] && ditto WARNING "cannot alter active $tty, login to alternate tty"
 
 if [ $disable ] ;then
   service disable agetty-autologin-$tty

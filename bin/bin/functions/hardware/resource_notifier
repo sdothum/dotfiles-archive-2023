@@ -18,7 +18,7 @@ thrash=$(( $swap / 10 ))
 
 if [ $free -lt $threshold ] ;then
   if [ $used -gt $thrash ] ;then
-    ditto "${free}M free memory" "${used}M used swap"
+    ditto ERROR "${free}M free memory" "${used}M used swap"
     notify critical "${free}M free memory" "${used}M used swap"
     exit
   fi

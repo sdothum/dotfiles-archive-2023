@@ -8,7 +8,7 @@
 
 # abort condition
 if ! pstat script ;then
-  ditto 'run "script" to log stdout messages'
+  ditto INFO 'run "script" to log stdout messages'
   # kill script called from
   exit
 fi

@@ -28,7 +28,7 @@ iso) [ -e /net/downloads/dvd/dvd.iso ] || exit
      else
        ifyes 'merge session (append)' && growisofs -M /dev/dvd -R -J $@
      fi
-     ditto 'eject and select cdrom in thunar before next merge' ;;
+     ditto INFO 'eject and select cdrom in thunar before next merge' ;;
 esac
 
 # vim: set ft=sh: #

@@ -11,7 +11,7 @@ trap "rm -f $copy" EXIT
 while : ;do
   file=$(sudo find /etc -name '*.pacnew' | sed 's,^/etc/,,; s/.pacnew$//')
   if [ -z "$file" ] ;then
-    [ -e $copy ] && ditto 'zero (0) outstanding .pacnew files'
+    [ -e $copy ] && ditto WARNING 'zero (0) outstanding .pacnew files'
     break
   fi
 

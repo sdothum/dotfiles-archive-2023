@@ -24,7 +24,7 @@ add_pkg() {
       echo "$i:$(echo $pkg | head -1 | sed 's/ (.*)//')" >>$conf
       sort -uo $conf $conf
     else
-      ditto package "\"$i\" not found"
+      ditto ERROR package "\"$i\" not found"
     fi
   done
   trackpkg

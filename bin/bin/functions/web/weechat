@@ -60,7 +60,7 @@ if server ;then
     notify low "Weechat" "$count seconds to ZNC server IRC connection"
     /usr/bin/weechat
   else
-    ditto 'znc server not running'
+    ditto ERROR 'znc server not running'
   fi
 elif pong $SERVER ;then
   # close (unlock) any remote instances

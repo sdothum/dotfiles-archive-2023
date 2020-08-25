@@ -16,12 +16,12 @@ server || exit 1
 [ "$1" ] && gallery="$FOLIO/$1" || usage
 
 GALLERY="$ROOT/$gallery"
-[ -d "$GALLERY" ] || { ditto gallery "${__RED}$gallery"; mkdir -p "$GALLERY"; }
+[ -d "$GALLERY" ] || { ditto gallery "$gallery"; mkdir -p "$GALLERY"; }
 shift
 [ $1 ] && files="$@" || files=$(ls *.jpg)
 
 for i in $files ;do
-  ditto adding "$gallery $i"
+  ditto INFO adding "$gallery $i"
   convert $i -size 1600 -quality $quality $GALLERY/$i
   convert $i -size 320  -quality $quality $GALLERY/{i%.jpg}_1.jpg
 done

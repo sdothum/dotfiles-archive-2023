@@ -102,7 +102,7 @@ check() {
   *  ) $QUERY $package >/dev/null 2>&1 && installed=true ;;
   esac
 
-  [ $installed ] && echo $package || { echo $line >>$missing ; ditto missing "$package"; }
+  [ $installed ] && echo $package || { echo $line >>$missing ; ditto ERROR missing "$package"; }
 }
 
 decomment() { echo "$@" | sed 's/#.*//'; }
@@ -143,9 +143,9 @@ done
 if [ $check ] && [ -e $missing ] ;then
   # sort -u -o $missing $missing
   sed -i 's/^d //' $missing
-  ditto missing "$(wc -l $missing | cut -d' ' -f1) packages"
+  ditto ERROR missing "$(wc -l $missing | cut -d' ' -f1) packages"
   cat $missing
-  ditto "m make_install packages cannot be verified"
+  ditto INFO "m make_install packages cannot be verified"
   ifno "bundle_install $missing" || exec bundle_install $missing
 elif [ $deferred ] && [ -e $deferred ] ;then
   # sort -u -o $deferred $deferred
