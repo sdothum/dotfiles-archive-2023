@@ -178,9 +178,9 @@ grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
 heading 'install bundle'
 # ══════════════════════════════════════════════════════════════════════════════
-ditto 'exit console (script)'
-ditto "login as user $user"
-ditto run 'bundle_install pi_base'
+ditto INFO 'exit console (script)'
+ditto INFO "login as user $user"
+ditto INFO run 'bundle_install pi_base'
 
 
 # vim: set ft=sh: #

@@ -11,7 +11,7 @@
 # rizon irc.rizon.net +6697
 # gitter irc.gitter.im +6667 <password>
 # znc install adds freenode by default for #znc
-ditto "listen on port 7000, username/password znc/znc
+ditto INFO "listen on port 7000, username/password znc/znc
 service identity with:
 /msg nickserv register <password> <email>
 or if already registered..
@@ -40,6 +40,6 @@ oftc channels:
 rizon channels:
 /join #anime-planet.com,#haruhichan,#rice"
 sudo -u znc znc --makeconf
-server && service enable znc || ditto run "service up znc"
+server && service enable znc || ditto INFO run "service up znc"
 
 # vim: set ft=sh: #

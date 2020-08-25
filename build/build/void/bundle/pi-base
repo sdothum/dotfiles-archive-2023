@@ -74,9 +74,9 @@
 = ══════════════
   herbstluftwm
 
-! ditto 'exit console (script)'
-! ditto run 'startx (x)'
-! ditto run 'bundle_install pi_bundle'
+! ditto INFO 'exit console (script)'
+! ditto INFO run 'startx (x)'
+! ditto INFO run 'bundle_install pi_bundle'
 
 
 # vim: set ft=conf: #

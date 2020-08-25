@@ -22,7 +22,7 @@ sudo usermod -a -G audio $USER
 # echo "max_user_watches $(cat /proc/sys/fs/inotify/max_user_watches) -> $(echo 32768 | sudo tee /proc/sys/fs/inotify/max_user_watches)"
 
 # service enable alsa  # don't require enabling pulseaudio to use pavucontrol
-ditto "pulseaudio -v[v[v]..] for diagnostics
+ditto INFO "pulseaudio -v[v[v]..] for diagnostics
 enable alsa service if no sound on first use"
 
 # vim: set ft=sh: #

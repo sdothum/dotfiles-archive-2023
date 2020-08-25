@@ -9,6 +9,6 @@ ifnsed /etc/privoxy/config '^enable-edit-actions.*1' '/^enable-edit-actions/s/0/
 [ -f /usr/bin/polipo ] && ifnsed /etc/privoxy/config 'forward / localhost:8123'
 
 service enable privoxy
-# ditto "configure browser proxies to localhost:8118"
+# ditto INFO "configure browser proxies to localhost:8118"
 
 # vim: set ft=sh: #

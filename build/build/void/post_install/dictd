@@ -6,6 +6,6 @@
 # ........................................................................ dictd
 
 service enable dictd
-ditto "dictd will complain if no dictionaries are installed yet"
+ditto WARNING "dictd will complain if no dictionaries are installed yet"
 
 # vim: set ft=sh: #

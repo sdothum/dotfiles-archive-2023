@@ -4,7 +4,7 @@
 # post install/upgrade configuration
 
 if [ ! -d $HOME/stow ] ;then
-  ditto error 'stow directory not present'
+  ditto ERROR error 'stow directory not present'
   exit
 fi
 

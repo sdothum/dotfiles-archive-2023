@@ -41,6 +41,6 @@ if [ -e $HOME/tt-rss/themes/${theme}_$button ] ;then
   ln -sfv $THEMES/${theme}_$button $TTRSS/images/
 fi
 
-ditto service 'enable tt-rss'
+ditto INFO service 'enable tt-rss'
 
 # vim: set ft=sh: #

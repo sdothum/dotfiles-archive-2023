@@ -19,9 +19,9 @@ fi
 service enable connmand-nodnsproxy
 sleep 2
 
-server && ditto "$scan
+server && ditto INFO "$scan
 connmanctl> config [ethernet] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway>" ||
-          ditto "$scan
+          ditto INFO "$scan
 connmanctl> connect [wireless]
 connmanctl> config [wireless] --ipv4 manual <ip address> <netmask:255.255.255.0> <gateway> --autoconnect True"
 # note: wireless must be connected before configuring service

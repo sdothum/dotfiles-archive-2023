@@ -5,7 +5,7 @@
 
 # ........................................................................ conky
 
-ditto "BUILD_MOC=OFF
+ditto INFO "BUILD_MOC=OFF
 BUILD_MPD=ON
 BUILD_NVIDIA=OFF
 BUILD_OLD_CONFIG=OFF

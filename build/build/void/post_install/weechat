@@ -6,9 +6,9 @@
 # ...................................................................... weechat
 
 if [ -d $HOME/.weechat ] ;then
-  ditto 'see post_install/weechat to re-initialize weechat.conf'
+  ditto INFO 'see post_install/weechat to re-initialize weechat.conf'
 else
-  ditto "within weechat session, copy and paste each of the command blocks below
+  ditto INFO "within weechat session, copy and paste each of the command blocks below
 colorize_lines.pl may need to be reinstalled
 configure authentication else some channels will force #<channel>-unregistered
 /go #python

@@ -15,6 +15,6 @@ sudo sed -i -e '/open_basedir/s/=.*/=/' \
          -e '/;extension=openssl/s/;//' \
          /etc/php/php.ini
 
-ditto service 'enable nginx'
+ditto INFO service 'enable nginx'
 
 # vim: set ft=sh: #

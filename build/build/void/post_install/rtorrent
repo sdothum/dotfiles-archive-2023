@@ -5,6 +5,6 @@
 
 # ...................................................................... rorrent
 
-ditto "check port forwarding on router $(grep port_range $HOME/.rtorrent.rc)"
+ditto INFO "check port forwarding on router $(grep port_range $HOME/.rtorrent.rc)"
 
 # vim: set ft=sh: #

@@ -9,6 +9,6 @@
 sudo -E passenger-install-nginx-module
 
 cfg_install /etc/sv/nginx
-ditto run "service enable nginx"
+ditto INFO run "service enable nginx"
 
 # vim: set ft=sh: #

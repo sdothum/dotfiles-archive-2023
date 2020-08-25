@@ -16,6 +16,6 @@ fi
 
 sudo cp -v src/amphetype2 /usr/bin/amphetype2
 ditto link "$(sudo ln -sfv /usr/bin/amphetype2 /usr/bin/amphetype)"
-ditto config 'view -> library -> import texts'
+ditto INFO config 'view -> library -> import texts'
 
 # vim: set ft=sh: #

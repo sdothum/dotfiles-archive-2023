@@ -9,7 +9,7 @@ mkdir -pv $HOME/.mpd || exit 1
 mkdir -pv $HOME/.mpd/playlists || exit 1
 touch $HOME/.mpd/{mpd.db,pid,state,sticker.sql,tag_cache}
 
-# ditto "configure $HOME/.mpdconf for non-root access to local mpd files"
+# ditto INFO "configure $HOME/.mpdconf for non-root access to local mpd files"
 sed -e '/^#music_directory/s|".*"|"/net/media/music"|' \
     -e '/^#music_directory/s/^#//' \
     -e '/^#db_file/s|".*"|"'$HOME'/.mpd/mpd.db"|' \

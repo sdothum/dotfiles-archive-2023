@@ -10,7 +10,7 @@ NAMESERVER=$SESSION/nameserver
 
 cfg_install /etc/dnsmasq.conf
 # create initial adblock list
-adblock || { ditto error 'post_install dnsmasq'; exit 1; }
+adblock || { ditto ERROR error 'post_install dnsmasq'; exit 1; }
 
 sudo chattr -i /etc/resolv.conf
 # switch over to dnsmasq AFTER creating adblock list!

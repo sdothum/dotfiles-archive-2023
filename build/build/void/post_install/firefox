@@ -5,7 +5,7 @@
 
 # ...................................................................... firefox
 
-ditto 'current void release may refuse to use existing profile..'
-ditto run 'firefox --allow-downgrade'
+ditto INFO 'current void release may refuse to use existing profile..'
+ditto INFO run 'firefox --allow-downgrade'
 
 # vim: set ft=sh: #

@@ -42,8 +42,8 @@ title "installation errors:"
 # ══════════════════════════════════════════════════════════════════════════════
 grep '> \(ERROR\|WARNING\)' $HOME/typescript
 
-ditto boot 'exit console (script)'
-ditto run 'startx (x)'
-ditto run 'voidlinux-3apps'
+ditto INFO boot 'exit console (script)'
+ditto INFO run 'startx (x)'
+ditto INFO run 'voidlinux-3apps'
 
 # vim: set ft=sh: #

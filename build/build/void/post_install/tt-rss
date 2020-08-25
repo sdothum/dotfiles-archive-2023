@@ -20,9 +20,9 @@ ifno 'create tt-rss database' || {
 original /etc/php/php.ini
 sudo sed -i -r '/=(curl|intl|openssl|(pdo_)*pgsql)/s/^;//' /etc/php/php.ini
 
-ditto check '/etc/php/php.ini'
-ditto install 'service enable php-fpm nginx -> reboot'
-ditto http://localhost:8000/tt-rss/[install] '[ttrss, ttrss] [admin, password]'
-ditto config.php 'SINGLE_USER_MODE true'
+ditto INFO check '/etc/php/php.ini'
+ditto INFO install 'service enable php-fpm nginx -> reboot'
+ditto INFO http://localhost:8000/tt-rss/[install] '[ttrss, ttrss] [admin, password]'
+ditto INFO config.php 'SINGLE_USER_MODE true'
 
 # vim: set ft=sh: #

@@ -5,8 +5,8 @@
 
 # ....................................................................... btsync
 
-ditto run "rmdir .sync"
-ditto "..and reinitialize (emptied) sync directories"
+ditto INFO run "rmdir .sync"
+ditto INFO "..and reinitialize (emptied) sync directories"
 service enable btsync@$USER
 
 # vim: set ft=sh: #

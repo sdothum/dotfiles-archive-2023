@@ -8,6 +8,6 @@
 original /etc/php/php.ini
 sudo sed -i -r '/=(curl|intl)/s/^;//' /etc/php/php.ini
 
-ditto service 'enable nginx'
+ditto INFO service 'enable nginx'
 
 # vim: set ft=sh: #

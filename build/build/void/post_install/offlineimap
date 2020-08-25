@@ -6,9 +6,9 @@
 # .................................................................. offlineimap
 
 # initialize keyring
-ditto "if new public key generated.."
-ditto run "pass.sh"
-ditto run "imap_setring"
+ditto INFO "if new public key generated.."
+ditto INFO run "pass.sh"
+ditto INFO run "imap_setring"
 [ -d $HOME/.password-store/mail ] && imap_setring
 
 # vim: set ft=sh: #

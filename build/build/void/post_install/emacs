@@ -8,6 +8,6 @@
 rm -rf $HOME/.emacs.d
 rm -rf $HOME/.emacs
 git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
-ditto 'launch emacs to complete spacemacs installation and prompts'
+ditto INFO 'launch emacs to complete spacemacs installation and prompts'
 
 # vim: set ft=sh: #

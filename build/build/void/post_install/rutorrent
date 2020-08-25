@@ -15,6 +15,6 @@ sudo chmod 0777 /opt/nginx/html/rutorrent/share/settings
 sudo chmod 0777 /opt/nginx/html/rutorrent/share/torrents
 sudo chmod 0777 /opt/nginx/html/rutorrent/share/users
 
-ditto "connect on htttp://localhost/rutorrent/"
+ditto INFO "connect on htttp://localhost/rutorrent/"
 
 # vim: set ft=sh: #

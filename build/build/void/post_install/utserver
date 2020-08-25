@@ -19,6 +19,6 @@ sed -e '/#ut_webui_port:/cut_webui_port: 8081' \
 ipfilter
 
 service enable utserver
-ditto "enable ipfiltering from advanced settings localhost:8081/gui/"
+ditto INFO "enable ipfiltering from advanced settings localhost:8081/gui/"
 
 # vim: set ft=sh: #

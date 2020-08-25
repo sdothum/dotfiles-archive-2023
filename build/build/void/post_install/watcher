@@ -17,6 +17,6 @@ command=/home/$uid/bin/watcher $filename\
 
 sudo sed -i "s/\$uid/$USER/" /etc/conf.d/watcher.ini
 # service enable watcher
-ditto run "sudo systemctl enable watcher"
+ditto INFO run "sudo systemctl enable watcher"
 
 # vim: set ft=sh: #

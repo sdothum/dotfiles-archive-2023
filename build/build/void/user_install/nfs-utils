@@ -36,6 +36,6 @@ fi
 #        sudo crontab -u $USER -
 # fi
 
-ditto "update cliend hosts tables with nfs server address for $SERVER"
+ditto INFO "update cliend hosts tables with nfs server address for $SERVER"
 
 # vim: set ft=sh: #
