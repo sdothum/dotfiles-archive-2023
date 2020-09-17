@@ -28,6 +28,7 @@ conky clock :: $(find $STOW/conky -type f -name '*clock*')
 conky lumen :: $(find $STOW/conky/1920x1080 -type f -name '*conky*')
 conky luna :: $(find $STOW/conky/3440x1440 -type f -name '*conky*')
 conky monad :: $(find $STOW/conky/1024x600 -type f -name '*conky*')
+corne beaklji :: $(find -L $STOW/corne/qmk_firmware/keyboards/crkbd/keymaps/beaklji -type f)
 corne beaklyi :: $(find -L $STOW/corne/qmk_firmware/keyboards/crkbd/keymaps/beaklyi -type f)
 corne beaklzi :: $(find -L $STOW/corne/qmk_firmware/keyboards/crkbd/keymaps/beaklzi -type f)
 cron user :: $HOME/build/cfg/var/spool/cron/crontabs/$USER

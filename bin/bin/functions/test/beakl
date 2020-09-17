@@ -6,6 +6,8 @@
 
 # ..................................................................... BEAKL Zi
 
-xinput list --name-only | egrep -q 'Chimera|Corne|Planck|Splitography' 2>/dev/null
+BEAKL=$SESSION/beakl
+
+[ -e $BEAKL ] || xinput list --name-only | egrep -q 'Chimera|Corne|Planck|Splitography' 2>/dev/null
 
 # vim: set ft=sh: #

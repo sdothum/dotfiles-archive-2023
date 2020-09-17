@@ -10,7 +10,7 @@ LIBRARY=/net/photos
 # udiskie automount point
 MEDIA=$(find /run/media/$USER/*/DCIM/* -maxdepth 0 -type d)
 
-lf() { [ $linefeed ] && echo; unset linefeed; }
+lf() { [ $linefeed ] && echo $lastname; unset linefeed lastname; }
 
 # transfer copy of new sdhc images
 copy_image() {
@@ -21,7 +21,7 @@ copy_image() {
   [ -d $LIBRARY/$year/$date ] || { lf; ditto on "$date"; mkdir $LIBRARY/$year/$date; }
 
   if [ -e $LIBRARY/$year/$date/$filename ] ;then
-    echo -n "$filename "
+    [ $linefeed ] && lastname=" .. $filename" || echo -n "$filename "
     linefeed=true
   else
     lf; ditto INFO took "$date / $filename"
@@ -36,5 +36,6 @@ case ${MEDIA##*/} in
 *FUJI ) camera $MEDIA ;;
 *SIGMA) camera $MEDIA ;;
 esac
+lf
 
 # vim: set ft=sh: #

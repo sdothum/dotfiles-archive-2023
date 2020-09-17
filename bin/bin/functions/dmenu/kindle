@@ -5,7 +5,7 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu kindle [default | epub | noindent | justify | all] <file>, see dmenu ebooks
+# Usage: dmenu kindle [azw3 | epub] [default | noindent | justify | all] <file>, see dmenu ebooks
 #
 # Note: Embed font to override possible ebook embedded font
 #       Use a unique font (remove all but regular font face for minimal file size) e.g. barcodes are small
@@ -16,24 +16,31 @@ kindle=/run/media/$USER/Kindle
 [ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
 kindle=$kindle/documents/
 
-case $1 in
-default ) option=default;              shift ;;
-epub    ) option=default; format=epub; shift ;;  # epub output hack
-noindent) option=noindent;             shift ;;
-just*   ) option=justify;              shift ;;
-all     ) option=all;                  shift ;;
-esac
-
 # embed smallest fontset possible, see notes above
 embed_font='Libre Barcode 39'  # a google font
 # em spacing
 em_indent=1.66          # paragraph
 em_linespace=0.33,0.75  # indent,noindent
 
+# override device/cloud transfer and create kindle/kobo file
+case $1 in
+azw3    ) option=${option:-default}; format=azw3; library=true; shift ;;  # library update
+epub    ) option=${option:-default}; format=epub;               shift ;;  # epub output hack
+esac
+
+# override left justification
+case $1 in
+def* ) option=default;  shift ;;
+noin*) option=noindent; shift ;;  # retain poetry formatting
+just*) option=justify;  shift ;;
+all  ) option=all;      shift ;;
+esac
+
 file=$1
 name=$(basename "${file%.*}")
 author=${name##* - }
 title=${name% - *}
+[ "${file%/*}" = "$file" ] && folder=./ || folder=${file%/*}/  # library
 
 # .............................................................. Amazon transfer
 
@@ -69,34 +76,37 @@ END
 
 # ...................................................................... Convert
 
-[ -d $kindle ] && format=azw3 || format=${format:-mobi}
+[ $library ] || { [ -d $kindle ] && format=azw3 || format=${format:-mobi}; }
 find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
-notify low "$title" "Converting to $format.."
 # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
 # use calibre conversion module
 output="/tmp/${file##*/}"
 [ $option ] || option=$(echo -n "default (ragged-right)\nnoindent\njustify\nall" | rmenu 'export options' -no-custom) || break
 justify=left
-indent="--remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent"
 linespace=${em_linespace%,*}
 case $option in
-default*) ;;
-noindent) unset indent; linespace=${em_linespace#*,} ;;
-just*   ) justify=justify ;;
+default ) ;;
+noindent) em_indent=0; linespace=${em_linespace#*,} ;;
+justify ) justify=justify ;;
 all     ) unset indent; linespace=${em_linespace#*,}; justify=justify ;;
 esac
+notify low "$title" "Converting to $format..\n--change-justification="$justify" $indent"
 # convert even .azw3 to inject folder title and author
 ebook-convert "$file" "${output%.*}.$format" \
               --title="$title" --authors="$author" \
-              --change-justification="$justify" $indent \
+              --change-justification="$justify" \
+              --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
               --insert-blank-line --insert-blank-line-size=$linespace \
               --embed-font-family="$embed_font" \
               >/tmp/ebook-convert.log || exit
 
 # ........................................................................ Write
 
-# usb or cloud?
-if [ -d $kindle ] ;then
+# usb, cloud or library update?
+if [ $library ] ;then
+  find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" "$folder" \;
+  notify low "$title" "$folder"
+elif [ -d $kindle ] ;then
   find $kindle -maxdepth 1 -wholename "${file% - *}*.sdr" -exec rm -rf "{}" \;  # cleanup dangling sdr files
   find /tmp -maxdepth 1 -name "*$format" -exec rm -rf "$kindle${file% - *}*.sdr" \; -exec mv -f "{}" $kindle \;
   notify low "$title" "$kindle"

@@ -9,6 +9,7 @@
 # Usage: [GT=<count>] W [[list] <letter>*]
 
 WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
+# WORDS=${WORDS:-$HOME/.config/Amphetype/10K-word.sort}  # top 10K words for detailed frequency function
 GT=${GT:-0}
 
 alphabet='e t a o i n s r h l d c u m f p g w y b v k x j q z'
@@ -23,6 +24,14 @@ frequency() {
     echo $i
   done | awk '{ freq += $1 } END { print freq }'
 }
+
+# including frequency within word (cpu intensive).. does not alter overall letter frequency order
+# frequency() {
+  # grep -i $i $WORDS | while read word count ;do
+    # match=$(echo -n $word | sed "s/$i/\n/gi" | wc -l)
+    # echo $(( $match * $count ))
+  # done | awk '{ freq += $1 } END { print freq }'
+# }
 
 corpus() {
   underline
