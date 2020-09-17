@@ -6,6 +6,20 @@
 
 # ......................................................... BEAKL Zi Keybindings
 
+BEAKL=$SESSION/beakl
+
+if [ -e $BEAKL ] ;then
+  if [ $(cat $BEAKL) = 'beaklhi' ] ;then
+    LEFT=n
+    DOWN=t
+    UP=d
+  else  # beaklzi
+    LEFT=t
+    DOWN=r
+    UP=n
+  fi
+fi
+
 # window manager
 hc keybind $Mod-Shift-q             chain . spawn kill -KILL $BROWSER . spawn quit  # qutebrowser (re)startx issue (qt5 ??)
 hc keybind $Mod-Control-Shift-q     chain . spawn kill -KILL $BROWSER . spawn pkill -KILL -f startx
@@ -42,19 +56,19 @@ hc keybind $Mod-Left                focus_edge left
 hc keybind $Mod-Down                focus_edge down
 hc keybind $Mod-Up                  focus_edge up
 hc keybind $Mod-Right               focus_edge right
-hc keybind $Mod-t                   focus left
-hc keybind $Mod-r                   focus down
-hc keybind $Mod-n                   focus up
+hc keybind $Mod-$LEFT               focus left
+hc keybind $Mod-$DOWN               focus down
+hc keybind $Mod-$UP                 focus up
 hc keybind $Mod-s                   focus right
 
-# move client
+# move clientCorne BEAKL Hi
 hc keybind $Mod-Shift-Left          shift_edge left
 hc keybind $Mod-Shift-Down          shift_edge down
 hc keybind $Mod-Shift-Up            shift_edge up
 hc keybind $Mod-Shift-Right         shift_edge right
-hc keybind $Mod-Shift-t             chain . shift left  . emit_hook focus_changed
-hc keybind $Mod-Shift-r             chain . shift down  . emit_hook focus_changed
-hc keybind $Mod-Shift-n             chain . shift up    . emit_hook focus_changed
+hc keybind $Mod-Shift-$LEFT         chain . shift left  . emit_hook focus_changed
+hc keybind $Mod-Shift-$DOWN         chain . shift down  . emit_hook focus_changed
+hc keybind $Mod-Shift-$UP           chain . shift up    . emit_hook focus_changed
 hc keybind $Mod-Shift-s             chain . shift right . emit_hook focus_changed
 hc keybind $Mod-Shift-Page_Down     spawn pin monitor 1
 hc keybind $Mod-Shift-Page_Up       spawn pin monitor 0
@@ -90,9 +104,9 @@ hc keybind $Mod-Shift-l             spawn switch orientation +2
 
 # resize frames
 resizestep=0.025
-hc keybind $Mod-Control-t           resize left  +$resizestep
-hc keybind $Mod-Control-r           resize down  +$resizestep
-hc keybind $Mod-Control-n           resize up    +$resizestep
+hc keybind $Mod-Control-$LEFT       resize left  +$resizestep
+hc keybind $Mod-Control-$DOWN       resize down  +$resizestep
+hc keybind $Mod-Control-$UP         resize up    +$resizestep
 hc keybind $Mod-Control-s           resize right +$resizestep
 hc keybind $Mod-Control-Left        resize left  +$resizestep
 hc keybind $Mod-Control-Down        resize down  +$resizestep
