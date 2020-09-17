@@ -135,8 +135,8 @@ void asterisk(STATE, void *user_data)
 
 void comma(STATE, void *user_data)
 {
-  tap_key(KC_COMM);
-  if (TAPS) { tap_key(KC_SPC); }
+  if (TAPS) { send_string(COMMACOMMA); }
+  else      { tap_key(KC_COMM); }
   reset_tap_dance(state);
 }
 
