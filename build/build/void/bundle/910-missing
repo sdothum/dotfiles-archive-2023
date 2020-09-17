@@ -1,8 +1,5 @@
-ranger
 m shell-functools
 mesa-nouveau-dri [gpu nvidia && ! gpu intel]
-elixir
-chromium-widevine
 m sonarr [server]
 tt-rss
 m tt-rss [server || test -d /srv/http/tt-rss]
