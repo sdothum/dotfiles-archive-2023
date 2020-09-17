@@ -117,7 +117,7 @@ enum keyboard_keycodes {
  ,PLOVER
 #endif
 #ifdef ROLLOVER
- ,HOME_Q  // pseudo GUI_T(KC_Q)
+ ,HOME_J  // pseudo GUI_T(KC_J)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
  ,HOME_A  // pseudo SFT_T(KC_A)
@@ -144,7 +144,7 @@ enum keyboard_keycodes {
 };
 
 #ifndef ROLLOVER
-#define HOME_Q  GUI_T(KC_Q)
+#define HOME_J  GUI_T(KC_J)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
 #define HOME_A  SFT_T(KC_A)
@@ -287,8 +287,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   switch (keycode) {
 #ifdef ROLLOVER
-  case HOME_Q:
-    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0);  break;
+  case HOME_J:
+    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_J, 0);  break;
   case HOME_H:
     mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
   case HOME_E:
@@ -556,7 +556,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   default:
     key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
-
+  
   CLR_1SHOT;        // see leader_cap()
   return true;
 }

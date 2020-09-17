@@ -554,9 +554,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ................................................................ Other Keys
 
   default:
-    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
-    key_timer = 0;                 // regular keycode, clear timer in keycode_functions.h
+    key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
+  
+  CLR_1SHOT;        // see leader_cap()
   return true;
 }
 
