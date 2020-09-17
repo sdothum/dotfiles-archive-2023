@@ -85,6 +85,7 @@ abbr t 'tail -f'
 # .................................................................... Directory
 
 abbr dus "/usr/bin/du -hs * | sort -h"
+abbr l 'ls '
 abbr l1 'ls -1'
 abbr ldot 'ls -lAd .*'
 abbr ll 'ls -lA'
