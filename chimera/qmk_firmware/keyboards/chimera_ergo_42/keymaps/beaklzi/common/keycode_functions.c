@@ -87,7 +87,7 @@ void tap_key(uint16_t keycode)
   unregister_code(keycode);
 }
 
-static uint16_t kc_shift = KC_LSFT;  // for repeating shift (down), see process_record_user() -> mod_roll(), roll_key() -> tap_shift()
+static uint16_t kc_shift = 0;  // for repeating shift (down), see process_record_user() -> mod_roll(), roll_key() -> tap_shift()
 
 void tap_shift(uint16_t keycode)
 {
@@ -124,17 +124,15 @@ void mod_key(uint16_t modifier, uint16_t keycode)
 }
 
 #define SET_EVENT(c) e[c].key_timer = timer_read(); \
-                     e[c].key_down  = KEY_DOWN;     \
                      e[c].keycode   = keycode;      \
                      e[c].shift     = shift;        \
                      e[c].side      = side;         \
                      e[c].leadercap = leadercap;    \
-                     if (modifier || !e[prev_key].key_down) { prev_key = next_key; next_key = c; }  // check for held key or roll onto modifier
+                     if (keycode != e[prev_key].keycode) { prev_key = next_key; next_key = c; }
 
 // column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
 static struct column_event {
   uint16_t key_timer;            // event priority
-  uint16_t key_down;
   uint16_t keycode;
   uint8_t  shift;
   uint8_t  side;
@@ -158,8 +156,8 @@ static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record
 static uint8_t next_key    = 0;  // by column reference
 static uint8_t prev_key    = 0;
 
-#define ROLL(s, k) (prev_key == RSHIFT && e[RSHIFT].shift && s == LEFT) || \
-                   (prev_key == LSHIFT && e[LSHIFT].shift && s == RIGHT)   \
+#define ROLL(s, k) (prev_key == RSHIFT && e[prev_key].shift && s == LEFT) || \
+                   (prev_key == LSHIFT && e[prev_key].shift && s == RIGHT)   \
                    ? tap_shift(k) : tap_key(k)
 
 void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
@@ -174,7 +172,6 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 }
 
 #define CLEAR_EVENT e[column].key_timer   = 0; \
-                    e[column].key_down    = 0; \
                     e[column].shift       = 0; \
                     e[prev_key].leadercap = 0; \
                     leaderlayer           = 0
@@ -182,12 +179,13 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
-  if (shift) { kc_shift = modifier; }  // for repeating shift (down), process_record_user(), see roll_key() -> tap_shift()
   if (KEY_DOWN) {
+    if (shift && !kc_shift) { kc_shift = modifier == KC_LSFT ? KC_RSFT : KC_LSFT; }  // for repeating shift (down), see roll_key() -> tap_shift()
     SET_EVENT(column);
     if (modifier) { REGISTER_MODIFIER(modifier); }
   } else {
     if (modifier) { UNREGISTER_MODIFIER(modifier); }
+    if (shift && kc_shift == modifier) { kc_shift = 0; }  // for repeating shift (down), process_record_user(), see roll_key() -> tap_shift()
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
       roll_key(side, keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
@@ -232,7 +230,6 @@ void mt_shift(RECORD, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 // handle map_shift() rolling keys (and dot chords)
 void set_leader(RECORD, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
 {
-  uint16_t modifier = 0;  // SET_EVENT default
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
