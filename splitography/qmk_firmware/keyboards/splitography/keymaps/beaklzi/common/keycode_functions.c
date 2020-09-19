@@ -52,9 +52,9 @@ void mod_all(void (*f)(uint8_t), uint8_t mask)
 
 // base layer modifier
 #ifdef SPLITOGRAPHY
-#define MOD_DOWN(k)         (mods & MOD_BIT(k))   // regardless of other home row modifiers
+#define MOD_DOWN(k) (mods & MOD_BIT(k))   // regardless of other home row modifiers
 #else
-#define MOD_DOWN(k)         (mods == MOD_BIT(k))  // on home row modifier only
+#define MOD_DOWN(k) (mods == MOD_BIT(k))  // on home row modifier only
 #endif
 
 // .................................................................. Key event
@@ -129,7 +129,7 @@ void mod_key(uint16_t modifier, uint16_t keycode)
                      e[c].shift     = shift;        \
                      e[c].side      = side;         \
                      e[c].leadercap = leadercap;    \
-                     if (shift || !e[prev_key].key_down) { prev_key = next_key; next_key = c; }  // check for held key or roll onto shift
+                     if (modifier || !e[prev_key].key_down) { prev_key = next_key; next_key = c; }  // check for held key or roll onto modifier
 
 // column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
 static struct column_event {
@@ -232,6 +232,7 @@ void mt_shift(RECORD, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 // handle map_shift() rolling keys (and dot chords)
 void set_leader(RECORD, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
 {
+  uint16_t modifier = 0;  // SET_EVENT default
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
