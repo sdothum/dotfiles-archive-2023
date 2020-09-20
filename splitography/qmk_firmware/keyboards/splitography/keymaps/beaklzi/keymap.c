@@ -409,7 +409,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
-    break;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_COMM, 4);             return false;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
@@ -417,7 +417,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #else
     if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
 #endif
-    break;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_DOT, 4);              return false;
 #else
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
