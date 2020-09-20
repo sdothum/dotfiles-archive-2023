@@ -87,7 +87,7 @@ void tap_key(uint16_t keycode)
   unregister_code(keycode);
 }
 
-static uint16_t kc_shift = 0;  // for repeating shift (down), see process_record_user() -> mod_roll(), roll_key() -> tap_shift()
+static uint16_t kc_shift = KC_LSFT;  // for repeating shift (down), see process_record_user() -> mod_roll(), roll_key() -> tap_shift()
 
 void tap_shift(uint16_t keycode)
 {
@@ -128,7 +128,7 @@ void mod_key(uint16_t modifier, uint16_t keycode)
                      e[c].shift     = shift;        \
                      e[c].side      = side;         \
                      e[c].leadercap = leadercap;    \
-                     if (keycode != e[prev_key].keycode) { prev_key = next_key; next_key = c; }
+                     if (!e[prev_key].shift && keycode != e[prev_key].keycode) { prev_key = next_key; next_key = c; }  // check for held key or repeating key
 
 // column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
 static struct column_event {
@@ -179,13 +179,12 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
+  if (shift) { kc_shift = modifier; }  // for repeating shift (down), process_record_user(), see roll_key() -> tap_shift()
   if (KEY_DOWN) {
-    if (shift && !kc_shift) { kc_shift = modifier == KC_LSFT ? KC_RSFT : KC_LSFT; }  // for repeating shift (down), see roll_key() -> tap_shift()
     SET_EVENT(column);
     if (modifier) { REGISTER_MODIFIER(modifier); }
   } else {
     if (modifier) { UNREGISTER_MODIFIER(modifier); }
-    if (shift && kc_shift == modifier) { kc_shift = 0; }  // for repeating shift (down), process_record_user(), see roll_key() -> tap_shift()
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
       roll_key(side, keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
