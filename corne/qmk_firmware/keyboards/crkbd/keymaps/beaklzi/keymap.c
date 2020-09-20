@@ -316,13 +316,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ............................................................. Toggle Layers
 
   case TGL_TL:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; return false; }  // defer reset!
-    if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; DONE }  // defer reset!
+    if (dual_down)                             { dual_down--; base_layer(dual_down); DONE }
     tt_escape(record, keycode);
     break;
   case TGL_TR:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { dual_down = 2; return false; }  // defer reset!
-    if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { dual_down = 2; DONE }  // defer reset!
+    if (dual_down)                             { dual_down--; base_layer(dual_down); DONE }
     tt_escape(record, keycode);
     break;
   case TGL_HL:
@@ -335,73 +335,73 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................... Left Thumb Keys
 
   case TT_ESC:
-    base_layer(0);                                   return false;      // exit TT layer
+    base_layer(0);                                     DONE    // exit TT layer
   case LT_ESC:
-    if (tt_keycode)                                  { base_layer(0); return false; }
+    if (tt_keycode)                                  { base_layer(0); DONE }
     break;
 
   case LT_I:
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { DONE }
 #endif
 #ifdef ROLLOVER
-    if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
+    if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { DONE }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #endif
     break;
   case TT_I:
     lt(record, _REGEX, SHIFT, KC_I);                 break;
   case S(KC_I):
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { DONE }
 #endif
-    if (!KEY_DOWN)                                   { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN)                                   { CLR_1SHOT }  // see leader_cap()
     break;
 
   case LT_TAB:
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { DONE }
 #endif
-    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { DONE }
     break;
 
   // .......................................................... Right Thumb Keys
 #ifdef ROLLOVER
   case LT_ENT:
-    leaderlayer = _EDIT;                                                    // see mod_roll()
-    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT -> enter shift
+    leaderlayer = _EDIT;                                           // see mod_roll()
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { DONE }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_ENT, 10)) { DONE }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-    leaderlayer = _SYMGUI;                                                  // see mod_roll()
-    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
+    leaderlayer = _SYMGUI;                                         // see mod_roll()
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { DONE }  // KC_SPC -> space shift
     break;
 #else
   case LT_ENT:
-    if (leader_cap(record, _EDIT, leadercap, KC_ENT))    { return false; }  // KC_ENT -> enter shift
+    if (leader_cap(record, _EDIT, leadercap, KC_ENT))    { DONE }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (leader_cap(record, 0, leadercap, KC_ENT))        { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (leader_cap(record, 0, leadercap, KC_ENT))        { DONE }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-    if (leader_cap(record, _SYMGUI, leadercap, KC_SPC))  { return false; }  // KC_SPC -> space shift
+    if (leader_cap(record, _SYMGUI, leadercap, KC_SPC))  { DONE }  // KC_SPC -> space shift
     break;
 #endif
   case TT_SPC:
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN)                                       { CLR_1SHOT }  // see leader_cap()
     break;
 
   case LT_BSPC:
   case KC_BSPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
+    if (!KEY_DOWN)                                       { CLR_1SHOT }  // see leader_cap()
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); DONE }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { DONE }
     break;
 
   // ............................................................. Modifier Keys
@@ -432,7 +432,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef ROLLOVER
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
+    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { DONE }
     break;
   case TD_COLN:
     if (MOD_DOWN(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
@@ -441,20 +441,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_COMM, 4);             return false;
+    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { DONE }
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_COMM, 4);               DONE
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_leader(record, LEFT, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_leader(record, LEFT, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { DONE }  // pseudo tapdance ~ -> ~/
 #else
-    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
+    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { DONE }
 #endif
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_DOT, 4);              return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_DOT, 4);                DONE
 #else
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { DONE }
     break;
   case TD_COLN:
     if (MOD_DOWN(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
@@ -463,14 +463,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))            { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))            { DONE }
     break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { DONE }  // pseudo tapdance ~ -> ~/
 #else
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { return false; }
+    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { DONE }
 #endif
     break;
 #endif
@@ -481,7 +481,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_QUES:
     leadercap = KEY_DOWN ? 1 : 0;  // exclamation/question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4))  { return false; }
+    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4))  { DONE }
 #endif
     break;
 
@@ -489,65 +489,62 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 #ifdef ROLLOVER
   case KC_Z:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_Z, 0);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_Z, 0);    DONE
   case KC_Y:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    DONE
   case KC_O:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_O, 2);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_O, 2);    DONE
   case KC_U:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_U, 3);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_U, 3);    DONE
 
   case KC_G:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_G, 5);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_G, 5);   DONE
   case KC_D:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_D, 6);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_D, 6);   DONE
   case KC_N:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_N, 7);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_N, 7);   DONE
   case KC_M:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_M, 8);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_M, 8);   DONE
   case KC_X:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_X, 9);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_X, 9);   DONE
 
   // ........................................................... Middle Row Keys 
 
   case KC_C:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_C, 5);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_C, 5);   DONE
 
   // ........................................................... Bottom Row Keys
 
   case KC_J:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_J, 0);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_J, 0);    DONE
   case KC_MINS:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_MINS, 1); return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_MINS, 1); DONE
   case KC_QUOT:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_QUOT, 2); return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_QUOT, 2); DONE
   case KC_K:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_K, 3);    return false;
+    mod_roll(record, LEFT, NOSHIFT, 0, KC_K, 3);    DONE
 
   case KC_B:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_B, 5);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_B, 5);   DONE
   case KC_P:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_P, 6);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_P, 6);   DONE
   case KC_L:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_L, 7);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_L, 7);   DONE
   case KC_F:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_F, 8);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_F, 8);   DONE
   case KC_V:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_V, 9);   return false;
+    mod_roll(record, RIGHT, NOSHIFT, 0, KC_V, 9);   DONE
 #endif
 
 #ifdef PLANCK
   // ................................................................ Steno Keys
 
   case PLOVER:
-    steno(record);
-    return false;
+    steno(record);                                                DONE
   case BASE1:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); return false; }
-    return false;
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); } DONE
   case BASE2:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }
-    return false;
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); } DONE
 #endif
 
   // ................................................................ Other Keys
@@ -557,7 +554,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 
   CLR_1SHOT;        // see leader_cap()
-  return true;
+  return true;      // finish qmk key handling
 }
 
 // Initialization
