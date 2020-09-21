@@ -181,7 +181,6 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
-  if (shift) { kc_shift = modifier; }  // for repeating shift (down), process_record_user(), see roll_key() -> tap_shift()
   if (KEY_DOWN) {
     SET_EVENT(column);
     if (modifier) { REGISTER_MODIFIER(modifier); }
@@ -198,6 +197,24 @@ bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t k
     CLEAR_EVENT;
   }
   return false;
+}
+
+// treat opposite shift key when shifted as character keycode only!
+static uint16_t shift_down = 0;  // shift (0) UP (modifier) DOWN
+
+bool sft_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
+{
+  // return mod_roll(record, side, shift, modifier, keycode, column);
+  if (shift_down == modifier) {  // shift key UP
+    shift_down = 0;
+    return mod_roll(record, side, shift, modifier, keycode, column);
+  }
+  if (shift_down == 0) {         // shift key DOWN
+    kc_shift = modifier == KC_LSFT ? KC_RSFT : KC_LSFT;        // counterintuitive but necessary for shift persistence, see tap_shift()
+    shift_down = modifier;
+    return mod_roll(record, side, shift, modifier, keycode, column);
+  }
+  return mod_roll(record, side, NOSHIFT, 0, keycode, column);  // opposite shift key as keycode only
 }
 
 // down -> always shift (versus SFT_t auto repeat), 

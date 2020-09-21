@@ -295,10 +295,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2);  break;
   case HOME_A:
     leadercap = KEY_DOWN ? 1 : 0;  // space/enter + shift shortcut, see leader_cap()
-    mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);    break;
+    sft_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);    break;
 
   case HOME_T:
-    mod_roll(record, RIGHT, SHIFT, KC_RSFT, KC_T, 6);   break;
+    sft_roll(record, RIGHT, SHIFT, KC_RSFT, KC_T, 6);   break;
   case HOME_R:
     mod_roll(record, RIGHT, NOSHIFT, KC_RALT, KC_R, 7); break;
   case HOME_S:
