@@ -9,15 +9,17 @@
 static uint8_t  reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
 static uint16_t tt_keycode = 0;  // current TT keycode
 
-#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
+#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED);
 #define KEY_DOWN  record->event.pressed
+// process_record_user() key processing
+#define DONE      return true;
 
 // ................................................................. Local Scope
 
 static uint8_t  i          = 0;  // inline for loop counter
 static uint16_t key_timer  = 0;  // global event timer
 
-#define KEY_TIMER key_timer = timer_read()
+#define KEY_TIMER key_timer = timer_read();
 #define KEY_TAP   timer_elapsed(key_timer) < TAPPING_TERM
 
 // Keycodes
@@ -63,7 +65,7 @@ void mod_all(void (*f)(uint8_t), uint8_t mask)
 void tt_escape(RECORD, uint16_t keycode)
 {
   if (tt_keycode && tt_keycode != keycode) { base_layer(0); }  // if different TT layer selected
-  if (KEY_DOWN)                            { KEY_TIMER; }
+  if (KEY_DOWN)                            { KEY_TIMER }
   else                                     { if (KEY_TAP) { tt_keycode = keycode; } key_timer = 0; }
 }
 
@@ -128,7 +130,7 @@ void mod_key(uint16_t modifier, uint16_t keycode)
                      e[c].shift     = shift;        \
                      e[c].side      = side;         \
                      e[c].leadercap = leadercap;    \
-                     if (!e[prev_key].shift && keycode != e[prev_key].keycode) { prev_key = next_key; next_key = c; }  // check for held key or repeating key
+                     if (!e[prev_key].shift && keycode != e[prev_key].keycode) { prev_key = next_key; next_key = c; }  // check for held key (shift) or repeating key
 
 // column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
 static struct column_event {
@@ -179,7 +181,6 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
 bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
-  if (shift) { kc_shift = modifier; }  // for repeating shift (down), process_record_user(), see roll_key() -> tap_shift()
   if (KEY_DOWN) {
     SET_EVENT(column);
     if (modifier) { REGISTER_MODIFIER(modifier); }
@@ -196,6 +197,24 @@ bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t k
     CLEAR_EVENT;
   }
   return false;
+}
+
+// treat opposite shift key when shifted as character keycode only!
+static uint16_t shift_down = 0;  // shift (0) UP (modifier) DOWN
+
+bool sft_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
+{
+  // return mod_roll(record, side, shift, modifier, keycode, column);
+  if (shift_down == modifier) {  // shift key UP
+    shift_down = 0;
+    return mod_roll(record, side, shift, modifier, keycode, column);
+  }
+  if (shift_down == 0) {         // shift key DOWN
+    kc_shift = modifier == KC_LSFT ? KC_RSFT : KC_LSFT;        // counterintuitive but necessary for shift persistence, see tap_shift()
+    shift_down = modifier;
+    return mod_roll(record, side, shift, modifier, keycode, column);
+  }
+  return mod_roll(record, side, NOSHIFT, 0, keycode, column);  // opposite shift key as keycode only
 }
 
 // down -> always shift (versus SFT_t auto repeat), 
@@ -266,7 +285,7 @@ bool map_shift(RECORD, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 bool mapc_shift(RECORD, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 {
   if (MOD_DOWN(shift_key)) {
-    if (KEY_DOWN) { KEY_TIMER; }
+    if (KEY_DOWN) { KEY_TIMER }
     else {
       if (KEY_TAP) {
         if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode

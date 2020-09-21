@@ -38,6 +38,7 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column);
 void rolling_layer(RECORD, uint8_t side, uint8_t shift, uint16_t keycode, uint8_t layer, uint8_t facing);
 void send(STATE, void *user_data);
 void set_leader(RECORD, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column);
+bool sft_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column);
 void space(STATE, void *user_data);
 void space_reset(STATE, void *user_data);
 void steno(RECORD);
