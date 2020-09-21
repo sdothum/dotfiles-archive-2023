@@ -38,7 +38,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 void colon(STATE, void *user_data)
 {
-  if (MOD_DOWN(KC_RSFT)) {  // handle like map_shift()
+  if (mod_down(KC_RSFT)) {  // handle like map_shift()
 #ifdef EMOJI
     if (TAPS)          { DOUBLE_TAP(KC_SCLN, " :-"); }
 #else
@@ -58,7 +58,7 @@ void colon(STATE, void *user_data)
 void colon_reset(STATE, void *user_data)
 {
   unregister_shift(KC_SCLN);
-  if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
+  if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
 }
 
 void equal(STATE, void *user_data)
@@ -121,7 +121,7 @@ void tilde_reset(STATE, void *user_data)
 {
   unregister_shift(KC_GRV);
   unregister_code (KC_DOT);
-  if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_TILD
+  if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_TILD
 }
 
 // ........................................................... Simple Double Tap
@@ -148,7 +148,7 @@ void dot(STATE, void *user_data)
 }
 
 #define IRC_ENTER _delay_ms(10); \
-                  tap_key(KC_ENT)
+                  tap_key  (KC_ENT)
 
 void paste(STATE, void *user_data)
 {

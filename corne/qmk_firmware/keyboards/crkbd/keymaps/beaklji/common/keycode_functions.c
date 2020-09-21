@@ -11,6 +11,8 @@ static uint16_t tt_keycode = 0;  // current TT keycode
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
 #define KEY_DOWN  record->event.pressed
+// process_record_user() key processing
+#define DONE      return true;
 
 // ................................................................. Local Scope
 
@@ -190,7 +192,7 @@ static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record
 static uint8_t next_key    = 0;  // by column reference
 static uint8_t prev_key    = 0;
 
-#define ROLL(s, k) (e[RSHIFT].shift && s == LEFT) || (e[LSHIFT].shift && s == RIGHT) ? tap_shift(k) : tap_key(k)
+#define ROLL(s, k) (e[RSHIFT].shift && e[RSHIFT].key_timer < e[column].key_timer && s == LEFT) || (e[LSHIFT].shift && e[LSHIFT].key_timer < e[column].key_timer && s == RIGHT) ? tap_shift(k) : tap_key(k)
 
 void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 {
