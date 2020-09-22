@@ -6,11 +6,22 @@
 
 // ................................................................ Global Scope
 
+
+static bool     leadercap  = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
 static bool     reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
-static uint16_t tt_keycode = 0;  // current TT keycode
+static uint16_t tt_keycode = 0;  // current TT state (keycode)
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
 #define KEY_DOWN  record->event.pressed
+
+#define LEFT      1  // keyboard hand side
+#define RIGHT     2  // for (LEFT | RIGHT) bit test
+
+#define SHIFT     1  // shift option or shiftable state (function dependent)
+#define NOSHIFT   0
+
+#define ONDOWN    0  // see raise_layer()
+#define TOGGLE    1
 
 // ................................................................. Local Scope
 
@@ -135,9 +146,6 @@ bool mod_down(uint16_t key_code)
 
 // ......................................................... Modifier Primitives
 
-#define SHIFT   1
-#define NOSHIFT 0
-
 void mod_key(uint16_t modifier, uint16_t keycode)
 {
   switch (modifier) {
@@ -172,8 +180,6 @@ void mt_shift(RECORD, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 
 // ....................................................... Leader Capitalization
 
-static bool leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
-
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
 bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 {
@@ -191,9 +197,6 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 }
 
 // ................................................................ Rolling Keys
-
-#define LEFT   1  // also see raise_layer(), rolling_layer()
-#define RIGHT  2  // for (LEFT | RIGHT) bit test
 
 #ifdef ROLLOVER
 #define SET_EVENT(c) e[c].key_timer = timer_read(); \
@@ -218,7 +221,7 @@ void clear_events(void)
   for (i = 0; i < 12; i++) { e[i].key_timer = 0; e[i].leadercap = 0; }
 }
 
-#define LEADER 10                // ,11 leader columns
+#define LEADER 10                // and 11 are leader columns (assigned to SPC and ENT)
 #define LSHIFT 3                 // left shift column
 #define RSHIFT 6                 // right shift column
 
@@ -385,9 +388,6 @@ void oneshot_shift(uint8_t layer)
 }
 
 // ............................................................ Double Key Layer
-
-#define ONDOWN 0
-#define TOGGLE 1
 
 static uint8_t double_key = 0;
 
