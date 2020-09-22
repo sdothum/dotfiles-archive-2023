@@ -380,14 +380,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #else
   case LT_ENT:
-    if (leader_cap(record, _EDIT, leadercap, KC_ENT))    { return false; }  // KC_ENT -> enter shift
+    if (leader_cap(record, _EDIT, KC_ENT))               { return false; }  // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (leader_cap(record, 0, leadercap, KC_ENT))        { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (leader_cap(record, 0, KC_ENT))                   { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-    if (leader_cap(record, _SYMGUI, leadercap, KC_SPC))  { return false; }  // KC_SPC -> space shift
+    if (leader_cap(record, _SYMGUI, KC_SPC))             { return false; }  // KC_SPC -> space shift
     break;
 #endif
   case TT_SPC:
@@ -443,7 +443,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_COMM, 4);               return false;
+    break;
 
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
@@ -452,7 +452,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #else
     if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
 #endif
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_DOT, 4);                return false;
+    break;
 #else
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
