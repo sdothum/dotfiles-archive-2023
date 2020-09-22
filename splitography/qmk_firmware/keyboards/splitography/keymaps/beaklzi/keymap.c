@@ -329,7 +329,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     leaderlayer = _SYMGUI;                                                  // see mod_roll()
     if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
 #else
-    if (leader_cap (record, _SYMGUI, leadercap, KC_SPC)) { return false; }  // KC_SPC -> space shift
+    if (leader_cap (record, _SYMGUI, KC_SPC))            { return false; }  // KC_SPC -> space shift
 #endif
     rolling_layer  (record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
@@ -352,7 +352,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     if (map_shift  (record, KC_LSFT, NOSHIFT, KC_DEL))   { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL))   { return false; }
-    if (leader_cap (record, _EDIT, leadercap, KC_ENT))   { return false; }  // see KC_BSPC for multi-tap
+    if (leader_cap (record, _EDIT, KC_ENT))              { return false; }  // see KC_BSPC for multi-tap
     break;
   case KC_BSPC:
     if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
@@ -361,7 +361,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     if (map_shift  (record, KC_LSFT, NOSHIFT, KC_DEL))   { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL))   { return false; }
-    if (leader_cap (record, 0, leadercap, KC_ENT))       { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
+    if (leader_cap (record, 0, KC_ENT))                  { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef THUMB_CAPS
     if (KEY_DOWN)                                        { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM)    { tap_key(KC_BSPC); }
@@ -409,7 +409,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_COMM:
     leadercap = KEY_DOWN ? 1 : 0;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_COMM, 4);             return false;
+    break;
   case KC_DOT:
     leadercap = KEY_DOWN ? 1 : 0;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
@@ -417,7 +417,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #else
     if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
 #endif
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_DOT, 4);              return false;
+    break;
 #else
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
