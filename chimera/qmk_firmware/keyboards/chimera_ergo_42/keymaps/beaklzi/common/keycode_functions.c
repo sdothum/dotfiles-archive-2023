@@ -6,7 +6,7 @@
 
 // ................................................................ Global Scope
 
-static uint8_t  reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
+static bool     reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
 static uint16_t tt_keycode = 0;  // current TT keycode
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
@@ -124,7 +124,7 @@ void tap_shift(uint16_t keycode)
 
 #define SHIFTED_OR(k) shift ? tap_shift(k) : tap_key(k)
 
-void double_tap(uint8_t count, uint8_t shift, uint16_t keycode)
+void double_tap(uint8_t count, bool shift, uint16_t keycode)
 {
   SHIFTED_OR(keycode);
   if (count > 1) { SHIFTED_OR(keycode); }
@@ -161,9 +161,9 @@ void mod_key(uint16_t modifier, uint16_t keycode)
 static struct column_event {
   uint16_t key_timer;            // event priority
   uint16_t keycode;
-  uint8_t  shift;
+  bool     shift;
   uint8_t  side;
-  uint8_t  leadercap;
+  bool     leadercap;
 } e[12];                         // leader -> 10 11, see process_record_user(), mod_roll()
 
 void clear_events(void)
@@ -178,7 +178,7 @@ void clear_events(void)
 #define LEFT   1                 // also see raise_layer(), rolling_layer()
 #define RIGHT  2                 // for bit (LEFT | RIGHT) test
 
-static uint8_t leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
+static bool    leadercap   = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
 static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record_user()
 static uint8_t next_key    = 0;  // by column reference
 static uint8_t prev_key    = 0;
@@ -204,7 +204,7 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
                     leaderlayer           = 0
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
-bool mod_roll(RECORD, uint8_t side, uint8_t shift, uint16_t modifier, uint16_t keycode, uint8_t column)
+bool mod_roll(RECORD, uint8_t side, bool shift, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) {
     SET_EVENT(column);
@@ -253,13 +253,13 @@ void mt_shift(RECORD, uint16_t modifier, uint16_t modifier2, uint16_t keycode)
 // ................................................................. Map Keycode
 
 // handle map_shift() rolling keys (and dot chords)
-void set_leader(RECORD, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
+void set_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
 
-bool map_leader(RECORD, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_t keycode, uint8_t column)
+bool map_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
 {
   set_leader(record, side, shift_key, shift, keycode, column);
   return map_shift(record, shift_key, shift, keycode);
@@ -268,7 +268,7 @@ bool map_leader(RECORD, uint8_t side, uint16_t shift_key, uint8_t shift, uint16_
 static uint8_t map = 0;  // map state
 
 // remap keycode via shift for base and caps layers
-bool map_shift(RECORD, uint16_t shift_key, uint8_t shift, uint16_t keycode)
+bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
 {
   if (map || mod_down(shift_key)) {
     if (KEY_DOWN) {
@@ -289,7 +289,7 @@ bool map_shift(RECORD, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 
 #if STENO
 // conditional map_shift pass through on keycode down to complete lt(), see process_record_user()
-bool mapc_shift(RECORD, uint16_t shift_key, uint8_t shift, uint16_t keycode)
+bool mapc_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
 {
   if (mod_down(shift_key)) {
     if (KEY_DOWN) { KEY_TIMER; }
@@ -308,7 +308,7 @@ bool mapc_shift(RECORD, uint16_t shift_key, uint8_t shift, uint16_t keycode)
 #endif
 
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
-bool leader_cap(RECORD, uint8_t layer, uint8_t leadercap, uint16_t keycode)
+bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 {
   if (leadercap) {
     if (KEY_DOWN) { KEY_TIMER; return false; }
@@ -357,7 +357,7 @@ void base_layer(uint8_t defer)
 }
 
 // LT macro for mapc_shift(), see process_record_user()
-void lt(RECORD, uint8_t layer, uint8_t shift, uint16_t keycode)
+void lt(RECORD, uint8_t layer, bool shift, uint16_t keycode)
 {
   if (KEY_DOWN) { KEY_TIMER; layer_on(layer); }
   else {
@@ -415,7 +415,7 @@ static uint8_t rightside = 0;
                            if (y && y == _MOUSE) { layer_on(facing); y = facing; }
 
 // seamlessly switch left / right thumb layer combinations
-void rolling_layer(RECORD, uint8_t side, uint8_t shift, uint16_t keycode, uint8_t layer, uint8_t facing)
+void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t layer, uint8_t facing)
 {
   if (KEY_DOWN) {
     layer_on(layer);
