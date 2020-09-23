@@ -10,7 +10,6 @@
 // enable for center column
 #define TAPPING_TOGGLE 1
 // tap dance key press termination interval
-#define TAPPING_TERM 250
 #define HASKELL_TERM 200
 
 // smooth mouse motion
@@ -36,6 +35,9 @@
 #define ROLLOVER
 #ifndef ROLLOVER
 #define IGNORE_MOD_TAP_INTERRUPT
+#define TAPPING_TERM 200
+#else
+#define TAPPING_TERM 250
 #endif
 
 // left handed space/enter
