@@ -10,7 +10,6 @@
 // enable for center column
 #define TAPPING_TOGGLE 1
 // tap dance key press termination interval
-#define TAPPING_TERM 250
 #define HASKELL_TERM 200
 
 // smooth mouse motion
@@ -22,8 +21,7 @@
 
 // compile time macro strings, see functions/hardware qmk script
 #define PRIVATE_STRING ""
-#define PUBLIC1_STRING ""
-#define PUBLIC2_STRING ""
+#define PUBLIC_STRING ""
 
 // language tap dance operators
 #define HASKELL
@@ -34,6 +32,9 @@
 #define ROLLOVER
 #ifndef ROLLOVER
 #define IGNORE_MOD_TAP_INTERRUPT
+#define TAPPING_TERM 200
+#else
+#define TAPPING_TERM 250
 #endif
 
 
