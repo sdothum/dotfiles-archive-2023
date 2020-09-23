@@ -7,7 +7,6 @@
 #define PREVENT_STUCK_MODIFIERS
 // fix dual function timing
 #define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
 // enable for center column
 #define TAPPING_TOGGLE 1
 // tap dance key press termination interval
@@ -39,8 +38,12 @@
 // sync app with window manager keybind hook defined in plover_keybind.h
 #define PLOVER_KEYBIND
 
-// rolling home row modifiers (replaces LGUI_T, LCTL_T, LALT_T qmk macros)
+// rolling home row modifiers (replaces LSFT_T, LGUI_T, LCTL_T, LALT_T qmk macros)
 #define ROLLOVER
+#ifndef ROLLOVER
+#define IGNORE_MOD_TAP_INTERRUPT
+#endif
+
 
 // double tap "=="
 #define EQLEQL "=~"
