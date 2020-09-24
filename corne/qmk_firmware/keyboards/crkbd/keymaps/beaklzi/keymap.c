@@ -428,7 +428,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 
   // ......................................................... Shift Mapped Keys
-
 #ifdef ROLLOVER
   case KC_COLN:
     leadercap = KEY_DOWN ? 1 : 0;  // semi/colon + space/enter + shift shortcut, see leader_cap()
@@ -489,7 +488,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   // .............................................................. Top Row Keys
-
 #ifdef ROLLOVER
   case KC_Z:
     mod_roll(record, LEFT, NOSHIFT, 0, KC_Z, 0);    return false;
@@ -565,7 +563,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════
-
 #ifdef CORNE
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);

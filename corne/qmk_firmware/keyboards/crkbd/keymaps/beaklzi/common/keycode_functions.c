@@ -197,7 +197,6 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 }
 
 // ................................................................ Rolling Keys
-
 #ifdef ROLLOVER
 #define SET_EVENT(c) e[c].key_timer = timer_read(); \
                      e[c].keycode   = keycode;      \
