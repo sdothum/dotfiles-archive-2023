@@ -26,7 +26,7 @@
 // language tap dance operators
 #define HASKELL
 #define UNIX
-#define EMOJI
+// #define EMOJI
 
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
 #define THUMB_CAPS
@@ -38,11 +38,12 @@
 
 // rolling home row modifiers (replaces LSFT_T, LGUI_T, LCTL_T, LALT_T qmk macros)
 #define ROLLOVER
-#ifndef ROLLOVER
+
+#ifdef ROLLOVER
+#define TAPPING_TERM 250
+#else
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
-#else
-#define TAPPING_TERM 250
 #endif
 
 
