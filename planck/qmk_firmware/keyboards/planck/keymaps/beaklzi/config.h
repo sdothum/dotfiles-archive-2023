@@ -26,17 +26,17 @@
 // language tap dance operators
 #define HASKELL
 #define UNIX
-#define EMOJI
+// #define EMOJI
 
 // rolling home row modifiers (replaces LSFT_T, LGUI_T, LCTL_T, LALT_T qmk macros)
 #define ROLLOVER
-#ifndef ROLLOVER
+
+#ifdef ROLLOVER
+#define TAPPING_TERM 250
+#else
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
-#else
-#define TAPPING_TERM 250
 #endif
-
 
 // left handed space/enter
 // #define LEFT_SPC_ENT
