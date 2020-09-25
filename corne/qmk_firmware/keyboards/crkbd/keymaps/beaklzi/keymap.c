@@ -489,52 +489,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // .............................................................. Top Row Keys
 #ifdef ROLLOVER
-  case KC_Z:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_Z, 0);    return false;
-  case KC_Y:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_Y, 1);    return false;
-  case KC_O:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_O, 2);    return false;
-  case KC_U:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_U, 3);    return false;
+#define CASE_ROLL(s, k, c) case k: \
+                           mod_roll(record, s, NOSHIFT, 0, k, c); \
+                           return false
 
-  case KC_G:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_G, 5);   return false;
-  case KC_D:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_D, 6);   return false;
-  case KC_N:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_N, 7);   return false;
-  case KC_M:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_M, 8);   return false;
-  case KC_X:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_X, 9);   return false;
+#define CASE_LKEY(k, c)    CASE_ROLL(LEFT,  k, c)
+#define CASE_RKEY(k, c)    CASE_ROLL(RIGHT, k, c)
 
-  // ........................................................... Middle Row Keys 
+  CASE_LKEY(KC_Z,    0);
+  CASE_LKEY(KC_Y,    1);
+  CASE_LKEY(KC_O,    2);
+  CASE_LKEY(KC_U,    3);
 
-  case KC_C:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_C, 5);   return false;
+  CASE_RKEY(KC_G,    5);
+  CASE_RKEY(KC_D,    6);
+  CASE_RKEY(KC_N,    7);
+  CASE_RKEY(KC_M,    8);
+  CASE_RKEY(KC_X,    9);
+
+  // ........................................................... Middle Row Keys
+
+  CASE_RKEY(KC_C,    5);
 
   // ........................................................... Bottom Row Keys
 
-  case KC_J:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_J, 0);    return false;
-  case KC_MINS:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_MINS, 1); return false;
-  case KC_QUOT:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_QUOT, 2); return false;
-  case KC_K:
-    mod_roll(record, LEFT, NOSHIFT, 0, KC_K, 3);    return false;
+  CASE_LKEY(KC_J,    0);
+  CASE_LKEY(KC_MINS, 1);
+  CASE_LKEY(KC_QUOT, 2);
+  CASE_LKEY(KC_K,    3);
 
-  case KC_B:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_B, 5);   return false;
-  case KC_P:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_P, 6);   return false;
-  case KC_L:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_L, 7);   return false;
-  case KC_F:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_F, 8);   return false;
-  case KC_V:
-    mod_roll(record, RIGHT, NOSHIFT, 0, KC_V, 9);   return false;
+  CASE_RKEY(KC_B,    5);
+  CASE_RKEY(KC_P,    6);
+  CASE_RKEY(KC_L,    7);
+  CASE_RKEY(KC_F,    8);
+  CASE_RKEY(KC_V,    9);
 #endif
 
 #ifdef PLANCK
