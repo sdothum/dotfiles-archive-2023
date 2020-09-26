@@ -6,7 +6,7 @@
 
 # ...................................................................... Browser
 
-usage() { echo "usage: $(basename $0) <service>"; exit 0; }
+usage() { echo "usage: $(basename $0)  netflix | prime"; exit 0; }
 
 BROWSER=chromium
 options='-s statusbar.hide true'  # see web/qutebrowser
