@@ -6,7 +6,7 @@
 # ........................................................................ Media
 
 CLEAR='[ clear ]'
-MENU="$CLEAR\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
+MENU="$CLEAR\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nprime\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
 
 video='play kodi netflix'
 NZBGEEK=https://nzbgeek.info/geekseek.php?c=2040
@@ -36,6 +36,8 @@ while : ;do
   usenet-crawler) $BROWSER $USENET_CRAWLER; pwait "$BROWSER.*$USENET_CRAWLER"; unset root ;;
   nzbget        ) $BROWSER $NZBGET; pwait "$BROWSER.*$NZBGET"; unset root ;;
   patricia      ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
+  netflix       ) vstream netflix ;;
+  prime         ) vstream prime ;;
   pulse         ) pulse; (pavucontrol &); pulseaudio-equalizer-gtk & ;;
   references    ) dmenu references; unset root; break ;;
   series        ) dmenu series ;;

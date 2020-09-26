@@ -6,10 +6,16 @@
 
 # ...................................................................... Browser
 
+usage() { echo "usage: $(basename $0) <service>"; exit 0; }
+
 BROWSER=chromium
 options='-s statusbar.hide true'  # see web/qutebrowser
-NETFLIX='http://www.netflix.com/ca'
-delay=0.1  # time
+
+case $1 in
+  netflix) SERVICE='http://www.netflix.com/ca' ;;
+  prime* ) SERVICE='primevideo.com' ;;
+  *      ) usage ;;
+esac
 
 pkill -f $BROWSER 2>/dev/null
 # void && pulseaudio --start --log-target=syslog  # browser doesn't autostart pulseaudio
@@ -17,7 +23,7 @@ void && pulse
 videomode on
 # is display -1920 && draw layout max || { is display -=2560 && draw layout 2:3 || draw layout spread; }
 
-RUNOPT=$options $BROWSER $NETFLIX &
+RUNOPT=$options $BROWSER $SERVICE &
 if [ $BROWSER = chromium ] ;then
   xdotool search --sync --onlyvisible --name 'Chromium'
   # set right full "window"
@@ -30,7 +36,7 @@ if [ $BROWSER = chromium ] ;then
   xdotool key Alt+space
 fi
 herbstclient shift_edge right
-pwait "$NETFLIX"
+pwait "$SERVICE"
 
 videomode off
 
