@@ -459,36 +459,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
                            mod_roll(record, s, NOSHIFT, 0, k, c); \
                            return false
 
-#define CASE_LKEY(k, c)    CASE_ROLL(LEFT,  k, c)
-#define CASE_RKEY(k, c)    CASE_ROLL(RIGHT, k, c)
+#define CASE_LKEY(c, k)    CASE_ROLL(LEFT,  k, c)
+#define CASE_RKEY(c, k)    CASE_ROLL(RIGHT, k, c)
 
-  CASE_LKEY(KC_Z,    0);
-  CASE_LKEY(KC_Y,    1);
-  CASE_LKEY(KC_O,    2);
-  CASE_LKEY(KC_U,    3);
+  CASE_LKEY(0, KC_Z);
+  CASE_LKEY(1, KC_Y);
+  CASE_LKEY(2, KC_O);
+  CASE_LKEY(3, KC_U);
 
-  CASE_RKEY(KC_G,    5);
-  CASE_RKEY(KC_D,    6);
-  CASE_RKEY(KC_N,    7);
-  CASE_RKEY(KC_M,    8);
-  CASE_RKEY(KC_X,    9);
+  CASE_RKEY(5, KC_G);
+  CASE_RKEY(6, KC_D);
+  CASE_RKEY(7, KC_N);
+  CASE_RKEY(8, KC_M);
+  CASE_RKEY(9, KC_X);
 
   // ........................................................... Middle Row Keys
 
-  CASE_RKEY(KC_C,    5);
+  CASE_RKEY(5, KC_C);
 
   // ........................................................... Bottom Row Keys
 
-  CASE_LKEY(KC_J,    0);
-  CASE_LKEY(KC_MINS, 1);
-  CASE_LKEY(KC_QUOT, 2);
-  CASE_LKEY(KC_K,    3);
+  CASE_LKEY(0, KC_J);
+  CASE_LKEY(1, KC_MINS);
+  CASE_LKEY(2, KC_QUOT);
+  CASE_LKEY(3, KC_K);
 
-  CASE_RKEY(KC_B,    5);
-  CASE_RKEY(KC_P,    6);
-  CASE_RKEY(KC_L,    7);
-  CASE_RKEY(KC_F,    8);
-  CASE_RKEY(KC_V,    9);
+  CASE_RKEY(5, KC_B);
+  CASE_RKEY(6, KC_P);
+  CASE_RKEY(7, KC_L);
+  CASE_RKEY(8, KC_F);
+  CASE_RKEY(9, KC_V);
 #endif
 
   // ................................................................ Steno Keys
