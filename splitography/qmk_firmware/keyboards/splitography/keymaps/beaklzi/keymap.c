@@ -306,7 +306,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
-    if (!KEY_DOWN)                                   { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case TD_EQL:
@@ -343,11 +343,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     lt             (record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
     break;
   case KC_SPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }  // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_BSPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }  // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))     { return false; }
 #endif
@@ -364,8 +364,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL))   { return false; }
     if (leader_cap (record, 0, KC_ENT))                  { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef THUMB_CAPS
-    if (KEY_DOWN)                                        { key_timer = timer_read(); }
-    else if (timer_elapsed(key_timer) < TAPPING_TERM)    { tap_key(KC_BSPC); }
+    if (KEY_DOWN)                                     { key_timer = timer_read(); }
+    else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
     return false;  // capslock toggling trap, use shift bspc -> del for auto repeat
 #else
     break;
@@ -402,7 +402,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
@@ -425,7 +425,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     break;
 
