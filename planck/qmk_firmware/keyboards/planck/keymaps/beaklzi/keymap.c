@@ -355,7 +355,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
-    if (!KEY_DOWN)                                   { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_TAB:
@@ -395,12 +395,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     lt(record, _SYMGUI, NOSHIFT, KC_SPC);
     break;
   case KC_SPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_BSPC:
   case KC_BSPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
     break;
@@ -436,7 +436,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
@@ -459,7 +459,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))                                      { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     break;
 
