@@ -148,7 +148,7 @@ void dot(STATE, void *user_data)
 }
 
 #define IRC_ENTER _delay_ms(10); \
-                  tap_key  (KC_ENT)
+                  tap_key(KC_ENT)
 
 void paste(STATE, void *user_data)
 {

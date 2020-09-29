@@ -218,7 +218,11 @@ enum keyboard_keycodes {
 #ifdef TEST
 #define DEBUG   TG  (_TEST)
 #else
+#ifdef CORNE
 #define DEBUG   RESET
+#else
+#define DEBUG   KC_NO
+#endif
 #endif
 
 // Layers
@@ -435,7 +439,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
   case TD_COLN:
-    if (mod_down(KC_RSFT))  { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
