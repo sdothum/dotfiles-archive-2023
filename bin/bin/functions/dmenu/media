@@ -8,7 +8,7 @@
 CLEAR='[ clear ]'
 MENU="$CLEAR\nblackboard\npulse\nebooks\nreferences\nanimation\nanime\nmovies\nseries\nsonarr\nprime\nnetflix\nkodi\nnzbgeek\nusenet-crawler\nnzbget\ntorrent\npatricia\nthought of you"
 
-video='play kodi netflix'
+video='play kodi vstream'
 NZBGEEK=https://nzbgeek.info/geekseek.php?c=2040
 USENET_CRAWLER=https://www.usenet-crawler.com/movies?t=2040
 NZBGET=http:///$SERVER:6789/nzbget:nzbget/
@@ -30,13 +30,11 @@ while : ;do
   ebooks        ) dmenu ebooks; unset root; break ;;
   kodi          ) videomode on; kodi; videomode off ;;
   movies        ) dmenu movies ;;
-  netflix       ) netflix ;;
+  netflix       ) vstream netflix ;;
   nzb           ) exists nzbget && { toggle term 'nzb' nzbget --connect; unset root; } || notify "$media" 'not installed'; break ;;
   nzbgeek       ) $BROWSER $NZBGEEK; pwait "$BROWSER.*$NZBGEEK"; unset root ;;
-  usenet-crawler) $BROWSER $USENET_CRAWLER; pwait "$BROWSER.*$USENET_CRAWLER"; unset root ;;
   nzbget        ) $BROWSER $NZBGET; pwait "$BROWSER.*$NZBGET"; unset root ;;
   patricia      ) play -q /net/media/patricia/Patricia/Patricia.mp4 ;;
-  netflix       ) vstream netflix ;;
   prime         ) vstream prime ;;
   pulse         ) pulse; (pavucontrol &); pulseaudio-equalizer-gtk & ;;
   references    ) dmenu references; unset root; break ;;
@@ -45,6 +43,7 @@ while : ;do
   #thought*     ) play https://youtu.be/OBk3ynRbtsw ;;
   thought*      ) play -q /net/media/patricia/Thought\ of\ You/Thought\ of\ You.mkv ;;
   torrent       ) toggle term 'torrent' rtorrent; unset root; break ;;
+  usenet-crawler) $BROWSER $USENET_CRAWLER; pwait "$BROWSER.*$USENET_CRAWLER"; unset root ;;
   esac
 done
 

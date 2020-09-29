@@ -6,7 +6,7 @@
 
 # ........................................................ Directory differences
 
-usage() { echo "usage: $(basename $0) [-b] [-d <date>] [<source> [<target>]] [<regex>]", target must be full path; exit 1; }
+usage() { echo "usage: $(basename $0) [-b] [-d <date>] <source> [<target>] [<regex>]"; exit 1; }
 
 ignore='backups|debian|\.history|makepkg|nixos|plugged-custom|qmk_firmware|root|snippets|undo|vps'
 
@@ -28,11 +28,11 @@ while [ "$1" ] ;do
   shift
 done
 
-[ "$target" ] && { [ -d "$target" ] || { [ -d ./$target ] && target=$(pwd)/$target; } } || target=/net/archive$(pwd)
 [ -d "$source" ] && cd "$source" || usage
+source=$(pwd)
+[ "$target" ] && { { [ "${target%${target#?}}" = '/' ] && [ -d "$target" ]; } || { [ -d ./$target ] && target=$(pwd)/$target; } } || target=/net/archive$source  # or pwd source compare to archive
 [ -d "$target" ] || usage
 [ "$regex"  ] || regex='.*'
-source=$(pwd)
 
 # to handle filenames containing spaces
 find -L ./ -type f | exclude | egrep -v $ignore | grep "$regex" >$FILES

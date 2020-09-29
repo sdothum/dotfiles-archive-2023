@@ -10,6 +10,7 @@ usage() { echo "usage: $(basename $0)  netflix | prime"; exit 0; }
 
 BROWSER=chromium
 options='-s statusbar.hide true'  # see web/qutebrowser
+delay=1
 
 case $1 in
   netflix) SERVICE='http://www.netflix.com/ca' ;;
