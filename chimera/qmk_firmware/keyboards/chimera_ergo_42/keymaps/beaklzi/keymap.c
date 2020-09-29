@@ -218,7 +218,11 @@ enum keyboard_keycodes {
 #ifdef TEST
 #define DEBUG   TG  (_TEST)
 #else
+#ifdef CORNE
+#define DEBUG   RESET
+#else
 #define DEBUG   KC_NO
+#endif
 #endif
 
 // Layers
@@ -429,7 +433,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 
   // ......................................................... Shift Mapped Keys
-
 #ifdef ROLLOVER
   case KC_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
@@ -445,6 +448,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
     break;
+
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
@@ -467,6 +471,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))            { return false; }
     break;
+
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
@@ -488,7 +493,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   // .............................................................. Top Row Keys
-
 #ifdef ROLLOVER
 #define CASE_ROLL(s, k, c) case k: \
                            mod_roll(record, s, NOSHIFT, 0, k, c); \
@@ -533,10 +537,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     steno(record);
     return false;
   case BASE1:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); }
     return false;
   case BASE2:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); }
     return false;
 #endif
 
@@ -552,7 +556,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════
-
 #ifdef CORNE
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
