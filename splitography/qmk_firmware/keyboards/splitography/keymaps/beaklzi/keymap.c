@@ -111,7 +111,6 @@ enum keyboard_keycodes {
 #endif
  ,LT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
  ,ML_BSLS
- ,ST_T    // pseudo SFT_T(S(KC_T))
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
 };
@@ -278,29 +277,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   // ........................................................... Left Thumb Keys
 
   case TT_ESC:
-    if (map_shift  (record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (key_press  (record))                           { base_layer(0); return false; }  // exit TT layer
+    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
+    if (key_press(record))                           { base_layer(0); return false; }  // exit TT layer
     break;
   case LT_ESC:
-    if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))    { return false; }
-    if (map_shift  (record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (tt_keycode)                                    { base_layer(0); return false; }
+    if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))  { return false; }
+    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
+    if (tt_keycode)                                  { base_layer(0); return false; }
     break;
 
   case LT_I:
-    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN))   { return false; }
+    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
 #ifdef LEFT_SPACE
-    if (map_shift  (record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
 #ifdef ROLLOVER
     if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #endif
-    rolling_layer  (record, LEFT, 0, 0, _REGEX, _SYMGUI);
+    rolling_layer(record, LEFT, 0, 0, _REGEX, _SYMGUI);
     break;
   case TT_I:
-    lt             (record, _REGEX, SHIFT, KC_I);
+    lt(record, _REGEX, SHIFT, KC_I);
     break;
   case S(KC_I):
 #ifdef LEFT_SPC_ENT
@@ -311,36 +310,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case TD_EQL:
     if (tt_keycode) { break; }  // no thumb mouse layer on toggle layer
-    rolling_layer  (record, LEFT, 0, 0, _MOUSE, _SYMGUI);
+    rolling_layer(record, LEFT, 0, 0, _MOUSE, _SYMGUI);
     break;
 
   // .......................................................... Right Thumb Keys
 
   case ML_BSLS:
-    rolling_layer  (record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _REGEX);
+    rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _REGEX);
     break;
 
   case LT_SPC:
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
 #endif
-    if (mapc_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
+    if (mapc_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))     { return false; }
 #ifdef ROLLOVER
     leaderlayer = _SYMGUI;                                                  // see mod_roll()
     if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
 #else
     if (leader_cap (record, _SYMGUI, KC_SPC))            { return false; }  // KC_SPC -> space shift
 #endif
-    rolling_layer  (record, RIGHT, 0, 0, _SYMGUI, _REGEX);
+    rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
   case TT_SPC:
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
 #endif
-    if (mapc_shift (record, KC_LSFT, NOSHIFT, KC_ENT))   { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_ENT))   { return false; }
-    lt             (record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
+    if (mapc_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))     { return false; }
+    lt(record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
     break;
   case KC_SPC:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
@@ -351,17 +350,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))     { return false; }
 #endif
-    if (map_shift  (record, KC_LSFT, NOSHIFT, KC_DEL))   { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL))   { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
     if (leader_cap (record, _EDIT, KC_ENT))              { return false; }  // see KC_BSPC for multi-tap
     break;
   case KC_BSPC:
-    if (!KEY_DOWN)                                       { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))     { return false; }
 #endif
-    if (map_shift  (record, KC_LSFT, NOSHIFT, KC_DEL))   { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift  (record, KC_RSFT, NOSHIFT, KC_DEL))   { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
     if (leader_cap (record, 0, KC_ENT))                  { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef THUMB_CAPS
     if (KEY_DOWN)                                     { key_timer = timer_read(); }
@@ -385,8 +384,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case ST_A:
     mt_shift(record, KC_LSFT, 0, KC_A);       break;
 #endif
-  case ST_T:
-    mt_shift(record, KC_RSFT, 0, KC_T);       break;
 #ifdef HASKELL
   case HS_GT:
     mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
@@ -449,7 +446,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_QUES:
     LEADERCAP;  // exclamation/question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4))  { return false; }
+    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4)) { return false; }
 #endif
     break;
 
