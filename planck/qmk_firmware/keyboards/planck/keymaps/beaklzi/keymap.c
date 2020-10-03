@@ -137,7 +137,6 @@ enum keyboard_keycodes {
  ,CT_C    // pseudo CTL_T(S(KC_C))
  ,ST_A    // pseudo SFT_T(S(KC_A))
 #endif
- ,ST_T    // pseudo SFT_T(S(KC_T))
  ,TT_ESC
  ,TT_I    // pseudo LT(_REGEX, S(KC_I))
  ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
@@ -350,7 +349,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     break;
   case TT_I:
-    lt(record, _REGEX, SHIFT, KC_I);                 break;
+    lt(record, _REGEX, SHIFT, KC_I);
+    break;
   case S(KC_I):
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
@@ -419,8 +419,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case ST_A:
     mt_shift(record, KC_LSFT, 0, KC_A);       break;
 #endif
-  case ST_T:
-    mt_shift(record, KC_RSFT, 0, KC_T);       break;
 #ifndef HASKELL
   case HS_GT:
     mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
