@@ -223,6 +223,7 @@ void clear_events(void)
 #define LEADER 10                // and 11 are leader columns (assigned to SPC and ENT)
 #define LSHIFT 3                 // left shift column
 #define RSHIFT 6                 // right shift column
+#define CLR_LSFT e[LSHIFT].key_timer = 0
 
 static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record_user()
 static uint8_t next_key    = 0;  // by column reference
