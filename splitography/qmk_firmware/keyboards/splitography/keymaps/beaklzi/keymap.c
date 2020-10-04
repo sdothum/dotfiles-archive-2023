@@ -290,8 +290,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
-#ifdef LEFT_SPACE
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+#ifdef LEFT_SPC_ENT
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { CLR_LSFT; return false; }
 #endif
 #ifdef ROLLOVER
     if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
@@ -303,7 +303,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case S(KC_I):
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { CLR_LSFT; return false; }
 #endif
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
@@ -392,7 +392,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
 
   // ......................................................... Shift Mapped Keys
-
 #ifdef ROLLOVER
   case KC_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
@@ -408,6 +407,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
     break;
+
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
@@ -430,6 +430,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))            { return false; }
     break;
+
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
@@ -451,7 +452,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 
   // .............................................................. Top Row Keys
-
 #ifdef ROLLOVER
 #define CASE_ROLL(s, k, c) case k: \
                            mod_roll(record, s, NOSHIFT, 0, k, c); \
@@ -495,10 +495,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     steno(record);
     return false;
   case BASE1:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); return false; }
+    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); }
     return false;
   case BASE2:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); return false; }
+    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); }
     return false;
 
   // ................................................................ Other Keys
