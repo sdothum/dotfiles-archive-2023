@@ -299,7 +299,7 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
       register_code(keycode);
       map = 1;                  // in case shift key is released first
 #ifdef ROLLOVER
-      e[RSHIFT].key_timer = 0;  // clear punctuation modifier, see mod_roll()
+      e[RSHIFT].key_timer = 0;  // clear punctuation modifier (key tap), see mod_roll()
 #endif
     } else {
       unregister_code(keycode);
@@ -308,7 +308,7 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
     }
     key_timer = 0;              // clear home row shift, see process_record_user()
 #ifdef ROLLOVER
-    e[LSHIFT].key_timer = 0;    // clear left handed separator modifier
+    e[LSHIFT].key_timer = 0;    // clear left handed separator modifier (key tap)
 #endif
     return true;
   }
