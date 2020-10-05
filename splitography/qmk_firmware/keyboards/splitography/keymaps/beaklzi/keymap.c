@@ -291,7 +291,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { CLR_LSFT; return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
 #ifdef ROLLOVER
     if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
@@ -303,7 +303,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case S(KC_I):
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { CLR_LSFT; return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;

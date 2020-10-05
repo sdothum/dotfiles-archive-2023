@@ -223,7 +223,6 @@ void clear_events(void)
 #define LEADER 10                // and 11 are leader columns (assigned to SPC and ENT)
 #define LSHIFT 3                 // left shift column
 #define RSHIFT 6                 // right shift column
-#define CLR_LSFT e[LSHIFT].key_timer = 0
 
 static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record_user()
 static uint8_t next_key    = 0;  // by column reference
@@ -298,16 +297,19 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
     if (KEY_DOWN) {
       if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
-      map = 1;                                     // in case shift key is released first
+      map = 1;                  // in case shift key is released first
 #ifdef ROLLOVER
-      e[RSHIFT].key_timer = 0;                     // don't bounce the punctuation modifier, see mod_roll()
+      e[RSHIFT].key_timer = 0;  // clear punctuation modifier, see mod_roll()
 #endif
     } else {
       unregister_code(keycode);
       if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       map = 0;
     }
-    key_timer = 0;  // clear home row shift, see process_record_user()
+    key_timer = 0;              // clear home row shift, see process_record_user()
+#ifdef ROLLOVER
+    e[LSHIFT].key_timer = 0;    // clear left handed separator modifier
+#endif
     return true;
   }
   return false;
