@@ -342,7 +342,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_I:
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { CLR_LSFT; return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
 #ifdef ROLLOVER
     if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
@@ -353,14 +353,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
   case S(KC_I):
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { CLR_LSFT; return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
 #endif
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_TAB:
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { CLR_LSFT; return false; }
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
 #endif
     if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))   { return false; }
     break;
