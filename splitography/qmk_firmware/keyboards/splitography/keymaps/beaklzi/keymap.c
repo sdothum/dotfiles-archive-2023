@@ -74,6 +74,8 @@ enum keyboard_layers {
  ,_NUMBER
  ,_FNCKEY
  ,_EDIT
+ ,_TTBASEL
+ ,_TTBASER
  ,_TTFNCKEY
  ,_TTCURSOR
  ,_TTMOUSE
@@ -111,8 +113,10 @@ enum keyboard_keycodes {
 #endif
  ,LT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
  ,ML_BSLS
- ,TT_I    // pseudo LT(_REGEX, S(KC_I))
- ,TT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
+ ,TT_A    // pseudo LT(_TTBASEL, S(KC_A))
+ ,TT_I    // pseudo LT(_REGEX,   S(KC_I))
+ ,TT_T    // pseudo LT(_TTBASER, S(KC_T))
+ ,TT_SPC  // pseudo LT(_SYMGUI,  KC_SPC)
 };
 
 #ifndef ROLLOVER
@@ -390,6 +394,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HS_LT:
     mt_shift(record, KC_LCTL, 0, KC_COMM);    break;
 #endif
+  case TT_A:
+    lt(record, _TTBASEL, SHIFT, KC_A);        break;
+  case TT_T:
+    lt(record, _TTBASER, SHIFT, KC_T);        break;
 
   // ......................................................... Shift Mapped Keys
 #ifdef ROLLOVER
