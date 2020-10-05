@@ -166,12 +166,8 @@ enum keyboard_keycodes {
 #include "tapdance.h"
 
 // keycodes
-#define ___x___ KC_TRNS
-#define ___fn__ KC_TRNS
-#ifdef _______
-#undef _______
-#endif
-#define _______ KC_NO
+#define __x__   KC_TRNS
+#define ___     KC_NO
 
 #ifdef HASKELL
 #define HS_GT   TD_GT
