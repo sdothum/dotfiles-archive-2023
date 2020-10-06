@@ -253,22 +253,22 @@ weather() {
 [ -e $STAT ] && touch $STAT:cpu $STAT:temp $STAT:mem
 
 cpu_usage() {
-  printf '%3d' $(cat $STAT:cpu)
+  printf '%3d%%' $(cat $STAT:cpu) 2>/dev/null
   sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }' >$STAT:cpu &
 }
 
 cpu_temperature() {
   cat $STAT:temp
-  cpu_temp >$STAT:temp &
+  echo "$(cpu_temp)°" >$STAT:temp &
 }
 
 mem_usage() {
   cat $STAT:mem
-  free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*).*/\1/' >$STAT:mem &
+  free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/' >$STAT:mem &
 }
 
 current_conditions() {
-  [ -e $STAT ] && stat="${STATPAD}${STATPAD}$(cpu_usage)%${STATPAD}$(cpu_temperature)°${STATPAD}$(mem_usage)⠙${DESKPAD}${TAG_PAD}"
+  [ -e $STAT ] && stat="${STATPAD}${STATPAD}$(cpu_usage)${STATPAD}$(cpu_temperature)${STATPAD}$(mem_usage)${DESKPAD}${TAG_PAD}"
 
   unset clock
   if [ $TIC ] ;then
