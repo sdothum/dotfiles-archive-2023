@@ -182,6 +182,7 @@ enum keyboard_keycodes {
 #define EOT     LCTL(KC_D)
 #define NAK     LCTL(KC_U)
 #define PASTE   TD_PASTE
+#define STAB    S   (KC_TAB)
 #define UNDO    LCTL(KC_Z)
 #define XCOPY   LCTL(LSFT(KC_C))
 #define XPASTE  TD_XPASTE
