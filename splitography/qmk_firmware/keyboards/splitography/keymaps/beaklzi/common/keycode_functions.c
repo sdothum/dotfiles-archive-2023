@@ -237,7 +237,7 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
     mod_all(unregister_code, 0);                                  // disable modifier chord finger rolls
     if (e[column].shift && e[column].side != e[next_key].side) {  // shift only opposite side of rolling sequence
       tap_shift(e[next_key].keycode);                             // shift opposite home row key
-      e[next_key].key_timer = 0;                                  // don't re-echo this key
+      e[next_key].key_timer = 0;                                  // don't echo this shift key
     } else { ROLL(side, keycode); }                               // tap (shifted?) key
   } else   { ROLL(side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
 }
