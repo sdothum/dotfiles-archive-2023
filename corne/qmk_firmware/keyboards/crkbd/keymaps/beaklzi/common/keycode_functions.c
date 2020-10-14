@@ -230,15 +230,20 @@ static uint8_t prev_key    = 0;
 
 #define ONSHIFT(s, c) (e[c].shift && e[c].key_timer < e[column].key_timer && s == (c == LSHIFT ? RIGHT : LEFT))
 #define ROLL(s, k)    ONSHIFT(s, LSHIFT) || ONSHIFT(s, RSHIFT) ? tap_shift(k) : tap_key(k)
+#ifndef INDEX_ONLY
+#define INDEX_ONLY    0
+#endif
+#define SHIFT_KEY(c)  (c == LSHIFT || c == RSHIFT)
+#define SHIFT_KEYS    (!INDEX_ONLY || (INDEX_ONLY && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
 
 void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 {
-  if (e[column].key_timer < e[next_key].key_timer) {              // rolling sequence in progress
-    mod_all(unregister_code, 0);                                  // disable modifier chord finger rolls
-    if (e[column].shift && e[column].side != e[next_key].side) {  // shift only opposite side of rolling sequence
-      tap_shift(e[next_key].keycode);                             // shift opposite home row key
-      e[next_key].key_timer = 0;                                  // don't echo this shift key
-    } else { ROLL(side, keycode); }                               // tap (shifted?) key
+  if (e[column].key_timer < e[next_key].key_timer) {  // rolling sequence in progress
+    mod_all(unregister_code, 0);                      // disable modifier chord finger rolls
+    if (e[column].shift && e[column].side != e[next_key].side && SHIFT_KEYS) {           // shift only opposite side of rolling sequence
+      tap_shift(e[next_key].keycode);                 // shift opposite home row key
+      e[next_key].key_timer = 0;                      // don't echo this shift key
+    } else { ROLL(side, keycode); }                   // tap (shifted?) key
   } else   { ROLL(side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
 }
 
