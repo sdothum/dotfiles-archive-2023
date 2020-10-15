@@ -28,7 +28,7 @@ git reset >/dev/null  # undo any previous aborted dotfiles
 # syncthing housekeeping
 find . -name '*.sync-conflict-*' -exec rm {} \;
 find . -name '*.syncthing.hsts.tmp' -exec rm {} \;
-find . -name '.uuid' -exec rm {} \;
+sudo find . -name '.uuid' -exec rm {} \;
 
 init() {
   git init
