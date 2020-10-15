@@ -41,7 +41,7 @@
 
 #ifdef ROLLOVER
 #define TAPPING_TERM 250
-// apply rolling shift for opposite index fingers only
+// rolling shift applied to opposite hand (0) all keys (1) opposite shift key only
 #define INDEX_ONLY 1
 #else
 #define IGNORE_MOD_TAP_INTERRUPT
