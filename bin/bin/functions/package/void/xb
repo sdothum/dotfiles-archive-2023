@@ -100,6 +100,11 @@ upgrade_actions() {
   done
 }
 
+history() {
+  xilog | grep $(xilog | tail -1 | awk '{ print $3 }')
+  ifno 'full history' || xilog | tac | less
+}
+
 case $action in
 count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) xbps-query -x $package ;;
@@ -107,7 +112,7 @@ downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
 file      ) xlocate $package ;;
 force     ) sudo xbps-install -f $yes $options $package ;;
 held      ) for i in $(xbps-query --list-hold-pkgs) ;do ditto held "$i" ;done ;;
-history   ) [ $package ] && ls -lt $CACHE/$package* | tac || xilog | grep $(xilog | tail -1 | awk '{ print $3 }') ;;
+history   ) [ $package ] && ls -lt $CACHE/$package* | tac || history ;;
 hold      ) [ $pkgver ] && { sudo xbps-pkgdb -m hold $options $package; ditto hold "$pkgver"; } ;;
 installed ) xbps-query -l $options | grep "$@" && ditto installed "$@" ;;
 query     ) [ $options ] && xbps-query -R $options $package || xbps-query -Rs $options "$package" | a $package ;;
