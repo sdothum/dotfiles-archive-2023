@@ -270,13 +270,12 @@ bool mod_roll(RECORD, uint8_t side, bool shift, uint16_t modifier, uint16_t keyc
   }
   return false;
 }
-#endif
 
 // Key Mapping
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ................................................................. Map Keycode
-#ifdef ROLLOVER
+
 // handle map_shift() rolling keys (and dot chords)
 void set_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
 {
