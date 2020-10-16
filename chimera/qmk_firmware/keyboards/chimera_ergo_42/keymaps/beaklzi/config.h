@@ -29,12 +29,11 @@
 // #define EMOJI
 
 // rolling home row modifiers (replaces LSFT_T, LGUI_T, LCTL_T, LALT_T qmk macros)
-#define ROLLOVER
+// apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
+#define ROLLOVER 1
 
 #ifdef ROLLOVER
 #define TAPPING_TERM 250
-// rolling shift applied to opposite hand (0) all keys (1) opposite shift key only
-#define INDEX_ONLY 1
 #else
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
