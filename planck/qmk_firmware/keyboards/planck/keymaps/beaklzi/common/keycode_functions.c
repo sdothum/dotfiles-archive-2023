@@ -230,11 +230,9 @@ static uint8_t prev_key    = 0;
 
 #define ONSHIFT(s, c) (e[c].shift && e[c].key_timer < e[column].key_timer && s == (c == LSHIFT ? RIGHT : LEFT))
 #define ROLL(s, k)    ONSHIFT(s, LSHIFT) || ONSHIFT(s, RSHIFT) ? tap_shift(k) : tap_key(k)
-#ifndef INDEX_ONLY
-#define INDEX_ONLY    0
-#endif
 #define SHIFT_KEY(c)  (c == LSHIFT || c == RSHIFT)
-#define SHIFT_KEYS    (!INDEX_ONLY || (INDEX_ONLY && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
+// apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
+#define SHIFT_KEYS    (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
 
 void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
 {
