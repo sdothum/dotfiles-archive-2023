@@ -8,7 +8,8 @@
 
 # Usage: [GT=<count>] W [[list] <letter>*]
 
-WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
+# WORDS=${WORDS:-$HOME/.config/Amphetype/100K-word.database}
+WORDS=${WORDS:-$HOME/.config/Amphetype/google-books-common-words.txt}
 # WORDS=${WORDS:-$HOME/.config/Amphetype/10K-word.sort}  # top 10K words for detailed frequency function
 GT=${GT:-0}
 
