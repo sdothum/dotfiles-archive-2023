@@ -119,14 +119,14 @@ enum keyboard_keycodes {
  ,PLOVER
 #endif
 #ifdef ROLLOVER
- ,HOME_B  // pseudo GUI_T(KC_B)
+ ,HOME_W  // pseudo GUI_T(KC_W)
  ,HOME_H  // pseudo CTL_T(KC_H)
  ,HOME_E  // pseudo ALT_T(KC_E)
  ,HOME_A  // pseudo SFT_T(KC_A)
  ,HOME_T  // pseudo SFT_T(KC_T)
  ,HOME_R  // pseudo ALT_T(KC_R)
  ,HOME_S  // pseudo CTL_T(KC_S)
- ,HOME_W  // pseudo GUI_T(KC_W)
+ ,HOME_B  // pseudo GUI_T(KC_B)
 #endif
 #ifdef HASKELL
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
@@ -147,14 +147,14 @@ enum keyboard_keycodes {
 };
 
 #ifndef ROLLOVER
-#define HOME_B  GUI_T(KC_B)
+#define HOME_W  GUI_T(KC_W)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
 #define HOME_A  SFT_T(KC_A)
 #define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
-#define HOME_W  GUI_T(KC_W)
+#define HOME_B  GUI_T(KC_B)
 #endif
 #ifndef UPPER_HEX
 #define ACT_E   MT   (MOD_LALT | MOD_LCTL, KC_E)
@@ -292,8 +292,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   switch (keycode) {
 #ifdef ROLLOVER
-  case HOME_B:
-    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_B, 0);  break;
+  case HOME_W:
+    mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 0); break;
   case HOME_H:
     mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
   case HOME_E:
@@ -308,8 +308,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, KC_RALT, KC_R, 7); break;
   case HOME_S:
     mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
-  case HOME_W:
-    mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 9); break;
+  case HOME_B:
+    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_B, 9);  break;
 #else
   case HOME_A:
     LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
