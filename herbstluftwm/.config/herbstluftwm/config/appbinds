@@ -27,7 +27,7 @@ hc keybind Super-6                    spawn sudo xbacklight +5
 hc keybind Super-equal                spawn dmenu calc
 hc keybind Super-Control-equal        spawn toggle plover
 hc keybind Super-BackSpace            spawn toggle ncurses
-hc keybind Super-x                    spawn toggle rox
+hc keybind Super-z                    spawn toggle rox
 hc keybind Super-apostrophe           spawn toggle conky
 hc keybind Super-Control-apostrophe   spawn toggle panel
 # hc keybind Super-F1                 spawn keymap toggle
@@ -64,7 +64,7 @@ hc keybind Super-w                    spawn focus $BROWSER
 hc keybind Super-Control-w            spawn dmenu history
 hc keybind Super-$Mod-Control-w       spawn dmenu bookmarks
 hc keybind Super-$Mod-w               chain . spawn kill -KILL $BROWSER . emit_hook focus_window
-hc keybind Super-z                    spawn dmenu halt
+hc keybind Super-q                    spawn dmenu halt
 hc keybind Super-Control-z            spawn dmenu screensaver
 
 # vim: set ft=sh: #
