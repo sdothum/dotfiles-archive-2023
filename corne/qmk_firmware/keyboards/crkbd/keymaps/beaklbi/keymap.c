@@ -293,7 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   switch (keycode) {
 #ifdef ROLLOVER
   case HOME_W:
-    mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_W, 0); break;
+    mod_roll(record, LEFT, NOSHIFT, KC_RGUI, KC_W, 0);  break;
   case HOME_H:
     mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
   case HOME_E:
@@ -309,7 +309,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_S:
     mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
   case HOME_B:
-    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_B, 9);  break;
+    mod_roll(record, RIGHT, NOSHIFT, KC_LGUI, KC_B, 9); break;
 #else
   case HOME_A:
     LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
