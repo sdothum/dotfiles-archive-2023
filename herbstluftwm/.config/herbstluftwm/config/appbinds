@@ -33,8 +33,10 @@ hc keybind Super-Control-apostrophe   spawn toggle panel
 # hc keybind Super-F1                 spawn keymap toggle
 hc keybind Super-F1                   spawn dmenu menu
 hc keybind Super-a                    spawn dmenu abook
-hc keybind Super-b                    spawn dmenu wiki
-hc keybind Super-Control-b            spawn dmenu wiki diary
+hc keybind Super-b                    spawn focus $BROWSER
+hc keybind Super-Control-b            spawn dmenu history
+hc keybind Super-$Mod-Control-b       spawn dmenu bookmarks
+hc keybind Super-$Mod-b               chain . spawn kill -KILL $BROWSER . emit_hook focus_window
 hc keybind Super-c                    spawn dmenu reminder
 hc keybind Super-Control-c            spawn term 'todo' td -i
 hc keybind Super-d                    spawn dmenu dict
@@ -51,6 +53,7 @@ hc keybind Super-Control-n            spawn dmenu notes draft
 hc keybind Super-p                    spawn dmenu pass
 hc keybind Super-Control-p            spawn proof toggle
 hc keybind Super-$Mod-p               spawn pulse restart
+hc keybind Super-q                    spawn dmenu halt
 hc keybind Super-r                    spawn dmenu clipboard
 hc keybind Super-s                    spawn dmenu system
 hc keybind Super-Control-s            spawn dmenu systemd
@@ -60,11 +63,8 @@ hc keybind Super-$Mod-t               spawn dmenu alarm
 hc keybind Super-v                    spawn dmenu media
 hc keybind Super-Control-v            spawn dmenu audio
 hc keybind Super-$Mod-Control-v       chain . spawn pkill '(mpv|omxplayer)' . emit_hook focus_window
-hc keybind Super-w                    spawn focus $BROWSER
-hc keybind Super-Control-w            spawn dmenu history
-hc keybind Super-$Mod-Control-w       spawn dmenu bookmarks
-hc keybind Super-$Mod-w               chain . spawn kill -KILL $BROWSER . emit_hook focus_window
-hc keybind Super-q                    spawn dmenu halt
+hc keybind Super-w                    spawn dmenu wiki
+hc keybind Super-Control-w            spawn dmenu wiki diary
 hc keybind Super-Control-z            spawn dmenu screensaver
 
 # vim: set ft=sh: #
