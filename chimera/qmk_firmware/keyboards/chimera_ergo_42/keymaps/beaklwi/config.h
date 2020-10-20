@@ -52,7 +52,7 @@
 // upper case hex (idefault lower case abcdef)
 // #define UPPER_HEX
 
-#define CHIMERA
+#define CORNE
 
 // keyswitch test layer
 // #define TEST

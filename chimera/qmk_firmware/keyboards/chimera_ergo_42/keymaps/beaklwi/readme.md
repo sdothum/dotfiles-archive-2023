@@ -1,1 +1,1 @@
-# The default keymap for chimera ergo 42 keyboards, see config.h
+# The default keymap for corne keyboards, see config.h
