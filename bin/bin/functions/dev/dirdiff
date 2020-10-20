@@ -28,7 +28,7 @@ while [ "$1" ] ;do
   shift
 done
 
-[ -d "$target" ] && target="$(pwd)/$target"
+[ -d "$target" ] && [ "${target%%/*}" = '' ] || target="$(pwd)/$target"
 [ -d "$source" ] && cd "$source" || usage
 source=$(pwd)
 [ "$target" ] && [ -d "$target" ] || target=/net/archive$source  # or pwd source compare to archive
