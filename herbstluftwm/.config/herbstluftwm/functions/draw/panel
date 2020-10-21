@@ -117,7 +117,7 @@ desktops() {
     fi
     desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
   done
-  [ -e $STAT ] && desktops="$DESKPAD${desktops}" || desktops="${desktops}$DESKPAD${desktops}"  # center tags with triple padding, see $stat
+  [ -e $STAT ] && desktops="$DESKPAD${desktops}" || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
 }
 
 # ............................................................... Current window
@@ -253,8 +253,9 @@ weather() {
 [ -e $STAT ] && touch $STAT:cpu $STAT:temp $STAT:mem
 
 cpu_usage() {
-  printf '%3d%%' $(cat $STAT:cpu) 2>/dev/null
-  sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }' >$STAT:cpu &
+  cat $STAT:cpu
+  cpu=$(sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }')
+  [ $cpu -gt 0 ] && printf '%3d%%' $cpu >$STAT:cpu &
 }
 
 cpu_temperature() {
