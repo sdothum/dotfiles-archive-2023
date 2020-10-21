@@ -30,7 +30,6 @@ PANEL_UNDERLINE=2
 OCCUPIED='■'
 FREE='□'
 TAG_PAD='    '          # tag bar separator (visual spacing)
-DESKPAD="$TAG_PAD$TAG_PAD$TAG_PAD"
 STATPAD=${TAG_PAD% }
 
 # panel theme
@@ -117,7 +116,7 @@ desktops() {
     fi
     desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
   done
-  [ -e $STAT ] && desktops="$DESKPAD${desktops}" || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
+  [ -e $STAT ] || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
 }
 
 # ............................................................... Current window
