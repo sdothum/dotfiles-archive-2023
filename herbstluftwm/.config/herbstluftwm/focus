@@ -19,7 +19,7 @@ msg=$1
 if [ -e ${0%/focus}/functions/focus/$msg ] ;then
   . ${0%/focus}/functions/focus/$msg $@
   # force panel refresh
-  xtitle -f 'T%s
+  xtitle -f 'X%s
 ' >$(cat $PANEL_FIFO)
 elif which $msg >/dev/null 2>&1 ;then
   # dynamic app window creation

@@ -248,23 +248,7 @@ weather() {
   unset update_weather
 }
 
-# background refresh is required to avoid update latency, see draw panel
-touch $STAT:cpu $STAT:temp $STAT:mem
-
-cpu_stat() {
-  while : ;do
-    pgrep -f 'sar --dec=0 1 1' >/dev/null || (cpu=$(sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }'); [ $cpu -gt 0 ] && printf '%3d%%' $cpu >$STAT:cpu) &
-    echo "$(cpu_temp)°" >$STAT:temp &
-    free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/' >$STAT:mem &
-    sleep 1
-  done
-}
-
-[ -e $STAT ] && cpu_stat &
-
 current_conditions() {
-  [ -e $STAT ] && stat="${STATPAD}${STATPAD}$(cat $STAT:cpu)${STATPAD}$(cat $STAT:temp)${STATPAD}$(cat $STAT:mem)${DESKPAD}${TAG_PAD}" || unset stat
-
   unset clock
   if [ $TIC ] ;then
     case $TIC in
@@ -298,19 +282,27 @@ current_conditions() {
   system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}"
 }
 
+cpu_stat() { stat="${STATPAD}${STATPAD}$cpu_usage${STATPAD}$cpu_temp${STATPAD}$mem_usage${DESKPAD}${TAG_PAD}"; }
+
 # initialize
 [ -e $WEATHER ] && weather
+cpu_usage='    '  # to avoid line centering shift
+cpu_temp='   '
+mem_usage='    '
 
 # fifo read loop
 panel() {
   while read -r line ;do
     case $line in
-    S*       ) current_conditions ;;  # clock based info
-    T*       ) working_on; desktops ;;
+    S*       ) current_conditions            ;;  # clock based info
+    X*       ) working_on; desktops          ;;
+    C*       ) cpu_usage=${line#?}; cpu_stat ;;
+    T*       ) cpu_temp=${line#?};  cpu_stat ;;
+    M*       ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
     *_changed) desktops ;;
     esac
     
-    [ $MUSL ] && { line=$(xtitle -f 'T%s'); working_on; desktops; }  # see below
+    [ $MUSL ] && { line=$(xtitle -f 'X%s'); working_on; desktops; }  # see below
 
     # empty desktop does not generate T message
     [ "$title"    ] || title
@@ -331,17 +323,26 @@ musl && MUSL=true || GLIBC=true
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
+
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 case $TIC in
 se*) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M %S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
 t* ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}| %-I:%M:%S%P|%{F-}${RSEP}%a %-d %b '%y" >$PANEL_FIFO:$fifo & ;;
 *  ) clock -i 1 -sf "S^${RSEP}%{F$ACTIVE_FG}%-I:%M%{F-} %P|%S|${RSEP}%a %-d %b '%y"  >$PANEL_FIFO:$fifo & ;;
 esac
+
 # event driven panel update
 if [ $GLIBC ] ;then
   herbstclient --idle '.*_changed' >$PANEL_FIFO:$fifo &
-  xtitle -sf 'T%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
+  xtitle -sf 'X%s\n' >$PANEL_FIFO:$fifo 2>/dev/null &  # see emit_hook
   draw spine &  # non-panel related redundancy check for latent frame handling, see emit_hook
+fi
+
+# cpu usage, cpu temperature, memory usage stats
+if [ -e $STAT ] ;then
+  while : ;do sar -u --dec=0 1 1 | tail -1 | awk '{ printf "C%3d%%\n", $3 }' > $PANEL_FIFO:$fifo; done &
+  while : ;do echo "T$(cpu_temp)°" > $PANEL_FIFO:$fifo; sleep 1; done &
+  while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/; s/^/M/' > $PANEL_FIFO:$fifo; sleep 2; done &
 fi
 
 cat $PANEL_FIFO:$fifo | panel | lemonbar -d -n "lemonbar:$fifo" \
