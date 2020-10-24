@@ -5,7 +5,7 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu kindle [azw3 | epub] [default | noindent | justify | all] <file>, see dmenu ebooks
+# Usage: dmenu kindle [azw3 | epub] [default | noindent | justify | all] [<file>], see dmenu ebooks
 #
 # Note: Embed font to override possible ebook embedded font
 #       Use a unique font (remove all but regular font face for minimal file size) e.g. barcodes are small
@@ -35,6 +35,9 @@ noin*) option=noindent; shift ;;  # retain poetry formatting
 just*) option=justify;  shift ;;
 all  ) option=all;      shift ;;
 esac
+
+# autoconvert epubs to awz3
+[ "$1" ] || { [ "$format" = azw3 ] && { find . -iname '*epub' | while read book ;do dmenu kindle azw3 "$book"; done; exit; } }
 
 file=$1
 name=$(basename "${file%.*}")

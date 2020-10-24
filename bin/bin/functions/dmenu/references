@@ -4,7 +4,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ...................................................................... E-books
-
+set -x
 # ebook library
 library=${LIBRARY:-/net/media/ebooks/${1:-references}}
 
@@ -12,7 +12,7 @@ library=${LIBRARY:-/net/media/ebooks/${1:-references}}
 while book=$(ls -1 $library | grep '.pdf$' | sed 's/.pdf$//' | mhistory references | rmenu 'Document') || exit ;do
   mhistory references "$book"
   [ $focus ] || { focus frame; focus=true; }
-  xdg-open "$library/$book.pdf" 2>/dev/null
+  zathura "$library/$book.pdf" 2>/dev/null
 done
 
 # vim: set ft=sh: #
