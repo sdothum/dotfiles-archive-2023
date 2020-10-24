@@ -56,10 +56,12 @@ d s perl-HTML-Strip
 # python-pip
 # python-setuptools
   python3-devel
+  python3-matplatlib  # kb-layout-evaluation dependency
+  python3-pandas      # kb-layout-evaluation dependency
   python3-pip
   python3-wheel
-  python-sip      # amphetype dependency
-d s python-PyQt4  # amphetype dependency
+  python-sip          # amphetype dependency
+d s python-PyQt4      # amphetype dependency
 
 
 = prototyping
