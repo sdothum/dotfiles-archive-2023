@@ -249,26 +249,21 @@ weather() {
 }
 
 # background refresh is required to avoid update latency, see draw panel
-[ -e $STAT ] && touch $STAT:cpu $STAT:temp $STAT:mem
+touch $STAT:cpu $STAT:temp $STAT:mem
 
-cpu_usage() {
-  cat $STAT:cpu
-  cpu=$(sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }')
-  [ $cpu -gt 0 ] && printf '%3d%%' $cpu >$STAT:cpu &
+cpu_stat() {
+  while : ;do
+    pgrep -f 'sar --dec=0 1 1' >/dev/null || (cpu=$(sar --dec=0 1 1 | tail -1 | awk '{ print (100 - $8) }'); [ $cpu -gt 0 ] && printf '%3d%%' $cpu >$STAT:cpu) &
+    echo "$(cpu_temp)°" >$STAT:temp &
+    free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/' >$STAT:mem &
+    sleep 1
+  done
 }
 
-cpu_temperature() {
-  cat $STAT:temp
-  echo "$(cpu_temp)°" >$STAT:temp &
-}
-
-mem_usage() {
-  cat $STAT:mem
-  free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/' >$STAT:mem &
-}
+[ -e $STAT ] && cpu_stat &
 
 current_conditions() {
-  [ -e $STAT ] && stat="${STATPAD}${STATPAD}$(cpu_usage)${STATPAD}$(cpu_temperature)${STATPAD}$(mem_usage)${DESKPAD}${TAG_PAD}"
+  [ -e $STAT ] && stat="${STATPAD}${STATPAD}$(cat $STAT:cpu)${STATPAD}$(cat $STAT:temp)${STATPAD}$(cat $STAT:mem)${DESKPAD}${TAG_PAD}" || unset stat
 
   unset clock
   if [ $TIC ] ;then
