@@ -119,6 +119,10 @@ desktops() {
   [ -e $STAT ] || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
 }
 
+# .................................................................... Cpu stats
+
+cpu_stat() { stat="${STATPAD}${STATPAD}$cpu_usage${STATPAD}$cpu_temp${STATPAD}$mem_usage${DESKPAD}${TAG_PAD}"; }
+
 # ............................................................... Current window
 
 # tag desktop description
@@ -128,7 +132,7 @@ title() {
 }
 
 # desktop details
-working_on() {
+active_window() {
   title
   count=$(herbstclient attr tags.focus.client_count)
   tickcount=$(herbstclient attr "tags.by-name.'$tag.client_count" 2>/dev/null)
@@ -167,10 +171,10 @@ working_on() {
   fi
 }
 
-# ........................................................... Current conditions
+# ....................................................................... Clocks
 
-# clocks
-dot() { [ "$tic" = '●' ] && tic='○' || tic='●'; }
+dot()     { [ "$tic" = '●' ] && tic='○' || tic='●'; }
+seconds() { tic=${line#*| }; tic=${tic%|*}; }
 
 circle() {
   [ "$tic" = '◓' ] && tic='◑' ||
@@ -220,8 +224,6 @@ bar() {
   esac
 }
 
-seconds() { tic=${line#*| }; tic=${tic%|*}; }
-
 tape() {
   tic=${line#*|}
   tic=${tic%|*}
@@ -241,14 +243,22 @@ tape() {
   tic="$(echo "$tic" | tail -c $(( $len - $pos )))$(echo "$tic" | head -c $pos)"
 }
 
-# weather watch
-weather() {
-  conky weather panel >$WEATHER &
-  touch $WEATHER  # have to access file for test -s to return expected result, see current_conditions()
-  unset update_weather
-}
+# ................................................................ Weather watch
 
-current_conditions() {
+weather() { unset update_weather; conky weather panel >$WEATHER & }
+
+# .................................................................. System info
+
+# initialize (for overlay redraw), see draw root
+touch $WEATHER              # have to access file for test -s to return expected result, see currently()
+[ -e $WEATHER ] && { current_weather=$(cat $WEATHER); weather; }
+
+touch $STAT:cpu $STAT:temp $STAT:mem
+cpu_usage=$(cat $STAT:cpu)  # to avoid line centering shift
+cpu_temp=$(cat $STAT:temp)
+mem_usage=$(cat $STAT:mem)
+
+currently() {
   unset clock
   if [ $TIC ] ;then
     case $TIC in
@@ -282,21 +292,13 @@ current_conditions() {
   system="%{F$DEFAULT_FG}%{B$DEFAULT_BG}${line#?}%{B-}%{F-}"
 }
 
-cpu_stat() { stat="${STATPAD}${STATPAD}$cpu_usage${STATPAD}$cpu_temp${STATPAD}$mem_usage${DESKPAD}${TAG_PAD}"; }
+# ............................................................... FIFO read loop
 
-# initialize
-[ -e $WEATHER ] && weather
-touch $STAT:cpu $STAT:temp $STAT:mem
-cpu_usage=$(cat $STAT:cpu)  # to avoid line centering shift, see draw root
-cpu_temp=$(cat $STAT:temp)
-mem_usage=$(cat $STAT:mem)
-
-# fifo read loop
 panel() {
   while read -r line ;do
     case $line in
-    S*       ) current_conditions            ;;  # clock based info
-    X*       ) working_on; desktops          ;;
+    S*       ) currently                     ;;  # clock based info
+    X*       ) active_window; desktops       ;;
     C*       ) cpu_usage=${line#?}; cpu_stat ;;
     T*       ) cpu_temp=${line#?};  cpu_stat ;;
     M*       ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
@@ -304,7 +306,7 @@ panel() {
     *_changed) desktops ;;
     esac
     
-    [ $MUSL ] && { line=$(xtitle -f 'X%s'); working_on; desktops; }  # see below
+    [ $MUSL ] && { line=$(xtitle -f 'X%s'); active_window; desktops; }  # see below
 
     # empty desktop does not generate T message
     [ "$title"    ] || title
@@ -317,7 +319,7 @@ panel() {
   done
 }
 
-# .............................................................. FIFO processing
+# ......................................................................... FIFO
 
 # void musl currently has a mkfifo bug that limits the buffer to the last feed, see panel() for adjustment
 musl && MUSL=true || GLIBC=true
