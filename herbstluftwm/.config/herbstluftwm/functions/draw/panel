@@ -286,9 +286,10 @@ cpu_stat() { stat="${STATPAD}${STATPAD}$cpu_usage${STATPAD}$cpu_temp${STATPAD}$m
 
 # initialize
 [ -e $WEATHER ] && weather
-cpu_usage='    '  # to avoid line centering shift
-cpu_temp='   '
-mem_usage='    '
+touch $STAT:cpu $STAT:temp $STAT:mem
+cpu_usage=$(cat $STAT:cpu)  # to avoid line centering shift, see draw root
+cpu_temp=$(cat $STAT:temp)
+mem_usage=$(cat $STAT:mem)
 
 # fifo read loop
 panel() {
@@ -299,6 +300,7 @@ panel() {
     C*       ) cpu_usage=${line#?}; cpu_stat ;;
     T*       ) cpu_temp=${line#?};  cpu_stat ;;
     M*       ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
+    !*       ) echo "$cpu_usage" >$STAT:cpu; echo "$cpu_temp" >$STAT:temp; echo "$mem_usage" >$STAT:mem ;;
     *_changed) desktops ;;
     esac
     
