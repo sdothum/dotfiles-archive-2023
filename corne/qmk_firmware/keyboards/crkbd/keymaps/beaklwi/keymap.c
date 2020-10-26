@@ -126,7 +126,7 @@ enum keyboard_keycodes {
  ,HOME_T  // pseudo SFT_T(KC_T)
  ,HOME_R  // pseudo ALT_T(KC_R)
  ,HOME_S  // pseudo CTL_T(KC_S)
- ,HOME_B  // pseudo GUI_T(KC_B)
+ ,HOME_V  // pseudo GUI_T(KC_V)
 #endif
 #ifdef HASKELL
  ,HS_GT   // pseudo SFT_T(S(KC_DOT))
@@ -154,7 +154,7 @@ enum keyboard_keycodes {
 #define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
-#define HOME_B  GUI_T(KC_B)
+#define HOME_V  GUI_T(KC_V)
 #endif
 #ifndef UPPER_HEX
 #define ACT_E   MT   (MOD_LALT | MOD_LCTL, KC_E)
@@ -308,8 +308,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     mod_roll(record, RIGHT, NOSHIFT, KC_RALT, KC_R, 7); break;
   case HOME_S:
     mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
-  case HOME_B:
-    mod_roll(record, RIGHT, NOSHIFT, KC_LGUI, KC_B, 9); break;
+  case HOME_V:
+    mod_roll(record, RIGHT, NOSHIFT, KC_LGUI, KC_V, 9); break;
 #else
   case HOME_A:
     LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
@@ -526,7 +526,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_LKEY(3, KC_K);
   CASE_LKEY(4, KC_QUOT);
 
-  CASE_RKEY(5, KC_V);
+  CASE_RKEY(5, KC_B);
   CASE_RKEY(6, KC_P);
   CASE_RKEY(7, KC_L);
   CASE_RKEY(8, KC_F);
