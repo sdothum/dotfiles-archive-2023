@@ -153,8 +153,8 @@ function! s:toggleSpell()
 endfunction
 
 " correction related, but really bound to Pencil
-nmap <silent><S-F6>      :silent call <SID>toggleSpell()<CR>
-imap <silent><S-F6> <C-o>:silent call <SID>toggleSpell()<CR>
+nmap <silent><S-F9>      :silent call <SID>toggleSpell()<CR>
+imap <silent><S-F9> <C-o>:silent call <SID>toggleSpell()<CR>
 
 autocmd plugin FileType mail,markdown call litecorrect#init()
 
