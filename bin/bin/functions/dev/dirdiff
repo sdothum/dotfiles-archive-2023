@@ -29,7 +29,7 @@ while [ "$1" ] ;do
 done
 
 [ -d "$target" ] && [ "${target%%/*}" = '' ] || target="$(pwd)/$target"
-[ -d "$source" ] && cd "$source" || usage
+[ -d "$source" ] && cd "$source" >/dev/null || usage
 source=$(pwd)
 [ "$target" ] && [ -d "$target" ] || target=/net/archive$source  # or pwd source compare to archive
 [ -d "$target" ] || usage
@@ -37,6 +37,7 @@ source=$(pwd)
 
 # to handle filenames containing spaces
 find -L ./ -type f | exclude | egrep -v $ignore | grep "$regex" >$FILES
+[ -s $FILES ] || usage
 src=${source#$HOME/stow/*/}
 src=\~/${src#$HOME/}
 
