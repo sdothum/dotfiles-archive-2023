@@ -201,7 +201,7 @@ fi
 panel=$(pgrep -f 'draw panel')
 echo '!panel:stat' >$PANEL_FIFO:$(herbstclient attr monitors.focus.index)  # save cpu_stats
 draw panel  # draw over old theme
-sleep 0.2   # wait for overlay
+sleep 0.25   # wait for overlay
 kill $panel
 
 # vim: set ft=sh: #
