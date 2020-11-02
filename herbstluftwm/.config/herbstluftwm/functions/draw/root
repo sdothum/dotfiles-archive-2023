@@ -199,7 +199,7 @@ fi
 
 # overlay panel with new theme to avuid panel flicker
 panel=$(pgrep -f 'draw panel')
-echo '!panel:stat' >$PANEL_FIFO:$(herbstclient attr monitors.focus.index)  # save cpu_stats
+echo '!panel:stat' >$(cat $PANEL_FIFO)  # save cpu_stats
 draw panel  # draw over old theme
 sleep 0.25   # wait for overlay
 kill $panel

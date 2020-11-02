@@ -327,6 +327,7 @@ musl && MUSL=true || GLIBC=true
 # initialize fifo
 [ -e $PANEL_FIFO:$fifo ] && rm -f $PANEL_FIFO:$fifo
 mkfifo $PANEL_FIFO:$fifo
+echo $PANEL_FIFO:$fifo >$PANEL_FIFO
 
 # note physical linebreaks for each format specification (to accomodate slow processors, notably arm)
 case $TIC in

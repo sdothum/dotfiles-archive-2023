@@ -20,7 +20,7 @@ xdotool search --onlyvisible --limit 1 --maxdepth 1 --name 'lemonbar' windowunma
 # [ -e $PANEL:$(herbstclient attr monitors.focus.index) ] || exit
 
 # restore panel
-echo "$PANEL_FIFO:$fifo" >$PANEL_FIFO
+echo $PANEL_FIFO:$fifo >$PANEL_FIFO
 xdotool search --limit 1 --maxdepth 1 --name "lemonbar:$fifo\$" windowmap >/dev/null && exit
 exec draw panel $fifo
 
