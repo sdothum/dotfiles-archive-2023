@@ -2,14 +2,16 @@
 #define STATE  qk_tap_dance_state_t *state
 
 void asterisk(STATE, void *user_data);
+void asterisk_reset(STATE, void *user_data);
 void base_layer(uint8_t defer);
 void clear_events(void);
 void clear_layers(void);
 void colon(STATE, void *user_data);
 void colon_reset(STATE, void *user_data);
 void comma(STATE, void *user_data);
+void comma_reset(STATE, void *user_data);
 void dot(STATE, void *user_data);
-void double_tap(uint8_t count, bool shift, uint16_t keycode);
+void dot_reset(STATE, void *user_data);
 void equal(STATE, void *user_data);
 void equal_reset(STATE, void *user_data);
 void greater(STATE, void *user_data);

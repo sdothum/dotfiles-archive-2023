@@ -61,14 +61,6 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
-#define TAP_CASE(k) shift ? tap_shift(k) : tap_key(k)
-
-void double_tap(uint8_t count, bool shift, uint16_t keycode)
-{
-  TAP_CASE(keycode);
-  if (count > 1) { TAP_CASE(keycode); }
-}
-
 // ................................................................... Key event
 
 // alternate escape for TT layers, see process_record_user()
