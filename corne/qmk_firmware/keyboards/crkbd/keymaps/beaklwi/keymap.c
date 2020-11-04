@@ -271,9 +271,9 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 #ifdef UNIX
 static uint16_t td_timer = 0;  // pseudo tapdance timer
 
-#define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
 #define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
 #endif
+#define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {

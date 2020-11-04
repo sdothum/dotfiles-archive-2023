@@ -45,9 +45,8 @@
 // double tap "=="
 #define EQLEQL "=~"
 
-// double tap ",," (number layer)
-// #define COMMACOMMA ", "
-#define COMMACOMMA ";"
+// double tap ",," (number layer) default: ";"
+// #define COMMASPACE
 
 // upper case hex (idefault lower case abcdef)
 // #define UPPER_HEX
