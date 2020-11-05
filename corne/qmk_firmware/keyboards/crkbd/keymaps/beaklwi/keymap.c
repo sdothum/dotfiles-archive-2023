@@ -169,6 +169,11 @@ enum keyboard_keycodes {
 #define __x__   KC_TRNS
 #define ___     KC_NO
 
+#ifndef EQLEQL
+#define HS_EQL  TD_EQL
+#else
+#define HS_EQL  KC_EQL
+#endif
 #ifdef HASKELL
 #define HS_COLN TD_COLN
 #define HS_GT   TD_GT
@@ -182,11 +187,6 @@ enum keyboard_keycodes {
 #define HS_TILD TD_TILD
 #else
 #define HS_TILD KC_TILD
-#endif
-#ifndef EQLEQL
-#define HS_EQL  TD_EQL
-#else
-#define HS_EQL  KC_EQL
 #endif
 
 #define COPY    LCTL(KC_C)

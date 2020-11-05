@@ -18,12 +18,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
  ,[_LT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lesser, lesser_reset, HASKELL_TERM)
 #endif
- ,[_PASTE]  = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, paste, paste_reset)
- ,[_PRIV]   = ACTION_TAP_DANCE_FN              (private)
- ,[_SEND]   = ACTION_TAP_DANCE_FN              (send)
 #ifdef UNIX
  ,[_TILD]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, tilde, tilde_reset)
 #endif
+ ,[_PASTE]  = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, paste, paste_reset)
+ ,[_PRIV]   = ACTION_TAP_DANCE_FN              (private)
+ ,[_SEND]   = ACTION_TAP_DANCE_FN              (send)
  ,[_XPASTE] = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, xpaste, xpaste_reset)
 };
 
@@ -56,9 +56,10 @@ void colon(STATE, void *user_data)
   } else {
 #ifdef HASKELL
     if (TAPS) { send_string   (" :: "); }
-    else
+    else      { register_shift(KC_SCLN); }
+#else
+    register_shift(KC_SCLN); 
 #endif
-      register_shift(KC_SCLN); 
   }
   reset_tap_dance(state);
 }
@@ -74,12 +75,7 @@ void colon_reset(STATE, void *user_data)
 void equal(STATE, void *user_data)
 {
   if (TAPS) { send_string  ("=~"); }
-  else
-#if NONSTENO
-    register_code(KC_EQL);
-#else
-    TAP_DOWN ? layer_on(_MOUSE) : register_code(KC_EQL);
-#endif
+  else      { register_code(KC_EQL); }
   reset_tap_dance(state);
 }
 
