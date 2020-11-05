@@ -27,15 +27,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // .......................................................... Double Tap Strings
 
-#define TAP      state->count
-#define TAPS     TAP > 1
-#define TAP_DOWN state->pressed
+#define TAP                 state->count
+#define TAPS                TAP > 1
+#define TAP_DOWN            state->pressed
+
+#define ON_TAPS_PRESS(s, k) TAPS ? send_string (s) : register_shift(k); \
+                            reset_tap_dance(state)
 
 void asterisk(STATE, void *user_data)
 {
-  if (TAPS) { send_string   (".*"); }
-  else      { register_shift(KC_8); }
-  reset_tap_dance(state);
+  ON_TAPS_PRESS(".*", KC_8);
 }
 
 void asterisk_reset(STATE, void *user_data)
@@ -47,13 +48,12 @@ void colon(STATE, void *user_data)
 {
   if (mod_down(KC_RSFT)) {  // handle like map_shift()
 #ifdef EMOJI
-    if (TAPS)      { send_string  (" :-"); }
-    else           { register_code(KC_SCLN); }
+    TAPS ? send_string  (" :-") : register_code(KC_SCLN);
 #else
     register_code(KC_SCLN);
 #endif
 #ifdef HASKELL
-  } else if (TAPS) { send_string(" :: "); }
+  } else if (TAPS) { send_string   (" :: "); }
 #endif
   else             { register_shift(KC_SCLN); }
   reset_tap_dance(state);
@@ -86,9 +86,7 @@ void equal_reset(STATE, void *user_data)
 #ifdef HASKELL
 void greater(STATE, void *user_data)
 {
-  if (TAPS) { send_string   (" -> "); }
-  else      { register_shift(KC_DOT); }
-  reset_tap_dance(state);
+  ON_TAPS_PRESS(" -> ", KC_DOT);
 }
 
 void greater_reset(STATE, void *user_data)
@@ -98,9 +96,7 @@ void greater_reset(STATE, void *user_data)
 
 void lesser(STATE, void *user_data)
 {
-  if (TAPS) { send_string   (" <- "); }
-  else      { register_shift(KC_COMM); }
-  reset_tap_dance(state);
+  ON_TAPS_PRESS(" <- ", KC_COMM);
 }
 
 void lesser_reset(STATE, void *user_data)
@@ -112,9 +108,7 @@ void lesser_reset(STATE, void *user_data)
 #ifdef UNIX
 void tilde(STATE, void *user_data)
 {
-  if (TAPS) { send_string   ("~/"); }
-  else      { register_shift(KC_GRV); }
-  reset_tap_dance(state);
+  ON_TAPS_PRESS("~/", KC_GRV);
 }
 
 void tilde_reset(STATE, void *user_data)
@@ -145,8 +139,7 @@ void comma_reset(STATE, void *user_data)
 
 void dot(STATE, void *user_data)
 {
-  if (TAPS) { register_shift(KC_SCLN); }
-  else      { register_code (KC_DOT); }
+  TAPS ? register_shift(KC_SCLN) : register_code (KC_DOT);
   reset_tap_dance(state);
 }
 
@@ -159,7 +152,7 @@ void dot_reset(STATE, void *user_data)
 // ............................................................... Paste Actions
 
 #define IRC_ENTER _delay_ms(10); \
-                  tap_key(KC_ENT)
+                  tap_key  (KC_ENT)
 
 void paste(STATE, void *user_data)
 {
