@@ -8,11 +8,13 @@
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_ASTR]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, asterisk, asterisk_reset)
- ,[_COLN]   = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, colon, colon_reset, HASKELL_TERM)
  ,[_COMM]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, comma, comma_reset)
  ,[_DOT]    = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, dot, dot_reset)
+#ifndef EQLEQL
  ,[_EQL]    = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, equal, equal_reset, HASKELL_TERM)
+#endif
 #ifdef HASKELL
+ ,[_COLN]   = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, colon, colon_reset, HASKELL_TERM)
  ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
  ,[_LT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lesser, lesser_reset, HASKELL_TERM)
 #endif
@@ -51,10 +53,13 @@ void colon(STATE, void *user_data)
 #else
     register_code(KC_SCLN);
 #endif
+  } else {
 #ifdef HASKELL
-  } else if (TAPS) { send_string   (" :: "); }
+    if (TAPS) { send_string   (" :: "); }
+    else
 #endif
-  else             { register_shift(KC_SCLN); }
+      register_shift(KC_SCLN); 
+  }
   reset_tap_dance(state);
 }
 
@@ -65,13 +70,15 @@ void colon_reset(STATE, void *user_data)
   if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
 }
 
+#ifndef EQLEQL
 void equal(STATE, void *user_data)
 {
-  if (TAPS) { send_string  (EQLEQL); }
+  if (TAPS) { send_string  ("=~"); }
+  else
 #if NONSTENO
-  else      { register_code(KC_EQL); }
+    register_code(KC_EQL);
 #else
-  else      { TAP_DOWN ? layer_on(_MOUSE) : register_code(KC_EQL); }
+    TAP_DOWN ? layer_on(_MOUSE) : register_code(KC_EQL);
 #endif
   reset_tap_dance(state);
 }
@@ -81,6 +88,7 @@ void equal_reset(STATE, void *user_data)
   unregister_code(KC_EQL);
   layer_off      (_MOUSE);
 }
+#endif
 
 #ifdef HASKELL
 void greater(STATE, void *user_data)

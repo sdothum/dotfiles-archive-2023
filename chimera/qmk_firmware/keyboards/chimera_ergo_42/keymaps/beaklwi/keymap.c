@@ -170,11 +170,23 @@ enum keyboard_keycodes {
 #define ___     KC_NO
 
 #ifdef HASKELL
+#define HS_COLN TD_COLN
 #define HS_GT   TD_GT
 #define HS_LT   TD_LT
 #else
+#define HS_COLN KC_COLN
 #define HS_GT   KC_GT
 #define HS_LT   KC_LT
+#endif
+#ifdef UNIX
+#define HS_TILD TD_TILD
+#else
+#define HS_TILD KC_TILD
+#endif
+#ifndef EQLEQL
+#define HS_EQL  TD_EQL
+#else
+#define HS_EQL  KC_EQL
 #endif
 
 #define COPY    LCTL(KC_C)
@@ -441,11 +453,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
     break;
+#ifdef HASKELL
   case TD_COLN:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
     break;
+#endif
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
@@ -465,10 +479,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
     break;
+#ifdef HASKELL
   case TD_COLN:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     break;
+#endif
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
