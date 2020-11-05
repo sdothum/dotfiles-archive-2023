@@ -75,7 +75,11 @@ void colon_reset(STATE, void *user_data)
 void equal(STATE, void *user_data)
 {
   if (TAPS) { send_string  ("=~"); }
+#if NONSTENO
   else      { register_code(KC_EQL); }
+#else
+  else      { TAP_DOWN ? layer_on(_MOUSE) : register_code(KC_EQL); }
+#endif
   reset_tap_dance(state);
 }
 
