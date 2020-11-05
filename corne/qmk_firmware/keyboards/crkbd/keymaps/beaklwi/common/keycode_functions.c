@@ -1,5 +1,5 @@
 #define STENO    !defined(CHIMERA) && !defined(CORNE)
-#define NONSTENO defined(CHIMERA) || defined(CORNE)
+#define NONSTENO  defined(CHIMERA) ||  defined(CORNE)
 
 #include "config.h"  // for ale linter
 #include "keycode_functions.h"
@@ -103,21 +103,21 @@ void unregister_modifier(uint16_t keycode)
   mods &= ~(MOD_BIT(keycode));
 }
 
-#define MOD_KEY(x) mods & MOD_BIT(x)
+#define MOD_KEY(k) if (mods & MOD_BIT(k)) { f(k); }
 
 // (un)register modifiers
 void mod_all(void (*f)(uint8_t), uint8_t mask)
 {
-  if (!mods)            { return; }
-  if (MOD_KEY(KC_LGUI)) { f(KC_LGUI); }
-  if (MOD_KEY(KC_LCTL)) { f(KC_LCTL); }
-  if (MOD_KEY(KC_LALT)) { f(KC_LALT); }
-  if (MOD_KEY(KC_LSFT)) { f(KC_LSFT); }
-  if (MOD_KEY(KC_RSFT)) { f(KC_RSFT); }  // note: qmk macros all use left modifiers
-  if (MOD_KEY(KC_RALT)) { f(KC_RALT); }
-  if (MOD_KEY(KC_RCTL)) { f(KC_RCTL); }
-  if (MOD_KEY(KC_RGUI)) { f(KC_RGUI); }
-  mods &= (mask ? 0xFF : 0);             // 0 -> discard, otherwise -> retain state
+  if (!mods) { return; }
+  MOD_KEY(KC_LGUI);
+  MOD_KEY(KC_LCTL);
+  MOD_KEY(KC_LALT);
+  MOD_KEY(KC_LSFT);
+  MOD_KEY(KC_RSFT);           // note: qmk macros all use left modifiers
+  MOD_KEY(KC_RALT);
+  MOD_KEY(KC_RCTL);
+  MOD_KEY(KC_RGUI);
+  mods &= (mask ? 0xFF : 0);  // 0 -> discard, otherwise -> retain state
 }
 
 void mod_bits(RECORD, uint16_t keycode)
