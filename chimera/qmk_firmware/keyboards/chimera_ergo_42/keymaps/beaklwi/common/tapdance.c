@@ -27,16 +27,15 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // .......................................................... Double Tap Strings
 
-#define TAP                 state->count
-#define TAPS                TAP > 1
-#define TAP_DOWN            state->pressed
+#define TAP      state->count
+#define TAPS     TAP > 1
+#define TAP_DOWN state->pressed
 
-#define ON_TAPS_PRESS(s, k) TAPS ? send_string (s) : register_shift(k); \
-                            reset_tap_dance(state)
+#define ON_TAPS_OR_SHIFT(s, k) TAPS ? send_string (s) : register_shift(k); reset_tap_dance(state)
 
 void asterisk(STATE, void *user_data)
 {
-  ON_TAPS_PRESS(".*", KC_8);
+  ON_TAPS_OR_SHIFT(".*", KC_8);
 }
 
 void asterisk_reset(STATE, void *user_data)
@@ -48,7 +47,7 @@ void colon(STATE, void *user_data)
 {
   if (mod_down(KC_RSFT)) {  // handle like map_shift()
 #ifdef EMOJI
-    TAPS ? send_string  (" :-") : register_code(KC_SCLN);
+    TAPS ? send_string(" :-") : register_code(KC_SCLN);
 #else
     register_code(KC_SCLN);
 #endif
@@ -86,7 +85,7 @@ void equal_reset(STATE, void *user_data)
 #ifdef HASKELL
 void greater(STATE, void *user_data)
 {
-  ON_TAPS_PRESS(" -> ", KC_DOT);
+  ON_TAPS_OR_SHIFT(" -> ", KC_DOT);
 }
 
 void greater_reset(STATE, void *user_data)
@@ -96,7 +95,7 @@ void greater_reset(STATE, void *user_data)
 
 void lesser(STATE, void *user_data)
 {
-  ON_TAPS_PRESS(" <- ", KC_COMM);
+  ON_TAPS_OR_SHIFT(" <- ", KC_COMM);
 }
 
 void lesser_reset(STATE, void *user_data)
@@ -108,7 +107,7 @@ void lesser_reset(STATE, void *user_data)
 #ifdef UNIX
 void tilde(STATE, void *user_data)
 {
-  ON_TAPS_PRESS("~/", KC_GRV);
+  ON_TAPS_OR_SHIFT("~/", KC_GRV);
 }
 
 void tilde_reset(STATE, void *user_data)
@@ -151,8 +150,7 @@ void dot_reset(STATE, void *user_data)
 
 // ............................................................... Paste Actions
 
-#define IRC_ENTER _delay_ms(10); \
-                  tap_key  (KC_ENT)
+#define IRC_ENTER _delay_ms(10); tap_key(KC_ENT)
 
 void paste(STATE, void *user_data)
 {
