@@ -2,11 +2,13 @@
 // tap dance keys
 enum tap_dance {
   _ASTR = 0
- ,_COLN
  ,_COMM
  ,_DOT
+#ifndef EQLEQL
  ,_EQL
+#endif
 #ifdef HASKELL
+ ,_COLN
  ,_GT
  ,_LT
 #endif
@@ -18,11 +20,13 @@ enum tap_dance {
 };
 
 #define TD_ASTR   TD(_ASTR)
-#define TD_COLN   TD(_COLN)
 #define TD_COMM   TD(_COMM)
 #define TD_DOT    TD(_DOT)
+#ifndef EQLEQL
 #define TD_EQL    TD(_EQL)
+#endif
 #ifdef HASKELL
+#define TD_COLN   TD(_COLN)
 #define TD_GT     TD(_GT)
 #define TD_LT     TD(_LT)
 #endif

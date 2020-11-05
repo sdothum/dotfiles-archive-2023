@@ -42,8 +42,8 @@
 // left handed space/enter
 #define LEFT_SPC_ENT
 
-// double tap "=="
-#define EQLEQL "=~"
+// double tap "==" (regex layer) default: "=~"
+// #define EQLEQL
 
 // double tap ",," (number layer) default: ";"
 // #define COMMASPACE
