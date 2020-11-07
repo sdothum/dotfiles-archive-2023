@@ -305,7 +305,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   switch (keycode) {
 #ifdef ROLLOVER
   case HOME_Q:
-    mod_roll(record, LEFT, NOSHIFT, KC_RGUI, KC_Q, 0);  break;
+    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0);  break;
   case HOME_H:
     mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
   case HOME_E:
@@ -321,7 +321,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_S:
     mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
   case HOME_V:
-    mod_roll(record, RIGHT, NOSHIFT, KC_LGUI, KC_V, 9); break;
+    mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_V, 9); break;
 #else
   case HOME_A:
     LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
@@ -500,14 +500,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #endif
     break;
 #endif
-    
+
   // ..................................................... Leader Capitalization
 
   case KC_EXLM:
   case KC_QUES:
     LEADERCAP;  // exclamation/question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4))  { return false; }
+    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4)) { return false; }
 #endif
     break;
 
