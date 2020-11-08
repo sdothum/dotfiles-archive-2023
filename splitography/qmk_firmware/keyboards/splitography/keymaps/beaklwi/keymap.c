@@ -327,6 +327,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case TD_EQL:
     if (tt_keycode) { break; }  // no thumb mouse layer on toggle layer
+#ifdef LEFT_SPC_ENT
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
+#endif
     rolling_layer(record, LEFT, 0, 0, _MOUSE, _SYMGUI);
     break;
 
