@@ -6,7 +6,10 @@ some.
 
 ## installation
 
-<pre>git clone https://github.com/sdothum/dotfiles.git</pre>
+<pre>git clone --depth 1 https://github.com/sdothum/dotfiles.git</pre>
+
+**--depth 1** ensures you do not download the unnecessary patch history
+which is extremely large. 
 
 The root folder name within dotfiles is the application the dotfiles
 belong to. Below that is the actual home folder path (or subfolders) to the dotfile.
@@ -23,6 +26,21 @@ Create symlinks to application dotfiles with
 
 <pre>cd ~/dotfiles
 stow &lt;application&gt;</pre>
+
+## beakl
+
+There are many keyboard layouts for the Planck, Splitography, Chimera and
+Corne keyboards. 
+
+**BEAKL Wi** is the current keyboard standard.
+
+What this means is that,
+while all layouts should compile and flash their appropriate
+keyboards properly, older source (layouts) libraries -- in
+particular, the *keycode_functions.c and tapdance.c* files -- will not incorporate
+the latest tweaks and fixes to corner case behaviour. This does not mean
+the older layouts do not work -- they do (and the corner cases addressed
+likely not visible to the user).
 
 ## caveats
 
