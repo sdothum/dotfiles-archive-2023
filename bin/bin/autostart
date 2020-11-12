@@ -41,9 +41,9 @@ xrdb -merge $HOME/.Xresources &
 
 # force hdmi audio functionality
 if [ -e $PULSE ] ;then
-  pavucontrol &
+  pavucontrol 2>/dev/null &               # suppress gtk warnings
   pulseaudio-equalizer enable
-  pulseaudio-equalizer-gtk &
+  pulseaudio-equalizer-gtk 2>/dev/null &  # suppress config file access errors
 fi
 
 # ........................................................... Daemons and caches
