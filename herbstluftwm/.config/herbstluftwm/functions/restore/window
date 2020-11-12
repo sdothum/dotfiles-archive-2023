@@ -7,13 +7,10 @@
 # ............................................................... Restore window
 
 # smart restore window
-if herbstclient dump "'$TAG" ;then
-  lock use "'$TAG"
-  # moving window sometimes isn't visible, so bring window instead !!
-  winid=$(herbstclient attr clients.focus.winid)
-  herbstclient use $TAG
+client=$(herbstclient dump "'$TAG" | cut -d' ' -f3- | sed -r 's/(.* )*([0-9a-z]*)[)]/\2/')
+if [ $client ] ;then
   focus frame
-  unlock bring $winid
+  herbstclient bring $client
 fi
 
 # vim: set ft=sh: #

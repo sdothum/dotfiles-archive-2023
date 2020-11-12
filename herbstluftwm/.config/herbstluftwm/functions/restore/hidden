@@ -36,7 +36,7 @@ if [ $count -gt 0 ] ;then
     # escape special characters in window title e.g. url page titles, and restore ^$SEP, see query wtitle
     *      ) winid=$(echo $hidden |
                    grep "$(echo $window | sed -r "s/([[])/\\\1/g; s/([]])/\\\1/g; s/ *($SEP)/^\1/; s/([*])/\\\1/g")" |
-                   cut -d$DLM -f2)
+                   cut -d$DLM -f2 | cut -d. -f2)
              lock use $TAG
              focus frame
              unlock bring $winid

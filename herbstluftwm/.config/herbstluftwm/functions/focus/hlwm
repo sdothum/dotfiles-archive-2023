@@ -48,23 +48,24 @@ if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
     title=$(echo $window | cut -d^ -f2)
     action $(echo "focus\nraise\nclose" | rmenu "$app ${title% }" -no-custom) || exit
   fi
+  CLIENT=$(echo $window | cut -d$DLM -f3 | cut -d. -f2)
 
   case $mode in
-  Close*) herbstclient close "$(echo $window | cut -d$DLM -f3)"
+  Close*) herbstclient close "$CLIENT"
           # desktop cleanup loop
           exec focus hlwm close ;;
 
   Raise*) focus frame
-          herbstclient bring "$(echo $window | cut -d$DLM -f3)" ;;
+          herbstclient bring "$CLIENT" ;;
 
   *     ) swap_monitors=$(herbstclient get swap_monitors_to_get_tag)
           lock set swap_monitors_to_get_tag 0
-          if echo $window | grep " \^$VISIBLE [0-9]" ;then
-            herbstclient chain . use $TAG . jumpto "$(echo $window | cut -d$DLM -f3)"  # focus normal tag
+          if echo $window | grep -q " \^$VISIBLE [0-9]" ;then
+            herbstclient chain . use $TAG . jumpto "$CLIENT"  # focus normal tag
           else
             herbstclient use ${TAG#\'}  # focus (restore) tick'tag
             focus frame
-            herbstclient bring "$(echo $window | cut -d$DLM -f3)"
+            herbstclient bring "$CLIENT"
           fi
           unlock set swap_monitors_to_get_tag $swap_monitors
           restore panel ;;
