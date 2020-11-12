@@ -6,6 +6,6 @@
 
 # .............................................................. List of winid's
 
-herbstclient attr clients | grep '0x' | sed 's/\.$//'
+herbstclient foreach C clients. echo C | grep -v focus
 
 # vim: set ft=sh: #

@@ -15,7 +15,7 @@ count=$(query ttag $TAG)
 if [ $count -gt 0 ] ;then
   # list of hidden windows
   for i in $(query winids) ;do
-    if herbstclient compare clients.$i.tag = "'$TAG" ;then
+    if herbstclient compare $i.tag = "'$TAG" ;then
       window="$(query wtitle $i)$DLM$i"
       [ "$hidden" ] && hidden="$hidden\n$window" || hidden="$window"
     fi

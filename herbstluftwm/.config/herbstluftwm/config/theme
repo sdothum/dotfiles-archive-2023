@@ -27,6 +27,7 @@ hc attr theme.tiling.reset            1
 hc set always_show_frame              0
 hc set frame_bg_transparent           1  # transparency on for autostart (avoid opaque frames), see emit_hook and draw spine
 hc set gapless_grid                   1
+hc set hide_covered_windows           1
 hc set mouse_recenter_gap             0
 hc set smart_frame_surroundings       0
 hc set smart_window_surroundings      0

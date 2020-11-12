@@ -15,8 +15,8 @@ start=$(date '+%s')
 instantiate=0.01  # instantiation window
 
 while : ;do
-  for i in $(herbstclient attr clients | egrep '0x|focus') ;do
-    herbstclient compare clients.${i%.}.instance = $1 && exit 0
+  for i in $(herbstclient foreach C clients. echo C) ;do
+    herbstclient compare ${i%.}.instance = $1 && exit 0
   done
   sleep $instantiate
   [ $(( $(date '+%s') - $start )) -gt $cutoff ] && exit 1

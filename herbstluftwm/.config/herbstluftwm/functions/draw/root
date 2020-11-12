@@ -202,6 +202,6 @@ panel=$(pgrep -f 'draw panel')
 echo '!panel:stat' >$(cat $PANEL_FIFO)  # save cpu_stats
 draw panel  # draw over old theme
 sleep 0.25   # wait for overlay
-kill $panel
+[ "$panel" ] && kill $panel
 
 # vim: set ft=sh: #

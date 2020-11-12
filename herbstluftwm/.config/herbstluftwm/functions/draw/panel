@@ -84,7 +84,7 @@ desktops() {
   active=$(query tag)
   inactive=$(query tag inactive)
   unset tags
-  for i in $(query winids) ;do tags="$tags $(herbstclient attr clients.$i.tag)" ;done
+  for i in $(query winids) ;do tags="$tags $(herbstclient attr $i.tag)" ;done
   unset desktops
   for i in $TAGS ;do
     format="%{B$DEFAULT_BG}"
