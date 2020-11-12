@@ -5,7 +5,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ................................................................ Switch to tag
-
+set -x
 # Usage: switch tag [<tag>]
 
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
@@ -25,6 +25,8 @@ restore monocle $tag
 
 focus window
 unlock
+
+# popup tag name when no windows showing (trap minimized windows!)
 if ! is nonempty $tag ;then
   is nonempty "'$tag" && notify low 1 "[$tag]" "$(query tname $tag)" || notify 1 "\\$tag" "$(query tname $tag)"
 fi
