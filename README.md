@@ -29,18 +29,20 @@ stow &lt;application&gt;</pre>
 
 ## beakl
 
-There are many keyboard layouts for the Planck, Splitography, Chimera and
+There are several keyboard layouts for the Planck, Splitography, Chimera and
 Corne keyboards. 
 
-**BEAKL Wi** is the current keyboard standard.
+**BEAKL Wi** is the current keyboard in daily use (hence, has the most
+up-to-date libraries).
 
 What this means is that,
 while all layouts should compile and flash their appropriate
 keyboards properly, older source (layouts) libraries -- in
 particular, the *keycode_functions.c and tapdance.c* files -- will not incorporate
-the latest tweaks and fixes to corner case behaviour. This does not mean
-the older layouts do not work -- they do (and the corner cases addressed
-likely not visible to the user).
+the latest tweaks and fixes to corner case behaviours caught over the
+course of this site's BEAKL development. This does not mean
+the older layouts do not work -- they do (with probably the majority of corner cases addressed
+not likely to be noticed by the user).
 
 ## caveats
 
