@@ -308,25 +308,31 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
   return false;
 }
 
-#if STENO
 // conditional map_shift pass through on keycode down to complete lt(), see process_record_user()
-bool mapc_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
+bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t layer)
 {
   if (mod_down(shift_key)) {
-    if (KEY_DOWN) { KEY_TIMER; }
-    else {
+    if (KEY_DOWN) {
+      KEY_TIMER;
+#ifdef ROLLOVER
+      e[RSHIFT].key_timer = 0;          // clear punctuation modifier (key tap), see mod_roll()
+#endif
+    } else {
       if (KEY_TAP) {
         if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode
         tap_key(keycode);
         if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       }
-      key_timer = 0;  // clear home row shift, see process_record_user() and sft_home()
+      key_timer = 0;                    // clear home row shift, see process_record_user() and sft_home()
+#ifdef ROLLOVER
+      e[LSHIFT].key_timer = 0;          // clear left handed separator modifier (key tap)
+#endif
+      if (layer) { layer_off(layer); }  // disable MO layer (base layer == 0)
       return true;
     }
   }
   return false;
 }
-#endif
 
 // Layers
 // ═════════════════════════════════════════════════════════════════════════════
@@ -363,7 +369,7 @@ void base_layer(uint8_t defer)
 #endif
 }
 
-// LT macro for mapc_shift(), see process_record_user()
+// LT macro for map_shifted(), see process_record_user()
 void lt(RECORD, uint8_t layer, bool shift, uint16_t keycode)
 {
   if (KEY_DOWN) { KEY_TIMER; layer_on(layer); }
