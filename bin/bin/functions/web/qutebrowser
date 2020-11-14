@@ -35,9 +35,9 @@ font="
 
 # void && pulse  # browser doesn't autostart pulseaudio
 if pgrep -f "$QUTEBROWSER" >/dev/null ;then
-  eval $QUTEBROWSER $RUNOPT $font :open\\ -w\\ $startpage & 
+  eval $QUTEBROWSER $RUNOPT $font :open\\ -w\\ $startpage 2>/dev/null & 
 else
-  eval $QUTEBROWSER $RUNOPT $font $startpage & 
+  eval $QUTEBROWSER $RUNOPT $font $startpage 2>/dev/null & 
 fi
 
 # vim: set ft=sh: #
