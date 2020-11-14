@@ -23,7 +23,7 @@ void lesser_reset(STATE, void *user_data);
 void lt(RECORD, uint8_t layer, bool shift, uint16_t keycode);
 bool map_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column);
 bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode);
-bool mapc_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode);
+bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t layer);
 void mod_all(void (*f)(uint8_t), uint8_t mask);
 void mod_bits(RECORD, uint16_t keycode);
 bool mod_down(uint16_t keycode);

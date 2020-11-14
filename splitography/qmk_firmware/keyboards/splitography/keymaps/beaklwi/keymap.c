@@ -318,12 +318,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case TT_I:
     lt(record, _REGEX, SHIFT, KC_I);
     break;
-  case S(KC_I):
-#ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
-#endif
-    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
-    break;
 
   case TD_EQL:
     if (tt_keycode) { break; }  // no thumb mouse layer on toggle layer
@@ -341,50 +335,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case LT_SPC:
 #ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))             { return false; }
 #endif
-    if (mapc_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))     { return false; }
+    if (map_shifted(record, KC_LSFT, NOSHIFT, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))            { return false; }
 #ifdef ROLLOVER
-    leaderlayer = _SYMGUI;                                                  // see mod_roll()
-    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
+    leaderlayer = _SYMGUI;                                                         // see mod_roll()
+    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11))        { return false; }  // KC_SPC -> space shift
 #else
-    if (leader_cap (record, _SYMGUI, KC_SPC))            { return false; }  // KC_SPC -> space shift
+    if (leader_cap (record, _SYMGUI, KC_SPC))                   { return false; }  // KC_SPC -> space shift
 #endif
     rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
   case TT_SPC:
 #ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))      { return false; }
+    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))             { return false; }
 #endif
-    if (mapc_shift(record, KC_LSFT, NOSHIFT, KC_ENT))    { layer_off(_SYMGUI); return false; }  // rolling cursor to enter
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))     { return false; }
-    lt(record, _SYMGUI, NOSHIFT, KC_SPC);  // because LT() issues <spc> before <enter> on mapc_shift()
+    if (map_shifted(record, KC_LSFT, NOSHIFT, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))            { return false; }
+    lt(record, _SYMGUI, NOSHIFT, KC_SPC);                                          // because LT() issues <spc> before <enter> on map_shifted()
     break;
   case KC_SPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
+    if (!KEY_DOWN)                                              { CLR_1SHOT; }     // see leader_cap()
     break;
 
   case LT_BSPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
+    if (!KEY_DOWN)                                              { CLR_1SHOT; }     // see leader_cap()
 #ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))     { return false; }
+    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))            { return false; }
 #endif
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
-    if (leader_cap (record, _EDIT, KC_ENT))              { return false; }  // see KC_BSPC for multi-tap
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))            { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))            { return false; }
+    if (leader_cap (record, _EDIT, KC_ENT))                     { return false; }  // see KC_BSPC for multi-tap
     break;
   case KC_BSPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
+    if (!KEY_DOWN)                                              { CLR_1SHOT; }     // see leader_cap()
 #ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))     { return false; }
+    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))            { return false; }
 #endif
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))     { return false; }
-    if (leader_cap (record, 0, KC_ENT))                  { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
+    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))            { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))            { return false; }
+    if (leader_cap (record, 0, KC_ENT))                         { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef THUMB_CAPS
-    if (KEY_DOWN)                                     { key_timer = timer_read(); }
-    else if (timer_elapsed(key_timer) < TAPPING_TERM) { tap_key(KC_BSPC); }
+    if (KEY_DOWN)                                               { key_timer = timer_read(); }
+    else if (timer_elapsed(key_timer) < TAPPING_TERM)           { tap_key(KC_BSPC); }
     return false;  // capslock toggling trap, use shift bspc -> del for auto repeat
 #else
     break;
