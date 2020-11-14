@@ -17,7 +17,7 @@ normal=$(herbstclient attr theme.normal.color)
 # with solid background colour, make inactive border invisible!
 [ -e $BLANK ] && bg="#$(cat $BLANK)" || bg=$normal
 if [ -e $BLANK ] ;then luminance +${bg#?} && hilight='#ff0000' || hilight='#00ff00'
-else                   hilight=$(cat $BORDER)
+else                   hilight="#$(cat $BORDER)"
 fi
 
 # border attention!
