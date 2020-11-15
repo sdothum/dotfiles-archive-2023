@@ -32,7 +32,7 @@ stow &lt;application&gt;</pre>
 There are several keyboard layouts for the Planck, Splitography, Chimera and
 Corne keyboards. 
 
-**BEAKL Wi** is the current keyboard in daily use (hence, has the most
+**[BEAKL Wi](http://thedarnedestthing.com/beakl%20wi)** is the current keyboard in daily use (hence, has the most
 up-to-date libraries).
 
 What this means is that,
