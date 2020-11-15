@@ -41,7 +41,7 @@
 #define ROLLOVER 1
 
 #ifdef ROLLOVER
-#define TAPPING_TERM 175
+#define TAPPING_TERM 200
 #else
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
