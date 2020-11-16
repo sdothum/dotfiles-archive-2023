@@ -44,6 +44,10 @@ course of this site's BEAKL development. This does not mean
 the older layouts do not work -- they do (with probably the majority of corner cases addressed
 not likely to be noticed by the user).
 
+See [keyboard
+evaluation](http://thedarnedestthing.com/keyboard%20layout%20evaluation#beakl-weighting)
+for a biased comparison of keyboard layouts!
+
 ## caveats
 
 Many of the configuration files contain custom keybind specifications for various
