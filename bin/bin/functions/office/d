@@ -6,11 +6,28 @@
 
 # ................................................................... Dictionary
 
-d() { ssh $SERVER dict $1; }
+usage() { echo "usage: $(basename $0) [-t [<maxlen>]] <word>"; exit 1; }
+
+if [ $1 = -t ] ;then
+  THESAURUS=" | grep -A9999 '^From Moby Thesaurus' | sed '1,3d' | sed 's/^From/,From/' | tr '\n' ' ' | tr ',' '\n' | sed 's/^ *//g'"  # an arbitrarily long thesaurus list
+  shift
+  if echo $1 | grep -q '^[0-9][0-9]*$' ;then
+    MAXLEN="$(seq -s. 0 $1 | tr -d '[:digit:]')[^ ]"
+    shift
+  else
+    MAXLEN="$(seq -s. 100 | tr -d '[:digit:]')[^ ]"  # an arbitrarily long word size
+  fi
+fi
+[ $1 ] || usage
 
 # see dmenu dict
-if   pstat dictd               ;then dict $1 >/dev/null && dict $1
-elif [ $(d $1 | wc -l) -gt 1 ] ;then d $1
-fi
+[ $(dict $1 | wc -l) -gt 1 ] && output=$(eval dict $1 $THESAURUS) || exit
+[ "$THESAURUS" ] || { echo "$output"; exit; }
+
+# trim trailing dictionary content following moby thesaurus
+while echo "$output" | grep -q '^From.*Dictionary' ;do
+  output=$(echo "$output" | grep -B9999 '^From.*Dictionary' | head -n -1)
+done
+echo "$output" | grep -v "$MAXLEN" | column  # tabular list of synonyms
 
 # vim: set ft=sh: #
