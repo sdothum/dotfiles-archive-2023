@@ -48,8 +48,10 @@ hc keybind Super-h                    spawn dmenu shistory
 hc keybind Super-Control-k            spawn clack toggle
 hc keybind Super-$Mod-k               spawn clack swap
 hc keybind Super-l                    spawn lock_screen
-hc keybind Super-n                    spawn dmenu notes
-hc keybind Super-Control-n            spawn dmenu notes draft
+hc keybind Super-m                    spawn tmux_session mail alot
+hc keybind Super-Control-m            spawn dmenu notes draft
+hc keybind Super-n                    spawn dmenu notes poem
+hc keybind Super-Control-n            spawn dmenu notes
 hc keybind Super-p                    spawn dmenu pass
 hc keybind Super-Control-p            spawn proof toggle
 hc keybind Super-$Mod-p               spawn pulse restart

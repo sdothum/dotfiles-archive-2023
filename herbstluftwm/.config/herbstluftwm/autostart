@@ -98,8 +98,6 @@ if [ ! -e $HLWM:autostart ] ;then
     herbstclient lock
     $HOME/bin/autostart
     herbstclient unlock
-    # close dunst notifications
-    xdotool key ctrl+shift+space
   fi
 fi
 touch $HLWM:autostart
