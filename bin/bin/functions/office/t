@@ -6,23 +6,19 @@
 
 # ................................................................... Dictionary
 
-usage() { echo "usage: $(basename $0) [-t [<maxlen>]] <word>"; exit 1; }
+usage() { echo "usage: $(basename $0) [-<maxlen>] <word>"; exit 1; }
 
-if [ $1 = -t ] ;then
-  THESAURUS=" | grep -A9999 '^From Moby Thesaurus' | sed '1,3d' | sed 's/^From/,From/' | tr '\n' ' ' | tr ',' '\n' | sed 's/^ *//g'"  # an arbitrarily long thesaurus list
+if [ ${1%${1#?}} = '-' ] && echo ${1#?} | grep -q '^[0-9][0-9]*$' ;then
+  MAXLEN="$(seq -s. 0 ${1#?} | tr -d '[:digit:]')[^ ]"
   shift
-  if echo $1 | grep -q '^[0-9][0-9]*$' ;then
-    MAXLEN="$(seq -s. 0 $1 | tr -d '[:digit:]')[^ ]"
-    shift
-  else
-    MAXLEN="$(seq -s. 100 | tr -d '[:digit:]')[^ ]"  # an arbitrarily long word size
-  fi
+else
+  MAXLEN="$(seq -s. 100 | tr -d '[:digit:]')[^ ]"  # an arbitrarily long word size
 fi
 [ $1 ] || usage
+[ $2 ] && usage
 
 # see dmenu dict
-[ $(dict $1 | wc -l) -gt 1 ] && output=$(eval dict $1 $THESAURUS) || exit
-[ "$THESAURUS" ] || { echo "$output"; exit; }
+[ $(dict $1 | wc -l) -gt 1 ] && output=$(dict $1 | grep -A9999 '^From.*Thesaurus' | sed '1,3d' | sed 's/^From/,From/' | tr '\n' ' ' | tr ',' '\n' | sed 's/^ *//g') || exit
 
 # trim trailing dictionary content following moby thesaurus
 while echo "$output" | grep -q '^From.*Dictionary' ;do
