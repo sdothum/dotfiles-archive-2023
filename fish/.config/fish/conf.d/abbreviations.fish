@@ -80,7 +80,7 @@ abbr r 'vifm'
 abbr R 'env VISUAL=vim ranger'
 abbr rm 'rm -i'
 abbr rmv 'rm -iv'
-abbr t 'tail -f'
+# abbr t 'tail -f'
 
 # .................................................................... Directory
 
@@ -144,14 +144,13 @@ abbr perli 'perl -de 1'
 # .................................................................. Application
 
 abbr calc 'speedcrunch'
-# abbr d 'dict'
+abbr d 'dict'
 abbr kindle 'dmenu kindle'
 abbr dotfiles 'rlwrap dotfiles'
 abbr handbrake 'ghb'
 abbr music '!p ncmpcpp ;and ncmpcpp'
 abbr scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
 abbr ss 'sc-im'
-abbr t 'd -t'
 abbr td 'td -i'
 # abbr todo 'rlwrap todo-screen'
 abbr uterm 'urxvt -sh 1'
