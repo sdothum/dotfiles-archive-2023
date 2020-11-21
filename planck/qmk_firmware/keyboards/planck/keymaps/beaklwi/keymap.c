@@ -134,10 +134,10 @@ enum keyboard_keycodes {
 #endif
  ,AST_G   // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
 #ifdef UPPER_HEX
- ,ACT_E   // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_E))
- ,AT_B    // pseudo ALT_T(S(KC_B))
- ,CT_C    // pseudo CTL_T(S(KC_C))
- ,ST_A    // pseudo SFT_T(S(KC_A))
+ ,ACT_B   // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_B))
+ ,AT_E    // pseudo ALT_T(S(KC_E))
+ ,CT_D    // pseudo CTL_T(S(KC_D))
+ ,ST_F    // pseudo SFT_T(S(KC_F))
 #endif
  ,TT_ESC
  ,TT_A    // pseudo LT(_TTBASEL, S(KC_A))
@@ -157,10 +157,10 @@ enum keyboard_keycodes {
 #define HOME_V  GUI_T(KC_V)
 #endif
 #ifndef UPPER_HEX
-#define ACT_E   MT   (MOD_LALT | MOD_LCTL, KC_E)
-#define AT_B    ALT_T(KC_B)
-#define CT_C    CTL_T(KC_C)
-#define ST_A    SFT_T(KC_A)
+#define ACT_B   MT   (MOD_LALT | MOD_LCTL, KC_B)
+#define AT_E    ALT_T(KC_E)
+#define CT_D    CTL_T(KC_D)
+#define ST_F    SFT_T(KC_F)
 #endif
 
 #include "tapdance.h"
@@ -418,14 +418,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case AST_G:
     mt_shift(record, KC_LALT, KC_LSFT, KC_G); break;
 #ifdef UPPER_HEX
-  case ACT_E:
-    mt_shift(record, KC_LALT, KC_LCTL, KC_E); break;
-  case AT_B:
-    mt_shift(record, KC_LALT, 0, KC_B);       break;
-  case CT_C:
-    mt_shift(record, KC_LCTL, 0, KC_C);       break;
-  case ST_A:
-    mt_shift(record, KC_LSFT, 0, KC_A);       break;
+  case ACT_B:
+    mt_shift(record, KC_LALT, KC_LCTL, KC_B); break;
+  case AT_E:
+    mt_shift(record, KC_LALT, 0, KC_E);       break;
+  case CT_D:
+    mt_shift(record, KC_LCTL, 0, KC_D);       break;
+  case ST_F:
+    mt_shift(record, KC_LSFT, 0, KC_F);       break;
 #endif
 #ifndef HASKELL
   case HS_GT:
