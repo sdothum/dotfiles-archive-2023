@@ -10,17 +10,17 @@ usage() { echo "usage: $(basename $0) [<size>] [<jpeg>]*"; exit 1; }
 
 # quality=92
 # quality=75
-quality=60
+quality=45
 size=800
 
-[ $1 ] && echo $1 | grep -q '^[0-9]*$' && { size="$1"; shift; }
+[ $1 ] && echo $1 | grep -q '^[0-9][0-9]*$' && { size="$1"; shift; }
 [ $1 ] && files=$@ || files=*.jpg
 [ "$files" ] || usage
 
 for i in $files ;do
   output=${i%.jpg}x$size.jpg
   ditto convert "$output"
-  convert $i -size $size -quality $quality $output
+  convert $i -resize $size -quality $quality $output
 done
 
 # vim: set ft=sh: #

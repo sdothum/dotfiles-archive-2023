@@ -107,7 +107,7 @@ while note=$(notes | rmenu "$(echo $ext | sed -r 's/./\u&/') [/search]" $(highli
   mhistory $catlg $file
   # mhistory=$file
   case $action in
-  edit     ) gvim -f -c "set filetype=markdown" -c "set modifiable" $file
+  edit     ) gvim -f -c 'set filetype=markdown' -c 'set modifiable' $file
              update=true ;;
 
   print    ) hardcopy wiki $file ;;
