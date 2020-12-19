@@ -12,11 +12,19 @@ L31 L32 L33 L34 L35 L36 R36 R35 R34 R33 R32 R31
 L41 L42 L43 L44 L45 L46 R46 R45 R44 R43 R42 R41
 L51 L52 L53 L57 L58 L59 R59 R58 R57 R53 R52 R51
 
+/*
 [weights]
 5.0 3.6 2.4 1.8 2.2 3.5 3.5 2.2 1.8 2.4 3.6 5.0
 4.0 1.6 1.2 1.0 1.0 3.0 3.0 1.0 1.0 1.2 1.6 4.0
 5.0 3.4 2.6 2.2 1.8 4.0 4.0 1.8 2.2 2.6 3.4 5.0
 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+*/
+
+[weights]
+16.0 12.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0 12.0 16.0
+ 9.0  7.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0  7.0  9.0
+10.0  5.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  5.0 10.0  // rest pinkie on lower row of corne!
+ 0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
 
 /*
 [weights]
@@ -25,7 +33,6 @@ L51 L52 L53 L57 L58 L59 R59 R58 R57 R53 R52 R51
 10.0  7.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  7.0 10.0
  0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
 
-/*
 [weights]
 16.0 12.0 2.5 1.5 2.0 4.0 4.0 2.0 1.5 2.5 12.0 16.0
  9.0  5.0 1.5 1.0 1.0 3.0 3.0 1.0 1.0 1.5  5.0  9.0
@@ -49,6 +56,7 @@ Weights should:
 https://colemakmods.github.io/mod-dh/compare.html
 */
 
+/*
 [penalties]
   ,same_row,row_jump1,row_jump2,row_jump3
 ii,      2.5,     3.5,      4.5,      0.0  // same finger
@@ -76,8 +84,8 @@ tr,      0.5,     1.5,      0.5,      1.0
 pt,      0.5,     1.5,      0.5,      1.0 
 tp,      0.5,     1.5,      0.5,      1.0 
 tt,      2.0,     3.0,      2.0,      2.5  // same finger
+*/
 
-/*
 [penalties]
   ,same_row,row_jump1,row_jump2,row_jump3
 ii,      2.5,     3.5,      4.5,      0.0  // same finger
@@ -384,5 +392,12 @@ x a u e i , c t s r n h
 # : y o u - g d n m z #
 # q h e a w c t r s v #
 # j , . k ' b p l f x #
+# # # # i # # # # # # #
+
+// http://thedarnedestthing:8000/corne
+>>BEAKL Wi-x
+# : y o u - g d n m z #
+# q h e a w c t r s x #
+# j , . k ' b p l f v #
 # # # # i # # # # # # #
 
