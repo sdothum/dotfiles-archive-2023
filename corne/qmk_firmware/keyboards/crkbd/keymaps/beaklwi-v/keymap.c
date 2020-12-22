@@ -541,7 +541,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_RKEY(6, KC_P);
   CASE_RKEY(7, KC_L);
   CASE_RKEY(8, KC_F);
-  CASE_RKEY(9, KC_X);
+  CASE_RKEY(9, KC_V);
 #endif
 
 #ifdef PLANCK
