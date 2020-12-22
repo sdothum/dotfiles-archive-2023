@@ -162,6 +162,7 @@ autocmd plugin FileType mail,markdown call litecorrect#init()
 
 let g:matchup_matchparen_deferred           = 1
 let g:matchup_matchparen_hi_surround_always = 1
+let g:matchup_matchparen_offscreen          = {}  " suppress off screen status line notification
 
 " ................................................................ Narrow region
 let g:nrrw_rgn_vert          = 0   " open in horizontal split buffer
