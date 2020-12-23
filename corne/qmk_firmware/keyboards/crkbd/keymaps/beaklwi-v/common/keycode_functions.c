@@ -60,6 +60,24 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
+void send(RECORD, bool shift, uint16_t keycode)
+{
+  if (KEY_DOWN) {
+    if (shift) { register_code(KC_LSFT); }
+    register_code(keycode);
+  } else {
+    unregister_code(keycode);
+    if (shift) { unregister_code(KC_LSFT); }
+  }
+}
+
+void toggle(RECORD, uint16_t modifier, uint16_t keycode)
+{
+  if (KEY_DOWN) { KEY_TIMER; register_code(modifier); }
+  else          { unregister_code(modifier); if (KEY_TAP) { tap_key(keycode); } }
+}
+
+
 // ................................................................... Key event
 
 // alternate escape for TT layers, see process_record_user()
@@ -191,7 +209,7 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 #ifdef ROLLOVER
 #define SET_EVENT(c) e[c].key_timer = timer_read(); \
                      e[c].keycode   = keycode;      \
-                     e[c].shift     = shift;        \
+                     e[c].shift     = keycode == KC_LSFT || keycode == KC_RSFT; \
                      e[c].side      = side;         \
                      e[c].leadercap = leadercap;    \
                      prev_key       = next_key;     \
@@ -242,7 +260,7 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
                     leaderlayer           = 0
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
-bool mod_roll(RECORD, uint8_t side, bool shift, uint16_t modifier, uint16_t keycode, uint8_t column)
+bool mod_roll(RECORD, uint8_t side, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) {
     SET_EVENT(column);

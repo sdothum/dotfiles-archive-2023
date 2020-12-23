@@ -23,7 +23,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #endif
  ,[_PASTE]  = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, paste, paste_reset)
  ,[_PRIV]   = ACTION_TAP_DANCE_FN              (private)
- ,[_SEND]   = ACTION_TAP_DANCE_FN              (send)
+ ,[_PUB]    = ACTION_TAP_DANCE_FN              (public)
  ,[_XPASTE] = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, xpaste, xpaste_reset)
 };
 
@@ -176,7 +176,7 @@ void private(STATE, void *user_data)
   reset_tap_dance(state);
 }
 
-void send(STATE, void *user_data)
+void public(STATE, void *user_data)
 {
   if (TAPS) { SEND_STRING(PUBLIC_STRING); }
   reset_tap_dance(state);
