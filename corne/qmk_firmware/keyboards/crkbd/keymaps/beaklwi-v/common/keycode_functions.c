@@ -209,7 +209,7 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 #ifdef ROLLOVER
 #define SET_EVENT(c) e[c].key_timer = timer_read(); \
                      e[c].keycode   = keycode;      \
-                     e[c].shift     = keycode == KC_LSFT || keycode == KC_RSFT; \
+                     e[c].shift     = modifier == KC_LSFT || modifier == KC_RSFT; \
                      e[c].side      = side;         \
                      e[c].leadercap = leadercap;    \
                      prev_key       = next_key;     \
@@ -288,6 +288,7 @@ bool mod_roll(RECORD, uint8_t side, uint16_t modifier, uint16_t keycode, uint8_t
 // handle map_shift() rolling keys (and dot chords)
 void set_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
 {
+  uint16_t modifier = 0;  // for SET_EVENT()
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
