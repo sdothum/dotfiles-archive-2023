@@ -21,18 +21,12 @@ L51 L52 L53 L57 L58 L59 R59 R58 R57 R53 R52 R51
 */
 
 [weights]
-10.0  7.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0  7.0 10.0
-16.0 12.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0 12.0 16.0
- 9.0  5.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  5.0  9.0  // rest pinkie on lower row of corne!
- 0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
-
-/*
-[weights]
 16.0 12.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0 12.0 16.0
 10.0  7.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0  7.0 10.0
  9.0  5.0 2.5 2.0 1.5 5.0 5.0 1.5 2.0 2.5  5.0  9.0  // rest pinkie on lower row of corne!
  0.5  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5  0.5  0.5
 
+/*
 [weights]
 16.0 12.0 2.0 1.0 1.0 4.0 4.0 1.0 1.0 2.0 12.0 16.0
  9.0  5.0 1.0 0.5 0.5 1.5 1.5 0.5 0.5 1.0  5.0  9.0
@@ -118,6 +112,7 @@ tr,      0.5,     1.5,      0.5,      1.0
 pt,      0.5,     1.5,      0.5,      1.0 
 tp,      0.5,     1.5,      0.5,      1.0 
 tt,      2.0,     3.0,      2.0,      2.5  // same finger
+*/
 
 [penalties]
   ,same_row,row_jump1,row_jump2,row_jump3
@@ -145,35 +140,6 @@ rt,      0.5,     1.5,      0.5,      1.0
 tr,      0.5,     1.5,      0.5,      1.0 
 pt,      0.5,     0.5,      1.0,      1.5  // lazy pinkie position
 tp,      0.5,     0.5,      1.0,      1.5  // lazy pinkie position
-tt,      2.0,     3.0,      2.0,      2.5  // same finger
-*/
-
-[penalties]
-  ,same_row,row_jump1,row_jump2,row_jump3
-ii,      2.5,     3.5,      4.5,      0.0  // same finger
-im,      0.5,     1.0,      2.0,      0.0 
-ir,      0.5,     1.0,      1.5,      0.0 
-ip,      0.5,     1.0,      1.5,      0.0 
-mi,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-mm,      2.5,     3.5,      4.5,      0.0  // same finger
-mr,      0.5,     1.0,      2.0,      0.0 
-mp,      1.0,     1.5,      2.5,      0.0 
-ri,     -1.5,    -0.5,      1.5,      0.0  // inward roll
-rm,      1.0,     1.5,      2.5,      0.0  // inward roll
-rr,      3.0,     4.0,      5.0,      0.0  // same finger
-rp,      3.0,     4.5,      7.0,      0.0 
-pi,     -1.0,     0.0,      1.0,      0.0  // inward roll
-pm,      1.0,     2.0,      3.0,      0.0  // inward roll
-pr,      4.0,     5.0,      6.5,      0.0  // inward roll
-pp,      5.0,     6.0,      8.0,      0.0  // same finger
-it,      0.5,     1.5,      0.5,      1.0 
-ti,      0.5,     1.5,      0.5,      1.0 
-mt,      0.5,     1.5,      0.5,      1.0 
-tm,      0.5,     1.5,      0.5,      1.0 
-rt,      0.5,     1.5,      0.5,      1.0 
-tr,      0.5,     1.5,      0.5,      1.0 
-pt,      0.5,     0.5,      1.5,      1.0  // lazy pinkie position
-tp,      0.5,     0.5,      1.5,      1.0  // lazy pinkie position
 tt,      2.0,     3.0,      2.0,      2.5  // same finger
 
 /*
@@ -460,13 +426,6 @@ x a u e i , c t s r n h
 >>BEAKL Wi-v
 # : y o u - g d n m z #
 # q h e a w c t r s x #
-# j , . k ' b p l f v #
-# # # # i # # # # # # #
-
-// http://thedarnedestthing:8000/corne
->>BEAKL Wi-x
-# : y o u - g d n m x #
-# q h e a w c t r s z #
 # j , . k ' b p l f v #
 # # # # i # # # # # # #
 
