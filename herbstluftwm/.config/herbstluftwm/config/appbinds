@@ -27,7 +27,6 @@ hc keybind Super-6                    spawn sudo xbacklight +5
 hc keybind Super-equal                spawn dmenu calc
 hc keybind Super-Control-equal        spawn toggle plover
 hc keybind Super-BackSpace            spawn toggle ncurses
-hc keybind Super-z                    spawn toggle rox
 hc keybind Super-apostrophe           spawn toggle conky
 hc keybind Super-Control-apostrophe   spawn toggle panel
 # hc keybind Super-F1                 spawn keymap toggle
@@ -67,6 +66,7 @@ hc keybind Super-Control-v            spawn dmenu audio
 hc keybind Super-$Mod-Control-v       chain . spawn pkill '(mpv|omxplayer)' . emit_hook focus_window
 hc keybind Super-w                    spawn dmenu wiki
 hc keybind Super-Control-w            spawn dmenu wiki diary
+hc keybind Super-x                    spawn toggle rox
 hc keybind Super-Control-z            spawn dmenu screensaver
 
 # vim: set ft=sh: #
