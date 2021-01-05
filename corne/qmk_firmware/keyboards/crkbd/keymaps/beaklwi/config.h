@@ -51,6 +51,9 @@
 // upper case hex (idefault lower case abcdef)
 // #define UPPER_HEX
 
+// togglable pinkie home position (0) normal middle row (1) bottom row stagger
+#define STAGGER 0
+
 #define CORNE
 
 // keyswitch test layer

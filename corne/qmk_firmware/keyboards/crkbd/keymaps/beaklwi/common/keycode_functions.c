@@ -60,6 +60,26 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
+#ifdef STAGGER
+void send(RECORD, bool shift, uint16_t keycode)
+{
+  if (KEY_DOWN) {
+    if (shift) { register_code(KC_LSFT); }
+    register_code(keycode);
+  } else {
+    unregister_code(keycode);
+    if (shift) { unregister_code(KC_LSFT); }
+  }
+}
+
+void toggle(RECORD, uint16_t modifier, uint16_t keycode)
+{
+  if (KEY_DOWN) { KEY_TIMER; register_code(modifier); }
+  else          { unregister_code(modifier); if (KEY_TAP) { tap_key(keycode); } }
+}
+#endif
+
+
 // ................................................................... Key event
 
 // alternate escape for TT layers, see process_record_user()
@@ -191,8 +211,8 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 #ifdef ROLLOVER
 #define SET_EVENT(c) e[c].key_timer = timer_read(); \
                      e[c].keycode   = keycode;      \
-                     e[c].shift     = shift;        \
-                     e[c].side      = side;         \
+                     e[c].shift     = modifier == KC_LSFT || modifier == KC_RSFT; \
+                     e[c].side      = column <= 4 ? LEFT : RIGHT;                 \
                      e[c].leadercap = leadercap;    \
                      prev_key       = next_key;     \
                      next_key       = c
@@ -225,15 +245,15 @@ static uint8_t prev_key    = 0;
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
 #define SHIFT_KEYS    (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
 
-void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
+void roll_key(uint16_t keycode, uint8_t column)
 {
   if (e[column].key_timer < e[next_key].key_timer) {  // rolling sequence in progress
     mod_all(unregister_code, 0);                      // disable modifier chord finger rolls
     if (e[column].shift && e[column].side != e[next_key].side && SHIFT_KEYS) {           // shift only opposite side of rolling sequence
       tap_shift(e[next_key].keycode);                 // shift opposite home row key
       e[next_key].key_timer = 0;                      // don't echo this shift key
-    } else { ROLL(side, keycode); }                   // tap (shifted?) key
-  } else   { ROLL(side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
+    } else { ROLL(e[column].side, keycode); }                   // tap (shifted?) key
+  } else   { ROLL(e[column].side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
 }
 
 #define CLEAR_EVENT e[column].key_timer   = 0; \
@@ -242,7 +262,7 @@ void roll_key(uint8_t side, uint16_t keycode, uint8_t column)
                     leaderlayer           = 0
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
-bool mod_roll(RECORD, uint8_t side, bool shift, uint16_t modifier, uint16_t keycode, uint8_t column)
+bool mod_roll(RECORD, uint16_t modifier, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) {
     SET_EVENT(column);
@@ -250,7 +270,7 @@ bool mod_roll(RECORD, uint8_t side, bool shift, uint16_t modifier, uint16_t keyc
   } else {
     if (modifier) { unregister_modifier(modifier); }
     if (timer_elapsed(e[column].key_timer) < TAPPING_TERM) {
-      roll_key(side, keycode, column);
+      roll_key(keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
         oneshot_shift(leaderlayer);
         CLEAR_EVENT;
@@ -268,15 +288,17 @@ bool mod_roll(RECORD, uint8_t side, bool shift, uint16_t modifier, uint16_t keyc
 // ................................................................. Map Keycode
 
 // handle map_shift() rolling keys (and dot chords)
-void set_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
+void set_leader(RECORD, uint16_t keycode, uint8_t column)
 {
+  uint16_t modifier = 0;  // for SET_EVENT()
+
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
 
-bool map_leader(RECORD, uint8_t side, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
+bool map_leader(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
 {
-  set_leader(record, side, shift_key, shift, keycode, column);
+  set_leader(record, keycode, column);
   return map_shift(record, shift_key, shift, keycode);
 }
 #endif
@@ -422,8 +444,7 @@ bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool toggle)
 static uint8_t leftside  = 0;
 static uint8_t rightside = 0;
 
-#define SWITCH_LAYER(x, y) layer_off(x); \
-                           x = 0;        \
+#define SWITCH_LAYER(x, y) layer_off(x); x = 0; \
                            if (y && y == _MOUSE) { layer_on(facing); y = facing; }
 
 // seamlessly switch left / right thumb layer combinations
