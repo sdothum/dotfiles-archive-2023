@@ -52,7 +52,10 @@
 // #define UPPER_HEX
 
 // togglable pinkie home position (0) normal middle row (1) bottom row stagger
-#define STAGGER 1
+#define STAGGER 0
+#define PINKIE1 KC_X
+#define PINKIE2 KC_Z
+#define PINKIE3 KC_V
 
 #define CORNE
 

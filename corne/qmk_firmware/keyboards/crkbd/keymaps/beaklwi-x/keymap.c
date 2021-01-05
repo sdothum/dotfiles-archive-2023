@@ -128,12 +128,12 @@ enum keyboard_keycodes {
  ,HOME_S   // pseudo CTL_T(KC_S)
 #endif
  ,SWAPKEY  // toggle pinkie home row stagger
- ,HOME2    // pseudo GUI_T(KC_Z/V)
- ,HOME1    // KC_Z/V
- ,SHIFT2   // SFT(KC_Z/V)
- ,SHIFT1   // SFT(KC_Z/V)
- ,KEY2     // KC_Z/V
- ,KEY1     // KC_Z/V
+ ,HOME2    // pseudo GUI_T(<pinkie>)
+ ,HOME1    // <pinkie>
+ ,SHIFT2   // SFT(<pinkie>)
+ ,SHIFT1   // SFT(<pinkie>)
+ ,KEY2     // <pinkie>
+ ,KEY1     // <pinkie>
 #ifdef HASKELL
  ,HS_GT    // pseudo SFT_T(S(KC_DOT))
  ,HS_LT    // pseudo CTL_T(S(KC_COMM))
@@ -292,7 +292,7 @@ static uint16_t td_timer  = 0;        // pseudo tapdance timer
 #define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
 #endif
 #define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
-#define PINKEY(r) r == 2 ? (stagger ? KC_Z : KC_V) : (stagger ? KC_V : KC_Z)
+#define PINKEY(r) r == 2 ? (stagger ? PINKIE3 : PINKIE2) : (stagger ? PINKIE2 : PINKIE3)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -528,7 +528,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_ROLL(6, KC_D);
   CASE_ROLL(7, KC_N);
   CASE_ROLL(8, KC_M);
-  CASE_ROLL(9, KC_X);
+  CASE_ROLL(9, PINKIE1);
 
   CASE_ROLL(4, KC_W);  // middle row 2
   CASE_ROLL(5, KC_C);
