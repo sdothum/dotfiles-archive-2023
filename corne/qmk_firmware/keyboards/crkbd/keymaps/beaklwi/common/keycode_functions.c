@@ -60,7 +60,7 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
-#ifdef STAGGER
+#ifdef PINKIE1
 void send(RECORD, bool shift, uint16_t keycode)
 {
   if (KEY_DOWN) {

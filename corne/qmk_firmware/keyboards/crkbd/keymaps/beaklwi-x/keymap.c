@@ -161,6 +161,8 @@ enum keyboard_keycodes {
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #endif
+#define KEY3    PINKIE3
+
 #ifndef UPPER_HEX
 #define ACT_B   MT   (MOD_LALT | MOD_LCTL, KC_B)
 #define AT_E    ALT_T(KC_E)
@@ -284,15 +286,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 #include "tapdance.c"
 
-static uint8_t  dual_down = 0;        // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
-static bool     stagger   = STAGGER;  // togglable pinkie home position (0) normal middle row (1) bottom row stagger
+static uint8_t  dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
+static bool     stagger   = 0;  // togglable pinkie home position (0) normal middle row (1) bottom row stagger
 #ifdef UNIX
-static uint16_t td_timer  = 0;        // pseudo tapdance timer
+static uint16_t td_timer  = 0;  // pseudo tapdance timer
 
 #define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
 #endif
 #define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
-#define PINKEY(r) r == 2 ? (stagger ? PINKIE3 : PINKIE2) : (stagger ? PINKIE2 : PINKIE3)
+#define PINKEY(r) r == 2 ? (stagger ? PINKIE1 : PINKIE2) : (stagger ? PINKIE2 : PINKIE1)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -528,7 +530,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_ROLL(6, KC_D);
   CASE_ROLL(7, KC_N);
   CASE_ROLL(8, KC_M);
-  CASE_ROLL(9, PINKIE1);
+  CASE_ROLL(9, KEY3);
 
   CASE_ROLL(4, KC_W);  // middle row 2
   CASE_ROLL(5, KC_C);
