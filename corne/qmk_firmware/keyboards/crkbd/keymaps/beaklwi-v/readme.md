@@ -1,3 +1,3 @@
 # The default keymap for corne keyboards, see config.h
 
-[BEAKL Wi](http://thedarnedestthing.com/beakl%20wi)
+[BEAKL Wi-v](http://thedarnedestthing.com/lazy%20beakl%20wi)
