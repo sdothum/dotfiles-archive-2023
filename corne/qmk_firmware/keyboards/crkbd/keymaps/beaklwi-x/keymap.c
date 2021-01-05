@@ -128,12 +128,12 @@ enum keyboard_keycodes {
  ,HOME_S   // pseudo CTL_T(KC_S)
 #endif
  ,SWAPKEY  // toggle pinkie home row stagger
+ ,HOME3    // <pinkie>
  ,HOME2    // pseudo GUI_T(<pinkie>)
- ,HOME1    // <pinkie>
+ ,SHIFT3   // SFT(<pinkie>)
  ,SHIFT2   // SFT(<pinkie>)
- ,SHIFT1   // SFT(<pinkie>)
+ ,KEY3     // <pinkie>
  ,KEY2     // <pinkie>
- ,KEY1     // <pinkie>
 #ifdef HASKELL
  ,HS_GT    // pseudo SFT_T(S(KC_DOT))
  ,HS_LT    // pseudo CTL_T(S(KC_COMM))
@@ -161,7 +161,7 @@ enum keyboard_keycodes {
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #endif
-#define KEY3    PINKIE3
+#define KEY1    PINKIE1
 
 #ifndef UPPER_HEX
 #define ACT_B   MT   (MOD_LALT | MOD_LCTL, KC_B)
@@ -294,7 +294,7 @@ static uint16_t td_timer  = 0;  // pseudo tapdance timer
 #define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
 #endif
 #define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
-#define PINKEY(r) r == 2 ? (stagger ? PINKIE1 : PINKIE2) : (stagger ? PINKIE2 : PINKIE1)
+#define PINKEY(r) r == 2 ? (stagger ? PINKIE3 : PINKIE2) : (stagger ? PINKIE2 : PINKIE3)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -530,7 +530,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_ROLL(6, KC_D);
   CASE_ROLL(7, KC_N);
   CASE_ROLL(8, KC_M);
-  CASE_ROLL(9, KEY3);
+  case HOME3:
+    mod_roll(record, 0, PINKEY(3), 9);
+    return false;
 
   CASE_ROLL(4, KC_W);  // middle row 2
   CASE_ROLL(5, KC_C);
@@ -543,24 +545,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_ROLL(6, KC_P);
   CASE_ROLL(7, KC_L);
   CASE_ROLL(8, KC_F);
-  case HOME1:
-    mod_roll(record, 0, PINKEY(1), 9);
-    return false;
+  CASE_ROLL(9, KEY1);
 #endif
 
   // .................................................. Toggle Layer Pinkie Keys
 
+#ifndef ROLLOVER
+  case HOME3:
+#endif
+  case KEY3:
+    send(record, NOSHIFT, PINKEY(3)); break;
+  case SHIFT3:
+    send(record, SHIFT, PINKEY(3));   break;
   case SHIFT2:
     send(record, SHIFT, PINKEY(2));   break;
-  case SHIFT1:
-    send(record, SHIFT, PINKEY(1));   break;
   case KEY2:
     send(record, NOSHIFT, PINKEY(2)); break;
-#ifndef ROLLOVER
-  case HOME1:
-#endif
-  case KEY1:
-    send(record, NOSHIFT, PINKEY(1)); break;
 
 #ifdef PLANCK
   // ................................................................ Steno Keys
