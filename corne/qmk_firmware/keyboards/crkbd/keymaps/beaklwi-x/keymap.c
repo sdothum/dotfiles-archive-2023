@@ -581,11 +581,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case SWAPKEY:
     if (KEY_DOWN) { stagger = !stagger; }  // see PINKEY()
     break;
-  default:
-    key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
+  // default:
+  //   key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
   }
   
-  CLR_1SHOT;        // see leader_cap()
+  CLR_1SHOT;           // see leader_cap()
   return true;
 }
 
