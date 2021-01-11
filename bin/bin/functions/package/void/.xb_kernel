@@ -2,7 +2,7 @@
 # see xb, .xb_actions
 
 # prune old kernel versions
-keep=10  # last kernels
+keep=9  # last kernels
 
 prune() {
   cpu atom && sudo vkpurge rm '5.*' # has 4.x and 5.x versions updates but runs 4.x only
