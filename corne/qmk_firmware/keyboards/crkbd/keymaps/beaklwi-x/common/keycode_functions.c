@@ -60,7 +60,7 @@ void tap_shift(uint16_t keycode)
   unregister_code(KC_LSFT);
 }
 
-#ifdef PINKIE1
+#ifdef INITIAL_STAGGER
 void send(RECORD, bool shift, uint16_t keycode)
 {
   if (KEY_DOWN) {
@@ -78,7 +78,6 @@ void toggle(RECORD, uint16_t modifier, uint16_t keycode)
   else          { unregister_code(modifier); if (KEY_TAP) { tap_key(keycode); } }
 }
 #endif
-
 
 // ................................................................... Key event
 

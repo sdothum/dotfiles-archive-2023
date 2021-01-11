@@ -127,13 +127,16 @@ enum keyboard_keycodes {
  ,HOME_R   // pseudo ALT_T(KC_R)
  ,HOME_S   // pseudo CTL_T(KC_S)
 #endif
- ,SWAPKEY  // toggle pinkie home row stagger
+ ,STAGGER  // cycle pinkie home row stagger 0 -> 1 -> 2
  ,HOME3    // <pinkie>
  ,HOME2    // pseudo GUI_T(<pinkie>)
- ,SHIFT3   // SFT(<pinkie>)
- ,SHIFT2   // SFT(<pinkie>)
+ ,HOME1    // <pinkie>
  ,KEY3     // <pinkie>
  ,KEY2     // <pinkie>
+ ,KEY1     // <pinkie>
+ ,SHIFT3   // SFT(<pinkie>)
+ ,SHIFT2   // SFT(<pinkie>)
+ ,SHIFT1   // SFT(<pinkie>)
 #ifdef HASKELL
  ,HS_GT    // pseudo SFT_T(S(KC_DOT))
  ,HS_LT    // pseudo CTL_T(S(KC_COMM))
@@ -161,7 +164,6 @@ enum keyboard_keycodes {
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
 #endif
-#define KEY1    PINKIE1
 
 #ifndef UPPER_HEX
 #define ACT_B   MT   (MOD_LALT | MOD_LCTL, KC_B)
@@ -235,12 +237,12 @@ enum keyboard_keycodes {
 #endif
 
 #ifdef TEST
-#define DEBUG   TG  (_TEST)
+#define FLASH   TG  (_TEST)
 #else
 #ifdef CORNE
-#define DEBUG   RESET
+#define FLASH   RESET
 #else
-#define DEBUG   KC_NO
+#define FLASH   KC_NO
 #endif
 #endif
 
@@ -287,14 +289,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "tapdance.c"
 
 static uint8_t  dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
-static bool     stagger   = 0;  // togglable pinkie home position (0) normal middle row (1) bottom row stagger
 #ifdef UNIX
 static uint16_t td_timer  = 0;  // pseudo tapdance timer
 
 #define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
 #endif
 #define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
-#define PINKEY(r) r == 2 ? (stagger ? PINKIE3 : PINKIE2) : (stagger ? PINKIE2 : PINKIE3)
+
+static uint16_t pinkies[][3] = { {KC_X, KC_V, KC_Z},    // ZVX beakl wi (row 3 -> 1)
+                                 {KC_V, KC_X, KC_Z},    // ZXV beakl wi-v
+                                 {KC_V, KC_Z, KC_X} };  // XZV beakl wi-x
+static uint8_t  stagger      = INITIAL_STAGGER <= 2 ? INITIAL_STAGGER : 0;  // pinkie on (0) home row (1,2) bottom row stagger variant
+
+#define PINKIE(r) pinkies[stagger][r - 1]
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -330,7 +337,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_S:
     mod_roll(record, KC_RCTL, KC_S, 8);      break;
   case HOME2:
-    mod_roll(record, KC_RGUI, PINKEY(2), 9); break;
+    mod_roll(record, KC_RGUI, PINKIE(2), 9); break;
 #else
   case HOME_A:
     LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
@@ -338,7 +345,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME_T:
     mod_bits(record, KC_RSFT);               break;
   case HOME2:
-    toggle(record, KC_RGUI, PINKEY(2));      break;
+    toggle(record, KC_RGUI, PINKIE(2));      break;
 #endif
 
   // ............................................................. Toggle Layers
@@ -531,8 +538,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_ROLL(7, KC_N);
   CASE_ROLL(8, KC_M);
   case HOME3:
-    mod_roll(record, 0, PINKEY(3), 9);
-    return false;
+    mod_roll(record, 0, PINKIE(3), 9); return false;
 
   CASE_ROLL(4, KC_W);  // middle row 2
   CASE_ROLL(5, KC_C);
@@ -545,7 +551,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   CASE_ROLL(6, KC_P);
   CASE_ROLL(7, KC_L);
   CASE_ROLL(8, KC_F);
-  CASE_ROLL(9, KEY1);
+  case HOME1:
+    mod_roll(record, 0, PINKIE(1), 9); return false;
 #endif
 
   // .................................................. Toggle Layer Pinkie Keys
@@ -554,13 +561,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME3:
 #endif
   case KEY3:
-    send(record, NOSHIFT, PINKEY(3)); break;
-  case SHIFT3:
-    send(record, SHIFT, PINKEY(3));   break;
-  case SHIFT2:
-    send(record, SHIFT, PINKEY(2));   break;
+    send(record, NOSHIFT, PINKIE(3)); break;
   case KEY2:
-    send(record, NOSHIFT, PINKEY(2)); break;
+    send(record, NOSHIFT, PINKIE(2)); break;
+#ifndef ROLLOVER
+  case HOME1:
+#endif
+  case KEY1:
+    send(record, NOSHIFT, PINKIE(1)); break;
+  case SHIFT3:
+    send(record, SHIFT, PINKIE(3));   break;
+  case SHIFT2:
+    send(record, SHIFT, PINKIE(2));   break;
+  case SHIFT1:
+    send(record, SHIFT, PINKIE(1));   break;
 
 #ifdef PLANCK
   // ................................................................ Steno Keys
@@ -578,8 +592,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ................................................................ Other Keys
 
-  case SWAPKEY:
-    if (KEY_DOWN) { stagger = !stagger; }  // see PINKEY()
+  case STAGGER:
+    if (KEY_DOWN) { stagger = stagger == 0 ? 1 : (stagger == 1 ? 2 : 0); }  // see PINKIE()
     break;
   // default:
   //   key_timer = 0;  // regular keycode, clear timer in keycode_functions.h

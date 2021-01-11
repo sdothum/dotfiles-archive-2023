@@ -51,10 +51,8 @@
 // upper case hex (idefault lower case abcdef)
 // #define UPPER_HEX
 
-// default pinkie colunm (togglable pinkie home position stagger)
-#define PINKIE3 KC_X
-#define PINKIE2 KC_Z
-#define PINKIE1 KC_V
+// pinkie stagger position (0) beakl wi home row (1) wi-v stagger (2) wi-x stagger
+#define INITIAL_STAGGER 2
 
 #define CORNE
 
