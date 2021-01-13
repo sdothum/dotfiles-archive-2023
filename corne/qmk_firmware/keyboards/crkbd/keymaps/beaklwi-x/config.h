@@ -48,11 +48,11 @@
 // double tap ",," (number layer) default: ";"
 // #define COMMASPACE
 
-// upper case hex (idefault lower case abcdef)
-// #define UPPER_HEX
+// initial hex case (0) lower case abcdef (1) upper case ABCDEF
+#define HEXCASE 0
 
-// pinkie stagger position (0) beakl wi home row (1) wi-v stagger (2) wi-x stagger
-#define INITIAL_STAGGER 2
+// initial pinkie stagger position (0) beakl wi home row (1) wi-v stagger (2) wi-x stagger
+#define PINKIE_STAGGER 2
 
 #define CORNE
 

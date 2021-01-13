@@ -141,13 +141,14 @@ enum keyboard_keycodes {
  ,HS_GT    // pseudo SFT_T(S(KC_DOT))
  ,HS_LT    // pseudo CTL_T(S(KC_COMM))
 #endif
- ,AST_G    // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
-#ifdef UPPER_HEX
+ ,CAPSHEX  // capslock hex
+ ,HEX_A
  ,ACT_B    // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_B))
- ,AT_E     // pseudo ALT_T(S(KC_E))
+ ,HEX_C
  ,CT_D     // pseudo CTL_T(S(KC_D))
+ ,AT_E     // pseudo ALT_T(S(KC_E))
  ,ST_F     // pseudo SFT_T(S(KC_F))
-#endif
+ ,AST_G    // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
  ,TT_ESC
  ,TT_A     // pseudo LT(_TTBASEL, S(KC_A))
  ,TT_I     // pseudo LT(_REGEX,   S(KC_I))
@@ -163,13 +164,6 @@ enum keyboard_keycodes {
 #define HOME_T  SFT_T(KC_T)
 #define HOME_R  ALT_T(KC_R)
 #define HOME_S  CTL_T(KC_S)
-#endif
-
-#ifndef UPPER_HEX
-#define ACT_B   MT   (MOD_LALT | MOD_LCTL, KC_B)
-#define AT_E    ALT_T(KC_E)
-#define CT_D    CTL_T(KC_D)
-#define ST_F    SFT_T(KC_F)
 #endif
 
 #include "tapdance.h"
@@ -292,14 +286,15 @@ static uint8_t  dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up
 #ifdef UNIX
 static uint16_t td_timer  = 0;  // pseudo tapdance timer
 
-#define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
+#define TAPDANCE  if (KEY_DOWN) { td_timer = KEY_TAPPED(td_timer) ? 0 : timer_read(); }
 #endif
-#define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
+#define LEADERCAP { leadercap = KEY_DOWN ? 1 : 0; }
 
 static uint16_t pinkies[][3] = { {KC_X, KC_V, KC_Z},    // ZVX beakl wi (row 3 -> 1)
                                  {KC_V, KC_X, KC_Z},    // ZXV beakl wi-v
                                  {KC_V, KC_Z, KC_X} };  // XZV beakl wi-x
-static uint8_t  stagger      = INITIAL_STAGGER <= 2 ? INITIAL_STAGGER : 0;  // pinkie on (0) home row (1,2) bottom row stagger variant
+static uint8_t  stagger      = PINKIE_STAGGER;          // pinkie on (0) home row (1,2) bottom row stagger variant
+static bool     hexcase      = HEXCASE;                 // hex case (0) lower case abcdef (1) upper case ABCDEF
 
 #define PINKIE(r) pinkies[stagger][r - 1]
 
@@ -373,26 +368,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     base_layer(0);
     return false;  // exit TT layer
   case LT_ESC:
-    if (tt_keycode)                                            { base_layer(0); return false; }
+    if (tt_keycode)                                          { base_layer(0); return false; }
     break;
 
   case LT_I:
 #ifdef LEFT_SPC_ENT
-    if (map_shifted(record, KC_LSFT, NOSHIFT, KC_SPC, _REGEX)) { return false; }  // non-autorepeating
+    if (map_shifted(record, KC_LSFT, LOWER, KC_SPC, _REGEX)) { return false; }  // non-autorepeating
 #endif
 #ifdef ROLLOVER
-    if (mod_roll(record, 0, KC_I, 4))                          { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
+    if (mod_roll(record, 0, KC_I, 4))                        { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #endif
     break;
   case TT_I:
-    lt(record, _REGEX, SHIFT, KC_I);
+    layer_toggle(record, _REGEX, UPPER, KC_I);
     break;
 
   case LT_TAB:
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT))           { return false; }
+    if (map_shift(record, KC_LSFT, LOWER, KC_ENT))           { return false; }
 #endif
-    if (map_shift(record, KC_RSFT, SHIFT, KC_TAB))             { return false; }
+    if (map_shift(record, KC_RSFT, UPPER, KC_TAB))           { return false; }
     break;
 
   // .......................................................... Right Thumb Keys
@@ -422,7 +417,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     break;
 #endif
   case TT_SPC:
-    lt(record, _SYMGUI, NOSHIFT, KC_SPC);
+    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);
     break;
   case KC_SPC:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
@@ -431,40 +426,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case LT_BSPC:
   case KC_BSPC:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL)) { return false; }
+    if (map_shift(record, KC_LSFT, LOWER, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, LOWER, KC_DEL)) { return false; }
     break;
 
-  // ............................................................. Modifier Keys
+  // ....................................................... Modifier / HEX Keys
 
-  case AST_G:
-    mt_shift(record, KC_LALT, KC_LSFT, KC_G); break;
-#ifdef UPPER_HEX
+  case HEX_A:
+    if (KEY_DOWN) { TAP_CASE(hexcase, KC_A); }
+    break;
   case ACT_B:
-    mt_shift(record, KC_LALT, KC_LCTL, KC_B); break;
-  case AT_E:
-    mt_shift(record, KC_LALT, 0, KC_E);       break;
+    mod_tap(record, KC_LALT, KC_LCTL, hexcase, KC_B); break;
+  case HEX_C:
+    if (KEY_DOWN) { TAP_CASE(hexcase, KC_C); }
+    break;
   case CT_D:
-    mt_shift(record, KC_LCTL, 0, KC_D);       break;
+    mod_tap(record, KC_LCTL, 0, hexcase, KC_D);       break;
+  case AT_E:
+    mod_tap(record, KC_LALT, 0, hexcase, KC_E);       break;
   case ST_F:
-    mt_shift(record, KC_LSFT, 0, KC_F);       break;
-#endif
+    mod_tap(record, KC_LSFT, 0, hexcase, KC_F);       break;
+  case AST_G:
+    mod_tap(record, KC_LALT, KC_LSFT, UPPER, KC_G);   break;
 #ifndef HASKELL
   case HS_GT:
-    mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
+    mod_tap(record, KC_LSFT, 0, UPPER, KC_DOT);       break;
   case HS_LT:
-    mt_shift(record, KC_LCTL, 0, KC_COMM);    break;
+    mod_tap(record, KC_LCTL, 0, UPPER, KC_COMM);      break;
 #endif
   case TT_A:
-    lt(record, _TTBASEL, SHIFT, KC_A);        break;
+    layer_toggle(record, _TTBASEL, UPPER, KC_A);      break;
   case TT_T:
-    lt(record, _TTBASER, SHIFT, KC_T);        break;
+    layer_toggle(record, _TTBASER, UPPER, KC_T);      break;
 
   // ......................................................... Shift Mapped Keys
 #ifdef ROLLOVER
   case KC_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
+    if (map_leader(record, KC_RSFT, LOWER, KC_COLN, 4)) { return false; }
     break;
 #ifdef HASKELL
   case TD_COLN:
@@ -476,21 +475,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
+    if (map_leader(record, KC_RSFT, LOWER, KC_GRV, 4))  { return false; }
     break;
 
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_leader(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_leader(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
 #else
-    if (map_leader(record, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
+    if (map_leader(record, KC_RSFT, UPPER, KC_GRV, 4))  { return false; }
 #endif
     break;
 #else
   case KC_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))     { return false; }
+    if (map_shift(record, KC_RSFT, LOWER, KC_COLN))     { return false; }
     break;
 #ifdef HASKELL
   case TD_COLN:
@@ -501,15 +500,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))      { return false; }
+    if (map_shift(record, KC_RSFT, LOWER, KC_GRV))      { return false; }
     break;
 
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
 #else
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))        { return false; }
+    if (map_shift(record, KC_RSFT, UPPER, KC_GRV))      { return false; }
 #endif
     break;
 #endif
@@ -520,13 +519,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case KC_QUES:
     LEADERCAP;  // exclamation/question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, 0, NOSHIFT, keycode, 4)) { return false; }
+    if (map_leader(record, 0, LOWER, keycode, 4)) { return false; }
 #endif
     break;
 
   // ................................................... Remaining Rollover Keys
 #ifdef ROLLOVER
-#define CASE_ROLL(c, k) case k: mod_roll(record, 0, k, c); return false
+#define CASE_ROLL(c, k) case k: { mod_roll(record, 0, k, c); return false; }
 
   CASE_ROLL(1, KC_Y);  // top row 3
   CASE_ROLL(2, KC_O);
@@ -561,20 +560,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case HOME3:
 #endif
   case KEY3:
-    send(record, NOSHIFT, PINKIE(3)); break;
+    send(record, LOWER, PINKIE(3)); break;
   case KEY2:
-    send(record, NOSHIFT, PINKIE(2)); break;
+    send(record, LOWER, PINKIE(2)); break;
 #ifndef ROLLOVER
   case HOME1:
 #endif
   case KEY1:
-    send(record, NOSHIFT, PINKIE(1)); break;
+    send(record, LOWER, PINKIE(1)); break;
   case SHIFT3:
-    send(record, SHIFT, PINKIE(3));   break;
+    send(record, UPPER, PINKIE(3)); break;
   case SHIFT2:
-    send(record, SHIFT, PINKIE(2));   break;
+    send(record, UPPER, PINKIE(2)); break;
   case SHIFT1:
-    send(record, SHIFT, PINKIE(1));   break;
+    send(record, UPPER, PINKIE(1)); break;
 
 #ifdef PLANCK
   // ................................................................ Steno Keys
@@ -592,8 +591,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ................................................................ Other Keys
 
+  case CAPSHEX:
+    if (KEY_DOWN) { hexcase = !hexcase; }
+    break;
   case STAGGER:
-    if (KEY_DOWN) { stagger = stagger == 0 ? 1 : (stagger == 1 ? 2 : 0); }  // see PINKIE()
+    if (KEY_DOWN) { stagger = (stagger == 0) ? 1 : ((stagger == 1) ? 2 : 0); }  // see PINKIE()
     break;
   // default:
   //   key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
