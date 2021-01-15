@@ -49,7 +49,7 @@
 // #define COMMASPACE
 
 // initial hex case (0) lower case abcdef (1) upper case ABCDEF
-#define HEXCASE 0
+#define HEXADECIMAL_CASE 0
 
 // initial pinkie stagger position (0) beakl wi home row (1) wi-v stagger (2) wi-x stagger
 #define PINKIE_STAGGER 2

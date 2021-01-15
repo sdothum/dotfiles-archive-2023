@@ -141,7 +141,10 @@ enum keyboard_keycodes {
  ,HS_GT    // pseudo SFT_T(S(KC_DOT))
  ,HS_LT    // pseudo CTL_T(S(KC_COMM))
 #endif
- ,CAPSHEX  // capslock hex
+ ,BRKTYPE  // cycle brkts [] -> () -> {}
+ ,L_BRKT
+ ,R_BRKT
+ ,HEXCASE  // capslock hex
  ,HEX_A
  ,ACT_B    // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_B))
  ,HEX_C
@@ -282,21 +285,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 #include "tapdance.c"
 
-static uint8_t  dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
+static uint8_t  dual_down    = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
+
+static uint16_t brkts[][3]   = { {LOWER, KC_LBRC, KC_RBRC},    // [] (side 1 -> 2)
+                                 {UPPER, KC_9,    KC_0},       // ()
+                                 {UPPER, KC_LCBR, KC_RCBR} };  // {}
+static uint8_t  brktype      = 0;                              // default (0) [], see case: BRKTYPE
+
+static bool     hexcase      = HEXADECIMAL_CASE;               // hex case (0) lower case abcdef (1) upper case ABCDEF, see case: HEXCASE
+
+static uint16_t pinkies[][3] = { {KC_X, KC_V, KC_Z},           // ZVX beakl wi (row 3 -> 1)
+                                 {KC_V, KC_X, KC_Z},           // ZXV beakl wi-v
+                                 {KC_V, KC_Z, KC_X} };         // XZV beakl wi-x
+static uint8_t  stagger      = PINKIE_STAGGER;                 // pinkie on (0) home row (1,2) bottom row stagger variant, see case: STAGGER
+
+#define PINKIE(r) pinkies[stagger][r - 1]
+
+// ............................................................... Keycode Cycle
 #ifdef UNIX
-static uint16_t td_timer  = 0;  // pseudo tapdance timer
+static uint16_t td_timer     = 0;  // pseudo tapdance timer
 
 #define TAPDANCE  if (KEY_DOWN) { td_timer = KEY_TAPPED(td_timer) ? 0 : timer_read(); }
 #endif
 #define LEADERCAP { leadercap = KEY_DOWN ? 1 : 0; }
-
-static uint16_t pinkies[][3] = { {KC_X, KC_V, KC_Z},    // ZVX beakl wi (row 3 -> 1)
-                                 {KC_V, KC_X, KC_Z},    // ZXV beakl wi-v
-                                 {KC_V, KC_Z, KC_X} };  // XZV beakl wi-x
-static uint8_t  stagger      = PINKIE_STAGGER;          // pinkie on (0) home row (1,2) bottom row stagger variant
-static bool     hexcase      = HEXCASE;                 // hex case (0) lower case abcdef (1) upper case ABCDEF
-
-#define PINKIE(r) pinkies[stagger][r - 1]
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -430,24 +441,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (map_shift(record, KC_RSFT, LOWER, KC_DEL)) { return false; }
     break;
 
-  // ....................................................... Modifier / HEX Keys
+  // .................................................................. HEX Keys
+
+#define HEX(k) if (KEY_DOWN) { TAP_CASE(hexcase, k); }
 
   case HEX_A:
-    if (KEY_DOWN) { TAP_CASE(hexcase, KC_A); }
-    break;
+    HEX(KC_A);                                        break;
   case ACT_B:
     mod_tap(record, KC_LALT, KC_LCTL, hexcase, KC_B); break;
   case HEX_C:
-    if (KEY_DOWN) { TAP_CASE(hexcase, KC_C); }
-    break;
+    HEX(KC_C);                                        break;
   case CT_D:
     mod_tap(record, KC_LCTL, 0, hexcase, KC_D);       break;
   case AT_E:
     mod_tap(record, KC_LALT, 0, hexcase, KC_E);       break;
   case ST_F:
     mod_tap(record, KC_LSFT, 0, hexcase, KC_F);       break;
+
+  // ....................................................... Numpad Bracket Keys
+
+#define BRACKET(s) if (KEY_DOWN) { TAP_CASE(brkts[brktype][0], brkts[brktype][s]); }
+
+  case L_BRKT:
+    BRACKET(LEFT);  break;
+  case R_BRKT:
+    BRACKET(RIGHT); break;
+
+  // ............................................................. Modifier Keys
+
   case AST_G:
-    mod_tap(record, KC_LALT, KC_LSFT, UPPER, KC_G);   break;
+    mod_tap(record, KC_LALT, KC_LSFT, UPPER, KC_G);   break;  // numpad vim goto
 #ifndef HASKELL
   case HS_GT:
     mod_tap(record, KC_LSFT, 0, UPPER, KC_DOT);       break;
@@ -591,11 +614,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   // ................................................................ Other Keys
 
-  case CAPSHEX:
+#define CYCLE(x) if (KEY_DOWN) { x = (x == 0) ? 1 : ((x == 1) ? 2 : 0); }
+
+  case BRKTYPE:
+    CYCLE(brktype);    // see BRACKET()
+    break;
+  case HEXCASE:
     if (KEY_DOWN) { hexcase = !hexcase; }
     break;
   case STAGGER:
-    if (KEY_DOWN) { stagger = (stagger == 0) ? 1 : ((stagger == 1) ? 2 : 0); }  // see PINKIE()
+    CYCLE(stagger);    // see PINKIE()
     break;
   // default:
   //   key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
