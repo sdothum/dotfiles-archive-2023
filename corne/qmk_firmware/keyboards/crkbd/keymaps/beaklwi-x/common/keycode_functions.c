@@ -13,19 +13,19 @@ static uint16_t tt_keycode = 0;  // current TT state (keycode)
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
 #define KEY_DOWN  (record->event.pressed)
 
-#define LEFT      1  // keyboard hand side
-#define RIGHT     2  // for (LEFT | RIGHT) bit test
+#define LEFT      1              // keyboard hand side
+#define RIGHT     2              // for (LEFT | RIGHT) bit test
 
-#define UPPER     1  // case
+#define UPPER     1              // case
 #define LOWER     0
 
-#define ONDOWN    0  // see raise_layer()
+#define ONDOWN    0              // see raise_layer()
 #define TOGGLE    1
 
 // ................................................................. Local Scope
 
-static uint8_t  i          = 0;  // inline for loop counter
-static uint16_t key_timer  = 0;  // global event timer
+static uint8_t  i         = 0;   // inline for loop counter
+static uint16_t key_timer = 0;   // global event timer
 
 #define KEY_TIMER     { key_timer = timer_read(); }
 #define KEY_TAPPED(t) (timer_elapsed(t) < TAPPING_TERM)
@@ -125,9 +125,10 @@ bool mod_down(uint16_t key_code)
 
 // ......................................................... Modifier Primitives
 
-#define TAP_CASE(s,k) if (s) { TAP_SHIFT(k); } \
-                      else   { TAP_KEY  (k); }
+#define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } \
+                       else   { TAP_KEY  (k); }
 
+#ifndef ROLLOVER
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
 void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode)
 {
@@ -142,6 +143,7 @@ void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t
     key_timer = 0;
   }
 }
+#endif
 
 // Key Sequence Handling
 // ═════════════════════════════════════════════════════════════════════════════
@@ -196,22 +198,22 @@ static uint8_t leaderlayer = 0;  // thumb key's toggle layer, see process_record
 static uint8_t next_key    = 0;  // by column reference
 static uint8_t prev_key    = 0;
 
-#define ONSHIFT(s, c) (e[c].shift && e[c].key_timer < e[column].key_timer && s == ((c == LSHIFT) ? RIGHT : LEFT))
-#define ROLL(s, k)    if (ONSHIFT(s, LSHIFT) || ONSHIFT(s, RSHIFT)) { TAP_SHIFT(k); } \
-                      else                                          { TAP_KEY(k); }
-#define SHIFT_KEY(c)  (c == LSHIFT || c == RSHIFT)
+#define ONSHIFT(c)   (e[c].shift && e[c].key_timer < e[column].key_timer && e[column].side == ((c == LSHIFT) ? RIGHT : LEFT))
+#define ROLL         if (shift || ONSHIFT(LSHIFT) || ONSHIFT(RSHIFT)) { TAP_SHIFT(keycode); } \
+                     else                                             { TAP_KEY(keycode); }
+#define SHIFT_KEY(c) (c == LSHIFT || c == RSHIFT)
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
-#define SHIFT_KEYS    (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
+#define SHIFT_KEYS   (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
 
-void roll_key(uint16_t keycode, uint8_t column)
+void roll_key(bool shift, uint16_t keycode, uint8_t column)
 {
-  if (e[column].key_timer < e[next_key].key_timer) {  // rolling sequence in progress
-    mod_all(unregister_code, 0);                      // disable modifier chord finger rolls
-    if (e[column].shift && e[column].side != e[next_key].side && SHIFT_KEYS) {           // shift only opposite side of rolling sequence
-      TAP_SHIFT(e[next_key].keycode);                 // shift opposite home row key
-      e[next_key].key_timer = 0;                      // don't echo this shift key
-    } else { ROLL(e[column].side, keycode); }         // tap (shifted?) key
-  } else   { ROLL(e[column].side, keycode); e[prev_key].key_timer = 0; e[column].leadercap = 0; }  // don't echo preceeding modifier key
+  if (e[column].key_timer < e[next_key].key_timer) {                            // rolling sequence in progress
+    mod_all(unregister_code, 0);                                                // disable modifier chord finger rolls
+    if (e[column].shift && e[column].side != e[next_key].side && SHIFT_KEYS) {  // shift only opposite side of rolling sequence
+      TAP_SHIFT(e[next_key].keycode);                                           // shift opposite home row key
+      e[next_key].key_timer = 0;                                                // don't echo this shift key
+    } else { ROLL; }                                                            // tap (shifted?) key
+  } else   { ROLL; e[prev_key].key_timer = 0; e[column].leadercap = 0; }        // don't echo preceeding modifier key
 }
 
 #define CLEAR_EVENT { e[column].key_timer   = 0; \
@@ -220,15 +222,17 @@ void roll_key(uint16_t keycode, uint8_t column)
                       leaderlayer           = 0; }
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
-bool mod_roll(RECORD, uint16_t modifier, uint16_t keycode, uint8_t column)
+bool mod_roll(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) {
     SET_EVENT(column);
-    if (modifier) { MODIFIER(modifier); }
+    if (modifier2) { MODIFIER(modifier2); }
+    if (modifier)  { MODIFIER(modifier); }
   } else {
-    if (modifier) { UNMODIFIER(modifier); }
+    if (modifier)  { UNMODIFIER(modifier); }
+    if (modifier2) { UNMODIFIER(modifier2); }
     if (KEY_TAPPED(e[column].key_timer)) {
-      roll_key(keycode, column);
+      roll_key(shift, keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
         oneshot_shift(leaderlayer);
         CLEAR_EVENT;
@@ -390,6 +394,7 @@ bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool toggle)
 
 // Steno
 // ═════════════════════════════════════════════════════════════════════════════
+
 #if STENO
 // .............................................................. Rolling Layers
 

@@ -27,7 +27,7 @@ bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8
 void mod_all(void (*f)(uint8_t), uint8_t mask);
 void mod_bits(RECORD, uint16_t keycode);
 bool mod_down(uint16_t keycode);
-bool mod_roll(RECORD, uint16_t modifier, uint16_t keycode, uint8_t col);
+bool mod_roll(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode, uint8_t col);
 void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode);
 void oneshot_shift(uint8_t layer);
 void paste(STATE, void *user_data);
@@ -37,7 +37,7 @@ void percent_reset(STATE, void *user_data);
 void private(STATE, void *user_data);
 void public(STATE, void *user_data);
 bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool toggle);
-void roll_key(uint16_t keycode, uint8_t column);
+void roll_key(bool shift, uint16_t keycode, uint8_t column);
 void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t layer, uint8_t facing);
 void send(RECORD, bool shift, uint16_t keycode);
 void set_leader(RECORD, uint16_t keycode, uint8_t column);

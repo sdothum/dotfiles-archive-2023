@@ -5,11 +5,11 @@
 
   [_BASE] = KEYMAP(
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
-      TGL_TL  , HS_COLN , KC_Y    , KC_O    , KC_U    , KC_MINS ,                      KC_G    , KC_D    , KC_N    , KC_M    , HOME3   , TGL_TR  ,
+      TGL_TL  , HS_COLN , KC_Y    , KC_O    , KC_U    , KC_MINS ,                      KC_G    , KC_D    , KC_N    , KC_M    , PINKY3  , TGL_TR  ,
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
-      TGL_HL  , HOME_Q  , HOME_H  , HOME_E  , HOME_A  , KC_W    ,                      KC_C    , HOME_T  , HOME_R  , HOME_S  , HOME2   , TGL_HR  ,
+      TGL_HL  , HOME_Q  , HOME_H  , HOME_E  , HOME_A  , KC_W    ,                      KC_C    , HOME_T  , HOME_R  , HOME_S  , PINKY2  , TGL_HR  ,
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
-      TGL_BL  , KC_J    , KC_COMM , KC_DOT  , KC_K    , KC_QUOT ,                      KC_B    , KC_P    , KC_L    , KC_F    , HOME1   , TGL_BR  ,
+      TGL_BL  , KC_J    , KC_COMM , KC_DOT  , KC_K    , KC_QUOT ,                      KC_B    , KC_P    , KC_L    , KC_F    , PINKY1  , TGL_BR  ,
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
                                               LT_ESC  , LT_I    , LT_TAB  ,  LT_ENT  , LT_SPC  , LT_BSPC 
   //                                         ---------+---------+---------  ---------+---------+--------- 

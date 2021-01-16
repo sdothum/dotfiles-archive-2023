@@ -48,6 +48,9 @@
 // double tap ",," (number layer) default: ";"
 // #define COMMASPACE
 
+// smart vim G'oto on hexpad
+#define SMART_DELIM
+
 // initial hex case (0) lower case abcdef (1) upper case ABCDEF
 #define HEXADECIMAL_CASE 0
 

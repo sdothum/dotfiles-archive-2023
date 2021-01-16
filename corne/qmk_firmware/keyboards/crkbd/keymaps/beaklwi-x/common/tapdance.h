@@ -21,6 +21,7 @@ enum tap_dance {
  ,_XPASTE
 };
 
+// tap dance macros
 #define TD_ASTR   TD(_ASTR)
 #define TD_COMM   TD(_COMM)
 #define TD_DOT    TD(_DOT)
