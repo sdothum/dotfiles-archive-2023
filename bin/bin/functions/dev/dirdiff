@@ -27,10 +27,12 @@ while [ "$1" ] ;do
   [ -d "$1" ] && { [ "$source" ] && target=$1 || source=$1; } || regex=$1
   shift
 done
+[ "$target" ] && [ "${target%${target#?*}}" != '/' ] && target=$PWD/$target  # target must be full pathname
+[ -d "$target/${source##*/}" ] && target="$target/${source##*/}"
 
 [ -d "$source" ] && cd "$source" >/dev/null || usage
 source=$(pwd)
-[ -d "$target" ] && [ "${target%%/*}" = '' ] || target=/net/depot/dotfiles/${source#$HOME/stow/}
+[ -d "$target" ] || target=/net/depot/dotfiles/${source#$HOME/stow/}         # no target -> depot
 [ -d "$target" ] || usage
 [ "$regex"  ] || regex='.*'
 
