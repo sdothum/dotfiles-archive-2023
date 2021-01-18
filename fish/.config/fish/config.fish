@@ -121,6 +121,15 @@ test -n $SESSION/browser
 test -z $BROWSER
   and set -x BROWSER qutebrowser
 
+# .................................................................. Directories
+
+set -x corne $HOME/stow/corne/qmk_firmware/keyboards/crkbd/keymaps
+set -x chimera $HOME/stow/chimera/qmk_firmware/keyboards/chimera_ergo_42/keymaps
+set -x planck $HOME/stow/planck/qmk_firmware/keyboards/planck/keymaps
+set -x splito $HOME/stow/splitography/qmk_firmware/keyboards/splitography/keymaps
+
+# ............................................................... Initialization
+
 console_login
 user_login
 # clear 'fish' tmux window name

@@ -120,6 +120,7 @@ abbr X x
 
 # ......................................................................... Edit
 
+abbr ddf 'dirdiff'
 abbr de 'dmenu - edit'
 abbr dp 'dmenu - projects'
 abbr dr 'dmenu - run'
