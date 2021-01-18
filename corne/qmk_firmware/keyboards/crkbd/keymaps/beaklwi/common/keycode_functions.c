@@ -1,7 +1,5 @@
 // sdothum - 2016 (c) wtfpl
 
-#define STENO !defined(CHIMERA) && !defined(CORNE)
-
 #include "config.h"  // for ale linter
 #include "keycode_functions.h"
 
@@ -69,7 +67,6 @@ void tt_escape(RECORD, uint16_t keycode)
   else                                     { if (KEY_TAP) { tt_keycode = keycode; } key_timer = 0; }
 }
 
-#ifdef SPLITOGRAPHY
 // tapped or not?
 bool key_press(RECORD)
 {
@@ -78,7 +75,6 @@ bool key_press(RECORD)
   else              { key_timer = 0; }
   return false;
 }
-#endif
 
 // Modifiers
 // ═════════════════════════════════════════════════════════════════════════════
@@ -348,7 +344,7 @@ void base_layer(uint8_t defer)
 #endif
   clear_layers();
   set_single_persistent_default_layer(_BASE);
-#if STENO
+#ifdef STENO_ENABLE
   toggle_plover(0);
 #endif
 }
@@ -396,7 +392,6 @@ bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert)
 // Steno
 // ═════════════════════════════════════════════════════════════════════════════
 
-#if STENO
 // .............................................................. Rolling Layers
 
 // rolling thumb combinations, see process_record_user()
@@ -431,6 +426,7 @@ void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t l
 
 // ...................................................................... Plover
 
+#ifdef STENO_ENABLE
 void steno(RECORD)
 {
   if (KEY_DOWN) {
