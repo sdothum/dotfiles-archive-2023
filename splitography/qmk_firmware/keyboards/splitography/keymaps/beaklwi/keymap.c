@@ -1,8 +1,10 @@
+// sdothum - 2016 (c) wtfpl
+
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 // this is the style you want to emulate.
 //
-// To flash splitography firmware
-// ═══════════════════════════════════════
+// To flash corne / chimera / planck firmware
+// ═════════════════════════
 //   Reset keyboard or press hw reset button on base
 //
 //   cd qmk_firmware/keyboards/<keyboard>
@@ -44,10 +46,42 @@
 //                === N O T E ===
 //
 // sudo CPATH=<keymap.c directory>/common make ...
- 
+
 // Hardware
 // ═════════════════════════════════════════════════════════════════════════════
 
+#ifdef CORNE
+#define KEYMAP LAYOUT
+#include QMK_KEYBOARD_H
+#ifdef RGBLIGHT_ENABLE
+//Following line allows macro to read current RGB settings
+extern rgblight_config_t rgblight_config;
+#endif
+extern uint8_t is_master;
+#endif
+
+#ifdef CHIMERA
+// #include "config.h"
+#include "chimera_ergo_42.h"
+// #include "action_layer.h"
+// #include "eeconfig.h"
+// extern keymap_config_t keymap_config;
+#endif
+
+#ifdef PLANCK
+#include "config.h"
+#include "planck.h"
+#include "action_layer.h"
+#ifdef STENO_ENABLE
+#include "keymap_steno.h"
+#endif
+#ifdef AUDIO_ENABLE
+#include "audio.h"
+#endif
+#include "eeconfig.h"
+#endif
+
+#ifdef SPLITOGRAPHY
 #include "config.h"
 #include "splitography.h"
 #include "action_layer.h"
@@ -58,11 +92,14 @@
 #include "audio.h"
 #endif
 #include "eeconfig.h"
+#endif
 
 // Keymaps
 // ═════════════════════════════════════════════════════════════════════════════
 
 extern keymap_config_t keymap_config;
+
+// ...................................................................... Layers
 
 enum keyboard_layers {
   _BASE = 0
@@ -81,118 +118,27 @@ enum keyboard_layers {
  ,_TTMOUSE
  ,_TTNUMBER
  ,_TTREGEX
+#ifdef STENO_ENABLE
  ,_PLOVER
+#endif
+#ifdef PLANCK
+ ,_ADJUST
+#endif
+#ifdef TEST
+ ,_TEST
+#endif
  ,_END_LAYERS
 };
 
-enum keyboard_keycodes {
-  BASE = SAFE_RANGE
- ,BASE1
- ,BASE2
- ,PLOVER
-#ifdef ROLLOVER
- ,HOME_Q  // pseudo GUI_T(KC_Q)
- ,HOME_H  // pseudo CTL_T(KC_H)
- ,HOME_E  // pseudo ALT_T(KC_E)
- ,HOME_A  // pseudo SFT_T(KC_A)
- ,HOME_T  // pseudo SFT_T(KC_T)
- ,HOME_R  // pseudo ALT_T(KC_R)
- ,HOME_S  // pseudo CTL_T(KC_S)
- ,HOME_V  // pseudo GUI_T(KC_V)
-#endif
-#ifdef HASKELL
- ,HS_GT   // pseudo SFT_T(S(KC_DOT))
- ,HS_LT   // pseudo CTL_T(S(KC_COMM))
-#endif
- ,AST_G   // pseudo MT   (MOD_LALT | MOD_LSFT, S(KC_G))
-#ifdef UPPER_HEX
- ,ACT_B   // pseudo MT   (MOD_LALT | MOD_LCTL, S(KC_B))
- ,AT_E    // pseudo ALT_T(S(KC_E))
- ,CT_D    // pseudo CTL_T(S(KC_D))
- ,ST_F    // pseudo SFT_T(S(KC_F))
-#endif
- ,LT_SPC  // pseudo LT(_SYMGUI, KC_SPC)
- ,ML_BSLS
- ,TT_A    // pseudo LT(_TTBASEL, S(KC_A))
- ,TT_I    // pseudo LT(_REGEX,   S(KC_I))
- ,TT_T    // pseudo LT(_TTBASER, S(KC_T))
- ,TT_SPC  // pseudo LT(_SYMGUI,  KC_SPC)
-};
+// .................................................................... Keycodes
 
-#ifndef ROLLOVER
-#define HOME_Q  GUI_T(KC_Q)
-#define HOME_H  CTL_T(KC_H)
-#define HOME_E  ALT_T(KC_E)
-#define HOME_A  SFT_T(KC_A)
-#define HOME_T  SFT_T(KC_T)
-#define HOME_R  ALT_T(KC_R)
-#define HOME_S  CTL_T(KC_S)
-#define HOME_V  GUI_T(KC_V)
-#endif
-#ifndef UPPER_HEX
-#define ACT_B   MT   (MOD_LALT | MOD_LCTL, KC_B)
-#define AT_E    ALT_T(KC_E)
-#define CT_D    CTL_T(KC_D)
-#define ST_F    SFT_T(KC_F)
-#endif
+#include "keycodes.h"
 
-#include "tapdance.h"
+// .............................................................. Tapdance Codes
 
-// keycodes
-#define __x__   KC_TRNS
-#define ___     KC_NO
+#include "tapcodes.h"
 
-#ifndef EQLEQL
-#define HS_EQL  TD_EQL
-#else
-#define HS_EQL  KC_EQL
-#endif
-#ifdef HASKELL
-#define HS_COLN TD_COLN
-#define HS_GT   TD_GT
-#define HS_LT   TD_LT
-#else
-#define HS_COLN KC_COLN
-#define HS_GT   KC_GT
-#define HS_LT   KC_LT
-#endif
-#ifdef UNIX
-#define HS_TILD TD_TILD
-#else
-#define HS_TILD KC_TILD
-#endif
-
-#define COPY    LCTL(KC_C)
-#define CUT     LCTL(KC_X)
-#define EOT     LCTL(KC_D)
-#define NAK     LCTL(KC_U)
-#define PASTE   TD_PASTE
-#define BKTAB   S   (KC_TAB)
-#define UNDO    LCTL(KC_Z)
-#define XCOPY   LCTL(LSFT(KC_C))
-#define XPASTE  TD_XPASTE
-
-#define LT_BSPC LT  (_EDIT, KC_BSPC)
-#ifdef ROLLOVER
-#define LT_I    MO  (_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
-#else
-#define LT_I    LT  (_REGEX, KC_I)
-#endif
-#define LT_ESC  LT  (_NUMBER, KC_ESC)
-#define OS_ALT  OSM (MOD_LALT)
-#define OS_CTL  OSM (MOD_LCTL)
-#define OS_GUI  OSM (MOD_LGUI)
-#define OS_SFT  OSM (MOD_LSFT)
-
-#define TGL_TL  TT  (_TTFNCKEY)
-#define TGL_HL  TT  (_TTCAPS)  // pseudo capslock to avoid TT key_timer conflicts
-#define TGL_BL  TT  (_TTMOUSE)
-#define TGL_TR  TT  (_TTREGEX)
-#define TGL_HR  TT  (_TTNUMBER)
-#define TGL_BR  TT  (_TTCURSOR)
-#define TT_ESC  MO  (_NUMBER)
-
-// Layers
+// Layouts
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ........................................................ Default Alpha Layout
@@ -200,7 +146,9 @@ enum keyboard_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "base_layout.h"
+#ifdef STENO_ENABLE
 #include "steno_layout.h"
+#endif
 
 // ...................................................... Number / Function Keys
 
@@ -220,9 +168,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+#ifdef PLANCK
 // ...................................................................... Sounds
 
 #include "sounds.h"
+#endif
 
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
@@ -230,216 +180,256 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "keycode_functions.c"
 #include "tapdance.c"
 
-static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see TGL_TL, TGL_TR
-#ifdef UNIX
-static uint16_t td_timer = 0;  // pseudo tapdance timer
+// ..................................................... Dynamic Pinkie Stagger!
 
-#define TAPDANCE  if (KEY_DOWN) { td_timer = timer_elapsed(td_timer) < TAPPING_TERM ? 0 : timer_read(); }
-#endif
-#define LEADERCAP leadercap = KEY_DOWN ? 1 : 0
+static uint16_t pinkies[][3] = { {KC_X, KC_V, KC_Z},    // ZVX beakl wi (row 3 -> 1)
+                                 {KC_V, KC_X, KC_Z},    // ZXV beakl wi-v
+                                 {KC_V, KC_Z, KC_X} };  // XZV beakl wi-x
+static uint8_t  stagger      = PINKIE_STAGGER;          // pinkie on (0) home row (1,2) bottom row stagger variant, see case STAGGER
+
+#define PINKIE(r) pinkies[stagger][r - 1]
+
+// ............................................................... Keycode Cycle
+
+#define LEADERCAP         { leadercap = KEY_DOWN ? 1 : 0; }
+#define MOD_ROLL(m, k, c) mod_roll(record, m, 0, 0, k, c)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
+#ifdef CORNE
+  if (record->event.pressed) {
+#ifdef SSD1306OLED
+    set_keylog(keycode, record);
+#endif
+    // set_timelog();
+  }
+#endif
+
   if (reshifted && !mod_down(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; }  // see map_shift()
 
-  // ........................................................ Home Row Modifiers
+// ...................................................... Smart Keypad Delimiter
+
+static uint16_t postfix    = KC_SPC;  // see case DELIM
+static bool     numerating = 0;       // see case LT_TAB
+static bool     smart      = 1;       // see case SMART
+
+#ifdef SMART_DELIM
+  if (numerating && smart) {
+    switch (keycode) {
+    case KC_0:  LEADERCAP;  // DELIM -> 0x
+    case KC_1:
+    case KC_2:
+    case KC_3:
+    case KC_4:
+    case KC_5:
+    case KC_6:
+    case KC_7:
+    case KC_8:
+    case KC_9:
+      postfix = KC_G;       // Vim ..G'oto
+      break;
+    case DELIM:
+      break;                // apply context rule
+    default:
+      postfix = KC_SPC;
+    }
+  } else { postfix = KC_SPC; }
+#endif
+
+// Home Row
+// ═════════════════════════════════════════════════════════════════════════════
+
+// .......................................................... Home Row Modifiers
+
+#define HOME_ROLL(m, k, c) { MOD_ROLL(m, k, c); break; }
 
   switch (keycode) {
 #ifdef ROLLOVER
-  case HOME_Q:
-    mod_roll(record, LEFT, NOSHIFT, KC_LGUI, KC_Q, 0);  break;
-  case HOME_H:
-    mod_roll(record, LEFT, NOSHIFT, KC_LCTL, KC_H, 1);  break;
-  case HOME_E:
-    mod_roll(record, LEFT, NOSHIFT, KC_LALT, KC_E, 2);  break;
+  case HOME_Q:  HOME_ROLL(KC_LGUI, KC_Q,      0);
+  case HOME_H:  HOME_ROLL(KC_LCTL, KC_H,      1);
+  case HOME_E:  HOME_ROLL(KC_LALT, KC_E,      2);
   case HOME_A:
-    LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
-    mod_roll(record, LEFT, SHIFT, KC_LSFT, KC_A, 3);    break;
+    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);
 
-  case HOME_T:
-    mod_roll(record, RIGHT, SHIFT, KC_RSFT, KC_T, 6);   break;
-  case HOME_R:
-    mod_roll(record, RIGHT, NOSHIFT, KC_RALT, KC_R, 7); break;
-  case HOME_S:
-    mod_roll(record, RIGHT, NOSHIFT, KC_RCTL, KC_S, 8); break;
-  case HOME_V:
-    mod_roll(record, RIGHT, NOSHIFT, KC_RGUI, KC_V, 9); break;
+  case HOME_T:  HOME_ROLL(KC_RSFT, KC_T,      6);
+  case HOME_R:  HOME_ROLL(KC_RALT, KC_R,      7);
+  case HOME_S:  HOME_ROLL(KC_RCTL, KC_S,      8);
+  case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
   case HOME_A:
     LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
-    mod_bits(record, KC_LSFT);                          break;
-  case HOME_T:
-    mod_bits(record, KC_RSFT);                          break;
+    mod_bits(record, KC_LSFT);                      break;
+  case HOME_T:  mod_bits(record, KC_RSFT);          break;
+  case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
 
-  // ............................................................. Toggle Layers
+// Thumb Keys
+// ═════════════════════════════════════════════════════════════════════════════
 
-  case TGL_TL:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { dual_down = 2; return false; }  // defer reset!
-    if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
-    tt_escape(record, keycode);
-    break;
-  case TGL_TR:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { dual_down = 2; return false; }  // defer reset!
-    if (dual_down)                             { dual_down--; base_layer(dual_down); return false; }
-    tt_escape(record, keycode);
-    break;
-  case TGL_HL:
-  case TGL_HR:
-  case TGL_BL:
-  case TGL_BR:
-    tt_escape(record, keycode);
-    break;
+#ifdef SPLITOGRAPHY
+#include "steno_thumbs_keymap.c"
+#else
 
-  // ........................................................... Left Thumb Keys
+// ............................................................. Left Thumb Keys
 
-  case TT_ESC:
-    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (key_press(record))                           { base_layer(0); return false; }  // exit TT layer
-    break;
-  case LT_ESC:
-    if (raise_layer(record, _FNCKEY, LEFT, ONDOWN))  { return false; }
-    if (map_shift(record, KC_LSFT, SHIFT, KC_TAB))   { return false; }
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_TAB)) { return false; }
-    if (tt_keycode)                                  { base_layer(0); return false; }
-    break;
+  case TT_ESC:  base_layer(0); return false;     // exit TT layer
+  case LT_ESC:  if (tt_keycode) { base_layer(0); return false; }; break;
 
   case LT_I:
-    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_SPC)) { return false; }
+    if (map_shifted(record, KC_LSFT, LOWER, KC_SPC, _REGEX)) { return false; }  // non-autorepeating
 #endif
 #ifdef ROLLOVER
-    if (mod_roll(record, LEFT, NOSHIFT, 0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
+    if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #endif
-    rolling_layer(record, LEFT, 0, 0, _REGEX, _SYMGUI);
     break;
-  case TT_I:
-    lt(record, _REGEX, SHIFT, KC_I);
-    break;
+  case TT_I:  layer_toggle(record, _REGEX, UPPER, KC_I); break;
 
-  case TD_EQL:
-    if (tt_keycode) { break; }  // no thumb mouse layer on toggle layer
+  case LT_TAB:
+    numerating = KEY_DOWN ? 1 : 0;
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_ENT)) { return false; }
+    if (map_shift(record, KC_LSFT, LOWER, KC_ENT)) { return false; }
 #endif
-    rolling_layer(record, LEFT, 0, 0, _MOUSE, _SYMGUI);
+    if (map_shift(record, KC_RSFT, UPPER, KC_TAB)) { return false; }
     break;
 
-  // .......................................................... Right Thumb Keys
+// ............................................................ Right Thumb Keys
 
-  case ML_BSLS:
-    rolling_layer(record, RIGHT, NOSHIFT, KC_BSLS, _MOUSE, _REGEX);
+#ifdef ROLLOVER
+  case LT_ENT:
+    leaderlayer = _EDIT;                            // see mod_roll()
+    if (MOD_ROLL(0, KC_ENT, 10)) { return false; }  // KC_ENT -> enter shift
+    break;
+  case KC_ENT:
+    if (MOD_ROLL(0, KC_ENT, 10)) { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))             { return false; }
-#endif
-    if (map_shifted(record, KC_LSFT, NOSHIFT, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))            { return false; }
-#ifdef ROLLOVER
-    leaderlayer = _SYMGUI;                                                         // see mod_roll()
-    if (mod_roll(record, RIGHT, NOSHIFT, 0, KC_SPC, 11))        { return false; }  // KC_SPC -> space shift
-#else
-    if (leader_cap (record, _SYMGUI, KC_SPC))                   { return false; }  // KC_SPC -> space shift
-#endif
-    rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
+    leaderlayer = _SYMGUI;                          // see mod_roll()
+    if (MOD_ROLL(0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
     break;
-  case TT_SPC:
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, TOGGLE))             { return false; }
+#else
+  case LT_ENT:
+    if (leader_cap(record, _EDIT, KC_ENT)) { return false; }  // KC_ENT -> enter shift
+    break;
+  case KC_ENT:
+    if (leader_cap(record, 0, KC_ENT)) { return false; }      // KC_ENT from LT_ENT -> enter enter* shift
+    break;
+
+  case LT_SPC:
+    if (leader_cap(record, _SYMGUI, KC_SPC)) { return false; }  // KC_SPC -> space shift
+    break;
 #endif
-    if (map_shifted(record, KC_LSFT, NOSHIFT, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_ENT))            { return false; }
-    lt(record, _SYMGUI, NOSHIFT, KC_SPC);                                          // because LT() issues <spc> before <enter> on map_shifted()
+  case TT_SPC:
+    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);
     break;
   case KC_SPC:
-    if (!KEY_DOWN)                                              { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_BSPC:
-    if (!KEY_DOWN)                                              { CLR_1SHOT; }     // see leader_cap()
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))            { return false; }
-#endif
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))            { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))            { return false; }
-    if (leader_cap (record, _EDIT, KC_ENT))                     { return false; }  // see KC_BSPC for multi-tap
-    break;
   case KC_BSPC:
-    if (!KEY_DOWN)                                              { CLR_1SHOT; }     // see leader_cap()
-#ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, RIGHT, TOGGLE))            { return false; }
-#endif
-    if (map_shift(record, KC_LSFT, NOSHIFT, KC_DEL))            { layer_off(_SYMGUI); return false; }  // rolling cursor to del
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_DEL))            { return false; }
-    if (leader_cap (record, 0, KC_ENT))                         { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
-#ifdef THUMB_CAPS
-    if (KEY_DOWN)                                               { key_timer = timer_read(); }
-    else if (timer_elapsed(key_timer) < TAPPING_TERM)           { tap_key(KC_BSPC); }
-    return false;  // capslock toggling trap, use shift bspc -> del for auto repeat
-#else
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
+    if (map_shift(record, KC_LSFT, LOWER, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
+    if (map_shift(record, KC_RSFT, LOWER, KC_DEL)) { return false; }
     break;
 #endif
 
-  // ............................................................. Modifier Keys
+// Key Pad
+// ═════════════════════════════════════════════════════════════════════════════
 
-  case AST_G:
-    mt_shift(record, KC_LALT, KC_LSFT, KC_G); break;
-#ifdef UPPER_HEX
-  case ACT_B:
-    mt_shift(record, KC_LALT, KC_LCTL, KC_B); break;
-  case AT_E:
-    mt_shift(record, KC_LALT, 0, KC_E);       break;
-  case CT_D:
-    mt_shift(record, KC_LCTL, 0, KC_D);       break;
-  case ST_F:
-    mt_shift(record, KC_LSFT, 0, KC_F);       break;
+// .................................................................... HEX Keys
+
+static bool hexcase = HEXADECIMAL_CASE;  // hex case (0) lower case abcdef (1) upper case ABCDEF, see case HEXCASE
+
+#ifdef ROLLOVER
+#define HEX(m, m2, k, c) { mod_roll(record, m, m2, hexcase, k, c); break; }
+
+  case HEX_A:  HEX(0,       0,       KC_A, 1);
+  case HEX_B:  HEX(KC_LALT, KC_LCTL, KC_B, 2);
+  case HEX_C:  HEX(0,       0,       KC_C, 3);
+  case HEX_D:  HEX(KC_LCTL, 0,       KC_D, 1);
+  case HEX_E:  HEX(KC_LALT, 0,       KC_E, 2);
+  case HEX_F:  HEX(KC_LSFT, 0,       KC_F, 3);
+#else
+#define HEX(m, m2, k) mod_tap(record, m, m2, hexcase, k)
+
+  case HEX_A:  HEX(0,       0,       KC_A);
+  case HEX_B:  HEX(KC_LALT, KC_LCTL, KC_B);
+  case HEX_C:  HEX(0,       0,       KC_C);
+  case HEX_D:  HEX(KC_LCTL, 0,       KC_D);
+  case HEX_E:  HEX(KC_LALT, 0,       KC_E);
+  case HEX_F:  HEX(KC_LSFT, 0,       KC_F);
 #endif
+
+// ......................................................... Numpad Bracket Keys
+
+static uint16_t brkts[][3] = { {LOWER, KC_LBRC, KC_RBRC},    // [] (side 1 -> 2)
+                               {UPPER, KC_9,    KC_0},       // ()
+                               {UPPER, KC_LCBR, KC_RCBR} };  // {}
+static uint8_t  brktype    = 0;                              // default (0) [], see case BRKTYPE
+
+#ifdef ROLLOVER
+#define BRACKET(m, m2, s, c) { mod_roll(record, m, m2, brkts[brktype][0], brkts[brktype][s], c); break; }
+
+  case L_BRKT:  BRACKET(0,       0,       LEFT,  1);
+  case R_BRKT:  BRACKET(KC_LALT, KC_LSFT, RIGHT, 2);
+#else
+#define BRACKET(m, m2, s) { mod_tap(record, m, m2, brkts[brktype][0], brkts[brktype][s]); break; }
+
+  case L_BRKT:  BRACKET(0,       0,       LEFT);
+  case R_BRKT:  BRACKET(KC_LALT, KC_LSFT, RIGHT);
+#endif
+
+// ............................................................. Smart Delimiter
+
+#define POSTCASE (postfix == KC_G ? UPPER : LOWER)
+
+#ifdef ROLLOVER
+  case DELIM:
+    if (leadercap) { mod_roll(record, 0, 0, LOWER,    KC_X,    3); }  // 0x
+    else           { mod_roll(record, 0, 0, POSTCASE, postfix, 3); }  // smart vim goto
+    break;
+#else
+  case DELIM:
+    if (leadercap) { mod_tap(record, 0, 0, LOWER,    KC_X); }         // 0x
+    else           { mod_tap(record, 0, 0, POSTCASE, postfix); }      // smart vim goto
+    break;
+#endif
+
+// Symbols
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ........................................................... Shift Mapped Keys
+
 #ifndef HASKELL
-  case HS_GT:
-    mt_shift(record, KC_LSFT, 0, KC_DOT);     break;
-  case HS_LT:
-    mt_shift(record, KC_LCTL, 0, KC_COMM);    break;
+  case HS_GT:  mod_tap(record, KC_LSFT, 0, UPPER, KC_DOT);  break;
+  case HS_LT:  mod_tap(record, KC_LCTL, 0, UPPER, KC_COMM); break;
 #endif
-  case TT_A:
-    lt(record, _TTBASEL, SHIFT, KC_A);        break;
-  case TT_T:
-    lt(record, _TTBASER, SHIFT, KC_T);        break;
 
-  // ......................................................... Shift Mapped Keys
+// ......................................................... Shift Mapped Leader
+
 #ifdef ROLLOVER
   case KC_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4)) { return false; }
+    if (map_leader(record, KC_RSFT, LOWER, KC_COLN, 4)) { return false; }
     break;
 #ifdef HASKELL
   case TD_COLN:
     if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    set_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_COLN, 4);
+    set_leader(record, KC_COLN, 4);
     break;
 #endif
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, LEFT, KC_RSFT, NOSHIFT, KC_GRV, 4))  { return false; }
-    break;
-
-  case KC_DOT:
-    LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
-#ifdef UNIX
-    TAPDANCE; if (map_leader(record, LEFT, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
-#else
-    if (map_leader(record, LEFT, KC_RSFT, SHIFT, KC_GRV, 4))    { return false; }
-#endif
+    if (map_leader(record, KC_RSFT, LOWER, KC_GRV, 4)) { return false; }
     break;
 #else
   case KC_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_COLN))           { return false; }
+    if (map_shift(record, KC_RSFT, LOWER, KC_COLN)) { return false; }
     break;
 #ifdef HASKELL
   case TD_COLN:
@@ -450,96 +440,160 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, NOSHIFT, KC_GRV))            { return false; }
+    if (map_shift(record, KC_RSFT, LOWER, KC_GRV)) { return false; }
     break;
+#endif
 
+// ...................................................... Shift Mapped Tap Dance
+
+#ifdef UNIX
+static uint16_t td_timer = 0;  // pseudo tapdance timer
+
+#define TAPDANCE if (KEY_DOWN) { td_timer = KEY_TAPPED(td_timer) ? 0 : timer_read(); }
+#endif
+#ifdef ROLLOVER
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? SHIFT : NOSHIFT, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_leader(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH, 4)) { return false; }  // pseudo tapdance ~ -> ~/
 #else
-    if (map_shift(record, KC_RSFT, SHIFT, KC_GRV))              { return false; }
+    if (map_leader(record, KC_RSFT, UPPER, KC_GRV, 4)) { return false; }
+#endif
+    break;
+#else
+  case KC_DOT:
+    LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
+#ifdef UNIX
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+#else
+    if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }
 #endif
     break;
 #endif
 
-  // ..................................................... Leader Capitalization
+// ....................................................... Leader Capitalization
 
   case KC_EXLM:
   case KC_QUES:
     LEADERCAP;  // exclamation/question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, LEFT, 0, NOSHIFT, keycode, 4)) { return false; }
+    if (map_leader(record, 0, LOWER, keycode, 4)) { return false; }
 #endif
     break;
 
-  // .............................................................. Top Row Keys
+// Alpha Keys
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ............................................................... Modifier Keys
+
+  case TT_A:  layer_toggle(record, _TTBASEL, UPPER, KC_A);  break;
+  case TT_T:  layer_toggle(record, _TTBASER, UPPER, KC_T);  break;
+
+// ..................................................... Remaining Rollover Keys
+
 #ifdef ROLLOVER
-#define CASE_ROLL(s, k, c) case k: \
-                           mod_roll(record, s, NOSHIFT, 0, k, c); \
-                           return false
+#define CASE_ROLL(k, c) case k: { MOD_ROLL(0, k, c); return false; }
 
-#define CASE_LKEY(c, k)    CASE_ROLL(LEFT, k, c)
-#define CASE_RKEY(c, k)    CASE_ROLL(RIGHT, k, c)
+  CASE_ROLL(KC_Y,    1);  // top row 3
+  CASE_ROLL(KC_O,    2);
+  CASE_ROLL(KC_U,    3);
+  CASE_ROLL(KC_MINS, 4);
 
-  CASE_LKEY(1, KC_Y);
-  CASE_LKEY(2, KC_O);
-  CASE_LKEY(3, KC_U);
-  CASE_LKEY(4, KC_MINS);
+  CASE_ROLL(KC_G,    5);
+  CASE_ROLL(KC_D,    6);
+  CASE_ROLL(KC_N,    7);
+  CASE_ROLL(KC_M,    8);
+  case PINKY3:
+    MOD_ROLL(0, PINKIE(3), 9); return false;
 
-  CASE_RKEY(5, KC_G);
-  CASE_RKEY(6, KC_D);
-  CASE_RKEY(7, KC_N);
-  CASE_RKEY(8, KC_M);
-  CASE_RKEY(9, KC_Z);
+  CASE_ROLL(KC_W,    4);  // middle row 2
+  CASE_ROLL(KC_C,    5);
 
-  // ........................................................... Middle Row Keys
+  CASE_ROLL(KC_J,    0);  // bottom row 1
+  CASE_ROLL(KC_K,    3);
+  CASE_ROLL(KC_QUOT, 4);
 
-  CASE_LKEY(4, KC_W);
-  CASE_RKEY(5, KC_C);
-
-  // ........................................................... Bottom Row Keys
-
-  CASE_LKEY(0, KC_J);
-  CASE_LKEY(3, KC_K);
-  CASE_LKEY(4, KC_QUOT);
-
-  CASE_RKEY(5, KC_B);
-  CASE_RKEY(6, KC_P);
-  CASE_RKEY(7, KC_L);
-  CASE_RKEY(8, KC_F);
-  CASE_RKEY(9, KC_X);
+  CASE_ROLL(KC_B,    5);
+  CASE_ROLL(KC_P,    6);
+  CASE_ROLL(KC_L,    7);
+  CASE_ROLL(KC_F,    8);
+  case PINKY1:
+    MOD_ROLL(0, PINKIE(1), 9); return false;
 #endif
 
-  // ................................................................ Steno Keys
+// Layers
+// ═════════════════════════════════════════════════════════════════════════════
 
-  case PLOVER:
-    steno(record);
-    return false;
-  case BASE1:
-    if (raise_layer(record, 0, LEFT, TOGGLE))  { base_layer(0); }
-    return false;
-  case BASE2:
-    if (raise_layer(record, 0, RIGHT, TOGGLE)) { base_layer(0); }
-    return false;
+// .................................................... Toggle Layer Pinkie Keys
 
-  // ................................................................ Other Keys
+#define TYPE_LOWER(r) { type(record, LOWER, PINKIE(r)); break; }
+#define TYPE_UPPER(r) { type(record, UPPER, PINKIE(r)); break; }
 
-  // default:
-  //   key_timer = 0;  // regular keycode, clear timer in keycode_functions.h
+#ifndef ROLLOVER
+  case PINKY3:
+#endif
+  case KEY3:    TYPE_LOWER(3);
+  case KEY2:    TYPE_LOWER(2);
+#ifndef ROLLOVER
+  case PINKY1:
+#endif
+  case KEY1:    TYPE_LOWER(1);
+  case SHIFT3:  TYPE_UPPER(3);
+  case SHIFT2:  TYPE_UPPER(2);
+  case SHIFT1:  TYPE_UPPER(1);
+
+// ............................................................... Toggle Layers
+
+static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see case TGL_TL, TGL_TR
+
+#define DEFAULTS { brktype = 0;                \
+                   hexcase = HEXADECIMAL_CASE; \
+                   postfix = KC_SPC;           \
+                   smart   = 1;                \
+                   stagger = PINKIE_STAGGER; }
+
+#define RESET(s) { if (raise_layer(record, 0, s, INVERT)) { dual_down = 2; return false; }                                \
+                   if (dual_down)                         { dual_down--; base_layer(dual_down); DEFAULTS; return false; } \
+                   tt_escape(record, keycode); break; }
+
+  case TGL_TL:  RESET(LEFT);
+  case TGL_TR:  RESET(RIGHT);
+  case TGL_HL:
+  case TGL_HR:
+  case TGL_BL:
+  case TGL_BR:  tt_escape(record, keycode); break;
+
+// .................................................................. Steno Keys
+
+#define BASE(s) { if (raise_layer(record, 0, s, INVERT)) { base_layer(0); }; return false; }
+
+#ifdef STENO_ENABLE
+  case PLOVER:  steno(record); return false;
+#endif
+#ifdef PLANCK
+  case BASE1:   BASE(LEFT);
+  case BASE2:   BASE(RIGHT);
+#endif
+
+// Special Keys
+// ═════════════════════════════════════════════════════════════════════════════
+
+// .................................................................. Other Keys
+
+#define CYCLE(x)  { if (KEY_DOWN) { x = (x == 0) ? 1 : ((x == 1) ? 2 : 0); }; break; }
+#define TOGGLE(v) { if (KEY_DOWN) { v = !v; }; break; }
+
+  case BRKTYPE:  CYCLE(brktype);  // see BRACKET()
+  case HEXCASE:  TOGGLE(hexcase);
+  case SMART:    TOGGLE(smart);
+  case STAGGER:  CYCLE(stagger);  // see PINKIE()
   }
   
-  CLR_1SHOT;           // see leader_cap()
+  CLR_1SHOT;                     // see leader_cap()
   return true;
 }
 
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════
 
-void matrix_init_user(void)
-{
-  clear_events();
-#ifdef STENO_ENABLE
-  steno_set_mode(STENO_MODE_BOLT);  // or STENO_MODE_GEMINI
-#endif
-}
+#include "initialize.c"
