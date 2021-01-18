@@ -1,10 +1,11 @@
+// sdothum - 2016 (c) wtfpl
+
 #define STENO !defined(CHIMERA) && !defined(CORNE)
 
 #include "config.h"  // for ale linter
 #include "keycode_functions.h"
 
 // ................................................................ Global Scope
-
 
 static bool     leadercap  = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
 static bool     reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
@@ -20,7 +21,7 @@ static uint16_t tt_keycode = 0;  // current TT state (keycode)
 #define LOWER     0
 
 #define ONDOWN    0              // see raise_layer()
-#define TOGGLE    1
+#define INVERT    1
 
 // ................................................................. Local Scope
 
@@ -40,7 +41,7 @@ static uint16_t key_timer = 0;   // global event timer
 #define TAP_SHIFT(k) { register_code(KC_LSFT); TAP_KEY(k); unregister_code(KC_LSFT); }
 
 #ifdef PINKIE_STAGGER
-void send(RECORD, bool shift, uint16_t keycode)
+void type(RECORD, bool shift, uint16_t keycode)
 {
   if (KEY_DOWN) {
     if (shift) { register_code(KC_LSFT); }
@@ -88,9 +89,7 @@ bool key_press(RECORD)
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-#define MODIFIER(k)   { register_code(k);   mods |= MOD_BIT(k); }
-#define UNMODIFIER(k) { unregister_code(k); mods &= ~(MOD_BIT(k)); }
-#define MOD_KEY(k)    if (mods & MOD_BIT(k)) { f(k); }
+#define MOD_KEY(k) if (mods & MOD_BIT(k)) { f(k); }
 
 // (un)register modifiers
 void mod_all(void (*f)(uint8_t), uint8_t mask)
@@ -125,6 +124,10 @@ bool mod_down(uint16_t key_code)
 
 // ......................................................... Modifier Primitives
 
+#define MODIFY(m)      if (m) { register_code(m);   mods |=   MOD_BIT(m); }
+#define UNMODIFY(m)    if (m) { unregister_code(m); mods &= ~(MOD_BIT(m)); }
+#define CHORD(m, m2)   { MODIFY(m);    MODIFY(m2); }
+#define UNCHORD(m, m2) { UNMODIFY(m2); UNMODIFY(m); }
 #define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } \
                        else   { TAP_KEY  (k); }
 
@@ -134,12 +137,10 @@ void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t
 {
   if (KEY_DOWN) {
     KEY_TIMER;
-    if (modifier2) { MODIFIER(modifier2); }
-    MODIFIER(modifier);
+    CHORD(modifier, modifier2);
   } else {
-    UNMODIFIER(modifier);
-    if (modifier2) { UNMODIFIER(modifier2); }
-    if (KEY_TAP)   { TAP_CASE(shift, keycode); }
+    UNCHORD(modifier, modifier2);
+    if (KEY_TAP) { TAP_CASE(shift, keycode); }
     key_timer = 0;
   }
 }
@@ -167,6 +168,7 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 }
 
 // ................................................................ Rolling Keys
+
 #ifdef ROLLOVER
 #define SET_EVENT(c) { e[c].key_timer = timer_read(); \
                        e[c].keycode   = keycode;      \
@@ -226,11 +228,9 @@ bool mod_roll(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_
 {
   if (KEY_DOWN) {
     SET_EVENT(column);
-    if (modifier2) { MODIFIER(modifier2); }
-    if (modifier)  { MODIFIER(modifier); }
+    CHORD(modifier, modifier2);
   } else {
-    if (modifier)  { UNMODIFIER(modifier); }
-    if (modifier2) { UNMODIFIER(modifier2); }
+    UNCHORD(modifier, modifier2);
     if (KEY_TAPPED(e[column].key_timer)) {
       roll_key(shift, keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
@@ -377,17 +377,18 @@ void oneshot_shift(uint8_t layer)
 static uint8_t double_key = 0;
 
 // dual key to raise layer (layer 0 to trap dual key state :-)
-bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool toggle)
+bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert)
 {
   if (KEY_DOWN) {
     double_key |= side;
     if (double_key == (LEFT | RIGHT)) { 
-      if (layer) { toggle ? layer_invert(layer) : layer_on(layer); }
+      if (layer) { invert ? layer_invert(layer) : layer_on(layer); }
+
       return true;
     }
   } else {
     double_key &= ~side;
-    if (!(double_key || toggle)) { layer_off(layer); }  // allow single key to continue on layer :-)
+    if (!(double_key || invert)) { layer_off(layer); }  // allow single key to continue on layer :-)
   }
   return false;
 }

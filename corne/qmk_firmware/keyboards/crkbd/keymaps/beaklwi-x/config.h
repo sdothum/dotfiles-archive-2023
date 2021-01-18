@@ -1,3 +1,5 @@
+// sdothum - 2016 (c) wtfpl
+
 #ifndef CONFIG_USER_H
 #define CONFIG_USER_H
 
@@ -48,7 +50,7 @@
 // double tap ",," (number layer) default: ";"
 // #define COMMASPACE
 
-// smart vim G'oto on hexpad
+// smart vim G'oto and 0x on hexpad
 #define SMART_DELIM
 
 // initial hex case (0) lower case abcdef (1) upper case ABCDEF

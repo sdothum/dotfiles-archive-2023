@@ -1,3 +1,5 @@
+// sdothum - 2016 (c) wtfpl
+
 #ifndef CONFIG_USER_H
 #define CONFIG_USER_H
 
@@ -48,13 +50,14 @@
 // double tap ",," (number layer) default: ";"
 // #define COMMASPACE
 
-// upper case hex (idefault lower case abcdef)
-// #define UPPER_HEX
+// smart vim G'oto and 0x on hexpad
+#define SMART_DELIM
 
-// default pinkie colunm (togglable pinkie home position stagger)
-#define PINKIE3 KC_Z
-#define PINKIE2 KC_X
-#define PINKIE1 KC_V
+// initial hex case (0) lower case abcdef (1) upper case ABCDEF
+#define HEXADECIMAL_CASE 0
+
+// initial pinkie stagger position (0) beakl wi home row (1) wi-v stagger (2) wi-x stagger
+#define PINKIE_STAGGER 1
 
 #define CORNE
 

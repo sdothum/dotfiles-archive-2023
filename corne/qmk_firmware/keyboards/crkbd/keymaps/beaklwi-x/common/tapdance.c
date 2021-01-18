@@ -1,5 +1,7 @@
+// sdothum - 2016 (c) wtfpl
+
 #include "config.h"  // for ale linter
-#include "keycode_functions.h"
+#include "tapdance.h"
 
 // Tap Dance
 // ═════════════════════════════════════════════════════════════════════════════

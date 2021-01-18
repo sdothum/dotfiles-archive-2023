@@ -1,5 +1,7 @@
+// sdothum - 2016 (c) wtfpl
+
 #include "config.h"  // for ale linter
-#include "keycode_functions.h"
+#include "tapdance.h"
 
 // Tap Dance
 // ═════════════════════════════════════════════════════════════════════════════
@@ -27,38 +29,45 @@ qk_tap_dance_action_t tap_dance_actions[] = {
  ,[_XPASTE] = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, xpaste, xpaste_reset)
 };
 
+// ............................................................ Tap Dance Macros
+
+#define TAPS               (state->count > 1)
+#define TAP_DOWN           (state->pressed)
+
+#define SHIFT(k)           { register_code(KC_LSFT); register_code(k); }
+#define UNSHIFT(k)         { unregister_code(k); unregister_code(KC_LSFT); }
+
+// taps -> string else ..
+#define DANCE_TAP(s, u, k) { if (TAPS)   { send_string  (s); } \
+                             else if (u) { SHIFT        (k); } \
+                             else        { register_code(k); } \
+                             reset_tap_dance(state); return; }
+
 // .......................................................... Double Tap Strings
-
-#define TAP      state->count
-#define TAPS     TAP > 1
-#define TAP_DOWN state->pressed
-
-#define ON_TAPS_OR_SHIFT(s, k) TAPS ? send_string (s) : register_shift(k); reset_tap_dance(state)
 
 void asterisk(STATE, void *user_data)
 {
-  ON_TAPS_OR_SHIFT(".*", KC_8);
+  DANCE_TAP(".*", UPPER, KC_8);
 }
 
 void asterisk_reset(STATE, void *user_data)
 {
-  unregister_shift(KC_8);
+  UNSHIFT(KC_8);
 }
 
 void colon(STATE, void *user_data)
 {
   if (mod_down(KC_RSFT)) {  // handle like map_shift()
 #ifdef EMOJI
-    TAPS ? send_string(" :-") : register_code(KC_SCLN);
+    DANCE_TAP(" :-", LOWER, KC_SCLN);
 #else
     register_code(KC_SCLN);
 #endif
   } else {
 #ifdef HASKELL
-    if (TAPS) { send_string   (" :: "); }
-    else      { register_shift(KC_SCLN); }
+    DANCE_TAP(" :: ", UPPER, KC_SCLN);
 #else
-    register_shift(KC_SCLN); 
+    SHIFT(KC_SCLN); 
 #endif
   }
   reset_tap_dance(state);
@@ -66,17 +75,15 @@ void colon(STATE, void *user_data)
 
 void colon_reset(STATE, void *user_data)
 {
-  unregister_code (KC_SCLN);
-  unregister_shift(KC_SCLN);
+  unregister_code(KC_SCLN);
+  UNSHIFT        (KC_SCLN);
   if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
 }
 
 #ifndef EQLEQL
 void equal(STATE, void *user_data)
 {
-  if (TAPS) { send_string  ("=~"); }
-  else      { register_code(KC_EQL); }
-  reset_tap_dance(state);
+  DANCE_TAP("=~", LOWER, KC_EQL);
 }
 
 void equal_reset(STATE, void *user_data)
@@ -88,34 +95,34 @@ void equal_reset(STATE, void *user_data)
 #ifdef HASKELL
 void greater(STATE, void *user_data)
 {
-  ON_TAPS_OR_SHIFT(" -> ", KC_DOT);
+  DANCE_TAP(" -> ", UPPER, KC_DOT);
 }
 
 void greater_reset(STATE, void *user_data)
 {
-  unregister_shift(KC_DOT);
+  UNSHIFT(KC_DOT);
 }
 
 void lesser(STATE, void *user_data)
 {
-  ON_TAPS_OR_SHIFT(" <- ", KC_COMM);
+  DANCE_TAP(" <- ", UPPER, KC_COMM);
 }
 
 void lesser_reset(STATE, void *user_data)
 {
-  unregister_shift(KC_COMM);
+  UNSHIFT(KC_COMM);
 }
 #endif
 
 #ifdef UNIX
 void tilde(STATE, void *user_data)
 {
-  ON_TAPS_OR_SHIFT("~/", KC_GRV);
+  DANCE_TAP("~/", UPPER, KC_GRV);
 }
 
 void tilde_reset(STATE, void *user_data)
 {
-  unregister_shift(KC_GRV);
+  UNSHIFT(KC_GRV);
   if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_TILD
 }
 #endif
@@ -125,12 +132,12 @@ void tilde_reset(STATE, void *user_data)
 void comma(STATE, void *user_data)
 {
 #ifdef COMMASPACE
-  if (TAPS) { send_string  (", "); }
+  DANCE_TAP(", ", LOWER, KC_COMM);
 #else
   if (TAPS) { register_code(KC_SCLN); }
-#endif
   else      { register_code(KC_COMM); }
   reset_tap_dance(state);
+#endif
 }
 
 void comma_reset(STATE, void *user_data)
@@ -141,25 +148,27 @@ void comma_reset(STATE, void *user_data)
 
 void dot(STATE, void *user_data)
 {
-  TAPS ? register_shift(KC_SCLN) : register_code (KC_DOT);
+  if (TAPS) { SHIFT        (KC_SCLN); }
+  else      { register_code(KC_DOT); }
   reset_tap_dance(state);
 }
 
 void dot_reset(STATE, void *user_data)
 {
-  unregister_code (KC_DOT);
-  unregister_shift(KC_SCLN);
+  unregister_code(KC_DOT);
+  UNSHIFT        (KC_SCLN);
 }
 
 // ............................................................... Paste Actions
 
-#define IRC_ENTER _delay_ms(10); tap_key(KC_ENT)
+#define IRC_ENTER { _delay_ms(10); TAP_KEY(KC_ENT); }
+#define CTL_V     { register_code(KC_LCTL); TAP_KEY(KC_V); unregister_code(KC_LCTL); }
 
 void paste(STATE, void *user_data)
 {
-  if (TAPS)          { mod_key      (KC_LCTL, KC_V); IRC_ENTER; }
+  if (TAPS)          { CTL_V; IRC_ENTER; }
   else if (TAP_DOWN) { register_code(KC_LCTL); register_code(KC_V); }
-  else               { mod_key      (KC_LCTL, KC_V); }
+  else               { CTL_V; }
   reset_tap_dance(state);
 }
 
@@ -182,20 +191,18 @@ void public(STATE, void *user_data)
   reset_tap_dance(state);
 }
 
-#define CTL_SFT_V register_code  (KC_LCTL); \
-                  tap_shift      (KC_V);    \
-                  unregister_code(KC_LCTL)
+#define CTL_SFT_V { register_code(KC_LCTL); TAP_SHIFT(KC_V); unregister_code(KC_LCTL); }
 
 void xpaste(STATE, void *user_data)
 {
   if (TAPS)          { CTL_SFT_V; IRC_ENTER; }
-  else if (TAP_DOWN) { register_code(KC_LCTL); register_shift(KC_V); }
+  else if (TAP_DOWN) { register_code(KC_LCTL); SHIFT(KC_V); }
   else               { CTL_SFT_V; }
   reset_tap_dance(state);
 }
 
 void xpaste_reset(STATE, void *user_data)
 {
-  unregister_shift(KC_V);
-  unregister_code (KC_LCTL);
+  UNSHIFT        (KC_V);
+  unregister_code(KC_LCTL);
 }

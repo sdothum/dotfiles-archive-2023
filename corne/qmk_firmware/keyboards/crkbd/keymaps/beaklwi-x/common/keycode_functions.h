@@ -1,53 +1,29 @@
-#define RECORD keyrecord_t *record
-#define STATE  qk_tap_dance_state_t *state
+// sdothum - 2016 (c) wtfpl
 
-void asterisk(STATE, void *user_data);
-void asterisk_reset(STATE, void *user_data);
-void base_layer(uint8_t defer);
-void clear_events(void);
-void clear_layers(void);
-void colon(STATE, void *user_data);
-void colon_reset(STATE, void *user_data);
-void comma(STATE, void *user_data);
-void comma_reset(STATE, void *user_data);
-void dot(STATE, void *user_data);
-void dot_reset(STATE, void *user_data);
-void equal(STATE, void *user_data);
-void equal_reset(STATE, void *user_data);
-void greater(STATE, void *user_data);
-void greater_reset(STATE, void *user_data);
+#define RECORD keyrecord_t *record
+
 bool key_press(RECORD);
 void layer_toggle(RECORD, uint8_t layer, bool shift, uint16_t keycode);
 bool leader_cap(RECORD, uint8_t layer, uint16_t keycode);
-void lesser(STATE, void *user_data);
-void lesser_reset(STATE, void *user_data);
 bool map_leader(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column);
 bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode);
 bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t layer);
-void mod_all(void (*f)(uint8_t), uint8_t mask);
 void mod_bits(RECORD, uint16_t keycode);
-bool mod_down(uint16_t keycode);
 bool mod_roll(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode, uint8_t col);
 void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode);
-void oneshot_shift(uint8_t layer);
-void paste(STATE, void *user_data);
-void paste_reset(STATE, void *user_data);
-void percent(STATE, void *user_data);
-void percent_reset(STATE, void *user_data);
-void private(STATE, void *user_data);
-void public(STATE, void *user_data);
-bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool toggle);
-void roll_key(bool shift, uint16_t keycode, uint8_t column);
+bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert);
 void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t layer, uint8_t facing);
-void send(RECORD, bool shift, uint16_t keycode);
 void set_leader(RECORD, uint16_t keycode, uint8_t column);
-void space(STATE, void *user_data);
-void space_reset(STATE, void *user_data);
 void steno(RECORD);
-void tilde(STATE, void *user_data);
-void tilde_reset(STATE, void *user_data);
 void toggle(RECORD, uint16_t modifier, uint16_t keycode);
-void toggle_plover(uint8_t state);
 void tt_escape(RECORD, uint16_t keycode);
-void xpaste(STATE, void *user_data);
-void xpaste_reset(STATE, void *user_data);
+void type(RECORD, bool shift, uint16_t keycode);
+
+void base_layer(uint8_t defer);
+void clear_events(void);
+void clear_layers(void);
+void mod_all(void (*f)(uint8_t), uint8_t mask);
+bool mod_down(uint16_t keycode);
+void oneshot_shift(uint8_t layer);
+void roll_key(bool shift, uint16_t keycode, uint8_t column);
+void toggle_plover(uint8_t state);

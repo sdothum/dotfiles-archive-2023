@@ -1,3 +1,4 @@
+// sdothum - 2016 (c) wtfpl
 
 // const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -5,11 +6,11 @@
 
   [_SYMGUI] = KEYMAP(
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
-       __x__  ,   ___   , KC_DOT  , KC_ASTR , KC_AMPR , KC_PLUS ,                      KC_G    , KC_D    , KC_N    , KC_M    , KEY3    ,  __x__  ,
+       __x__  ,   ___   , KC_DOT  , KC_ASTR , KC_AMPR , KC_PLUS ,                      KC_G    , KC_D    , KC_N    , KC_M    , PINKY3  ,  __x__  ,
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
-       __x__  ,   ___   , KC_QUES , KC_EXLM , KC_SLSH , KC_PIPE ,                      KC_C    , HOME_T  , HOME_R  , HOME_S  , HOME2   ,  __x__  ,
+       __x__  ,   ___   , KC_QUES , KC_EXLM , KC_SLSH , KC_PIPE ,                      KC_C    , HOME_T  , HOME_R  , HOME_S  , PINKY2  ,  __x__  ,
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
-       __x__  ,   ___   , HS_LT   , HS_GT   , KC_PERC , KC_AT   ,                      KC_B    , KC_P    , KC_L    , KC_F    , HOME1   ,  __x__  ,
+       __x__  ,   ___   , HS_LT   , HS_GT   , KC_PERC , KC_AT   ,                      KC_B    , KC_P    , KC_L    , KC_F    , PINKY1  ,  __x__  ,
   // ---------+---------+---------+---------+---------+---------                      ---------+---------+---------+---------+---------+--------- 
                                               KC_ESC  , HS_EQL  , KC_BSLS ,    ___   ,  __x__  ,   ___   
   //                                         ---------+---------+---------  ---------+---------+---------         Right hand mod_roll()

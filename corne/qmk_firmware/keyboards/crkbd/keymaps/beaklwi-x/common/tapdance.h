@@ -1,42 +1,30 @@
+// sdothum - 2016 (c) wtfpl
 
-// tap dance keys
-enum tap_dance {
-  _ASTR = 0
- ,_COMM
- ,_DOT
-#ifndef EQLEQL
- ,_EQL
-#endif
-#ifdef HASKELL
- ,_COLN
- ,_GT
- ,_LT
-#endif
-#ifdef UNIX
- ,_TILD
-#endif
- ,_PASTE
- ,_PRIV
- ,_PUB 
- ,_XPASTE
-};
+#define STATE qk_tap_dance_state_t *state
 
-// tap dance macros
-#define TD_ASTR   TD(_ASTR)
-#define TD_COMM   TD(_COMM)
-#define TD_DOT    TD(_DOT)
-#ifndef EQLEQL
-#define TD_EQL    TD(_EQL)
-#endif
-#ifdef HASKELL
-#define TD_COLN   TD(_COLN)
-#define TD_GT     TD(_GT)
-#define TD_LT     TD(_LT)
-#endif
-#ifdef UNIX
-#define TD_TILD   TD(_TILD)
-#endif
-#define TD_PASTE  TD(_PASTE)
-#define TD_PRIV   TD(_PRIV)  // compile time macro string, provided in private_string.h
-#define TD_PUB    TD(_PUB)   // config.h defined macro string
-#define TD_XPASTE TD(_XPASTE)
+void asterisk(STATE, void *user_data);
+void asterisk_reset(STATE, void *user_data);
+void colon(STATE, void *user_data);
+void colon_reset(STATE, void *user_data);
+void comma(STATE, void *user_data);
+void comma_reset(STATE, void *user_data);
+void dot(STATE, void *user_data);
+void dot_reset(STATE, void *user_data);
+void equal(STATE, void *user_data);
+void equal_reset(STATE, void *user_data);
+void greater(STATE, void *user_data);
+void greater_reset(STATE, void *user_data);
+void lesser(STATE, void *user_data);
+void lesser_reset(STATE, void *user_data);
+void paste(STATE, void *user_data);
+void paste_reset(STATE, void *user_data);
+void percent(STATE, void *user_data);
+void percent_reset(STATE, void *user_data);
+void private(STATE, void *user_data);
+void public(STATE, void *user_data);
+void space(STATE, void *user_data);
+void space_reset(STATE, void *user_data);
+void tilde(STATE, void *user_data);
+void tilde_reset(STATE, void *user_data);
+void xpaste(STATE, void *user_data);
+void xpaste_reset(STATE, void *user_data);
