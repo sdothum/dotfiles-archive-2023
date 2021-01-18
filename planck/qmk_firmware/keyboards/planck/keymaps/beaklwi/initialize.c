@@ -82,6 +82,16 @@ void matrix_init_user(void)
 #include "audio.h"
 #endif
 
+#ifdef SPLITOGRAPHY
+void matrix_init_user(void)
+{
+  clear_events();
+#ifdef STENO_ENABLE
+  steno_set_mode(STENO_MODE_BOLT);  // or STENO_MODE_GEMINI
+#endif
+}
+#endif
+
 #ifdef CHIMERA
 void matrix_init_user(void)
 {

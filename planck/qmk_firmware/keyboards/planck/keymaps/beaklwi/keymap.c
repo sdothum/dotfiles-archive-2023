@@ -81,6 +81,19 @@ extern uint8_t is_master;
 #include "eeconfig.h"
 #endif
 
+#ifdef SPLITOGRAPHY
+#include "config.h"
+#include "splitography.h"
+#include "action_layer.h"
+#ifdef STENO_ENABLE
+#include "keymap_steno.h"
+#endif
+#ifdef AUDIO_ENABLE
+#include "audio.h"
+#endif
+#include "eeconfig.h"
+#endif
+
 // Keymaps
 // ═════════════════════════════════════════════════════════════════════════════
 
@@ -105,8 +118,10 @@ enum keyboard_layers {
  ,_TTMOUSE
  ,_TTNUMBER
  ,_TTREGEX
-#ifdef PLANCK
+#ifdef STENO_ENABLE
  ,_PLOVER
+#endif
+#ifdef PLANCK
  ,_ADJUST
 #endif
 #ifdef TEST
@@ -123,7 +138,7 @@ enum keyboard_layers {
 
 #include "tapcodes.h"
 
-// Layers
+// Layouts
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ........................................................ Default Alpha Layout
@@ -131,7 +146,7 @@ enum keyboard_layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "base_layout.h"
-#ifdef PLANCK
+#ifdef STENO_ENABLE
 #include "steno_layout.h"
 #endif
 
@@ -192,7 +207,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
   if (reshifted && !mod_down(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; }  // see map_shift()
 
-  // .................................................... Smart Keypad Delimiter
+// ...................................................... Smart Keypad Delimiter
 
 static uint16_t postfix    = KC_SPC;  // see case DELIM
 static bool     numerating = 0;       // see case LT_TAB
@@ -221,7 +236,10 @@ static bool     smart      = 1;       // see case SMART
   } else { postfix = KC_SPC; }
 #endif
 
-  // ........................................................ Home Row Modifiers
+// Home Row
+// ═════════════════════════════════════════════════════════════════════════════
+
+// .......................................................... Home Row Modifiers
 
 #define HOME_ROLL(m, k, c) { MOD_ROLL(m, k, c); break; }
 
@@ -245,7 +263,14 @@ static bool     smart      = 1;       // see case SMART
   case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
 
-  // ........................................................... Left Thumb Keys
+// Thumb Keys
+// ═════════════════════════════════════════════════════════════════════════════
+
+#ifdef SPLITOGRAPHY
+#include "steno_thumbs_keymap.c"
+#else
+
+// ............................................................. Left Thumb Keys
 
   case TT_ESC:  base_layer(0); return false;     // exit TT layer
   case LT_ESC:  if (tt_keycode) { base_layer(0); return false; }; break;
@@ -268,7 +293,7 @@ static bool     smart      = 1;       // see case SMART
     if (map_shift(record, KC_RSFT, UPPER, KC_TAB)) { return false; }
     break;
 
-  // .......................................................... Right Thumb Keys
+// ............................................................ Right Thumb Keys
 
 #ifdef ROLLOVER
   case LT_ENT:
@@ -308,8 +333,12 @@ static bool     smart      = 1;       // see case SMART
     if (map_shift(record, KC_LSFT, LOWER, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, LOWER, KC_DEL)) { return false; }
     break;
+#endif
 
-  // .................................................................. HEX Keys
+// Key Pad
+// ═════════════════════════════════════════════════════════════════════════════
+
+// .................................................................... HEX Keys
 
 static bool hexcase = HEXADECIMAL_CASE;  // hex case (0) lower case abcdef (1) upper case ABCDEF, see case HEXCASE
 
@@ -333,7 +362,7 @@ static bool hexcase = HEXADECIMAL_CASE;  // hex case (0) lower case abcdef (1) u
   case HEX_F:  HEX(KC_LSFT, 0,       KC_F);
 #endif
 
-  // ....................................................... Numpad Bracket Keys
+// ......................................................... Numpad Bracket Keys
 
 static uint16_t brkts[][3] = { {LOWER, KC_LBRC, KC_RBRC},    // [] (side 1 -> 2)
                                {UPPER, KC_9,    KC_0},       // ()
@@ -352,7 +381,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
   case R_BRKT:  BRACKET(KC_LALT, KC_LSFT, RIGHT);
 #endif
 
-  // ................................................................. Smart Key
+// ............................................................. Smart Delimiter
 
 #define POSTCASE (postfix == KC_G ? UPPER : LOWER)
 
@@ -368,16 +397,17 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
     break;
 #endif
 
-  // ............................................................. Modifier Keys
+// Symbols
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ........................................................... Shift Mapped Keys
 
 #ifndef HASKELL
   case HS_GT:  mod_tap(record, KC_LSFT, 0, UPPER, KC_DOT);  break;
   case HS_LT:  mod_tap(record, KC_LCTL, 0, UPPER, KC_COMM); break;
 #endif
-  case TT_A:  layer_toggle(record, _TTBASEL, UPPER, KC_A);  break;
-  case TT_T:  layer_toggle(record, _TTBASER, UPPER, KC_T);  break;
 
-  // ......................................................... Shift Mapped Keys
+// ......................................................... Shift Mapped Leader
 
 #ifdef ROLLOVER
   case KC_COLN:
@@ -441,7 +471,7 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
     break;
 #endif
 
-  // ..................................................... Leader Capitalization
+// ....................................................... Leader Capitalization
 
   case KC_EXLM:
   case KC_QUES:
@@ -451,7 +481,15 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
 #endif
     break;
 
-  // ................................................... Remaining Rollover Keys
+// Alpha Keys
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ............................................................... Modifier Keys
+
+  case TT_A:  layer_toggle(record, _TTBASEL, UPPER, KC_A);  break;
+  case TT_T:  layer_toggle(record, _TTBASER, UPPER, KC_T);  break;
+
+// ..................................................... Remaining Rollover Keys
 
 #ifdef ROLLOVER
 #define CASE_ROLL(k, c) case k: { MOD_ROLL(0, k, c); return false; }
@@ -483,7 +521,10 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
     MOD_ROLL(0, PINKIE(1), 9); return false;
 #endif
 
-  // .................................................. Toggle Layer Pinkie Keys
+// Layers
+// ═════════════════════════════════════════════════════════════════════════════
+
+// .................................................... Toggle Layer Pinkie Keys
 
 #define TYPE_LOWER(r) { type(record, LOWER, PINKIE(r)); break; }
 #define TYPE_UPPER(r) { type(record, UPPER, PINKIE(r)); break; }
@@ -501,7 +542,7 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
   case SHIFT2:  TYPE_UPPER(2);
   case SHIFT1:  TYPE_UPPER(1);
 
-  // ............................................................. Toggle Layers
+// ............................................................... Toggle Layers
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see case TGL_TL, TGL_TR
 
@@ -522,17 +563,22 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
   case TGL_BL:
   case TGL_BR:  tt_escape(record, keycode); break;
 
-  // ................................................................ Steno Keys
+// .................................................................. Steno Keys
 
-#ifdef PLANCK
 #define BASE(s) { if (raise_layer(record, 0, s, INVERT)) { base_layer(0); }; return false; }
 
+#ifdef STENO_ENABLE
   case PLOVER:  steno(record); return false;
+#endif
+#ifdef PLANCK
   case BASE1:   BASE(LEFT);
   case BASE2:   BASE(RIGHT);
 #endif
 
-  // ................................................................ Other Keys
+// Special Keys
+// ═════════════════════════════════════════════════════════════════════════════
+
+// .................................................................. Other Keys
 
 #define CYCLE(x)  { if (KEY_DOWN) { x = (x == 0) ? 1 : ((x == 1) ? 2 : 0); }; break; }
 #define TOGGLE(v) { if (KEY_DOWN) { v = !v; }; break; }
@@ -547,6 +593,7 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
   return true;
 }
 
-// .............................................................. Initialization
+// Initialization
+// ═════════════════════════════════════════════════════════════════════════════
 
 #include "initialize.c"

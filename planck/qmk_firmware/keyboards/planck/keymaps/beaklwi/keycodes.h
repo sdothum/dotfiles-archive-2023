@@ -1,10 +1,14 @@
 // sdothum - 2016 (c) wtfpl
 
+#define STENO_LAYER defined(PLANCK) || defined(STENO_ENABLE)
+
 enum keyboard_keycodes {
   BASE = SAFE_RANGE
-#ifdef PLANCK
+#if STENO_LAYER
  ,BASE1
  ,BASE2
+#endif
+#ifdef STENO_ENABLE
  ,PLOVER
 #endif
 #ifdef ROLLOVER
@@ -42,7 +46,12 @@ enum keyboard_keycodes {
  ,R_BRKT   // pseudo MT(MOD_LALT | MOD_LSFT, R_BRKT)
  ,SMART
  ,DELIM
+#ifdef SPLITOGRAPHY
+ ,LT_SPC
+ ,ML_BSLS
+#else
  ,TT_ESC
+#endif
  ,TT_A     // pseudo LT(_TTBASEL, S(KC_A))
  ,TT_I     // pseudo LT(_REGEX,   S(KC_I))
  ,TT_T     // pseudo LT(_TTBASER, S(KC_T))
@@ -62,6 +71,9 @@ enum keyboard_keycodes {
 // pass through keycodes
 #define __x__   KC_TRNS
 #define ___     KC_NO
+#ifndef STENO_ENABLE
+#define PLOVER  KC_NO
+#endif
 
 // tap dance macros
 #ifndef EQLEQL
@@ -95,17 +107,28 @@ enum keyboard_keycodes {
 #define XPASTE  TD_XPASTE
 
 // thumb keys
+#ifdef SPLITOGRAPHY
+#define LT_BSPC LT(_EDIT, KC_BSPC)
+#define LT_ESC  LT(_NUMBER, KC_ESC)
+#define TT_ESC  MO(_NUMBER)
+#ifdef ROLLOVER
+#define LT_I    MO(_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
+#else
+#define LT_I    LT(_REGEX, KC_I)
+#endif
+#else
 #define BKTAB   S (KC_TAB)
 #define LT_BSPC LT(_MOUSE, KC_BSPC)
 #define LT_ESC  LT(_FNCKEY, KC_ESC)
 #ifdef ROLLOVER
-#define LT_ENT  MO(_EDIT)    // plus mod_roll() -> LT(_EDIT, KC_ENT)
 #define LT_I    MO(_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
+#define LT_ENT  MO(_EDIT)    // plus mod_roll() -> LT(_EDIT, KC_ENT)
 #define LT_SPC  MO(_SYMGUI)  // plus mod_roll() -> LT(_SYMGUI, KC_SPC)
 #else
-#define LT_ENT  LT(_EDIT, KC_ENT)
 #define LT_I    LT(_REGEX, KC_I)
+#define LT_ENT  LT(_EDIT, KC_ENT)
 #define LT_SPC  LT(_SYMGUI, KC_SPC)
+#endif
 #endif
 #define LT_TAB  LT(_NUMBER, KC_TAB)
 
