@@ -120,6 +120,7 @@ enum keyboard_keycodes {
 #define BKTAB   S (KC_TAB)
 #define LT_BSPC LT(_MOUSE, KC_BSPC)
 #define LT_ESC  LT(_FNCKEY, KC_ESC)
+#define LT_TAB  LT(_NUMBER, KC_TAB)
 #ifdef ROLLOVER
 #define LT_I    MO(_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
 #define LT_ENT  MO(_EDIT)    // plus mod_roll() -> LT(_EDIT, KC_ENT)
@@ -130,7 +131,6 @@ enum keyboard_keycodes {
 #define LT_SPC  LT(_SYMGUI, KC_SPC)
 #endif
 #endif
-#define LT_TAB  LT(_NUMBER, KC_TAB)
 
 // fnkey layer macros
 #define OS_ALT  OSM(MOD_LALT)
