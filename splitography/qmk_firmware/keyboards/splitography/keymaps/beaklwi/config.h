@@ -49,9 +49,6 @@
 #define TAPPING_TERM 200
 #endif
 
-// left handed space/enter
-#define LEFT_SPC_ENT
-
 // double tap "==" (regex layer) default: "=~"
 // #define EQLEQL
 

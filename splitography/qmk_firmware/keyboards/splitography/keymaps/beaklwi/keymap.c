@@ -569,8 +569,6 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 #ifdef STENO_ENABLE
   case PLOVER:  steno(record); return false;
-#endif
-#ifdef PLANCK
   case BASE1:   BASE(LEFT);
   case BASE2:   BASE(RIGHT);
 #endif
@@ -580,8 +578,8 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 // .................................................................. Other Keys
 
-#define CYCLE(x)  { if (KEY_DOWN) { x = (x == 0) ? 1 : ((x == 1) ? 2 : 0); }; break; }
-#define TOGGLE(v) { if (KEY_DOWN) { v = !v; }; break; }
+#define CYCLE(n)  { if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; break; }
+#define TOGGLE(b) { if (KEY_DOWN) { b = !b; }; break; }
 
   case BRKTYPE:  CYCLE(brktype);  // see BRACKET()
   case HEXCASE:  TOGGLE(hexcase);
