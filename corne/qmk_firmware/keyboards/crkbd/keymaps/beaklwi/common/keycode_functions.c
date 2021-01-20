@@ -10,7 +10,7 @@ static bool     reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_
 static uint16_t tt_keycode = 0;  // current TT state (keycode)
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
-#define KEY_DOWN  (record->event.pressed)
+#define KEY_DOWN  record->event.pressed
 
 #define LEFT      1              // keyboard hand side
 #define RIGHT     2              // for (LEFT | RIGHT) bit test
@@ -28,7 +28,7 @@ static uint16_t key_timer = 0;   // global event timer
 
 #define KEY_TIMER     { key_timer = timer_read(); }
 #define KEY_TAPPED(t) (timer_elapsed(t) < TAPPING_TERM)
-#define KEY_TAP       (KEY_TAPPED(key_timer))
+#define KEY_TAP       KEY_TAPPED(key_timer)
 
 // Keycodes
 // ═════════════════════════════════════════════════════════════════════════════
@@ -109,12 +109,12 @@ void mod_bits(RECORD, uint16_t keycode)
 }
 
 // base layer modifier
-bool mod_down(uint16_t key_code)
+bool mod_down(uint16_t keycode)
 {
 #ifdef SPLITOGRAPHY
-  return mods & MOD_BIT(key_code);   // regardless of other home row modifiers
+  return mods & MOD_BIT(keycode);   // regardless of other home row modifiers
 #else
-  return mods == MOD_BIT(key_code);  // on home row modifier only
+  return mods == MOD_BIT(keycode);  // on home row modifier only
 #endif
 }
 
