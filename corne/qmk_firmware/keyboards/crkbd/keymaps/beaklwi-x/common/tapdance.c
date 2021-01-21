@@ -33,15 +33,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #define TAPS               (state->count > 1)
 #define TAP_DOWN           (state->pressed)
-
-#define SHIFT(k)           { register_code(KC_LSFT); register_code(k); }
-#define UNSHIFT(k)         { unregister_code(k); unregister_code(KC_LSFT); }
+#define SHIFT(k)           register_code(KC_LSFT); register_code(k)
+#define UNSHIFT(k)         unregister_code(k);     unregister_code(KC_LSFT)
 
 // taps -> string else ..
-#define DANCE_TAP(s, u, k) { if (TAPS)   { send_string  (s); } \
-                             else if (u) { SHIFT        (k); } \
-                             else        { register_code(k); } \
-                             reset_tap_dance(state); return; }
+#define DANCE_TAP(s, u, k) if (TAPS)   { send_string  (s); } \
+                           else if (u) { SHIFT        (k); } \
+                           else        { register_code(k); } \
+                           reset_tap_dance(state); return
 
 // .......................................................... Double Tap Strings
 
@@ -161,8 +160,8 @@ void dot_reset(STATE, void *user_data)
 
 // ............................................................... Paste Actions
 
-#define IRC_ENTER { _delay_ms(10); TAP_KEY(KC_ENT); }
-#define CTL_V     { register_code(KC_LCTL); TAP_KEY(KC_V); unregister_code(KC_LCTL); }
+#define IRC_ENTER _delay_ms(10); TAP(KC_ENT)
+#define CTL_V     register_code(KC_LCTL); TAP(KC_V); unregister_code(KC_LCTL)
 
 void paste(STATE, void *user_data)
 {
@@ -191,7 +190,7 @@ void public(STATE, void *user_data)
   reset_tap_dance(state);
 }
 
-#define CTL_SFT_V { register_code(KC_LCTL); TAP_SHIFT(KC_V); unregister_code(KC_LCTL); }
+#define CTL_SFT_V register_code(KC_LCTL); TAP_SHIFT(KC_V); unregister_code(KC_LCTL)
 
 void xpaste(STATE, void *user_data)
 {

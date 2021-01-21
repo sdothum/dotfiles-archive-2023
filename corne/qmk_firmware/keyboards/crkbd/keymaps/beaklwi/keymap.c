@@ -191,7 +191,7 @@ static uint8_t  stagger      = PINKIE_STAGGER;          // pinkie on (0) home ro
 
 // ............................................................... Keycode Cycle
 
-#define LEADERCAP         { leadercap = KEY_DOWN ? 1 : 0; }
+#define LEADERCAP         leadercap = KEY_DOWN ? 1 : 0
 #define MOD_ROLL(m, k, c) mod_roll(record, m, 0, 0, k, c)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
@@ -241,7 +241,7 @@ static bool     smart      = 1;       // see case SMART
 
 // .......................................................... Home Row Modifiers
 
-#define HOME_ROLL(m, k, c) { MOD_ROLL(m, k, c); break; }
+#define HOME_ROLL(m, k, c) MOD_ROLL(m, k, c); break
 
   switch (keycode) {
 #ifdef ROLLOVER
@@ -343,7 +343,7 @@ static bool     smart      = 1;       // see case SMART
 static bool hexcase = HEXADECIMAL_CASE;  // hex case (0) lower case abcdef (1) upper case ABCDEF, see case HEXCASE
 
 #ifdef ROLLOVER
-#define HEX(m, m2, k, c) { mod_roll(record, m, m2, hexcase, k, c); break; }
+#define HEX(m, m2, k, c) mod_roll(record, m, m2, hexcase, k, c); break
 
   case HEX_A:  HEX(0,       0,       KC_A, 1);
   case HEX_B:  HEX(KC_LALT, KC_LCTL, KC_B, 2);
@@ -370,12 +370,12 @@ static uint16_t brkts[][3] = { {LOWER, KC_LBRC, KC_RBRC},    // [] (side 1 -> 2)
 static uint8_t  brktype    = 0;                              // default (0) [], see case BRKTYPE
 
 #ifdef ROLLOVER
-#define BRACKET(m, m2, s, c) { mod_roll(record, m, m2, brkts[brktype][0], brkts[brktype][s], c); break; }
+#define BRACKET(m, m2, s, c) mod_roll(record, m, m2, brkts[brktype][0], brkts[brktype][s], c); break
 
   case L_BRKT:  BRACKET(0,       0,       LEFT,  1);
   case R_BRKT:  BRACKET(KC_LALT, KC_LSFT, RIGHT, 2);
 #else
-#define BRACKET(m, m2, s) { mod_tap(record, m, m2, brkts[brktype][0], brkts[brktype][s]); break; }
+#define BRACKET(m, m2, s) mod_tap(record, m, m2, brkts[brktype][0], brkts[brktype][s]); break
 
   case L_BRKT:  BRACKET(0,       0,       LEFT);
   case R_BRKT:  BRACKET(KC_LALT, KC_LSFT, RIGHT);
@@ -383,7 +383,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 // ............................................................. Smart Delimiter
 
-#define POSTCASE (postfix == KC_G ? UPPER : LOWER)
+#define POSTCASE postfix == KC_G ? UPPER : LOWER
 
 #ifdef ROLLOVER
   case DELIM:
@@ -492,7 +492,7 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
 // ..................................................... Remaining Rollover Keys
 
 #ifdef ROLLOVER
-#define CASE_ROLL(k, c) case k: { MOD_ROLL(0, k, c); return false; }
+#define CASE_ROLL(k, c) case k: MOD_ROLL(0, k, c); return false
 
   CASE_ROLL(KC_Y,    1);  // top row 3
   CASE_ROLL(KC_O,    2);
@@ -526,8 +526,8 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
 
 // .................................................... Toggle Layer Pinkie Keys
 
-#define TYPE_LOWER(r) { type(record, LOWER, PINKIE(r)); break; }
-#define TYPE_UPPER(r) { type(record, UPPER, PINKIE(r)); break; }
+#define TYPE_LOWER(r) type(record, LOWER, PINKIE(r)); break
+#define TYPE_UPPER(r) type(record, UPPER, PINKIE(r)); break
 
 #ifndef ROLLOVER
   case PINKY3:
@@ -546,15 +546,15 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
 
 static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up stroke, see case TGL_TL, TGL_TR
 
-#define DEFAULTS { brktype = 0;                \
-                   hexcase = HEXADECIMAL_CASE; \
-                   postfix = KC_SPC;           \
-                   smart   = 1;                \
-                   stagger = PINKIE_STAGGER; }
+#define DEFAULTS brktype = 0;                \
+                 hexcase = HEXADECIMAL_CASE; \
+                 postfix = KC_SPC;           \
+                 smart   = 1;                \
+                 stagger = PINKIE_STAGGER
 
-#define RESET(s) { if (raise_layer(record, 0, s, INVERT)) { dual_down = 2; return false; }                                \
-                   if (dual_down)                         { dual_down--; base_layer(dual_down); DEFAULTS; return false; } \
-                   tt_escape(record, keycode); break; }
+#define RESET(s) if (raise_layer(record, 0, s, INVERT)) { dual_down = 2; return false; }                                \
+                 if (dual_down)                         { dual_down--; base_layer(dual_down); DEFAULTS; return false; } \
+                 tt_escape(record, keycode); break
 
   case TGL_TL:  RESET(LEFT);
   case TGL_TR:  RESET(RIGHT);
@@ -565,7 +565,7 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 // .................................................................. Steno Keys
 
-#define BASE(s) { if (raise_layer(record, 0, s, INVERT)) { base_layer(0); }; return false; }
+#define BASE(s) if (raise_layer(record, 0, s, INVERT)) { base_layer(0); }; return false
 
 #ifdef STENO_ENABLE
   case PLOVER:  steno(record); return false;
@@ -578,8 +578,8 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 // .................................................................. Other Keys
 
-#define CYCLE(n)  { if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; break; }
-#define TOGGLE(b) { if (KEY_DOWN) { b = !b; }; break; }
+#define CYCLE(n)  if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; break
+#define TOGGLE(b) if (KEY_DOWN) { b = !b; }; break
 
   case BRKTYPE:  CYCLE(brktype);  // see BRACKET()
   case HEXCASE:  TOGGLE(hexcase);
