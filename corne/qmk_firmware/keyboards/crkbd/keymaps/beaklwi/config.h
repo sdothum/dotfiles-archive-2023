@@ -57,7 +57,7 @@
 #define HEXADECIMAL_CASE 0
 
 // initial pinkie stagger position (0) beakl wi home row (1) wi-v stagger (2) wi-x stagger
-#define PINKIE_STAGGER 0
+#define PINKIE_STAGGER 2
 
 #define CORNE
 

@@ -125,8 +125,7 @@ bool mod_down(uint16_t keycode)
 #define UNMOD(m)       if (m) { unregister_code(m); mods &= ~(MOD_BIT(m)); }
 #define CHORD(m, m2)   MOD(m);    MOD(m2)
 #define UNCHORD(m, m2) UNMOD(m2); UNMOD(m)
-#define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } \
-                       else   { TAP      (k); }
+#define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } else { TAP(k); }
 
 #ifndef ROLLOVER
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
@@ -198,8 +197,7 @@ static uint8_t next_key    = 0;  // by column reference
 static uint8_t prev_key    = 0;
 
 #define ONSHIFT(c)   (e[c].shift && e[c].key_timer < e[column].key_timer && e[column].side == ((c == LSHIFT) ? RIGHT : LEFT))
-#define ROLL         if (shift || ONSHIFT(LSHIFT) || ONSHIFT(RSHIFT)) { TAP_SHIFT(keycode); } \
-                     else                                             { TAP      (keycode); }
+#define ROLL         if (shift || ONSHIFT(LSHIFT) || ONSHIFT(RSHIFT)) { TAP_SHIFT(keycode); } else { TAP(keycode); }
 #define SHIFT_KEY(c) (c == LSHIFT || c == RSHIFT)
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
 #define SHIFT_KEYS   (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
@@ -330,8 +328,8 @@ void clear_layers(void)
 {
   for (i = 0; i < _END_LAYERS; i++) { layer_off(i); }
   mods       = 0;
-  key_timer  = 0;
   tt_keycode = 0;
+  CLEAR_TIMER;
 #ifdef ROLLOVER
   clear_events();
 #endif
@@ -403,8 +401,7 @@ bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert)
 static uint8_t leftside  = 0;
 static uint8_t rightside = 0;
 
-#define SWITCH_LAYER(x, y) layer_off(x); x = 0; \
-                           if (y && y == _MOUSE) { layer_on(facing); y = facing; }
+#define SWITCH_LAYER(x, y) layer_off(x); x = 0; if (y && y == _MOUSE) { layer_on(facing); y = facing; }
 
 // seamlessly switch left / right thumb layer combinations
 void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t layer, uint8_t facing)
