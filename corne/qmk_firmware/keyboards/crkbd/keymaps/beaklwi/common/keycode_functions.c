@@ -86,43 +86,17 @@ bool key_press(RECORD)
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-#define MOD_KEY(k) if (mods & MOD_BIT(k)) { f(k); }
-
-// (un)register modifiers
-void mod_all(void (*f)(uint8_t), uint8_t mask)
-{
-  if (!mods) { return; }
-  MOD_KEY(KC_LGUI);
-  MOD_KEY(KC_LCTL);
-  MOD_KEY(KC_LALT);
-  MOD_KEY(KC_LSFT);
-  MOD_KEY(KC_RSFT);           // note: qmk macros all use left modifiers
-  MOD_KEY(KC_RALT);
-  MOD_KEY(KC_RCTL);
-  MOD_KEY(KC_RGUI);
-  mods &= (mask ? 0xFF : 0);  // 0 -> discard, otherwise -> retain state
-}
-
-void mod_bits(RECORD, uint16_t keycode)
-{
-  if (KEY_DOWN) { mods |=   MOD_BIT(keycode); }
-  else          { mods &= ~(MOD_BIT(keycode)); }
-}
-
-// base layer modifier
-bool mod_down(uint16_t keycode)
-{
 #ifdef SPLITOGRAPHY
-  return mods & MOD_BIT(keycode);   // regardless of other home row modifiers
+#define MOD_DOWN(k) (mods & MOD_BIT(k))   // regardless of other home row modifiers
 #else
-  return mods == MOD_BIT(keycode);  // on home row modifier only
+#define MOD_DOWN(k) (mods == MOD_BIT(k))  // on home row modifier only
 #endif
-}
+#define MOD_BITS(k) if (KEY_DOWN) { mods |= MOD_BIT(k); } else { mods &= ~(MOD_BIT(k)); }
 
 // ......................................................... Modifier Primitives
 
-#define MOD(m)         if (m) { register_code  (m); mods |=   MOD_BIT(m); }
-#define UNMOD(m)       if (m) { unregister_code(m); mods &= ~(MOD_BIT(m)); }
+#define MOD(m)         if (m) { register_code  (m); MOD_BITS(m); }
+#define UNMOD(m)       if (m) { unregister_code(m); MOD_BITS(m); }
 #define CHORD(m, m2)   MOD(m);    MOD(m2)
 #define UNCHORD(m, m2) UNMOD(m2); UNMOD(m)
 #define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } else { TAP(k); }
@@ -205,7 +179,7 @@ static uint8_t prev_key    = 0;
 void roll_key(bool shift, uint16_t keycode, uint8_t column)
 {
   if (e[column].key_timer < e[next_key].key_timer) {                            // rolling sequence in progress
-    mod_all(unregister_code, 0);                                                // disable modifier chord finger rolls
+    clear_mods();                                                               // disable modifier chord finger rolls
     if (e[column].shift && e[column].side != e[next_key].side && SHIFT_KEYS) {  // shift only opposite side of rolling sequence
       TAP_SHIFT(e[next_key].keycode);                                           // shift opposite home row key
       e[next_key].CLEAR_TIMER;                                                  // don't echo this shift key
@@ -265,7 +239,7 @@ static uint8_t map = 0;  // map state
 // remap keycode via shift for base and caps layers
 bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
 {
-  if (map || mod_down(shift_key)) {
+  if (map || MOD_DOWN(shift_key)) {
     if (KEY_DOWN) {
       if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
@@ -290,7 +264,7 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
 // conditional map_shift pass through on keycode down to complete layer_toggle(), see process_record_user()
 bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t layer)
 {
-  if (mod_down(shift_key)) {
+  if (MOD_DOWN(shift_key)) {
     if (KEY_DOWN) {
       START_TIMER;
 #ifdef ROLLOVER

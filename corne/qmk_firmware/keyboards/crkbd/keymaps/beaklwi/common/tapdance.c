@@ -56,7 +56,7 @@ void asterisk_reset(STATE, void *user_data)
 
 void colon(STATE, void *user_data)
 {
-  if (mod_down(KC_RSFT)) {  // handle like map_shift()
+  if (MOD_DOWN(KC_RSFT)) {  // handle like map_shift()
 #ifdef EMOJI
     DANCE_TAP(" :-", LOWER, KC_SCLN);
 #else
@@ -76,7 +76,7 @@ void colon_reset(STATE, void *user_data)
 {
   unregister_code(KC_SCLN);
   UNSHIFT        (KC_SCLN);
-  if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
+  if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
 }
 
 #ifndef EQLEQL
@@ -122,7 +122,6 @@ void tilde(STATE, void *user_data)
 void tilde_reset(STATE, void *user_data)
 {
   UNSHIFT(KC_GRV);
-  if (mod_down(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_TILD
 }
 #endif
 
