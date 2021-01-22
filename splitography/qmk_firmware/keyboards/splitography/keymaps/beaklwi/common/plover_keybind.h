@@ -5,6 +5,6 @@
 // toggle plover application, see herbstluftwm/config/appbinds
 register_code  (KC_LGUI);
 register_code  (KC_LCTL);
-TAP_KEY        (KC_EQL);
+TAP            (KC_EQL);
 unregister_code(KC_LCTL);
 unregister_code(KC_LGUI);

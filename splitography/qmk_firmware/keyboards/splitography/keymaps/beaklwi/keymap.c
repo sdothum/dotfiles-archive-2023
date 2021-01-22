@@ -205,7 +205,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 #endif
 
-  if (reshifted && !mod_down(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; }  // see map_shift()
+  if (reshifted && !MOD_DOWN(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; }  // see map_shift()
 
 // ...................................................... Smart Keypad Delimiter
 
@@ -249,7 +249,7 @@ static bool     smart      = 1;       // see case SMART
   case HOME_H:  HOME_ROLL(KC_LCTL, KC_H,      1);
   case HOME_E:  HOME_ROLL(KC_LALT, KC_E,      2);
   case HOME_A:
-    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);
+    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);          // space/enter + shift shortcut, see leader_cap()
 
   case HOME_T:  HOME_ROLL(KC_RSFT, KC_T,      6);
   case HOME_R:  HOME_ROLL(KC_RALT, KC_R,      7);
@@ -257,9 +257,8 @@ static bool     smart      = 1;       // see case SMART
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
   case HOME_A:
-    LEADERCAP;  // space/enter + shift shortcut, see leader_cap()
-    mod_bits(record, KC_LSFT);                      break;
-  case HOME_T:  mod_bits(record, KC_RSFT);          break;
+    LEADERCAP;  MOD_BITS(KC_LSFT);                  break  // space/enter + shift shortcut, see leader_cap()
+  case HOME_T:  MOD_BITS(KC_RSFT);                  break;
   case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
 
@@ -416,7 +415,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
     break;
 #ifdef HASKELL
   case TD_COLN:
-    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (MOD_DOWN(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, KC_COLN, 4);
     break;
@@ -433,7 +432,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
     break;
 #ifdef HASKELL
   case TD_COLN:
-    if (mod_down(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
+    if (MOD_DOWN(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     break;
 #endif

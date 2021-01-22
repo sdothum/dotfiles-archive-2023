@@ -55,7 +55,7 @@
     if (map_shifted(record, KC_LSFT, LOWER, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
     if (map_shift(record, KC_RSFT, LOWER, KC_ENT))            { return false; }
 #ifdef ROLLOVER
-    leaderlayer = _SYMGUI;                                                         // see mod_roll()
+    leaderlayer = _SYMGUI;                                                       // see mod_roll()
     if (mod_roll(record, RIGHT, LOWER, 0, KC_SPC, 11))        { return false; }  // KC_SPC -> space shift
 #else
     if (leader_cap (record, _SYMGUI, KC_SPC))                 { return false; }  // KC_SPC -> space shift
@@ -68,14 +68,14 @@
 #endif
     if (map_shifted(record, KC_LSFT, LOWER, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
     if (map_shift(record, KC_RSFT, LOWER, KC_ENT))            { return false; }
-    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);                                          // because layer_toggle() issues <spc> before <enter> on map_shifted()
+    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);  // because layer_toggle() issues <spc> before <enter> on map_shifted()
     break;
   case KC_SPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_BSPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, INVERT))  { return false; }
 #endif
@@ -84,7 +84,7 @@
     if (leader_cap (record, _EDIT, KC_ENT))           { return false; }  // see KC_BSPC for multi-tap
     break;
   case KC_BSPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }     // see leader_cap()
+    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
 #ifdef THUMB_CAPS
     if (raise_layer(record, _TTCAPS, RIGHT, INVERT))  { return false; }
 #endif
@@ -93,7 +93,7 @@
     if (leader_cap (record, 0, KC_ENT))               { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef THUMB_CAPS
     if (KEY_DOWN) { key_timer = timer_read(); }
-    else if (timer_elapsed(key_timer) < TAPPING_TERM) { TAP_KEY(KC_BSPC); }
+    else if (timer_elapsed(key_timer) < TAPPING_TERM) { TAP(KC_BSPC); }
     return false;  // capslock toggling trap, use shift bspc -> del for auto repeat
 #else
     break;
