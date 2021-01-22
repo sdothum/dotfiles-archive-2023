@@ -1,0 +1,24 @@
+#!/usr/bin/dash 
+# sdothum - 2016 (c) wtfpl
+
+# Dev
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Promote Updates
+
+usage() { echo "usage: $(basename $0) <path> <project>*"; exit 1; }
+
+[ $2 ] || usage
+[ -f "$1" ] && { file=$1; shift; } || usage
+# project subdirectory mirrors source structure
+path=${file%/*}
+
+# promote library updates to common projects e.g. qmk keyboards
+# example: promote beaklwi/common/keycode_functions.c $planck $chimera $splito
+for i in $@ ;do
+  [ -d $i/$path ] || usage
+  ditto $file "-> $i/$path"
+  cp $file $i/$path
+done
+
+# vim: set ft=sh: #
