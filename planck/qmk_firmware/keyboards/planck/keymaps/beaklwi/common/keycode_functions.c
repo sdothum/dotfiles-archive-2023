@@ -130,7 +130,7 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
       TAP(keycode);
       oneshot_shift(layer);
       CLEAR_TIMER;
-      return true; 
+      return true;
     }
     CLEAR_TIMER;
   }
@@ -140,12 +140,12 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 // ................................................................ Rolling Keys
 
 #ifdef ROLLOVER
-#define SET_EVENT(c) e[c].key_timer = timer_read(); \
-                     e[c].keycode   = keycode;      \
+#define SET_EVENT(c) e[c].START_TIMER;           \
+                     e[c].keycode   = keycode;   \
                      e[c].shift     = (modifier == KC_LSFT || modifier == KC_RSFT); \
                      e[c].side      = (column <= 4) ? LEFT : RIGHT;                 \
-                     e[c].leadercap = leadercap;    \
-                     prev_key       = next_key;     \
+                     e[c].leadercap = leadercap; \
+                     prev_key       = next_key;  \
                      next_key       = c
 
 // column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
@@ -350,7 +350,7 @@ bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert)
 {
   if (KEY_DOWN) {
     double_key |= side;
-    if (double_key == (LEFT | RIGHT)) { 
+    if (double_key == (LEFT | RIGHT)) {
       if (layer) { invert ? layer_invert(layer) : layer_on(layer); }
       return true;
     }
