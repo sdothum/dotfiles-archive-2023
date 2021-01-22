@@ -28,7 +28,7 @@
 // language tap dance operators
 #define HASKELL
 #define UNIX
-#define EMOJI
+// #define EMOJI
 
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
 #define THUMB_CAPS
@@ -48,6 +48,9 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
 #endif
+
+// left handed space/enter
+// #define LEFT_SPC_ENT
 
 // double tap "==" (regex layer) default: "=~"
 // #define EQLEQL
