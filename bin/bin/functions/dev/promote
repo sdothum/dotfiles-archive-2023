@@ -17,8 +17,7 @@ path=${file%/*}
 # example: promote beaklwi/common/keycode_functions.c $planck $chimera $splito
 for i in $@ ;do
   [ -d $i/$path ] || usage
-  ditto $file "-> $i/$path"
-  cp $file $i/$path
+  [ "$(cp --update -v $file $i/$path)" ] && ditto update "$i/$file"
 done
 
 # vim: set ft=sh: #
