@@ -82,7 +82,13 @@ void colon_reset(STATE, void *user_data)
 #ifndef EQLEQL
 void equal(STATE, void *user_data)
 {
+#ifdef SPLITOGRAPHY
+  if (TAPS)           { send_string  ("=~"); }
+  else if (!TAP_DOWN) { register_code(KC_EQL); }
+  reset_tap_dance(state);
+#else
   DANCE_TAP("=~", LOWER, KC_EQL);
+#endif
 }
 
 void equal_reset(STATE, void *user_data)
