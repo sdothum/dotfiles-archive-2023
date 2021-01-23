@@ -382,7 +382,7 @@ void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t l
 {
   if (KEY_DOWN) {
     layer_on(layer);
-    if (side == LEFT) { leftside = layer; }
+    if (side == LEFT) { leftside  = layer; }
     else              { rightside = layer; }
     START_TIMER;
   } else {
