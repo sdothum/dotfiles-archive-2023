@@ -199,7 +199,9 @@ void xpaste_reset(STATE, void *user_data)
   unregister_code(KC_LCTL);
 }
 
-// compile time macro strings, see functions/hardware qmk script
+// .............................................................. Custom Strings
+
+// compile time macro strings, see ~/bin/functions/hardware/qmk script
 void private(STATE, void *user_data)
 {
   if (TAPS) { SEND_STRING(PRIVATE_STRING); }
