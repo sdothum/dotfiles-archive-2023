@@ -28,6 +28,7 @@ static uint16_t key_timer = 0;   // global event timer
 
 #define START_TIMER   key_timer = timer_read()
 #define CLEAR_TIMER   key_timer = 0
+
 #define KEY_TAPPED(t) (timer_elapsed(t) < TAPPING_TERM)
 #define KEY_TAP       KEY_TAPPED(key_timer)
 
@@ -97,8 +98,10 @@ static uint8_t mods = 0;
 
 #define MOD(m)         if (m) { register_code  (m); MOD_BITS(m); }
 #define UNMOD(m)       if (m) { unregister_code(m); MOD_BITS(m); }
+
 #define CHORD(m, m2)   MOD(m);    MOD(m2)
 #define UNCHORD(m, m2) UNMOD(m2); UNMOD(m)
+
 #define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } else { TAP(k); }
 
 #ifndef ROLLOVER
@@ -172,6 +175,7 @@ static uint8_t prev_key    = 0;
 
 #define ONSHIFT(c)   (e[c].shift && e[c].key_timer < e[column].key_timer && e[column].side == ((c == LSHIFT) ? RIGHT : LEFT))
 #define ROLL         if (shift || ONSHIFT(LSHIFT) || ONSHIFT(RSHIFT)) { TAP_SHIFT(keycode); } else { TAP(keycode); }
+
 #define SHIFT_KEY(c) (c == LSHIFT || c == RSHIFT)
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
 #define SHIFT_KEYS   (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
@@ -243,7 +247,7 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
     if (KEY_DOWN) {
       if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
       register_code(keycode);
-      map = 1;                  // in case shift key is released first
+      map = 1;                // in case shift key is released first
 #ifdef ROLLOVER
       e[RSHIFT].CLEAR_TIMER;  // clear punctuation modifier (key tap), see mod_roll()
 #endif
