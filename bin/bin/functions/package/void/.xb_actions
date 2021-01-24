@@ -3,6 +3,7 @@
 
 mail     alot
 ttrss    php-fpm
+gpg      pinentry-gtk
 database postgresql
 
 # vim: set ft=conf: #
