@@ -309,10 +309,10 @@ static bool     smart      = 1;       // see case SMART
     break;
 #else
   case LT_ENT:
-    if (leader_cap(record, _EDIT, KC_ENT)) { return false; }  // KC_ENT -> enter shift
+    if (leader_cap(record, _EDIT, KC_ENT)) { return false; }    // KC_ENT -> enter shift
     break;
   case KC_ENT:
-    if (leader_cap(record, 0, KC_ENT))     { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
+    if (leader_cap(record, 0, KC_ENT)) { return false; }        // KC_ENT from LT_ENT -> enter enter* shift
     break;
 
   case LT_SPC:
