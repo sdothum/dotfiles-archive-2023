@@ -96,23 +96,25 @@ static uint8_t mods = 0;
 
 // ......................................................... Modifier Primitives
 
-#define MOD(m)         if (m) { register_code  (m); MOD_BITS(m); }
-#define UNMOD(m)       if (m) { unregister_code(m); MOD_BITS(m); }
+// mods only needed for map_shift() and map_shifted()
+#define MOD(k)     register_code  (k); MOD_BITS(k)
+#define UNMOD(k)   unregister_code(k); MOD_BITS(k)
 
-#define CHORD(m, m2)   MOD(m);    MOD(m2)
-#define UNCHORD(m, m2) UNMOD(m2); UNMOD(m)
+// smart chording (0) none (KC_*) modifier keycode (MOD_* | ..) compound modifier bitcodes
+#define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD(k); }   else { register_mods((uint8_t) k); } }
+#define UNCHORD(k) if (k) { if (IS_MOD(k)) { UNMOD(k); } else { unregister_mods((uint8_t) k); } }
 
 #define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } else { TAP(k); }
 
 #ifndef ROLLOVER
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
-void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode)
+void mod_tap(RECORD, uint16_t modifier, bool shift, uint16_t keycode)
 {
   if (KEY_DOWN) {
     START_TIMER;
-    CHORD(modifier, modifier2);
+    CHORD(modifier);
   } else {
-    UNCHORD(modifier, modifier2);
+    UNCHORD(modifier);
     if (KEY_TAP) { TAP_CASE(shift, keycode); }
     CLEAR_TIMER;
   }
@@ -197,13 +199,13 @@ void roll_key(bool shift, uint16_t keycode, uint8_t column)
                     leaderlayer           = 0
 
 // handle rolling keys as shift keycode, a sequence of unmodified keycodes, or keycode leader oneshot_SHIFT
-bool mod_roll(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode, uint8_t column)
+bool mod_roll(RECORD, uint16_t modifier, bool shift, uint16_t keycode, uint8_t column)
 {
   if (KEY_DOWN) {
     SET_EVENT(column);
-    CHORD(modifier, modifier2);
+    CHORD(modifier);
   } else {
-    UNCHORD(modifier, modifier2);
+    UNCHORD(modifier);
     if (KEY_TAPPED(e[column].key_timer)) {
       roll_key(shift, keycode, column);
       if (e[prev_key].leadercap && column >= LEADER) {  // punctuation leader capitalization chord?
@@ -231,21 +233,21 @@ void set_leader(RECORD, uint16_t keycode, uint8_t column)
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
 
-bool map_leader(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column)
+bool map_leader(RECORD, uint16_t sftcode, bool shift, uint16_t keycode, uint8_t column)
 {
   set_leader(record, keycode, column);
-  return map_shift(record, shift_key, shift, keycode);
+  return map_shift(record, sftcode, shift, keycode);
 }
 #endif
 
 static uint8_t map = 0;  // map state
 
 // remap keycode via shift for base and caps layers
-bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
+bool map_shift(RECORD, uint16_t sftcode, bool shift, uint16_t keycode)
 {
-  if (map || MOD_DOWN(shift_key)) {
+  if (map || MOD_DOWN(sftcode)) {
     if (KEY_DOWN) {
-      if (!shift) { unregister_code(shift_key); }  // in event of unshifted keycode
+      if (!shift) { unregister_code(sftcode); }  // in event of unshifted keycode
       register_code(keycode);
       map = 1;                // in case shift key is released first
 #ifdef ROLLOVER
@@ -253,7 +255,7 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
 #endif
     } else {
       unregister_code(keycode);
-      if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
+      if (!shift) { register_code(sftcode); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       map = 0;
     }
     CLEAR_TIMER;              // clear home row shift, see process_record_user()
@@ -266,9 +268,9 @@ bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode)
 }
 
 // conditional map_shift pass through on keycode down to complete layer_toggle(), see process_record_user()
-bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t layer)
+bool map_shifted(RECORD, uint16_t sftcode, bool shift, uint16_t keycode, uint8_t layer)
 {
-  if (MOD_DOWN(shift_key)) {
+  if (MOD_DOWN(sftcode)) {
     if (KEY_DOWN) {
       START_TIMER;
 #ifdef ROLLOVER
@@ -276,9 +278,9 @@ bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8
 #endif
     } else {
       if (KEY_TAP) {
-        if (!shift) { unregister_code(shift_key); }               // in event of unshifted keycode
+        if (!shift) { unregister_code(sftcode); }               // in event of unshifted keycode
         TAP(keycode);
-        if (!shift) { register_code(shift_key); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
+        if (!shift) { register_code(sftcode); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       }
       CLEAR_TIMER;            // clear home row shift, see process_record_user() and sft_home()
 #ifdef ROLLOVER
