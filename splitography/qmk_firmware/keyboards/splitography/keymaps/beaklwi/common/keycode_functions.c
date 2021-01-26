@@ -106,7 +106,6 @@ static uint8_t mods = 0;
 #define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD(k); }   else { register_mods((uint8_t) k); } }
 #define UNCHORD(k) if (k) { if (IS_MOD(k)) { UNMOD(k); } else { unregister_mods((uint8_t) k); } }
 
-#ifndef ROLLOVER
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
 void mod_tap(RECORD, uint16_t modifier, bool upcase, uint16_t keycode)
 {
@@ -119,7 +118,6 @@ void mod_tap(RECORD, uint16_t modifier, bool upcase, uint16_t keycode)
     CLEAR_TIMER;
   }
 }
-#endif
 
 // Key Sequence Handling
 // ═════════════════════════════════════════════════════════════════════════════
