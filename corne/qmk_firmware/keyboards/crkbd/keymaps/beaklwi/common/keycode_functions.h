@@ -5,11 +5,11 @@
 bool key_press(RECORD);
 void layer_toggle(RECORD, uint8_t layer, bool shift, uint16_t keycode);
 bool leader_cap(RECORD, uint8_t layer, uint16_t keycode);
-bool map_leader(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t column);
-bool map_shift(RECORD, uint16_t shift_key, bool shift, uint16_t keycode);
-bool map_shifted(RECORD, uint16_t shift_key, bool shift, uint16_t keycode, uint8_t layer);
-bool mod_roll(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode, uint8_t col);
-void mod_tap(RECORD, uint16_t modifier, uint16_t modifier2, bool shift, uint16_t keycode);
+bool map_leader(RECORD, uint16_t sftcode, bool shift, uint16_t keycode, uint8_t column);
+bool map_shift(RECORD, uint16_t sftcode, bool shift, uint16_t keycode);
+bool map_shifted(RECORD, uint16_t sftcode, bool shift, uint16_t keycode, uint8_t layer);
+bool mod_roll(RECORD, uint16_t modifier, bool shift, uint16_t keycode, uint8_t column);
+void mod_tap(RECORD, uint16_t modifier, bool shift, uint16_t keycode);
 bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert);
 void rolling_layer(RECORD, uint8_t side, bool shift, uint16_t keycode, uint8_t layer, uint8_t facing);
 void set_leader(RECORD, uint16_t keycode, uint8_t column);
