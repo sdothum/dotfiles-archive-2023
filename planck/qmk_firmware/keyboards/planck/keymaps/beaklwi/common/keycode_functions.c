@@ -153,13 +153,14 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
                      prev_key       = next_key;  \
                      next_key       = c
 
+// ortholinear column numbering independent of toggle_layout key columns
 // column 0 1 2 3 4 <- left, right -> 5 6 7 8 9
-static struct column_event {
-  uint16_t key_timer;            // event priority
-  uint16_t keycode;
-  bool     shift;
-  uint8_t  side;
-  bool     leadercap;
+static struct   column_event {
+       uint16_t key_timer;       // event priority
+       uint16_t keycode;
+       bool     shift;
+       uint8_t  side;
+       bool     leadercap;
 } e[12];                         // leader -> 10 11, see process_record_user(), mod_roll()
 
 void clear_events(void)
