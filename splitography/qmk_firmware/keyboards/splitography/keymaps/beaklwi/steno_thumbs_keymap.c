@@ -35,17 +35,14 @@
     break;
 
   case TD_EQL:
-    if (tt_keycode) { break; }  // no thumb mouse layer on toggle layer
-#ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, LOWER, KC_ENT)) { return false; }
-#endif
-    rolling_layer(record, LEFT, 0, 0, _MOUSE, _SYMGUI);        // equal handled by tapdance
+    if (tt_keycode) { break; }                           // no thumb mouse layer on toggle layer
+    rolling_layer(record, LEFT, 0, 0, _MOUSE, _SYMGUI);  // equal handled by tapdance
     break;
 
 // ............................................................ Right Thumb Keys
 
   case ML_BSLS:
-    rolling_layer(record, RIGHT, 0, KC_BSLS, _MOUSE, _REGEX);  // see TD_EQL
+    rolling_layer(record, RIGHT, LOWER, KC_BSLS, _MOUSE, _REGEX);  // see TD_EQL
     break;
 
   case LT_SPC:
