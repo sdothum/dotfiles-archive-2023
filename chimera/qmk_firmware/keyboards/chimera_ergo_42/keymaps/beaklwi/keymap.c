@@ -409,15 +409,16 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 // ......................................................... Shift Mapped Leader
 
 #ifdef ROLLOVER
-  case KC_COLN:
-    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, KC_RSFT, LOWER, KC_COLN, 0)) { return false; }
-    break;
 #ifdef HASKELL
   case TD_COLN:
     if (MOD_DOWN(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     set_leader(record, KC_COLN, 0);
+    break;
+#else
+  case KC_COLN:
+    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
+    if (map_leader(record, KC_RSFT, LOWER, KC_COLN, 0)) { return false; }
     break;
 #endif
 
@@ -426,14 +427,15 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
     if (map_leader(record, KC_RSFT, LOWER, KC_GRV, 1)) { return false; }
     break;
 #else
-  case KC_COLN:
-    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, LOWER, KC_COLN)) { return false; }
-    break;
 #ifdef HASKELL
   case TD_COLN:
     if (MOD_DOWN(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
+    break;
+#else
+  case KC_COLN:
+    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
+    if (map_shift(record, KC_RSFT, LOWER, KC_COLN)) { return false; }
     break;
 #endif
 
@@ -475,13 +477,13 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
   case KC_EXLM:
     LEADERCAP;  // exclamation + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, 0, LOWER, keycode, 2)) { return false; }
+    set_leader(record, keycode, 2);
 #endif
     break;
   case KC_QUES:
     LEADERCAP;  // question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    if (map_leader(record, 0, LOWER, keycode, 1)) { return false; }
+    set_leader(record, keycode, 1);
 #endif
     break;
 
