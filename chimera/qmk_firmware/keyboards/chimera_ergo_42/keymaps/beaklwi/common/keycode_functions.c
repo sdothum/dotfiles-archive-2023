@@ -102,7 +102,7 @@ static uint8_t mods = 0;
 #define MOD(k)     register_code  (k); MOD_BITS(k)
 #define UNMOD(k)   unregister_code(k); MOD_BITS(k)
 
-// smart chording (0) none (KC_*) modifier keycode (MOD_* | ..) compound modifier bitcodes
+// smart chording (0) none (KC_*) modifier keycode (MOD_* | ..) compound modifier bitcode
 #define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD(k); }   else { register_mods((uint8_t) k); } }
 #define UNCHORD(k) if (k) { if (IS_MOD(k)) { UNMOD(k); } else { unregister_mods((uint8_t) k); } }
 
