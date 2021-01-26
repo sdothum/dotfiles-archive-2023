@@ -6,9 +6,11 @@
 
 # .............................................................. Promote Updates
 
-usage() { echo "usage: $(basename $0) <path> <project>* | <path>* -- <project>*"; exit 1; }
+usage() { echo "usage: $(basename $0) [-f] <path> <project>* | [-f] <path>* -- <project>*"; exit 1; }
 
+[ "$1" = '-f' ] && { update=--force; shift; } || update=--update
 [ $2 ] || usage
+
 if $(echo $@ | grep -vq ' [-][-] ') ;then 
   files=$1; shift
   projects=$@
@@ -25,7 +27,7 @@ for i in $files ;do
   path=${file%/*}
   for j in $projects ;do
     [ -d $j/$path ] || usage
-    [ "$(cp --update -v $file $j/$path)" ] && ditto update "$j/$file"
+    [ "$(cp $update -v $file $j/$path)" ] && ditto update "$j/$file"
   done
 done
 
