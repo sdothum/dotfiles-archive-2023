@@ -6,18 +6,28 @@
 
 # .............................................................. Promote Updates
 
-usage() { echo "usage: $(basename $0) <path> <project>*"; exit 1; }
+usage() { echo "usage: $(basename $0) <path> <project>* | <path>* -- <project>*"; exit 1; }
 
 [ $2 ] || usage
-[ -f "$1" ] && { file=$1; shift; } || usage
-# project subdirectory mirrors source structure
-path=${file%/*}
+if $(echo $@ | grep -vq ' [-][-] ') ;then 
+  files=$1; shift
+  projects=$@
+else
+  files=$(echo $@ | sed 's/ -- .*$//')
+  projects=$(echo $@ | sed 's/^.* -- //')
+fi
 
 # promote library updates to common projects e.g. qmk keyboards
-# example: promote beaklwi/common/keycode_functions.c $planck $chimera $splito
-for i in $@ ;do
-  [ -d $i/$path ] || usage
-  [ "$(cp --update -v $file $i/$path)" ] && ditto update "$i/$file"
+# example: promote beaklwi/common/keycode_functions.c beaklwi/common/keycode_functions.h -- $planck $chimera $splito
+for i in $files ;do
+  [ -f "$i" ] && file=$i || usage
+  # project subdirectory mirrors source structure
+  path=${file%/*}
+  for j in $projects ;do
+    [ -d $j/$path ] || usage
+    [ "$(cp --update -v $file $j/$path)" ] && ditto update "$j/$file"
+  done
 done
+
 
 # vim: set ft=sh: #
