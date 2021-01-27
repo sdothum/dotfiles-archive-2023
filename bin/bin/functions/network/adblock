@@ -6,8 +6,9 @@
 
 # .......................................................................... DNS
 
-TMP=/tmp/adblock
-LOG=$TMP.log
+mkdir /tmp/adblock 2>/dev/null  # see console_login
+LOG=/tmp/adblock.log
+CACHE=/tmp/adblock/adblock
 
 # from https://github.com/SilentBob999/adblock 
 ADBLOCK="
@@ -73,13 +74,13 @@ rm -f adblock
 
 trace "Generating adblock.." >>$LOG
 
-count() { wc -l $TMP:$1; }
+count() { wc -l $CACHE:$1; }
 
 addblock() {
-  cat >$TMP:$1
-  cat $TMP:$1 >>adblock
-  [ $(count $1 | cut -d' ' -f1) -eq 0 ] && { ditto WARNING empty "$TMP:$1"; exit 1; }
-  wc -l $TMP:$1
+  cat >$CACHE:$1
+  cat $CACHE:$1 >>adblock
+  [ $(count $1 | cut -d' ' -f1) -eq 0 ] && { ditto WARNING empty "$CACHE:$1"; exit 1; }
+  wc -l $CACHE:$1
   count $1
 }
 
@@ -123,6 +124,5 @@ echo "# Generated adblock on $(timestamp)" >adblock.hosts
 cat adblock.uniq adblock.blacklist >>adblock.hosts
 ditto blacklisting "$(wc -l adblock.hosts | cut -d' ' -f1) hosts"
 service restart dnsmasq
-touch $TMP  # see console_login
 
 # vim: set ft=sh: #

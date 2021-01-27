@@ -13,7 +13,8 @@ usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}]
 # adding extended randomization of clock display for hours and minute information
 # for visual pizzazz, set conky font to 'Major Mono Display' (google fonts), else use 'Noto Sans Mono'
 
-QCLOCK=/tmp/qclocktwo             # interval lock
+mkdir /tmp/qclocktwo 2>/dev/null
+QCLOCK=/tmp/qclocktwo/qclocktwo   # interval lock
 GLYPH=$HOME/.session/qclocktwo:glyph
 
 [ -e $GLYPH ] && glyph=cat || glyph="tr '[:upper:]' '[:lower:]'"  # conkyrc "uppercase=false" must be set for this

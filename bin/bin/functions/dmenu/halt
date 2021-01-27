@@ -16,6 +16,7 @@ disconnect() {
     sudo umount $HOME/Maildir
     sudo systemctl stop nfs-config
   fi
+  rm /tmp/login:console
   quit
 }
 

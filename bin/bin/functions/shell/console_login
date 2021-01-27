@@ -13,7 +13,7 @@ WMAIL=$SESSION/wmail
 # bootstrap SSD scheduler
 if [ $USER != root ] ;then
   if console && [ ! -e /tmp/login:console ] ;then
-    find /tmp -group users -mtime +7 -exec rm -rf {} \;  # clear out stale entries
+    find /tmp -group users -mtime +1 -exec sudo rm -rf {} \; 2>/dev/null  # clear out stale entries
     tty >/tmp/login:console
     sudo find /var/log/journal -name '*~' -exec rm {} \;
     # SERVER=$(grep 10.1.0.10 /etc/hosts | awk '{ print $2 }')
