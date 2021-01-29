@@ -22,11 +22,11 @@ fi
 # promote library updates to common projects e.g. qmk keyboards
 # example: promote beaklwi/common/keycode_functions.c beaklwi/common/keycode_functions.h -- $planck $chimera $splito
 for i in $files ;do
-  [ -f "$i" ] && file=$i || usage
+  [ -f "$i" ] && file=$i || { ditto 'file?' $i; usage; }
   # project subdirectory mirrors source structure
   path=${file%/*}
   for j in $projects ;do
-    [ -d $j/$path ] || usage
+    [ -d $j/$path ] || { ditto 'directory?' $j; usage; }
     [ "$(cp $update -v $file $j/$path)" ] && ditto update "$j/$file"
   done
 done
