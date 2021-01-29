@@ -14,6 +14,9 @@
     break;
   case LT_ESC:
     numerating = KEY_DOWN ? 1 : 0;
+#ifdef LEFT_SPC_ENT
+    if (map_shift(record, KC_LSFT, LOWER, KC_ENT))  { return false; }
+#endif
     if (raise_layer(record, _FNCKEY, LEFT, ONDOWN)) { return false; }
     if (map_shift(record, KC_LSFT, UPPER, KC_TAB))  { return false; }
     if (map_shift(record, KC_RSFT, LOWER, KC_TAB))  { return false; }
