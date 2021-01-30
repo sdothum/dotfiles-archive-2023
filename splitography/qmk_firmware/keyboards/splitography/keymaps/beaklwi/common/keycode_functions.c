@@ -89,11 +89,7 @@ bool key_press(RECORD)
 // keyboard_report->mods (?) appears to be cleared by tap dance
 static uint8_t mods = 0;
 
-#ifdef SPLITOGRAPHY
-#define MOD_DOWN(k) (mods & MOD_BIT(k))   // regardless of other home row modifiers
-#else
-#define MOD_DOWN(k) (mods == MOD_BIT(k))  // on home row modifier only
-#endif
+#define MOD_DOWN(k) (mods & MOD_BIT(k))
 #define MOD_BITS(k) if (KEY_DOWN) { mods |= MOD_BIT(k); } else { mods &= ~(MOD_BIT(k)); }
 
 // ......................................................... Modifier Primitives
@@ -246,7 +242,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
 {
   if (map || MOD_DOWN(sftcode)) {
     if (KEY_DOWN) {
-      if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
+      if (!upcase) { clear_mods(); }  // in event of unshifted keycode
       register_code(keycode);
       map = 1;                // in case shift key is released first
 #ifdef ROLLOVER
@@ -277,13 +273,13 @@ bool map_shifted(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_
 #endif
     } else {
       if (KEY_TAP) {
-        if (!upcase) { unregister_code(sftcode); }               // in event of unshifted keycode
+        if (!upcase) { clear_mods(); }  // in event of unshifted keycode
         TAP(keycode);
         if (!upcase) { register_code(sftcode); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
       }
-      CLEAR_TIMER;            // clear home row shift, see process_record_user() and sft_home()
+      CLEAR_TIMER;                      // clear home row shift, see process_record_user() and sft_home()
 #ifdef ROLLOVER
-      e[LSHIFT].CLEAR_TIMER;  // clear left handed separator modifier (key tap)
+      e[LSHIFT].CLEAR_TIMER;            // clear left handed separator modifier (key tap)
 #endif
       if (layer) { layer_off(layer); }  // disable MO layer (base layer == 0)
       return true;
