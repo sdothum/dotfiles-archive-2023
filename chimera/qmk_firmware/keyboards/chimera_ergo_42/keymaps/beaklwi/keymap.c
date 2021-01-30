@@ -205,7 +205,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 #endif
 
-  if (reshifted && !MOD_DOWN(KC_LSFT)) { unregister_code(KC_LSFT); reshifted = 0; }  // see map_shift()
+  if (reshifted && !MOD_DOWN(KC_LSFT) && !MOD_DOWN(KC_RSFT)) { clear_mods(); reshifted = 0; }  // see map_shift()
 
 // ...................................................... Smart Keypad Delimiter
 
@@ -257,7 +257,7 @@ static bool     smart      = 1;       // see case SMART
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
   case HOME_A:
-    LEADERCAP;  MOD_BITS(KC_LSFT);                  break  // space/enter + shift shortcut, see leader_cap()
+    LEADERCAP;  MOD_BITS(KC_LSFT);                  break; // space/enter + shift shortcut, see leader_cap()
   case HOME_T:  MOD_BITS(KC_RSFT);                  break;
   case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
@@ -409,35 +409,20 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 // ......................................................... Shift Mapped Leader
 
 #ifdef ROLLOVER
-#ifdef HASKELL
-  case TD_COLN:
-    if (MOD_DOWN(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    set_leader(record, KC_COLN, 0);
-    break;
-#else
-  case KC_COLN:
+  case HS_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, KC_RSFT, LOWER, KC_COLN, 0)) { return false; }
     break;
-#endif
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
     if (map_leader(record, KC_RSFT, LOWER, KC_GRV, 1)) { return false; }
     break;
 #else
-#ifdef HASKELL
-  case TD_COLN:
-    if (MOD_DOWN(KC_RSFT)) { unregister_code(KC_RSFT); }  // *must* un-shift before tap dance processing to register unshifted keycodes
-    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    break;
-#else
-  case KC_COLN:
+  case HS_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
     if (map_shift(record, KC_RSFT, LOWER, KC_COLN)) { return false; }
     break;
-#endif
 
   case KC_COMM:
     LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()

@@ -57,19 +57,11 @@ void asterisk_reset(STATE, void *user_data)
 
 void colon(STATE, void *user_data)
 {
-  if (MOD_DOWN(KC_RSFT)) {  // handle like map_shift()
-#ifdef EMOJI
-    DANCE_TAP(" :-", LOWER, KC_SCLN);
-#else
-    register_code(KC_SCLN);
-#endif
-  } else {
 #ifdef HASKELL
-    DANCE_TAP(" :: ", UPPER, KC_SCLN);
+  DANCE_TAP(" :: ", UPPER, KC_SCLN);
 #else
-    SHIFT(KC_SCLN); 
+  SHIFT(KC_SCLN); 
 #endif
-  }
   reset_tap_dance(state);
 }
 
@@ -77,7 +69,6 @@ void colon_reset(STATE, void *user_data)
 {
   unregister_code(KC_SCLN);
   UNSHIFT        (KC_SCLN);
-  if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }  // restore HOME_T, see process_record_user() TD_COLN
 }
 
 #ifndef EQLEQL
