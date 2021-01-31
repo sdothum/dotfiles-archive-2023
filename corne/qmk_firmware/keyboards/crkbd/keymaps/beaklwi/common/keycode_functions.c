@@ -6,7 +6,6 @@
 // ................................................................ Global Scope
 
 static bool     leadercap  = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
-static bool     reshifted  = 0;  // SFT_T timing trap, see map_shift(), process_record_user()
 static uint16_t tt_keycode = 0;  // current TT state (keycode)
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
@@ -222,7 +221,7 @@ bool mod_roll(RECORD, uint16_t modifier, bool upcase, uint16_t keycode, uint8_t 
 // handle map_shift() rolling keys (and dot chords)
 void set_leader(RECORD, uint16_t keycode, uint8_t column)
 {
-  uint16_t modifier = 0;  // for SET_EVENT()
+  uint16_t modifier = 0;                      // for SET_EVENT()
 
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
@@ -242,7 +241,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
 {
   if (map || MOD_DOWN(sftcode)) {
     if (KEY_DOWN) {
-      if (!upcase) { clear_mods(); }  // in event of unshifted keycode
+      if (!upcase) { clear_mods(); }            // in event of unshifted keycode
       register_code(keycode);
       map = 1;                // in case shift key is released first
 #ifdef ROLLOVER
@@ -250,7 +249,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
 #endif
     } else {
       unregister_code(keycode);
-      if (!upcase) { register_code(sftcode); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
+      if (!upcase) { register_code(sftcode); }  // restore shift
       map = 0;
     }
     CLEAR_TIMER;              // clear home row shift, see process_record_user()
@@ -273,15 +272,15 @@ bool map_shifted(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_
 #endif
     } else {
       if (KEY_TAP) {
-        if (!upcase) { clear_mods(); }  // in event of unshifted keycode
+        if (!upcase) { clear_mods(); }            // in event of unshifted keycode
         TAP(keycode);
-        if (!upcase) { register_code(sftcode); reshifted = 1; }  // set SFT_T timing trap, process_record_user()
+        if (!upcase) { register_code(sftcode); }  // restore shift
       }
-      CLEAR_TIMER;                      // clear home row shift, see process_record_user() and sft_home()
+      CLEAR_TIMER;            // clear home row shift, see process_record_user() and sft_home()
 #ifdef ROLLOVER
-      e[LSHIFT].CLEAR_TIMER;            // clear left handed separator modifier (key tap)
+      e[LSHIFT].CLEAR_TIMER;  // clear left handed separator modifier (key tap)
 #endif
-      if (layer) { layer_off(layer); }  // disable MO layer (base layer == 0)
+      if (layer) { layer_off(layer); }            // disable MO layer (base layer == 0)
       return true;
     }
   }

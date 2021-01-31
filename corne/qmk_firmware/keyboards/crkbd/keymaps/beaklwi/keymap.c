@@ -205,8 +205,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 #endif
 
-  if (reshifted && !MOD_DOWN(KC_LSFT) && !MOD_DOWN(KC_RSFT)) { clear_mods(); reshifted = 0; }  // see map_shift()
-
 // ...................................................... Smart Keypad Delimiter
 
 static uint16_t postfix    = KC_SPC;  // see case DELIM
@@ -450,7 +448,7 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }      // pseudo tapdance ~ -> ~/
 #else
     if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }
 #endif
@@ -578,7 +576,7 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
   case STAGGER:  CYCLE(stagger);  // see PINKIE()
   }
   
-  CLR_1SHOT;                     // see leader_cap()
+  CLR_1SHOT;                      // see leader_cap()
   return true;
 }
 
