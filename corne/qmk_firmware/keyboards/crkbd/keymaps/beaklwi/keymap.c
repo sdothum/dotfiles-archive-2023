@@ -255,8 +255,8 @@ static bool     smart      = 1;       // see case SMART
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
   case HOME_A:
-    LEADERCAP;  MOD_BITS(KC_LSFT);                  break; // space/enter + shift shortcut, see leader_cap()
-  case HOME_T:  MOD_BITS(KC_RSFT);                  break;
+    LEADERCAP;  MOD_BITS(KC_LSFT); if (!KEY_DOWN) { unregister_code(KC_LSFT); }; break; // space/enter + shift shortcut, see leader_cap()
+  case HOME_T:  MOD_BITS(KC_RSFT); if (!KEY_DOWN) { unregister_code(KC_RSFT); }; break;
   case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
 
@@ -567,8 +567,8 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 // .................................................................. Other Keys
 
-#define CYCLE(n)  if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; break
-#define TOGGLE(b) if (KEY_DOWN) { b = !b; }; break
+#define CYCLE(n)  if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; return false
+#define TOGGLE(b) if (KEY_DOWN) { b = !b; }; return false
 
   case BRKTYPE:  CYCLE(brktype);  // see BRACKET()
   case HEXCASE:  TOGGLE(hexcase);
