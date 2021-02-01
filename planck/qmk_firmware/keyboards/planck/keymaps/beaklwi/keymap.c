@@ -247,16 +247,18 @@ static bool     smart      = 1;       // see case SMART
   case HOME_H:  HOME_ROLL(KC_LCTL, KC_H,      1);
   case HOME_E:  HOME_ROLL(KC_LALT, KC_E,      2);
   case HOME_A:
-    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);          // space/enter + shift shortcut, see leader_cap()
+    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);  // space/enter + shift shortcut, see leader_cap()
 
   case HOME_T:  HOME_ROLL(KC_RSFT, KC_T,      6);
   case HOME_R:  HOME_ROLL(KC_RALT, KC_R,      7);
   case HOME_S:  HOME_ROLL(KC_RCTL, KC_S,      8);
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
+#define HOME_MOD(k) if (!KEY_DOWN) { unregister_code(k); }; MOD_BITS(k); break
+
   case HOME_A:
-    LEADERCAP;  MOD_BITS(KC_LSFT); if (!KEY_DOWN) { unregister_code(KC_LSFT); }; break; // space/enter + shift shortcut, see leader_cap()
-  case HOME_T:  MOD_BITS(KC_RSFT); if (!KEY_DOWN) { unregister_code(KC_RSFT); }; break;
+    LEADERCAP;  HOME_MOD(KC_LSFT);                 // space/enter + shift shortcut, see leader_cap()
+  case HOME_T:  HOME_MOD(KC_RSFT);
   case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
 
