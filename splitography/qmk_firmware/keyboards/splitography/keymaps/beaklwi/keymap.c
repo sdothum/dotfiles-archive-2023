@@ -205,8 +205,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   }
 #endif
 
-  if (reshifted && !MOD_DOWN(KC_LSFT) && !MOD_DOWN(KC_RSFT)) { clear_mods(); reshifted = 0; }  // see map_shift()
-
 // ...................................................... Smart Keypad Delimiter
 
 static uint16_t postfix    = KC_SPC;  // see case DELIM
@@ -249,16 +247,18 @@ static bool     smart      = 1;       // see case SMART
   case HOME_H:  HOME_ROLL(KC_LCTL, KC_H,      1);
   case HOME_E:  HOME_ROLL(KC_LALT, KC_E,      2);
   case HOME_A:
-    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);          // space/enter + shift shortcut, see leader_cap()
+    LEADERCAP;  HOME_ROLL(KC_LSFT, KC_A,      3);  // space/enter + shift shortcut, see leader_cap()
 
   case HOME_T:  HOME_ROLL(KC_RSFT, KC_T,      6);
   case HOME_R:  HOME_ROLL(KC_RALT, KC_R,      7);
   case HOME_S:  HOME_ROLL(KC_RCTL, KC_S,      8);
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
+#define HOME_MOD(k) if (!KEY_DOWN) { unregister_code(k); }; MOD_BITS(k); break
+
   case HOME_A:
-    LEADERCAP;  MOD_BITS(KC_LSFT);                  break; // space/enter + shift shortcut, see leader_cap()
-  case HOME_T:  MOD_BITS(KC_RSFT);                  break;
+    LEADERCAP;  HOME_MOD(KC_LSFT);                 // space/enter + shift shortcut, see leader_cap()
+  case HOME_T:  HOME_MOD(KC_RSFT);
   case PINKY2:  toggle(record, KC_RGUI, PINKIE(2)); break;
 #endif
 
@@ -450,7 +450,7 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }      // pseudo tapdance ~ -> ~/
 #else
     if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }
 #endif
@@ -569,8 +569,8 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 // .................................................................. Other Keys
 
-#define CYCLE(n)  if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; break
-#define TOGGLE(b) if (KEY_DOWN) { b = !b; }; break
+#define CYCLE(n)  if (KEY_DOWN) { n = (n == 0) ? 1 : ((n == 1) ? 2 : 0); }; return false
+#define TOGGLE(b) if (KEY_DOWN) { b = !b; }; return false
 
   case BRKTYPE:  CYCLE(brktype);  // see BRACKET()
   case HEXCASE:  TOGGLE(hexcase);
@@ -578,7 +578,7 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
   case STAGGER:  CYCLE(stagger);  // see PINKIE()
   }
   
-  CLR_1SHOT;                     // see leader_cap()
+  CLR_1SHOT;                      // see leader_cap()
   return true;
 }
 

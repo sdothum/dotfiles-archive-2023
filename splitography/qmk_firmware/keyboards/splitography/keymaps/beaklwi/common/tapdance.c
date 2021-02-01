@@ -41,7 +41,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define DANCE_TAP(s, u, k) if (TAPS)   { send_string  (s); } \
                            else if (u) { SHIFT        (k); } \
                            else        { register_code(k); } \
-                           reset_tap_dance(state); return
+                           reset_tap_dance(state)
 
 // .......................................................... Double Tap Strings
 
@@ -61,8 +61,8 @@ void colon(STATE, void *user_data)
   DANCE_TAP(" :: ", UPPER, KC_SCLN);
 #else
   SHIFT(KC_SCLN); 
-#endif
   reset_tap_dance(state);
+#endif
 }
 
 void colon_reset(STATE, void *user_data)
