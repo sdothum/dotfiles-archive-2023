@@ -50,49 +50,7 @@
 // Hardware
 // ═════════════════════════════════════════════════════════════════════════════
 
-#ifdef CORNE
-#define KEYMAP LAYOUT
-#include QMK_KEYBOARD_H
-#ifdef RGBLIGHT_ENABLE
-//Following line allows macro to read current RGB settings
-extern rgblight_config_t rgblight_config;
-#endif
-extern uint8_t is_master;
-#endif
-
-#ifdef CHIMERA
-// #include "config.h"
-#include "chimera_ergo_42.h"
-// #include "action_layer.h"
-// #include "eeconfig.h"
-// extern keymap_config_t keymap_config;
-#endif
-
-#ifdef PLANCK
-#include "config.h"
-#include "planck.h"
-#include "action_layer.h"
-#ifdef STENO_ENABLE
-#include "keymap_steno.h"
-#endif
-#ifdef AUDIO_ENABLE
-#include "audio.h"
-#endif
-#include "eeconfig.h"
-#endif
-
-#ifdef SPLITOGRAPHY
-#include "config.h"
-#include "splitography.h"
-#include "action_layer.h"
-#ifdef STENO_ENABLE
-#include "keymap_steno.h"
-#endif
-#ifdef AUDIO_ENABLE
-#include "audio.h"
-#endif
-#include "eeconfig.h"
-#endif
+#include "hardware.h"
 
 // Keymaps
 // ═════════════════════════════════════════════════════════════════════════════
@@ -146,6 +104,9 @@ enum keyboard_layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #include "base_layout.h"
+
+// ............................................................... Plover Layout
+ 
 #ifdef STENO_ENABLE
 #include "steno_layout.h"
 #endif
@@ -167,12 +128,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #include "mouse_chord_layout.h"
 
 };
-
-#ifdef PLANCK
-// ...................................................................... Sounds
-
-#include "sounds.h"
-#endif
 
 // User Keycode Trap
 // ═════════════════════════════════════════════════════════════════════════════
@@ -239,10 +194,10 @@ static bool     smart      = 1;       // see case SMART
 
 // .......................................................... Home Row Modifiers
 
-#define HOME_ROLL(m, k, c) MOD_ROLL(m, k, c); break
-
   switch (keycode) {
 #ifdef ROLLOVER
+#define HOME_ROLL(m, k, c) MOD_ROLL(m, k, c); break
+
   case HOME_Q:  HOME_ROLL(KC_LGUI, KC_Q,      0);
   case HOME_H:  HOME_ROLL(KC_LCTL, KC_H,      1);
   case HOME_E:  HOME_ROLL(KC_LALT, KC_E,      2);
