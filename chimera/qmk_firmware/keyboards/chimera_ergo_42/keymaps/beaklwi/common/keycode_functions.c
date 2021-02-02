@@ -185,6 +185,7 @@ void roll_key(bool upcase, uint16_t keycode, uint8_t column)
       e[next_key].CLEAR_TIMER;                                                  // don't echo this shift key
     } else { ROLL; }                                                            // tap (shifted?) key
     if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }                          // restore shift for map_shift(), see UNIX
+    if (MOD_DOWN(KC_LSFT)) { register_code(KC_LSFT); }                          // .. for completeness
   } else   { ROLL; e[prev_key].CLEAR_TIMER; e[column].leadercap = 0; }          // don't echo preceeding modifier key
 }
 
