@@ -231,7 +231,7 @@ static bool     smart      = 1;       // see case SMART
 
   case LT_I:
 #ifdef LEFT_SPC_ENT
-    if (map_shifted(record, KC_LSFT, LOWER, KC_SPC, _REGEX)) { return false; }  // non-autorepeating
+    if (map_shift(record, KC_LSFT, LOWER, KC_SPC)) { return false; }  // non-autorepeating
 #endif
 #ifdef ROLLOVER
     if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
@@ -364,10 +364,10 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 // ......................................................... Shift Mapped Leader
 
 #ifdef ROLLOVER
-#define MAP(k, c) LEADERCAP; if (map_leader(record, KC_RSFT, LOWER, k, c)) { return false; }; break
+#define MAP(k, c) LEADERCAP; if (map_shift_event(record, KC_RSFT, LOWER, k, c)) { return false; }; break
 
   case HS_COLN:  MAP(KC_SCLN, 0);  // semi/colon + space/enter + shift shortcut, see leader_cap()
-  case KC_COMM:  MAP(KC_GRV, 1);   // comma + space/enter + shift shortcut, see leader_cap()
+  case KC_COMM:  MAP(KC_GRV,  1);  // comma + space/enter + shift shortcut, see leader_cap()
 #else
 #define MAP(k) LEADERCAP; if (map_shift(record, KC_RSFT, LOWER, k)) { return false; }; break
 
@@ -380,22 +380,23 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 #ifdef UNIX
 static uint16_t td_timer = 0;  // pseudo tapdance timer
 
-#define TAPDANCE if (KEY_DOWN) { td_timer = KEY_TAPPED(td_timer) ? 0 : timer_read(); }
+#define TAPDANCE    if (KEY_DOWN) { td_timer = KEY_TAPPED(td_timer) ? 0 : timer_read(); }
+#define TILDE_SLASH td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH
 #endif
 #ifdef ROLLOVER
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_leader(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH, 2)) { return false; }  // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2)) { return false; }  // pseudo tapdance ~ -> ~/
 #else
-    if (map_leader(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }
+    if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }
 #endif
     break;
 #else
   case KC_DOT:
     LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
 #ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH)) { return false; }      // pseudo tapdance ~ -> ~/
+    TAPDANCE; if (map_shift(record, KC_RSFT, TILDE_SLASH)) { return false; }           // pseudo tapdance ~ -> ~/
 #else
     if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }
 #endif
@@ -407,13 +408,13 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
   case KC_EXLM:
     LEADERCAP;  // exclamation + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    set_leader(record, keycode, 2);
+    set_leadercap(record, keycode, 2);
 #endif
     break;
   case KC_QUES:
     LEADERCAP;  // question + space/enter + shift shortcut, see leader_cap()
 #ifdef ROLLOVER
-    set_leader(record, keycode, 1);
+    set_leadercap(record, keycode, 1);
 #endif
     break;
 
