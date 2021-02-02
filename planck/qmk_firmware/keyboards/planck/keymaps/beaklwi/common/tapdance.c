@@ -33,6 +33,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #define TAPS               (state->count > 1)
 #define TAP_DOWN           (state->pressed)
+#define TAP_RELEASED       !TAP_DOWN
 
 #define SHIFT(k)           register_code(KC_LSFT); register_code(k)
 #define UNSHIFT(k)         unregister_code(k);     unregister_code(KC_LSFT)
@@ -75,8 +76,8 @@ void colon_reset(STATE, void *user_data)
 void equal(STATE, void *user_data)
 {
 #ifdef SPLITOGRAPHY
-  if (TAPS)           { send_string  ("=~"); }
-  else if (!TAP_DOWN) { register_code(KC_EQL); }
+  if (TAPS)              { send_string  ("=~"); }
+  else if (TAP_RELEASED) { register_code(KC_EQL); }
   reset_tap_dance(state);
 #else
   DANCE_TAP("=~", LOWER, KC_EQL);
