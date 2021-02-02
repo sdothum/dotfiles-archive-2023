@@ -171,6 +171,7 @@ static uint8_t prev_key    = 0;
 
 #define ONSHIFT(c)   (e[c].shift && e[c].key_timer < e[column].key_timer && e[column].side == ((c == LSHIFT) ? RIGHT : LEFT))
 #define ROLL         if (upcase || ONSHIFT(LSHIFT) || ONSHIFT(RSHIFT)) { TAP_SHIFT(keycode); } else { TAP(keycode); }
+#define RESTORE(k)   if (MOD_DOWN(k)) { register_code(k); }
 
 #define SHIFT_KEY(c) (c == LSHIFT || c == RSHIFT)
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
@@ -184,7 +185,8 @@ void roll_key(bool upcase, uint16_t keycode, uint8_t column)
       TAP_SHIFT(e[next_key].keycode);                                           // shift opposite home row key
       e[next_key].CLEAR_TIMER;                                                  // don't echo this shift key
     } else { ROLL; }                                                            // tap (shifted?) key
-    if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }                          // restore shift for map_shift(), see UNIX
+    RESTORE(KC_RSFT);                                                           // restore shift for map_shift(), see UNIX
+    RESTORE(KC_LSFT);                                                           // .. for completeness
   } else   { ROLL; e[prev_key].CLEAR_TIMER; e[column].leadercap = 0; }          // don't echo preceeding modifier key
 }
 
