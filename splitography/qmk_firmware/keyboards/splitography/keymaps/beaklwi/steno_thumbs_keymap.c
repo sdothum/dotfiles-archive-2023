@@ -50,25 +50,25 @@
 
   case LT_SPC:
 #ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, INVERT))           { return false; }
+    if (raise_layer(record, _TTCAPS, LEFT, INVERT)) { return false; }
 #endif
-    if (map_shifted(record, KC_LSFT, LOWER, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
-    if (map_shift(record, KC_RSFT, LOWER, KC_ENT))            { return false; }
+    if (map_shift(record, KC_LSFT, LOWER, KC_ENT))  { return false; }  // shift-space -> enter
+    if (map_shift(record, KC_RSFT, LOWER, KC_ENT))  { return false; }
 #ifdef ROLLOVER
-    leaderlayer = _SYMGUI;                                                       // see mod_roll()
-    if (mod_roll(record, 0, LOWER, KC_SPC, 11))               { return false; }  // KC_SPC -> space shift
+    leaderlayer = _SYMGUI;                                             // see mod_roll()
+    if (mod_roll(record, 0, LOWER, KC_SPC, 11))     { return false; }  // KC_SPC -> space shift
 #else
-    if (leader_cap (record, _SYMGUI, KC_SPC))                 { return false; }  // KC_SPC -> space shift
+    if (leader_cap (record, _SYMGUI, KC_SPC))       { return false; }  // KC_SPC -> space shift
 #endif
     rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
     break;
   case TT_SPC:
 #ifdef THUMB_CAPS
-    if (raise_layer(record, _TTCAPS, LEFT, INVERT))           { return false; }
+    if (raise_layer(record, _TTCAPS, LEFT, INVERT)) { return false; }
 #endif
-    if (map_shifted(record, KC_LSFT, LOWER, KC_ENT, _SYMGUI)) { return false; }  // rolling cursor to enter
-    if (map_shift(record, KC_RSFT, LOWER, KC_ENT))            { return false; }
-    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);  // because layer_toggle() issues <spc> before <enter> on map_shifted()
+    if (map_shift(record, KC_LSFT, LOWER, KC_ENT))  { unregister_code(KC_LSFT); return false; }  // shift-space -> enter
+    if (map_shift(record, KC_RSFT, LOWER, KC_ENT))  { unregister_code(KC_RSFT); return false; }  // .. undo map_shift() shift restore
+    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);
     break;
   case KC_SPC:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
