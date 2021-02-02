@@ -5,9 +5,6 @@
 
 // ................................................................ Global Scope
 
-static bool     leadercap  = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
-static uint16_t tt_keycode = 0;  // current TT state (keycode)
-
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
 #define KEY_DOWN  record->event.pressed
 
@@ -60,6 +57,8 @@ void toggle(RECORD, uint16_t modifier, uint16_t keycode)
 #endif
 
 // ................................................................... Key event
+
+static uint16_t tt_keycode = 0;  // current TT state (keycode)
 
 // alternate escape for TT layers, see process_record_user()
 void tt_escape(RECORD, uint16_t keycode)
@@ -118,6 +117,8 @@ void mod_tap(RECORD, uint16_t modifier, bool upcase, uint16_t keycode)
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ....................................................... Leader Capitalization
+
+static bool leadercap  = 0;  // substitute (0) keycode (1) leader + oneshot_SHIFT, see leader_cap()
 
 // LT (LAYER, KEY) -> <leader><SHIFT>, see process_record_user() and TD_TILD, KC_EXLM, KC_QUES
 bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
