@@ -40,7 +40,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .dijitTreeExpando { margin-left: 0 !important; opacity: 0 !important; margin-bottom: -1px !important; }
 
-.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { animation: blink 1.66s infinite; color: rgba(177,37,37,.6) !important; }
+.ttrss_index .dijitTreeRow .dijitTreeExpandoOpened { animation: blink 1.25s infinite; color: rgba(177,37,37,.6) !important; }
 
 @keyframes blink {  0% { opacity: 1.0; } 50% { opacity: 0.0; } 100% { opacity: 1.0; } }
 
