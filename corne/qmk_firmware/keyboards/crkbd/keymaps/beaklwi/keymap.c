@@ -364,25 +364,15 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 // ......................................................... Shift Mapped Leader
 
 #ifdef ROLLOVER
-  case HS_COLN:
-    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, KC_RSFT, LOWER, KC_SCLN, 0)) { return false; }
-    break;
+#define MAP(k, c) LEADERCAP; if (map_leader(record, KC_RSFT, LOWER, k, c)) { return false; }; break
 
-  case KC_COMM:
-    LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, KC_RSFT, LOWER, KC_GRV, 1)) { return false; }
-    break;
+  case HS_COLN:  MAP(KC_SCLN, 0);  // semi/colon + space/enter + shift shortcut, see leader_cap()
+  case KC_COMM:  MAP(KC_GRV, 1);   // comma + space/enter + shift shortcut, see leader_cap()
 #else
-  case HS_COLN:
-    LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, LOWER, KC_SCLN)) { return false; }
-    break;
+#define MAP(k) LEADERCAP; if (map_shift(record, KC_RSFT, LOWER, k)) { return false; }; break
 
-  case KC_COMM:
-    LEADERCAP;  // comma + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, LOWER, KC_GRV)) { return false; }
-    break;
+  case HS_COLN:  MAP(KC_SCLN);     // semi/colon + space/enter + shift shortcut, see leader_cap()
+  case KC_COMM:  MAP(KC_GRV);      // comma + space/enter + shift shortcut, see leader_cap()
 #endif
 
 // ...................................................... Shift Mapped Tap Dance
