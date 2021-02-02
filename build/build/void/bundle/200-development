@@ -8,7 +8,6 @@
 = ═══════
   libcurl-devel          # passenger dependency
   qt                     # amphetype dependency
-  qt-webkit              # fontmatrix dependency
 # qt5-devel              # amphetype2 dependency
 # qt5-xmlpatterns-devel  # amphetype2 dependency
 # qt5-multimedia-devel   # amphetype2 dependency
