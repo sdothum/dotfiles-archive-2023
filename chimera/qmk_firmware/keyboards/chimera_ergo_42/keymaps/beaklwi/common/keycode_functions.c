@@ -5,22 +5,23 @@
 
 // ................................................................ Global Scope
 
-#define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
-#define KEY_DOWN  record->event.pressed
+#define CLR_1SHOT    clear_oneshot_layer_state(ONESHOT_PRESSED)
+#define KEY_DOWN     record->event.pressed
+#define KEY_RELEASED !KEY_DOWN
 
-#define LEFT      1              // keyboard hand side
-#define RIGHT     2              // for (LEFT | RIGHT) bit test
+#define LEFT         1          // keyboard hand side
+#define RIGHT        2          // for (LEFT | RIGHT) bit test
 
-#define UPPER     1              // case
-#define LOWER     0
+#define UPPER        1          // case
+#define LOWER        0
 
-#define ONDOWN    0              // see raise_layer()
-#define INVERT    1
+#define ONDOWN       0          // see raise_layer()
+#define INVERT       1
 
 // ................................................................. Local Scope
 
-static uint8_t  i         = 0;   // inline for loop counter
-static uint16_t key_timer = 0;   // global event timer
+static uint8_t  i         = 0;  // inline for loop counter
+static uint16_t key_timer = 0;  // global event timer
 
 #define START_TIMER   key_timer = timer_read()
 #define CLEAR_TIMER   key_timer = 0
