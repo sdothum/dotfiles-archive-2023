@@ -184,6 +184,7 @@ void roll_key(bool upcase, uint16_t keycode, uint8_t column)
       TAP_SHIFT(e[next_key].keycode);                                           // shift opposite home row key
       e[next_key].CLEAR_TIMER;                                                  // don't echo this shift key
     } else { ROLL; }                                                            // tap (shifted?) key
+    if (MOD_DOWN(KC_RSFT)) { register_code(KC_RSFT); }                          // restore shift for map_shift(), see UNIX
   } else   { ROLL; e[prev_key].CLEAR_TIMER; e[column].leadercap = 0; }          // don't echo preceeding modifier key
 }
 
@@ -219,7 +220,7 @@ bool mod_roll(RECORD, uint16_t modifier, bool upcase, uint16_t keycode, uint8_t 
 // ................................................................. Map Keycode
 
 // handle map_shift() rolling keys (and dot chords)
-void set_leader(RECORD, uint16_t keycode, uint8_t column)
+void set_leadercap(RECORD, uint16_t keycode, uint8_t column)
 {
   uint16_t modifier = 0;                      // for SET_EVENT()
 
@@ -227,9 +228,9 @@ void set_leader(RECORD, uint16_t keycode, uint8_t column)
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
 
-bool map_leader(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t column)
+bool map_shift_event(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t column)
 {
-  set_leader(record, keycode, column);
+  set_leadercap(record, keycode, column);
   return map_shift(record, sftcode, upcase, keycode);
 }
 #endif
@@ -257,32 +258,6 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
     e[LSHIFT].CLEAR_TIMER;    // clear left handed separator modifier (key tap)
 #endif
     return true;
-  }
-  return false;
-}
-
-// conditional map_shift pass through on keycode down to complete layer_toggle(), see process_record_user()
-bool map_shifted(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t layer)
-{
-  if (MOD_DOWN(sftcode)) {
-    if (KEY_DOWN) {
-      START_TIMER;
-#ifdef ROLLOVER
-      e[RSHIFT].CLEAR_TIMER;  // clear punctuation modifier (key tap), see mod_roll()
-#endif
-    } else {
-      if (KEY_TAP) {
-        if (!upcase) { clear_mods(); }            // in event of unshifted keycode
-        TAP(keycode);
-        if (!upcase) { register_code(sftcode); }  // restore shift
-      }
-      CLEAR_TIMER;            // clear home row shift, see process_record_user() and sft_home()
-#ifdef ROLLOVER
-      e[LSHIFT].CLEAR_TIMER;  // clear left handed separator modifier (key tap)
-#endif
-      if (layer) { layer_off(layer); }            // disable MO layer (base layer == 0)
-      return true;
-    }
   }
   return false;
 }
