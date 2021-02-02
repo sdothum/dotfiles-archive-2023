@@ -421,10 +421,12 @@ static uint16_t td_timer = 0;  // pseudo tapdance timer
 // Alpha Keys
 // ═════════════════════════════════════════════════════════════════════════════
 
-// ............................................................... Modifier Keys
+// ...................................................... Capslock Modifier Keys
 
-  case TT_A:  layer_toggle(record, _TTBASEL, UPPER, KC_A); break;
-  case TT_T:  layer_toggle(record, _TTBASER, UPPER, KC_T); break;
+#define SHIFT_LAYER(m, l, k) layer_toggle(record, l, UPPER, k); MOD_BITS(m); break
+
+  case TT_A:  SHIFT_LAYER(KC_LSFT, _TTBASEL, KC_A);
+  case TT_T:  SHIFT_LAYER(KC_RSFT, _TTBASER, KC_T);
 
 // ..................................................... Remaining Rollover Keys
 
