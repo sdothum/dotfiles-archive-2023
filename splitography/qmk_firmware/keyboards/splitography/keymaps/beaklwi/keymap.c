@@ -366,7 +366,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 #ifdef ROLLOVER
   case HS_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_leader(record, KC_RSFT, LOWER, KC_COLN, 0)) { return false; }
+    if (map_leader(record, KC_RSFT, LOWER, KC_SCLN, 0)) { return false; }
     break;
 
   case KC_COMM:
@@ -376,7 +376,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 #else
   case HS_COLN:
     LEADERCAP;  // semi/colon + space/enter + shift shortcut, see leader_cap()
-    if (map_shift(record, KC_RSFT, LOWER, KC_COLN)) { return false; }
+    if (map_shift(record, KC_RSFT, LOWER, KC_SCLN)) { return false; }
     break;
 
   case KC_COMM:
