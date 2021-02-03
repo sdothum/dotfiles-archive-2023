@@ -9,6 +9,7 @@
   compton
   compton-conf
   lxappearance
+  qt5-ct
   setroot
 # unclutter
   unclutter-xfixes
@@ -42,14 +43,17 @@
 # msttcorefonts
 
 
-= gtk theme/engine
+= gtk/qt5 theme/engine
 = ════════════════
   Adapta
+# adwaita-qt
+# arc-theme           # qt5 dark themes
   breeze-hacked-cursor-theme
-  gtk-engine-murrine
+  gtk-engine-murrine  # for rox-filer lxappearance theming
   meson
-# paper-icon-theme  # missing down arrow menu button
+# paper-icon-theme    # missing down arrow menu button
   papirus-icon-theme
+# qt5-styleplugins
 
 
 = notification
