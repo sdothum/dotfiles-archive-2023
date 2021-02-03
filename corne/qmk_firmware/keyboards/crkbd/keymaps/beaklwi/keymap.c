@@ -209,7 +209,7 @@ static bool     smart      = 1;       // see case SMART
   case HOME_S:  HOME_ROLL(KC_RCTL, KC_S,      8);
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
 #else
-#define HOME_MOD(k) if (KEY_RELEASED) { unregister_code(k); }; MOD_BITS(k); break
+#define HOME_MOD(k) if (KEY_UP) { unregister_code(k); }; MOD_BITS(k); break
 
   case HOME_A:
     LEADERCAP;  HOME_MOD(KC_LSFT);                 // space/enter + shift shortcut, see leader_cap()
@@ -278,12 +278,12 @@ static bool     smart      = 1;       // see case SMART
     layer_toggle(record, _SYMGUI, LOWER, KC_SPC);
     break;
   case KC_SPC:
-    if (KEY_RELEASED) { CLR_1SHOT; }  // see leader_cap()
+    if (KEY_UP) { CLR_1SHOT; }  // see leader_cap()
     break;
 
   case LT_BSPC:
   case KC_BSPC:
-    if (KEY_RELEASED) { CLR_1SHOT; }  // see leader_cap()
+    if (KEY_UP) { CLR_1SHOT; }  // see leader_cap()
     if (map_shift(record, KC_LSFT, LOWER, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, LOWER, KC_DEL)) { return false; }
     break;
