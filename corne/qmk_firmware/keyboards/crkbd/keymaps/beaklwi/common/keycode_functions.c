@@ -66,7 +66,7 @@ void tt_escape(RECORD, uint16_t keycode)
 {
   if (tt_keycode && tt_keycode != keycode) { base_layer(0); }  // if different TT layer selected
   if (KEY_DOWN)     { START_TIMER; }
-  else if (KEY_TAP) { tt_keycode = keycode; CLEAR_TIMER; }
+  else if (KEY_TAP) { CLEAR_TIMER; tt_keycode = keycode; }
   else              { CLEAR_TIMER; }
 }
 
@@ -98,7 +98,7 @@ static uint8_t mods = 0;
 #define UNMOD(k)   unregister_code(k); MOD_BITS(k)
 
 // smart chording (0) none (KC_*) modifier keycode (MOD_* | ..) compound modifier bitcode
-#define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD(k); }   else { register_mods((uint8_t) k); } }
+#define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD  (k); } else { register_mods  ((uint8_t) k); } }
 #define UNCHORD(k) if (k) { if (IS_MOD(k)) { UNMOD(k); } else { unregister_mods((uint8_t) k); } }
 
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes

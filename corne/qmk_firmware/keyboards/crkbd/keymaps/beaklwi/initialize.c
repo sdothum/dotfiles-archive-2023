@@ -3,6 +3,8 @@
 // Initialization
 // ═════════════════════════════════════════════════════════════════════════════
 
+// ....................................................................... Corne
+ 
 #ifdef CORNE
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
@@ -67,6 +69,8 @@ void iota_gfx_task_user(void) {
 #endif
 #endif
 
+// ...................................................................... Planck
+
 #ifdef PLANCK
 void matrix_init_user(void)
 {
@@ -82,6 +86,8 @@ void matrix_init_user(void)
 #include "audio.h"
 #endif
 
+// ................................................................ Splitography
+
 #ifdef SPLITOGRAPHY
 void matrix_init_user(void)
 {
@@ -92,14 +98,13 @@ void matrix_init_user(void)
 }
 #endif
 
+// ..................................................................... Chimera
+
 #ifdef CHIMERA
 void matrix_init_user(void)
 {
   base_layer(0);
 }
-
-// Layer States
-// ═════════════════════════════════════════════════════════════════════════════
 
 void matrix_scan_user(void) {
   uint8_t layer = biton32(layer_state);
