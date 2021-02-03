@@ -160,7 +160,7 @@ void dot_reset(STATE, void *user_data)
 
 #define IRC_ENTER _delay_ms(10); TAP(KC_ENT)
 
-#define CTL_V     register_code(KC_LCTL); TAP(KC_V);       unregister_code(KC_LCTL)
+#define CTL_V     register_code(KC_LCTL); TAP      (KC_V); unregister_code(KC_LCTL)
 #define CTL_SFT_V register_code(KC_LCTL); TAP_SHIFT(KC_V); unregister_code(KC_LCTL)
 
 void paste(STATE, void *user_data)

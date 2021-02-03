@@ -250,40 +250,24 @@ static bool     smart      = 1;       // see case SMART
 // ............................................................ Right Thumb Keys
 
 #ifdef ROLLOVER
-  case LT_ENT:
-    leaderlayer = _EDIT;                            // see mod_roll()
-    if (MOD_ROLL(0, KC_ENT, 10)) { return false; }  // KC_ENT -> enter shift
-    break;
-  case KC_ENT:
-    if (MOD_ROLL(0, KC_ENT, 10)) { return false; }  // KC_ENT from LT_ENT -> enter enter* shift
-    break;
-
-  case LT_SPC:
-    leaderlayer = _SYMGUI;                          // see mod_roll()
-    if (MOD_ROLL(0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
-    break;
+  case LT_ENT:  leaderlayer = _EDIT; if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;    // KC_ENT -> enter shift
+  case KC_ENT:  if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;                         // KC_ENT from LT_ENT -> enter enter* shift
 #else
-  case LT_ENT:
-    if (leader_cap(record, _EDIT, KC_ENT)) { return false; }    // KC_ENT -> enter shift
-    break;
-  case KC_ENT:
-    if (leader_cap(record, 0, KC_ENT)) { return false; }        // KC_ENT from LT_ENT -> enter enter* shift
-    break;
-
-  case LT_SPC:
-    if (leader_cap(record, _SYMGUI, KC_SPC)) { return false; }  // KC_SPC -> space shift
-    break;
+  case LT_ENT:  if (leader_cap(record, _EDIT, KC_ENT)) { return false; }; break;               // KC_ENT -> enter shift
+  case KC_ENT:  if (leader_cap(record, 0,     KC_ENT)) { return false; }; break;               // KC_ENT from LT_ENT -> enter enter* shift
 #endif
-  case TT_SPC:
-    layer_toggle(record, _SYMGUI, LOWER, KC_SPC);
-    break;
-  case KC_SPC:
-    if (KEY_UP) { CLR_1SHOT; }  // see leader_cap()
-    break;
+
+#ifdef ROLLOVER
+  case LT_SPC:  leaderlayer = _SYMGUI; if (MOD_ROLL(0, KC_SPC, 11)) { return false; }; break;  // KC_SPC -> space shift
+#else
+  case LT_SPC:  if (leader_cap(record, _SYMGUI, KC_SPC)) { return false; }; break;             // KC_SPC -> space shift
+#endif
+  case TT_SPC:  layer_toggle(record, _SYMGUI, LOWER, KC_SPC); break;
+  case KC_SPC:  if (KEY_UP) { CLR_1SHOT; }; break;  // see leader_cap()
 
   case LT_BSPC:
   case KC_BSPC:
-    if (KEY_UP) { CLR_1SHOT; }  // see leader_cap()
+    if (KEY_UP) { CLR_1SHOT; }                      // see leader_cap()
     if (map_shift(record, KC_LSFT, LOWER, KC_DEL)) { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, LOWER, KC_DEL)) { return false; }
     break;
