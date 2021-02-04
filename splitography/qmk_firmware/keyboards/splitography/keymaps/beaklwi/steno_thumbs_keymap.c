@@ -31,22 +31,26 @@
 #ifdef ROLLOVER
     if (mod_roll(record, 0, LOWER, KC_I, 4))         { return false; }  // MO(_REGEX) -> layer_toggle(_REGEX, KC_I)
 #endif
-    rolling_layer(record, LEFT, 0, 0, _REGEX, _SYMGUI);
+    rolling_layer(record, LEFT, _REGEX, _SYMGUI);
     break;
-  case TT_I:
-    layer_toggle(record, _REGEX, UPPER, KC_I);
-    break;
+  case TT_I:  layer_toggle(record, _REGEX, UPPER, KC_I); break;
 
-  case TD_EQL:
-    if (tt_keycode) { break; }                           // no thumb mouse layer on toggle layer
-    rolling_layer(record, LEFT, 0, 0, _MOUSE, _SYMGUI);  // equal handled by tapdance
-    break;
+// ............................................................ Mapped Tap Dance
+
+#define EQUAL_MATCH first_tap ? LOWER : UPPER, first_tap ? KC_EQL : KC_GRV
+
+  case DT_EQL:
+    if (tt_keycode) { break; }                     // no thumb mouse layer on toggle layer
+    DOUBLETAP; press(record, EQUAL_MATCH);         // doubletap == -> =~/
+    rolling_layer(record, LEFT, _MOUSE, _SYMGUI);  // see ML_BSLS
+    return false; 
 
 // ............................................................ Right Thumb Keys
 
-  case ML_BSLS:
-    rolling_layer(record, RIGHT, LOWER, KC_BSLS, _MOUSE, _REGEX);  // see TD_EQL
-    break;
+  case ML_BSLS: 
+    press(record, LOWER, KC_BSLS);
+    rolling_layer(record, RIGHT, _MOUSE, _REGEX);  // see KC_EQL
+    return false;
 
   case LT_SPC:
 #ifdef THUMB_CAPS
@@ -60,7 +64,7 @@
 #else
     if (leader_cap (record, _SYMGUI, KC_SPC))       { return false; }  // KC_SPC -> space shift
 #endif
-    rolling_layer(record, RIGHT, 0, 0, _SYMGUI, _REGEX);
+    rolling_layer(record, RIGHT, _SYMGUI, _REGEX);
     break;
   case TT_SPC:
 #ifdef THUMB_CAPS
@@ -70,9 +74,7 @@
     if (map_shift(record, KC_RSFT, LOWER, KC_ENT))  { unregister_code(KC_RSFT); return false; }  // .. undo map_shift() shift restore
     layer_toggle(record, _SYMGUI, LOWER, KC_SPC);
     break;
-  case KC_SPC:
-    if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()
-    break;
+  case KC_SPC:  if (!KEY_DOWN) { CLR_1SHOT; }; break;  // see leader_cap()
 
   case LT_BSPC:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()

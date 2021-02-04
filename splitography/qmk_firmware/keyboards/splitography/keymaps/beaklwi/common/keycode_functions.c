@@ -7,20 +7,21 @@
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
 #define KEY_DOWN  record->event.pressed
+#define KEY_UP    !KEY_DOWN
 
-#define LEFT      1              // keyboard hand side
-#define RIGHT     2              // for (LEFT | RIGHT) bit test
+#define LEFT      1             // keyboard hand side
+#define RIGHT     2             // for (LEFT | RIGHT) bit test
 
-#define UPPER     1              // case
+#define UPPER     1             // case
 #define LOWER     0
 
-#define ONDOWN    0              // see raise_layer()
+#define ONDOWN    0             // see raise_layer()
 #define INVERT    1
 
 // ................................................................. Local Scope
 
-static uint8_t  i         = 0;   // inline for loop counter
-static uint16_t key_timer = 0;   // global event timer
+static uint8_t  i         = 0;  // inline for loop counter
+static uint16_t key_timer = 0;  // global event timer
 
 #define START_TIMER   key_timer = timer_read()
 #define CLEAR_TIMER   key_timer = 0
@@ -37,7 +38,6 @@ static uint16_t key_timer = 0;   // global event timer
 #define TAP_SHIFT(k)   register_code(KC_LSFT); TAP(k); unregister_code(KC_LSFT)
 #define TAP_CASE(u, k) if (u) { TAP_SHIFT(k); } else { TAP(k); }
 
-#ifdef PINKIE_STAGGER
 void type(RECORD, bool upcase, uint16_t keycode)
 {
   if (KEY_DOWN) {
@@ -49,10 +49,18 @@ void type(RECORD, bool upcase, uint16_t keycode)
   }
 }
 
+#ifdef SPLITOGRAPHY
+void press(RECORD, bool upcase, uint16_t keycode)
+{
+  if (key_press(record)) { TAP_CASE(upcase, keycode); }
+}
+#endif
+
+#ifdef PINKIE_STAGGER
 void toggle(RECORD, uint16_t modifier, uint16_t keycode)
 {
   if (KEY_DOWN) { START_TIMER; register_code(modifier); }
-  else          { unregister_code(modifier); if (KEY_TAP) { TAP(keycode); } }
+  else          { unregister_code(modifier); if (KEY_TAP) { TAP(keycode); }; CLEAR_TIMER; }
 }
 #endif
 
@@ -64,9 +72,7 @@ static uint16_t tt_keycode = 0;  // current TT state (keycode)
 void tt_escape(RECORD, uint16_t keycode)
 {
   if (tt_keycode && tt_keycode != keycode) { base_layer(0); }  // if different TT layer selected
-  if (KEY_DOWN)     { START_TIMER; }
-  else if (KEY_TAP) { tt_keycode = keycode; CLEAR_TIMER; }
-  else              { CLEAR_TIMER; }
+  if (key_press(record))                   { tt_keycode = keycode; }
 }
 
 // tapped or not?
@@ -97,7 +103,7 @@ static uint8_t mods = 0;
 #define UNMOD(k)   unregister_code(k); MOD_BITS(k)
 
 // smart chording (0) none (KC_*) modifier keycode (MOD_* | ..) compound modifier bitcode
-#define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD(k); }   else { register_mods((uint8_t) k); } }
+#define CHORD(k)   if (k) { if (IS_MOD(k)) { MOD  (k); } else { register_mods  ((uint8_t) k); } }
 #define UNCHORD(k) if (k) { if (IS_MOD(k)) { UNMOD(k); } else { unregister_mods((uint8_t) k); } }
 
 // ALT_T, CTL_T, GUI_T, SFT_T for shifted keycodes
@@ -357,20 +363,16 @@ static uint8_t rightside = 0;
 #define SWITCH_LAYER(x, y) layer_off(x); x = 0; if (y && y == _MOUSE) { layer_on(facing); y = facing; }
 
 // seamlessly switch left / right thumb layer combinations
-void rolling_layer(RECORD, uint8_t side, bool upcase, uint16_t keycode, uint8_t layer, uint8_t facing)
+void rolling_layer(RECORD, uint8_t side, uint8_t layer, uint8_t facing)
 {
   if (KEY_DOWN) {
     layer_on(layer);
     if (side == LEFT) { leftside  = layer; }
     else              { rightside = layer; }
-    START_TIMER;
   } else {
     layer_off(_MOUSE);
-    if (keycode && KEY_TAP) { TAP_CASE(upcase, keycode); }
     if (side == LEFT) { SWITCH_LAYER(leftside, rightside); }
     else              { SWITCH_LAYER(rightside, leftside); }
-    // clear_mods();
-    CLEAR_TIMER;
   }
 }
 #endif
