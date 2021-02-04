@@ -52,6 +52,7 @@ enum keyboard_keycodes {
 #else
  ,TT_ESC
 #endif
+ ,DT_EQL
  ,TT_A     // pseudo LT(_TTBASEL, S(KC_A))
  ,TT_I     // pseudo LT(_REGEX,   S(KC_I))
  ,TT_T     // pseudo LT(_TTBASER, S(KC_T))
@@ -76,11 +77,6 @@ enum keyboard_keycodes {
 #endif
 
 // tap dance macros
-#ifndef EQLEQL
-#define HS_EQL  TD_EQL
-#else
-#define HS_EQL  KC_EQL
-#endif
 #ifdef HASKELL
 #define HS_COLN TD_COLN
 #define HS_GT   TD_GT
@@ -89,11 +85,6 @@ enum keyboard_keycodes {
 #define HS_COLN KC_COLN
 #define HS_GT   KC_GT
 #define HS_LT   KC_LT
-#endif
-#ifdef UNIX
-#define HS_TILD TD_TILD
-#else
-#define HS_TILD KC_TILD
 #endif
 
 // editing macros

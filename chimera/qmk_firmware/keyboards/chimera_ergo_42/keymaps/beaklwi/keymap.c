@@ -146,6 +146,9 @@ static uint8_t  stagger      = PINKIE_STAGGER;          // pinkie on (0) home ro
 
 // ............................................................... Keycode Cycle
 
+static uint16_t first_tap = 0;     // tap timer (time) first (0) second
+
+#define DOUBLETAP         if (KEY_DOWN) { first_tap = KEY_TAPPED(first_tap) ? 0 : timer_read(); }
 #define LEADERCAP         leadercap = KEY_DOWN ? 1 : 0
 #define MOD_ROLL(m, k, c) mod_roll(record, m, LOWER, k, c)
 
@@ -195,6 +198,7 @@ static bool     smart      = 1;       // see case SMART
 // .......................................................... Home Row Modifiers
 
   switch (keycode) {
+
 #ifdef ROLLOVER
 #define HOME_ROLL(m, k, c) MOD_ROLL(m, k, c); break
 
@@ -208,6 +212,7 @@ static bool     smart      = 1;       // see case SMART
   case HOME_R:  HOME_ROLL(KC_RALT, KC_R,      7);
   case HOME_S:  HOME_ROLL(KC_RCTL, KC_S,      8);
   case PINKY2:  HOME_ROLL(KC_RGUI, PINKIE(2), 9);
+
 #else
 #define HOME_MOD(k) if (KEY_UP) { unregister_code(k); }; MOD_BITS(k); break
 
@@ -289,6 +294,7 @@ static bool hexcase = HEXADECIMAL_CASE;  // hex case (0) lower case abcdef (1) u
   case HEX_D:  HEX(KC_LCTL,             KC_D, 1);
   case HEX_E:  HEX(KC_LALT,             KC_E, 2);
   case HEX_F:  HEX(KC_LSFT,             KC_F, 3);
+
 #else
 #define HEX(m, k) mod_tap(record, m, hexcase, k)
 
@@ -312,6 +318,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
   case L_BRKT:  BRACKET(0,                   LEFT,  1);
   case R_BRKT:  BRACKET(MOD_LALT | MOD_LSFT, RIGHT, 2);
+
 #else
 #define BRACKET(m, s) mod_tap(record, m, brkts[brktype][0], brkts[brktype][s]); break
 
@@ -352,6 +359,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
   case HS_COLN:  MAP(KC_SCLN, 0);  // semi/colon + space/enter + shift shortcut, see leader_cap()
   case KC_COMM:  MAP(KC_GRV,  1);  // comma + space/enter + shift shortcut, see leader_cap()
+
 #else
 #define MAP(k) LEADERCAP; if (map_shift(record, KC_RSFT, LOWER, k)) { return false; }; break
 
@@ -359,48 +367,42 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
   case KC_COMM:  MAP(KC_GRV);      // comma + space/enter + shift shortcut, see leader_cap()
 #endif
 
-// ...................................................... Shift Mapped Tap Dance
+// .................................................... (Shift) Mapped Tap Dance
 
 #ifdef UNIX
-static uint16_t td_timer = 0;  // pseudo tapdance timer
+#define TILDE_SLASH first_tap ? UPPER : LOWER, first_tap ? KC_GRV : KC_SLSH
 
-#define TAPDANCE    if (KEY_DOWN) { td_timer = KEY_TAPPED(td_timer) ? 0 : timer_read(); }
-#define TILDE_SLASH td_timer ? UPPER : LOWER, td_timer ? KC_GRV : KC_SLSH
-#endif
 #ifdef ROLLOVER
-  case KC_DOT:
-    LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
-#ifdef UNIX
-    TAPDANCE; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2)) { return false; }  // pseudo tapdance ~ -> ~/
+  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2)) { return false; };  // doubletap ~~ -> ~/
 #else
-    if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }
+  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift(record, KC_RSFT, TILDE_SLASH)) { return false; }            // doubletap ~~ -> ~/
+#endif
+#else
+#ifdef ROLLOVER
+  case KC_DOT:  LEADERCAP; if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
+#else
+  case KC_DOT:  LEADERCAP; if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }           // dot + space/enter + shift shortcut, see leader_cap()
+#endif
 #endif
     break;
-#else
-  case KC_DOT:
-    LEADERCAP;  // dot + space/enter + shift shortcut, see leader_cap()
-#ifdef UNIX
-    TAPDANCE; if (map_shift(record, KC_RSFT, TILDE_SLASH)) { return false; }           // pseudo tapdance ~ -> ~/
-#else
-    if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }
+
+#ifndef SPLITOGRAPHY
+#ifndef EQLEQL
+#define EQUAL_MATCH first_tap ? LOWER : UPPER, first_tap ? KC_EQL : KC_GRV
+
+  case DT_EQL:  DOUBLETAP; type(record, EQUAL_MATCH); return false;  // doubletap == -> =~/
 #endif
-    break;
 #endif
 
 // ....................................................... Leader Capitalization
 
+#ifdef ROLLOVER
+  case KC_EXLM:  LEADERCAP; set_leadercap(record, keycode, 2); break;  // exclamation + space/enter + shift shortcut, see leader_cap()
+  case KC_QUES:  LEADERCAP; set_leadercap(record, keycode, 1); break;  // question + space/enter + shift shortcut, see leader_cap()
+#else
   case KC_EXLM:
-    LEADERCAP;  // exclamation + space/enter + shift shortcut, see leader_cap()
-#ifdef ROLLOVER
-    set_leadercap(record, keycode, 2);
+  case KC_QUES:  LEADERCAP; break;
 #endif
-    break;
-  case KC_QUES:
-    LEADERCAP;  // question + space/enter + shift shortcut, see leader_cap()
-#ifdef ROLLOVER
-    set_leadercap(record, keycode, 1);
-#endif
-    break;
 
 // Alpha Keys
 // ═════════════════════════════════════════════════════════════════════════════
