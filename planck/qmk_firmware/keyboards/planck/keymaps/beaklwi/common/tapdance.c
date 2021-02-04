@@ -3,25 +3,16 @@
 #include "config.h"  // for ale linter
 #include "tapdance.h"
 
-// Tap Dance
-// ═════════════════════════════════════════════════════════════════════════════
-
 // .......................................................... Tap Dance Keycodes
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [_ASTR]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, asterisk, asterisk_reset)
  ,[_COMM]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, comma, comma_reset)
  ,[_DOT]    = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, dot, dot_reset)
-#ifndef EQLEQL
- ,[_EQL]    = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, equal, equal_reset, HASKELL_TERM)
-#endif
 #ifdef HASKELL
  ,[_COLN]   = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, colon, colon_reset, HASKELL_TERM)
  ,[_GT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, greater, greater_reset, HASKELL_TERM)
  ,[_LT]     = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lesser, lesser_reset, HASKELL_TERM)
-#endif
-#ifdef UNIX
- ,[_TILD]   = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, tilde, tilde_reset)
 #endif
  ,[_PASTE]  = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, paste, paste_reset)
  ,[_PRIV]   = ACTION_TAP_DANCE_FN              (private)
@@ -72,24 +63,6 @@ void colon_reset(STATE, void *user_data)
   UNSHIFT        (KC_SCLN);
 }
 
-#ifndef EQLEQL
-void equal(STATE, void *user_data)
-{
-#ifdef SPLITOGRAPHY
-  if (TAPS)         { send_string  ("=~"); }
-  else if (TAP_END) { register_code(KC_EQL); }
-  reset_tap_dance(state);
-#else
-  DANCE_TAP("=~", LOWER, KC_EQL);
-#endif
-}
-
-void equal_reset(STATE, void *user_data)
-{
-  unregister_code(KC_EQL);
-}
-#endif
-
 #ifdef HASKELL
 void greater(STATE, void *user_data)
 {
@@ -109,18 +82,6 @@ void lesser(STATE, void *user_data)
 void lesser_reset(STATE, void *user_data)
 {
   UNSHIFT(KC_COMM);
-}
-#endif
-
-#ifdef UNIX
-void tilde(STATE, void *user_data)
-{
-  DANCE_TAP("~/", UPPER, KC_GRV);
-}
-
-void tilde_reset(STATE, void *user_data)
-{
-  UNSHIFT(KC_GRV);
 }
 #endif
 
@@ -160,7 +121,7 @@ void dot_reset(STATE, void *user_data)
 
 #define IRC_ENTER _delay_ms(10); TAP(KC_ENT)
 
-#define CTL_V     register_code(KC_LCTL); TAP(KC_V);       unregister_code(KC_LCTL)
+#define CTL_V     register_code(KC_LCTL); TAP      (KC_V); unregister_code(KC_LCTL)
 #define CTL_SFT_V register_code(KC_LCTL); TAP_SHIFT(KC_V); unregister_code(KC_LCTL)
 
 void paste(STATE, void *user_data)
