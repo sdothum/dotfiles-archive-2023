@@ -44,20 +44,19 @@ uint16_t tapping_term(uint16_t keycode)
   default:      return TAPPING_TERM;
   }
 }
-#endif
 
 // ............................................................... Keycode State
 
 static uint16_t keycode = 0;  // default keycode for when tapping_term() macro substitution has none!
 
-#define KEY_DOWN      record->event.pressed
-#define KEY_UP        !KEY_DOWN
-#ifdef ROLLOVER
 #define KEY_TAPPED(t) (timer_elapsed(t) < tapping_term(keycode))
 #else
 #define KEY_TAPPED(t) (timer_elapsed(t) < TAPPING_TERM)
 #endif
 #define KEY_TAP       KEY_TAPPED(key_timer)
+
+#define KEY_DOWN      record->event.pressed
+#define KEY_UP        !KEY_DOWN
 
 // Keycodes
 // ═════════════════════════════════════════════════════════════════════════════
