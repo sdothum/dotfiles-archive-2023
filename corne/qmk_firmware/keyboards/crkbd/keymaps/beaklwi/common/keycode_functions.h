@@ -23,4 +23,5 @@ void clear_events(void);
 void clear_layers(void);
 void oneshot_shift(uint8_t layer);
 void roll_key(bool upcase, uint16_t keycode, uint8_t column);
+uint16_t tapping_term(uint16_t keycode);
 void toggle_plover(uint8_t state);

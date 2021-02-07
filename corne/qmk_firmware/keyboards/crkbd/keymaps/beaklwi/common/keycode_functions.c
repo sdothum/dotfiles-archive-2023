@@ -3,11 +3,13 @@
 #include "config.h"  // for ale linter
 #include "keycode_functions.h"
 
-// ................................................................ Global Scope
+// ...................................................................... Global
+
+static uint8_t i = 0;           // inline for loop counter
+
+// .............................................................. Keyboard State
 
 #define CLR_1SHOT clear_oneshot_layer_state(ONESHOT_PRESSED)
-#define KEY_DOWN  record->event.pressed
-#define KEY_UP    !KEY_DOWN
 
 #define LEFT      1             // keyboard hand side
 #define RIGHT     2             // for (LEFT | RIGHT) bit test
@@ -18,15 +20,43 @@
 #define ONDOWN    0             // see raise_layer()
 #define INVERT    1
 
-// ................................................................. Local Scope
+// ................................................................ Tapping Term
 
-static uint8_t  i         = 0;  // inline for loop counter
 static uint16_t key_timer = 0;  // global event timer
 
-#define START_TIMER   key_timer = timer_read()
-#define CLEAR_TIMER   key_timer = 0
+#define START_TIMER  key_timer = timer_read()
+#define CLEAR_TIMER  key_timer = 0
 
+#ifdef ROLLOVER
+#define ROLLING_TERM TAPPING_TERM + 50
+
+uint16_t tapping_term(uint16_t keycode)
+{
+  switch (keycode) {
+  case HOME_Q:
+  case HOME_H:
+  case HOME_E:
+  case HOME_R:
+  case HOME_S:
+  case PINKY2:  return ROLLING_TERM;  // longer to prevent false rolling GUI CTL ALT (workflow) triggering, see mod_roll()
+  case HOME_A:
+  case HOME_T:
+  default:      return TAPPING_TERM;
+  }
+}
+#endif
+
+// ............................................................... Keycode State
+
+static uint16_t keycode = 0;  // default keycode for when tapping_term() macro substitution has none!
+
+#define KEY_DOWN      record->event.pressed
+#define KEY_UP        !KEY_DOWN
+#ifdef ROLLOVER
+#define KEY_TAPPED(t) (timer_elapsed(t) < tapping_term(keycode))
+#else
 #define KEY_TAPPED(t) (timer_elapsed(t) < TAPPING_TERM)
+#endif
 #define KEY_TAP       KEY_TAPPED(key_timer)
 
 // Keycodes
