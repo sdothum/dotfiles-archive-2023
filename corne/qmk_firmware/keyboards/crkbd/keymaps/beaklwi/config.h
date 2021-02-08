@@ -31,9 +31,9 @@
 
 // rolling home row modifiers (replaces LSFT_T, LGUI_T, LCTL_T, LALT_T qmk macros)
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
-#define ROLLOVER 1
+#define ROLLING 1
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define TAPPING_TERM 200
 #else
 #define IGNORE_MOD_TAP_INTERRUPT
