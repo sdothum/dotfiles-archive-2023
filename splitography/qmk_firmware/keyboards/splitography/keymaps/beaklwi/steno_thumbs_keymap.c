@@ -28,7 +28,7 @@
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, LOWER, KC_SPC))   { return false; }
 #endif
-#ifdef ROLLOVER
+#ifdef ROLLING
     if (mod_roll(record, 0, LOWER, KC_I, 4))         { return false; }  // MO(_REGEX) -> layer_toggle(_REGEX, KC_I)
 #endif
     rolling_layer(record, LEFT, _REGEX, _SYMGUI);
@@ -58,7 +58,7 @@
 #endif
     if (map_shift(record, KC_LSFT, LOWER, KC_ENT))  { return false; }  // shift-space -> enter
     if (map_shift(record, KC_RSFT, LOWER, KC_ENT))  { return false; }
-#ifdef ROLLOVER
+#ifdef ROLLING
     leaderlayer = _SYMGUI;                                             // see mod_roll()
     if (mod_roll(record, 0, LOWER, KC_SPC, 11))     { return false; }  // KC_SPC -> space shift
 #else

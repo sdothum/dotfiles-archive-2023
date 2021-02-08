@@ -11,7 +11,7 @@ enum keyboard_keycodes {
 #ifdef STENO_ENABLE
  ,PLOVER
 #endif
-#ifdef ROLLOVER
+#ifdef ROLLING
  ,HOME_Q   // pseudo GUI_T(KC_Q)
  ,HOME_H   // pseudo CTL_T(KC_H)
  ,HOME_E   // pseudo ALT_T(KC_E)
@@ -59,7 +59,7 @@ enum keyboard_keycodes {
  ,TT_SPC   // pseudo LT(_SYMGUI,  KC_SPC)
 };
 
-#ifndef ROLLOVER
+#ifndef ROLLING
 #define HOME_Q  GUI_T(KC_Q)
 #define HOME_H  CTL_T(KC_H)
 #define HOME_E  ALT_T(KC_E)
@@ -102,7 +102,7 @@ enum keyboard_keycodes {
 #define LT_BSPC LT(_EDIT, KC_BSPC)
 #define LT_ESC  LT(_NUMBER, KC_ESC)
 #define TT_ESC  MO(_NUMBER)
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define LT_I    MO(_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
 #else
 #define LT_I    LT(_REGEX, KC_I)
@@ -112,7 +112,7 @@ enum keyboard_keycodes {
 #define LT_BSPC LT(_MOUSE, KC_BSPC)
 #define LT_ESC  LT(_FNCKEY, KC_ESC)
 #define LT_TAB  LT(_NUMBER, KC_TAB)
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define LT_I    MO(_REGEX)   // plus mod_roll() -> LT(_REGEX, KC_I)
 #define LT_ENT  MO(_EDIT)    // plus mod_roll() -> LT(_EDIT, KC_ENT)
 #define LT_SPC  MO(_SYMGUI)  // plus mod_roll() -> LT(_SYMGUI, KC_SPC)

@@ -199,7 +199,7 @@ static bool     smart      = 1;       // see case SMART
 
   switch (keycode) {
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define HOME_ROLL(m, k, c) MOD_ROLL(m, k, c); break
 
   case HOME_Q:  HOME_ROLL(KC_LGUI, KC_Q,      0);
@@ -238,7 +238,7 @@ static bool     smart      = 1;       // see case SMART
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, LOWER, KC_SPC)) { return false; }  // non-autorepeating
 #endif
-#ifdef ROLLOVER
+#ifdef ROLLING
     if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #endif
     break;
@@ -254,7 +254,7 @@ static bool     smart      = 1;       // see case SMART
 
 // ............................................................ Right Thumb Keys
 
-#ifdef ROLLOVER
+#ifdef ROLLING
   case LT_ENT:  leaderlayer = _EDIT; if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;    // KC_ENT -> enter shift
   case KC_ENT:  if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;                         // KC_ENT from LT_ENT -> enter enter* shift
 #else
@@ -262,7 +262,7 @@ static bool     smart      = 1;       // see case SMART
   case KC_ENT:  if (leader_cap(record, 0,     KC_ENT)) { return false; }; break;               // KC_ENT from LT_ENT -> enter enter* shift
 #endif
 
-#ifdef ROLLOVER
+#ifdef ROLLING
   case LT_SPC:  leaderlayer = _SYMGUI; if (MOD_ROLL(0, KC_SPC, 11)) { return false; }; break;  // KC_SPC -> space shift
 #else
   case LT_SPC:  if (leader_cap(record, _SYMGUI, KC_SPC)) { return false; }; break;             // KC_SPC -> space shift
@@ -285,7 +285,7 @@ static bool     smart      = 1;       // see case SMART
 
 static bool hexcase = HEXADECIMAL_CASE;  // hex case (0) lower case abcdef (1) upper case ABCDEF, see case HEXCASE
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define HEX(m, k, c) mod_roll(record, m, hexcase, k, c); break
 
   case HEX_A:  HEX(0,                   KC_A, 1);
@@ -313,7 +313,7 @@ static uint16_t brkts[][3] = { {LOWER, KC_LBRC, KC_RBRC},    // [] (side 1 -> 2)
                                {UPPER, KC_LCBR, KC_RCBR} };  // {}
 static uint8_t  brktype    = 0;                              // default (0) [], see case BRKTYPE
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define BRACKET(m, s, c) mod_roll(record, m, brkts[brktype][0], brkts[brktype][s], c); break
 
   case L_BRKT:  BRACKET(0,                   LEFT,  1);
@@ -330,7 +330,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 #define POSTCASE postfix == KC_G ? UPPER : LOWER
 
-#ifdef ROLLOVER
+#ifdef ROLLING
   case DELIM:
     if (leadercap) { mod_roll(record, 0, LOWER,    KC_X,    3); }  // 0x
     else           { mod_roll(record, 0, POSTCASE, postfix, 3); }  // smart vim goto
@@ -354,7 +354,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 // ......................................................... Shift Mapped Leader
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define MAP(k, c) LEADERCAP; if (map_shift_event(record, KC_RSFT, LOWER, k, c)) { return false; }; break
 
   case HS_COLN:  MAP(KC_SCLN, 0);  // semi/colon + space/enter + shift shortcut, see leader_cap()
@@ -372,13 +372,13 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 #ifdef UNIX
 #define TILDE_SLASH first_tap ? UPPER : LOWER, first_tap ? KC_GRV : KC_SLSH
 
-#ifdef ROLLOVER
+#ifdef ROLLING
   case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2)) { return false; };  // doubletap ~~ -> ~/
 #else
   case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift(record, KC_RSFT, TILDE_SLASH)) { return false; }            // doubletap ~~ -> ~/
 #endif
 #else
-#ifdef ROLLOVER
+#ifdef ROLLING
   case KC_DOT:  LEADERCAP; if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
 #else
   case KC_DOT:  LEADERCAP; if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }           // dot + space/enter + shift shortcut, see leader_cap()
@@ -396,7 +396,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 // ....................................................... Leader Capitalization
 
-#ifdef ROLLOVER
+#ifdef ROLLING
   case KC_EXLM:  LEADERCAP; set_leadercap(record, keycode, 2); break;  // exclamation + space/enter + shift shortcut, see leader_cap()
   case KC_QUES:  LEADERCAP; set_leadercap(record, keycode, 1); break;  // question + space/enter + shift shortcut, see leader_cap()
 #else
@@ -416,7 +416,7 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 // ..................................................... Remaining Rollover Keys
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define CASE_ROLL(k, c) case k: MOD_ROLL(0, k, c); return false
 
   CASE_ROLL(KC_Y,    1);  // top row 3
@@ -454,12 +454,12 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 #define TYPE_LOWER(r) type(record, LOWER, PINKIE(r)); break
 #define TYPE_UPPER(r) type(record, UPPER, PINKIE(r)); break
 
-#ifndef ROLLOVER
+#ifndef ROLLING
   case PINKY3:
 #endif
   case KEY3:    TYPE_LOWER(3);
   case KEY2:    TYPE_LOWER(2);
-#ifndef ROLLOVER
+#ifndef ROLLING
   case PINKY1:
 #endif
   case KEY1:    TYPE_LOWER(1);
