@@ -27,8 +27,11 @@ static uint16_t key_timer = 0;  // global event timer
 #define START_TIMER  key_timer = timer_read()
 #define CLEAR_TIMER  key_timer = 0
 
-#ifdef ROLLOVER
+#ifdef ROLLING
+#ifndef ROLLING_TERM
+// longer TAPPING_TERM to prevent false rolling GUI CTL ALT (workflow) triggering, see mod_roll()
 #define ROLLING_TERM TAPPING_TERM + 50
+#endif
 
 uint16_t tapping_term(uint16_t keycode)
 {
@@ -38,7 +41,7 @@ uint16_t tapping_term(uint16_t keycode)
   case HOME_E:
   case HOME_R:
   case HOME_S:
-  case PINKY2:  return ROLLING_TERM;  // longer to prevent false rolling GUI CTL ALT (workflow) triggering, see mod_roll()
+  case PINKY2:  return ROLLING_TERM;
   case HOME_A:
   case HOME_T:
   default:      return TAPPING_TERM;
@@ -47,7 +50,7 @@ uint16_t tapping_term(uint16_t keycode)
 
 // ............................................................... Keycode State
 
-static uint16_t keycode = 0;  // default keycode for when tapping_term() macro substitution has none!
+static uint16_t keycode = 0;  // default keycode for when tapping_term() macro substitution scope has none defined!
 
 #define KEY_TAPPED(t) (timer_elapsed(t) < tapping_term(keycode))
 #else
@@ -173,7 +176,7 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 
 // ................................................................ Rolling Keys
 
-#ifdef ROLLOVER
+#ifdef ROLLING
 #define SET_EVENT(c) e[c].START_TIMER;           \
                      e[c].keycode   = keycode;   \
                      e[c].shift     = (modifier == KC_LSFT || modifier == KC_RSFT); \
@@ -211,7 +214,7 @@ static uint8_t prev_key    = 0;
 
 #define SHIFT_KEY(c) (c == LSHIFT || c == RSHIFT)
 // apply rolling shift to opposite hand (0) for all keys (1) opposite shift key only
-#define SHIFT_KEYS   (!ROLLOVER || (ROLLOVER && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
+#define SHIFT_KEYS   (!ROLLING || (ROLLING && SHIFT_KEY(column) && SHIFT_KEY(next_key)))
 
 void roll_key(bool upcase, uint16_t keycode, uint8_t column)
 {
@@ -283,7 +286,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
       if (!upcase) { clear_mods(); }            // in event of unshifted keycode
       register_code(keycode);
       map = 1;                // in case shift key is released first
-#ifdef ROLLOVER
+#ifdef ROLLING
       e[RSHIFT].CLEAR_TIMER;  // clear punctuation modifier (key tap), see mod_roll()
 #endif
     } else {
@@ -292,7 +295,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
       map = 0;
     }
     CLEAR_TIMER;              // clear home row shift, see process_record_user()
-#ifdef ROLLOVER
+#ifdef ROLLING
     e[LSHIFT].CLEAR_TIMER;    // clear left handed separator modifier (key tap)
 #endif
     return true;
@@ -317,7 +320,7 @@ void clear_layers(void)
   mods       = 0;
   tt_keycode = 0;
   CLEAR_TIMER;
-#ifdef ROLLOVER
+#ifdef ROLLING
   clear_events();
 #endif
 }
