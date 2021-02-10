@@ -24,8 +24,8 @@ sudo sh /usr/share/doc/dovecot/mkcert.sh
 sudo cp /etc/ssl/certs/dovecot.pem /etc/ca-certificates/trust-source/anchors/dovecot.crt
 # sudo trust extract-compat  # not configured for void
 
-sudo cp -v /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot/
-sudo cp -rv /usr/share/doc/dovecot/example-config/conf.d /etc/dovecot/
+sudo cp -v /usr/share/examples/dovecot/dovecot.conf /etc/dovecot/
+sudo cp -rv /usr/share/examples/dovecot/conf.d /etc/dovecot/
 echo "$USER:{PLAIN}$password:$(id -u $USER):$(id -g $USER)::$HOME" >/tmp/users
 sudo mv /tmp/users /etc/dovecot/
 
