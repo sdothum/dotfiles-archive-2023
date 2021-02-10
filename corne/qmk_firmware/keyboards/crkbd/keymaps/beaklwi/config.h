@@ -35,6 +35,7 @@
 
 #ifdef ROLLING
 #define TAPPING_TERM 200
+// #define ROLLING_TERM 275
 #else
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
