@@ -7,7 +7,7 @@
 # ....................................................................... Server
 
 usage() {
-  echo "usage: $(basename $0) 'start | 1'pass [<name>] | C'ertificate | f'ilter <name>|allmail | I'nitialize [<name>] | L'|l'og | Q'uiet | q'uit | r'estart | t'oggle"
+  echo "usage: $(basename $0) 'start | 1'pass [<name>] | C'ertificate | f'ilter [<name>]|allmail | I'nitialize [<name>] | L'|l'og | Q'uiet | q'uit | r'estart | t'oggle"
   ditto INFO 'renew Certificate to correct periodic fingerprint mismatch'
   ditto INFO '"imap f allmail" is reserved for rebuilding full gmail download'
   exit 1
@@ -76,7 +76,7 @@ case $1 in
     imap l ;;
 
 C*) rm -f $IMAPFILTER/certificates; imap f ;;
-f*) filter $2 ;;
+f*) filter ${2:-dovecot} ;;
 I*) init $2 ;;
 L*) log imapfilter $IMAPFILTER/$filter ;;
 l*) log offlineimap $OFFLINEIMAPRC ;;

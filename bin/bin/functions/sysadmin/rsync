@@ -145,7 +145,7 @@ vps() {
 case $1 in
 ''      ) usage ;;
 arm     ) cpu arm && rsync -r --delete --exclude='*sync-conflict*' $USER@$SERVER:$STOW $HOME/ ;;
-backup  ) server && { ifyes 'backup /net to /backup' && rsync -r --delete /net/* /backup/; } ;;
+backup  ) server && { ifyes 'backup /net to /backup' && rsync -r --delete --exclude='.cache' /net/* /backup/; } ;;
 
 home    ) ifyes "backup $HOME to /net/archive" || exit
           mkdir -pv /net/archive/home || exit 1

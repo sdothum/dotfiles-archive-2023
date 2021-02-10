@@ -2,6 +2,7 @@
 # tuple: <action> <package> -> file: .xb_<action>, see xb
 
 mail     alot
+imap     dovecot
 ttrss    php-fpm
 gpg      pinentry-gtk
 database postgresql
