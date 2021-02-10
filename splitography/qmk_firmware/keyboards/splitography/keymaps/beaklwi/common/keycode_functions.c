@@ -30,7 +30,7 @@ static uint16_t key_timer = 0;  // global event timer
 #ifdef ROLLING
 #ifndef ROLLING_TERM
 // longer TAPPING_TERM to prevent false rolling GUI CTL ALT (workflow) triggering, see mod_roll()
-#define ROLLING_TERM TAPPING_TERM + 50
+#define ROLLING_TERM TAPPING_TERM + TAPPING_TERM / 3
 #endif
 
 uint16_t tapping_term(uint16_t keycode)
