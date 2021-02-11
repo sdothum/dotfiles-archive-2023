@@ -141,11 +141,11 @@ enum keyboard_keycodes {
 #endif
 
 #ifdef TEST
-#define FLASH   TG(_TEST)
+#define ROM     TG(_TEST)
 #else
 #ifdef CORNE
-#define FLASH   RESET
+#define ROM     RESET
 #else
-#define FLASH   KC_NO
+#define ROM     KC_NO
 #endif
 #endif
