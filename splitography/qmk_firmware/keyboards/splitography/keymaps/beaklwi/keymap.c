@@ -477,12 +477,12 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
                  smart   = 1;                \
                  stagger = PINKIE_STAGGER
 
-#define RESET(s) if (raise_layer(record, 0, s, INVERT)) { dual_down = 2; return false; }                                \
+#define RAISE(s) if (raise_layer(record, 0, s, INVERT)) { dual_down = 2; return false; }                                \
                  if (dual_down)                         { dual_down--; base_layer(dual_down); DEFAULTS; return false; } \
                  tt_escape(record, keycode); break
 
-  case TGL_TL:  RESET(LEFT);
-  case TGL_TR:  RESET(RIGHT);
+  case TGL_TL:  RAISE(LEFT);
+  case TGL_TR:  RAISE(RIGHT);
   case TGL_HL:
   case TGL_HR:
   case TGL_BL:
