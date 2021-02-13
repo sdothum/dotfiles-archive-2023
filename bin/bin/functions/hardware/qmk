@@ -68,7 +68,7 @@ echo CPATH=$CPATH
 case $model in
 chimera) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
 corne  ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
-planck ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # use rev1 rules
+planck ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # rev1 board
 *      ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
 esac
 sudo chown -R $USER:users $QMK
