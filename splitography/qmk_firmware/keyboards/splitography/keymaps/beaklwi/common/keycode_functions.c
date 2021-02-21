@@ -283,7 +283,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
 {
   if (map || MOD_DOWN(sftcode)) {
     if (KEY_DOWN) {
-      if (!upcase) { clear_mods(); }            // in event of unshifted keycode
+      if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
       register_code(keycode);
       map = 1;                // in case shift key is released first
 #ifdef ROLLING
@@ -291,7 +291,7 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
 #endif
     } else {
       unregister_code(keycode);
-      if (!upcase) { register_code(sftcode); }  // restore shift
+      if (!upcase) { register_code(sftcode); }    // restore shift
       map = 0;
     }
     CLEAR_TIMER;              // clear home row shift, see process_record_user()
