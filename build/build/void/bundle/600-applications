@@ -4,6 +4,11 @@
 # see bundle_install
 
 
+# android
+# ═══════
+  android-tools
+  scrcpy
+
 = astronomy
 = ═════════
 # stellarium

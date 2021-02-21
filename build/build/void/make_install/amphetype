@@ -5,13 +5,7 @@
 
 # .................................................................... amphetype
 
-AMPHETYPE=/opt/amphetype/Amphetype.py
-
-cd /net/depot
-[ -d amphetype ] || git clone https://github.com/webiest/amphetype.git
-
-sudo cp -rf amphetype /opt
-ditto amphetype "$(echo "#!/usr/bin/dash\npython2 $AMPHETYPE" | sudo tee /usr/bin/amphetype | tail -1)"
-sudo chmod 755 /usr/bin/amphetype
+# now QT5 compatible!
+pip install --user amphetype
 
 # vim: set ft=sh: #

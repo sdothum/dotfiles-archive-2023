@@ -15,7 +15,7 @@
 
 = file transfer
 = ═════════════
-# gftp
+  gftp
 d nzbget
 # sabnzbd  [server]
 d m sonarr [server]
