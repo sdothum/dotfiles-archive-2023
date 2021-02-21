@@ -153,9 +153,9 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .titleWrap { white-space: normal !important; }
 
 /* feed title */
-.ttrss_index a.title { font-family: Raleway,Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13.25px !important; font-weight: 700 !important; }
+.ttrss_index a.title { font-family: "Jost*",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 14px !important; font-weight: 500 !important; }
 
-.ttrss_index .Unread a.title { color: rgba(0,0,0,.85) !important; }
+.ttrss_index .Unread a.title { color: rgba(0,0,0,.90) !important; }
 
 /* feed summary */
 .ttrss_index .cdm.expandable:not(.active) span.author { display: none !important; }
@@ -189,7 +189,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index #floatingTitle span.updated { display: none !important; }
 
-.ttrss_index .active .title { font-size: 21px !important; font-weight: 600 !important; }
+.ttrss_index .active .title { font-size: 21px !important; font-weight: 500 !important; }
 
 /* expanded content */
 .ttrss_index .content-inner { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
