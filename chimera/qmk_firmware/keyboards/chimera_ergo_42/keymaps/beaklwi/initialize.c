@@ -71,7 +71,9 @@ void iota_gfx_task_user(void) {
 #ifdef PLANCK
 void matrix_init_user(void)
 {
+#ifdef ROLLING
   clear_events();
+#endif
 #ifdef STENO_ENABLE
   steno_set_mode(STENO_MODE_BOLT);  // or STENO_MODE_GEMINI
 #endif
@@ -88,7 +90,9 @@ void matrix_init_user(void)
 #ifdef SPLITOGRAPHY
 void matrix_init_user(void)
 {
+#ifdef ROLLING
   clear_events();
+#endif
 #ifdef STENO_ENABLE
   steno_set_mode(STENO_MODE_BOLT);  // or STENO_MODE_GEMINI
 #endif
