@@ -1,0 +1,12 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Network
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................................... Android
+
+adb devices | grep -q 'device$' || { notify critical 'Connect phone to USB-C'; exit; }
+term 'android' scrcpy
+
+# vim: set ft=sh: #
