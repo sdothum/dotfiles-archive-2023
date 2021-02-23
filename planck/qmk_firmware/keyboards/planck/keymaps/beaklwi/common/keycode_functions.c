@@ -303,6 +303,26 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
   return false;
 }
 
+#ifdef ROLLING
+// remap keycode with rolling timing (special case for same hand remap loses autorepeat)
+bool roll_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t column)
+{
+  uint16_t modifier = 0;  // for SET_EVENT()
+
+  if (map || MOD_DOWN(sftcode)) {
+    if (KEY_DOWN) {
+      SET_EVENT(column);
+    } else if (KEY_TAPPED(e[column].key_timer)) {
+      if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
+      roll_key(upcase, keycode, column);
+      if (!upcase) { register_code(sftcode); }    // restore shift
+    }
+    return true;
+  }
+  return false;
+}
+#endif
+
 // Layers
 // ═════════════════════════════════════════════════════════════════════════════
 
