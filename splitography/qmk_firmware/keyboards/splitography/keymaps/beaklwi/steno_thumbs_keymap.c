@@ -24,12 +24,12 @@
     break;
 
   case LT_I:
-    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN)) { return false; }
+    if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN))   { return false; }
 #ifdef LEFT_SPC_ENT
-    if (roll_shift(record, KC_LSFT, LOWER, KC_SPC))  { return false; }
+    if (roll_shift(record, KC_LSFT, LOWER, KC_SPC, 4)) { return false; }
 #endif
 #ifdef ROLLING
-    if (mod_roll(record, 0, LOWER, KC_I, 4))         { return false; }  // MO(_REGEX) -> layer_toggle(_REGEX, KC_I)
+    if (mod_roll(record, 0, LOWER, KC_I, 4))           { return false; }  // MO(_REGEX) -> layer_toggle(_REGEX, KC_I)
 #endif
     rolling_layer(record, LEFT, _REGEX, _SYMGUI);
     break;
