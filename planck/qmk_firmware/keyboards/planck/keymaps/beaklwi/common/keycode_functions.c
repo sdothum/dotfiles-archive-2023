@@ -177,6 +177,8 @@ bool leader_cap(RECORD, uint8_t layer, uint16_t keycode)
 // ................................................................ Rolling Keys
 
 #ifdef ROLLING
+uint16_t modifier = 0;           // absent default for SET_EVENT()
+
 #define SET_EVENT(c) e[c].START_TIMER;           \
                      e[c].keycode   = keycode;   \
                      e[c].shift     = (modifier == KC_LSFT || modifier == KC_RSFT); \
@@ -263,8 +265,6 @@ bool mod_roll(RECORD, uint16_t modifier, bool upcase, uint16_t keycode, uint8_t 
 // handle map_shift() rolling keys (and dot chords)
 void set_leadercap(RECORD, uint16_t keycode, uint8_t column)
 {
-  uint16_t modifier = 0;                      // for SET_EVENT()
-
   if (KEY_DOWN) { SET_EVENT(column); }
   else          { e[column].leadercap = 0; }  // clear leader capitalization, see mod_roll()
 }
@@ -307,12 +307,9 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
 // remap keycode with rolling timing (special case for same hand remap loses autorepeat)
 bool roll_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t column)
 {
-  uint16_t modifier = 0;  // for SET_EVENT()
-
   if (map || MOD_DOWN(sftcode)) {
-    if (KEY_DOWN) {
-      SET_EVENT(column);
-    } else if (KEY_TAPPED(e[column].key_timer)) {
+    if (KEY_DOWN) { SET_EVENT(column); }
+    else if (KEY_TAPPED(e[column].key_timer)) {
       if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
       roll_key(upcase, keycode, column);
       if (!upcase) { register_code(sftcode); }    // restore shift
