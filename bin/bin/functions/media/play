@@ -96,7 +96,7 @@ while : ;do
           rm -rf "$1"
           break ;;
 
-  quit  ) pkill -f 'dmenu'; blackboard; xdotool key alt+Tab; exit ;;  # next active window
+  quit  ) pkill -f 'dmenu'; blackboard; xdotool key alt+Shift+Tab; exit ;;  # goto last active window
   replay) pulse; continue ;;
   *     ) break ;;
   esac
