@@ -236,7 +236,7 @@ static bool     smart      = 1;       // see case SMART
 
   case LT_I:
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, LOWER, KC_SPC)) { return false; }  // non-autorepeating
+    if (roll_shift(record, KC_LSFT, LOWER, KC_SPC, 4)) { return false; }  // non-autorepeating
 #endif
 #ifdef ROLLING
     if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)

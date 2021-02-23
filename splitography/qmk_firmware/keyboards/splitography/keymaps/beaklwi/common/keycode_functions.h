@@ -12,6 +12,7 @@ void mod_tap(RECORD, uint16_t modifier, bool upcase, uint16_t keycode);
 void press(RECORD, bool upcase, uint16_t keycode);
 bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert);
 void rolling_layer(RECORD, uint8_t side, uint8_t layer, uint8_t facing);
+bool roll_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t column);
 void set_leadercap(RECORD, uint16_t keycode, uint8_t column);
 void steno(RECORD);
 void toggle(RECORD, uint16_t modifier, uint16_t keycode);
