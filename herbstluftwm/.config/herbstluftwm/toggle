@@ -25,7 +25,7 @@ close() {
   focus window
   return 0
 }
-
+set -x
 # special term processing toggles on unique title
 toggle_term() {
   if xdotool search --limit 1 --classname "$1" >/dev/null ;then
@@ -47,8 +47,10 @@ toggle_term() {
 # toggle application, note application specific exception handling
 toggle_app() {
   # handle rox filer binary name
-  [ $msg = rox ] && app=ROX-Filer
-  if pgrep -lf ${app:-$msg} | grep -qv $0 ;then
+  case $msg in
+  rox   ) app=ROX-Filer       ;;
+  esac
+  if pgrep -lf ${app:-$msg} | grep -qv toggle ;then
     case $msg in
     xpad    ) xpad --quit;      exit ;;  # xpad multiple windows shortcut
     decorate) killall decorate; exit ;;
@@ -67,6 +69,8 @@ toggle_app() {
           herbstclient bring $i
         fi
       done
+    else
+      focus $msg $@
     fi
     unlock
   else
