@@ -7,8 +7,10 @@
 # ........................................................................ Steno
 
 # Tx Bolt usb ports
+grep -q "dialout.*$USER" /etc/group || sudo useradd -G dialout $USER
+grep -q "tty.*$USER"     /etc/group || sudo useradd -G tty $USER
 sudo chown $USER:users /dev/ttyACM*
 
-/usr/bin/plover &
+$HOME/bin/plover.AppImage &
 
 # vim: set ft=sh: #

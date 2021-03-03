@@ -106,7 +106,7 @@ while : ;do
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
   "$SEARCH") surf $usenet; pwait "surf $usenet"; continue ;;
-  "$EDIT"  ) killall 'ROX-Filer'; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
+  "$EDIT"  ) killall 'ROX-Filer'; focus frame; rox $nzb; rox "$library"; pwait "ROX-Filer"; cache ;;
   *        ) movie=$(echo "$movie" | sed "s/^$SEP //"); playback ;;
   esac
 done
