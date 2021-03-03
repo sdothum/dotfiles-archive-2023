@@ -18,6 +18,8 @@ optimized for "Jost*" and "Roboto" fonts
 
 body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
+/* body.ttrss_index #content-wrap * { background-color: #fefbf5 !important; } */
+
 .ttrss_index { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
 
 .ttrss_index .dijitTreeContainer { padding-top: 0 !important; margin-top: -10px; }
