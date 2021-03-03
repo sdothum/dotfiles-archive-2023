@@ -235,10 +235,10 @@ static bool     smart      = 1;       // see case SMART
   case LT_ESC:  if (tt_keycode) { base_layer(0); return false; }; break;
 
   case LT_I:
+#ifdef ROLLING
 #ifdef LEFT_SPC_ENT
     if (roll_shift(record, KC_LSFT, LOWER, KC_SPC, 4)) { return false; }  // non-autorepeating
 #endif
-#ifdef ROLLING
     if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #endif
     break;
@@ -249,7 +249,7 @@ static bool     smart      = 1;       // see case SMART
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, LOWER, KC_ENT)) { return false; }
 #endif
-    if (map_shift(record, KC_RSFT, UPPER, KC_TAB)) { return false; }
+    if (map_tab(record, KC_RSFT, UPPER))           { return false; }
     break;
 
 // ............................................................ Right Thumb Keys
