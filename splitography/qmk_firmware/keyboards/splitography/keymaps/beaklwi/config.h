@@ -30,7 +30,7 @@
 #define UNIX
 
 // thumb capslock toggle on and off (default on only to preseve bspc auto-repeat)
-#define THUMB_CAPS
+// #define THUMB_CAPS
 // left home shift I -> space
 #define LEFT_SPACE
 

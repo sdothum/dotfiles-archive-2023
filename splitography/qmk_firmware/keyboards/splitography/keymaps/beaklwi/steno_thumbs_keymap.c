@@ -18,8 +18,8 @@
     if (map_shift(record, KC_LSFT, LOWER, KC_ENT))  { return false; }
 #endif
     if (raise_layer(record, _FNCKEY, LEFT, ONDOWN)) { return false; }
-    if (map_shift(record, KC_LSFT, UPPER, KC_TAB))  { return false; }
-    if (map_shift(record, KC_RSFT, LOWER, KC_TAB))  { return false; }
+    if (map_tab(record, KC_LSFT, UPPER))            { return false; }
+    if (map_tab(record, KC_RSFT, LOWER))            { return false; }
     if (tt_keycode)                                 { base_layer(0); return false; }
     break;
 
@@ -83,7 +83,7 @@
 #endif
     if (map_shift(record, KC_LSFT, LOWER, KC_DEL))    { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, LOWER, KC_DEL))    { return false; }
-    if (leader_cap (record, _EDIT, KC_ENT))           { return false; }  // see KC_BSPC for multi-tap
+    if (leader_cap(record, _EDIT, KC_ENT))            { return false; }  // see KC_BSPC for multi-tap
     break;
   case KC_BSPC:
     if (!KEY_DOWN) { CLR_1SHOT; }  // see leader_cap()

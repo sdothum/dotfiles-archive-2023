@@ -320,6 +320,22 @@ bool roll_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t
 }
 #endif
 
+bool map_tab(RECORD, uint16_t sftcode, bool upcase)
+{
+  if (MOD_DOWN(sftcode)) {
+    if (KEY_DOWN) { START_TIMER; return true; }
+    else if (KEY_TAP) {
+      if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
+      TAP(KC_TAB);
+      if (!upcase) { register_code(sftcode); }    // restore shift
+    }
+    CLEAR_TIMER;
+    return true;
+  }
+  return false;
+}
+
+
 // Layers
 // ═════════════════════════════════════════════════════════════════════════════
 
