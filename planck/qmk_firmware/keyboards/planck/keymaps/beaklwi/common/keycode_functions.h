@@ -7,6 +7,7 @@ void layer_toggle(RECORD, uint8_t layer, bool upcase, uint16_t keycode);
 bool leader_cap(RECORD, uint8_t layer, uint16_t keycode);
 bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode);
 bool map_shift_event(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t column);
+bool map_tab(RECORD, uint16_t sftcode, bool upcase);
 bool mod_roll(RECORD, uint16_t modifier, bool upcase, uint16_t keycode, uint8_t column);
 void mod_tap(RECORD, uint16_t modifier, bool upcase, uint16_t keycode);
 void press(RECORD, bool upcase, uint16_t keycode);
