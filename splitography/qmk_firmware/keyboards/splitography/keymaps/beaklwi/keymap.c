@@ -240,6 +240,10 @@ static bool     smart      = 1;       // see case SMART
     if (roll_shift(record, KC_LSFT, LOWER, KC_SPC, 4)) { return false; }  // non-autorepeating
 #endif
     if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
+#else
+#ifdef LEFT_SPC_ENT
+    if (map_shift(record, KC_LSFT, LOWER, KC_SPC)) { return false; }
+#endif
 #endif
     break;
   case TT_I:  layer_toggle(record, _REGEX, UPPER, KC_I); break;
@@ -249,7 +253,7 @@ static bool     smart      = 1;       // see case SMART
 #ifdef LEFT_SPC_ENT
     if (map_shift(record, KC_LSFT, LOWER, KC_ENT)) { return false; }
 #endif
-    if (map_tab(record, KC_RSFT, UPPER))           { return false; }
+    if (map_shift(record, KC_LSFT, UPPER, KC_ENT)) { return false; }
     break;
 
 // ............................................................ Right Thumb Keys

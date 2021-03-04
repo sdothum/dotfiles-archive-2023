@@ -18,18 +18,22 @@
     if (map_shift(record, KC_LSFT, LOWER, KC_ENT))  { return false; }
 #endif
     if (raise_layer(record, _FNCKEY, LEFT, ONDOWN)) { return false; }
-    if (map_tab(record, KC_LSFT, UPPER))            { return false; }
-    if (map_tab(record, KC_RSFT, LOWER))            { return false; }
+    if (map_shift(record, KC_LSFT, UPPER, KC_TAB))  { return false; }
+    if (map_shift(record, KC_RSFT, LOWER, KC_TAB))  { return false; }
     if (tt_keycode)                                 { base_layer(0); return false; }
     break;
 
   case LT_I:
     if (raise_layer(record, _FNCKEY, RIGHT, ONDOWN))   { return false; }
+#ifdef ROLLING
 #ifdef LEFT_SPC_ENT
     if (roll_shift(record, KC_LSFT, LOWER, KC_SPC, 4)) { return false; }
 #endif
-#ifdef ROLLING
     if (mod_roll(record, 0, LOWER, KC_I, 4))           { return false; }  // MO(_REGEX) -> layer_toggle(_REGEX, KC_I)
+#else
+#ifdef LEFT_SPC_ENT
+    if (map_shift(record, KC_LSFT, LOWER, KC_SPC))     { return false; }
+#endif
 #endif
     rolling_layer(record, LEFT, _REGEX, _SYMGUI);
     break;
