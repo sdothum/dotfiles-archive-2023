@@ -293,11 +293,11 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
       unregister_code(keycode);
       if (!upcase) { register_code(sftcode); }    // restore shift
       map = 0;
-    }
-    CLEAR_TIMER;              // clear home row shift, see process_record_user()
+      CLEAR_TIMER;              // clear home row shift, see process_record_user()
 #ifdef ROLLING
-    e[LSHIFT].CLEAR_TIMER;    // clear left handed separator modifier (key tap)
+      e[LSHIFT].CLEAR_TIMER;    // clear left handed separator modifier (key tap)
 #endif
+    }
     return true;
   }
   return false;
@@ -319,22 +319,6 @@ bool roll_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode, uint8_t
   return false;
 }
 #endif
-
-bool map_tab(RECORD, uint16_t sftcode, bool upcase)
-{
-  if (MOD_DOWN(sftcode)) {
-    if (KEY_DOWN) { START_TIMER; return true; }
-    else if (KEY_TAP) {
-      if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
-      TAP(KC_TAB);
-      if (!upcase) { register_code(sftcode); }    // restore shift
-    }
-    CLEAR_TIMER;
-    return true;
-  }
-  return false;
-}
-
 
 // Layers
 // ═════════════════════════════════════════════════════════════════════════════
