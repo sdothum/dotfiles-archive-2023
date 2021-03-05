@@ -239,10 +239,10 @@ static bool     smart      = 1;       // see case SMART
 #ifdef LEFT_SPC_ENT
     if (roll_shift(record, KC_LSFT, LOWER, KC_SPC, 4)) { return false; }  // non-autorepeating
 #endif
-    if (MOD_ROLL(0, KC_I, 4)) { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
+    if (MOD_ROLL(0, KC_I, 4))                          { return false; }  // MO(_REGEX) -> LT(_REGEX, KC_I)
 #else
 #ifdef LEFT_SPC_ENT
-    if (map_shift(record, KC_LSFT, LOWER, KC_SPC)) { return false; }
+    if (map_shift(record, KC_LSFT, LOWER, KC_SPC))     { return false; }
 #endif
 #endif
     break;
@@ -259,17 +259,17 @@ static bool     smart      = 1;       // see case SMART
 // ............................................................ Right Thumb Keys
 
 #ifdef ROLLING
-  case LT_ENT:  leaderlayer = _EDIT; if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;    // KC_ENT -> enter shift
-  case KC_ENT:  if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;                         // KC_ENT from LT_ENT -> enter enter* shift
+  case LT_ENT:  leaderlayer = _EDIT; if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;  // KC_ENT -> enter shift
+  case KC_ENT:  if (MOD_ROLL(0, KC_ENT, 10))                      { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
 #else
-  case LT_ENT:  if (leader_cap(record, _EDIT, KC_ENT)) { return false; }; break;               // KC_ENT -> enter shift
-  case KC_ENT:  if (leader_cap(record, 0,     KC_ENT)) { return false; }; break;               // KC_ENT from LT_ENT -> enter enter* shift
+  case LT_ENT:  if (leader_cap(record, _EDIT, KC_ENT))            { return false; }; break;  // KC_ENT -> enter shift
+  case KC_ENT:  if (leader_cap(record, 0,     KC_ENT))            { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
 #endif
 
 #ifdef ROLLING
   case LT_SPC:  leaderlayer = _SYMGUI; if (MOD_ROLL(0, KC_SPC, 11)) { return false; }; break;  // KC_SPC -> space shift
 #else
-  case LT_SPC:  if (leader_cap(record, _SYMGUI, KC_SPC)) { return false; }; break;             // KC_SPC -> space shift
+  case LT_SPC:  if (leader_cap(record, _SYMGUI, KC_SPC))            { return false; }; break;  // KC_SPC -> space shift
 #endif
   case TT_SPC:  layer_toggle(record, _SYMGUI, LOWER, KC_SPC); break;
   case KC_SPC:  if (KEY_UP) { CLR_1SHOT; }; break;  // see leader_cap()
@@ -377,15 +377,15 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 #define TILDE_SLASH first_tap ? UPPER : LOWER, first_tap ? KC_GRV : KC_SLSH
 
 #ifdef ROLLING
-  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2)) { return false; };  // doubletap ~~ -> ~/
+  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2))   { return false; }  // doubletap ~~ -> ~/
 #else
-  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift(record, KC_RSFT, TILDE_SLASH)) { return false; }            // doubletap ~~ -> ~/
+  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift      (record, KC_RSFT, TILDE_SLASH))      { return false; }  // doubletap ~~ -> ~/
 #endif
 #else
 #ifdef ROLLING
-  case KC_DOT:  LEADERCAP; if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
+  case KC_DOT:  LEADERCAP;            if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
 #else
-  case KC_DOT:  LEADERCAP; if (map_shift(record, KC_RSFT, UPPER, KC_GRV)) { return false; }           // dot + space/enter + shift shortcut, see leader_cap()
+  case KC_DOT:  LEADERCAP;            if (map_shift      (record, KC_RSFT, UPPER, KC_GRV))    { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
 #endif
 #endif
     break;
@@ -481,8 +481,8 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
                  smart   = 1;                \
                  stagger = PINKIE_STAGGER
 
-#define RAISE(s) if (raise_layer(record, 0, s, INVERT)) { dual_down = 2; return false; }                                \
-                 if (dual_down)                         { dual_down--; base_layer(dual_down); DEFAULTS; return false; } \
+#define RAISE(s) if (dualkey_raise(record, _BASE, s, INVERT)) { dual_down = 2; return false; }                                \
+                 if (dual_down)                               { dual_down--; base_layer(dual_down); DEFAULTS; return false; } \
                  tt_escape(record, keycode); break
 
   case TGL_TL:  RAISE(LEFT);
@@ -494,7 +494,7 @@ static uint8_t dual_down = 0;  // dual keys down (2 -> 1 -> 0) reset on last up 
 
 // .................................................................. Steno Keys
 
-#define BASE(s) if (raise_layer(record, 0, s, INVERT)) { base_layer(0); }; return false
+#define BASE(s) if (dualkey_raise(record, _BASE, s, INVERT)) { base_layer(0); }; return false
 
 #ifdef STENO_ENABLE
   case PLOVER:  steno(record); return false;

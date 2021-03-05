@@ -17,7 +17,7 @@ static uint8_t i = 0;           // inline for loop counter
 #define UPPER     1             // case
 #define LOWER     0
 
-#define ONDOWN    0             // see raise_layer()
+#define ONDOWN    0             // see double_raise()
 #define INVERT    1
 
 // ................................................................ Tapping Term
@@ -285,18 +285,18 @@ bool map_shift(RECORD, uint16_t sftcode, bool upcase, uint16_t keycode)
     if (KEY_DOWN) {
       if (!upcase) { unregister_code(sftcode); }  // in event of unshifted keycode
       register_code(keycode);
-      map = 1;                // in case shift key is released first
 #ifdef ROLLING
       e[RSHIFT].CLEAR_TIMER;  // clear punctuation modifier (key tap), see mod_roll()
 #endif
+      map = 1;                // in case shift key is released first
     } else {
       unregister_code(keycode);
       if (!upcase) { register_code(sftcode); }    // restore shift
-      map = 0;
-      CLEAR_TIMER;              // clear home row shift, see process_record_user()
 #ifdef ROLLING
-      e[LSHIFT].CLEAR_TIMER;    // clear left handed separator modifier (key tap)
+      e[LSHIFT].CLEAR_TIMER;  // clear left handed separator modifier (key tap)
 #endif
+      CLEAR_TIMER;            // clear home row shift, see process_record_user()
+      map = 0;
     }
     return true;
   }
@@ -378,8 +378,8 @@ void oneshot_shift(uint8_t layer)
 
 static uint8_t double_key = 0;
 
-// dual key to raise layer (layer 0 to trap dual key state :-)
-bool raise_layer(RECORD, uint8_t layer, uint8_t side, bool invert)
+// dual key to raise layer (_BASE layer 0 to trap dual key state :-)
+bool dualkey_raise(RECORD, uint8_t layer, uint8_t side, bool invert)
 {
   if (KEY_DOWN) {
     double_key |= side;
