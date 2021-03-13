@@ -263,7 +263,7 @@ static bool     smart      = 1;       // see case SMART
   case KC_ENT:                       if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
 #else
   case LT_ENT:  if (leader_cap(record, _EDIT, KC_ENT))            { return false; }; break;  // KC_ENT -> enter shift
-  case KC_ENT:  if (leader_cap(record, 0,     KC_ENT))            { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
+  case KC_ENT:  if (leader_cap(record, _BASE, KC_ENT))            { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
 #endif
 
   case LT_SPC:
@@ -338,11 +338,11 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
   case DELIM:
 #ifdef ROLLING
-    if (leadercap) { mod_roll(record, 0, LOWER,    KC_X,    3); }  // 0x
-    else           { mod_roll(record, 0, POSTCASE, postfix, 3); }  // smart vim goto
+    if (leadercap) { mod_roll(record, _BASE, LOWER,    KC_X,    3); }  // 0x
+    else           { mod_roll(record, _BASE, POSTCASE, postfix, 3); }  // smart vim goto
 #else
-    if (leadercap) { mod_tap(record, 0, LOWER,    KC_X); }         // 0x
-    else           { mod_tap(record, 0, POSTCASE, postfix); }      // smart vim goto
+    if (leadercap) { mod_tap(record, _BASE, LOWER,    KC_X); }         // 0x
+    else           { mod_tap(record, _BASE, POSTCASE, postfix); }      // smart vim goto
 #endif
     break;
 
