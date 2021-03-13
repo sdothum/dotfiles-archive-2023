@@ -260,17 +260,19 @@ static bool     smart      = 1;       // see case SMART
 
 #ifdef ROLLING
   case LT_ENT:  leaderlayer = _EDIT; if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;  // KC_ENT -> enter shift
-  case KC_ENT:  if (MOD_ROLL(0, KC_ENT, 10))                      { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
+  case KC_ENT:                       if (MOD_ROLL(0, KC_ENT, 10)) { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
 #else
   case LT_ENT:  if (leader_cap(record, _EDIT, KC_ENT))            { return false; }; break;  // KC_ENT -> enter shift
   case KC_ENT:  if (leader_cap(record, 0,     KC_ENT))            { return false; }; break;  // KC_ENT from LT_ENT -> enter enter* shift
 #endif
 
+  case LT_SPC:
 #ifdef ROLLING
-  case LT_SPC:  leaderlayer = _SYMGUI; if (MOD_ROLL(0, KC_SPC, 11)) { return false; }; break;  // KC_SPC -> space shift
+    leaderlayer = _SYMGUI; if (MOD_ROLL(0, KC_SPC, 11)) { return false; }  // KC_SPC -> space shift
 #else
-  case LT_SPC:  if (leader_cap(record, _SYMGUI, KC_SPC))            { return false; }; break;  // KC_SPC -> space shift
+    if (leader_cap(record, _SYMGUI, KC_SPC))            { return false; }  // KC_SPC -> space shift
 #endif
+    break;
   case TT_SPC:  layer_toggle(record, _SYMGUI, LOWER, KC_SPC); break;
   case KC_SPC:  if (KEY_UP) { CLR_1SHOT; }; break;  // see leader_cap()
 
@@ -334,17 +336,15 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 #define POSTCASE postfix == KC_G ? UPPER : LOWER
 
-#ifdef ROLLING
   case DELIM:
+#ifdef ROLLING
     if (leadercap) { mod_roll(record, 0, LOWER,    KC_X,    3); }  // 0x
     else           { mod_roll(record, 0, POSTCASE, postfix, 3); }  // smart vim goto
-    break;
 #else
-  case DELIM:
     if (leadercap) { mod_tap(record, 0, LOWER,    KC_X); }         // 0x
     else           { mod_tap(record, 0, POSTCASE, postfix); }      // smart vim goto
-    break;
 #endif
+    break;
 
 // Symbols
 // ═════════════════════════════════════════════════════════════════════════════
@@ -373,19 +373,20 @@ static uint8_t  brktype    = 0;                              // default (0) [], 
 
 // .................................................... (Shift) Mapped Tap Dance
 
+  case KC_DOT:
 #ifdef UNIX
 #define TILDE_SLASH first_tap ? UPPER : LOWER, first_tap ? KC_GRV : KC_SLSH
 
 #ifdef ROLLING
-  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2))   { return false; }  // doubletap ~~ -> ~/
+    LEADERCAP;  DOUBLETAP; if (map_shift_event(record, KC_RSFT, TILDE_SLASH, 2))   { return false; }  // doubletap ~~ -> ~/
 #else
-  case KC_DOT:  LEADERCAP; DOUBLETAP; if (map_shift      (record, KC_RSFT, TILDE_SLASH))      { return false; }  // doubletap ~~ -> ~/
+    LEADERCAP;  DOUBLETAP; if (map_shift      (record, KC_RSFT, TILDE_SLASH))      { return false; }  // doubletap ~~ -> ~/
 #endif
 #else
 #ifdef ROLLING
-  case KC_DOT:  LEADERCAP;            if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
+    LEADERCAP;             if (map_shift_event(record, KC_RSFT, UPPER, KC_GRV, 2)) { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
 #else
-  case KC_DOT:  LEADERCAP;            if (map_shift      (record, KC_RSFT, UPPER, KC_GRV))    { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
+    LEADERCAP;             if (map_shift      (record, KC_RSFT, UPPER, KC_GRV))    { return false; }  // dot + space/enter + shift shortcut, see leader_cap()
 #endif
 #endif
     break;
