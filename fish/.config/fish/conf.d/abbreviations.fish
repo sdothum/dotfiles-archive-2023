@@ -146,7 +146,7 @@ abbr perli 'perl -de 1'
 
 abbr calc 'speedcrunch'
 abbr d 'dict'
-abbr kindle 'dmenu kindle'
+abbr kindle 'dmenu kindle azw3'
 abbr dotfiles 'rlwrap dotfiles'
 abbr handbrake 'ghb'
 abbr music '!p ncmpcpp ;and ncmpcpp'
