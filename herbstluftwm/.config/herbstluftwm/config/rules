@@ -94,7 +94,7 @@ hc rule instance='www.netflix.com__ca'     focus=on
 hc rule title=omxplay                      fullscreen=on hook=fullscreen
 hc rule class=Plover                       pseudotile=on
 hc rule class=qutebrowser                  focus=on hook=max
-hc rule class=ROX-Filer                    pseudotile=off hook=vertical
+hc rule class=ROX-Filer                    pseudotile=off hook=vertical index=e
 hc rule class=Savebox                      pseudotile=off
 # hc rule title=scratchpad                 pseudotile=on
 hc rule class=Simpletimer                  pseudotile=on
