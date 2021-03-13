@@ -378,13 +378,13 @@ void oneshot_shift(uint8_t layer)
 
 static uint8_t double_key = 0;
 
-// dual key to raise layer (_BASE layer 0 to trap dual key state :-)
+// dual key to raise layer (_BASE layer to trap dual key state :-)
 bool dualkey_raise(RECORD, uint8_t layer, uint8_t side, bool invert)
 {
   if (KEY_DOWN) {
     double_key |= side;
     if (double_key == (LEFT | RIGHT)) {
-      if (layer) { invert ? layer_invert(layer) : layer_on(layer); }
+      if (layer == _BASE) { invert ? layer_invert(layer) : layer_on(layer); }
       return true;
     }
   } else {
