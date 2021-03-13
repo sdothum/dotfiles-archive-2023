@@ -96,7 +96,7 @@
 #endif
     if (map_shift(record, KC_LSFT, LOWER, KC_DEL))     { layer_off(_SYMGUI); return false; }  // rolling cursor to del
     if (map_shift(record, KC_RSFT, LOWER, KC_DEL))     { return false; }
-    if (leader_cap (record, 0, KC_ENT))                { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
+    if (leader_cap (record, _BASE, KC_ENT))            { return false; }  // KC_BSPC from LT_BSPC -> (enter)* enter shift
 #ifdef THUMB_CAPS
     if (KEY_DOWN) { key_timer = timer_read(); }
     else if (timer_elapsed(key_timer) < TAPPING_TERM) { TAP(KC_BSPC); }
