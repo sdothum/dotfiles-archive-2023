@@ -80,7 +80,7 @@ while : ;do
   case $show in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
-  "$EDIT"  ) killall 'ROX-Filer'; focus frame; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
+  "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
   "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
   *        ) series=""$library"/$(echo $show | sed 's/ /./g')"
