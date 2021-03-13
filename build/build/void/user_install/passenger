@@ -62,7 +62,7 @@ sed -e '/^#user  nobody;/cuser  http;'                   \
             empty_gif;\
         }\
     }\
-' /opt/nginx/conf/nginx.conf.original | sudo tee /opt/nginx/conf/nginx.conf
+' /opt/nginx/conf/nginx.conf.default | sudo tee /opt/nginx/conf/nginx.conf
 
 [ -L /srv/http/thedarnedestthing.com ] || { sudo mkdir -p /srv/http; sudo rm -rf /srv/http/thedarnedestthing.com; sudo ln -sfv $HOME/thedarnedestthing.com /srv/http/; }
 

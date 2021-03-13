@@ -5,7 +5,7 @@
 
 # ........................................................................ nginx
 
-[ -e /opt/nginx/conf/nginx.conf ] && mv -f /opt/nginx/conf/nginx.conf /opt/nginx/conf/nginx.conf.original
+[ -e /opt/nginx/conf/nginx.conf ] && sudo mv -f /opt/nginx/conf/nginx.conf /opt/nginx/conf/nginx.conf.original
 sudo -E passenger-install-nginx-module
 
 cfg_install /etc/sv/nginx
