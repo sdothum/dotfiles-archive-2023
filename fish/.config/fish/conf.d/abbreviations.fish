@@ -144,6 +144,7 @@ abbr perli 'perl -de 1'
 
 # .................................................................. Application
 
+abbr bc 'bcd'
 abbr calc 'speedcrunch'
 abbr d 'dict'
 abbr kindle 'dmenu kindle azw3'
