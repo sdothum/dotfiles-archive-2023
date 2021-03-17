@@ -15,7 +15,7 @@ FONT=$HOME/.fonts/iosevka
 
 case "$2" in
 code     ) shape=500; leading=1450 ;;                 # 1.16 line spacing (over leading 1250)
-proof    ) family=-proof; shape=576; leading=1875 ;;  # extended width (shape) 1.5 line spacing
+proof    ) family=-proof; shape=576; leading=2250 ;;  # extended width (shape) 1.8 line spacing
 *        ) usage ;;
 esac
 
@@ -47,31 +47,37 @@ no-cv-ss = true
 
 # Optional; Configure single character's variant
 [buildPlans.iosevka$family.variants.design]
-capital-b = 'more-asymmetric'
-capital-d = 'more-rounded'
-capital-j = 'serifless'
-capital-q = 'crossing'
+capital-d = 'more-rounded'       # D
+capital-j = 'serifless'          # J
+capital-m = 'flat-bottom'        # M
+capital-q = 'crossing'           # Q
+capital-w = 'straight-flat-top'  # W
 i = 'hooky'
 j = 'serifless'
 l = 'flat-tailed'
 q = 'diagonal-tailed'
 r = 'compact'
-t = 'flat-hook'
+t = 'flat-hook-short-neck2'
+w = 'straight-flat-top'
 y = 'straight-turn'
-zero = 'reverse-slashed'
-one = 'nobase-flat-top-serif'
-two = 'straight-neck'
-four = 'closed'
-five = 'oblique-upper-left-bar'
-six = 'closed-contour'
-eight = 'two-circles'
-brace = 'straight'
-ampersand = 'upper-open'
+zero = 'reverse-slashed'         # 0
+one = 'nobase-flat-top-serif'    # 1
+two = 'straight-neck'            # 2
+four = 'closed'                  # 4
+five = 'oblique-upper-left-bar'  # 5
+six = 'closed-contour'           # 6
+eight = 'two-circles'            # 8
+brace = 'straight'               # {}
+ampersand = 'upper-open'         # &
 # at = 'fourfold'
-at = 'short'
-paragraph-sign = 'low'
+at = 'short'                     # @
+cyrl-ka = 'symmetric-touching'   # к
+lower-iota = 'flat-tailed'       # ι
+lower-lambda = 'straight-turn'   # λ
+# number-sign = 'slanted'
+paragraph-sign = 'low'           # ¶
 # percent = 'rings-continuous-slash'
-percent = 'dots'
+percent = 'dots'                 # %
 
 # Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
 [buildPlans.iosevka$family.variants.upright]
@@ -82,7 +88,7 @@ a = 'double-storey'
 e = 'flat-crossbar'
 f = 'serifless'
 k = 'straight'
-eszet = 'sulzbacher'
+eszet = 'sulzbacher'             # ß
 
 # End variant section
 ###################################################################################################
