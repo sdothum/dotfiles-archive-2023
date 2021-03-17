@@ -4,12 +4,8 @@
 # Web
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ............................................................. Google group rss
+# .............................................................. Google hangouts
 
-usage() { echo "usage: $(basename $0) <group>"; exit 1; }
-
-[ $1 ] || usage
-
-echo https://groups.google.com/group/$@/feed/rss_v2_0_msgs.xml?num=50
+$BROWSER https://hangouts.google.com/ &
 
 # vim: set ft=sh: #

@@ -12,6 +12,7 @@ trap "rm -f $FORTUNE:term" EXIT
 
 # console login check
 if console ;then
+  find $HOME -iname '*sync-conflict*' -exec rm -v {} \;  # purge syncthing conflicts
   echo
 elif [ -e $FORTUNE:term ] ;then
   if [ ! -e $FORTUNE ] ;then

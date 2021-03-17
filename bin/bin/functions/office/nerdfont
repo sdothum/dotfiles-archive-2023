@@ -15,13 +15,7 @@ FONT=$HOME/.fonts/iosevka
 
 nerdfonts='--fontawesome --fontawesomeextension --octicons --material'  # powerline added below
 
-pkgcheck() { xb Q $1 >/dev/null || missing="$missing$1 "; }
-
-pkgcheck fontforge
-pkgcheck nodejs
-pkgcheck otfcc
-pkgcheck ttfautohint
-[ "$missing" ] && { ifno "install $missing" && exit 1; for i in $missing ;do xb S $i ;done }
+xb_check fontforge nodejs otfcc ttfautohint
 
 # install nerd-font patcher
 cd /net/depot

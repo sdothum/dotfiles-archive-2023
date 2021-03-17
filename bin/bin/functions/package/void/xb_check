@@ -1,0 +1,18 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Package
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Package management
+
+usage() { echo "usage: $(basename $0) <package>*"; exit 1; }
+
+[ $1 ] || usage
+
+for i in $@ ;do xb Q $i >/dev/null || missing="$missing$i " ;done
+
+# install missing packages
+[ "$missing" ] && { ifno "install $missing" && exit 1; for i in $missing ;do xb S $i ;done }
+
+# vim: set ft=sh: #

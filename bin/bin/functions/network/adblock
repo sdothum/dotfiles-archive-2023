@@ -123,6 +123,7 @@ fi
 echo "# Generated adblock on $(timestamp)" >adblock.hosts
 cat adblock.uniq adblock.blacklist >>adblock.hosts
 ditto blacklisting "$(wc -l adblock.hosts | cut -d' ' -f1) hosts"
+
 service restart dnsmasq
 
 # vim: set ft=sh: #
