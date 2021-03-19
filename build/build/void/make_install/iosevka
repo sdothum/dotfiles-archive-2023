@@ -6,7 +6,7 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka  code | proof  [geometric | hyperlegible]"
+  echo "usage: $(basename $0) iosevka  code | proof  [geometric | hyperlegible] [default | linespace <decimal>]"
   exit 1
 }
 
@@ -49,19 +49,28 @@ geometric() {
 
 hyperlegible  # default typeface
 
+linespace() {
+  [ $1 ] || usage
+  leading=$(echo "1250 * $1" | bc 2>/dev/null | sed 's/[.].*//')
+  [ $leading = '' ] && usage
+  [ $leading = 0 ]  && usage
+}
+
 shift
 while [ $1 ] ;do
   case "$1" in
   code     ) shape=500; leading=1450 ;;                 # 1.16 line spacing (over leading 1250)
-  proof    ) family=-proof; shape=576; leading=2250 ;;  # extended width (shape) 1.8 line spacing
+  default  ) leading=1250 ;;                            # single line space
   geometric) geometric; typeface=-jost; ;;
   hyperleg*) typeface=-atkinson ;;                      # simply add typeface name
+  linespace) linespace $2; shift ;;
+  proof    ) family=-proof; shape=576; leading=2250 ;;  # extended width (shape) 1.8 line spacing
   *        ) usage ;;
   esac
   shift
 done
 
-[ $leading ] || usage
+[ $shape ] || usage
 ifyes "build Iosevka$family$typeface" || usage
 FONT=$FONT$family
 REGULAR=$FONT/ttf/iosevka$family$typeface-regular.ttf
