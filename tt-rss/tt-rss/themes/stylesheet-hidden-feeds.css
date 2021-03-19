@@ -198,7 +198,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 
 .ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border: none !important; }
 
-.ttrss_index .content-inner p { font-family: "Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13.85px !important; color: rgba(0,0,0,.8) !important; line-height: 1.65em !important; }
+.ttrss_index .content-inner p { font-family: "Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13.85px !important; color: rgba(0,0,0,.8) !important; line-height: 1.7em !important; }
 
 .ttrss_index .content-inner td { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border-color: transparent !important; }
 
