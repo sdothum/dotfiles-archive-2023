@@ -32,7 +32,7 @@ hyperlegible() {
 
 # jost* typeface
 geometric() {
-  cap=800  # increase ascender height
+  cap=800  # increased ascender height
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_k=symmetric-touching
