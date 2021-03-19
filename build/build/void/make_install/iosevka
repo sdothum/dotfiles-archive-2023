@@ -6,22 +6,65 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka  code | proof"
+  echo "usage: $(basename $0) iosevka  code | proof  [geometric | hyperlegible]"
   exit 1
 }
 
 REPO=/net/depot/Iosevka
 FONT=$HOME/.fonts/iosevka
 
-case "$2" in
-code     ) shape=500; leading=1450 ;;                 # 1.16 line spacing (over leading 1250)
-proof    ) family=-proof; shape=576; leading=2250 ;;  # extended width (shape) 1.8 line spacing
-*        ) usage ;;
-esac
+# atkinson hyperlegible typeface
+hyperlegible() {
+  cap=735  # default ascender height
+  capital_g=toothed-serifless-hooked
+  capital_i=serifed
+  capital_k=straight
+  i=hooky
+  k=straight
+  l=flat-tailed
+  q=diagonal-tailed
+  t=flat-hook-short-neck2
+  y=straight-turn
+  zero=reverse-slashed
+  one=nobase-flat-top-serif
+  six=closed-contour
+}
 
-ifyes "build Iosevka$family" || usage
+# jost* typeface
+geometric() {
+  cap=800  # increase ascender height
+  capital_g=toothless-rounded-serifless-hooked
+  capital_i=serifless
+  capital_k=symmetric-touching
+  i=serifless
+  k=symmetric-touching
+  l=serifless
+  q=straight
+  t=cross
+  y=straight
+  zero=unslashed-oval
+  one=nobase
+  six=straight-bar
+}
+
+hyperlegible  # default typeface
+
+shift
+while [ $1 ] ;do
+  case "$1" in
+  code     ) shape=500; leading=1450 ;;                 # 1.16 line spacing (over leading 1250)
+  proof    ) family=-proof; shape=576; leading=2250 ;;  # extended width (shape) 1.8 line spacing
+  geometric) geometric; typeface=-jost; ;;
+  hyperleg*) typeface=-atkinson ;;                      # simply add typeface name
+  *        ) usage ;;
+  esac
+  shift
+done
+
+[ $leading ] || usage
+ifyes "build Iosevka$family$typeface" || usage
 FONT=$FONT$family
-REGULAR=$FONT/ttf/iosevka$family-regular.ttf
+REGULAR=$FONT/ttf/iosevka$family$typeface-regular.ttf
 
 cd ${REPO%/*}
 # install iosevka repo
@@ -32,40 +75,44 @@ cd Iosevka
 # a tweaked :-) atkinson hyperlegible font character emulation
 # based on sample.toml (with quote and backtick conversion to single quotes)
 echo "
-[buildPlans.iosevka$family]      # <iosevka-custom> is your plan name
-family = 'Iosevka$family'        # Font menu family name
-spacing = 'term'                 # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
-serifs = 'sans'                  # Optional; Values: 'sans' or 'slab'
+[buildPlans.iosevka$family$typeface]  # <iosevka-custom> is your plan name
+family = 'Iosevka$family$typeface'    # Font menu family name
+spacing = 'term'                      # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'                       # Optional; Values: 'sans' or 'slab'
 no-cv-ss = true
 
 ###################################################################################################
 # Configure variants
 
 # Optional; Whether to inherit a 'ss##' variant
-[buildPlans.iosevka$family.variants]
-# inherits = 'ss01'
+[buildPlans.iosevka$family$typeface.variants]
+# inherits = 'ss01'              # use defaults instead (of inheriting)
 
 # Optional; Configure single character's variant
-[buildPlans.iosevka$family.variants.design]
+[buildPlans.iosevka$family$typeface.variants.design]
 capital-d = 'more-rounded'       # D
+capital-g = '$capital_g'         # G
+capital-i = '$capital_i'         # I
 capital-j = 'serifless'          # J
+capital-k = '$capital_k'         # K
 capital-m = 'flat-bottom'        # M
 capital-q = 'crossing'           # Q
 capital-w = 'straight-flat-top'  # W
-i = 'hooky'
+i = '$i'
 j = 'serifless'
-l = 'flat-tailed'
-q = 'diagonal-tailed'
+k = '$k'
+l = '$l'
+q = '$q'
 r = 'compact'
-t = 'flat-hook-short-neck2'
+t = '$t'
 w = 'straight-flat-top'
-y = 'straight-turn'
-zero = 'reverse-slashed'         # 0
-one = 'nobase-flat-top-serif'    # 1
+y = '$y'
+zero = '$zero'                   # 0
+one = '$one'                     # 1
 two = 'straight-neck'            # 2
 four = 'closed'                  # 4
 five = 'oblique-upper-left-bar'  # 5
-six = 'closed-contour'           # 6
+six = '$six'                     # 6
 eight = 'two-circles'            # 8
 brace = 'straight'               # {}
 ampersand = 'upper-open'         # &
@@ -80,14 +127,17 @@ paragraph-sign = 'low'           # ¶
 percent = 'dots'                 # %
 
 # Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
-[buildPlans.iosevka$family.variants.upright]
+[buildPlans.iosevka$family$typeface.variants.upright]
 
 # Optional; Configure single character's variant for Italic only; Overrides [design]
-[buildPlans.iosevka$family.variants.italic]
+[buildPlans.iosevka$family$typeface.variants.italic]
 a = 'double-storey'
+d = 'toothed'
 e = 'flat-crossbar'
 f = 'serifless'
-k = 'straight'
+k = '$k'
+u = 'toothed'
+y = '$y'
 eszet = 'sulzbacher'             # ß
 
 # End variant section
@@ -96,7 +146,7 @@ eszet = 'sulzbacher'             # ß
 ###################################################################################################
 # Configure ligations
 
-[buildPlans.iosevka$family.ligations]
+[buildPlans.iosevka$family$typeface.ligations]
 inherits = 'default-calt'   # Optional; inherits an existing ligation set
 disables = []               # Optional; disable specific ligation groups, overrides inherited ligation set
 enables  = []               # Optional; enable specific ligation groups, overrides inherited ligation set
@@ -113,17 +163,17 @@ enables  = []               # Optional; enable specific ligation groups, overrid
 #             and 'shape' properly only supports number between 100 and 900 (inclusive).
 #             If you decide to use custom weights you have to define all the weights you
 #             plan to use otherwise they will not be built.
-[buildPlans.iosevka$family.weights.regular]
+[buildPlans.iosevka$family$typeface.weights.regular]
 shape = 400  # Weight for glyph shapes.
 menu  = 400  # Weight for the font's names.
 css   = 400  # Weight for webfont CSS.
 
-[buildPlans.iosevka$family.weights.book]
+[buildPlans.iosevka$family$typeface.weights.book]
 shape = 450
 menu  = 450  # Use 450 here to name the font's weight 'Book'
 css   = 450
 
-[buildPlans.iosevka$family.weights.bold]
+[buildPlans.iosevka$family$typeface.weights.bold]
 shape = 700
 menu  = 700
 css   = 700
@@ -136,7 +186,7 @@ css   = 700
 # Format: <upright|italic|oblique> = <'normal'|'italic'|'oblique'>
 # When this section is absent, all slopes would be built.
 
-[buildPlans.iosevka$family.slopes]
+[buildPlans.iosevka$family$typeface.slopes]
 upright = 'normal'
 italic = 'italic'
 oblique = 'oblique'
@@ -155,12 +205,12 @@ oblique = 'oblique'
 #             If you decide to use custom widths you have to define all the widths you plan to use,
 #             otherwise they will not be built.
 
-[buildPlans.iosevka$family.widths.normal]
+[buildPlans.iosevka$family$typeface.widths.normal]
 shape = $shape     # Unit Width, measured in 1/1000 em.
 menu  = 5          # Width grade for the font's names.
 css   = 'normal'   # 'font-stretch' property of webfont CSS.
 
-[buildPlans.iosevka$family.widths.extended]
+[buildPlans.iosevka$family$typeface.widths.extended]
 shape = 576
 menu  = 7
 css   = 'expanded'
@@ -173,7 +223,7 @@ css   = 'expanded'
 # Specify character ranges in the section below to exclude certain characters from the font being
 # built. Remove this section when this feature is not needed.
 
-[buildPlans.iosevka$family.exclude-chars]
+[buildPlans.iosevka$family$typeface.exclude-chars]
 ranges = [[10003, 10008]]
 
 # End character exclusion
@@ -186,7 +236,7 @@ ranges = [[10003, 10008]]
 # following section to build PUA characters that are generated from the OpenType ligatures.
 # Remove this section when compatibility ligatures are not needed.
 
-[[buildPlans.iosevka$family.compatibility-ligatures]]
+[[buildPlans.iosevka$family$typeface.compatibility-ligatures]]
 unicode = 57600 # 0xE100
 featureTag = 'calt'
 sequence = '<*>'
@@ -199,7 +249,8 @@ sequence = '<*>'
 # Certain metrics like line height (leading) could be overridden in your build plan file.
 # Edit the values to change the metrics. Remove this section when overriding is not needed.
 
-[buildPlans.iosevka$family.metric-override]
+[buildPlans.iosevka$family$typeface.metric-override]
+cap = $cap
 leading = $leading
 winMetricAscenderPad = 0
 winMetricDescenderPad = 0
@@ -216,8 +267,8 @@ powerlineShiftX = 0
 npm install  # ignore npm funding and audit messages
 # npm update
 
-npm run build -- ttf::iosevka$family   # post Verda commits
+npm run build -- ttf::iosevka$family$typeface   # post Verda commits
 
-nerdfont ${family#-}
+nerdfont ${family#-}$typeface
 
 # vim: set ft=sh: #
