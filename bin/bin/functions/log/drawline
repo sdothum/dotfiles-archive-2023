@@ -9,7 +9,7 @@
 # .................................................................... Highlight
 
 # line break
-[ $1 ] && linechar=$1 || linechar='─'
+[ "$1" ] && linechar=$1 || linechar='─'
 [ $2 ] && color=$2 || color=${RED}
 width=$(tput cols)
 
