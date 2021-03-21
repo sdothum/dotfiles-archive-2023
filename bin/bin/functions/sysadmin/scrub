@@ -8,7 +8,7 @@
 
 usage() { echo "usage: $(basename $0) a'll | c'ancel | I'nitialize | s'tatus [boot | net | share | backup]"; exit 1; }
 
-interval=15
+interval=60
 
 # butterfs maintenance
 volume() {
