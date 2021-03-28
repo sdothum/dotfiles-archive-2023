@@ -6,13 +6,14 @@
 
 # ................................................................... Dictionary
 
-usage() { echo "usage: $(basename $0) [-<maxlen>] <word>"; exit 1; }
+usage() { echo "usage: $(basename $0) [[-=]<maxlen>] <word>"; exit 1; }
 
 if [ ${1%${1#?}} = '-' ] && echo ${1#?} | grep -q '^[0-9][0-9]*$' ;then
   MAXLEN="$(seq -s. 0 ${1#?} | tr -d '[:digit:]')[^ ]"
   shift
-else
-  MAXLEN="$(seq -s. 100 | tr -d '[:digit:]')[^ ]"  # an arbitrarily long word size
+elif [ ${1%${1#?}} = '=' ] && echo ${1#?} | grep -q '^[0-9][0-9]*$' ;then
+  LENGTH="^$(seq -s. 0 ${1#?} | tr -d '[:digit:]' | sed 's/[.]/[^ ]/g')$"
+  shift
 fi
 [ $1 ] || usage
 [ $2 ] && usage
@@ -24,6 +25,13 @@ fi
 while echo "$output" | grep -q '^From.*Dictionary' ;do
   output=$(echo "$output" | grep -B9999 '^From.*Dictionary' | head -n -1)
 done
-echo "$output" | grep -v "$MAXLEN" | column  # tabular list of synonyms
+
+if [ "$MAXLEN" ] ;then
+  echo "$output" | grep -v "$MAXLEN" | column  # word length cutoff
+elif [ "$LENGTH" ] ;then
+  echo "$output" | grep "$LENGTH" | column     # exact word length match
+else
+  echo "$output" | column
+fi
 
 # vim: set ft=sh: #
