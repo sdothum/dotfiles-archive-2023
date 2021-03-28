@@ -6,8 +6,17 @@
 # ...................................................................... iosevka
 
 # make_install iosevka ..
+# eg. make_install iosevka term round
+#                  iosevka extended proof round
+#                  iosevka term jost round
+#                  iosevka extended jost proof round family jost-proof
 usage() {
-  echo "usage: $(basename $0) iosevka  code | proof  [geometric | hyperlegible]  [default | linespace <decimal>]  [cap [-+]<emu>]  [shape [-+]<emu>]  [sb [-+]<emu>]  [family <name>]"
+  echo "usage: $(basename $0) iosevka  term | extended  [atkinson | jost]
+                                              [proof | linespace <decimal>]
+                                              [cap [-+]<emu>]
+                                              [shape [-+]<emu>]
+                                              [round | sb [-+]<emu>]
+                                              [family <name>]"
   exit 1
 }
 
@@ -15,12 +24,14 @@ REPO=/net/depot/Iosevka
 FONT=$HOME/.fonts/iosevka
 
 # atkinson hyperlegible typeface
-hyperlegible() {
-  cap=735  # default ascender height
+atkinson() {
   capital_g=toothed-serifless-hooked
   capital_i=serifed
   capital_k=straight
+  d=tailed
+  f=flat-hook-crossbar-at-x-height
   i=hooky
+  j=flat-hook-serifless
   k=straight
   l=flat-tailed
   q=diagonal-tailed
@@ -32,12 +43,15 @@ hyperlegible() {
 }
 
 # jost* typeface
-geometric() {
-  cap=800  # increased ascender height
+jost() {
+  cap='cap = 800'  # increased ascender height
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_k=symmetric-touching
+  d=toothed
+  f=serifless-crossbar-at-x-height
   i=serifless
+  j=straight-line  # serifless (jost actual)
   k=symmetric-touching
   l=serifless
   q=straight
@@ -48,10 +62,8 @@ geometric() {
   six=straight-bar
 }
 
-hyperlegible  # default typeface
-
 multiply() {
-  [ $2 ] || usage
+  [ $2 ] || exit 1
   result=$(echo "$1 * $2" | bc 2>/dev/null | sed 's/[.].*//')
   [ $result = '' ] && usage
   [ $result = 0 ]  && usage
@@ -59,32 +71,36 @@ multiply() {
 }
 
 adjust() {
-  [ $2 ] || usage
+  [ $2 ] || exit 1
   result=$(echo "$1 + ${2#+}" | bc 2>/dev/null | sed 's/[.].*//')
   [ $result = '' ] && usage
   [ $result = 0 ]  && usage
   echo $result
 }
 
+atkinson      # default typeface
+leading=1450  # default 1.16 line spacing
+
 shift
 while [ $1 ] ;do
   case "$1" in
-  cap      ) cap=$(adjust 735 $2);          shift ;;    # H height (affects descender as well)
-  code     ) shape=500; leading=1450 ;;                 # 1.16 line spacing (over leading 1250)
-  default  ) leading=1250 ;;                            # single line space
-  family   ) [ $2 ] && family=-$2 || usage; shift ;;
-  geometric) geometric; family=-jost; ;;
-  hyperleg*) family=-atkinson ;;                        # simply add typeface name
-  linespace) leading=$(multiply 1250 $2);   shift ;;    # line spacing > 1.0
-  proof    ) family=-proof; shape=576; leading=2250 ;;  # extended width (shape) 1.8 line spacing
-  sb       ) sb="sb = $(adjust 60 $2)";     shift ;;    # side bearing (spacing)
-  shape    ) shape=$(adjust 500 $2);        shift ;;    # cell width
+  atkinson ) family=-atkinson ;;                                       # simply add typeface name
+  cap      ) cap="cap = $(adjust 735 $2)" || usage;          shift ;;  # H height (affects descender as well)
+  extended ) family=-extended; shape=576; sb=80 ;;                     # extended width (shape), guestimated sb
+  family   ) [ $2 ] && family=-$2 || usage;                  shift ;;
+  jost     ) jost; family=-jost; ;;
+  linespace) leading=$(multiply 1250 $2) || usage;           shift ;;  # line spacing > 1.0
+  proof    ) leading=2250; family=${family#-extended}-proof ;;         # 1.8 line spacing
+  round    ) side_bearing="sb = $(adjust $sb -10)" || usage ;;         # round closed lower case characters
+  sb       ) side_bearing="sb = $(adjust $sb $2)"  || usage; shift ;;  # side bearing (spacing)
+  shape    ) shape=$(adjust $shape $2) || usage;             shift ;;  # cell width
+  term     ) shape=500; sb=60 ;;                                       # 1.16 line spacing (over leading 1250)
   *        ) usage ;;
   esac
   shift
 done
 
-[ $shape ] || usage
+[ $sb ] || usage
 ifyes "build Iosevka$family" || usage
 FONT=$FONT$family
 REGULAR=$FONT/ttf/iosevka$family-regular.ttf
@@ -121,8 +137,10 @@ capital-k = '$capital_k'         # K
 capital-m = 'flat-bottom'        # M
 capital-q = 'crossing'           # Q
 capital-w = 'straight-flat-top'  # W
+d = '$d'
+f = '$f'
 i = '$i'
-j = 'serifless'
+j = '$j'
 k = '$k'
 l = '$l'
 q = '$q'
@@ -155,9 +173,9 @@ percent = 'dots'                 # %
 # Optional; Configure single character's variant for Italic only; Overrides [design]
 [buildPlans.iosevka$family.variants.italic]
 a = 'double-storey'
-d = 'toothed'
+d = '$d'
 e = 'flat-crossbar'
-f = 'serifless'
+f = '$f'
 k = '$k'
 u = 'toothed'
 y = '$y'
@@ -273,9 +291,9 @@ sequence = '<*>'
 # Edit the values to change the metrics. Remove this section when overriding is not needed.
 
 [buildPlans.iosevka$family.metric-override]
-cap = $cap
+$cap
 leading = $leading
-$sb
+$side_bearing
 winMetricAscenderPad = 0
 winMetricDescenderPad = 0
 powerlineScaleY = 1
