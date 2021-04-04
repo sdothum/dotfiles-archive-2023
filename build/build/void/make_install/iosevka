@@ -15,6 +15,7 @@ usage() {
                                               [proof | linespace <decimal>]
                                               [cap [-+]<emu>]
                                               [shape [-+]<emu>]
+                                              [xheight [-+]<emu>]
                                               [round | sb [-+]<emu>]
                                               [family <name>]"
   exit 1
@@ -26,6 +27,8 @@ usage() {
 
 REPO=/net/depot/Iosevka
 FONT=$HOME/.fonts/iosevka
+
+leading=1450  # default 1.16 coding line spacing
 
 # atkinson hyperlegible typeface
 atkinson() {
@@ -69,21 +72,21 @@ jost() {
 multiply() {
   [ $2 ] || exit 1
   result=$(echo "$1 * $2" | bc 2>/dev/null | sed 's/[.].*//')
-  [ $result = '' ] && exit 1
-  [ $result = 0 ]  && exit 1
+  [ "$result" = '' ] && exit 1
+  [ $result = 0 ]    && exit 1
   echo $result
 }
 
 adjust() {
-  [ $2 ] || exit 1
+  [ $2 ]                    || exit 1
+  [ $2 -eq $2 2>/dev/null ] || exit 1  # integer test
   result=$(echo "$1 + ${2#+}" | bc 2>/dev/null | sed 's/[.].*//')
-  [ $result = '' ] && usage
-  [ $result = 0 ]  && usage
+  [ "$result" = '' ] && exit 1
+  [ $result = 0 ]    && exit 1
   echo $result
 }
 
 atkinson      # default typeface
-leading=1450  # default 1.16 line spacing
 
 shift
 while [ $1 ] ;do
@@ -97,10 +100,11 @@ while [ $1 ] ;do
   jost     ) jost; family=-jost ;;
   linespace) leading=$(multiply 1250 $2)           || usage; shift ;;  # line spacing > 1.0
   proof    ) leading=2250; family=${family#-extended}-proof ;;         # 1.8 line spacing
-  round    ) side_bearing="sb = $(adjust $sb -10)" || usage ;;         # round closed lower case characters
+  round    ) side_bearing="sb = $(adjust $sb -10)" || usage ;;         # round closed lower case characters by reducing sb
   sb       ) side_bearing="sb = $(adjust $sb $2)"  || usage; shift ;;  # side bearing (spacing)
   shape    ) shape=$(adjust $shape $2)             || usage; shift ;;  # cell width
   term     ) shape=500; sb=60 ;;                                       # 1.16 line spacing (over leading 1250)
+  xheight  ) xheight="xheight = $(adjust 530 $2)"  || usage; shift ;;  # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
@@ -300,6 +304,7 @@ sequence = '<*>'
 $cap
 leading = $leading
 $side_bearing
+$xheight
 winMetricAscenderPad = 0
 winMetricDescenderPad = 0
 powerlineScaleY = 1
