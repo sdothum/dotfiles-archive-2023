@@ -69,8 +69,8 @@ jost() {
 multiply() {
   [ $2 ] || exit 1
   result=$(echo "$1 * $2" | bc 2>/dev/null | sed 's/[.].*//')
-  [ $result = '' ] && usage
-  [ $result = 0 ]  && usage
+  [ $result = '' ] && exit 1
+  [ $result = 0 ]  && exit 1
   echo $result
 }
 
@@ -317,6 +317,6 @@ npm install  # ignore npm funding and audit messages
 
 npm run build -- ttf::iosevka$family   # post Verda commits
 
-nerdfont ${family#-}
+nerdfont ${family#-}                   # insert glyphs
 
 # vim: set ft=sh: #
