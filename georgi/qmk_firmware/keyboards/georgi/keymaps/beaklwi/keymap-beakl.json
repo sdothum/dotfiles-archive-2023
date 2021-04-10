@@ -80,7 +80,14 @@
             [" ", " ", " ", "X", " ", "X", "X",  "_"],
             [" ", " ", " ", " ", "X", "X", "X", "\""]
            ]
-         },
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP5", "BOT5", "THU6"],
+          "dictionary": [
+            ["X", "X", "X", "DEL"]
+           ]
+        },
         {
           "type": "visual_array",
           "keys": ["THU1", "THU2", "THU3", "THU4", "THU5", "THU6"],
@@ -105,7 +112,7 @@
             "DF(FNC)"  ,                 ":", "MK(KC_LSFT, KC_Y)", "MK(KC_LSFT, KC_O)", "MK(KC_LSFT, KC_U)",                 "-",        "MK(KC_LSFT, KC_G)", "MK(KC_LSFT, KC_D)", "MK(KC_LSFT, KC_N)",  "MK(KC_LSFT, KC_M)", "MK(KC_LSFT, KC_X)", "DF(SYMBOL)", 
             "DF(MOUSE)", "MK(KC_LSFT, KC_Q)", "MK(KC_LSFT, KC_H)", "MK(KC_LSFT, KC_E)", "MK(KC_LSFT, KC_A)", "MK(KC_LSFT, KC_W)",        "MK(KC_LSFT, KC_C)", "MK(KC_LSFT, KC_T)", "MK(KC_LSFT, KC_R)",  "MK(KC_LSFT, KC_S)", "MK(KC_LSFT, KC_Z)",    "DF(NAV)",
             "DF(BEAKL)", "MK(KC_LSFT, KC_J)",                 ",",                 ".", "MK(KC_LSFT, KC_K)",                 "'",        "MK(KC_LSFT, KC_B)", "MK(KC_LSFT, KC_P)", "MK(KC_LSFT, KC_L)",  "MK(KC_LSFT, KC_F)", "MK(KC_LSFT, KC_V)",    "DF(NUM)",
-                                                                                   " ",                 " ",                 " ",        " "                ,                 " ",                 " "
+                                                                                   " ", "MK(KC_LSFT, KC_I)",                 " ",        " "                ,                 " ",                 " "
           ]
         },
         {
@@ -116,15 +123,15 @@
             [" ", "X", " ", " ", " ", "X", "X",  "`"],
             [" ", " ", "X", " ", " ", "X", "X",  "~"],
             [" ", " ", " ", "X", " ", "X", "X",  "_"],
-            [" ", " ", " ", " ", "X", "X", "X", "STR(\"my string test\")"]
+            [" ", " ", " ", " ", "X", "X", "X", "\""]
            ]
-         },
+        },
         {
           "type": "visual_array",
           "keys": ["THU1", "THU2", "THU3", "THU4", "THU5", "THU6"],
           "dictionary": [
             ["X", " ", " ", " ", " ", " ",    "KL(ESC, FNC)"],
-            [" ", "X", " ", " ", " ", " ",    "KL(I, REGEX)"],
+            [" ", "X", " ", " ", " ", " ",       "MO(REGEX)"],
             [" ", " ", "X", " ", " ", " ",    "KL(TAB, NUM)"],
             [" ", " ", " ", "X", " ", " ",  "KL(ENTER, NAV)"],
             [" ", " ", " ", " ", "X", " ",    "KL(SPC, SYM)"],
@@ -160,6 +167,13 @@
             " ", " ", "<", ">", "%",  "@",        " ", " ", " ", " ", " ", " ",
                            " ", "=", "\\",        " ", " ", " "                   
           ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2"],
+          "dictionary": [
+            ["X", "X", "STR(\"=~\")"]
+          ]
         }
       ]
     },
@@ -174,6 +188,13 @@
             " ", " ", "?", "!", "/",  "|",        "?", "LPRN",   "$", "RPRN", " ",         " ",
             " ", " ", "<", ">", "%",  "@",        "|",    "{",   "#",    "}", " ",         " ",
                    "DF(BEAKL)", "=", "\\",        " ",  "SPC", "DEL"                   
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2"],
+          "dictionary": [
+            ["X", "X", "STR(\"=~\")"]
           ]
         }
       ]
@@ -215,9 +236,9 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ", " ",    " ",    " ",    " ",    " ",        " ", "HOME",   "UP",   "END", "PGUP",         " ", 
-            " ", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",     " ",    " ", "DF(BEAKL)",
-            " ", " ",    " ",    " ",    " ",    " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN",         " ",
+            " ",                 " ",                 " ", "MK(KC_LCTL, MK(KC_LSFT, KC_C))", "MK(KC_LCTL, MK(KC_LSFT, KC_V))",    " ",        " ", "HOME",   "UP",   "END", "PGUP",         " ", 
+            " ",                 " ",              "LGUI",                           "LCTL",                           "LALT", "LSFT",        " ",    " ",    " ",     " ",    " ", "DF(BEAKL)",
+            " ", "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",              "MK(KC_LCTL, KC_C)",              "MK(KC_LCTL, KC_V)",    " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN",         " ",
                                  "DF(BEAKL)",    " ",    " ",        " ", " ",    " "
           ]
         }
@@ -230,7 +251,7 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " "        , " ",    " ",    " ",    " ",    " ",        " ", "BTN1", "MS_U", "BTN2", "WH_U", " ", 
+            "RESET"    , " ",    " ",    " ",    " ",    " ",        " ", "BTN1", "MS_U", "BTN2", "WH_U", " ", 
             "DF(BEAKL)", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",    " ",    " ", " ",
             " "        , " ",    " ",    " ",    " ",    " ",        " ", "MS_L", "MS_D", "MS_R", "WH_D", " ",
                                  "DF(BEAKL)",    " ",    " ",        " ", " ",    " "
