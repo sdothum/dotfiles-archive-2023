@@ -13,7 +13,7 @@ NZBGEEK=https://nzbgeek.info/geekseek.php?c=2040
 USENET_CRAWLER=https://www.usenet-crawler.com/movies?t=2040
 NZBGET=http:///$SERVER:6789/nzbget:nzbget/
 SONARR=http://$SERVER:8989/calendar
-BROWSER=vimb
+BROWSER=surf
 root=true
 
 # meta dmenu menu!
