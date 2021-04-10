@@ -1,0 +1,245 @@
+{
+  "keys": [
+    "TOP1", "TOP2", "TOP3", "TOP4", "TOP5", "TOP6",    "TOP7", "TOP8", "TOP9", "TOP10", "TOP11", "TOP12",
+    "BOT1", "BOT2", "BOT3", "BOT4", "BOT5", "BOT6",    "BOT7", "BOT8", "BOT9", "BOT10", "BOT11", "BOT12",
+                            "THU1", "THU2", "THU3",    "THU4", "THU5", "THU6"
+  ],
+  "parameters": {
+    "layout_function_name": "LAYOUT_georgi",
+    "chord_timeout": 200,
+    "dance_timeout": 200,
+    "leader_timeout": 750,
+    "tap_timeout": 50,
+    "command_max_length": 5,
+    "leader_max_length": 5,
+    "dynamic_macro_max_length": 20,
+    "string_max_length": 16,
+    "long_press_multiplier": 3,
+    "default_pseudolayer": "BEAKL"
+  },
+  "layers": [
+    {
+      "type": "auto"
+    }
+  ],
+  "chord_sets": [
+    {
+      "name": "rows",
+      "chords": [
+        ["TOP1"], ["TOP2"], ["TOP3"], ["TOP4"], ["TOP5"], ["TOP6"], ["TOP7"], ["TOP8"], ["TOP9"], ["TOP10"], ["TOP11"], ["TOP12"],
+        ["TOP1", "BOT1"], ["TOP2", "BOT2"], ["TOP3", "BOT3"], ["TOP4", "BOT4"], ["TOP5", "BOT5"], ["TOP6", "BOT6"], ["TOP7", "BOT7"], ["TOP8", "BOT8"], ["TOP9", "BOT9"], ["TOP10", "BOT10"], ["TOP11", "BOT11"], ["TOP12", "BOT12"],
+        ["BOT1"], ["BOT2"], ["BOT3"], ["BOT4"], ["BOT5"], ["BOT6"], ["BOT7"], ["BOT8"], ["BOT9"], ["BOT10"], ["BOT11"], ["BOT12"],
+        ["THU1"], ["THU2"], ["THU3"], ["THU4"], ["THU5"], ["THU6"]
+      ]
+    }
+  ],
+  "pseudolayers": [
+    {
+      "name": "ALWAYS_ON",
+      "chords": [
+        {
+          "type": "visual",
+          "chord": [
+            "X", " ", " ", " ", " ", " ",    " ", " ", " ", " ", " ", "X",
+            "X", " ", " ", " ", " ", " ",    " ", " ", " ", " ", " ", "X",
+                           " ", " ", " ",    " ", " ", " "
+          ],
+          "keycode": "CLEAR_KB"
+        },
+        {
+          "type": "visual",
+          "chord": [
+            " ", " ", " ", " ", " ", "X",    "X", " ", " ", " ", " ", " ",
+            " ", " ", " ", " ", " ", "X",    "X", " ", " ", " ", " ", " ",
+                           " ", " ", " ",    " ", " ", " "
+          ],
+          "keycode": "CMD"
+        }
+      ]
+    },
+    {
+      "name": "BEAKL",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            "DF(FNC)"  ,           ":",           "Y",           "O",           "U", "-",        "G",           "D",           "N",            "M",           "X", "DF(SYMBOL)", 
+            "DF(MOUSE)", "KK(Q, LGUI)", "KM(H, LCTL)", "KM(E, LALT)", "KK(A, LSFT)", "W",        "C", "KK(T, RSFT)", "KM(R, RALT)",  "KM(S, RCTL)", "KK(Z, RGUI)",    "DF(NAV)",
+            "DF(CAPS)" ,           "J",           ",",           ".",           "K", "'",        "B",           "P",           "L",            "F",           "V",    "DF(NUM)",
+                                                                 " ",           " ", " ",        " ",           " ",           " "
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP2", "BOT3", "BOT4", "TOP6", "BOT6", "TOP8", "BOT8"],
+          "dictionary": [
+            ["X", " ", " ", " ", " ", "X", "X",  ";"],
+            [" ", "X", " ", " ", " ", "X", "X",  "`"],
+            [" ", " ", "X", " ", " ", "X", "X",  "~"],
+            [" ", " ", " ", "X", " ", "X", "X",  "_"],
+            [" ", " ", " ", " ", "X", "X", "X", "\""]
+           ]
+         },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2", "THU3", "THU4", "THU5", "THU6"],
+          "dictionary": [
+            ["X", " ", " ", " ", " ", " ",    "KL(ESC, FNC)"],
+            [" ", "X", " ", " ", " ", " ",    "KL(I, REGEX)"],
+            [" ", " ", "X", " ", " ", " ",    "KL(TAB, NUM)"],
+            [" ", " ", " ", "X", " ", " ",  "KL(ENTER, NAV)"],
+            [" ", " ", " ", " ", "X", " ",    "KL(SPC, SYM)"],
+            [" ", " ", " ", " ", " ", "X", "KL(BSPC, MOUSE)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CAPS",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            "DF(FNC)"  ,                 ":", "MK(KC_LSFT, KC_Y)", "MK(KC_LSFT, KC_O)", "MK(KC_LSFT, KC_U)",                 "-",        "MK(KC_LSFT, KC_G)", "MK(KC_LSFT, KC_D)", "MK(KC_LSFT, KC_N)",  "MK(KC_LSFT, KC_M)", "MK(KC_LSFT, KC_X)", "DF(SYMBOL)", 
+            "DF(MOUSE)", "MK(KC_LSFT, KC_Q)", "MK(KC_LSFT, KC_H)", "MK(KC_LSFT, KC_E)", "MK(KC_LSFT, KC_A)", "MK(KC_LSFT, KC_W)",        "MK(KC_LSFT, KC_C)", "MK(KC_LSFT, KC_T)", "MK(KC_LSFT, KC_R)",  "MK(KC_LSFT, KC_S)", "MK(KC_LSFT, KC_Z)",    "DF(NAV)",
+            "DF(BEAKL)", "MK(KC_LSFT, KC_J)",                 ",",                 ".", "MK(KC_LSFT, KC_K)",                 "'",        "MK(KC_LSFT, KC_B)", "MK(KC_LSFT, KC_P)", "MK(KC_LSFT, KC_L)",  "MK(KC_LSFT, KC_F)", "MK(KC_LSFT, KC_V)",    "DF(NUM)",
+                                                                                   " ",                 " ",                 " ",        " "                ,                 " ",                 " "
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP2", "BOT3", "BOT4", "TOP6", "BOT6", "TOP8", "BOT8"],
+          "dictionary": [
+            ["X", " ", " ", " ", " ", "X", "X",  ";"],
+            [" ", "X", " ", " ", " ", "X", "X",  "`"],
+            [" ", " ", "X", " ", " ", "X", "X",  "~"],
+            [" ", " ", " ", "X", " ", "X", "X",  "_"],
+            [" ", " ", " ", " ", "X", "X", "X", "\""]
+           ]
+         },
+        {
+          "type": "visual_array",
+          "keys": ["THU1", "THU2", "THU3", "THU4", "THU5", "THU6"],
+          "dictionary": [
+            ["X", " ", " ", " ", " ", " ",    "KL(ESC, FNC)"],
+            [" ", "X", " ", " ", " ", " ",    "KL(I, REGEX)"],
+            [" ", " ", "X", " ", " ", " ",    "KL(TAB, NUM)"],
+            [" ", " ", " ", "X", " ", " ",  "KL(ENTER, NAV)"],
+            [" ", " ", " ", " ", "X", " ",    "KL(SPC, SYM)"],
+            [" ", " ", " ", " ", " ", "X", "KL(BSPC, MOUSE)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "REGEX",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", " ", " ", " ", " ", " ",        "*",    "[",   "^",    "]", " ", " ", 
+            " ", " ", " ", " ", " ", " ",        "?", "LPRN",   "$", "RPRN", " ", " ",
+            " ", " ", " ", " ", " ", " ",        "|",    "{",   "#",    "}", " ", " ",
+                           " ", " ", " ",        " ",   "\\", "DEL"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SYM",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", " ", ".", "*", "&",  "+",        " ", " ", " ", " ", " ", " ", 
+            " ", " ", "?", "!", "/",  "|",        " ", " ", " ", " ", " ", " ",
+            " ", " ", "<", ">", "%",  "@",        " ", " ", " ", " ", " ", " ",
+                           " ", "=", "\\",        " ", " ", " "                   
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SYMBOL",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", " ", ".", "*", "&",  "+",        "*",    "[",   "^",    "]", " ", "DF(BEAKL)", 
+            " ", " ", "?", "!", "/",  "|",        "?", "LPRN",   "$", "RPRN", " ",         " ",
+            " ", " ", "<", ">", "%",  "@",        "|",    "{",   "#",    "}", " ",         " ",
+                   "DF(BEAKL)", "=", "\\",        " ",  "SPC", "DEL"                   
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NUM",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ",    " ",           "A",           "B",           "C", " ",        "/" , "4", "5", "9", "*",         " ", 
+            " ", "LGUI", "KM(D, LCTL)", "KM(E, LALT)", "KK(F, LSFT)", " ",        "." , "1", "2", "3", "-",         " ",
+            " ",    " ",           "[",           "]",           "G", " ",        " " , "8", "6", "7", "+", "DF(BEAKL)",
+                                          "DF(BEAKL)",           " ", " ",        "\\", "0", "="
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FNC",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            "DF(BEAKL)",    " ",    " ",    " ",    " ", " ",        " ", "F4", "F5", "F9", "F12", " ", 
+            " "        , "LGUI", "LCTL", "LALT", "LSFT", " ",        " ", "F1", "F2", "F3", "F11", " ",
+            " "        ,    " ",    " ",    " ",    " ", " ",        " ", "F8", "F6", "F7", "F10", " ",
+                                    "DF(BEAKL)",    " ", " ",        " ",  " ",  " "
+          ]
+        }    
+      ]
+    },
+    {
+      "name": "NAV",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " ", " ",    " ",    " ",    " ",    " ",        " ", "HOME",   "UP",   "END", "PGUP",         " ", 
+            " ", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",     " ",    " ", "DF(BEAKL)",
+            " ", " ",    " ",    " ",    " ",    " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN",         " ",
+                                 "DF(BEAKL)",    " ",    " ",        " ", " ",    " "
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MOUSE",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " "        , " ",    " ",    " ",    " ",    " ",        " ", "BTN1", "MS_U", "BTN2", "WH_U", " ", 
+            "DF(BEAKL)", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",    " ",    " ", " ",
+            " "        , " ",    " ",    " ",    " ",    " ",        " ", "MS_L", "MS_D", "MS_R", "WH_D", " ",
+                                 "DF(BEAKL)",    " ",    " ",        " ", " ",    " "
+          ]
+        }
+      ]
+    }
+  ],
+  "leader_sequences": [],
+  "extra_code": "",
+  "extra_dependencies": []
+}
