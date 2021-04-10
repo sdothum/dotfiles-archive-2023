@@ -34,8 +34,9 @@ ifno 'sync qmk_firmware repo' || { cd $QMK; rm -rf $KEYBOARD; git pull origin ma
 
 # chording engine? generate keymap.c from json
 if [ $KBD = georgi ] ;then
-  rsync -avq -KL --exclude .deprecated ${SOURCE%/keyboards/*}/users/sdothum $QMK/users
-  cd $QMK/users/sdothum/chording_engine
+  # rsync -avq -KL --exclude .deprecated ${SOURCE%/keyboards/*}/users/sdothum $QMK/users
+  # cd $QMK/users/sdothum/chording_engine
+  cd $QMK/users/dennytom/chording_engine
   python parser.py $SOURCE/*.json $SOURCE/keymap.c
 fi
 
