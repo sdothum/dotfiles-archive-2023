@@ -77,7 +77,7 @@ Plug 'simnalamburt/vim-mundo'          " undo
 Plug 'vim-scripts/YankRing.vim'        " paste (yank)
 
 " ....................................................................... Linter
-Plug 'w0rp/ale'                        " asynchronous lint engine
+Plug 'dense-analysis/ale'              " asynchronous lint engine
 
 " Editing ______________________________________________________________________
 
