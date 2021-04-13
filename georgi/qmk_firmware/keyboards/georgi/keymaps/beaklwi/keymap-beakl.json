@@ -93,11 +93,24 @@
         },
         {
           "type": "visual_array",
-          "keys": ["BOT4", "TOP5", "BOT5", "THU5", "THU6"],
+          "keys": ["TOP2", "BOT3", "BOT4", "TOP5", "BOT5", "THU4", "THU5"],
           "dictionary": [
-            ["X", " ", " ", "X", " ", "M(cap, KC_DOT, KC_SPC)"],
-            [" ", "X", "X", " ", "X", "DEL"],
-            [" ", " ", " ", "X", "X", "DEL"]
+            ["X", " ", " ", " ", " ", "X", " ", "M(cap, KC_COLN, KC_ENTER)"],
+            [" ", "X", " ", " ", " ", "X", " ", "M(cap, KC_COMM, KC_ENTER)"],
+            [" ", " ", "X", " ", " ", "X", " ",  "M(cap, KC_DOT, KC_ENTER)"],
+            [" ", " ", " ", "X", "X", "X", " ",   "M(cap, KC_NO, KC_ENTER)"],
+            ["X", " ", " ", " ", " ", " ", "X",   "M(cap, KC_COLN, KC_SPC)"],
+            [" ", "X", " ", " ", " ", " ", "X",   "M(cap, KC_COMM, KC_SPC)"],
+            [" ", " ", "X", " ", " ", " ", "X",    "M(cap, KC_DOT, KC_SPC)"],
+            [" ", " ", " ", "X", "X", " ", "X",     "M(cap, KC_NO, KC_SPC)"]
+           ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP5", "BOT5", "THU5", "THU6"],
+          "dictionary": [
+            ["X", "X", " ", "X", "DEL"],
+            [" ", " ", "X", "X", "DEL"]
            ]
         },
         {
@@ -331,7 +344,7 @@
     }
   ],
   "leader_sequences": [],
-  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n    case ACTIVATED:\n      tap_key(self->value1);\n      tap_key(self->value2);\n      break;\n    case DEACTIVATED:\n      current_pseudolayer = CAPS;\n      *self->state = IN_ONE_SHOT;\n      break;\n    case FINISHED:\n    case PRESS_FROM_ACTIVE:\n      current_pseudolayer = self->value1;\n      a_key_went_through = false;\n      break;\n    case RESTART:\n      if (a_key_went_through) {\n        current_pseudolayer = self->pseudolayer;\n      } else {\n        *self->state = IN_ONE_SHOT;\n      }\n    default:\n      break;\n  }\n}\n",
+  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    tap_key(self->value1);\n    tap_key(self->value2);\n    break;\n  case DEACTIVATED:\n    current_pseudolayer = CAPS;\n    *self->state = IN_ONE_SHOT;\n    break;\n  case FINISHED:\n  case PRESS_FROM_ACTIVE:\n    current_pseudolayer = self->value1;\n    a_key_went_through = false;\n    break;\n  case RESTART:\n    if (a_key_went_through) {\n      current_pseudolayer = self->pseudolayer;\n    } else {\n      *self->state = IN_ONE_SHOT;\n    }\n  default:\n    break;\n  }\n}\n",
   "extra_dependencies": [
     "keymap_steno.h"
   ]
