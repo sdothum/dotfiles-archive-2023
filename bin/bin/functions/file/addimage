@@ -14,6 +14,6 @@ quality=92
 [ "$1" ] && { jpeg=$1; shift; } || usage
 [ "$1" ] && name="$@.jpg" || name=$jpeg
 
-convert $jpeg -size 1600 -quality $quality $GALLERY/$name
+convert $jpeg -resize 1600 -quality $quality $GALLERY/$name
 
 # vim: set ft=sh: #
