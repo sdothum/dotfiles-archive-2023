@@ -239,10 +239,46 @@ void tap_key(int16_t keycode) {
     key_in(keycode);
     wait_ms(TAP_TIMEOUT);
     key_out(keycode);
+}void cap(const struct Chord* self) {
+  switch (*self->state) {
+  case ACTIVATED:
+    key_in(self->value1);
+    key_in(self->value2);
+    break;
+  case DEACTIVATED:
+    key_out(self->value1);
+    key_out(self->value2);
+    break;
+  case FINISHED:
+  case FINISHED_FROM_ACTIVE:
+    //O(CAPS);
+    break;
+  case RESTART:
+    key_out(self->value1);
+    key_out(self->value2);
+    break;
+  default:
+    break;
+  }
 }
-const char * const strings[] PROGMEM = {
 
+
+const char string_0 [] PROGMEM = "::";
+const char string_1 [] PROGMEM = "~/";
+const char string_2 [] PROGMEM = ".*";
+const char string_3 [] PROGMEM = "<-";
+const char string_4 [] PROGMEM = "->";
+const char string_5 [] PROGMEM = "=~";
+const char string_6 [] PROGMEM = "<-";
+const char string_7 [] PROGMEM = "->";
+const char string_8 [] PROGMEM = "=~";
+const char string_9 [] PROGMEM = "SECRET";
+const char string_10 [] PROGMEM = "PUBLIC";
+
+const char * const strings[] PROGMEM = {
+    string_0, string_1, string_2, string_3, string_4, string_5, string_6, string_7, string_8, string_9, string_10
 };
+
 void single_dance(const struct Chord* self) {
     switch (*self->state) {
         case ACTIVATED:
@@ -526,7 +562,7 @@ void dynamic_macro_play(const struct Chord* self) {
                     break;
                 }
                 register_code(dynamic_macro_buffer[i]);
-            }
+            }\
             send_keyboard_report();
             wait_ms(TAP_TIMEOUT);
             for (int i = ind_start; i < DYNAMIC_MACRO_MAX_LENGTH; i++) {
