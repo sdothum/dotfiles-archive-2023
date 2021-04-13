@@ -97,8 +97,8 @@ hc keybind $Mod-Control-x           split right  0.333333
 hc keybind $Mod-Control-space       spawn restore frames
 
 # rotate frames
-hc keybind $Mod-Shift-h             spawn switch orientation -2
-hc keybind $Mod-h                   spawn switch orientation -1
+hc keybind $Mod-Control-Shift-l     spawn switch orientation -2
+hc keybind $Mod-Control-l           spawn switch orientation -1
 hc keybind $Mod-l                   spawn switch orientation +1
 hc keybind $Mod-Shift-l             spawn switch orientation +2
 
@@ -121,7 +121,7 @@ hc keybind $Mod-BackSpace           spawn switch tag
 # set layout
 hc keybind $Mod-Control-0           spawn toggle monocle
 hc keybind $Mod-g                   spawn toggle layout grid
-hc keybind $Mod-l                   spawn draw layout
+hc keybind $Mod-Shift-g             spawn draw layout
 hc keybind $Mod-Control-minus       spawn draw layout default
 hc keybind $Mod-Control-1           spawn draw layout max
 hc keybind $Mod-Control-2           spawn draw layout halves
