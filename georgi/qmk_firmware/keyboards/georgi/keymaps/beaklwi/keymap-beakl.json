@@ -73,7 +73,7 @@
           "set": "rows",
           "keycodes": [
             "DF(FNC)"   ,           ":",           "Y",           "O",           "U", "-",        "G",           "D",           "N",            "M",           "X", "DF(SYMBOL)",
-            "DF(PLOVER)", "KK(Q, LGUI)", "KM(H, LCTL)", "KM(E, LALT)", "KK(A, LSFT)", "W",        "C", "KK(T, RSFT)", "KM(R, RALT)",  "KM(S, RCTL)", "KK(Z, RGUI)",    "DF(NAV)",
+            "DF(PLOVER)", "KM(Q, LGUI)", "KM(H, LCTL)", "KM(E, LALT)", "KM(A, LSFT)", "W",        "C", "KM(T, RSFT)", "KM(R, RALT)",  "KM(S, RCTL)", "KM(Z, RGUI)",    "DF(NAV)",
             "CAPS"      ,           "J",           ",",           ".",           "K", "'",        "B",           "P",           "L",            "F",           "V",    "DF(NUM)",
                                                                   " ",           " ", " ",        " ",           " ",           " "
           ]
@@ -89,7 +89,7 @@
             [" ", " ", " ", "X", "X", " ", " ", "X", "X",     "STR(~/)"],
             [" ", " ", " ", " ", " ", "X", " ", "X", "X",           "_"],
             [" ", " ", " ", " ", " ", " ", "X", "X", "X",          "\""]
-           ]
+          ]
         },
         {
           "type": "visual_array",
@@ -103,15 +103,15 @@
             [" ", "X", " ", " ", " ", " ", "X",   "M(cap, KC_COMM, KC_SPC)"],
             [" ", " ", "X", " ", " ", " ", "X",    "M(cap, KC_DOT, KC_SPC)"],
             [" ", " ", " ", "X", "X", " ", "X",     "M(cap, KC_NO, KC_SPC)"]
-           ]
+          ]
         },
         {
           "type": "visual_array",
           "keys": ["TOP5", "BOT5", "THU5", "THU6"],
           "dictionary": [
-            ["X", "X", " ", "X", "DEL"],
-            [" ", " ", "X", "X", "DEL"]
-           ]
+            ["X", "X", " ", "X", "BSPC"],
+            [" ", " ", "X", "X",  "DEL"]
+          ]
         },
         {
           "type": "visual_array",
@@ -183,7 +183,7 @@
           "dictionary": [
             ["X", "X", " ", " ", "STR(' <- ')"],
             [" ", " ", "X", "X", "STR(' -> ')"]
-           ]
+          ]
         },
         {
           "type": "visual_array",
@@ -211,9 +211,9 @@
           "type": "visual_array",
           "keys": ["BOT2", "BOT3", "BOT4", "BOT5"],
           "dictionary": [
-            ["X", "X", " ", " ", "STR( <- )"],
-            [" ", " ", "X", "X", "STR( -> )"]
-           ]
+            ["X", "X", " ", " ", "STR(' <- ')"],
+            [" ", " ", "X", "X", "STR(' -> ')"]
+          ]
         },
         {
           "type": "visual_array",
@@ -231,10 +231,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ",    " ",           "A",           "B",           "C", " ",        "/" , "4", "5", "9", "*",         " ",
-            " ", "LGUI", "KM(D, LCTL)", "KM(E, LALT)", "KK(F, LSFT)", " ",        "." , "1", "2", "3", "-",         " ",
-            " ",    " ",           "[",           "]",           "G", " ",        " " , "8", "6", "7", "+", "DF(BEAKL)",
-                                          "DF(BEAKL)",           " ", " ",        "\\", "0", "="
+            " ",    " ",           "A",           "B",                 "C", " ",        "/" , "4", "5", "9", "*",         " ",
+            " ", "LGUI", "KM(D, LCTL)", "KM(E, LALT)",       "KM(F, LSFT)", " ",        "." , "1", "2", "3", "-",         " ",
+            " ",    " ",           "[",           "]", "MK(KC_LSFT, KC_G)", " ",        "," , "8", "6", "7", "+", "DF(BEAKL)",
+                                          "DF(BEAKL)",                 " ", " ",        "\\", "0", "="
           ]
         },
         {
@@ -243,7 +243,14 @@
           "dictionary": [
             ["X", " ", "X", " ", ":"],
             [" ", "X", " ", "X", ";"]
-           ]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["BOT5", "THU5"],
+          "dictionary": [
+            ["X", "X", "STR(0x)"]
+          ]
         }
       ]
     },
@@ -281,7 +288,7 @@
           "dictionary": [
             ["X", " ", "X", " ", "STR(SECRET)"],
             [" ", "X", " ", "X", "STR(PUBLIC)"]
-           ]
+          ]
         }
       ]
     },
