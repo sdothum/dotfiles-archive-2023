@@ -1,4 +1,4 @@
-# # BEAKL Wi Georgi Layout
+# # BEAKL Wi (? ! on symbol layer) Georgi Layout
 
 This keymap is using a custom chording engine. Head out to (DennyTom) user space to find the source files and details.
 

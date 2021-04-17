@@ -1,0 +1,9 @@
+MOUSEKEY_ENABLE = yes
+EXTRAKEY_ENABLE = yes
+CONSOLE_ENABLE = no
+# COMMAND_ENABLE = no
+NKRO_ENABLE = yes
+STENO_LAYERS = no
+
+TMPVAR := $(SRC)
+SRC = $(filter-out sten.c, $(TMPVAR))
