@@ -23,6 +23,12 @@ expand() {
   return 0
 }
 
+# apostrophes in filename cannot be handled by duochrome statusline..
+apostrophe_check() {
+  # so substitute a linked file with carets
+  [ "${file%\'*}" = "$file" ] || { link=/tmp/$(echo "${file##*/}" | tr \' ^); ln -sf "$file" "$link"; file=$link; }
+}
+
 add() {
   wiki=$(dirs | rmenu "$prompt" -no-custom) || exit
   [ $1 ] || { [ $prompt = Diary ] && title=$(date '+%Y-%m-%d'); } || title=$(echo | rmenu 'Title') || exit
@@ -30,6 +36,7 @@ add() {
   file=$wikis/$wiki/$title.wiki
   # prepend h1 title
   echo "# $title\n\n" >$file
+  apostrophe_check
   v -c ':normal! G' "$file"
 }
 
@@ -37,9 +44,11 @@ wiki() {
   mhistory wiki$1 "$(echo $file | sed "s/ *$SEP/^$SEP/")"
   file=$(echo $file | sed -r "s,(.*)  *$SEP  *(.*),\2/\1,")
   if expand "$file" >/dev/null ;then
-    v "$(expand "$file")"
+    file="$(expand "$file")"
+    apostrophe_check
+    v "$file"
     # history file cleanup usually precedes impending edit
-    expand "$file" | grep -q dmenu/.history && { pwait "vim.*"$(expand "$file")""; dmenu edit; }
+    # expand "$file" | grep -q dmenu/.history && { pwait "vim.*"$(expand "$file")""; dmenu edit; }
   else
     error=": ${file##*/} ∉ ${file%/*}"
     sed -i "\|${file##*/}.$SEP ${file%/*}$|d" $HISTORY/wiki
