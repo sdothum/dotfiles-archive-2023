@@ -238,10 +238,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ",    " ",           "A",           "B",                 "C", " ",        "/" , "4", "5", "9", "*",         " ",
-            " ", "LGUI", "KM(D, LCTL)", "KM(E, LALT)",       "KM(F, LSFT)", " ",        "." , "1", "2", "3", "-",         " ",
-            " ",    " ",           "[",           "]", "MK(KC_LSFT, KC_G)", " ",        "," , "8", "6", "7", "+", "DF(BEAKL)",
-                                          "DF(BEAKL)",                 " ", " ",        "\\", "0", "="
+            " ",    " ",               "A",               "B",               "C", " ",        "/" , "4", "5", "9", "*", "M(toggle, 0, 0)",
+            " ", "LGUI",     "KM(D, LCTL)",     "KM(E, LALT)",     "KM(F, LSFT)", " ",        "." , "1", "2", "3", "-",               " ",
+            " ",    " ", "M(hexbkt, 1, 0)", "M(hexbkt, 2, 0)", "M(hexpad, 0, 0)", " ",        "," , "8", "6", "7", "+",  "M(cycle, 0, 0)",
+                                                  "DF(BEAKL)",               " ", " ",        "\\", "0", "="
           ]
         },
         {
@@ -358,7 +358,7 @@
     }
   ],
   "leader_sequences": [],
-  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    tap_key(self->value1);\n    tap_key(self->value2);\n    break;\n  case DEACTIVATED:\n    current_pseudolayer = CAPS;\n    *self->state = IN_ONE_SHOT;\n    break;\n  case FINISHED:\n  case PRESS_FROM_ACTIVE:\n    current_pseudolayer = CAPS;\n    a_key_went_through = false;\n    break;\n  case RESTART:\n    if (a_key_went_through) {\n      current_pseudolayer = self->pseudolayer;\n    } else {\n      *self->state = IN_ONE_SHOT;\n    }\n  default:\n    break;\n  }\n}\n",
+  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    tap_key(self->value1);\n    tap_key(self->value2);\n    break;\n  case DEACTIVATED:\n    current_pseudolayer = CAPS;\n    *self->state = IN_ONE_SHOT;\n    break;\n  case FINISHED:\n  case PRESS_FROM_ACTIVE:\n    current_pseudolayer = CAPS;\n    a_key_went_through = false;\n    break;\n  case RESTART:\n    if (a_key_went_through) {\n      current_pseudolayer = self->pseudolayer;\n    } else {\n      *self->state = IN_ONE_SHOT;\n    }\n  default:\n    break;\n  }\n}\n\nvoid hexput(int16_t modifier, int16_t keycode) {\n  key_in(modifier);\n  tap_key(keycode);\n  key_out(modifier);\n}\n\nstatic uint16_t postfix = KC_G;\n\nvoid toggle(const struct Chord* self) {\n  switch (*self->state) {\n    case ACTIVATED:\n      postfix = postfix == KC_G ? KC_SPC : KC_G;\n    default:\n      break;\n  }\n}\n\nvoid hexpad(const struct Chord* self) {\n  switch (*self->state) {\n    case ACTIVATED:\n      hexput(KC_LSFT, postfix);\n    default:\n      break;\n  }\n}\n\nstatic uint16_t pairs[][3] = { {KC_NO, KC_LBRC, KC_RBRC}, {KC_LSFT, KC_9, KC_0}, {KC_LSFT, KC_LCBR, KC_RCBR} };\nstatic uint8_t bracket = 0;\n\nvoid cycle(const struct Chord* self) {\n  switch (*self->state) {\n    case ACTIVATED:\n      bracket = (bracket == 0) ? 1 : ((bracket == 1) ? 2 : 0);\n    default:\n      break;\n  }\n}\n\nvoid hexbkt(const struct Chord* self) {\n  switch (*self->state) {\n    case ACTIVATED:\n      hexput(pairs[bracket][0], pairs[bracket][self->value1]);\n    default:\n      break;\n  }\n}\n",
   "extra_dependencies": [
     "keymap_steno.h"
   ]
