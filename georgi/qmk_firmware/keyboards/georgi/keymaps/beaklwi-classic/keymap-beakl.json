@@ -109,10 +109,12 @@
         },
         {
           "type": "visual_array",
-          "keys": ["TOP5", "BOT5", "THU5", "THU6"],
+          "keys": ["TOP5", "BOT5", "THU2", "THU3", "THU5", "THU6"],
           "dictionary": [
-            ["X", "X", " ", "X", "BSPC"],
-            [" ", " ", "X", "X",  "DEL"]
+            ["X", "X", "X", " ", " ", " ",   "SPC"],
+            ["X", "X", " ", "X", " ", " ", "ENTER"],
+            ["X", "X", " ", " ", " ", "X",  "BSPC"],
+            [" ", " ", " ", " ", "X", "X",   "DEL"]
           ]
         },
         {
