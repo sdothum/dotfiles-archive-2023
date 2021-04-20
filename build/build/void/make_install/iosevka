@@ -324,4 +324,6 @@ npm run build -- ttf::iosevka$family   # post Verda commits
 
 nerdfont ${family#-}                   # insert glyphs
 
+fforge_hyperlegible ${family#-}        # hyperlegible font mod for better q
+
 # vim: set ft=sh: #
