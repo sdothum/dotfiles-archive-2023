@@ -1,0 +1,32 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................ hyperlegible q update
+
+# Usage: fforge_hyperlegible [family]
+
+# see make_insstall iosevka
+ditto iosevka 'copy char 0u024b and paste to char 0u0071'
+ifno 'atkinson q update' && exit
+
+FONT=$HOME/.fonts/iosevka
+[ $1 ] && { family=-$1; FONT=$FONT-$1; }
+cd $FONT
+
+for i in *ttf ;do
+  echo "
+Open(\"$i\");
+Select(0u024b);
+Copy();
+Select(0u0071);
+Paste();
+Generate(\"$i\", \"\", 4);
+" >/tmp/fontforge.script
+  ditto fontforge $i
+  fontforge --script /tmp/fontforge.script
+done
+
+# vim: set ft=sh: #
