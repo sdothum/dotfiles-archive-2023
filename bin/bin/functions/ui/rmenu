@@ -59,7 +59,7 @@ if [ -z $TERMINAL ] ;then
 
   # tune padding to displaywidth / (font * factor) for current monitor resolutions in system
   if [ $width -gt 1920 ] ;then
-    padsize $width 14 '3 / 2'
+    padsize $width 13 '3 / 2'
   elif [ $width -gt 1680 ] ;then
     padsize $width 12 '5 / 3'
   elif [ $width -gt 1440 ] ;then

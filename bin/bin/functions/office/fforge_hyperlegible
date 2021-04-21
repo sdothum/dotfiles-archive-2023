@@ -14,19 +14,19 @@ ifno 'atkinson q update' && exit
 
 FONT=$HOME/.fonts/iosevka
 [ $1 ] && { family=-$1; FONT=$FONT-$1; }
-cd $FONT
-
-for i in *ttf ;do
-  echo "
-Open(\"$i\");
+echo "
+Open(\$1);
 Select(0u024b);
 Copy();
 Select(0u0071);
 Paste();
-Generate(\"$i\", \"\", 4);
+Generate(\$1);
 " >/tmp/fontforge.script
+cd $FONT
+
+for i in *ttf ;do
   ditto fontforge $i
-  fontforge --script /tmp/fontforge.script
+  fontforge --script /tmp/fontforge.script $i
 done
 
 # vim: set ft=sh: #
