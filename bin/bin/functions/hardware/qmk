@@ -41,18 +41,20 @@ rsync -avq -KL --exclude .deprecated $SOURCE $KEYBOARD/keymaps
 
 # georgi template bypasses config.h #define's
 if [ $KBD = georgi ] ;then
-  case $1 in
-  '' | flash) ;;
-  *         ) sed -i "s/STR(SECRET)/STR($1)/" $JSON; shift ;;
-  esac
-  case $1 in
-  '' | flash) sed -i "s/STR(PUBLIC)/STR($(cat $HOME/.forward))/" $JSON ;;
-  *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
-  esac
+  if [ -e $JSON ] ;then
+    case $1 in
+    '' | flash) ;;
+    *         ) sed -i "s/STR(SECRET)/STR($1)/" $JSON; shift ;;
+    esac
+    case $1 in
+    '' | flash) sed -i "s/STR(PUBLIC)/STR($(cat $HOME/.forward))/" $JSON ;;
+    *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
+    esac
 
-  # generate keymap.c from json
-  cd $QMK/users/dennytom/chording_engine
-  python *parser.py $JSON $KEYMAP/keymap.c
+    # generate keymap.c from json
+    cd $QMK/users/dennytom/chording_engine
+    python *parser.py $JSON $KEYMAP/keymap.c
+  fi
 else
   # steno (mouse may need to be disabled in config.h)
   if [ "$1" = steno ] ;then
