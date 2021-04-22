@@ -6,8 +6,8 @@
   ],
   "parameters": {
     "layout_function_name": "LAYOUT_georgi",
-    "chord_timeout": 200,
-    "dance_timeout": 200,
+    "chord_timeout": 100,
+    "dance_timeout": 100,
     "leader_timeout": 750,
     "tap_timeout": 50,
     "command_max_length": 5,
@@ -73,7 +73,7 @@
           "set": "rows",
           "keycodes": [
             "DF(FNC)"        ,           ":",           "Y",           "O",           "U", "-",        "G",           "D",           "N",            "M",           "X", "DF(SYMBOL)",
-            "DF(PLOVER)"     , "KM(Q, LGUI)", "KK(H, LCTL)", "KK(E, LALT)", "KM(A, LSFT)", "W",        "C", "KM(T, RSFT)", "KK(R, RALT)",  "KK(S, RCTL)", "KM(Z, RGUI)",    "DF(NAV)",
+            "DF(STENO)"      , "KK(Q, LGUI)", "KK(H, LCTL)", "KK(E, LALT)", "KK(A, LSFT)", "W",        "C", "KK(T, RSFT)", "KK(R, RALT)",  "KK(S, RCTL)", "KK(Z, RGUI)",    "DF(NAV)",
             "M(hexpad, 0, 3)",           "J",           ",",           ".",           "K", "'",        "B",           "P",           "L",            "F",           "V",    "DF(NUM)",
                                                                   " ",           " ", " ",        " ",           " ",           " "
           ]
@@ -205,10 +205,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ", " ", ".", "*", "&",  "+",        "*",    "[",   "^",    "]", " ", "DF(BEAKL)",
-            " ", " ", "?", "!", "/",  "|",        "?", "LPRN",   "$", "RPRN", " ",         " ",
-            " ", " ", "<", ">", "%",  "@",        "|",    "{",   "#",    "}", " ",         " ",
-                   "DF(BEAKL)", "=", "\\",        " ",  "SPC", "DEL"
+            " ", " ", ".", "*", "&",  "+",        "*",    "[",   "^",    "]", " ", "M(hexpad, 0, 0)",
+            " ", " ", "`", "~", "/",  "|",        "?", "LPRN",   "$", "RPRN", " ",               " ",
+            " ", " ", "<", ">", "%",  "@",        "|",    "{",   "#",    "}", " ",               " ",
+             "M(hexpad, 0, 0)", "=", "\\",        " ",  "SPC", "DEL"
           ]
         },
         {
@@ -238,7 +238,7 @@
             " ",    " ",               "A",               "B",               "C", " ",        "/" , "4", "5", "9", "*", "M(hexpad, 0, 1)",
             " ", "LGUI",     "KM(D, LCTL)",     "KM(E, LALT)",     "KM(F, LSFT)", " ",        "." , "1", "2", "3", "-", "M(hexpad, 0, 3)",
             " ",    " ", "M(hexpad, 2, 1)", "M(hexpad, 2, 2)", "M(hexpad, 1, 0)", " ",        "," , "8", "6", "7", "+", "M(hexpad, 0, 2)",
-                                                  "DF(BEAKL)",               " ", " ",        "\\", "0", "="
+                                            "M(hexpad, 0, 0)",               " ", " ",        "\\", "0", "="
           ]
         },
         {
@@ -265,10 +265,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            "DF(BEAKL)",    " ",    " ",    " ",    " ", " ",        " ", "F4", "F5", "F9", "F12", " ",
-            " "        , "LGUI", "LCTL", "LALT", "LSFT", " ",        " ", "F1", "F2", "F3", "F11", " ",
-            " "        ,    " ",    " ",    " ",    " ", " ",        " ", "F8", "F6", "F7", "F10", " ",
-                                    "DF(BEAKL)",    " ", " ",        " ",  " ",  " "
+            "M(hexpad, 0, 0)",    " ",    " ",    " ",    " ", " ",        " ", "F4", "F5", "F9", "F12", " ",
+            " "              , "LGUI", "LCTL", "LALT", "LSFT", " ",        " ", "F1", "F2", "F3", "F11", " ",
+            " "              ,    " ",    " ",    " ",    " ", " ",        " ", "F8", "F6", "F7", "F10", " ",
+                                    "M(hexpad, 0, 0)",    " ", " ",        " ",  " ",  " "
           ]
         }
       ]
@@ -280,10 +280,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ",                 " ",                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)",    " ",        " ", "HOME",   "UP",   "END", "PGUP",         " ",
-            " ",              "LGUI",              "LCTL",                       "LALT",                       "LSFT",    " ",        " ",    " ",    " ",     " ",    " ", "DF(BEAKL)",
-            " ", "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)",    " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN",         " ",
-                                                                            "DF(BEAKL)",                          " ",    " ",        " ",    " ",    " "
+            " ",                 " ",                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)",    " ",        " ", "HOME",   "UP",   "END", "PGUP",               " ",
+            " ",              "LGUI",              "LCTL",                       "LALT",                       "LSFT",    " ",        " ",    " ",    " ",     " ",    " ", "M(hexpad, 0, 0)",
+            " ", "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)",    " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN",               " ",
+                                                                      "M(hexpad, 0, 0)",                          " ",    " ",        " ",    " ",    " "
           ]
         },
         {
@@ -303,10 +303,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            "RESET"    , " ",    " ",    " ",    " ",    " ",        " ", "BTN1", "MS_U", "BTN2", "WH_U", " ",
-            "DF(BEAKL)", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",    " ",    " ", " ",
-            " "        , " ",    " ",    " ",    " ",    " ",        " ", "MS_L", "MS_D", "MS_R", "WH_D", " ",
-                                 "DF(BEAKL)",    " ",    " ",        " ",    " ",    " "
+            "RESET"          , " ",    " ",    " ",    " ",    " ",        " ", "BTN1", "MS_U", "BTN2", "WH_U", " ",
+            "M(hexpad, 0, 0)", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",    " ",    " ", " ",
+            " "              , " ",    " ",    " ",    " ",    " ",        " ", "MS_L", "MS_D", "MS_R", "WH_D", " ",
+                                 "M(hexpad, 0, 0)",    " ",    " ",        " ",    " ",    " "
           ]
         }
       ]
@@ -327,7 +327,7 @@
           "type": "visual_array",
           "keys": ["TOP1", "BOT1"],
           "dictionary": [
-            ["X", "X", "DF(BEAKL)"]
+            ["X", "X", "M(hexpad, 0, 0)"]
           ]
         }
       ]
@@ -348,15 +348,16 @@
           "type": "visual_array",
           "keys": ["TOP1", "BOT1"],
           "dictionary": [
-            ["X", "X", "DF(BEAKL)"]
+            ["X", "X", "M(hexpad, 0, 0)"]
           ]
         }
       ]
     }
   ],
   "leader_sequences": [],
-  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    tap_key(self->value1);\n    tap_key(self->value2);\n    break;\n  case DEACTIVATED:\n    current_pseudolayer = CAPS;\n    *self->state = IN_ONE_SHOT;\n    break;\n  case FINISHED:\n  case PRESS_FROM_ACTIVE:\n    current_pseudolayer = CAPS;\n    a_key_went_through = false;\n    break;\n  case RESTART:\n    if (a_key_went_through) {\n      current_pseudolayer = self->pseudolayer;\n    } else {\n      *self->state = IN_ONE_SHOT;\n    }\n  }\n}\n\nstatic uint16_t postfix = KC_G;\nstatic uint8_t postcap = 0;\nstatic uint16_t pairs[][3] = { {KC_NO, KC_LBRC, KC_RBRC}, {KC_LSFT, KC_9, KC_0}, {KC_LSFT, KC_LCBR, KC_RCBR} };\nstatic uint8_t bracket = 0;\n\nvoid output(int16_t modifier, int16_t keycode) {\n  key_in(modifier);\n  tap_key(keycode);\n  key_out(modifier);\n}\n\nvoid hexpad(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    switch (self->value1) {\n    case 0:\n      switch (self->value2) {\n      case 1:\n        postfix = postfix == KC_G ? KC_SPC : KC_G;\n        break;\n      case 2:\n        bracket = (bracket == 0) ? 1 : ((bracket == 1) ? 2 : 0);\n        break;\n      case 3:\n        tap_key(KC_CAPS);\n        postcap = !postcap;\n      }\n      break;\n    case 1:\n      output(postcap ? KC_NO : KC_LSFT, postfix);\n      break;\n    case 2:\n      output(pairs[bracket][0], pairs[bracket][self->value2]);\n    }\n  }\n}\n",
+  "extra_code": "void cap(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    tap_key(self->value1);\n    tap_key(self->value2);\n    break;\n  case DEACTIVATED:\n    current_pseudolayer = CAPS;\n    *self->state = IN_ONE_SHOT;\n    break;\n  case FINISHED:\n  case PRESS_FROM_ACTIVE:\n    current_pseudolayer = CAPS;\n    a_key_went_through = false;\n    break;\n  case RESTART:\n    if (a_key_went_through) {\n      current_pseudolayer = self->pseudolayer;\n    } else {\n      *self->state = IN_ONE_SHOT;\n    }\n  }\n}\n\nstatic uint16_t postfix = KC_G;\nstatic uint8_t postcap = 0;\nstatic uint16_t pairs[][3] = { {KC_NO, KC_LBRC, KC_RBRC}, {KC_LSFT, KC_9, KC_0}, {KC_LSFT, KC_LCBR, KC_RCBR} };\nstatic uint8_t bracket = 0;\n\nvoid output(int16_t modifier, int16_t keycode) {\n  key_in(modifier);\n  tap_key(keycode);\n  key_out(modifier);\n}\n\nvoid hexpad(const struct Chord* self) {\n  switch (*self->state) {\n  case ACTIVATED:\n    switch (self->value1) {\n    case 0:\n      switch (self->value2) {\n      case 1:\n        postfix = postfix == KC_G ? KC_SPC : KC_G;\n        break;\n      case 2:\n        bracket = (bracket == 0) ? 1 : ((bracket == 1) ? 2 : 0);\n        break;\n      case 0:\n        current_pseudolayer = BEAKL;\n        if (!postcap) {\n          break;\n        }\n      case 3:\n        tap_key(KC_CAPS);\n        postcap = !postcap;\n      }\n      break;\n    case 1:\n      output(postcap ? KC_NO : KC_LSFT, postfix);\n      break;\n    case 2:\n      output(pairs[bracket][0], pairs[bracket][self->value2]);\n    }\n  }\n}\n\nvoid matrix_init_user() {\n  steno_set_mode(STENO_MODE_GEMINI);\n}\n",
   "extra_dependencies": [
     "keymap_steno.h"
   ]
 }
+
