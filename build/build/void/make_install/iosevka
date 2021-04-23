@@ -12,12 +12,12 @@
 #                  iosevka term jost round
 #                  iosevka extended jost proof round family jost-proof
 usage() {
-  echo "usage: $(basename $0) iosevka  term | extended  [atkinson[+] | jost[+]]
-                                              [proof | linespace <decimal>]
+  echo "usage: $(basename $0) iosevka  term | extended | ebook  [atkinson[+] | jost[+]]
+                                              [proof | leading <decimal>]
                                               [cap [-+]<emu>]
                                               [shape [-+]<emu>]
                                               [xheight [-+]<emu>]
-                                              [round | sb [-+]<emu>]
+                                              [round | sb <decimal>]
                                               [family <name>]"
   exit 1
 }
@@ -29,7 +29,7 @@ usage() {
 REPO=/net/depot/Iosevka
 FONT=$HOME/.fonts/iosevka
 
-leading=1550  # default 1.24 coding line spacing
+leading=1.25  # default coding line spacing
 
 # atkinson hyperlegible typeface
 atkinson() {
@@ -50,9 +50,13 @@ atkinson() {
   six=closed-contour
 }
 
+cap() {
+  cap="cap = $1"
+}
+
 # jost* typeface
 jost() {
-  cap='cap = 800'  # increased ascender height
+  cap +65  # increase ascender height
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_k=symmetric-touching
@@ -70,21 +74,25 @@ jost() {
   six=straight-bar
 }
 
-multiply() {
-  [ $2 ] || exit 1
-  result=$(echo "$1 * $2" | bc 2>/dev/null | sed 's/[.].*//')
-  [ "$result" = '' ] && exit 1
-  [ $result = 0 ]    && exit 1
-  echo $result
+integer() {
+  [ $1 ]                    || exit 1
+  [ $1 -eq $1 2>/dev/null ] || exit 1
+  echo $1
+}
+
+real() {
+  integer ${1#*.} || exit 1
+  integer ${1%.*} || exit 1
+  echo $1
 }
 
 adjust() {
-  [ $2 ]                    || exit 1
-  [ $2 -eq $2 2>/dev/null ] || exit 1  # integer test
-  result=$(echo "$1 + ${2#+}" | bc 2>/dev/null | sed 's/[.].*//')
-  [ "$result" = '' ] && exit 1
-  [ $result = 0 ]    && exit 1
-  echo $result
+   integer $2 || exit 1
+   echo $(( $1 + $2 ))
+}
+
+sb() {
+  sb="sb = $1"
 }
 
 atkinson      # default typeface
@@ -92,26 +100,27 @@ atkinson      # default typeface
 shift
 while [ $1 ] ;do
   case "$1" in
-  atkinson+) atkinson d ;;                                                # tailed d
-  atkinson ) family=-atkinson ;;                                          # simply add typeface name
-  cap      ) cap="cap = $(adjust 735 $2)"             || usage; shift ;;  # H height (affects descender as well)
-  extended ) shape=576; sb=80; round=-20 ;;                               # extended width (shape), guestimated sb
-  family   ) [ $2 ] && family=-$2                     || usage; shift ;;
-  jost+    ) jost j; family=-jost ;;                                      # straight-line j
+  atkinson+) atkinson d ;;                                         # tailed d
+  atkinson ) family=-atkinson ;;                                   # simply add typeface name
+  cap      ) cap $(integer $2)                 || usage; shift ;;  # H height (affects descender as well)
+  ebook    ) shape=576; sb 0.6000; leading=1.0000; family=-ebook ;;
+  extended ) shape=576 ;;                                          # default extended width
+  family   ) [ $2 ] && family=-$2              || usage; shift ;;
+  jost+    ) jost j; family=-jost ;;                               # straight-line j
   jost     ) jost; family=-jost ;;
-  linespace) leading=$(multiply 1250 $2)              || usage; shift ;;  # line spacing > 1.0
-  proof    ) leading=2250; family=${family}-proof; round=-10 ;;           # 1.8 line spacing
-  round    ) side_bearing="sb = $(adjust $sb $round)" || usage ;;         # round closed lower case characters by reducing sb
-  sb       ) side_bearing="sb = $(adjust $sb $2)"     || usage; shift ;;  # side bearing (spacing)
-  shape    ) shape=$(adjust $shape $2)                || usage; shift ;;  # cell width
-  term     ) shape=500; sb=60; round=-10 ;;                               # 1.16 line spacing (over leading 1250)
-  xheight  ) xheight="xheight = $(adjust 530 $2)"     || usage; shift ;;  # height of x (experimental for larger fontsizes)
+  leading  ) leading=$(real $2)                || usage; shift ;;  # line spacing > 1.0
+  proof    ) leading=1.8000; sb 0.8000; family=${family}-proof ;;  # prose display needs more sb (?)
+  round    ) sb 0.6000 ;;                                          # round closed lower case characters by reducing sb
+  sb       ) sb $(real $2)                     || usage; shift ;;  # side bearing (spacing)
+  shape    ) shape=$(adjust $shape $2)         || usage; shift ;;  # cell width
+  term     ) shape=500 ;;                                          # default width
+  xheight  ) xheight="xheight = $(integer $2)" || usage; shift ;;  # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
 done
 
-[ $sb ] || usage
+[ $shape ] || usage
 ifyes "build Iosevka$family" || usage
 FONT=$FONT$family
 REGULAR=$FONT/ttf/iosevka$family-regular.ttf
@@ -302,16 +311,20 @@ sequence = '<*>'
 # Edit the values to change the metrics. Remove this section when overriding is not needed.
 
 [buildPlans.iosevka$family.metric-override]
-$cap
-leading = $leading
-$side_bearing
-$xheight
 winMetricAscenderPad = 0
 winMetricDescenderPad = 0
 powerlineScaleY = 1
 powerlineScaleX = 1
 powerlineShiftY = 0
 powerlineShiftX = 0
+
+[buildPlans.iosevka$family.metric-override.multiplies]
+leading = $leading
+$sb
+
+[buildPlans.iosevka$family.metric-override.adds]
+$cap
+$xheight
 
 # End metric override section
 ###################################################################################################
