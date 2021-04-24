@@ -103,7 +103,7 @@ while [ $1 ] ;do
   atkinson+) atkinson d ;;                                         # tailed d
   atkinson ) family=-atkinson ;;                                   # simply add typeface name
   cap      ) cap $(integer $2)                 || usage; shift ;;  # H height (affects descender as well)
-  ebook    ) shape=576; sb 0.6000; leading=1.0000; family=-ebook ;;
+  ebook    ) shape=576; sb 0.6000; leading=1.2500; family=-eink; font=iosevka ;;
   extended ) shape=576 ;;                                          # default extended width
   family   ) [ $2 ] && family=-$2              || usage; shift ;;
   jost+    ) jost j; family=-jost ;;                               # straight-line j
@@ -121,7 +121,8 @@ while [ $1 ] ;do
 done
 
 [ $shape ] || usage
-ifyes "build Iosevka$family" || usage
+[ $font ] || name=$family
+ifyes "build ${font:-Iosevka}$name" || usage
 FONT=$FONT$family
 REGULAR=$FONT/ttf/iosevka$family-regular.ttf
 
@@ -134,10 +135,10 @@ cd Iosevka
 # a tweaked :-) atkinson hyperlegible font character emulation
 # based on sample.toml (with quote and backtick conversion to single quotes)
 echo "
-[buildPlans.iosevka$family]  # <iosevka-custom> is your plan name
-family = 'Iosevka$family'    # Font menu family name
-spacing = 'term'             # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
-serifs = 'sans'              # Optional; Values: 'sans' or 'slab'
+[buildPlans.iosevka$family]       # <iosevka-custom> is your plan name
+family = '${font:-Iosevka}$name'  # Font menu family name
+spacing = 'term'                  # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'                   # Optional; Values: 'sans' or 'slab'
 no-cv-ss = true
 
 ###################################################################################################
@@ -334,10 +335,10 @@ $xheight
 npm install  # ignore npm funding and audit messages
 # npm update
 
-npm run build -- ttf::iosevka$family   # post Verda commits
+npm run build -- ttf::iosevka$family  # post Verda commits
 
-nerdfont ${family#-}                   # insert glyphs
+[ $font ] && { mkdir -p $FONT; cp -v dist/iosevka$family/ttf/* $FONT; } || nerdfont ${family#-}  # insert glyphs
 
-fforge_hyperlegible ${family#-}        # hyperlegible font mod for better q
+fforge_hyperlegible ${family#-}       # hyperlegible font mod for better q
 
 # vim: set ft=sh: #
