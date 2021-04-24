@@ -103,7 +103,7 @@ while [ $1 ] ;do
   atkinson+) atkinson d ;;                                         # tailed d
   atkinson ) family=-atkinson ;;                                   # simply add typeface name
   cap      ) cap $(integer $2)                 || usage; shift ;;  # H height (affects descender as well)
-  ebook    ) shape=576; sb 0.6000; leading=1.2500; family=-eink; font=iosevka ;;
+  ebook    ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; family=-hyperlegible ;;
   extended ) shape=576 ;;                                          # default extended width
   family   ) [ $2 ] && family=-$2              || usage; shift ;;
   jost+    ) jost j; family=-jost ;;                               # straight-line j
