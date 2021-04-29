@@ -16,6 +16,7 @@ usage() {
                                               [proof | leading <decimal>]
                                               [cap [-+]<emu>]
                                               [shape [-+]<emu>]
+                                              [weight <integer>]
                                               [xheight [-+]<emu>]
                                               [round | sb <decimal>]
                                               [family <name>]"
@@ -30,13 +31,14 @@ REPO=/net/depot/Iosevka
 FONT=$HOME/.fonts/iosevka
 
 leading=1.25  # default coding line spacing
+weight=400    # regular weight
 
 # atkinson hyperlegible typeface
 atkinson() {
   capital_g=toothed-serifless-hooked
   capital_i=serifed
   capital_k=straight
-  [ $1 ] && d=tailed || d=toothed
+  [ $1 ] && d=tailed-serifless || d=toothed-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
@@ -60,7 +62,7 @@ jost() {
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_k=symmetric-touching
-  d=toothed
+  d=toothed-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
   [ $1 ] && j=straight-line || j=serifless
@@ -114,6 +116,7 @@ while [ $1 ] ;do
   sb       ) sb $(real $2)                     || usage; shift ;;  # side bearing (spacing)
   shape    ) shape=$(adjust $shape $2)         || usage; shift ;;  # cell width
   term     ) shape=500 ;;                                          # default width
+  weight   ) weight=$(integer $2)              || usage; shift ;;  # regular weight
   xheight  ) xheight="xheight = $(integer $2)" || usage; shift ;;  # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
@@ -150,14 +153,14 @@ no-cv-ss = true
 
 # Optional; Configure single character's variant
 [buildPlans.iosevka$family.variants.design]
-capital-d = 'more-rounded'       # D
-capital-g = '$capital_g'         # G
-capital-i = '$capital_i'         # I
-capital-j = 'serifless'          # J
-capital-k = '$capital_k'         # K
-capital-m = 'flat-bottom'        # M
-capital-q = 'crossing'           # Q
-capital-w = 'straight-flat-top'  # W
+capital-d = 'more-rounded-serifless'  # D
+capital-g = '$capital_g'              # G
+capital-i = '$capital_i'              # I
+capital-j = 'serifless'               # J
+capital-k = '$capital_k'              # K
+capital-m = 'flat-bottom'             # M
+capital-q = 'crossing'                # Q
+capital-w = 'straight-flat-top'       # W
 d = '$d'
 f = '$f'
 i = '$i'
@@ -169,24 +172,24 @@ r = 'compact'
 t = '$t'
 w = 'straight-flat-top'
 y = '$y'
-zero = '$zero'                   # 0
-one = '$one'                     # 1
-two = 'straight-neck'            # 2
-four = 'closed'                  # 4
-five = 'oblique-upper-left-bar'  # 5
-six = '$six'                     # 6
-eight = 'two-circles'            # 8
-brace = 'straight'               # {}
-ampersand = 'upper-open'         # &
+zero = '$zero'                        # 0
+one = '$one'                          # 1
+two = 'straight-neck'                 # 2
+four = 'closed'                       # 4
+five = 'oblique-upper-left-bar'       # 5
+six = '$six'                          # 6
+eight = 'two-circles'                 # 8
+brace = 'straight'                    # {}
+ampersand = 'upper-open'              # &
 # at = 'fourfold'
-at = 'short'                     # @
-cyrl-ka = 'symmetric-touching'   # к
-lower-iota = 'flat-tailed'       # ι
-lower-lambda = 'straight-turn'   # λ
+at = 'short'                          # @
+cyrl-ka = 'symmetric-touching'        # к
+lower-iota = 'flat-tailed'            # ι
+lower-lambda = 'straight-turn'        # λ
 # number-sign = 'slanted'
-paragraph-sign = 'low'           # ¶
+paragraph-sign = 'low'                # ¶
 # percent = 'rings-continuous-slash'
-percent = 'dots'                 # %
+percent = 'dots'                      # %
 
 # Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
 [buildPlans.iosevka$family.variants.upright]
@@ -200,7 +203,7 @@ f = '$f'
 k = '$k'
 u = 'toothed'
 y = '$y'
-eszet = 'sulzbacher'             # ß
+eszet = 'sulzbacher'                  # ß
 
 # End variant section
 ###################################################################################################
@@ -226,9 +229,9 @@ enables  = []               # Optional; enable specific ligation groups, overrid
 #             If you decide to use custom weights you have to define all the weights you
 #             plan to use otherwise they will not be built.
 [buildPlans.iosevka$family.weights.regular]
-shape = 400  # Weight for glyph shapes.
-menu  = 400  # Weight for the font's names.
-css   = 400  # Weight for webfont CSS.
+shape = $weight  # Weight for glyph shapes.
+menu  = $weight  # Weight for the font's names.
+css   = $weight  # Weight for webfont CSS.
 
 [buildPlans.iosevka$family.weights.book]
 shape = 450
