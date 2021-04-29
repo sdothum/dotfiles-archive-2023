@@ -306,6 +306,20 @@ void hexpad(const struct Chord* self) {
   }
 }
 
+static uint8_t stn = 0;
+
+#define doubled(k) stn=1;clear_keyboard(); return false
+
+bool process_steno_user(uint16_t keycode, keyrecord_t *record) { 
+  switch (keycode) {
+    case STN_FN:
+      doubled(1);
+    case STN_PWR:
+      doubled(2);
+  }
+  return true;
+}
+
 void matrix_init_user() {
   steno_set_mode(STENO_MODE_GEMINI);
 }
