@@ -20,6 +20,14 @@
   "layers": [
     {
       "type": "auto"
+    },
+    {
+      "type": "manual",
+      "keycodes": [
+        "STN_FN" , "STN_S1", "STN_TL", "STN_PL","STN_HL", "STN_ST1",        "STN_ST3", "STN_FR", "STN_PR", "STN_LR", "STN_TR", "STN_DR",
+        "STN_PWR", "STN_S2", "STN_KL", "STN_WL","STN_RL", "STN_ST2",        "STN_ST4", "STN_RR", "STN_BR", "STN_GR", "STN_SR", "STN_ZR",
+                                       "STN_N1", "STN_A",   "STN_O",        "STN_E"  , "STN_U",  "STN_N7"
+      ]
     }
   ],
   "chord_sets": [
@@ -73,7 +81,7 @@
           "set": "rows",
           "keycodes": [
             "DF(FNC)"        ,           ":",           "Y",           "O",           "U", "-",        "G",           "D",           "N",            "M",           "X", "DF(SYMBOL)",
-            "DF(STENO)"      , "KK(Q, LGUI)", "KK(H, LCTL)", "KK(E, LALT)", "KK(A, LSFT)", "W",        "C", "KK(T, RSFT)", "KK(R, RALT)",  "KK(S, RCTL)", "KK(Z, RGUI)",    "DF(NAV)",
+            "TO(1)"          , "KK(Q, LGUI)", "KK(H, LCTL)", "KK(E, LALT)", "KK(A, LSFT)", "W",        "C", "KK(T, RSFT)", "KK(R, RALT)",  "KK(S, RCTL)", "KK(Z, RGUI)",    "DF(NAV)",
             "M(hexpad, 0, 3)",           "J",           ",",           ".",           "K", "'",        "B",           "P",           "L",            "F",           "V",    "DF(NUM)",
                                                                   " ",           " ", " ",        " ",           " ",           " "
           ]
@@ -241,7 +249,7 @@
           "set": "rows",
           "keycodes": [
             " ",    " ",               "A",               "B",               "C", " ",        "/" , "4", "5", "9", "*", "M(hexpad, 0, 1)",
-            " ", "LGUI",     "KM(D, LCTL)",     "KM(E, LALT)",     "KM(F, LSFT)", " ",        "." , "1", "2", "3", "-", "M(hexpad, 0, 3)",
+            " ", "LGUI",     "KK(D, LCTL)",     "KK(E, LALT)",     "KK(F, LSFT)", " ",        "." , "1", "2", "3", "-", "M(hexpad, 0, 3)",
             " ",    " ", "M(hexpad, 2, 1)", "M(hexpad, 2, 2)", "M(hexpad, 1, 0)", " ",        "," , "8", "6", "7", "+", "M(hexpad, 0, 2)",
                                             "M(hexpad, 0, 0)",               " ", " ",        "\\", "0", "="
           ]
@@ -312,27 +320,6 @@
             "M(hexpad, 0, 0)", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",    " ",    " ", " ",
             " "              , " ",    " ",    " ",    " ",    " ",        " ", "MS_L", "MS_D", "MS_R", "WH_D", " ",
                                  "M(hexpad, 0, 0)",    " ",    " ",        " ",    " ",    " "
-          ]
-        }
-      ]
-    },
-    {
-      "name": "STENO",
-      "chords": [
-        {
-          "type": "chord_set",
-          "set": "steno",
-          "keycodes": [
-            "STN_FN" , "STN_S1", "STN_TL", "STN_PL","STN_HL", "STN_ST1",        "STN_ST3", "STN_FR", "STN_PR", "STN_LR", "STN_TR", "STN_DR",
-            "STN_PWR", "STN_S2", "STN_KL", "STN_WL","STN_RL", "STN_ST2",        "STN_ST4", "STN_RR", "STN_BR", "STN_GR", "STN_SR", "STN_ZR",
-                                           "STN_N1", "STN_A",   "STN_O",        "STN_E"  , "STN_U",  "STN_N7"
-          ]
-        },
-        {
-          "type": "visual_array",
-          "keys": ["TOP1", "BOT1"],
-          "dictionary": [
-            ["X", "X", "M(hexpad, 0, 0)"]
           ]
         }
       ]
