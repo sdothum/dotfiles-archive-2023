@@ -306,16 +306,16 @@ void hexpad(const struct Chord* self) {
   }
 }
 
-static uint8_t stn = 0;
+static uint8_t combo = 0;
 
-#define doubled(k) stn=1;clear_keyboard(); return false
+#define key(k) if (record->event.pressed) { combo |= k; if (combo == 3) { clear_keyboard(); return false; } } else { combo &= ~k; } break
 
 bool process_steno_user(uint16_t keycode, keyrecord_t *record) { 
   switch (keycode) {
     case STN_FN:
-      doubled(1);
+      key(1);
     case STN_PWR:
-      doubled(2);
+      key(2);
   }
   return true;
 }
