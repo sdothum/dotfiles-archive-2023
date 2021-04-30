@@ -86,10 +86,10 @@ cd $QMK
 # sudo make $KBD:$keymap:clean
 echo CPATH=$CPATH
 case $model in
-chimera) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
-corne  ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
-planck ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # rev1 board
-*      ) [ "$1" = flash ] && sudo CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
+chimera) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
+corne  ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;
+planck ) [ "$1" = flash ] && CPATH=$CPATH make $KBD/rev1:$keymap:dfu || make $KBD/rev1:$keymap ;;  # rev1 board
+*      ) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:dfu      || make $KBD:$keymap ;;
 esac
 sudo chown -R $USER:users $QMK
 
