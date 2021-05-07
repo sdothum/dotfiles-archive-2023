@@ -28,18 +28,11 @@ JSON=$KEYBOARD/keymaps/$keymap/*.json
 CONFIG=$KEYMAP/config.h
 MAKEFILE=$KEYMAP/rules.mk
 SOURCE=$STOW/$model/${KEYMAP#$ROOT/}
+chording_engine=${SOURCE}/*.json
 
 [ -d $SOURCE ] || { ditto $keymap 'keymap not found'; usage; }
 ditto "$KEYBOARD" "$keymap"
 ifno 'sync qmk_firmware repo' || { cd $QMK; rm -rf $KEYBOARD; git pull origin master; }
-
-# chording engine? generate keymap.c from json
-if [ $KBD = georgi ] ;then
-  # rsync -avq -KL --exclude .deprecated ${SOURCE%/keyboards/*}/users/sdothum $QMK/users
-  # cd $QMK/users/sdothum/chording_engine
-  cd $QMK/users/dennytom/chording_engine
-  python *parser.py $SOURCE/*.json $SOURCE/keymap.c
-fi
 
 # update keymap from stow repo
 mkdir -p $KEYMAP 2>/dev/null
@@ -47,8 +40,8 @@ rsync -avq -KL --exclude .deprecated $SOURCE $KEYBOARD/keymaps
 # splitography is not in official repo
 [ $KBD = splitography ] && rsync -avq --no-r -KL ${SOURCE%/keymaps/*}/* $KEYBOARD
 
-# georgi template bypasses config.h #define's
-if [ $model = georgi ] ;then
+# chording engine? generate keymap.c from json
+if [ -e $chording_engine ] ;then
   case $1 in
   '' | flash) ;;
   *         ) sed -i "s/STR(SECRET)/STR($1)/" $JSON; shift ;;
@@ -57,6 +50,10 @@ if [ $model = georgi ] ;then
   '' | flash) sed -i "s/STR(PUBLIC)/STR($(cat $HOME/.forward))/" $JSON ;;
   *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
   esac
+  cd $QMK/users/dennytom/chording_engine
+  python *parser.py $JSON ${JSON%/*}/keymap.c
+  # parsing patch
+  grep -q '#define HASH_TYPE uint64_t' ${JSON%/*}/keymap.c && sed -i 's/uint32_t keycodes_hash;/uint64_t keycodes_hash;/' ${JSON%/*}/keymap.c
 else
   # steno (mouse may need to be disabled in config.h)
   if [ "$1" = steno ] ;then
@@ -83,7 +80,7 @@ fi
 
 cd $QMK
 [ -e $KEYMAP/common ] && export CPATH=$KEYMAP/common || export CPATH=$KEYMAP
-# sudo make $KBD:$keymap:clean
+make $KBD:$keymap:clean
 echo CPATH=$CPATH
 case $model in
 chimera) [ "$1" = flash ] && CPATH=$CPATH make $KBD:$keymap:avrdude  || make $KBD:$keymap ;;

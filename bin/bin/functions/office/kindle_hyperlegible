@@ -1,0 +1,63 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ...................................................... hyperlegible for kindle
+
+# Usage: kindle_hyperlegible [family]
+
+# see make_insstall iosevka
+ifno 'set book weights as regular' && exit
+
+FONT=$HOME/.fonts/iosevka
+[ $1 ] && { family=-$1; FONT=$FONT-$1; }
+cd $FONT
+rm -f *#1.ttf
+rm -f *.ttx
+
+# bold **must** be converted too
+fonts='*-book *-bookitalic *-bold *-bolditalic'
+
+# dump to ttx
+for i in $fonts ;do
+  file=$i.ttf
+  ditto ttx $file
+  ttx $file
+done
+
+sed -i -e 's/iosevka Book Version/iosevka Regular Version/' \
+    -e 's/iosevka[ -]Book/iosevka/'                         \
+    -e 's/Book/Regular/'                                    \
+    *-book.ttx 
+
+sed -i -e 's/iosevka Book Italic Version/iosevka Italic Version/' \
+    -e 's/iosevka[ -]Book/iosevka/'                               \
+    -e 's/Book Italic/Italic/'                                    \
+    *-bookitalic.ttx 
+
+# generate new ttf
+for i in $fonts ;do
+  file=$i.ttx
+  ditto ttf $file
+  ttx $file
+done
+
+# replace emdash with double-dash
+echo "
+Open(\$1);
+Select(0u268b);
+Copy();
+Select(0u2014);
+Paste();
+Generate(\$1);
+" >/tmp/fontforge.script
+cd $FONT
+
+for i in *#1.ttf ;do
+  ditto fontforge $i
+  fontforge --script /tmp/fontforge.script $i
+done
+
+# vim: set ft=sh: #
