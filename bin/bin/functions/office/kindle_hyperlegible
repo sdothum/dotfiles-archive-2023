@@ -27,6 +27,7 @@ for i in $fonts ;do
   ttx $file
 done
 
+# assign book weights as regular (normal)
 sed -i -e 's/iosevka Book Version/iosevka Regular Version/' \
     -e 's/iosevka[ -]Book/iosevka/'                         \
     -e 's/Book/Regular/'                                    \
@@ -59,5 +60,7 @@ for i in *#1.ttf ;do
   ditto fontforge $i
   fontforge --script /tmp/fontforge.script $i
 done
+
+ditto kindle "$(ls *#1.ttf)"
 
 # vim: set ft=sh: #
