@@ -1845,44 +1845,44 @@ const struct Chord chord_240 PROGMEM = {H_BOT5 + H_BOT6, NAV, &state_240, NULL, 
 uint8_t state_241 = IDLE;
 const struct Chord chord_241 PROGMEM = {H_TOP1, MOUSE, &state_241, NULL, 0, 0, reset};
 uint8_t state_242 = IDLE;
-const struct Chord chord_242 PROGMEM = {H_TOP8, MOUSE, &state_242, NULL, KC_BTN1, 0, single_dance};
+const struct Chord chord_242 PROGMEM = {H_TOP8, MOUSE, &state_242, NULL, KC_WH_L, 0, single_dance};
 uint8_t state_243 = IDLE;
 const struct Chord chord_243 PROGMEM = {H_TOP9, MOUSE, &state_243, NULL, KC_MS_U, 0, single_dance};
 uint8_t state_244 = IDLE;
-const struct Chord chord_244 PROGMEM = {H_TOP10, MOUSE, &state_244, NULL, KC_BTN2, 0, single_dance};
+const struct Chord chord_244 PROGMEM = {H_TOP10, MOUSE, &state_244, NULL, KC_WH_R, 0, single_dance};
 uint8_t state_245 = IDLE;
 const struct Chord chord_245 PROGMEM = {H_TOP11, MOUSE, &state_245, NULL, KC_WH_U, 0, single_dance};
 uint8_t state_246 = IDLE;
-uint8_t counter_246 = 0;
-const struct Chord chord_246 PROGMEM = {H_TOP1 + H_BOT1, MOUSE, &state_246, &counter_246, 0, 0, hexpad};
+const struct Chord chord_246 PROGMEM = {H_TOP2 + H_BOT2, MOUSE, &state_246, NULL, KC_LGUI, 0, single_dance};
 uint8_t state_247 = IDLE;
-const struct Chord chord_247 PROGMEM = {H_TOP3 + H_BOT3, MOUSE, &state_247, NULL, KC_LGUI, 0, single_dance};
+const struct Chord chord_247 PROGMEM = {H_TOP3 + H_BOT3, MOUSE, &state_247, NULL, KC_LCTL, 0, single_dance};
 uint8_t state_248 = IDLE;
-const struct Chord chord_248 PROGMEM = {H_TOP4 + H_BOT4, MOUSE, &state_248, NULL, KC_LCTL, 0, single_dance};
+const struct Chord chord_248 PROGMEM = {H_TOP4 + H_BOT4, MOUSE, &state_248, NULL, KC_LALT, 0, single_dance};
 uint8_t state_249 = IDLE;
-const struct Chord chord_249 PROGMEM = {H_TOP5 + H_BOT5, MOUSE, &state_249, NULL, KC_LALT, 0, single_dance};
+const struct Chord chord_249 PROGMEM = {H_TOP5 + H_BOT5, MOUSE, &state_249, NULL, KC_LSFT, 0, single_dance};
 uint8_t state_250 = IDLE;
-const struct Chord chord_250 PROGMEM = {H_TOP6 + H_BOT6, MOUSE, &state_250, NULL, KC_LSFT, 0, single_dance};
+const struct Chord chord_250 PROGMEM = {H_BOT3, MOUSE, &state_250, NULL, KC_BTN3, 0, single_dance};
 uint8_t state_251 = IDLE;
-const struct Chord chord_251 PROGMEM = {H_BOT8, MOUSE, &state_251, NULL, KC_MS_L, 0, single_dance};
+const struct Chord chord_251 PROGMEM = {H_BOT4, MOUSE, &state_251, NULL, KC_BTN2, 0, single_dance};
 uint8_t state_252 = IDLE;
-const struct Chord chord_252 PROGMEM = {H_BOT9, MOUSE, &state_252, NULL, KC_MS_D, 0, single_dance};
+const struct Chord chord_252 PROGMEM = {H_BOT5, MOUSE, &state_252, NULL, KC_BTN1, 0, single_dance};
 uint8_t state_253 = IDLE;
-const struct Chord chord_253 PROGMEM = {H_BOT10, MOUSE, &state_253, NULL, KC_MS_R, 0, single_dance};
+const struct Chord chord_253 PROGMEM = {H_BOT8, MOUSE, &state_253, NULL, KC_MS_L, 0, single_dance};
 uint8_t state_254 = IDLE;
-const struct Chord chord_254 PROGMEM = {H_BOT11, MOUSE, &state_254, NULL, KC_WH_D, 0, single_dance};
+const struct Chord chord_254 PROGMEM = {H_BOT9, MOUSE, &state_254, NULL, KC_MS_D, 0, single_dance};
 uint8_t state_255 = IDLE;
-uint8_t counter_255 = 0;
-const struct Chord chord_255 PROGMEM = {H_THU1, MOUSE, &state_255, &counter_255, 0, 0, hexpad};
+const struct Chord chord_255 PROGMEM = {H_BOT10, MOUSE, &state_255, NULL, KC_MS_R, 0, single_dance};
+uint8_t state_256 = IDLE;
+const struct Chord chord_256 PROGMEM = {H_BOT11, MOUSE, &state_256, NULL, KC_WH_D, 0, single_dance};
 
 const struct Chord* const list_of_chords[] PROGMEM = {
-    &chord_0, &chord_1, &chord_2, &chord_3, &chord_4, &chord_5, &chord_6, &chord_7, &chord_8, &chord_9, &chord_10, &chord_11, &chord_12, &chord_13, &chord_14, &chord_15, &chord_16, &chord_17, &chord_18, &chord_19, &chord_20, &chord_21, &chord_22, &chord_23, &chord_24, &chord_25, &chord_26, &chord_27, &chord_28, &chord_29, &chord_30, &chord_31, &chord_32, &chord_33, &chord_34, &chord_35, &chord_36, &chord_37, &chord_38, &chord_39, &chord_40, &chord_41, &chord_42, &chord_43, &chord_44, &chord_45, &chord_46, &chord_47, &chord_48, &chord_49, &chord_50, &chord_51, &chord_52, &chord_53, &chord_54, &chord_55, &chord_56, &chord_57, &chord_58, &chord_59, &chord_60, &chord_61, &chord_62, &chord_63, &chord_64, &chord_65, &chord_66, &chord_67, &chord_68, &chord_69, &chord_70, &chord_71, &chord_72, &chord_73, &chord_74, &chord_75, &chord_76, &chord_77, &chord_78, &chord_79, &chord_80, &chord_81, &chord_82, &chord_83, &chord_84, &chord_85, &chord_86, &chord_87, &chord_88, &chord_89, &chord_90, &chord_91, &chord_92, &chord_93, &chord_94, &chord_95, &chord_96, &chord_97, &chord_98, &chord_99, &chord_100, &chord_101, &chord_102, &chord_103, &chord_104, &chord_105, &chord_106, &chord_107, &chord_108, &chord_109, &chord_110, &chord_111, &chord_112, &chord_113, &chord_114, &chord_115, &chord_116, &chord_117, &chord_118, &chord_119, &chord_120, &chord_121, &chord_122, &chord_123, &chord_124, &chord_125, &chord_126, &chord_127, &chord_128, &chord_129, &chord_130, &chord_131, &chord_132, &chord_133, &chord_134, &chord_135, &chord_136, &chord_137, &chord_138, &chord_139, &chord_140, &chord_141, &chord_142, &chord_143, &chord_144, &chord_145, &chord_146, &chord_147, &chord_148, &chord_149, &chord_150, &chord_151, &chord_152, &chord_153, &chord_154, &chord_155, &chord_156, &chord_157, &chord_158, &chord_159, &chord_160, &chord_161, &chord_162, &chord_163, &chord_164, &chord_165, &chord_166, &chord_167, &chord_168, &chord_169, &chord_170, &chord_171, &chord_172, &chord_173, &chord_174, &chord_175, &chord_176, &chord_177, &chord_178, &chord_179, &chord_180, &chord_181, &chord_182, &chord_183, &chord_184, &chord_185, &chord_186, &chord_187, &chord_188, &chord_189, &chord_190, &chord_191, &chord_192, &chord_193, &chord_194, &chord_195, &chord_196, &chord_197, &chord_198, &chord_199, &chord_200, &chord_201, &chord_202, &chord_203, &chord_204, &chord_205, &chord_206, &chord_207, &chord_208, &chord_209, &chord_210, &chord_211, &chord_212, &chord_213, &chord_214, &chord_215, &chord_216, &chord_217, &chord_218, &chord_219, &chord_220, &chord_221, &chord_222, &chord_223, &chord_224, &chord_225, &chord_226, &chord_227, &chord_228, &chord_229, &chord_230, &chord_231, &chord_232, &chord_233, &chord_234, &chord_235, &chord_236, &chord_237, &chord_238, &chord_239, &chord_240, &chord_241, &chord_242, &chord_243, &chord_244, &chord_245, &chord_246, &chord_247, &chord_248, &chord_249, &chord_250, &chord_251, &chord_252, &chord_253, &chord_254, &chord_255
+    &chord_0, &chord_1, &chord_2, &chord_3, &chord_4, &chord_5, &chord_6, &chord_7, &chord_8, &chord_9, &chord_10, &chord_11, &chord_12, &chord_13, &chord_14, &chord_15, &chord_16, &chord_17, &chord_18, &chord_19, &chord_20, &chord_21, &chord_22, &chord_23, &chord_24, &chord_25, &chord_26, &chord_27, &chord_28, &chord_29, &chord_30, &chord_31, &chord_32, &chord_33, &chord_34, &chord_35, &chord_36, &chord_37, &chord_38, &chord_39, &chord_40, &chord_41, &chord_42, &chord_43, &chord_44, &chord_45, &chord_46, &chord_47, &chord_48, &chord_49, &chord_50, &chord_51, &chord_52, &chord_53, &chord_54, &chord_55, &chord_56, &chord_57, &chord_58, &chord_59, &chord_60, &chord_61, &chord_62, &chord_63, &chord_64, &chord_65, &chord_66, &chord_67, &chord_68, &chord_69, &chord_70, &chord_71, &chord_72, &chord_73, &chord_74, &chord_75, &chord_76, &chord_77, &chord_78, &chord_79, &chord_80, &chord_81, &chord_82, &chord_83, &chord_84, &chord_85, &chord_86, &chord_87, &chord_88, &chord_89, &chord_90, &chord_91, &chord_92, &chord_93, &chord_94, &chord_95, &chord_96, &chord_97, &chord_98, &chord_99, &chord_100, &chord_101, &chord_102, &chord_103, &chord_104, &chord_105, &chord_106, &chord_107, &chord_108, &chord_109, &chord_110, &chord_111, &chord_112, &chord_113, &chord_114, &chord_115, &chord_116, &chord_117, &chord_118, &chord_119, &chord_120, &chord_121, &chord_122, &chord_123, &chord_124, &chord_125, &chord_126, &chord_127, &chord_128, &chord_129, &chord_130, &chord_131, &chord_132, &chord_133, &chord_134, &chord_135, &chord_136, &chord_137, &chord_138, &chord_139, &chord_140, &chord_141, &chord_142, &chord_143, &chord_144, &chord_145, &chord_146, &chord_147, &chord_148, &chord_149, &chord_150, &chord_151, &chord_152, &chord_153, &chord_154, &chord_155, &chord_156, &chord_157, &chord_158, &chord_159, &chord_160, &chord_161, &chord_162, &chord_163, &chord_164, &chord_165, &chord_166, &chord_167, &chord_168, &chord_169, &chord_170, &chord_171, &chord_172, &chord_173, &chord_174, &chord_175, &chord_176, &chord_177, &chord_178, &chord_179, &chord_180, &chord_181, &chord_182, &chord_183, &chord_184, &chord_185, &chord_186, &chord_187, &chord_188, &chord_189, &chord_190, &chord_191, &chord_192, &chord_193, &chord_194, &chord_195, &chord_196, &chord_197, &chord_198, &chord_199, &chord_200, &chord_201, &chord_202, &chord_203, &chord_204, &chord_205, &chord_206, &chord_207, &chord_208, &chord_209, &chord_210, &chord_211, &chord_212, &chord_213, &chord_214, &chord_215, &chord_216, &chord_217, &chord_218, &chord_219, &chord_220, &chord_221, &chord_222, &chord_223, &chord_224, &chord_225, &chord_226, &chord_227, &chord_228, &chord_229, &chord_230, &chord_231, &chord_232, &chord_233, &chord_234, &chord_235, &chord_236, &chord_237, &chord_238, &chord_239, &chord_240, &chord_241, &chord_242, &chord_243, &chord_244, &chord_245, &chord_246, &chord_247, &chord_248, &chord_249, &chord_250, &chord_251, &chord_252, &chord_253, &chord_254, &chord_255, &chord_256
 };
 
 const uint16_t** const leader_triggers PROGMEM = NULL;
 void (*leader_functions[]) (void) = {};
 
-#define NUMBER_OF_CHORDS 256
+#define NUMBER_OF_CHORDS 257
 #define NUMBER_OF_LEADER_COMBOS 0
 
 bool are_hashed_keycodes_in_sound(HASH_TYPE keycodes_hash, HASH_TYPE sound) {

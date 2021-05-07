@@ -39,14 +39,6 @@
         ["BOT1"],                 ["BOT2"],         ["BOT3"],         ["BOT4"],         ["BOT5"],         ["BOT6"],        ["BOT7"],                 ["BOT8"],         ["BOT9"],          ["BOT10"],          ["BOT11"],          ["BOT12"],
                                                                       ["THU1"],         ["THU2"],         ["THU3"],        ["THU4"],                 ["THU5"],         ["THU6"]
       ]
-    },
-    {
-      "name": "steno",
-      "chords": [
-        ["TOP1"], ["TOP2"], ["TOP3"], ["TOP4"], ["TOP5"], ["TOP6"],        ["TOP7"], ["TOP8"], ["TOP9"], ["TOP10"], ["TOP11"], ["TOP12"],
-        ["BOT1"], ["BOT2"], ["BOT3"], ["BOT4"], ["BOT5"], ["BOT6"],        ["BOT7"], ["BOT8"], ["BOT9"], ["BOT10"], ["BOT11"], ["BOT12"],
-                                      ["THU1"], ["THU2"], ["THU3"],        ["THU4"], ["THU5"], ["THU6"]
-      ]
     }
   ],
   "pseudolayers": [
@@ -83,7 +75,7 @@
             "DF(FNC)"        ,           ":",           "Y",           "O",           "U", "-",        "G",           "D",           "N",            "M",           "X", "DF(SYMBOL)",
             "TO(1)"          , "KK(Q, LGUI)", "KK(H, LCTL)", "KK(E, LALT)", "KK(A, LSFT)", "W",        "C", "KK(T, RSFT)", "KK(R, RALT)",  "KK(S, RCTL)", "KK(Z, RGUI)",    "DF(NAV)",
             "M(hexpad, 0, 3)",           "J",           ",",           ".",           "K", "'",        "B",           "P",           "L",            "F",           "V",    "DF(NUM)",
-                                                                  " ",           " ", " ",        " ",           " ",           " "
+                                                                       " ",           " ", " ",        " ",           " ",           " "
           ]
         },
         {
@@ -316,10 +308,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            "RESET"          , " ",    " ",    " ",    " ",    " ",        " ", "BTN1", "MS_U", "BTN2", "WH_U", " ",
-            "M(hexpad, 0, 0)", " ", "LGUI", "LCTL", "LALT", "LSFT",        " ",    " ",    " ",    " ",    " ", " ",
-            " "              , " ",    " ",    " ",    " ",    " ",        " ", "MS_L", "MS_D", "MS_R", "WH_D", " ",
-                                 "M(hexpad, 0, 0)",    " ",    " ",        " ",    " ",    " "
+            "RESET",    " ",    " ",    " ",    " ", " ",        " ", "KC_WH_L", "MS_U", "KC_WH_R", "WH_U", " ",
+            " "    , "LGUI", "LCTL", "LALT", "LSFT", " ",        " ",       " ",    " ",       " ",    " ", " ",
+            " "    ,    " ", "BTN3", "BTN2", "BTN1", " ",        " ",    "MS_L", "MS_D",    "MS_R", "WH_D", " ",
+                                        " ",    " ", " ",        " ",       " ",    " "
           ]
         }
       ]
