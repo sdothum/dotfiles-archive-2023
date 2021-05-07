@@ -34,6 +34,7 @@
 = font editor
 = ═══════════
   fontforge   [server]
+  fonttools   [server]
   nodejs      [server]
   otfcc       [server]
   ttfautohint [server]
@@ -60,7 +61,7 @@ d m amphetype
 = ════════════
   abiword
   calc
-# gnumeric
+  gnumeric
   remind
 # sc-im
   speedcrunch
