@@ -58,7 +58,7 @@ cd $FONT
 
 for i in *#1.ttf ;do
   ditto emdash $i
-  fontforge --script /tmp/fontforge.script $i 2>/dev/null
+  fontforge --script /tmp/fontforge.script $i
 done
 
 # optically adjust M (to weight 400 to narrow stroke width)
@@ -76,10 +76,10 @@ cd $FONT
 for i in *book*#1.ttf ;do
   ditto M $i
   case $i in
-  *book\#1*) file=*regular.ttf ;;
-  *        ) file=*-italic.ttf ;;
+  *italic*) file=*-italic.ttf ;;
+  *       ) file=*regular.ttf ;;
   esac
-  fontforge --script /tmp/fontforge.script $i $file 2>/dev/null
+  fontforge --script /tmp/fontforge.script $i $file
 done
 
 ditto kindle "$(ls *#1.ttf)"

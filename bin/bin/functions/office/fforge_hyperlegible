@@ -26,7 +26,7 @@ cd $FONT
 
 for i in *ttf ;do
   ditto fontforge $i
-  fontforge --script /tmp/fontforge.script $i 2>/dev/null
+  fontforge --script /tmp/fontforge.script $i
 done
 
 # vim: set ft=sh: #
