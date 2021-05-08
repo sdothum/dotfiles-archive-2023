@@ -57,8 +57,29 @@ Generate(\$1);
 cd $FONT
 
 for i in *#1.ttf ;do
-  ditto fontforge $i
-  fontforge --script /tmp/fontforge.script $i
+  ditto emdash $i
+  fontforge --script /tmp/fontforge.script $i 2>/dev/null
+done
+
+# optically adjust M (to weight 400 to narrow stroke width)
+echo "
+Open(\$2);
+Select(0u004d);
+Copy();
+Open(\$1);
+Select(0u004d);
+Paste();
+Generate(\$1);
+" >/tmp/fontforge.script
+cd $FONT
+
+for i in *book*#1.ttf ;do
+  ditto M $i
+  case $i in
+  *book\#1*) file=*regular.ttf ;;
+  *        ) file=*-italic.ttf ;;
+  esac
+  fontforge --script /tmp/fontforge.script $i $file 2>/dev/null
 done
 
 ditto kindle "$(ls *#1.ttf)"
