@@ -120,7 +120,7 @@
           "dictionary": [
             ["X", "X", " ", "X", " ", " ",   "SPC"],
             ["X", "X", "X", " ", " ", " ", "ENTER"],
-            ["X", "X", " ", " ", " ", "X",   "DEL"],
+            ["X", "X", " ", " ", " ", "X",  "BSPC"],
             [" ", " ", " ", " ", "X", "X", "ENTER"]
           ]
         },
@@ -128,11 +128,12 @@
           "type": "visual_array",
           "keys": ["THU1", "THU2", "THU3", "THU4"],
           "dictionary": [
-            ["X", " ", " ", " ",    "KL(ESC, NUM)"],
-            ["X", "X", " ", " ",    "KL(TAB, FNC)"],
-            [" ", "X", " ", " ",    "KL(I, REGEX)"],
-            [" ", " ", "X", " ",    "KL(SPC, SYM)"],
-            [" ", " ", " ", "X",   "KL(BSPC, NAV)"]
+            ["X", " ", " ", " ",   "KL(ESC, NUM)"],
+            ["X", "X", " ", " ",   "KL(TAB, FNC)"],
+            [" ", "X", " ", " ",   "KL(I, REGEX)"],
+            [" ", " ", "X", " ",   "KL(SPC, SYM)"],
+            [" ", " ", "X", "X", "KL(DEL, MOUSE)"],
+            [" ", " ", " ", "X",  "KL(BSPC, NAV)"]
           ]
         }
       ]
@@ -181,9 +182,9 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " ", ".", "*", "&",  "+", " ",        " ", "HOME",   "UP",   "END", "PGUP", " ",
-            " ", "`", "~", "/",  "|", " ",        " ",    " ",    " ",     " ",    " ", " ",
-            " ", "<", ">", "%",  "@", " ",        " ", "LEFT", "DOWN", "RIGHT", "PGDN", " ",
+            " ", ".", "*", "&",  "+", " ",        " ", " ", "HOME",   "UP",   "END", "PGUP",
+            " ", "`", "~", "/",  "|", " ",        " ", " ",    " ",    " ",     " ",    " ",
+            " ", "<", ">", "%",  "@", " ",        " ", " ", "LEFT", "DOWN", "RIGHT", "PGDN",
                                 "\\", "=",        " ",    " "
           ]
         },
@@ -289,10 +290,10 @@
           "type": "chord_set",
           "set": "rows",
           "keycodes": [
-            " "                ,                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)", " ", "RESET",        " ", " ", "KC_WH_L", "MS_U", "KC_WH_R", "WH_U",
-            " "                ,              "BTN3",                       "BTN2",                       "BTN1", " ",     " ",        " ", " ",       " ",    " ",       " ",    " ",
-            "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)", " ",     " ",        " ", " ",    "MS_L", "MS_D",    "MS_R", "WH_D",
-                                                                                                                  " ",     " ",        " ", " "
+            " "                ,                 " ", "MK(KC_LCTL, KC_LSFT, KC_C)", "MK(KC_LCTL, KC_LSFT, KC_V)", " ", " ",        " ", " ", "HOME",   "UP",   "END", "PGUP",
+            " "                ,              "BTN3",                       "BTN2",                       "BTN1", " ", " ",        " ", " ",    " ",    " ",     " ",    " ",
+            "MK(KC_LCTL, KC_Z)", "MK(KC_LCTL, KC_X)",          "MK(KC_LCTL, KC_C)",          "MK(KC_LCTL, KC_V)", " ", " ",        " ", " ", "LEFT", "DOWN", "RIGHT", "PGDN",
+                                                                                                                  " ", " ",        " ", " "
           ]
         },
         {
@@ -301,6 +302,21 @@
           "dictionary": [
             ["X", " ", "X", " ", "STR(SECRET)"],
             [" ", "X", " ", "X", "STR(PUBLIC)"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MOUSE",
+      "chords": [
+        {
+          "type": "chord_set",
+          "set": "rows",
+          "keycodes": [
+            " "   ,    " ",    " ",    " ", " ", "RESET",        " ", " ", "KC_WH_L", "MS_U", "KC_WH_R", "WH_U",
+            "LGUI", "LCTL", "LALT", "LSFT", " ",     " ",        " ", " ",       " ",    " ",       " ",    " ",
+            " "   , "BTN3", "BTN2", "BTN1", " ",     " ",        " ", " ",    "MS_L", "MS_D",    "MS_R", "WH_D",
+                                            " ",     " ",        " ", " "
           ]
         }
       ]
