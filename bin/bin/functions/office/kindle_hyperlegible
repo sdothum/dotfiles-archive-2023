@@ -54,7 +54,6 @@ Select(0u2014);
 Paste();
 Generate(\$1);
 " >/tmp/fontforge.script
-cd $FONT
 
 for i in *#1.ttf ;do
   ditto emdash $i
@@ -71,7 +70,6 @@ Select(0u004d);
 Paste();
 Generate(\$1);
 " >/tmp/fontforge.script
-cd $FONT
 
 for i in *book*#1.ttf ;do
   ditto M $i

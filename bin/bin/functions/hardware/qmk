@@ -53,7 +53,7 @@ if [ -e $chording_engine ] ;then
   cd $QMK/users/dennytom/chording_engine
   python *parser.py $JSON ${JSON%/*}/keymap.c
   # parsing patch
-  grep -q '#define HASH_TYPE uint64_t' ${JSON%/*}/keymap.c && sed -i 's/uint32_t keycodes_hash;/uint64_t keycodes_hash;/' ${JSON%/*}/keymap.c
+  grep -q '#define HASH_TYPE uint64_t' ${JSON%/*}/keymap.c && sed -i 's/uint32_t keycodes_hash;/uint64_t keycodes_hash;/; /bool contains_first_keycode/s/uint32_t/HASH_TYPE/' ${JSON%/*}/keymap.c
 else
   # steno (mouse may need to be disabled in config.h)
   if [ "$1" = steno ] ;then

@@ -21,6 +21,7 @@ usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option
 # unset fzf query highlight to list all
 # hilite=true
 
+FONT='Iosevka-menu'
 wbg=argb:B0000000
 bg=argb:00000000
 fg=argb:FFFDF6E3
@@ -120,7 +121,7 @@ rofi_stub() {
             -color-urgent "$bg,$fg,$abg,$hbg,$hfg" \
             -color-window "$wbg,$wbg" \
             -eh 1 \
-            -font \"$MONOFONT $fontsize\" \
+            -font \"$FONT $fontsize\" \
             -fullscreen \
             -hide-scrollbar \
             -line-margin $(( $fontsize + 2 )) \
