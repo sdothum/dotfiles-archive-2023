@@ -6,20 +6,25 @@
 # ...................................................................... iosevka
 
 # make_install iosevka ..
-# eg. make_install iosevka term round           (regular iosevka half width coding font)
-#                  iosevka extended round       (grotesque width coding font, reduce display fontsize by 1)
-#                  iosevka extended proof round (grotesque width prose font)
-#                  iosevka term jost round
-#                  iosevka extended jost proof round family jost-proof
+# eg. make_install iosevka extended round +Q (grotesque width coding font, reduce display fontsize by 1) **
+#                  iosevka extended proof    (grotesque width prose font) **
+#                  iosevka extended menu +Q **
+#                  iosevka ebook **
+#                  ** fonts i use, with and without +Q
+#
+#                  iosevka default           (regular iosevka half width coding font)
+#                  iosevka default jost round
+#                  iosevka extended jost proof +j family jost-proof
 usage() {
-  echo "usage: $(basename $0) iosevka  term | extended | ebook  [atkinson[+] | jost[+]]
-                                              [proof | leading <decimal>]
-                                              [cap [-+]<emu>]
-                                              [shape [-+]<emu>]
-                                              [weight <integer>]
-                                              [xheight [-+]<emu>]
-                                              [round | sb <decimal>]
-                                              [family <name>]"
+  echo "usage: $(basename $0) iosevka  default (width) | extended | ebook | menu
+                                     [atkinson | jost] [+[d | j | Q]]
+                                     [proof | leading <decimal>]
+                                     [cap [-+]<emu>]
+                                     [shape [-+]<emu>]
+                                     [weight <integer>]
+                                     [xheight [-+]<emu>]
+                                     [round | sb <decimal>]
+                                     [family <name>]"
   exit 1
 }
 
@@ -38,7 +43,8 @@ atkinson() {
   capital_g=toothed-serifless-hooked
   capital_i=serifed
   capital_k=straight
-  [ $1 ] && d=tailed-serifless || d=toothed-serifless
+  capital_q=crossing
+  d=toothed-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
@@ -62,10 +68,11 @@ jost() {
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_k=symmetric-touching
+  capital_q=crossing
   d=toothed-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
-  [ $1 ] && j=straight-line || j=serifless
+  j=serifless
   k=symmetric-touching
   l=serifless
   q=straight
@@ -74,6 +81,14 @@ jost() {
   zero=unslashed-oval
   one=nobase
   six=straight-bar
+}
+
+variant() {
+  case $1 in
+  Q) capital_q=detached-tailed ;;
+  d) d=tailed-serifless ;;
+  j) j=straight-line ;;
+  esac
 }
 
 integer() {
@@ -102,23 +117,25 @@ atkinson      # default typeface
 shift
 while [ $1 ] ;do
   case "$1" in
-  atkinson+) atkinson d ;;                                         # tailed d
-  atkinson ) family=-atkinson ;;                                   # simply add typeface name
-  cap      ) cap $(integer $2)                 || usage; shift ;;  # H height (affects descender as well)
-  ebook    ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; family=-hyperlegible ;;
-  extended ) shape=576 ;;                                          # default extended width
-  family   ) [ $2 ] && family=-$2              || usage; shift ;;
-  jost+    ) jost j; family=-jost ;;                               # straight-line j
-  jost     ) jost; family=-jost ;;
-  leading  ) leading=$(real $2)                || usage; shift ;;  # line spacing > 1.0
-  proof    ) leading=1.8000; sb 0.8000; family=${family}-proof ;;  # prose display needs more sb (?)
-  round    ) sb 0.6000 ;;                                          # round closed lower case characters by reducing sb
-  sb       ) sb $(real $2)                     || usage; shift ;;  # side bearing (spacing)
-  shape    ) shape=$(adjust $shape $2)         || usage; shift ;;  # cell width
-  term     ) shape=500 ;;                                          # default width
-  weight   ) weight=$(integer $2)              || usage; shift ;;  # regular weight
-  xheight  ) xheight="xheight = $(integer $2)" || usage; shift ;;  # height of x (experimental for larger fontsizes)
-  *        ) usage ;;
+  atkinson) atkinson; family=-atkinson ;;                         # add typeface name
+  cap     ) cap $(integer $2)                 || usage; shift ;;  # H height (affects descender as well)
+  +d      ) variant d ;;                                          # tailed d
+  default ) shape=500 ;;                                          # default width
+  ebook   ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; family=-hyperlegible ;;
+  extended) shape=576 ;;                                          # default extended width
+  family  ) [ $2 ] && family=-$2              || usage; shift ;;
+  +j      ) variant j ;;                                          # straight-line j
+  jost    ) jost; family=-jost ;;
+  leading ) leading=$(real $2)                || usage; shift ;;  # line spacing > 1.0
+  menu    ) leading=1.4000; sb 0.9000; family=-menu           ;;  # rofi menu
+  proof   ) leading=1.8000; sb 0.8000; family=${family}-proof ;;  # prose display needs less sb (larger fontsize)
+  +Q      ) variant Q ;;                                          # tailed Q
+  round   ) sb 0.7000 ;;                                          # round closed lower case characters by reducing sb
+  sb      ) sb $(real $2)                     || usage; shift ;;  # side bearing (spacing)
+  shape   ) shape=$(adjust $shape $2)         || usage; shift ;;  # cell width
+  weight  ) weight=$(integer $2)              || usage; shift ;;  # regular weight
+  xheight ) xheight="xheight = $(integer $2)" || usage; shift ;;  # height of x (experimental for larger fontsizes)
+  *       ) usage ;;
   esac
   shift
 done
@@ -159,7 +176,7 @@ capital-i = '$capital_i'              # I
 capital-j = 'serifless'               # J
 capital-k = '$capital_k'              # K
 capital-m = 'flat-bottom'             # M
-capital-q = 'crossing'                # Q
+capital-q = '$capital_q'              # Q
 capital-w = 'straight-flat-top'       # W
 d = '$d'
 f = '$f'
@@ -343,5 +360,7 @@ npm run build -- ttf::iosevka$family  # post Verda commits
 [ $font ] && { mkdir -p $FONT; cp -v dist/iosevka$family/ttf/* $FONT; } || nerdfont ${family#-}  # insert glyphs
 
 fforge_hyperlegible ${family#-}       # hyperlegible font mod for better q
+
+[ ${family#-} = hyperlegible ] && kindle_hyperlegible ${family#-}
 
 # vim: set ft=sh: #
