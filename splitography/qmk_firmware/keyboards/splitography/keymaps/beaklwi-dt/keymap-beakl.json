@@ -118,22 +118,21 @@
           "type": "visual_array",
           "keys": ["TOP4", "BOT4", "THU1", "THU2", "THU3", "THU4"],
           "dictionary": [
-            ["X", "X", " ", "X", " ", " ",   "SPC"],
             ["X", "X", "X", " ", " ", " ", "ENTER"],
-            ["X", "X", " ", " ", " ", "X",  "BSPC"],
-            [" ", " ", " ", " ", "X", "X", "ENTER"]
+            ["X", "X", " ", "X", " ", " ",   "SPC"],
+            [" ", " ", " ", " ", "X", "X", "ENTER"],
+            ["X", "X", " ", " ", " ", "X",  "BSPC"]
           ]
         },
         {
           "type": "visual_array",
           "keys": ["THU1", "THU2", "THU3", "THU4"],
           "dictionary": [
-            ["X", " ", " ", " ",   "KL(ESC, NUM)"],
-            ["X", "X", " ", " ",   "KL(TAB, FNC)"],
-            [" ", "X", " ", " ",   "KL(I, REGEX)"],
-            [" ", " ", "X", " ",   "KL(SPC, SYM)"],
-            [" ", " ", "X", "X", "KL(DEL, MOUSE)"],
-            [" ", " ", " ", "X",  "KL(BSPC, NAV)"]
+            ["X", " ", " ", " ",     "KL(ESC, NUM)"],
+            ["X", "X", " ", " ",     "KL(TAB, FNC)"],
+            [" ", "X", " ", " ",     "KL(I, REGEX)"],
+            [" ", " ", "X", " ",     "KL(SPC, SYM)"],
+            [" ", " ", " ", "X",    "KL(BSPC, NAV)"]
           ]
         }
       ]
