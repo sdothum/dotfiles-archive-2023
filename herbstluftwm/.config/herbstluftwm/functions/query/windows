@@ -1,0 +1,12 @@
+# sdothum - 2016 (c) wtfpl
+# [ $TRACE ] && CHILD="query/winids $@" . $PARENT
+
+# herbstluftwm
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. List of windows
+for i in $(herbstclient foreach C clients. echo C) ;do
+  herbstclient attr $i | egrep 'class =|title ='
+done
+
+# vim: set ft=sh: #
