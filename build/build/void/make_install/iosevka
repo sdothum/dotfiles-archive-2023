@@ -40,6 +40,7 @@ weight=400    # regular weight
 
 # atkinson hyperlegible typeface
 atkinson() {
+  curlyq=true
   capital_g=toothed-serifless-hooked
   capital_i=serifed
   capital_k=straight
@@ -58,13 +59,9 @@ atkinson() {
   six=closed-contour
 }
 
-cap() {
-  cap="cap = $1"
-}
-
 # jost* typeface
 jost() {
-  cap +65  # increase ascender height
+  unset curlyq
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
   capital_k=symmetric-touching
@@ -108,9 +105,10 @@ adjust() {
    echo $(( $1 + $2 ))
 }
 
-sb() {
-  sb="sb = $1"
-}
+# optional metric overrides
+cap()     { cap="cap = $1"; }
+sb()      { sb="sb = $1"; }
+xheight() { xheight="xheight = $1"; }
 
 atkinson      # default typeface
 
@@ -118,23 +116,23 @@ shift
 while [ $1 ] ;do
   case "$1" in
   atkinson) atkinson; family=-atkinson ;;                         # add typeface name
-  cap     ) cap $(integer $2)                 || usage; shift ;;  # H height (affects descender as well)
+  cap     ) cap $(integer $2)         || usage; shift ;;          # H height (affects descender as well)
   +d      ) variant d ;;                                          # tailed d
   default ) shape=500 ;;                                          # default width
-  ebook   ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; family=-hyperlegible ;;
+  ebook   ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; family=-hyperlegible; ebook=true ;;
   extended) shape=576 ;;                                          # default extended width
-  family  ) [ $2 ] && family=-$2              || usage; shift ;;
+  family  ) [ $2 ] && family=-$2      || usage; shift ;;
   +j      ) variant j ;;                                          # straight-line j
-  jost    ) jost; family=-jost ;;
-  leading ) leading=$(real $2)                || usage; shift ;;  # line spacing > 1.0
-  menu    ) leading=1.4000; sb 0.9000; family=-menu           ;;  # rofi menu
+  jost    ) jost; cap +75; family=-jost ;;
+  leading ) leading=$(real $2)        || usage; shift ;;          # line spacing > 1.0
+  menu    ) leading=1.5000; sb 0.9000; family=-menu           ;;  # rofi menu
   proof   ) leading=1.8000; sb 0.8000; family=${family}-proof ;;  # prose display needs less sb (larger fontsize)
   +Q      ) variant Q ;;                                          # tailed Q
   round   ) sb 0.7000 ;;                                          # round closed lower case characters by reducing sb
-  sb      ) sb $(real $2)                     || usage; shift ;;  # side bearing (spacing)
-  shape   ) shape=$(adjust $shape $2)         || usage; shift ;;  # cell width
-  weight  ) weight=$(integer $2)              || usage; shift ;;  # regular weight
-  xheight ) xheight="xheight = $(integer $2)" || usage; shift ;;  # height of x (experimental for larger fontsizes)
+  sb      ) sb $(real $2)             || usage; shift ;;          # side bearing (spacing)
+  shape   ) shape=$(adjust $shape $2) || usage; shift ;;          # cell width
+  weight  ) weight=$(integer $2)      || usage; shift ;;          # regular weight
+  xheight ) xheight $(integer $2)     || usage; shift ;;          # height of x (experimental for larger fontsizes)
   *       ) usage ;;
   esac
   shift
@@ -359,8 +357,8 @@ npm run build -- ttf::iosevka$family  # post Verda commits
 
 [ $font ] && { mkdir -p $FONT; cp -v dist/iosevka$family/ttf/* $FONT; } || nerdfont ${family#-}  # insert glyphs
 
-fforge_hyperlegible ${family#-}       # hyperlegible font mod for better q
+[ $curlyq ] && fforge_hyperlegible ${family#-}  # hyperlegible font mod for better q
 
-[ ${family#-} = hyperlegible ] && kindle_hyperlegible ${family#-}
+[ $ebook ] && kindle_hyperlegible ${family#-}
 
 # vim: set ft=sh: #
