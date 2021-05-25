@@ -39,6 +39,12 @@ pstat gpg-agent || gpg-agent --homedir $HOME/.gnupg --use-standard-socket --daem
 server && ipfilter &
 xrdb -merge $HOME/.Xresources &
 
+if xinput list --name-only | egrep -q 'Georgi|Splitography' ;then
+  switch tag $ADMIN
+  plover &
+  sleep $instantiate
+fi
+
 # force hdmi audio functionality
 if [ -e $PULSE ] ;then
   pavucontrol 2>/dev/null &               # suppress gtk warnings

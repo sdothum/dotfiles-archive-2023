@@ -7,8 +7,12 @@
 
 # Usage: dmenu ebooks [<author> | [<catlg>]]
 
+  EDIT='[ manage  ]'
+SWITCH='[ library ]'
+
 LIBRARY=${LIBRARY:-/net/media/ebooks/library}
-CATLG=$LIBRARY/${CATLG:-kindle}
+CATLGS=$(ls -1 $LIBRARY | grep 'kindle:' | sed -r 's/(.*)/\1\\\\n/')
+CATLG=$LIBRARY/${CATLG:-kindle:science-fiction}
 
 # ebook library
 while [ "$1" ] ;do
@@ -52,7 +56,15 @@ edit() {
 # .................................................................. Select book
 
 while : ;do
-  book=$(catlg | mhistory ebooks | column -s^ -t | rmenu "E-book" -filter \"$author\" -no-custom)
+  book=$(catlg | mhistory ebooks | column -s^ -t | sed "1i$EDIT\n$SWITCH" | rmenu "E-book" -filter \"$author\" -no-custom)
+
+  case $book in
+  "$EDIT"  ) killall 'ROX-Filer'; rox "$CATLG"; pwait "ROX-Filer"; catlg; continue ;;
+
+  "$SWITCH") library=$(ls -1 $LIBRARY | grep 'kindle:' | rmenu "Catalogue" -no-custom)
+             [ $library ] && { CATLG=$LIBRARY/$library; catlg; }
+             continue ;;
+  esac
 
   # return loop filtered by author, allow escape to clear filter!
   if [ -z "$book" ] ;then

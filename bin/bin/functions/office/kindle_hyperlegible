@@ -6,14 +6,16 @@
 
 # ...................................................... hyperlegible for kindle
 
-# Usage: kindle_hyperlegible [family]
-
-# see make_insstall iosevka
-ifno 'set book weights as regular' && exit
+usage() { echo "usage: $(basename $0) [--emdash] [family"; exit 1; }
 
 FONT=$HOME/.fonts/iosevka
-[ $1 ] && { family=-$1; FONT=$FONT-$1; }
-cd $FONT
+[ "$1" = '--emdash' ] && { emdash=--; shift; }
+[ $1 ] && { family=-$1; FONT=$FONT-$1; shift; }
+[ $1 ] && usage
+cd $FONT 2>/dev/null || usage
+
+# see make_insstall iosevka
+ifno 'add double width characters & set book weights as regular' && exit
 rm -f *#1.ttf
 rm -f *.ttx
 
@@ -45,15 +47,36 @@ for i in $fonts ;do
   ttx $file
 done
 
-# replace emdash with double-dash
-echo "
+# double width emdash (or '--') and ellipsis
+if [ $emdash ] ;then
+  echo "
 Open(\$1);
 Select(0u268b);
 Copy();
 Select(0u2014);
 Paste();
+Transform(200,0,0,100,100,0);
+Select(0u2026);
+Transform(200,0,0,200,100,0);
+ChangeWeight(-100);
+Move(0,-40);
 Generate(\$1);
-" >/tmp/fontforge.script
+"
+else
+  echo "
+Open(\$1);
+Select(0u2012);
+Copy();
+Select(0u2014);
+Paste();
+Transform(200,0,0,100,100,0);
+Select(0u2026);
+Transform(200,0,0,200,100,0);
+ChangeWeight(-100);
+Move(0,-40);
+Generate(\$1);
+"
+fi >/tmp/fontforge.script
 
 for i in *#1.ttf ;do
   ditto emdash $i
