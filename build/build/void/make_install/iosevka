@@ -120,7 +120,7 @@ while [ $1 ] ;do
   +d      ) variant d ;;                                          # tailed d
   default ) shape=500 ;;                                          # default width
   ebook   ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; family=-hyperlegible; ebook=true ;;
-  extended) shape=576 ;;                                          # default extended width
+  extended) shape=576; sb 0.7000 ;;                               # default extended width
   family  ) [ $2 ] && family=-$2      || usage; shift ;;
   +j      ) variant j ;;                                          # straight-line j
   jost    ) jost; cap +75; family=-jost ;;
