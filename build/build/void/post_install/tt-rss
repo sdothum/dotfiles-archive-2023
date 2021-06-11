@@ -5,20 +5,32 @@
 
 # ....................................................................... tt-rss
 
-ifno 'create tt-rss database' || {
-  echo "echo \"create user ttrss with password 'ttrss';\" | psql" | su - postgres
-  echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
-  echo "echo \"create database ttrss;\" | psql" | su - postgres
-  echo "echo \"grant all privileges on database ttrss to ttrss;\" | psql" | su - postgres
-  echo "echo \"create extension pg_trgm;\" | psql --dbname=ttrss" | su - postgres
-  original /var/lib/postgresql/data/pg_hba.conf
-  sudo sed -i '/^local *all *all *peer/s/peer/md5/' /var/lib/postgresql/data/pg_hba.conf
-  service restart postgresql
-}
+service status postgresql | grep -q 'run:' && db=postgresql || db=mysql
 
-# required php extensions
+ifno 'create tt-rss database' || create=true
 original /etc/php/php.ini
-sudo sed -i -r '/=(curl|intl|openssl|(pdo_)*pgsql)/s/^;//' /etc/php/php.ini
+
+if [ $db = postgresql ] ;then
+  if [ $create ] ;then
+    echo "echo \"create user ttrss with password 'ttrss';\" | psql" | su - postgres
+    echo "echo \"alter user ttrss set work_mem='64MB';\" | psql" | su - postgres
+    echo "echo \"create database ttrss;\" | psql" | su - postgres
+    echo "echo \"grant all privileges on database ttrss to ttrss;\" | psql" | su - postgres
+    echo "echo \"create extension pg_trgm;\" | psql --dbname=ttrss" | su - postgres
+    original /var/lib/postgresql/data/pg_hba.conf
+    sudo sed -i '/^local *all *all *peer/s/peer/md5/' /var/lib/postgresql/data/pg_hba.conf
+    service restart postgresql
+  fi
+  sudo sed -i -r '/^;extension=(curl|intl|openssl|(pdo_)*pgsql)/s/^;//' /etc/php/php.ini
+else
+  if [ $create ] ;then
+    echo "echo \"create user 'ttrss'@'localhost' identified by 'ttrss';\" | mysql" | su - mysql
+    echo "echo \"create database ttrss;\" | mysql" | su - mysql
+    echo "echo \"grant all privileges on ttrss.* to 'ttrss'@'localhost';\" | mysql" | su - mysql
+    service restart mysqld
+  fi
+  sudo sed -i -r '/^;extension=(curl|intl|openssl|(pdo_)*mysql)/s/^;//' /etc/php/php.ini
+fi
 
 ditto INFO check '/etc/php/php.ini'
 ditto INFO install 'service enable php-fpm nginx -> reboot'
