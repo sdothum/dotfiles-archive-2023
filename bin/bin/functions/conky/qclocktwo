@@ -15,6 +15,7 @@ usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}]
 
 mkdir /tmp/qclocktwo 2>/dev/null
 QCLOCK=/tmp/qclocktwo/qclocktwo   # interval lock
+LOG=$QCLOCK.log
 GLYPH=$HOME/.session/qclocktwo:glyph
 
 [ -e $GLYPH ] && glyph=cat || glyph="tr '[:upper:]' '[:lower:]'"  # conkyrc "uppercase=false" must be set for this
@@ -46,9 +47,9 @@ _='{color1}'                      # conky color dim
 esc='s/[{]/$&/g'                  # escape conky expression
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
-xs()      { echo "${_}$(ch 1)${Q}"; }                               # word pair fill char
-nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }  # random fill char column
-shuffle() { echo "$@" | shuf | tr -d '\n'; }                        # word salad
+xs()      { echo "${_}$(ch 1)${Q}"; }                                    # word pair fill char
+nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }        # random fill char column
+shuffle() { echo "shuffle: $@" >>$LOG; echo "$@" | shuf | tr -d '\n'; }  # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" | $glyph >$QCLOCK:$1; }
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
@@ -138,6 +139,7 @@ _3_5Q3() { shuffle "${_}$W31\n${_}$W51\n${Q}$W33"; }
 _3_5_3() { shuffle "${_}$W31\n${_}$W51\n${_}$W33"; }
 
 refresh_hour() { 
+    echo "refresh_hour: $@" >>$LOG
     [ "$HOUR" != $H ] && return 0                       # 'to' hour change in progress
     for j in $@ ;do [ "$HOUR" = $j ] && return 1 ;done  # freeze current hour display
     return 0                                            # eye candy refresh
@@ -226,10 +228,10 @@ defvars() {
   eval set -- $(shuffle "$(W$i)")  # see layout()
   for j in $(seq 1 $(W$i | wc -l)) ;do
     var="I$i$j=$1"
-    echo $var >>$QCLOCK:vars &
+    echo $var >>$QCLOCK:vars
     eval $var                      # I<wordlen><idx> -> hour
     var="W$i$j='$(echo $2 | sed "s/./& /g")'"
-    echo $var >>$QCLOCK:vars &
+    echo $var >>$QCLOCK:vars
     eval $var                      # W<wordlen><idx> -> label
     shift 2
   done
@@ -247,7 +249,7 @@ layout() {
     done 3< $QCLOCK:vars
   fi
   minutes=$(shuffle "1 \n 2 ")        # map minutes (lines)
-  echo $minutes >$QCLOCK:minutes &
+  echo $minutes >$QCLOCK:minutes
   [ $H != $I43 ] && [ $M5 != 2 ] && [ $M5 != 6 ] && halfpast=$(shuffle "3 \n 4 ") || halfpast='3 4'
   echo $halfpast >$QCLOCK:halfpast &  # map to/past (lines)
 }
@@ -264,14 +266,15 @@ line() {
 }
 
 if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
-  echo $H:$M5 >$QCLOCK &
+  echo $H:$M5 >$QCLOCK
+  echo $H:$M5 >$log
   layout
   for i in $(seq 0 9) ;do
     unset qclock                         # clear buffer, see draw()
     eval qclock$i
-    draw $i &
+    draw $i
   done
-  echo $H >$QHOUR &
+  echo $H >$QHOUR
   wait
 fi
 for i in $(seq 0 9) ;do line $i ;done

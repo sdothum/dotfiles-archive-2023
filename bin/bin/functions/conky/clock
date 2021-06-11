@@ -25,7 +25,7 @@ stop) xset s on -dpms
       notify low 'Que Clock Two' 'Stopped' ;;
 
 on  ) clock && exit
-      rm -f /tmp/qclocktwo*  # clear qclock buffers
+      rm -rf /tmp/qclocktwo  # clear qclock buffers
       /usr/bin/conky -c $CONKYRC 2>/dev/null &
       server && /usr/bin/conky -c $CONKY_Q2 2>/dev/null & ;;
 
