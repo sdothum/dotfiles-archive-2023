@@ -5,20 +5,22 @@
 
 # ...................................................................... iosevka
 
+# for git iosevka 7.x
+
 # make_install iosevka ..
-# eg. make_install iosevka extended        (grotesque width coding font, reduce display fontsize by 1) **
-#                  iosevka extended proof  (grotesque width prose font) **
-#                  iosevka extended menu **
+# eg. make_install iosevka extended                 (grotesque width coding font, reduce display fontsize by 1) **
+#                  iosevka extended atkinson proof  (grotesque width prose font) **
+#                  iosevka extended atkinson menu **
 #                  iosevka ebook **
 #                  ** fonts i use with variant optimizatons
 #
-#                  iosevka default round atkinson  (half width hyperlegible coding font)
+#                  iosevka compact round atkinson  (half width hyperlegible coding font)
 #                  iosevka extended jost proof     (extended width jost prose font)
 
 usage() {
-  echo "usage: $(basename $0) iosevka  default (width) | extended | ebook | menu
-                             [proof | leading <decimal>]
-                             [grotesque (default) | atkinson | geometric | jost]
+  echo "usage: $(basename $0) iosevka [grotesque (default) | atkinson | geometric | jost]
+                             compact (width) | extended | ebook
+                             [proof | menu | leading <decimal>]
                              [name <name>]
                              [cap [-+]<emu>]
                              [round | sb <decimal>]
@@ -43,13 +45,13 @@ atkinson() {
   curlyq=true
   capital_g=toothed-serifless-hooked
   capital_i=serifed
-  capital_k=straight
+  capital_k=straight-serifless
   capital_q=detached-tailed
   d=toothed-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
-  k=straight
+  k=straight-serifless
   l=flat-tailed
   q=diagonal-tailed
   t=flat-hook-short-neck2
@@ -59,6 +61,7 @@ atkinson() {
   six=closed-contour
   ampersand=upper-open
   at=short
+  cyrl_ka=straight-serifless
   dollar=through
   percent=dots
 }
@@ -68,22 +71,23 @@ jost() {
   unset curlyq
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
-  capital_k=symmetric-touching
+  capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
   d=toothed-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
-  j=serifless
-  k=symmetric-touching
-  l=straight-line
+  j=straight-line
+  k=symmetric-touching-serifless
+  l=serifless
   q=straight
-  t=cross
+  t=cross-short-neck2
   y=straight
   zero=unslashed-oval
   one=nobase
   six=straight-bar
   ampersand=upper-open
   at=short
+  cyrl_ka=symmetric-touching-serifless
   dollar=through
   percent=dots
 }
@@ -132,8 +136,8 @@ shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  default  ) shape=500 ;;                                      # default width
-  ebook    ) shape=576; sb 0.6000; leading=1.2500; font=iosevka; name=-monolegible; ebook=true ;;
+  compact  ) shape=500 ;;                                      # half cell width
+  ebook    ) shape=576; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;
   extended ) shape=576; sb 0.7000 ;;                           # extended width
   menu     ) leading=1.5000; sb 0.9000; name=-menu ;;          # rofi menu
   proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs less sb (larger fontsize)
@@ -215,7 +219,7 @@ eight = 'two-circles'                 # 8
 brace = 'straight'                    # {}
 ampersand = '$ampersand'              # &
 at = '$at'                            # @
-cyrl-ka = 'symmetric-touching'        # к
+cyrl-ka = '$cyrl_ka'                  # к
 dollar = '$dollar'                    # $
 lower-iota = 'flat-tailed'            # ι
 lower-lambda = 'straight-turn'        # λ
@@ -228,7 +232,7 @@ percent = '$percent'                  # %
 
 # Optional; Configure single character's variant for Italic only; Overrides [design]
 [buildPlans.iosevka$name.variants.italic]
-a = 'double-storey'
+a = 'double-storey-serifless'
 d = '$d'
 e = 'flat-crossbar'
 f = '$f'
