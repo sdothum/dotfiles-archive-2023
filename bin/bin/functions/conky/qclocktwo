@@ -139,14 +139,16 @@ _3_5Q3() { shuffle "${_}$W31\n${_}$W51\n${Q}$W33"; }
 _3_5_3() { shuffle "${_}$W31\n${_}$W51\n${_}$W33"; }
 
 refresh_hour() { 
-    echo "refresh_hour: $@" >>$LOG
-    [ "$HOUR" != $H ] && return 0                       # 'to' hour change in progress
-    for j in $@ ;do [ "$HOUR" = $j ] && return 1 ;done  # freeze current hour display
-    return 0                                            # eye candy refresh
+    unset vars
+    for j in $@ ;do eval value=\$$j; vars="$vars $j=$value"; done
+    echo "refresh_hour:$vars H=$H HOUR=$HOUR" >>$LOG
+    [ "$HOUR" != $H ] && return 0                              # 'to' hour change in progress
+    for j in $@ ;do eval [ "$HOUR" = \$$j ] && return 1 ;done  # freeze current hour display
+    return 0                                                   # eye candy refresh
   }
 
 qclock5() {
-  if refresh_hour $I31 $I51 $I33 ;then
+  if refresh_hour I31 I51 I33 ;then
     case $H in
     $I31) qclock=$(Q3_5_3) ;;
     $I51) qclock=$(_3Q5_3) ;;
@@ -162,7 +164,7 @@ _3_4Q4() { shuffle "${_}$W32\n${_}$W41\n${Q}$W42"; }
 _3_4_4() { shuffle "${_}$W32\n${_}$W41\n${_}$W42"; }
 
 qclock6() {
-  if refresh_hour $I32 $I41 $I42 ;then
+  if refresh_hour I32 I41 I42 ;then
     case $H in
     $I32) qclock=$(Q3_4_4) ;;
     $I41) qclock=$(_3Q4_4) ;;
@@ -177,7 +179,7 @@ _5Q6() { shuffle "${_}$W53\n${Q}$W61"; }
 _5_6() { shuffle "${_}$W53\n${_}$W61"; }
 
 qclock7() {
-  if refresh_hour $I53 $I61 ;then
+  if refresh_hour I53 I61 ;then
     case $H in
     $I53) qclock=$(Q5_6) ;;
     $I61) qclock=$(_5Q6) ;;
@@ -191,7 +193,7 @@ _6Q5() { shuffle "${_}$W62\n${Q}$W52"; }
 _6_5() { shuffle "${_}$W62\n${_}$W52"; }
 
 qclock8() {
-  if refresh_hour $I52 $I62 ;then
+  if refresh_hour I52 I62 ;then
     case $H in
     $I52) qclock=$(_6Q5) ;;
     $I62) qclock=$(Q6_5) ;;
