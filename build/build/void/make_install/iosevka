@@ -8,11 +8,11 @@
 # for git iosevka 7.x
 
 # make_install iosevka ..
-# eg. make_install iosevka extended                 (grotesque width coding font, reduce display fontsize by 1) **
-#                  iosevka extended atkinson proof  (grotesque width prose font) **
-#                  iosevka extended atkinson menu **
+# eg. make_install iosevka extended        (grotesque width coding font, reduce display fontsize by 1) **
+#                  iosevka extended proof  (grotesque width prose font) **
+#                  iosevka extended menu **
 #                  iosevka ebook **
-#                  ** fonts i use with variant optimizatons
+#                  ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
 #
 #                  iosevka compact round atkinson  (half width hyperlegible coding font)
 #                  iosevka extended jost proof     (extended width jost prose font)
@@ -47,7 +47,6 @@ atkinson() {
   capital_i=serifed
   capital_k=straight-serifless
   capital_q=detached-tailed
-  d=toothed-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
@@ -63,6 +62,7 @@ atkinson() {
   at=short
   cyrl_ka=straight-serifless
   dollar=through
+  number_sign=upright
   percent=dots
 }
 
@@ -73,7 +73,6 @@ jost() {
   capital_i=serifless
   capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
-  d=toothed-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
   j=straight-line
@@ -89,20 +88,21 @@ jost() {
   at=short
   cyrl_ka=symmetric-touching-serifless
   dollar=through
+  number_sign=upright
   percent=dots
 }
 
 # for stricter typeface matching
 variant() {
-  for o in $@ ;do  # uncustomized character ($i in use for variant)
+  for o in $@ ;do  # free character name ($i in use for variant :)
     case $o in
-    d        ) d=tailed-serifless ;;
-    j        ) j=serifless ;;
-    Q        ) capital_q=crossing ;;
-    ampersand) ampersand=closed ;;
-    at       ) at=fourfold ;;
-    dollar   ) dollar=open ;;
-    percent  ) percent=rings-continuous-slash ;;
+    j          ) j=serifless ;;
+    Q          ) capital_q=crossing ;;
+    ampersand  ) ampersand=closed ;;
+    at         ) at=fourfold ;;
+    dollar     ) dollar=open ;;
+    number_sign) number_sign=slanted ;;
+    percent    ) percent=rings-continuous-slash ;;
     esac
   done
   [ "$name" = '-monolegible' ] && name=-hyperlegible
@@ -143,9 +143,9 @@ while [ $1 ] ;do
   proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs less sb (larger fontsize)
   # font
   grotesque) atkinson ;;
-  atkinson ) atkinson; variant d Q ampersand at percent ;;
+  atkinson ) atkinson; variant Q ampersand at number_sign percent ;;
   geometric) jost; cap +75; name=-jost ;;
-  jost     ) jost; cap +75; name=-jost; variant j ampersand at dollar percent ;;
+  jost     ) jost; cap +75; name=-jost; variant j ampersand at dollar number_sign percent ;;
   name     ) [ $2 ] && name=-$2        || usage; shift ;;
   # custom
   cap      ) cap $(integer $2)         || usage; shift ;;      # H height (affects descender as well)
@@ -198,7 +198,6 @@ capital-k = '$capital_k'              # K
 capital-m = 'flat-bottom'             # M
 capital-q = '$capital_q'              # Q
 capital-w = 'straight-flat-top'       # W
-d = '$d'
 f = '$f'
 i = '$i'
 j = '$j'
@@ -223,7 +222,7 @@ cyrl-ka = '$cyrl_ka'                  # к
 dollar = '$dollar'                    # $
 lower-iota = 'flat-tailed'            # ι
 lower-lambda = 'straight-turn'        # λ
-# number-sign = 'slanted'
+number-sign = '$number_sign'          # #
 paragraph-sign = 'low'                # ¶
 percent = '$percent'                  # %
 
@@ -233,7 +232,7 @@ percent = '$percent'                  # %
 # Optional; Configure single character's variant for Italic only; Overrides [design]
 [buildPlans.iosevka$name.variants.italic]
 a = 'double-storey-serifless'
-d = '$d'
+d = 'toothed-serifless'
 e = 'flat-crossbar'
 f = '$f'
 k = '$k'
