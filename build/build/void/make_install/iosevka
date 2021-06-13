@@ -23,7 +23,7 @@ usage() {
                              [proof | menu | leading <decimal>]
                              [name <name>]
                              [cap [-+]<emu>]
-                             [round | sb <decimal>]
+                             [noround | sb <decimal>]
                              [shape [-+]<emu>]
                              [weight <integer>]
                              [xheight [-+]<emu>]"
@@ -94,7 +94,7 @@ jost() {
 
 # for stricter typeface matching
 variant() {
-  for o in $@ ;do  # free character name ($i in use for variant :)
+  for o in $@ ;do  # unused var ($i in use for variant :)
     case $o in
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
@@ -136,7 +136,7 @@ shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  compact  ) shape=500 ;;                                      # half cell width
+  compact  ) shape=500; sb 0.7000 ;;                           # half cell width
   ebook    ) shape=576; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;
   extended ) shape=576; sb 0.7000 ;;                           # extended width
   menu     ) leading=1.5000; sb 0.9000; name=-menu ;;          # rofi menu
@@ -150,7 +150,7 @@ while [ $1 ] ;do
   # custom
   cap      ) cap $(integer $2)         || usage; shift ;;      # H height (affects descender as well)
   leading  ) leading=$(real $2)        || usage; shift ;;      # line spacing > 1.0
-  round    ) sb 0.7000 ;;                                      # round closed lower case characters by reducing sb
+  noround  ) unset sb ;;
   sb       ) sb $(real $2)             || usage; shift ;;      # side bearing (spacing)
   shape    ) shape=$(adjust $shape $2) || usage; shift ;;      # cell width
   weight   ) weight=$(integer $2)      || usage; shift ;;      # regular weight
