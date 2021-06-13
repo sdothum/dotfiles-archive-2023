@@ -47,9 +47,9 @@ _='{color1}'                      # conky color dim
 esc='s/[{]/$&/g'                  # escape conky expression
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
-xs()      { echo "${_}$(ch 1)${Q}"; }                                    # word pair fill char
-nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }        # random fill char column
-shuffle() { echo "shuffle: $@" >>$LOG; echo "$@" | shuf | tr -d '\n'; }  # word salad
+xs()      { echo "${_}$(ch 1)${Q}"; }                                                     # word pair fill char
+nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }                         # random fill char column
+shuffle() { ditto shuffle ' ' >>$LOG; echo "$@" >>$LOG; echo "$@" | shuf | tr -d '\n'; }  # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" | $glyph >$QCLOCK:$1; }
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
@@ -140,8 +140,8 @@ _3_5_3() { shuffle "${_}$W31\n${_}$W51\n${_}$W33"; }
 
 refresh_hour() { 
     unset vars
-    for j in $@ ;do eval value=\$$j; vars="$vars $j=$value"; done
-    echo "refresh_hour:$vars H=$H HOUR=$HOUR" >>$LOG
+    for j in $@ ;do eval value=\$$j; vars="$vars$j=$value "; done
+    ditto refresh_hour "${vars}-- H=$H HOUR=$HOUR" >>$LOG
     [ "$HOUR" != $H ] && return 0                              # 'to' hour change in progress
     for j in $@ ;do eval [ "$HOUR" = \$$j ] && return 1 ;done  # freeze current hour display
     return 0                                                   # eye candy refresh
@@ -243,16 +243,16 @@ layout() {
   if [ "$HOUR" != $H ] ;then          # shuffle hour positions
     >$QCLOCK:vars
     for i in $(seq 3 6) ;do defvars ;done
-    hours=$(shuffle "5 \n 6 \n7 \n8 ")
+    hours=$(shuffle "5 \n6 \n7 \n8 ")
     echo $hours >$QCLOCK:hours &      # map hours (lines)
   else
     while read var <&3 ;do            # restore variables
       eval $var
     done 3< $QCLOCK:vars
   fi
-  minutes=$(shuffle "1 \n 2 ")        # map minutes (lines)
+  minutes=$(shuffle "1 \n2 ")         # map minutes (lines)
   echo $minutes >$QCLOCK:minutes
-  [ $H != $I43 ] && [ $M5 != 2 ] && [ $M5 != 6 ] && halfpast=$(shuffle "3 \n 4 ") || halfpast='3 4'
+  [ $H != $I43 ] && [ $M5 != 2 ] && [ $M5 != 6 ] && halfpast=$(shuffle "3 \n4 ") || halfpast='3 4'
   echo $halfpast >$QCLOCK:halfpast &  # map to/past (lines)
 }
 
@@ -269,7 +269,7 @@ line() {
 
 if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
   echo $H:$M5 >$QCLOCK
-  echo $H:$M5 >$log
+  ditto qclocktwo "hour $H -- interval $M5" >$LOG
   layout
   for i in $(seq 0 9) ;do
     unset qclock                         # clear buffer, see draw()
