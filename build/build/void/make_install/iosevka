@@ -14,12 +14,12 @@
 #                  iosevka ebook **
 #                  ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
 #
-#                  iosevka compact round atkinson  (half width hyperlegible coding font)
-#                  iosevka extended jost proof     (extended width jost prose font)
+#                  iosevka atkinson             (normal width hyperlegible coding font)
+#                  iosevka extended jost proof  (extended width jost prose font)
 
 usage() {
   echo "usage: $(basename $0) iosevka [grotesque (default) | atkinson | geometric | jost]
-                             compact (width) | extended | ebook
+                             [normal (default) | extended | ebook]
                              [proof | menu | leading <decimal>]
                              [name <name>]
                              [cap [-+]<emu>]
@@ -41,7 +41,7 @@ leading=1.25  # default coding line spacing
 weight=400    # regular weight
 
 # atkinson hyperlegible typeface
-atkinson() {
+grotesque() {
   curlyq=true
   capital_g=toothed-serifless-hooked
   capital_i=serifed
@@ -67,7 +67,7 @@ atkinson() {
 }
 
 # jost* typeface
-jost() {
+geometric() {
   unset curlyq
   capital_g=toothless-rounded-serifless-hooked
   capital_i=serifless
@@ -130,22 +130,24 @@ cap()     { cap="cap = $1"; }
 sb()      { sb="sb = $1"; }
 xheight() { xheight="xheight = $1"; }
 
-atkinson      # default typeface
+grotesque      # default typeface
+shape=500
+sb 0.7000
 
 shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  compact  ) shape=500; sb 0.7000 ;;                           # half cell width
-  ebook    ) shape=576; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;
+  normal   ) shape=500; sb 0.7000 ;;                           # normal width
+  ebook    ) shape=576; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;  # less sb with higher dpi
   extended ) shape=576; sb 0.7000 ;;                           # extended width
   menu     ) leading=1.5000; sb 0.9000; name=-menu ;;          # rofi menu
-  proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs less sb (larger fontsize)
+  proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs more sb (larger fontsize)
   # font
-  grotesque) atkinson ;;
-  atkinson ) atkinson; variant Q ampersand at number_sign percent ;;
-  geometric) jost; cap +75; name=-jost ;;
-  jost     ) jost; cap +75; name=-jost; variant j ampersand at dollar number_sign percent ;;
+  grotesque) grotesque ;;
+  atkinson ) grotesque; variant Q ampersand at number_sign percent ;;
+  geometric) geometric; cap +75; name=-jost ;;
+  jost     ) geometric; cap +75; name=-jost; variant j ampersand at dollar number_sign percent ;;
   name     ) [ $2 ] && name=-$2        || usage; shift ;;
   # custom
   cap      ) cap $(integer $2)         || usage; shift ;;      # H height (affects descender as well)
@@ -175,10 +177,10 @@ cd Iosevka
 # a tweaked :-) atkinson hyperlegible font character emulation
 # based on sample.toml (with quote and backtick conversion to single quotes)
 echo "
-[buildPlans.iosevka$name]       # <iosevka-custom> is your plan name
+[buildPlans.iosevka$name]           # <iosevka-custom> is your plan name
 family = '${family:-Iosevka}$plan'  # Font menu family name
-spacing = 'term'                  # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
-serifs = 'sans'                   # Optional; Values: 'sans' or 'slab'
+spacing = 'term'                    # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'                     # Optional; Values: 'sans' or 'slab'
 no-cv-ss = true
 
 ###################################################################################################
