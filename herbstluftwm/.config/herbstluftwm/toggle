@@ -25,7 +25,7 @@ close() {
   focus window
   return 0
 }
-set -x
+
 # special term processing toggles on unique title
 toggle_term() {
   if xdotool search --limit 1 --classname "$1" >/dev/null ;then

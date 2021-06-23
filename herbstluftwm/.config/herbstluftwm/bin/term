@@ -25,7 +25,7 @@ options='FLOAT|STACK|MAX|VERTICAL|HORIZONTAL|GRID|BLACKBOARD|VISIBLE|WAIT|FORTUN
 case $TERM in
 alacritty) TITLE=--title
            NAME=--class
-           blackboard="--config-file $HOME/.config/alacritty/blackboard.yml"
+           blackboard=blackboard
            XY='--option window.dimensions.columns=120 window.dimensions.rows=30' ;;
 
 urxvt    ) TITLE=-title
@@ -72,8 +72,8 @@ done
 
 [ -z "$name" ] && [ "$title" ] && name="$NAME ${title#* }"
 
-if [ $stack ] ;then $TERM $title $name $geometry $theme $cmd &
-else                focus $TERM $title $name $geometry $theme $cmd
+if [ $stack ] ;then $TERM $theme $title $name $geometry $cmd &
+else                focus $TERM $theme $title $name $geometry $cmd
 fi
 
 [ $visible ] && [ "$title" ] && xdotool search --sync --onlyvisible --limit 1 --classname "${title#* }"
