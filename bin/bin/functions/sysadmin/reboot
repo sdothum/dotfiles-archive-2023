@@ -10,7 +10,7 @@ delay=3  # reboot delay window
 
 ifno 'reboot kernel' && exit
 ditto reboot "in $delay seconds.."
-(sleep $delay; rm /tmp/login:console; sudo reboot) &
+(sleep $delay; rm /tmp/login:console; sudo /bin/reboot) &
 pkill -f "sshd: $USER" 2>/dev/null  # close remote ssh session connect
 
 # vim: set ft=sh: #

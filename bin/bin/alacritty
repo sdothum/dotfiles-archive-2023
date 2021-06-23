@@ -6,15 +6,57 @@
 
 # ..................................................................... Terminal
 
+# Usage: alacritty [blackboard] <option>*
+
 export SHELL=/usr/bin/fish
 
-# match alacritty font size to gvim
-# font="$STOW/alacritty/$(( $(fontsize) - 1 ))pt"
-font="$STOW/alacritty/$(fontsize)pt"
-[ -e $font ] && config="--config-file $font/.config/alacritty/alacritty.yml"
-echo "$@" | grep -q '\--config-file' && unset config
+size=$(fontsize)
+paddingX=0
+paddingY=0
+offsetX=0
+offsetY=0
+background='#263238'
+foreground='#eaeaea'
 
-# pgrep xclip >/dev/null || xclip -r -silent &
-eval /usr/bin/alacritty $config $@ &
+if [ "$1" = blackboard ] ;then
+  background='#000000'
+  foreground='#000000'
+  shift
+else
+  # tweak window margins by fontsize
+  case $size in
+  8 ) paddingX=8; paddingY=8; offsetX=0; offsetY=4 ;;
+  9 ) paddingX=9; paddingY=9; offsetX=0; offsetY=2 ;;
+  11) paddingX=12; paddingY=12; offsetX=0; offsetY=3 ;;
+  * ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
+  esac
+fi
+
+# my quantum dark colour theme :)
+/usr/bin/alacritty --option font.size=$size                           \
+                            window.padding.x=$paddingX                \
+                            window.padding.y=$paddingY                \
+                            font.offset.x=$offsetX                    \
+                            font.offset.y=$offsetY                    \
+                            draw_bold_text_with_bright_colors=true    \
+                            colors.primary.background=\'$background\' \
+                            colors.primary.foreground=\'$foreground\' \
+                            colors.normal.black=\'#000000\'           \
+                            colors.normal.red=\'#d54e53\'             \
+                            colors.normal.green=\'#b9ca4a\'           \
+                            colors.normal.yellow=\'#e6c547\'          \
+                            colors.normal.blue=\'#7aa6da\'            \
+                            colors.normal.magenta=\'#c397d8\'         \
+                            colors.normal.cyan=\'#70c0ba\'            \
+                            colors.normal.white=\'#eaeaea\'           \
+                            colors.bright.black=\'#666666\'           \
+                            colors.bright.red=\'#ff3334\'             \
+                            colors.bright.green=\'#9ec400\'           \
+                            colors.bright.yellow=\'#e7c547\'          \
+                            colors.bright.blue=\'#7aa6da\'            \
+                            colors.bright.magenta=\'#b77ee0\'         \
+                            colors.bright.cyan=\'#54ced6\'            \
+                            colors.bright.white=\'#ffffff\'           \
+                            $@ &
 
 # vim: set ft=sh: #

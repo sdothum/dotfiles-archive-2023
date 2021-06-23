@@ -25,7 +25,7 @@ if ! pm_query $@ ;then
   if pacman -Ss $@ | grep -q --regex="/$@ " ;then
     sudo pacman -S ${options% --noedit} $@
   else
-    ditto @ aur
+    ditto @aur
     $wrappaur -S $options $@
   fi
   post_install $@

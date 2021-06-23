@@ -16,7 +16,7 @@ if gem list $gem | grep -q "^$gem " ;then
 else
   heading : $gem
   time=$(chrono)
-  ditto @ gem
+  ditto @gem
   void && sudo gem install $gem $version || gem install $gem $version
   post_install $gem
   chrono $time
