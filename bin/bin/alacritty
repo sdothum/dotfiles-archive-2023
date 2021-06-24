@@ -22,17 +22,17 @@ if [ "$1" = blackboard ] ;then
   background='#000000'
   foreground='#000000'
   shift
-else
-  # tweak window margins by fontsize
-  case $size in
-  8 ) paddingX=8; paddingY=8; offsetX=0; offsetY=4 ;;
-  9 ) paddingX=9; paddingY=9; offsetX=0; offsetY=2 ;;
-  11) paddingX=12; paddingY=12; offsetX=0; offsetY=3 ;;
-  * ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
-  esac
 fi
 
-# my quantum dark colour theme :)
+# tweak window margins by fontsize
+case $size in
+8 ) paddingX=8; paddingY=8; offsetX=0; offsetY=4 ;;
+9 ) paddingX=9; paddingY=9; offsetX=0; offsetY=2 ;;
+11) paddingX=12; paddingY=12; offsetX=0; offsetY=3 ;;
+* ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
+esac
+
+# quantum colour theme :)
 /usr/bin/alacritty --option font.size=$size                           \
                             window.padding.x=$paddingX                \
                             window.padding.y=$paddingY                \
