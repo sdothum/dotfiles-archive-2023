@@ -12,9 +12,6 @@ disconnect() {
   if ! server ;then
     pstat rsync && notify 3 critical 'Rsync in progress' 'Waiting..'
     pwait rsync
-    sudo umount /net
-    sudo umount $HOME/Maildir
-    sudo systemctl stop nfs-config
   fi
   rm /tmp/login:console
   quit
@@ -29,7 +26,7 @@ while cmd=$(actions | rmenu 'Session' $cmd -no-custom) || exit ;do
   lock    ) lock_screen ;;
   logout  ) sudo kill -TERM X ;;
   suspend ) [ -e /sbin/systemctl ] && sudo systemctl suspend || sudo pm-suspend ;;
-  reboot  ) disconnect; [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo shutdown -r now ;;
+  reboot  ) disconnect; [ -e /sbin/systemctl ] && sudo systemctl reboot || sudo /bin/reboot ;;
   shutdown) disconnect; [ -e /sbin/systemctl ] && sudo systemctl poweroff || sudo shutdown -h now ;;
   esac
   break
