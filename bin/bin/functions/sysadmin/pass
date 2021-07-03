@@ -6,7 +6,7 @@
 
 # ..................................................................... Password
 
-usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | l'ist | m'v <name> <'name> | R'm <name>"; exit 1; }
+usage() { echo "usage: $(basename $0) <name> | a'dd <name> <password> | eX'port | G|g'enerate <name> | I'nitialize | i'mport | l'ist <search> | m'v <name> <'name> | R'm <name>"; exit 1; }
 
 PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 PASS=/usr/bin/pass
@@ -55,6 +55,9 @@ pass I || exit" >$image
   zip -mP "$(passphrase pass/master)" ${image%.sh} $image
 }
 
+# list() { tree -f $PASSWORD_STORE_DIR | grep '.gpg$' | sed  "s|.*$PASSWORD_STORE_DIR/||; s/.gpg$//" | tr '/' ' '; }
+list() { tree -f $PASSWORD_STORE_DIR | grep '.gpg$' | sed -r "s|.*$PASSWORD_STORE_DIR/||; s/.gpg$//; s|(.*)/(.*)|\1 \2|"; }
+
 # password manager
 case $1 in
 a ) [ $# -eq 3 ] && { echo "$3\n$3" | $PASS insert --force $2; exec pass $2; } ;;
@@ -62,7 +65,7 @@ G ) [ $# -eq 2 ] && { $PASS generate --no-symbols --force --clip $2 12; exec pas
 g ) [ $# -eq 2 ] && { $PASS generate --force --clip $2 12; exec pass $2; } ;;
 I ) init; exit ;;
 i ) [ $# -eq 3 ] && { ditto importing "$2"; echo "$3\n$3" >/tmp/pass; exec $PASS insert --force $2 </tmp/pass >>/tmp/pass.log 2>&1; } ;;
-l )  shift && exec $PASS $@ ;;
+l )  shift && { [ "$1" ] && list | a "$1" || list; exit; } ;;
 m ) [ $# -eq 3 ] && { $PASS mv --force $2 $3; exec pass $3; } ;;
 R ) [ $# -eq 2 ] && { exec $PASS rm --recursive --force $2; } ;;
 X ) xport; exit ;;
