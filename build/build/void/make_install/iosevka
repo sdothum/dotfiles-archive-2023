@@ -8,13 +8,13 @@
 # for git iosevka 7.x
 
 # make_install iosevka ..
-# eg. make_install iosevka extended        (grotesque width coding font, reduce display fontsize by 1) **
-#                  iosevka extended proof  (grotesque width prose font) **
+# eg. make_install iosevka extended                (grotesque width coding font, reduce display fontsize by 1) **
+#                  iosevka extended proof crossed  (grotesque width prose font) **
 #                  iosevka extended menu **
 #                  iosevka ebook **
 #                  ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
 #
-#                  iosevka atkinson             (normal width hyperlegible coding font)
+#                  iosevka ebook atkinson       (full hyperlegible variants)
 #                  iosevka extended jost proof  (extended width jost prose font)
 
 usage() {
@@ -39,7 +39,7 @@ FONT=$HOME/.fonts/iosevka
 
 leading=1.25  # default coding line spacing
 weight=400    # regular weight
-extended=576  # extended regular shape
+extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
 
 # atkinson hyperlegible typeface
 grotesque() {
@@ -112,7 +112,6 @@ variant() {
     question   ) question=corner ;;
     esac
   done
-  [ "$name" = '-monolegible' ] && name=-hyperlegible
 }
 
 integer() {
@@ -151,9 +150,9 @@ while [ $1 ] ;do
   menu     ) leading=1.5000; sb 0.9000; name=-menu ;;          # rofi menu
   proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs more sb (larger fontsize)
   # font
-  crossed  ) ifno 'name "-crossed"' || { family=${family}-crossed; name=${name}-crossed; }; variant Q ;;
+  crossed  ) variant Q ;;
   grotesque) grotesque ;;
-  atkinson ) grotesque; variant Q ampersand at number_sign percent ;;
+  atkinson ) grotesque; ifno 'name "-hyperlegible"' || { family=${family}-hyperlegible; name=-hyperlegible; }; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; name=-jost ;;
   jost     ) geometric; cap +75; name=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   name     ) [ $2 ] && name=-$2        || usage; shift ;;
@@ -388,7 +387,7 @@ npm install  # ignore npm funding and audit messages
 npm run build -- ttf::iosevka$name  # post Verda commits
 
 if [ $ebook ] ;then
-  fontdir=${family%-crossed}$name
+  fontdir=${family%-hyperlegible}$name
   mkdir -p $HOME/.fonts/$fontdir
   cp -v dist/$fontdir/ttf/* $HOME/.fonts/$fontdir
 else
