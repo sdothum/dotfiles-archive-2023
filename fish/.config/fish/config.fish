@@ -107,7 +107,7 @@ set -x XDG_RUNTIME_DIR /tmp/runtime-$USER
 set -x NNTPSERVER news.sunnyusenet.com
 
 # tt-rss
-set -x SELF_URL_PATH 'http://localhost:8000/tt-rss/'
+set -x SELF_URL_PATH 'http://luna:8000/tt-rss/'
 
 # ..................................................................... Defaults
 
