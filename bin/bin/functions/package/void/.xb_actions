@@ -1,6 +1,7 @@
 # sdothum - 2016 (c) wtfpl
-# tuple: <action> <package> -> file: .xb_<action>, see xb
+# tuple: <object> <package> -> file: .xb_<action>, see xb
 
+hints    chromium
 mail     alot
 imap     dovecot
 ttrss    php-fpm

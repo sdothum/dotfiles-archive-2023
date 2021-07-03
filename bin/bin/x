@@ -53,7 +53,9 @@ if console ;then
   # avoid dash shell echo "$(figlet)" escape character issues
   # figlet -t -d $HOME/.fonts/figlet -f s-relief $wm
   # figlet -t -f lean $wm
-  void && toilet -F gay -f smbraille $wm || toilet -F rainbow -f smbraille $wm
+  void && toilet -F gay -f pagga $wm || toilet -F rainbow -f pagga $wm
+  echo
+  sleep 1
   # echo ${NOCOLOR}
   # escape to shell prompt
   [ $wm = shell ] && exit

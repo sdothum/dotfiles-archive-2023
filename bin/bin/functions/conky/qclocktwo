@@ -49,13 +49,14 @@ esc='s/[{]/$&/g'                  # escape conky expression
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
 xs()      { echo "${_}$(ch 1)${Q}"; }                              # word pair fill char
 nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }  # random fill char column
-shuffle() { shuf=$(echo "$@" | shuf | tr -d '\n'); ditto shuffle "$shuf" >>$LOG; echo "$shuf"; }  # word salad
+shuffle() { shuf=$(echo "$@" | shuf | tr -d '\n'); ditto $f "$shuf" >>$LOG; echo "$shuf"; }  # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" | $glyph >$QCLOCK:$1; }
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
 _ITIS_()  { shuffle "${Q}I T $(xs)I S $(nx 6)"; }
 
 qclock0() {
+  f=qclock0
   case $M5 in
   0) qclock=$(ITIS) ;;    # top corner on the hour
   *) qclock=$(_ITIS_) ;;  # randomly position 'it is' phrase
@@ -66,6 +67,7 @@ AQUARTER() { shuffle "${Q}A $(xs)Q U A R T E R $(nx 2)"; }
 quarter()  { shuffle "${_}Q U A R T E R $(nx 4)"; }
 
 qclock1() {
+  f=qclock1
   case $M5 in
   3) qclock=$(AQUARTER) ;;
   9) qclock=$(AQUARTER) ;;
@@ -79,6 +81,7 @@ TWENTYFIVE() { shuffle "${Q}T W E N T Y F I V E $(nx)"; }
 twentyfive() { shuffle "${_}T W E N T Y \n${_}F I V E $(nx)"; }
 
 qclock2() {
+  f=qclock2
   case $M5 in
   1 ) qclock=$(twentyFIVE) ;;
   11) qclock=$(twentyFIVE) ;;
@@ -97,6 +100,7 @@ halftenTO() { shuffle "${_}H A L F \n${_}T E N \n${Q}T O $(nx 2)"; }
 halftento() { shuffle "${_}H A L F \n${_}T E N \n${_}T O $(nx 2)"; }
 
 qclock3() {
+  f=qclock3
   case $M5 in
   2 ) qclock=$(halfTENto) ;;
   6 ) qclock=$(HALFtento) ;;
@@ -116,6 +120,7 @@ PASTQ4_ed() { sed -i "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/; $es
 past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
 
 qclock4() {
+  f=qclock4
   if [ $H = $I43 ] ;then
     if [ "$HOUR" != $I43 ] ;then
       if past_hour ;then qclock=$(PASTQ4)  # on conky startup past the hour
@@ -149,6 +154,7 @@ refresh_hour() {
   }
 
 qclock5() {
+  f=qclock5
   if refresh_hour I31 I51 I33 ;then
     case $H in
     $I31) qclock=$(Q3_5_3) ;;
@@ -165,6 +171,7 @@ _3_4Q4() { shuffle "${_}$W32\n${_}$W41\n${Q}$W42"; }
 _3_4_4() { shuffle "${_}$W32\n${_}$W41\n${_}$W42"; }
 
 qclock6() {
+  f=qclock6
   if refresh_hour I32 I41 I42 ;then
     case $H in
     $I32) qclock=$(Q3_4_4) ;;
@@ -180,6 +187,7 @@ _5Q6() { shuffle "${_}$W53\n${Q}$W61"; }
 _5_6() { shuffle "${_}$W53\n${_}$W61"; }
 
 qclock7() {
+  f=qclock7
   if refresh_hour I53 I61 ;then
     case $H in
     $I53) qclock=$(Q5_6) ;;
@@ -194,6 +202,7 @@ _6Q5() { shuffle "${_}$W62\n${Q}$W52"; }
 _6_5() { shuffle "${_}$W62\n${_}$W52"; }
 
 qclock8() {
+  f=qclock8
   if refresh_hour I52 I62 ;then
     case $H in
     $I52) qclock=$(_6Q5) ;;
@@ -203,12 +212,13 @@ qclock8() {
   fi
 }
 
-Q3OCLOCK() { echo "${Q}$W34$(xs)O ' C L O C K "; }
+Q3OCLOCK() { qclock9="${Q}$W34$(xs)O ' C L O C K "; ditto 'qclock9=' "$qclock9" >>$LOG; }
 Q3clock()  { echo "${Q}$W34$(shuffle "${_}C L O C K $(nx 3)")"; }
 _3OCLOCK() { echo "$(shuffle "${_}$W34$(nx)")${Q}O ' C L O C K "; }
 _3clock()  { shuffle "${_}$W34\n${_}C L O C K $(nx 3)"; }
 
 qclock9() {
+  f=qclock9
   if [ $H = $I34 ] ;then
     case $M5 in
     0) qclock=$(Q3OCLOCK) ;;  # ten o'clock always touches corner
@@ -228,6 +238,7 @@ W5() { echo "3 THREE \n7 SEVEN \n8 EIGHT "; }
 W6() { echo "11 ELEVEN \n12 TWELVE "; }
 
 defvars() {
+  f=defvars
   eval set -- $(shuffle "$(W$i)")  # see layout()
   for j in $(seq 1 $(W$i | wc -l)) ;do
     var="I$i$j=$1"
@@ -241,6 +252,7 @@ defvars() {
 }
 
 layout() {
+  f=layout
   if [ "$HOUR" != $H ] ;then          # shuffle hour positions
     >$QCLOCK:vars
     for i in $(seq 3 6) ;do defvars ;done
