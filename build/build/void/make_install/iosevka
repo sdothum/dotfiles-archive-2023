@@ -48,6 +48,7 @@ grotesque() {
   capital_i=serifed
   capital_k=straight-serifless
   capital_q=detached-tailed
+  a=double-storey-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
@@ -65,6 +66,7 @@ grotesque() {
   dollar=through
   number_sign=upright
   percent=dots
+  question=smooth
 }
 
 # jost* typeface
@@ -74,6 +76,7 @@ geometric() {
   capital_i=serifless
   capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
+  a=double-storey-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
   j=straight-line
@@ -91,12 +94,14 @@ geometric() {
   dollar=through
   number_sign=upright
   percent=dots
+  question=smooth
 }
 
 # for stricter typeface matching
 variant() {
   for o in $@ ;do  # unused var ($i in use for variant :)
     case $o in
+    a          ) a=single-storey-serifless ;;
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
     ampersand  ) ampersand=closed ;;
@@ -104,6 +109,7 @@ variant() {
     dollar     ) dollar=open ;;
     number_sign) number_sign=slanted ;;
     percent    ) percent=rings-continuous-slash ;;
+    question   ) question=corner ;;
     esac
   done
   [ "$name" = '-monolegible' ] && name=-hyperlegible
@@ -149,7 +155,7 @@ while [ $1 ] ;do
   grotesque) grotesque ;;
   atkinson ) grotesque; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; name=-jost ;;
-  jost     ) geometric; cap +75; name=-jost; variant j Q ampersand at dollar number_sign percent ;;
+  jost     ) geometric; cap +75; name=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   name     ) [ $2 ] && name=-$2        || usage; shift ;;
   # custom
   cap      ) cap $(integer $2)         || usage; shift ;;      # H height (affects descender as well)
@@ -229,13 +235,14 @@ lower-lambda = 'straight-turn'        # λ
 number-sign = '$number_sign'          # #
 paragraph-sign = 'low'                # ¶
 percent = '$percent'                  # %
+question = '$question'                # ?
 
 # Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
 [buildPlans.iosevka$name.variants.upright]
 
 # Optional; Configure single character's variant for Italic only; Overrides [design]
 [buildPlans.iosevka$name.variants.italic]
-a = 'double-storey-serifless'
+a = '$a'
 d = 'toothed-serifless'
 e = 'flat-crossbar'
 f = '$f'
