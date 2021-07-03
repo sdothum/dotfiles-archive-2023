@@ -18,8 +18,8 @@
 #                  iosevka extended jost proof  (extended width jost prose font)
 
 usage() {
-  echo "usage: $(basename $0) iosevka [grotesque (default) | atkinson | geometric | jost]
-                             [normal (default) | extended | ebook]
+  echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook]
+                             [grotesque (default) | atkinson | geometric | jost] [crossed]
                              [proof | menu | leading <decimal>]
                              [name <name>]
                              [cap [-+]<emu>]
@@ -39,6 +39,7 @@ FONT=$HOME/.fonts/iosevka
 
 leading=1.25  # default coding line spacing
 weight=400    # regular weight
+extended=576  # extended regular shape
 
 # atkinson hyperlegible typeface
 grotesque() {
@@ -139,15 +140,16 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal   ) shape=500; sb 0.7000 ;;                           # normal width
-  ebook    ) shape=576; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;  # less sb with higher dpi
-  extended ) shape=576; sb 0.7000 ;;                           # extended width
+  ebook    ) shape=$extended; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;  # less sb with higher dpi
+  extended ) shape=$extended; sb 0.7000 ;;                           # extended width
   menu     ) leading=1.5000; sb 0.9000; name=-menu ;;          # rofi menu
   proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs more sb (larger fontsize)
   # font
+  crossed  ) ifno 'name "-crossed"' || { family=${family}-crossed; name=${name}-crossed; }; variant Q ;;
   grotesque) grotesque ;;
   atkinson ) grotesque; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; name=-jost ;;
-  jost     ) geometric; cap +75; name=-jost; variant j ampersand at dollar number_sign percent ;;
+  jost     ) geometric; cap +75; name=-jost; variant j Q ampersand at dollar number_sign percent ;;
   name     ) [ $2 ] && name=-$2        || usage; shift ;;
   # custom
   cap      ) cap $(integer $2)         || usage; shift ;;      # H height (affects descender as well)
@@ -313,7 +315,7 @@ menu  = 5          # Width grade for the font's names.
 css   = 'normal'   # 'font-stretch' property of webfont CSS.
 
 [buildPlans.iosevka$name.widths.extended]
-shape = 576
+shape = 600
 menu  = 7
 css   = 'expanded'
 
@@ -352,6 +354,7 @@ sequence = '<*>'
 # Edit the values to change the metrics. Remove this section when overriding is not needed.
 
 [buildPlans.iosevka$name.metric-override]
+# leading = 1250
 winMetricAscenderPad = 0
 winMetricDescenderPad = 0
 powerlineScaleY = 1
@@ -377,7 +380,13 @@ npm install  # ignore npm funding and audit messages
 
 npm run build -- ttf::iosevka$name  # post Verda commits
 
-[ $family ] && { mkdir -p $family; cp -v dist/iosevka$name/ttf/* $family; } || nerdfont ${name#-}  # insert glyphs
+if [ $ebook ] ;then
+  fontdir=${family%-crossed}$name
+  mkdir -p $HOME/.fonts/$fontdir
+  cp -v dist/$fontdir/ttf/* $HOME/.fonts/$fontdir
+else
+  nerdfont ${name#-}  # insert glyphs
+fi
 
 [ $curlyq ] && fforge_hyperlegible ${name#-}  # hyperlegible font mod for better q
 
