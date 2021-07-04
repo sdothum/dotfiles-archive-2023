@@ -21,7 +21,7 @@ usage() {
   echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook]
                              [grotesque (default) | atkinson | geometric | jost] [crossed]
                              [proof | menu | leading <decimal>]
-                             [name <name>]
+                             [family <name>]
                              [cap [-+]<emu>]
                              [noround | sb <decimal>]
                              [shape [-+]<emu>]
@@ -35,7 +35,6 @@ usage() {
 # a b c d e f g h i j k l m n o p q r s t u v w x y z      @   $ %   &      { }
 
 REPO=/net/depot/Iosevka
-FONT=$HOME/.fonts/iosevka
 
 leading=1.25  # default coding line spacing
 weight=400    # regular weight
@@ -135,6 +134,7 @@ adjust() {
 cap()     { cap="cap = $1"; }
 sb()      { sb="sb = $1"; }
 xheight() { xheight="xheight = $1"; }
+efont()   { family=e-$1; ebook=true; }
 
 grotesque      # default typeface
 shape=500
@@ -144,36 +144,34 @@ shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape=500; sb 0.7000 ;;                           # normal width
-  ebook    ) shape=$extended; sb 0.6000; leading=1.2500; family=iosevka; name=-monolegible; ebook=true ;;  # less sb with higher dpi
-  extended ) shape=$extended; sb 0.7000 ;;                           # extended width
-  menu     ) leading=1.5000; sb 0.9000; name=-menu ;;          # rofi menu
-  proof    ) leading=1.8000; sb 0.8000; name=${name}-proof ;;  # prose display needs more sb (larger fontsize)
+  normal   ) shape=500; sb 0.7000 ;;                                           # normal width
+  ebook    ) shape=$extended; sb 0.6000; leading=1.2500; efont monolegible ;;  # less sb with higher dpi
+  extended ) shape=$extended; sb 0.7000 ;;                                     # extended width
+  menu     ) leading=1.5000; sb 0.9000; build=-menu ;;                         # rofi menu
+  proof    ) leading=1.8000; sb 0.8000; build=${build}-proof ;;                # prose display needs more sb (larger fontsize)
   # font
   crossed  ) variant Q ;;
   grotesque) grotesque ;;
-  atkinson ) grotesque; ifno 'name "-hyperlegible"' || { family=${family}-hyperlegible; name=-hyperlegible; }; variant Q ampersand at number_sign percent ;;
-  geometric) geometric; cap +75; name=-jost ;;
-  jost     ) geometric; cap +75; name=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
-  name     ) [ $2 ] && name=-$2        || usage; shift ;;
+  atkinson ) grotesque; [ $ebook ] && efont hyperlegible; variant Q ampersand at number_sign percent ;;
+  geometric) geometric; cap +75; build=-jost ;;
+  jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
+  family   ) [ $2 ] && family=$2       || usage; shift ;;
   # custom
-  cap      ) cap $(integer $2)         || usage; shift ;;      # H height (affects descender as well)
-  leading  ) leading=$(real $2)        || usage; shift ;;      # line spacing > 1.0
+  cap      ) cap $(integer $2)         || usage; shift ;;  # H height (affects descender as well)
+  leading  ) leading=$(real $2)        || usage; shift ;;  # line spacing > 1.0
   noround  ) unset sb ;;
-  sb       ) sb $(real $2)             || usage; shift ;;      # side bearing (spacing)
-  shape    ) shape=$(adjust $shape $2) || usage; shift ;;      # cell width
-  weight   ) weight=$(integer $2)      || usage; shift ;;      # regular weight
-  xheight  ) xheight $(integer $2)     || usage; shift ;;      # height of x (experimental for larger fontsizes)
+  sb       ) sb $(real $2)             || usage; shift ;;  # side bearing (spacing)
+  shape    ) shape=$(adjust $shape $2) || usage; shift ;;  # cell width
+  weight   ) weight=$(integer $2)      || usage; shift ;;  # regular weight
+  xheight  ) xheight $(integer $2)     || usage; shift ;;  # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
 done
 
 [ $shape ] || usage
-[ $family ] || plan=$name
-ifyes "build ${family:-Iosevka}$plan" || usage
-FONT=$family$name
-REGULAR=$family/ttf/iosevka$name-regular.ttf
+[ $family ] || family=Iosevka$build
+ifyes "build $family" || usage
 
 cd ${REPO%/*}
 # install iosevka repo
@@ -184,21 +182,21 @@ cd Iosevka
 # a tweaked :-) atkinson hyperlegible font character emulation
 # based on sample.toml (with quote and backtick conversion to single quotes)
 echo "
-[buildPlans.iosevka$name]           # <iosevka-custom> is your plan name
-family = '${family:-Iosevka}$plan'  # Font menu family name
-spacing = 'term'                    # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
-serifs = 'sans'                     # Optional; Values: 'sans' or 'slab'
+[buildPlans.$family]  # <iosevka-custom> is your plan name
+family = '$family'    # Font menu family name
+spacing = 'term'      # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
 no-cv-ss = true
 
 ###################################################################################################
 # Configure variants
 
 # Optional; Whether to inherit a 'ss##' variant
-[buildPlans.iosevka$name.variants]
-# inherits = 'ss01'              # use defaults instead (of inheriting)
+[buildPlans.$family.variants]
+# inherits = 'ss01'                   # use defaults instead (of inheriting)
 
 # Optional; Configure single character's variant
-[buildPlans.iosevka$name.variants.design]
+[buildPlans.$family.variants.design]
 capital-d = 'more-rounded-serifless'  # D
 capital-g = '$capital_g'              # G
 capital-i = '$capital_i'              # I
@@ -237,10 +235,10 @@ percent = '$percent'                  # %
 question = '$question'                # ?
 
 # Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
-[buildPlans.iosevka$name.variants.upright]
+[buildPlans.$family.variants.upright]
 
 # Optional; Configure single character's variant for Italic only; Overrides [design]
-[buildPlans.iosevka$name.variants.italic]
+[buildPlans.$family.variants.italic]
 a = '$a'
 d = 'toothed-serifless'
 e = 'flat-crossbar'
@@ -256,7 +254,7 @@ eszet = 'sulzbacher'                  # ß
 ###################################################################################################
 # Configure ligations
 
-[buildPlans.iosevka$name.ligations]
+[buildPlans.$family.ligations]
 inherits = 'default-calt'   # Optional; inherits an existing ligation set
 disables = []               # Optional; disable specific ligation groups, overrides inherited ligation set
 enables  = []               # Optional; enable specific ligation groups, overrides inherited ligation set
@@ -273,17 +271,17 @@ enables  = []               # Optional; enable specific ligation groups, overrid
 #             and 'shape' properly only supports number between 100 and 900 (inclusive).
 #             If you decide to use custom weights you have to define all the weights you
 #             plan to use otherwise they will not be built.
-[buildPlans.iosevka$name.weights.regular]
+[buildPlans.$family.weights.regular]
 shape = $weight  # Weight for glyph shapes.
 menu  = $weight  # Weight for the font's names.
 css   = $weight  # Weight for webfont CSS.
 
-[buildPlans.iosevka$name.weights.book]
+[buildPlans.$family.weights.book]
 shape = 450
 menu  = 450  # Use 450 here to name the font's weight 'Book'
 css   = 450
 
-[buildPlans.iosevka$name.weights.bold]
+[buildPlans.$family.weights.bold]
 shape = 700
 menu  = 700
 css   = 700
@@ -296,7 +294,7 @@ css   = 700
 # Format: <upright|italic|oblique> = <'normal'|'italic'|'oblique'>
 # When this section is absent, all slopes would be built.
 
-[buildPlans.iosevka$name.slopes]
+[buildPlans.$family.slopes]
 upright = 'normal'
 italic = 'italic'
 oblique = 'oblique'
@@ -315,12 +313,12 @@ oblique = 'oblique'
 #             If you decide to use custom widths you have to define all the widths you plan to use,
 #             otherwise they will not be built.
 
-[buildPlans.iosevka$name.widths.normal]
+[buildPlans.$family.widths.normal]
 shape = $shape     # Unit Width, measured in 1/1000 em.
 menu  = 5          # Width grade for the font's names.
 css   = 'normal'   # 'font-stretch' property of webfont CSS.
 
-[buildPlans.iosevka$name.widths.extended]
+[buildPlans.$family.widths.extended]
 shape = 600
 menu  = 7
 css   = 'expanded'
@@ -333,7 +331,7 @@ css   = 'expanded'
 # Specify character ranges in the section below to exclude certain characters from the font being
 # built. Remove this section when this feature is not needed.
 
-[buildPlans.iosevka$name.exclude-chars]
+[buildPlans.$family.exclude-chars]
 ranges = [[10003, 10008]]
 
 # End character exclusion
@@ -346,7 +344,7 @@ ranges = [[10003, 10008]]
 # following section to build PUA characters that are generated from the OpenType ligatures.
 # Remove this section when compatibility ligatures are not needed.
 
-[[buildPlans.iosevka$name.compatibility-ligatures]]
+[[buildPlans.$family.compatibility-ligatures]]
 unicode = 57600 # 0xE100
 featureTag = 'calt'
 sequence = '<*>'
@@ -359,7 +357,7 @@ sequence = '<*>'
 # Certain metrics like line height (leading) could be overridden in your build plan file.
 # Edit the values to change the metrics. Remove this section when overriding is not needed.
 
-[buildPlans.iosevka$name.metric-override]
+[buildPlans.$family.metric-override]
 # leading = 1250
 winMetricAscenderPad = 0
 winMetricDescenderPad = 0
@@ -368,11 +366,11 @@ powerlineScaleX = 1
 powerlineShiftY = 0
 powerlineShiftX = 0
 
-[buildPlans.iosevka$name.metric-override.multiplies]
+[buildPlans.$family.metric-override.multiplies]
 leading = $leading
 $sb
 
-[buildPlans.iosevka$name.metric-override.adds]
+[buildPlans.$family.metric-override.adds]
 $cap
 $xheight
 
@@ -384,18 +382,17 @@ $xheight
 npm install  # ignore npm funding and audit messages
 # npm update
 
-npm run build -- ttf::iosevka$name  # post Verda commits
+npm run build -- ttf::$family  # post Verda commits
 
 if [ $ebook ] ;then
-  fontdir=${family%-hyperlegible}$name
-  mkdir -p $HOME/.fonts/$fontdir
-  cp -v dist/$fontdir/ttf/* $HOME/.fonts/$fontdir
+  mkdir -p $HOME/.fonts/$family
+  cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont ${name#-}  # insert glyphs
+  nerdfont $family  # insert glyphs
 fi
 
-[ $curlyq ] && fforge_hyperlegible ${name#-}  # hyperlegible font mod for better q
+[ $curlyq ] && fforge_hyperlegible $family  # hyperlegible font mod for better q
 
-[ $ebook ] && kindle_hyperlegible ${name#-}
+[ $ebook ] && kindle_hyperlegible $family   # book weight and double width ebook characters
 
 # vim: set ft=sh: #
