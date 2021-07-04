@@ -6,12 +6,12 @@
 
 # ...................................................... hyperlegible for kindle
 
-usage() { echo "usage: $(basename $0) [--emdash] [family"; exit 1; }
+usage() { echo "usage: $(basename $0) [--emdash] [family]"; exit 1; }
 
-FONT=$HOME/.fonts/iosevka
 [ "$1" = '--emdash' ] && { emdash=--; shift; }
-[ $1 ] && { family=-$1; FONT=$FONT-$1; shift; }
-[ $1 ] && usage
+[ $2 ] && usage
+FONT=$HOME/.fonts/${1:-iosevka}
+family=${FONT##*/}
 cd $FONT 2>/dev/null || usage
 
 # see make_insstall iosevka
@@ -30,13 +30,13 @@ for i in $fonts ;do
 done
 
 # assign book weights as regular (normal)
-sed -i -e 's/iosevka Book Version/iosevka Regular Version/' \
-    -e 's/iosevka[ -]Book/iosevka/'                         \
+sed -i -e "s/$family Book Version/$family Regular Version/" \
+    -e "s/$family[ -]Book/$family/"                         \
     -e 's/Book/Regular/'                                    \
     *-book.ttx 
 
-sed -i -e 's/iosevka Book Italic Version/iosevka Italic Version/' \
-    -e 's/iosevka[ -]Book/iosevka/'                               \
+sed -i -e "s/$family Book Italic Version/$family Italic Version/" \
+    -e "s/$family[ -]Book/$family/"                               \
     -e 's/Book Italic/Italic/'                                    \
     *-bookitalic.ttx 
 
@@ -94,6 +94,7 @@ Paste();
 Generate(\$1);
 " >/tmp/fontforge.script
 
+echo
 for i in *book*#1.ttf ;do
   ditto M $i
   case $i in

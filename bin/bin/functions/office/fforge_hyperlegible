@@ -12,8 +12,9 @@
 ditto iosevka 'copy char 0u024b and paste to char 0u0071'
 ifno 'atkinson q update' && exit
 
-FONT=$HOME/.fonts/iosevka
-[ $1 ] && { family=-$1; FONT=$FONT-$1; }
+FONT=$HOME/.fonts/${1:-iosevka}
+cd $FONT
+
 echo "
 Open(\$1);
 Select(0u024b);
@@ -22,7 +23,6 @@ Select(0u0071);
 Paste();
 Generate(\$1);
 " >/tmp/fontforge.script
-cd $FONT
 
 for i in *ttf ;do
   ditto fontforge $i
