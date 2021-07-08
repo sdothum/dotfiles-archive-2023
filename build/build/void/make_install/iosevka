@@ -18,14 +18,14 @@
 #                  iosevka extended jost proof  (extended width jost prose font)
 
 usage() {
-  echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook]
+  echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook | heading]
                              [grotesque (default) | atkinson | geometric | jost] [crossed]
                              [proof | menu | leading <decimal>]
                              [family <name>]
                              [cap [-+]<emu>]
                              [noround | sb <decimal>]
                              [shape [-+]<emu>]
-                             [weight <integer>]
+                             [weight <integer> <name>]
                              [xheight [-+]<emu>]"
   exit 1
 }
@@ -37,7 +37,6 @@ usage() {
 REPO=/net/depot/Iosevka
 
 leading=1.25  # default coding line spacing
-weight=400    # regular weight
 extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
 
 # atkinson hyperlegible typeface
@@ -114,19 +113,19 @@ variant() {
 }
 
 integer() {
-  [ $1 ]                    || exit 1
-  [ $1 -eq $1 2>/dev/null ] || exit 1
+  [ $1 ]                    || return 1
+  [ $1 -eq $1 2>/dev/null ] || return 1
   echo $1
 }
 
 real() {
-  integer ${1#*.} || exit 1
-  integer ${1%.*} || exit 1
+  integer ${1#*.} || return 1
+  integer ${1%.*} || return 1
   echo $1
 }
 
 adjust() {
-   integer $2 || exit 1
+   integer $2 || return 1
    echo $(( $1 + $2 ))
 }
 
@@ -136,6 +135,11 @@ sb()      { sb="sb = $1"; }
 xheight() { xheight="xheight = $1"; }
 efont()   { family=e-$1; ebook=true; }
 
+weight() {
+  weight=$(integer $1) || return 1
+  [ $2 ] && name=$2    || return 1
+}
+
 grotesque      # default typeface
 shape=500
 sb 0.7000
@@ -144,11 +148,12 @@ shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape=500; sb 0.7000 ;;                                           # normal width
-  ebook    ) shape=$extended; sb 0.6000; leading=1.2500; efont monolegible ;;  # less sb with higher dpi
-  extended ) shape=$extended; sb 0.7000 ;;                                     # extended width
-  menu     ) leading=1.5000; sb 0.9000; build=-menu ;;                         # rofi menu
-  proof    ) leading=1.8000; sb 0.8000; build=${build}-proof ;;                # prose display needs more sb (larger fontsize)
+  normal   ) shape=500; sb 0.7000 ;;                                                        # normal width
+  ebook    ) shape=$extended; sb 0.6000; leading=1.2500; efont monolegible ;;               # less sb with higher dpi
+  extended ) shape=$extended; sb 0.7000 ;;                                                  # extended width
+  heading  ) shape=650; sb 0.8000; leading=1.2500; weight 300 light; family=web-heading ;;  # web heading
+  menu     ) leading=1.5000; sb 0.9000; build=-menu ;;                                      # rofi menu
+  proof    ) leading=1.8000; sb 0.8000; build=${build}-proof ;;                             # prose display needs more sb (larger fontsize)
   # font
   crossed  ) variant Q ;;
   grotesque) grotesque ;;
@@ -156,14 +161,14 @@ while [ $1 ] ;do
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family   ) [ $2 ] && family=$2       || usage; shift ;;
-  # custom
-  cap      ) cap $(integer $2)         || usage; shift ;;  # H height (affects descender as well)
-  leading  ) leading=$(real $2)        || usage; shift ;;  # line spacing > 1.0
+                                                             # custom
+  cap      ) cap $(integer $2)         || usage; shift ;;    # H height (affects descender as well)
+  leading  ) leading=$(real $2)        || usage; shift ;;    # line spacing > 1.0
   noround  ) unset sb ;;
-  sb       ) sb $(real $2)             || usage; shift ;;  # side bearing (spacing)
-  shape    ) shape=$(adjust $shape $2) || usage; shift ;;  # cell width
-  weight   ) weight=$(integer $2)      || usage; shift ;;  # regular weight
-  xheight  ) xheight $(integer $2)     || usage; shift ;;  # height of x (experimental for larger fontsizes)
+  sb       ) sb $(real $2)             || usage; shift ;;    # side bearing (spacing)
+  shape    ) shape=$(adjust $shape $2) || usage; shift ;;    # cell width
+  weight   ) weight $2 $3              || usage; shift 2 ;;  # custom font weight
+  xheight  ) xheight $(integer $2)     || usage; shift ;;    # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
@@ -171,6 +176,12 @@ done
 
 [ $shape ] || usage
 [ $family ] || family=Iosevka$build
+[ $weight ] && weight="
+[buildPlans.$family.weights.$name]
+shape = $weight
+menu  = $weight
+css   = $weight
+"
 ifyes "build $family" || usage
 
 cd ${REPO%/*}
@@ -272,9 +283,9 @@ enables  = []               # Optional; enable specific ligation groups, overrid
 #             If you decide to use custom weights you have to define all the weights you
 #             plan to use otherwise they will not be built.
 [buildPlans.$family.weights.regular]
-shape = $weight  # Weight for glyph shapes.
-menu  = $weight  # Weight for the font's names.
-css   = $weight  # Weight for webfont CSS.
+shape = 400  # Weight for glyph shapes.
+menu  = 400  # Weight for the font's names.
+css   = 400  # Weight for webfont CSS.
 
 [buildPlans.$family.weights.book]
 shape = 450
@@ -285,6 +296,8 @@ css   = 450
 shape = 700
 menu  = 700
 css   = 700
+
+$weight
 
 # End weight section
 ###################################################################################################
