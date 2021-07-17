@@ -5,22 +5,17 @@
 
 # ...................................................................... E-books
 
-# Usage: dmenu kindle [azw3 | epub] [default | noindent | justify | all] [<file>], see dmenu ebooks
-#
-# Note: Embed font to override possible ebook embedded font
-#       Use a unique font (remove all but regular font face for minimal file size) e.g. barcodes are small
-#       (don't forget to update font cache with fc-cache -f -v)
-#       This font should not reside on the kindle, to force default kindle settings
+usage() { echo "usage: $(basename $0) kindle [azw3 | epub] [default | justify | noindent | poetry | all] [<file>]"; exit 1; }
 
 kindle=/run/media/$USER/Kindle
 [ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
 kindle=$kindle/documents/
 
-# embed smallest fontset possible, see notes above
-embed_font='Libre Barcode 39'  # a google font
-# em spacing
-em_indent=1.66          # paragraph
-em_linespace=0.33,0.75  # indent,noindent
+# enhanced em-legible spacing!
+# em_indent=2       # conventional paragraph indent
+# em_linespace=0,1  # conventional indent,noindent spacing
+em_indent=1.66
+em_linespace=0.33,1.25
 
 # override device/cloud transfer and create kindle/kobo file
 case $1 in
@@ -29,15 +24,19 @@ epub    ) option=${option:-default}; format=epub;               shift ;;  # epub
 esac
 
 # override left justification
-case $1 in
-def* ) option=default;  shift ;;
-noin*) option=noindent; shift ;;  # retain poetry formatting
-just*) option=justify;  shift ;;
-all  ) option=all;      shift ;;
+case "$1" in
+''      ) ;;
+default ) option=default;  shift ;;
+justify ) option=justify;  shift ;;
+noindent) option=noindent; shift ;;  # retain poetry formatting
+poetry  ) option=noindent; shift ;;  # retain poetry formatting
+all     ) option=all;      shift ;;
+*       ) [ -e "$1" ] ||   usage ;;
 esac
 
 # autoconvert epubs to awz3
-[ "$1" ] || { [ "$format" = azw3 ] && { find . -iname '*epub' | while read book ;do dmenu kindle azw3 "$book"; done; exit; } }
+# [ "$1" ] || { [ "$format" = azw3 ] && { find . -iname '*epub' | while read book ;do dmenu kindle azw3 "$book"; done; exit; } }
+[ "$1" ] || { [ "$format" = azw3 ] && { find . -iname '*epub' -exec echo {} \; -exec dmenu kindle azw3 $option {} \; ; exit; } }
 
 file=$1
 name=$(basename "${file%.*}")
@@ -93,14 +92,18 @@ noindent) em_indent=0; linespace=${em_linespace#*,} ;;
 justify ) justify=justify ;;
 all     ) unset indent; linespace=${em_linespace#*,}; justify=justify ;;
 esac
+
 notify low "$title" "Converting to $format..\n--change-justification="$justify" $indent"
+ditto $format "$file"
+
+# ebook-convert "$file" "${output%.*}.epub"  # test image
 # convert even .azw3 to inject folder title and author
-ebook-convert "$file" "${output%.*}.$format" \
-              --title="$title" --authors="$author" \
-              --change-justification="$justify" \
+ebook-convert "$file" "${output%.*}.$format"                                               \
+              --title="$title" --authors="$author"                                         \
+              --change-justification="$justify"                                            \
               --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
-              --insert-blank-line --insert-blank-line-size=$linespace \
-              --embed-font-family="$embed_font" \
+              --insert-blank-line --insert-blank-line-size=$linespace                      \
+              --filter-css='font-family'                                                   \
               >/tmp/ebook-convert.log || exit
 
 # ........................................................................ Write
