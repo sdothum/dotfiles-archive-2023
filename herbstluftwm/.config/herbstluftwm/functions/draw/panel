@@ -300,6 +300,8 @@ panel() {
     X*       ) active_window; desktops       ;;
     C*       ) [ "${line#?}" = '  0%' ] || cpu_usage=${line#?}; cpu_stat ;;  # ignore 0%
     T*       ) cpu_temp=${line#?};  cpu_stat ;;
+    # M*     ) mem_usage=$(echo ${line#?} | sed 's/..M/M/'); cpu_stat ;;
+    # M*     ) mem_usage=$(echo ${line#?} | sed 's/..M/ᴹ/; s/G/ᴳ/'); cpu_stat ;;
     M*       ) mem_usage=$(echo ${line#?} | sed 's/..M/⠍/; s/G/⠛/'); cpu_stat ;;
     !*       ) echo "$cpu_usage" >$STAT:cpu; echo "$cpu_temp" >$STAT:temp; echo "$mem_usage" >$STAT:mem ;;  # save stats for draw root redraw
     *_changed) desktops ;;
@@ -346,6 +348,8 @@ fi
 if [ -e $STAT ] ;then
   while : ;do sar -u --dec=0 1 1 | tail -1 | awk '{ printf "C%3d%%\n", $3 }' > $PANEL_FIFO:$fifo; done &  # cycle >~ 1 second
   while : ;do echo "T$(cpu_temp)°" > $PANEL_FIFO:$fifo; sleep 2; done &
+  # while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1M/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1G/; s/^/M/' > $PANEL_FIFO:$fifo; sleep 3; done &
+  # while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1ᴹ/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1ᴳ/; s/^/M/' > $PANEL_FIFO:$fifo; sleep 3; done &
   while : ;do free -h | grep 'Mem:' | sed -r 's/^[^ ]* *[^ ]* *([0-9.]*)Mi.*/\1⠍/; s/^[^ ]* *[^ ]* *([0-9.]*)Gi.*/\1⠛/; s/^/M/' > $PANEL_FIFO:$fifo; sleep 3; done &
 fi
 
