@@ -1,0 +1,15 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Web
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ....................................................................... Sonarr
+
+BROWSER=/usr/bin/surf
+SONARR=http://$SERVER:8989/calendar
+
+$BROWSER $SONARR &
+pwait "$BROWSER.*$SONARR"  # see dmenu media [series]
+
+# vim: set ft=sh: #

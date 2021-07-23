@@ -26,7 +26,6 @@ category=${1:-series}
 PASSPORT="/run/media/$USER/My Passport/$category"
 catlg=$CACHEDIR/dmenu:$category
 [ -d "$PASSPORT" ] && { library=$PASSPORT; usb=true; } || library=${LIBRARY:-/net/media/videos/$category}
-sonarr=http://$SERVER:8989/calendar
 preprocess=${0%/dmenu}/functions/dmenu/.preproc/$category
 retitle="$library"/.retitle
 
@@ -80,8 +79,8 @@ while : ;do
   case $show in
   "$NAME"  ) unset T; continue ;;
   "$DATE"  ) T=t;     continue ;;
+  "$SONARR") sonarr;  continue ;;
   "$EDIT"  ) killall 'ROX-Filer'; rox "$library"; pwait "ROX-Filer"; cache; continue ;;
-  "$SONARR") $BROWSER $sonarr; pwait "$BROWSER.*$sonarr"; continue ;;
 
   *        ) series=""$library"/$(echo $show | sed 's/ /./g')"
              playlist="$series/.playlist"

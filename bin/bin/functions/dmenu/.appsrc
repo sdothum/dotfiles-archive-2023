@@ -1,6 +1,7 @@
 hardcopy eject
 amphetype
 blackboard
+$BROWSER $(cat $SESSION/bookmark)           # http :: bookmark
 calibre
 digikam
 gthumb

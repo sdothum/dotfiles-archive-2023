@@ -115,7 +115,7 @@ pastQ4()    { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
 PASTQ4()    { shuffle "${Q}P A S T $(xs)$W43$(nx 2)"; }
 PAST_4()    { shuffle "${Q}P A S T \n${_}$W43$(nx 3)"; }
 past_4()    { shuffle "${_}P A S T \n${_}$W43$(nx 3)"; }
-PASTQ4_ed() { sed -i "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/; $esc" $QCLOCK:${display}4; }
+PASTQ4_ed() { sed -i "s/[$]//g; s/${_}p a s t ${_}. ${Q}/${Q}p a s t $(xs)/; $esc" $QCLOCK:${display}4; }
 
 past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
 

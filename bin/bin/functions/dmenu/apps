@@ -24,10 +24,10 @@ apps() {
 }
 
 pgm=$(previous apps)
-while pgm=$(apps | sed  "1i$EDIT" | rmenu 'launch' $pgm -no-custom) || exit ;do
+while pgm=$(apps | sed  "1i$EDIT" | rmenu 'open' $pgm -no-custom) || exit ;do
   case $pgm in
   "$EDIT") gvim -f $pgms ;;
-  *      ) mhistory apps "$pgm"; exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
+  *      ) mhistory apps "$pgm"; eval exec $(grep "$pgm" $pgms | cut -d'#' -f1) ;;
   esac
 done
 
