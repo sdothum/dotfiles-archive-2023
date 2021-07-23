@@ -33,9 +33,10 @@ hc keybind Super-Control-apostrophe   spawn toggle panel
 hc keybind Super-F1                   spawn dmenu menu
 hc keybind Super-a                    spawn dmenu abook
 hc keybind Super-b                    spawn focus $BROWSER
-hc keybind Super-Control-b            spawn dmenu history
-hc keybind Super-$Mod-Control-b       spawn dmenu bookmarks
+hc keybind Super-Control-b            spawn bookmark
+hc keybind Super-$Mod-Control-b       spawn dmenu history
 hc keybind Super-$Mod-b               chain . spawn kill -KILL $BROWSER . emit_hook focus_window
+hc keybind Super-Shift-b              spawn dmenu bookmarks
 hc keybind Super-c                    spawn dmenu reminder
 hc keybind Super-Control-c            spawn term 'todo' td -i
 hc keybind Super-d                    spawn dmenu dict
