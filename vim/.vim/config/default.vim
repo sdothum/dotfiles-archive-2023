@@ -11,7 +11,7 @@ augroup defaults | autocmd! | augroup END
 " don't linger in insert mode indefinitely (updatetime=ms)
 autocmd defaults InsertEnter * let s:updatetime = &updatetime | set updatetime=60000
 autocmd defaults InsertLeave * let &updatetime  = s:updatetime
-autocmd defaults CursorHoldI * stopinsert
+autocmd defaults CursorHoldI * if &filetype != 'steno' | stopinsert | endif
 
 " ........................................................................ Debug
 " recover last error message
