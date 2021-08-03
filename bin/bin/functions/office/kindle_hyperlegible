@@ -15,7 +15,7 @@ family=${FONT##*/}
 cd $FONT 2>/dev/null || usage
 
 # see make_insstall iosevka
-ifno 'add double width characters & set book weights as regular' && exit
+ifyes 'add double width characters & set book weights as regular' || exit
 rm -f *#1.ttf
 rm -f *.ttx
 

@@ -30,9 +30,10 @@ inject() {
     mkdir -p "${2%/*}" || exit 1
     touch "$2"
   fi
-  # remove duplicate history entries
+  # remove duplicate and empty history entries
   echo "$1\n$(grep -iv "$(echo "$1" | sed -r 's/([.*?$])/\\\1/g')" "$2")" | sed '/^$/d' >$update
   mv $update "$2"
+  sed -i '/^[\^]/d; /^ *$/d' "$2"
 }
 
 # update history or show it

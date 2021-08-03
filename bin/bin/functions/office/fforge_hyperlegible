@@ -10,7 +10,7 @@
 
 # see make_insstall iosevka
 ditto iosevka 'copy char 0u024b and paste to char 0u0071'
-ifno 'atkinson q update' && exit
+ifyes 'atkinson q update' || exit
 
 FONT=$HOME/.fonts/${1:-iosevka}
 cd $FONT

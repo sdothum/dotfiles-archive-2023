@@ -10,10 +10,13 @@ usage() { echo "usage: $(basename $0) <jpeg> [<name>]*"; exit 1; }
 
 GALLERY=/srv/http/thedarnedestthing.com/application/public/images
 quality=92
+[ $1 ] || usage
 
-[ "$1" ] && { jpeg=$1; shift; } || usage
-[ "$1" ] && name="$@.jpg" || name=$jpeg
-
-convert $jpeg -resize 1600 -quality $quality $GALLERY/$name
+for i in $@ ;do
+  [ "$i" ] && jpeg=$i
+  [ "${i##*.}" = jpg ] && name=$jpeg || name="${i%.*}.jpg"
+  ditto add "$(basename $GALLERY)/$name"
+  convert $jpeg -resize 1600 -quality $quality $GALLERY/$name
+done
 
 # vim: set ft=sh: #

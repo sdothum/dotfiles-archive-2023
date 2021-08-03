@@ -50,7 +50,7 @@ gui && monitor=$(herbstclient attr monitors.focus.index)
 
 shows() {
   # clean up episodes
-  ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\1/' | sort >$episodes
+  ls -1 "$series" | sed -r 's/.*\.((S[0-9][0-9]E[0-9][0-9])([E.][0-9][0-9])?)(\..*)*/\U\1/I' | sort >$episodes
   playlist $episodes "$playlist"
 }
 

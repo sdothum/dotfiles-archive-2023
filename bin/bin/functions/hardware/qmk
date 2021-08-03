@@ -51,7 +51,7 @@ if [ -e $chording_engine ] ;then
   *         ) sed -i "s/STR(PUBLIC)/STR($1)/" $JSON; shift ;;
   esac
   cd $QMK/users/dennytom/chording_engine
-  python *parser.py $JSON ${JSON%/*}/keymap.c
+  python *parser.py $JSON ${JSON%/*}/keymap.c  # most recent parser from https://github.com/DennyTom/qmk_firmware/tree/feature/buttery_engine_paired
   # parsing patch
   grep -q '#define HASH_TYPE uint64_t' ${JSON%/*}/keymap.c && sed -i 's/uint32_t keycodes_hash;/uint64_t keycodes_hash;/; /bool contains_first_keycode/s/uint32_t/HASH_TYPE/' ${JSON%/*}/keymap.c
 else

@@ -1,0 +1,8 @@
+# sdothum - 2016 (c) wtfpl
+# see xb, .xb_actions
+
+gem list
+ditto version "$(ruby --version)"
+ifno 'upgrade gems' || { cd $HOME/build/void/bundle; bundle_install 220-framework; }
+
+# vim: set ft=sh: #
