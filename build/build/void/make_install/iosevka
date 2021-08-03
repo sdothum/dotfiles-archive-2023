@@ -12,6 +12,7 @@
 #                  iosevka extended proof crossed  (grotesque width prose font) **
 #                  iosevka extended menu **
 #                  iosevka ebook english **
+#                  iosevka heading english **
 #                  ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
 #
 #                  iosevka ebook atkinson english  (full hyperlegible variants)
@@ -129,9 +130,10 @@ adjust() {
 }
 
 # optional metric overrides
-cap()     { cap=$1; }
-sb()      { sb=$1; }
-xheight() { xheight=$1; }
+leading() { leading="leading = 'default_leading * $1'"; }
+sb()      { sb="sb = 'default_sb * $1'"; }
+cap()     { cap="cap = 'default_cap + $1'"; }
+xheight() { xheight="xheight = 'default_xheight + $1'"; }
 
 weight() {
   weight=$(integer $1) || return 1
@@ -148,9 +150,7 @@ ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || li
 
 grotesque    # default typeface
 shape=500
-sb 0.7000
-cap 0
-xheight 0
+leading $leading
 no_litigation=false
 mono=--mono  # nerdfont
 
@@ -158,12 +158,12 @@ shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape=500; sb 0.7000 ;;                                                        # normal width
-  ebook    ) shape=$extended; sb 0.6000; leading=1.2500; efont monolegible ;;               # less sb with higher dpi
-  extended ) shape=$extended; sb 0.7000 ;;                                                  # extended width
-  heading  ) shape=650; sb 0.8000; leading=1.2500; weight 300 light; family=web-heading ;;  # web heading
-  menu     ) leading=1.5000; sb 0.9000; build=-menu ;;                                      # rofi menu
-  proof    ) leading=1.8000; sb 0.8000; build=${build}-proof ;;                             # prose display needs more sb (larger fontsize)
+  normal   ) shape=500; sb 0.7000 ;;                                                   # normal width
+  ebook    ) shape=$extended; sb 0.6000; leading 1.2500; efont monolegible ;;          # less sb with higher dpi
+  extended ) shape=$extended; sb 0.7000 ;;                                             # extended width
+  heading  ) shape=650; sb 0.8000; leading 1.2500; weight 300 light; efont heading ;;  # web heading
+  menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
+  proof    ) leading 1.8000; sb 0.8000; build=${build}-proof ;;                        # prose display needs more sb (larger fontsize)
   english  ) english ;;
   ligature ) ligature $2               || usage; shift ;;
   double   ) unset mono ;;
@@ -176,7 +176,7 @@ while [ $1 ] ;do
   family   ) [ $2 ] && family=$2       || usage; shift ;;
                                                              # custom
   cap      ) cap $(integer $2)         || usage; shift ;;    # H height (affects descender as well)
-  leading  ) leading=$(real $2)        || usage; shift ;;    # line spacing > 1.0
+  leading  ) leading $(real $2)        || usage; shift ;;    # line spacing > 1.0
   noround  ) unset sb ;;
   sb       ) sb $(real $2)             || usage; shift ;;    # side bearing (spacing)
   shape    ) shape=$(adjust $shape $2) || usage; shift ;;    # cell width
@@ -407,11 +407,11 @@ powerlineScaleX = 1
 powerlineShiftY = 0
 powerlineShiftX = 0
 
-leading = 'default_leading * $leading'
-sb = 'default_sb * $sb'
-
-cap = 'default_cap + $cap'
-xheight = 'default_xheight + $xheight'
+# metric-override adjustments
+$leading
+$sb
+$cap
+$xheight
 
 # End metric override section
 ###################################################################################################
@@ -431,6 +431,8 @@ else
 fi
 
 [ $curlyq ] && fforge_hyperlegible $family  # hyperlegible font mod for better q
+
+fforge_doublewidth $family
 
 [ $ebook ] && kindle_hyperlegible $family   # book weight and double width ebook characters
 
