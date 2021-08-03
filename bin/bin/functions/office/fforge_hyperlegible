@@ -8,7 +8,7 @@
 
 # Usage: fforge_hyperlegible [family]
 
-# see make_insstall iosevka
+# see make_install iosevka
 ditto iosevka 'copy char 0u024b and paste to char 0u0071'
 ifyes 'atkinson q update' || exit
 
