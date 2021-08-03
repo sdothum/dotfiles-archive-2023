@@ -5,21 +5,21 @@
 
 # ...................................................................... iosevka
 
-# for git iosevka 7.x
+# for git iosevka 9.x
 
 # make_install iosevka ..
 # eg. make_install iosevka extended                (grotesque width coding font, reduce display fontsize by 1) **
 #                  iosevka extended proof crossed  (grotesque width prose font) **
 #                  iosevka extended menu **
-#                  iosevka ebook **
+#                  iosevka ebook english **
 #                  ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
 #
-#                  iosevka ebook atkinson       (full hyperlegible variants)
-#                  iosevka extended jost proof  (extended width jost prose font)
+#                  iosevka ebook atkinson english  (full hyperlegible variants)
+#                  iosevka extended jost proof     (extended width jost prose font)
 
 usage() {
   echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook | heading]
-                             [english | ligature <name>]
+                             [english | ligature <name>] [double]
                              [grotesque (default) | atkinson | geometric | jost] [crossed]
                              [proof | menu | leading <decimal>]
                              [family <name>]
@@ -61,7 +61,6 @@ grotesque() {
   six=closed-contour
   ampersand=upper-open
   at=short
-  cyrl_ka=straight-serifless
   dollar=through
   number_sign=upright
   percent=dots
@@ -89,7 +88,6 @@ geometric() {
   six=straight-bar
   ampersand=upper-open
   at=short
-  cyrl_ka=symmetric-touching-serifless
   dollar=through
   number_sign=upright
   percent=dots
@@ -131,9 +129,9 @@ adjust() {
 }
 
 # optional metric overrides
-cap()     { cap="cap = $1"; }
-sb()      { sb="sb = $1"; }
-xheight() { xheight="xheight = $1"; }
+cap()     { cap=$1; }
+sb()      { sb=$1; }
+xheight() { xheight=$1; }
 
 weight() {
   weight=$(integer $1) || return 1
@@ -148,10 +146,13 @@ efont()    { family=e-$1; no_litigation=true; ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
-grotesque  # default typeface
+grotesque    # default typeface
 shape=500
 sb 0.7000
+cap 0
+xheight 0
 no_litigation=false
+mono=--mono  # nerdfont
 
 shift
 while [ $1 ] ;do
@@ -165,6 +166,7 @@ while [ $1 ] ;do
   proof    ) leading=1.8000; sb 0.8000; build=${build}-proof ;;                             # prose display needs more sb (larger fontsize)
   english  ) english ;;
   ligature ) ligature $2               || usage; shift ;;
+  double   ) unset mono ;;
   # font
   crossed  ) variant Q ;;
   grotesque) grotesque ;;
@@ -185,8 +187,9 @@ while [ $1 ] ;do
   shift
 done
 
-[ $shape ] || usage
+[ $shape ]  || usage
 [ $family ] || family=Iosevka$build
+[ $mono ]   || family=${family}-double
 [ $weight ] && weight="
 [buildPlans.$family.weights.$name]
 shape = $weight
@@ -202,24 +205,7 @@ cd Iosevka
 # rm -rf build dist 2>/dev/null
 
 # a tweaked :-) atkinson hyperlegible font character emulation
-# based on sample.toml (with quote and backtick conversion to single quotes)
-echo "
-[buildPlans.$family]  # <iosevka-custom> is your plan name
-family = '$family'    # Font menu family name
-spacing = 'term'      # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
-serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
-no-cv-ss = true
-no-litigation = $no_litigation
-
-###################################################################################################
-# Configure variants
-
-# Optional; Whether to inherit a 'ss##' variant
-[buildPlans.$family.variants]
-# inherits = 'ss01'                   # use defaults instead (of inheriting)
-
-# Optional; Configure single character's variant
-[buildPlans.$family.variants.design]
+variants="
 capital-d = 'more-rounded-serifless'  # D
 capital-g = '$capital_g'              # G
 capital-i = '$capital_i'              # I
@@ -248,28 +234,47 @@ eight = 'two-circles'                 # 8
 brace = 'straight'                    # {}
 ampersand = '$ampersand'              # &
 at = '$at'                            # @
-cyrl-ka = '$cyrl_ka'                  # к
+cyrl-capital-ka = '$k'                # К
+cyrl-ka = '$k'                        # к
+cyrl-capital-u = '$y'                 # У
 dollar = '$dollar'                    # $
+eszet = 'sulzbacher'                  # ß
+long-s = 'flat-hook'                  # ſ
 lower-iota = 'flat-tailed'            # ι
 lower-lambda = 'straight-turn'        # λ
 number-sign = '$number_sign'          # #
 paragraph-sign = 'low'                # ¶
 percent = '$percent'                  # %
 question = '$question'                # ?
+"
+
+# based on sample.toml (with quote and backtick conversion to single quotes)
+echo "
+[buildPlans.$family]  # <iosevka-custom> is your plan name
+family = '$family'    # Font menu family name
+spacing = 'term'      # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
+no-cv-ss = true
+no-litigation = $no_litigation
+
+###################################################################################################
+# Configure variants
+
+# Optional; Whether to inherit a 'ss##' variant
+[buildPlans.$family.variants]
+# inherits = 'ss01'                   # use defaults instead (of inheriting)
+
+# Optional; Configure single character's variant
+[buildPlans.$family.variants.design]
+$variants
 
 # Optional; Configure single character's variant for Upright and Oblique; Overrides [design]
 [buildPlans.$family.variants.upright]
+$variants
 
 # Optional; Configure single character's variant for Italic only; Overrides [design]
 [buildPlans.$family.variants.italic]
-a = '$a'
-d = 'toothed-serifless'
-e = 'flat-crossbar'
-f = '$f'
-k = '$k'
-u = 'toothed'
-y = '$y'
-eszet = 'sulzbacher'                  # ß
+$variants
 
 # End variant section
 ###################################################################################################
@@ -316,14 +321,25 @@ $weight
 
 ###################################################################################################
 # Override default building slope sets
-# Format: <upright|italic|oblique> = <'normal'|'italic'|'oblique'>
 # When this section is absent, all slopes would be built.
 
-[buildPlans.$family.slopes]
-upright = 'normal'
-italic = 'italic'
-oblique = 'oblique'
+[buildPlans.$family.slopes.upright]
+angle = 0             # Angle in degrees. Valid range [0, 15]
+shape = 'upright'     # Slope grade used for shape selection.  'upright' | 'oblique' | 'italic'
+menu  = 'upright'     # Slope grade used for naming.           'upright' | 'oblique' | 'italic'
+css   = 'normal'      # Slope grade used for webfont CSS.      'normal'  | 'oblique' | 'italic'
 
+[buildPlans.$family.slopes.oblique]
+angle = 9.4
+shape = 'oblique'
+menu  = 'oblique'
+css   = 'oblique'
+
+[buildPlans.$family.slopes.italic]
+angle = 9.4
+shape = 'italic'
+menu  = 'italic'
+css   = 'italic'
 # End slope section
 ###################################################################################################
 
@@ -391,13 +407,11 @@ powerlineScaleX = 1
 powerlineShiftY = 0
 powerlineShiftX = 0
 
-[buildPlans.$family.metric-override.multiplies]
-leading = $leading
-$sb
+leading = 'default_leading * $leading'
+sb = 'default_sb * $sb'
 
-[buildPlans.$family.metric-override.adds]
-$cap
-$xheight
+cap = 'default_cap + $cap'
+xheight = 'default_xheight + $xheight'
 
 # End metric override section
 ###################################################################################################
@@ -413,7 +427,7 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $family  # insert glyphs
+  nerdfont $mono $family  # insert glyphs
 fi
 
 [ $curlyq ] && fforge_hyperlegible $family  # hyperlegible font mod for better q
