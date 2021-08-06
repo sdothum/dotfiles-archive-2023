@@ -30,7 +30,7 @@ done
 [ "$target" ] && [ "${target%${target#?*}}" != '/' ] && target=$PWD/$target  # target must be full pathname
 [ -d "$target/${source##*/}" ] && target="$target/${source##*/}"
 
-[ -d "$source" ] && cd "$source" >/dev/null || usage
+[ -d "$source" ] && cd "$source" || usage
 source=$(pwd)
 [ -d "$target" ] || target=/net/depot/dotfiles/${source#$HOME/stow/}         # no target -> depot
 [ -d "$target" ] || usage

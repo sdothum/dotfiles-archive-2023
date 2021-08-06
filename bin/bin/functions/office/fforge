@@ -1,0 +1,148 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Office
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ................................................. monolegible font adjustments
+# see make_install iosevka
+
+usage() { echo "usage: $(basename $0) curlyq | emwidth [--emdash] | bookweight  [family]"; exit 1; }
+
+# substitute curly tail q
+curlyq() {
+  ditto iosevka 'copy char 0u024b and paste to char 0u0071'
+  ifyes 'atkinson q update' || exit
+
+  echo "
+  Open(\$1);
+  Select(0u024b);
+  Copy();
+  Select(0u0071);
+  Paste();
+  Generate(\$1);
+  " >/tmp/fontforge.script
+
+  for i in *ttf ;do
+    ditto fontforge $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
+# double emdash and ellipsis character cell width
+emwidth() {
+  ifyes 'add double width characters' || exit
+
+  # double width emdash (or '--') and ellipsis
+  if [ $emdash ] ;then
+    echo "
+  Open(\$1);
+  Select(0u268b);
+  Copy();
+  Select(0u2014);
+  Paste();
+  Transform(200,0,0,100,100,0);
+  Select(0u2026);
+  Transform(200,0,0,200,100,0);
+  ChangeWeight(-100);
+  Move(0,-40);
+  Generate(\$1);
+  "
+  else
+    echo "
+  Open(\$1);
+  Select(0u2012);
+  Copy();
+  Select(0u2014);
+  Paste();
+  Transform(200,0,0,100,100,0);
+  Select(0u2026);
+  Transform(200,0,0,200,100,0);
+  ChangeWeight(-100);
+  Move(0,-40);
+  Generate(\$1);
+  "
+  fi >/tmp/fontforge.script
+
+  for i in *.ttf ;do
+    ditto emdash $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
+# set book weights as regular (for kindle use with bold weights)
+bookweight() {
+  ifyes 'set book weights as regular' || exit
+  rm -f *#1.ttf
+  rm -f *.ttx
+
+  # bold **must** be converted too
+  fonts='*-book *-bookitalic *-bold *-bolditalic'
+
+  # dump to ttx
+  for i in $fonts ;do
+    file=$i.ttf
+    ditto ttx $file
+    ttx $file
+  done
+
+  # assign book weights as regular (normal)
+  family=${FONT##*/}
+  sed -i -e "s/$family Book Version/$family Regular Version/"       \
+      -e "s/$family[ -]Book/$family/"                               \
+      -e 's/Book/Regular/'                                          \
+      *-book.ttx 
+
+  sed -i -e "s/$family Book Italic Version/$family Italic Version/" \
+      -e "s/$family[ -]Book/$family/"                               \
+      -e 's/Book Italic/Italic/'                                    \
+      *-bookitalic.ttx 
+
+  # generate new ttf
+  for i in $fonts ;do
+    file=$i.ttx
+    ditto ttf $file
+    ttx $file
+  done
+
+  # optically adjust M (to weight 400 to narrow stroke width and better match contrast)
+  echo "
+  Open(\$2);
+  Select(0u004d);
+  Copy();
+  Open(\$1);
+  Select(0u004d);
+  Paste();
+  Generate(\$1);
+  " >/tmp/fontforge.script
+
+  echo
+  for i in *book*#1.ttf ;do
+    ditto M $i
+    case $i in
+    *italic*) file=*-italic.ttf ;;
+    *       ) file=*regular.ttf ;;
+    esac
+    fontforge --script /tmp/fontforge.script $i $file
+  done
+
+  ditto kindle "$(ls *#1.ttf)"
+}
+
+# main
+fforge=$1
+case $1 in
+curlyq    ) ;;
+emwidth   ) [ "$2" = '--emdash' ] && { emdash=--; shift; } ;;
+bookweight) ;;
+*         ) usage ;;
+esac
+shift
+[ $2 ] && usage
+
+FONT=$HOME/.fonts/${1:-Iosevka}
+cd $FONT || usage
+
+$fforge
+
+# vim: set ft=sh: #
