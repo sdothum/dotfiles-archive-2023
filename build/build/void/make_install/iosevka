@@ -26,7 +26,7 @@ usage() {
                              [family <name>]
                              [cap [-+]<emu>]
                              [noround | sb <decimal>]
-                             [shape [-+]<emu>]
+                             [shape <emu>]
                              [weight <integer> <name>]
                              [xheight [-+]<emu>]"
   exit 1
@@ -129,7 +129,9 @@ adjust() {
    echo $(( $1 + $2 ))
 }
 
-# optional metric overrides
+shape()   { shape="shape = $1"; }
+
+# metric overrides
 leading() { leading="leading = 'default_leading * $1'"; }
 sb()      { sb="sb = 'default_sb * $1'"; }
 cap()     { cap="cap = 'default_cap + $1'"; }
@@ -144,12 +146,11 @@ weight() {
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
 english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8227, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
-efont()    { family=e-$1; no_litigation=true; ebook=true; }
+efont()    { family=e$(echo $1 | sed 's/.*/\u&/'); no_litigation=true; ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
 grotesque    # default typeface
-shape=500
 leading $leading
 no_litigation=false
 mono=--mono  # nerdfont
@@ -158,46 +159,48 @@ shift
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape=500; sb 0.7000 ;;                                                   # normal width
-  ebook    ) shape=$extended; sb 0.6000; leading 1.2500; efont monolegible ;;          # less sb with higher dpi
-  extended ) shape=$extended; sb 0.7000 ;;                                             # extended width
-  heading  ) shape=650; sb 0.8000; leading 1.2500; weight 300 light; efont heading ;;  # web heading
+  normal   ) shape 500; sb 0.7000 ;;                                                   # normal width
+  ebook    ) shape $extended; sb 0.6000; leading 1.2500; efont monolegible ;;          # less sb with higher dpi
+  extended ) shape $extended; sb 0.7000 ;;                                             # extended width
+  heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; efont heading ;;  # web heading
   menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
   proof    ) leading 1.8000; sb 0.8000; build=${build}-proof ;;                        # prose display needs more sb (larger fontsize)
   english  ) english ;;
-  ligature ) ligature $2               || usage; shift ;;
+  ligature ) ligature $2           || usage; shift ;;
   double   ) unset mono ;;
   # font
-  crossed  ) variant Q ;;
+  cross*   ) variant Q ;;
   grotesque) grotesque ;;
   atkinson ) grotesque; [ $ebook ] && efont hyperlegible; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
-  family   ) [ $2 ] && family=$2       || usage; shift ;;
-                                                             # custom
-  cap      ) cap $(integer $2)         || usage; shift ;;    # H height (affects descender as well)
-  leading  ) leading $(real $2)        || usage; shift ;;    # line spacing > 1.0
+  family   ) [ $2 ] && family=$2   || usage; shift ;;
+  # custom
+  cap      ) cap $(integer $2)     || usage; shift ;;    # H height (affects descender as well)
+  leading  ) leading $(real $2)    || usage; shift ;;    # line spacing > 1.0
   noround  ) unset sb ;;
-  sb       ) sb $(real $2)             || usage; shift ;;    # side bearing (spacing)
-  shape    ) shape=$(adjust $shape $2) || usage; shift ;;    # cell width
-  weight   ) weight $2 $3              || usage; shift 2 ;;  # custom font weight
-  xheight  ) xheight $(integer $2)     || usage; shift ;;    # height of x (experimental for larger fontsizes)
+  sb       ) sb $(real $2)         || usage; shift ;;    # side bearing (spacing)
+  shape    ) shape $(integer $2)   || usage; shift ;;    # cell width
+  weight   ) weight $2 $3          || usage; shift 2 ;;  # custom font weight
+  xheight  ) xheight $(integer $2) || usage; shift ;;    # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
 done
 
-[ $shape ]  || usage
-[ $family ] || family=Iosevka$build
-[ $mono ]   || family=${family}-double
+[ "$shape" ] || usage
+[ $family ]  || family=Iosevka$build
+[ $mono ]    || family=${family}-double
+
+# additional font weight
 [ $weight ] && weight="
 [buildPlans.$family.weights.$name]
 shape = $weight
 menu  = $weight
 css   = $weight
 "
-ifyes "build $family" || usage
 
+ifyes "build $family" || usage
 cd ${REPO%/*}
 # install iosevka repo
 [ -d Iosevka ] && { ifno 'sync iosevka repo' || git pull --unshallow; } || git clone --depth 1 https://github.com/be5invis/Iosevka.git
@@ -355,9 +358,9 @@ css   = 'italic'
 #             otherwise they will not be built.
 
 [buildPlans.$family.widths.normal]
-shape = $shape     # Unit Width, measured in 1/1000 em.
-menu  = 5          # Width grade for the font's names.
-css   = 'normal'   # 'font-stretch' property of webfont CSS.
+$shape            # Unit Width, measured in 1/1000 em.
+menu  = 5         # Width grade for the font's names.
+css   = 'normal'  # 'font-stretch' property of webfont CSS.
 
 [buildPlans.$family.widths.extended]
 shape = 600
@@ -427,13 +430,13 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family  # insert glyphs
+  nerdfont $mono $family                 # insert glyphs
 fi
 
-[ $curlyq ] && fforge_hyperlegible $family  # hyperlegible font mod for better q
+[ $curlyq ] && fforge curlyq $family     # hyperlegible font mod for better q
 
-fforge_doublewidth $family
+fforge emwidth $family                   # double width emdash and ellipsis
 
-[ $ebook ] && kindle_hyperlegible $family   # book weight and double width ebook characters
+[ $ebook ] && fforge bookweight $family  # book weight for kindle (as regular)
 
 # vim: set ft=sh: #
