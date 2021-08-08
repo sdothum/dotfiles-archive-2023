@@ -35,7 +35,7 @@ edge() { [ -e $SPINE ] && echo $1 || echo $2; }
 
 # dynamic rice tweaking
 config() {
-  stest -n $PMARGIN $layout >/dev/null || spine || continue
+  # stest -n $PMARGIN $layout >/dev/null || spine || continue
 
   herbstclient detect_monitors  # reset monitor margins (dimensions)
   killall -q lemonbar
@@ -69,7 +69,6 @@ while : ;do
   w) echo $value >$WINDOW_GAP ;;
   *) usage; continue ;;
   esac
-
   config
 done
 
