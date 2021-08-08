@@ -153,10 +153,11 @@
         },
         {
           "type": "visual_array",
-          "keys": ["TOP4", "BOT4", "TOP8", "BOT8"],
+          "keys": ["TOP2", "BOT2", "TOP4", "BOT4", "TOP5", "TOP8", "BOT8"],
           "dictionary": [
-            ["X", " ", "X", "X", "STR('oo')"],
-            ["X", "X", "X", "X", "STR('ee')"]
+            ["X", "X", " ", " ", "X", " ", " ", "STR('qu')"],
+            [" ", " ", "X", " ", " ", "X", "X", "STR('oo')"],
+            [" ", " ", "X", "X", " ", "X", "X", "STR('ee')"]
           ]
         }
       ]
@@ -172,6 +173,13 @@
             " ", "MK(KC_LSFT, KC_Q)", "MK(KC_LSFT, KC_H)", "MK(KC_LSFT, KC_E)", "MK(KC_LSFT, KC_A)", "MK(KC_LSFT, KC_W)",        "MK(KC_LSFT, KC_C)", "MK(KC_LSFT, KC_T)", "MK(KC_LSFT, KC_R)",  "MK(KC_LSFT, KC_S)", "MK(KC_LSFT, KC_Z)", " ",
             " ", "MK(KC_LSFT, KC_J)",                 ",",                 ".", "MK(KC_LSFT, KC_K)",                 "'",        "MK(KC_LSFT, KC_B)", "MK(KC_LSFT, KC_P)", "MK(KC_LSFT, KC_L)",  "MK(KC_LSFT, KC_F)", "MK(KC_LSFT, KC_V)", " ",
                                                                            " ", "MK(KC_LSFT, KC_I)",                 " ",        " "                ,                 " ",                 " "
+          ]
+        },
+        {
+          "type": "visual_array",
+          "keys": ["TOP2", "BOT2", "TOP5"],
+          "dictionary": [
+            ["X", "X", "X", "STR('QU')"]
           ]
         }
       ]
