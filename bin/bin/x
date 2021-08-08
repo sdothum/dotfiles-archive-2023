@@ -53,13 +53,14 @@ esac
 # start X11 from init console
 if console ;then
   wm=$(cat $HOME/.windowmanager)
-  [ $font = emboss ] && seat=$(echo $wm | sed -r 's/(.)/\1 /g') || seat=$wm
+  [ ${#wm} -le 12 ] && extra=' '  # emboss spacing
+  [ $font = emboss ] && seat=$(echo $wm | sed -r "s/(.)/\1 $extra/g; s/ *$//") || seat=$wm
   # echo "${__GREEN}$(figlet -t -f lean $seat)${NOCOLOR}"
   echo ${__GREEN}
   # avoid dash shell echo "$(figlet)" escape character issues
   # figlet -t -d $HOME/.fonts/figlet -f s-relief $seat
   # figlet -t -f lean $seat
-  void && toilet -F gay -f $font $seat || toilet -F rainbow -f $font $seat
+  void && toilet -F gay -f $font "$seat" || toilet -F rainbow -f $font "$seat"
   echo
   sleep 1
   # echo ${NOCOLOR}
