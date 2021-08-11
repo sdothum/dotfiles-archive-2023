@@ -153,11 +153,18 @@
         },
         {
           "type": "visual_array",
-          "keys": ["TOP2", "BOT2", "TOP4", "BOT4", "TOP5", "TOP8", "BOT8"],
+          "keys": ["TOP4", "BOT4", "TOP8", "BOT8"],
           "dictionary": [
-            ["X", "X", " ", " ", "X", " ", " ", "STR('qu')"],
-            [" ", " ", "X", " ", " ", "X", "X", "STR('oo')"],
-            [" ", " ", "X", "X", " ", "X", "X", "STR('ee')"]
+            ["X", " ", "X", "X", "STR('oo')"],
+            ["X", "X", "X", "X", "STR('ee')"]
+          ]
+        },
+        {
+          "type": "visual_array",
+          "_comment": "sloppy pinkie bigram",
+          "keys": ["TOP2", "BOT2", "TOP5"],
+          "dictionary": [
+            ["X", "X", "X", "STR('qu')"]
           ]
         }
       ]
@@ -177,6 +184,7 @@
         },
         {
           "type": "visual_array",
+          "_comment": "sloppy pinkie bigram",
           "keys": ["TOP2", "BOT2", "TOP5"],
           "dictionary": [
             ["X", "X", "X", "STR('QU')"]
