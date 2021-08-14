@@ -15,7 +15,7 @@
 #     iosevka heading english **
 #     ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
 #
-#     iosevka ebook atkinson english  (full hyperlegible variants)
+#     iosevka ebook atkinson english  (strict hyperlegible variants)
 #     iosevka extended jost proof     (extended width jost prose font)
 
 type -t usage | grep -q 'shell function' ||  # see make_install
