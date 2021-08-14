@@ -1,7 +1,7 @@
 #!/usr/bin/dash
 # sdothum - 2016 (c) wtfpl
 
-# Office
+# Font
 # ══════════════════════════════════════════════════════════════════════════════
 
 # .................................................................... nerd-font
@@ -11,24 +11,31 @@
 nerdfonts='--fontawesome --fontawesomeextension --octicons --material'  # powerline added below
 
 # see make_install iosevka
-REPO=/net/depot/Iosevka
+REPO=/net/depot/nerd-fonts
 [ $1 = '--mono' ] && { mono=$1; shift; }
 FONT=$HOME/.fonts/${1:-iosevka}
 family=${FONT##*/}
 
 # install nerd-font patcher
 xb_check fontforge nodejs otfcc ttfautohint
-cd /net/depot
-[ -d nerd-fonts ] && { ifno 'sync nerd-fonts repo' || git pull --unshallow; } || git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
+ditto warning 'nerd-fonts v2.x may break ligatures'
+if [ -d $REPO ] ;then
+  cd $REPO
+  /net/depot/nerd-fonts/font-patcher --version
+  ifno 'sync nerd-fonts repo' || git pull
+else
+  cd ${REPO%/*}
+  git clone --depth 1 https://github.com/be5invis/Iosevka.git
+  /net/depot/nerd-fonts/font-patcher --version
+fi
 
 [ -e /tmp/${FONT##*/} ] && { ifyes "replace $FONT" || exit; }
 mv -f $FONT /tmp/${FONT##*/} 2>/dev/null
 mkdir -p $FONT
-cd Iosevka
+cd ${REPO%/*}/Iosevka
 cp -v dist/$family/ttf/* $FONT
 
 # patch font
-# note: nerd-fonts v2.x currently breaks ligatures
 REGULAR=$FONT/$family-regular.ttf
 if [ -e /net/depot/nerd-fonts/font-patcher ] ;then
   rm -f /tmp/*ttf  # nerd-font creates file by font family name (note case)
