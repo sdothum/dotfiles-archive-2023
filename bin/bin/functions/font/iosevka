@@ -77,7 +77,7 @@ geometric() {
   capital_i=serifless
   capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
-  a=double-storey-serifless
+  a=single-storey-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
   j=straight-line
@@ -123,13 +123,13 @@ integer() {
 }
 
 real() {
-  integer ${1#*.} || return 1
-  integer ${1%.*} || return 1
+  integer ${1#*.} >/dev/null || return 1
+  integer ${1%.*} >/dev/null || return 1
   echo $1
 }
 
 adjust() {
-   integer $2 || return 1
+   integer $2 >/dev/null || return 1
    echo $(( $1 + $2 ))
 }
 
@@ -227,6 +227,9 @@ capital-k = '$capital_k'              # K
 capital-m = 'flat-bottom'             # M
 capital-q = '$capital_q'              # Q
 capital-w = 'straight-flat-top'       # W
+a = '$a'
+d = 'toothed-serifless'
+e = 'flat-crossbar'
 f = '$f'
 i = '$i'
 j = '$j'
@@ -235,6 +238,7 @@ l = '$l'
 q = '$q'
 r = 'compact'
 t = '$t'
+u = 'toothed'
 w = 'straight-flat-top'
 y = '$y'
 zero = '$zero'                        # 0
