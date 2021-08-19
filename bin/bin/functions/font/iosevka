@@ -447,13 +447,13 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                       # insert glyphs
+  nerdfont $mono $family                               # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family           # hyperlegible font mod for better q
+[ $curlyq ] && fforge curlyq $family                   # hyperlegible font mod for better q
 
-[ $spacing = term ] && fforge emwidth $family  # double width emdash and ellipsis
+[ $spacing = term ] && fforge emwidth $family          # double width emdash and ellipsis
 
-[ $ebook ] && fforge bookweight $m_adjustment $family        # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $m_adjustment $family  # book weight for kindle (as regular)
 
 # vim: set ft=sh: #
