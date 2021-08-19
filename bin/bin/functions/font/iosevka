@@ -150,7 +150,7 @@ weight() {
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
 english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8227, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
-efont()    { variant asterisk; no_litigation=true; family=e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+efont()    { variant asterisk; no_litigation=true; m_adjustment=--M; family=e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
@@ -174,7 +174,7 @@ while [ $1 ] ;do
   english  ) english ;;
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; efont quasilegible ;;
+  quasi*   ) spacing=quasi-proportional; efont quasilegible; unset m_adjustment ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
@@ -454,6 +454,6 @@ fi
 
 [ $spacing = term ] && fforge emwidth $family  # double width emdash and ellipsis
 
-[ $ebook ] && fforge bookweight $family        # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $m_adjustment $family        # book weight for kindle (as regular)
 
 # vim: set ft=sh: #

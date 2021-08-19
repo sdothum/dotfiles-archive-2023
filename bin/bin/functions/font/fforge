@@ -7,7 +7,7 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | emwidth [--emdash] | bookweight  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) curlyq | emwidth [--emdash] | bookweight [--M]  [family]"; exit 1; }
 
 # substitute curly tail q
 curlyq() {
@@ -73,7 +73,7 @@ emwidth() {
 # set book weights as regular (for kindle use with bold weights)
 bookweight() {
   ifyes 'set book weights as regular' || exit
-  rm -f *#1.ttf
+  rm -f *\#1.ttf
   rm -f *.ttx
 
   # bold **must** be converted too
@@ -105,6 +105,9 @@ bookweight() {
     ttx $file
   done
 
+  ditto kindle "$(ls *\#1.ttf)"
+
+  [ $M ] || exit
   # optically adjust M (to weight 400 to narrow stroke width and better match contrast)
   echo "
   Open(\$2);
@@ -117,7 +120,7 @@ bookweight() {
   " >/tmp/fontforge.script
 
   echo
-  for i in *book*#1.ttf ;do
+  for i in *book*\#1.ttf ;do
     ditto M $i
     case $i in
     *italic*) file=*-italic.ttf ;;
@@ -125,16 +128,14 @@ bookweight() {
     esac
     fontforge --script /tmp/fontforge.script $i $file
   done
-
-  ditto kindle "$(ls *#1.ttf)"
 }
 
 # main
 fforge=$1
 case $1 in
 curlyq    ) ;;
-emwidth   ) [ "$2" = '--emdash' ] && { emdash=--; shift; } ;;
-bookweight) ;;
+emwidth   ) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
+bookweight) [ "$2" = '--M' ] && { M=true; shift; } ;;
 *         ) usage ;;
 esac
 shift
