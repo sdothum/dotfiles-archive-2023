@@ -21,15 +21,15 @@
 type -t usage | grep -q 'shell function' ||  # see make_install
 usage() {
   echo "usage: iosevka [normal (default) | extended | ebook | heading]
-               [english | ligature <name>] [double]
+               [english | ligature <name>] [double] [quasi-proportional]
                [grotesque (default) | atkinson | geometric | jost] [crossed]
                [proof | menu | leading <decimal>]
                [family <name>]
-               [cap [-+]<emu>]
+               [cap [-+]<decimal>]
                [noround | sb <decimal>]
                [shape <emu>]
                [weight <integer> <name>]
-               [xheight [-+]<emu>]"
+               [xheight [-+]<decimal>]"
   exit 1
 }
 
@@ -138,8 +138,8 @@ shape()   { shape="shape = $1"; }
 # metric overrides
 leading() { leading="leading = 'default_leading * $1'"; }
 sb()      { sb="sb = 'default_sb * $1'"; }
-cap()     { cap="cap = 'default_cap + $1'"; }
-xheight() { xheight="xheight = 'default_xheight + $1'"; }
+cap()     { cap="cap = 'default_cap * $1'"; }
+xheight() { xheight="xheight = 'default_xheight * $1'"; }
 
 weight() {
   weight=$(integer $1) || return 1
@@ -160,34 +160,36 @@ no_litigation=false
 mono=--mono  # nerdfont (pango no longer supports double width display)
 shape 500
 sb 0.7000
+spacing=term
 
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape 500; sb 0.7000 ;;                                                   # normal width
+  normal   ) shape 500; sb 0.5500 ;;                                                   # normal width
   ebook    ) shape $extended; sb 0.6000; leading 1.2500; efont monolegible ;;          # less sb with higher dpi
   extended ) shape $extended; sb 0.7000 ;;                                             # extended width
   heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; efont heading ;;  # web heading
   menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
   proof    ) leading 1.8000; sb 0.8000; build=${build}-proof ;;                        # prose display needs more sb (larger fontsize)
   english  ) english ;;
-  ligature ) ligature $2           || usage; shift ;;
+  ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
+  quasi*   ) spacing=quasi-proportional; efont quasilegible ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
   atkinson ) grotesque; [ $ebook ] && efont hyperlegible; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
-  family   ) [ $2 ] && family=$2   || usage; shift ;;
+  family   ) [ $2 ] && family=$2 || usage; shift ;;
   # custom
-  cap      ) cap $(integer $2)     || usage; shift ;;    # H height (affects descender as well)
-  leading  ) leading $(real $2)    || usage; shift ;;    # line spacing > 1.0
+  cap      ) cap $(real $2)      || usage; shift ;;    # H height (affects descender as well)
+  leading  ) leading $(real $2)  || usage; shift ;;    # line spacing > 1.0
   noround  ) unset sb ;;
-  sb       ) sb $(real $2)         || usage; shift ;;    # side bearing (spacing)
-  shape    ) shape $(integer $2)   || usage; shift ;;    # cell width
-  weight   ) weight $2 $3          || usage; shift 2 ;;  # custom font weight
-  xheight  ) xheight $(integer $2) || usage; shift ;;    # height of x (experimental for larger fontsizes)
+  sb       ) sb $(real $2)       || usage; shift ;;    # side bearing (spacing)
+  shape    ) shape $(integer $2) || usage; shift ;;    # cell width
+  weight   ) weight $2 $3        || usage; shift 2 ;;  # custom font weight
+  xheight  ) xheight $(real $2)  || usage; shift ;;    # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
@@ -270,7 +272,7 @@ question = '$question'                # ?
 echo "
 [buildPlans.$family]  # <iosevka-custom> is your plan name
 family = '$family'    # Font menu family name
-spacing = 'term'      # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
+spacing = '$spacing'  # Optional; Values: 'normal', 'term', 'fontconfig-mono', or 'fixed'
 serifs = 'sans'       # Optional; Values: 'sans' or 'slab'
 no-cv-ss = true
 no-litigation = $no_litigation
@@ -445,13 +447,13 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                 # insert glyphs
+  nerdfont $mono $family                       # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family     # hyperlegible font mod for better q
+[ $curlyq ] && fforge curlyq $family           # hyperlegible font mod for better q
 
-fforge emwidth $family                   # double width emdash and ellipsis
+[ $spacing = term ] && fforge emwidth $family  # double width emdash and ellipsis
 
-[ $ebook ] && fforge bookweight $family  # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $family        # book weight for kindle (as regular)
 
 # vim: set ft=sh: #
