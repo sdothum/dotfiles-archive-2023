@@ -5,22 +5,9 @@
 
 # ...................................................................... iosevka
 
-# for git iosevka 10.x
-
-# make_install iosevka ..
-# eg. make_install iosevka extended                (grotesque width coding font, reduce display fontsize by 1) **
-#                  iosevka extended proof crossed  (grotesque width prose font) **
-#                  iosevka extended menu **
-#                  iosevka ebook english **
-#                  iosevka heading english **
-#                  ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
-#
-#                  iosevka ebook atkinson english  (full hyperlegible variants)
-#                  iosevka extended jost proof     (extended width jost prose font)
-
 usage() {
   echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook | heading]
-                            [english | ligature <name>] [double]
+                            [english | ligature <name>] [double] [quasi-proportional]
                             [grotesque (default) | atkinson | geometric | jost] [crossed]
                             [proof | menu | leading <decimal>]
                             [family <name>]
@@ -33,7 +20,13 @@ usage() {
 }
 
 shift
-. $HOME/bin/functions/font/iosevka $@
+# build font suite
+. $HOME/bin/functions/font/iosevka extended
+. $HOME/bin/functions/font/iosevka extended proof
+. $HOME/bin/functions/font/iosevka extended menu
+. $HOME/bin/functions/font/iosevka ebook english
+. $HOME/bin/functions/font/iosevka ebook english quasi-proportional
+. $HOME/bin/functions/font/iosevka heading english
 exit
 
 # vim: set ft=sh: #
