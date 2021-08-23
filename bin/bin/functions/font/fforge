@@ -7,7 +7,7 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | emwidth [--emdash] | bookweight [--M]  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) curlyq | emwidth [--emdash] | aewidth | bookweight [--M]  [family]"; exit 1; }
 
 # substitute curly tail q
 curlyq() {
@@ -15,13 +15,13 @@ curlyq() {
   ifyes 'atkinson q update' || exit
 
   echo "
-  Open(\$1);
-  Select(0u024b);
-  Copy();
-  Select(0u0071);
-  Paste();
-  Generate(\$1);
-  " >/tmp/fontforge.script
+Open(\$1);
+Select(0u024b);
+Copy();
+Select(0u0071);
+Paste();
+Generate(\$1);
+" >/tmp/fontforge.script
 
   for i in *ttf ;do
     ditto fontforge $i
@@ -29,43 +29,71 @@ curlyq() {
   done
 }
 
-# double emdash and ellipsis character cell width
-emwidth() {
-  ifyes 'add double width characters' || exit
+# double cell width punctuation
+punctuation() {
+  ifyes 'add double width punctuation' || exit
 
   # double width emdash (or '--') and ellipsis
   if [ $emdash ] ;then
     echo "
-  Open(\$1);
-  Select(0u268b);
-  Copy();
-  Select(0u2014);
-  Paste();
-  Transform(200,0,0,100,100,0);
-  Select(0u2026);
-  Transform(200,0,0,200,100,0);
-  ChangeWeight(-100);
-  Move(0,-40);
-  Generate(\$1);
-  "
+Open(\$1);
+Select(0u268b);
+Copy();
+Select(0u2014);
+Paste();
+Transform(200,0,0,100,100,0);
+Select(0u2026);
+Transform(200,0,0,200,100,0);
+ChangeWeight(-100);
+Move(0,-40);
+Generate(\$1);
+"
   else
     echo "
-  Open(\$1);
-  Select(0u2012);
-  Copy();
-  Select(0u2014);
-  Paste();
-  Transform(200,0,0,100,100,0);
-  Select(0u2026);
-  Transform(200,0,0,200,100,0);
-  ChangeWeight(-100);
-  Move(0,-40);
-  Generate(\$1);
-  "
+Open(\$1);
+Select(0u2012);
+Copy();
+Select(0u2014);
+Paste();
+Transform(200,0,0,100,100,0);
+Select(0u2026);
+Transform(200,0,0,200,100,0);
+ChangeWeight(-100);
+Move(0,-40);
+Generate(\$1);
+"
   fi >/tmp/fontforge.script
 
   for i in *.ttf ;do
     ditto emdash $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
+# double width ligatures
+transform() {
+  echo "
+Select($1);
+Transform(${width:-200},0,0,100,0,0);
+ChangeWeight(-15);
+"
+}
+
+ligature() {
+  ifyes 'add double width ligatures *experimental*' || exit
+
+  echo "
+Open(\$1);
+$(transform 0u00e6)
+$(transform 0u0152)
+$(transform 0u0153)
+$(transform 0u01fc)
+$(transform 0u01fd)
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  for i in *.ttf ;do
+    ditto aechar $i
     fontforge --script /tmp/fontforge.script $i
   done
 }
@@ -110,14 +138,14 @@ bookweight() {
   [ $M ] || exit
   # optically adjust M (to weight 400 to narrow stroke width and better match contrast)
   echo "
-  Open(\$2);
-  Select(0u004d);
-  Copy();
-  Open(\$1);
-  Select(0u004d);
-  Paste();
-  Generate(\$1);
-  " >/tmp/fontforge.script
+Open(\$2);
+Select(0u004d);
+Copy();
+Open(\$1);
+Select(0u004d);
+Paste();
+Generate(\$1);
+" >/tmp/fontforge.script
 
   echo
   for i in *book*\#1.ttf ;do
@@ -133,10 +161,11 @@ bookweight() {
 # main
 fforge=$1
 case $1 in
-curlyq    ) ;;
-emwidth   ) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
-bookweight) [ "$2" = '--M' ] && { M=true; shift; } ;;
-*         ) usage ;;
+curlyq     ) ;;
+ligature   ) [ "$2" = 'quasi-proportional' ] && { width=150; shift; } ;;
+punctuation) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
+bookweight ) [ "$2" = '--M' ] && { M=true; shift; } ;;
+*          ) usage ;;
 esac
 shift
 [ $2 ] && usage

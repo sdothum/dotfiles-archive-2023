@@ -43,6 +43,16 @@ REPO=/net/depot/Iosevka
 leading=1.25  # default coding line spacing
 extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
 
+symbols() {
+  ampersand=upper-open
+  asterisk=penta-high
+  at=short
+  dollar=through
+  number_sign=upright
+  percent=dots
+  question=smooth
+}
+
 # atkinson hyperlegible typeface
 grotesque() {
   curlyq=true
@@ -62,13 +72,7 @@ grotesque() {
   zero=reverse-slashed
   one=no-base-flat-top-serif
   six=closed-contour
-  ampersand=upper-open
-  asterisk=penta-high
-  at=short
-  dollar=through
-  number_sign=upright
-  percent=dots
-  question=smooth
+  symbols
 }
 
 # jost* typeface
@@ -90,18 +94,12 @@ geometric() {
   zero=unslashed-oval
   one=no-base
   six=straight-bar
-  ampersand=upper-open
-  asterisk=penta-high
-  at=short
-  dollar=through
-  number_sign=upright
-  percent=dots
-  question=smooth
+  symbols
 }
 
 # for stricter typeface matching
 variant() {
-  for o in $@ ;do  # unused var ($i in use for variant :)
+  for o in $@ ;do  # "o" unused var ($i in use for variant :)
     case $o in
     a          ) a=single-storey-serifless ;;
     j          ) j=serifless ;;
@@ -151,7 +149,7 @@ weight() {
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
 english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8227, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
-efont()    { variant asterisk; no_litigation=true; m_weight=--M; family=e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family=e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
@@ -167,19 +165,19 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal   ) shape 500; sb 0.5500 ;;                                                   # normal width
-  ebook    ) shape $extended; sb 0.6000; leading 1.2500; efont monolegible ;;          # less sb with higher dpi
+  ebook    ) shape $extended; sb 0.6000; leading 1.2500; ebook monolegible ;;          # less sb with higher dpi
   extended ) shape $extended; sb 0.7000 ;;                                             # extended width
-  heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; efont heading ;;  # web heading
+  heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
   menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
   proof    ) leading 1.8000; sb 0.8000; build=${build}-proof ;;                        # prose display needs more sb (larger fontsize)
   english  ) english ;;
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; efont quasilegible; unset m_weight ;;
+  quasi*   ) spacing=quasi-proportional; ebook quasilegible; unset m_weight ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
-  atkinson ) grotesque; [ $ebook ] && efont hyperlegible; variant Q ampersand at number_sign percent ;;
+  atkinson ) grotesque; [ $ebook ] && ebook hyperlegible; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family   ) [ $2 ] && family=$2 || usage; shift ;;
@@ -448,13 +446,15 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                           # insert glyphs
+  nerdfont $mono $family                               # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family               # hyperlegible font mod for better q
+[ $curlyq ] && fforge curlyq $family                   # hyperlegible font mod for better q
 
-[ $spacing = term ] && fforge emwidth $family      # double width emdash and ellipsis
+[ $spacing = term ] && fforge punctuation $family      # double width emdash and ellipsis
 
-[ $ebook ] && fforge bookweight $m_weight $family  # book weight for kindle (as regular)
+[ $ebook ] && fforge ligature ${spacing#term} $family  # ae width character adjustment
+
+[ $ebook ] && fforge bookweight $m_weight $family      # book weight for kindle (as regular)
 
 # vim: set ft=sh: #
