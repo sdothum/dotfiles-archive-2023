@@ -20,6 +20,7 @@ usage() {
 }
 
 shift
+[ $i ] && { . $HOME/bin/functions/font/iosevka $@; exit; }
 # build font suite
 . $HOME/bin/functions/font/iosevka extended
 . $HOME/bin/functions/font/iosevka extended proof
@@ -27,6 +28,5 @@ shift
 . $HOME/bin/functions/font/iosevka ebook english
 . $HOME/bin/functions/font/iosevka ebook english quasi-proportional
 . $HOME/bin/functions/font/iosevka heading english
-exit
 
 # vim: set ft=sh: #
