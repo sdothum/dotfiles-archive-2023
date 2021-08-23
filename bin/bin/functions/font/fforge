@@ -75,7 +75,7 @@ transform() {
   echo "
 Select($1);
 Transform(${width:-200},0,0,100,0,0);
-ChangeWeight(-15);
+ChangeWeight(-20);
 "
 }
 

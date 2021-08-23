@@ -1,0 +1,20 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Font
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ............................................................. kindle FONT_RAMP
+
+usage() { echo "usage: $(basename $0) <power> <fontsize>, in decimals e.g. 1.05 5.48"; exit 1; }
+
+[ $2 ] || usage
+
+font_ramp() { for i in $(seq 0 13) ;do echo "$2 * $1 ^ $i" | bc ;done | tr '\n' ' '; echo; }
+
+# create FONT_RAMP sample
+vsn=$(echo $1 | sed 's/\.//')
+font_ramp $1 $2 >FONT_RAMP.$vsn
+cat FONT_RAMP.$vsn
+
+# vim: set ft=sh: #
