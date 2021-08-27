@@ -13,10 +13,12 @@ if [ -e $BEAKL ] ;then
     LEFT=n
     DOWN=t
     UP=d
+    RIGHT=s
   else  # beaklzi
     LEFT=t
     DOWN=r
     UP=n
+    RIGHT=s
   fi
 fi
 
@@ -59,7 +61,7 @@ hc keybind $Mod-Right               focus_edge right
 hc keybind $Mod-$LEFT               focus left
 hc keybind $Mod-$DOWN               focus down
 hc keybind $Mod-$UP                 focus up
-hc keybind $Mod-s                   focus right
+hc keybind $Mod-$RIGHT              focus right
 
 # move clientCorne BEAKL Hi
 hc keybind $Mod-Shift-Left          shift_edge left
@@ -69,7 +71,7 @@ hc keybind $Mod-Shift-Right         shift_edge right
 hc keybind $Mod-Shift-$LEFT         chain . shift left  . emit_hook focus_changed
 hc keybind $Mod-Shift-$DOWN         chain . shift down  . emit_hook focus_changed
 hc keybind $Mod-Shift-$UP           chain . shift up    . emit_hook focus_changed
-hc keybind $Mod-Shift-s             chain . shift right . emit_hook focus_changed
+hc keybind $Mod-Shift-$RIGHT        chain . shift right . emit_hook focus_changed
 hc keybind $Mod-Shift-Page_Down     spawn pin monitor 1
 hc keybind $Mod-Shift-Page_Up       spawn pin monitor 0
 hc keybind $Mod-Control-Page_Down   spawn switch monitor 1
@@ -107,7 +109,7 @@ resizestep=0.025
 hc keybind $Mod-Control-$LEFT       resize left  +$resizestep
 hc keybind $Mod-Control-$DOWN       resize down  +$resizestep
 hc keybind $Mod-Control-$UP         resize up    +$resizestep
-hc keybind $Mod-Control-s           resize right +$resizestep
+hc keybind $Mod-Control-$RIGHT      resize right +$resizestep
 hc keybind $Mod-Control-Left        resize left  +$resizestep
 hc keybind $Mod-Control-Down        resize down  +$resizestep
 hc keybind $Mod-Control-Up          resize up    +$resizestep

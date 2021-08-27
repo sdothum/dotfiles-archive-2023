@@ -8,6 +8,7 @@
 
 # Usage: draw panel <fifo>, see restore panel
 
+[ -e $SPANEL ] || exit  # no panel
 which lemonbar >/dev/null 2>&1 || exit
 fifo=${1#:}
 [ $fifo ] || fifo=$(herbstclient attr monitors.focus.index)

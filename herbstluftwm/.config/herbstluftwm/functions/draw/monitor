@@ -63,6 +63,7 @@ margin=$(( $desktop_margin - $window_frame ))
 [ -s $FRAME_GAP    ] && { frame=$(cat $FRAME_GAP); herbstclient set frame_gap $frame; }
 [ -e $SPINE        ] || { [ -s $WINDOW_GAP ] && { window=$(cat $WINDOW_GAP); herbstclient set window_gap $window; };}
 [ -s $PANEL_HEIGHT ] && panel=$(cat $PANEL_HEIGHT) || panel=$margin
+[ -e $SPANEL ] || panel=0  # no panel
 
 # latest xorg messed alignment option, now using gap X origin offset
 # conkyX=$(( $CONKY_WIDTH + $CONKY_GAP + $CONKY_INNER + $CONKY_OUTER - $window_frame ))

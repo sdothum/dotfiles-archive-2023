@@ -46,7 +46,9 @@ if window=$(echo $windows | sort | cut -d$DLM -f2 | column -s\^ -t |
   if [ -z $mode ] ;then
     app=$(echo $window | cut -d^ -f1 | sed 's/.*\$//')
     title=$(echo $window | cut -d^ -f2)
-    action $(echo "focus\nraise\nclose" | rmenu "$app ${title% }" -no-custom) || exit
+    action=$(previous hlwm)
+    action $(echo "focus\nraise\nclose" | rmenu "$app ${title% }" $action -no-custom) || exit
+    mhistory hlwm $action 
   fi
   CLIENT=$(echo $window | cut -d$DLM -f3 | cut -d. -f2)
 

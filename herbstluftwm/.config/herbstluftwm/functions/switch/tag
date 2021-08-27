@@ -8,8 +8,13 @@
 
 # Usage: switch tag [<tag>]
 
+tag() { 
+  is nonempty "'$tag" && notify low 1 "[$tag]" "$(query tname $tag)" || notify 1 "\\$tag" "$(query tname $tag)"
+  [ -e $SPANEL ] || weather
+}
+
 # swap monitors (special case) to utilize fullscreen / monocle persistence handling
-[ "$(query tag)" = "$1" ] && exit
+[ "$(query tag)" = "$1" ] && { tag=$1; tag; exit; }
 if is multihead ;then
   if [ "$(query tag unfocused)" = "$1" ] ;then
     is primary && switch monitor 0 || switch monitor 1
@@ -29,8 +34,6 @@ focus window
 unlock
 
 # popup tag name when no windows showing (trap minimized windows!)
-if ! is nonempty $tag ;then
-  is nonempty "'$tag" && notify low 1 "[$tag]" "$(query tname $tag)" || notify 1 "\\$tag" "$(query tname $tag)"
-fi
+[ ! -e $SPANEL ] || ! is nonempty $tag && tag
 
 # vim: set ft=sh: #
