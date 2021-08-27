@@ -137,12 +137,13 @@ shape()   { shape="shape = $1"; }
 # metric overrides
 leading() { leading="leading = 'default_leading * $1'"; }
 sb()      { sb="sb = 'default_sb * $1'"; }
-cap()     { cap="cap = 'default_cap * $1'"; }
-xheight() { xheight="xheight = 'default_xheight * $1'"; }
+cap()     { cap="cap = 'default_cap * $1'"; ditto override "$cap"; }
+xheight() { xheight="xheight = 'default_xheight * $1'"; ditto override "$xheight"; }
 
 weight() {
   weight=$(integer $1) || return 1
   [ $2 ] && name=$2    || return 1
+  ditto override "$name weight = $weight"
 }
 
 # e-reading only fontset
@@ -197,6 +198,10 @@ done
 [ "$shape" ] || usage
 [ $family ]  || family=Iosevka$build
 [ $mono ]    || family=${family}-double
+
+ditto override "$leading"
+ditto override "$shape" 
+ditto override "$sb"
 
 # additional font weight
 [ $weight ] && weight="

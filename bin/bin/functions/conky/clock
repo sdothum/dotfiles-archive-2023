@@ -31,7 +31,8 @@ on  ) clock && exit
 
 off ) clock || exit
       pkill -f "conky -c $CONKYRC"
-      pkill -f "conky -c $CONKY_Q2" ;;
+      pkill -f "conky -c $CONKY_Q2"
+      [ -e $SPANEL ] || weather ;;
 
 ''  ) clock && { conky clock off; true; } || conky clock on ;;
 *   ) usage ;;

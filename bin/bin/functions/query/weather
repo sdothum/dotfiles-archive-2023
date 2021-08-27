@@ -1,0 +1,26 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# Query
+# ══════════════════════════════════════════════════════════════════════════════
+
+# .............................................................. Current weather
+
+# Usage: weather [time]
+
+seconds=15   # to display for
+delim=•
+
+# notify $seconds "$(date '+%b %d %I:%M')" "$(conky weather panel | sed -r 's|(.*)  .  (.*)|\1\n\2|')"
+# eval notify $seconds $(conky weather panel | sed -r 's|(.*)  .  (.*)|"\1" "\2"|')
+
+if [ $1 = time ] ;then
+  weather=$(conky weather panel | sed "s//${delim}/")
+  date=$(date "+%b %d '%y @ %I:%M%P")
+  padding=$(echo "$weather" | sed "s/^$(echo $date | tr "[ @:'a-zA-Z0-9]" '.')//; s/./ /g")
+  notify $seconds "$padding$date" "$weather"
+else
+  eval notify $seconds $(conky weather | sed -r 's|(.*), (.*)|"\1" "\2"|')
+fi
+
+# vim: set ft=sh: #

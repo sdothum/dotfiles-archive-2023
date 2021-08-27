@@ -7,7 +7,7 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | emwidth [--emdash] | aewidth | bookweight [--M]  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) curlyq | punctuation [--emdash] | ligature [quasi-proportional] | bookweight [--M]  [family]"; exit 1; }
 
 # substitute curly tail q
 curlyq() {
