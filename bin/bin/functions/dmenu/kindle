@@ -5,7 +5,7 @@
 
 # ...................................................................... E-books
 
-usage() { echo "usage: $(basename $0) kindle [azw3 | epub] [default | justify | noindent | poetry | all] [<file>]"; exit 1; }
+usage() { echo "usage: $(basename $0) kindle [azw3 | epub] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
 
 kindle=/run/media/$USER/Kindle
 [ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
@@ -31,12 +31,14 @@ justify ) option=justify;  shift ;;
 noindent) option=noindent; shift ;;  # retain poetry formatting
 poetry  ) option=noindent; shift ;;  # retain poetry formatting
 all     ) option=all;      shift ;;
-*       ) [ -e "$1" ] ||   usage ;;
+*       ) find . -iname "$1" | grep -q '[.]' || usage ;;
 esac
 
-# autoconvert epubs to awz3
-# [ "$1" ] || { [ "$format" = azw3 ] && { find . -iname '*epub' | while read book ;do dmenu kindle azw3 "$book"; done; exit; } }
-[ "$1" ] || { [ "$format" = azw3 ] && { find . -iname '*epub' -exec echo {} \; -exec dmenu kindle azw3 $option {} \; ; exit; } }
+# <regex> autoconvert epubs to awz3
+if [ "$format" = azw3 ] ;then
+  [ "$1"    ] || { find . -iname '*epub' -exec dmenu kindle azw3 $option {} \; ; exit; }
+  [ -e "$1" ] || { find . -iname "$1" -exec dmenu kindle azw3 $option {} \; ; exit; }
+fi
 
 file=$1
 name=$(basename "${file%.*}")
