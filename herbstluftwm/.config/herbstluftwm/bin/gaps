@@ -7,7 +7,10 @@
 
 # ................................................................. Tweak layout
 
-usage() { echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap <value>, 0 -> off (spine)"; }
+usage() { 
+  echo "toggle: p'anel"
+  echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap <value>, '' -> default (indent), 0 -> off (spine)"
+}
 
 # ricing parameters
 layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
@@ -20,9 +23,10 @@ settings() {
   echo
   [ -e $SPINE ] && border=on || border=off
   for i in $layout ;do 
-    [ -e $i ] && ditto $(echo $i | tr ' ' '\n' | sed "s,$SESSION/,,") "$([ -s $i ] && cat $i || echo on)"
+    ditto $(echo $i | tr ' ' '\n' | sed "s,$SESSION/,,") "$([ -s $i ] && cat $i || echo default)"
   done
   [ -e $SPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
+  [ -e $SPANEL ] || ditto panel 'off'
   echo
 }
 
@@ -57,7 +61,15 @@ while : ;do
   [ "$config" ] || break
   attr=${config%% *}
   value=${config##* }
-  [ "$attr" = "$value" ] && continue
+  if [ "$attr" = "$value" ] ;then
+    case $attr in
+    i) [ -e $PANEL_INDENT ] && rm $PANEL_INDENT || usage ;;
+    p) [ -e $SPANEL ] && rm $SPANEL || touch $SPANEL ;;
+    *) usage ;;
+    esac
+    config
+    continue
+  fi
   echo $value | grep -q '[^0-9]' && { usage; continue; }
 
   case $attr in
@@ -65,7 +77,7 @@ while : ;do
   m) echo $value >$MARGIN ;;
   h) echo $value >$PANEL_HEIGHT ;;
   i) echo $value >$PANEL_INDENT ;;
-  s) [ $value -gt 0 ] && echo $value >$SPINE || rm -f $SPINE ;;
+  s) [ $value -gt 0 ] && echo $value >$SPINE || rm $SPINE ;;
   w) echo $value >$WINDOW_GAP ;;
   *) usage; continue ;;
   esac

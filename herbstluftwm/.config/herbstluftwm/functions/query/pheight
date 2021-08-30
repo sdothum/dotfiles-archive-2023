@@ -1,4 +1,4 @@
-# sdothum - 2016 (c) wtfpl
+# sdothum - 2024 (c) wtfpl
 # [ $TRACE ] && CHILD="query/pheight $@" . $PARENT
 
 # herbstluftwm
@@ -9,8 +9,8 @@
 # Usage: query pheight [primary | secondary]
 
 # heights
-primary=18
-secondary=16
+primary=$(( $(fontsize) * 4 ))
+secondary=$(( $(fontsize) * 3 ))  # assumes lower resolution monitor
 monitor=$1
 
 cpu arm && monitor=primary
@@ -19,7 +19,7 @@ case $monitor in
 tv       ) echo $(( $(herbstclient attr settings.window_gap) + $(herbstclient attr settings.frame_gap) )) ;;
 primary  ) echo $primary ;;
 secondary) echo $secondary ;;
-*        ) is display =3440 && echo 24 || echo 18 ;;
+*        ) is display =3440 && echo $primary || echo $secondary ;;
 esac
 
 # vim: set ft=sh: #
