@@ -6,10 +6,10 @@
 
 # ........................................................... Update web gallery
 
-usage() { echo "usage: $(basename $0) <jpeg> [<name>]*"; exit 1; }
+usage() { echo "usage: $(basename $0) [-100] <jpeg> [<name>]*"; exit 1; }
 
 GALLERY=/srv/http/thedarnedestthing.com/application/public/images
-quality=92
+[ "$1" = '-100' ] && { quality=100; shift; } || quality=92
 [ $1 ] || usage
 
 for i in $@ ;do

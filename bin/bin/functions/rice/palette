@@ -5,7 +5,7 @@
 
 # ......................................................... Scrape colorhexa.com
 
-usage() { echo "usage: $(basename $0) palette <hexcolor> [Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Similar | Shade | Tint | Tone]"; exit 1; }
+usage() { echo "usage: $(basename $0) palette <color> | <hexcolor> [Complementary | Analogous | Split | Triadic | Tetradic | Monochromatic | Similar | Shade | Tint | Tone]"; exit 1; }
 
 # adjust script to website page layout, test with "rice palette ff0000"
 COLORS='Complementary|Analogous|Split|Triadic|Tetradic|Monochromatic|Similar|Shade|Tint|Tone'
@@ -41,9 +41,11 @@ palette() {
         awk '{ while(++i<=NF) printf (!a[$i]++) ? $i FS : ""; i=split("",a); print "" }'  # remove duplicate values (css labels)
 }
 
-colors=$(palette $1)
+hex() { X='[0-9a-f]'; echo $1 | grep -qi '^#*$X$X$X$X$X$X$'; }
+
+hex $1 && hex=$1 || { hex=$(pastel format hex $1 2>/dev/null) || exit; }
+colors=$(palette ${hex#\#})
 [ $2 ] && { colors=$(echo "$colors" | grep -i "^$2"); true; } || exec echo "$colors"
 [ "$colors" ] && echo "$colors" | cut -d' ' -f2- || echo $BLANK | sed "s/ffffff/$1/g"
 
 # vim: set ft=sh: #
-

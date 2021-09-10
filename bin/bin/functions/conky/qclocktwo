@@ -3,9 +3,20 @@
 # X11 Desktop
 # ══════════════════════════════════════════════════════════════════════════════
 
-# .... .................................................Dynamcic conky qclocktwo
+# ........ .......................................... Randomized conky qclocktwo
 
-usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}] | -- <hour> <minute> [*] (debug)"; exit 1; }
+# for a monospaced font e.g. https://fonts.google.com/specimen/Major+Mono+Display?query=major
+
+usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}] | (terminal) -- [<hour> <minute>] [-x] [clear]"; exit 1; }
+
+# terminal debug testing configurations..
+# no $DEBUG -> one trace
+# empty $DEBUG -> 2 second loop
+# non-empty $DEBUG -> $(cat $DEBUG) second loop
+# no <hour> <minute> -> current start time
+# <hour> <minute> -> <hour> <minute> start time
+# -x -> set -x trace
+# clear -> screen per refresh
 
 [ "$1" ] || usage
 
@@ -17,40 +28,49 @@ mkdir /tmp/qclocktwo 2>/dev/null
 QCLOCK=/tmp/qclocktwo/qclocktwo   # interval lock
 LOG=$QCLOCK.log
 GLYPH=$HOME/.session/qclocktwo:glyph
+DEBUG=$HOME/.session/qclocktwo:debug
 
 [ -e $GLYPH ] && glyph=cat || glyph="tr '[:upper:]' '[:lower:]'"  # conkyrc "uppercase=false" must be set for this
 
-
-if [ "$1" = -- ] ;then            # console debug mode
+# command line parameters
+if [ "$1" = -- ] ;then  # console debug mode
   shift
-  [ "$2" ] || usage
-  H=$1; M=$2
-  [ $3 ] && rm -f $QCLOCK*        # clear history
+  while [ $1 ] ;do
+    case "$1 $2" in
+    [0-9]*\ [0-9]*) H=$1; M=$2; shift ;;
+    clear*        ) clear=true ;;
+    -x*           ) set -x; setx=true ;;
+    *             ) usage ;;
+    esac
+    shift
+  done
+  rm $QCLOCK*           # clear history
+  [ -e $DEBUG ] || { echo 0 >$DEBUG; once=true; }
 else
-  voffset=$1                      # conkyrc alignment
-  # [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
+  rm $DEBUG             # remove debug loop timer
+fi
+if [ -z $H ] ;then
+  voffset=$1            # conkyrc alignment
+# [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
   [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:${2#* }; QCLOCK=${QCLOCK%?}; } || offset='{alignc}'
   H=$(date +%-I); M=$(date +%-M)
 fi
 
-touch $QCLOCK
-QHOUR=$QCLOCK:hour                # current hour (highlight)
-touch $QHOUR
-HOUR=$(cat $QHOUR)
+Q='{color}'             # conky color bright
+_='{color1}'            # conky color dim
 
-M5=$(( $M / 5 ))                  # 5 minute intervals (0..11)
-[ $M -ge 35 ] && H=$(( $H + 1 ))  # highlight 'to' hour
-[ $H -gt 12 ] && H=1
-
-Q='{color}'                       # conky color bright
-_='{color1}'                      # conky color dim
-esc='s/[{]/$&/g'                  # escape conky expression
+# debug output to terminal
+if [ -e $DEBUG ] ;then
+  Q=$__YELLOW; [ $setx ] && _=$NOCOLOR || _=$__BLACK
+  unset offset; unset voffset
+  DELAY=$(cat $DEBUG); DELAY=${DELAY:-2}
+fi
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
-xs()      { echo "${_}$(ch 1)${Q}"; }                              # word pair fill char
-nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }  # random fill char column
+xs()      { echo "${_}$(ch 1)${Q}"; }                                                        # word pair fill char
+nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }                            # random fill char column
 shuffle() { shuf=$(echo "$@" | shuf | tr -d '\n'); ditto $f "$shuf" >>$LOG; echo "$shuf"; }  # word salad
-draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; $esc" | $glyph >$QCLOCK:$1; }
+draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; s/[{]/$&/g" | $glyph >$QCLOCK:$1; }  # escape conky expression
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
 _ITIS_()  { shuffle "${Q}I T $(xs)I S $(nx 6)"; }
@@ -115,7 +135,12 @@ pastQ4()    { shuffle "${_}P A S T $(xs)$W43$(nx 2)"; }
 PASTQ4()    { shuffle "${Q}P A S T $(xs)$W43$(nx 2)"; }
 PAST_4()    { shuffle "${Q}P A S T \n${_}$W43$(nx 3)"; }
 past_4()    { shuffle "${_}P A S T \n${_}$W43$(nx 3)"; }
-PASTQ4_ed() { sed -i "s/[$]//g; s/${_}p a s t ${_}. ${Q}/${Q}p a s t $(xs)/; $esc" $QCLOCK:${display}4; }
+
+PASTQ4_ed() { 
+  # [ -e $DEBUG ] && sed "s/${_#??}p a s t /${Q#??}P A S T /" $QCLOCK:4 ||  # drop "\e[" of ansi sequences
+  [ -e $DEBUG ] && sed "s/$(escape ${_})p a s t /$(escape ${Q})P A S T /" $QCLOCK:4 ||
+                   cut -d'$' -f4- $QCLOCK:4 | sed "s/[$]//g; s/${_}P A S T ${_}. ${Q}/${Q}P A S T $(xs)/"
+}
 
 past_hour() { [ $M -ge 5 ] && [ $M -lt 35 ]; }
 
@@ -123,11 +148,11 @@ qclock4() {
   f=qclock4
   if [ $H = $I43 ] ;then
     if [ "$HOUR" != $I43 ] ;then
-      if past_hour ;then qclock=$(PASTQ4)  # on conky startup past the hour
+      if past_hour ;then qclock=$(PASTQ4)            # on conky startup past the hour
       else               qclock=$(pastQ4)
       fi
     elif past_hour ;then 
-      if [ -e $QCLOCK:4 ] ;then PASTQ4_ed  # highlight hour -> highlight past hour
+      if [ -e $QCLOCK:4 ] ;then qclock=$(PASTQ4_ed)  # highlight hour -> highlight past hour
       else                      qclock=$(PASTQ4)
       fi
     fi
@@ -212,7 +237,8 @@ qclock8() {
   fi
 }
 
-Q3OCLOCK() { qclock9="${Q}$W34$(xs)O ' C L O C K "; ditto 'qclock9=' "$qclock9" >>$LOG; }
+# Q3OCLOCK() { qclock9="${Q}$W34$(xs)O ' C L O C K "; ditto 'qclock9=' "$qclock9" >>$LOG; echo $qclock9; }
+Q3OCLOCK() { echo "${Q}$W34$(xs)O ' C L O C K "; }
 Q3clock()  { echo "${Q}$W34$(shuffle "${_}C L O C K $(nx 3)")"; }
 _3OCLOCK() { echo "$(shuffle "${_}$W34$(nx)")${Q}O ' C L O C K "; }
 _3clock()  { shuffle "${_}$W34\n${_}C L O C K $(nx 3)"; }
@@ -253,20 +279,20 @@ defvars() {
 
 layout() {
   f=layout
-  if [ "$HOUR" != $H ] ;then          # shuffle hour positions
+  if [ "$HOUR" != $H ] ;then        # shuffle hour positions
     >$QCLOCK:vars
     for i in $(seq 3 6) ;do defvars ;done
     hours=$(shuffle "5 \n6 \n7 \n8 ")
-    echo $hours >$QCLOCK:hours &      # map hours (lines)
+    echo $hours >$QCLOCK:hours      # map hours (lines)
   else
-    while read var <&3 ;do            # restore variables
+    while read var <&3 ;do          # restore variables
       eval $var
     done 3< $QCLOCK:vars
   fi
-  minutes=$(shuffle "1 \n2 ")         # map minutes (lines)
+  minutes=$(shuffle "1 \n2 ")       # map minutes (lines)
   echo $minutes >$QCLOCK:minutes
   [ $H != $I43 ] && [ $M5 != 2 ] && [ $M5 != 6 ] && halfpast=$(shuffle "3 \n4 ") || halfpast='3 4'
-  echo $halfpast >$QCLOCK:halfpast &  # map to/past (lines)
+  echo $halfpast >$QCLOCK:halfpast  # map to/past (lines)
 }
 
 map() { cat $QCLOCK:$1 | cut -d' ' -f$(( $3 - $2 )); }
@@ -280,18 +306,56 @@ line() {
   esac
 }
 
-if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
-  echo $H:$M5 >$QCLOCK
-  ditto qclocktwo "hour $H -- interval $M5" >$LOG
-  layout
-  for i in $(seq 0 9) ;do
-    unset qclock                         # clear buffer, see draw()
-    eval qclock$i
-    draw $i
-  done
-  echo $H >$QHOUR
-  wait
-fi
-for i in $(seq 0 9) ;do line $i ;done
+init() {
+  touch $QCLOCK
+  QHOUR=$QCLOCK:hour                       # current hour (highlight)
+  touch $QHOUR
+  HOUR=$(cat $QHOUR)
+
+  M5=$(( $M / 5 ))                         # 5 minute intervals (0..11)
+  if [ -e $DEBUG ] ;then
+    [ $M -eq 35 ] && H=$(( $H + 1 ))       # highlight 'to' hour
+  else
+    [ $M -ge 35 ] && H=$(( $H + 1 ))       # highlight 'to' hour
+  fi
+  [ $H -gt 12 ] && H=1
+}
+
+qclocktwo() {
+  if [ $H:$M5 != "$(cat $QCLOCK)" ] ;then  # 5 minute update cycle
+    echo $H:$M5 >$QCLOCK
+    ditto qclocktwo "hour $H -- interval $M5" >$LOG
+    layout
+    for i in $(seq 0 9) ;do
+      unset qclock                         # clear buffer, see draw()
+      eval qclock$i
+      draw $i
+    done
+    echo $H >$QHOUR
+    wait
+  fi
+  for i in $(seq 0 9) ;do line $i ;done
+}
+
+inc() {
+  t=$(( $1 + 1 ))
+  [ $t -gt $2 ] && t=$3
+  echo $t
+}
+
+HH=$H
+init
+while [ -e $DEBUG ] ;do
+  [ $clear ] && clear
+  ditto $HH "${M:-oops}"
+  qclocktwo
+  [ $once ] && { rm $DEBUG; exit; }
+  sleep $DELAY
+  M5=$(inc $M5 11 0)
+  M=$(( $M5 * 5 ))
+  [ $M5 -eq 0 ] && { H=$(inc $HH 12 1); HH=$H; }
+  init
+done
+qclocktwo
 
 # vim: set ft=sh: #

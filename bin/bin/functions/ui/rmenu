@@ -18,16 +18,27 @@
 
 usage() { echo "usage: $(basename $0) '<prompt>' [['<select>' | <row>]] [<option>]*"; exit 1; }
 
+# version 1.6.x
 # unset fzf query highlight to list all
 # hilite=true
+# FONT='Iosevka-menu'
+# wbg=argb:B0000000
+# bg=argb:00000000
+# fg=argb:FFFDF6E3
+# abg=$bg
+# hbg=$bg
+# hfg=argb:FF20bbfc
 
-FONT='Iosevka-menu'
-wbg=argb:B0000000
-bg=argb:00000000
-fg=argb:FFFDF6E3
+# version 1.7.x
+THEME=$HOME/.config/rofi/themes/rofi.theme
+font='Iosevka-menu'
+font='Iosevka-menu'
+wbg='#000000B0'
+bg='#000000FF'
+fg='#FDF6E3FF'
 abg=$bg
 hbg=$bg
-hfg=argb:FF20bbfc
+hfg='#20bbfcFF'
 
 # leader left or right (prompt case Right, RIGHT, right)
 lead=right
@@ -112,26 +123,42 @@ parms=$@
 # ......................................................................... Read
 
 rofi_stub() {
-  eval rofi -matching ${matching:-fuzzy} \
-            -monitor $display \
-            -bw 0 \
-            -color-enabled \
-            -color-active "$bg,$fg,$abg,$hbg,$hfg" \
-            -color-normal "$bg,$fg,$abg,$hbg,$hfg" \
-            -color-urgent "$bg,$fg,$abg,$hbg,$hfg" \
-            -color-window "$wbg,$wbg" \
-            -eh 1 \
-            -font \"$FONT $fontsize\" \
-            -fullscreen \
-            -hide-scrollbar \
-            -line-margin $(( $fontsize + 2 )) \
-            -padding $padding \
-            -separator-style none \
-            -theme-str "'inputbar { padding: 1.2em; }'" \
+  # version 1.6.x
+  # eval rofi -matching ${matching:-fuzzy}                       \
+  #           -monitor $display                                  \
+  #           -eh 1                                              \
+  #           -bw 0                                              \
+  #           -color-enabled                                     \
+  #           -color-active "$bg,$fg,$abg,$hbg,$hfg"             \
+  #           -color-normal "$bg,$fg,$abg,$hbg,$hfg"             \
+  #           -color-urgent "$bg,$fg,$abg,$hbg,$hfg"             \
+  #           -color-window "$wbg,$wbg"                          \
+  #           -font \"$FONT $fontsize\"                          \
+  #           -fullscreen                                        \
+  #           -hide-scrollbar                                    \
+  #           -line-margin $(( $fontsize + 2 ))                  \
+  #           -padding $padding                                  \
+  #           -separator-style none                              \
+  #           -theme-str "'inputbar { padding: 1.2em; }'"        \
+  #           -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
+  #           -theme-str "'* { highlight: none; }'"              \
+  #           -width 100                                         \
+  #           -dmenu -p "\"$prompt\"" -i $select                 \
+  #           $@
+  eval PADDING=$padding                                        \
+       SPACING="${fontsize}px"                                 \
+       FONT=\"$font $fontsize\"                                \
+       BG=$bg FG=$fg WBG=$wbg                                  \
+       rofi -upgrade-config                                    \
+            -font \"$font $fontsize\"                          \
+            -matching ${matching:-fuzzy}                       \
+            -monitor $display                                  \
+            -eh 1                                              \
+            -theme $THEME                                      \
+            -theme-str "'inputbar { padding: 1.2em; }'"        \
             -theme-str "'textbox-prompt-colon { str: \"\"; }'" \
-            -theme-str "'* { highlight: none; }'" \
-            -width 100 \
-            -dmenu -p "\"$prompt\"" -i $select \
+            -theme-str "'* { highlight: none; }'"              \
+            -dmenu -p "\"$prompt\"" -i $select                 \
             $@
 }
 

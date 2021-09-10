@@ -35,12 +35,14 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
              contrast=$(cat $CONTRAST)
              mhistory root "$bg^$SEP $contrast $hue"
              swatch $bg $hue
-             ln -sf $PALETTE/$contrast/$hue/$bg.png $BACKGROUND ;;
+             ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
+             ln -sf $WALLCOLOR $BACKGROUND ;;
 
   *dark*     |\
   *light*  ) bg=$(echo $color | cut -d' ' -f1)
              draw root blank $bg
-             ln -sf $(find $PALETTE -name $bg.png) $BACKGROUND
+             ln -sf $(find $PALETTE -name $bg.png) $WALLCOLOR
+             ln -sf $WALLCOLOR $BACKGROUND
              mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
              break ;;
 
