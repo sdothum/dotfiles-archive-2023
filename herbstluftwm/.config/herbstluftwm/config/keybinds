@@ -37,6 +37,7 @@ hc keybind $Mod-0                   spawn toggle focus
 # UI appearance
 hc keybind $Mod-b                   spawn focus border 3
 hc keybind $Mod-Shift-b             spawn toggle border
+hc keybind $Mod-h                   spawn term 'gaps' gaps
 hc keybind $Mod-i                   spawn toggle unclutter
 hc keybind $Mod-Shift-i             spawn toggle compton
 
@@ -96,7 +97,7 @@ hc keybind $Mod-x                   split right  0.5
 hc keybind $Mod-Shift-x             split right  0.666666
 hc keybind $Mod-Control-x           split right  0.333333
 # let the current frame explode into subframes
-hc keybind $Mod-Control-space       spawn restore frames
+hc keybind $Mod-Control-Shift-space spawn restore frames
 
 # rotate frames
 hc keybind $Mod-Control-Shift-l     spawn switch orientation -2
@@ -121,6 +122,7 @@ hc keybind $Mod-k                   use_index -1 --skip-visible
 hc keybind $Mod-BackSpace           spawn switch tag
 
 # set layout
+hc keybind $Mod-Control-space       spawn toggle monocle
 hc keybind $Mod-Control-0           spawn toggle monocle
 hc keybind $Mod-g                   spawn toggle layout grid
 hc keybind $Mod-Shift-g             spawn draw layout

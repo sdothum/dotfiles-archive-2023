@@ -8,34 +8,37 @@
 # ................................................................. Tweak layout
 
 usage() { 
-  echo "toggle: p'anel"
-  echo "tuples: f'rame_gap | m'argin | panel h'eight | panel i'ndent | s'pine | w'indow_gap <value>, '' -> default (indent), 0 -> off (spine)"
+  echo "toggle: c'olors | p'anel | s'pine"
+  echo "tuples: f'rame_gap | m'argin | panel c'olor | panel h'eight | panel i'ndent | s'pine | w'indow_gap <value>"
+  echo "          panel color:  <name> or #<hex>"
+  echo "          panel indent: '' -> default"
+  echo "          spine:        0 -> off"
 }
 
 # ricing parameters
 layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
 
 usage
-[ -e $SPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=2; } || spine=0
+[ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
 window=$(herbstclient attr settings.window_gap)  # current window gap
 
 settings() {
   echo
-  [ -e $SPINE ] && border=on || border=off
+  [ -e $SSPINE ] && border=on || border=off
   for i in $layout ;do 
     ditto $(echo $i | tr ' ' '\n' | sed "s,$SESSION/,,") "$([ -s $i ] && cat $i || echo default)"
   done
-  [ -e $SPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
+  [ -e $SSPINE ] && ditto window_gap 'off [spine]' || ditto spine 'off'
   [ -e $SPANEL ] || ditto panel 'off'
   echo
 }
 
 spine() {
-  [ -e $SPINE ] && { [ $border = off ] && return 0 || return 1; } ||
-                     [ $border = on  ]
+  [ -e $SSPINE ] && { [ $border = off ] && return 0 || return 1; } ||
+                      [ $border = on  ]
 }
 
-edge() { [ -e $SPINE ] && echo $1 || echo $2; }
+edge() { [ -e $SSPINE ] && echo $1 || echo $2; }
 
 # dynamic rice tweaking
 config() {
@@ -48,8 +51,8 @@ config() {
   toggle compton on
 
   [ -s $WINDOW_GAP ] && window_gap=$(cat $WINDOW_GAP) || window_gap=$window
-  herbstclient attr theme.active.padding_left $(edge $spine 0)
   herbstclient attr theme.padding_left        $(edge $spine 0)
+  herbstclient attr theme.active.padding_left $(edge $spine 0)
   herbstclient set  window_gap                $(edge 0 $window_gap)
   herbstclient set  frame_bg_transparent      $(edge 0 1)
 }
@@ -63,8 +66,10 @@ while : ;do
   value=${config##* }
   if [ "$attr" = "$value" ] ;then
     case $attr in
+    c) pastel list | less; continue ;;
     i) [ -e $PANEL_INDENT ] && rm $PANEL_INDENT || usage ;;
     p) [ -e $SPANEL ] && rm $SPANEL || touch $SPANEL ;;
+    s) [ -e $SSPINE ] && rm $SSPINE || touch $SSPINE ;;
     *) usage ;;
     esac
     config
@@ -73,11 +78,12 @@ while : ;do
   echo $value | grep -q '[^0-9]' && { usage; continue; }
 
   case $attr in
+  c) pastel gradient --colorspace=HSL --number 5 $value ffffff >$PANEL_COLOR ;;
   f) echo $value >$FRAME_GAP ;;
   m) echo $value >$MARGIN ;;
   h) echo $value >$PANEL_HEIGHT ;;
   i) echo $value >$PANEL_INDENT ;;
-  s) [ $value -gt 0 ] && echo $value >$SPINE || rm $SPINE ;;
+  s) [ $value -gt 0 ] && { echo $value >$SPINE; spine=$value; touch $SSPINE; } || rm $SSPINE ;;
   w) echo $value >$WINDOW_GAP ;;
   *) usage; continue ;;
   esac

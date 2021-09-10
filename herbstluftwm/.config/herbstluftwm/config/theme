@@ -7,7 +7,7 @@
 # ..................................................................... Settings
 
 BG='#707070'                    # inactive spine colour
-[ -e $SPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=2; } || spine=0
+[ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
 
 hc set tree_style "'╾│ ├└╼─┐'"  # tree_style string must be quote enclosed "'string'" for hc parsing
 

@@ -102,7 +102,8 @@ blank() {
 
 color() {
   # initialize default link
-  [ -L $BACKGROUND ] && exists $BACKGROUND || ln -sf $(find $PALETTE -name '*.png' | head -1) $BACKGROUND
+  [ -L $WALLCOLOR ] && exists $WALLCOLOR || ln -sf $(find $PALETTE -name '*.png' | head -1) $WALLCOLOR
+  ln -sf $WALLCOLOR $BACKGROUND
 }
 
 select_blank() {
@@ -110,9 +111,9 @@ select_blank() {
   color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r \
-               -A "ln -sf %f $BACKGROUND && xdotool type 'q'" \
-               --start-at $(lname $BACKGROUND) $(find $PALETTE -name '*.png')
-  blank $(basename $(ls -l $BACKGROUND | cut -d'>' -f2) .png)
+               -A "ln -sf %f $WALLCOLOR && xdotool type 'q'" \
+               --start-at $(lname $WALLCOLOR) $(find $PALETTE -name '*.png')
+  blank $(basename $(ls -l $WALLCOLOR | cut -d'>' -f2) .png)
 }
 
 # ................................................................ Set wallpaper
@@ -120,6 +121,7 @@ select_blank() {
 wallpaper() {
   # initialize default link
   [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
+  ln -sf $WALLPAPER $BACKGROUND
   rm -f $BLANK
   rm -f $THEME
   herbstclient attr theme.normal.color $NORMAL
@@ -190,9 +192,9 @@ if [ ! -e $BLANK ] ;then
   if [ -e $background ] ;then
     cp $background $THEME
     [ -e $HOME/.conkyrc ] && is display +1920 && draw conky
-  else
-    term 'Theme' STACK SHELL 'rice cooker'
-    pwait 'rice cooker'
+  # else
+  #   term 'Theme' STACK SHELL 'rice cooker'
+  #   pwait 'rice cooker'
   fi
   set_border $(rice palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
 fi

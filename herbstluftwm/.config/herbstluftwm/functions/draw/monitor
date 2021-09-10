@@ -71,13 +71,14 @@ margin=$(( $desktop_margin - $window_frame ))
 conkyX=$(( $CONKY_WIDTH + $CONKY_OUTER + $CONKY_INNER + $CONKY_OUTER - $window_frame ))
 
 # adjust margin values by frame_gap (frames touch margins)
-margin=$(( $margin - $frame ))
+margin=$(( $margin - $frame ))                         # -> margin is gap to frame
 [ $margin -lt 0 ] && margin=0                          # minimum (visual) margin is frame gap
-panel=$(( $panel - $frame ))
+panel=$(( $panel - $frame ))                           # -> panel is gap to frame
 [ $panel -lt 0 ] && panel=0 
 echo $(( $margin + $frame )) >$PMARGIN                 # default panel content indent, see draw panel
 [ $panel -gt 0 ] && marginY=$panel || marginY=$margin  # adjust monitor height to retain panel line height
 [ $marginY -lt $margin ] && marginY=$margin
+margins=$(( $margin + $marginY ))
 
 # adjust virtual monitor dimensions to set fixed visual window margins
 normal_width=$(( $X0 - $margin - $conkyX - $monocle*2 ))
@@ -95,19 +96,19 @@ SEC() { SECONDARY=$(printf '%dx%d%+d%+d' $1 $2 $3 $4); }
 case $@ in
 conky     ) rm -f $FULLSCREEN:primary
             rm -f $FULLSCREEN:$TAG
-            PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $marginY*2 )) $(( $margin + $monocle )) $margin ;;
+            PRI $(( $normal_width - $SHADOW )) $(( $Y0 - $margins )) $(( $margin + $monocle )) $margin ;;
 
 conky*f*  ) touch $FULLSCREEN:primary
             touch $FULLSCREEN:$TAG
-            if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $marginY*2 - $window_frame*2 )) \
+            if [ $X0 -gt $MIN_DISPLAY ] ;then PRI $(( $fullscreen_width - $SHADOW )) $(( $Y0 - $margins - $window_frame*2 )) \
                                                   $(( $margin + $window_frame + $monocle )) $(( $margin + $window_frame ))  # desktop screens retain margins
             else                              PRI $(( $fullscreen_width + $margin + $window_frame )) $Y0 0 0                # laptop screens fill to edge
             fi ;;
 
 fullframe ) rm -f $FULLSCREEN:primary
             rm -f $FULLSCREEN:$TAG
-            if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $margin*2 )) $(( $Y0 - $marginY*2 )) $margin $margin
-            else                        PRI $normal_width $(( $Y0 - $marginY*2 )) $(( ($X0 - $normal_width)/2 )) $margin
+            if [ $monocle -eq 0 ] ;then PRI $(( $X0 - $margin*2 )) $(( $Y0 - $margins )) $margin $margin
+            else                        PRI $normal_width $(( $Y0 - $margins )) $(( ($X0 - $normal_width)/2 )) $margin
             fi ;;
 
 fullscreen) touch $FULLSCREEN:primary
@@ -117,7 +118,7 @@ fullscreen) touch $FULLSCREEN:primary
 
 secondary ) rm -f $FULLSCREEN:secondary
             rm -f $FULLSCREEN:$TAG
-            SEC $(( $X1 - $margin*2 )) $(( $Y1 - $marginY*2 )) \
+            SEC $(( $X1 - $margin*2 )) $(( $Y1 - $margins )) \
                 $(( X0 + $margin )) $margin ;;
 
 second*f* ) touch $FULLSCREEN:secondary
