@@ -345,9 +345,11 @@ inc() {
 
 HH=$H
 init
-[ $clear ] && clear
+[ -e $DEBUG ] || { qclocktwo; exit; }  # normal conky invocation
+
+[ $clear ] && { clear; tput civis; trap "rm $DEBUG 2>/dev/null; tput cnorm" EXIT INT; }  # hide cursor
 while [ -e $DEBUG ] ;do
-  [ $clear ] && tput cup 0 0                                   # reposition terminal cursor!
+  [ $clear ] && tput cup 0 0                                   # reposition terminal cursor
   ditto $HH "${M:-oops}$([ $HH -lt 10 ] && echo -n '\\ \\ ')"  # pad for overwrite
   qclocktwo
   [ $once ] && { rm $DEBUG; exit; }
@@ -357,6 +359,5 @@ while [ -e $DEBUG ] ;do
   [ $M5 -eq 0 ] && { H=$(inc $HH 12 1); HH=$H; }
   init
 done
-qclocktwo
 
 # vim: set ft=sh: #
