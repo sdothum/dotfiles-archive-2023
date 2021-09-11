@@ -27,10 +27,10 @@ usage() { echo "usage: $(basename $0) qclocktwo [{voffset <pos>} [{offset <pos>}
 mkdir /tmp/qclocktwo 2>/dev/null
 QCLOCK=/tmp/qclocktwo/qclocktwo   # interval lock
 LOG=$QCLOCK.log
-GLYPH=$HOME/.session/qclocktwo:glyph
+LOWER=$HOME/.session/qclocktwo:lower
 DEBUG=$HOME/.session/qclocktwo:debug
 
-[ -e $GLYPH ] && glyph=cat || glyph="tr '[:upper:]' '[:lower:]'"  # conkyrc "uppercase=false" must be set for this
+[ -e $LOWER ] && glyph="tr '[:upper:]' '[:lower:]'" || glyph=cat  # conkyrc "uppercase=false" must be set for this
 
 HM() { H=$(date +%-I); M=$(date +%-M); }
 
@@ -44,7 +44,7 @@ if [ "$1" = -- ] ;then  # console debug mode
     clear*         ) clear=true; echo 1 >$DEBUG ;;
     scroll\ [.0-9]*) echo $2 >$DEBUG; shift ;;
     scroll*        ) echo 2 >$DEBUG ;;
-    -x*            ) set -x; setx=true ;;
+    -x*            ) set -x; setx=true; unset clear ;;
     *              ) usage ;;
     esac
     shift
