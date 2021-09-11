@@ -11,12 +11,12 @@ usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}]
 
 # terminal debug testing configurations..
 # no $DEBUG -> one trace
-# empty $DEBUG -> 2 second loop
+# empty $DEBUG -> default 2 second loop
 # non-empty $DEBUG -> $(cat $DEBUG) second loop
 # no <hour> <minute> -> current start time
 # <hour> <minute> -> <hour> <minute> start time
 # -x -> set -x trace
-# clear -> screen per refresh
+# clear -> screen per refresh (default 1 second loop)
 
 [ "$1" ] || usage
 
@@ -38,7 +38,7 @@ if [ "$1" = -- ] ;then  # console debug mode
   while [ $1 ] ;do
     case "$1 $2" in
     [0-9]*\ [0-9]*) H=$1; M=$2; shift ;;
-    clear*        ) clear=true ;;
+    clear*        ) clear=true; [ -e $DEBUG ] || echo 1 >$DEBUG ;;
     -x*           ) set -x; setx=true ;;
     *             ) usage ;;
     esac
@@ -345,9 +345,10 @@ inc() {
 
 HH=$H
 init
+[ $clear ] && clear
 while [ -e $DEBUG ] ;do
-  [ $clear ] && clear
-  ditto $HH "${M:-oops}"
+  [ $clear ] && tput cup 0 0                                   # reposition terminal cursor!
+  ditto $HH "${M:-oops}$([ $HH -lt 10 ] && echo -n '\\ \\ ')"  # pad for overwrite
   qclocktwo
   [ $once ] && { rm $DEBUG; exit; }
   sleep $DELAY
