@@ -7,7 +7,7 @@
 
 # for a monospaced font e.g. https://fonts.google.com/specimen/Major+Mono+Display?query=major
 
-usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}] | (terminal) -- [<hour> <minute>] [-x] [clear]"; exit 1; }
+usage() { echo "usage: $(basename $0) qclocktwo [{voffset <pos>} [{offset <pos>}]] | [-- [<hour> <minute>] [-x] [clear | scroll [<delay>]]]"; exit 1; }
 
 # terminal debug testing configurations..
 # no $DEBUG -> one trace
@@ -18,7 +18,7 @@ usage() { echo "usage: $(basename $0) qclocktwo {voffset <pos>} [{offset <pos>}]
 # -x -> set -x trace
 # clear -> screen per refresh (default 1 second loop)
 
-[ "$1" ] || usage
+# [ "$1" ] || usage  # no parameters is now console mode clock!
 
 # reduces qclocktwo conkyrc configuration to 1 line statement using ${execp conky qclocktwo '{voffset..}'}
 # adding extended randomization of clock display for hours and minute information
@@ -32,28 +32,38 @@ DEBUG=$HOME/.session/qclocktwo:debug
 
 [ -e $GLYPH ] && glyph=cat || glyph="tr '[:upper:]' '[:lower:]'"  # conkyrc "uppercase=false" must be set for this
 
+HM() { H=$(date +%-I); M=$(date +%-M); }
+
 # command line parameters
 if [ "$1" = -- ] ;then  # console debug mode
   shift
   while [ $1 ] ;do
     case "$1 $2" in
-    [0-9]*\ [0-9]*) H=$1; M=$2; shift ;;
-    clear*        ) clear=true; [ -e $DEBUG ] || echo 1 >$DEBUG ;;
-    -x*           ) set -x; setx=true ;;
-    *             ) usage ;;
+    [0-9]*\ [0-9]* ) H=$1; M=$2; shift ;;
+    clear\ [.0-9]* ) clear=true; echo $2 >$DEBUG; shift ;;
+    clear*         ) clear=true; echo 1 >$DEBUG ;;
+    scroll\ [.0-9]*) echo $2 >$DEBUG; shift ;;
+    scroll*        ) echo 2 >$DEBUG ;;
+    -x*            ) set -x; setx=true ;;
+    *              ) usage ;;
     esac
     shift
   done
-  rm $QCLOCK*           # clear history
+  rm -f $QCLOCK*           # clear history
   [ -e $DEBUG ] || { echo 0 >$DEBUG; once=true; }
+  [ $H ] || HM
 else
-  rm $DEBUG             # remove debug loop timer
-fi
-if [ -z $H ] ;then
-  voffset=$1            # conkyrc alignment
-# [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
-  [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:${2#* }; QCLOCK=${QCLOCK%?}; } || offset='{alignc}'
-  H=$(date +%-I); M=$(date +%-M)
+  rm -f $DEBUG             # remove debug loop timer
+  if [ "$1" ] ;then
+    voffset=$1            # conkyrc alignment
+  # [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
+    [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:${2#* }; QCLOCK=${QCLOCK%?}; } || offset='{alignc}'
+  else
+    echo 1 >$DEBUG
+    console=true
+    clear=true
+  fi
+  HM
 fi
 
 Q='{color}'             # conky color bright
@@ -347,16 +357,21 @@ HH=$H
 init
 [ -e $DEBUG ] || { qclocktwo; exit; }  # normal conky invocation
 
-[ $clear ] && { clear; tput civis; trap "rm $DEBUG 2>/dev/null; tput cnorm" EXIT INT; }  # hide cursor
+[ $clear ] && { clear; tput civis; trap "tput cnorm; rm -f $DEBUG" EXIT INT; }  # hide cursor
+
 while [ -e $DEBUG ] ;do
-  [ $clear ] && tput cup 0 0                                   # reposition terminal cursor
-  ditto $HH "${M:-oops}$([ $HH -lt 10 ] && echo -n '\\ \\ ')"  # pad for overwrite
+  [ $clear ] && tput cup 0 0                                                   # reposition terminal cursor
+  [ $console ] || ditto $HH "${M:-oops}$([ $HH -lt 10 ] && echo -n '\\ \\ ')"  # pad for overwrite
   qclocktwo
-  [ $once ] && { rm $DEBUG; exit; }
+  [ $once ] && { rm -f $DEBUG; exit; }
   sleep $DELAY
-  M5=$(inc $M5 11 0)
-  M=$(( $M5 * 5 ))
-  [ $M5 -eq 0 ] && { H=$(inc $HH 12 1); HH=$H; }
+  if [ $console ] ;then
+    HM
+  else
+    M5=$(inc $M5 11 0)
+    M=$(( $M5 * 5 ))
+    [ $M5 -eq 0 ] && { H=$(inc $HH 12 1); HH=$H; }
+  fi
   init
 done
 

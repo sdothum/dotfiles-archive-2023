@@ -9,7 +9,7 @@
 pstat plover.AppImage && notify keyboard 'enable steno layer' || { notify steno 'start plover'; exit; }
 file=$(mktemp /tmp/steno.XXX)
 gvim -f -c 'set filetype=steno' $file
-rm $file
+rm -f $file
 notify keyboard 'exit steno layer'
 
 # vim: set ft=sh: #

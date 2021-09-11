@@ -166,7 +166,7 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal   ) shape 500; sb 0.5500 ;;                                                   # normal width
-  ebook    ) shape $extended; sb 0.6000; leading 1.2500; ebook monolegible ;;          # less sb with higher dpi
+  ebook    ) shape $extended; sb 0.6000; leading 1.5000; ebook monolegible ;;          # less sb with higher dpi
   extended ) shape $extended; sb 0.7000 ;;                                             # extended width
   heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
   menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
@@ -174,7 +174,7 @@ while [ $1 ] ;do
   english  ) english ;;
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; ebook quasilegible; unset m_weight ;;
+  quasi*   ) spacing=quasi-proportional; leading 1.2500; ebook quasilegible; unset m_weight ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;

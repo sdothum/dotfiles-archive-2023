@@ -13,7 +13,7 @@ disconnect() {
     pstat rsync && notify 3 critical 'Rsync in progress' 'Waiting..'
     pwait rsync
   fi
-  rm /tmp/login:console
+  rm -f /tmp/login:console
   quit
 }
 
