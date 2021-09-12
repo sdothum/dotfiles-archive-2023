@@ -166,7 +166,7 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal   ) shape 500; sb 0.5500 ;;                                                   # normal width
-  ebook    ) shape $extended; sb 0.6000; leading 1.5000; ebook monolegible ;;          # less sb with higher dpi
+  ebook    ) shape $extended; sb 0.6000; leading 1.4185; ebook monolegible ;;          # less sb with higher dpi (maximum leading with kindle font list typeface)
   extended ) shape $extended; sb 0.7000 ;;                                             # extended width
   heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
   menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
@@ -178,7 +178,7 @@ while [ $1 ] ;do
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
-  atkinson ) grotesque; [ $ebook ] && ebook hyperlegible; variant Q ampersand at number_sign percent ;;
+  atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant Q ampersand at number_sign percent ;;
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family   ) [ $2 ] && family=$2 || usage; shift ;;
