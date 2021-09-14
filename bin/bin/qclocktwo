@@ -1,0 +1,69 @@
+#!/usr/bin/dash
+# sdothum - 2016 (c) wtfpl
+
+# X11 System
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ........................................................... Terminal qclocktwo
+
+# toggle
+pgrep -f 'alacritty.*qclocktwo' &&  { pkill -f 'alacritty.*qclocktwo' >/dev/null; exit; }
+
+size=$(( $(fontsize) * 5 / 4 ))
+paddingX=0
+paddingY=0
+offsetX=0
+offsetY=0
+background='#263238'
+foreground='#eaeaea'
+
+# tweak window margins by fontsize
+case $size in
+8 ) paddingX=8; paddingY=8; offsetX=0; offsetY=4 ;;
+9 ) paddingX=9; paddingY=9; offsetX=0; offsetY=2 ;;
+11) paddingX=12; paddingY=12; offsetX=0; offsetY=3 ;;
+* ) paddingX=12; paddingY=12; offsetX=0; offsetY=0 ;;
+esac
+
+offsetY=$size                  # double line space to write square
+paddingX=$(( $size * 3 / 2 ))  # corner offset
+paddingX=$(( $size * 16 ))     # center over half frame (split 1:2:3) but currently causes flicker
+paddingX=$(( $size * 10 ))     # maxixmum no flicker offset
+paddingX=$(( $size * 8 ))
+paddingY=$paddingX
+[ -e $SSPINE ] || transparency='background_opacity=0'
+
+# quantum colour theme :)
+cd $HOME/bin
+/usr/bin/alacritty --option font.size=$size                             \
+                            window.padding.x=$paddingX                  \
+                            window.padding.y=$paddingY                  \
+                            font.offset.x=$offsetX                      \
+                            font.offset.y=$offsetY                      \
+                            draw_bold_text_with_bright_colors=true      \
+                            colors.primary.background=\'$background\'   \
+                            colors.primary.foreground=\'$foreground\'   \
+                            colors.normal.black=\'#000000\'             \
+                            colors.normal.red=\'#d54e53\'               \
+                            colors.normal.green=\'#b9ca4a\'             \
+                            colors.normal.yellow=\'#e6c547\'            \
+                            colors.normal.blue=\'#7aa6da\'              \
+                            colors.normal.magenta=\'#c397d8\'           \
+                            colors.normal.cyan=\'#70c0ba\'              \
+                            colors.normal.white=\'#eaeaea\'             \
+                            colors.bright.black=\'#666666\'             \
+                            colors.bright.red=\'#ff3334\'               \
+                            colors.bright.green=\'#9ec400\'             \
+                            colors.bright.yellow=\'#e7c547\'            \
+                            colors.bright.blue=\'#7aa6da\'              \
+                            colors.bright.magenta=\'#b77ee0\'           \
+                            colors.bright.cyan=\'#54ced6\'              \
+                            colors.bright.white=\'#ffffff\'             \
+                            font.normal.family=\'Major\ Mono\ Display\' \
+                            $transparency                               \
+                   --title qclocktwo                                    \
+                   --class float                                        \
+                   -e conky qclocktwo &
+
+
+# vim: set ft=sh: #

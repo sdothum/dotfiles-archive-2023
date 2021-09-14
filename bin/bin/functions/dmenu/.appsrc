@@ -7,7 +7,7 @@ digikam
 gthumb
 term 'Trace' tail -f /tmp/herbstluftwm.log  # herbstluftwm :: log
 tmux_session irc weechat                    # irc
-tmux_session jabber 'mcabber 2>/dev/null'   # jabber
+tmux_session jabber mcabber                 # jabber
 tmux_session mail alot                      # mail
 rawtherapee
 vimb http://luna:8213/                      # repo

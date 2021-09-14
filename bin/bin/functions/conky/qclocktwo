@@ -29,6 +29,7 @@ QCLOCK=/tmp/qclocktwo/qclocktwo   # interval lock
 LOG=$QCLOCK.log
 LOWER=$HOME/.session/qclocktwo:lower
 DEBUG=$HOME/.session/qclocktwo:debug
+ANIMATE=$HOME/.session/qclocktwo:sim
 
 [ -e $LOWER ] && glyph="tr '[:upper:]' '[:lower:]'" || glyph=cat  # conkyrc "uppercase=false" must be set for this
 
@@ -53,13 +54,13 @@ if [ "$1" = -- ] ;then  # console debug mode
   [ -e $DEBUG ] || { echo 0 >$DEBUG; once=true; }
   [ $H ] || HM
 else
-  rm -f $DEBUG             # remove debug loop timer
   if [ "$1" ] ;then
+    rm -f $DEBUG          # remove debug loop timer
     voffset=$1            # conkyrc alignment
   # [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:$(echo "$2" | sed -r 's/.* ([0-9]*).*/\1/'); } || offset='{alignc}'
     [ "$2" ] && { offset=$2; QCLOCK=$QCLOCK:${2#* }; QCLOCK=${QCLOCK%?}; } || offset='{alignc}'
   else
-    echo 1 >$DEBUG
+    [ -e $ANIMATE ] && cp $ANIMATE $DEBUG || echo 1 >$DEBUG
     console=true
     clear=true
   fi
@@ -318,16 +319,12 @@ line() {
 
 init() {
   touch $QCLOCK
-  QHOUR=$QCLOCK:hour                       # current hour (highlight)
+  QHOUR=$QCLOCK:hour  # current hour (highlight)
   touch $QHOUR
   HOUR=$(cat $QHOUR)
 
-  M5=$(( $M / 5 ))                         # 5 minute intervals (0..11)
-  if [ -e $DEBUG ] ;then
-    [ $M -eq 35 ] && H=$(( $H + 1 ))       # highlight 'to' hour
-  else
-    [ $M -ge 35 ] && H=$(( $H + 1 ))       # highlight 'to' hour
-  fi
+  M5=$(( $M / 5 ))                                    # 5 minute intervals (0..11)
+  [ $M -ge 35 ] && [ $HH -eq $H ] && H=$(( $H + 1 ))  # highlight 'to' hour
   [ $H -gt 12 ] && H=1
 }
 
@@ -357,7 +354,8 @@ HH=$H
 init
 [ -e $DEBUG ] || { qclocktwo; exit; }  # normal conky invocation
 
-[ $clear ] && { clear; tput civis; trap "tput cnorm; rm -f $DEBUG" EXIT INT; }  # hide cursor
+[ $clear ]   && { clear; tput civis; trap "tput cnorm; rm -f $DEBUG" EXIT INT; }          # hide cursor
+[ $console ] && { stty_reset=$(stty -g); stty -echo; trap "stty $stty_reset" EXIT INT; }  # disable window input
 
 while [ -e $DEBUG ] ;do
   [ $clear ] && tput cup 0 0                                                   # reposition terminal cursor
@@ -365,7 +363,7 @@ while [ -e $DEBUG ] ;do
   qclocktwo
   [ $once ] && { rm -f $DEBUG; exit; }
   sleep $DELAY
-  if [ $console ] ;then
+  if [ $console ] && [ ! -e $ANIMATE ] ;then
     HM
   else
     M5=$(inc $M5 11 0)
@@ -374,5 +372,6 @@ while [ -e $DEBUG ] ;do
   fi
   init
 done
+rm -f $ANIMATE  # remove on break but not toggle (see bin/qclocktwo)
 
 # vim: set ft=sh: #
