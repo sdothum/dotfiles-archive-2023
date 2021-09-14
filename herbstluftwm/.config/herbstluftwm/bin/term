@@ -26,7 +26,7 @@ case $TERM in
 alacritty) TITLE=--title
            NAME=--class
            blackboard=blackboard
-           XY='--option window.dimensions.columns=120 window.dimensions.rows=30' ;;
+           XY='window.dimensions.columns=120 window.dimensions.rows=30' ;;
 
 urxvt    ) TITLE=-title
            NAME=-name

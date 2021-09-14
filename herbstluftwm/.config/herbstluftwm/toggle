@@ -19,7 +19,7 @@ touch_panel() { xtitle -f 'X%s' >$(cat $PANEL_FIFO); }
 close() {
   tag=$(herbstclient attr clients.$1.tag)
   # kill instance if already visible
-  [ $tag != "$(query tag)" ] && [ $tag != "$(query tag inactive)" ] && return 1
+  [ "$tag" != "$(query tag)" ] && [ "$tag" != "$(query tag inactive)" ] && return 1
   herbstclient close $1
   # clear panel title as required
   focus window

@@ -55,6 +55,8 @@ config() {
   herbstclient attr theme.active.padding_left $(edge $spine 0)
   herbstclient set  window_gap                $(edge 0 $window_gap)
   herbstclient set  frame_bg_transparent      $(edge 0 1)
+  # herbstclient set  frame_active_opacity    $(edge 1 0)
+  # herbstclient set  frame_normal_opacity    $(edge 1 0)
 }
 
 while : ;do
