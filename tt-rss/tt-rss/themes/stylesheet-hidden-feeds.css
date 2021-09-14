@@ -163,6 +163,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .cdm.expandable:not(.active) span.author { display: none !important; }
 
 .ttrss_index span.excerpt { font-family: "Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; }
+/* .ttrss_index span.excerpt { font-family: eMonolegible,"Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 11.5px !important; line-height: 1em !important; } */
 
 .ttrss_index .cdm.Unread span.excerpt { color: rgba(0,0,0,.65) !important; }
 
@@ -199,6 +200,7 @@ body.ttrss_index #main { background-color: #fdf7e7 !important; }
 .ttrss_index .content-inner * { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border: none !important; }
 
 .ttrss_index .content-inner p { font-family: "Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13.85px !important; color: rgba(0,0,0,.8) !important; line-height: 1.7em !important; }
+/* .ttrss_index .content-inner p { font-family: eMonolegible,"Atkinson Hyperlegible",Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 12.5px !important; color: rgba(0,0,0,.8) !important; line-height: 2em !important; } */
 
 .ttrss_index .content-inner td { font-family: Roboto,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important; font-size: 13px !important; border-color: transparent !important; }
 
