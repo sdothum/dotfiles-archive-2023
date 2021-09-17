@@ -147,6 +147,7 @@ abbr perli 'perl -de 1'
 
 abbr bc 'bcd'
 abbr calc 'speedcrunch'
+abbr color 'pastel format hex'
 abbr d 'dict'
 abbr dotfiles 'rlwrap dotfiles'
 abbr handbrake 'ghb'
