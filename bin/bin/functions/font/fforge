@@ -7,12 +7,14 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | punctuation [--emdash] | ligature [quasi-proportional] | bookweight [--M]  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) curlyq | punctuation [--emdash] | ligature [quasi-proportional] | bookweight [--M] | dyslexic  [family]"; exit 1; }
+
+MAKE_INSTALL=/tmp/iosevka:make_install
 
 # substitute curly tail q
 curlyq() {
   ditto iosevka 'copy char 0u024b and paste to char 0u0071'
-  ifyes 'atkinson q update' || exit
+  [ -e $MAKE_INSTALL ] && ditto make_install 'atkinson q update' || { ifyes 'atkinson q update' || exit; }
 
   echo "
 Open(\$1);
@@ -31,7 +33,7 @@ Generate(\$1);
 
 # double cell width punctuation
 punctuation() {
-  ifyes 'add double width punctuation' || exit
+  [ -e $MAKE_INSTALL ] && ditto make_install 'add double width punctuation' || { ifyes 'add double width punctuation' || exit; }
 
   # double width emdash (or '--') and ellipsis
   if [ $emdash ] ;then
@@ -80,7 +82,7 @@ ChangeWeight(-20);
 }
 
 ligature() {
-  ifyes 'add double width ligatures *experimental*' || exit
+  [ -e $MAKE_INSTALL ] && ditto make_install 'add double width ligatures *experimental*' || { ifyes 'add double width ligatures *experimental*' || exit; }
 
   echo "
 Open(\$1);
@@ -100,7 +102,7 @@ Generate(\$1);
 
 # set book weights as regular (for kindle use with bold weights)
 bookweight() {
-  ifyes 'set book weights as regular' || exit
+  [ -e $MAKE_INSTALL ] && ditto make_install 'set book weights as regular' || { ifyes 'set book weights as regular' || exit; }
   rm -f *\#1.ttf
   rm -f *.ttx
 
@@ -158,6 +160,22 @@ Generate(\$1);
   done
 }
 
+# double cell width space
+dyslexic() {
+  ditto dyslexic 'double width space character'
+  echo "
+Open(\$1);
+Select(0u0020);
+Transform(200,0,0,100,0,0);
+Generate(\$1);
+" >/tmp/fontforge.script
+
+  for i in *.ttf ;do
+    ditto emdash $i
+    fontforge --script /tmp/fontforge.script $i
+  done
+}
+
 # main
 fforge=$1
 case $1 in
@@ -165,6 +183,7 @@ curlyq     ) ;;
 ligature   ) [ "$2" = 'quasi-proportional' ] && { width=150; shift; } ;;
 punctuation) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
 bookweight ) [ "$2" = '--M' ] && { M=true; shift; } ;;
+dyslexic   ) ;;
 *          ) usage ;;
 esac
 shift

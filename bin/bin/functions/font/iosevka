@@ -19,9 +19,10 @@
 #     iosevka ebook atkinson english  (strict hyperlegible variants)
 #     iosevka extended jost proof     (extended width jost prose font)
 
-type -t usage | grep -q 'shell function' ||  # see make_install
+# type -t usage | grep -q 'shell function' ||  # see make_install
+
 usage() {
-  echo "usage: iosevka [normal (default) | extended | ebook | heading]
+  echo "usage: iosevka [normal (default) | extended | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional]
                [grotesque (default) | atkinson | geometric | jost] [crossed]
                [proof | menu | leading <decimal>]
@@ -39,6 +40,7 @@ usage() {
 # a b c d e f g h i j k l m n o p q r s t u v w x y z      @   $ %   &      { }
 
 REPO=/net/depot/Iosevka
+MAKE_INSTALL=/tmp/iosevka:make_install
 
 leading=1.25  # default coding line spacing
 extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
@@ -61,6 +63,7 @@ grotesque() {
   capital_k=straight-serifless
   capital_q=detached-tailed
   a=double-storey-serifless
+  d=toothed-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
@@ -68,6 +71,7 @@ grotesque() {
   l=flat-tailed
   q=diagonal-tailed
   t=flat-hook-short-neck2
+  u=toothless-rounded
   y=straight-turn
   zero=reverse-slashed
   one=no-base-flat-top-serif
@@ -83,6 +87,7 @@ geometric() {
   capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
   a=single-storey-serifless
+  d=toothed-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
   j=straight-line
@@ -90,6 +95,7 @@ geometric() {
   l=serifless
   q=straight
   t=cross-short-neck2
+  u=toothed
   y=straight
   zero=unslashed-oval
   one=no-base
@@ -102,8 +108,10 @@ variant() {
   for o in $@ ;do  # "o" unused var ($i in use for variant :)
     case $o in
     a          ) a=single-storey-serifless ;;
+    d          ) d=tailed-serifless ;;
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
+    u          ) u=toothed ;;
     ampersand  ) ampersand=closed ;;
     asterisk   ) asterisk=penta-low ;;  # paragraph separator (ebook)
     at         ) at=fourfold ;;
@@ -175,10 +183,11 @@ while [ $1 ] ;do
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
   quasi*   ) spacing=quasi-proportional; leading 1.2500; ebook quasilegible; unset m_weight ;;
+  dyslexic ) shape 600; sb 0.6500; leading 1.4185; ebook monolexic; variant d; dyslexic=true ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
-  atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant Q ampersand at number_sign percent ;;
+  atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant d Q u ampersand at number_sign percent ;;
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family   ) [ $2 ] && family=$2 || usage; shift ;;
@@ -211,11 +220,11 @@ menu  = $weight
 css   = $weight
 "
 
-ifyes "build $family" || usage
+[ -e $MAKE_INSTALL ] &&  ditto make_install "build $family"|| { ifyes "build $family" || usage; }
 # install iosevka repo
 if [ -d $REPO ] ;then
   cd $REPO
-  ifno 'sync iosevka repo' || git pull
+  [ -e $MAKE_INSTALL ] || { ifno 'sync iosevka repo' || git pull; }
 else
   cd ${REPO%/*}
   git clone --depth 1 https://github.com/be5invis/Iosevka.git
@@ -234,7 +243,7 @@ capital-m = 'flat-bottom'             # M
 capital-q = '$capital_q'              # Q
 capital-w = 'straight-flat-top'       # W
 a = '$a'
-d = 'toothed-serifless'
+d = '$d'
 e = 'flat-crossbar'
 f = '$f'
 i = '$i'
@@ -244,7 +253,7 @@ l = '$l'
 q = '$q'
 r = 'compact'
 t = '$t'
-u = 'toothed'
+u = '$u'
 w = 'straight-flat-top'
 y = '$y'
 zero = '$zero'                        # 0
@@ -459,6 +468,8 @@ fi
 [ $spacing = term ] && fforge punctuation $family      # double width emdash and ellipsis
 
 [ $ebook ] && fforge ligature ${spacing#term} $family  # ae width character adjustment
+
+[ $dyslexic ] && fforge dyslexic $family               # book weight for kindle (as regular)
 
 [ $ebook ] && fforge bookweight $m_weight $family      # book weight for kindle (as regular)
 
