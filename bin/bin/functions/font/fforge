@@ -11,11 +11,12 @@ usage() { echo "usage: $(basename $0) curlyq | punctuation [--emdash] | ligature
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 
+confirm() { [ -e $MAKE_INSTALL ] && ditto make_install "$1" || { ifyes "$1" || exit; }; }
+
 # substitute curly tail q
 curlyq() {
   ditto iosevka 'copy char 0u024b and paste to char 0u0071'
-  [ -e $MAKE_INSTALL ] && ditto make_install 'atkinson q update' || { ifyes 'atkinson q update' || exit; }
-
+  confirm 'atkinson q update'
   echo "
 Open(\$1);
 Select(0u024b);
@@ -33,8 +34,7 @@ Generate(\$1);
 
 # double cell width punctuation
 punctuation() {
-  [ -e $MAKE_INSTALL ] && ditto make_install 'add double width punctuation' || { ifyes 'add double width punctuation' || exit; }
-
+  confirm 'add double width punctuation'
   # double width emdash (or '--') and ellipsis
   if [ $emdash ] ;then
     echo "
@@ -82,8 +82,7 @@ ChangeWeight(-20);
 }
 
 ligature() {
-  [ -e $MAKE_INSTALL ] && ditto make_install 'add double width ligatures *experimental*' || { ifyes 'add double width ligatures *experimental*' || exit; }
-
+  confirm 'add double width ligatures *experimental*'
   echo "
 Open(\$1);
 $(transform 0u00e6)
@@ -102,7 +101,7 @@ Generate(\$1);
 
 # set book weights as regular (for kindle use with bold weights)
 bookweight() {
-  [ -e $MAKE_INSTALL ] && ditto make_install 'set book weights as regular' || { ifyes 'set book weights as regular' || exit; }
+  confirm 'set book weights as regular'
   rm -f *\#1.ttf
   rm -f *.ttx
 
@@ -162,11 +161,13 @@ Generate(\$1);
 
 # double cell width space
 dyslexic() {
-  ditto dyslexic 'double width space character'
+  width=$(echo "$space * 100" | bc | cut -d. -f1)
+  confirm "${space}x width space character"
+  ditto dyslexic "${space}x width space character"
   echo "
 Open(\$1);
 Select(0u0020);
-Transform(200,0,0,100,0,0);
+Transform($width,0,0,100,0,0);
 Generate(\$1);
 " >/tmp/fontforge.script
 
@@ -183,7 +184,7 @@ curlyq     ) ;;
 ligature   ) [ "$2" = 'quasi-proportional' ] && { width=150; shift; } ;;
 punctuation) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
 bookweight ) [ "$2" = '--M' ] && { M=true; shift; } ;;
-dyslexic   ) ;;
+dyslexic   ) space=$2; shift ;;
 *          ) usage ;;
 esac
 shift

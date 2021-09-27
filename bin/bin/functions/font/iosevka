@@ -22,8 +22,8 @@
 # type -t usage | grep -q 'shell function' ||  # see make_install
 
 usage() {
-  echo "usage: iosevka [normal (default) | extended | ebook | dyslexic | heading]
-               [english | ligature <name>] [double] [quasi-proportional]
+  echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
+               [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
                [grotesque (default) | atkinson | geometric | jost] [crossed]
                [proof | menu | leading <decimal>]
                [family <name>]
@@ -44,6 +44,7 @@ MAKE_INSTALL=/tmp/iosevka:make_install
 
 leading=1.25  # default coding line spacing
 extended=576  # extended regular shape (slightly tighter than Iosevka defaults)
+expanded=600  # maximum terminal source code and proof legibility
 
 symbols() {
   ampersand=upper-open
@@ -59,11 +60,12 @@ symbols() {
 grotesque() {
   curlyq=true
   capital_g=toothed-serifless-hooked
-  capital_i=serifed
+  capital_i=short-serifed
   capital_k=straight-serifless
   capital_q=detached-tailed
   a=double-storey-serifless
-  d=toothed-serifless
+  b=toothless-corner
+  d=tailed-serifless
   f=flat-hook-crossbar-at-x-height
   i=hooky
   j=flat-hook-serifless
@@ -87,6 +89,7 @@ geometric() {
   capital_k=symmetric-touching-serifless
   capital_q=detached-tailed
   a=single-storey-serifless
+  b=toothed
   d=toothed-serifless
   f=serifless-crossbar-at-x-height
   i=serifless
@@ -105,10 +108,12 @@ geometric() {
 
 # for stricter typeface matching
 variant() {
-  for o in $@ ;do  # "o" unused var ($i in use for variant :)
+  for o in $@ ;do  # "o"nly non-variant character ($i in use for variant :)
     case $o in
     a          ) a=single-storey-serifless ;;
-    d          ) d=tailed-serifless ;;
+    b          ) b=toothed ;;
+    d          ) d=toothed-serifless ;;
+    I          ) capital_i=serifed ;;
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
     u          ) u=toothed ;;
@@ -140,13 +145,13 @@ adjust() {
    echo $(( $1 + $2 ))
 }
 
-shape()   { shape="shape = $1"; }
+shape()   { shape="shape = $(integer $1)"; }
 
 # metric overrides
-leading() { leading="leading = 'default_leading * $1'"; }
-sb()      { sb="sb = 'default_sb * $1'"; }
-cap()     { cap="cap = 'default_cap * $1'"; ditto override "$cap"; }
-xheight() { xheight="xheight = 'default_xheight * $1'"; ditto override "$xheight"; }
+leading() { leading="leading = 'default_leading * $(real $1)'"; }
+sb()      { sb="sb = 'default_sb * $(real $1)'"; }
+cap()     { cap="cap = 'default_cap * $(real $1)'" && ditto override "$cap"; }
+xheight() { xheight="xheight = 'default_xheight * $(real $1)'" && ditto override "$xheight"; }
 
 weight() {
   weight=$(integer $1) || return 1
@@ -158,7 +163,9 @@ weight() {
 # english() { exclude_chars='ranges = [[592, 687], [1024, 8191], [8304, 8351], [8400, 8447], [8528, 8703], [8960, 9631], [9728, 130041]]'; }  # prune unnecessary unicode sets
 english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 566], [568, 586], [588, 709], [712, 712], [714, 727], [734, 805], [807, 915], [917, 936], [938, 955], [957, 959], [961, 7807], [7814, 7921], [7924, 8210], [8213, 8215], [8219, 8219], [8223, 8223], [8227, 8229], [8231, 8239], [8241, 8248], [8251, 8259], [8261, 8363], [8365, 8452], [8454, 8466], [8468, 8469], [8471, 8481], [8483, 8485], [8487, 8493], [8495, 8530], [8533, 8538], [8543, 8705], [8707, 8709], [8711, 8718], [8720, 8720], [8723, 8724], [8726, 8728], [8731, 8733], [8735, 8746], [8748, 8775], [8777, 8799], [8801, 8803], [8806, 9412], [9414, 9673], [9675, 64255], [64261, 130041]]'; }  # [8826, 8827, 8880, 8881] not excluded (?)
 
-ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family=e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
+family()   { [ $1 ] || return 1; family=$1; }
+space()    { space=$(real $1); }
+ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
@@ -173,32 +180,34 @@ spacing=term
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape 500; sb 0.5500 ;;                                                              # normal width
-  ebook    ) shape $extended; sb 0.6000; leading 1.4185; ebook monolegible ;;                     # less sb with higher dpi (maximum leading with kindle font list typeface)
-  extended ) shape $extended; sb 0.7000 ;;                                                        # extended width
-  heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading; variant d ;;  # web heading
-  menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                            # rofi menu
-  proof    ) leading 1.8000; sb 0.8000; build=${build}-proof ;;                                   # prose display needs more sb (larger fontsize)
+  normal   ) shape 500; sb 0.7000 ;;                                                      # normal width
+  ebook    ) shape $extended; sb 0.6250; leading 1.4185; space 1.5; ebook monolegible ;;  # less sb with higher dpi (maximum leading with kindle font list typeface)
+  expanded ) shape $expanded; sb 0.8000 ;;                                                # expanded width (for source code and proof)
+  extended ) shape $extended; sb 0.7000 ;;                                                # extended width (tighter than expanded)
+  heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;     # web heading
+  menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                    # rofi menu
+  proof    ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                           # for pure writing :)
   english  ) english ;;
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; leading 1.2500; ebook quasilegible; unset m_weight ;;
-  dyslexic ) shape 600; sb 0.6500; leading 1.4185; ebook monolexic; variant d; dyslexic=true ;;
+  quasi*   ) spacing=quasi-proportional; sb 0.7000; leading 1.2500; space 2; ebook quasilegible; variant I; unset m_weight ;;
+  dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
-  atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant d Q u ampersand at number_sign percent ;;
+  atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant b d Q u ampersand at number_sign percent ;;
   geometric) geometric; cap +75; build=-jost ;;
   jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
-  family   ) [ $2 ] && family=$2 || usage; shift ;;
+  family   ) family $2    || usage; shift ;;
   # custom
-  cap      ) cap $(real $2)      || usage; shift ;;    # H height (affects descender as well)
-  leading  ) leading $(real $2)  || usage; shift ;;    # line spacing > 1.0
+  cap      ) cap $2       || usage; shift ;;    # H height (affects descender as well)
+  leading  ) leading $2   || usage; shift ;;    # line spacing > 1.0
   noround  ) unset sb ;;
-  sb       ) sb $(real $2)       || usage; shift ;;    # side bearing (spacing)
-  shape    ) shape $(integer $2) || usage; shift ;;    # cell width
-  weight   ) weight $2 $3        || usage; shift 2 ;;  # custom font weight
-  xheight  ) xheight $(real $2)  || usage; shift ;;    # height of x (experimental for larger fontsizes)
+  sb       ) sb $2        || usage; shift ;;    # side bearing (spacing)
+  shape    ) shape $2     || usage; shift ;;    # cell width
+  space    ) space $2     || usage; shift ;;    # space width
+  weight   ) weight $2 $3 || usage; shift 2 ;;  # custom font weight
+  xheight  ) xheight $2   || usage; shift ;;    # height of x (experimental for larger fontsizes)
   *        ) usage ;;
   esac
   shift
@@ -211,6 +220,7 @@ done
 ditto override "$leading"
 ditto override "$shape" 
 ditto override "$sb"
+[ $space ] && ditto override "space ${space}x"
 
 # additional font weight
 [ $weight ] && weight="
@@ -243,6 +253,7 @@ capital-m = 'flat-bottom'             # M
 capital-q = '$capital_q'              # Q
 capital-w = 'straight-flat-top'       # W
 a = '$a'
+b = '$b'
 d = '$d'
 e = 'flat-crossbar'
 f = '$f'
@@ -469,7 +480,7 @@ fi
 
 [ $ebook ] && fforge ligature ${spacing#term} $family  # ae width character adjustment
 
-[ $dyslexic ] && fforge dyslexic $family               # book weight for kindle (as regular)
+[ $space ] && fforge dyslexic $space $family           # book weight for kindle (as regular)
 
 [ $ebook ] && fforge bookweight $m_weight $family      # book weight for kindle (as regular)
 
