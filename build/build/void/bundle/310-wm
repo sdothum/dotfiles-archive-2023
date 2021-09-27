@@ -17,13 +17,22 @@
 = window manager
 = ══════════════
   herbstluftwm
-# 2bwm
+# windowchef
 
 
 = window utilities
 = ════════════════
-# wmutils
-# sxhkd
+  wmutils
+  sxhkd
+
+
+= 2bwm
+= ════
+  libxcb-devel
+  xcb-util-keysyms-devel
+  xcb-util-wm-devel
+  xcb-util-xrm-devel
+m 2bwm
 
 
 # vim: set ft=conf: #

@@ -6,7 +6,7 @@
 # ...................................................................... iosevka
 
 usage() {
-  echo "usage: $(basename $0) iosevka [normal (default) | extended | ebook | heading]
+  echo "usage: $(basename $0) iosevka [normal (default) | extended | expanded | ebook | heading]
                             [english | ligature <name>] [double] [quasi-proportional]
                             [grotesque (default) | atkinson | geometric | jost] [crossed]
                             [proof | menu | leading <decimal>]
@@ -26,9 +26,9 @@ shift
 # build font suite
 ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
 touch $MAKE_INSTALL
-iosevka extended
-iosevka extended proof
-iosevka extended menu
+iosevka expanded
+iosevka expanded proof
+iosevka expanded menu
 iosevka ebook english
 iosevka ebook english atkinson
 iosevka ebook english quasi-proportional
