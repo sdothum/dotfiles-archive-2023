@@ -56,7 +56,8 @@ for i in $(herbstclient monitor_rect $monitor) ;do
   geometry=${geometry#*:}
 done
 
-mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # kludgey column width calculation for title trim below
+fontsize=$(fontsize)
+mid_point=$(( $monitorW / ($fontsize - 3) / 2 ))  # kludgey column width calculation for title trim below
 
 # frame=$(herbstclient attr settings.frame_gap)
 # window=$(herbstclient attr settings.window_gap)
@@ -66,8 +67,8 @@ mid_point=$(( $monitorW / ($(fontsize) - 3) / 2 ))  # kludgey column width calcu
 [ $PANEL_HEIGHT -lt $margin ] && PANEL_HEIGHT=$margin
 [ $PANEL_BOTTOM ] && panel_offsetY=$(( $(query displayheight) - $PANEL_HEIGHT )) || panel_offsetY=$PANEL_HEIGHT
 
-[ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=$(( $margin * 2 ))
-[ $indent -lt $margin ] && indent=$margin
+[ -s $PANEL_INDENT ] && indent=$(cat $PANEL_INDENT) || indent=0
+indent=$(( $margin + $indent ))
 panel_width=$(( $monitorW - $indent * 2 ))
 panel_offsetX=$(( $monitorX + $indent ))
 
@@ -358,6 +359,6 @@ fi
 cat $PANEL_FIFO:$fifo | panel | lemonbar -d -n "lemonbar:$fifo" \
                                          -g ${panel_width}x$PANEL_HEIGHT+$panel_offsetX+$panel_offsetY \
                                          -u $PANEL_UNDERLINE \
-                                         -f "$PANEL_FONT:size=$(fontsize)" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
+                                         -f "$PANEL_FONT:size=$fontsize" -F "$DEFAULT_FG" -B "$DEFAULT_BG" &
 
 # vim: set ft=sh: #

@@ -73,6 +73,7 @@ export TICKER=$SPANEL:ticker
 export WEATHER=$SPANEL:weather
 
 # application states
+export FONTSIZE=$SESSION/fontsize
 export MENU=$SESSION/term:menu
 export NCURSES=$SESSION/ncurses
 export PROOF=$SESSION/proof

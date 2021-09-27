@@ -9,14 +9,14 @@
 
 usage() { 
   echo "toggle: c'olors | p'anel | s'pine"
-  echo "tuples: f'rame_gap | m'argin | panel c'olor | panel h'eight | panel i'ndent | s'pine | w'indow_gap <value>"
+  echo "tuples: f'rame_gap | m'argin | panel c'olor | panel h'eight | panel i'ndent | s'pine | w'indow_gap | font siz'e  <value>"
   echo "          panel color:  <name> or #<hex>"
   echo "          panel indent: '' -> default"
   echo "          spine:        0 -> off"
 }
 
 # ricing parameters
-layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP"
+layout="$FRAME_GAP $MARGIN $PANEL_HEIGHT $PANEL_INDENT $SPINE $WINDOW_GAP $FONTSIZE"
 
 usage
 [ -e $SSPINE ] && { [ -s $SPINE ] && spine=$(cat $SPINE) || spine=3; } || spine=0
@@ -45,7 +45,8 @@ config() {
   # stest -n $PMARGIN $layout >/dev/null || spine || continue
 
   herbstclient detect_monitors  # reset monitor margins (dimensions)
-  killall -q lemonbar
+  # killall -q lemonbar
+  pkill -f 'draw panel'
   draw monitor fullframe
   draw panel
   toggle compton on
@@ -87,6 +88,7 @@ while : ;do
   i) echo $value >$PANEL_INDENT ;;
   s) [ $value -gt 0 ] && { echo $value >$SPINE; spine=$value; touch $SSPINE; } || rm $SSPINE ;;
   w) echo $value >$WINDOW_GAP ;;
+  z) echo $value >$FONTSIZE ;;
   *) usage; continue ;;
   esac
   config
