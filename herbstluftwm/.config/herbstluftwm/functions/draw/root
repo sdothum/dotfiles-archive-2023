@@ -24,7 +24,7 @@ SETBLUR=$HLWM:setblur
 SHUFFLE=$HLWM:shuffle
 
 [ -e $BLACKBOARD ] && exit
-# toggle compton on
+# toggle picom on
 
 # blur radius, brightness (to slightly darken and enhance transparency)
 blur=50

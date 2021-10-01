@@ -49,7 +49,7 @@ config() {
   pkill -f 'draw panel'
   draw monitor fullframe
   draw panel
-  toggle compton on
+  toggle picom on
 
   [ -s $WINDOW_GAP ] && window_gap=$(cat $WINDOW_GAP) || window_gap=$window
   herbstclient attr theme.padding_left        $(edge $spine 0)

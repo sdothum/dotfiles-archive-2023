@@ -16,7 +16,7 @@ export ROOT=${ROOT:-/tmp}
 export HLWM=$ROOT/herbstluftwm
 export SESSION=$HOME/.session
 export UI=$HOME/.session/herbstluftwm
-export COMPTONCONF=$HOME/.compton.conf
+export PICOMCONF=$HOME/.picom.conf
 export CONKYRC=$HOME/.conkyrc
 
 echo $DISPLAY >$SESSION/display  # for cron notifications, see notify
@@ -32,7 +32,7 @@ export BACKGROUND=$HOME/images/default  # ln to WALLPAPER or WALLCOLOR, see draw
 export BLACKBOARD=$HLWM:blackboard
 export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
-export COMPTON=$HLWM:compton
+export PICOM=$HLWM:picom
 export CONKY=$HLWM:conky
 export CONTRAST=$CONKY:contrast
 export DYNAMIC=$HLWM:dynamic
@@ -77,7 +77,7 @@ export FONTSIZE=$SESSION/fontsize
 export MENU=$SESSION/term:menu
 export NCURSES=$SESSION/ncurses
 export PROOF=$SESSION/proof
-export SCOMPTON=$SESSION/compton
+export SPICOM=$SESSION/picom
 export UNCLUTTER=$SESSION/unclutter
 export WSYNC=$SESSION/wsync
 
@@ -114,15 +114,15 @@ export CONKY_INNER=$(conkyrc 'border_inner_margin')
 export CONKY_OUTER=$(conkyrc 'border_outer_margin')
 export CONKY_WIDTH=$(conkyrc 'maximum_width')
 
-# compton shadow left shift pixel adjustment for conky panel edge (0) none
-if [ ! -e $COMPTONCONF ] ;then
+# picom shadow left shift pixel adjustment for conky panel edge (0) none
+if [ ! -e $PICOMCONF ] ;then
   # export SHADOW=0
   export SHADOW=18
-elif grep -q '^shadow-opacity = 0.0' $COMPTONCONF ;then
+elif grep -q '^shadow-opacity = 0.0' $PICOMCONF ;then
   export SHADOW=0
 else
   # assumes shadow-offset = -(shadow-radius)
-  export SHADOW=$(( $(grep '^shadow-radius =' $COMPTONCONF | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR ))
+  export SHADOW=$(( $(grep '^shadow-radius =' $PICOMCONF | sed -r 's/.*= *([0-9]*).*/\1/') * $SHADOW_FACTOR ))
 fi
 
 # ................................................................ Miscellaneous

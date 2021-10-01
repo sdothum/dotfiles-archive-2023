@@ -1,34 +1,34 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="toggle/compton $@" . $PARENT
+[ $TRACE ] && CHILD="toggle/picom $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ............................................................... Toggle compton
+# ................................................................. Toggle picom
 
-# Usage: toggle compton [off | on]
+# Usage: toggle picom [off | on]
 
-which compton >/dev/null 2>&1 || exit
+which picom >/dev/null 2>&1 || exit
 case $1 in
-off) [ -e $COMPTON ] || exit ;;
-on ) [ -e $COMPTON ] && exit ;;
+off) [ -e $PICOM ] || exit ;;
+on ) [ -e $PICOM ] && exit ;;
 esac
 
-if [ -e $COMPTON ] ;then
-  rm -f $COMPTON
+if [ -e $PICOM ] ;then
+  rm -f $PICOM
   notify low 'Compton Compositing' Off
 else
-  touch $COMPTON
+  touch $PICOM
   notify low 'Compton Compositing' On
 fi
 
-if [ -e $COMPTON ] ;then
-  if ! pstat compton ;then
-    compton >/tmp/compton.log 2>&1 &
+if [ -e $PICOM ] ;then
+  if ! pstat picom ;then
+    picom >/tmp/picom.log 2>&1 &
     # xscreensaver -no-splash &
   fi
-elif pstat compton ;then
-  killall -KILL compton
+elif pstat picom ;then
+  killall -KILL picom
   # killall -KILL xscreensaver
 fi
 

@@ -47,7 +47,7 @@ desktop_margin=$(margins $X0)
 # see toggle monocle
 [ -e $MONOCLE ] && monocle=$(cat $MONOCLE) || monocle=0
 
-# with transparent compton window borders, calculations assume..
+# with transparent picom window borders, calculations assume..
 # - frame_border_width=0
 # - smart_frame_surroundings=0
 # - smart_window_surroundings=0

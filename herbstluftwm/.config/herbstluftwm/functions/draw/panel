@@ -34,7 +34,7 @@ TAG_PAD='    '          # tag bar separator (visual spacing)
 STATPAD=${TAG_PAD% }
 
 # panel theme
-DEFAULT_BG='#00000000'  # alpha channel for panel transparency with compton
+DEFAULT_BG='#00000000'  # alpha channel for panel transparency with picom
 DEFAULT_FG="#$(conky color PANEL)"
 ACTIVE_FG="#$(conky color LUARINGS)"
 INACTIVE_FG="#$(conky color colorA)"
