@@ -182,7 +182,7 @@ while [ $1 ] ;do
   # style
   normal   ) shape 500; sb 0.7000 ;;                                                      # normal width
   ebook    ) shape $extended; sb 0.6250; leading 1.4185; space 1.5; ebook monolegible ;;  # less sb with higher dpi (maximum leading with kindle font list typeface)
-  expanded ) shape $expanded; sb 0.8000 ;;                                                # expanded width (for source code and proof)
+  expanded ) shape $expanded; sb 0.8500 ;;                                                # expanded width (for source code and proof)
   extended ) shape $extended; sb 0.7000 ;;                                                # extended width (tighter than expanded)
   heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;     # web heading
   menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                    # rofi menu
@@ -190,7 +190,7 @@ while [ $1 ] ;do
   english  ) english ;;
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; sb 0.7000; leading 1.2500; space 2; ebook quasilegible; variant I; unset m_weight ;;
+  quasi*   ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I; unset m_weight ;;
   dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
   # font
   cross*   ) variant Q ;;

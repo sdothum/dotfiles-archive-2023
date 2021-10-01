@@ -43,7 +43,8 @@ archive() {
       # [ -d /net/archive/${PLEX#/} ] || mkdir -pv /net/archive/${PLEX#/} || exit 1
       # sudo_rsync -r --delete $PLEX/Plex\ Media\ Server /net/archive/${PLEX#/}/
       mkdir -p /net/archive/srv/lib || exit 1
-      sudo_rsync -r --delete /srv/lib/postgres /net/archive/srv/lib/
+      # sudo_rsync -r --delete /srv/lib/postgres /net/archive/srv/lib/
+      sudo_rsync -r --delete /var/lib/mysql /net/archive/var/lib/
       mkdir -p /net/archive/etc/webapps/tt-rss || exit 1
       sudo_rsync /etc/webapps/tt-rss/config.php /net/archive/etc/webapps/tt-rss/
     }
@@ -82,9 +83,12 @@ restore() {
       # sudo systemctl stop plexmediaserver
       # sudo_rsync -r --delete /net/archive/${PLEX#/}/Plex\ Media\ Server $PLEX/
       # sudo systemctl start plexmediaserver
-      sudo systemctl stop postgres
-      sudo_rsync -r --delete /net/archive/srv/lib/postgres /srv/lib/
-      sudo systemctl start postgres
+      # sudo systemctl stop postgres
+      # sudo_rsync -r --delete /net/archive/srv/lib/postgres /srv/lib/
+      # sudo systemctl start postgres
+      sudo systemctl stop mysqld
+      sudo_rsync -r --delete /net/archive/var/lib/mysql /var/lib/
+      sudo systemctl start mysqld
       sudo systemctl stop tt-rss
       sudo_rsync /net/archive/etc/webapps/tt-rss/config.php /etc/webapps/tt-rss/
       sudo systemctl start tt-rss

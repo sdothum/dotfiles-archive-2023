@@ -13,9 +13,10 @@ case $1 in
 off) sudo systemctl disable connman
      sudo systemctl enable dhcpcd
      sudo systemctl enable dovecot
+     sudo systemctl enable mysqld
      sudo systemctl enable nginx
      sudo systemctl enable php-fpm
-     sudo systemctl enable postgresql
+     # sudo systemctl enable postgresql
      sudo systemctl enable tt-rss
      sudo systemctl enable znc ;;
 
@@ -23,9 +24,10 @@ off) sudo systemctl disable connman
 on ) sudo systemctl enable connman
      sudo systemctl disable dhcpcd
      sudo systemctl disable dovecot
+     sudo systemctl disable mysqld
      sudo systemctl disable nginx
      sudo systemctl disable php-fpm
-     sudo systemctl disable postgresql
+     # sudo systemctl disable postgresql
      sudo systemctl disable tt-rss
      sudo systemctl disable znc ;;
 

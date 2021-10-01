@@ -15,7 +15,7 @@ case $1 in
 on ) [ -e $DYNAMIC ] && { rm $DYNAMIC; touch $V_DYNAMIC; }
      [ -e $NCURSES ] && touch $V_NCURSES
      rm -f $MENU
-     [ -e $SCOMPTON:toggle ] && touch $NCURSES
+     [ -e $SPICOM:toggle ] && touch $NCURSES
      conky clock stop
      [ -e $BLACKBOARD ] || blackboard  # bypass blackboard toggling if already on
      hdmi && pulse ;;                  # check hdmi audio
