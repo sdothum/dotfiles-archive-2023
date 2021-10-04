@@ -67,7 +67,8 @@ setblur() {
 
 # create pulsar border color gradient
 set_border() {
-  rice palette $1 'Monochromatic' >$PULSAR
+  # rice palette $1 'Monochromatic' >$PULSAR
+  rice palette red 'Tint' >$PULSAR
   # set border to midtone
   cut -d' ' -f1 $PULSAR >$BORDER
   # refresh border of active window
@@ -87,15 +88,16 @@ blank() {
   fi
   setroot --blank-color "#$color" 2>/dev/null
   # blackboard reserved for media playback background
-  if [ $color != 000000 ] ;then
-    echo $color >$COLOR
-    contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
-    if   [ "$contrast" = dark  ] ;then set_border "$(rice conky light $color)"
-    elif [ "$contrast" = light ] ;then set_border "$(rice conky dark $color)"
-    else                               set_border "$(rice conky contrast $color)"
-    fi
-  fi
+  # if [ $color != 000000 ] ;then
+  #   echo $color >$COLOR
+  #   contrast=$(find $PALETTE -name $color.png | sed -r 's/.*(dark|light).*/\1/')
+  #   if   [ "$contrast" = dark  ] ;then set_border "$(rice conky light $color)"
+  #   elif [ "$contrast" = light ] ;then set_border "$(rice conky dark $color)"
+  #   else                               set_border "$(rice conky contrast $color)"
+  #   fi
+  # fi
   echo $color >$BLANK
+  luminance -$color && echo light >$THEME || echo dark >$THEME
   # make inactive border invisible!
   herbstclient attr theme.normal.color "#$color"
 }
@@ -192,18 +194,20 @@ if [ ! -e $BLANK ] ;then
   if [ -e $background ] ;then
     cp $background $THEME
     [ -e $HOME/.conkyrc ] && is display +1920 && draw conky
-  # else
+  else
   #   term 'Theme' STACK SHELL 'rice cooker'
   #   pwait 'rice cooker'
+    echo light >$THEME
   fi
-  set_border $(rice palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
+  # set_border $(rice palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
+  set_border
 fi
 
 # overlay panel with new theme to avuid panel flicker
 panel=$(pgrep -f 'draw panel')
 echo '!panel:stat' >$(cat $PANEL_FIFO)  # save cpu_stats
-draw panel  # draw over old theme
-sleep 0.25   # wait for overlay
+draw panel                              # draw over old theme
+sleep 0.25                              # wait for overlay
 [ "$panel" ] && kill $panel
 
 # vim: set ft=sh: #
