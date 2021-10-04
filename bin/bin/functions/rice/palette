@@ -44,7 +44,7 @@ palette() {
 hex() { X='[0-9a-f]'; echo $1 | grep -qi '^#*$X$X$X$X$X$X$'; }
 
 hex $1 && hex=$1 || { hex=$(pastel format hex $1 2>/dev/null) || exit; }
-colors=$(palette ${hex#\#})
+colors=$(palette ${hex#?})
 [ $2 ] && { colors=$(echo "$colors" | grep -i "^$2"); true; } || exec echo "$colors"
 [ "$colors" ] && echo "$colors" | cut -d' ' -f2- || echo $BLANK | sed "s/ffffff/$1/g"
 

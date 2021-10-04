@@ -9,9 +9,7 @@
 
 VIEWER='[ viewer ]'
 UPDATE='[ update ]'
-  DARK='[ dark  ]'
- LIGHT='[ light ]'
-  SAVE='[ save  ]'
+  SAVE='[ save ]'
 
 # catalogue of root background colors
 root() { find $PALETTE -name '*png' | egrep '(dark|light)/' | sed -r "s,.*/(.*)/(.*)/(.*).png,\3^$SEP \1 \2," | sort -r -k2 >$HISTORY/root; }
@@ -23,16 +21,22 @@ themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
 hex()    { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'; }
 colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$VIEWER\n$UPDATE"; }
 
+theme() {
+  case $1 in 
+  dark ) echo light >$THEME ;;
+  light) echo dark  >$THEME ;;
+  esac
+}
+
 while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   case $color in
   ''       ) break ;;
   "$VIEWER") exec draw root restore ;;
   "$UPDATE") root ;;
-  "$DARK"  ) rice conky dark $bg ;;
-  "$LIGHT" ) rice conky light $bg ;;
 
   "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
-             contrast=$(cat $CONTRAST)
+             contrast=$(cat $CONTRAST)  # see draw root blank
+             theme $contrast
              mhistory root "$bg^$SEP $contrast $hue"
              swatch $bg $hue
              ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
@@ -40,18 +44,19 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
 
   *dark*     |\
   *light*  ) bg=$(echo $color | cut -d' ' -f1)
+             theme $(echo $color | cut -d' ' -f3)
              draw root blank $bg
              ln -sf $(find $PALETTE -name $bg.png) $WALLCOLOR
              ln -sf $WALLCOLOR $BACKGROUND
              mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
              break ;;
 
-  *        ) hex $color || continue
+  *        ) hex $color || { color=$(pastel format hex $color 2>/dev/null) && color=${color#?} || exit; } || continue
              draw root blank $color
              bg=$color
              # overlay conky panel over rmenu screen!
              draw conky
-             menu="$DARK\n$LIGHT\n$SAVE" ;;
+             menu=$SAVE ;;
   esac
 done
 
