@@ -30,33 +30,34 @@ theme() {
 
 while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   case $color in
-  ''       ) break ;;
-  "$VIEWER") exec draw root restore ;;
-  "$UPDATE") root ;;
+  ''        ) break ;;
+  "$VIEWER"*) exec draw root restore ;;
+  "$UPDATE"*) root ;;
 
-  "$SAVE"  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
-             contrast=$(cat $CONTRAST)  # see draw root blank
-             theme $contrast
-             mhistory root "$bg^$SEP $contrast $hue"
-             swatch $bg $hue
-             ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
-             ln -sf $WALLCOLOR $BACKGROUND ;;
+  "$SAVE"*  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
+              contrast=$(cat $CONTRAST)  # see draw root blank
+              theme $contrast
+              mhistory root "$bg^$SEP $contrast $hue"
+              swatch $bg $hue
+              ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
+              ln -sf $WALLCOLOR $BACKGROUND
+              break ;;
 
-  *dark*     |\
-  *light*  ) bg=$(echo $color | cut -d' ' -f1)
-             theme $(echo $color | cut -d' ' -f3)
-             draw root blank $bg
-             ln -sf $(find $PALETTE -name $bg.png) $WALLCOLOR
-             ln -sf $WALLCOLOR $BACKGROUND
-             mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
-             break ;;
+  *dark*      |\
+  *light*   ) bg=$(echo $color | cut -d' ' -f1)
+              theme $(echo $color | cut -d' ' -f3)
+              draw root blank $bg
+              ln -sf $(find $PALETTE -name $bg.png) $WALLCOLOR
+              ln -sf $WALLCOLOR $BACKGROUND
+              mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
+              break ;;
 
-  *        ) hex $color || { color=$(pastel format hex $color 2>/dev/null) && color=${color#?} || exit; } || continue
-             draw root blank $color
-             bg=$color
-             # overlay conky panel over rmenu screen!
-             draw conky
-             menu=$SAVE ;;
+  *         ) hex $color || { color=$(pastel format hex $color 2>/dev/null) && color=${color#?} || exit; } || continue
+              draw root blank $color
+              bg=$color
+              # overlay conky panel over rmenu screen!
+              draw conky
+              menu=$SAVE ;;
   esac
 done
 
