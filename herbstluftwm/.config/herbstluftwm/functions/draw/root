@@ -158,7 +158,7 @@ blank    ) blank $2 ;;
 restore  ) select_blank ;;
 wallpaper) wallpaper ;;
 
-save     ) color=$(cat $COLOR)
+save     ) color=$(cat $BLANK)
            swatch $color
            notify low 'Background Color' "$color saved" ;;
 
