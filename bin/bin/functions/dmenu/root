@@ -9,7 +9,7 @@
 
 VIEWER='[ viewer ]'
 UPDATE='[ update ]'
-  SAVE='[ save ]'
+  SAVE='[ save as ]'
 
 # catalogue of root background colors
 root() { find $PALETTE -name '*png' | egrep '(dark|light)/' | sed -r "s,.*/(.*)/(.*)/(.*).png,\3^$SEP \1 \2," | sort -r -k2 >$HISTORY/root; }
@@ -34,7 +34,7 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   "$VIEWER"*) exec draw root restore ;;
   "$UPDATE"*) root ;;
 
-  "$SAVE"*  ) hue=$(echo "$(themes)" | rmenu 'Colour') || exit
+  "$SAVE"*  ) hue=$(echo "$(themes)" | rmenu 'Colour (name)') || exit
               contrast=$(cat $CONTRAST)  # see draw root blank
               theme $contrast
               mhistory root "$bg^$SEP $contrast $hue"
@@ -47,7 +47,7 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   *light*   ) bg=$(echo $color | cut -d' ' -f1)
               theme $(echo $color | cut -d' ' -f3)
               draw root blank $bg
-              ln -sf $(find $PALETTE -name $bg.png) $WALLCOLOR
+              ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
               ln -sf $WALLCOLOR $BACKGROUND
               mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
               break ;;

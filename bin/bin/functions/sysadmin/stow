@@ -25,7 +25,7 @@ sync ) link '&& stow' ;;
 clean) link '|| stow D' ;;
 check) link '&& ditto' ;;
 D | R) [ $2 ] && { /usr/bin/stow -v -t $HOME -d $STOW -$1 $2 2>&1 | grep -v BUG; true; } || usage ;;  # suppress stow path bugs
-*    ) /usr/bin/stow -v -t $HOME -d $STOW -S $1 ;;
+*    ) /usr/bin/stow -v -t $HOME -d $STOW -S --ignore=.deprecated $1 ;;
 esac
 
 # vim: set ft=sh: #
