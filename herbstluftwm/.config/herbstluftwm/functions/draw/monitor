@@ -13,6 +13,11 @@
 #        draw monitor secondary [fullscreen], secondary monitor view
 #        draw monitor menu
 
+# Note: 1) sliding conky sidebar visibility is no longer actively maintained.. gauges are distracting eye candy!
+#          replaced with a more minimalist togglable panel instead, see draw panel and draw root
+#       2) secondary monitor is no longer part of present desktop configuration
+#          desktop real estate currently satisfied with a single "primary" ultra wide monitor  
+
 SHADOW=${SHADOW:-1}
 # load theme
 # . ${0%/draw}/config/ENV

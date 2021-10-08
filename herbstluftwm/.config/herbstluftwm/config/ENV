@@ -30,7 +30,7 @@ export WALLPAPER=$HOME/images/backgrounds/default
 export BACKGROUND=$HOME/images/default  # ln to WALLPAPER or WALLCOLOR, see draw root
 
 export BLACKBOARD=$HLWM:blackboard
-export BLANK=$HLWM:blank
+# export BLANK=$HLWM:blank
 export BORDER=$HLWM:border
 export PICOM=$HLWM:picom
 export CONKY=$HLWM:conky

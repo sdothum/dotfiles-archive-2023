@@ -56,7 +56,7 @@ root() {
 }
 
 setblur() {
-  if [ ! -e $BLANK ] ;then
+  if [ ! -e $COLOR ] ;then
     primary=$(root 0)
     is multihead && secondary=$(root 1)
   fi
@@ -87,6 +87,7 @@ blank() {
     rm -f $SETROOT
   fi
   setroot --blank-color "#$color" 2>/dev/null
+  echo $color >$COLOR
   # blackboard reserved for media playback background
   # if [ $color != 000000 ] ;then
   #   echo $color >$COLOR
@@ -96,21 +97,16 @@ blank() {
   #   else                               set_border "$(rice conky contrast $color)"
   #   fi
   # fi
-  echo $color >$BLANK
   luminance -$color && echo light >$THEME || echo dark >$THEME
   # make inactive border invisible!
   herbstclient attr theme.normal.color "#$color"
 }
 
-color() {
+select_blank() {
+  notify time=5 low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
   # initialize default link
   [ -L $WALLCOLOR ] && exists $WALLCOLOR || ln -sf $(find $PALETTE -name '*.png' | head -1) $WALLCOLOR
   ln -sf $WALLCOLOR $BACKGROUND
-}
-
-select_blank() {
-  notify time=5 low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
-  color
   # to use office/feh and focus, the quoted --action must be escaped and pwait invoked..
   /usr/bin/feh -B black --scale-down -r \
                -A "ln -sf %f $WALLCOLOR && xdotool type 'q'" \
@@ -124,7 +120,7 @@ wallpaper() {
   # initialize default link
   [ -L $WALLPAPER ] && exists $WALLPAPER || ln -sf $(ls -1 ${WALLPAPER%/default}/$WALL/*.png | head -1) $WALLPAPER
   ln -sf $WALLPAPER $BACKGROUND
-  rm -f $BLANK
+  rm -f $COLOR
   rm -f $THEME
   herbstclient attr theme.normal.color $NORMAL
 }
@@ -141,7 +137,7 @@ select_wallpaper() {
 
 shuffle() {
   ln -sf $(find ${WALLPAPER%/default} -name '*.png' | shuf -n1) $WALLPAPER
-  rm -f $BLANK
+  rm -f $COLOR
   rm -f $THEME
 }
 
@@ -158,7 +154,7 @@ blank    ) blank $2 ;;
 restore  ) select_blank ;;
 wallpaper) wallpaper ;;
 
-save     ) color=$(cat $BLANK)
+save     ) color=$(cat $COLOR)
            swatch $color
            notify low 'Background Color' "$color saved" ;;
 
@@ -184,10 +180,10 @@ esac
 # .................................................................. Apply theme
 
 setblur >$SETBLUR
-[ -e $BLANK ] || setroot ${primary#?:} ${secondary#?:} &
+[ -e $COLOR ] || setroot ${primary#?:} ${secondary#?:} &
 
 # apply rice conky to .conkyrc, $THEME unset above if new background
-if [ ! -e $BLANK ] ;then
+if [ ! -e $COLOR ] ;then
   [ -e $THEME ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour
