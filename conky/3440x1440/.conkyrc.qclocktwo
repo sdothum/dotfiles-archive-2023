@@ -6,7 +6,7 @@ conky.config = {
 	double_buffer = true,
 	draw_shades = true,
 	-- font = 'Noto Sans Mono:size=24', conky.text = [[ ${voffset 493}
-	font = 'Major Mono Display:size=24',
+  font = 'Major Mono Display:size=24',
 	-- gap_x = 0,
 	-- new xorg doesn't center on primary monitor
 	gap_x = -1680,
