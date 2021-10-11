@@ -87,7 +87,7 @@ blank() {
     rm -f $SETROOT
   fi
   setroot --blank-color "#$color" 2>/dev/null
-  echo $color >$COLOR
+  [ $color = 000000 ] || echo $color >$COLOR
   # blackboard reserved for media playback background
   # if [ $color != 000000 ] ;then
   #   echo $color >$COLOR
