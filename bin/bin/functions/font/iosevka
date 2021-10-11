@@ -8,23 +8,28 @@
 
 # for git iosevka 10.x
 
-# eg. iosevka extended                (grotesque width coding font, reduce display fontsize by 1) **
+# eg. source code and desktop fonts..
+#     iosevka extended                (grotesque width coding font, reduce display fontsize by 1)
 #     iosevka extended proof crossed  (grotesque width prose font) **
-#     iosevka extended menu **
-#     iosevka ebook english **
-#     iosevka ebook english quasi-proportional **
-#     iosevka heading english **
-#     ** fonts i use with variant optimizatons, full atkinson looks best in larger font sizes
+#     iosevka extended menu
+#     iosevka heading english
 #
-#     iosevka ebook atkinson english  (strict hyperlegible variants)
-#     iosevka extended jost proof     (extended width jost prose font)
+#     e-ink fonts..
+#     iosevka ebook english
+#     iosevka ebook english quasi-proportional
+#     iosevka dyslexic english
+#     iosevka dyslexic mono english
+#
+#     variants, full atkinson looks best in larger font sizes..
+#     iosevka ebook atkinson english         (strict hyperlegible variants)
+#     iosevka extended geometric jost proof  (extended width jost prose font)
 
 # type -t usage | grep -q 'shell function' ||  # see make_install
 
 usage() {
-  echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
+  echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic [mono] | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
-               [grotesque (default) | atkinson | geometric | jost] [crossed]
+               [grotesque (default) | atkinson | geometric [jost]] | [crossed]
                [proof | menu | leading <decimal>]
                [family <name>]
                [cap [-+]<decimal>]
@@ -79,6 +84,7 @@ grotesque() {
   one=no-base-flat-top-serif
   six=closed-contour
   symbols
+  cyrl_ka=symmetric-touching-serifless
 }
 
 # jost* typeface
@@ -104,6 +110,7 @@ geometric() {
   one=no-base
   six=straight-bar
   symbols
+  cyrl_ka=symmetric-connected-serifless
 }
 
 # for stricter typeface matching
@@ -191,13 +198,12 @@ while [ $1 ] ;do
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
   quasi*   ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 1.66; ebook quasilegible; variant I; unset m_weight ;;
-  dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
+  dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; [ "$2" = mono ] && { space 2; ebook monolexic; shift; } || { space 1.75; ebook $1; } ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
   atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant b d Q u ampersand at number_sign percent ;;
-  geometric) geometric; cap +75; build=-jost ;;
-  jost     ) geometric; cap +75; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
+  geometric) geometric; cap 1.225; build=-jost; [ "$2" = jost ] && { variant a j Q ampersand at dollar number_sign percent question; shift; } ;;
   family   ) family $2    || usage; shift ;;
   # custom
   cap      ) cap $2       || usage; shift ;;    # H height (affects descender as well)
@@ -278,9 +284,8 @@ brace = 'straight'                    # {}
 ampersand = '$ampersand'              # &
 asterisk = '$asterisk'                # *
 at = '$at'                            # @
-cyrl-capital-ka = '$k'                # К
-cyrl-ka = '$k'                        # к
-cyrl-capital-u = '$y'                 # У
+cyrl-capital-ka = '$cyrl_ka'          # К
+cyrl-ka = '$cyrl_ka'                  # к
 dollar = '$dollar'                    # $
 eszet = 'sulzbacher'                  # ß
 long-s = 'flat-hook'                  # ſ

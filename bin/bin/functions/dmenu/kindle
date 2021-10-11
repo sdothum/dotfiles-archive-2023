@@ -20,7 +20,7 @@ em_linespace=0.33,1.25
 # override device/cloud transfer and create kindle/kobo file
 case $1 in
 azw3    ) option=${option:-default}; format=azw3; library=true; shift ;;  # library update
-epub    ) option=${option:-default}; format=epub;               shift ;;  # epub output hack
+epub    ) option=${option:-default}; format=epub; library=true; shift ;;  # epub output hack
 esac
 
 # override left justification
@@ -35,10 +35,12 @@ all     ) option=all;      shift ;;
 esac
 
 # <regex> autoconvert epubs to awz3
-if [ "$format" = azw3 ] ;then
-  [ "$1"    ] || { find . -iname '*epub' -exec dmenu kindle azw3 $option {} \; ; exit; }
-  [ -e "$1" ] || { find . -iname "$1" -exec dmenu kindle azw3 $option {} \; ; exit; }
-fi
+case "$format" in
+azw3) [ "$1"    ] || { find . -iname '*epub' -exec dmenu kindle azw3 $option {} \; ; exit; }
+      [ -e "$1" ] || { find . -iname "$1"    -exec dmenu kindle azw3 $option {} \; ; exit; } ;;
+epub) [ "$1"    ] || { find . -iname '*azw3' -exec dmenu kindle epub $option {} \; ; exit; }
+      [ -e "$1" ] || { find . -iname "$1"    -exec dmenu kindle epub $option {} \; ; exit; } ;;
+esac
 
 file=$1
 name=$(basename "${file%.*}")
