@@ -18,7 +18,7 @@
 #     iosevka ebook english
 #     iosevka ebook english quasi-proportional
 #     iosevka dyslexic english
-#     iosevka dyslexic mono english
+#     iosevka dyslexic english space 1.75 family eDyslexic
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
@@ -27,9 +27,9 @@
 # type -t usage | grep -q 'shell function' ||  # see make_install
 
 usage() {
-  echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic [mono] | heading]
+  echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
-               [grotesque (default) | atkinson | geometric [jost]] | [crossed]
+               [grotesque (default) | atkinson | geometric | jost] | [crossed]
                [proof | menu | leading <decimal>]
                [family <name>]
                [cap [-+]<decimal>]
@@ -198,12 +198,13 @@ while [ $1 ] ;do
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
   quasi*   ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 1.66; ebook quasilegible; variant I; unset m_weight ;;
-  dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; [ "$2" = mono ] && { space 2; ebook monolexic; shift; } || { space 1.75; ebook $1; } ;;
+  dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
   # font
   cross*   ) variant Q ;;
   grotesque) grotesque ;;
   atkinson ) grotesque; [ $ebook ] && { leading 1.2500; ebook hyperlegible; }; variant b d Q u ampersand at number_sign percent ;;
-  geometric) geometric; cap 1.225; build=-jost; [ "$2" = jost ] && { variant a j Q ampersand at dollar number_sign percent question; shift; } ;;
+  geometric) geometric; cap 1.225; build=-jost ;;
+  jost     ) geometric; cap 1.225; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family   ) family $2    || usage; shift ;;
   # custom
   cap      ) cap $2       || usage; shift ;;    # H height (affects descender as well)
