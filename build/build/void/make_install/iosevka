@@ -33,7 +33,7 @@ iosevka ebook english
 iosevka ebook english atkinson
 iosevka ebook english quasi-proportional
 iosevka dyslexic english
-iosevka dyslexic mono english
+iosevka dyslexic english space 1.75 family eDyslexic
 iosevka heading english
 rm -f $MAKE_INSTALL
 
