@@ -5,7 +5,7 @@
 
 # ...................................................................... E-books
 
-usage() { echo "usage: $(basename $0) kindle [azw3 | epub] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
+usage() { echo "usage: $(basename $0) kindle [azw3 | epub | same] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
 
 kindle=/run/media/$USER/Kindle
 [ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
@@ -14,13 +14,14 @@ kindle=$kindle/documents/
 # enhanced em-legible spacing!
 # em_indent=2       # conventional paragraph indent
 # em_linespace=0,1  # conventional indent,noindent spacing
-em_indent=1.66
+em_indent=1.95      # tuned to 3x space monolexic font for kindle's rendering engine
 em_linespace=0.33,1.25
 
 # override device/cloud transfer and create kindle/kobo file
 case $1 in
 azw3    ) option=${option:-default}; format=azw3; library=true; shift ;;  # library update
 epub    ) option=${option:-default}; format=epub; library=true; shift ;;  # epub output hack
+same    ) option=${option:-default}; format=same; library=true; shift ;;  # epub output hack
 esac
 
 # override left justification
@@ -31,7 +32,7 @@ justify ) option=justify;  shift ;;
 noindent) option=noindent; shift ;;  # retain poetry formatting
 poetry  ) option=noindent; shift ;;  # retain poetry formatting
 all     ) option=all;      shift ;;
-*       ) find . -iname "$1" | grep -q '[.]' || usage ;;
+*       ) [ -e "$1" ] || { find . -iname "$1" | grep -q '[.]' || usage; } ;;
 esac
 
 # <regex> autoconvert epubs to awz3
@@ -40,6 +41,7 @@ azw3) [ "$1"    ] || { find . -iname '*epub' -exec dmenu kindle azw3 $option {} 
       [ -e "$1" ] || { find . -iname "$1"    -exec dmenu kindle azw3 $option {} \; ; exit; } ;;
 epub) [ "$1"    ] || { find . -iname '*azw3' -exec dmenu kindle epub $option {} \; ; exit; }
       [ -e "$1" ] || { find . -iname "$1"    -exec dmenu kindle epub $option {} \; ; exit; } ;;
+same) format=${1##*\.}; same=true ;;  # for re-tweaking converted ebooks
 esac
 
 file=$1
@@ -103,7 +105,7 @@ ditto $format "$file"
 # ebook-convert "$file" "${output%.*}.epub"  # test image
 # convert even .azw3 to inject folder title and author
 ebook-convert "$file" "${output%.*}.$format"                                               \
-              --title="$title" --authors="$author"                                         \
+              $([ $same ] && echo || echo "--title=\"$title\" --authors=\"$author\"")        \
               --change-justification="$justify"                                            \
               --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
               --insert-blank-line --insert-blank-line-size=$linespace                      \
