@@ -6,8 +6,7 @@ conky.config = {
 	double_buffer = true,
 	draw_shades = true,
 	-- font = 'Noto Sans Mono:size=24', conky.text = [[ ${voffset 493}
-  -- font = 'Major Mono Display:size=24',
-  font = 'eMonolexic:size=20',
+	font = 'Major Mono Display:size=24',
 	-- gap_x = 0,
 	-- new xorg doesn't center on primary monitor
 	gap_x = -1680,
@@ -20,15 +19,14 @@ conky.config = {
 	own_window = true,
 	own_window_type = 'panel',
 	update_interval = 1.0,
+	uppercase = true,
 	use_xft = true,
 	xftalpha = 0.1,
 };
 
--- ${voffset 413}
--- ${execp conky qclocktwo '{voffset 20}' '{offset 3200}'}
 conky.text = [[
-${voffset 386}
-${execp conky qclocktwo '{voffset 5}' '{offset 3150}'}
+${voffset 413}
+${execp conky qclocktwo '{voffset 20}' '{offset 3200}'}
 ]];
 
 -- vim: set ft=lua : --
