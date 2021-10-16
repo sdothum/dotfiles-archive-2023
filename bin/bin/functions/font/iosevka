@@ -16,9 +16,12 @@
 #
 #     e-ink fonts..
 #     iosevka ebook english
+#     iosevka ebook english i-serifless
+#     iosevka ebook english atkinson
 #     iosevka ebook english quasi-proportional
+#     iosevka ebook english quasi-proportional i-serifless
 #     iosevka dyslexic english
-#     iosevka dyslexic english space 1.75 family eDyslexic
+#     iosevka dyslexic english i-serifless
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
@@ -29,7 +32,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
-               [grotesque (default) | atkinson | geometric | jost] | [crossed]
+               [grotesque (default) | atkinson | geometric | jost] | [i-serifless] | [q-crossed]
                [proof | menu | leading <decimal>]
                [family <name>]
                [cap [-+]<decimal>]
@@ -120,7 +123,8 @@ variant() {
     a          ) a=single-storey-serifless ;;
     b          ) b=toothed ;;
     d          ) d=toothed-serifless ;;
-    I          ) capital_i=serifed ;;
+    I          ) capital_i=serifless; family=$(echo $family | sed 's/^e/i/') ;;
+    I+         ) capital_i=serifed ;;
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
     u          ) u=toothed ;;
@@ -197,10 +201,11 @@ while [ $1 ] ;do
   english  ) english ;;
   ligature ) ligature $2         || usage; shift ;;
   double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I; unset m_weight ;;
+  quasi*   ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I+; unset m_weight ;;
   dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
   # font
-  cross*   ) variant Q ;;
+  i-serif* ) variant I ;;
+  q-cross* ) variant Q ;;
   grotesque) grotesque ;;
   atkinson ) grotesque; ebook hyperlegible; variant b d Q u ampersand at number_sign percent ;;
   geometric) geometric; cap 1.225; build=-jost ;;
