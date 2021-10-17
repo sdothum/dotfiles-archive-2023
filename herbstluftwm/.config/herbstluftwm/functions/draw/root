@@ -12,7 +12,7 @@
 #        draw root, refresh background if necessary, shuffling if set
 #        draw root blank, draw random background color
 #        draw root restore, restore background color
-#        draw root save, save background color
+#        draw root theme, switch contrast
 #        draw root select, select default background and disable shuffling
 #        draw root shuffle, enable random background shuffling
 #        draw root blur, toggle background blur mode
@@ -102,6 +102,14 @@ blank() {
   herbstclient attr theme.normal.color "#$color"
 }
 
+# switch theme
+theme() {
+  case $(cat $THEME) in
+  dark ) echo light >$THEME ;;
+  light) echo dark  >$THEME ;;
+  esac
+}
+
 select_blank() {
   notify time=5 low 'Root Background' '<Space>  Show next\n<Enter>  Select color'
   # initialize default link
@@ -152,11 +160,8 @@ unblur() {
 case $1 in
 blank    ) blank $2 ;;
 restore  ) select_blank ;;
+theme    ) theme ;;
 wallpaper) wallpaper ;;
-
-save     ) color=$(cat $COLOR)
-           swatch $color
-           notify low 'Background Color' "$color saved" ;;
 
 select   ) rm -f $SHUFFLE
            select_wallpaper

@@ -34,7 +34,7 @@ export BLACKBOARD=$HLWM:blackboard
 export BORDER=$HLWM:border
 export PICOM=$HLWM:picom
 export CONKY=$HLWM:conky
-export CONTRAST=$CONKY:contrast
+# export CONTRAST=$CONKY:contrast
 export DYNAMIC=$HLWM:dynamic
 export FORTUNE=$HLWM:fortune
 export FOCUS=$HLWM:focus
@@ -54,7 +54,7 @@ echo $PANEL_FIFO:$(herbstclient attr monitors.focus.index) >$PANEL_FIFO  # sat b
 # ............................................................... Session states
 
 # wm states, see gaps
-export CONTRAST=$SESSION/contrast
+# export CONTRAST=$SESSION/contrast
 export FRAME_GAP=$UI:frame_gap
 export MARGIN=$UI:margin
 export NOBLUR=$SESSION/noblur
