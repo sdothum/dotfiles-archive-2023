@@ -144,13 +144,15 @@ contrast) [ $# -eq 1 ] && { luminance +$1 && rice conky dark $1 || rice conky li
 light   ) [ $# -eq 1 ] || exit
           hexgen $(rice palette $1 Shade | cut -d' ' -f4)
           paper
-          echo dark >$CONTRAST
+          # echo dark >$CONTRAST
+          echo dark >$THEME
           theme ;;
 
 dark    ) [ $# -eq 1 ] || exit
           hexgen $(rice palette $1 Tint | cut -d' ' -f4)
           ink
-          echo light >$CONTRAST
+          # echo light >$CONTRAST
+          echo light >$THEME
           theme ;;
 
 test    ) [ $# -eq 1 ] || exit

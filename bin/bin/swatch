@@ -13,7 +13,8 @@
 size=180x180
 
 if [ $2 ] ;then
-  swatch=$PALETTE/$(cat $CONTRAST)/$2
+  # swatch=$PALETTE/$(cat $CONTRAST)/$2
+  swatch=$PALETTE/$(cat $THEME)/$2
   mkdir -p $swatch || exit 1
   convert -size $size xc:"#$1" $swatch/$1.png
 else

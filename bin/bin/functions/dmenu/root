@@ -5,21 +5,16 @@
 
 # ................................................................... Background
 
-# Usage: dmenu root [cache]
+# Usage: dmenu root [cache] [save]
 
 VIEWER='[ viewer ]'
 UPDATE='[ update ]'
   SAVE='[ save as ]'
 
 # catalogue of root background colors
-root() { find $PALETTE -name '*png' | egrep '(dark|light)/' | sed -r "s,.*/(.*)/(.*)/(.*).png,\3^$SEP \1 \2," | sort -r -k2 >$HISTORY/root; }
-
-# rebuild swatches
-[ $1 ] && root
-
+root()   { find $PALETTE -name '*png' | egrep '(dark|light)/' | sed -r "s,.*/(.*)/(.*)/(.*).png,\3^$SEP \1 \2," | sort -r -k2 >$HISTORY/root; }
 themes() { find $PALETTE -type d | cut -d/ -f7 | sort -u | grep '[^ ]'; }
 hex()    { echo $1 | egrep -q '^[0-9A-Fa-f]{6}$'; }
-colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$VIEWER\n$UPDATE"; }
 
 theme() {
   case $1 in 
@@ -28,20 +23,35 @@ theme() {
   esac
 }
 
+save() {
+  hue=$(echo "$(themes)" | rmenu 'Colour (name)') || exit
+  # contrast=$(cat $CONTRAST)
+  contrast=$(cat $THEME)  # see draw root blank
+  theme $contrast
+  mhistory root "$bg^$SEP $contrast $hue"
+  swatch $bg $hue
+  ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
+  ln -sf $WALLCOLOR $BACKGROUND
+  notify low 'Background Color' "$bg saved"
+}
+
+# rebuild swatches
+while [ $1 ] ;do
+  case $1 in
+  cache) root ;;
+  save ) bg=$(cat $COLOR); save; exit ;;
+  esac
+  shift
+done
+
+colors() { [ "$menu" ] && echo | mhistory root | sed "1i$menu" || echo | mhistory root | sed "1i$VIEWER\n$UPDATE"; }
+
 while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   case $color in
   ''        ) break ;;
   "$VIEWER"*) exec draw root restore ;;
   "$UPDATE"*) root ;;
-
-  "$SAVE"*  ) hue=$(echo "$(themes)" | rmenu 'Colour (name)') || exit
-              contrast=$(cat $CONTRAST)  # see draw root blank
-              theme $contrast
-              mhistory root "$bg^$SEP $contrast $hue"
-              swatch $bg $hue
-              ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
-              ln -sf $WALLCOLOR $BACKGROUND
-              break ;;
+  "$SAVE"*  ) save; break ;;
 
   *dark*      |\
   *light*   ) bg=$(echo $color | cut -d' ' -f1)

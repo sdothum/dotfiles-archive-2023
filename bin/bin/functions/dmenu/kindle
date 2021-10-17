@@ -104,13 +104,13 @@ ditto $format "$file"
 
 # ebook-convert "$file" "${output%.*}.epub"  # test image
 # convert even .azw3 to inject folder title and author
-ebook-convert "$file" "${output%.*}.$format"                                               \
-              $([ $same ] && echo || echo "--title=\"$title\" --authors=\"$author\"")        \
-              --change-justification="$justify"                                            \
-              --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
-              --insert-blank-line --insert-blank-line-size=$linespace                      \
-              --filter-css='font-family'                                                   \
-              >/tmp/ebook-convert.log || exit
+eval ebook-convert \"$file\" \"${output%.*}.$format\"                                           \
+                   $([ $same ] && echo || echo "--title=\"$title\" --authors=\"$author\"")      \
+                   --change-justification=\"$justify\"                                          \
+                   --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
+                   --insert-blank-line --insert-blank-line-size=$linespace                      \
+                   --filter-css=\'font-family\'                                                 \
+                   >/tmp/ebook-convert.log || exit
 
 # ........................................................................ Write
 
