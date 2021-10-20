@@ -5,11 +5,11 @@
 
 # ...................................................................... E-books
 
-usage() { echo "usage: $(basename $0) kindle [azw3 | epub | same] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
+usage() { echo "usage: $(basename $0) econvert [azw3 | epub | same] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
 
-kindle=/run/media/$USER/Kindle
-[ -d $kindle ] && sudo mount -o remount,rw $(mount | grep $kindle | cut -d' ' -f1) $kindle
-kindle=$kindle/documents/
+KINDLE=/run/media/$USER/Kindle
+[ -d $KINDLE ] && sudo mount -o remount,rw $(mount | grep $KINDLE | cut -d' ' -f1) $KINDLE
+KINDLE=$KINDLE/documents/
 
 # enhanced em-legible spacing!
 # em_indent=2       # conventional paragraph indent
@@ -84,7 +84,7 @@ END
 
 # ...................................................................... Convert
 
-[ $library ] || { [ -d $kindle ] && format=azw3 || format=${format:-mobi}; }
+[ $library ] || { [ -d $KINDLE ] && format=azw3 || format=${format:-mobi}; }
 find /tmp -maxdepth 1 -name "*$format" -exec rm {} \;
 # cloudconvert -f azw3 -o /tmp "$file" >/tmp/cloudconvert.log 2>&1
 # use calibre conversion module
@@ -118,10 +118,10 @@ eval ebook-convert \"$file\" \"${output%.*}.$format\"                           
 if [ $library ] ;then
   find /tmp -maxdepth 1 -name "*$format" -exec mv -f "{}" "$folder" \;
   notify low "$title" "$folder"
-elif [ -d $kindle ] ;then
-  find $kindle -maxdepth 1 -wholename "${file% - *}*.sdr" -exec rm -rf "{}" \;  # cleanup dangling sdr files
-  find /tmp -maxdepth 1 -name "*$format" -exec rm -rf "$kindle${file% - *}*.sdr" \; -exec mv -f "{}" $kindle \;
-  notify low "$title" "$kindle"
+elif [ -d $KINDLE ] ;then
+  find $KINDLE -maxdepth 1 -wholename "${file% - *}*.sdr" -exec rm -rf "{}" \;  # cleanup dangling sdr files
+  find /tmp -maxdepth 1 -name "*$format" -exec rm -rf "$KINDLE${file% - *}*.sdr" \; -exec mv -f "{}" $KINDLE \;
+  notify low "$title" "$KINDLE"
   sync
 elif [ $format = mobi ] ;then
   mobi=$(find /tmp -maxdepth 1 -name "*$format")

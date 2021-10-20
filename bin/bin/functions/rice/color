@@ -8,7 +8,7 @@
 
 usage() { echo "usage: rice $(basename $0) <color>"; exit 1; }
 
-COLORS=$HOME/bin/functions/rice/.theme
+COLORS=$PALETTE/.theme
 
 [ $1 ] && grep "^$1.$(cat $THEME)" $COLORS | cut -d= -f2 || usage
 

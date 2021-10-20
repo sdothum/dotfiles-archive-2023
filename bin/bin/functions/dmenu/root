@@ -25,11 +25,10 @@ theme() {
 
 save() {
   hue=$(echo "$(themes)" | rmenu 'Colour (name)') || exit
-  # contrast=$(cat $CONTRAST)
   contrast=$(cat $THEME)  # see draw root blank
   theme $contrast
   mhistory root "$bg^$SEP $contrast $hue"
-  swatch $bg $hue
+  rice swatch $bg $hue
   ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
   ln -sf $WALLCOLOR $BACKGROUND
   notify low 'Background Color' "$bg saved"
