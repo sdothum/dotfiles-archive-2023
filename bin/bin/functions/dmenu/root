@@ -53,8 +53,8 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
   "$UPDATE"*) root ;;
   "$SAVE"*  ) save; break ;;
 
-  *dark*      |\
-  *light*   ) bg=$(echo $color | cut -d' ' -f1)
+  *\ dark*    |\
+  *\ light* ) bg=$(echo $color | cut -d' ' -f1)
               theme $(echo $color | cut -d' ' -f3)
               draw root blank $bg
               ln -sf $(find $PALETTE -name $bg.png | head -1) $WALLCOLOR
@@ -62,7 +62,8 @@ while color=$(colors | column -s^ -t | rmenu 'Setroot') || exit ;do
               mhistory root "$(echo $color | sed "s/ *$SEP */^$SEP /")"
               break ;;
 
-  *         ) hex $color || { color=$(pastel format hex $color 2>/dev/null) && color=${color#?} || exit; } || continue
+  *         ) color=${color#\'}
+              hex $color || { color=$(pastel format hex $color 2>/dev/null) && color=${color#?}; } || continue
               draw root blank $color
               bg=$color
               # overlay conky panel over rmenu screen!
