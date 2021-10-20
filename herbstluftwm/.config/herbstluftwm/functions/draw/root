@@ -65,15 +65,15 @@ setblur() {
 
 # ....................................................... Generate border colors
 
-# create pulsar border color gradient
-set_border() {
-  # rice palette $1 'Monochromatic' >$PULSAR
-  rice palette red 'Tint' >$PULSAR
-  # set border to midtone
-  cut -d' ' -f1 $PULSAR >$BORDER
-  # refresh border of active window
-  herbstclient attr theme.active.color "#$(cat $BORDER)"
-}
+# create pulsar border color gradient, see draw border
+# set_border() {
+#   # rice palette $1 'Monochromatic' >$PULSAR
+#   rice palette red 'Tint' >$PULSAR
+#   # set border to midtone
+#   cut -d' ' -f1 $PULSAR >$BORDER
+#   # refresh border of active window
+#   herbstclient attr theme.active.color "#$(cat $BORDER)"
+# }
 
 # ............................................................... Set background
 
@@ -201,7 +201,7 @@ if [ ! -e $COLOR ] ;then
     echo light >$THEME
   fi
   # set_border $(rice palette $(grep 'default_color=' $THEME | cut -d= -f2) 'Triadic' | cut -d' ' -f2)
-  set_border
+  # set_border
 fi
 
 # overlay panel with new theme to avuid panel flicker

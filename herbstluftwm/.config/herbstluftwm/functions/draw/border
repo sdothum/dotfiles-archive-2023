@@ -12,7 +12,8 @@
 # frequency=0.066
 frequency=0.15
 
-[ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='FFFFFF AAAAAA 555555  000000'
+# [ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='FFFFFF AAAAAA 555555  000000'
+[ -e $PULSAR ] && colors=$(cat $PULSAR) || colors='ff0000 ff0808 ff1414 ff2727 ff3b3b ff4e4e ff6262 ff7676 ff8989 ff9d9d ffb1b1 ffc4c4 ffd8d8 ffebeb'
 colors="$colors $(echo $colors | reverse)"
 [ -e $BORDER ] && BORDER=$(cat $BORDER) || BORDER=000000
 
