@@ -29,6 +29,7 @@ save() {
   theme $contrast
   mhistory root "$bg^$SEP $contrast $hue"
   rice swatch $bg $hue
+  root
   ln -sf $PALETTE/$contrast/$hue/$bg.png $WALLCOLOR
   ln -sf $WALLCOLOR $BACKGROUND
   notify low 'Background Color' "$bg saved"
