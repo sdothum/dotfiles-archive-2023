@@ -132,6 +132,10 @@ abbr sd 'sdiff -b -E -W -w(tput cols)'
 abbr vdarchive 'dirdiff ./ /net/archive(pwd)'
 abbr vdbackup 'dirdiff ./ /net/backup(pwd)'
 
+# ........................................................................ Regex
+
+abbr list "ls -A1 | tr '\n' ' ' | sed 's/ /|/g; s/|\$//'"
+
 # .................................................................. Development
  
 # abbr ghc 'ghc -dynamic'  # arch repo only
@@ -152,9 +156,9 @@ abbr d 'dict'
 abbr dotfiles 'rlwrap dotfiles'
 abbr handbrake 'ghb'
 abbr hex 'hexdump -C'
-abbr kindle 'dmenu kindle azw3'
-abbr epub 'dmenu kindle same'
-abbr kobo 'dmenu kindle epub'
+abbr kindle 'dmenu econvert azw3'
+abbr ereader 'dmenu econvert same'
+abbr kobo 'dmenu econvert epub'
 abbr music '!p ncmpcpp ;and ncmpcpp'
 abbr reqk 'qk stop; qk start'
 abbr scrot 'scrot -e "mv \$f /net/photos/batchqueue/"'
