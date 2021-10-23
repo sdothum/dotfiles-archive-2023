@@ -79,7 +79,8 @@ grotesque() {
   j=flat-hook-serifless
   k=straight-serifless
   l=flat-tailed
-  q=diagonal-tailed
+  # q=diagonal-tailed
+  q=tailed
   t=flat-hook-short-neck2
   u=toothless-rounded
   y=straight-turn
@@ -485,7 +486,7 @@ else
   nerdfont $mono $family                               # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family                   # hyperlegible font mod for better q
+# [ $curlyq ] && fforge curlyq $family                 # hyperlegible font mod for better q
 
 [ $spacing = term ] && fforge punctuation $family      # double width emdash and ellipsis
 
