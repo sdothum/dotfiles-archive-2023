@@ -4,12 +4,9 @@
 # Media
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ................................................................ E-book author
+# ................................................................ ebook convert
 
-usage() { echo "usage: $(basename $0) <title - author.ext>"; exit 1; }
-
-# rox -> ebooks "$@"
-author=$(echo "${1%.*}" | sed 's/ - /:/g' | rev | cut -d: -f1 | rev)
-dmenu ebooks "$author"
+dmenu econvert azw3 "$@"  # kindle
+dmenu econvert epub "$@"  # kobo
 
 # vim: set ft=sh: #

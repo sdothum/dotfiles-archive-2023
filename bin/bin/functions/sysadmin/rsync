@@ -175,7 +175,7 @@ wiki    ) ifno 'recover thedarnedestthing.com:/vimwiki' && exit
           trace "thedarnedestthing.com:/vimwiki => $(hostname)"
           rsync -r --delete thedarnedestthing.com:/srv/http/thedarnedestthing.com/application/public/vimwiki $HOME/ ;;
 
-*       ) rsync $@ ;;
+*       ) [ $2 ] && rsync $@ || usage ;;
 esac
 
 # vim: set ft=sh: #

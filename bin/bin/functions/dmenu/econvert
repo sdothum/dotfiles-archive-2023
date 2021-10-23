@@ -5,7 +5,7 @@
 
 # ...................................................................... E-books
 
-usage() { echo "usage: $(basename $0) econvert [azw3 | epub | same] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
+usage() { echo "usage: $(basename $0) econvert [azw3 | epub | reformat] [default | justify | noindent | poetry | all] [<file> | '<regex>', default '*epub']"; exit 1; }
 
 KINDLE=/run/media/$USER/Kindle
 [ -d $KINDLE ] && sudo mount -o remount,rw $(mount | grep $KINDLE | cut -d' ' -f1) $KINDLE
@@ -19,9 +19,9 @@ em_linespace=0.33,1.25
 
 # override device/cloud transfer and create kindle/kobo file
 case $1 in
-azw3    ) option=${option:-default}; format=azw3; library=true; shift ;;  # library update
-epub    ) option=${option:-default}; format=epub; library=true; shift ;;  # epub output hack
-same    ) option=${option:-default}; format=same; library=true; shift ;;  # epub output hack
+azw3    ) option=${option:-default}; format=azw3; library=true; shift ;;      # library update
+epub    ) option=${option:-default}; format=epub; library=true; shift ;;      # epub output hack
+reformat) option=${option:-default}; format=reformat; library=true; shift ;;  # epub output hack
 esac
 
 # override left justification
@@ -37,11 +37,13 @@ esac
 
 # <regex> autoconvert epubs to awz3
 case "$format" in
-azw3) [ "$1"    ] || { find . -iname '*epub' -exec dmenu kindle azw3 $option {} \; ; exit; }
-      [ -e "$1" ] || { find . -iname "$1"    -exec dmenu kindle azw3 $option {} \; ; exit; } ;;
-epub) [ "$1"    ] || { find . -iname '*azw3' -exec dmenu kindle epub $option {} \; ; exit; }
-      [ -e "$1" ] || { find . -iname "$1"    -exec dmenu kindle epub $option {} \; ; exit; } ;;
-same) format=${1##*\.}; same=true ;;  # for re-tweaking converted ebooks
+azw3    ) [ "$1"    ] || { find . -iname '*epub'             -exec dmenu econvert azw3 $option {} \; ; exit; }
+          [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert azw3 $option {} \; ; exit; } ;;
+epub    ) [ "$1"    ] || { find . -iname '*azw3'             -exec dmenu econvert epub $option {} \; ; exit; }
+          [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert epub $option {} \; ; exit; } ;;
+reformat) [ "$1"    ] || { find . -iregex '.*\(azw3\|epub\)' -exec dmenu econvert reformat $option {} \; ; exit; }
+          [ -e "$1" ] || { find . -iname "$1"                -exec dmenu econvert reformat $option {} \; ; exit; }
+          format=${1##*\.}; reformat=true ;;  # for re-tweaking converted ebooks
 esac
 
 file=$1
@@ -105,7 +107,7 @@ ditto $format "$file"
 # ebook-convert "$file" "${output%.*}.epub"  # test image
 # convert even .azw3 to inject folder title and author
 eval ebook-convert \"$file\" \"${output%.*}.$format\"                                           \
-                   $([ $same ] && echo || echo "--title=\"$title\" --authors=\"$author\"")      \
+                   $([ $reformat ] && echo || echo "--title=\"$title\" --authors=\"$author\"")      \
                    --change-justification=\"$justify\"                                          \
                    --remove-paragraph-spacing --remove-paragraph-spacing-indent-size=$em_indent \
                    --insert-blank-line --insert-blank-line-size=$linespace                      \

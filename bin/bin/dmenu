@@ -60,7 +60,7 @@ if [ $(basename $0) = dmenu ] ;then
   console || { is multihead || conky clock off; }
   if [ -f ${0%/dmenu}/functions/dmenu/$msg ] ;then
     case $msg in
-    kindle    |\
+    econvert  |\
     media     |\
     scripts   |\
     projects) ;;

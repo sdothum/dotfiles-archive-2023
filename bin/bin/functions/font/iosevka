@@ -192,7 +192,7 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal   ) shape 500; sb 0.7000 ;;                                                   # normal width
-  ebook    ) shape $extended; sb 0.7000; leading 1.4185; space 1.75; ebook monolegible ;;
+  ebook    ) shape $extended; sb 0.7000; leading 1.4185; space 2; ebook monolegible ;;
   expanded ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
   extended ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
   heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
