@@ -5,26 +5,18 @@
 
 # ...................................................................... iosevka
 
-usage() {
-  echo "usage: $(basename $0) iosevka [normal (default) | extended | expanded | ebook | heading]
-                            [english | ligature <name>] [double] [quasi-proportional]
-                            [grotesque (default) | atkinson | geometric | jost] [crossed]
-                            [proof | menu | leading <decimal>]
-                            [family <name>]
-                            [cap [-+]<emu>]
-                            [noround | sb <decimal>]
-                            [shape <emu>]
-                            [weight <integer> <name>]
-                            [xheight [-+]<emu>]"
-  exit 1
-}
+# Usage: make_install iosevka [q-tailed | <opions>*]
 
 MAKE_INSTALL=/tmp/iosevka:make_install
-
-shift
 touch $MAKE_INSTALL
-[ $1 = q-tailed ] && { q=q-tailed; shift; }
-[ $1 ] && { . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit; }
+shift
+
+case $1 in
+''      ) ;;
+q-tailed) q=q-tailed ;;
+*       ) . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit ;;
+esac
+
 # build font suite
 ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
 iosevka expanded
