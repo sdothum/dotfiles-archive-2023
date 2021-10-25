@@ -46,6 +46,7 @@ let g:easy_align_delimiters =
   \, ']' : { 'pattern' : ']',        'left_margin' : 1 }
   \, '/' : { 'pattern' : '//\|/\*',  'left_margin' : 2 }
   \, '\' : { 'pattern' : '\\ *$',    'left_margin' : 1 }
+  \, '|' : { 'pattern' : '||',       'left_margin' : 1 }
   \, '-' : { 'pattern' : '--',       'left_margin' : 2 }
   \, '#' : { 'pattern' : ' #',       'left_margin' : 1 }
   \, '"' : { 'pattern' : ' "',       'left_margin' : 1 }
