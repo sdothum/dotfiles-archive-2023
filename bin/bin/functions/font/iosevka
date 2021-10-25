@@ -15,13 +15,13 @@
 #     iosevka heading english q-curly
 #
 #     e-ink fonts..
-#     iosevka ebook english
-#     iosevka ebook english i-serifless
+#     iosevka ebook english [q-tailed]
+#     iosevka ebook english i-serifless [q-tailed]
 #     iosevka ebook english atkinson
-#     iosevka ebook english quasi-proportional
-#     iosevka ebook english quasi-proportional i-serifless
-#     iosevka dyslexic english
-#     iosevka dyslexic english i-serifless
+#     iosevka ebook english quasi-proportional [q-tailed]
+#     iosevka ebook english quasi-proportional i-serifless [q-tailed]
+#     iosevka dyslexic english [q-tailed]
+#     iosevka dyslexic english i-serifless [q-tailed]
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
@@ -32,7 +32,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
-               [grotesque (default) | atkinson | geometric | jost] | [i-serifless] | [q-crossed] | [q-curly] | [q-tailed]
+               [grotesque (default) | atkinson | geometric | jost] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed]
                [proof | menu | leading <decimal>]
                [family <name>]
                [cap [-+]<decimal>]
@@ -191,38 +191,38 @@ spacing=term
 while [ $1 ] ;do
   case "$1" in
   # style
-  normal   ) shape 500; sb 0.7000 ;;                                                   # normal width
-  ebook    ) shape $extended; sb 0.7000; leading 1.4185; space 2; ebook monolegible ;;
-  expanded ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
-  extended ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
-  heading  ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
-  menu     ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
-  proof    ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                        # for pure writing :)
-  english  ) english ;;
-  ligature ) ligature $2         || usage; shift ;;
-  double   ) unset mono ;;
-  quasi*   ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I+; unset m_weight ;;
-  dyslexic ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
+  normal     ) shape 500; sb 0.7000 ;;                                                   # normal width
+  ebook      ) shape $extended; sb 0.7000; leading 1.4185; space 2; ebook monolegible ;;
+  expanded   ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
+  extended   ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
+  heading    ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
+  menu       ) leading 1.5000; sb 0.9000; build=-menu ;;                                 # rofi menu
+  proof      ) leading 2.0000; sb 0.8000; build=${build}-proof ;;                        # for pure writing :)
+  english    ) english ;;
+  ligature   ) ligature $2  || usage; shift ;;
+  double     ) unset mono ;;
+  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I+; unset m_weight ;;
+  dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
   # font
-  i-serif* ) variant I ;;
-  q-cross* ) variant Q ;;
-  q-curly  ) curlyq=true ;;
-  q-tailed ) unset curlyq ;;
-  grotesque) grotesque ;;
-  atkinson ) grotesque; ebook hyperlegible; variant b d Q q u ampersand at number_sign percent ;;
-  geometric) geometric; cap 1.225; build=-jost ;;
-  jost     ) geometric; cap 1.225; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
-  family   ) family $2    || usage; shift ;;
+  I-serifless) variant I ;;
+  Q-crossed  ) variant Q ;;
+  q-curly    ) curlyq=true ;;
+  q-tailed   ) unset curlyq ;;
+  grotesque  ) grotesque ;;
+  atkinson   ) grotesque; ebook hyperlegible; variant b d Q q u ampersand at number_sign percent ;;
+  geometric  ) geometric; cap 1.225; build=-jost ;;
+  jost       ) geometric; cap 1.225; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
+  family     ) family $2    || usage; shift ;;
   # custom
-  cap      ) cap $2       || usage; shift ;;    # H height (affects descender as well)
-  leading  ) leading $2   || usage; shift ;;    # line spacing > 1.0
-  noround  ) unset sb ;;
-  sb       ) sb $2        || usage; shift ;;    # side bearing (spacing)
-  shape    ) shape $2     || usage; shift ;;    # cell width
-  space    ) space $2     || usage; shift ;;    # space width
-  weight   ) weight $2 $3 || usage; shift 2 ;;  # custom font weight
-  xheight  ) xheight $2   || usage; shift ;;    # height of x (experimental for larger fontsizes)
-  *        ) usage ;;
+  cap        ) cap $2       || usage; shift ;;    # H height (affects descender as well)
+  leading    ) leading $2   || usage; shift ;;    # line spacing > 1.0
+  noround    ) unset sb ;;
+  sb         ) sb $2        || usage; shift ;;    # side bearing (spacing)
+  shape      ) shape $2     || usage; shift ;;    # cell width
+  space      ) space $2     || usage; shift ;;    # space width
+  weight     ) weight $2 $3 || usage; shift 2 ;;  # custom font weight
+  xheight    ) xheight $2   || usage; shift ;;    # height of x (experimental for larger fontsizes)
+  *          ) usage ;;
   esac
   shift
 done
