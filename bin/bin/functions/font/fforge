@@ -195,4 +195,6 @@ cd $FONT || usage
 
 $fforge
 
+for i in $(find . -iname '*#1.ttf') ;do mv -v $i ${i%#1.ttf}.ttf ;done
+
 # vim: set ft=sh: #

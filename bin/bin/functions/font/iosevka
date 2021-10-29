@@ -9,19 +9,19 @@
 # for git iosevka 10.x
 
 # eg. source code and desktop fonts..
-#     iosevka extended        (grotesque width coding font, reduce display fontsize by 1)
-#     iosevka extended proof  (grotesque width prose font) **
-#     iosevka extended menu q-curly
+#     iosevka expanded        (grotesque width coding font, reduce display fontsize by 1)
+#     iosevka expanded proof  (grotesque width prose font) **
+#     iosevka expanded menu q-curly
 #     iosevka heading english q-curly
 #
 #     e-ink fonts..
-#     iosevka ebook english [q-tailed]
-#     iosevka ebook english i-serifless [q-tailed]
+#     iosevka ebook english [q-curly]
+#     iosevka ebook english I-serifless [q-curly]
 #     iosevka ebook english atkinson
-#     iosevka ebook english quasi-proportional [q-tailed]
-#     iosevka ebook english quasi-proportional i-serifless [q-tailed]
-#     iosevka dyslexic english [q-tailed]
-#     iosevka dyslexic english i-serifless [q-tailed]
+#     iosevka ebook english quasi-proportional [q-curly]
+#     iosevka ebook english quasi-proportional I-serifless [q-curly]
+#     iosevka dyslexic english [q-curly]
+#     iosevka dyslexic english I-serifless [q-curly]
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
@@ -32,7 +32,7 @@
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
                [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
-               [grotesque (default) | atkinson | geometric | jost] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed]
+               [grotesque (default) | atkinson | geometric | jost] | [G-toothless] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed]
                [proof | menu | leading <decimal>]
                [family <name>]
                [cap [-+]<decimal>]
@@ -122,6 +122,7 @@ variant() {
     a          ) a=single-storey-serifless ;;
     b          ) b=toothed ;;
     d          ) d=toothed-serifless ;;
+    G          ) capital_g=toothless-corner-serifless-hooked ;;
     I          ) capital_i=serifless; family=$(echo $family | sed 's/^e/i/') ;;
     I+         ) capital_i=serifed ;;
     j          ) j=serifless ;;
@@ -176,7 +177,7 @@ english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 
 
 family()   { [ $1 ] || return 1; family=$1; }
 space()    { space=$(real $1); }
-ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); curlyq=true; ebook=true; }
+ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
 
@@ -204,12 +205,13 @@ while [ $1 ] ;do
   quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I+; unset m_weight ;;
   dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
   # font
-  I-serifless) variant I ;;
+  G-toothless) variant G ;;
+  I-serifless) variant G I ;;  # combined minimal stroke glyphs
   Q-crossed  ) variant Q ;;
   q-curly    ) curlyq=true ;;
   q-tailed   ) unset curlyq ;;
   grotesque  ) grotesque ;;
-  atkinson   ) grotesque; ebook hyperlegible; variant b d Q q u ampersand at number_sign percent ;;
+  atkinson   ) grotesque; ebook hyperlegible; variant b d G Q q u ampersand at number_sign percent ;;
   geometric  ) geometric; cap 1.225; build=-jost ;;
   jost       ) geometric; cap 1.225; build=-jost; variant a j Q ampersand at dollar number_sign percent question ;;
   family     ) family $2    || usage; shift ;;
@@ -493,7 +495,7 @@ fi
 
 [ $ebook ] && fforge ligature ${spacing#term} $family  # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family           # book weight for kindle (as regular)
+[ $space ] && fforge dyslexic $space $family           # lengthen space character cell width 
 
 [ $ebook ] && fforge bookweight $m_weight $family      # book weight for kindle (as regular)
 
