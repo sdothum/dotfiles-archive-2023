@@ -5,7 +5,7 @@
 
 # ...................................................................... iosevka
 
-# Usage: make_install iosevka [q-tailed | <opions>*]
+# Usage: make_install iosevka [q-curly | q-tailed | <opions>*]
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 touch $MAKE_INSTALL
@@ -13,6 +13,7 @@ shift
 
 case $1 in
 ''      ) ;;
+q-curly ) q=q-curly ;;
 q-tailed) q=q-tailed ;;
 *       ) . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit ;;
 esac
@@ -22,14 +23,15 @@ ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
 iosevka expanded
 iosevka expanded proof
 iosevka expanded menu q-curly
+iosevka heading english q-curly
+
 iosevka ebook english $q
-iosevka ebook english i-serifless $q
+iosevka ebook english I-serifless $q
 iosevka ebook english atkinson $q
 iosevka ebook english quasi-proportional $q
-iosevka ebook english quasi-proportional i-serifless $q
+iosevka ebook english quasi-proportional I-serifless $q
 iosevka dyslexic english $q
-iosevka dyslexic english i-serifless $q
-iosevka heading english q-curly
+iosevka dyslexic english I-serifless $q
 rm -f $MAKE_INSTALL
 
 # vim: set ft=sh: #
