@@ -123,7 +123,7 @@ variant() {
     b          ) b=toothed ;;
     d          ) d=toothed-serifless ;;
     G          ) capital_g=toothless-corner-serifless-hooked ;;
-    I          ) capital_i=serifless; family=$(echo $family | sed 's/^e/i/') ;;
+    I          ) capital_i=serifless; [ $ebook ] && family=$(echo $family | sed 's/^e/i/') ;;
     I+         ) capital_i=serifed ;;
     j          ) j=serifless ;;
     Q          ) capital_q=crossing ;;
