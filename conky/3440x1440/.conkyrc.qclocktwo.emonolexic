@@ -27,7 +27,7 @@ conky.config = {
 -- ${voffset 413}
 -- ${execp conky qclocktwo '{voffset 20}' '{offset 3200}'}
 conky.text = [[
-${voffset 386}
+${voffset 400}
 ${execp conky qclocktwo '{voffset 5}' '{offset 3150}'}
 ]];
 
