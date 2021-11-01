@@ -5,25 +5,29 @@
 
 # ...................................................................... iosevka
 
-# Usage: make_install iosevka [q-curly | q-tailed | <opions>*]
+# Usage: make_install iosevka [I-serifless | q-curly | q-tailed | <opions>*]
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 touch $MAKE_INSTALL
 shift
 
-case $1 in
-''      ) ;;
-q-curly ) q=q-curly ;;
-q-tailed) q=q-tailed ;;
-*       ) . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit ;;
-esac
+while [ $1 ] ;do
+  case $1 in
+  ''         ) ;;
+  I-serifless) flavour=I-serifless ;;  # source code variant
+  q-curly    ) q=q-curly ;;            # ebook variant
+  q-tailed   ) q=q-tailed ;;           # ebook variant (default)
+  *          ) . $HOME/bin/functions/font/iosevka $@; rm -f $MAKE_INSTALL; exit ;;
+  esac
+  shift
+done
 
 # build font suite
 ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
-iosevka expanded
-iosevka expanded proof
-iosevka expanded menu q-curly
-iosevka heading english q-curly
+iosevka expanded $flavour
+iosevka expanded proof $flavour
+iosevka expanded menu q-curly $flavour
+iosevka heading english q-curly $flavour
 
 iosevka ebook english $q
 iosevka ebook english I-serifless $q
