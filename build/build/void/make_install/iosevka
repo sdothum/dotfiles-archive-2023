@@ -5,7 +5,7 @@
 
 # ...................................................................... iosevka
 
-# Usage: make_install iosevka [I-serifless | q-curly | q-tailed | <opions>*]
+# Usage: make_install iosevka [I-serifless | q-curly | q-tailed] | <opions>*
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 touch $MAKE_INSTALL
