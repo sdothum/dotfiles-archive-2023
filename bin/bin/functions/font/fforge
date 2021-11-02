@@ -73,23 +73,45 @@ Generate(\$1);
 }
 
 # double width ligatures
-transform() {
-  echo "
+explode() {
+  if [ $shape ] ;then
+    # explode monospace ligature
+    echo "
+Select($2);
+CopyReference();
+Select($1);
+Paste();
+Select($3);
+CopyReference();
+Select($1);
+PasteWithOffset($shape,0);
+SetWidth($(( $shape * 2 )));
+"
+    [ $4 ] && echo "
+Select($4);
+CopyReference();
+Select($1);
+PasteWithOffset($(( $shape / 2 * 3 )),$5);
+"
+  else
+    # stretch proportional ligature
+    echo "
 Select($1);
 Transform(${width:-200},0,0,100,0,0);
 ChangeWeight(-20);
 "
+  fi
 }
 
 ligature() {
-  confirm 'add double width ligatures *experimental*'
+  confirm 'add exploded double width ligatures'
   echo "
 Open(\$1);
-$(transform 0u00e6)
-$(transform 0u0152)
-$(transform 0u0153)
-$(transform 0u01fc)
-$(transform 0u01fd)
+$(explode 0u00e6 0u0061 0u0065)
+$(explode 0u0152 0u0041 0u0045)
+$(explode 0u0153 0u006f 0u0065)
+$(explode 0u01fc 0u0041 0u0045 0u0301 200)
+$(explode 0u01fd 0u0061 0u0065 0u0301 0)
 Generate(\$1);
 " >/tmp/fontforge.script
 
@@ -181,7 +203,7 @@ Generate(\$1);
 fforge=$1
 case $1 in
 curlyq     ) ;;
-ligature   ) [ "$2" = 'quasi-proportional' ] && { width=150; shift; } ;;
+ligature   ) [ "$2" = 'quasi-proportional' ] && { width=150; shift 2; } || { shape=$2; shift; } ;;
 punctuation) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
 bookweight ) [ "$2" = '--M' ] && { M=true; shift; } ;;
 dyslexic   ) space=$2; shift ;;
