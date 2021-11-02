@@ -136,7 +136,7 @@ bookweight() {
 
   ditto kindle "$(ls *\#1.ttf)"
 
-  [ $M ] || exit
+  [ $M ] || return
   # optically adjust M (to weight 400 to narrow stroke width and better match contrast)
   echo "
 Open(\$2);
