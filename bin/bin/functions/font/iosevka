@@ -22,6 +22,8 @@
 #     iosevka ebook english quasi-proportional I-serifless [q-curly]
 #     iosevka dyslexic english [q-curly]
 #     iosevka dyslexic english I-serifless [q-curly]
+#     iosevka dyslexic english quasi-proportional [q-curly]
+#     iosevka dyslexic english quasi-proportional I-serifless [q-curly]
 #
 #     variants, full atkinson looks best in larger font sizes..
 #     iosevka ebook atkinson english         (strict hyperlegible variants)
@@ -193,7 +195,7 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal     ) shape 500; sb 0.7000 ;;                                                   # normal width
-  ebook      ) shape $extended; sb 0.7000; leading 1.4185; space 2; ebook monolegible ;;
+  ebook      ) shape $extended; sb 0.7000; leading 1.4185; space 2; width=140; ebook monolegible ;;
   expanded   ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
   extended   ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
   heading    ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
@@ -202,8 +204,8 @@ while [ $1 ] ;do
   english    ) english ;;
   ligature   ) ligature $2  || usage; shift ;;
   double     ) unset mono ;;
-  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasilegible; variant I+; unset m_weight ;;
-  dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; ebook monolexic ;;
+  quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; unset m_weight ;;
+  dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; width=135; ebook monolexic ;;
   # font
   G-toothless) variant G ;;
   I-serifless) variant G I ;;  # combined minimal stroke glyphs
@@ -486,17 +488,17 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                                           # insert glyphs
+  nerdfont $mono $family                                             # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family                               # hyperlegible font mod for better q
+[ $curlyq ] && fforge curlyq $family                                 # hyperlegible font mod for better q
 
-[ $spacing = term ] && fforge punctuation $family                  # double width emdash and ellipsis
+[ $spacing = term ] && { fforge punctuation $family; unset width; }  # double width emdash and ellipsis
 
-[ $ebook ] && fforge ligature ${spacing#term} ${shape#*=} $family  # ae width character adjustment
+[ $ebook ] && fforge ligature $width ${shape#*=} $family             # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family                       # lengthen space character cell width
+[ $space ] && fforge dyslexic $space $family                         # lengthen space character cell width
 
-[ $ebook ] && fforge bookweight $m_weight $family                  # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $m_weight $family                    # book weight for kindle (as regular)
 
 # vim: set ft=sh: #

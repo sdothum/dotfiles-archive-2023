@@ -85,20 +85,18 @@ Select($3);
 CopyReference();
 Select($1);
 PasteWithOffset($shape,0);
-SetWidth($(( $shape * 2 )));
-"
-    [ $4 ] && echo "
 Select($4);
 CopyReference();
 Select($1);
-PasteWithOffset($(( $shape / 2 * 3 )),$5);
+PasteWithOffset($5,$6);
+SetWidth($(( $shape * 2 )));
 "
   else
     # stretch proportional ligature
     echo "
 Select($1);
 Transform(${width:-200},0,0,100,0,0);
-ChangeWeight(-20);
+ChangeWeight(-15);
 "
   fi
 }
@@ -107,11 +105,11 @@ ligature() {
   confirm 'add exploded double width ligatures'
   echo "
 Open(\$1);
-$(explode 0u00e6 0u0061 0u0065)
-$(explode 0u0152 0u004f 0u0045)
-$(explode 0u0153 0u006f 0u0065)
-$(explode 0u01fc 0u0041 0u0045 0u0301 200)
-$(explode 0u01fd 0u0061 0u0065 0u0301 0)
+$(explode 0u00e6 0u0061 0u0065 0u00b7 $(( ${shape:-0} / 2 )) -70)
+$(explode 0u0152 0u004f 0u0045 0u00b7 $(( ${shape:-0} / 2 )) 40)
+$(explode 0u0153 0u006f 0u0065 0u00b7 $(( ${shape:-0} / 2 )) -70)
+$(explode 0u01fc 0u0041 0u0045 0u0301 $(( ${shape:-0} / 2 * 3 )) 200)
+$(explode 0u01fd 0u0061 0u0065 0u0301 $(( ${shape:-0} / 2 * 3 )) 0)
 Generate(\$1);
 " >/tmp/fontforge.script
 
@@ -199,11 +197,11 @@ Generate(\$1);
   done
 }
 
-# main
+# main, see iosevka
 fforge=$1
 case $1 in
 curlyq     ) ;;
-ligature   ) [ "$2" = 'quasi-proportional' ] && { width=150; shift 2; } || { shape=$2; shift; } ;;
+ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
 punctuation) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
 bookweight ) [ "$2" = '--M' ] && { M=true; shift; } ;;
 dyslexic   ) space=$2; shift ;;
