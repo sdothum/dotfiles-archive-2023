@@ -36,6 +36,8 @@ iosevka ebook english quasi-proportional $q
 iosevka ebook english quasi-proportional I-serifless $q
 iosevka dyslexic english $q
 iosevka dyslexic english I-serifless $q
+iosevka dyslexic english quasi-proportional $q
+iosevka dyslexic english quasi-proportional I-serifless $q
 rm -f $MAKE_INSTALL
 
 # vim: set ft=sh: #
