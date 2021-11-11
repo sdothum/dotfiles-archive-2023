@@ -11,8 +11,8 @@
 # eg. source code and desktop fonts..
 #     iosevka expanded        (grotesque width coding font, reduce display fontsize by 1)
 #     iosevka expanded proof  (grotesque width prose font) **
-#     iosevka expanded menu q-curly
-#     iosevka heading english q-curly
+#     iosevka expanded menu [q-curly]
+#     iosevka heading english [q-curly]
 #
 #     e-ink fonts..
 #     iosevka ebook english [q-curly]
@@ -33,7 +33,7 @@
 
 usage() {
   echo "usage: iosevka [normal (default) | extended | expanded | ebook | dyslexic | heading]
-               [english | ligature <name>] [double] [quasi-proportional] [space <decimal>]
+               [english | ligature <name>] [double] [quasi-proportional] [space <decimal>] [ emdash <decimal> ]
                [grotesque (default) | atkinson | geometric | jost] | [G-toothless] | [I-serifless] | [Q-crossed] | [q-curly] | [q-tailed]
                [proof | menu | leading <decimal>]
                [family <name>]
@@ -179,6 +179,7 @@ english()  { exclude_chars='ranges = [[384, 401], [403, 505], [512, 535], [540, 
 
 family()   { [ $1 ] || return 1; family=$1; }
 space()    { space=$(real $1); }
+emdash()   { emdash=$(real $1); }
 ebook()    { variant asterisk; no_litigation=true; m_weight=--M; family e$(echo $1 | sed 's/.*/\u&/'); ebook=true; }
 
 ligature() { [ $1 ] || return 1; [ $1 = default ] && ligature=default-calt || ligature=$1; inherits="inherits = '$ligature'"; }
@@ -195,7 +196,7 @@ while [ $1 ] ;do
   case "$1" in
   # style
   normal     ) shape 500; sb 0.7000 ;;                                                   # normal width
-  ebook      ) shape $extended; sb 0.7000; leading 1.4185; space 2; width=140; ebook monolegible ;;
+  ebook      ) shape $extended; sb 0.7000; leading 1.4185; space 2; emdash 2; width=140; ebook monolegible ;;
   expanded   ) shape $expanded; sb 0.8500 ;;                                             # expanded width (for source code and proof)
   extended   ) shape $extended; sb 0.7000 ;;                                             # extended width (tighter than expanded)
   heading    ) shape 650; sb 0.8000; leading 1.2500; weight 300 light; ebook heading ;;  # web heading
@@ -205,7 +206,7 @@ while [ $1 ] ;do
   ligature   ) ligature $2  || usage; shift ;;
   double     ) unset mono ;;
   quasi*     ) spacing=quasi-proportional; sb 0.7500; leading 1.2500; space 2; ebook quasi${family#*Mono}; variant I+; unset m_weight ;;
-  dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; width=135; ebook monolexic ;;
+  dyslexic   ) shape $expanded; sb 0.6500; leading 1.4185; space 2; emdash 2; width=135; ebook monolexic ;;
   # font
   G-toothless) variant G ;;
   I-serifless) variant G I ;;  # combined minimal stroke glyphs
@@ -224,6 +225,7 @@ while [ $1 ] ;do
   sb         ) sb $2        || usage; shift ;;    # side bearing (spacing)
   shape      ) shape $2     || usage; shift ;;    # cell width
   space      ) space $2     || usage; shift ;;    # space width
+  emdash     ) emdash $2    || usage; shift ;;    # emdash width
   weight     ) weight $2 $3 || usage; shift 2 ;;  # custom font weight
   xheight    ) xheight $2   || usage; shift ;;    # height of x (experimental for larger fontsizes)
   *          ) usage ;;
@@ -239,6 +241,7 @@ ditto override "$leading"
 ditto override "$shape" 
 ditto override "$sb"
 [ $space ] && ditto override "space ${space}x"
+[ $emdash ] && ditto override "emdash ${emdash}x"
 
 # additional font weight
 [ $weight ] && weight="
@@ -488,17 +491,17 @@ if [ $ebook ] ;then
   mkdir -p $HOME/.fonts/$family
   cp -v dist/$family/ttf/* $HOME/.fonts/$family
 else
-  nerdfont $mono $family                                             # insert glyphs
+  nerdfont $mono $family                                  # insert glyphs
 fi
 
-[ $curlyq ] && fforge curlyq $family                                 # hyperlegible font mod for better q
+[ $curlyq ] && fforge curlyq $family                      # hyperlegible font mod for better q
 
-[ $spacing = term ] && { fforge punctuation $family; unset width; }  # double width emdash and ellipsis
+[ $ebook ] && [ $spacing = term ] && { fforge punctuation $emdash $family; unset width; }  # wide cell emdash and double width ellipsis
 
-[ $ebook ] && fforge ligature $width ${shape#*=} $family             # ae width character adjustment
+[ $ebook ] && fforge ligature $width ${shape#*=} $family  # ae width character adjustment
 
-[ $space ] && fforge dyslexic $space $family                         # lengthen space character cell width
+[ $space ] && fforge dyslexic $space $family              # lengthen space character cell width
 
-[ $ebook ] && fforge bookweight $m_weight $family                    # book weight for kindle (as regular)
+[ $ebook ] && fforge bookweight $m_weight $family         # book weight for kindle (as regular)
 
 # vim: set ft=sh: #

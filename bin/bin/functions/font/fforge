@@ -7,16 +7,17 @@
 # ................................................. monolegible font adjustments
 # see make_install iosevka
 
-usage() { echo "usage: $(basename $0) curlyq | punctuation [--emdash] | ligature [quasi-proportional] | bookweight [--M] | dyslexic  [family]"; exit 1; }
+usage() { echo "usage: $(basename $0) curlyq | punctuation [<emdash>] | ligature [quasi-proportional] | bookweight [--M] | dyslexic [<space>]  [family]"; exit 1; }
 
 MAKE_INSTALL=/tmp/iosevka:make_install
 
 confirm() { [ -e $MAKE_INSTALL ] && ditto make_install "$1" || { ifyes "$1" || exit; }; }
+percent() { echo "$1 * 100" | bc | cut -d. -f1; }
 
 # substitute curly tail q
 curlyq() {
-  ditto iosevka 'copy char 0u024b and paste to char 0u0071'
-  confirm 'atkinson q update'
+  # copy char 0u024b and paste to char 0u0071
+  confirm 'atkinson curly tail q'
   echo "
 Open(\$1);
 Select(0u024b);
@@ -27,44 +28,28 @@ Generate(\$1);
 " >/tmp/fontforge.script
 
   for i in *ttf ;do
-    ditto fontforge $i
+    ditto curlyq $i
     fontforge --script /tmp/fontforge.script $i
   done
 }
 
-# double cell width punctuation
+# wide cell width punctuation
 punctuation() {
-  confirm 'add double width punctuation'
-  # double width emdash (or '--') and ellipsis
-  if [ $emdash ] ;then
-    echo "
-Open(\$1);
-Select(0u268b);
-Copy();
-Select(0u2014);
-Paste();
-Transform(200,0,0,100,0,0);
-Select(0u2026);
-Transform(200,0,0,200,0,0);
-ChangeWeight(-100);
-Move(0,-40);
-Generate(\$1);
-"
-  else
-    echo "
+  width=$(percent $emdash)
+  confirm "${emdash}x width emdash"
+  echo "
 Open(\$1);
 Select(0u2012);
 Copy();
 Select(0u2014);
 Paste();
-Transform(200,0,0,100,0,0);
+Transform($width,0,0,100,0,0);
 Select(0u2026);
 Transform(200,0,0,200,0,0);
 ChangeWeight(-100);
 Move(0,-40);
 Generate(\$1);
-"
-  fi >/tmp/fontforge.script
+" >/tmp/fontforge.script
 
   for i in *.ttf ;do
     ditto emdash $i
@@ -114,7 +99,7 @@ Generate(\$1);
 " >/tmp/fontforge.script
 
   for i in *.ttf ;do
-    ditto aechar $i
+    ditto ligature $i
     fontforge --script /tmp/fontforge.script $i
   done
 }
@@ -154,8 +139,6 @@ bookweight() {
     ttx $file
   done
 
-  ditto kindle "$(ls *\#1.ttf)"
-
   [ $M ] || return
   # optically adjust M (to weight 400 to narrow stroke width and better match contrast)
   echo "
@@ -181,9 +164,8 @@ Generate(\$1);
 
 # double cell width space
 dyslexic() {
-  width=$(echo "$space * 100" | bc | cut -d. -f1)
+  width=$(percent $space)
   confirm "${space}x width space character"
-  ditto dyslexic "${space}x width space character"
   echo "
 Open(\$1);
 Select(0u0020);
@@ -192,7 +174,7 @@ Generate(\$1);
 " >/tmp/fontforge.script
 
   for i in *.ttf ;do
-    ditto emdash $i
+    ditto space $i
     fontforge --script /tmp/fontforge.script $i
   done
 }
@@ -202,9 +184,9 @@ fforge=$1
 case $1 in
 curlyq     ) ;;
 ligature   ) [ $4 ] && { width=$2; shift 2; } || { shape=$2; shift; } ;;  # see iosevka for tricky bits
-punctuation) [ "$2" = '--emdash' ] && { emdash=true; shift; } ;;
+punctuation) [ $2 ] && { emdash=$2; shift; } || emdash=2 ;;
 bookweight ) [ "$2" = '--M' ] && { M=true; shift; } ;;
-dyslexic   ) space=$2; shift ;;
+dyslexic   ) [ $2 ] && { space=$2; shift; } || space=2 ;;
 *          ) usage ;;
 esac
 shift
@@ -215,6 +197,6 @@ cd $FONT || usage
 
 $fforge
 
-for i in $(find . -iname '*#1.ttf') ;do mv -v $i ${i%#1.ttf}.ttf ;done
+for i in $(find . -iname '*#1.ttf') ;do ditto kindle "$(mv -v $i ${i%#1.ttf}.ttf | cut -d"'" -f4 | sed 's|.*/||')" ;done
 
 # vim: set ft=sh: #
