@@ -28,6 +28,7 @@
 
 = web server
 = ══════════
+  pcre-devel  # nginx dependency
   d g passenger
 
 

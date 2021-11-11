@@ -26,8 +26,8 @@ done
 ifno 'build iosevka font suite' && { rm -f $MAKE_INSTALL; exit; }
 iosevka expanded $flavour
 iosevka expanded proof $flavour
-iosevka expanded menu q-curly $flavour
-iosevka heading english q-curly $flavour
+iosevka expanded menu $flavour
+iosevka heading english $flavour
 
 iosevka ebook english $q
 iosevka ebook english I-serifless $q
