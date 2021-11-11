@@ -56,7 +56,7 @@ root() {
 }
 
 setblur() {
-  if [ ! -e $COLOR ] ;then
+  if [ ! -e $COLOR ] && [ -z $blackboard ] ;then
     primary=$(root 0)
     is multihead && secondary=$(root 1)
   fi
@@ -81,13 +81,13 @@ blank() {
   if [ $1 ] ;then
     color=$1
     # blackboard reserved for media playback background to allow desktop restoration
-    [ $color = 000000 ] || echo blank >$SETROOT
+    [ $color = 000000 ] && blackboard=true || echo blank >$SETROOT
   else
     color=$(rice randomc -#)
     rm -f $SETROOT
   fi
   setroot --blank-color "#$color" 2>/dev/null
-  [ $color = 000000 ] || echo $color >$COLOR
+  [ $blackboard ] || echo $color >$COLOR
   # blackboard reserved for media playback background
   # if [ $color != 000000 ] ;then
   #   echo $color >$COLOR
@@ -177,11 +177,11 @@ esac
 # .................................................................. Apply theme
 
 setblur >$SETBLUR
-[ -e $COLOR ] || setroot ${primary#?:} ${secondary#?:} &
+[ $blackboard ] || [ -e $COLOR ] || setroot ${primary#?:} ${secondary#?:} &
 
 # apply rice conky to .conkyrc, $THEME unset above if new background
-if [ ! -e $COLOR ] ;then
-  [ -e $THEME ] && exit
+if [ ! -e $COLOR ] && [ -z $blackboard ]  ;then
+  # [ -e $THEME ] && exit
   background=$(query theme)
   # load theme or generate a theme from the border colour
   if [ -e $background ] ;then

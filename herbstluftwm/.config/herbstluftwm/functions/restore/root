@@ -1,5 +1,5 @@
 # sdothum - 2016 (c) wtfpl
-[ $TRACE ] && CHILD="restore/tiled $@" . $PARENT
+[ $TRACE ] && CHILD="restore/root $@" . $PARENT
 
 # herbstluftwm
 # ══════════════════════════════════════════════════════════════════════════════
@@ -12,7 +12,9 @@
 background=$(cat $SETROOT 2>/dev/null)
 
 case $background in
-blank    ) draw root blank $(cat $COLOR 2>/dev/null) ;;
+blank    ) color=$(find $PALETTE -iname $(cat $COLOR).png | cut -d/ -f6)
+           [ $color ] && { [ $color = light ] && echo dark >$THEME || echo light >$THEME; }
+           draw root blank $(cat $COLOR 2>/dev/null) $(cat $THEME 2>/dev/null) ;;
 wallpaper) draw root wallpaper ;;
 *        ) draw root blank ;;
 esac
