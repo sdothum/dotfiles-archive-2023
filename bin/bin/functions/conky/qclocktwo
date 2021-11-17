@@ -78,18 +78,20 @@ if [ -e $DEBUG ] ;then
 fi
 
 ch()      { cat /dev/urandom | tr -dc 'A-Z' | head -c $1 | sed 's/./& /g'; }
-xs()      { echo "${_}$(ch 1)${Q}"; }                                                        # word pair fill char
-nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }                            # random fill char column
-shuffle() { shuf=$(echo "$@" | shuf | tr -d '\n'); ditto $f "$shuf" >>$LOG; echo "$shuf"; }  # word salad
+xs()      { echo "${_}$(ch 1)${Q}"; }                              # word pair fill char
+nx()      { for j in $(seq 1 $1) ;do echo "\n${_}$(ch 1)" ;done }  # random fill char column
+shuffle() { shuf=$(echo "$@" | shuf | tr -d '\n'); ditto $f "$shuf" >>$LOG; echo -n "$shuf"; }  # word salad
 draw()    { [ "$qclock" ] && echo "$voffset$offset$qclock" | sed "s/ $//; s/[{]/$&/g" | $glyph >$QCLOCK:$1; }  # escape conky expression
 
 ITIS()    { echo "${Q}I T $(xs)I S ${_}$(ch 6)"; }
-_ITIS_()  { shuffle "${Q}I T $(xs)I S $(nx 6)"; }
+_ITIS_()  { echo -n "${_}$(ch 1)"; shuffle "${Q}I T $(xs)I S $(nx 4)"; echo -n "${_}$(ch 1)"; }
+_ITIS()   { echo "${_}$(ch 6)${Q}I T $(xs)I S"; }
 
 qclock0() {
   f=qclock0
   case $M5 in
-  0) qclock=$(ITIS) ;;    # top corner on the hour
+  0) qclock=$(ITIS)   ;;  # top corner on the hour
+  6) qclock=$(_ITIS)  ;;  # right corner on the half hour
   *) qclock=$(_ITIS_) ;;  # randomly position 'it is' phrase
   esac
 }
@@ -102,7 +104,7 @@ qclock1() {
   case $M5 in
   3) qclock=$(AQUARTER) ;;
   9) qclock=$(AQUARTER) ;;
-  *) qclock=$(quarter) ;;
+  *) qclock=$(quarter)  ;;
   esac
 }
 
@@ -259,12 +261,12 @@ qclock9() {
   if [ $H = $I34 ] ;then
     case $M5 in
     0) qclock=$(Q3OCLOCK) ;;  # ten o'clock always touches corner
-    *) qclock=$(Q3clock) ;;
+    *) qclock=$(Q3clock)  ;;
     esac
   else 
     case $M5 in
     0) qclock=$(_3OCLOCK) ;;  # o'clock touches corner, just because
-    *) qclock=$(_3clock) ;;
+    *) qclock=$(_3clock)  ;;
     esac
   fi
 }
@@ -310,9 +312,9 @@ map() { cat $QCLOCK:$1 | cut -d' ' -f$(( $3 - $2 )); }
 
 line() {
   case $1 in
-  [12] ) cat $QCLOCK:$(map minutes 0 $1) ;;
+  [12] ) cat $QCLOCK:$(map minutes 0 $1)  ;;
   [34] ) cat $QCLOCK:$(map halfpast 2 $1) ;;
-  [5-8]) cat $QCLOCK:$(map hours 4 $1) ;;
+  [5-8]) cat $QCLOCK:$(map hours 4 $1)    ;;
   *    ) cat $QCLOCK:$1 ;;
   esac
 }

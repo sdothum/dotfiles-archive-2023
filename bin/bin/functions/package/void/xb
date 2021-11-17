@@ -20,7 +20,8 @@ usage() {
   echo "        H .. hold"
   echo "       -H .. unhold"
   echo "        Q .. installed"
-  echo "    .. $(basename $0) H | S | U"
+  echo "    .. $(basename $0) C | H | S | U"
+  echo "        C    backup cache"
   echo "        H    held (list)"
   echo "        S    installed (count)"
   echo "        U    upgrade system"
@@ -35,6 +36,7 @@ usage() {
 }
 
 CACHE=/var/cache/xbps
+BACKUP=/net/depot/
 XBDIR=${0%/*}
 ACTIONS=$XBDIR/.xb_actions  # tuple: <action> <package> -> file: .xb_<action>, see upgrade_check and upgrade_actions 
 [ $1 ] || usage
@@ -60,6 +62,7 @@ upgrade_check() {
 
 # default (no options) to package query
 case $1 in
+ C) [ $2 ] && usage || action=backup ;;
  S) [ $2 ] && { action=sync; yes='-y'; } || action=count ;;
 SS) [ $2 ] && { action=force; yes='-y'; } ;;
 -S) [ $2 ] && action=sync || sudo xbps-install -S; exit ;;
@@ -80,6 +83,7 @@ h ) action=history ;;
 esac
 
 shift; [ $1 ] || case $action in
+backup ) ;;
 held   ) ;;
 history) ;;
 count  ) ;;
@@ -106,6 +110,7 @@ history() {
 }
 
 case $action in
+backup    ) rsync $CACHE $BACKUP ;;
 count     ) ditto installed "$(xbps-query -l $options | wc -l) packages" ;;
 dependency) xbps-query -x $package ;;
 downgrade ) sudo xdowngrade $@ ;;  # downgrade must include package dependencies
