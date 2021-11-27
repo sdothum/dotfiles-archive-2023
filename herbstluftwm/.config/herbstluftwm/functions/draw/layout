@@ -107,6 +107,16 @@ one2two() {
   fi
 }
 
+one2three() {
+  echo 1:3 >$LAYOUT:$1
+  if [ "$load" ] || [ $windows -lt 3 ] ;then
+    herbstclient load $1 '(split horizontal:0.250000:0 (clients vertical:0) (clients vertical:0))'
+  else
+    restore mono
+    [ $MASTER = left ] && split 0.2500 || split 0.7500
+  fi
+}
+
 two2three() {
   echo 2:3 >$LAYOUT:$1
   if [ "$load" ] || [ $windows -lt 3 ] ;then
@@ -185,6 +195,7 @@ tags      ) for i in $TAGS ;do layout $i ;done
 1:1       |\
 2:3       |\
 1:2       |\
+1:3       |\
 1:1:1     |\
 spread    |\
 max       |\
@@ -195,10 +206,11 @@ quarters  |\
 vertical  |\
 horizontal) layout=$1
             case $layout in
-            1:1   ) layout=halves ;;
-            1:2   ) layout=one2two ;;
+            1:1   ) layout=halves    ;;
+            1:2   ) layout=one2two   ;;
+            1:3   ) layout=one2three ;;
             2:3   ) layout=two2three ;;
-            1:1:1 ) layout=thirds ;;
+            1:1:1 ) layout=thirds    ;;
             esac
             # may already be in lock state, see toggle monocle
             [ -e $LOCK ] || herbstclient lock

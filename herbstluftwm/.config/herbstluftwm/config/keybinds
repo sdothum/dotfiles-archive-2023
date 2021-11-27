@@ -133,8 +133,9 @@ hc keybind $Mod-Control-2           spawn draw layout halves
 hc keybind $Mod-Control-3           spawn draw layout thirds
 hc keybind $Mod-Control-4           spawn draw layout quarters
 hc keybind $Mod-Control-5           spawn draw layout 2:3
-hc keybind $Mod-Control-6           spawn draw layout 1:2
-hc keybind $Mod-Control-7           spawn draw layout spread
+hc keybind $Mod-Control-6           spawn draw layout 1:3
+hc keybind $Mod-Control-7           spawn draw layout 1:2
+hc keybind $Mod-Control-8           spawn draw layout spread
 hc keybind $Mod-space               spawn toggle layout max
 hc keybind $Mod-Shift-space         spawn switch layout
 hc keybind $Mod-Shift-f             chain . floating toggle . emit_hook focus_changed

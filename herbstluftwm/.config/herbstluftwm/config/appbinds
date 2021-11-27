@@ -16,6 +16,9 @@ hc keybind Super-space                spawn dmenu run
 hc keybind Super-Control-space        spawn dmenu apps
 hc keybind Super-Shift-space          spawn dmenu manpages
 hc keybind Super-$Mod-space           spawn killall -KILL dmenu
+hc keybind Control-space              spawn dunstctl close
+hc keybind Control-Shift-space        spawn dunstctl close-all
+hc keybind Control-BackSpace          spawn dunstctl history-pop
 hc keybind Super-1                    spawn pactl set-sink-volume $(sink) -3db
 hc keybind Super-2                    spawn pactl set-sink-volume $(sink) 0db
 hc keybind Super-3                    spawn pactl set-sink-volume $(sink) +3db
