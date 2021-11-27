@@ -22,7 +22,7 @@ while : ;do
   [ "$media" = "$CLEAR" ] || mhistory media $media
 
   case $media in
-  "$CLEAR"      ) pkill mpv; pkill -f 'dmenu series'; media=$(previous media); ;;
+  "$CLEAR"      ) pkill mpv; pkill -f 'dmenu (series|movies)'; media=$(previous media); ;;
   animation     ) dmenu movies animation ;;
   anime         ) dmenu series anime ;;
   blackboard    ) exec blackboard ;;
