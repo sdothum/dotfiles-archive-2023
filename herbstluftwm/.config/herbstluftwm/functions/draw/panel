@@ -119,7 +119,7 @@ desktops() {
     fi
     desktops="${desktops}${TAG_PAD}${format}${tag}%{-u}%{U-}%{B-}%{F-}"
   done
-  [ -e $STAT ] || desktops="${desktops}TAG_PAD"  # center tags with triple padding, see $stat
+  [ -e $STAT ] || desktops="${desktops}$TAG_PAD"  # center tags with triple padding, see $stat
 }
 
 # .................................................................... Cpu stats
